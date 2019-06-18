@@ -1,0 +1,131 @@
+
+=============================================================================
+Run Date: OCT 20, 2016                     Designation: GMTS*2.7*116
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #108                    Status: Released
+                  Compliance Date: NOV 20, 2016
+=============================================================================
+
+Associated patches: (v)YS*5.01*119 <<= must be installed BEFORE `GMTS*2.7*116'
+
+Subject: CORRECT LIST OF MENTAL HEALTH INSTRUMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is in support of the Mental Health PCL-5 instrument patch 
+ YS*5.01*119. It will modify the list of mental health instruments
+ presented as selection items in health summary when using the ad hoc
+ health summary option in CPRS.  The patch will prevent instruments that
+ are inoperative or not scored correctly from being selected.
+  
+ Please refer to the information contained in the Mental Health patch for 
+ installation instructions.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:  N/A
+  
+ Forms Associated:           N/A
+  
+ Mail Groups Associated:     N/A
+  
+ Options Associated:         N/A
+  
+ Protocols Associated:       N/A
+  
+ Security Keys Associated:   N/A
+  
+ Templates Associated:       N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150509: Posttraumatic Stress Disorder (PTSD) Checklist 5 (PCL-5) 
+ and Mental Health Assistant Stabilization (MHAS) 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 2497: Mental health instruments that use a complex scoring algorithm 
+ display an incorrect score when used in Health Summary and Clinical 
+ Reminders. 
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Cleveland
+ Milwaukee
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ This patch is being distributed as a host file.  The name of the host
+ file is YS_PCL5_UPDATE.KID.  This file should be downloaded in ASCII 
+ format.
+  
+ The preferred method is to retrieve files from:
+    
+       download.vista.domain.ext.
+  
+    
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+    
+ Sites may retrieve the software and install guide directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+   Albany:                 domain.ext
+   Hines:                  domain.ext    
+   Salt Lake City:         domain.ext
+    
+  
+       File Name:              Description:                  Protocol
+       ==========              ============                  =========
+       YS_PCL5_UPDATE.PDF      PCL-5 Update Install Guide    BINARY
+       YS_PCL5_UPDATE.KID      PCL-5 Update Host File        ASCII      
+    
+ Documentation can also be found on the VA Software Documentation Library
+ at:  http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ------------------
+  
+ Instructions for installation of the software are included in the Mental
+ Health PCL-5 patch YS*5.01*119.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSADH5
+    Before: B46673093   After: B48340236  **36,35,37,49,63,110,116**
+ 
+Routine list of preceding patches: 110
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 22, 2015
+Completed By:                               Date Completed: OCT 19, 2016
+Released By :                               Date Released : OCT 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

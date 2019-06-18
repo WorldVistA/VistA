@@ -1,0 +1,430 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 12/10/18 at 16:10
+=============================================================================
+Run Date: FEB 13, 2019                     Designation: LR*5.2*504
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #417                    Status: Released
+                  Compliance Date: MAR 16, 2019
+=============================================================================
+
+
+Subject: MISSING ANATOMIC PATHOLOGY ALERTS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses one (1) VistA Laboratory Anatomic Pathology issue:
+  
+ Alerts might not be generated after Anatomic Pathology cases are verified.
+  
+ Patch Components:
+ =================
+  
+ Options Associated:
+  
+ Option Name              Type         New/Modified/Deleted
+ -----------              -----------  -------------------- 
+ Missing AP Alert Search  run routine  New
+ LRAPSUPER                menu         Modified
+  
+ Parameter Definition Associated:
+  
+ Parameter Definition Name        New/Modified/Deleted
+ -------------------------        --------------------
+ LR AP ALERT SEARCH END           New
+  
+ New Service Requests (NSRs):
+ ===========================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ PSPO 3681
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*504 does not contain
+ any changes to the VISTA BLOOD BANK Software as defined by ProPath standard
+ titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*504 does not alter
+ or modify any software design safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*504 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes made,
+ no specific validation requirements exist as a result of installation of this
+ patch.
+  
+  
+ Participating Test Sites:
+ ========================
+ WHITE RIVER JUNCTION VA (VERMONT)
+ ST.CLOUD VA
+ FARGO VA
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+  
+ R18600337FY18: Missing Anatomic Pathology Alerts
+ R19264009FY18 (d)
+  
+ Problem:
+ -------
+  
+ Alerts might not be generated after Anatomic Pathology cases are verified.
+ Several sites are finding that alerts are not generating after some cases 
+ are verified.  The issue is not reproducible except by forcing a session 
+ disconnect after electronically signing a case but before specifying 
+ whether additional alerts should be sent.  It is unknown whether this is
+ the scenario causing missing alerts at sites.
+  
+ Resolution: 
+ ----------
+ The root cause of this issue is not yet known.  In the meantime, this 
+ patch provides a routine and option which will search for missing 
+ Anatomic Pathology alerts as well as other issues known to occur along 
+ with missing alerts such as fields in the ORDERS (#100) file which are 
+ set incorrectly.
+  
+ After the routine executes, alert(s) and a MailMan message are sent to 
+ the"LMI" mail group as well as the user who manually invoked the option
+ "Missing AP Alert Search". Recipients of the alerts and MailMan messages
+ will then determine whether to manually generate an alert for the cases
+ using the already existing option "Send an AP Alert" which is under the
+ menu "Verify/release menu, anat path".
+  
+ The option included in this patch, "Missing AP Alert Search", is placed 
+ under the "Supervisor, anat path" menu.  The option may be invoked
+ manually and/or defined to be executed automatically by TaskMan.
+  
+ Various information gathered about issues found is sent in alerts and 
+ MailMan messages as well as stored in an ^XTMP("LR AP ALERT TRACE... 
+ global.  The information in the ^XTMP subscript will automatically purge 
+ after 90 days.  The information is kept for a period of time in the event
+ that future research will need to be performed on the Anatomic Pathology
+ cases.
+   
+ NOTE: It is strongly recommended this option be scheduled to run daily. 
+ See the Post-Installation Instructions.  If the option is executed by 
+ TaskMan, alert(s) and a MailMan message are sent to the user who defined 
+ the option in TaskMan as well as members of the "LMI" MailMan group.
+  
+  
+ Routine: LRAPUALT
+  
+ ^XTMP Example (top level only):
+ ------------------------------
+  
+ ^XTMP("LR AP ALERT TRACE 3181207.1434",0) = purge date, etc.
+  
+ The search option may be executed manually and/or through TaskMan.  Sites 
+ can determine how often the search routine should run.
+  
+ Manual Execution:
+ ----------------
+  
+ The option included in this patch, "Missing AP Alert Search", is placed 
+ under the "Supervisor, anat path" menu.
+  
+ The option will ask the user which starting and end date should be 
+ searched.  The date range pertains to the date that Anatomic Pathology 
+ cases are verified.
+  
+ After the routine executes, alert(s) and a MailMan message are sent to 
+ members of the "LMI" mail group as well as the user who manually invoked
+ the option "Missing AP Alert Search". Recipients of the alerts and MailMan
+ messages will then determine whether to manually generate an alert for the
+ cases using the already existing option "Send an AP Alert" which is under
+ the menu "Verify/release menu, anat path".
+  
+ If no issues are found, an alert and MailMan message are generated 
+ indicating "No issues found".
+  
+ TaskMan Execution:
+ ----------------- 
+  
+ If the option is executed by TaskMan, alert(s) and a MailMan message are
+ sent ONLY to members of the "LMI" MailMan group and ONLY if issues are
+ found.  
+  
+ Only "new" verified Anatomic Pathology cases with missing alerts and/or
+ related issues will be included in the MailMan messages each time the
+ option is invoked.  This enables the recipients to quickly ascertain which
+ cases need attention.  The ending date/time when the search option last 
+ finished is stored in the parameter "LR AP ALERT SEARCH END".  
+  
+ Manually invoking option "Missing AP Alert Search" will not affect the
+ parameter setting.  The parameter is only referred to and set by TaskMan
+ execution.
+  
+ MailMan Message Example - Issues Found:
+ --------------------------------------
+  
+ Subj: Anatomic Pathology Alert Search Issues Found  [#277918] 
+ 12/07/18@14:34
+ 65 lines
+ From: Anatomic Pathology Missing Alert Search  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+ Anatomic Pathology Alert Search Issues Found
+  
+ Date/Time Range Searched: Dec 06, 2018@14:30 to: Dec 07, 2018@14:30
+   
+   SP 18 15:
+    - is missing package reference for order 5598085.
+    - has incorrect status of 6 for order 5598085.
+    - has no results date/time for order 5598085.
+    - *** did not generate an alert. ***
+  
+ MailMan Message Example - No Issues Found:
+ -----------------------------------------
+  
+ Note: TaskMan executions run for a specified date/time range.
+       Manual executions run for a date range.
+  
+ Subj: No Anatomic Pathology Alert Search Issues Found  [#277926] 
+ 12/07/18@18:02
+ 4 lines
+ From: Anatomic Pathology Missing Alert Search  In 'IN' basket.   Page 1  
+ *New*
+ --------------------------------------------------------------------------
+  
+ No missing Anatomic Pathology alert issues found on Dec 07, 2018@18:02.
+ Date Range Searched: Dec 01, 2018 to: Dec 07, 2018
+  
+ Documentation Update
+ --------------------
+  
+ The Laboratory Anatomic Pathology (AP) Version 5.2 User Guide has been 
+ updated in the section titled "Supervisor, Anat Path [LRAPSUPER]".
+  
+ The manual is located in the VA Document Library (VDL) at:
+  
+ https://www.domain.ext/vdl/application.asp?appid=72
+  
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+       NOTE: Since the routine in this patch is new, there should be no    
+             routines to back up.  However, it's a good idea to back up 
+             anyway in case a routine with the same name unexpectedly
+             happens to reside on the system.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*504'.
+  
+       When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? NO//', choose 'NO'.
+  
+       When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', choose 'NO'.
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+ Installation Verification
+ =========================
+  
+ 1. Compare the checksum of the routine LRAPUALT to the "After" checksum
+    listed in the patch description.
+  
+ 2. Verify that the option "Missing AP Alert Search" is available under 
+    the LRAPSUPER menu:
+  
+        AL     Missing AP Alert Search
+  
+ 3. Perform a FileMan Inquiry on the PARAMETER DEFINITION (#8989.51) file 
+    for "LR AP ALERT SEARCH END":
+  
+        VA FileMan 22.2
+  
+        Select OPTION: 5  INQUIRE TO FILE ENTRIES
+  
+        Output from what File: PARAMETER DEFINITION//   (1001 entries)
+        Select PARAMETER DEFINITION NAME: LR AP ALERT SEARCH END
+                                          LR AP Alert Search End Date/Time
+        Another one: 
+        Standard Captioned Output? Yes//   (Yes)
+        Include COMPUTED fields:  (N/Y/R/B): NO// BOTH Computed Fields and
+                                                  Record Number (IEN)
+  
+        NUMBER: 933                    NAME: LR AP ALERT SEARCH END
+        DISPLAY TEXT: LR AP Alert Search End Date/Time
+        MULTIPLE VALUED: No
+        INSTANCE TERM: LR AP Alert Search End Date/Time
+        VALUE TERM: LR AP Alert Search End Date/Time
+        PROHIBIT EDITING: No              VALUE DATA TYPE: date/time
+        VALUE DOMAIN: ::T
+        VALUE HELP: This value equals the last time that TaskMan ran option
+                    Missing AP Alert Search.                          
+        INSTANCE DATA TYPE: date/time     INSTANCE DOMAIN: ::T
+        DESCRIPTION:   
+        This parameter only applies to a search initiated by Taskman when
+        the option "Missing AP Alert Search" is defined to run 
+        automatically in TaskMan.  Users may manually run the search using
+        the option "Missing AP Alert Search" without affecting the
+        date/time set in this parameter.
+   
+        The value for this parameter equals the last date/time that was
+        searched in order to find verified Anatomic Pathology cases which
+        did not have an alert generated.  Some sites are finding that
+        alerts do not generate at times.  The issue cannot be reproduced at
+        will.  A suspected cause is that a session is disconnected after
+        verification but before the alert is queued.
+        PRECEDENCE: 1                      ENTITY FILE: SYSTEM
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ 1. Verify there is at least one member in the mail group LMI.  It is 
+ recommended that the LIM and at least one other person be a member of 
+ this group.
+  
+ 2. Use the option Schedule/Unschedule Options (XUTM SCHEDULE) to schedule 
+ the option Missing AP Alert Search (LRAPALERT) to run DAILY. 
+  
+  
+ Back-out Procedures
+ ===================
+  
+ Option:
+ ------
+  
+ The option "Missing AP Alert Search" can be removed from the LRAPSUPER
+ menu through FileMan.
+  
+ 1. Make sure the option has not been scheduled in TaskMan.  If it has, 
+    delete the TaskMan entry following established protocols for your site.
+  
+ 2. Delete the option as an item under the LRAPSUPER menu:
+  
+        VA FileMan 22.2
+  
+        Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+        Input to what File: OPTION//              (13653 entries)
+        EDIT WHICH FIELD: ALL// MENU
+        1   MENU    (multiple)
+        2   MENU TEXT  
+        CHOOSE 1-2: 1  MENU  (multiple)
+        EDIT WHICH MENU SUB-FIELD: ALL// ITEM  
+        THEN EDIT MENU SUB-FIELD: 
+        THEN EDIT FIELD: 
+  
+        Select OPTION NAME: LRAPSUPER       Supervisor, anat path
+        Select ITEM: LRAPALERT// @
+        SURE YOU WANT TO DELETE THE ENTIRE ITEM? Y  (Yes)
+        Select ITEM: LRAP ESIG SWITCH// ^
+  
+ 3. Delete the option:
+  
+        VA FileMan 22.2
+  
+        Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+        Input to what File: OPTION//              (13653 entries)
+        EDIT WHICH FIELD: ALL// 
+  
+        Select OPTION NAME: LRAPALERT       Missing AP Alert Search
+        NAME: LRAPALERT// @
+        SURE YOU WANT TO DELETE THE ENTIRE 'LRAPALERT' OPTION? Y  (Yes)
+        SINCE THE DELETED ENTRY MAY HAVE BEEN 'POINTED TO'
+        BY ENTRIES IN THE 'AUDIT' FILE, ETC.,
+        DO YOU WANT THOSE POINTERS UPDATED (WHICH COULD TAKE QUITE A
+        WHILE)? No// (No)
+  
+ Routine:
+ -------
+  
+ The routine LRAPUALT may be deleted using the Delete Routines option 
+ under the Programmer Options menu:
+  
+ Select Routine Tools <TEST ACCOUNT> Option: DELETE Routines
+  
+ ROUTINE DELETE
+  
+ All Routines? No => No
+  
+ Routine: LRAPUALT
+ Routine: 
+ 1 routine
+  
+ 1 routines to DELETE, OK: NO// YES
+  
+ Use this option cautiously so as to not accidentally delete a routine 
+ which is needed due to a typo when specifying the routine.  It does not 
+ cause harm to keep the routine on the system since the option has been 
+ deleted.
+  
+ Parameter Definition:
+ --------------------
+  
+ Deleting the PARAMETER DEFINITION (#8989.51) file entry of "LR AP ALERT 
+ SEARCH END" is not recommended.  Cross-references may exist in other VistA
+ files, and the downstream effects of possible remaining cross references 
+ are unknown.
+  
+ There is no harm in allowing the PARAMETER DEFINITION (#8989.51) file 
+ entry of "LR AP ALERT SEARCH END" to remain on the system.  Instead, the 
+ FileMan description field could be edited to state that the parameter 
+ definition is not used.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 33
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAPUALT
+    Before:       n/a   After:B158177199  **504**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 17, 2018
+Completed By:                               Date Completed: FEB 12, 2019
+Released By :                               Date Released : FEB 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

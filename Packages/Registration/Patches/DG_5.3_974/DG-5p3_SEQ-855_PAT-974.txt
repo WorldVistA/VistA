@@ -1,0 +1,306 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Wednesday, 01/16/19 at 11:07
+=============================================================================
+Run Date: APR 10, 2019                     Designation: DG*5.3*974
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #855                    Status: Released
+                  Compliance Date: APR 18, 2019
+=============================================================================
+
+Associated patches: (v)DG*5.3*578  <<= must be installed BEFORE `DG*5.3*974'
+                    (v)DG*5.3*837  <<= must be installed BEFORE `DG*5.3*974'
+                    (v)DG*5.3*937  <<= must be installed BEFORE `DG*5.3*974'
+                    (v)DG*5.3*944  <<= must be installed BEFORE `DG*5.3*974'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - SUPPORT LONG NAMES IN VA MPI
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ NOTE: Master Patient Index (MPI) 'Support for Long Names in VA MPI'
+       enhancements are being distributed in three VistA namespaces:
+       DG, MPIF and RG.
+       The only build enforced requirement for this set of related
+       patches is that MPIF*1.0*69 be installed before RG*1.0*71.
+       
+       (Do NOT install MPIF*1.0*69 or RG*1.0*71 on legacy sites
+        or on the FORUM CLAIMS system)
+  
+ NOTE: Legacy sites and the FORUM CLAIMS system can install just the
+       DG*5.3*974 patch. MPIF*1.0*69 and RG*1.0*71 should NOT be
+       installed on legacy sites or on the FORUM CLAIMS system.  
+  
+ DG*5.3*578, DG*5.3*837, DG*5.3*937 and DG*5.3*944 are the required
+ builds for patch DG*5.3*974.
+  
+ The following enhancement exported in this patch was needed to support
+ the collection of the patient's legal name in the Veteran Affairs (VA)
+ Master Person Index, which requires MPI to support storing patient
+ names and aliases greater than the VistA maximum of 30 characters in
+ length.
+   
+ Enhancement
+ MPI as of patch MPI*1.0*125 will start supporting the collection of
+ an individual's legal name, which can now exceed VistA's limitation of
+ a maximum length of 30 characters on the name and/or alias fields. To
+ support this change on the MPI, VistA has been modified with the
+ following changes so that it will NOT outright reject the value for
+ exceeding the 30-character maximum length:
+  
+   - Created a new Remote Procedure Call (RPC) [DG UPDATE NAME 
+     COMPONENTS] that will allow MPI to remotely retrieve and update
+     the name components stored in the NAME COMPONENTS (#20) file
+     for a patient's name or alias at the site.
+  
+   - Modified the Health Level Seven (HL7) processing code for the
+     Admit Discharge Transfer (ADT) A08 (Update Patient) and A31
+     (Update Person) HL7 messages received from MPI that determines
+     whether 'Aliases' need to be added or deleted from the PATIENT
+     (#2) file, so that the comparison will now occur against fields
+     in the NAME COMPONENTS (#20) file.     
+    
+   - Modified the HL7 Patient Identification (PID) builder so that the
+     'Alias' name components from the NAME COMPONENTS (#20) file are
+     placed into the PID-5 segment, which will ensure that the Alias
+     components in the HL7 message reflect the true alias component
+     values which will be filed into the Correlation on the MPI.
+   
+        Note: Previously, the 'Alias' components were obtained by
+              parsing the Alias Name (.01) into its component
+              parts.
+      
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ ------------------       -------------------       --------------------
+ N/A
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ DG UPDATE NAME COMPONENTS         NEW
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+   
+ Test Sites:
+ ----------
+ Birmingham VAMC
+ Salt Lake City HCS
+   
+  
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes. 
+  
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than a minute to install. This patch may be 
+ installed with users on the system, but it is recommended that
+ installation occur during off hours. 
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      UPDATE BATCH JOB FOR HL7 v2.3               [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu       [RG ADMIN COORD MENU]
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+   
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+     
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. DG*5.3*974):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+      
+     a. When prompted 'Enter options you wish to mark as 'Out Of Order':',
+        select the following options:
+     
+          Option Name                    Menu Text                       
+          -----------                    ---------
+          [DG LOAD PATIENT DATA]         Load/Edit Patient Data
+          [DG REGISTER PATIENT]          Register a Patient 
+          [DGPRE PRE-REGISTER OPTION]    Preregister a Patient
+          [EAS EZ 1010EZ PROCESSING]     Electronic 10-10EZ Processing
+          [VAFC BATCH UPDATE]            UPDATE BATCH JOB FOR HL7 v2.3
+          [RG ADMIN COORD MENU]          MPI/PD Patient Admin Coordinator
+                                          Menu
+          [MPIF LOC/MIS ICN RES]         Local/Missing ICN Resolution
+                                          Background Job 
+     
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+        press the Enter key.
+  
+     c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU]. 
+  
+ Back-Out Plan
+ -------------
+ The DG patch back-out procedure would consist of restoring the original
+ routines using the back-up message created during the patch installation,
+ deleting the NEW routine 'DGNAME' and RPC [DG UPDATE NAME COMPONENTS]
+ from the REMOTE PROCEDURE (#8994) file.
+  
+ If assistance is still required to back-out the patch please contact the
+ National Service Desk (NSD) to log a help desk ticket so the development
+ team can assist in the process.
+    
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGNAME
+    Before:       n/a   After:  B7077363  **974**
+Routine Name: VAFCMSG
+    Before: B18003001   After: B21014587  **91,149,530,578,974**
+Routine Name: VAFCPDT2
+    Before: B31881197   After: B40397763  **414,505,627,697,797,876,937,
+                                           944,974**
+Routine Name: VAFCPTED
+    Before: B15564397   After: B45940753  **149,333,756,837,974**
+Routine Name: VAFCQRY1
+    Before: B86325384   After: B93833983  **428,474,477,575,627,648,698,
+                                           711,707,837,874,937,974**
+ 
+Routine list of preceding patches: 578, 944
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 01, 2018
+Completed By:                               Date Completed: APR 10, 2019
+Released By :                               Date Released : APR 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

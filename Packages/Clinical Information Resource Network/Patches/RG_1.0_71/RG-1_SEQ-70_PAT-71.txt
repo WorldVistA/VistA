@@ -1,0 +1,321 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 02/11/19 at 07:59
+=============================================================================
+Run Date: APR 10, 2019                     Designation: RG*1*71
+Package : RG - CLINICAL INFO RESOURCE NETWORK Priority: Mandatory
+Version : 1        SEQ #70                      Status: Released
+                  Compliance Date: APR 18, 2019
+=============================================================================
+
+Associated patches: (v)RG*1*67     <<= must be installed BEFORE `RG*1*71'
+                    (v)RG*1*68     <<= must be installed BEFORE `RG*1*71'
+                    (v)MPIF*1*69   <<= must be installed BEFORE `RG*1*71'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - SUPPORT LONG NAMES IN VA MPI
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems or the FORUM CLAIMS system (since it is NOT a
+       Veterans Affair Medical Center (VAMC) VistA system).
+  
+ RG*1.0*67, RG*1.0*68 and MPIF*1.0*69 are the required builds for patch
+ RG*1.0*71.
+  
+ NOTE: Master Patient Index (MPI) 'Support for Long Names in VA MPI'
+       enhancements are being distributed in three VistA namespaces:
+       DG, MPIF and RG.
+       The only build enforced requirement for this set of related
+       patches is that MPIF*1.0*69 be installed before RG*1.0*71.
+       
+       (Do NOT install MPIF*1.0*69 or RG*1.0*71 on legacy sites
+        or on the FORUM CLAIMS system) 
+  
+ NOTE: Legacy sites and the FORUM CLAIMS system can install just the
+       DG*5.3*974 patch. MPIF*1.0*69 and RG*1.0*71 should NOT be
+       installed on legacy sites or on the FORUM CLAIMS system. 
+   
+ The following enhancements exported in this patch were needed to
+ support the collection of the patient's legal name in the Veteran
+ Affairs (VA) Master Person Index, which requires MPI to support
+ storing patient names and aliases greater than the VistA maximum of
+ 30 characters in length and to also allow updating of Date of Death
+ metadata when the update is triggered through the Override process in
+ Toolkit.
+  
+ Enhancement #1
+ MPI as of patch MPI*1.0*125 will start supporting the collection of
+ an individual's legal name, which can now exceed VistA's limitation of
+ a maximum length of 30 characters on the name and/or alias fields. To
+ support this change on the MPI, VistA has been modified with the
+ following change so that it will NOT outright reject the value for
+ exceeding the 30-character maximum length:
+  
+   The processor for the incoming Admit Discharge Transfer (ADT) A08 
+   (Update Patient) Health Level Seven (HL7) messages has been modified
+   so that when a Patient's name and/or alias exceeds 30 characters and
+   the NEW Name Components flag is NOT set that a shortened name will
+   be generated from the component parts of the name that were sent in
+   the HL7 message. That shortened version of the name is then filed
+   into the NAME field (#.01) or ALIAS (#1) multiple NAME (#.01) field
+   in the PATIENT (#2) file.
+  
+   NOTE: Prior to this change, long names (Patient Name or Aliases)
+         would have been rejected by the input transform and the
+         update would have failed.
+  
+   If the NEW Name Components flag is set to '1' then the name components
+   for the 'Name' and 'Aliases' values will be filed directly into the
+   NAME COMPONENTS (#20) file. The existing 'ANAME' MUMPS cross-reference
+   (X-REF) on the name components fields in the NAME COMPONENTS (#20) file
+   will continue to be used to update the corresponding NAME (#.01) and/or
+   ALIAS (#1) multiple NAME (#.01) fields in the PATIENT (#2) file. 
+  
+   NOTE: See patch MPIF*1.0*69 for additional information on the NEW
+         Name Components flag stored in the MPI ICN BUILD MANAGEMENT
+         (#984.8) file.
+  
+ Enhancement #2
+ The Healthcare Identity Management (HC IdM) business group has requested
+ an enhancement that will modify routine RGADTP3 to NOW allow a patient's
+ Date of Death (DOD) metadata to be updated ONLY if the update was received
+ from the Override (OVR) process in the Person Service Identity Management
+ (PSIM) Toolkit (TK), even if there was no change in the DOD. Currently
+ only SOURCE OF NOTIFICATION (field #.353) in the PATIENT File (#2) will be
+ updated in VistA through this process, as the other DOD metadata items are
+ NOT presently synched out to the sites from the MVI. 
+  
+   Note: The OVR process will be identified by the ARRAY("TKOVRDOD") flag.
+       
+     
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Birmingham VAMC
+ Salt Lake City HCS
+    
+   
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.    
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system. 
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      UPDATE BATCH JOB FOR HL7 v2.3               [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu       [RG ADMIN COORD MENU]
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. RG*1.0*71):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+      
+     a. When prompted 'Enter options you wish to mark as 'Out Of Order':',
+        select the following options:
+     
+          Option Name                    Menu Text                       
+          -----------                    ---------
+          [DG LOAD PATIENT DATA]         Load/Edit Patient Data
+          [DG REGISTER PATIENT]          Register a Patient 
+          [DGPRE PRE-REGISTER OPTION]    Preregister a Patient
+          [EAS EZ 1010EZ PROCESSING]     Electronic 10-10EZ Processing
+          [VAFC BATCH UPDATE]            UPDATE BATCH JOB FOR HL7 v2.3
+          [RG ADMIN COORD MENU]          MPI/PD Patient Admin Coordinator
+                                          Menu
+          [MPIF LOC/MIS ICN RES]         Local/Missing ICN Resolution
+                                          Background Job  
+     
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+        press the Enter key.
+  
+     c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+   
+ Back-Out Plan
+ -------------
+ The RG patch back-out procedure would consist of restoring the original
+ routines using the back-up message created during the patch installation,
+ as there are no additional components nor any other data modifications
+ being made in this patch.
+  
+ If assistance is still required to back-out the patch please contact the
+ National Service Desk (NSD) to log a help desk ticket so the development
+ team can assist in the process.
+  
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL INFO RESOURCE NETWORK;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RGADTP1
+    Before: B55919988   After: B62788084  **26,27,42,45,44,47,48,59,61,
+                                           64,67,71**
+Routine Name: RGADTP2
+    Before: B71260442   After: B73923286  **27,20,45,44,47,48,49,52,54,
+                                           58,59,64,66,67,71**
+Routine Name: RGADTP3
+    Before: B29753601   After: B42830500  **48,59,63,65,67,68,71**
+ 
+Routine list of preceding patches: 68
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 07, 2018
+Completed By:                               Date Completed: APR 10, 2019
+Released By :                               Date Released : APR 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

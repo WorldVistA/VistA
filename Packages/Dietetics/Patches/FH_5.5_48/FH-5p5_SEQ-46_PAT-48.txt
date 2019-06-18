@@ -1,0 +1,197 @@
+$TXT Created by                      CLN2G2.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 02/05/19 at 16:39
+=============================================================================
+Run Date: APR 10, 2019                     Designation: FH*5.5*48
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #46                    Status: Released
+                  Compliance Date: MAY 13, 2019
+=============================================================================
+
+Associated patches: (v)FH*5.5*46   <<= must be installed BEFORE `FH*5.5*48'
+
+Subject: ADD NEW FOOD ALLERGIES TO FHSELA2
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the addition of new food allergies by adding them
+ to the mapping capability for food preference dislikes.
+  
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ HITPS-1123 (formerly PSPO 1380)
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ -------------------------------------------
+ 1. INC3106807 - New Food Allergy MEAT, MAMMALIAN HOOVED
+  
+ Problem 1:
+ ---------
+ The New Term Rapid Turnaround (NTRT) Allergy team has recently added MEAT,
+ MAMMALIAN HOOVED as a food allergy to the GMR ALLERGIES file (#120.82).
+ This new food allergy must be added to the routine FHSELA to be mapped as
+ an allergy type food preference dislike in the Dietetics package.
+  
+ Resolution 1:
+ ------------
+ Routine FHSELA2 has a hard-coded list of food allergies. It presents this 
+ hard-coded list to the user when adding a food allergy preference dislike
+ to the FOOD PREFERENCES file (#115.2) and then maps it to a matching
+ record in the GMR ALLERGIES file (#120.82). The new allergy has been added
+ to the hard-coded list of food allergies in routine FHSELA2 so that it may
+ be presented to the user.
+  
+ Problem 2:
+ ---------
+ This issue was discovered during SQA testing. The food allergy MEAT, 
+ MAMMALIAN HOOVED is added to the FOOD PREFERENCES file (#115.2) as ALLERGY
+ - MEAT, MAMMALIAN HOOVED. This is two characters longer than is allowed by
+ the data dictionary for the FOOD PREFERENCES file (#115.2). As a result,
+ ALLERGY - MEAT, MAMMALIAN HOOVED continues to be presented to the user for
+ mapping after it is mapped; instead it should be removed from the
+ hard-coded list of food allergies after it's successfully mapped the
+ first time.
+  
+ Resolution 2:
+ ------------
+ The food allergy name MEAT, MAMMALIAN HOOVED has been shortened to MEAT,
+ MAMMAL HOOVED.
+  
+ 2. INC3512723 - New Food Allergy STARFRUIT
+  
+ Problem:
+ -------
+ The New Term Rapid Turnaround (NTRT) Allergy team has recently added  
+ STARFRUIT as a food allergy to the GMR ALLERGIES file (#120.82). This new
+ food allergy must be added to the routine FHSELA2 to be mapped as an
+ allergy type food preference dislike in the Dietetics package.
+  
+ Resolution:
+ ----------
+ Routine FHSELA2 has a hard-coded list of food allergies. It presents this 
+ hard-coded list to the user when adding a food allergy preference dislike
+ to the FOOD PREFERENCES file (#115.2) and then maps it to a matching
+ record in the GMR ALLERGIES file (#120.82). The new allergy has been added
+ to the hard-coded list of food allergies in routine FHSELA2 so that it may
+ be presented to the user.
+  
+ 3. INC3974189 - Food allergy reactant reactivated - CANNABIS
+  
+ Problem:
+ -------
+ The New Term Rapid Turnaround (NTRT) Allergy team has recently 
+ reactivated CANNABIS as a drug food allergy in the GMR ALLERGIES file
+ (#120.82). This drug food allergy must be added to the routine FHSELA2 to
+ be mapped as an allergy type food preference dislike in the Dietetics
+ package.
+  
+ Resolution:
+ ----------
+ Routine FHSELA2 has a hard-coded list of food allergies. It presents this 
+ hard-coded list to the user when adding a food allergy preference dislike
+ to the FOOD PREFERENCES file (#115.2) and then maps it to a matching
+ record in the GMR ALLERGIES file (#120.82). The reactivated allergy has
+ been added to the hard-coded list of food allergies in routine FHSELA2 so
+ that it may be presented to the user.
+  
+ Test Sites:
+ ----------
+ VA Illiana HCS (Danville)
+ James A. Haley Veterans' Hospital (Tampa)
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ -------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.
+  
+ 4. From the Installation Menu, select Backup a Transport Global and when
+    prompted for the INSTALL NAME enter the patch FH*5.5*48. This option
+    will create a backup message of any routines exported with this patch.
+    It will not backup any other changes such as DDs or templates. If for
+    any reason the patch is to be rolled back, this backup will be required
+    to restore the patch's routine(s) to the pre-installation version(s).
+  
+ 5. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch: FH*5.5*48 
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+     
+     b. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     c. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch is
+        installed. (It compares all components of this patch's routines,
+        DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond NO.
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B142382944   After:B146060826  **8,13,23,25,28,35,37,39,40,
+                                           41,42,44,45,46,48**
+ 
+Routine list of preceding patches: 46
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 15, 2018
+Completed By:                               Date Completed: APR 10, 2019
+Released By :                               Date Released : APR 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

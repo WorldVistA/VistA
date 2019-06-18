@@ -1,0 +1,454 @@
+
+=============================================================================
+Run Date: AUG 15, 2017                     Designation: MAG*3*191
+Package : MAG - IMAGING                       Priority: EMERGENCY
+Version : 3       SEQ #137                      Status: Released
+                  Compliance Date: AUG 23, 2017
+=============================================================================
+
+
+Subject: Clinical Display ROI Print issues.
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches:  
+ ==================
+ This patch must be installed after MAG*3.0*181.
+  
+ Subject:  CLINICAL DISPLAY ROI PRINT ISSUE
+ =======
+  
+ Category:  OTHER
+ ========
+  
+ Description:
+ ===========
+ MAG*3.0*191 resolves the Release of Information (ROI) print and MUSE 
+ Viewer Window Modifications Needed issues.  The ROI issue is that when a
+ patient is changed in the Computerized Patient Record System (CPRS) while
+ a ROI print job is running on Clinical Display, the ROI print job might
+ combine images from the newly selected patient into the ROI print job of
+ the first patient.  For MUSE issues, the patch will fix the toolbars for
+ the newest version of the Imaging MUSE Viewer, fix issues where the tool
+ bar is hidden, correct the sort of the list of studies in reverse
+ chronological order, with the most current study at the top of the list,
+ and allow the window settings to be saved when exiting the Viewer.
+  
+ NOTE: MAG*3.0*191 Clinical Display MUSE Electrocardiogram (EKG) Viewer 
+ requires that the new MUSE API 3 service is installed and running on the
+ MUSE System.
+  
+ Patch Components:
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 191_Patch_Description.pdf, provides an overview, explains the
+ changes, and outlines the installation for this patch.  
+  
+ MAG3_0P191_README.txt, if present, is an informative file associated with
+ the patch.
+  
+ Software:
+ ========
+ File Name                                       Description
+ =========                                       ===========
+ MAG3_0P191.KID                                  Kernel Installation and 
+                                                 Distribution System (KIDS)
+                                                 build for Patch 191
+ MAG3_0P191_Clinical_Display_Setup.exe           Clinical Display client  
+                                                 installation file.
+ MAG3_0P191_CLINICAL_DISPLAY_INSTALL.MSI         Clinical Display push  
+                                                 installation file.
+  
+ Documentation:
+ =============
+ This document, MAG3_0191_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Files & Fields Associated:
+ =========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated:
+ ================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ ======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ==================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ ====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================
+ New Service Requests (NSRs):
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+  
+ 1.  Defect 553145 (Trouble Ticket I15262086FY17) Release of Information 
+ (ROI) Printing Multiple Patients' Information
+  
+ Overview:  The ROI Process Images window is opened from the Image List 
+ window.
+  
+ From the Image List window, click "Utilities|ROI Processing Options 
+ Choose Images to process".  The user will typically select the images to
+ process and then click the Continue button. The Process Images for:
+ Patient window will open.
+  
+ The Process Images window has two versions of VistA Imaging (VI) ROI.  
+ These versions are represented by the two tabs at the bottom of the
+ window:  Print the Disclosure and To File and CD tabs.
+  
+ Print the Disclosure tab:  This is the older version of VI ROI.  This 
+ version only prints non- Digital Imaging and Communications in Medicine
+ (DICOM) patient images.  The ROI process is executed in real time from the
+ Clinical Display application.  It is not processed as a background job.
+  
+ To File and CD tab:  This version was released with MAG*3.0*130.  This 
+ version will process all images for a patient.  This ROI process is
+ executed by the VistA Imaging Exchange (VIX) on the VIX System.  DICOM
+ images are printed on a CD writer selected by the user.  Non-DICOM images
+ are compiled into one or more files and saved as a zipped file on the
+ VIX.  The user can download the zipped file of the processed images and
+ release it to the patient.
+  
+ Problem:  The issue happens when "Print the Disclosure" is used, an ROI 
+ process has been started and the user changes patients from CPRS.  In that
+ situation, the ROI Print process might combine images from the newly
+ selected patient into the ROI print job of the first patient.
+  
+ Resolution:  Patient synchronization on a Clinical Context Object 
+ Workgroup (CCOW) enabled desktop is handled by the Vergence Context
+ Manager.  When the patient is changed in CPRS, the Context Manager sends a
+ Patient Change Pending message to all CCOW enabled applications.
+  
+ Clinical Display was NOT correctly processing or responding to the 
+ Patient Change Pending message.  In Patch 191, Clinical Display has been
+ fixed in two ways:
+  
+ 1.  When selecting studies for processing, the default has changed to NOT 
+ select all studies. Previously the default was to select all studies for
+ processing.  Clinical Display will not add any images from a newly
+ selected patient into the ROI print job of a previously selected patient.
+  
+ 2. Clinical Display will correctly respond to the Patient Change Pending 
+ message. 
+  
+ Clinical Display responds to the Context Manager that it cannot change 
+ patients at this time.  The response is a message to be displayed to the
+ user.  The message warns the user that the ROI Report may be incomplete if
+ the patient is changed at this time.
+  
+ The message received is: "ROI is Processing.  The Report may be 
+ INCOMPLETE if you continue with Patient Change."  This warning is
+ displayed in the message dialog and the user is asked if they want to
+ continue with the Patient Change.  The Context Manager displays the
+ message to the user and the user has three options.
+  
+ The three user choices are:  OK, Cancel, or Break Link.  Cancel is the 
+ default choice and is the suggested option for the end user.  All three
+ options are detailed below:
+  
+ 1.  If the OK button is selected:
+ The user has chosen to force a patient change in Clinical Display.  The 
+ patient will be changed in CPRS and Clinical Display.  The Process Images
+ window will be closed AND the ROI print job will be canceled.  This could
+ result in an INCOMPLETE ROI print (i.e., the ROI print report may not have
+ all the images that were selected to print).
+  
+ 2.  If Cancel is selected:
+ The patient change is canceled. CPRS, Clinical Display, and the Process 
+ Images windows will all remain synchronized with the originally selected
+ patient.  The ROI print job will continue until finished.
+  
+ 3.  If the Break Link button is selected:
+ The user has selected to break the link in CPRS.  CPRS will no longer be 
+ joined to CCOW Patient Context and the patient change will happen in CPRS
+ only.  The CCOW Broken Link icon will be displayed in CPRS. 
+  
+ Clinical Display remains "In Patient Context."  The patient will not
+ change in Clinical Display or the Process Images window.  The ROI print
+ job will continue until finished.
+  
+ 2.  Defect 527237 (Trouble Ticket R13454874FY17) MUSE Viewer Window 
+ Modifications Needed
+  
+ Problem: The toolbars for this version of the Imaging MUSE Viewer are
+ different, and when the Viewer opens, some of the toolbar buttons are
+ hidden by the list of tests. Another issue to be corrected is to sort the
+ list of studies in reverse chronological order, with the most current
+ study at the top of the list.  The last correction is to allow the window
+ settings to be saved when exiting the Viewer.
+  
+ Resolution:  When the Viewer opens, the default layout of the toolbar 
+ will be three rows and the list of studies will be sorted in reverse
+ chronological order.
+  
+ Also, modifications have been made to the User Preferences for the new 
+ MUSE Viewer in the following ways:
+    Image Fit setting (Fit to Window, Fit to Width, Fit to Height)
+    Row and column count for displayed images.
+    Toolbar Break settings.  This indicates if the toolbars are on
+ individual rows, one above the other, or all on one line.
+  
+ Test Sites:
+ ==========
+ The following site is a test site for this patch:
+    VA Salt Lake City Health Care System
+    VA Eastern Kansas Health Care System - Topeka
+  
+ Software and Documentation Retrieval Instructions:
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available. The preferred method
+ is to retrieve files from anonymous@download.vista.domain.ext
+ from the COMMAND prompt (example:  sftp
+ anonymous@download.vista.domain.ext).  This transmits the files from the
+ first available server. 
+  
+ Sites may also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ When using Attachmate Reflection (Secure Shell):
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ When using the COMMAND prompt (example: sftp 
+ anonymous@domain.ext): 
+ Albany:         anonymous@domain.ext
+ Hines:          anonymous@domain.ext
+ Salt Lake City: anonymous@domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+ ==================
+ Supported Client Versions
+ =========================
+ When MAG*3.0*191 is released, the list of supported versions of Clinical 
+ Display will change:
+  
+ Supported Versions      No Longer Supported 
+ 3.0.191                 3.0.131
+ 3.0.181                 3.0.122
+ 3.0.167                 3.0.117
+ 3.0.161                 3.0.106
+ 3.0.149                 3.0.94
+ 3.0.130
+  
+ Pre/Post Installation Overview:
+ ==============================
+ MAG*3.0*191 must be installed on the VistA System and on 64-bit 
+ workstations on which the VistA Imaging Applications will be used.  This
+ patch must be installed by the compliance date.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Pre-Installation Instructions:
+ =============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:
+ ====
+ All released VistA Imaging patches must be installed on the VistA system 
+ before installing MAG*3.0*191.
+  
+ VistA System (KIDS) Installation Instructions 
+ =============================================
+ Installation Steps 
+ ==================
+ KIDS installation will take less than one minute.
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu 
+  
+ [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+ the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P191.KID) of the 
+ Patch 191 KIDS file.
+   c.When prompted to continue with the load, enter "YES". A Distribution 
+ OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+ option if you want to ensure the integrity of the routines in the patch.
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+ Run this option if you want to view all changes that will be made when the
+ patch is installed.
+  
+  All components (routines, options, and so on) in the patch will be 
+ compared.
+   c. Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+ to create a backup message of any routines exported with the patch.  It
+ will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a.Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b.When prompted for the install name, enter "MAG*3.0*191".
+   c.Answer "NO" to the following prompts:
+  
+  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing
+ the KIDS file in a namespace on which it has previously been installed,
+ your output may be different.
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*191    7/7/17@16:34:10
+      => VistA Imaging V3 - Patch 191 - ROI Print Issues  ;Created on Jul 
+ 07
+  
+ This Distribution was loaded on Jul 07, 2017@16:34:10 with header of
+    VistA Imaging V3 - Patch 191 - ROI Print Issues  ;Created on Jul 07, 
+ 2017@
+ 15:44:43
+    It consisted of the following Install(s):
+     MAG*3.0*191
+ Checking Install for Package MAG*3.0*191
+  
+ Install Questions for MAG*3.0*191
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Running Pre-Install Routine: PRE^MAGIP191
+  
+  Running Post-Install Routine: POS^MAGIP191
+  
+ Post Install Mail Message: Jul 07, 2017@16:34:17
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*191 Installed.
+                Jul 07, 2017@16:34:17
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+   100% 
+ Complete
+  
+ Install Completed
+  
+ VistA Imaging Clinical Display Client Installation Instructions
+ ===============================================================
+ The Clinical Display software can be updated using one of the methods 
+ outlined below:
+   Manual installation
+   Automatic installation using other methods (SMS, PSexec, etc.).
+ Note: The Clinical Display Application is only supported on a Windows 7 
+ operating system; other operating systems are not officially supported.
+ Clinical Display is distributed as an MSI and EXE installation.  The MSI 
+ is intended for sites that want to do a push installation (using SCCM or
+ another tool).  The EXE is intended for use to install on a single
+ workstation. After client installation is complete, log in to an updated
+ workstation and use the Help | About menu option to verify that the
+ version number is 3.0.191.2.
+  
+ Manual Installation
+ ===================
+ The MAG3_0P191_Clinical_Display_Setup.exe file can be installed manually 
+ on workstations as described in the Single Workstation Installation
+ section in the VistA Imaging System Installation Guide.
+  
+ Auto-update Installation
+ ========================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ Uninstalling Clinical Display Client MAG*3.0*191
+ ================================================
+ If it is necessary to uninstall the MAG*3.0*191 client, use the Uninstall 
+ option from Windows Control Panel to Uninstall: "VistA Imaging Clinical
+ Display". Then install the previous version of Clinical Display which was
+ included in MAG*3.0*181.
+  
+ Routine Information:
+ ===================
+ This section lists modified routines for the VistA KIDS build.  For each 
+ routine, the second line will contain the following information:
+  
+ ;;3.0;IMAGING;** [Patch List]**;Mar 19, 2002;Build 41;JUL 24, 2017
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+  
+ MAGGTU4D        5320928         5527813         **93, 94, 106, 117, 122, 
+                                                 131, 149, 138, 156, 161,
+                                                 167, 181,191**
+ MAGIP191        NA              4214993         **191**
+  
+ Routine MAGIP191 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 07, 2017
+Completed By:                               Date Completed: AUG 15, 2017
+Released By :                               Date Released : AUG 15, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

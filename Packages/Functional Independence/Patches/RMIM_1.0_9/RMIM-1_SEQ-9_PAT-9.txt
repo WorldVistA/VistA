@@ -1,0 +1,217 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 07/18/18 at 15:03
+=============================================================================
+Run Date: OCT 30, 2018                     Designation: RMIM*1*9
+Package : RMIM - FUNCTIONAL INDEPENDENCE      Priority: Mandatory
+Version : 1         SEQ #9                      Status: Released
+                  Compliance Date: NOV 30, 2018
+=============================================================================
+
+Associated patches: (v)RMIM*1*8    <<= must be installed BEFORE `RMIM*1*9'
+
+Subject: FIM WINDOWS 10 UPDATES
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Functional Independence Measurement (FIM) windows 10 compatibility updates.
+  
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+ N/A
+  
+  
+ Forms Associated:
+ N/A
+  
+  
+ Mail Groups Associated:
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name   Type     New/Modified/Deleted
+ -----------   ----     -------------------- 
+ RMIMFIM              Broker    Modified
+  
+  
+ Protocols Associated:
+ N/A
+  
+  
+ Security Keys Associated:
+ N/A
+  
+  
+ Templates Associated:
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. 746725 - FIM Windows 10 compatibility updates
+  
+ Problem:
+ --------
+ The FIM Graphical User Interface (GUI) help files need to be 
+ updated to be combatable with Windows 10.
+  
+  
+ Resolution:
+ -----------
+ The FIM GUI has been updated to utilize .CHM help files as .HLP
+ help files are no longer supported in Windows 10. Additionally,
+ the FIM GUI has been modified to work with high Dots Per Inch (DPI)
+ and recompiled in Delphi XE 10.2 to meet current Technical Reference 
+ Model (TRM) requirements.
+  
+  
+ Test Sites:
+ ----------
+ Maryland HCS
+ VA Butler HC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Please refer to the "Functional Independence Measurement Installation 
+ Guide" located on the VDL website.  
+ https://www.domain.ext/vdl/application.asp?appid=134
+  
+  Sites may retrieve the new RMIM executable directly using Secure File
+  Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+  following OI Field Offices:
+  
+  Hines:               domain.ext  
+  Salt Lake City:      domain.ext
+   
+  File Name               Title                   SFTP Mode
+  =========               =====                   =========
+  RMIM_1_9.ZIP            Contents below          BINARY
+  
+  
+  ZIP file contents          Description
+  =================          ===========
+  RMIM.chm                   RMIM Help file 
+  FIM.exe                    FIM Executable
+  
+   
+  NOTE: These files must be transferred using the binary (BIN) file 
+        transfer mode.  The size of the file (FIM.exe) once downloaded will
+        be 3.16 MB
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Install Time - less than 2 minutes.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+  GUI Client Installation:
+  ------------------------
+  1. Extract all the files in the zip file to the folder where the
+     existing FIM executable is installed. At your medical center the
+     location of the FIM  executable may be on a network drive or installed
+     on each workstation under a program files folder like this example:
+   
+     C:\Program Files (x86)\Vista\FIM 
+   
+  2. When asked to overwrite the existing file, answer Yes.  
+   
+  3. Following successful extraction of the executable, you can delete 
+     the RMIM_1_9.ZIP file.
+   
+  4. When this version of FIM.exe is launched it will show the version 
+     as "FIM 1.0.9.1" in the about section.
+  
+  
+  VistA Installation:
+  -------------------
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter RMIM*1.0*9)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package RMIM*1.0*9.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? NO//", respond No.
+  
+      7. Review the installation message for errors.
+  
+    
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------------
+ This patch can be backed out by overwriting the updated option text
+ via Fileman Enter/Edit and utilizing the previous FIM GUI executable.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 24, 2018
+Completed By:                               Date Completed: OCT 30, 2018
+Released By :                               Date Released : OCT 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

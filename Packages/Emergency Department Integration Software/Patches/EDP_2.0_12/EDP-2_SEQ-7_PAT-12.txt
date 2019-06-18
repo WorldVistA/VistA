@@ -1,0 +1,170 @@
+$TXT Created by                at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Monday, 04/02/18 at 13:36
+=============================================================================
+Run Date: OCT 18, 2018                     Designation: EDP*2*12
+Package : EDP - EMERGENCY DEPARTMENT          Priority: Mandatory
+Version : 2         SEQ #7                      Status: Released
+                  Compliance Date: NOV 18, 2018
+=============================================================================
+
+Associated patches: (v)EDP*2*2     <<= must be installed BEFORE `EDP*2*12'
+
+Subject: EDPQLE ERROR/DUPLICATE PROVIDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch EDP*2.0*12 addresses the following two (2) issues:
+  
+ 1. I10851184FY16 - Emergency Department Integrated Software - 
+                    Other:Frequent Error DIAGPCE + 16 EDPQLE 
+  
+ 2. I10847965FY16 - Duplicate Primary Providers 
+  
+    - I10850405FY16
+    - I10848207FY16
+    - I8579772FY16
+    - I7768354FY16 
+  
+ Defect Tracking System Tickets(s) & Overview:
+ =============================================
+  
+ 1. I10851184FY16 - Emergency Department Integrated Software - 
+                    Other:Frequent Error DIAGPCE + 16 EDPQLE 
+  
+    Problem:
+    --------
+    An error in a site's error-trap occurs, when an EDIS user attempts to
+    edit and save a patient's record, and that record ultimately contains
+    "null" in the CPT procedure narrative field.
+  
+    Technical Explanation:
+    ----------------------
+    A patient's record may be edited using PCE and EDIS simultaneously.
+    If an encounter is being processed per a patient being maintained
+    via EDIS; and EDIS processing is attempting to save that patient's
+    data with the CPT procedure narrative equal to "null", the attempt
+    to save the record in EDIS will cause a hard-error.
+  
+    Resolution:
+    -----------
+    Routine EDPQLE has been modified to verify EDIS does not attempt to
+    save a "null" CPT procedure narrative.
+  
+    Routine:EDPQLE
+  
+ 2. I10847965FY16 - Duplicate Primary Providers 
+  
+    Problem:
+    --------
+    Duplicate primary providers are appearing on encounters.
+  
+    Technical Explanation:
+    ----------------------
+    On occasion duplicate primary providers were assigned to EDIS
+    encounters.  As an example, when EDIS and CPRS are used to record
+    encounter data at the same time, both the provider using EDIS and
+    the provider using CPRS were stored in PCE as the "PRIMARY
+    PROVIDER".
+  
+    Resolution:
+    -----------
+    Routine EDPLPCE has been modified to verify multiple primary
+    providers are not recorded per encounters edited via EDIS.
+  
+    Routine:EDPLPCE
+  
+ Test Sites:
+ -----------
+ New York Harbor (Manhattan)
+ Syracuse VA Medical Center 
+  
+ Patch Installation:
+  
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch 
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3.  From the Kernel Installation and Distribution System Menu, select the
+      Installation Menu.  From this menu, you may elect to use the 
+      following options. When prompted for the INSTALL NAME enter the patch
+      EDP*2.0*12:
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not back
+         up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+      Install? NO//', answer NO.
+  
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      answer NO.
+  
+  7.  When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+      Protocols? NO//', answer NO.
+  
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Backout/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ To verify the back-out completed successfully, ensure the checksums match
+ the pre-patch checksums from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EMERGENCY DEPARTMENT;**[Patch List]**;Feb 24, 2012;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EDPLPCE
+    Before: B39952113   After: B46706543  **2,12**
+ Description of Changes:
+  Routine EDPLPCE has been modified to verify multiple primary providers 
+  are not recorded per encounters edited via EDIS.
+
+Routine Name: EDPQLE
+    Before: B55054483   After: B60984334  **6,2,12**
+ Description of Changes:
+  Routine EDPQLE has been modified to verify EDIS does not attempt to save 
+  a "null" CPT procedure narrative.
+
+ 
+Routine list of preceding patches: 2
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2018
+Completed By:                               Date Completed: OCT 17, 2018
+Released By :                               Date Released : OCT 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,199 @@
+$TXT Created by                   CAS-RXSU2-S1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 01/25/18 at 14:59
+=============================================================================
+Run Date: OCT 25, 2018                     Designation: PSN*4*541
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #546                      Status: Released
+                  Compliance Date: NOV 25, 2018
+=============================================================================
+
+Associated patches: (v)PSN*4*476   <<= must be installed BEFORE `PSN*4*541'
+
+Subject: CAS-RXSU2 ADD A FIELD IDENTIFIER TO FILE #50.68
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ eThis patch has the following enhancement for Clinical Ancillary Services 
+ (CAS)-Pharmacy Safety Updates (RxSU) Phase 2:
+  
+  
+ 1.  Manage Lookup List Inactive Entries.
+  
+     The INACTIVATION DATE field (#21) has been added as a new field
+     identifier to the data dictionary of the VA PRODUCT file (#50.68).
+  
+     This will display the INACTIVATION DATE information during a lookup 
+     of records in this file and will aid users in deciding what entries
+     have been inactivated from those that have not.
+  
+      Example:
+      Select VA PRODUCT NAME: INSULIN REG HUMAN
+          1   INSULIN REG HUMAN 100 U/ML INJ HUMULIN R       
+          2   INSULIN REG HUMAN 100 U/ML INJ INNOLET 3ML       FEB 02, 2012
+          3   INSULIN REG HUMAN 100 U/ML INJ NOVOLIN R       
+          4   INSULIN REG HUMAN 100 U/ML INJ PEN 1.5ML       SEP 02, 2008
+          5   INSULIN REG HUMAN 100 U/ML INJ VELOSULIN       SEP 02, 2008
+  
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)                New/Modified/Deleted
+ -------------------   ---------------------------    --------------------
+ VA PRODUCT (#50.68)   INACTIVATION DATE (#21)                  Modified
+  
+  
+ Forms Associated:
+  
+ Form Name             File #    New/Modified/Deleted
+ ---------             ------    ------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        -------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                     Type         New/Modified/Deleted
+ -----------                     ----         -------------------
+ N/A
+   
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+    
+  
+ Security Keys Associated:
+  
+ Security Key Name       New/Modified/Deleted
+ -------------           --------------------
+ N/A 
+  
+  
+ Templates Associated:
+  
+ Template                 Type    File Name (#)   New/Modified/Deleted
+ -------------            ----    -------------    --------------------
+ N/A
+   
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20151007
+   
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ St Louis
+ Orlando
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre Installation Overview
+ --------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ 1.  Use the INSTALL/CHECK MESSAGES option on the PackMan menu.
+  
+ 2.  From the Kernel Installation & Distribution System menu, select
+     the Installation menu.
+  
+ 3.  From this menu, you may choose to use the option Verify Checksums in
+     Transport Global, and Compare Transport
+     Global to Current System.  When prompted, select PSN*4.0*541.
+   
+ 4.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to backout this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if backout of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0. 
+  
+  
+ Post Installation Overview
+ --------------------------
+ N/A
+  
+  
+ Backout Procedures
+ ------------------
+  
+ Backeout Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow ticket to obtain
+ this concurrence. The development team will then assist with the backout
+ process.
+  
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ This patch has no routine changes and therefore the Roll Back Procedure
+ cannot be verified by automatic means.  A ServiceNow helpdesk support
+ would be needed to verify Roll Back. The development team will then assist
+ with the validation process.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 21, 2017
+Completed By:                               Date Completed: OCT 23, 2018
+Released By :                               Date Released : OCT 25, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

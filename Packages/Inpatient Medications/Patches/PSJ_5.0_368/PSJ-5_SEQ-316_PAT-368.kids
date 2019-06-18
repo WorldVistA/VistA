@@ -1,0 +1,505 @@
+Released PSJ*5*368 SEQ #316
+Extracted from mail message
+**KIDS**:PSJ*5.0*368^
+
+**INSTALL NAME**
+PSJ*5.0*368
+"BLD",11153,0)
+PSJ*5.0*368^INPATIENT MEDICATIONS^0^3180720^y
+"BLD",11153,1,0)
+^^37^37^3180719^
+"BLD",11153,1,1,0)
+This patch will resolve the following issue.
+"BLD",11153,1,2,0)
+ 
+"BLD",11153,1,3,0)
+INC1065553 - BCBU MAR display NON transdermal patch orders with Removal
+"BLD",11153,1,4,0)
+             times discharged/deceased
+"BLD",11153,1,5,0)
+INC0608952 - *TEST ACCOUNT-BCMA listing all admins as a patch-TEST ACCOUNT*
+"BLD",11153,1,6,0)
+(Duplicate)
+"BLD",11153,1,7,0)
+    
+"BLD",11153,1,8,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",11153,1,9,0)
+--------------------------------------------
+"BLD",11153,1,10,0)
+INC1065553 - BCBU MAR display NON transdermal patch orders with Removal
+"BLD",11153,1,11,0)
+             times discharged/deceased
+"BLD",11153,1,12,0)
+INC0608952 - *TEST ACCOUNT-BCMA listing all admins as a patch-TEST ACCOUNT*
+"BLD",11153,1,13,0)
+(Duplicate)
+"BLD",11153,1,14,0)
+        
+"BLD",11153,1,15,0)
+Problem: 
+"BLD",11153,1,16,0)
+--------
+"BLD",11153,1,17,0)
+When Inpatient Pharmacy users use the option Inpatient Order Entry [PSJ OE]
+"BLD",11153,1,18,0)
+and instead of ordering a single medication choose an order set, there is a
+"BLD",11153,1,19,0)
+potential mix up between patch medications with other medications with a 
+"BLD",11153,1,20,0)
+different form of administration. Orders sets are created via the Order Set
+"BLD",11153,1,21,0)
+Enter/Edit [PSJU OSE] option. In some circumstances patch medications will
+"BLD",11153,1,22,0)
+not have a field for entering removal times and other times medication with
+"BLD",11153,1,23,0)
+other forms of administration will prompt BMCA users for an application
+"BLD",11153,1,24,0)
+site, which is required only for patch medications.
+"BLD",11153,1,25,0)
+      
+"BLD",11153,1,26,0)
+Resolution:
+"BLD",11153,1,27,0)
+-----------
+"BLD",11153,1,28,0)
+Reset variables that identify patch medication versus non patch medication
+"BLD",11153,1,29,0)
+before processing each order within the order set. This will prevent orders
+"BLD",11153,1,30,0)
+following a patch medication order from being flagged as patch as well.
+"BLD",11153,1,31,0)
+ 
+"BLD",11153,1,32,0)
+Technical Resolution:
+"BLD",11153,1,33,0)
+---------------------
+"BLD",11153,1,34,0)
+NEWed the variable PSGRF and ND2P1 variables at GND+1^PSGOES and set the 
+"BLD",11153,1,35,0)
+variable PSGRF with the content of the PROMPT FOR REMOVAL IN BCMA field (#12)
+"BLD",11153,1,36,0)
+in the PHARMACY ORDERABLE ITEM (#50.7) file, which is used to identify 
+"BLD",11153,1,37,0)
+whether form of application for the medication being entered is a patch.
+"BLD",11153,4,0)
+^9.64PA^^
+"BLD",11153,6.3)
+2
+"BLD",11153,"ABPKG")
+n
+"BLD",11153,"KRN",0)
+^9.67PA^779.2^20
+"BLD",11153,"KRN",.4,0)
+.4
+"BLD",11153,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",11153,"KRN",.401,0)
+.401
+"BLD",11153,"KRN",.401,"NM",0)
+^9.68A^^
+"BLD",11153,"KRN",.402,0)
+.402
+"BLD",11153,"KRN",.403,0)
+.403
+"BLD",11153,"KRN",.5,0)
+.5
+"BLD",11153,"KRN",.84,0)
+.84
+"BLD",11153,"KRN",3.6,0)
+3.6
+"BLD",11153,"KRN",3.8,0)
+3.8
+"BLD",11153,"KRN",9.2,0)
+9.2
+"BLD",11153,"KRN",9.8,0)
+9.8
+"BLD",11153,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",11153,"KRN",9.8,"NM",1,0)
+PSGOES^^0^B23676138
+"BLD",11153,"KRN",9.8,"NM","B","PSGOES",1)
+
+"BLD",11153,"KRN",19,0)
+19
+"BLD",11153,"KRN",19.1,0)
+19.1
+"BLD",11153,"KRN",101,0)
+101
+"BLD",11153,"KRN",409.61,0)
+409.61
+"BLD",11153,"KRN",771,0)
+771
+"BLD",11153,"KRN",779.2,0)
+779.2
+"BLD",11153,"KRN",870,0)
+870
+"BLD",11153,"KRN",8989.51,0)
+8989.51
+"BLD",11153,"KRN",8989.52,0)
+8989.52
+"BLD",11153,"KRN",8994,0)
+8994
+"BLD",11153,"KRN","B",.4,.4)
+
+"BLD",11153,"KRN","B",.401,.401)
+
+"BLD",11153,"KRN","B",.402,.402)
+
+"BLD",11153,"KRN","B",.403,.403)
+
+"BLD",11153,"KRN","B",.5,.5)
+
+"BLD",11153,"KRN","B",.84,.84)
+
+"BLD",11153,"KRN","B",3.6,3.6)
+
+"BLD",11153,"KRN","B",3.8,3.8)
+
+"BLD",11153,"KRN","B",9.2,9.2)
+
+"BLD",11153,"KRN","B",9.8,9.8)
+
+"BLD",11153,"KRN","B",19,19)
+
+"BLD",11153,"KRN","B",19.1,19.1)
+
+"BLD",11153,"KRN","B",101,101)
+
+"BLD",11153,"KRN","B",409.61,409.61)
+
+"BLD",11153,"KRN","B",771,771)
+
+"BLD",11153,"KRN","B",779.2,779.2)
+
+"BLD",11153,"KRN","B",870,870)
+
+"BLD",11153,"KRN","B",8989.51,8989.51)
+
+"BLD",11153,"KRN","B",8989.52,8989.52)
+
+"BLD",11153,"KRN","B",8994,8994)
+
+"BLD",11153,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",11153,"QUES",0)
+^9.62^^
+"BLD",11153,"REQB",0)
+^9.611^1^1
+"BLD",11153,"REQB",1,0)
+PSJ*5.0*256^2
+"BLD",11153,"REQB","B","PSJ*5.0*256",1)
+
+"MBREQ")
+0
+"PKG",471,-1)
+1^1
+"PKG",471,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",471,20,0)
+^9.402P^^
+"PKG",471,22,0)
+^9.49I^1^1
+"PKG",471,22,1,0)
+5.0^2971215^2990325^66481
+"PKG",471,22,1,"PAH",1,0)
+368^3180720
+"PKG",471,22,1,"PAH",1,1,0)
+^^37^37^3180720
+"PKG",471,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issue.
+"PKG",471,22,1,"PAH",1,1,2,0)
+ 
+"PKG",471,22,1,"PAH",1,1,3,0)
+INC1065553 - BCBU MAR display NON transdermal patch orders with Removal
+"PKG",471,22,1,"PAH",1,1,4,0)
+             times discharged/deceased
+"PKG",471,22,1,"PAH",1,1,5,0)
+INC0608952 - *TEST ACCOUNT-BCMA listing all admins as a patch-TEST ACCOUNT*
+"PKG",471,22,1,"PAH",1,1,6,0)
+(Duplicate)
+"PKG",471,22,1,"PAH",1,1,7,0)
+    
+"PKG",471,22,1,"PAH",1,1,8,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",471,22,1,"PAH",1,1,9,0)
+--------------------------------------------
+"PKG",471,22,1,"PAH",1,1,10,0)
+INC1065553 - BCBU MAR display NON transdermal patch orders with Removal
+"PKG",471,22,1,"PAH",1,1,11,0)
+             times discharged/deceased
+"PKG",471,22,1,"PAH",1,1,12,0)
+INC0608952 - *TEST ACCOUNT-BCMA listing all admins as a patch-TEST ACCOUNT*
+"PKG",471,22,1,"PAH",1,1,13,0)
+(Duplicate)
+"PKG",471,22,1,"PAH",1,1,14,0)
+        
+"PKG",471,22,1,"PAH",1,1,15,0)
+Problem: 
+"PKG",471,22,1,"PAH",1,1,16,0)
+--------
+"PKG",471,22,1,"PAH",1,1,17,0)
+When Inpatient Pharmacy users use the option Inpatient Order Entry [PSJ OE]
+"PKG",471,22,1,"PAH",1,1,18,0)
+and instead of ordering a single medication choose an order set, there is a
+"PKG",471,22,1,"PAH",1,1,19,0)
+potential mix up between patch medications with other medications with a 
+"PKG",471,22,1,"PAH",1,1,20,0)
+different form of administration. Orders sets are created via the Order Set
+"PKG",471,22,1,"PAH",1,1,21,0)
+Enter/Edit [PSJU OSE] option. In some circumstances patch medications will
+"PKG",471,22,1,"PAH",1,1,22,0)
+not have a field for entering removal times and other times medication with
+"PKG",471,22,1,"PAH",1,1,23,0)
+other forms of administration will prompt BMCA users for an application
+"PKG",471,22,1,"PAH",1,1,24,0)
+site, which is required only for patch medications.
+"PKG",471,22,1,"PAH",1,1,25,0)
+      
+"PKG",471,22,1,"PAH",1,1,26,0)
+Resolution:
+"PKG",471,22,1,"PAH",1,1,27,0)
+-----------
+"PKG",471,22,1,"PAH",1,1,28,0)
+Reset variables that identify patch medication versus non patch medication
+"PKG",471,22,1,"PAH",1,1,29,0)
+before processing each order within the order set. This will prevent orders
+"PKG",471,22,1,"PAH",1,1,30,0)
+following a patch medication order from being flagged as patch as well.
+"PKG",471,22,1,"PAH",1,1,31,0)
+ 
+"PKG",471,22,1,"PAH",1,1,32,0)
+Technical Resolution:
+"PKG",471,22,1,"PAH",1,1,33,0)
+---------------------
+"PKG",471,22,1,"PAH",1,1,34,0)
+NEWed the variable PSGRF and ND2P1 variables at GND+1^PSGOES and set the 
+"PKG",471,22,1,"PAH",1,1,35,0)
+variable PSGRF with the content of the PROMPT FOR REMOVAL IN BCMA field (#12)
+"PKG",471,22,1,"PAH",1,1,36,0)
+in the PHARMACY ORDERABLE ITEM (#50.7) file, which is used to identify 
+"PKG",471,22,1,"PAH",1,1,37,0)
+whether form of application for the medication being entered is a patch.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSGOES")
+0^1^B23676138^B24088682
+"RTN","PSGOES",1,0)
+PSGOES ;BIR/CML3-CREATE ORDERS USING ORDER SET ;19 Feb 99 / 12:53 PM
+"RTN","PSGOES",2,0)
+ ;;5.0;INPATIENT MEDICATIONS ;**12,22,30,34,50,58,111,181,263,309,281,256,368**;16 DEC 97;Build 2
+"RTN","PSGOES",3,0)
+ ;
+"RTN","PSGOES",4,0)
+ ; Reference to ^PS(50.7 is supported by DBIA 2180.
+"RTN","PSGOES",5,0)
+ ; Reference to ^PS(55 is supported by DBIA 2191.
+"RTN","PSGOES",6,0)
+ ; Reference to ^PSDRUG( is supported by DBIA 2192.
+"RTN","PSGOES",7,0)
+ ; Reference to ^TMP("PSODAOC",$J supported by DBIA 6071
+"RTN","PSGOES",8,0)
+ ;
+"RTN","PSGOES",9,0)
+ NEW PSJNOOSV
+"RTN","PSGOES",10,0)
+ K DIC,PSGOEOS S X=$P(X,"S.",2),DIC="^PS(53.2,",DIC(0)="QEM" D ^DIC K DIC G:Y'>0 DONE W "  (ORDER SET)" S PSGOESDA=+Y,PSGOES=1
+"RTN","PSGOES",11,0)
+ I '$D(^PS(53.2,+Y,2)) W "    Invalid Order Set" Q
+"RTN","PSGOES",12,0)
+ I $P(PSJSYSU,";",2) S PSGOESPR=DUZ
+"RTN","PSGOES",13,0)
+ E  D  G:Y'>0 DONE
+"RTN","PSGOES",14,0)
+ .S DIC="^VA(200,",DIC(0)="QEAM",DIC("A")="Select PROVIDER: ",X=$P($G(^PS(55,PSGP,5.1)),"^",2) I X S X=$P($G(^VA(200,X,0)),"^") I X]"" S Y=^("PS") I Y,$S('$P(Y,"^",4):1,1:$P(Y,"^",4)>DT) S DIC("B")=X
+"RTN","PSGOES",15,0)
+ .S DIC("S")="S X(1)=$G(^(""PS"")) I X(1),$S('$P(X(1),""^"",4):1,1:$P(X(1),""^"",4)>DT)" W ! D ^DIC K DIC I Y'>0 W $C(7),!!,"Provider is required for order sets." Q
+"RTN","PSGOES",16,0)
+ .S PSGOESPR=+Y S:$P($G(^PS(55,PSGP,5.1)),"^",2)'=+Y $P(^(5.1),"^",2)=+Y
+"RTN","PSGOES",17,0)
+ S (PSJNOO,PSJNOOSV)=$$ENNOO^PSJUTL5("N")
+"RTN","PSGOES",18,0)
+ I $G(PSJNOO)<0 W !,$C(7),"...order set not entered..." G DONE
+"RTN","PSGOES",19,0)
+ F PSGOESN=0:0 S PSGOESN=$O(^PS(53.2,PSGOESDA,2,PSGOESN)) Q:'PSGOESN  I $D(^(PSGOESN,0)) S OSND=^(0) I $S($P(OSND,"^",3)="":0,$P(OSND,"^",4)="":0,$P(OSND,"^",4)="OC":1,1:$P(OSND,"^",5)]"") S PSGSI=$P($G(^(1)),"^") D GND Q:PSGQUIT
+"RTN","PSGOES",20,0)
+ ;
+"RTN","PSGOES",21,0)
+DONE ;
+"RTN","PSGOES",22,0)
+ K PSJNOON,PSJNOO,PSJNOOSV
+"RTN","PSGOES",23,0)
+ S X="S.X" K %DT,N,OSND,PSGOESDA,PSGDDRG,PSGOESI,PSGOES,PSGOEOS,PSGOESN,PSGOESPR,PSGQUIT,PSGX,SDT,STDAY,X1,X2 Q
+"RTN","PSGOES",24,0)
+ ;
+"RTN","PSGOES",25,0)
+GND ;
+"RTN","PSGOES",26,0)
+ NEW PSJOCDS,PSJALLGY,PSJMULDD,PSJOLDNM,PSGRF,ND2P1
+"RTN","PSGOES",27,0)
+ K PSGOEE,PSGSCH,PSGORD
+"RTN","PSGOES",28,0)
+ K ^TMP("PSODAOC",$J)
+"RTN","PSGOES",29,0)
+ S:'$D(PSJNOO) PSJNOO=$G(PSJNOOSV)
+"RTN","PSGOES",30,0)
+ S (PSGPDRG,PSGX)=+OSND,PSGPDRGN=$P($G(^PS(50.7,PSGPDRG,0)),"^") S:PSGPDRGN="" PSGPDRGN=PSGPDRG
+"RTN","PSGOES",31,0)
+ S PSGRF=$P($G(^PS(50.7,PSGPDRG,4),0),U,1)
+"RTN","PSGOES",32,0)
+ W !!,"...entering ",$S(PSGPDRGN'=PSGPDRG:PSGPDRGN,1:"** UNKNOWN **"),"..."
+"RTN","PSGOES",33,0)
+ K Y,DIRUT D END^PSGSICHK S PSGQUIT=$D(DIRUT) Q:$G(Y)<0
+"RTN","PSGOES",34,0)
+ S PSGNEDFD=$P(OSND,"^",2,5),PSGMR=$P(OSND,"^",3),PSGST=$P(OSND,"^",4),PSGDO=$P(OSND,"^",9),PSGMRN=$$ENMRN^PSGMI(PSGMR)
+"RTN","PSGOES",35,0)
+ ;PSJ*5*256
+"RTN","PSGOES",36,0)
+ I '+$P(OSND,"^",5) S PSJOLDNM("ORD_SCHD")=$P(OSND,"^",5) I $$CHKSCHD^PSJMISC2(.PSJOLDNM) Q
+"RTN","PSGOES",37,0)
+ S:PSGMRN="" PSGMRN=PSGMR D NOW^%DTC S PSGDT=+$E(%,1,12) I PSGST="OC" S PSGSCH="ON CALL",(PSGS0XT,PSGS0Y)=""
+"RTN","PSGOES",38,0)
+ E  S X=$P(OSND,"^",5) W "." S:X X="`"_X S:$G(PSJOLDNM("NEW_SCHD"))]"" X=PSJOLDNM("NEW_SCHD") D ENOS^PSGS0 S:$D(X) PSGSCH=X I '$D(X) S (PSGSCH,PSGS0XT,PSGS0Y)=""
+"RTN","PSGOES",39,0)
+ S (PSGNESD,PSGNEFD)="" W "." I $P(OSND,"^",11)]"" S %DT="T",X=$P(OSND,"^",11) D ^%DT S PSGNESD=Y D ENFD^PSGNE3(PSGDT)
+"RTN","PSGOES",40,0)
+ D:$P(OSND,"^",11)="" ^PSGNE3 K PSGDRG,PSGORQF,^PS(53.45,PSJSYSP,1),^(2) S (N,Q)=0
+"RTN","PSGOES",41,0)
+ K PSJALLGY
+"RTN","PSGOES",42,0)
+ ;If PSJMULDD >1 then the order has mutliple DD and it will flag ENDDC^PSGSICHK to display the OI name instead of DD name
+"RTN","PSGOES",43,0)
+ S PSJMULDD=0
+"RTN","PSGOES",44,0)
+ F  S Q=$O(^PS(53.2,PSGOESDA,2,PSGOESN,2,Q)) Q:'Q!$D(PSGORQF)  S PSGDRG=$G(^(Q,0)) I PSGDRG D
+"RTN","PSGOES",45,0)
+ .S PSJALLGY(+PSGDRG)="",PSJMULDD=PSJMULDD+1
+"RTN","PSGOES",46,0)
+ .;D ENDDC^PSGSICHK(PSGP,+PSGDRG) Q:$D(PSGORQF)
+"RTN","PSGOES",47,0)
+ .;D IN^PSJOCDS($G(PSGORD),"UD",+PSGDRG) Q:$D(PSGORQF)
+"RTN","PSGOES",48,0)
+ .;D CONT^PSJOCDT Q:$D(PSGORQF)
+"RTN","PSGOES",49,0)
+ .S:$P(PSGDRG,U,2)="" $P(PSGDRG,U,2)=1
+"RTN","PSGOES",50,0)
+ .S N=N+1,^PS(53.45,PSJSYSP,2,N,0)=PSGDRG,^PS(53.45,PSJSYSP,2,"B",+PSGDRG,N)="" W "."
+"RTN","PSGOES",51,0)
+ .I $P(^PSDRUG(+PSGDRG,2),U,3)'["U"!($S('+$G(^PSDRUG(+PSGDRG,"I")):0,^("I")'>DT:1,1:0)) S PSGOEAV="0^1" W:PSJSYSU $C(7),!?5,"...AS NON-VERIFIED - DATA INCOMPLETE..."
+"RTN","PSGOES",52,0)
+ S PSGDRG=$O(PSJALLGY(0)) Q:'+PSGDRG
+"RTN","PSGOES",53,0)
+ D FULL^VALM1
+"RTN","PSGOES",54,0)
+ D ENDDC^PSGSICHK(PSGP,+PSGDRG) Q:$D(PSGORQF)
+"RTN","PSGOES",55,0)
+ D IN^PSJOCDS($G(PSGORD),"UD",+PSGDRG) Q:$D(PSGORQF)
+"RTN","PSGOES",56,0)
+ ;*309 - Remove second continue prompt
+"RTN","PSGOES",57,0)
+ ;D CONT^PSJOCDT Q:$D(PSGORQF)
+"RTN","PSGOES",58,0)
+ I N S ^PS(53.45,PSJSYSP,2,0)="^53.4502P^"_N_"^"_N
+"RTN","PSGOES",59,0)
+ I $G(PSGORQF) W !,?5,"...ORDER FOR ",PSGPDRGN," NOT ENTERED...",! Q
+"RTN","PSGOES",60,0)
+ ;I PSGOEAV,$S($D(PSGOEOS):1,'PSGPDRG:1,PSGPDRG=PSGPDRGN:1,'PSGMR:1,PSGMR=PSGMRN:1,PSGSCH="":1,PSGST="":1,'PSGNESD:1,'PSGNEFD:1,+PSJSYSU=3:'N,1:0) S PSGOEAV="0^1" W:('$D(PSGOEOS)&PSJSYSU) $C(7),!?5,"...AS NON-VERIFIED - DATA INCOMPLETE..."
+"RTN","PSGOES",61,0)
+ I PSGOEAV,$S('PSGPDRG:1,PSGPDRG=PSGPDRGN:1,'PSGMR:1,PSGMR=PSGMRN:1,PSGSCH="":1,PSGST="":1,'PSGNESD:1,'PSGNEFD:1,+PSJSYSU=3:'N,1:0) S PSGOEAV="0^1" W:('$D(PSGOES)&PSJSYSU) $C(7),!?5,"...AS NON-VERIFIED - DATA INCOMPLETE..."
+"RTN","PSGOES",62,0)
+ S (PSGHSM,PSGSM)="",PSGPR=PSGOESPR D ^PSGOETO S PSGOEAV=$P(PSJSYSP0,"^",9)&PSJSYSU
+"RTN","PSGOES",63,0)
+ ; pharmacist label check, build label for order set only if auto verify turned on
+"RTN","PSGOES",64,0)
+ I PSJSYSL>0,(PSGOEAV),($P($G(^PS(55,PSGP,5,$S($D(DA):DA,1:+PSGORD),0)),U,9)="A") D
+"RTN","PSGOES",65,0)
+ .S $P(^PS(55,PSGP,5,$S($D(DA):DA,1:+PSGORD),7),U)=PSGDT S:$P(^(7),U,2)="" $P(^(7),U,2)="N" S PSGTOL=2,PSGUOW=DUZ,PSGTOO=1,DA=+PSGORD D ENL^PSGVDS
+"RTN","PSGOES",66,0)
+ ; ward clerk label check 
+"RTN","PSGOES",67,0)
+ I PSJSYSL>0,$P(PSJSYSU,";",3)<3,"12"[$P(PSJSYSW0,"^",12),'(PSGOEAV) D
+"RTN","PSGOES",68,0)
+ .I PSGORD["P" S $P(^PS(53.1,$S($D(DA):DA,1:+PSGORD),7),U)=PSGDT S:$P(^(7),U,2)="" $P(^(7),U,2)="N"
+"RTN","PSGOES",69,0)
+ .I PSGORD'["P" S $P(^PS(55,PSGP,5,$S($D(DA):DA,1:+PSGORD),7),U)=PSGDT S:$P(^(7),U,2)="" $P(^(7),U,2)="N"
+"RTN","PSGOES",70,0)
+ .S PSGTOL=2,PSGUOW=DUZ,PSGTOO=2,DA=+PSGORD D ENL^PSGVDS
+"RTN","PSGOES",71,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",11153,6)
+^316
+**END**
+**END**
+

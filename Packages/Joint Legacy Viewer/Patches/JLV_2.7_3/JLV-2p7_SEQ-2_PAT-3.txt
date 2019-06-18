@@ -1,0 +1,116 @@
+
+=============================================================================
+Run Date: APR 25, 2019                     Designation: JLV*2.7*3
+Package : JLV - JOINT LEGACY VIEWER           Priority: Mandatory
+Version : 2.7         SEQ #2                    Status: Released
+                  Compliance Date: MAY 09, 2019
+=============================================================================
+
+
+Subject: JLV 2.7.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 2.7.1.0 of the Joint Legacy Viewer (JLV) was                  *
+ * promoted to the production server at 9 pm EST on 01/31/19.            *
+ *                                                                       *
+ *                                                                       *
+ * NOTE: This patch was loaded on the National JLV server. There is      *
+ * nothing that local sites can or needed to do for this install.        *
+ *                                                                       *
+ *************************************************************************
+  
+ JLV version 2.7.1.0 included the following changes and enhancements:
+  
+ - JLV will provide a list of clinical reminders of all statuses from all
+   registered sites for a given patient
+ - Change the site drop-down menu item used by users with CAPRI access
+   from "Veterans Benefits Admin" to "CAPRI-Claims"
+ - JLV will provide a complete blood bank report for every site where a 
+   patient is registered for all dates. This will include all VA blood 
+   type testing and transfusions for the selected patient.
+ - Start Date and Stop Date columns will be displayed in the expanded
+   view of the orders widget.
+ - The "Gender" field has been renamed to "Birth Sex" in the VA Patient
+   Demographics area.
+ - The outpatient medications widget displays the prescription number in 
+   a new column adjacent to the drug name in the expanded view.
+ - JLV will present a dialog warning a user when adding a duplicate 
+   widget to the current tab.
+ - JLV will include Primary Care Team details and contact information in
+   the Demographics widget.
+ - JLV will query eHealth Exchange using a date range spanning the past 
+   150 years through 1 year in the future.
+ - JLV will sort data with partial dates in the same manner that VistA 
+   does:
+   - A date with month and year but no day will be treated like the day 
+     is 0.
+   - A date that is only a year will be treated like the month is 
+     January and the day is 00.
+ - A new Surgery / Procedure Reports - VA ONLY widget that displays 
+   surgical and operative reports from VA sources for all dates will be 
+   added to JLV.
+  
+ Participating Test Sites:
+  
+ The requirements planned for the JLV 2.7.1 Sprints 1-3 were verified and 
+ validated during the Development Independent Testing (DIT) phase of 
+ testing. All requirements mapped to the test scripts. The scripts are 
+ designed to be end-to-end functional tests of the system to evaluate all 
+ the technical requirements including the testing of external interfaces 
+ where appropriate.
+  
+ The DIT cycle consisted of smoke testing and the formal DIT. Before 
+ starting the DIT cycle, a JLV Web application baseline is installed on the
+ system. Tests are then run against this software baseline. Any issues
+ found and potential resolutions are assessed for possible inclusion in the
+ software baseline.
+  
+ During DIT, the test team validated the requirements provided in the
+ RATIONAL RM requirements collection using the test scripts and the test 
+ cases. Any issue encountered is recorded as a defect in RATIONAL CM.
+  
+ Documentation Instructions:
+ ==========================
+  
+ The JLV user guide, resources and training materials are also posted and
+ updated on the JLV website:
+  
+ http://vaww.oed.portal.domain.ext/pm/iehr/vista_evolution/JLV/SitePages/
+ Home.aspx
+  
+ JLV user guides are also on the VDL here:
+  
+ https://www.domain.ext/vdl/application.asp?appid=224
+  
+ Installation Instructions:
+ ==========================
+ N/A.  This patch is loaded on the National JLV server in Austin.
+  
+ Routine Information:
+ ====================
+  
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 09, 2019
+Completed By:                               Date Completed: APR 25, 2019
+Released By :                               Date Released : APR 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

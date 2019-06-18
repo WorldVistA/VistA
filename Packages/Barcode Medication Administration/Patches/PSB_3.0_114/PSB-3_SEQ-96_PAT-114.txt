@@ -1,0 +1,184 @@
+$TXT Created by               F at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 03/05/19 at 11:18
+=============================================================================
+Run Date: APR 30, 2019                     Designation: PSB*3*114
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #96                      Status: Released
+                  Compliance Date: MAY 31, 2019
+=============================================================================
+
+Associated patches: (v)PSB*3*83    <<= must be installed BEFORE `PSB*3*114'
+                    (v)PSB*3*103   <<= must be installed BEFORE `PSB*3*114'
+                    (v)PSB*3*104   <<= must be installed BEFORE `PSB*3*114'
+
+Subject: PATCH MEDICATION MISSING FROM COVERSHEET/VDL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ INC2383720 - Error at REMOVES+23^PSBULTL unable to run report in BCMA
+      
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2383720 - Error at REMOVES+23^PSBULTL unable to run report in BCMA
+          
+ Problem: 
+ --------
+ James A. Haley VA Medical Center reported a problem with the BCMA Missed 
+ Medication Report. They were getting an error whenever they tried to run it 
+ for a patient that had a PATCH medication order and the dispense drug had
+ been edited using the BCMA GUI. An additional side effect was the fact that
+ the order no longer showed on the patient's VDL.
+   
+ Resolution:
+ -----------
+ The error happened because the Transdermal Project patch PSB*3*83 assumed the
+ IEN for the DISPENSE DRUG sub-file (#53.795) in the BCMA MEDICATION LOG
+ file (#53.79) would always be 1 (one) for a PATCH medication order. Such
+ assumption turned out to be incorrect because when the user edits the
+ dispense drug for an order in BCMA the IEN 1 gets deleted and IEN 2 gets
+ created. If a second edit is performed IEN 2 is then deleted and IEN 3 gets
+ created and so forth. That's the reason the order would not show up on the 
+ BCMA Patient's VDL and also caused the Missed Medication Report to error out.
+   
+ Technical Resolution:
+ ---------------------
+ Changed the following routines: PSBMLEN, PSBMLEN1, PSBO1, PSBUTL, PSBVDLPA,
+ PSBVDLRM and PSBVDLVL to retrieve the first dispense drug in the DISPENSE
+ DRUG sub-file (#53.795) instead of assuming the IEN 1 to contain the order
+ dispense drug. For PATCH medication orders there should only be one dispense
+ drug.
+    
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+         
+ Test Sites:
+ -----------
+ Wilmington VAMC
+ Tampa VAMC
+    
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to install.
+  
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSB*3*114):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+   
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBMLEN
+    Before: B87414949   After: B88412701  **4,9,19,75,83,114**
+Routine Name: PSBMLEN1
+    Before: B79293217   After: B80056585  **3,4,9,11,13,28,50,83,114**
+Routine Name: PSBO1
+    Before: B35943966   After: B36592169  **4,13,32,2,43,28,70,83,103,114**
+Routine Name: PSBUTL
+    Before:B253039260   After:B257190228  **3,9,13,38,45,46,63,83,97,99,
+                                           104,114**
+Routine Name: PSBVDLPA
+    Before: B24345187   After: B24434016  **5,16,13,38,32,58,70,83,114**
+Routine Name: PSBVDLRM
+    Before: B23619193   After: B23842002  **83,114**
+Routine Name: PSBVDLVL
+    Before:B151829804   After:B153013957  **6,3,12,11,13,32,25,61,70,83,114**
+ 
+Routine list of preceding patches: 103, 104
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 06, 2018
+Completed By:                               Date Completed: APR 29, 2019
+Released By :                               Date Released : APR 30, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

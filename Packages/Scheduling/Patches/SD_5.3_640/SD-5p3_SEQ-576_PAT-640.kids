@@ -1,0 +1,2653 @@
+Released SD*5.3*640 SEQ #576
+Extracted from mail message
+**KIDS**:SD*5.3*640^
+
+**INSTALL NAME**
+SD*5.3*640
+"BLD",10356,0)
+SD*5.3*640^SCHEDULING^0^3180917^y
+"BLD",10356,1,0)
+^^11^11^3180917^^
+"BLD",10356,1,1,0)
+This patch release contains the shutdown of the HL7 Ambulatory Care 
+"BLD",10356,1,2,0)
+nightly transmission (ACRP) that goes out from each VistA instance 
+"BLD",10356,1,3,0)
+each day to the National Patient Care Database (NPCDB). The NPCDB is being
+"BLD",10356,1,4,0)
+shut down in Austin and the Corporate Data Warehouse (CDW) is replacing 
+"BLD",10356,1,5,0)
+the database as the authoritative source. The VistA extracts done to 
+"BLD",10356,1,6,0)
+populate the CDW will replace the need for the HL7 transmission.
+"BLD",10356,1,7,0)
+ 
+"BLD",10356,1,8,0)
+Austin Information Technology Center (AITC) has also requested the Monthly
+"BLD",10356,1,9,0)
+Additional Performance Monitors HL7 data transmissions stop being 
+"BLD",10356,1,10,0)
+transmitted from VistA instances to Data Management Interface (DMI) at 
+"BLD",10356,1,11,0)
+AITC.
+"BLD",10356,4,0)
+^9.64PA^^
+"BLD",10356,6.3)
+8
+"BLD",10356,"INID")
+^n
+"BLD",10356,"INIT")
+EN^SCDXSTOP
+"BLD",10356,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10356,"KRN",.4,0)
+.4
+"BLD",10356,"KRN",.401,0)
+.401
+"BLD",10356,"KRN",.402,0)
+.402
+"BLD",10356,"KRN",.403,0)
+.403
+"BLD",10356,"KRN",.5,0)
+.5
+"BLD",10356,"KRN",.84,0)
+.84
+"BLD",10356,"KRN",3.6,0)
+3.6
+"BLD",10356,"KRN",3.8,0)
+3.8
+"BLD",10356,"KRN",9.2,0)
+9.2
+"BLD",10356,"KRN",9.8,0)
+9.8
+"BLD",10356,"KRN",9.8,"NM",0)
+^9.68A^7^7
+"BLD",10356,"KRN",9.8,"NM",1,0)
+SCDXMSG^^0^B47588941
+"BLD",10356,"KRN",9.8,"NM",2,0)
+SCDXRT01^^0^B28530329
+"BLD",10356,"KRN",9.8,"NM",3,0)
+SCDXRT02^^0^B49367988
+"BLD",10356,"KRN",9.8,"NM",4,0)
+SCDXRT03^^0^B6481187
+"BLD",10356,"KRN",9.8,"NM",5,0)
+SDPMHLS^^0^B36919465
+"BLD",10356,"KRN",9.8,"NM",6,0)
+SCDXSTOP^^0^B10792724
+"BLD",10356,"KRN",9.8,"NM",7,0)
+SDOQMP^^0^B27996803
+"BLD",10356,"KRN",9.8,"NM","B","SCDXMSG",1)
+
+"BLD",10356,"KRN",9.8,"NM","B","SCDXRT01",2)
+
+"BLD",10356,"KRN",9.8,"NM","B","SCDXRT02",3)
+
+"BLD",10356,"KRN",9.8,"NM","B","SCDXRT03",4)
+
+"BLD",10356,"KRN",9.8,"NM","B","SCDXSTOP",6)
+
+"BLD",10356,"KRN",9.8,"NM","B","SDOQMP",7)
+
+"BLD",10356,"KRN",9.8,"NM","B","SDPMHLS",5)
+
+"BLD",10356,"KRN",19,0)
+19
+"BLD",10356,"KRN",19.1,0)
+19.1
+"BLD",10356,"KRN",101,0)
+101
+"BLD",10356,"KRN",409.61,0)
+409.61
+"BLD",10356,"KRN",771,0)
+771
+"BLD",10356,"KRN",779.2,0)
+779.2
+"BLD",10356,"KRN",870,0)
+870
+"BLD",10356,"KRN",8989.51,0)
+8989.51
+"BLD",10356,"KRN",8989.52,0)
+8989.52
+"BLD",10356,"KRN",8994,0)
+8994
+"BLD",10356,"KRN","B",.4,.4)
+
+"BLD",10356,"KRN","B",.401,.401)
+
+"BLD",10356,"KRN","B",.402,.402)
+
+"BLD",10356,"KRN","B",.403,.403)
+
+"BLD",10356,"KRN","B",.5,.5)
+
+"BLD",10356,"KRN","B",.84,.84)
+
+"BLD",10356,"KRN","B",3.6,3.6)
+
+"BLD",10356,"KRN","B",3.8,3.8)
+
+"BLD",10356,"KRN","B",9.2,9.2)
+
+"BLD",10356,"KRN","B",9.8,9.8)
+
+"BLD",10356,"KRN","B",19,19)
+
+"BLD",10356,"KRN","B",19.1,19.1)
+
+"BLD",10356,"KRN","B",101,101)
+
+"BLD",10356,"KRN","B",409.61,409.61)
+
+"BLD",10356,"KRN","B",771,771)
+
+"BLD",10356,"KRN","B",779.2,779.2)
+
+"BLD",10356,"KRN","B",870,870)
+
+"BLD",10356,"KRN","B",8989.51,8989.51)
+
+"BLD",10356,"KRN","B",8989.52,8989.52)
+
+"BLD",10356,"KRN","B",8994,8994)
+
+"BLD",10356,"QDEF")
+^^^^NO^^^^^^YES
+"BLD",10356,"QUES",0)
+^9.62^^
+"BLD",10356,"REQB",0)
+^9.611^5^4
+"BLD",10356,"REQB",2,0)
+SD*5.3*68^2
+"BLD",10356,"REQB",3,0)
+SD*5.3*416^2
+"BLD",10356,"REQB",4,0)
+SD*5.3*466^2
+"BLD",10356,"REQB",5,0)
+SD*5.3*47^2
+"BLD",10356,"REQB","B","SD*5.3*416",3)
+
+"BLD",10356,"REQB","B","SD*5.3*466",4)
+
+"BLD",10356,"REQB","B","SD*5.3*47",5)
+
+"BLD",10356,"REQB","B","SD*5.3*68",2)
+
+"INIT")
+EN^SCDXSTOP
+"MBREQ")
+0
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+640^3180917
+"PKG",16,22,1,"PAH",1,1,0)
+^^11^11^3180917
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch release contains the shutdown of the HL7 Ambulatory Care 
+"PKG",16,22,1,"PAH",1,1,2,0)
+nightly transmission (ACRP) that goes out from each VistA instance 
+"PKG",16,22,1,"PAH",1,1,3,0)
+each day to the National Patient Care Database (NPCDB). The NPCDB is being
+"PKG",16,22,1,"PAH",1,1,4,0)
+shut down in Austin and the Corporate Data Warehouse (CDW) is replacing 
+"PKG",16,22,1,"PAH",1,1,5,0)
+the database as the authoritative source. The VistA extracts done to 
+"PKG",16,22,1,"PAH",1,1,6,0)
+populate the CDW will replace the need for the HL7 transmission.
+"PKG",16,22,1,"PAH",1,1,7,0)
+ 
+"PKG",16,22,1,"PAH",1,1,8,0)
+Austin Information Technology Center (AITC) has also requested the Monthly
+"PKG",16,22,1,"PAH",1,1,9,0)
+Additional Performance Monitors HL7 data transmissions stop being 
+"PKG",16,22,1,"PAH",1,1,10,0)
+transmitted from VistA instances to Data Management Interface (DMI) at 
+"PKG",16,22,1,"PAH",1,1,11,0)
+AITC.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+7
+"RTN","SCDXMSG")
+0^1^B47588941^B46406425
+"RTN","SCDXMSG",1,0)
+SCDXMSG ;ALB/JRP - AMB CARE TRANSMISSION BUILDER ;05/06/96
+"RTN","SCDXMSG",2,0)
+ ;;5.3;SCHEDULING;**44,56,70,77,85,96,121,128,66,247,245,387,466,640**;AUG 13, 1993;Build 8
+"RTN","SCDXMSG",3,0)
+ ;
+"RTN","SCDXMSG",4,0)
+SNDZ00 ;Main entry point for the sending of ADT-Z00 batch messages to
+"RTN","SCDXMSG",5,0)
+ ; the National Patient Care Database
+"RTN","SCDXMSG",6,0)
+ ;
+"RTN","SCDXMSG",7,0)
+ ;Input  : None
+"RTN","SCDXMSG",8,0)
+ ;Output : None
+"RTN","SCDXMSG",9,0)
+ ;
+"RTN","SCDXMSG",10,0)
+ ; SD*640 Stop sending nightly transmission to NPCDB.
+"RTN","SCDXMSG",11,0)
+ Q
+"RTN","SCDXMSG",12,0)
+ ;
+"RTN","SCDXMSG",13,0)
+SD70 ; added w/ patch SD*5.3*70 to reset transmit flags if needed
+"RTN","SCDXMSG",14,0)
+ N SDEND,SDSTA D EN^SCDXUTL5
+"RTN","SCDXMSG",15,0)
+ ;
+"RTN","SCDXMSG",16,0)
+ ;Declare variables
+"RTN","SCDXMSG",17,0)
+ N X,X1,X2,%H
+"RTN","SCDXMSG",18,0)
+ N XMITPTR,NOACKBY,XMITDATE,SCDXEVNT,MAXBATCH,MAXLINE,BATCHCNT,MSGNUM
+"RTN","SCDXMSG",19,0)
+ N LINECNT,MSHLINE,XMITLIST,XMITERR,HL7XMIT,ERROR,IPCNT
+"RTN","SCDXMSG",20,0)
+ N HLEID,HL,HLECH,HLFS,HLQ,HLMID,HLMTIEN,HLDT,HLDT1,MSGID,HLRESLT,HLP
+"RTN","SCDXMSG",21,0)
+ ;Set message count limit for batch message
+"RTN","SCDXMSG",22,0)
+ S MAXBATCH=100
+"RTN","SCDXMSG",23,0)
+ ;Set line count limit for batch message Note max 160K char. MM Message
+"RTN","SCDXMSG",24,0)
+ S MAXLINE=$P($G(^SD(404.91,1,"AMB")),U,8) S:'MAXLINE MAXLINE=2000
+"RTN","SCDXMSG",25,0)
+ ;Initialize global locations
+"RTN","SCDXMSG",26,0)
+ S XMITERR="^TMP(""SCDX-XMIT-BLD"","_$J_",""ERRORS"")"
+"RTN","SCDXMSG",27,0)
+ S HL7XMIT="^TMP(""HLS"","_$J_")"
+"RTN","SCDXMSG",28,0)
+ K @XMITERR,@HL7XMIT
+"RTN","SCDXMSG",29,0)
+ ;Get lag time for acks from NPCDB (default to T-LAG)
+"RTN","SCDXMSG",30,0)
+ S NOACKBY=+$P($G(^SD(404.91,1,"AMB")),"^",4)
+"RTN","SCDXMSG",31,0)
+ S:('NOACKBY) NOACKBY=2
+"RTN","SCDXMSG",32,0)
+ ;Determine T-LAG @ 11:59:59 PM
+"RTN","SCDXMSG",33,0)
+ S X1=$$DT^XLFDT()
+"RTN","SCDXMSG",34,0)
+ S X2=0-NOACKBY
+"RTN","SCDXMSG",35,0)
+ S NOACKBY=$$FMADD^XLFDT(X1,X2)_".235959"
+"RTN","SCDXMSG",36,0)
+ ;Flag transmissions that haven't been acked by T-LAG for retransmission
+"RTN","SCDXMSG",37,0)
+ S XMITDATE=""
+"RTN","SCDXMSG",38,0)
+ F  S XMITDATE=+$O(^SD(409.73,"AACNOACK",XMITDATE)) Q:(('XMITDATE)!(XMITDATE>NOACKBY))  D
+"RTN","SCDXMSG",39,0)
+ .S XMITPTR=""
+"RTN","SCDXMSG",40,0)
+ .F  S XMITPTR=+$O(^SD(409.73,"AACNOACK",XMITDATE,XMITPTR)) Q:('XMITPTR)  D
+"RTN","SCDXMSG",41,0)
+ ..;Mark entry with retransmit event (POSTMASTER is causer of event)
+"RTN","SCDXMSG",42,0)
+ ..D STREEVNT^SCDXFU01(XMITPTR,0,"",.5)
+"RTN","SCDXMSG",43,0)
+ ..;Can no longer receive database credit - delete x-ref and quit
+"RTN","SCDXMSG",44,0)
+ ..I +$$XMIT4DBC^SCDXFU04(XMITPTR)>3 K ^SD(409.73,"AACNOACK",XMITDATE,XMITPTR) Q  ;SD*5.3*247
+"RTN","SCDXMSG",45,0)
+ ..;Turn transmission flag on
+"RTN","SCDXMSG",46,0)
+ ..D XMITFLAG^SCDXFU01(XMITPTR)
+"RTN","SCDXMSG",47,0)
+ ;Get pointer to sending event
+"RTN","SCDXMSG",48,0)
+ S HLEID=+$O(^ORD(101,"B","SCDX AMBCARE SEND SERVER FOR ADT-Z00",0))
+"RTN","SCDXMSG",49,0)
+ ;Sending event not found - send error bulletin - done
+"RTN","SCDXMSG",50,0)
+ I ('HLEID) D ERRBULL^SCDXMSG2("Unable to initialize HL7 variables - protocol not found") Q
+"RTN","SCDXMSG",51,0)
+ ;Initialze HL7 variables
+"RTN","SCDXMSG",52,0)
+ D INIT^HLFNC2(HLEID,.HL)
+"RTN","SCDXMSG",53,0)
+ ;Unable to initialize HL7 variables - send error bulletin - done
+"RTN","SCDXMSG",54,0)
+ I ($O(HL(""))="") D ERRBULL^SCDXMSG2($P(HL,"^",2)) Q
+"RTN","SCDXMSG",55,0)
+ ;Create batch message
+"RTN","SCDXMSG",56,0)
+ D CREATE^HLTF(.HLMID,.HLMTIEN,.HLDT,.HLDT1)
+"RTN","SCDXMSG",57,0)
+ ;Unable to create batch message - send error bulletin - done
+"RTN","SCDXMSG",58,0)
+ I ('HLMTIEN) D ERRBULL^SCDXMSG2("Unable to create batch HL7 message") Q
+"RTN","SCDXMSG",59,0)
+ ;Initialize message count
+"RTN","SCDXMSG",60,0)
+ S BATCHCNT=0,IPCNT=0
+"RTN","SCDXMSG",61,0)
+ ;Initialize message number
+"RTN","SCDXMSG",62,0)
+ S MSGNUM=1
+"RTN","SCDXMSG",63,0)
+ ;Initialize line count
+"RTN","SCDXMSG",64,0)
+ S LINECNT=1
+"RTN","SCDXMSG",65,0)
+ N VALER,VALERR
+"RTN","SCDXMSG",66,0)
+ ;this global contains the validation errors if any.
+"RTN","SCDXMSG",67,0)
+ S VALER="^TMP(""SCDXVALID"",$J)"
+"RTN","SCDXMSG",68,0)
+ ;Loop through list of [deleted] encounters requiring transmission
+"RTN","SCDXMSG",69,0)
+ S SCDXEVNT=""
+"RTN","SCDXMSG",70,0)
+ F  S SCDXEVNT=+$O(^SD(409.73,"AACXMIT",SCDXEVNT)) Q:('SCDXEVNT)  D
+"RTN","SCDXMSG",71,0)
+ .S XMITPTR=""
+"RTN","SCDXMSG",72,0)
+ .F  S XMITPTR=+$O(^SD(409.73,"AACXMIT",SCDXEVNT,XMITPTR)) Q:('XMITPTR)  D
+"RTN","SCDXMSG",73,0)
+ ..N OENODE,PARENT,FILERR
+"RTN","SCDXMSG",74,0)
+ ..S VALERR="^TMP(""SCDXVALID"",$J,"_XMITPTR_")"
+"RTN","SCDXMSG",75,0)
+ ..;Bad entry in cross reference - delete cross reference and quit
+"RTN","SCDXMSG",76,0)
+ ..I ('$D(^SD(409.73,XMITPTR))) K ^SD(409.73,"AACXMIT",SCDXEVNT,XMITPTR) Q
+"RTN","SCDXMSG",77,0)
+ ..;Make sure entry points to an existing encounter - delete entry
+"RTN","SCDXMSG",78,0)
+ ..; and quit if it doesn't
+"RTN","SCDXMSG",79,0)
+ ..S X=^SD(409.73,XMITPTR,0)
+"RTN","SCDXMSG",80,0)
+ ..S X1=+$P(X,"^",2)
+"RTN","SCDXMSG",81,0)
+ ..S X2=+$P(X,"^",3)
+"RTN","SCDXMSG",82,0)
+ ..S OENODE=$S($G(^SCE(+X1,0)):^(0),1:$G(^SD(409.74,+X2,1))),PARENT=$P(OENODE,"^",6)
+"RTN","SCDXMSG",83,0)
+ ..I (((X1)&('$D(^SCE(X1))))!((X2)&('$D(^SD(409.74,X2))))) S ERROR=$$DELXMIT^SCDXFU03(XMITPTR) Q
+"RTN","SCDXMSG",84,0)
+ ..; if SD*5.3*70 cleanup not complete, recheck date of encounter for range
+"RTN","SCDXMSG",85,0)
+ ..I $G(SDEND) Q:$$CHKD(X1,X2)
+"RTN","SCDXMSG",86,0)
+ ..;If inpatient appointment, delete entry and quit
+"RTN","SCDXMSG",87,0)
+ ..;Commented to allow transmission of inpatient to NPCD; SD*5.3*387
+"RTN","SCDXMSG",88,0)
+ ..;I ($$INPATENC^SCDXUTL(XMITPTR)) S ERROR=$$DELXMIT^SCDXFU03(XMITPTR) Q
+"RTN","SCDXMSG",89,0)
+ ..;If test patient, delete entry and quit
+"RTN","SCDXMSG",90,0)
+ ..I $$TESTPAT^VADPT($P($$EZN4XMIT^SCDXFU11(XMITPTR),"^",2)) S ERROR=$$DELXMIT^SCDXFU03(XMITPTR) Q
+"RTN","SCDXMSG",91,0)
+ ..;If child encounter, delete entry, flag parent for xmit, and quit
+"RTN","SCDXMSG",92,0)
+ ..I PARENT D  Q
+"RTN","SCDXMSG",93,0)
+ ...S ERROR=$$DELXMIT^SCDXFU03(XMITPTR)
+"RTN","SCDXMSG",94,0)
+ ..;NPCD will not accept for database credit - clean up and quit
+"RTN","SCDXMSG",95,0)
+ ..I +$$XMIT4DBC^SCDXFU04(XMITPTR)>3 D  Q  ;SD*5.3*247
+"RTN","SCDXMSG",96,0)
+ ...;Past database close-out date - delete previously reported errors
+"RTN","SCDXMSG",97,0)
+ ...D DELAERR^SCDXFU02(XMITPTR)
+"RTN","SCDXMSG",98,0)
+ ...;Turn off transmission flag
+"RTN","SCDXMSG",99,0)
+ ...D XMITFLAG^SCDXFU01(XMITPTR,1)
+"RTN","SCDXMSG",100,0)
+ ..;Calculate message control ID
+"RTN","SCDXMSG",101,0)
+ ..S MSGID=HLMID_"-"_MSGNUM
+"RTN","SCDXMSG",102,0)
+ ..;Put [deleted] encounter into transmission
+"RTN","SCDXMSG",103,0)
+ ..S ERROR=$$BUILDHL7^SCDXMSG0(XMITPTR,.HL,MSGID,HL7XMIT,LINECNT,VALERR)
+"RTN","SCDXMSG",104,0)
+ ..;[Deleted] encounter not added to transmission
+"RTN","SCDXMSG",105,0)
+ ..I ERROR<0,$O(@VALERR@(0))']"" D VALIDATE^SCMSVUT0("INTERNAL","","V900",VALERR,0)
+"RTN","SCDXMSG",106,0)
+ ..D DELAERR^SCDXFU02(XMITPTR,0)
+"RTN","SCDXMSG",107,0)
+ ..I $O(@VALERR@(0))]"" S FILERR=$$FILEVERR^SCMSVUT2(XMITPTR,VALERR)
+"RTN","SCDXMSG",108,0)
+ ..I ERROR<0 Q
+"RTN","SCDXMSG",109,0)
+ ..;Increment line count
+"RTN","SCDXMSG",110,0)
+ ..S LINECNT=LINECNT+ERROR
+"RTN","SCDXMSG",111,0)
+ ..;Increment message count
+"RTN","SCDXMSG",112,0)
+ ..S BATCHCNT=BATCHCNT+1
+"RTN","SCDXMSG",113,0)
+ ..;Increment message number
+"RTN","SCDXMSG",114,0)
+ ..S MSGNUM=MSGNUM+1
+"RTN","SCDXMSG",115,0)
+ ..;Increment inpatient count
+"RTN","SCDXMSG",116,0)
+ ..I $$INPATENC^SCDXUTL(XMITPTR) S IPCNT=IPCNT+1
+"RTN","SCDXMSG",117,0)
+ ..;Create entry in ACRP Transmission History file (#409.77)
+"RTN","SCDXMSG",118,0)
+ ..S X=$$CRTHIST^SCDXFU10(XMITPTR,HLDT,MSGID,HLMID)
+"RTN","SCDXMSG",119,0)
+ ..;Update transmission info for [deleted] encounter
+"RTN","SCDXMSG",120,0)
+ ..D XMITDATA^SCDXFU03(XMITPTR,HLDT,MSGID,HLMID)
+"RTN","SCDXMSG",121,0)
+ ..;Turn off transmission flag for [deleted] encounter
+"RTN","SCDXMSG",122,0)
+ ..D XMITFLAG^SCDXFU01(XMITPTR,1)
+"RTN","SCDXMSG",123,0)
+ ..;Delete all errors previously reported for [deleted] encounter
+"RTN","SCDXMSG",124,0)
+ ..D DELAERR^SCDXFU02(XMITPTR)
+"RTN","SCDXMSG",125,0)
+ ..;Reached max size for batch
+"RTN","SCDXMSG",126,0)
+ ..I ((MSGNUM>MAXBATCH)!(LINECNT>MAXLINE)) D
+"RTN","SCDXMSG",127,0)
+ ...;Send batch message - immediate priority
+"RTN","SCDXMSG",128,0)
+ ...S HLP("PRIORITY")="I"
+"RTN","SCDXMSG",129,0)
+ ...D GENERATE^HLMA(HLEID,"GB",1,.HLRESLT,HLMTIEN,.HLP)
+"RTN","SCDXMSG",130,0)
+ ...;Re-initialize HL7 message
+"RTN","SCDXMSG",131,0)
+ ...K @HL7XMIT
+"RTN","SCDXMSG",132,0)
+ ...;Re-initialize HL7 variables
+"RTN","SCDXMSG",133,0)
+ ...K HL,HLRESLT,HLP,HLMID,HLMTIEN,HLDT,HLDT1
+"RTN","SCDXMSG",134,0)
+ ...S HLEID=+$O(^ORD(101,"B","SCDX AMBCARE SEND SERVER FOR ADT-Z00",0))
+"RTN","SCDXMSG",135,0)
+ ...D INIT^HLFNC2(HLEID,.HL)
+"RTN","SCDXMSG",136,0)
+ ...;Create new batch message
+"RTN","SCDXMSG",137,0)
+ ...D CREATE^HLTF(.HLMID,.HLMTIEN,.HLDT,.HLDT1)
+"RTN","SCDXMSG",138,0)
+ ...;Re-initialize line count
+"RTN","SCDXMSG",139,0)
+ ...S LINECNT=1
+"RTN","SCDXMSG",140,0)
+ ...;Re-initialize message number
+"RTN","SCDXMSG",141,0)
+ ...S MSGNUM=1
+"RTN","SCDXMSG",142,0)
+ ;Check for unsent batch message
+"RTN","SCDXMSG",143,0)
+ I ($O(@HL7XMIT@(0))) D
+"RTN","SCDXMSG",144,0)
+ .;Send batch message - immediate priority
+"RTN","SCDXMSG",145,0)
+ .S HLP("PRIORITY")="I"
+"RTN","SCDXMSG",146,0)
+ .D GENERATE^HLMA(HLEID,"GB",1,.HLRESLT,HLMTIEN,.HLP)
+"RTN","SCDXMSG",147,0)
+ N ERRCNT,IPERR
+"RTN","SCDXMSG",148,0)
+ S ERRCNT=$$COUNT^SCMSVUT2(VALER)
+"RTN","SCDXMSG",149,0)
+ S IPERR=$$IPERR^SCMSVUT2(VALER)
+"RTN","SCDXMSG",150,0)
+ ;Send completion bulletin
+"RTN","SCDXMSG",151,0)
+ D CMPLBULL^SCDXMSG2(BATCHCNT,ERRCNT,IPCNT,IPERR)
+"RTN","SCDXMSG",152,0)
+ ;Clean up global arrays used
+"RTN","SCDXMSG",153,0)
+ K @XMITERR,@HL7XMIT,@VALER
+"RTN","SCDXMSG",154,0)
+ ;Determine if updating of Hospital Location file hasn't completed AND
+"RTN","SCDXMSG",155,0)
+ ; if today is past the OPC to HL7 cut over date
+"RTN","SCDXMSG",156,0)
+ I ('$P($G(^SD(404.91,1,"AMB")),"^",7)) I ($$DATE^SCDXUTL(DT)) D
+"RTN","SCDXMSG",157,0)
+ .;Task updating of Hospital Location file
+"RTN","SCDXMSG",158,0)
+ .N ZTRTN,ZTDESC,ZTDTH,ZTIO,ZTSK
+"RTN","SCDXMSG",159,0)
+ .S ZTRTN="HOPUP^SCMSP"
+"RTN","SCDXMSG",160,0)
+ .S ZTDESC="REQUIRE PROVIDER AND DIAGNOSIS FOR CHECKOUT FROM CLINICS"
+"RTN","SCDXMSG",161,0)
+ .S ZTDTH="NOW"
+"RTN","SCDXMSG",162,0)
+ .S ZTIO=""
+"RTN","SCDXMSG",163,0)
+ .D ^%ZTLOAD
+"RTN","SCDXMSG",164,0)
+ ;Done
+"RTN","SCDXMSG",165,0)
+ Q
+"RTN","SCDXMSG",166,0)
+ ;
+"RTN","SCDXMSG",167,0)
+CHKD(X1,X2) ; if clean-up still in progress for SD*5.3*70, check date
+"RTN","SCDXMSG",168,0)
+ N SDELE
+"RTN","SCDXMSG",169,0)
+ I X1,+$G(^SCE(X1,0))>SDEND Q 1
+"RTN","SCDXMSG",170,0)
+ I X2 S SDELE=+$G(^SD(409.74,X2,1)) I SDELE>SDSTA D:SDELE<SDEND  Q 1
+"RTN","SCDXMSG",171,0)
+ . D KILL^SCDXUTL5("^SD(409.74,",X2)
+"RTN","SCDXMSG",172,0)
+ . D KILL^SCDXUTL5("^SD(409.73,",XMITPTR)
+"RTN","SCDXMSG",173,0)
+ Q 0
+"RTN","SCDXRT01")
+0^2^B28530329^B27872204
+"RTN","SCDXRT01",1,0)
+SCDXRT01 ;ALB/JRP - AMB CARE RETRANSMISSION ;5/9/96
+"RTN","SCDXRT01",2,0)
+ ;;5.3;Scheduling;**44,640**;AUG 13, 1993;Build 8
+"RTN","SCDXRT01",3,0)
+ ;
+"RTN","SCDXRT01",4,0)
+RTRNRNG ;Mark all [Deleted] Outpatient Encounters for a user specified
+"RTN","SCDXRT01",5,0)
+ ; date range for retransmission to the National Ambulatory Care
+"RTN","SCDXRT01",6,0)
+ ; Database
+"RTN","SCDXRT01",7,0)
+ ;
+"RTN","SCDXRT01",8,0)
+ ;Input  : None
+"RTN","SCDXRT01",9,0)
+ ;Output : None
+"RTN","SCDXRT01",10,0)
+ ;Note   : User is prompted for the date range to retransmit
+"RTN","SCDXRT01",11,0)
+ ;       : Encounters that are not contained in the Transmitted
+"RTN","SCDXRT01",12,0)
+ ;         Outpatient Encounter file (#409.73) can not be
+"RTN","SCDXRT01",13,0)
+ ;         retransmitted
+"RTN","SCDXRT01",14,0)
+ ;       : [Deleted] Encounters that occurred before switching to new
+"RTN","SCDXRT01",15,0)
+ ;         transmission format can not be retransmitted
+"RTN","SCDXRT01",16,0)
+ ;       : [Deleted] Encounters that occurred within the last two days
+"RTN","SCDXRT01",17,0)
+ ;         can not be retransmitted
+"RTN","SCDXRT01",18,0)
+ ;
+"RTN","SCDXRT01",19,0)
+ ;SD*640 Stop retransmit by date range
+"RTN","SCDXRT01",20,0)
+ Q
+"RTN","SCDXRT01",21,0)
+ ;
+"RTN","SCDXRT01",22,0)
+ ;Declare variables
+"RTN","SCDXRT01",23,0)
+ N MINDT,MAXDT,SCDXSTRT,SCDXEND,HELPTXT,X,%H,%,%I
+"RTN","SCDXRT01",24,0)
+ N ZTSK,ZTDESC,ZTRTN,ZTIO,ZTDTH
+"RTN","SCDXRT01",25,0)
+ W !!
+"RTN","SCDXRT01",26,0)
+ ;Cut-off date for old transmission format is earliest date
+"RTN","SCDXRT01",27,0)
+ ; allowed for retransmission (default to 10/1/96)
+"RTN","SCDXRT01",28,0)
+ S MINDT=+$P($G(^SD(404.91,1,"AMB")),"^",2)
+"RTN","SCDXRT01",29,0)
+ S:('MINDT) MINDT=2961001
+"RTN","SCDXRT01",30,0)
+ ;Today is the latest date allowed for retransmission
+"RTN","SCDXRT01",31,0)
+ D NOW^%DTC
+"RTN","SCDXRT01",32,0)
+ S MAXDT=X
+"RTN","SCDXRT01",33,0)
+ ;Set up help text for getting beginning and ending dates
+"RTN","SCDXRT01",34,0)
+ S HELPTXT("BGN")="Enter the beginning date for retransmitting encounters"
+"RTN","SCDXRT01",35,0)
+ S HELPTXT("END")="Enter the ending date for retransmitting encounters"
+"RTN","SCDXRT01",36,0)
+ ;Get beginning and ending dates
+"RTN","SCDXRT01",37,0)
+ S X=$$GETDTRNG^SCDXUTL1(MINDT,MAXDT,"HELPTXT(""BGN"")","HELPTXT(""END"")")
+"RTN","SCDXRT01",38,0)
+ ;User abort / time out
+"RTN","SCDXRT01",39,0)
+ Q:(X<0)
+"RTN","SCDXRT01",40,0)
+ W !!
+"RTN","SCDXRT01",41,0)
+ ;Verify that user wants to do this
+"RTN","SCDXRT01",42,0)
+ S SCDXSTRT=$P(X,"^",1)
+"RTN","SCDXRT01",43,0)
+ S SCDXEND=$P(X,"^",2)
+"RTN","SCDXRT01",44,0)
+ S DIR("A",1)=" "
+"RTN","SCDXRT01",45,0)
+ S DIR("A",2)=" "
+"RTN","SCDXRT01",46,0)
+ S X=(+$E(SCDXSTRT,4,5))_"/"_(+$E(SCDXSTRT,6,7))_"/"_(1700+$E(SCDXSTRT,1,3))
+"RTN","SCDXRT01",47,0)
+ S DIR("A",3)="All outpatient encounters that occurred between "_X
+"RTN","SCDXRT01",48,0)
+ S X=(+$E(SCDXEND,4,5))_"/"_(+$E(SCDXEND,6,7))_"/"_(1700+$E(SCDXEND,1,3))
+"RTN","SCDXRT01",49,0)
+ S DIR("A",4)="and "_X_" will be marked for retransmission to the"
+"RTN","SCDXRT01",50,0)
+ S DIR("A",5)="National Patient Care Database."
+"RTN","SCDXRT01",51,0)
+ S DIR("A",6)=" "
+"RTN","SCDXRT01",52,0)
+ S DIR("A",7)=" "
+"RTN","SCDXRT01",53,0)
+ S DIR("A")="Are you sure you want to do this ? "
+"RTN","SCDXRT01",54,0)
+ S DIR(0)="YA"
+"RTN","SCDXRT01",55,0)
+ D ^DIR
+"RTN","SCDXRT01",56,0)
+ ;Not verified / user abort / time out
+"RTN","SCDXRT01",57,0)
+ Q:('Y)
+"RTN","SCDXRT01",58,0)
+ ;Queue marking for retransmission
+"RTN","SCDXRT01",59,0)
+ S ZTRTN="TASKRX^SCDXRT01"
+"RTN","SCDXRT01",60,0)
+ S ZTDESC="Mark [Deleted] Outpatient Encounters for retransmission"
+"RTN","SCDXRT01",61,0)
+ S ZTDTH=$H
+"RTN","SCDXRT01",62,0)
+ S ZTIO=""
+"RTN","SCDXRT01",63,0)
+ S ZTSAVE("SCDXSTRT")=SCDXSTRT
+"RTN","SCDXRT01",64,0)
+ S ZTSAVE("SCDXEND")=SCDXEND
+"RTN","SCDXRT01",65,0)
+ K ZTSK D ^%ZTLOAD
+"RTN","SCDXRT01",66,0)
+ W:('$G(ZTSK)) !!,"** UNABLE TO QUEUE MARKING OF ENCOUNTERS FOR RETRANSMISSION **",!!
+"RTN","SCDXRT01",67,0)
+ W:($G(ZTSK)) !!,"Marking of encounters for retransmission queued as task number ",ZTSK
+"RTN","SCDXRT01",68,0)
+ W !!
+"RTN","SCDXRT01",69,0)
+ Q
+"RTN","SCDXRT01",70,0)
+ ;
+"RTN","SCDXRT01",71,0)
+TASKRX ;Mark all [Deleted] Outpatient Encounters in a given date range
+"RTN","SCDXRT01",72,0)
+ ; for retransmission
+"RTN","SCDXRT01",73,0)
+ ;
+"RTN","SCDXRT01",74,0)
+ ;Input  : SCDXSTRT - Date to begin marking encounters from 
+"RTN","SCDXRT01",75,0)
+ ;                    (FileMan format) (Required)
+"RTN","SCDXRT01",76,0)
+ ;         SCDXEND - Date to end marking encounters at
+"RTN","SCDXRT01",77,0)
+ ;                   (FileMan format) (Required)
+"RTN","SCDXRT01",78,0)
+ ;Output : None
+"RTN","SCDXRT01",79,0)
+ ;Notes  : Encounters that are not contained in the Transmitted
+"RTN","SCDXRT01",80,0)
+ ;         Outpatient Encounter file (#409.73) can not be
+"RTN","SCDXRT01",81,0)
+ ;         retransmitted
+"RTN","SCDXRT01",82,0)
+ ;       : This entry point should be used when marking for
+"RTN","SCDXRT01",83,0)
+ ;         retransmission is being queued.  If queued, ZTSTOP will
+"RTN","SCDXRT01",84,0)
+ ;         be set accordingly.
+"RTN","SCDXRT01",85,0)
+ ;
+"RTN","SCDXRT01",86,0)
+ ;Check input
+"RTN","SCDXRT01",87,0)
+ Q:('$G(SCDXSTRT))
+"RTN","SCDXRT01",88,0)
+ Q:('$G(SCDXEND))
+"RTN","SCDXRT01",89,0)
+ ;Declare variables
+"RTN","SCDXRT01",90,0)
+ N JUNK
+"RTN","SCDXRT01",91,0)
+ ;Call module to mark entries for retransmission
+"RTN","SCDXRT01",92,0)
+ S JUNK=$$REXMIT(SCDXSTRT,SCDXEND)
+"RTN","SCDXRT01",93,0)
+ ;Set ZTSTOP accordingly
+"RTN","SCDXRT01",94,0)
+ S:($P(JUNK,"^",4)) ZTSTOP=1
+"RTN","SCDXRT01",95,0)
+ ;Done
+"RTN","SCDXRT01",96,0)
+ Q
+"RTN","SCDXRT01",97,0)
+ ;
+"RTN","SCDXRT01",98,0)
+REXMIT(STARTDT,ENDDT) ;Mark all [Deleted] Outpatient Encounters in a
+"RTN","SCDXRT01",99,0)
+ ; given date range for retransmission
+"RTN","SCDXRT01",100,0)
+ ;
+"RTN","SCDXRT01",101,0)
+ ;Input  : STARTDT - Date to begin marking encounters from 
+"RTN","SCDXRT01",102,0)
+ ;                   (FileMan format) (Required)
+"RTN","SCDXRT01",103,0)
+ ;         ENDDT - Date to end marking encounters at (FileMan format)
+"RTN","SCDXRT01",104,0)
+ ;                 (Required)
+"RTN","SCDXRT01",105,0)
+ ;Output : Tot^Enc^Del^Stop - Number of [deleted] encounters marked for
+"RTN","SCDXRT01",106,0)
+ ;                            retransmission
+"RTN","SCDXRT01",107,0)
+ ;           Tot - Total number of encounters marked
+"RTN","SCDXRT01",108,0)
+ ;           Enc - Number of existing encounters marked
+"RTN","SCDXRT01",109,0)
+ ;           Del - Number of deleted encounters marked
+"RTN","SCDXRT01",110,0)
+ ;           Stop - Flag indicating if task was asked to stop
+"RTN","SCDXRT01",111,0)
+ ;             1 = Task was asked to stop
+"RTN","SCDXRT01",112,0)
+ ;             0 = Task was not asked to stop
+"RTN","SCDXRT01",113,0)
+ ;         0 - No encounters marked / bad input
+"RTN","SCDXRT01",114,0)
+ ;Notes  : Encounters that are not contained in the Transmitted
+"RTN","SCDXRT01",115,0)
+ ;         Outpatient Encounter file (#409.73) can not be
+"RTN","SCDXRT01",116,0)
+ ;         retransmitted
+"RTN","SCDXRT01",117,0)
+ ;
+"RTN","SCDXRT01",118,0)
+ ;Check input
+"RTN","SCDXRT01",119,0)
+ S STARTDT=+$G(STARTDT)
+"RTN","SCDXRT01",120,0)
+ Q:('STARTDT)
+"RTN","SCDXRT01",121,0)
+ S ENDDT=+$G(ENDDT)
+"RTN","SCDXRT01",122,0)
+ Q:('ENDDT)
+"RTN","SCDXRT01",123,0)
+ ;Declare variables
+"RTN","SCDXRT01",124,0)
+ N XMITPTR,ENCPTR,DELPTR,ENCDATE,EVNTDATE,DELCNT,ENCCNT,STOP,LOOP
+"RTN","SCDXRT01",125,0)
+ S STOP=0
+"RTN","SCDXRT01",126,0)
+ ;Add one second before midnight to ending date
+"RTN","SCDXRT01",127,0)
+ S ENDDT=ENDDT+.235959
+"RTN","SCDXRT01",128,0)
+ ;Find all deleted encounters that fall in date range
+"RTN","SCDXRT01",129,0)
+ S ENCDATE=STARTDT-.000001
+"RTN","SCDXRT01",130,0)
+ S DELCNT=0
+"RTN","SCDXRT01",131,0)
+ F LOOP=1:1 S ENCDATE=+$O(^SD(409.74,"B",ENCDATE)) Q:(('ENCDATE)!(ENCDATE>ENDDT))  D  Q:(STOP)
+"RTN","SCDXRT01",132,0)
+ .;Check for request to stop
+"RTN","SCDXRT01",133,0)
+ .I ('(LOOP#10)) S STOP=$$S^%ZTLOAD(DELCNT_" encounters have been marked for retransmission") Q:(STOP)
+"RTN","SCDXRT01",134,0)
+ .S DELPTR=0
+"RTN","SCDXRT01",135,0)
+ .F  S DELPTR=+$O(^SD(409.74,"B",ENCDATE,DELPTR)) Q:('DELPTR)  D
+"RTN","SCDXRT01",136,0)
+ ..;Find entry in Transmitted Outpatient Encounter file
+"RTN","SCDXRT01",137,0)
+ ..S XMITPTR=+$O(^SD(409.73,"ADEL",DELPTR,0))
+"RTN","SCDXRT01",138,0)
+ ..;Entry not found - don't retransmit
+"RTN","SCDXRT01",139,0)
+ ..Q:('XMITPTR)
+"RTN","SCDXRT01",140,0)
+ ..;Mark entry for retransmission
+"RTN","SCDXRT01",141,0)
+ ..D STREEVNT^SCDXFU01(XMITPTR,0)
+"RTN","SCDXRT01",142,0)
+ ..;Turn on transmission flag
+"RTN","SCDXRT01",143,0)
+ ..D XMITFLAG^SCDXFU01(XMITPTR)
+"RTN","SCDXRT01",144,0)
+ ..;Increment count of deleted encounters marked
+"RTN","SCDXRT01",145,0)
+ ..S DELCNT=DELCNT+1
+"RTN","SCDXRT01",146,0)
+ ;Task was asked to stop - abort
+"RTN","SCDXRT01",147,0)
+ Q:(STOP) DELCNT_"^^"_DELCNT_"^1"
+"RTN","SCDXRT01",148,0)
+ ;Find all encounters that fall in date range
+"RTN","SCDXRT01",149,0)
+ S ENCCNT=0
+"RTN","SCDXRT01",150,0)
+ S ENCDATE=STARTDT-.000001
+"RTN","SCDXRT01",151,0)
+ F LOOP=1:1 S ENCDATE=+$O(^SCE("B",ENCDATE)) Q:(('ENCDATE)!(ENCDATE>ENDDT))  D  Q:(STOP)
+"RTN","SCDXRT01",152,0)
+ .;Check for request to stop
+"RTN","SCDXRT01",153,0)
+ .I ('(LOOP#10)) S STOP=$$S^%ZTLOAD((ENCCNT+DELCNT)_" encounters have been marked for retransmission") Q:(STOP)
+"RTN","SCDXRT01",154,0)
+ .S ENCPTR=0
+"RTN","SCDXRT01",155,0)
+ .F  S ENCPTR=+$O(^SCE("B",ENCDATE,ENCPTR)) Q:('ENCPTR)  D
+"RTN","SCDXRT01",156,0)
+ ..;Find entry in Transmitted Outpatient Encounter file
+"RTN","SCDXRT01",157,0)
+ ..S XMITPTR=+$O(^SD(409.73,"AENC",ENCPTR,0))
+"RTN","SCDXRT01",158,0)
+ ..;Entry not found - don't retransmit
+"RTN","SCDXRT01",159,0)
+ ..Q:('XMITPTR)
+"RTN","SCDXRT01",160,0)
+ ..;Mark entry for retransmission
+"RTN","SCDXRT01",161,0)
+ ..D STREEVNT^SCDXFU01(XMITPTR,0)
+"RTN","SCDXRT01",162,0)
+ ..;Turn on transmission flag
+"RTN","SCDXRT01",163,0)
+ ..D XMITFLAG^SCDXFU01(XMITPTR)
+"RTN","SCDXRT01",164,0)
+ ..;Increment count of encounters marked
+"RTN","SCDXRT01",165,0)
+ ..S ENCCNT=ENCCNT+1
+"RTN","SCDXRT01",166,0)
+ ;Done
+"RTN","SCDXRT01",167,0)
+ Q (DELCNT+ENCCNT)_"^"_ENCCNT_"^"_DELCNT_"^"_STOP
+"RTN","SCDXRT02")
+0^3^B49367988^B48072799
+"RTN","SCDXRT02",1,0)
+SCDXRT02 ;ALB/JRP - RETRANSMIT REJECTS FROM NPCDB ;10/15/96
+"RTN","SCDXRT02",2,0)
+ ;;5.3;Scheduling;**68,640**;AUG 13, 1993;Build 8
+"RTN","SCDXRT02",3,0)
+ ;
+"RTN","SCDXRT02",4,0)
+EN ;Entry point for List Manager display
+"RTN","SCDXRT02",5,0)
+ ;
+"RTN","SCDXRT02",6,0)
+ ;SD*640 Stop selective retransmit of NPCDB rejections
+"RTN","SCDXRT02",7,0)
+ Q
+"RTN","SCDXRT02",8,0)
+ ;
+"RTN","SCDXRT02",9,0)
+ D EN^VALM("SCDX RETRAN REJECTS FROM NPCDB")
+"RTN","SCDXRT02",10,0)
+ Q
+"RTN","SCDXRT02",11,0)
+ ;
+"RTN","SCDXRT02",12,0)
+HEADER ;Entry point for building header List Manager header
+"RTN","SCDXRT02",13,0)
+ ;Input  : Variables as set by List Manager interface
+"RTN","SCDXRT02",14,0)
+ ;Output : Header for List Manager screen
+"RTN","SCDXRT02",15,0)
+ ;
+"RTN","SCDXRT02",16,0)
+ ;Declare variables
+"RTN","SCDXRT02",17,0)
+ N TMP,SPOT
+"RTN","SCDXRT02",18,0)
+ ;Build header
+"RTN","SCDXRT02",19,0)
+ S TMP="Patients whose encounter data has been rejected by the National"
+"RTN","SCDXRT02",20,0)
+ S SPOT=40-($L(TMP)\2)
+"RTN","SCDXRT02",21,0)
+ S VALMHDR(1)=$$INSERT^SCDXUTL1(TMP,"",SPOT)
+"RTN","SCDXRT02",22,0)
+ S TMP="Patient Care Database and not currently marked for retransmission"
+"RTN","SCDXRT02",23,0)
+ S SPOT=40-($L(TMP)\2)
+"RTN","SCDXRT02",24,0)
+ S VALMHDR(2)=$$INSERT^SCDXUTL1(TMP,"",SPOT)
+"RTN","SCDXRT02",25,0)
+ S TMP="(Entries marked by '*' will be flagged for retransmission on exit)"
+"RTN","SCDXRT02",26,0)
+ S SPOT=40-($L(TMP)\2)
+"RTN","SCDXRT02",27,0)
+ S VALMHDR(3)=$$INSERT^SCDXUTL1(TMP,"",SPOT)
+"RTN","SCDXRT02",28,0)
+ Q
+"RTN","SCDXRT02",29,0)
+ ;
+"RTN","SCDXRT02",30,0)
+INIT ;Entry point for building List Manager display & indexes
+"RTN","SCDXRT02",31,0)
+ ;Input  : Variables as set by List Manager interface
+"RTN","SCDXRT02",32,0)
+ ;Output : List Manager display
+"RTN","SCDXRT02",33,0)
+ ;           VALMAR(Line,0) = Line to display
+"RTN","SCDXRT02",34,0)
+ ;         Indexes
+"RTN","SCDXRT02",35,0)
+ ;           VALMAR("ENTRIES") = Total number of entries
+"RTN","SCDXRT02",36,0)
+ ;           VALMAR("LINES") = Total number of lines
+"RTN","SCDXRT02",37,0)
+ ;           VALMAR("ENTRY2DFN",Entry) = DFN of entry
+"RTN","SCDXRT02",38,0)
+ ;           VALMAR("DFN",DFN,XmitPtr) = Patient's name
+"RTN","SCDXRT02",39,0)
+ ;              XmitPtr => Pointer to TRANSMITTED OUTPATIENT
+"RTN","SCDXRT02",40,0)
+ ;                         ENCOUNTER file (#409.73)
+"RTN","SCDXRT02",41,0)
+ ;           VALMAR("NAME",Name) = DFN ^ Total encounters rejected
+"RTN","SCDXRT02",42,0)
+ ;
+"RTN","SCDXRT02",43,0)
+ ;Declare variables
+"RTN","SCDXRT02",44,0)
+ N SPOT,COL4ENT,LINE4ENT,TOTENTRY,DATA,ENTRY,DFN,NAME,NAMEID,VA,BS,VAERR
+"RTN","SCDXRT02",45,0)
+ ;Initialize global locations being used
+"RTN","SCDXRT02",46,0)
+ K @VALMAR
+"RTN","SCDXRT02",47,0)
+ ;Get array of all rejections not currently marked for [re]transmission
+"RTN","SCDXRT02",48,0)
+ W !!
+"RTN","SCDXRT02",49,0)
+ W !,"Building list of patients who have encounters that were rejected by"
+"RTN","SCDXRT02",50,0)
+ W !,"the National Patient Care Database and are not currently marked for"
+"RTN","SCDXRT02",51,0)
+ W !,"retransmission.  This list only includes demographic and other non-"
+"RTN","SCDXRT02",52,0)
+ W !,"encounter related errors."
+"RTN","SCDXRT02",53,0)
+ S TOTENTRY=+$$GETREJ^SCDXUTL4(VALMAR,3,20)
+"RTN","SCDXRT02",54,0)
+ I (TOTENTRY<1) D  Q
+"RTN","SCDXRT02",55,0)
+ .;No rejections on file - print message and quit
+"RTN","SCDXRT02",56,0)
+ .W !!,"No demographic rejections requiring retransmission are currently on file.",!
+"RTN","SCDXRT02",57,0)
+ .K @VALMAR
+"RTN","SCDXRT02",58,0)
+ .H 2
+"RTN","SCDXRT02",59,0)
+ .S VALMQUIT=1
+"RTN","SCDXRT02",60,0)
+ ;Determine total number of lines that will be in display
+"RTN","SCDXRT02",61,0)
+ ; (this is also the last entry number of column 1)
+"RTN","SCDXRT02",62,0)
+ S VALMCNT=TOTENTRY\2
+"RTN","SCDXRT02",63,0)
+ S:(TOTENTRY#2) VALMCNT=VALMCNT+1
+"RTN","SCDXRT02",64,0)
+ ;Remember total number of entries and lines
+"RTN","SCDXRT02",65,0)
+ S @VALMAR@("ENTRIES")=TOTENTRY
+"RTN","SCDXRT02",66,0)
+ S @VALMAR@("LINES")=VALMCNT
+"RTN","SCDXRT02",67,0)
+ ;Build display
+"RTN","SCDXRT02",68,0)
+ W !!,"Building display screen "
+"RTN","SCDXRT02",69,0)
+ S ENTRY=1
+"RTN","SCDXRT02",70,0)
+ ; string of blank characters
+"RTN","SCDXRT02",71,0)
+ S BS="",$P(BS," ",25)=""
+"RTN","SCDXRT02",72,0)
+ ; Loop through name index of rejection array
+"RTN","SCDXRT02",73,0)
+ S NAME=""
+"RTN","SCDXRT02",74,0)
+ F  S NAME=$O(@VALMAR@("NAME",NAME)) Q:(NAME="")  D
+"RTN","SCDXRT02",75,0)
+ .;Write a dot for every 10 entries
+"RTN","SCDXRT02",76,0)
+ .W:('(ENTRY#10)) "."
+"RTN","SCDXRT02",77,0)
+ .;Get DFN
+"RTN","SCDXRT02",78,0)
+ .S DFN=+$G(@VALMAR@("NAME",NAME))
+"RTN","SCDXRT02",79,0)
+ .D PID^VADPT6
+"RTN","SCDXRT02",80,0)
+ .;Determine which column & line to put entry in
+"RTN","SCDXRT02",81,0)
+ .S COL4ENT=(ENTRY>VALMCNT)+1
+"RTN","SCDXRT02",82,0)
+ .S LINE4ENT=ENTRY
+"RTN","SCDXRT02",83,0)
+ .S:(ENTRY>VALMCNT) LINE4ENT=ENTRY-VALMCNT
+"RTN","SCDXRT02",84,0)
+ .;Get data currently stored in display
+"RTN","SCDXRT02",85,0)
+ .S DATA=$G(@VALMAR@(LINE4ENT,0))
+"RTN","SCDXRT02",86,0)
+ .;Insert entry number
+"RTN","SCDXRT02",87,0)
+ .S SPOT=5-$L(ENTRY)
+"RTN","SCDXRT02",88,0)
+ .S:(COL4ENT=2) SPOT=43-$L(ENTRY)
+"RTN","SCDXRT02",89,0)
+ .S DATA=$$INSERT^SCDXUTL1(ENTRY,DATA,SPOT)
+"RTN","SCDXRT02",90,0)
+ .;Insert patient name truncated to 20 characters, then BID
+"RTN","SCDXRT02",91,0)
+ .S SPOT=6
+"RTN","SCDXRT02",92,0)
+ .S:(COL4ENT=2) SPOT=44
+"RTN","SCDXRT02",93,0)
+ .S NAMEID=$E(NAME_BS,1,20)_$S(VA("BID")]"":"  ("_VA("BID")_")",1:"")
+"RTN","SCDXRT02",94,0)
+ .S DATA=$$INSERT^SCDXUTL1(NAMEID,DATA,SPOT)
+"RTN","SCDXRT02",95,0)
+ .;Put data back into display
+"RTN","SCDXRT02",96,0)
+ .S @VALMAR@(LINE4ENT,0)=DATA
+"RTN","SCDXRT02",97,0)
+ .;Store data into indexes
+"RTN","SCDXRT02",98,0)
+ .S @VALMAR@("ENTRY2DFN",ENTRY)=DFN
+"RTN","SCDXRT02",99,0)
+ .S @VALMAR@("DFN2ENTRY",DFN)=ENTRY
+"RTN","SCDXRT02",100,0)
+ .;Increment entry number
+"RTN","SCDXRT02",101,0)
+ .S ENTRY=ENTRY+1
+"RTN","SCDXRT02",102,0)
+ ;Done
+"RTN","SCDXRT02",103,0)
+ S VALMBG=1
+"RTN","SCDXRT02",104,0)
+ Q
+"RTN","SCDXRT02",105,0)
+ ;
+"RTN","SCDXRT02",106,0)
+MARK(RESET) ;Entry point to prompt user for entry numbers to mark/unmark
+"RTN","SCDXRT02",107,0)
+ ; for retransmission
+"RTN","SCDXRT02",108,0)
+ ;
+"RTN","SCDXRT02",109,0)
+ ;Input  : RESET - Flag denoting which process to execute
+"RTN","SCDXRT02",110,0)
+ ;                 0 = Mark entry for retransmission (default)
+"RTN","SCDXRT02",111,0)
+ ;                 1 = Unmark entry for retransmission
+"RTN","SCDXRT02",112,0)
+ ;         Variables as set by List Manager interface
+"RTN","SCDXRT02",113,0)
+ ;Output : None
+"RTN","SCDXRT02",114,0)
+ ;         The following index is set when marking an entry
+"RTN","SCDXRT02",115,0)
+ ;            VALMAR("MARKED",Entry) = ""
+"RTN","SCDXRT02",116,0)
+ ;         This index is deleted when unmarking an entry
+"RTN","SCDXRT02",117,0)
+ ;         The List Manager display is updated accordingly  
+"RTN","SCDXRT02",118,0)
+ ;Note   : Marking/unmarking is done only in the context of the List
+"RTN","SCDXRT02",119,0)
+ ;         Manager display
+"RTN","SCDXRT02",120,0)
+ ;
+"RTN","SCDXRT02",121,0)
+ ;Check input
+"RTN","SCDXRT02",122,0)
+ S RESET=+$G(RESET)
+"RTN","SCDXRT02",123,0)
+ ;Declare variables
+"RTN","SCDXRT02",124,0)
+ N ENTRY,SELECT,DIR,X,Y,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","SCDXRT02",125,0)
+ ;Switch to full screen
+"RTN","SCDXRT02",126,0)
+ D FULL^VALM1
+"RTN","SCDXRT02",127,0)
+ ;Prompt user for selection(s)
+"RTN","SCDXRT02",128,0)
+ S X=+$O(@VALMAR@("ENTRY2DFN",""))
+"RTN","SCDXRT02",129,0)
+ S Y=+$O(@VALMAR@("ENTRY2DFN",""),-1)
+"RTN","SCDXRT02",130,0)
+ S DIR(0)="LAO^"_X_":"_Y_":0"
+"RTN","SCDXRT02",131,0)
+ S DIR("A")="Select "_VALM("ENTITY")_"(s)  ("_X_"-"_Y_"): "
+"RTN","SCDXRT02",132,0)
+ S DIR("?",1)="     Select the patient(s) whose rejected encounters you want "_$S(RESET:"un",1:"")_"marked"
+"RTN","SCDXRT02",133,0)
+ S DIR("?")="     for retransmission to the National Patient Care Database"
+"RTN","SCDXRT02",134,0)
+ D ^DIR
+"RTN","SCDXRT02",135,0)
+ I $D(DIRUT) S VALMBCK="R" Q
+"RTN","SCDXRT02",136,0)
+ ;Move selections from Y into SELECT - parse main output of DIR
+"RTN","SCDXRT02",137,0)
+ ; into individual entries in SELECT() array
+"RTN","SCDXRT02",138,0)
+ M SELECT=Y
+"RTN","SCDXRT02",139,0)
+ F X=1:1 S Y=$P(SELECT(0),",",X) Q:('Y)  S SELECT(Y)=""
+"RTN","SCDXRT02",140,0)
+ K SELECT(0)
+"RTN","SCDXRT02",141,0)
+ ;Loop through selected entries
+"RTN","SCDXRT02",142,0)
+ S ENTRY=0
+"RTN","SCDXRT02",143,0)
+ F  S ENTRY=+$O(SELECT(ENTRY)) Q:('ENTRY)  D
+"RTN","SCDXRT02",144,0)
+ .;Mark/unmark entry for retransmission
+"RTN","SCDXRT02",145,0)
+ .D MARKIDX(ENTRY,RESET)
+"RTN","SCDXRT02",146,0)
+ ;Done
+"RTN","SCDXRT02",147,0)
+ S VALMBCK="R"
+"RTN","SCDXRT02",148,0)
+ Q
+"RTN","SCDXRT02",149,0)
+ ;
+"RTN","SCDXRT02",150,0)
+MARKPT(RESET) ; Entry point to prompt user for patients to mark/unmark
+"RTN","SCDXRT02",151,0)
+ ; for retransmission
+"RTN","SCDXRT02",152,0)
+ ;
+"RTN","SCDXRT02",153,0)
+ ; (see description of input/output for MARK call)
+"RTN","SCDXRT02",154,0)
+ ;
+"RTN","SCDXRT02",155,0)
+ S RESET=+$G(RESET)
+"RTN","SCDXRT02",156,0)
+ ;Declare variables
+"RTN","SCDXRT02",157,0)
+ N ENTRY,DA,DIC,X,Y,DTOUT,DUOUT,DIRUT,DIROUT,VAUTN
+"RTN","SCDXRT02",158,0)
+ ;Switch to full screen
+"RTN","SCDXRT02",159,0)
+ D FULL^VALM1
+"RTN","SCDXRT02",160,0)
+ ;Prompt user for selection(s) via VAUTOMA
+"RTN","SCDXRT02",161,0)
+ S VAUTNI=2
+"RTN","SCDXRT02",162,0)
+ S DIC("S")="I $D(@VALMAR@(""DFN2ENTRY"",+Y))"
+"RTN","SCDXRT02",163,0)
+ D PATIENT^VAUTOMA
+"RTN","SCDXRT02",164,0)
+ I Y<0 S VALMBCK="R" Q
+"RTN","SCDXRT02",165,0)
+ I VAUTN=1 D MARKALL(RESET)
+"RTN","SCDXRT02",166,0)
+ ;Loop through selected entries
+"RTN","SCDXRT02",167,0)
+ S DFN=0
+"RTN","SCDXRT02",168,0)
+ F  S DFN=+$O(VAUTN(DFN)) Q:('DFN)  D
+"RTN","SCDXRT02",169,0)
+ .S ENTRY=$G(@VALMAR@("DFN2ENTRY",DFN)) Q:'ENTRY
+"RTN","SCDXRT02",170,0)
+ .;Mark/unmark entry for retransmission
+"RTN","SCDXRT02",171,0)
+ .D MARKIDX(ENTRY,RESET)
+"RTN","SCDXRT02",172,0)
+ ;Done
+"RTN","SCDXRT02",173,0)
+ S VALMBCK="R"
+"RTN","SCDXRT02",174,0)
+ Q
+"RTN","SCDXRT02",175,0)
+ ;
+"RTN","SCDXRT02",176,0)
+MARKALL(RESET) ;Entry point to mark all entries for retransmission
+"RTN","SCDXRT02",177,0)
+ ;
+"RTN","SCDXRT02",178,0)
+ ;Input  : RESET - Flag denoting which process to execute
+"RTN","SCDXRT02",179,0)
+ ;                 0 = Mark entry for retransmission (default)
+"RTN","SCDXRT02",180,0)
+ ;                 1 = Unmark entry for retransmission
+"RTN","SCDXRT02",181,0)
+ ;         Variables as set by List Manager interface
+"RTN","SCDXRT02",182,0)
+ ;Output : None
+"RTN","SCDXRT02",183,0)
+ ;         The following index is set when marking an entry
+"RTN","SCDXRT02",184,0)
+ ;            VALMAR("MARKED",Entry) = ""
+"RTN","SCDXRT02",185,0)
+ ;         This index is deleted when unmarking an entry
+"RTN","SCDXRT02",186,0)
+ ;         The List Manager display is updated accordingly  
+"RTN","SCDXRT02",187,0)
+ ;Note   : Marking/unmarking is done only in the context of the List
+"RTN","SCDXRT02",188,0)
+ ;         Manager display
+"RTN","SCDXRT02",189,0)
+ ;
+"RTN","SCDXRT02",190,0)
+ ;Check input
+"RTN","SCDXRT02",191,0)
+ S RESET=+$G(RESET)
+"RTN","SCDXRT02",192,0)
+ ;Declare variables
+"RTN","SCDXRT02",193,0)
+ N ENTRY
+"RTN","SCDXRT02",194,0)
+ ;Loop through all entries in entry & DFN index
+"RTN","SCDXRT02",195,0)
+ S ENTRY=""
+"RTN","SCDXRT02",196,0)
+ F  S ENTRY=+$O(@VALMAR@("ENTRY2DFN",ENTRY)) Q:('ENTRY)  D
+"RTN","SCDXRT02",197,0)
+ .;Mark/unmark for retransmission
+"RTN","SCDXRT02",198,0)
+ .D MARKIDX(ENTRY,RESET)
+"RTN","SCDXRT02",199,0)
+ ;Done
+"RTN","SCDXRT02",200,0)
+ S VALMBCK="R"
+"RTN","SCDXRT02",201,0)
+ Q
+"RTN","SCDXRT02",202,0)
+ ;
+"RTN","SCDXRT02",203,0)
+MARKIDX(ENTRY,RESET) ;Entry point to mark/unmark an entry for retransmission
+"RTN","SCDXRT02",204,0)
+ ;
+"RTN","SCDXRT02",205,0)
+ ;Input  : ENTRY - Entry number in display to mark/unmark
+"RTN","SCDXRT02",206,0)
+ ;         RESET - Flag denoting which process to execute
+"RTN","SCDXRT02",207,0)
+ ;                 0 = Mark entry for retransmission (default)
+"RTN","SCDXRT02",208,0)
+ ;                 1 = Unmark entry for retransmission
+"RTN","SCDXRT02",209,0)
+ ;         Variables as set by List Manager interface
+"RTN","SCDXRT02",210,0)
+ ;Output : None
+"RTN","SCDXRT02",211,0)
+ ;         The following index is set when marking an entry
+"RTN","SCDXRT02",212,0)
+ ;            VALMAR("MARKED",Entry) = ""
+"RTN","SCDXRT02",213,0)
+ ;         This index is deleted when unmarking an entry
+"RTN","SCDXRT02",214,0)
+ ;         The List Manager display is updated accordingly  
+"RTN","SCDXRT02",215,0)
+ ;Note   : Marking/unmarking is done only in the context of the List
+"RTN","SCDXRT02",216,0)
+ ;         Manager display
+"RTN","SCDXRT02",217,0)
+ ;
+"RTN","SCDXRT02",218,0)
+ ;Check input
+"RTN","SCDXRT02",219,0)
+ S ENTRY=+$G(ENTRY)
+"RTN","SCDXRT02",220,0)
+ Q:(ENTRY<1)
+"RTN","SCDXRT02",221,0)
+ Q:('$D(@VALMAR@("ENTRY2DFN",ENTRY)))
+"RTN","SCDXRT02",222,0)
+ S RESET=+$G(RESET)
+"RTN","SCDXRT02",223,0)
+ ;Declare variables
+"RTN","SCDXRT02",224,0)
+ N TMP,COL4ENT,LINE4ENT,DATA,SPOT
+"RTN","SCDXRT02",225,0)
+ ;Set index
+"RTN","SCDXRT02",226,0)
+ S:('RESET) @VALMAR@("MARKED",ENTRY)=""
+"RTN","SCDXRT02",227,0)
+ ;Delete index
+"RTN","SCDXRT02",228,0)
+ K:(RESET) @VALMAR@("MARKED",ENTRY)
+"RTN","SCDXRT02",229,0)
+ ;Update display
+"RTN","SCDXRT02",230,0)
+ ; Determine which column & line to put entry in
+"RTN","SCDXRT02",231,0)
+ S TMP=+$G(@VALMAR@("LINES"))
+"RTN","SCDXRT02",232,0)
+ S COL4ENT=(ENTRY>TMP)+1
+"RTN","SCDXRT02",233,0)
+ S LINE4ENT=ENTRY
+"RTN","SCDXRT02",234,0)
+ S:(ENTRY>TMP) LINE4ENT=ENTRY-TMP
+"RTN","SCDXRT02",235,0)
+ ;Get data currently stored in display
+"RTN","SCDXRT02",236,0)
+ S DATA=$G(@VALMAR@(LINE4ENT,0))
+"RTN","SCDXRT02",237,0)
+ ;Put/remove retransmission mark
+"RTN","SCDXRT02",238,0)
+ S SPOT=1
+"RTN","SCDXRT02",239,0)
+ S:(COL4ENT=2) SPOT=39
+"RTN","SCDXRT02",240,0)
+ S TMP="*"
+"RTN","SCDXRT02",241,0)
+ S:(RESET) TMP=" "
+"RTN","SCDXRT02",242,0)
+ S DATA=$$INSERT^SCDXUTL1(TMP,DATA,SPOT)
+"RTN","SCDXRT02",243,0)
+ ;Put data back into display
+"RTN","SCDXRT02",244,0)
+ S @VALMAR@(LINE4ENT,0)=DATA
+"RTN","SCDXRT02",245,0)
+ ;Done
+"RTN","SCDXRT02",246,0)
+ Q
+"RTN","SCDXRT02",247,0)
+ ;
+"RTN","SCDXRT02",248,0)
+CLEANUP ;Entry point for cleaning up
+"RTN","SCDXRT02",249,0)
+ ;
+"RTN","SCDXRT02",250,0)
+ ;Input  : Variables as set by List Manager interface
+"RTN","SCDXRT02",251,0)
+ ;Output : None
+"RTN","SCDXRT02",252,0)
+ ;
+"RTN","SCDXRT02",253,0)
+ ;Declare variables
+"RTN","SCDXRT02",254,0)
+ N ENTRY,DFN,XMITPTR
+"RTN","SCDXRT02",255,0)
+ ;Switch to full screen
+"RTN","SCDXRT02",256,0)
+ D FULL^VALM1
+"RTN","SCDXRT02",257,0)
+ W !
+"RTN","SCDXRT02",258,0)
+ W !,"Rejected encounters for the selected patient(s) will now be"
+"RTN","SCDXRT02",259,0)
+ W !,"marked for retransmission "
+"RTN","SCDXRT02",260,0)
+ ;Loop through index of marked entries
+"RTN","SCDXRT02",261,0)
+ S ENTRY=""
+"RTN","SCDXRT02",262,0)
+ F  S ENTRY=+$O(@VALMAR@("MARKED",ENTRY)) Q:('ENTRY)  D
+"RTN","SCDXRT02",263,0)
+ .;Get DFN for entry
+"RTN","SCDXRT02",264,0)
+ .S DFN=+$G(@VALMAR@("ENTRY2DFN",ENTRY))
+"RTN","SCDXRT02",265,0)
+ .Q:('DFN)
+"RTN","SCDXRT02",266,0)
+ .;Loop through index of all entries in TRANSMITTED OUTPATIENT
+"RTN","SCDXRT02",267,0)
+ .; ENCOUNTER file (#409.73) for DFN
+"RTN","SCDXRT02",268,0)
+ .S XMITPTR=""
+"RTN","SCDXRT02",269,0)
+ .F  S XMITPTR=+$O(@VALMAR@("DFN",DFN,XMITPTR)) Q:('XMITPTR)  D
+"RTN","SCDXRT02",270,0)
+ ..;Mark entry for retransmission
+"RTN","SCDXRT02",271,0)
+ ..D STREEVNT^SCDXFU01(XMITPTR,0)
+"RTN","SCDXRT02",272,0)
+ ..;Turn on transmission flag
+"RTN","SCDXRT02",273,0)
+ ..D XMITFLAG^SCDXFU01(XMITPTR)
+"RTN","SCDXRT02",274,0)
+ ..W "."
+"RTN","SCDXRT02",275,0)
+ ;Done - clean up global location used and quit
+"RTN","SCDXRT02",276,0)
+ K @VALMAR
+"RTN","SCDXRT02",277,0)
+ Q
+"RTN","SCDXRT03")
+0^4^B6481187^B6148498
+"RTN","SCDXRT03",1,0)
+SCDXRT03 ;BP OIFO/KEITH - AMB CARE RETRANSMISSION BY SELECTED ERROR CODE ;12/26/01
+"RTN","SCDXRT03",2,0)
+ ;;5.3;Scheduling;**215,247,640**;AUG 13, 1993;Build 8
+"RTN","SCDXRT03",3,0)
+ ;
+"RTN","SCDXRT03",4,0)
+CODE ;Retransmit by selected error code
+"RTN","SCDXRT03",5,0)
+ ;
+"RTN","SCDXRT03",6,0)
+ ;SD*640 Stop retransmit by selected error code
+"RTN","SCDXRT03",7,0)
+ Q
+"RTN","SCDXRT03",8,0)
+ ;
+"RTN","SCDXRT03",9,0)
+ N DIC,X,Y,SDERR,DIR,SDBEG,SDEND,SDCT,SDT,SDTOE,SDTOEE,SDTOEE0,SDTOT
+"RTN","SCDXRT03",10,0)
+ S DIC="^SD(409.76,",DIC(0)="AEMQ" W ! D ^DIC
+"RTN","SCDXRT03",11,0)
+ Q:$D(DTOUT)!$D(DUOUT)  Q:Y'>0  S SDERR=+Y
+"RTN","SCDXRT03",12,0)
+BEG S X=$$ECLMO() S:'X X=2991000 S X=X+1
+"RTN","SCDXRT03",13,0)
+ I '$O(^SD(409.75,"AEDT",X)) D  Q
+"RTN","SCDXRT03",14,0)
+ .W !!,"No errors on file since the most recent database closeout date."
+"RTN","SCDXRT03",15,0)
+ .Q
+"RTN","SCDXRT03",16,0)
+ S DIR(0)="D^"_X_":"_DT_":EXP"
+"RTN","SCDXRT03",17,0)
+ S DIR("A")="Start date"
+"RTN","SCDXRT03",18,0)
+ W ! D ^DIR Q:$D(DTOUT)!$D(DUOUT)  S SDBEG=Y
+"RTN","SCDXRT03",19,0)
+ I '$O(^SD(409.75,"AEDT",Y)) D  G BEG
+"RTN","SCDXRT03",20,0)
+ .W !!,"No errors on file later than the date specified."
+"RTN","SCDXRT03",21,0)
+ .Q
+"RTN","SCDXRT03",22,0)
+ S DIR(0)="D^"_Y_":"_DT_":EXP"
+"RTN","SCDXRT03",23,0)
+ S DIR("A")="  End date"
+"RTN","SCDXRT03",24,0)
+ W ! D ^DIR Q:$D(DTOUT)!$D(DUOUT)  S SDEND=Y_.999999
+"RTN","SCDXRT03",25,0)
+ I $O(^SD(409.75,"AEDT",SDBEG))>SDEND D  G BEG
+"RTN","SCDXRT03",26,0)
+ .W !!,"No errors on file within the date range specified."
+"RTN","SCDXRT03",27,0)
+ .Q
+"RTN","SCDXRT03",28,0)
+ W ! D WAIT^DICD  ;Pause
+"RTN","SCDXRT03",29,0)
+ ;Search for transmitted encounters with selected error by date range
+"RTN","SCDXRT03",30,0)
+ S (SDTOT,SDCT)=0,SDT=SDBEG
+"RTN","SCDXRT03",31,0)
+ F  S SDT=$O(^SD(409.75,"AEDT",SDT)) Q:'SDT!(SDT>SDEND)  D
+"RTN","SCDXRT03",32,0)
+ .S SDTOE=0 F  S SDTOE=$O(^SD(409.75,"AEDT",SDT,SDTOE)) Q:'SDTOE  D
+"RTN","SCDXRT03",33,0)
+ ..S SDTOEE=0
+"RTN","SCDXRT03",34,0)
+ ..F  S SDTOEE=$O(^SD(409.75,"AEDT",SDT,SDTOE,SDTOEE)) Q:'SDTOEE  D
+"RTN","SCDXRT03",35,0)
+ ...S SDTOEE0=$G(^SD(409.75,SDTOEE,0))
+"RTN","SCDXRT03",36,0)
+ ...S SDCT=SDCT+1 W:SDCT#100=0 "."  ;Dot out
+"RTN","SCDXRT03",37,0)
+ ...Q:$P(SDTOEE0,U,2)'=SDERR  ;Quit if not the selected error
+"RTN","SCDXRT03",38,0)
+ ...S SDTOT=SDTOT+1  ;Count records flagged
+"RTN","SCDXRT03",39,0)
+ ...D STREEVNT^SCDXFU01(SDTOE,0)  ;Record event
+"RTN","SCDXRT03",40,0)
+ ...D XMITFLAG^SCDXFU01(SDTOE,0)  ;Mark record for transmission
+"RTN","SCDXRT03",41,0)
+ ...Q
+"RTN","SCDXRT03",42,0)
+ ..Q
+"RTN","SCDXRT03",43,0)
+ .Q
+"RTN","SCDXRT03",44,0)
+ I 'SDTOT D  Q
+"RTN","SCDXRT03",45,0)
+ .W !!,"No encounters were found in this date range with the selected error code!"
+"RTN","SCDXRT03",46,0)
+ .Q
+"RTN","SCDXRT03",47,0)
+ W !!,SDTOT," encounter",$S(SDTOT=1:"",1:"s")," flagged for transmission."
+"RTN","SCDXRT03",48,0)
+ Q
+"RTN","SCDXRT03",49,0)
+ ;
+"RTN","SCDXRT03",50,0)
+ECLMO() ;Earliest month following the most recent database closeout
+"RTN","SCDXRT03",51,0)
+ N SDY,SDM,SDX
+"RTN","SCDXRT03",52,0)
+ S SDY=$E(DT,1,3)
+"RTN","SCDXRT03",53,0)
+ S SDM=$E(DT,4,5)
+"RTN","SCDXRT03",54,0)
+ S SDY=SDY-2 S:SDM<10 SDY=SDY-1
+"RTN","SCDXRT03",55,0)
+ S SDX=SDY_1000 ;Days greater than this one are acceptable
+"RTN","SCDXRT03",56,0)
+ Q SDX
+"RTN","SCDXSTOP")
+0^6^B10792724^n/a
+"RTN","SCDXSTOP",1,0)
+SCDXSTOP ;ALB/TXH - STOP ACRP HL7 TRANSMISSIONS;08/21/18
+"RTN","SCDXSTOP",2,0)
+ ;;5.3;Scheduling;**640**;AUG 13, 1993;Build 8
+"RTN","SCDXSTOP",3,0)
+ ;
+"RTN","SCDXSTOP",4,0)
+ ; This post-init routine will
+"RTN","SCDXSTOP",5,0)
+ ; - disable the AMB-CARE & SDPM Logical Links
+"RTN","SCDXSTOP",6,0)
+ ; - unschedule the AMB-CARE NIGHTLY transmission task
+"RTN","SCDXSTOP",7,0)
+ ; - place AMB-CARE & APM related options Out of Order
+"RTN","SCDXSTOP",8,0)
+ ;
+"RTN","SCDXSTOP",9,0)
+ Q
+"RTN","SCDXSTOP",10,0)
+ ;
+"RTN","SCDXSTOP",11,0)
+EN ; Entry Point
+"RTN","SCDXSTOP",12,0)
+ D BMES^XPDUTL("SD*5.3*640 Post-Init Started...")
+"RTN","SCDXSTOP",13,0)
+ D LOGLNK
+"RTN","SCDXSTOP",14,0)
+ D DELETE
+"RTN","SCDXSTOP",15,0)
+ D OPTOUT
+"RTN","SCDXSTOP",16,0)
+ D BMES^XPDUTL("SD*5.3*640 Post-Init Finished.")
+"RTN","SCDXSTOP",17,0)
+ D MES^XPDUTL(" ")
+"RTN","SCDXSTOP",18,0)
+ Q
+"RTN","SCDXSTOP",19,0)
+ ;
+"RTN","SCDXSTOP",20,0)
+LOGLNK ; Disable the AMB-CARE & SDPM Logical Links
+"RTN","SCDXSTOP",21,0)
+ ;
+"RTN","SCDXSTOP",22,0)
+ D BMES^XPDUTL("   * Disabling the following Logical Links...")
+"RTN","SCDXSTOP",23,0)
+ N SDLOG,SDLOGN,SDLOGLNK,DA,DR,SDLNKMSG,SDLNK
+"RTN","SCDXSTOP",24,0)
+ S SDLOG=0
+"RTN","SCDXSTOP",25,0)
+ F SDLOGN=1:1 S SDLOGLNK=$P($TEXT(LOGLIST+SDLOGN),";;",2) Q:SDLOGLNK="$$END"!(SDLOGLNK="")  D
+"RTN","SCDXSTOP",26,0)
+ . S SDLNK=+$$FIND1^DIC(870,"","BX",SDLOGLNK,"","","")
+"RTN","SCDXSTOP",27,0)
+ . I SDLNK="" D MES^XPDUTL("    "_SDLOGLNK_" not found. It's okay.") Q
+"RTN","SCDXSTOP",28,0)
+ . ; Get AUTOSTART disabled and set SHUTDOWN LLP to YES.
+"RTN","SCDXSTOP",29,0)
+ . N DIE S DIE="^HLCS(870,",DA=SDLNK,DR="4.5///0;14///1"
+"RTN","SCDXSTOP",30,0)
+ . D ^DIE
+"RTN","SCDXSTOP",31,0)
+ . S SDLNKMSG="     "_SDLOGLNK
+"RTN","SCDXSTOP",32,0)
+ . D MES^XPDUTL(SDLNKMSG)
+"RTN","SCDXSTOP",33,0)
+ D MES^XPDUTL("     Done.")
+"RTN","SCDXSTOP",34,0)
+ Q
+"RTN","SCDXSTOP",35,0)
+ ;
+"RTN","SCDXSTOP",36,0)
+DELETE ; Remove the following tasks in Option Schedule
+"RTN","SCDXSTOP",37,0)
+ ; SCDX AMBCAR NIGHTLY XMIT Ambulatory Care Nightly Transmission to NPCDB
+"RTN","SCDXSTOP",38,0)
+ ; SCRPW APM TASK JOB       Schedule APM Performance Monitor Task
+"RTN","SCDXSTOP",39,0)
+ ; SDOQM PM NIGHTLY JOB     Nightly job for PM data extract
+"RTN","SCDXSTOP",40,0)
+ ;
+"RTN","SCDXSTOP",41,0)
+ ; IA #6121 Remove Scheduled options from #19.2
+"RTN","SCDXSTOP",42,0)
+ ; IA #2051 Database Server API: Lookup Utilities (DIC)
+"RTN","SCDXSTOP",43,0)
+ ;
+"RTN","SCDXSTOP",44,0)
+ K ^XTMP("SCDXTSK")
+"RTN","SCDXSTOP",45,0)
+ D BMES^XPDUTL("   * Removing ACRP & APM related scheduled tasks...")
+"RTN","SCDXSTOP",46,0)
+ N SDMCN,SDRPTSK,SDOPT,DA,DIK,SDTSKMSG
+"RTN","SCDXSTOP",47,0)
+ S SDN=0
+"RTN","SCDXSTOP",48,0)
+ F SDMCN=1:1 S SDRPTSK=$P($TEXT(TSKLIST+SDMCN),";;",2) Q:SDRPTSK="$$END"!(SDRPTSK="")  D
+"RTN","SCDXSTOP",49,0)
+ . S SDOPT=+$$FIND1^DIC(19,"","BX",SDRPTSK,"","","")
+"RTN","SCDXSTOP",50,0)
+ . I SDOPT="" D MES^XPDUTL("    "_SDRPTSK_" not found. It's okay.") Q
+"RTN","SCDXSTOP",51,0)
+ . S DA="" F  S DA=$O(^DIC(19.2,"B",SDOPT,DA)) Q:'+DA  D
+"RTN","SCDXSTOP",52,0)
+ . . S ^XTMP("SCDXTSK",$J,SDN)=$$FMADD^XLFDT(DT+90)_"^"_DT_"^copy of "_SDRPTSK_" in #19.2^"_DA
+"RTN","SCDXSTOP",53,0)
+ . . M ^XTMP("SCDXTSK",$J,SDN,"DIC",19.2,DA)=^DIC(19.2,DA)
+"RTN","SCDXSTOP",54,0)
+ . . S DIK="^DIC(19.2," D ^DIK
+"RTN","SCDXSTOP",55,0)
+ . . S SDTSKMSG="     "_SDRPTSK
+"RTN","SCDXSTOP",56,0)
+ . . D MES^XPDUTL(SDTSKMSG)
+"RTN","SCDXSTOP",57,0)
+ . . S SDN=SDN+1
+"RTN","SCDXSTOP",58,0)
+ K SDN
+"RTN","SCDXSTOP",59,0)
+ D MES^XPDUTL("     Done.")
+"RTN","SCDXSTOP",60,0)
+ Q
+"RTN","SCDXSTOP",61,0)
+ ;
+"RTN","SCDXSTOP",62,0)
+OPTOUT ; Set options out of order
+"RTN","SCDXSTOP",63,0)
+ ;
+"RTN","SCDXSTOP",64,0)
+ ; IA #1157 OUT^XPDMENU(OPT,TXT)
+"RTN","SCDXSTOP",65,0)
+ ;
+"RTN","SCDXSTOP",66,0)
+ D BMES^XPDUTL("   * Placing the following options out of order...")
+"RTN","SCDXSTOP",67,0)
+ N SDMCN,SDOPT,SDTXT,SDOPTMSG
+"RTN","SCDXSTOP",68,0)
+ S SDTXT="This functionality is now accomplished by CDW/VSSC."
+"RTN","SCDXSTOP",69,0)
+ F SDMCN=1:1 S SDOPT=$P($TEXT(OPTLIST+SDMCN),";;",2) Q:SDOPT="$$END"!(SDOPT="")  D
+"RTN","SCDXSTOP",70,0)
+ . D OUT^XPDMENU(SDOPT,SDTXT)  ;Mark option out-of-order
+"RTN","SCDXSTOP",71,0)
+ . S SDOPTMSG="     "_SDOPT
+"RTN","SCDXSTOP",72,0)
+ . D MES^XPDUTL(SDOPTMSG)
+"RTN","SCDXSTOP",73,0)
+ D MES^XPDUTL("     Done.")
+"RTN","SCDXSTOP",74,0)
+ Q
+"RTN","SCDXSTOP",75,0)
+ ;
+"RTN","SCDXSTOP",76,0)
+OPTLIST ; options
+"RTN","SCDXSTOP",77,0)
+ ;;SCDX AMBCAR NIGHTLY XMIT
+"RTN","SCDXSTOP",78,0)
+ ;;SCDX AMBCAR RETRANS BY DATE
+"RTN","SCDXSTOP",79,0)
+ ;;SCDX AMBCAR RETRANS ERROR
+"RTN","SCDXSTOP",80,0)
+ ;;SCDX AMBCAR RETRANS SEL REJ
+"RTN","SCDXSTOP",81,0)
+ ;;SCRPW APM TASK JOB
+"RTN","SCDXSTOP",82,0)
+ ;;SCRPW PM RETRANSMIT REPORT
+"RTN","SCDXSTOP",83,0)
+ ;;SDOQM PM NIGHTLY JOB
+"RTN","SCDXSTOP",84,0)
+ ;;$$END
+"RTN","SCDXSTOP",85,0)
+ ;
+"RTN","SCDXSTOP",86,0)
+TSKLIST ; Scheduled tasks
+"RTN","SCDXSTOP",87,0)
+ ;;SCDX AMBCAR NIGHTLY XMIT
+"RTN","SCDXSTOP",88,0)
+ ;;SCRPW APM TASK JOB
+"RTN","SCDXSTOP",89,0)
+ ;;SDOQM PM NIGHTLY JOB
+"RTN","SCDXSTOP",90,0)
+ ;;$$END
+"RTN","SCDXSTOP",91,0)
+ ;
+"RTN","SCDXSTOP",92,0)
+LOGLIST ; Logical Links
+"RTN","SCDXSTOP",93,0)
+ ;;AMB-CARE
+"RTN","SCDXSTOP",94,0)
+ ;;SDPM
+"RTN","SCDXSTOP",95,0)
+ ;;$$END
+"RTN","SCDXSTOP",96,0)
+ ;
+"RTN","SDOQMP")
+0^7^B27996803^B27066112
+"RTN","SDOQMP",1,0)
+SDOQMP ;ALB/SCK - Appointment Monitoring / Performance Measure report;07/17/96
+"RTN","SDOQMP",2,0)
+ ;;5.3;SCHEDULING;**47,640**;AUG 13,1993;Build 8
+"RTN","SDOQMP",3,0)
+ Q
+"RTN","SDOQMP",4,0)
+ ;
+"RTN","SDOQMP",5,0)
+EN ;  Entry point for Access PM extract to be sent to data collection server
+"RTN","SDOQMP",6,0)
+ ;
+"RTN","SDOQMP",7,0)
+ ; SD*640 Stop sending data to data collection server even this option 
+"RTN","SDOQMP",8,0)
+ ; has not been used for a long time.
+"RTN","SDOQMP",9,0)
+ Q
+"RTN","SDOQMP",10,0)
+ ;
+"RTN","SDOQMP",11,0)
+ Q:$$CHKTASK^SDOQMP0
+"RTN","SDOQMP",12,0)
+ D INIT,LOOP,START^SDOQMP2,BLDPME
+"RTN","SDOQMP",13,0)
+ D END^SDOQMP1
+"RTN","SDOQMP",14,0)
+ Q
+"RTN","SDOQMP",15,0)
+ ;
+"RTN","SDOQMP",16,0)
+EN1 ;  Entry point for interactive appointment monitoring report
+"RTN","SDOQMP",17,0)
+ ;
+"RTN","SDOQMP",18,0)
+ N XT,XT1,CONT,PMSEL
+"RTN","SDOQMP",19,0)
+ ;
+"RTN","SDOQMP",20,0)
+ S PMSEL=$$SELECT^SDOQMP0
+"RTN","SDOQMP",21,0)
+ Q:PMSEL']""
+"RTN","SDOQMP",22,0)
+ ;
+"RTN","SDOQMP",23,0)
+ I PMSEL="C" G EN1Q:'$$CLINIC^SDOQMP0
+"RTN","SDOQMP",24,0)
+ I PMSEL="S" G EN1Q:'$$STOP^SDOQMP0
+"RTN","SDOQMP",25,0)
+ I PMSEL="D" G EN1Q:'$$DIV^SDOQMP0
+"RTN","SDOQMP",26,0)
+ ;
+"RTN","SDOQMP",27,0)
+ F XT=1:1 S XT1=$P($T(MSG+XT),";;",2) Q:XT1="$$END"  W !,XT1
+"RTN","SDOQMP",28,0)
+AGN S CONT=0
+"RTN","SDOQMP",29,0)
+ S %ZIS="Q" D ^%ZIS  G:POP EN1Q
+"RTN","SDOQMP",30,0)
+ ;
+"RTN","SDOQMP",31,0)
+ I IOM'=132 D  G:'CONT AGN
+"RTN","SDOQMP",32,0)
+ . S:$E(IOST,1,2)="C-" DIR("A",1)="It's not recommended to print this report to screen."
+"RTN","SDOQMP",33,0)
+ . S DIR(0)="Y^A",DIR("A")="Do you want to select another device?",DIR("B")="YES"
+"RTN","SDOQMP",34,0)
+ . S DIR("A",2)="The selected device does not have 132 columns."
+"RTN","SDOQMP",35,0)
+ . D ^DIR K DIR
+"RTN","SDOQMP",36,0)
+ . S:$D(DIRUT)!(Y=0) CONT=1
+"RTN","SDOQMP",37,0)
+ ;
+"RTN","SDOQMP",38,0)
+QUE I $D(IO("Q")) D  G EN1Q
+"RTN","SDOQMP",39,0)
+ . S ZTRTN="START^SDOQMP",ZTDESC="Appointment Monitoring Report"
+"RTN","SDOQMP",40,0)
+ . S:PMSEL="C" ZTSAVE("CLINIC(")="",ZTSAVE("CLINIC")=""
+"RTN","SDOQMP",41,0)
+ . S:PMSEL="S" ZTSAVE("VAUTC(")="",ZTSAVE("VAUTC")=""
+"RTN","SDOQMP",42,0)
+ . S:PMSEL="D" ZTSAVE("VAUTD(")="",ZTSAVE("VAUTD")=""
+"RTN","SDOQMP",43,0)
+ . D ^%ZTLOAD W:$D(ZTSK) !,"TASK #: ",ZTSK
+"RTN","SDOQMP",44,0)
+ . D HOME^%ZIS K IO("Q")
+"RTN","SDOQMP",45,0)
+ ;
+"RTN","SDOQMP",46,0)
+ D WAIT^DICD
+"RTN","SDOQMP",47,0)
+START D INIT,LOOPS^SDOQMP0,START^SDOQMP2,BLDRPT
+"RTN","SDOQMP",48,0)
+ ;
+"RTN","SDOQMP",49,0)
+EN1Q D:'$D(ZTQUEUED) ^%ZISC
+"RTN","SDOQMP",50,0)
+ D END^SDOQMP1
+"RTN","SDOQMP",51,0)
+ K CLINIC,^TMP("SDAMMS"),^TMP("SDPM"),VAUTD,VAUTC,^TMP("SDMSG")
+"RTN","SDOQMP",52,0)
+ Q
+"RTN","SDOQMP",53,0)
+ ;
+"RTN","SDOQMP",54,0)
+INIT ;   Initialize date arrays for calculating next available appointments
+"RTN","SDOQMP",55,0)
+ ;
+"RTN","SDOQMP",56,0)
+ S:'$D(U) U="^"
+"RTN","SDOQMP",57,0)
+ K ^TMP("SDAMMS"),^TMP("SDPM"),^TMP("APPT")
+"RTN","SDOQMP",58,0)
+ S ^TMP("SDAMMS",$J,"MGN")=80,(CNT,CNT1,CNT2,CNT3,CNT4)=0,IOM=80
+"RTN","SDOQMP",59,0)
+ S ^TMP("SDAMMS",$J,"PG")=0,$P(^TMP("SDAMMS",$J,"="),"=",IOM)=""
+"RTN","SDOQMP",60,0)
+ S X="T" D ^%DT S DT=Y X ^DD("DD") S ^TMP("SDAMMS",$J,"DT")=Y
+"RTN","SDOQMP",61,0)
+ S X="T" D ^%DT S AMMSRDT=Y
+"RTN","SDOQMP",62,0)
+ S ^TMP("SDPM",$J,0)=DT
+"RTN","SDOQMP",63,0)
+ S AMMSCNT="",AMMSLAST=0,AMMSZDT=DT,AMMSFDT=20,AMMSFSL=33
+"RTN","SDOQMP",64,0)
+ D DATES^SDOQMP1
+"RTN","SDOQMP",65,0)
+ Q
+"RTN","SDOQMP",66,0)
+ ;
+"RTN","SDOQMP",67,0)
+LOOP ;   Loop through the clinics in the Hospital location file.  Use only those clinics with
+"RTN","SDOQMP",68,0)
+ ;   an associated stop code on the required list for the access performance measure
+"RTN","SDOQMP",69,0)
+ ;
+"RTN","SDOQMP",70,0)
+ ;   Variables
+"RTN","SDOQMP",71,0)
+ ;      AMMSD0 - Clinic IEN
+"RTN","SDOQMP",72,0)
+ ;   
+"RTN","SDOQMP",73,0)
+ S AMMSD0=0
+"RTN","SDOQMP",74,0)
+ F  S AMMSD0=$O(^SC("AC","C",AMMSD0)) Q:'AMMSD0  D
+"RTN","SDOQMP",75,0)
+ . Q:'$P($G(^SC(AMMSD0,0)),"^",7)
+"RTN","SDOQMP",76,0)
+ . Q:'$$CLNOK^SDOQMP0($P($G(^SC(AMMSD0,0)),"^",7))
+"RTN","SDOQMP",77,0)
+ . Q:$G(^TMP("SDAMMS",$J,"Q"))=1
+"RTN","SDOQMP",78,0)
+ . F X1=1:1:3 D AMMSCNT^SDOQMP1 Q:AMMSLAST=0
+"RTN","SDOQMP",79,0)
+ Q
+"RTN","SDOQMP",80,0)
+ ;
+"RTN","SDOQMP",81,0)
+LOOPC ;  Loop through the clinics in the hospital location file.  User can select
+"RTN","SDOQMP",82,0)
+ ;  one-many-all clinics through this entry point.
+"RTN","SDOQMP",83,0)
+ ;
+"RTN","SDOQMP",84,0)
+ ;  Variables
+"RTN","SDOQMP",85,0)
+ ;    AMMSD0 -  Clinic IEN
+"RTN","SDOQMP",86,0)
+ ;    CLINIC -  Clinic array returned from VAUTOMA
+"RTN","SDOQMP",87,0)
+ ;
+"RTN","SDOQMP",88,0)
+ S AMMSD0=0
+"RTN","SDOQMP",89,0)
+ ;   Select all
+"RTN","SDOQMP",90,0)
+ I CLINIC=1 D
+"RTN","SDOQMP",91,0)
+ . F  S AMMSD0=$O(^SC("AC","C",AMMSD0)) Q:'AMMSD0  D
+"RTN","SDOQMP",92,0)
+ .. Q:'$P($G(^SC(AMMSD0,0)),"^",7)
+"RTN","SDOQMP",93,0)
+ .. Q:$G(^TMP("SDAMMS",$J,"Q"))=1
+"RTN","SDOQMP",94,0)
+ .. F X1=1:1:3 D AMMSCNT^SDOQMP1 Q:AMMSLAST=0
+"RTN","SDOQMP",95,0)
+ ;
+"RTN","SDOQMP",96,0)
+ ;   Select One-Many
+"RTN","SDOQMP",97,0)
+ I CLINIC=0&($D(CLINIC)) D 
+"RTN","SDOQMP",98,0)
+ . F  S AMMSD0=$O(CLINIC(AMMSD0)) Q:'AMMSD0  D
+"RTN","SDOQMP",99,0)
+ .. Q:'$P($G(^SC(AMMSD0,0)),"^",7)
+"RTN","SDOQMP",100,0)
+ .. Q:$G(^TMP("SDAMMS",$J,"Q"))=1
+"RTN","SDOQMP",101,0)
+ .. F X1=1:1:3 D AMMSCNT^SDOQMP1 Q:AMMSLAST=0
+"RTN","SDOQMP",102,0)
+ Q
+"RTN","SDOQMP",103,0)
+ ;
+"RTN","SDOQMP",104,0)
+BLDPME ;   Build the data array to be included in the mail message.
+"RTN","SDOQMP",105,0)
+ ;   If the number of data lines in the current array goes over 100,
+"RTN","SDOQMP",106,0)
+ ;   Send the array and begin building a new one.
+"RTN","SDOQMP",107,0)
+ ;
+"RTN","SDOQMP",108,0)
+ ;   Data String format:
+"RTN","SDOQMP",109,0)
+ ;       Clinic Name^Date Run^Date of Next Appt.^# of Days^Stop code^Division
+"RTN","SDOQMP",110,0)
+ ;
+"RTN","SDOQMP",111,0)
+ N X,LC,PMNODE,PMDT,PMMSG,PMCLNI,PMCLNE,PMAPT
+"RTN","SDOQMP",112,0)
+ ;
+"RTN","SDOQMP",113,0)
+ K ^TMP("SDMSG")
+"RTN","SDOQMP",114,0)
+ S X=$G(^TMP("SDPM",$J,0)),PMDT=$P(X,U)
+"RTN","SDOQMP",115,0)
+ S LC=1,PMCLNI=0
+"RTN","SDOQMP",116,0)
+ ;
+"RTN","SDOQMP",117,0)
+ F  S PMCLNI=$O(^TMP("SDPM",$J,PMCLNI)) Q:'PMCLNI  D
+"RTN","SDOQMP",118,0)
+ . S PMNODE=$G(^TMP("SDPM",$J,PMCLNI,PMDT))
+"RTN","SDOQMP",119,0)
+ . S PMCLNE=$P($G(^SC(PMCLNI,0)),U)
+"RTN","SDOQMP",120,0)
+ . S PMAPT=$P(PMNODE,U)
+"RTN","SDOQMP",121,0)
+ . S X2=PMDT,X1=PMAPT D ^%DTC
+"RTN","SDOQMP",122,0)
+ . S ^TMP("SDMSG",$J,LC)=PMCLNE_U_PMDT_U_PMAPT_U_$S(X']"":-1,1:X)_U_$$STOPCDE^SDOQMP0(PMCLNI)_U_$$DIVISION^SDOQMP0(PMCLNI)
+"RTN","SDOQMP",123,0)
+ . S LC=LC+1
+"RTN","SDOQMP",124,0)
+ ;
+"RTN","SDOQMP",125,0)
+ D:LC>350 PRCLRG
+"RTN","SDOQMP",126,0)
+ I LC'>350 D PRCSML
+"RTN","SDOQMP",127,0)
+DMQ Q
+"RTN","SDOQMP",128,0)
+ ;
+"RTN","SDOQMP",129,0)
+PRCSML ;  Process clinic lists smaller than 500 entries
+"RTN","SDOQMP",130,0)
+ N PMMSG,LC
+"RTN","SDOQMP",131,0)
+ S (X,LC)=0
+"RTN","SDOQMP",132,0)
+ F  S X=$O(^TMP("SDMSG",$J,X)) Q:'X  D
+"RTN","SDOQMP",133,0)
+ . S LC=LC+1
+"RTN","SDOQMP",134,0)
+ . S PMMSG(LC)=^TMP("SDMSG",$J,X)
+"RTN","SDOQMP",135,0)
+ D MAIL(.PMMSG,LC)
+"RTN","SDOQMP",136,0)
+ Q
+"RTN","SDOQMP",137,0)
+ ;
+"RTN","SDOQMP",138,0)
+PRCLRG ;  Process clinic lists greater than 500 entries
+"RTN","SDOQMP",139,0)
+ N SDTMP,XF,XL,XC
+"RTN","SDOQMP",140,0)
+ S XF=1,XL=350
+"RTN","SDOQMP",141,0)
+ ;
+"RTN","SDOQMP",142,0)
+LP1 F XC=XF:1:XL Q:XC'<LC  D
+"RTN","SDOQMP",143,0)
+ . S SDTMP(XC)=^TMP("SDMSG",$J,XC)
+"RTN","SDOQMP",144,0)
+ ;
+"RTN","SDOQMP",145,0)
+ D MAIL(.SDTMP,LC,XC)
+"RTN","SDOQMP",146,0)
+ ;
+"RTN","SDOQMP",147,0)
+ S XF=XL+1,XL=XL+350
+"RTN","SDOQMP",148,0)
+ K SDTMP
+"RTN","SDOQMP",149,0)
+ G:XC<LC LP1
+"RTN","SDOQMP",150,0)
+ Q
+"RTN","SDOQMP",151,0)
+ ;
+"RTN","SDOQMP",152,0)
+MAIL(PMDATA,LINCNT,CNT) ;  Send data message to server.
+"RTN","SDOQMP",153,0)
+ ;   The data message is sent to the local notification mail group,
+"RTN","SDOQMP",154,0)
+ ;   the notification mail group at the server domain, and the
+"RTN","SDOQMP",155,0)
+ ;   server at the data collection server domain
+"RTN","SDOQMP",156,0)
+ ;
+"RTN","SDOQMP",157,0)
+ ;   Server
+"RTN","SDOQMP",158,0)
+ ;      A1BO PM NEXT APPT EXTRACT at Albany ISC
+"RTN","SDOQMP",159,0)
+ ;
+"RTN","SDOQMP",160,0)
+ ;   Variables
+"RTN","SDOQMP",161,0)
+ ;     MSG    - Data array to be sent
+"RTN","SDOQMP",162,0)
+ ;     LINCNT - Number of lines in the data array
+"RTN","SDOQMP",163,0)
+ ;
+"RTN","SDOQMP",164,0)
+ ;   Message Format        
+"RTN","SDOQMP",165,0)
+ ;     Header - $START^Site Name^Facility Number^Date.Time run^Domain Name^Total lines^Last line sent
+"RTN","SDOQMP",166,0)
+ ;     Body   - data array (see BLDPME)
+"RTN","SDOQMP",167,0)
+ ;     Tail   - $END
+"RTN","SDOQMP",168,0)
+ ;
+"RTN","SDOQMP",169,0)
+ N XC,X1,%DT,XMB,PMFAC,XMLOC
+"RTN","SDOQMP",170,0)
+ ;
+"RTN","SDOQMP",171,0)
+ S XMLOC=0
+"RTN","SDOQMP",172,0)
+ S XMDUZ=.5
+"RTN","SDOQMP",173,0)
+ S XMY(".5")=""
+"RTN","SDOQMP",174,0)
+ S XMY("S.A1BO PM NEXT APPT EXTRACT@DEVFEX.ISC-ALBANY.DOMAIN.EXT")=""
+"RTN","SDOQMP",175,0)
+ S XMY("G.SD PM NOTIFICATION")=""
+"RTN","SDOQMP",176,0)
+ S XMY("G.SD PM EXTRACT@ISC-ALBANY.DOMAIN.EXT")=""
+"RTN","SDOQMP",177,0)
+ ;
+"RTN","SDOQMP",178,0)
+ S PMFAC=$$SITE^VASITE
+"RTN","SDOQMP",179,0)
+ D NOW^%DTC
+"RTN","SDOQMP",180,0)
+ ;
+"RTN","SDOQMP",181,0)
+ S PMDATA(.01)="$START^"_$P($G(PMFAC),"^",2,3)_"^"_%_"^"_$G(^XMB("NETNAME"))_"^"_LINCNT_"^"_$G(CNT)
+"RTN","SDOQMP",182,0)
+ S PMDATA(LINCNT+1)="$END"
+"RTN","SDOQMP",183,0)
+ ;
+"RTN","SDOQMP",184,0)
+ S XMTEXT="PMDATA("
+"RTN","SDOQMP",185,0)
+ S XMSUB="Access PM Extract from "_$P($G(PMFAC),U,2),XMN=0
+"RTN","SDOQMP",186,0)
+ D ^XMD
+"RTN","SDOQMP",187,0)
+ K XMDUZ,XMN,XMSUB,XMTEXT,XMY
+"RTN","SDOQMP",188,0)
+SMQ Q
+"RTN","SDOQMP",189,0)
+ ;
+"RTN","SDOQMP",190,0)
+BLDRPT ;  Call the entry point to print the Appointment Monitoring report
+"RTN","SDOQMP",191,0)
+ D START^SDOQMPR
+"RTN","SDOQMP",192,0)
+ Q
+"RTN","SDOQMP",193,0)
+ ;
+"RTN","SDOQMP",194,0)
+MSG ;   Message displayed to user when the EN1 entry point is used.
+"RTN","SDOQMP",195,0)
+ ;;
+"RTN","SDOQMP",196,0)
+ ;;This report requires 132 columns and could take a long time
+"RTN","SDOQMP",197,0)
+ ;;to print depending on the number of clinics selected.
+"RTN","SDOQMP",198,0)
+ ;;Please remember to QUEUE it.
+"RTN","SDOQMP",199,0)
+ ;;$$END
+"RTN","SDPMHLS")
+0^5^B36919465^B35184132
+"RTN","SDPMHLS",1,0)
+SDPMHLS ;BPFO/JRC - Build ROU-R01 HL7 message for 'SD ENC PERF MON' application ;4/2/04
+"RTN","SDPMHLS",2,0)
+ ;;5.3;Scheduling;**313,371,416,640**;AUG 13, 1993;Build 8
+"RTN","SDPMHLS",3,0)
+ ;
+"RTN","SDPMHLS",4,0)
+QUE ;Queue retroactive XMIT job
+"RTN","SDPMHLS",5,0)
+ ;SD*640 Stop running Performance Monitor Retransmit Report (AAC) job.
+"RTN","SDPMHLS",6,0)
+ Q
+"RTN","SDPMHLS",7,0)
+ ;
+"RTN","SDPMHLS",8,0)
+ ;Declare variables
+"RTN","SDPMHLS",9,0)
+ S (STDT,EDT,Y,X)=""
+"RTN","SDPMHLS",10,0)
+ ;Prompt user for month and year
+"RTN","SDPMHLS",11,0)
+ S %DT("A")="Please select MONTH and YEAR for TIU's National Rollup to transmit: "
+"RTN","SDPMHLS",12,0)
+ S %DT="AEMX"
+"RTN","SDPMHLS",13,0)
+ ;Set %DT not to allow current and future months
+"RTN","SDPMHLS",14,0)
+ S %DT(0)=-($$FMADD^XLFDT($$NOW^XLFDT(),-32))
+"RTN","SDPMHLS",15,0)
+ D ^%DT
+"RTN","SDPMHLS",16,0)
+ ;Check date input if (-1) quit else continue
+"RTN","SDPMHLS",17,0)
+ I Y<0 Q
+"RTN","SDPMHLS",18,0)
+ ;Set STDT = user selected month and year and add 1 day
+"RTN","SDPMHLS",19,0)
+ S STDT=Y+01
+"RTN","SDPMHLS",20,0)
+ ;Add 32 days to STDT
+"RTN","SDPMHLS",21,0)
+ S X=$$FMADD^XLFDT(STDT,32)
+"RTN","SDPMHLS",22,0)
+ ;Subtract number of days that overlap into the following month
+"RTN","SDPMHLS",23,0)
+ S EDT=$$FMADD^XLFDT(X,-($E(X,6,7)))
+"RTN","SDPMHLS",24,0)
+ ;Set task variables
+"RTN","SDPMHLS",25,0)
+ S ZTIO=""
+"RTN","SDPMHLS",26,0)
+ S ZTDESC="Performance Indicator National Rollup"
+"RTN","SDPMHLS",27,0)
+ S ZTRTN="EN^SDPMHLS"
+"RTN","SDPMHLS",28,0)
+ S ZTSAVE("STDT")=""
+"RTN","SDPMHLS",29,0)
+ S ZTSAVE("EDT")=""
+"RTN","SDPMHLS",30,0)
+ D ^%ZTLOAD W:$D(ZTSK) "   (Task: ",ZTSK,")"
+"RTN","SDPMHLS",31,0)
+ K STDT,EDT,X,Y,%DT,%DT("A"),%DT(0)
+"RTN","SDPMHLS",32,0)
+ Q
+"RTN","SDPMHLS",33,0)
+EN ;Entry point
+"RTN","SDPMHLS",34,0)
+ ;Note: Retroactive reports use variables STDT and EDT to pass dates
+"RTN","SDPMHLS",35,0)
+ ;   STDT - start date, first day of the month for selected month
+"RTN","SDPMHLS",36,0)
+ ;   EDT - ending date, last day of the month for selected month
+"RTN","SDPMHLS",37,0)
+ ;
+"RTN","SDPMHLS",38,0)
+ ;SD*640 Stop scheduling APM Performance Monitor Task job.
+"RTN","SDPMHLS",39,0)
+ Q
+"RTN","SDPMHLS",40,0)
+ ;
+"RTN","SDPMHLS",41,0)
+ ;Declare variables
+"RTN","SDPMHLS",42,0)
+ N STDATE,ENDDATE
+"RTN","SDPMHLS",43,0)
+ N XMTARRY,SCRNARR,SORTARR,OUTARR,X,RDATE
+"RTN","SDPMHLS",44,0)
+ S SCRNARR="^TMP(""SCRPW"",$J,""SCRNARR"")"
+"RTN","SDPMHLS",45,0)
+ S SORTARR="^TMP(""SCRPW"",$J,""SORTARR"")"
+"RTN","SDPMHLS",46,0)
+ S OUTARR="^TMP(""SCRPW"",$J,""OUTARR"")"
+"RTN","SDPMHLS",47,0)
+ S XMTARRY="^TMP(""HLS"","_$J_")"
+"RTN","SDPMHLS",48,0)
+ S (STDATE,ENDDATE)=""
+"RTN","SDPMHLS",49,0)
+ ;Set national screen/sort
+"RTN","SDPMHLS",50,0)
+ D ROLLUP^SCRPW303(SCRNARR,SORTARR)
+"RTN","SDPMHLS",51,0)
+ ;Call module to build scratch global
+"RTN","SDPMHLS",52,0)
+ D GETINFO
+"RTN","SDPMHLS",53,0)
+ ;Build HL7 Message
+"RTN","SDPMHLS",54,0)
+ D BLDMSG(OUTARR,XMTARRY)
+"RTN","SDPMHLS",55,0)
+ ;Send HL7 Message
+"RTN","SDPMHLS",56,0)
+ I +$O(@XMTARRY@(""))>0 D
+"RTN","SDPMHLS",57,0)
+ .S J=$$SENDMSG(.XMTARRY)
+"RTN","SDPMHLS",58,0)
+ ;Send XMIT notifications
+"RTN","SDPMHLS",59,0)
+ D MSG
+"RTN","SDPMHLS",60,0)
+ ;Cleanup an quit
+"RTN","SDPMHLS",61,0)
+ D EXIT
+"RTN","SDPMHLS",62,0)
+ Q
+"RTN","SDPMHLS",63,0)
+BLDMSG(OUTARR,XMTARRY) ;Build OBR segment
+"RTN","SDPMHLS",64,0)
+ ;Input : OUTARR - Ouptut array 
+"RTN","SDPMHLS",65,0)
+ ;Output: XMTARRY - HL7 temporary array
+"RTN","SDPMHLS",66,0)
+ ;Declare variables
+"RTN","SDPMHLS",67,0)
+ N HL,HLFS,HLECH,HLQ,SNODE,PNODE,DIVHL,TYPE,COUNT
+"RTN","SDPMHLS",68,0)
+ D INIT^HLFNC2("SD ENC PERF MON ORU-R01 SERVER",.HL)
+"RTN","SDPMHLS",69,0)
+ Q:$O(HL(""))=""
+"RTN","SDPMHLS",70,0)
+ N VAFEVN,VAFSTR,CNT,MAKE,VAFOBR,VAFOBX,I,XCNT,INFO,DIV,DIVHL
+"RTN","SDPMHLS",71,0)
+ S CNT=1,XCNT=0
+"RTN","SDPMHLS",72,0)
+ S MAKE(1)="1"
+"RTN","SDPMHLS",73,0)
+ S MAKE(4,1,1)="01"
+"RTN","SDPMHLS",74,0)
+ S MAKE(4,1,2)="VA ENC PERF MONITOR"
+"RTN","SDPMHLS",75,0)
+ S MAKE(7)=$$HLDATE^HLFNC(RDATE)
+"RTN","SDPMHLS",76,0)
+ S MAKE(25)="F"
+"RTN","SDPMHLS",77,0)
+ S MAKE(27,1,4)=$$HLDATE^HLFNC(STDATE,"DT")
+"RTN","SDPMHLS",78,0)
+ S MAKE(27,1,5)=$$HLDATE^HLFNC(ENDDATE,"DT")
+"RTN","SDPMHLS",79,0)
+ K VAFOBR
+"RTN","SDPMHLS",80,0)
+ D MAKEIT^VAFHLU("OBR",.MAKE,.VAFOBR,.VAFOBR)
+"RTN","SDPMHLS",81,0)
+ M @XMTARRY@(CNT)=VAFOBR
+"RTN","SDPMHLS",82,0)
+ S XCNT=XCNT+1,CNT=CNT+1
+"RTN","SDPMHLS",83,0)
+ ;Build OBX segment for facility
+"RTN","SDPMHLS",84,0)
+ S SNODE=$G(@OUTARR@("SUMMARY"))
+"RTN","SDPMHLS",85,0)
+ S PNODE=$G(@OUTARR@("SUMMARY","PI"))
+"RTN","SDPMHLS",86,0)
+ S DIVHL=$P($$SITE^VASITE,"^",3)
+"RTN","SDPMHLS",87,0)
+ D MAKEOBX
+"RTN","SDPMHLS",88,0)
+ ;Build OBX segment for division(s)
+"RTN","SDPMHLS",89,0)
+ S DIV="" F  S DIV=$O(@OUTARR@("SUBTOTAL",DIV)) Q:DIV=""  D
+"RTN","SDPMHLS",90,0)
+ .N SNODE,PNODE
+"RTN","SDPMHLS",91,0)
+ .S SNODE=$G(@OUTARR@("SUBTOTAL",DIV))
+"RTN","SDPMHLS",92,0)
+ .S PNODE=$G(@OUTARR@("SUBTOTAL",DIV,"PI"))
+"RTN","SDPMHLS",93,0)
+ .S DIVHL=$P(DIV,"^",2)
+"RTN","SDPMHLS",94,0)
+ .D MAKEOBX
+"RTN","SDPMHLS",95,0)
+ .Q
+"RTN","SDPMHLS",96,0)
+ Q
+"RTN","SDPMHLS",97,0)
+MAKEOBX ;Set type and count for total encounters to bld OBX
+"RTN","SDPMHLS",98,0)
+ ;Input : SNODE - Temporary counter node for summary
+"RTN","SDPMHLS",99,0)
+ ;        PNODE - Temporary counter node for PI
+"RTN","SDPMHLS",100,0)
+ ;        DIVHL - Division and Suffix
+"RTN","SDPMHLS",101,0)
+ ;        CNT - Temporary array subscript count
+"RTN","SDPMHLS",102,0)
+ ;        XCNT  - OBX segment counter
+"RTN","SDPMHLS",103,0)
+ ;        XMTARRY - Temporary HL array ^TMP("HLS",$J)
+"RTN","SDPMHLS",104,0)
+ S TYPE="CD",COUNT=$P($G(SNODE),U,1),OBID=1 D BLDOBX
+"RTN","SDPMHLS",105,0)
+ ;Set type and count for counters for ET in days F0 - F10 to bld OBX
+"RTN","SDPMHLS",106,0)
+ F M4=0:1:10 D
+"RTN","SDPMHLS",107,0)
+ .S OBID=2
+"RTN","SDPMHLS",108,0)
+ .S TYPE="F"_M4
+"RTN","SDPMHLS",109,0)
+ .S COUNT=$P($G(PNODE),U,(M4+1))
+"RTN","SDPMHLS",110,0)
+ .D BLDOBX
+"RTN","SDPMHLS",111,0)
+ ;Set type and count for scanned notes and Uniques to bld OBX
+"RTN","SDPMHLS",112,0)
+ S TYPE="FSPN",OBID=2,COUNT=$P($G(SNODE),U,7) D BLDOBX
+"RTN","SDPMHLS",113,0)
+ S TYPE="FEP",OBID=2,COUNT=$P($G(SNODE),U,4) D BLDOBX
+"RTN","SDPMHLS",114,0)
+ S TYPE="FDSS",OBID=2,COUNT=$P($G(SNODE),U,5) D BLDOBX
+"RTN","SDPMHLS",115,0)
+ ;Set types and count for encounters w/o progress notes and
+"RTN","SDPMHLS",116,0)
+ ;encounters w/progress notes pending signatures
+"RTN","SDPMHLS",117,0)
+ S TYPE="FNPN",OBID=2,COUNT=+$P(SNODE,U,1)-(+($P(SNODE,U,2)))-(+($P(SNODE,U,9)))-(+($P(SNODE,U,7)))-(+($P(PNODE,U,11))) D BLDOBX
+"RTN","SDPMHLS",118,0)
+ S TYPE="FNPS",OBID=2,COUNT=$P($G(SNODE),U,9) D BLDOBX
+"RTN","SDPMHLS",119,0)
+ Q
+"RTN","SDPMHLS",120,0)
+BLDOBX ;Build OBX
+"RTN","SDPMHLS",121,0)
+ ;Ouput : @XMTARRY = Temporary HL array
+"RTN","SDPMHLS",122,0)
+ ;Set variables
+"RTN","SDPMHLS",123,0)
+ N MAKE,VAFOBX
+"RTN","SDPMHLS",124,0)
+ S MAKE(1)=XCNT
+"RTN","SDPMHLS",125,0)
+ S MAKE(2)="NM"
+"RTN","SDPMHLS",126,0)
+ S MAKE(3,1,1)=OBID
+"RTN","SDPMHLS",127,0)
+ S MAKE(3,1,4)=TYPE
+"RTN","SDPMHLS",128,0)
+ S MAKE(5)=COUNT
+"RTN","SDPMHLS",129,0)
+ S MAKE(11)="F"
+"RTN","SDPMHLS",130,0)
+ S MAKE(15)=DIVHL
+"RTN","SDPMHLS",131,0)
+ K VAFOBX
+"RTN","SDPMHLS",132,0)
+ D MAKEIT^VAFHLU("OBX",.MAKE,.VAFOBX,.VAFOBX)
+"RTN","SDPMHLS",133,0)
+ M @XMTARRY@(CNT)=VAFOBX
+"RTN","SDPMHLS",134,0)
+ S XCNT=XCNT+1,CNT=CNT+1
+"RTN","SDPMHLS",135,0)
+ Q
+"RTN","SDPMHLS",136,0)
+SENDMSG(XMTARRY) ;Send HL7 message
+"RTN","SDPMHLS",137,0)
+ ;Input - @XMTARRY
+"RTN","SDPMHLS",138,0)
+ ;Output - ARRY4HL7
+"RTN","SDPMHLS",139,0)
+ N ARRY4HL7,KILLARRY,HL,HLRESLT,HLFS,HLECH,HLQ,HLP
+"RTN","SDPMHLS",140,0)
+ S XMTARRY=$G(XMTARRY)
+"RTN","SDPMHLS",141,0)
+ S:'(XMTARRY]"") XMTARRY="^TMP(""HLS"","_$J_")"
+"RTN","SDPMHLS",142,0)
+ Q:($O(@XMTARRY@(""))="") "-1^Can not send empty message"
+"RTN","SDPMHLS",143,0)
+ S ARRY4HL7="TMP(""HLS"","_$J_")"
+"RTN","SDPMHLS",144,0)
+ ;Initialize HL7 variables
+"RTN","SDPMHLS",145,0)
+ D INIT^HLFNC2("SD ENC PERF MON ORU-R01 SERVER",.HL)
+"RTN","SDPMHLS",146,0)
+ Q:($O(HL(""))="") "-1^Unable to initialize HL7 variables"
+"RTN","SDPMHLS",147,0)
+ ;Check if XMTARRY is ^TMP("HLS",$J)
+"RTN","SDPMHLS",148,0)
+ S KILLARRY=0
+"RTN","SDPMHLS",149,0)
+ I $NA(@XMTARRY)'=$NA(@ARRY4HL7) D
+"RTN","SDPMHLS",150,0)
+ .K @ARRY4HL7
+"RTN","SDPMHLS",151,0)
+ .M @ARRY4HL7=@XMTARRY
+"RTN","SDPMHLS",152,0)
+ .S KILLARRY=1
+"RTN","SDPMHLS",153,0)
+ ;Broadcast message
+"RTN","SDPMHLS",154,0)
+ D GENERATE^HLMA("SD ENC PERF MON ORU-R01 SERVER","GM",1,.HLRESLT,"",.HLP)
+"RTN","SDPMHLS",155,0)
+ S:('HLRESLT) HLRESLT=$P(HLRESLT,"^",2,3)
+"RTN","SDPMHLS",156,0)
+ ;Delete ^TMP("HLS",$J) if XMTARRY was different
+"RTN","SDPMHLS",157,0)
+ K:(KILLARRY) @ARRY4HL7
+"RTN","SDPMHLS",158,0)
+ Q $G(HLRESLT)
+"RTN","SDPMHLS",159,0)
+GETINFO ;Get performance monitor data
+"RTN","SDPMHLS",160,0)
+ ;Input:
+"RTN","SDPMHLS",161,0)
+ ;    @SCRNARR - Screen array full global reference
+"RTN","SDPMHLS",162,0)
+ ;    @SORTARR - Sort array full global reference
+"RTN","SDPMHLS",163,0)
+ ;Output:
+"RTN","SDPMHLS",164,0)
+ ;    @OUTARR - Ouput array full global reference 
+"RTN","SDPMHLS",165,0)
+ ;Remember starting time
+"RTN","SDPMHLS",166,0)
+ S RDATE=$$NOW^XLFDT()
+"RTN","SDPMHLS",167,0)
+ ;Check STDT and EDT, if 1 set STDATE and ENDDATE
+"RTN","SDPMHLS",168,0)
+ I $D(STDT)&$D(EDT) S STDATE=STDT,ENDDATE=EDT
+"RTN","SDPMHLS",169,0)
+ I STDATE="" D
+"RTN","SDPMHLS",170,0)
+ .;Set start date = 1st day of previous month
+"RTN","SDPMHLS",171,0)
+ .N X,X1,X2
+"RTN","SDPMHLS",172,0)
+ .S X1=$$DT^XLFDT(),X2=-30 S:$E(X1,6,7)=31 X2=-31
+"RTN","SDPMHLS",173,0)
+ .D C^%DTC
+"RTN","SDPMHLS",174,0)
+ .S STDATE=$E(X,1,5)_"01"
+"RTN","SDPMHLS",175,0)
+ .;Set end date = start date + 32 minus number of days into next month
+"RTN","SDPMHLS",176,0)
+ .S X=$$FMADD^XLFDT(STDATE,32)
+"RTN","SDPMHLS",177,0)
+ .S ENDDATE=$$FMADD^XLFDT(X,-($E(X,6,7)))
+"RTN","SDPMHLS",178,0)
+ .Q
+"RTN","SDPMHLS",179,0)
+ ;Set date range in screen array
+"RTN","SDPMHLS",180,0)
+ S @SCRNARR@("RANGE")=STDATE_"^"_ENDDATE
+"RTN","SDPMHLS",181,0)
+ ;Get data
+"RTN","SDPMHLS",182,0)
+ D GETDATA^SDPMUT1(SCRNARR,SORTARR,OUTARR)
+"RTN","SDPMHLS",183,0)
+ Q
+"RTN","SDPMHLS",184,0)
+MSG ;Build bulletin and send
+"RTN","SDPMHLS",185,0)
+ ;Input:
+"RTN","SDPMHLS",186,0)
+ ;     RDATE - report starting time
+"RTN","SDPMHLS",187,0)
+ ;Output: 
+"RTN","SDPMHLS",188,0)
+ ;   Notificaion bulletin to SD ENC PERF MON mail group
+"RTN","SDPMHLS",189,0)
+ N MSGTEXT,XMTEXT,XMSUB,XMY,XMCHAN,XMZ,XMDUZ
+"RTN","SDPMHLS",190,0)
+ S MSGTEXT(1)=" "
+"RTN","SDPMHLS",191,0)
+ S MSGTEXT(2)="Performance Indicator National Rollup was started on "_$$FMTE^XLFDT(RDATE,1)
+"RTN","SDPMHLS",192,0)
+ S MSGTEXT(3)="Encounter date range: "_$$FMTE^XLFDT(STDATE,1)_" to "_$$FMTE^XLFDT(ENDDATE,1)
+"RTN","SDPMHLS",193,0)
+ S MSGTEXT(3)="Extraction of data and sending of data completed "_$$FMTE^XLFDT($$NOW^XLFDT(),1)
+"RTN","SDPMHLS",194,0)
+ S MSGTEXT(4)=" "
+"RTN","SDPMHLS",195,0)
+ ;Send completion bulletin to current user
+"RTN","SDPMHLS",196,0)
+ S XMSUB="Performance Indicator National Rollup"
+"RTN","SDPMHLS",197,0)
+ S XMTEXT="MSGTEXT("
+"RTN","SDPMHLS",198,0)
+ S XMY("G.SD PM NOTIFICATION TIU")=""
+"RTN","SDPMHLS",199,0)
+ S XMCHAN=1
+"RTN","SDPMHLS",200,0)
+ S XMDUZ="Performance Indicator"
+"RTN","SDPMHLS",201,0)
+ D ^XMD
+"RTN","SDPMHLS",202,0)
+ Q
+"RTN","SDPMHLS",203,0)
+EXIT ;Done
+"RTN","SDPMHLS",204,0)
+ K @SCRNARR,@SORTARR,@OUTARR,@XMTARRY
+"RTN","SDPMHLS",205,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",10356,6)
+^576
+**END**
+**END**
+

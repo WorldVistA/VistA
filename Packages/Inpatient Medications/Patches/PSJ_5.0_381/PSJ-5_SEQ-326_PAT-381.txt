@@ -1,0 +1,140 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 12/19/18 at 12:48
+=============================================================================
+Run Date: FEB 21, 2019                     Designation: PSJ*5*381
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #326                      Status: Released
+                  Compliance Date: MAR 24, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*362   <<= must be installed BEFORE `PSJ*5*381'
+
+Subject: GLUCOSE AND iSTAT TEST RESULTS NOT GOING TO VISTA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ INC3409448-A site has reported that they have over 350 patient results
+ that are pending and not transferring to Veterans Information Systems and
+ Technology Architecture (VistA) and Computerized Patient Record System
+ (CPRS). This includes Glucose and iSTAT results along with numerous other
+ Health Level 7 (HL7) messages.
+  
+ Patient Safety Issues (HITPS):
+ -----------------------------
+ None
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ INC3409448  Results from LA7POC1 and LA7POC2 for iSTAT and 
+             Glucose testing are not going over to VistA
+  
+ Problem: 
+ --------
+ A site has reported that they have over 350 patient results that are 
+ pending and not transferring to VistA and CPRS. This includes Glucose 
+ and iSTAT results along with numerous other HL7 messages.
+  
+ It was found that the code to identify users that hold the PSJ PADE MGR 
+ security key is bogging down the system which in turn is causing a backup
+ of the HL7 message transmissions.  
+  
+ The users who hold the PSJ PADE MGR security key are gathered for a mail 
+ group to inform them when a Dispense without Order (DWO) event has
+ occurred.
+  
+ Resolution:
+ -----------
+ The code in PSJPAD7I, that identifies the holders of the PSJ PADE MGR key, 
+ has been modified to do a direct call into the cross-reference using the 
+ security key, which is a faster process, instead of walking through the 
+ entire NEW PERSON (#200) file to identify these key holders. 
+  
+  
+ Test Sites:
+ -----------
+ Albany VAMC
+ Michael E. DeBakey VAMC (Houston)
+  
+ Installation Instructions:
+ -------------------------- 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following
+        options. When prompted for the INSTALL NAME enter the patch 
+        PSJ*5.0*381.
+  
+   a.   Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  (It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+   b.   Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.     Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+  
+ 5.     From the Installation Menu, select the Install Package(s) option
+        and choose the patch to install.
+  
+ 6.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond 'NO'.
+  
+ 7.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from this patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJPAD7I
+    Before: B94847537   After: B93404669  **317,356,362,381**
+ 
+Routine list of preceding patches: 362
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 18, 2018
+Completed By:                               Date Completed: FEB 20, 2019
+Released By :                               Date Released : FEB 21, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

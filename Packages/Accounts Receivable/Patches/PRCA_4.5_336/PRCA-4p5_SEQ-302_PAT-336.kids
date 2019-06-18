@@ -1,0 +1,4021 @@
+EMERGENCY Released PRCA*4.5*336 SEQ #302
+Extracted from mail message
+**KIDS**:PRCA*4.5*336^
+
+**INSTALL NAME**
+PRCA*4.5*336
+"BLD",10775,0)
+PRCA*4.5*336^ACCOUNTS RECEIVABLE^0^3190122^y
+"BLD",10775,1,0)
+^^27^27^3190118^
+"BLD",10775,1,1,0)
+This patch addresses the following issues:
+"BLD",10775,1,2,0)
+ 
+"BLD",10775,1,3,0)
+1. Modify Cross-service bill foreign address handling
+"BLD",10775,1,4,0)
+ 
+"BLD",10775,1,5,0)
+2. Ensure that the telephone number in the IAI C2CA (Debtor Contact
+"BLD",10775,1,6,0)
+   Information) adheres to the AITC and Artiva guidelines that the
+"BLD",10775,1,7,0)
+   phone number (position 261-270) be 10 numeric and, if not, leave 
+"BLD",10775,1,8,0)
+   the field blank and also leave positions 260 (Contact Phone Type)
+"BLD",10775,1,9,0)
+   and 275 (Contact Primary Phone) blank.
+"BLD",10775,1,10,0)
+ 
+"BLD",10775,1,11,0)
+3. Modify served messages from Treasury to not use the same work space as
+"BLD",10775,1,12,0)
+   weekly batch run
+"BLD",10775,1,13,0)
+ 
+"BLD",10775,1,14,0)
+4. Ensure the cross-service date is reset for rejected recalls by Treasury
+"BLD",10775,1,15,0)
+ 
+"BLD",10775,1,16,0)
+5. Ensure TCSP bill scrub sets address node in file 430
+"BLD",10775,1,17,0)
+ 
+"BLD",10775,1,18,0)
+6. Ensure CS flag set for debtor is only cleared if deceased or scrubbed
+"BLD",10775,1,19,0)
+ 
+"BLD",10775,1,20,0)
+7. Ensure 5B records are sent to Treasury in every case except when 
+"BLD",10775,1,21,0)
+   Recall status is set on bill
+"BLD",10775,1,22,0)
+ 
+"BLD",10775,1,23,0)
+8. Fix CS reporting for IOP setup affecting other print options
+"BLD",10775,1,24,0)
+ 
+"BLD",10775,1,25,0)
+9. Update the Error Code file #348.5 with code additions/changes
+"BLD",10775,1,26,0)
+ 
+"BLD",10775,1,27,0)
+10. Correct bill Category codes to reflect 47 & 49 to skip bill processing
+"BLD",10775,4,0)
+^9.64PA^^
+"BLD",10775,6.3)
+45
+"BLD",10775,"ABPKG")
+n
+"BLD",10775,"INID")
+^y
+"BLD",10775,"INIT")
+EN^RCTC336P
+"BLD",10775,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10775,"KRN",.4,0)
+.4
+"BLD",10775,"KRN",.401,0)
+.401
+"BLD",10775,"KRN",.402,0)
+.402
+"BLD",10775,"KRN",.403,0)
+.403
+"BLD",10775,"KRN",.5,0)
+.5
+"BLD",10775,"KRN",.84,0)
+.84
+"BLD",10775,"KRN",3.6,0)
+3.6
+"BLD",10775,"KRN",3.8,0)
+3.8
+"BLD",10775,"KRN",9.2,0)
+9.2
+"BLD",10775,"KRN",9.8,0)
+9.8
+"BLD",10775,"KRN",9.8,"NM",0)
+^9.68A^9^9
+"BLD",10775,"KRN",9.8,"NM",1,0)
+RCTCSPRS^^0^B64307500
+"BLD",10775,"KRN",9.8,"NM",2,0)
+RCTCSP3S^^0^B32035982
+"BLD",10775,"KRN",9.8,"NM",3,0)
+RCTCSPD^^0^B168268375
+"BLD",10775,"KRN",9.8,"NM",4,0)
+RCTCSJS^^0^B210400195
+"BLD",10775,"KRN",9.8,"NM",5,0)
+RCTCSP1^^0^B180778033
+"BLD",10775,"KRN",9.8,"NM",6,0)
+RCTCSP7^^0^B6169401
+"BLD",10775,"KRN",9.8,"NM",7,0)
+RCAMADD^^0^B20133852
+"BLD",10775,"KRN",9.8,"NM",8,0)
+RCTC336P^^0^B12149010
+"BLD",10775,"KRN",9.8,"NM",9,0)
+RCDPCSA^^0^B35235614
+"BLD",10775,"KRN",9.8,"NM","B","RCAMADD",7)
+
+"BLD",10775,"KRN",9.8,"NM","B","RCDPCSA",9)
+
+"BLD",10775,"KRN",9.8,"NM","B","RCTC336P",8)
+
+"BLD",10775,"KRN",9.8,"NM","B","RCTCSJS",4)
+
+"BLD",10775,"KRN",9.8,"NM","B","RCTCSP1",5)
+
+"BLD",10775,"KRN",9.8,"NM","B","RCTCSP3S",2)
+
+"BLD",10775,"KRN",9.8,"NM","B","RCTCSP7",6)
+
+"BLD",10775,"KRN",9.8,"NM","B","RCTCSPD",3)
+
+"BLD",10775,"KRN",9.8,"NM","B","RCTCSPRS",1)
+
+"BLD",10775,"KRN",19,0)
+19
+"BLD",10775,"KRN",19.1,0)
+19.1
+"BLD",10775,"KRN",101,0)
+101
+"BLD",10775,"KRN",409.61,0)
+409.61
+"BLD",10775,"KRN",771,0)
+771
+"BLD",10775,"KRN",779.2,0)
+779.2
+"BLD",10775,"KRN",870,0)
+870
+"BLD",10775,"KRN",8989.51,0)
+8989.51
+"BLD",10775,"KRN",8989.52,0)
+8989.52
+"BLD",10775,"KRN",8994,0)
+8994
+"BLD",10775,"KRN","B",.4,.4)
+
+"BLD",10775,"KRN","B",.401,.401)
+
+"BLD",10775,"KRN","B",.402,.402)
+
+"BLD",10775,"KRN","B",.403,.403)
+
+"BLD",10775,"KRN","B",.5,.5)
+
+"BLD",10775,"KRN","B",.84,.84)
+
+"BLD",10775,"KRN","B",3.6,3.6)
+
+"BLD",10775,"KRN","B",3.8,3.8)
+
+"BLD",10775,"KRN","B",9.2,9.2)
+
+"BLD",10775,"KRN","B",9.8,9.8)
+
+"BLD",10775,"KRN","B",19,19)
+
+"BLD",10775,"KRN","B",19.1,19.1)
+
+"BLD",10775,"KRN","B",101,101)
+
+"BLD",10775,"KRN","B",409.61,409.61)
+
+"BLD",10775,"KRN","B",771,771)
+
+"BLD",10775,"KRN","B",779.2,779.2)
+
+"BLD",10775,"KRN","B",870,870)
+
+"BLD",10775,"KRN","B",8989.51,8989.51)
+
+"BLD",10775,"KRN","B",8989.52,8989.52)
+
+"BLD",10775,"KRN","B",8994,8994)
+
+"BLD",10775,"QDEF")
+^^^^^^^^^^YES
+"BLD",10775,"QUES",0)
+^9.62^^
+"BLD",10775,"REQB",0)
+^9.611^7^4
+"BLD",10775,"REQB",3,0)
+PRCA*4.5*190^2
+"BLD",10775,"REQB",5,0)
+PRCA*4.5*325^2
+"BLD",10775,"REQB",6,0)
+PRCA*4.5*323^2
+"BLD",10775,"REQB",7,0)
+PRCA*4.5*341^2
+"BLD",10775,"REQB","B","PRCA*4.5*190",3)
+
+"BLD",10775,"REQB","B","PRCA*4.5*323",6)
+
+"BLD",10775,"REQB","B","PRCA*4.5*325",5)
+
+"BLD",10775,"REQB","B","PRCA*4.5*341",7)
+
+"INIT")
+EN^RCTC336P
+"MBREQ")
+0
+"PKG",142,-1)
+1^1
+"PKG",142,0)
+ACCOUNTS RECEIVABLE^PRCA^BILL COLLECTIONS
+"PKG",142,22,0)
+^9.49I^1^1
+"PKG",142,22,1,0)
+4.5^^2950320
+"PKG",142,22,1,"PAH",1,0)
+336^3190122
+"PKG",142,22,1,"PAH",1,1,0)
+^^27^27^3190122
+"PKG",142,22,1,"PAH",1,1,1,0)
+This patch addresses the following issues:
+"PKG",142,22,1,"PAH",1,1,2,0)
+ 
+"PKG",142,22,1,"PAH",1,1,3,0)
+1. Modify Cross-service bill foreign address handling
+"PKG",142,22,1,"PAH",1,1,4,0)
+ 
+"PKG",142,22,1,"PAH",1,1,5,0)
+2. Ensure that the telephone number in the IAI C2CA (Debtor Contact
+"PKG",142,22,1,"PAH",1,1,6,0)
+   Information) adheres to the AITC and Artiva guidelines that the
+"PKG",142,22,1,"PAH",1,1,7,0)
+   phone number (position 261-270) be 10 numeric and, if not, leave 
+"PKG",142,22,1,"PAH",1,1,8,0)
+   the field blank and also leave positions 260 (Contact Phone Type)
+"PKG",142,22,1,"PAH",1,1,9,0)
+   and 275 (Contact Primary Phone) blank.
+"PKG",142,22,1,"PAH",1,1,10,0)
+ 
+"PKG",142,22,1,"PAH",1,1,11,0)
+3. Modify served messages from Treasury to not use the same work space as
+"PKG",142,22,1,"PAH",1,1,12,0)
+   weekly batch run
+"PKG",142,22,1,"PAH",1,1,13,0)
+ 
+"PKG",142,22,1,"PAH",1,1,14,0)
+4. Ensure the cross-service date is reset for rejected recalls by Treasury
+"PKG",142,22,1,"PAH",1,1,15,0)
+ 
+"PKG",142,22,1,"PAH",1,1,16,0)
+5. Ensure TCSP bill scrub sets address node in file 430
+"PKG",142,22,1,"PAH",1,1,17,0)
+ 
+"PKG",142,22,1,"PAH",1,1,18,0)
+6. Ensure CS flag set for debtor is only cleared if deceased or scrubbed
+"PKG",142,22,1,"PAH",1,1,19,0)
+ 
+"PKG",142,22,1,"PAH",1,1,20,0)
+7. Ensure 5B records are sent to Treasury in every case except when 
+"PKG",142,22,1,"PAH",1,1,21,0)
+   Recall status is set on bill
+"PKG",142,22,1,"PAH",1,1,22,0)
+ 
+"PKG",142,22,1,"PAH",1,1,23,0)
+8. Fix CS reporting for IOP setup affecting other print options
+"PKG",142,22,1,"PAH",1,1,24,0)
+ 
+"PKG",142,22,1,"PAH",1,1,25,0)
+9. Update the Error Code file #348.5 with code additions/changes
+"PKG",142,22,1,"PAH",1,1,26,0)
+ 
+"PKG",142,22,1,"PAH",1,1,27,0)
+10. Correct bill Category codes to reflect 47 & 49 to skip bill processing
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+9
+"RTN","RCAMADD")
+0^7^B20133852^B9400859
+"RTN","RCAMADD",1,0)
+RCAMADD ;WASH-ISC@ALTOONA,PA/RGY - Get debtor address ;10/8/96  5:15 PM
+"RTN","RCAMADD",2,0)
+V ;;4.5;Accounts Receivable;**34,190,336**;Mar 20, 1995;Build 45
+"RTN","RCAMADD",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCAMADD",4,0)
+ ;
+"RTN","RCAMADD",5,0)
+ ;PRCA*4.5*336 Ensure the correct address is returned when
+"RTN","RCAMADD",6,0)
+ ;             no address node 1 is defined in file 340
+"RTN","RCAMADD",7,0)
+ ;             Also, ensure that the phone number defaults
+"RTN","RCAMADD",8,0)
+ ;             to 10 spaces if non-numeric.
+"RTN","RCAMADD",9,0)
+ ;
+"RTN","RCAMADD",10,0)
+ ;Get AR Debtor Address
+"RTN","RCAMADD",11,0)
+ ; Input:
+"RTN","RCAMADD",12,0)
+ ;   RCDB - Pointer to AR DEBTOR file #340
+"RTN","RCAMADD",13,0)
+ ;   RCCONF (optional) - Confidential Address required, if applicable. 1-yes, 0(default)-no.
+"RTN","RCAMADD",14,0)
+ ; Returns Debtor Address:
+"RTN","RCAMADD",15,0)
+ ;   Str1^Str2^Str3^City^State^ZIP^Telephone^Forein Country Code
+"RTN","RCAMADD",16,0)
+DADD(RCDB,RCCONF,RCCSW) ;
+"RTN","RCAMADD",17,0)
+ N X
+"RTN","RCAMADD",18,0)
+ S X="" G:$G(RCDB)="" Q
+"RTN","RCAMADD",19,0)
+ I RCDB?1N.N S RCDB=$P($G(^RCD(340,RCDB,0)),"^")
+"RTN","RCAMADD",20,0)
+ ; the confidential address has greatest priority for mailing
+"RTN","RCAMADD",21,0)
+ I $G(RCCONF),RCDB["DPT(" S X=$$PAT(+RCDB,1) I X'="" G Q
+"RTN","RCAMADD",22,0)
+ ; the AR DEBTOR address (if exists) has a greater priority the permanent address in PATIENT file.
+"RTN","RCAMADD",23,0)
+ I RCDB["DPT(" S X=$$ARDEB(+$O(^RCD(340,"B",RCDB,0))) I ($P(X,U)'=""),($P(X,U,4)'=""),($P(X,U,5)'=""),(($P(X,U,6)'="")!($P(X,U,8)'="")) G Q
+"RTN","RCAMADD",24,0)
+ I RCDB["DPT(" S:'$G(RCCSW) X=$$PAT(+RCDB,0) S:$G(RCCSW) X=$$PAT1(+RCDB,0) G Q    ;PRCA*4.5*336
+"RTN","RCAMADD",25,0)
+ I RCDB["DIC(4" S X=$$INST(+RCDB) G Q
+"RTN","RCAMADD",26,0)
+ I RCDB["PRC(440," S X=$$VEN(+RCDB) G Q
+"RTN","RCAMADD",27,0)
+ I RCDB["DIC(36," S X=$$INSUR(+RCDB) G Q
+"RTN","RCAMADD",28,0)
+ I RCDB["VA(200," S X=$$PER(+RCDB)
+"RTN","RCAMADD",29,0)
+Q Q X
+"RTN","RCAMADD",30,0)
+PER(RCDB) ;Get person address
+"RTN","RCAMADD",31,0)
+ N X,Y
+"RTN","RCAMADD",32,0)
+ S X="" G:'$D(^VA(200,+$G(RCDB),0)) Q1
+"RTN","RCAMADD",33,0)
+ S Y=$S($D(^VA(200,RCDB,.11)):^(.11),1:"") F I=1:1:6 S $P(X,"^",I)=$P(Y,"^",I)
+"RTN","RCAMADD",34,0)
+ S:$D(^VA(200,RCDB,.13)) $P(X,"^",7)=$P(^(.13),"^")
+"RTN","RCAMADD",35,0)
+ S $P(X,"^",5)=$P($G(^DIC(5,+$P(X,"^",5),0)),"^",2)
+"RTN","RCAMADD",36,0)
+Q1 Q X
+"RTN","RCAMADD",37,0)
+INST(RCDB) ;Get institution address
+"RTN","RCAMADD",38,0)
+ N X,Y
+"RTN","RCAMADD",39,0)
+ S X="" G:'$D(^DIC(4,+$G(RCDB),0)) Q2
+"RTN","RCAMADD",40,0)
+ S $P(X,"^",5)=$P(^DIC(4,RCDB,0),"^",2),Y=$S($D(^DIC(4,RCDB,1)):^(1),1:""),$P(X,"^")=$P(Y,"^"),$P(X,"^",2)=$P(Y,"^",2),$P(X,"^",4)=$P(Y,"^",3),$P(X,"^",6)=$P(Y,"^",4)
+"RTN","RCAMADD",41,0)
+ S $P(X,"^",5)=$P($G(^DIC(5,+$P(X,"^",5),0)),"^",2)
+"RTN","RCAMADD",42,0)
+Q2 Q X
+"RTN","RCAMADD",43,0)
+ ;
+"RTN","RCAMADD",44,0)
+PAT(RCDB,RCCONF) ;Get patient address as "Str1^Str2^Str3^City^State^ZIP^Telephone" from ^DPT
+"RTN","RCAMADD",45,0)
+ ; if RCCONF=0 (default), then return patients permanent address
+"RTN","RCAMADD",46,0)
+ ; if RCCONF=1, then return confidential address, or NULL
+"RTN","RCAMADD",47,0)
+ N DFN,VAERR,VAPA,RCX,RCY,X,RCXX,RCYY,RCII
+"RTN","RCAMADD",48,0)
+ I '$D(^DPT(+$G(RCDB),0)) S RCX="" G Q3
+"RTN","RCAMADD",49,0)
+ S RCCONF=+$G(RCCONF) ; confidential address flag
+"RTN","RCAMADD",50,0)
+ S DFN=RCDB D ADD^VADPT
+"RTN","RCAMADD",51,0)
+ S RCX=""
+"RTN","RCAMADD",52,0)
+ ;
+"RTN","RCAMADD",53,0)
+ I 'RCCONF D
+"RTN","RCAMADD",54,0)
+ . F RCY=1,2,3,4 S $P(RCX,"^",RCY)=VAPA(RCY)
+"RTN","RCAMADD",55,0)
+ . S $P(RCX,"^",5)=$P($G(^DIC(5,+$P(VAPA(5),"^"),0)),"^",2)
+"RTN","RCAMADD",56,0)
+ . S $P(RCX,"^",6)=$P($G(VAPA(11)),"^")
+"RTN","RCAMADD",57,0)
+ ;
+"RTN","RCAMADD",58,0)
+ ; is the confidential address available? Return NULL if not.
+"RTN","RCAMADD",59,0)
+ I RCCONF S RCX="" G:'$G(VAPA(12)) Q3  G:($P($G(VAPA(22,3)),U,3)'="Y") Q3  D
+"RTN","RCAMADD",60,0)
+ . F RCY=1,2,3,4 S $P(RCX,"^",RCY)=VAPA(RCY+12)
+"RTN","RCAMADD",61,0)
+ . S $P(RCX,"^",5)=$P($G(^DIC(5,+$P(VAPA(17),"^"),0)),"^",2)
+"RTN","RCAMADD",62,0)
+ . S $P(RCX,"^",6)=$P($G(VAPA(18)),"^")
+"RTN","RCAMADD",63,0)
+ S (RCXX,RCYY)=VAPA(8)   ;PRCA*4.5*336          
+"RTN","RCAMADD",64,0)
+ I RCXX'?10N D           ;PRCA*4.5*336        
+"RTN","RCAMADD",65,0)
+ . S RCYY="" F RCII=1:1:$L(RCXX) I $E(RCXX,RCII)?1N S RCYY=RCYY_$E(RCXX,RCII)   ;PRCA*4.5*336
+"RTN","RCAMADD",66,0)
+ S VAPA(8)=$E("000000000000",1,10-$L(RCYY))_RCYY   ;PRCA*4.5*336
+"RTN","RCAMADD",67,0)
+ S VAPA(8)=$S($L(RCYY)=10:RCYY,1:"          ")    ;PRCA*4.5*336         
+"RTN","RCAMADD",68,0)
+ S $P(RCX,"^",7)=VAPA(8) ; Telephone   ;PRCA*4.5*336
+"RTN","RCAMADD",69,0)
+Q3 Q RCX
+"RTN","RCAMADD",70,0)
+PAT1(RCDB,RCCONF) ;Get patient address as "Str1^Str2^Str3^City^State^ZIP^Telephone" from ^DPT   ;PRCA*4.5*336
+"RTN","RCAMADD",71,0)
+ ; if RCCONF=0 (default), then return patients permanent address
+"RTN","RCAMADD",72,0)
+ ; if RCCONF=1, then return confidential address, or NULL
+"RTN","RCAMADD",73,0)
+ N DFN,RCX,RCY,RCII,RCTRY,RCYY,RCXX,VAPA,TELPHN
+"RTN","RCAMADD",74,0)
+ I '$D(^DPT(+$G(RCDB),0)) S RCX="" G Q3A
+"RTN","RCAMADD",75,0)
+ S DFN=RCDB D ADD^VADPT
+"RTN","RCAMADD",76,0)
+ S RCX=""
+"RTN","RCAMADD",77,0)
+ I 'RCCONF D
+"RTN","RCAMADD",78,0)
+ . F RCY=1,2,3,4 S $P(RCX,"^",RCY)=VAPA(RCY)
+"RTN","RCAMADD",79,0)
+ . S $P(RCX,"^",5)=$P($G(^DIC(5,+$P(VAPA(5),"^"),0)),"^",2)
+"RTN","RCAMADD",80,0)
+ . S $P(RCX,"^",6)=$P($G(VAPA(11)),"^"),TELPHN=VAPA(8)
+"RTN","RCAMADD",81,0)
+ ;
+"RTN","RCAMADD",82,0)
+ ; is the confidential address available? Return NULL if not.
+"RTN","RCAMADD",83,0)
+ I RCCONF S RCX="" G:'$G(VAPA(12))!($P($G(VAPA(22,3)),U,3)'="Y") Q3A  D
+"RTN","RCAMADD",84,0)
+ . F RCY=1,2,3,4 S $P(RCX,"^",RCY)=VAPA(RCY+12)
+"RTN","RCAMADD",85,0)
+ . S $P(RCX,"^",5)=$P($G(^DIC(5,+$P(VAPA(17),"^"),0)),"^",2)
+"RTN","RCAMADD",86,0)
+ . S $P(RCX,"^",6)=$P($G(VAPA(18)),"^"),TELPHN=VAPA(8)
+"RTN","RCAMADD",87,0)
+ S RCYY="",RCXX=TELPHN F RCII=1:1:$L(RCXX) I $E(RCXX,RCII)?1N S RCYY=RCYY_$E(RCXX,RCII)
+"RTN","RCAMADD",88,0)
+ S VAPA(8)=$S($L(RCYY)=10:RCYY,1:"          ")    ;PRCA*4.5*336
+"RTN","RCAMADD",89,0)
+ S $P(RCX,U,7)=VAPA(8)
+"RTN","RCAMADD",90,0)
+ S $P(RCX,U,9)=0
+"RTN","RCAMADD",91,0)
+ I +VAPA(25)<3 S $P(RCX,U,8)="" G Q3A
+"RTN","RCAMADD",92,0)
+ S $P(RCX,U,4)=$E(VAPA(4)_" "_$E(VAPA(23),1,2)_" "_VAPA(24),1,25)
+"RTN","RCAMADD",93,0)
+ S $P(RCX,U,8)=+VAPA(25)
+"RTN","RCAMADD",94,0)
+Q3A Q RCX
+"RTN","RCAMADD",95,0)
+VEN(RCDB) ;Get vendor address
+"RTN","RCAMADD",96,0)
+ NEW X,Y,I
+"RTN","RCAMADD",97,0)
+ S X="" G:'$D(^PRC(440,+$G(RCDB),0)) Q4
+"RTN","RCAMADD",98,0)
+ S Y=$S($D(^PRC(440,RCDB,.11)):^(.11),1:"") F I=1:1:7 S $P(X,"^",I)=$P(Y,"^",I)
+"RTN","RCAMADD",99,0)
+ S $P(X,"^",5)=$P($G(^DIC(5,+$P(X,"^",5),0)),"^",2)
+"RTN","RCAMADD",100,0)
+Q4 Q X
+"RTN","RCAMADD",101,0)
+INSUR(RCDB) ;Get insurance company address
+"RTN","RCAMADD",102,0)
+ NEW X,Y,I
+"RTN","RCAMADD",103,0)
+ S X="" G:'$D(^DIC(36,+$G(RCDB),0)) Q5
+"RTN","RCAMADD",104,0)
+ S Y=$S($D(^DIC(36,RCDB,.11)):^(.11),1:"") F I=1:1:6 S $P(X,"^",I)=$P(Y,"^",I)
+"RTN","RCAMADD",105,0)
+ S:$D(^DIC(36,RCDB,.13)) $P(X,"^",7)=$P(^(.13),"^",2)
+"RTN","RCAMADD",106,0)
+ S $P(X,"^",5)=$P($G(^DIC(5,+$P(X,"^",5),0)),"^",2)
+"RTN","RCAMADD",107,0)
+Q5 Q X
+"RTN","RCAMADD",108,0)
+ARDEB(RCDB) ;Get address from AR Debtor file (340)
+"RTN","RCAMADD",109,0)
+ NEW X,Y,RCXX,RCYY
+"RTN","RCAMADD",110,0)
+ S X="" G:'$D(^RCD(340,+$G(RCDB),0)) Q6 S X=$P($G(^RCD(340,RCDB,1)),"^",1,8)
+"RTN","RCAMADD",111,0)
+ S $P(X,"^",5)=$P($G(^DIC(5,+$P(X,"^",5),0)),"^",2)
+"RTN","RCAMADD",112,0)
+ S RCYY="",RCXX=$P(X,"^",7) F RCII=1:1:$L(RCXX) I $E(RCXX,RCII)?1N S RCYY=RCYY_$E(RCXX,RCII)
+"RTN","RCAMADD",113,0)
+ S $P(X,"^",7)=$S($L(RCYY)=10:RCYY,1:"          ")
+"RTN","RCAMADD",114,0)
+Q6 Q X
+"RTN","RCDPCSA")
+0^9^B35235614^B37276787
+"RTN","RCDPCSA",1,0)
+RCDPCSA ;UNY/RGB-CROSS-SERVICING STATUS FIX ;03/15/14 3:34 PM
+"RTN","RCDPCSA",2,0)
+ ;;4.5;Accounts Receivable;**325,336**;Mar 20, 1995;Build 45
+"RTN","RCDPCSA",3,0)
+ ;OPTION: RCDP TCSP FLAG CONTROL
+"RTN","RCDPCSA",4,0)
+ ;
+"RTN","RCDPCSA",5,0)
+ ;PRCA*4.5*336 When setting bills to cross service date
+"RTN","RCDPCSA",6,0)
+ ;             ensure the TCSP address node ^PRCA(430,ien,16)
+"RTN","RCDPCSA",7,0)
+ ;             is established
+"RTN","RCDPCSA",8,0)
+ ;
+"RTN","RCDPCSA",9,0)
+A S U="^" S SITE=+$$SITE^VASITE
+"RTN","RCDPCSA",10,0)
+B K DIR S DIR(0)="SO^1:Set cross-service flag on BILL;2:Clear cross-service flag on BILL;3:Clear cross-service flag on DEBTOR (AND ALL BILLS);4:Set cross-service flag on DEBTOR;5:Fully re-establish debtor/bill as cross-serviced"
+"RTN","RCDPCSA",11,0)
+ S DIR("?")="Enter an option number 1 to 5."
+"RTN","RCDPCSA",12,0)
+ S DIR("A")="Select Number"
+"RTN","RCDPCSA",13,0)
+ D ^DIR
+"RTN","RCDPCSA",14,0)
+ G EXIT:$D(DIRUT)
+"RTN","RCDPCSA",15,0)
+ S PRCAOPT=+Y
+"RTN","RCDPCSA",16,0)
+ ;
+"RTN","RCDPCSA",17,0)
+C ;select bill
+"RTN","RCDPCSA",18,0)
+ ;  returns -1 for timeout or ^, 0 for no selection, or ien of bill
+"RTN","RCDPCSA",19,0)
+ K %,%Y,C,DIC,DIR,DIE,DTOUT,DUOUT,X,Y
+"RTN","RCDPCSA",20,0)
+ K RCY,DIR,DIRUT
+"RTN","RCDPCSA",21,0)
+ W ! S DIC="^PRCA(430,",DIC(0)="QEAM",DIC("A")="Select BILL: "
+"RTN","RCDPCSA",22,0)
+ ;  special lookup on input
+"RTN","RCDPCSA",23,0)
+ S RCBEFLUP=1
+"RTN","RCDPCSA",24,0)
+ D ^DIC
+"RTN","RCDPCSA",25,0)
+ I $G(DUOUT)!$G(DTOUT) G B
+"RTN","RCDPCSA",26,0)
+ I Y<0 G B
+"RTN","RCDPCSA",27,0)
+ S RCBILLDA=+Y
+"RTN","RCDPCSA",28,0)
+ ;Disp last 4 soc#
+"RTN","RCDPCSA",29,0)
+C1 I '$D(^PRCA(430,"TCSP",RCBILLDA)),PRCAOPT=2 W !,"*** BILL NOT CROSS SERVICED ***" G C
+"RTN","RCDPCSA",30,0)
+ I $P($G(^PRCA(430,RCBILLDA,0)),U,8)'=16 W !,"*** BILL NOT ACTIVE ***" G C
+"RTN","RCDPCSA",31,0)
+ S RCDEBTOR=$P($G(^PRCA(430,RCBILLDA,0)),U,9) I 'RCDEBTOR W !," < *** debtor not found on bill *** >" G C
+"RTN","RCDPCSA",32,0)
+ S RCDEBTV=$P($G(^RCD(340,RCDEBTOR,0)),U) I 'RCDEBTV W !," < *** debtor on bill not found *** >" G C
+"RTN","RCDPCSA",33,0)
+ I RCDEBTV'["DPT(" W !," < *** debtor must be a veteran *** >" G C
+"RTN","RCDPCSA",34,0)
+ I '$D(^RCD(340,"TCSP",RCDEBTOR)),"245"'[PRCAOPT W !," <debtor not flagged as CS *** >" G C
+"RTN","RCDPCSA",35,0)
+ S RCDPT=+RCDEBTV,RC0=$G(^DPT(RCDPT,0)) I RC0="" W !," < *** debtor info not found *** >" G C
+"RTN","RCDPCSA",36,0)
+ W ?60,$E($P(RC0,U,9),6,9)
+"RTN","RCDPCSA",37,0)
+ D @PRCAOPT
+"RTN","RCDPCSA",38,0)
+ G C
+"RTN","RCDPCSA",39,0)
+1 ;option 1
+"RTN","RCDPCSA",40,0)
+ I $D(^PRCA(430,"TCSP",RCBILLDA)) W !,"*** BILL ALREADY CROSS-SERVICED ***" Q
+"RTN","RCDPCSA",41,0)
+ S DIR(0)="D",DIR("A")="Enter Cross-Sevice Date" D ^DIR K DIR
+"RTN","RCDPCSA",42,0)
+ I $D(DIRUT)!($D(DUOUT)) Q
+"RTN","RCDPCSA",43,0)
+ S RCDATE=Y
+"RTN","RCDPCSA",44,0)
+ S DIR(0)="YA",DIR("A")="File CS Bill Change (Y/N): ",DIR("B")="N",DIR("?")="Enter (Y)es to file or (N)o to skip filing"
+"RTN","RCDPCSA",45,0)
+ D ^DIR K DIR I Y=0!$G(DIRUT) W "   < Bill Not Updated >" Q
+"RTN","RCDPCSA",46,0)
+ S RCDAS=RCBILLDA_",",PRCAR(430,RCDAS,151)=RCDATE D FILE^DIE("EK","PRCAR","PRCAERR") I $D(PRCAERR) W "   <",$G(PRCAERR("DIERR",1,"TEXT",1)),">" K PRCAERR G 1
+"RTN","RCDPCSA",47,0)
+ D SET16             ;PRCA*4.5*336
+"RTN","RCDPCSA",48,0)
+ W "  <DONE>"
+"RTN","RCDPCSA",49,0)
+ Q
+"RTN","RCDPCSA",50,0)
+2 ;option 2
+"RTN","RCDPCSA",51,0)
+ I '$D(^PRCA(430,"TCSP",RCBILLDA)) W !,"*** BILL NOT CROSS SERVICED ***" Q
+"RTN","RCDPCSA",52,0)
+ S DIR(0)="YA",DIR("A")="File CS Bill Flag Removal (Y/N): ",DIR("B")="N",DIR("?")="Enter (Y)es to file or (N)o to skip filing"
+"RTN","RCDPCSA",53,0)
+ D ^DIR K DIR I Y=0!$G(DIRUT) W "   <Bill Not Updated" Q
+"RTN","RCDPCSA",54,0)
+ K ^PRCA(430,RCBILLDA,16)
+"RTN","RCDPCSA",55,0)
+ S DA=RCBILLDA,DIE="^PRCA(430,",DR="151////@" D ^DIE W "  <DONE>"         ;PRCA*4.5*336
+"RTN","RCDPCSA",56,0)
+ Q
+"RTN","RCDPCSA",57,0)
+3 ;option 3
+"RTN","RCDPCSA",58,0)
+ S DIR(0)="YA",DIR("A")="File CS Debtor/Bills Flag Removal (Y/N): ",DIR("B")="N",DIR("?")="Enter (Y)es to file or (N)o to skip filing"
+"RTN","RCDPCSA",59,0)
+ D ^DIR I Y=0!$G(DIRUT) W "   <Bill Not Updated" Q
+"RTN","RCDPCSA",60,0)
+ S DA=RCDEBTOR,DIE="^RCD(340,",DR="7.05////@" D ^DIE W "  <DONE>"
+"RTN","RCDPCSA",61,0)
+ S PRCAIEN=0
+"RTN","RCDPCSA",62,0)
+ F  S PRCAIEN=$O(^PRCA(430,"C",RCDEBTOR,PRCAIEN)) Q:'PRCAIEN  D
+"RTN","RCDPCSA",63,0)
+ . I '$D(^PRCA(430,"TCSP",PRCAIEN)) Q
+"RTN","RCDPCSA",64,0)
+ . S DA=PRCAIEN,DIE="^PRCA(430,",DR="151////@" D ^DIE         ;PRCA*4.5*336
+"RTN","RCDPCSA",65,0)
+ . K ^PRCA(430,RCBILLDA,16)
+"RTN","RCDPCSA",66,0)
+ . W !,?4,$P(^PRCA(430,PRCAIEN,0),U),"  Cleared"
+"RTN","RCDPCSA",67,0)
+ Q
+"RTN","RCDPCSA",68,0)
+4 ;option 4
+"RTN","RCDPCSA",69,0)
+ I $D(^RCD(340,"TCSP",RCDEBTOR)) W !,"*** DEBTOR ALREADY CROSS-SERVICED ***" Q
+"RTN","RCDPCSA",70,0)
+ S DIR(0)="D",DIR("A")="Enter Debtor Cross-Sevice Date" D ^DIR K DIR
+"RTN","RCDPCSA",71,0)
+ I $D(DIRUT)!($D(DUOUT)) Q
+"RTN","RCDPCSA",72,0)
+ S RCDATE=Y
+"RTN","RCDPCSA",73,0)
+ S DIR(0)="YA",DIR("A")="File CS Debtor Change (Y/N): ",DIR("B")="N",DIR("?")="Enter (Y)es to file or (N)o to skip filing"
+"RTN","RCDPCSA",74,0)
+ D ^DIR K DIR I Y=0!$G(DIRUT) W "   < Debtor Not Updated >" Q
+"RTN","RCDPCSA",75,0)
+ S RCDAS=RCDEBTOR_",",RCDR(340,RCDAS,7.05)=RCDATE D FILE^DIE("EK","RCDR","RCDERR") I $D(RCDERR) W "   <",$G(RCDERR("DIERR",1,"TEXT",1)),">" K RCDERR G 4
+"RTN","RCDPCSA",76,0)
+ W "  <DONE>"
+"RTN","RCDPCSA",77,0)
+ Q
+"RTN","RCDPCSA",78,0)
+5 ;option 5
+"RTN","RCDPCSA",79,0)
+ I $D(^PRCA(430,"TCSP",RCBILLDA)) W !,"*** BILL ALREADY CROSS-SERVICED, DEBTOR MUST BE ALSO ***" Q
+"RTN","RCDPCSA",80,0)
+ I $D(^RCD(340,"TCSP",RCDEBTOR)) W !,"*** DEBTOR ALREADY CROSS-SERVICED, USE OPTION 1 TO SET BILL ***" Q
+"RTN","RCDPCSA",81,0)
+ I $D(^PRCA(430,RCBILLDA,30)) W !,"*** BILL RETURNED BY RECONCILIATION ***" Q
+"RTN","RCDPCSA",82,0)
+ S DIR(0)="D",DIR("A")="Enter Debtor Cross-Sevice Date" D ^DIR K DIR Q:$G(DIRUT)
+"RTN","RCDPCSA",83,0)
+ S RCDATE=Y
+"RTN","RCDPCSA",84,0)
+ S DIR(0)="YA",DIR("A")="File CS Debtor/Bill Change (Y/N): ",DIR("B")="N",DIR("?")="Enter (Y)es to file or (N)o to skip filing"
+"RTN","RCDPCSA",85,0)
+ D ^DIR K DIR I Y=0!$G(DIRUT) W "   < Debtor Not Updated >" Q
+"RTN","RCDPCSA",86,0)
+ S RCDAS=RCDEBTOR_",",RCDR(340,RCDAS,7.05)=RCDATE D FILE^DIE("EK","RCDR","RCDERR") I $D(RCDERR) W "   <",$G(RCDERR("DIERR",1,"TEXT",1)),">" K RCDERR G 5
+"RTN","RCDPCSA",87,0)
+ S ^PRCA(430,RCBILLDA,15)="",DA=RCBILLDA,DIE="^PRCA(430,",DR="151////^S X=RCDATE" D ^DIE
+"RTN","RCDPCSA",88,0)
+ D SET16              ;PRCA*4.5*336
+"RTN","RCDPCSA",89,0)
+ W "  <DONE>",!,">>> Bill Updating for CS info... "
+"RTN","RCDPCSA",90,0)
+ W "fully re-established as Cross-Serviced >"
+"RTN","RCDPCSA",91,0)
+ Q
+"RTN","RCDPCSA",92,0)
+ ;
+"RTN","RCDPCSA",93,0)
+SET16 ;SET NODE 16 FOR TCSP BILL                    ;PRCA*4.5*336
+"RTN","RCDPCSA",94,0)
+ N RCXX,RCYY
+"RTN","RCDPCSA",95,0)
+ S (RCDEBTR0,DEBTOR0)=$G(^RCD(340,RCDEBTOR,0)),DEBTOR1=$G(^RCD(340,RCDEBTOR,1)),RCDFN=+RCDEBTR0
+"RTN","RCDPCSA",96,0)
+ S RCDPN16="",RCB6=$G(^PRCA(430,RCBILLDA,6)),RCB7=$G(^(7)),RCBILLDT=$P($P(RCB6,U,21),".")
+"RTN","RCDPCSA",97,0)
+ S TAXID=$$TAXID^RCTCSPD(RCDEBTOR),RCNAME=$$NAME^RCTCSPD(+RCDEBTR0),RCNAME=$P(RCNAME,U)
+"RTN","RCDPCSA",98,0)
+ S $P(RCDPN16,U)=TAXID,$P(RCDPN16,U,2)=RCNAME,$P(RCDPN16,U,3)=+RCBILLDT
+"RTN","RCDPCSA",99,0)
+ S DEBTOR=RCDEBTOR,ADDRCS=$$ADDR^RCTCSP1(RCDFN,1),$P(RCDPN16,U,4,8)=$P(ADDRCS,U,1,5)
+"RTN","RCDPCSA",100,0)
+ S $P(RCDPN16,U,12)=$S($P(ADDRCS,U,7)>2:$P(ADDRCS,U,7),+^PRCA(430,RCBILLDA,0)=436:2,1:1),$P(RCDPN16,U,13)=$P(^DPT(RCDFN,0),U,3)
+"RTN","RCDPCSA",101,0)
+ S RCAMTRFD=0 F I=1:1:5 S RCAMTRFD=RCAMTRFD+$P(RCB7,U,I)
+"RTN","RCDPCSA",102,0)
+ F I=9,10 S $P(RCDPN16,U,I)=RCAMTRFD
+"RTN","RCDPCSA",103,0)
+ S (RCXX,RCYY)=$P(ADDRCS,U,6)
+"RTN","RCDPCSA",104,0)
+ I RCXX'?10N D
+"RTN","RCDPCSA",105,0)
+ . S RCYY="" F I=1:1:$L(RCXX) I $E(RCXX,I)?1N S RCYY=RCYY_$E(RCXX,I)
+"RTN","RCDPCSA",106,0)
+ S $P(RCDPN16,U,11)=$E("000000000000",1,10-$L(RCYY))_RCYY
+"RTN","RCDPCSA",107,0)
+ S ^PRCA(430,RCBILLDA,16)=RCDPN16
+"RTN","RCDPCSA",108,0)
+ Q
+"RTN","RCDPCSA",109,0)
+ ;
+"RTN","RCDPCSA",110,0)
+EXIT D KILL^XUSCLEAN Q
+"RTN","RCTC336P")
+0^8^B12149010^n/a
+"RTN","RCTC336P",1,0)
+RCTC336P ;MNTVBB,RGB-TCSP date sent/address node cleanup + IAI error code file 348.5 updates ;12/14/17 3:34 PM
+"RTN","RCTC336P",2,0)
+V ;;4.5;Accounts Receivable;**336**;Mar 20, 1995;Build 45
+"RTN","RCTC336P",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCTC336P",4,0)
+ Q
+"RTN","RCTC336P",5,0)
+EN S U="^",(IEN,T,T1,T2)=0,DT=$$DT^XLFDT
+"RTN","RCTC336P",6,0)
+ K ^XTMP("RCTC336P")
+"RTN","RCTC336P",7,0)
+ S ^XTMP("RCTC336P",0)=$$FMADD^XLFDT(DT,90)_"^"_DT
+"RTN","RCTC336P",8,0)
+ D NOW^%DTC S ^XTMP("RCTC336P",$J,"ZZASTART")=%
+"RTN","RCTC336P",9,0)
+1 ;SET MISSING FIELD DATE BILL REFERRED TO TCSP (#151) FOR TCSP BILL
+"RTN","RCTC336P",10,0)
+ F  S IEN=$O(^PRCA(430,"TCSP",IEN)) Q:'IEN  D
+"RTN","RCTC336P",11,0)
+ . S R15=$G(^PRCA(430,IEN,15)),R16=$G(^PRCA(430,IEN,16)),T=T+1
+"RTN","RCTC336P",12,0)
+ . I '$P(R15,U) D
+"RTN","RCTC336P",13,0)
+ . . S RCVERB="DATE> "_IEN_"   "_$P(^PRCA(430,IEN,0),U)_"   "_$P(^PRCA(430,IEN,0),U,9)_"   "_R15
+"RTN","RCTC336P",14,0)
+ . . D BMES^XPDUTL(RCVERB)
+"RTN","RCTC336P",15,0)
+ . . S T1=T1+1
+"RTN","RCTC336P",16,0)
+ . . S ^XTMP("RCTC336P",$J,1,IEN)=R15
+"RTN","RCTC336P",17,0)
+ . . S DA=IEN,DIE="^PRCA(430,",DR="151////^S X=DT" D ^DIE K DA,DR,DIE
+"RTN","RCTC336P",18,0)
+ . . Q
+"RTN","RCTC336P",19,0)
+ . I R16=""  D
+"RTN","RCTC336P",20,0)
+ . . S RCVERB="ADDR> "_IEN_"   "_$P(^PRCA(430,IEN,0),U)_"   "_$P(^PRCA(430,IEN,0),U,9)
+"RTN","RCTC336P",21,0)
+ . . D BMES^XPDUTL(RCVERB)
+"RTN","RCTC336P",22,0)
+ . . S T2=T2+1,RCDEBTOR=$P(^PRCA(430,IEN,0),U,9),RCBILLDA=IEN
+"RTN","RCTC336P",23,0)
+ . . D SET16 S RCVERB=^PRCA(430,RCBILLDA,16) D BMES^XPDUTL(RCVERB)
+"RTN","RCTC336P",24,0)
+ . . S ^XTMP("RCTC336P",$J,2,IEN,16)=^PRCA(430,RCBILLDA,16)
+"RTN","RCTC336P",25,0)
+ . Q
+"RTN","RCTC336P",26,0)
+ D NOW^%DTC S ^XTMP("RCTC336P",$J,"ZZBEND")=%
+"RTN","RCTC336P",27,0)
+ S ^XTMP("RCTC336P",$J,"ZZTOTALS")=T_U_T1_U_T2
+"RTN","RCTC336P",28,0)
+ S RCVERB="TOTAL 'TCSP':   "_T
+"RTN","RCTC336P",29,0)
+ D BMES^XPDUTL(RCVERB)
+"RTN","RCTC336P",30,0)
+ S RCVERB="TOTAL NULL Date Sent TCSP:   "_T1
+"RTN","RCTC336P",31,0)
+ D BMES^XPDUTL(RCVERB)
+"RTN","RCTC336P",32,0)
+ S RCVERB="TOTAL ADDRESS NODE 16 FIXED:   "_T2
+"RTN","RCTC336P",33,0)
+ D BMES^XPDUTL(RCVERB)
+"RTN","RCTC336P",34,0)
+ K IEN,T,T1,T2,R
+"RTN","RCTC336P",35,0)
+UPD3485 ;Update IAI error codes in file 348.5
+"RTN","RCTC336P",36,0)
+ S U="^",UPD=0,NUM=4
+"RTN","RCTC336P",37,0)
+UPD1 S UPD=UPD+1 G:UPD>NUM UPD3485Q
+"RTN","RCTC336P",38,0)
+ S R=$P($T(ERRCDS+UPD),";",2),ERRCD=$P(R,U),UPDTYP=$P(R,U,2),FNACT=$P(R,U,3),RECTYPE=$P(R,U,4),ERRMSG=$P(R,U,5)
+"RTN","RCTC336P",39,0)
+UEDIT ;edit record in file 348.5
+"RTN","RCTC336P",40,0)
+ I UPDTYP="E" D  G UPD1
+"RTN","RCTC336P",41,0)
+ . S DA=$O(^RC(348.5,"B",ERRCD,0)) Q:'DA
+"RTN","RCTC336P",42,0)
+ . S DIE="^RC(348.5,",DR="1///^S X=FNACT;2///^S X=RECTYPE;3///^S X=ERRMSG"
+"RTN","RCTC336P",43,0)
+ . D ^DIE K DIE,DR,DA
+"RTN","RCTC336P",44,0)
+UADD ;add record in file 348.5
+"RTN","RCTC336P",45,0)
+ S X=ERRCD,DLAYGO=348.5,DIC="^RC(348.5,",DIC(0)="LXZ" D ^DIC K DLAYGO,DIC
+"RTN","RCTC336P",46,0)
+ S DA=+Y,DIE="^RC(348.5,",DR="1///^S X=FNACT;2///^S X=RECTYPE;3///^S X=ERRMSG"
+"RTN","RCTC336P",47,0)
+ D ^DIE K DIE,DR,DA
+"RTN","RCTC336P",48,0)
+ G UPD1
+"RTN","RCTC336P",49,0)
+UPD3485Q K UPD,NUM,R,UPDTYP,ERRCDID,FNACT,RECTYPE,ERRMSG Q
+"RTN","RCTC336P",50,0)
+SET16 ;SET MISSING NODE 16 FOR TCSP BILL
+"RTN","RCTC336P",51,0)
+ N RCXX,RCYY,RCDEBTR0,DEBTOR0,DEBTOR1,RCDFN,RCDPN16,RCB6,RCB7,RCBILLDT,TAXID,RCNAME,DEBTOR,RCAMTRFD
+"RTN","RCTC336P",52,0)
+ S (RCDEBTR0,DEBTOR0)=$G(^RCD(340,RCDEBTOR,0)),DEBTOR1=$G(^RCD(340,RCDEBTOR,1)),RCDFN=+RCDEBTR0
+"RTN","RCTC336P",53,0)
+ Q:$P(RCDEBTR0,U)'["DPT"
+"RTN","RCTC336P",54,0)
+ S RCDPN16="",RCB6=$G(^PRCA(430,RCBILLDA,6)),RCB7=$G(^(7)),RCBILLDT=$P($P(RCB6,U,21),".")
+"RTN","RCTC336P",55,0)
+ S TAXID=$$TAXID^RCTCSPD(RCDEBTOR),RCNAME=$$NAME^RCTCSPD(+RCDEBTR0),RCNAME=$P(RCNAME,U)
+"RTN","RCTC336P",56,0)
+ S $P(RCDPN16,U)=TAXID,$P(RCDPN16,U,2)=RCNAME,$P(RCDPN16,U,3)=+RCBILLDT
+"RTN","RCTC336P",57,0)
+ S DEBTOR=RCDEBTOR,ADDRCS=$$ADDR^RCTCSP1(RCDFN,1),$P(RCDPN16,U,4,8)=$P(ADDRCS,U,1,5)
+"RTN","RCTC336P",58,0)
+ S $P(RCDPN16,U,12)=$S($P(ADDRCS,U,7)>2:$P(ADDRCS,U,7),+^PRCA(430,RCBILLDA,0)=436:2,1:1) S $P(RCDPN16,U,13)=$P($G(^DPT(RCDFN,0)),U,3)
+"RTN","RCTC336P",59,0)
+ S RCAMTRFD=0 F I=1:1:5 S RCAMTRFD=RCAMTRFD+$P(RCB7,U,I)
+"RTN","RCTC336P",60,0)
+ F I=9,10 S $P(RCDPN16,U,I)=RCAMTRFD
+"RTN","RCTC336P",61,0)
+ S (RCXX,RCYY)=$P(ADDRCS,U,6)
+"RTN","RCTC336P",62,0)
+ I RCXX'?10N D
+"RTN","RCTC336P",63,0)
+ . S RCYY="" F I=1:1:$L(RCXX) I $E(RCXX,I)?1N S RCYY=RCYY_$E(RCXX,I)
+"RTN","RCTC336P",64,0)
+ S $P(RCDPN16,U,11)=$E("000000000000",1,10-$L(RCYY))_RCYY
+"RTN","RCTC336P",65,0)
+ S ^PRCA(430,RCBILLDA,16)=RCDPN16
+"RTN","RCTC336P",66,0)
+ Q
+"RTN","RCTC336P",67,0)
+ERRCDS ;file 348.5 error code adjustments
+"RTN","RCTC336P",68,0)
+ ;53^E^Invalid Phone number^^Invalid phone number: ####
+"RTN","RCTC336P",69,0)
+ ;9A^E^Batch Control ID is Invalid^Header Record^Batch Control ID is Invalid
+"RTN","RCTC336P",70,0)
+ ;0C^A^Agency Debt ID^5A^Cannot post payment to a closed case
+"RTN","RCTC336P",71,0)
+ ;0D^A^Undefined Processing Error-New Business Phase^5B^New Business Phase-Transaction could not be added
+"RTN","RCTCSJS")
+0^4^B210400195^B204961410
+"RTN","RCTCSJS",1,0)
+RCTCSJS ;ALBANY/LEG - CROSS-SERVICING REJECTS SERVER;02/19/14 3:21 PM
+"RTN","RCTCSJS",2,0)
+V ;;4.5;Accounts Receivable;**301,323,336**;Mar 20, 1995;Build 45
+"RTN","RCTCSJS",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCTCSJS",4,0)
+ ;Program to process CS REJECT server messages from AITC
+"RTN","RCTCSJS",5,0)
+ ;
+"RTN","RCTCSJS",6,0)
+ ;PRCA*4.5*323 a. Convert reject rec totals to absolute value
+"RTN","RCTCSJS",7,0)
+ ;             b. Allow C2 B rec type or '3E' reject clear CS flag
+"RTN","RCTCSJS",8,0)
+ ;
+"RTN","RCTCSJS",9,0)
+ ;PRCA*4.5*336 Insure CS date is reset for rejected recalls on bills
+"RTN","RCTCSJS",10,0)
+ ;
+"RTN","RCTCSJS",11,0)
+ ; 
+"RTN","RCTCSJS",12,0)
+ ;===============================================================================
+"RTN","RCTCSJS",13,0)
+ ; 
+"RTN","RCTCSJS",14,0)
+SERVER ; entry from outside
+"RTN","RCTCSJS",15,0)
+ D INIT1
+"RTN","RCTCSJS",16,0)
+ S:'$L(XMZ1) XMZ1=$S($L(XMZ2):XMZ2,1:" ")
+"RTN","RCTCSJS",17,0)
+ S:'$L(XMZ2) XMZ2=$S($L(XMZ1):XMZ1,1:" ")
+"RTN","RCTCSJS",18,0)
+ I '$G(XMZ1)!'$G(XMZ2) D  G END
+"RTN","RCTCSJS",19,0)
+ . D RECERR(.ERRCNT,"Inv MM MSG","Invalid MM Msg# '"_$G(XMZ1)_"'"_$S(XMZ2'=XMZ1:" to '"_XMZ2_"'",1:""),0,.RECERR)
+"RTN","RCTCSJS",20,0)
+ I '$D(^XMB(3.9,XMZ1))!'$D(^XMB(3.9,XMZ2)) D  G END
+"RTN","RCTCSJS",21,0)
+ . D RECERR(.ERRCNT,"Inv MM MSG","Invalid MM Msg# '"_$G(XMZ1)_"'"_$S(XMZ2'=XMZ1:" to '"_XMZ2_"'",1:""),0,.RECERR)
+"RTN","RCTCSJS",22,0)
+ ;
+"RTN","RCTCSJS",23,0)
+ K LIST F XMZ=XMZ1:1:XMZ2 S LIST(XMZ)=""
+"RTN","RCTCSJS",24,0)
+ I '$D(LIST) D RECERR(.ERRCNT,"BAD QUEUE","No Valid MM Msgs are for REJECTS Queues for MM Msg: "_XMZ,0,.RECERR) G END
+"RTN","RCTCSJS",25,0)
+ F XMZ=XMZ1:1:XMZ2 I $D(LIST(XMZ)) D  ;
+"RTN","RCTCSJS",26,0)
+ . K ^XTMP(NMSPC,$J,"BILL")
+"RTN","RCTCSJS",27,0)
+ . K ^XTMP(NMSPC,$J,"REC")
+"RTN","RCTCSJS",28,0)
+ . S QNAM=$G(^XMB(3.9,XMZ,2,1,0)) ; Queue Name
+"RTN","RCTCSJS",29,0)
+ . I $D(^XMB(3.9,XMZ)) D  ;
+"RTN","RCTCSJS",30,0)
+ .. S BATFDT=$G(^XMB(3.9,XMZ,.6))
+"RTN","RCTCSJS",31,0)
+ .. S LSTREC=$P($G(^XMB(3.9,XMZ,2,0)),U,3) ; last record# of data
+"RTN","RCTCSJS",32,0)
+ .. S XNRECS=$P($G(^XMB(3.9,XMZ,2,0)),U,4) ; #records expected from file
+"RTN","RCTCSJS",33,0)
+ .. S HDR=$G(^XMB(3.9,XMZ,2,2,0)) ; AITC Header record
+"RTN","RCTCSJS",34,0)
+ .. S BCIDA=$E(HDR,2,9) ; AITC Batch Control ID
+"RTN","RCTCSJS",35,0)
+ .. I 'XNRECS!'$L(HDR) D  Q  ;
+"RTN","RCTCSJS",36,0)
+ ... D RECERR(.ERRCNT,"NO RECS/HDR","No Records Found: '"_XNRECS_"'",0,.RECERR)
+"RTN","RCTCSJS",37,0)
+ .. D START
+"RTN","RCTCSJS",38,0)
+END ;
+"RTN","RCTCSJS",39,0)
+ I '$D(^XTMP(NMSPC,$J,"BULTN")) D  ;
+"RTN","RCTCSJS",40,0)
+ . S BLTNCNT=$G(BLTNCNT)+1
+"RTN","RCTCSJS",41,0)
+ . S ^XTMP(NMSPC,$J,"BULTN",BLTNCNT)=" "
+"RTN","RCTCSJS",42,0)
+ . S BLTNCNT=$G(BLTNCNT)+1
+"RTN","RCTCSJS",43,0)
+ . S BLTNREC="NOTE: NO UNPROCESSABLE/REJECT RECORDS FOUND NEEDING TO BE PROCESSED"
+"RTN","RCTCSJS",44,0)
+ . S ^XTMP(NMSPC,$J,"BULTN",BLTNCNT)=BLTNREC
+"RTN","RCTCSJS",45,0)
+ D SENDBUL^RCTCSJS1
+"RTN","RCTCSJS",46,0)
+ I $D(^XTMP(NMSPC,$J,"ERR")) D SENDERR^RCTCSJS1
+"RTN","RCTCSJS",47,0)
+ D CLEANUP^RCTCSJS1
+"RTN","RCTCSJS",48,0)
+ Q  ; ENTER
+"RTN","RCTCSJS",49,0)
+ ;
+"RTN","RCTCSJS",50,0)
+INIT1 ;     initialize first time
+"RTN","RCTCSJS",51,0)
+ S NMSPC="RCTCSJS"
+"RTN","RCTCSJS",52,0)
+ S CSRCS=""
+"RTN","RCTCSJS",53,0)
+ S XMZ1=$P($G(XMZ),"-")
+"RTN","RCTCSJS",54,0)
+ S XMZ2=$P($G(XMZ),"-",2)
+"RTN","RCTCSJS",55,0)
+ K ^XTMP(NMSPC,$J)
+"RTN","RCTCSJS",56,0)
+ K TOTAMT,ARTXNID
+"RTN","RCTCSJS",57,0)
+ S U="^"
+"RTN","RCTCSJS",58,0)
+ S STATCNT=0 ; STATUS logging count
+"RTN","RCTCSJS",59,0)
+ D NOW^%DTC
+"RTN","RCTCSJS",60,0)
+ S (X1,RUNDT)=X,RUNDTTM=%
+"RTN","RCTCSJS",61,0)
+ S X2=30 D C^%DTC
+"RTN","RCTCSJS",62,0)
+ S ^XTMP(NMSPC,$J,0)=X_U_RUNDT_U_"CS REJECT FILE PROCESSING/"_DUZ
+"RTN","RCTCSJS",63,0)
+ S ERRCNT=0 ; ERROR logging count
+"RTN","RCTCSJS",64,0)
+ S NULLERR="",$P(NULLERR," ",19)="" ; for no error codes
+"RTN","RCTCSJS",65,0)
+ S BLNKS="",$P(BLNKS," ",25)=""
+"RTN","RCTCSJS",66,0)
+ S BLTNCNT=0
+"RTN","RCTCSJS",67,0)
+ S SITE=$$SITE^RCMSITE()
+"RTN","RCTCSJS",68,0)
+ Q  ; INIT1
+"RTN","RCTCSJS",69,0)
+ ;
+"RTN","RCTCSJS",70,0)
+START ; start of process
+"RTN","RCTCSJS",71,0)
+ D INIT2
+"RTN","RCTCSJS",72,0)
+ D XMB2XTMP   ; moves MM data from ^XMB(3.9,... to ^XTMP
+"RTN","RCTCSJS",73,0)
+ D SRTXTMP    ; sorts recs from ^XTMP into by Debtor, by BILL
+"RTN","RCTCSJS",74,0)
+ S STOPSET="" ; flag to determine if data is error free (or not)
+"RTN","RCTCSJS",75,0)
+ I RECNS'=XNRECS D  ; logs MailMan record COUNT error
+"RTN","RCTCSJS",76,0)
+ . S ZMSG="Expected MM RECS: '"_XNRECS_"' not same as # RECS FOUND: '"_RECNS_"'"
+"RTN","RCTCSJS",77,0)
+ . D RECERR(.ERRCNT,"RECNUMS",ZMSG,RECNS,.RECERR)
+"RTN","RCTCSJS",78,0)
+ . S STOPSET=1
+"RTN","RCTCSJS",79,0)
+TOT ;
+"RTN","RCTCSJS",80,0)
+ I $TR(TOTAMT,"-+","")'=(+ZTOTA*.01) D  ; logs record Total Amt error
+"RTN","RCTCSJS",81,0)
+ . S X=TOTAMT,X2="2$",X3=4 D COMMA^%DTC S TOTAMOUT=$TR(X," ","")
+"RTN","RCTCSJS",82,0)
+ . S X=ZTOTA*.01,X2="2$",X3=4 D COMMA^%DTC S ZTOTAOUT=$TR(X," ","")
+"RTN","RCTCSJS",83,0)
+ . S ZMSG="Expected $Amt: '"_ZTOTAOUT_"' = ACCUMULATED AMT found: '"_TOTAMOUT_"'"
+"RTN","RCTCSJS",84,0)
+ . D RECERR(.ERRCNT,"TOTAL $ AMT",ZMSG,RECNS,.RECERR)
+"RTN","RCTCSJS",85,0)
+ . S STOPSET=STOPSET_2
+"RTN","RCTCSJS",86,0)
+ I CRCNT'=+$G(ZRCNT) D  ; logs record COUNT error
+"RTN","RCTCSJS",87,0)
+ . S ZMSG="Z record RECS: '"_$G(ZRCNT)_"' not same as # RECS FOUND: '"_CRCNT_"'"
+"RTN","RCTCSJS",88,0)
+ . D RECERR(.ERRCNT,"Z-REC-CNTS",ZMSG,RECNS,.RECERR)
+"RTN","RCTCSJS",89,0)
+ . S STOPSET=STOPSET_3
+"RTN","RCTCSJS",90,0)
+ I STOPSET S STOPMSG="" D  Q  ; whole file error detected, DO NOT PROCESS REJECTS
+"RTN","RCTCSJS",91,0)
+ . F I=1:1:3 I STOPSET[I D  ;
+"RTN","RCTCSJS",92,0)
+ .. I I[1 S STOPMSG="(#MM RECS("_XNRECS_") not same as #Recs found("_RECNS_")"
+"RTN","RCTCSJS",93,0)
+ .. I I[2 S STOPMSG="(ZTOTAMT("_(+$G(ZTOTA)*.01)_") = Amt found("_TOTAMT*100_")"
+"RTN","RCTCSJS",94,0)
+ .. I I[3 S STOPMSG="(#Z RECCNT("_$G(ZRCNT)_") not = #C Recs found("_CRCNT_")"
+"RTN","RCTCSJS",95,0)
+ .. S ZMSG="BILL Records NOT Updated: "_STOPMSG
+"RTN","RCTCSJS",96,0)
+ .. D RECERR(.ERRCNT,"FILE ERR",ZMSG,RECNS,.RECERR)
+"RTN","RCTCSJS",97,0)
+ I '$D(^XTMP(NMSPC,$J,"BILL")) D  Q  ; logs NO VALID BILLS found error
+"RTN","RCTCSJS",98,0)
+ . S ZMSG="Found NO REJECT Bill Errors"
+"RTN","RCTCSJS",99,0)
+ . D RECERR(.ERRCNT,"NO BILLS",ZMSG,0,.RECERR)
+"RTN","RCTCSJS",100,0)
+ D SETREJS
+"RTN","RCTCSJS",101,0)
+ Q  ; START
+"RTN","RCTCSJS",102,0)
+ ;
+"RTN","RCTCSJS",103,0)
+INIT2 ;     subsequent inits
+"RTN","RCTCSJS",104,0)
+ S CRCNT=0 ; "C" records count
+"RTN","RCTCSJS",105,0)
+ S TOTAMT=0 ; Total Amount of Referred Balance
+"RTN","RCTCSJS",106,0)
+ N I ; new variables
+"RTN","RCTCSJS",107,0)
+ ;
+"RTN","RCTCSJS",108,0)
+ S LSTREC=$P($G(^XMB(3.9,XMZ,2,0)),U,3) ; last record# of data
+"RTN","RCTCSJS",109,0)
+ S XNRECS=$P($G(^XMB(3.9,XMZ,2,0)),U,4) ; #records expected from file
+"RTN","RCTCSJS",110,0)
+ S HDR=$G(^XMB(3.9,XMZ,2,2,0)) ; AITC Header record
+"RTN","RCTCSJS",111,0)
+ S BCIDA=$E(HDR,2,9) ; AITC Batch Control ID
+"RTN","RCTCSJS",112,0)
+ I 'XNRECS!'$L(HDR) D  Q  ;
+"RTN","RCTCSJS",113,0)
+ . D RECERR(.ERRCNT,"NO RECS/HDR","No Records Found: '"_XNRECS_"'",0,.RECERR)
+"RTN","RCTCSJS",114,0)
+ Q  ; INIT2
+"RTN","RCTCSJS",115,0)
+ ;
+"RTN","RCTCSJS",116,0)
+FMDTM(%H) ;
+"RTN","RCTCSJS",117,0)
+ S %H=$H D YX^%DTC ;  X=FM Date, %=Time
+"RTN","RCTCSJS",118,0)
+ Q X_%
+"RTN","RCTCSJS",119,0)
+ ;
+"RTN","RCTCSJS",120,0)
+XMB2XTMP ;copies ^XMB(3.9,XMZ) to ^XTMP
+"RTN","RCTCSJS",121,0)
+ M ^XTMP(NMSPC,$J,"READ",BCIDA)=^XMB(3.9,XMZ,2)
+"RTN","RCTCSJS",122,0)
+ Q  ; XMB2XTMP
+"RTN","RCTCSJS",123,0)
+ ;
+"RTN","RCTCSJS",124,0)
+SRTXTMP ;sorts ^XTMP(...,"READ" recs into ^XTMP(..."BILL" which is sorted by Debtor ID, by BILL
+"RTN","RCTCSJS",125,0)
+ F RECN=2:2 Q:'$D(^XTMP(NMSPC,$J,"READ",BCIDA,RECN))  D  ;
+"RTN","RCTCSJS",126,0)
+ . S NOTPROC=""
+"RTN","RCTCSJS",127,0)
+ . K CERRS
+"RTN","RCTCSJS",128,0)
+ . S RECERR=0
+"RTN","RCTCSJS",129,0)
+ . S REC1=^XTMP(NMSPC,$J,"READ",BCIDA,RECN,0)
+"RTN","RCTCSJS",130,0)
+ . S REC2=^XTMP(NMSPC,$J,"READ",BCIDA,RECN+1,0)
+"RTN","RCTCSJS",131,0)
+ . S REC=$P(REC1,"^")_$P(REC2,"~") ; eliminate record delimiters
+"RTN","RCTCSJS",132,0)
+ . Q:$E(REC,1,4)="NNNN"
+"RTN","RCTCSJS",133,0)
+ . S RID=$E(REC) ; (H,C,Z)
+"RTN","RCTCSJS",134,0)
+ . S RTYP=$TR($E(REC,2,3)," ","") ; eliminate spaces
+"RTN","RCTCSJS",135,0)
+ . I RID="C",",1,2,2A,2B,2C,2D,2E,3,4,5A,5B,6,"'[(","_RTYP_",") D  Q  ; logs RTYP error
+"RTN","RCTCSJS",136,0)
+ .. S CBILL=$E(REC,20,29)
+"RTN","RCTCSJS",137,0)
+ .. S ZMSG="Invalid Record TYPE Received: '"_RTYP_"' from Record: "_CBILL_", record# "_RECN
+"RTN","RCTCSJS",138,0)
+ .. D RECERR(.ERRCNT,"INV REC TYPE",ZMSG,RECN,.RECERR)
+"RTN","RCTCSJS",139,0)
+ . S RACTN=$E(REC,4) ; (A,B,D,L,U,V)
+"RTN","RCTCSJS",140,0)
+ . I $L(REC)'=471 D  Q  ; logs record LEN error
+"RTN","RCTCSJS",141,0)
+ .. D RECERR(.ERRCNT,"RECLEN","Record Length Error: "_$L(REC),RECN,.RECERR)
+"RTN","RCTCSJS",142,0)
+ . D @RID
+"RTN","RCTCSJS",143,0)
+ . Q:RECERR  ; quit, process err detected and logged via RECERR
+"RTN","RCTCSJS",144,0)
+ . Q:$G(CERRS(RTYP))=NULLERR!'$D(CERRS(RTYP))  ; ignore, no errors in this record
+"RTN","RCTCSJS",145,0)
+ . I CERRS(RTYP)["9A" S REFBATCH=$E(CERRS(RTYP),11,18) D  ;
+"RTN","RCTCSJS",146,0)
+ .. S ZMSG="Invalid Referral Batch: '"_REFBATCH_"'  from Message: '"_XMZ_"'"
+"RTN","RCTCSJS",147,0)
+ .. D RECERR(.ERRCNT,"INV REF BATCH",ZMSG,RECN,.RECERR)
+"RTN","RCTCSJS",148,0)
+ .. S ERRSFND("9A",REFBATCH,XMZ)=""
+"RTN","RCTCSJS",149,0)
+ . I '$G(SAMESITE) D  ;
+"RTN","RCTCSJS",150,0)
+ .. S ZMSG="Expecting: '"_SITE_"', Found: '"_SITENUM_"'/"_CBILL_"/"_RID_RTYP
+"RTN","RCTCSJS",151,0)
+ .. D RECERR(.ERRCNT,"WRONG REC SITE",ZMSG,RECN,.RECERR)
+"RTN","RCTCSJS",152,0)
+ . Q:'$G(SAMESITE)  ; ignore, this record belongs to a different site
+"RTN","RCTCSJS",153,0)
+ . ;  Q:$G(NOTPROC)  ; last Z record shows first THRU last batches were not all completely satisfied
+"RTN","RCTCSJS",154,0)
+ . ;
+"RTN","RCTCSJS",155,0)
+ . I RID="C" D LOGREJS
+"RTN","RCTCSJS",156,0)
+ S RECNS=RECN-1
+"RTN","RCTCSJS",157,0)
+ Q  ; SRTXTMP
+"RTN","RCTCSJS",158,0)
+ ;
+"RTN","RCTCSJS",159,0)
+LOGREJS ; compiles the varied reject errors by BILL
+"RTN","RCTCSJS",160,0)
+ K Z
+"RTN","RCTCSJS",161,0)
+ S CERRS=$P($G(^XTMP(NMSPC,$J,"BILL",CDEBTIEN,CBILL,HDATE,CSRC,RTYP,RACTN)),U)
+"RTN","RCTCSJS",162,0)
+ F I=2:2:18 S ERR=$E(CERRS(RTYP),I-1,I) Q:ERR="  "  D  ;
+"RTN","RCTCSJS",163,0)
+ . I '$D(^RC(348.5,"B",ERR)) D  Q  ;
+"RTN","RCTCSJS",164,0)
+ .. S ZMSG="Unknown Error Code: '"_ERR_"', FOUND IN: "_CBILL_"/"_RID_RTYP
+"RTN","RCTCSJS",165,0)
+ .. D RECERR(.ERRCNT,"UNK ERR CD",ZMSG,RECN,.RECERR)
+"RTN","RCTCSJS",166,0)
+ . S:CERRS'[ERR CERRS=CERRS_ERR_"," ; captures new errs
+"RTN","RCTCSJS",167,0)
+ I $L(CERRS) S ^XTMP(NMSPC,$J,"BILL",CDEBTIEN,CBILL,HDATE,CSRC,RTYP,RACTN)=CERRS_U_$G(ARTXNID(CDEBTIEN,CBILL))
+"RTN","RCTCSJS",168,0)
+ Q  ; LOGREJS
+"RTN","RCTCSJS",169,0)
+ ;
+"RTN","RCTCSJS",170,0)
+SETREJS ;
+"RTN","RCTCSJS",171,0)
+ S IDXS=".01;1;2;3;4;5;6;7;8;9;10;11;12;13;14"
+"RTN","RCTCSJS",172,0)
+ S BILLIEN=""
+"RTN","RCTCSJS",173,0)
+ F  S BILLIEN=$O(^XTMP(NMSPC,$J,"BILL",BILLIEN)),SBILL="" Q:'$L(BILLIEN)  D  ;
+"RTN","RCTCSJS",174,0)
+ . F  S SBILL=$O(^XTMP(NMSPC,$J,"BILL",BILLIEN,SBILL)),HDATE="" Q:'$L(SBILL)  D  ;
+"RTN","RCTCSJS",175,0)
+ .. F  S HDATE=$O(^XTMP(NMSPC,$J,"BILL",BILLIEN,SBILL,HDATE)),CSRC="" Q:'$L(HDATE)  D  ;
+"RTN","RCTCSJS",176,0)
+ ... F  S CSRC=$O(^XTMP(NMSPC,$J,"BILL",BILLIEN,SBILL,HDATE,CSRC)),RTYP="" Q:CSRC=""  D  ;
+"RTN","RCTCSJS",177,0)
+ .... F  S RTYP=$O(^XTMP(NMSPC,$J,"BILL",BILLIEN,SBILL,HDATE,CSRC,RTYP)),RACTN="" Q:RTYP=""  D  ;
+"RTN","RCTCSJS",178,0)
+ ..... F  S RACTN=$O(^XTMP(NMSPC,$J,"BILL",BILLIEN,SBILL,HDATE,CSRC,RTYP,RACTN)) Q:RACTN=""  D  ;
+"RTN","RCTCSJS",179,0)
+ ...... S CERRS=$P(^XTMP(NMSPC,$J,"BILL",BILLIEN,SBILL,HDATE,CSRC,RTYP,RACTN),U)
+"RTN","RCTCSJS",180,0)
+ ...... S ^XTMP(NMSPC,$J,"ERRCDS",CERRS,BILLIEN)="" ; log by errs found
+"RTN","RCTCSJS",181,0)
+ ...... S REC=ZDATE_U_CSRC_U_$TR(CERRS,",","^")
+"RTN","RCTCSJS",182,0)
+ ...... S $P(REC,U,12)=RTYP,$P(REC,U,13)=RACTN,$P(REC,U,14)=BCIDA,$P(REC,U,15)=XMZ
+"RTN","RCTCSJS",183,0)
+ ...... S PATID=$P(^PRCA(430,BILLIEN,0),U,7),OTHERID=$P(^PRCA(430,BILLIEN,0),U,9)
+"RTN","RCTCSJS",184,0)
+ ...... I OTHERID D  ;
+"RTN","RCTCSJS",185,0)
+ ....... S IDNUMGLB=$P(^RCD(340,OTHERID,0),U),IDGLOB=$P(IDNUMGLB,";",2),IDNUM=+IDNUMGLB
+"RTN","RCTCSJS",186,0)
+ ....... S IDREC0=@("^"_IDGLOB_IDNUM_",0)")
+"RTN","RCTCSJS",187,0)
+ ....... S NAM=$P(IDREC0,U),SSN=$P(IDREC0,U,9)
+"RTN","RCTCSJS",188,0)
+ ...... I PATID S NAM=$P(^DPT(PATID,0),U),SSN=$P(^DPT(PATID,0),U,9)
+"RTN","RCTCSJS",189,0)
+ ...... S STATCNT=STATCNT-1
+"RTN","RCTCSJS",190,0)
+ ...... D UPDREJ
+"RTN","RCTCSJS",191,0)
+ Q  ; SETREJS
+"RTN","RCTCSJS",192,0)
+ ;
+"RTN","RCTCSJS",193,0)
+UPDREJ ;
+"RTN","RCTCSJS",194,0)
+ K DR,DA,DD,DO,Y
+"RTN","RCTCSJS",195,0)
+ ;
+"RTN","RCTCSJS",196,0)
+ ; checks for valid bill
+"RTN","RCTCSJS",197,0)
+ S DIC="^PRCA(430,",DIC(0)="KMNZ",X=BILLIEN D ^DIC
+"RTN","RCTCSJS",198,0)
+ S KBILL=$E(SBILL,5,11)
+"RTN","RCTCSJS",199,0)
+ ; 
+"RTN","RCTCSJS",200,0)
+ ; Set ID for errors if ARTXNID not available
+"RTN","RCTCSJS",201,0)
+ N ERRORID
+"RTN","RCTCSJS",202,0)
+ S ERRORID=$S($G(ARTXNID(BILLIEN))="":U_U_RECN,1:ARTXNID(BILLIEN))
+"RTN","RCTCSJS",203,0)
+ ;
+"RTN","RCTCSJS",204,0)
+ I Y=-1 D  Q  ;
+"RTN","RCTCSJS",205,0)
+ . S ZMSG="Unknown Bill: "_BILLIEN_"/"_SBILL_"/"_RTYP
+"RTN","RCTCSJS",206,0)
+ . D RECERR(.ERRCNT,"UNK-BILL:",ZMSG,$P(ERRORID,U,3),.RECERR) Q  ; UPDREJ ;
+"RTN","RCTCSJS",207,0)
+ ; checks if REJECT record was previously logged
+"RTN","RCTCSJS",208,0)
+ S COMMENT="XMB "_XMZ_" "_BCIDA
+"RTN","RCTCSJS",209,0)
+ ;I $D(^PRCA(430,BILLIEN,18,"B",ZDATE)) D  Q:PREV  ;UPDREJ
+"RTN","RCTCSJS",210,0)
+ ;. S IDX="",PREV=0
+"RTN","RCTCSJS",211,0)
+ ;. F  S IDX=$O(^PRCA(430,BILLIEN,18,"B",ZDATE,IDX)) Q:'IDX  D  ;
+"RTN","RCTCSJS",212,0)
+ ;.. I $P(^PRCA(430,BILLIEN,18,IDX,0),U,1,14)=$P(REC,U,1,14) S PREV=1 Q
+"RTN","RCTCSJS",213,0)
+ ;. I PREV D  ;
+"RTN","RCTCSJS",214,0)
+ ;. . S ZMSG="BILL Previously Logged IEN: "_BILLIEN_"/"_SBILL_"/"_RTYP
+"RTN","RCTCSJS",215,0)
+ ;. . D RECERR(.ERRCNT,"BILL PREV LOGGED",ZMSG,$P(ERRORID,U,3),.RECERR)
+"RTN","RCTCSJS",216,0)
+ ;
+"RTN","RCTCSJS",217,0)
+ ; gets next rejects subfile entry number
+"RTN","RCTCSJS",218,0)
+ K DR,DA,DD,DO
+"RTN","RCTCSJS",219,0)
+ S DA(1)=+Y
+"RTN","RCTCSJS",220,0)
+ S DIC="^PRCA(430,"_DA(1)_",18,"
+"RTN","RCTCSJS",221,0)
+ S DIC(0)="KMNZ"
+"RTN","RCTCSJS",222,0)
+ S DIC("P")=$P(^DD(430,172,0),"^",2)
+"RTN","RCTCSJS",223,0)
+ S (DA,X)=$O(@(DIC_"""A"")"),-1)
+"RTN","RCTCSJS",224,0)
+ D ^DIC
+"RTN","RCTCSJS",225,0)
+ ;
+"RTN","RCTCSJS",226,0)
+ ; set Reject Fields
+"RTN","RCTCSJS",227,0)
+ K DD,DO
+"RTN","RCTCSJS",228,0)
+ S DA(1)=BILLIEN
+"RTN","RCTCSJS",229,0)
+ ; S DA=$S(Y=-1:1,1:DA+1)
+"RTN","RCTCSJS",230,0)
+ S DA=$S($O(^PRCA(430,BILLIEN,18,"A"),-1):($O(^PRCA(430,BILLIEN,18,"A"),-1)+1),1:1)
+"RTN","RCTCSJS",231,0)
+ S DIE=DIC K DIC
+"RTN","RCTCSJS",232,0)
+ S DR=""
+"RTN","RCTCSJS",233,0)
+ D RJCDCONV
+"RTN","RCTCSJS",234,0)
+ F PC=1:1:15 S DTA=$P(REC,U,PC) I $L(DTA) S DR=DR_$P(IDXS,";",PC)_"////"_DTA_";"
+"RTN","RCTCSJS",235,0)
+ S DIC("DR")=DR
+"RTN","RCTCSJS",236,0)
+ I $L(DR) D  ;
+"RTN","RCTCSJS",237,0)
+ . D ^DIE
+"RTN","RCTCSJS",238,0)
+ . ; Re-Index AB x_ref
+"RTN","RCTCSJS",239,0)
+ . S DIK(1)=".01^AB^B"
+"RTN","RCTCSJS",240,0)
+ . S DIK="^PRCA(430,"_BILLIEN_",18," D ENALL^DIK ;,DA(1)=HDATE
+"RTN","RCTCSJS",241,0)
+ . S $P(^PRCA(430,BILLIEN,18,0),U,3)=$O(^PRCA(430,BILLIEN,18,"A"),-1)
+"RTN","RCTCSJS",242,0)
+ . ;
+"RTN","RCTCSJS",243,0)
+ . D STOPFILE ; resets STOP TCSP REFERRAL FLAG 
+"RTN","RCTCSJS",244,0)
+ . D LOGBULTN ; logs data into Bulletin
+"RTN","RCTCSJS",245,0)
+ Q  ;UPDREJ
+"RTN","RCTCSJS",246,0)
+ ;
+"RTN","RCTCSJS",247,0)
+STOPFILE ;set stop referral data in file 430
+"RTN","RCTCSJS",248,0)
+ N B0,DEBTOR,BTRNNUM
+"RTN","RCTCSJS",249,0)
+ S B0=$G(^PRCA(430,BILLIEN,0))
+"RTN","RCTCSJS",250,0)
+ S $P(^PRCA(430,BILLIEN,15),U,7,10)="1^"_RUNDT_U_"R"_U_$G(COMMENT)
+"RTN","RCTCSJS",251,0)
+ I RTYP=1 D  Q
+"RTN","RCTCSJS",252,0)
+ .I RACTN="A" K ^PRCA(430,BILLIEN,15),^(16),^PRCA(430,"TCSP",BILLIEN)
+"RTN","RCTCSJS",253,0)
+ .I RACTN="U" S $P(^PRCA(430,BILLIEN,19),U,1)="1" Q
+"RTN","RCTCSJS",254,0)
+ .I RACTN="L" D  Q    ;PRCA*4.5*336
+"RTN","RCTCSJS",255,0)
+ .. S DA=BILLIEN,DIE="^PRCA(430,",DR="151////^S X=DT;152///@;153///@;154///@;155///@" D ^DIE K DIE,DR,DA  ;PRCA*4.5*336
+"RTN","RCTCSJS",256,0)
+ I RTYP="2" S DEBTOR=$P(B0,U,9) D  Q
+"RTN","RCTCSJS",257,0)
+ .I RACTN="A" K ^RCD(340,DEBTOR,7),^RCD(340,"TCSP",DEBTOR) Q
+"RTN","RCTCSJS",258,0)
+ .I RACTN="B",$G(CERRS)["3E" K ^PRCA(430,BILLIEN,15),^(16),^PRCA(430,"TCSP",BILLIEN)
+"RTN","RCTCSJS",259,0)
+ .I RACTN="L" D  Q     ;PRCA*4.5*336
+"RTN","RCTCSJS",260,0)
+ .. S DA=DEBTOR,DIE="^RCD(340,",DR="7.05////^S X=DT;7.02///@;7.03///@;7.04///@" D ^DIE K DIE,DR,DA  ;PRCA*4.5*336
+"RTN","RCTCSJS",261,0)
+ .. S DA=BILLIEN,DIE="^PRCA(430,",DR="151///^S X=DT;152///@;153///@;154///@;155///@" D ^DIE K DIE,DR,DA  ;PRCA*4.5*336
+"RTN","RCTCSJS",262,0)
+ .I RACTN="U" S $P(^PRCA(430,BILLIEN,19),U,2)="1" Q
+"RTN","RCTCSJS",263,0)
+ I RTYP="2A" D  Q
+"RTN","RCTCSJS",264,0)
+ .I RACTN="A" Q
+"RTN","RCTCSJS",265,0)
+ .I RACTN="U" S $P(^PRCA(430,BILLIEN,19),U,3)="1" Q
+"RTN","RCTCSJS",266,0)
+ I RTYP="2C" D  Q
+"RTN","RCTCSJS",267,0)
+ . I RACTN="A" S $P(^PRCA(430,BILLIEN,19),U,4)="1" Q
+"RTN","RCTCSJS",268,0)
+ I RTYP=3 Q
+"RTN","RCTCSJS",269,0)
+ I RTYP="5B" D  Q
+"RTN","RCTCSJS",270,0)
+ .I RACTN="U" I $D(ARTXNID(BILLIEN)) S TRNNUM=+$P(ARTXNID(BILLIEN),U,1) I TRNNUM D
+"RTN","RCTCSJS",271,0)
+ ..;N INDX 
+"RTN","RCTCSJS",272,0)
+ ..S INDX=0
+"RTN","RCTCSJS",273,0)
+ ..F  S INDX=$O(^PRCA(430,BILLIEN,17,INDX)) Q:+INDX=0  I $P($G(^PRCA(430,BILLIEN,17,INDX,0)),U,1)=TRNNUM S $P(^PRCA(430,BILLIEN,17,INDX,0),U,2)=1 S DR="151///DT",DIE="^PRCA(430,",DA=BILLIEN D ^DIE Q
+"RTN","RCTCSJS",274,0)
+ Q
+"RTN","RCTCSJS",275,0)
+ ;
+"RTN","RCTCSJS",276,0)
+C S CRCNT=CRCNT+1
+"RTN","RCTCSJS",277,0)
+ S CERRS(RTYP)=$E(REC,452,469)
+"RTN","RCTCSJS",278,0)
+ F PC=1:2 S CHKEC=$E(CERRS(RTYP),PC,PC+1) Q:CHKEC=""  Q:CHKEC="  "  I '$D(^RC(348.5,"B",CHKEC)) D  ;
+"RTN","RCTCSJS",279,0)
+ . S ZMSG="Invalid Error Code: '"_CHKEC_"' in Batch: "_BCIDA_"/"_RID_RTYP
+"RTN","RCTCSJS",280,0)
+ . S ERR=1 D RECERR(.ERRCNT,"INV ERR CODE",ZMSG,RECN,.RECERR)
+"RTN","RCTCSJS",281,0)
+ S CSRC=$E(REC,470),CSRC=$S(CSRC=" ":"T",1:CSRC)
+"RTN","RCTCSJS",282,0)
+ I CSRCS'[CSRC S CSRCS=CSRCS_CSRC
+"RTN","RCTCSJS",283,0)
+ S LBL="L"_RTYP
+"RTN","RCTCSJS",284,0)
+ D @LBL ; perform record type parsing of data
+"RTN","RCTCSJS",285,0)
+ Q  ; C
+"RTN","RCTCSJS",286,0)
+H ; Header record
+"RTN","RCTCSJS",287,0)
+ S BCIDA=$E(REC,2,9)
+"RTN","RCTCSJS",288,0)
+ S HREC=REC
+"RTN","RCTCSJS",289,0)
+ S HFAST=$E(REC,24,25),HALC=$E(REC,26,33),HERRS=$E(REC,452,469),HSRC=$E(REC,470,471)
+"RTN","RCTCSJS",290,0)
+ S H4DATE=$E(BCIDA,1,4),HSEQ=$E(BCIDA,5,9) ; (note: H4DATE is Y_DOY)
+"RTN","RCTCSJS",291,0)
+ D DOY2EXT(H4DATE,.HDATE)
+"RTN","RCTCSJS",292,0)
+ I HDATE'?7N S ERR=1 D RECERR(.ERRCNT,"INV DATE","Invalid Date: '"_HDATE_"' /"_RID_RTYP,RECN,.RECERR) Q  ;
+"RTN","RCTCSJS",293,0)
+ I HERRS'=NULLERR S FILERR=$E(HERRS,1,10),BCIDV=$E(HERRS,11,18)
+"RTN","RCTCSJS",294,0)
+ Q  ; H
+"RTN","RCTCSJS",295,0)
+Z ; Trailer record
+"RTN","RCTCSJS",296,0)
+ S ZREC=REC
+"RTN","RCTCSJS",297,0)
+ S ZRCNT=$E(REC,2,9),ZTOTA=$E(REC,10,23)
+"RTN","RCTCSJS",298,0)
+ S Z4DOY=$E(REC,24,27)
+"RTN","RCTCSJS",299,0)
+ S ZSEQ=$E(REC,28,31)
+"RTN","RCTCSJS",300,0)
+ S ZFAST=$E(REC,46,47),ZALC=$E(REC,48,55)
+"RTN","RCTCSJS",301,0)
+ S ZERRS=$S($E(REC,452)'=" ":$E(REC,452,469),1:NULLERR)
+"RTN","RCTCSJS",302,0)
+ S ZBAT1=$E(REC,459,462),ZBAT2=$E(REC,463,466)
+"RTN","RCTCSJS",303,0)
+ S ZSRC=$E(REC,470,471)
+"RTN","RCTCSJS",304,0)
+ D DOY2EXT(Z4DOY,.ZDATE)
+"RTN","RCTCSJS",305,0)
+ Q  ; Z
+"RTN","RCTCSJS",306,0)
+DOY2EXT(YDOY,ZDATE) ; gets Date from DOY;
+"RTN","RCTCSJS",307,0)
+ N X
+"RTN","RCTCSJS",308,0)
+ S ZLYR=$E(YDOY),ZDOY=$E(YDOY,2,4)
+"RTN","RCTCSJS",309,0)
+ S %H=$H D YX^%DTC
+"RTN","RCTCSJS",310,0)
+ S X1=$S($E(X,3)=ZLYR:$E(X,1,3)-1,$E(X,3)<ZLYR:$E(X,1,2)_ZLYR-11,$E(X,3)>ZLYR:$E(X,1,2)_ZLYR-1)_"1231"
+"RTN","RCTCSJS",311,0)
+ S X2=ZDOY D C^%DTC
+"RTN","RCTCSJS",312,0)
+ S NX=X
+"RTN","RCTCSJS",313,0)
+ S ZDATE=$S(ZDOY>365&($E(X,4,7)'="1231"):-1,1:NX) ; error if DOY >365 and not a Leap Year 
+"RTN","RCTCSJS",314,0)
+ Q  ; DOY2EXT
+"RTN","RCTCSJS",315,0)
+ ;
+"RTN","RCTCSJS",316,0)
+L1 ; Debt Record
+"RTN","RCTCSJS",317,0)
+ S CORIGD=$E(REC,77,90)*.01,CREFBAL=$TR($E(REC,91,104),"-","0")*.01
+"RTN","RCTCSJS",318,0)
+ S TOTAMT=$G(TOTAMT)+CREFBAL
+"RTN","RCTCSJS",319,0)
+ D GETPCS1
+"RTN","RCTCSJS",320,0)
+ Q  ; L1
+"RTN","RCTCSJS",321,0)
+L2 ;; Debtor Record
+"RTN","RCTCSJS",322,0)
+ S CDEBTIN=$E(REC,65,73),CDEBNAML=$E(REC,77,111),CDEBNAMF=$E(REC,112,146)
+"RTN","RCTCSJS",323,0)
+ S CDEBNAMM=$E(REC,147,181)
+"RTN","RCTCSJS",324,0)
+ D GETPCS1
+"RTN","RCTCSJS",325,0)
+ Q  ;L2
+"RTN","RCTCSJS",326,0)
+L2A ;; Individual Debtor Record
+"RTN","RCTCSJS",327,0)
+ S CDEBSEX=$E(REC,68),CDOB=$E(REC,69,76)
+"RTN","RCTCSJS",328,0)
+ D GETPCS1
+"RTN","RCTCSJS",329,0)
+ Q  ;L2A
+"RTN","RCTCSJS",330,0)
+L2B ; Business Debtor Record
+"RTN","RCTCSJS",331,0)
+ D GETPCS1
+"RTN","RCTCSJS",332,0)
+ Q  ; L2B
+"RTN","RCTCSJS",333,0)
+L2C ; Debtor Contact Information
+"RTN","RCTCSJS",334,0)
+ S CDEBTIN=$E(REC,65,73)
+"RTN","RCTCSJS",335,0)
+ D GETPCS1
+"RTN","RCTCSJS",336,0)
+ Q  ; L2C
+"RTN","RCTCSJS",337,0)
+L2D ; Debtor Record (Property Information)
+"RTN","RCTCSJS",338,0)
+ D GETPCS1
+"RTN","RCTCSJS",339,0)
+ Q  ; L2D
+"RTN","RCTCSJS",340,0)
+L2E ; Debtor Record (Employment Information for Individual Debtor)
+"RTN","RCTCSJS",341,0)
+ D GETPCS1
+"RTN","RCTCSJS",342,0)
+ Q  ; L2E
+"RTN","RCTCSJS",343,0)
+L3 ; Case Record
+"RTN","RCTCSJS",344,0)
+ D GETPCS1
+"RTN","RCTCSJS",345,0)
+ Q  ; L3
+"RTN","RCTCSJS",346,0)
+L4 ; Alias Name
+"RTN","RCTCSJS",347,0)
+ S CDEBTIN=$E(REC,65,73)
+"RTN","RCTCSJS",348,0)
+ D GETPCS1
+"RTN","RCTCSJS",349,0)
+ Q  ; L4
+"RTN","RCTCSJS",350,0)
+L5A ; Creditor Agency Financial Transactions (Collections)
+"RTN","RCTCSJS",351,0)
+ S CTRAMT=$E(REC,117,130)*.01,CORIGPMT=$E(REC,117,130)*.01
+"RTN","RCTCSJS",352,0)
+ S TOTAMT=+$G(TOTAMT)+($TR($E(REC,117,130),"-","0")*.01)
+"RTN","RCTCSJS",353,0)
+ D GETPCS2
+"RTN","RCTCSJS",354,0)
+ Q  ; L5A
+"RTN","RCTCSJS",355,0)
+L5B ; Creditor Agency Financial Transactions (Adjustments)
+"RTN","RCTCSJS",356,0)
+ S CSPAMT=$E(REC,117,130)*.01,CSTAMT=$E(REC,173,186)*.01
+"RTN","RCTCSJS",357,0)
+ S CSTADJ=$E(REC,211,224)*.01
+"RTN","RCTCSJS",358,0)
+ S TOTAMT=+$G(TOTAMT)+($TR($E(REC,173,186),"-","0")*.01)
+"RTN","RCTCSJS",359,0)
+ D GETPCS2
+"RTN","RCTCSJS",360,0)
+ S ARTXNID=$E(REC,93,107),ARTXNID(CDEBTIEN)=+ARTXNID_U_CBILL_U_RECN
+"RTN","RCTCSJS",361,0)
+ Q  ; L5B
+"RTN","RCTCSJS",362,0)
+L6 ; Payment Bypass/Offset
+"RTN","RCTCSJS",363,0)
+ S CDEBTIN=$E(REC,65,73)
+"RTN","RCTCSJS",364,0)
+ D GETPCS1
+"RTN","RCTCSJS",365,0)
+ Q  ; L6
+"RTN","RCTCSJS",366,0)
+GETPCS1 ; 
+"RTN","RCTCSJS",367,0)
+ Q:CERRS(RTYP)=NULLERR
+"RTN","RCTCSJS",368,0)
+ S CDEBTID=$E(REC,20,49)
+"RTN","RCTCSJS",369,0)
+ S SITENUM=$E(CDEBTID,1,3)
+"RTN","RCTCSJS",370,0)
+ S SAMESITE=$S(SITENUM=SITE:1,1:0)
+"RTN","RCTCSJS",371,0)
+ I 'SAMESITE D  Q  ;
+"RTN","RCTCSJS",372,0)
+ . S ZMSG="Wrong Rec Site ('"_SITENUM_"' vs. '"_SITE_"') /"_CDEBTID_"/"_CBILL_"/"_RID_RTYP
+"RTN","RCTCSJS",373,0)
+ . D RECERR(.ERRCNT,"WRONG REC SITE",ZMSG,RECN,.RECERR)
+"RTN","RCTCSJS",374,0)
+ S CACT=$E(REC,4),CFAST=$E(REC,5,6),CALC=$E(REC,7,14),CSTATN=$E(REC,15,19)
+"RTN","RCTCSJS",375,0)
+ S CDEBTOR=$E(REC,50,64)
+"RTN","RCTCSJS",376,0)
+ D CHKBD ; check for valid Bill/Debtor
+"RTN","RCTCSJS",377,0)
+ S (CORIDG,CREFBAL)=""
+"RTN","RCTCSJS",378,0)
+ Q  ;GETPC1
+"RTN","RCTCSJS",379,0)
+GETPCS2 ;
+"RTN","RCTCSJS",380,0)
+ Q:CERRS(RTYP)=NULLERR
+"RTN","RCTCSJS",381,0)
+ S CDEBTID=$E(REC,21,50)
+"RTN","RCTCSJS",382,0)
+ S SITENUM=$E(CDEBTID,1,3)
+"RTN","RCTCSJS",383,0)
+ S SAMESITE=$S(SITENUM=SITE:1,1:0)
+"RTN","RCTCSJS",384,0)
+ I 'SAMESITE D  Q  ;
+"RTN","RCTCSJS",385,0)
+ . S ZMSG="Wrong RecSite ('"_SITENUM_"' vs. '"_SITE_"') /"_CDEBTID_"/"_CBILL_"/"_RID_RTYP
+"RTN","RCTCSJS",386,0)
+ . D RECERR(.ERRCNT,"WRONG REC SITE",ZMSG,RECN,.RECERR)
+"RTN","RCTCSJS",387,0)
+ S CACT=$E(REC,4),CFAST=$E(REC,5,6),CALC=$E(REC,7,14),CSTATN=$E(REC,15,19)
+"RTN","RCTCSJS",388,0)
+ S CDEBTOR=$E(REC,51,65)
+"RTN","RCTCSJS",389,0)
+ D CHKBD ; check for valid Bill/Debtor
+"RTN","RCTCSJS",390,0)
+ S (CORIDG,CREFBAL)=""
+"RTN","RCTCSJS",391,0)
+ Q  ;GETPC2
+"RTN","RCTCSJS",392,0)
+CHKBD ; checks for valid Bill/Debtor
+"RTN","RCTCSJS",393,0)
+ S RECERR=""
+"RTN","RCTCSJS",394,0)
+ S CBILL=$E(CDEBTID,1,3)_"-"_$E(CDEBTID,4,10),CDEBTIEN=+$E(CDEBTID,11,30)
+"RTN","RCTCSJS",395,0)
+ I '$D(^PRCA(430,"B",CBILL,CDEBTIEN)) D  ;
+"RTN","RCTCSJS",396,0)
+ . S ZMSG="Bill IEN: "_CDEBTIEN_"/"_CBILL_"/"_RID_RTYP
+"RTN","RCTCSJS",397,0)
+ . D RECERR(.ERRCNT,"NO BILL/DEBTOR ",ZMSG,RECN,.RECERR)
+"RTN","RCTCSJS",398,0)
+ Q
+"RTN","RCTCSJS",399,0)
+RECERR(ERRCNT,ETYP,ERRDATA,RECN,RECERR) ; log TRANSMITTED FORMAT err
+"RTN","RCTCSJS",400,0)
+ S (ERRCNT,^XTMP(NMSPC,$J,"ERR",0))=$G(^XTMP(NMSPC,$J,"ERR",0))+1
+"RTN","RCTCSJS",401,0)
+ S ^XTMP(NMSPC,$J,"ERR",ERRCNT)=RECN_U_ERRDATA
+"RTN","RCTCSJS",402,0)
+ S RECERR=1
+"RTN","RCTCSJS",403,0)
+ Q  ;
+"RTN","RCTCSJS",404,0)
+LOGBULTN ; logs the bulletin records
+"RTN","RCTCSJS",405,0)
+ S ERRS=$S($E(CERRS,$L(CERRS))=",":$E(CERRS,1,$L(CERRS)-1),1:CERRS)
+"RTN","RCTCSJS",406,0)
+ S BLTNCNT=$G(BLTNCNT)+1
+"RTN","RCTCSJS",407,0)
+ S BLTNREC=$E(NAM_BLNKS,1,20)_" "_$E(SSN_BLNKS,1,10)_$E(SBILL_BLNKS,1,12)
+"RTN","RCTCSJS",408,0)
+ S BLTNREC=BLTNREC_$E(RTYP_BLNKS,1,5)_$E(RACTN_BLNKS,1,5)_$E($P(CERRS,",",1,$L(CERRS,",")-1)_BLNKS,1,26)
+"RTN","RCTCSJS",409,0)
+ ;
+"RTN","RCTCSJS",410,0)
+ S ^XTMP(NMSPC,$J,"BULTN",BLTNCNT)=BLTNREC
+"RTN","RCTCSJS",411,0)
+ S ^XTMP(NMSPC,$J,"SRC",CSRC,NAM,SBILL,BLTNCNT)=""
+"RTN","RCTCSJS",412,0)
+ Q
+"RTN","RCTCSJS",413,0)
+RJCDCONV ;Will modify code string to convert code data to linked file pointer
+"RTN","RCTCSJS",414,0)
+ N COD,CVI
+"RTN","RCTCSJS",415,0)
+ F CVI=3:1:13 S COD=$P(REC,U,CVI) D:COD'=""
+"RTN","RCTCSJS",416,0)
+ . I CVI>2,CVI<12 S COD=$O(^RC(348.5,"B",COD,0)),$P(REC,U,CVI)=COD Q
+"RTN","RCTCSJS",417,0)
+ . I CVI=12 S COD=$O(^RC(348.7,"B",COD,0)),$P(REC,U,CVI)=COD Q
+"RTN","RCTCSJS",418,0)
+ . I CVI=13 S COD=$O(^RC(348.6,"B",COD,0)),$P(REC,U,CVI)=COD
+"RTN","RCTCSJS",419,0)
+ . Q
+"RTN","RCTCSP1")
+0^5^B180778033^B169151504
+"RTN","RCTCSP1",1,0)
+RCTCSP1 ;ALBANY/BDB-CROSS - SERVICING TRANSMISSION ;03/15/14 3:34 PM
+"RTN","RCTCSP1",2,0)
+ ;;4.5;Accounts Receivable;**301,331,315,339,341,336**;Mar 20, 1995;Build 45
+"RTN","RCTCSP1",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCTCSP1",4,0)
+ ;
+"RTN","RCTCSP1",5,0)
+ ;PRCA*4.5*331 Modify code to ensure that the debtor address info
+"RTN","RCTCSP1",6,0)
+ ;             is correct on transmission of foreign veterans 
+"RTN","RCTCSP1",7,0)
+ ;             debtor/bills to Treasury.
+"RTN","RCTCSP1",8,0)
+ ;
+"RTN","RCTCSP1",9,0)
+ ;PRCA*4.5*336 Remove IOP set from device request as it causes
+"RTN","RCTCSP1",10,0)
+ ;             issue when set after %ZIS call and then jumping
+"RTN","RCTCSP1",11,0)
+ ;             to new option using ^%ZIS call.
+"RTN","RCTCSP1",12,0)
+ ;             Also, Set CS call switch for correct address
+"RTN","RCTCSP1",13,0)
+ ;             when debtor file (340) does not have address
+"RTN","RCTCSP1",14,0)
+ ;             node 1. 
+"RTN","RCTCSP1",15,0)
+ ;             Also, ensure that the phone number defaults
+"RTN","RCTCSP1",16,0)
+ ;             to 10 spaces if non-numeric.
+"RTN","RCTCSP1",17,0)
+ ;
+"RTN","RCTCSP1",18,0)
+ Q
+"RTN","RCTCSP1",19,0)
+ ;
+"RTN","RCTCSP1",20,0)
+BILLREP ;Cross-servicing bill report, prints individual bills that make up a cross-servicing account
+"RTN","RCTCSP1",21,0)
+ N DIC,DEBTOR,ZTSAVE,ZTDESC,ZTRTN,POP,DTFRMTO,PROMPT,EXCEL
+"RTN","RCTCSP1",22,0)
+ K ^TMP("RCTCSP1",$J)
+"RTN","RCTCSP1",23,0)
+ S DIC=340,DIC(0)="AEQM",DIC("S")="I $D(^RCD(340,""TCSP"",+Y))" D ^DIC
+"RTN","RCTCSP1",24,0)
+ Q:Y<1  S DEBTOR=+Y
+"RTN","RCTCSP1",25,0)
+ S DTFRMTO=$$DTFRMTO^RCTCSP2 Q:'DTFRMTO  ;Get date range as per PRCA*4.5*315
+"RTN","RCTCSP1",26,0)
+ S EXCEL=0,PROMPT="CAPTURE Report data to an Excel Document",DIR(0)="Y",DIR("?")="^D HEXC^RCTCSJR"
+"RTN","RCTCSP1",27,0)
+ S EXCEL=$$SELECT^RCTCSJR(PROMPT,"NO") I "01"'[EXCEL S STOP=1 Q
+"RTN","RCTCSP1",28,0)
+ I EXCEL=1 D EXCMSG^RCTCSJR ; Display Excel display message
+"RTN","RCTCSP1",29,0)
+ K IOP,IO("Q") S %ZIS="MQ",%ZIS("B")="" D ^%ZIS G:POP BILLREPQ     ;PRC*4.5*336
+"RTN","RCTCSP1",30,0)
+ I $D(IO("Q")) D  G BILLREPQ
+"RTN","RCTCSP1",31,0)
+ .S ZTSAVE("DEBTOR")="",ZTSAVE("DTFRMTO")="",ZTSAVE("EXCEL")=""
+"RTN","RCTCSP1",32,0)
+ .S ZTRTN="BILLREPP^RCTCSP1",ZTDESC="CROSS-SERVICING BILL REPORT"
+"RTN","RCTCSP1",33,0)
+ .D ^%ZTLOAD,HOME^%ZIS
+"RTN","RCTCSP1",34,0)
+ .I $G(ZTSK) W !!,"Report compilation has started with task# ",ZTSK,".",! S DIR(0)="E" D ^DIR K DIR
+"RTN","RCTCSP1",35,0)
+ .Q
+"RTN","RCTCSP1",36,0)
+ ;
+"RTN","RCTCSP1",37,0)
+BILLREPP ;Call to build array of bills referred
+"RTN","RCTCSP1",38,0)
+ U IO
+"RTN","RCTCSP1",39,0)
+ N BILL,B7,B14,B15,B16,D4,FND,BAMT,TAMT,DIRUT,TNM,TID,TDT,DASH,CSTAT,PAGE,DASH,TMP,I,DATE,DTFRM,DTTO,DATDATE
+"RTN","RCTCSP1",40,0)
+ K ^TMP("RCTCSP1",$J)
+"RTN","RCTCSP1",41,0)
+ S DASH="",$P(DASH,"-",78)=""  ;(as per PRCA*4.5*315)
+"RTN","RCTCSP1",42,0)
+ S (DATE,DTFRM)=$$FMADD^XLFDT(+$P(DTFRMTO,U,2)),DTTO=$P(DTFRMTO,U,3)
+"RTN","RCTCSP1",43,0)
+ S (BAMT,TAMT,BILL,PAGE)=0
+"RTN","RCTCSP1",44,0)
+ ; rewritten to sort by "TCSP" (#151 date referred to TCSP) not the "AB" xref... PRCA*4.5*315 (TV8)
+"RTN","RCTCSP1",45,0)
+ F  S BILL=$O(^PRCA(430,"TCSP",BILL)) Q:BILL=""!($D(DIRUT))  D
+"RTN","RCTCSP1",46,0)
+ .Q:$P($G(^PRCA(430,BILL,0)),U,9)'=DEBTOR
+"RTN","RCTCSP1",47,0)
+ .Q:'+$G(^PRCA(430,BILL,15))
+"RTN","RCTCSP1",48,0)
+ .S DATDATE=$P($G(^PRCA(430,BILL,15)),U) Q:DATDATE<DTFRM!(DATDATE>DTTO)
+"RTN","RCTCSP1",49,0)
+ .S B7=$G(^PRCA(430,BILL,7))
+"RTN","RCTCSP1",50,0)
+ .S BAMT=0 F I=1:1:5 S BAMT=BAMT+$P(B7,U,I)
+"RTN","RCTCSP1",51,0)
+ .S TAMT=TAMT+BAMT
+"RTN","RCTCSP1",52,0)
+ .S ^TMP("RCTCSP1",$J,DEBTOR,BILL)=BAMT
+"RTN","RCTCSP1",53,0)
+ D BILLREPH
+"RTN","RCTCSP1",54,0)
+ S DEBTOR="" F  S DEBTOR=$O(^TMP("RCTCSP1",$J,DEBTOR)) Q:'DEBTOR!($D(DIRUT))  D
+"RTN","RCTCSP1",55,0)
+ . S BILL=0 F  S BILL=$O(^TMP("RCTCSP1",$J,DEBTOR,BILL)) Q:'BILL  D
+"RTN","RCTCSP1",56,0)
+ ..Q:'+$G(^PRCA(430,BILL,15))
+"RTN","RCTCSP1",57,0)
+ ..S FND=1 W !,$P(^PRCA(430,BILL,0),U) S CSTAT=$P(^(0),U,8),B7=$G(^(7)),B15=$G(^(15)),B16=$G(^(16))
+"RTN","RCTCSP1",58,0)
+ ..I 'EXCEL W ?12,$P(^PRCA(430.3,CSTAT,0),U,2)
+"RTN","RCTCSP1",59,0)
+ ..I EXCEL W U_$P(^PRCA(430.3,CSTAT,0),U,2)
+"RTN","RCTCSP1",60,0)
+ ..I 'EXCEL W ?15
+"RTN","RCTCSP1",61,0)
+ ..I EXCEL W U
+"RTN","RCTCSP1",62,0)
+ ..W $J($P(B16,U,9),8,2)
+"RTN","RCTCSP1",63,0)
+ ..S BAMT=^TMP("RCTCSP1",$J,DEBTOR,BILL)
+"RTN","RCTCSP1",64,0)
+ ..I 'EXCEL W ?25
+"RTN","RCTCSP1",65,0)
+ ..I EXCEL W U
+"RTN","RCTCSP1",66,0)
+ ..W $J(BAMT,8,2)
+"RTN","RCTCSP1",67,0)
+ ..I 'EXCEL W $J($P(B7,U,1),9,2),$J($P(B7,U,2),7,2),$J($P(B7,U,3),8,2),$J($P(B7,U,4),8,2)  ;(as per PRCA*4.5*315)
+"RTN","RCTCSP1",68,0)
+ ..I EXCEL W $J($P(B7,U,1),8,2)_U_$J($P(B7,U,2),7,2)_U_$J($P(B7,U,3),7,2)_U_$J($P(B7,U,4),8,2)
+"RTN","RCTCSP1",69,0)
+ ..S TMP=$$FMTE^XLFDT($P(B15,U,1),"2Z")  ;Format date to n/n/nn  (as per PRCA*4.5*315)
+"RTN","RCTCSP1",70,0)
+ ..I 'EXCEL W ?67,TMP  ;$P(TMP,", ",1)_","_$P(TMP,", ",2)  ;
+"RTN","RCTCSP1",71,0)
+ ..I EXCEL W U_TMP
+"RTN","RCTCSP1",72,0)
+ ..;check for end of page here, if necessary form feed and print header
+"RTN","RCTCSP1",73,0)
+ ..I ($Y+3)>IOSL D
+"RTN","RCTCSP1",74,0)
+ ...I $E(IOST,1,2)="C-" S DIR(0)="E" K DIRUT D ^DIR Q:$D(DIRUT)
+"RTN","RCTCSP1",75,0)
+ ...D BILLREPH
+"RTN","RCTCSP1",76,0)
+ I $E(IOST,1,2)="C-" R !!,"END OF REPORT...PRESS RETURN TO CONTINUE",X:DTIME W @IOF
+"RTN","RCTCSP1",77,0)
+ D ^%ZISC
+"RTN","RCTCSP1",78,0)
+ S:$D(ZTQUEUED) ZTREQ="@"
+"RTN","RCTCSP1",79,0)
+ K ^TMP("RCTCSP1",$J)
+"RTN","RCTCSP1",80,0)
+ K IOP,%ZIS,ZTQUEUED
+"RTN","RCTCSP1",81,0)
+BILLREPQ Q
+"RTN","RCTCSP1",82,0)
+ ;
+"RTN","RCTCSP1",83,0)
+BILLREPH ;header for cross-servicing bill report
+"RTN","RCTCSP1",84,0)
+ W @IOF
+"RTN","RCTCSP1",85,0)
+ S PAGE=PAGE+1
+"RTN","RCTCSP1",86,0)
+ I 'EXCEL W "PAGE "_PAGE,?24,"CROSS-SERVICING BILL REPORT",?60,$$FMTE^XLFDT(DT,"2Z"),!,DASH
+"RTN","RCTCSP1",87,0)
+ I EXCEL W "PAGE "_PAGE_U_"CROSS-SERVICING BILL REPORT"_U_U_$$FMTE^XLFDT(DT,"2Z")
+"RTN","RCTCSP1",88,0)
+ N RCHDR,RCSSN
+"RTN","RCTCSP1",89,0)
+ S RCHDR=$$ACCNTHDR^RCDPAPLM(DEBTOR),RCSSN=$S($P(RCHDR,U,2)["P":$E($P(RCHDR,U,2),7,11),1:$E($P(RCHDR,U,2),6,9))  ;Pseudo SSN shouldn't be allowed but we allowed for it to print
+"RTN","RCTCSP1",90,0)
+ I 'EXCEL D  Q 
+"RTN","RCTCSP1",91,0)
+ . W !!,"DEBTOR: ",$E($P(RCHDR,U,1),1,18),?22,"SSN: ",RCSSN,?45,"CURRENT CS DEBT: ",$J(TAMT,8,2),!,DASH
+"RTN","RCTCSP1",92,0)
+ . W !,"BILL NO.",?12,"ST",?15,"ORIG AMT",?25,"CURR AMT",?38,"PRIN",?46,"INT",?52,"ADMIN",?60,"COURT",?67,"CS REF DT" ;(as per PRCA*4.5*315)
+"RTN","RCTCSP1",93,0)
+ . W !,"---- ---",?12,"--",?15,"---- ---",?25,"---- ---",?38,"----",?46,"---",?52,"-----",?60,"-----",?67,"-- -------"
+"RTN","RCTCSP1",94,0)
+ W !,"DEBTOR: "_$E($P(RCHDR,U,1),1,18)_U_U_"SSN: "_RCSSN_U_U_U_"CURRENT CS DEBT: "_$J(TAMT,8,2)
+"RTN","RCTCSP1",95,0)
+ W !,"BILL NO."_U_"ST"_U_"ORIG AMT"_U_"CURR AMT"_U_"PRIN"_U_"INT"_U_"ADMIN"_U_"COURT"_U_"CS REF DATE"
+"RTN","RCTCSP1",96,0)
+ Q
+"RTN","RCTCSP1",97,0)
+ ;
+"RTN","RCTCSP1",98,0)
+CSRPRT ;Print Cross-Servicing Report, prints sorted individual bills that make up a cross-servicing account
+"RTN","RCTCSP1",99,0)
+ ;
+"RTN","RCTCSP1",100,0)
+ K ^TMP("RCTCSP1",$J)
+"RTN","RCTCSP1",101,0)
+ N DIC,RCSORT,PAGE,DASH,DTOUT,DIRUT,DUOUT,DIROUT,RCIEN,RCDEBTOR,RCREFDT,RCSSN,RCORIG,RCCAMT,RCREFDT,RCBILL,ITEM,DBTR,SDT,SSN,NCIEN,TERMDIG
+"RTN","RCTCSP1",102,0)
+ S PAGE=0,DASH="",$P(DASH,"-",81)=""
+"RTN","RCTCSP1",103,0)
+ W !
+"RTN","RCTCSP1",104,0)
+ S DIR(0)="S^1:Bill Number;2:Debtor Name;3:CS Referred Date",DIR("A")="Sort by" D ^DIR K DIR
+"RTN","RCTCSP1",105,0)
+ S RCSORT=Y Q:($D(DTOUT)!$D(DUOUT)!$D(DIROUT))
+"RTN","RCTCSP1",106,0)
+ ; The following sections were rewritten to eliminate using ^DIP - (as per PRCA*4.5*315 reformat dates and SSN)
+"RTN","RCTCSP1",107,0)
+ S DTFRMTO=$$DTFRMTO^RCTCSP2 Q:'DTFRMTO  ;Get date range as per PRCA*4.5*315
+"RTN","RCTCSP1",108,0)
+ S (DATE,DTFRM)=$$FMADD^XLFDT(+$P(DTFRMTO,U,2)),DTTO=$P(DTFRMTO,U,3)
+"RTN","RCTCSP1",109,0)
+ S EXCEL=0,PROMPT="CAPTURE Report data to an Excel Document",DIR(0)="Y",DIR("?")="^D HEXC^RCTCSJR"
+"RTN","RCTCSP1",110,0)
+ S EXCEL=$$SELECT^RCTCSJR(PROMPT,"NO") I "01"'[EXCEL S STOP=1 Q
+"RTN","RCTCSP1",111,0)
+ I EXCEL=1 D EXCMSG^RCTCSJR ; Display Excel display message
+"RTN","RCTCSP1",112,0)
+ K IOP,IO("Q") S %ZIS="MQ",%ZIS("B")="" D ^%ZIS Q:POP     ;PRC*4.5*336
+"RTN","RCTCSP1",113,0)
+ I $D(IO("Q")) D  Q
+"RTN","RCTCSP1",114,0)
+ .S ZTSAVE("RCSORT")="",ZTSAVE("DTFRMTO")="",ZTSAVE("EXCEL")="",ZTSAVE("PROMPT")="",ZTSAVE("PAGE")="",ZTSAVE("DASH")=""
+"RTN","RCTCSP1",115,0)
+ .S ZTRTN="CSRPRTR^RCTCSP1",ZTDESC="PRINT CROSS-SERVICING REPORT"
+"RTN","RCTCSP1",116,0)
+ .D ^%ZTLOAD,HOME^%ZIS
+"RTN","RCTCSP1",117,0)
+ .I $G(ZTSK) W !!,"Report compilation has started with task# ",ZTSK,".",! S DIR(0)="E" D ^DIR K DIR
+"RTN","RCTCSP1",118,0)
+ .Q
+"RTN","RCTCSP1",119,0)
+CSRPRTR ; compile/print job - either foreground or background
+"RTN","RCTCSP1",120,0)
+ U IO
+"RTN","RCTCSP1",121,0)
+ K ^TMP("RCTCSP1",$J)
+"RTN","RCTCSP1",122,0)
+ ;
+"RTN","RCTCSP1",123,0)
+ I RCSORT=1 D
+"RTN","RCTCSP1",124,0)
+ . D CSRPRTH1^RCTCSP1A
+"RTN","RCTCSP1",125,0)
+ . S (DATE,DTFRM)=$$FMADD^XLFDT(+$P(DTFRMTO,U,2)),DTTO=$P(DTFRMTO,U,3)
+"RTN","RCTCSP1",126,0)
+ . S RCIEN="" F  S RCIEN=$O(^PRCA(430,"TCSP",RCIEN)) Q:RCIEN=""  D
+"RTN","RCTCSP1",127,0)
+ .. Q:'$D(^PRCA(430,RCIEN,15))   ;cross servicing data fields
+"RTN","RCTCSP1",128,0)
+ ..Q:$P($G(^PRCA(430,RCIEN,15)),U)<DTFRM!($P($G(^PRCA(430,RCIEN,15)),U)>DTTO)
+"RTN","RCTCSP1",129,0)
+ ..K LIST,MSG,RCLIST D GETS^DIQ(430,RCIEN_",",".01;9;121,141,161;169;151;11","IE","LIST","MSG") S RCLIST=$NA(LIST(430,RCIEN_","))
+"RTN","RCTCSP1",130,0)
+ ..;Q:$G(@RCLIST@(141,"E"))'=""   ;Date sent to TOP
+"RTN","RCTCSP1",131,0)
+ ..S SSN=$E($$SSN^RCFN01(@RCLIST@(9,"I")),6,9) S SSN=$S(SSN'="":SSN,1:"     "),TERMDIG=$E(@RCLIST@(9,"E"),1)_SSN
+"RTN","RCTCSP1",132,0)
+ ..I EXCEL D  Q 
+"RTN","RCTCSP1",133,0)
+ ...S ^TMP("RCTCSP1",$J,RCIEN,@RCLIST@(.01,"E"))=@RCLIST@(.01,"E")_U_$E(@RCLIST@(9,"E"),1,19)_U_TERMDIG_U_$J(@RCLIST@(169,"E"),8,2)_U_$$FMTE^XLFDT(@RCLIST@(151,"I"),"2Z")
+"RTN","RCTCSP1",134,0)
+ ...S ^TMP("RCTCSP1",$J,RCIEN,@RCLIST@(.01,"E"))=^TMP("RCTCSP1",$J,RCIEN,@RCLIST@(.01,"E"))_U_$J(@RCLIST@(11,"E"),8,2)
+"RTN","RCTCSP1",135,0)
+ ...Q
+"RTN","RCTCSP1",136,0)
+ ..S ^TMP("RCTCSP1",$J,RCIEN,@RCLIST@(.01,"E"))=@RCLIST@(.01,"E")_U_$E(@RCLIST@(9,"E"),1,19)_U_SSN_U_$J(@RCLIST@(169,"E"),8,2)_U_$$FMTE^XLFDT(@RCLIST@(151,"I"),"2Z")
+"RTN","RCTCSP1",137,0)
+ ..S ^TMP("RCTCSP1",$J,RCIEN,@RCLIST@(.01,"E"))=^TMP("RCTCSP1",$J,RCIEN,@RCLIST@(.01,"E"))_U_$J(@RCLIST@(11,"E"),8,2)
+"RTN","RCTCSP1",138,0)
+ .;
+"RTN","RCTCSP1",139,0)
+ .; print report for sort 1
+"RTN","RCTCSP1",140,0)
+ .S (NCIEN,ITEM)="" F  S NCIEN=$O(^TMP("RCTCSP1",$J,NCIEN)) Q:NCIEN=""!$D(DIRUT)  F  S ITEM=$O(^TMP("RCTCSP1",$J,NCIEN,ITEM)) Q:ITEM=""!$D(DIRUT)  D  Q:$D(DIRUT)
+"RTN","RCTCSP1",141,0)
+ ..I EXCEL W !,$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U)_U_$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,2)_U_$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,3)
+"RTN","RCTCSP1",142,0)
+ ..I EXCEL W U_$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,4)_U_$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,5)_U_$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,6)
+"RTN","RCTCSP1",143,0)
+ ..I EXCEL Q
+"RTN","RCTCSP1",144,0)
+ ..; non-Excel output
+"RTN","RCTCSP1",145,0)
+ ..W !,$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U),?14,$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,2),?35,$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,3),?43
+"RTN","RCTCSP1",146,0)
+ ..W $P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,4),?58,$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,5),?68,$P(^TMP("RCTCSP1",$J,NCIEN,ITEM),U,6)
+"RTN","RCTCSP1",147,0)
+ ..; page break check
+"RTN","RCTCSP1",148,0)
+ ..I ($Y+3)>IOSL D
+"RTN","RCTCSP1",149,0)
+ ...I $E(IOST,1,2)="C-" S DIR(0)="E" K DIRUT D ^DIR K DIR Q:$D(DIRUT)
+"RTN","RCTCSP1",150,0)
+ ...D CSRPRTH1^RCTCSP1A
+"RTN","RCTCSP1",151,0)
+ ...Q
+"RTN","RCTCSP1",152,0)
+ ..Q
+"RTN","RCTCSP1",153,0)
+ .Q
+"RTN","RCTCSP1",154,0)
+ ;
+"RTN","RCTCSP1",155,0)
+ I RCSORT=2 D
+"RTN","RCTCSP1",156,0)
+ . D CSRPRTH2^RCTCSP1A
+"RTN","RCTCSP1",157,0)
+ . S (DATE,DTFRM)=$$FMADD^XLFDT(+$P(DTFRMTO,U,2),-1),DTTO=$P(DTFRMTO,U,3)
+"RTN","RCTCSP1",158,0)
+ . S RCIEN="" F  S RCIEN=$O(^PRCA(430,"TCSP",RCIEN)) Q:RCIEN=""  D
+"RTN","RCTCSP1",159,0)
+ ..Q:'$D(^PRCA(430,RCIEN,15))   ;cross servicing data fields
+"RTN","RCTCSP1",160,0)
+ ..Q:$P($G(^PRCA(430,RCIEN,15)),U)<DTFRM!($P($G(^PRCA(430,RCIEN,15)),U)>DTTO)
+"RTN","RCTCSP1",161,0)
+ ..K LIST,MSG,RCLIST D GETS^DIQ(430,RCIEN_",",".01;9;121,141,161;169;151;11","IE","LIST","MSG") S RCLIST=$NA(LIST(430,RCIEN_","))
+"RTN","RCTCSP1",162,0)
+ ..;Q:$G(@RCLIST@(121,"E"))'=""   ;Date sent to DMC
+"RTN","RCTCSP1",163,0)
+ ..;Q:$G(@RCLIST@(141,"E"))'=""   ;Date sent to TOP
+"RTN","RCTCSP1",164,0)
+ ..S SSN=$E($$SSN^RCFN01(@RCLIST@(9,"I")),6,9) S SSN=$S(SSN'="":SSN,1:"     "),TERMDIG=$E(@RCLIST@(9,"E"),1)_SSN
+"RTN","RCTCSP1",165,0)
+ ..I EXCEL D  Q
+"RTN","RCTCSP1",166,0)
+ ...S ^TMP("RCTCSP1",$J,@RCLIST@(9,"E"),RCIEN)=$E(@RCLIST@(9,"E"),1,19)_U_@RCLIST@(.01,"E")_U_TERMDIG_U_$J(@RCLIST@(169,"E"),8,2)_U_$$FMTE^XLFDT(@RCLIST@(151,"I"),"2Z")_U_$J(@RCLIST@(11,"E"),8,2) Q
+"RTN","RCTCSP1",167,0)
+ ..S ^TMP("RCTCSP1",$J,@RCLIST@(9,"E"),RCIEN)=$E(@RCLIST@(9,"E"),1,19)_U_@RCLIST@(.01,"E")_U_SSN_U_$J(@RCLIST@(169,"E"),8,2)_U_$$FMTE^XLFDT(@RCLIST@(151,"I"),"2Z")_U_$J(@RCLIST@(11,"E"),8,2)
+"RTN","RCTCSP1",168,0)
+ .;
+"RTN","RCTCSP1",169,0)
+ .; print report for sort 2
+"RTN","RCTCSP1",170,0)
+ .S (DBTR,NCIEN)="" F  S DBTR=$O(^TMP("RCTCSP1",$J,DBTR)) Q:DBTR=""!$D(DIRUT)  F  S NCIEN=$O(^TMP("RCTCSP1",$J,DBTR,NCIEN)) Q:NCIEN=""!$D(DIRUT)  D  Q:$D(DIRUT)
+"RTN","RCTCSP1",171,0)
+ ..I EXCEL W !,$P(^TMP("RCTCSP1",$J,DBTR,NCIEN),U,1,4)_U_$P(^TMP("RCTCSP1",$J,DBTR,NCIEN),U,5)_U_$P(^TMP("RCTCSP1",$J,DBTR,NCIEN),U,6)
+"RTN","RCTCSP1",172,0)
+ ..I EXCEL Q
+"RTN","RCTCSP1",173,0)
+ ..; non-Excel output
+"RTN","RCTCSP1",174,0)
+ ..W !,$P(^TMP("RCTCSP1",$J,DBTR,NCIEN),U),?21,$P(^TMP("RCTCSP1",$J,DBTR,NCIEN),U,2),?35,$P(^TMP("RCTCSP1",$J,DBTR,NCIEN),U,3),?43,$P(^TMP("RCTCSP1",$J,DBTR,NCIEN),U,4)
+"RTN","RCTCSP1",175,0)
+ ..W ?58,$P(^TMP("RCTCSP1",$J,DBTR,NCIEN),U,5),?68,$P(^TMP("RCTCSP1",$J,DBTR,NCIEN),U,6)
+"RTN","RCTCSP1",176,0)
+ ..; page break check
+"RTN","RCTCSP1",177,0)
+ ..I ($Y+3)>IOSL D
+"RTN","RCTCSP1",178,0)
+ ...I $E(IOST,1,2)="C-" S DIR(0)="E" K DIRUT D ^DIR K DIR Q:$D(DIRUT)
+"RTN","RCTCSP1",179,0)
+ ...D CSRPRTH2^RCTCSP1A
+"RTN","RCTCSP1",180,0)
+ ...Q
+"RTN","RCTCSP1",181,0)
+ ..Q
+"RTN","RCTCSP1",182,0)
+ .Q
+"RTN","RCTCSP1",183,0)
+ ;
+"RTN","RCTCSP1",184,0)
+ I RCSORT=3 D
+"RTN","RCTCSP1",185,0)
+ .D CSRPRTH3^RCTCSP1A
+"RTN","RCTCSP1",186,0)
+ .S (DATE,DTFRM)=$$FMADD^XLFDT(+$P(DTFRMTO,U,2),-1),DTTO=$P(DTFRMTO,U,3)
+"RTN","RCTCSP1",187,0)
+ .S RCIEN="" F  S RCIEN=$O(^PRCA(430,"TCSP",RCIEN)) Q:RCIEN=""  D
+"RTN","RCTCSP1",188,0)
+ ..Q:'$D(^PRCA(430,RCIEN,15))   ;cross servicing data fields
+"RTN","RCTCSP1",189,0)
+ ..Q:$P(^PRCA(430,RCIEN,15),U)<DTFRM!($P(^PRCA(430,RCIEN,15),U)>DTTO)
+"RTN","RCTCSP1",190,0)
+ ..K LIST,MSG,RCLIST D GETS^DIQ(430,RCIEN_",",".01;9;121,141,161;169;151;11","IE","LIST","MSG") S RCLIST=$NA(LIST(430,RCIEN_","))
+"RTN","RCTCSP1",191,0)
+ ..;Q:$G(@RCLIST@(121,"E"))'=""   ;Date sent to DMC
+"RTN","RCTCSP1",192,0)
+ ..;Q:$G(@RCLIST@(141,"E"))'=""   ;Date sent to TOP
+"RTN","RCTCSP1",193,0)
+ ..S SSN=$E($$SSN^RCFN01(@RCLIST@(9,"I")),6,9) S SSN=$S(SSN'="":SSN,1:"     "),TERMDIG=$E(@RCLIST@(9,"E"),1)_SSN
+"RTN","RCTCSP1",194,0)
+ ..I EXCEL S ^TMP("RCTCSP1",$J,@RCLIST@(151,"I"),RCIEN)=$$FMTE^XLFDT(@RCLIST@(151,"I"),"2Z")_U_$E(@RCLIST@(9,"E"),1,19)_U_@RCLIST@(.01,"E")_U_TERMDIG_U_$J(@RCLIST@(169,"E"),8,2)_U_$J(@RCLIST@(11,"E"),8,2)
+"RTN","RCTCSP1",195,0)
+ ..I 'EXCEL S ^TMP("RCTCSP1",$J,@RCLIST@(151,"I"),RCIEN)=$$FMTE^XLFDT(@RCLIST@(151,"I"),"2Z")_U_$E(@RCLIST@(9,"E"),1,19)_U_@RCLIST@(.01,"E")_U_SSN_U_$J(@RCLIST@(169,"E"),8,2)_U_$J(@RCLIST@(11,"E"),8,2)
+"RTN","RCTCSP1",196,0)
+ .;
+"RTN","RCTCSP1",197,0)
+ .; print report for sort 3
+"RTN","RCTCSP1",198,0)
+ .S (SDT,NCIEN)="" F  S SDT=$O(^TMP("RCTCSP1",$J,SDT)) Q:SDT=""!$D(DIRUT)  F  S NCIEN=$O(^TMP("RCTCSP1",$J,SDT,NCIEN)) Q:NCIEN=""!$D(DIRUT)  D  Q:$D(DIRUT)
+"RTN","RCTCSP1",199,0)
+ ..I EXCEL W !,$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U)_U_$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,2)_U_$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,3)_U_$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,4)
+"RTN","RCTCSP1",200,0)
+ ..I EXCEL W U_$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,5)_U_$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,6)
+"RTN","RCTCSP1",201,0)
+ ..I EXCEL Q
+"RTN","RCTCSP1",202,0)
+ ..; non-Excel output
+"RTN","RCTCSP1",203,0)
+ ..W !,$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U),?12,$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,2),?34,$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,3),?49
+"RTN","RCTCSP1",204,0)
+ ..W $P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,4),?58,$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,5),?68,$P(^TMP("RCTCSP1",$J,SDT,NCIEN),U,6)
+"RTN","RCTCSP1",205,0)
+ ..; page break check
+"RTN","RCTCSP1",206,0)
+ ..I ($Y+3)>IOSL D
+"RTN","RCTCSP1",207,0)
+ ...I $E(IOST,1,2)="C-" S DIR(0)="E" K DIRUT D ^DIR K DIR Q:$D(DIRUT)
+"RTN","RCTCSP1",208,0)
+ ...D CSRPRTH3^RCTCSP1A
+"RTN","RCTCSP1",209,0)
+ ...Q
+"RTN","RCTCSP1",210,0)
+ ..Q
+"RTN","RCTCSP1",211,0)
+ .Q
+"RTN","RCTCSP1",212,0)
+ ;
+"RTN","RCTCSP1",213,0)
+ ;end of report
+"RTN","RCTCSP1",214,0)
+ I $E(IOST,1,2)="C-",'$D(DIRUT) R !!,"END OF REPORT...PRESS RETURN TO CONTINUE",X:DTIME W @IOF
+"RTN","RCTCSP1",215,0)
+ ;
+"RTN","RCTCSP1",216,0)
+ K ^TMP("RCTCSP1",$J)          ; kill scratch
+"RTN","RCTCSP1",217,0)
+ D ^%ZISC                      ; close device
+"RTN","RCTCSP1",218,0)
+ I $D(ZTQUEUED) S ZTREQ="@"    ; purge the task
+"RTN","RCTCSP1",219,0)
+ Q
+"RTN","RCTCSP1",220,0)
+ ;
+"RTN","RCTCSP1",221,0)
+REC5B ;Create record 5B for Treasury
+"RTN","RCTCSP1",222,0)
+ ;  trnnum     transaction number file #433 pass in
+"RTN","RCTCSP1",223,0)
+ ;  trntyp     transaction type pointer to 430.3
+"RTN","RCTCSP1",224,0)
+ ;  trntypa    aia transaction type  (aio: dmc agency internal offset, abal: decrease adjustment) 
+"RTN","RCTCSP1",225,0)
+ N REC,KNUM,DEBTNR,DEBTORNB,TAMOUNT,TAMTPBAL,TAMTIBAL,TAMTABAL,TAMTFBAL,TAMTCBAL,AMTRFRRD,TRNTYP,TRNTYPA,TRANSNB
+"RTN","RCTCSP1",226,0)
+ N AMTPBAL,AMTIBAL,AMTABAL,AMTFBAL,AMTCBAL,TRN3,TRNNUME
+"RTN","RCTCSP1",227,0)
+ S TRNTYPA="AIO"
+"RTN","RCTCSP1",228,0)
+ S REC="C5B"_ACTION_"3636001200"_"DM1D "_"L"
+"RTN","RCTCSP1",229,0)
+ S KNUM=$P($P(B0,U,1),"-",2)
+"RTN","RCTCSP1",230,0)
+ S DEBTNR=$E(SITE,1,3)_$$RJZF(KNUM,7)_$TR($J(BILL,20)," ",0),REC=REC_DEBTNR
+"RTN","RCTCSP1",231,0)
+ S DEBTORNB=$E(SITE,1,3)_$TR($J(DEBTOR,12)," ",0)
+"RTN","RCTCSP1",232,0)
+ S REC=REC_DEBTORNB
+"RTN","RCTCSP1",233,0)
+ S TRNTYP=$P($G(^PRCA(433,TRNNUM,1)),U,2) I ",35,73,74,"[TRNTYP S TRNTYPA="ABAL"
+"RTN","RCTCSP1",234,0)
+ S REC=REC_$$LJSF(TRNTYPA,9)
+"RTN","RCTCSP1",235,0)
+ S TRNNUME=$$RJZF(TRNNUM,10)
+"RTN","RCTCSP1",236,0)
+ S TRNNUME=$E(TRNNUME,5,10) ;max is 999999
+"RTN","RCTCSP1",237,0)
+ I TRNNUME="000000" S TRNNUME="000001" ;min is 1
+"RTN","RCTCSP1",238,0)
+ S REC=REC_$$RJZF(TRNNUME,10)
+"RTN","RCTCSP1",239,0)
+ S REC=REC_$$DATE8(DT)
+"RTN","RCTCSP1",240,0)
+ S TRANSNB=$E(SITE,1,3)_$TR($J(TRNNUM,12)," ",0)
+"RTN","RCTCSP1",241,0)
+ S REC=REC_TRANSNB
+"RTN","RCTCSP1",242,0)
+ S REC=REC_$$BLANK(9)
+"RTN","RCTCSP1",243,0)
+ S TRN3=$G(^PRCA(433,TRNNUM,3))
+"RTN","RCTCSP1",244,0)
+ S TAMTPBAL=$P(TRN3,U,1) ;transaction principle balance
+"RTN","RCTCSP1",245,0)
+ S TAMTIBAL=$P(TRN3,U,2) ;transaction interest balance
+"RTN","RCTCSP1",246,0)
+ S TAMTABAL=$P(TRN3,U,3) ;transaction administrative balance
+"RTN","RCTCSP1",247,0)
+ S TAMTFBAL=$P(TRN3,U,4) ;transaction marshal fee
+"RTN","RCTCSP1",248,0)
+ S TAMTCBAL=$P(TRN3,U,5) ;transaction court cost
+"RTN","RCTCSP1",249,0)
+ I (TAMTPBAL+TAMTIBAL+TAMTABAL+TAMTFBAL+TAMTCBAL)=0 S TAMTPBAL=TRNAMT
+"RTN","RCTCSP1",250,0)
+ S TAMOUNT=$$AMOUNT(TAMTPBAL,TRNTYP)
+"RTN","RCTCSP1",251,0)
+ S TAMOUNT=TAMOUNT_$$AMOUNT(TAMTIBAL,TRNTYP)
+"RTN","RCTCSP1",252,0)
+ S TAMOUNT=TAMOUNT_$$AMOUNT(TAMTABAL,TRNTYP)
+"RTN","RCTCSP1",253,0)
+ S TAMOUNT=TAMOUNT_$$AMOUNT(TAMTFBAL+TAMTCBAL,TRNTYP)
+"RTN","RCTCSP1",254,0)
+ S REC=REC_TAMOUNT
+"RTN","RCTCSP1",255,0)
+ S REC=REC_$$AMOUNT(TRNAMT,TRNTYP)
+"RTN","RCTCSP1",256,0)
+ S REC=REC_$$BLANK(450-$L(REC))
+"RTN","RCTCSP1",257,0)
+ S AMTPBAL=$P(B7,U,1) ;principle balance
+"RTN","RCTCSP1",258,0)
+ S AMTIBAL=$P(B7,U,2) ;interest balance
+"RTN","RCTCSP1",259,0)
+ S AMTABAL=$P(B7,U,3) ;administrative balance
+"RTN","RCTCSP1",260,0)
+ S AMTFBAL=$P(B7,U,4) ;marshal fee
+"RTN","RCTCSP1",261,0)
+ S AMTCBAL=$P(B7,U,5) ;court cost
+"RTN","RCTCSP1",262,0)
+ S AMTRFRRD=AMTPBAL+AMTIBAL+AMTABAL+AMTFBAL+AMTCBAL
+"RTN","RCTCSP1",263,0)
+ I ACTION="U" S $P(^PRCA(430,BILL,16),U,10)=AMTRFRRD
+"RTN","RCTCSP1",264,0)
+ S ^XTMP("RCTCSPD",$J,BILL,ACTION,"5B",TRNNUM)=REC
+"RTN","RCTCSP1",265,0)
+ S ^XTMP("RCTCSPD",$J,"BILL",ACTION,BILL)=$$TAXID(DEBTOR)_"^"_$S(TRNTYP=73!(TRNTYP=74):"",1:"-")_+$E(REC,174,184)_"."_$E(REC,185,186)
+"RTN","RCTCSP1",266,0)
+ Q
+"RTN","RCTCSP1",267,0)
+ ;
+"RTN","RCTCSP1",268,0)
+DATE8(X) ;changes fileman date into 8 digit date yyyymmdd
+"RTN","RCTCSP1",269,0)
+ I +X S X=X+17000000
+"RTN","RCTCSP1",270,0)
+ S X=$E(X,1,8)
+"RTN","RCTCSP1",271,0)
+ Q X
+"RTN","RCTCSP1",272,0)
+ ;
+"RTN","RCTCSP1",273,0)
+AMOUNT(X,TT) ;changes amount to zero filled, right justified
+"RTN","RCTCSP1",274,0)
+ ;Zeroes are positive
+"RTN","RCTCSP1",275,0)
+ ;Increase adjustment are positive (TT=73,74)
+"RTN","RCTCSP1",276,0)
+ ;All other tranactions are negative (reduce bill balance)
+"RTN","RCTCSP1",277,0)
+ S X=$TR($J(X,0,2),".")
+"RTN","RCTCSP1",278,0)
+ S X=$E($S(+X=0:0,TT=73!(TT=74):0,1:"-")_"00000000000",1,14-$L(X))_X
+"RTN","RCTCSP1",279,0)
+ Q X
+"RTN","RCTCSP1",280,0)
+ ;
+"RTN","RCTCSP1",281,0)
+BLANK(X) ;returns 'x' blank spaces
+"RTN","RCTCSP1",282,0)
+ N BLANK
+"RTN","RCTCSP1",283,0)
+ S BLANK="",$P(BLANK," ",X+1)=""
+"RTN","RCTCSP1",284,0)
+ Q BLANK
+"RTN","RCTCSP1",285,0)
+ ;
+"RTN","RCTCSP1",286,0)
+RJZF(X,Y) ;right justify zero fill width Y
+"RTN","RCTCSP1",287,0)
+ S X=$E("000000000000",1,Y-$L(X))_X
+"RTN","RCTCSP1",288,0)
+ Q X
+"RTN","RCTCSP1",289,0)
+ ;
+"RTN","RCTCSP1",290,0)
+LJSF(X,Y) ;left justified space filled
+"RTN","RCTCSP1",291,0)
+ S X=$E(X,1,Y)
+"RTN","RCTCSP1",292,0)
+ S X=X_$$BLANK(Y-$L(X))
+"RTN","RCTCSP1",293,0)
+ Q X
+"RTN","RCTCSP1",294,0)
+ ;
+"RTN","RCTCSP1",295,0)
+TAXID(DEBTOR) ;computes TAXID to place on documents
+"RTN","RCTCSP1",296,0)
+ N TAXID,DIC,DA,DR,DIQ
+"RTN","RCTCSP1",297,0)
+ S TAXID=$$SSN^RCFN01(DEBTOR)
+"RTN","RCTCSP1",298,0)
+ S TAXID=$$LJSF(TAXID,9)
+"RTN","RCTCSP1",299,0)
+ Q TAXID
+"RTN","RCTCSP1",300,0)
+ ;
+"RTN","RCTCSP1",301,0)
+ADDR(RCDFN,RCCSW) ; returns patient file address
+"RTN","RCTCSP1",302,0)
+ N DFN,ADDRCS,STATEIEN,STATEAB,VAPA,ADDR340,PRCAYY
+"RTN","RCTCSP1",303,0)
+ S DFN=RCDFN
+"RTN","RCTCSP1",304,0)
+ D ADD^VADPT
+"RTN","RCTCSP1",305,0)
+ S STATEIEN=+VAPA(5),STATEAB=$$GET1^DIQ(5,STATEIEN,1)
+"RTN","RCTCSP1",306,0)
+ S PRCAYY="" F I=1:1:$L(VAPA(8)) I $E(VAPA(8),I)?1N S PRCAYY=PRCAYY_$E(VAPA(8),I)
+"RTN","RCTCSP1",307,0)
+ S VAPA(8)=PRCAYY I $L(VAPA(8))'=10 S VAPA(8)="          "    ;PRCA*4.5*336
+"RTN","RCTCSP1",308,0)
+ S ADDRCS=VAPA(1)_U_VAPA(2)_U_VAPA(4)_U_STATEAB_U_VAPA(6)_U_VAPA(8)_U_+VAPA(25)
+"RTN","RCTCSP1",309,0)
+ S ADDR340=$P($$DADD^RCAMADD(DEBTOR,,RCCSW),U,1,8)     ;PRCA*4.5*336
+"RTN","RCTCSP1",310,0)
+ I $P(ADDRCS,U,7)>2 S $P(ADDR340,U,6)="     "    ;PRCA*4.5*331/336
+"RTN","RCTCSP1",311,0)
+ S ADDR340=$P(ADDR340,U,1,2)_"^"_$P(ADDR340,U,4,7)_U_$S($P(ADDRCS,U,7)'="":$P(ADDRCS,U,7),1:1)    ;PRCA*4.5*331        
+"RTN","RCTCSP1",312,0)
+ I $P(ADDR340,U,7)="" S $P(ADDR340,U,7)=$P(ADDRCS,U,7)     ;PRCA*4.5*331
+"RTN","RCTCSP1",313,0)
+ I $P(ADDR340,U,7)>2 S $P(ADDR340,U,4)="  "     ;PRCA*4.5*331/336
+"RTN","RCTCSP1",314,0)
+ S ADDRCS=ADDR340
+"RTN","RCTCSP1",315,0)
+ Q ADDRCS
+"RTN","RCTCSP1",316,0)
+ ;
+"RTN","RCTCSP1",317,0)
+DEM(RCDFN) ; returns patient file gender and dob
+"RTN","RCTCSP1",318,0)
+ N DFN,VADM
+"RTN","RCTCSP1",319,0)
+ S DFN=RCDFN
+"RTN","RCTCSP1",320,0)
+ D DEM^VADPT
+"RTN","RCTCSP1",321,0)
+ ; return string   sex:m/f ^ dob: yyyymmdd ^ ssn ^ deceased
+"RTN","RCTCSP1",322,0)
+ Q $P(VADM(5),U,1)_U_$P(VADM(3),U,1)_U_$P(VADM(2),U,1)_U_VADM(6)
+"RTN","RCTCSP3S")
+0^2^B32035982^B30705650
+"RTN","RCTCSP3S",1,0)
+RCTCSP3S ;ALBANY/BDB-CROSS-SERVICING DPN SERVER ;03/15/14 3:34 PM
+"RTN","RCTCSP3S",2,0)
+ ;;4.5;Accounts Receivable;**301,336**;Mar 20, 1995;Build 45
+"RTN","RCTCSP3S",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCTCSP3S",4,0)
+ ;
+"RTN","RCTCSP3S",5,0)
+ ;PRCA*4.5*336 Use a different work file ^XTMP('RCTCSP3SW') to avoid
+"RTN","RCTCSP3S",6,0)
+ ;             and contention with weekly CS batch run RCTCSPD.
+"RTN","RCTCSP3S",7,0)
+ ;
+"RTN","RCTCSP3S",8,0)
+READ ;READS MESSAGE INTO TEMPORARY GLOBAL
+"RTN","RCTCSP3S",9,0)
+ N FDT S FDT=0
+"RTN","RCTCSP3S",10,0)
+ K ^XTMP("RCTCSP3S",$J)
+"RTN","RCTCSP3S",11,0)
+ S ^XTMP("RCTCSP3S",0)=$$FMADD^XLFDT(DT,3)_"^"_DT
+"RTN","RCTCSP3S",12,0)
+ K ^XTMP("RCTCSP3SW",$J)
+"RTN","RCTCSP3S",13,0)
+ S ^XTMP("RCTCSP3SW",0)=$$FMADD^XLFDT(DT,3)_"^"_DT
+"RTN","RCTCSP3S",14,0)
+ S XMA=0
+"RTN","RCTCSP3S",15,0)
+READ1 X XMREC I $D(XMER) G:XMER<0 READQ
+"RTN","RCTCSP3S",16,0)
+ I $E(XMRG,1)="H" S FDT=$E(XMRG,2,9)
+"RTN","RCTCSP3S",17,0)
+ S ^XTMP("RCTCSP3S",$J,"READ",FDT,XMPOS)=XMRG
+"RTN","RCTCSP3S",18,0)
+ G READ1
+"RTN","RCTCSP3S",19,0)
+ ;
+"RTN","RCTCSP3S",20,0)
+READQ K XMA,XMER,XMREC,XMPOS,XMRG
+"RTN","RCTCSP3S",21,0)
+ N REC
+"RTN","RCTCSP3S",22,0)
+ S LN=0
+"RTN","RCTCSP3S",23,0)
+ F  S LN=$O(^XTMP("RCTCSP3S",$J,"READ",FDT,LN)) Q:LN=""  S REC=$G(^(LN)) D
+"RTN","RCTCSP3S",24,0)
+ .S TYPE=$E(REC,1)
+"RTN","RCTCSP3S",25,0)
+ .I TYPE="H" K TYPE Q
+"RTN","RCTCSP3S",26,0)
+ .I TYPE="C" D DPN K TYPE Q
+"RTN","RCTCSP3S",27,0)
+ .I TYPE="Z" K TYPE Q
+"RTN","RCTCSP3S",28,0)
+ .Q
+"RTN","RCTCSP3S",29,0)
+ ;
+"RTN","RCTCSP3S",30,0)
+ D LTRPDT
+"RTN","RCTCSP3S",31,0)
+ D ERRCD
+"RTN","RCTCSP3S",32,0)
+ Q
+"RTN","RCTCSP3S",33,0)
+ ;
+"RTN","RCTCSP3S",34,0)
+LTRPDT ;sends mailman message to user for due process notification letter print date
+"RTN","RCTCSP3S",35,0)
+ Q:'$D(^XTMP("RCTCSP3SW",$J,"L"))
+"RTN","RCTCSP3S",36,0)
+ S XMDUZ="AR PACKAGE",XMY("G.TCSP")=""
+"RTN","RCTCSP3S",37,0)
+ N TCT,TDEB,TBIL,TBCNT
+"RTN","RCTCSP3S",38,0)
+ S XMSUB="CS DUE PROCESS NOTIFICATION LETTERS "_$E(DT,4,5)_"/"_$E(DT,6,7)_"/"_$E(DT,2,3)
+"RTN","RCTCSP3S",39,0)
+ S ^XTMP("RCTCSP3SW",$J,"LTR",1)="The following Debt Due Process Notification letters have been printed."
+"RTN","RCTCSP3S",40,0)
+ S ^XTMP("RCTCSP3SW",$J,"LTR",2)=""
+"RTN","RCTCSP3S",41,0)
+ S ^XTMP("RCTCSP3SW",$J,"LTR",3)="Name                             Bill #    DPN File Date   Letter Print Date"
+"RTN","RCTCSP3S",42,0)
+ S ^XTMP("RCTCSP3SW",$J,"LTR",4)="----                             ------    -------------   -----------------"
+"RTN","RCTCSP3S",43,0)
+ S TDEB="",TBCNT=0,TCT=4
+"RTN","RCTCSP3S",44,0)
+ F  S TDEB=$O(^XTMP("RCTCSP3SW",$J,"L",TDEB)) Q:TDEB=""  D
+"RTN","RCTCSP3S",45,0)
+ .S TBIL=""
+"RTN","RCTCSP3S",46,0)
+ .F  S TBIL=$O(^XTMP("RCTCSP3SW",$J,"L",TDEB,TBIL)) Q:TBIL=""  S TBCNT=TBCNT+1 D
+"RTN","RCTCSP3S",47,0)
+ ..S TCT=TCT+1
+"RTN","RCTCSP3S",48,0)
+ ..S ^XTMP("RCTCSP3SW",$J,"LTR",TCT)=^XTMP("RCTCSP3SW",$J,"L",TDEB,TBIL)
+"RTN","RCTCSP3S",49,0)
+ S TCT=TCT+1
+"RTN","RCTCSP3S",50,0)
+ S ^XTMP("RCTCSP3SW",$J,"LTR",TCT)="Total records: "_TBCNT
+"RTN","RCTCSP3S",51,0)
+ S XMTEXT="^XTMP(""RCTCSP3SW"","_$J_",""LTR"","
+"RTN","RCTCSP3S",52,0)
+ D ^XMD K XMDUZ,XMSUB,XMTEXT,XMY
+"RTN","RCTCSP3S",53,0)
+LTRQ Q
+"RTN","RCTCSP3S",54,0)
+ ;
+"RTN","RCTCSP3S",55,0)
+ERRCD ;sends mailman message to user for due process notification letter print date
+"RTN","RCTCSP3S",56,0)
+ Q:'$D(^XTMP("RCTCSP3SW",$J,"E"))
+"RTN","RCTCSP3S",57,0)
+ S XMDUZ="AR PACKAGE",XMY("G.TCSP")=""
+"RTN","RCTCSP3S",58,0)
+ N TCT,TDEB,TBIL,TBCNT
+"RTN","RCTCSP3S",59,0)
+ S XMSUB="CS DUE PROCESS NOTIFICATION REJECT RECORDS "_$E(DT,4,5)_"/"_$E(DT,6,7)_"/"_$E(DT,2,3)
+"RTN","RCTCSP3S",60,0)
+ S ^XTMP("RCTCSP3SW",$J,"ERRCD",1)="The following Debt Due Process Notification file records have been rejected."
+"RTN","RCTCSP3S",61,0)
+ S ^XTMP("RCTCSP3SW",$J,"ERRCD",2)=""
+"RTN","RCTCSP3S",62,0)
+ S ^XTMP("RCTCSP3SW",$J,"ERRCD",3)="Name                     Bill #   DPN File Date  Reject Error Codes"
+"RTN","RCTCSP3S",63,0)
+ S ^XTMP("RCTCSP3SW",$J,"ERRCD",4)="----                     ------   -------------  ------------------"
+"RTN","RCTCSP3S",64,0)
+ S TDEB="",TBCNT=0,TCT=4
+"RTN","RCTCSP3S",65,0)
+ F  S TDEB=$O(^XTMP("RCTCSP3SW",$J,"E",TDEB)) Q:TDEB=""  D
+"RTN","RCTCSP3S",66,0)
+ .S TBIL=""
+"RTN","RCTCSP3S",67,0)
+ .F  S TBIL=$O(^XTMP("RCTCSP3SW",$J,"E",TDEB,TBIL)) Q:TBIL=""  S TBCNT=TBCNT+1 D
+"RTN","RCTCSP3S",68,0)
+ ..S TCT=TCT+1
+"RTN","RCTCSP3S",69,0)
+ ..S ^XTMP("RCTCSP3SW",$J,"ERRCD",TCT)=^XTMP("RCTCSP3SW",$J,"E",TDEB,TBIL)
+"RTN","RCTCSP3S",70,0)
+ S TCT=TCT+1
+"RTN","RCTCSP3S",71,0)
+ S ^XTMP("RCTCSP3SW",$J,"ERRCD",TCT)="Total records: "_TBCNT
+"RTN","RCTCSP3S",72,0)
+ S XMTEXT="^XTMP(""RCTCSP3SW"","_$J_",""ERRCD"","
+"RTN","RCTCSP3S",73,0)
+ D ^XMD
+"RTN","RCTCSP3S",74,0)
+ERRQ Q
+"RTN","RCTCSP3S",75,0)
+ ;
+"RTN","RCTCSP3S",76,0)
+DPN ;due process notification record
+"RTN","RCTCSP3S",77,0)
+ N BILL,X,ERRCD,ERRCDD,Y,PRNTDT,DEBTOR,DEBTORN,REC1
+"RTN","RCTCSP3S",78,0)
+ S BILL=+$E(REC,2,11)
+"RTN","RCTCSP3S",79,0)
+ S X=$E(REC,221,228) I +X D  Q  ;check for a letter print date
+"RTN","RCTCSP3S",80,0)
+ .D ^%DT S PRNTDT=Y
+"RTN","RCTCSP3S",81,0)
+ .S $P(^PRCA(430,BILL,20),U,5)=PRNTDT ;set the aitc print date
+"RTN","RCTCSP3S",82,0)
+ .S DEBTOR=$P($G(^PRCA(430,BILL,0)),U,9)
+"RTN","RCTCSP3S",83,0)
+ .I DEBTOR D
+"RTN","RCTCSP3S",84,0)
+ ..S DEBTORN=$$GET1^DIQ(430,BILL,9)
+"RTN","RCTCSP3S",85,0)
+ ..S DEBTORN=$E(DEBTORN,1,31)
+"RTN","RCTCSP3S",86,0)
+ ..S REC1=DEBTORN_$$BLANK(33-$L(DEBTORN))_$$LJSF($P($P(^PRCA(430,BILL,0),U,1),"-",2),7)_"   "
+"RTN","RCTCSP3S",87,0)
+ ..S REC1=REC1_$$LJSF($$FMTE^XLFDT($P($G(^PRCA(430,BILL,20)),U,4)),13)_"   "_$$LJSF($$FMTE^XLFDT(PRNTDT),13)
+"RTN","RCTCSP3S",88,0)
+ ..S ^XTMP("RCTCSP3SW",$J,"L",DEBTOR,BILL)=REC1
+"RTN","RCTCSP3S",89,0)
+ .S $P(^PRCA(430,BILL,20),U,6,8)="^^" ;clear the error codes
+"RTN","RCTCSP3S",90,0)
+ S ERRCD=$E(REC,231,248) I ERRCD'?1" "." " D  Q  ;check for error codes
+"RTN","RCTCSP3S",91,0)
+ .S DEBTOR=$P($G(^PRCA(430,BILL,0)),U,9)
+"RTN","RCTCSP3S",92,0)
+ .I DEBTOR D
+"RTN","RCTCSP3S",93,0)
+ ..N ERRCDD,RCJ
+"RTN","RCTCSP3S",94,0)
+ ..S DEBTORN=$$GET1^DIQ(430,BILL,9)
+"RTN","RCTCSP3S",95,0)
+ ..S DEBTORN=$E(DEBTORN,1,23)
+"RTN","RCTCSP3S",96,0)
+ ..S REC1=DEBTORN_$$BLANK(25-$L(DEBTORN))_$$LJSF($P($P(^PRCA(430,BILL,0),U,1),"-",2),7)_"  "
+"RTN","RCTCSP3S",97,0)
+ ..S REC1=REC1_$$LJSF($$FMTE^XLFDT($P($G(^PRCA(430,BILL,20)),U,4)),13)_"  "
+"RTN","RCTCSP3S",98,0)
+ ..S ERRCDD=$E(ERRCD,1,2)
+"RTN","RCTCSP3S",99,0)
+ ..F RCJ=3:2:17 Q:$E(ERRCD,RCJ)'?1AN  S ERRCDD=ERRCDD_","_$E(ERRCD,RCJ,RCJ+1)
+"RTN","RCTCSP3S",100,0)
+ ..S REC1=REC1_$$LJSF(ERRCDD,27)
+"RTN","RCTCSP3S",101,0)
+ ..S ^XTMP("RCTCSP3SW",$J,"E",DEBTOR,BILL)=REC1
+"RTN","RCTCSP3S",102,0)
+ .S $P(^PRCA(430,BILL,20),U,7)=DT ;set the aitc error date
+"RTN","RCTCSP3S",103,0)
+ .S $P(^PRCA(430,BILL,20),U,8)=ERRCD ;set the aitc error codes
+"RTN","RCTCSP3S",104,0)
+ .S $P(^PRCA(430,BILL,20),U,4,6)="^^" ;clear the request date, referral date, and the print date
+"RTN","RCTCSP3S",105,0)
+ Q
+"RTN","RCTCSP3S",106,0)
+ ;
+"RTN","RCTCSP3S",107,0)
+DATE8(X) ;changes fileman date into 8 digit date yyyymmdd
+"RTN","RCTCSP3S",108,0)
+ I +X S X=X+17000000
+"RTN","RCTCSP3S",109,0)
+ S X=$E(X,1,8)
+"RTN","RCTCSP3S",110,0)
+ Q X
+"RTN","RCTCSP3S",111,0)
+ ;
+"RTN","RCTCSP3S",112,0)
+AMOUNT(X) ;changes amount to zero filled, right justified
+"RTN","RCTCSP3S",113,0)
+ S:X<0 X=-X
+"RTN","RCTCSP3S",114,0)
+ S X=$TR($J(X,0,2),".")
+"RTN","RCTCSP3S",115,0)
+ S X=$E("000000000000",1,14-$L(X))_X
+"RTN","RCTCSP3S",116,0)
+ Q X
+"RTN","RCTCSP3S",117,0)
+ ;
+"RTN","RCTCSP3S",118,0)
+AMOUNT9(X) ;changes amount to zero filled, right justified
+"RTN","RCTCSP3S",119,0)
+ S:X<0 X=-X
+"RTN","RCTCSP3S",120,0)
+ S X=$TR($J(X,0,2),".")
+"RTN","RCTCSP3S",121,0)
+ S X=$E("000000000000",1,9-$L(X))_X
+"RTN","RCTCSP3S",122,0)
+ Q X
+"RTN","RCTCSP3S",123,0)
+ ;
+"RTN","RCTCSP3S",124,0)
+BLANK(X) ;returns 'x' blank spaces
+"RTN","RCTCSP3S",125,0)
+ N BLANK
+"RTN","RCTCSP3S",126,0)
+ S BLANK="",$P(BLANK," ",X+1)=""
+"RTN","RCTCSP3S",127,0)
+ Q BLANK
+"RTN","RCTCSP3S",128,0)
+ ;
+"RTN","RCTCSP3S",129,0)
+RJZF(X,Y) ;right justify zero fill width Y
+"RTN","RCTCSP3S",130,0)
+ S X=$E("000000000000",1,Y-$L(X))_X
+"RTN","RCTCSP3S",131,0)
+ Q X
+"RTN","RCTCSP3S",132,0)
+ ;
+"RTN","RCTCSP3S",133,0)
+LJSF(X,Y) ;left justified space filled
+"RTN","RCTCSP3S",134,0)
+ S X=$E(X,1,Y)
+"RTN","RCTCSP3S",135,0)
+ S X=X_$$BLANK(Y-$L(X))
+"RTN","RCTCSP3S",136,0)
+ Q X
+"RTN","RCTCSP3S",137,0)
+ ;
+"RTN","RCTCSP3S",138,0)
+TAXID(DEBTOR) ;computes TAXID to place on documents
+"RTN","RCTCSP3S",139,0)
+ N TAXID,DIC,DA,DR,DIQ
+"RTN","RCTCSP3S",140,0)
+ S TAXID=$$SSN^RCFN01(DEBTOR)
+"RTN","RCTCSP3S",141,0)
+ S TAXID=$$LJSF(TAXID,9)
+"RTN","RCTCSP3S",142,0)
+ Q TAXID
+"RTN","RCTCSP3S",143,0)
+ ;
+"RTN","RCTCSP3S",144,0)
+JD() ; returns today's Julian date YDOY
+"RTN","RCTCSP3S",145,0)
+ N XMDDD,XMNOW,XMDT
+"RTN","RCTCSP3S",146,0)
+ S XMNOW=$$NOW^XLFDT
+"RTN","RCTCSP3S",147,0)
+ S XMDT=$E(XMNOW,1,7)
+"RTN","RCTCSP3S",148,0)
+ S XMDDD=$$RJ^XLFSTR($$FMDIFF^XLFDT(XMDT,$E(XMDT,1,3)_"0101",1)+1,3,"0")
+"RTN","RCTCSP3S",149,0)
+ Q $E(DT,3)_XMDDD
+"RTN","RCTCSP3S",150,0)
+ ;
+"RTN","RCTCSP3S",151,0)
+NAMEFF(DFN) ;returns name for document and name in file
+"RTN","RCTCSP3S",152,0)
+ N FN,LN,MN,NM,DOCNM,VA,VADM
+"RTN","RCTCSP3S",153,0)
+ S NM=""
+"RTN","RCTCSP3S",154,0)
+ D DEM^VADPT
+"RTN","RCTCSP3S",155,0)
+ I $D(VADM) S NM=VADM(1)
+"RTN","RCTCSP3S",156,0)
+ S LN=$TR($P(NM,",")," .'-"),MN=$P($P(NM,",",2)," ",2)
+"RTN","RCTCSP3S",157,0)
+ I ($E(MN,1,2)="SR")!($E(MN,1,2)="JR")!(MN?2.3"I")!(MN?0.1"I"1"V"1.3"I") S MN=""
+"RTN","RCTCSP3S",158,0)
+ S FN=$P($P(NM,",",2)," ")
+"RTN","RCTCSP3S",159,0)
+ S DOCNM=LN_", "_FN_" "_MN
+"RTN","RCTCSP3S",160,0)
+ Q DOCNM
+"RTN","RCTCSP3S",161,0)
+ ;
+"RTN","RCTCSP7")
+0^6^B6169401^B5563240
+"RTN","RCTCSP7",1,0)
+RCTCSP7 ;ALBANY/RGB-CROSS - SERVICING TRANSMISSION CONT'D ;08/03/17 3:34 PM
+"RTN","RCTCSP7",2,0)
+ ;;4.5;Accounts Receivable;**327,315,336**;Mar 20, 1995;Build 45
+"RTN","RCTCSP7",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCTCSP7",4,0)
+ ;
+"RTN","RCTCSP7",5,0)
+ ;PRCA*4.5*327 Moved rec code from RCTCSPD to create room
+"RTN","RCTCSP7",6,0)
+ ;             for batch mods.
+"RTN","RCTCSP7",7,0)
+ ;
+"RTN","RCTCSP7",8,0)
+ ;PRCA*4.5*336 Set CS call switch for address setup
+"RTN","RCTCSP7",9,0)
+ ;             Also, ensure that pos 260 & 275 are set
+"RTN","RCTCSP7",10,0)
+ ;             to 10 spaces for non-numeric phone number
+"RTN","RCTCSP7",11,0)
+ ;
+"RTN","RCTCSP7",12,0)
+REC2C ;
+"RTN","RCTCSP7",13,0)
+ N REC,KNUM,DEBTNR,DEBTORNB,TAXID,RCDFN,PHONE,ADDRCS
+"RTN","RCTCSP7",14,0)
+ S REC="C2C"_ACTION_"3636001200"_"DM1D "
+"RTN","RCTCSP7",15,0)
+ S KNUM=$P($P(B0,U,1),"-",2)
+"RTN","RCTCSP7",16,0)
+ S DEBTNR=$E(SITE,1,3)_$$LJZF(KNUM,7)_$TR($J(BILL,20)," ",0),REC=REC_DEBTNR
+"RTN","RCTCSP7",17,0)
+ S DEBTORNB=$E(SITE,1,3)_$TR($J(DEBTOR,12)," ",0)
+"RTN","RCTCSP7",18,0)
+ S REC=REC_DEBTORNB
+"RTN","RCTCSP7",19,0)
+ S TAXID=$$TAXID(DEBTOR)
+"RTN","RCTCSP7",20,0)
+ S REC=REC_TAXID
+"RTN","RCTCSP7",21,0)
+ S REC=REC_"SLFIND"
+"RTN","RCTCSP7",22,0)
+ S REC=REC_$$BLANK(20)
+"RTN","RCTCSP7",23,0)
+ S RCDFN=+DEBTOR0
+"RTN","RCTCSP7",24,0)
+ S REC=REC_$$LJSF($$NAMEFF(RCDFN),60)_"Y"
+"RTN","RCTCSP7",25,0)
+ S ADDRCS=$$ADDR^RCTCSP1(RCDFN,1),PHONE=$P(ADDRCS,U,6)    ;PRCA*4.5*336
+"RTN","RCTCSP7",26,0)
+ S REC=REC_$$LJSF($P(ADDRCS,U,1),35)_$$LJSF($P(ADDRCS,U,2),35)_$$LJSF($P(ADDRCS,U,3),15)_$$LJSF($P(ADDRCS,U,4),2)_$$LJSF($P(ADDRCS,U,5),9)
+"RTN","RCTCSP7",27,0)
+ S REC=REC_$$COUNTRY^RCTCSP1A($P(ADDRCS,U,7)) ;COUNTRY label moved due to routine size PRCA*4.5*315/DRF
+"RTN","RCTCSP7",28,0)
+ S REC=REC_"Y"
+"RTN","RCTCSP7",29,0)
+ S REC=REC_$S(+PHONE:"P",1:" ")         ;PRCA*4.5*336
+"RTN","RCTCSP7",30,0)
+ S REC=REC_$$LJSF($TR(PHONE,"() -"),10)_$$BLANK(4)
+"RTN","RCTCSP7",31,0)
+ S REC=REC_$S(+PHONE:"Y",1:" ")         ;PRCA*4.5*336
+"RTN","RCTCSP7",32,0)
+ S REC=REC_$$BLANK(450-$L(REC))
+"RTN","RCTCSP7",33,0)
+ S ^XTMP("RCTCSPD",$J,BILL,ACTION,"2C")=REC
+"RTN","RCTCSP7",34,0)
+ S $P(^XTMP("RCTCSPD",$J,"BILL",ACTION,BILL),U,1)=$$TAXID(DEBTOR)
+"RTN","RCTCSP7",35,0)
+ D CLR19(BILL,4)
+"RTN","RCTCSP7",36,0)
+ Q
+"RTN","RCTCSP7",37,0)
+ ;
+"RTN","RCTCSP7",38,0)
+NAMEFF(DFN) ;returns name for document and name in file
+"RTN","RCTCSP7",39,0)
+ N FN,LN,MN,NM,DOCNM,VA,VADM
+"RTN","RCTCSP7",40,0)
+ S NM=""
+"RTN","RCTCSP7",41,0)
+ D DEM^VADPT
+"RTN","RCTCSP7",42,0)
+ I $D(VADM) S NM=VADM(1)
+"RTN","RCTCSP7",43,0)
+ S LN=$TR($P(NM,",")," .'-"),MN=$P($P(NM,",",2)," ",2)
+"RTN","RCTCSP7",44,0)
+ I ($E(MN,1,2)="SR")!($E(MN,1,2)="JR")!(MN?2.3"I")!(MN?0.1"I"1"V"1.3"I") S MN=""
+"RTN","RCTCSP7",45,0)
+ S FN=$P($P(NM,",",2)," ")
+"RTN","RCTCSP7",46,0)
+ S DOCNM=LN_" "_FN_" "_MN
+"RTN","RCTCSP7",47,0)
+ Q DOCNM
+"RTN","RCTCSP7",48,0)
+ ;
+"RTN","RCTCSP7",49,0)
+BLANK(X) ;returns 'x' blank spaces
+"RTN","RCTCSP7",50,0)
+ N BLANK
+"RTN","RCTCSP7",51,0)
+ S BLANK="",$P(BLANK," ",X+1)=""
+"RTN","RCTCSP7",52,0)
+ Q BLANK
+"RTN","RCTCSP7",53,0)
+ ;
+"RTN","RCTCSP7",54,0)
+TAXID(DEBTOR) ;computes TAXID to place on documents
+"RTN","RCTCSP7",55,0)
+ N TAXID,DIC,DA,DR,DIQ
+"RTN","RCTCSP7",56,0)
+ S TAXID=$$SSN^RCFN01(DEBTOR)
+"RTN","RCTCSP7",57,0)
+ S TAXID=$$LJSF(TAXID,9)
+"RTN","RCTCSP7",58,0)
+ Q TAXID
+"RTN","RCTCSP7",59,0)
+ ;
+"RTN","RCTCSP7",60,0)
+LJSF(X,Y) ;x left justified, y space filled
+"RTN","RCTCSP7",61,0)
+ S X=$E(X,1,Y)
+"RTN","RCTCSP7",62,0)
+ S X=X_$$BLANK(Y-$L(X))
+"RTN","RCTCSP7",63,0)
+ Q X
+"RTN","RCTCSP7",64,0)
+ ;
+"RTN","RCTCSP7",65,0)
+LJZF(X,Y) ;x left justified, y zero filled
+"RTN","RCTCSP7",66,0)
+ S X=X_"0000000000"
+"RTN","RCTCSP7",67,0)
+ S X=$E(X,X,Y)
+"RTN","RCTCSP7",68,0)
+ Q X
+"RTN","RCTCSP7",69,0)
+ ;
+"RTN","RCTCSP7",70,0)
+CLR19(BILL,X) ; clear the send flag
+"RTN","RCTCSP7",71,0)
+ S $P(^PRCA(430,BILL,19),U,X)=""
+"RTN","RCTCSP7",72,0)
+ ;
+"RTN","RCTCSPD")
+0^3^B168268375^B159825609
+"RTN","RCTCSPD",1,0)
+RCTCSPD ;ALBANY/BDB-CROSS-SERVICING TRANSMISSION ;03/15/14 3:34 PM
+"RTN","RCTCSPD",2,0)
+ ;;4.5;Accounts Receivable;**301,327,315,336**;Mar 20, 1995;Build 45
+"RTN","RCTCSPD",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCTCSPD",4,0)
+ ;
+"RTN","RCTCSPD",5,0)
+ ;PRCA*4.5*327 a. Add check to insure debtor exists to prevent 
+"RTN","RCTCSPD",6,0)
+ ;                undefined error and set in XTMP work global to
+"RTN","RCTCSPD",7,0)
+ ;                be reported via 'TCSP' mailgroup.
+"RTN","RCTCSPD",8,0)
+ ;             b. Added process controls throughout entire batch
+"RTN","RCTCSPD",9,0)
+ ;                run and message to mail group 'TCSP' batch run
+"RTN","RCTCSPD",10,0)
+ ;                is complete
+"RTN","RCTCSPD",11,0)
+ ;             c. Move SETUP/FINISH to new routine RCTCSPD0
+"RTN","RCTCSPD",12,0)
+ ;                due to SACC size constraints
+"RTN","RCTCSPD",13,0)
+ ;             d. Move REC2C tag/code to RCTCSP7 to create space
+"RTN","RCTCSPD",14,0)
+ ;                for debtor undefined logic
+"RTN","RCTCSPD",15,0)
+ ;
+"RTN","RCTCSPD",16,0)
+ ;PRCA*4.5*336 a. Shift code to handle 5B transactions ahead
+"RTN","RCTCSPD",17,0)
+ ;                of other processing that could cause a 5B
+"RTN","RCTCSPD",18,0)
+ ;                record to not be sent in batch run at tag 
+"RTN","RCTCSPD",19,0)
+ ;                $$UPDCHK(BILL), EXCEPT FOR RECALL CHECK.
+"RTN","RCTCSPD",20,0)
+ ;             b. Ensure address calls to RCTCSP1 include flag
+"RTN","RCTCSPD",21,0)
+ ;                to handle missing debtor node 1 correctly when
+"RTN","RCTCSPD",22,0)
+ ;                building address for CS transactions
+"RTN","RCTCSPD",23,0)
+ ;
+"RTN","RCTCSPD",24,0)
+ENTER ;          Entry point from nightly process PRCABJ
+"RTN","RCTCSPD",25,0)
+ N DEBTOR,P150DT,PRIN,INT,ADMIN,TDEB,TFIL,RCDFN,CNTR,SITE,LN,FN,MN,SITE,F60DT,VADM,PHONE,QUIT,TOTAL,ZIPCODE,FULLNM,RCNT,REPAY,X1,X2,ERROR,ADDR,CAT,BILLDT,CURRTOT,SITECD
+"RTN","RCTCSPD",26,0)
+ N SEQ,CNTLID,PREPDT,X1,X2,X,DELDT,ACTDT
+"RTN","RCTCSPD",27,0)
+ D SETUP^RCTCSPD0
+"RTN","RCTCSPD",28,0)
+ S (DEBTOR,RCNT)=0,SEQ=0
+"RTN","RCTCSPD",29,0)
+RSDEBTOR ;
+"RTN","RCTCSPD",30,0)
+ F  S DEBTOR=$O(^PRCA(430,"C",DEBTOR)) Q:DEBTOR'?1N.N  D
+"RTN","RCTCSPD",31,0)
+ .D NOW^%DTC S ^XTMP("RCTCSPD",$J,"ZZBDEBTOR")=%_U_DEBTOR
+"RTN","RCTCSPD",32,0)
+ .N X,RCDFN,DEMCS,DOB,GNDR,DEBTOR0,DEBTOR1,DEBTOR3,DEBTOR7,BILL
+"RTN","RCTCSPD",33,0)
+ .I '$D(^RCD(340,DEBTOR,0)) S ^XTMP("RCTCSPD",$J,"ZZUNDEF",DEBTOR)="" Q
+"RTN","RCTCSPD",34,0)
+ .S DEBTOR0=^RCD(340,DEBTOR,0),DEBTOR1=$G(^(1)),DEBTOR3=$G(^(3)),DEBTOR7=$G(^(7))
+"RTN","RCTCSPD",35,0)
+ .S RCDFN=+DEBTOR0
+"RTN","RCTCSPD",36,0)
+ .S DEMCS=$$DEM^RCTCSP1(RCDFN)
+"RTN","RCTCSPD",37,0)
+ .S DOB=$P(DEMCS,U,2)
+"RTN","RCTCSPD",38,0)
+ .S GNDR=$P(DEMCS,U,1) S:"MF"'[GNDR GNDR="U"
+"RTN","RCTCSPD",39,0)
+ .I $P(DEBTOR7,U,2) I '+$P(DEBTOR7,U,3) D  ;send type 2 recall record
+"RTN","RCTCSPD",40,0)
+ ..N ACTION,B0,B15,BILL
+"RTN","RCTCSPD",41,0)
+ ..S ACTION="L"
+"RTN","RCTCSPD",42,0)
+ ..S B0="",B15="",BILL=0
+"RTN","RCTCSPD",43,0)
+ ..; The code below is designed to get ONLY one bill #.  It is not a bug! As per VA SME contacts.
+"RTN","RCTCSPD",44,0)
+ ..F  S BILL=$O(^PRCA(430,"C",DEBTOR,BILL)) Q:BILL'?1N.N  I $D(^PRCA(430,"TCSP",BILL)) I $P(^PRCA(430,BILL,15),U,7)'=1 S B0=$G(^PRCA(430,BILL,0)),B15=$G(^(15)) Q  ;get one bill
+"RTN","RCTCSPD",45,0)
+ ..I BILL="" S BILL=0 S $P(^RCD(340,DEBTOR,7),U,2,4)="^^",$P(DEBTOR7,U,2,4)="^^" Q  ;cs debtor with no cs bill, clear the debtor recall flag, quit
+"RTN","RCTCSPD",46,0)
+ ..D REC2
+"RTN","RCTCSPD",47,0)
+ ..S $P(^RCD(340,DEBTOR,7),U,3)=DT
+"RTN","RCTCSPD",48,0)
+ ..S DEBTOR7=^RCD(340,DEBTOR,7)
+"RTN","RCTCSPD",49,0)
+ ..S BILL=0 ;set debtor cross-serviced bills as recalled
+"RTN","RCTCSPD",50,0)
+ ..F  S BILL=$O(^PRCA(430,"C",DEBTOR,BILL)) Q:BILL'?1N.N  D
+"RTN","RCTCSPD",51,0)
+ ...D NOW^%DTC S ^XTMP("RCTCSPD",$J,"ZZCRBILL")=%_U_BILL
+"RTN","RCTCSPD",52,0)
+ ...I $D(^PRCA(430,"TCSP",BILL)) D  Q  ;bill previously sent to TCSP
+"RTN","RCTCSPD",53,0)
+ ....S $P(^PRCA(430,BILL,15),U,1)="" ;clear the date referred
+"RTN","RCTCSPD",54,0)
+ ....S $P(^PRCA(430,BILL,15),U,2)=1 ;set the recall flag
+"RTN","RCTCSPD",55,0)
+ ....S $P(^PRCA(430,BILL,15),U,3)=DT ;set the recall date
+"RTN","RCTCSPD",56,0)
+ ....S $P(^PRCA(430,BILL,15),U,4)=$P(DEBTOR7,U,4) ;set the recall reason
+"RTN","RCTCSPD",57,0)
+ ....S $P(^PRCA(430,BILL,15),U,5)=$$GET1^DIQ(430,BILL,11) ;set the recall amount to the current amount
+"RTN","RCTCSPD",58,0)
+ ....K ^PRCA(430,"TCSP",BILL) ;kill the cross-servicing cross reference
+"RTN","RCTCSPD",59,0)
+ ....D RCRSD^RCTCSPD4 ; set debtor recall non-financial transaction PRCA*4.5*315
+"RTN","RCTCSPD",60,0)
+ .S (BILL,TOTAL,REPAY)=0
+"RTN","RCTCSPD",61,0)
+RSBILL .F  S BILL=$O(^PRCA(430,"C",DEBTOR,BILL)) Q:BILL'?1N.N  D
+"RTN","RCTCSPD",62,0)
+ ..D NOW^%DTC S ^XTMP("RCTCSPD",$J,"ZZCTRACKER")=%_U_DEBTOR_U_BILL
+"RTN","RCTCSPD",63,0)
+ ..N B0,B4,B6,B7,B9,B12,B121,B14,B15,B16,B19,B20,ACTION
+"RTN","RCTCSPD",64,0)
+ ..S B0=$G(^PRCA(430,BILL,0)),B4=$G(^(4)),B6=$G(^(6)),B7=$G(^(7)),B9=$G(^(9)),B12=$G(^(12)),B121=$G(^(12.1)),B14=$G(^(14)),B15=$G(^(15)),B16=$G(^(16)),B19=$G(^(19)),B20=$G(^(20))
+"RTN","RCTCSPD",65,0)
+ ..Q:($P(B6,U,21)\1)<ACTDT  ;cs activation date cutoff
+"RTN","RCTCSPD",66,0)
+ ..I $D(^PRCA(430,"TCSP",BILL)),$$RCLLCHK^RCTCSP2(BILL) Q  ;bill previously sent to TCSP
+"RTN","RCTCSPD",67,0)
+ ..I $$UPDCHK(BILL) Q
+"RTN","RCTCSPD",68,0)
+ ..Q:B4  ;repayment plan
+"RTN","RCTCSPD",69,0)
+ ..Q:+$P(B15,U,7)  ;quit if bill is stopped
+"RTN","RCTCSPD",70,0)
+ ..Q:+$P(B14,U,1)  ;bill referred to TOP
+"RTN","RCTCSPD",71,0)
+ ..Q:$P(DEBTOR1,"^",9)=1  ;quit if debtor address marked unknown
+"RTN","RCTCSPD",72,0)
+ ..Q:$E($P(DEMCS,U,3),1,5)="00000"  ;quit if the ssn is not valid
+"RTN","RCTCSPD",73,0)
+ ..I +$P(B12,U,1) Q  ;check date bill sent to dmc
+"RTN","RCTCSPD",74,0)
+ ..Q:($P(B121,U,1)="N")!($P(B121,U,1)="P")  ;dmc debt valid
+"RTN","RCTCSPD",75,0)
+ ..I $P(B6,U,4),($P(B6,U,5)="DOJ") Q
+"RTN","RCTCSPD",76,0)
+ ..Q:+$P(DEMCS,U,4)  ;deceased patient
+"RTN","RCTCSPD",77,0)
+ ..Q:'$P(B0,U,2)  ;no category
+"RTN","RCTCSPD",78,0)
+ ..S CAT=$P($G(^PRCA(430.2,$P(B0,U,2),0)),U,7)
+"RTN","RCTCSPD",79,0)
+ ..Q:'CAT
+"RTN","RCTCSPD",80,0)
+ ..I ",4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,33,34,35,36,37,38,39,47,48,49,"[(","_CAT_",") Q
+"RTN","RCTCSPD",81,0)
+ ..;dpn checks
+"RTN","RCTCSPD",82,0)
+ ..I $P(B20,U,3)=1,(10000+$G(^RC(342,1,"CS")))>DT,'$P(B20,U,4) D DUEPROC^RCTCSP3 Q  ;check to send dpn file to aitc
+"RTN","RCTCSPD",83,0)
+ ..I $P(B20,U,3)=1,(10000+$G(^RC(342,1,"CS")))>DT,$P(B20,U,4),'$P(B20,U,5) Q  ;check for print letter date
+"RTN","RCTCSPD",84,0)
+ ..I $P(B20,U,3)=1,(10000+$G(^RC(342,1,"CS")))>DT,$P(B20,U,4),$P(B20,U,5) D  I X<60 Q  ;check for 60 day wait from print letter date
+"RTN","RCTCSPD",85,0)
+ ...N X1,X2
+"RTN","RCTCSPD",86,0)
+ ...S X1=DT,X2=$P(B20,U,5) D ^%DTC
+"RTN","RCTCSPD",87,0)
+ ...I X'<60 S $P(B20,U,6)=DT,^PRCA(430,BILL,20)=B20 ;set the bill referral date to the current date
+"RTN","RCTCSPD",88,0)
+ ..S BILLDT=$P(B6,U,21),PREPDT=$P(B0,U,10)
+"RTN","RCTCSPD",89,0)
+ ..I BILLDT>P150DT Q  ;150 day old check
+"RTN","RCTCSPD",90,0)
+ ..I ($P(B0,U,8)=16),('$P(B6,U,3)) D  Q
+"RTN","RCTCSPD",91,0)
+ ...;no 3rd letter being sent
+"RTN","RCTCSPD",92,0)
+ ...N DNM
+"RTN","RCTCSPD",93,0)
+ ...S DNM=$$NAMEFF(+DEBTOR0),^XTMP("RCTCSPD",$J,"THIRD",DNM,$P(B0,U))=""
+"RTN","RCTCSPD",94,0)
+ ..I $P(B0,U,8)=16 I $$ADDCHKND(BILL) Q
+"RTN","RCTCSPD",95,0)
+ ..I $P(B0,U,8)=16 I $$ADDCHKNB(BILL) Q
+"RTN","RCTCSPD",96,0)
+ ..Q
+"RTN","RCTCSPD",97,0)
+ .Q
+"RTN","RCTCSPD",98,0)
+ ;
+"RTN","RCTCSPD",99,0)
+ D NOW^%DTC S ^XTMP("RCTCSPD",$J,"ZZDEND")=%
+"RTN","RCTCSPD",100,0)
+ D THIRD^RCTCSP2
+"RTN","RCTCSPD",101,0)
+ D NOW^%DTC S ^XTMP("RCTCSPD",$J,"ZZETRANSMIT CS RECS")=%
+"RTN","RCTCSPD",102,0)
+ D COMPILE^RCTCSP2 ;compile cross-serviced records
+"RTN","RCTCSPD",103,0)
+ D NOW^%DTC S ^XTMP("RCTCSPD",$J,"ZZFTRANSMIT DPN")=%
+"RTN","RCTCSPD",104,0)
+ D COMPILED^RCTCSP3 ;compile the aitc due process notification records
+"RTN","RCTCSPD",105,0)
+ D NOW^%DTC S ^XTMP("RCTCSPD",$J,"ZZGTRANSMIT FINISHED")=%
+"RTN","RCTCSPD",106,0)
+ D NOW^%DTC S ^XTMP("RCTCSPD",$J,"ZZHCOMPLETE")=%
+"RTN","RCTCSPD",107,0)
+ D FINISH^RCTCSPD0
+"RTN","RCTCSPD",108,0)
+ Q
+"RTN","RCTCSPD",109,0)
+ ;
+"RTN","RCTCSPD",110,0)
+ADDCHKND(BILL) ;add a new bill referral, new debtor
+"RTN","RCTCSPD",111,0)
+ N TOTAL,ACTION,X
+"RTN","RCTCSPD",112,0)
+ S ACTION="A"
+"RTN","RCTCSPD",113,0)
+ I $D(^RCD(340,"TCSP",DEBTOR)) Q 0 ;check debtor previously referred
+"RTN","RCTCSPD",114,0)
+ I $P(B15,U,2) Q 0 ;check tcsp bill recall flag
+"RTN","RCTCSPD",115,0)
+ I $P(DEBTOR7,U,2) Q 0 ;check debtor recall
+"RTN","RCTCSPD",116,0)
+ I $P(B15,U,7) Q 0 ;check stop tcsp referral flag
+"RTN","RCTCSPD",117,0)
+ I $D(^PRCA(430,"TCSP",BILL)) Q 0 ;bill previously sent to TCSP
+"RTN","RCTCSPD",118,0)
+ S TOTAL=$P(B7,U)+$P(B7,U,2)+$P(B7,U,3)+$P(B7,U,4)+$P(B7,U,5)
+"RTN","RCTCSPD",119,0)
+ I TOTAL<25 Q 1 ;no adds for bills less than $25
+"RTN","RCTCSPD",120,0)
+ D REC1,REC2,REC2A
+"RTN","RCTCSPD",121,0)
+ S $P(^PRCA(430,BILL,16),U,13)=DOB,B16=^(16)
+"RTN","RCTCSPD",122,0)
+ S $P(^PRCA(430,BILL,15),U,14)=GNDR,B15=^(15)
+"RTN","RCTCSPD",123,0)
+ D REC2C^RCTCSP7    ;PRCA*4.5*327
+"RTN","RCTCSPD",124,0)
+ S ADDRCS=$$ADDR^RCTCSP1(RCDFN,1)     ;PRCA*4.5*336
+"RTN","RCTCSPD",125,0)
+ S $P(^PRCA(430,BILL,16),U,4,8)=$P(ADDRCS,U,1,5),$P(^(16),U,11)=$P(ADDRCS,U,6),$P(^(16),U,12)=$P(ADDRCS,U,7)
+"RTN","RCTCSPD",126,0)
+ S B16=^PRCA(430,BILL,16)
+"RTN","RCTCSPD",127,0)
+ D REC3^RCTCSP2
+"RTN","RCTCSPD",128,0)
+ S TAXID=$$TAXID(DEBTOR)
+"RTN","RCTCSPD",129,0)
+ S NAME=$$NAME(+DEBTOR0),NAME=$P(NAME,U)
+"RTN","RCTCSPD",130,0)
+ S $P(^PRCA(430,BILL,15),U,1)=DT,$P(^(16),U,1)=TAXID,$P(^(16),U,2)=NAME
+"RTN","RCTCSPD",131,0)
+ S X1=BILLDT,X2=+30 D C^%DTC S DELDT=X
+"RTN","RCTCSPD",132,0)
+ S $P(^PRCA(430,BILL,16),U,3)=DELDT,^PRCA(430,"TCSP",BILL)=""
+"RTN","RCTCSPD",133,0)
+ I $P($G(^PRCA(430,BILL,21)),U)="" S $P(^PRCA(430,BILL,21),U)=DT    ;PRCA*4.5*336
+"RTN","RCTCSPD",134,0)
+ I '$D(^RCD(340,"TCSP",DEBTOR)) S $P(^RCD(340,DEBTOR,7),U,5)=DT,^RCD(340,"TCSP",DEBTOR)=""
+"RTN","RCTCSPD",135,0)
+ D NEWDEBTR^RCTCSPD4 ; set CS new debtor new bill non-financial transaction PRCA*4.5*315
+"RTN","RCTCSPD",136,0)
+ Q 1
+"RTN","RCTCSPD",137,0)
+ ;
+"RTN","RCTCSPD",138,0)
+ADDCHKNB(BILL) ;add a new bill referral, existing debtor
+"RTN","RCTCSPD",139,0)
+ N TOTAL,ACTION,TAXID,NAME,ADDRCS,X
+"RTN","RCTCSPD",140,0)
+ I '$D(^RCD(340,"TCSP",DEBTOR)) Q 0 ;check debtor previously referred
+"RTN","RCTCSPD",141,0)
+ I $P(B15,U,2) Q 0 ;check tcsp bill recall flag
+"RTN","RCTCSPD",142,0)
+ I $P(B15,U,7) Q 0 ;check stop tcsp referral flag
+"RTN","RCTCSPD",143,0)
+ I $D(^PRCA(430,"TCSP",BILL)) Q 0 ;bill previously sent to TCSP
+"RTN","RCTCSPD",144,0)
+ S TOTAL=$P(B7,U)+$P(B7,U,2)+$P(B7,U,3)+$P(B7,U,4)+$P(B7,U,5)
+"RTN","RCTCSPD",145,0)
+ I TOTAL<25 Q 0 ;no adds for bills less than $25
+"RTN","RCTCSPD",146,0)
+ S ACTION="A" D REC1
+"RTN","RCTCSPD",147,0)
+ S ACTION="B" D REC2
+"RTN","RCTCSPD",148,0)
+ S ACTION="A" D REC3^RCTCSP2
+"RTN","RCTCSPD",149,0)
+ S TAXID=$$TAXID(DEBTOR)
+"RTN","RCTCSPD",150,0)
+ S NAME=$$NAME(+DEBTOR0),NAME=$P(NAME,U)
+"RTN","RCTCSPD",151,0)
+ S $P(^PRCA(430,BILL,15),U,1)=DT,$P(^(16),U,1)=TAXID,$P(^(16),U,2)=NAME,$P(^(16),U,3)=BILLDT,^PRCA(430,"TCSP",BILL)=""
+"RTN","RCTCSPD",152,0)
+ I $P($G(^PRCA(430,BILL,21)),U)="" S $P(^PRCA(430,BILL,21),U)=DT    ;PRCA*4.5*336
+"RTN","RCTCSPD",153,0)
+ S ADDRCS=$$ADDR^RCTCSP1(RCDFN,1)     ;PRCA*4.5*336
+"RTN","RCTCSPD",154,0)
+ S $P(^PRCA(430,BILL,16),U,4,8)=$P(ADDRCS,U,1,5),$P(^(16),U,11)=$P(ADDRCS,U,6),$P(^(16),U,12)=$P(ADDRCS,U,7)
+"RTN","RCTCSPD",155,0)
+ S $P(^PRCA(430,BILL,16),U,13)=DOB,B16=^(16)
+"RTN","RCTCSPD",156,0)
+ S $P(^PRCA(430,BILL,15),U,14)=GNDR,B15=^(15)
+"RTN","RCTCSPD",157,0)
+ I '$D(^RCD(340,"TCSP",DEBTOR)) S $P(^RCD(340,DEBTOR,7),U,5)=DT,^RCD(340,"TCSP",DEBTOR)=""
+"RTN","RCTCSPD",158,0)
+ D DEBTOR^RCTCSPD4 ; set CS debtor new bill non-financial transaction PRCA*4.5*315
+"RTN","RCTCSPD",159,0)
+ Q 1
+"RTN","RCTCSPD",160,0)
+ ;
+"RTN","RCTCSPD",161,0)
+UPDCHK(BILL) ;update 5b or existing bill
+"RTN","RCTCSPD",162,0)
+ I $P(B15,U,2) Q 0 ;check tcsp bill recall flag
+"RTN","RCTCSPD",163,0)
+ N TOTAL,TAXID,OTAXID,NAME,ONAME,ADDR,OADDR,ADDRCS,COUNTRY,OCOUNTRY,OPHONE,ODOB,OGNDR,TRNIDX,TRN1,TRN8,TRNAMT,TRNNUM,TRNFLG,FIVBFLG
+"RTN","RCTCSPD",164,0)
+ ;5b check
+"RTN","RCTCSPD",165,0)
+ S FIVBFLG=0
+"RTN","RCTCSPD",166,0)
+ S TRNIDX=0 F  S TRNIDX=$O(^PRCA(430,BILL,17,TRNIDX)) Q:+TRNIDX=0  D
+"RTN","RCTCSPD",167,0)
+ .S TRNNUM=$P($G(^PRCA(430,BILL,17,TRNIDX,0)),U,1),TRNFLG=$P($G(^PRCA(430,BILL,17,TRNIDX,0)),U,2)
+"RTN","RCTCSPD",168,0)
+ .Q:+TRNFLG=0
+"RTN","RCTCSPD",169,0)
+ .S TRN1=$G(^PRCA(433,TRNNUM,1)),TRNAMT=$P(TRN1,U,5) S:TRNAMT<0 TRNAMT=-TRNAMT
+"RTN","RCTCSPD",170,0)
+ .S TRN8=$G(^PRCA(433,TRNNUM,8))
+"RTN","RCTCSPD",171,0)
+ .S ACTION="U"
+"RTN","RCTCSPD",172,0)
+ .D REC5B^RCTCSP1
+"RTN","RCTCSPD",173,0)
+ .S $P(^PRCA(430,BILL,17,TRNIDX,0),U,2)=""
+"RTN","RCTCSPD",174,0)
+ .S FIVBFLG=1
+"RTN","RCTCSPD",175,0)
+ I '$D(^PRCA(430,BILL,16)) Q 0 ;quit null node 16 old address   ;PRCA*4.5*336
+"RTN","RCTCSPD",176,0)
+ I $P(B15,U,7) Q 0 ;check stop tcsp referral flag               ;PRCA*4.5*336
+"RTN","RCTCSPD",177,0)
+ S TOTAL=$P(B7,U)+$P(B7,U,2)+$P(B7,U,3)+$P(B7,U,4)+$P(B7,U,5)
+"RTN","RCTCSPD",178,0)
+ I FIVBFLG,(TOTAL=0) S DR="151///@",DIE="^PRCA(430,",DA=BILL D ^DIE K DR,DIE,DA
+"RTN","RCTCSPD",179,0)
+ I $P(B19,U,1)=1 S ACTION="U" D REC1 S $P(B19,U,1)="" S $P(^PRCA(430,BILL,19),U,1)=""
+"RTN","RCTCSPD",180,0)
+ I $P(B19,U,2)=1 S ACTION="U" D REC2 S $P(B19,U,2)="" S $P(^PRCA(430,BILL,19),U,2)=""
+"RTN","RCTCSPD",181,0)
+ I $P(B19,U,3)=1 S ACTION="U" D REC2A S $P(B19,U,3)="" S $P(^PRCA(430,BILL,19),U,3)=""
+"RTN","RCTCSPD",182,0)
+ I $P(B19,U,4)=1 S ACTION="A" D REC2C^RCTCSP7 S $P(B19,U,4)="" S $P(^PRCA(430,BILL,19),U,4)="" ;PRCA*4.5*327
+"RTN","RCTCSPD",183,0)
+ I FIVBFLG=1 Q 1 ;if 5b sent, then do not continue to referral check
+"RTN","RCTCSPD",184,0)
+ I '$D(^PRCA(430,"TCSP",BILL)) Q 0 ;if not cross-serviced, then continue referral check
+"RTN","RCTCSPD",185,0)
+ S TAXID=$$TAXID(DEBTOR)
+"RTN","RCTCSPD",186,0)
+ S OTAXID=$P(B16,U,1)
+"RTN","RCTCSPD",187,0)
+ S NAME=$$NAME(+DEBTOR0),NAME=$P(NAME,U)
+"RTN","RCTCSPD",188,0)
+ S ONAME=$P(B16,U,2)
+"RTN","RCTCSPD",189,0)
+ I $P(B0,U,8)=16,$D(^PRCA(430,"TCSP",BILL)) I (NAME'=ONAME)!(TAXID'=OTAXID) D
+"RTN","RCTCSPD",190,0)
+ .S ACTION="U"
+"RTN","RCTCSPD",191,0)
+ .D REC2
+"RTN","RCTCSPD",192,0)
+ .S $P(^PRCA(430,BILL,16),U,1)=TAXID,$P(^(16),U,2)=NAME,$P(^(19),U,2)="",$P(B19,U,2)=""
+"RTN","RCTCSPD",193,0)
+ S OADDR=$P(^PRCA(430,BILL,16),U,4,8),OPHONE=$P(^(16),U,11),OCOUNTRY=$P(^(16),U,12)
+"RTN","RCTCSPD",194,0)
+ S ADDRCS=$$ADDR^RCTCSP1(RCDFN,1),PHONE=$P(ADDRCS,U,6),COUNTRY=$P(ADDRCS,U,7)     ;PRCA*4.5*336
+"RTN","RCTCSPD",195,0)
+ I $P(DEBTOR1,"^",9)'=1 D  ;if debtor address is not marked unknown, then check address
+"RTN","RCTCSPD",196,0)
+ .I $P(B0,U,8)=16,$D(^PRCA(430,"TCSP",BILL)) I ($P(ADDRCS,U,1,5)'=$P(OADDR,U,1,5))!(PHONE'=OPHONE)!(COUNTRY'=OCOUNTRY) D
+"RTN","RCTCSPD",197,0)
+ ..S ACTION="A" ;2c records have action code 'a'
+"RTN","RCTCSPD",198,0)
+ ..D REC2C^RCTCSP7
+"RTN","RCTCSPD",199,0)
+ ..S $P(B19,U,4)=""
+"RTN","RCTCSPD",200,0)
+ ..S $P(^PRCA(430,BILL,16),U,4,8)=$P(ADDRCS,U,1,5),$P(^(16),U,11)=PHONE,$P(^(16),U,12)=$P(ADDRCS,U,7)
+"RTN","RCTCSPD",201,0)
+ S B16=^PRCA(430,BILL,16)
+"RTN","RCTCSPD",202,0)
+ S ODOB=$P(^PRCA(430,BILL,16),U,13)
+"RTN","RCTCSPD",203,0)
+ S OGNDR=$P(^PRCA(430,BILL,15),U,14)
+"RTN","RCTCSPD",204,0)
+ I $P(B0,U,8)=16,$D(^PRCA(430,"TCSP",BILL)) I (DOB'=ODOB)!(GNDR'=OGNDR) D
+"RTN","RCTCSPD",205,0)
+ .S ACTION="U"
+"RTN","RCTCSPD",206,0)
+ .D REC2A
+"RTN","RCTCSPD",207,0)
+ .S $P(^PRCA(430,BILL,16),U,13)=DOB,B16=^(16)
+"RTN","RCTCSPD",208,0)
+ .S $P(^PRCA(430,BILL,15),U,14)=GNDR,B15=^(15)
+"RTN","RCTCSPD",209,0)
+ .Q
+"RTN","RCTCSPD",210,0)
+ Q 1 ;bill is cross-serviced so do not continue referral check
+"RTN","RCTCSPD",211,0)
+ ;
+"RTN","RCTCSPD",212,0)
+REC1 ;record type 1
+"RTN","RCTCSPD",213,0)
+ N REC,KNUM,DEBTNR,AMTORIG,AMTPBAL,AMTIBAL,AMTABAL,AMTFBAL,AMTCBAL,AMTRFRRD,AMOUNT,DELDT,X,X1,X2,BILLDT,PREPDT
+"RTN","RCTCSPD",214,0)
+ S REC="C1 "_ACTION_"3636001200"_"DM1D "
+"RTN","RCTCSPD",215,0)
+ S KNUM=$P($P(B0,U,1),"-",2)
+"RTN","RCTCSPD",216,0)
+ S DEBTNR=$E(SITE,1,3)_$$LJZF(KNUM,7)_$TR($J(BILL,20)," ",0),REC=REC_DEBTNR_" "
+"RTN","RCTCSPD",217,0)
+ S REC=REC_"I   A MSCC"
+"RTN","RCTCSPD",218,0)
+ S BILLDT=$P(B6,U,21),PREPDT=$P(B0,U,10)
+"RTN","RCTCSPD",219,0)
+ S REC=REC_$$DATE8(PREPDT)
+"RTN","RCTCSPD",220,0)
+ S X1=BILLDT,X2=+30 D C^%DTC S DELDT=X
+"RTN","RCTCSPD",221,0)
+ S REC=REC_$$DATE8(DELDT)
+"RTN","RCTCSPD",222,0)
+ S AMTPBAL=$P(B7,U,1) ;principle balance
+"RTN","RCTCSPD",223,0)
+ S AMTIBAL=$P(B7,U,2) ;interest balance
+"RTN","RCTCSPD",224,0)
+ S AMTABAL=$P(B7,U,3) ;administrative balance
+"RTN","RCTCSPD",225,0)
+ S AMTFBAL=$P(B7,U,4) ;marshal fee
+"RTN","RCTCSPD",226,0)
+ S AMTCBAL=$P(B7,U,5) ;court cost
+"RTN","RCTCSPD",227,0)
+ S AMTRFRRD=AMTPBAL+AMTIBAL+AMTABAL+AMTFBAL+AMTCBAL
+"RTN","RCTCSPD",228,0)
+ S AMTORIG=$P(B0,U,3)
+"RTN","RCTCSPD",229,0)
+ D  ;
+"RTN","RCTCSPD",230,0)
+ .I ACTION="A" S REC=REC_$$AMOUNT(AMTRFRRD)_$$AMOUNT(AMTRFRRD) Q
+"RTN","RCTCSPD",231,0)
+ .I ACTION="L" S AMTRFRRD=0 S REC=REC_$$AMOUNT(AMTRFRRD)_$$AMOUNT(AMTRFRRD) Q
+"RTN","RCTCSPD",232,0)
+ .S REC=REC_$$BLANK(28)
+"RTN","RCTCSPD",233,0)
+ S REC=REC_"                                             N        "
+"RTN","RCTCSPD",234,0)
+ S AMOUNT=$$AMOUNT(AMTPBAL)_$$AMOUNT(AMTIBAL)_$$AMOUNT(AMTABAL)_$$AMOUNT(AMTFBAL+AMTCBAL)
+"RTN","RCTCSPD",235,0)
+ I ACTION="L" S AMOUNT=$$AMOUNT(0)_$$AMOUNT(0)_$$AMOUNT(0)_$$AMOUNT(0) ;by iai spec
+"RTN","RCTCSPD",236,0)
+ I ACTION="U" S AMOUNT=$$BLANK(56) ;by iai spec
+"RTN","RCTCSPD",237,0)
+ S REC=REC_AMOUNT
+"RTN","RCTCSPD",238,0)
+ I ACTION="L" D
+"RTN","RCTCSPD",239,0)
+ .S REC=REC_$$BLANK(252-$L(REC))
+"RTN","RCTCSPD",240,0)
+ .S RCD=$P(B15,U,4)
+"RTN","RCTCSPD",241,0)
+ .S REC=REC_$S(RCD="01":"01",RCD="07":"07",RCD="08":"08",RCD="15":"01",RCD="03":"01",RCD="05":"01",RCD="06":"01",1:"01")
+"RTN","RCTCSPD",242,0)
+ S REC=REC_$$BLANK(450-$L(REC))
+"RTN","RCTCSPD",243,0)
+ I ACTION="A" S $P(^PRCA(430,BILL,16),U,9)=AMTRFRRD,$P(^(16),U,10)=AMTRFRRD
+"RTN","RCTCSPD",244,0)
+ I ACTION="L" S $P(^PRCA(430,BILL,16),U,9)="",$P(^(16),U,10)=""
+"RTN","RCTCSPD",245,0)
+ S ^XTMP("RCTCSPD",$J,BILL,ACTION,1)=REC
+"RTN","RCTCSPD",246,0)
+ S ^XTMP("RCTCSPD",$J,"BILL",ACTION,BILL)=$$TAXID(DEBTOR)_"^"_+$E(REC,91,102)_"."_$E(REC,103,104) ;sends mailman message of documents sent to user
+"RTN","RCTCSPD",247,0)
+ D CLR19(BILL,1)
+"RTN","RCTCSPD",248,0)
+ Q
+"RTN","RCTCSPD",249,0)
+ ;
+"RTN","RCTCSPD",250,0)
+REC2 ;
+"RTN","RCTCSPD",251,0)
+ N REC,KNUM,DEBTNR,DEBTORNB,TAXID,NAME,RCD
+"RTN","RCTCSPD",252,0)
+ S REC="C2 "_ACTION_"3636001200"_"DM1D "
+"RTN","RCTCSPD",253,0)
+ S KNUM=$P($P(B0,U,1),"-",2)
+"RTN","RCTCSPD",254,0)
+ S DEBTNR=$E(SITE,1,3)_$$LJZF(KNUM,7)_$TR($J(BILL,20)," ",0),REC=REC_DEBTNR
+"RTN","RCTCSPD",255,0)
+ S DEBTORNB=$E(SITE,1,3)_$TR($J(DEBTOR,12)," ",0)
+"RTN","RCTCSPD",256,0)
+ S REC=REC_DEBTORNB
+"RTN","RCTCSPD",257,0)
+ S TAXID=$$TAXID(DEBTOR)
+"RTN","RCTCSPD",258,0)
+ S REC=REC_TAXID_"SSN"
+"RTN","RCTCSPD",259,0)
+ S NAME=$$NAME(+DEBTOR0),NAME=$P(NAME,U)
+"RTN","RCTCSPD",260,0)
+ S REC=REC_NAME_$$BLANK(5)_"I"
+"RTN","RCTCSPD",261,0)
+ I ACTION="L" D
+"RTN","RCTCSPD",262,0)
+ .S REC=REC_$$BLANK(232-$L(REC))
+"RTN","RCTCSPD",263,0)
+ .S RCD=$P(B15,U,4)
+"RTN","RCTCSPD",264,0)
+ .S REC=REC_$S(RCD="01":"12",RCD="07":"12",RCD="08":"12",RCD="15":"12",RCD="03":"03",RCD="05":"05",RCD="06":"06",1:"12")
+"RTN","RCTCSPD",265,0)
+ S REC=REC_$$BLANK(450-$L(REC))
+"RTN","RCTCSPD",266,0)
+ S ^XTMP("RCTCSPD",$J,BILL,ACTION,2)=REC
+"RTN","RCTCSPD",267,0)
+ S $P(^XTMP("RCTCSPD",$J,"BILL",ACTION,BILL),U,1)=$$TAXID(DEBTOR)
+"RTN","RCTCSPD",268,0)
+ D CLR19(BILL,2)
+"RTN","RCTCSPD",269,0)
+ Q
+"RTN","RCTCSPD",270,0)
+ ;
+"RTN","RCTCSPD",271,0)
+REC2A ;
+"RTN","RCTCSPD",272,0)
+ N REC,KNUM,DEBTNR,DEBTORNB
+"RTN","RCTCSPD",273,0)
+ S REC="C2A"_ACTION_"3636001200"_"DM1D "
+"RTN","RCTCSPD",274,0)
+ S KNUM=$P($P(B0,U,1),"-",2)
+"RTN","RCTCSPD",275,0)
+ S DEBTNR=$E(SITE,1,3)_$$LJZF(KNUM,7)_$TR($J(BILL,20)," ",0),REC=REC_DEBTNR
+"RTN","RCTCSPD",276,0)
+ S DEBTORNB=$E(SITE,1,3)_$TR($J(DEBTOR,12)," ",0)
+"RTN","RCTCSPD",277,0)
+ S REC=REC_DEBTORNB
+"RTN","RCTCSPD",278,0)
+ S REC=REC_$$BLANK(3)
+"RTN","RCTCSPD",279,0)
+ S REC=REC_GNDR
+"RTN","RCTCSPD",280,0)
+ S REC=REC_$$DATE8($P(DEMCS,U,2))
+"RTN","RCTCSPD",281,0)
+ S REC=REC_$$BLANK(450-$L(REC))
+"RTN","RCTCSPD",282,0)
+ S ^XTMP("RCTCSPD",$J,BILL,ACTION,"2A")=REC
+"RTN","RCTCSPD",283,0)
+ S $P(^XTMP("RCTCSPD",$J,"BILL",ACTION,BILL),U,1)=$$TAXID(DEBTOR)
+"RTN","RCTCSPD",284,0)
+ D CLR19(BILL,3)
+"RTN","RCTCSPD",285,0)
+ Q
+"RTN","RCTCSPD",286,0)
+ ;
+"RTN","RCTCSPD",287,0)
+DATE8(X) ;changes fileman date into 8 digit date yyyymmdd
+"RTN","RCTCSPD",288,0)
+ I +X S X=X+17000000
+"RTN","RCTCSPD",289,0)
+ S X=$E(X,1,8)
+"RTN","RCTCSPD",290,0)
+ Q X
+"RTN","RCTCSPD",291,0)
+ ;
+"RTN","RCTCSPD",292,0)
+AMOUNT(X) ;changes amount to zero filled, right justified
+"RTN","RCTCSPD",293,0)
+ S:X<0 X=-X
+"RTN","RCTCSPD",294,0)
+ S X=$TR($J(X,0,2),".")
+"RTN","RCTCSPD",295,0)
+ S X=$E("000000000000",1,14-$L(X))_X
+"RTN","RCTCSPD",296,0)
+ Q X
+"RTN","RCTCSPD",297,0)
+ ;
+"RTN","RCTCSPD",298,0)
+NAME(DFN) ;returns name for document and name in file
+"RTN","RCTCSPD",299,0)
+ N FN,LN,MN,NM,DOCNM,VA,VADM
+"RTN","RCTCSPD",300,0)
+ S NM=""
+"RTN","RCTCSPD",301,0)
+ D DEM^VADPT
+"RTN","RCTCSPD",302,0)
+ I $D(VADM) S NM=VADM(1)
+"RTN","RCTCSPD",303,0)
+ S LN=$TR($P(NM,",")," .'-"),MN=$P($P(NM,",",2)," ",2)
+"RTN","RCTCSPD",304,0)
+ I ($E(MN,1,2)="SR")!($E(MN,1,2)="JR")!(MN?2.3"I")!(MN?0.1"I"1"V"1.3"I") S MN=""
+"RTN","RCTCSPD",305,0)
+ S FN=$P($P(NM,",",2)," ")
+"RTN","RCTCSPD",306,0)
+ S DOCNM=$$LJ^XLFSTR($E(LN,1,35),35)_$$LJ^XLFSTR($E(FN,1,35),35)_$$LJ^XLFSTR($E(MN,1,35),35)
+"RTN","RCTCSPD",307,0)
+ Q DOCNM
+"RTN","RCTCSPD",308,0)
+ ;
+"RTN","RCTCSPD",309,0)
+NAMEFF(DFN) ;returns name for document and name in file
+"RTN","RCTCSPD",310,0)
+ N FN,LN,MN,NM,DOCNM,VA,VADM
+"RTN","RCTCSPD",311,0)
+ S NM=""
+"RTN","RCTCSPD",312,0)
+ D DEM^VADPT
+"RTN","RCTCSPD",313,0)
+ I $D(VADM) S NM=VADM(1)
+"RTN","RCTCSPD",314,0)
+ S LN=$TR($P(NM,",")," .'-"),MN=$P($P(NM,",",2)," ",2)
+"RTN","RCTCSPD",315,0)
+ I ($E(MN,1,2)="SR")!($E(MN,1,2)="JR")!(MN?2.3"I")!(MN?0.1"I"1"V"1.3"I") S MN=""
+"RTN","RCTCSPD",316,0)
+ S FN=$P($P(NM,",",2)," ")
+"RTN","RCTCSPD",317,0)
+ S DOCNM=LN_" "_FN_" "_MN
+"RTN","RCTCSPD",318,0)
+ Q DOCNM
+"RTN","RCTCSPD",319,0)
+ ;
+"RTN","RCTCSPD",320,0)
+BLANK(X) ;returns 'x' blank spaces
+"RTN","RCTCSPD",321,0)
+ N BLANK
+"RTN","RCTCSPD",322,0)
+ S BLANK="",$P(BLANK," ",X+1)=""
+"RTN","RCTCSPD",323,0)
+ Q BLANK
+"RTN","RCTCSPD",324,0)
+ ;
+"RTN","RCTCSPD",325,0)
+NOW() ;compiles current date,time
+"RTN","RCTCSPD",326,0)
+ N X,Y,%,%H
+"RTN","RCTCSPD",327,0)
+ S %H=$H D YX^%DTC
+"RTN","RCTCSPD",328,0)
+ Q Y
+"RTN","RCTCSPD",329,0)
+ ;
+"RTN","RCTCSPD",330,0)
+RJZF(X,Y) ;right justify zero fill width Y
+"RTN","RCTCSPD",331,0)
+ S X=$E("000000000000",1,Y-$L(X))_X
+"RTN","RCTCSPD",332,0)
+ Q X
+"RTN","RCTCSPD",333,0)
+ ;
+"RTN","RCTCSPD",334,0)
+TAXID(DEBTOR) ;computes TAXID to place on documents
+"RTN","RCTCSPD",335,0)
+ N TAXID,DIC,DA,DR,DIQ
+"RTN","RCTCSPD",336,0)
+ S TAXID=$$SSN^RCFN01(DEBTOR)
+"RTN","RCTCSPD",337,0)
+ S TAXID=$$LJSF(TAXID,9)
+"RTN","RCTCSPD",338,0)
+ Q TAXID
+"RTN","RCTCSPD",339,0)
+ ;
+"RTN","RCTCSPD",340,0)
+LJSF(X,Y) ;x left justified, y space filled
+"RTN","RCTCSPD",341,0)
+ S X=$E(X,1,Y)
+"RTN","RCTCSPD",342,0)
+ S X=X_$$BLANK(Y-$L(X))
+"RTN","RCTCSPD",343,0)
+ Q X
+"RTN","RCTCSPD",344,0)
+ ;
+"RTN","RCTCSPD",345,0)
+LJZF(X,Y) ;x left justified, y zero filled
+"RTN","RCTCSPD",346,0)
+ S X=X_"0000000000"
+"RTN","RCTCSPD",347,0)
+ S X=$E(X,X,Y)
+"RTN","RCTCSPD",348,0)
+ Q X
+"RTN","RCTCSPD",349,0)
+ ;
+"RTN","RCTCSPD",350,0)
+RECALL(BILL) ; set the recall flag
+"RTN","RCTCSPD",351,0)
+ S $P(^PRCA(430,BILL,15),U,2)=1
+"RTN","RCTCSPD",352,0)
+ Q
+"RTN","RCTCSPD",353,0)
+ ;
+"RTN","RCTCSPD",354,0)
+CLR19(BILL,X) ; clear the send flag
+"RTN","RCTCSPD",355,0)
+ S $P(^PRCA(430,BILL,19),U,X)=""
+"RTN","RCTCSPD",356,0)
+ ;
+"RTN","RCTCSPRS")
+0^1^B64307500^B66612792
+"RTN","RCTCSPRS",1,0)
+RCTCSPRS ;ALBANY/BDB - CROSS-SERVICING (RECONCILIATION SERVER);02/19/14 3:21 PM
+"RTN","RCTCSPRS",2,0)
+ ;;4.5;Accounts Receivable;**301,315,336**;Mar 20, 1995;Build 45
+"RTN","RCTCSPRS",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCTCSPRS",4,0)
+ ;
+"RTN","RCTCSPRS",5,0)
+ ;Program to process reconciliation server messages from AITC
+"RTN","RCTCSPRS",6,0)
+ ;
+"RTN","RCTCSPRS",7,0)
+ ;PRCA*4.5*336 Use a different work file ^XTMP('RCTCSPRSW') to avoid
+"RTN","RCTCSPRS",8,0)
+ ;             any contention with weekly CS batch run RCTCSPD.
+"RTN","RCTCSPRS",9,0)
+ ;             Also, the clearing of the CS flag for debtor when
+"RTN","RCTCSPRS",10,0)
+ ;             no longer having any CS bills has been REMOVED.
+"RTN","RCTCSPRS",11,0)
+ ;
+"RTN","RCTCSPRS",12,0)
+READ ;READS MESSAGE INTO TEMPORARY GLOBAL
+"RTN","RCTCSPRS",13,0)
+ N FDT,RDNODE S FDT=0
+"RTN","RCTCSPRS",14,0)
+ K ^XTMP("RCTCSPDW",$J)      ;PRCA*4.5*336 
+"RTN","RCTCSPRS",15,0)
+ ;New report for claims returned from treasury PRCA*4.5*315
+"RTN","RCTCSPRS",16,0)
+ S ^XTMP("RCTCSP5 - "_DT,0)=$$FMADD^XLFDT(DT,57)_"^"_DT_"^"_"Treasury Cross-Servicing IAI Report"  ; Maintain this entry for 57 days
+"RTN","RCTCSPRS",17,0)
+ S RDNODE=$NA(^XTMP("RCTCSP5 - "_DT))
+"RTN","RCTCSPRS",18,0)
+ ;
+"RTN","RCTCSPRS",19,0)
+ S XMA=0
+"RTN","RCTCSPRS",20,0)
+READ1 X XMREC I $D(XMER) G:XMER<0 READQ
+"RTN","RCTCSPRS",21,0)
+ I $E(XMRG,1)="H" S FDT=$E(XMRG,2,9)
+"RTN","RCTCSPRS",22,0)
+ S ^XTMP("RCTCSPRS",$J,"READ",FDT,XMPOS)=XMRG
+"RTN","RCTCSPRS",23,0)
+ G READ1
+"RTN","RCTCSPRS",24,0)
+ ;
+"RTN","RCTCSPRS",25,0)
+READQ K XMA,XMER,XMREC,XMPOS,XMRG
+"RTN","RCTCSPRS",26,0)
+ N TYPE,VALC,VFASTCD,VSTTN,VSITE,LN,REC,REC1,REC2
+"RTN","RCTCSPRS",27,0)
+ S VALC="36001200"
+"RTN","RCTCSPRS",28,0)
+ S VFASTCD="36"
+"RTN","RCTCSPRS",29,0)
+ S VSTTN="DM1D "
+"RTN","RCTCSPRS",30,0)
+ S VSITE=$E($$SITE^RCMSITE(),1,3)
+"RTN","RCTCSPRS",31,0)
+ S LN=0
+"RTN","RCTCSPRS",32,0)
+ F  S LN=$O(^XTMP("RCTCSPRS",$J,"READ",FDT,LN)) Q:LN=""  S REC1=$G(^(LN)),LN=LN+1,REC2=$G(^(LN)),REC=$E(REC1,1,225)_$E(REC2,1,225) D
+"RTN","RCTCSPRS",33,0)
+ .S TYPE=$E(REC,1,2)
+"RTN","RCTCSPRS",34,0)
+ .I TYPE["H" D HDR Q
+"RTN","RCTCSPRS",35,0)
+ .I TYPE="A1" D A1 Q
+"RTN","RCTCSPRS",36,0)
+ .I TYPE="C1" Q
+"RTN","RCTCSPRS",37,0)
+ .I TYPE="R1" D R1 Q
+"RTN","RCTCSPRS",38,0)
+ .I TYPE="R2" D R2 Q
+"RTN","RCTCSPRS",39,0)
+ .I TYPE["Z" K TYPE Q
+"RTN","RCTCSPRS",40,0)
+ .Q
+"RTN","RCTCSPRS",41,0)
+ ;
+"RTN","RCTCSPRS",42,0)
+TRDT ;sends mailman message to user for returned debts
+"RTN","RCTCSPRS",43,0)
+ Q:'$D(^XTMP("RCTCSPDW",$J,"TRDTRDB"))
+"RTN","RCTCSPRS",44,0)
+ S XMDUZ="AR PACKAGE",XMY("G.TCSP")=""
+"RTN","RCTCSPRS",45,0)
+ N TCT1,TDEB1,TDEB10,TBIL1,TSP1,FST1,TBCNT,TTXT1
+"RTN","RCTCSPRS",46,0)
+ S XMSUB="CS QUALIFIED/RETURNED DEBTS "_$E(DT,4,5)_"/"_$E(DT,6,7)_"/"_$E(DT,2,3)
+"RTN","RCTCSPRS",47,0)
+ S ^XTMP("RCTCSPDW",$J,"TRDT",1)="The following Debtors and Debts were Returned by Reconciliation."
+"RTN","RCTCSPRS",48,0)
+ S ^XTMP("RCTCSPDW",$J,"TRDT",2)=""
+"RTN","RCTCSPRS",49,0)
+ S ^XTMP("RCTCSPDW",$J,"TRDT",3)="Name                                     Bill #    Returned Date   Closed Date"
+"RTN","RCTCSPRS",50,0)
+ S ^XTMP("RCTCSPDW",$J,"TRDT",4)="----                                     ------    -------- ----   ------ ----"
+"RTN","RCTCSPRS",51,0)
+ S TCT1=5,TSP1=0,TDEB1="",TBCNT=0
+"RTN","RCTCSPRS",52,0)
+ F  S TDEB1=$O(^XTMP("RCTCSPDW",$J,"TRDTRDB",TDEB1)) Q:TDEB1=""  D
+"RTN","RCTCSPRS",53,0)
+ .S FST1=1,TBIL1=""
+"RTN","RCTCSPRS",54,0)
+ .I FST1,TCT1'=5 S ^XTMP("RCTCSPDW",$J,"TRDT",TCT1)="",TCT1=TCT1+1,TSP1=TSP1+1
+"RTN","RCTCSPRS",55,0)
+ .F  S TBIL1=$O(^XTMP("RCTCSPDW",$J,"TRDTRDB",TDEB1,TBIL1)) Q:TBIL1=""  S TBCNT=TBCNT+1 D
+"RTN","RCTCSPRS",56,0)
+ ..S TDEB10=$S(FST1:TDEB1,1:""),TTXT1=""
+"RTN","RCTCSPRS",57,0)
+ ..F  S TTXT1=$O(^XTMP("RCTCSPDW",$J,"TRDTRDB",TDEB1,TBIL1,TTXT1)) Q:TTXT1=""  S ^XTMP("RCTCSPDW",$J,"TRDT",TCT1)=^XTMP("RCTCSPDW",$J,"TRDTRDB",TDEB1,TBIL1,TTXT1) S TCT1=TCT1+1
+"RTN","RCTCSPRS",58,0)
+ ..S TCT1=TCT1+1,FST1=0
+"RTN","RCTCSPRS",59,0)
+ S ^XTMP("RCTCSPDW",$J,"TRDT",TCT1)="Total records: "_TBCNT
+"RTN","RCTCSPRS",60,0)
+ S XMTEXT="^XTMP(""RCTCSPDW"","_$J_",""TRDT"","
+"RTN","RCTCSPRS",61,0)
+ D ^XMD K XMDUZ,XMSUB,XMTEXT,XMY
+"RTN","RCTCSPRS",62,0)
+ K ^XTMP("RCTCSPDW",$J,"TRDT")
+"RTN","RCTCSPRS",63,0)
+TRDTQ Q
+"RTN","RCTCSPRS",64,0)
+ ;
+"RTN","RCTCSPRS",65,0)
+HDR ; header record
+"RTN","RCTCSPRS",66,0)
+ S TFASTCD=$E(REC,10,11),TALC=$E(REC,12,19) ;repeated on r1 AND r2
+"RTN","RCTCSPRS",67,0)
+ Q
+"RTN","RCTCSPRS",68,0)
+ ;
+"RTN","RCTCSPRS",69,0)
+A1 ;active debt record
+"RTN","RCTCSPRS",70,0)
+ N TFASTCD,TALC,TSTTN,TDBTID,TSITE,BILL,B0,DEBTOR
+"RTN","RCTCSPRS",71,0)
+ S TFASTCD=$E(REC,3,4),TALC=$E(REC,5,12),TSTTN=$E(REC,13,17),TDBTID=$E(REC,18,47),TRDT=$E(REC,58,65)
+"RTN","RCTCSPRS",72,0)
+ I TFASTCD'=VFASTCD D NPMSG("FASTCD",TFASTCD,VFASTCD) Q
+"RTN","RCTCSPRS",73,0)
+ I TALC'=VALC D NPMSG("ALC",TALC,VALC) Q
+"RTN","RCTCSPRS",74,0)
+ I TSTTN'=VSTTN D NPMSG("STATION",TSTTN,VSTTN)
+"RTN","RCTCSPRS",75,0)
+ S TSITE=$E(TDBTID,1,3) I TSITE'=VSITE D NPMSG("SITE",TSITE,VSITE) Q
+"RTN","RCTCSPRS",76,0)
+ S BILL=+$E(TDBTID,12,30)  ;BILL = IEN
+"RTN","RCTCSPRS",77,0)
+ S B0=$G(^PRCA(430,BILL,0))
+"RTN","RCTCSPRS",78,0)
+ S DEBTOR=+$P(B0,U,9)
+"RTN","RCTCSPRS",79,0)
+ ;PRCA*4.5*315  set data for IAI report (^RCTCSP5)
+"RTN","RCTCSPRS",80,0)
+ I DEBTOR,BILL S @RDNODE@(DEBTOR,BILL)=""   ;set to debtor then bill IEN for sorting the IAI report
+"RTN","RCTCSPRS",81,0)
+ Q
+"RTN","RCTCSPRS",82,0)
+ ;
+"RTN","RCTCSPRS",83,0)
+R1 ;returned debt record
+"RTN","RCTCSPRS",84,0)
+ N TFASTCD,TALC,TSTTN,TDBTID,TRDT,TSITE,BILLNO,BILL,B0,B4,B6,B7,B9,B14,B15,B16,DEBTOR,RJND
+"RTN","RCTCSPRS",85,0)
+ S TFASTCD=$E(REC,3,4),TALC=$E(REC,5,12),TSTTN=$E(REC,13,17),TDBTID=$E(REC,18,47),TRDT=$E(REC,58,65)
+"RTN","RCTCSPRS",86,0)
+ I TFASTCD'=VFASTCD D NPMSG("FASTCD",TFASTCD,VFASTCD) Q
+"RTN","RCTCSPRS",87,0)
+ I TALC'=VALC D NPMSG("ALC",TALC,VALC) Q
+"RTN","RCTCSPRS",88,0)
+ I TSTTN'=VSTTN D NPMSG("STATION",TSTTN,VSTTN)
+"RTN","RCTCSPRS",89,0)
+ S TSITE=$E(TDBTID,1,3) I TSITE'=VSITE D NPMSG("SITE",TSITE,VSITE) Q
+"RTN","RCTCSPRS",90,0)
+ S BILLNO=$E(TDBTID,4,10),BILL=+$E(TDBTID,11,30)  ;BILL = IEN
+"RTN","RCTCSPRS",91,0)
+ S B0=$G(^PRCA(430,BILL,0)),B4=$G(^(4)),B6=$G(^(6)),B7=$G(^(7)),B9=$G(^(9)),B14=$G(^(14)),B15=$G(^(15)),B16=$G(^(16))
+"RTN","RCTCSPRS",92,0)
+ S DEBTOR=$P(B0,U,9)
+"RTN","RCTCSPRS",93,0)
+ ;set comment transaction in 433
+"RTN","RCTCSPRS",94,0)
+ D CSPRTR^RCTCSPD5  ;PRCA*4.5*315
+"RTN","RCTCSPRS",95,0)
+ ;
+"RTN","RCTCSPRS",96,0)
+ S RJND=0 F  S RJND=$O(^PRCA(430,BILL,18,RJND)) Q:'RJND  D
+"RTN","RCTCSPRS",97,0)
+ .N DAT
+"RTN","RCTCSPRS",98,0)
+ .S DAT=+$G(^PRCA(430,BILL,18,RJND,0))
+"RTN","RCTCSPRS",99,0)
+ .I DAT K ^PRCA(430,"AB",DAT,BILL)
+"RTN","RCTCSPRS",100,0)
+ K ^PRCA(430,BILL,15),^(16),^(17),^(18),^(19),^(20)
+"RTN","RCTCSPRS",101,0)
+ I +TRDT D
+"RTN","RCTCSPRS",102,0)
+ .N DNM,DA,DIE,DR
+"RTN","RCTCSPRS",103,0)
+ .I $D(^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,1)) S $E(^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,1),52,63)=$$DTT2E(TRDT) Q
+"RTN","RCTCSPRS",104,0)
+ .S DNM=$E($$NAMEFF(+^RCD(340,DEBTOR,0)),1,30),DNM=$$LJSF(DNM,30)
+"RTN","RCTCSPRS",105,0)
+ .S ^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,1)=$$LJSF(DNM,30)_"           "_$$LJSF(BILLNO,7)_"   "_$$DTT2E(TRDT)
+"RTN","RCTCSPRS",106,0)
+ .S EFFDT=$$HL7TFM^XLFDT(TRDT),REASON="O",COMMENT="BY RECONCILIATION"
+"RTN","RCTCSPRS",107,0)
+ .S $P(^PRCA(430,BILL,15),U,7,10)="1^"_EFFDT_U_REASON_U_$G(COMMENT)
+"RTN","RCTCSPRS",108,0)
+ .S DIE="^PRCA(430,",DA=BILL
+"RTN","RCTCSPRS",109,0)
+ .S DR="301////"_EFFDT ;Returned date
+"RTN","RCTCSPRS",110,0)
+ .S DR=DR_";310////"_$P(B16,U,9)
+"RTN","RCTCSPRS",111,0)
+ .S DR=DR_";311////"_$P(B16,U,10)
+"RTN","RCTCSPRS",112,0)
+ .S DR=DR_";312////"_$P(B15,U,3)
+"RTN","RCTCSPRS",113,0)
+ .D ^DIE
+"RTN","RCTCSPRS",114,0)
+ K ^PRCA(430,"TCSP",BILL) ;set the bill to not sent to cross-servicing
+"RTN","RCTCSPRS",115,0)
+ Q
+"RTN","RCTCSPRS",116,0)
+ ;
+"RTN","RCTCSPRS",117,0)
+R2 ;returned debtor record
+"RTN","RCTCSPRS",118,0)
+ N TFASTCD,TALC,TSTTN,TDBTID,TSITE,TFDA,TDBTORID,TRRSNCD,TCMPIND,TCMPAMT,TCLSDT,TBNKDT,TDTHDT,TDISDT,RJND
+"RTN","RCTCSPRS",119,0)
+ S TFASTCD=$E(REC,3,4),TALC=$E(REC,5,12),TSTTN=$E(REC,13,17),TDBTID=$E(REC,18,47),TDBTORID=$E(REC,48,62),TRRSNCD=$E(REC,261,262)
+"RTN","RCTCSPRS",120,0)
+ S TCMPIND=$E(REC,263,263),TCMPAMT=$E(REC,264,277),TCLSDT=$E(REC,278,285),TBNKDT=$E(REC,286,293),TDTHDT=$E(REC,294,301),TDISDT=$E(REC,302,309)
+"RTN","RCTCSPRS",121,0)
+ I TFASTCD'=VFASTCD D NPMSG("FASTCD",TFASTCD,VFASTCD) Q
+"RTN","RCTCSPRS",122,0)
+ I TALC'=VALC D NPMSG("ALC",TALC,VALC) Q
+"RTN","RCTCSPRS",123,0)
+ I TSTTN'=VSTTN D NPMSG("STATION",TSTTN,VSTTN)
+"RTN","RCTCSPRS",124,0)
+ S TSITE=$E(TDBTID,1,3) I TSITE'=VSITE D NPMSG("SITE",TSITE,VSITE) Q
+"RTN","RCTCSPRS",125,0)
+ S BILLNO=$E(TDBTID,4,10),BILL=+$E(TDBTID,11,30)
+"RTN","RCTCSPRS",126,0)
+ S B0=$G(^PRCA(430,BILL,0))
+"RTN","RCTCSPRS",127,0)
+ S TRRSNCD=$$CLRBLNK(TRRSNCD)
+"RTN","RCTCSPRS",128,0)
+ S DEBTOR=$P(B0,U,9)
+"RTN","RCTCSPRS",129,0)
+ S RJND=0 F  S RJND=$O(^PRCA(430,BILL,18,RJND)) Q:'RJND  D
+"RTN","RCTCSPRS",130,0)
+ .N DAT
+"RTN","RCTCSPRS",131,0)
+ .S DAT=+$G(^PRCA(430,BILL,18,RJND,0))
+"RTN","RCTCSPRS",132,0)
+ .I DAT K ^PRCA(430,"AB",DAT,BILL)
+"RTN","RCTCSPRS",133,0)
+ K ^PRCA(430,BILL,15),^(16),^(17),^(18),^(19),^(20)
+"RTN","RCTCSPRS",134,0)
+ I TRRSNCD]"" D
+"RTN","RCTCSPRS",135,0)
+ .N DNM,EFFDT,REASON,COMMENT
+"RTN","RCTCSPRS",136,0)
+ .I $D(^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,1)) S $E(^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,1),68,79)=$S($G(TCLSDT)]"":$$DTT2E(TCLSDT),1:"")
+"RTN","RCTCSPRS",137,0)
+ .I '$D(^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,1)) D
+"RTN","RCTCSPRS",138,0)
+ ..S DNM=$E($$NAMEFF(+^RCD(340,DEBTOR,0)),1,30),DNM=$$LJSF(DNM,30),^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,1)=DNM_"           "_$$LJSF(BILLNO,7)_"                   "_$S($G(TCLSDT)]"":$$DTT2E(TCLSDT),1:"")
+"RTN","RCTCSPRS",139,0)
+ .S DIC="^PRCA(430.5,",DIC(0)="Z",X=TRRSNCD D ^DIC K DIC I +Y>0 D
+"RTN","RCTCSPRS",140,0)
+ ..S ^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,2)="     "_$P(Y(0),U,2)
+"RTN","RCTCSPRS",141,0)
+ ..S $P(^PRCA(430,BILL,30),U,2)=+Y
+"RTN","RCTCSPRS",142,0)
+ I TCMPIND="Y" D
+"RTN","RCTCSPRS",143,0)
+ .S ^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,3)="     COMPROMISE, PLEASE WRITE THIS BILL OFF BY THE MANUAL PROCESS."
+"RTN","RCTCSPRS",144,0)
+ .S $P(^PRCA(430,BILL,30),U,3)=TCMPIND
+"RTN","RCTCSPRS",145,0)
+ .I +TCMPAMT D
+"RTN","RCTCSPRS",146,0)
+ ..S ^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,4)="     COMPROMISED AMOUNT (NOT COLLECTED):"_$J(TCMPAMT/100,9,2)
+"RTN","RCTCSPRS",147,0)
+ ..S $P(^PRCA(430,BILL,30),U,4)=TCMPAMT/100
+"RTN","RCTCSPRS",148,0)
+ I +TBNKDT D
+"RTN","RCTCSPRS",149,0)
+ .S ^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,5)="     BANKRUPTCY DATE: "_$$DTT2E(TBNKDT)
+"RTN","RCTCSPRS",150,0)
+ .S $P(^PRCA(430,BILL,30),U,6)=$$HL7TFM^XLFDT(TBNKDT)
+"RTN","RCTCSPRS",151,0)
+ I +TDTHDT D
+"RTN","RCTCSPRS",152,0)
+ .S ^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,6)="     DATE OF DEATH:  "_$$DTT2E(TDTHDT)
+"RTN","RCTCSPRS",153,0)
+ .S $P(^PRCA(430,BILL,30),U,7)=$$HL7TFM^XLFDT(TDTHDT)
+"RTN","RCTCSPRS",154,0)
+ I +TDISDT D
+"RTN","RCTCSPRS",155,0)
+ .S ^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,7)="     DATE OF DISSOLUTION:  "_$$DTT2E(TDISDT)
+"RTN","RCTCSPRS",156,0)
+ .S $P(^PRCA(430,BILL,30),U,8)=$$HL7TFM^XLFDT(TDISDT)
+"RTN","RCTCSPRS",157,0)
+ I +TCLSDT D
+"RTN","RCTCSPRS",158,0)
+ .S EFFDT=$$HL7TFM^XLFDT(TCLSDT),REASON="O",COMMENT="BY RECONCILIATION"
+"RTN","RCTCSPRS",159,0)
+ .S $P(^PRCA(430,BILL,15),U,7,10)="1^"_EFFDT_U_REASON_U_$G(COMMENT)
+"RTN","RCTCSPRS",160,0)
+ .S $P(^PRCA(430,BILL,30),U,5)=$$HL7TFM^XLFDT(TCLSDT)
+"RTN","RCTCSPRS",161,0)
+ K ^PRCA(430,"TCSP",BILL) ;set the bill to not sent to cross-servicing
+"RTN","RCTCSPRS",162,0)
+ S ^XTMP("RCTCSPDW",$J,"TRDTRDB",DEBTOR,BILL,8)=""
+"RTN","RCTCSPRS",163,0)
+ Q
+"RTN","RCTCSPRS",164,0)
+ ;
+"RTN","RCTCSPRS",165,0)
+NPMSG(FLD,TCD,VCD) ;error not processed
+"RTN","RCTCSPRS",166,0)
+ Q
+"RTN","RCTCSPRS",167,0)
+ ;
+"RTN","RCTCSPRS",168,0)
+LJSF(X,Y) ;left justified space filled
+"RTN","RCTCSPRS",169,0)
+ S X=$E(X,1,Y)
+"RTN","RCTCSPRS",170,0)
+ S X=X_$$BLANK(Y-$L(X))
+"RTN","RCTCSPRS",171,0)
+ Q X
+"RTN","RCTCSPRS",172,0)
+ ;
+"RTN","RCTCSPRS",173,0)
+BLANK(X) ;returns 'x' blank spaces
+"RTN","RCTCSPRS",174,0)
+ N BLANK
+"RTN","RCTCSPRS",175,0)
+ S BLANK="",$P(BLANK," ",X+1)=""
+"RTN","RCTCSPRS",176,0)
+ Q BLANK
+"RTN","RCTCSPRS",177,0)
+ ;
+"RTN","RCTCSPRS",178,0)
+CLRBLNK(X) ;clear blanks
+"RTN","RCTCSPRS",179,0)
+ S X=$TR(X," ","")
+"RTN","RCTCSPRS",180,0)
+ Q X
+"RTN","RCTCSPRS",181,0)
+ ;
+"RTN","RCTCSPRS",182,0)
+NAMEFF(DFN) ;returns name for document and name in file
+"RTN","RCTCSPRS",183,0)
+ N FN,LN,MN,NM,DOCNM,VA,VADM
+"RTN","RCTCSPRS",184,0)
+ S NM=""
+"RTN","RCTCSPRS",185,0)
+ D DEM^VADPT
+"RTN","RCTCSPRS",186,0)
+ I $D(VADM) S NM=VADM(1)
+"RTN","RCTCSPRS",187,0)
+ S LN=$TR($P(NM,",")," .'-"),MN=$P($P(NM,",",2)," ",2)
+"RTN","RCTCSPRS",188,0)
+ I ($E(MN,1,2)="SR")!($E(MN,1,2)="JR")!(MN?2.3"I")!(MN?0.1"I"1"V"1.3"I") S MN=""
+"RTN","RCTCSPRS",189,0)
+ S FN=$P($P(NM,",",2)," ")
+"RTN","RCTCSPRS",190,0)
+ S DOCNM=LN_" "_FN_" "_MN
+"RTN","RCTCSPRS",191,0)
+ Q DOCNM
+"RTN","RCTCSPRS",192,0)
+ ;
+"RTN","RCTCSPRS",193,0)
+DTT2E(TDT) ;date treasury to external format
+"RTN","RCTCSPRS",194,0)
+ Q $$UPPER^VALM1($$FMTE^XLFDT($$HL7TFM^XLFDT(TDT)))
+"VER")
+8.0^22.2
+"BLD",10775,6)
+^302
+**END**
+**END**
+

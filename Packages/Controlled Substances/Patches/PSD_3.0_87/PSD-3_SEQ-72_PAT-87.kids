@@ -1,0 +1,351 @@
+Released PSD*3*87 SEQ #72
+Extracted from mail message
+**KIDS**:PSD*3.0*87^
+
+**INSTALL NAME**
+PSD*3.0*87
+"BLD",10877,0)
+PSD*3.0*87^CONTROLLED SUBSTANCES^0^3181207^y
+"BLD",10877,1,0)
+^^11^11^3181207^
+"BLD",10877,1,1,0)
+This patch for a patch is created in support of PSD*3.0*84. 
+"BLD",10877,1,2,0)
+PSD*3.0*84 added the BALANCE DISCREPANCY CHECK field (#37) to the DRUG 
+"BLD",10877,1,3,0)
+ACCOUNTABILITY STATS file (#58.8). Routine PSDEN is used to display 
+"BLD",10877,1,4,0)
+fields from this file for editing based on when the 'Location Type' field 
+"BLD",10877,1,5,0)
+is set to 'MASTER VAULT'. After release of PSD*3.0*84 it was discovered 
+"BLD",10877,1,6,0)
+that if another field 'PRIME VENDOR' was set to NO or null the BALANCE 
+"BLD",10877,1,7,0)
+DISCREPANCY CHECK field would not display as expected. This patch 
+"BLD",10877,1,8,0)
+PSD*3.0*87 will allow the field the BALANCE DISCREPANCY CHECK fiel #37
+"BLD",10877,1,9,0)
+to be edited regardless of the state of the PRIME VENDOR field #12, while 
+"BLD",10877,1,10,0)
+maintaining the original branching flow connected to the PRIME VENDOR 
+"BLD",10877,1,11,0)
+field.
+"BLD",10877,4,0)
+^9.64PA^^
+"BLD",10877,6.3)
+1
+"BLD",10877,"KRN",0)
+^9.67PA^1.61^23
+"BLD",10877,"KRN",.4,0)
+.4
+"BLD",10877,"KRN",.401,0)
+.401
+"BLD",10877,"KRN",.402,0)
+.402
+"BLD",10877,"KRN",.403,0)
+.403
+"BLD",10877,"KRN",.5,0)
+.5
+"BLD",10877,"KRN",.84,0)
+.84
+"BLD",10877,"KRN",1.6,0)
+1.6
+"BLD",10877,"KRN",1.61,0)
+1.61
+"BLD",10877,"KRN",1.62,0)
+1.62
+"BLD",10877,"KRN",3.6,0)
+3.6
+"BLD",10877,"KRN",3.8,0)
+3.8
+"BLD",10877,"KRN",9.2,0)
+9.2
+"BLD",10877,"KRN",9.8,0)
+9.8
+"BLD",10877,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10877,"KRN",9.8,"NM",1,0)
+PSDEN^^0^B14711583
+"BLD",10877,"KRN",9.8,"NM","B","PSDEN",1)
+
+"BLD",10877,"KRN",19,0)
+19
+"BLD",10877,"KRN",19.1,0)
+19.1
+"BLD",10877,"KRN",101,0)
+101
+"BLD",10877,"KRN",409.61,0)
+409.61
+"BLD",10877,"KRN",771,0)
+771
+"BLD",10877,"KRN",779.2,0)
+779.2
+"BLD",10877,"KRN",870,0)
+870
+"BLD",10877,"KRN",8989.51,0)
+8989.51
+"BLD",10877,"KRN",8989.52,0)
+8989.52
+"BLD",10877,"KRN",8994,0)
+8994
+"BLD",10877,"KRN","B",.4,.4)
+
+"BLD",10877,"KRN","B",.401,.401)
+
+"BLD",10877,"KRN","B",.402,.402)
+
+"BLD",10877,"KRN","B",.403,.403)
+
+"BLD",10877,"KRN","B",.5,.5)
+
+"BLD",10877,"KRN","B",.84,.84)
+
+"BLD",10877,"KRN","B",1.6,1.6)
+
+"BLD",10877,"KRN","B",1.61,1.61)
+
+"BLD",10877,"KRN","B",1.62,1.62)
+
+"BLD",10877,"KRN","B",3.6,3.6)
+
+"BLD",10877,"KRN","B",3.8,3.8)
+
+"BLD",10877,"KRN","B",9.2,9.2)
+
+"BLD",10877,"KRN","B",9.8,9.8)
+
+"BLD",10877,"KRN","B",19,19)
+
+"BLD",10877,"KRN","B",19.1,19.1)
+
+"BLD",10877,"KRN","B",101,101)
+
+"BLD",10877,"KRN","B",409.61,409.61)
+
+"BLD",10877,"KRN","B",771,771)
+
+"BLD",10877,"KRN","B",779.2,779.2)
+
+"BLD",10877,"KRN","B",870,870)
+
+"BLD",10877,"KRN","B",8989.51,8989.51)
+
+"BLD",10877,"KRN","B",8989.52,8989.52)
+
+"BLD",10877,"KRN","B",8994,8994)
+
+"BLD",10877,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10877,"QUES",0)
+^9.62^^
+"BLD",10877,"REQB",0)
+^9.611^1^1
+"BLD",10877,"REQB",1,0)
+PSD*3.0*84^1
+"BLD",10877,"REQB","B","PSD*3.0*84",1)
+
+"MBREQ")
+0
+"PKG",328,-1)
+1^1
+"PKG",328,0)
+CONTROLLED SUBSTANCES^PSD^Controlled Substances Inventory and Tracking module.
+"PKG",328,22,0)
+^9.49I^1^1
+"PKG",328,22,1,0)
+3.0^2970213^2980330^1
+"PKG",328,22,1,"PAH",1,0)
+87^3181207
+"PKG",328,22,1,"PAH",1,1,0)
+^^11^11^3181207
+"PKG",328,22,1,"PAH",1,1,1,0)
+This patch for a patch is created in support of PSD*3.0*84. 
+"PKG",328,22,1,"PAH",1,1,2,0)
+PSD*3.0*84 added the BALANCE DISCREPANCY CHECK field (#37) to the DRUG 
+"PKG",328,22,1,"PAH",1,1,3,0)
+ACCOUNTABILITY STATS file (#58.8). Routine PSDEN is used to display 
+"PKG",328,22,1,"PAH",1,1,4,0)
+fields from this file for editing based on when the 'Location Type' field 
+"PKG",328,22,1,"PAH",1,1,5,0)
+is set to 'MASTER VAULT'. After release of PSD*3.0*84 it was discovered 
+"PKG",328,22,1,"PAH",1,1,6,0)
+that if another field 'PRIME VENDOR' was set to NO or null the BALANCE 
+"PKG",328,22,1,"PAH",1,1,7,0)
+DISCREPANCY CHECK field would not display as expected. This patch 
+"PKG",328,22,1,"PAH",1,1,8,0)
+PSD*3.0*87 will allow the field the BALANCE DISCREPANCY CHECK fiel #37
+"PKG",328,22,1,"PAH",1,1,9,0)
+to be edited regardless of the state of the PRIME VENDOR field #12, while 
+"PKG",328,22,1,"PAH",1,1,10,0)
+maintaining the original branching flow connected to the PRIME VENDOR 
+"PKG",328,22,1,"PAH",1,1,11,0)
+field.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSDEN")
+0^1^B14711583^B14499014
+"RTN","PSDEN",1,0)
+PSDEN ;BIR/JPW-Enter NAOUs ; 6 July 94
+"RTN","PSDEN",2,0)
+ ;;3.0;CONTROLLED SUBSTANCES;**84,87**;13 Feb 97;Build 1
+"RTN","PSDEN",3,0)
+ I '$D(PSDSITE) D ^PSDSET Q:'$D(PSDSITE)
+"RTN","PSDEN",4,0)
+ I '$D(^XUSEC("PSD PARAM",DUZ)) W $C(7),!!,?9,"** Please contact your Pharmacy Coordinator for access to enter/edit",!,?12,"NAOUs.  PSD PARAM security key required.",! Q
+"RTN","PSDEN",5,0)
+ S SITEN=$P($G(^PS(59.4,+PSDSITE,0)),"^"),MULTI=$S($P(PSDSITE,"^",2)="M":1,1:0)
+"RTN","PSDEN",6,0)
+NAOU ;entry for NAOUs into file 58.8
+"RTN","PSDEN",7,0)
+ K DIC,DLAYGO W ! S (DIC,DLAYGO)=58.8,DIC(0)="QEAL",DIC("A")="Select NAOU: ",DIC("DR")="2////"_+PSDSITE,DIC("S")="I $P(^(0),""^"",3)=+PSDSITE,$P(^(0),""^"",2)'=""P"""
+"RTN","PSDEN",8,0)
+ D ^DIC K DIC,DLAYGO G:Y<0 END S PSDA=+Y,NEW=+$P(Y,"^",3) D TYPE
+"RTN","PSDEN",9,0)
+ G NAOU
+"RTN","PSDEN",10,0)
+END K ANS,DA,DIC,DIE,DIR,DIROUT,DIRUT,DLAYGO,DR,DTOUT,DUOUT,MULTI,NEW,PSDA,SITEN,X,Y
+"RTN","PSDEN",11,0)
+ Q
+"RTN","PSDEN",12,0)
+TYPE ;selects location type
+"RTN","PSDEN",13,0)
+ W !!,"CONTROLLED SUBSTANCES SITE : "_SITEN
+"RTN","PSDEN",14,0)
+ I $P(^PSD(58.8,PSDA,0),"^",2)]"",+$O(^PSD(58.8,PSDA,1,0)) S ANS=$P(^PSD(58.8,PSDA,0),"^",2) G DIE
+"RTN","PSDEN",15,0)
+ K ANS,DIR,DIRUT S DIR(0)="S^M:MASTER VAULT;S:SATELLITE VAULT;N:NARCOTIC LOCATION",DIR("A")="LOCATION TYPE"
+"RTN","PSDEN",16,0)
+ S DIR("?")="'S' for Satellite Vault or 'N' for Narcotic location.",DIR("?",1)="Enter this NAOU's type.  Select 'M' for Master Vault,"
+"RTN","PSDEN",17,0)
+ S:$P(^PSD(58.8,PSDA,0),"^",2)]"" DIR("B")=$P(^(0),"^",2) D ^DIR K DIR
+"RTN","PSDEN",18,0)
+ I $D(DIRUT),NEW K DIK S DIK="^PSD(58.8,",DA=+PSDA D ^DIK K DIK W $C(7),!!,"No location type entered.  Entry has been deleted!",!! Q
+"RTN","PSDEN",19,0)
+ Q:$D(DIRUT)  S ANS=Y
+"RTN","PSDEN",20,0)
+DIE ;edit
+"RTN","PSDEN",21,0)
+ S PSDJLP=1
+"RTN","PSDEN",22,0)
+ K DA,DIE,DR S DIE=58.8,DA=PSDA
+"RTN","PSDEN",23,0)
+ S:ANS="M" DR=".01T;1////"_ANS_";Q;5;3///@;14;I 'X S Y=19;15;Q;16;Q;17;Q;19;19.5;23;24;25;26;29;28;30;12;S:'$P(^(0),U,8) Y=37;13;37"  ;RTW change and add Y=37;13;37 for balance discrepancy on off
+"RTN","PSDEN",24,0)
+ S:ANS="S" DR=".01T;1////"_ANS_";Q;3;5;14;I 'X S Y=19;15;Q;16;Q;17;Q;19;19.5;23;24;25;26;29;28;30"
+"RTN","PSDEN",25,0)
+ S:ANS="N" DR=".01T;1////"_ANS_";Q;3;18;6T;32;33"
+"RTN","PSDEN",26,0)
+ D ^DIE K DIE,DR,DA,PSDJLP
+"RTN","PSDEN",27,0)
+ ;link ward for dispensing equipment interface
+"RTN","PSDEN",28,0)
+ D:$O(^HL(770,"B","PSD-NDES",0))&(ANS="N")
+"RTN","PSDEN",29,0)
+WARD .I $O(^PSD(58.8,+PSDA,3,0)) W !!,"Current Ward(s):  " S PSDA(1)=0 F  S PSDA(1)=$O(^PSD(58.8,+PSDA,3,PSDA(1))) Q:'PSDA(1)  W ?20,$P($G(^DIC(42,+PSDA(1),0)),U),!
+"RTN","PSDEN",30,0)
+ .S DIR(0)="PO^42:AEMQ"
+"RTN","PSDEN",31,0)
+ .S DIR("A")="Select Ward for dispensing equipment interface"
+"RTN","PSDEN",32,0)
+ .S DIR("?")="When doses are dispensed the ward will be used as a path to this NAOU."
+"RTN","PSDEN",33,0)
+ .W ! D ^DIR K DIR Q:Y<1  S PSDA(1)=0,PSDA(2)=+Y,PSDA(3)=$P(Y,U,2)
+"RTN","PSDEN",34,0)
+ .I $D(^PSD(58.8,"AB",PSDA(2),PSDA)) D  Q:$D(DIRUT)  G WARD
+"RTN","PSDEN",35,0)
+ ..S DIR(0)="Y",DIR("A")="Remove "_PSDA(3)_"'s link to "_$P($G(^PSD(58.8,+PSDA,0)),U) D ^DIR K DIR
+"RTN","PSDEN",36,0)
+ ..I Y=1 W !!,PSDA(3)," removed.",! S DIK="^PSD(58.8,+PSDA,3,",DA(1)=PSDA,DA=PSDA(2) D ^DIK K DIK,DA
+"RTN","PSDEN",37,0)
+ .F  S PSDA(1)=$O(^PSD(58.8,"AB",PSDA(2),PSDA(1))) Q:'PSDA(1)  S:$P($G(^PSD(58.8,PSDA(1),0)),U,2)="N"&(PSDA'=PSDA(1)) PSDA(4)=$P($G(^(0)),U)
+"RTN","PSDEN",38,0)
+ .I $G(PSDA(4))]"" W !!,PSDA(3)," is already linked to ",PSDA(4),"." K PSDA(4) G WARD
+"RTN","PSDEN",39,0)
+ .S DIC="^PSD(58.8,"_+PSDA_",3,",DIC(0)="LM",DLAYGO=58.8,DA(1)=PSDA
+"RTN","PSDEN",40,0)
+ .S X=PSDA(3),DA=PSDA(2),DIC("P")=$P(^DD(58.8,21,0),U,2),DINUM=PSDA(2)
+"RTN","PSDEN",41,0)
+ .D ^DIC K DIC,DA,DLAYGO G WARD
+"RTN","PSDEN",42,0)
+ ;Set up Default Dispensing Site
+"RTN","PSDEN",43,0)
+ I "MS"[ANS S $P(PSDSITE,U,3)=PSDA,$P(PSDSITE,U,4)=$P($G(^PSD(58.8,+PSDA,0)),U),$P(PSDSITE,U,5)=0 D EN^PSDSP S:$G(PSDS) $P(PSDSITE,U,5)=1
+"RTN","PSDEN",44,0)
+ K PSDA,PSDS,PSDSN Q
+"VER")
+8.0^22.2
+"BLD",10877,6)
+^72
+**END**
+**END**
+

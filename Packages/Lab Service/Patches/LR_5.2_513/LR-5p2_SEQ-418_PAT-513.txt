@@ -1,0 +1,153 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 12/06/18 at 14:16
+=============================================================================
+Run Date: MAR 08, 2019                     Designation: LR*5.2*513
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #418                    Status: Released
+                  Compliance Date: APR 08, 2019
+=============================================================================
+
+Associated patches: (v)LR*5.2*508  <<= must be installed BEFORE `LR*5.2*513'
+
+Subject: PROBLEM WITH OPTION LRMISTUF
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ ServiceNow Ticket(s):
+ ----------------------------  
+ INC2778111- Problem with option Results entry (batch) [LRMISTUF]
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*513 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*513 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*513 have no adverse effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  1.  Defect 848632 (SN INC2778111- Problem with option Results entry (batch)
+ [LRMISTUF])
+  
+ Problem:
+ -------
+ The problem reported is that when using option Microbiology Results entry
+ (batch), for a test using the TB BACTERIOLOGY execute code, a prompt for
+ PRELIMINARY BACT COMMENT is displayed in addition to instead of the prompt for
+ PRELIMINARY TB COMMENT.  This occurs if the user enters a partial response such
+ as: "PREL" at the "Enter the field to edit" prompt.  This was found to be a 
+ parsing problem and therefore this problem may exist for more than just the TB 
+ BACTERIOLOGY execute code reported by the user.   It was found that the 
+ EXECUTE CODE (#62.07) file defined for the test LAB files (File#60) was not 
+ being parsed correctly which lead to an incorrect prompt being displayed.  
+  
+ Resolution:
+ ----------
+ Modify routine LRMISTF to correctly parse out the correct pointers from File
+ #62.07.  The problem was that the parsing code was looking at codes that it
+ should not have been, past where the codes were listed in a string beginning
+ with 'DR=' which was followed by a semi-colon delimited string of the codes. 
+ After those code there was in some instances additional data in the string. 
+ That additional data was viewed for valid codes.  The changes with this patch
+ modifies it to only view the valid code in the DR= part of the string.
+   
+  
+ Test Sites:
+ ----------
+ Lexington VAMC 
+ Heartland - West (Kansas City, Columbia, Topeka, Leavenworth, Wichita) 
+   
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. Installation should 
+ take less than 2 minutes to complete.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+         Installation Menu.  From this menu, you may elect to use the following 
+         options.  When prompted for the INSTALL NAME enter the patch LR*5.2*513
+          
+              a. Backup a Transport Global - This option will create a backup 
+                 message of any routines exported with this patch. It will not 
+                 backup any other changes such as DDs or templates.
+              b. Compare Transport Global to Current System - This option will 
+                 (allow you to view all changes that will be made when this 
+                 patch is installed.  It compares all components of this patch 
+                 routines, DDs, templates, etc.).
+              c. Verify Checksums in Transport Global - This option will allow 
+                 you to ensure the integrity of the routines that are in the 
+                 transport global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option and
+          choose the patch to install (LR*5.2*513)
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the
+        install? NO//'
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//'
+  
+  
+ Back-out/Rollback Strategy:
+ -------------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRMISTF
+    Before: B15004530   After: B15830209  **153,476,508,513**
+ 
+Routine list of preceding patches: 508
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 30, 2018
+Completed By:                               Date Completed: MAR 07, 2019
+Released By :                               Date Released : MAR 08, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,1371 @@
+Released XU*8*690 SEQ #547
+Extracted from mail message
+**KIDS**:XU*8.0*690^
+
+**INSTALL NAME**
+XU*8.0*690
+"BLD",9013,0)
+XU*8.0*690^KERNEL^0^3180809^y
+"BLD",9013,1,0)
+^^6^6^3180613^^
+"BLD",9013,1,1,0)
+This patch adds "ABNL IMA" to the ALERT CRITICAL TEXT file (#8992.3) and
+"BLD",9013,1,2,0)
+checks for "NON" (like "NOT") to screen Alerts with critical text that are
+"BLD",9013,1,3,0)
+indicated is not critical.
+"BLD",9013,1,4,0)
+ 
+"BLD",9013,1,5,0)
+See the Patch Description for XU*8*690 in the Forum Patch Module for
+"BLD",9013,1,6,0)
+complete details.
+"BLD",9013,4,0)
+^9.64PA^^
+"BLD",9013,6)
+7^
+"BLD",9013,6.3)
+18
+"BLD",9013,"ABPKG")
+n
+"BLD",9013,"INID")
+^n
+"BLD",9013,"INIT")
+ENPOST^XU8P690
+"BLD",9013,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9013,"KRN",.4,0)
+.4
+"BLD",9013,"KRN",.401,0)
+.401
+"BLD",9013,"KRN",.402,0)
+.402
+"BLD",9013,"KRN",.403,0)
+.403
+"BLD",9013,"KRN",.5,0)
+.5
+"BLD",9013,"KRN",.84,0)
+.84
+"BLD",9013,"KRN",3.6,0)
+3.6
+"BLD",9013,"KRN",3.8,0)
+3.8
+"BLD",9013,"KRN",9.2,0)
+9.2
+"BLD",9013,"KRN",9.8,0)
+9.8
+"BLD",9013,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",9013,"KRN",9.8,"NM",1,0)
+XQALSUR2^^0^B6427475
+"BLD",9013,"KRN",9.8,"NM",2,0)
+XQARPRT2^^0^B80045754
+"BLD",9013,"KRN",9.8,"NM",3,0)
+XQARPRT1^^0^B206434272
+"BLD",9013,"KRN",9.8,"NM","B","XQALSUR2",1)
+
+"BLD",9013,"KRN",9.8,"NM","B","XQARPRT1",3)
+
+"BLD",9013,"KRN",9.8,"NM","B","XQARPRT2",2)
+
+"BLD",9013,"KRN",19,0)
+19
+"BLD",9013,"KRN",19.1,0)
+19.1
+"BLD",9013,"KRN",101,0)
+101
+"BLD",9013,"KRN",409.61,0)
+409.61
+"BLD",9013,"KRN",771,0)
+771
+"BLD",9013,"KRN",779.2,0)
+779.2
+"BLD",9013,"KRN",870,0)
+870
+"BLD",9013,"KRN",8989.51,0)
+8989.51
+"BLD",9013,"KRN",8989.52,0)
+8989.52
+"BLD",9013,"KRN",8994,0)
+8994
+"BLD",9013,"KRN","B",.4,.4)
+
+"BLD",9013,"KRN","B",.401,.401)
+
+"BLD",9013,"KRN","B",.402,.402)
+
+"BLD",9013,"KRN","B",.403,.403)
+
+"BLD",9013,"KRN","B",.5,.5)
+
+"BLD",9013,"KRN","B",.84,.84)
+
+"BLD",9013,"KRN","B",3.6,3.6)
+
+"BLD",9013,"KRN","B",3.8,3.8)
+
+"BLD",9013,"KRN","B",9.2,9.2)
+
+"BLD",9013,"KRN","B",9.8,9.8)
+
+"BLD",9013,"KRN","B",19,19)
+
+"BLD",9013,"KRN","B",19.1,19.1)
+
+"BLD",9013,"KRN","B",101,101)
+
+"BLD",9013,"KRN","B",409.61,409.61)
+
+"BLD",9013,"KRN","B",771,771)
+
+"BLD",9013,"KRN","B",779.2,779.2)
+
+"BLD",9013,"KRN","B",870,870)
+
+"BLD",9013,"KRN","B",8989.51,8989.51)
+
+"BLD",9013,"KRN","B",8989.52,8989.52)
+
+"BLD",9013,"KRN","B",8994,8994)
+
+"BLD",9013,"QUES",0)
+^9.62^^
+"BLD",9013,"REQB",0)
+^9.611^3^3
+"BLD",9013,"REQB",1,0)
+XU*8.0*602^2
+"BLD",9013,"REQB",2,0)
+XU*8.0*443^2
+"BLD",9013,"REQB",3,0)
+XU*8.0*631^2
+"BLD",9013,"REQB","B","XU*8.0*443",2)
+
+"BLD",9013,"REQB","B","XU*8.0*602",1)
+
+"BLD",9013,"REQB","B","XU*8.0*631",3)
+
+"INIT")
+ENPOST^XU8P690
+"MBREQ")
+0
+"PKG",163,-1)
+1^1
+"PKG",163,0)
+KERNEL^XU^SIGN-ON, SECURITY, MENU DRIVER, DEVICES, TASKMAN^
+"PKG",163,20,0)
+^9.402P^^0
+"PKG",163,22,0)
+^9.49I^1^1
+"PKG",163,22,1,0)
+8.0^2950703^2951019^1039
+"PKG",163,22,1,"PAH",1,0)
+690^3180809^10000000407
+"PKG",163,22,1,"PAH",1,1,0)
+^^6^6^3180809
+"PKG",163,22,1,"PAH",1,1,1,0)
+This patch adds "ABNL IMA" to the ALERT CRITICAL TEXT file (#8992.3) and
+"PKG",163,22,1,"PAH",1,1,2,0)
+checks for "NON" (like "NOT") to screen Alerts with critical text that are
+"PKG",163,22,1,"PAH",1,1,3,0)
+indicated is not critical.
+"PKG",163,22,1,"PAH",1,1,4,0)
+ 
+"PKG",163,22,1,"PAH",1,1,5,0)
+See the Patch Description for XU*8*690 in the Forum Patch Module for
+"PKG",163,22,1,"PAH",1,1,6,0)
+complete details.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","XQALSUR2")
+0^1^B6427475^B5665797
+"RTN","XQALSUR2",1,0)
+XQALSUR2 ;FO-OAK.SEA/JLI-Continuation of alert surrogate processing ;07/12/12  11:30
+"RTN","XQALSUR2",2,0)
+ ;;8.0;KERNEL;**366,513,602,690**;Jul 10, 1995;Build 18
+"RTN","XQALSUR2",3,0)
+ ;Per VHA VA Directive 6402, this routine should not be modified
+"RTN","XQALSUR2",4,0)
+ Q
+"RTN","XQALSUR2",5,0)
+ ; added to handle adjustment for manual or Fileman editing of surrogate on top zero node
+"RTN","XQALSUR2",6,0)
+CHEKSUBS(XQAUSER) ;
+"RTN","XQALSUR2",7,0)
+ N XQA0,XQASTR1,XQANOW,XQB0,XQB1
+"RTN","XQALSUR2",8,0)
+ S XQANOW=$$NOW^XLFDT()
+"RTN","XQALSUR2",9,0)
+ S XQA0=$G(^XTV(8992,XQAUSER,0)) I $P(XQA0,U,2)>0 D
+"RTN","XQALSUR2",10,0)
+ . N XQAFDA,XQAIEN,XQADA
+"RTN","XQALSUR2",11,0)
+ . S XQASTR1=$P(XQA0,U,3) S:XQASTR1'>0 XQASTR1=XQANOW,XQAFDA(8992,XQAUSER_",",.03)=XQASTR1 D
+"RTN","XQALSUR2",12,0)
+ . . S XQADA=0 F  S XQADA=$O(^XTV(8992,XQAUSER,2,"B",XQASTR1,XQADA)) Q:XQADA'>0  Q:$P(^XTV(8992,XQAUSER,2,XQADA,0),U,2)=$P(XQA0,U,2)
+"RTN","XQALSUR2",13,0)
+ . . S XQAIEN=$S(XQADA>0:XQADA,1:"+1")_","_XQAUSER_"," S XQAFDA(8992.02,XQAIEN,.01)=XQASTR1
+"RTN","XQALSUR2",14,0)
+ . . S XQAFDA(8992.02,XQAIEN,.02)=$P(XQA0,U,2) S:$P(XQA0,U,4)>0 XQAFDA(8992.02,XQAIEN,.03)=$P(XQA0,U,4)
+"RTN","XQALSUR2",15,0)
+ . . D:XQADA'>0 UPDATE^DIE("","XQAFDA")
+"RTN","XQALSUR2",16,0)
+ . . D:XQADA>0 FILE^DIE("","XQAFDA")
+"RTN","XQALSUR2",17,0)
+ . . Q
+"RTN","XQALSUR2",18,0)
+ . Q
+"RTN","XQALSUR2",19,0)
+ Q
+"RTN","XQALSUR2",20,0)
+ ;
+"RTN","XQALSUR2",21,0)
+CHKCRIT(ZERONODE) ;EXTRINSIC - check for critical indication for alert
+"RTN","XQALSUR2",22,0)
+ ; ZERONODE - input - Value for zero node for alert data
+"RTN","XQALSUR2",23,0)
+ ; RETURN VALUE - 1 if the alert is indicated as critical
+"RTN","XQALSUR2",24,0)
+ ;                0 otherwise
+"RTN","XQALSUR2",25,0)
+ N RESULT,IEN
+"RTN","XQALSUR2",26,0)
+ S RESULT=0
+"RTN","XQALSUR2",27,0)
+ F IEN=0:0 S IEN=$O(^XTV(8992.3,IEN)) Q:IEN'>0  D  Q:RESULT
+"RTN","XQALSUR2",28,0)
+ . N IENS,RES,MSG,CRITTEXT,PKGID,ALERTTXT
+"RTN","XQALSUR2",29,0)
+ . S IENS=IEN_","
+"RTN","XQALSUR2",30,0)
+ . D GETS^DIQ(8992.3,IENS,".01:.02",,"RES","MSG")
+"RTN","XQALSUR2",31,0)
+ . S CRITTEXT=$$UP^XLFSTR(RES(8992.3,IENS,.01)),PKGID=$$UP^XLFSTR(RES(8992.3,IENS,.02))
+"RTN","XQALSUR2",32,0)
+ . I PKGID'="",$$UP^XLFSTR($P(ZERONODE,U,2))'[PKGID Q
+"RTN","XQALSUR2",33,0)
+ . S ALERTTXT=$$UP^XLFSTR($P(ZERONODE,U,3))
+"RTN","XQALSUR2",34,0)
+ . I ALERTTXT[CRITTEXT,ALERTTXT'["NOT "_CRITTEXT,ALERTTXT'["NON "_CRITTEXT S RESULT=1  ;;XU*8*690 - Added check for "NON" critical text
+"RTN","XQALSUR2",35,0)
+ Q RESULT
+"RTN","XQALSUR2",36,0)
+CLEANUP(XQAUSER) ;SR. - clean up expired surrogate info
+"RTN","XQALSUR2",37,0)
+ N XQAI,XQANOW,XQASUR
+"RTN","XQALSUR2",38,0)
+ S XQANOW=$$NOW^XLFDT()
+"RTN","XQALSUR2",39,0)
+ I $P($G(^XTV(8992,XQAUSER,2,0)),U,2)>0 D
+"RTN","XQALSUR2",40,0)
+ . S XQAI=0 F  S XQAI=$O(^XTV(8992,XQAUSER,2,XQAI)) Q:XQAI'>0  D
+"RTN","XQALSUR2",41,0)
+ . . S XQASUR=$G(^XTV(8992,XQAUSER,2,XQAI,0))
+"RTN","XQALSUR2",42,0)
+ . . I ($P(XQASUR,U)<XQANOW)&($P(XQASUR,U,4)'=1)&($P(XQASUR,U,3)<XQANOW)&($P(XQASUR,U,3)>0) D
+"RTN","XQALSUR2",43,0)
+ . . . N XQAIEN S XQAIEN=XQAI_","_XQAUSER_","
+"RTN","XQALSUR2",44,0)
+ . . . N XQAFDA S XQAFDA(8992.02,XQAIEN,.01)="@" D FILE^DIE("","XQAFDA")
+"RTN","XQALSUR2",45,0)
+ Q
+"RTN","XQARPRT1")
+0^3^B206434272^B87729690
+"RTN","XQARPRT1",1,0)
+XQARPRT1 ;sgh/mtz,JLI/OAK_OIFO-ROUTINE TO PROVIDE COUNTS OF ALERTS ;9/3/03  11:17
+"RTN","XQARPRT1",2,0)
+ ;;8.0;KERNEL;**316,338,631,690**;Jul 10, 1995;Build 18
+"RTN","XQARPRT1",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XQARPRT1",4,0)
+ ; based on an original routine AMNUALT
+"RTN","XQARPRT1",5,0)
+EN1 ; OPT - generates a listing of the number of alerts a user has as well as last sign-on date, number of critical and/or abnomal imaging alerts, and the date of the oldest alert
+"RTN","XQARPRT1",6,0)
+ N XQACRIT S XQACRIT=0
+"RTN","XQARPRT1",7,0)
+EN2 ;
+"RTN","XQARPRT1",8,0)
+ N XQASDT,XQAEDT,XQAC1,XQAORDER,Y,DIR,%ZIS,POP,ZTSAVE,ZTDESC,ZTRTN
+"RTN","XQARPRT1",9,0)
+ N SHOWDIV,DIVISION,I,DATE,DIRUT,SERVICE,SERVSRT,ALLSERV,XQAWORDS,XQAQTVAR
+"RTN","XQARPRT1",10,0)
+ I 'XQACRIT D WORDS^XQARPRT2("A") K Y
+"RTN","XQARPRT1",11,0)
+ S DIR(0)="NO",DIR("A")="Display users whose "_$S(XQACRIT:"CRITICAL ",1:"")_"ALERT count is at least"
+"RTN","XQARPRT1",12,0)
+ S DIR("B")=$S(XQACRIT:10,1:100) D ^DIR K DIR Q:Y'>0  S XQAC1=Y
+"RTN","XQARPRT1",13,0)
+ D DATES Q:Y'>0
+"RTN","XQARPRT1",14,0)
+ D QUERYDIV Q:$D(DIRUT)  D ORDER Q:XQAORDER'>0
+"RTN","XQARPRT1",15,0)
+ S %ZIS="MQ" D ^%ZIS Q:POP  I $D(IO("Q")) K IO("Q") S ZTRTN="DQ1^XQARPRT1",ZTDESC="How Many "_$S(XQACRIT:"Critical ",1:"")_"Alerts",ZTSAVE("*")="" D ^%ZTLOAD W:$G(ZTSK)>0 !,"Task number is ",ZTSK K ZTSK Q
+"RTN","XQARPRT1",16,0)
+ G DQ1
+"RTN","XQARPRT1",17,0)
+ ;
+"RTN","XQARPRT1",18,0)
+CRITICAL ; OPT - generates a listing of users with more than a specified number of alerts containing CRITICAL or ABNORMAL IMAGING
+"RTN","XQARPRT1",19,0)
+ N XQACRIT S XQACRIT=1
+"RTN","XQARPRT1",20,0)
+ G EN2
+"RTN","XQARPRT1",21,0)
+ ;
+"RTN","XQARPRT1",22,0)
+DATES ;
+"RTN","XQARPRT1",23,0)
+ S DIR(0)="DO^::EX",DIR("A")="START DATE" ; Add "EX" to require eXact data and Echo input, XU*8*690
+"RTN","XQARPRT1",24,0)
+ D ^DIR K DIR Q:Y'>0
+"RTN","XQARPRT1",25,0)
+ S XQASDT=Y
+"RTN","XQARPRT1",26,0)
+ S DIR(0)="DO^::EX"_XQASDT_":DT",DIR("A")="END DATE" ; Add "EX" to require eXact data and Echo input, XU*8*690
+"RTN","XQARPRT1",27,0)
+ D ^DIR K DIR Q:Y'>0
+"RTN","XQARPRT1",28,0)
+ S XQAEDT=Y_".24"
+"RTN","XQARPRT1",29,0)
+ Q
+"RTN","XQARPRT1",30,0)
+ ;
+"RTN","XQARPRT1",31,0)
+QUERYDIV ;
+"RTN","XQARPRT1",32,0)
+ S DIR(0)="Y",DIR("A")="Breakout by One or More Divisions",DIR("?")="Entering YES will result in the entries being grouped by DIVISION." D ^DIR K DIR S DIVISION=+Y Q:$D(DIRUT)
+"RTN","XQARPRT1",33,0)
+ I DIVISION D  Q:SHOWDIV'>0
+"RTN","XQARPRT1",34,0)
+ . S DIR(0)="Y",DIR("A")="Show ALL Divisions",DIR("?",1)="Entering YES will result in the analysis being performed for ALL Divisons,",DIR("?")="A NO will result in prompts to select which division(S) you want listed."
+"RTN","XQARPRT1",35,0)
+ . D ^DIR K DIR I +Y D  I 1
+"RTN","XQARPRT1",36,0)
+ . . S DIR(0)="S^1:Show only as 'Multiple Division';2:Show in EACH Division",DIR("A")="If a user has more than one division"
+"RTN","XQARPRT1",37,0)
+ . . S DIR("?",1)="If New Person entries have multiple divisions, entering 1 will result in",DIR("?",2)="those entries being shown only under a heading of 'These users are assigned"
+"RTN","XQARPRT1",38,0)
+ . . S DIR("?",3)="to multiple divisions', while entering 2 will result in the data for a",DIR("?",4)="specific New Person entry  being shown under each division heading which",DIR("?")="that entry may select."
+"RTN","XQARPRT1",39,0)
+ . . D ^DIR K DIR S SHOWDIV=+Y
+"RTN","XQARPRT1",40,0)
+ . . Q
+"RTN","XQARPRT1",41,0)
+ . E  S SHOWDIV=2 D  K DIRUT
+"RTN","XQARPRT1",42,0)
+ . . F I=1:1 S DIR(0)="PO^4:EMZ",DIR("A")="Select "_$S(I>1:"Another ",1:"")_"Division: " D ^DIR K DIR Q:Y'>0  S DIVISION($P(Y,U,2))=""
+"RTN","XQARPRT1",43,0)
+ . Q
+"RTN","XQARPRT1",44,0)
+ Q
+"RTN","XQARPRT1",45,0)
+ ;
+"RTN","XQARPRT1",46,0)
+ORDER ;
+"RTN","XQARPRT1",47,0)
+ S DIR(0)="SO^;1:By Name;2:By Number;3:By Service/Section;",DIR("A")="Select the ordering of results desired",DIR("?",1)="Select a number to indicate how you would like the selected entries to be"
+"RTN","XQARPRT1",48,0)
+ S DIR("?",2)="listed by"_$S(DIVISION:" (Within Division)",1:"")_": the New Person entrie's Name; the Number of "_$S(DIVISION:"",1:$S(XQACRIT:"Critical ",1:"")_"Alerts,")
+"RTN","XQARPRT1",49,0)
+ S DIR("?")=$S(DIVISION:$S(XQACRIT:"Critical ",1:"")_"Alerts, ",1:"")_"or by Service/Section"
+"RTN","XQARPRT1",50,0)
+ D ^DIR K DIR S XQAORDER=+Y
+"RTN","XQARPRT1",51,0)
+ I XQAORDER=3 D  Q:$D(DIRUT)
+"RTN","XQARPRT1",52,0)
+ . S DIR(0)="Y",DIR("A")="Show ALL Service/Sections",DIR("?",1)="Entering YES will result in the analysis being performed for ALL Services,",DIR("?")="A NO will result in prompts to select which Service(s) you want listed."
+"RTN","XQARPRT1",53,0)
+ . D ^DIR K DIR Q:$D(DIRUT)  S ALLSERV=+Y
+"RTN","XQARPRT1",54,0)
+ . I 'ALLSERV D
+"RTN","XQARPRT1",55,0)
+ . . S DIR(0)="PO^49:EMZ" F I=1:1 S DIR("A")="Select "_$S(I>1:"Another ",1:"")_"Service/Section" D ^DIR Q:Y'>0  S SERVICE($E($P(Y,U,2),1,17))=""
+"RTN","XQARPRT1",56,0)
+ . . K DIR
+"RTN","XQARPRT1",57,0)
+ . . Q
+"RTN","XQARPRT1",58,0)
+ . S DIR(0)="S^;1:By Name;2:By Number;",DIR("A")="Within Service/Section order results by" D ^DIR K DIR S:$D(DIRUT) XQAORDER=0 Q:$D(DIRUT)  S SERVSRT=+Y
+"RTN","XQARPRT1",59,0)
+ . Q
+"RTN","XQARPRT1",60,0)
+ Q
+"RTN","XQARPRT1",61,0)
+ ;
+"RTN","XQARPRT1",62,0)
+DQ1 ;
+"RTN","XQARPRT1",63,0)
+ N XQAGLOB,XQAN1
+"RTN","XQARPRT1",64,0)
+ S XQAGLOB=$NA(^TMP("XQARPRT1",$J)) K @XQAGLOB
+"RTN","XQARPRT1",65,0)
+ U IO
+"RTN","XQARPRT1",66,0)
+ D G1,PRT
+"RTN","XQARPRT1",67,0)
+ I '$D(ZTQUEUED),+$G(XQAQTVAR)'>0 W ! U IO(0) S DIR(0)="E" D ^DIR K DIR W ! U IO ; XU*8*690 - Pause end of user terminal report
+"RTN","XQARPRT1",68,0)
+ D ^%ZISC
+"RTN","XQARPRT1",69,0)
+ K @XQAGLOB
+"RTN","XQARPRT1",70,0)
+ Q
+"RTN","XQARPRT1",71,0)
+ ;
+"RTN","XQARPRT1",72,0)
+G1 ;gather
+"RTN","XQARPRT1",73,0)
+ N COUNT,MSG,DATE,CRITMSG
+"RTN","XQARPRT1",74,0)
+ F XQAN1=0:0 S XQAN1=$O(^XTV(8992,XQAN1)) Q:XQAN1'>0  D
+"RTN","XQARPRT1",75,0)
+ . S COUNT=0,OLDEST=0,NCRIT=0 F I=0:0 S I=$O(^XTV(8992,XQAN1,"XQA",I)) Q:I'>0  D
+"RTN","XQARPRT1",76,0)
+ . . S DATE=$P($P(^XTV(8992,XQAN1,"XQA",I,0),U,2),";",3)  S:OLDEST=0 OLDEST=DATE\1 I (DATE<XQASDT)!(DATE>XQAEDT) Q
+"RTN","XQARPRT1",77,0)
+ . . S MSG=$$UP^XLFSTR($P(^XTV(8992,XQAN1,"XQA",I,0),U,3))
+"RTN","XQARPRT1",78,0)
+ . . S CRITMSG=$G(^XTV(8992,XQAN1,"XQA",I,0)) I CRITMSG'="" D  ; begin P631
+"RTN","XQARPRT1",79,0)
+ . . I $D(XQAWORDS)'>0 S COUNT=COUNT+1 I $$CHKCRIT^XQALSUR2(CRITMSG) S NCRIT=NCRIT+1
+"RTN","XQARPRT1",80,0)
+ . . I $D(XQAWORDS)>1 D  I MSG'="" S COUNT=COUNT+1
+"RTN","XQARPRT1",81,0)
+ . . . N MSG1,I,J S MSG1=MSG F J=0:0 S J=$O(XQAWORDS(J)) Q:J'>0  S MSG=MSG1 D  Q:MSG'=""
+"RTN","XQARPRT1",82,0)
+ . . . . F I=0:0 S I=$O(XQAWORDS(J,I)) Q:I'>0  D  I MSG'[XQAWORDS(J,I) S MSG="" Q
+"RTN","XQARPRT1",83,0)
+ . . . . . I $D(XQAWORDS)>1,MSG[XQAWORDS(J,I),$$CHKCRIT^XQALSUR2(CRITMSG) S NCRIT=NCRIT+1
+"RTN","XQARPRT1",84,0)
+ . . . . . Q
+"RTN","XQARPRT1",85,0)
+ . . . . Q
+"RTN","XQARPRT1",86,0)
+ . . . Q
+"RTN","XQARPRT1",87,0)
+ . . Q  ; end P631
+"RTN","XQARPRT1",88,0)
+ . I $S(XQACRIT:NCRIT,1:COUNT)<XQAC1 Q
+"RTN","XQARPRT1",89,0)
+ . S VALUE=COUNT_U_XQAN1_U_$$FMTE^XLFDT(OLDEST,"5DZ")_U_NCRIT_U_$$GET1^DIQ(200,XQAN1_",",.01)
+"RTN","XQARPRT1",90,0)
+ . I DIVISION D  I 1
+"RTN","XQARPRT1",91,0)
+ . . K XQARRAY,XQADIV S XQADIV=0 D GETS^DIQ(200,XQAN1_",","16*","","XQARRAY") S:'$D(XQARRAY) XQADIV(0)="",XQADIV=1 I $D(XQARRAY) D
+"RTN","XQARPRT1",92,0)
+ . . . N K,L S K="" F  S K=$O(XQARRAY(200.02,K)) Q:K=""  D
+"RTN","XQARPRT1",93,0)
+ . . . . I $D(DIVISION)'>1 S XQADIV(XQARRAY(200.02,K,.01))="",XQADIV=XQADIV+1
+"RTN","XQARPRT1",94,0)
+ . . . . E  S L=XQARRAY(200.02,K,.01) I $D(DIVISION(L))>0 S XQADIV(L)="",XQADIV=XQADIV+1
+"RTN","XQARPRT1",95,0)
+ . . . I XQADIV>1,SHOWDIV=1 K XQADIV S XQADIV(99999)="",XQADIV=1
+"RTN","XQARPRT1",96,0)
+ . . . Q
+"RTN","XQARPRT1",97,0)
+ . . S K=$S($D(DIVISION)'>1:"",1:0) F  S K=$O(XQADIV(K)) Q:K=""  S @XQAGLOB@("DIV",K,"NAME",$$GET1^DIQ(200,XQAN1_",",.01)_XQAN1)=VALUE
+"RTN","XQARPRT1",98,0)
+ . . Q
+"RTN","XQARPRT1",99,0)
+ . E  S @XQAGLOB@("NAME",$$GET1^DIQ(200,XQAN1_",",.01)_XQAN1)=VALUE
+"RTN","XQARPRT1",100,0)
+ . Q
+"RTN","XQARPRT1",101,0)
+ Q
+"RTN","XQARPRT1",102,0)
+ ;
+"RTN","XQARPRT1",103,0)
+PRT ;print
+"RTN","XQARPRT1",104,0)
+ N NAME,NUMBER,LSIGNON,VALUE,XQAGLOB1,DIVNAME,XQAFP,XQASVCFP
+"RTN","XQARPRT1",105,0)
+ S (XQAFP,XQASVCFP)=1
+"RTN","XQARPRT1",106,0)
+ S XQAGLOB1=XQAGLOB
+"RTN","XQARPRT1",107,0)
+ I DIVISION D  I 1
+"RTN","XQARPRT1",108,0)
+ . S DIVNAME="" F  S DIVNAME=$O(@XQAGLOB@("DIV",DIVNAME)) Q:DIVNAME=""  S XQAGLOB1=$NA(@XQAGLOB@("DIV",DIVNAME)) D HEADER,PRTLOC
+"RTN","XQARPRT1",109,0)
+ E  D HEADER,PRTLOC
+"RTN","XQARPRT1",110,0)
+ Q
+"RTN","XQARPRT1",111,0)
+ ;
+"RTN","XQARPRT1",112,0)
+PRTLOC ;
+"RTN","XQARPRT1",113,0)
+ N PRTLOC
+"RTN","XQARPRT1",114,0)
+ S PRTLOC=$S(XQAORDER=1:"PRTNAME",XQAORDER=2:"PRTNUMBR",1:"PRTSERVC") D @PRTLOC
+"RTN","XQARPRT1",115,0)
+ Q
+"RTN","XQARPRT1",116,0)
+ ;
+"RTN","XQARPRT1",117,0)
+HEADER ;
+"RTN","XQARPRT1",118,0)
+ N XQACTR SET XQACTR=0 ; XU*8*690 - For WORDHDR^XQARPRT2
+"RTN","XQARPRT1",119,0)
+ I '$D(ZTQUEUED) W @IOF ; XU*8*690 - Initial FormFeed for home device (screen) 
+"RTN","XQARPRT1",120,0)
+ I $D(ZTQUEUED),'XQAFP W @IOF ; XU*8*690 - FormFeed page when queued (Printer)
+"RTN","XQARPRT1",121,0)
+ S XQAFP=0
+"RTN","XQARPRT1",122,0)
+ W " COUNT of ",$S($D(XQAWORDS)>1:"SELECTED ",1:""),"ALERTS - users with more than ",XQAC1," on ",$$FMTE^XLFDT($$NOW^XLFDT())
+"RTN","XQARPRT1",123,0)
+ W !,"   for date range ",$$FMTE^XLFDT(XQASDT,"5DZ")," to ",$$FMTE^XLFDT(XQAEDT,"5DZ")
+"RTN","XQARPRT1",124,0)
+ W !,"CRIT column indicates number of alerts containing critical text"
+"RTN","XQARPRT1",125,0)
+ D WORDHDR^XQARPRT2
+"RTN","XQARPRT1",126,0)
+ W !!,?42,$S($D(XQAWORDS)>1:"Selected",1:"  Total"),?70,"Oldest"
+"RTN","XQARPRT1",127,0)
+ W !,"Name",?25,"Service/section",?43,"Alerts",?50,"Last Sign-on",?64,"CRIT   Alert"
+"RTN","XQARPRT1",128,0)
+ W !,"-----------------",?25,"-----------------",?43,"------",?50,"------------",?64,"---- ----------"
+"RTN","XQARPRT1",129,0)
+ I $D(DIVNAME) D DIVPRINT
+"RTN","XQARPRT1",130,0)
+ Q
+"RTN","XQARPRT1",131,0)
+ ;
+"RTN","XQARPRT1",132,0)
+PRTNAME ;
+"RTN","XQARPRT1",133,0)
+ N NAME,NUMBER,VALUE,XQAN1,NCRIT,OLDEST,LSIGNON,FSTNOSVC
+"RTN","XQARPRT1",134,0)
+ S FSTNOSVC=0 ; XU*8*690 - LIMIT ERROR tracking
+"RTN","XQARPRT1",135,0)
+ S NAME="" F  S NAME=$O(@XQAGLOB1@("NAME",NAME)) Q:NAME=""  S VALUE=@XQAGLOB1@("NAME",NAME) D PRINTVAL(0,.FSTNOSVC) Q:+$G(XQAQTVAR)>0  ; XU*8*690 - Quit on Terminal pause
+"RTN","XQARPRT1",136,0)
+ Q
+"RTN","XQARPRT1",137,0)
+ ;
+"RTN","XQARPRT1",138,0)
+PRTNUMBR ;
+"RTN","XQARPRT1",139,0)
+ N NAME,NUMBER,NUMB,VALUE,XQAN1,NCRIT,OLDEST,LSIGNON,FSTNOSVC
+"RTN","XQARPRT1",140,0)
+ S FSTNOSVC=0 ; XU*8*690 - LIMIT ERROR tracking
+"RTN","XQARPRT1",141,0)
+ S NAME="" F  S NAME=$O(@XQAGLOB1@("NAME",NAME)) Q:NAME=""  Q:+$G(XQAQTVAR)>0  D  ; XU*8*690 - Quit on Terminal pause
+"RTN","XQARPRT1",142,0)
+ . S NUMBER=$S(XQACRIT:$P(@XQAGLOB1@("NAME",NAME),U,4),1:+@XQAGLOB1@("NAME",NAME))
+"RTN","XQARPRT1",143,0)
+ . S @XQAGLOB1@("NUMB",100000-NUMBER,NAME)=@XQAGLOB1@("NAME",NAME)
+"RTN","XQARPRT1",144,0)
+ . Q
+"RTN","XQARPRT1",145,0)
+ N NUMB
+"RTN","XQARPRT1",146,0)
+ S NUMB=""
+"RTN","XQARPRT1",147,0)
+ F  S NUMB=$O(@XQAGLOB1@("NUMB",NUMB)) Q:NUMB=""  Q:+$G(XQAQTVAR)>0  S NAME="" DO
+"RTN","XQARPRT1",148,0)
+ . F  S NAME=$O(@XQAGLOB1@("NUMB",NUMB,NAME)) Q:NAME=""  Q:+$G(XQAQTVAR)>0  DO
+"RTN","XQARPRT1",149,0)
+ . . S VALUE=@XQAGLOB1@("NUMB",NUMB,NAME) D PRINTVAL(0,.FSTNOSVC) ; XU*8*690 - Quit on Terminal pause
+"RTN","XQARPRT1",150,0)
+ Q
+"RTN","XQARPRT1",151,0)
+ ;
+"RTN","XQARPRT1",152,0)
+PRTSERVC ;
+"RTN","XQARPRT1",153,0)
+ N NAME,NUMBER,NUMB,VALUE,XQAN1,NCRIT,OLDEST,LSIGNON,FSTNOSVC
+"RTN","XQARPRT1",154,0)
+ S FSTNOSVC=0 ; XU*8*690 - LIMIT ERROR tracking
+"RTN","XQARPRT1",155,0)
+ S NAME=""
+"RTN","XQARPRT1",156,0)
+ F  S NAME=$O(@XQAGLOB1@("NAME",NAME)) Q:NAME=""  Q:+$G(XQAQTVAR)>0  D  ; XU*8*690 - Quit on Terminal pause
+"RTN","XQARPRT1",157,0)
+ . S XQAN1=$P(@XQAGLOB1@("NAME",NAME),U,2)
+"RTN","XQARPRT1",158,0)
+ . S SERVICE=$E($$GET1^DIQ(200,XQAN1_",",29),1,17) I SERVICE="" S SERVICE="<No Service>"
+"RTN","XQARPRT1",159,0)
+ . I ALLSERV!$D(SERVICE(SERVICE)) D
+"RTN","XQARPRT1",160,0)
+ . . I SERVSRT=1 S @XQAGLOB1@("SERV",SERVICE,NAME)=@XQAGLOB1@("NAME",NAME) Q
+"RTN","XQARPRT1",161,0)
+ . . I SERVSRT=2 S @XQAGLOB1@("SERV",SERVICE,"NUMB",100000-@XQAGLOB1@("NAME",NAME),NAME)=@XQAGLOB1@("NAME",NAME)
+"RTN","XQARPRT1",162,0)
+ . . Q
+"RTN","XQARPRT1",163,0)
+ . Q
+"RTN","XQARPRT1",164,0)
+ S SERVICE=""
+"RTN","XQARPRT1",165,0)
+ F  S SERVICE=$O(@XQAGLOB1@("SERV",SERVICE)) Q:SERVICE=""  Q:+$G(XQAQTVAR)>0  D  ; XU*8*690 - Quit on Terminal pause
+"RTN","XQARPRT1",166,0)
+ . SET XQASVCFP=0
+"RTN","XQARPRT1",167,0)
+ . I SERVSRT=1 DO
+"RTN","XQARPRT1",168,0)
+ . . S NAME=""
+"RTN","XQARPRT1",169,0)
+ . . F  S NAME=$O(@XQAGLOB1@("SERV",SERVICE,NAME)) Q:NAME=""  Q:+$G(XQAQTVAR)>0  DO
+"RTN","XQARPRT1",170,0)
+ . . . S VALUE=@XQAGLOB1@("SERV",SERVICE,NAME)
+"RTN","XQARPRT1",171,0)
+ . . . D PRINTVAL($$CHKSRV(XQAGLOB1,SERVICE,NAME,"NAME"),.FSTNOSVC) ; XU*8*690 - Terminal pause last service item
+"RTN","XQARPRT1",172,0)
+ . I SERVSRT=2 DO
+"RTN","XQARPRT1",173,0)
+ . . F NUMB=0:0 S NUMB=$O(@XQAGLOB1@("SERV",SERVICE,"NUMB",NUMB)) Q:+NUMB'>0  Q:+$G(XQAQTVAR)>0  D  ; XU*8*690 - Quit on Terminal pause
+"RTN","XQARPRT1",174,0)
+ . . . S NAME=""
+"RTN","XQARPRT1",175,0)
+ . . . F  S NAME=$O(@XQAGLOB1@("SERV",SERVICE,"NUMB",NUMB,NAME)) Q:NAME=""  Q:+$G(XQAQTVAR)>0  DO
+"RTN","XQARPRT1",176,0)
+ . . . . S VALUE=@XQAGLOB1@("SERV",SERVICE,"NUMB",NUMB,NAME)
+"RTN","XQARPRT1",177,0)
+ . . . . D PRINTVAL($$CHKSRV(XQAGLOB1,SERVICE,NAME,"NUMB",NUMB),.FSTNOSVC) ; XU*8*690 - Terminal pause last service item
+"RTN","XQARPRT1",178,0)
+ . . Q
+"RTN","XQARPRT1",179,0)
+ . Q
+"RTN","XQARPRT1",180,0)
+ Q
+"RTN","XQARPRT1",181,0)
+ ;
+"RTN","XQARPRT1",182,0)
+CHKSRV(XQAGLOB1,XQASRVC,XQACNAME,XQATYPE,XQANUM) ; Determine change to SERVICE/SECTION, XU*8*690
+"RTN","XQARPRT1",183,0)
+ ; Input:
+"RTN","XQARPRT1",184,0)
+ ;    XQAGLOB1 - Value of ^TMP global root
+"RTN","XQARPRT1",185,0)
+ ;    XQASRVC  - Current Service
+"RTN","XQARPRT1",186,0)
+ ;    XQASNAME - Current Name
+"RTN","XQARPRT1",187,0)
+ ;    XQATYPE  - Type of Report  ("NUMB", "NAME")
+"RTN","XQARPRT1",188,0)
+ ;    XQANUM   - Number of Alerts (For Service report on Number)
+"RTN","XQARPRT1",189,0)
+ ;
+"RTN","XQARPRT1",190,0)
+ ; Result:
+"RTN","XQARPRT1",191,0)
+ ;    0 - Service did not change
+"RTN","XQARPRT1",192,0)
+ ;    1 - Service changed
+"RTN","XQARPRT1",193,0)
+ ;
+"RTN","XQARPRT1",194,0)
+ N RESULT,NXTSERV,XQANNAME,XQANNUM
+"RTN","XQARPRT1",195,0)
+ S (CHKCNT,RESULT)=0
+"RTN","XQARPRT1",196,0)
+ I XQATYPE="NAME" DO
+"RTN","XQARPRT1",197,0)
+ . SET:$O(@XQAGLOB1@("SERV",XQASRVC,XQACNAME))="" RESULT=1
+"RTN","XQARPRT1",198,0)
+ . IF RESULT=1 DO
+"RTN","XQARPRT1",199,0)
+ . . SET:$O(@XQAGLOB1@("SERV",XQASRVC))="" RESULT=0
+"RTN","XQARPRT1",200,0)
+ ;
+"RTN","XQARPRT1",201,0)
+ I XQATYPE="NUMB" DO
+"RTN","XQARPRT1",202,0)
+ . SET XQANNAME=$O(@XQAGLOB1@("SERV",XQASRVC,"NUMB",XQANUM,XQACNAME))
+"RTN","XQARPRT1",203,0)
+ . IF XQANNAME="" DO
+"RTN","XQARPRT1",204,0)
+ . . SET XQANNUM=$O(@XQAGLOB1@("SERV",XQASRVC,"NUMB",XQANUM))
+"RTN","XQARPRT1",205,0)
+ . . IF XQANNUM="" DO
+"RTN","XQARPRT1",206,0)
+ . . . SET NXTSERVC=$O(@XQAGLOB1@("SERV",XQASRVC))
+"RTN","XQARPRT1",207,0)
+ . . . IF (NXTSERVC'=XQASRVC),(NXTSERVC'="") SET RESULT=1
+"RTN","XQARPRT1",208,0)
+ Q RESULT
+"RTN","XQARPRT1",209,0)
+ ;
+"RTN","XQARPRT1",210,0)
+PRINTVAL(XQAPAWS,FSTNOSVC) ;Print report value
+"RTN","XQARPRT1",211,0)
+ ; Input  ; Add to indicate if report needs page break, XU*8*690
+"RTN","XQARPRT1",212,0)
+ ;   XQAPAWS  - 1: New Service
+"RTN","XQARPRT1",213,0)
+ ;              0: Same Service
+"RTN","XQARPRT1",214,0)
+ ;   FSTNOSVC - 1: First line (No Service) written after ERROR LIMIT exceeded
+"RTN","XQARPRT1",215,0)
+ ;              0: First line NOT written after ERROR LIMIT exceeded
+"RTN","XQARPRT1",216,0)
+ ;
+"RTN","XQARPRT1",217,0)
+ N NAME,SRVERRCT,XQAWRTER
+"RTN","XQARPRT1",218,0)
+ S NUMBER=+VALUE,XQAN1=$P(VALUE,U,2),NCRIT=$P(VALUE,U,4),OLDEST=$P(VALUE,U,3),NAME=$P(VALUE,U,5)
+"RTN","XQARPRT1",219,0)
+ S SERVICE=$E($$GET1^DIQ(200,XQAN1_",",29),1,17)
+"RTN","XQARPRT1",220,0)
+ ;
+"RTN","XQARPRT1",221,0)
+ IF SERVICE="" DO   ;XU*8*690 - Report <No Service> - SERVICE/SECTION not defined for user, Error Trap
+"RTN","XQARPRT1",222,0)
+ . NEW XQANOTES,XQAZTR,XQAFCNT,XQAZTEN
+"RTN","XQARPRT1",223,0)
+ . SET SERVICE="<No Service>"
+"RTN","XQARPRT1",224,0)
+ . SET XQAZTEN=$O(^%ZTER(3.077,"B",$E("Undefined SERVICE/SECTION Err",1,30),0))
+"RTN","XQARPRT1",225,0)
+ . IF 'XQAZTEN SET SRVERRCT=1
+"RTN","XQARPRT1",226,0)
+ . IF XQAZTEN DO
+"RTN","XQARPRT1",227,0)
+ . . SET SRVERRCT=0
+"RTN","XQARPRT1",228,0)
+ . . SET XQAZTR=$G(^%ZTER(3.077,XQAZTEN,4,+$H,0))
+"RTN","XQARPRT1",229,0)
+ . . FOR XQAFCNT=1:1:24 S SRVERRCT=SRVERRCT+$P(XQAZTR,"~",XQAFCNT)
+"RTN","XQARPRT1",230,0)
+ . . SET SRVERRCT=SRVERRCT+1
+"RTN","XQARPRT1",231,0)
+ . SET XQAWRTER=(SRVERRCT>$$XQZMAXER()) ;Error limit reached?
+"RTN","XQARPRT1",232,0)
+ . ;XQANOTES array = "ERROR description for inclusion in ERROR trap"
+"RTN","XQARPRT1",233,0)
+ . SET XQANOTES("PROGRAMMER",1,"WHAT HAPPENED")="Kernel Alerts Report included a user with a pending alert that did NOT have a SERVICE/SECTION in the New Person File."
+"RTN","XQARPRT1",234,0)
+ . SET XQANOTES("PROGRAMMER",2,"MENU REPORT OPTION")=$P(XQY0,"^",1,2)
+"RTN","XQARPRT1",235,0)
+ . SET XQANOTES("PROGRAMMER",3,"PROBLEM")="SERVICE/SECTION is a required field for all active VistA Users."
+"RTN","XQARPRT1",236,0)
+ . SET XQANOTES("PROGRAMMER",4,"REPORT NOTES",1)="Rerunning the report with the parameters in this log may or may not report all of the users missing SERVICE/SECTION."
+"RTN","XQARPRT1",237,0)
+ . SET XQANOTES("PROGRAMMER",4,"REPORT NOTES",2)="Users with alerts that have been processed since this log was recorded will not be reported."
+"RTN","XQARPRT1",238,0)
+ . IF SRVERRCT=$$XQZMAXER() DO
+"RTN","XQARPRT1",239,0)
+ . . SET XQANOTES("PROGRAMMER",4,"REPORT NOTES",3)="The MENU REPORT OPTION will only create an Error Trap log for the first "_$$XQZMAXER()_" users missing SERVICE/SECTION."
+"RTN","XQARPRT1",240,0)
+ . . SET XQANOTES("PROGRAMMER",4,"REPORT NOTES",4)="The daily Error Trap limit of "_$$XQZMAXER()_" is determined by the KERNEL SYSTEM PARAMETERS file (#8989.3), ERROR LIMIT field(#520.1)."
+"RTN","XQARPRT1",241,0)
+ . . SET XQANOTES("PROGRAMMER",4,"REPORT NOTES",5)="The MENU REPORT OPTION includes a message after the limit of "_$$XQZMAXER()_" users missing SERVICE/SECTION is reached."
+"RTN","XQARPRT1",242,0)
+ . . SET XQANOTES("PROGRAMMER",4,"REPORT NOTES",6)="When user number "_($$XQZMAXER()+1)_" missing SERVICE/SECTION is reported, the message is printed on the report but Error Traps are not logged."
+"RTN","XQARPRT1",243,0)
+ . . SET XQANOTES("PROGRAMMER",4,"REPORT NOTES",7)="1st Message on report: 'Daily Error Trap limit is "_$$XQZMAXER()_" errors for users missing SERVICE/SECTION.'"
+"RTN","XQARPRT1",244,0)
+ . . SET XQANOTES("PROGRAMMER",4,"REPORT NOTES",8)="2nd Message on report: Limit Reached. 'No more entries will be added for '<No Service>' users today!'"
+"RTN","XQARPRT1",245,0)
+ . . SET XQANOTES("PROGRAMMER",4,"REPORT NOTES",9)="Any users on the report following that message will not be recorded in the Error Trap."
+"RTN","XQARPRT1",246,0)
+ . D APPERROR^%ZTER("Undefined SERVICE/SECTION Err")
+"RTN","XQARPRT1",247,0)
+ ;
+"RTN","XQARPRT1",248,0)
+ S LSIGNON=$$GET1^DIQ(200,XQAN1_",",202)
+"RTN","XQARPRT1",249,0)
+ I LSIGNON["@" S LSIGNON=$P(LSIGNON,"@")
+"RTN","XQARPRT1",250,0)
+ I $Y>(IOSL-5) DO
+"RTN","XQARPRT1",251,0)
+ . I '$D(ZTQUEUED) W ! DO XQAPAUS(.XQAQTVAR)
+"RTN","XQARPRT1",252,0)
+ . I +$G(XQAQTVAR)'>0 D HEADER
+"RTN","XQARPRT1",253,0)
+ ;
+"RTN","XQARPRT1",254,0)
+ I +$G(XQAQTVAR)'>0 DO
+"RTN","XQARPRT1",255,0)
+ . ;XU*8*690 - Error trap limit exceeded
+"RTN","XQARPRT1",256,0)
+ . IF (SERVICE="<No Service>"),(+$$XQZMAXER()>0) DO  ;Errors limited
+"RTN","XQARPRT1",257,0)
+ . . IF (SRVERRCT=($$XQZMAXER()+1)) DO
+"RTN","XQARPRT1",258,0)
+ . . . W !,"    Daily Error Trap limit is "_$$XQZMAXER()_" errors for users missing SERVICE/SECTION."
+"RTN","XQARPRT1",259,0)
+ . . . W !,"  Limit Reached.  No more entries will be added for '<No Service>' users today!"
+"RTN","XQARPRT1",260,0)
+ . . . SET FSTNOSVC=1
+"RTN","XQARPRT1",261,0)
+ . . IF XQAWRTER,'FSTNOSVC DO  ;Error limit reached before report
+"RTN","XQARPRT1",262,0)
+ . . . W !,"    Daily Error Trap limit is "_$$XQZMAXER()_" errors for users missing SERVICE/SECTION."
+"RTN","XQARPRT1",263,0)
+ . . . W !,"  Limit Reached.  No more entries will be added for '<No Service>' users today!"
+"RTN","XQARPRT1",264,0)
+ . . . SET FSTNOSVC=1
+"RTN","XQARPRT1",265,0)
+ . W !,NAME,?25,SERVICE,?43,NUMBER,?50,LSIGNON,?64,NCRIT,?69,OLDEST
+"RTN","XQARPRT1",266,0)
+ ;
+"RTN","XQARPRT1",267,0)
+ I $G(XQAPAWS)>0 DO
+"RTN","XQARPRT1",268,0)
+ . I '$D(ZTQUEUED) W ! DO XQAPAUS(.XQAQTVAR)
+"RTN","XQARPRT1",269,0)
+ . I +$G(XQAQTVAR)'>0 D HEADER
+"RTN","XQARPRT1",270,0)
+ Q
+"RTN","XQARPRT1",271,0)
+ ;
+"RTN","XQARPRT1",272,0)
+XQAPAUS(XQAQTVAR) ;; Pause API, XU*8*690
+"RTN","XQARPRT1",273,0)
+ U IO(0) S DIR(0)="E" D ^DIR
+"RTN","XQARPRT1",274,0)
+ IF $D(DTOUT)!$D(DUOUT)!$D(DIRUT)!$D(DIROUT) SET XQAQTVAR=1
+"RTN","XQARPRT1",275,0)
+ KILL DIR,X,Y,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","XQARPRT1",276,0)
+ Q
+"RTN","XQARPRT1",277,0)
+ ;
+"RTN","XQARPRT1",278,0)
+XQZMAXER() ;;Return KERNEL SYSTEM PARAMETER file (#8989.3) ERROR LIMIT field (#520.1), XU*8*690
+"RTN","XQARPRT1",279,0)
+ Q +$P($G(^XTV(8989.3,1,"ZTER"),"10"),"^",1)
+"RTN","XQARPRT1",280,0)
+ ;
+"RTN","XQARPRT1",281,0)
+DIVPRINT ;
+"RTN","XQARPRT1",282,0)
+ I $Y>(IOSL-6) D HEADER
+"RTN","XQARPRT1",283,0)
+ W !,?5,"Division: ",$S(DIVNAME=0:"These users are not assigned to a division",DIVNAME=99999:"These users are assigned to multiple divisions",1:DIVNAME)
+"RTN","XQARPRT1",284,0)
+ Q
+"RTN","XQARPRT1",285,0)
+ ;
+"RTN","XQARPRT1",286,0)
+OLDEST() ; Returns date of oldest entry in alert tracking file
+"RTN","XQARPRT1",287,0)
+ N OLDEST,I,J,FND
+"RTN","XQARPRT1",288,0)
+ ; Use cross-ref, since if user data used to create entries in tracking file oldest may not be first in file
+"RTN","XQARPRT1",289,0)
+ ; Make sure cross-ref is valid
+"RTN","XQARPRT1",290,0)
+ S FND=0 F I=0:0 Q:FND  S I=$O(^XTV(8992.1,"D",I)) Q:I'>0  F J=0:0 S J=$O(^XTV(8992.1,"D",I,J)) Q:J'>0  I $D(^XTV(8992.1,J,0)) S FND=1 Q
+"RTN","XQARPRT1",291,0)
+ S OLDEST=I S:OLDEST'>0 OLDEST=DT+1
+"RTN","XQARPRT1",292,0)
+ Q OLDEST\1
+"RTN","XQARPRT1",293,0)
+ ;
+"RTN","XQARPRT1",294,0)
+VIEWTRAK ; OPT.  View an entry in the Alert Tracking file in Captioned mode
+"RTN","XQARPRT1",295,0)
+ N DIR,X0,X1,DAARRAY
+"RTN","XQARPRT1",296,0)
+ S X0=$O(^XTV(8992.1,0)),X1=$P(^XTV(8992.1,0),U,3)
+"RTN","XQARPRT1",297,0)
+ S DIR(0)="NO^"_X0_":"_X1
+"RTN","XQARPRT1",298,0)
+ F I=1:1 S DIR("A")=$S(I>1:"Another ",1:"")_"Internal Entry number in Alert Tracking File" D ^DIR K DIRUT Q:Y'>0  S DAARRAY(I)=+Y
+"RTN","XQARPRT1",299,0)
+ K DIR Q:$D(DAARRAY)'>1
+"RTN","XQARPRT1",300,0)
+ S %ZIS="MQ" D ^%ZIS Q:POP  I $D(IO("Q")) K IO("Q") S ZTRTN="VIEWDQ^XQARPRT1",ZTDESC="List data from Alert Tracking file",ZTSAVE("*")="" D ^%ZTLOAD W:$G(ZTSK)>0 !,"Task number is ",ZTSK K ZTSK Q
+"RTN","XQARPRT1",301,0)
+ ;
+"RTN","XQARPRT1",302,0)
+VIEWDQ ;
+"RTN","XQARPRT1",303,0)
+ N DIC,DA,DIC,XQAI,DR,DIQ
+"RTN","XQARPRT1",304,0)
+ W @IOF
+"RTN","XQARPRT1",305,0)
+ S DIQ(0)="CR"
+"RTN","XQARPRT1",306,0)
+ F XQAI=0:0 S XQAI=$O(DAARRAY(XQAI)) Q:XQAI'>0  D
+"RTN","XQARPRT1",307,0)
+ . S DA=DAARRAY(XQAI),DIC="^XTV(8992.1," D EN^DIQ
+"RTN","XQARPRT1",308,0)
+ Q
+"RTN","XQARPRT2")
+0^2^B80045754^B75569961
+"RTN","XQARPRT2",1,0)
+XQARPRT2 ;DCN/BUF,JLI/OAK-OIFO - LOOKUP PROVIDER ALERTS ;4/9/07  10:16
+"RTN","XQARPRT2",2,0)
+ ;;8.0;KERNEL;**316,443,690**;Jul 10, 1995;Build 18
+"RTN","XQARPRT2",3,0)
+ ;Per VHA VA Directive 6402, this routine should not be modified
+"RTN","XQARPRT2",4,0)
+ ;  Based on the original routine AEKALERT
+"RTN","XQARPRT2",5,0)
+ Q
+"RTN","XQARPRT2",6,0)
+EN ; OPT - interactive lists alerts from start date for a single user based on contents of alert tracking file
+"RTN","XQARPRT2",7,0)
+ N DIR,XQADOC S DIR(0)="PO^200:EMZ" D ^DIR K DIR Q:$D(DIRUT)  Q:Y'>0  S XQADOC=+Y
+"RTN","XQARPRT2",8,0)
+EN1 ;
+"RTN","XQARPRT2",9,0)
+ N XQASDATE,XQAWORDS,XQADISP,%ZIS,ZTRTN,ZTDESC,ZTSAVE,POP,XQAU1N4
+"RTN","XQARPRT2",10,0)
+ D DATES Q:Y'>0
+"RTN","XQARPRT2",11,0)
+ D WORDS() Q:$D(DIRUT)  K Y
+"RTN","XQARPRT2",12,0)
+ S %ZIS="MQ" D ^%ZIS Q:POP  I $D(IO("Q")) K IO("Q") S ZTRTN="DQ1^XQARPRT2",ZTDESC="List of User Alerts",ZTSAVE("*")="" D ^%ZTLOAD W:$G(ZTSK)>0 !,"Task number is ",ZTSK K ZTSK Q
+"RTN","XQARPRT2",13,0)
+DQ1 ;
+"RTN","XQARPRT2",14,0)
+ N XQANWID,XQAIEN,XQADATE,XQANODE0,XQACTR,HEADERID,XQATOT
+"RTN","XQARPRT2",15,0)
+ S HEADERID="User "_$$GET1^DIQ(200,XQADOC_",",.01)_" (DFN="_XQADOC_")"
+"RTN","XQARPRT2",16,0)
+ U IO
+"RTN","XQARPRT2",17,0)
+ D HEADER(HEADERID,1)
+"RTN","XQARPRT2",18,0)
+ S XQAIEN=$O(^XTV(8992.1,"D",XQASDATE-.0000001))
+"RTN","XQARPRT2",19,0)
+ I XQAIEN>0 S XQAIEN=$O(^(XQAIEN,0))-0.0001 ; find starting point instead of having to work up through x-ref, XU*8*690 - Subtract .0001 from 1st XQAIEN
+"RTN","XQARPRT2",20,0)
+ I XQAIEN>0 F  S XQAIEN=$O(^XTV(8992.1,"R",XQADOC,XQAIEN)) Q:XQAIEN'>0  D  Q:$D(DIRUT)!(XQADATE>XQAEDATE)
+"RTN","XQARPRT2",21,0)
+ . S XQANODE0=$G(^XTV(8992.1,XQAIEN,0)),XQADATE=$P(XQANODE0,"^",2) Q:(XQADATE<XQASDATE)!(XQADATE>XQAEDATE)
+"RTN","XQARPRT2",22,0)
+ . D PRNTATRK(XQAIEN)
+"RTN","XQARPRT2",23,0)
+ D HEADER(HEADERID,0)
+"RTN","XQARPRT2",24,0)
+ I '$D(ZTQUEUED) U IO(0) S DIR(0)="E" D ^DIR K DIR W ! U IO ; XU*8*690 - Pause at end of report to user terminal
+"RTN","XQARPRT2",25,0)
+ D ^%ZISC
+"RTN","XQARPRT2",26,0)
+ K XQADATE,XQACTR,DATA,DIR,DIRUT,XQADOC,XQAIEN,XQANODE0,XQASDATE,Y
+"RTN","XQARPRT2",27,0)
+ Q
+"RTN","XQARPRT2",28,0)
+ ;
+"RTN","XQARPRT2",29,0)
+WORDS(TYPE) ; Allow user to select alerts containing only certain words
+"RTN","XQARPRT2",30,0)
+ S DIR(0)="Y",DIR("A")="Do you want to "_$S($G(TYPE)'="":"count",1:"list")_" only alerts containing specific words or phrase(s)"
+"RTN","XQARPRT2",31,0)
+ S DIR("?",1)="You can enter one or more words or phrases which you want to be used to"
+"RTN","XQARPRT2",32,0)
+ S DIR("?",2)="select the alerts to be listed.  If you enter NO, all for the selected"
+"RTN","XQARPRT2",33,0)
+ S DIR("?",3)="individual in the selected time period will be selected.  If you enter"
+"RTN","XQARPRT2",34,0)
+ S DIR("?",4)="YES, you will be prompted to enter a word or phrase.  You will be prompted"
+"RTN","XQARPRT2",35,0)
+ S DIR("?",5)="again, and you may enter as many word or phrase entries as you want."
+"RTN","XQARPRT2",36,0)
+ S DIR("?",6)="Comparisons will NOT be case specific."
+"RTN","XQARPRT2",37,0)
+ S DIR("?",7)=""
+"RTN","XQARPRT2",38,0)
+ S DIR("?",8)="HOWEVER ALL WORDS OR PHRASES ENTERED MUST BE IN THE MESSAGE FOR AN ALERT"
+"RTN","XQARPRT2",39,0)
+ S DIR("?")="TO BE SELECTED."
+"RTN","XQARPRT2",40,0)
+ D ^DIR K DIR Q:Y'>0
+"RTN","XQARPRT2",41,0)
+ ;
+"RTN","XQARPRT2",42,0)
+ F J=1:1 W:J>1 !?7,"--- OR ---",!,"Enter another set of words or phrases that should",!,"be matched independently of the previous entr"_$S(J>2:"ies",1:"y") D  Q:'$D(XQAWORDS(J))
+"RTN","XQARPRT2",43,0)
+ . W !?10,"ALL words or phrases connected by -AND- must appear in the",!?10,"message for an alert to be selected"
+"RTN","XQARPRT2",44,0)
+ . S DIR("?",1)="Enter a word, at least three characters long, or phrase, without regard to"
+"RTN","XQARPRT2",45,0)
+ . S DIR("?",2)="case, that you want to be required for selection of alerts to be listed."
+"RTN","XQARPRT2",46,0)
+ . S DIR("?",3)="If more than one word or phrase are specified, ALL of them must be in alerts"
+"RTN","XQARPRT2",47,0)
+ . S DIR("?")="which will be listed."
+"RTN","XQARPRT2",48,0)
+ . F I=1:1 S DIR(0)="FO^3:",DIR("A")="Enter "_$S(I=1:"a",1:"another")_" word or phrase" W:I>1 !?10,"-AND-" D ^DIR Q:(Y="")!(Y["^")  S XQAWORDS(J,I)=$$UP^XLFSTR(Y)
+"RTN","XQARPRT2",49,0)
+ . K DIR,DIRUT
+"RTN","XQARPRT2",50,0)
+ . Q
+"RTN","XQARPRT2",51,0)
+ ;
+"RTN","XQARPRT2",52,0)
+ I $D(XQAWORDS)>1,$G(TYPE)="" D
+"RTN","XQARPRT2",53,0)
+ . S DIR(0)="SO^1:Both Action and Info Only;2:Action Alerts;3:Info Only Alerts",DIR("?",1)="Select whether alerts listed should be alerts involving actions (2), info",DIR("?")="only or text only alerts (3), or both (1)."
+"RTN","XQARPRT2",54,0)
+ . S DIR("A")="Select Alert Type(s) desired",DIR("B")=1 D ^DIR K DIR S:Y'>0 Y=1 K DIRUT S XQADISP=+Y
+"RTN","XQARPRT2",55,0)
+ . Q
+"RTN","XQARPRT2",56,0)
+ Q
+"RTN","XQARPRT2",57,0)
+ ;
+"RTN","XQARPRT2",58,0)
+USER ;USER ENTRY POINT
+"RTN","XQARPRT2",59,0)
+ N DIR,XQADOC S XQADOC=DUZ
+"RTN","XQARPRT2",60,0)
+ G EN1
+"RTN","XQARPRT2",61,0)
+ ;
+"RTN","XQARPRT2",62,0)
+DATES ;
+"RTN","XQARPRT2",63,0)
+ S DIR(0)="DO^::EX",DIR("B")="TODAY",DIR("A")="START DATE" D ^DIR K DIR Q:Y'>0  S XQASDATE=+Y
+"RTN","XQARPRT2",64,0)
+ I XQASDATE<$$OLDEST() W !?10,"The earliest date in the alert tracking file is ",$$FMTE^XLFDT($$OLDEST(),"D") S XQASDATE=$$OLDEST()
+"RTN","XQARPRT2",65,0)
+ I $D(XQA1U4N) W !,"*** WARNING ***: Do not specify too many days - each entry in the Alert Tracking",!,"file must be checked for the date range specified.",! S DIR("B")=$$FMTE^XLFDT(XQASDATE)
+"RTN","XQARPRT2",66,0)
+ S DIR(0)="DO^"_XQASDATE_":DT:EX",DIR("A")="END DATE" D ^DIR K DIR Q:$D(DIRUT)  I Y>0 S XQAEDATE=Y+.24 ; Add "EX" to require eXact data and Echo input, XU*8*690
+"RTN","XQARPRT2",67,0)
+ Q
+"RTN","XQARPRT2",68,0)
+ ;
+"RTN","XQARPRT2",69,0)
+PRNTATRK(IEN) ; Print data for an entry from the alert tracking file
+"RTN","XQARPRT2",70,0)
+ N XQANODE0,XQADATE,Y,XQANEN,XQAMSG,XQAOPT,XQAROU,XQAMSGUC
+"RTN","XQARPRT2",71,0)
+ S XQANODE0=$G(^XTV(8992.1,IEN,0)),XQADATE=$P(XQANODE0,"^",2)
+"RTN","XQARPRT2",72,0)
+ S XQAMSG=$G(^XTV(8992.1,IEN,1)),XQAOPT=$P(XQAMSG,U,2),XQAROU=$P(XQAMSG,U,3,4),XQAMSG=$P(XQAMSG,U)
+"RTN","XQARPRT2",73,0)
+ S XQAOPT=$S(XQAOPT>0:" [OPT]",1:"") S XQAROU=$S((XQAROU'="")&(XQAROU'="^"):" [ROU]",1:"") S XQAOPT=$S(XQAOPT'="":XQAOPT,XQAROU'="":XQAROU,1:"      ")
+"RTN","XQARPRT2",74,0)
+ I $D(XQAWORDS)>1 S XQAMSGUC=$$UP^XLFSTR(XQAMSG) D  Q:XQAMSGUC=""
+"RTN","XQARPRT2",75,0)
+ . N XQAMSG1,J,I S XQAMSG1=XQAMSGUC F J=0:0 S J=$O(XQAWORDS(J)) Q:J'>0  S XQAMSGUC=XQAMSG1 D  Q:XQAMSGUC'=""
+"RTN","XQARPRT2",76,0)
+ . . F I=0:0 S I=$O(XQAWORDS(J,I)) Q:I'>0  I XQAMSGUC'[XQAWORDS(J,I) S XQAMSGUC="" Q
+"RTN","XQARPRT2",77,0)
+ . . I XQAMSGUC'="",XQADISP'=1 D
+"RTN","XQARPRT2",78,0)
+ . . . I XQADISP=2,XQAOPT="",XQAROU="" S XQAMSGUC=""
+"RTN","XQARPRT2",79,0)
+ . . . I XQADISP=3,(XQAOPT'="")!(XQAROU'="") S XQAMSGUC=""
+"RTN","XQARPRT2",80,0)
+ . . . Q
+"RTN","XQARPRT2",81,0)
+ . . Q
+"RTN","XQARPRT2",82,0)
+ . Q
+"RTN","XQARPRT2",83,0)
+ S XQANEN=$$FMTE^XLFDT(XQADATE,"5Z")_XQAOPT_" ien="_IEN
+"RTN","XQARPRT2",84,0)
+ W !,$E(XQAMSG,1,IOM-1) W !?35,XQANEN S XQATOT=XQATOT+1
+"RTN","XQARPRT2",85,0)
+ S XQACTR=XQACTR+2 I XQACTR>(IOSL-4) D  Q:$D(DIRUT)  S XQACTR=0
+"RTN","XQARPRT2",86,0)
+ . I $D(ZTQUEUED) W @IOF
+"RTN","XQARPRT2",87,0)
+ . E  U IO(0) S DIR(0)="E" D ^DIR K DIR W !
+"RTN","XQARPRT2",88,0)
+ . U IO
+"RTN","XQARPRT2",89,0)
+ . Q
+"RTN","XQARPRT2",90,0)
+ Q
+"RTN","XQARPRT2",91,0)
+ ;
+"RTN","XQARPRT2",92,0)
+HEADER(XQANAME,DOFF) ; Output header at start of report XQANAME indicates who report is for
+"RTN","XQARPRT2",93,0)
+ IF '$D(ZTQUEUED) W:DOFF @IOF ; XU*8*690 - Remove initial FormFeed when queued to task job (Printer)
+"RTN","XQARPRT2",94,0)
+ W:'DOFF ! W $S('DOFF:"Found "_XQATOT_" ",1:""),$S($D(XQAWORDS)>1:"Selected ",1:""),"Alerts for ",XQANAME,!,"  for dates ",$$FMTE^XLFDT(XQASDATE)," through "
+"RTN","XQARPRT2",95,0)
+ N OUTDATE S OUTDATE=$$FMTE^XLFDT(XQAEDATE,"D") I 'DOFF,$D(XQADATE),XQADATE<XQAEDATE,'$D(ZTQUEUED) S OUTDATE=$$FMTE^XLFDT(XQADATE)
+"RTN","XQARPRT2",96,0)
+ W OUTDATE S XQACTR=2
+"RTN","XQARPRT2",97,0)
+ D WORDHDR
+"RTN","XQARPRT2",98,0)
+ W ! S XQACTR=XQACTR+1
+"RTN","XQARPRT2",99,0)
+ S XQATOT=0
+"RTN","XQARPRT2",100,0)
+ Q
+"RTN","XQARPRT2",101,0)
+ ;
+"RTN","XQARPRT2",102,0)
+WORDHDR ;
+"RTN","XQARPRT2",103,0)
+ N I,J
+"RTN","XQARPRT2",104,0)
+ F I=0:0 S I=$O(XQAWORDS(I)) Q:I'>0  W:I>1 !?10,"--- OR ---" D
+"RTN","XQARPRT2",105,0)
+ . F J=0:0 S J=$O(XQAWORDS(I,J)) Q:J'>0  W !?5,$S(J=1:"Selected alerts containing:",1:"            and containing:"),?35,XQAWORDS(I,J) S XQACTR=XQACTR+1
+"RTN","XQARPRT2",106,0)
+ . Q
+"RTN","XQARPRT2",107,0)
+ Q
+"RTN","XQARPRT2",108,0)
+DTPT ; OPT - GIVEN DATE AND PATIENT, TAKE A LOOK AT ALL USING 'D' X-REF
+"RTN","XQARPRT2",109,0)
+ ; for one day and for 1 patient list data in alert tracking file related to patient
+"RTN","XQARPRT2",110,0)
+ N DIR,XQANAME,XQADFN,XQA1U4N,XQASDATE,XQAEDATE,XQA1U4NP,XQAWORDS
+"RTN","XQARPRT2",111,0)
+ S DIR(0)="PO^2:EMZ" D ^DIR Q:Y'>0  S XQANAME=$P(Y,"^",2),XQADFN=+Y,XQA1U4N=$$GET1^DIQ(2,XQADFN_",",.0905),XQA1U4NP="("_XQA1U4N_")"
+"RTN","XQARPRT2",112,0)
+ D CHEKSCAN(XQADFN) Q:$D(DIRUT)
+"RTN","XQARPRT2",113,0)
+ D DATES Q:Y'>0
+"RTN","XQARPRT2",114,0)
+ D WORDS() K Y Q:$D(DIRUT)
+"RTN","XQARPRT2",115,0)
+ S %ZIS="MQ" D ^%ZIS Q:POP  I $D(IO("Q")) K IO("Q") S ZTRTN="DTPTDQ^XQARPRT2",ZTDESC="List of Patient Alerts",ZTSAVE("*")="" D ^%ZTLOAD W:$G(ZTSK)>0 !,"Task number is ",ZTSK K ZTSK Q
+"RTN","XQARPRT2",116,0)
+DTPTDQ ;
+"RTN","XQARPRT2",117,0)
+ N XQANWID,FOUND,ONE,ZERO,XQACTR,XQAIEN,XQATYPE,XQADATE,HEADERID,XQATOT
+"RTN","XQARPRT2",118,0)
+ S HEADERID="Patient "_$$GET1^DIQ(2,XQADFN_",",.01)_" ("_$$GET1^DIQ(2,XQADFN_",",.0905)_")"
+"RTN","XQARPRT2",119,0)
+ D HEADER(HEADERID,1)
+"RTN","XQARPRT2",120,0)
+ S XQADATE=XQASDATE-0.0000001 F  S XQADATE=$O(^XTV(8992.1,"D",XQADATE)) Q:(XQADATE'>0)!(XQADATE>XQAEDATE)  D  Q:$D(DIRUT)
+"RTN","XQARPRT2",121,0)
+ . S XQAIEN=0 F  S XQAIEN=$O(^XTV(8992.1,"D",XQADATE,XQAIEN)) Q:XQAIEN=""  S ONE=$G(^XTV(8992.1,XQAIEN,1)),ZERO=$G(^(0)),XQATYPE=$E(ZERO,1,3) D  Q:$D(DIRUT)
+"RTN","XQARPRT2",122,0)
+ . . S FOUND=0
+"RTN","XQARPRT2",123,0)
+ . . I (XQATYPE="DVB")!(XQATYPE="OR,") I $P(ZERO,U,4)=XQADFN S FOUND=1
+"RTN","XQARPRT2",124,0)
+ . . I (XQATYPE="GMA"),$P(ONE,U)[XQANAME S FOUND=1
+"RTN","XQARPRT2",125,0)
+ . . I (XQATYPE="TIU"),$P(ONE,U)[$E(XQANAME,1,9),$P(ONE,U)[XQA1U4NP S FOUND=1
+"RTN","XQARPRT2",126,0)
+ . . I FOUND D PRNTATRK(XQAIEN)
+"RTN","XQARPRT2",127,0)
+ . . Q
+"RTN","XQARPRT2",128,0)
+ . Q
+"RTN","XQARPRT2",129,0)
+ D HEADER(HEADERID,0)
+"RTN","XQARPRT2",130,0)
+ Q
+"RTN","XQARPRT2",131,0)
+ ;
+"RTN","XQARPRT2",132,0)
+CHEKSCAN(XQADFN) ; Output a list of dates when OR, and DVB alerts are found
+"RTN","XQARPRT2",133,0)
+ N DIR,OLDEST,X,Y,XQASDATE,XX,CNT,COL,BASECNT,I
+"RTN","XQARPRT2",134,0)
+ W !!! S DIR(0)="Y",DIR("A")="Do you want to scan for a list of dates that have at least some alerts for this patient",DIR("A",1)="The quick scan method used here will not pick up some alerts,"
+"RTN","XQARPRT2",135,0)
+ S DIR("A",2)="but should give an indication of when alerts might be found.",DIR("A",3)=""
+"RTN","XQARPRT2",136,0)
+ D ^DIR K DIR Q:$D(DIRUT)  I Y D
+"RTN","XQARPRT2",137,0)
+ . K ^TMP("XQARPRT2",$J)
+"RTN","XQARPRT2",138,0)
+ . N OLDEST S OLDEST=$$FMTE^XLFDT($$OLDEST(),"5DZ")
+"RTN","XQARPRT2",139,0)
+ . S DIR(0)="SO^;1:1 Week ago;2:1 month ago;3:3 months ago;4:6 months ago;5:1 year ago;6:As far back as possible",DIR("A")="Select a period for starting",DIR("A",1)="The oldest entry in your Alert Tracking file is from "_OLDEST,DIR("A",2)=""
+"RTN","XQARPRT2",140,0)
+ . D ^DIR K DIR Q:Y'>0
+"RTN","XQARPRT2",141,0)
+ . S X=$S(Y=1:"1W",Y=2:"1M",Y=3:"3M",Y=4:"6M",Y=5:"12M",1:"1000M"),X="T-"_X D ^%DT S XQASDATE=Y
+"RTN","XQARPRT2",142,0)
+ . F I=0:0 S I=$O(^XTV(8992.1,"C",XQADFN,I)) Q:I'>0  S ZERO=$P(^XTV(8992.1,I,0),U,2) I ZERO'<XQASDATE S ^TMP("XQARPRT2",$J,(ZERO\1))=$G(^TMP("XQARPRT2",$J,(ZERO\1)))+1
+"RTN","XQARPRT2",143,0)
+ . ; Output date and number found in vertical columns, with (if lots of dates) three columns per screen
+"RTN","XQARPRT2",144,0)
+ . I $D(^TMP("XQARPRT2",$J)) W !,"Dates and number of alerts found in () [may not be all of them]"
+"RTN","XQARPRT2",145,0)
+ . ; S CNT=0,COL=1,BASECNT=0 F I=0:0 S I=$O(^TMP("XQARPRT2",$J,I)) Q:I'>0  S CNT=CNT+1,XX(CNT)=$G(XX(CNT))_$$FMTE^XLFDT(I,"5DZ")_"  ("_^(I)_")"_"     " I (CNT-BASECNT)>(IOSL-4) S COL=COL+1 S:'(COL#3) BASECNT=CNT S CNT=BASECNT
+"RTN","XQARPRT2",146,0)
+ . S CNT=2 F I=0:0 S I=$O(^TMP("XQARPRT2",$J,I)) Q:I'>0  S CNT=CNT+1,XX(CNT\3)=$G(XX(CNT\3))_$$FMTE^XLFDT(I,"5DZ")_"  ("_^(I)_")"_"     "
+"RTN","XQARPRT2",147,0)
+ . F I=0:0 S I=$O(XX(I)) Q:I'>0  W !,XX(I)
+"RTN","XQARPRT2",148,0)
+ . Q
+"RTN","XQARPRT2",149,0)
+ Q
+"RTN","XQARPRT2",150,0)
+ ;
+"RTN","XQARPRT2",151,0)
+VIEWTRAK ; OPT.  View an entry in the Alert Tracking file in Captioned mode
+"RTN","XQARPRT2",152,0)
+ D VIEWTRAK^XQARPRT1
+"RTN","XQARPRT2",153,0)
+ Q
+"RTN","XQARPRT2",154,0)
+ ;
+"RTN","XQARPRT2",155,0)
+OLDEST() ; Returns date of oldest entry in alert tracking file
+"RTN","XQARPRT2",156,0)
+ Q $$OLDEST^XQARPRT1()
+"RTN","XU8P690")
+0^^B3544198^n/a
+"RTN","XU8P690",1,0)
+XU8P690 ;ALB/GTS - Patch XU*8*690 post-init ;1/12/18  14:50
+"RTN","XU8P690",2,0)
+ ;;8.0;KERNEL;**690**;Jul 10, 1995;Build 18
+"RTN","XU8P690",3,0)
+ ;Per VHA VA Directive 6402, this routine should not be modified
+"RTN","XU8P690",4,0)
+ ;
+"RTN","XU8P690",5,0)
+ENPOST ; -- main entry point for XU*8*690 post-init
+"RTN","XU8P690",6,0)
+ NEW XU690ST
+"RTN","XU8P690",7,0)
+ SET XU690ST=$$XU690ST()
+"RTN","XU8P690",8,0)
+ IF +XU690ST'=2 DO BMES^XPDUTL(" o 'ABNL IMA' addition to ALERT CRITICAL TEXT file (#8992.3) "_$SELECT(+XU690ST:"succeeded.",1:"failed."))
+"RTN","XU8P690",9,0)
+ IF +XU690ST<1 DO MES^XPDUTL("        Error: "_$P(XU690ST,"^",2))
+"RTN","XU8P690",10,0)
+ IF +XU690ST=2 DO 
+"RTN","XU8P690",11,0)
+ . DO BMES^XPDUTL(" o "_$P(XU690ST,"^",2))
+"RTN","XU8P690",12,0)
+ . DO MES^XPDUTL("       ...no need to add '"_$$ALERTNAM_"' to file #8992.3")
+"RTN","XU8P690",13,0)
+ QUIT
+"RTN","XU8P690",14,0)
+ ;
+"RTN","XU8P690",15,0)
+ ; -- Add ABNL IMA to file 8992.3
+"RTN","XU8P690",16,0)
+XU690ST() ;* Create Alert Critical Text file (#8992.3) entry
+"RTN","XU8P690",17,0)
+ SET RESULT="1^SUCCESS"
+"RTN","XU8P690",18,0)
+ SET DA=$$FIND1^DIC(8992.3,"","BX",$$ALERTNAM,"","","ERR")
+"RTN","XU8P690",19,0)
+ IF +DA>0 SET RESULT="2^'"_$$ALERTNAM_"' ALERT CRITICAL TEXT file entry exists."
+"RTN","XU8P690",20,0)
+ ;
+"RTN","XU8P690",21,0)
+ ; Add A1VS PKG MGT PARAMETERS Parameter Template
+"RTN","XU8P690",22,0)
+ IF +DA'>0 DO
+"RTN","XU8P690",23,0)
+ . KILL DO
+"RTN","XU8P690",24,0)
+ . SET DIC="^XTV(8992.3,",DIC(0)="LU" ;Do not execute Input Transforms on .01 field
+"RTN","XU8P690",25,0)
+ . SET X=$$ALERTNAM()
+"RTN","XU8P690",26,0)
+ . DO FILE^DICN
+"RTN","XU8P690",27,0)
+ . SET XU690DA=+Y
+"RTN","XU8P690",28,0)
+ . IF +XU690DA'>0 SET RESULT="0^ALERT CRITICAL TEXT file entry failure!"
+"RTN","XU8P690",29,0)
+ . IF +XU690DA>0 DO
+"RTN","XU8P690",30,0)
+ . . SET DA=XU690DA
+"RTN","XU8P690",31,0)
+ . . SET DIE="^XTV(8992.3,"
+"RTN","XU8P690",32,0)
+ . . SET DR=".02///"_$$PKGID()_";.03///"_$$CRTPKG()
+"RTN","XU8P690",33,0)
+ . . DO ^DIE
+"RTN","XU8P690",34,0)
+ ;
+"RTN","XU8P690",35,0)
+ QUIT RESULT
+"RTN","XU8P690",36,0)
+ ;
+"RTN","XU8P690",37,0)
+ ; -- Parameter Template definition APIs
+"RTN","XU8P690",38,0)
+ALERTNAM() ; -- return Parameter Template name (fld #.01)
+"RTN","XU8P690",39,0)
+ QUIT "ABNL IMA"
+"RTN","XU8P690",40,0)
+ ;
+"RTN","XU8P690",41,0)
+PKGID() ; -- Package ID text (fld #.02)
+"RTN","XU8P690",42,0)
+ QUIT ""
+"RTN","XU8P690",43,0)
+ ;
+"RTN","XU8P690",44,0)
+CRTPKG() ; -- return Creating Package that needed the entry (fld #.03)
+"RTN","XU8P690",45,0)
+ QUIT "ORDER ENTRY/RESULTS REPORTING"
+"VER")
+8.0^22.2
+"BLD",9013,6)
+^547
+**END**
+**END**
+

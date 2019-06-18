@@ -1,0 +1,1585 @@
+Released RA*5*148 SEQ #136
+Extracted from mail message
+**KIDS**:RA*5.0*148^
+
+**INSTALL NAME**
+RA*5.0*148
+"BLD",10905,0)
+RA*5.0*148^RADIOLOGY/NUCLEAR MEDICINE^0^3181221^y
+"BLD",10905,1,0)
+^^5^5^3181210^^
+"BLD",10905,1,1,0)
+This patch allows the user to select an imaging order that has been 
+"BLD",10905,1,2,0)
+signed, create a consult order from that imaging order, automatically sign
+"BLD",10905,1,3,0)
+the consult order which creates a consult, and the consult is submitted to
+"BLD",10905,1,4,0)
+community care. Seven consult new services are created for use in this 
+"BLD",10905,1,5,0)
+process.
+"BLD",10905,4,0)
+^9.64PA^^
+"BLD",10905,6)
+5^
+"BLD",10905,6.3)
+59
+"BLD",10905,"ABPKG")
+n
+"BLD",10905,"INID")
+^n
+"BLD",10905,"INIT")
+EN^RA148PST
+"BLD",10905,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10905,"KRN",.4,0)
+.4
+"BLD",10905,"KRN",.401,0)
+.401
+"BLD",10905,"KRN",.402,0)
+.402
+"BLD",10905,"KRN",.403,0)
+.403
+"BLD",10905,"KRN",.5,0)
+.5
+"BLD",10905,"KRN",.84,0)
+.84
+"BLD",10905,"KRN",3.6,0)
+3.6
+"BLD",10905,"KRN",3.8,0)
+3.8
+"BLD",10905,"KRN",9.2,0)
+9.2
+"BLD",10905,"KRN",9.8,0)
+9.8
+"BLD",10905,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",10905,"KRN",9.8,"NM",1,0)
+RAORDR^^0^B93349955
+"BLD",10905,"KRN",9.8,"NM",2,0)
+RAORDR1^^0^B40134897
+"BLD",10905,"KRN",9.8,"NM",3,0)
+RAORDR2^^0^B22971178
+"BLD",10905,"KRN",9.8,"NM","B","RAORDR",1)
+
+"BLD",10905,"KRN",9.8,"NM","B","RAORDR1",2)
+
+"BLD",10905,"KRN",9.8,"NM","B","RAORDR2",3)
+
+"BLD",10905,"KRN",19,0)
+19
+"BLD",10905,"KRN",19,"NM",0)
+^9.68A^2^2
+"BLD",10905,"KRN",19,"NM",1,0)
+RA ORDER^^2
+"BLD",10905,"KRN",19,"NM",2,0)
+RA ORDERREF^^0
+"BLD",10905,"KRN",19,"NM","B","RA ORDER",1)
+
+"BLD",10905,"KRN",19,"NM","B","RA ORDERREF",2)
+
+"BLD",10905,"KRN",19.1,0)
+19.1
+"BLD",10905,"KRN",101,0)
+101
+"BLD",10905,"KRN",409.61,0)
+409.61
+"BLD",10905,"KRN",771,0)
+771
+"BLD",10905,"KRN",779.2,0)
+779.2
+"BLD",10905,"KRN",870,0)
+870
+"BLD",10905,"KRN",8989.51,0)
+8989.51
+"BLD",10905,"KRN",8989.52,0)
+8989.52
+"BLD",10905,"KRN",8994,0)
+8994
+"BLD",10905,"KRN","B",.4,.4)
+
+"BLD",10905,"KRN","B",.401,.401)
+
+"BLD",10905,"KRN","B",.402,.402)
+
+"BLD",10905,"KRN","B",.403,.403)
+
+"BLD",10905,"KRN","B",.5,.5)
+
+"BLD",10905,"KRN","B",.84,.84)
+
+"BLD",10905,"KRN","B",3.6,3.6)
+
+"BLD",10905,"KRN","B",3.8,3.8)
+
+"BLD",10905,"KRN","B",9.2,9.2)
+
+"BLD",10905,"KRN","B",9.8,9.8)
+
+"BLD",10905,"KRN","B",19,19)
+
+"BLD",10905,"KRN","B",19.1,19.1)
+
+"BLD",10905,"KRN","B",101,101)
+
+"BLD",10905,"KRN","B",409.61,409.61)
+
+"BLD",10905,"KRN","B",771,771)
+
+"BLD",10905,"KRN","B",779.2,779.2)
+
+"BLD",10905,"KRN","B",870,870)
+
+"BLD",10905,"KRN","B",8989.51,8989.51)
+
+"BLD",10905,"KRN","B",8989.52,8989.52)
+
+"BLD",10905,"KRN","B",8994,8994)
+
+"BLD",10905,"QUES",0)
+^9.62^^
+"BLD",10905,"REQB",0)
+^9.611^^
+"INIT")
+EN^RA148PST
+"KRN",19,4202,-1)
+2^1
+"KRN",19,4202,0)
+RA ORDER^Radiology/Nuclear Med Order Entry Menu^^M^520824649^^^^^^^
+"KRN",19,4202,10,0)
+^19.01IP^14^14
+"KRN",19,4202,10,14,0)
+2922516^REF
+"KRN",19,4202,10,14,"^")
+RA ORDERREF
+"KRN",19,4202,"U")
+RADIOLOGY/NUCLEAR MED ORDER EN
+"KRN",19,2922516,-1)
+0^2
+"KRN",19,2922516,0)
+RA ORDERREF^Refer Selected Requests to COMMUNITY CARE Provider^^R^^^^^^^^RADIOLOGY/NUCLEAR MEDICINE^^
+"KRN",19,2922516,1,0)
+^19.06^1^1^3180214^^
+"KRN",19,2922516,1,1,0)
+This option allows the user to CREATE a REQUEST/CONSULTentry  for a selected 'requested' exam in the  'PENDING' or 'HOLD' status . The user will be asked to select an external IMAGING location from the LOCATION file.
+"KRN",19,2922516,10.1)
+Refer Exam
+"KRN",19,2922516,20)
+
+"KRN",19,2922516,25)
+ENT^RAORDR
+"KRN",19,2922516,"U")
+REFER SELECTED REQUESTS TO COM
+"MBREQ")
+0
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",31,-1)
+1^1
+"PKG",31,0)
+RADIOLOGY/NUCLEAR MEDICINE^RA^REGISTERS PATIENTS,RECORDS EXAMS,PROFILES,AMIS REPORTS
+"PKG",31,22,0)
+^9.49I^1^1
+"PKG",31,22,1,0)
+5.0^2980317^2980805^1
+"PKG",31,22,1,"PAH",1,0)
+148^3181221
+"PKG",31,22,1,"PAH",1,1,0)
+^^5^5^3181221
+"PKG",31,22,1,"PAH",1,1,1,0)
+This patch allows the user to select an imaging order that has been 
+"PKG",31,22,1,"PAH",1,1,2,0)
+signed, create a consult order from that imaging order, automatically sign
+"PKG",31,22,1,"PAH",1,1,3,0)
+the consult order which creates a consult, and the consult is submitted to
+"PKG",31,22,1,"PAH",1,1,4,0)
+community care. Seven consult new services are created for use in this 
+"PKG",31,22,1,"PAH",1,1,5,0)
+process.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","RA148PST")
+0^^B17594265^n/a
+"RTN","RA148PST",1,0)
+RA148PST ;ABV/MKN - Post Install;10/5/2018 11:28 AM
+"RTN","RA148PST",2,0)
+ ;;5.0;Radiology/Nuclear Medicine;**148**;Mar 16, 1998;Build 59
+"RTN","RA148PST",3,0)
+ ;
+"RTN","RA148PST",4,0)
+ Q
+"RTN","RA148PST",5,0)
+ ;
+"RTN","RA148PST",6,0)
+EN ;
+"RTN","RA148PST",7,0)
+ ;First change the name of the seven -AUTO consult services (files #123.5 and #101.43),
+"RTN","RA148PST",8,0)
+ ;if they exist, to move the hyphen
+"RTN","RA148PST",9,0)
+ ;  Example:  "COMMUNITY CARE IMAGING-CT-AUTO"  to  "COMMUNITY CARE-IMAGING CT-AUTO"
+"RTN","RA148PST",10,0)
+ ;
+"RTN","RA148PST",11,0)
+ N DA,DIE,DR,ORN,RAFROM,RAI,RATO,X
+"RTN","RA148PST",12,0)
+ F RAI=1:1 S X=$T(LIST+RAI) Q:X=" ;//"  S RAFROM=$P(X,";",2),RATO=$P(X,";",3) D
+"RTN","RA148PST",13,0)
+ .S DA=$O(^GMR(123.5,"B",RAFROM,"")) D:DA
+"RTN","RA148PST",14,0)
+ ..S DIE="^GMR(123.5,",DR=".01///"_RATO D ^DIE
+"RTN","RA148PST",15,0)
+ .S DA=$O(^ORD(101.43,"B",$E(RAFROM,1,30),"")) D:DA
+"RTN","RA148PST",16,0)
+ ..S X=$$GET1^DIQ(101.43,DA_",",.01)
+"RTN","RA148PST",17,0)
+ ..I X=RAFROM S DIE="^ORD(101.43,",DR=".01///"_RATO_";1.1///"_RATO D ^DIE
+"RTN","RA148PST",18,0)
+ ;
+"RTN","RA148PST",19,0)
+ D QUEUE
+"RTN","RA148PST",20,0)
+ ;
+"RTN","RA148PST",21,0)
+ Q
+"RTN","RA148PST",22,0)
+ ;
+"RTN","RA148PST",23,0)
+LIST ;
+"RTN","RA148PST",24,0)
+ ;COMMUNITY CARE IMAGING-CT-AUTO;COMMUNITY CARE-IMAGING CT-AUTO
+"RTN","RA148PST",25,0)
+ ;COMMUNITY CARE IMAGING-MAMMOGRAPHY DIAGNOSTIC-AUTO;COMMUNITY CARE-IMAGING MAMMOGRAPHY DIAGNOSTIC-AUTO
+"RTN","RA148PST",26,0)
+ ;COMMUNITY CARE IMAGING-MAMMOGRAPHY SCREEN-AUTO;COMMUNITY CARE-IMAGING MAMMOGRAPHY SCREEN-AUTO
+"RTN","RA148PST",27,0)
+ ;COMMUNITY CARE IMAGING-MAGNETIC RESONANCE IMAGING-AUTO;COMMUNITY CARE-IMAGING MAGNETIC RESONANCE IMAGING-AUTO
+"RTN","RA148PST",28,0)
+ ;COMMUNITY CARE IMAGING-NUCLEAR MEDICINE-AUTO;COMMUNITY CARE-IMAGING NUCLEAR MEDICINE-AUTO
+"RTN","RA148PST",29,0)
+ ;COMMUNITY CARE IMAGING-GENERAL RADIOLOGY-AUTO;COMMUNITY CARE-IMAGING GENERAL RADIOLOGY-AUTO
+"RTN","RA148PST",30,0)
+ ;COMMUNITY CARE IMAGING-ULTRASOUND-AUTO;COMMUNITY CARE-IMAGING ULTRASOUND-AUTO
+"RTN","RA148PST",31,0)
+ ;//
+"RTN","RA148PST",32,0)
+QUEUE ;
+"RTN","RA148PST",33,0)
+ N ZTRTN,ZTDESC,ZTREQ,ZTIO,ZTDTH,ZTSK
+"RTN","RA148PST",34,0)
+ D BMES^XPDUTL("Calling TaskMan to create background job to change service name where needed in")
+"RTN","RA148PST",35,0)
+ D BMES^XPDUTL("  Order Actions multiple of file #100")
+"RTN","RA148PST",36,0)
+ S ZTRTN="CHGORAC^RA148PST",ZTDESC="Change service name where needed in Order Actions multiple of file #100",ZTIO="",ZTDTH=$H
+"RTN","RA148PST",37,0)
+ D ^%ZTLOAD I '$G(ZTSK) D BMES^XPDUTL("Unable to create TaskMan job - run CHGORAC^RA148PST after install finishes") Q 
+"RTN","RA148PST",38,0)
+ D BMES^XPDUTL("Post-install queued as task #"_$G(ZTSK))
+"RTN","RA148PST",39,0)
+ Q
+"RTN","RA148PST",40,0)
+ ;
+"RTN","RA148PST",41,0)
+CHGORAC ;
+"RTN","RA148PST",42,0)
+ ;Find orders where the name of the consult might need to be changed in the ORDER ACTIONS multiple
+"RTN","RA148PST",43,0)
+ ;  Example:  "COMMUNITY CARE IMAGING-CT-AUTO"  to  "COMMUNITY CARE-IMAGING CT-AUTO"
+"RTN","RA148PST",44,0)
+ ;
+"RTN","RA148PST",45,0)
+ N CT,CTXTMP,CTXTMPPP,DA,IEN,ORACT,ORDATE,ORN,X,X1,X2,XTMP,XTMPPP
+"RTN","RA148PST",46,0)
+ S DA=$$NOW^XLFDT,X1=DA,X2=90 D C^%DTC
+"RTN","RA148PST",47,0)
+ S XTMP=$NA(^XTMP("RA148PST "_$$FMTE^XLFDT(DA,"5PZ")_" "_$J)),(CT,CTXTMP,CTXTMPPP)=0
+"RTN","RA148PST",48,0)
+ K @XTMP S @XTMP@(0)=X_U_DA_U_"List of ORDER ACTION records in file #100 where the name of the consult service was changed"
+"RTN","RA148PST",49,0)
+ S XTMPPP=$NA(^XTMP("RA148PST-PP "_$$FMTE^XLFDT(DA,"5PZ")_" "_$J))
+"RTN","RA148PST",50,0)
+ K @XTMPPP S @XTMPPP@(0)=X_U_DA_U_"Records Pre and Post"
+"RTN","RA148PST",51,0)
+ S ORDATE="3180101" F  S ORDATE=$O(^OR(100,"AF",ORDATE)) Q:'ORDATE  S IEN=0 D
+"RTN","RA148PST",52,0)
+ .F  S IEN=$O(^OR(100,"AF",ORDATE,IEN)) Q:'IEN  D
+"RTN","RA148PST",53,0)
+ ..S ORACT=0 F  S ORACT=$O(^OR(100,"AF",ORDATE,IEN,ORACT)) Q:'ORACT  D
+"RTN","RA148PST",54,0)
+ ...S ORN=0 F  S ORN=$O(^OR(100,IEN,8,ORACT,.1,ORN)) Q:'ORN  S X=^(ORN,0) D CHKORDAC(X)
+"RTN","RA148PST",55,0)
+ S CTXTMP=CTXTMP+1
+"RTN","RA148PST",56,0)
+ I 'CT S @XTMP@(CTXTMP)="No records found that needed changing"
+"RTN","RA148PST",57,0)
+ E  S @XTMP@(CTXTMP)="End of run: "_CT_" record"_$S(CT>1:"s",1:"")_" found and changed"
+"RTN","RA148PST",58,0)
+ S ZTREQ="@"
+"RTN","RA148PST",59,0)
+ K X S X(1)="RA*5.0*148 - the background job has finished changing the consult records."
+"RTN","RA148PST",60,0)
+ I CT=0 S X(2)="No records were changed."
+"RTN","RA148PST",61,0)
+ E  S X(2)=CT_" record"_$S(CT>1:"s were",1:" was")_" changed"
+"RTN","RA148PST",62,0)
+ D MSG(.X)
+"RTN","RA148PST",63,0)
+ Q
+"RTN","RA148PST",64,0)
+ ;
+"RTN","RA148PST",65,0)
+CHKORDAC(IN) ;
+"RTN","RA148PST",66,0)
+ N FROM,I,OR0,ORPNA,TO,Y,Z
+"RTN","RA148PST",67,0)
+ F I=1:1 S X=$T(LIST+I) Q:X=" ;//"  S FROM=$P(X,";",2),TO=$P(X,";",3) D
+"RTN","RA148PST",68,0)
+ .S Y=$F(IN,FROM) Q:'Y
+"RTN","RA148PST",69,0)
+ .S Z=$E(IN,1,(Y-$L(FROM))-1)_TO_$E(IN,Y,$L(IN))
+"RTN","RA148PST",70,0)
+ .S OR0=$G(^OR(100,IEN,0))
+"RTN","RA148PST",71,0)
+ .I OR0="" S ORPNA="Not Known"
+"RTN","RA148PST",72,0)
+ .E  S ORPNA=$$GET1^DIQ(100,IEN_",",.02,"E")
+"RTN","RA148PST",73,0)
+ .S CT=CT+1,CTXTMP=CTXTMP+1,@XTMP@(CTXTMP)=CT_". "_ORPNA_" Order IEN:"_IEN_" Consult to Service/Specialty changed:"
+"RTN","RA148PST",74,0)
+ .S CTXTMP=CTXTMP+1,@XTMP@(CTXTMP)="  from "_FROM_" to "_TO
+"RTN","RA148PST",75,0)
+ .S CTXTMPPP=CTXTMPPP+1,@XTMPPP@(CTXTMPPP)="^OR(100,"_IEN_",8,"_ORACT_",.1,"_ORN_",0)"
+"RTN","RA148PST",76,0)
+ .S @XTMPPP@(CTXTMPPP,1)=^OR(100,IEN,8,ORACT,.1,ORN,0)
+"RTN","RA148PST",77,0)
+ .S @XTMPPP@(CTXTMPPP,2)=Z
+"RTN","RA148PST",78,0)
+ .S ^OR(100,IEN,8,ORACT,.1,ORN,0)=Z
+"RTN","RA148PST",79,0)
+ Q
+"RTN","RA148PST",80,0)
+ ;
+"RTN","RA148PST",81,0)
+MSG(SUB) ;create and send message
+"RTN","RA148PST",82,0)
+ N XMDUZ,XMSUB,XMZ,XMTEXT,XMY
+"RTN","RA148PST",83,0)
+ N IEN,A,B,C,LNCNT S (IEN,A,B,C)=0,LNCNT=1
+"RTN","RA148PST",84,0)
+ S XMY(DUZ)=""
+"RTN","RA148PST",85,0)
+ S XMDUZ=DUZ
+"RTN","RA148PST",86,0)
+ S XMSUB="RA*5.0*148 Post-install"
+"RTN","RA148PST",87,0)
+ D XMZ^XMA2 ; call Create Message Module
+"RTN","RA148PST",88,0)
+ S XMTEXT="XMTEXT"
+"RTN","RA148PST",89,0)
+ M XMTEXT=SUB
+"RTN","RA148PST",90,0)
+ D ENL^XMD
+"RTN","RA148PST",91,0)
+ D ENT1^XMD
+"RTN","RA148PST",92,0)
+ Q
+"RTN","RA148PST",93,0)
+ ;
+"RTN","RAORDR")
+0^1^B93349955^n/a
+"RTN","RAORDR",1,0)
+RAORDR ;ABV/SCR/MKN - Refer Pending/Hold Requests ;4/1/2018 11:28 AM
+"RTN","RAORDR",2,0)
+ ;;5.0;Radiology/Nuclear Medicine;**148**;Mar 16, 1998;Build 59
+"RTN","RAORDR",3,0)
+ ;
+"RTN","RAORDR",4,0)
+ Q
+"RTN","RAORDR",5,0)
+ ;
+"RTN","RAORDR",6,0)
+ ;ICR#     Supports
+"RTN","RAORDR",7,0)
+ ;10061    DEM^VADPT
+"RTN","RAORDR",8,0)
+ ;
+"RTN","RAORDR",9,0)
+ENT ;
+"RTN","RAORDR",10,0)
+ ;
+"RTN","RAORDR",11,0)
+ N DIC,DIR,DIRUT,DTOUT,DUOUT,QQ,RA123IEN,RA44NA,RAANS,RAANS2,RAARAY,RAARRAY
+"RTN","RAORDR",12,0)
+ N RACDW,RACDWN,RACIENS,RACOMCT,RACNT,RACOM,RACOUNT,RADD,RADFN,RADT,RAEND
+"RTN","RAORDR",13,0)
+ N RAERR,RAEXPL,RAF,RAHDR,RAI,RAILOC,RAJUST,RAJUST2,RAILOC1,RALOCNM,RAMAND
+"RTN","RAORDR",14,0)
+ N RAN,RANOW,RANOW2,RAO,RAOBEG,RAOEND,RAOIFN,RAOPHY,RAORD0,RAORDIEN,RAPOP
+"RTN","RAORDR",15,0)
+ N RAPR,RAPRTYDT,RAQUES,RAQUIT,RAREASON,RAREQSTA,RARES,RASELOC,RASTART,RASUB
+"RTN","RAORDR",16,0)
+ N RAT,RAUCID,X,Y
+"RTN","RAORDR",17,0)
+ ;
+"RTN","RAORDR",18,0)
+ S (RAARRAY,RACIENS,RAILOC)=""
+"RTN","RAORDR",19,0)
+GETPAT ;
+"RTN","RAORDR",20,0)
+ S (RACOUNT,RASELOC)=0 K RAEOS
+"RTN","RAORDR",21,0)
+ K DIC,DIRUT,^TMP("RAORDR",$J),RAARRAY
+"RTN","RAORDR",22,0)
+ S DIC="^DPT(",DIC(0)="AEMQ" D ^DIC K DIC
+"RTN","RAORDR",23,0)
+ I $D(DIRUT) S RAQUIT=1
+"RTN","RAORDR",24,0)
+ Q:$G(RAQUIT)!($G(Y)=-1)
+"RTN","RAORDR",25,0)
+ S RADFN=+Y
+"RTN","RAORDR",26,0)
+ K DIR S DIR(0)="E" D ^DIR G:'+Y GETPAT
+"RTN","RAORDR",27,0)
+ S Y="P",RAQUIT=0
+"RTN","RAORDR",28,0)
+ W !
+"RTN","RAORDR",29,0)
+ S RACOUNT=0
+"RTN","RAORDR",30,0)
+ F RAREQSTA=3,5,8 S RAOIFN=0 F  S RAOIFN=$O(^RAO(75.1,"AS",RADFN,RAREQSTA,RAOIFN)) Q:'RAOIFN!($D(RAEOS))  D
+"RTN","RAORDR",31,0)
+ . I $D(^RAO(75.1,RAOIFN,0)) D
+"RTN","RAORDR",32,0)
+ . . S RAO(0)=^RAO(75.1,RAOIFN,0) I RAREQSTA=3&($P(RAO(0),U,7)) Q:$$AUTOHOLD($P(RAO(0),U,7))
+"RTN","RAORDR",33,0)
+ . . S RAOPHY=$P(RAO(0),U,14)
+"RTN","RAORDR",34,0)
+ . . S RALADT=$P(RAO(0),U,21)
+"RTN","RAORDR",35,0)
+ . . S RACOUNT=RACOUNT+1,RAARRAY(RACOUNT)=RAOIFN
+"RTN","RAORDR",36,0)
+ I '$D(RAARRAY(1)) W !,"No Imaging orders found for this patient",! G GETPAT
+"RTN","RAORDR",37,0)
+ S (RACOUNT,RAF,RARES)=0
+"RTN","RAORDR",38,0)
+ D GETORD
+"RTN","RAORDR",39,0)
+ G:'RARES GETPAT
+"RTN","RAORDR",40,0)
+ S RAORDIEN=$$MAKECONS^RAORDR1($G(RAARRAY(Y)))
+"RTN","RAORDR",41,0)
+ ;Add comments to Consult that was just created
+"RTN","RAORDR",42,0)
+ S RAUCID="",RA123IEN=$G(^OR(100,RAORDIEN,4)) I $P(RA123IEN,";",2)="GMRC" D
+"RTN","RAORDR",43,0)
+ . S RA123IEN=+RA123IEN,RAUCID=$$GET1^DIQ(123,RA123IEN,80)
+"RTN","RAORDR",44,0)
+ . D:RA123IEN&($D(RAEXPL(RAANS2)))
+"RTN","RAORDR",45,0)
+ . . S RAI="",RACOMCT=0 F  S RAI=$O(RACDW(RAANS,RAANS2,RAI)) Q:RAI=""  D
+"RTN","RAORDR",46,0)
+ . . . S RACOMCT=RACOMCT+1,RACOM(RACOMCT)=$P(RACDW(RAANS,RAANS2,RAI),U)
+"RTN","RAORDR",47,0)
+ . . . I $P(RACDW(RAANS,RAANS2,RAI),U,2)]"",$G(RAEXPL(RAANS2))]"" D ADDEXPL
+"RTN","RAORDR",48,0)
+ . . S RADT=$$NOW^XLFDT()
+"RTN","RAORDR",49,0)
+ . . D CMT^ORQQCN2(.RAERR,RA123IEN,.RACOM,"N","",RADT)
+"RTN","RAORDR",50,0)
+ . D:RA123IEN&(RAANS2=0)
+"RTN","RAORDR",51,0)
+ . . S RAI="",RACOMCT=0 F  S RAI=$O(RACDW(RAANS,RAI)) Q:RAI=""  D
+"RTN","RAORDR",52,0)
+ . . . S RACOMCT=RACOMCT+1 S:$P(RACDW(RAANS,RAI),U)]"" RACOM(RACOMCT)=$P(RACDW(RAANS,RAI),U)
+"RTN","RAORDR",53,0)
+ . . . I $P(RACDW(RAANS,RAI),U,2)]"",$G(RAEXPL)]"" D ADDEXPLS
+"RTN","RAORDR",54,0)
+ . . S RADT=$$NOW^XLFDT()
+"RTN","RAORDR",55,0)
+ . . D CMT^ORQQCN2(.RAERR,RA123IEN,.RACOM,"N","",RADT)
+"RTN","RAORDR",56,0)
+ . W !!,"Consult with UCID: "_$S(RAUCID]"":RAUCID,1:"(Not known)")," has been created",!
+"RTN","RAORDR",57,0)
+ . I 'RA123IEN W !!,"**NO Consult created**",!
+"RTN","RAORDR",58,0)
+ D KILL
+"RTN","RAORDR",59,0)
+ G GETPAT
+"RTN","RAORDR",60,0)
+ ;
+"RTN","RAORDR",61,0)
+ADDEXPL ;
+"RTN","RAORDR",62,0)
+ N I,L,X
+"RTN","RAORDR",63,0)
+ S X=$P($G(RAEXPL(RAANS2)),U,2)
+"RTN","RAORDR",64,0)
+ S RACOM(RACOMCT)=RACOM(RACOMCT)_$S(X]"":":",1:"")
+"RTN","RAORDR",65,0)
+ I X]"" D BRKLINE(.L,X,74) D
+"RTN","RAORDR",66,0)
+ .S I="" F  S I=$O(L(I)) Q:'I  S RACOMCT=RACOMCT+1,RACOM(RACOMCT)=L(I)
+"RTN","RAORDR",67,0)
+ Q
+"RTN","RAORDR",68,0)
+ ;
+"RTN","RAORDR",69,0)
+ADDEXPLS ;
+"RTN","RAORDR",70,0)
+ N I,X,L
+"RTN","RAORDR",71,0)
+ S X=RAEXPL
+"RTN","RAORDR",72,0)
+ I $D(RACOM(RACOMCT)) D  Q
+"RTN","RAORDR",73,0)
+ .S RACOM(RACOMCT)=RACOM(RACOMCT)_$S(X]"":":",1:"")
+"RTN","RAORDR",74,0)
+ .I X]"" D BRKLINE(.L,X,74) D
+"RTN","RAORDR",75,0)
+ ..S I="" F  S I=$O(L(I)) Q:'I  S RACOMCT=RACOMCT+1,RACOM(RACOMCT)=L(I)
+"RTN","RAORDR",76,0)
+ D BRKLINE(.L,X,74)
+"RTN","RAORDR",77,0)
+ S I="" F  S I=$O(L(I)) Q:'I  S RACOM(RACOMCT)=L(I),RACOMCT=RACOMCT+1
+"RTN","RAORDR",78,0)
+ Q
+"RTN","RAORDR",79,0)
+ ;
+"RTN","RAORDR",80,0)
+KILL ;
+"RTN","RAORDR",81,0)
+ K DIC,DIR,DIRUT,QQ,RA123IEN,RA44NA,RAANS,RAANS2,RAARAY,RAARRAY,RACDW,RACDWN,RACIENS,RACOMCT,RACNT,RACOM
+"RTN","RAORDR",82,0)
+ K RACOUNT,RADD,RADFN,RADT,RAEND,RAERR,RAEXPL,RAF,RAHDR,RAI,RAILOC,RAJUST,RAJUST2,RAILOC1,RALOCNM,RAN,RANOW
+"RTN","RAORDR",83,0)
+ K RANOW2,RAO,RAOBEG,RAOEND,RAOIFN,RAOPHY,RAORD0,RAORDIEN,RAPOP,RAPR,RAPRTYDT,RAQUES,RAQUIT,RAREASON
+"RTN","RAORDR",84,0)
+ K RAREQSTA,RARES,RASELOC,RASTART,RASUB,RAT,RAUCID,X,Y
+"RTN","RAORDR",85,0)
+ S (RACIENS,RAILOC)=""
+"RTN","RAORDR",86,0)
+ Q
+"RTN","RAORDR",87,0)
+ ;
+"RTN","RAORDR",88,0)
+AUTOHOLD(ORIFN) ;
+"RTN","RAORDR",89,0)
+ ;Return:
+"RTN","RAORDR",90,0)
+ ;  0 if this consult was placed on Hold other than as a result of auto-submission following an imaging order
+"RTN","RAORDR",91,0)
+ ;  1 if this consult was placed on Hold as a result of auto-submission following an imaging order
+"RTN","RAORDR",92,0)
+ N OR123,ORACT,ORCCFND,X
+"RTN","RAORDR",93,0)
+ Q:'ORIFN
+"RTN","RAORDR",94,0)
+ S (ORACT,ORCCFND)=0 F  S ORACT=$O(^OR(100,ORIFN,8,ORACT)) Q:'ORACT  S X=$G(^OR(100,ORIFN,8,ORACT,1)) D:X]""
+"RTN","RAORDR",95,0)
+ .I X["Placed on hold due to transfer to Community Care with UCID" S X=$P(X,"UCID",2) D
+"RTN","RAORDR",96,0)
+ ..S X=$P(X,"_",2) I X?1.N,$D(^GMR(123,X)) S ORCCFND=1 Q
+"RTN","RAORDR",97,0)
+ Q ORCCFND
+"RTN","RAORDR",98,0)
+ ;
+"RTN","RAORDR",99,0)
+HDR ; header
+"RTN","RAORDR",100,0)
+ W:$Y>0 @IOF
+"RTN","RAORDR",101,0)
+ W !?(80-$L(RAHDR)/2),RAHDR
+"RTN","RAORDR",102,0)
+ W !,"PATIENT NAME",?35,"SSN",?47,"PROCEDURE"
+"RTN","RAORDR",103,0)
+ W !,?10,"DATE DESIRED",?25,"DATE ORDERED",?55,$S(RAREQSTA=3:"HOLD DT",1:"ORDERING PROVIDER")
+"RTN","RAORDR",104,0)
+ W !?10,"IMAGING LOCATION",?50,"REQUEST STATUS"
+"RTN","RAORDR",105,0)
+ W !,QQ
+"RTN","RAORDR",106,0)
+ W !
+"RTN","RAORDR",107,0)
+ Q
+"RTN","RAORDR",108,0)
+GETORD ;
+"RTN","RAORDR",109,0)
+ N DFN,RADFNARY,RALADT,RAMORE,RAQUIT,RAREA,VADM
+"RTN","RAORDR",110,0)
+ K VADM S DFN=RADFN D DEM^VADPT
+"RTN","RAORDR",111,0)
+ S RACOUNT=0
+"RTN","RAORDR",112,0)
+ S QQ="",$P(QQ,"=",80)="="
+"RTN","RAORDR",113,0)
+SELORDER ;
+"RTN","RAORDR",114,0)
+ S RAHDR="SELECT FROM IMAGING ORDERS"
+"RTN","RAORDR",115,0)
+ D HDR Q:$D(RAEOS)
+"RTN","RAORDR",116,0)
+ S (RAMORE,RAQUIT)=0 F  Q:RAQUIT  S RACOUNT=$O(RAARRAY(RACOUNT)) Q:'RACOUNT!(RAQUIT)  S RAO=RAARRAY(RACOUNT) D
+"RTN","RAORDR",117,0)
+ .S:RACOUNT RAT=RACOUNT S:RAF=0 RAF=RAT
+"RTN","RAORDR",118,0)
+ .S RAORD0=^RAO(75.1,+RAO,0),RADT=$P(RAORD0,U,21),RALADT=$P(RAORD0,U,16),RAPR=$P(RAORD0,U,2),RASELOC=$P(RAORD0,U,20)
+"RTN","RAORDR",119,0)
+ .S Y=RADT
+"RTN","RAORDR",120,0)
+ .D DD^%DT
+"RTN","RAORDR",121,0)
+ .S RADD=Y
+"RTN","RAORDR",122,0)
+ .S Y=$P(RALADT,".")
+"RTN","RAORDR",123,0)
+ .D DD^%DT
+"RTN","RAORDR",124,0)
+ .S RAPRTYDT=Y
+"RTN","RAORDR",125,0)
+ .W !,RACOUNT_". ",$E(VADM(1),1,31)
+"RTN","RAORDR",126,0)
+ .W ?35,"*****",$E(VADM(2),$L(VADM(2))-3,$L(VADM(2)))
+"RTN","RAORDR",127,0)
+ .W ?47,$S($D(^RAMIS(71,RAPR,0)):$E($P(^(0),U),1,24),1:"Unknown")
+"RTN","RAORDR",128,0)
+ .W !,?10,RADD,?25,RAPRTYDT,?57,$E($P($G(^VA(200,RAOPHY,0)),U,1),1,23)
+"RTN","RAORDR",129,0)
+ .W !?10,$S('RASELOC:"Unknown",$D(^RA(79.1,RASELOC,0)):$S($D(^SC($P(^(0),U),0)):$P(^(0),U),1:"Unknown"),1:"Unknown")
+"RTN","RAORDR",130,0)
+ .W ?50,$$GET1^DIQ(75.1,+RAO_",",5,"E")
+"RTN","RAORDR",131,0)
+ .S:$Y>20 RAQUIT=1
+"RTN","RAORDR",132,0)
+ K DIR,DIRUT S RACIENS=""
+"RTN","RAORDR",133,0)
+ S DIR(0)="NO^"_RAF_":"_RAT
+"RTN","RAORDR",134,0)
+ S DIR("A")="Select NUMBER of ORDER to be REFERRED to COMMUNITY CARE"
+"RTN","RAORDR",135,0)
+ I RAT?1.N,RACOUNT]"",$O(RAARRAY(RACOUNT))]"" S DIR("A")=DIR("A")_" or press Enter for more orders" S RAMORE=1
+"RTN","RAORDR",136,0)
+ E  S $P(DIR(0),U)="N" ;Remove "O" flag
+"RTN","RAORDR",137,0)
+ D ^DIR
+"RTN","RAORDR",138,0)
+ K DIR
+"RTN","RAORDR",139,0)
+ I Y=""&(RAMORE) S RAF=0 G SELORDER
+"RTN","RAORDR",140,0)
+ Q:Y=""&('RAMORE)
+"RTN","RAORDR",141,0)
+ Q:$D(DIRUT)
+"RTN","RAORDR",142,0)
+ W !,"You selected number "_Y
+"RTN","RAORDR",143,0)
+ S RARES=Y
+"RTN","RAORDR",144,0)
+ Q
+"RTN","RAORDR",145,0)
+GETINFO(RAARAY) ;this function collects information that would be collected from a SEOC in Consult Toolbox
+"RTN","RAORDR",146,0)
+ N DIR,DIRUT,RACOUNT,RAGMRC1,RARPT,Y
+"RTN","RAORDR",147,0)
+ ;
+"RTN","RAORDR",148,0)
+ S (RAJUST,RAQUIT,RARPT)=0
+"RTN","RAORDR",149,0)
+ D SETJUST2 ;Set up RAJUST array with prompts
+"RTN","RAORDR",150,0)
+ D GETMAIN
+"RTN","RAORDR",151,0)
+ S:'$D(RAARAY("TYPEOFSERVICE")) RAARAY("TYPEOFSERVICE")="4^Diagnostic"
+"RTN","RAORDR",152,0)
+ S RAARAY("THIRDPARTY")="2^NO"
+"RTN","RAORDR",153,0)
+ S RAARAY("TRAUMA")="2^NO"
+"RTN","RAORDR",154,0)
+ Q
+"RTN","RAORDR",155,0)
+ ;
+"RTN","RAORDR",156,0)
+SETJUST2 ;Build RAJUST
+"RTN","RAORDR",157,0)
+ N I,LAST,X
+"RTN","RAORDR",158,0)
+ S LAST="",(RAANS,RAANS2)=0
+"RTN","RAORDR",159,0)
+ ;First build RAJUST array with questions
+"RTN","RAORDR",160,0)
+ F I=1:1 S X=$T(JUSTQ+I) Q:X=" ;//"  S OPT=$P(X,";",2),I=$$JUSTMAIN(OPT,I)
+"RTN","RAORDR",161,0)
+ Q
+"RTN","RAORDR",162,0)
+ ;
+"RTN","RAORDR",163,0)
+JUSTMAIN(OPT,LINE) ;
+"RTN","RAORDR",164,0)
+ N J,RET,X
+"RTN","RAORDR",165,0)
+ S RET=LINE
+"RTN","RAORDR",166,0)
+ F J=LINE:1 S X=$T(JUSTQ+J) Q:X=" ;//"  Q:$P(X,";",2)'=OPT  S RET=J D
+"RTN","RAORDR",167,0)
+ .I $P(X,";",3)'="CDW",$P(X,";",3)'="S" S RAJUST(OPT)=$P(X,";",3) Q
+"RTN","RAORDR",168,0)
+ .I $P(X,";",3)="S" S J=$$JUSTSUB(OPT,J) Q
+"RTN","RAORDR",169,0)
+ .I $P(X,";",3)="CDW" S RAJUST(OPT,"CDW",$P(X,";",4))=$P(X,";",5) D  Q
+"RTN","RAORDR",170,0)
+ ..I $P(X,";",3)="CDW",$P(X,";",6)="ASK" S RAJUST(OPT,"CDW",$P(X,";",4),"ASK")=$P(X,";",7) D
+"RTN","RAORDR",171,0)
+ ...I $P(X,";",8) S RAJUST(OPT,"CDW",$P(X,";",4),"MAND")=1
+"RTN","RAORDR",172,0)
+ Q RET
+"RTN","RAORDR",173,0)
+ ;
+"RTN","RAORDR",174,0)
+JUSTSUB(PARENT,LINE) ;
+"RTN","RAORDR",175,0)
+ N J,OPT,RET,X
+"RTN","RAORDR",176,0)
+ F J=LINE:1 S X=$T(JUSTQ+J) Q:X=" ;//"  S RET=J S:J=LINE OPT=$P(X,";",2) Q:PARENT'=OPT  D
+"RTN","RAORDR",177,0)
+ .I $P(X,";",5)'="CDW" S RAJUST(PARENT,"S",$P(X,";",4))=$P(X,";",5) Q
+"RTN","RAORDR",178,0)
+ .I $P(X,";",5)="CDW" S:$P(X,";",7)'="" RAJUST(PARENT,"S",$P(X,";",4),"CDW",$P(X,";",6))=$P(X,";",7) D
+"RTN","RAORDR",179,0)
+ ..I $P(X,";",8)="ASK" S RAJUST(PARENT,"S",$P(X,";",4),"CDW",$P(X,";",6),"ASK")=$P(X,";",9) D
+"RTN","RAORDR",180,0)
+ ...I $P(X,";",10) S RAJUST(PARENT,"S",$P(X,";",4),"CDW",$P(X,";",6),"MAND")=1
+"RTN","RAORDR",181,0)
+ Q RET
+"RTN","RAORDR",182,0)
+ ;
+"RTN","RAORDR",183,0)
+GETMAIN ;Ask the main questions and fill in the answers at tag GETJSUB
+"RTN","RAORDR",184,0)
+ N RAL
+"RTN","RAORDR",185,0)
+ W !!,"Justification for Community Care"
+"RTN","RAORDR",186,0)
+ K DIR S RAL=0,DIR(0)="S^" F I=1:1 S X=$G(RAJUST(I)) Q:X=""  S DIR(0)=DIR(0)_I_":"_$P($P(X,U),";")_";",RAL=RAL+1
+"RTN","RAORDR",187,0)
+ S DIR(0)=$E(DIR(0),1,$L(DIR(0))-1)
+"RTN","RAORDR",188,0)
+ D ^DIR
+"RTN","RAORDR",189,0)
+ I $D(DIRUT) S RAQUIT=1
+"RTN","RAORDR",190,0)
+ S:'RAQUIT RAARAY("JUSTIFICATION")=Y_U_Y(0) ;This array entry is used for Reason for Request WP in Consult
+"RTN","RAORDR",191,0)
+ K DIR,DIRUT
+"RTN","RAORDR",192,0)
+ Q:RAQUIT
+"RTN","RAORDR",193,0)
+ S RAANS=+Y,RAREASON=RAJUST(RAANS) ; Reason for Request
+"RTN","RAORDR",194,0)
+ ;
+"RTN","RAORDR",195,0)
+ ;Now check if there are any main questions or any sub-questions
+"RTN","RAORDR",196,0)
+GETJSUB ;
+"RTN","RAORDR",197,0)
+ ;
+"RTN","RAORDR",198,0)
+ S RARPT=0 K RAEXPL
+"RTN","RAORDR",199,0)
+ I '$D(RAJUST(RAANS,"S")) S RAANS2=0 D  G:RARPT GETMAIN Q
+"RTN","RAORDR",200,0)
+ . ;Set CDW up for main menu item. Ask any text questions if needed
+"RTN","RAORDR",201,0)
+ . S RACDWN="" F  S RACDWN=$O(RAJUST(RAANS,"CDW",RACDWN)) Q:RACDWN=""  D
+"RTN","RAORDR",202,0)
+ . . S RACDW(RAANS,RACDWN)=RAJUST(RAANS,"CDW",RACDWN)_U_$G(RAJUST(RAANS,"CDW",RACDWN,"ASK"))
+"RTN","RAORDR",203,0)
+ . . S RAQUES=$G(RAJUST(RAANS,"CDW",RACDWN,"ASK"))
+"RTN","RAORDR",204,0)
+ . . S RAMAND=$G(RAJUST(RAANS,"CDW",RACDWN,"MAND"))
+"RTN","RAORDR",205,0)
+ . . I RAQUES]"" D
+"RTN","RAORDR",206,0)
+ . . . K DIR S DIR(0)="F"_$S('RAMAND:"O",1:"")_"^3:240",DIR("A")=RAQUES
+"RTN","RAORDR",207,0)
+ . . . S DIR("?")=RAQUES_": 3-240 characters"
+"RTN","RAORDR",208,0)
+ . . . S DIR("??")="^D HELP^RAORDR("_$C(34)_RAQUES_": 3-240 characters"_$C(34)_")"
+"RTN","RAORDR",209,0)
+ . . . D ^DIR
+"RTN","RAORDR",210,0)
+ . . . I $D(DUOUT)!($D(DTOUT)) S RARPT=1 Q
+"RTN","RAORDR",211,0)
+ . . . S RAEXPL=Y
+"RTN","RAORDR",212,0)
+ . . . S:RAEXPL]"" RAARAY("JUSTIFICATION EXPLANATION")="  "_RAEXPL
+"RTN","RAORDR",213,0)
+ ;
+"RTN","RAORDR",214,0)
+ ;Sub-menu questions
+"RTN","RAORDR",215,0)
+ W !!,$P(RAJUST(RAANS),U)
+"RTN","RAORDR",216,0)
+ K DIR S DIR(0)="S^",RASUB="" F  S RASUB=$O(RAJUST(RAANS,"S",RASUB)) Q:RASUB=""  D
+"RTN","RAORDR",217,0)
+ . S DIR(0)=DIR(0)_RASUB_":"_RAJUST(RAANS,"S",RASUB)_";"
+"RTN","RAORDR",218,0)
+ . S RACDWN="" F  S RACDWN=$O(RAJUST(RAANS,"S",RASUB,"CDW",RACDWN)) Q:RACDWN=""  D
+"RTN","RAORDR",219,0)
+ . . S RACDW(RAANS,RASUB,RACDWN)=RAJUST(RAANS,"S",RASUB,"CDW",RACDWN)_U_$G(RAJUST(RAANS,"S",RASUB,"CDW",RACDWN,"ASK"))
+"RTN","RAORDR",220,0)
+ . . S RAEXPL(RASUB)=$P(RACDW(RAANS,RASUB,RACDWN),U,2)
+"RTN","RAORDR",221,0)
+ . . S RAEXPL(RASUB,"MAND")=$G(RAJUST(RAANS,"S",RASUB,"CDW",RACDWN,"MAND"))
+"RTN","RAORDR",222,0)
+ S DIR(0)=$E(DIR(0),1,$L(DIR(0))-1)
+"RTN","RAORDR",223,0)
+ S DIR("A")="Select Reason for "_$P(RAJUST(RAANS),U)
+"RTN","RAORDR",224,0)
+ D ^DIR
+"RTN","RAORDR",225,0)
+ G:$D(DUOUT)!($D(DTOUT)) GETMAIN
+"RTN","RAORDR",226,0)
+ S RAANS2=+Y
+"RTN","RAORDR",227,0)
+ ;If the sub-question requires a reason, ask it now
+"RTN","RAORDR",228,0)
+ S RARPT=0
+"RTN","RAORDR",229,0)
+ I $G(RAEXPL(RAANS2))]"" D  G:RARPT GETJSUB ;^ entered by user in SUB-QUESTION field - go back to Justification question
+"RTN","RAORDR",230,0)
+ . S RAMAND=$G(RAEXPL(RAANS2,"MAND"))
+"RTN","RAORDR",231,0)
+ . K DIR S DIR(0)="F"_$S('RAMAND:"O",1:"")_"^3:240",DIR("A")=$G(RAEXPL(RAANS2))
+"RTN","RAORDR",232,0)
+ . S DIR("?")="Enter "_$G(RAEXPL(RAANS2))_": 3-240 characters"
+"RTN","RAORDR",233,0)
+ . S DIR("??")="^D HELP^RAORDR("_$C(34)_"Enter "_$G(RAEXPL(RAANS2))_": 3-240 characters"_$C(34)_")"
+"RTN","RAORDR",234,0)
+ . D ^DIR
+"RTN","RAORDR",235,0)
+ . I $D(DUOUT)!($D(DTOUT)) S RARPT=1 Q
+"RTN","RAORDR",236,0)
+ . S $P(RAEXPL(RAANS2),U,2)=Y
+"RTN","RAORDR",237,0)
+ . S RAARAY("JUSTIFICATION SUBMENU SELECTION")=$P($P(RAJUST(RAANS,"S",RAANS2),U)," (")_$S(Y]"":":",1:"")
+"RTN","RAORDR",238,0)
+ . S:Y]"" RAARAY("JUSTIFICATION SUBMENU EXPLANATION")=Y
+"RTN","RAORDR",239,0)
+ ;
+"RTN","RAORDR",240,0)
+ Q
+"RTN","RAORDR",241,0)
+ ;
+"RTN","RAORDR",242,0)
+BRKLINE(OUT,LINE,LGTH) ;Break line down into 80 character lines in OUT
+"RTN","RAORDR",243,0)
+ N CT,DIWL,DIWR,I,X
+"RTN","RAORDR",244,0)
+ S LINE=$$TRIM^XLFSTR(LINE)
+"RTN","RAORDR",245,0)
+ K ^UTILITY($J,"W") S CT=0,DIWL=1,DIWR=LGTH,X=LINE D ^DIWP
+"RTN","RAORDR",246,0)
+ S I="" F  S I=$O(^UTILITY($J,"W",1,I)) Q:'I  S CT=CT+1,OUT(CT)=^UTILITY($J,"W",1,I,0)
+"RTN","RAORDR",247,0)
+ K ^UTILITY($J,"W")
+"RTN","RAORDR",248,0)
+ Q
+"RTN","RAORDR",249,0)
+ ;
+"RTN","RAORDR",250,0)
+HELP(MSG) ;
+"RTN","RAORDR",251,0)
+ W !!,MSG
+"RTN","RAORDR",252,0)
+ Q
+"RTN","RAORDR",253,0)
+ ;
+"RTN","RAORDR",254,0)
+JUSTQ ;Justification for Community Care prompts
+"RTN","RAORDR",255,0)
+ ;1;VA facility does not provide the required service
+"RTN","RAORDR",256,0)
+ ;1;CDW;1;#COI#
+"RTN","RAORDR",257,0)
+ ;1;CDW;2;COI-Veteran OPT-IN for Community Care
+"RTN","RAORDR",258,0)
+ ;1;CDW;3;Service Not Available: VA facility does not provide the required service
+"RTN","RAORDR",259,0)
+ ;2;Veteran cannot safely travel to VA facility due to medical reason
+"RTN","RAORDR",260,0)
+ ;2;CDW;1;#COI#
+"RTN","RAORDR",261,0)
+ ;2;CDW;2;COI-Veteran OPT-IN for Community Care
+"RTN","RAORDR",262,0)
+ ;2;CDW;3;Veteran cannot safely travel to VA facility due to medical reason
+"RTN","RAORDR",263,0)
+ ;2;CDW;4;;ASK;Medical reason
+"RTN","RAORDR",264,0)
+ ;3;Veteran cannot travel to VA facility due to geographical inaccessibility
+"RTN","RAORDR",265,0)
+ ;3;CDW;1;#COI#
+"RTN","RAORDR",266,0)
+ ;3;CDW;2;COI-Veteran OPT-IN for Community Care
+"RTN","RAORDR",267,0)
+ ;3;CDW;3;Geographical inaccessibility
+"RTN","RAORDR",268,0)
+ ;4;VA facility cannot timely provide the required service
+"RTN","RAORDR",269,0)
+ ;4;CDW;1;#COI#
+"RTN","RAORDR",270,0)
+ ;4;CDW;2;COI-Veteran OPT-IN for Community Care
+"RTN","RAORDR",271,0)
+ ;4;CDW;3;Wait Time: VA appointment is greater than Wait Time Standard (WTS)
+"RTN","RAORDR",272,0)
+ ;5;Unusual or excessive travel burden
+"RTN","RAORDR",273,0)
+ ;5;S;1;Geographical challenges
+"RTN","RAORDR",274,0)
+ ;5;S;1;CDW;1;#COI#
+"RTN","RAORDR",275,0)
+ ;5;S;1;CDW;2;COI-Veteran OPT-IN for Community Care
+"RTN","RAORDR",276,0)
+ ;5;S;1;CDW;3;UXB-Unusual or excessive travel burden
+"RTN","RAORDR",277,0)
+ ;5;S;1;CDW;4;GEO-Geographical challenges;ASK;Explain
+"RTN","RAORDR",278,0)
+ ;5;S;2;Environmental factors
+"RTN","RAORDR",279,0)
+ ;5;S;2;CDW;1;#COI#
+"RTN","RAORDR",280,0)
+ ;5;S;2;CDW;2;COI-Veteran OPT-IN for Community Care
+"RTN","RAORDR",281,0)
+ ;5;S;2;CDW;3;UXB-Unusual or excessive travel burden
+"RTN","RAORDR",282,0)
+ ;5;S;2;CDW;4;ENV-Environmental factors;ASK;Explain
+"RTN","RAORDR",283,0)
+ ;5;S;3;Medical condition
+"RTN","RAORDR",284,0)
+ ;5;S;3;CDW;1;#COI#
+"RTN","RAORDR",285,0)
+ ;5;S;3;CDW;2;COI-Veteran OPT-IN for Community Care
+"RTN","RAORDR",286,0)
+ ;5;S;3;CDW;3;UXB-Unusual or excessive travel burden
+"RTN","RAORDR",287,0)
+ ;5;S;3;CDW;4;MED-Medical condition;ASK;Explain
+"RTN","RAORDR",288,0)
+ ;5;S;4;Nature or simplicity of services
+"RTN","RAORDR",289,0)
+ ;5;S;4;CDW;1;#COI#
+"RTN","RAORDR",290,0)
+ ;5;S;4;CDW;2;COI-Veteran OPT-IN for Community Care
+"RTN","RAORDR",291,0)
+ ;5;S;4;CDW;3;UXB-Unusual or excessive travel burden
+"RTN","RAORDR",292,0)
+ ;5;S;4;CDW;4;Nature or simplicity of services;ASK;Explain;1
+"RTN","RAORDR",293,0)
+ ;//
+"RTN","RAORDR1")
+0^2^B40134897^n/a
+"RTN","RAORDR1",1,0)
+RAORDR1 ;ABV/SCR/MKN - Refer Pending/Hold Requests continued ;4/2/2018  3:30 PM
+"RTN","RAORDR1",2,0)
+ ;;5.0;Radiology/Nuclear Medicine;**148**;Mar 16, 1998;Build 59
+"RTN","RAORDR1",3,0)
+ ;
+"RTN","RAORDR1",4,0)
+ ;ICR   Supports
+"RTN","RAORDR1",5,0)
+ ;10061 DEM^VADPT
+"RTN","RAORDR1",6,0)
+ ;
+"RTN","RAORDR1",7,0)
+ Q
+"RTN","RAORDR1",8,0)
+ ;
+"RTN","RAORDR1",9,0)
+MAKECONS(RAOIFN) ;Create Consult using Order Dialog GMRCOR CONSULT
+"RTN","RAORDR1",10,0)
+ ;RAOIFN is the IEN in file #75.1
+"RTN","RAORDR1",11,0)
+ ;
+"RTN","RAORDR1",12,0)
+ N DA,DFN,DIC,DIE,DR,ORDIALOG,RADFN,RADLG,RADTDES,RAFIELDS,RAFILE,RAIENS,RAMAP,RAN,RAN1,RANEWORD,RAO,RAOIEN,RAORDG
+"RTN","RAORDR1",13,0)
+ N RAORDIEN,RAORDITM,RAORDLOC,RAORDS,RAORDTXT,RAOREA,RAORGTX,RAORNP,RAORIT,RAORL,RAORNP,RAORPRE,RAORPREG,RAORTYP
+"RTN","RAORDR1",14,0)
+ N RAORVP,RAORWANT,RAQUIT,RAORD,RARET,RARTRN,RAUCID,RAURG,RAWPN,RAX,RAY,VADM,X,Y
+"RTN","RAORDR1",15,0)
+ S RADLG="GMRCOR CONSULT"
+"RTN","RAORDR1",16,0)
+ K DIC S DIC=101.41,X=RADLG D ^DIC I Y=-1 D ERROR("Quick Order ""GMRCOR CONSULT"" not found in ORDER DIALOG file") Q 0
+"RTN","RAORDR1",17,0)
+ S RAORIT=+Y
+"RTN","RAORDR1",18,0)
+ D GETDLG^ORCD(RAORIT)
+"RTN","RAORDR1",19,0)
+ I $$CHECKDLG=1 D ERROR("Order dialog missing essential items") Q 0
+"RTN","RAORDR1",20,0)
+ ;Now set up the input parameters for ORWDX SAVE 
+"RTN","RAORDR1",21,0)
+ S RAFILE=75.1  ;RAD\nUC MED ORDER
+"RTN","RAORDR1",22,0)
+ S RAIENS=RAOIFN_","
+"RTN","RAORDR1",23,0)
+ S RAFIELDS=".01;2;3;7;12;13;14;21;22;"  ; ALL FIELDS
+"RTN","RAORDR1",24,0)
+ D GETS^DIQ(RAFILE,RAIENS,RAFIELDS,"IE","RARTRN","RAERR")
+"RTN","RAORDR1",25,0)
+ S (DFN,RAORVP)=$G(RARTRN(75.1,RAIENS,.01,"I")) ;Patient DFN P2
+"RTN","RAORDR1",26,0)
+ S (RAORDIEN,RAORD)=$G(RARTRN(75.1,RAIENS,7,"I")) ;RAD Order IEN P100
+"RTN","RAORDR1",27,0)
+ S RAORTYP=$G(RARTRN(75.1,RAIENS,3,"E"))  ;Type of imaging P79.2
+"RTN","RAORDR1",28,0)
+ S RAORPRE=$G(RARTRN(75.1,RAIENS,12,"E")) ;PRE-OP DATE/TIME
+"RTN","RAORDR1",29,0)
+ S RAORPREG=$G(RARTRN(75.1,RAIENS,13,"E")) ;PREGNANT - set of codes Y,N,U
+"RTN","RAORDR1",30,0)
+ S RAORNP=$G(RARTRN(75.1,RAIENS,14,"I"))  ;Ordering Provider P200
+"RTN","RAORDR1",31,0)
+ S (RADTDES,RAORWANT)=$G(RARTRN(75.1,RAIENS,21,"E")) ;Date Desired for consult
+"RTN","RAORDR1",32,0)
+ S RAORL=$G(RARTRN(75.1,RAIENS,22,"I"))
+"RTN","RAORDR1",33,0)
+ S RAORDLOC=$G(RARTRN(75.1,RAIENS,22,"E"))   ;Ordering Location P44
+"RTN","RAORDR1",34,0)
+ K DIC S DIC=100.98,X="CONSULTS" D ^DIC I Y=-1 D ERROR("Quick Order ""CONSULTS"" display group not found") Q 0
+"RTN","RAORDR1",35,0)
+ S RAORDG=+Y
+"RTN","RAORDR1",36,0)
+ ;Now add the responses to the dialog
+"RTN","RAORDR1",37,0)
+ S RAQUIT=0,RAMAP=$$MAP(RAORTYP) I RAMAP="" D  Q 0
+"RTN","RAORDR1",38,0)
+ .S RAX="Radiology Orders may only be forwarded from national IMAGING TYPEs."_$C(13,10)
+"RTN","RAORDR1",39,0)
+ .S RAX=RAX_"The Imaging Type:  "_RAORTYP_" is not a recognized"_$C(13,10)
+"RTN","RAORDR1",40,0)
+ .S RAX=RAX_"national IMAGING TYPE. Please contact your Imaging Supervisor"_$C(13,10)
+"RTN","RAORDR1",41,0)
+ .S RAX=RAX_"for assistance to correct this issue."
+"RTN","RAORDR1",42,0)
+ .D ERROR(RAX) S RAQUIT=1
+"RTN","RAORDR1",43,0)
+ Q:RAQUIT 0
+"RTN","RAORDR1",44,0)
+ I RAMAP["MAMMOGRAPHY" D
+"RTN","RAORDR1",45,0)
+ .D DEM^VADPT S RAX=$P($G(VADM(5)),U)
+"RTN","RAORDR1",46,0)
+ .I RAX="M" S RAMAP="COMMUNITY CARE-IMAGING MAMMOGRAPHY DIAGNOSTIC-AUTO" S:RAX="" RAQUIT=1 Q
+"RTN","RAORDR1",47,0)
+ .S RAX=$$MAMMO() I RAX=0 S RAQUIT=1
+"RTN","RAORDR1",48,0)
+ .S RAMAP=$S(RAX=1:"COMMUNITY CARE-IMAGING MAMMOGRAPHY DIAGNOSTIC-AUTO",RAX=2:"COMMUNITY CARE-IMAGING MAMMOGRAPHY SCREEN-AUTO",1:"") S:RAMAP="" RAQUIT=1
+"RTN","RAORDR1",49,0)
+ Q:RAQUIT 0
+"RTN","RAORDR1",50,0)
+ K DIC S DIC=101.43,X=RAMAP D ^DIC I Y=-1 D ERROR("Orderable Item "_RAMAP_" not found in Orderable item file") Q 0
+"RTN","RAORDR1",51,0)
+ S RAORDITM=+Y
+"RTN","RAORDR1",52,0)
+ D UPORDLG("OR GTX ORDERABLE ITEM",RAORDITM)
+"RTN","RAORDR1",53,0)
+ K DIC S DIC=101.42,X="ROUTINE" D ^DIC I Y=-1 D ERROR("Urgency ""ROUTINE"" not found in ORDER URGENCY file") Q 0
+"RTN","RAORDR1",54,0)
+ S RAURG=+Y
+"RTN","RAORDR1",55,0)
+ D UPORDLG("OR GTX URGENCY",RAURG)
+"RTN","RAORDR1",56,0)
+ D UPORDLG("OR GTX CATEGORY","O") ;Outpatient
+"RTN","RAORDR1",57,0)
+ D UPORDLG("OR GTX PLACE OF CONSULTATION","C") ;"Consultant's Choice"
+"RTN","RAORDR1",58,0)
+ D UPORDLG("OR GTX PROVIDER","") ;Attention field not known
+"RTN","RAORDR1",59,0)
+ ;
+"RTN","RAORDR1",60,0)
+ D GETS^DIQ(100,RAORDIEN_",",".8*","IE","RAO")
+"RTN","RAORDR1",61,0)
+ S RAORDTXT=$G(RAO(100.008,"1,"_RAORDIEN_",",.1,1))
+"RTN","RAORDR1",62,0)
+ I RAORDTXT="" D ERROR("Order Text not found in ORDER file at IEN "_RAORDIEN) Q 0
+"RTN","RAORDR1",63,0)
+ D UPORDLG("OR GTX FREE TEXT","Encounter for other specified special examinations (ICD-10-CM Z01.89)")
+"RTN","RAORDR1",64,0)
+ D UPORDLG("OR GTX CLINICALLY INDICATED DATE",RADTDES)
+"RTN","RAORDR1",65,0)
+ S ORDIALOG("ORCHECK")=0 ;No Order Checks
+"RTN","RAORDR1",66,0)
+ S ORDIALOG("ORTS")=0
+"RTN","RAORDR1",67,0)
+ ;Set up Reason For Study in ORDIALOG
+"RTN","RAORDR1",68,0)
+ S RAWPN=RAORGTX("OR GTX WORD PROCESSING 1")
+"RTN","RAORDR1",69,0)
+ S ORDIALOG(RAWPN_",1")="ORDIALOG(""WP"",15,1)"
+"RTN","RAORDR1",70,0)
+ D GETREAS^RAORDR2 Q:RAQUIT 0
+"RTN","RAORDR1",71,0)
+ ;Clean up ORDIALOG to leave only answers
+"RTN","RAORDR1",72,0)
+ S RAN="" F  S RAN=$O(ORDIALOG(RAN)) Q:RAN=""  D
+"RTN","RAORDR1",73,0)
+ .M:RAN="WP" RANEWORD(RAN)=ORDIALOG(RAN) I RAN'="WP",RAN'="ORCHECK",RAN'="ORTS" S RAN1="" D
+"RTN","RAORDR1",74,0)
+ ..F  S RAN1=$O(ORDIALOG(RAN,RAN1)) Q:RAN1=""  S:RAN1=1 RANEWORD(RAN,RAN1)=ORDIALOG(RAN,RAN1)
+"RTN","RAORDR1",75,0)
+ S RAX=$O(ORDIALOG("WP","")) I RAX]"" S RANEWORD(RAX,1)="ORDIALOG(""WP"","_RAX_",1)"
+"RTN","RAORDR1",76,0)
+ K ORDIALOG M ORDIALOG=RANEWORD
+"RTN","RAORDR1",77,0)
+ ;Create Consult Order
+"RTN","RAORDR1",78,0)
+ D SAVE^ORWDX(.RARET,RAORVP,RAORNP,RAORL,RADLG,RAORDG,RAORIT,"",.ORDIALOG,"","","",0)
+"RTN","RAORDR1",79,0)
+ S RAORDIEN=0,RAX=$G(RARET(1)) I RAX]"" S RAORDIEN=$P($P($P(RAX,U),"~",2),";")
+"RTN","RAORDR1",80,0)
+ I 'RAORDIEN Q 0
+"RTN","RAORDR1",81,0)
+ D VALID^ORWDXA(.RAO,RAORDIEN,"OC",DUZ) ;Signature on chart
+"RTN","RAORDR1",82,0)
+ K RAORDS S RAORDS(1)=RAORDIEN_";1^0^1^W"
+"RTN","RAORDR1",83,0)
+ D SEND^ORWDX(.RAO,RAORVP,RAORNP,RAORL," ",.RAORDS)
+"RTN","RAORDR1",84,0)
+ ;Set Signature Status to "Electronic" and Reason to ADMINISTRATIVELY RELEASED BY POLICY
+"RTN","RAORDR1",85,0)
+ S DA(1)=RAORDIEN,DA=1,DIE="^OR(100,"_RAORDIEN_",8,"
+"RTN","RAORDR1",86,0)
+ S DR="4///1;1///ADMINISTRATIVELY RELEASED BY POLICY;7///@"
+"RTN","RAORDR1",87,0)
+ D ^DIE
+"RTN","RAORDR1",88,0)
+ ;
+"RTN","RAORDR1",89,0)
+ ;Put Radiology order on hold
+"RTN","RAORDR1",90,0)
+ S RAX=$O(^RA(75.2,"B","COMMUNITY CARE APPT","")) D HOLD(RAOIFN,.RAX)
+"RTN","RAORDR1",91,0)
+ ;Now add comment to show UCID if it exists
+"RTN","RAORDR1",92,0)
+ S RAX=$G(^OR(100,RAORDIEN,4)) I $P(RAX,";",2)="GMRC" D
+"RTN","RAORDR1",93,0)
+ .S RAX=+RAX,RAUCID=$$GET1^DIQ(123,RAX,80)
+"RTN","RAORDR1",94,0)
+ .I RAUCID]"" S RAX="Placed on hold due to transfer to Community Care with UCID "_RAUCID D
+"RTN","RAORDR1",95,0)
+ ..;RADORD is IEN of original radiology order in file #100
+"RTN","RAORDR1",96,0)
+ ..S DA(1)=RAORD,DIE="^OR(100,"_RAORD_",8,",DA=$O(^OR(100,RAORD,8,"A"),-1) I DA S DR="1///"_RAX D ^DIE
+"RTN","RAORDR1",97,0)
+ ;
+"RTN","RAORDR1",98,0)
+ Q RAORDIEN
+"RTN","RAORDR1",99,0)
+ ;
+"RTN","RAORDR1",100,0)
+HOLD(RAOIFN,RAOREA) ;Put the original radiology order on hold
+"RTN","RAORDR1",101,0)
+ N RAOSTS
+"RTN","RAORDR1",102,0)
+ S RAOSTS=3 D ^RAORDU
+"RTN","RAORDR1",103,0)
+ Q
+"RTN","RAORDR1",104,0)
+ ;
+"RTN","RAORDR1",105,0)
+CHECKDLG() ;
+"RTN","RAORDR1",106,0)
+ N RAI,RARES,RAX,RAY,X,Y
+"RTN","RAORDR1",107,0)
+ S RARES=0 F RAI=1:1 S RAX=$P($T(DLGLST+RAI),";",2) Q:RAX="//"  D
+"RTN","RAORDR1",108,0)
+ .K DIC S DIC=101.41,X=RAX D ^DIC I Y=-1 D ERROR("Order Dialog "_RAX_" not found") S RARES=1
+"RTN","RAORDR1",109,0)
+ .S RAY=+Y
+"RTN","RAORDR1",110,0)
+ .I '$D(ORDIALOG(RAY)) D ERROR("Order Dialog "_RAX_" not found") S RARES=1
+"RTN","RAORDR1",111,0)
+ .S RAORGTX(RAX)=RAY
+"RTN","RAORDR1",112,0)
+ Q RARES
+"RTN","RAORDR1",113,0)
+ ;
+"RTN","RAORDR1",114,0)
+UPORDLG(RADLGNA,RADATA) ;Stuff answer into Order Dialog array ORDIALOG
+"RTN","RAORDR1",115,0)
+ N RAX
+"RTN","RAORDR1",116,0)
+ S RAX=$G(RAORGTX(RADLGNA)),ORDIALOG(RAX,1)=RADATA
+"RTN","RAORDR1",117,0)
+ Q
+"RTN","RAORDR1",118,0)
+ ;
+"RTN","RAORDR1",119,0)
+DLGLST ;
+"RTN","RAORDR1",120,0)
+ ;OR GTX ORDERABLE ITEM
+"RTN","RAORDR1",121,0)
+ ;OR GTX URGENCY
+"RTN","RAORDR1",122,0)
+ ;OR GTX CATEGORY
+"RTN","RAORDR1",123,0)
+ ;OR GTX WORD PROCESSING 1
+"RTN","RAORDR1",124,0)
+ ;OR GTX PROVIDER
+"RTN","RAORDR1",125,0)
+ ;OR GTX FREE TEXT
+"RTN","RAORDR1",126,0)
+ ;OR GTX PLACE OF CONSULTATION
+"RTN","RAORDR1",127,0)
+ ;OR GTX CODE
+"RTN","RAORDR1",128,0)
+ ;OR GTX FREE TEXT OI
+"RTN","RAORDR1",129,0)
+ ;OR GTX CLINICALLY INDICATED DATE
+"RTN","RAORDR1",130,0)
+ ;//
+"RTN","RAORDR1",131,0)
+ERROR(RAERR) ;
+"RTN","RAORDR1",132,0)
+ W !!,RAERR
+"RTN","RAORDR1",133,0)
+ Q
+"RTN","RAORDR1",134,0)
+ ;
+"RTN","RAORDR1",135,0)
+GETDIAG(RAORDIEN) ;RETURN POINTER TO #80 FROM ORDER ENTRY
+"RTN","RAORDR1",136,0)
+ ;
+"RTN","RAORDR1",137,0)
+ N RADIAG,RAFILE,RAFLD,RAERR,RAIENS
+"RTN","RAORDR1",138,0)
+ S RAFILE=100.051 ;DIAGNOSIS SUB-FILE
+"RTN","RAORDR1",139,0)
+ S RAIENS=1_","_RAORDIEN_","
+"RTN","RAORDR1",140,0)
+ S RAFLD=.01
+"RTN","RAORDR1",141,0)
+ S RADIAG=$$GET1^DIQ(RAFILE,RAIENS,RAFLD,"I",,"RAERR")  ;If there is no entry for DX in 5.1, -1 returns in piece 1
+"RTN","RAORDR1",142,0)
+ I $D(RAERR) S RADIAG="-1^"_RAERR("DIERR",1,"TEXT",1)
+"RTN","RAORDR1",143,0)
+ Q RADIAG
+"RTN","RAORDR1",144,0)
+ ;
+"RTN","RAORDR1",145,0)
+MAMMO() ;
+"RTN","RAORDR1",146,0)
+ N RARES,DIR,DIRUT
+"RTN","RAORDR1",147,0)
+ W !!,"Please select the type of Mammography order from the following options:"
+"RTN","RAORDR1",148,0)
+ S DIR(0)="S^1:Diagnostic Mammography;2:Screen Mammography"
+"RTN","RAORDR1",149,0)
+ D ^DIR
+"RTN","RAORDR1",150,0)
+ I $D(DIRUT) S RARES=0
+"RTN","RAORDR1",151,0)
+ S RAARAY("TYPEOFSERVICE")=$S(Y=1:"4^Diagnostic",1:"4^Screen")
+"RTN","RAORDR1",152,0)
+ Q +Y
+"RTN","RAORDR1",153,0)
+ ;
+"RTN","RAORDR1",154,0)
+MAP(RAIN) ;
+"RTN","RAORDR1",155,0)
+ N RAI,RARES,RAX
+"RTN","RAORDR1",156,0)
+ S RARES=""
+"RTN","RAORDR1",157,0)
+ F RAI=1:1 S RAX=$T(ORDITEMS+RAI) Q:RAX=" ;//"  I $P(RAX,";",2)=RAIN S RARES=$P(RAX,";",3) Q
+"RTN","RAORDR1",158,0)
+ Q RARES
+"RTN","RAORDR1",159,0)
+ ;
+"RTN","RAORDR1",160,0)
+ORDITEMS ;
+"RTN","RAORDR1",161,0)
+ ;CT SCAN;COMMUNITY CARE-IMAGING CT-AUTO
+"RTN","RAORDR1",162,0)
+ ;MAMMOGRAPHY;COMMUNITY CARE-IMAGING MAMMOGRAPHY DIAGNOSTIC-AUTO
+"RTN","RAORDR1",163,0)
+ ;MAMMOGRAPHY;COMMUNITY CARE-IMAGING MAMMOGRAPHY SCREEN-AUTO
+"RTN","RAORDR1",164,0)
+ ;MAGNETIC RESONANCE IMAGING;COMMUNITY CARE-IMAGING MAGNETIC RESONANCE IMAGING-AUTO
+"RTN","RAORDR1",165,0)
+ ;NUCLEAR MEDICINE;COMMUNITY CARE-IMAGING NUCLEAR MEDICINE-AUTO
+"RTN","RAORDR1",166,0)
+ ;GENERAL RADIOLOGY;COMMUNITY CARE-IMAGING GENERAL RADIOLOGY-AUTO
+"RTN","RAORDR1",167,0)
+ ;ULTRASOUND;COMMUNITY CARE-IMAGING ULTRASOUND-AUTO
+"RTN","RAORDR1",168,0)
+ ;//
+"RTN","RAORDR2")
+0^3^B22971178^n/a
+"RTN","RAORDR2",1,0)
+RAORDR2 ;ABV/SCR/MKN - Refer Pending/Hold Requests Reason for Request ;10/4/2018 09:04 AM
+"RTN","RAORDR2",2,0)
+ ;;5.0;Radiology/Nuclear Medicine;**148**;Mar 16, 1998;Build 59
+"RTN","RAORDR2",3,0)
+ ;
+"RTN","RAORDR2",4,0)
+GETREAS ;
+"RTN","RAORDR2",5,0)
+ N RAARRAY,RACOUNT,RAERR,RAFILE,RAI,RAL,RAMED,RANEXT,RARTRN1
+"RTN","RAORDR2",6,0)
+ S RAIENS=RAOIFN_","
+"RTN","RAORDR2",7,0)
+ S RAFILE=100.008 ;get order actions
+"RTN","RAORDR2",8,0)
+ S RAFIELDS=".01;.1;2;3;4;5;6;12;13;16;17"
+"RTN","RAORDR2",9,0)
+ S RACOUNT=1,RANEXT=0
+"RTN","RAORDR2",10,0)
+ F  S RANEXT=$O(^OR(100,RAORDIEN,8,RANEXT)) Q:'+RANEXT  D
+"RTN","RAORDR2",11,0)
+ .S RAIENS=RANEXT_","_RAORDIEN_","
+"RTN","RAORDR2",12,0)
+ .S RAFIELDS=".01;2;3;7;12;13;21;22;"
+"RTN","RAORDR2",13,0)
+ .D GETS^DIQ(RAFILE,RAIENS,RAFIELDS,"E","RARTRN1","RAERR")
+"RTN","RAORDR2",14,0)
+ S RAX=$O(^RA(75.2,"B","COMMUNITY CARE APPT",""))
+"RTN","RAORDR2",15,0)
+ D:RAX?1.N
+"RTN","RAORDR2",16,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="",RACOUNT=RACOUNT+1
+"RTN","RAORDR2",17,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  ** Radiology Order placed on hold due to COMMUNITY CARE APPT **",RACOUNT=RACOUNT+1
+"RTN","RAORDR2",18,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="",RACOUNT=RACOUNT+1
+"RTN","RAORDR2",19,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Date/Time Ordered: "_$G(RARTRN1(100.008,RAIENS,.01,"E"))_" "_$G(RARTRN1(100.008,RAIENS,2,"E"))_" order entered by "_$G(RARTRN1(100.008,RAIENS,3,"E"))
+"RTN","RAORDR2",20,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",21,0)
+ .S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",22,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Nature of Order: "_$G(RARTRN1(100.008,RAIENS,12,"E"))
+"RTN","RAORDR2",23,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",24,0)
+ .S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",25,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Elec Signature: "_$G(RARTRN1(100.008,RAIENS,5,"E"))_" on "_$G(RARTRN1(100.008,RAIENS,6,"E"))
+"RTN","RAORDR2",26,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",27,0)
+ S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",28,0)
+ D GETINFO^RAORDR(.RAARAY) Q:RAQUIT
+"RTN","RAORDR2",29,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Justification for Community Care:"
+"RTN","RAORDR2",30,0)
+ S RACOUNT=RACOUNT+1,ORDIALOG("WP",RAWPN,1,RACOUNT,0)="    "_$P(RAARAY("JUSTIFICATION"),U,2)
+"RTN","RAORDR2",31,0)
+ I $G(RAARAY("JUSTIFICATION EXPLANATION"))]"" D  ;Medical Reason or other reason from main menu selection
+"RTN","RAORDR2",32,0)
+ .K RAL D BRKLINE^RAORDR(.RAL,"    "_RAARAY("JUSTIFICATION EXPLANATION"),70)
+"RTN","RAORDR2",33,0)
+ .D SETLINES
+"RTN","RAORDR2",34,0)
+ I RAANS2 D  ;There is a sub-question answer
+"RTN","RAORDR2",35,0)
+ .S RAMED=$G(RAARAY("JUSTIFICATION SUBMENU SELECTION")) D:RAMED]""
+"RTN","RAORDR2",36,0)
+ ..K RAL D BRKLINE^RAORDR(.RAL,RAMED,70),SETLINES
+"RTN","RAORDR2",37,0)
+ .S RAMED=$G(RAARAY("JUSTIFICATION SUBMENU EXPLANATION")) D:RAMED]""
+"RTN","RAORDR2",38,0)
+ ..K RAL D BRKLINE^RAORDR(.RAL,RAMED,70),SETLINES
+"RTN","RAORDR2",39,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",40,0)
+ S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",41,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Type of Service: "_$P(RAARAY("TYPEOFSERVICE"),U,2)
+"RTN","RAORDR2",42,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",43,0)
+ S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",44,0)
+ S RANEXT=0
+"RTN","RAORDR2",45,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Category: "_RAORTYP
+"RTN","RAORDR2",46,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",47,0)
+ S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",48,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Ordering Location: "_RAORDLOC
+"RTN","RAORDR2",49,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",50,0)
+ S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",51,0)
+ I RAORPRE'="" D
+"RTN","RAORDR2",52,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Pre-Op Scheduled Date/Time: "_RAORPRE
+"RTN","RAORDR2",53,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",54,0)
+ .S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",55,0)
+ I RAORPREG'="" D 
+"RTN","RAORDR2",56,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Pregnant: "_RAORPREG
+"RTN","RAORDR2",57,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",58,0)
+ .S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",59,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Date Desired (not guaranteed): "_RAORWANT
+"RTN","RAORDR2",60,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",61,0)
+ S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",62,0)
+ I $G(RAARAY("THIRDPARTY")) D
+"RTN","RAORDR2",63,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  Third Party: "_$P(RAARAY("THIRDPARTY"),U,2)
+"RTN","RAORDR2",64,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",65,0)
+ .S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",66,0)
+ I $G(RAARAY("TRAUMA")) D
+"RTN","RAORDR2",67,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="  History of Trauma :"_$P(RAARAY("TRAUMA"),U,2)
+"RTN","RAORDR2",68,0)
+ .S RANEXT=0
+"RTN","RAORDR2",69,0)
+ .F  S RANEXT=$O(RAARAY("TRAUMA",RANEXT)) Q:RANEXT=""  D
+"RTN","RAORDR2",70,0)
+ . .S ORDIALOG("WP",RAWPN,1,RACOUNT+1,0)=""
+"RTN","RAORDR2",71,0)
+ . .S RACOUNT=RACOUNT+2
+"RTN","RAORDR2",72,0)
+ . .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)=RAARAY("TRAUMA",RANEXT)
+"RTN","RAORDR2",73,0)
+ D ORDDET
+"RTN","RAORDR2",74,0)
+ Q
+"RTN","RAORDR2",75,0)
+ ;
+"RTN","RAORDR2",76,0)
+ORDDET ;Get Order Detail
+"RTN","RAORDR2",77,0)
+ N RACR,RAHDORD,RAN,RAHDORD,RAOUT,RAX,RAY
+"RTN","RAORDR2",78,0)
+ S RAX="",$P(RAX,"-",79)=""
+"RTN","RAORDR2",79,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)=" ",RACOUNT=RACOUNT+1
+"RTN","RAORDR2",80,0)
+ S RAY="Radiology order details "
+"RTN","RAORDR2",81,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)=RAY_$E(RAX,1,79-$L(RAY)),RACOUNT=RACOUNT+1
+"RTN","RAORDR2",82,0)
+ S RAY="Radiology order IEN:"_RAORDIEN
+"RTN","RAORDR2",83,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)=RAY,RACOUNT=RACOUNT+1
+"RTN","RAORDR2",84,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)="",RACOUNT=RACOUNT+1
+"RTN","RAORDR2",85,0)
+ D DETAIL^ORWOR(.RAOUT,RAORDIEN,RAORVP)
+"RTN","RAORDR2",86,0)
+ S RAN=0 F  S RAN=$O(@RAOUT@(RAN)) Q:'RAN  D
+"RTN","RAORDR2",87,0)
+ .S ORDIALOG("WP",RAWPN,1,RACOUNT,0)=@RAOUT@(RAN),RACOUNT=RACOUNT+1,ORDIALOG("WP",RAWPN,1,RACOUNT,0)="",RACOUNT=RACOUNT+1
+"RTN","RAORDR2",88,0)
+ S RAY="RAD"_$E(RAX,1,76)
+"RTN","RAORDR2",89,0)
+ S ORDIALOG("WP",RAWPN,1,RACOUNT,0)=RAY,RACOUNT=RACOUNT+1,ORDIALOG("WP",RAWPN,1,RACOUNT,0)="",RACOUNT=RACOUNT+1
+"RTN","RAORDR2",90,0)
+ Q
+"RTN","RAORDR2",91,0)
+ ;
+"RTN","RAORDR2",92,0)
+SETLINES ;
+"RTN","RAORDR2",93,0)
+ S RAI="" F  S RAI=$O(RAL(RAI)) Q:'RAI  S RACOUNT=RACOUNT+1,ORDIALOG("WP",RAWPN,1,RACOUNT,0)="    "_RAL(RAI)
+"RTN","RAORDR2",94,0)
+ Q
+"RTN","RAORDR2",95,0)
+ ;
+"VER")
+8.0^22.2
+"BLD",10905,6)
+^136
+**END**
+**END**
+

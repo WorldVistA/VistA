@@ -1,0 +1,531 @@
+
+=============================================================================
+Run Date: MAR 12, 2019                     Designation: MAG*3*218
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #171                      Status: Released
+                  Compliance Date: APR 12, 2019
+=============================================================================
+
+
+Subject: Vista Imaging and Legacy DICOM GATEWAY Updates and Fixes
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches: This patch must be installed after MAG*3.0*190.
+ ===================
+ Subject: Legacy DICOM Gateway (LDGW) Cache Upgrade
+ =======
+  
+ Category: OTHER
+ =========
+  
+ Description:
+ ============
+ Patch MAG*3.0*218 addresses the following issues with VistA Imaging Legacy
+ DICOM Gateway: 
+         Upgrade the version of InterSystems Cache used by the LDGW to 2014
+         Update MAGDVRSN routine to include all LDGW patches
+         LDGW is crashing when processing a DICOM image with erroneous 
+         private group information in the DICOM header.
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 218_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch. 
+ MAG3_0P218_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software & Documentation:
+ =========================
+ File Name                          Description
+ =========                          ===========
+ MAG3_0P218.KID                     KIDS file for installation on VistA
+ MAG3_0P218_DICOM_SETUP.EXE         Executable install for Legacy DICOM 
+                                    Gateway
+ MAG3_0P218_PATCH_DESCRIPTION.PDF   Patch description - this document
+ MAG3_0P218_README.TXT              If present, is an informative file
+                                    associated with the patch.
+ MAG_DICOMug.DOC                    VistA Imaging DICOM Gateway User Manual
+ MAG_DICOMig.DOC                    VistA Imaging DICOM Gateway          
+                                    Installation Guide
+  
+ Files & Field Associated:
+ =========================
+ There are no files and field associated with this patch.
+  
+ Forms Associated:
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated:
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated:
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ 1.  Defect 377944 - Upgrade the version of InterSystems Cache used by 
+     the LDGW to 2014
+  
+ Problem: 
+ ========
+ The existing LDGW uses InterSystems Cache 2010.2.3.702.0.10387 which is 
+ not compliant with the VA One-VA Technical Reference Model (TRM).
+  
+ Resolution:
+ ===========
+ The LDGW installation was modified to update the version of Cache to 
+ 2014.
+  
+ 2.  Defect 775015 - Update MAGDVRSN routine to include all LDGW patches
+  
+ Problem: 
+ ========
+ Option 4-2-12 on the LDGW displays the versions and/or time stamps of the 
+ gateway components including the LGDW itself.  The list is missing 162 and
+ 183. 
+  
+ Example:
+ ======== 
+      4 - System Maintenance
+         2 - Gateway Configuration and Master Files
+           12 - Display Versions and/or Time Stamps of Components
+  
+   OPTION:  12
+              Host Name = VAAUSAPPVIM906
+               Location = 660
+      Instrument (path) = C:\DICOM\DICT\INSTRUMENT.dic
+     Instrument (stamp) = 3-APR-2018 09:05:00
+        Modality (path) = C:\DICOM\DICT\MODALITY.dic
+       Modality (stamp) = 13-JAN-2016 09:06:00
+       Port List (path) = C:\DICOM\DICT\PORTLIST.dic
+      Port List (stamp) = 1-MAR-2016 10:12:00
+        SCU List (path) = C:\DICOM\DICT\SCU_LIST.dic
+       SCU List (stamp) = 11-JAN-2017 17:03:00
+        WorkList (path) = C:\DICOM\DICT\WORKLIST.dic
+       WorkList (stamp) = 8-DEC-2015 15:53:00
+   CT Parameters (path) = C:\DICOM\DICT\CT_PARAM.dic
+  CT Parameters (stamp) = 5-SEP-2017 07:45:00
+               Version  = 
+ ;;3.0;IMAGING;**1,7,9,26,21,10,36,3,11,30,5,51,50,52,69,75,102,103,54,53,6
+ 6,49,99,123,118,87,110,138,156,160,174,166**;Mar 19, 2002;Build 6050;Aug 
+ 08, 2017
+         C-Store (path) = C:\Program Files 
+ (x86)\VistA\Imaging\DICOM\MAG_CSTORE.exe
+        C-Store (stamp) = 7-NOV-2017 10:04:00
+   Reconstructor (path) = C:\Program Files 
+ (x86)\VistA\Imaging\DICOM\MAG_RECON.exe
+  Reconstructor (stamp) = 1-MAR-2016 11:13:00
+  DICOM to Targa (path) = C:\Program Files 
+ (x86)\VistA\Imaging\DICOM\MAG_DCMTOTGA.exe
+ DICOM to Targa (stamp) = 1-MAR-2016 11:13:00
+ Resolution: 
+ Routine MAGDVRSN second line was updated to include the missing patches 
+ (162 and 183).
+  
+  
+ 3.  Defect 783174 (INC1013626) - LDGW is crashing when processing a DICOM
+ image with erroneous group length information in the DICOM header for
+ Private Data Elements.
+  
+ Problem: 
+ ========
+ Private Data Element is an additional Data Element in the DICOM header, 
+ defined by an implementer, to communicate information that is not 
+ contained in Standard Data Elements. Private Data Elements have an odd 
+ Group Number that is not (0001,eeee), (0003,eeee), (0005,eeee), 
+ (0007,eeee), or (FFFF,eeee).  The vendor is violating the DICOM standard 
+ with the way they have formatted the group length (gggg,0000) of the
+ Private Data Elements.  The Transfer Syntax of the image is 
+ "1.2.840.10008.1.2.1" indicating DICOM Explicit VR Little Endian.  The 
+ group lengths values were retired in 2007. Prior to 2007 the DICOM 
+ standard for Explicit VR was the VR value in the DICOM tag should have be 
+ UL (4-byte unsigned integer).  The vendor is still sending these fields 
+ in the DICOM header and it is with a VR value of LO (64-character text).  
+ The LDGW is trying to change the VR to what the standard was (UL), but 
+ this is causing issues with the LDGW.  The LDGW gets caught in a loop, 
+ the temporary cache.dat file in   C:\CacheSys/mgr/cachetemp continues to 
+ grow until the c: drive fills up and the LDGW crashes.
+  
+ Resolution: 
+ ===========
+ The code was modified to use the Explicit VR that is in the DICOM header 
+ for (gggg,0000) instead changing it to UL and flag when it does not agree 
+ with the standard.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+          Fayetteville VA Medical Center
+          Jonathan M. Wainwright Memorial VAMC (Walla Walla)
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released and/or documentation describing the new
+ functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Additional documentation may be found on the VA Software Documentation 
+ Library at:
+ http://www4.domain.ext/vdl
+  
+ Note:   Information about last-minute changes to this patch will be 
+         provided in a readme file. If present, then this file will also 
+         be in the MAG3_0P218 directory.
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*218 must be installed on the VistA System and on Legacy VistA 
+ Imaging DICOM Gateways. This patch must be installed by the compliance 
+ date to conform to VHA Directive 2001-023.
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch. This patch can be loaded while the VistA Imaging System is active, 
+ and users are on the system. Installing the MAG*3.0*218 KIDS takes 2-5 
+ minutes.
+  
+ Note: All gateways - Legacy DICOM, Text and HDIGs - need to be upgraded 
+       with the installation of patch MAG*3.0*218.
+  
+ Note: All released VistA Imaging patches must be installed on the VistA 
+       system before installing MAG*3.0*218.
+  
+ IMPORTANT: The Cache Service must be stopped before upgrading the DICOM 
+            Gateway.
+  
+ Note: When Cache is installed, it will automatically install Adobe SVG 
+       Viewer 3.0 which is not approved for use and must therefore be 
+       uninstalled using Add/Remove programs.  
+  
+ Note: After the patch installation Telnet may need to be disabled.  Refer 
+       to the VistA Imaging DICOM Gateway Installation Guide for details.
+  
+ VistA System (KIDS) Installation: 
+ =================================
+  
+ Installation Steps: 
+ ===================
+  
+ The actual KIDS installation will take less than one minute.
+ 1.  On the VistA system, access the Kernel Installation and 
+     Distribution System Menu [XPD MAIN].
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+ 3.  Load the KIDS file by performing the following steps:
+     a.  Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+         load the KIDS distribution.
+     b.  When prompted, enter the path and file name (MAG3_0P218.KID) of 
+         the Patch 218 KIDS file.
+     c.  When prompted to continue with the load, enter "YES". A 
+         Distribution OK! message will be displayed when the load is
+         complete.
+ 4.  After loading the KIDS file, use the following options to verify 
+     the contents of the patch and to back up any affected routines.
+     a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+        this option to ensure the integrity of the routines in the patch. 
+     b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+        - Run this option to view all changes that will be made when the 
+        patch is installed. All components (routines, options, and so on)
+        in the patch will be compared.
+     c. Backup a Transport Global [XPD BACKUP] - Run this option to 
+        create a backup message of any routines exported with the patch. It
+        will NOT back up any of the other changes.
+ 5.  After performing the load and any optional verification steps, install
+     the KIDS file by performing the following steps:
+     a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+     b.  When prompted for the install name, enter "MAG*3.0*218".
+     c.  Answer "NO" to the following prompts:
+   Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  Want KIDS to INHIBIT LOGONs during the install? NO//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6.  When installation is finished, an Install Complete message will 
+     be displayed.
+  
+ KIDS Installation Example:
+ ==========================
+ This example shows the output when the KIDS file is installed for the
+ first time. If the patch has already been installed and the KIDS file is 
+ to be installed in a namespace on which it has been previously installed, 
+ then the output may be different.
+  
+ Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: 
+ Installation
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ You've got PRIORITY mail!
+ Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+ Enter a Host File: C:\INSTALL\MAG3_0P218.KID
+  
+ KIDS Distribution saved on Apr 26, 2018@09:05:42
+ Comment: VistA Imaging V3.0 - Patch 218
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    MAG*3.0*218
+ Distribution OK!
+  
+ Want to Continue with Load? YES//
+ Loading Distribution...
+  
+    MAG*3.0*218
+ Use INSTALL NAME: MAG*3.0*218 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+  
+ You've got PRIORITY mail!
+  
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*218      7/17/18@11:52:46
+      => VistA Imaging V3.0 - Patch 218  ;Created on Apr 26, 2018@09:05:42
+  
+ This Distribution was loaded on Jul 17, 2018@11:52:46 with header of
+    VistA Imaging V3.0 - Patch 218  ;Created on Apr 26, 2018@09:05:42
+    It consisted of the following Install(s):
+     MAG*3.0*218
+ Checking Install for Package MAG*3.0*218
+  
+ Install Questions for MAG*3.0*218
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// NO
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*218 :
+                Jul 17, 2018@11:55:39
+  
+ Build Distribution Date: Apr 26, 2018
+  
+  Installing Routines:....
+                Jul 17, 2018@11:55:39
+  
+  Running Post-Install Routine: ^MAGIP218.
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*218 Installed.
+                Jul 17, 2018@11:55:39
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+ Legacy DICOM Gateway Installation: 
+ ==================================
+ For installing, updating, or uninstalling the Legacy DICOM Gateway, refer 
+ to the VistA Imaging DICOM Gateway Installation Guide.
+   
+ Post-Installation Instructions:
+ ===============================
+ N/A
+  
+ Back Out Plan:
+ ==============
+     
+ Legacy DICOM Gateway Uninstall:
+ ===============================
+ If it is necessary to uninstall the MAG*3.0*218, then the user would 
+ follow the following steps:
+ 1.  Stop Cache 2014 by selecting the blue Cache cube and select Stop 
+     Cache.
+ 2.  Copy the file Cache.key in the C:\CacheSys\mgr directory to a 
+     temporary location.
+ 3.  Go to the Control Panel, choose Uninstall a program, and remove 
+     the current version Cache instance.
+ 4.  Go to the Control Panel, choose Uninstall a program, and remove 
+     the VistA DICOM Gateway (Patch 218).
+ 5.  Delete the directory C:\CacheSys.
+ 6.  Restart the server.
+ 7.  Install Legacy DICOM Gateway patch MAG*3.0*190, refer to the VistA
+     Imaging DICOM Gateway Installation Guide for instructions.
+ 8.  Copy the Cache.key file backed up earlier to C:\CacheSys\mgr.
+  
+ Uninstalling MAG*3.0*218:
+ =========================
+ If it is necessary to uninstall the MAG*3.0*218 VistA KIDS, then select 
+ the "Kernel Installation & Distribution System" menu option, "Backup a 
+ Transport Global" (see Installation Steps section, step 4c must be done 
+ before installing the patch.
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check the MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function executed prior to the patch install.
+ 1.  Select the message shown below:
+ Backup of MAG*3.0*218 install on <mmm dd, yyyy> <user name>
+ 2.  Select the Xtract PackMan option.
+ 3.  Select the Install/Check Message option.
+ 4.  Enter "Yes" at the prompt.
+ 5.  Enter "No" at the backup prompt. There is no need to back up the 
+     backup.
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+           and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGGGTU4C 
+ (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ====================
+ LDGW CheckSums:
+ ===============
+ This section lists modified routines for the LDGW build. For each 
+ routine, the second line will contain the following information: 
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 6054;Aug 07, 2018
+  
+ Table 2: Modified Routines for LDGW build
+ =========================================
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGDDR2A        97912369        103732840       **1,10,51,54,99,110,190,
+                                                 218** 
+ MAGDVRSN        21494340        21494340        **1,7,9,26,21,10,36,3,11,
+                                                 30,5,51,50,52,69,75,102,
+                                                 103,54,53,66,49,99,123,118,
+                                                 118,87,110,138,156,160,
+                                                 162,174,166,183,190,218**
+  
+ VistA KIDS Checksums:
+ =====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 19;Mar 27, 2015
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Table 3: Modified Routines for VistA KIDS Build
+ ===============================================
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGIP218        N/A             4110417         **218**
+  
+ Routine MAGIP218 is an installation routine that is automatically deleted 
+ after the KIDS installation. There are no other changes on VistA.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGIP218
+    Before:       n/a   After:  B4110417  **218**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 27, 2018
+Completed By:                               Date Completed: FEB 12, 2019
+Released By :                               Date Released : MAR 12, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

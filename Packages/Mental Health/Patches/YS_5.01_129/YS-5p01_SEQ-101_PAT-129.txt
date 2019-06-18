@@ -1,0 +1,308 @@
+$TXT Created by               at MHA-DEVA.DOMAIN.EXT  (KIDS) on Monday, 08/14/17 at 17:22
+=============================================================================
+Run Date: MAY 02, 2018                     Designation: YS*5.01*129
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #101                   Status: Released
+                  Compliance Date: JUN 02, 2018
+=============================================================================
+
+Associated patches: (v)YS*5.01*119     install with patch       `YS*5.01*129'
+
+Subject: MHA GUI UPDATE FOR 2FA
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will be used to update the current Mental Health Assistant (MHA) 
+ for use with an updated RPC Broker in support of the two-factor 
+ authentication effort.
+  
+ Upgrading MHA from Delphi 7 to XE8 was required in order to use this version 
+ of the Broker.  Modifications to the Delphi code were required and made to 
+ accomplish this upgrade.
+     
+ The patch also removes the Global Assessment of Functioning (GAF) Manager from
+ the Mental Health Assistant and addresses issues resulting from the upgrade in
+ the graphing and charting feature of MHA as well as deficiencies.
+    
+ The following existing instruments are modified:
+ ================================================
+  Beck Anxiety Inventory                                  BAI
+    a) Changed information text in the Instrument Results Review to reflect
+       the following:
+        
+       The overall range is 0 to 63.
+        
+       0-7      Minimal level of anxiety
+       8-15     Mild anxiety
+       16-25    Moderate anxiety
+       26-63    Severe anxiety 
+   
+  Beck Depression Inventory--Second Edition               BDI2
+    a) Added the following verbiage to the Instrument Results Review
+        
+         1 point = mild symptom level 
+         2 points = moderate symptom level
+         3 points = severe symptom level
+  
+  Minnesota Multiphasic Personality Inventory-2           MMPI-2-RF
+    -Restructured Form
+    a) changed the report text as follows:
+           Higher Order to Higher-Order
+           Self_Doubt to Self-Doubt
+           Behavior_Restricting to Behavior-Restricting
+           Aesthetic_Literary to Aesthetic-Literary
+           Mechanical_Physical to Mechanical-Physical
+  
+    b) In the Instrument Administrator option, fixed a problem with 
+       the progress bar color to correctly indicate when all questions 
+       are answered.
+  
+    c) When the COG (Cognitive Complaints) T-score is high, the report no
+       longer displays an erroneous message about the SUI (Suicidal/Death
+       Ideation) T-score being high.
+  
+  NEO Personality Inventory-3                             NEO-PI-3
+    a) Fixed scoring issues with T-Scores and Factor scores 
+  
+  Patient Health Questionnaire Depression Scale           PHQ9
+    a) Changed choices so that they are now numbered 0-3 instead of
+       1-4.  This more closely matches the paper form.
+  
+  PTSD Symptom Checklist for DSM 5                        PCL-5
+    a) Made the PCL-5 available on the Special Results tab in the 
+       Instrument Review Results module
+  
+  Quality of Life Inventory                               QOLI
+    a) Changed the score bar delimiter in the Instrument Results Review 
+       option output from a "*" (i.e., asterisk) to a capital "I".
+  
+ The following existing instruments are inactivated:
+  ---------------------------------------------------
+  Alcohol Use Inventory (Revised)                      AUIR
+  Center for Epidemiologic Studies Depression Scale 
+    (5-item version)                                   CESD5
+  Depression Outcome Module 8.0                        DOM80
+  Depression Outcomes Module: Geriatric Screen         DOMG
+  Employment Readiness Scale                           ERS
+  Health Locus of Control Scale                        HLOC
+  Rotter Internal-External Scale                       IEQ
+  Rotter Locus of Control                              RLOC
+  Spiritual Assessment Inventory                       SAI
+  Crowne-Marlowe Social Desirability Scale             SDES
+  Short Michigan Alcoholism Screening Test             SMAST
+  Validity Scale                                       VALD
+  Ward Atmosphere Scale                                WAS
+  
+ Date of Administration:
+ =======================
+ Before this patch, the user could enter any date in the past as the Date
+ of Administration. With this patch, the user cannot enter a date more than
+ one year in the past.
+  
+ Skipped Questions in the Instrument Administrator:
+ ==================================================
+ Corrected a bug that incorrectly reported skipped questions
+  
+   
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:     N/A 
+  
+ Forms Associated:              N/A
+  
+ Mail Groups Associated:        N/A
+   
+ Options Associated:            
+   
+ Option Name                    Type                    New/Mod/Del
+ -----------                    ----                    -----------
+   YS BROKER1                   Broker                      Mod
+   YSGAF CLINIC ENTRY           run routine                 Mod
+   YSGAF ERROR                  run routine                 Mod
+   YSGAF SINGLE PT              run routine                 Mod
+  
+ Protocols Associated:          N/A
+  
+ Remote Procedures Associated:  N/A
+   
+ Security Keys Associated:      N/A
+   
+ Templates Associated:          N/A
+   
+  
+ Additional Information:
+   
+ New Service Requests (NSRs):
+ ----------------------------  
+ None
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ HD0000000952874 - POQ
+  Problem: The following statement did not line wrap correctly and Veteran 
+  was not capitalized: Higher percentile scores denote Veteran's self-
+  reports of increased symptom severity when compared to comparison groups 
+  of Veterans with pain treated in inpatient or outpatient 
+  multidisciplinary pain settings.
+  Solution: Capitalized Veteran and corrected the line wrapping issue.
+  
+ HD0000000806297 - Crash File Missing Header Line.
+  Problem: If the MHA GUI aborts, for whatever reason (e.g., system crash),
+  the MHA writes the information it has already collected to a "crash" file
+  on the workstation. When the user connects to the MHA the next time, the
+  MHA GUI displays a message to the user who can continue with that
+  administration and save the information to the database. For some
+  instruments, the crash file was not built correctly, and the information
+  in the crash file was useless and had to be discarded. 
+  Solution: The patch corrects the problem so the crash file is properly
+  built.
+  
+ HD0000000816662 - Mental Health - Mental Health Assistant
+  Problem: If the user has a DUZ value of more than 9 characters in length 
+  and tries to sign an Addiction Severity Index (ASI) entry, there is an
+  error message. The user cannot sign the ASI entry.
+  Solution: The software now recognizes long DUZ values and allows the user
+  to sign the entry.
+  
+ HD0000000946589 - An error occurs on the Special Results Tab if a BAM 
+  instrument has more than 3 administrations completed.
+  Problem: Under the Special Results tab in the Instrument Results Review 
+  option, if the BAM has more than 3 administrations, an error occurs, then
+  the three oldest BAM administrations are displayed rather than the most 
+  recent 3.
+  Solution: The access error is fixed. Instruments with no scales now
+  display all instances of the instrument administration starting with the
+  most recent. Instruments with scales will display up to 6 administrations
+  starting with the most recent.
+  
+ I12166629FY17, R13148174FY17 - PHQ9
+  Problem: The choices for each question are numbered 1-4, while the paper 
+  version numbers the choices 0-3.
+  Solution: The choices in MHA are now numbered 0-3 to match the paper 
+  version.
+  
+ Test Sites:
+ ----------
+ Milwaukee
+ Orlando
+   
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+   MHA3 Installation Guide (YS*5.01*129)        YS_501_129_IG.pdf    
+   MHA3 Technical Manual and Security Guide     YS_TM.pdf    
+   MHA3 User Manual                             YS_MHA_UM.pdf
+   
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This patch is being distributed as a host file.  The name of the host 
+ file is YS_501_129.KID.  This file should be downloaded in ASCII 
+ format.
+   
+ The preferred method is to retrieve files from:
+   
+     download.vista.domain.ext.
+   
+ This transmits the files from the first available server. Sites may
+ also elect to retrieve files directly from a specific server.
+   
+ Sites may retrieve the software and install guide directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+   
+ The Install Guide is also available on the above servers.  It is 
+ available as .PDF format.  This file should be downloaded in BINARY 
+ format.  
+   
+     File Name:              Description:                    Protocol
+     ==========              ============                    =========
+     YS_501_129_IG.pdf       MHA3 Patch 129 Install Guide    BINARY
+     YS_501_129.KID          PATCH 129 Update Host File      ASCII
+     YS_501_129.ZIP          PATCH 129 MHA GUI V 1.0.3.72    BINARY
+     YS_TM.PDF               MHA3 Technical Manual           BINARY
+     YS_MHA_UM.PDF           MHA3 User Manual                BINARY
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at:  http://www.domain.ext/vdl/
+   
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take five minutes.  Refer to the Install Guide, YS_501_129_IG.pdf 
+ for complete details.
+   
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu. 
+   
+     When prompted to enter a host file, type in YS_501_129.KID
+   
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+    
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use YS_501_129.KID
+  
+ 4.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+     NO//' enter No. 
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' enter NO.
+   
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' enter NO. 
+    
+ Back-Out Plan
+ -------------
+ For information about back out steps see this document:
+  
+   YS_501_129_IG.pdf
+  
+ in the VistA Documentation Library at: http://www.domain.ext/vdl/
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS129PST
+    Before:       n/a   After: B10659983  **129**
+Routine Name: YTQAPI7
+    Before: B18902958   After: B23570402  **85,129**
+ 
+Routine list of preceding patches: 85
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 02, 2017
+Completed By:                               Date Completed: APR 20, 2018
+Released By :                               Date Released : MAY 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

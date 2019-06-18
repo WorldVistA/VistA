@@ -1,0 +1,297 @@
+$TXT Created by                      COC-CCAD-DEV.AAC.DOMAIN.EXT  (KIDS) on Sunday, 02/03/19 at 08:49
+=============================================================================
+Run Date: MAR 20, 2019                     Designation: GMRC*3*119
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3       SEQ #100                      Status: Released
+                  Compliance Date: MAR 28, 2019
+=============================================================================
+
+Associated patches: (v)GMRC*3*107  <<= must be installed BEFORE `GMRC*3*119'
+
+Subject: ADMIN KEY-FIX THE ADMINISTRATIVELY RELEASED BY POLICY GROUP REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1. GMRC*3.0*119 is being released to correct a defect identified in
+    Incident INC3759691. In the Consult Management menu option [GMRC MGR]
+    under the Consult Tracking Reports [GMRC REPORTS] option, the following
+    report is being fixed:
+    GR  Administratively Released Consults by Group [GMRC RPT ADMIN REL 
+    CONS GROUPR]
+  
+    If a consult service placed with a service name containing -DS or
+    -ADMIN is forwarded to a different consult service that does not
+    contain -DS or -ADMIN, it creates a hard error in VistA when pulling
+    the report. This patch fixes the defect so that the report will display
+    without getting a hard error.
+  
+ 2. In the same circumstance as described above, when the consult was 
+    forwarded, it no longer included that consult in the count. This patch 
+    fixes that issue.
+  
+ 3. Descriptions were added to three options for the following local 
+    reports on the Consult Management menu [GMRC MGR]:
+  
+    GR     Administratively Released Consults by Group [GMRC RPT ADMIN 
+           RELEASE CONSULT]
+    ST     Completion Time Statistics [GMRC RPT ADMIN REL CONS GROUPR]
+    US     Administratively Released Consults by User [GMRC RPT ADMIN REL 
+           CONS USER]
+  
+  
+ Patch Components
+ ================ 
+  
+ Files & Fields Associated:
+  
+                                                           New/Modified/
+ File Name (Number)          Field Name(Number)              Deleted
+ -------------------         ------------------            -------------
+ N/A 
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Number                    Deleted   
+ ---------                    -----------------            -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted   
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                              New/Modified/
+ Option Name                      Type                           Deleted
+ -----------                      ----                        -------------
+ GMRC RPT ADMIN RELEASE CONSULT   Run Routine                    Modified
+ GMRC RPT ADMIN REL CONS USER     Run Routine                    Modified
+ GMRC RPT ADMIN REL CONS GROUPR   Run Routine                    Modified
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted   
+ -------------                                             -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted   
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name                   Type   File Name (Number)   Deleted
+ -------------                   ----   ------------------ -------------
+ N/A
+  
+  
+ Additional Information:
+ ----------------------- 
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Incident INC3759691 (GMRC*3*107/OR*3*490 - Hard Error - Defect)
+  
+ Problem:
+ -------
+ If a consult service placed with a service name containing -DS or -ADMIN 
+ is forwarded to a different consult service that does not contain -DS or 
+ -ADMIN, it creates a hard error in VistA when pulling this report, GR     
+ Administratively Released Consults by Group [GMRC RPT ADMIN REL CONS 
+ GROUPR].
+  
+ Also, in the same circumstances, the report would not count the consult
+ that was forwarded.
+  
+ Resolution:
+ ----------
+ The report will display and the user will no longer get a hard error. 
+ It will also now include the consult that was forwarded in the counts. 
+  
+ Test Sites:
+ ----------
+ Eastern Colorado HCS  Denver, CO
+ Tomah VA Medical Center  Tomah, WI
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                                   File Name             FTP Mode
+ -----------------------------------------------------------------------
+ Consult/Request Tracking User Manual    consum.pdf            Binary
+ Consult/Request Tracking User Manual    consum.docx           Binary
+  
+  
+ Patch Installation:
+  
+ *****************************************
+ DO NOT QUEUE the install of this patch.
+ *****************************************
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter patch 
+     GMRC*3.0*119:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//Respond NO  
+    
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO// Respond NO
+                                                                 
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO// Respond NO
+   
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A 
+  
+  
+ Back-Out Plan:
+ -------------------------------
+  
+ This patch contains 1 routine, GMRCADG.
+  
+ Prior to installing an updated KIDS package, the site/region should have 
+ saved a backup of the routine in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option (this is done at time of 
+ install). The message containing the backed-up routine can be loaded with 
+ the "Xtract PackMan" function at the Message Action prompt. The Packman 
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed-up 
+ routines onto the VistA System. 
+  
+ Go to the Backup of Patch_GMRC_3_119 message in Mailman. 
+ At the Enter message action prompt, enter "X" to "Xtract PackMan" 
+ At the Select PackMan Function prompt enter the number 6 to Install/Check 
+ Message. 
+ At the end of this process the pre-patch routines are restored.
+  
+ Validation of Roll Back Procedure:
+ ----------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the GMRC routine GMRCADG contained in this patch using the option First
+ Line Routine  Print [XU FIRST LINE PRINT]. Once the routine contained in
+ the GMRC*3.0*119 patch has been rolled back, the first two lines of the
+ Routine will no longer contain the designation of patch GMRC*3.0*119 in
+ the patch list section on line 2.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+     
+ It is imperative that you have performed a backup of the routines
+ included in this patch prior to installation.
+    
+ The back-out plan is to restore the routines from the backup created.
+    
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+    
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRCADG
+    Before: B21404529   After: B28316541  **107,119**
+ 
+Routine list of preceding patches: 107
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 07, 2019
+Completed By:                               Date Completed: MAR 18, 2019
+Released By :                               Date Released : MAR 20, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

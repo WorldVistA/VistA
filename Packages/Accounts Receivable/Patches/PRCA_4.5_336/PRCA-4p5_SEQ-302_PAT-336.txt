@@ -1,0 +1,468 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/22/19 at 10:46
+=============================================================================
+Run Date: MAR 05, 2019                     Designation: PRCA*4.5*336
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: EMERGENCY
+Version : 4.5       SEQ #302                    Status: Released
+                  Compliance Date: MAR 08, 2019
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*190<<= must be installed BEFORE `PRCA*4.5*336'
+                    (v)PRCA*4.5*323<<= must be installed BEFORE `PRCA*4.5*336'
+                    (v)PRCA*4.5*325<<= must be installed BEFORE `PRCA*4.5*336'
+                    (v)PRCA*4.5*341<<= must be installed BEFORE `PRCA*4.5*336'
+
+Subject: CROSS-SERVICE PROCESSING MAINTENANCE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. Modify Cross-Service (CS) bill foreign address handling.
+  
+ 2. Ensure that the telephone number in the Integrated Agency
+    Interface (IAI) C2CA (Debtor Contact Information) adheres to the
+    Austin Information Transmission Center (AITC) and Artiva guidelines.
+   
+ 3. Modify served messages from Treasury to not use the same work space as 
+    weekly batch run.
+  
+ 4. Ensure the CS date is reset for rejected recalls by Treasury.
+  
+ 5. Ensure Treasury Cross-Servicing Project (TCSP) bill scrub sets address 
+    node in the ACCOUNTS RECEIVABLE (#430) file.
+  
+ 6. Ensure CS flag set for debtor is only cleared if deceased or scrubbed.
+  
+ 7. Ensure 5B records are sent to Treasury in every case except when 
+    Recall status is set on bill.
+  
+ 8. Fix CS reporting for variable IOP setup affecting other print options.
+  
+ 9. Update the Error Code (#348.5)file with code additions/changes. 
+  
+ 10. Correct bill Category codes.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) I17391307FY18 - Veteran with foreign address not sent to TCSP 
+                    correctly when debtor address node is missing.
+  
+ Problem:
+ --------
+ Bills with First Party foreign addresses are not passing correctly to 
+ Treasury causing a bad address reject type 45.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the weekly TCSP batch run to ensure that 
+ the correct country, state and zip code are set when a veteran address is 
+ outside the United States and there is no address node in the AR DEBTOR
+ (#340) file .
+  
+ The majority of these address issues deal with Canadian border VA sites 
+ (Upstate NY & Fort Harrison).
+  
+ Routines: RCTCSP1, RCTCSP7, RCAMADD, RCTCSPD
+  
+  
+  
+ 2. INC2776430 - Ensure a non-numeric phone number in the C2CA (Debtor
+                 Contact Information) adheres to AITC and Artiva guidelines
+  
+ Problem:
+ --------
+ Vista patient phone numbers that are non-numeric or numeric length not
+ equal to ten currently default to 9999999999. This number is not 
+ accepted as valid by Artiva and the update is rejected and sent back 
+ to Vista.
+  
+  
+ Resolution:
+ -----------
+ When building the IAI C2CA (Debtor Contact Information) transaction,
+ a non-conforming phone number (not length 10, all numeric) will now
+ be set to blank (positions 261-270). And, in addition, the Contact
+ Phone Type (position 260) and Contact Primary Phone (position 275) 
+ will also be set to blank.
+  
+  
+ Routines: RCAMADD, RCTCSP1, RCTCSP7
+  
+  
+  
+ 3) I17291574FY18 - Reconciliation and Due Process Notification (DPN) 
+                    served messages using the same temporary work space 
+                    ('RCTCSPD') as weekly batch runs.
+  
+ Problem:
+ --------
+ The Reconciliation Report and DPN messages via Mailman are processed 
+ (served messages) using the same work file as the weekly batch run, 
+ ^XTMP("RCTCSPD"). If either message was sent to a VistA system on a 
+ Tuesday (cross-service batch run day), the possibility exists that the
+ served message would erase the batch run compilation in the same work 
+ file.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the served message processing routines 
+ for the Reconciliation Report and DPN messaging to use work files 
+ ^XTMP("RCTCSP3SW") and ^XTMP("RCTCSPRSW") respectively, to avoid any 
+ probability of killing/overwriting other processing.
+  
+ Routines: RCTCSP3S, RCTCSPRS
+  
+  
+ 4) I17654506FY18 - Ensure the date sent to cross-service is reset when a 
+                    recall bill is rejected by Treasury.
+  
+ Problem:
+ -------- 
+ When a recall bill transaction is sent to the Treasury (via TCSP batch 
+ run) and Treasury rejects the transaction, the returning reject message 
+ does not correctly reset the DATE BILL REFERRED TO TCSP (#151) field in 
+ ACCOUNTS RECEIVABLE (#430) file.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the Treasury reject message handler to 
+ ensure that the current date is set into the DATE BILL REFERRED TO TCSP 
+ (#151) field in the ACCOUNTS RECEIVABLE (#430) file.
+  
+ Also, a post-install routine has been included to correct all bills that 
+ are flagged as cross-service but date is missing in DATE BILL 
+ REFERRED TO TCSP (#151) field in the ACCOUNTS RECEIVABLE (#430) file.
+  
+  
+ Routines: RCTCSJS, RCTC336P (post-install run) 
+  
+  
+ 5) I18597330FY18 - TCSP Scrubber fails to update node 16 in file ACCOUNTS 
+                    RECEIVABLE (#430).
+  
+ Problem:
+ --------
+ Sites are scrubbing bills by setting the Treasury Cross-Service (TCSP) 
+ date in the following options without creating a corresponding address 
+ node 16 in the ACCOUNTS RECEIVABLE (#430) file causing the weekly batch 
+ run to fail if the bill is recalled.
+  
+ Option 1 - Set cross-service flag on bill
+ Option 5 - Fully re-establish debtor/bill as cross-serviced
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to routines, RCDPCSA & RCTC336P, to create
+ the bill address node 16 in the ACCOUNTS RECEIVABLE (#430) file, for
+ the, 'Set cross-service flag on bill' and 'Fully re-establish
+ debtor/bill as cross-serviced', options. Also, for option 2 - Clear
+ cross-service flag on BILL and option 3 - Clear cross-service flag on
+ DEBTOR (AND ALL BILLS), the address node 16 will be deleted from the bill.
+  
+ Lastly, a post-install routine, RCTC336P, will ensure that all bills
+ flagged as cross-service in the ACCOUNTS RECEIVABLE (#430) file,
+ will have address node 16 set to prevent any ongoing failures of the 
+ weekly batch run regarding recalled bills (balances less than $25.00), 
+ having no address node defined.
+  
+ Routines: RCDPCSA, RCTC336P (post-install run)
+  
+  
+ 6) I18917477FY18 - Debtor is being cleared when the last bill at Treasury 
+                    is returned.
+  
+  
+ Problem:
+ --------
+ The Reconciliation Report and the served rejects from Treasury will clear 
+ the CS debtor flag if the last open CS bill for debtor has been cleared 
+ or when various batch rejection types are returned from Treasury.
+  
+  
+ Resolution:
+ ----------
+ Modifications have been made to the served message handlers for the 
+ Reconciliation report and the batch rejects sent by the Treasury system, 
+ Artiva. The debtor will only be cleared if the veteran is deceased, but 
+ clearing is not handled by CS processing.
+  
+ Removed check on Reconciliation R2 transactions to no longer check for 
+ debtor open bills (active & >$25) and clearing CS flag on debtor if none 
+ are found.
+  
+  
+ Routines: RCTCSPRS, RCTCSJS
+  
+  
+ 7) I19188159FY18 - Cross-Servicing 5B records are not transmitting.
+  
+ Problem:
+ --------
+ Patient bills that have decreases posted (i.e. payments, adjustments,
+ etc.), create a 5B record that should be sent in the next batch run
+ and at times are skipped due to other bill status checks prior to the
+ processing of open 5B transactions.
+  
+  
+ Resolution:
+ ----------
+ Modifications have been made to the batch run routine RCTCSPD to move the 
+ check for 5B processing on bills to have priority over the referral flag 
+ checking, that skips subsequent processing of a bill.
+  
+  
+ Routines: RCTCSPD
+  
+  
+ 8) INC0543529 - Fix Cross Service (CS) reporting for IOP variable setup 
+                 affecting other print options.
+  
+ Problem:
+ --------
+ The setting of the printing variable IOP, after the printer setup query 
+ will cause a false process when jumping out of the Cross-Servicing Bill 
+ Report [RCTCSP BILL REPORT] or Print Cross-Servicing Report [RCTCSP 
+ REPORT] print menu options to another option while printing.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to routine RCTCSP1 to ensure the setting of 
+ the print control variable IOP is NOT set after calling the printer query 
+ for device. This ensures variable IOP is not defined when jumping to 
+ another print option.
+  
+  
+ Routine: RCTCSP1
+  
+  
+ 9) INC1759367 - Update the Error Code file #348.5 with code 
+                 additions/changes
+  
+ Problem:
+ --------
+ Treasury has been adding or modifying Integrated Agency Interface
+ File Format For Cross-Servicing (IAI) Reject error codes and this
+ patch, PRCA*4.5*336, updates the national Error Code (#348.5) file
+ for any modified/new errors from the most recent version of IAI
+ for Feb 2018. 
+  
+  
+ Resolution:
+ -----------
+ The post install run has been updated to edit the codes 53 and 9A and add 
+ the codes 0C and 0D.
+  
+  
+ Routine: RCTC336P (Post Install run)
+  
+  
+ 10) INC1540432 - Patch PRCA*4.5*315 has not resolved TP bills populating 
+                 'No 3rd Letter Report' for cross-servicing.
+  
+  
+ Problem:
+ --------
+ The following Category codes were either left out of the batch run or not 
+ coded correctly to be recognized as a code that skips any further 
+ processing of a bill.
+    47  FEE REIMB INS    (missing from exception string)
+    49  INELIGIBLE HOSP. REIMB.  (coded incorrectly, patch PRCA*4.5*315 
+  
+  
+ Resolution:
+ -----------
+ The weekly batch run has been modified to skip the processing 
+ of a bill if the Category Code is 47 and correct the problem that 
+ prevented Category Code 49 from being skipped.
+  
+  
+ Routines: RCTCSPD
+  
+  
+  
+ TEST SITES:
+ ----------- 
+ VA Montana Health Care System
+ VISN 2 VA Healthcare Network Upstate New York
+  
+ Software and Documentation Retrieval Instructions:
+ -----------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ ------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than five minutes to install this patch. 
+  
+ **********************************************************
+ PLEASE NOTE: Post-install routine RCTC336P will be deleted once the 
+ install is complete.  If you wish to check the checksum of this routine 
+ please use the 'Verify Checksums in Transport Global' under the 
+ Installation Menu. 
+ **********************************************************
+  
+ Pre-Installation Instructions:
+ -------------------------
+ N/A
+  
+ Installation Instructions:
+ ----------------------
+ 1. Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. From the Kernel Installation & Distribution System menu, select the 
+    Installation menu.  
+  
+ 3. From this menu, you may select to use the following options:
+    (when prompted for INSTALL NAME, enter PRCA*4.5*336)
+       transport global.
+    b. Print Transport Global - This option allows you to view
+       the components of the KIDS build. 
+    c. Compare Transport Global to Current System - This option
+       allows you to view all changes that are made when this
+       patch is installed. It compares all components of this patch
+       (routines, DD's, templates, etc.).
+    d. Backup a Transport Global - This option creates a backup
+       message of any routines exported with this patch.
+  
+ 4. Use the Install Package(s) option and select the package PRCA*4.5*336.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//" 
+    respond NO.
+  
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? YES//", hit ENTER.
+  
+    a) When Prompted "Enter options you wish to mark as "Out of Order:" 
+       enter the following options:
+  
+       TCSP Flag Control              [RCDP TCSP FLAG CONTROL] 
+       Print Cross-Servicing Report   [RCTCSP REPORT]
+       Cross-Servicing Bill Report    [RCTCSP BILL REPORT]
+  
+    b) When prompted "Enter protocols you wish to mark as "Out of Order:" 
+       just press <Return>
+  
+  
+ Post-Installation Instructions:
+ -------------------------
+  
+  
+ Back-Out Plan:
+ ----------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 45
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCAMADD
+    Before:  B9400859   After: B20133852  **34,190,336**
+Routine Name: RCDPCSA
+    Before: B37276787   After: B35235614  **325,336**
+Routine Name: RCTC336P
+    Before:       n/a   After: B12149010  **336**
+Routine Name: RCTCSJS
+    Before:B204961410   After:B210400195  **301,323,336**
+Routine Name: RCTCSP1
+    Before:B169151504   After:B180778033  **301,331,315,339,341,336**
+Routine Name: RCTCSP3S
+    Before: B30705650   After: B32035982  **301,336**
+Routine Name: RCTCSP7
+    Before:  B5563240   After:  B6169401  **327,315,336**
+Routine Name: RCTCSPD
+    Before:B159825609   After:B168268375  **301,327,315,336**
+Routine Name: RCTCSPRS
+    Before: B66612792   After: B64307500  **301,315,336**
+ 
+Routine list of preceding patches: 190, 323, 325, 341
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 29, 2017
+Completed By:                               Date Completed: MAR 05, 2019
+Released By :                               Date Released : MAR 05, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

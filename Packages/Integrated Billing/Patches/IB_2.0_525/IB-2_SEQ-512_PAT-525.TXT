@@ -1,0 +1,322 @@
+
+=============================================================================
+Run Date: APR 18, 2016                     Designation: IB*2*525
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #512                      Status: Released
+                  Compliance Date: MAY 18, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*516    <<= must be installed BEFORE `IB*2*525'
+
+Subject: MCCF ENHANCEMENTS PROJECT - HPID
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch implements changes to VistA's Integrated Billing (IB) module as
+ requested by the Veterans Health Administration (VHA) Chief Business 
+ Office (CBO) eBusiness Solutions Department to comply with the 
+ legislative changes mandated by the Health Insurance Portability and
+ Accountability Act of 1996 (HIPAA).
+  
+ ***Note:
+ The host file "MCCF_FY14_HPID_EIV_1_0.KID" contains two patches 
+ (Eligibility IB*2.0*528 and HPID IB*2.0*525) that are bundled together 
+ into this host file.   The two patches are NOT DEPENDENT on each other.   
+ After loading the distribution "MCCF_FY14_HPID_EIV_1_0.KID" and  
+ installing the distribution "MCCF FY14 HPID EIV 1.0",  the installation 
+ of BOTH patches (Eligibility IB*2.0*528 and HPID IB*2.0*525) will be 
+ installed together AUTOMATICALLY.
+  
+ ***Note:
+ When installing patch IB*2.0*525 answer "YES" at the following prompt:
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//YES
+ In general, the sites may have a background process that is jobbed off at 
+ non-peak hours to Rebuild the Menu Trees. It is recommended that the 
+ sites rebuild the Menu Trees (after the patch is installed and during 
+ non-peak hours).
+  
+ ***Note:
+ There is a data report such that when printing/displaying/exporting 
+ the data it is recommended to use the 132 or 254 columns to 
+ display/print/export. The users will receive a warning message in such a 
+ case.
+                                
+ PMAS Increment 9 of IB*2.0*525 (HPID Build 3) contains the changes made to
+ the BILL/CLAIMS File (#399) to track changes to the claim-level HPID
+ Fields #471, #472, and #473.
+  
+ PMAS Increment 10 of IB*2.0*525 (HPID Build 3) implements a menu option
+ that runs an ad-hoc report listing Authorized claims that have had
+ claim-level HPIDs added within a selected date range.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                        New/Modified/Deleted
+ -------------          -----------------------------------   --------------------
+ BILL/CLAIMS (#399)     PRIMARY HPID EDIT DATE/TIME (#474)    New
+                        PRIMARY HPID CHANGES MADE BY (#475)   New
+                        SECONDARY HPID EDIT DATE/TIME (#476)  New
+                        SECONDARY HPID CHANGES MADE BY (#477) New
+                        TERTIARY HPID EDIT DATE/TIME (#478)   New
+                        TERTIARY HPID CHANGES MADE BY (#479)  New
+                        PRIMARY INSURANCE HPID (#471)         Modified
+                        SECONDARY INSURANCE HPID (#472)       Modified
+                        TERTIARY INSURANCE HPID (#473)        Modified
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ IBCN HPID CLAIM RPT            run routine      New
+ IB OUTPUT PATIENT REPORT MENU  menu             Modified
+ IBCN INSURANCE MGMT MENU       menu             Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                 New/Modified/Deleted
+ -------------      ----      ------------------            --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20130513 - Health Plan Identifier (HPID) Compliance (Phase 2, Iteration 2)
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Central Alabama (HCS) - Station 619
+ Dayton VAMC - Station 552
+ Lebanon VA Medical Center - Station 595
+ Martinsburg VA Medical Center - Station 613
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+                                  
+ File Description                       File Name                 FTP Mode
+ -------------------------------------------------------------------------
+  
+ INTEGRATED BILLING User Manual         IB_2_0_UM.PDF             (binary)
+ INTEGRATED BILLING Technical Manual/   IB_2_0_TM.PDF             (binary)
+ Security Guide
+ INTEGRATED BILLING Release Notes       IB_2_0_P525_RN.PDF        (binary)
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file MCCF_FY14_HPID_EIV_1_0.KID, which contains the
+     following patches:
+  
+         IB*2.0*528
+         IB*2.0*525
+  
+      Sites can retrieve VistA software from the following server
+      addresses. The preferred method is retrieve the files from:
+  
+                     download.vista.domain.ext
+  
+      This will transmit the files from the first available server.
+      Sites may also elect to retrieve the software directly using
+      Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+      directory at the following OI Field Offices:
+  
+        Albany:                  domain.ext
+        Hines:                   domain.ext
+        Salt Lake City:          domain.ext
+  
+      The MCCF_FY14_HPID_EIV_1_0.KID host file is located in the
+       directory. Use the American Standard Code for
+      Information Interchange (ASCII) Mode when downloading the file.
+  
+  
+   2.  START UP KIDS
+       -------------
+       Start up the Kernel Installation and Distribution System Menu option
+       [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+       Select Kernel Installation & Distribution System Option: Installation
+                                                                
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+       Select Installation Option:
+  
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR BUILD
+     -------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file MCCF_FY14_HPID_EIV_1_0.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]MCCF_FY14_HPID_EIV_1_0.KID).
+  
+     When prompted for "OK to continue with Load? YES//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+          IB*2.0*525
+       Use INSTALL NAME: MCCF FY14 HPID EIV 1.0 to install this
+       Distribution.
+  
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR THE BUILD
+     -----------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter MCCF FY14 HPID 
+     EIV 1.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+  
+ 5.  INSTALL THE BUILD
+     -----------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the MCCF FY14 HPID EIV 1.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter MCCF FY14 
+         HPID EIV 1.0.
+     c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//", enter YES.
+     d.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", enter NO.
+     e.  When prompted " Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+     f.  When prompted "Device: HOME//", respond with the correct device 
+         but do * NOT * queue this install.
+     g.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 106
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNHPR
+    Before:       n/a   After:  B7519738  **525**
+Routine Name: IBCNHPR1
+    Before:       n/a   After:  B6873066  **525**
+Routine Name: IBCNHPR2
+    Before:       n/a   After:  B6925867  **525**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 21, 2014
+Completed By:                               Date Completed: MAR 24, 2016
+Released By :                               Date Released : APR 18, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

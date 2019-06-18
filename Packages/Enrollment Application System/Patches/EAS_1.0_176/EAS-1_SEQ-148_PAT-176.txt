@@ -1,0 +1,278 @@
+
+=============================================================================
+Run Date: MAR 29, 2019                     Designation: EAS*1*176
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #148                      Status: Released
+                  Compliance Date: APR 29, 2019
+=============================================================================
+
+
+Subject: Enrollment System (ES) 5.5.1 Sustainment Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.5.1. This release, developed in 
+ Java technology, contains Enrollment System Modernization Phase 2 (ESM P2)
+ defect fixes to support Community Care (CC) and ES Sustainment.
+  
+ This software is being installed at the Austin Information Technology 
+ Center (AITC) and no action is required by the sites.
+  
+ ES 5.5.1 was successfully deployed on Thursday, March 28th, 2019.
+  
+ The following functionality is updated in this ES 5.5.1 release:
+  
+ ES Sustainment defect fixes:
+  
+ 534702: Pending Application Reports - Pending Applications Schedule Report
+         Detailed Format .csv report contains incorrect labels.
+ 793956: Section 508: Information, structure, and relationships conveyed
+         through presentation cannot be read (programmatically determined).
+ 793990: Section 508: Keyboard-operable user interface elements do not have
+         a visible indication of focus.
+ 793998: Section 508: The name, role, and value of user interface elements 
+         in the product cannot be read.
+ 797775: Section 508: The Person Search screen-mouse cursor creates an
+         infinite loop.
+ 808703: Application error message displayed after update button is 
+         clicked - Add MSE button clicked, no data entered.
+ 842345: ES is sending the incorrect person bio source date.
+ 911803: Permanent Mailing Address with Bad Address Reason is not getting
+         persisted in ES as sent from VistA via ORU-Z07 message.
+ 927993: Unexpected sub-bio in VET360 payload causes JSON mapping 
+         exception. 
+ 932334: Real-time Veterans Choice Eligibility (VCE)
+         recalculation batch does not process all records in single
+         execution.
+ 933394: Rurality Changed Batch Process does not process all records in one
+         run.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ --------- --------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Ticket #         Overview
+ -------------    -------------------
+ N/A
+            
+ Rational Team Concert (RTC):
+ ----------------------------
+  
+ RTC #       Problem / Resolution:
+ --------    ---------------------
+ 534702      Problem: Pending Application Reports - Pending Applications
+             Schedule Report Detailed Format .csv report contains incorrect
+             labels.
+  
+             Resolution: Updated .csv report format.
+  
+ 793956      Problem: Section 508: Information, structure, and 
+             relationships conveyed through presentation cannot be read
+             (programmatically determined).
+  
+             Resolution: On the Person Search screen, an accessibility
+             property was added to each of the navigation links. When a 
+             user does not have permission for a particular link, the
+             screen reader will read the link title and then say the link
+             is not accessible.
+             On the Veterans Demographic screen, the missing title property
+             was added to the Addresses sub-tab. Now the screen reader will
+             announce: "Address sub tab".
+  
+ 793990      Problem: Section 508: Keyboard-operable user interface 
+             elements do not have a visible indication of focus.
+  
+             Resolution: As recommended by the 508 Office, the navigation
+             bar's behavior has been documented in the Accessibility 
+             section of the application's Online Help.
+  
+ 793998      Problem: Section 508: The name, role, and value of user 
+             interface elements in the product cannot be read.
+  
+             Resolution: On the Veteran Demographic screen, the missing 
+             title property was added to the Address sub-tab. On the
+             Veteran Communications screen, a title property was added to
+             the column header links and a variable added to the table's
+             summary property to identify which column the table is sorted
+             by.
+  
+ 797775      Problem: Section 508: The Person Search screen-mouse cursor
+             creates an infinite loop.
+  
+             Resolution: As recommended by the 508 Office, this behavior 
+             was noted in the Accessibility section of the application's
+             Online Help.
+  
+ 808703      Problem: Application error message displayed after update 
+             button is clicked - Add MSE button clicked, no data entered.
+  
+             Resolution: Added form validation logic.
+  
+ 842345      Problem: ES is sending the incorrect person bio source date.
+  
+             Resolution: Updated code so that ES sends the most recent 
+             entity source date as the person bio source date.
+  
+ 911803      Problem: Permanent Mailing Address with Bad Address Reason is
+             not getting persisted in ES as sent from VistA via ORU-Z07
+             message.
+  
+             Resolution: The not statement in the check for "has a matching
+             address record" in IsPermAddressHasBadAddressReason was
+             accidentally removed while fixing defect 845428 in ES 5.4. 
+             This fix reverses the error so that the not statement is now
+             included.
+  
+ 927993      Problem: Unexpected sub-bio in VET360 payload causes JSON 
+             mapping exception.
+  
+             Resolution: Added ignore unrecognized property for JSON 
+             mapper.
+  
+ 932334      Problem: Real-time Veterans Choice Eligibility (VCE)
+             recalculation batch does not process all records in single
+             execution.
+  
+             Resolution: Added idempotent=false setting for RecalculateVCE
+             batch process and changed schedule to execute every hour.
+  
+ 933394      Problem: Rurality Changed Batch Process does not process all
+             records in one run.
+  
+             Resolution: Changed incremental processing to a one-time query
+             execution.
+  
+ Test Sites:
+ -----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Updated documentation describing the modification and defects fixed by 
+ this release is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         ES_5_5_1_RN.PDF         (binary)
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 21, 2019
+Completed By:                               Date Completed: MAR 29, 2019
+Released By :                               Date Released : MAR 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

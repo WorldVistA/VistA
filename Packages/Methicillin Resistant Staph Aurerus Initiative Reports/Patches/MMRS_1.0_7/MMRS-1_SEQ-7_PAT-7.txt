@@ -1,0 +1,161 @@
+$TXT Created by                 at CPRS32.DOMAIN.EXT  (KIDS) on Monday, 10/22/18 at 18:36
+=============================================================================
+Run Date: MAR 29, 2019                     Designation: MMRS*1*7
+Package : MMRS - MRSA INITIATIVE REPORTS      Priority: Mandatory
+Version : 1         SEQ #7                      Status: Released
+                  Compliance Date: APR 29, 2019
+=============================================================================
+
+Associated patches: (v)MMRS*1*5    <<= must be installed BEFORE `MMRS*1*7'
+
+Subject: MRSA PCR Results
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes an issue with the Multi-Drug Resistant Organisms (MDRO) 
+ Program Tools, where it was not always picking up Methicillin-Resistant 
+ Staphylococcus Aureus (MRSA) Laboratory results. This was caused by sites 
+ that started to report their MRSA PCR tests (i.e., MRSA SURVL NARES DNA or
+ MRSA SURVL OTHER DNA) as DETECTED/Not Detected instead of 
+ POSITIVE/Negative due to manufacturer specifications.
+  
+ For the MRSA Program Tools to continue to pick up MRSA laboratory results 
+ for those sites, this patch will update the tools to consider a result of 
+ "POSITIVE" or "DETECTED" as MRSA Positive (this is a case insensitive 
+ comparison, so a result of "Positive" or "Detected" will also be 
+ considered as MRSA Positive). This will be backwards compatible, and the 
+ MDRO Program Tools should still work for sites reporting their results as 
+ Positive/Negative. These changes have been hard-coded into the program and
+ users will not need to make any changes via the MDRO Tools Lab Parameter
+ Setup option.
+  
+  
+ New Service Requests (NSRs):
+ ============================
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ N/A
+  
+   
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch MMRS*1*7 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch MMRS*1*7 have no adverse effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ There is no Ticket associated with this patch. 
+   
+  
+ Test Sites:
+ ==========
+ Miami - VA Healthcare System 
+ Lexington VAMC
+ Erie VA Medical Center 
+  
+   
+ Patch Installation:
+ ===================  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no special considerations for pre/post installation.
+   
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. This patch should
+ take less than 1 minute to install.
+   
+ Installation Instructions:
+ --------------------------
+ 1.      Choose the PackMan message containing this patch.
+   
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+   
+ 3.      From the Kernel Installation and Distribution System Menu, select
+         the Installation Menu. From this menu, you may elect to use the
+         following options. When prompted for the INSTALL NAME enter the
+         patch MMRS*1.0*7:
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DDs or templates. 
+         b. Compare Transport Global to Current System - This option will
+            (allow you to view all changes that will be made when this
+            patch is installed.  It compares all components of this patch
+            routines, DDs, templates, etc.). 
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+   
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+   
+ 5.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' respond NO.
+   
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//' respond NO. 
+   
+ 7.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+   
+ Post-Installation Instructions:
+ -------------------------------
+ There are no specific post-installation instructions.
+  
+   
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the  
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines 
+ included in this patch prior to installation.
+   
+ The back-out plan is to restore the routines from the backup created.
+   
+ No data was modified by this patch installation and, therefore, no  
+ rollback strategy is required.
+   
+ To verify the back-out completed successfully, ensure the checksum  
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MRSA PROGRAM TOOLS;**[Patch List]**;Mar 22, 2009;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MMRSIPC
+    Before:B103279928   After:B108454756  **3,5,7**
+ 
+Routine list of preceding patches: 5
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 04, 2018
+Completed By:                               Date Completed: MAR 28, 2019
+Released By :                               Date Released : MAR 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,350 @@
+
+=============================================================================
+Run Date: MAR 19, 2019                     Designation: PSO*7*522
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #453                      Status: Released
+                  Compliance Date: APR 18, 2019
+=============================================================================
+
+
+Subject: Informational - OPAI - VIE TO HEALTH CONNECT
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  *************************************************************************
+     
+        This is an informational patch describing the migration from
+        Veterans Health Information Systems and Technology Architecture
+        (VistA) Interface Engine (VIE) to InterSystems Health Connect. 
+        Health Connect is a part of the suite of products grouped under 
+        HealthShare.
+        
+   
+  *************************************************************************
+         
+        The Health Connect product will be replacing the VistA Interface 
+        Engine (VIE). During the transition phase, Health Connect and VIE
+        will be running concurrently.
+         
+        A parallel deployment is planned at an enterprise level. The VIE - 
+        OUTPATIENT PHARMACY AUTOMATION INTERFACE (OPAI)
+        functionality will remain in place for most sites while specific 
+        sites will implement OPAI Health Connect.  Production will run 
+        concurrently with VIE, replacing only the VIE OPAI functionality. 
+        Both VIE and Health Connect systems will run in parallel at the 
+        site level when Health Connect OPAI is rolled out. VIE will 
+        continue to process messages for applications that have not yet 
+        been migrated. The Health Connect OPAI production will process 
+        OPAI messages.
+   
+   
+  ********
+   
+  WARNING:
+  The following word processing fields of OUTPATIENT SITE Parameters may 
+  contain "blank line(s)" with control characters that may cause
+  incorrect HL7 message termination during processing.  To correct, follow
+  Narrative Validation, Step 7 of the Outpatient Pharmacy Automation 
+  Interface Installation Guide: Performing the Implementation Section to 
+  remove blank lines from these fields:
+   
+       OUTPATIENT SITE FILE (#59):
+       NARRATIVE FOR COPAY DOCUMENT (field #59.01004)
+       NARRATIVE REFILLABLE RX (field #59.01005)
+       NARRATIVE NON-REFILLABLE RX (field #59.01006)
+        
+  ********
+   
+   
+   
+         
+        Patch Components:
+        ================
+          
+        Files & Fields Associated:
+         
+        File Name (#)                    Field Name   New/Modified/Deleted
+        ------------                     ----------   --------------------
+        N/A
+         
+        Form Name             File #                  New/Modified/Deleted
+        ---------             ------                  --------------------
+        N/A
+         
+        Kernel Parameters Associated:
+         
+        Kernel Parameter Name             Entities                 Values
+        ---------------------       ---------------               --------
+        N/A
+         
+        Mail Groups Associated:
+         
+        Mail Group Name                               New/Modified/Deleted
+        ---------------                               --------------------
+        N/A
+         
+        Options Associated:
+         
+        Option Name                      Type         New/Modified/Deleted
+        -----------                      ----         --------------------
+        N/A
+         
+          
+        Protocols Associated:
+         
+        Protocol Name                                 New/Modified/Deleted
+        -------------                                 --------------------
+        N/A
+           
+        Security Keys Associated:
+         
+        Security Key Name                             New/Modified/Deleted
+        -----------------                             --------------------
+        N/A
+         
+        Templates Associated:
+         
+        Template Name            Type  File Name (#)  New/Modified/Deleted
+        -------------            ----  ------------   --------------------
+        N/A
+          
+        New Service Requests (NSRs):
+        ----------------------------
+        N/A
+          
+        Patient Safety Issues (PSIs):
+        -----------------------------
+        N/A  
+         
+         
+        Remedy Ticket(s) & Overviews:
+        -----------------------------
+        N/A
+            
+         
+        TEST Site:          Test Site Size   Integrated (Y/N)
+        ===========         ===========      ================
+        Tucson, AZ          Level 1 (Large VAMC)    N
+        Oklahoma City, OK   Level 1 (Large VAMC)    N
+         
+     
+             
+        Software and Documentation Retrieval Instructions:
+        -------------------------------------------------- 
+        Software being released as a host file and/or documentation 
+        describing the new functionality introduced by this patch are
+        available.
+         
+        One method is to retrieve files from download.vista.domain.ext.
+        This transmits the files from the first available server. Sites
+        may also elect to retrieve files directly from a specific server. 
+         
+        Sites may retrieve the software and/or documentation directly using
+        Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+        directory at the following OI Field Offices:
+         
+         Hines            domain.ext
+         Salt Lake City   domain.ext
+         
+        Documentation can be found on the VA Software Documentation
+        Library at: http://www.domain.ext/vdl/
+               
+        File Description                   File Name           SFTP Mode
+  -------------------------------------------------------------------------
+      
+        Technical Manual/Security      pso_7_p522_tm.pdf          Binary
+        Guide Outpatient Pharmacy V. 7.0
+                                                                  
+        User Manual - Pharmacist       pso_7_p522_phar_um.pdf     Binary
+        Outpatient Pharmacy V. 7.0
+  
+        Health Connect / Outpatient    pso_7_p522_opai_dibrg.pdf  Binary
+        Pharmacy Automated Interface
+        (OPAI) 1.0 Deployment, 
+        Installation, Back-Out, and 
+        Rollback Guide
+  
+        Installation Guide             pso_7_p522_opai_ig.pdf   Binary
+        Automation Interface
+     
+        Patch Installation: 
+         
+        Pre/Post Installation Overview
+        ------------------------------
+        N/A 
+         
+            
+        Installation Instructions
+        -------------------------
+  
+   Note: Until further notice, DO NOT implement this patch (PSO*7*522) 
+         with the Parata OPAI Device. 
+  
+  *************************************************************************
+        The following instructions are to be performed only when directed
+        to do so by the Healthshare National Admin Team. These changes can
+        only be implemented in collaboration and coordination with site
+        Pharmacy Administrator (ADPAC), Vendor Engineer or Implementation
+        Support, Clinical Product Support and Healthshare National Admin
+        Team as outlined in the Outpatient Pharmacy Automation Interface
+        (OPAI) Installation Guide. Please refer to the Outpatient Pharmacy 
+        Automation Interface (OPAI) Installation Guide for complete 
+        details.
+   
+  *************************************************************************
+   
+        After HealthShare/Health Connect is stood up, and the Health 
+        Connect Production instance is ready to process incoming and
+        outgoing messages, the VAMC IRM will need to edit the HL LOGICAL
+        LINKS file (#870) for the PSO DISP entry. The OPAI servers and VistA
+        logical links will need to point to an IP address and port to the
+        Health Connect production. 
+ 
+        NOTE: Configuration changes as described below MUST be coordinated 
+        between the site's outpatient pharmacy department, OPAI vendor(s) 
+        and OIT HL7 Support Analyst.
+  
+        The following steps will need to be performed in the VistA HL7
+        application:
+ 
+        Step 1.  Stop the PSO DISP Logical Link with HL7 Menu option: Start/Stop 
+            Links. The following is an example:
+      
+    Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+    
+             Event monitoring menu ...
+             Systems Link Monitor
+             Filer and Link Management Options ...  <===
+             Message Management Options ...
+             Interface Developer Options ...
+             Site Parameter Edit
+      HLO    HL7 (Optimized) MAIN MENU ...
+    
+   Select HL7 Main Menu <TEST ACCOUNT> Option: FILER AND LINK Management 
+                                               Options
+    
+      SM     Systems Link Monitor
+      FL     Monitor, Start, Stop Filers
+      LM     TCP Link Manager Start/Stop
+      SA     Stop All Messaging Background Processes
+      RA     Restart/Start All Links and Filers
+      DF     Default Filers Startup
+      SL     Start/Stop Links  <===
+      PI     Ping (TCP Only)
+      ED     Link Edit
+      ER     Link Errors ...
+    
+   Select Filer and Link Management Options <TEST ACCOUNT> Option: sl  
+                                                          
+   This option is used to launch the lower level protocol for the
+   appropriate device.  Please select the node with which you want
+   to communicate
+    
+   Select HL LOGICAL LINK NODE: PSO DISP
+  
+   The LLP was last started on MAR 07, 2019 12:17:34.
+   
+   Okay to shut down this job? YES
+   The job for the PSO DISP Lower Level Protocol will be shut down.
+   
+   Step 2.   Edit the PSO DISP Logical Link with the Link Edit HL7 menu option: 
+    
+      SM     Systems Link Monitor
+      FL     Monitor, Start, Stop Filers
+      LM     TCP Link Manager Start/Stop
+      SA     Stop All Messaging Background Processes
+      RA     Restart/Start All Links and Filers
+      DF     Default Filers Startup
+      SL     Start/Stop Links
+      PI     Ping (TCP Only)
+      ED     Link Edit     <===
+      ER     Link Errors ...
+    
+   Select HL LOGICAL LINK NODE:    PSO DISP
+    
+    Step 3. On the first screen, change AUTOSTART to Enabled. 
+    Next, move the cursor to the field LLP TYPE and press Enter. 
+    This will present the second screen (as shown is step 5).
+   
+    Step 4. On the first screen, edit the DNS DOMAIN field as 
+    instructed below.
+    
+                           HL7 LOGICAL LINK
+    ------------------------------------------------------------------------
+    
+                   NODE: PSO DISP                     DESCRIPTION:
+                   ----
+            INSTITUTION:
+    
+         MAILMAN DOMAIN:
+    
+              AUTOSTART: Enabled  
+    
+             QUEUE SIZE: 10    
+    
+               LLP TYPE: TCP  <=== Highlight this field and hit <ENTER>.
+               --------            The TCP LOWER LEVEL PARAMETERS window
+                                   will open up (shown in step 4 below).
+             DNS DOMAIN: XXXX <=== Set this field to the value for your
+                                   regional Health Connect system
+                                   
+    _________________________________________________________________________
+    
+    
+    COMMAND:                              Press <PF1>H for help    Insert
+    
+    
+    Step 5. Replace the existing TCP/IP ADDRESS and existing TCP/IP 
+            PORT with the Health Connect IP address and port as shown:
+    
+                             HL7 LOGICAL LINK
+    -----------------------------------------------------------------------
+    
+     |------------------TCP LOWER LEVEL PARAMETERS---------------------|
+     |                  PSO DISP                                       |
+     |                                                                 |
+     |  TCP/IP SERVICE TYPE: CLIENT (SENDER)                           |
+     |       TCP/IP ADDRESS: XXXXXX  <=== Enter the appropriate TCP/IP |
+     |                                    Address value for your       |
+     |                                    regional Health Connect      |
+     |                                    system.                      |
+     |         TCP/IP PORT: XXXX                                       |
+     |         TCP/IP PORT (OPTIMIZED):                                |
+     |                                                                 |
+     |   ACK TIMEOUT:                   RE-TRANSMISION ATTEMPTS:       |
+     |  READ TIMEOUT:                 EXCEED RE-TRANSMIT ACTION:       |
+     |    BLOCK SIZE:                                  SAY HELO:       |
+     |                                  TCP/IP OPENFAIL TIMEOUT:       |
+     |STARTUP NODE:                                  PERSISTENT:       |
+     |   RETENTION:                        UNI-DIRECTIONAL WAIT:       |
+     |_________________________________________________________________|
+    
+     ______________________________________________________________________
+    
+    
+    COMMAND:                             Press <PF1>H for help    Insert 
+   
+    Note:  Do NOT start the PSO DISP Logical Link after the edits have 
+           been completed.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2018
+Completed By:                               Date Completed: MAR 19, 2019
+Released By :                               Date Released : MAR 19, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

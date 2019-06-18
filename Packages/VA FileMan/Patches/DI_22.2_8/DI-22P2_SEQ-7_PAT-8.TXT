@@ -1,0 +1,303 @@
+$TXT Created by                     FMB.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 05/09/17 at 15:05
+=============================================================================
+Run Date: AUG 08, 2017                     Designation: DI*22.2*8
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2         SEQ #7                   Status: Released
+                  Compliance Date: SEP 08, 2017
+=============================================================================
+
+
+Subject: Data Access Control
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Print Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch releases the new Data Access Control (DAC) utility. DAC is an
+ attribute-based access control tool, that can permit or deny a user access
+ to a resource (i.e., a record in a file). Pre-defined target attribute
+ values are used to match appropriate access policies to the action being
+ taken. Policies are made up of rules that can be combined as needed,
+ allowing for creation of simple or very complex access policies. See the
+ VA FileMan Data Access Control User Guide for details on setting up and
+ applying access control policies.
+   
+ This patch also fixes an issue with Language file (#.85) changes made to 
+ the DIR Reader in VA FileMan version 22.2, which altered the global 
+ reference and could cause an error on return to the calling application.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+                                                              New/Modified/
+ File Name (#)                  Field Name (#)                       Deleted
+ -------------                  --------------                --------------
+ Policy (#1.6)                                                New
+ Application Action (#1.61)                                   New
+ Policy Function (#1.62)                                      New
+  
+  
+ Forms Associated:
+  
+ Form Name                     File #               New/Modified/Deleted
+ ---------                     ------               --------------------
+ DIAC POLICY                   1.6                  New
+ DIAC RULE                     1.6                  New
+ DIAC SET                      1.6                  New
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A                       
+  
+  
+ Options Associated:
+  
+ Option Name                    Type               New/Modified/Deleted
+ -----------                    ----               -------------------- 
+ DIAC ACTIONS                   Action             New
+ DIAC DELETE                    Action             New
+ DIAC DISABLE                   Action             New
+ DIAC EDIT                      Action             New
+ DIAC FUNCTIONS                 Action             New
+ DIAC PRINT                     Action             New
+ DIAC TEST                      Action             New
+ DIACCESS                       Menu               New
+ DIOTHER                        Menu               Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ DIAC ACTION MENU    New
+ DIAC BLANK LINE     New
+ DIAC CHANGE         New
+ DIAC DELETE         New
+ DIAC DISABLE        New
+ DIAC EDIT           New
+ DIAC EXPAND         New
+ DIAC FUNCTIONS      New
+ DIAC INQUIRE        New
+ DIAC LINK ACTION    New
+ DIAC MEMBERS        New
+ DIAC QUIT           New
+ DIAC TEST           New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type      File Name        (Number)  New/Modified/Deleted
+ -------------   ----      -------------------------  --------------------
+ DIAC ACTIONS    Print     Application Action (#1.61) New
+  
+  
+ Additional Information:
+ -----------------------
+ List Template DIAC POLICY EDITOR
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Ticket R12680330FY17
+    Ticket R12874559FY17
+    Ticket R13073003FY17
+  
+ Problem:
+ --------
+ VA FileMan 22.2 expanded use of the Language file #.85 and converted 
+ all hard-coded strings to the Dialog framework, to enable table-driven translation. As a result the DIR Reader now checks the Language file 
+ before issuing a prompt, which changes the current global reference. 
+ After return to the calling application, a naked global reference 
+ could now cause an undefined error.
+  
+ Resolution:
+ -----------
+ The DIR Reader has been modified to preserve the global reference.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*8 contains
+ changes to a package referenced in ProPath standard titled: BBM Team Review
+ of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+ software design safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22.2*8 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+ 3/24/2017
+  
+ Test Sites:
+ -----------
+ North Florida/South Georgia HCS
+ West Palm Beach, FL 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Updated documentation is on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Title                                   File Name            SFTP Mode
+ ----------------------------------------------------------------------
+ FM 22.2 Data Access Control User Guide  fm22_2p8_dac_ug.PDF  binary
+ FM 22.2 Developer's Guide               fm22_2dg.PDF         binary
+ FM 22.2 Technical Manual                fm22_2tm.PDF         binary
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ During the VistA Installation Procedure of the KIDS build, the
+ installer should use the 'Backup a Transport Global' action (step 3a
+ in the Installations Instructions below).
+  
+ If rollback/backout is required, the installer can use the MailMan
+ message to restore routines that were saved prior to installing the
+ patch. The option menu DIACCESS may be disabled by using VA FileMan
+ to assign an Out of Order message:
+  
+ VA FileMan 22.2
+  
+  
+ Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+  
+ Input to what File: OPTION//              (11330 entries)
+ EDIT WHICH FIELD: ALL// OUT OF ORDER MESSAGE  
+ THEN EDIT FIELD: 
+  
+  
+ Select OPTION NAME: DIACCESS       Data Access Control
+ OUT OF ORDER MESSAGE: ROLLBACK PATCH DI*22.2*8
+  
+ Select OPTION NAME: 
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the 
+ system.  The patch should be installed during non-peak hours to minimize
+ potential for disruption to users.  This patch should take less than 1 
+ minute to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the MailMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter DI*22.2*8.
+ a.     Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     NOTE: This option is affected by Defect #1 described above, when 
+     printing the transport global for this patch DI*22.2*8. To avoid the 
+     error before installation, use device parameters such as '0;80;999' 
+     that will print the full report without issuing an end-of-page prompt.
+ b.     Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as functions.
+ c.     Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+ d.     Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     When prompted for the INSTALL NAME, enter DI*22.2*8.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//' respond YES.
+  
+ 6.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+     NO//" respond NO.
+  
+ 7.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//" respond NO. 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DIAC1
+    Before:       n/a   After: B60228827  **8**
+Routine Name: DIAC1T
+    Before:       n/a   After: B47977715  **8**
+Routine Name: DIACLM
+    Before:       n/a   After:  B8416953  **8**
+Routine Name: DIACLM1
+    Before:       n/a   After: B88255480  **8**
+Routine Name: DIACOPT
+    Before:       n/a   After:  B1762073  **8**
+Routine Name: DIACP
+    Before:       n/a   After: B49134619  **8**
+Routine Name: DIACX
+    Before:       n/a   After: B15814572  **8**
+Routine Name: DIALOG
+    Before: B28460894   After: B28415998  **7,8**
+Routine Name: DIALOGU
+    Before:  B4304241   After:  B4301510  **7,8**
+Routine Name: DII1
+    Before:  B1965958   After:  B2105841  **8**
+Routine Name: DIR2
+    Before: B25407011   After: B27040742  **2,5,8**
+ 
+Routine list of preceding patches: 5, 7
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 09, 2017
+Completed By:                               Date Completed: AUG 03, 2017
+Released By :                               Date Released : AUG 08, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

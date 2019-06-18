@@ -1,0 +1,236 @@
+$TXT Created by                      VIALAB1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 03/05/19 at 11:51
+=============================================================================
+Run Date: APR 02, 2019                     Designation: VIAB*1*14
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: EMERGENCY
+Version : 1        SEQ #14                      Status: Released
+                  Compliance Date: APR 04, 2019
+=============================================================================
+
+Associated patches: (v)VIAB*1*13   <<= must be installed BEFORE `VIAB*1*14'
+
+Subject: VIAB MISCELLANEOUS MODIFICATIONS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ The VistA integration Adaptor (VIA) system is a middleware used to 
+ transport clinical and non-clinical electronic information between
+ producing and consuming applications in VA systems.  VIA utilizes remote
+ procedure calls (RPCs) for data requested by consuming applications.
+  
+ This patch contains modifications for immunization functionality for the
+ Customer Relationship Management (CRM) team. This patch also contains a 
+ modification to the "LISTSCHEDULEDADMISSION" target of VIABMS, used by 
+ the Bed Management System (BMS).
+  
+ The updates for this patch are:
+  
+ 1. The semantics of SDATE (start date) and EDATE (end date) in the
+ LISTSCHEDULEDADMISSION target of VIABMS (only) is modified as follows:
+  
+    * SDATE and EDATE are mandatory and represent date/time values, even if
+      the date is exact.
+    * The range returned is the inclusive range of times (not days) 
+      between SDATE and EDATE. (Note that this is different from the
+      behavior of some other targets of the same RPC.)
+  
+ 2. VIAB GET IMMUNIZATION TYPE RPC entry in the REMOTE PROCEDURE 
+ File (#8994) is populated with additional documentation information.
+  
+ 3. Reconcile the VIAB WEB SERVICES OPTION option with the list of RPCs
+ that VIA has permission to use with the ICRs that were approved.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+    
+ Forms Associated:
+ Form Name                  File Number             New/Modified/Deleted
+ ---------                  -----------             --------------------
+ N/A   
+  
+ Mail Groups Associated:
+ Mail Group Name           New/Modified/Deleted
+ ---------------           -------------------- 
+ N/A
+  
+ Options Associated: 
+ Option Name               Type                     New/Modified/Deleted
+ ---------------           -----------              -------------------- 
+ VIAB WEB SERVICES OPTION  Broker (Client/Server)   Modified
+  
+ Protocols Associated:
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ VIAB GET IMMUNIZATION TYPE  Modified
+  
+ Parameter Definitions Associated:
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ New Service Requests (NSRs):
+ N/A
+     
+ Patient Safety Issues (PSIs):
+ N/A
+     
+ Defect Tracking System Ticket(s) & Overview:
+ 1. INC3239832 - Scheduled Admissions coming over from VistA on wrong day.
+  
+ Problem:
+ --------
+ When start date and end date were passing as midnight dates to return one 
+ full days worth of scheduled admissions, two full days of scheduled 
+ admissions were returning.
+  
+ Resolution:
+ --------
+ Call to DTCHK^VIABMS1 has been commented out.
+  
+  
+ Test Sites:
+ -----------
+ North Texas Veterans Health Care System
+ Indianapolis VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Documentation describing the new functionality and/or a host file 
+ containing a build may be included in this release.
+  
+ The preferred method is to retrieve the files from 
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www.domain.ext/vdl/application.asp?appid=221
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A 
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ -------------------  
+     
+ Pre/Post Installation Overview:
+ This patch contains pre installation instructions. 
+  
+ Pre-Installation Instructions:
+ This patch may be installed with users on the system. This patch should 
+ take less than 5 minutes to install.
+  
+ No menu options need to be disabled.
+  
+ Installation Instructions:
+  
+  1.  This release is provided using PackMan, choose the PackMan 
+      message containing this build. Select the INSTALL/CHECK MESSAGE 
+      PackMan option to load the build.
+    
+  2.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu,
+  
+       A.  Select the Verify Checksums in Transport Global option to 
+           confirm the integrity of the routines that are in the transport 
+           global. When prompted for the INSTALL NAME enter the patch or 
+           build name VIAB*1*14.
+  
+       B.  Select the Backup a Transport Global option to create a backup 
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DDs or templates.
+  
+       C. You may also elect to use the following options: 
+          i.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          ii. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all of the components of 
+              this patch, such as routines, DDs, templates, etc.
+  
+       D.  Select the Install Package(s) option and choose the patch 
+           (VIAB*1*14) to install.
+  
+           i.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+               of Install? YES//', press <ENTER>.
+  
+           ii. When prompted 'Want KIDS to INHIBIT LOGONs during the 
+               install? NO//', press <ENTER>.
+    
+           iii. When prompted 'Want to DISABLE Scheduled Options, Menu
+                Options and Protocols? NO//', press <ENTER>.
+                a. When prompted 'Enter options you wish to mark as 'Out 
+                   Of Order':', press the Enter key.
+                b. When prompted 'Enter protocols you wish to mark as 'Out 
+                   Of Order':', press the Enter key.
+                c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//',
+                   answer 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-2014;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIABMS1
+    Before:B102618166   After:B103511639  **8,11,13,14**
+ 
+Routine list of preceding patches: 13
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 07, 2018
+Completed By:                               Date Completed: APR 01, 2019
+Released By :                               Date Released : APR 02, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

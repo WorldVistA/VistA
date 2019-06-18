@@ -1,0 +1,923 @@
+EMERGENCY Released PRCA*4.5*337 SEQ #296
+Extracted from mail message
+**KIDS**:PRCA*4.5*337^
+
+**INSTALL NAME**
+PRCA*4.5*337
+"BLD",10792,0)
+PRCA*4.5*337^ACCOUNTS RECEIVABLE^0^3180530^y
+"BLD",10792,1,0)
+^^8^8^3180402^^
+"BLD",10792,1,1,0)
+This patch addresses the following two issues:
+"BLD",10792,1,2,0)
+ 
+"BLD",10792,1,3,0)
+1. Ensure Tier Rate decreases do not flag non Tier Rate charges as
+"BLD",10792,1,4,0)
+   duplicate
+"BLD",10792,1,5,0)
+ 
+"BLD",10792,1,6,0)
+2. Modify purging criteria for the weekly TCSP batch run
+"BLD",10792,1,7,0)
+ 
+"BLD",10792,1,8,0)
+3. Modify purging criteria for the weekly TOP batch run
+"BLD",10792,4,0)
+^9.64PA^^
+"BLD",10792,6.3)
+14
+"BLD",10792,"ABPKG")
+n
+"BLD",10792,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10792,"KRN",.4,0)
+.4
+"BLD",10792,"KRN",.401,0)
+.401
+"BLD",10792,"KRN",.402,0)
+.402
+"BLD",10792,"KRN",.403,0)
+.403
+"BLD",10792,"KRN",.5,0)
+.5
+"BLD",10792,"KRN",.84,0)
+.84
+"BLD",10792,"KRN",3.6,0)
+3.6
+"BLD",10792,"KRN",3.8,0)
+3.8
+"BLD",10792,"KRN",9.2,0)
+9.2
+"BLD",10792,"KRN",9.8,0)
+9.8
+"BLD",10792,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",10792,"KRN",9.8,"NM",1,0)
+RCTCSPD0^^0^B8551366
+"BLD",10792,"KRN",9.8,"NM",2,0)
+PRCASER1^^0^B19502485
+"BLD",10792,"KRN",9.8,"NM",3,0)
+RCTOPD^^0^B72886643
+"BLD",10792,"KRN",9.8,"NM","B","PRCASER1",2)
+
+"BLD",10792,"KRN",9.8,"NM","B","RCTCSPD0",1)
+
+"BLD",10792,"KRN",9.8,"NM","B","RCTOPD",3)
+
+"BLD",10792,"KRN",19,0)
+19
+"BLD",10792,"KRN",19.1,0)
+19.1
+"BLD",10792,"KRN",101,0)
+101
+"BLD",10792,"KRN",409.61,0)
+409.61
+"BLD",10792,"KRN",771,0)
+771
+"BLD",10792,"KRN",779.2,0)
+779.2
+"BLD",10792,"KRN",870,0)
+870
+"BLD",10792,"KRN",8989.51,0)
+8989.51
+"BLD",10792,"KRN",8989.52,0)
+8989.52
+"BLD",10792,"KRN",8994,0)
+8994
+"BLD",10792,"KRN","B",.4,.4)
+
+"BLD",10792,"KRN","B",.401,.401)
+
+"BLD",10792,"KRN","B",.402,.402)
+
+"BLD",10792,"KRN","B",.403,.403)
+
+"BLD",10792,"KRN","B",.5,.5)
+
+"BLD",10792,"KRN","B",.84,.84)
+
+"BLD",10792,"KRN","B",3.6,3.6)
+
+"BLD",10792,"KRN","B",3.8,3.8)
+
+"BLD",10792,"KRN","B",9.2,9.2)
+
+"BLD",10792,"KRN","B",9.8,9.8)
+
+"BLD",10792,"KRN","B",19,19)
+
+"BLD",10792,"KRN","B",19.1,19.1)
+
+"BLD",10792,"KRN","B",101,101)
+
+"BLD",10792,"KRN","B",409.61,409.61)
+
+"BLD",10792,"KRN","B",771,771)
+
+"BLD",10792,"KRN","B",779.2,779.2)
+
+"BLD",10792,"KRN","B",870,870)
+
+"BLD",10792,"KRN","B",8989.51,8989.51)
+
+"BLD",10792,"KRN","B",8989.52,8989.52)
+
+"BLD",10792,"KRN","B",8994,8994)
+
+"BLD",10792,"QUES",0)
+^9.62^^
+"BLD",10792,"REQB",0)
+^9.611^3^3
+"BLD",10792,"REQB",1,0)
+PRCA*4.5*327^2
+"BLD",10792,"REQB",2,0)
+PRCA*4.5*307^2
+"BLD",10792,"REQB",3,0)
+PRCA*4.5*315^2
+"BLD",10792,"REQB","B","PRCA*4.5*307",2)
+
+"BLD",10792,"REQB","B","PRCA*4.5*315",3)
+
+"BLD",10792,"REQB","B","PRCA*4.5*327",1)
+
+"MBREQ")
+0
+"PKG",142,-1)
+1^1
+"PKG",142,0)
+ACCOUNTS RECEIVABLE^PRCA^BILL COLLECTIONS
+"PKG",142,20,0)
+^9.402P^1^1
+"PKG",142,20,1,0)
+2^^PRCAMRG
+"PKG",142,20,1,1)
+
+"PKG",142,20,"B",2,1)
+
+"PKG",142,22,0)
+^9.49I^1^1
+"PKG",142,22,1,0)
+4.5^^2950320
+"PKG",142,22,1,"PAH",1,0)
+337^3180530
+"PKG",142,22,1,"PAH",1,1,0)
+^^8^8^3180530
+"PKG",142,22,1,"PAH",1,1,1,0)
+This patch addresses the following two issues:
+"PKG",142,22,1,"PAH",1,1,2,0)
+ 
+"PKG",142,22,1,"PAH",1,1,3,0)
+1. Ensure Tier Rate decreases do not flag non Tier Rate charges as
+"PKG",142,22,1,"PAH",1,1,4,0)
+   duplicate
+"PKG",142,22,1,"PAH",1,1,5,0)
+ 
+"PKG",142,22,1,"PAH",1,1,6,0)
+2. Modify purging criteria for the weekly TCSP batch run
+"PKG",142,22,1,"PAH",1,1,7,0)
+ 
+"PKG",142,22,1,"PAH",1,1,8,0)
+3. Modify purging criteria for the weekly TOP batch run
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","PRCASER1")
+0^2^B19502485^B18562527
+"RTN","PRCASER1",1,0)
+PRCASER1 ;WASH-ISC@ALTOONA,PA/RGY-Accept transaction from billing engine ;9/8/93  2:21 PM
+"RTN","PRCASER1",2,0)
+V ;;4.5;Accounts Receivable;**48,104,165,233,301,307,337**;Mar 20, 1995;Build 14
+"RTN","PRCASER1",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","PRCASER1",4,0)
+ ;
+"RTN","PRCASER1",5,0)
+ ;PRCA*4.5*337 Added a bill lock to insure that decreases are stacked
+"RTN","PRCASER1",6,0)
+ ;             instead of slamming bill simultaneously.
+"RTN","PRCASER1",7,0)
+ ;
+"RTN","PRCASER1",8,0)
+ NEW AMT,AMT1,PRCAERR,PRCABN,PRCADJ,X1,XMDUZ,XMSUB,XMTEXT,XMY,DEBT
+"RTN","PRCASER1",9,0)
+ I '$D(X) S Y="-1^PRCA020" G Q
+"RTN","PRCASER1",10,0)
+ I $O(^PRCA(430.3,"AC",+X,0))'?1N.N,$P($G(^PRCA(430.3,+X,0)),"^",3)'=21 S Y="-1^PRCA021" G Q
+"RTN","PRCASER1",11,0)
+ I +X'=21,$P($G(^PRCA(430.3,+X,0)),"^",3)'=21 S Y="-1^PRCA022" G Q
+"RTN","PRCASER1",12,0)
+ I $P(X,"^",2)'?.N.1".".2N S Y="-1^PRCA023" G Q
+"RTN","PRCASER1",13,0)
+ I $P(X,"^",2)'>0 S Y="-1^PRCA017" G Q
+"RTN","PRCASER1",14,0)
+ I $P(X,"^",3)="" S Y="-1^PRCA006" G Q
+"RTN","PRCASER1",15,0)
+ S PRCABN=$O(^PRCA(430,"B",$P(X,"^",3),0)) I $G(^PRCA(430,+PRCABN,0))="" S Y="-1^PRCA007" G Q
+"RTN","PRCASER1",16,0)
+ I '$D(^VA(200,+$P(X,"^",4),0)) S Y="-1^PRCA013" G Q
+"RTN","PRCASER1",17,0)
+ I $P(X,"^",5)'?7N S Y="-1^PRCA024" G Q
+"RTN","PRCASER1",18,0)
+ S (AMT1,AMT)=$P(X,"^",2)
+"RTN","PRCASER1",19,0)
+ D DEC(PRCABN,.AMT,$P(X,"^",4),$P(X,U,6),$P(X,U,5))
+"RTN","PRCASER1",20,0)
+ S XMDUZ="AR Package",XMTEXT="X1(",DEBT=$P($G(^PRCA(430,PRCABN,0)),"^",9),DEBT=$E($$NAM^RCFN01(DEBT),1)_" ("_$E($$SSN^RCFN01(DEBT),6,9)_")"
+"RTN","PRCASER1",21,0)
+ I AMT'=AMT1 S X1(1)="A decrease adjustment for bill/Pt name (SSN) #"_$P(X,"^",3)_"/"_DEBT_" has been",XMSUB="Automatic Adj: "_$P(X,"^",3)
+"RTN","PRCASER1",22,0)
+ I AMT=AMT1 S X1(1)="**** NOTICE: A decrease adjustment for bill/Pt name (SSN) #"_$P(X,U,3)_"/"_DEBT,XMSUB="Manual Adj: "_$P(X,U,3),X1(3)=" "
+"RTN","PRCASER1",23,0)
+ S Y=DT X ^DD("DD") S X1(2)=$S(AMT'=AMT1:"automatically",1:"needs to be manually")_" applied in the amount of $"_$J($S(AMT1=AMT:AMT1,1:AMT1-AMT),0,2)_" on "_Y_"."
+"RTN","PRCASER1",24,0)
+ I AMT,AMT'=AMT1 S X1(3)="Please review bill for proper application of the unapplied amount of $"_$J(AMT,0,2)_"."
+"RTN","PRCASER1",25,0)
+ S X1(4)=" ",X1(5)="Data sent from Service"
+"RTN","PRCASER1",26,0)
+ S X1(6)="        Amount: $"_$J(AMT1,0,2)
+"RTN","PRCASER1",27,0)
+ S Y=$P(X,U,5) X ^DD("DD") S X1(7)="          Date: "_Y
+"RTN","PRCASER1",28,0)
+ S X1(8)="        Reason: "_$S($P(X,"^",6)]"":$P(X,"^",6),1:"N/A")
+"RTN","PRCASER1",29,0)
+ S X1(9)=" Adjustment by: "_$P($G(^VA(200,+$P(X,"^",4),0)),"^")
+"RTN","PRCASER1",30,0)
+ S AMT=0 F X=1:1:5 S AMT=AMT+$P($G(^PRCA(430,PRCABN,7)),U,X)
+"RTN","PRCASER1",31,0)
+ S AMT1=AMT-+$G(^PRCA(430,PRCABN,7))
+"RTN","PRCASER1",32,0)
+ S X=$P(^PRCA(430.3,+$P($G(^PRCA(430,PRCABN,0)),U,8),0),U,1)
+"RTN","PRCASER1",33,0)
+ S X1(10)=" ",X1(12)=" ",X1(13)="Bill status is "_$S(XMSUB["Auto":"now ",1:"")_X_" with a balance of $"_$J(AMT,0,2)_".",X1(14)=" "
+"RTN","PRCASER1",34,0)
+ I AMT1>0 S X1(15)=" *WARNING*  There is outstanding administrative charges of $"_$J(AMT1,0,2)_".",X1(16)="            An adjustment of administrative charges MAY need to be done."
+"RTN","PRCASER1",35,0)
+ S XMY("G.PRCA ADJUSTMENT TRANS")=""
+"RTN","PRCASER1",36,0)
+ D ^XMD
+"RTN","PRCASER1",37,0)
+Q S Y=$S($G(Y)<0:Y,1:1) Q
+"RTN","PRCASER1",38,0)
+ ;
+"RTN","PRCASER1",39,0)
+DEC(PRCABN,AMT,APR,REA,BDT,PRCAEN) ;Auto decrease from service Bill#,Tran amt,person,reason,Tran date
+"RTN","PRCASER1",40,0)
+ NEW BAL,DA,DIC,DIE,DR,ERR,PRCA,PRCAA2,PRCAMT,PRCASV,X S Y=1
+"RTN","PRCASER1",41,0)
+ L +^PRCA(430,PRCABN,"PRCASER1"):$S(DILOCKTM>30:DILOCKTM,1:30) I '$T S Y="-1^PRCA004^AR Package 'busy' while trying to add transaction." Q
+"RTN","PRCASER1",42,0)
+ S PRCAEN="",BAL=+$G(^PRCA(430,PRCABN,7)) I 'BAL S Y="-1^Bill balance less than decrease" G Q1
+"RTN","PRCASER1",43,0)
+ I $P(^PRCA(430,PRCABN,0),U,8)'=$O(^PRCA(430.3,"AC",102,"")),$P(^PRCA(430,PRCABN,0),U,8)'=$O(^PRCA(430.3,"AC",112,"")) S Y="-1^Invalid status for posting" G Q1
+"RTN","PRCASER1",44,0)
+ I $P(^PRCA(430,PRCABN,0),U,2)=$O(^PRCA(430.2,"AC",33,0)) S Y="-1^Cannot post against pre-pay bill" G Q1
+"RTN","PRCASER1",45,0)
+ S BAL=$S(AMT>BAL:BAL,1:AMT)
+"RTN","PRCASER1",46,0)
+ S PRCA("ADJ")=$O(^PRCA(430.3,"AC",21,0)),PRCASV("FY")=$$FY^RCFN01(DT)_U_BAL,PRCASV("APR")=APR,PRCASV("BDT")=$S($G(BDT)>0:BDT,1:DT)
+"RTN","PRCASER1",47,0)
+ D SETTR^PRCAUTL,PATTR^PRCAUTL S DIE="^PRCA(433,",DR="[PRCA FY ADJ2 BATCH]",DA=PRCAEN D ^DIE
+"RTN","PRCASER1",48,0)
+ S PRCAA2=$P(^PRCA(433,PRCAEN,4,0),U,3) D UPFY^PRCADJ,TRANUP^PRCAUTL
+"RTN","PRCASER1",49,0)
+ I ("^30^31^")[("^"_$P($G(^PRCA(430,PRCABN,0)),"^",2)_"^") D EN^PRCAFBDM(PRCABN,BAL,PRCA("ADJ"),$G(PRCADJ("BDT")),PRCAEN,.ERR)
+"RTN","PRCASER1",50,0)
+ D UPPRIN^PRCADJ
+"RTN","PRCASER1",51,0)
+ I "AutoAUTO"'[$E(REA,1,4) S REA="Auto Dec.: "_REA
+"RTN","PRCASER1",52,0)
+ S DA=PRCAEN,DIE="^PRCA(433,",DR="41///"_REA D ^DIE
+"RTN","PRCASER1",53,0)
+ S AMT=AMT-+$P($G(^PRCA(433,PRCAEN,1)),U,5)
+"RTN","PRCASER1",54,0)
+ I PRCAEN,$D(^PRCA(430,"TCSP",PRCABN)) D DECADJ^RCTCSPU(PRCABN,PRCAEN) ;prca*4.5*301 add cs decrease adjustment 5B
+"RTN","PRCASER1",55,0)
+Q1 L -^PRCA(430,PRCABN,"PRCASER1") S Y=$S($G(Y)<0:Y,1:1)
+"RTN","PRCASER1",56,0)
+ Q
+"RTN","RCTCSPD0")
+0^1^B8551366^B8111368
+"RTN","RCTCSPD0",1,0)
+RCTCSPD0 ;ALBANY/RGB-CROSS-SERVICING TRANSMISSION START ;06/15/17 3:34 PM
+"RTN","RCTCSPD0",2,0)
+ ;;4.5;Accounts Receivable;**327,337**;Mar 20, 1995;Build 14
+"RTN","RCTCSPD0",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCTCSPD0",4,0)
+ ;
+"RTN","RCTCSPD0",5,0)
+ ;PRCA*4.5*327 new setup/finish extraction from RCTCSPD and
+"RTN","RCTCSPD0",6,0)
+ ;             modify XTMP file kill to work correctly for
+"RTN","RCTCSPD0",7,0)
+ ;             5 days after Tuesday run.
+"RTN","RCTCSPD0",8,0)
+ ;             Also, send mail message to 'TCSP' mailgroup
+"RTN","RCTCSPD0",9,0)
+ ;             to report any missing/corrupted debtor entries.
+"RTN","RCTCSPD0",10,0)
+ ;
+"RTN","RCTCSPD0",11,0)
+ ;PRCA*4.5*337 Modify the top node of ^XTMP work files
+"RTN","RCTCSPD0",12,0)
+ ;             to have ONLY ^XTMP(namespace,0) to insure
+"RTN","RCTCSPD0",13,0)
+ ;             correct purging outcome.
+"RTN","RCTCSPD0",14,0)
+ ;
+"RTN","RCTCSPD0",15,0)
+SETUP ;Entry point from nightly process PRCABJ
+"RTN","RCTCSPD0",16,0)
+ ;
+"RTN","RCTCSPD0",17,0)
+ ;initialize temporary global, variables
+"RTN","RCTCSPD0",18,0)
+ ;
+"RTN","RCTCSPD0",19,0)
+ K ^TMP("RCTCSPD",$J)
+"RTN","RCTCSPD0",20,0)
+ K ^XTMP("RCTCSPD")
+"RTN","RCTCSPD0",21,0)
+ K ^XTMP("RCTCSPDN")
+"RTN","RCTCSPD0",22,0)
+ S ^XTMP("RCTCSPD",0)=$$FMADD^XLFDT(DT,5)_"^"_DT
+"RTN","RCTCSPD0",23,0)
+ S ^XTMP("RCTCSPDN",0)=$$FMADD^XLFDT(DT,5)_"^"_DT
+"RTN","RCTCSPD0",24,0)
+RESTART D NOW^%DTC S ^XTMP("RCTCSPD",$J,"ZZASTART")=%
+"RTN","RCTCSPD0",25,0)
+ S SITE=$E($$SITE^RCMSITE(),1,3),SITECD=$P(^RC(342,1,3),U,5)
+"RTN","RCTCSPD0",26,0)
+ S ACTDT=3150801 ;activation date for all sites except beckley, little rock, upstate ny 
+"RTN","RCTCSPD0",27,0)
+ S:SITE=598 ACTDT=3150201 ;activation date for little rock
+"RTN","RCTCSPD0",28,0)
+ S:SITE=517 ACTDT=3150201 ;activation date for beckley
+"RTN","RCTCSPD0",29,0)
+ S:SITE=528 ACTDT=3150201 ;activation date for upstate ny
+"RTN","RCTCSPD0",30,0)
+ S X1=DT,X2=-150 D C^%DTC S P150DT=X
+"RTN","RCTCSPD0",31,0)
+ S X1=DT,X2=+60 D C^%DTC S F60DT=X
+"RTN","RCTCSPD0",32,0)
+ S (CNTR(1),CNTR(2),CNTR("2A"),CNTR("2C"),CNTR(3),CNTR("5A"),CNTR("5B"))=0
+"RTN","RCTCSPD0",33,0)
+ Q
+"RTN","RCTCSPD0",34,0)
+FINISH ;sends mailman message to TCSP mail group to show batch fully completed
+"RTN","RCTCSPD0",35,0)
+ I $D(^XTMP("RCTCSPD",$J,"ZZUNDEF")) D UNDEF
+"RTN","RCTCSPD0",36,0)
+ N XMY,XMDUZ,XMSUB,XMTEXT,BMSG
+"RTN","RCTCSPD0",37,0)
+ S XMDUZ="AR PACKAGE"
+"RTN","RCTCSPD0",38,0)
+ S XMY("G.TCSP")=""
+"RTN","RCTCSPD0",39,0)
+ S XMSUB="*** Batch Completion Notice ***"
+"RTN","RCTCSPD0",40,0)
+ S BMSG(1)="The batch run and transmission completed on "_(17000000+^XTMP("RCTCSPD",$J,"ZZHCOMPLETE"))
+"RTN","RCTCSPD0",41,0)
+ S XMTEXT="BMSG("
+"RTN","RCTCSPD0",42,0)
+ D ^XMD
+"RTN","RCTCSPD0",43,0)
+ K ^TMP("RCTCSPD",$J)
+"RTN","RCTCSPD0",44,0)
+ Q
+"RTN","RCTCSPD0",45,0)
+UNDEF ;send message to mail group for any undefined debtor entries found
+"RTN","RCTCSPD0",46,0)
+ N XMY,XMDUZ,XMSUB,XMTEXT,BMSG,IEN,CTR
+"RTN","RCTCSPD0",47,0)
+ S XMDUZ="AR PACKAGE"
+"RTN","RCTCSPD0",48,0)
+ S XMY("G.TCSP")=""
+"RTN","RCTCSPD0",49,0)
+ S XMSUB="**** FAILED DEBTOR ACTION NOTICE ***"
+"RTN","RCTCSPD0",50,0)
+ S BMSG(1)="The following corrupted debtor records were found during the batch run."
+"RTN","RCTCSPD0",51,0)
+ S BMSG(2)="They can be found in xref ^PRCA(430,_""C""_) and have no file 340 entry or a"
+"RTN","RCTCSPD0",52,0)
+ S BMSG(3)="corrupted entry (missing node 0 or 1)."
+"RTN","RCTCSPD0",53,0)
+ s BMSG(4)=" "
+"RTN","RCTCSPD0",54,0)
+ S BMSG(97)=" "
+"RTN","RCTCSPD0",55,0)
+ S BMSG(98)="*** These corrupt debtor file records must be reported to ***"
+"RTN","RCTCSPD0",56,0)
+ S BMSG(99)="*** region IT staff to be corrected immediately !!        ***"
+"RTN","RCTCSPD0",57,0)
+ S IEN=0,CTR=4 F  S IEN=$O(^XTMP("RCTCSPD",$J,"ZZUNDEF",IEN)) Q:'IEN  D
+"RTN","RCTCSPD0",58,0)
+ . S CTR=CTR+1,BMSG(CTR)="CORRUPT DEBTOR INTERNAL: "_IEN
+"RTN","RCTCSPD0",59,0)
+ S XMTEXT="BMSG("
+"RTN","RCTCSPD0",60,0)
+ D ^XMD
+"RTN","RCTCSPD0",61,0)
+ Q
+"RTN","RCTOPD")
+0^3^B72886643^B71556644
+"RTN","RCTOPD",1,0)
+RCTOPD ;WASH IRMFO@ALTOONA,PA/TJK-TOP TRANSMISSION ;2/11/00 3:34 PM
+"RTN","RCTOPD",2,0)
+V ;;4.5;Accounts Receivable;**141,187,224,236,229,301,315,337**;Mar 20, 1995;Build 14
+"RTN","RCTOPD",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCTOPD",4,0)
+ ;
+"RTN","RCTOPD",5,0)
+ ;PRCA*4.5*337 Keep XTMP work file for 5 days
+"RTN","RCTOPD",6,0)
+ ;
+"RTN","RCTOPD",7,0)
+ENTER ;Entry point from nightly process
+"RTN","RCTOPD",8,0)
+ Q:'$D(RCDOC)
+"RTN","RCTOPD",9,0)
+ N DEBTOR,BILL,DEBTOR0,B0,B6,B7,P121DT,PRIN,INT,ADMIN,B4  ;PRCA*4.5*315 - P181Dt change to P121DT - FY16 HAPE RRE [TOPS]
+"RTN","RCTOPD",10,0)
+ N EFFDT,DFN,CNTR,SITE,LN,FN,MN,DOB,SITE,F60DT,VADM,DEBTOR4,DEBTOR6
+"RTN","RCTOPD",11,0)
+ N PHONE,QUIT,TOTAL,ZIPCODE,FULLNM,RCNT,REPAY,X1,X2
+"RTN","RCTOPD",12,0)
+ N ERROR,ADDR,CAT,BILLDT,P10YDT,CURRTOT,HOLD,SITECD,RCNEW,ACTDT
+"RTN","RCTOPD",13,0)
+ ;
+"RTN","RCTOPD",14,0)
+ ;initialize temporary global, variables
+"RTN","RCTOPD",15,0)
+ ;
+"RTN","RCTOPD",16,0)
+ K ^XTMP("RCTOPD") S ^XTMP("RCTOPD",0)=$$FMADD^XLFDT(DT,5)_"^"_DT   ;PRCA*4.5*315 Allow global to be purged in 5 days
+"RTN","RCTOPD",17,0)
+ S SITE=$E($$SITE^RCMSITE(),1,3),SITECD=$P(^RC(342,1,3),U,5)
+"RTN","RCTOPD",18,0)
+ S X1=DT,X2=-121 D C^%DTC S (P121DT,EFFDT)=X  ; PRCA*4.5*315 - FY16 HAPE RRE [TOPS] - change -181 to -121 (120 vs 180 days)
+"RTN","RCTOPD",19,0)
+ S X1=DT,X2=-3650 D C^%DTC S P10YDT=X
+"RTN","RCTOPD",20,0)
+ S X1=DT,X2=+60 D C^%DTC S F60DT=X
+"RTN","RCTOPD",21,0)
+ S ACTDT=3150801 ;activation date for all sites except beckley, little rock, upstate ny 
+"RTN","RCTOPD",22,0)
+ S:SITE=598 ACTDT=3150201 ;activation date for little rock
+"RTN","RCTOPD",23,0)
+ S:SITE=517 ACTDT=3150201 ;activation date for beckley
+"RTN","RCTOPD",24,0)
+ S:SITE=528 ACTDT=3150201 ;activation date for upstate ny
+"RTN","RCTOPD",25,0)
+ S (CNTR(1),CNTR(2),CNTR(4),DEBTOR,RCNT)=0
+"RTN","RCTOPD",26,0)
+ ;
+"RTN","RCTOPD",27,0)
+ ;branch if recertification document
+"RTN","RCTOPD",28,0)
+ I RCDOC="Y" D RECERT G EXIT
+"RTN","RCTOPD",29,0)
+ ;
+"RTN","RCTOPD",30,0)
+ ;branch to do update documents
+"RTN","RCTOPD",31,0)
+ D UPDATE I RCDOC="U" G EXIT
+"RTN","RCTOPD",32,0)
+ ;
+"RTN","RCTOPD",33,0)
+ ;master sheet compilation
+"RTN","RCTOPD",34,0)
+ ;
+"RTN","RCTOPD",35,0)
+ F  S DEBTOR=$O(^PRCA(430,"C",DEBTOR)) Q:DEBTOR'?1N.N  D
+"RTN","RCTOPD",36,0)
+ .N X,RCDFN
+"RTN","RCTOPD",37,0)
+ .S RCDFN=$G(^RCD(340,DEBTOR,0))
+"RTN","RCTOPD",38,0)
+ .I $P(RCDFN,";",2)["DPT",$$EMERES^PRCAUTL(+RCDFN)]"" Q  ;stop the master sheet compilation for hurricane Katrina sites (patients)
+"RTN","RCTOPD",39,0)
+    .Q:$D(^RCD(340,"TOP",DEBTOR))
+"RTN","RCTOPD",40,0)
+    .; quit if debtor address marked unknown
+"RTN","RCTOPD",41,0)
+    .Q:$P($G(^RCD(340,+DEBTOR,1)),"^",9)=1
+"RTN","RCTOPD",42,0)
+    .S DEBTOR6=$G(^RCD(340,DEBTOR,6)),DEBTOR0=$G(^(0)),HOLD=0,RCNEW=1
+"RTN","RCTOPD",43,0)
+    .I $P(DEBTOR6,U,2),'$P(DEBTOR6,U,3) Q
+"RTN","RCTOPD",44,0)
+    .S QUIT=1,FILE=$$FILE(DEBTOR0) Q:'FILE
+"RTN","RCTOPD",45,0)
+    .S EFFDT=P121DT
+"RTN","RCTOPD",46,0)
+    .D PROC(DEBTOR,.QUIT,FILE,.HOLD,.EFFDT) Q:QUIT
+"RTN","RCTOPD",47,0)
+    .D EN1^RCTOP2(DEBTOR,"M",FILE)
+"RTN","RCTOPD",48,0)
+    .D EN1^RCTOP1(DEBTOR,TOTAL,"M",EFFDT,0,FILE)
+"RTN","RCTOPD",49,0)
+    .;set hold date in file for employee, ex-employee, vendor records
+"RTN","RCTOPD",50,0)
+    .;Austin holds these for 60 days before transmitting to TOP
+"RTN","RCTOPD",51,0)
+    .I $G(HOLD) S $P(^RCD(340,DEBTOR,6),U,6)=F60DT
+"RTN","RCTOPD",52,0)
+    .Q
+"RTN","RCTOPD",53,0)
+ ;compile documents into mail messages--sets referral date in 430
+"RTN","RCTOPD",54,0)
+ D COMPILE
+"RTN","RCTOPD",55,0)
+EXIT K RCDOC,^TMP("RCTOPD"),XMDUZ D KVAR^VADPT
+"RTN","RCTOPD",56,0)
+ Q
+"RTN","RCTOPD",57,0)
+ ;
+"RTN","RCTOPD",58,0)
+UPDATE ;weekly update compilation
+"RTN","RCTOPD",59,0)
+ F  S DEBTOR=$O(^RCD(340,"TOP",DEBTOR)) Q:DEBTOR'?1N.N  D
+"RTN","RCTOPD",60,0)
+    .S QUIT=1,DEBTOR0=^RCD(340,DEBTOR,0),DEBTOR6=^(6),DEBTOR4=^(4),FILE=$$FILE(DEBTOR0),EFFDT=$P(DEBTOR4,U,6),RCNEW=0
+"RTN","RCTOPD",61,0)
+    .D EN1^RCTOP2(DEBTOR,"U",FILE)
+"RTN","RCTOPD",62,0)
+    .D PROC(DEBTOR,.QUIT,FILE,0,.EFFDT) I QUIT D  Q
+"RTN","RCTOPD",63,0)
+       ..;process type 4 document if necessary
+"RTN","RCTOPD",64,0)
+       ..S TAXID=$$TAXID^RCTOP1(DEBTOR,FILE),OTAXID=$P(DEBTOR4,U)
+"RTN","RCTOPD",65,0)
+       ..S NAME=$$NAME^RCTOP1(+DEBTOR0,FILE),ONAME=$P(DEBTOR4,U,2),NAME=$P(NAME,U)
+"RTN","RCTOPD",66,0)
+       ..I NAME=ONAME,TAXID=OTAXID Q
+"RTN","RCTOPD",67,0)
+       ..D EN1^RCTOP4(NAME,TAXID,DEBTOR4,DEBTOR,FILE)
+"RTN","RCTOPD",68,0)
+       ..Q
+"RTN","RCTOPD",69,0)
+    .D EN1^RCTOP1(DEBTOR,TOTAL,"U",EFFDT,0,FILE)
+"RTN","RCTOPD",70,0)
+    .Q
+"RTN","RCTOPD",71,0)
+ ;refund/refund reversal documents
+"RTN","RCTOPD",72,0)
+ D REFDOC
+"RTN","RCTOPD",73,0)
+ ;compile documents into mail messages--sets referral date in 430
+"RTN","RCTOPD",74,0)
+ D:$G(RCDOC)="U" COMPILE
+"RTN","RCTOPD",75,0)
+ Q
+"RTN","RCTOPD",76,0)
+ ;
+"RTN","RCTOPD",77,0)
+RECERT ;send yearly recertification documents
+"RTN","RCTOPD",78,0)
+ F  S DEBTOR=$O(^RCD(340,"TOP",DEBTOR)) Q:DEBTOR'?1N.N  D
+"RTN","RCTOPD",79,0)
+    .S DEBTOR4=$G(^RCD(340,DEBTOR,4)),TOTAL=$P(DEBTOR4,U,3),EFFDT=$P(DEBTOR4,U,6),DEBTOR0=$G(^(0)),FILE=$$FILE(DEBTOR0)
+"RTN","RCTOPD",80,0)
+    .I TOTAL D EN1^RCTOP1(DEBTOR,TOTAL,"Y",EFFDT,0,FILE)
+"RTN","RCTOPD",81,0)
+    .Q
+"RTN","RCTOPD",82,0)
+ ;compile documents into mail messages
+"RTN","RCTOPD",83,0)
+ D COMPILE
+"RTN","RCTOPD",84,0)
+ Q
+"RTN","RCTOPD",85,0)
+ ;
+"RTN","RCTOPD",86,0)
+REFDOC ; refund, refund reversal documents
+"RTN","RCTOPD",87,0)
+ N CODE,BILL,DEBTOR,TOTAL,EFFDT,FILE,RFCODE
+"RTN","RCTOPD",88,0)
+ F RFCODE=1,3 S CODE=$S(RFCODE=1:"R",1:"RV") D
+"RTN","RCTOPD",89,0)
+    .S BILL=0 F  S BILL=$O(^PRCA(430,"TREF",RFCODE,BILL)) Q:'BILL  D
+"RTN","RCTOPD",90,0)
+       ..S DEBTOR=$P($G(^PRCA(430,BILL,0)),U,9) Q:'DEBTOR
+"RTN","RCTOPD",91,0)
+       ..S TOTAL=$P($G(^(7)),U,18) Q:'TOTAL  ;NAKED TO LINE ABOVE
+"RTN","RCTOPD",92,0)
+       ..S EFFDT=$P($G(^RCD(340,+DEBTOR,4)),U,6),FILE=$$FILE(^(0))
+"RTN","RCTOPD",93,0)
+       ..D EN1^RCTOP1(DEBTOR,TOTAL,CODE,EFFDT,BILL,FILE)
+"RTN","RCTOPD",94,0)
+      ..Q
+"RTN","RCTOPD",95,0)
+    .Q
+"RTN","RCTOPD",96,0)
+ Q
+"RTN","RCTOPD",97,0)
+ ;
+"RTN","RCTOPD",98,0)
+COMPILE ;compiles documents into mail messages and transmits them
+"RTN","RCTOPD",99,0)
+ ;builds message array
+"RTN","RCTOPD",100,0)
+ N CNT,SEQ,REC,XMDUZ,DOCTYPE,LRTYPE,XMSUB,XMTEXT,XMY,TSEQ,DOCAMT
+"RTN","RCTOPD",101,0)
+ S (SEQ,TSEQ)=0
+"RTN","RCTOPD",102,0)
+ F I=1,2,4 S TSEQ=TSEQ+($G(CNTR(I))\150)+$S($G(CNTR(I))#150:1,1:0)
+"RTN","RCTOPD",103,0)
+ F DOCTYPE=1,2,4 D:$D(^XTMP("RCTOPD",$J,DOCTYPE)) COMPILE1(DOCTYPE,CNTR(DOCTYPE))
+"RTN","RCTOPD",104,0)
+ D USRMSG
+"RTN","RCTOPD",105,0)
+ Q
+"RTN","RCTOPD",106,0)
+COMPILE1(DOCTYPE,CNTR) ; compiles each type of document separately
+"RTN","RCTOPD",107,0)
+ S RCNT=RCNT+CNTR
+"RTN","RCTOPD",108,0)
+ I '$G(LRTYPE) F I=1,2,4 S:$D(^XTMP("RCTOPD",$J,I)) LRTYPE=I
+"RTN","RCTOPD",109,0)
+ F CNT=1:1:CNTR D
+"RTN","RCTOPD",110,0)
+    .D:CNT#150=1
+"RTN","RCTOPD",111,0)
+       ..K ^XTMP("RCTOPD",$J,"BUILD") S SEQ=SEQ+1
+"RTN","RCTOPD",112,0)
+       ..S REC=1,DOCAMT=0
+"RTN","RCTOPD",113,0)
+       ..Q
+"RTN","RCTOPD",114,0)
+    .S REC=REC+1,^XTMP("RCTOPD",$J,"BUILD",REC)=^XTMP("RCTOPD",$J,DOCTYPE,CNT)_U S:DOCTYPE=1 DOCAMT=DOCAMT+($E(^(REC),135,146)/100)
+"RTN","RCTOPD",115,0)
+    .I CNTR=CNT,LRTYPE=DOCTYPE S ^XTMP("RCTOPD",$J,"BUILD",REC+1)="END OF TRANSMISSION FOR SITE# "_SITE_":  TOTAL RECORDS: "_RCNT
+"RTN","RCTOPD",116,0)
+    .I $S(CNTR=CNT:1,CNT#150=0:1,1:0) D
+"RTN","RCTOPD",117,0)
+       ..S ^XTMP("RCTOPD",$J,"BUILD",1)=SITE_U_$TR($J(SEQ,2)," ",0)_U_$TR($J(TSEQ,2)," ",0)_U_(REC-1)_U_DOCAMT_U
+"RTN","RCTOPD",118,0)
+       ..S XMDUZ="AR PACKAGE"
+"RTN","RCTOPD",119,0)
+       ..S XMY("XXX@Q-TOP.DOMAIN.EXT")=""
+"RTN","RCTOPD",120,0)
+       ..S XMY("G.TOP")=""
+"RTN","RCTOPD",121,0)
+       ..S XMSUB=SITE_"/TOP TRANSMISSION/SEQ#: "_SEQ_"/"_$$NOW()
+"RTN","RCTOPD",122,0)
+       ..S XMTEXT="^XTMP(""RCTOPD"","_$J_",""BUILD"","
+"RTN","RCTOPD",123,0)
+       ..D ^XMD
+"RTN","RCTOPD",124,0)
+       ..Q
+"RTN","RCTOPD",125,0)
+    .Q
+"RTN","RCTOPD",126,0)
+ Q
+"RTN","RCTOPD",127,0)
+ ;
+"RTN","RCTOPD",128,0)
+USRMSG ;sends mailman message of documents sent to user
+"RTN","RCTOPD",129,0)
+ N XMY,XMDUZ,XMSUB,X,RCNT
+"RTN","RCTOPD",130,0)
+ S XMDUZ="AR PACKAGE",XMY("G.TOP")=""
+"RTN","RCTOPD",131,0)
+ S XMSUB="TOP "_$S(RCDOC="M":"MASTER/UPDATE",RCDOC="U":"UPDATE",1:"RECERTIFICATION")_" RECORDS SENT ON "_$E(DT,4,5)_"/"_$E(DT,6,7)_"/"_$E(DT,2,3)
+"RTN","RCTOPD",132,0)
+ S ^XTMP("RCTOPD",$J,"REC1",1)="Name                             TIN        TYPE       AMOUNT"
+"RTN","RCTOPD",133,0)
+ S ^XTMP("RCTOPD",$J,"REC1",2)="----                             ---        ----       ------"
+"RTN","RCTOPD",134,0)
+ S X="",RCNT=3 F  S X=$O(^XTMP("RCTOPD",$J,"REC",X)) Q:X=""  S ^XTMP("RCTOPD",$J,"REC1",RCNT)=^(X),RCNT=RCNT+1
+"RTN","RCTOPD",135,0)
+ S ^XTMP("RCTOPD",$J,"REC1",RCNT)="Total Records: "_(RCNT-3)
+"RTN","RCTOPD",136,0)
+ S XMTEXT="^XTMP(""RCTOPD"","_$J_",""REC1"","
+"RTN","RCTOPD",137,0)
+ D ^XMD
+"RTN","RCTOPD",138,0)
+ ;
+"RTN","RCTOPD",139,0)
+THIRD ;sends mailman message to user if no third letter found
+"RTN","RCTOPD",140,0)
+ Q:'$D(^XTMP("RCTOPD",$J,"THIRD"))
+"RTN","RCTOPD",141,0)
+ K ^XTMP("RCTOPD",$J,"REC1")
+"RTN","RCTOPD",142,0)
+ S XMDUZ="AR PACKAGE",XMY("G.TOP")=""
+"RTN","RCTOPD",143,0)
+ N TCT,TDEB,TDEB0,TBIL,TSP,FST
+"RTN","RCTOPD",144,0)
+ S XMSUB="TOP QUALIFIED/NO 3RD LETTER SENT ON "_$E(DT,4,5)_"/"_$E(DT,6,7)_"/"_$E(DT,2,3)
+"RTN","RCTOPD",145,0)
+ S ^XTMP("RCTOPD",$J,"REC1",1)="The following list of debtor bills were not sent to TOP."
+"RTN","RCTOPD",146,0)
+ S ^XTMP("RCTOPD",$J,"REC1",2)="Please review debtor's account to determine why the third"
+"RTN","RCTOPD",147,0)
+ S ^XTMP("RCTOPD",$J,"REC1",3)="notice letter has not been sent:"
+"RTN","RCTOPD",148,0)
+ S ^XTMP("RCTOPD",$J,"REC1",4)="Name                               Bill #"
+"RTN","RCTOPD",149,0)
+ S ^XTMP("RCTOPD",$J,"REC1",5)="----                               ------"
+"RTN","RCTOPD",150,0)
+ S TCT=6,TSP=0,TDEB=""
+"RTN","RCTOPD",151,0)
+ F  S TDEB=$O(^XTMP("RCTOPD",$J,"THIRD",TDEB)) Q:TDEB=""  D
+"RTN","RCTOPD",152,0)
+ .S FST=1,TBIL=""
+"RTN","RCTOPD",153,0)
+ .I FST,TCT'=6 S ^XTMP("RCTOPD",$J,"REC1",TCT)="",TCT=TCT+1,TSP=TSP+1
+"RTN","RCTOPD",154,0)
+ .F  S TBIL=$O(^XTMP("RCTOPD",$J,"THIRD",TDEB,TBIL)) Q:TBIL=""  D
+"RTN","RCTOPD",155,0)
+ ..S TDEB0=$S(FST:TDEB,1:"")
+"RTN","RCTOPD",156,0)
+ ..S ^XTMP("RCTOPD",$J,"REC1",TCT)=TDEB0_$J(" ",35-$L(TDEB0))_TBIL
+"RTN","RCTOPD",157,0)
+ ..S TCT=TCT+1,FST=0
+"RTN","RCTOPD",158,0)
+ S ^XTMP("RCTOPD",$J,"REC1",TCT)="Total records: "_(TCT-(6+TSP))
+"RTN","RCTOPD",159,0)
+ S XMTEXT="^XTMP(""RCTOPD"","_$J_",""REC1"","
+"RTN","RCTOPD",160,0)
+ D ^XMD
+"RTN","RCTOPD",161,0)
+COMPQ Q
+"RTN","RCTOPD",162,0)
+ ;
+"RTN","RCTOPD",163,0)
+PROC(DEBTOR,QUIT,FILE,HOLD,EFFDT) ;process bills for a specific debtor
+"RTN","RCTOPD",164,0)
+ K ^TMP("RCTOPD",$J,"BILL")
+"RTN","RCTOPD",165,0)
+ S DEBTOR0=$G(^RCD(340,DEBTOR,0))
+"RTN","RCTOPD",166,0)
+ Q:'FILE
+"RTN","RCTOPD",167,0)
+ I FILE=2 S DFN=+DEBTOR0 D DEM^VADPT Q:$E(VADM(2),1,5)="00000"
+"RTN","RCTOPD",168,0)
+ S (BILL,TOTAL,REPAY)=0
+"RTN","RCTOPD",169,0)
+ I RCNEW,FILE=440 S HOLD=1
+"RTN","RCTOPD",170,0)
+ I 'RCNEW,$P(^RCD(340,DEBTOR,6),U,2),'$P(^(6),U,3) G TOTAL
+"RTN","RCTOPD",171,0)
+ I RCNEW,$D(^RCD(340,"DMC",1,DEBTOR)) G TOTAL
+"RTN","RCTOPD",172,0)
+ F  S BILL=$O(^PRCA(430,"C",DEBTOR,BILL)) Q:BILL'?1N.N  D
+"RTN","RCTOPD",173,0)
+    .I FILE=2,+VADM(6) S TOTAL=0,REPAY=1 Q
+"RTN","RCTOPD",174,0)
+    .S B0=$G(^PRCA(430,BILL,0)),B4=$G(^(4)),B6=$G(^(6)),B7=$G(^(7)),B14=$G(^(14))
+"RTN","RCTOPD",175,0)
+    .Q:$P(B0,U,8)'=16
+"RTN","RCTOPD",176,0)
+    .Q:B4
+"RTN","RCTOPD",177,0)
+    .Q:'$P(B0,U,2)  S CAT=$P($G(^PRCA(430.2,$P(B0,U,2),0)),U,7)
+"RTN","RCTOPD",178,0)
+    .Q:'CAT  I ",16,17,21,22,23,26,27,33,"[(","_CAT_",") Q
+"RTN","RCTOPD",179,0)
+    .Q:$D(^PRCA(430,"TCSP",BILL))  ;cross-serviced bills
+"RTN","RCTOPD",180,0)
+    .I '+B14,($P(B6,U,21)'<ACTDT) I ",1,2,3,24,29,30,31,32,40,41,42,43,44,45,46,"[(","_CAT_",") Q  ;prca*4.5*301 cs activation date and 1st party bill
+"RTN","RCTOPD",181,0)
+    .;check for DOJ referral here
+"RTN","RCTOPD",182,0)
+    .I $P(B6,U,4),($P(B6,U,5)="DOJ") Q
+"RTN","RCTOPD",183,0)
+    .S BILLDT=$P(B6,U,21) I (BILLDT<P10YDT)!(BILLDT>P121DT)!(BILLDT<$P(DEBTOR6,U,3)) Q
+"RTN","RCTOPD",184,0)
+    .I '$P(B6,U,3) D  Q
+"RTN","RCTOPD",185,0)
+    ..;no 3rd letter being sent 
+"RTN","RCTOPD",186,0)
+    ..N TDEB,TFIL
+"RTN","RCTOPD",187,0)
+    ..S TDEB=$G(^RCD(340,DEBTOR,0)),TFIL=$$FILE(TDEB),TDEB=$$NAME^RCTOP1(+TDEB,TFIL),TDEB=$P(TDEB,U,2),^XTMP("RCTOPD",$J,"THIRD",TDEB,$P(B0,U))=""
+"RTN","RCTOPD",188,0)
+    .I RCNEW,CAT>12,CAT<15 S HOLD=1
+"RTN","RCTOPD",189,0)
+    .I BILLDT,BILLDT<EFFDT S EFFDT=BILLDT
+"RTN","RCTOPD",190,0)
+    .S TOTAL=TOTAL+$P(B7,U)+$P(B7,U,2)+$P(B7,U,3)+$P(B7,U,4)+$P(B7,U,5)
+"RTN","RCTOPD",191,0)
+    .S ^TMP("RCTOPD",$J,"BILL",BILL)=""
+"RTN","RCTOPD",192,0)
+    .Q
+"RTN","RCTOPD",193,0)
+ ;
+"RTN","RCTOPD",194,0)
+TOTAL ;set transmission total, reset quit variable
+"RTN","RCTOPD",195,0)
+ N RCSWINFO S RCSWINFO=$$SWSTAT^IBBAPI()                  ;PRCA*4.5*229
+"RTN","RCTOPD",196,0)
+ I RCNEW,'+RCSWINFO Q:TOTAL<25                            ;PRCA*4.5*229
+"RTN","RCTOPD",197,0)
+ I RCNEW,+RCSWINFO Q:TOTAL'>0                             ;PRCA*4.5*229
+"RTN","RCTOPD",198,0)
+ ;
+"RTN","RCTOPD",199,0)
+ I 'RCNEW S:TOTAL<25 TOTAL=0  S CURRTOT=$P($G(^RCD(340,DEBTOR,4)),U,3) Q:CURRTOT=TOTAL  S TOTAL=TOTAL-CURRTOT
+"RTN","RCTOPD",200,0)
+ S QUIT=0
+"RTN","RCTOPD",201,0)
+PROCQ Q
+"RTN","RCTOPD",202,0)
+ ;
+"RTN","RCTOPD",203,0)
+NOW() ;compiles current date,time
+"RTN","RCTOPD",204,0)
+ N X,Y,%,%H
+"RTN","RCTOPD",205,0)
+ S %H=$H D YX^%DTC
+"RTN","RCTOPD",206,0)
+ Q Y
+"RTN","RCTOPD",207,0)
+ ;
+"RTN","RCTOPD",208,0)
+FILE(DEBTOR0) ;gets file number for debtor
+"RTN","RCTOPD",209,0)
+ S FILE=$P($P(DEBTOR0,U),";",2)
+"RTN","RCTOPD",210,0)
+ S FILE=$S(FILE["DPT(":2,FILE["PRC(440":440,FILE["VA(200":200,1:0)
+"RTN","RCTOPD",211,0)
+FILEQ Q FILE
+"VER")
+8.0^22.2
+"BLD",10792,6)
+^296
+**END**
+**END**
+

@@ -1,0 +1,323 @@
+
+=============================================================================
+Run Date: OCT 29, 2018                     Designation: SD*5.3*682
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #577                    Status: Released
+                  Compliance Date: NOV 12, 2018
+=============================================================================
+
+Associated patches: (c)OR*3*483        install with patch       `SD*5.3*682'
+                    (v)SD*5.3*671  <<= must be installed BEFORE `SD*5.3*682'
+
+Subject: REMOVE AUTO-REBOOK FUNCTIONALITY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch removes Auto-Rebook functionality from Vista Scheduling. Users
+  will no longer be able to Auto-Rebook patients when appointments or 
+  clinic availability is cancelled.
+  
+  The patch also corrects duplicate code in the Return To Clinic
+  functionality. When a user entered one of the following characters into
+  the comment field (~|\&), the characters are not being un-escaped when
+  the SD code processes the HL7 messages from the VSE VS GUI. Also, the HL7
+  validation message errors between VSE and CPRS were updated to include 
+  more descriptive messages.
+  
+  This is a combined patch. SD*5.3*682 and OR*3.0*483 are contained in one 
+  build. Refer to OR*3.0*483 patch description for information regarding 
+  that patch.
+  
+  Patch Components:
+  -----------------
+  
+  Files & Fields Associated:
+  
+  File Name (Number)    Field Name (Number)   New/Modified/Deleted
+  ------------------    -------------------   --------------------
+  N/A
+  
+  Forms Associated:
+  
+  Form Name    File Number      New/Modified/Deleted
+  ---------    -----------      --------------------
+  N/A
+  
+  Mail Groups Associated:
+  
+  Mail Group Name             New/Modified/Deleted
+  ---------------             --------------------
+  N/A
+  
+  Options Associated:
+  
+  Option Name                               Type     New/Modified/Deleted
+  -----------                               ----     --------------------
+  Cancel Clinic Availability [SDCANCEL]     Routine  Modified
+  
+  Protocols Associated:
+  
+  Protocol Name               New/Modified/Deleted
+  -------------               --------------------
+  N/A
+  
+  Security Keys Associated: 
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  Templates Associated:
+  
+  Template Name   Type  File Name (Number)   New/Modified/Deleted
+  -------------   ----  ------------------   --------------------
+  N/A
+  
+  Remote Procedures Associated:
+  
+  Remote Procedure Name       New/Modified/Deleted
+  ---------------------       --------------------
+  N/A
+  
+  Parameter Definitions Associated:
+  
+  Parameter Name              New/Modified/Deleted
+  --------------              --------------------
+  N/A
+  
+  Additional Information:
+  ----------------------
+  
+  New Service Requests (NSRs):
+  
+  N/A
+  
+  Patient Safety Issues (PSIs):
+  
+  IT8578532FY18
+  
+  Defect Tracking System Ticket(s) & Overview:
+  
+  INC1411043
+  
+  Problem:
+  --------
+  When using the National RTC order, if a user uses exactly 75 characters
+  in the comment box, it allows them to sign for the order but then places
+  it into a cancelled status. They do get an error message, but as we have
+  found from a few instances, users are overlooking it, potentially
+  allowing orders to be missed. System should allow 75 characters, or
+  change settings so pop up box doesn't allow users to sign at 75
+  characters, as it does for comments 76 characters and over. Please
+  contact staff for additional information regarding patient specifics.
+  
+  Resolution:
+  -----------
+  Routine SDHL7 was edited to correct the issue introduced in patch 
+  SD*5.3*682.
+  
+  Test Sites:
+  -----------
+  Minneapolis VAMC
+  Pittsburgh VAMC
+  St. Cloud VAMC
+  
+  Software and Documentation Retrieval Instructions:
+  --------------------------------------------------
+  
+  The preferred method is to retrieve the files from
+  download.vista.domain.ext. This transmits the files from the first
+  available server. Sites may also elect to retrieve the files
+  directly from a specific server.
+  
+  Sites may retrieve the software and/or documentation directly using
+  Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+  directory at the following OI Field Offices:
+  
+  Hines:          domain.ext  
+  Salt Lake City: domain.ext
+  
+  Documentation can also be found on the VA Software Documentation Library
+  at: https://www.domain.ext/vdl/
+  
+  Documentation Title            File Name                       FTP Mode
+  -----------------------------------------------------------------------
+  User Manual - Appointment Menu appt_UG.docx                    Binary
+  User Manual - Appointment Menu appt_UG.pdf                     Binary
+  User Manual - Supervisor Menu  supv_UG.docx                    Binary
+  User Manual - Supervisor Menu  supv_UG.pdf                     Binary
+  
+  Host File Name                          FTP Mode
+  ------------------------------------------------
+  SD53_682_OR3_483.KID                    ASCII
+  
+  Patch Installation:
+  -------------------
+  
+  Pre/Post Installation Overview:
+  
+  Pre-Installation Instructions:
+  This patch may be installed with users on the system although it is
+  recommended that it be installed during non-peak hours to minimize
+  potential disruption to users.  This patch should take less than 5
+  minutes to install.
+  
+ Installation Instructions
+ -------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file SD53_682_0R3_483.KID, which contains the
+     following patches:
+  
+         SD*5.3*682
+         OR*3.0*483
+  
+      Sites can retrieve VistA software from the following SFTP addresses.
+      The preferred method is to SFTP the files from:
+  
+                     download.vista.domain.ext
+  
+      This will transmit the files from the first available SFTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+        Hines                   ftp.domain.ext
+        Salt Lake City          ftp.domain.ext
+  
+      The SD53_682_OR3_483.KID host file is located in the
+       directory. Use the American Standard Code for
+      Information Interchange (ASCII) Mode when downloading the file.
+  
+  
+   2.  START UP KIDS
+       -------------
+       Start up the Kernel Installation and Distribution System Menu option
+       [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+       Select Kernel Installation & Distribution System Option: 
+       Installation
+                                                                ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+       Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file SD53_682_OR3_483.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]SD53_682_OR3_483.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         SD*5.3*682
+         OR*3.0*483
+  
+       Use INSTALL NAME: S53_682_OR3_483.KID to install this
+       distribution.
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     SD53_682_OR3_483.KID):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the SD53_682_OR3_483.KID build.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter
+         SD53_682_OR3_483.KID
+     c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//", enter NO.
+     d.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", enter NO.
+     e.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'
+           Respond with 'YES'
+           Options to mark as out of order:
+              Cancel Clinic Availability     [SDCANCEL]
+     f.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  Post-Installation Instructions:
+  
+  Back-Out/Roll Back Plan:
+  ------------------------
+  In the event of a catastrophic failure, the Facility Chief Information 
+  Officer may make the decision to back-out the patch.
+  
+  It is imperative that you have performed a backup of the routines and
+  the routines included matches the pre-patch checksum from the patch
+  description.
+  
+  This patch only contains routine updates. To back-out the patch please
+  restore the backup message from the patch installation process.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDC0
+    Before: B35668791   After: B36239906  **303,330,379,398,467,478,545,682**
+Routine Name: SDCNP1
+    Before: B33156446   After: B33715154  **398,467,478,554,597,682**
+Routine Name: SDHL7
+    Before:B103204707   After:B106155934  **671,682**
+Routine Name: SDN
+    Before: B34257653   After: B33353252  **32,79,398,478,627,651,682**
+Routine Name: SDN0
+    Before: B12220540   After: B12318284  **381,682**
+ 
+Routine list of preceding patches: 381, 545, 597, 651, 671
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 31, 2018
+Completed By:                               Date Completed: OCT 29, 2018
+Released By :                               Date Released : OCT 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

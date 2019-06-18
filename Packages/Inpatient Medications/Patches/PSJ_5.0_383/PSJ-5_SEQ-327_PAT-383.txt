@@ -1,0 +1,139 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 01/04/19 at 14:36
+=============================================================================
+Run Date: MAR 07, 2019                     Designation: PSJ*5*383
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #327                      Status: Released
+                  Compliance Date: APR 07, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*370   <<= must be installed BEFORE `PSJ*5*383'
+
+Subject: PROVIDER COMMENTS MISSING IN CPRS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Copied provider comments no longer display on the orders tab in CPRS when 
+ pharmacist edits starred (*) field with Auto-Verify ON
+ 
+  
+ Patient Safety Issues (HITPS):
+ -----------------------------
+ 6446
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ INC3322701  Copied provider comments no longer display on the orders tab 
+             in CPRS when pharmacist edits starred (*) field with Auto-Verify ON
+ INC3386455(d)   
+  
+ Problem: 
+ ========
+ 
+ A site has reported that when a pharmacist edits a starred(*) field
+ for an order, the provider comments are not displaying on the Orders tab
+ in CPRS.  This only happens when auto-verify is ON.
+ 
+ Non-BCMA areas rely on CPRS for provider comments.
+ 
+ 
+ Resolution:
+ ===========
+  
+ A modification was made to routine PSJBCMA5 to check the auto-verify setting
+ when working with the provider comments so they are properly sent back over
+ to CPRS.
+ 
+ 
+  
+ Test Sites:
+ ===========
+ 
+ 
+ Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following
+        options. When prompted for the INSTALL NAME enter the patch 
+        PSJ*5.0*383.
+  
+   a.   Backup a Transport Global - This option will create a backup message of
+        any routines exported with this patch. It will not backup any other 
+        changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  (It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option and
+        choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond 'NO'.
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from this patch description.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJBCMA5
+    Before: B81407826   After: B82156820  **267,275,361,371,370,383**
+ 
+Routine list of preceding patches: 370
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 03, 2019
+Completed By:                               Date Completed: MAR 06, 2019
+Released By :                               Date Released : MAR 07, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

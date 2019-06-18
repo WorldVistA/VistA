@@ -1,0 +1,188 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/17/19 at 14:19
+=============================================================================
+Run Date: APR 08, 2019                     Designation: YS*5.01*143
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #107                   Status: Released
+                  Compliance Date: MAY 09, 2019
+=============================================================================
+
+
+Subject: MENTAL HEALTH ASSISTANT SCL9R MISSING ANSWER CHOICES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses one (1) issue:
+  
+ 1.   When using the SCL9R instrument in the Mental Health Assistant,
+      only four (4) answer choices are offered when there should be 
+      five (5).  
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+  
+ Associated Remedy ticket(s):
+ ==========================
+ 1.   INC3526338 - SCL9R Missing Answer Choices
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Boise VA Medical Center, ID
+ VA Illiana Health Care System  (Danville, IL)
+  
+  
+ Ticket Overview:
+ ================
+  
+ 1.   INC3526338 - SCL9R Missing Answer Choices
+  
+ Problem:
+ --------
+ When using the SCL9R instrument in the Mental Health Assistant, only 
+ four (4) answer choices are offered when there should be five (5).  This
+ occurs because of an incorrect entry in the MH CHOICETYPES (#601.751)
+ file. Specifically, the CHOICETYPE ID `1272 has a SEQUENCE (#1) field
+ value of 5 (should be 1) and a CHOICE ID (#2) field value of "Extremely"
+ (should be "Not at all").
+  
+ Resolution:
+ -----------
+ Post install routine YS143PIR corrects the field values and resets the
+ LAST EDIT DATE (#18) field for the SCL9R instrument in the MH TESTS
+ AND SURVEYS (#601.71) file to force the Mental Health Assistant GUI to
+ reload the survey with the corrected answers.
+  
+ Components:
+ ===========
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ No documentation associated with this patch other than this patch 
+ description.
+  
+ This patch is being distributed as a Packman message.
+  
+ Installation Instructions:
+ ==========================
+ The install time for this patch is less than 2 minutes. This patch 
+ can be installed when Mental Health package users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system to avoid
+       problems loading and/or installing this patch.
+  
+   1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+      option will load the KIDS patch onto your system.
+  
+   2. The patch has now been loaded into a Transport global on your
+      system. You now need to use KIDS to install the transport global.
+  
+   3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+      select the 'Installation' menu.
+  
+   4. Use the 'Verify Checksum in Transport Global' option and verify
+      that all routines have the correct checksums.
+     
+   5. On the KIDS menu, under the 'Installation' menu, use the 
+      Following options:
+              Print Transport Global
+              Compare Transport Global to Current System
+              Backup a Transport Global
+  
+      To preserve a copy of the routines exported in this patch prior
+      to installation, you should use the 'Backup a Transport Global' 
+      option at this time. You may also compare the routines in your 
+      production account to the routines in the patch by using the 
+      'Compare a Transport Global to Current System' option.
+  
+   6. Use the 'Install Package(s)' option under the 'Installation' 
+      Menu and select the package 'YS*5.01*143'.
+  
+      If prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+      YES//, choose 'NO'.
+  
+      If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      And Protocols? YES//', choose 'NO'.
+  
+ Installation Verification:
+ --------------------------
+ Complete the post install Test Script and observe that the SCL9R
+ survey/test now presents five (5) answer choices.
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ The process for backing out the changes made by this patch is 
+ documented below in the Rollback Procedure section.
+  
+ Rollback Procedure:
+ -------------------
+ Use VA FileMan to restore the MH CHOICETYPES (#601.751) file and the 
+ MH TESTS AND SURVEYS (#601.71) file to their original state as detailed
+ below.
+  
+ VA FileMan 22.2
+  
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+  
+ Input to what File: MH CHOICETYPES// 601.751  MH CHOICETYPES
+                                           (100879 entries)
+ EDIT WHICH FIELD: ALL// SEQUENCE  
+ THEN EDIT FIELD: CHOICE ID  
+ THEN EDIT FIELD: 
+  
+ Select MH CHOICETYPES CHOICETYPE ID: `1272  336
+ SEQUENCE: 1// 5
+ CHOICE ID: 1054// 1058       Extremely
+  
+ Select MH CHOICETYPES CHOICETYPE ID: 
+  
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+  
+ Input to what File: MH CHOICETYPES// 601.71  MH TESTS AND SURVEYS
+                                           (234 entries)
+ EDIT WHICH FIELD: ALL// LAST EDIT DATE
+ THEN EDIT FIELD: LAST EDITED BY
+ THEN EDIT FIELD: 
+  
+ Select MH TESTS AND SURVEYS NAME: SCL9R  SCL9R
+ LAST EDIT DATE: JAN 15,2019@09:31:40// N  (JAN 16, 2019@09:26)
+ LAST EDITED BY: Xxxxxx, Xxxx// YS*5.01*143 Uninstall
+  
+ Select MH TESTS AND SURVEYS NAME: 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Jan 2, 2019;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS143PIR
+    Before:       n/a   After:  B2834077  **143**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 20, 2018
+Completed By:                               Date Completed: APR 04, 2019
+Released By :                               Date Released : APR 08, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,334 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/06/18 at 10:58
+=============================================================================
+Run Date: OCT 01, 2018                     Designation: EC*2*144
+Package : EC - EVENT CAPTURE                  Priority: EMERGENCY
+Version : 2       SEQ #137                      Status: Released
+                  Compliance Date: OCT 02, 2018
+=============================================================================
+
+Associated patches: (v)EC*2*141    <<= must be installed BEFORE `EC*2*144'
+
+Subject: FY19 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch EC*2.0*144 will update the EC NATIONAL PROCEDURE (#725) file by 
+ adding 30 new procedures, inactivating 15 existing procedures,
+ changing 16 CPT codes, and changing 16 procedure names in the file.
+       
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  1. INC0506702 - FY19 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+   
+     Problem:
+     --------
+     The Managerial Cost Accounting Office (MCAO) requested an update to the EC 
+     NATIONAL PROCEDURE (#725) file. The request is to add 30 new procedures,
+     inactivate 15 existing procedures, change 16 CPT codes, and change 16 
+     procedure names in the file.
+    
+     Resolution:
+     -----------
+     The post install routines EC2P144A, EC2P144B, and EC2P144C included in this
+     patch will update the EC NATIONAL PROCEDURE (#725) file by adding 30 new
+     procedures, inactivating 15 existing procedures, changing 16 CPT codes, 
+     and changing 16 procedure names in the file.
+       
+     The entries that will be added in the EC NATIONAL PROCEDURE (#725) file
+     are:
+  
+         Natl #     Description                                  CPT CODE
+         ------     ---------------------                        --------  
+         NU300      DX- ENERGY BALANCE
+         NU301      DX- ORAL/NUTR SUPPORT
+         NU302      DX- FLUID INTAKE
+         NU303      DX- BIOACTIVE SUBSTANCES
+         NU304      DX- NUTRIENT INTAKE
+         NU305      DX- FUNCTIONAL
+         NU306      DX- BIOCHEMICAL
+         NU307      DX- WEIGHT
+         NU308      DX- KNOWLEDGE/BELIEFS
+         NU309      DX- ACTIVITY & FXN
+         NU310      DX- FOOD SAFETY & ACCESS
+         NU400      INTERV-MEALS/SNACKS
+         NU401      INTERV-EN or PN
+         NU402      INTERV-SUPPL
+         NU403      INTERV-FEEDING ASSIST
+         NU404      INTERV-FEEDING ENVIRON
+         NU405      INTERV-MED MGMT
+         NU406      INTERV - NUTR EDUC
+         NU407      INTERV- NUTR COUNSELING
+         NU408      INTERV-COORD OF CARE
+         NU409      INTERV-POP ACTION
+         NU500      M&E-PROBLEM RESOLVED
+         NU501      M&E-PROBLEM IMPROVED
+         RC132      COGNITIVE SKILLS DVMNT                       G0515
+         SW183      INPT CONSULT NO PSYCHOTHERAPY                T1016
+         SW184      INPT D/C PLAN COORDINATION                   T1016
+         SW185      CONTRACT NURSING HOME F/U                    T1016
+         SW186      INELIG NON-PT REFER/CM                       T1016
+         SW187      INELIG PT REFER/CASE MGMT                    T1016
+         SW188      COMMUNITY RES CARE F/U                       T1016
+  
+     The entries that will be inactivated in the NATIONAL PROCEDURE (#725) file
+     on 10/01/18 are:
+    
+         Natl #     Description               
+         ------     ---------------------           
+         SW075      HEALTH RISK ASSESSMENT
+         SW130      FAMILY COUNSELING W/PT
+         SW139      HEALTH-BEHAVIORAL ASSESS
+         SW148      CONSULTATION WITH FAMILY
+         SW164      HOSPICE REFERRAL VISIT
+         SW167      PSYCH EVAL HOSP RECS MED DX
+         SW168      RESULTS INTERP EXAMS TO OTHERS
+         SW169      ENVIRON INTERVENT MED MGMT MH PT
+         SW173      GRP COUNSEL ETOH &/OR DRUG SERVICES
+         SW174      ETOH &/OR SA FAM/COUPLE COUNSEL
+         SW175      ETOH &/OR SA TX PLAN DVMT/MOD
+         SW176      BEH HEALTH IND/GRP COUNSEL TX 15M
+         SW178      ETOH &/OR DRUG SERVICES CRISIS OPT
+         SW179      PSYCHOEDUC SERVICE, 15M
+         SW180      ETOH &/OR DRUG SERVICES METHADONE
+  
+     The entries whose CPT Codes will be changed in the EC NATIONAL PROCEDURE 
+     (#725) file are:
+  
+         Natl #     Description                                  CPT CODE
+         ------     ---------------------                        --------  
+         BR059      CAT F/U PROSTH DEV                           97763
+         BR061      LS F/U PROSTH DEV                            97763
+         BR063      MS F/U PROSTH DEV                            97763
+         BR065      OMF/U PROSTH DEV                             97763
+         BR067      LV F/U PROSTH DEV                            97763
+         NU191      HT TECH/ED INSTALL                           A9279
+         RC114      DEVICE FILL ORTH/PROS USE                    97763
+         SP038      INITIAL ACOUSTIC DEVICE FIT                  V5011
+         SP101      INTRAOP MONITORING PER HR                    95940
+         SP107      INITIAL HEARING AID FIT, MON                 V5011
+         SP108      INITIAL HEARING AID FIT, BIN                 V5011
+         SP449      FOLLOW-UP ACOUSTIC DEV FIT                   V5011
+         SP450      FOLLOW-UP HEARING AID FIT, MON               V5011
+         SP451      FOLLOW-UP HEARING AID FIT, BIN               V5011
+         SP467      CHECKOUT FOR PROSTHETIC USE                  V5011
+         SP505      ADHESIVE REMOVER WIPES                       A4456
+  
+     The entries whose procedure names will be changed in the EC NATIONAL
+     PROCEDURE (#725) file are:
+    
+         Natl #     Description                
+         ------     ---------------------                
+         NU007      ASSMT-NO PROBLEM
+         NU008      ASSMT-PREDICTED PROBLEM
+         NU009      ASSMT-PROBLEM PRESENT
+         NU215      DX-MALNUTR DISORDERS
+         SP101      INTRAOP MONITORING PER HR
+         SW006      HEALTH & BEH INTERVENT IND
+         SW009      TEAM CONFERENCE W/PT 30M
+         SW019      HEALTH & BEH INTERVENT GRP
+         SW020      GROUP PSYCHOTHERAPY
+         SW087      CASE MGMT 15M IN-HOME F/U
+         SW093      TEAM CONF W/O PT NO PRESCRIBER 
+         SW122      ADVANCED DIRECTIVES
+         SW137      MH ASSESSMENT BY NON-MD
+         SW138      PSYCHIATRIC DIAGNOSTIC EVALUATION
+         SW153      PROGRAM INTAKE SCREENING
+         SW154      HOME VISIT IND/FM MARRIAGE COUNSEL
+  
+    ===========================================================================
+     Note: The new EC NATIONAL PROCEDURE Numbers could exist in some site's
+     environment. If the EC NATIONAL PROCEDURE Numbers exist, then the system
+     will add the new numbers and it will keep what the sites have on file. In
+     addition, a message similar to the one below will be printed during
+     installation: 
+     
+     ***EXAMPLE***
+     "Entry #3457 for 99999 SAMPLE [CPT: 99999] (XXXXX)  ...
+     successfully added. Your site has a local procedure (entry #90999) in
+     File #725 which uses XXXXX as its National Number. Please inactivate
+     this local procedure."
+     
+     Please review the installed message.
+    ==========================================================================
+  
+ TEST SITES:
+ -----------
+ VA Connecticut Health Care System (West Haven, Newington)
+ Richard L. Roudebush VA Medical Center (Indianapolis)    
+    
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ *******************************************************************
+ * This patch is being released as an emergency in order to assure *
+ * timely update of files and processes.                           *
+ *******************************************************************
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run, they
+ are not automatically deleted.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Prior to install this patch, backup file ^EC(725) using your site's 
+ policy for backing up data.
+  
+ If the steps are unknown, please follow the following procedures:
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GOGEN.
+    3. At the device prompt, enter the directory and file name where the 
+       global backup is to be stored.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the Global prompt, enter ^EC(725
+    6. Verify that the file was created and exists in the directory 
+       specified.
+  
+ Installation Instructions:
+ --------------------------
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter EC*2.0*144)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package EC*2.0*144.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? NO//" respond NO.
+  
+      7. Review the installation message for notifications.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routines EC2P144A, EC2P144B, and EC2P144C from your
+ production system after the patch has been successfully verified.
+  
+ Back-Out Plan:
+ --------------
+ Please use %GIGEN for restoring the EC NATIONAL PROCEDURE file (#725) if
+ needed.
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GIGEN.
+    3. At the device prompt, enter the directory and file name created in
+       the pre-install instructions.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the 'Transfer entire set of files? No=>', type 'Yes'.
+    6. At the From global prompt, enter ^EC(725
+    7. At the To global ^EC(725=>, enter ^EC(725
+    8. At the OK to transfer? Yes=> prompt, select Yes. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P144A
+    Before:       n/a   After:  B2321371  **144**
+Routine Name: EC2P144B
+    Before:       n/a   After: B25665520  **144**
+Routine Name: EC2P144C
+    Before:       n/a   After: B12366085  **144**
+
+=============================================================================
+User Information:                          Hold Date     : OCT 01, 2018
+Entered By  :                               Date Entered  : MAY 01, 2018
+Completed By:                               Date Completed: SEP 14, 2018
+Released By :                               Date Released : OCT 01, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

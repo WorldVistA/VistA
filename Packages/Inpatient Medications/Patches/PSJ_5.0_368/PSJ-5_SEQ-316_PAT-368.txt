@@ -1,0 +1,163 @@
+$TXT Created by               F at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 07/20/18 at 09:05
+=============================================================================
+Run Date: OCT 15, 2018                     Designation: PSJ*5*368
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #316                      Status: Released
+                  Compliance Date: NOV 14, 2018
+=============================================================================
+
+Associated patches: (v)PSJ*5*256   <<= must be installed BEFORE `PSJ*5*368'
+
+Subject: ISSUE WITH INPATIENT ORDER SET WITH PATCH MEDICATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ INC1065553 - Bar Code Medication Administration (BCMA) Backup System
+ (BCBU) Medication Administration Record (MAR) display NON transdermal
+ patch orders with Removal times discharged/deceased
+ INC0608952 - *TEST ACCOUNT-BCMA listing all admins as a patch-TEST ACCOUNT*
+ (Duplicate)
+     
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC1065553 - BCBU MAR display NON transdermal patch orders with Removal
+              times discharged/deceased
+ INC0608952 - *TEST ACCOUNT-BCMA listing all admins as a patch-TEST ACCOUNT*
+ (Duplicate)
+         
+ Problem: 
+ --------
+ When Inpatient Pharmacy users use the option Inpatient Order Entry [PSJ OE]
+ and instead of ordering a single medication choose an order set, there is
+ a potential mix up between patch medications and other medications 
+ that have a different form of administration. Order sets are created via
+ the Order Set Enter/Edit [PSJU OSE] option. In some circumstances patch
+ medications will not have a field for entering removal times and in others
+ medication with other forms of administration will prompt BCMA users for
+ an application site, which is required only for patch medications.
+       
+ Resolution:
+ -----------
+ Reset variables that identify patch medication versus non patch medication
+ before processing each order within the order set. This will prevent orders
+ following a patch medication order from being flagged as patch as well.
+  
+ Technical Resolution:
+ ---------------------
+ NEWed the variable PSGRF and ND2P1 variables at GND+1^PSGOES and set the 
+ variable PSGRF with the content of the PROMPT FOR REMOVAL IN BCMA (#12)
+ field in the PHARMACY ORDERABLE ITEM (#50.7) file, which is used to
+ identify whether form of application for the medication being entered is a
+ patch.
+   
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+         
+ Test Sites:
+ -----------
+ West Palm Beach VAMC
+ Roseburg HCS 
+    
+ Patch Installation: 
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installtion and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSJ*5.0*368):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOES
+    Before: B24088682   After: B23676138  **12,22,30,34,50,58,111,181,
+                                           263,309,281,256,368**
+ 
+Routine list of preceding patches: 256
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 16, 2018
+Completed By:                               Date Completed: OCT 12, 2018
+Released By :                               Date Released : OCT 15, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

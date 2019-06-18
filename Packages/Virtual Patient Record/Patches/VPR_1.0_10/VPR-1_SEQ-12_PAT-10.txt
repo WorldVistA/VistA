@@ -1,0 +1,241 @@
+$TXT Created by                     FMB.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 04/09/19 at 07:59
+=============================================================================
+Run Date: APR 22, 2019                     Designation: VPR*1*10
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1        SEQ #12                      Status: Released
+                  Compliance Date: APR 26, 2019
+=============================================================================
+
+Associated patches: (v)VPR*1*8     <<= must be installed BEFORE `VPR*1*10'
+
+Subject: HEALTHSHARE FIXES
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch to the Virtual Patient Record (VPR) application updates VPR 
+ entries in the Entity file (#1.5) to correct 6 issues with the 
+ HealthShare (HS) interface that were identified too late to be addressed 
+ in VPR*1*8:
+  
+ 1. Problems merged
+    ---------------
+    If the same problem is entered for a patient at multiple VA facilities, 
+    HS will attempt to merge those entries in its Edge Cache Repository 
+    (ECR). This patch adds the ExternalId property to the Problem container 
+    Entities to prevent HS from attempting this merge.
+  
+ 2. Allergies merged
+    ----------------
+    Like with problems, HS will attempt to merge the same allergy entered 
+    for a patient at multiple VA facilities in its ECR. This patch adds the 
+    ExternalId property to the Allergy container Entities to prevent HS from 
+    attempting this merge.
+  
+ 3. Radiology exam sets missing reports
+    -----------------------------------
+    The RadOrder container in HS only provides a link to a single report 
+    as the result of an order; if an exam set is registered, multiple 
+    reports may be created. This patch adds the DocumentNumbers property 
+    to the RadOrder extension Entity to hold all report identifiers 
+    for an order.
+  
+ 4. Incorrect LOINC codes for Pathology reports
+    -------------------------------------------
+    A general LOINC code was previously assigned to all pathology reports 
+    when stored in HS, for ease of searching; this patch changes the
+    Anatomic Pathology Entities for the Document container to now assign
+    a code based on the VistA Lab section.
+  
+ 5. Missing Pathology orders
+    ------------------------
+    Previously only Chemistry orders were included in the LabOrder container,
+    resulting in incomplete lab data for a patient and difficulty navigating
+    to the pathology reports in SDA. All Lab orders will now be returned.
+  
+ 6. Unknown Last Date of Treatment
+    ------------------------------
+    HS has the ability to aggregate data for a patient from multiple VA 
+    facilities, but cannot easily identify which site treated the patient 
+    most recently. This patch adds the LastTreated property to the VPR 
+    PATIENT EXTENSION entity to store the date of the last visit for each 
+    patient at a given VA facility.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Entities Associated:
+  
+ Entity Name                   New/Modified/Deleted
+ -----------                   --------------------
+ VPR ALLERGY                   Modified
+ VPR ALLERGY ASSESSMENT        Modified
+ VPR FIM                       Modified
+ VPR LAB ORDER                 Modified
+ VPR LOCATION EXTENSION        Modified
+ VPR LR RESULT EXTENSION       Modified
+ VPR LRAP EXTENSION            Modified
+ VPR LRAP REPORT               Modified
+ VPR LRCH RESULT               Modified
+ VPR LRCY RESULT               Modified
+ VPR LREM RESULT               Modified
+ VPR LRMI EXTENSION            Modified
+ VPR LRMI REPORT               Modified
+ VPR LRMI RESULT               Modified
+ VPR LRSP RESULT               Modified
+ VPR MEDICATION                Modified
+ VPR OTHER ORDER               Modified
+ VPR PATIENT                   Modified
+ VPR PATIENT EXTENSION         Modified
+ VPR PATIENT ID                Modified
+ VPR PROBLEM                   Modified
+ VPR RAD ORDER                 Modified
+ VPR RAD REPORT                Modified
+ VPR RAD RESULT                Modified
+ VPR RAD RESULT EXTENSION      Modified
+ VPR RAD RPT EXTENSION         Modified
+ VPR SOURCE FACILITY           New
+  
+  
+ Files & Fields Associated:         N/A
+  
+ Forms Associated:                  N/A
+  
+ Mail Groups Associated:            N/A
+  
+ Options Associated:                N/A
+  
+ Protocols Associated:              N/A
+  
+ Remote Procedure Calls Associated: N/A
+  
+ Security Keys Associated:          N/A
+  
+ Templates Associated:              N/A
+  
+ Blood Bank Team Coordination:      N/A
+  
+ New Service Requests (NSRs):       N/A
+  
+ Patient Safety Issues (PSIs):      N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Charleston, SC
+ North Chicago, IL
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ The software for this patch is being released as a KIDS build.
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME, enter VPR*1.0*10.
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted Want KIDS to INHIBIT LOGONs during the install?
+     NO// enter NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// enter NO.
+  
+ 7.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ A post-init routine will replace VPR LRAP EVENTS with VPR XQOR EVENTS in the
+ Items multiple of the LR7O AP EVSEND OR entry in the Protocol file (#101),
+ to enable monitoring of pathology orders as well as reports. Using the
+ FileMan Inquiry option , review the LR7O AP EVSEND OR protocol after
+ installation of this patch to ensure VPR XQOR EVENTS is now in its Items
+ multiple.
+  
+  
+ Backout Procedures:
+ -------------------
+ Back-out will be done only with the concurrence and participation of the 
+ development team, health product support, and appropriate VA site/region 
+ personnel. Please call the national help desk or enter a help desk ticket 
+ for assistance.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPREVNT
+    Before:B123701454   After:B125233310  **8,10**
+Routine Name: VPRHS
+    Before: B23926181   After: B24940964  **8,10**
+Routine Name: VPRP10
+    Before:       n/a   After:  B1260403  **10**
+Routine Name: VPRSDA
+    Before:B175529612   After:B238403489  **8,10**
+Routine Name: VPRSDAL
+    Before:  B7855097   After:  B8006329  **8,10**
+Routine Name: VPRSDAQ
+    Before:B144153181   After:B148289095  **8,10**
+Routine Name: VPRSDAR
+    Before:  B9382651   After: B16670259  **8,10**
+Routine Name: VPRSR
+    Before:  B1400443   After:  B1588116  **8,10**
+ 
+Routine list of preceding patches: 8
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 20, 2018
+Completed By:                               Date Completed: APR 22, 2019
+Released By :                               Date Released : APR 22, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

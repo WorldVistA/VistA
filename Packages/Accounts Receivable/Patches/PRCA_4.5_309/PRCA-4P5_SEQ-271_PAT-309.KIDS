@@ -1,0 +1,599 @@
+Released PRCA*4.5*309 SEQ #271
+Extracted from mail message
+**KIDS**:PRCA*4.5*309^
+
+**INSTALL NAME**
+PRCA*4.5*309
+"BLD",10027,0)
+PRCA*4.5*309^ACCOUNTS RECEIVABLE^0^3151204^y
+"BLD",10027,1,0)
+^^5^5^3151204^
+"BLD",10027,1,1,0)
+The purpose of this patch is to (1) add the additional suspense types to
+"BLD",10027,1,2,0)
+the Suspension Type field (#90) of the AR Transaction file (#433) for the
+"BLD",10027,1,3,0)
+Suspend an AR bill [PRCAC TR SUSPENDED] option, and (2) use a function to
+"BLD",10027,1,4,0)
+automatically generate the 'Brief Comment' for the selective suspension
+"BLD",10027,1,5,0)
+type in the Brief Account Profile [PRCAY ACCOUNT PROFILE] option.
+"BLD",10027,4,0)
+^9.64PA^433^1
+"BLD",10027,4,433,0)
+433
+"BLD",10027,4,433,2,0)
+^9.641^433^1
+"BLD",10027,4,433,2,433,0)
+AR TRANSACTION  (File-top level)
+"BLD",10027,4,433,2,433,1,0)
+^9.6411^90^1
+"BLD",10027,4,433,2,433,1,90,0)
+SUSPENSION TYPE
+"BLD",10027,4,433,222)
+y^n^p^^^^n^^n
+"BLD",10027,4,433,224)
+
+"BLD",10027,4,"APDD",433,433)
+
+"BLD",10027,4,"APDD",433,433,90)
+
+"BLD",10027,4,"B",433,433)
+
+"BLD",10027,6.3)
+3
+"BLD",10027,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10027,"KRN",.4,0)
+.4
+"BLD",10027,"KRN",.401,0)
+.401
+"BLD",10027,"KRN",.402,0)
+.402
+"BLD",10027,"KRN",.403,0)
+.403
+"BLD",10027,"KRN",.5,0)
+.5
+"BLD",10027,"KRN",.84,0)
+.84
+"BLD",10027,"KRN",3.6,0)
+3.6
+"BLD",10027,"KRN",3.8,0)
+3.8
+"BLD",10027,"KRN",9.2,0)
+9.2
+"BLD",10027,"KRN",9.8,0)
+9.8
+"BLD",10027,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10027,"KRN",9.8,"NM",1,0)
+RCWROFF^^^B34901459
+"BLD",10027,"KRN",9.8,"NM","B","RCWROFF",1)
+
+"BLD",10027,"KRN",19,0)
+19
+"BLD",10027,"KRN",19.1,0)
+19.1
+"BLD",10027,"KRN",101,0)
+101
+"BLD",10027,"KRN",409.61,0)
+409.61
+"BLD",10027,"KRN",771,0)
+771
+"BLD",10027,"KRN",779.2,0)
+779.2
+"BLD",10027,"KRN",870,0)
+870
+"BLD",10027,"KRN",8989.51,0)
+8989.51
+"BLD",10027,"KRN",8989.52,0)
+8989.52
+"BLD",10027,"KRN",8994,0)
+8994
+"BLD",10027,"KRN","B",.4,.4)
+
+"BLD",10027,"KRN","B",.401,.401)
+
+"BLD",10027,"KRN","B",.402,.402)
+
+"BLD",10027,"KRN","B",.403,.403)
+
+"BLD",10027,"KRN","B",.5,.5)
+
+"BLD",10027,"KRN","B",.84,.84)
+
+"BLD",10027,"KRN","B",3.6,3.6)
+
+"BLD",10027,"KRN","B",3.8,3.8)
+
+"BLD",10027,"KRN","B",9.2,9.2)
+
+"BLD",10027,"KRN","B",9.8,9.8)
+
+"BLD",10027,"KRN","B",19,19)
+
+"BLD",10027,"KRN","B",19.1,19.1)
+
+"BLD",10027,"KRN","B",101,101)
+
+"BLD",10027,"KRN","B",409.61,409.61)
+
+"BLD",10027,"KRN","B",771,771)
+
+"BLD",10027,"KRN","B",779.2,779.2)
+
+"BLD",10027,"KRN","B",870,870)
+
+"BLD",10027,"KRN","B",8989.51,8989.51)
+
+"BLD",10027,"KRN","B",8989.52,8989.52)
+
+"BLD",10027,"KRN","B",8994,8994)
+
+"BLD",10027,"QDEF")
+^^^^^^^^^^YES
+"BLD",10027,"QUES",0)
+^9.62^^
+"BLD",10027,"REQB",0)
+^9.611^1^1
+"BLD",10027,"REQB",1,0)
+PRCA*4.5*204^2
+"BLD",10027,"REQB","B","PRCA*4.5*204",1)
+
+"FIA",433)
+AR TRANSACTION
+"FIA",433,0)
+^PRCA(433,
+"FIA",433,0,0)
+433NI
+"FIA",433,0,1)
+y^n^p^^^^n^^n
+"FIA",433,0,10)
+
+"FIA",433,0,11)
+
+"FIA",433,0,"RLRO")
+
+"FIA",433,0,"VR")
+4.5^PRCA
+"FIA",433,433)
+1
+"FIA",433,433,90)
+
+"MBREQ")
+0
+"PKG",142,-1)
+1^1
+"PKG",142,0)
+ACCOUNTS RECEIVABLE^PRCA^BILL COLLECTIONS
+"PKG",142,20,0)
+^9.402P^1^1
+"PKG",142,20,1,0)
+2^^PRCAMRG
+"PKG",142,20,1,1)
+
+"PKG",142,20,"B",2,1)
+
+"PKG",142,22,0)
+^9.49I^1^1
+"PKG",142,22,1,0)
+4.5^^2950320
+"PKG",142,22,1,"PAH",1,0)
+309^3151204
+"PKG",142,22,1,"PAH",1,1,0)
+^^5^5^3151204
+"PKG",142,22,1,"PAH",1,1,1,0)
+The purpose of this patch is to (1) add the additional suspense types to
+"PKG",142,22,1,"PAH",1,1,2,0)
+the Suspension Type field (#90) of the AR Transaction file (#433) for the
+"PKG",142,22,1,"PAH",1,1,3,0)
+Suspend an AR bill [PRCAC TR SUSPENDED] option, and (2) use a function to
+"PKG",142,22,1,"PAH",1,1,4,0)
+automatically generate the 'Brief Comment' for the selective suspension
+"PKG",142,22,1,"PAH",1,1,5,0)
+type in the Brief Account Profile [PRCAY ACCOUNT PROFILE] option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","RCWROFF")
+0^1^B34901459^B30058500
+"RTN","RCWROFF",1,0)
+RCWROFF ;WISC/RFJ-write off, terminated ;1 Feb 2000
+"RTN","RCWROFF",2,0)
+ ;;4.5;Accounts Receivable;**168,204,309**;Mar 20, 1995;Build 3
+"RTN","RCWROFF",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","RCWROFF",4,0)
+ Q
+"RTN","RCWROFF",5,0)
+ ;
+"RTN","RCWROFF",6,0)
+ ;
+"RTN","RCWROFF",7,0)
+8 ;  terminated by fiscal officer (trantype=8) (menu option)
+"RTN","RCWROFF",8,0)
+ N RCDRSTRG
+"RTN","RCWROFF",9,0)
+ S RCDRSTRG="11TERMINATION DATE;"
+"RTN","RCWROFF",10,0)
+ S RCDRSTRG=RCDRSTRG_"17;"  ;termination reason
+"RTN","RCWROFF",11,0)
+ D MAIN("8^Fiscal Officer Termination",RCDRSTRG)
+"RTN","RCWROFF",12,0)
+ Q
+"RTN","RCWROFF",13,0)
+ ;
+"RTN","RCWROFF",14,0)
+ ;
+"RTN","RCWROFF",15,0)
+9 ;  terminated by compromise (trantype=9) (menu option)
+"RTN","RCWROFF",16,0)
+ N RCDRSTRG
+"RTN","RCWROFF",17,0)
+ S RCDRSTRG="11TERMINATION DATE;"
+"RTN","RCWROFF",18,0)
+ S RCDRSTRG=RCDRSTRG_"17;"  ;termination reason
+"RTN","RCWROFF",19,0)
+ D MAIN("9^Compromise Termination",RCDRSTRG)
+"RTN","RCWROFF",20,0)
+ Q
+"RTN","RCWROFF",21,0)
+ ;
+"RTN","RCWROFF",22,0)
+ ;
+"RTN","RCWROFF",23,0)
+A9 ;  compromised by rc/doj (use trantype=9) (menu option)
+"RTN","RCWROFF",24,0)
+ N RCDRSTRG
+"RTN","RCWROFF",25,0)
+ S RCDRSTRG="11TERMINATION DATE;"
+"RTN","RCWROFF",26,0)
+ S RCDRSTRG=RCDRSTRG_"17;"  ;termination reason
+"RTN","RCWROFF",27,0)
+ D MAIN("9^Compromise Termination by RC/DOJ",RCDRSTRG)
+"RTN","RCWROFF",28,0)
+ Q
+"RTN","RCWROFF",29,0)
+ ;
+"RTN","RCWROFF",30,0)
+ ;
+"RTN","RCWROFF",31,0)
+10 ;  waived in full transaction (trantype=10) (menu option)
+"RTN","RCWROFF",32,0)
+ D MAIN("10^Waiver","11WAIVED DATE;")
+"RTN","RCWROFF",33,0)
+ Q
+"RTN","RCWROFF",34,0)
+ ;
+"RTN","RCWROFF",35,0)
+ ;
+"RTN","RCWROFF",36,0)
+A10 ;  waived by rc/doj (use trantype=10) (menu option)
+"RTN","RCWROFF",37,0)
+ D MAIN("10^RC/DOJ Waiver","11WAIVED DATE;")
+"RTN","RCWROFF",38,0)
+ Q
+"RTN","RCWROFF",39,0)
+ ;
+"RTN","RCWROFF",40,0)
+ ;
+"RTN","RCWROFF",41,0)
+29 ;  terminated by rc/doj (trantype=29) (menu option)
+"RTN","RCWROFF",42,0)
+ N RCDRSTRG
+"RTN","RCWROFF",43,0)
+ S RCDRSTRG="11TERMINATION DATE;"
+"RTN","RCWROFF",44,0)
+ S RCDRSTRG=RCDRSTRG_"17;"  ;termination reason
+"RTN","RCWROFF",45,0)
+ D MAIN("29^RC/DOJ Termination",RCDRSTRG)
+"RTN","RCWROFF",46,0)
+ Q
+"RTN","RCWROFF",47,0)
+ ;
+"RTN","RCWROFF",48,0)
+ ;
+"RTN","RCWROFF",49,0)
+47 ;  suspended (trantype=47) (menu option)
+"RTN","RCWROFF",50,0)
+ N RCDRSTRG
+"RTN","RCWROFF",51,0)
+ S RCDRSTRG="11SUSPENDED DATE;"
+"RTN","RCWROFF",52,0)
+ S RCDRSTRG=RCDRSTRG_"90R;"  ;suspension type
+"RTN","RCWROFF",53,0)
+ S RCDRSTRG=RCDRSTRG_"S RCX=$$SUSTP^RCWROFF(X);"
+"RTN","RCWROFF",54,0)
+ S RCDRSTRG=RCDRSTRG_"5.02////^S X=RCX;"  ;brief comment
+"RTN","RCWROFF",55,0)
+ S RCDRSTRG=RCDRSTRG_"K RCX;"
+"RTN","RCWROFF",56,0)
+ D MAIN("47^Suspension",RCDRSTRG)
+"RTN","RCWROFF",57,0)
+ Q
+"RTN","RCWROFF",58,0)
+ ;
+"RTN","RCWROFF",59,0)
+SUSTP(X) ; suspension types for brief comment in *309
+"RTN","RCWROFF",60,0)
+ ; input-code between 0 to 11
+"RTN","RCWROFF",61,0)
+ ; output-text
+"RTN","RCWROFF",62,0)
+ N IBX
+"RTN","RCWROFF",63,0)
+ S IBX=$P($T(SUSTX+X),";;",2)
+"RTN","RCWROFF",64,0)
+ Q IBX
+"RTN","RCWROFF",65,0)
+ ;
+"RTN","RCWROFF",66,0)
+SUSTX ;;NOT CO-PAY SUSPENSION
+"RTN","RCWROFF",67,0)
+ ;;INITIAL CO-PAY WAIVER
+"RTN","RCWROFF",68,0)
+ ;;APPEAL CO-PAY WAIVER
+"RTN","RCWROFF",69,0)
+ ;;ADMINISTRATIVE SUSPENSION
+"RTN","RCWROFF",70,0)
+ ;;COMPROMISE
+"RTN","RCWROFF",71,0)
+ ;;TERMINATION
+"RTN","RCWROFF",72,0)
+ ;;BANKRUPTCY CHAP 7
+"RTN","RCWROFF",73,0)
+ ;;BANKRUPTCY CHAP 13
+"RTN","RCWROFF",74,0)
+ ;;BANKRUPTCY OTHER
+"RTN","RCWROFF",75,0)
+ ;;PROBATE
+"RTN","RCWROFF",76,0)
+ ;;CHOICE
+"RTN","RCWROFF",77,0)
+ ;;DISPUTE
+"RTN","RCWROFF",78,0)
+ ;
+"RTN","RCWROFF",79,0)
+ ;
+"RTN","RCWROFF",80,0)
+MAIN(RCTRTYPE,RCDRSTRG) ;  main subroutine to process a waiver, termination, suspended transaction
+"RTN","RCWROFF",81,0)
+ ;  rctrtype = transaction type^description, example 10^waiver
+"RTN","RCWROFF",82,0)
+ ;  rcdrstrg = dr string used when calling die
+"RTN","RCWROFF",83,0)
+ N BALANCE,DR,RCBILLDA,RCTRANDA,Y
+"RTN","RCWROFF",84,0)
+ F  D  Q:RCBILLDA<1
+"RTN","RCWROFF",85,0)
+ .   K RCTRANDA  ;do not leave around in for loop
+"RTN","RCWROFF",86,0)
+ .   ;  select a bill
+"RTN","RCWROFF",87,0)
+ .   S RCBILLDA=$$GETABILL^RCBEUBIL I RCBILLDA<1 Q
+"RTN","RCWROFF",88,0)
+ .   ;  check to see if bill has been referred to rc/doj (6;4 = referral date)
+"RTN","RCWROFF",89,0)
+ .   I $P(RCTRTYPE,"^",2)["RC/DOJ",$P($G(^PRCA(430,RCBILLDA,6)),"^",4)="" W !,"THIS ACCOUNT IS NOT REFERRED TO RC/DOJ." Q
+"RTN","RCWROFF",90,0)
+ .   ;  lock the bill
+"RTN","RCWROFF",91,0)
+ .   L +^PRCA(430,RCBILLDA):5 I '$T W !,"ANOTHER USER IS CURRENTLY WORKING WITH THIS BILL." Q
+"RTN","RCWROFF",92,0)
+ .   D SHOWBILL^RCWROFF1(RCBILLDA)
+"RTN","RCWROFF",93,0)
+ .   I '$G(^PRCA(430,RCBILLDA,7)) W !,"THIS BILL HAS NO PRINCIPAL BALANCE." D UNLOCK Q
+"RTN","RCWROFF",94,0)
+ .   ;  ask to enter transaction
+"RTN","RCWROFF",95,0)
+ .   S Y=$$ASKOK($P(RCTRTYPE,"^",2)) I Y'=1 D UNLOCK S:Y<0 RCBILLDA=0 Q
+"RTN","RCWROFF",96,0)
+ .   ;  add a new transaction to file 433
+"RTN","RCWROFF",97,0)
+ .   S RCTRANDA=$$ADD433^RCBEUTRA(RCBILLDA,$P(RCTRTYPE,"^")) I 'RCTRANDA W !,$P(RCTRANDA,"^",2) D UNLOCK Q
+"RTN","RCWROFF",98,0)
+ .   W !,"  Transaction number ",RCTRANDA," added ..."
+"RTN","RCWROFF",99,0)
+ .   ;
+"RTN","RCWROFF",100,0)
+ .   ;  set up dr string for die call
+"RTN","RCWROFF",101,0)
+ .   S DR=RCDRSTRG_"41;"  ;comment
+"RTN","RCWROFF",102,0)
+ .   ;  bill amount moved to transaction amount
+"RTN","RCWROFF",103,0)
+ .   S BALANCE=$P($G(^PRCA(430,RCBILLDA,7)),"^",1,5)
+"RTN","RCWROFF",104,0)
+ .   S DR=DR_"15////"_($P(BALANCE,"^")+$P(BALANCE,"^",2)+$P(BALANCE,"^",3)+$P(BALANCE,"^",4)+$P(BALANCE,"^",5))_";"
+"RTN","RCWROFF",105,0)
+ .   I $P(BALANCE,"^",1) S DR=DR_"81////"_+$P(BALANCE,"^",1)_";"   ;principal
+"RTN","RCWROFF",106,0)
+ .   I $P(BALANCE,"^",2) S DR=DR_"82////"_+$P(BALANCE,"^",2)_";"   ;interest
+"RTN","RCWROFF",107,0)
+ .   I $P(BALANCE,"^",3) S DR=DR_"83////"_+$P(BALANCE,"^",3)_";"   ;admin
+"RTN","RCWROFF",108,0)
+ .   I $P(BALANCE,"^",4) S DR=DR_"84////"_+$P(BALANCE,"^",4)_";"   ;marshal fee
+"RTN","RCWROFF",109,0)
+ .   I $P(BALANCE,"^",5) S DR=DR_"85////"_+$P(BALANCE,"^",5)_";"   ;court cost
+"RTN","RCWROFF",110,0)
+ .   ;
+"RTN","RCWROFF",111,0)
+ .   ;  edit the fields
+"RTN","RCWROFF",112,0)
+ .   S Y=$$EDIT433^RCBEUTRA(RCTRANDA,DR)
+"RTN","RCWROFF",113,0)
+ .   I 'Y W !,$P(Y,"^",2) D DEL433^RCBEUTRA(RCTRANDA,"",0),UNLOCK Q
+"RTN","RCWROFF",114,0)
+ .   ;  set the bill and transaction as RC/DOJ
+"RTN","RCWROFF",115,0)
+ .   I $P(RCTRTYPE,"^",2)["RC/DOJ" D SETRCDOJ^RCBEUBIL(RCBILLDA,RCTRANDA,"RC")
+"RTN","RCWROFF",116,0)
+ .   ;  change the status of the bill
+"RTN","RCWROFF",117,0)
+ .   I $P(RCTRTYPE,"^")'=47 D CHGSTAT^RCBEUBIL(RCBILLDA,23)  ;write off
+"RTN","RCWROFF",118,0)
+ .   I $P(RCTRTYPE,"^")=47 D CHGSTAT^RCBEUBIL(RCBILLDA,40)   ;suspended
+"RTN","RCWROFF",119,0)
+ .   ;  mark transaction as processed
+"RTN","RCWROFF",120,0)
+ .   D PROCESS^RCBEUTRA(RCTRANDA)
+"RTN","RCWROFF",121,0)
+ .   ;
+"RTN","RCWROFF",122,0)
+ .   ;  create fms write off document, if not accrued and not suspended (47) transaction
+"RTN","RCWROFF",123,0)
+ .   I '$$ACCK^PRCAACC(RCBILLDA),$P($G(^PRCA(433,RCTRANDA,1)),"^",2)'=47 D FMSDOC(RCTRANDA)
+"RTN","RCWROFF",124,0)
+ .   ;
+"RTN","RCWROFF",125,0)
+ .   W !,"  * * * * * ",$P(RCTRTYPE,"^",2)," has been PROCESSED! * * * * *"
+"RTN","RCWROFF",126,0)
+ .I '$G(REFMS)&(DT>$$LDATE^RCRJR(DT)) S Y=$E($$FPS^RCAMFN01(DT,1),1,5)_"01" D DD^%DT W !!,"   * * * * Transmission will be held until "_Y_" * * * *"
+"RTN","RCWROFF",127,0)
+ .   D UNLOCK
+"RTN","RCWROFF",128,0)
+ Q
+"RTN","RCWROFF",129,0)
+ ;
+"RTN","RCWROFF",130,0)
+ ;
+"RTN","RCWROFF",131,0)
+FMSDOC(RCTRANDA) ;  create fms write off document
+"RTN","RCWROFF",132,0)
+ N Y
+"RTN","RCWROFF",133,0)
+ W !!,"Creating FMS Write-off document ... "
+"RTN","RCWROFF",134,0)
+ S Y=$$BUILDWR^RCXFMSW1(RCTRANDA)
+"RTN","RCWROFF",135,0)
+ I Y W $P(Y,"^",2)," created."
+"RTN","RCWROFF",136,0)
+ E  W "ERROR: ",$P(Y,"^",2)
+"RTN","RCWROFF",137,0)
+ Q
+"RTN","RCWROFF",138,0)
+ ;
+"RTN","RCWROFF",139,0)
+ ;
+"RTN","RCWROFF",140,0)
+UNLOCK ;  unlock bill and transaction
+"RTN","RCWROFF",141,0)
+ L -^PRCA(430,RCBILLDA)
+"RTN","RCWROFF",142,0)
+ I $G(RCTRANDA) L -^PRCA(433,RCTRANDA)
+"RTN","RCWROFF",143,0)
+ Q
+"RTN","RCWROFF",144,0)
+ ;
+"RTN","RCWROFF",145,0)
+ ;
+"RTN","RCWROFF",146,0)
+ASKOK(TRANTYPE) ;  ask record transaction
+"RTN","RCWROFF",147,0)
+ N DIR,DIQ2,DIRUT,DTOUT,DUOUT,X,Y
+"RTN","RCWROFF",148,0)
+ S DIR(0)="YO",DIR("B")="NO"
+"RTN","RCWROFF",149,0)
+ S DIR("A")="  Are you sure you want to record this bill as a "
+"RTN","RCWROFF",150,0)
+ I $L(TRANTYPE)<20 S DIR("A")=DIR("A")_TRANTYPE
+"RTN","RCWROFF",151,0)
+ E  S DIR("A",1)=DIR("A"),DIR("A")="  "_TRANTYPE
+"RTN","RCWROFF",152,0)
+ W ! D ^DIR
+"RTN","RCWROFF",153,0)
+ I $G(DTOUT)!($G(DUOUT)) S Y=-1
+"RTN","RCWROFF",154,0)
+ Q Y
+"VER")
+8.0^22.0
+"^DD",433,433,90,0)
+SUSPENSION TYPE^S^0:NON-COPAY SUSPENSION;1:INITIAL CO-PAY WAIVER;2:APPEAL CO-PAY WAIVER;3:ADMINISTRATIVE SUSPENSION;4:COMPROMISE;5:TERMINATION;6:BANKRUPTCY CHAP 7;7:BANKRUPTCY CHAP 13;8:BANKRUPTCY OTHER;9:PROBATE;10:CHOICE;11:DISPUTE;^1;11^Q
+"^DD",433,433,90,3)
+Select the number (between 0 and 11) that corresponds to the type of suspension for this copay waiver request.
+"^DD",433,433,90,21,0)
+^^4^4^3150803^
+"^DD",433,433,90,21,1,0)
+This field documents the reason for the type of suspension for copay
+"^DD",433,433,90,21,2,0)
+waiver request by veterans.  Two types of waiver can be documented, one
+"^DD",433,433,90,21,3,0)
+for the initial copay waiver and the second is when the original copay
+"^DD",433,433,90,21,4,0)
+waiver was denied and the veteran is appealing the decision.
+"^DD",433,433,90,"DT")
+3150729
+"BLD",10027,6)
+^271
+**END**
+**END**
+

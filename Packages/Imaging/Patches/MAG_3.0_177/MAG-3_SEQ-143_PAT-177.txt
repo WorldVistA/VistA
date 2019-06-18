@@ -1,0 +1,398 @@
+MAGIP177  value = 4110449 (new only)
+=============================================================================
+Run Date: OCT 12, 2017                     Designation: MAG*3*177
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #143                      Status: Released
+                  Compliance Date: NOV 12, 2017
+=============================================================================
+
+
+Subject: VIX IMAGE VIEWER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This document describes MAG*3.0*177, the VIX Image Viewer patch.
+ This patch adds enhancements to the Zero footprint HTML5 based image viewer.
+ Major changes for this patch are summarized below.  
+   
+ MAG*3.0*177 contains the following new features:
+   -General viewer improvements
+   -Ability to hide and turn off automatic detection of Scout Images
+   -A new menu option to view color channels of an image and compare them in dual stack view
+   -Scout lines viewable across multiple series when viewing a cross sectional study
+   -2 Factor Authentication support for DICOM importer  
+   -Java Version 1.8.121
+   -Tomcat Version 8.0.45
+    
+   
+ Associated patches:
+ -------------------
+ MAG*3.0*170 KIDS must be installed before installing  MAG*3.0*177 KIDS.
+    
+    
+ Patch Components:
+ -----------------
+ This patch includes the following files:
+   
+ File Name                   Description
+ ---------                   --------------------------------------
+ MAG3_0P177.KID              KIDS (Kernel Installation & Distribution System) 
+                             package to  be installed on the VistA System
+ MAG3_0P177_VIX_Setup.msi    Installation filed for the VIX software 
+ MAG3_0P177_Patch_Description.pdf   This document
+ MAG3_0P177_VIX_Installation_Guide.pdf  VIX Installation Guide for this patch 
+ MAG_VIX_Admin_Guide.pdf                VIX Admin Guide
+   
+ This patch requires the following versions: 
+ Apache Tomcat: 8.0.45
+ Java: 1.8.0_121
+   
+   
+ Documentation:
+ ==============
+ This document provides an overview, explains the changes, and outlines the
+ installation for this patch.
+    
+    
+ Files & Fields Associated:
+ --------------------------
+ File Name (Number)   Field Name (Number)   New/Modified/Deleted
+ ------------------   -------------------   --------------------
+ There are no files or fields associated with this patch. 
+   
+   
+ Forms Associated:
+ -----------------
+ Form Name            File #               New/Modified/Deleted
+ ------------         -------------------  --------------------
+ There are no forms associated with this patch. 
+   
+   
+ Mail Groups Associated:
+ -----------------------
+ Mail Group Name      New/Modified/Deleted
+ ---------------      ---------------------
+ There are no mail groups associated with this patch. 
+   
+   
+ Options Associated:
+ -------------------
+ Option Name         Type          New/Modified/Deleted
+ -----------         ---------     --------------------
+ There are no options associated with this patch. 
+    
+     
+ Protocols Associated:
+ ---------------------
+ Protocol Name       New/Modified/Deleted
+ -------------       ---------------------
+ There are no protocols associated with this patch.
+   
+     
+ Security Keys Associated:
+ -------------------------
+ Security Key Name
+ -----------------
+ There are no security keys associated with this patch.
+   
+    
+ Templates Associated:
+ ---------------------
+ Template Name       Type    File Name (Number)   New/Modified/Deleted
+ -------------       ------  ------------------   -----------------------
+ There are no templates associated with this patch.
+   
+    
+ Additional Information:
+ -----------------------
+ There is no additional information associated with this patch.
+   
+     
+ New Service Requests (NSRs):
+ ----------------------------
+ This project is initiated by Requirement BR 8.0 of the Health Information 
+ Exchange Viewer BRD #01-02-03-05-08-003.
+   
+    
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no patient safety issues associated with this patch.
+   
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. Rational Defect 354112 Larger Studies 
+ Problem:
+ Larger study is taking a long time to load the images 
+    
+ Resolution:
+ Image caching improvements made in this patch. Test results show
+ acceptable load times. 
+   
+ 2. Rational Defect 437547 Pan Function
+ Problem:
+ Pan functionality exhibited extensive lag and inadequate image adjustment with 
+ each user action.
+   
+ Resolution:
+ Image caching improvements made in this patch. Test results
+ show improved response when using pan functionality. 
+   
+ 3. Rational Defect 437552 Hard to view PDF documents
+ Problem:
+ The zoom button is difficult to use. The experience improves with 'Fit to Window'
+ option, but no scrolling is available to access the entire image area. 
+   
+ Resolution:
+ Scroll bar is added to improve viewing of .pdf documents
+   
+ 4. Rational Defect 464629 FPS notation
+ Problem:
+ Users see no reason for the FPS notation to exist when the study has no purpose
+ for Cine. 
+   
+ Resolution:
+ Issue with FPS notation is fixed and the FPS notation no longer appears on 
+ studies where it has no purpose. 
+   
+ 5. Rational Defect 464632 Progress Bar
+ Problem:
+ Progress bar is not close to accurate during the image loading process. The 
+ progress bar always ends partially done. 
+   
+ Resolution:
+ Defect open as a misinterpretation of the meaning of the user
+ interface item which was deemed confusing and therefore removed. 
+ No impact to user functionality. 
+   
+ 6. Rational Defect 464651 Window/Level
+ Problem:
+ The Window/Level function jerky at times. 
+   
+ Resolution:
+ Window/Level function improved. Testing confirmed acceptable
+ performance. 
+   
+ Test Sites:
+ ------------
+     El Paso, TX
+     Puget Sound, WA
+     Kansas City, KS
+      
+    
+ Documentation Retrieval Instructions:
+ =====================================
+ See "Software and Documentation Retrieval Instructions"
+   
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+     
+  
+ Hines:domain.ext 
+ Salt Lake City:domain.ext
+    
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the VA Software Documentation Library at:
+ https://www4.domain.ext/vdl/
+   
+   
+ Title                    File Name                                    FTP Mode
+ ----------------------   -----------------------------------------    ---------
+ MAG*3.0*177 KIDS         MAG3_0P177.KID                               ASCII
+ MAG*3.0*177 VIX Setup    MAG3_0P177_VIX_Setup.msi                     Binary
+ MAG*3.0*177 Patch        MAG3_0P177_Patch_Description.pdf             Binary
+      Description                     
+ MAG*3.0*177 VIX          MAG3_0P177_VIX_Installaiton_Guide.pdf        Binary
+      Installation Guide
+ VIX Admin Guide          MAG_VIX_Admin_Guide.pdf                      Binary                     
+    
+   
+ Patch Installation:
+ ===================
+   
+ Pre/Post Installation Overview:
+ -------------------------------
+ See readme file
+   
+   
+ Pre-Installation Instructions:
+ ------------------------------
+ Verify that the patches listed in the Associated Patched section of this 
+ document have been previously installed. 
+   
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  
+   
+ There are no Menu Options to disable. 
+ Installation Instructions:
+ This patch contains a VIX portion and a KIDS portion. Installation instructions 
+ for the VIX portion of this patch can be found in the VIX Installation Guide. 
+ The KIDS portion of this patch is to be installed on the VistA System and the 
+ VIX portion should be installed on the VIX servers.
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+   
+ NOTE: All sites running VistA Imaging 3.0 must install both the KIDS portion as 
+ well as the VIX portion of this patch. 
+    
+ This patch may be loaded while VistA Imaging System is active.   
+ All sites must install the KIDS portion of this patch. The MAG*3.0*177 KIDS can
+ be loaded while VistA Imaging System is active. Installing the KIDS will take 
+ less than one minute.
+ After the KIDS portion of this patch is installed, all sites will need to update
+ their VIX. For detailed information, refer to the VIX Installation Guide.
+ Installation Prerequisites
+ Before installing this patch, you will need to download the MAG*3.0*177 files 
+ from the Imaging SFTP site to a local storage location.
+ Verify that required patches and any optional patches that support desired or 
+ needed features have been installed. For a summary of associated patches, see 
+ page 1.
+   
+   
+ KIDS Installation
+ -----------------
+ All sites must install the KIDS portion of this patch.
+   
+ Installing the KIDS Package:
+ ---------------------------
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+  
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+  
+ 3. Load the KIDS file by performing the following steps.
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load the 
+       KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P177.KID) of the 
+       MAG*3.0*177 KIDS file that you downloaded from the Imaging FTP server.
+    c. When prompted to continue with the load, enter YES. A Distribution OK! 
+       message will be displayed when the load is complete.
+   
+ 4. After loading the KIDS file, use the following options if you need to verify
+    the contents of the patch and to back up any affected routines. Verify 
+    Checksums in Transport Global [XPD PRINT CHECKSUM] - run this option to 
+    ensure the integrity of the routines in the patch. Compare Transport Global
+    to Current System [XPD COMPARE TO SYSTEM] - run this option to view all 
+    changes that will be made when the patch is installed. All components (
+    routines, options, and so on) in the patch will be compared. Backup a 
+    Transport Global [XPD BACKUP] - run this option to create a backup message of
+    any routines exported with the patch. It will NOT back up any of the other 
+    changes.
+    
+ 5. After performing the load and any optional verifica tion steps, perform the 
+    following steps to install the KIDS file:
+    a. Run the Install Package(s) option [XPD INSTALL BUILD].
+    b. When prompted for the install name, enter MAG*3.0*177.
+    c. Answer NO to the following prompts:
+       i. Want KIDS to INHIBIT LOGONs during the install? No//NO
+       ii. Want to DISABLE Scheduled Options, Menu Options, and Protocols? //NO
+  
+ 6. When installation has finished, an Install Complete message will be displayed.
+   
+    
+ Sample KIDS Installation:
+ -------------------------
+ XPD INSTALLATION MENU     Installation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+ Post-Installation Instructions
+ Select Installation <TEST ACCOUNT> Option: 1  Load a 
+ Distribution
+ Enter a Host File: /home/sfrank/MAG3_0P177.KID
+ KIDS Distribution saved on Jul 28, 2017@14:30:08
+ Comment: VistA Imaging V3.0 Patch 177 - VIX Viewer v1.5 - 
+ 07/28/2017 02:30PM
+ This Distribution contains Transport Globals for the following Package(s):
+    MAG*3.0*177
+ Distribution OK!
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+    MAG*3.0*177
+ Use INSTALL NAME: MAG*3.0*177 to install this Distribution.
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+ Select Installation <TEST ACCOUNT> Option: 6 install Package(s)
+ Select INSTALL NAME:    MAG*3.0*177    8/31/17@16:28:55
+      => VistA Imaging V3.0 Patch 177 - VIX Viewer v1.5
+  - 07/28/2017 02:30PM  ;
+ This Distribution was loaded on Aug 31, 2017@16:28:55 with 
+ header of 
+    VistA Imaging V3.0 Patch 177 - VIX Viewer v1.5 - 07/28/2017 
+ 02:30PM  ;Created
+  on Jul 28, 2017@14:30:08
+    It consisted of the following Install(s):
+     MAG*3.0*177
+ Checking Install for Package MAG*3.0*177
+ Install Questions for MAG*3.0*177
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+ DEVICE: HOME// ;P-OTHER;999999  TELNET PORT
+  Install Started for MAG*3.0*177 : 
+                Aug 31, 2017@16:29:27
+ Build Distribution Date: Jul 28, 2017
+  Installing Routines:.
+                Aug 31, 2017@16:29:27  
+ Running Pre-Install Routine: PRE^MAGIP177.
+  Running Post-Install Routine: POS^MAGIP177.
+ Post Install Mail Message: Aug 31, 2017@16:29:27  
+ Updating Routine file......
+  Updating KIDS files.......
+  MAG*3.0*177 Installed. 
+                Aug 31, 2017@16:29:27
+ ------------------------------
+ See VIX Installation Guide
+   
+
+Routine Information:
+====================
+Routine Name: MAGIP177
+    Checksum:
+  4110449 (New only)
+ Description of Changes:
+  KID post install routine only.
+  Routine MAGIP177 is an installation routine that is automatically deleted 
+  after the KIDS installation. 
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 06, 2017
+Completed By:                               Date Completed: OCT 03, 2017
+Released By :                               Date Released : OCT 12, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

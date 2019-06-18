@@ -1,0 +1,154 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/07/19 at 16:56
+=============================================================================
+Run Date: MAR 27, 2019                     Designation: SR*3*193
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #183                      Status: Released
+                  Compliance Date: APR 26, 2019
+=============================================================================
+
+Associated patches: (v)SR*3*184    <<= must be installed BEFORE `SR*3*193'
+
+Subject: CVD FIELDS ASSIGNED WRONG VALUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one (1) issue:
+  
+ 1. Preoperative CVD data fields assigned invalid values.
+  
+ Associated ticket(s):
+ =====================
+ 1. INC0448967 - Preoperative CVD data fields assigned invalid values
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Ann Arbor VAMC
+ White River JCT 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ INC0448967 - Preoperative CVD data fields assigned invalid values
+  
+ Problem:
+ --------
+ When a user is in the process of entering preoperative info using the
+ "Preoperative Information (Enter/Edit") [SROA PREOP DATA] option
+ and enters an "NS" (no study) in the CENTRAL NERVOUS SYSTEM (#210)
+ grouping, which is a component of the SURGERY file (#130), the 
+ CVD fields, CVD REPAIR/OBSTRUCTION (#521) and HISTORY OF CVD (#522), 
+ are being assigned the "NS" value. Per definition of these fields
+ in the data dictionary, this is an invalid value.
+  
+ Resolution:
+ -----------
+ The routine ^SROAPRE2 is modified to assign the value of zero (0)
+ to both the CVD REPAIR/OBSTRUCTION (#521) and HISTORY OF CVD (#522),
+ fields of the SURGERY file (#130) when the user enters "NS" 
+ (no study) at the CENTRAL NERVOUS SYSTEM (#210) grouping level.
+  
+ Components:
+ ===========
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+  
+     The install time for this patch is less than 2 minutes. This patch 
+     can be installed when Surgery users are on the system.
+  
+  
+ Installation Instructions:
+ ==========================
+    The install time for this patch is less than 2 minutes. This patch 
+    can be installed when Surgery users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the 
+       Following options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       To preserve a copy of the routines exported in this patch prior
+       to installation, you should use the 'Backup a Transport Global' 
+       option at this time. You may also compare the routines in your 
+       production account to the routines in the patch by using the 
+      'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' 
+       Menu and select the package 'SR*3.0*193'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       YES//, choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       And Protocols? YES//', choose 'NO'.
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision 
+ to back-out or rollback software will be a joint decision between
+ development team, VA site/region personnel and other appropriate VA
+ personnel. It is imperative that you have performed a backup of the
+ routine included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery;**[Patch List]**;24 Jun 93;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SROAPRE2
+    Before: B10254316   After: B10941744  **38,47,125,153,166,176,182,184,193**
+ 
+Routine list of preceding patches: 184
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 17, 2018
+Completed By:                               Date Completed: MAR 27, 2019
+Released By :                               Date Released : MAR 27, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

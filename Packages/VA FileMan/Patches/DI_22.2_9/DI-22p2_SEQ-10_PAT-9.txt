@@ -1,0 +1,394 @@
+
+=============================================================================
+Run Date: FEB 04, 2019                     Designation: DI*22.2*9
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2        SEQ #10                   Status: Released
+                  Compliance Date: FEB 19, 2019
+=============================================================================
+
+Associated patches: (v)XU*8*672    <<= must be installed BEFORE `DI*22.2*9'
+                    (v)DI*22.2*10  <<= must be installed BEFORE `DI*22.2*9'
+
+Subject: MAP SUMMARY DOCUMENT ARCHITECTURE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Input Template
+  - Other
+
+Description:
+============
+
+ This patch provides an option to map a VistA resource to a 
+ representation of a Summary Document Architecture (SDA) data type.
+  
+ The patch includes a new ENTITY (#1.5) file.  The ENTITY file defines 
+ the VistA resource being mapped to an SDA type.
+  
+ Patch Components:
+ -----------------
+  
+ File Name (#)               Field Name (#)      New/Modified/Deleted
+ -------------               --------------      -------------
+ Entity (#1.5)                                   New
+  
+ Form Name                    File #             New/Modified/Deleted
+ ---------                    ------             --------------------
+ DDE ENTITY ENTER/EDIT        1.5                New
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               --------------------
+ Entity Enter/Edit            
+ [DDE ENTITY ENTER/EDIT]      run routine        New
+ Entity Mapping             
+ [DDE ENTITY MAPPING]         menu               New
+ Other Options[DIOTHER]       menu               Modified
+  
+  
+ Input Template               File #             New/Modified/Deleted
+ --------------               ------             --------------------
+ DDE EDIT ENITY               1.5                New
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*9 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22.2*9 have no effect on Blood
+ Bank software functionality, therefore RISK's none. 
+  
+  
+ Test Sites:
+ -----------
+ Charleston, SC
+ North Chicago, IL
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software is being released as a host file and documentation describing
+ the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Software                  File Name                   SFTP Mode
+ ------------------------------------------------------------------
+ VPR*1*8 & DI*22.2*9       DI_222_9_VPR_1_8.KID        ASCII
+  
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www.domain.ext/vdl/
+  
+ Title                          File Name                 SFTP Mode
+ -----------------------------------------------------------------
+ FileMan 22.2 Technical Manual  FM22_2TM.PDF              Binary
+  
+  
+ Patch Installation:
+ -------------------
+ Software is being released as a host file, DI_222_9_VPR_1_8.KID.  The host
+ file contains two patches; DI*22.2*9 and VPR*1*8.
+  
+ Patches DI*22.2*9 and VPR*1*8 are scheduled to be released nationally as a
+ bundle.  Installation of these patches into Production within the first 15
+ days from the National Release date is requested. The VA leadership has asked
+ for an expedited release to comply with the schedule for the high profile
+ Mission Act.  Certain functionality has to be loaded into production in 130
+ VA Medical Centers within a short timeframe.  We appreciate your cooperation.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than
+ 2 minutes to install.
+  
+ NOTE: This patch was created with VA FileMan 22.2, so please ensure
+ the target system has also been upgraded to this version, otherwise
+ installation will fail.
+  
+  
+ Installation Instructions:
+ --------------------------
+  1.  From the Kernel Installation and Distribution System (KIDS) Menu,
+      select the Installation menu. 
+  2.  Use Load a Distribution. You may need to precede the host file name
+      with a directory name.
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME, enter DI*22.2*9.
+    a.  Backup a Transport Global - This option will create a backup message
+        of any routines exported with this patch. It will not backup any other
+        changes such as DDs or templates.
+    b.  Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is installed.
+        It compares all components of this patch.
+    c.  Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+  4.  From the Installation Menu, select the Install Package(s) option and
+      when prompted for the INSTALL NAME, enter DI*22.2*9.
+  5.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//" enter NO.
+  6.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      enter NO.
+  7.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//" enter NO.
+  8.  If prompted "Delay Install (Minutes):  (0  60): 0//" enter 0.
+  
+  
+  Example Install:
+  
+ Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+  
+    Edits and Distribution ...
+    Utilities ...
+    Installation ...
+  
+  
+ Select Kernel Installation & Distribution System <TEST> Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation <TEST> Option: 1  Load a Distribution
+ Enter a Host File: /srv/vista/oak/user/hfs/DI_222_9_VPR_1_8.KID
+  
+ KIDS Distribution saved on Jan 22, 2019@14:40:07
+ Comment: Combined patches DI*22.2*9 and VPR*1*8
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    DI*22.2*9
+    VPR*1.0*8
+ Distribution OK!
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    DI*22.2*9
+    VPR*1.0*8
+ Use INSTALL NAME: DI*22.2*9 to install this Distribution.
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation <TEST> Option: 6  Install Package(s)
+ Select INSTALL NAME: DI*22.2*9       Loaded from Distribution    1/23/19@08:
+ 06:37
+      => Combined patches DI*22.2*9 and VPR*1*8  ;Created on Jan 22, 2019@14:
+ 40
+  
+ This Distribution was loaded on Jan 23, 2019@08:06:37 with header of 
+    Combined patches DI*22.2*9 and VPR*1*8  ;Created on Jan 22, 2019@14:40:07
+    It consisted of the following Install(s):
+       DI*22.2*9      VPR*1.0*8
+ Checking Install for Package DI*22.2*9
+  
+ Install Questions for DI*22.2*9
+  
+ Incoming Files:
+  
+  
+    1.5       ENTITY
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+ Checking Install for Package VPR*1.0*8
+  
+ Install Questions for VPR*1.0*8
+  
+ Incoming Files:
+  
+  
+    560       VPR SUBSCRIPTION
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   NETWORK
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ None
+  
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ During the VistA Installation Procedure of the KIDS build, the 
+ installer should back up the modified routines by the use of the
+ 'Backup a Transport Global' action (step 3a in the Installations 
+ Instructions below).
+  
+ If rollback/backout is required, the installer can use the MailMan
+ message to restore the routines to previous state. 
+  
+ To backout the ENTITY (#1.5) file and DDE EDIT ENTITY input template, use 
+ the EN^DIU2 API. Caution should be taken when using this API. For more 
+ information on usage of this API see FileMan 22.2 Developer Guide. The
+ following is an example execution to remove files and input template:
+  
+ S DIU=1.5,DIU(0)="DT" D EN^DIU2
+  
+ To rollback/backout DDE options exported with this patch, may be disabled
+ by using VA FileMan to assign an Out of Order message as follows:
+  
+ VA FileMan 22.2
+  
+  
+ Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+  
+  
+ Input to what File: OPTION//              (11330 entries)
+ EDIT WHICH FIELD: ALL// OUT OF ORDER MESSAGE  
+ THEN EDIT FIELD: 
+  
+  
+ Select OPTION NAME: Entity Mapping       DDE ENTITY MAPPING
+ OUT OF ORDER MESSAGE: ROLLBACK PATCH DI*22.2*9
+  
+ Select OPTION NAME: 
+  
+ To rollback/backout DDE form exported with this patch, use VA FileMan
+ [DDS DELETE A FORM] option as follows:
+  
+ VA FileMan 22.2
+  
+  
+ Select OPTION: OTHER OPTIONS  
+ Select OTHER OPTION: SCREENMAN  
+ Select SCREENMAN OPTION: DELETE A FORM  
+  
+ Delete Form for what File: OPTION// ENTITY    (2 entries)
+  
+ Select FORM to delete: DDE ENTITY ENTER/EDIT  DDE ENTITY ENTER/EDIT
+                                    #165    3/6/18                 File 
+ #1.5
+  
+  
+   BLOCKS USED ON FORM "DDE ENTITY ENTER/EDIT" (IEN #165)
+  
+  Internal                                        Used on
+  Entry Number    Block Name                      Other Forms?  Deletable?
+  ------------    -------------                   ------------  ----------
+   602            DDE ENTITY HEADER                    NO            YES
+   603            DDE ENTITY 1                         NO            YES
+   604            DDE ITEMS                            NO            YES
+   605            DDE ENTITY 2                         NO            YES
+   606            DDE ENTITY 3                         NO            YES
+   607            DDE ITEM FIXED                       NO            YES
+   608            DDE ITEM ID                          NO            YES
+   609            DDE ITEM SIMPLE                      NO            YES
+   610            DDE ITEM WORD PROC                   NO            YES
+   611            DDE ITEM COMPLEX                     NO            YES
+   612            DDE ITEM ENTITY                      NO            YES
+   613            DDE ITEM LIST                        NO            YES
+   614            DDE COMPLEX LIST                     NO            YES
+   615            DDE LIST FILE                        NO            YES
+   616            DDE LIST COMPLEX                     NO            YES
+   617            DDE LIST COMPLEX ITEMS               NO            YES
+  
+  
+ Delete all deletable blocks used on form DDE ENTITY ENTER/EDIT
+ from the BLOCK file (Y/N)? YES// 
+  
+  
+ Delete blocks without prompting (Y/N)? NO// y  YES
+  
+ Continue (Y/N)? NO// YES
+  
+ Deleting form DDE ENTITY ENTER/EDIT (IEN #165) ...
+  
+ Deleting block DDE ENTITY HEADER (IEN #602) ...
+ Deleting block DDE ENTITY 1 (IEN #603) ...
+ Deleting block DDE ITEMS (IEN #604) ...
+ Deleting block DDE ENTITY 2 (IEN #605) ...
+ Deleting block DDE ENTITY 3 (IEN #606) ...
+ Deleting block DDE ITEM FIXED (IEN #607) ...
+ Deleting block DDE ITEM ID (IEN #608) ...
+ Deleting block DDE ITEM SIMPLE (IEN #609) ...
+ Deleting block DDE ITEM WORD PROC (IEN #610) ...
+ Deleting block DDE ITEM COMPLEX (IEN #611) ...
+ Deleting block DDE ITEM ENTITY (IEN #612) ...
+ Deleting block DDE ITEM LIST (IEN #613) ...
+ Deleting block DDE COMPLEX LIST (IEN #614) ...
+ Deleting block DDE LIST FILE (IEN #615) ...
+ Deleting block DDE LIST COMPLEX (IEN #616) ...
+ Deleting block DDE LIST COMPLEX ITEMS (IEN #617) ...
+  
+ DONE!
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 59
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDE
+    Before:       n/a   After:  B4683326  **9**
+Routine Name: DDE1A
+    Before:       n/a   After:   B737990  **9**
+Routine Name: DDEG
+    Before:       n/a   After:B122631592  **9**
+Routine Name: DDEGET
+    Before:       n/a   After: B10359109  **9**
+Routine Name: DDEMAP
+    Before:       n/a   After: B44771305  **9**
+Routine Name: DDEOPT
+    Before:       n/a   After:   B794105  **9**
+Routine Name: DDERR
+    Before:       n/a   After:   B683652  **9**
+Routine Name: DDEX
+    Before:       n/a   After:  B1026050  **9**
+Routine Name: DII1
+    Before:  B2240976   After:  B2361298  **8,10,9**
+ 
+Routine list of preceding patches: 10
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2017
+Completed By:                               Date Completed: FEB 04, 2019
+Released By :                               Date Released : FEB 04, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,1338 @@
+KIDS Distribution saved on Jul 02, 2018@10:01:42
+VistA Imaging V 3 - Patch 214 - BP issues.
+**KIDS**:MAG*3.0*214^
+
+**INSTALL NAME**
+MAG*3.0*214
+"BLD",8383,0)
+MAG*3.0*214^IMAGING^0^3180702^y
+"BLD",8383,1,0)
+^^13^13^3180627^^^^
+"BLD",8383,1,1,0)
+VistA Imaging Patch 214 - BackGround Processor (BP)
+"BLD",8383,1,2,0)
+This patch fixes the following issues:
+"BLD",8383,1,3,0)
+The BP gets stuck in a loop displaying the error message 'Can't
+"BLD",8383,1,4,0)
+find file'.  the BP must be killed using TaskManager.
+"BLD",8383,1,5,0)
+The BP Site Parameter Window will not open.  the error message
+"BLD",8383,1,6,0)
+is shown 'Value not Initialized'.
+"BLD",8383,1,7,0)
+The BP user is prompted to enter their PIV/PIN.  this should
+"BLD",8383,1,8,0)
+not happen
+"BLD",8383,1,9,0)
+The BP uses Kernel utilities to generate encrypted passwords.  
+"BLD",8383,1,10,0)
+This patch will assure there are no 'spaces' in the generated
+"BLD",8383,1,11,0)
+password.
+"BLD",8383,1,12,0)
+When Patch 214 KIDs is installed,  BP Client versions
+"BLD",8383,1,13,0)
+135, 196, 198 and 214 will all be supported.
+"BLD",8383,4,0)
+^9.64PA^^0
+"BLD",8383,6.3)
+34
+"BLD",8383,"ABNS",0)
+^9.66A^^
+"BLD",8383,"ABPKG")
+n^n^G.IMAGING DEVELOPMENT TEAM@DOMAIN.EXT
+"BLD",8383,"INI")
+PRE^MAGIP214
+"BLD",8383,"INID")
+n^y^n
+"BLD",8383,"INIT")
+POS^MAGIP214
+"BLD",8383,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8383,"KRN",.4,0)
+.4
+"BLD",8383,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",8383,"KRN",.401,0)
+.401
+"BLD",8383,"KRN",.402,0)
+.402
+"BLD",8383,"KRN",.403,0)
+.403
+"BLD",8383,"KRN",.5,0)
+.5
+"BLD",8383,"KRN",.84,0)
+.84
+"BLD",8383,"KRN",3.6,0)
+3.6
+"BLD",8383,"KRN",3.8,0)
+3.8
+"BLD",8383,"KRN",9.2,0)
+9.2
+"BLD",8383,"KRN",9.8,0)
+9.8
+"BLD",8383,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",8383,"KRN",9.8,"NM",1,0)
+MAGIP214^^0^B4472734
+"BLD",8383,"KRN",9.8,"NM",2,0)
+MAGQBUT4^^0^B97778946
+"BLD",8383,"KRN",9.8,"NM",3,0)
+MAGBVAL^^0^B21406475
+"BLD",8383,"KRN",9.8,"NM","B","MAGBVAL",3)
+
+"BLD",8383,"KRN",9.8,"NM","B","MAGIP214",1)
+
+"BLD",8383,"KRN",9.8,"NM","B","MAGQBUT4",2)
+
+"BLD",8383,"KRN",19,0)
+19
+"BLD",8383,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8383,"KRN",19.1,0)
+19.1
+"BLD",8383,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",8383,"KRN",101,0)
+101
+"BLD",8383,"KRN",409.61,0)
+409.61
+"BLD",8383,"KRN",771,0)
+771
+"BLD",8383,"KRN",779.2,0)
+779.2
+"BLD",8383,"KRN",870,0)
+870
+"BLD",8383,"KRN",8989.51,0)
+8989.51
+"BLD",8383,"KRN",8989.52,0)
+8989.52
+"BLD",8383,"KRN",8994,0)
+8994
+"BLD",8383,"KRN",8994,"NM",0)
+^9.68A^1^1
+"BLD",8383,"KRN",8994,"NM",1,0)
+MAGQBP VAL^^0
+"BLD",8383,"KRN",8994,"NM","B","MAGQBP VAL",1)
+
+"BLD",8383,"KRN","B",.4,.4)
+
+"BLD",8383,"KRN","B",.401,.401)
+
+"BLD",8383,"KRN","B",.402,.402)
+
+"BLD",8383,"KRN","B",.403,.403)
+
+"BLD",8383,"KRN","B",.5,.5)
+
+"BLD",8383,"KRN","B",.84,.84)
+
+"BLD",8383,"KRN","B",3.6,3.6)
+
+"BLD",8383,"KRN","B",3.8,3.8)
+
+"BLD",8383,"KRN","B",9.2,9.2)
+
+"BLD",8383,"KRN","B",9.8,9.8)
+
+"BLD",8383,"KRN","B",19,19)
+
+"BLD",8383,"KRN","B",19.1,19.1)
+
+"BLD",8383,"KRN","B",101,101)
+
+"BLD",8383,"KRN","B",409.61,409.61)
+
+"BLD",8383,"KRN","B",771,771)
+
+"BLD",8383,"KRN","B",779.2,779.2)
+
+"BLD",8383,"KRN","B",870,870)
+
+"BLD",8383,"KRN","B",8989.51,8989.51)
+
+"BLD",8383,"KRN","B",8989.52,8989.52)
+
+"BLD",8383,"KRN","B",8994,8994)
+
+"BLD",8383,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8383,"QUES",0)
+^9.62^^
+"BLD",8383,"REQB",0)
+^9.611^1^1
+"BLD",8383,"REQB",1,0)
+MAG*3.0*198^2
+"BLD",8383,"REQB","B","MAG*3.0*198",1)
+
+"INI")
+PRE^MAGIP214
+"INIT")
+POS^MAGIP214
+"KRN",8994,3446,-1)
+0^1
+"KRN",8994,3446,0)
+MAGQBP VAL^VAL^MAGBVAL^2^R
+"KRN",8994,3446,1,0)
+^8994.01^4^4^3180620^^
+"KRN",8994,3446,1,1,0)
+This call will validate existing data in the 
+"KRN",8994,3446,1,2,0)
+IMAGING SITE PARAMETERS File.
+"KRN",8994,3446,1,3,0)
+If existing data is invalid,  the BP cannot run the 
+"KRN",8994,3446,1,4,0)
+Imaging Site Parameters edit window.
+"KRN",8994,3446,2,0)
+^8994.02A^2^2
+"KRN",8994,3446,2,1,0)
+MAGARRAY^2^^1^1
+"KRN",8994,3446,2,1,1,0)
+^^1^1^3180620^
+"KRN",8994,3446,2,1,1,1,0)
+Array of Field Numbers to Validate
+"KRN",8994,3446,2,2,0)
+ALL^1^30^0^2
+"KRN",8994,3446,2,2,1,0)
+^^3^3^3180620^
+"KRN",8994,3446,2,2,1,1,0)
+if ALL=1  then all fields will be validated.
+"KRN",8994,3446,2,2,1,2,0)
+if ALL=0  then the validation will stop when first invalid
+"KRN",8994,3446,2,2,1,3,0)
+entry is found.
+"KRN",8994,3446,2,"B","ALL",2)
+
+"KRN",8994,3446,2,"B","MAGARRAY",1)
+
+"KRN",8994,3446,2,"PARAMSEQ",1,1)
+
+"KRN",8994,3446,2,"PARAMSEQ",2,2)
+
+"KRN",8994,3446,3,0)
+^8994.03^4^4^3180620^^
+"KRN",8994,3446,3,1,0)
+Array(0)=1^Success    if all field data was valid
+"KRN",8994,3446,3,2,0)
+Array(0)="0^Error message"  if any data is invalid
+"KRN",8994,3446,3,3,0)
+if ALL=1  then Array(1..n) will contain Error messages for
+"KRN",8994,3446,3,4,0)
+all fields that have invalid data.
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"PKG",454,-1)
+1^1
+"PKG",454,0)
+IMAGING^MAG^Imaging-V1 to release 
+"PKG",454,20,0)
+^9.402P^^
+"PKG",454,22,0)
+^9.49I^1^1
+"PKG",454,22,1,0)
+3.0^3020319^3020517^126
+"PKG",454,22,1,"PAH",1,0)
+214^3180702^126
+"PKG",454,22,1,"PAH",1,1,0)
+^^13^13^3180702
+"PKG",454,22,1,"PAH",1,1,1,0)
+VistA Imaging Patch 214 - BackGround Processor (BP)
+"PKG",454,22,1,"PAH",1,1,2,0)
+This patch fixes the following issues:
+"PKG",454,22,1,"PAH",1,1,3,0)
+The BP gets stuck in a loop displaying the error message 'Can't
+"PKG",454,22,1,"PAH",1,1,4,0)
+find file'.  the BP must be killed using TaskManager.
+"PKG",454,22,1,"PAH",1,1,5,0)
+The BP Site Parameter Window will not open.  the error message
+"PKG",454,22,1,"PAH",1,1,6,0)
+is shown 'Value not Initialized'.
+"PKG",454,22,1,"PAH",1,1,7,0)
+The BP user is prompted to enter their PIV/PIN.  this should
+"PKG",454,22,1,"PAH",1,1,8,0)
+not happen
+"PKG",454,22,1,"PAH",1,1,9,0)
+The BP uses Kernel utilities to generate encrypted passwords.  
+"PKG",454,22,1,"PAH",1,1,10,0)
+This patch will assure there are no 'spaces' in the generated
+"PKG",454,22,1,"PAH",1,1,11,0)
+password.
+"PKG",454,22,1,"PAH",1,1,12,0)
+When Patch 214 KIDs is installed,  BP Client versions
+"PKG",454,22,1,"PAH",1,1,13,0)
+135, 196, 198 and 214 will all be supported.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","MAGBVAL")
+0^3^B21406475
+"RTN","MAGBVAL",1,0)
+MAGBVAL ;WOIFO/GEK - BP Validate Site Params data array ; [ 12/27/2000 10:49 ]
+"RTN","MAGBVAL",2,0)
+ ;;3.0;IMAGING;**214**;Mar 19, 2002;Build 34;Jun 27, 2018
+"RTN","MAGBVAL",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGBVAL",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGBVAL",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGBVAL",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGBVAL",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGBVAL",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGBVAL",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGBVAL",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGBVAL",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGBVAL",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGBVAL",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGBVAL",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGBVAL",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGBVAL",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGBVAL",17,0)
+ ;;
+"RTN","MAGBVAL",18,0)
+ Q
+"RTN","MAGBVAL",19,0)
+VAL(MAGRY,MAGARRAY,ALL) ;RPC [MAGQBP VAL]
+"RTN","MAGBVAL",20,0)
+ ;Call to Validate some of the IMAGING SITE PARAMETERS values
+"RTN","MAGBVAL",21,0)
+ ;  before the BP IMAGING SITE PARAMETERS Window is opened.
+"RTN","MAGBVAL",22,0)
+ ;
+"RTN","MAGBVAL",23,0)
+ ;  Parameters : 
+"RTN","MAGBVAL",24,0)
+ ;    MAGARRAY - array of 'Field numbers' and Optionally '^' Value 
+"RTN","MAGBVAL",25,0)
+ ;       if the input array, MAGARRAY, has no value for a field,
+"RTN","MAGBVAL",26,0)
+ ;       then we validate the current value of the field.
+"RTN","MAGBVAL",27,0)
+ ;       example:    MAGARRAY(1)="100^"   Field# = 100   Value= ""
+"RTN","MAGBVAL",28,0)
+ ;       so we would then get value from DataBase.                        
+"RTN","MAGBVAL",29,0)
+ ;    ALL - "1" = Validate ALL fields, returning an array 
+"RTN","MAGBVAL",30,0)
+ ;                of error messages.
+"RTN","MAGBVAL",31,0)
+ ;          "0" = Stop validating if an error occurs, return
+"RTN","MAGBVAL",32,0)
+ ;                           the error message in (0) node.
+"RTN","MAGBVAL",33,0)
+ ;   ALL will default to 1, if it is null.
+"RTN","MAGBVAL",34,0)
+ ;
+"RTN","MAGBVAL",35,0)
+ ;  Return Variable
+"RTN","MAGBVAL",36,0)
+ ;    MAGRY() - Array
+"RTN","MAGBVAL",37,0)
+ ;      Successful   MAGRY(0) = 1^Image Data is Valid.
+"RTN","MAGBVAL",38,0)
+ ;      UNsuccessful MAGRY(0) = 0^Error desc
+"RTN","MAGBVAL",39,0)
+ ;                   IF ALL then MAGRY(1..N) =0^Error desc of all errors
+"RTN","MAGBVAL",40,0)
+ N MAGGFLD,MAGGDAT,MAGRES,MAGPLC,MAGIENS
+"RTN","MAGBVAL",41,0)
+ N Y,AITEM,CT,MAGERR,DAT1,X
+"RTN","MAGBVAL",42,0)
+ N MAGVAL,MAGVALLB
+"RTN","MAGBVAL",43,0)
+ N $ETRAP,$ESTACK S $ETRAP="D ERR^"_$T(+0)
+"RTN","MAGBVAL",44,0)
+ S ALL=$G(ALL,1)
+"RTN","MAGBVAL",45,0)
+ S MAGPLC=$$DUZ2PLC^MAGBAPIP()
+"RTN","MAGBVAL",46,0)
+ S MAGIENS=MAGPLC_","
+"RTN","MAGBVAL",47,0)
+ S MAGRY(0)="0^Validating the Data Array..."
+"RTN","MAGBVAL",48,0)
+ S MAGERR="",CT=0
+"RTN","MAGBVAL",49,0)
+ ;  Do we have any data ? 
+"RTN","MAGBVAL",50,0)
+ I ($D(MAGARRAY)<10) S MAGRY(0)="0^No input data, Operation CANCELED" Q
+"RTN","MAGBVAL",51,0)
+ ;  Loop through Input Array
+"RTN","MAGBVAL",52,0)
+ S AITEM="" F  S AITEM=$O(MAGARRAY(AITEM)) Q:AITEM=""  D  I $L(MAGERR) Q:'ALL  S CT=CT+1,MAGRY(CT)=MAGERR,MAGERR=""
+"RTN","MAGBVAL",53,0)
+ . S MAGERR=""
+"RTN","MAGBVAL",54,0)
+ . S MAGGFLD=$P(MAGARRAY(AITEM),U,1),MAGGDAT=$P(MAGARRAY(AITEM),U,2,99)
+"RTN","MAGBVAL",55,0)
+ . ; IF MAGGDAT = "" then get current Value.
+"RTN","MAGBVAL",56,0)
+ . I MAGGDAT="" S MAGGDAT=$$GET1^DIQ(2006.1,MAGIENS,MAGGFLD,"I","MAGVAL")
+"RTN","MAGBVAL",57,0)
+ . ; HERE we Validate the Data.
+"RTN","MAGBVAL",58,0)
+ . I MAGGDAT="" Q  ;This means no data was input, and the Field has no current Value. 
+"RTN","MAGBVAL",59,0)
+ . ; 
+"RTN","MAGBVAL",60,0)
+ . S DAT1=MAGGDAT
+"RTN","MAGBVAL",61,0)
+ . I '$$VALID(2006.1,MAGGFLD,.MAGGDAT,.MAGRES) S MAGERR="0^"_MAGRES Q
+"RTN","MAGBVAL",62,0)
+ . I DAT1'=MAGGDAT S MAGARRAY(AITEM)=MAGGFLD_"^"_MAGGDAT
+"RTN","MAGBVAL",63,0)
+ . Q
+"RTN","MAGBVAL",64,0)
+ ;
+"RTN","MAGBVAL",65,0)
+ ; if there was an Error in data we'll quit now.
+"RTN","MAGBVAL",66,0)
+ ; If ALL is true, then MAGRY(1...N) will exist if there were errors.
+"RTN","MAGBVAL",67,0)
+ I $O(MAGRY(0)) S MAGRY(0)="0^Errors were found in data." Q
+"RTN","MAGBVAL",68,0)
+ ; If ALL is false, then MAGERR will exist if there was an error.
+"RTN","MAGBVAL",69,0)
+ I $L(MAGERR) S MAGRY(0)=MAGERR Q
+"RTN","MAGBVAL",70,0)
+ ;
+"RTN","MAGBVAL",71,0)
+ ;  If all data is valid we get here.
+"RTN","MAGBVAL",72,0)
+ S MAGRY(0)="1^Data is Valid."
+"RTN","MAGBVAL",73,0)
+ Q
+"RTN","MAGBVAL",74,0)
+VALID(MAGF,MAGL,MAGD,MAGRES) ; call to validate value for field in a FM file.
+"RTN","MAGBVAL",75,0)
+ ; Function is boolean.  Returns:
+"RTN","MAGBVAL",76,0)
+ ;        0   -  Invalid 
+"RTN","MAGBVAL",77,0)
+ ;        1   -  Valid 
+"RTN","MAGBVAL",78,0)
+ ;        ""  -  Error
+"RTN","MAGBVAL",79,0)
+ ; Call this function before you set the FDA Array.
+"RTN","MAGBVAL",80,0)
+ ; MAGD - sent by reference because it could be Internal or External
+"RTN","MAGBVAL",81,0)
+ ;        and if it is external and valid, it is changed to Internal.
+"RTN","MAGBVAL",82,0)
+ ;        
+"RTN","MAGBVAL",83,0)
+ ; MAGF  : File Number
+"RTN","MAGBVAL",84,0)
+ ; MAGL  : Field Number
+"RTN","MAGBVAL",85,0)
+ ; MAGD  : (sent by reference) data value of field
+"RTN","MAGBVAL",86,0)
+ ; MAGRES: (sent by reference) Result message
+"RTN","MAGBVAL",87,0)
+ ;
+"RTN","MAGBVAL",88,0)
+ N MAGR,MAGMSG,MAGSP,MAGRESA,MAGPT
+"RTN","MAGBVAL",89,0)
+ N MAGLABEL,MAGWIN
+"RTN","MAGBVAL",90,0)
+ S MAGWIN=$$BROKER^XWBLIB ; If not MAGWIN,  we can write to screen.
+"RTN","MAGBVAL",91,0)
+ ;if a BAD field number, Quit
+"RTN","MAGBVAL",92,0)
+ I '$$VFIELD^DILFD(MAGF,MAGL) D  Q 0
+"RTN","MAGBVAL",93,0)
+ . S MAGRES="The field number: "_MAGL_", in File: "_MAGF_", is invalid."
+"RTN","MAGBVAL",94,0)
+ ;
+"RTN","MAGBVAL",95,0)
+ D FIELD^DID(MAGF,MAGL,"","SPECIFIER;LABEL","MAGSP")
+"RTN","MAGBVAL",96,0)
+ S MAGLABEL=MAGSP("LABEL")
+"RTN","MAGBVAL",97,0)
+ ; If it is a pointer field then:
+"RTN","MAGBVAL",98,0)
+ ; If an  integer - We assume it is an IEN of Pointed to file. Validate that and Quit.
+"RTN","MAGBVAL",99,0)
+ ; If not integer - We assume it is external value, proceed to let CHK do validate
+"RTN","MAGBVAL",100,0)
+ I (MAGSP("SPECIFIER")["P"),(+MAGD=MAGD) D  Q MAGPT
+"RTN","MAGBVAL",101,0)
+ . I $$EXTERNAL^DILFD(MAGF,MAGL,"",MAGD)'="" S MAGPT=1,MAGRES="Valid pointer" Q
+"RTN","MAGBVAL",102,0)
+ . S MAGPT=0,MAGRES="The value '"_MAGD_"' for field: "_MAGLABEL_" is an invalid Pointer. "
+"RTN","MAGBVAL",103,0)
+ . I 'MAGWIN W !,MAGF,!,MAGL
+"RTN","MAGBVAL",104,0)
+ . ; we are only deleting the Default User Pref if it is bad.
+"RTN","MAGBVAL",105,0)
+ . I (MAGL=100)&(MAGF=2006.1) D DEL(MAGF,MAGL,.MAGRES)
+"RTN","MAGBVAL",106,0)
+ . Q
+"RTN","MAGBVAL",107,0)
+ ; here, so check external value.
+"RTN","MAGBVAL",108,0)
+ D CHK^DIE(MAGF,MAGL,"E",MAGD,.MAGR,"MAGMSG")
+"RTN","MAGBVAL",109,0)
+ ; If success, Quit. We changed External to Internal. Internal is in MAGR
+"RTN","MAGBVAL",110,0)
+ I MAGR'="^" S MAGD=MAGR Q 1
+"RTN","MAGBVAL",111,0)
+ ;  If not success Get the error text and Quit 0
+"RTN","MAGBVAL",112,0)
+ D MSG^DIALOG("A",.MAGRESA,245,5,"MAGMSG")
+"RTN","MAGBVAL",113,0)
+ S MAGRES=MAGRESA(1)
+"RTN","MAGBVAL",114,0)
+ Q 0
+"RTN","MAGBVAL",115,0)
+DEL(MAGF,MAGL,MAGRES) ;
+"RTN","MAGBVAL",116,0)
+ I 'MAGWIN W !,"IN DEL  File: ",MAGF," Field: ",MAGL
+"RTN","MAGBVAL",117,0)
+ N MAGGMSG,MAGIENS
+"RTN","MAGBVAL",118,0)
+ S X=$$DUZ2PLC^MAGBAPIP()
+"RTN","MAGBVAL",119,0)
+ S MAGIENS=X_","
+"RTN","MAGBVAL",120,0)
+ ; For Default User Preference #100 
+"RTN","MAGBVAL",121,0)
+ ; in Imaging site Parameters #2006.1 
+"RTN","MAGBVAL",122,0)
+ ; we will delete the current value if it is invalid.
+"RTN","MAGBVAL",123,0)
+ K MAGGFDA,MAGGMSG
+"RTN","MAGBVAL",124,0)
+ S MAGGFDA(MAGF,MAGIENS,MAGL)="@"
+"RTN","MAGBVAL",125,0)
+ D FILE^DIE("S","MAGGFDA","MAGGMSG")
+"RTN","MAGBVAL",126,0)
+ I $D(MAGGMSG)=0 S MAGRES=MAGRES_" the value was Deleted."
+"RTN","MAGBVAL",127,0)
+ ;I $D(MAGGMSG)=10 S MAGRES=$G(MAGGMSG("DIERR",1,"TEXT",1))
+"RTN","MAGBVAL",128,0)
+ I $D(MAGGMSG)=10 S MAGRES=MAGRES_" the attempt to Delete, Failed."
+"RTN","MAGBVAL",129,0)
+ Q
+"RTN","MAGBVAL",130,0)
+ERR ;
+"RTN","MAGBVAL",131,0)
+ N ERR
+"RTN","MAGBVAL",132,0)
+ S ERR=$$EC^%ZOSV
+"RTN","MAGBVAL",133,0)
+ S MAGRES="0^Error during data validation: "_ERR
+"RTN","MAGBVAL",134,0)
+ D LOGERR^MAGGTERR(ERR)
+"RTN","MAGBVAL",135,0)
+ D @^%ZOSF("ERRTN")
+"RTN","MAGBVAL",136,0)
+ D CLEAN^DILF
+"RTN","MAGBVAL",137,0)
+ Q 
+"RTN","MAGIP214")
+0^1^B4472734
+"RTN","MAGIP214",1,0)
+MAGIP214 ;WOIFO/GEK - INSTALL CODE FOR MAG*3.0*214 BP;
+"RTN","MAGIP214",2,0)
+ ;;3.0;IMAGING;**214**;Mar 19, 2002;Build 34;Jun 27, 2018
+"RTN","MAGIP214",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGIP214",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP214",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGIP214",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGIP214",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGIP214",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGIP214",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGIP214",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGIP214",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGIP214",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGIP214",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGIP214",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGIP214",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGIP214",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP214",17,0)
+ ;;
+"RTN","MAGIP214",18,0)
+ ; There are no environment checks here but the MAGIP198 has to be
+"RTN","MAGIP214",19,0)
+ ; referenced by the "Environment Check Routine" field of the KIDS
+"RTN","MAGIP214",20,0)
+ ; build so that entry points of the routine are available to the
+"RTN","MAGIP214",21,0)
+ ; KIDS during all installation phases.
+"RTN","MAGIP214",22,0)
+ ;
+"RTN","MAGIP214",23,0)
+ Q
+"RTN","MAGIP214",24,0)
+ ;
+"RTN","MAGIP214",25,0)
+ ;+++++ INSTALLATION ERROR HANDLING
+"RTN","MAGIP214",26,0)
+ERROR ;
+"RTN","MAGIP214",27,0)
+ S:$D(XPDNM) XPDABORT=1
+"RTN","MAGIP214",28,0)
+ ;--- Display the messages and store them to the INSTALL file
+"RTN","MAGIP214",29,0)
+ D DUMP^MAGUERR1(),ABTMSG^MAGKIDS()
+"RTN","MAGIP214",30,0)
+ Q
+"RTN","MAGIP214",31,0)
+ ;
+"RTN","MAGIP214",32,0)
+POST ;***** POST-INSTALL CODE
+"RTN","MAGIP214",33,0)
+POS ;
+"RTN","MAGIP214",34,0)
+ N CALLBACK
+"RTN","MAGIP214",35,0)
+ D CLEAR^MAGUERR(1)
+"RTN","MAGIP214",36,0)
+ I $G(DUZ)<.5 S XPDABORT=1 Q
+"RTN","MAGIP214",37,0)
+ ;
+"RTN","MAGIP214",38,0)
+ ;-- Link new remote procedures to the Broker context option
+"RTN","MAGIP214",39,0)
+ ; ** 1 New RPC for p214
+"RTN","MAGIP214",40,0)
+ D ADDRPC^MAGQBUT4("MAGQBP VAL","MAG WINDOWS")
+"RTN","MAGIP214",41,0)
+ ;
+"RTN","MAGIP214",42,0)
+ ;--- Send the notification e-mail
+"RTN","MAGIP214",43,0)
+ D BMES^XPDUTL("Post Install Mail Message: "_$$FMTE^XLFDT($$NOW^XLFDT))
+"RTN","MAGIP214",44,0)
+ D INS^MAGQBUT4(XPDNM,DUZ,$$NOW^XLFDT,XPDA)
+"RTN","MAGIP214",45,0)
+ ;
+"RTN","MAGIP214",46,0)
+ Q
+"RTN","MAGIP214",47,0)
+ ;
+"RTN","MAGIP214",48,0)
+ ;***** PRE-INSTALL CODE
+"RTN","MAGIP214",49,0)
+PRE ;
+"RTN","MAGIP214",50,0)
+ ;****
+"RTN","MAGIP214",51,0)
+ QUIT
+"RTN","MAGQBUT4")
+0^2^B97778946
+"RTN","MAGQBUT4",1,0)
+MAGQBUT4 ;WOIFO/RMP/GEK - BP Utilities ;
+"RTN","MAGQBUT4",2,0)
+ ;;3.0;IMAGING;**7,8,48,20,81,39,121,135,196,198,214**;Mar 19, 2002;Build 34;Jun 27, 2018
+"RTN","MAGQBUT4",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGQBUT4",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGQBUT4",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGQBUT4",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGQBUT4",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGQBUT4",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGQBUT4",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGQBUT4",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGQBUT4",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGQBUT4",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGQBUT4",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGQBUT4",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGQBUT4",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGQBUT4",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGQBUT4",17,0)
+ ;;
+"RTN","MAGQBUT4",18,0)
+ ;
+"RTN","MAGQBUT4",19,0)
+ Q
+"RTN","MAGQBUT4",20,0)
+VOKR(RESULT,VER) ; RPC for VOK [MAGQ VOK]
+"RTN","MAGQBUT4",21,0)
+ ;Patch 214  enables Clients 135, 196, 198, 214  
+"RTN","MAGQBUT4",22,0)
+ N CLPATCH,SVRPATCH
+"RTN","MAGQBUT4",23,0)
+ ;   get client Patch number
+"RTN","MAGQBUT4",24,0)
+ S CLPATCH=$$TRIM($P(VER,"P",2))
+"RTN","MAGQBUT4",25,0)
+ ; These are allowable Clients.
+"RTN","MAGQBUT4",26,0)
+ S SVRPATCH=",135,196,198,214," ; P 214 , continue to support 135, 196, 198 
+"RTN","MAGQBUT4",27,0)
+ ; if client patch is allowed, the Result = 1^...
+"RTN","MAGQBUT4",28,0)
+ I SVRPATCH[CLPATCH S RESULT="1^3.0P214"
+"RTN","MAGQBUT4",29,0)
+ E  S RESULT="0^3.0P214"
+"RTN","MAGQBUT4",30,0)
+ Q
+"RTN","MAGQBUT4",31,0)
+CONV(ARR,ICT) ;Convert any single node array to FM Style multiple
+"RTN","MAGQBUT4",32,0)
+ ;  The node subscripts of ARR are ignored, and not retained
+"RTN","MAGQBUT4",33,0)
+ ; i.e.  ARR(34)=8
+"RTN","MAGQBUT4",34,0)
+ ;       ARR("BLUE")=9
+"RTN","MAGQBUT4",35,0)
+ ;       ARR("D")=10
+"RTN","MAGQBUT4",36,0)
+ ; converts to
+"RTN","MAGQBUT4",37,0)
+ ;      ARR(1,0)=8
+"RTN","MAGQBUT4",38,0)
+ ;      ARR(2,0)=9
+"RTN","MAGQBUT4",39,0)
+ ;      ARR(3,0)=10
+"RTN","MAGQBUT4",40,0)
+ N I,ARO
+"RTN","MAGQBUT4",41,0)
+ S ICT=0,I=""
+"RTN","MAGQBUT4",42,0)
+ F  S I=$O(ARR(I)) Q:(I="")  D
+"RTN","MAGQBUT4",43,0)
+ . S ICT=ICT+1
+"RTN","MAGQBUT4",44,0)
+ . S ARO(ICT,0)=ARR(I)
+"RTN","MAGQBUT4",45,0)
+ K ARR
+"RTN","MAGQBUT4",46,0)
+ M ARR=ARO
+"RTN","MAGQBUT4",47,0)
+ Q
+"RTN","MAGQBUT4",48,0)
+MRGMULT(ARR,RT,RTDSC,CT) ;Merge the FM formatted array into a FM File
+"RTN","MAGQBUT4",49,0)
+ ;   multiple field.
+"RTN","MAGQBUT4",50,0)
+ ;   This isn't for general consumption.
+"RTN","MAGQBUT4",51,0)
+ ; RT = FILE ROOT, RECORD NUMBER, NODE
+"RTN","MAGQBUT4",52,0)
+ ; i.e.  "^MAG(2006.034,44,1,"   -> 44 is the IEN of MAG(2006.34
+"RTN","MAGQBUT4",53,0)
+ ; RTDSC is the 2nd piece of the 0 node of the multiple field.
+"RTN","MAGQBUT4",54,0)
+ S RT=$E(RT,1,$L(RT)-1)_")"
+"RTN","MAGQBUT4",55,0)
+ S @RT@(0)=U_RTDSC_U_CT_U_CT ;  i.e.    ^2006.341A^13^13
+"RTN","MAGQBUT4",56,0)
+ M @RT=ARR
+"RTN","MAGQBUT4",57,0)
+ Q
+"RTN","MAGQBUT4",58,0)
+DDLF(RESULTS,FILE,FIELD,FLAGS,ATTR) ;[MAG FLD ATT]
+"RTN","MAGQBUT4",59,0)
+ S X="ERR^MAGQBTM",@^%ZOSF("TRAP")
+"RTN","MAGQBUT4",60,0)
+ K X
+"RTN","MAGQBUT4",61,0)
+ N I
+"RTN","MAGQBUT4",62,0)
+ D FIELD^DID(FILE,FIELD,FLAGS,ATTR,"RESULTS","RESULTS")
+"RTN","MAGQBUT4",63,0)
+ S I=0 F  S I=I+1 Q:'$D(RESULTS(ATTR,I))  M RESULTS(I)=RESULTS(ATTR,I)
+"RTN","MAGQBUT4",64,0)
+ Q
+"RTN","MAGQBUT4",65,0)
+DDFA(RESULTS) ;[MAG ATT LST]
+"RTN","MAGQBUT4",66,0)
+ S X="ERR^MAGQBTM",@^%ZOSF("TRAP")
+"RTN","MAGQBUT4",67,0)
+ K X
+"RTN","MAGQBUT4",68,0)
+ D FIELDLST^DID(RESULTS)
+"RTN","MAGQBUT4",69,0)
+ Q
+"RTN","MAGQBUT4",70,0)
+DVAL(RESULTS,FILE,IENS,FIELD,FLAGS,VALUE) ;[MAG FIELD VALIDATE]
+"RTN","MAGQBUT4",71,0)
+ S X="ERR^MAGQBTM",@^%ZOSF("TRAP")
+"RTN","MAGQBUT4",72,0)
+ K X
+"RTN","MAGQBUT4",73,0)
+ I FLAGS']"" S FLAGS="EHU"
+"RTN","MAGQBUT4",74,0)
+ D VAL^DIE(FILE,IENS,FIELD,FLAGS,VALUE,.RESULT,"","MSG")
+"RTN","MAGQBUT4",75,0)
+ I RESULT=U S RESULTS="-1^"_$G(MSG("DIERR","1","TEXT","1"))
+"RTN","MAGQBUT4",76,0)
+ E  S RESULTS=1_U_RESULT_U_$G(RESULT(0))
+"RTN","MAGQBUT4",77,0)
+ Q
+"RTN","MAGQBUT4",78,0)
+KVAL(RESULTS,FLAGS,FDA) ;[MAG KEY VALIDATE]
+"RTN","MAGQBUT4",79,0)
+ N TMP,DDRFDA
+"RTN","MAGQBUT4",80,0)
+ S X="ERR^MAGQBTM",@^%ZOSF("TRAP")
+"RTN","MAGQBUT4",81,0)
+ K X
+"RTN","MAGQBUT4",82,0)
+ D FDASET(.FDA,.DDRFDA)
+"RTN","MAGQBUT4",83,0)
+ S TMP=$$KEYVAL^DIE(FLAGS,"DDRFDA","MSG")
+"RTN","MAGQBUT4",84,0)
+ S RESULTS=$S(TMP=1:1,1:"-1^"_$G(MSG("DIERR","1","TEXT","1")))
+"RTN","MAGQBUT4",85,0)
+ K DDRFDA,MSG
+"RTN","MAGQBUT4",86,0)
+ Q
+"RTN","MAGQBUT4",87,0)
+FDASET(DDRROOT,DDRFDA) ;
+"RTN","MAGQBUT4",88,0)
+ N DDRFILE,DDRIEN,DDRFIELD,DDRVAL,DDRERR,I
+"RTN","MAGQBUT4",89,0)
+ S I=0
+"RTN","MAGQBUT4",90,0)
+ F  S I=$O(DDRROOT(I)) Q:'I  S X=DDRROOT(I) D
+"RTN","MAGQBUT4",91,0)
+ . S DDRFILE=$P(X,U)
+"RTN","MAGQBUT4",92,0)
+ . S DDRFIELD=$P(X,U,2)
+"RTN","MAGQBUT4",93,0)
+ . S DDRIEN=$P(X,U,3)
+"RTN","MAGQBUT4",94,0)
+ . S DDRVAL=$P(X,U,4,99)
+"RTN","MAGQBUT4",95,0)
+ . D FDA^DILF(DDRFILE,DDRIEN_$S($E(DDRIEN,$L(DDRIEN))'=",":",",1:""),DDRFIELD,"",DDRVAL,"DDRFDA","DDRERR")
+"RTN","MAGQBUT4",96,0)
+ Q
+"RTN","MAGQBUT4",97,0)
+DHRPC(RESULTS,FNAME,FLOC) ;[MAG DIRHASH]
+"RTN","MAGQBUT4",98,0)
+ N TMP
+"RTN","MAGQBUT4",99,0)
+ S X="ERR^MAGQBTM",@^%ZOSF("TRAP")
+"RTN","MAGQBUT4",100,0)
+ K X
+"RTN","MAGQBUT4",101,0)
+ S TMP=$$DIRHASH^MAGFILEB(FNAME,FLOC)
+"RTN","MAGQBUT4",102,0)
+ S RESULTS=$S(TMP="":U,1:TMP)
+"RTN","MAGQBUT4",103,0)
+ Q
+"RTN","MAGQBUT4",104,0)
+GPACHX(PV) ; Get Package File Install History of Imaging
+"RTN","MAGQBUT4",105,0)
+ N I,LCNT,MSG,PKG
+"RTN","MAGQBUT4",106,0)
+ S LCNT=0
+"RTN","MAGQBUT4",107,0)
+ S PV(0)="Version^Install Date"
+"RTN","MAGQBUT4",108,0)
+ F PKG="IMAGING" D
+"RTN","MAGQBUT4",109,0)
+ . N J,K,L,VERS,DATE,X,Y
+"RTN","MAGQBUT4",110,0)
+ . S J=$O(^DIC(9.4,"B",PKG,"")) Q:'J
+"RTN","MAGQBUT4",111,0)
+ . S VERS="" F  S VERS=$O(^DIC(9.4,J,22,"B",VERS)) Q:VERS=""  D
+"RTN","MAGQBUT4",112,0)
+ . . N MSG,TAR
+"RTN","MAGQBUT4",113,0)
+ . . S K=$O(^DIC(9.4,J,22,"B",VERS,""))
+"RTN","MAGQBUT4",114,0)
+ . . D LIST^DIC(9.4901,","_K_","_J_",","@;.01;.02;.03","","","","","","","","TAR","MSG")
+"RTN","MAGQBUT4",115,0)
+ . . Q:$D(MSG("DIERR"))
+"RTN","MAGQBUT4",116,0)
+ . . S L=0 F  S L=$O(TAR("DILIST","ID",L)) Q:'L  D
+"RTN","MAGQBUT4",117,0)
+ . . . S LCNT=LCNT+1
+"RTN","MAGQBUT4",118,0)
+ . . . S PV(LCNT)=VERS_"P"_$P(TAR("DILIST","ID",L,".01"),"^",1)
+"RTN","MAGQBUT4",119,0)
+ . . . S X=$P($P(TAR("DILIST","ID",L,".02"),"^",1),"@",1)
+"RTN","MAGQBUT4",120,0)
+ . . . S PV(LCNT)=PV(LCNT)_"^"_$S(X["-1":"",1:X)
+"RTN","MAGQBUT4",121,0)
+ . . . Q
+"RTN","MAGQBUT4",122,0)
+ . . Q
+"RTN","MAGQBUT4",123,0)
+ . Q
+"RTN","MAGQBUT4",124,0)
+ Q
+"RTN","MAGQBUT4",125,0)
+ ;
+"RTN","MAGQBUT4",126,0)
+OLD ;
+"RTN","MAGQBUT4",127,0)
+ S VER="3.0P"_($$TRIM($P(VER,"P",2)))
+"RTN","MAGQBUT4",128,0)
+ S X="ERR^MAGQBTM",@^%ZOSF("TRAP")
+"RTN","MAGQBUT4",129,0)
+ S SLINE=$T(+2)
+"RTN","MAGQBUT4",130,0)
+ S PNUM=$$TRIM($P(SLINE,"**",2)),PNUM=$$TRIM($P(PNUM,",",$L(PNUM,",")))
+"RTN","MAGQBUT4",131,0)
+ S CVERS=$$TRIM($P(SLINE,";",3))_"P"_PNUM
+"RTN","MAGQBUT4",132,0)
+ S RESULT=$S(CVERS=VER:1,1:0)_U_CVERS
+"RTN","MAGQBUT4",133,0)
+ Q
+"RTN","MAGQBUT4",134,0)
+ ;
+"RTN","MAGQBUT4",135,0)
+TRIM(X) ; remove both leading and trailing blanks
+"RTN","MAGQBUT4",136,0)
+ N I,J
+"RTN","MAGQBUT4",137,0)
+ F I=1:1:$L(X) Q:$E(X,I)'=" "
+"RTN","MAGQBUT4",138,0)
+ F J=$L(X):-1:I Q:$E(X,J)'=" "
+"RTN","MAGQBUT4",139,0)
+ Q $S($E(X,I,J)=" ":"",1:$E(X,I,J))
+"RTN","MAGQBUT4",140,0)
+ ;
+"RTN","MAGQBUT4",141,0)
+QCNT(RESULT,PLC,QUE) ; [MAGQ QCNT] Called from MagQueManSet.pas and MagSiteParameters.pas
+"RTN","MAGQBUT4",142,0)
+ N CNT,DA,CQ,IA,X
+"RTN","MAGQBUT4",143,0)
+ S X="ERR^MAGQBTM",@^%ZOSF("TRAP")
+"RTN","MAGQBUT4",144,0)
+ ;CQ=Current Queue Pointer(#2006.03) 
+"RTN","MAGQBUT4",145,0)
+ ;QP=Queue file pointer(#2006.031)
+"RTN","MAGQBUT4",146,0)
+ ;CNT=Queue type total, IA=Not failed total
+"RTN","MAGQBUT4",147,0)
+ S IA="",RESULT=0
+"RTN","MAGQBUT4",148,0)
+ S (CNT,IA)=0,DA=""
+"RTN","MAGQBUT4",149,0)
+ S QP=$S($D(^MAGQUEUE(2006.031,"C",PLC,QUE)):$O(^MAGQUEUE(2006.031,"C",PLC,QUE,"")),1:"")
+"RTN","MAGQBUT4",150,0)
+ S CQ=$S('QP:0,1:$P($G(^MAGQUEUE(2006.031,QP,0)),U,2))
+"RTN","MAGQBUT4",151,0)
+ F  S DA=$O(^MAGQUEUE(2006.03,"C",PLC,QUE,DA)) Q:'DA  D
+"RTN","MAGQBUT4",152,0)
+ . I '$D(^MAGQUEUE(2006.03,DA,0)) K ^MAGQUEUE(2006.03,"C",PLC,QUE,DA) Q 
+"RTN","MAGQBUT4",153,0)
+ . S CNT=CNT+1
+"RTN","MAGQBUT4",154,0)
+ . I CQ<DA S IA=IA+1
+"RTN","MAGQBUT4",155,0)
+ . Q
+"RTN","MAGQBUT4",156,0)
+ D QPUP(PLC,QUE,CNT,CQ,IA,QP) Q
+"RTN","MAGQBUT4",157,0)
+ Q
+"RTN","MAGQBUT4",158,0)
+ ;
+"RTN","MAGQBUT4",159,0)
+QPUP(PLC,QUE,CNT,CQ,IA,QP) ;
+"RTN","MAGQBUT4",160,0)
+ N IEN,DIC,VAL
+"RTN","MAGQBUT4",161,0)
+ K VAL
+"RTN","MAGQBUT4",162,0)
+ S VAL(1)=PLC,VAL(2)=QUE
+"RTN","MAGQBUT4",163,0)
+ S QP=$S(QP:QP,1:$$FIND1^DIC(2006.031,"","QX",.VAL,"C","",""))
+"RTN","MAGQBUT4",164,0)
+ ;I IEN>0 D  Q:IEN
+"RTN","MAGQBUT4",165,0)
+ ;. S $P(^MAGQUEUE(2006.031,IEN,0),U,5)=CNT Q
+"RTN","MAGQBUT4",166,0)
+ I 'QP D  Q
+"RTN","MAGQBUT4",167,0)
+ . K DIE,FDA
+"RTN","MAGQBUT4",168,0)
+ . S FDA(2006.031,"+1,",.01)=QUE
+"RTN","MAGQBUT4",169,0)
+ . S FDA(2006.031,"+1,",.04)=PLC
+"RTN","MAGQBUT4",170,0)
+ . S FDA(2006.031,"+1,",1)=CQ
+"RTN","MAGQBUT4",171,0)
+ . S FDA(2006.031,"+1,",2)=IA
+"RTN","MAGQBUT4",172,0)
+ . S FDA(2006.031,"+1,",3)=CNT
+"RTN","MAGQBUT4",173,0)
+ . D UPDATE^DIE("U","FDA","","MAGQUP")
+"RTN","MAGQBUT4",174,0)
+ . K DIE,FDA
+"RTN","MAGQBUT4",175,0)
+ E  D
+"RTN","MAGQBUT4",176,0)
+ . K DIE,FDA
+"RTN","MAGQBUT4",177,0)
+ . S FDA(2006.031,QP_",",.01)=QUE
+"RTN","MAGQBUT4",178,0)
+ . S FDA(2006.031,QP_",",.04)=PLC
+"RTN","MAGQBUT4",179,0)
+ . S FDA(2006.031,QP_",",1)=CQ
+"RTN","MAGQBUT4",180,0)
+ . S FDA(2006.031,QP_",",2)=IA
+"RTN","MAGQBUT4",181,0)
+ . S FDA(2006.031,QP_",",3)=CNT
+"RTN","MAGQBUT4",182,0)
+ . D FILE^DIE("","FDA","MAGERR")
+"RTN","MAGQBUT4",183,0)
+ . K DIE,FDA
+"RTN","MAGQBUT4",184,0)
+ Q
+"RTN","MAGQBUT4",185,0)
+ ;
+"RTN","MAGQBUT4",186,0)
+CPUD ;
+"RTN","MAGQBUT4",187,0)
+ N PLC,INS,QUE
+"RTN","MAGQBUT4",188,0)
+ S (INS,PLC)=""
+"RTN","MAGQBUT4",189,0)
+ F  S INS=$O(^MAG(2006.1,"B",INS)) Q:INS=""  D
+"RTN","MAGQBUT4",190,0)
+ . S PLC=$O(^MAG(2006.1,"B",INS,""))
+"RTN","MAGQBUT4",191,0)
+ . S QUE="" F  S QUE=$O(^MAGQUEUE(2006.031,"C",PLC,QUE)) Q:QUE=""  D
+"RTN","MAGQBUT4",192,0)
+ . . D QCNT^MAGQBUT4("",PLC,QUE)
+"RTN","MAGQBUT4",193,0)
+ . . Q
+"RTN","MAGQBUT4",194,0)
+ . Q
+"RTN","MAGQBUT4",195,0)
+ Q
+"RTN","MAGQBUT4",196,0)
+CNL(GL,IEN,NLC) ;  Check Network Location
+"RTN","MAGQBUT4",197,0)
+ N MAGREF,MAG0,MAG1,PLC
+"RTN","MAGQBUT4",198,0)
+ S NLC=NLC+1
+"RTN","MAGQBUT4",199,0)
+ I '$G(IEN) Q ""
+"RTN","MAGQBUT4",200,0)
+ S MAG0=$G(@(GL_IEN_",0)"))
+"RTN","MAGQBUT4",201,0)
+ S MAGREF=+$P(MAG0,"^",3)            ; get file from raid
+"RTN","MAGQBUT4",202,0)
+ I MAGREF=0 S MAGREF=+$P(MAG0,"^",5) ; get file from jukebox
+"RTN","MAGQBUT4",203,0)
+ I 'MAGREF Q ""
+"RTN","MAGQBUT4",204,0)
+ I '$D(^MAG(2005.2,MAGREF,0)) Q ""
+"RTN","MAGQBUT4",205,0)
+ S PLC=$P($G(^MAG(2005.2,MAGREF,0)),U,10)
+"RTN","MAGQBUT4",206,0)
+ Q:'PLC ""
+"RTN","MAGQBUT4",207,0)
+ S PLC=$P($G(^MAG(2006.1,PLC,0)),U)
+"RTN","MAGQBUT4",208,0)
+ Q $S('PLC:"",1:PLC)
+"RTN","MAGQBUT4",209,0)
+CNSP(GL,IEN,NMSP,NSC) ;  Check NameSPace
+"RTN","MAGQBUT4",210,0)
+ N NMSPC,MAG0,FNAM,INSTIEN
+"RTN","MAGQBUT4",211,0)
+ S NSC=NSC+1
+"RTN","MAGQBUT4",212,0)
+ S MAG0=$G(@(GL_IEN_",0)"))
+"RTN","MAGQBUT4",213,0)
+ S FNAM=$P(MAG0,U,2)
+"RTN","MAGQBUT4",214,0)
+ S NMSPC=$TR($P(FNAM,"."),"0123456789","")
+"RTN","MAGQBUT4",215,0)
+ Q:NMSPC="" ""
+"RTN","MAGQBUT4",216,0)
+ S INSTIEN=$S($D(NMSP(NMSPC)):$O(NMSP(NMSPC,"")),1:"")
+"RTN","MAGQBUT4",217,0)
+ Q INSTIEN
+"RTN","MAGQBUT4",218,0)
+NMSP(TMPA) ;
+"RTN","MAGQBUT4",219,0)
+ N IEN,INS,TMP,I,J
+"RTN","MAGQBUT4",220,0)
+ S INS="" F  S INS=$O(^MAG(2006.1,"B",INS)) Q:INS=""  S IEN="" D
+"RTN","MAGQBUT4",221,0)
+ . S IEN=$O(^MAG(2006.1,"B",INS,IEN)) Q:IEN=""  D  Q
+"RTN","MAGQBUT4",222,0)
+ . . S TMP=","_$$UPPER^MAGQE4($$INIS^MAGQBPG2(IEN))_"," D  Q
+"RTN","MAGQBUT4",223,0)
+ . . . F I=2:1 S J=$P(TMP,",",I) Q:J=""  S TMPA(J,INS)=""
+"RTN","MAGQBUT4",224,0)
+ . . . Q
+"RTN","MAGQBUT4",225,0)
+ S J="" F  S J=$O(TMPA(J)) Q:J=""  S INS=$O(TMPA(J,"")) K:($O(TMPA(J,INS))]"") TMPA(J)
+"RTN","MAGQBUT4",226,0)
+ Q
+"RTN","MAGQBUT4",227,0)
+CLRQ ; Clears the Queue file and Queue Pointer files
+"RTN","MAGQBUT4",228,0)
+ N DA,DIK,FILE,IEN
+"RTN","MAGQBUT4",229,0)
+ F FILE=2006.03,2006.031 D
+"RTN","MAGQBUT4",230,0)
+ . S IEN=0 F  S IEN=$O(^MAGQUEUE(FILE,IEN)) Q:'IEN  D
+"RTN","MAGQBUT4",231,0)
+ . . S DIK="^MAGQUEUE("_FILE_","
+"RTN","MAGQBUT4",232,0)
+ . . S DA=IEN,DA(1)=FILE D ^DIK
+"RTN","MAGQBUT4",233,0)
+ K DIK,DA
+"RTN","MAGQBUT4",234,0)
+ Q
+"RTN","MAGQBUT4",235,0)
+ ; We add RPC to MAG WINDOWS Option this way instead of sending Option : MAG WINDOWS
+"RTN","MAGQBUT4",236,0)
+ ; If we send MAG WINDOWS Option, the last one installed will overwrite others.
+"RTN","MAGQBUT4",237,0)
+ ; ADDRPC copied from Patch 51, added the call "D MES^XPDUTL(" instead of "W !"
+"RTN","MAGQBUT4",238,0)
+ADDRPC(RPCNAME,OPTNAME) ;
+"RTN","MAGQBUT4",239,0)
+ N DA,DIC
+"RTN","MAGQBUT4",240,0)
+ S DIC="^DIC(19,",DIC(0)="",X=OPTNAME D ^DIC
+"RTN","MAGQBUT4",241,0)
+ I Y<0 D  Q
+"RTN","MAGQBUT4",242,0)
+ . D MES^XPDUTL("Cannot add RPC: """_RPCNAME_""" to Option: """_OPTNAME_""".")
+"RTN","MAGQBUT4",243,0)
+ . D MES^XPDUTL("Cannot find Option: """_OPTNAME_""".")
+"RTN","MAGQBUT4",244,0)
+ . Q
+"RTN","MAGQBUT4",245,0)
+ I '$D(^XWB(8994,"B",RPCNAME)) D  Q
+"RTN","MAGQBUT4",246,0)
+ . D MES^XPDUTL("Cannot add RPC: """_RPCNAME_""" to Option: """_OPTNAME_""".")
+"RTN","MAGQBUT4",247,0)
+ . D MES^XPDUTL("Cannot find RPC: """_RPCNAME_""".")
+"RTN","MAGQBUT4",248,0)
+ . Q
+"RTN","MAGQBUT4",249,0)
+ S DA(1)=+Y
+"RTN","MAGQBUT4",250,0)
+ I $D(^DIC(19,+Y,"RPC","B",$O(^XWB(8994,"B",RPCNAME,"")))) D  Q
+"RTN","MAGQBUT4",251,0)
+ . D MES^XPDUTL("Cannot add RPC: """_RPCNAME_""" to Option: """_OPTNAME_""".")
+"RTN","MAGQBUT4",252,0)
+ . D MES^XPDUTL("RPC: """_RPCNAME_""" is already a member of """_OPTNAME_""".")
+"RTN","MAGQBUT4",253,0)
+ . Q
+"RTN","MAGQBUT4",254,0)
+ S DIC=DIC_DA(1)_",""RPC"","
+"RTN","MAGQBUT4",255,0)
+ S DIC(0)="L",DLAYGO="19" ; LAYGO should be allowed here
+"RTN","MAGQBUT4",256,0)
+ S X=RPCNAME
+"RTN","MAGQBUT4",257,0)
+ D ^DIC
+"RTN","MAGQBUT4",258,0)
+ K DIC,D0,DLAYGO
+"RTN","MAGQBUT4",259,0)
+ I Y<0 D  Q
+"RTN","MAGQBUT4",260,0)
+ . D MES^XPDUTL("Cannot add RPC: """_RPCNAME_""" to Option: """_OPTNAME_""".")
+"RTN","MAGQBUT4",261,0)
+ . D MES^XPDUTL("Cannot find RPC: """_RPCNAME_""".")
+"RTN","MAGQBUT4",262,0)
+ . Q
+"RTN","MAGQBUT4",263,0)
+ Q
+"RTN","MAGQBUT4",264,0)
+INS(XP,DUZ,DATE,IDA) ;
+"RTN","MAGQBUT4",265,0)
+ N CT,CNT,COM,D,D0,D1,D2,DDATE,DG,DIC,DICR,DIW,MAGMSG,ST,XMID,XMY,PLACE,XMSUB,XMZ
+"RTN","MAGQBUT4",266,0)
+ S PLACE=$O(^MAG(2006.1,"B",$$KSP^XUPARAM("INST"),""))
+"RTN","MAGQBUT4",267,0)
+ D GETENV^%ZOSV
+"RTN","MAGQBUT4",268,0)
+ S CNT=0
+"RTN","MAGQBUT4",269,0)
+ S CNT=CNT+1,MAGMSG(CNT)="PACKAGE INSTALL"
+"RTN","MAGQBUT4",270,0)
+ S CNT=CNT+1,MAGMSG(CNT)="SITE: "_$$KSP^XUPARAM("WHERE")
+"RTN","MAGQBUT4",271,0)
+ S CNT=CNT+1,MAGMSG(CNT)=" Production Account: "_$$PROD^XUPROD("1")
+"RTN","MAGQBUT4",272,0)
+ S CNT=CNT+1,MAGMSG(CNT)="PACKAGE: "_XP
+"RTN","MAGQBUT4",273,0)
+ S CNT=CNT+1,MAGMSG(CNT)="Version: "_$$VER^XPDUTL(XP)
+"RTN","MAGQBUT4",274,0)
+ S ST=$$GET1^DIQ(9.7,IDA,11,"I")
+"RTN","MAGQBUT4",275,0)
+ S CNT=CNT+1,MAGMSG(CNT)="Start time: "_$$FMTE^XLFDT(ST)
+"RTN","MAGQBUT4",276,0)
+ S CT=$$GET1^DIQ(9.7,IDA,17,"I") S:+CT'=CT CT=$$NOW^XLFDT
+"RTN","MAGQBUT4",277,0)
+ S CNT=CNT+1,MAGMSG(CNT)="Completion time: "_$$FMTE^XLFDT(CT)
+"RTN","MAGQBUT4",278,0)
+ S CNT=CNT+1,MAGMSG(CNT)="Run time: "_$$FMDIFF^XLFDT(CT,ST,3)
+"RTN","MAGQBUT4",279,0)
+ S CNT=CNT+1,MAGMSG(CNT)="Environment: "_Y
+"RTN","MAGQBUT4",280,0)
+ S COM=$$GET1^DIQ(9.7,IDA,6,"I")
+"RTN","MAGQBUT4",281,0)
+ S CNT=CNT+1,MAGMSG(CNT)="FILE COMMENT: "_COM
+"RTN","MAGQBUT4",282,0)
+ S CNT=CNT+1,MAGMSG(CNT)="DATE: "_DATE
+"RTN","MAGQBUT4",283,0)
+ S CNT=CNT+1,MAGMSG(CNT)="Installed by: "_$$GET1^DIQ(9.7,IDA,9,"E")
+"RTN","MAGQBUT4",284,0)
+ S CNT=CNT+1,MAGMSG(CNT)="Install Name: "_$$GET1^DIQ(9.7,IDA,.01,"E")
+"RTN","MAGQBUT4",285,0)
+ S DDATE=$$GET1^DIQ(9.7,IDA,51,"I")
+"RTN","MAGQBUT4",286,0)
+ S CNT=CNT+1,MAGMSG(CNT)="Distribution Date: "_$$FMTE^XLFDT(DDATE)
+"RTN","MAGQBUT4",287,0)
+ S XMSUB=XP_" INSTALLATION"
+"RTN","MAGQBUT4",288,0)
+ S XMID=$G(DUZ) S:'XMID XMID=.5
+"RTN","MAGQBUT4",289,0)
+ S XMY(XMID)=""
+"RTN","MAGQBUT4",290,0)
+ S:$G(MAGDUZ) XMY(MAGDUZ)=""
+"RTN","MAGQBUT4",291,0)
+ S XMSUB=$E(XMSUB,1,63)
+"RTN","MAGQBUT4",292,0)
+ D:$$PROD^XUPROD("1") ADDMG^MAGQBUT5(XMSUB,.XMY,PLACE)
+"RTN","MAGQBUT4",293,0)
+ D SENDMSG^XMXAPI(XMID,XMSUB,"MAGMSG",.XMY,,.XMZ,)
+"RTN","MAGQBUT4",294,0)
+ I $G(XMERR) M XMERR=^TMP("XMERR",$J) K XMERR
+"RTN","MAGQBUT4",295,0)
+ K MAGMSG
+"RTN","MAGQBUT4",296,0)
+ Q
+"RTN","MAGQBUT4",297,0)
+TEST ;
+"RTN","MAGQBUT4",298,0)
+ N FDA
+"RTN","MAGQBUT4",299,0)
+ S FDA(4)="2006.8^.01^+1,^BP1"
+"RTN","MAGQBUT4",300,0)
+ S FDA(1)="2006.8^.04^+1,^1"
+"RTN","MAGQBUT4",301,0)
+ S FDA(3)="2006.8^50^+1,^ISW-PRICER"
+"RTN","MAGQBUT4",302,0)
+ S FDA(2)="2006.8^11^+1,^1"
+"RTN","MAGQBUT4",303,0)
+ D KVAL(.RESULTS,"Q",.FDA)
+"RTN","MAGQBUT4",304,0)
+ W !,"RESULTS: "_RESULTS
+"RTN","MAGQBUT4",305,0)
+ Q
+"RTN","MAGQBUT4",306,0)
+ ;
+"VER")
+8.0^22.2
+**END**
+**END**

@@ -1,0 +1,126 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 08/03/18 at 08:02
+=============================================================================
+Run Date: OCT 24, 2018                     Designation: OR*3*492
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #410                      Status: Released
+                  Compliance Date: NOV 26, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*260    <<= must be installed BEFORE `OR*3*492'
+
+Subject: LAB LABELS INCORRECTLY PRINTED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ServiceNow Ticket(s):
+ ----------------------------  
+ INC1506496 - Discontinued lab labels being printed and then disposed of
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1.  Defect 784555(ServiceNow INC1506496 - LAB LABELS INCORRECTLY PRINTED
+  
+ Problem:
+ -------
+ After signing a lab order when print parameters have been defined the Print
+ Orders window displays and allows selection of multiple print items.  When any
+ of the items are checked to print and the button to Print All Checked Items or
+ Print Highlighted Items Only (and any item(s) are pre-checked) or the window is
+ closed (x), all items will print instead of only the checked item(s).
+  
+ Resolution:
+ ----------
+ Modify RPC 'RVPRINT ORWD1' (routine ORWD1) to only print the item(s) that have
+ a print device passed into the RPC corresponding to the checked item(s).  The 
+ routine will still print using the default printers when not called from CPRS.  
+  
+ Test Sites:
+ ----------
+ Upstate New York - Western NY HCS (Buffalo, Buffalo, Canandaigua, 
+ Syracuse, Bath, Albany)
+ Richmond VA Medical Center Service
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. Installation should 
+ take less than 2 minutes to complete.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+         Installation Menu.  From this menu, you may elect to use the following 
+         options.  When prompted for the INSTALL NAME enter the patch OR*3.0*492
+          
+              a. Backup a Transport Global - This option will create a backup 
+                 message of any routines exported with this patch. It will not 
+                 backup any other changes such as DDs or templates.
+              b. Compare Transport Global to Current System - This option will 
+                 (allow you to view all changes that will be made when this 
+                 patch is installed.  It compares all components of this patch 
+                 routines, DDs, templates, etc.).
+              c. Verify Checksums in Transport Global - This option will allow 
+                 you to ensure the integrity of the routines that are in the 
+                 transport global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option and
+          choose the patch to install (OR*3.0*492)
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the
+        install? NO//'
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//'
+  
+  
+ Back-out/Rollback Strategy:
+ -------------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWD1
+    Before: B27963897   After: B30369768  **10,85,140,215,260,492**
+ 
+Routine list of preceding patches: 260
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 26, 2018
+Completed By:                               Date Completed: OCT 24, 2018
+Released By :                               Date Released : OCT 24, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

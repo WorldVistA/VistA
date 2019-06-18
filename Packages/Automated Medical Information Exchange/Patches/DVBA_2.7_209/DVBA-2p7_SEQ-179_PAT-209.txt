@@ -1,0 +1,663 @@
+$TXT Created by                 K at DEVFEX.DOMAIN.EXT  (KIDS) on Wednesday, 03/20/19 at 07:58
+=============================================================================
+Run Date: APR 15, 2019                     Designation: DVBA*2.7*209
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #179                    Status: Released
+                  Compliance Date: MAY 16, 2019
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*193<<= must be installed BEFORE `DVBA*2.7*209'
+
+Subject: SHA DBQ DATA, CAPRI GUI MAINTENANCE FIXES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ The Separation Health Assessment (SHA) is a comprehensive medical 
+ examination conducted by either the Veterans Affairs (VA) or Department of
+ Defense (DoD) for Separating Service Members (SSMs) who file pre-discharge
+ claims under the Benefits Delivery at Discharge (BDD) Program.  The SHA is
+ used by both the Veterans Benefits Administration (VBA) and DoD to
+ evaluate a SSM's disability(ies) and determine benefits eligibility
+ according to a common standard. The VA and DoD need the ability
+ to share the SHA results as soon as they become available (on or prior 
+ to the Release from Active Duty [RAD] date). To avoid duplication of
+ health assessments between the two departments, VA assessments are used by
+ DoD.
+ There are three new fields added in this patch that will be included in 
+ all DBQs. These are the Electronic Data Interchange Personal Identifier 
+ (EDIPI), the Release from Active Duty (RAD) field and the Pre-discharge 
+ flag. 
+ New functionality has been added to account for failed transmission.  
+ If transmission fails between CAPRI and Data Access Services (DAS), the 
+ user will be prompted with a message giving the user an option to
+ retransmit up to 5 times before being prompted to contact the national
+ help desk.
+  
+ The following Data Dictionary changes to CAPRI DIVISION EXAM LIST File
+ (#396.15) DISABLE ALL EXAMS? field (#4) have been made to provide the user
+ more direction when adding a Division entry:
+ -Field name change from DISABLE ALL EXAMS? to DISABLE ALL C&P EXAMS?
+ -Entry in field is now required
+ -Help and Technical Prompts have additional information to explain options
+  
+ Patch DVBA*2.7*209 will also fix the following issues:
+   
+ -2507 Request without Regional Office (RO) values
+ -Copy & Paste crash issues
+ -Inconsistent routing locations on 7131 requests
+ -7131 requests automatically closing in AMIE
+ -2507 Requests not closing out properly when an exam is cancelled
+ -"Validate Remote Connections" validation issues
+ -Enterprise search issues with validating the "Connect To" site
+ -Enterprise search allowing search without all required data
+ -Enterprise search results may include non VAMC entities that are not    
+  Accessible
+ -Enterprise search identifying user as being connected as a "Treating 
+  Facility" and attempts to "Connect to Site" user is continuously prompted
+  to select a site
+ -A delay between mouse cursor loading symbol changing back to pointer
+ -CAPRI GUI not recognizing version control
+ -CAPRI GUI log code default status causing slow response time
+ -C&P exams not transferring if patient is not registered at new receiving 
+  site
+ -DVBA C Check 2507 Integrity Report findings listing all exams
+ -New C&P Divisions being set to active automatically
+ -CAPRI C&P Template bug with keyboard navigation
+ -CAPRI Edit exam list parameters MAS Option-Bug allows all divisions to 
+  be displayed
+ -Co-Signing templates encounters an undefined error during signature 
+  process
+  
+   
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)               Field Name (Number) New/Modified/Deleted
+ ------------------               ------------------- --------------------
+ CAPRI DIVISION EXAM LIST (396.15)  DISABLE ALL EXAMS? (#4)  MODIFIED
+  
+  
+ Forms Associated:
+  
+ Form Name       File #   New/Modified/Deleted
+ ---------       ------   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name    New/Modified/Deleted
+ ---------------    --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name       Type    New/Modified/Deleted
+ -----------       ----    -------------------- 
+ DVBA CAPRI GUI               Modified
+  
+  
+ Parameter Definition Associated:
+  
+ Parameter Definition Name       New/Modified/Deleted
+ ------------------------        -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Remote Procedure Call:
+  
+ RPC NAME                 New/Modified/Deleted
+ --------                 --------------------
+ DVBA CAPRI GET EDIPI     New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number) New/Modified/Deleted
+ -------------   ----   ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1) I7798288FY16/553087   CAPRI - C&P Exam Requests missing RO value 
+   
+    Problem: 
+    --------
+    When marking a 2507 Exam as insufficient, when creating the new 
+    request, if the Regional Office has more than one match in the VAMC by
+    name, the update will fail to populate the Regional Office because it
+    cannot find a unique value based on the name.
+   
+    Resolution:
+    -----------
+    Rather than using the name to identify the Regional Office, CAPRI will 
+    now pass the internal entry number of the Institution File record as
+    there will be only one entry for each internal value.
+   
+  
+ 2) I9127673FY16/553089   CAPRI: Copying with CTRL C causes CAPRI to crash 
+    duplicate:  I10983321FY17
+    duplicate:  I11270080FY17
+    duplicate:  I11995613FY17
+    duplicate:  I9127811FY16
+  
+   
+    Problem: 
+    --------
+    Attempting to copy or paste from the exam "Cancel Comments" box on
+    the "Exam Details" screen of CAPRI using CTRL C or CTRL V causes a    
+    fatal crash of CAPRI.  Using the mouse right-click menu to    
+    copy/paste does not cause this failure.
+  
+    Attempting to copy from the "Routing Location Information" box on
+    the "Add New C&P Exam" screen of CAPRI using CTRL C causes a fatal  
+    crash of CAPRI. Using the mouse right-click menu to copy does not
+    cause this failure. 
+   
+    Resolution:
+    -----------
+    The code in CAPRI that handles the CopyToClipboard, CutToClipboard
+    and PasteFromCliboard has been changed to set the current Edit Box    
+    or Memo Box as the ActiveControl.  This tells the Windows API what
+    control to copy/cut/paste to or from.
+  
+ 3) I15864002FY17/588679 CAPRI: inconsistent routing locations on 7131
+                         requests
+  
+    Problem: 
+    --------
+    When a user creates a new 7131 request using the 7131 requests tab 
+    in CAPRI, the list of routing locations available is identical to 
+    what is set to active under the "edit exam list parameters (MAS)" 
+    utility in CAPRI.  However, if the user goes back into the 7131 
+    request, CAPRI displays every routing location (both active and 
+    inactive) as options to the user.  
+   
+    Resolution:
+    -----------
+    When populating the list or routing locations on a 7131 Edit, CAPRI
+    will now filter out inactive locations.
+  
+ 4) I18426774FY18/894638  CAPRI 7131 requests automatically closing in AMIE
+  
+    Problem: 
+    --------
+    CAPRI currently allows a 7131 to be submitted without checking any of 
+    the checkboxes on the "New 7131 Request" form.  The FORM 7131 (#396)
+    record is created, but because there are not any items identified by
+    checkboxes the request is auto finalized (essentially closed) without
+    any data returned.
+    An additional request came in to force users to also enter "Comments" 
+    when submitting a 7131.
+  
+    Resolution:
+    -----------
+    Prior to allowing a user to submit a 7131 request, CAPRI will check  
+    and force at least one checkbox to be marked and data to be entered
+    into the "Comments" memo box.
+  
+  
+ 5) I12188347FY17/553078 CAPRI exams not closing out properly when a DBQ is
+                         cancelled
+  
+    Problem: 
+    --------
+    If a 2507 Request has multiple exams and the exams have a mixed bag of 
+    completed/canceled statuses AND the last exam satisfied is canceled
+    the corresponding 2507 Exam Status is not updated and the 2507 is 
+    not released even though all exams have been satisfied.
+   
+   
+    Resolution:
+    -----------
+    When canceling a 2507 Exam, CAPRI will now check to see if there are
+    any remaining open exams on the 2507 Request.  If there are not, it
+    will update the status and release the exam.
+  
+ 6) I13232280FY17/553080  CAPRI "Validate Remote Connections" problem
+  
+    Problem: 
+    --------
+    When on the "Validate Remote Connections" screen and checking 
+    connections for multiple entries, there is potential for one entry to
+    fail and provide incorrect results for the subsequent tests
+    automatically.  This happens when a connection timeout occurs and CAPRI
+    does not handle the failed attempt correctly resulting in subsequent
+    failures. 
+    
+   
+    Resolution:
+    -----------
+    When connection timeouts occur, CAPRI will reset the broker variables 
+    which would allow it to truly test each subsequent record.
+  
+ 7) I7855778FY16/553084 CAPRI is unable to access Upstate New York HCS 
+                        using Enterprise Search
+  
+    Problem:
+    --------
+    When using the Enterprise Search functionality, CAPRI can indicate a 
+    user is unable to access certain sites due to issues with how CAPRI
+    evaluates permissions.
+         
+     
+    Resolution:
+    -----------
+    When evaluating permissions, rather than using the selected entries 
+    site number to validate, CAPRI will now use the full facility name to
+    compare with the site list the user has access to so that it will be
+    able to appropriately grant access (or deny).
+  
+  
+ 8) I11409458FY17/553076  CAPRI Enterprise Search issue (see attachments) 
+  
+    Problem: 
+    --------
+    After performing an "Enterprise Search" in CAPRI, the results returned 
+    may include non VAMC entities that are not accessible.  If the user
+    tries to connect to one of these entries they are presented an error
+    indicating they don't have access to the site or some other issue
+    occurred preventing the connection.  This causes confusion for VBA
+    users who are tasked with collecting all relevant health information.
+   
+   
+    Resolution:
+    -----------
+    Now, after selecting a non VAMC entity to connect to, a message will be
+    displayed indicating that the entry selected is not a VA treatment
+    facility containing patient records.
+  
+ 9) I13483878FY17/894644  CAPRI Enterprise Search Concern
+  
+    Problem:
+    --------
+    According to the CAPRI user manual, Enterprise Search is supposed to 
+    require First Name, Last Name, SSN, and Date of Birth. However, CAPRI
+    is not physically requiring the Date of Birth field to be completed
+    before allowing searches.
+  
+    Resolution:
+    -----------
+    CAPRI GUI code modified to review and validate the DOB field.  DOB is 
+    now a required field.
+  
+  
+ 10) I18189589FY18/894652 CAPRI Enterprise Search does not work from-to
+                          Portland
+  
+     Problem: 
+     --------
+     If a CAPRI user is connected to a site and does an "Enterprise 
+     Search" and the search identifies the site the user is currently
+     connected to as a "Treating Facility", if the user attempts to
+     "Connect to Site" there is potential to get into an endless loop where
+     the end user is continuously prompted for a select to site.
+  
+     Resolution:
+     -----------
+     CAPRI will now compare the "connect to" site with the currently 
+     connected site and if they are the same, present the user with a
+     message/error indicating they are already connected to the site and to
+     use the "Patient Selector" to select the patient in question.
+  
+ 11) INC0629993/894656 A CAPRI bug has been identified where the mouse
+                       cursor changes to an hourglass, then never changes
+                       back.
+  
+     Problem: 
+     --------
+     When the user presses "OK" on the Preview Window, the mouse cursor 
+     will change to the loading symbol (a wheel or potentially an hour
+     glass) for an extended duration of time, before returning to the
+     default cursor pointer.
+  
+     Resolution:
+     -----------
+     A line of code was added at the end of SaveExamsToMemory which 
+     returns the cursor to its default state after the user presses "OK" on
+     the Preview Window and SaveExamsToMemory finishes executing.
+  
+ 12) INC3159682/86183 CAPRI GUI-Your Client software is older that the
+                      server on Vista
+  
+     Problem:
+     --------
+     Patch 193.12 introduced version control for the GUI to confirm that 
+     the user was using the latest version after a deadline date.  Users
+     were receiving an error after the deadline even if they were using the
+     most current GUI version.
+  
+     Resolution:
+     ----------
+     If the patch number check fails it falls back to a date located in 
+     the PARAMETERS file.  We found a problem in the code that is failing
+     the patch number check which appears to have been hard coded sometime
+     prior to patch 193.10.  This hardcoded code is being removed and
+     corrected.
+  
+ 13) 876380   Update RPC logger code to improve CAPRI Performance
+  
+     Problem:
+     --------
+     CAPRI Patch 193 included an update to create an RPC log that could be 
+     used to better identify errors received in the field. The logger was
+     set to store 3 days' worth of logs that could be used for debugging.
+  
+     Resolution:
+     -----------
+     Change of the RPC logger's default status to OFF and will create a 
+     new parameter that will allow the logger to be turned ON when 
+     needed by a member of the IT support team.
+  
+ 14) INC2749812/876380 ERIE - DVBA C Check  2507 Integrity Report
+                       findings
+  
+     Problem:
+     --------
+     The report includes two entries, both patients have cancelled exams.  
+     Two exams found on one patient one from 1995, the other 2014.  The
+     second patient has one entry from 1995.
+  
+     Resolution:
+     ----------
+     Patch 193.12 changed the screening process for this report. Routine 
+     DVBCCHKR is being modified to check and screen those exams in a 
+     cancelled status.
+  
+ 15) INC2754318/876379 CAPRI - Portland cannot see exams transferred from
+                       R01
+  
+     Problem:
+     --------
+     C&P exams are not being transferred to sites if the patient is not 
+     registered at the receiving site. Routine DVBCXFRC is expecting data
+     parameters not being set in the bulletin receiving routine.
+  
+     Resolution:
+     ----------
+     Routine DVBCXFRB is being modified to set the necessary variables 
+     required to enter the new patient information into the receiving sites
+     file.
+  
+ 16) INC3221099/876378 New C&P Divisions being set to active
+  
+     Problem:
+     --------
+     New Divisions being added to the MEDICAL CENTER DIVISION File (#40.8) 
+     and then being added to CAPRI DIVISION EXAM LIST File (#396.15) are
+     being marked as active if the DISABLE ALL EXAMS? field is left null
+  
+     Resolution:
+     ----------
+     DISABLE ALL EXAMS? field (#4) of DIVISION EXAM LIST File (#396.15) 
+     name change to DISABLE ALL C&P EXAMS? and will be made a required
+     field and more exact verbiage will be added to the help text for 
+     this field.
+     A post-install routine will review existing entries and if Null
+     will set the status to "No". 
+  
+ 17) INC1885947/941346  CAPRI C&P template bug with keyboard navigation
+  
+     Problem:
+     --------
+     When using the keyboard to navigate the templates listed in the 
+     "Available Templates" or "Selected Templates" lists in CAPRI, the 
+     "Description" text does not update. This text only updates when a
+     template is selected via a mouse click.
+  
+     Resolution:
+     -----------
+     Modify ListBoxTemplatesChange and ListBoxSelectedTemplatesChange to 
+     update FMCommentsMemo when a new template is selected. This will allow
+     the "Description" text to be accurate when using keyboard navigation.
+  
+ 18) INC1315324/951874  CAPRI edit exam list parameters MAS option - bug
+                        allows all divisions to be displayed.
+  
+     Problem:
+     --------
+     If all Divisions are disabled in CAPRI DIVISION EXAM LIST File  
+     (#396.15), then CAPRI will allow all routing locations as selectable
+     when Adding a New Request. This could lead to misrouted requests and
+     claims processing delays.
+  
+     Resolution:
+     -----------
+     Prevent all Divisions from being disabled in CAPRI to avoid these 
+     situations. If all CAPRI DIVISION EXAM LIST File (#396.15) Division's
+     DISABLE ALL EXAMS? field (#4) are set to "YES", display no routing
+     location options on the Add New C&P Exam form.
+  
+ 19) INC3199960/894659  CAPRI errors 
+  
+     Problem:
+     --------
+     An error occurs during the co-signature process due to expected CAPRI 
+     TEMPLATE values being undefined during the signature process causing
+     the save process to fail while updating the 2507 EXAM File (#396.4).
+  
+     Resolution:
+     -----------
+     The CAPRI code has been modified to identify the relevant data 
+     regardless of the signature process so the records can file
+     correctly.
+  
+  
+ Test Sites:
+ ----------
+ Greater West LA 
+ Minneapolis
+ Tampa
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+  
+ OI Field Offices:
+  
+ Hines:    domain.ext  
+ Salt Lake City:    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+ Title                       File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ CAPRI GUI ZIP          DVBA_27_P209_01.ZIP                 BINARY
+  
+ Zip file contents:
+  
+           - CAPRI.exe            CAPRI v209 executable
+           - VACAPRIVVA.dll       Virtual VA dynamically linked library
+           - CAPRI_Help.chm       CAPRI On-line Help
+           - CAPRI.map            CAPRI error map
+           - CAPRISession.rdox    MicroFocus Reflection session 
+                                  configuration
+           - CapriTerminalEmulators.ini
+           - ssh_config           Secure Shell configuration       
+           - DVBA_27_209_ISG.doc    CAPRI GUI Installation Supplemental Guide
+           - Libeay32.dll         VLER /DAS dynamically linked library
+           - Ssleay32.dll         VLER /DAS dynamically linked library
+           - QPDF.exe             Support PDF compression and Linearization
+           - QPDF13.dll           Support PDF compression and Linearization
+           - LIBGCC_S_DW2-1.dll   Support PDF compression and Linearization
+           - LIBSTDC++-6.dll      Support PDF compression and Linearization
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system without impact. 
+ Install of patch will take 5 minutes or less.
+  
+ Installation Instructions:
+ --------------------------
+ The CAPRI GUI is CAPRI.exe contained in DVBA_27_P209_01.ZIP. 
+ Please refer to the DVBA_27_209_ISG.doc document within the 
+ DVBA_27_P209_01.zip file for supplemental installation
+ instructions regarding the installation of the following files:
+   
+              VACAPRIVVA.dll        Virtual VA dynamically linked library
+              CAPRI_Help.chm        CAPRI On-line Help
+              CAPRI.map             CAPRI error map
+              ssh_config            Secure Shell configuration
+              Libeay32.dll          VLER /DAS dynamically linked library
+              Ssleay32.dll          VLER /DAS dynamically linked library
+              QPDF.exe              Support PDF compression and 
+                                    Linearization
+              QPDF13.dll            Support PDF compression and 
+                                    Linearization
+              LIBGCC_S_DW2-1.dll    Support PDF compression and 
+                                    Linearization
+              LIBSTDC++-6.dll       Support PDF compression and 
+                                    Linearization
+              CAPRISession.rdox     Micro Focus Reflections configuration
+  
+  
+ Installation Instructions:
+ --------------------------
+ The installation of the patch will be introducing new files, updating 
+ routines, parameters, remote procedure calls and options.
+  
+ 1. Choose the PackMan message containing this patch.
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the patch 
+    DVBA*2.7*209):
+ a. Backup a Transport Global - This option will create a backup 
+    message of any routines exported with this patch. It will not backup
+    any other changes such as DDs or templates.
+ b. Compare Transport Global to Current System - This option will 
+    allow you to view all changes that will be made when this patch is 
+    installed.  It compares all components of this patch's routines, DDs, 
+    templates, etc.
+ c. Verify Checksums in Transport Global - This option will allow you    
+    to ensure the integrity of the routines that are in the transport
+    global.
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+    When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//NO
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//NO
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//NO 
+ 7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+ 8. If CAPRI GUI users have not already been upgraded to the new 
+    version of the CAPRI GUI v209 (CAPRI.exe [DVBA_27_P209_1.ZIP]),
+    they should be upgraded as soon as possible upon installation of this
+    patch.
+  
+  
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. Log a ServiceNow helpdesk ticket so the 
+ development team can assist in this process.
+  
+  
+ Prior to installing a patch, the site/region should have saved a back-up 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed-up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed-up routines.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995 ;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBC209P
+    Before:       n/a   After:  B3191615  **209**
+Routine Name: DVBCCHKR
+    Before: B29140314   After: B29585944  **17,194,193,209**
+Routine Name: DVBCENQ
+    Before:  B3945315   After:  B4653684  **209**
+Routine Name: DVBCXFRB
+    Before: B16864719   After: B17997517  **149,193,209**
+Routine Name: DVBCXFRC
+    Before: B92188379   After: B54996630  **1,6,18,65,149,193,209**
+ 
+Routine list of preceding patches: 193
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 06, 2018
+Completed By:                               Date Completed: APR 15, 2019
+Released By :                               Date Released : APR 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

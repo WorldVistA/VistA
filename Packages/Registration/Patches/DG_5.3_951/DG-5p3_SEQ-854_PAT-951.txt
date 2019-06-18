@@ -1,0 +1,649 @@
+$TXT Created by                DEVA.DOMAIN.EXT  (KIDS) on Tuesday, 02/05/19 at 18:46
+=============================================================================
+Run Date: MAR 04, 2019                     Designation: DG*5.3*951
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #854                    Status: Released
+                  Compliance Date: MAR 07, 2019
+=============================================================================
+
+Associated patches: (v)DG*5.3*864  <<= must be installed BEFORE `DG*5.3*951'
+                    (v)DG*5.3*911  <<= must be installed BEFORE `DG*5.3*951'
+                    (v)DG*5.3*921  <<= must be installed BEFORE `DG*5.3*951'
+
+Subject: SHRPE ENHANCEMENTS FOR PATIENT RECORD FLAGS
+
+Category: 
+  - Enhancement ()
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ NOTE: This patch is requested to be installed prior to or on the
+ compliance date, which is 3 days after its release. Patient Record Flags
+ (PRF) data can get out of sync when some sites have installed the patch
+ and some have not and this can potentially cause patient safety issues.
+ The patch description provides instructions on how to fix the issues if
+ they arise. While the shorter period of installation cannot guarantee
+ there will be no issues, this approach can minimize the risk by reducing
+ the chance of out-of-sync occurrences and in the case it does happen,
+ there will be fewer sites that will need to fix issues manually.
+  
+ This patch addresses enhancements to Patient Record Flags (PRF) to 
+ improve the delivery of targeted Mental Health care for individuals at 
+ high risk for suicide.
+  
+ Enhancements to PRF reports were made to improve effective management of 
+ coordination of care for high risk individuals and to include new data 
+ elements introduced with this patch.
+  
+ 1. The Disruptive Behavior Reporting System (DBRS) record numbers are now 
+    recorded in the PRF FileMan files to enable a convenient reference 
+    between VistA and DBRS. The patch contains the following modifications
+    to support DBRS functionality:
+                                  
+   a) Ability to enter/edit multiple DBRS data sets on National Category 1 
+      Behavioral PRF flags in VistA.
+   b) Enforced format of DBRS Number field to be consistent with DBRS case 
+      numbers in DBRS system.
+   c) HL7 updates to pertinent messages to include DBRS data set 
+      information.
+   d) Implemented business rules around editing DBRS data sets and 
+      tracking the author for enforcement of editing rules.
+   e) New DBRS Historical Report to display historical edits made to a 
+      single National Category 1 Behavioral PRF flag in VistA.
+   f) New Application Programming Interface (API) GETDBRS^DGPFDBRS was
+      added to the Registration (DG) application to provide access to DBRS
+      data to external applications like Computerized Patient Record System
+      (CPRS) for displaying DBRS data on the screen. The Integration
+      Control Registration (ICR)# 6874 was introduced for this new
+      interface.
+  
+ 2. Modification to support Text Integration Utility (TIU)/CPRS Progress
+    Note Properties' flag action list functionality. The new array element
+    "ORIG FAC" was added to the output of the pre-existing API  
+    $$GETHTIU^DGPFAPI1. The new data element contains the facility that
+    created the Assignment History record. This will allow the TIU
+    application to retrieve the data via RPC TIU GET PRF ACTIONS and
+    display the originating facility on the Progress Note Properties' flag
+    action list and sort entries by these values. Note: The respective TIU
+    modification is required to make this functionality available for
+    users and it will be included in the future version of CPRS. The ICR#
+    4383, that covers $$GETHTIU^DGPFAPI1, was updated accordingly.
+  
+ 3. Enhancements to PRF flags ownership transfers. The patch implements new
+    functionality and makes modifications to existing code to improve the
+    process of ownership transfer and eliminate issues reported by PRF
+    users:
+  
+   a) The new ListMan action "PRF Owner Transfer Request" (FT) in the 
+      Record Flag Assignment [DGPF RECORD FLAG ASSIGNMENT] menu option was 
+      created to request ownership transfer of PRF assignments.
+      - When a user requests ownership transfer, the division that was used
+        to sign into VistA will be the new owner.
+        Note: This modification addresses PRF transfer issues experienced
+        by integrated sites.
+      - If the assignment is active, a MailMan message will be sent to the
+        current owner's mail group requesting approval.
+      - If the assignment is inactive, the transfer will be done
+        immediately and a MailMan message will be sent notifying the
+        current owner of the change of ownership action.
+      - The functionality prevents duplicate requests.
+  
+   b) The corresponding new menu option Record Flag Transfer Requests (TR) 
+      was created to manage ownership transfer requests:
+      The new menu option allows users to:
+      - list requests and their statuses
+      - review request details
+      - approve or reject requests
+      - enter a reason for transfer request and a reason for 
+        approval/rejection
+  
+   c) The MailMan modification is sent to PRF mail group 'DGPF PRF 
+      TRANSFER REQUESTS' when PRF ownership request is
+      - sent 
+      - received 
+      - approved
+      - rejected
+  
+   d) Both the Change Assignment Ownership (CO) and the PRF Owner Transfer
+      Request (FT) actions will set the Review Date on the new owner's
+      system to the default value for that flag.
+  
+   e) Change Assignment Ownership (CO) action is blocked from transferring 
+      an Active PRF assignment if an existing request created in PRF Owner
+      Transfer Request (FT) action is pending.
+  
+   f) New option, DGPF RECORD REFRESH is sent out as a stand alone OPTION
+      not attached to any menu. It is locked with the SECURITY KEY "DGPF
+      TRANSMISSIONS". This option was designed to be used by VA Tier II
+      Support or at their direction. This action allows the user to
+      retransmit the entire PRF record to other sites to enforce PRF flag
+      synchronization across the sites where the patient is registered.
+  
+ 4. Various enhancements and fixes related to PRF flag HL7 transmissions: 
+   a) In the Assign Flag (AF) and the Edit Flag Assignment (EF) actions,
+      the two word processing fields for Assignment Narrative and Edit
+      Reason will require a minimum of three consecutive alpha characters.
+  
+   b) HL7 messages for PRF related transmission and their processing were
+      updated to use external names of PRF flag instead of internal entry
+      numbers (IENs). 
+  
+   c) PRF HL7 message processing code was updated to properly handle HL7
+      delimiters entered by users in free text fields.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+  
+ File Name (Number)              Field Name(Number)    New/Modified/Deleted
+ ----------------------------    --------------------   -------------------
+  PRF ASSIGNMENT FILE (#26.13)    DBRS NUMBER (#2)       New Multiple
+      DBRS NUMBER (#26.131)       DBRS NUMBER (#.01)       New
+                                  OTHER DBRS DATA (#.02)   New
+                                  DATE (#.03)              New
+                                  CREATE SITE (#.04)       New
+  
+  PRF ASSIGNMENT HISTORY (#26.14) PRF ASSIGNMENT (#.01)  Modified
+                                  ACTION (#.03)          Modified
+                                  CREATED BY SITE (#.09) New
+                                  DBRS NUMBER (#2)       New Multiple
+      DBRS NUMBER (#26.142)       DBRS NUMBER (#.01)       New
+                                  DBRS OTHER (#.02)        New
+                                  DATE (#.03)              New
+                                  STATUS  (#.04)           New
+                                  CREATE SITE (#.05)       New
+  
+ PRF HL7 REQUEST LOG (#26.22)                              New
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ PRF-TRANS-REQ                                             New 
+ PRF-TRANS-RESP                                            New
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ DGPF PRF TRANSFER REQUESTS                                New 
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                           Type                  Deleted
+ -----------                        -----------            -------------
+ DGPF DISRUPT BEHAVIOR REPORT       Run Routine            New
+ DGPF PRF TRANSFER REQUESTS         Run Routine            New 
+ DGPF RECORD FLAG REPORTS MENU      Menu                   Modified
+ DGPF RECORD FLAGS MAIN MENU        Menu                   Modified 
+ DGPF RECORD REFRESH                Run Routine            New 
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ DGPF PRF QBP/Q11 EVENT                                    New
+ DGPF PRF QBP/Q11 SUBSC                                    New
+ DGPF PRF RSP/K11 EVENT                                    New
+ DGPF PRF RSP/K11 SUBSC                                    New 
+ DGPF PRF TR REQ CHANGE VIEW                               New 
+ DGPF PRF TR REQ DETAILS                                   New 
+ DGPF PRF TR REQ MENU                                      New 
+ DGPF PRF TR REQ REVIEW                                    New 
+ DGPF RECORD FLAG ASSIGNMENT MENU                          New 
+ DGPF TRANSFER FLAG                                        New 
+ VALM QUIT                                                 Unchanged
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name                Type                           Deleted    
+ -------------                ----                         -------------
+ DGPF PRF TRANSFER REQUESTS   List                         New
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+  
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ 1. I17222368FY18 - No Category I Patient Record Flag Assignments found
+  
+ Problem:
+ -------
+    "No Category I Patient Record Flag Assignments found" is the response
+    for queries made concerning existing Patient Record Flag (PRF) data and
+    no PRF data is transmitted. It has been determined a PRF file entry
+    having a lone associated comment consisting solely of a punctuation/
+    control character is treated by PRF-HL7 processing as not-valid; and
+    is treated as if there is no flag history.
+  
+ Resolution:
+ ----------
+    Modify routine DGPFHLUT to transmit an HL7 message when entering a
+    punctuation as a comment and store it with quotes so that it does not
+    interfere with HL7 message format or integrity. 
+  
+  
+ Test Sites:
+ ----------
+ Syracuse
+ West Palm Beach
+ Iowa City
+ Des Moines
+ Omaha
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The software is released as a PackMan patch message and is distributed 
+ via FORUM.
+  
+ Software documentation describing the new functionality introduced by 
+ this patch is available for downloading from the ANONYMOUS.SOFTWARE 
+ directories or from the VA Software Documentation Library.
+  
+ The preferred method is to retrieve the files from the ANONYMOUS.SOFTWARE 
+ directories is from download.vista.domain.ext. This transmits the files 
+ from the first available server.
+  
+ Sites may elect to retrieve the software and/or documentation directly 
+ using Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:             http://www.domain.ext/vdl/ 
+  
+ Title                    File Name                            SFTP Mode
+ -----------------------------------------------------------------------
+ PIMS Technical Manual    pimstm.pdf                           Binary
+ Patient Record Flags     prfhl7is.pdf                         Binary    
+ HL7 Interface 
+ Specification
+ Patient Record Flags     patient_record_flags_user_guide.pdf  Binary
+ User Guide
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Post-installation routine DG53P951 creates a non-human user 
+ "DGPRF,INTERFACE", if one does not already exist. This user account is
+ used for sending various MailMan notifications and ownership transfers of
+ inactive PRF flags.
+  
+ The installer needs to contact the site's Suicide Prevention Coordinators
+ (National Category 1 High Risk for Suicide flags) and Disruptive Behavior
+ Committee Chair (National Category 1 Behavioral flags) to identify the
+ person who will be coordinating transfer requests notifications for PRF
+ flags. That person's name should be entered at the following prompt for
+ the newly created mailgroup:
+     Enter the Coordinator for Mail Group 'DGPF PRF TRANSFER REQUESTS': 
+  
+ During installation of the patch, the "HL7 CHECK POST-INSTALLATION" 
+ report will be generated and sent to: 
+   - the installer,
+   - POSTMASTER,
+   - DGPF BEHAVIORAL FLAG REVIEW mail group,
+   - IRM mail group
+ to identify potential DBRS data synchronization issues.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 
+ minutes to install. However, the "HL7 CHECK POST-INSTALLATION" report 
+ generation portion of the patch might take up to several hours. Therefore 
+ it is designed to be run in the background (see details in the paragraph 
+ below).
+  
+ The patch installation can be queued if necessary. 
+ - If the patch installation is queued, no questions will be asked and the 
+ installer will receive a separate MailMan message with the "HL7 CHECK 
+ POST-INSTALLATION" report if something was found to report. A "NO REPORT 
+ GENERATED" message will be emailed and displayed if nothing was found to 
+ report.
+ - If the patch installation is not queued then the installer will be 
+ prompted to schedule a specific time when the background jobs should be 
+ started. The user can also press the Enter key to accept NOW and start it 
+ immediately:
+    Requested Start Time: NOW//
+ Later, the user (and other recipients) will receive the report as a 
+ MailMan message or "NO REPORT GENERATED" message if nothing was found to 
+ report.
+ Note: please see more details about this report in the post-install 
+ section. 
+  
+ Options to disable during the install:
+  
+   Patient Record Flag Background [DGPF BACKGROUND PROCESSING] 
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch #:
+     DG*5.3*951.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter DG*5.3*951
+  
+ 5.  Enter the Coordinator for Mail Group 'DGPF PRF TRANSFER REQUESTS': 
+     <ENTER A NAME>
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//', answer with YES.
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer with NO.
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES//', answer with YES, 
+  
+     Enter options you wish to mark as 'Out Of Order': 
+     DGPF BACKGROUND PROCESSING    Patient Record Flag Background
+  
+     Enter options you wish to mark as 'Out Of Order': <ENTER>
+  
+     Enter protocols you wish to mark as 'Out Of Order': <ENTER>
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ 10. Enter the Device you want to print the Install messages.
+       You can queue the install by enter a 'Q' at the device prompt.
+       Enter a '^' to abort the install.
+  
+       DEVICE: HOME// 
+  
+ 11. You will now be prompted for Requested Start Time to generate
+       the HL7 CHECK POST INSTALLATION REPORT  
+  
+       If you do not enter a time, then this report will be queued to run 
+       NOW.
+  
+       Requested Start Time: NOW//  
+  
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ During National Release period all VA sites will generate the "HL7 CHECK 
+ POST-INSTALLATION" report that will be used to address DBRS data 
+ synchronization issues across the VA that can be occur during 
+ the deployment period when some sites will have DG*5.3*951 installed and
+ some will not have it yet. During this period, DBRS data sent in HL7
+ messages to the sites without the patch will not be able to store DBRS
+ data in the database.
+  
+ The report will be generated at the end of the DG*5.3*951 installation
+ process. The installer and other recipients of the report will receive it
+ in the form of a MailMan message. The process of generating the report
+ might take up to several hours; therefore, the MailMan message with the
+ report can be received several hours after the time scheduled to generate
+ the report. The report will identify patients for whom DBRS data was sent
+ from other sites during the National Release period (for simplicity the
+ report will be checking for the last 4 days in the past and this will
+ cover the National Release period).
+  
+ The report text will list patients and sending sites that need to run the 
+ "Refresh" option for their patients listed in the report. 
+ The report will be sent to the following recipients:
+  the installer,
+  POSTMASTER,
+  local Information Resources Management (IRM) "IRM" mail group, 
+  local "DGPF BEHAVIORAL FLAG REVIEW" mail group. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 135
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P951
+    Before:       n/a   After:B177935300  **951**
+Routine Name: DGPFAA
+    Before: B41515033   After: B81848262  **425,921,951**
+Routine Name: DGPFAA1
+    Before:   B954394   After:  B1552435  **425,951**
+Routine Name: DGPFAA2
+    Before: B31192734   After: B33264279  **425,554,650,951**
+Routine Name: DGPFAA3
+    Before: B36294863   After: B37090841  **425,650,911,951**
+Routine Name: DGPFAAH
+    Before: B32554418   After: B57134079  **425,554,951**
+Routine Name: DGPFAAH1
+    Before:  B1218620   After:  B1497249  **425,951**
+Routine Name: DGPFAPI1
+    Before: B24558175   After: B27698774  **554,650,951**
+Routine Name: DGPFDBRS
+    Before:       n/a   After:  B1824667  **951**
+Routine Name: DGPFHLF
+    Before:       n/a   After: B68443058  **951**
+Routine Name: DGPFHLQ
+    Before: B44511391   After: B53156618  **425,650,951**
+Routine Name: DGPFHLQ4
+    Before: B17883143   After: B34191835  **425,650,951**
+Routine Name: DGPFHLR
+    Before: B69390340   After:B124847191  **425,650,951**
+Routine Name: DGPFHLT
+    Before:       n/a   After: B17377719  **951**
+Routine Name: DGPFHLT1
+    Before:       n/a   After: B83307291  **951**
+Routine Name: DGPFHLT2
+    Before:       n/a   After: B13087829  **951**
+Routine Name: DGPFHLT3
+    Before:       n/a   After: B17764072  **951**
+Routine Name: DGPFHLT4
+    Before:       n/a   After:  B1707116  **951**
+Routine Name: DGPFHLTM
+    Before:       n/a   After: B17001676  **951**
+Routine Name: DGPFHLU
+    Before: B34815804   After: B54583242  **425,718,650,951**
+Routine Name: DGPFHLU1
+    Before: B28767858   After:  B6628832  **425,951**
+Routine Name: DGPFHLU2
+    Before: B22238545   After: B25225629  **425,951**
+Routine Name: DGPFHLU3
+    Before: B31915353   After: B31602328  **425,650,951**
+Routine Name: DGPFHLU4
+    Before: B16669354   After: B17533287  **425,951**
+Routine Name: DGPFHLUT
+    Before: B36458354   After: B64018223  **425,650,951**
+Routine Name: DGPFLMA2
+    Before: B58607996   After: B95827931  **425,623,554,650,864,951**
+Routine Name: DGPFLMA3
+    Before: B74777125   After:B115226280  **425,623,554,650,864,951**
+Routine Name: DGPFLMA4
+    Before: B39834723   After: B45697880  **425,554,650,951**
+Routine Name: DGPFLMA5
+    Before:       n/a   After: B26946927  **951**
+Routine Name: DGPFLMU1
+    Before: B45355090   After: B57734763  **425,554,650,951**
+Routine Name: DGPFRDB
+    Before:       n/a   After:  B2814866  **951**
+Routine Name: DGPFRDB1
+    Before:       n/a   After: B36629736  **951**
+Routine Name: DGPFTR
+    Before:       n/a   After: B25361396  **951**
+Routine Name: DGPFTR1
+    Before:       n/a   After: B75593234  **951**
+Routine Name: DGPFUT
+    Before: B38902808   After: B65688898  **425,554,650,951**
+Routine Name: DGPFUT3
+    Before: B35131526   After: B43190610  **554,951**
+Routine Name: DGPFUT4
+    Before: B36954590   After: B49462470  **554,951**
+Routine Name: DGPFUT6
+    Before:       n/a   After:  B4892495  **951**
+Routine Name: DGPFUT61
+    Before:       n/a   After:B148565711  **951**
+Routine Name: DGPFUT62
+    Before:       n/a   After: B53001893  **951**
+Routine Name: DGPFUT64
+    Before:       n/a   After:  B9605992  **951**
+ 
+Routine list of preceding patches: 864, 911, 921
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 22, 2017
+Completed By:                               Date Completed: MAR 04, 2019
+Released By :                               Date Released : MAR 04, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

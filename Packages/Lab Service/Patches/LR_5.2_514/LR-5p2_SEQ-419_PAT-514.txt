@@ -1,0 +1,382 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/05/19 at 16:14
+=============================================================================
+Run Date: MAR 27, 2019                     Designation: LR*5.2*514
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #419                    Status: Released
+                  Compliance Date: APR 27, 2019
+=============================================================================
+
+
+Subject: ANATOMIC PATHOLOGY LOG-IN: SCREEN FOR SEX-SPECIFIC TOPOGRAPHY
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ Anatomic Pathology Log-In does not require that the patient's sex must 
+ match the SEX SPECIFIC (#2.5) field in the TOPOGRAPHY FIELD (#61) file for
+ specimens (if the sex specific field is defined).
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)    Field Name (Number)          New/Modified/Deleted
+ ------------------    --------------------------   --------------------
+ CYTOPATHOLOGY:
+ SPECIMEN SUB-FIELD    SPECIMEN TOPOGRAPHY (#.06)   Modified
+ (#63.902)
+  
+ ELECTRON MICROSCOPY:
+ SPECIMEN SUB-FIELD    SPECIMEN TOPOGRAPHY (#.06)   Modified
+ (#63.202)                                          
+  
+ SURGICAL PATHOLOGY:
+ SPECIMEN SUB-FIELD    SPECIMEN TOPOGRAPHY (#.06)   Modified
+ (#63.812) 
+  
+  
+ Blood Bank Review:
+ ================= 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*514 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*514 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*514 have no adverse effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1. INC2906846 - Anatomic Pathology Log-In Sex-Specific Topography
+                 Validation
+  
+ Problem:
+ -------
+ The Log-in, anat path [LRAPLG] option does not require that the patient's
+ sex must match any sex-specific specimen topography specimens. These
+ specimens correspond to an entry from the TOPOGRAPHY FIELD (#61) file that
+ is defined with "F" for "female" or "M" for "male" in the SEX SPECIFIC
+ (#2.5) field. If a specimen is logged in with a sex-specific mismatch,
+ that entry is not accepted during the later steps in Anatomic Pathology
+ Data Entry.
+  
+ Resolution:
+ ----------
+ Modify the data dictionary input transforms and screens for the Surgical 
+ Pathology, Cytopathology, and Electron Microscopy (EM) accession areas
+ with the following requirement: If the SEX SPECIFIC (#2.5) field of the
+ TOPOGRAPHY FIELD (#61) file is defined, the patient's sex must match the
+ field entry.
+  
+ Any entries in the TOPOGRAPHY FIELD (#61) file that have an "M" or "F"
+ entry in the SEX SPECIFIC (#2.5) field will not display to the user as a
+ selection choice if the entry is not the same as the patient's sex.
+  
+ NOTE: This change is not necessary for the Autopsy accession area since 
+ specimen topography is not entered during the Log-in, anat path [LRAPLG]
+ option. The change will also not be implemented for Laboratory accession
+ areas not related to Anatomic Pathology.
+  
+  
+ Test Sites:
+ ==========
+ VA Puget Sound HCS
+ Syracuse VAMC
+  
+  
+ Data Dictionaries Before:
+ ========================
+ 63.902,.06      SPECIMEN TOPOGRAPHY  0;6 POINTER TO TOPOGRAPHY FIELD
+                                      FILE (#61)
+  
+                 LAST EDITED:    NOV 25, 2005 
+                 DESCRIPTION:    This field contains the topography 
+                                 location for this test.
+  
+ 63.202,.06      SPECIMEN TOPOGRAPHY  0;6 POINTER TO TOPOGRAPHY FIELD 
+                                      FILE (#61)
+  
+                 LAST EDITED:    NOV 25, 2005 
+                 DESCRIPTION:    This field contains the topography 
+                                 location for this test.
+  
+ 63.812,.06      SPECIMEN TOPOGRAPHY  0;6 POINTER TO TOPOGRAPHY FIELD 
+                                      FILE (#61) 
+  
+                 LAST EDITED:    FEB 08, 2007 
+                 DESCRIPTION:    This field contains the topography 
+                                 location for this test.
+  
+ Data Dictionaries After:
+ =======================
+ 63.902,.06     SPECIMEN TOPOGRAPHY   0;6 POINTER TO TOPOGRAPHY FIELD 
+                                      FILE (#61)
+  
+                INPUT TRANSFORM: S DIC("S")="I $P(^LAB(61,+Y,0),U,3)
+                                 =""""!($P(^LAB(61,+Y,0),U,3)=$G(SEX))" D
+                                 ^DIC K DIC S DIC=$G(DIE),X=+Y K:Y<0 X
+                LAST EDITED:     NOV 30, 2018
+                HELP-PROMPT:     This field contains the topography
+                                 location for this test.
+                DESCRIPTION:     This field contains the topography 
+                                 location for this test. If the SEX 
+                                 SPECIFIC (#2.5) field of the TOPOGRAPHY
+                                 FIELD (#61) file is defined, the sex of
+                                 the patient must match.
+  
+                SCREEN:          S DIC("S")="I $P(^LAB(61,+Y,0),U,3)
+                                 =""""!($P(^LAB(61,+Y,0),U,3)=$G(SEX))"
+                EXPLANATION:     If this message appears after entering a 
+                                 topography, the entry might be: (1) not on
+                                 file; (2) misspelled; or (3) the 
+                                 topography has a restriction by sex that
+                                 does not match the patient's sex.
+  
+ 63.202,.06     SPECIMEN TOPOGRAPHY    0;6 POINTER TO TOPOGRAPHY FIELD 
+                                       FILE (#61)
+  
+                INPUT TRANSFORM: S DIC("S")="I $P(^LAB(61,+Y,0),U,3)
+                                 =""""!($P(^LAB(61,+Y,0),U,3)=$G(SEX))" D
+                                 ^DIC K DIC S DIC=$G(DIE),X=+Y K:Y<0 X
+                LAST EDITED:     NOV 30, 2018
+                HELP-PROMPT:     This field contains the topography
+                                 location for this test.
+                DESCRIPTION:     This field contains the topography 
+                                 location for this test. If the SEX 
+                                 SPECIFIC (#2.5) field of the TOPOGRAPHY
+                                 FIELD (#61) file is defined, the sex of
+                                 the patient must match.
+  
+                SCREEN:          S DIC("S")="I $P(^LAB(61,+Y,0),U,3)
+                                 =""""!($P(^LAB(61,+Y,0),U,3)=$G(SEX))"
+                EXPLANATION:     If this message appears after entering a 
+                                 topography, the entry might be: (1) not on
+                                 file; (2) misspelled; or (3) the 
+                                 topography has a restriction by sex that
+                                 does not match the patient's sex.
+  
+ 63.812,.06     SPECIMEN TOPOGRAPHY     0;6 POINTER TO TOPOGRAPHY FIELD 
+                                        FILE (#61)
+  
+                INPUT TRANSFORM: S DIC("S")="I $P(^LAB(61,+Y,0),U,3)
+                                 =""""!($P(^LAB(61,+Y,0),U,3)=$G(SEX))" D
+                                 ^DIC K DIC S DIC=$G(DIE),X=+Y K:Y<0 X
+                LAST EDITED:     NOV 30, 2018
+                HELP-PROMPT:     This field contains the topography
+                                 location for this test.
+                DESCRIPTION:     This field contains the topography 
+                                 location for this test. If the SEX 
+                                 SPECIFIC (#2.5) field of the TOPOGRAPHY
+                                 FIELD (#61) file is defined, the sex of
+                                 the patient must match.
+  
+                SCREEN:          S DIC("S")="I $P(^LAB(61,+Y,0),U,3)
+                                 =""""!($P(^LAB(61,+Y,0),U,3)=$G(SEX))"
+                EXPLANATION:     If this message appears after entering a 
+                                 topography, the entry might be: (1) not on
+                                 file; (2) misspelled; or (3) the 
+                                 topography has a restriction by sex that
+                                 does not match the patient's sex.
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ =============================
+ This patch may be loaded with users on the system. You may wish to 
+ install it during non-peak hours. Installation will take less than 1 
+ minute. 
+  
+ NOTE: Kernel patches must be current on the target system to avoid 
+ problems loading and/or installing this patch.
+  
+ Installation Instructions:
+ =========================
+    1. Choose the PackMan message containing this patch.
+  
+    2. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. From this menu, you may elect to use the following option. When 
+       prompted for the INSTALL NAME select the package 'LR*5.2*514':
+  
+       a. Print Transport Global - This option will allow you to print 
+          only a summary of the patch, to print a summary of the patch and
+          the routines in the transport global, or to print only the
+          routines in the transport global.
+  
+       b. Compare Transport Global to Current System - This option will 
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch (routines,
+          DDs, templates, etc.).
+       
+    5. Backup: The KIDS menu option "Backup a Transport Global" will not be
+       used to back this patch up since no routines are included.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*514'.
+  
+    7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', choose 'NO'.
+  
+    8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//', choose 'NO'.
+  
+ Installation Verification:
+ =========================
+ Review the Data Dictionary changes listed above using VA FileMan. The 
+ example below illustrates the Cytopathology sub-file.  The steps may be 
+ repeated for the EM and Surgical Pathology sub-files.
+  
+ VA FileMan 22.2
+  
+ Select OPTION: 8  DATA DICTIONARY UTILITIES
+ Select DATA DICTIONARY UTILITY OPTION: 1  LIST FILE ATTRIBUTES
+  START WITH What File: LAB DATA//         (52116 entries)
+       GO TO What File: LAB DATA//         (52116 entries)
+       Select SUB-FILE: CYTOPATHOLOGY  
+       Select SUB-FILE: SPECIMEN
+       Select SUB-FILE:
+ Select LISTING FORMAT: STANDARD//   
+ Start with field: FIRST// SPECIMEN TOPOGRAPHY
+ Go to field: SPECIMEN TOPOGRAPHY
+ DEVICE: ;;9999  HOME  (CRT)    Right Margin: 80// 
+  
+  
+ Back-out/Rollback Strategy:
+ ==========================
+ If this patch needs to be backed out, the VA FileMan option MODIFY FILE
+ ATTRIBUTES will need to be used. Contact HPS Sustainment for assistance  
+ if needed. 
+  
+ 1. The Screen and the Description fields should be edited as shown for 
+    Cytopathology, EM, and Surgical Pathology using option MODIFY FILE 
+    ATTRIBUTES:
+  
+ VA FileMan 22.2
+  
+ Select OPTION: MODIFY FILE ATTRIBUTES  
+ Do you want to use the screen-mode version? YES// NO
+  
+ Modify what File: LAB DATA//              (37960 entries)
+  
+ Select FIELD: CYTOPATHOLOGY    (multiple)  <<< enter CYTOPATHOLOGY, EM
+                                                or SURGICAL PATHOLOGY
+ LABEL: CYTOPATHOLOGY// 
+ READ ACCESS (OPTIONAL): 
+ WRITE ACCESS (OPTIONAL): 
+ SOURCE: 
+ Select DESTINATION: 
+ Select GROUP: 
+ DESCRIPTION:
+   Edit? NO// 
+ TECHNICAL DESCRIPTION:
+   Edit? NO// 
+  
+ Select CYTOPATHOLOGY SUB-FIELD: SPECIMEN     <<<< enter SPECIMEN
+      1   SPECIMEN    (multiple)
+      2   SPECIMEN SUBMITTED BY  
+ CHOOSE 1-2: 1  SPECIMEN  (multiple)
+ LABEL: SPECIMEN// 
+ READ ACCESS (OPTIONAL): 
+ WRITE ACCESS (OPTIONAL): 
+ SOURCE: 
+ Select DESTINATION: 
+ Select GROUP: 
+ DESCRIPTION:
+ These are the specimens submitted.
+  
+   Edit? NO// 
+ TECHNICAL DESCRIPTION:
+   Edit? NO// 
+  
+ Select SPECIMEN SUB-FIELD: SPECIMEN TOPOGRAPHY   <<< enter SPECIMEN T
+ LABEL: SPECIMEN TOPOGRAPHY// 
+ TITLE: 
+ AUDIT: 
+ AUDIT CONDITION: 
+ READ ACCESS (OPTIONAL): 
+ DELETE ACCESS (OPTIONAL): 
+ WRITE ACCESS (OPTIONAL): 
+ SOURCE: 
+ Select DESTINATION: 
+ Select GROUP: 
+ DESCRIPTION:
+ This field contains the topography location for this test. 
+ If the SEX SPECIFIC (#2.5) field of the TOPOGRAPHY FIELD (#61) file
+ is defined, the sex of the patient must match.
+  
+   Edit? NO// YES  <<< Edit description to "This field contains the 
+                       topography location for this test"
+  
+ ==[ WRAP ]==[INSERT ]======< DESCRIPTION >===[Press <PF1>H for help]==
+  
+ This field contains the topography location for this test. 
+  
+ <========T========T========T========T========T=======T=======T======T>
+  
+ TECHNICAL DESCRIPTION:
+   Edit? NO// 
+  
+ DATA TYPE OF SPECIMEN TOPOGRAPHY: POINTER TO A FILE// 
+ POINT TO WHICH FILE: TOPOGRAPHY FIELD//   
+ SHOULD 'ADDING A NEW TOPOGRAPHY FIELD FILE ENTRY' ("LAYGO")
+ BE ALLOWED WHEN ANSWERING THE SPECIMEN TOPOGRAPHY' QUESTION? No//   (No)
+ SHOULD 'TOPOGRAPHY FIELD' ENTRIES BE SCREENED? Yes// N  (No)  <<< enter N
+ IS SPECIMEN TOPOGRAPHY ENTRY MANDATORY (Y/N): NO//   NO
+ ....
+ 'HELP'-PROMPT: This field contains the topography location for this test.
+            Replace 
+ XECUTABLE 'HELP': 
+  
+ SINCE YOU HAVE CHANGED THE FIELD DEFINITION,
+ EXISTING 'SPECIMEN TOPOGRAPHY' DATA WILL NOW BE CHECKED FOR 
+ INCONSISTENCIES
+ OK? Yes// N  (No)   <<<<< enter N
+  
+ Select SPECIMEN SUB-FIELD:
+  
+ 2. Make sure that the Back-Out Strategy is followed for each of the
+    three sub-files: CYTOPATHOLOGY, EM, and SURGICAL PATHOLOGY.
+  
+ 3. Verify that the SPECIMEN TOPOGRAPHY fields appear as listed in the
+    "Data Dictionaries Before" section of this patch description.
+  
+ NOTE: The HELP-PROMPT entries will remain after following the above 
+       steps. The HELP-PROMPT text is correct whether or not LR*5.2*514
+       is installed.  It was included with this patch at the request of
+       the approver during the Data Dictionary approval process.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 06, 2018
+Completed By:                               Date Completed: MAR 26, 2019
+Released By :                               Date Released : MAR 27, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

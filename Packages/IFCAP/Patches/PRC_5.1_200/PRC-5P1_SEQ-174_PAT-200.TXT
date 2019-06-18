@@ -1,0 +1,139 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Friday, 07/21/17 at 14:17
+=============================================================================
+Run Date: AUG 28, 2017                     Designation: PRC*5.1*200
+Package : PRC - IFCAP                         Priority: EMERGENCY
+Version : 5.1       SEQ #174                    Status: Released
+                  Compliance Date: AUG 30, 2017
+=============================================================================
+
+Associated patches: (v)PRC*5.1*33  <<= must be installed BEFORE `PRC*5.1*200'
+
+Subject: PERPETUAL INVENTORY FLAG ON SECONDARY IP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ 1. Keep Perpetual Inventory not working correctly for inventory 
+    distribution of items to the Secondary Inventory Point.
+  
+  
+  
+ Associated Ticket(s):
+ =====================
+ 1. I9830401FY16 - PERPETUAL INVENTORY FLAG not working correctly on 
+                   Secondary Inventory Point items. 
+               
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+  
+ Participating Test Sites:
+ =========================
+ Manchester VAMC
+ VA Maine HCS 
+  
+  
+ CA SDM Overview:
+ ================
+ 1. I9830401FY16 - PERPETUAL INVENTORY FLAG not working correctly on 
+                   Secondary Inventory Point items. 
+  
+  
+    Problem:
+    --------
+    The Keep Perpetual Inventory (#.5) field in the Generic Inventory
+    (#445) file is not working properly when items are distributed from the
+    Primary Inventory Point (IP).  If the Keep Perpetual Inventory 
+    (#.5) field is set to 'NO', there should be NO accrual of quantity or
+    cost of item distribution to the Secondary IP.
+    
+    Resolution:
+    -----------                    
+    Modify the routine to check if the Keep Perpetual Inventory (#.5) field
+    in the Generic Inventory (#445) file is set to 'NO' and, if so, DO NOT
+    accrue quantity or dollars for related item distribution into Secondary
+    IP.
+  
+    
+ Routines: PRCPOPPP
+  
+  
+  
+  
+ Installation Instructions: 
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*200)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*200.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', just press <RETURN>. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+           Primary Inventory Point Main Menu       [PRCP MAIN MENU]    
+           Secondary Inventory Point Main Menu     [PRCP2 MAIN MENU]     
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCPOPPP
+    Before: B13897532   After: B15418168  **4,33,200**
+ 
+Routine list of preceding patches: 33
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 26, 2017
+Completed By:                               Date Completed: AUG 25, 2017
+Released By :                               Date Released : AUG 28, 2017
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

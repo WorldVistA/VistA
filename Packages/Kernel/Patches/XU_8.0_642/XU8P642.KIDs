@@ -1,0 +1,902 @@
+KIDS Distribution saved on Nov 16, 2015@08:29:57
+XU*8.0*642
+**KIDS**:XU*8.0*642^
+
+**INSTALL NAME**
+XU*8.0*642
+"BLD",1523,0)
+XU*8.0*642^KERNEL^0^3151116^y
+"BLD",1523,1,0)
+^9.61A^16^16^3150609^^^
+"BLD",1523,1,1,0)
+This patch is in support of the Drug Enforcement Agency (DEA) 
+"BLD",1523,1,2,0)
+e-Prescribing of Controlled Substances (CS) (ePCS) using Public Key 
+"BLD",1523,1,3,0)
+Infrastructure (PKI).  The following modifications to the VistA Kernel 
+"BLD",1523,1,4,0)
+have been made to meet current ePCS requirements.
+"BLD",1523,1,5,0)
+ 
+"BLD",1523,1,6,0)
+Routine ^XUSC1C was modified to prevent an infinite loop when a read 
+"BLD",1523,1,7,0)
+failed at the start of a "conversation". Routine ^XUSC1C was also modified
+"BLD",1523,1,8,0)
+to replace hard-coded string comparison of IP addresses with supported
+"BLD",1523,1,9,0)
+Kernel API calls (ICR 5844).
+"BLD",1523,1,10,0)
+ 
+"BLD",1523,1,11,0)
+Application Programmer Interface (API) $$VDEA^XUSER was modified to 
+"BLD",1523,1,12,0)
+return those users with no valid DEA number (none on file, or expired 
+"BLD",1523,1,13,0)
+expiration date) and a valid VA number as valid DEA prescribers. The API 
+"BLD",1523,1,14,0)
+was also changed to highlight those users who are grandfathered, in case 
+"BLD",1523,1,15,0)
+grandfathering is no longer allowed at some point in the future.
+"BLD",1523,1,16,0)
+
+"BLD",1523,4,0)
+^9.64PA^^
+"BLD",1523,6.3)
+6
+"BLD",1523,"KRN",0)
+^9.67PA^9002226^22
+"BLD",1523,"KRN",.4,0)
+.4
+"BLD",1523,"KRN",.401,0)
+.401
+"BLD",1523,"KRN",.402,0)
+.402
+"BLD",1523,"KRN",.403,0)
+.403
+"BLD",1523,"KRN",.5,0)
+.5
+"BLD",1523,"KRN",.84,0)
+.84
+"BLD",1523,"KRN",3.6,0)
+3.6
+"BLD",1523,"KRN",3.8,0)
+3.8
+"BLD",1523,"KRN",9.2,0)
+9.2
+"BLD",1523,"KRN",9.8,0)
+9.8
+"BLD",1523,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",1523,"KRN",9.8,"NM",1,0)
+XUSC1C^^0^B9026863
+"BLD",1523,"KRN",9.8,"NM",2,0)
+XUSER^^0^B53243847
+"BLD",1523,"KRN",9.8,"NM","B","XUSC1C",1)
+
+"BLD",1523,"KRN",9.8,"NM","B","XUSER",2)
+
+"BLD",1523,"KRN",19,0)
+19
+"BLD",1523,"KRN",19.1,0)
+19.1
+"BLD",1523,"KRN",101,0)
+101
+"BLD",1523,"KRN",409.61,0)
+409.61
+"BLD",1523,"KRN",771,0)
+771
+"BLD",1523,"KRN",779.2,0)
+779.2
+"BLD",1523,"KRN",870,0)
+870
+"BLD",1523,"KRN",8989.51,0)
+8989.51
+"BLD",1523,"KRN",8989.52,0)
+8989.52
+"BLD",1523,"KRN",8993,0)
+8993
+"BLD",1523,"KRN",8994,0)
+8994
+"BLD",1523,"KRN",9002226,0)
+9002226
+"BLD",1523,"KRN","B",.4,.4)
+
+"BLD",1523,"KRN","B",.401,.401)
+
+"BLD",1523,"KRN","B",.402,.402)
+
+"BLD",1523,"KRN","B",.403,.403)
+
+"BLD",1523,"KRN","B",.5,.5)
+
+"BLD",1523,"KRN","B",.84,.84)
+
+"BLD",1523,"KRN","B",3.6,3.6)
+
+"BLD",1523,"KRN","B",3.8,3.8)
+
+"BLD",1523,"KRN","B",9.2,9.2)
+
+"BLD",1523,"KRN","B",9.8,9.8)
+
+"BLD",1523,"KRN","B",19,19)
+
+"BLD",1523,"KRN","B",19.1,19.1)
+
+"BLD",1523,"KRN","B",101,101)
+
+"BLD",1523,"KRN","B",409.61,409.61)
+
+"BLD",1523,"KRN","B",771,771)
+
+"BLD",1523,"KRN","B",779.2,779.2)
+
+"BLD",1523,"KRN","B",870,870)
+
+"BLD",1523,"KRN","B",8989.51,8989.51)
+
+"BLD",1523,"KRN","B",8989.52,8989.52)
+
+"BLD",1523,"KRN","B",8993,8993)
+
+"BLD",1523,"KRN","B",8994,8994)
+
+"BLD",1523,"KRN","B",9002226,9002226)
+
+"BLD",1523,"QUES",0)
+^9.62^^
+"BLD",1523,"REQB",0)
+^9.611^1^1
+"BLD",1523,"REQB",1,0)
+XU*8.0*605^1
+"BLD",1523,"REQB","B","XU*8.0*605",1)
+
+"MBREQ")
+0
+"PKG",3,-1)
+1^1
+"PKG",3,0)
+KERNEL^XU^SIGN-ON, SECURITY, MENU DRIVER, DEVICES, TASKMAN^
+"PKG",3,22,0)
+^9.49I^1^1
+"PKG",3,22,1,0)
+8.0^3090706^3090706^6
+"PKG",3,22,1,"PAH",1,0)
+642^3151116
+"PKG",3,22,1,"PAH",1,1,0)
+^^16^16^3151116
+"PKG",3,22,1,"PAH",1,1,1,0)
+This patch is in support of the Drug Enforcement Agency (DEA) 
+"PKG",3,22,1,"PAH",1,1,2,0)
+e-Prescribing of Controlled Substances (CS) (ePCS) using Public Key 
+"PKG",3,22,1,"PAH",1,1,3,0)
+Infrastructure (PKI).  The following modifications to the VistA Kernel 
+"PKG",3,22,1,"PAH",1,1,4,0)
+have been made to meet current ePCS requirements.
+"PKG",3,22,1,"PAH",1,1,5,0)
+ 
+"PKG",3,22,1,"PAH",1,1,6,0)
+Routine ^XUSC1C was modified to prevent an infinite loop when a read 
+"PKG",3,22,1,"PAH",1,1,7,0)
+failed at the start of a "conversation". Routine ^XUSC1C was also modified
+"PKG",3,22,1,"PAH",1,1,8,0)
+to replace hard-coded string comparison of IP addresses with supported
+"PKG",3,22,1,"PAH",1,1,9,0)
+Kernel API calls (ICR 5844).
+"PKG",3,22,1,"PAH",1,1,10,0)
+ 
+"PKG",3,22,1,"PAH",1,1,11,0)
+Application Programmer Interface (API) $$VDEA^XUSER was modified to 
+"PKG",3,22,1,"PAH",1,1,12,0)
+return those users with no valid DEA number (none on file, or expired 
+"PKG",3,22,1,"PAH",1,1,13,0)
+expiration date) and a valid VA number as valid DEA prescribers. The API 
+"PKG",3,22,1,"PAH",1,1,14,0)
+was also changed to highlight those users who are grandfathered, in case 
+"PKG",3,22,1,"PAH",1,1,15,0)
+grandfathering is no longer allowed at some point in the future.
+"PKG",3,22,1,"PAH",1,1,16,0)
+
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","XUSC1C")
+0^1^B9026863
+"RTN","XUSC1C",1,0)
+XUSC1C ;ISCSF/RWF - Client Interface to Server services.;04/17/14  11:43
+"RTN","XUSC1C",2,0)
+ ;;8.0;KERNEL;**283,580,642**;Jul 10, 1995;Build 6
+"RTN","XUSC1C",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XUSC1C",4,0)
+ ;Return 0 = OK, else -1^msg
+"RTN","XUSC1C",5,0)
+EN(INPUT,OUTPUT,TYPE) ;Call to connect to Server
+"RTN","XUSC1C",6,0)
+ N X,Y,XUSCCMD,XUSCDAT,XUSCER,XUSCTIME,XUSCTRC,XUSCEXIT
+"RTN","XUSC1C",7,0)
+ D SETUP
+"RTN","XUSC1C",8,0)
+ D TRACE("IP:"_XUSC("IP")_" Port: "_XUSC("SOCK"))
+"RTN","XUSC1C",9,0)
+ N $ESTACK,$ETRAP S $ETRAP="D ERROR^XUSC1C"
+"RTN","XUSC1C",10,0)
+ D OPEN G:XUSC("STAT") ERR
+"RTN","XUSC1C",11,0)
+ D HELO G:XUSC("STAT") ERR
+"RTN","XUSC1C",12,0)
+ ;D SERV G:XUSC("STAT") ERR
+"RTN","XUSC1C",13,0)
+ D DATA G:XUSC("STAT") ERR
+"RTN","XUSC1C",14,0)
+ D TURN G:XUSC("STAT") ERR
+"RTN","XUSC1C",15,0)
+ D GET G:XUSC("STAT") ERR
+"RTN","XUSC1C",16,0)
+ D QUIT
+"RTN","XUSC1C",17,0)
+ Q 0
+"RTN","XUSC1C",18,0)
+ERR ;Report back an error
+"RTN","XUSC1C",19,0)
+ D TRACE("ERROR "_XUSC("STAT"))
+"RTN","XUSC1C",20,0)
+ D:'POP QUIT
+"RTN","XUSC1C",21,0)
+ Q XUSC("STAT")
+"RTN","XUSC1C",22,0)
+ ;
+"RTN","XUSC1C",23,0)
+ERROR ;Trap an error
+"RTN","XUSC1C",24,0)
+ S XUSC("STAT")="-1^M error: "_$ECODE
+"RTN","XUSC1C",25,0)
+ D ^%ZTER G UNWIND^%ZTER
+"RTN","XUSC1C",26,0)
+ ;
+"RTN","XUSC1C",27,0)
+OPEN ;Open connection
+"RTN","XUSC1C",28,0)
+ N IPCNT,IPA
+"RTN","XUSC1C",29,0)
+ D TRACE("Make Connection")
+"RTN","XUSC1C",30,0)
+ F IPCNT=1:1 S IPA=$P(XUSC("IP"),",",IPCNT) Q:IPA=""  D
+"RTN","XUSC1C",31,0)
+ . I '$$VALIDATE^XLFIPV(IPA) S IPA=$P($$ADDRESS^XLFNSLK(IPA),",")  ;p642 ICR#5844
+"RTN","XUSC1C",32,0)
+ . I '$$VALIDATE^XLFIPV(IPA) Q  ;p642 ICR#5844
+"RTN","XUSC1C",33,0)
+ . D TRACE("Call IP "_IPA)
+"RTN","XUSC1C",34,0)
+ . F XUSCCNT=0:1:5 D  Q:'POP
+"RTN","XUSC1C",35,0)
+ . . D CALL^%ZISTCP(IPA,XUSC("SOCK"),1)
+"RTN","XUSC1C",36,0)
+ I POP S XUSC("STAT")="-1^Initial Connection Failed" Q
+"RTN","XUSC1C",37,0)
+ D TRACE("Got Connection")
+"RTN","XUSC1C",38,0)
+ U IO
+"RTN","XUSC1C",39,0)
+ Q
+"RTN","XUSC1C",40,0)
+HELO ;start conversation
+"RTN","XUSC1C",41,0)
+ N I ;p638
+"RTN","XUSC1C",42,0)
+ S X=$$POST("HELO "_$$KSP^XUPARAM("WHERE"))
+"RTN","XUSC1C",43,0)
+ I $E(X,1)'=2 S XUSC("STAT")="-1^Initial HELO Failed",XUSC("REC")=X
+"RTN","XUSC1C",44,0)
+ I $E(X,1,3)="421" S XUSC("STAT")="-1^Busy"
+"RTN","XUSC1C",45,0)
+ F I=0:1:5 Q:$E(XUSCCMD,1,3)=220  D CREAD^XUSC1S ;p642 quit after 6 tries (read failed)
+"RTN","XUSC1C",46,0)
+ Q
+"RTN","XUSC1C",47,0)
+SERV ;Requested Service
+"RTN","XUSC1C",48,0)
+ D TRACE("Service Request: "_TYPE)
+"RTN","XUSC1C",49,0)
+ S X=$$POST("SERV "_TYPE)
+"RTN","XUSC1C",50,0)
+ I $E(X,1)'=2 S XUSC("STAT")="-1^"_X,XUSC("REC")=X
+"RTN","XUSC1C",51,0)
+ Q
+"RTN","XUSC1C",52,0)
+DATA ;Send data
+"RTN","XUSC1C",53,0)
+ D TRACE("Send Data")
+"RTN","XUSC1C",54,0)
+ D SDATA^XUSC1S1(INPUT,$G(TYPE,"MPI")),CREAD^XUSC1S
+"RTN","XUSC1C",55,0)
+ I $E(XUSCCMD,1)'=2 S XUSC("STAT")="-1^No 220 after send "_XUSCDAT Q
+"RTN","XUSC1C",56,0)
+ Q
+"RTN","XUSC1C",57,0)
+ ;
+"RTN","XUSC1C",58,0)
+TURN ;Turn channel
+"RTN","XUSC1C",59,0)
+ S X=$$POST("TURN ") I $E(X,1)'=2 S XUSC("STAT")="-1^No 220 after Turn"
+"RTN","XUSC1C",60,0)
+ Q
+"RTN","XUSC1C",61,0)
+GET ;Get responce
+"RTN","XUSC1C",62,0)
+ D CREAD^XUSC1S I XUSCCMD[220 G GET
+"RTN","XUSC1C",63,0)
+ I XUSCCMD'["DATA" S XUSC("STAT")="-1^No DATA cmd "_XUSCCMD Q
+"RTN","XUSC1C",64,0)
+ D DATA^XUSC1S1(OUTPUT)
+"RTN","XUSC1C",65,0)
+ Q
+"RTN","XUSC1C",66,0)
+QUIT ;Shut down
+"RTN","XUSC1C",67,0)
+ D SEND^XUSC1S("QUIT ")
+"RTN","XUSC1C",68,0)
+ D CLOSE^%ZISTCP
+"RTN","XUSC1C",69,0)
+ Q
+"RTN","XUSC1C",70,0)
+POST(MSG) ;Send a command and get responce
+"RTN","XUSC1C",71,0)
+ D SEND^XUSC1S(MSG)
+"RTN","XUSC1C",72,0)
+ D CREAD^XUSC1S
+"RTN","XUSC1C",73,0)
+ Q XUSCCMD
+"RTN","XUSC1C",74,0)
+ ;
+"RTN","XUSC1C",75,0)
+TRACE(S1) ;
+"RTN","XUSC1C",76,0)
+ N %,H
+"RTN","XUSC1C",77,0)
+ I S1=-1 K ^TMP("XUSC1",$J) Q
+"RTN","XUSC1C",78,0)
+ Q:'$G(XUSCDBUG)
+"RTN","XUSC1C",79,0)
+ S H=$P($H,",",2),H=(H\3600)_":"_(H#3600\60)_":"_(H#60)_" "
+"RTN","XUSC1C",80,0)
+ L +^TMP("XUSC1",$J):1
+"RTN","XUSC1C",81,0)
+ S %=$G(^TMP("XUSC1",$J,0))+1,^(0)=%,^(%)=H_XUSCTRC_S1
+"RTN","XUSC1C",82,0)
+ L -^TMP("XUSC1",$J)
+"RTN","XUSC1C",83,0)
+ Q
+"RTN","XUSC1C",84,0)
+SETUP ;
+"RTN","XUSC1C",85,0)
+ S (XUSC("STAT"),XUSCEXIT)=0,XUSCTIME=30,XUSCTRC="C: "
+"RTN","XUSC1C",86,0)
+ S XUSCDBUG=$$GET^XPAR("SYS","XUSC1 DEBUG",,"Q")
+"RTN","XUSC1C",87,0)
+ D TRACE(-1),TRACE("Client Setup")
+"RTN","XUSC1C",88,0)
+ Q
+"RTN","XUSER")
+0^2^B53243847
+"RTN","XUSER",1,0)
+XUSER ;ISP/RFR - A common set of user functions ;06/09/15  10:51
+"RTN","XUSER",2,0)
+ ;;8.0;KERNEL;**75,97,99,150,226,267,288,330,370,373,580,609,642**;Jul 10, 1995;Build 6
+"RTN","XUSER",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XUSER",4,0)
+ ;Covered under DBIA #2343
+"RTN","XUSER",5,0)
+ Q
+"RTN","XUSER",6,0)
+LOOKUP(XUF) ;Do a user lookup
+"RTN","XUSER",7,0)
+ ;Parameter, "Q" to NOT ask OK.
+"RTN","XUSER",8,0)
+ ;Parameter, "A" Don't select current users who have a termination
+"RTN","XUSER",9,0)
+ ;               date prior to today's date
+"RTN","XUSER",10,0)
+ N DIC,XUDA,DIR,Y
+"RTN","XUSER",11,0)
+LK1 S DIC="^VA(200,",DIC(0)="AEMQZ" D ^DIC S XUDA=Y G:Y'>0 LKX
+"RTN","XUSER",12,0)
+ S Y=$P(Y(0),"^",11) I Y>0,Y<DT W !?15,"This user was terminated on ",$$FMTE^XLFDT(Y) I $G(XUF)["A" S XUDA=-1 G LK1
+"RTN","XUSER",13,0)
+ G:$G(XUF)["Q" LKX
+"RTN","XUSER",14,0)
+ S DIR(0)="Y",DIR("A")=" Is "_$P(XUDA,U,2)_" the one you want",DIR("B")="YES" D ^DIR
+"RTN","XUSER",15,0)
+ I Y'=1 S XUDA=-1 G:'$D(DIRUT) LK1
+"RTN","XUSER",16,0)
+ ;
+"RTN","XUSER",17,0)
+LKX Q XUDA
+"RTN","XUSER",18,0)
+ ;
+"RTN","XUSER",19,0)
+ACTIVE(XUDA) ;Get if a user is active.
+"RTN","XUSER",20,0)
+ N %,X1,X2
+"RTN","XUSER",21,0)
+ S X1=$G(^VA(200,+$G(XUDA),0)),X2=$S(X1="":"",1:0)
+"RTN","XUSER",22,0)
+ I $L($P(X1,U,3)) S X2="1^"_$S($L($P($G(^VA(200,XUDA,.1)),U,2)):"ACTIVE",1:"NEW")
+"RTN","XUSER",23,0)
+ S:$P(X1,U,7)=1 X2="0^DISUSER"
+"RTN","XUSER",24,0)
+ S:X2["ACTIVE" $P(X2,U,3)=$P($G(^VA(200,XUDA,1.1)),U) ;Return last sign-on
+"RTN","XUSER",25,0)
+ S %=$P(X1,U,11) I %>0,%'>DT S X2="0^TERMINATED^"_%
+"RTN","XUSER",26,0)
+ Q X2
+"RTN","XUSER",27,0)
+ ;
+"RTN","XUSER",28,0)
+BULL ;Called from bulletin in DD of file #200 for 'Sub Alt Name' fld.
+"RTN","XUSER",29,0)
+ ;This will find users with PSDMGR keys and setup the XMY array for
+"RTN","XUSER",30,0)
+ ;bulletin recipients. p580 REM
+"RTN","XUSER",31,0)
+ ; ZEXCEPT: XMY - Kernel exemption
+"RTN","XUSER",32,0)
+ N PSD,I
+"RTN","XUSER",33,0)
+ S PSD=$$FIND1^DIC(19.1,"","MX","PSDMGR","","","PSDERR") Q:PSD'>0
+"RTN","XUSER",34,0)
+ S I=0 F  S I=$O(^VA(200,"AB",PSD,I)) Q:I'>0  S XMY(I)=""
+"RTN","XUSER",35,0)
+ Q
+"RTN","XUSER",36,0)
+ ;
+"RTN","XUSER",37,0)
+PROVIDER(XUDA,XUF) ;See if user qualifies as a CPRS provider
+"RTN","XUSER",38,0)
+ ;XUDA = IEN of Record in New Person File
+"RTN","XUSER",39,0)
+ ;XUF = Flag to control processing
+"RTN","XUSER",40,0)
+ ;      0 or not passed, do not include Visitors
+"RTN","XUSER",41,0)
+ ;      1 include Visitors
+"RTN","XUSER",42,0)
+ N %,X1,X2,XUORES
+"RTN","XUSER",43,0)
+ ;Test to see if XUDA Passed:
+"RTN","XUSER",44,0)
+ I '$D(XUDA) Q ""
+"RTN","XUSER",45,0)
+ ;
+"RTN","XUSER",46,0)
+ ;Test for valid IEN:
+"RTN","XUSER",47,0)
+ S X1=$G(^VA(200,+$G(XUDA),0)),X2=$S(X1="":"",1:1) Q:X2="" ""
+"RTN","XUSER",48,0)
+ ;
+"RTN","XUSER",49,0)
+ ;See if user has XUORES Security Key:
+"RTN","XUSER",50,0)
+ S XUORES=$D(^XUSEC("XUORES",XUDA))
+"RTN","XUSER",51,0)
+ ;
+"RTN","XUSER",52,0)
+ ;Test for Access Code:
+"RTN","XUSER",53,0)
+ I $P(X1,U,3)]"" Q 1
+"RTN","XUSER",54,0)
+ ;
+"RTN","XUSER",55,0)
+ ;Test for a Termination Date not in the Future
+"RTN","XUSER",56,0)
+ ;AND Not owner of XUORES Security Key:
+"RTN","XUSER",57,0)
+ S %=$P(X1,U,11) I %>0,%'>DT,'XUORES Q "0^TERMINATED^"_%
+"RTN","XUSER",58,0)
+ ;
+"RTN","XUSER",59,0)
+ ;Test if user has XUORES Security key:
+"RTN","XUSER",60,0)
+ I XUORES Q 1
+"RTN","XUSER",61,0)
+ ;
+"RTN","XUSER",62,0)
+ ;Tests for Visitors:
+"RTN","XUSER",63,0)
+ I +$G(XUF),$D(^VA(200,"BB","VISITOR",XUDA)) Q 1
+"RTN","XUSER",64,0)
+ I $D(^VA(200,"BB","VISITOR",XUDA)) Q "0^VISITOR"
+"RTN","XUSER",65,0)
+ ;
+"RTN","XUSER",66,0)
+ ;Default:
+"RTN","XUSER",67,0)
+ Q "0^NOT A PROVIDER"
+"RTN","XUSER",68,0)
+ ;
+"RTN","XUSER",69,0)
+DEA(FG,IEN) ;sr. ef. Return users DEA # or Facility DEA_"-"_user VA# or null
+"RTN","XUSER",70,0)
+ ;ICR #2343
+"RTN","XUSER",71,0)
+ ;If FG is 1: DEA# or VA#
+"RTN","XUSER",72,0)
+ ;Fee Basis, C&A providers only return DEA# or null - p609/REM
+"RTN","XUSER",73,0)
+ ;Add XDT=DEA expiration date. If XDT unpopulated, its expired. - p609/REM
+"RTN","XUSER",74,0)
+ N DEA,FB,IN,INN,N,N1,XDT,VA
+"RTN","XUSER",75,0)
+ S IEN=$G(IEN,DUZ),INN=+DUZ(2)
+"RTN","XUSER",76,0)
+ S N=$G(^VA(200,IEN,"PS")),N1=$G(^VA(200,IEN,"QAR"))
+"RTN","XUSER",77,0)
+ S DEA=$P(N,U,2),VA=$P(N,U,3),XDT=$P(N1,U,9)
+"RTN","XUSER",78,0)
+ I $P(N,U,6)=4!($P(N,U,6)=3) S FB=1 ;Fee Basis or C&A  provider -p609
+"RTN","XUSER",79,0)
+ ;I $L(DEA),$S('$L($P(N1,U,9)):1,1:$P(N1,U,9)>DT) Q DEA
+"RTN","XUSER",80,0)
+ I $L(DEA),$L(XDT),XDT'<DT Q DEA ;p609
+"RTN","XUSER",81,0)
+ I $G(FB) Q "" ;p609
+"RTN","XUSER",82,0)
+ I $G(FG) Q VA
+"RTN","XUSER",83,0)
+ S IN=$P($G(^DIC(4,INN,"DEA")),U) ;Check signed-in Inst.
+"RTN","XUSER",84,0)
+ I '$L(IN) D
+"RTN","XUSER",85,0)
+ . N XU1 D PARENT^XUAF4("XU1","`"_INN,"PARENT FACILITY")
+"RTN","XUSER",86,0)
+ . S INN=$O(XU1("P","")) I INN S IN=$P($G(^DIC(4,INN,"DEA")),U)
+"RTN","XUSER",87,0)
+ . Q
+"RTN","XUSER",88,0)
+ N XUEXDT I INN S XUEXDT=$P($G(^DIC(4,INN,"DEA")),U,2) ;check DEA EXPIRATION DATE
+"RTN","XUSER",89,0)
+ S XUEXDT=$G(XUEXDT)
+"RTN","XUSER",90,0)
+ I $L(VA),$L(IN),$L(XUEXDT),XUEXDT'<DT Q IN_"-"_VA ;check DEA EXPIRATION DATE
+"RTN","XUSER",91,0)
+ ;I $L(VA),$L(IN) Q IN_"-"_VA
+"RTN","XUSER",92,0)
+ Q ""
+"RTN","XUSER",93,0)
+ ;
+"RTN","XUSER",94,0)
+DETOX(IEN) ;Return the Detox/Maintenance ID in file 200 - p580/REM
+"RTN","XUSER",95,0)
+ ;ICR #2343
+"RTN","XUSER",96,0)
+ ;Return Detox# - valid detox# and DEA Xdate is valid
+"RTN","XUSER",97,0)
+ ;Return null - if no detox or the DEA Xdate is unpopulated
+"RTN","XUSER",98,0)
+ ;Return DEA Expiration Date - valid detox# but expired DEA Xdate
+"RTN","XUSER",99,0)
+ ;IEN is used to lookup user in file #200
+"RTN","XUSER",100,0)
+ N DET,XDT,N,N1
+"RTN","XUSER",101,0)
+ S N=$G(^VA(200,IEN,"PS")),N1=$G(^VA(200,IEN,"QAR"))
+"RTN","XUSER",102,0)
+ S DET=$P(N,U,11),XDT=$P(N1,U,9)
+"RTN","XUSER",103,0)
+ I $L(DET),$L(XDT),XDT'<DT Q DET
+"RTN","XUSER",104,0)
+ I $L(DET),$L(XDT),XDT<DT Q XDT
+"RTN","XUSER",105,0)
+ ;I $L(DET),$S('$L($P(N1,U,9)):1,1:$P(N1,U,9)>DT) Q DTX
+"RTN","XUSER",106,0)
+ Q ""
+"RTN","XUSER",107,0)
+ ;
+"RTN","XUSER",108,0)
+SDEA(FG,IEN,PSDEA) ;validation for new DEA regulations p580-JC(CPRS)
+"RTN","XUSER",109,0)
+ ;ICR #2343
+"RTN","XUSER",110,0)
+ ;Returns: DEA#, Facility DEA_"-"_user VA#, 1, 2, or 4^expiration date
+"RTN","XUSER",111,0)
+ ;If FG is 1: DEA# or VA# - similar to $$DEA
+"RTN","XUSER",112,0)
+ ;IEN is used to lookup user in file #200
+"RTN","XUSER",113,0)
+ ;PSDEA is the DEA schedule
+"RTN","XUSER",114,0)
+ N DEA,N3,I,A,NALL,E,DA,XD,N,N1,Y
+"RTN","XUSER",115,0)
+ S FG=$G(FG),IEN=$G(IEN),PSDEA=$G(PSDEA)
+"RTN","XUSER",116,0)
+ S DEA=$$DEA(FG,IEN) I DEA="" D  Q E
+"RTN","XUSER",117,0)
+ . S E=1
+"RTN","XUSER",118,0)
+ . S N=$G(^VA(200,IEN,"PS")),N1=$G(^VA(200,IEN,"QAR"))
+"RTN","XUSER",119,0)
+ . S DA=$P(N,U,2),XD=$P(N1,U,9)
+"RTN","XUSER",120,0)
+ . I $L(DA),$L(XD),XD<DT S Y=XD X ^DD("DD") S E=4_"^"_Y
+"RTN","XUSER",121,0)
+ I $G(PSDEA)="" Q 1
+"RTN","XUSER",122,0)
+ I '$D(^VA(200,IEN,"PS3")) Q DEA
+"RTN","XUSER",123,0)
+ S N3=^VA(200,IEN,"PS3")
+"RTN","XUSER",124,0)
+ S NALL=1 F I=1:1:6 S A(I)=$P(N3,"^",I) I A(I) S NALL=0
+"RTN","XUSER",125,0)
+ I NALL D  Q 2
+"RTN","XUSER",126,0)
+ . I $G(^VA(200,IEN,"PS"))="" Q
+"RTN","XUSER",127,0)
+ . S $P(^("PS"),"^",2)="",$P(^("PS"),"^",3)=""
+"RTN","XUSER",128,0)
+ I PSDEA=2 Q $S('A(1):2,1:DEA)
+"RTN","XUSER",129,0)
+ I PSDEA="2n" Q $S('A(2):2,1:DEA)
+"RTN","XUSER",130,0)
+ I PSDEA=3 Q $S('A(3):2,1:DEA)
+"RTN","XUSER",131,0)
+ I PSDEA="3n" Q $S('A(4):2,1:DEA)
+"RTN","XUSER",132,0)
+ I PSDEA=4 Q $S('A(5):2,1:DEA)
+"RTN","XUSER",133,0)
+ I PSDEA=5 Q $S('A(6):2,1:DEA)
+"RTN","XUSER",134,0)
+ Q DEA
+"RTN","XUSER",135,0)
+ ;
+"RTN","XUSER",136,0)
+VDEA(RETURN,IEN)  ;ISP/RFR - Verify a provider is properly configured for ePCS
+"RTN","XUSER",137,0)
+ ;PARAMETERS: IEN - Internal Entry Number in the NEW PERSON file (#200)
+"RTN","XUSER",138,0)
+ ;            RETURN - Reference to an array in which text explaining
+"RTN","XUSER",139,0)
+ ;                     deficiencies and listing prescribable schedules
+"RTN","XUSER",140,0)
+ ;                     is placed, with each deficiency and the list of
+"RTN","XUSER",141,0)
+ ;                     schedules on a separate node
+"RTN","XUSER",142,0)
+ ;RETURN: 1 - Provider is properly configured for ePCS
+"RTN","XUSER",143,0)
+ ;        0 - Provider is not properly configured for ePCS
+"RTN","XUSER",144,0)
+ N STATUS,DEA,RETVAL,DATE,NODEA
+"RTN","XUSER",145,0)
+ S RETVAL=1,STATUS=$$ACTIVE(IEN)
+"RTN","XUSER",146,0)
+ I STATUS="" S RETURN("User account does not exist.")="",RETVAL=0
+"RTN","XUSER",147,0)
+ I STATUS=0 S RETURN("User cannot sign on.")="",RETVAL=0
+"RTN","XUSER",148,0)
+ I +STATUS=0,($P(STATUS,U,2)'="") S RETURN("User account status: "_$P(STATUS,U,2))="",RETVAL=0
+"RTN","XUSER",149,0)
+ Q:STATUS="" RETVAL
+"RTN","XUSER",150,0)
+ I '$D(^XUSEC("ORES",IEN)) D
+"RTN","XUSER",151,0)
+ . S RETURN("Does not hold the ORES security key.")="",RETVAL=0
+"RTN","XUSER",152,0)
+ I +$P($G(^VA(200,IEN,"PS")),U,1)'=1 D
+"RTN","XUSER",153,0)
+ . S RETURN("Is not authorized to write medication orders.")="",RETVAL=0
+"RTN","XUSER",154,0)
+ I $P($G(^VA(200,IEN,"PS")),U,2)'="" D
+"RTN","XUSER",155,0)
+ . N DATE
+"RTN","XUSER",156,0)
+ . S DATE=+$P($G(^VA(200,IEN,"QAR")),U,9)
+"RTN","XUSER",157,0)
+ . I DATE=0 S RETURN("Has a DEA number with no expiration date.")="",RETVAL=0,NODEA=1
+"RTN","XUSER",158,0)
+ . I DATE>0,(DATE<=DT) S RETURN("Has an expired DEA number.")="",RETVAL=0,NODEA=1
+"RTN","XUSER",159,0)
+ I $P($G(^VA(200,IEN,"PS")),U,2)="" D
+"RTN","XUSER",160,0)
+ . S NODEA=1
+"RTN","XUSER",161,0)
+ . I $P($G(^VA(200,IEN,"PS")),U,3)="" D
+"RTN","XUSER",162,0)
+ . . S RETURN("Has neither a DEA number nor a VA number.")="",RETVAL=0
+"RTN","XUSER",163,0)
+ I +$G(NODEA),($P($G(^VA(200,IEN,"PS")),U,3)'="") S RETVAL=1
+"RTN","XUSER",164,0)
+ S DATE=+$P($G(^VA(200,IEN,"PS")),U,4)
+"RTN","XUSER",165,0)
+ I DATE>0,(DATE<=DT) D
+"RTN","XUSER",166,0)
+ . S RETURN("Is no longer able to write medication orders (inactive date).")="",RETVAL=0
+"RTN","XUSER",167,0)
+ I $D(^VA(200,IEN,"PS3")) D
+"RTN","XUSER",168,0)
+ . N NODE
+"RTN","XUSER",169,0)
+ . S NODE=$$STRIP^XLFSTR(^VA(200,IEN,"PS3"),U),NODE=$$STRIP^XLFSTR(NODE,0)
+"RTN","XUSER",170,0)
+ . I $G(NODE)="" S RETURN("Is not permitted to prescribe any schedules.")="",RETVAL=0 Q
+"RTN","XUSER",171,0)
+ . I $G(NODE)'="" D
+"RTN","XUSER",172,0)
+ . . N PIECE,SCHED,SPEC,ASCHED
+"RTN","XUSER",173,0)
+ . . S SPEC("SCHEDULE ")=""
+"RTN","XUSER",174,0)
+ . . S ASCHED=1
+"RTN","XUSER",175,0)
+ . . F PIECE=1:1:6 D
+"RTN","XUSER",176,0)
+ . . . I +$P(^VA(200,IEN,"PS3"),U,PIECE)>0 D
+"RTN","XUSER",177,0)
+ . . . . N LABEL,ERROR
+"RTN","XUSER",178,0)
+ . . . . S LABEL=$$REPLACE^XLFSTR($$GET1^DID(200,"55."_PIECE,,"LABEL",,"ERROR"),.SPEC)
+"RTN","XUSER",179,0)
+ . . . . S:$G(LABEL)="" LABEL="Unknown field #55."_PIECE
+"RTN","XUSER",180,0)
+ . . . . S SCHED=$S($G(SCHED)'="":SCHED_U,1:"")_LABEL
+"RTN","XUSER",181,0)
+ . . . I +$P(^VA(200,IEN,"PS3"),U,PIECE)=0 S ASCHED=0
+"RTN","XUSER",182,0)
+ . . I ASCHED=1 S RETURN("Is permitted to prescribe all schedules.")=""
+"RTN","XUSER",183,0)
+ . . I ASCHED=0 D
+"RTN","XUSER",184,0)
+ . . . N DELIMIT,INDEX,TEXT
+"RTN","XUSER",185,0)
+ . . . S DELIMIT=", "
+"RTN","XUSER",186,0)
+ . . . F INDEX=1:1:$L(SCHED,U) D
+"RTN","XUSER",187,0)
+ . . . . S:INDEX=$L(SCHED,U) DELIMIT=" and "
+"RTN","XUSER",188,0)
+ . . . . S TEXT=$S($G(TEXT)'="":TEXT_DELIMIT,1:"")_$P(SCHED,U,INDEX)
+"RTN","XUSER",189,0)
+ . . . S RETURN("Is permitted to prescribe schedule"_$S($L(SCHED,U)>1:"s",1:"")_" "_TEXT_".")=""
+"RTN","XUSER",190,0)
+ I '$D(^VA(200,IEN,"PS3")) S RETURN("Is permitted to prescribe all schedules due to grandfathering.")=""
+"RTN","XUSER",191,0)
+ Q RETVAL
+"RTN","XUSER",192,0)
+ ;
+"RTN","XUSER",193,0)
+DIV4(XUROOT,XUDUZ) ;Return the Divisions that this user is assigned to.
+"RTN","XUSER",194,0)
+ ;Returns 0 - no institution for user, 1 - institution for user
+"RTN","XUSER",195,0)
+ ;XUROOT is passed by reference.
+"RTN","XUSER",196,0)
+ N %,%1 S:$G(XUDUZ)="" XUDUZ=DUZ S (%,%1)=0
+"RTN","XUSER",197,0)
+ F  S %=$O(^VA(200,XUDUZ,2,%)) Q:%'>0  S XUROOT(%)=$P($G(^(%,0)),U,2),%1=1
+"RTN","XUSER",198,0)
+ Q %1
+"RTN","XUSER",199,0)
+ ;
+"RTN","XUSER",200,0)
+NAME(IEN,FL) ;Return the full name from Name Components file
+"RTN","XUSER",201,0)
+ N NA S NA("FILE")=200,NA("FIELD")=.01,NA("IENS")=IEN
+"RTN","XUSER",202,0)
+ S FL=$G(FL,"G") ;Valid are Famly or Given
+"RTN","XUSER",203,0)
+ S:"FG"'[FL FL="G"
+"RTN","XUSER",204,0)
+ Q $$NAMEFMT^XLFNAME(.NA,FL,"CMDP")
+"RTN","XUSER",205,0)
+ ;
+"RTN","XUSER",206,0)
+HL7(IEN) ;Return a HL7 name from the components file
+"RTN","XUSER",207,0)
+ N NA S NA("FILE")=200,NA("FIELD")=.01,NA("IENS")=IEN
+"RTN","XUSER",208,0)
+ Q $$HLNAME^XLFNAME(.NA,"","~")
+"RTN","XUSER",209,0)
+ ;
+"RTN","XUSER",210,0)
+SCR200() ;Whole File Screen logic for file 200
+"RTN","XUSER",211,0)
+ ; ZEXCEPT: DIC,DINDEX - Kernel exemption
+"RTN","XUSER",212,0)
+ ;
+"RTN","XUSER",213,0)
+ ; Test to see if FileMan can "talk" to the user, IA# 4577
+"RTN","XUSER",214,0)
+ I $G(DIC(0))'["E" Q 1
+"RTN","XUSER",215,0)
+ ;
+"RTN","XUSER",216,0)
+ ; Test to see if index being searched is SSN, IA# 4578
+"RTN","XUSER",217,0)
+ I $G(DINDEX)'="SSN" Q 1
+"RTN","XUSER",218,0)
+ ;
+"RTN","XUSER",219,0)
+ ; Test for Security Key
+"RTN","XUSER",220,0)
+ I $G(DUZ),$D(^XUSEC("XUSHOWSSN",DUZ)) Q 1
+"RTN","XUSER",221,0)
+ ;
+"RTN","XUSER",222,0)
+ ; Default - None of the above is TRUE
+"RTN","XUSER",223,0)
+ Q 0
+"VER")
+8.0^22.0
+**END**
+**END**

@@ -1,0 +1,167 @@
+
+=============================================================================
+Run Date: OCT 29, 2018                     Designation: OR*3*483
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #411                      Status: Released
+                  Compliance Date: NOV 12, 2018
+=============================================================================
+
+Associated patches: (v)OR*3*475    <<= must be installed BEFORE `OR*3*483'
+
+Subject: UNESCAPE HL7 MESSAGE RECEIVED FROM SCHEDULING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of OR*3*483 is to fix an issue in the Return to Clinic order
+ processing. If a user entered one of the following characters into the
+ comment field (~|\&^) the order messages were not processed correctly when
+ being transmitted to and from the VistA Scheduling Enhancement (VSE)
+ Graphical User Interface (GUI).
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 3741
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC1411043 - RTC Order Canceled
+  
+ Problem:
+ -------
+ Currently the Health Level 7 (HL7) messages are not properly processing 
+ special characters when they are entered into the comment field. This can 
+ cause the order to be canceled due to a comment being too long when, in 
+ fact, the comment meets the 75 character restriction.
+  
+ Resolution:
+ ----------
+ The HL7 routine (ORMSD) responsible for processing order acknowledgements
+ from Scheduling has been modified to correctly handle (un-escape) the
+ special characters.
+  
+ Test Sites:
+ ----------
+ Minneapolis, MN
+ Pittsburgh HealthCare System, PA
+ St. Cloud, MN 
+  
+ Software Retrieval Instructions:
+ -------------------------------
+ This patch is being distributed as a host file, combined with the patch 
+ SD*5.3*682. Please refer to the patch description for SD*5.3*682 for 
+ retrieval instructions.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no special considerations for pre or post installation.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+  
+ Installation Instructions:
+ --------------------------
+ Please refer to the patch description for SD*5.3*683 for installation 
+ instructions.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out, Rollback Instructions:
+ --------------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ matches the pre-patch checksum from the patch description.
+  
+ Please refer to the patch description for SD*5.3*683 for installation 
+ instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 45
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORMSD
+    Before: B98961984   After: B92940191  **434,475,483**
+ 
+Routine list of preceding patches: 475
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 05, 2018
+Completed By:                               Date Completed: OCT 26, 2018
+Released By :                               Date Released : OCT 29, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

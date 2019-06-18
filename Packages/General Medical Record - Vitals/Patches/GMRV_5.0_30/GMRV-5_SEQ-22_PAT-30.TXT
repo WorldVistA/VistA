@@ -1,0 +1,224 @@
+$TXT Created by                CHEY59.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 08/01/16 at 10:06
+=============================================================================
+Run Date: OCT 26, 2016                     Designation: GMRV*5*30
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #22                      Status: Released
+                  Compliance Date: NOV 25, 2016
+=============================================================================
+
+Associated patches: (v)XU*8*664    <<= must be installed BEFORE `GMRV*5*30'
+
+Subject: NATIVE DOMAIN STANDARDIZATION
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch will add a new field Coding System multiple to files GMRV 
+ VITAL TYPE (#120.51), GMRV VITAL QUALIFIER (#120.52) and GMRV VITAL 
+ CATEGORY (#120.53) for the purpose of interoperability. 
+  
+ * GMRV VITAL TYPE (#120.51) file shall be updated to include a new
+ field to store LOINC code field from the respective SDO. 
+  
+ * GMRV VITAL QUALIFIER (#120.52) file shall be updated to include a new
+ field to store the SNOMED CT code from the respective SDO.
+  
+ *GMRV VITAL CATEGORY (#120.53) file shall be updated to include a new
+ field to store the SNOMED CT code from the respective SDO. 
+  
+  
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)        Field Name (Number)  New/Modified/Deleted
+ ------------------        -------------------  --------------------
+ GMRV VITAL TYPE (#120.51)     CODING SYSTEM  (#8)     New
+ GMRV VITAL QUALIFIER (#120.52)     CODING SYSTEM  (#2)     New
+ GMRV VITAL CATEGORY (#120.53)     CODING SYSTEM  (#2)     New
+  
+  
+  
+ Forms Associated:
+  
+ Form Name     File #     New/Modified/Deleted
+ ---------     ------     --------------------
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+  
+  
+ Options Associated:
+  
+ Option Name     Type     New/Modified/Deleted
+ -----------     ----      -------------------- 
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------      -------------------- 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  
+  
+ Templates Associated:
+  
+ Template Name     Type     File Name (Number)  New/Modified/Deleted
+ -------------     ----     ------------------  --------------------
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ --------
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA Palo Alto Health Care System, California
+  
+ Bedford Healthcare System, Bedford, Massachusetts 
+  
+ New York Harbor Healthcare System, New York
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany:     domain.ext
+ Hines:     domain.ext 
+ Salt Lake City:     domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+  
+ File Description                         File Name            FTP Mode
+ ----------------------------------------------------------------------
+ Vitals/Measurements Technical Manual    GMRV_5_TM_R1016.PDF    Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+ the Installation Menu. From this menu, you may elect to use the
+ following options. When prompted for the INSTALL NAME enter the patch
+ :GMRV*5.0*30
+ a. Backup a Transport Global - This option will create a backup message
+ of any routines exported with this patch. It will not backup any other
+ changes such as DDs or templates.
+ b. Compare Transport Global to Current System - This option will allow
+ you to view all changes that will be made when this patch is installed.
+ It compares all components of this patch routines, DDs, templates,
+ etc.).
+  
+ c. Verify Checksums in Transport Global - This option will allow you to
+ ensure the integrity of the routines that are in the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option
+ and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+ Install? NO//' 
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+  
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//'
+   
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;MAR 21, 2016;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRVVZRT
+    Before:       n/a   After: B27713164  **30**
+ Description of Changes:
+  Files & Fields Associated:
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 18, 2016
+Completed By:                               Date Completed: OCT 25, 2016
+Released By :                               Date Released : OCT 26, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

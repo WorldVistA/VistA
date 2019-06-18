@@ -1,0 +1,235 @@
+
+=============================================================================
+Run Date: OCT 18, 2018                     Designation: WEBP*1*20
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1        SEQ #20                      Status: Released
+                  Compliance Date: NOV 17, 2018
+=============================================================================
+
+
+Subject: PCMM WEB V1.20 CONFIGURATION UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*20 will implement the following configuration changes to current 
+ functionality that will reduce errors received by users and allow the 
+ system to function more efficiently.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+  
+ 1. RTC 822552 - The TRM upgrade of Spring Framework caused the treatment 
+ of transactions to fail for the "Validate Team Data Consistency" link on 
+ the team profile screen which validates team integrity from the user 
+ interface.
+ The following error is received when debugging the issue: 
+ "javax.persistence.TransactionRequiredException: No EntityManager with 
+ actual transaction available for current thread - cannot reliably process 
+ 'refresh' call" which is eaten and call returns immediately. The 
+ Javascript files 
+ C":\data\projects-hp\PCMMR\trunk\web\src\main\java\gov\va\med\pcmm\web\tea
+ m\TeamController.java" added transactional annotation to allow the 
+ validation link to evaluate and display validation errors for the team as 
+ expected.
+ ServiceNow Ticket: No associated helpdesk tickets for this issue.
+  
+ 2. RTC 811695:  The INFORMATIONAL alerts R2, R5, R6, R20, R23, R24, R26 
+ received within PCMM Web needs to be clearer for the PCMM Coordinators 
+ and Traveling Veteran Coordinators (TVCs). The following alert rules 
+ verbiage was changed in the properties file 
+ C:\data\projects-hp\PCMMR\trunk\web\src\main\resources\messages_en.propert
+ ies as requested so these alerts are clearer to the users in PCMM Web.
+ ServiceNow Ticket: No associated helpdesk tickets for this issue.
+  
+ Alert rules changes are listed below:
+ R2 - Change from:
+ A multiple PACT request for patient "xxx" for a Primary Care team 
+ assignment at station "xxx" has been created and is awaiting approvals.
+ Change to:
+ MPACT CREATED and awaiting approvals due to request for patient "xxx" for 
+ a Primary Care team assignment at station "xxx".
+  
+ R5 - Change from:
+ Station "xxx" has approved a multiple PACT request for patient "xxx" for 
+ a Primary Care team assignment at station "xxx".
+ Change to:
+ MPACT APPROVED by station "xxx" for patient "xxx" for a Primary Care team 
+ assignment at station "xxx".
+  
+ R6 - Change from:
+ A multiple PACT request for patient "xxx" for a Primary Care team 
+ assignment at station "xxx" has been DENIED. The Multiple PACT request is 
+ now closed.
+ Change to:
+ MPACT DENIED for patient "xxx" for a Primary Care team assignment at 
+ station "xxx". The Multiple PACT request is now closed.
+  
+ R20 - Change from:
+ A multiple PACT approval request for patient "XX" for a Primary Care team 
+ assignment at station "XXX" has been pending for "15" days. Please 
+ provide your approve/deny decision as soon as possible.
+ Change to:
+ PENDING 15 DAYS: A MPACT approval request for patient XXX for a Primary
+ Care team assignment at station XXX.  Please provide your approve/deny
+ decision as soon as possible.
+  
+ R23 - Change from:
+ A multiple PACT request for patient "xxx" for a Primary Care team 
+ assignment at station "xxx" has been WITHDRAWN.
+ Change to:
+ MPACT WITHDRAWN for patient "xxx" for a Primary Care team assignment at 
+ station "xxx".
+  
+ R24 - Change from:
+ A multiple PACT request for patient "xxx" for a Primary Care team 
+ assignment at station "xxx" has been APPROVED by all the authorized 
+ stations.
+ Change to:
+ MPACT APPROVED BY ALL authorized stations for patient "xxx" for a Primary 
+ Care team assignment at station "xxx".
+  
+ R26 - Change from:
+ The patient "xxx" has completed the relocation to station "xxx".  The 
+ Multiple PACT request for this patient at station "xxx" is being 
+ WITHDRAWN.
+ Change to:
+ MPACT WITHDRAWN/COMPLETED RELOCATION for patient "xxx" relocation to 
+ station "xxx".  The Multiple PACT request at station "xxx" is being 
+ WITHDRAWN.
+  
+  
+ 3. RTC 756552 - The business office requested that the Intensity Score 
+ from Modeled Capacity Calculations throughout application needs to be 
+ modified to not influence the calculation results for modeled team 
+ capacity calculations. The following changes were implemented to 
+ calculate the intensity score at a value of 1.0 throughout the 
+ application:
+ a. Update station intensity UI to make value read-only, so users can not 
+ override it.
+ b. Update database to make intensity station 1.0 so it does not change 
+ modeled capacity.
+ c. Change patient to always return patient intensity of 1.0 
+ irrespectively of database values so it does not change modeled capacity.
+ ServiceNow Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*20 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ 618 - Minneapolis VA HCS
+ 626 - Tennessee Valley VAMC
+ 691 - West LA VAMC
+  
+  
+ Documentation:
+ ==============
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Documentation can also be retrieved from the VA Software Documentation
+ Library (VDL) on the Internet at the following address:
+ http://www.domain.ext/vdl.
+  
+ File Description              File Name                      SFTP Mode
+ --------------------------------------------------------------------------
+ Patient-Centered Management   PCMM_WEB_USER_GUIDE.DOCX       BINARY
+ Module (PCMM) Web User Guide 
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a yourIT ServiceNow ticket using the category: ENTERPRISE 
+ APPLICATION.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 29, 2018
+Completed By:                               Date Completed: OCT 11, 2018
+Released By :                               Date Released : OCT 18, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

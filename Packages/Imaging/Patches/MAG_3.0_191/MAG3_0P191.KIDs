@@ -1,0 +1,542 @@
+KIDS Distribution saved on Jul 24, 2017@21:29:24
+VistA Imaging V3 - Patch 191 - ROI Print issues
+**KIDS**:MAG*3.0*191^
+
+**INSTALL NAME**
+MAG*3.0*191
+"BLD",8359,0)
+MAG*3.0*191^IMAGING^0^3170724^y
+"BLD",8359,1,0)
+^^14^14^3170707^^^^
+"BLD",8359,1,1,0)
+Release of Information(ROI) Print issues.
+"BLD",8359,1,2,0)
+   
+"BLD",8359,1,3,0)
+The issue happens when a user is processing a Release of  
+"BLD",8359,1,4,0)
+Information (ROI) Print job and the user switches patient's
+"BLD",8359,1,5,0)
+in CPRS while the ROI Print job is running.
+"BLD",8359,1,6,0)
+    
+"BLD",8359,1,7,0)
+This could potentially cause the Second Patient's images to be
+"BLD",8359,1,8,0)
+included in the ROI Print job that is running for the First Patient.
+"BLD",8359,1,9,0)
+  
+"BLD",8359,1,10,0)
+This will check the routines from a BUILD file.
+"BLD",8359,1,11,0)
+Select BUILD NAME:    MAG*3.0*191     IMAGING
+"BLD",8359,1,12,0)
+MAGGTU4D  value = 5528535
+"BLD",8359,1,13,0)
+MAGIP191  value = 4214993
+"BLD",8359,1,14,0)
+done
+"BLD",8359,4,0)
+^9.64PA^^0
+"BLD",8359,6.3)
+41
+"BLD",8359,"ABNS",0)
+^9.66A^^0
+"BLD",8359,"ABPKG")
+n^n^G.IMAGING DEVELOPMENT TEAM@AADOMAIN.EXT
+"BLD",8359,"INI")
+PRE^MAGIP191
+"BLD",8359,"INID")
+n^y^n
+"BLD",8359,"INIT")
+POS^MAGIP191
+"BLD",8359,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8359,"KRN",.4,0)
+.4
+"BLD",8359,"KRN",.401,0)
+.401
+"BLD",8359,"KRN",.402,0)
+.402
+"BLD",8359,"KRN",.403,0)
+.403
+"BLD",8359,"KRN",.5,0)
+.5
+"BLD",8359,"KRN",.84,0)
+.84
+"BLD",8359,"KRN",3.6,0)
+3.6
+"BLD",8359,"KRN",3.8,0)
+3.8
+"BLD",8359,"KRN",9.2,0)
+9.2
+"BLD",8359,"KRN",9.8,0)
+9.8
+"BLD",8359,"KRN",9.8,"NM",0)
+^9.68A^3^2
+"BLD",8359,"KRN",9.8,"NM",2,0)
+MAGGTU4D^^0^B5527813
+"BLD",8359,"KRN",9.8,"NM",3,0)
+MAGIP191^^0^B4214993
+"BLD",8359,"KRN",9.8,"NM","B","MAGGTU4D",2)
+
+"BLD",8359,"KRN",9.8,"NM","B","MAGIP191",3)
+
+"BLD",8359,"KRN",19,0)
+19
+"BLD",8359,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8359,"KRN",19.1,0)
+19.1
+"BLD",8359,"KRN",101,0)
+101
+"BLD",8359,"KRN",409.61,0)
+409.61
+"BLD",8359,"KRN",771,0)
+771
+"BLD",8359,"KRN",779.2,0)
+779.2
+"BLD",8359,"KRN",870,0)
+870
+"BLD",8359,"KRN",8989.51,0)
+8989.51
+"BLD",8359,"KRN",8989.52,0)
+8989.52
+"BLD",8359,"KRN",8994,0)
+8994
+"BLD",8359,"KRN","B",.4,.4)
+
+"BLD",8359,"KRN","B",.401,.401)
+
+"BLD",8359,"KRN","B",.402,.402)
+
+"BLD",8359,"KRN","B",.403,.403)
+
+"BLD",8359,"KRN","B",.5,.5)
+
+"BLD",8359,"KRN","B",.84,.84)
+
+"BLD",8359,"KRN","B",3.6,3.6)
+
+"BLD",8359,"KRN","B",3.8,3.8)
+
+"BLD",8359,"KRN","B",9.2,9.2)
+
+"BLD",8359,"KRN","B",9.8,9.8)
+
+"BLD",8359,"KRN","B",19,19)
+
+"BLD",8359,"KRN","B",19.1,19.1)
+
+"BLD",8359,"KRN","B",101,101)
+
+"BLD",8359,"KRN","B",409.61,409.61)
+
+"BLD",8359,"KRN","B",771,771)
+
+"BLD",8359,"KRN","B",779.2,779.2)
+
+"BLD",8359,"KRN","B",870,870)
+
+"BLD",8359,"KRN","B",8989.51,8989.51)
+
+"BLD",8359,"KRN","B",8989.52,8989.52)
+
+"BLD",8359,"KRN","B",8994,8994)
+
+"BLD",8359,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8359,"QUES",0)
+^9.62^^
+"BLD",8359,"REQB",0)
+^9.611^1^1
+"BLD",8359,"REQB",1,0)
+MAG*3.0*181^2
+"BLD",8359,"REQB","B","MAG*3.0*181",1)
+
+"INI")
+PRE^MAGIP191
+"INIT")
+POS^MAGIP191
+"MBREQ")
+0
+"PKG",454,-1)
+1^1
+"PKG",454,0)
+IMAGING^MAG^Imaging-V1 to release 
+"PKG",454,20,0)
+^9.402P^^
+"PKG",454,22,0)
+^9.49I^1^1
+"PKG",454,22,1,0)
+3.0^3020319^3020517^126
+"PKG",454,22,1,"PAH",1,0)
+191^3170724^126
+"PKG",454,22,1,"PAH",1,1,0)
+^^14^14^3170724
+"PKG",454,22,1,"PAH",1,1,1,0)
+Release of Information(ROI) Print issues.
+"PKG",454,22,1,"PAH",1,1,2,0)
+   
+"PKG",454,22,1,"PAH",1,1,3,0)
+The issue happens when a user is processing a Release of  
+"PKG",454,22,1,"PAH",1,1,4,0)
+Information (ROI) Print job and the user switches patient's
+"PKG",454,22,1,"PAH",1,1,5,0)
+in CPRS while the ROI Print job is running.
+"PKG",454,22,1,"PAH",1,1,6,0)
+    
+"PKG",454,22,1,"PAH",1,1,7,0)
+This could potentially cause the Second Patient's images to be
+"PKG",454,22,1,"PAH",1,1,8,0)
+included in the ROI Print job that is running for the First Patient.
+"PKG",454,22,1,"PAH",1,1,9,0)
+  
+"PKG",454,22,1,"PAH",1,1,10,0)
+This will check the routines from a BUILD file.
+"PKG",454,22,1,"PAH",1,1,11,0)
+Select BUILD NAME:    MAG*3.0*191     IMAGING
+"PKG",454,22,1,"PAH",1,1,12,0)
+MAGGTU4D  value = 5528535
+"PKG",454,22,1,"PAH",1,1,13,0)
+MAGIP191  value = 4214993
+"PKG",454,22,1,"PAH",1,1,14,0)
+done
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","MAGGTU4D")
+0^2^B5527813
+"RTN","MAGGTU4D",1,0)
+MAGGTU4D ;WOIFO/SG/NST/JSL/GEK - VERSION CONTROL (CLINICAL DISPLAY) ; 25 May 2014  2:24 PM
+"RTN","MAGGTU4D",2,0)
+ ;;3.0;IMAGING;**93,94,106,117,122,131,149,138,156,161,167,181,191**;Mar 19, 2002;Build 41;JUL 24, 2017
+"RTN","MAGGTU4D",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGGTU4D",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTU4D",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGGTU4D",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGGTU4D",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGGTU4D",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGGTU4D",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGGTU4D",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGGTU4D",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGGTU4D",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGGTU4D",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGGTU4D",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGGTU4D",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGGTU4D",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTU4D",17,0)
+ ;;
+"RTN","MAGGTU4D",18,0)
+ ; This routine contains the version control code and data specific
+"RTN","MAGGTU4D",19,0)
+ ; to the Clinical Display application. DO NOT ADD ANYTHING ELSE!
+"RTN","MAGGTU4D",20,0)
+ Q
+"RTN","MAGGTU4D",21,0)
+ ;
+"RTN","MAGGTU4D",22,0)
+CLVERCT ;***** VERSION CONTROL TABLE FOR THE CLINICAL DISPLAY CLIENTS
+"RTN","MAGGTU4D",23,0)
+ ;;==================================================================
+"RTN","MAGGTU4D",24,0)
+ ;;| Version |Build|Seq #|                Comment                   |
+"RTN","MAGGTU4D",25,0)
+ ;;|---------+-----+------------------------------------------------|
+"RTN","MAGGTU4D",26,0)
+ ;;| 3.0.191 |   2 |  88 | Aug 2017                                 |
+"RTN","MAGGTU4D",27,0)
+ ;;| 3.0.181 |   3 |  87 | Jun 2017                                 |
+"RTN","MAGGTU4D",28,0)
+ ;;| 3.0.167 |   8 |  86 | Jan 2017                                 |
+"RTN","MAGGTU4D",29,0)
+ ;;| 3.0.161 |   2 |  85 | May 2015                                 |
+"RTN","MAGGTU4D",30,0)
+ ;;| 3.0.149 |   4 |  75 | Sep 2014                                 |
+"RTN","MAGGTU4D",31,0)
+ ;;| 3.0.130 |  18 |  70 | Aug 2013                                 |
+"RTN","MAGGTU4D",32,0)
+ ;;==================================================================
+"RTN","MAGGTU4D",33,0)
+ ;
+"RTN","MAGGTU4D",34,0)
+ ; Each row of the version control table contains the version and
+"RTN","MAGGTU4D",35,0)
+ ; build number of a supported client. Released patches must also
+"RTN","MAGGTU4D",36,0)
+ ; indicate the sequential numbers.
+"RTN","MAGGTU4D",37,0)
+ ;
+"RTN","MAGGTU4D",38,0)
+ ; Sort order of the rows does not matter. However, the reversed
+"RTN","MAGGTU4D",39,0)
+ ; order of patch sequential numbers is recommended.
+"RTN","MAGGTU4D",40,0)
+ ; NOTE:
+"RTN","MAGGTU4D",41,0)
+ ;  Patch 191 Emergency Patch did not remove support for any clients
+"RTN","MAGGTU4D",42,0)
+ ;  Patch 181 removed support for
+"RTN","MAGGTU4D",43,0)
+ ;        - Patch 131  
+"RTN","MAGGTU4D",44,0)
+ ;  Patch 167 removed support for
+"RTN","MAGGTU4D",45,0)
+ ;        - Patch 122
+"RTN","MAGGTU4D",46,0)
+ ;  Patch 149 removed support for 
+"RTN","MAGGTU4D",47,0)
+ ;        - Patch 117
+"RTN","MAGGTU4D",48,0)
+ ;        - Patch 106 
+"RTN","MAGGTU4D",49,0)
+ ;        - Patch  94
+"RTN","MAGGTU4D",50,0)
+ Q
+"RTN","MAGGTU4D",51,0)
+ ;
+"RTN","MAGGTU4D",52,0)
+ ;***** ADDS A CLIENT-SPECIFIC WARNING (IF NECESSARY)
+"RTN","MAGGTU4D",53,0)
+ ;
+"RTN","MAGGTU4D",54,0)
+ ; .MAGBUF       Reference to a local array that the warning text
+"RTN","MAGGTU4D",55,0)
+ ;               is returned to. It is appended to the RPC result
+"RTN","MAGGTU4D",56,0)
+ ;               array by the caller (WARNING^MAGGTU41).
+"RTN","MAGGTU4D",57,0)
+ ;
+"RTN","MAGGTU4D",58,0)
+ ;               Text must be stored at nodes with positive numbers
+"RTN","MAGGTU4D",59,0)
+ ;               or at the 0-node descendent from those nodes.
+"RTN","MAGGTU4D",60,0)
+ ;
+"RTN","MAGGTU4D",61,0)
+ ; CLVER         Client application version (Major.Minor.Patch.Build)
+"RTN","MAGGTU4D",62,0)
+ ;
+"RTN","MAGGTU4D",63,0)
+ ; CVRC          Version check code returned by the $$CHKVER1^MAGGTU41
+"RTN","MAGGTU4D",64,0)
+ ;
+"RTN","MAGGTU4D",65,0)
+ ; Notes
+"RTN","MAGGTU4D",66,0)
+ ; =====
+"RTN","MAGGTU4D",67,0)
+ ;
+"RTN","MAGGTU4D",68,0)
+ ; If the RPC result array already contains an error message that
+"RTN","MAGGTU4D",69,0)
+ ; will terminate the client, application, this procedure is not
+"RTN","MAGGTU4D",70,0)
+ ; called.
+"RTN","MAGGTU4D",71,0)
+ ;
+"RTN","MAGGTU4D",72,0)
+WARNING(MAGBUF,CLVER,CVRC) ;
+"RTN","MAGGTU4D",73,0)
+ Q
+"RTN","MAGIP191")
+0^3^B4214993
+"RTN","MAGIP191",1,0)
+MAGIP191 ;WOIFO/GEK - INSTALL CODE FOR MAG*3.0*191 ROI Print issues ;
+"RTN","MAGIP191",2,0)
+ ;;3.0;IMAGING;**191**;Mar 19, 2002;Build 41;Jul 24, 2017
+"RTN","MAGIP191",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGIP191",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP191",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGIP191",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGIP191",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGIP191",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGIP191",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGIP191",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGIP191",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGIP191",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGIP191",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGIP191",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGIP191",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGIP191",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP191",17,0)
+ ;;
+"RTN","MAGIP191",18,0)
+ ; There are no environment checks here but the MAGIP191 has to be
+"RTN","MAGIP191",19,0)
+ ; referenced by the "Environment Check Routine" field of the KIDS
+"RTN","MAGIP191",20,0)
+ ; build so that entry points of the routine are available to the
+"RTN","MAGIP191",21,0)
+ ; KIDS during all installation phases.
+"RTN","MAGIP191",22,0)
+ ;
+"RTN","MAGIP191",23,0)
+ Q
+"RTN","MAGIP191",24,0)
+ ;
+"RTN","MAGIP191",25,0)
+ ;+++++ INSTALLATION ERROR HANDLING
+"RTN","MAGIP191",26,0)
+ERROR ;
+"RTN","MAGIP191",27,0)
+ S:$D(XPDNM) XPDABORT=1
+"RTN","MAGIP191",28,0)
+ ;--- Display the messages and store them to the INSTALL file
+"RTN","MAGIP191",29,0)
+ D DUMP^MAGUERR1(),ABTMSG^MAGKIDS()
+"RTN","MAGIP191",30,0)
+ Q
+"RTN","MAGIP191",31,0)
+ ;
+"RTN","MAGIP191",32,0)
+ ;***** POST-INSTALL CODE
+"RTN","MAGIP191",33,0)
+POS ;
+"RTN","MAGIP191",34,0)
+ N CALLBACK
+"RTN","MAGIP191",35,0)
+ D CLEAR^MAGUERR(1)
+"RTN","MAGIP191",36,0)
+ ;
+"RTN","MAGIP191",37,0)
+ ;--- Link new remote procedures to the Broker context option
+"RTN","MAGIP191",38,0)
+ ;*** None for 191 **
+"RTN","MAGIP191",39,0)
+ ;S CALLBACK="$$ADDRPCS^"_$NA(MAGKIDS1("RPCLST^"_$T(+0),"MAG WINDOWS"))
+"RTN","MAGIP191",40,0)
+ ;I $$CP^MAGKIDS("MAG ATTACH RPCS",CALLBACK)<0  D ERROR  Q
+"RTN","MAGIP191",41,0)
+ ;
+"RTN","MAGIP191",42,0)
+ ;
+"RTN","MAGIP191",43,0)
+ ;--- Misc Updates
+"RTN","MAGIP191",44,0)
+ ;*** None for 191 **
+"RTN","MAGIP191",45,0)
+ ;I $$CP^MAGKIDS("MAG 191 MISC UPDATES ","$$UPDATE^"_$T(+0))<0 D ERROR Q
+"RTN","MAGIP191",46,0)
+ ; 
+"RTN","MAGIP191",47,0)
+ ;--- Send the notification e-mail
+"RTN","MAGIP191",48,0)
+ D BMES^XPDUTL("Post Install Mail Message: "_$$FMTE^XLFDT($$NOW^XLFDT))
+"RTN","MAGIP191",49,0)
+ D INS^MAGQBUT4(XPDNM,DUZ,$$NOW^XLFDT,XPDA)
+"RTN","MAGIP191",50,0)
+ ;
+"RTN","MAGIP191",51,0)
+ Q
+"RTN","MAGIP191",52,0)
+ ;
+"RTN","MAGIP191",53,0)
+ ;***** PRE-INSTALL CODE
+"RTN","MAGIP191",54,0)
+PRE ;
+"RTN","MAGIP191",55,0)
+ ;
+"RTN","MAGIP191",56,0)
+ Q
+"VER")
+8.0^22.2
+**END**
+**END**

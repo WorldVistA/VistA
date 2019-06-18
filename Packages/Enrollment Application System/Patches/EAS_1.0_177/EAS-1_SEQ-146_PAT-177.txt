@@ -1,0 +1,184 @@
+
+=============================================================================
+Run Date: MAR 11, 2019                     Designation: EAS*1*177
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: EMERGENCY
+Version : 1       SEQ #146                      Status: Released
+                  Compliance Date: MAR 13, 2019
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.5.0.07003 EMERGENCY RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+ The purpose of this informational patch description is to announce the 
+ emergency release of Enrollment System (ES) 5.5.0.07003. This release, 
+ developed in Java technology, contains Enrollment System Modernization 
+ (ESM) Phase 2 development and upgrade efforts, including enhancements to 
+ support Enrollment System Community Care (ESCC) and ES Sustainment.
+  
+ This software is being installed at AITC and no action is required by the 
+ sites.
+  
+ ES 5.5.0.07003 was successfully deployed on Friday, March 8th, 2019.
+  
+ The following functionality is updated in this ES 5.5.0.07003 release:
+  
+ Production defects:
+ 1. A SQL query, introduced by ES 5.5, caused a severe system performance
+    degradation (see Informational Patch EAS*1*173, deployed 02/16/2019). 
+    The problem is the system is unable to extend the temp segment by 128
+    in the tablespace TEMP.
+  
+ 2. Records that are Veterans Choice Eligibility (VCE) status Not 
+    Determined (ND) are being included in the Third-Party Administrator
+    (TPA) positive file.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+ 944306      Problem: A SQL query, introduced by ES 5.5, caused a severe
+             system performance degradation (see Informational Patch
+             EAS*1*173, deployed 02/16/2019). The problem is the system is
+             unable to extend the temp segment by 128 in the tablespace 
+             TEMP.
+             Resolution: Tuned the SQL query for performance and 
+             management of TEMP tablespace.
+  
+  
+ 945034      Problem: Records that are Veterans Choice Eligibility (VCE)
+             status Not Determined (ND) are being included in the Third-
+             Party Administrator (TPA) positive file.
+             Resolution: VCE of ND is excluded as a VCE change; TPA
+             positive also excludes VCE of ND.
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Patch (PackMan) message and documentation 
+ describing the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                    File Name                              FTP Mode
+ -----------------------------------------------------------------------
+ Release Notes            ES_5_5_0_07003_RN.PDF                  binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 07, 2019
+Completed By:                               Date Completed: MAR 11, 2019
+Released By :                               Date Released : MAR 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

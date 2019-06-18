@@ -1,0 +1,132 @@
+
+=============================================================================
+Run Date: OCT 11, 2016                     Designation: IVM*2*153
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #138                      Status: Released
+                  Compliance Date: NOV 11, 2016
+=============================================================================
+
+Associated patches: (v)IVM*2*132   <<= must be installed BEFORE `IVM*2*153'
+                    (v)IVM*2*147   <<= must be installed BEFORE `IVM*2*153'
+
+Subject: FIX MSE DATA ISSUE FOR Z07 INCONSISTENCIES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ **************************************************************************
+  Note:  IVM*2*153 is being released along with DG*5.3*855
+         in host file: DG_53_P855.KID.
+  
+         It is imperative that these patches be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  
+ **************************************************************************
+  
+  Patch DG*5.3*797 added the new MILITARY SERVICE EPISODE sub-file 
+  (#2.3216) in the PATIENT (#2) file to store Military Service Episode
+  (MSE) data. Changes in that patch included modifications to several
+  consistency checks that used MSE data.  The checks for data
+  inconsistencies should only be checking the MSEs in the new MILITARY
+  SERVICE EPISODE sub-file (#2.3216).
+  
+  However, during the check for inconsistencies that would prevent the 
+  transmission of a Z07 HL7 message to the Health Eligibility Center 
+  (HEC), the MSE data in the old location is being checked instead of the
+  MSEs in the new location.  This is causing invalid inconsistency errors
+  to be filed in the INCONSISTENT DATA file (#38.5), and preventing the
+  transmission of the Z07 messages for those patients. 
+  
+  The wrong MSE data is being checked for the following inconsistencies:
+  
+   83    MERCH SEA OR FILIPINO VET BOS REQUIRES SERVICE DATES DURING WWII
+   85    VERIFIED FILIPINO VETERAN SHOULD HAVE A VETERAN STATUS OF 'YES'
+   86    INELIGIBLE FILIPINO VETERAN SHOULD HAVE A VETERAN STATUS OF 'NO'
+  
+  This patch is being released with patch DG*5.3*855 in host file 
+  DG_53_P855.KID.
+  
+  
+  ASSOCIATED TICKETS:
+  ===================
+  1.) INC000000718678 - Inconsistency in patient record that need to be 
+      I9915503FY16(d)   corrected
+    
+  ASSOCIATED NSR:
+  ===============
+  N/A
+  
+  
+  PARTICIPATING TEST SITES:
+  =========================
+  Tuscaloosa VA Medical Center
+  Upstate New York Health Care System 
+  West Palm Beach VA Medical Center
+   
+  
+  TICKET OVERVIEW:
+  ================
+  1.)INC000000718678 - Inconsistency in patient record that need to be 
+     I9915503FY16(d)   corrected
+  
+  Problem:
+  --------
+  During the check for inconsistencies that would prevent the transmission 
+  of a Z07 HL7 message to the Health Eligibility Center (HEC), the MSE data
+  in the old location is being checked instead of the MSEs in the new
+  location. This is causing invalid inconsistency errors to be filed in the
+  INCONSISTENT DATA file (#38.5), and preventing the transmission of the
+  Z07 messages for those patients.
+   
+  The wrong MSE data is being checked for the following inconsistencies:
+   
+   83    MERCH SEA OR FILIPINO VET BOS REQUIRES SERVICE DATES DURING WWII
+   85    VERIFIED FILIPINO VETERAN SHOULD HAVE A VETERAN STATUS OF 'YES'
+   86    INELIGIBLE FILIPINO VETERAN SHOULD HAVE A VETERAN STATUS OF 'NO' 
+  
+  
+  Resolution:
+  -----------
+  Routines IVMZ7CR and IVMZ07C are being modified to use the new Military 
+  Service Episode (MSE) data in sub-file (#2.3216) in the PATIENT (#2) 
+  file for consistency checks prior to processing a Z07 message.
+    
+  
+  Installation Instructions:
+  ==========================
+  IVM*2*153 is being released along with DG*5.3*855 in host file: 
+  DG_53_P855.KID.  Installing DG*5.3*855 will also install IVM*2*153.
+  
+  See the Installation Instructions of DG*5.3*855 to install both patches.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;JUL 8,1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMZ07C
+    Before: B18525978   After: B19513657  **105,128,134,147,153**
+Routine Name: IVMZ7CR
+    Before: B68668453   After: B83209153  **105,127,132,153**
+ 
+Routine list of preceding patches: 132, 147
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 18, 2012
+Completed By:                               Date Completed: SEP 29, 2016
+Released By :                               Date Released : OCT 11, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

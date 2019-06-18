@@ -1,0 +1,206 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 11/27/18 at 12:24
+=============================================================================
+Run Date: MAR 20, 2019                     Designation: PSN*4*566
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #548                      Status: Released
+                  Compliance Date: APR 19, 2019
+=============================================================================
+
+Associated patches: (v)PSN*4*563   <<= must be installed BEFORE `PSN*4*566'
+
+Subject: RE-INDEX OF CMOP ID FIELD/GCNSEQNO FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues.
+  
+ 1. Unable to do remote order checks where the remote drug is now inactive 
+    and the GCNSEQNO is blank.
+  
+ 2. Drug File Index 'AQ1' Not Cleaned Up on Un-match from NDF 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+  
+ INC1229364 - Unable to do remote order checks where the remote drug is now
+              inactive and the GCNSEQNO is blank
+  
+ INC2658350 - Drug File Index 'AQ1' Not Cleaned Up on Un-match from NDF
+  
+  
+  
+  
+ 1. INC1229364 - Unable to do remote order checks where the remote drug is 
+                 now inactive and the GCNSEQNO is blank.
+ Problem: 
+ --------
+ During the testing of PSN*4*565 patch and releasing of new .DAT file,
+ additional entries of the VA product file (#50.68) updated with missing
+ the GCNSEQNO field (#11). The GCNSEQNO field value is necessary for the
+ system to perform enhanced order checks (MOCHA).
+  
+  
+ Resolution:
+ -----------
+ This patch fixes the PPS-N data update process to prevent deletion of the 
+ GCNSEQNO field (#11) of the VA PRODUCT file (#50.68) for the products 
+ that are not included in the .DAT file. 
+  
+ This patch restores the GCNSEQNO field for all products that were affected
+ during the implementation of PSN*4*565 patch.
+  
+  
+  
+ 2. INC2658350 - Drug File Index 'AQ1' Not Cleaned Up on Un-match from NDF
+  
+ Problem: 
+ --------
+ Orlando VAMC identified several invalid index globals in the DRUG file 
+ (#50) for the 'AQ1' cross-reference of CMOP ID field (#27).
+  
+  
+ Resolution:
+ -----------
+ The NDF .DAT file update process has been updated to delete the 'AQ1'
+ index entry for the un-matched drugs. Also, the 'AQ1' will be re-indexed 
+ as part of the post-install routine.
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+         
+ Test Sites:
+ ----------- 
+ Orlando VAMC
+ Central Plains HCS 
+  
+ Pre/Post Installation Overview:  
+ ------------------------------- 
+ The PSN566PO post-install process performs the following actions:
+   - Restore the missing GCNSEQNO field (#11) of the VA PRODUCT file 
+     (#50.68) for the provided products
+   - Generates a MailMan message with all updated entries and it will be
+     sent to the patch installer as well as all "PSNMGR" key holders.
+   - Re-index the 'AQ1' index of CMOP ID field (#27) of the DRUG file (#50)
+  
+ The routines PSN566PO is deleted at the end of patch installation.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch should take less than 2 minutes to install.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the
+    following options. When prompted for the INSTALL NAME enter the patch
+    PSN*4.0*566.
+  
+   a. Backup a Transport Global - This option will create a backup 
+      message of any routines exported with this patch. It will not backup
+      any other changes such as DDs or templates.
+  
+   b. Compare Transport Global to Current System - This option will allow
+      you to view all changes that will be made when this patch is
+      installed.  (It compares all components of this patch routines,
+      DDs, templates, etc.).
+  
+   c. Verify Checksums in Transport Global - This option will allow you 
+      to ensure the integrity of the routines that are in the transport
+      global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//', respond 'NO'.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond 'NO'.
+  
+ 7. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0. 
+  
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+   
+ ;;4.0;NATIONAL DRUG FILE;**[PATCH LIST]**; 30 Oct 98
+    
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run 
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of 
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSN Routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSN*4.0*566 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch PSN*4.0*566 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN566PO
+    Before:       n/a   After:  B7846893  **566**
+Routine Name: PSNPPSNU
+    Before: B50930121   After: B51460995  **513,563,566**
+ 
+Routine list of preceding patches: 563
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 19, 2018
+Completed By:                               Date Completed: MAR 19, 2019
+Released By :                               Date Released : MAR 20, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

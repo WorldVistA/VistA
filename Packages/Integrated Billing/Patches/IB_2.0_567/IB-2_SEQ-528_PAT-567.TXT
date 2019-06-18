@@ -1,0 +1,143 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 06/09/16 at 14:13
+=============================================================================
+Run Date: OCT 18, 2016                     Designation: IB*2*567
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #528                      Status: Released
+                  Compliance Date: NOV 18, 2016
+=============================================================================
+
+
+Subject: UPDATE PAYER FILE (#365.12) WITH MISSING ENTRIES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will update the PAYER file (#365.12) with any missing entries.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000001239207    Integrated Billing - e-IIV:
+    I9872762FY16(d)
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Orlando VAMC
+ Texas Valley Coastal Bend (Harlingen)
+ Upstate NY HCS (Albany)
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001239207    Integrated Billing - e-IIV:
+   
+    Problem: 
+    --------
+    Initial additions to the PAYER file (#365.12) transmitted 
+    by Financial Services Center (FSC) were not added causing 
+    subsequent updates to fail at select VistA facilities.
+   
+    Resolution:
+    -----------
+    Each VistA PAYER file (#365.12) will be checked for missing
+    entries and updated as necessary. 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*567)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*567.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//, respond NO.
+  
+     7. You may delete routines IB20P567 and IB2P567A after the installation.
+  
+  
+ *** After the install please review the installation to verify the
+     PAYER file (#365.12) additions completed. 
+     NOTE: If any type of error message is displayed during installation
+     create a CA ticket to resolve the issue. The total number of
+     of records will vary from site to site depending on what records
+     already exist.
+  
+  See example below:
+  
+ >>>Evaluating PAYER file...
+  
+ PAYER ACS BENEFIT SERVICES ADDED WITH A NATIONAL ID OF: VA2642
+  
+ PAYER WEA TRUST ADDED WITH A NATIONAL ID OF: VA1484
+  
+ PAYER ACORDIA NATIONAL-MOHWK/HCKRY SPRGS ADDED WITH A NATIONAL ID OF: VA1045
+  
+ PAYER DIRECTORS GUILD ADDED WITH A NATIONAL ID OF: VA92
+  
+ TOTAL OF 4 ADDED TO THE PAYER FILE
+  
+  
+ >>>PAYER file update complete!!...
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P567
+    Before:       n/a   After:B155215312  **567**
+Routine Name: IB2P567A
+    Before:       n/a   After:B141064316  **567**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 26, 2016
+Completed By:                               Date Completed: OCT 13, 2016
+Released By :                               Date Released : OCT 18, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

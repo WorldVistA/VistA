@@ -1,0 +1,529 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 03/31/15 at 11:23
+=============================================================================
+Run Date: SEP 15, 2015                     Designation: XU*8*655
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #518                      Status: Released
+                  Compliance Date: OCT 16, 2015
+=============================================================================
+
+Associated patches: (v)XU*8*240    <<= must be installed BEFORE `XU*8*655'
+                    (v)XU*8*325    <<= must be installed BEFORE `XU*8*655'
+                    (v)XU*8*514    <<= must be installed BEFORE `XU*8*655'
+                    (v)XU*8*523    <<= must be installed BEFORE `XU*8*655'
+
+Subject: ENHANCED SINGLE SIGN-ON UTILITIES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+  - Print Template
+  - Sort Template
+
+Description:
+============
+
+ This patch provides enhanced Single Sign-On (SSO) utilities to support
+ advanced models for identification and authentication of users into VistA.
+ This patch also provides utilities to secure data for storage (Secure 
+ Hash Algorithm one-way hash), Base64 encoding and decoding, AES 
+ encryption and decryption, and RSA encryption and decryption (DBIA #6189).
+ The utilities to manage and process PKI certificates used for RSA 
+ encryption are still in development and will be released with a follow-on 
+ patch.
+  
+ The use of these utilities are expected to improve security and auditing
+ capabilities in accordance with VA Handbook 6500 Appendix F and revision 4
+ of NIST SP 800-53. As required by FIPS 199 and using guidance from NIST SP
+ 800-60, the recommended security categorization for these applications is
+ HIGH.
+  
+ The following projects are only a few of the external applications that
+ are expected to make use of these utilities.
+  
+ Identity and Access Management (IAM)
+  - Ensure enterprise mandate for Personal Identity Verification (PIV) 
+    compliance is met for VistA access.
+  - Ensure Continuous Readiness in Information Security Program (CRISP) 
+    on-boarding and off-boarding enterprise mandate is met for VistA
+    access.
+  - Automate and improve accuracy in creation of VistA accounts as a path 
+    to moving Veterans Health Administration (VHA) and Veterans Business 
+    Administration (VBA) applications away from reliance on "anonymous"
+    VistA accounts that represent systems rather than people.
+  - Integrate VistA user management within the IAM context and provide 
+    mapping from the VistA user identifier and enterprise user identifiers 
+    (Active Directory (AD), PIV).
+  - Integrate all forms of user access to VistA ("roll and scroll" terminal
+    session, Computerized Patient Record System (CPRS), calls from remote 
+    systems, etc.) with the IAM SSO user session.
+  - This patch adds five new Remote Procedures, two context Options, and
+    two REMOTE APPLICATION file (#8994.5) entries to be used by the IAM
+    Binding application and the IAM Provisioning application (both in
+    development).
+  
+ VistA Access Enhancements (VAE) 
+  - Fix existing remote applications, middleware and VistA to eliminate 
+    anonymous access.
+  - Replace outmoded broker and middleware with modern solutions: update 
+    VistA Integration Adapter (VIA) to include new services; migrate MDWS 
+    users to VIA; implement VistA Service Assembler (VSA) services. 
+  - This patch adds one new Remote Procedure "XUS ESSO VALIDATE" to be 
+    used in the future (under development) to sign-on a user authenticated
+    and identified by a Secure Assertion Markup Language (SAML) token based
+    on IAM SAML token definition v1.2) for SSO - Internal (SSOi), SSO -
+    External (SSOe), and Nationwide Health Information Network (NHIN). It
+    will be used for VistA access by VistALink, RPC Broker, and Vista.js,
+    similar to the existing "XUS AV CODE" Remote Procedure used to validate
+    Access and Verify Codes.
+  - This patch includes XML event handlers (routine ^XUSAML) to parse and 
+    process a SAML token for SSOi, SSOe, and NHIN login. The processing of 
+    the authentication portion of the SAML token is currently under 
+    development, so these event handlers can currently be used only 
+    internally to identify a user, and will not authenticate an external
+    user into VistA.
+  - This patch does not include the VistALink code for a SAML token 
+    embedded in a VistALink XML message (will require a VistALink patch 
+    in the XOB namespace).
+  - This patch does not include the code for RPC Broker clients to use SAML
+    tokens (will require a RPC Broker patch in the XWB namespace and an
+    updated Broker Development Kit).
+  
+ Virtual Lifetime Electronic Record (VLER) eHealth Exchange
+  - Use provider information in the form of a National Health Information
+    Network (NHIN) SAML token to identify a NEW PERSON file (#200) entry in
+    VistA so that a patient record can be tied to the Retail Pharmacy
+    provider who administered an immunization. The APIs in this patch can 
+    not yet add a new entry, as the authentication processing of the SAML 
+    token is still in development.
+  
+ Veterans Access, Choice, and Accountability Act of 2014 (VACAA)
+  - Bulk-load non-VA entities and providers to be identified in VistA when 
+    documenting patient care.
+  - This patch uses a new API that is used to bulk-load Non-VA Care 
+    Providers into the NEW PERSON file (#200) with a post-installation 
+    routine. The data to be used is in the XU_8_655.GBL global included
+    with this patch. Provider names have been encrypted in the import
+    global to protect PII. This patch will only load providers into
+    production VistA systems, and will not load providers into development,
+    test, mirror, or other non-production systems.
+  - The providers are saved in the NEW PERSON file (#200) in a format 
+    compatible with the future use of a NHIN SAML token to provide data 
+    interoperability with external systems.
+  
+  
+ Enterprise Health Management Platform (eHMP)
+  - Provide write-back capability to VistA that meets HIPAA technical 
+    requirements for user identification and auditing.
+  - This patch includes an API for VistA.js that will be used to identify
+    users, and also includes a modified Broker Security Enhancement (BSE)
+    API to identify the calling application.
+  
+ One utility common to all of the above requirements will identify an
+ externally authenticated VistA user for auditing and HIPAA technical
+ requirements. At least one of the following attributes is required to
+ uniquely identify an existing user in the NEW PERSON file (#200):
+  - Unique Security ID [SecID, assigned by Identity and Access Management]
+  - Unique National Provider Identifier [NPI, assigned by Centers for 
+    Medicare and Medicaid Services (CMS)]
+  - Unique combination of Subject Organization ID (OID) and Unique User ID 
+    (UID)
+  
+ The current model for SSO using the Remote Procedure Call (RPC) 
+ Broker Security Enhancement (BSE) allows users to be validated through the
+ traditional VistA Access and Verify Codes on their home system and then
+ carry that authentication to other VistA systems. The BSE model for SSO 
+ will continue to be supported and enhanced. A packet of information
+ is retrieved from the authenticating (home) site, and is entered in the
+ NEW PERSON file (#200) so that a trace to the original authentication can
+ be made.  The information packet contains the visiting user's name, SSN,
+ station name, site number, user's phone number (if a phone number is
+ available), SecID, and network username (if the network username is 
+ available).  For security purposes, the SSN must be a valid SSN (not
+ pseudo and not a test user).  VistA records the visit information in the
+ VISITED FROM multiple field (#8910) of the NEW PERSON file (#200).
+  
+ Two new menu options have been added to the "User Management Menu" 
+ [XUOPTUSER].  The first, "User with Foreign Visits" [XUS VISIT USERS], 
+ lists users who have visited from remote sites using BSE and shows the 
+ remote site name, date of first visit, and date of last visit.  The 
+ second, "Remote Access User Sign-On Log" [XUSEC REMOTE ACCESS], prints 
+ entries from the Sign-On Log for BSE visitor entries.
+  
+ This patch adds two new fields TITLE (#3.1) and ELECTRONIC SIGNATURE CODE 
+ (#20.4) into the form EDIT USER CHARACTERISTICS [XUEDIT CHARACTERISTICS] 
+ for the Edit User Characteristics [XUSEREDITSELF] menu option. 
+  
+ The updated form looks like:
+  
+                      EDIT USER CHARACTERISTICS
+ NAME:                                                    PAGE 1 OF 1
+ _______________________________________________________________________
+  
+       INITIAL:                                    PHONE:  
+     NICK NAME:                             OFFICE PHONE:
+         TITLE:                              VOICE PAGER:
+                                    
+     ASK DEVICE TYPE AT SIGN-ON: 
+                      AUTO MENU: 
+                     TYPE-AHEAD:    
+                TEXT TERMINATOR:
+               PREFERRED EDITOR:    
+               NETWORK USERNAME: 
+      ELECTRONIC SIGNATURE CODE:            
+  
+ Want to edit VERIFY CODE (Y/N):
+ _______________________________________________________________________
+  
+  
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 03/30/15
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*655 contains 
+ changes to a package referenced in ProPath standard titled BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8.0*655 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)  Field Name (Number)              New/Modified/Deleted
+ ------------------  -------------------              --------------------
+ NEW PERSON (#200)   SECID (#205.1)                   New
+ NEW PERSON (#200)   SUBJECT ORGANIZATION (#205.2)    New
+ NEW PERSON (#200)   SUBJECT ORGANIZATION ID (#205.3) New
+ NEW PERSON (#200)   UNIQUE USER ID (#205.4)          New
+ NEW PERSON (#200)   ADUPN (#205.5)                   New
+ NEW PERSON (#200)   NETWORK USERNAME (#501.1)        Modified
+  
+  
+ Forms Associated:
+  
+ Form Name                Type                      New/Modified/Deleted
+ ---------                ----                      -------------------- 
+ XUEDIT CHARACTERISTICS   Menu                      Modified
+  
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      -------------------- 
+ User Management Menu   Menu                      Modified
+  [XUOPTUSER]                               
+ Users with Foreign     Print                     New
+  Visits 
+  [XUS VISIT USERS]                            
+ Remote Access User     Print                     New
+  Sign-On Log 
+  [XUSEC REMOTE ACCESS]                   
+ IAM User Provisioning  Broker (Client/Server)    New
+  [XUS IAM USER 
+  PROVISIONING]
+ IAM User Binding App   Broker (Client/Server)    New
+  [XUS IAM USER
+  BINDING]
+  
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)   New/Modified/Deleted 
+ -------------       ----    ------------------   --------------------
+ XUS VISIT USERS     Sort    NEW PERSON (#200)    Modified to select
+                                                  date range
+ XUS VISIT USERS     Print   NEW PERSON (#200)    Modified to add field
+                                                  LAST VISITED
+ XUSEC REMOTE ACCESS Sort    SIGN-ON LOG (#3.081) Modified to select
+                                                  date range
+ XUSEC REMOTE ACCESS Print   SIGN-ON LOG (#3.081) Modified to clarify
+                                                  report title
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name               Type               New/Modified/Deleted
+ --------               ----               --------------------
+ XUS ESSO VALIDATE      RESTRICTED         New
+ XUS IAM FIND USER      RESTRICTED         New
+ XUS IAM DISPLAY USER   RESTRICTED         New
+ XUS IAM ADD USER       RESTRICTED         New
+ XUS IAM EDIT USER      RESTRICTED         New
+ XUS IAM BIND USER      RESTRICTED         New
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  INC000000498046 Names are not updated on remote site
+  INC000000756781 Cannot override syntax check on NETWORK USERNAME
+  INC000001108082 STDNAME^XLFNAME does not work as documented
+  
+ 1. INC000000498046 Names are not updated on remote site
+  
+ Problem:
+ -------
+ When visiting a remote VistA site using the Broker Security Enhancement 
+ (BSE), and the name field does not match the home (authenticating) VistA
+ site due to a name change, the name at the remote site needs to be 
+ updated. Names are being attached to new documents that are not the legal
+ name of the person entering the information.
+  
+ Resolution:
+ ----------
+ Routine XUESSO1 has been modified to validate the name at the time of the
+ remote login and change it to the new incoming name from the home site if
+ it is different.  The name will be modified only if the entry in the NEW 
+ PERSON file (#200) does not have an access code (not an active local 
+ user), has matching SSN, and has visited the remote site at least once
+ before.
+  
+ 2. INC000000756781 Cannot override syntax check on NETWORK USERNAME
+  
+ Problem:
+ -------
+ Holders of the XUMGR Security Key cannot override the syntax check on NEW 
+ PERSON file (#200) NETWORK USERNAME field (#501.1) for non-VHA names or 
+ names less than 9 characters long.
+  
+ Resolution:
+ ----------
+ The syntax check now looks to see if the provisioning user holds the XUMGR
+ Security Key. If so, then warnings are generated but the provisioner is
+ allowed to continue with entering or editing the NETWORK USERNAME.
+  
+ 3. INC000001108082 STDNAME^XLFNAME does not work as documented
+  
+ Problem:
+ -------
+ A bug was found in the supported Name Standardization APIs (#3065) using 
+ the call STDNAME^XLFNAME(.NAME,FLAGS,.AUDIT). This API is called to 
+ standardize the name stored in the NEW PERSON file (#200) in the 
+ following format, all in uppercase:
+         Family_name,Given_name(s) Middle_name Suffix(es)
+ If the name is entered in upper and lower case, and entered in correct 
+ format for the flags that are being used, the API may not evaluate the 
+ name correctly.
+  
+ Resolution:
+ ----------
+ When checking the suffix at CHKSUF^XLFNAME1, the code expects the name to 
+ be all in uppercase as it only checks for uppercase. A fix has been coded 
+ to change the name into all uppercase upon entering the API at 
+ STDNAME^XLFNAME. This corrects the problem.
+  
+  
+ Test Sites: (Patch Tracking Message #73147622)
+ ----------
+ Birmingham VA Medical Center, Birmingham AL (Large, Station 521)
+ Minneapolis VA Medical Center, Minneapolis MN (Large, Station 618)
+ VA Central Alabama HCS, Tuskegee AL (Integrated, Station 619) 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ No changes have been made to Kernel documentation as a result of this 
+ patch. However, the most up-to-date VA Kernel end-user documentation 
+ is available on the VHA Software Document Library (VDL) at the following
+ Internet Website:
+      http://www.domain/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ FTP Software Retrieval Instructions
+ ----------------------------------- 
+ Global Host File:                XU_8_655.GBL  (ASCII)
+  
+ The preferred method is to FTP the files from download.vista.domain.ext,
+ which will transmit the files from the first available FTP server.
+  
+ The files may also be downloaded directly from a particular FTP
+ location at the following locations:
+  
+      Hines           ftp.fo-hines.domain.ext
+      Albany          ftp.fo-albany.domain.ext
+      Salt Lake       ftp.fo-slc.domain.ext
+  
+      Files are available in the ANONYMOUS.SOFTWARE directory. 
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+   1) Install the data from the global host file XU_8_655.GBL. This
+      file contains the VACAA Non-VA Care Provider information. This 
+      global file is ONLY required for production VistA systems. Provider 
+      information will not be loaded into development, test, mirror, or
+      other non-production systems.
+  
+      This global is approximately 14 megabytes in size.  Make sure
+      there is sufficient space available to load this global with
+      journaling on.  The loading of the global should take from 
+      1 to 2 minutes.
+  
+      From the Programmer prompt, execute the following routine, answering 
+      the "device" prompt with the server and directory information where
+      you saved the global to be loaded:
+  
+           D ^%GI
+             
+           Global input
+           Device: SERVER$:[DIRECTORY]XU_8_655.GBL
+           Parameters? "RS" => 
+             Globals were saved on 30 Mar 2015   10:12 AM   Cache
+             with description: Patch XU*8*655 global ^XU8P655("VACAA") 
+             
+             Input option: A
+             ^XU8P655
+  
+      5)  Set up user and IO variables (D ^XUP) for programmer access.
+  
+      6)  Distribution Load:
+  
+          Load the KIDS Distribution from the Packman Message using the
+          Packman function "Install/Check Message."
+  
+      7)  KIDS Installation:
+  
+          Install the patch using the KIDS Installation Menu action
+          "Install Package(s)" and the install name XU*8.0*655.
+  
+ This patch can be queued for installation. TaskMan does not have to be
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.  There are no menu options or protocols that need to be disabled.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 5 minutes to install.  It may be queued for installation.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*655):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ A post-installation routine POST^XU8PS655 will execute upon patch 
+ installation to add REMOTE APPLICATION file (#8994.5) entries for the IAM 
+ Binding and IAM Provisioning applications.
+  
+ NOTE:  The post-installation routine will load Non-VA Care Provider 
+ information into the NEW PERSON file (#200) of PRODUCTION VISTA SYSTEMS
+ ONLY! Providers will not be loaded into development, test, mirror, or
+ other non-production accounts. Three e-mail messages will be sent to the
+ G.PATCHES mail group informing the patch installer of successful, failed, 
+ and "requires manual review" entries. Not all VistA systems will load the 
+ same providers, as the providers will be selected based on the VISN where 
+ the production system is located.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XLFNAME
+    Before: B54765617   After: B55907833  **134,211,240,655**
+Routine Name: XU8PE655
+    Before:       n/a   After: B53655876  **655**
+Routine Name: XU8PS655
+    Before:       n/a   After:B102640640  **655**
+Routine Name: XUESSO1
+    Before: B41206647   After: B77693554  **165,183,196,245,254,269,337,
+                                           395,466,523,655**
+Routine Name: XUESSO2
+    Before:       n/a   After:B108993229  **655**
+Routine Name: XUESSO3
+    Before:       n/a   After:B206943521  **655**
+Routine Name: XUPSQRY
+    Before: B35986409   After: B37071844  **325,655**
+Routine Name: XUSAML
+    Before:       n/a   After: B78896546  **655**
+Routine Name: XUSER1
+    Before: B10316909   After: B12036496  **169,210,222,514,655**
+Routine Name: XUSHSH
+    Before: B14303416   After: B31040658  **655**
+ 
+Routine list of preceding patches: 240, 325, 514, 523
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 31, 2014
+Completed By:                               Date Completed: AUG 18, 2015
+Released By :                               Date Released : SEP 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

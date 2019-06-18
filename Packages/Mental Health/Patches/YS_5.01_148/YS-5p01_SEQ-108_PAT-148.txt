@@ -1,0 +1,205 @@
+$TXT Created by               at DEVD-MHA.DOMAIN.EXT  (KIDS) on Monday, 04/01/19 at 18:12
+=============================================================================
+Run Date: APR 18, 2019                     Designation: YS*5.01*148
+Package : YS - MENTAL HEALTH                  Priority: EMERGENCY
+Version : 5.01       SEQ #108                   Status: Released
+                  Compliance Date: APR 25, 2019
+=============================================================================
+
+
+Subject: RE-INDEX MENTAL HEALTH RESULTS EMERGENCY PATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to repair any anomalies in the indexes of the
+ MH ANSWERS (601.85) and MH RESULTS (601.92) files.  Starting with 
+ YS*5.01*123, the Mental Health package records all instrument scores in
+ VistA.  After installation, sites have seen errors when processing
+ Clinical Reminders.  This is usually manifest on the CPRS cover sheet.
+ Clinical Reminders that include a Mental Health assessment may show
+ "Error" instead of "DUE NOW" in the Due Date column.  Bad pointers in the
+ indexes of the MH ANSWERS (601.85) and MH RESULTS (601.92) files are the
+ cause of the errors.  When these indexes have bad entries, you may see
+ these errors in the error trap:
+  
+     SI+5^YTQPXRM6
+     OLDSCRES+5^YTSCORE
+     LOADANSW+20^YTSCORE
+  
+ Some sites have already manually rebuilt the "AC" indexes in these files
+ using VA FileMan.  When the patch is installed, you are asked if you want 
+ to skip re-indexing.  Only answer "Yes" if you have already re-indexed the
+ files.  Even if you have re-indexed, it will be fine to re-index again.  
+ The re-indexing is a queued task that runs in the background.  It can be
+ run with users on the system.  In test environments the re-indexing 
+ process has taken about 15 minutes.
+  
+ At the end of re-indexing, a MailMan message is sent to the installer.  
+ There is also an option included, YS123 RE-INDEX MONITOR. The option will
+ allow you to view the status of the re-indexing.  It will also allow you
+ to re-queue a new indexing task, should that ever become necessary.
+  
+ If you have already installed YS*5.01*123:
+   After this patch has been installed and the re-indexing has completed,
+   you should stop seeing the errors mentioned above.  There is no need to 
+   re-install YS*5.01*123.
+  
+ If you have not yet installed YS*5.01*123:
+   Install this patch prior to installing YS*5.01*123.  The patch will 
+   repair the indexes so that you don't see the above errors when
+   YS*5.01*123 is installed.
+  
+   
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A  
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A    
+  
+ Options Associated:
+ Option Name                                      Type         New/Mod/Del
+ -----------                                      ----         -----------
+ YS*5.01*123 Result Indexing Monitor              run routine  New
+   [YS123 RE-INDEX MONITOR]
+  
+ Protocols Associated: N/A
+  
+ Remote Procedures Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ NSD Ticket(s) & Overview:
+ -------------------------
+ INC4999706
+ Errors with Clinical Reminders: <UNDEFINED>LOADANSW+20^YTSCORE
+  
+ INC5001344
+ All sites getting error after installing YS*5.01*123 
+ <SUBSCRIPT>OLDSCRES+5^YTSCORE
+  
+ INC5005448
+ PTSD, Depression, and Follow-up Depression/PTSD/SI reminders are causing 
+ errors in the error trap. 
+  
+ Test Sites:
+ ----------
+ Milwaukee
+ Orlando
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+   YS*5.01*148 Install Guide                    YS_501_148_IG.PDF
+   
+ Sites may retrieve the install guide directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext 
+ Patch Installation
+ ==================
+  
+ This patch can be loaded with users on the system. Installation time will
+ be less than 5 minutes.
+  1. Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  2. Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+     Select Kernel Installation & Distribution System Option: 
+     Installation
+          1      Load a Distribution
+          2      Verify Checksums in Transport Global
+          3      Print Transport Global
+          4      Compare Transport Global to Current System
+          5      Backup a Transport Global
+          6      Install Package(s)
+                 Restart Install of Package(s)
+                 Unload a Distribution
+   
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter YS*5.01*148):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+  
+  4. Use the Install Package(s) option and select the package
+     YS*5.01*148.
+     a.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//", answer NO.
+     b.  When prompted "Do you want to SKIP re-indexing MH RESULTS and MH 
+         ANSWERS? NO//", answer NO. 
+         (Unless you have previously re-indexed as described above.)
+     c.  When prompted "Queue Re-Indexing to Run: NOW//", answer the time 
+         you want the re-indexing to run.
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the 
+         install? NO//", answer NO.
+     b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//", answer NO.
+  
+    
+ Back-Out Plan
+ -------------
+ This patch adds two new routines that exist solely for the purpose of this
+ patch.  It does not modify any existing routines, so there is nothing to
+ back-out or to restore.
+  
+ If there is a catastrophic failure in re-indexing, use VA FileMan to
+ manually re-index the MH ANSWERS (601.85) and the MH RESULTS (601.92)
+ files.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS148IDX
+    Before:       n/a   After: B33200330  **148**
+Routine Name: YS148PST
+    Before:       n/a   After:  B1333784  **148**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 29, 2019
+Completed By:                               Date Completed: APR 18, 2019
+Released By :                               Date Released : APR 18, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

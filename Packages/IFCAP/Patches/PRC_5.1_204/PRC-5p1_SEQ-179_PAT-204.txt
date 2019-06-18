@@ -1,0 +1,325 @@
+$TXT Created by               MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 03/05/18 at 06:50
+=============================================================================
+Run Date: APR 10, 2018                     Designation: PRC*5.1*204
+Package : PRC - IFCAP                         Priority: EMERGENCY
+Version : 5.1       SEQ #179                    Status: Released
+                  Compliance Date: APR 12, 2018
+=============================================================================
+
+Associated patches: (v)PRC*5.1*93  <<= must be installed BEFORE `PRC*5.1*204'
+
+Subject: CORRECT UNDEFINED ERRORS IN REQUEST AND PO PROCESSING
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ This patch will address 5 issues:
+  
+ 1) When a user enters a temporary transaction, exits out of the session 
+ and then tries to edit that request, there will be an undefined error.
+  
+ 2) If a user exits while creating a 2237, then edits that same 2237, but 
+ times out at the field "DATE OF REQUEST", an error will occur.
+  
+ 3) An error will occur if a temporary transaction is edited in the 2237.
+  
+ 4) When entering a new 2237, if the user "jumps" at the "PRIORITY OF 
+ REQUEST" field to the "COMMENTS" field then exits, an error occurs.
+  
+ 5) If a fund has a multi-appropriation, the beginning budget fiscal year
+ may not match the fiscal year.
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) I18542810FY18 - AEU's vista is dropping connection while working
+    Duplicates: 
+           R18679358FY18 - <UNDEFINED>CHKREQ+3^PRCSEB *PRC("FY") Error
+           I18740010FY18 - STX - User cannot edit order in Vista, kicks 
+           R18806714FY18 - IFCAP - < UNDEFINED>CHKREQ+3^PRCSEB *PRC("FY")
+           I19113233FY18 - cannot edit a Vista IFCAP request 
+           I18695458FY18 - Charleston Vista kicking back to log in screen
+  
+ Problem: 
+ --------
+ In the Requestor's Menu [PRCSREQUESTOR] option, if a user uses the Enter 
+ a Request (SECTION) [PRCSENRS] option to create a temporary request, and 
+ then exits out proceeding to use the Edit a Request (SECTION) [PRCSEDRS] 
+ option, the user will receive an error. There are 3 values that will
+ become undefined upon exiting: Fiscal Year, Quarter, and Beginning Budget
+ Fiscal Year. A date check occurs in the edit, but since these values are
+ no longer there the user will receive an error. The error will also occur
+ when using Edit 1358 Request (Section) [PRCS1358A] option.
+  
+  
+ Resolution:
+ -----------
+ The routine PRCSEA has been modified so that the values for Fiscal Year,
+ Quarter, and Beginning Budget Fiscal Year will be checked to ensure they
+ exist, and if not, either prompted to be entered again or created based
+ off of prior information.
+  
+  
+ 2) R18702900FY18 - <UNDEFINED>CMDAT^PRCSEB0 ^PRCS(410,98342061,4) caused
+    Duplicates:  
+           R18789916FY18 - 2237 (578-18-2-5075-0137) caused unusual high 
+           R18774943FY18 - District 2 Region 3 - Request to VistA 
+  
+ Problem: 
+ --------
+ When using the New 2237 (SERVICE) REQUEST [PRCSENRB] menu option and the
+ form is not completely filled out, then not all of the necessary files
+ will be created. If that transaction created is now edited in the Edit a
+ 2237 (SERVICE) [PRCSEDTD] option, and it times out at the "DATE OF
+ REQUEST" field an error will occur. Also for the options New 2237 
+ (SERVICE) REQUEST [PRCSENRB], Edit a 2237 (SERVICE) [PRCSEDTD], Enter a 
+ Request (SECTION) [PRCSENRS], and Edit 1358 Request (Section) 
+ [PRCS1358A] if the user does not complete the Line Item and 'jumps' past
+ they will encounter an infinite loop causing journaling.
+  
+  
+ Resolution:
+ -----------
+ The routine PRCSEB0 has been modified so when a user times out at the 
+ "DATE OF REQUEST" field it will check for a time out and exit 
+ appropriately. In addition the routines PRCSEB, PRCSEB0, and PRCSEA have
+ been modified so they will re-enter the input template for Line Item if
+ it is not completed.
+  
+  
+ 3) R18684786FY18 - HON WEIR 2237 patterns
+  
+ Problem: 
+ --------
+ In the Process a Request Menu [PRCSER] option, if a user uses the Edit a 
+ 2237 (SERVICE) [PRCSEDTD] option to edit a temporary transaction created
+ in the Enter a Request (SECTION) [PRCSENRS] option, the user will receive
+ an error. There are 3 values that will become undefined upon exiting:
+ Fiscal Year, Quarter, and Beginning Budget Fiscal Year. A date check
+ occurs in the edit, but since these values are no longer there the user
+ will receive an error.
+  
+    
+ Resolution:
+ -----------
+ The routine PRCSEB0 has been modified so the values for Fiscal Year, 
+ Quarter, and Beginning Budget Fiscal Year will be checked to ensure they
+ exist, and if not, either prompted to be entered again or created based
+ off of prior information.
+  
+  
+  
+ 4) R18745172FY18 - IFCAP error trap $ZE= <UNDEFINED>COMDT^PRCSEB
+  
+ Problem: 
+ --------
+ While entering a new 2237 in the New 2237 (SERVICE) REQUEST [PRCSENRB] 
+ menu option, if a user "jumps" from the field "PRIORITY OF REQEUEST" to 
+ "COMMENTS" and proceeds to exit using a carat, the user will receive an
+ error.
+    
+  
+ Resolution:
+ -----------
+ The routine PRCSEB has been modified to add a check so that if there is
+ a jump in New 2237 (SERVICE) REQUEST [PRCSENRB] happens the file that is 
+ undefined will be protected and exit correctly.
+  
+  
+ 5) R18823347FY18 - Requesting menu option
+    Duplicate:
+           I18903257FY18 - IFCAP - Problem with multiple year fund and 
+           R19048966FY18 - ifcap. Pharmacy is trying to enter a new 1358
+  
+  
+ Problem: 
+ --------
+ When using the option New 2237 (SERVICE) REQUEST [PRCSENRB] option and 
+ New 1358 REQUEST (SECTION) [PRCS1358] option with a control point that 
+ has multi-appropriation, a message will be prompted that the date entered
+ for the field "DATE REQUIRED" does not match the fiscal year. This can 
+ happen because the beginning budget fiscal year will be the starting 
+ year and can increment by any number. 
+    
+  
+ Resolution:
+ ----------
+ The routines PRCEN, PRCSEA1, and PRCSUT have been modified so a check is
+ done to see if the control point selected is multi-appropriation and if 
+ so, it will not require a date check. An incremental lock issue was 
+ corrected in PRCSUT.
+  
+  
+ TEST SITES:
+ -----------
+ Boston HCS
+ Pittsburgh HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. Post installation routines can be deleted after they run; they
+ are not automatically deleted.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*204)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*204.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', just press <RETURN>. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+           Control Point Clerk's Menu            [PRCSCP CLERK]
+           Requestor's Menu                      [PRCSREQUESTOR]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+   
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ This patch can be backed out by installing the routines/packman message 
+ created from the installation instruction, Step 3.d. Backup a Transport 
+ Global.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCEN
+    Before: B57712163   After: B58083507  **23,148,150,196,204**
+Routine Name: PRCSEA
+    Before: B87690038   After: B93389276  **81,147,150,174,196,204**
+Routine Name: PRCSEA1
+    Before: B15066543   After: B16584277  **150,204**
+Routine Name: PRCSEB
+    Before: B29593062   After: B30999928  **81,174,184,196,204**
+Routine Name: PRCSEB0
+    Before: B25973826   After: B29218782  **81,174,196,204**
+Routine Name: PRCSUT
+    Before: B54556386   After: B55616855  **93,204**
+ 
+Routine list of preceding patches: 93, 196
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 22, 2018
+Completed By:                               Date Completed: APR 10, 2018
+Released By :                               Date Released : APR 10, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

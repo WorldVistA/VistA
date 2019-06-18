@@ -1,0 +1,179 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Saturday, 07/09/16 at 23:40
+=============================================================================
+Run Date: OCT 17, 2016                     Designation: LR*5.2*473
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #373                    Status: Released
+                  Compliance Date: NOV 17, 2016
+=============================================================================
+
+Associated patches: (v)LR*5.2*309  <<= must be installed BEFORE `LR*5.2*473'
+                    (v)LR*5.2*427  <<= must be installed BEFORE `LR*5.2*473'
+
+Subject: PROBLEMS WITH AUTOPSY LOG-IN AND MICRO RESULTS ENTRY (BATCH)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch address the following 2 issues:
+  
+ 1. Cleanup of aborted autopsy accession.
+ 2. <UNDEFINED> error in the Results entry (batch) option.
+  
+ Associated Tickets:
+ ===================
+ 1. I8246369FY16 - Incomplete autopsy log-in
+ 2. I6575449FY16 - <UNDEFINED> error in micro results entry (batch)
+  
+ Associated NSR(s):
+ ==================
+ N/A
+   
+ Participating Test Sites:
+ =========================
+ Durham VAMC
+ Connecticut HCS
+ VA Pittsburgh HCE
+  
+ Blood Bank Review:
+ ================== 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*473 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*473 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*473 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Ticket Overview:
+ ================
+ 1. I8246369FY16 - Incomplete autopsy log-in
+  
+ Problem:
+ --------
+ When the log-in process of an autopsy accession is aborted at the "AUTOPSY
+ DATE/TIME:" prompt, a stub entry is erroneously left in the ACCESSION 
+ file (#68) for the new accession number that was being created but
+ subsequently aborted. The cleanup of the aborted log-in is incomplete.
+  
+ Resolution:
+ -----------
+ Modify routine LRAUAW to complete the cleanup process of ACCESSION 
+ file (#68) when the log-in of an autopsy accession is aborted.
+  
+ Routines: LRAUAW
+  
+ 2. I6575449FY16 - <UNDEFINED> error in micro results entry (batch)
+  
+ Problem:
+ --------
+ If auditing is turned on for the BACT RPT REMARK field (#13) of the
+ MICROBIOLOGY subfile (#63.05) of the LAB DATA file (#63) and the option
+ "Results entry (batch)" [LRMISTUF] is used to enter micro results, an
+ <UNDEFINED> error occurs.
+     
+ Resolution:
+ -----------
+ Modify routine LRMISTF1 to set the DA(1) variable at linetag STUFF+18
+ before the call to FileMan routine ^DIE.    
+     
+ Routine: LRMISTF1  
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+   The install time for this patch is less than 2 minutes. This patch
+   can be installed when Laboratory users are on the system.
+  
+   NOTE: Kernel patches must be current on the target system to avoid
+         problems loading and/or installing this patch.
+  
+  1. Load Transport Global
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.
+   
+  2. Startup KIDS
+     ------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+   
+     Select Kernel Installation & Distribution system Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+   
+  3. Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter LR*5.2*473):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+   
+  4. Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     ** This is the step to start the installation of this KIDS patch:
+   
+     a. Choose the Install Package(s) option to start the patch
+        install and select the package LR*5.2*473.
+   
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', answer NO.
+   
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAUAW
+    Before:  B5111264   After:  B5220417  **72,115,121,309,473**
+Routine Name: LRMISTF1
+    Before: B41353920   After: B41522345  **121,128,202,263,264,295,350,
+                                           427,473**
+ 
+Routine list of preceding patches: 309, 427
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 09, 2016
+Completed By:                               Date Completed: OCT 13, 2016
+Released By :                               Date Released : OCT 17, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,386 @@
+
+=============================================================================
+Run Date: FEB 04, 2019                     Designation: VPR*1*8
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1        SEQ #10                      Status: Released
+                  Compliance Date: FEB 19, 2019
+=============================================================================
+
+Associated patches: (v)XU*8*672    <<= must be installed BEFORE `VPR*1*8'
+                    (v)DI*22.2*9   <<= must be installed BEFORE `VPR*1*8'
+
+Subject: HEALTHSHARE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch extends the Virtual Patient Record (VPR) application, to provide
+ a new method of retrieving patient health data from a Veterans Health
+ Information Systems (VistA) database.
+  
+ Patch DI*22.2*9 released a new VA FileManager utility that provides the
+ ability to map VistA files and fields to other data models, and extract
+ that data as XML or JSON objects. This VPR patch will populate the new
+ Entity file (#1.5) to map VistA data elements to InterSystems' Summary
+ Data Architecture (SDA) model, and use the new supported calls to retrieve
+ the requested data.
+  
+ This patch also installs a mechanism to monitor clinical data events in VistA,
+ to enable retrieval of updated information as a patient's data changes.
+ New Protocol file (#101) entries will be added, and linked to appropriate 
+ clinical application events; the file and record numbers modified will be
+ collected in the new VPR Subscription file (#560) until retrieved and 
+ updated.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Entities Associated:
+  
+ Entity Name                   New/Modified/Deleted
+ -----------                   --------------------
+ VPR ADMISSION                 New
+ VPR ADMISSION EXTENSION       New
+ VPR ADVANCE DIRECTIVE         New
+ VPR ALLERGY                   New
+ VPR ALLERGY ASSESSMENT        New
+ VPR ALLERGY EXTENSION         New
+ VPR ALLERGY SIGN/SYMPTOM      New
+ VPR AMIS                      New
+ VPR APPOINTMENT               New
+ VPR APPOINTMENT EXTENSION     New
+ VPR CODE ONLY                 New
+ VPR CODE TABLE                New
+ VPR COMMENT                   New
+ VPR CONSULT SERVICE           New
+ VPR COUNTRY                   New
+ VPR CPT                       New
+ VPR CPT MODIFIER              New
+ VPR CUSTOM PAIR               New
+ VPR CW NOTES                  New
+ VPR DISPLAY GROUP             New
+ VPR DOCUMENT                  New
+ VPR DOCUMENT EXTENSION        New
+ VPR DOCUMENT ROLE             New
+ VPR DOCUMENT SERVICE          New
+ VPR DOCUMENT SETTING          New
+ VPR DOCUMENT STATUS           New
+ VPR DOCUMENT SUBJECT          New
+ VPR DOCUMENT TITLE            New
+ VPR DOCUMENT TYPE             New
+ VPR DOSAGE STEP               New
+ VPR DRUG CLASS                New
+ VPR DRUG GENERIC              New
+ VPR DRUG INGREDIENT           New
+ VPR DRUG PRODUCT              New
+ VPR ETHNICITY                 New
+ VPR EXAM                      New
+ VPR FACILITY                  New
+ VPR FACILITY ADDRESS          New
+ VPR FAMILY DOCTOR             New
+ VPR FAMILY HISTORY            New
+ VPR FIM                       New
+ VPR FIM EXTENSION             New
+ VPR HEALTH CONCERN            New
+ VPR HEALTH FACTOR             New
+ VPR HF EXTENSION              New
+ VPR ICD                       New
+ VPR IMM ADMINISTRATION        New
+ VPR IMM EXTENSION             New
+ VPR IMM ROUTE                 New
+ VPR IMM SITE                  New
+ VPR IMM VIS                   New
+ VPR IMMUNIZATION              New
+ VPR INS COMPANY ADDRESS       New
+ VPR INS GROUP NAME            New
+ VPR INSURANCE                 New
+ VPR INSURANCE COMPANY         New
+ VPR INSURANCE PLAN            New
+ VPR INSURED ADDRESS           New
+ VPR IV PRODUCT                New
+ VPR LAB ORDER                 New
+ VPR LAB TEST                  New
+ VPR LAB URGENCY               New
+ VPR LANGUAGE                  New
+ VPR LOCATION                  New
+ VPR LOCATION EXTENSION        New
+ VPR LOINC                     New
+ VPR LRAP EXTENSION            New
+ VPR LRAP REPORT               New
+ VPR LRCH RESULT               New
+ VPR LRCH RESULT EXTENSION     New
+ VPR LRCH RESULT ITEM          New
+ VPR LRMI EXTENSION            New
+ VPR LRMI REPORT               New
+ VPR MARITAL STATUS            New
+ VPR MED ADMINISTRATION        New
+ VPR MED EXTENSION             New
+ VPR MED FILL                  New
+ VPR MED ROUTE                 New
+ VPR MEDICATION                New
+ VPR NAME                      New
+ VPR ORDER EXTENSION           New
+ VPR ORDER STATUS              New
+ VPR ORDER URGENCY             New
+ VPR ORDERABLE ITEM            New
+ VPR OTHER ORDER               New
+ VPR PATIENT                   New
+ VPR PATIENT ADDRESS           New
+ VPR PATIENT ALIAS             New
+ VPR PATIENT BIRTHPLACE        New
+ VPR PATIENT DISABILITY        New
+ VPR PATIENT ECON              New
+ VPR PATIENT ECON ADDRESS      New
+ VPR PATIENT ELIGIBILITY       New
+ VPR PATIENT EMPLOYER          New
+ VPR PATIENT EMPLOYER ADDRESS  New
+ VPR PATIENT EXTENSION         New
+ VPR PATIENT ID                New
+ VPR PATIENT LANGUAGE          New
+ VPR PATIENT NOK               New
+ VPR PATIENT NOK ADDRESS       New
+ VPR PATIENT NUMBER            New
+ VPR PATIENT RECORD FLAG       New
+ VPR PERSON CLASS              New
+ VPR PERSON CLASS EXTENSION    New
+ VPR PREGNANCY                 New
+ VPR PRF EXTENSION             New
+ VPR PROBLEM                   New
+ VPR PROBLEM EXTENSION         New
+ VPR PROCEDURE                 New
+ VPR PROCEDURE EXTENSION       New
+ VPR PROVIDER                  New
+ VPR PROVIDER EXTENSION        New
+ VPR PTF                       New
+ VPR PTF EXTENSION             New
+ VPR RACE                      New
+ VPR RAD ORDER                 New
+ VPR RAD REPORT                New
+ VPR RAD RESULT                New
+ VPR RAD RESULT EXTENSION      New
+ VPR RAD RPT EXTENSION         New
+ VPR REFERRAL                  New
+ VPR REFERRAL EXTENSION        New
+ VPR RELIGION                  New
+ VPR SCHEDULED ADMISSION       New
+ VPR SIGNER                    New
+ VPR SOCIAL HISTORY            New
+ VPR SPECIALTY                 New
+ VPR STATE                     New
+ VPR SURGERY                   New
+ VPR SURGERY EXTENSION         New
+ VPR TEAM MEMBER               New
+ VPR USER                      New
+ VPR V CPT                     New
+ VPR V EXAM                    New
+ VPR V POV                     New
+ VPR V PROVIDER                New
+ VPR VACCINATION               New
+ VPR VISIT                     New
+ VPR VISIT EXTENSION           New
+ VPR VITAL EXTENSION           New
+ VPR VITAL MEASUREMENT         New
+ VPR VITAL QUALIFIER           New
+ VPR VITAL TYPE                New 
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)            Field Name (Number)   New/Modified/Deleted
+ ------------------            -------------------   --------------------
+ VPR SUBSCRIPTION (#560)       *                     New
+  
+  
+ Options Associated:
+  
+ Option Name                   New/Modified/Deleted
+ -----------                   --------------------
+ VPR HS CLEAR LIST             New
+ VPR HS ENABLE                 New
+ VPR HS MENU                   New
+ VPR HS PUSH                   New
+ VPR HS TEST                   New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                 New/Modified/Deleted
+ -------------                 --------------------
+ DG FIELD MONITOR              Modified (USE AS LINK)
+ DGPF PRF ORU/R01 EVENT        Modified (USE AS LINK)
+ DGPM MOVEMENT EVENTS          Modified (USE AS LINK)
+ FH EVSEND OR                  Modified (USE AS LINK)
+ GMPL EVENT                    Modified (USE AS LINK)
+ GMRA ENTERED IN ERROR         Modified (USE AS LINK)
+ GMRA SIGN-OFF ON DATA         Modified (USE AS LINK)
+ GMRC EVSEND OR                Modified (USE AS LINK)
+ IBCN NEW INSURANCE EVENTS     Modified (USE AS LINK)
+ LR7O AP EVSEND OR             Modified (USE AS LINK)
+ LR7O CH EVSEND OR             Modified (USE AS LINK)
+ OR EVSEND FH                  Modified (USE AS LINK)
+ OR EVSEND GMRC                Modified (USE AS LINK)
+ OR EVSEND LRCH                Modified (USE AS LINK)
+ OR EVSEND ORG                 Modified (USE AS LINK)
+ OR EVSEND PS                  Modified (USE AS LINK)
+ OR EVSEND RA                  Modified (USE AS LINK)
+ OR EVSEND VPR                 Modified (USE AS LINK)
+ PS EVSEND OR                  Modified (USE AS LINK)
+ PXK VISIT DATA EVENT          Modified (USE AS LINK)
+ RA EVSEND OR                  Modified (USE AS LINK)
+ RMIM DRIVER                   Modified (USE AS LINK)
+ SCMC PATIENT TEAM CHANGES     Modified (USE AS LINK)
+ SCMC PATIENT TEAM POSITION    Modified (USE AS LINK)
+  CHANGES
+ SDAM APPOINTMENT EVENTS       Modified (USE AS LINK)
+ VAFC ADT-A08 SERVER           Modified (USE AS LINK)
+ VPR ADT-A08 CLIENT            New
+ VPR APPT EVENTS               New
+ VPR DG UPDATES                New
+ VPR DGPF EVENTS               New
+ VPR GMPL EVENT                New
+ VPR GMRA ERROR EVENTS         New
+ VPR GMRA EVENTS               New
+ VPR IBCN EVENTS               New
+ VPR INPT EVENTS               New
+ VPR LRAP EVENTS               New
+ VPR NA EVENTS                 New
+ VPR PCE EVENTS                New
+ VPR PCMM TEAM                 New
+ VPR PCMM TEAM POSITION        New
+ VPR RMIM EVENTS               New
+ VPR XQOR EVENTS               New
+  
+ Additional Information:
+ -----------------------
+  
+ Blood Bank Team Coordination:
+ N/A
+  
+ New Service Requests (NSRs):
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Charleston, SC
+ North Chicago, IL
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software is being released as a host file, DI_222_9_VPR_1_8.KID, containing
+ two patches: DI*22.2*9 and VPR*1*8.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:           domain.ext  
+ Salt Lake City:  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                     File Name                   FTP Mode
+ ----------------------------------------------------------------------
+ VPR*1*8 & DI*22.2*9       DI_222_9_VPR_1_8.KID        ASCII
+  
+ VPR Technical Manual      VPR_TM.PDF              Binary
+                           VPR_TM.DOCX             Binary 
+  
+ Patch Installation:
+ -------------------
+ Refer to Patch DI*22.2*9 for installation instructions.
+  
+ Patches DI*22.2*9 and VPR*1*8 are scheduled to be released nationally as a
+ bundle.  Installation of these patches into Production within the first 15
+ days from the National Release date is requested. The VA leadership has 
+ asked for an expedited release to comply with the schedule for the high
+ profile Mission Act.  Certain functionality has to be loaded into
+ production in 130 VA Medical Centers within a short timeframe.  We
+ appreciate your cooperation.
+   
+   
+ Post-Installation Instructions:
+ -------------------------------
+ Your site will be contacted when it is time for HealthShare to monitor 
+ patient events.  At this time, no additional setup is needed after
+ patch VPR*1*8 is installed.
+  
+  
+ Backout Procedures:
+ -------------------
+ Back-out will be done only with the concurrence and participation of the
+ development team, health product support, and appropriate VA site/region
+ personnel. All components exported by the patch (excluding linked Protocol
+ menus) are new and could be removed from the system if needed. Please 
+ call the national help desk or enter a help desk ticket for assistance.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 87
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPREHL7
+    Before:       n/a   After:  B7760700  **8**
+Routine Name: VPREVNT
+    Before:       n/a   After:B123701454  **8**
+Routine Name: VPRHS
+    Before:       n/a   After: B23926181  **8**
+Routine Name: VPRHST
+    Before:       n/a   After: B15285575  **8**
+Routine Name: VPRHST1
+    Before:       n/a   After:  B5849231  **8**
+Routine Name: VPRHSX
+    Before:       n/a   After: B13465259  **8**
+Routine Name: VPRIDX
+    Before:       n/a   After:  B2708676  **8**
+Routine Name: VPRP8I
+    Before:       n/a   After:   B775515  **8**
+Routine Name: VPRPROC
+    Before:       n/a   After:   B449786  **8**
+Routine Name: VPRSDA
+    Before:       n/a   After:B175529612  **8**
+Routine Name: VPRSDAL
+    Before:       n/a   After:  B7855097  **8**
+Routine Name: VPRSDAP
+    Before:       n/a   After: B21076843  **8**
+Routine Name: VPRSDAQ
+    Before:       n/a   After:B144153181  **8**
+Routine Name: VPRSDAR
+    Before:       n/a   After:  B9382651  **8**
+Routine Name: VPRSR
+    Before:       n/a   After:  B1400443  **8**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 26, 2018
+Completed By:                               Date Completed: FEB 04, 2019
+Released By :                               Date Released : FEB 04, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

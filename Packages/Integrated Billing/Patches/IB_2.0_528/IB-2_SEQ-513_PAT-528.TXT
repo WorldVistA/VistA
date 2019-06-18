@@ -1,0 +1,903 @@
+
+=============================================================================
+Run Date: APR 18, 2016                     Designation: IB*2*528
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #513                      Status: Released
+                  Compliance Date: MAY 18, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*516    <<= must be installed BEFORE `IB*2*528'
+
+Subject: MCCF ENHANCEMENTS PROJECT - EIV
+
+Category: 
+  - Routine
+  - Input Template
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch implements changes to VistA's Integrated Billing (IB), 
+ Insurance Company, and Patient Insurance File modules are requested by 
+ the Veterans Health Administration (VHA) Chief Business Office (CBO)
+ eBusiness Solutions Department to comply with the legislative
+ changes mandated by the Health Insurance Portability and Accountability 
+ Act of 1996 (HIPAA).
+  
+ The IB application is a character-based system using VA FileMan as its 
+ database manager and Cache/M (TRM approved, 
+ http://trm.oit.domain.ext/StandardPage.asp?tid=6402) as the programming 
+ language. This software application is part of the VistA suite of 
+ applications, which includes additional clinical and financial 
+ applications. There are no Graphical User Interfaces (GUIs).
+  
+ ***Note:
+ The newly added software application "System Sharing Verified Insurance
+ (SSVI)" Parameter in the eIV Site Parameters is set to the OFF position 
+ during the install. DO NOT TURN ON. This patch will install all necessary
+ source code, data dictionaries, options, templates etc. for the SSVI
+ application, however, this feature should be left in the OFF position so
+ as to Not initiate the SSVI feature. This feature will be modified in the
+ future IB projects with instructions on how to use this newly added 
+ feature.
+  
+ ***Note:
+ IB SSVI mail group:
+ During the install a new mail group "IB SSVI" will be installed within 
+ the VistA database and the installer will be prompted to "Enter the 
+ Coordinator for Mail Group IB SSVI:".  The IB SSVI mail group will need 
+ the name of a person that will be responsible (COORDINATOR) for 
+ maintaining the membership of the IB SSVI mail group.  Mail messages will 
+ be sent to the IB SSVI mail group for identifying SSVI issues.
+ The coordinator name is the appropriate CPAC insurance verification 
+ manager for the specific region.  If you do not know the name of the CPAC 
+ insurance verification manager please contact the rapid response mail 
+ group at: vhaeinsurancerapidresponse@domain.ext
+  
+ ***Note:
+ The newly added software application "Consistency Checker" source code 
+ that uses the options Patient Insurance Info View/Edit (PI)-->
+ Verify Coverage (VC) is now disabled ('commented out') so as to Not Use 
+ the "Consistency Checker" source code to verify coverage.  This feature 
+ will be modified within future IB projects with instructions on how to 
+ use this newly added "Consistency Checker" feature in conjunction with
+ the SSVI feature. DO NOT ENABLE THE SSVI UTILITY.
+  
+ ***Note:
+ The host file "MCCF_FY14_HPID_EIV_1_0.KID" contains two patches 
+ (Eligibility IB*2.0*528 and HPID IB*2.0*525) that are bundled together 
+ into this host file.   The two patches are NOT DEPENDENT on each other.   
+ After loading the distribution "MCCF_FY14_HPID_EIV_1_0.KID" and  
+ installing the distribution "MCCF FY14 HPID EIV 1.0",  the installation 
+ of BOTH patches (Eligibility IB*2.0*528 and HPID IB*2.0*525) will be 
+ installed together AUTOMATICALLY.
+  
+ ***Note:
+ When installing patch IB*2.0*528 answer "YES" at the following prompt:
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? YES// YES
+ In general, the sites may have a background process that is jobbed off at 
+ non-peak hours to Rebuild the Menu Trees. It is recommended that the 
+ sites rebuild the Menu Trees (after the patch is installed and during 
+ non-peak hours).
+  
+ ***Note:
+ There are several data reports that when printing/displaying/exporting 
+ the data it is recommended to use the 132 or 254 columns to 
+ display/print/export. The users will receive a warning message in such a 
+ case. It is recommended to have the users terminal emulation setting for 
+ the 'auto-wrap' feature set to 'on'. This will allow the user to view 
+ text on the next line when the user is entering/editing comment text 
+ fields that extend past the end of the line.
+  
+  
+ System Sharing Verified Insurance (SSVI):
+ -----------------------------------------
+ The Eligibility Benefits and Claims Status Data Content and 
+ Infrastructure (Phase 2, Iteration 2) project task will utilize IB 
+ Patient Insurance data stored in VA VistA databases residing on 
+ approximately 134 VA VistA servers located at 129 VA Medical Centers. 
+ There are approximately 750 current users of the IB Patient Insurance 
+ application within the VA VistA databases.
+  
+ Updates to the Patient Insurance data will be shared between VA VistA 
+ sites both locally and nationally where the patient has been seen.  Only 
+ those sites that choose to turn on this option will receive the updated 
+ Insurance information.
+  
+ Note:  A new user, AUTOUPDATE,IBEIV, will be created in the NEW PERSON
+ File (#200) during installation.  When a patient's insurance is updated at
+ a receiving site, this user name will be the generic name showing that the
+ insurance was last updated or verified by the SSVI process.
+  
+ The actual transmission of insurance information to other subscribers 
+ shall be done in a batch processing fashion. This will be executed by a 
+ background job that shall be tasked once a day.
+  
+ The background job will search for patients who have had the flag to 
+ transmit the patient's information set via user indication.
+  
+ When the Background job runs, it will take the latest "snapshot" of the 
+ patient's insurance information (all Active policies & plans, along with 
+ all Medicare (M) plans).
+  
+ After a user updates a patient Insurance record a trigger is initiated 
+ that will at the end of the day create a global file containing the 
+ updated patient Insurance. Those messages will only be sent to those 
+ sites where that patient had visits.  
+ A "consistency checker" to ensure all required sub-fields under the 
+ Insurance Type multiple field (multiple field # .3121) in the Patient 
+ (#2) file are complete before sending the information to other 
+ facilities. A parameter, in the form of a VistA option, will be created 
+ to allow each VA site to enable or disable this feature.  
+ A user report can be run for sending and receiving patient insurance 
+ information at a site.
+  
+  
+ SSVI - Data Source/Location(s):
+ -------------------------------
+ The updated Insurance information will reside in the site's existing 
+ VistA database where the patient has been seen and optionally transferred 
+ to those subscribing VA sites via Remote Query. Those subscribing sites 
+ will receive then store the updated information within their VA VistA 
+ database until processed.
+  
+ Three files have been created. IB INSURANCE CONSISTENCY ELEMENTS (#366.2) 
+ contains the fields or categories to be checked for inconsistencies 
+ following an editing session of the insurance edit option information.  IB
+ INSURANCE INCONSISTENT DATA (#366.1) is a storage area for all the fields
+ or categories that have been recently found to be inconsistent. IB SSVI
+ PIN/HL7 PIVOT (#366) is a storage area for all the remote query
+ transaction information.
+  
+ The project will allow the processing/sending of updated patient 
+ insurance information via Remote Query messaging.  The user will set a 
+ flag to have the option of transmitting any updated patient insurance 
+ information.
+  
+  
+ Eligibility Benefits and Claims (Screens):
+ ------------------------------------------
+ The Eligibility Benefits and Claims Status Data Content and 
+ Infrastructure (Phase 2, Iteration 2) project task will create 
+ enhancements to the VA VistA system utilizing the IB Version 2.0 software 
+ application.
+  
+ Enhancements will include the creation/modifications of existing 
+ Insurance screens/menus/options/templates/files.  
+  
+ 1.      A newly created Subscriber screen will display a side-by-side 
+ comparison of the Insurance Verification Processor buffer information 
+ against the patient's Subscriber information found in either the Patient 
+ File(#2) or the Income Person File (#408.13) depending on what the user 
+ selects at the "Patient Relationship to Subscriber" prompt.
+  
+  
+ 2.      A newly created Annual Benefits screen will allow the user to 
+ View/Edit/Save the patient annual benefits found within file (#355.4) 
+ Annual Benefits File.
+  
+ 3.      A newly created Coverage Limitations screen will allow the user 
+ to View/Edit/Save the patient coverage limitations data found within file 
+ (#355.32) Plan Coverage Limitations File.
+  
+ 4.    Standardization of certain insurance subscriber display field names 
+ from "Insured (Person)" or "Patient" to "Subscriber".
+  
+  
+ Security Key Updates:
+ ---------------------
+ Updates will be made to IB Insurance security keys.
+  
+ 1.    The post-install routine for this patch will rename the IBCNE IIV 
+ AUTOMATCH security key to IBCNE EIV MAINTENANCE and assign it as 
+ appropriate.
+  
+ 2.    The renamed IBCNE EIV MAINTENANCE key will be assigned to the IBCNE 
+ PAYER MAINTENANCE MENU and its options IBCNE PAYER EDIT and IBCNE PAYER 
+ LINK, replacing the IB INSURANCE SUPERVISOR lock on these options.
+  
+ 3.    The renamed IBCNE EIV MAINTENANCE key will be assigned to the 
+ IBCNSC INS CO PAYER protocol, i.e., the Payer Action (PA) on the IBCN 
+ INSURANCE CO EDIT option.
+  
+  
+ Eligibility Benefits and Claims (Patient Policy Comments): 
+ ----------------------------------------------------------
+ Enhancements made to the patient policy comments displayed in the Patient
+ Policy Screens.
+ Option:  Patient Insurance Info/Edit (PI)
+ Software modifications made to the VP View Policy action located on the 
+ Patient Policy Information screen include:
+ a.  Retrieval of comment data from the new COMMENT - SUBSCRIBER 
+ POLICY multiple (2.312, 1.18). 
+ b.  Display of comments in Comment -- Patient Policy region.
+  
+ Affected Options:
+ Patient Insurance Info/Edit [IBCN PATIENT INSURANCE]
+ Third Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY]
+ View Patient Insurance [IBCN VIEW PATIENT INSURANCE]
+ Claims Tracking Edit [IBT EDIT BI TRACKING ENTRY]
+  
+ Software modifications made to the  AC Add Comment action on the Patient 
+ Policy Information screen include:
+   a.  Provides the capability for the user to enter up to 245 
+ characters of comments
+   b.  Provides the capability for the user to edit previously entered 
+ comments entered on the same day
+   c.  The user-entered comments, the date/time that the comment was 
+ entered/edited, and the user ID (DUZ) gets stored in the respective 
+ fields of the COMMENT - SUBSCRIBER POLICY multiple (2.312, 1.18): 
+       COMMENT DATE/TIME (2.342,.01) 
+       LAST EDITED BY (2.342,.02)
+       COMMENT (2.342,.03)
+   d.  Due to the authorized usage of the existing COMMENT PATIENT POLICY
+     field (2.312, 1.08) by other applications (ICRs), the old comment
+     field and the new comment multiple are to be populated until the
+     IA subscribers have made the necessary changes to their applications
+     to reference the new fields at the 2.312, 1.18 multiple.  To that end
+     the following DD definitions were made:
+      i. Trigger cross-reference was defined to the COMMENT field (2.342,
+         .03) that will populate the COMMENT PATIENT POLICY field  (2.312,
+         1.08) when data is entered/edited at the COMMENT field (2.342,
+         .03).
+     ii. Mumps cross-reference was defined to the COMMENT PATIENT POLICY
+         field (2.312, 1.08) that will populate the fields at the COMMENT
+         SUBCRIBER POLICY multiple only when both the old and the new
+         comment field is different.
+  
+ Affected Options:
+ -----------------
+ Patient Insurance Info/Edit [IBCN PATIENT INSURANCE]
+ Third Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY]
+ View Patient Insurance [IBCN VIEW PATIENT INSURANCE]
+ Claims Tracking Edit [IBT EDIT BI TRACKING ENTRY]
+  
+  
+ Reports:
+ --------
+ Several new reports will be added to the IB menus and existing reports 
+ will be updated.
+  
+ 1.    A new report will be created to capture Group Plans without annual 
+ benefits for a requested year.
+  
+ 2.    An audit report will be created to monitor changes to four IB 
+ insurance-related files.
+  
+ 3.    A new report will be created to capture outgoing and incoming HL7 
+ messages between VistA and the Financial Services Center (FSC).
+  
+ 4.    Two new fields, "FSC Trusted?" and "Number of Active Groups", will 
+ be added to the eIV Payer Link Report.  (The "HPID/OEID" field was added 
+ in IB*2.0*521.)
+  
+ 5.    A new submenu will be created to display all insurance-related 
+ reports under one menu.
+  
+ 6.    IB reports will be enhanced to enable output to Excel spreadsheets.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)     Field Name (#)                     New/Modified/Deleted
+ -------------     --------------                     --------------------
+ PATIENT FILE (#2)
+                  INSURANCE TYPE (sub-file)(#2.312)
+                   COMMENT-PATIENT POLICY (1.08)      Modified
+                  COMMENT - SUBSCRIBER POLICY         New
+                    (sub-file)(#2.342)
+  
+  
+ INSURANCE COMPANY (#36)
+                   NAME (#.01)                        Modified
+                   INACTIVE (#.05)
+                   STREET ADDRESS [LINE 1]            Modified
+                     (#.111)
+                   STREET ADDRESS [LINE 2]            Modified
+                     (#.112)
+                   REIMBURSE? (#1)                    Modified
+                   PAYER (#3.1)                       Modified
+  
+  
+ IB SITE PARAMETERS (#350.9)
+                   IBCN SSVI DISABLE/ENABLE (#100)    New
+                   IBCN SSVI LAST INS DATE XFER       New
+                     (#101)
+                   IBCN CURRENT PIVOT ENTRY (#102)    New
+                   IBCN PIVOT FILE DAYS TO RETAIN     New
+                     (#103)
+  
+  
+ TYPE OF PLAN (#355.1)
+                   NAME (#.01)                        Modified
+                   ABBREVIATION (#.02)                Modified
+  
+  
+ GROUP INSURANCE PLAN (#355.3)
+                   PLAN STANDARD FTF (#.16)           Modified
+                   PLAN STANDARD FTF VALUE (#.17)     Modified
+                   GROUP NAME (#2.01)                 Modified
+                   GROUP NUMBER (#2.02)               Modified
+  
+ INSURANCE VERIFICATION PROCESSOR (#355.33)
+                   SUBSCRIBER PHONE                   New 
+                     (#62.09)
+  
+  
+ IB SSVI PIN/HL7 PIVOT (#366)                         New
+  
+  
+ IB INSURANCE INCONSISTENT DATA (#366.1)              New
+  
+  
+ IB INSURANCE CONSISTENCY ELEMENTS (#366.2)           New
+  
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                  New/Modified/Deleted
+ ---------------                                  --------------------
+ IB SSVI                                          New
+  
+  
+ Options Associated:
+  
+ Option Name                     Type            New/Modified/Deleted
+ -----------                     ----            --------------------
+ IBCN INSURANCE MGMT MENU        menu            Modified
+ IBCN INS RPTS                   menu            New
+ IBCN GRP PLAN FILES RPT         run routine     New
+ IBCN INTERFACILITY INS UPDATE   run routine     New
+ IBCN USER EDIT RPT              run routine     New
+ IBCN ID DUP INSURANCE ENTRIES   run routine     Modified
+ IBCN LIST INACTIVE INS W/PAT    run routine     Modified
+ IBCN LIST NEW NOT VER           run routine     Modified
+ IBCN LIST PLANS BY INS CO       run routine     Modified
+ IBCN NO COVERAGE VERIFIED       run routine     Modified
+ IBCN OUTPUT INS BUFF ACTIVITY   run routine     Modified
+ IBCN OUTPUT INS BUFF EMPLOYEE   run routine     Modified
+ IBCN POL W/NO EFF DATE REPORT   run routine     Modified
+ IBCN PT W/WO INSURANCE REPORT   run routine     Modified
+ IBCNE EIV UPDATE REPORT         run routine     Modified
+ IBCNE HL7 RESPONSE REPORT       run routine     New
+ IBCNE IIV PAYER LINK REPORT     run routine     Modified
+ IBCNE IIV PAYER REPORT          run routine     Modified
+ IBCNE IIV RESPONSE REPORT       run routine     Modified
+ IBCNE IIV STATISTICAL REPORT    run routine     Modified
+ IBCNE POTENTIAL NEW INS FOUND   menu            Modified
+ IBCNE IIV MENU                  menu            Modified
+ IBJD INTAKE INS                 run routine     Modified
+ IBJD INTAKE POL NOT VER         run routine     Modified
+ IB INPATIENT VET REPORT         run routine     Modified
+ IB OUTPATIENT VET REPORT        run routine     Modified
+ IB OUTPUT INPTS WITHOUT INS     run routine     Modified
+ IB OUTPUT OPTS WITHOUT INS      run routine     Modified
+ IB OUTPUT PRE-REG SOURCE REPT   run routine     Modified
+ IB OUTPUT TREND REPORT          run routine     Modified
+ IBCEM PATIENTS W/O MEDICARE     run routine     Modified
+  
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                    New/Modified/Deleted
+ -------------                                    --------------------
+ IBCNB LIST SCREEN MENU                           Modified
+ IBCNB LIST TRICARE/CHAMPVA VIEW                  New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ IBCNE IIV AUTOMATCH
+  
+ Templates Associated:
+  
+ Template Name
+ -------------
+     Type      File Name (#)                      New/Modified/Deleted
+     ----      -------------                      -------------------- 
+ IB SSVI PIVOT
+     Print     IB SSVI PIN/HL7 PIVOT (#366)       New
+  
+ IB SSVI PIVOT B    
+     Print     IB SSVI PIN/HL7 PIVOT (#366)       New
+  
+ IB SSVI PIVOT
+     Sort      IB SSVI PIN/HL7 PIVOT (#366)       New
+  
+ IB SSVI PIVOT B
+     Sort      IB SSVI PIN/HL7 PIVOT (#366)       New
+  
+ IB SSVI ENABLE/DISABLE    
+     Input     IB SITE PARAMETERS (#350.9)        New
+  
+ IBCNE GENERAL PARAMETER EDIT    
+     Input     IB SITE PARAMETERS (#350.9)        Modified
+  
+ IBCN PATIENT INSURANCE    
+     Input     PATIENT (#2)                       Modified
+  
+ IBCNBC CV IP EDIT    
+     Input     PLAN COVERAGE LIMITATIONS(#355.32) New
+  
+ IBCNBC CV OP EDIT    
+     Input     PLAN COVERAGE LIMITATIONS(#355.32) New
+  
+ IBCNBC CV DN EDIT    
+     Input     PLAN COVERAGE LIMITATIONS(#355.32) New
+  
+ IBCNBC CV MH EDIT    
+     Input     PLAN COVERAGE LIMITATIONS(#355.32) New
+  
+ IBCNBC CV LT EDIT    
+     Input     PLAN COVERAGE LIMITATIONS(#355.32) New
+  
+ IBCNBC CV PH EDIT    
+     Input     PLAN COVERAGE LIMITATIONS(#355.32) New
+  
+ IBCN AB ACCEPT
+     Input     ANNUAL BENEFITS (#355.4)           New
+  
+ IBCNB INSURANCE BUFFER PROCESS                   
+     List      INSURANCE VERIFICATION PROCESSOR   Modified
+                (#355.33)                         
+  
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name                            New/Modified/Deleted
+ ---------------------                            --------------------
+ IBCN SSVI ENABLED                                New
+ IBCN SSVI SEND                                   New
+  
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 180833
+ 20110215
+ 20120118
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ Dayton VAMC - Station 552
+ Lebanon VA Medical Center - Station 595
+ Martinsburg VA Medical Center - Station 613
+ Central Alabama HCS - Station 619 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+ Sites may retrieve the software and/or documentation directly using 
+ Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory 
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ The documentation will be in the form of Adobe Acrobat files.
+                                                          
+ File Description                        File Name            FTP Mode
+ ---------------------------------------------------------------------
+                   
+ Integrated Billing User Manual          IB_2_0_UM.PDF        (binary)
+ Integrated Billing Technical Manual/    IB_2_0_TM.PDF        (binary)
+ Security Guide
+ Integrated Billing Release Notes        IB_2_0_P528_RN.PDF   (binary)
+ Electronic Insurance Verification (eIV) IB_2_0_EIV_TM.PDF    (binary)
+ Technical Manual/Security Guide
+ Electronic Insurance Verification (eIV) IB_2_0_EIV_UG.PDF    (binary)
+ User Manual
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-install routine, IBY528PO, will perform the following:
+ 1. The name of the IBCNE IIV AUTO MATCH key will be changed to IBCNE 
+    EIV MAINTENANCE.
+  
+ 2. The IBCNE EIV MAINTENANCE key will be used to lock the following menu 
+    options in place of the current IB INSURANCE SUPERVISOR lock:
+         IBCNE PAYER MAINTENANCE MENU
+         IBCNE PAYER EDIT
+         IBCNE PAYER LINK
+  
+ 3. The IBCNE EIV MAINTENANCE key will be used to lock the Payer action
+    (PA) action on the IBCN INSURANCE CO EDIT screen.
+  
+ 4. Retrieves all historical comment data stored at (2.312,1.18) and stores
+     to the following new location:
+       COMMENT SUBSCRIBER POLICY multiple (2.312,1.18) :
+          COMMENT DATE/TIME (2.342,.01) = start date/time of the post-install
+          LAST EDITED BY (2.342,.02)    = postmaster DUZ 
+          COMMENT (2.342,.03)           = value stored at 2.312, 1.08
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take 1-3 hours to 
+ install depending on the sites current system workload volume during
+ the time of the install.
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file MCCF_FY14_HPID_EIV_1_0.KID, which contains the
+     following patches:
+  
+         IB*2.0*528
+         IB*2.0*525
+  
+      Sites can retrieve VistA software from the following server
+      addresses. The preferred method is retrieve the files from:
+  
+                     download.vista.domain.ext
+  
+      This will transmit the files from the first available server.
+      Sites may also elect to retrieve the software directly using
+      Secure Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+      directory at the following OI Field Offices:
+  
+        Albany:                  domain.ext
+        Hines:                   domain.ext
+        Salt Lake City:          domain.ext
+  
+      The MCCF_FY14_HPID_EIV_1_0.KID host file is located in the
+       directory. Use the American Standard Code for
+      Information Interchange (ASCII) Mode when downloading the file.
+  
+  
+   2.  START UP KIDS
+       -------------
+       Start up the Kernel Installation and Distribution System Menu option
+       [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+       Select Kernel Installation & Distribution System Option: Install
+          ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+       Select Installation Option:
+  
+  
+ 3.  LOAD THE TRANSPORT GLOBAL
+     -------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file MCCF_FY14_HPID_EIV_1_0.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]MCCF_FY14_HPID_EIV_1_0.KID).
+  
+     When prompted for "OK to continue with Load? YES//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+          IB*2.0*528
+          IB*2.0*525
+       Use INSTALL NAME: MCCF FY14 HPID EIV 1.0 to install this
+       Distribution.
+  
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS
+     ---------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter MCCF FY14 HPID
+     EIV 1.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+  
+ 5.  INSTALL THE PATCH
+     -----------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the MCCF FY14 HPID EIV 1.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter MCCF FY14
+         HPID EIV 1.0.
+     c.  When prompted for " Enter the Coordinator for Mail Group 'IB   
+         SSVI':" enter the name of a person that will be responsible
+         (COORDINATOR) for maintaining the membership of the IB SSVI mail 
+         group. ***See Note for IB SSVI mail group.
+     d.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//", enter YES.
+     e.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", enter NO.
+     f.  When prompted " Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+     g.  When prompted "Device: HOME//", respond with the correct device
+         but do * NOT * queue this install.
+     h.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ In order to verify the patch post-installation routine was run
+ successfully, please examine the Install File for this patch and 
+ check the Mailman message that was created.  Report any error messages to
+ Product Support.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 164
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCEMMR
+    Before: B48738467   After: B56465782  **155,366,528**
+Routine Name: IBCN118
+    Before:       n/a   After:  B9899730  **528**
+Routine Name: IBCNAU
+    Before:       n/a   After: B50832462  **528**
+Routine Name: IBCNAU1
+    Before:       n/a   After: B17152074  **528**
+Routine Name: IBCNAU2
+    Before:       n/a   After: B24403828  **528**
+Routine Name: IBCNAU3
+    Before:       n/a   After: B12671484  **528**
+Routine Name: IBCNBAA
+    Before: B75234738   After:B170357032  **82,184,246,416,506,528**
+Routine Name: IBCNBAC
+    Before: B51549169   After: B53121470  **184,497,528**
+Routine Name: IBCNBAR
+    Before: B44889067   After: B51423558  **82,240,345,413,416,497,528**
+Routine Name: IBCNBCD
+    Before: B99276499   After: B99061672  **82,251,361,371,416,438,452,
+                                           497,528**
+Routine Name: IBCNBCD1
+    Before:       n/a   After: B94125626  **528**
+Routine Name: IBCNBCD2
+    Before:       n/a   After:B204932472  **528**
+Routine Name: IBCNBCD3
+    Before:       n/a   After:B116960368  **528**
+Routine Name: IBCNBCD4
+    Before:       n/a   After: B43901770  **528**
+Routine Name: IBCNBCD5
+    Before:       n/a   After:B137684111  **528**
+Routine Name: IBCNBCD6
+    Before:       n/a   After:B134178322  **528**
+Routine Name: IBCNBCD7
+    Before:       n/a   After:  B7325705  **528**
+Routine Name: IBCNBEE
+    Before: B45711543   After: B50211933  **82,184,252,251,356,361,371,
+                                           377,416,438,452,497,528**
+Routine Name: IBCNBLA1
+    Before:B100917255   After:B104276372  **82,133,149,184,252,271,416,
+                                           438,506,528**
+Routine Name: IBCNBLE
+    Before:B108261560   After:B108286905  **82,231,184,251,371,416,435,
+                                           452,497,519,516,528**
+Routine Name: IBCNBLL
+    Before:B139954762   After:B144703884  **82,149,153,183,184,271,345,
+                                           416,438,435,506,519,528**
+Routine Name: IBCNBMI
+    Before: B91864404   After: B96670788  **82,184,246,251,299,345,361,
+                                           371,413,416,438,452,497,528**
+Routine Name: IBCNBOA
+    Before: B46681109   After: B66757822  **82,305,528**
+Routine Name: IBCNBOE
+    Before: B81017950   After:B109925669  **82,528**
+Routine Name: IBCNBOF
+    Before: B25012565   After: B32265412  **82,528**
+Routine Name: IBCNEDE1
+    Before: B44623085   After: B48152754  **184,271,416,438,435,467,497,528**
+Routine Name: IBCNERP1
+    Before: B79692188   After: B87784206  **184,271,416,528**
+Routine Name: IBCNERP2
+    Before: B30801647   After: B31175764  **184,271,416,528**
+Routine Name: IBCNERP3
+    Before: B28161597   After: B79824613  **184,271,416,528**
+Routine Name: IBCNERP4
+    Before: B61656289   After: B65437129  **184,271,300,416,528**
+Routine Name: IBCNERP6
+    Before: B74223457   After: B98862424  **184,271,416,528**
+Routine Name: IBCNERP7
+    Before: B26715367   After: B30436149  **184,416,528**
+Routine Name: IBCNERP9
+    Before:B103562066   After:B133982311  **184,271,416,506,528**
+Routine Name: IBCNERPA
+    Before:  B6564371   After:  B7366399  **184,271,345,416,528**
+Routine Name: IBCNERPB
+    Before: B47288196   After: B48231865  **184,252,271,416,528**
+Routine Name: IBCNERPC
+    Before: B46095484   After: B55318393  **184,252,271,416,528**
+Routine Name: IBCNERPD
+    Before: B67426555   After:B108873361  **184,252,416,521,528**
+Routine Name: IBCNERPF
+    Before: B16361185   After: B17142142  **416,528**
+Routine Name: IBCNERPG
+    Before: B15534927   After: B15763271  **416,528**
+Routine Name: IBCNERPH
+    Before: B19008482   After: B26306975  **416,528**
+Routine Name: IBCNERPJ
+    Before:       n/a   After: B18323199  **528**
+Routine Name: IBCNERPK
+    Before:       n/a   After:  B9770810  **528**
+Routine Name: IBCNERPL
+    Before:       n/a   After: B21072359  **528**
+Routine Name: IBCNGPF
+    Before:       n/a   After: B21375238  **528**
+Routine Name: IBCNGPF1
+    Before:       n/a   After: B16592637  **528**
+Routine Name: IBCNGPF2
+    Before:       n/a   After: B19487325  **528**
+Routine Name: IBCNGPF3
+    Before:       n/a   After:  B8501170  **528**
+Routine Name: IBCNICB
+    Before:B106011881   After:B139240420  **413,416,528**
+Routine Name: IBCNSM
+    Before: B22946232   After: B23601352  **28,46,56,52,82,103,199,276,
+                                           435,528**
+Routine Name: IBCNSM2
+    Before: B21200856   After: B22268650  **28,103,139,516,528**
+Routine Name: IBCNSM4
+    Before:  B3479873   After:  B4086996  **56,82,199,276,528**
+Routine Name: IBCNSP
+    Before: B49297563   After: B79133086  **6,28,43,52,85,251,363,371,
+                                           416,497,516,528**
+Routine Name: IBCNSP0
+    Before: B38008161   After: B45681848  **28,43,52,85,93,103,137,229,
+                                           251,363,371,399,438,458,497,
+                                           516,528**
+Routine Name: IBCNSP3
+    Before: B38854605   After: B85952229  **28,52,85,251,371,497,528**
+Routine Name: IBCNVCC
+    Before:       n/a   After: B19887877  **528**
+Routine Name: IBCNVCC1
+    Before:       n/a   After: B13802423  **528**
+Routine Name: IBCNVPU0
+    Before:       n/a   After: B30762326  **528**
+Routine Name: IBCNVRD0
+    Before:       n/a   After:B157582204  **528**
+Routine Name: IBCNVRD1
+    Before:       n/a   After:B219042298  **528**
+Routine Name: IBCNVRP0
+    Before:       n/a   After: B26970383  **528**
+Routine Name: IBCNVRP1
+    Before:       n/a   After: B26005231  **528**
+Routine Name: IBCNVRP2
+    Before:       n/a   After:B107004778  **528**
+Routine Name: IBCNVUT0
+    Before:       n/a   After: B99101857  **528**
+Routine Name: IBCOC
+    Before:  B1268279   After: B14081123  **528**
+Routine Name: IBCOC1
+    Before:  B1383231   After: B21404907  **528**
+Routine Name: IBCOMA
+    Before: B21266517   After: B24000522  **103,528**
+Routine Name: IBCOMA1
+    Before: B34536686   After: B45473488  **103,516,528**
+Routine Name: IBCOMC
+    Before: B25360036   After: B28290447  **103,528**
+Routine Name: IBCOMC1
+    Before: B16846008   After: B19172785  **103,183,528**
+Routine Name: IBCOMC2
+    Before: B12669229   After: B15997269  **103,153,516,528**
+Routine Name: IBCOMD
+    Before: B34794130   After: B38054448  **103,528**
+Routine Name: IBCOMD1
+    Before: B21770147   After: B27677991  **103,528**
+Routine Name: IBCOMN
+    Before: B11550204   After: B13731474  **103,528**
+Routine Name: IBCOMN1
+    Before: B10839800   After: B14298599  **103,528**
+Routine Name: IBCONS1
+    Before: B79511698   After:B125225379  **66,80,137,516,528**
+Routine Name: IBCONSC
+    Before: B15130560   After: B17158899  **66,120,528**
+Routine Name: IBCOPP
+    Before: B14149734   After: B15985691  **28,62,528**
+Routine Name: IBCOPP1
+    Before:  B9186592   After: B10507720  **28,528**
+Routine Name: IBCOPP2
+    Before: B20749250   After: B22994194  **28,62,93,516,528**
+Routine Name: IBCOPP3
+    Before: B10453963   After: B15474438  **28,516,528**
+Routine Name: IBCOPR
+    Before: B34320642   After: B37055885  **75,345,528**
+Routine Name: IBCOPR1
+    Before: B32793618   After: B58373479  **75,345,528**
+Routine Name: IBJDI4
+    Before: B27931040   After: B31792499  **69,98,100,118,528**
+Routine Name: IBJDI41
+    Before: B83815230   After:B150223354  **98,100,118,528**
+Routine Name: IBJDI5
+    Before: B65839451   After: B97543922  **69,98,100,118,123,528**
+Routine Name: IBJPI
+    Before: B19548396   After: B21646408  **184,271,316,416,438,479,506,528**
+Routine Name: IBOTR1
+    Before: B19679785   After: B22387130  **21,42,72,100,118,128,528**
+Routine Name: IBOTR3
+    Before: B31663645   After: B51841072  **42,80,100,118,128,133,447,516,528**
+Routine Name: IBOUNP1
+    Before: B15243221   After: B17878634  **249,528**
+Routine Name: IBOUNP3
+    Before: B22364020   After: B37406205  **249,528**
+Routine Name: IBOUNP4
+    Before: B12652607   After: B13529081  **528**
+Routine Name: IBOUNP6
+    Before: B21711406   After: B36369758  **528**
+Routine Name: IBY528PA
+    Before:       n/a   After: B92379813  **528**
+Routine Name: IBY528PO
+    Before:       n/a   After: B26150711  **528**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 05, 2014
+Completed By:                               Date Completed: MAR 29, 2016
+Released By :                               Date Released : APR 18, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

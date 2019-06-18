@@ -1,0 +1,152 @@
+$TXT Created by                     CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 11/27/18 at 16:55
+=============================================================================
+Run Date: FEB 04, 2019                     Designation: MD*1*64
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #49                      Status: Released
+                  Compliance Date: MAR 07, 2019
+=============================================================================
+
+Associated patches: (v)MD*1*54     <<= must be installed BEFORE `MD*1*64'
+
+Subject: CP CONSOLE NETWORK HELP FILE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Clinical Procedures 
+ (CP) Console application.
+  
+ 1.      While evaluating Windows 10, it was discovered that the Help 
+ files would not display correctly. This patch will correct this problem 
+ by converting the help files to a new format.
+ 2.      The Department of Veterans Affairs Office of Information and 
+ Technology requires that applications remain compliant with the Technical 
+ Reference Model (TRM) regarding the version of tools used for 
+ development. This patch accomplished this by updating the version of 
+ Delphi to XE10.2.
+ 3.      Many of the VistA instances are now pushing their Graphical User 
+ Interface (GUI) installations to network share drives, rather than 
+ installing on individual machines. It was discovered that the online help 
+ would not work when the application was installed on the network share 
+ drive. This patch corrects this problem.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ St. Cloud HCS
+ Cheyenne VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ This Software is being released with both a VistA component, and an 
+ updated GUI. Files and documentation pertaining to this patch are
+ available.
+  
+ The preferred method is to retrieve files from:
+  
+   download.vista.domain.ext.
+  
+ This transmits the files from the first available server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Title                     File Name           FTP Mode
+ -----------------------------------------------------------------------
+ Clinical Procedures (CP)  MD_1_64_IG.pdf       Binary
+ Console Patch (MD*1.0*64) 
+ Network Deployment, 
+ Installation, Back-out, and 
+ Rollback Guide
+ GUI Files                 MD_1_64.zip          Binary
+ GUI Source Files          MD_1_64_SRC.zip      Binary
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Please reference the MD*1.0*64 CP Console Installation 
+ Guide as this server installation needs to be coordinated with the GUIs 
+ and GUI DLL installation.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users and needs to be installed at the same
+ time as the GUI DLL installation.
+ This patch should take less than 5 minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the 
+    patch # MD*1.0*64.
+  
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not backup
+       any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will 
+       (allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport
+       global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    answer NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//', answer NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Please reference the MD*1.0*64 CP Console Installation Guide for post 
+ install steps.
+  
+ Back-Out Strategy:
+ ------------------
+ Please reference the MD*1.0*64 CP Console Installation Guide if this 
+ patch needs to be backed out.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Sept 20, 2018;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDPOST64
+    Before:       n/a   After:   B377123  **64**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 09, 2018
+Completed By:                               Date Completed: JAN 31, 2019
+Released By :                               Date Released : FEB 04, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

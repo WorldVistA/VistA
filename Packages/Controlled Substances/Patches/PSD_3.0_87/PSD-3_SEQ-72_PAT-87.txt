@@ -1,0 +1,251 @@
+$TXT Created by                 VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Friday, 12/07/18 at 06:21
+=============================================================================
+Run Date: FEB 11, 2019                     Designation: PSD*3*87
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #72                      Status: Released
+                  Compliance Date: MAR 14, 2019
+=============================================================================
+
+Associated patches: (v)PSD*3*84    <<= must be installed BEFORE `PSD*3*87'
+
+Subject: EPIP CONTROLLED SUBSTANCES REMEDIATION 2.0
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ ------------
+ Patch PSD*3.0*87 corrects an issue with the BALANCE DISCREPANCY CHECK 
+ prompt, as reported by a VA site after the release of PSD*3.0*84. The 
+ issue is that when the PRIME VENDOR field (#12) is set to NO or null, the 
+ BALANCE DISCREPANCY CHECK prompt does not appear as expected when using 
+ the Create/Edit the Narcotic Area of Use [PSD NAOU EDIT] option.
+  
+ The routine PSDEN is modified to always display the BALANCE DISCREPANCY 
+ CHECK prompt whether the PRIME VENDOR field is set to YES or NO.
+  
+  
+ Patch Components: 
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)     New/Modified/Deleted
+ ------------------          -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                  File #                  New/Modified/Deleted
+ ---------                  ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                Type                    New/Modified/Deleted
+ -----------                ----                    ---------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              -------------------- 
+ N/A
+  
+  
+ Parameters Associated: 
+  
+ Parameter Name             New/Modified/Deleted
+ ---------------            -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type    File Name (Number)  New/Modified/Deleted
+ -------------      ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC3380754 - BALANCE DISCREPANCY CHECK prompt not displaying when PRIME 
+ VENDOR field is null or set to No
+  
+ Problem:
+ -------
+ If the PRIME VENDOR field (#12) is null or set to No, then the BALANCE 
+ DISCREPANCY CHECK prompt will not show to the user.
+  
+ Resolution:
+ ----------
+ This patch for a patch is created in support of PSD*3.0*84. PSD*3.0*84 
+ added the BALANCE DISCREPANCY CHECK field (#37) to the DRUG ACCOUNTABILITY
+ STATS file (#58.8). Routine PSDEN is used to display fields from this file
+ for editing when the LOCATION TYPE field (#1) is set to "MASTER VAULT."
+ After release of PSD*3.0*84, it was discovered that if the PRIME VENDOR
+ field (#12) is set to NO or null, then the BALANCE DISCREPANCY CHECK
+ prompt will not display as expected. Patch PSD*3.0*87 allows the BALANCE
+ DISCREPANCY CHECK field to be edited regardless of the state of the PRIME
+ VENDOR field, while maintaining the original branching flow connected to
+ the PRIME VENDOR field.
+  
+ Test Sites:
+ ----------
+ Milwaukee VA Medical Center, Milwaukee, WI
+ Fargo VA Health Care System, Fargo, ND
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------- 
+ The software is released as a PackMan patch message and is distributed 
+ from FORUM.
+  
+ There are no VA Software Document Library (VDL) manuals associated with 
+ this patch release.
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Review the Pre-Installation Instructions provided before beginning 
+ installation of the patch.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Installation Instructions:
+ ------------------------------
+ To install the patch:
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System (KIDS) menu, 
+ select the Installation Menu. From this menu, you may elect to use the 
+ following options. When prompted for the INSTALL NAME, enter the patch 
+ number PSD*3.0*87.
+  
+       a. Verify Checksums in Transport Global - This option will help 
+ ensure the integrity of the routines that are in the transport global.
+  
+       b. Print Transport Global - This option will enable viewing the 
+ components of the KIDS build.
+  
+       c. Compare Transport Global to Current System - This option will 
+ enable viewing all changes that will be made when this patch is installed.
+ It compares all components of this patch (routines, data dictionaries,
+ templates, etc.).
+  
+       d. Back up a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not back up any
+ other changes such as data dictionaries or templates.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and 
+ choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+ press <Enter>.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO//', press <Enter>.
+  
+ 7. If prompted 'Delay install (Minutes): (0-60): 0//', press <Enter>.
+  
+ 8. If prompted 'Enter the Device you want to print the Install messages. 
+ You can queue the install by enter a 'Q' at the device prompt. Enter a 
+ '^' to abort the install. DEVICE: HOME//   HOME  (CRT)', press <Enter>.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Backout Procedure:
+ ------------------
+ Backout of this patch will be performed only with the concurrence and 
+ participation of the appropriate VA site/region personnel. The decision 
+ to back out the patch will be a joint decision between VA site/region 
+ personnel and other appropriate VA personnel.
+  
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option. The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system.
+  
+  
+ Validation of Backout Procedure:
+ --------------------------------
+ The Backout procedure can be verified by printing the first two lines of 
+ the PSD routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the PSD routines have been 
+ backed out, the first two lines of the routines will no longer contain 
+ the designation of patch PSD*3.0*87 on line 2 in the patch list section. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONTROLLED SUBSTANCES;**[Patch List]**;13 Feb 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSDEN
+    Before: B14499014   After: B14711583  **84,87**
+ 
+Routine list of preceding patches: 84
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 05, 2018
+Completed By:                               Date Completed: FEB 11, 2019
+Released By :                               Date Released : FEB 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

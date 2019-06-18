@@ -1,0 +1,333 @@
+$TXT Created by                      at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 08/07/18 at 07:46
+=============================================================================
+Run Date: OCT 30, 2018                     Designation: QAN*2*34
+Package : QAN - INCIDENT REPORTING            Priority: Mandatory
+Version : 2        SEQ #34                      Status: Released
+                  Compliance Date: NOV 29, 2018
+=============================================================================
+
+
+Subject: INCIDENT REPORTING DATA ENTRY DEACTIVATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Incident Reporting patch, QAN*2.0*34, marks menu options as, "Disabled-USE
+ Joint Patient Safety Reporting-JPSR". This was requested by the Veterans
+ Health Administration National Center for Patient Safety  Joint Patient
+ Safety Reporting (VHANCPS JPSR) TEAM.
+   
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)    New/Modified/Deleted
+ ------------------      -------------------    --------------------
+ N/A 
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Group Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Request (NSRs):
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. Rational Defect# 781764- Place Incident Reporting Menu Options "out of
+                             order". 
+  
+    Problem:
+    --------
+    The VHANCPS JPSR TEAM has identified that several Incident Reporting
+    menu options are obsolete and no longer in use.  They have requested
+    the options listed in this patch be disabled with the message:
+    "Disabled-USE Joint Patient Safety Reporting-JPSR".
+  
+    Resolution:
+    -----------
+    The post install routine QAN2P34 has been created to update the OUT 
+    OF ORDER MESSAGE field (#2), with, "Disabled-USE Joint Patient Safety 
+    Reporting-JPSR".
+  
+ NOTE: The following list is inclusive and some sites may not have all
+ listed options.  There is no cause for concern if your site does not have
+ some of these listed options.
+  
+ Option Name                     Type    New/Modified/Deleted
+ -----------------               ----    --------------------
+ QAN AUTO E-MAIL BRIEF           R       Modified
+ QAN AUTO E-MAIL DELETE          R       Modified
+ QAN AUTO E-MAIL FULL            R       Modified
+ QAN BRIEF EDIT                  R       Modified
+ QAN DBASE INTEGRITY CHECKER     R       Modified
+ QAN EARLY WARNING SYSTEM AUTO   R       Modified
+ QAN EARLY WARNING SYSTEM MAN    R       Modified
+ QAN INCIDENT FOLLOW-UP          R       Modified
+ QAN INCIDENT LOCATION           R       Modified
+ QAN INCIDENT MAIL TO REGION     R       Modified
+ QAN INCIDENT QUICK              R       Modified
+ QAN INCIDENT REGION STATUS      R       Modified
+ QAN INCIDENT REPORT             R       Modified
+ QAN INCIDENT STATUS ENTER/EDIT  R       Modified
+ QAN INCIDENT SUMMARY REGION     R       Modified
+ QAN INCIDENT WORKSHEET          R       Modified
+ QAN PATIENT MANIPULATION        R       Modified
+ QAN PATIENT/INCIDENT VIEW       R       Modified
+ QAN RECORD MANIPULATION         R       Modified
+ QAN SITE PARAMETERS ENTER/EDIT  R       Modified
+ QAN FR ENTER/EDIT               R       Modified
+ QAN FR PRINT                    R       Modified
+ QAN BOI ENTER/EDIT              R       Modified
+ QANSERV                         R       Modified
+ QAN FR DELETE                   R       Modified
+ QAN MANUAL FORM UPDATE          R       Modified
+ QAN MANUAL FORM NOTIFICATION    R       Modified
+ QAN IR MANUAL UPDATE            R       Modified
+ QAN IR MANUAL NOTIFICATION      R       Modified
+ QANERC                          R       Modified
+ QAN TEST                        R       Modified
+ QAN TRANSMIT                    R       Modified
+ QAN PRINT IR                    R       Modified
+  
+  
+ Test Sites:
+ -----------
+ North Texas HCS (Dallas)
+ Maine HCS (Togus)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Albany: domain.ext
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Filename        Description
+ =======         ========================================================
+ irtm.pdf        Incident Reporting V 2.0 Technical Manual
+ irum.pdf        Incident Reporting V 2.0 User Manual
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+ transfer mode. 
+  
+ The complete and updated User Manual will be posted to the VDL immediately
+ after the release of the patch.
+  
+  
+ Installation Instruction:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize 
+ potential disruption to users. 
+  
+ This patch should take less than 5 minutes to install.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+  
+    1. Choose the PackMan message containing this patch.
+     
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+    3. From the Kernel Installation & Distribution System Menu, select 
+       the Installation Menu. From this menu, you may select to use the 
+       following options.  When prompted for the INSTALL NAME, enter the
+       patch QAN*2.0*34:
+  
+       a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+       b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+  
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+     
+    4. From the Installation Menu, select the Install Package(s) option
+       and choose the patch to install.
+    
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+     
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//", respond NO.
+  
+  
+ Post-Installation Instructions:
+ ------------------------------- 
+ Once the install is complete and you are satisfied with the status of 
+ the QAN Menu options, you may delete the routine QAN2P34.  However, it is 
+ recommended that you wait until the compliance date has been reached 
+ before doing so.
+  
+ Overview:
+  
+ The install is performed by the post install routine, QAN2P34.  A 
+ successful run will post messaging to the screen similar to the following:
+  
+ SETTING QAN AUTO E-MAIL BRIEF TO OUT OF ORDER...
+ SETTING QAN AUTO E-MAIL DELETE TO OUT OF ORDER...
+ SETTING QAN AUTO E-MAIL FULL TO OUT OF ORDER...
+ SETTING QAN BRIEF EDIT TO OUT OF ORDER...
+ SETTING QAN DBASE INTEGRITY CHECKER TO OUT OF ORDER...
+ SETTING QAN EARLY WARNING SYSTEM AUTO TO OUT OF ORDER...
+ SETTING QAN EARLY WARNING SYSTEM MAN TO OUT OF ORDER...
+ SETTING QAN INCIDENT FOLLOW-UP TO OUT OF ORDER...
+ SETTING QAN INCIDENT LOCATION TO OUT OF ORDER...
+ SETTING QAN INCIDENT MAIL TO REGION TO OUT OF ORDER...
+ SETTING QAN INCIDENT QUICK TO OUT OF ORDER...
+ SETTING QAN INCIDENT REGION STATUS TO OUT OF ORDER...
+ SETTING QAN INCIDENT REPORT TO OUT OF ORDER...
+ SETTING QAN INCIDENT STATUS ENTER/EDIT TO OUT OF ORDER...
+ SETTING QAN INCIDENT SUMMARY REGION TO OUT OF ORDER...
+ SETTING QAN INCIDENT WORKSHEET TO OUT OF ORDER...
+ SETTING QAN PATIENT MANIPULATION TO OUT OF ORDER...
+ SETTING QAN PATIENT/INCIDENT VIEW TO OUT OF ORDER...
+ SETTING QAN RECORD MANIPULATION TO OUT OF ORDER...
+ SETTING QAN SITE PARAMETERS ENTER/EDIT TO OUT OF ORDER...
+ SETTING QAN FR ENTER/EDIT TO OUT OF ORDER...
+ SETTING QAN FR PRINT TO OUT OF ORDER...
+ SETTING QAN BOI ENTER/EDIT TO OUT OF ORDER...
+ SETTING QANSERV TO OUT OF ORDER...
+ SETTING QAN FR DELETE TO OUT OF ORDER...
+ SETTING QAN MANUAL FORM UPDATE TO OUT OF ORDER...
+ SETTING QAN MANUAL FORM NOTIFICATION TO OUT OF ORDER...
+ SETTING QAN IR MANUAL UPDATE TO OUT OF ORDER...
+ SETTING QAN IR MANUAL NOTIFICATION TO OUT OF ORDER...
+ SETTING QANERC TO OUT OF ORDER...
+ SETTING QAN TEST TO OUT OF ORDER...
+ SETTING QAN TRANSMIT TO OUT OF ORDER...
+ SETTING QAN PRINT IR TO OUT OF ORDER...
+  
+ NOTE:  As there is a great many differences in menu options from site to 
+ site for a variety of reasons, not all the responses in this section will 
+ appear the same. Some of the options may not be installed at your site.
+  
+ Other messages that may appear during a successful install are as follows:
+  
+ OPTION QAN FR ENTER/EDIT NOT FOUND
+ OPTION QAN FR PRINT NOT FOUND
+ OPTION QAN BOI ENTER/EDIT NOT FOUND
+ OPTION QANSERV NOT FOUND
+ OPTION QAN FR DELETE NOT FOUND
+ OPTION QAN MANUAL FORM UPDATE NOT FOUND
+ OPTION QAN MANUAL FORM NOTIFICATION NOT FOUND
+ OPTION QAN IR MANUAL UPDATE NOT FOUND
+ OPTION QAN IR MANUAL NOTIFICATION NOT FOUND
+ OPTION QANERC NOT FOUND
+ OPTION QAN TEST NOT FOUND
+ OPTION QAN TRANSMIT NOT FOUND
+ OPTION QAN PRINT IR NOT FOUND
+  
+  
+ Back-Out Plan:
+ --------------
+ To re-enable these menu options, please open a ticket with the Enterprise 
+ Service Desk.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Incident Reporting;**[Patch List]**;08/07/1992;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: QAN2P34
+    Before:       n/a   After:  B4224343  **34**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 14, 2018
+Completed By:                               Date Completed: OCT 29, 2018
+Released By :                               Date Released : OCT 30, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,171 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 10/29/18 at 12:28
+=============================================================================
+Run Date: MAR 18, 2019                     Designation: MD*1*66
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #50                      Status: Released
+                  Compliance Date: APR 18, 2019
+=============================================================================
+
+Associated patches: (v)MD*1*56     <<= must be installed BEFORE `MD*1*66'
+
+Subject: CP HEMO HELP FILE UPDATE AND DELPHI UPGRADE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Clinical Procedures 
+ (CP) Hemodialysis application.
+  
+ 1. RTC 770203 - CP Hemodialysis - XE10 Conversion
+ The Department of Veterans Affairs Office of Information and Technology
+ requires that applications remain compliant with the Technical Reference
+ Model (TRM) regarding the version of tools used for development. This
+ patch accomplished this by updating the version of Delphi to XE10.2.
+  
+ 2. RTC 770202 - CP Hemodialysis - Windows 10 help file format conversion
+ While evaluating Windows 10, it was discovered that the Help files
+ would not display correctly. This patch will correct this problem by
+ converting the help files to a new format.
+  
+ 3. RTC 770205 - CP Hemodialysis - Network share help file
+ Many of the VistA instances are now pushing their Graphical User
+ Interface (GUI) installations to network share drives, rather than
+ installing on individual machines. It was discovered that the online help
+ would not work when the application was installed on the network share
+ drive. This patch corrects this problem.
+  
+ 4. RTC 782211 - CP Hemodialysis - Memory leak detections and cleanup
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Louis Stokes Cleveland VA Medical Center, OH
+ New Mexico VA Health Care System (Albuquerque) 
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ This Software is being released with both a VistA component, and an 
+ updated Graphical User Interface (GUI). Files and documentation
+ pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Please refer to the "CP Hemodialysis (MD*1.0*66) Installation Guide"
+ for installation and set-up information. This document is available
+ on the VA Software Document Library (VDL).
+  
+ Title                                  File Name          FTP Mode
+ -------------------------------------------------------------------
+ CP Hemodialysis (MD*1.0*66)            MD_1_66_IG.pdf     Binary
+ Installation Guide
+  
+ MD*1.0*66 GUI MSI Install files        MD_1_66.zip        Binary
+ (CP Hemodialysis)
+  
+ Zip File Name       Zip Contents (size)                
+ ----------------    -------------------------------------          
+ Hemodialysis.chm    CP Hemodialysis Help file (328,716)
+ Hemodialysis.exe    CP Hemodialysis Executable (8,429,056)
+ RoboEx32.dll        CP Hemodialysis Dynamic Link Library (1,044,480)
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Clinical Procedures users should be off the system when this patch is 
+ installed. Installation will take less than 5 minutes. This patch should 
+ be installed during non-peak requirement hours.
+  
+ NOTE: Installation of this patch requires both this KIDS build, and the 
+ installation of the GUI files included in the zip file. This needs to be 
+ a coordinated install, both need to happen concurrently.
+  
+ Installation Instructions:
+ -------------------------- 
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 2. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+   
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter MD*1.0*66).      
+  
+    a. Backup a Transport Global - this option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - this option will
+       allow you to view all changes that will be made when the patch 
+       is installed
+    c. Verify Checksums in Transport Global - this option will ensure
+       the integrity of the routines that are in the transport global.
+    d. Print Transport Global - this option will allow you to view
+       the components of the KIDS build.
+      
+ 4. Use the Install Package(s) option and select the package: MD*1.0*66.
+   
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond NO.
+   
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Post-installation routine MDPOST66 is provided which updates Clinical
+ Procedures with the expected version number for CP Hemodialysis.
+  
+ NOTE: Installation of this patch requires both this KIDS build, and the 
+ installation of the GUI files included in the zip file. This needs to be 
+ a coordinated install, both need to happen concurrently.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+   
+ Please reference the CP Hemodialysis MD*1.0*66 Installation Guide for 
+ back-out/rollback instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDPOST66
+    Before:       n/a   After:  B2580618  **66**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 14, 2018
+Completed By:                               Date Completed: MAR 15, 2019
+Released By :                               Date Released : MAR 18, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

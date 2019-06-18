@@ -1,0 +1,324 @@
+$TXT Created by                   CLN1S1.AAC.DOMAIN.EXT  (KIDS) on Friday, 08/24/18 at 12:38
+=============================================================================
+Run Date: OCT 09, 2018                     Designation: IB*2*614
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #572                      Status: Released
+                  Compliance Date: NOV 08, 2018
+=============================================================================
+
+Associated patches: (v)IB*2*339    <<= must be installed BEFORE `IB*2*614'
+                    (v)IB*2*549    <<= must be installed BEFORE `IB*2*614'
+                    (v)IB*2*563    <<= must be installed BEFORE `IB*2*614'
+
+Subject: SUICIDE HIGH RISK COPAYMENT ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ The patch implements modifications for Mental Health Suicide Prevention -
+ Suicide High Risk Patient Enhancements (SHRPE) project. The goal of this
+ effort is to improve the delivery of targeted Mental Health care for
+ individuals at high risk for suicide. Modification of outpatient visit
+ and RX copayment functionality for Veterans assessed as being at high
+ risk for suicide involves making changes to the existing VistA and payment
+ systems to support regulatory change processes aimed at removing financial
+ barriers that may prevent these Veterans from engaging in enhanced care,
+ which includes more frequent contacts and dispensing medications in
+ smaller amounts more frequently, as safety precautions.
+  
+ The patch makes the following modifications:
+  
+     Modifications to prevent Outpatient visit copayment charges from being
+ created/charged for patients with the national HRfS flag active on the 
+ date of service.
+     Modifications to the menu option IB CANCEL/EDIT/ADD CHARGES to prevent
+ Outpatient visit copayment charges from being added manually for patients 
+ with the national HRfS flag active on the date of service.
+     Modifications to prorate Rx copay amounts paid by patients with the 
+ national HRfS flag active on the date of service if the supply is for 
+ less than 30 days.
+     The modification to the menu option IB CANCEL/EDIT/ADD CHARGES for the
+ manual process of adding Rx charges to support prorated amounts for Rx 
+ copays: 
+     - add the prompt "Days' Supply" if the Patient has the HRfS flag,
+     - if the supply is for less than 30 days, then prorate the cost.
+     A new entry HRFS FLAGGED was added to IB CHARGE REMOVE REASONS file 
+ (#350.3) to support visit copay exemptions for patients with the national 
+ HRfS flag active on the date of service.
+     The new field is #70.02  SHRPE ACTIVATION DATE was added to the file 
+ #350.9 IB SITE PARAMETERS. This new field is used to activate 
+ functionality delivered by the patch. This field is not set to any 
+ specific date by this patch installation. It is set to null value which 
+ effectively turns off the functionality delivered by the patch. This is 
+ because the effective date for appropriate legislation (and funding) for 
+ this functionality is unknown at the time of the patch release.
+  
+ Note: When the government passes the legislation that affects copays for 
+ patients with active Category I (national) High Risk for Suicide Patient 
+ Record flag and the effective date becomes known to stakeholders of the 
+ SHRPE project, the activation patch IB*2.0*629 will be released to 
+ activate the functionality.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)            Field Name (Number)     New/Modified/Deleted
+ ----------------------------  ----------------------  --------------------
+ IB SITE PARAMETERS (#350.9)   SHRPE ACTIVATION DATE   New
+                               (70.02) 
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ Patch creates a new MM Bulletin: A bulletin is created daily, ran from
+ ^IBAMTC to see if patients had the HRfS flag activated the day before, the
+ bulletin will be sent to the mail group - IB MEANS TEST.  It will allow
+ the IB revenue staff to review entries created in the INTEGRATED BILLING
+ ACTION (File #350).
+  
+ Blood Bank Team Coordination:
+ N/A
+  
+ New Service Requests (NSRs):
+ NSR20160415 - Suicide High Risk Patient Epics and Sub-epics
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ N/A
+  
+ Test Sites:
+ -----------
+ West Palm Beach
+ Palo Alto
+   
+ Software and Documentation Retrieval Instructions:
+ ------------------------------- --------------------------------------
+ The software is released as a packman patch message and is distributed 
+ from FORUM.
+  
+ Software documentation describing the new functionality introduced by 
+ this patch is available for downloading.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                       File Name        FTP Mode
+ ---------------------------------------------------------------------
+ Deployment, Installation, Back-out,         IB_2_0_P614_IG   Binary
+ and Rollback Guide 
+ IB Release Notes                            IB_2_0_P614_RN   Binary
+ IB Technical Manual/Security Guide          IB_2_0_P614_TM   Binary
+ Integrated Billing (IB) V. 2.0 User Manual  IB_2_0_P614_UM   Binary
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ Users can be on the system when patch is applied, but the Patient 
+ Prescription Processing  option of Outpatient  Pharmacy should not be 
+ used for processing prescriptions during the install.
+  
+ Patch should take less than 5 minutes to install.
+  
+ Pre-Installation Instructions:
+ N/A
+  
+  
+ Installation Instructions:
+  
+  1. Choose the PackMan message containing this patch.
+  
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+  3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch name
+     IB*2.0*614:
+       a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all of the components of this patch,
+          such as routines, DDs, templates, etc.
+       d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+  
+  4. From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+  5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer NO.
+   
+  6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     answer NO.
+   
+  7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', answer YES.
+  
+     a. When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', select the following option<s>:
+   
+      Option Name                Menu Text
+      -------------------------- -------------------------------
+      PSO LM BACKDOOR ORDERS     Patient Prescription Processing
+      IB CANCEL/EDIT/ADD CHARGES Cancel/Edit/Add Patient Charges 
+      Press the Enter key when you are done selecting options.
+  
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of
+          Order':', press the Enter key.
+  
+  
+  8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions:
+  
+ Back-Out Plan:
+ --------------------
+ Due to the complexity of this patch (because of the data dictionary 
+ changes), it is not recommended for back-out. However, in the event that
+ a site decides to back-out this patch, the site should contact the 
+ National Service Desk (NSD) to submit a ticket; the development team will
+ assist with the process.
+ The Back-Out Procedure consists of restoring routines, and removing 
+ manually each new Data Definition (DD) component introduced by the patch. 
+ The back-out is to be performed by persons with programmer-level access,
+ and in conjunction with the SHRPE Team.
+  
+ Routines
+ --------
+ The pre-patch versions of routines can be restored by using backup 
+ MailMan message that should be created during installation.
+  
+ Note: The routines can be modified by another patch that follows the 
+ IB*2.0*614 and released after the installation of the IB*2.0*614. In this
+ case restoring routines from the backup MailMan messages might cause 
+ issues. It is recommended that the sites contact the development team and
+ the National VistA Support team after for specific solutions to their
+ unique problems.
+  
+ File/Field additions
+ -----------------
+ The new SHRPE ACTIVATION DATE field (#70.02) of the file IB SITE 
+ PARAMETERS (#350.9) can be deleted by using the standard FileMan utility
+ option MODIFY FILE ATTRIBUTES.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-18;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P614
+    Before:       n/a   After:  B1077117  **614**
+Routine Name: IBAMTC
+    Before: B27117465   After: B28036606  **34,52,70,93,100,118,115,132,
+                                           150,153,137,176,215,275,321,
+                                           312,457,519,549,614**
+Routine Name: IBAMTS1
+    Before: B22328511   After: B22926288  **20,52,132,153,166,156,167,
+                                           247,339,614**
+Routine Name: IBAMTS3
+    Before:       n/a   After: B26133048  **614**
+Routine Name: IBARX1
+    Before: B24612250   After: B34169462  **34,101,150,158,156,234,247,
+                                           563,614**
+Routine Name: IBECEA3
+    Before: B70707203   After: B73673307  **7,57,52,132,150,153,166,156,
+                                           167,176,198,188,183,202,240,
+                                           312,402,454,563,614**
+Routine Name: IBECEAU2
+    Before: B28548148   After: B32399245  **7,52,153,176,545,563,614**
+ 
+Routine list of preceding patches: 339, 549, 563
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 22, 2017
+Completed By:                               Date Completed: OCT 09, 2018
+Released By :                               Date Released : OCT 09, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

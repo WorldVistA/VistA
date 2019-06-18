@@ -1,0 +1,108 @@
+
+=============================================================================
+Run Date: MAR 08, 2016                     Designation: GMRV*5*28
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #21                      Status: Released
+                  Compliance Date: JUL 27, 2016
+=============================================================================
+
+Associated patches: (v)OR*3*350    <<= must be installed BEFORE `GMRV*5*28'
+
+Subject: Upgrade code base to Delphi XE3 - Vitals Lite (dll) ONLY
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch will correct the following issue in the Vitals Lite feature 
+ of the CPRS GUI:
+  
+ 1. CPRS 30 is being upgraded to Delphi XE3 and will now use the Unicode
+    Character Standard. Since Vitals Lite is based on the Ansi Character 
+    Standard there is a conflict when CPRS tries to make a call out to 
+    the Vitals Lite dll.
+   
+ Associated NSR(S):
+ ==================
+ N/A
+  
+  
+ Defect Tracking System Tickets:
+ ===============================
+ 1. INC000000927040 - Upgrade Vitals package base code
+  
+  
+ Participating Test Sites:
+ =========================
+ Cleveland, OH
+ Heartland - East
+ Heartland - West
+ Loma Linda, CA
+ Palo Alto, CA
+ San Diego, CA 
+  
+ Defect Tracking System Ticket(s) Overview:
+ ==========================================     
+ 1. INC000000927040 - Upgrade Vitals package base code 
+  
+    Problem:
+    --------
+    With the upgrade of CPRS30 to Delphi XE3, the Vitals Lite package must
+    be updated to the new Unicode base.
+       
+    Resolution:
+    -----------   
+    Convert the Vitals Lite dll over to Delphi XE3 and a Unicode standard.
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Sites may retrieve the software and/or documentation directly using 
+ the Secure File Transfer Protocol (SFTP) address as directed by the CPRS
+ Implementation team. Installation instructions will be distributed when
+ your site begins the implementation process.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ The updated documentation will not be on the vdl until after the phased
+ deployment has completed.
+  
+ Patch Installation:
+ =================== 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v.30.b Installation Guide" for installation 
+ and set-up information. This document is exported as OR_30_350_IG.doc and
+ OR_30_350_IG.pdf and is included in OR_30_350.ZIP and will be emailed to 
+ the installation point of contacts by the CPRS Implementation team.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;Oct 31, 2002;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMV28PST
+    Before:       n/a   After:  B1933023  **28**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 09, 2013
+Completed By:                               Date Completed: MAR 07, 2016
+Released By :                               Date Released : MAR 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

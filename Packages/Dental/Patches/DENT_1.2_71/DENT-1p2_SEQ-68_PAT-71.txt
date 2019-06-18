@@ -1,0 +1,192 @@
+$TXT Created by                 at SMA.DOMAIN.EXT  (KIDS) on Tuesday, 12/19/17 at 13:07
+=============================================================================
+Run Date: JAN 02, 2018                     Designation: DENT*1.2*71
+Package : DENT - DENTAL                       Priority: Mandatory
+Version : 1.2        SEQ #68                    Status: Released
+                  Compliance Date: JAN 09, 2018
+=============================================================================
+
+Associated patches: (v)LEX*2*113   <<= must be installed BEFORE `DENT*1.2*71'
+
+Subject: Code Standards FY18-Q1
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ The purpose of this patch is to update the DENTAL RECORD MANAGER CPT
+ CODE MAPPING (#228) file to comply with the changes introduced for 
+ Fiscal Year (FY) 18, Quarter (Q) 1.
+  
+ The patch also updates Coding Standards as approved by the Office of
+ Dentistry.
+  
+ A Mailman message will be sent to DENTV ADA CODE MAPPING mail group to
+ identify new and modified ADA/CPT codes at the site. The patch contains
+ a post-installation routine to perform the updates and notification.
+  
+ This patch requires DENT*1.2*70 to be installed.
+ This patch requires LEX*2.0*113 to be installed.
+  
+ Dental Record Manager Plus Changes:
+ -----------------------------------
+ 1. The following CPT Codes were added:
+    69714
+  
+ 2. The following NEW ADA Codes were added:
+    D0411, D5511, D5512, D5611, D5612, D5621,
+    D5622, D6096, D6118, D6119, D7296, D7297,
+    D7979, D8695, D9222, D9239, D9995, D9996
+  
+ 3. The following ADA Codes were inactivated:
+    D5510, D5610, D5620
+  
+ 4. The following ADA Codes were edited:
+    D0171, D0180, D0191, D0330, D1110, D1206,
+    D1330, D3120, D4210, D4211, D4212, D4230,
+    D4231, D4240, D4241, D4245, D4260, D4261,
+    D4263, D4264, D4265, D4266, D4267, D4268,
+    D4270, D4273, D4275, D4276, D4277, D4278,
+    D4283, D4285, D4341, D4342, D4346, D4355,
+    D4381, D4910, D4920, D4921, D4999, D5982,
+    D6081, D7210, D7272, D9910, D9911
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ File Name (Number)              New/Modified/Deleted
+ ------------------              --------------------
+ DENTAL CPT CODE MAPPING (#228)  Modified
+  
+ Forms Associated: N/A
+ Mail Groups Associated: N/A
+ Options Associated: N/A
+ Protocols Associated: N/A
+ Security Keys Associated: N/A
+ Templates Associated: N/A
+ Parameters Associated: N/A
+ Remote Procedures Associated: N/A
+  
+ Routines Associated:
+  
+ Routine Name                    New/Modified/Deleted
+ ------------                    --------------------
+ DENTV068                        Deleted (May already be deleted)
+ DENTV071                        New
+  
+ New Service Requests (NSRs): N/A
+ Patient Safety Issues (PSIs): N/A
+ Remedy Ticket(s) & Overview: N/A
+  
+  
+ Test Sites:
+ ----------
+ Montana HCS                     Medium/Integrated
+ Portland VA Medical Center      Large
+  
+ Documentation and Software Retrieval:
+ -------------------------------------
+ All documentation for this patch is available within the Forum
+ National Patch Module patch description.  The patch is a Kernel
+ Installation & Distribution System (KIDS) build available on Forum.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ **********************************************************************
+ NOTE: This patch has a shortened compliance date.
+ **********************************************************************
+  
+ The pre-installation routine will save a copy of the site's DENTAL CPT
+ CODE MAPPING (#228) file in a temp global.  The post-installation 
+ routine will restore the fields that the site is allowed to define at 
+ the local level ($ values, etc). The post-install sends the Mailman 
+ message to the G.DENTV ADA CODE MAPPING group that describes the 
+ changes made and the affected ADA/CPT codes.
+  
+  ======================================================================
+            INSTALLATION INSTRUCTIONS FOR DENT*1.2*71
+  ======================================================================
+  The Dental users should not use the DRM Plus GUI while the patch is
+  being installed.  All Dental users MUST close any open DRM Plus
+  application prior to the patch being installed.  Once the patch has
+  completed the users can use the DRM Plus application.  This ensures
+  the Dental users are seeing the new CDT/CPT codes and Standards.
+  
+  Do not queue the installation of this patch.
+  The installation time should take less than 5 minutes.
+  It is not necessary to disable any DENTV options.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch
+     DENT*1.2*71:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option
+     and choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  answer NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  answer NO.
+  
+ 7.  If prompted Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ NOTE: DENTV071 may be deleted after installation of DENT*1.2*71.
+  
+  
+  MISCELLANEOUS INFORMATION
+  =========================
+  If you have any questions concerning the installation of DSS Dental
+  Record Manager Plus patch version 71 please contact the DSS Help Desk
+  at (561) 284-7200 during normal working hours (8AM to 7PM EST) or
+  place a Remedy Support ticket.
+  For DSS after hours support dial (561) 284-7200 Select Option 1.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.2;DENTAL;**[Patch List]**;Aug 10, 2001;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DENTV071
+    Before:       n/a   After:B154933409  **71**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 19, 2017
+Completed By:                               Date Completed: JAN 02, 2018
+Released By :                               Date Released : JAN 02, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

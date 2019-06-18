@@ -1,0 +1,126 @@
+
+=============================================================================
+Run Date: OCT 20, 2016                     Designation: PXRM*2*62
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #48                      Status: Released
+                  Compliance Date: NOV 20, 2016
+=============================================================================
+
+Associated patches: (v)YS*5.01*119 <<= must be installed BEFORE `PXRM*2*62'
+                    (v)SD*5.3*649  <<= must be installed BEFORE `PXRM*2*62'
+
+Subject: PCL-5 MENTAL HEALTH INSTRUMENT UPDATE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch is in support of the Mental Health PCL-5 instrument patch.  It 
+ will modify nationally released clinical reminders and reminder dialogs 
+ to use the PCL-5 instrument instead of the previously used PCLC and PCLM
+ instruments.  The PCLC and PCLM instruments are inactivated with the 
+ associated mental health patch.
+  
+   Please refer to the information contained in the Mental Health patch 
+   for installation instructions.
+  
+ The following items are updated to use PCL-5 as a finding instead of PCLC:
+  
+   VA-PTSD REASSESSMENT (PCL)      reminder definition
+  
+   VA-MH CPT ASSESSMENT GROUP      dialog group
+   VA-MH PEI ASSESSMENT GP         dialog group
+  
+   VA-PTSD EVALUATION (PCL)        reminder dialog
+   VA-PTSD SCREENING               reminder dialog
+  
+ The effects of updating the dialog groups will be seen in the VA-MH CPT* 
+ and the VA-MH PEI* reminder dialogs.  They will open the PCL-5 instrument 
+ now instead of the PCLC instrument.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:  N/A
+  
+ Forms Associated:           N/A
+  
+ Mail Groups Associated:     N/A
+  
+ Options Associated:         N/A
+  
+ Protocols Associated:       N/A
+  
+ Security Keys Associated:   N/A
+  
+ Templates Associated:       N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150509: Posttraumatic Stress Disorder (PTSD) Checklist 5 (PCL-5) 
+ and Mental Health Assistant Stabilization (MHAS) 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ CLEVELAND
+ MILWAUKEE
+  
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+  
+ Patch Installation:
+ ------------------
+  
+   Instructions for installation of the software are included in the 
+   Mental Health PCL-5 patch, YS*5.01*119.
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+   See Mental Health PCL-5 patch YS*5.01*119 for post-installation 
+   instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP62E
+    Before:       n/a   After:   B715505  **62**
+Routine Name: PXRMP62I
+    Before:       n/a   After:  B4841113  **62**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 05, 2015
+Completed By:                               Date Completed: OCT 19, 2016
+Released By :                               Date Released : OCT 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

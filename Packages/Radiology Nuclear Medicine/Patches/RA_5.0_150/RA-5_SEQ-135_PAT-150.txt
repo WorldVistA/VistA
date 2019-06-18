@@ -1,0 +1,212 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 09/27/18 at 12:53
+=============================================================================
+Run Date: MAR 13, 2019                     Designation: RA*5*150
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #135                      Status: Released
+                  Compliance Date: APR 15, 2019
+=============================================================================
+
+Associated patches: (v)RA*5*138    <<= must be installed BEFORE `RA*5*150'
+                    (v)RA*5*144    <<= must be installed BEFORE `RA*5*150'
+
+Subject: RA PROC OPTION SEMI-COLON ISSUE AND OUTSIDE RPT ENT OBSERVATION DT/TM
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following 2 issues:
+      
+ Issue 1
+ When attempting to enter a new Procedure using 
+ the menu option RA PROCEDURE, the system will error 
+ out with a <SYNTAX>BR1^DIE0 error if the procedure 
+ being entered contains a semi-colon.
+      
+ Issue 2
+ When using Menu Option-Outside Report Entry/Edit an
+ observation date/time is not recorded in the HL7 (Health Level 7) 
+ OBR(Observation Record) Data Element 22 (OBR-22).  
+ This causes some PACS (Picture Archiving and Communications System) 
+ machines to not display the reports in the correct date/time order. 
+ This Issue is specific to Outside Report Entry only.
+           
+ New Service Requests (NSRs):
+ ----------------------------  
+      
+ Patient Safety Issues (PSIs):
+ -----------------------------
+                     
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Rational Work Items - 
+ 808281
+ 813998                                      
+ ServiceNow Ticket Number
+ INC1933636 - <SYNTAX ERROR>
+ INC2024677 - Radiology OBR date issue
+      
+ Associated NSR(s):
+ =============
+ N/A
+       
+ Problem 1:
+ --------
+      
+ A <SYNTAX>BR1^DIE0 error is generated when a user
+ attempts to enter a Radiology Procedure using menu
+ option RA PROCEDURE.
+      
+ Resolution 1:
+ ------------     
+     
+ A modification will be made to routine RANPRO to not
+ allow an entry containing a semi-colon.  The option will
+ display an error message and return the user to the 
+ RAD/NUC MED PROCEDURE NAME: prompt.
+      
+ Problem 2
+ --------
+      
+ When a Radiology Report is entered using menu
+ option-Outside Report Entry/Edit, the observation
+ date/time is not captured for the report.  This is
+ a problem for some PACS machines at the site 
+ causing reports to not display in the correct order.
+      
+ Resolution 2:
+ ------------    
+       
+ A modification will be made in routine RAHLRPT1
+ to capture the observation date/time in the HL7 
+ (Health Level 7) OBR-22 for transmission to the 
+ PACS machine.
+      
+ Test Sites:
+ ----------
+ Tennessee Valley
+ White City
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+     
+ Patch Installation:
+      
+      
+ Pre/Post Installation Overview:
+ -------------------------------
+      
+ Pre-Installation Instructions:
+ ------------------------------    
+     
+ If installed during the normal workday, it is recommended that the 
+ the Radiology users be off the system.  Other VISTA users
+ will not be affected. Install Time - less than 2 minutes (unless 
+ otherwise indicated)
+      
+ Installation Instructions:
+ --------------------------     
+                
+ 1.  Load Transport Global 
+     ---------------------------
+       
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter RA*5.0*150):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+   b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO 
+  
+   c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? YES//' answer NO 
+      
+ Back-out/Rollback Strategy:
+ ====================
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+        
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+      
+ The back-out plan is to restore the routine from the backup created.
+      
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+      
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+             
+ Post-Installation Instructions:
+ -------------------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAHLRPT1
+    Before: B50118132   After: B52598170  **47,144,150**
+Routine Name: RANPRO
+    Before:B121872781   After:B124356175  **127,138,150**
+ 
+Routine list of preceding patches: 138, 144
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 28, 2018
+Completed By:                               Date Completed: MAR 13, 2019
+Released By :                               Date Released : MAR 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

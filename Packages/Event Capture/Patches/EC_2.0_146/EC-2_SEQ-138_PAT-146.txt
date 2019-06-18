@@ -1,0 +1,231 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 12/03/18 at 10:57
+=============================================================================
+Run Date: MAR 28, 2019                     Designation: EC*2*146
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #138                      Status: Released
+                  Compliance Date: APR 01, 2019
+=============================================================================
+
+Associated patches: (v)EC*2*144    <<= must be installed BEFORE `EC*2*146'
+
+Subject: MID-FY19 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be 
+ installed as close to 4/1/2019 as possible. Sites will need the updates 
+ for Mid Fiscal Year (FY) 19.
+ *************************************************************************
+  
+ This patch will update the EC NATIONAL PROCEDURE (#725) file by
+ inactivating nine existing procedures and adding three new procedures to
+ the file.
+   
+       
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+ N/A          
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+ N/A
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ Remote Procedures Associated:
+ N/A
+  
+ Parameter Definitions Associated:
+ N/A
+  
+ Additional Information:
+  
+  
+ Blood Bank Team Coordination:
+ ----------------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  1. INC3192642 - Mid-FY19 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+   
+     Problem:
+     --------
+     The Managerial Cost Accounting Office (MCAO) requested an update to the
+     EC NATIONAL PROCEDURE (#725) file. The request is to inactivate nine 
+     existing procedures and add three new procedures to the file.
+   
+     Resolution:
+     -----------
+     The routines included in this patch will update the EC NATIONAL 
+     PROCEDURE file (#725) by inactivating nine existing procedures and adding  
+     three new procedures to the file.
+    
+     The entries that will be inactivated in the NATIONAL PROCEDURE (#725) file
+     on 04/01/19 are:
+    
+        Natl #   Description               
+        ------   ---------------------           
+        SN101    SN 0-25 CARE LEVEL ADDON
+        SN102    SN 26-50 CARE LEVEL ADDON
+        SN103    SN 51-75 CARE LEVEL ADDON
+        SN104    SN 76-100 CARELEVEL ADDON
+        SN105    SN 101-199 CARELEVEL ADDON
+        SN106    SN 200-299 CARELEVEL ADDON
+        SN107    SN 300-499 CARELEVEL ADDON
+        SN108    SN 500-599 CARELEVEL ADDON
+        SN109    SN >600 CARE LEVEL ADDON
+  
+  
+     The entries that will be added to the NATIONAL PROCEDURE 
+     (#725) file are:
+  
+        Natl #          Description                     CPT CODE
+        ------          ---------------------           ----------  
+        SD200           ASC AT SC RATE STATE DOM        none
+        SH200           ASC AT SC RATE STATE ADHC       none
+        SN200           ASC AT SC RATE STATE HOME       none
+  
+  
+    This patch will also create a task during install to inactivate any
+    Event Code Screens that are associated with inactive EC National Procedure 
+    codes.
+  
+           
+ Test Sites:
+ ----------
+ New Mexico VA HCS
+ VA Illiana HCS
+ Battle Creek VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+    
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  You may install
+ these routines at any time without interruption to users.    
+     
+ Installation will take less than 2 minutes.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Prior to installation of this patch, backup file ^EC(725) using your 
+ site's policy for backing up data.
+  
+ If the steps are unknown, please follow the following procedures:
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GOGEN.
+    3. At the device prompt, enter the directory and file name where the 
+       global backup is to be stored.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the Global prompt, enter ^EC(725
+    6. Verify that the file was created and exists in the directory 
+       specified.
+  
+ Installation Instructions:
+ --------------------------    
+      1. Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+     
+      2. From the Kernel Installation & Distribution System menu, select 
+         the Installation menu.  
+     
+      3. From this menu, you may select to use the following options: 
+         (when prompted for INSTALL NAME, enter EC*2.0*146)
+     
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this patch
+               is installed.  It compares all components of this patch
+               (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+     
+      4. Use the Install Package(s) option and select the package EC*2.0*146.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+         Protocols? NO//" respond NO.
+  
+      7. Review the installation message for notifications.
+                
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routines EC2P146A, EC2P146B and EC2P146C from your 
+ production system after the patch has been successfully verified.
+  
+ Back-Out Plan:
+ --------------------
+ Due to the complexity of this patch, it is not recommended for back-out, 
+ and a restore from a backup of the Transport Global should not be attempted.  
+ In the event that a site decides to back out this patch, the site should 
+ contact the National Service Desk (NSD) to submit a help desk ticket. The 
+ development team will need to issue a follow-on patch in order to 
+ comprehensively back-out this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P146A
+    Before:       n/a   After:  B3647876  **146**
+Routine Name: EC2P146B
+    Before:       n/a   After: B13315626  **146**
+Routine Name: EC2P146C
+    Before:       n/a   After:  B9963357  **146**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 19, 2018
+Completed By:                               Date Completed: MAR 28, 2019
+Released By :                               Date Released : MAR 28, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

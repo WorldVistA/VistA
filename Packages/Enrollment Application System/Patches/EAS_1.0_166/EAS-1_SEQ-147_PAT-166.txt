@@ -1,0 +1,297 @@
+
+=============================================================================
+Run Date: MAR 26, 2019                     Designation: EAS*1*166
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #147                      Status: Released
+                  Compliance Date: MAR 28, 2019
+=============================================================================
+
+
+Subject: INFORMATIONAL - ESR/MVR VIE TO HEALTH CONNECT MIGRATION
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+  **************************************************************************
+    This is an informational patch describing the migration from Vitria
+    Interface Engine (VIE) to InterSystems Health Connect (HC). HC is a
+    part of the suite of products grouped under HealthShare.
+    **************************************************************************
+     
+   The Health Connect (HC) product will be replacing the Vitria Interface 
+   Engine (VIE). During the transition phase, HC and VIE will be running
+   concurrently.
+  
+  A phased deployment is planned at an enterprise level. This patch, 
+  EAS*1*166, is for the migration of Health Level 7 (HL7) messaging 
+  between the VistA, Enrollment System Redesign (ESR), and Master
+  Veteran Record (MVR) systems.  In the initial deployment of this patch,
+  HL7 communications from the VistA systems to the ESR (inbound to ESR)
+  will be via HC; and the communications from the ESR (outbound from ESR) 
+  to VistA systems will be via VIE.  The next phase of deployment
+  will have all communications between VistA systems and ESR processed with
+  HC.
+  
+  Patch Components:
+  ================
+    
+  Files & Fields Associated:
+   
+  File Name (#)                    Field Name   New/Modified/Deleted
+  ------------                     ----------   --------------------
+  N/A
+   
+  Form Name             File #                  New/Modified/Deleted
+  ---------             ------                  --------------------
+  N/A
+   
+  Kernel Parameters Associated:
+   
+  Kernel Parameter Name              Entities                 Values
+  ---------------------       ---------------               --------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name                               New/Modified/Deleted
+  ---------------                               --------------------
+  N/A
+   
+  Options Associated:
+   
+  Option Name                      Type         New/Modified/Deleted
+  -----------                      ----         --------------------
+  N/A
+   
+    
+  Protocols Associated:
+   
+  Protocol Name                                 New/Modified/Deleted
+  -------------                                 --------------------
+  N/A
+     
+  Security Keys Associated:
+   
+  Security Key Name                             New/Modified/Deleted
+  -----------------                             --------------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name            Type  File Name (#)  New/Modified/Deleted
+  -------------            ----  ------------   --------------------
+  N/A
+    
+  New Service Requests (NSRs):
+  ----------------------------
+  N/A
+    
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A  
+   
+   
+  Remedy Ticket(s) & Overviews:
+  -----------------------------
+  N/A
+      
+   
+  TEST Sites:
+  ===========
+  Battle Creek, MI
+  Columbus, OH
+   
+       
+  Software and Documentation Retrieval Instructions:
+  -------------------------------------------------- 
+  Software being released as a host file and/or documentation describing 
+  the new functionality introduced by this patch are available.
+   
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may 
+  also elect to retrieve files directly from a specific server. 
+   
+  Sites may retrieve the software and/or documentation directly using
+  Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+  directory at the following OI Field Offices:
+   
+   Hines            domain.ext
+   Salt Lake City   domain.ext
+   
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www.domain.ext/vdl/
+   
+  File Description                         File Name               FTP Mode
+  -------------------------------------------------------------------------
+  Health Connect / Enrollment Service      HC_ESR-MVR_DIBRG.PDF   Binary
+  Redesign (ESR) 1.0
+  Deployment, Installation, Back-Out
+  and Rollback Guide  
+  
+  Patch Installation: 
+         
+  Pre/Post Installation Overview
+  ------------------------------
+  *************************************************************************
+        The following instructions are to be performed only when directed
+        to do so by the Healthshare National Admin Team. These changes can
+        only be implemented in collaboration and coordination with site 
+        Enrollment Service Administrator, Master Veterans Record, OIT HL7
+        Support Analyst, and Healthshare National Admin Team.
+  ************************************************************************   
+         
+ Installation Instructions  
+ -------------------------
+ After HealthShare/Health Connect is deployed, and the Health Connect 
+ Regional Production instance is ready to process incoming and outgoing 
+ messages, the HL LOGICAL LINK file (#870) for the LLESROUT entry will 
+ need to be modified. The ESR servers and VistA logical link will need 
+ to point to an IP address and port for Health Connect production. 
+ 
+ The following steps will have to be performed in the VistA HL7 application 
+ for the LLESROUT outbound logical link entry:
+   
+  Step 1.  Stop the LLESROUT logical link with HL7 Menu option: Start/Stop 
+           Links. The following is an example:
+     
+   Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+   
+            Event monitoring menu ...
+            Systems Link Monitor
+            Filer and Link Management Options ...  <===
+            Message Management Options ...
+            Interface Developer Options ...
+            Site Parameter Edit
+     HLO    HL7 (Optimized) MAIN MENU ...
+   
+  Select HL7 Main Menu <TEST ACCOUNT> Option: FILER AND LINK Management 
+                                              Options
+   
+     SM     Systems Link Monitor
+     FL     Monitor, Start, Stop Filers
+     LM     TCP Link Manager Start/Stop
+     SA     Stop All Messaging Background Processes
+     RA     Restart/Start All Links and Filers
+     DF     Default Filers Startup
+     SL     Start/Stop Links  <===
+     PI     Ping (TCP Only)
+     ED     Link Edit
+     ER     Link Errors ...
+   
+  Select Filer and Link Management Options <TEST ACCOUNT> Option: sl  
+                                                         
+  This option is used to launch the lower level protocol for the
+  appropriate device.  Please select the node with which you want
+  to communicate
+   
+  Select HL LOGICAL LINK NODE: LLESROUT
+ 
+  The LLP was last started on MAR 07, 2019 12:17:34.
+  
+  Okay to shut down this job? YES
+  The job for the LLESROUT Lower Level Protocol will be shut down.
+  
+  Step 2.   Edit the LLESROUT Logical Link with the Link Edit HL7 menu option: 
+   
+     SM     Systems Link Monitor
+     FL     Monitor, Start, Stop Filers
+     LM     TCP Link Manager Start/Stop
+     SA     Stop All Messaging Background Processes
+     RA     Restart/Start All Links and Filers
+     DF     Default Filers Startup
+     SL     Start/Stop Links
+     PI     Ping (TCP Only)
+     ED     Link Edit     <===
+     ER     Link Errors ...
+   
+  Select HL LOGICAL LINK NODE:    LLESROUT
+   
+   Step 3. On the first screen, change AUTOSTART to Enabled. 
+   Next, move the cursor to the field LLP TYPE and press Enter. 
+   This will present the second screen (as shown is step 5).
+  
+   Step 4. On the first screen, edit the DNS DOMAIN field as 
+   instructed below.
+   
+                          HL7 LOGICAL LINK
+   ------------------------------------------------------------------------
+   
+                  NODE: LLESROUT                     DESCRIPTION:
+                  ----
+           INSTITUTION:
+   
+        MAILMAN DOMAIN:
+   
+             AUTOSTART: Enabled  
+   
+            QUEUE SIZE: 10    
+   
+              LLP TYPE: TCP  <=== Highlight this field and hit <ENTER>.
+              --------            The TCP LOWER LEVEL PARAMETERS window
+                                  will open up (shown in step 4 below).
+            DNS DOMAIN: XXXX <=== Set this field to the value for your
+                                  regional Health Connect system
+                                  
+   _________________________________________________________________________
+   
+   
+   COMMAND:                              Press <PF1>H for help    Insert
+   
+   
+   Step 5. Replace the existing TCP/IP ADDRESS and existing TCP/IP 
+           PORT with the Health Connect IP address and port as shown:
+   
+                            HL7 LOGICAL LINK
+   -----------------------------------------------------------------------
+   
+    |------------------TCP LOWER LEVEL PARAMETERS---------------------|
+    |                  LLESROUT                                       |
+    |                                                                 |
+    |  TCP/IP SERVICE TYPE: CLIENT (SENDER)                           |
+    |       TCP/IP ADDRESS: XXXXXX  <=== Enter the appropriate TCP/IP |
+    |                                    Address value for your       |
+    |                                    regional Health Connect      |
+    |                                    system.                      |
+    |         TCP/IP PORT: XXXX                                       |
+    |         TCP/IP PORT (OPTIMIZED):                                |
+    |                                                                 |
+    |   ACK TIMEOUT:                   RE-TRANSMISION ATTEMPTS:       |
+    |  READ TIMEOUT:                 EXCEED RE-TRANSMIT ACTION:       |
+    |    BLOCK SIZE:                                  SAY HELO:       |
+    |                                  TCP/IP OPENFAIL TIMEOUT:       |
+    |STARTUP NODE:                                  PERSISTENT:       |
+    |   RETENTION:                        UNI-DIRECTIONAL WAIT:       |
+    |_________________________________________________________________|
+   
+    ______________________________________________________________________
+   
+   
+   COMMAND:                             Press <PF1>H for help    Insert 
+  
+   Note:  Do NOT start the LLESROUT logical link after the edits have 
+          been completed.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 26, 2018
+Completed By:                               Date Completed: MAR 26, 2019
+Released By :                               Date Released : MAR 26, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
