@@ -360,7 +360,6 @@ type
     procedure NextButtonClick(Sender: TObject);
     procedure NextButtonMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    function GetWindowsLanguage(LCTYPE: LCTYPE {type of information}): string;
   public
     EnduringPtSelSplitterPos, frmFrameHeight, pnlPatientSelectedHeight: integer;
     EnduringPtSelColumns: string;
@@ -719,20 +718,7 @@ begin
   Result := (VitalsDLLHandle <> 0) or (MHDLLHandle <> 0);
 end;
 
-function TfrmFrame.GetWindowsLanguage(LCTYPE: LCTYPE {type of information}): string;
-var
-  Buffer : PChar;
-  Size : integer;
-begin
-  Size := GetLocaleInfo (LOCALE_USER_DEFAULT, LCType, nil, 0);
-  GetMem(Buffer, Size);
-  try
-    GetLocaleInfo (LOCALE_USER_DEFAULT, LCTYPE, Buffer, Size);
-    Result := string(Buffer);
-  finally
-    FreeMem(Buffer);
-  end;
-end;
+
 
 { Form Events (Create, Destroy) ----------------------------------------------------------- }
 
@@ -748,7 +734,7 @@ procedure TfrmFrame.FormCreate(Sender: TObject);
 var
   ClientVer, ServerVer, ServerReq, SAN: string;
   fLocale: LangID;
-  sUserLang: string;
+  sLocale: string;
 
 resourcestring
   RS_PROBLEMS = 'Problems';
@@ -768,12 +754,12 @@ begin
   // All others will get the default internationlized long date format decided
   // --> by Windows.
   fLocale := GetSystemDefaultLCID;
-  sUserLang := self.GetWindowsLanguage(LOCALE_SABBREVLANGNAME);
+  sLocale := GetWindowsLanguage(LOCALE_SNAME);   //Locale short name: en-US or kr-KR or de-DE
 {$IFDEF DEBUG}
   OutputDebugString(PChar('Non-Unicode Locale: ' + fLocale.ToString));
   OutputDebugString(PChar('User Windows Language: ' + sUserLang));
 {$ENDIF}
-  if sUserLang = 'ENU' then          // English United States
+  if sLocale = 'en-US' then          // English United States
   begin
     FormatSettings.LongDateFormat := 'mmm dd, yyyy';
   end

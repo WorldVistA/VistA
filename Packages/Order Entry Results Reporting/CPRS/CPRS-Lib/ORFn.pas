@@ -158,6 +158,7 @@ function ListGridRowHeight(AListBox: TListBox; AHeader: THeaderControl; ARow, AC
 
 { Misc functions }
 function CPRSInstances: integer;
+function GetWindowsLanguage(LCTYPE: LCTYPE {type of information}): string;
 { You MUST pass an address to an object variable to get KillObj to work }
 procedure KillObj(ptr: Pointer; KillObjects: boolean = FALSE);
 procedure ClearTStringList(var AStringList: TStringList);
@@ -2545,6 +2546,22 @@ begin
     ReleaseDC(0, DC);                                                     // release the drawing context
   end;
 end;
+
+function GetWindowsLanguage(LCTYPE: LCTYPE {type of information}): string;
+var
+  Buffer : PChar;
+  Size : integer;
+begin
+  Size := GetLocaleInfo (LOCALE_USER_DEFAULT, LCType, nil, 0);
+  GetMem(Buffer, Size);
+  try
+    GetLocaleInfo (LOCALE_USER_DEFAULT, LCTYPE, Buffer, Size);
+    Result := string(Buffer);
+  finally
+    FreeMem(Buffer);
+  end;
+end;
+
 
 initialization
   FBaseFont := TFont.Create;
