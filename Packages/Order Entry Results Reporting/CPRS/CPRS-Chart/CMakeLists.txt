@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,7 @@
 option(LOCALIZE_USING_KRYVICH "Use Kryvich Framework for Localization" OFF)
 
 if(${LOCALIZE_USING_KRYVICH})
-  set(USE_KRYVICH_UNITS "  uFreeLocalizer in '${CMAKE_CURRENT_SOURCE_DIR}\\Translation-Frameworks\\kryvich\\uFreeLocalizer.pas',   uStringUtils in   '${CMAKE_CURRENT_SOURCE_DIR}\\Translation-Frameworks\\kryvich\\uStringUtils.pas',")
-  set(USE_KRYVICH_INIT "FreeLocalizer.AutoTranslate := True; FreeLocalizer.LanguageFile := 'CPRSChart.ko.lng';")
+  set(KRYVICH_DEFINE "KRYVICH")
 endif()
 
 add_delphi_project(CPRSChart)

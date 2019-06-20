@@ -333,7 +333,10 @@ uses
   uGlobalVar in '@SOURCE@\uGlobalVar.pas',
   ORExtensions in '@SOURCE@\ORExtensions.pas',
   fFocusedControls in '@SOURCE@\fFocusedControls.pas' {fFocusedControls},
-@USE_KRYVICH_UNITS@
+{$IFDEF KRYVICH}
+  uFreeLocalizer in '@SOURCE@\Translation-Frameworks\kryvich\uFreeLocalizer.pas',
+  uStringUtils in   '@SOURCE@\Translation-Frameworks\kryvich\uStringUtils.pas',
+{$ENDIF}
   mTreeGrid in '@SOURCE@\mTreeGrid.pas' {TreeGridFrame: TFrame},
   mColumnTree in '@SOURCE@\mColumnTree.pas' {ColumnTreeFrame: TFrame},
   mDrawers in '@SOURCE@\mDrawers.pas' {fraDrawers: TFrame},
@@ -344,12 +347,23 @@ uses
 {$R *.RES}
 {$SetPEFlags IMAGE_FILE_RELOCS_STRIPPED}
 
+{$IFDEF KRYVICH}
+var
+  sLocale, sUserLang, sLangFile: string;
+{$ENDIF}
+
 begin
   if not BorlandDLLVersionOK then exit;         // Exit immediately if old or missing BORLNDMM.DLL
 //    RegisterCPRSTypeLibrary;                      // will halt program if /regserver or /unregserver param
   Application.Initialize;
 
-@USE_KRYVICH_INIT@
+{$IFDEF KRYVICH}
+  sLocale := GetWindowsLanguage(LOCALE_SNAME);
+  sUserLang := Piece(sLocale, '-', 1);
+  sLangFile := 'CPRSChart.' + sUserLang + '.lng';
+  FreeLocalizer.AutoTranslate := True;
+  FreeLocalizer.LanguageFile := sLangFile;
+{$ENDIF}
 
   frmSplash := nil;
   if ParamSearch('SPLASH') <> 'OFF' then
