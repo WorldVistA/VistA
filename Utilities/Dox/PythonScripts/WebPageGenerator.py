@@ -2162,9 +2162,9 @@ class WebPageGenerator:
                         if Routine(pair[1]) in value.keys():
                           entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1].replace("%",''), pair[0], pair[0], pair[1])
                           line = line.replace("%s^%s" % pair, entryLink)
-                        elif pair[0] in labels:
-                          entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s</a>" % (DOX_URL, routineName.replace("%",''), pair[0], pair[0])
-                          line = line.replace(pair[0], entryLink)
+                    elif pair[0] in labels:
+                      entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s</a>" % (DOX_URL, routineName.replace("%",''), pair[0], pair[0])
+                      line = line.replace(pair[0], entryLink)
                 if len(line):
                   outputFile.write("<pre style=\"padding:unset; border: none; margin:unset;\" class=\"prettyprint lang-mumps linenums:%s\">%s</pre>\n" % (lineNo, line))
                   lineNo = lineNo + 1
