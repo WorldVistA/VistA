@@ -32,7 +32,7 @@ from UtilityFunctions import getPackageHtmlFileName, getPackageDependencyHtmlFil
 from UtilityFunctions import getPackageComponentLink, getPackageGraphEdgePropsByMetrics
 from UtilityFunctions import mergeAndSortDependencyListByPackage, normalizePackageName
 from UtilityFunctions import normalizeName, parseICRJson, readIntoDictionary
-from UtilityFunctions import PACKAGE_COMPONENT_MAP, MAX_DEPENDENCY_LIST_SIZE
+from UtilityFunctions import PACKAGE_COMPONENT_MAP, MAX_DEPENDENCY_LIST_SIZE, COLOR_MAP
 
 class GraphGenerator:
     def __init__(self, crossReference, outDir, docRepDir, dot):
@@ -239,8 +239,8 @@ class GraphGenerator:
                 for depRoutine in callDict:
                     escapedDepRoutineName = re.escape(depRoutine.getName())
                     htmlFileName = getPackageComponentLink(depRoutine)
-                    output.write("\t\t\"%s\" [penwidth=2 color=black URL=\"%s\" tooltip=\"%s\"];\n" %
-                                    (escapedDepRoutineName,
+                    output.write("\t\t\"%s\" [penwidth=2 color=\"%s\" URL=\"%s\" tooltip=\"%s\"];\n" %
+                                    (escapedDepRoutineName,COLOR_MAP[depRoutine.getObjectType()],
                                      htmlFileName, htmlFileName))
                     if str(depPackage) == packageName:
                         output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
