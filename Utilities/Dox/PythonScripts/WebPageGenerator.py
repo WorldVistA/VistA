@@ -349,7 +349,7 @@ def findRelevantIndex(sectionGenLst, existingOutFile):
   return indexList,idxLst
 
 def getICRHtmlFileName(icrEntry):
-    return ("%sICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"]))
+    return ("%s/ICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"]))
 
 def getGlobalDisplayName(globalVar):
     if globalVar.isFileManFile():
