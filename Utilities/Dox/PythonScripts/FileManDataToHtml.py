@@ -896,7 +896,7 @@ class FileManDataToHtml(object):
                                                                     fileManDataFileNo))
         if fileNo in ['19','101']:
           # Todo: Check if the object exists in options/menus first.
-          output.write("<a style='font-size: 15px;' href='%s../vista_menus.php#%s?name=%s'>View in ViViaN Menu</a>" %
+          output.write("<a style='font-size: 15px;' href='%s/../vista_menus.php#%s?name=%s'>View in ViViaN Menu</a>" %
                           (VIV_URL, fileNo, urllib.quote_plus(name)))
         outputFileEntryTableList(output, tName)
         """ table body """
