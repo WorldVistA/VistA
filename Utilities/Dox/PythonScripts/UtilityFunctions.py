@@ -97,6 +97,7 @@ PACKAGE_COMPONENT_MAP = {
 MAX_DEPENDENCY_LIST_SIZE = 30
 
 COLOR_MAP = {
+    "Routine": "black",
     "Option": "orangered",
     "Function": "royalblue",
     "List_Manager_Templates": "saddlebrown",
