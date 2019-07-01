@@ -479,4 +479,4 @@ def safeElementId(name):
   it turns out that '=' is not a valid html element id
   remove the padding
   """
-  return base64.b64encode(name, "__").replace('=','')
+  return base64.b64encode(name, "__").replace('=','').replace('.','')

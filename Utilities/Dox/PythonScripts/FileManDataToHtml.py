@@ -882,7 +882,7 @@ class FileManDataToHtml(object):
       fileNo = dataEntry.fileNo
       if fileNo:
         outDir = os.path.join(self.outDir, fileNo.replace(".","_"))
-      tName = "%s-%s" % (pathSafeFileManDataFileNo, ien)
+      tName = safeElementId("%s-%s" % (pathSafeFileManDataFileNo, ien))
       if isFilePointerType(dataEntry):
         link, name = convertFilePointerToHtml(name)
       outHtmlFileName = getDataEntryHtmlFileName(ien, fileManDataFileNo)
