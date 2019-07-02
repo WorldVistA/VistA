@@ -3047,7 +3047,7 @@ class WebPageGenerator:
 
     def __writeEntryPointSection__(self, routine, data, header, link,
                                    outputFile, pdf, classid, tableHeader):
-        self.writeSectionHeader("Entry Points", "Routine Entry Points",
+        self.writeSectionHeader("Entry Points", "Entry Points",
                                 outputFile, pdf)
         entryPoints = routine.getEntryPoints()
         tableData = []
