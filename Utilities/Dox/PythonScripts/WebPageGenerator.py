@@ -95,8 +95,8 @@ ENTRY_POINT = re.compile("^[A-Z0-9]+[(]?")
 # https://www.regular-expressions.info/catastrophic.html
 # https://stackoverflow.com/questions/13577372/do-python-regular-expressions-have-an-equivalent-to-rubys-atomic-grouping
 #
-routineCall = re.compile('[DG,$](?:[:].+?)? ?(?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>(?<=\^)[%A-Za-z0-9]+)?')# re.compile("[DG] (?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>.+)\b")
-routineCallExpanded = re.compile('(?:DO|GOTO|\$) ?(?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>(?<=\^)[%A-Za-z0-9]+)?')# re.compile("[DG] (?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>.+)\b")
+routineCall = re.compile(r'(?:D(?= )|G(?= )|[,$])(?::\S+)* ?(?P<entry>\w*)?(?:\^?(?P<rtn>(?<=\^)[%A-Za-z0-9]*)?)')  # re.compile("[DG] (?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>.+)\b")
+routineCallExpanded = re.compile(r'(?:DO|GOTO|\$) ?(?P<entry>[A-Za-z0-9]+)?(?:\^(?P<rtn>(?<=\^)[%A-Za-z0-9]+)?)?')  # re.compile("[DG] (?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>.+)\b")
 COMMENT  = re.compile("^ ; ")
 READ_CMD = re.compile(" R (?P<params>.+?):(?! )(?P<timeout>.+?) ")
 WRITE_CMD = re.compile(" W (?P<string>.+?)\s")
@@ -2059,6 +2059,7 @@ class WebPageGenerator:
         packageName = package.getName()
         routineName = routine.getName()
         calledRoutines = routine.getCalledRoutines()
+        labels = routine.getLabelReferences()
         filename = os.path.join(self._outDir,
                                 getRoutineSourceHtmlFileName(sourceCodeName))
         with open(filename, 'w') as outputFile:
@@ -2128,11 +2129,15 @@ class WebPageGenerator:
                         if rtnLinks:
                           #  find captured groupings
                           for pair in routineCall.findall(line):
-                          #  replace them with links to new pages
-                            for value in calledRoutines.values():
-                              if Routine(pair[1]) in value.keys():
-                                entryLink ="<a class=\"pln\"href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1], pair[0], pair[0], pair[1])
-                                line = line.replace("%s^%s" % pair, entryLink)
+                            if pair[1]:
+                              #  replace them with links to new pages
+                              for value in calledRoutines.values():
+                                if Routine(pair[1]) in value.keys():
+                                  entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1].replace('%',''), pair[0], pair[0], pair[1])
+                                  line = line.replace("%s^%s" % pair, entryLink)
+                            elif pair[0] in labels:
+                              entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s</a>" % (DOX_URL, routineName.replace('%',''), pair[0], pair[0])
+                              line = line.replace(pair[0], entryLink)
                         outputFile.write("<pre style=\"padding:unset; border: none; margin:unset; display: inline;\" %s class=\"prettyprint lang-mumps linenums:%s\">%s</pre>" % (idVal, lineNo,line))
                         lineNo += 1
                         entryOffset += 1
@@ -2151,11 +2156,15 @@ class WebPageGenerator:
                 if rtnLinks:
                   #  find captured groupings
                   for pair in routineCallExpanded.findall(line):
-                  #  replace them with links to new pages
-                    for value in calledRoutines.values():
-                      if Routine(pair[1]) in value.keys():
-                        entryLink ="<a class=\"pln\"href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1], pair[0], pair[0], pair[1])
-                        line = line.replace("%s^%s" % pair, entryLink)
+                    if pair[1]:
+                    #  replace them with links to new pages
+                      for value in calledRoutines.values():
+                        if Routine(pair[1]) in value.keys():
+                          entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1].replace("%",''), pair[0], pair[0], pair[1])
+                          line = line.replace("%s^%s" % pair, entryLink)
+                    elif pair[0] in labels:
+                      entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s</a>" % (DOX_URL, routineName.replace("%",''), pair[0], pair[0])
+                      line = line.replace(pair[0], entryLink)
                 if len(line):
                   outputFile.write("<pre style=\"padding:unset; border: none; margin:unset;\" class=\"prettyprint lang-mumps linenums:%s\">%s</pre>\n" % (lineNo, line))
                   lineNo = lineNo + 1
