@@ -128,7 +128,7 @@ def _getICRIndividualHtmlFileLinkByIen(value, icrEntry, **kargs):
           ienDescription += '\n'
         else:
           ienDescription += ' ' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
-    return '<a title=\"%s\" href=\"%s\">%s</a>' % (ienDescription,'ICR-' + ien + '.html', value)
+    return '<a title=\"%s\" href=\"%s\">%s</a>' % (ienDescription,'%s/ICR/ICR-%s.html' % 	 (VIVIAN_URL,ien), value)
 
 
 def _getGeneralDescription(value, icrEntry, **kargs):
@@ -146,7 +146,7 @@ def _getPackageHRefLink(pkgName, icrEntry, **kargs):
     global pgkUpperCaseNameDict
     if pkgName in PACKAGE_MAP:
         pkgLink = getPackageHtmlFileName(PACKAGE_MAP[pkgName])
-        return '<a href=\"%s%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
+        return '<a href=\"%s/%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
     crossRef = None
     if 'crossRef' in kargs:
         crossRef = kargs['crossRef']
@@ -157,7 +157,7 @@ def _getPackageHRefLink(pkgName, icrEntry, **kargs):
         upperName = _normalizeName(pkgName).upper()
         if upperName in pgkUpperCaseNameDict:
             _addToPackageMap(icrEntry, pgkUpperCaseNameDict[upperName])
-            return '<a href=\"%s%s\">%s</a>' % (DOX_URL,
+            return '<a href=\"%s/%s\">%s</a>' % (DOX_URL,
                                                 getPackageHtmlFileName(pgkUpperCaseNameDict[upperName]),
                                                 pkgName)
         pkg = crossRef.getPackageByName(pkgName)
@@ -170,7 +170,7 @@ def _getPackageHRefLink(pkgName, icrEntry, **kargs):
         if pkg:
             _addToPackageMap(icrEntry, pkg.getName())
             pkgLink = getPackageHtmlFileName(pkg.getName())
-            return '<a href=\"%s%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
+            return '<a href=\"%s/%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
         else:
             logger.warning('Cannot find mapping for package: [%s]', pkgName)
     return pkgName
@@ -185,7 +185,7 @@ def _getFileManFileHRefLink(fileNo, icrEntry, **kargs):
         if fileInfo:
             linkName = getGlobalHtmlFileNameByName(fileInfo.getName())
             # _addToPackageMap(icrEntry, fileInfo.getPackage().getName())
-            return '<a href=\"%s%s\">%s</a>' % (DOX_URL, linkName, fileNo)
+            return '<a href=\"%s/%s\">%s</a>' % (DOX_URL, linkName, fileNo)
         else:
             logger.warning('Cannot find file: [%s]', fileNo)
     return fileNo
@@ -201,7 +201,7 @@ def _getRoutineHRefLink(rtnName, icrEntry, **kargs):
 def _getRPCHRefLink(rpcName, icrEntry, **kargs):
     if rpcName in RPC_NAME_TO_IEN_MAPPING:
         filename ="%s-%s.html" % (RPC_FILE_NO, RPC_NAME_TO_IEN_MAPPING[rpcName])
-        rpcFilename = "%s%s/%s" % (VIVIAN_URL, RPC_FILE_NO, filename)
+        rpcFilename = "%s/%s/%s" % (VIVIAN_URL, RPC_FILE_NO, filename)
         return '<a href=\"%s\">%s</a>' % (rpcFilename, rpcName)
     return rpcName
 
