@@ -6,8 +6,8 @@ inherited frmHFSearch: TfrmHFSearch
   ClientWidth = 355
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 363
-  ExplicitHeight = 417
+  ExplicitWidth = 371
+  ExplicitHeight = 429
   PixelsPerInch = 96
   TextHeight = 13
   object splMain: TSplitter [0]
@@ -50,6 +50,7 @@ inherited frmHFSearch: TfrmHFSearch
     SynonymChars = '<>'
     TabOrder = 0
     TabStop = True
+    Text = ''
     OnChange = cbxSearchChange
     OnDblClick = tvSearchDblClick
     CharsNeedMatch = 1
@@ -73,7 +74,6 @@ inherited frmHFSearch: TfrmHFSearch
     OnGetSelectedIndex = tvSearchGetImageIndex
     Caption = 'Health Factors Category'
     NodePiece = 2
-    ExplicitTop = 137
   end
   object pnlBottom: TPanel [4]
     Left = 0

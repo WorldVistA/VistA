@@ -197,13 +197,12 @@ try                                                                             
        begin
          BuildServiceTree(treService, SvcList, '0', nil) ;
          with treService do
-           for i:=0 to Items.Count-1 do
-             begin
-               if Items[i].Level > 0 then Items[i].Expanded := False
-                 else Items[i].Expanded := True;
-               TopItem := Items[0] ;
-               Selected := Items[0] ;
-             end ;
+           begin
+            for i:=0 to Items.Count-1 do
+             if Items[i].Level > 0 then Items[i].Expanded := False else Items[i].Expanded := True;
+           TopItem := Items[0] ;
+           Selected := Items[0] ;
+           end ;
        end;
      pnlForward.Visible := True ;
    end ;

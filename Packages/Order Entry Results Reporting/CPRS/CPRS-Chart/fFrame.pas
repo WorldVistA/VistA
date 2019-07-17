@@ -1303,6 +1303,7 @@ begin
   if Assigned(NewForm) then begin
     mnuFrame.Merge(NewForm.Menu);
     NewForm.Show;
+    FormResize(Self);
   end;
   lstCIRNLocations.Visible := False;
   pnlCIRN.BevelOuter := bvRaised;
@@ -2520,6 +2521,9 @@ end;
 procedure TfrmFrame.FormResize(Sender: TObject);
 { need to resize tab forms specifically since they don't inherit resize event (because they
   are derived from TForm itself) }
+var
+  r: TRect;
+
 begin
   if FTerminate or FClosing then Exit;
   if csDestroying in ComponentState then Exit;
@@ -2548,6 +2552,21 @@ begin
     FNextButton.Left := FNextButtonL;
     FNextButton.Top := stsArea.Top;
   end;
+
+  if Self.WindowState <> wsMaximized then
+  begin
+    r := Screen.MonitorFromWindow(Self.Handle).WorkareaRect;
+
+    if height > r.Height then
+    begin
+      height := r.Height;
+      top := r.top;
+    end;
+    if (top+height) > r.Bottom then
+      top := r.Bottom-height;
+    if (top < r.Top) then top := r.Top;
+  end;
+
   Self.Repaint;
 end;
 
@@ -4206,7 +4225,7 @@ var
   PtSubject: string;
 begin
   data := IContextItemCollection(aContextItemCollection) ;
-  anItem := data.Present('[hds_med_domain]request.id.name');
+  anItem := data.Present('[hds_med_va.gov]request.id.name');
   // Retrieve the ContextItem name and value as strings
   if anItem <> nil then
     begin
@@ -4578,7 +4597,7 @@ begin
       end;
     4:begin
         if laMHV.Caption = 'MHV' then
-          ShellExecute(laMHV.Handle, 'open', PChar('http://www.myhealth.domain/'), '', '', SW_NORMAL);
+          ShellExecute(laMHV.Handle, 'open', PChar('http://www.adomadomain.ext/'), '', '', SW_NORMAL);
       end;
     5:begin
         if fCover.VAAFlag[0] <> '0' then //'0' means subscriber not found
