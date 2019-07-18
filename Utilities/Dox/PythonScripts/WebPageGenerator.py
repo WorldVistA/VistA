@@ -2151,8 +2151,17 @@ class WebPageGenerator:
               outputFile.write("<div id=\"expandedDisplay\" style='display:none;'>")
               lineNo = 1
               for line in routine._structuredCode:
-                #if "^" in line:
+                idVal = ""
+                line = line.replace("<", "&lt")
+                line = line.replace(">", "&gt")
                 rtnLinks = routineCallExpanded.search(line)
+                if lineNo > 1 and ENTRY_POINT.search(line):
+                  foundLine = line.replace("\t"," ").split(" ",1)
+                  if len(foundLine) > 1:
+                    entry = foundLine[0]
+                  else:
+                    entry = line
+                  idVal = "id=\"x%s\"" % entry.split("(")[0]
                 if rtnLinks:
                   #  find captured groupings
                   for pair in routineCallExpanded.findall(line):
@@ -2163,10 +2172,10 @@ class WebPageGenerator:
                           entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1].replace("%",''), pair[0], pair[0], pair[1])
                           line = line.replace("%s^%s" % pair, entryLink)
                     elif pair[0] in labels:
-                      entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s</a>" % (DOX_URL, routineName.replace("%",''), pair[0], pair[0])
+                      entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#x%s\">%s</a>" % (DOX_URL, routineName.replace("%",''), pair[0], pair[0])
                       line = line.replace(pair[0], entryLink)
                 if len(line):
-                  outputFile.write("<pre style=\"padding:unset; border: none; margin:unset;\" class=\"prettyprint lang-mumps linenums:%s\">%s</pre>\n" % (lineNo, line))
+                  outputFile.write("<pre style=\"padding:unset; border: none; margin:unset;\" %s class=\"prettyprint lang-mumps linenums:%s\">%s</pre>\n" % (idVal, lineNo, line))
                   lineNo = lineNo + 1
               outputFile.write("</div>\n")
             outputFile.write(FOOTER)
