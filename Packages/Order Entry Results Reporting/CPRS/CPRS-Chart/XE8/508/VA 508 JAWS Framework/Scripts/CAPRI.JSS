@@ -1,6 +1,6 @@
 ; Scripts for CAPRI Version 2.7.190.4 
 ; Department of Veterans Affairs Feb 23, 2016 
-; Author: Jonathan Cohn (section508@domain)
+; Author: Jonathan Cohn (section508@va.gov)
 ; Script version 4
 ; CAPRI Version 2.7.190.4 
 ;Jaws Version: Written with JAWS 17 

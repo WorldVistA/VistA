@@ -11,7 +11,7 @@ const
   //Setting IAM_Server_URL = '' disables 2-factor authentication if Windows Registry
   //  HKLM entry is not set
   //IAM_Server_URL = '';
-  IAM_Server_URL = 'https://services.indomain.ext:9301/STS/RequestSecurityToken';
+  IAM_Server_URL = 'https://services.aadomain.ext:9301/STS/RequestSecurityToken';
   //Hashed pass phrase for IAM Binding RPC (REMOTE APPLICATION file entry)
   IAM_Binding = '29mgM|vENcll|eY!Z|mkF)';
   //Parts 1 and 2 of SOAP message sent to IAM

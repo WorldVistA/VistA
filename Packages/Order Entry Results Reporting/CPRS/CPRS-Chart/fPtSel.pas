@@ -132,10 +132,10 @@ implementation
 uses rCore, uCore, fDupPts, fPtSens, fPtSelDemog, fPtSelOptns, fPatientFlagMulti,
      uOrPtf, fAlertForward, rMisc, fFrame, fRptBox, VA508AccessibilityRouter,
      VAUtils, System.Types;
-
+(* RTC 961386 - removing dependence on dragging
 var
   FDragging: Boolean = False;
-
+*)
 const
   AliasString = ' -- ALIAS';
 
@@ -728,6 +728,7 @@ begin
 end;
 
 procedure TfrmPtSel.lstvAlertsDblClick(Sender: TObject);
+(* RTC 961386 - removing dependence on dragging
 var
   ScreenCurPos, ClientCurPos: TPoint;
 begin
@@ -743,6 +744,9 @@ begin
       lstvAlerts.BeginDrag(False,0);
       FDragging := True;
     end;
+*)
+begin
+  cmdProcessClick(Sender);
 end;
 
 procedure TfrmPtSel.cmdForwardClick(Sender: TObject);
@@ -911,12 +915,13 @@ end;
 
 procedure TfrmPtSel.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+(* RTC 961386 - removing dependence on dragging
 if FDragging then
 begin
   lstvAlerts.EndDrag(True); //terminate fake dragging operation from lstvAlertsDblClick.
   FDragging := False;
 end;
-
+*)
 if (IsRPL = '1') then                          // Deal with restricted patient list users.
   KillRPLPtList(RPLJob);                       // Kills server global data each time.
                                                // (Global created by MakeRPLPtList in rCore.)

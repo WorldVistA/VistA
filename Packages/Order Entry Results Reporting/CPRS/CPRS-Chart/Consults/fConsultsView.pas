@@ -91,12 +91,12 @@ begin
           cboService.Items.Add(SvcList.Strings[i]);
       BuildServiceTree(treService, SvcList, '0', nil) ;
       with treService do
-        for i:=0 to Items.Count-1 do
-          begin
+        begin
+          for i:=0 to Items.Count-1 do
             if Items[i].Level > 0 then Items[i].Expanded := False else Items[i].Expanded := True;
-            TopItem := Items[0] ;
-            Selected := Items[0] ;
-          end ;
+        TopItem := Items[0] ;
+        Selected := Items[0] ;
+        end ;
       CurrentService := CurrentContext.Service;
       if StrToIntDef(CurrentService, 0) > 0 then
         begin
