@@ -2224,7 +2224,7 @@ class WebPageGenerator:
           return "Entry: %s" % routine["IENum"]
 
     def getGlobalEntryHTML(self, routine):
-        return "%s%s/%s-%s.html" % (VIVIAN_URL, routine["GlobalNum"].replace(".","_"),routine["GlobalNum"],routine["IENum"])
+        return "%s/%s/%s-%s.html" % (VIVIAN_URL, routine["GlobalNum"].replace(".","_"),routine["GlobalNum"],routine["IENum"])
 
 #===============================================================================
 # Method to generate routine Index page
@@ -2824,7 +2824,7 @@ class WebPageGenerator:
 
 
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
-      return "%s%s/%s-%s.html" % (VIVIAN_URL, fileNo.replace('.','_'), fileNo, ien)
+      return "%s/%s/%s-%s.html" % (VIVIAN_URL, fileNo.replace('.','_'), fileNo, ien)
 
     def __convertRPCDataReference__(self, variables, routine=None):
         return self.__convertRtnDataReference__(variables, '8994')
