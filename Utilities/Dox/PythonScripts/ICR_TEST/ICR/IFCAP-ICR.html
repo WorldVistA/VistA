@@ -62,6 +62,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,6 +80,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
@@ -269,7 +275,7 @@
  FIELD     FIELD NUMBER    NAME
  .01       PHARMACY LOCATION (RF), [0;1] 10        DRUG (Multiple-58.8001), [1;0] .01  DRUG (MR*P50&quot;X), [0;1] 11        PRIMARY INVENTORY POINT (*P445&quot;X), [0;6]
  This DBIA is effective until 18 months following Drug Accountability V2.0.
-" href="ICR-214.html">DBIA214</a></td>
+" href="https://code.osehra.org/vivian/files/ICR/ICR-214.html">DBIA214</a></td>
 <td>Other</td>
 <td><a href="https://code.osehra.org/dox/Package_IFCAP.html">IFCAP</a></td>
 <td>1993/02/22</td>

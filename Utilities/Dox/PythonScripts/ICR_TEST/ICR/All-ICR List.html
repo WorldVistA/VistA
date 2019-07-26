@@ -62,6 +62,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,6 +80,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
@@ -200,7 +206,7 @@
 <tbody>
 <tr>
 <td>3103</td>
-<td><a title=" To prevent multiple jobs from running simultaneously through a resource device, the device must be monitored.  Also, if a job that is utilizing a resource device fails, the device must be cleared manually. This IA will allow the CMOP package to manage the PSX resource device and prevent potentially harmful results from data merging." href="ICR-3103.html">RESOURCE FILE MANAGEMENT</a></td>
+<td><a title=" To prevent multiple jobs from running simultaneously through a resource device, the device must be monitored.  Also, if a job that is utilizing a resource device fails, the device must be cleared manually. This IA will allow the CMOP package to manage the PSX resource device and prevent potentially harmful results from data merging." href="https://code.osehra.org/vivian/files/ICR/ICR-3103.html">RESOURCE FILE MANAGEMENT</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
 <td>2000/05/04</td>
@@ -260,7 +266,7 @@
 
  RDV    Type: Input   (Optional) default = today Boolean flag to indicate whether or not to include remote data view visitors - default to 0 to not include.
  FUN    Type: Input (Optional)  Default is zero (0). I $G(FUN) then extrinsic function, else RPC.
- Return all user IDs for a given user.  This component is used for the &quot;DSIC ACTIVE CPRS PROVIDER&quot; rpc." href="ICR-5317.html">DSICDUZ</a></td>
+ Return all user IDs for a given user.  This component is used for the &quot;DSIC ACTIVE CPRS PROVIDER&quot; rpc." href="https://code.osehra.org/vivian/files/ICR/ICR-5317.html">DSICDUZ</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_VA_Certified_Components___DSSI.html">VA CERTIFIED COMPONENTS - DSSI</a></td>
 <td>2008/12/23</td>
@@ -320,7 +326,7 @@
 </tr>
 <tr>
 <td>639</td>
-<td><a title="" href="ICR-639.html">DBIA181-F</a></td>
+<td><a title="" href="https://code.osehra.org/vivian/files/ICR/ICR-639.html">DBIA181-F</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></td>
 <td>1992/06/19</td>
@@ -335,7 +341,7 @@
 </tr>
 <tr>
 <td>28</td>
-<td><a title=" *****TEMPORARY SUPPORTED CALL FOR IFCAP V2 TEST SITES ONLY***** call to ZIS^DGUTL" href="ICR-28.html">DBIA28</a></td>
+<td><a title=" *****TEMPORARY SUPPORTED CALL FOR IFCAP V2 TEST SITES ONLY***** call to ZIS^DGUTL" href="https://code.osehra.org/vivian/files/ICR/ICR-28.html">DBIA28</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_Registration.html">REGISTRATION</a></td>
 <td>1989/03/21</td>
@@ -394,7 +400,7 @@
  Double Serving Messages
  On occasion, the transmission/receive process is interrupted by a system back-up.  It appears to result in the same message being served twice.  The Audit Log for the Options file shows two messages with the same message number and subject, but with different Date/Times and Job Numbers.
 
- To avoid this, application servers should be written such that they check for and avoid processing of the same message being delivered to any particular server.  MailMan transparently checks this and does not deliver twice to mail boxes.  However, devices and servers do not have mail boxes to check against. Servers can have some understanding of special mail baskets in the Postmaster&quot;s mail box and can be written to check for duplicate deliveries (See reference XMAIC entry points in the Callable Routines section of the Technical Manual and System Manager&quot;s Guide)." href="ICR-1151.html">MAILMAN: Server API</a></td>
+ To avoid this, application servers should be written such that they check for and avoid processing of the same message being delivered to any particular server.  MailMan transparently checks this and does not deliver twice to mail boxes.  However, devices and servers do not have mail boxes to check against. Servers can have some understanding of special mail baskets in the Postmaster&quot;s mail box and can be written to check for duplicate deliveries (See reference XMAIC entry points in the Callable Routines section of the Technical Manual and System Manager&quot;s Guide)." href="https://code.osehra.org/vivian/files/ICR/ICR-1151.html">MAILMAN: Server API</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_MailMan.html">MAILMAN</a></td>
 <td>1995/02/20</td>
@@ -453,7 +459,7 @@
 </tr>
 <tr>
 <td>91</td>
-<td><a title="" href="ICR-91.html">DBIA91-A</a></td>
+<td><a title="" href="https://code.osehra.org/vivian/files/ICR/ICR-91.html">DBIA91-A</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
 <td>1991/09/11</td>
@@ -537,7 +543,7 @@
  FIELD     FIELD NUMBER    NAME
  .01       PHARMACY LOCATION (RF), [0;1] 10        DRUG (Multiple-58.8001), [1;0] .01  DRUG (MR*P50&quot;X), [0;1] 11        PRIMARY INVENTORY POINT (*P445&quot;X), [0;6]
  This DBIA is effective until 18 months following Drug Accountability V2.0.
-" href="ICR-214.html">DBIA214</a></td>
+" href="https://code.osehra.org/vivian/files/ICR/ICR-214.html">DBIA214</a></td>
 <td>Other</td>
 <td><a href="https://code.osehra.org/dox/Package_IFCAP.html">IFCAP</a></td>
 <td>1993/02/22</td>
@@ -628,7 +634,7 @@
  A.  An entry is made in the Requested Records file #190.1 ^RTV(190.1,n) by a call from RT^SDUTL to a tasked job QUE^RTQ or RT^SDI
  B.  After the entry is added to the Requested Records file #190.1 an entry is made in Parent Record Request field of the Patient subfield of the Hospital Location file #44 ^SC(n,&quot;S&quot;,,,,&quot;RTR&quot;)=n^ by a return call from CREATE+11^RTQ2 to RTSET^SDUTL
  3.  When a clinic appointment is canceled: If there is a Requested Records entry in file #190.1 the status is changed to &quot;canceled&quot; by a call RTV(190.1,n)=^^^^^x^ from RT+2^SDUTL to CANCEL^RTQ2.
- 4.  When the name of a clinic is changed the corresponding names of entries in the Pull List file #194.2 are changed by a trigger on the .01 field of the Hospital Location file #44.  Clinic ^SC(1,0)=DJones Medical Clinic^ ^RTV(194.2,n)=Dr Jones Medical Clinic [04/01/91]^ Clinic names are changed in a compiled input template.  To insure the use of this trigger the following action is taken: The Record Tracking package includes the .01 field of the Hospital Location file #44 so that the SDB template is re-compiled when the Record Tracking package is initialized." href="ICR-85.html">DBIA85-A</a></td>
+ 4.  When the name of a clinic is changed the corresponding names of entries in the Pull List file #194.2 are changed by a trigger on the .01 field of the Hospital Location file #44.  Clinic ^SC(1,0)=DJones Medical Clinic^ ^RTV(194.2,n)=Dr Jones Medical Clinic [04/01/91]^ Clinic names are changed in a compiled input template.  To insure the use of this trigger the following action is taken: The Record Tracking package includes the .01 field of the Hospital Location file #44 so that the SDB template is re-compiled when the Record Tracking package is initialized." href="https://code.osehra.org/vivian/files/ICR/ICR-85.html">DBIA85-A</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Record_Tracking.html">RECORD TRACKING</a></td>
 <td>1991/07/09</td>
@@ -651,7 +657,7 @@
 <tr>
 <td>6104</td>
 <td><a title="
- NAME: LRHY GET SITES                    TAG: GETSITES ROUTINE: LRHYRP01                     RETURN VALUE TYPE: ARRAY DESCRIPTION: This RPC will return all Howdy Sites USAGE: Controlled Subscri  ENTERED: SEP 23,2014 STATUS: Pending             EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure" href="ICR-6104.html">LRHY GET SITES RPC</a></td>
+ NAME: LRHY GET SITES                    TAG: GETSITES ROUTINE: LRHYRP01                     RETURN VALUE TYPE: ARRAY DESCRIPTION: This RPC will return all Howdy Sites USAGE: Controlled Subscri  ENTERED: SEP 23,2014 STATUS: Pending             EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure" href="https://code.osehra.org/vivian/files/ICR/ICR-6104.html">LRHY GET SITES RPC</a></td>
 <td>Remote Procedure</td>
 <td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
 <td>2014/09/23</td>
@@ -675,7 +681,7 @@
  NAME: IBB PFSS ADT-A04 SERVER           ITEM TEXT: PFSS/IBB ADT-A04 Receiver TYPE: event driver SENDING APPLICATION: DGPFSS ADT SENDING TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A04 MESSAGE STRUCTURE: ACK                ACCEPT ACK CODE: AL APPLICATION ACK TYPE: AL              VERSION ID: 2.4 SUBSCRIBERS: IBB PFSS ADT-A04 CLIENT
  NAME: IBB PFSS ADT-A05 CLIENT           TYPE: subscriber RECEIVING APPLICATION: DGPFSS ADT RECV EVENT TYPE: A05                       RESPONSE MESSAGE TYPE: ADT PROCESSING ROUTINE: D A05^IBBAADTI    SENDING FACILITY REQUIRED?: NO RECEIVING FACILITY REQUIRED?: NO
  NAME: IBB PFSS ADT-A05 SERVER           ITEM TEXT: PFSS/IBB ADT-A05 Receiver TYPE: event driver SENDING APPLICATION: DGPFSS ADT SENDING TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A05 ACCEPT ACK CODE: AL                   APPLICATION ACK TYPE: AL VERSION ID: 2.4
-" href="ICR-4849.html">DBIA #4849</a></td>
+" href="https://code.osehra.org/vivian/files/ICR/ICR-4849.html">DBIA #4849</a></td>
 <td>Other</td>
 <td><a href="https://code.osehra.org/dox/Package_Registration.html">REGISTRATION</a></td>
 <td>2006/04/20</td>
@@ -698,7 +704,7 @@
 </tr>
 <tr>
 <td>16</td>
-<td><a title=" Surgery file (130)." href="ICR-16.html">DBIA16</a></td>
+<td><a title=" Surgery file (130)." href="https://code.osehra.org/vivian/files/ICR/ICR-16.html">DBIA16</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Surgery.html">SURGERY</a></td>
 <td>1990/02/26</td>
@@ -713,7 +719,7 @@
 </tr>
 <tr>
 <td>4528</td>
-<td><a title=" MAG IMPORT CHECK STATUS This RPC is called to get a status record from the IMPORT STATUS file (2006.037)" href="ICR-4528.html">MAG IMPORT CHECK STATUS</a></td>
+<td><a title=" MAG IMPORT CHECK STATUS This RPC is called to get a status record from the IMPORT STATUS file (2006.037)" href="https://code.osehra.org/vivian/files/ICR/ICR-4528.html">MAG IMPORT CHECK STATUS</a></td>
 <td>Remote Procedure</td>
 <td><a href="https://code.osehra.org/dox/Package_Imaging.html">IMAGING</a></td>
 <td>2004/10/29</td>
@@ -729,7 +735,7 @@
 <tr>
 <td>3248</td>
 <td><a title=" This Remote procedure call will allow the calling application to REMOVE the link between a specific Document in the TIU Document File (#8925) and a specific Image in the Image File (#2005).
- NAME: TIU REMOVE LINK TO IMAGE          TAG: DELIMAGE ROUTINE: TIUSRVPL                     RETURN VALUE TYPE: SINGLE VALUE AVAILABILITY: SUBSCRIPTION DESCRIPTION: This RPC will remove a link between a document and an image. Only valid links may be removed.  INPUT PARAMETER: TIUDA                  PARAMETER TYPE: LITERAL REQUIRED: YES                         SEQUENCE NUMBER: 1 DESCRIPTION: This is the record number (IEN) of the document in the TIU DOCUMENT FILE (#8925).  INPUT PARAMETER: IMGDA                  PARAMETER TYPE: LITERAL REQUIRED: YES                         SEQUENCE NUMBER: 2 DESCRIPTION: This is the record number (IEN) of the document in the IMAGE FILE (#2005). RETURN PARAMETER DESCRIPTION: This is a BOOLEAN result. If the call is made with record numbers for which a valid link exists, it will remove the link, and the return value will be 1 (TRUE), otherwise, the return value will have two &quot;^&quot;-pieces (i.e., zero and an explanatory message (e.g., 0^ Document and Image not currently linked))." href="ICR-3248.html">TIU REMOVE LINK TO IMAGE</a></td>
+ NAME: TIU REMOVE LINK TO IMAGE          TAG: DELIMAGE ROUTINE: TIUSRVPL                     RETURN VALUE TYPE: SINGLE VALUE AVAILABILITY: SUBSCRIPTION DESCRIPTION: This RPC will remove a link between a document and an image. Only valid links may be removed.  INPUT PARAMETER: TIUDA                  PARAMETER TYPE: LITERAL REQUIRED: YES                         SEQUENCE NUMBER: 1 DESCRIPTION: This is the record number (IEN) of the document in the TIU DOCUMENT FILE (#8925).  INPUT PARAMETER: IMGDA                  PARAMETER TYPE: LITERAL REQUIRED: YES                         SEQUENCE NUMBER: 2 DESCRIPTION: This is the record number (IEN) of the document in the IMAGE FILE (#2005). RETURN PARAMETER DESCRIPTION: This is a BOOLEAN result. If the call is made with record numbers for which a valid link exists, it will remove the link, and the return value will be 1 (TRUE), otherwise, the return value will have two &quot;^&quot;-pieces (i.e., zero and an explanatory message (e.g., 0^ Document and Image not currently linked))." href="https://code.osehra.org/vivian/files/ICR/ICR-3248.html">TIU REMOVE LINK TO IMAGE</a></td>
 <td>Remote Procedure</td>
 <td><a href="https://code.osehra.org/dox/Package_Text_Integration_Utility.html">TEXT INTEGRATION UTILITIES</a></td>
 <td>2000/11/13</td>
@@ -746,7 +752,7 @@
 <tr>
 <td>977</td>
 <td><a title=" This integration agreement permits IFCAP to remove entries from the OPTION file (#19) until the release and availability of KIDS.
-" href="ICR-977.html">DBIA977</a></td>
+" href="https://code.osehra.org/vivian/files/ICR/ICR-977.html">DBIA977</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
 <td>1994/08/29</td>
@@ -769,7 +775,7 @@
  where: piece1 = date/time in FileMan internal format piece2 = patient number from FILE 2 (i.e., DFN) piece3 = vital type, a semi-colon, the reading, a semi-colon, and oxygen flow rate and percentage values [optional] (e.g., 21;99;1 l/min 90%) piece4 = hospital location (FILE 44) pointer value piece5 = user number from FILE 200 (i.e., DUZ), an asterisk, and the qualifier (File 120.52) internal entry numbers separated by colons (e.g., 547*50:65) RETURN PARAMETER DESCRIPTION: RESULT does not return a value.
  The data is filed in the GMRV VITAL MEASUREMENT (#120.5) file.
  Example:
- &gt; S GMRVDATA=&quot;3051011.1635^134^1;120/80;^67^87*2:38:50:75&quot; &gt; D EN1^GMVDCSAV(.RESULT,GMRVDATA)" href="ICR-3996.html">GMV ADD VM</a></td>
+ &gt; S GMRVDATA=&quot;3051011.1635^134^1;120/80;^67^87*2:38:50:75&quot; &gt; D EN1^GMVDCSAV(.RESULT,GMRVDATA)" href="https://code.osehra.org/vivian/files/ICR/ICR-3996.html">GMV ADD VM</a></td>
 <td>Remote Procedure</td>
 <td><a href="https://code.osehra.org/dox/Package_General_Medical_Record___Vitals.html">GEN. MED. REC. - VITALS</a></td>
 <td>2005/11/30</td>
@@ -795,7 +801,7 @@
  With the release of Mental Heath v5.01 this will be changed to: FILE    ORDER   PREFIX  LAYGO   MESSAGE 80      1      I       n       ICD9 Code 627.7    2      D       n       DSM-IV
  PNs should have had an agreement to use this file.  Prior to the release of Progress Notes v2.5 this data was a part of the Mental Health progress notes global 606.  The agreement was somehow overlooked when the data was converted to ^GMR(121.
  GMRP*2.5*26 will make Progress Notes fully compatible with versions 4.18, 5.0 and 5.01 of Mental Health.
- Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for the existence of all 3 possible globals and accomplish the prting accordingly." href="ICR-1068.html">DBIA1068</a></td>
+ Progress Notes rtns ^GMRPNP3 and ^GMRPNP4 have been modified to check for the existence of all 3 possible globals and accomplish the prting accordingly." href="https://code.osehra.org/vivian/files/ICR/ICR-1068.html">DBIA1068</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Mental_Health.html">MENTAL HEALTH</a></td>
 <td>1994/11/21</td>
@@ -814,7 +820,7 @@
 </tr>
 <tr>
 <td>1973</td>
-<td><a title=" The CMOP package makes a call to the Outpatient Pharmacy routine, PSOLSET.  This call is made to set up the required OP system variables that are necessary for pulling Rx&quot;s from suspense during the CMOP transmission process or when CMOP labels are printed at the medical center pharmacy." href="ICR-1973.html">DBIA1973</a></td>
+<td><a title=" The CMOP package makes a call to the Outpatient Pharmacy routine, PSOLSET.  This call is made to set up the required OP system variables that are necessary for pulling Rx&quot;s from suspense during the CMOP transmission process or when CMOP labels are printed at the medical center pharmacy." href="https://code.osehra.org/vivian/files/ICR/ICR-1973.html">DBIA1973</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_Outpatient_Pharmacy.html">OUTPATIENT PHARMACY</a></td>
 <td>1997/03/27</td>
@@ -830,7 +836,7 @@
 <tr>
 <td>4887</td>
 <td><a title=" This integration agreement describes the use of the std_institution table and fields within the PATS application&quot;s Oracle database.
- When the first test site goes to production with PATS, the EMC will be using version 11 of the SDS database." href="ICR-4887.html">Use of STD_INSTITUTION table in PATS application</a></td>
+ When the first test site goes to production with PATS, the EMC will be using version 11 of the SDS database." href="https://code.osehra.org/vivian/files/ICR/ICR-4887.html">Use of STD_INSTITUTION table in PATS application</a></td>
 <td>SQL Table</td>
 <td>807</td>
 <td>2006/08/21</td>
@@ -849,7 +855,7 @@
 <td><a title=" Add support for Mental Health
  1796     NAME: TIU GET PERSONAL PREFERENCES CUSTODIAL PACKAGE:  TEXT INTEGRATION UTILITIES                 Salt Lake City SUBSCRIBING PACKAGE: FUNCTIONAL INDEPENDENCE ORDER ENTRY/RESULTS REPORTING USAGE: Controlled Subscri  ENTERED: APR 30,2003 STATUS: Active              EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure Returns Users personal preferences for TIU in the following format:
  TIUY = USER [1P] ^ DEFAULT LOCATION [2P] ^ REVIEW SCREEN SORT FIELD [3S] ^ ==&gt;REVIEW SCREEN SORT ORDER [4S] ^ DISPLAY MENUS [5S] ^ PATIENT ==&gt;SELECTION PREFERENCE [6S] ^ ASK &quot;Save changes?&quot; AFTER EDIT [7S] ^ ==&gt;ASK SUBJECT FOR PROGRESS NOTES [8S] ^
- TAG^ROUTINE: GETPREF^TIUSRVR KEYWORDS:" href="ICR-5499.html">TIU GET PERSONAL PREFERENCES</a></td>
+ TAG^ROUTINE: GETPREF^TIUSRVR KEYWORDS:" href="https://code.osehra.org/vivian/files/ICR/ICR-5499.html">TIU GET PERSONAL PREFERENCES</a></td>
 <td>Remote Procedure</td>
 <td><a href="https://code.osehra.org/dox/Package_Text_Integration_Utility.html">TEXT INTEGRATION UTILITIES</a></td>
 <td>2009/09/25</td>
@@ -867,7 +873,7 @@
 </tr>
 <tr>
 <td>6280</td>
-<td><a title=" The Enterprise Health MGMT Platform (HMP) accesses the Lab Reports file (#64.5) to retrieve lab report data." href="ICR-6280.html">HMP ACCESS TO LAB(64.5</a></td>
+<td><a title=" The Enterprise Health MGMT Platform (HMP) accesses the Lab Reports file (#64.5) to retrieve lab report data." href="https://code.osehra.org/vivian/files/ICR/ICR-6280.html">HMP ACCESS TO LAB(64.5</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
 <td>2015/11/24</td>
@@ -882,7 +888,7 @@
 </tr>
 <tr>
 <td>6730</td>
-<td><a title=" VIA needs to read a number of fields from Surgery File #130 for VIAB SRGY RPTLIST RPC." href="ICR-6730.html">VIAB SRGY RPTLIST</a></td>
+<td><a title=" VIA needs to read a number of fields from Surgery File #130 for VIAB SRGY RPTLIST RPC." href="https://code.osehra.org/vivian/files/ICR/ICR-6730.html">VIAB SRGY RPTLIST</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Surgery.html">SURGERY</a></td>
 <td>2017/01/26</td>
@@ -897,7 +903,7 @@
 </tr>
 <tr>
 <td>10155</td>
-<td><a title=" The 3rd piece of ^DD(filenumber,fieldnumber,0) is used in the call to Y^DIQ.  This may be referenced since no FM APIs exist yet to return this field for input to the supported call Y^DIQ." href="ICR-10155.html">SET OF CODES</a></td>
+<td><a title=" The 3rd piece of ^DD(filenumber,fieldnumber,0) is used in the call to Y^DIQ.  This may be referenced since no FM APIs exist yet to return this field for input to the supported call Y^DIQ." href="https://code.osehra.org/vivian/files/ICR/ICR-10155.html">SET OF CODES</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_VA_FileMan.html">VA FILEMAN</a></td>
 <td>1998/02/03</td>
@@ -912,7 +918,7 @@
 </tr>
 <tr>
 <td>10156</td>
-<td><a title=" Exporting, deleting, updating Options by Namespace via KIDS is permitted.  Linking menu options from other packages requires IAs between the packages whose options are being &quot;linked&quot;." href="ICR-10156.html">OPTION FILE</a></td>
+<td><a title=" Exporting, deleting, updating Options by Namespace via KIDS is permitted.  Linking menu options from other packages requires IAs between the packages whose options are being &quot;linked&quot;." href="https://code.osehra.org/vivian/files/ICR/ICR-10156.html">OPTION FILE</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
 <td>2006/05/31</td>
@@ -927,7 +933,7 @@
 </tr>
 <tr>
 <td>10034</td>
-<td><a title=" Used to to install filegrams." href="ICR-10034.html">Other API: Filegram</a></td>
+<td><a title=" Used to to install filegrams." href="https://code.osehra.org/vivian/files/ICR/ICR-10034.html">Other API: Filegram</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_VA_FileMan.html">VA FILEMAN</a></td>
 <td>1998/11/17</td>
@@ -942,7 +948,7 @@
 </tr>
 <tr>
 <td>10035</td>
-<td><a title=" Any nationally released cross-reference on the supported fields in this Integration Agreement are &quot;open/supported&quot; for direct global reference (as well as reference through VA FileMan)." href="ICR-10035.html">PATIENT FILE</a></td>
+<td><a title=" Any nationally released cross-reference on the supported fields in this Integration Agreement are &quot;open/supported&quot; for direct global reference (as well as reference through VA FileMan)." href="https://code.osehra.org/vivian/files/ICR/ICR-10035.html">PATIENT FILE</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Registration.html">REGISTRATION</a></td>
 <td>2017/09/13</td>

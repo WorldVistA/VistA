@@ -62,6 +62,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,6 +80,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
@@ -201,7 +207,7 @@
 <tr>
 <td>4887</td>
 <td><a title=" This integration agreement describes the use of the std_institution table and fields within the PATS application&quot;s Oracle database.
- When the first test site goes to production with PATS, the EMC will be using version 11 of the SDS database." href="ICR-4887.html">Use of STD_INSTITUTION table in PATS application</a></td>
+ When the first test site goes to production with PATS, the EMC will be using version 11 of the SDS database." href="https://code.osehra.org/vivian/files/ICR/ICR-4887.html">Use of STD_INSTITUTION table in PATS application</a></td>
 <td>SQL Table</td>
 <td>807</td>
 <td>2006/08/21</td>

@@ -62,6 +62,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,6 +80,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
@@ -200,7 +206,7 @@
 <tbody>
 <tr>
 <td>28</td>
-<td><a title=" *****TEMPORARY SUPPORTED CALL FOR IFCAP V2 TEST SITES ONLY***** call to ZIS^DGUTL" href="ICR-28.html">DBIA28</a></td>
+<td><a title=" *****TEMPORARY SUPPORTED CALL FOR IFCAP V2 TEST SITES ONLY***** call to ZIS^DGUTL" href="https://code.osehra.org/vivian/files/ICR/ICR-28.html">DBIA28</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_Registration.html">REGISTRATION</a></td>
 <td>1989/03/21</td>
@@ -223,7 +229,7 @@
  NAME: IBB PFSS ADT-A04 SERVER           ITEM TEXT: PFSS/IBB ADT-A04 Receiver TYPE: event driver SENDING APPLICATION: DGPFSS ADT SENDING TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A04 MESSAGE STRUCTURE: ACK                ACCEPT ACK CODE: AL APPLICATION ACK TYPE: AL              VERSION ID: 2.4 SUBSCRIBERS: IBB PFSS ADT-A04 CLIENT
  NAME: IBB PFSS ADT-A05 CLIENT           TYPE: subscriber RECEIVING APPLICATION: DGPFSS ADT RECV EVENT TYPE: A05                       RESPONSE MESSAGE TYPE: ADT PROCESSING ROUTINE: D A05^IBBAADTI    SENDING FACILITY REQUIRED?: NO RECEIVING FACILITY REQUIRED?: NO
  NAME: IBB PFSS ADT-A05 SERVER           ITEM TEXT: PFSS/IBB ADT-A05 Receiver TYPE: event driver SENDING APPLICATION: DGPFSS ADT SENDING TRANSACTION MESSAGE TYPE: ADT         EVENT TYPE: A05 ACCEPT ACK CODE: AL                   APPLICATION ACK TYPE: AL VERSION ID: 2.4
-" href="ICR-4849.html">DBIA #4849</a></td>
+" href="https://code.osehra.org/vivian/files/ICR/ICR-4849.html">DBIA #4849</a></td>
 <td>Other</td>
 <td><a href="https://code.osehra.org/dox/Package_Registration.html">REGISTRATION</a></td>
 <td>2006/04/20</td>
@@ -246,7 +252,7 @@
 </tr>
 <tr>
 <td>10035</td>
-<td><a title=" Any nationally released cross-reference on the supported fields in this Integration Agreement are &quot;open/supported&quot; for direct global reference (as well as reference through VA FileMan)." href="ICR-10035.html">PATIENT FILE</a></td>
+<td><a title=" Any nationally released cross-reference on the supported fields in this Integration Agreement are &quot;open/supported&quot; for direct global reference (as well as reference through VA FileMan)." href="https://code.osehra.org/vivian/files/ICR/ICR-10035.html">PATIENT FILE</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Registration.html">REGISTRATION</a></td>
 <td>2017/09/13</td>

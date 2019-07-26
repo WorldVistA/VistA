@@ -62,6 +62,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,6 +80,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
@@ -207,7 +213,7 @@
  A.  An entry is made in the Requested Records file #190.1 ^RTV(190.1,n) by a call from RT^SDUTL to a tasked job QUE^RTQ or RT^SDI
  B.  After the entry is added to the Requested Records file #190.1 an entry is made in Parent Record Request field of the Patient subfield of the Hospital Location file #44 ^SC(n,&quot;S&quot;,,,,&quot;RTR&quot;)=n^ by a return call from CREATE+11^RTQ2 to RTSET^SDUTL
  3.  When a clinic appointment is canceled: If there is a Requested Records entry in file #190.1 the status is changed to &quot;canceled&quot; by a call RTV(190.1,n)=^^^^^x^ from RT+2^SDUTL to CANCEL^RTQ2.
- 4.  When the name of a clinic is changed the corresponding names of entries in the Pull List file #194.2 are changed by a trigger on the .01 field of the Hospital Location file #44.  Clinic ^SC(1,0)=DJones Medical Clinic^ ^RTV(194.2,n)=Dr Jones Medical Clinic [04/01/91]^ Clinic names are changed in a compiled input template.  To insure the use of this trigger the following action is taken: The Record Tracking package includes the .01 field of the Hospital Location file #44 so that the SDB template is re-compiled when the Record Tracking package is initialized." href="ICR-85.html">DBIA85-A</a></td>
+ 4.  When the name of a clinic is changed the corresponding names of entries in the Pull List file #194.2 are changed by a trigger on the .01 field of the Hospital Location file #44.  Clinic ^SC(1,0)=DJones Medical Clinic^ ^RTV(194.2,n)=Dr Jones Medical Clinic [04/01/91]^ Clinic names are changed in a compiled input template.  To insure the use of this trigger the following action is taken: The Record Tracking package includes the .01 field of the Hospital Location file #44 so that the SDB template is re-compiled when the Record Tracking package is initialized." href="https://code.osehra.org/vivian/files/ICR/ICR-85.html">DBIA85-A</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Record_Tracking.html">RECORD TRACKING</a></td>
 <td>1991/07/09</td>

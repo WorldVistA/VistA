@@ -62,6 +62,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,6 +80,9 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
@@ -244,7 +250,7 @@
  Double Serving Messages
  On occasion, the transmission/receive process is interrupted by a system back-up.  It appears to result in the same message being served twice.  The Audit Log for the Options file shows two messages with the same message number and subject, but with different Date/Times and Job Numbers.
 
- To avoid this, application servers should be written such that they check for and avoid processing of the same message being delivered to any particular server.  MailMan transparently checks this and does not deliver twice to mail boxes.  However, devices and servers do not have mail boxes to check against. Servers can have some understanding of special mail baskets in the Postmaster&quot;s mail box and can be written to check for duplicate deliveries (See reference XMAIC entry points in the Callable Routines section of the Technical Manual and System Manager&quot;s Guide)." href="ICR-1151.html">MAILMAN: Server API</a></td>
+ To avoid this, application servers should be written such that they check for and avoid processing of the same message being delivered to any particular server.  MailMan transparently checks this and does not deliver twice to mail boxes.  However, devices and servers do not have mail boxes to check against. Servers can have some understanding of special mail baskets in the Postmaster&quot;s mail box and can be written to check for duplicate deliveries (See reference XMAIC entry points in the Callable Routines section of the Technical Manual and System Manager&quot;s Guide)." href="https://code.osehra.org/vivian/files/ICR/ICR-1151.html">MAILMAN: Server API</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_MailMan.html">MAILMAN</a></td>
 <td>1995/02/20</td>
