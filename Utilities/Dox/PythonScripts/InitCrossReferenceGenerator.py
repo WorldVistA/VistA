@@ -19,13 +19,13 @@ import re
 import csv
 import os
 import sys
-import argparse
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
+from ArgParserHelper import createArgParser as createInitialCrossRefGenArgParser
 from CrossReference import CrossReference, Routine, Package, Global, PlatformDependentGenericRoutine
 from LogManager import logger
 
@@ -263,14 +263,3 @@ def parseCrossReferenceGeneratorArgs(MRepositDir,
                                                 "*/Routines/*.m")
 
   return crossRefGen.crossReference
-
-def createInitialCrossRefGenArgParser():
-    parser = argparse.ArgumentParser(add_help=False) # no help page
-    argGroup = parser.add_argument_group(
-                              'Initial CrossReference Generator Arguments',
-                              "Argument for generating initial CrossReference")
-    argGroup.add_argument('-mr', '--MRepositDir', required=True,
-                          help='VistA M Component Git Repository Directory')
-    argGroup.add_argument('-pr', '--patchRepositDir', required=True,
-                          help="VistA Git Repository Directory")
-    return parser

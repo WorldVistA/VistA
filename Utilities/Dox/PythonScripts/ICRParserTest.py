@@ -16,6 +16,7 @@
 
 import argparse
 import filecmp
+import json
 import logging
 import os
 import sys
@@ -23,7 +24,7 @@ import unittest
 
 import ICRParser
 
-from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
+from ArgParserHelper import createArgParser
 from LogManager import initLogging, logger
 
 EXPECTED_PDFS = {
@@ -52,7 +53,13 @@ class testICRParser(unittest.TestCase):
         ICRParser.generate_json(TEST_ICR_FILE, generated_icr_json)
 
         # Check that expected JSON was generated
-        self.assertTrue(filecmp.cmp(TEST_ICR_JSON, generated_icr_json))
+        expectedJsonFile = open(TEST_ICR_JSON)
+        generatedJsonFile = open(generated_icr_json)
+        expectedJson = json.load(expectedJsonFile)
+        generatedJson = json.load(generatedJsonFile)
+        # We need to compare the json contents. The order the file is written
+        # changes from Python 2 to Python 3
+        self.assertEqual(expectedJson, generatedJson)
 
         # Make sure ONLY JSON file was generated
         generated_files = os.listdir(generated_output_dir)
@@ -88,7 +95,7 @@ class testICRParser(unittest.TestCase):
                                args.patchRepositDir, generated_pdf_output_dir)
 
         # Check that expected subdirectories were generated
-        expected_dirs = EXPECTED_PDFS.keys()
+        expected_dirs = list(EXPECTED_PDFS.keys())
         expected_dirs.sort()
         generated_dirs = os.listdir(generated_pdf_output_dir)
         generated_dirs.sort()
@@ -125,7 +132,7 @@ class testICRParser(unittest.TestCase):
                 self.fail("%s is not the same as %s" % (expected_file, generated_file))
 
         # Check that expected subdirectories were generated
-        expected_pdf_dirs = EXPECTED_PDFS.keys()
+        expected_pdf_dirs = list(EXPECTED_PDFS.keys())
         expected_pdf_dirs.sort()
         generated_pdf_dirs = os.listdir(generated_pdf_output_dir)
         generated_pdf_dirs.sort()
@@ -146,7 +153,7 @@ class testICRParser(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    init_parser = createInitialCrossRefGenArgParser()
+    init_parser = createArgParser()
     parser = argparse.ArgumentParser(description='VistA ICR Parser',
                                      parents=[init_parser])
     parser.add_argument('testOutDir', help='Test files will be created here')

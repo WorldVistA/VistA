@@ -781,11 +781,6 @@ class FileManGlobalDataParser(object):
         outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
 
-def generateSingleFileFieldToIenMappingBySchema(MRepositDir, crossRef, fileNo, fieldNo):
-  glbDataParser = FileManGlobalDataParser(MRepositDir, crossRef)
-  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'][0], '1', '^DIC(')
-  return glbDataParser.generateFileFieldMap(glbDataParser.allFiles[fileNo]['path'], fileNo, fieldNo)
-
 def run(args):
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
   from FileManDataToHtml import FileManDataToHtml
