@@ -1,3 +1,5 @@
+from builtins import str
+from builtins import object
 import json
 import argparse
 import os.path
@@ -50,7 +52,7 @@ summary_list_fields = [
     ('dateUpdated', None, None),
     ('recentUpdate', None, None)
 ]
-class RequirementsConverter:
+class RequirementsConverter(object):
     def __init__(self, outDir):
         self._outDir = outDir
 
@@ -211,11 +213,11 @@ class RequirementsConverter:
 
     def _generateRequirementsSummaryPage(self, inputJson):
         nsrSummary = {"NO NSR":[]}
-        for key in inputJson.keys():
+        for key in inputJson:
           self._generateRequirementsSummaryPageImpl(inputJson, 'Requirement List', key, False)
           for bffEntry in inputJson[key]:
             nsrSummary= self.findNSRValues(bffEntry,nsrSummary)
             self._generateIndividualRequirementsPage(bffEntry)
-        for NSRKey in nsrSummary.keys():
+        for NSRKey in nsrSummary:
           self._generateRequirementsSummaryPageImpl(nsrSummary, 'Requirement List', NSRKey, False)
         self._generateRequirementsSummaryPageImpl(allReqs, 'Requirement List', "All", True)
