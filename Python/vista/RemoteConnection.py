@@ -4,6 +4,7 @@ Created on Sep 12, 2012
 @author: jspivey
 '''
 
+from builtins import object
 class RemoteConnectionDetails(object):
     '''
     classdocs
