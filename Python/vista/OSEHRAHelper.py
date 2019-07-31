@@ -25,7 +25,11 @@ and interaction methods such as write() and wait()
 @copyright The Open Source Electronic Health Record Agent
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
+from __future__ import print_function
 
+from builtins import str
+from builtins import range
+from builtins import object
 import sys
 import os, errno
 import telnetlib
@@ -45,13 +49,13 @@ sys.path.append(paramikoedir)
 try:
   import pexpect
   no_pexpect = None
-except ImportError, no_pexpect:
+except ImportError as no_pexpect:
   pass
 
 try:
   import paramiko
   no_paramiko = None
-except ImportError, no_paramiko:
+except ImportError as no_paramiko:
   pass
 
 #---------------------------------------------------------------------------
@@ -152,7 +156,7 @@ class ConnectWinCache(ConnectMUMPS):
       namespace = 'VISTA'
     self.namespace = namespace
     self.prompt = self.namespace + '>'
-    self.log = file(logfile, 'w')
+    self.log = open(logfile, 'w')
     self.type = 'cache'
     path,filename = os.path.split(logfile)
     self.MenuLocation=[]
@@ -161,20 +165,22 @@ class ConnectWinCache(ConnectMUMPS):
     self.optionMenuTextDict = []
 
   def write(self, command):
-    self.connection.write(command + '\r')
+    self.connection.write(command.encode('utf-8') + b'\r')
     logging.debug('connection.write:' + command)
     self.log.flush()
 
   def writectrl(self, command):
-    self.connection.write(command)
+    self.connection.write(command.encode('utf-8'))
     logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.namespace + '>'
-    rbuf = self.connection.read_until(command, tout)
+    rbuf = self.connection.read_until(command.encode('utf-8'), tout).decode('utf-8')
     if rbuf.find(command) == -1:
+        command=str(command)
+        rbuf=str(rbuf)
         self.log.write('ERROR: expected: ' + command + 'actual: ' + rbuf)
         logging.debug('ERROR: expected: ' + command + 'actual: ' + rbuf)
         raise TestHelper.TestError('ERROR: expected: ' + command + 'actual: ' + rbuf)
@@ -195,19 +201,22 @@ class ConnectWinCache(ConnectMUMPS):
     if output[0] == -1 and output[1] == None:
       raise Exception("Timed out")
     if output[2]:
-      self.log.write(output[2])
+      self.log.write(output[2].decode('utf-8'))
       self.log.flush()
       self.lastconnection=output[2]
       return output
 
   def multiwait(self, options, tout=15):
     logging.debug('connection.expect: ' + str(options))
+    encodedOptions = []
     if isinstance(options, list):
-      index = self.connection.expect(options, tout)
+      for option in options:
+        encodedOptions.append(option.encode('utf-8'))
+      index = self.connection.expect(encodedOptions, tout)
       if index == -1:
         logging.debug('ERROR: expected: ' + str(options))
         raise TestHelper.TestError('ERROR: expected: ' + str(options))
-      self.log.write(index[2])
+      self.log.write(index[2].decode('utf-8'))
       self.lastconnection=index[2]
       return index[0]
     else:
@@ -263,7 +272,7 @@ class ConnectLinuxCache(ConnectMUMPS):
       namespace = 'VISTA'
     self.namespace = namespace
     self.prompt = self.namespace + '>'
-    self.connection.logfile_read = file(logfile, 'w')
+    self.connection.logfile_read = open(logfile, 'w')
     self.type = 'cache'
     path,filename = os.path.split(logfile)
     self.MenuLocation=[]
@@ -283,7 +292,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.namespace + '>'
-    rbuf = self.connection.expect_exact(command, tout)
+    rbuf = self.connection.expect_exact(command.encode('utf-8'), tout)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
@@ -362,7 +371,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
         self.prompt = os.getenv("gtm_prompt")
         if self.prompt == None:
           self.prompt = "GTM>"
-    self.connection.logfile_read = file(logfile, 'w')
+    self.connection.logfile_read = open(logfile, 'w')
     self.type = 'GTM'
     path,filename = os.path.split(logfile)
     self.MenuLocation=[]
@@ -383,7 +392,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.prompt
-    rbuf = self.connection.expect_exact(command, tout)
+    rbuf = self.connection.expect_exact(command.encode('utf-8'), tout)
     logging.debug('RECEIVED: ' + command)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
@@ -512,7 +521,7 @@ class ConnectRemoteSSH(ConnectMUMPS):
     from paramikoe import SSHClientInteraction
     interact = SSHClientInteraction(client, timeout=10, display=False)
     self.connection = interact
-    self.connection.logfile_read = file(logfile, 'w')
+    self.connection.logfile_read = open(logfile, 'w')
     self.client = client  # apparently there is a deconstructor which disconnects (probably sends a FYN packet) when client is gone
 
   def write(self, command):
@@ -543,7 +552,7 @@ class ConnectRemoteSSH(ConnectMUMPS):
 
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
-        print 'ERROR: expected: ' + command
+        print('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
     else:
         return 1
@@ -659,12 +668,12 @@ def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0
       if os.getenv('gtm_dist'):
         try:
           return ConnectLinuxGTM(logfile, instance, namespace, location)
-        except pexpect.ExceptionPexpect, no_gtm:
+        except pexpect.ExceptionPexpect as no_gtm:
            if (no_gtm):
              raise "Cannot find a MUMPS instance"
       else:
         try:
           return ConnectLinuxCache(logfile, instance, namespace, location)
-        except pexpect.ExceptionPexpect, no_cache:
+        except pexpect.ExceptionPexpect as no_cache:
          if (no_cache):
            raise "Cannot find a MUMPS instance"
