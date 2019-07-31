@@ -2333,7 +2333,7 @@ class WebPageGenerator:
                     # append the content of map outputFile
                     for line in cmapFile:
                         outputFile.write(line)
-            except:
+            except Exception as e:
                 logger.error(e)
 
         total = "%s, Total: %d " % (sectionListHeader, totalPackages)
