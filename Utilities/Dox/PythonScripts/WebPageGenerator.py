@@ -416,12 +416,6 @@ def getGlobalHypeLinkByName(globalName):
     return "<a href=\"%s\">%s</a>" % (getGlobalHtmlFileNameByName(globalName),
                                       globalName)
 
-def getPackageHyperLinkByName(packageName):
-    if packageName in PACKAGE_MAP:
-      packageName = PACKAGE_MAP[packageName]
-    return "<a href=\"%s\">%s</a>" % (getPackageHtmlFileName(packageName),
-                                      packageName)
-
 def getRoutineSourceCodeFileByName(routineName, packageName, sourceDir):
     return os.path.join(sourceDir, "Packages" +
                         os.path.sep + packageName +
@@ -556,7 +550,6 @@ class WebPageGenerator:
             self._repoJson = json.load(jsonFile)
         self._generatePDFBundle = generatePDF
         self.__generateLegend__()
-
 
     def __includeHeader__(self, outputFile, indexList=""):
         for line in (self._header):
@@ -795,7 +788,7 @@ class WebPageGenerator:
                     row = []
                     # write the package name
                     if index == 0:
-                        row.append(getPackageHyperLinkByName(packageName))
+                        row.append(self.getPackageHyperLinkByName(packageName))
                     else:
                         row.append("")
                     # write the namespace
@@ -932,7 +925,7 @@ class WebPageGenerator:
                 package = subFile.getRootFile().getPackage()
                 row = [getFileManSubFileHypeLinkWithName(subFile),
                        getFileManSubFileHypeLinkByName(subFile),
-                       getPackageHyperLinkByName(package.getName())]
+                       self.getPackageHyperLinkByName(package.getName())]
                 writeTableRow(row, outputFile)
             outputFile.write("</table>\n")
             outputFile.write("<BR>\n")
@@ -1084,7 +1077,7 @@ class WebPageGenerator:
                         infoHeader = ["FileMan FileNo", "FileMan Filename", "Package"]
                         itemList = [[globalVar.getFileNo(),
                                   globalVar.getFileManName(),
-                                  getPackageHyperLinkByName(package.getName())]]
+                                  self.getPackageHyperLinkByName(package.getName())]]
                         self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, "information")
                         if self._generatePDFBundle:
                             self.__writeGenericTablizedPDFData__(infoHeader, itemList, pdf)
@@ -1253,7 +1246,7 @@ class WebPageGenerator:
             else:
                 parentFileLink =  getFileManSubFileHypeLinkByName(parentFile.getFileNo())
             itemList = [[parentFileLink, subFile.getFileManName(), subFile.getFileNo(),
-                         getPackageHyperLinkByName(packageName)]]
+                         self.getPackageHyperLinkByName(packageName)]]
             self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, "information")
             writeSectionEnd(outputFile)
             if self._generatePDFBundle:
@@ -1465,7 +1458,7 @@ class WebPageGenerator:
         for package in sortedPackage:
             globalDict = pointedByGlobals[package]
             itemRow = []
-            itemRow.append(getPackageHyperLinkByName(package.getName()))
+            itemRow.append(self.getPackageHyperLinkByName(package.getName()))
             itemRow.append(len(globalDict))
             #
             if pdf and self._generatePDFBundle:
@@ -1555,7 +1548,7 @@ class WebPageGenerator:
             routineSet = depRoutines[package]
             #
             itemRow = []
-            itemRow.append(getPackageHyperLinkByName(package.getName()))
+            itemRow.append(self.getPackageHyperLinkByName(package.getName()))
             itemRow.append(len(routineSet))
             #
             if self._generatePDFBundle:
@@ -1621,9 +1614,10 @@ class WebPageGenerator:
             subscribingPackages = []
             for value in entry["SUBSCRIBING PACKAGE"]:
                 pkgName = value["SUBSCRIBING PACKAGE"][0] if type(value["SUBSCRIBING PACKAGE"]) is list else value["SUBSCRIBING PACKAGE"]
-                subscribingPackage += "<li>" + getPackageHyperLinkByName(pkgName) + "</li>"
-                if pkgName in PACKAGE_MAP:
-                    pkgName = PACKAGE_MAP[pkgName]
+                subscribingPackage += "<li>" + self.getPackageHyperLinkByName(pkgName) + "</li>"
+                mappedPkgName = self._crossRef.getMappedPackageName(pkgName)
+                if mappedPkgName is not None:
+                    pkgName = mappedPkgName
                 subscribingPackages.append(generateParagraph(pkgName))
             if self._generatePDFBundle:
                 subscribingPackagesPDF = generateList(subscribingPackages)
@@ -1675,8 +1669,8 @@ class WebPageGenerator:
 #===============================================================================
     def generatePackageRoutineDependencyDetailPage(self, package, depPackage,
                                                    outputFile, titleIndex):
-        packageHyperLink = getPackageHyperLinkByName(package.getName())
-        depPackageHyperLink = getPackageHyperLinkByName(depPackage.getName())
+        packageHyperLink = self.getPackageHyperLinkByName(package.getName())
+        depPackageHyperLink = self.getPackageHyperLinkByName(depPackage.getName())
         routineDepDict = package.getPackageRoutineDependencies()
         globalDepDict = package.getPackageGlobalDependencies()
         globalRtnDepDict = package.getPackageGlobalRoutineDependencies()
@@ -1969,8 +1963,8 @@ class WebPageGenerator:
             self.__includeHeader__(outputFile)
 
             # Get package links
-            packageHyperLink = getPackageHyperLinkByName(package.getName())
-            depPackageHyperLink = getPackageHyperLinkByName(depPackage.getName())
+            packageHyperLink = self.getPackageHyperLinkByName(package.getName())
+            depPackageHyperLink = self.getPackageHyperLinkByName(depPackage.getName())
 
             # Generate the index bar
             inputList = ["%s-->%s" % (package.getName(), depPackage.getName()),
@@ -2415,7 +2409,7 @@ class WebPageGenerator:
         outputFile.write("<div class=\"headertitle\">\n")
         if package is not None:
             outputFile.write(("<h4>Package: %s</h4>\n"
-                               % getPackageHyperLinkByName(package.getName())))
+                               % self.getPackageHyperLinkByName(package.getName())))
         if extraHtmlHeader:
             outputFile.write("<h4>%s</h4>\n" % extraHtmlHeader)
         outputFile.write("<h1>%s</h1>\n" % title)
@@ -3275,7 +3269,7 @@ class WebPageGenerator:
                 index += 1
             depPackageName = depPackage.getName()
             totalRoutinesInDepPackage = "%d" % len(data[depPackage])
-            row = [getPackageHyperLinkByName(depPackageName),
+            row = [self.getPackageHyperLinkByName(depPackageName),
                    totalRoutinesInDepPackage,
                    routineNameLink]
             tableData.append(row)
@@ -3702,7 +3696,15 @@ $( document ).ready(function() {
 
         logger.info("End of generating individual routines......")
 
-
+#===============================================================================
+#
+#===============================================================================
+    def getPackageHyperLinkByName(self, packageName):
+        mappedPackageName = self._crossRef.getMappedPackageName(packageName)
+        if mappedPackageName is not None:
+            packageName = mappedPackageName
+        return "<a href=\"%s\">%s</a>" % (getPackageHtmlFileName(packageName),
+                                          packageName)
 #===============================================================================
 # main
 #===============================================================================

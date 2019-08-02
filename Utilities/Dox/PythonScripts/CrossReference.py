@@ -23,7 +23,7 @@ import json
 from operator import itemgetter, attrgetter
 
 from LogManager import logger
-from UtilityFunctions import PACKAGE_COMPONENT_MAP
+from UtilityFunctions import PACKAGE_MAP, PACKAGE_COMPONENT_MAP
 
 NOT_KILLED_EXPLICITLY_VALUE = ">>"
 MUMPS_ROUTINE_PREFIX = "Mumps"
@@ -1274,6 +1274,8 @@ class CrossReference:
         self._platformDepRoutines = dict() # [name, package, mapping list]
         self._platformDepRoutineMappings = dict() # [platform dep _calledRoutine -> generic _calledRoutine]
         self._allFileManSubFiles = dict() # store all fileman subfiles
+        self._packageMap = PACKAGE_MAP # initialize package map with special cases
+
     def getAllRoutines(self):
         return self._allRoutines
     def getAllPackages(self):
@@ -1311,6 +1313,7 @@ class CrossReference:
 
     def getPackageByName(self, packageName):
         return self._allPackages.get(packageName)
+
     def getGlobalByName(self, globalName):
         return self._allGlobals.get(globalName)
 
@@ -1435,6 +1438,39 @@ class CrossReference:
         if genericRoutine:
             return genericRoutine.getPlatformDepRoutineInfoByName(routineName)[0]
         return None
+
+    def mapPackageNames(self):
+        # map 'PACKAGE NAME' to 'package name' (with some special cases)
+        for pkgName in self.getAllPackages():
+            package = self.getPackageByName(pkgName)
+            if package is not None:
+                originalPkgName = package.getOriginalName()
+                pkgName = self.normalizePackageName(pkgName)
+                self._addMappedPackage(originalPkgName, pkgName)
+
+    def addMappedPackage(self, originalPkgName, pkgName):
+        package = self.getPackageByName(pkgName)
+        if package is not None:
+            self._addMappedPackage(originalPkgName, pkgName)
+
+    def _addMappedPackage(self, originalPkgName, pkgName):
+        if originalPkgName not in self._packageMap:
+            self._packageMap[originalPkgName] = pkgName
+        elif self._packageMap[originalPkgName] != pkgName and \
+             originalPkgName not in PACKAGE_MAP:
+            logger.warning('[%s] mapped to [%s] and [%s]',
+                            originalPkgName,
+                            self._packageMap[originalPkgName], pkgName)
+
+    def getMappedPackageName(self, pkgName):
+        if pkgName in self._packageMap:
+            return self._packageMap[pkgName]
+        else:
+            return None
+
+    def normalizePackageName(self, name):
+        return name.replace('/', ' ').replace('\'','').replace(',','') \
+                   .replace('.','').replace('&', 'and')
 
     # should be using trie structure for quick find, but
     # as python does not have trie and seems to be OK now

@@ -34,7 +34,7 @@ from LogManager import logger
 from ICRSchema import ICR_FILE_KEYWORDS_LIST, RPC_FILE_NO, RPC_NAME_FIELD_NO
 from ICRSchema import isSubFile, isWordProcessingField, SUBFILE_FIELDS
 from UtilityFunctions import getPackageHtmlFileName, getGlobalHtmlFileNameByName
-from UtilityFunctions import getRoutineHRefLink, PACKAGE_MAP, normalizePackageName
+from UtilityFunctions import getRoutineHRefLink, normalizePackageName
 from UtilityFunctions import generatePDFTableHeader
 from UtilityFunctions import getDOXURL, getViViaNURL
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
@@ -48,7 +48,6 @@ STYLES = getSampleStyleSheet()
 DOX_URL = None
 VIVIAN_URL = None
 FAILURES = []
-pgkUpperCaseNameDict = dict()
 RPC_NAME_TO_IEN_MAPPING = dict()
 
 # This is the entry point to convert JSON to html web pages and/or PDFs
@@ -92,10 +91,18 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
         pkgJson = {} # group by package
         allpkgJson = []
         inputJson = json.load(inputFile)
+
         for icrEntry in inputJson:
             if 'NUMBER' not in icrEntry:
                 logger.error("Could not parse entry: " + str(icrEntry))
                 continue
+
+            if 'CUSTODIAL PACKAGE' in icrEntry:
+                pkgName = icrEntry['CUSTODIAL PACKAGE']
+                if crossRef.getMappedPackageName(pkgName) is None:
+                    crossRef.addMappedPackage(pkgName,
+                                              crossRef.normalizePackageName(pkgName).title())
+                    logger.warning("Adding package " + pkgName + " to package name map.")
             if generatePDF:
                 _generateICRIndividualPagePDF(icrEntry, date, pdfOutDir)
             if generateHTML:
@@ -106,11 +113,10 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
                     pkgJson.setdefault(icrEntry['CUSTODIAL PACKAGE'],[]).append(summaryInfo)
         if generateHTML:
             _generateICRSummaryPageImpl(allpkgJson, 'ICR List', 'All', date,
-                                        outDir, isForAll=True)
+                                        outDir, crossRef, isForAll=True)
             for pkgName, outJson in pkgJson.items():
                 _generateICRSummaryPageImpl(outJson, 'ICR List', pkgName, date,
-                                            outDir)
-            logger.warn('Total # entry in PACKAGE_MAP is [%s]', len(PACKAGE_MAP))
+                                            outDir, crossRef)
             logger.warn('Total # entry in pkgJson is [%s]', len(pkgJson))
             _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef)
 
@@ -152,37 +158,35 @@ def _getGeneralDescription(value, icrEntry, **kargs):
 
 
 def _getPackageHRefLink(pkgName, icrEntry, **kargs):
-    global pgkUpperCaseNameDict
-    if pkgName in PACKAGE_MAP:
-        pkgLink = getPackageHtmlFileName(PACKAGE_MAP[pkgName])
+    if 'crossRef' not in kargs:
+        logger.error('No CrossReference given. Cannot find mapping for package: [%s]', pkgName)
+        return pkgName
+
+    crossRef = kargs['crossRef']
+    mappedPkgName = crossRef.getMappedPackageName(pkgName)
+    if mappedPkgName is not None:
+        pkgLink = getPackageHtmlFileName(mappedPkgName)
         return '<a href=\"%s/%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
-    crossRef = None
-    if 'crossRef' in kargs:
-        crossRef = kargs['crossRef']
-    if crossRef:
-        if not pgkUpperCaseNameDict:
-            for name in crossRef.getAllPackages().keys():
-                pgkUpperCaseNameDict[name.upper()] = name
-        upperName = _normalizeName(pkgName).upper()
-        if upperName in pgkUpperCaseNameDict:
-            _addToPackageMap(icrEntry, pgkUpperCaseNameDict[upperName])
-            return '<a href=\"%s/%s\">%s</a>' % (DOX_URL,
-                                                getPackageHtmlFileName(pgkUpperCaseNameDict[upperName]),
-                                                pkgName)
-        pkg = crossRef.getPackageByName(pkgName)
-        if not pkg:
-            pkgRename = _normalizeName(pkgName).title()
-            pkg = crossRef.getPackageByName(pkgRename)
-        if not pkg:
-            pkgRename = _normalizeName(pkgName)
-            pkg = crossRef.getPackageByName(pkgRename)
-        if pkg:
-            _addToPackageMap(icrEntry, pkg.getName())
-            pkgLink = getPackageHtmlFileName(pkg.getName())
-            return '<a href=\"%s/%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
-        else:
-            logger.warning('Cannot find mapping for package: [%s]', pkgName)
-    return pkgName
+
+    upperName = pkgName.upper()
+    mappedPkgName = crossRef.getMappedPackageName(upperName)
+    if mappedPkgName is not None:
+        pkgLink = getPackageHtmlFileName(mappedPkgName)
+        return '<a href=\"%s/%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
+
+    pkg = crossRef.getPackageByName(pkgName)
+    if not pkg:
+        pkgRename = crossRef.normalizePackageName(pkgName).title()
+        pkg = crossRef.getPackageByName(pkgRename)
+    if not pkg:
+        pkgRename = crossRef.normalizePackageName(pkgName)
+        pkg = crossRef.getPackageByName(pkgRename)
+    if pkg:
+        pkgLink = getPackageHtmlFileName(pkg.getName())
+        return '<a href=\"%s/%s\">%s</a>' % (DOX_URL, pkgLink, pkgName)
+    else:
+        logger.warning('Cannot find mapping for package: [%s]', pkgName)
+        return pkgName
 
 
 def _getFileManFileHRefLink(fileNo, icrEntry, **kargs):
@@ -193,7 +197,6 @@ def _getFileManFileHRefLink(fileNo, icrEntry, **kargs):
         fileInfo = crossRef.getGlobalByFileNo(fileNo)
         if fileInfo:
             linkName = getGlobalHtmlFileNameByName(fileInfo.getName())
-            # _addToPackageMap(icrEntry, fileInfo.getPackage().getName())
             return '<a href=\"%s/%s\">%s</a>' % (DOX_URL, linkName, fileNo)
         else:
             logger.warning('Cannot find file: [%s]', fileNo)
@@ -310,7 +313,7 @@ def _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef):
                 output.write ("<dt>%s:</dt>\n" % pkgDepType.upper())
                 depPkgInfo = outDep[pkgName][pkgDepType]
                 for depPkgName in sorted(depPkgInfo.keys()):
-                    outputInfo = _getPackageHRefLink(depPkgName, {'CUSTODIAl PACKAGE': depPkgName}, crossRef=crossRef)
+                    outputInfo = _getPackageHRefLink(depPkgName, {'CUSTODIAL PACKAGE': depPkgName}, crossRef=crossRef)
                     outputInfo += ': &nbsp;&nbsp Total # of ICRs %s : [' % len(depPkgInfo[depPkgName])
                     for icrNo in depPkgInfo[depPkgName]:
                         outputInfo += _getICRIndividualHtmlFileLinkByIen(icrNo, {'NUMBER': icrNo}, crossRef=crossRef) + '&nbsp;&nbsp'
@@ -331,14 +334,15 @@ def _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef):
 
 
 def _generateICRSummaryPageImpl(inputJson, listName, pkgName, date, outDir,
-                                isForAll=False):
+                                crossRef, isForAll=False):
     listName = listName.strip()
     pkgName = pkgName.strip()
     pkgHtmlName = pkgName
     outFilename = os.path.join(outDir, "%s-%s.html" % (pkgName, listName))
     if not isForAll:
-        if pkgName in PACKAGE_MAP:
-            pkgName = PACKAGE_MAP[pkgName]
+        mappedPkgName = crossRef.getMappedPackageName(pkgName)
+        if mappedPkgName is not None:
+            pkgName = mappedPkgName
         pkgHtmlName = pkgName + '-ICR.html'
         outFilename = "%s/%s" % (outDir, pkgHtmlName)
     with open(outFilename, 'w+') as output:
@@ -805,18 +809,6 @@ def _convertIndividualFieldValuePDF(field, value, writeField=False,
         if writeField:
             text = "%s : %s" % (field, text)
         return Paragraph(text, STYLES['Normal'])
-
-
-def _addToPackageMap(icrEntry, pkgName):
-    if 'CUSTODIAL PACKAGE' in icrEntry:
-        icrPkg = icrEntry['CUSTODIAL PACKAGE']
-        if icrPkg not in PACKAGE_MAP:
-            PACKAGE_MAP[icrPkg] = pkgName
-        elif PACKAGE_MAP[icrPkg] != pkgName:
-            logger.warning('[%s] mapped to [%s] and [%s]', icrPkg, PACKAGE_MAP[icrPkg], pkgName)
-
-def _normalizeName(name):
-    return name.replace('/', ' ').replace('\'','').replace(',','').replace('.','').replace('&', 'and')
 
 
 def _useAjaxDataTable(len):
