@@ -564,29 +564,53 @@ class FileManDataToHtml(object):
     menuArray = {}
     fileDataArray = {}
     package_name_dict = {"3": "Kernel",
+                         "177": "Kernel", #RPMS
                          "4": "MailMan",
+                         "139": "MailMan", #RPMS
                          "5": "Toolkit",
+                         "232": "Toolkit", #RPMS
                          "14": "Lab Service",
+                         "249": "Lab Service", #RPMS
                          "33": "Health Level Seven",
+                         "238": "Health Level Seven", #RPMS
                          "49": "Integrated Billing",
+                         "329": "Integrated Billing", #RPMS
                          "52": "IFCAP",
+                         "325": "IFCAP", #RPMS 
                          "53": "Accounts Receivable",
+                         "295": "Accounts Receivable", #RPMS
                          "73": "Network Health Exchange",
+                         "340": "Network Health Exchange", #RPMS
                          "82": "CMOP",
+                         "303": "CMOP", #RPMS
                          "85": "Patient Data Exchange",
+                         "345": "Patient Data Exchange",  #RPMS
                          "93": "Automated Med Information Exchange",
+                         "300": "Automated Med Information Exchange", #RPMS
                          "99": "EEO Complaint Tracking",
+                         "311": "EEO Complaint Tracking", #RPMS
                          "114": "Fee Basis",
+                         "315": "Fee Basis", #RPMS
                          "115": "Radiology/Nuclear Medicine",
+                         "256": "Radiology/Nuclear Medicine", #RPMS
                          "124": "Medicine",
+                         "335": "Medicine", #RPMS
                          "127": "Surgery",
+                         "363": "Surgery", #RPMS
                          "128": "Oncology",
+                         "343": "Oncology", #RPMS
+                         "204": "Alcohol Chemical Dependency", #RPMS
                          "147": "Remote Order/Entry System",
+                         "360": "Remote Order/Entry System", #RPMS
                          "149": "Voluntary Timekeepting",
+                         "368": "Voluntary Timekeepting", #RPMS
                          "165": "DSS Extracts",
+                         "310": "DSS Extracts", #RPMS
                          "181": "Enrollment Application System",
                          "188": "Functional Independence",
-                         "201": "Health Data & Informatics"}
+                         "201": "Health Data & Informatics",
+                         "417": "Health Data & Informatics", #RPMS
+                         "153": "Registration"} #RPMS
     menuArray['0'] = FileManDataEntry(19, "9999990")
     menuArray['0'].addField(FileManDataField('1', 4, 'MENU TEXT', 'Unknown'))
     menuArray['0'].addField(FileManDataField('4', 2, 'TYPE', 'menu'))
@@ -930,7 +954,7 @@ class FileManDataToHtml(object):
       elif fieldType == FileManField.FIELD_TYPE_FREE_TEXT and name.find("ROUTINE") >=0:
         value = _getRoutineHRefLink(dataEntry, str(value), crossRef=self.crossRef)
       elif fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
-        if value and value.dataEntries:
+        if value and ("dataEntries" in dir(value)):
           if isRoot:
             output.write("<tr>\n")
             output.write("<td>%s</td>\n" % name)

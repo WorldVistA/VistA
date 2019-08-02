@@ -136,7 +136,7 @@ if (GENERATE_DOX OR GENERATE_VIVIAN)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/FileManGlobalAttributes.py.in ${SCRIPT_OUTPUT_DIR}/FilemanGlobalAttributes.py)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GetFilemanSchema.cmake.in ${SCRIPT_OUTPUT_DIR}/GetFilemanSchema.cmake @ONLY)
   add_test(GetFilemanSchema ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GetFilemanSchema.cmake)
-  set_tests_properties(GetFilemanSchema PROPERTIES TIMEOUT 7200)
+  set_tests_properties(GetFilemanSchema PROPERTIES TIMEOUT 10000)
   set(FILEMANDBCALL_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/filemanDBCall.json")
 endif()
 
@@ -154,7 +154,7 @@ endif()
 if (GENERATE_DOX OR GENERATE_VIVIAN)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/FileManGlobalDataParser.cmake.in ${SCRIPT_OUTPUT_DIR}/FileManGlobalDataParser.cmake @ONLY)
   add_test(FileManGlobalDataParser ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/FileManGlobalDataParser.cmake)
-  set_tests_properties(FileManGlobalDataParser PROPERTIES TIMEOUT 9000)
+  set_tests_properties(FileManGlobalDataParser PROPERTIES TIMEOUT 10000)
 endif()
 
 # 5. Run ICR Parser Script to parse and convert the downloaded ICR text file
