@@ -81,6 +81,7 @@ downloadButtons = """
                         if (Array.isArray(html)) {
                           html = html.join(" ")
                         }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $$("<div/>").html(entryList.join("|")).text();
                      }
@@ -105,6 +106,7 @@ downloadButtons = """
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });

@@ -62,6 +62,10 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,12 +81,16 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });
@@ -200,7 +208,7 @@
 <tbody>
 <tr>
 <td>639</td>
-<td><a title="" href="ICR-639.html">DBIA181-F</a></td>
+<td><a title="" href="https://code.osehra.org/vivian/files/ICR/ICR-639.html">DBIA181-F</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_Order_Entry_Results_Reporting.html">ORDER ENTRY/RESULTS REPORTING</a></td>
 <td>1992/06/19</td>

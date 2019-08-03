@@ -62,6 +62,10 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,12 +81,16 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });
@@ -200,7 +208,7 @@
 <tbody>
 <tr>
 <td>1973</td>
-<td><a title=" The CMOP package makes a call to the Outpatient Pharmacy routine, PSOLSET.  This call is made to set up the required OP system variables that are necessary for pulling Rx&quot;s from suspense during the CMOP transmission process or when CMOP labels are printed at the medical center pharmacy." href="ICR-1973.html">DBIA1973</a></td>
+<td><a title=" The CMOP package makes a call to the Outpatient Pharmacy routine, PSOLSET.  This call is made to set up the required OP system variables that are necessary for pulling Rx&quot;s from suspense during the CMOP transmission process or when CMOP labels are printed at the medical center pharmacy." href="https://code.osehra.org/vivian/files/ICR/ICR-1973.html">DBIA1973</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_Outpatient_Pharmacy.html">OUTPATIENT PHARMACY</a></td>
 <td>1997/03/27</td>

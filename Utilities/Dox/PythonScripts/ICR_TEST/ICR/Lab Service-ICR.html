@@ -62,6 +62,10 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,12 +81,16 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });
@@ -200,7 +208,7 @@
 <tbody>
 <tr>
 <td>91</td>
-<td><a title="" href="ICR-91.html">DBIA91-A</a></td>
+<td><a title="" href="https://code.osehra.org/vivian/files/ICR/ICR-91.html">DBIA91-A</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
 <td>1991/09/11</td>
@@ -216,7 +224,7 @@
 <tr>
 <td>6104</td>
 <td><a title="
- NAME: LRHY GET SITES                    TAG: GETSITES ROUTINE: LRHYRP01                     RETURN VALUE TYPE: ARRAY DESCRIPTION: This RPC will return all Howdy Sites USAGE: Controlled Subscri  ENTERED: SEP 23,2014 STATUS: Pending             EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure" href="ICR-6104.html">LRHY GET SITES RPC</a></td>
+ NAME: LRHY GET SITES                    TAG: GETSITES ROUTINE: LRHYRP01                     RETURN VALUE TYPE: ARRAY DESCRIPTION: This RPC will return all Howdy Sites USAGE: Controlled Subscri  ENTERED: SEP 23,2014 STATUS: Pending             EXPIRES: DURATION:                     VERSION: DESCRIPTION:                        TYPE: Remote Procedure" href="https://code.osehra.org/vivian/files/ICR/ICR-6104.html">LRHY GET SITES RPC</a></td>
 <td>Remote Procedure</td>
 <td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
 <td>2014/09/23</td>
@@ -232,7 +240,7 @@
 </tr>
 <tr>
 <td>6280</td>
-<td><a title=" The Enterprise Health MGMT Platform (HMP) accesses the Lab Reports file (#64.5) to retrieve lab report data." href="ICR-6280.html">HMP ACCESS TO LAB(64.5</a></td>
+<td><a title=" The Enterprise Health MGMT Platform (HMP) accesses the Lab Reports file (#64.5) to retrieve lab report data." href="https://code.osehra.org/vivian/files/ICR/ICR-6280.html">HMP ACCESS TO LAB(64.5</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Lab_Service.html">LAB SERVICE</a></td>
 <td>2015/11/24</td>

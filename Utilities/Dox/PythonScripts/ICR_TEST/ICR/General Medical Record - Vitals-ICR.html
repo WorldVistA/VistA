@@ -62,6 +62,10 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,12 +81,16 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });
@@ -207,7 +215,7 @@
  where: piece1 = date/time in FileMan internal format piece2 = patient number from FILE 2 (i.e., DFN) piece3 = vital type, a semi-colon, the reading, a semi-colon, and oxygen flow rate and percentage values [optional] (e.g., 21;99;1 l/min 90%) piece4 = hospital location (FILE 44) pointer value piece5 = user number from FILE 200 (i.e., DUZ), an asterisk, and the qualifier (File 120.52) internal entry numbers separated by colons (e.g., 547*50:65) RETURN PARAMETER DESCRIPTION: RESULT does not return a value.
  The data is filed in the GMRV VITAL MEASUREMENT (#120.5) file.
  Example:
- &gt; S GMRVDATA=&quot;3051011.1635^134^1;120/80;^67^87*2:38:50:75&quot; &gt; D EN1^GMVDCSAV(.RESULT,GMRVDATA)" href="ICR-3996.html">GMV ADD VM</a></td>
+ &gt; S GMRVDATA=&quot;3051011.1635^134^1;120/80;^67^87*2:38:50:75&quot; &gt; D EN1^GMVDCSAV(.RESULT,GMRVDATA)" href="https://code.osehra.org/vivian/files/ICR/ICR-3996.html">GMV ADD VM</a></td>
 <td>Remote Procedure</td>
 <td><a href="https://code.osehra.org/dox/Package_General_Medical_Record___Vitals.html">GEN. MED. REC. - VITALS</a></td>
 <td>2005/11/30</td>

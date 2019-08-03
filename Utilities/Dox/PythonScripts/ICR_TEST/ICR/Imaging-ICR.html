@@ -62,6 +62,10 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,12 +81,16 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });
@@ -200,7 +208,7 @@
 <tbody>
 <tr>
 <td>4528</td>
-<td><a title=" MAG IMPORT CHECK STATUS This RPC is called to get a status record from the IMPORT STATUS file (2006.037)" href="ICR-4528.html">MAG IMPORT CHECK STATUS</a></td>
+<td><a title=" MAG IMPORT CHECK STATUS This RPC is called to get a status record from the IMPORT STATUS file (2006.037)" href="https://code.osehra.org/vivian/files/ICR/ICR-4528.html">MAG IMPORT CHECK STATUS</a></td>
 <td>Remote Procedure</td>
 <td><a href="https://code.osehra.org/dox/Package_Imaging.html">IMAGING</a></td>
 <td>2004/10/29</td>

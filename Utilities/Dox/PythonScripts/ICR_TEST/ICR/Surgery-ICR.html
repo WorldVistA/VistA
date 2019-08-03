@@ -62,6 +62,10 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,12 +81,16 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });
@@ -200,7 +208,7 @@
 <tbody>
 <tr>
 <td>16</td>
-<td><a title=" Surgery file (130)." href="ICR-16.html">DBIA16</a></td>
+<td><a title=" Surgery file (130)." href="https://code.osehra.org/vivian/files/ICR/ICR-16.html">DBIA16</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Surgery.html">SURGERY</a></td>
 <td>1990/02/26</td>
@@ -215,7 +223,7 @@
 </tr>
 <tr>
 <td>6730</td>
-<td><a title=" VIA needs to read a number of fields from Surgery File #130 for VIAB SRGY RPTLIST RPC." href="ICR-6730.html">VIAB SRGY RPTLIST</a></td>
+<td><a title=" VIA needs to read a number of fields from Surgery File #130 for VIAB SRGY RPTLIST RPC." href="https://code.osehra.org/vivian/files/ICR/ICR-6730.html">VIAB SRGY RPTLIST</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Surgery.html">SURGERY</a></td>
 <td>2017/01/26</td>

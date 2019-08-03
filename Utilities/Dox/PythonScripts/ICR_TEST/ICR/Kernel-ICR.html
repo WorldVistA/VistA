@@ -62,6 +62,10 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,12 +81,16 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });
@@ -200,7 +208,7 @@
 <tbody>
 <tr>
 <td>3103</td>
-<td><a title=" To prevent multiple jobs from running simultaneously through a resource device, the device must be monitored.  Also, if a job that is utilizing a resource device fails, the device must be cleared manually. This IA will allow the CMOP package to manage the PSX resource device and prevent potentially harmful results from data merging." href="ICR-3103.html">RESOURCE FILE MANAGEMENT</a></td>
+<td><a title=" To prevent multiple jobs from running simultaneously through a resource device, the device must be monitored.  Also, if a job that is utilizing a resource device fails, the device must be cleared manually. This IA will allow the CMOP package to manage the PSX resource device and prevent potentially harmful results from data merging." href="https://code.osehra.org/vivian/files/ICR/ICR-3103.html">RESOURCE FILE MANAGEMENT</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
 <td>2000/05/04</td>
@@ -216,7 +224,7 @@
 <tr>
 <td>977</td>
 <td><a title=" This integration agreement permits IFCAP to remove entries from the OPTION file (#19) until the release and availability of KIDS.
-" href="ICR-977.html">DBIA977</a></td>
+" href="https://code.osehra.org/vivian/files/ICR/ICR-977.html">DBIA977</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
 <td>1994/08/29</td>
@@ -232,7 +240,7 @@
 </tr>
 <tr>
 <td>10156</td>
-<td><a title=" Exporting, deleting, updating Options by Namespace via KIDS is permitted.  Linking menu options from other packages requires IAs between the packages whose options are being &quot;linked&quot;." href="ICR-10156.html">OPTION FILE</a></td>
+<td><a title=" Exporting, deleting, updating Options by Namespace via KIDS is permitted.  Linking menu options from other packages requires IAs between the packages whose options are being &quot;linked&quot;." href="https://code.osehra.org/vivian/files/ICR/ICR-10156.html">OPTION FILE</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_Kernel.html">KERNEL</a></td>
 <td>2006/05/31</td>

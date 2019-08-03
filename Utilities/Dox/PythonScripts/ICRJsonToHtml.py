@@ -14,7 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import division
 
+from builtins import str
+from past.utils import old_div
 import json
 import os.path
 import cgi
@@ -27,8 +30,6 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter, inch
 from reportlab.lib import colors
 
-from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
-from FileManGlobalDataParser import generateSingleFileFieldToIenMappingBySchema
 from LogManager import logger
 from ICRSchema import ICR_FILE_KEYWORDS_LIST, RPC_FILE_NO, RPC_NAME_FIELD_NO
 from ICRSchema import isSubFile, isWordProcessingField, SUBFILE_FIELDS
@@ -79,13 +80,12 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
         if not os.path.exists(pdfOutDir):
             os.makedirs(pdfOutDir)
 
+    from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
     crossRef = parseCrossReferenceGeneratorArgs(MRepositDir,
                                                 patchRepositDir)
     global RPC_NAME_TO_IEN_MAPPING
     RPC_NAME_TO_IEN_MAPPING = generateSingleFileFieldToIenMappingBySchema(MRepositDir,
-                                                                          crossRef,
-                                                                          RPC_FILE_NO,
-                                                                          RPC_NAME_FIELD_NO)
+                                                                          crossRef)
 
 
     with open(inputJsonFile, 'r') as inputFile:
@@ -107,7 +107,7 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
         if generateHTML:
             _generateICRSummaryPageImpl(allpkgJson, 'ICR List', 'All', date,
                                         outDir, isForAll=True)
-            for pkgName, outJson in pkgJson.iteritems():
+            for pkgName, outJson in pkgJson.items():
                 _generateICRSummaryPageImpl(outJson, 'ICR List', pkgName, date,
                                             outDir)
             logger.warn('Total # entry in PACKAGE_MAP is [%s]', len(PACKAGE_MAP))
@@ -115,6 +115,15 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
             _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef)
 
         # TODO: Log failures
+
+###############################################################################
+
+def generateSingleFileFieldToIenMappingBySchema(MRepositDir, crossRef):
+  from FileManGlobalDataParser import FileManGlobalDataParser
+  glbDataParser = FileManGlobalDataParser(MRepositDir, crossRef)
+  glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'][0], '1', '^DIC(')
+  return glbDataParser.generateFileFieldMap(glbDataParser.allFiles[RPC_FILE_NO]['path'],
+                                            RPC_FILE_NO, RPC_NAME_FIELD_NO)
 
 ###############################################################################
 
@@ -152,7 +161,7 @@ def _getPackageHRefLink(pkgName, icrEntry, **kargs):
         crossRef = kargs['crossRef']
     if crossRef:
         if not pgkUpperCaseNameDict:
-            for name in crossRef.getAllPackages().iterkeys():
+            for name in crossRef.getAllPackages().keys():
                 pgkUpperCaseNameDict[name.upper()] = name
         upperName = _normalizeName(pkgName).upper()
         if upperName in pgkUpperCaseNameDict:
@@ -290,17 +299,17 @@ def _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef):
         """ table body """
         output.write("<tbody>\n")
         """ Now convert the ICR Data to Table data """
-        for pkgName in sorted(outDep.iterkeys()):
+        for pkgName in sorted(outDep.keys()):
             output.write("<tr>\n")
             output.write("<td>%s</td>\n" % _getPackageHRefLink(pkgName, {'CUSTODIAL PACKAGE': pkgName}, crossRef=crossRef))
             """ Convert the dependencies and dependent information """
             output.write("<td>\n")
             output.write ("<ol>\n")
-            for pkgDepType in sorted(outDep[pkgName].iterkeys()):
+            for pkgDepType in sorted(outDep[pkgName].keys()):
                 output.write ("<li>\n")
                 output.write ("<dt>%s:</dt>\n" % pkgDepType.upper())
                 depPkgInfo = outDep[pkgName][pkgDepType]
-                for depPkgName in sorted(depPkgInfo.iterkeys()):
+                for depPkgName in sorted(depPkgInfo.keys()):
                     outputInfo = _getPackageHRefLink(depPkgName, {'CUSTODIAl PACKAGE': depPkgName}, crossRef=crossRef)
                     outputInfo += ': &nbsp;&nbsp Total # of ICRs %s : [' % len(depPkgInfo[depPkgName])
                     for icrNo in depPkgInfo[depPkgName]:
@@ -446,10 +455,10 @@ def _generateICRIndividualPagePDF(icrJson, date, pdfOutDir):
     buf = io.BytesIO()
     doc = SimpleDocTemplate(
         buf,
-        rightMargin=inch/2,
-        leftMargin=inch/2,
-        topMargin=inch/2,
-        bottomMargin=inch/2,
+        rightMargin=old_div(inch,2),
+        leftMargin=old_div(inch,2),
+        topMargin=old_div(inch,2),
+        bottomMargin=old_div(inch,2),
         pagesize=letter,
     )
     pdf = []
@@ -569,7 +578,7 @@ def _writeGlobalReferenceToPDF(section, pdf, doc):
                             row.append(Paragraph("", STYLES['Normal']))
                     table.append(row)
             columns = 12
-            columnWidth = doc.width/columns
+            columnWidth = old_div(doc.width,columns)
             t = Table(table,
                       colWidths=[columnWidth, columnWidth*2, columnWidth*2, columnWidth*6, columnWidth])
             t.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
@@ -635,7 +644,7 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
                 # TODO: Parsing error! See ICR-28
                 pass
         columns = 10
-        columnWidth = doc.width/columns
+        columnWidth = old_div(doc.width,columns)
         t = Table(table, colWidths=[columnWidth*2, columnWidth, columnWidth*7])
         t.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
                               ('BOX', (0,0), (-1,-1), 0.25, colors.black),

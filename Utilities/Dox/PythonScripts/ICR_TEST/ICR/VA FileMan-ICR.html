@@ -62,6 +62,10 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,12 +81,16 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });
@@ -200,7 +208,7 @@
 <tbody>
 <tr>
 <td>10155</td>
-<td><a title=" The 3rd piece of ^DD(filenumber,fieldnumber,0) is used in the call to Y^DIQ.  This may be referenced since no FM APIs exist yet to return this field for input to the supported call Y^DIQ." href="ICR-10155.html">SET OF CODES</a></td>
+<td><a title=" The 3rd piece of ^DD(filenumber,fieldnumber,0) is used in the call to Y^DIQ.  This may be referenced since no FM APIs exist yet to return this field for input to the supported call Y^DIQ." href="https://code.osehra.org/vivian/files/ICR/ICR-10155.html">SET OF CODES</a></td>
 <td>File</td>
 <td><a href="https://code.osehra.org/dox/Package_VA_FileMan.html">VA FILEMAN</a></td>
 <td>1998/02/03</td>
@@ -215,7 +223,7 @@
 </tr>
 <tr>
 <td>10034</td>
-<td><a title=" Used to to install filegrams." href="ICR-10034.html">Other API: Filegram</a></td>
+<td><a title=" Used to to install filegrams." href="https://code.osehra.org/vivian/files/ICR/ICR-10034.html">Other API: Filegram</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_VA_FileMan.html">VA FILEMAN</a></td>
 <td>1998/11/17</td>

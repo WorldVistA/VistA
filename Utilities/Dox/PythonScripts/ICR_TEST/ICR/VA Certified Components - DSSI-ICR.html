@@ -62,6 +62,10 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
+                        html = html.replace(/<br>/g, " ");
                         var entryList = html.split("</li>");
                         return $("<div/>").html(entryList.join("|")).text();
                      }
@@ -77,12 +81,16 @@
                   columns: ':visible',
                   format: {
                      body: function(html, indx, node) {
+                        if (Array.isArray(html)) {
+                          html = html.join(" ")
+                        }
                         var entryList = html.split("</li>");
                         var parsedList = []
                         entryList.forEach(function(d) {
                             if (d.indexOf("<li>") != -1) {
                               parsedList.push("* " + d)
                             } else {
+                              d = d.replace(/<br>/g, " ");
                               parsedList.push(d)
                             }
                         });
@@ -245,7 +253,7 @@
 
  RDV    Type: Input   (Optional) default = today Boolean flag to indicate whether or not to include remote data view visitors - default to 0 to not include.
  FUN    Type: Input (Optional)  Default is zero (0). I $G(FUN) then extrinsic function, else RPC.
- Return all user IDs for a given user.  This component is used for the &quot;DSIC ACTIVE CPRS PROVIDER&quot; rpc." href="ICR-5317.html">DSICDUZ</a></td>
+ Return all user IDs for a given user.  This component is used for the &quot;DSIC ACTIVE CPRS PROVIDER&quot; rpc." href="https://code.osehra.org/vivian/files/ICR/ICR-5317.html">DSICDUZ</a></td>
 <td>Routine</td>
 <td><a href="https://code.osehra.org/dox/Package_VA_Certified_Components___DSSI.html">VA CERTIFIED COMPONENTS - DSSI</a></td>
 <td>2008/12/23</td>
