@@ -158,6 +158,13 @@ COMMON_HEADER_PART = """
 SWAP_VIEW_HTML = """
 <button id="swapDisplay">Switch Display Mode</button>
 <script type="text/javascript\">
+  $(document).ready( function (event) {
+    if (location.hash[1] === "_") {
+      $("#terseDisplay").hide()
+      $("#expandedDisplay").show()
+      location.hash = location.hash
+    }
+  })
   $("#swapDisplay").click( function(event) {
     if ($("#terseDisplay").is(':visible')) {
       $("#terseDisplay").hide()
@@ -2167,7 +2174,7 @@ class WebPageGenerator:
                     entry = foundLine[0]
                   else:
                     entry = line
-                  idVal = "id=\"x%s\"" % entry.split("(")[0]
+                  idVal = "id=\"_%s\"" % entry.split("(")[0]
                 if rtnLinks:
                   #  find captured groupings
                   for pair in routineCallExpanded.findall(line):
@@ -2175,10 +2182,10 @@ class WebPageGenerator:
                     #  replace them with links to new pages
                       for value in calledRoutines.values():
                         if Routine(pair[1]) in value.keys():
-                          entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1].replace("%",''), pair[0], pair[0], pair[1])
+                          entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#_%s\">%s^%s</a>" % (DOX_URL, pair[1].replace("%",''), pair[0], pair[0], pair[1])
                           line = line.replace("%s^%s" % pair, entryLink)
                     elif pair[0] in labels:
-                      entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#x%s\">%s</a>" % (DOX_URL, routineName.replace("%",''), pair[0], pair[0])
+                      entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#_%s\">%s</a>" % (DOX_URL, routineName.replace("%",''), pair[0], pair[0])
                       line = line.replace(pair[0], entryLink)
                 if len(line):
                   outputFile.write("<pre style=\"padding:unset; border: none; margin:unset;\" %s class=\"prettyprint lang-mumps linenums:%s\">%s</pre>\n" % (idVal, lineNo, line))
