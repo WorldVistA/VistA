@@ -439,29 +439,10 @@ def scheduleOption(VistA,optionName):
   VistA.wait('Do you really want to halt')
   VistA.write('Y')
 
-def restartTaskMan(VistA):
-  # Restarts the TaskMan instance via the Taskman Management Utilities Menu.
-
+def startTaskMan(VistA):
+  # Starts the TaskMan instance via cold boot entry point ^ZTMB
   VistA.wait(PROMPT)
-  VistA.write('S DUZ=1 D ^XUP')
-  VistA.wait('Select OPTION NAME')
-  VistA.write('EVE\r1')
-  VistA.wait('Systems Manager Menu')
-  VistA.write('Taskman Management')
-  VistA.wait('Select Taskman Management')
-  VistA.write('Taskman Management Utilities')
-  VistA.wait('Select Taskman Management Utilities')
-  VistA.write('Restart Task Manager\rY')
-  VistA.wait('Select Taskman Management Utilities')
-  VistA.write('')
-  VistA.wait('Select Taskman Management')
-  VistA.write('')
-  VistA.wait('Select Systems Manager Menu')
-  VistA.write('')
-  VistA.wait('Do you really want to halt')
-  VistA.write('Y')
-  VistA.wait(PROMPT)
-  VistA.write('K')
+  VistA.write('DO ^ZTMB')
 
 def addSystemManager(VistA):
   # Add the super user System Manager via the User Management Menu
