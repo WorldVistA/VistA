@@ -49,6 +49,31 @@ It is also recommmended that you add the path to python executable to your
 system PATH environment variable, ``%PATH%`` for Windows, and ``$PATH``
 for Unix/Linix.
 
+Python Requirements
+###################
+
+Additionally, two  ``requirements.txt`` file has been provided.  These files
+should be used as the input to the ``pip`` program to install the required
+libraries for the Python environments.
+
+Execute the following command in the top level of this repository to install
+the libraries:
+
+Unix/Linux
+**********
+
+..parsed-literal::
+
+  VistA$ <path to>/python -m pip install -r requirements.txt
+
+Windows
+*******
+
+..parsed-literal::
+
+  VistA$ <path to>/python -m pip install -r requirements-windows.txt
+
+
 Sikuli
 -------
 Optional Download:  Sikuli is a cross platform utility for test graphical user
