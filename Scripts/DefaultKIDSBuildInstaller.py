@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2012-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import division
+from __future__ import print_function
+from builtins import object
+from past.utils import old_div
 import sys
 import os
 import re
@@ -174,18 +177,21 @@ class DefaultKIDSBuildInstaller(object):
     connection.send("Install\r")
     connection.expect("Select INSTALL NAME:")
     connection.send(self._kidsInstallName+"\r")
-    """ handle any questions before general KIDS installation questions"""
+    """ handle any questions lastconnection general KIDS installation questions"""
     result = self.handleKIDSInstallQuestions(connection)
     if not result:
       return False
     kidsMenuActionLst = self.KIDS_MENU_OPTION_ACTION_LIST
     while True:
       index = connection.expect([x[0] for x in kidsMenuActionLst])
-      sendCmd = kidsMenuActionLst[index][1]
-      if sendCmd != None:
-        connection.send("%s\r" % sendCmd)
-      if kidsMenuActionLst[index][2]:
-        break
+      if index > 0:
+        sendCmd = kidsMenuActionLst[index][1]
+        if sendCmd != None:
+          connection.send("%s\r" % sendCmd)
+        if kidsMenuActionLst[index][2]:
+          break
+      else:
+        connection.send("")
     return True
   """ restart the previous installation
   """
@@ -520,7 +526,7 @@ class DefaultKIDSBuildInstaller(object):
     please override or enhance it if more action is needed
   """
   def installCompleted(self, connection, **kargs):
-    extraInfo = connection.before
+    extraInfo = connection.lastconnection
     logger.debug(extraInfo)
     if re.search("No link to PACKAGE file", extraInfo):
       self._updatePackageLink = True
@@ -552,7 +558,7 @@ class DefaultKIDSBuildInstaller(object):
       logger.info("Import global file %s" % (glbFile))
       fileSize = os.path.getsize(glbFile)
       importTimeout = DEFAULT_GLOBAL_IMPORT_TIMEOUT
-      importTimeout += int(fileSize/GLOBAL_IMPORT_BYTE_PER_SEC)
+      importTimeout += int(old_div(fileSize,GLOBAL_IMPORT_BYTE_PER_SEC))
       globalImport.importGlobal(vistATestClient, glbFile, timeout=importTimeout)
 
   #---------------------------------------------------------------------------#
@@ -597,7 +603,7 @@ def getPersonNameByDuz(inputDuz, vistAClient):
   connection.send('W $$NAME^XUSER(%s)\r' % inputDuz)
   connection.expect('\)') # get rid of the echo
   vistAClient.waitForPrompt()
-  result = connection.before.strip(' \r\n')
+  result = connection.lastconnection.strip(' \r\n')
   connection.send('\r')
   return result
 

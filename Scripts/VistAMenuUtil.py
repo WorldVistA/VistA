@@ -14,10 +14,12 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import object
 import re
+import sys
 # constant for reuse
-DD_OUTPUT_FROM_WHAT_FILE = re.compile("OUTPUT FROM WHAT FILE:", re.I)
-DD_INPUT_TO_WHAT_FILE = re.compile("INPUT TO WHAT FILE:", re.I)
+DD_OUTPUT_FROM_WHAT_FILE = "OUTPUT FROM WHAT FILE:"
+DD_INPUT_TO_WHAT_FILE = "INPUT TO WHAT FILE:"
 
 """
   Utilitity Class to access VistA Menus System

@@ -1,6 +1,5 @@
-from __future__ import print_function
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +13,7 @@ from __future__ import print_function
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
 import sys
 import os
 import PackRO

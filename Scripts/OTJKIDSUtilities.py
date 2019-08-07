@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
 import sys,os,re,argparse,fnmatch
 from PatchInfoParser import installNameToDirName
 from OTJParseEvidenceOutput import ParseOutput,WriteRCheck,WriteRFind,XINDEXParser,GTMRFind,findGTMRoutinesDir
@@ -155,49 +156,49 @@ with testClient:
     for filename in fnmatch.filter(filenames,'*.m'):
       name,ext = filename.split('.')
       routineset.append(name)
-  print "Writing out intial XINDEX information: Start"
+  print("Writing out intial XINDEX information: Start")
   FullXINDEX(testClient,result.outputDir,routineset)
-  print "Writing out intial XINDEX information: Done"
+  print("Writing out intial XINDEX information: Done")
   resultsfolder = os.path.join(result.outputDir,"RCheck_RFind")
   try:
     os.mkdir(resultsfolder)
   except:
     pass
   if testClient.isCache():
-    print "Writing out initial %RCheck information: Start"
+    print("Writing out initial %RCheck information: Start")
     WriteRCheck(testClient,resultsfolder,"RCheckResultsPre.log",routineset)
-    print "Writing out %RCheck information: Done"
-    print "Writing out initial %RFind information: Start"
+    print("Writing out %RCheck information: Done")
+    print("Writing out initial %RFind information: Start")
     WriteRFind(testClient,resultsfolder,"RFindResultsPre.log",routineset)
-    print "Writing out %RFind information: Done"
+    print("Writing out %RFind information: Done")
   else:
-    print "%RFIND is an InterSystems Cache Utility, performing a REGEX search through the gtmroutines directory in " + findGTMRoutinesDir()
+    print("%RFIND is an InterSystems Cache Utility, performing a REGEX search through the gtmroutines directory in " + findGTMRoutinesDir())
     GTMRFind(resultsfolder,"RFindResultsPre.log",routineset)
   # Attempt to install the supplied KIDS build
-  print "Installation of " + result.KIDSbuild+ " : START"
+  print("Installation of " + result.KIDSbuild+ " : START")
   KIDSInstaller = DefaultKIDSBuildInstaller(result.KIDSbuild,KIDSParser.installNameList[0],None,os.path.join(result.outputDir,'InstallLog.txt'),
                                             KIDSParser.installNameList,1,printTG=result.outputDir)
 
   KIDSInstaller.runInstallation(testClient)
-  print "Installation of " + result.KIDSbuild+ " : DONE"
+  print("Installation of " + result.KIDSbuild+ " : DONE")
   # Run the XINDEX utility on each build that was installed by the KIDS build
   for name in KIDSParser.installNameList:
-    print "Running XINDEX and finding Checksums for installed package: " + name
+    print("Running XINDEX and finding Checksums for installed package: " + name)
     XINDEXbyBuildname(testClient,name,result.outputDir)
     PrintChecksumsbyBuildname(testClient,name,result.outputDir)
   rfindpost=os.path.join(resultsfolder,"RFindResultsPost.log")
   rcheckpost= os.path.join(resultsfolder,"RCheckResultsPost.log")
   if testClient.isCache():
-    print "Writing out post-install %RCheck information: Start"
+    print("Writing out post-install %RCheck information: Start")
     WriteRCheck(testClient,resultsfolder,"RCheckResultsPost.log",routineset)
-    print "Writing out post-install %RCheck information: Done"
-    print "Writing out post-install %RFind information: Start"
+    print("Writing out post-install %RCheck information: Done")
+    print("Writing out post-install %RFind information: Start")
     WriteRFind(testClient,resultsfolder,"RFindResultsPost.log",routineset)
-    print "Writing out post-install %RFind information: Done"
-    print "Parsing Output"
+    print("Writing out post-install %RFind information: Done")
+    print("Parsing Output")
     ParseOutput(resultsfolder+"/",rfindpost,rcheckpost,routineset)
   else:
-    print "%RFIND is an InterSystems Cache Utility, performing a REGEX search through the gtmroutines directory in " + findGTMRoutinesDir()
+    print("%RFIND is an InterSystems Cache Utility, performing a REGEX search through the gtmroutines directory in " + findGTMRoutinesDir())
     GTMRFind(resultsfolder,"RFindResultsPost.log",routineset)
-    print "Parsing Output"
+    print("Parsing Output")
     ParseOutput(resultsfolder+"/",rfindpost,None,routineset)

@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import object
 import sys
 import os
 import re
@@ -218,7 +219,7 @@ class MCompReposReadMeGenerator(object):
   def __readFromPackageCsv__(self):
     pkgDict = self._packageVDLDict
     packageCsv = os.path.join(self._inputDir, "Packages.csv")
-    result = csv.DictReader(open(packageCsv, 'rb'))
+    result = csv.DictReader(open(packageCsv, 'r'))
     for row in result:
       pkgName = row['Directory Name']
       vdlId = row['VDL ID']

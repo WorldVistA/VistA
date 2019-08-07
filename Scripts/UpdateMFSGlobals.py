@@ -1,3 +1,4 @@
+from __future__ import print_function
 # Update the globals that are updated by the Master File Server
 # in a running instance of VistA.
 #
@@ -24,13 +25,16 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
 from __future__ import with_statement
 import sys
 import os
 import re
 import glob
 import argparse
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from datetime import datetime
 import time
 
@@ -48,7 +52,7 @@ from PackRO             import pack
 from VistARoutineImport import VistARoutineImport
 
   #(fileNum, Package, GlobalName)
-class updateMFSGlobals():
+class updateMFSGlobals(object):
   MFS_list = [
   ("Kernel","4.009","STANDARD TERMINOLOGY VERSION FILE"),
   ("Registration","10.99", "RACE MASTER"),
@@ -94,16 +98,16 @@ class updateMFSGlobals():
       try:
         index = connection.expect(["\n\^.*\n"],1)
       except:
-        print "File %s does not exist in the instance, skipping..." % fileNumber
+        print("File %s does not exist in the instance, skipping..." % fileNumber)
 	return False
       myGlobal = connection.after.strip()
-      print "Killing Global " + myGlobal
+      print("Killing Global " + myGlobal)
       connection.send("KILL " + myGlobal + "\n")
       connection.expect(".*>.*")
       return True
       
   def installFile(self, vistaClient, connection, downloadedGblPath):
-      print "Importing %s" % downloadedGblPath
+      print("Importing %s" % downloadedGblPath)
 
       connection.send("D ^ZGI\r")
       connection.expect("Device",1)
@@ -115,18 +119,18 @@ class updateMFSGlobals():
         connection.expect("Loaded")
       except Exception as ex:
         #Print error message with import problem?
-        print "Problem importing global: %s" % ex
+        print("Problem importing global: %s" % ex)
 
   def checkforZGI(self,vistaClient,tmpDir,gtmDir):
     connection = vistaClient.getConnection()
     try:
-      print "Checking for the ZGI routine"
+      print("Checking for the ZGI routine")
       connection.send("D ^ZGI\r")
       connection.expect("Device")
       connection.send("^\r")
     # If error, ZGI routine doesn't exist
     except Exception as ex:
-        print "Installing ZGI"
+        print("Installing ZGI")
         # Attempt to install ZGI from SCRIPT_DIR?
         zgiRO = open(tmpDir+"/ZGI.ro","w")
         pack([SCRIPT_DIR+"/ZGI.m"],zgiRO)
@@ -134,7 +138,7 @@ class updateMFSGlobals():
         vistARoutineImport = VistARoutineImport()
         vistARoutineImport.importRoutines(vistaClient, tmpDir+"/ZGI.ro",
                                           gtmDir)
-        print "Done installing!"
+        print("Done installing!")
 
   """ This function downloads from a known set of Globals which are updated by the master file server
 
@@ -150,9 +154,9 @@ class updateMFSGlobals():
     connection = vistaClient.getConnection()
     # Go through each file from above and download it from the branch set above
     for MFS_info in self.MFS_list:
-      print ""
+      print("")
       zwrFile = urlRoot+"/Packages/%s/Globals/%s+%s.zwr" % (MFS_info[0], MFS_info[1],MFS_info[2].replace(")","").replace("(",""))
-      print "Downloading the %s global from %s" % (MFS_info[2], zwrFile)
+      print("Downloading the %s global from %s" % (MFS_info[2], zwrFile))
       downloadedGblPath = '%s/%s+%s.zwr' % (tmpDir,MFS_info[1],MFS_info[2])
       # Download from URL
       downloader = ExternalDataDownloader()
@@ -163,12 +167,12 @@ class updateMFSGlobals():
       with open(downloadedGblPath,"r") as gblContent:
         gbl_first_line = gblContent.readline()
       if gbl_first_line.strip() == "404: Not Found":
-        print "Trying to see if global has split:"
+        print("Trying to see if global has split:")
         index = 1
 	didIDeleteTheFileAlready = False
         while True:
             splitZwrFile = urlRoot+"/Packages/%s/Globals/%s-%s+%s.zwr" % (MFS_info[0], MFS_info[1], index,MFS_info[2])
-            print "trying %s" % (splitZwrFile)
+            print("trying %s" % (splitZwrFile))
             downloadedSplitGblPath = '%s/%s-%s+%s.zwr' % (tmpDir, MFS_info[1], index,MFS_info[2])
             # Download from URL
             downloader = ExternalDataDownloader()
@@ -187,13 +191,13 @@ class updateMFSGlobals():
         os.remove(downloadedGblPath)
         continue
       elif MFS_info[2].replace('-','/') not in gbl_first_line:
-        print "Downloaded global information does not match desired name"
+        print("Downloaded global information does not match desired name")
         continue
     # Import the global using the ZGI routine
       if install:
         if self.deleteFile(connection, MFS_info[1]):
           self.installFile(vistaClient,connection,downloadedGblPath)
-        print "Deleting Download"
+        print("Deleting Download")
         os.remove(downloadedGblPath)
 
   """ main

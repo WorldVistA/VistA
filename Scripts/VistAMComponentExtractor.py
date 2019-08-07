@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2012-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,9 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from __future__ import print_function
 from __future__ import with_statement
+from builtins import object
 import sys
 import os
 import subprocess
@@ -51,7 +53,7 @@ ROUTINE_EXTRACT_EXCEPTION_LIST = (
 """ Extract routines/globals from a VistA instance and import
     to the git repository
 """
-class VistADataExtractor:
+class VistADataExtractor(object):
   def __init__(self, vistARepoDir, outputResultDir,
                outputLogDir, routineOutDir=None,
                gitBranch=None, generateReadMe=False,
@@ -189,14 +191,14 @@ class VistADataExtractor:
     from PopulatePackages import populate
     curDir = os.getcwd()
     os.chdir(self._packagesDir)
-    populate(open(self._packagesCSV, "rb"))
+    populate(open(self._packagesCSV, "r"))
     os.chdir(curDir)
 
   def __chmodGlobalOutput__(self):
     allZWRFiles = glob.glob(os.path.join(self._globalOutputDir,
                                          "*.zwr"))
     for file in allZWRFiles:
-      os.chmod(file, 0644)
+      os.chmod(file, 0o644)
 
   def __generatePackageReadMes__(self):
     # assume runs from the scripts directory

@@ -8,7 +8,7 @@
 # and generate the Patch order via patch dependency
 #
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2012-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +22,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
+from past.builtins import cmp
+from builtins import str
+from builtins import range
+from builtins import object
 import os
 import sys
 import re
@@ -219,7 +224,7 @@ class PatchOrderGenerator(object):
 
   """ parse all the KIDS files, update kidsInstallNameDict, multibuildDict """
   def __parseAllKIDSBuildFilesList__(self):
-    for basename in self._kidsBuildFileDict.iterkeys():
+    for basename in self._kidsBuildFileDict:
       kidsFile, sha1Path = self._kidsBuildFileDict[basename]
       if kidsFile == None:
         logger.error("No KIDS file available for name %s" % basename)
@@ -329,7 +334,7 @@ class PatchOrderGenerator(object):
   """ update multiBuild KIDS patch info"""
   def __updateMultiBuildPatchInfo__(self):
     patchList = self._patchInfoDict
-    for installList in self._multiBuildDict.itervalues():
+    for installList in self._multiBuildDict.values():
       for installName in installList:
         patchInfo = patchList[installName]
         patchInfo.isMultiBuilds = True
@@ -337,7 +342,7 @@ class PatchOrderGenerator(object):
   """ update multiBuild KIDS files dependencies """
   def __updateMultiBuildDependencies__(self):
     patchList = self._patchInfoDict
-    for installList in self._multiBuildDict.itervalues():
+    for installList in self._multiBuildDict.values():
       logger.info("Multi-Buids KIDS install List: %s" % (installList))
       firstPatch = patchList[installList[0]]
       firstPatch.otherKidsInfoList = []
@@ -370,7 +375,7 @@ class PatchOrderGenerator(object):
 
   """ update the csvDepPatch based on csv file based dependencies """
   def __updateCSVDependencies__(self):
-    for patchInfo in self._patchInfoDict.itervalues():
+    for patchInfo in self._patchInfoDict.values():
       installName = patchInfo.installName
       if installName in self._csvDepDict:
         patchInfo.csvDepPatch = self._csvDepDict[installName]
@@ -387,7 +392,7 @@ class PatchOrderGenerator(object):
   def __updateSeqNoDependencies__(self):
     namespaceVerSeq = dict()
     patchInfoDict = self._patchInfoDict
-    for patchInfo in patchInfoDict.itervalues():
+    for patchInfo in patchInfoDict.values():
       """ generate dependencies map based on seq # """
       namespace = patchInfo.namespace
       version = patchInfo.version
@@ -403,8 +408,8 @@ class PatchOrderGenerator(object):
         namespaceVerSeq[namespace][version].append((int(seqNo),
                                                     installName))
     """ add dependencies based on SEQ # """
-    for versionDict in namespaceVerSeq.itervalues():
-      for seqList in versionDict.itervalues():
+    for versionDict in namespaceVerSeq.values():
+      for seqList in versionDict.values():
         if len(seqList) < 2:
           continue
         else:
@@ -418,7 +423,7 @@ class PatchOrderGenerator(object):
   def __generatePatchDependencyGraph__(self):
     depDict = self._patchDependencyDict
     namespaceVerSeq = dict()
-    for patchInfo in self._patchInfoDict.itervalues():
+    for patchInfo in self._patchInfoDict.values():
       installName = patchInfo.installName
       if installName not in depDict:
         depDict[installName] = set()
@@ -461,9 +466,9 @@ class PatchOrderGenerator(object):
   def __handlePatchAssociatedFiles__(self):
     """ handle the info files first """
     """ first by name assiciation """
-    patchInfoList = self._patchInfoDict.values()
+    patchInfoList = list(self._patchInfoDict.values())
     #handle the associated files for missingKIDSBuild info
-    patchInfoList.extend(self._missKidsBuildDict.values())
+    patchInfoList.extend(list(self._missKidsBuildDict.values()))
     for patchInfo in patchInfoList:
       infoPath = patchInfo.kidsInfoPath
       if infoPath:
@@ -577,7 +582,7 @@ class PatchOrderGenerator(object):
     """ Utility methods to sort the CSV file based dependency """
     outOrderList = []
     """ sort the csv file by the first entry's verification date """
-    csvFileOrder = sorted(self._patchOrderCSVDict.keys(),
+    csvFileOrder = sorted(list(self._patchOrderCSVDict.keys()),
                           key=lambda
                           item: self._patchOrderCSVDict[item][0].verifiedDate)
 
@@ -610,7 +615,7 @@ class PatchOrderGenerator(object):
     if orderCSV not in self._patchOrderCSVDict:
       self._patchOrderCSVDict[orderCSV] = []
     patchOrderList = self._patchOrderCSVDict[orderCSV]
-    result = csv.DictReader(open(orderCSV, 'rb'))
+    result = csv.DictReader(open(orderCSV, 'r'))
     installNameSet = set() # to check possible duplicates entry
     for row in result:
       installName = convertToInstallName(row['LABELED_AS'].strip())
@@ -719,17 +724,17 @@ def visitNode(nodeName, depDict, visitSet, tempStack, result):
 """ Utility function to print result of a ordered patch list """
 def printPatchOrderList(patchOrderList):
   for x in patchOrderList:
-    print({"Name" : x.installName},
+    print(({"Name" : x.installName},
           {"Seq#" : x.seqNo},
           {"KIDS" : os.path.basename(x.kidsFilePath)},
           {"CSVDep" : x.csvDepPatch},
-         )
+         ))
 
 """ Utility function to check if the csv file is indeed in valid format """
 def isValidOrderCSVFile(patchesCSV):
   assert os.path.exists(patchesCSV)
   validFields = VALID_CSV_ORDER_FILE_FIELDS
-  patches_csv = csv.DictReader(open(patchesCSV, 'rb'))
+  patches_csv = csv.DictReader(open(patchesCSV, 'r'))
   patchCSVHeader = patches_csv.fieldnames
   if (patchCSVHeader is None or
       len(patchCSVHeader) < len(validFields)):

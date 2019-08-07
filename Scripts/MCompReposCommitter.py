@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
+from builtins import str
+from builtins import object
 import sys
 import os
 import subprocess
@@ -117,7 +119,7 @@ def testSinglePatchCommitMsg():
   patchInfo.kidsFilePath = "C:/users/jason.li/git/VistA/Packages/"\
                            "Lab Service/Patches/LR_5.2_334/LR_52_334.KIDs.json"
   commitMsgFile = getDefaultCommitMsgFileByPatchInfo(patchInfo)
-  print commitMsgFile
+  print(commitMsgFile)
   generateCommitMsgFileByPatchInfo(patchInfo, commitMsgFile,
                                    "origin/master", SCRIPTS_DIR)
 

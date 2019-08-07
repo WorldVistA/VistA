@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2014 The Open Source Electronic Health Record Agent
+# Copyright 2014-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
+from builtins import range
 import xlrd
 from xlrd import open_workbook,cellname,xldate_as_tuple
 from datetime import datetime, date, time
@@ -23,15 +24,15 @@ import logging
 def test_sheet(test_xls):
   book = open_workbook(test_xls)
   sheet0 = book.sheet_by_index(0)
-  print sheet0.row(0)
-  print sheet0.col(0)
-  print
-  print sheet0.row_slice(0,1)
-  print sheet0.row_slice(0,1,2)
-  print sheet0.row_values(0,1)
-  print sheet0.row_values(0,1,2)
-  print sheet0.row_types(0,1)
-  print sheet0.row_types(0,1,2)
+  print(sheet0.row(0))
+  print(sheet0.col(0))
+  print()
+  print(sheet0.row_slice(0,1))
+  print(sheet0.row_slice(0,1,2))
+  print(sheet0.row_values(0,1))
+  print(sheet0.row_values(0,1,2))
+  print(sheet0.row_types(0,1))
+  print(sheet0.row_types(0,1,2))
 
 typeDict = {
   xlrd.XL_CELL_NUMBER: "Number",
@@ -74,7 +75,7 @@ def convertExcelToCsv(input, output):
   isHeader = False
   data_row = 0
   fields = None
-  for row_index in xrange(sheet.nrows):
+  for row_index in range(sheet.nrows):
     row_types = sheet.row_types(row_index)
     assert len(row_types) == sheet.ncols
     """ Try to identify the header of file """
@@ -99,12 +100,12 @@ def convertExcelToCsv(input, output):
   if not isHeader:
     logging.error("No Valid Header for CSV file output")
     return
-  with open(output, "wb") as outCsv:
+  with open(output, "w") as outCsv:
     csvWrt = csv.writer(outCsv, lineterminator="\n")
     csvWrt.writerow(fields)
-    for row_index in xrange(data_row, sheet.nrows):
+    for row_index in range(data_row, sheet.nrows):
       curRow = []
-      for col_index in xrange(sheet.ncols):
+      for col_index in range(sheet.ncols):
         cell = sheet.cell(row_index, col_index)
         name = cellname(row_index, col_index)
         cType = typeDict.get(cell.ctype, "Unknown")
@@ -118,7 +119,7 @@ def convertExcelToCsv(input, output):
         logging.debug("Ignore empty row %s " % curRow)
         continue
       csvWrt.writerow(curRow)
-  with open(output, 'rb') as csvFile:
+  with open(output, 'r') as csvFile:
     csvReader = csv.reader(csvFile)
     for row in csvReader:
       logging.debug(','.join(row))

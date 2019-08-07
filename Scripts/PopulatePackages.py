@@ -12,7 +12,7 @@
 # a prefix.
 #
 #---------------------------------------------------------------------------
-# Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2011-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -26,12 +26,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from past.builtins import cmp
+from functools import cmp_to_key
+from builtins import object
 import sys
 import os
 import csv
 import glob
 
-class Package:
+class Package(object):
     def __init__(self, name, path):
         self.name = name
         self.path = path.strip().replace('/',os.path.sep)
@@ -89,7 +92,7 @@ def populatePackageMapByCSV(input):
         for ns in p.included:
             namespaces[ns] = p.path
         for ns in p.excluded:
-            if not namespaces.has_key(ns):
+            if ns not in namespaces:
                 namespaces[ns] = None
 
     return (packages, namespaces)
@@ -106,7 +109,7 @@ def populate(input):
     #-----------------------------------------------------------------------------
 
     # Map by package namespace (prefix).
-    for ns in sorted(namespaces.keys(),order_long_to_short):
+    for ns in sorted(list(namespaces.keys()),key=cmp_to_key(order_long_to_short)):
         path = namespaces[ns]
         gbls=[]
         for gbl in globals:

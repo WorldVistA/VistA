@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
 import sys
 import os
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from LoggerManager import logger, initConsoleLogging
 from ConvertToExternalData import generateExternalDataFileName
 from ConvertToExternalData import generateSha1Sum
@@ -72,7 +74,7 @@ class ExternalDataDownloader(object):
   @staticmethod
   def downloadExternalDataDirectly(dwnUrl, fileToSave):
     try:
-      urllib.urlretrieve(dwnUrl, fileToSave)
+      urllib.request.urlretrieve(dwnUrl, fileToSave)
       return True
     except Exception as ex:
       logger.error(ex)

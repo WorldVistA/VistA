@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2012-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
+from builtins import object
+import codecs
 import os
 import sys
 import re
@@ -171,7 +174,7 @@ class PatchInfoParser(object):
     patchInfo = PatchInfo()
     assert os.path.exists(infoFile)
     patchInfo.kidsInfoPath = infoFile
-    inputFile = open(infoFile, 'rb')
+    inputFile = codecs.open(infoFile, 'r', encoding='utf-8', errors='ignore')
     for line in inputFile:
       line = line.rstrip(" \r\n")
       if len(line) == 0:
@@ -253,7 +256,7 @@ def testPatchInfoParser():
     sys.exit(-1)
   infoParser = PatchInfoParser()
   patchInfo = infoParser.parseKIDSInfoFile(sys.argv[1])
-  print patchInfo
+  print(patchInfo)
 
 if __name__ == '__main__':
   testPatchInfoParser()

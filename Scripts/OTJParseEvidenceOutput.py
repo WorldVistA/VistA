@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
+from builtins import range
 import os,sys,argparse,re,fnmatch
 from PatchInfoParser import installNameToDirName
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
@@ -130,7 +131,7 @@ def RFindParser(rfindinput,searchers,filearray,routineset=False):
       routine,ext = line.split('.')
       # check to see if a routine set is given, and if the routine is in the set
       if routine in routineset:
-        print "Writing findings for "+ routine
+        print("Writing findings for "+ routine)
     else:
       # Once a routine is found, check the next lines for the strings in the searcharray
       for index in range(0,len(regexsearcharray)):
@@ -152,7 +153,7 @@ def RCheckParser(rcheckinput,outputDir,routineset):
       if routine in routineset:
         if re.search('Error [0-9]+',line):
           rcheckresults.write(line)
-          print "An error has been found in " + routine
+          print("An error has been found in " + routine)
 
 def ParseOutput(outputDir,FindFile,CheckFile,RoutineSet):
   filearray = [open(outputDir+'fourslash.txt','w'),open(outputDir+'dic0.txt','w'),open(outputDir+'utility.txt','w'),open(outputDir+'tmp.txt','w'),
