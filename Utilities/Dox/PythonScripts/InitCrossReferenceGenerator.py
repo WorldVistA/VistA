@@ -250,7 +250,7 @@ def parseCrossReferenceGeneratorArgs(MRepositDir,
   percentMapFile = os.path.join(patchRepositDir, DoxDir,
                                 "PercentRoutineMapping.csv")
   crossRefGen.parsePercentRoutineMappingFile(percentMapFile)
-  crossRefGen.parsePackagesFile(os.path.join(patchRepositDir,
+  crossRefGen.parsePackagesFile(os.path.join(MRepositDir,
                                                "Packages.csv"))
   platformDepRtnFile = os.path.join(patchRepositDir, DoxDir,
                                 "PlatformDependentRoutine.csv")
