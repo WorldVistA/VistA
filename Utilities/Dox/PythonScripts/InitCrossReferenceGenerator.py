@@ -262,4 +262,6 @@ def parseCrossReferenceGeneratorArgs(MRepositDir,
                                                            "Packages"),
                                                 "*/Routines/*.m")
 
+  crossRefGen.crossReference.mapPackageNames()
+
   return crossRefGen.crossReference
