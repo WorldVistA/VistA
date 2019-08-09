@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2012-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 #---------------------------------------------------------------------------
 
 from __future__ import with_statement
+from __future__ import print_function
 import os
 import sys
 import time
@@ -33,7 +34,7 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
   if VistA.type=='cache':
     try:
       VistA.ZN('${VISTA_CACHE_NAMESPACE}')
-    except IndexError,no_namechange:
+    except IndexError as no_namechange:
       pass
   VistA.wait(PROMPT)
   VistA.write('D ^%ZIS')
@@ -142,12 +143,12 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
     VistA.write('')
     VistA.wait(PROMPT)
     VistA.write('HALT')
-  except EOFError, e:
+  except EOFError as e:
     logger.error(e)
 
 if __name__ == '__main__':
   if len(sys.argv) != 5:
-    print 'Wrong number of arguments'
+    print('Wrong number of arguments')
     sys.exit()
   initLogging(sys.argv[4], "FileManGlobalAttributes.log")
   listFileManFileAttributes(sys.argv[1],
