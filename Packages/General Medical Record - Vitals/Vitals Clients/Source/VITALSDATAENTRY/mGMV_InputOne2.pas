@@ -158,6 +158,7 @@ type
     procedure cbxInputEnter(Sender: TObject);
     procedure cbxUnitsEnter(Sender: TObject);
     procedure cbxUnitsExit(Sender: TObject);
+    destructor Destroy; override;
   private
     fTemplateVital: TGMV_TemplateVital;
     fTemplateVitalType: TVitalType;
@@ -1662,6 +1663,19 @@ end;
 procedure TfraGMV_InputOne2.cbxUnitsExit(Sender: TObject);
 begin
   setStatusString('');
+end;
+
+destructor TfraGMV_InputOne2.Destroy;
+begin
+  if DefaultTemplateVital <> fTemplateVital then
+  begin
+    if assigned(DefaultTemplateVital) then
+      FreeAndNil(DefaultTemplateVital);
+  end;
+
+  if assigned(fTemplateVital) then
+    FreeAndNil(fTemplateVital);
+  inherited;
 end;
 
 end.

@@ -4,7 +4,7 @@ unit uGMV_Engine;
 *
 *       Application:  Vitals
 *       Revision:     $Revision: 1 $  $Modtime: 5/05/09 1:44p $
-*       Developer:    andrey.andriyevskiy@domain
+*       Developer:    andrey.andriyevskiy@va.gov
 *       Site:         Hines OIFO
 *
 *       Description:  This unit isolates VistA RPC

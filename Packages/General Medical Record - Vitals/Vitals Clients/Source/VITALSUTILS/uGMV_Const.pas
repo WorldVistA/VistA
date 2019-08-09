@@ -108,11 +108,11 @@ const
         'Qualifiers management is not supported locally.'+#13#10+
         'If you wish to request a new term or modify an existing term'+#13#10+
         'please  refer to the New Term Rapid Turnaround (NTRT) web site located at'+#13#10+
-        '                            http://domaindomain.ext/ntrt/ '+#13#10+
+        '                            http://vista.domain.ext/ntrt/ '+#13#10+
         'If you have any questions regarding this new term request process,'+#13#10+
          'please contact the ERT NTRT Coordinator via e-mail at VHA OI SDD HDS NTRT.';
 
-  GMV_WEBSITE = 'http://domaindomain.ext/ClinicalSpecialties/vitals/';
+  GMV_WEBSITE = 'http://vista.domain.ext/ClinicalSpecialties/vitals/';
   MetricList = 'HEIGHT TEMPERATURE WEIGHT CIRCUMFERENCE/GIRTH CENTRAL VENOUS PRESSURE'; // zzzzzzandria 060725 HD0000000149958
 
   GMV_DateTimeFormat = 'mm/dd/yyyy hh:nn:ss';

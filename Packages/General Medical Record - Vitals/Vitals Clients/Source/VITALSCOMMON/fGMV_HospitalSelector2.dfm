@@ -112,12 +112,15 @@ object frmGMV_HospitalSelector2: TfrmGMV_HospitalSelector2
     Height = 302
     ActivePage = tsByName
     Align = alClient
-    TabIndex = 2
     TabOrder = 1
     OnChange = pcMainChange
     object tsByApointment: TTabSheet
       Caption = 'A&ppointments'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lvAppt: TListView
         Left = 0
         Top = 89
@@ -228,6 +231,10 @@ object frmGMV_HospitalSelector2: TfrmGMV_HospitalSelector2
     object tsAdmissions: TTabSheet
       Caption = 'Ad&missions'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pnlAdmitTest: TPanel
         Left = 0
         Top = 0
@@ -357,7 +364,6 @@ object frmGMV_HospitalSelector2: TfrmGMV_HospitalSelector2
             Height = 21
             Anchors = [akLeft, akTop, akRight]
             Color = clInfoBk
-            ItemHeight = 13
             TabOrder = 0
             OnChange = cmbTargetChange
             OnEnter = cmbTargetEnter

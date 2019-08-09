@@ -18,9 +18,10 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
   Menu = MainMenu1
   OldCreateOrder = False
   Position = poOwnerFormCenter
+  OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Panel2: TPanel
     Left = 0
     Top = 525
@@ -29,10 +30,8 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 529
-    ExplicitWidth = 799
     object Panel3: TPanel
-      Left = 611
+      Left = 603
       Top = 0
       Width = 188
       Height = 41
@@ -86,7 +85,6 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
     Width = 791
     Height = 525
     Align = alClient
-    Caption = 'Panel8'
     TabOrder = 0
     object Panel7: TPanel
       Left = 1
@@ -96,7 +94,6 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitHeight = 527
       DesignSize = (
         199
         523)
@@ -108,7 +105,6 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
         Anchors = [akLeft, akTop, akRight, akBottom]
         Caption = '&User Templates'
         TabOrder = 0
-        ExplicitHeight = 515
         DesignSize = (
           185
           511)
@@ -125,7 +121,6 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
           Font.Height = -12
           Font.Name = 'MS Sans Serif'
           Font.Style = []
-          ItemHeight = 13
           ParentCtl3D = False
           ParentFont = False
           TabOrder = 0
@@ -142,7 +137,6 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
       Height = 523
       Align = alClient
       BevelOuter = bvNone
-      Caption = 'Panel1'
       TabOrder = 1
       object Panel5: TPanel
         Left = 0
@@ -152,7 +146,6 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 590
       end
       object Panel4: TPanel
         Left = 0
@@ -162,8 +155,6 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitTop = 519
-        ExplicitWidth = 590
       end
       object Panel9: TPanel
         Left = 0
@@ -171,7 +162,6 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
         Width = 582
         Height = 506
         Align = alClient
-        Caption = 'Panel9'
         TabOrder = 2
         inline fraGMV_EditTemplate1: TfraGMV_EditTemplate
           Left = 1
@@ -198,57 +188,59 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
             Width = 580
             Height = 268
             ExplicitTop = 236
-            ExplicitWidth = 588
-            ExplicitHeight = 272
+            ExplicitWidth = 580
+            ExplicitHeight = 268
             inherited Panel7: TPanel
-              Height = 272
+              Height = 268
               Visible = False
-              ExplicitHeight = 272
+              ExplicitHeight = 268
             end
             inherited pnlDefaults: TPanel
-              Width = 579
-              Height = 272
-              ExplicitWidth = 579
-              ExplicitHeight = 272
+              Width = 571
+              Height = 268
+              ExplicitWidth = 571
+              ExplicitHeight = 268
               inherited Panel8: TPanel
-                Top = 264
-                Width = 579
+                Top = 260
+                Width = 571
                 Height = 8
                 TabOrder = 1
                 Visible = False
-                ExplicitTop = 264
-                ExplicitWidth = 579
+                ExplicitTop = 260
+                ExplicitWidth = 571
                 ExplicitHeight = 8
                 inherited lblQualifiers: TLabel
-                  Width = 83
-                  ExplicitWidth = 83
+                  Width = 104
+                  Height = 16
+                  ExplicitWidth = 104
+                  ExplicitHeight = 16
                 end
               end
               inherited pnlDefaultQualifiers: TPanel
-                Width = 579
-                Height = 197
+                Width = 571
+                Height = 193
                 TabOrder = 2
-                ExplicitWidth = 579
-                ExplicitHeight = 197
+                ExplicitWidth = 571
+                ExplicitHeight = 193
                 inherited gb: TGroupBox
-                  Width = 579
-                  Height = 197
-                  ExplicitWidth = 579
-                  ExplicitHeight = 197
+                  Width = 571
+                  Height = 193
+                  ExplicitWidth = 571
+                  ExplicitHeight = 193
                 end
               end
               inherited Panel2: TPanel
-                Width = 579
+                Width = 571
                 TabOrder = 0
-                ExplicitWidth = 579
+                ExplicitWidth = 571
                 inherited rgMetric: TRadioGroup
-                  Width = 579
-                  ExplicitWidth = 579
+                  Width = 571
+                  ExplicitWidth = 571
                 end
               end
               inherited Panel4: TPanel
-                Width = 579
-                ExplicitWidth = 579
+                Width = 571
+                ExplicitWidth = 571
               end
             end
           end
@@ -256,35 +248,39 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
             Width = 580
             Height = 233
             BevelOuter = bvNone
-            ExplicitWidth = 588
+            ExplicitWidth = 580
             ExplicitHeight = 233
             inherited pnlListView: TPanel
               Left = 0
               Top = 100
-              Width = 588
+              Width = 580
               Height = 133
               ExplicitLeft = 0
               ExplicitTop = 100
-              ExplicitWidth = 588
+              ExplicitWidth = 580
               ExplicitHeight = 133
               inherited Panel1: TPanel
-                Width = 588
+                Width = 580
                 Height = 133
-                ExplicitWidth = 588
+                ExplicitWidth = 580
                 ExplicitHeight = 133
                 inherited Panel3: TPanel
-                  Width = 588
+                  Width = 580
                   Height = 25
-                  ExplicitWidth = 588
+                  ExplicitWidth = 580
                   ExplicitHeight = 25
                   inherited lblVitals: TLabel
+                    Width = 33
+                    Height = 16
                     Caption = 'V&itals'
+                    ExplicitWidth = 33
+                    ExplicitHeight = 16
                   end
                   inherited Panel5: TPanel
-                    Left = 301
+                    Left = 293
                     Width = 287
                     Height = 25
-                    ExplicitLeft = 301
+                    ExplicitLeft = 293
                     ExplicitWidth = 287
                     ExplicitHeight = 25
                     inherited SpeedButton1: TSpeedButton
@@ -307,12 +303,12 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
                 end
                 inherited lvVitals: TListView
                   Top = 25
-                  Width = 588
+                  Width = 580
                   Height = 108
                   OnEnter = fraGMV_EditTemplate1lvVitalsEnter
                   OnExit = fraGMV_EditTemplate1lvVitalsExit
                   ExplicitTop = 25
-                  ExplicitWidth = 588
+                  ExplicitWidth = 580
                   ExplicitHeight = 108
                 end
               end
@@ -320,40 +316,50 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
             inherited pnlHeader: TPanel
               Left = 0
               Top = 0
-              Width = 588
+              Width = 580
               ExplicitLeft = 0
               ExplicitTop = 0
-              ExplicitWidth = 588
+              ExplicitWidth = 580
             end
             inherited pnlNameDescription: TPanel
               Left = 0
               Top = 20
-              Width = 588
+              Width = 580
               ExplicitLeft = 0
               ExplicitTop = 20
-              ExplicitWidth = 588
+              ExplicitWidth = 580
               DesignSize = (
                 580
                 80)
               inherited Label2: TLabel
-                Width = 56
-                ExplicitWidth = 56
+                Width = 71
+                Height = 16
+                ExplicitWidth = 71
+                ExplicitHeight = 16
               end
               inherited Label1: TLabel
                 Top = 4
+                Width = 40
+                Height = 16
                 ExplicitTop = 4
+                ExplicitWidth = 40
+                ExplicitHeight = 16
               end
               inherited edtTemplateDescription: TEdit
                 Left = 4
-                Width = 571
+                Width = 563
+                Height = 24
                 ExplicitLeft = 4
-                ExplicitWidth = 579
+                ExplicitWidth = 563
+                ExplicitHeight = 24
               end
               inherited edtTemplateName: TEdit
                 Left = 4
-                Width = 571
+                Width = 563
+                Height = 24
                 ExplicitLeft = 4
-                ExplicitWidth = 579
+                ExplicitWidth = 563
+                ExplicitHeight = 24
               end
             end
           end
@@ -363,7 +369,7 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
           inherited ImageList1: TImageList
             Top = 104
             Bitmap = {
-              494C010104000900100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+              494C0101040009001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
               0000000000003600000028000000400000002000000001002000000000000020
               0000000000000000000000000000000000000000000000000000000000000000
               0000000000000000000000000000000000000000000000000000000000000000
@@ -645,8 +651,6 @@ object frmGMV_EditUserTemplates: TfrmGMV_EditUserTemplates
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitLeft = 790
-      ExplicitHeight = 527
     end
   end
   object MainMenu1: TMainMenu

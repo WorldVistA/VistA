@@ -12,7 +12,7 @@ uses
   , OleCtrls
   , mGMV_GridGraph
   , mGMV_MDateTime, uROR_Contextor, AppEvnts
-  , fGMV_PatientSelector, System.Actions, Vcl.WinHelpViewer
+  , fGMV_PatientSelector, System.Actions, HtmlHelpViewer
   ;
 
 type
@@ -902,7 +902,7 @@ begin
       else
         s := ExtractFileDir(Application.ExeName) + '\Help\';
 
-      s := s + ChangeFileExt(ExtractFileName(Application.ExeName), '.hlp');
+      s := s + ChangeFileExt(ExtractFileName(Application.ExeName), '.chm');
       LoadHelpFile(s);
     finally
       Screen.Cursor := CrRtn;

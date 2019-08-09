@@ -1,0 +1,1 @@
+gXMLBuffer="<?xml version=\"1.0\" encoding=\"UTF-8\"?><cki><ck fm=\"Creating a New Template\" to=\"Template Overview\" num=\"9\"/></cki>";

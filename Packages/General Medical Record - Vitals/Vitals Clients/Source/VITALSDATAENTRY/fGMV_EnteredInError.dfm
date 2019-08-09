@@ -20,6 +20,7 @@ object frmGMV_EnteredInError: TfrmGMV_EnteredInError
   Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   OnResize = FormResize
   PixelsPerInch = 96

@@ -14,6 +14,7 @@ object frmGMV_Manager: TfrmGMV_Manager
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
@@ -340,7 +341,7 @@ object frmGMV_Manager: TfrmGMV_Manager
           Left = 56
           Top = 176
           Bitmap = {
-            494C010104000900280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+            494C0101040009003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
             0000000000003600000028000000400000002000000001002000000000000020
             0000000000000000000000000000000000000000000000000000000000000000
             0000000000000000000000000000000000000000000000000000000000000000
@@ -823,6 +824,13 @@ object frmGMV_Manager: TfrmGMV_Manager
             Color = clActiveCaption
             TabOrder = 0
             ExplicitHeight = 36
+            inherited lblRange: TLabel
+              Top = 19
+              Align = alBottom
+              Font.Color = clCaptionText
+              Font.Height = -12
+              ExplicitTop = 19
+            end
             inherited lblName: TLabel
               Align = alLeft
               Font.Color = clCaptionText
@@ -836,13 +844,6 @@ object frmGMV_Manager: TfrmGMV_Manager
               Font.Height = -12
               ExplicitLeft = 135
               ExplicitTop = 4
-            end
-            inherited lblRange: TLabel
-              Top = 19
-              Align = alBottom
-              Font.Color = clCaptionText
-              Font.Height = -12
-              ExplicitTop = 19
             end
           end
         end
@@ -895,6 +896,13 @@ object frmGMV_Manager: TfrmGMV_Manager
             Color = clActiveCaption
             TabOrder = 0
             ExplicitHeight = 36
+            inherited lblRange: TLabel
+              Top = 19
+              Align = alBottom
+              Font.Color = clCaptionText
+              Font.Height = -12
+              ExplicitTop = 19
+            end
             inherited lblName: TLabel
               Align = alLeft
               Font.Color = clCaptionText
@@ -909,13 +917,6 @@ object frmGMV_Manager: TfrmGMV_Manager
               ExplicitLeft = 135
               ExplicitTop = 4
             end
-            inherited lblRange: TLabel
-              Top = 19
-              Align = alBottom
-              Font.Color = clCaptionText
-              Font.Height = -12
-              ExplicitTop = 19
-            end
           end
         end
       end
@@ -924,6 +925,8 @@ object frmGMV_Manager: TfrmGMV_Manager
       BorderWidth = 4
       Caption = 'tbshtSystemParameters'
       ImageIndex = 4
+      ExplicitWidth = 342
+      ExplicitHeight = 299
       inline fraSystemParameters: TfraSystemParameters
         Left = 0
         Top = 0
@@ -931,19 +934,19 @@ object frmGMV_Manager: TfrmGMV_Manager
         Height = 384
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 546
-        ExplicitHeight = 384
+        ExplicitWidth = 334
+        ExplicitHeight = 291
         inherited Panel1: TPanel
           Width = 546
           Height = 384
-          ExplicitWidth = 546
-          ExplicitHeight = 384
+          ExplicitWidth = 334
+          ExplicitHeight = 291
           inherited pnlBottom: TPanel
             Width = 544
             Height = 289
             BevelInner = bvNone
-            ExplicitWidth = 544
-            ExplicitHeight = 289
+            ExplicitWidth = 332
+            ExplicitHeight = 196
             inherited Label1: TLabel
               Left = 0
               Top = 0
@@ -1222,7 +1225,7 @@ object frmGMV_Manager: TfrmGMV_Manager
     Left = 64
     Top = 336
     Bitmap = {
-      494C01010B000E00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010B000E00380010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       00000000000000000000000000000000000000000000FF000000000000000000

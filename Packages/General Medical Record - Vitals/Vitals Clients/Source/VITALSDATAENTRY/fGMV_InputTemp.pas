@@ -101,6 +101,7 @@ uses  mGMV_InputOne2
   , uGMV_GlobalVars
   , uGMV_FileEntry
   , uGMV_Engine, uGMV_Setup
+  , System.UITypes
   ;
 
 {$R *.dfm}

@@ -235,11 +235,11 @@ var
   s: String;
 begin
 {$IFDEF DLL}
-  s := GetProgramFilesPath+'\Vista\Common Files\GMV_VitalsViewEnter.hlp';
+  s := GetProgramFilesPath+'\Vista\Common Files\GMV_VitalsViewEnter.chm';
   lblCRCValue.Caption := GetFileCRC32(GetProgramFilesPath + '\Vista\Common Files\GMV_VitalsViewEnter.Dll');
 {$ELSE}
   s := ExtractFileDir(Application.ExeName) + '\Help\'+
-       ChangeFileExt(ExtractFileName(Application.ExeName),'.hlp');
+       ChangeFileExt(ExtractFileName(Application.ExeName),'.chm');
   lblCRCValue.Caption := GetFileCRC32(Application.Exename);
 {$ENDIF}
 

@@ -23,7 +23,7 @@ object frmVitals: TfrmVitals
   OnKeyDown = FormKeyDown
   OnResize = FormResize
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   inline TfraGMV_GridGraph1: TfraGMV_GridGraph
     Left = 0
     Top = 0
@@ -74,6 +74,10 @@ object frmVitals: TfrmVitals
               inherited pnlZoom: TPanel
                 Width = 119
                 ExplicitWidth = 119
+                inherited edZoom: TEdit
+                  Height = 24
+                  ExplicitHeight = 24
+                end
               end
             end
             inherited Panel5: TPanel
@@ -109,6 +113,7 @@ object frmVitals: TfrmVitals
                 inherited lbDateRange: TListBox
                   Width = 114
                   Height = 95
+                  ItemHeight = 16
                   ExplicitWidth = 114
                   ExplicitHeight = 95
                 end
@@ -164,6 +169,10 @@ object frmVitals: TfrmVitals
             Width = 696
             ExplicitWidth = 696
             inherited pnlGSelect: TPanel
+              inherited cbxGraph: TComboBox
+                Height = 24
+                ExplicitHeight = 24
+              end
               inherited pnlGSelectBottom: TPanel
                 ExplicitLeft = 0
                 ExplicitTop = 27
@@ -294,7 +303,7 @@ object frmVitals: TfrmVitals
     end
     inherited ImageList1: TImageList
       Bitmap = {
-        494C01010B000E001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+        494C01010B000E00340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
         0000000000003600000028000000400000003000000001002000000000000030
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000

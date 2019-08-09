@@ -45,7 +45,7 @@ uses
   Buttons,
   mGMV_VitalHiLo,
   mGMV_SystemParameters
-  , uGMV_Template, uROR_Contextor, AppEvnts, System.Actions,WinHelpViewer,
+  , uGMV_Template, uROR_Contextor, AppEvnts, System.Actions,HTMLHelpViewer,
   System.ImageList
   ;
 
@@ -177,6 +177,7 @@ type
     procedure Timer1Timer(Sender: TObject);
     function ApplicationEventsHelp(Command: Word; Data: NativeInt;
       var CallHelp: Boolean): Boolean;
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     FAbnormalRoot: TTreeNode;
@@ -288,6 +289,22 @@ begin
   ShowLog1.Visible := False;
   Timer1.Enabled := False;
 {$ENDIF}
+end;
+
+procedure TfrmGMV_Manager.FormDestroy(Sender: TObject);
+Var
+ I: Integer;
+begin
+ for I := 0 to tv.Items.Count -1 do
+ begin
+   if Assigned(tv.Items[i].Data) then
+   begin
+    if TObject(tv.Items[i].Data) is TGMV_VitalHiLoDefinition then
+     TGMV_VitalHiLoDefinition(tv.Items[i].Data).free
+    else if TObject(tv.Items[i].Data) is TGMV_Template then
+     TGMV_Template(tv.Items[i].Data).free;
+   end;
+ end;
 end;
 
 function TfrmGMV_Manager.RestoreConnection:Boolean;
@@ -903,7 +920,7 @@ begin
       else
         s := ExtractFileDir(Application.ExeName) + '\Help\';
 
-      s := s + ChangeFileExt(ExtractFileName(Application.ExeName), '.hlp');
+      s := s + ChangeFileExt(ExtractFileName(Application.ExeName), '.chm');
       LoadHelpFile(s);
     finally
       Screen.Cursor := CrRtn;

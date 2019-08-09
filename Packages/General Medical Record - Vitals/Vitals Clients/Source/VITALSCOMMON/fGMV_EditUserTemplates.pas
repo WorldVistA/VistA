@@ -161,6 +161,7 @@ type
     procedure fraGMV_EditTemplate1lvVitalsExit(Sender: TObject);
     procedure fraGMV_EditTemplate1sbtnMoveUpClick(Sender: TObject);
     procedure fraGMV_EditTemplate1sbtnAddVitalClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -267,28 +268,35 @@ begin
 end;
 
 procedure TfrmGMV_EditUserTemplates.btnNewTemplateClick(Sender: TObject);
+var
+ anItem: TGMV_Template;
 begin
-  CreateNewUserTemplate;
+  anItem := CreateNewUserTemplate;
+  //Template object not used, just use call to create VistA entry, will pull template in next function
+  //Clean up leak
+  FreeAndNil(anItem);
   GetTemplates;
+
 end;
 
 procedure TfrmGMV_EditUserTemplates.btnDeleteClick(Sender: TObject);
 var
   s: String;
 begin
-  if MessageDlg('Delete Template ' + lbxTemplates.Items[lbxTemplates.ItemIndex] + '?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-    begin
-      s := deleteUserTemplate(lbxTemplates.Items[lbxTemplates.ItemIndex]);
-      if Piece(s, '^', 1) <> '-1' then
-        begin
-          fraGMV_EditTemplate1.EditTemplate := nil;
-          TGMV_Template(lbxTemplates.Items.Objects[lbxTemplates.ItemIndex]).Free;
-          lbxTemplates.Items.Delete(lbxTemplates.ItemIndex);
-        end
-      else
-        MessageDlg('Unable to delete template ' + Piece(s, '^', 2, 3), mtError, [mbOk], 0);
-    end;
+  if (lbxTemplates.Items.Count > 0) and (lbxTemplates.ItemIndex <> -1) then
+    if MessageDlg('Delete Template ' + lbxTemplates.Items[lbxTemplates.ItemIndex] + '?',
+      mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+      begin
+        s := deleteUserTemplate(lbxTemplates.Items[lbxTemplates.ItemIndex]);
+        if Piece(s, '^', 1) <> '-1' then
+          begin
+            fraGMV_EditTemplate1.EditTemplate := nil;
+            TGMV_Template(lbxTemplates.Items.Objects[lbxTemplates.ItemIndex]).Free;
+            lbxTemplates.Items.Delete(lbxTemplates.ItemIndex);
+          end
+        else
+          MessageDlg('Unable to delete template ' + Piece(s, '^', 2, 3), mtError, [mbOk], 0);
+      end;
 end;
 
 //AAN 06/11/02 ---------------------------------------------------------- Begin
@@ -312,6 +320,11 @@ procedure TfrmGMV_EditUserTemplates.lbxTemplatesExit(Sender: TObject);
 begin
   GroupBox1.Font.Style := [];
   lbxTemplates.Color := clwindow;
+end;
+
+procedure TfrmGMV_EditUserTemplates.FormDestroy(Sender: TObject);
+begin
+ CleanUp;
 end;
 
 procedure TfrmGMV_EditUserTemplates.FormKeyDown(Sender: TObject;

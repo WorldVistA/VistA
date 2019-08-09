@@ -277,7 +277,7 @@ initialization
   RPCCount := 0;
 
 finalization
-exit;
+//exit;
   while RPCLog.Count > 0 do
   begin
     try

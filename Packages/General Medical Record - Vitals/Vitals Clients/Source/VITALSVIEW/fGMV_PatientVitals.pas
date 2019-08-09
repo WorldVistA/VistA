@@ -63,6 +63,7 @@ type
     ptInfo: String;
     FMDateTimeRange: TMDateTimeRange;
     fIgnoreCount: Integer;
+    FHelpHWND: HWND;
   public
     { Public declarations }
     property FileVersion:String read fFileVersion;
@@ -102,7 +103,7 @@ implementation
 
 uses
    uGMV_Engine, uGMV_VersionInfo, uGMV_User, uGMV_Common, fGMV_AboutDlg,
-  fGMV_PtInfo, uGMV_WindowsEvents;
+  fGMV_PtInfo, uGMV_WindowsEvents, System.UITypes;
 
 var
   PrevApp: TApplication;
@@ -383,6 +384,13 @@ begin
 
   TfraGMV_GridGraph1.SaveStatus;
 {$IFDEF DLL}
+  // DRM 10/30/2018 - I found no way to detect when a CHM *closes*.
+  // But IsWindow will detect if the window handle is still valid.
+  if (FHelpHWND <> 0) and IsWindow(FHelpHWND) then
+  begin
+    HtmlHelp(Application.Handle, nil, HH_CLOSE_ALL, 0);
+    Sleep(0);
+  end;
   Action := caFree;
 {$ENDIF}
 end;
@@ -445,7 +453,8 @@ end;
 
 procedure TfrmVitals.Index1Click(Sender: TObject);
 begin
-  Application.HelpCommand(0,0);
+ // Application.HelpCommand(0,0);
+  Application.HelpCommand(HELP_INDEX, 0);
 end;
 
 procedure TfrmVitals.SelectGraphColor1Click(Sender: TObject);
@@ -466,34 +475,31 @@ end;
 function TfrmVitals.AppEvHelp(Command: Word; Data: NativeInt;
   var CallHelp: Boolean): Boolean;
 var
-  s: String;
+ // s: String;
 //  iHelp: Integer;
  CrRtn: Integer;
 begin
+  try
   AppEv.CancelDispatch;
  // s := GetProgramFilesPath+'\Vista\Common Files\GMV_VitalsViewEnter.hlp';
   CrRtn := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   try
-  LoadHelpFile('GMV_VitalsViewEnter.hlp');
+  LoadHelpFile('GMV_VitalsViewEnter.chm');
   finally
     Screen.Cursor := CrRtn;
   end;
 //  iHelp := ActiveControl.HelpContext;
 //  if iHelp = 0 then iHelp := 1;
+  Result := True;
+  FHelpHWND := HtmlHelp(Application.Handle, PChar(Application.HelpFile), HH_DISPLAY_TOC, 0);
 
-  try
-//    Application.HelpSystem.ShowContextHelp(iHelp,s);
-   // Application.HelpSystem.ShowTopicHelp('Introduction',Application.HelpFile);
-    WinHelp( Application.Handle, PChar(Application.HelpFile), HELP_CONTEXT, 1);
-
-    Result := True;
+  CallHelp := false;
   except
     Result := False;
+      CallHelp := true;
   end;
-
-  CallHelp := False;
-end;
+ end;
 
 procedure TfrmVitals.VitalsReport1Click(Sender: TObject);
 begin

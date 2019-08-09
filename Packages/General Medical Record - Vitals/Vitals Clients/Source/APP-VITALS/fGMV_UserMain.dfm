@@ -129,6 +129,7 @@ object frmGMV_UserMain: TfrmGMV_UserMain
           inherited pnlGraph: TPanel
             Width = 659
             Height = 213
+            Caption = ''
             ExplicitWidth = 659
             ExplicitHeight = 213
             inherited pnlDateRange: TPanel
@@ -396,7 +397,7 @@ object frmGMV_UserMain: TfrmGMV_UserMain
       end
       inherited ImageList1: TImageList
         Bitmap = {
-          494C01010B000E00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+          494C01010B000E00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
           0000000000003600000028000000400000003000000001002000000000000030
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000

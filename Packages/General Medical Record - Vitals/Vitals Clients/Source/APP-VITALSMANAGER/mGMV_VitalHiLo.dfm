@@ -75,18 +75,20 @@ object fraVitalHiLo: TfraVitalHiLo
         object lblMax: TLabel
           Left = 5
           Top = 5
-          Width = 30
+          Width = 91
           Height = 13
           Align = alTop
           Caption = 'lblMax'
+          ExplicitWidth = 30
         end
         object lblMin: TLabel
           Left = 5
           Top = 108
-          Width = 26
+          Width = 91
           Height = 13
           Align = alBottom
           Caption = 'lblMin'
+          ExplicitWidth = 26
         end
       end
       object pnlSpacer: TPanel
@@ -107,14 +109,35 @@ object fraVitalHiLo: TfraVitalHiLo
       Align = alTop
       BevelOuter = bvNone
       BorderWidth = 4
-      Color = clHighlight
+      Color = clGradientActiveCaption
       ParentBackground = False
+      ShowCaption = False
       TabOrder = 2
+      object lblRange: TLabel
+        Left = 4
+        Top = 36
+        Width = 171
+        Height = 16
+        Align = alTop
+        Alignment = taCenter
+        Caption = 'lblRange'
+        Color = clHighlight
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clHighlightText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = True
+        ExplicitTop = 30
+        ExplicitWidth = 64
+      end
       object lblName: TLabel
         Left = 4
         Top = 4
-        Width = 46
-        Height = 13
+        Width = 171
+        Height = 16
         Align = alTop
         Alignment = taCenter
         Caption = 'lblName'
@@ -127,12 +150,14 @@ object fraVitalHiLo: TfraVitalHiLo
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
+        Transparent = True
+        ExplicitWidth = 109
       end
       object lblHiLo: TLabel
         Left = 4
-        Top = 17
-        Width = 40
-        Height = 13
+        Top = 20
+        Width = 171
+        Height = 16
         Align = alTop
         Alignment = taCenter
         Caption = 'lblHiLo'
@@ -144,23 +169,9 @@ object fraVitalHiLo: TfraVitalHiLo
         Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
-      end
-      object lblRange: TLabel
-        Left = 4
-        Top = 30
-        Width = 51
-        Height = 13
-        Align = alTop
-        Alignment = taCenter
-        Caption = 'lblRange'
-        Color = clHighlight
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clHighlightText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
+        Transparent = True
+        ExplicitTop = 17
+        ExplicitWidth = 50
       end
     end
   end

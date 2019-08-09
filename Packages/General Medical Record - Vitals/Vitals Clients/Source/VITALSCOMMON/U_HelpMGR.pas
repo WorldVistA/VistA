@@ -173,19 +173,6 @@ begin
       if not FCanceled then
         Application.HelpFile := LocalHelpFile;
     end;
-    {$IFDEF HOTFIXCHK}
-    if GetOperatingSystem = cOSWin7 then
-    begin
-      if (ExtractFileExt(HelpFile) = '.hlp') then
-        if (not ISHotFixID_Installed('KB917607')) then begin
-          if InstanceCheck then begin
-            if InstanceCount = 0 then
-              HotFixError;
-          end else
-            HotFixError;
-        end;
-    end;
-    {$ENDIF HOTFIXCHK}
   finally
     Screen.Cursor := crDefault;
   end;
@@ -584,20 +571,6 @@ begin
   CoInitialize(nil);
   if LoadLocalHelp(fstrOriginalHelp, LocalHelpFile, false) then
     Application.HelpFile := LocalHelpFile;
-  {$IFDEF HOTFIXCHK}
-  if GetOperatingSystem = cOSWin7 then
-  begin
-    if (ExtractFileExt(LocalHelpFile) = '.hlp') then
-      if (not ISHotFixID_Installed('KB917607')) then begin
-        if fInstanceCheck then begin
-          if InstanceCount = 0 then
-            HotFixError;
-        end else
-          HotFixError;
-      end;
-
-  end;
- {$ENDIF HOTFIXCHK}
 
   Sleep(Random(100));
 end;

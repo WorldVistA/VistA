@@ -13,8 +13,7 @@ object frmGMV_PatientSelector: TfrmGMV_PatientSelector
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object pnlStatus: TPanel
@@ -79,10 +78,6 @@ object frmGMV_PatientSelector: TfrmGMV_PatientSelector
     OnMouseUp = pcMainMouseUp
     object tsUnit: TTabSheet
       Caption = '   &Unit     '
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Splitter1: TSplitter
         Left = 0
         Top = 165
@@ -263,10 +258,6 @@ object frmGMV_PatientSelector: TfrmGMV_PatientSelector
     object tsWard: TTabSheet
       Caption = '  &Ward  '
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Splitter2: TSplitter
         Left = 0
         Top = 165
@@ -448,10 +439,6 @@ object frmGMV_PatientSelector: TfrmGMV_PatientSelector
     object tsTeam: TTabSheet
       Caption = '&Team'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Splitter3: TSplitter
         Left = 0
         Top = 101
@@ -635,10 +622,6 @@ object frmGMV_PatientSelector: TfrmGMV_PatientSelector
     object tsClinic: TTabSheet
       Caption = '&Clinic'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Splitter4: TSplitter
         Left = 0
         Top = 121
@@ -912,10 +895,6 @@ object frmGMV_PatientSelector: TfrmGMV_PatientSelector
     object tsAll: TTabSheet
       Caption = '   &All  '
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel5: TPanel
         Left = 0
         Top = 45

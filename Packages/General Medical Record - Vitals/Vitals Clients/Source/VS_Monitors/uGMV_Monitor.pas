@@ -163,6 +163,9 @@ begin
   FLB.Mask := '*.dll';
   sDir := ExtractFileDir(Application.ExeName) + '\' + GMV_PlugInDir;
   try
+    if not SysUtils.DirectoryExists(sDir) then
+      exit;
+
     FLB.ApplyFilePath(sDir);  // Here is where the no parent issue fires DRP@5-28-2013
     fMonitorLibrary := 0;
 

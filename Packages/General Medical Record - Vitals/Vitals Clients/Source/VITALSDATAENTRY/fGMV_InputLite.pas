@@ -331,6 +331,7 @@ type
     procedure acEnableRExecute(Sender: TObject);
     procedure acUnitsDDLExecute(Sender: TObject);
   private
+    fGMV_TemplateArray: Array of TGMV_Template;
     FTmpltRoot: TTreeNode;
     FTmpltDomainRoot: TTreeNode;
     FTmpltInstitutionRoot: TTreeNode;
@@ -380,7 +381,7 @@ type
     procedure setPatientInfoView(aName, anInfo: String);
     procedure updatePatientInfoView;
     function getPatientName: String;
-
+    procedure CleanUp;
   public
     property Status: String read fStatus write setStatus;
     property _CurrentPtIEN: String read _FCurrentPtIEN write _SetCurrentPtIEN;
@@ -463,6 +464,7 @@ var
   LI: TListItem;
   lc: TListColumn;
   i: Integer;
+  anEvt: TLVChangeEvent;
 
   CurrentServerDateTime: TDateTime;
 
@@ -477,30 +479,33 @@ var
   begin
     RetList := TStringList.Create;
     try
-      with InputVitalsForm do
+      try
+        with InputVitalsForm do
         begin
           sWindowSettings := InputVitalsForm.ClassName;
           sWindowSettings := getUserSettings(sWindowSettings);
           if sWindowSettings <> '' then
-            begin
-              Left := StrToIntDef(Piece(sWindowSettings, ';', 3), Left);
-              Top := StrToIntDef(Piece(sWindowSettings, ';', 4), Top);
-              Width := StrToIntDef(Piece(sWindowSettings, ';', 5), Width);
-              Height := StrToIntDef(Piece(sWindowSettings, ';', 6), Height);
-            end
+          begin
+            Left := StrToIntDef(Piece(sWindowSettings, ';', 3), Left);
+            Top := StrToIntDef(Piece(sWindowSettings, ';', 4), Top);
+            Width := StrToIntDef(Piece(sWindowSettings, ';', 5), Width);
+            Height := StrToIntDef(Piece(sWindowSettings, ';', 6), Height);
+          end
           else
-            begin
-              Left := (Screen.Width - Width) div 2;
-              Top := (Screen.Height - Height) div 2;
-              if Top < 0 Then
-                Top := 0;
-              if Left < 0 Then
-                Left := 0;
-            end;
+          begin
+            Left := (Screen.Width - Width) div 2;
+            Top := (Screen.Height - Height) div 2;
+            if Top < 0 Then
+              Top := 0;
+            if Left < 0 Then
+              Left := 0;
+          end;
         end;
-    except
+      except
+      end;
+    finally
+      RetList.Free;
     end;
-    RetList.Free;
   end;
 
 begin
@@ -584,6 +589,10 @@ begin
                   lc := lvSelPatients.Columns.Add;
                   lc.Width := 0;
                 end;
+
+              anEvt := lvSelPatients.OnChange;
+              lvSelPatients.OnChange := nil;
+              try
               for i := 0 to LV.Items.Count - 1 do
                 begin
                   LI := lvSelPatients.Items.Add;
@@ -594,6 +603,10 @@ begin
                   LI.SubItems.Add('');
                   LI.Checked := False;
                 end;
+              Finally
+                lvSelPatients.OnChange := anEvt;
+              End;
+
               if lvSelPatients.Items.Count > 0 then
                 begin
                   lvSelPatients.ItemFocused := lvSelPatients.Items[0];
@@ -1098,9 +1111,10 @@ begin
       if aDateTime <> 0 then
         begin
           CurrentTime := aDateTime; // zzzzzzandra 20081008 fixing discepency between PC and VistA
-           dtpDate.MaxDate := 0; // Gotta reset MaxDate here since the datetime came from the DLL Client
-          dtpDate.Date := CurrentTime;
-           dtpDate.MaxDate := CurrentTime;
+          //dtpDate.MaxDate := 0; // Gotta reset MaxDate here since the datetime came from the DLL Client
+          //dtpDate.Date := 0;
+          dtpDate.MaxDate := CurrentTime;
+          dtpDate.Date := Trunc(CurrentTime);
           dtpTime.DateTime := CurrentTime;
         end
       else
@@ -1264,6 +1278,9 @@ begin
   except
   end;
 
+  if assigned(FInputTemplate) then
+    FreeAndNil(FInputTemplate);
+
   FInputTemplate := GetTemplateObject(Piece(InputTemplate, '|', 1), Piece(InputTemplate, '|', 2));
 
   if FInputTemplate <> nil then
@@ -1354,9 +1371,11 @@ begin
   tv.Enabled := False;
   tv.Items.BeginUpdate;
   tv.ShowRoot := True;
+  tv.Ctl3D := False;
   with tv.Items do
     begin
       Clear;
+      CleanUp;
       FTmpltRoot := nil;
       FTmpltDomainRoot := AddChild(FTmpltRoot, GMVENTITYNAMES[teDomain]);
       FTmpltInstitutionRoot := AddChild(FTmpltRoot, GMVENTITYNAMES[teInstitution]);
@@ -1368,12 +1387,16 @@ begin
   try
     tmpList := getTemplateListByID('');
     for i := 1 to tmpList.Count - 1 do
-      InsertTemplate(TGMV_Template.CreateFromXPAR(tmpList[i]));
+    begin
+      SetLength(fGMV_TemplateArray, Length(fGMV_TemplateArray) +1);
+      fGMV_TemplateArray[high(fGMV_TemplateArray)] := TGMV_Template.CreateFromXPAR(tmpList[i]);
+      InsertTemplate(fGMV_TemplateArray[high(fGMV_TemplateArray)]);
+    end;
   finally
     FreeAndNil(tmpList);
   end;
 
-  tv.Ctl3D := False;
+ // tv.Ctl3D := False;
   tv.AlphaSort;
   tv.Enabled := True;
   tv.TopItem := tv.Items.GetFirstNode;
@@ -2307,6 +2330,11 @@ procedure TfrmGMV_InputLite.FormDestroy(Sender: TObject);
 begin
   if Status = stsDLL then
     CleanUpGlobals;
+
+  if assigned(FInputTemplate) then
+    FreeAndNil(FInputTemplate);
+
+  CleanUp;
 {$IFDEF USEVSMONITOR}
   if fMonitor <> nil then
     FreeAndNil(fMonitor);
@@ -2719,6 +2747,17 @@ procedure TfrmGMV_InputLite.acUnitsDDLExecute(Sender: TObject);
 begin
   chkCPRSSTyle.Checked := not chkCPRSSTyle.Checked;
   acMetricStyleChangeExecute(Sender);
+end;
+
+procedure TfrmGMV_InputLite.CleanUp;
+var
+  I: Integer;
+begin
+  for I := Low(fGMV_TemplateArray) to High(fGMV_TemplateArray) do
+  begin
+    FreeandNil(fGMV_TemplateArray[i]);
+  end;
+  SetLength(fGMV_TemplateArray, 0);
 end;
 
 end.

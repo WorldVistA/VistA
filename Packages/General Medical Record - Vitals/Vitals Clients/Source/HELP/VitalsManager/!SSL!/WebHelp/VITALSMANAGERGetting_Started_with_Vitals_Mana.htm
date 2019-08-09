@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+ <title>Getting Started with Vitals Manager</title>
+<script type="text/javascript" language="JavaScript">
+//<![CDATA[
+function reDo() {
+  if (innerWidth != origWidth || innerHeight != origHeight)
+     location.reload();
+}
+if ((parseInt(navigator.appVersion) == 4) && (navigator.appName == "Netscape")) {
+	origWidth = innerWidth;
+	origHeight = innerHeight;
+	onresize = reDo;
+}
+onerror = null; 
+//]]>
+</script>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute;
+left:0px;
+top:0px;
+z-index:4;
+visibility:hidden; }
+p.WebHelpNavBar { text-align:right; }
+-->
+</style>
+<script type="text/javascript" language="javascript1.2" src="whmsg.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" src="whver.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.gbWhTopic)
+{
+	var strUrl = document.location.href;
+	var bc = 0;
+	var n = strUrl.toLowerCase().indexOf("bc-");
+	if(n != -1)
+	{
+		document.location.replace(strUrl.substring(0, n));
+		bc = strUrl.substring(n+3);
+	}
+
+	addTocInfo("Getting Started with Vitals Manager");
+
+
+	
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+    
+onLoadHandler = function()
+{
+	if (window.setRelStartPage)
+	{
+    setTimeout("setRelStartPage('index.htm');", 1)
+
+    setTimeout("UpdateBreadCrumbsMarker();", 1);
+    }
+} 
+
+if (window.addEventListener){  
+	window.addEventListener('load', onLoadHandler, false);   
+} else if (window.attachEvent){  
+	window.attachEvent('onload', onLoadHandler);  
+}
+
+function onSetStartPage()
+{
+	autoSync(1);
+	sendSyncInfo();
+	sendAveInfoOut();
+}
+//-->
+//]]></script>
+ <meta name="generator" content="Adobe RoboHelp 2017" />
+</head>
+<body><script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(4);
+//-->
+//]]></script>
+<script type="text/javascript" src="ehlpdhtm.js"></script>
+
+<h1>Getting Started with Vitals Manager</h1>
+<p></p>
+The Vitals Manager module allows a management-level user (such as the Clinical Application Coordinator) to manage settings and templates for the Vitals application.
+<p></p>
+These settings and templates are used to determine how data is displayed in Vitals: the user can set a range of normal and abnormal values for each vital sign, can create or edit templates for different users, and can assign default qualifiers to each type of vital sign.
+<p></p>
+<b>To open Vitals Manager:</b>
+<p></p>
+<ol>
+<li>Double-click the Vitals Manager icon on your desktop to open the VistA sign-on window.
+<p></p>
+</li>
+<li>Enter your access and verify codes, then click <b>OK</b>.
+<p></p>
+</li>
+<li>The main Vitals Manager window opens, showing a list of folders on the left side.
+<p></p>
+</li>
+</ol>
+From this window, you can:
+<p></p>
+<a href="VITALSMANAGEREditing_Abnormal_Values.htm">Set abnormal values</a>
+<p></p>
+<a href="VITALSMANAGEREditing_System_Parameters.htm">Set system parameters</a>
+<p></p>
+<a href="VITALSMANAGERTemplate_Overview.htm">Create or edit templates</a>
+<p></p>
+<a href="VITALSMANAGEREdit_Vitals_Categories_and_Quali.htm">Edit vitals categories and qualifiers</a>
+<p></p>
+<a href="VITALSMANAGERPrinting_the_Qualifiers_Table.htm">Print a list of qualifiers</a>
+<p></p>
+<a href="VITALSMANAGERGetting_Help.htm">View Help</a>
+<p></p>
+<p></p>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+
+highlightSearch();
+//-->
+//]]></script>
+</body>
+</html>

@@ -94,6 +94,7 @@ type
   TGMV_VitalType = class(TGMV_FileReference)
   public
     constructor Create; override;
+    destructor Destroy; override;
   end;
 
   TGMV_VitalQual = class(TGMV_FileReference)
@@ -186,7 +187,25 @@ begin
 end;
 
 destructor TGMV_FileReference.Destroy;
+
+  Procedure ClearListObjects(aSL: TStringList);
+  var
+   I: integer;
+
+  begin
+    for I := 0 to aSL.Count - 1 do
+    begin
+      if Assigned(aSL.Objects[i]) then
+      begin
+        if aSL.Objects[i] is TGMV_FileEntry then
+          TGMV_FileEntry(aSL.Objects[i]).Free;
+      end;
+    end;
+  end;
+
 begin
+  ClearListObjects(FTypes);
+
   FreeAndNil(FTypes);
   inherited;
 end;
@@ -196,24 +215,41 @@ var
   i: integer;
   fe: TGMV_FileEntry;
   RetList: TStrings;
-  s: String;
+  s, sCaption: String;
+  AddItem: Boolean;
 begin
   FDDNumber := FileNumber;
 
   RetList := getFileEntries(FDDNumber);
-  if RetList.Count > 0 then
-    begin
-      FFileName := Copy(RetList[0], Pos('^', RetList[0]), Length(RetList[0]));
-      FTypes.Sorted := True; //AAN 08/08/2002
-      for i := 1 to RetList.Count - 1 do
-        begin
-          s := RetList[i];
-          fe := TGMV_FileEntry.CreateFromRPC(s);
-          FTypes.AddObject(fe.Caption, fe);
-        end;
-    end;
-  fLoaded := True;
-  RetList.Free;
+  try
+    if RetList.Count > 0 then
+      begin
+        FFileName := Copy(RetList[0], Pos('^', RetList[0]), Length(RetList[0]));
+        FTypes.Sorted := True; //AAN 08/08/2002
+        for i := 1 to RetList.Count - 1 do
+          begin
+            AddItem := true;
+            s := RetList[i];
+
+            if (FTypes.Duplicates = dupIgnore) or (FTypes.Duplicates = dupError)  then
+            begin            
+             sCaption := Piece(s, '^', 2);
+             AddItem := FTypes.IndexOf(sCaption) = -1;
+            end;
+
+            if AddItem then
+            begin
+              fe := TGMV_FileEntry.CreateFromRPC(s);
+              FTypes.AddObject(fe.Caption, fe);
+            end;
+
+          end;
+      end;
+    fLoaded := True;
+  finally
+   RetList.Free;
+  end;
+
 end;
 
 procedure TGMV_FileReference.LoadEntriesConverted(FileNumber: string);
@@ -351,6 +387,11 @@ begin
   LoadEntries('120.51');
 end;
 
+destructor TGMV_VitalType.Destroy;
+begin
+  inherited Destroy;
+end;
+
 { TGMV_VitalQual }
 
 constructor TGMV_VitalQual.Create;
@@ -385,6 +426,7 @@ begin
   FDDNumber := '42';
 
   RetList := getWardLocations('A');// Return ALL Wards
+  try
   if RetList.Count > 0 then
     begin
 //      FFileName := Copy(RetList[0], Pos('^', RetList[0]), Length(RetList[0]));
@@ -402,7 +444,9 @@ begin
         end;
     end;
   fLoaded := True;
-  RetList.Free;
+  finally
+    RetList.Free;
+  end;
 end;
 
 

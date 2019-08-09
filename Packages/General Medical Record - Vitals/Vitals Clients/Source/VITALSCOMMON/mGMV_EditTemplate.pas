@@ -211,6 +211,9 @@ type
     procedure btnMoveDown;
     procedure btnAddVital;
     procedure btnDeleteVital;
+    procedure WMDestroy(var Msg: TWMDestroy); message WM_DESTROY;
+    Procedure CleanUp;
+    Procedure ClearList();
   public
     procedure SaveTemplate;
     procedure SaveTemplateIfChanged;
@@ -703,6 +706,9 @@ begin
 end;
 
 procedure TfraGMV_EditTemplate.SetEditTemplate(const Value: TGMV_Template);
+
+
+
 var
   XPAR: string;
   i: integer;
@@ -714,7 +720,7 @@ begin
 
   ClearAllQualBoxes;
   fIgnore := True;
-  lvVitals.Items.Clear;
+  ClearList;
   fIgnore := False;
 
   rgMetric.ItemIndex := -1;
@@ -760,6 +766,32 @@ begin
   getTemplate(Selected,Item.Caption,TGMV_TemplateVital(Item.Data));
   fIgnore := False;
 end;
+
+procedure TfraGMV_EditTemplate.WMDestroy(var Msg: TWMDestroy);
+begin
+  if (csDestroying in ComponentState) then
+    CleanUp;
+  inherited;
+end;
+
+Procedure TfraGMV_EditTemplate.CleanUp;
+begin
+ ClearList;
+ ClearAllQualBoxes;
+ FreeandNil(fQualBoxes);
+end;
+
+ Procedure TfraGMV_EditTemplate.ClearList();
+ Var
+  I: integer;
+ begin
+  for I := 0 to lvVitals.Items.Count - 1 do
+  begin
+    if Assigned(lvVitals.Items[i].Data) then
+     TGMV_TemplateVital(lvVitals.Items[i].Data).Free;
+  end;
+  lvVitals.Items.Clear;
+ end;
 
 end.
 

@@ -145,6 +145,7 @@ type
       Shift: TShiftState);
     procedure lvVitalsCustomDrawItem(Sender: TCustomListView;
       Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
+    procedure FormDestroy(Sender: TObject);
   private
     FPatientIEN: string;
     { Private declarations }
@@ -198,6 +199,11 @@ begin
     begin
       dtpDate.Date := Now;
     end;
+end;
+
+procedure TfrmGMV_EnteredInError.FormDestroy(Sender: TObject);
+begin
+ClearList;
 end;
 
 procedure TfrmGMV_EnteredInError.DateChange(Sender: TObject);

@@ -166,6 +166,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure lbClinics0MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     fSelectedPatientName,
@@ -387,6 +388,15 @@ begin
 }
 end;
 
+procedure TfrmGMV_PatientSelector.FormDestroy(Sender: TObject);
+begin
+ ClearListView(lvAllPatients);
+ ClearListView(lvUnitPatients);
+ ClearListView(lvWardPatients);
+ ClearListView(lvTeamPatients);
+ ClearListView(lvClinicPatients);
+end;
+
 procedure TfrmGMV_PatientSelector.Setup;
 var
   sl: TStringList;
@@ -428,11 +438,14 @@ begin
       SL := getClinicFileEntriesByName('',intToStr(iLoadLimit),'1');
       if Assigned(SL) then
         begin
-          GMVClinics.Entries.Assign(SL);
-          SetLB(lbClinics, GMVClinics.Entries);
+          try
+            GMVClinics.Entries.Assign(SL);
+            SetLB(lbClinics, GMVClinics.Entries);
 
-      sLastClinicFound := SL[SL.Count-1];
-      SL.Free;
+            sLastClinicFound := SL[SL.Count-1];
+          finally
+            SL.Free;
+          end;
         end;
     end;
 //  tmrLoad.Enabled := true; -- no background load
@@ -1393,54 +1406,57 @@ begin
   SetInfo;
 end;
 
-function TfrmGMV_PatientSelector.UploadClinics(aTarget,aDirection:String;anOption:Word): Integer;
+function TfrmGMV_PatientSelector.UploadClinics(aTarget, aDirection: String;
+  anOption: Word): Integer;
 var
-  s, sSelected,
-  sTarget,
-  sCount: String;
-  iSelected,
-  iSL, iIndex: Integer;
+  s, sSelected, sTarget, sCount: String;
+  iSelected, iSL, iIndex: Integer;
   fe: TGMV_FileEntry;
-  SL: TStringList;
+  sl: TStringList;
 begin
   Result := 0;
-  sCount := IntToStr(iLoadLimit);
+  sCount := intToStr(iLoadLimit);
   sTarget := aTarget;
   iSelected := fListBox.ItemIndex;
-  if iSelected < 0 then iSelected := 0;
+  if iSelected < 0 then
+    iSelected := 0;
   sSelected := fListBox.Items[iSelected];
-  SL := getClinicFileEntriesByName(aTarget,sCount,aDirection);
+  sl := getClinicFileEntriesByName(aTarget, sCount, aDirection);
 
-  if Assigned(SL) then
-    begin
-      Result := SL.Count;
-      for iSL := 0 to SL.Count - 1 do
+  if Assigned(sl) then
+  begin
+    try
+      Result := sl.Count;
+      for iSL := 0 to sl.Count - 1 do
+      begin
+        s := sl[iSL];
+        iIndex := GMVClinics.Entries.IndexOf(s);
+        fe := TGMV_FileEntry(sl.Objects[iSL]);
+        if iIndex >= 0 then
+          try
+            if Assigned(fe) then
+              fe.Free;
+          except
+          end
+        else
         begin
-          s := SL[iSL];
-          iIndex := GMVClinics.Entries.IndexOf(s);
-          fe := TGMV_FileEntry(SL.Objects[iSL]);
-          if iIndex >= 0 then
-            try
-              if Assigned(fe) then fe.Free;
-            except
-            end
+          if aDirection = '1' then
+          begin
+            GMVClinics.Entries.AddObject(sl[iSL], fe);
+            fListBox.Items.Add(sl[iSL]); // zzzzzzandria 2008-04-15
+          end
           else
-            begin
-              if aDirection = '1' then
-                begin
-                  GMVClinics.Entries.AddObject(SL[iSL],fe);
-                  fListBox.Items.Add(SL[iSL]);    // zzzzzzandria 2008-04-15
-                end
-              else
-                begin
-                  GMVClinics.Entries.InsertObject(0,SL[iSL],fe);
-                  fListBox.Items.Insert(0,SL[iSL]); // zzzzzzandria 2008-04-15
-                end;
-            end;
+          begin
+            GMVClinics.Entries.InsertObject(0, sl[iSL], fe);
+            fListBox.Items.Insert(0, sl[iSL]); // zzzzzzandria 2008-04-15
+          end;
         end;
-      SL.Free;
+      end;
+    Finally
+       SL.Free;
     end;
-    UpdateScrollBar;
+  end;
+  UpdateScrollBar;
 end;
 
 // zzzzzzandria 2008-04-11 =============================================== begin
@@ -1691,5 +1707,3 @@ initialization
   iLoadLimit := 500; // production version
 {$ENDIF}
 end.
-
-

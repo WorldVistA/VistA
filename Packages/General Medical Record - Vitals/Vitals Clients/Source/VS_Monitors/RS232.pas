@@ -4,7 +4,7 @@ unit RS232;
 *
 *       Application:  Vitals
 *       Revision:     $Revision: 1 $  $Modtime: 2/20/09 3:21p $
-*       Developer:    andrey.andriyevskiy@domain.ext
+*       Developer:    dddddddddomain.user@domain.ext
 *       Site:         Hines OIFO
 *
 *       Description:  COM support for CASMED Vitals Signs Monitor

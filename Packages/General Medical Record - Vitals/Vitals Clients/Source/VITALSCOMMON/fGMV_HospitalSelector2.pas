@@ -233,11 +233,14 @@ var
 begin
   lv := TListView(Sender);
   try
-    fID := lv.Selected.SubItems[0];
-    fName := lv.Selected.Caption;
-    btnOK.Enabled := ReadyToSelect;
-    lblLeft.Caption := fName + '('+fID+')';
-    edSelected.Text := fName;
+    if Assigned(LV.Selected) then
+    begin
+      fID := lv.Selected.SubItems[0];
+      fName := lv.Selected.Caption;
+      btnOK.Enabled := ReadyToSelect;
+      lblLeft.Caption := fName + '('+fID+')';
+      edSelected.Text := fName;
+    end;
   except
   end;
 end;

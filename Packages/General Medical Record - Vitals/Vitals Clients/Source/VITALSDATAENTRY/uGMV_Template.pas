@@ -3,18 +3,11 @@ unit uGMV_Template;
 interface
 
 uses
-  SysUtils
-  ,Classes
-  ,Dialogs
-  ;
+  SysUtils, Classes, Dialogs;
 
 type
-  TGMV_TemplateEntityType = (
-    teUnknown,
-    teDomain,
-    teInstitution,
-    teHospitalLocation,
-    teNewPerson);
+  TGMV_TemplateEntityType = (teUnknown, teDomain, teInstitution,
+    teHospitalLocation, teNewPerson);
 
   TGMV_TemplateVital = class(TObject)
   private
@@ -30,8 +23,8 @@ type
   public
     constructor Create;
     constructor CreateFromXPAR(XPARVal: string);
-//    destructor Destroy; override;
- // published
+    // destructor Destroy; override;
+    // published
     property VitalName: string read FVitalName write SetVitalName;
     property IEN: string read FIEN write SetIEN;
     property Metric: Boolean read FMetric write SetMetric;
@@ -48,12 +41,12 @@ type
   public
     constructor Create(OwnerName: string; Entity: string);
     destructor Destroy; override;
- // published
+    // published
     property OwnerName: string read FOwnerName write SetOwnerName;
     property Entity: string read FEntity write SetEntity;
   end;
 
- TGMV_Template = class(TObject)
+  TGMV_Template = class(TObject)
   private
     FEntityType: TGMV_TemplateEntityType;
     FEntity: string;
@@ -73,8 +66,9 @@ type
     function SetAsDefault: Boolean;
     function VitalsCount: integer;
     function Vital(Index: integer): TGMV_TemplateVital;
- // published
-    property EntityType: TGMV_TemplateEntityType read FEntityType write SetEntityType;
+    // published
+    property EntityType: TGMV_TemplateEntityType read FEntityType
+      write SetEntityType;
     property Entity: string read FEntity write SetEntity;
     property Owner: TGMV_TemplateOwner read FOwner write SetOwner;
     property TemplateName: string read FTemplateName write SetTemplateName;
@@ -88,16 +82,17 @@ type
     constructor Create;
     destructor Destroy; override;
     function DefaultTemplate(Entity: string): string;
-    function IsDefault(Entity: string; Name: string): boolean;
+    function IsDefault(Entity: string; Name: string): Boolean;
   end;
 
 var
   GMVDefaultTemplates: TGMV_DefaultTemplates;
-const
-  GMVENTITYNAMES: array[TGMV_TemplateEntityType] of string = (
-       'Unknown', 'System', 'Division', 'Location', 'User');
 
-//procedure GetTemplateList(Entity: string; var List: TStringList);
+const
+  GMVENTITYNAMES: array [TGMV_TemplateEntityType] of string = ('Unknown',
+    'System', 'Division', 'Location', 'User');
+
+  // procedure GetTemplateList(Entity: string; var List: TStringList);
 
 function GetTemplateObject(Entity, Name: string): TGMV_Template;
 function GetDefaultTemplateObject(Entity: string): TGMV_Template;
@@ -106,11 +101,7 @@ function CreateNewUserTemplate: TGMV_Template;
 
 implementation
 
-uses uGMV_Common
-  , uGMV_GlobalVars
-  , uGMV_FileEntry
-  , uGMV_Engine
-  , System.UITypes;
+uses uGMV_Common, uGMV_GlobalVars, uGMV_FileEntry, uGMV_Engine, System.UITypes;
 
 { TGMV_TemplateVital }
 
@@ -126,16 +117,16 @@ begin
   try
     FVitalName := GMVTypes.Entries[GMVTypes.IndexOfIEN(FIEN)];
   except
-    FVitalName := 'Unknown ('+FIEN+')';
+    FVitalName := 'Unknown (' + FIEN + ')';
   end;
   FMetric := (Piece(XPARVal, ':', 2) = '1');
   FQualifiers := Piece(XPARVal, ':', 3);
 end;
 
-//destructor TGMV_TemplateVital.Destroy;
-//begin
-//  inherited;
-//end;
+// destructor TGMV_TemplateVital.Destroy;
+// begin
+// inherited;
+// end;
 
 function TGMV_TemplateVital.GetDisplayQualifiers: string;
 var
@@ -146,17 +137,18 @@ begin
   x := '';
   i := 1;
   while Piece(FQualifiers, '~', i) <> '' do
-    begin
-      q := Piece(FQualifiers, '~', i);
-      if x <> '' then
-        x := x + ',';
-      try
-        x := x + GMVQuals.Entries[GMVQuals.IndexOfIEN(Piece(q, ',', 2))];
-      except
-      end;
-      inc(i);
+  begin
+    q := Piece(FQualifiers, '~', i);
+    if x <> '' then
+      x := x + ',';
+    try
+      x := x + GMVQuals.Entries[GMVQuals.IndexOfIEN(Piece(q, ',', 2))];
+    except
     end;
-  Result := '[' + x + ']';//  Result := '[' + TitleCase(x) + ']';  //AAN 07/18/2002
+    inc(i);
+  end;
+  Result := '[' + x + ']';
+  // Result := '[' + TitleCase(x) + ']';  //AAN 07/18/2002
 end;
 
 procedure TGMV_TemplateVital.SetIEN(const Value: string);
@@ -190,21 +182,27 @@ constructor TGMV_Template.CreateFromXPAR(XPARVal: string);
 begin
   inherited Create;
   case StrToIntDef(Piece(XPARVal, '^', 1), 0) of
-    1: FEntityType := teDomain;
-    2: FEntityType := teInstitution;
-    3: FEntityType := teHospitalLocation;
-    4: FEntityType := teNewPerson;
+    1:
+      FEntityType := teDomain;
+    2:
+      FEntityType := teInstitution;
+    3:
+      FEntityType := teHospitalLocation;
+    4:
+      FEntityType := teNewPerson;
   else
     FEntityType := teUnknown;
   end;
-  FEntity := Piece(XParVal, '^', 2);
+  FEntity := Piece(XPARVal, '^', 2);
   FOwner := TGMV_TemplateOwner.Create(Piece(XPARVal, '^', 3), FEntity);
-  FTemplateName := Piece(XParVal, '^', 4);
-  //  FXPARValue := Piece(XParVal,'^',5);
+  FTemplateName := Piece(XPARVal, '^', 4);
+  // FXPARValue := Piece(XParVal,'^',5);
 end;
 
 destructor TGMV_Template.Destroy;
 begin
+  if Assigned(FOwner) then
+    FreeAndNil(FOwner);
   inherited;
 end;
 
@@ -230,28 +228,28 @@ end;
 
 procedure TGMV_Template.SetXPARValue(const Value: string);
 begin
-  setTemplate(FEntity,FTemplateName,Value);
+  setTemplate(FEntity, FTemplateName, Value);
 end;
 
 function TGMV_Template.GetXPARValue: string;
 begin
-  Result := Piece(getTemplateValue(FEntity,FTemplateName), '^', 5);
+  Result := Piece(getTemplateValue(FEntity, FTemplateName), '^', 5);
 end;
 
 function TGMV_Template.Rename(NewName: string): Boolean;
 begin
-  if renameTemplate(FEntity,FTemplateName,NewName)<>'-1' then
-    begin
-      Result := True;
-      FTemplateName := NewName;
-    end
+  if renameTemplate(FEntity, FTemplateName, NewName) <> '-1' then
+  begin
+    Result := True;
+    FTemplateName := NewName;
+  end
   else
     Result := False;
 end;
 
 function TGMV_Template.SetAsDefault: Boolean;
 begin
-  Result := (Piece(SetDefaultTemplate(FEntity,FTemplateName), '^', 1) <> '-1');
+  Result := (Piece(SetDefaultTemplate(FEntity, FTemplateName), '^', 1) <> '-1');
 end;
 
 function TGMV_Template.Vital(Index: integer): TGMV_TemplateVital;
@@ -289,7 +287,7 @@ begin
   FOwnerName := Value;
 end;
 
-/////////////////////////////////////////////////////////////////////
+/// //////////////////////////////////////////////////////////////////
 
 function GetDefaultTemplateObject(Entity: string): TGMV_Template;
 var
@@ -297,7 +295,7 @@ var
 begin
   s := getDefaultTemplateByID(Entity);
   if Piece(s, '^', 1) = '-1' then
-      Result := nil
+    Result := nil
   else
     Result := GetTemplateObject(Entity, s);
 end;
@@ -306,7 +304,7 @@ function GetTemplateObject(Entity, Name: string): TGMV_Template;
 var
   s: String;
 begin
-  s := getTemplateValue(Entity,Name);
+  s := getTemplateValue(Entity, Name);
   try
     Result := TGMV_Template.CreateFromXPAR(s);
   except
@@ -315,37 +313,36 @@ begin
 end;
 
 (*
-procedure GetTemplateList(Entity: string; var List: TStringList);
-var
+  procedure GetTemplateList(Entity: string; var List: TStringList);
+  var
   i: integer;
   SL: TStringList;
-begin
+  begin
   if List = nil then List := TStringList.Create;
   List.Clear;
 
   SL := getTemplateListByID(Entity);
   for i := 0 to SL.Count - 1 do
-    List.AddObject(Piece(SL[i], '^', 4), TGMV_Template.CreateFromXPAR(SL[i]));
-end;
+  List.AddObject(Piece(SL[i], '^', 4), TGMV_Template.CreateFromXPAR(SL[i]));
+  end;
 *)
 
 function CreateNewUserTemplate: TGMV_Template;
 var
-  s,
-  TemplateName: string;
+  s, TemplateName: string;
 begin
   if InputQuery('Create New Template', 'Template Name:', TemplateName) then
+  begin
+    s := createUserTemplateByName(TemplateName);
+    if Piece(s, '^') = '-1' then
     begin
-      s := createUserTemplateByName(Templatename);
-      if Piece(s, '^') = '-1' then
-        begin
-          MessageDlg('Unable to Create New Template'#13#13+
-            Piece(s, '^',3), mtError, [mbOK], 0);
-          Result := nil;
-        end
-      else
-        Result := TGMV_Template.CreateFromXPAR(S);
+      MessageDlg('Unable to Create New Template'#13#13 + Piece(s, '^', 3),
+        mtError, [mbOK], 0);
+      Result := nil;
     end
+    else
+      Result := TGMV_Template.CreateFromXPAR(s);
+  end
   else
     Result := nil;
 end;
@@ -365,10 +362,10 @@ begin
   Result := '';
   for i := 0 to FTemplates.Count - 1 do
     if Piece(FTemplates[i], '^', 1) = Entity then
-      begin
-        Result := Piece(FTemplates[i], '^', 2);
-        Exit;
-      end
+    begin
+      Result := Piece(FTemplates[i], '^', 2);
+      Exit;
+    end
 end;
 
 destructor TGMV_DefaultTemplates.Destroy;
@@ -377,8 +374,7 @@ begin
   inherited;
 end;
 
-
-function TGMV_DefaultTemplates.IsDefault(Entity, Name: string): boolean;
+function TGMV_DefaultTemplates.IsDefault(Entity, Name: string): Boolean;
 begin
   Result := (FTemplates.IndexOf(Entity + '^' + Name) > -1);
 end;
