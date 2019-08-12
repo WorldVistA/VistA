@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Adobe RoboHelp 2017" />
+<title>Setting User Options</title>
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute;
+left:0px;
+top:0px;
+z-index:4;
+visibility:hidden; }
+p.WebHelpNavBar { text-align:right; }
+-->
+</style>
+<script type="text/javascript" language="javascript1.2" src="whmsg.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" src="whver.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.gbWhTopic)
+{
+	var strUrl = document.location.href;
+	var bc = 0;
+	var n = strUrl.toLowerCase().indexOf("bc-");
+	if(n != -1)
+	{
+		document.location.replace(strUrl.substring(0, n));
+		bc = strUrl.substring(n+3);
+	}
+
+	addTocInfo("Setting User Options");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"whd_show0.gif","whd_show2.gif","whd_show1.gif");
+addButton("hide",BTN_TEXT,"Hide","","","","",0,0,"whd_hide0.gif","whd_hide2.gif","whd_hide1.gif");
+
+
+	
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+    
+onLoadHandler = function()
+{
+	if (window.setRelStartPage)
+	{
+    setTimeout("setRelStartPage('index.htm');", 1)
+
+    setTimeout("UpdateBreadCrumbsMarker();", 1);
+    }
+} 
+
+if (window.addEventListener){  
+	window.addEventListener('load', onLoadHandler, false);   
+} else if (window.attachEvent){  
+	window.attachEvent('onload', onLoadHandler);  
+}
+
+function onSetStartPage()
+{
+	autoSync(0);
+	sendSyncInfo();
+	sendAveInfoOut();
+}
+//-->
+//]]></script>
+</head>
+
+<body><script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(4);
+//-->
+//]]></script>
+<script type="text/javascript" src="./ehlpdhtm.js" language="JavaScript1.2"></script>
+
+<b>Setting User Options</b> 
+<br />The User Options feature is used to define the vitals 
+ data grid display and the search delay setting. 
+<br /><b><i>To set user options:</i></b> 
+<ol>
+	<li>From the <b>File</b> menu in the main Vitals window, select <b>User 
+	 Options</b>. The User Preferences window opens. </li>
+	<li>Use the <b>Display Values</b> area to set display options for Normal 
+	 and Abnormal Values: </li>
+</ol>
+Click the <b>Text</b> button to select a text color for the table. 
+<br />Click the <b>Background</b> button to select a background 
+ color for the table. 
+<br />Check the <b>Bold</b> check box to bold the text. 
+<br />Check the <b>Show Qualifiers</b> check box to show qualifier 
+ abbreviations with each value. 
+<br />To restore default settings, click the <b>Defaults</b> 
+ button. 
+<br />Default settings for Normal Values are: Black Text, White 
+ Background, Not Bold, Show Qualifiers. 
+<br />Default settings for Abnormal Values are: Red Text, White 
+ Background, Not Bold, Show Qualifiers. 
+<ol start="3">
+	<li>Use the <b>Search Value</b> area to set the Search Delay setting. 
+	 The Search Delay is the amount of time, in seconds, between entering 
+	 characters and beginning a Patient or Location lookup. </li>
+</ol>
+Select <b>0.5</b> for the fastest lookup, or <b>5.0</b> for the slowest 
+ 
+<br />The default Search Delay setting is <b>1.0</b> 
+<ol start="4">
+	<li>Click <b>OK</b> to save changes, or <b>Cancel</b> to discard changes. 
+	 </li>
+</ol>
+To customize the appearance of the vitals data graph, see <a href="VITALSSetting_Graph_and_Grid_Options.htm" title="VITALSSetting_Graph_and_Grid_Options.htm">Setting 
+ Graph Options</a>. 
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+
+highlightSearch();
+//-->
+//]]></script>
+</body>
+</html>

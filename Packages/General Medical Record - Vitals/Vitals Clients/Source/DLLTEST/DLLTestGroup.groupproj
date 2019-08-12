@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{FB011227-F42A-4F4A-8BAC-677249397F12}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\DLL-VITALSVIEWENTER\GMV_VitalsViewEnter.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DLLTEST.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="GMV_VitalsViewEnter">
+        <MSBuild Projects="..\DLL-VITALSVIEWENTER\GMV_VitalsViewEnter.dproj"/>
+    </Target>
+    <Target Name="GMV_VitalsViewEnter:Clean">
+        <MSBuild Projects="..\DLL-VITALSVIEWENTER\GMV_VitalsViewEnter.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GMV_VitalsViewEnter:Make">
+        <MSBuild Projects="..\DLL-VITALSVIEWENTER\GMV_VitalsViewEnter.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DLLTEST">
+        <MSBuild Projects="DLLTEST.dproj"/>
+    </Target>
+    <Target Name="DLLTEST:Clean">
+        <MSBuild Projects="DLLTEST.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DLLTEST:Make">
+        <MSBuild Projects="DLLTEST.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="GMV_VitalsViewEnter;DLLTEST"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="GMV_VitalsViewEnter:Clean;DLLTEST:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="GMV_VitalsViewEnter:Make;DLLTEST:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
