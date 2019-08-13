@@ -3084,7 +3084,8 @@ class WebPageGenerator:
                 pdfRow = []
             comments = entryPoints[entry]["comments"] if entryPoints[entry]["comments"] else ""
             # Build table row
-            row.append(entry)
+            sourceLink = "<a href='%s/Routine_%s_source.html#%s'>%s</a>" % (DOX_URL, routine.getName(),entry.split('(')[0],entry)
+            row.append(sourceLink)
             if self._generatePDFBundle:
                 pdfRow.append(generateParagraph(entry))
             val = ""
