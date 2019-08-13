@@ -33,6 +33,7 @@ import re
 import os.path
 import argparse
 import glob
+import sys
 
 # Regular expression to grep routines from the log file
 Routine= re.compile('^(?P<routine>%?[a-zA-Z|0-9][^ ]+) +\* \* .*[cC]hecksum:.*')
@@ -130,7 +131,7 @@ if __name__ == '__main__':
     else:
         # If don't choose all packages, must specify package name
         if (not result['packageName']):
-            exit -1;
+            sys.exit("Must specify all packages or one or more package names")
         for package in result['packageName']:
             searchFiles.append(os.path.join(result['logDir'],package.replace(' ', '_')+'Test.log'))
         if (len(result['packageName']) == 1):
