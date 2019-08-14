@@ -473,7 +473,8 @@ def writeTableListInfo(output, tName):
 def safeFileName(name):
   """ convert to base64 encoding """
   import base64
-  return base64.urlsafe_b64encode(name)
+  # b64Encode requires a bytes object but would prefer strings
+  return str(base64.urlsafe_b64encode(name.encode('utf-8')))
 
 def safeElementId(name):
   import base64
@@ -481,4 +482,8 @@ def safeElementId(name):
   it turns out that '=' is not a valid html element id
   remove the padding
   """
-  return base64.b64encode(name, "__").replace('=','').replace('.','')
+  # b64Encode requires a bytes object but would prefer strings
+  name = name.encode('utf-8')
+  extraChr = str('__').encode('utf-8')
+  returnStr = str(base64.b64encode(name, extraChr))
+  return returnStr.replace('=','').replace('.','')

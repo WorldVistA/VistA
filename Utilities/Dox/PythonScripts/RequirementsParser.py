@@ -15,12 +15,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from future import standard_library
+standard_library.install_aliases()
 import RequirementsXLStoJSON
 import RequirementsJSONtoHTML
 
 import argparse
 import os
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from LogManager import initLogging, logger
 
@@ -32,16 +34,16 @@ def run(args):
       # First, acquire pages from http://code.osehra.org
       xlsfileName="Open Needs_Epics with BFFs (for Open Source)_Feb2018.xlsx"
       logger.info("Downloading %s from http://code.osehra.org" % xlsfileName)
-      quotedURL = urllib.quote("code.osehra.org/files/requirements/"+xlsfileName)
-      urllib.urlretrieve("http://%s" % quotedURL,xlsfileName)
+      quotedURL = urllib.parse.quote("code.osehra.org/files/requirements/"+xlsfileName)
+      urllib.request.urlretrieve("http://%s" % quotedURL,xlsfileName)
     if args.localPast:
       logger.info("Using local pastData file: %s" % args.localPast)
       pastDataFileName = args.localPast
     else:
       pastDataURL= "code.osehra.org/files/requirements/requirements_July_2017/Requirements.json"
       logger.info("Downloading %s" % pastDataURL)
-      quotedURL = urllib.quote(pastDataURL)
-      urllib.urlretrieve("http://%s" % quotedURL,"oldRequirements.json")
+      quotedURL = urllib.parse.quote(pastDataURL)
+      urllib.request.urlretrieve("http://%s" % quotedURL,"oldRequirements.json")
       pastDataFileName = "oldRequirements.json"
 
     args.ReqJsonFile = os.path.join(args.outDir, "requirements.json")
