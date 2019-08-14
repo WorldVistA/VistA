@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2011-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
 if VistA.type=='cache':
   try:
     VistA.ZN('${VISTA_CACHE_NAMESPACE}')
-  except IndexError,no_namechange:
+  except IndexError as no_namechange:
     pass
 VistA.wait(PROMPT)
 VistA.write('D ^%RI')
-if VistA.type=='GTM':
+if VistA.type == 'GTM':
   VistA.wait('Formfeed delimited <No>?')
   VistA.write('No')
   VistA.wait('Input device: <terminal>:')

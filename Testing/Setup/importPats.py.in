@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 PwC
+# Copyright 2013-2019 PwC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -48,13 +48,13 @@ try:
     if VistA.type=='cache':
         try:
             VistA.ZN('${VISTA_CACHE_NAMESPACE}')
-        except IndexError,no_namechange:
+        except IndexError as no_namechange:
             pass
     VistA.wait(PROMPT)
     pat=PATActions(VistA)
     pat.signon()
     pat.patientaddallcsv('${VISTA_SOURCE_DIR}/Testing/Functional/dataFiles/patdata0.csv')
-except TestHelper.TestError, e:
+except TestHelper.TestError as e:
     resultlog.write(e.value)
     logging.error('*****exception*********')
 else:

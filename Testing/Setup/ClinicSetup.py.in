@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 PwC
+# Copyright 2013-2019 PwC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,6 +33,8 @@ Created on Jun 19, 2012
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
 
+from builtins import range
+from builtins import object
 import sys
 import time
 sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
@@ -192,7 +194,7 @@ if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
 if VistA.type == 'cache':
   try:
     VistA.ZN('${VISTA_CACHE_NAMESPACE}')
-  except IndexError, no_namechange:
+  except IndexError as no_namechange:
     pass
 VistA.wait(PROMPT, 60)
 

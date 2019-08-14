@@ -111,7 +111,7 @@ class ConnectMUMPS(object):
       test = match[1].span()
       VistAboxvol = ''
       for i in range(test[0], test[1]):
-        VistAboxvol = VistAboxvol + match[2][i]
+        VistAboxvol = VistAboxvol + match[2].decode('utf-8')[i]
       self.boxvol = VistAboxvol.strip()
     else:
       self.wait_re(volume + ':.+\s', None)
@@ -138,7 +138,7 @@ class ConnectMUMPS(object):
       test = match[1].span()
       number = ''
       for i in range(test[0], test[1]):
-        number = number + match[2][i]
+        number = number + match[2].decode('utf-8')[i]
       number = number.lstrip('\r\n')
       self.IENumber = number
     else:
