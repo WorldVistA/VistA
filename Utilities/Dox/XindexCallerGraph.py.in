@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2011-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+
+from __future__ import with_statement
+from __future__ import print_function
 import sys
 sys.path.append('${VISTA_SOURCE_DIR}/Python/vista')
 
@@ -70,7 +73,7 @@ def runXindexForRoutine(connection, routineName):
         continue
       else:
         break
-    except IndexError, error:
+    except IndexError as error:
       print ("Caught IndexError %s" % error)
       continue
 
@@ -143,7 +146,7 @@ def runXindexForPackage(connection, packageName,namespace_list,fileNo_list):
         continue
       elif index == 1:
         break
-    except IndexError, error:
+    except IndexError as error:
       print ("Caught IndexError %s" % error)
       continue
 
@@ -153,7 +156,7 @@ if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
 if VistA.type=='cache':
   try:
     VistA.ZN('${VISTA_CACHE_NAMESPACE}')
-  except IndexError,no_namechange:
+  except IndexError as no_namechange:
     pass
 AllRoutines = []
 ${AllRoutines} # this is the line that will replace by cmake config file
