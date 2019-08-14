@@ -80,7 +80,7 @@ def generateXindexExceptionList(logFileName, packageDir, MType, WarnFlag,
                     absPath = os.path.join(packageDir, outputFilename)
                     existingFile = os.path.exists(absPath)
                     if existingFile:
-                        with open(absPath, "rb") as file:
+                        with open(absPath, "r") as file:
                             # Read in file, remove all trailing whitespace
                             exceptionFileList[outputFilename] = [exception.rstrip() for exception in file]
                 # Remove whitespace
@@ -91,18 +91,18 @@ def generateXindexExceptionList(logFileName, packageDir, MType, WarnFlag,
                         newExceptions[outputFilename] = []
                     # Only add line to exception file once
                     if line not in newExceptions[outputFilename]:
-                        newExceptions[outputFilename].append(line)
+                        newExceptions[outputFilename].append(line.encode('utf-8'))
     packageLogFile.close()
 
     # Make sure the directory exists
     if newExceptions and not os.path.exists(packageDir):
         os.makedirs(packageDir)
     # Write out the new exceptions
-    for filename, exceptionList in newExceptions.iteritems():
+    for filename, exceptionList in newExceptions.items():
         absPath = os.path.join(packageDir, filename)
         with open(absPath, "ab") as file:  # Open in binary mode to preserve line endings
-            file.write("\r\n".join(exceptionList))
-            file.write("\r\n")  # Make sure there's a newline at the end of file
+            file.write(b"\r\n".join(exceptionList))
+            file.write(b"\r\n")  # Make sure there's a newline at the end of file
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='XIndex Exception List file generator')
