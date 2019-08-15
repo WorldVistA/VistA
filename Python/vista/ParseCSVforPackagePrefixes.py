@@ -1,3 +1,4 @@
+
 #---------------------------------------------------------------------------
 # Copyright 2013 The Open Source Electronic Health Record Agent
 #
@@ -13,25 +14,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
+from past.builtins import cmp
+from builtins import str
+from builtins import object
 import csv,os,sys
 
-class Prefix:
+class Prefix(object):
   def __init__(self, exclude, name):
     self.exclude = exclude
     self.name = name
   def __str__(self):
     return self.exclude + self.name
-  def __cmp__(l,r):
+  def __lt__(l,r):
     """Order prefixes from shortest to longest, ignoring exclude mark."""
     if len(l.name) < len(r.name):
         return -1
-    elif len(l.name) > len(r.name):
+  def __gt__(l,r):
+    if len(l.name) > len(r.name):
         return +1
-    else:
+  def __eq__(l,r):
         return cmp(l.name,r.name)
 
 def FindPackagePrefixes(packagename,packages_csv_file):
-  packages_csv = csv.DictReader(open(packages_csv_file,'rb'))
+  packages_csv = csv.DictReader(open(packages_csv_file,'r'))
   package_dir_name = packagename.replace('_',' ')
   packageprefix = []
   """
@@ -101,7 +107,7 @@ def FindPackagePrefixes(packagename,packages_csv_file):
   return [str(x) for x in prefixes]
 
 def FindPackageFiles(packagename,packages_csv_file):
-  packages_csv = csv.DictReader(open(packages_csv_file,'rb'))
+  packages_csv = csv.DictReader(open(packages_csv_file,'r'))
   package_dir_name = packagename.replace('_',' ')
   packageprefix = []
   """
@@ -137,6 +143,6 @@ if __name__ == '__main__':
     sys.exit()
   prefixes = FindPackagePrefixes(sys.argv[1], sys.argv[2])
   files = FindPackageFiles(sys.argv[1], sys.argv[2])
-  print prefixes
-  print "********************************"
-  print files
+  print(prefixes)
+  print("********************************")
+  print(files)
