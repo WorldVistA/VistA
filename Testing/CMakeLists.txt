@@ -206,11 +206,6 @@ if((TEST_VISTA_FUNCTIONAL_SIK OR TEST_VISTA_FUNCTIONAL_RAS) AND TEST_VISTA_SETUP
   option(TEST_VISTA_COVERAGE_READABLE "On Cache, output the coverage report in a summary table" ON)
   file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage")
 endif()
-# this option is reserved for dashboard submission
-if (TEST_VISTA_OTJ_SUBMISSION)
-  add_subdirectory(OTJ)
-endif()
-
 
 
 #-----------------------------------------------------------------------------#
