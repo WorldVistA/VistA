@@ -15,26 +15,26 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import print_function
-from past.builtins import cmp
 from builtins import str
 from builtins import object
-import csv,os,sys
+import csv
+import os
+import sys
 
 class Prefix(object):
   def __init__(self, exclude, name):
     self.exclude = exclude
     self.name = name
+
   def __str__(self):
     return self.exclude + self.name
+
+  # Order prefixes from shortest to longest, ignoring exclude mark.
+  # If prefixes are the same length, put in alphabetical order.
   def __lt__(l,r):
-    """Order prefixes from shortest to longest, ignoring exclude mark."""
-    if len(l.name) < len(r.name):
-        return -1
-  def __gt__(l,r):
-    if len(l.name) > len(r.name):
-        return +1
-  def __eq__(l,r):
-        return cmp(l.name,r.name)
+    if len(l.name) == len(r.name):
+      return l.name < r.name
+    return len(l.name) < len(r.name)
 
 def FindPackagePrefixes(packagename,packages_csv_file):
   packages_csv = csv.DictReader(open(packages_csv_file,'r'))
@@ -135,14 +135,3 @@ def FindPackageFiles(packagename,packages_csv_file):
   included_File_Names = [Prefix( "",x) for x in included]
   File_Names = sorted(included_File_Names)
   return [str(x) for x in File_Names]
-
-if __name__ == '__main__':
-  print ('sys.argv is %s' % sys.argv)
-  if len(sys.argv) <= 1:
-    print ('Need the two arguments arguments:packagename,packages_csv_file ')
-    sys.exit()
-  prefixes = FindPackagePrefixes(sys.argv[1], sys.argv[2])
-  files = FindPackageFiles(sys.argv[1], sys.argv[2])
-  print(prefixes)
-  print("********************************")
-  print(files)
