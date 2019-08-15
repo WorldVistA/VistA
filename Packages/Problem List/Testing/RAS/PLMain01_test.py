@@ -37,7 +37,7 @@ def main():
        # End Tests
 
         test_suite_driver.post_test_suite_run(test_suite_details)
-    except Exception, e:
+    except Exception as e:
         test_suite_driver.exception_handling(test_suite_details, e)
     else:
         test_suite_driver.try_else_handling(test_suite_details)

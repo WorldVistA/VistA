@@ -26,6 +26,8 @@ Created on Jun 14, 2012
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
 
+from builtins import str
+from builtins import range
 from Actions import Actions
 import TestHelper
 import datetime
