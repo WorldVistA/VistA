@@ -56,7 +56,7 @@ def generateXindexExceptionList(logFileName, packageDir, MType, WarnFlag,
     # Exception File List key file name, value is the file contents
     exceptionFileList = dict()
     newExceptions = dict()
-    isSetEmpty = routineSet == None or len(routineSet)== 0
+    isSetEmpty = routineSet is None or len(routineSet)== 0
     packageLogFile = open(logFileName,'r')
     currentRoutineName = ""
     for line in packageLogFile:
@@ -65,6 +65,7 @@ def generateXindexExceptionList(logFileName, packageDir, MType, WarnFlag,
         if(newRoutineName):
             if (newRoutineName != currentRoutineName):
                 currentRoutineName=newRoutineName.group('routine')
+                print("Processing routine ", currentRoutineName)
         else:
             ErrWarnLine = ErrWarn.search(line)
             if ErrWarnLine and (isSetEmpty or currentRoutineName in routineSet):
@@ -126,6 +127,7 @@ if __name__ == '__main__':
     searchFiles=[]
     routines=set()
     if (result['allPackage']):
+        print("Looking for files in ",os.path.join(result['logDir']))
         logFilenamePattern="*Test.log"
         searchFiles = glob.glob(os.path.join(result['logDir'],logFilenamePattern))
     else:
@@ -139,11 +141,16 @@ if __name__ == '__main__':
 
     vistADir = result['VistADir']
     for logFile in searchFiles:
+        print("Parsing file ", logFile)
         packageName = os.path.basename(logFile)
+        print("Processing Package ", packageName)
         # assume the package name is in the following format
         packageName = packageName[0:packageName.find("Test.log")]
         if packageName == "Last":
             # Skip 'LastTest.log'
             continue
-        packageDir = os.path.join(vistADir, "Packages", packageName.replace('_',' '), "XINDEXException")
-        generateXindexExceptionList(logFile, packageDir, result['MType'], result['WarnFlag'], routines)
+        packageDir = os.path.join(vistADir, "Packages",
+                                  packageName.replace('_',' '),
+                                  "XINDEXException")
+        generateXindexExceptionList(logFile, packageDir, result['MType'],
+                                    result['WarnFlag'], routines)
