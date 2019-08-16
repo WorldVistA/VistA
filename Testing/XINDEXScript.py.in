@@ -24,7 +24,7 @@ if ('@VISTA_CACHE_USERNAME@' and '@VISTA_CACHE_PASSWORD@'):
 if VistA.type=='cache':
   try:
     VistA.ZN('@VISTA_CACHE_NAMESPACE@')
-  except IndexError,no_namechange:
+  except IndexError as no_namechange:
     pass
 
 if '@TEST_VISTA_COVERAGE@'=='ON':
