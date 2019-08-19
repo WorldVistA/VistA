@@ -268,7 +268,8 @@ class ConnectWinCache(ConnectMUMPS):
 class ConnectLinuxCache(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
-    self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None)
+    if sys.version_info[0] == 3 : self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None, encoding='utf-8')
+    else                        : self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None)
     if len(namespace) == 0:
       namespace = 'VISTA'
     self.namespace = namespace
@@ -367,7 +368,8 @@ class ConnectLinuxGTM(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
     gtm_command = os.getenv('gtm_dist')+'/mumps -dir'
-    self.connection = pexpect.spawn(gtm_command, timeout=None)
+    if sys.version_info[0] == 3 : self.connection = pexpect.spawn(gtm_command, timeout=None, encoding='utf-8')
+    else                        : self.connection = pexpect.spawn(gtm_command, timeout=None)
     if len(namespace) == 0:
         self.prompt = os.getenv("gtm_prompt")
         if self.prompt == None:
@@ -393,7 +395,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.prompt
-    rbuf = self.connection.expect_exact(command.encode('utf-8'), tout)
+    rbuf = self.connection.expect_exact(str(command), tout)
     logging.debug('RECEIVED: ' + command)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
@@ -663,7 +665,7 @@ def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0
     # local connections
     if sys.platform == 'win32':
       return ConnectWinCache(logfile, instance, namespace, location)
-    elif (sys.platform == 'linux2' or sys.platform == 'cygwin'):
+    elif (sys.platform == 'linux2' or sys.platform == 'linux' or sys.platform == 'cygwin'):
       if no_pexpect:
         raise no_pexpect
       if os.getenv('gtm_dist'):

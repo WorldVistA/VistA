@@ -181,7 +181,7 @@ class TestSuiteDriver(object):
         if not os.path.isabs(args.resultdir):
             logging.error('EXCEPTION: Absolute Path Required for Result Directory')
             raise
-        result_log = file(resfile, 'w')
+        result_log = open(resfile, 'w')
 
         return test_suite_details(package_name, test_suite_name, result_log, args.resultdir, instance,
                            namespace, username, remote_conn_details, args.coverage_type, args.coverage_subset.split(","))
