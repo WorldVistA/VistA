@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2016 The Open Source Electronic Health Record Agent
+# Copyright 2016-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import division
+from __future__ import print_function
+from past.utils import old_div
 from DefaultKIDSBuildInstaller import DefaultKIDSBuildInstaller
 from VistAMenuUtil import VistAMenuUtil
 import re
@@ -35,7 +37,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
   def __init__(self, kidsFile, kidsInstallName,
                seqNo = None, logFile = None, multiBuildList=None,
                duz=17, **kargs):
-    print kidsInstallName, seqNo
+    print(kidsInstallName, seqNo)
     assert kidsInstallName == "LA*5.2*88"
     DefaultKIDSBuildInstaller.__init__(self, kidsFile,
                                        kidsInstallName,
@@ -59,7 +61,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
       logger.info("Import global file %s" % (glbFile))
       fileSize = os.path.getsize(glbFile)
       importTimeout = DEFAULT_GLOBAL_IMPORT_TIMEOUT
-      importTimeout += int(fileSize/GLOBAL_IMPORT_BYTE_PER_SEC)
+      importTimeout += int(old_div(fileSize,GLOBAL_IMPORT_BYTE_PER_SEC))
       globalImport.importGlobal(vistATestClient, glbFile, timeout=importTimeout)
 
     """ Requires the installer account to have the ZTMQ security key"""
