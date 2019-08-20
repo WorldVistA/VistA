@@ -157,7 +157,7 @@ class PatchIncrInstallExtractCommit(object):
     mRepoBranch = mExtractConfig.get('M_repo_branch', None)
     outputDir = mExtractConfig['temp_output_dir']
     if not os.path.exists(outputDir):
-      os.mkdirs(outputDir)
+      os.makedirs(outputDir)
     extractLogDir  = mExtractConfig['log_dir']
     commitMsgDir = mExtractConfig['commit_msg_dir']
     if not os.path.exists(commitMsgDir):
