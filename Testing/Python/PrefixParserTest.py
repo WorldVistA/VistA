@@ -13,8 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
 
 ### set up the IO that is need by unit test
+from builtins import str
 import sys,os
 sys.path = [os.path.dirname(__file__)+'/../../Python/vista'] + sys.path
 
@@ -28,8 +30,8 @@ ExpectedOutput = ["'%", "'ABC", "'BCD", "'DEF", 'ABCD', "'CDEH", 'DEFG']
 TestOutput = FindPackagePrefixes(sys.argv[1],sys.argv[2])
 
 if ExpectedOutput == TestOutput:
-  print "Output of test matches the expected output"
+  print("Output of test matches the expected output")
   sys.exit(0)
 else:
-  print "Error:  Expected output was: " + str(ExpectedOutput) + ".  Test output was: " + str(TestOutput)
+  print("Error:  Expected output was: " + str(ExpectedOutput) + ".  Test output was: " + str(TestOutput))
   sys.exit(1)
