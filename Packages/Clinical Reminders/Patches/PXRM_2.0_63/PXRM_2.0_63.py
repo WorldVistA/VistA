@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2016 The Open Source Electronic Health Record Agent
+# Copyright 2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from __future__ import print_function
 from DefaultKIDSBuildInstaller import DefaultKIDSBuildInstaller
 from VistAMenuUtil import VistAMenuUtil
 import re
@@ -35,7 +36,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
   def __init__(self, kidsFile, kidsInstallName,
                seqNo = None, logFile = None, multiBuildList=None,
                duz=17, **kargs):
-    print kidsInstallName, seqNo
+    print(kidsInstallName, seqNo)
     assert kidsInstallName == "PXRM*2.0*63"
     DefaultKIDSBuildInstaller.__init__(self, kidsFile,
                                        kidsInstallName,

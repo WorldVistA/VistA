@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2016 The Open Source Electronic Health Record Agent
+# Copyright 2016-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
 from DefaultKIDSBuildInstaller import DefaultKIDSBuildInstaller
 
 """ This is an example of custom installer to handle post install questions
@@ -31,7 +31,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
   def __init__(self, kidsFile, kidsInstallName,
                seqNo = None, logFile = None, multiBuildList=None,
                duz=17, **kargs):
-    print kidsInstallName, seqNo
+    print(kidsInstallName, seqNo)
     assert kidsInstallName == "ROR*1.5*28" and int(seqNo) == 28
     DefaultKIDSBuildInstaller.__init__(self, kidsFile,
                                        kidsInstallName,
