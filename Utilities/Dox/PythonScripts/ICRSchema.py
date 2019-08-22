@@ -126,7 +126,7 @@ SUBFILE_FIELDS = {
 }
 
 """ This is to get all the keywords in sub files """
-SUBFILE_KEYWORDS = reduce(set.union, [set(y) for y in SUBFILE_FIELDS.values()], set()) | set([x for x in SUBFILE_FIELDS.keys()])
+SUBFILE_KEYWORDS = reduce(set.union, [set(y) for y in list(SUBFILE_FIELDS.values())], set()) | set([x for x in list(SUBFILE_FIELDS.keys())])
 
 ICR_FILE_KEYWORDS = ICR_FILE_KEYWORDS | SUBFILE_KEYWORDS
 

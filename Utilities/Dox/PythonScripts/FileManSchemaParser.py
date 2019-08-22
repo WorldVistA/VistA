@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from builtins import object
 import os
 import sys
 import re
@@ -179,7 +180,7 @@ class FileManSchemaParser(object):
     """
     out = set()
     allFiles = set(self._fileDep.keys())
-    for key, values in self._fileDep.iteritems():
+    for key, values in self._fileDep.items():
       allFiles.update(values)
     for key in allFiles:
       self._fileDep.setdefault(key,set())
@@ -368,11 +369,11 @@ class FileManSchemaParser(object):
 
   def _updateMultiple(self):
     allSchemaDict = self._allSchema
-    for file, schema in allSchemaDict.iteritems():
+    for file, schema in allSchemaDict.items():
       allFields = schema.getAllFileManFields()
       if not allFields:
         continue
-      for field, detail in schema.getAllFileManFields().iteritems():
+      for field, detail in schema.getAllFileManFields().items():
         if detail.getType() == FileManField.FIELD_TYPE_SUBFILE_POINTER:
           subFile = detail.getPointedToSubFile()
           if subFile:

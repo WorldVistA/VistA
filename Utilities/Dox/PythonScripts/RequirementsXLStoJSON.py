@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from past.builtins import basestring
 from builtins import map
 from builtins import range
 import xlrd

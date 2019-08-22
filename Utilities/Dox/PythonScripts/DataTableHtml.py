@@ -17,6 +17,7 @@
 """ This is a python module to convert VA FileMan Like Data to HTML DataTable
 """
 
+from builtins import str
 from string import Template
 """
   html header using JQuery Table Sorter Plugin

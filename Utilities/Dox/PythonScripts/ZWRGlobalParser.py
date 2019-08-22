@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from past.builtins import cmp
+from builtins import str
+from builtins import object
 import os
 import sys
 import re
@@ -78,7 +81,7 @@ class GlobalNode(object):
   def __len__(self):
     return len(self.child)
   def keys(self):
-    return self.child.keys()
+    return list(self.child.keys())
   def values(self):
     return self.child.value()
   def getIndex(self):
@@ -171,9 +174,9 @@ class DefaultZWRRootGenerator(object):
   def __del__(self):
     self.inputFile.close()
   def __next__(self):
-    return self.next()
+    return next(self)
 
-  def next(self):
+  def __next__(self):
     if self.inputFile.closed:
       raise StopIteration
     while True:

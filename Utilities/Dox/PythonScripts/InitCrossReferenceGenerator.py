@@ -14,6 +14,7 @@
 # limitations under the License.
 # ---------------------------------------------------------------------------
 
+from builtins import object
 import glob
 import re
 import csv
@@ -54,14 +55,14 @@ class InitCrossReferenceGenerator(object):
     return self.crossRef
 
   def parsePercentRoutineMappingFile(self, mappingFile):
-    result = csv.DictReader(open(mappingFile, "rb"))
+    result = csv.DictReader(open(mappingFile, 'r'))
     for row in result:
       self.crossRef.addPercentRoutineMapping(row['Name'],
                                              row['Source'],
                                              row['Package'])
 
   def parsePackagesFile(self, packageFilename):
-    result = csv.DictReader(open(packageFilename, 'rb'))
+    result = csv.DictReader(open(packageFilename, 'r'))
     crossRef = self.crossRef
     currentPackage = None
     index = 0
@@ -87,7 +88,7 @@ class InitCrossReferenceGenerator(object):
     logger.info("Total # of Packages is %d" % (len(crossRef.getAllPackages())))
 
   def parsePlatformDependentRoutineFile(self, routineCSVFile):
-    routineFile = open(routineCSVFile, "rb")
+    routineFile = open(routineCSVFile, 'r')
     sniffer = csv.Sniffer()
     dialect = sniffer.sniff(routineFile.read(1024))
     routineFile.seek(0)
@@ -108,7 +109,7 @@ class InitCrossReferenceGenerator(object):
             routineDict[currentName] = []
         routineDict[currentName].append(line[-1])
       routineDict[currentName].append([line[1], line[2]])
-    for (routineName, mappingList) in routineDict.iteritems():
+    for (routineName, mappingList) in routineDict.items():
       crossRef.addPlatformDependentRoutineMapping(routineName,
                                                   mappingList[0],
                                                   mappingList[1:])
@@ -183,7 +184,7 @@ class InitCrossReferenceGenerator(object):
                          allPackages.get(packageName))
       try:
         fileNum = float(globalVar.getFileNo())
-      except ValueError, es:
+      except ValueError as es:
         logger.error("error: %s, globalVar:%s file %s" % (es, globalVar, file))
         continue
 #            crossReference.addGlobalToPackage(globalVar, packageName)
@@ -199,7 +200,7 @@ class InitCrossReferenceGenerator(object):
     logger.info("Total # of Packages is %d and Total # of Globals is %d, Total Skip File %d, total FileNo is %d" %
            (len(allPackages), len(allGlobals), len(skipFile), len(fileNoSet)))
 
-    sortedKeyList = sorted(allGlobals.keys(),
+    sortedKeyList = sorted(list(allGlobals.keys()),
                          key=lambda item: float(allGlobals[item].getFileNo()))
     for key in sortedKeyList:
       globalVar = allGlobals[key]
