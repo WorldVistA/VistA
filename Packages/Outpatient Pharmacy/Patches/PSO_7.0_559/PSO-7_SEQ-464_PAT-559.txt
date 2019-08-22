@@ -1,0 +1,178 @@
+$TXT Created by               F at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 04/26/19 at 13:42
+=============================================================================
+Run Date: JUL 18, 2019                     Designation: PSO*7*559
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #464                      Status: Released
+                  Compliance Date: AUG 18, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*541   <<= must be installed BEFORE `PSO*7*559'
+
+Subject: ONEVA PHARAMACY ERROR - HL7 REQUEST SENT TO WRONG SITE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ 1. $ZE= <UNDEFINED>PROCESS+24^PSORWRAP *MW
+    
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC5310207 - $ZE= <UNDEFINED>PROCESS+24^PSORWRAP *MW
+  
+ Problem: 
+ --------
+ Ann Arbor VAMC reported about 5 or 6 entries in their error trap related to
+ OneVA Pharmacy functionality. After some research it was determined that the
+ error was happening because OneVA Pharmacy HL7 messages were being sent to
+ the Ann Arbor VAMC erroneously. The prescription number in the HL7 message
+ request did not exist in the Ann Arbor site as it was probably supposed to
+ be sent to a different site. That was what caused the hard error reported.
+ At this point it is not clear why HL7 messages have been routed the wrong
+ site.
+   
+ Resolution:
+ -----------
+ The processing of incoming HL7 messages for OneVA Pharmacy fill requests
+ is being changed to check whether the prescription in the request actually
+ belongs to the site it arrived. If the prescription does not exist at the
+ site the message below will be displayed to the dispensing site user that
+ is requesting the OneVA fill:
+  
+   Processing refill request. Please be patient as it may take a moment
+   for the host site to respond and generate your label data...
+  
+   Unable to complete transaction. 
+  
+   The Rx #999999 does not belong to this facility (REMOTE SITE NAME). Please,
+   try to place the fill request again. It may take up to 4 attempts to get a
+   successful response. If the issue continues, please contact IT Support for
+   assistance.
+   
+   Press RETURN to continue: 
+      
+ Technical Resolution:
+ ---------------------
+ Changed the routine PSORWRAP at REMOTE+21 to verify that the prescription 
+ number in the incoming OneVA HL7 message actually belongs to the site
+ receiving the message. If it does not, stop processing and respond back to
+ the sending site with the message above. 
+    
+ Test Sites:
+ -----------
+ Oklahoma City VAMC
+ Salt Lake City VAMC  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A 
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  Staff should not be processing 
+ prescriptions while patch is being installed.  This patch should take 
+ less than 5 minutes to install.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  From this menu, you may select to use the
+       following options: 
+       when prompted for INSTALL NAME, enter the patch # PSO*7.0*559:
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       choose the patch to install.
+  
+    5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', respond NO.
+  
+    6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+    7. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first
+ 2 lines of the routines contained in the patch. The second line
+ will contain the patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;DEC 1997;Build 349 
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] 
+ can be run to compare the routine checksums to what is documented
+ in the patch description.
+  
+ Back-out/Rollback Strategy:
+ -------------------
+ Back-out will be done only with the concurrence and participation
+ of development team and appropriate VA site/region personnel. The
+ decision to back-out or rollback software will be a joint decision
+ between development team, VA site/region personnel and other
+ appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should
+ have saved a backup of the routines in a mail message using the
+ Backup a Transport Global [XPD BACKUP] menu option (this is done at
+ time of install). The message containing the backed up routines can
+ be loaded with the "Xtract PackMan" function at the Message Action
+ prompt. The Packman function "INSTALL/CHECK MESSAGE" is then used
+ to install the backed up routines onto the VistA System. 
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ Validation of Back-out Procedure
+ ---------------------------------
+ The Back-out Procedure can be verified by printing the first 2
+ lines of the PSO Routines contained in this patch using the option
+ First Line Routine Print [XU FIRST LINE PRINT]. Once the routines
+ contained in the PSO*7.0*559 patch have been rolled back, the first
+ two lines of the Routines will no longer contain the designation
+ of patch PSO*7.0*559 in the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORWRAP
+    Before:B106763543   After:B115691184  **454,475,541,559**
+ 
+Routine list of preceding patches: 541
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 22, 2019
+Completed By:                               Date Completed: JUL 18, 2019
+Released By :                               Date Released : JUL 18, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,238 @@
+$TXT Created by                   CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 05/10/19 at 08:11
+=============================================================================
+Run Date: JUL 12, 2019                     Designation: GMTS*2.7*127
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #116                    Status: Released
+                  Compliance Date: AUG 12, 2019
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*94 <<= must be installed BEFORE `GMTS*2.7*127'
+
+Subject: HEALTH SUMMARY COMPONENTS MMR1 AND MRT1 OPTDISP+11~GMTSPST  ERRORS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Health Summary 
+ package:
+  
+ 1. INC3453605 - CPRS error "<SUBSCRIPT>OPTDISP+11^GMTSPST1"
+    Duplicate(s):
+    -------------
+    INC5955740 - OPS All users receive an M ERROR when attempting to enter
+                specific note titles in a specific Veteran's chart.
+  
+ 2. INC4173537 - VISTA MUMPS ERROR: <SUBSCRIPT>OPTDISP+11^GMTSPSTN*ORQLN
+    Duplicate(s):
+    -------------
+    INC4582326 - M ERROR prevents entry of a specific note in a specific
+                 inpatient Veteran's chart by any user.
+    
+    INC5736258 - Quantity field in pending outpatient prescription causes 
+                 M error with EMLR data object $ZE= <SUBSCRIPT>OPTDISP+11^
+                 GMTSPSTN *GMTSPSTP("")
+  
+    INC5847692 - M ERROR in patient file preventing note and encounter 
+                 writing--Tucson
+  
+ 3. INC4082824 - New MRT1 Health Summary component is causing OPTDISP+11 M
+                 Errors From GMTS*2.7*94 patch
+  
+ 4. INC4308565 - 103-134A > Medication Reconciliation note 34934 < x45117,
+                 error OPTDISP+11^GMTSPSTN
+  
+ 5. INC4009145 - CPRS printed report doesn't match report displayed within
+                 CPRS
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC3453605 - CPRS error "<SUBSCRIPT>OPTDISP+11^GMTSPST1"
+  
+ Problem 1:
+ ----------
+ If a user attempts to use the Health Summary component Med Reconciliation 
+ (MRT1) on a patient with a supply quick order without a Quantity the hard 
+ error <SUBSCRIPT>OPTDISP+11^GMTSPST1 occurs.
+  
+ Resolution 1:
+ -------------
+ Routine GMTSPST1 was modified so that the hard error will no longer occur.
+  
+  
+ 2. INC4173537 - VISTA MUMPS ERROR: <SUBSCRIPT>OPTDISP+11^GMTSPSTN*ORQLN
+  
+ Problem 2:
+ ----------
+ If a user attempts to use the Health Summary component Med Reconciliation 
+ (MRR1) on a patient with a supply quick order without a Quantity the hard 
+ error <SUBSCRIPT>OPTDISP+11^GMTSPSTN occurs.
+  
+ Resolution 2:
+ -------------
+ Routine GMTSPSTN was modified so that the hard error will no longer occur.
+  
+  
+ 3. INC4082824 - New MRT1 Health Summary component is causing OPTDISP+11 M
+                 Errors From GMTS*2.7*94 patch
+  
+ Problem 3:
+ ----------
+ When entering order text, the provider can create a preceding space in 
+ front of the "Quantity" line of the order text. Health Summary component 
+ Med Reconciliation (MRT1) normally bypasses this "Quantity" line and the 
+ quantity is displayed elsewhere. Having this proceeding space will cause 
+ the quantity line to print (inappropriately) in the component output.    
+  
+ Resolution 3:
+ -------------
+ Modified Routine GMTSPST1 to strip proceeding spaces prior to evaluating 
+ the Line.
+  
+  
+ 4. INC4308565 - 103-134A > Medication Reconciliation note 34934 < x45117,
+                 error OPTDISP+11^GMTSPSTN
+  
+ Problem 4:
+ ----------
+ When entering order text, the provider can create a preceding space in 
+ front of the "Quantity" line of the order text. Health Summary component 
+ Med Reconciliation (MRR1) normally bypasses this "Quantity" line and the 
+ quantity is displayed elsewhere. Having this proceeding space will cause 
+ the quantity line to print (inappropriately) in the component output.    
+  
+ Resolution 4:
+ -------------
+ Modified Routine GMTSPSTN to strip proceeding spaces prior to evaluating 
+ the Line.
+  
+  
+ 5. INC4009145 - CPRS printed report doesn't match report displayed within
+                 CPRS
+  
+ Problem 5:
+ ----------
+ In CPRS reports tab --> Health summary--> Essential Med List for Review: 
+ In CRPS the report that is on the screen versus the report when printed 
+ (file--> print selected item) are not matching. This is happening for 
+ outpatient medications that are being "changed." The CPRS list shows the 
+ new pending directions, however when you print the same report, it is 
+ showing the old directions as pending.  This has been found to be an 
+ issue for both MRT1 and MRR1 HS components.
+  
+ Resolution 5:
+ -------------
+ When the order is pending the data for both the discontinued order and 
+ the pending order are returned from a call to TEXT^ORQ12.  Routines 
+ GMTSPST1 & GMTSPSTN display the instructions for the discontinued order.  
+ This patch modifies the GM routines to display the instructions for the 
+ pending order correctly.
+  
+ Test Sites:
+ -----------
+ Charlie Norwood VA Medical Center (Augusta, GA)
+ C.W. Bill Young VA Medical Center (Bay Pines, FL)
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ No special pre or post install steps needed, just install as normal.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, use the following option(s).
+    When prompted for the INSTALL NAME enter the patch #(GMTS*2.7*127):
+   a. Backup a Transport Global - (Mandatory) This option will create a
+      backup message of any routines exported with this patch. It will not 
+      backup any other changes such as DDs or templates.
+   b. Compare Transport Global to Current System - (Optional) This 
+      option will (allow you to view all changes that will be made when
+      this patch  is installed.  It compares all components of this patch
+      routines, DDs, templates, etc.).
+   c. Verify Checksums in Transport Global - (Optional) This option 
+      will allow you to ensure the integrity of the routines that are in
+      the transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    Enter "No".
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', Enter "No".
+  
+ 7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ No special post install steps, just install as normal.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSPST1
+    Before:B167015680   After:B172187216  **94,127**
+Routine Name: GMTSPSTN
+    Before:B180171627   After:B185619877  **94,127**
+ 
+Routine list of preceding patches: 94
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 28, 2019
+Completed By:                               Date Completed: JUL 11, 2019
+Released By :                               Date Released : JUL 12, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

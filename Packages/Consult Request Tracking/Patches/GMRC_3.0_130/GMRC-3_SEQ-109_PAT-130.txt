@@ -1,0 +1,215 @@
+
+=============================================================================
+Run Date: MAY 31, 2019                     Designation: GMRC*3*130
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3       SEQ #109                      Status: Released
+                  Compliance Date: JUN 03, 2019
+=============================================================================
+
+
+Subject: DECISION SUPPORT TOOL (DST) REVISIONS FOR FACILITY DRIVE TIME
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ****************************************************************************** 
+ This is an informational patch for the Decision Support Tool application
+ version 1.0.04 Build 14. There is no VistA component to this new build. 
+ This patch is for informational purposes only and defines the scope of the  
+ changes that have been made including defects that have been resolved in DST. 
+ ******************************************************************************
+ 
+ Decision Support Tool version 1.0.04 has the following functionality changes
+ and defect fixes:
+ 
+ 1. #1010791: Display specific Facility types associated with Specialty Care
+ Consults:
+    - Decision Support Tool will display only the following Facility type for
+      Specialty Care consults to determine Drive Time more accurately -
+      - VA Medical Center (VAMC),
+      - Health Care Center (HCC),
+      - Medical Specialty Community-Based Outpatient Clinic (MS CBOC).
+    
+ 2. #1010786: Display accurate Drive Time information associated with the
+ facility for the selected Clinical Service:
+    - Decision Support Tool will perform a look up within 100 or 50 miles radius
+      to display Drive Time for Specialty Care.
+    - Decision Support Tool will perform a look up within 40 or 20 miles radius
+      to display Drive Time for Primary Care.  
+ 
+ 3. #1009783: Restoring Consult Name associated with Signed Consult:
+    - User will not see the new consult name in Consult section on Decision
+      Support Tool dashboard for signed consult that has been forwarded.
+ 
+  
+ Patch Components:
+ -----------------
+ N/A 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+  
+ Blood Bank Team Coordination:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+  
+ Defect Tracking System & Overview:
+  
+  
+ Test Sites:
+ -----------
+ N/A
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Documentation describing the new functionality and/or a host file containing 
+ a build may be included in this release.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: https://www.domain.ext/vdl/
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ DST User Guide                dst_ug.docx                     binary
+ DST User Guide                dst_ug.pdf                      binary
+ DST DIBORG                    dst_dibr.docx                   binary
+ DST DIBORG                    dst_dibr.pdf                    binary
+         
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ -------------------
+  
+  
+ Pre/Post Installation Overview:
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ N/A
+  
+  
+ Installation Instructions:
+ N/A
+  
+  
+ Post-Installation Instructions:
+ N/A
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ N/A
+ 
+ 
+ Routine Information:
+ ====================
+ 
+ 
+ No routines included.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 29, 2019
+Completed By:                               Date Completed: MAY 31, 2019
+Released By :                               Date Released : MAY 31, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

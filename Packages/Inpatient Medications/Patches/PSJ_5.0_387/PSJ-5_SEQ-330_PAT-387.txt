@@ -1,0 +1,180 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 03/04/19 at 17:19
+=============================================================================
+Run Date: JUN 10, 2019                     Designation: PSJ*5*387
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #330                      Status: Released
+                  Compliance Date: JUL 11, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*256   <<= must be installed BEFORE `PSJ*5*387'
+                    (v)PSJ*5*353   <<= must be installed BEFORE `PSJ*5*387'
+
+Subject: CRCL AND CREATININE DISPLAY ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+   
+ INC2529214 - Code failure during display of CrCL and Creatinine lab 
+ results in the patient profile
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2529214 - Code failure or missing data during display of CrCL and
+ Creatinine lab results in the patient profile 
+           
+ Problem: 
+ --------
+ Inpatient pharmacists at the Pensacola Joint Ambulatory Care Center 
+ reported an error in VistA had occurred during display of the patient
+ profile.
+  
+ When a user accesses the following Inpatient menu options;
+  
+ Inpatient Profile [PSJ PR]
+ Order Entry [PSJU NE]
+ Action Profile #2 [PSJU AP-2]
+  
+ A hard stop will occur or data will not be displayed to the user in VistA
+ due to an undefined variable ZDSPL. This is caused by code that was
+ written in such a way as to not handle all possible combinations of data
+ that could be present. The code specifically would not set ZDSPL if the
+ CrCL value is equal to "Not Found" and the Creatinine value was equal to
+ .01 or if the CrCL was less than 1. The four Inpatient routines involved
+ are PSJHEAD, PSJLMHED, PSJCLOR2 and PSGCAPP0 having the same code so the
+ same fix could be applied to all four routines.
+  
+ Resolution:
+ -----------
+ The resolution for the undefined variable ZDSPL is to update the code to 
+ handle all possible data combinations that could exist for CrCL and
+ Creatinine results.
+    
+ Technical Resolution:
+ ---------------------
+ Changed routines PSJHEAD, PSJLMHED, PSJCLOR2 and PSJCAPP0 to format and
+ display the CrCL and Creatine lab results in the patient profile and
+ correct the undefined variable or un-displayed results.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+         
+ Test Sites:
+ -----------
+ Northport VAMC
+ Biloxi VAMC   
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to 
+ install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSJ*5.0*387):
+  
+    a. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    b. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+  
+  
+ 5. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 8. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;5.0;INPATIENT PHARMACY;**[PATCH LIST]**;16 DEC 97;[BUILD NUMBER]
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGCAPP0
+    Before: B14274534   After: B15229587  **8,20,85,169,203,256,387**
+Routine Name: PSJCLOR2
+    Before:B129355642   After:B131661640  **275,279,315,256,387**
+Routine Name: PSJHEAD
+    Before: B32768134   After: B34063978  **8,20,85,95,203,260,256,387**
+Routine Name: PSJLMHED
+    Before: B64791709   After: B66544479  **4,58,85,110,148,181,260,275,
+                                           331,256,353,387**
+ 
+Routine list of preceding patches: 353
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 20, 2019
+Completed By:                               Date Completed: JUN 10, 2019
+Released By :                               Date Released : JUN 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

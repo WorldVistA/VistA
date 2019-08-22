@@ -1,0 +1,338 @@
+$TXT Created by            S at CHEYL54.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 05/01/19 at 12:25
+=============================================================================
+Run Date: MAY 17, 2019                     Designation: GMRC*3*124
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3       SEQ #106                      Status: Released
+                  Compliance Date: MAY 20, 2019
+=============================================================================
+
+
+Subject: DECISION SUPPORT TOOL (DST): ADD COMMENT TO CONSULT AFTER SIGNING
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement ()
+
+Description:
+============
+
+ Associated patches: Informational Patch GMRC*3.0*125
+ 
+ When a consult order is signed if there is a DST ID number listed 
+ in the Responses Multiple (#100.045) in the ORDER file (#100), this DST 
+ patch will query the DST server and retrieve the detailed DST 
+ information from the database and create a Consult Comment in the 
+ REQUEST/CONSULTATION file(#123) that includes the structured consult 
+ factor text to enable analytic reporting using the same approach as 
+ Consult Tool Box (CTB).
+ 
+ This patch includes a post-install routine, GMRC124P, that sets up access 
+ to the DST Service and attaches the new GMRC SIGNED CONSULT DST Protocol 
+ as an item to the OR EVSEND GMRC Protocol. Please see the Pre/Post-
+ Installation Overview and the Post-Installation Instructions sections
+ below for more details. 
+ 
+ Informational Patch GMRC*3.0*125, contains instructions for System 
+ Administrators to manually configure the SSL/TLS configurations. The 
+ service will not function until the Cache Management Portal is configured 
+ to allow SSL/TLS communication for the Web Server File.
+ 
+ Patch Components:
+ =================
+ 
+ Files & Fields Associated:
+ 
+ File Name (Number)     Field Name (Number)    New/Modified/Deleted
+ ------------------     -------------------    --------------------
+ N/A
+ 
+ Forms Associated:
+ 
+ Form Name                File #     New/Modified/Deleted
+ ---------                ------     --------------------
+ N/A
+ 
+ Mail Groups Associated:
+ 
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+ 
+ Options Associated:
+ 
+ Option Name                    Type  New/Modified/Deleted
+ -----------                    ----  --------------------
+ N/A
+ 
+ Protocols Associated:
+ 
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ GMRC SIGNED CONSULT DST           NEW
+ OR EVSEND GMRC                    MODIFIED
+ 
+ Security Keys Associated:
+ 
+ Security Key Name
+ -----------------
+ N/A
+ 
+ 
+ Templates Associated:
+ 
+ Template Name  Type  File Name (Number)  New/Modified/Deleted
+ -------------  ----  ------------------  --------------------
+ N/A
+ 
+ Additional Information:
+ 
+ 
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+ 
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+ 
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+ 
+ 
+ Test Sites:
+ -----------
+ Philadelphia, PA 
+ Kansas City, MO
+ Madison, WI
+ Salisbury, NC
+ Anchorage, AK
+ FT. Harrison, MT 
+ 
+ 
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ This software is being released as a patch (PackMan) message.
+ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+ 
+ The preferred method is to install the patch from a FORUM patch message.
+ 
+ The documentation will be in the form of Adobe Acrobat files.
+ 
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+ 
+ Title                         File Name                       SFTP Mode
+ ----------------------------------------------------------------------- 
+ DST User Guide                dst_ug.docx                     binary
+ DST User Guide                dst_ug.pdf                      binary
+ DST DIBORG                    dst_dibr.docx                   binary
+ DST DIBORG                    dst_dibr.pdf                    binary
+ Consult/Request Tracking User Manual consum.docx               binary
+ Consult/Request Tracking User Manual consum.pdf               binary
+ Consult/Request Tracking Tech Manual constm.docx              binary
+ Consult/Request Tracking Tech Manual constm.pdf               binary
+ 
+ 
+ Patch Installation:
+ 
+ Pre/Post Installation Overview
+ ------------------------------
+ The Post install has two automated steps that are performed by the 
+ post-install routine GMRC124P. First the Uniform Resource Locator (URL) 
+ and Context components for the DST Service are added respectively to the 
+ WEB SERVER and WEB SERVICE files. Second the post-install routine will 
+ add the GMRC SIGNED CONSULT DST Protocol as an Item to the OR EVSEND GMRC 
+ Protocol (#101) trigger.
+ 
+ The post processor GMRC124P will set the WEB SERVER and the WEB SERVICE 
+ values for the DST GET ID SERVICE to the proper URL for the DST Server.
+ The post processor will also add the GMRC SIGNED CONSULT DST Protocol to
+ the system and then attach that as an Item to the GMRC EVSEND OR Protocol
+ (#101)
+ 
+ *Note please be aware the URL is broken into two sections. The Web 
+ Address only goes into the WEB SERVER file, while the directory context, 
+ the part beginning with "/" is entered in the WEB SEVICE File.
+ Details to verify this information are in the Post Install Instructions.
+ 
+ 
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+ 
+ 
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+ 
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+ 
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch #
+     (GMRC*3.0*124):
+ 
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+ 
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter GMRC*3.0*124.
+ 
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+ 
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+ 
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+ 
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+ 
+ Post-Installation Instructions:
+ -------------------------------
+ Once install has completed verify the WEB SERVER settings for DST GET ID 
+ SERVER using VA FileMan. If there are differences between these 
+ settings and what is installed, please change your local 
+ configuration to match what is below. There should NOT be any need
+ in production to change these values.
+ 
+ VA FileMan 22.2
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+ Input to what File: WEB SERVER//          
+ EDIT WHICH FIELD: ALL// 
+ Select WEB SERVER NAME: DST GET ID SERVER
+ NAME: DST GET ID SERVER// 
+ PORT: 80// 
+ SERVER: dst.domain.ext// 
+ STATUS: ENABLED// 
+ DEFAULT HTTP TIMEOUT: 60// 
+ LOGIN REQUIRED: NO// 
+ Want to edit PASSWORD (Y/N): 
+ SSL ENABLED: TRUE// 
+ SSL CONFIGURATION: encrypt_only_all//
+ SSL PORT: 443// 
+ Select WEB SERVICE: DST GET ID SERVICE//
+   WEB SERVICE: DST GET ID SERVICE// 
+   STATUS: ENABLED// 
+ Select WEB SERVICE:
+ USERNAME: 
+ PASSWORD: 
+ 
+ Verify the WEB SERVICE settings for DST GET ID SERVICE, 
+ using VA FileMan. If there are differences between these 
+ settings and what is installed, please change your local 
+ configuration to match what is below. There should NOT
+ be any need to change these values. 
+ 
+ VA FileMan 22.2
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+ Input to what File: WEB SERVER// WEB SERVICE    (10 entries)
+ EDIT WHICH FIELD: ALL// 
+ Select WEB SERVICE NAME: DST GET ID SERVICE  
+ NAME: DST GET ID SERVICE// 
+ TYPE: REST// 
+ DATE REGISTERED: 
+ PROXY CLASS NAME: 
+ CONTEXT ROOT: vs/v1/consultFactor// 
+ AVAILABILITY RESOURCE: 
+ WSDL:
+   Edit? NO//
+ 
+ This should complete all Post-Install steps and verification.
+ 
+ Back-Out Plan:
+ --------------------
+ The patch is only functional due to the connection to the 
+ Protocol OR EVSEND GMRC. The protocol GMRC SIGNED CONSULT DST 
+ is attached as an ITEM. To disable/remove this patch use 
+ VA FileMan to edit the Protocol OR EVSEND GMRC and go to ITEM.
+ On the ITEM you should see the protocol 
+ GMRC SIGNED CONSULT DST. Select this protocol and then at 
+ the Name prompt, use the "@" sign to signal to VA FileMan you 
+ wish the Item removed. VA FileMan will ask you to confirm this choice. 
+ 
+ VA FileMan 22.2
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+ Input to what File: WEB SERVER// PROTOCOL    (6625 entries)
+ EDIT WHICH FIELD: ALL// ITEM
+ 1  ITEM   (MULTIPLE)
+ 2  ITEM TEXT
+ CHOOSE 1-2:1 ITEM  (MULTIPLE)
+ EDIT WHICH ITEM SUB-FIELD: ALL//
+ THEN EDIT FIELD:
+ 
+ Select PROTOCOL NAME: OR EVSEND GMRC     OE/RR => CONSULTS MESSAGE EVENT
+ Select ITEM: GMRC SIGNED CONSULT DST// @ "Enter the "@" sign to delete"
+   SURE YOU WANT TO DELETE THE ENTIRE ITEM?  Y   "Enter Y for yes"  
+ 
+ To verify you have removed this Item, use Inquiry on the 
+ OR EVSEND GMRC protocol and confirm the 
+ GMRC SIGNED CONSULT DST is no longer listed.
+ Once removed this code is no longer active or called
+ by any other function. If desired the code may be
+ deleted, but this is unnecessary as the code is no
+ longer being invoked by any process. 
+ 
+ VA FileMan 22.2
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+ Output from what File: PROTOCOL//         (6625 entries)
+ Select PROTOCOL NAME: OR EVSEND GMRC       OE/RR => CONSULTS MESSAGE 
+ EVENT  
+ Another one: 
+ Standard Captioned Output? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN), no 
+ Computed
+  Fields
+ 
+ NAME: OR EVSEND GMRC
+   ITEM TEXT: OE/RR => CONSULTS MESSAGE EVENT
+   TYPE: extended action                 CREATOR: NADEAU,MARCY
+ ITEM: GMRC RECEIVE                      SEQUENCE: 1
+ ITEM: OCX ORDER CHECK HL7 RECIEVE       SEQUENCE: 2
+ ITEM: RMPR RECEIVE
+ ITEM: MD RECEIVE OR
+ ITEM: EDP OR MONITOR
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;MAR 28, 2019;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRC124P
+    Before:       n/a   After: B31514407  **124**
+Routine Name: GMRCDST
+    Before:       n/a   After:B106297381  **124**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2019
+Completed By:                               Date Completed: MAY 17, 2019
+Released By :                               Date Released : MAY 17, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

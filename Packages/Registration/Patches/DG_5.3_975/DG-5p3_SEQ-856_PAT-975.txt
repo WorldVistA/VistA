@@ -1,0 +1,265 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 12/18/18 at 14:19
+=============================================================================
+Run Date: MAY 13, 2019                     Designation: DG*5.3*975
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #856                    Status: Released
+                  Compliance Date: JUN 13, 2019
+=============================================================================
+
+Associated patches: (v)DG*5.3*959  <<= must be installed BEFORE `DG*5.3*975'
+
+Subject: CURRENT MSE DELETING WITHOUT ADDING INCOMING MSE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*975 fixes an issue where the current Military Service Episode
+ (MSE) data is being deleted while processing an incoming ORFZ11 and
+ incoming MSE data is not being stored. Upon receipt of an ORFZ11 
+ Health Level-7 (HL7) message from Enrollment System (ES), Veterans  
+ Information Systems and Technology Architecture (VistA) system parses
+ the data within and stores as appropriate. When processing the MSE data
+ contained within the ZMH segment of the ORFZ11, VistA first deletes the
+ MSE data from the PATIENT (#2) file. It then should store the MSE data
+ contained in the ZMH segment of the ORFZ11. Due to a subscripting error
+ introduced by patch DG*5.3*959, the MSE data from the ZMH segment fails to
+ store. In addition, this issue also causes the Service Connected Rated
+ Disabilities to be deleted from VistA and fails to store the Service
+ Connected Rated Disabilities from the ZRD segment of the ORFZ11 into
+ VistA.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC2693452 - Registration - User reports MSE/SC info not storing in
+                                VistA 
+  
+         Duplicates:
+         INC1940610 - ES transmissions not uploading  
+         INC3001527 - VistA not receiving or storing MSE/MT info from ES
+                      at NFL
+         INC4243837 - Enrollment System
+    
+    Problem:
+    ---------
+    Current Military Service Episode data is being deleted from an
+    incoming ORFZ11 and incoming MSE data is not being stored. Upon 
+    receipt of an ORFZ11 HL7 message from the ES, VistA parses the
+    data within and stores as appropriate. When processing the MSE
+    data contained within the ZMH segment of the ORFZ11, VistA first
+    deletes the MSE data from the PATIENT (#2) file. It then should
+    store the MSE data contained in the ZMH segment of the ORFZ11.
+    Due to a subscripting error introduced by patch DG*5.3*959, the
+    MSE data from the ZMH segment fails to store. In addition, this
+    issue also causes the Service Connected Rated Disabilities to be
+    deleted from VistA and fails to store the Service Connected Rated
+    Disabilities from the ZRD segment of the ORFZ11 into VistA.
+  
+  
+    Resolution:
+    -----------
+    Modify routine DGENUPL1 to use the variable IVMRTN in the ^TMP global
+    subscript that holds the incoming data.
+  
+  
+ Test Sites:
+ -----------
+ West Palm Beach VAMC
+ VA North Florida/South Georgia HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ 1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+     Taskman Management [XUTM MGR] menu. Note the currently scheduled 
+     date/time.
+  
+ 2.  The HL7 incoming/outgoing filers should be stopped. Stop All Messaging
+     Background Processes by using the [HL STOP ALL] option on the Filer
+     and Link Management Options [HL MENU FILER LINK MGT] menu on the
+     HL7 Main Menu [HL MAIN MENU].
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch DG*5.3*975:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//" respond NO.
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond NO.
+  
+  
+    When prompted 'Delay Install (Minutes):  (0 - 60): 0//', answer 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be rescheduled.
+ Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+ Taskman Management [XUTM MGR] menu.
+  
+ The HL7 incoming filers should be restarted.  Use the Restart/Start All 
+ Links and Filers [HL TASK RESTART] option on the Filer and Link 
+ Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu    
+ [HL MAIN MENU]. 
+  
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing this patch (DG*5.3*975), the installer should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The PackMan
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;REGISTRATION;**[Patch List]**;Aug 13,1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENUPL1
+    Before: B62801103   After: B62726769  **147,222,232,314,397,379,407,
+                                           363,673,653,688,797,842,894,
+                                           871,935,959,975**
+ 
+Routine list of preceding patches: 959
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 23, 2018
+Completed By:                               Date Completed: MAY 13, 2019
+Released By :                               Date Released : MAY 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

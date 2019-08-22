@@ -1,0 +1,308 @@
+
+=============================================================================
+Run Date: JUN 17, 2019                     Designation: EAS*1*179
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #150                      Status: Released
+                  Compliance Date: JUL 18, 2019
+=============================================================================
+
+
+Subject: Enrollment System (ES) 5.6.1 Sustainment Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.6.1. This release, developed in 
+ Java technology, contains Enrollment System Modernization (ESM) Phase 2 
+ enhancements and defect fixes to support Enrollment System Community Care 
+ (ESCC) and ES Sustainment.
+  
+ This software is being installed at the Austin Information Technology 
+ Center (AITC) and no action is required by the sites.
+  
+ ES 5.6.1 was successfully deployed on Saturday, June 15th, 2019.
+  
+ The following functionality is updated in this ES 5.6.1 release:
+  
+ ESCC enhancements and modifications:
+  
+ The MISSION Act Health Benefit Plan (HBP) named "Veteran Plan - CCP Admin 
+ VCCPE Consults" is changed to "Veteran Plan - CCP Hardship Determination".
+ (Business User Story 1113159: Update MISSION Act HBP Name in ES).
+  
+ ES Sustainment defect fixes (Business User Story 1076869: ES 5.6.1 
+ Maintain the Enrollment System):
+  
+ 988927:  In the Community Care Network (CCN) file, the residential address
+          effective date is reflecting the effective date of the permanent
+          mailing address.
+ 989189:  Status is "Error" when the CCN initial seeding extract job is run
+          with over a million records.
+ 995263:  Person merge is failing due to an issue with appointment request.
+          Add a Person is also failing when the application data is saved 
+          in process prior to ES 5.6 release and contains appointment
+          request fields; user is unable to retrieve previous saved
+          application data. (YOUR IT Services ticket#: INC5572969)
+ 996848:  When updating the permanent mailing address, no record is 
+          inserted in the CCN Service Log; the existing record is updated
+          instead.
+ 996912:  Adding new non-Community Care Program (CCP) health benefit plan
+          (HBP) is removing existing CCP HBPs.
+ 997068:  ES is not sending the latest addresses updated from VET360 to CCN
+          contractor.
+ 1000947: Online Help: Community Care Determination needs to be updated
+          according to User Guide.
+ 1003897: CCN Region is shown blank for the states with two words in their
+          names. State/region lookup needs to be case insensitive.
+ 1003903: CCN Region should be derived from the residential address.
+ 1008146: Addresses with bad address reason (address_invalid_type_id) are 
+          not being geocoded.
+ 1011367: After VCEParameter batch process, some records retain the 
+          original Veterans Choice Eligibility (VCE).
+ 1011369: After VCEParameter batch process, some records have a VCE of "Not
+          Determined".
+ 1016492: Large CCN files cannot be transferred to Data Access Service 
+          (DAS).
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ --------- --------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ Ticket #         Overview
+ -------------    -------------------
+ INC5572969       Person merge is failing due to an issue with appointment
+                  request. Add a Person is also failing when the
+                  application data is saved in process prior to ES 5.6
+                  release and contains appointment request fields; user is
+                  unable to retrieve previous saved application data.
+  
+            
+ Rational Team Concert (RTC):
+ ----------------------------
+  
+ RTC #       Problem / Resolution:
+ --------    ---------------------
+  
+ 988927:     Problem: In the Community Care Network (CCN) file, the
+             residential address effective date is reflecting the effective
+             date of the permanent mailing address.
+  
+             Resolution: Corrected the SQL query to retrieve the relevant
+             data.
+  
+ 989189:     Problem: Status is "Error" when the CCN initial seeding 
+             extract job is run with over a million records.
+  
+             Resolution: Updated the job to use the Stateless session bean.
+  
+ 995263:     Problem: Person merge is failing due to an issue with 
+             appointment request. Add a Person is also failing when the
+             application data is saved in process prior to ES 5.6 release
+             and contains appointment request fields; user is unable to
+             retrieve previous saved application data. (YOUR IT Services
+             ticket#: INC5572969)
+  
+             Resolution: Updated code to handle person merge appointment
+             request mapping and merging, enable backward compatibility for
+             appointment request data, and handle old appointment request
+             data.
+  
+ 996848:     Problem: When updating the permanent mailing address, no 
+             record is inserted in the CCN Service Log; the existing record
+             is updated instead.
+  
+             Resolution: Addressed bug in code that was not checking for 
+             the CCN Service Log message type - corrected code to check if
+             there is an existing unsent unsolicited transaction and update
+             it; otherwise create a new unsolicited record.
+  
+ 996912:     Problem: Adding new non-Community Care Program (CCP) health
+             benefit plan (HBP) is removing existing CCP HBPs.
+  
+             Resolution: Added MISSION Act HPBs to the update logic on the
+             Health Benefit Plan page.
+  
+ 997068:     Problem: ES is not sending the latest addresses updated from
+             VET360 to CCN contractor.
+  
+             Resolution: Fixed the issue related to transaction boundary.
+  
+ 1000947:    Problem: Online Help: Community Care Determination needs to be
+             updated according to User Guide.
+  
+             Resolution: Online Help updated per User Guide; updated the 
+             help id to 495 (helpId.VC_Eligibility=495).
+  
+ 1003897:    Problem: CCN Region is shown blank for the states with two 
+             words in their names. State/region lookup needs to be case
+             insensitive.
+  
+             Resolution: Updated SQL to ignore the case while comparing the
+             state names.
+  
+ 1003903:    Problem: CCN Region should be derived from the residential
+             address.
+  
+             Resolution: Corrected the code to derive the CCN Region using 
+             the residential address.
+  
+ 1008146:    Problem: Addresses with bad address reason
+             (address_invalid_type_id) are not being geocoded.
+  
+             Resolution: The bad address indicator column
+             (address_invalid_type_id) should not be used to exclude
+             residential address records that are sent to Planning System
+             Support Group (PSSG) for geocoding. Removed bad address 
+             indicator filtering on residential addresses.
+  
+ 1011367:    Problem: After VCEParameter batch process, some records retain
+             the original Veterans Choice Eligibility (VCE).
+  
+             Resolution: Used new variable for VCEmanualoverride in ILOG
+             rules.
+  
+ 1011369:    Problem: After VCEParameter batch process, some records have a
+             VCE of "Not Determined".
+  
+             Resolution: Used new variable for VCEmanualoverride in ILOG
+             rules.
+  
+ 1016492:    Large CCN files cannot be transferred to Data Access Service
+             (DAS).
+  
+             Resolution: Updated code to calculate the file size without
+             reading the file content into memory.
+  
+ Test Sites:
+ -----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Updated documentation describing the modification and defects fixed by 
+ this release is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         ES_5_6_1_RN.PDF         (binary)
+ User Guide                            ES_5_6_1_UG.PDF         (binary)
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 13, 2019
+Completed By:                               Date Completed: JUN 17, 2019
+Released By :                               Date Released : JUN 17, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,224 @@
+$TXT Created by              at FMB.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Wednesday, 06/26/19 at 04:23
+=============================================================================
+Run Date: JUL 01, 2019                     Designation: DI*22.2*16
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2        SEQ #12                   Status: Released
+                  Compliance Date: JUL 03, 2019
+=============================================================================
+
+Associated patches: (v)DI*22.2*9   <<= must be installed BEFORE `DI*22.2*16'
+
+Subject: Bug fix in Entity Mapping utility
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ Patch 16 correct 6 issues. Issues 1,2, & 3 were discovered during pre-load 
+ of the Veteran's Data Integration & Federation (VDIF) Qualifying
+ Patient Query (QPQ) endeavor and the other three are fixes from patch
+ DI*22.2*9.
+  1. Text containing $C(0) control characters. 
+  2. Text larger than 3 megabytes. 
+  3. Text containing "[[>" creates problem with XML
+  4. Missing DDE AUTO GEN ENTITY FOR A DD # option
+  5. Missing DDE ENTITY INQUIRE option
+  6. Seventeen field names were changed to conform to similar fields in
+  other Infrastructure files.  The DDE ENTIRY ENTER/EDIT form was changed to
+  support the new field names.
+  
+  
+ Patch Components:
+ -----------------
+  
+ File Name (#)           Field Name (#)                 New/Modified/Deleted
+ -------------           --------------------           -------------
+ ENTITY (#1.5)           GET ENTRY ACTION (2)           Modified
+                         GET EXIT ACTION (3)
+                         GET ID ACTION (4)
+                         PUT ENTRY ACTION (6)
+                         PUT EXIT ACTION (7)
+                         PUT ID ACTION (8)
+                         PUT CREATE ACTION (10)
+                         DELETE ENTRY ACTION (11)
+                         DELETE EXIT ACTION (12)
+                         DELETE ID ACTION (13)
+                         POST ENTRY ACTION (14)
+                         POST EXIT ACTION (15)
+                         POST ID ACTION (16)
+                         POST CREATE ACTION (18)
+   SubDD ITEM (#1.51)    GET ACTION (6)
+                         PUT ACTION (7)
+                         POST ACTION (8)
+  
+  
+ Form Name                    File #             New/Modified/Deleted
+ ---------                    ------             --------------------
+ DDE ENTITY ENTER/EDIT        1.5                Modified
+  
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               --------------------
+ Entity Mapping               menu               Modified
+ [DDE ENTITY MAPPING]   
+ Inquire to Entity File       option             New
+ [DDE ENTITY INQUIRE]
+ Auto Gen Entity For A DD #   option             New
+ [DDE AUTO GEN ENTITY FOR
+  A DD #]
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ 6/12/2019
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*16 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22.2*16 have no adverse effect on
+ Blood Bank software functionality, therefore RISK is none. 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. Problem:
+     Word processing and free text fields can contain control characters
+    Resolution:
+     Change DDEG to remove control characters
+   
+ 2. Problem:
+     Word processing fields can exceed 3 million characters
+    Resolution:
+     Change DDEG to remove text and replace with phrase:
+   "Text exceed 3 megabyte limit and could not be saved. Please contact the
+    site for full original text."
+  
+ 3. Problem:
+     Word processing can contain "[[>" string which creates problems for XML
+    Resolution:
+     Change DDEG to remove string
+  
+ 4. Problem:
+     Missing DDE AUTO GEN ENTITY FOR A DD # option
+    Resolution:
+     Add missing option
+  
+ 5. Problem:
+     Missing DDE ENTITY INQUIRE option
+    Resolution:
+     Add missing option
+  
+ 6. Problem:
+     Fields have non-conforming names
+    Resolution:
+     Change 17 field names
+  
+  
+  
+ Test Sites:
+ -----------
+ West Palm Beach, FL
+ North Chicago, IL 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software is being released as a KIDS Build on Forum.
+  
+  
+ Patch Installation:
+   
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be queued for installation.  TaskMan does not have to be
+ stopped, Health Level 7 (HL7) filers do not need to be stopped, and
+ users may be on the system.  The patch should be installed during
+ non-peak hours to minimize potential for disruption to users.  This
+ patch should take less than 1 minute to install.
+  
+  Installation Instructions:
+ --------------------------
+ 1. Choose the MailMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following options. When prompted for the INSTALL NAME enter
+    DI*22.2*16.
+  a. Print Transport Global - This option lets you print the contents
+     of a Transport Global that is currently loaded in the ^XTMP
+     global.
+  b. Backup a Transport Global - This option will create a backup
+     message of any routines exported with this patch. It will not
+     backup any other changes such as functions.
+  c. Compare Transport Global to Current System - This option will
+     allow you to view all changes that will be made when this patch
+     is installed.  It compares all components of this patch
+     (routines, DDs, templates, etc.).
+  d. Verify Checksums in Transport Global - This option will allow
+     you to ensure the integrity of the routines that are in the
+     transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option
+    and when prompted for the INSTALL NAME, enter DI*22.2*16.
+  
+ 5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO//' respond NO.
+  
+ 7. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+    NO//" respond NO.
+  
+ 8. If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//" respond NO. 
+  
+ 9. If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ none
+   
+   
+ Backout and Rollback Procedure:
+ ------------------------------- 
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the
+ patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDEG
+    Before:B122631592   After:B128480515  **9,16**
+Routine Name: DDEOPT
+    Before:   B794105   After:   B885922  **9,16**
+Routine Name: DDEPRT
+    Before:       n/a   After: B48500922  **16**
+ 
+Routine list of preceding patches: 9
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 13, 2019
+Completed By:                               Date Completed: JUL 01, 2019
+Released By :                               Date Released : JUL 01, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

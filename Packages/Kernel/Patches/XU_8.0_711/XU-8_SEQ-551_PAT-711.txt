@@ -1,0 +1,415 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Wednesday, 06/19/19 at 07:15
+=============================================================================
+Run Date: JUL 23, 2019                     Designation: XU*8*711
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #551                      Status: Released
+                  Compliance Date: JUL 30, 2019
+=============================================================================
+
+Associated patches: (v)XU*8*691    <<= must be installed BEFORE `XU*8*711'
+                    (v)XU*8*705    <<= must be installed BEFORE `XU*8*711'
+
+Subject: PPMS PIE SUPPORT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ XU*8.0*691 and XU*8.0*705 are the required builds for patch XU*8.0*711.
+  
+ The following enhancements exported in this patch are in support of the
+ Provider Profile Management System (PPMS) / Provider Integration Engine
+ (PIE) updates for Mission Act that the Master Veteran Index (MVI) team
+ has been requested to implement. These enhancements listed below work with
+ the MVI changes that have been exported in patch MPI*1.0*130.
+  
+ Enhancement #1  
+ The existing Remote Procedure Call (RPC) [XUS MVI NEW PERSON GET] and its
+ corresponding routine XUMVINPU have been modified to support the additional
+ search requests by National Provider Identifier (NPI) or Social Security
+ Number (SSN) within the NEW PERSON (#200) file. Furthermore, the following
+ data associated with the additional fields listed below will be transmitted
+ from the NEW PERSON (#200) file to MVI for the requested record:
+  
+      - STREET ADDRESS 2                 .112
+      - STREET ADDRESS 3                 .113
+      - CITY                             .114
+      - STATE                            .115
+      - ZIP CODE                         .116
+      - FAX NUMBER                       .136
+      - SEX                              4
+      - TITLE                            8
+      - NPI                              41.99
+      - KEYS                             51
+      - PERSON CLASS                     8932.1
+      -   PERSON CLASS                     .01
+      -   EFFECTIVE DATE                   2
+      -   EXPIRATION DATE                  3
+      - AUTHORIZED TO WRITE MED ORDERS   53.1
+      - DETOX/MAINTENANCE ID NUMBER      53.11
+      - DEA#                             53.2
+      - INACTIVE DATE                    53.4
+      - PROVIDER CLASS                   53.5
+      - PROVIDER TYPE                    53.6
+      - REMARKS                          53.9
+      - NON-VA PRESCRIBER                53.91
+      - TAX ID                           53.92
+      - SCHEDULE II NARCOTIC             55.1
+      - SCHEDULE II NON-NARCOTIC         55.2
+      - SCHEDULE III NARCOTIC            55.3
+      - SCHEDULE III NON-NARCOTIC        55.4
+      - SCHEDULE IV                      55.5
+      - SCHEDULE V                       55.6
+      - DEA EXPIRATION DATE              747.44
+  
+      ** The following NEW fields will ONLY be returned if
+         patch XU*8.0*688 has been installed. **
+  
+      - NEW DEA #'S                      53.21 [200.5321]
+      -      DEA NUMBER                    .01
+      -      INDIVIDUAL DEA SUFFIX         .02
+      - DETOX CALCULATED                 9001
+  
+      ** The following fields from the DEA NUMBERS (#8991.9)
+         file will ONLY be returned if a DEA NUMBER (53.21)
+         entry has been defined. **
+        
+      -     BUSINESS ACTIVITY CODE           .02
+      -     DETOX NUMBER                     .03
+      -     EXPIRATION DATE                  .04
+      -     USE FOR INPATIENT ORDERS         .06
+      -     TYPE                             .07
+      -     NAME (PROVIDER OR INSTITUTION)   1.1
+      -     STREET ADDRESS 1                 1.2
+      -     STREET ADDRESS 2                 1.3
+      -     STREET ADDRESS 3                 1.4
+      -     CITY                             1.5
+      -     STATE                            1.6
+      -     ZIP CODE                         1.7
+      -     SCHEDULE II NARCOTIC?            2.1
+      -     SCHEDULE II NON-NARCOTIC?        2.2
+      -     SCHEDULE III NARCOTIC?           2.3
+      -     SCHEDULE III NON-NARCOTIC?       2.4
+      -     SCHEDULE IV?                     2.5
+      -     SCHEDULE V?                      2.6
+      -     LAST UPDATED BY                  10.1
+      -     LAST UPDATE DATE/TIME            10.2
+      -     LAST DOJ UPDATE DATE/TIME        10.3
+  
+ Enhancement #2
+ The existing RPC [XUS MVI NEW PERSON UPDATE] and corresponding routine
+ XUMVINPU have been modified to allow the following additional fields to
+ be updated by MVI in the NEW PERSON File (#200) for a specific DUZ:
+  
+       - EMAIL ADDRESS (#.151)
+       - NETWORK USERNAME (#501.1)
+  
+ Enhancement #3
+ A new RPC [XUS MVI ENRICH NEW PERSON] along with the corresponding
+ routines XUMVIENU and XUMVINPA were created to give MVI the ability
+ to 'Add' and/or 'Update' a NEW PERSON (#200) file entry in support of
+ PPMS/PIE in VistA. This RPC 'REQUIRES' the following two parameters:
+  
+       - XUARR  - An array containing the new values for the specific
+                  fields to 'ADD' or 'UPDATE' the record in the NEW
+                  PERSON (#200) file with.
+  
+            Required Elements:
+  
+             ("WHO") : Station Number of requesting station
+             ("NPI") : National Provider Identifier
+             ("NAME") : Surname | First | Middle | Suffix | Full
+  
+                 **NOTE: 'NAME' Required only when XUFLAG is 'A'.**    
+  
+            Optional Elements (Only pass if update required):  
+  
+             ("ADDRESS DATA") : Address values consisting of the
+                                following delimited information -
+  
+                 Street Address 1 | Street Address 2 | Street Address 3
+                 | City | State | Zip | Office Phone | Fax Number
+  
+             ("SubjectOrgan") : Subject Organization
+                 *Defaults to 'Department Of Veterans Affairs'
+             ("SubjectOrganID") : Subject Organization Id
+                 *Defaults to 'urn:oid:2.16.840.1.113883.4.349'
+             ("ADUPN") : Identity and Access Management (IAM) Active
+                         Directory User Principle Name
+             ("AuthWriteMedOrders") : YES (1) or NO (0)
+                 *Defaults to YES (1) if ("WHO") is 200PIEV and
+                  ("DEA",<seq#>,"DEA") is transmitted.
+             ("DEA",<seq#>, : Drug Enforcement Agency (DEA) Info
+                              (*Multiple Entries Allowed)
+                 
+                  "DEA")            : DEA Number
+                  "Detox") : Substance Abuse Provider Detox/Maintenance
+                             ID #
+                  "DEAExpire")      : DEA Number Expiration Date
+                                      (*Can be a future date.)
+                  "SchedIINarc")    : YES (1) or NO (0)
+                  "SchedIINonNarc") : YES (1) or NO (0)
+                  "SchedIIINarc")   : YES (1) or NO (0)
+                  "SchedIIINonNarc"): YES (1) or NO (0)
+                  "SchedIV")        : YES (1) or NO (0)
+                  "SchedV")         : YES (1) or NO (0)
+  
+             ("DEGREE") : Individual's Degree codes separated by a space
+             ("EMAIL") : Email Address
+             ("GENDER") : Male of Female   
+             ("Inactivate") : Date Access Inactivated
+                              (*Can be a future date.)
+             ("NonVAPrescriber") : YES (1) or NO (0)
+                 *Defaults to YES (1) if ("WHO") is 200PIEV.
+             ("NTUSERNAME") : Network User Name
+             ("PersonClass",<seq#>, : Person Class Info
+                                      (*Multiple Entries Allowed)
+                  
+                  "PersonClass")       : X12 Code Value
+                  "PersonClassActive") : Date Class Activated
+                     *Defaults to TODAY if NOT currently active.
+                  "PersonClassExpire") : Date Class De-Activated
+                         
+             ("ProviderClass") : PROVIDER CLASS (#7) file record value
+             ("ProviderType") : Provider Type Code | Provider Type Value
+             ("Remarks") : Provider Remarks
+                 *Defaults to 'NON-VA PROVIDER' if ("WHO") is 200PIEV  
+             ("SECID") : IAM Security ID
+             ("TaxID") : Tax ID of the Non-VA Physician's Private Clinic
+             ("Termination") : Date Access Terminated
+                               (*Can NOT be a future date.)
+             ("Title") : Person's Title
+                 *Defaults to 'NON-VA PROVIDER' if ("WHO") is 200PIEV
+             ("UniqueUserID") : IAM's Unique User Id
+  
+       - XUFLAG - "A" : RPC is being called to 'ADD' a record to the
+                        NEW PERSON (#200) file.
+                  "U" : RPC is being called to 'UPDATE' an existing
+                        record in the NEW PERSON (#200) file.  
+  
+ Finally, the RPC will return one of the following values to MVI upon
+ execution completion:
+  
+       - DUZ                  : No issues adding and/or editing an entry.
+       - DUZ^-1^Error Message : Issue occurred editing an entry where
+                                some data was invalid and could NOT be
+                                filed.
+       - -1^Error Message     : Required data NOT passed, entry could NOT
+                                be added (Flag="A") or entry could NOT be
+                                found to be updated (Flag="U").
+  
+ Enhancement #4
+ The business office has requested that the [XUS MVI NEW PERSON DATA] RPC
+ which returns calculated data analysis from the NEW PERSON (#200) file be
+ enhanced to ensure that for a NEW PERSON (#200) record to be determined
+ 'Active' that the record must also have a PRIMARY MENU OPTION (Field #201)
+ assigned. Therefore, the associated routine XUMVIDTA has been modified to
+ include this additional check of ensuring that a NEW PERSON (#200) record
+ has a PRIMARY MENU OPTION (#201) when determining if that user's record is
+ considered 'Active'. 
+   
+     
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ ------------------       -------------------       --------------------
+ N/A
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ XUS MVI ENRICH NEW PERSON         NEW
+ XUS MVI NEW PERSON GET            MODIFIED
+ XUS MVI NEW PERSON UPDATE         MODIFIED
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+  
+ Blood Bank Team Coordination
+ ----------------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*711 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8.0*711 have no adverse effect
+ on Blood Bank software functionality, therefore RISK is none.
+  
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+      
+  
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre/post installation routines in this patch.
+  
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than a minute to install. This patch may be 
+ installed with users on the system and the installation may be queued.
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. XU*8.0*711):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan
+ -------------
+ The back-out procedure for this patch would consist of restoring the
+ RPCs [XUS MVI NEW PERSON GET] and [XUS MVI NEW PERSON UPDATE] and
+ routine XUMVINPU, which can be accomplished by re-installing the KERNEL
+ patch XU*8.0*691 again. In addition, routine XUMVIDTA should be restored
+ using the back-up message created during the patch installation. Finally,
+ the RPC [XUS MVI ENRICH NEW PERSON] in the REMOTE PROCEDURE (#8994) file
+ and routines XUMVIENU and XUMVINPA should be deleted from the system.
+    
+ If assistance is still required to back-out the patch please contact the
+ National Service Desk (NSD) to log a help desk ticket so the development
+ team can assist in the process.
+   
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMVIDTA
+    Before:  B8690518   After:  B9059477  **705,711**
+Routine Name: XUMVIENU
+    Before:       n/a   After:B277994868  **711**
+Routine Name: XUMVINPA
+    Before:       n/a   After:  B8194513  **711**
+Routine Name: XUMVINPU
+    Before: B42823064   After:B124825166  **691,711**
+ 
+Routine list of preceding patches: 691, 705
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 11, 2019
+Completed By:                               Date Completed: JUL 22, 2019
+Released By :                               Date Released : JUL 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

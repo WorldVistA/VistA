@@ -1,0 +1,393 @@
+
+=============================================================================
+Run Date: JUL 15, 2019                     Designation: YS*5.01*122
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #110                   Status: Released
+                  Compliance Date: AUG 15, 2019
+=============================================================================
+
+Associated patches: (v)YS*5.01*92  <<= must be installed BEFORE `YS*5.01*122'
+
+Subject: MENTAL HEALTH NCC PROJECT 5.01
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will add enhancements to the Inpatient Order Entry routines for
+ the National Clozapine Coordination project.  Below is a list of all the 
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    MENTAL HEALTH (MH) V. 5.01                          YS*5.01*122
+    OUTPATIENT PHARMACY (OP) V. 7.0                     PSO*7*457 
+    INPATIENT MEDICATIONS (IP) V. 5.0                   PSJ*5*327
+    ORDER ENTRY/RESULTS REPORTING (OR) V. 3.0           OR*3*427
+  
+ The patches (PSJ*5*327, PSO*7*457, YS*5.01*122, and OR*3*427) are 
+ being released in the Kernel Installation and Distribution System
+ (KIDS) multi-build distribution MENTAL HEALTH NCC PROJECT 5.01.
+  
+ Abbreviations for terms used in the multi-build patch descriptions 
+ include the National Clozapine Coordinating Center (NCCC) located in
+ Dallas, Texas; Absolute Neutrophil Count (ANC); White Blood Cells (WBC);
+ Initial Operating Capability (IOC); and Computerized Patient Record 
+ System (CPRS).
+  
+ The purpose of this software package is to maintain compliance with 
+ legislative and federal mandates, as well as to add Clozapine Order
+ Checking to the Inpatient Pharmacy application. In addition, this 
+ package replaces the weekly roll-up functionality and now transmits 
+ data to the National Clozapine server nightly.
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+ The routines related to validation of the ANC Lab values, Local override
+ Reasons for both Inpatient/Outpatient Clozapine orders and daily
+ reporting of the Clozapine orders to the Hines Clozapine server will be
+ modified:
+  
+ 1.  The Mental Health CLAPI routine ^YSCLTST2 will be modified
+     To use the new FDA guidelines for the ANC Lab values in 
+     determining if overrides are required to continue processing.
+  
+ 2.  The override logic will be modified to allow local overrides
+     If the ANC Lab values are >= 1000 and < 1500  
+  
+ 3.  The reporting logic will be modified to store the Clozapine order
+     information in an XTMP variable and send the days Clozapine order
+     information to the Hines Clozapine server via a Mailman message
+     every night.
+  
+ 4.  Add a new routine YSCLDIS that will discontinue Clozapine Patients
+     status when
+     a. An emergency 4 day registration was performed on a patient
+        during hours when the NCCC is not available to register the
+        patient into the Clozapine program.
+     b. A patient was registered in the Clozapine Program and has not
+        been prescribed any Clozapine at all in the first 28 days of
+        being registered.
+     c. A registered Clozapine patient has not been prescribed any
+        Clozapine in the last 56 days.
+  
+ 5.  Add logic to send a Mailman message to NCCC notifying the NCCC
+     that a patient was discontinued from the Clozapine program.
+  
+ 6.  Add new menu option to be used to manually transmit the previous
+     day's Inpatients Clozapine Orders and the Outpatient Clozapine
+     Prescriptions to the Hines Database server.  This option can
+     also be scheduled to run nightly via Taskman.
+  
+ 7.  VistA option Weekly Clozapine Report [YSCL WEEKLY TRANSMISSION]
+     will be set to out of order. If a user attempts to run this option
+     they will receive 'Replaced by YSCL DAILY TRANSMISSION' message.
+  
+ 8.  VistA option Transmit Clozapine Demographics [YSCL TRANSMIT
+     DEMOGRAPHICS] will be set to out of order. 
+  
+ 9.  The ^YSCLTST2 routine was modified to run REX^YSCLTST5 to manually
+     execute the Retransmit of daily Clozapine orders (both Inpatient
+     and Outpatient) to the Hines database. This routine will also
+     prompt the user for start and end dates.
+  
+ 10. ^YSCLSERV routine was modified to accept a date range for the
+     start and end dates to the retransmission of daily Inpatient and
+     Outpatient Clozapine orders. The routine will accept a single date
+     to retransmit a single day's Inpatient and Outpatient Clozapine 
+     orders.
+  
+ 11. Add 4 new fields to the CLOZAPINE PARAMETERS file (#603.03) which
+     is stored in ^YSLC(603.03,1,0).  The four new fields:
+        RX LAB PROD LISTENER   (#8)
+        DEMOGRAPHIC PROD LISTENER   (#9)
+        RX LAB TEST LISTENER   (#10)
+        DEMOGRAPHIC TEST LISTENER   (#11)
+     These are used by Mailman to identify the servers that the YSCL DAILY
+     TRANSMISSION option uses to transmit Clozapine Demographics, 
+     Outpatient RX, and Inpatient Order transaction data to the Hines
+     FOURWORD server for FDA reporting.
+  
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)       New/Modified/Deleted
+ ------------------      -------------------       --------------------
+ CLOZAPINE PARAMETERS (#603.03)                               MODIFY
+                         RX LAB PROD LISTENER (#8)            NEW
+                         DEMOGRAPHIC PROD LISTENER (#9)       NEW
+                         RX LAB TEST LISTENER (#10)           NEW
+                         DEMOGRAPHIC TEST LISTENER (#11)      NEW
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                   Type           New/Modified/Deleted
+ -----------                   ----           --------------------
+ YSCL DAILY TRANSMISSION       Run Routine      New
+ YSCL WEEKLY TRANSMISSION      Run Routine      Modified
+ YSCL TRANSMIT DEMOGRAPHICS    Run Routine      Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name                 New/Modified/Deleted
+ ----------------------            --------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ Request Name: National Clozapine Coordination Project
+   Request ID: 20100703
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+  Battle Creek VA Medical Center
+  VA Black Hills Health Care System
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+          Hines: domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ --------------------------------------------------------------------------
+ Title                                  File Name               FTP Mode
+ --------------------------------------------------------------------------
+ MENTAL HEALTH NCC PROJECT 5.01     MH_NCC_PROJ_5_01.KID (ASCII)
+  
+ MENTAL HEALTH NCC PROJECT 5.01     MH_NCC_Proj_5_01_UG_R0719.PDF (binary)
+ Technical Manual
+  
+  
+  
+    Inpatient Medications           psj_5_p327_tm.PDF          (binary)
+ Deploy Install BO RB Guide
+                   MH_NCC_Proj_5_01_IG_R0719.PDF  (binary)
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The new Daily Clozapine Transmission [YSCL DAILY TRANSMISSION] must be
+ scheduled to run in TaskMan.
+  
+ Installation Instructions
+ -------------------------
+ This patch should take up to 3 minutes to install.
+ DO NOT QUEUE the installation of this patch.
+  
+ This patch may be installed with users on the system although it is  
+ recommended to be installed after normal business hours to minimize 
+ potential disruption to users.
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file MH_NCC_PROJ_5_01.KID, which contains 
+     the following patches:
+  
+         YS*5.01*122
+         PSO*7*457
+         PSJ*5*327
+         OR*3*427
+  
+      Sites can retrieve VistA software from the following SFTP addresses.
+      The preferred method is to SFTP the files from:
+  
+                     download.vista.domain.ext
+  
+      This will transmit the files from the first available SFTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+        Hines                   ftp.domain.ext
+        Salt Lake City          ftp.domain.ext
+  
+      The MH_NCC_PROJ_5_01.KID host file is located in the
+       directory. Use ASCII Mode when downloading the
+      file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file MH_NCC_PROJ_5_01.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS] MH_NCC_PROJ_5_01.KID)
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         MENTAL HEALTH NCC PROJECT 5.01
+         YS*5.01*122
+         PSO*7*457
+         PSJ*5*327
+         OR*3*427
+       Use INSTALL NAME: MENTAL HEALTH NCC PROJECT 5.01 to install this
+       Distribution.
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     MENTAL HEALTH NCC PROJECT 5.01):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the MENTAL HEALTH NCC PROJECT 5.01.
+  
+     a. Choose the Install Package(s) option to start the patch install.
+     b. When prompted "Select INSTALL NAME:"  
+        enter "MENTAL HEALTH NCC PROJECT 5.01"
+  
+ 6.  INSTALL QUESTIONS
+     -----------------
+     a. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? YES//", enter YES unless your system does this in a 
+        nightly TaskMan process.
+     b. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        YES//", enter NO.
+     c. When prompted " Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? NO//", enter NO.
+     d. When prompted "Device: HOME//", respond with the correct device 
+        but do not queue this install.
+  
+  
+ Post-Installation Instructions
+  
+ The option Daily Clozapine Transmission [YSCL DAILY TRANSMISSION] should 
+ be scheduled to run daily in TaskMan.  It should be scheduled without
+ a device and during off-peak hours.  It will take just a few minutes
+ to complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 112
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YSCL122P
+    Before:       n/a   After:  B1888525  **122**
+Routine Name: YSCLDIS
+    Before:       n/a   After: B33307266  **122**
+Routine Name: YSCLSERV
+    Before: B64095727   After:B113744359  **18,22,26,47,61,69,74,90,92,122**
+Routine Name: YSCLSRV1
+    Before:  B2228786   After:  B2824351  **61,69,74,90,122**
+Routine Name: YSCLTEST
+    Before: B20876343   After: B21338958  **18,22,26,47,61,69,74,90,122**
+Routine Name: YSCLTST2
+    Before: B49184088   After:B118550569  **18,22,26,47,61,69,74,90,92,122**
+Routine Name: YSCLTST3
+    Before: B59491458   After: B73925187  **18,22,25,26,47,61,69,74,90,122**
+Routine Name: YSCLTST4
+    Before: B15352155   After: B20061166  **92,122**
+Routine Name: YSCLTST5
+    Before:       n/a   After:B144170754  **122**
+Routine Name: YSCLTST6
+    Before:       n/a   After: B35479087  **122**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 29, 2015
+Completed By:                               Date Completed: JUL 15, 2019
+Released By :                               Date Released : JUL 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

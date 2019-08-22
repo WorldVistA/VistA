@@ -1,0 +1,158 @@
+$TXT Created by                at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 05/17/19 at 08:54
+=============================================================================
+Run Date: JUN 28, 2019                     Designation: LR*5.2*523
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #425                    Status: Released
+                  Compliance Date: JUL 29, 2019
+=============================================================================
+
+Associated patches: (v)LR*5.2*516  <<= must be installed BEFORE `LR*5.2*523'
+                    (v)LR*5.2*520  <<= must be installed BEFORE `LR*5.2*523'
+
+Subject: MOST RECENT REPORT IN CPRS BUTTONS GREYED OUT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following ticket, which was discovered during 
+ testing of LR*5.2*520.
+ INC5168203 - Most Recent report in Computerized Patient Record System
+ (CPRS) buttons greyed out
+  
+ Blood Bank Review:
+ ------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*523 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*523 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*523 have no adverse effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC5168203 - Most Recent report in CPRS buttons greyed out
+  
+ Problem:
+ --------
+ After cancelling a Microbiology (MI) subscripted test, go into CPRS
+ under the Most Recent report and the canceled MI subscripted test is the
+ most recent result.  If you click Next, then all the buttons grey out and
+ you can no longer move between the previous and next results. This only
+ happens if the most recent result is a canceled MI subscripted test.  
+ This occurs when there are Chem (CH) and MI tests entered for the same
+ time and then both are canceled.  This was found when a test site was
+ testing patch LR*5.2*520.
+   
+ Resolution:
+ -----------
+ Modify routine LR7OGM to adjust NEWOLD variable values to reverse date 
+ for valid comparison to variable IDT.  Prior to this patch the check if 
+ NEWOLD was not equal to IDT would always be true.  This patch also 
+ adds logic to set piece 9 of ^TMP("LR7OGX",$J,"OUTPUT",1)
+ to either 1 or 2 if no chemical test is displayable when a MI & CH test 
+ are at the same date/time - to accomplish this LR7OGMC was modified to
+ quit out when FORMAT=4 that will return SKIP but no other data as when
+ FORMAT is 1,2, or 3.
+  
+  
+ Test Sites:
+ ----------
+ San Diego VAMC
+ Southeast Louisiana HCS 
+   
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. Installation should 
+ take less than 1 minutes to complete.
+  
+ Installation Instructions:
+ --------------------------
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select 
+        The Installation Menu.  From this menu, you may elect to use the
+        following options. When prompted for the INSTALL NAME enter the 
+        patch LR*5.2*523
+          
+        a. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this 
+           patch is installed.  It compares all components of this patch 
+           routines, DDs, templates, etc.
+        b. Verify Checksums in Transport Global - This option will allow 
+           you to ensure the integrity of the routines that are in the 
+           transport global.
+  
+ 4.     From the the Installation Menu, select Backup a Transport
+        Global - This option will create a backup message of any routines
+        exported with this patch. It will not backup any other changes such
+        as DDs or templates.
+  
+ 5.     From the Installation Menu, select the Install Package(s) option
+        and choose the patch to install (LR*5.2*523).
+  
+ 6.     When prompted 'Want KIDS to INHIBIT LOGONs during the
+        install? NO//', respond NO.
+  
+ 7.     When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? NO//', respond NO.
+  
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OGM
+    Before: B42661615   After: B47777096  **187,220,312,286,395,350,523**
+Routine Name: LR7OGMC
+    Before: B37375586   After: B38181513  **187,230,312,286,356,372,395,
+                                           350,516,523**
+ 
+Routine list of preceding patches: 516
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 08, 2019
+Completed By:                               Date Completed: JUN 26, 2019
+Released By :                               Date Released : JUN 28, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

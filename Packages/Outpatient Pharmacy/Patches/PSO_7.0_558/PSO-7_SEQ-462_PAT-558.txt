@@ -1,0 +1,157 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 03/01/19 at 09:48
+=============================================================================
+Run Date: JUL 11, 2019                     Designation: PSO*7*558
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #462                      Status: Released
+                  Compliance Date: AUG 11, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*318   <<= must be installed BEFORE `PSO*7*558'
+
+Subject: INVALID PSO REC IN VPR RPT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following Outpatient Pharmacy issue.
+  
+ INC4045365 - VPR XML file reporting for Non-VA meds outside of date range
+      
+ Defect Tracking System Ticket(s) & Overview:
+ -------------------------------------------------------------
+           
+ Problem: 
+ ------------
+ When running the VPR (Virtual Patient Record) XML extract for medications 
+ there are results returned for discontinued Non-VA orders that have a 
+ stop date outside of the intended date range.
+      
+ Resolution:
+ ---------------
+ The VPR XML extract process was modified to bypass the writing of any 
+ discontinued Non-VA orders that have a stop date outside of the extract 
+ date range.
+     
+ Technical Resolution:
+ ---------------------
+ Modified routine at NVA+5^PSOORRL to check for a value in stop date.
+ Routine will only write to the ^TMP global used for the VPR XML extract if
+ the date is within the targeted date range.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ n/a
+         
+ Test Sites:
+ -----------
+ Rocky Mountain Regional VAMC (Eastern Colorado Health Care System)   
+ Syracuse VAMC 
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to 
+ install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch
+    PSO*7.0*558.
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;** [PATCH LIST]**;[DATE];[BUILD NUMBER]
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOORRL
+    Before: B64833222   After: B66471559  **4,20,9,34,54,82,124,132,159,
+                                           214,225,318,558**
+ 
+Routine list of preceding patches: 318
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 26, 2019
+Completed By:                               Date Completed: JUL 10, 2019
+Released By :                               Date Released : JUL 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

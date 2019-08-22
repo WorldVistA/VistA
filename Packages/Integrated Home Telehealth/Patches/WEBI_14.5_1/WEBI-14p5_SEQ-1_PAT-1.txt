@@ -1,0 +1,207 @@
+
+=============================================================================
+Run Date: JUL 16, 2019                     Designation: WEBI*14.5*1
+Package : WEBI - HOME TELEHEALTH              Priority: Mandatory
+Version : 14.5         SEQ #1                   Status: Released
+                  Compliance Date: AUG 16, 2019
+=============================================================================
+
+
+Subject: Release of IHTA 14.5
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Associated patches: N/A
+  
+ Home Telehealth Reporting Enhancements (HTRE) Phase 3 project. In all 
+ phases of the project, Integrated Home Telehealth Application (IHTA) has 
+ worked with the Census and Survey (CNS) and Sustainment side of the Home 
+ Telehealth Product Development organization to support the Office of 
+ Telehealth Services (OTS) business requirements.
+  
+ IHTA 14.5 builds on the current IHTA 14.0 version. Build 4 of the HTRE 
+ Phase 3 project has completed the following:
+  
+ Report Enhancements: 
+  
+ 1.     Restricted Satisfaction Survey Results Reports Graph to totals only
+ when All Modalities is selected.
+ 2.     Updated the three Patient Satisfaction Survey Reports so they can 
+ be run for a year's timeframe.
+ 3.     Changed role title "OTS Contract Manager" to "HT Contract Manager".
+ 4.     Changed the list of Device Models on the New QIR page to only 
+ include Device Models that are associated with active vendors. 
+ 5.     The History Information Table of the Manage Scheduled Jobs was 
+ updated to remove the 'Exit Status' column to avoid duplicate information 
+ from displaying in two columns.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+                             
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. 961834 Title for the bar chart generated for Mean/Std Deviation option 
+ for Satisfaction Survey Results Reports has misleading title.
+ --------------------------------------------
+ Resolution: The Title for the generated bar chart now correctly reads 
+ "Percentage".
+ --------------------------------------------
+ 2. 958032  For the Census Activity Report unchecked the Show vendor
+ checkbox if disabled by other selections.
+ --------------------------------------------
+ Resolution: The Census Activity Report "Show Vendor" Checkbox is now 
+ unselected by default when the checkbox is disabled.
+ --------------------------------------------
+ 3. 958015 In the Census Activity Report when Single Modality, All Vendors,
+ Show Vendor checkbox, selected the Report displays HTTP 405 Error.
+ --------------------------------------------
+ Resolution: The Report is now generated instead of showing a 405 Error 
+ page.
+ --------------------------------------------
+ 4. 962015 508 Defect - The Category of Care All checkbox 
+ "checked/Unchecked" instead of "Category of Care: (one must be
+ selected;can select multiples)/".
+ --------------------------------------------
+ Resolution: The Label for the Category of Care Selection is now reading 
+ correctly as per the 508 Audit Team's Suggestion.
+ --------------------------------------------
+ 5. 966114  Census Activity Report for Facility N. Florida/S. 
+ Georgia VHA, Week Ending 03/23 causes a displays HTTP 405 Error.
+ --------------------------------------------
+ Resolution: The Report is now generated instead of showing a 405 Error 
+ page.
+ --------------------------------------------
+ 6. 967118 Census Reports doesn't provide the List of "All Facilities" or
+ all existing VA VISN/Facility.
+ --------------------------------------------
+ Resolution: The Census Report Menu now displays the Va VISN along with 
+ the Facility Number in the Facilites drop down selection.
+ --------------------------------------------
+ 7. 611273  QIR-Description Headline cut off when populating the PDF field.
+ --------------------------------------------
+ Resolution: When the QIR is being created the Headline field has been
+ limited to a Max number of characters so that it cannot extend beyond the
+ visable limit.
+ --------------------------------------------
+ 8. 1003561 508 Defect - Manage Registration table cell names are carried
+ over to the other cell.
+ --------------------------------------------
+ Resolution: Table cell names now no longer carry over to the next cell.
+ --------------------------------------------
+ 9. 1003587 508 Defect Manage Schedule jobs table cell names are carried
+ over to the other cell.(Management and Active tabs)
+ --------------------------------------------
+ Resolution: Table cell names now no longer carry over to the next cell.
+ --------------------------------------------
+ 10. 1009212 508 Defect - Manage QIR table cell names are carried over to
+ the other cell.
+ --------------------------------------------
+ Resolution: Table cell names now no longer carry over to the next cell.
+ --------------------------------------------
+  
+ Test Sites:
+ ----------
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ There is no documentation being posted for download for this release.
+  
+ Patch Installation:
+ IHTA will be installed at the Austin Information Technology Center (AITC).
+  
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ IHTA will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+  
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ HTRE IHTA was assigned 508 Status Recommend for Deployment May 30, 2019.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 10, 2019
+Completed By:                               Date Completed: JUN 19, 2019
+Released By :                               Date Released : JUL 16, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

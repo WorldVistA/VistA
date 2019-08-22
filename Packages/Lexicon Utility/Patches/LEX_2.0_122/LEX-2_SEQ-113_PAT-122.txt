@@ -1,0 +1,289 @@
+$TXT Created by                   CHEYL106.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 05/21/19 at 17:27
+=============================================================================
+Run Date: JUN 17, 2019                     Designation: LEX*2*122
+Package : LEX - LEXICON UTILITY               Priority: EMERGENCY
+Version : 2       SEQ #113                      Status: Released
+                  Compliance Date: JUN 25, 2019
+=============================================================================
+
+Associated patches: (v)LEX*2*121   <<= must be installed BEFORE `LEX*2*122'
+
+Subject: CODE SET FY19 4TH QTR UPDATE
+
+Category: 
+  - Routine
+  - Enhancement ()
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+  This patch contains the FY19 4th Quarter Code Set distribution with
+  12 changes effective Jul 01, 2019.  This patch also contains 20
+  changes from FY19 3rd Qtr (effective Apr 01, 2019).  Additionally,
+  this patch exports 3751 changes to the SNOMED CT coding system.  This
+  patch installs the data for the following Informational patch:
+   
+            ICPT*6.0*89
+   
+  This patch writes to the following files:
+   
+       CPT                       #81       ^ICPT(       ICR 4489
+       LEXICON files          #757-757.41  ^LEX(        N/A
+   
+    
+  PATCH COMPONENTS:
+  ================
+    
+    Files & Fields Associated:                       N/A
+    Forms Associated:                                N/A
+    Mail Groups Associated:                          N/A
+    Options Associated:                              N/A
+    Protocols Associated:                            N/A
+    Security Keys Associated:                        N/A
+    Templates Associated:                            N/A
+    
+    
+  ADDITIONAL INFORMATION:
+  ======================
+    
+    New Service Requests (NSRs):                     N/A
+    Patient Safety Issues (PSIs):                    N/A
+    
+    
+  ENHANCEMENTS:
+  ============
+   
+    FY19 4th Quarter Update
+  
+      HCPCS Procedure Additions  (29 Codes)
+      -------------------------
+  
+        Effective Apr 01, 2019 (FY19 3rd Qtr)                (20 Codes)
+          C9040   C9041   C9042   C9043   C9044   C9045   C9046   C9141
+          G2001   G2002   G2003   G2004   G2005   G2006   G2007   G2008
+          G2009   G2013   G2014   G2015
+  
+        Effective Jul 01, 2019                                (9 Codes)
+          J1444   J7208   J7677   J9036   J9356   Q5112   Q5113   Q5114
+          Q5115
+  
+      HCPCS Procedure Inactivations
+      -----------------------------
+  
+        Effective Jul 01, 2019                                 (1 Code)
+          J9031
+  
+      HCPCS Procedures Re-Used
+      ------------------------
+  
+        Effective Jul 01, 2019                                 (1 Code)
+          J9030
+  
+      HCPCS Procedure Revisions
+      -------------------------
+  
+        Effective Jul 01, 2019                                 (1 Code)
+          J9355
+  
+      SNOMED CT Changes
+      -----------------
+                           Effective  Added  Inact  React  Revise  Total
+                          ----------  -----  -----  -----  ------  -----
+        SNOMED Codes      03/01/2019    451    146     --     264    861
+        SNOMED Terms
+          Concepts                      715    410     --      --   1125
+          Synonyms                      611    285     --      --    896
+          Fully Specified               723    146     --      --    869
+                                      -----  -----  -----  ------  -----
+                                       2500    987     --     264   3751
+   
+        SNOMED CT Version ID:  20190301
+   
+  
+  
+  CPT Copyright 
+  ==============
+  
+    CPT (CPT is a registered trademark of the American Medical
+    Association) codes, descriptions and other data are copyright 1966,
+    1970, 1973, 1977, 1981, 1983-2019 American Medical Association.
+  
+    CPT is commercial technical data developed exclusively at private
+    expense by Contractor/Manufacturer American Medical Association, AMA
+    Plaza, 330 N. Wabash Ave., Suite 39300, Chicago, IL 60611-5885.  The
+    provisions of this Agreement between AMA and VA prevail, including
+    prohibiting creating derivative works and providing CPT to any third
+    parties outside of the Facilities.
+  
+  
+  REQUEST/INCIDENTS
+  =================
+  
+    None
+  
+  
+  TEST SITES
+  ==========
+  
+    VISN 02 (Buffalo, NY)
+    Montana HCS (Fort Harrison, MT)
+    North Florida HCS (Gainesville, FL)
+  
+  
+  SFTP SOFTWARE RETRIEVAL:
+  =======================
+        
+    Global Host File:                  LEX_2_122.GBL  (ASCII)
+        
+    The host file is 103 MB in size and could take up to 10 minutes to
+    SFTP.  The preferred method is to retrieve the file from:
+        
+        download.vista.domain.ext.
+        
+    This transmits the files from the first available server. Sites 
+    may also elect to retrieve files directly from a specific server.
+        
+    Sites may retrieve the software directly using Secure File Transfer
+    Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+    the following OI Field Offices:
+        
+        Hines             domain.ext
+        Salt Lake City    domain.ext
+  
+  INSTALLATION INSTRUCTIONS
+  =========================
+  
+     1)  Users may be on the system during the install of LEX*2.0*122.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 50 to 110 minutes to install
+         depending on the system.
+  
+             Create a backup    25-90 minutes
+             Load the Global    2-5 minutes
+             Kids Install       8-15 minutes
+  
+     2)  Size/Disk Space Requirements:
+  
+         The changes to the Lexicon and CPT globals will result in a
+         combined growth of about 85 MB of data.  The import global ^LEXM
+         is about 103 MB in size.  Make sure there is sufficient space for
+         the growth to the VistA globals and the import global before
+         continuing.
+  
+  
+     3)  Create a backup of the following global files before continuing:
+  
+             CPT                         #81         ^ICPT(
+             Lexicon Files            #757-757.41    ^LEX(
+  
+         These backup files may get as large as 2.4 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 25 to
+         90 minutes to create the backup files.
+  
+         When you are creating a backup of non-subscripted globals, you
+         are saving the entire global.  You should use the utility ^%GO
+         for non-subscripted globals, and when prompted for a global,
+         enter the global root (global name only, no open parenthesis,
+         no file number and no commas, as shown below).  Examples:
+  
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICPT            CPT
+             ^LEX             Lexicon Files
+  
+     4)  Install the data from the global host file LEX_2_122.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+  
+         This global is approximately 103 megabytes in size.  Make sure
+         there is sufficient space available to load this global on
+         your system.  The loading of the global should take from 
+         4 to 7 minutes.
+  
+         From the Programmer prompt, execute the following routine:
+  
+            >D ^%GI
+  
+            Global input
+  
+            Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_122.GBL
+            Parameter: RS=>
+            Globals were saved on 21 May 2019  4:38 PM   Cache
+            with description: LEX*2.0*122/ICPT*6.0*89 Data
+  
+            Input option: A
+              ^LEXM
+  
+     5)  Set up user and IO variables (D ^XUP) for programmer access.
+  
+     6)  Distribution Load:
+  
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+  
+     7)  KIDS Installation:
+  
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*122.
+  
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+  
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+  
+         The KIDs install should take from 8-15 minutes
+  
+     8)  Cleanup
+  
+         a)  The Environment Check routine LEX2122 and the Post-Install 
+             routine LEX2122P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+  
+             NOTE:  The installation of this patch should trigger an
+                    update protocol and may spawn background tasks for 
+                    the Clinical Reminders or Consult packages.  You 
+                    do not need to wait for these background jobs to 
+                    complete to delete the Environment Check and 
+                    Post-Install routines.
+  
+     9)  Back-out Plan:
+  
+         To back-out data from a production account could cause broken 
+         pointers, <UNDEFINED> errors and hard MUMPS crashes.  The 
+         back-out plan for data only patches is to report your findings
+         and wait for a repair patch.  Contact Help desk to log a ticket. 
+  
+    10)  Patch Verification:
+  
+         Kernel Installation & Distribution System-> Utilities-> Install
+         File Print option can be used to check for any errors plus the
+         status of the install being Completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2122
+    Before:       n/a   After: B91984739  **122**
+Routine Name: LEX2122P
+    Before:       n/a   After: B21647845  **122**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 01, 2019
+Completed By:                               Date Completed: JUN 14, 2019
+Released By :                               Date Released : JUN 17, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

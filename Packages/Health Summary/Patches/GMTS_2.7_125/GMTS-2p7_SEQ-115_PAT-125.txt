@@ -1,0 +1,230 @@
+$TXT Created by               at CPRS31A.DOMAIN.EXT  (KIDS) on Tuesday, 04/23/19 at 22:16
+=============================================================================
+Run Date: JUN 14, 2019                     Designation: GMTS*2.7*125
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #115                    Status: Released
+                  Compliance Date: JUL 15, 2019
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*116<<= must be installed BEFORE `GMTS*2.7*125'
+                    (v)PSS*1*234   <<= must be installed BEFORE `GMTS*2.7*125'
+                    (v)PSN*4*567   <<= must be installed BEFORE `GMTS*2.7*125'
+
+Subject: CPRS EP2 HEALTH SUMMARY COMPONENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ The purpose of this patch is to release two new national Health Summary 
+ components that can be used to create objects or used in Ad-Hoc reporting.
+  
+ The components will allow selecting Outpatient prescriptions by drug class
+ (VA classification) or by Pharmacy Orderable Item name. The component 
+ names are RXDC for drug classes and RXOI for Orderable Items.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ HEALTH SUMMARY TYPE     SELECTION ITEM (#4)     Modified
+   (#142) 
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR 20120407 - Drug Class and Select drug object 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ VA San Diego Healthcare System, CA
+ Tuscaloosa VA Medication Center, AL
+ VA Boston Health Care System, MA 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch is
+ available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ https://www.domain.ext/vdl/
+  
+  
+ Title                              File Name            FTP Mode
+ -----------------------------------------------------------------------
+ Health Summary Technical Manual    hsum_2_7_tm.pdf      Binary
+ Health Summary User Manual         hsum_2_7_um.pdf      Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch is being distributed using PackMan. It may be installed with
+ users on the system although it is recommended that it be installed during
+ non-peak hours to minimize potential disruption to users.  This patch
+ should take less than 5 minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, use the following options.
+         When prompted for the INSTALL NAME enter the patch #: 
+         GMTS*2.7*125:
+  
+         a. Backup a Transport Global - [REQUIRED] This option will create
+            a backup message of any routines exported with this patch. It
+            will not backup any other changes such as DDs or templates.
+  
+         b. Compare Transport Global to Current System - [OPTIONAL]This
+            option will (allow you to view all changes that will be made
+            when this patch is installed.  It compares all components of
+            this patch routines, DDs, templates, etc.).
+         
+         c. Verify Checksums in Transport Global - [OPTIONAL] This option
+            will allow you to ensure the integrity of the routines that are
+            in the transport global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+  
+ 5.      When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+         Install? NO//', respond NO. 
+  
+ 6.      When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', respond NO.
+  
+ 7.      When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//', respond NO.
+  
+ 8.      If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no specific post-installation instructions.
+  
+ Backout/Rollback Strategy:
+ -------------------------
+ In the event of a catastrophic failure, the Area Manager may make the 
+ decision to back-out the patch.
+  
+ While some of the routines are new, there is one pre-existing routine. 
+ You will need to restore the backup you created pre-installation in 
+ order to revert to the pre-patch version. 
+  
+ Your IT support person or the Clinical Application Coordinator may edit 
+ the Health Summary Component and set the DISABLE FLAG field (#5) of the 
+ HEALTH SUMMARY COMPONENT file (#142.1) to either 'T' for temporary or 'P' 
+ for permanent, depending on the decision of the Area Manager, Health 
+ Product Support representative, and the development team.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTS125A
+    Before:       n/a   After:  B2032349  **125**
+Routine Name: GMTSADH5
+    Before: B48340236   After: B52423832  **36,35,37,49,63,110,116,125**
+Routine Name: GMTSP125
+    Before:       n/a   After:  B7458066  **125**
+Routine Name: GMTSPSO8
+    Before:       n/a   After: B14020935  **125**
+Routine Name: GMTSPSO9
+    Before:       n/a   After: B13547938  **125**
+ 
+Routine list of preceding patches: 116
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 24, 2018
+Completed By:                               Date Completed: JUN 13, 2019
+Released By :                               Date Released : JUN 14, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

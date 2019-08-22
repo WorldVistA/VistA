@@ -1,0 +1,225 @@
+$TXT Created by                      CLN2G2.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 02/20/19 at 17:07
+=============================================================================
+Run Date: JUN 21, 2019                     Designation: MD*1*69
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #53                      Status: Released
+                  Compliance Date: JUL 22, 2019
+=============================================================================
+
+Associated patches: (v)MD*1*54     <<= must be installed BEFORE `MD*1*69'
+
+Subject: HEMODIALYSIS IS NOT AUTO CHECKING IN PROPERLY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the issue of the CP Hemodialysis consults no 
+ longer auto checking in.
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC3431411 CP Hemo has stopped auto checkin
+  
+     Duplicates:
+     -----------
+     INC3430523 Dayton Clinical procedure not automatically sending over 
+                to Endosoft after Patch 54 installed.
+     INC3525351 Patch MD*1.0*54 patch Issues impacting CP Hemo in  
+                Cleveland VAMC
+     INC3559705 CP Hemo Consults stopped Auto Checking in after patch 
+                MD*1.0*54
+  
+ Problem 1:
+ ---------
+ After the release of MD*1*54, auto check-in for CP Hemodialysis clinic 
+ does not work.
+  
+ Resolution 1:
+ ------------
+ Modification of routines MDWOR and MDWORSR to remove the future care CP 
+ order auto check-in issue logic that patch MD*1.0*54 introduced.
+  
+ Test Sites:
+ ----------
+ Jerry L. Pettis Memorial VA Medical Center (Loma Linda, CA)
+ Louis Stokes Cleveland VA Medical Center, OH
+  
+  
+ Patch Installation:
+ ================== 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch 
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select the 
+     Installation Menu.
+  
+ 4.  From the Installation Menu, select the Backup a Transport Global and 
+     when prompted for the INSTALL NAME, enter the patch MD*1.0*69.
+     This option will create a backup message of the routine(s) exported 
+     with this patch. It will not backup any other changes such as DDs or
+     templates. If for any reason the patch is to be rolled back, this
+     backup will be required to restore the patch's routine(s) to the
+     pre-installation version(s).
+  
+ 5.  From the Installation Menu you may elect to use the following 
+     options. When prompted for the INSTALL NAME, enter the patch
+     MD*1.0*69:
+  
+       a. Verify Checksums in Transport Global - This option will allow 
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+       b. Print Transport Global - This option will allow you to print 
+          only a summary of the patch, to print a summary of the patch and
+          the routines in the transport global, or to print only the
+          routines in the transport global.
+  
+       c. Compare Transport Global to Current System - This option will 
+          (allow you to view all changes that will be made when this patch 
+          is installed. It compares all components of this patch's
+          routines, DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 7. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of  
+    Install? NO//', respond NO.
+  
+ 8. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    respond NO.
+  
+ 9. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//', respond NO.
+  
+ 10. If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Backout/Rollback Strategy:
+ --------------------------
+ No data dictionary charges are made by this patch installation and, 
+ therefore, no data dictionary rollback strategy is required.
+  
+ No data was modified by this patch installation and, therefore, no data
+ rollback strategy is required.
+  
+ To restore routine(s) backup from MailMan:
+ ------------------------------------------ 
+ 1. Enter the MailMan Menu [XMUSER] option.
+  
+ 2. At the Select MailMan Menu Option prompt, select the Read/Manage 
+    Messages Option (RML).
+  
+ 3. At the Read mail in basket prompt, select the basket the routine backup
+    message is stored in.
+  
+ 4. At the Enter message number or command prompt, select the message 
+    which has the routines.
+  
+ 5. At the Type <Enter> to continue or '^' to exit prompt, enter '^' to 
+    skip to the message action prompt.
+  
+ 6. At the Enter message action (in SELECTED basket) prompt, type in X for
+    Xtract PackMan.
+  
+ 7. At the Select PackMan function prompt, type in 6 for INSTALL/CHECK
+    MESSAGE.       
+  
+ 8. The user will be presented with the following warning and a prompt:
+  
+    Warning: Installing this message will cause a permanent update of
+    globals and routines.
+    Do you really want to do this? NO// 
+  
+    At this prompt, type in Y for YES to install the backup copies.
+  
+ 9. The user will be presented with the following message and a prompt:
+  
+    Routines are the only parts that are backed up. No other parts
+    are backed up, not even globals.  You may use the 'Summarize Message'
+    option of PackMan to see what parts the message contains. Those parts
+    that are not routines should be backed up separately if they need to be
+    preserved.
+  
+    Shall I preserve the routines on disk in a separate back-up message?
+    YES// 
+  
+    Answering yes to this prompt is optional. The site can reinstall the 
+    patch.
+  
+    If the user answers YES to this prompt:
+       a. At the Subject prompt, type in a descriptive subject.
+       b. At the Send mail to prompt, select the user to send this message.
+       c. At the Select basket to send to prompt, select the basket to
+          send this message. It will default to the IN basket.
+       d. At the And Send to: prompt select any additional user to send 
+          this message to or hit enter to continue.
+  
+    A message similar to the following will be presented to the user. 
+    Building PackMan backup message with subject backup
+  
+    PackMan backup message [999999999] sent.
+    Line 2    Message #99999999  Unloading Routine   MDWOR (PACKMAN_BACKUP)
+  
+ 10. At the Enter message action (in SELECTED basket) prompt, accept the
+     default of Ignore.
+  
+ 11. To verify the roll-back completed successfully, ensure each routine's 
+     checksum matches the pre-patch checksum from the patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01,2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDWOR
+    Before: B51417126   After: B50562959  **14,11,21,20,37,42,54,69**
+Routine Name: MDWORSR
+    Before: B59164885   After: B59105822  **14,11,21,20,54,69**
+ 
+Routine list of preceding patches: 54
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 17, 2019
+Completed By:                               Date Completed: JUN 18, 2019
+Released By :                               Date Released : JUN 21, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

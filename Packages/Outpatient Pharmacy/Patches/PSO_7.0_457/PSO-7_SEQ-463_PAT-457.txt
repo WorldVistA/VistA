@@ -1,0 +1,335 @@
+
+=============================================================================
+Run Date: JUL 15, 2019                     Designation: PSO*7*457
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #463                      Status: Released
+                  Compliance Date: AUG 14, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*422   <<= must be installed BEFORE `PSO*7*457'
+                    (v)PSO*7*518   <<= must be installed BEFORE `PSO*7*457'
+                    (v)PSO*7*526   <<= must be installed BEFORE `PSO*7*457'
+                    (v)PSO*7*537   <<= must be installed BEFORE `PSO*7*457'
+                    (v)PSO*7*538   <<= must be installed BEFORE `PSO*7*457'
+                    (v)PSO*7*550   <<= must be installed BEFORE `PSO*7*457'
+                    (v)PSO*7*555   <<= must be installed BEFORE `PSO*7*457'
+
+Subject: MENTAL HEALTH NCC PROJECT 5.01
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will add enhancements to the Inpatient Order Entry routines for
+ the National Clozapine Coordination project.  Below is a list of all the 
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    MENTAL HEALTH (MH) V. 5.01                          YS*5.01*122
+    OUTPATIENT PHARMACY (OP) V. 7.0                     PSO*7*457 
+    INPATIENT MEDICATIONS (IP) V. 5.0                   PSJ*5*327
+    ORDER ENTRY/RESULTS REPORTING (OR) V. 3.0           OR*3*427
+  
+ The patches (YS*5.01*122, PSO*7*457, PSJ*5*327, and OR*3*427) are
+ being released in the Kernel Installation and Distribution System
+ (KIDS) multi-build distribution MENTAL HEALTH NCC PROJECT 5.01.
+  
+ Abbreviations for terms used in the multi-build patch descriptions 
+ include the National Clozapine Coordinating Center (NCCC) located in
+ Dallas, Texas; Absolute Neutrophil Count (ANC); White Blood Cells (WBC);
+ Initial Operating Capability (IOC); and Computerized Patient Record 
+ System (CPRS).
+  
+ The purpose of this software package is to maintain compliance with 
+ legislative and federal mandates, as well as to add Clozapine Order
+ Checking to the Inpatient Pharmacy application. In addition, this 
+ package replaces the weekly roll-up functionality and now transmits 
+ data to the National Clozapine server nightly.
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+ Modifications to ^PSOCLO1 routine.
+  
+ 1. Added new Override reasons, 8 ;;REGISTER NON-DUTY HRS/WE (MAX 4D)
+    9 ;;PRESCRIBER APPROVED 4 DAY SUPPLY 10 ;;MILD NEUTROPENIA
+    PRESCRIBER APPROVED
+  
+ 2. Modified the CHECK module to look at the ANC values instead of WBC
+    as well as add more selections for the values of the PSOYS variable
+    that displays the override reasons.
+  
+ 3. Added new warning for critically low ANC readings.
+  
+ 4. Added capability to produce a list of only active approving members
+    with the "PSOLOCKCLOZ" security key to choose from for the second
+    approving member for the Clozapine Override process.
+  
+ 5. Created a view alert to be sent to the provider, member 
+    approving the override, and the secondary approving member selected.
+    This alert is available in CPRS. When the user double clicks on the
+    alert, it will be removed from the list. 
+  
+ 6. Inpatient Medications PSJOE was modified to detect the drug chosen.
+    When a clozapine drug is chosen, the code calls the new PSJCLOZ
+    routine, then uses the existing but modified outpatient medication
+    routine PSOCLO1. This means both outpatient and inpatient clozapine
+    orders go through the same order checks and override procedure. The
+    divergence occurs when recording the override. When an outpatient is
+    detected "CLOZAPINE PRESCRIPTION OVERRIDES" file (#52.52) is updated.
+    And when an inpatient is detected "CLOZAPINE MEDICATION OVERRIDES"
+    file (#53.8) is updated.
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ File Name (Number)                 Field Name (Number)         
+  
+ New/Modified/Deleted
+ ------------------                 -------------------         
+  
+ --------------------
+ CLOZAPINE PRESCRIPTION OVERRIDES   REASON FOR OVERRIDE (#4)     MODIFIED
+ (#52.52)                           SECOND APPROVING TEAM
+                                    MEMBER (#6)                  NEW
+ CLOZAPINE OVERRIDE REASONS         OVERRIDE REASON (#.01)       NEW
+ (#52.54)
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                   Type           New/Modified/Deleted
+ -----------                   ----           --------------------
+ PSOL MANAGER                  Menu               Modified
+ PSOL EDIT                     Run Routine        Modified
+ PSOL REGISTER PATIENT         Run Routine        Modified
+ PSOLAB LIST                   Run Routine        Modified
+ PSOLIST OVERRIDES             Run Routine        Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name                 New/Modified/Deleted
+ ----------------------            --------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ Request Name: National Clozapine Coordination Project
+   Request ID: 20100703
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ This patch has the following known defects that are logged in the 
+ Rational Tools:
+  
+ 940970 - During pharmacist verification the system correctly, 
+ automatically overrode the stop date to reflect the 7-day limit for a 
+ weekly patient, but the Duration field still displays 90 days
+  
+ 969788 - Inpatient complex orders - Stop date in order details does not 
+ match stop date in profile view. Making CPRS order, able to create 
+ complex Clozapine order past patient dispense frequency
+  
+ 981761 - During backdoor pharmacy process of Outpatient 4 Day Override 
+ order, a field called LIMITED DURATION appears
+  
+  
+ Known Defects:
+ --------------
+ The following defects were identified during IOC testing and will be fixed
+ during this patch's warranty period:
+  
+ Defect 940970 - During pharmacist verification the system correctly, 
+ automatically overrode the stop date to reflect the 7-day limit for a 
+ weekly patient, but the Duration field still displays 90 days
+  
+ Defect 969788 - Inpatient complex orders - Stop date in order details does
+ not match stop date in profile view. Making CPRS order, able to create
+ complex Clozapine order past patient dispense frequency
+  
+ Defect 981761 - During backdoor pharmacy process of Outpatient 4 Day
+ Override order, a field called LIMITED DURATION appears
+  
+  
+ Test Sites:
+ -----------
+  Battle Creek VA Medical Center
+  VA Black Hills Health Care System
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+          Hines: domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ --------------------------------------------------------------------------
+ Title                                File Name                  FTP Mode
+ --------------------------------------------------------------------------
+ MENTAL HEALTH NCC PROJECT 5.01     MH_NCC_PROJ_5_01.KID (ASCII)
+  
+ MENTAL HEALTH NCC PROJECT 5.01     MH_NCC_Proj_5_01_UG_R0719.PDF (binary)
+ User Manual - Manager -
+  Outpatient Pharmacy V.7.0         pso_7_P457_man_um.PDF      (binary)
+ User Manual - Pharmacist -
+  Outpatient Pharmacy V.7.0         pso_7_p457_phar_um.PDF     (binary)
+ Deploy Install BO RB Guide         MH_NCC_Proj_5_01_IG_R0719.PDF  (binary)
+ Quick Reference Guide    
+                             MH_NCC_Proj_5_01_PSO_PSJ_QR_R0719.PDF (binary)
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Pre-Install/Install/Post-Install Instructions
+ ---------------------------------------------
+ The components sent with this patch PSO*7*457 have been included in the 
+ host file MH_NCC_PROJ_5_01.KID. Please follow the
+ (pre/install/post) installation instructions listed in the patch
+ description for patch YS*5.01*122.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;March 2019;Build 116
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSO457P
+    Before:       n/a   After:  B1583709  **457**
+Routine Name: PSOBKDED
+    Before: B97742354   After: B94241318  **11,46,91,78,99,117,133,143,
+                                           268,378,416,282,450,402,518,
+                                           525,538,457**
+Routine Name: PSOCAN3
+    Before: B73058805   After: B73878473  **15,24,27,32,36,94,88,117,131,
+                                           146,139,132,223,235,148,249,
+                                           225,324,251,375,379,372,540,
+                                           508,457**
+Routine Name: PSOCLO1
+    Before: B28077371   After:B149456436  **1,23,37,222,457**
+Routine Name: PSOCLOLS
+    Before:  B9406774   After: B14700402  **457**
+Routine Name: PSOCLOU
+    Before:       n/a   After: B77943063  **457**
+Routine Name: PSOCLUTL
+    Before: B30326336   After:B101965385  **28,56,122,222,268,457**
+Routine Name: PSODIR
+    Before: B42513700   After: B42041292  **37,46,111,117,146,164,211,
+                                           264,275,391,372,416,422,504,
+                                           457**
+Routine Name: PSODIR1
+    Before: B95790697   After:B108575993  **23,46,78,102,121,131,146,166,
+                                           184,222,268,206,266,340,391,
+                                           444,446,505,543,457**
+Routine Name: PSODIR2
+    Before: B29095518   After: B32390771  **3,9,26,46,124,146,139,152,
+                                           166,504,526,457**
+Routine Name: PSODRG
+    Before:B100166024   After: B99583322  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375,
+                                           387,398,390,427,411,458,504,
+                                           517,457**
+Routine Name: PSON52
+    Before:B103399623   After:B118986186  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379,390,391,313,408,
+                                           473,504,505,517,457**
+Routine Name: PSONEW
+    Before: B33443923   After: B38956670  **11,27,32,46,94,130,268,225,
+                                           251,379,390,417,313,411,457**
+Routine Name: PSONEW1
+    Before: B18114075   After: B21636420  **46,104,117,143,422,457**
+Routine Name: PSOORED1
+    Before: B76283215   After: B79193159  **5,23,46,78,114,117,131,146,
+                                           223,148,244,249,268,206,313,
+                                           444,422,457**
+Routine Name: PSOORED5
+    Before:B105280160   After:B114405743  **46,75,78,100,99,117,133,251,
+                                           378,372,416,313,450,486,402,
+                                           500,507,525,537,555,457**
+Routine Name: PSOORNEW
+    Before:B119220767   After:B119452733  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408,436,411,444,
+                                           486,446,505,517,508,457**
+Routine Name: PSORENW
+    Before: B51301339   After: B54413066  **11,27,30,46,71,96,100,130,
+                                           148,206,388,390,417,313,411,
+                                           504,508,550,457**
+Routine Name: PSORENW0
+    Before: B84933755   After: B98608427  **11,27,32,59,64,46,71,96,100,
+                                           130,237,206,251,375,379,372,
+                                           411,518,457**
+Routine Name: PSORENW4
+    Before: B76190857   After: B91746035  **11,23,27,32,37,64,46,75,71,
+                                           100,130,117,152,148,264,225,
+                                           301,390,313,411,444,504,508,
+                                           550,457**
+ 
+Routine list of preceding patches: 526, 538, 543, 550, 555
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 06, 2016
+Completed By:                               Date Completed: JUL 15, 2019
+Released By :                               Date Released : JUL 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

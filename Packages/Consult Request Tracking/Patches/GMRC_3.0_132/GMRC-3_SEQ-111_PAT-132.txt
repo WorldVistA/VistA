@@ -1,0 +1,216 @@
+
+=============================================================================
+Run Date: JUN 11, 2019                     Designation: GMRC*3*132
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3       SEQ #111                      Status: Released
+                  Compliance Date: JUN 12, 2019
+=============================================================================
+
+
+Subject: DECISION SUPPORT TOOL (DST) HOT FIXES  
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ****************************************************************************** 
+ This is an informational patch for the Decision Support Tool application
+ version 1.0.03.1.There is no VistA component to this new build. 
+ This patch is for informational purposes only and defines the scope of the  
+ changes that have been made including defects that have been resolved in DST. 
+ ******************************************************************************
+ 
+ Decision Support Tool version 1.0.03.1 has the following functionality changes
+ and defect fixes:
+ 
+ 1. 1014877 Modifies the business rule that triggers the Existing Clinic Patient
+ workflow from Consult Name equals Community Care-Admin VCCPE(Veterans 
+ Community Care Program Eligibility) to contains.
+    
+ 2. 1019390 It removes the facility type filters on the Provider Profile
+ Management System(PPMS) remote data call to allow all types of facilities 
+ to be displayed in DST.
+ 
+ 3. 1010786 DST will pull and display accurate Drive Time information associated
+ with the facility for the selected Clinical Service:
+     - Decision Support Tool will perform a look up within 100 or 50 miles
+       radius for Specialty Care and 40 or 20 miles radius for Primary Care 
+       to display Drive Time.
+ 
+ 4. Defect 1009783 It fixes the restoration Consult name associated with the
+ Signed Consult where DST will not show the new consult name for signed 
+ consult that has been forwarded.
+ 
+ 5. Defect 1018543 It fixes a critical defect in 1.0.04 that was causing
+ facility to be displayed in DST incorrectly, to include facilities displayed 
+ in the Average Wait Time(AWT) table given site ID and Stop code.
+ 
+ 
+  
+ Patch Components:
+ -----------------
+ N/A 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+  
+ Blood Bank Team Coordination:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+  
+ Defect Tracking System & Overview:
+  
+  
+ Test Sites:
+ -----------
+ Kansas City, MO
+ Madison, WI
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Documentation describing the new functionality and/or a host file containing 
+ a build may be included in this release.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: https://www.domain.ext/vdl/
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ 
+         
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ -------------------
+  
+  
+ Pre/Post Installation Overview:
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ N/A
+  
+  
+ Installation Instructions:
+ N/A
+  
+  
+ Post-Installation Instructions:
+ N/A
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ N/A
+ 
+ 
+ Routine Information:
+ ====================
+ 
+ 
+ No routines included.
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 07, 2019
+Completed By:                               Date Completed: JUN 11, 2019
+Released By :                               Date Released : JUN 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

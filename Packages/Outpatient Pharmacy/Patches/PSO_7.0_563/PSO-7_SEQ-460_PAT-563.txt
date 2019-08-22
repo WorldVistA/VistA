@@ -1,0 +1,145 @@
+
+=============================================================================
+Run Date: MAY 31, 2019                     Designation: PSO*7*563
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #460                      Status: Released
+                  Compliance Date: JUL 01, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*481   <<= must be installed BEFORE `PSO*7*563'
+
+Subject: NON-VA PROVIDER APRIL 2019 UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Note****
+ Import of Non-Va providers is OPTIONAL and should be coordinated between 
+ OIT and the site personnel (Pharmacy)
+  
+ This Informational patch is to notify sites that the non-VA providers 
+ file(s) from the April 2019 master spreadsheet are available for download.
+  
+  
+ Previous patch, PSO*7.0*481, provided functionality to import "new" 
+ non-VA provider information into the NEW PERSON (#200) file. A "new"
+ provider is defined as a provider whose National Provider Identifier (NPI)
+ is not on file yet at a site.
+  
+ As a safeguard, providers are not imported if a name match is found by the
+ import process for an existing entry in the NEW PERSON (#200) file.
+  
+ The providers loaded are eligible to be selected as encounter providers in
+ the Computerized Patient Record System (CPRS) application and as ordering 
+ providers in the Patient Prescription Processing [PSO LM BACKDOOR ORDERS] 
+ option.
+  
+ The import of data for non-VA providers into the NEW PERSON (#200) file 
+ is optional.  Sites that elect not to import the non-VA provider data are 
+ not required to do so, but please note that upcoming patches to the NEW 
+ PERSON (#200) file will render this process non-functional and the 
+ decision cannot be made to load the data at a later time.  All updates 
+ should be completed prior to the install of patch XU*8*688.  No release 
+ schedule is available for XU*8*688 at this time.
+  
+ Follow the 'Installation Guide - Non-VA Provider Updates (PSO*7.0*481)', 
+ available on the VDL, for import instructions to load the VISN-specific 
+ spreadsheet of provider data. (Note: Keep in mind when reviewing the 
+ guide that the folder and file names are now numbered as "563" instead of 
+ "481".)
+  
+  
+ NOTE:  Non-VA provider import is not functionally testable in a
+        mirror/test/non-production account.  The functionality can only be 
+        exercised in a production environment.  
+  
+ Tracking System Ticket & Overview:
+ ==================================
+ RTC 994621: Non-VA Provider April 2019 Import
+  
+ Problem:
+ --------
+ The VA may upload a list of non-VA medical care providers into the VistA 
+ system to maintain an accurate and updated list of non-VA providers in 
+ the Veterans Access, Choice, and Accountability Act of 2014 (VACAA) 
+ program.
+  
+ Resolution:
+ -----------                  
+ A new option was added by previous patch PSO*7.0*481 to the Maintenance 
+ (Outpatient Pharmacy) [PSO MAINTENANCE] menu, Non-VA Provider Import [PSO 
+ NON-VA PROVIDER IMPORT]. An additional new option, Non-VA Provider 
+ Inactivate [PSO NON-VA PROVIDER INACTIVATE], allows for the inactivation 
+ of providers which were previously filed by this patch if it is decided 
+ later that the providers should not remain active due to workflow or other
+ issues and a decision is made to inactive previously imported providers 
+ with this utility, users will be prompted to enter the date of previous 
+ import.
+  
+ Non-VA Provider Import [PSO NON-VA PROVIDER IMPORT] option, although on 
+ the Maintenance (Outpatient Pharmacy) [PSO MAINTENANCE] menu, will not be
+ executable by the pharmacy personnel due to directory permission issue and
+ the import must be done by the installer of the patch who has permission
+ to the directory where the Excel files will be placed for import.
+  
+ Non-VA Provider Inactivate [PSO NON-VA PROVIDER INACTIVATE] option is only
+ accessible by users with programmer level access and is not attached to a
+ menu.
+  
+ File Retrieval Instructions:
+ ============================
+ Updated CSV files containing April 2019 non-VA provider information is 
+ now available.
+  
+ Software support personnel may retrieve the Non-VA Provider data files for
+ their individual VISN and State(s) in Comma Separated Value (CSV) format
+  
+ Sites may retrieve the files directly using Secure File Transfer 
+ Protocol (SFTP) from the "ANONYMOUS.PSO_563" directory at the following OI
+ Field Office:
+  
+ Hines:                  domain.ext    
+  
+ File example: PSO_563_VISN_ST.csv
+  
+ VISN is the VISN number and ST is the state abbreviation for the files 
+ containing the Non-VA Provider data.
+  
+ NOTE: After release of PSO*7.0*481, it was found that sites might still 
+       be configured as VISN 18 even though VISN 18 is no longer a valid
+       VISN. For that reason, sites which previously reported the issue
+       also have files available in the VISN_18 folder.
+  
+  
+ File Transfer Notes
+ -------------------
+ 1. After deployment of PSO*7.0*481, it was found that the "ASCII" method 
+    of transfer should be used for VMS sites.
+  
+ 2. After several sites had difficulty importing files, it was found that 
+    the files should first be transferred from the "anonymous" directory to
+    the user's desktop. Then the files should be transferred to the site's 
+    directory used for host files.  If files were transferred directly from
+    the "anonymous" directory to the site's host file directory, the files
+    would experience corruption rendering them incapable of being imported
+    into VistA.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 03, 2019
+Completed By:                               Date Completed: MAY 31, 2019
+Released By :                               Date Released : MAY 31, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

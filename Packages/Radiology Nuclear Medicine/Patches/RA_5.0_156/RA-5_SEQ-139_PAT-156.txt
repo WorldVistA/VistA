@@ -1,0 +1,215 @@
+$TXT Created by                    at DEV.DEV.DOMAIN.EXT  (KIDS) on Friday, 03/15/19 at 10:46
+=============================================================================
+Run Date: MAY 14, 2019                     Designation: RA*5*156
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #139                      Status: Released
+                  Compliance Date: JUN 14, 2019
+=============================================================================
+
+Associated patches: (v)RA*5*124    <<= must be installed BEFORE `RA*5*156'
+                    (v)RA*5*137    <<= must be installed BEFORE `RA*5*156'
+                    (v)RA*5*143    <<= must be installed BEFORE `RA*5*156'
+                    (v)RA*5*153    <<= must be installed BEFORE `RA*5*156'
+
+Subject: CPRS/RIS: OUT OF SYNCH ORDERS & ERROR IN IA 2265 CODE
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ RA*5.0*156 was created to address the following issues:
+  
+ Issue one: INC2553950
+ ---------------------
+ RA*5.0*124 corrected an issue where the Radiology/Nuclear Medicine 
+ ('RIS') side was out of sequence with CPRS when a procedure was edited on 
+ a completed study. The issue was that the RIS showed the study and 
+ request as being complete while the CPRS order showed active. Since that 
+ time it was discovered, through a workflow anomaly, that editing two 
+ other RAD/NUC MED PATIENT [#70] fields backed the CPRS order down to 
+ active. The action of add/edit/deleting the 'Procedure Modifier' [#125],
+ would leave the RIS study and request as complete but the CPRS order as
+ active. Additional testing found that editing the 'Requesting Physician'
+ [#14] on a completed study will also change the CPRS order status to
+ active.
+  
+ Resolution (1)
+ --------------
+ RA*5.0*156 will prevent add/edit/delete actions on the 'Procedure
+ Modifier' [#125] field when case editing a completed study. This patch
+ will prevent the editing the 'Requesting Physician' [#14] field when case
+ editing a completed study.
+  
+  
+ Issue two: INC4590879
+ ---------------------
+ The error is 'Undefined error <UNDEFINED>SS+3^RAO7PC1 *RADTI' and occurs 
+ calling the EN3^RAO7PC1. This entry point is covered by DBIA: 2265. The 
+ purpose of the API is to return narrative text for one or more exams.
+  
+ Resolution (2)
+ --------------
+ The software prior to RA*5.0*156 references two variables to indicate the 
+ inverse date/time of an exam: RAINVXDT & RADTI. The issue occurs when the 
+ software defines RAINVXDT but later in the software returns to RADTI. 
+ Since RADTI is not defined the result is an error. The fix is to be 
+ consistent and reference one variable: RAINVXDT.
+  
+ Issue three: INC4101382
+ -----------------------
+ Patch RA*5.0*137 added the ability to broadcast ADT HL7 messages with the
+ 'Send ADT HL7 message to PACS' [RA ADT] option. The routine RAHLRS is used
+ to re-broadcast VistA RIS HL7 messages. RAHLRS checks for the record with
+ an IEN of one in the IMAGING SITE PARAMETERS [#2006.1] file. The field IHE
+ PACS HL7 INTERFACE ACTIVE [#3.01] indicates if ADT HL7 messages should be
+ broadcast (yes/no). The software assumes that a record with an IEN of one
+ will always exist. That IEN is not guaranteed to exist. The failure
+ occurred at the North Florida HCS.
+  
+ Resolution (3)
+ --------------
+ The check for IEN one has been replaced with a check for the institution 
+ associated with the hospital production system. If the institution of the 
+ hospital production system is not defined as a record in the IMAGING SITE 
+ PARAMETERS file the option gracefully exits with a warning message to the
+ user.
+  
+  
+ SERVICE NOW TICKETS
+ -------------------
+ INC2553950
+ INC4590879
+ INC4101382
+  
+  
+ TEST SITES
+ ----------
+ N. Florida/Gainesville VAMC
+ Boston HCS VAMC 
+  
+ Documentation Retrieval
+ -----------------------
+ There are no documentation changes associated with this patch:
+  
+  
+  
+    ===================  Installation Instructions ====================
+   If installed during the normal workday, it is recommended that the
+   Radiology users be off the system. Other VISTA users will not be
+   affected.
+  
+   Install Time - less than two minutes
+  
+   1. Load Transport Global:
+      ----------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+   2. Access the KIDS main menu:
+      --------------------------
+    Start with the Kernel Installation and Distribution System Menu [XPD
+    MAIN]:
+  
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+  
+            Load a Distribution
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+            Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3. Select Installation Option:
+      ---------------------------
+       NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter RA*5.0*156):
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+   4. Select Installation Option: Install Package(s):
+      -----------------------------------------------
+       **This is the step to start the installation of this KIDS patch:
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  
+    c. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       YES//', answer NO.
+  
+    d. When prompted 'Want to DISABLE Scheduled Options, Menu
+       Options, and Protocols? YES//', answer YES.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of order':',
+       enter the following options:
+        'Add Exams to Last Visit' [RA ADDEXAM]
+        'Register Patient for Exams' [RA REG]
+        'Case No. Exam Edit' [RA EDITCN]
+        'Edit Exam by Patient' [RA EDITPT]
+        'Send ADT HL7 message to PACS' [RA ADT] 
+  
+ Backout/Roll-back strategy
+ ==========================
+ During installation, if the option to back up routines was run as
+ directed, "Backup a Transport Global", then routines will have the ability
+ to be restored from the "backup" MailMan message that was generated.
+  
+ Back-out will be done only with the concurrence and participation of the
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel. A
+ national help desk ticket should be logged before attempting any backout
+ procedure.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAHLRS
+    Before: B27750372   After: B29109552  **25,54,60,71,82,95,137,156**
+Routine Name: RAO7PC1
+    Before: B47162808   After: B34284367  **1,16,18,26,36,45,75,143,156**
+Routine Name: RAPXRM
+    Before: B18223107   After: B18914362  **33,56,153,156**
+Routine Name: RAUTL8
+    Before: B71419275   After: B72237581  **45,72,99,90,137,156**
+ 
+Routine list of preceding patches: 137, 143, 153
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 26, 2019
+Completed By:                               Date Completed: MAY 14, 2019
+Released By :                               Date Released : MAY 14, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

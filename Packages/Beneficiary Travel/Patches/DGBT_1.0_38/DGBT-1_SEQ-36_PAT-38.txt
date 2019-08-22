@@ -1,0 +1,187 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/11/19 at 16:08
+=============================================================================
+Run Date: JUL 08, 2019                     Designation: DGBT*1*38
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #36                      Status: Released
+                  Compliance Date: AUG 08, 2019
+=============================================================================
+
+Associated patches: (v)DGBT*1*30   <<= must be installed BEFORE `DGBT*1*38'
+
+Subject: DGBTA UNDEFINED ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+  
+  
+  
+ This patch will address the following issue:
+  
+ 1. An undefined error is occurring in the Beneficiary Travel (BT)
+ application.
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+ N/A
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+ N/A
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ Remote Procedures Associated:
+ N/A
+  
+ Parameter Definitions Associated:
+ N/A
+  
+  
+ Additional Information:
+ Blood Bank Team Coordination:
+ ----------------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  1. INC4737093 - Error Trap: Bene Travel Error <UNDEFINED>MANRQ+11^DGBTRDVW 
+                  *DGBTA error in many R4 sites
+    
+     Problem:
+     --------
+     Multiple sites are seeing an <UNDEFINED>MANRQ+11^DGBTRDVW *DGBTA error
+     in their error trap. This error occurs when entering a Claim for 
+     patients that meet certain criteria and have a manual deductible 
+     waiver on file.
+    
+     Resolution:
+     -----------
+     The Routine DGBTRDVW has been  modified to use the variable DGBTDTI
+     for Claim Date/Time rather than undefined variable DGBTA.
+  
+ Test Sites:
+ ----------
+ VA Healthcare Network Upstate New York
+ VA Hudson Valley Health Care System, NY
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be run with users on the system, but it is recommended 
+ that it be queued to run after normal business hours.
+  
+ Installation will take less than 2 minutes.
+  
+ Suggested time to install: Non-peak hours
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+  1. Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.  
+     
+  2. From the Kernel Installation & Distribution System menu, select 
+     the Installation menu.  
+     
+  3. From this menu, you may select to use the following options: 
+     (when prompted for INSTALL NAME, enter DGBT*1.0*38)
+     
+        a.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        b.  Print Transport Global - This option will allow you to view
+            the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+     
+  4. Use the Install Package(s) option and select the package DGBT*1.0*38. 
+    
+  5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+     NO//", respond NO.  
+     
+  6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? YES//", respond YES. When prompted to select the
+     options you would like to place out of order, enter the following:
+  
+        Claim Enter/Edit                [DGBT BENE TRAVEL SCREEN]
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Beneficiary Travel;**[Patch List]**;September 25, 2001;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBTRDVW
+    Before:  B9874213   After: B10917686  **20,25,30,38**
+ 
+Routine list of preceding patches: 30
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 25, 2019
+Completed By:                               Date Completed: JUL 08, 2019
+Released By :                               Date Released : JUL 08, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

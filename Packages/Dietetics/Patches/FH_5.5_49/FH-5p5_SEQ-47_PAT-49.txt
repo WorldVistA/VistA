@@ -1,0 +1,244 @@
+$TXT Created by                      CLN2G2.AAC.DOMAIN.EXT  (KIDS) on Monday, 02/25/19 at 17:02
+=============================================================================
+Run Date: JUN 10, 2019                     Designation: FH*5.5*49
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #47                    Status: Released
+                  Compliance Date: JUL 11, 2019
+=============================================================================
+
+Associated patches: (v)FH*5.5*8    <<= must be installed BEFORE `FH*5.5*49'
+
+Subject: MISSING IA/INCORRECT API CALL/FOOD ALLERGY DISPLAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address 2 issues:
+      
+ INC3751127
+ The IA for Adverse Reaction API GMRADPT is missing from routine FHCLN. 
+ Routine FHCLN is using an obsolete API call for Adverse Reaction API
+ GMRADPT.
+      
+ INC3519667
+ Allergen classified as drug/food and categorized as pharmacologic does 
+ not cross to nutrition package.
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ No NSR
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ HITPS-6503
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1.INC3751127 Issue with Routine FHCLN
+ 2.INC3519667 Allergen classified as drug/food and categorized as
+   pharmacologic does not cross to nutrition package
+  
+ Problem 1:
+ -------
+ The IA for Adverse Reaction API GMRADPT is missing from routine FHCLN. 
+ Routine FHCLN is using an obsolete API call for Adverse Reaction API
+ GMRADPT.
+  
+ Resolution 1:
+ ----------
+ Modify routine FHCLN to include the missing IA and update the API call.
+      
+ Problem 2:
+ -------
+ An Allergen classified as drug/food and categorized as pharmacologic 
+ does not cross to nutrition package.
+      
+ Resolution 2:
+ ----------
+ A modification has been made to include all food allergies, 
+ regardless of mechanism categorization. (ALLERGY, PHARMACOLOGIC, OTHER)
+      
+ Test Sites:
+ ----------
+ Upstate New York - Western NY HCS (Buffalo, Batavia, Buffalo, 
+ Canandaigua, Syracuse, Bath, Albany)
+ Mountain Home - VA Medical Center
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no options to disable.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch 
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select the 
+     Installation Menu.
+  
+ 4.  From the Installation Menu, select the Backup a Transport Global and 
+     when prompted for the INSTALL NAME enter the patch FH*5.5*49.
+     This option will create a backup message of the routine(s) exported 
+     with this patch. This will be routine FHCLN. It will not backup any
+     other changes such as DDs or templates. If for any reason the patch is
+     to be rolled back, this backup will be required to restore the patch's
+     routine(s) to the pre-installation version(s).
+  
+ 5.  From the Installation Menu you may elect to use the following 
+     options. When prompted for the INSTALL NAME enter the patch FH*5.5*49:
+  
+       a. Verify Checksums in Transport Global - This option will allow 
+          you to ensure the integrity of the routines that are in the
+          transport global.
+     
+       b. Print Transport Global - This option will allow you to print 
+          only a summary of the patch, to print a summary of the patch and
+          the routines in the transport global, or to print only the
+          routines in the transport global.
+  
+       c. Compare Transport Global to Current System - This option will 
+          (allow you to view all changes that will be made when this patch 
+          is installed. It compares all components of this patch's
+          routines, DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 7. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of  
+    Install? NO//' respond NO.
+  
+ 8. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+    respond NO.
+  
+ 9. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//' respond NO.
+  
+ 10. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Backout/Rollback Strategy:
+ --------------------------
+ No data dictionary charges are made by this patch installation and, 
+ therefore, no data dictionary rollback strategy is required.
+  
+ No data was modified by this patch installation and, therefore, no data
+ rollback strategy is required.
+  
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+  
+ To restore routine(s) backup from MailMan:
+ ------------------------------------------ 
+ 1. Enter the MailMan Menu [XMUSER]
+  
+ 2. At the Select MailMan Menu Option prompt select the Read/Manage 
+    Messages Option (RML).
+  
+ 3. At the Read mail in basket prompt: select the basket the routine backup
+    Message is stored in.
+  
+ 4. At the Enter message number or command: prompt select the message 
+    which has the routines.
+  
+ 5. At the Type <Enter> to continue or '^' to exit: prompt enter '^' to 
+    skip to the message action prompt.
+  
+ 6. At the Enter message action (in SELECTED basket): prompt type in X for
+    Xtract PackMan.
+  
+ 7. At the Select PackMan function: prompt type in 6 for INSTALL/CHECK
+    MASSAGE.
+  
+ 8. The user will be presented with the following warning and a prompt:
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// 
+  
+ At this prompt type in Y for YES to install the backup copies.
+  
+ 9. The user will be presented with the following message and a prompt:
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains. Those parts that
+ are not routines should be backed up separately if they need to be
+ preserved.
+  
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// 
+  
+ Answering yes to this prompt is optional. The site can reinstall the 
+ patch.
+  
+ If the user answers YES to this prompt:
+     9.1 At the Subject: prompt type in a descriptive subject.
+     9.2 At the Send mail to: prompt select the user to send this message.
+     9.3 At the Select basket to send to: prompt select the basket to
+         send this message. It will default to the IN basket.
+     9.4 At the And Send to: prompt select any additional user to send this
+         Message to or hit enter to continue.
+  
+ A message similar to the following will be presented to the user. 
+ Building PackMan backup message with subject backup
+  
+ PackMan backup message [999999999] sent.
+ Line 2    Message #99999999  Unloading Routine   FHCLN (PACKMAN_BACKUP)
+  
+ If the user answers NO to this prompt, the user will be presented with a
+ message similar to this:
+  
+ Line 2    Message #99999999  Unloading Routine   FHCLNL (PACKMAN_BACKUP)
+  
+ 10. At the Enter message action (in SELECTED basket): prompt accept the
+     default of Ignore.
+  
+ 11. To verify the roll-back completed successfully, ensure the routine 
+     FHCLN checksum Matches the pre-patch checksum from the patch
+     description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHCLN
+    Before:  B1290608   After:  B1937926  **8,49**
+ 
+Routine list of preceding patches: 8
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 07, 2019
+Completed By:                               Date Completed: JUN 06, 2019
+Released By :                               Date Released : JUN 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,306 @@
+
+=============================================================================
+Run Date: MAY 07, 2019                     Designation: GMRC*3*118
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3       SEQ #104                      Status: Released
+                  Compliance Date: MAY 17, 2019
+=============================================================================
+
+
+Subject: CONSULT TOOLBOX INFORMATIONAL PATCH GUI ENHANCEMENTS
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ This is an informational patch explaining changes in Consult Toolbox.
+ NOTE: This patch is loaded on individual PC workstations via SCCM 
+ software update push from local/regional OIT. 
+ There is nothing that local sites can or need to do besides communicate 
+ changes to the clinical users. No code changes were made to the Consult 
+ application to accommodate these enhancements. 
+ **************************************************************************
+  
+ Version 1.9.0004 modifies the Consult Toolbox application as described 
+ below: 
+  
+  1. Community Care Functions 
+     - Removed Care Coordination tab from Community Care Functions
+  
+  2. Community Care Functions, MSA Elig. Verification tab
+     - Removed "Administrative eligibility verified" field 
+     - Removed "Basic eligibility verified" field 
+     - Renamed "Specific Choice Eligibility verified" to "Specific 
+       Eligibility Verified"
+  
+  3. Community Care Functions, MSA Elig. Verification tab, Administrative 
+     Screening 
+     - Added "Complementary and integrated medicine" as a selection in the 
+       "Does the consult specify any of the following basic services?"
+       dropdown
+     - Renamed "Routine Follow-up Therapeutics (Pre-scheduled services 
+       Dialysis, OT, PT, RT)"to "Routine therapeutic services (Dialysis,
+       OT, PT, RT)" in the "Does the consult specify any of the following
+       basic services?" dropdown 
+  
+  4. Community Care Functions, Consult Review tab
+     - The following selectable fields no longer display in the "Request 
+       Approved (Select CC Program)" dropdown: 
+       Choice Program Agreements Mileage, 
+       Choice Provider Agreement, 
+       Choice Provider Agreement UEXB Environmental factors, 
+       Choice Provider Agreement UEXB Geographical Challenges, 
+       Choice Provider Agreement UEXB Medical Condition, 
+       Choice Provider Agreement UEXB Nature or Simplicity of Services,
+       Choice Provider Agreement Wait Time, 
+       Indiv. Authorization (Trad NVA)
+       Veteran Choice Program Mileage, 
+       Veteran Choice Program UEXB Environmental factors, 
+       Veteran Choice Program UEXB Geographical Challenges, 
+       Veteran Choice Program UEXB Medical Condition, 
+       Veteran Choice Program UEXB Nature or simplicity of services, 
+       Veteran Choice Program Wait Time
+     - The following selectable fields were added to the "Request Approved 
+       (Select CC Program)" dropdown: 
+       Transfer for Nursing home care, Adult Day health care - 1720
+       Drug or Alcohol Treatment and rehabilitative services - 1720A
+       Respite Care - 1720B
+       Non-institutional Alternative to nursing Home Care - 1720C
+       Benefit Travel - 1720G  
+     - The following selectable fields were renamed in the "Request 
+       Approved (Select CC Program)" dropdown:
+       Renamed "Tribal" to "Veterans Care Agreement (VCA)"
+       Renamed "Choice TPA (TwiWest)" to "TPA (TriWest)"
+     - The selection "Incomplete Information" was added to the "Opt" 
+       dropdown which is associated with the "Request Disapproved
+       (reason):" field 
+     - The only selections available in the "Guideline Review Method:"
+       drop down menu are:
+       MCG Guidelines
+       InterQual Guidelines
+       Chief of Staff approved Protocol
+       There is no free text Comment/Other Method box next to the Guideline
+       Review Method
+     - The following selectable field was added to the "Scheduling to be 
+       performed by:" dropdown:
+       Community Care Contractor
+     - The following selectable field was removed from the "Scheduling to
+       be performed by:" dropdown:
+       HealthNet
+  
+  5. Community Care Functions, Authorization tab
+     - Removed the following fields and associated functionality: 
+       Authorization instructions to be included with Referral
+       Category of Care
+       Other
+       SubSpecialty
+       Procedure
+       Type of Service
+       Opt
+       Timeframe for episode of care not to exceed (including months) 
+       Authorize total of (including visit count)
+       Care must be completed by
+       Include Standard Authorization Language 
+       Add the following to authorization 
+     - Added ability to select SEOC without "Request Approved (Select CC 
+       Program):" checkbox checked
+  
+  6. Community Care Functions, Authorization tab, Display SEOC
+     - The field "Max Visits:" will no longer display and Max Visit 
+       related comments will no longer appear on the consult comments
+  
+  7. Community Care Functions, DoD tab
+     - Removed "Disposition" field 
+     - Removed "Exceptions List Determination" including "DoD Consult 
+       present" and "DOS Outside of Approved EOC timeframe" checkbox areas
+     - New checkbox added "DoD facility contacted to request care" (moved 
+       from the Appt Tracking tab)
+  
+  8. Community Care Functions, MSA Pt Contacts tab
+     - Renamed field "Veteran's Choice Participation Preference" to 
+       "Veteran's Participation Preference"
+     - Under Veteran Contacted, removed "Veteran agrees to Community Care 
+       referral" field
+     - Ability to connect to the PPMS provide locator site using the 
+       "Facility & Services" button
+  
+  9. Community Care Functions, Appt Tracking tab
+     - Removed the checkbox, "Community Care Provider has accepted
+       referral"
+     - Removed the checkbox, "Records faxed/sent to community care 
+       provider" 
+     - Removed the checkbox, "DoD facility contacted to request care" (it 
+       was moved to DoD tab)
+     - Removed "Lookup a Provider" button
+     - Removed "Records Received:" and associated dropdown
+     - Under the "Returned to Community Care Provider:" section, added 
+       branch "CCN Return Reasons (select specific reason)" 
+  
+ 10. Community Care Functions, SAR/RFS tab
+     - All instances of SAR will now display as SAR/RFS.  Any instance of 
+       "Secondary Authorization Request (SAR)" will now display as 
+       "Secondary Authorization Request (SAR)/Request for Service (RFS)"
+     - Changed the dropdown selection "within 72 hours" to "w/in 48 hrs" 
+       for "SAR Urgency" field
+     - Added new field "SAR/RFS was entered into VistA Imaging" with a 
+       Yes/No dropdown menu
+     - Removed "Same Provider authorization and/or Additional Services or 
+       Visits Requested" and the three associated checkbox selections 
+     - Checkbox for "Service Available at VA" will now display under the 
+       Request is Clinically Appropriate area instead of under the Request
+       is not Clinically Appropriate area
+     - Under Actions Taken, the Approved radio button will now display as 
+       "Request is Clinically Appropriate" and the Disapproved radio button
+       will now display as "Request is not Clinically Appropriate"
+     - Removed "Include Standard SAR Authorization Language" field 
+     - Added checkbox "Missing Documentation" for "Request is not 
+       Clinically Appropriate" radio button
+  
+ 11. Community Care Functions, Consult Completion tab
+     - Renamed fourth radio button, "Records rec'd, forwarded to medical 
+       records" to "Records Received"
+     - Renamed checkbox field 'Refer to clinical reviewer for 
+       administrative completion' to "Refer to Clinical Care Coordinator" 
+     - Moved the field "Community Care appointment occurred (waiting for 
+       records)" with the Opt dropdown menu from the "Appt Tracking" tab 
+       to the Consult Completion tab
+  
+ 12. Administratively Complete Comments, Administratively Close window
+     - Both instances of the terminology "three attempts" on the 
+       Administratively Close area will now display as "after at least one 
+       attempt"
+  
+ 13. Forward Consult to Community Care, Forward to Community Care Options 
+     tab
+     - Renamed "Appointment is greater than 30 days from PID" to 
+       "Appointment greater than wait time standards"
+     - Removed radio button titled "No appointment within 90 days (EWL)"
+   
+ 14. Discontinue, Discontinuation Reasons, General Discontinuation Comments
+     tab
+     - Added radio button "Entered/Requested in error". Toolbox inserts 
+       the following text into the CPRS comment field: 
+       "ERR-Entered/Requested in error."
+  
+ 15. Integration with the Community Care Decision Support Tool (DST). The 
+     Decision Support Tool (DST) is a web application that is invoked 
+     during the consult ordering workflow in Computerize Patient Record 
+     System (CPRS) to inform the Veteran and their referring clinician 
+     about the availability of services in the Department of Veterans 
+     Affairs (VA) and eligibility for receiving care in the community.
+  
+ 16. Added the ability for the Business to maintain dropdown values (edit, 
+     add, and delete items)
+  
+ 17. Added ability for CAN score to autopopulate when the CAN Score API is 
+     nationally available
+  
+ This software was created by the Atlanta VA Medical Center in response to 
+ a need to manage the process of consult management. During the life of a 
+ consult, there are prescribed steps of actions to be taken, and there is 
+ a need to be able track these steps at an individual patient level. 
+ Additionally, there is a need to be able to understand the overall status 
+ of consult management at a macro level, and identify specific services 
+ needing attention or resources. Without opening and reading a patient 
+ medical record, it is difficult to identify which patients have had which 
+ scheduling steps completed.
+  
+ This software does several things. First, it makes it very easy for staff 
+ to document actions completed quickly and consistently. Second, it uses 
+ consistent verbiage to document these steps. Third, it eliminates the 
+ need to take a second action or make a separate entry to track scheduling 
+ steps. Fourth, this consistent verbiage allows software analysis of 
+ records without needing to have software changes to VistA or CPRS.
+  
+ A separate process using corporate data warehouse queries and reports 
+ allows creation of views showing such things as patients who have not had 
+ first call, second call, scheduling letter sent or how much time has 
+ passed between these events.
+  
+ Together, these allow tracking and managing consults without the need to 
+ keep a separate list or other workflow to know which consults need 
+ attention.
+  
+  
+ Additional Information:
+ ----------------------- 
+ This software watches keyboard and mouse activity, and comes to life 
+ when certain conditions occur.
+  
+ 1. It only activates when the currently active windows title 
+    "Receive Consult", "Add Comment to Consult" or "Discontinue Consult." 
+    Otherwise nothing happens 
+  
+ 2. When the user initiates a trigger event when either of 
+    these windows have the focus, then depending on the open window a menu 
+    appears for the user to select the appropriate action, then the
+    software inserts the appropriate text into the comment box.
+  
+ 3.  The defined trigger is a right mouse click in the supported CPRS 
+ consult actions.
+  
+ New Service Requests (NSRs):
+ --------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------
+ N/A
+  
+ Test Sites:
+ --------------------
+ Anchorage, AK
+ Salisbury, NC
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software is being released via SCCM package to ESE.  User Guide will be 
+ placed on the following anonymous directories:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                          File Name                     FTP Mode   
+ -----------------------------------------------------------------------
+ Consult Toolbox User Guide     consult_toolbox_1_0_um.pdf    Binary
+ Consult Toolbox User Guide     consult_toolbox_1_0_um.docx   Binary 
+ Deployment, Installation, 
+ Back-Out, and Rollback Guide   ctb_dibr.pdf                  Binary
+ Deployment, Installation, 
+ Back-Out, and Rollback Guide   ctb_dib.docx                  Binary
+  
+ Patch Installation
+ --------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ Software is being released via SCCM package to ESE. 
+ This software installs on the PC desktop at the windows level and will 
+ reside in the system tray.
+ Installation of this Windows feature will occur via a SCCM software push 
+ to PCs via a Local/ Regional process. 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 26, 2018
+Completed By:                               Date Completed: MAY 06, 2019
+Released By :                               Date Released : MAY 07, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

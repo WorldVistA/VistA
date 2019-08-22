@@ -1,0 +1,991 @@
+Released PSO*7*559 SEQ #464
+Extracted from mail message
+**KIDS**:PSO*7.0*559^
+
+**INSTALL NAME**
+PSO*7.0*559
+"BLD",11142,0)
+PSO*7.0*559^OUTPATIENT PHARMACY^0^3190426^y
+"BLD",11142,1,0)
+^^45^45^3190426^
+"BLD",11142,1,1,0)
+This patch will address the following two issues:
+"BLD",11142,1,2,0)
+ 
+"BLD",11142,1,3,0)
+1. $ZE= <UNDEFINED>PROCESS+24^PSORWRAP *MW
+"BLD",11142,1,4,0)
+   
+"BLD",11142,1,5,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",11142,1,6,0)
+--------------------------------------------
+"BLD",11142,1,7,0)
+1. INC5310207 - $ZE= <UNDEFINED>PROCESS+24^PSORWRAP *MW
+"BLD",11142,1,8,0)
+ 
+"BLD",11142,1,9,0)
+Problem: 
+"BLD",11142,1,10,0)
+--------
+"BLD",11142,1,11,0)
+Ann Arbor VAMC reported about 5 or 6 entries in their error trap related to
+"BLD",11142,1,12,0)
+OneVA Pharmacy functionality. After some research it was determined that the
+"BLD",11142,1,13,0)
+error was happening because OneVA Pharmacy HL7 messages were being sent to
+"BLD",11142,1,14,0)
+the Ann Arbor VAMC erroneously. The prescription number in the HL7 message
+"BLD",11142,1,15,0)
+request did not exist in the Ann Arbor site as it was probably supposed to
+"BLD",11142,1,16,0)
+be sent to a different site. That was what caused the hard error reported.
+"BLD",11142,1,17,0)
+At this point it is not clear why HL7 messages have been routed the wrong
+"BLD",11142,1,18,0)
+site.
+"BLD",11142,1,19,0)
+  
+"BLD",11142,1,20,0)
+Resolution:
+"BLD",11142,1,21,0)
+-----------
+"BLD",11142,1,22,0)
+The processing of incoming HL7 messages for OneVA Pharmacy fill requests
+"BLD",11142,1,23,0)
+is being changed to check whether the prescription in the request actually
+"BLD",11142,1,24,0)
+belongs to the site it arrived. If the prescription does not exist at the
+"BLD",11142,1,25,0)
+site the message below will be displayed to the dispensing site user that
+"BLD",11142,1,26,0)
+is requesting the OneVA fill:
+"BLD",11142,1,27,0)
+ 
+"BLD",11142,1,28,0)
+  Processing refill request. Please be patient as it may take a moment
+"BLD",11142,1,29,0)
+  for the host site to respond and generate your label data...
+"BLD",11142,1,30,0)
+ 
+"BLD",11142,1,31,0)
+  Unable to complete transaction. 
+"BLD",11142,1,32,0)
+ 
+"BLD",11142,1,33,0)
+  The Rx #999999 does not belong to this facility (REMOTE SITE NAME). Please,
+"BLD",11142,1,34,0)
+  try to place the fill request again. It may take up to 4 attempts to get a
+"BLD",11142,1,35,0)
+  successful response. If the issue continues, please contact IT Support for
+"BLD",11142,1,36,0)
+  assistance.
+"BLD",11142,1,37,0)
+  
+"BLD",11142,1,38,0)
+  Press RETURN to continue: 
+"BLD",11142,1,39,0)
+     
+"BLD",11142,1,40,0)
+Technical Resolution:
+"BLD",11142,1,41,0)
+---------------------
+"BLD",11142,1,42,0)
+Changed the routine PSORWRAP at REMOTE+21 to verify that the prescription 
+"BLD",11142,1,43,0)
+number in the incoming OneVA HL7 message actually belongs to the site
+"BLD",11142,1,44,0)
+receiving the message. If it does not, stop processing and respond back to
+"BLD",11142,1,45,0)
+the sending site with the message above. 
+"BLD",11142,4,0)
+^9.64PA^^
+"BLD",11142,6.3)
+2
+"BLD",11142,"ABPKG")
+n
+"BLD",11142,"KRN",0)
+^9.67PA^1.5^24
+"BLD",11142,"KRN",.4,0)
+.4
+"BLD",11142,"KRN",.401,0)
+.401
+"BLD",11142,"KRN",.402,0)
+.402
+"BLD",11142,"KRN",.403,0)
+.403
+"BLD",11142,"KRN",.5,0)
+.5
+"BLD",11142,"KRN",.84,0)
+.84
+"BLD",11142,"KRN",1.5,0)
+1.5
+"BLD",11142,"KRN",1.6,0)
+1.6
+"BLD",11142,"KRN",1.61,0)
+1.61
+"BLD",11142,"KRN",1.62,0)
+1.62
+"BLD",11142,"KRN",3.6,0)
+3.6
+"BLD",11142,"KRN",3.8,0)
+3.8
+"BLD",11142,"KRN",9.2,0)
+9.2
+"BLD",11142,"KRN",9.8,0)
+9.8
+"BLD",11142,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",11142,"KRN",9.8,"NM",1,0)
+PSORWRAP^^0^B115691184
+"BLD",11142,"KRN",9.8,"NM","B","PSORWRAP",1)
+
+"BLD",11142,"KRN",19,0)
+19
+"BLD",11142,"KRN",19.1,0)
+19.1
+"BLD",11142,"KRN",101,0)
+101
+"BLD",11142,"KRN",409.61,0)
+409.61
+"BLD",11142,"KRN",771,0)
+771
+"BLD",11142,"KRN",779.2,0)
+779.2
+"BLD",11142,"KRN",870,0)
+870
+"BLD",11142,"KRN",8989.51,0)
+8989.51
+"BLD",11142,"KRN",8989.52,0)
+8989.52
+"BLD",11142,"KRN",8994,0)
+8994
+"BLD",11142,"KRN","B",.4,.4)
+
+"BLD",11142,"KRN","B",.401,.401)
+
+"BLD",11142,"KRN","B",.402,.402)
+
+"BLD",11142,"KRN","B",.403,.403)
+
+"BLD",11142,"KRN","B",.5,.5)
+
+"BLD",11142,"KRN","B",.84,.84)
+
+"BLD",11142,"KRN","B",1.5,1.5)
+
+"BLD",11142,"KRN","B",1.6,1.6)
+
+"BLD",11142,"KRN","B",1.61,1.61)
+
+"BLD",11142,"KRN","B",1.62,1.62)
+
+"BLD",11142,"KRN","B",3.6,3.6)
+
+"BLD",11142,"KRN","B",3.8,3.8)
+
+"BLD",11142,"KRN","B",9.2,9.2)
+
+"BLD",11142,"KRN","B",9.8,9.8)
+
+"BLD",11142,"KRN","B",19,19)
+
+"BLD",11142,"KRN","B",19.1,19.1)
+
+"BLD",11142,"KRN","B",101,101)
+
+"BLD",11142,"KRN","B",409.61,409.61)
+
+"BLD",11142,"KRN","B",771,771)
+
+"BLD",11142,"KRN","B",779.2,779.2)
+
+"BLD",11142,"KRN","B",870,870)
+
+"BLD",11142,"KRN","B",8989.51,8989.51)
+
+"BLD",11142,"KRN","B",8989.52,8989.52)
+
+"BLD",11142,"KRN","B",8994,8994)
+
+"BLD",11142,"PRET")
+
+"BLD",11142,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",11142,"QUES",0)
+^9.62^^
+"BLD",11142,"REQB",0)
+^9.611^1^1
+"BLD",11142,"REQB",1,0)
+PSO*7.0*541^2
+"BLD",11142,"REQB","B","PSO*7.0*541",1)
+
+"MBREQ")
+0
+"PKG",170,-1)
+1^1
+"PKG",170,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",170,22,0)
+^9.49I^1^1
+"PKG",170,22,1,0)
+7.0^2971216^2981113^1
+"PKG",170,22,1,"PAH",1,0)
+559^3190426
+"PKG",170,22,1,"PAH",1,1,0)
+^^45^45^3190426
+"PKG",170,22,1,"PAH",1,1,1,0)
+This patch will address the following two issues:
+"PKG",170,22,1,"PAH",1,1,2,0)
+ 
+"PKG",170,22,1,"PAH",1,1,3,0)
+1. $ZE= <UNDEFINED>PROCESS+24^PSORWRAP *MW
+"PKG",170,22,1,"PAH",1,1,4,0)
+   
+"PKG",170,22,1,"PAH",1,1,5,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",170,22,1,"PAH",1,1,6,0)
+--------------------------------------------
+"PKG",170,22,1,"PAH",1,1,7,0)
+1. INC5310207 - $ZE= <UNDEFINED>PROCESS+24^PSORWRAP *MW
+"PKG",170,22,1,"PAH",1,1,8,0)
+ 
+"PKG",170,22,1,"PAH",1,1,9,0)
+Problem: 
+"PKG",170,22,1,"PAH",1,1,10,0)
+--------
+"PKG",170,22,1,"PAH",1,1,11,0)
+Ann Arbor VAMC reported about 5 or 6 entries in their error trap related to
+"PKG",170,22,1,"PAH",1,1,12,0)
+OneVA Pharmacy functionality. After some research it was determined that the
+"PKG",170,22,1,"PAH",1,1,13,0)
+error was happening because OneVA Pharmacy HL7 messages were being sent to
+"PKG",170,22,1,"PAH",1,1,14,0)
+the Ann Arbor VAMC erroneously. The prescription number in the HL7 message
+"PKG",170,22,1,"PAH",1,1,15,0)
+request did not exist in the Ann Arbor site as it was probably supposed to
+"PKG",170,22,1,"PAH",1,1,16,0)
+be sent to a different site. That was what caused the hard error reported.
+"PKG",170,22,1,"PAH",1,1,17,0)
+At this point it is not clear why HL7 messages have been routed the wrong
+"PKG",170,22,1,"PAH",1,1,18,0)
+site.
+"PKG",170,22,1,"PAH",1,1,19,0)
+  
+"PKG",170,22,1,"PAH",1,1,20,0)
+Resolution:
+"PKG",170,22,1,"PAH",1,1,21,0)
+-----------
+"PKG",170,22,1,"PAH",1,1,22,0)
+The processing of incoming HL7 messages for OneVA Pharmacy fill requests
+"PKG",170,22,1,"PAH",1,1,23,0)
+is being changed to check whether the prescription in the request actually
+"PKG",170,22,1,"PAH",1,1,24,0)
+belongs to the site it arrived. If the prescription does not exist at the
+"PKG",170,22,1,"PAH",1,1,25,0)
+site the message below will be displayed to the dispensing site user that
+"PKG",170,22,1,"PAH",1,1,26,0)
+is requesting the OneVA fill:
+"PKG",170,22,1,"PAH",1,1,27,0)
+ 
+"PKG",170,22,1,"PAH",1,1,28,0)
+  Processing refill request. Please be patient as it may take a moment
+"PKG",170,22,1,"PAH",1,1,29,0)
+  for the host site to respond and generate your label data...
+"PKG",170,22,1,"PAH",1,1,30,0)
+ 
+"PKG",170,22,1,"PAH",1,1,31,0)
+  Unable to complete transaction. 
+"PKG",170,22,1,"PAH",1,1,32,0)
+ 
+"PKG",170,22,1,"PAH",1,1,33,0)
+  The Rx #999999 does not belong to this facility (REMOTE SITE NAME). Please,
+"PKG",170,22,1,"PAH",1,1,34,0)
+  try to place the fill request again. It may take up to 4 attempts to get a
+"PKG",170,22,1,"PAH",1,1,35,0)
+  successful response. If the issue continues, please contact IT Support for
+"PKG",170,22,1,"PAH",1,1,36,0)
+  assistance.
+"PKG",170,22,1,"PAH",1,1,37,0)
+  
+"PKG",170,22,1,"PAH",1,1,38,0)
+  Press RETURN to continue: 
+"PKG",170,22,1,"PAH",1,1,39,0)
+     
+"PKG",170,22,1,"PAH",1,1,40,0)
+Technical Resolution:
+"PKG",170,22,1,"PAH",1,1,41,0)
+---------------------
+"PKG",170,22,1,"PAH",1,1,42,0)
+Changed the routine PSORWRAP at REMOTE+21 to verify that the prescription 
+"PKG",170,22,1,"PAH",1,1,43,0)
+number in the incoming OneVA HL7 message actually belongs to the site
+"PKG",170,22,1,"PAH",1,1,44,0)
+receiving the message. If it does not, stop processing and respond back to
+"PKG",170,22,1,"PAH",1,1,45,0)
+the sending site with the message above. 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSORWRAP")
+0^1^B115691184^B106763543
+"RTN","PSORWRAP",1,0)
+PSORWRAP ;AITC/BWF - Remote RX API wrapper ;12/12/16 3:21pm
+"RTN","PSORWRAP",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**454,475,541,559**;DEC 1997;Build 2
+"RTN","PSORWRAP",3,0)
+ ;
+"RTN","PSORWRAP",4,0)
+ Q
+"RTN","PSORWRAP",5,0)
+PROCESS ;
+"RTN","PSORWRAP",6,0)
+ N I,NUM,HLQUIT,DONE,ORCS,ORRS,ORES,ORSS,RXFTYP,RXNUM,RXFDATE,PHINFO,PHDUZ,PHLN,PHFN,RFSITE,RPHONE,RPHARM,QTY,MW,DSUPP,REMARKS
+"RTN","PSORWRAP",7,0)
+ N HLFS,RET,RXIEN,ZD,RX0,RX2,RXSTA,RPROV,SIG,RPAR0,RREF0,RREF0,ROR1,RX3
+"RTN","PSORWRAP",8,0)
+ S (QTY,MW,DSUPP,RX0,RX2,RX3,RXSTA,RPROV,SIG,RPAR0,RREF0,RREF0,ROR1,RXFTYP)=""
+"RTN","PSORWRAP",9,0)
+ S $ETRAP="D ^%ZTER Q"
+"RTN","PSORWRAP",10,0)
+ S HLFS=HL("FS")
+"RTN","PSORWRAP",11,0)
+ S ORCS=$E($G(HL("ECH")),1),ORRS=$E($G(HL("ECH")),2),ORES=$E($G(HL("ECH")),3),ORSS=$E($G(HL("ECH")),4)
+"RTN","PSORWRAP",12,0)
+ S (I,DONE,HLQUIT)=0
+"RTN","PSORWRAP",13,0)
+ F  X HLNEXT Q:DONE!HLQUIT'>0  D
+"RTN","PSORWRAP",14,0)
+ .I '$L($G(HLNODE)) S DONE=1 Q
+"RTN","PSORWRAP",15,0)
+ .N LOOP
+"RTN","PSORWRAP",16,0)
+ .S LOOP=0 F  S LOOP=$O(HLNODE(LOOP)) Q:LOOP=""  S HLNODE=HLNODE_HLNODE(LOOP)
+"RTN","PSORWRAP",17,0)
+ .I $E(HLNODE,1,3)="ORC" D
+"RTN","PSORWRAP",18,0)
+ ..S RXFTYP=$P(HLNODE,HLFS,2),RXNUM=$P($P(HLNODE,HLFS,3),ORCS),RXFDATE=$P(HLNODE,HLFS,10),PHINFO=$P(HLNODE,HLFS,11)
+"RTN","PSORWRAP",19,0)
+ ..S PHDUZ=$P(PHINFO,ORCS),PHLN=$P(PHINFO,ORCS,2),PHFN=$P(PHINFO,ORCS,3),RFSITE=$P($P(HLNODE,HLFS,14),ORCS,4),RPHONE=$P(HLNODE,HLFS,15)
+"RTN","PSORWRAP",20,0)
+ ..S RPHARM=PHLN_","_PHFN
+"RTN","PSORWRAP",21,0)
+ .I $E(HLNODE,1,3)="RXO" D
+"RTN","PSORWRAP",22,0)
+ ..S QTY=$P(HLNODE,HLFS,3),MW=$P($P(HLNODE,HLFS,9),ORCS),DSUPP=$P(HLNODE,HLFS,12)
+"RTN","PSORWRAP",23,0)
+ .I $E(HLNODE,1,3)="NTE" D
+"RTN","PSORWRAP",24,0)
+ ..S REMARKS=$P(HLNODE,HLFS,4)
+"RTN","PSORWRAP",25,0)
+ .S I=I+1
+"RTN","PSORWRAP",26,0)
+ I $G(RXNUM)'="" S RXIEN=$O(^PSRX("B",RXNUM,0))
+"RTN","PSORWRAP",27,0)
+ ; HL7 Request message apparently came to the wrong Rx Host site 
+"RTN","PSORWRAP",28,0)
+ I '$G(RXIEN) D  Q
+"RTN","PSORWRAP",29,0)
+ .S RET(0)=0_U_$G(RXNUM)_U_0_U_U_$G(RXFDATE),$P(RET(0),U,15)=$G(RPHARM),$P(RET(0),U,16)=$G(RPHONE),$P(RET(0),U,17)=$G(RSITE)
+"RTN","PSORWRAP",30,0)
+ .S RET(1)="The Rx #"_RXNUM_" does not belong to this facility ("_$P($$SITE^VASITE(),"^",2)_"). Please,"
+"RTN","PSORWRAP",31,0)
+ .S RET(2)="try to place the fill request again. It may take up to 4 attempts to get a"
+"RTN","PSORWRAP",32,0)
+ .S RET(3)="successful response. If the issue continues, please contact IT Support for"
+"RTN","PSORWRAP",33,0)
+ .S RET(4)="assistance."
+"RTN","PSORWRAP",34,0)
+ .S RET(5)=""
+"RTN","PSORWRAP",35,0)
+ .D BLDACK(.RET,0,RXFTYP,RX0,RX2,RXSTA,RPROV,SIG,RREF0,RPAR0,ROR1,RX3)
+"RTN","PSORWRAP",36,0)
+ ;
+"RTN","PSORWRAP",37,0)
+ S DFN=$$GET1^DIQ(52,RXIEN,2,"I")
+"RTN","PSORWRAP",38,0)
+ I RXFTYP="RF" D
+"RTN","PSORWRAP",39,0)
+ .D REMREF^PSORREF(.RET,RXNUM,RXFDATE,MW,RPHARM,RPHONE,RFSITE,.RX0,.RX2,.RXSTA,.RPROV,.SIG,.RREF0,.ROR1,.RX3)
+"RTN","PSORWRAP",40,0)
+ .D BLDACK(.RET,DFN,RXFTYP,RX0,RX2,RXSTA,RPROV,SIG,RREF0,"",ROR1,RX3)
+"RTN","PSORWRAP",41,0)
+ I RXFTYP="PF" D
+"RTN","PSORWRAP",42,0)
+ .D PAR^PSORRPA1(.RET,RXNUM,RXFDATE,MW,QTY,DSUPP,REMARKS,RPHARM,RPHONE,RFSITE,.RX0,.RX2,.RXSTA,.RPROV,.SIG,.RPAR0,.ROR1,.RX3,.RREF0)
+"RTN","PSORWRAP",43,0)
+ .D BLDACK(.RET,DFN,RXFTYP,RX0,RX2,RXSTA,RPROV,SIG,RREF0,RPAR0,ROR1,RX3)
+"RTN","PSORWRAP",44,0)
+ Q
+"RTN","PSORWRAP",45,0)
+ ;
+"RTN","PSORWRAP",46,0)
+ ;Build Acknowlegement to show Rx was filled or in error
+"RTN","PSORWRAP",47,0)
+BLDACK(DAT,DFN,TYPE,RX0,RX2,RXSTA,RPROV,SIG,RREF0,RPAR0,ROR1,RX3) ;
+"RTN","PSORWRAP",48,0)
+ N CNT,PIDLP,DONE,PSOHCNT,PNAME,PLNAME,PFNAME,PSOIEN,LBLGLB,LBLOOP,NTECNT,DATLP,ERR,LBLGBL,LBLOVF,LBTXT,PSACKERR,PSORRDAT
+"RTN","PSORWRAP",49,0)
+ N NODE,HSITE,T,HSNAM,HMFSADD,HACODE,HPHONE,HMFSZIP,HSNUM,HCITY,HSTATE,OFNAME,OFADD,OFPHONE,NODEDAT
+"RTN","PSORWRAP",50,0)
+ S (NTECNT,CNT)=0
+"RTN","PSORWRAP",51,0)
+ ; MSA segment
+"RTN","PSORWRAP",52,0)
+ K ^TMP("HLA",$J)
+"RTN","PSORWRAP",53,0)
+ S CNT=CNT+1,^TMP("HLA",$J,CNT)="MSA"_HLFS_"AA"_HLFS_$G(HL("MID"))
+"RTN","PSORWRAP",54,0)
+ ; ERR segment if error
+"RTN","PSORWRAP",55,0)
+ I $E($G(DAT(0)))=0 D
+"RTN","PSORWRAP",56,0)
+ .N ERRSEG
+"RTN","PSORWRAP",57,0)
+ .S $P(ERRSEG,HLFS)="ERR"
+"RTN","PSORWRAP",58,0)
+ .S $P(ERRSEG,HLFS,4)=207  ; error code - application internal error
+"RTN","PSORWRAP",59,0)
+ .S $P(ERRSEG,HLFS,5)="E"  ; severity - "E"rror
+"RTN","PSORWRAP",60,0)
+ .S $P(ERRSEG,HLFS,9)="Unable to complete transaction" ; User Message
+"RTN","PSORWRAP",61,0)
+ .S CNT=CNT+1
+"RTN","PSORWRAP",62,0)
+ .S ^TMP("HLA",$J,CNT)=ERRSEG
+"RTN","PSORWRAP",63,0)
+ ; NTE segment
+"RTN","PSORWRAP",64,0)
+ S DATLP=0 F  S DATLP=$O(DAT(DATLP)) Q:'DATLP  D
+"RTN","PSORWRAP",65,0)
+ .S CNT=CNT+1,NTECNT=NTECNT+1,^TMP("HLA",$J,CNT)="NTE"_HLFS_NTECNT_HLFS_"L"_HLFS_$G(DAT(DATLP))
+"RTN","PSORWRAP",66,0)
+ S LBLGBL=$P($G(DAT(0)),U,18)
+"RTN","PSORWRAP",67,0)
+ ; build label data into NTE segments
+"RTN","PSORWRAP",68,0)
+ I $L(LBLGBL) D
+"RTN","PSORWRAP",69,0)
+ .S LBLGBL=U_LBLGBL
+"RTN","PSORWRAP",70,0)
+ .S LBLOOP=0 F  S LBLOOP=$O(@LBLGBL@(LBLOOP)) Q:'LBLOOP  D
+"RTN","PSORWRAP",71,0)
+ ..S LBTXT=$G(@LBLGBL@(LBLOOP,0))
+"RTN","PSORWRAP",72,0)
+ ..I $D(@LBLGBL@(LBLOOP,"OVF")) D
+"RTN","PSORWRAP",73,0)
+ ...S LBLOVF=0 F  S LBLOVF=$O(@LBLGBL@(LBLOOP,"OVF",LBLOVF)) Q:'LBLOVF  D
+"RTN","PSORWRAP",74,0)
+ ....S LBTXT=$G(LBTXT)_$G(@LBLGBL@(LBLOOP,"OVF",LBLOVF,0))
+"RTN","PSORWRAP",75,0)
+ ..S CNT=CNT+1,NTECNT=NTECNT+1,^TMP("HLA",$J,CNT)="NTE"_HLFS_NTECNT_HLFS_"O"_HLFS_$G(LBTXT)
+"RTN","PSORWRAP",76,0)
+ ; end label build
+"RTN","PSORWRAP",77,0)
+ D BLDPID^PSOTPHL2(DFN,"",.PSORRDAT,.HL,.ERR)
+"RTN","PSORWRAP",78,0)
+ S PSOIEN=$P(DAT(0),U,3)
+"RTN","PSORWRAP",79,0)
+ S PNAME=$$GET1^DIQ(52,PSOIEN,2,"E")
+"RTN","PSORWRAP",80,0)
+ S PLNAME=$P(PNAME,","),PFNAME=$P($P(PNAME,",",2)," ")
+"RTN","PSORWRAP",81,0)
+ S DONE=0
+"RTN","PSORWRAP",82,0)
+ S CNT=CNT+1
+"RTN","PSORWRAP",83,0)
+ ; build PID segment
+"RTN","PSORWRAP",84,0)
+ F PSOHCNT=1:1 D  Q:DONE
+"RTN","PSORWRAP",85,0)
+ .I '$D(PSORRDAT(PSOHCNT)) S DONE=1 Q
+"RTN","PSORWRAP",86,0)
+ .S ^TMP("HLA",$J,CNT)=$G(^TMP("HLA",$J,CNT))_PSORRDAT(PSOHCNT)
+"RTN","PSORWRAP",87,0)
+ S CNT=CNT+1
+"RTN","PSORWRAP",88,0)
+ S HSITE=$P(RX2,U,9)
+"RTN","PSORWRAP",89,0)
+ S HSNAM=$$GET1^DIQ(59,HSITE,.01,"E")
+"RTN","PSORWRAP",90,0)
+ S HMFSADD=$$GET1^DIQ(59,HSITE,.02,"E")
+"RTN","PSORWRAP",91,0)
+ S HACODE=$$GET1^DIQ(59,HSITE,.03,"E")
+"RTN","PSORWRAP",92,0)
+ S HPHONE=$$GET1^DIQ(59,HSITE,.04,"E")
+"RTN","PSORWRAP",93,0)
+ S HMFSZIP=$$GET1^DIQ(59,HSITE,.05,"E")
+"RTN","PSORWRAP",94,0)
+ S HSNUM=$$GET1^DIQ(59,HSITE,.06,"E")
+"RTN","PSORWRAP",95,0)
+ S HCITY=$$GET1^DIQ(59,HSITE,.07,"E")
+"RTN","PSORWRAP",96,0)
+ S HSTATE=$$GET1^DIQ(59,HSITE,.08,"I"),HSTATE=$$GET1^DIQ(5,HSTATE,1,"E")
+"RTN","PSORWRAP",97,0)
+ S T="~"
+"RTN","PSORWRAP",98,0)
+ S OFNAME=HSNAM
+"RTN","PSORWRAP",99,0)
+ S OFADD=HMFSADD_T_T_HCITY_T_HSTATE_T_HMFSZIP
+"RTN","PSORWRAP",100,0)
+ S OFPHONE=HACODE_"-"_HPHONE
+"RTN","PSORWRAP",101,0)
+ ;
+"RTN","PSORWRAP",102,0)
+ ; build ORC segment
+"RTN","PSORWRAP",103,0)
+ ;S ^TMP("HLA",$J,CNT)="ORC"_HLFS_TYPE_HLFS_$P(DAT(0),U,2)_ORCS_$P(DAT(0),U,17)_ORCS_$$GET1^DIQ(4,$P(DAT(0),U,17),60,"E")
+"RTN","PSORWRAP",104,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,1)="ORC"
+"RTN","PSORWRAP",105,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,2)=TYPE
+"RTN","PSORWRAP",106,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,3)=$P(DAT(0),U,2)_ORCS_$P(DAT(0),U,17)_ORCS_$$FQDN(,$P(DAT(0),U,17))
+"RTN","PSORWRAP",107,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,10)=$P(DAT(0),U,5)
+"RTN","PSORWRAP",108,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,11)=DFN_ORCS_PLNAME_ORCS_PFNAME
+"RTN","PSORWRAP",109,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,14)=ORCS_ORCS_ORCS_$P($$SITE^VASITE(),U,3)
+"RTN","PSORWRAP",110,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,16)=$P(RX0,U,13) ; Issue Date
+"RTN","PSORWRAP",111,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,20)="P"_ORCS_$$GET1^DIQ(200,$P(RX0,U,16),.01)   ; seq #1
+"RTN","PSORWRAP",112,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,20)=$P(^TMP("HLA",$J,CNT),HLFS,20)_ORRS_"VP"_ORCS_$$GET1^DIQ(200,$P(RX2,U,10),.01)  ; seq #2
+"RTN","PSORWRAP",113,0)
+ ;
+"RTN","PSORWRAP",114,0)
+ I $G(RREF0)]"" D
+"RTN","PSORWRAP",115,0)
+ .S $P(^TMP("HLA",$J,CNT),HLFS,20)=$P(^TMP("HLA",$J,CNT),HLFS,20)_ORRS_"C"_ORCS_$$GET1^DIQ(200,$P(RREF0,U,7),.01)  ; seq #3
+"RTN","PSORWRAP",116,0)
+ .S $P(^TMP("HLA",$J,CNT),HLFS,20)=$P(^TMP("HLA",$J,CNT),HLFS,20)_ORRS_"RP"_ORCS_$$GET1^DIQ(200,$P(RREF0,U,17),.01)   ; seq #4
+"RTN","PSORWRAP",117,0)
+ ;
+"RTN","PSORWRAP",118,0)
+ I $G(RPAR0)]"" D
+"RTN","PSORWRAP",119,0)
+ .S $P(^TMP("HLA",$J,CNT),HLFS,20)=$P(^TMP("HLA",$J,CNT),HLFS,20)_ORRS_"C"_ORCS_$$GET1^DIQ(200,$P(RPAR0,U,7),.01)  ; seq #3
+"RTN","PSORWRAP",120,0)
+ .S $P(^TMP("HLA",$J,CNT),HLFS,20)=$P(^TMP("HLA",$J,CNT),HLFS,20)_ORRS_"PP"_ORCS_$$GET1^DIQ(200,$P(RPAR0,U,17),.01)   ; seq #4
+"RTN","PSORWRAP",121,0)
+ ;
+"RTN","PSORWRAP",122,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,20)=$P(^TMP("HLA",$J,CNT),HLFS,20)_ORRS_"FP"_ORCS_$$GET1^DIQ(200,$P(ROR1,U,5),.01)   ; seq #5
+"RTN","PSORWRAP",123,0)
+ N DATA
+"RTN","PSORWRAP",124,0)
+ S $P(DATA,ORSS,2)=$$GET1^DIQ(44,$P(RX0,U,5),.01)  ; Clinic 
+"RTN","PSORWRAP",125,0)
+ S $P(OFNAME,ORCS,8)=DATA
+"RTN","PSORWRAP",126,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,22)=OFNAME
+"RTN","PSORWRAP",127,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,23)=OFADD
+"RTN","PSORWRAP",128,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,24)=OFPHONE
+"RTN","PSORWRAP",129,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,26)=$$GET1^DIQ(52,PSOIEN,100,"I")_ORCS_$$GET1^DIQ(52,PSOIEN,100,"E")_ORCS_ORCS_$$GET1^DIQ(53,$P(RX0,U,3),2)_ORCS_$$GET1^DIQ(53,$P(RX0,U,3),.01)  ; Rx Status (ex - 1 ACTIVE)
+"RTN","PSORWRAP",130,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,28)=$P(RX3,U)  ; Last dispense date in ORC-27 Fillers expected availability date
+"RTN","PSORWRAP",131,0)
+ S CNT=CNT+1
+"RTN","PSORWRAP",132,0)
+ ;
+"RTN","PSORWRAP",133,0)
+ ; build RXD segment
+"RTN","PSORWRAP",134,0)
+ ;S ^TMP("HLA",$J,CNT)="RXD"_HLFS_1_HLFS_$P(DAT(0),U,6)_ORCS_"NDC"_HLFS_$P(DAT(0),U,5)_HLFS_$P(DAT(0),U,7)
+"RTN","PSORWRAP",135,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,1)="RXD"
+"RTN","PSORWRAP",136,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,2)=1
+"RTN","PSORWRAP",137,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,3)=$P(DAT(0),U,6)_ORCS_"NDC"
+"RTN","PSORWRAP",138,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,4)=$P(DAT(0),U,5) ; Fill date
+"RTN","PSORWRAP",139,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,5)=$P(DAT(0),U,7) ; Quantity
+"RTN","PSORWRAP",140,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,8)=$P(DAT(0),U,3)_"::"_$P(DAT(0),U,4)
+"RTN","PSORWRAP",141,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,9)=$$GET1^DIQ(52,PSOIEN,9,"I") ; # of refills remaining
+"RTN","PSORWRAP",142,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,11)=$P(DAT(0),U,15) ; Dispensing Pharmacy
+"RTN","PSORWRAP",143,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,13)=$P(DAT(0),U,8) ; Days Supply
+"RTN","PSORWRAP",144,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,16)=$$GET1^DIQ(52,PSOIEN,10.1,"I")_ORCS_$$GET1^DIQ(52,PSOIEN,10,"I") ; SIGs
+"RTN","PSORWRAP",145,0)
+ I $D(^PSRX(PSOIEN,"SIG1",1)) D
+"RTN","PSORWRAP",146,0)
+ .N SIG1CNT
+"RTN","PSORWRAP",147,0)
+ .S SIG1CNT=0 F  S SIG1CNT=$O(^PSRX(PSOIEN,"SIG1",SIG1CNT)) Q:'SIG1CNT  D
+"RTN","PSORWRAP",148,0)
+ ..S DATA="SIG1_"_SIG1CNT_ORCS_$G(^PSRX(PSOIEN,"SIG1",SIG1CNT,0))
+"RTN","PSORWRAP",149,0)
+ ..S $P(^TMP("HLA",$J,CNT),HLFS,16)=$P(^TMP("HLA",$J,CNT),HLFS,16)_ORRS_DATA
+"RTN","PSORWRAP",150,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,20)=$P(RX2,U,6)  ; Rx expiration date
+"RTN","PSORWRAP",151,0)
+ ;
+"RTN","PSORWRAP",152,0)
+ S $P(^TMP("HLA",$J,CNT),HLFS,23)=$P(RX0,U,18) ; Number of copies into DISPENSE PACKAGE SIZE
+"RTN","PSORWRAP",153,0)
+ ;
+"RTN","PSORWRAP",154,0)
+ D GENACK^HLMA1(HL("EID"),HLMTIENS,HL("EIDS"),"GM",1,.PSACKERR)
+"RTN","PSORWRAP",155,0)
+ K ^TMP("HLA",$J)
+"RTN","PSORWRAP",156,0)
+ Q
+"RTN","PSORWRAP",157,0)
+LABEL(RX,PSOLAP,PSOSITE,DUZ,PSOTRAMT,FNAME) ; Print the label.
+"RTN","PSORWRAP",158,0)
+ ;  Input:        RX  --  Pointer to the prescription in file #52
+"RTN","PSORWRAP",159,0)
+ ;            PSOLAP  --  Label printer
+"RTN","PSORWRAP",160,0)
+ ;           PSOSITE  --  Pointer to the Pharmacy in file #59
+"RTN","PSORWRAP",161,0)
+ ;               DUZ  --  Pointer to the use in file #200
+"RTN","PSORWRAP",162,0)
+ ;          PSOTRAMT  --  Amount to be paid
+"RTN","PSORWRAP",163,0)
+ ;
+"RTN","PSORWRAP",164,0)
+ ;
+"RTN","PSORWRAP",165,0)
+ Q:PSOLAP["LAT-TERM"
+"RTN","PSORWRAP",166,0)
+ Q:'$D(^PSRX(RX,0))
+"RTN","PSORWRAP",167,0)
+ Q:'$D(^PS(59,PSOSITE,0))
+"RTN","PSORWRAP",168,0)
+ N CT,II,III,NOW,RXFF,X,Y,PSOSYS,PSOPAR,PSOBARS,PDUZ,PSOBAR0,PSOBAR1,REPRINT,PSOCHAMP,PSHRX,DIQUIET
+"RTN","PSORWRAP",169,0)
+ S DIQUIET=1 D DT^DICRW
+"RTN","PSORWRAP",170,0)
+ I '$G(DT) S DT=$$DT^XLFDT
+"RTN","PSORWRAP",171,0)
+ S:$P($G(^PSRX(RX,"STA")),"^")'=3 REPRINT=""
+"RTN","PSORWRAP",172,0)
+ ;
+"RTN","PSORWRAP",173,0)
+IO D SAVDEV^%ZISUTL("ONEVAHLIO")
+"RTN","PSORWRAP",174,0)
+ N PAR S PAR="0"
+"RTN","PSORWRAP",175,0)
+ S PAR("HFSNAME")=FNAME,PAR("HFSMODE")="W"
+"RTN","PSORWRAP",176,0)
+ D OPEN^%ZISUTL("ONEVALABEL",PSOLAP,.PAR)
+"RTN","PSORWRAP",177,0)
+ Q:POP
+"RTN","PSORWRAP",178,0)
+ ;
+"RTN","PSORWRAP",179,0)
+ N PSOONEVA
+"RTN","PSORWRAP",180,0)
+ D USE^%ZISUTL("ONEVALABEL")
+"RTN","PSORWRAP",181,0)
+ N PSOIOS S PSOIOS=IOS D DEVBAR^PSOBMST
+"RTN","PSORWRAP",182,0)
+ S PSOSYS=$G(^PS(59,PSOSITE,1))
+"RTN","PSORWRAP",183,0)
+ S PSOPAR=$G(^PS(59,PSOSITE,1)),PDUZ=DUZ
+"RTN","PSORWRAP",184,0)
+ S PPL=RX
+"RTN","PSORWRAP",185,0)
+ ; The PSOONEVA variable will identify a OneVA Pharmacy label request from a Remote Site
+"RTN","PSORWRAP",186,0)
+ S (PSOCHAMP,PSOONEVA)=1
+"RTN","PSORWRAP",187,0)
+ S PSOBARS=PSOBAR1]""&(PSOBAR0]"")&($P(PSOPAR,"^",19))
+"RTN","PSORWRAP",188,0)
+ D DQ^PSOLBL
+"RTN","PSORWRAP",189,0)
+ D CLOSE^%ZISUTL("ONEVALABEL")
+"RTN","PSORWRAP",190,0)
+ D RMDEV^%ZISUTL("ONEVALABEL")
+"RTN","PSORWRAP",191,0)
+ K PPL
+"RTN","PSORWRAP",192,0)
+ ;
+"RTN","PSORWRAP",193,0)
+ Q
+"RTN","PSORWRAP",194,0)
+ ; log information about the refill or partial fill locally for reporting
+"RTN","PSORWRAP",195,0)
+ ;HLDAT(1)=MESSAGE^PATIENT DFN^RX NUMBER^REMOTE SITE#^FILL/PARTIAL DATE^PHARMACIST NAME^QUANTITY^DISPENSE DATE^DRUG NAME^DAYS SUPPLY
+"RTN","PSORWRAP",196,0)
+LOGDATA(HLDAT,TYPE,LOCDRUG,LBLGBL,PSOIEN) ;
+"RTN","PSORWRAP",197,0)
+ N F,ERR,FDA,DATA,FILERR,NIEN,MSG,LBL,TMPIEN,REFREM,LIEN,LDCOST,TCOST,DSAV,DSAV2,RRFTYP,RRXPR,RRXFL,RPPL
+"RTN","PSORWRAP",198,0)
+ N RX0,RX2,RX3,RXSTA,HINFO,RSIG,ROR1,RPAR0,RREF0,RFIEN,PARIEN,RIEN,PATST,RSIG1
+"RTN","PSORWRAP",199,0)
+ S DATA=$G(@HLDAT@(1))
+"RTN","PSORWRAP",200,0)
+ ;
+"RTN","PSORWRAP",201,0)
+ ;Q:'+$P(DATA,U,7)  ; no quantity dispensed. WCJ
+"RTN","PSORWRAP",202,0)
+ ;
+"RTN","PSORWRAP",203,0)
+ I '$G(PSODFN) S PSODFN=$$GET1^DIQ(52,PSOIEN,2,"I")
+"RTN","PSORWRAP",204,0)
+ S F=52.09
+"RTN","PSORWRAP",205,0)
+ ;set up FDA and file data
+"RTN","PSORWRAP",206,0)
+ S FDA(F,"+1,",.01)=$$NOW^XLFDT
+"RTN","PSORWRAP",207,0)
+ S FDA(F,"+1,",.02)=PSODFN
+"RTN","PSORWRAP",208,0)
+ S FDA(F,"+1,",.03)=$P(@HLDAT@(1),U,3)
+"RTN","PSORWRAP",209,0)
+ S FDA(F,"+1,",.04)=$$FIND1^DIC(4,,"X",$P(@HLDAT@(1),U,4),"D","I $P(^(0),U,11)=""N"",'$P($G(^(99)),U,4)")
+"RTN","PSORWRAP",210,0)
+ S FDA(F,"+1,",.05)=TYPE
+"RTN","PSORWRAP",211,0)
+ I TYPE="PR"!(TYPE="RF") S FDA(F,"+1,",.06)=$G(DUZ)
+"RTN","PSORWRAP",212,0)
+ I TYPE="OR"!(TYPE="OP") S FDA(F,"+1,",.061)=$P(@HLDAT@(1),U,11)
+"RTN","PSORWRAP",213,0)
+ S FDA(F,"+1,",.07)=$P(@HLDAT@(1),U,7)
+"RTN","PSORWRAP",214,0)
+ S FDA(F,"+1,",.08)=$P(@HLDAT@(1),U,10)
+"RTN","PSORWRAP",215,0)
+ S FDA(F,"+1,",.09)=$P(@HLDAT@(1),U,12)
+"RTN","PSORWRAP",216,0)
+ S FDA(F,"+1,",.1)=$P(@HLDAT@(1),U,8)
+"RTN","PSORWRAP",217,0)
+ S FDA(F,"+1,",1)=$P(@HLDAT@(1),U,9)
+"RTN","PSORWRAP",218,0)
+ ; local drug will not be passed in if this is an OF or OR type.
+"RTN","PSORWRAP",219,0)
+ I $G(LOCDRUG) D
+"RTN","PSORWRAP",220,0)
+ .S FDA(F,"+1,",1.1)=LOCDRUG
+"RTN","PSORWRAP",221,0)
+ .S QTY=$P(@HLDAT@(1),U,7) Q:'QTY
+"RTN","PSORWRAP",222,0)
+ .S LDCOST=$$GET1^DIQ(50,LOCDRUG,16,"I") Q:LDCOST=""
+"RTN","PSORWRAP",223,0)
+ .S TCOST=QTY*LDCOST
+"RTN","PSORWRAP",224,0)
+ .S FDA(F,"+1,",1.2)=TCOST
+"RTN","PSORWRAP",225,0)
+ .S FDA(F,"+1,",1.3)=$$GET1^DIQ(50,LOCDRUG,22,"I")
+"RTN","PSORWRAP",226,0)
+ D UPDATE^DIE(,"FDA","NIEN","FILERR")
+"RTN","PSORWRAP",227,0)
+ ;I $D(FILERR) D  Q
+"RTN","PSORWRAP",228,0)
+ ;.; display error
+"RTN","PSORWRAP",229,0)
+ S NIEN=$G(NIEN(1))
+"RTN","PSORWRAP",230,0)
+ S MSG(1)=$P(@HLDAT@(1),U)
+"RTN","PSORWRAP",231,0)
+ D WP^DIE(52.09,NIEN_",",2,"K","MSG")
+"RTN","PSORWRAP",232,0)
+ S RRFTYP=TYPE
+"RTN","PSORWRAP",233,0)
+ I $G(PSORXMM) Q  ;*541
+"RTN","PSORWRAP",234,0)
+ ;
+"RTN","PSORWRAP",235,0)
+ ; if you have a label, store it in the log and print it out.
+"RTN","PSORWRAP",236,0)
+ I $D(@HLDAT@("LBL")) D
+"RTN","PSORWRAP",237,0)
+ .M LBL=@HLDAT@("LBL")
+"RTN","PSORWRAP",238,0)
+ .D WP^DIE(52.09,NIEN_",",3,"K","LBL")
+"RTN","PSORWRAP",239,0)
+ N %ZIS,ZTRTN,ZTDESC,ZTDTH,ZTSAVE,ZTSK,ZTREQ,RRXPR,RRXFL,RPPL
+"RTN","PSORWRAP",240,0)
+ I TYPE="PR" S RRXPR($G(@HLDAT@("RIEN")))=1
+"RTN","PSORWRAP",241,0)
+ I TYPE="RF" S RRXFL($G(@HLDAT@("RIEN")))=1
+"RTN","PSORWRAP",242,0)
+ S RPPL=$G(@HLDAT@("RIEN"))
+"RTN","PSORWRAP",243,0)
+ I 'RPPL Q
+"RTN","PSORWRAP",244,0)
+ S RPPL=RPPL_","
+"RTN","PSORWRAP",245,0)
+ N IOP S IOP="Q"  ; default to Queueing this
+"RTN","PSORWRAP",246,0)
+ W ! K POP S %ZIS("B")="",%ZIS("S")="I $$GET1^DIQ(3.5,Y,3,""I""),$D(^%ZIS(2,$$GET1^DIQ(3.5,Y,3,""I""),55,""B"",""LL""))",%ZIS="QMN",%ZIS("A")="Select LABEL DEVICE: " D ^%ZIS
+"RTN","PSORWRAP",247,0)
+ Q:POP  ; do not pass GO, do not collect $200 - User wants out - sad cause RX was already filled
+"RTN","PSORWRAP",248,0)
+ ;I '$G(IO("Q")) D RRXLBL Q  ; user really didn't want to queue it and overrode that
+"RTN","PSORWRAP",249,0)
+ ;I $P(RSIG,U)="" S $P(RSIG,U)=$G(RSIGSTR)
+"RTN","PSORWRAP",250,0)
+ F DSAV="RX0","RX2","RX3","RXSTA","HINFO","RSIG","PSODFN","LOCDRUG","ROR1","RPAR0","RREF0","RFIEN","PARIEN","RIEN","PATST" D
+"RTN","PSORWRAP",251,0)
+ .M @DSAV=@HLDAT@(DSAV)
+"RTN","PSORWRAP",252,0)
+ .S ZTSAVE(DSAV)=""
+"RTN","PSORWRAP",253,0)
+ M RSIG1=@HLDAT@("RSIG1")
+"RTN","PSORWRAP",254,0)
+ F DSAV2="PSOSITE","PSODFN","PSOPAR","PSOSYS","RRFTYP","RRXFL(","RRXPR(","RSIG1(","RPPL" D
+"RTN","PSORWRAP",255,0)
+ .S ZTSAVE(DSAV2)=""
+"RTN","PSORWRAP",256,0)
+ ;I '$G(IO("Q")) K ZTSAVE D DQ^PSORLLLI,^%ZISC Q
+"RTN","PSORWRAP",257,0)
+ ; if you made it here, they picked a queueable device to queue this to
+"RTN","PSORWRAP",258,0)
+ ;S ZTRTN="RRXLBL^PSORWRAP"
+"RTN","PSORWRAP",259,0)
+ S ZTDESC="OneVA label print",ZTDTH=$H
+"RTN","PSORWRAP",260,0)
+ S ZTRTN="DQ^PSORLLLI"
+"RTN","PSORWRAP",261,0)
+ D ^%ZTLOAD
+"RTN","PSORWRAP",262,0)
+ I $D(ZTSK)[0 W !!?5,"Problems queuing label!"
+"RTN","PSORWRAP",263,0)
+ E  W !!?5,"Label queued!"
+"RTN","PSORWRAP",264,0)
+ D HOME^%ZIS K IO("Q") Q
+"RTN","PSORWRAP",265,0)
+ Q
+"RTN","PSORWRAP",266,0)
+ ;
+"RTN","PSORWRAP",267,0)
+RRXLBL ;Remote RX Label print
+"RTN","PSORWRAP",268,0)
+ N LBLLOOP,LBLTXT
+"RTN","PSORWRAP",269,0)
+ U IO
+"RTN","PSORWRAP",270,0)
+ S LBLOOP=0 F  S LBLOOP=$O(LBL(LBLOOP)) Q:'LBLOOP  D
+"RTN","PSORWRAP",271,0)
+ .S LBTXT=$G(LBL(LBLOOP))
+"RTN","PSORWRAP",272,0)
+ .W !,LBTXT
+"RTN","PSORWRAP",273,0)
+ D ^%ZISC
+"RTN","PSORWRAP",274,0)
+ S:$D(ZTQUEUED) ZTREQ="@"
+"RTN","PSORWRAP",275,0)
+ Q
+"RTN","PSORWRAP",276,0)
+ ;
+"RTN","PSORWRAP",277,0)
+FQDN(SITE,IEN4) ; get Fully Qualified Domain Name
+"RTN","PSORWRAP",278,0)
+ ;
+"RTN","PSORWRAP",279,0)
+ I $G(IEN4)="",$G(SITE)="" Q ""  ; Need site # or institution file IEN
+"RTN","PSORWRAP",280,0)
+ ;
+"RTN","PSORWRAP",281,0)
+ I $G(IEN4)="" D  Q:$G(IEN4)="" ""
+"RTN","PSORWRAP",282,0)
+ .S IEN4=$$FIND1^DIC(4,,"X",SITE,"D","I $P(^(0),U,11)=""N"",'$P($G(^(99)),U,4)")
+"RTN","PSORWRAP",283,0)
+ ;
+"RTN","PSORWRAP",284,0)
+ N PSOHLNK,RMSDOM
+"RTN","PSORWRAP",285,0)
+ S PSOHLNK=$O(^HLCS(870,"C",IEN4,0)) ; get first entry (should only be one but you never know) IA#3550
+"RTN","PSORWRAP",286,0)
+ Q:'$G(PSOHLNK) ""
+"RTN","PSORWRAP",287,0)
+ ;
+"RTN","PSORWRAP",288,0)
+ S RMSDOM=$$GET1^DIQ(870,PSOHLNK,.03,"E")  ; get domain name IA#3335
+"RTN","PSORWRAP",289,0)
+ Q:$G(RMSDOM)="" ""
+"RTN","PSORWRAP",290,0)
+ ;
+"RTN","PSORWRAP",291,0)
+ S:$$PROD^XUPROD() RMSDOM="HL7."_RMSDOM   ; prefix domain name
+"RTN","PSORWRAP",292,0)
+ Q RMSDOM
+"VER")
+8.0^22.2
+"BLD",11142,6)
+^464
+**END**
+**END**
+

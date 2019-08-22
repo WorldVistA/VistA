@@ -1,0 +1,193 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/14/19 at 11:20
+=============================================================================
+Run Date: MAY 29, 2019                     Designation: RMPR*3*201
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #176                      Status: Released
+                  Compliance Date: JUN 29, 2019
+=============================================================================
+
+Associated patches: (v)RMPR*3*61       install with patch       `RMPR*3*201'
+
+Subject: STOPS HCPCS INVENTORY FLAG FLIP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ When a user edits a PROSTHETICS HCPCS (Healthcare Common Procedure 
+ Coding System) using the option Add Inventory LOCATION or ITEMS [RMPR INV
+ ADD] it will flip the INVENTORY FLAG field (#10) in PROSTHETIC HCPCS
+ (#661.1) file to 'YES'.
+  
+ Patch Components:
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A                             N/A                   N/A
+  
+ Forms Associated:
+  
+ Form Name   File        #New/Modified/Deleted
+ ---------   ------      --------------------
+ N/A         N/A         N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name     New/Modified/Deleted
+ -------------   --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC4043081 - HCPCS inventory flag is being randomly flipped from "NO" to 
+ "YES". 
+  
+ Problem:
+ --------
+ When a user edits a PROSTHETICS HCPCS using the option Add Inventory 
+ LOCATION or ITEMS [RMPR INV ADD] it will flip the INVENTORY FLAG (#10) 
+ field in PROSTHETIC HCPCS (#661.1) file to 'YES'.
+  
+ Resolution:
+ -----------
+ The routine RMPRPIX1 has been modified so that the INVENTORY FLAG (#10) 
+ field in PROSTHETIC HCPCS (#661.1) file will not update to 'YES'.
+  
+ Test Sites:
+ ----------
+ Birmingham VAMC
+ Clement J. Zablocki VAMC (Milwaukee)
+ Sioux Falls VA HCS
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+   
+ Installation Instructions:
+ --------------------------
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter RMPR*3.0*201).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package 
+       RMPR*3.0*201
+  
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+       respond NO.
+   
+    6. When prompted "Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//", just press <RETURN>. 
+  
+       1) When prompted "Enter options you wish to mark as 'Out of
+            Order':", enter the following option:
+  
+         Add Inventory LOCATION or ITEMS [RMPR INV ADD]
+  
+       2) When prompted  "Enter protocols you wish to mark as 'Out Of
+            Order':", just press <RETURN>.
+  
+ Post-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option. The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed-up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPRPIX1
+    Before: B42076833   After: B41783987  **61,201**
+ 
+Routine list of preceding patches: 61
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 13, 2019
+Completed By:                               Date Completed: MAY 28, 2019
+Released By :                               Date Released : MAY 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

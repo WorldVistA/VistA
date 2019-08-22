@@ -1,0 +1,425 @@
+$TXT Created by                DEVVJJ.DOMAIN.EXT  (KIDS) on Friday, 06/22/18 at 15:55
+=============================================================================
+Run Date: JUL 23, 2018                     Designation: EC*2*139
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #136                      Status: Released
+                  Compliance Date: AUG 23, 2018
+=============================================================================
+
+Associated patches: (v)EC*2*92     <<= must be installed BEFORE `EC*2*139'
+                    (v)EC*2*124    <<= must be installed BEFORE `EC*2*139'
+                    (v)EC*2*134    <<= must be installed BEFORE `EC*2*139'
+
+Subject: Event Capture FY 18 Sustainment
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ The Managerial Cost Accounting Office (MCAO) requests modifications to
+ the Event Capture System that would provide the field with improved data
+ entry capabilities so that accurate costing information can be gathered
+ nationally.  This patch contains the modifications for Fiscal Year 2018.
+  
+ Functional Overview
+ ===================
+  
+ 1) Modify the GUI spreadsheet upload interface to include a speed button
+    for changing the duplicate threshold.
+  
+ 2) Modify the GUI spreadsheet upload interface so that all menu items 
+    display their corresponding speed button to the left of the command.
+  
+ 3) Modify the GUI spreadsheet upload interface so that when a user closes
+    the upload form all existing data within the cells is cleared.
+  
+ 4) Modify the spreadsheet upload logic so that locations are only 
+    identified by their station number (STA6).
+  
+ 5) Modify the spreadsheet upload interface so that the cursor remains
+    visible when editing data within a cell.
+  
+ 6) Modify the spreadsheet upload interface to allow use of spreadsheets 
+    created using Microsoft 365.
+  
+ 7) Modify the spreadsheet upload interface so that the column headers of
+    the cell grid match the column headers on the Event Capture spreadsheet
+    upload template.
+  
+ 8) Modify the two factor authentication (2FA) login interface so that
+    Event Capture doesn't launch when the user cancels out of the 2FA 
+    process.  While Event Capture opened, it was in an unusable state.
+  
+ 9) Modify the location option on the manager's menu to change the listing
+    of locations so that the 'current locations' (those identified as being
+    used by Event Capture) appear at the top of the list. The rest of the 
+    list will be sorted alphabetically.
+  
+ 10) Modify spreadsheet upload interface to disallow, by DSS Unit, 
+     duplicate workload entry.
+  
+ 11) Add a new report called Possible Late State Home Entries Report to 
+     the reports menu.
+  
+ 12) Modify the Event Code Screens with CPT Codes Report, both printed and 
+     exported, to include the synonym, associated clinic, and MCA Labor
+     Code.
+  
+ 13) Modify the Event Code Screens with CPT Codes Report 
+     selection interface to change the existing "select" label with "CPT
+     Codes".
+  
+ 14) Modify the Print Category and Procedure Summary Report to allow the 
+     user to select a DSS Unit status (active, inactive, or both) and to
+     be able to select one, many, or all DSS Units.
+  
+ 15) Modify the Print Category and Procedure Summary Report selection 
+     interface to change the existing "select" label with "Event Code 
+     Screens".
+  
+ 16) Modify the Event Capture Encounters Report, both printed and 
+     exported, to include the MCA Labor Code.
+  
+ 17) Modify the Patient Summary Report, both printed and exported, to 
+     include the MCA Labor Code.
+  
+ 18) Modify the Disabled Category and Procedure Summary Report, both 
+     printed and exported, to include the MCA Labor Code.
+  
+ 19) Modify the Print Category and Procedure Summary Report, both printed
+     and exported, to include the MCA Labor Code.
+  
+ 20) Modify the PCE Data Summary Report, both printed and exported, to
+     include the MCA Labor Code, Credit Stop and CHAR4 code.
+  
+ 21) Modify the export report process to allow users with Microsoft 365 to
+     export reports.
+  
+ 22) Modify the Event Capture GUI interface so that it retains column grid
+     sizing, by user, for subsequent logons to the interface.
+  
+ 23) Modify the spreadsheet upload process to store the date/time the 
+     record was uploaded.
+  
+ 24) Modify the three patient data entry options to expand the provider 
+     selection area to allow more potential choices to be listed.
+  
+ 25) Modify the three patient data entry options to add a placeholder for
+     Camp Lejeune encounter related activity.  This is in preparation for
+     the eventual release of Camp Lejeune related updates.
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Components Sent With Patch
+ ==========================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name (Number)           Field Name (Number)       New/Modified/Deleted
+ ---------------------------------------------------------------------------
+ EVENT CAPTURE PATIENT (#721) SOURCE (#45)              New
+                              ENTRY STATUS (#46)        New
+                              DATE/TIME IMPORTED (#47)  New
+                              SSID (#48)                New
+  
+ DSS UNIT (#724)              SEND TO PCE (#13)         Modified
+                              ALLOW DUPLICATES (#16)    New
+  
+ Forms Associated:
+ -----------------
+  
+ Form Name                       File #            New/Modified/Deleted
+ ----------------------------------------------------------------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+  
+ Mail Group Name                    New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+  
+ Options
+ -------
+ EC GUI CONTEXT
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name                      New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+  
+ Security Key
+ ------------
+ N/A
+  
+ Help Frames
+ -----------
+ ECCP
+ ECDISSUM
+ ECLATESH
+ ECPAT SUM
+ ECPCER
+ ECRECER
+ ECSCPT
+ ECSSDSSNUM
+ ECSSSTATION
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ The following sites participated in the testing of this patch.
+  
+  
+ Test Sites
+ ================
+  
+ Albuquerque
+ Battle Creek
+ Danville
+ Detroit
+ Indianaoplis
+ Northern Indiana
+  
+ Software and Documentation Retrieval
+ ====================================
+  
+ The VistA server software for this patch is being distributed through 
+ the National Patch Module (NPM).
+  
+ The Event Capture GUI client software is being distributed as a self-
+ extracting Install Shield executable.  The installed executable for
+ this patch is client version 2.5.0.0.
+  
+ The GUI client software and documentation for this patch may be retrieved
+ directly using Secure File Transfer Protocol (SFTP) from the
+ ANONYMOUS.SOFTWARE directory at the following Office of Information (OI)
+ Field Offices:
+  
+   OIFO               SFTP ADDRESS               
+   ------------       ------------------------   
+   First available    download.vista.domain.ext
+   Hines              domain.ext
+   Salt Lake City     domain.ext
+  
+ The following files will be available:
+  
+   File Name           Format        Description
+   ---------           ------        -----------
+   EC_2_P139.ZIP       BINARY        EC GUI client installer zip file
+  
+   
+   File Name           Description
+   ----------------    ----------------------------------------
+   ECSFY18_DIBR.PDF    Deployment, Installation, Back-out, Rollback
+                       Guide (Install Guide)
+   ECSFY18_UG.PDF      Users Guide
+   ECSFY18_TM.PDF      Technical Manual
+   ECSFY18_VDD.PDF     Version Description Document (Release
+                       Notes)
+  
+ The VistA Documentation Library [VDL] web site will also contain the
+ updated patch documentation.
+  
+ This web site is usually updated within 1-3 days of the patch release
+ date.
+  
+ The VDL address is http://www.domain.ext/vdl/application.asp?appid=39.
+  
+ Installation Instructions
+ ========================= 
+  
+ Pre-Installation Items:
+ =======================
+  
+ * Environment Check:
+      
+   Programmer access is required for installing this patch.
+  
+   ** NOTE ** -- Prior to installation, the installer must ensure the  
+                 DUZ(0) node of the DUZ array is set to the "@" symbol.
+   
+ * Users On the System:
+    
+   This patch modifies routines used by the Event Capture application and
+   may affect many users.
+  
+   This patch may be installed with users on the system, but should be
+   loaded during non-peak hours to minimize disruption to users and to
+   reduce the possibility of errors when the routines are updated.
+  
+   If installed during the normal workday, it is recommended that the
+   following selection(s) in the OPTION (#19) file, and all of their
+   descendants be disabled to prevent possible conflicts while running
+   the KIDS Install. Other VISTA users will not be affected.
+  
+         EC GUI Context version 2.4.0.0   ... EC GUI CONTEXT
+    
+ * Software Installation Time:
+  
+   The estimated installation time is less than 5 minutes during off peak
+   hours.
+  
+ * Required Builds:
+    
+   The following is a list of REQUIRED builds for this KIDS
+   distribution.  KIDS will not allow the installation of this patch
+   without their prior installation.
+  
+   Required Build(s):
+   ------------------
+   EC*2.0*92
+   EC*2.0*134
+  
+ Installation Steps:
+ ===================
+   
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+  
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter EC*2.0*139):
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4.  Use the Install Package(s) option and select the package EC*2.0*139.
+  
+   5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//'  Answer YES unless your system does this in a
+       nightly TaskMan process.
+  
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' answer NO.
+  
+   7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//' answer YES.
+     
+   8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+       Enter the following options:
+      
+       EC GUI Context version 2.4.0.0   ... EC GUI CONTEXT
+  
+   9.  When prompted 'Enter protocols you wish to mark as 'Out Of
+       Order':' press <enter>.
+  
+  10.  If desired, any post-install routines can be deleted after
+       successful installation of the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECBEN2U
+    Before: B35228325   After: B36435236  **4,5,7,10,17,18,23,42,47,54,
+                                           72,95,76,139**
+Routine Name: ECDISSUM
+    Before:  B4114146   After:  B4295797  **131,139**
+Routine Name: ECEFPAT
+    Before: B89607529   After:B121783396  **25,32,39,42,47,49,54,65,72,
+                                           95,76,112,119,114,126,134,139**
+Routine Name: ECLATESH
+    Before:       n/a   After: B12606729  **139**
+Routine Name: ECMFDSSU
+    Before: B64085384   After: B67578246  **25,30,33,126,131,139**
+Routine Name: ECPAT
+    Before: B55958670   After: B58151375  **5,18,47,72,95,112,119,131,134,139**
+Routine Name: ECPCER
+    Before: B35285752   After: B38226237  **4,18,23,47,72,95,119,114,126,139**
+Routine Name: ECRECER
+    Before: B34819903   After: B38346891  **112,122,126,139**
+Routine Name: ECRRPC
+    Before: B23213577   After: B24100495  **25,47,61,72,95,101,100,107,
+                                           112,131,139**
+Routine Name: ECRRPT1
+    Before: B64773176   After: B60357464  **25,32,33,61,78,72,90,95,100,
+                                           107,112,119,139**
+Routine Name: ECRRPT2
+    Before: B45393143   After: B50858655  **112,131,139**
+Routine Name: ECSCPT
+    Before: B12785074   After: B14113911  **72,92,95,119,139**
+Routine Name: ECSCPT1
+    Before: B12941962   After: B15662403  **72,95,119,131,139**
+Routine Name: ECSUM
+    Before: B16700984   After: B16622195  **4,19,33,47,95,119,122,126,131,139**
+Routine Name: ECSUM1
+    Before: B30607449   After: B32805163  **4,19,23,33,47,95,100,119,122,
+                                           126,131,139**
+Routine Name: ECU1RPC
+    Before: B55194101   After: B55545194  **25,30,49,61,131,139**
+Routine Name: ECUERPC
+    Before: B63459075   After: B78089602  **25,32,33,46,47,59,72,95,114,
+                                           126,129,131,139**
+Routine Name: ECUERPC2
+    Before: B10728700   After: B11049596  **41,39,50,72,134,139**
+Routine Name: ECUMRPC
+    Before: B30601632   After: B32856501  **25,32,33,131,139**
+Routine Name: ECUMRPC1
+    Before:B107083588   After:B116888350  **25,30,33,72,94,95,105,100,
+                                           107,110,112,126,130,131,134,
+                                           139**
+Routine Name: ECUNTRPT
+    Before:  B8713813   After:  B9743210  **107,119,139**
+Routine Name: ECUTL0
+    Before: B14949344   After: B15671674  **10,139**
+Routine Name: ECUTL3
+    Before: B34886716   After: B35350036  **122,131,139**
+Routine Name: ECUURPC
+    Before:  B6143414   After:  B6184913  **25,42,49,94,95,76,104,124,139**
+Routine Name: ECV1RPC
+    Before: B15098086   After: B18261455  **25,33,49,61,131,139**
+Routine Name: ECV2RPC
+    Before: B23577970   After: B25981039  **25,30,49,95,139**
+Routine Name: ECV3RPC
+    Before: B66640374   After: B71779614  **25,47,49,61,72,131,134,139**
+Routine Name: ECV4RPC
+    Before: B76866291   After: B78304168  **25,33,49,131,134,139**
+ 
+Routine list of preceding patches: 124, 134
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 26, 2017
+Completed By:                               Date Completed: JUL 23, 2018
+Released By :                               Date Released : JUL 23, 2018
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

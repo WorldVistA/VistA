@@ -1,0 +1,303 @@
+
+=============================================================================
+Run Date: MAY 06, 2019                     Designation: EAS*1*178
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #149                      Status: Released
+                  Compliance Date: JUN 06, 2019
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.6 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.6. This release, developed in Java
+ technology, contains Enrollment System Modernization (ESM) Phase 2 
+ development and upgrade efforts, including enhancements to support ES
+ Community Care (ESCC) and ES Sustainment.
+  
+ ES 5.6 was successfully deployed on Saturday, May 4, 2019.
+  
+ The following functionality is updated in this ES 5.6 release:
+  
+ ESM
+ 1. ES is enhanced to interface with the VET360 address validation service 
+    and display the results provided by the service to the ES user who can
+    select the most accurate address.
+ 2. ES is enhanced to implement the Preferred Name field.
+ 3. ES is enhanced to allow editing of the Appointment Request field after 
+    a Veteran's application has been completed in the Add a Person module.
+    Once the Appointment Request field is updated, ES will notify VistA of
+    the change.
+ 4. ES is enhanced to limit the future discharge date (FDD) for a Veteran's
+    application to 365 days from the current date.
+ 5. ES is enhanced to set applications to a "Not Applicable" enrollment 
+    status when an FDD is received from the Healthcare Application (HCA)
+    system.
+ 6. ES is enhanced to share the site identifier with VET360 as part of each
+    address, phone, and email update message. ES is also updated to
+    handle logical deletes of phone numbers and email addresses from 
+    VET360. 
+  
+ Enrollment System Community Care (ESCC)
+ ES is updated and enhanced to implement business rule and system process 
+ changes associated with the MISSION Act. President Trump signed the 
+ MISSION Act into law on June 5, 2018. The MISSION Act goes into effect on 
+ June 6, 2019. Changes to ES that support the functionality for the 
+ Community Care Program (CCP) requirements of the MISSION Act are as 
+ follows:
+ 1. Introduction of new Health Benefit Plans (HBPs) and Veterans Choice
+    Eligibility (VCE) codes
+ 2. Introduction of new combinations of VCE codes and new scenarios that 
+    will be supported based on business rules
+ 3. New iLOG rule flows and extract, transform, load (ETL) jobs based on
+    business rules to support this new and revised logic
+ 4. Changes to the following screens and reports:
+    - Health Benefit Plan
+    - Community Care (CC) Determination
+    - CC Determination History
+    - System Parameters
+    - Veterans Choice Eligibility (VCE) Parameters
+    - Third-Party Administrator (TPA) Details
+    - TPA Export Report
+    - Community Care Network (CCN) Contractor Message Log
+    - CCN Export Report
+ 5. New data being exchanged with Corporate Data Warehouse (CDW) for Title 
+    38 Care and Urgent Care
+ 6. Cleanup of the ES ETL for the existing CDW interface for Wait-Time
+ 7. Implementation of changes to the business rules and associated data 
+    around the Hardship Eligibility and Hardship HBPs
+  
+ Operational Decision Management (ODM)
+ For the iLOG to ODM project, the 71 iLOG rule sets were transferred 
+ from iLOG to ODM.  A Mediation Framework was established to allow the ES
+ user to switch between the iLOG and ODM rules sets as the rules sets
+ are integrated into the ES application. ES 5.6 integrates rule sets that
+ support the Person Eligibility and Process Demographics functionalities.
+ Screen functionality is unchanged by the upgraded rules.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+ 746736      Problem: A StackOverflow exception occurs during Add a Person.
+             Resolution: Added bean (domainconcept entry for 
+             moneterybenefit) in model_properties.xml.
+  
+ 812027      Problem: Take out the Bad Address Indicator (BAI) when an 
+             address is corrected by VET360. 
+             Resolution: Added check to ensure that false string is handled
+             by the inbound VET360 code.
+  
+ 874714      Problem: CCN Insurances fail to upload in ES if the file 
+             contains two entries for the same record.
+             Resolution: Corrected the CCN Other Health Insurance (OHI)
+             private insurance processor transaction boundaries; 
+             restructured the code so that each OHI record has its own
+             transaction.
+  
+ 899494      Problem: VET360 client is not retrying HTTP 500 errors.
+             Resolution: Updated all handlers to retry the message if it is
+             not an expected checked exception.
+  
+ 910333      Problem: Section 508: Medal of Honor (MOH) radio buttons are 
+             not keyboard accessible if MOH = NO or No Data.
+             Resolution: Modified screen to override the default tab order
+             when No Data is selected, so that the focus will go to the NO
+             radio button instead.
+  
+ 921339      Problem: Federal Information Processing Standards (FIPS) code 
+             is truncated in Geocode_Transmit.
+             Resolution: Corrected the ETL query to retrieve all five
+             characters.
+  
+ 933988      Problem: Records with address or phone changes that do NOT 
+             change VCE are being excluded in the Third-Party Administrator
+             (TPA) file.
+             Resolution: New ETL job TPA_POSITIVE_PROD created to include
+             records with address and phone changes in TPA positive files.
+  
+ 937497      Problem: Deleting phone numbers (Home, Mobile) is not 
+             triggering a Z05.
+             Resolution: Added code fix to ensure that VET360 outbound
+             messages get sent on deletion of addresses, thus triggering a
+             Z05.
+  
+ 939276      Problem: MOH can only be added to a person who has Veteran
+             Indicator = Yes.
+             Resolution: Code has been updated to do the proper validation.
+  
+ 950355      Problem: Error screen appears when filtering on CCN Messages
+             Search Screen for more than 1,000 records.
+             Resolution: Updated the exception handling for the CCN search 
+             to catch MaxRecordExceededExceptions and output an error
+             message to the user interface (UI) when they occur.
+  
+ 960040      Problem: ES is not updating the effective date of the 
+             residential address correctly when message is received from
+             VistA.
+             Resolution: Changed the ProcessAddress rule on iLog and ODM by
+             removing setAddressUpdatedDate to current date. This ensures 
+             that the incoming address will be accepted as is.
+  
+ 960266      Problem: Effective dates on all address types are being 
+             processed in RF1 segment with no regard to time zone.
+             Resolution: Enabled the zone inclusion in the address builder 
+             for the following two address metadata: AddressMetaDataFromZTA
+             and AddressMetaDataFromPID.
+  
+ 963997      Problem: TPA files have duplicates.
+             Resolution: Modified the flow to check the review flag to 
+             ensure that the save isn't happening during a review. The
+             review  flag is used to ensure that when the process comes
+             from MSDS it will not do the save either. MSDS is configured
+             to execute the rule flow multiple times with tempPerson. When
+             the return uses tempPerson, the flag set is ignored. It is
+             only acted upon when the process is called with the onFile
+             session person.TBD.
+  
+ 965309      Problem: Incorrect VCE due to P.O. Box pattern mismatch.
+             Resolution: Modified the REGEX that captures P.O. Box and 
+             General Delivery.
+  
+ 965311      Problem: Geocode_Transmit Audit trigger is skipping some 
+             history.
+             Resolution: Implemented changes to audit trigger and records
+             restoration database so that history updates will not be 
+             skipped by the audit trigger.
+  
+ 968724      Problem: CDW data should be capitalized before updating to
+             Administrative Data Repository (ADR).
+             Resolution: Capitalized all clinic names in ADR.WaitTime 
+             table.
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Patch (PackMan) message and documentation 
+ describing the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.6 Release Notes            ES_5_6_RN.PDF                  binary
+ ES 5.6 User Guide               ES_5_6_UG.PDF                  binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 29, 2019
+Completed By:                               Date Completed: MAY 06, 2019
+Released By :                               Date Released : MAY 06, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

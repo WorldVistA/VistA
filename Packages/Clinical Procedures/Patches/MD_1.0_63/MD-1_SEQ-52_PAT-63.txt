@@ -1,0 +1,163 @@
+$TXT Created by                     CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Monday, 12/10/18 at 17:02
+=============================================================================
+Run Date: MAY 01, 2019                     Designation: MD*1*63
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #52                      Status: Released
+                  Compliance Date: JUN 01, 2019
+=============================================================================
+
+Associated patches: (v)MD*1*61     <<= must be installed BEFORE `MD*1*63'
+
+Subject: CP FLOWSHEETS WINDOWS 10 HELP FILE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Clinical Procedures 
+ (CP) Flowsheets application.
+  
+ 1. CP Flowsheets - XE10 Conversion
+ The Department of Veterans Affairs Office of Information and Technology
+ requires that applications remain compliant with the Technical Reference
+ Model (TRM) regarding the version of tools used for development. This
+ patch accomplished this by updating the version of Delphi to XE10.2.
+  
+ 2. CP Flowsheets - Windows 10 help file format conversion
+ While evaluating Windows 10, it was discovered that the Help files would
+ not display correctly. This patch will correct this problem by 
+ converting the help files to a new format.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ Wilmington VA Medical Center, DE
+ Edward Hines Jr. VA Hospital (Hines, IL) 
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ This Software is being released with both a VistA component, and an 
+ updated GUI. Files and documentation pertaining to this patch are
+ available.
+  
+ The preferred method is to retrieve files from:
+  
+   download.vista.domain.ext.
+  
+ This transmits the files from the first available server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Title                     File Name           FTP Mode
+ -----------------------------------------------------------------------
+ Installation Guide for    MD_1_63_IG.pdf       Binary
+ MD*1.0*63 (CP Flowsheets)  
+ GUI Files                 MD_1_63.zip          Binary
+  
+          Zip File Name       Zip Contents (size)                
+          ----------------    ------------------------------------
+          CPFlowsheets.chm    CP Flowsheets Help file    (360,303)
+          CPFlowsheets.exe    CP Flowsheets Executable (5,215,232)
+  
+  
+ Patch Installation:
+ ===================
+ NOTE: Installation of this patch requires both this KIDS build, and the 
+ installation of the GUI files included in the zip file. This needs to be 
+ a coordinated install, both need to happen concurrently.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Please reference the MD*1.0*63 CP Flowsheets Installation Guide as this
+ server installation needs to be coordinated with the GUIs and GUI DLL
+ installation.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users and needs to be installed at the same
+ time as the GUI DLL installation.
+ This patch should take less than 5 minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the 
+    patch # MD*1.0*63.
+  
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not backup
+       any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will 
+       (allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch routines,
+       DDs, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport
+       global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    answer NO.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//', answer NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Please reference the MD*1.0*63 CP Flowsheets Installation Guide for post 
+ install steps.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ Please reference the MD*1.0*63 CP Flowsheets Installation Guide for 
+ back-out/rollback instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Oct 5, 2018;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDPOST63
+    Before:       n/a   After:   B398921  **63**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 09, 2018
+Completed By:                               Date Completed: APR 30, 2019
+Released By :                               Date Released : MAY 01, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

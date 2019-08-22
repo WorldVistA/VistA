@@ -1,0 +1,186 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/04/19 at 09:38
+=============================================================================
+Run Date: JUN 04, 2019                     Designation: LR*5.2*517
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #424                    Status: Released
+                  Compliance Date: JUL 05, 2019
+=============================================================================
+
+Associated patches: (v)LR*5.2*500  <<= must be installed BEFORE `LR*5.2*517'
+
+Subject: CPRS LAB TEST ERROR AFTER SPECIMEN DELETION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following VistA Lab Service issue:
+  
+ An <UNDEFINED> error occurs in CPRS when ordering a lab test that has had
+ a SITE/SPECIMEN deleted in the LABORATORY TEST file (#60).
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+ 1. INC3909862 - Error when ordering lab test after specimen deletion 
+  
+ Problem:
+ -------
+ The following error occurs in CPRS when ordering a lab test that has had 
+ a SITE/SPECIMEN deleted in LABORATORY TEST file (#60):
+ $ZE= <UNDEFINED>COLL+10^LR7OR3 ^LAB(60,lab_test_IEN,1,site/specimen_IEN,0)
+  
+ Resolution: 
+ ----------
+ Routine LRMLED has been modified to prevent the <UNDEFINED> error from 
+ occurring. Specifically, the API ES^LRMLED has been modified to bypass
+ continued processing if the following zero node entry does not exist for
+ a lab test: ^LAB(60,'lab test ien',1,'site/specimen ien',0))
+ Also, post-install routine LR517 has been created to clean up the 
+ orphaned data that was causing the <UNDEFINED> error prior to this patch 
+ being installed.
+  
+ Note: An entry in the SITE/SPECIMEN multiple of a test in the LABORATORY
+ TEST file (#60) should NEVER be deleted. If a specimen was added in error,
+ or if the specimen is no longer used, the field RESULT/SPECIMEN INACTIVE
+ DATE should be used, and a date entered to mark the specimen as inactive.
+  
+  
+ Blood Bank Clearance:
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*517 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*517 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*517 have no adverse effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Test Sites:
+ ==========
+ Lexington VA HCS
+ Overton Brooks VAMC (Shreveport)
+  
+  
+ Patch Installation:
+  
+ Pre/Post-Installation Overview:
+ ------------------------------
+ The post-install routine is LR517. This routine will remove any orphaned
+ data in the LABORATORY TEST file (#60) that was causing the error prior to
+ this patch install. Prior to being removed, the data will be backed up to
+ ^XTMP("LR_5.2_517_POST_INSTALL") and stored for 30 days. This routine will
+ also create and send a MailMan message with the subject - LR*5.2*517 Data
+ Removal - to the patch installer that details the orphaned data that was
+ removed.
+  
+ Pre-Installation Instructions:
+ -----------------------------
+ This patch may be loaded with users on the system. You may wish to install
+ it during non-peak hours. Installation along with the execution of the
+ post-install routine will take less than 5 minutes.
+  
+ NOTE: Kernel patches must be current on the target system to avoid
+ problems loading and/or installing this patch.
+  
+ Installation Instructions:
+ -------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option to load the KIDS patch
+    into a Transport Global on your system.
+  
+ 3. From the Kernel Installation & Distribution System Menu (KIDS), select
+    the Installation Menu.
+  
+ 4. From the Installation Menu, select the Backup a Transport Global
+    option and when prompted for the INSTALL NAME enter the patch
+    LR*5.2*517. This option will create a backup message of any routines
+    exported with this patch. It will not backup any other changes such as
+    DDs or templates.
+     
+ 5. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch LR*5.2*517.
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+     
+     b. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     c. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch is
+        installed. (It compares all components of this patch's routines,
+        DDs, templates, etc.).
+  
+ 6. From the Installation Menu, select the Install Package(s) option and
+    enter the patch LR*5.2*517.
+  
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+    respond 'NO'.
+  
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//', respond 'NO'.
+  
+ Installation Verification:
+ -------------------------
+ The Calculate and Show Checksum Values option [XTSUMBLD-CHECK] can be run 
+ to compare the routine checksums to what is documented in this patch 
+ description.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from this patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR517
+    Before:       n/a   After:  B5492199  **517**
+Routine Name: LRMLED
+    Before:B187849781   After:B189478521  **468,500,517**
+ 
+Routine list of preceding patches: 500
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 31, 2019
+Completed By:                               Date Completed: JUN 04, 2019
+Released By :                               Date Released : JUN 04, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,171 @@
+
+=============================================================================
+Run Date: MAY 17, 2019                     Designation: RA*5*159
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #140                      Status: Released
+                  Compliance Date: JUN 17, 2019
+=============================================================================
+
+
+Subject: INFORMATIONAL FOR NTP HL7 FEEDS
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ****  This Patch Only Applies to Facilities that use NTP  ****
+ ****             National Teleradiology Program           ****
+  
+ NTP is in the process of switching from servers located in each VISN to a 
+ regional data center model for ingesting DICOM images. For the HL7 
+ traffic, everything (inbound and outbound) will be going directly through 
+ the Sacramento data center servers.  All NTP customers will need to 
+ update the TCP/IP address for their RA-NTPV2 logical link.
+  
+ NODE: RA-NTPV2                          
+   LLP TYPE: TCP                         DEVICE TYPE: Non-Persistent Client
+   STATE: Inactive                       AUTOSTART: Enabled
+   TCP/IP ADDRESS: 127.0.0.1             TCP/IP PORT: 5005
+   TCP/IP SERVICE TYPE: CLIENT (SENDER)  PERSISTENT: NO
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ There are no documentation changes associated with this patch.
+  
+  
+    ===================  Installation Instructions ====================
+   There is no installable component to this patch.  The following 
+   instructions are provided for NTP sites to update the TCP/IP address of
+   their RA-NTPV2 HL7 Logical Link.  Note there is no change to the port.
+  
+   Step 1: Shut down the RA-NTPV2 HL Logical Link
+  
+      Select OPTION NAME: HL MAIN MENU       HL7 Main Menu
+  
+                Event monitoring menu ...
+                Systems Link Monitor
+                Filer and Link Management Options ...
+                Message Management Options ...
+                Interface Developer Options ...
+                Site Parameter Edit
+         HLO    HL7 (Optimized) MAIN MENU ...
+  
+      Select HL7 Main Menu Option: filer and Link Management Options
+  
+         SM     Systems Link Monitor
+         FL     Monitor, Start, Stop Filers
+         LM     TCP Link Manager Start/Stop
+         SA     Stop All Messaging Background Processes
+         RA     Restart/Start All Links and Filers
+         DF     Default Filers Startup
+         SL     Start/Stop Links
+         PI     Ping (TCP Only)
+         ED     Link Edit
+         ER     Link Errors ...
+  
+      Select Filer and Link Management Options Option: SL  Start/Stop Links
+  
+      This option is used to launch the lower level protocol for the
+      appropriate device.  Please select the node with which you want to 
+      communicate
+  
+      Select HL LOGICAL LINK NODE: RA-NTPV2
+      The LLP was last started on JAN 05, 2018 11:51:03.
+  
+      Okay to shut down this job? y  YES
+      The job for the RA-NTPV2 Lower Level Protocol will be shut down.
+  
+   Step 2: Edit the TCP/IP address of the RA-NTPV2 HL Logical Link to 
+           127.0.0.1
+  
+        SM     Systems Link Monitor
+        FL     Monitor, Start, Stop Filers
+        LM     TCP Link Manager Start/Stop
+        SA     Stop All Messaging Background Processes
+        RA     Restart/Start All Links and Filers
+        DF     Default Filers Startup
+        SL     Start/Stop Links
+        PI     Ping (TCP Only)
+        ED     Link Edit
+        ER     Link Errors ...
+  
+      Select Filer and Link Management Options Option: ED  Link Edit
+  
+                 NODE: RA-NTPV2              DESCRIPTION:
+          INSTITUTION:
+       MAILMAN DOMAIN:
+            AUTOSTART:
+           QUEUE SIZE: 10
+             LLP TYPE: TCP  <--  Enter here
+           DNS DOMAIN:
+  
+      Select HL LOGICAL LINK NODE:    RA-NTPV2
+                           HL7 LOGICAL LINK
+    
+     --------------------------------------------------------------
+  
+     lqqqqqqqqqqqqqqqTCP LOWER LEVEL PARAMETERSqqqqqqqqqqqqqqqqqqk
+     x               RA-NTPV2                                    x
+     x                                                           x
+     x  TCP/IP SERVICE TYPE: CLIENT  (SENDER)                    x
+     x       TCP/IP ADDRESS: 127.0.0.1  <--- New IP          x
+     x          TCP/IP PORT: 5005                                x
+     x          TCP/IP PORT (OPTIMIZED):                         x
+     x                                                           x
+     x   ACK TIMEOUT: 30        RE-TRANSMISION ATTEMPTS: 3       x
+     x  READ TIMEOUT: 30      EXCEED RE-TRANSMIT ACTION: ignore  x
+     x    BLOCK SIZE:                          SAY HELO:         x
+     x                          TCP/IP OPENFAIL TIMEOUT:         x
+     xSTARTUP NODE:                          PERSISTENT: NO      x
+     x   RETENTION:                UNI-DIRECTIONAL WAIT:         x
+     mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj
+   
+     --------------------------------------------------------------
+     Close    Refresh
+  
+   Step 3: Restart the RA-NTPV2 HL Logical Link.
+  
+      Select HL LOGICAL LINK NODE:
+  
+         SM     Systems Link Monitor
+         FL     Monitor, Start, Stop Filers
+         LM     TCP Link Manager Start/Stop
+         SA     Stop All Messaging Background Processes
+         RA     Restart/Start All Links and Filers
+         DF     Default Filers Startup
+         SL     Start/Stop Links
+         PI     Ping (TCP Only)
+         ED     Link Edit
+         ER     Link Errors ...
+  
+      Select Filer and Link Management Options Option: SL  Start/Stop Links
+  
+     This option is used to launch the lower level protocol for the
+     appropriate device.  Please select the node with which you want
+     to communicate
+  
+      Select HL LOGICAL LINK NODE:    RA-NTPV2
+      The LLP was last shutdown on MAY 15, 2019 10:51:13.
+      This LLP has been enabled!
+  
+   Step 4: Send an email to "VHA NTP Tier 2 Support" (email group in the 
+           GAL) when the change is complete so they can validate it.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 15, 2019
+Completed By:                               Date Completed: MAY 16, 2019
+Released By :                               Date Released : MAY 17, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

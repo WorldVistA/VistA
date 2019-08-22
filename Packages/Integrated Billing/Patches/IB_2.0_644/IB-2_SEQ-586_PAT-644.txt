@@ -1,0 +1,228 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/25/19 at 17:26
+=============================================================================
+Run Date: JUL 22, 2019                     Designation: IB*2*644
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #586                      Status: Released
+                  Compliance Date: AUG 21, 2019
+=============================================================================
+
+Associated patches: (v)IB*2*377    <<= must be installed BEFORE `IB*2*644'
+
+Subject: MULTIPLE LINE ITEMS WITH 1ST SERVICE DATE; BILLING FACILITY NAME DISCREPANCY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ -Insurance claims with multiple service line items/dates on the bill are
+  not electronically transmitted properly.
+  
+ -The BILLING FACILITY NAME (#200) field in the INSTITUTION (#4) file is
+  not correctly populated on the uniform billing form UB-04 FL-1.
+  
+ Patch Components:
+ ----------------- 
+    
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+   
+ Forms Associated:
+   
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+   
+ Mail Groups Associated:
+   
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+   
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+                                                       
+ Protocols Associated:
+   
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+ Templates Associated:
+   
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+   
+ Additional Information:
+ N/A
+    
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+    
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+    
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC3318511 - Insurance claims with multiple line items/dates on a
+                 single bill are not transmitting electronically properly.
+    
+  
+    Problem:
+    --------
+    Insurance claims on the bill in the Electronic Data Interchange (EDI)
+    Transmission, displays only the first date of service listed on all
+    service line items instead of an individual date of service for each
+    service line item.
+    
+  
+    Resolution:
+    ------------
+    Routine IBCEFG1 was modified to pull the procedure date to the 'Service
+    Date From' field for each service line item for the EDI transmission if
+    it can be determined by the associated procedure, otherwise it will use
+    the start date of the statement on the bill.
+    
+  
+ 2. INC3333745 -  Billing Facility Naming discrepancy resulting in denied
+                  claims for NCCPAC.
+                
+  
+    Problem:
+    --------
+    The BILLING FACILITY NAME (#200) field in the INSTITUTION (#4) file 
+    does not display to the correct uniform billing form,
+    UB-04 FL-1, resulting in claims being denied by payers.
+  
+    
+    Resolution:
+    -----------
+    Post-init routine IB20P644, was created to modify the
+    FORMAT CODE (#1) field in the IB FORM FIELD CONTENT (#364.7) file
+    for the BILLING PROVIDER NAME (FL-1/1) form field. If the
+    BILLING FACILITY NAME (#200) field of the INSTITUTION (#4) file
+    exists, the Facility Name will be used. If not, the NAME (#.01) field 
+    of the INSTITUTION (#4) file will be used for the UB-04 FL-1 uniform 
+    billing form.
+  
+  
+    
+ TEST SITES:
+ -----------
+ MARTINSBURG VAMC
+ VA MARYLAND HCS 
+   
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+   
+ Pre/Post Installation Overview:
+  
+ Pre-Installation Instructions:
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ The installation will install new and modified routines.
+  
+  1. Choose the PackMan message containing this patch.
+  
+  2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+  3. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu. From this menu, you may elect to use the following
+     options. When prompted for the INSTALL NAME enter the patch # (ex.
+     IB*2.0*644):
+        a. Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DDs or templates.
+        
+        b. Compare Transport Global to Current System - This option will 
+           allow you to view all changes that will be made when this patch 
+           is installed. It compares all components of this patch 
+           (routines, DDs, templates, etc.).
+  
+        c. Verify Checksums in Transport Global - This option will allow 
+           you to ensure the integrity of the routines that are in the 
+           transport global.
+  
+  4. Select the Install Package(s) option and choose the patch to install,
+     IB*2.0*644.
+  
+        a. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//', answer NO
+  
+        b. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+           and Protocols? NO//', answer NO
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ You may delete the routine IB20P644 from your production system after the 
+ patch has been successfully verified.
+  
+ Use the 'Install File Print' option to review the updates and ensure
+ that the install has been completed. For an example:
+  
+     IB*2.0*644 Post-Install starts .....
+  
+   Format code updated for National BILLING PROVIDER NAME (FL-1/1) in the 
+ #364.7 
+  
+     IB*2.0*644 Post-Install is complete.
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should
+ have saved a backup of the routines in a mail message using the Backup
+ a Transport Global [XPD BACKUP] menu option. The message containing
+ the backed-up routines can be loaded with the "Xtract PackMan" function
+ at the Message Action prompt. The PackMan function INSTALL/CHECK
+ MESSAGE is then used to install the backed-up routines onto the VistA
+ system. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P644
+    Before:       n/a   After:  B7540275  **644**
+Routine Name: IBCEFG1
+    Before: B23263677   After: B23251268  **52,51,137,181,197,232,288,
+                                           349,371,377,644**
+ 
+Routine list of preceding patches: 377
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 11, 2019
+Completed By:                               Date Completed: JUL 22, 2019
+Released By :                               Date Released : JUL 22, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,182 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/21/19 at 15:53
+=============================================================================
+Run Date: MAY 21, 2019                     Designation: PSO*7*556
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #458                      Status: Released
+                  Compliance Date: JUN 21, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*452   <<= must be installed BEFORE `PSO*7*556'
+                    (v)PSO*7*482   <<= must be installed BEFORE `PSO*7*556'
+
+Subject: CRCL AND CREATININE DISPLAY ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+   
+ INC2529214 - Code failure during display of CrCL Creatinine lab results 
+ in the patient profile 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2529214 - Code failure during display of CrCL Creatinine lab results 
+ in the patient profile 
+           
+ Problem: 
+ --------
+ Outpatient pharmacists at the Pensacola Joint Ambulatory Care Center 
+ reported an error in VistA had occurred during display of the patient
+ profile.
+  
+ When a user accesses the following Outpatient menu options;
+  
+ Patient Prescription Processing  [PSO LM BACKDOOR ORDERS]
+ Medication Profile               [PSO P]
+ Edit Prescriptions               [PSO RXEDIT]
+  
+ A hard stop will occur in VistA due to an undefined variable ZDSPL. This 
+ is caused by code that was written in such a way as to not handle all
+ possible combinations of data that could be present. The code specifically
+ would not set ZDSPL if the CrCL value is equal to "Not Found" and the
+ Creatinine value was equal to .01 or if the CrCL was less than 1. The
+ three Outpatient routines involved are PSOORUT2, PSODEM and PSORXEDT and
+ have the exact same code so the same fix could be applied to all three
+ routines.
+  
+ Resolution:
+ -----------
+ The resolution for the undefined variable ZDSPL is to update the code to 
+ handle all possible data combinations that could exist for CrCL and
+ Creatinine results.
+    
+ Technical Resolution:
+ ---------------------
+ Changed five lines in routine PSOORUT2, PSODEM and PSORXEDT starting at
+ line 33 thru 37 to format the display of CrCL and Creatine lab results in 
+ the patient profile and correct the undefined variable RSLT crash.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+         
+ Test Sites:
+ -----------
+ Northport VAMC
+ Biloxi VAMC
+    
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to 
+ install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSO*7.0*556):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ ;;7.0;OUTPATIENT PHARMACY;**[PATCH LIST]**;[DATE];[BUILD NUMBER]
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODEM
+    Before: B21822724   After: B23001879  **5,19,233,258,326,390,411,402,
+                                           500,452,556**
+Routine Name: PSOORUT2
+    Before:B105702086   After:B107871071  **11,146,132,182,233,243,261,
+                                           268,264,305,390,411,402,500,
+                                           556**
+Routine Name: PSORXEDT
+    Before: B55389504   After: B57054033  **21,23,44,71,146,185,148,253,
+                                           390,372,416,313,427,422,402,
+                                           500,482,556**
+ 
+Routine list of preceding patches: 452, 482
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 08, 2019
+Completed By:                               Date Completed: MAY 20, 2019
+Released By :                               Date Released : MAY 21, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

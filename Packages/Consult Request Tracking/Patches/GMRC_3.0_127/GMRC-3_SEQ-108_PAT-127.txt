@@ -1,0 +1,112 @@
+
+=============================================================================
+Run Date: MAY 29, 2019                     Designation: GMRC*3*127
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3       SEQ #108                      Status: Released
+                  Compliance Date: MAY 30, 2019
+=============================================================================
+
+
+Subject: SEOC APPLICATION PERFORMANCE MONITORING (APM) IMPLEMENTATION
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ This is an informational patch explaining development of the Standardized 
+ Episodes of Care (SEOC) application.
+  
+ NOTE: This patch is loaded to an internal VA hosting environment and will 
+ be available for use within the VA network.
+  
+ There is nothing that local sites can or need to do. 
+ **************************************************************************
+  
+ This software is a reference database for managing care bundles for use by
+ Veterans Information Systems and Technology Architecture (VistA) and other
+ VA systems. Services are grouped together within the SEOC system into 
+ bundles so that clinicians can add these bundles to patients consult 
+ records in a standardized fashion, reducing the amount of time spent 
+ manually entering consult instructions, and providing uniformity among 
+ the patient records and across facilities for how patient care is 
+ prescribed for similar complaints.
+  
+ These bundles group together one or more services that are preselected for
+ different specialties to be added to the consult records. In addition, the
+ clinician is provided with information regarding prescribing rules and
+ preauthorization requirements, so they can make the most informed 
+ decisions regarding patient care.
+  
+ Additionally, SEOC data will be accessible outside of the 
+ VistA/Computerized Patient Record System (CPRS) so that users of 
+ downstream applications will be accessing the same data, and SEOC 
+ descriptions, reducing the chances of discrepancies.
+  
+ Additional Information:
+ -------------------- 
+ The software is installed in the VA Austin Information Technology Center
+ (AITC) environment, and is accessible via the VA intranet. An API is made
+ available for downstream applications to access SEOC data in a JavaScript 
+ Object Notation (JSON) format.
+  
+ **************************************************************************
+ Version 1.7.1 implements the App Dynamics Application Performance 
+ Monitoring (APM) agent within the SEOC Docker container.
+ **************************************************************************
+  
+ INSTALLATION INSTRUCTIONS:
+  
+ New Service Requests (NSRs):
+ --------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------
+ N/A
+  
+ Test Sites:
+ --------------------
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ SEOC Software is installed on servers in the Infrastructure Operations
+ (IO) environment, and no remote installation is required.  The 
+ Technical Manual will be placed on the following anonymous directories:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at:
+ http://www.domain.ext/vdl/
+  
+ Title                          File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ N/A
+  
+ Patch Installation
+ --------------------
+ Installation of this software will be performed by Infrastructure 
+ Operations (IO) System Administrators, no action is to be taken by 
+ local sites.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 16, 2019
+Completed By:                               Date Completed: MAY 29, 2019
+Released By :                               Date Released : MAY 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

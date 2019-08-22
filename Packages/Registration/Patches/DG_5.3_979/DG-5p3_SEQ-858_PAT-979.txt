@@ -1,0 +1,226 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/04/19 at 10:01
+=============================================================================
+Run Date: JUN 20, 2019                     Designation: DG*5.3*979
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #858                    Status: Released
+                  Compliance Date: JUL 21, 2019
+=============================================================================
+
+
+Subject: ISO SENSITIVE REPORT CHARACTER LIMIT
+
+Category: 
+  - Print Template
+
+Description:
+============
+
+ Patch DG*5.3*979 fixes an issue in the ISO Sensitive Records Report-Export
+ [DG SENSITIVE RCDS RPT-EXPORT] option where the data is not being displayed
+ correctly.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name              Type  File Name (Number)      New/Modified/Deleted
+ -------------              ----  ---------------------   --------------------
+ DG ISO SENSITIVE RCDS PRT    P   DG SECURITY LOG (38.1)       Modified
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC3936613- Registration - DG ISO SENSITIVE RCDS RPT Print Template
+  
+    
+    Problem:
+    ---------
+    User reported an issue in the ISO Sensitive Records Report-Export
+    [DG SENSITIVE RCDS RPT-EXPORT] option where the data is not being
+    displayed correctly if the PATIENT NAME (#.01) field of the DG SECURITY
+    LOG (#38.1) file is 30 characters long. The print template does not
+    account for the "^", it concatenates to the end of the patients name to
+    use as a delimiter. Therefore, the PATIENT NAME (#.01) field and the
+    DATE/TIME RECORD ACCESSED (#50) field from the DG SECURITY LOG (#38.1)
+    file would be displayed together.
+  
+    Resolution:
+    -----------
+    The DG ISO SENSITIVE RCDS PRT print template was modified to change the
+    PATIENT NAME (#.01) field of the DG SECURITY LOG (#38.1) file, length
+    from L30 to L31 to account for the concatenation of the, "^".
+  
+  
+ TEST SITES:
+ -----------
+ Altoona - James E. Van Zandt VA Medical Center
+ West Palm Beach VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than 2 minutes to install this patch.
+  
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch DG*5.3*979:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//" respond NO.
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES.
+  
+    When prompted 'Enter options you wish to mark as 'Out Of Order':', select
+    the following option<s>:
+   
+               Option Name                         Menu Text
+               -----------                         ---------
+       DG SENSITIVE RCDS RPT-EXPORT     ISO Sensitive Records Report-Export
+  
+  
+    Press the Enter key when you are done selecting options.
+  
+  
+    When prompted 'Enter protocols you wish to mark as 'Out Of Order':',
+    press the Enter key.
+  
+  
+    When prompted 'Delay Install (Minutes):  (0 - 60): 0//', answer 0.
+  
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------  
+ In the event that a site decides to back out this patch, the site should 
+ contact the National Service Desk (NSD) to submit a help desk ticket. The 
+ development team will need to issue a follow-on patch in order to 
+ comprehensively back-out this patch.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 31, 2019
+Completed By:                               Date Completed: JUN 19, 2019
+Released By :                               Date Released : JUN 20, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

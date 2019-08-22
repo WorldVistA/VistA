@@ -1,0 +1,286 @@
+
+=============================================================================
+Run Date: JUL 03, 2019                     Designation: WEBN*1.1*10
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1        SEQ #10                    Status: Released
+                  Compliance Date: AUG 03, 2019
+=============================================================================
+
+
+Subject: NUMI 15.7
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The National Utilization Management Integration (NUMI) WEBN*1.1*10, patch 
+ addresses issues related to upgrading the .Net version from 4.5.2 to
+ 4.7.2, changing table structure on AdmissionSource table, removing Print
+ Preview & Export to Excel functionality from the Utilization Management
+ Review Listing page and limiting the Site Administrators from updating
+ Superuser access on NUMI. It also fixes navigation issues after an
+ unexpected error occurs on a NUMI page and errors occurring on Search
+ filters on NUMI screens due to empty Date fields.
+  
+ Patch Components:
+ -----------------
+ N/A   
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ -------------------    ---------------------    ---------------------
+  
+ N/A                             
+  
+ Forms Associated:
+  
+ Form Name       File#   New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A                             
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A    
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A     
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A     
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A    
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC0172999 - Table structure for AdmissionSource needs Primary
+                 key/Unique key update
+  
+ Problem: 
+ -------
+ The original table structure design for the AdmissionSourc data 
+ table inadvertently switched the primary and unique keys.
+  
+ Resolution:
+ ----------
+ Switched the keys so the Primary Key is AdmissionSourceID and the unique 
+ key is AdmissionSourceDesc.
+  
+ 2. INC2565815 - Upgrade to .Net version from 4.5.2 to 4.7.2
+  
+ Problem: 
+ -------
+ The recent release of VistA Integration Adaptor (VIA) has required 
+ Transport Layer Security (TLS 1.2) to be used by both the Internet 
+ Information Services (IIS) web server and the Sync windows service. The
+ synchronizer was not able to use 1.2 as the default connection property
+ without either hardcoding or updating to 4.7.2.
+  
+ Resolution:
+ ----------
+ The NUMI application was upgraded to.NET 4.7.2 so that both the
+ web application and the windows service would be using the same technology
+ baseline.
+  
+ 3. INC2703561 - Date Filter Error
+  
+ Problem: 
+ -------
+ NUMI displays a generic error when the Date filter is selected and the
+ Start Date is blank. This occurs on the Patient Selection screen, the
+ Dismissed Patient Stay screen, and other NUMI pages.
+  
+ Resolution:
+ ----------
+ Corrected code to require start date on all NUMI pages with date
+ filters. This will ensure that no error occurs and all date filters
+ have a date when submitting a date entry.
+  
+ 4. INC2983292 - Super User All-Site Access
+  
+ Problem: 
+ -------
+ Site Administrators who are unaware of NUMI SuperUser privileges often
+ revert their permissions on certain sites which inadvertently leaves them
+ without access to those sites.
+  
+ Resolution:
+ ----------
+ Corrected NUMI code to allow only NUMI SuperUsers to update other NUMI
+ SuperUsers access. All the other Site Administrators without SuperUser 
+ access will be restricted and given a warning message when trying to 
+ update SuperUser access.
+  
+  
+ 5. INC2723124 - Error page displayed to the user
+  
+ Problem: 
+ --------
+ When a user receives an error in NUMI on certain pages, they cannot log 
+ back into NUMI after the error is received. When the user attempts to 
+ start a new session in NUMI, the page jumps back to the error screen where
+ there is no login feature.
+  
+ Resolution:
+ ----------
+ Corrected Code to provide a hyperlink whenever an error occurs. The user
+ will then be able to select the hyperlink entitled, 'Click Here to
+ continue', to be taken to the login page or depending on where the error
+ page occurred, the worklist page.
+  
+ 6. INC2780015 - User Guide Update
+  
+ Problem: 
+ -------
+ Observation stay of 48 hours or less may span two calendar days. 
+ However, only one review is required for the observation stay. The second 
+ day will not be counted in the VHA Support Service Center Capital Assets 
+ (VSSC) data due to a business rule set to count one.
+  
+ Resolution:
+ ----------
+ Updated NUMI User guide for user awareness.
+  
+  
+ 7. INC4649382 - Remove Print Preview/Export to Excel buttons from
+                 Utilization Management Review Listing
+  
+ Problem: 
+ -------
+ When the Print Preview/Export to Excel options found on Utilization 
+ Management Review Listing page are selected it displays full SSN numbers 
+ in printable form which produces a privacy risk.
+  
+ Resolution:
+ ----------
+  
+ Print Preview and Export to Excel buttons have now been removed 
+ from the Utilization Management Review Listing screen with this patch, 
+ WEBN*1.1*10. The NUMI User guide has also been updated to remove any 
+ reference of this option.
+  
+ 8. INC4563728 - Update NUMI User guide for Physician Advisor Review page
+                 modified for Sec. 508 compliance
+  
+ Problem: 
+ -------
+ NUMI Physician Advisor Review page was modified for Sec. 508 compliance, 
+ where the first radio button selection was selected (turned on) by 
+ default. This change was not reflected in NUMI User guide.
+  
+ Resolution:
+ ----------
+ Updated Section 9.3.1 of the NUMI User guide and Figure 151 screenshot to 
+ show default radio button selection for Section 508 compliance.
+  
+  
+ Test Sites:
+ -----------
+ Orlando VA Medical Center
+ Gainesville (NF/SG)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+ OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/application.asp?appid=184
+  
+ Title                              File Name                      FTP Mode
+ ==========================================================================
+  
+ NUMI User Guide v15.7              numi_15_7_UserGuide.pdf        binary
+                                               
+  
+ NUMI Server Setup Guide v15.7      numi_15_7_ServerSetupGuide.pdf binary
+                                                               
+  
+ NUMI System Management Guide v15.7 numi_15_7_sysmtguide.pdf       binary
+                                                    
+                    
+ Patch Installation:
+ -------------------
+ Austin Information Technology Center (AITC) performs patch installation 
+ on a centralized web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ NUMI application users need to be notified of the patch installation 
+ window after confirming the final release date and time with AITC. A 
+ maintenance page is displayed on the NUMI web application while 
+ installation and smoke testing are performed.
+  
+ Installation Instructions:
+ --------------------------
+ NUMI is a .NET based web application build. This is a centralized server 
+ promotion. No installation is required at local sites.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 10, 2018
+Completed By:                               Date Completed: JUL 01, 2019
+Released By :                               Date Released : JUL 03, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

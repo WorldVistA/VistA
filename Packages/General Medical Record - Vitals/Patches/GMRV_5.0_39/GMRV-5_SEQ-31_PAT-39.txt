@@ -1,0 +1,195 @@
+
+=============================================================================
+Run Date: JUL 17, 2019                     Designation: GMRV*5*39
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #31                      Status: Released
+                  Compliance Date: AUG 17, 2019
+=============================================================================
+
+
+Subject: VISTA SECURITY REMEDIATION RPC REFERENCE PARAMETER TYPE RPC UPDATES
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Patch GMRV*5.0*39 is being released to support the security vulnerability
+ solution for the Veterans Health Information Systems and Technology
+ Architecture (VistA) Security Remediation (VSR) program that focuses on 
+ updates to the REFERENCE Parameter Type Remote Procedure Calls (RPCs).
+  
+ Patch GMRV*5.0*39 is being released as a supporting patch for the 
+ Beneficiary Travel Patch DGBT*1.0*35.  GMRV*5.0*39 contains data entry updates
+ to the REMOTE PROCEDURE File (#8994) that include the following.
+  
+ Defect:
+ 957472 - DEF - RPC call GMV PTSELECT
+  
+ 1. Remote Procedure call GMV PTSELECT
+    a. This RPC allows for an input parameter (RESULT) to be passed in and 
+       then uses this parameter as the return. There is no validation of this 
+       input parameter and is a potential security risk as is. This includes
+       an update to the data entry within the REMOTE PROCEDURE File (#8994).
+  
+    b. Removed REFERENCE Parameter Type from GMV PTSELECT and
+       corrected the Input Parameter sequence.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Tucson, AZ
+ West Palm Beach, FL
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality and/or a host file containing 
+ a build may be included in this release.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the 
+ following OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ https://www.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ Host File                           DGBT_1_P35.KID            ASCII
+ TECHNICAL MANUAL AND SECURITY       GMRV_5_0_P39_TM.PD        BINARY
+ GUIDE - Vitals/Measurement 
+  
+ Patches for this installation are combined in the following host file for
+ distribution: DGBT_1_P35.KID. 
+  
+ The host file was created to simplify installation at Veterans
+ Health Administration (VHA) facilities. This file can be obtained from 
+ one of the anonymous Secure File Transfer Protocol (SFTP) directories.
+  
+ File Name                           Contents           Retrieval Format
+ ----------------------------        --------           ----------------
+ DGBT_1_P35.KID                      DGBT*1.0*35          ASCII
+                                     GMRC*3.0*105
+                                     MD*1.0*67
+                                     GMRV*5.0*39
+                                     OR*3.0*495
+                                     PSB*3.0*113
+                                     SD*5.3*713
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+   
+ Installation Instructions:
+ --------------------------
+ Please refer to the DGBT*1.0*35 patch description for installation 
+ instructions. 
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Please refer to the DGBT*1.0*35 patch description for back out plan.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 10, 2018
+Completed By:                               Date Completed: JUL 16, 2019
+Released By :                               Date Released : JUL 17, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

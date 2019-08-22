@@ -1,0 +1,144 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/07/19 at 14:03
+=============================================================================
+Run Date: MAY 01, 2019                     Designation: LR*5.2*520
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #423                    Status: Released
+                  Compliance Date: JUN 01, 2019
+=============================================================================
+
+Associated patches: (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*520'
+
+Subject: CANCELED LAB TEST PROBLEM
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ServiceNow Ticket(s):
+ ----------------------------  
+ INC4230026 - Canceled Lab Test problem
+  
+ Blood Bank Review:
+ ==================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*520 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*520 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*520 have no adverse effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  1.  Defect 924890 - Canceled Lab Test problem
+  
+ Problem:
+ -------
+ A provider is concerned that when she looks under the CPRS Labs tab at a urine 
+ culture that it says completed, even though it was discontinued.  When it is a
+ "CH" subscripted test and it is canceled they do not show up here.  She is 
+ afraid the providers might assume that it is "completed" and is a normal urine
+ since nothing shows up.
+  
+ Resolution:
+ ----------
+ Routines LR7OSMZ1 & LRMIPSZ1 are modified to display 'canceled' when the
+ disposition field in the accession contains 'Not Performed'.
+  
+ Test Sites:
+ ----------
+ Pittsburgh HCS
+ San Diego HCS
+  
+   
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. Installation should 
+ take less than 1 minutes to complete.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following 
+        options. When prompted for the INSTALL NAME enter the patch LR*5.2*520
+          
+              a. Backup a Transport Global - This option will create a backup 
+                 message of any routines exported with this patch. It will not 
+                 backup any other changes such as DDs or templates.
+              b. Compare Transport Global to Current System - This option will 
+                 (allow you to view all changes that will be made when this 
+                 patch is installed.  It compares all components of this patch 
+                 routines, DDs, templates, etc.).
+              c. Verify Checksums in Transport Global - This option will allow 
+                 you to ensure the integrity of the routines that are in the 
+                 transport global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option and
+         choose the patch to install (LR*5.2*520)
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the
+        install? NO//', respond 'NO'.
+  
+ 6.      When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', respond 'NO'.
+  
+  
+ Back-out/Rollback Strategy:
+ -------------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routine from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OSMZ1
+    Before: B17671319   After: B18324120  **121,244,350,520**
+Routine Name: LRMIPSZ1
+    Before: B49126027   After: B50337425  **283,350,520**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 28, 2019
+Completed By:                               Date Completed: MAY 01, 2019
+Released By :                               Date Released : MAY 01, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

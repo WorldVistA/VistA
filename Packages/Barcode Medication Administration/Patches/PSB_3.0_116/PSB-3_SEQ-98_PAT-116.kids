@@ -1,0 +1,1177 @@
+Released PSB*3*116 SEQ #98
+Extracted from mail message
+**KIDS**:PSB*3.0*116^
+
+**INSTALL NAME**
+PSB*3.0*116
+"BLD",11071,0)
+PSB*3.0*116^BAR CODE MED ADMIN^0^3190211^y
+"BLD",11071,1,0)
+^^42^42^3190211^
+"BLD",11071,1,1,0)
+This patch will resolve the following issue.
+"BLD",11071,1,2,0)
+ 
+"BLD",11071,1,3,0)
+INC3683945 - AEU can't look at med admin history (BCMA) due to an error after
+"BLD",11071,1,4,0)
+             inputting a date range
+"BLD",11071,1,5,0)
+INC3570947 - CPRS error caused by patch PSB*3*112, installed at our site on
+"BLD",11071,1,6,0)
+(Duplicate)  12/11/2018
+"BLD",11071,1,7,0)
+INC3507924 - In CPRS trying to run the Med Admin History report for 11-29
+"BLD",11071,1,8,0)
+(Duplicate)  through 12-5 get the attached error message <UNDEFINED>EN+112^
+"BLD",11071,1,9,0)
+             PSBOMH1 *PSBAR(64988)
+"BLD",11071,1,10,0)
+INC4109840 - CPRS shuts down repeatedly when trying to access BCMA 
+"BLD",11071,1,11,0)
+(Duplicate)  medication history record in CPRS reports tab
+"BLD",11071,1,12,0)
+      
+"BLD",11071,1,13,0)
+Defect Tracking System Ticket(s) & Overview:
+"BLD",11071,1,14,0)
+--------------------------------------------
+"BLD",11071,1,15,0)
+INC3683945 - AEU can't look at med admin history (BCMA) due to an error after
+"BLD",11071,1,16,0)
+             inputting a date range
+"BLD",11071,1,17,0)
+INC3570947 - CPRS error caused by patch PSB*3*112, installed at our site on
+"BLD",11071,1,18,0)
+(Duplicate)  12/11/2018
+"BLD",11071,1,19,0)
+INC3507924 - In CPRS trying to run the Med Admin History report for 11-29
+"BLD",11071,1,20,0)
+(Duplicate)  through 12-5 get the attached error message <UNDEFINED>EN+112^
+"BLD",11071,1,21,0)
+             PSBOMH1 *PSBAR(64988)
+"BLD",11071,1,22,0)
+INC4109840 - CPRS shuts down repeatedly when trying to access BCMA 
+"BLD",11071,1,23,0)
+(Duplicate)  medication history record in CPRS reports tab
+"BLD",11071,1,24,0)
+               
+"BLD",11071,1,25,0)
+Problem: 
+"BLD",11071,1,26,0)
+--------
+"BLD",11071,1,27,0)
+After the release of PSB*3*112 a new issue was introduced that caused the 
+"BLD",11071,1,28,0)
+BCMA Medication Admin History Report to cause an <UNDEFINED> error and exit
+"BLD",11071,1,29,0)
+the BCMA GUI application. The problem is specific to a patient with a PATCH
+"BLD",11071,1,30,0)
+Medication with a ONE TIME schedule (ex: Start Date of D and End Date of D+1)
+"BLD",11071,1,31,0)
+and after the PATCH is given on day D and marked removed on day D+1, when the
+"BLD",11071,1,32,0)
+user ran the report for the date Range D thru D the error happens.
+"BLD",11071,1,33,0)
+ 
+"BLD",11071,1,34,0)
+Resolution:
+"BLD",11071,1,35,0)
+-----------
+"BLD",11071,1,36,0)
+This patch prevents the error from happening when the BCMA Medication Admin
+"BLD",11071,1,37,0)
+History Report is run following the instructions above.
+"BLD",11071,1,38,0)
+   
+"BLD",11071,1,39,0)
+Technical Resolution:
+"BLD",11071,1,40,0)
+---------------------
+"BLD",11071,1,41,0)
+Changed the routines PSBOMH and PSBOMH1 to prevent the PSBAR array from 
+"BLD",11071,1,42,0)
+crashing when the subscript is undefined.
+"BLD",11071,4,0)
+^9.64PA^^
+"BLD",11071,6.3)
+2
+"BLD",11071,"ABPKG")
+n
+"BLD",11071,"KRN",0)
+^9.67PA^1.5^24
+"BLD",11071,"KRN",.4,0)
+.4
+"BLD",11071,"KRN",.401,0)
+.401
+"BLD",11071,"KRN",.402,0)
+.402
+"BLD",11071,"KRN",.403,0)
+.403
+"BLD",11071,"KRN",.5,0)
+.5
+"BLD",11071,"KRN",.84,0)
+.84
+"BLD",11071,"KRN",1.5,0)
+1.5
+"BLD",11071,"KRN",1.6,0)
+1.6
+"BLD",11071,"KRN",1.61,0)
+1.61
+"BLD",11071,"KRN",1.62,0)
+1.62
+"BLD",11071,"KRN",3.6,0)
+3.6
+"BLD",11071,"KRN",3.8,0)
+3.8
+"BLD",11071,"KRN",9.2,0)
+9.2
+"BLD",11071,"KRN",9.8,0)
+9.8
+"BLD",11071,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",11071,"KRN",9.8,"NM",1,0)
+PSBOMH^^0^B105048172
+"BLD",11071,"KRN",9.8,"NM",2,0)
+PSBOMH1^^0^B96588224
+"BLD",11071,"KRN",9.8,"NM","B","PSBOMH",1)
+
+"BLD",11071,"KRN",9.8,"NM","B","PSBOMH1",2)
+
+"BLD",11071,"KRN",19,0)
+19
+"BLD",11071,"KRN",19.1,0)
+19.1
+"BLD",11071,"KRN",101,0)
+101
+"BLD",11071,"KRN",409.61,0)
+409.61
+"BLD",11071,"KRN",771,0)
+771
+"BLD",11071,"KRN",779.2,0)
+779.2
+"BLD",11071,"KRN",870,0)
+870
+"BLD",11071,"KRN",8989.51,0)
+8989.51
+"BLD",11071,"KRN",8989.52,0)
+8989.52
+"BLD",11071,"KRN",8994,0)
+8994
+"BLD",11071,"KRN","B",.4,.4)
+
+"BLD",11071,"KRN","B",.401,.401)
+
+"BLD",11071,"KRN","B",.402,.402)
+
+"BLD",11071,"KRN","B",.403,.403)
+
+"BLD",11071,"KRN","B",.5,.5)
+
+"BLD",11071,"KRN","B",.84,.84)
+
+"BLD",11071,"KRN","B",1.5,1.5)
+
+"BLD",11071,"KRN","B",1.6,1.6)
+
+"BLD",11071,"KRN","B",1.61,1.61)
+
+"BLD",11071,"KRN","B",1.62,1.62)
+
+"BLD",11071,"KRN","B",3.6,3.6)
+
+"BLD",11071,"KRN","B",3.8,3.8)
+
+"BLD",11071,"KRN","B",9.2,9.2)
+
+"BLD",11071,"KRN","B",9.8,9.8)
+
+"BLD",11071,"KRN","B",19,19)
+
+"BLD",11071,"KRN","B",19.1,19.1)
+
+"BLD",11071,"KRN","B",101,101)
+
+"BLD",11071,"KRN","B",409.61,409.61)
+
+"BLD",11071,"KRN","B",771,771)
+
+"BLD",11071,"KRN","B",779.2,779.2)
+
+"BLD",11071,"KRN","B",870,870)
+
+"BLD",11071,"KRN","B",8989.51,8989.51)
+
+"BLD",11071,"KRN","B",8989.52,8989.52)
+
+"BLD",11071,"KRN","B",8994,8994)
+
+"BLD",11071,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",11071,"QUES",0)
+^9.62^^
+"BLD",11071,"REQB",0)
+^9.611^2^2
+"BLD",11071,"REQB",1,0)
+PSB*3.0*83^2
+"BLD",11071,"REQB",2,0)
+PSB*3.0*112^2
+"BLD",11071,"REQB","B","PSB*3.0*112",2)
+
+"BLD",11071,"REQB","B","PSB*3.0*83",1)
+
+"MBREQ")
+0
+"PKG",607,-1)
+1^1
+"PKG",607,0)
+BAR CODE MED ADMIN^PSB^BAR CODE MEDICATION ADMINISTRATION
+"PKG",607,22,0)
+^9.49I^1^1
+"PKG",607,22,1,0)
+3.0^3040224^3040503^568
+"PKG",607,22,1,"PAH",1,0)
+116^3190211
+"PKG",607,22,1,"PAH",1,1,0)
+^^42^42^3190211
+"PKG",607,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issue.
+"PKG",607,22,1,"PAH",1,1,2,0)
+ 
+"PKG",607,22,1,"PAH",1,1,3,0)
+INC3683945 - AEU can't look at med admin history (BCMA) due to an error after
+"PKG",607,22,1,"PAH",1,1,4,0)
+             inputting a date range
+"PKG",607,22,1,"PAH",1,1,5,0)
+INC3570947 - CPRS error caused by patch PSB*3*112, installed at our site on
+"PKG",607,22,1,"PAH",1,1,6,0)
+(Duplicate)  12/11/2018
+"PKG",607,22,1,"PAH",1,1,7,0)
+INC3507924 - In CPRS trying to run the Med Admin History report for 11-29
+"PKG",607,22,1,"PAH",1,1,8,0)
+(Duplicate)  through 12-5 get the attached error message <UNDEFINED>EN+112^
+"PKG",607,22,1,"PAH",1,1,9,0)
+             PSBOMH1 *PSBAR(64988)
+"PKG",607,22,1,"PAH",1,1,10,0)
+INC4109840 - CPRS shuts down repeatedly when trying to access BCMA 
+"PKG",607,22,1,"PAH",1,1,11,0)
+(Duplicate)  medication history record in CPRS reports tab
+"PKG",607,22,1,"PAH",1,1,12,0)
+      
+"PKG",607,22,1,"PAH",1,1,13,0)
+Defect Tracking System Ticket(s) & Overview:
+"PKG",607,22,1,"PAH",1,1,14,0)
+--------------------------------------------
+"PKG",607,22,1,"PAH",1,1,15,0)
+INC3683945 - AEU can't look at med admin history (BCMA) due to an error after
+"PKG",607,22,1,"PAH",1,1,16,0)
+             inputting a date range
+"PKG",607,22,1,"PAH",1,1,17,0)
+INC3570947 - CPRS error caused by patch PSB*3*112, installed at our site on
+"PKG",607,22,1,"PAH",1,1,18,0)
+(Duplicate)  12/11/2018
+"PKG",607,22,1,"PAH",1,1,19,0)
+INC3507924 - In CPRS trying to run the Med Admin History report for 11-29
+"PKG",607,22,1,"PAH",1,1,20,0)
+(Duplicate)  through 12-5 get the attached error message <UNDEFINED>EN+112^
+"PKG",607,22,1,"PAH",1,1,21,0)
+             PSBOMH1 *PSBAR(64988)
+"PKG",607,22,1,"PAH",1,1,22,0)
+INC4109840 - CPRS shuts down repeatedly when trying to access BCMA 
+"PKG",607,22,1,"PAH",1,1,23,0)
+(Duplicate)  medication history record in CPRS reports tab
+"PKG",607,22,1,"PAH",1,1,24,0)
+               
+"PKG",607,22,1,"PAH",1,1,25,0)
+Problem: 
+"PKG",607,22,1,"PAH",1,1,26,0)
+--------
+"PKG",607,22,1,"PAH",1,1,27,0)
+After the release of PSB*3*112 a new issue was introduced that caused the 
+"PKG",607,22,1,"PAH",1,1,28,0)
+BCMA Medication Admin History Report to cause an <UNDEFINED> error and exit
+"PKG",607,22,1,"PAH",1,1,29,0)
+the BCMA GUI application. The problem is specific to a patient with a PATCH
+"PKG",607,22,1,"PAH",1,1,30,0)
+Medication with a ONE TIME schedule (ex: Start Date of D and End Date of D+1)
+"PKG",607,22,1,"PAH",1,1,31,0)
+and after the PATCH is given on day D and marked removed on day D+1, when the
+"PKG",607,22,1,"PAH",1,1,32,0)
+user ran the report for the date Range D thru D the error happens.
+"PKG",607,22,1,"PAH",1,1,33,0)
+ 
+"PKG",607,22,1,"PAH",1,1,34,0)
+Resolution:
+"PKG",607,22,1,"PAH",1,1,35,0)
+-----------
+"PKG",607,22,1,"PAH",1,1,36,0)
+This patch prevents the error from happening when the BCMA Medication Admin
+"PKG",607,22,1,"PAH",1,1,37,0)
+History Report is run following the instructions above.
+"PKG",607,22,1,"PAH",1,1,38,0)
+   
+"PKG",607,22,1,"PAH",1,1,39,0)
+Technical Resolution:
+"PKG",607,22,1,"PAH",1,1,40,0)
+---------------------
+"PKG",607,22,1,"PAH",1,1,41,0)
+Changed the routines PSBOMH and PSBOMH1 to prevent the PSBAR array from 
+"PKG",607,22,1,"PAH",1,1,42,0)
+crashing when the subscript is undefined.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSBOMH")
+0^1^B105048172^B103792484
+"RTN","PSBOMH",1,0)
+PSBOMH ;BIRMINGHAM/EFC-MAH ;03/06/16 3:06pm
+"RTN","PSBOMH",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**5,9,38,57,67,68,70,76,83,116**;Mar 2004;Build 2
+"RTN","PSBOMH",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PSBOMH",4,0)
+ ;
+"RTN","PSBOMH",5,0)
+ ; Reference/IA
+"RTN","PSBOMH",6,0)
+ ; EN^PSJBCMA/2828
+"RTN","PSBOMH",7,0)
+ ; EN^PSJBCMA2/2830
+"RTN","PSBOMH",8,0)
+ ; File 200/10060
+"RTN","PSBOMH",9,0)
+ ; ^DIWP/10011
+"RTN","PSBOMH",10,0)
+ ;
+"RTN","PSBOMH",11,0)
+ ;*68 - remove old special instruction text encoding, defer to PSBOMH2
+"RTN","PSBOMH",12,0)
+ ;*70 - add Clinic name to PSBO array for printing on grid via PSBOMH2
+"RTN","PSBOMH",13,0)
+ ;       in ^TMP(""PSB",$J,"ORDERS",PSBX,"INST") global
+"RTN","PSBOMH",14,0)
+ ;*83 - add remove logic to print RM and associated Gives in grid and
+"RTN","PSBOMH",15,0)
+ ;      also remove string in order summary area.
+"RTN","PSBOMH",16,0)
+ ;
+"RTN","PSBOMH",17,0)
+EN ; Called from DQ^PSBO
+"RTN","PSBOMH",18,0)
+ N PSBGBL,DFN,Q,X                                                 ;*83
+"RTN","PSBOMH",19,0)
+ S PSBGBL=$NAME(^TMP("PSBO",$J,"B"))
+"RTN","PSBOMH",20,0)
+ F  S PSBGBL=$Q(@PSBGBL) Q:PSBGBL=""  Q:$QS(PSBGBL,2)'=$J  Q:$QS(PSBGBL,1)'["PSBO"  D
+"RTN","PSBOMH",21,0)
+ .S DFN=$QS(PSBGBL,5)
+"RTN","PSBOMH",22,0)
+ .S (PSBSTRT,X)=$P(PSBRPT(.1),U,6) D H^%DTC S PSBSTH=%H
+"RTN","PSBOMH",23,0)
+ .S (PSBSTOP,X)=$P(PSBRPT(.1),U,8)+.235959 D H^%DTC S PSBSPH=%H
+"RTN","PSBOMH",24,0)
+ .S PSBCNT=0 F I=PSBSTH:1:PSBSPH S PSBAR(I)=PSBSTH+((PSBCNT\7)*7),PSBCNT=PSBCNT+1
+"RTN","PSBOMH",25,0)
+ .D EN1
+"RTN","PSBOMH",26,0)
+ K PSBCNT,PSBAR
+"RTN","PSBOMH",27,0)
+ D CLEAN^PSBVT                                                    ;*83
+"RTN","PSBOMH",28,0)
+ Q
+"RTN","PSBOMH",29,0)
+EN1 ; Expects DFN,STRT,STOP
+"RTN","PSBOMH",30,0)
+ N PSBGBL,PSBHDR,PSBX,PSBFLAG,PSBHLDFL,PSBADST1,PSBOST1,PSBCLINIC,PSBORSTP ;*70
+"RTN","PSBOMH",31,0)
+ K ^TMP("PSJ",$J),^TMP("PSB",$J)
+"RTN","PSBOMH",32,0)
+ S PSBEVDT=PSBSTRT
+"RTN","PSBOMH",33,0)
+ D EN^PSJBCMA(DFN,PSBSTRT)
+"RTN","PSBOMH",34,0)
+ N PSBCLINORD S PSBCLINORD=2                 ;*70 Combind mode headers
+"RTN","PSBOMH",35,0)
+ I $G(^TMP("PSJ",$J,1,0))=-1 D  Q  ; No Ord
+"RTN","PSBOMH",36,0)
+ .D PT^PSBOHDR(DFN,.PSBHDR) W !!,"****NO MEDICATIONS FOUND****"
+"RTN","PSBOMH",37,0)
+ S PSBX=""
+"RTN","PSBOMH",38,0)
+ F  S PSBX=$O(^TMP("PSJ",$J,PSBX)) Q:PSBX=""  D
+"RTN","PSBOMH",39,0)
+ .Q:$P(^TMP("PSJ",$J,PSBX,0),U,3)?.N1"P"  ; No Pnd
+"RTN","PSBOMH",40,0)
+ .S PSBORSTP=$P(^TMP("PSJ",$J,PSBX,1),U,5) S:$P(^TMP("PSJ",$J,PSBX,1),U,15)>PSBORSTP PSBORSTP=$P(^TMP("PSJ",$J,PSBX,1),U,15)
+"RTN","PSBOMH",41,0)
+ .Q:PSBORSTP<PSBSTRT!($P(^TMP("PSJ",$J,PSBX,1),U,4)>PSBSTOP)  ;display orders active in date range of report
+"RTN","PSBOMH",42,0)
+ .S X=$P(^TMP("PSJ",$J,PSBX,1),U,2)
+"RTN","PSBOMH",43,0)
+ .S ^TMP("PSB",$J,"ORDERS",$P(^TMP("PSJ",$J,PSBX,0),U,3))=X
+"RTN","PSBOMH",44,0)
+ I '$D(^TMP("PSB",$J,"ORDERS")) D  Q        ;No Orders
+"RTN","PSBOMH",45,0)
+ .D PT^PSBOHDR(DFN,.PSBHDR) W !!,"****NO MEDICATIONS FOUND****"
+"RTN","PSBOMH",46,0)
+ S PSBMHND="PSBOMH"
+"RTN","PSBOMH",47,0)
+ ; Act on Orders
+"RTN","PSBOMH",48,0)
+ S PSBX="" F  S PSBX=$O(^TMP("PSB",$J,"ORDERS",PSBX)) Q:PSBX=""  S PSBTYPE=^(PSBX) D
+"RTN","PSBOMH",49,0)
+ .S:PSBTYPE'="C" PSBTYPE="P"
+"RTN","PSBOMH",50,0)
+ .D CLEAN^PSBVT
+"RTN","PSBOMH",51,0)
+ .D PSJ1^PSBVT(DFN,PSBX)
+"RTN","PSBOMH",52,0)
+ .S PSBCLINIC=PSBCLORD
+"RTN","PSBOMH",53,0)
+ .S X1=((PSBEVDT)\1)  S X2=-1  D C^%DTC  S PSBCNTST=X
+"RTN","PSBOMH",54,0)
+ .S X1=((PSBSTOP)\1)  S X2=1  D C^%DTC  S PSBXSTOP=X
+"RTN","PSBOMH",55,0)
+ .S PSBVALB=""
+"RTN","PSBOMH",56,0)
+ .S PSBVALB=$$IVPTAB^PSBVDLU3(PSBOTYP,PSBIVT,PSBISYR,PSBCHEMT,PSBIVPSH)
+"RTN","PSBOMH",57,0)
+ .S PSBZ=""
+"RTN","PSBOMH",58,0)
+ .S X1=PSBXSTOP,X2=PSBCNTST D ^%DTC S PSBNCT=X
+"RTN","PSBOMH",59,0)
+ .F PSBZ=1:1:PSBNCT S X1=PSBCNTST  S X2=1  D C^%DTC  S PSBCNTST=X  D
+"RTN","PSBOMH",60,0)
+ ..I (PSBX["V")!(PSBX'["V")  D
+"RTN","PSBOMH",61,0)
+ ...I PSBCNTST'>(PSBOST\1) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""
+"RTN","PSBOMH",62,0)
+ ...;add check for admin time before start time in PSB*3*57
+"RTN","PSBOMH",63,0)
+ ...S PSBADST1=$E($P($G(PSBADST),"-",$L($G(PSBADST),"-"))_"00",1,4),PSBOST1=$E($P(PSBOST,".",2)_"0000",1,4) ;PSB*3*67
+"RTN","PSBOMH",64,0)
+ ...I PSBCNTST=(PSBOST\1)&(PSBADST1>=PSBOST1) K ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST) ;PSB*3*67 - PSB*3*76 adds "=" for stop date/time check
+"RTN","PSBOMH",65,0)
+ ...I PSBCNTST=(PSBOST\1),'$P($G(PSBADST),"-") K ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST) ;PSB*3*67
+"RTN","PSBOMH",66,0)
+ ...I PSBCNTST>(PSBOSP\1) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""
+"RTN","PSBOMH",67,0)
+ ...I PSBCNTST=(PSBOSP\1)&($G(^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST))) K ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""
+"RTN","PSBOMH",68,0)
+ ..S PSBDODD=""
+"RTN","PSBOMH",69,0)
+ ..I (PSBFREQ#1440'=0),(1440#PSBFREQ'=0) S PSBDODD=1
+"RTN","PSBOMH",70,0)
+ ..I ((PSBX'["V")!(PSBVALB="1")),((PSBDODD="1")&(PSBADST'="")) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""
+"RTN","PSBOMH",71,0)
+ ..I ((PSBX'["V")!(PSBVALB="1")),('$$OKAY^PSBVDLU1(PSBOST,PSBCNTST,PSBSCH,PSBON,PSBOITX,PSBFREQ,PSBOSTS)) S ^TMP("PSB",$J,"ORDERS",PSBONX,"NTDUE",PSBCNTST)=""  ;W t TMP
+"RTN","PSBOMH",72,0)
+ .S (PSBYES,PSBODD,PSBFLAG,PSBYTFN,PSBDAYN)=0
+"RTN","PSBOMH",73,0)
+ .S:$$PSBDCHK1^PSBVT1(PSBSCH) PSBYES=1,PSBDAYN=1
+"RTN","PSBOMH",74,0)
+ .I PSBYES,PSBADST="",PSBSCHT'="O",PSBSCHT'="OC",PSBSCHT'="P" Q 
+"RTN","PSBOMH",75,0)
+ .F I=1:1 Q:$P(PSBSCH,"-",I)=""  I $P(PSBSCH,"-",I)?2N!($P(PSBSCH,"-",I)?4N) S PSBYES=1,PSBYTFN=1
+"RTN","PSBOMH",76,0)
+ .I (PSBFREQ="O")!(PSBTYPE="P") S PSBYES=1
+"RTN","PSBOMH",77,0)
+ .I (PSBFREQ#1440'=0),(1440#PSBFREQ'=0) S PSBODD=1
+"RTN","PSBOMH",78,0)
+ .;flg / admn t
+"RTN","PSBOMH",79,0)
+ .S:PSBONX["U" PSBFLAG=1
+"RTN","PSBOMH",80,0)
+ .I PSBIVT="A" S PSBADST="0000"
+"RTN","PSBOMH",81,0)
+ .I PSBIVT="H" S PSBADST="0000"
+"RTN","PSBOMH",82,0)
+ .I PSBIVT="C",PSBCHEMT="P" S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",83,0)
+ .I PSBIVT="C",PSBISYR=1 S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",84,0)
+ .I PSBIVT="C",PSBCHEMT="A" S PSBADST="0000"
+"RTN","PSBOMH",85,0)
+ .I PSBIVT="C",PSBISYR=0 S PSBADST="0000"
+"RTN","PSBOMH",86,0)
+ .I PSBIVT="P",($G(PSBADST)=0) S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",87,0)
+ .I PSBIVT="P" S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",88,0)
+ .I PSBIVT="S",PSBISYR=0 S PSBADST="0000"
+"RTN","PSBOMH",89,0)
+ .I PSBIVT="S",PSBISYR=1 S:PSBADST="" PSBFLAG=1
+"RTN","PSBOMH",90,0)
+ .I PSBFREQ="D" S PSBFREQ=""
+"RTN","PSBOMH",91,0)
+ .I 'PSBYES,PSBADST="",PSBFREQ<1 Q
+"RTN","PSBOMH",92,0)
+ .S (PSBEE,PSBZZ)=0
+"RTN","PSBOMH",93,0)
+ .I (PSBVALB="1")!(PSBX'["V") D  Q:(PSBEE!PSBZZ)=1
+"RTN","PSBOMH",94,0)
+ ..I PSBSCHT="C",PSBYTFN="1",PSBADST=""  S PSBEE=1
+"RTN","PSBOMH",95,0)
+ ..I PSBSCHT="C",PSBDAYN'="1",PSBYTFN'="1",PSBADST'="",PSBFREQ<1  S PSBZZ=1
+"RTN","PSBOMH",96,0)
+ .I 'PSBODD,PSBFLAG,PSBTYPE="C",PSBADST="" S PSBADST=$$GETADMIN^PSBVDLU1(DFN,PSBONX,PSBOST,PSBFREQ,PSBSTOP)
+"RTN","PSBOMH",97,0)
+ .E  I PSBADST'="" K ^TMP("PSB",$J,"GETADMIN") S ^TMP("PSB",$J,"GETADMIN",0)=PSBADST
+"RTN","PSBOMH",98,0)
+ .;Calc adm/frq
+"RTN","PSBOMH",99,0)
+ .S PSBDT=PSBSTRT
+"RTN","PSBOMH",100,0)
+ .K PSBO,^UTILITY($J)
+"RTN","PSBOMH",101,0)
+ .F X=1:1:8 S PSBO(X)=""
+"RTN","PSBOMH",102,0)
+ .S DIWL=0,DIWR=32,DIWF="C32"
+"RTN","PSBOMH",103,0)
+ .S X=$P(PSBOSTX," ")_"          "_$P(PSBOSPX," ") D ^DIWP
+"RTN","PSBOMH",104,0)
+ .S X="@"_$P(PSBOSTX," ",3)_"              @"_$P(PSBOSPX," ",3)_"   " D ^DIWP
+"RTN","PSBOMH",105,0)
+ .S X="" D ^DIWP
+"RTN","PSBOMH",106,0)
+ .S X=PSBOITX D ^DIWP
+"RTN","PSBOMH",107,0)
+ .; DD,SOL,ADD
+"RTN","PSBOMH",108,0)
+ .S X=""
+"RTN","PSBOMH",109,0)
+ .F Y=0:0 S Y=$O(PSBDDA(Y)) Q:'Y  S X=X_$S(X]"":", ",1:"")_$P(PSBDDA(Y),U,3)
+"RTN","PSBOMH",110,0)
+ .F Y=0:0 S Y=$O(PSBADA(Y)) Q:'Y  S X=X_$S(X]"":", ",1:"")_$P(PSBADA(Y),U,3)_" "_$P(PSBADA(Y),U,4)_$P(PSBADA(Y),U,5)
+"RTN","PSBOMH",111,0)
+ .F Y=0:0 S Y=$O(PSBSOLA(Y)) Q:'Y  S X=X_$S(X]"":", ",1:"")_$P(PSBSOLA(Y),U,3)_" "_$P(PSBSOLA(Y),U,4)
+"RTN","PSBOMH",112,0)
+ .S X=" "_X,DIWF="I2C32" D ^DIWP S DIWF="C32"
+"RTN","PSBOMH",113,0)
+ .S PSBTXT=" Give: "_PSBDOSE_" "_PSBMRAB_" "_PSBSCH_" "_PSBIFR
+"RTN","PSBOMH",114,0)
+ .F  S PSBWORD=$P(PSBTXT," ",1),PSBTXT=$P(PSBTXT," ",2,250) D  Q:PSBTXT=""
+"RTN","PSBOMH",115,0)
+ ..F  Q:'$L(PSBWORD)  S X=$E(PSBWORD,1,30),PSBWORD=$E(PSBWORD,30,250) D ^DIWP
+"RTN","PSBOMH",116,0)
+ .K ^TMP("PSJ",$J) D EN^PSJBCMA2(DFN,PSBX) I ^TMP("PSJ",$J,0)'=-1 D   ;get activity log
+"RTN","PSBOMH",117,0)
+ ..S (PSBDISX,PSBHLDX)=0 F I=1:1:$P(^TMP("PSJ",$J,0),U,4) S X=$G(^TMP("PSJ",$J,I,1)) D  ;loop activities
+"RTN","PSBOMH",118,0)
+ ...Q:X["EDITED"!(X["VERIF")  ;
+"RTN","PSBOMH",119,0)
+ ...S:$P(X,U,4)["PLACED ON HOLD" PSBHLDFL=1 ;Set Hold Flag
+"RTN","PSBOMH",120,0)
+ ...S:$P(X,U,4)["TAKEN OFF HOLD" PSBHLDFL=0 ;Remove Hold Flag
+"RTN","PSBOMH",121,0)
+ ...S Z=0
+"RTN","PSBOMH",122,0)
+ ...I X'["OFF HOLD",X'["UNHOLD",X'["REINSTATE" S Z=1 ; inc iv's
+"RTN","PSBOMH",123,0)
+ ...S PSBHLDX=PSBHLDX+$S(Z>0:1,1:0)
+"RTN","PSBOMH",124,0)
+ ...S $P(PSBHLD(PSBHLDX),U,$S(Z>0:1,1:11))=^TMP("PSJ",$J,I,1)  ;set up for multiple on hold entries save start & stop as pair if exists 
+"RTN","PSBOMH",125,0)
+ ..F PSBHLDX=1:1 S X=$G(PSBHLD(PSBHLDX)) Q:'X  D  ;if a hold index - process 
+"RTN","PSBOMH",126,0)
+ ...S PSBHLDN=$P(PSBHLD(PSBHLDX),U,1),PSBHLDF=$P(PSBHLD(PSBHLDX),U,11)  ;get on/off hold, dates, IEN number(for UD orders) of person. 
+"RTN","PSBOMH",127,0)
+ ...Q:PSBHLDN>PSBSTOP  Q:(PSBHLDF<PSBSTRT)&(PSBHLDF'="") 
+"RTN","PSBOMH",128,0)
+ ...F PSBHLDT=PSBSTRT\1:1:PSBSTOP\1 I (PSBHLDT'<(PSBHLDN\1)),(PSBHLDT'>PSBSTOP) D
+"RTN","PSBOMH",129,0)
+ ....I X["DISCONTINUED" K ^TMP("PSB",$J,"ORDERS",PSBONX,"HOLD",PSBHLDT) S ^TMP("PSB",$J,"ORDERS",PSBONX,"DISC",PSBHLDT)=""
+"RTN","PSBOMH",130,0)
+ ....I (X["HOLD")&($G(PSBHLDFL))&((PSBHLDN\1)'>PSBHLDT)&((PSBHLDF'<PSBHLDT)!(PSBHLDF="")) S ^TMP("PSB",$J,"ORDERS",PSBONX,"HOLD",PSBHLDT)="" ;Check additional flag for PSB*3*57
+"RTN","PSBOMH",131,0)
+ ....I X["REINSTATE" K ^TMP("PSB",$J,"ORDERS",PSBONX,"DISC",PSBHLDT) I PSBOSTS="H" S ^TMP("PSB",$J,"ORDERS",PSBONX,"HOLD",PSBHLDT)=""
+"RTN","PSBOMH",132,0)
+ ...F PSBHLDXP=1:10:$P(PSBHLD(PSBHLDX),U,11)]""+10 D
+"RTN","PSBOMH",133,0)
+ ....S PSBDESC=$P(PSBHLD(PSBHLDX),U,PSBHLDXP+3),X=$S(PSBDESC["DISCONTINUE":"***",1:"")
+"RTN","PSBOMH",134,0)
+ ....S X=" "_X_PSBDESC D ^DIWP  ;output activity text 
+"RTN","PSBOMH",135,0)
+ ....S X="",PSBHLDI=$P(PSBHLD(PSBHLDX),U,PSBHLDXP+4) I PSBHLDI'="" S X=$$GET1^DIQ(200,PSBHLDI,"INITIAL")
+"RTN","PSBOMH",136,0)
+ ....S:X="" X="99" ;no init present
+"RTN","PSBOMH",137,0)
+ ....I X'="99" S X=" "_X D ^DIWP   ;get init & store
+"RTN","PSBOMH",138,0)
+ ....S Y=$P(PSBHLD(PSBHLDX),U,PSBHLDXP) D DD^%DT S X=Y D ^DIWP  ;format hold date / write 
+"RTN","PSBOMH",139,0)
+ ..K PSBHLD,PSBHLDF,PSBHLDN,PSBHLDT,PSBHLDX,PSBHLDXP,PSBHLDI,PSBDISX,PSBDISC,PSBDISXP,PSBDISI,PSBDIST,PSBDISN,PSBDESC
+"RTN","PSBOMH",140,0)
+ .F X=0:0 S X=$O(^UTILITY($J,"W",0,X)) Q:'X  S PSBO(X)=$G(^(X,0)) D
+"RTN","PSBOMH",141,0)
+ .;
+"RTN","PSBOMH",142,0)
+ .;Insert removal times print text, insure 4 digit times           *83
+"RTN","PSBOMH",143,0)
+ .; if removal time null, probably due to MRR type 1 so calculate
+"RTN","PSBOMH",144,0)
+ .I $G(PSBRMST)]"" S PSBRMST=$$CNVRT4^PSBUTL(PSBRMST,"-")
+"RTN","PSBOMH",145,0)
+ .I PSBMRRFL,$G(PSBRMST)="" S PSBRMST=$$REMSTR^PSBUTL(PSBADST,PSBDOA,PSBSCHT,PSBOSP,PSBOPRSP)
+"RTN","PSBOMH",146,0)
+ .D:$G(PSBRMST)]""
+"RTN","PSBOMH",147,0)
+ ..S X=$O(PSBO(""),-1)+1
+"RTN","PSBOMH",148,0)
+ ..F Q=1:1:$L(PSBRMST,"-") D
+"RTN","PSBOMH",149,0)
+ ...I Q=1 S PSBO(X)="     Removal Times: "_$P(PSBRMST,"-",Q) Q
+"RTN","PSBOMH",150,0)
+ ...S X=X+1,PSBO(X)="                    "_$P(PSBRMST,"-",Q)
+"RTN","PSBOMH",151,0)
+ .;
+"RTN","PSBOMH",152,0)
+ .S X=$O(PSBO(""),-1) S X=$S(X<8:8,1:X+1)
+"RTN","PSBOMH",153,0)
+ .S PSBO(X)=" RPH: "_PSBVPHI_"  RN: "_PSBVNI
+"RTN","PSBOMH",154,0)
+ .S PSBVAL=$$IVPTAB^PSBVDLU3(PSBOTYP,PSBIVT,PSBISYR,PSBCHEMT,PSBIVPSH)
+"RTN","PSBOMH",155,0)
+ .I PSBODD="1",PSBADST'="" D
+"RTN","PSBOMH",156,0)
+ ..I (PSBVAL="1")!(PSBX'["V") D   ;checks iv/pb and u dose
+"RTN","PSBOMH",157,0)
+ ...S PSBO(X+1)=""
+"RTN","PSBOMH",158,0)
+ ...S PSBO(X+2)="NOTE - ODD SCHEDULE NO LONGER",PSBO(X+3)="       ALLOWS ADMIN TIMES."
+"RTN","PSBOMH",159,0)
+ .K ^UTILITY($J)
+"RTN","PSBOMH",160,0)
+ . ;*70 If no location, and not inpatient, and Manual Med Entry, relay this information
+"RTN","PSBOMH",161,0)
+ .S PSBO(0)=$S(PSBCLINIC]"":PSBCLINIC,1:"INPATIENT")   ;clinic nam *70
+"RTN","PSBOMH",162,0)
+ .S XORDERS=$S(PSBO(0)="INPATIENT":1,1:2)              ;IM or CO   *70
+"RTN","PSBOMH",163,0)
+ .M ^TMP("PSB",$J,"ORDERS",PSBX,"INST")=PSBO
+"RTN","PSBOMH",164,0)
+ .D:PSBTYPE="C"
+"RTN","PSBOMH",165,0)
+ ..F  D  Q:PSBDT>PSBSTOP
+"RTN","PSBOMH",166,0)
+ ...S X=PSBDT D H^%DTC S PSBWEEK=%H
+"RTN","PSBOMH",167,0)
+ ...S ^TMP("PSB",$J,PSBWEEK,PSBONX)=""
+"RTN","PSBOMH",168,0)
+ ...; Odd schd - msg
+"RTN","PSBOMH",169,0)
+ ...S PSBIDOW=0 I PSBONX["U"!("PCS"[PSBIVT) S PSBIDOW=1
+"RTN","PSBOMH",170,0)
+ ...I PSBADST="",PSBIDOW,(PSBODD) D
+"RTN","PSBOMH",171,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",0)=7
+"RTN","PSBOMH",172,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",1)="odd"
+"RTN","PSBOMH",173,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",2)="sched"
+"RTN","PSBOMH",174,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",3)=$E(PSBSCH,1,5)
+"RTN","PSBOMH",175,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",4)="no"
+"RTN","PSBOMH",176,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",5)="fixed"
+"RTN","PSBOMH",177,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",6)="admin"
+"RTN","PSBOMH",178,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",7)="times"
+"RTN","PSBOMH",179,0)
+ ...I PSBADST'="",PSBADST'="0000",+$G(PSBFREQ)>0,+$G(PSBFREQ)<45 D
+"RTN","PSBOMH",180,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",0)=5
+"RTN","PSBOMH",181,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",1)="Due"
+"RTN","PSBOMH",182,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",2)="every"
+"RTN","PSBOMH",183,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",3)=$E(PSBFREQ,1,5)
+"RTN","PSBOMH",184,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",4)="mins."
+"RTN","PSBOMH",185,0)
+ ....S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",5)=" "
+"RTN","PSBOMH",186,0)
+ ...S PSBATCNT=0    ; # times to print...
+"RTN","PSBOMH",187,0)
+ ...I PSBADST'="",((+$G(PSBFREQ)>44)!(PSBFREQ="")!(PSBADST="0000")) F PSBXX=0:1  Q:$G(^TMP("PSB",$J,"GETADMIN",PSBXX))=""  D
+"RTN","PSBOMH",188,0)
+ ....S PSBADST2=$G(^TMP("PSB",$J,"GETADMIN",PSBXX))
+"RTN","PSBOMH",189,0)
+ ....F Y=1:1:$L(PSBADST2,"-") D
+"RTN","PSBOMH",190,0)
+ .....Q:($P(PSBADST2,"-",Y)'?2N)&($P(PSBADST2,"-",Y)'?4N)  S PSBATCNT=PSBATCNT+1,^TMP("PSB",$J,"ORDERS",PSBONX,"AT",PSBATCNT)=$P(PSBADST2,"-",Y)
+"RTN","PSBOMH",191,0)
+ ...;*70   Insert Xorders IM or CO flag (1 or 2) into Sort control
+"RTN","PSBOMH",192,0)
+ ...I PSBADST'="",PSBFREQ>44 S ^TMP("PSB",$J,"ORDERS",PSBONX,"AT",0)=PSBATCNT
+"RTN","PSBOMH",193,0)
+ ...S ^TMP("PSB",$J,PSBWEEK,"SORT",XORDERS,PSBTYPE,PSBOITX,PSBX)=""
+"RTN","PSBOMH",194,0)
+ ...F PSBDOW=0:1:6 D  Q:X>(PSBSTOP-1)
+"RTN","PSBOMH",195,0)
+ ....S %H=PSBWEEK+PSBDOW D YMD^%DTC
+"RTN","PSBOMH",196,0)
+ ....S ^TMP("PSB",$J,PSBWEEK,PSBONX,X,0)=0
+"RTN","PSBOMH",197,0)
+ ....I '$D(^TMP("PSB",$J,PSBWEEK,"HDR",X)) S ^TMP("PSB",$J,PSBWEEK,"HDR",X)=$E(X,4,5)_"/"_$E(X,6,7)_"/"_(1700+$E(X,1,3))
+"RTN","PSBOMH",198,0)
+ ...S %H=PSBWEEK+7 D YMD^%DTC S PSBDT=X
+"RTN","PSBOMH",199,0)
+ .D:PSBTYPE'="C"
+"RTN","PSBOMH",200,0)
+ ..S X=PSBDT D H^%DTC S PSBWEEK=%H
+"RTN","PSBOMH",201,0)
+ ..S (^TMP("PSB",$J,PSBWEEK,PSBONX),^TMP("PSB",$J,PSBWEEK,PSBONX,"AT",0))=""
+"RTN","PSBOMH",202,0)
+ ..;*70   Insert Xorders IM or CO flag (1 or 2) into Sort control
+"RTN","PSBOMH",203,0)
+ ..S ^TMP("PSB",$J,PSBWEEK,"SORT",XORDERS,PSBTYPE,PSBOITX,PSBX)=""
+"RTN","PSBOMH",204,0)
+ D EN^PSBOMH1
+"RTN","PSBOMH",205,0)
+ D EN^PSBOMH2
+"RTN","PSBOMH",206,0)
+ Q
+"RTN","PSBOMH",207,0)
+INSTR S PSBINIT=PSBINIT_"*"
+"RTN","PSBOMH",208,0)
+ S PSBNAME=PSBNAME_"/"_$P(^PSB(53.79,PSBIEN,.9,$P(PSBDT,"."),0),U,3)_"  "_$$GET1^DIQ(53.79,PSBIEN_",",.06)
+"RTN","PSBOMH",209,0)
+ Q
+"RTN","PSBOMH1")
+0^2^B96588224^B95783446
+"RTN","PSBOMH1",1,0)
+PSBOMH1 ;BIRMINGHAM/EFC-MAH ;03/06/16 3:06pm
+"RTN","PSBOMH1",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**6,3,9,11,26,38,45,51,50,57,67,64,72,83,97,112,116**;Mar 2004;Build 2
+"RTN","PSBOMH1",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PSBOMH1",4,0)
+ ;
+"RTN","PSBOMH1",5,0)
+ ; Reference/IA
+"RTN","PSBOMH1",6,0)
+ ; ^DILF/2054
+"RTN","PSBOMH1",7,0)
+ ; File 200/10060
+"RTN","PSBOMH1",8,0)
+ ;
+"RTN","PSBOMH1",9,0)
+ ;*83 - add Remove events per Give events when occurred.
+"RTN","PSBOMH1",10,0)
+ ;
+"RTN","PSBOMH1",11,0)
+EN ;
+"RTN","PSBOMH1",12,0)
+ ; Load administrations
+"RTN","PSBOMH1",13,0)
+ N PSBDT,PSBADMDT,X,Y,Z
+"RTN","PSBOMH1",14,0)
+ S (PSBORD,PSBIEN,PSBR1,PSBADIEN,PSBABR)="",PSBDT=PSBSTRT
+"RTN","PSBOMH1",15,0)
+ K PSBTSA
+"RTN","PSBOMH1",16,0)
+ ;ERROR
+"RTN","PSBOMH1",17,0)
+ F  S PSBDT=$O(^PSB(53.79,"AADT",DFN,PSBDT)) Q:'PSBDT  D
+"RTN","PSBOMH1",18,0)
+ .F  S PSBIEN=$O(^PSB(53.79,"AADT",DFN,PSBDT,PSBIEN)) Q:'PSBIEN  Q:'$D(^PSB(53.79,PSBIEN))  I $P(^PSB(53.79,PSBIEN,0),U,9)]"" D  ;Remove Lock as file is only read, PSB*3*64
+"RTN","PSBOMH1",19,0)
+ ..Q:'$P($G(^PSB(53.79,PSBIEN,0)),U,6)  ; Bad IEN -no evnt dt
+"RTN","PSBOMH1",20,0)
+ ..Q:$P(^PSB(53.79,PSBIEN,0),U,9)="N"  ;NGiven
+"RTN","PSBOMH1",21,0)
+ ..S PSBADMDT=PSBDT I $P(^PSB(53.79,PSBIEN,0),U,9)="RM" S:(PSBDT>PSBSTOP) PSBADMDT=+$$FINDGIVE^PSBUTL(PSBIEN) I ((PSBADMDT<PSBSTRT)!(PSBADMDT>PSBSTOP))&(PSBDT>PSBSTOP) Q
+"RTN","PSBOMH1",22,0)
+ ..I $P(^PSB(53.79,PSBIEN,0),U,9)'="RM",PSBDT>PSBSTOP Q
+"RTN","PSBOMH1",23,0)
+ ..S PSBORD=$P($G(^PSB(53.79,PSBIEN,.1)),U,1)
+"RTN","PSBOMH1",24,0)
+ ..;PSB*3*45 Anyone on the audit log should be in the legend
+"RTN","PSBOMH1",25,0)
+ ..N TMPCT S TMPCT=0 F  S TMPCT=$O(^PSB(53.79,PSBIEN,.9,TMPCT)) Q:'TMPCT  D
+"RTN","PSBOMH1",26,0)
+ ...S PSBINIT=$$GET1^DIQ(53.799,TMPCT_","_PSBIEN,"USER:INITIAL"),PSBNAME=$$GET1^DIQ(53.799,TMPCT_","_PSBIEN_",","USER")
+"RTN","PSBOMH1",27,0)
+ ...S:PSBINIT="" PSBINIT=99
+"RTN","PSBOMH1",28,0)
+ ...S ^TMP("PSB",$J,"LEGEND",PSBINIT,PSBNAME)=""
+"RTN","PSBOMH1",29,0)
+ ..; Continuous
+"RTN","PSBOMH1",30,0)
+ ..D:$P($G(^PSB(53.79,PSBIEN,.1)),U,2)="C"
+"RTN","PSBOMH1",31,0)
+ ...S X=PSBADMDT D H^%DTC S PSBWEEK=+$G(PSBAR(%H)) D CLEAN^PSBVT,PSJ1^PSBVT($P(^PSB(53.79,PSBIEN,0),U,1),$P(^PSB(53.79,PSBIEN,.1),U,1))
+"RTN","PSBOMH1",32,0)
+ ...I $P(^PSB(53.79,PSBIEN,0),U,6)'=PSBDT,'$$IVPTAB^PSBVDLU3(PSBOTYP,PSBIVT,PSBISYR,PSBCHEMT,PSBIVPSH) D  D CLEAN^PSBVT Q  ;chck IV audit
+"RTN","PSBOMH1",33,0)
+ ....S PSBSIEN=PSBIEN
+"RTN","PSBOMH1",34,0)
+ ....I $P(^PSB(53.79,PSBIEN,0),"^",10)]"" D BAGDTL^PSBRPC2(.PSBAUD,$P(^PSB(53.79,PSBIEN,0),U,10),$P(^PSB(53.79,PSBIEN,.1),U,1))
+"RTN","PSBOMH1",35,0)
+ ....S PSBIEN=PSBSIEN K PSBSIEN
+"RTN","PSBOMH1",36,0)
+ ....S X=0 F  S X=$O(PSBAUD(X)) Q:X=""  I $P(PSBAUD(X),U,3)="" K PSBAUD(X)
+"RTN","PSBOMH1",37,0)
+ ....S X=0 F  S X=$O(PSBAUD(X)) Q:X=""  Q:$P(PSBAUD(X),U,1)=PSBDT
+"RTN","PSBOMH1",38,0)
+ ....I X="" K PSBAUD Q
+"RTN","PSBOMH1",39,0)
+ ....I '$D(PSBAUD(X)) K PSBAUD Q
+"RTN","PSBOMH1",40,0)
+ ....S PSBS=$P(PSBAUD(X),U,3)
+"RTN","PSBOMH1",41,0)
+ ....I PSBS="GIVEN",$P($G(PSBAUD(X-1)),U,3)="NOT GIVEN" Q
+"RTN","PSBOMH1",42,0)
+ ....I PSBS="NOT GIVEN" Q
+"RTN","PSBOMH1",43,0)
+ ....S PSBS=$S(PSBS="INFUSING":"I",PSBS="GIVEN":"G",PSBS="COMPLETED":"C",PSBS="HELD":"H",PSBS="REFUSED":"R",PSBS="REMOVED":"RM",PSBS="STOPPED":"S",PSBS["MISSING":"M",1:"NOACTION")
+"RTN","PSBOMH1",44,0)
+ ....D PSBSTIV^PSBOMH2
+"RTN","PSBOMH1",45,0)
+ ....S X=PSBDT_U_$P(PSBAUD(X),U,2)_U_PSBS_U_PSBIEN
+"RTN","PSBOMH1",46,0)
+ ....S Y=$O(^TMP("PSB",$J,PSBWEEK,PSBORD,PSBDT\1,""),-1)+1
+"RTN","PSBOMH1",47,0)
+ ....S ^TMP("PSB",$J,PSBWEEK,PSBORD,PSBDT\1,Y)=X ;PSB*3*67
+"RTN","PSBOMH1",48,0)
+ ....S ^TMP("PSB",$J,PSBWEEK,PSBORD,PSBDT\1,0)=Y
+"RTN","PSBOMH1",49,0)
+ ....D PSBOUT($P((X),"^",1),$P((X),"^",2))
+"RTN","PSBOMH1",50,0)
+ ....K PSBAUD
+"RTN","PSBOMH1",51,0)
+ ...S PSBINIT=$$GETINIT^PSBCSUTX(PSBIEN,"I") ;Get initials of who took action, PSB*3*72
+"RTN","PSBOMH1",52,0)
+ ...S PSBNAME=$$GETINIT^PSBCSUTX(PSBIEN,"N") ;Get name of who took action, PSB*3*72
+"RTN","PSBOMH1",53,0)
+ ...I PSBINIT="" S PSBINIT=99
+"RTN","PSBOMH1",54,0)
+ ...;get instrc info - audt log
+"RTN","PSBOMH1",55,0)
+ ...I $D(^PSB(53.79,PSBIEN,.9,$P(PSBDT,"."))) D
+"RTN","PSBOMH1",56,0)
+ ....D INSTR^PSBOMH
+"RTN","PSBOMH1",57,0)
+ ....S ^TMP("PSB",$J,"LEGEND",PSBINIT,PSBNAME)=""
+"RTN","PSBOMH1",58,0)
+ ...I PSBINIT[99 S PSBINIT=""
+"RTN","PSBOMH1",59,0)
+ ...I $P(^PSB(53.79,PSBIEN,0),U,9)="G",PSBDT=$P(^PSB(53.79,PSBIEN,0),U,6)  D PSBCK1^PSBOMH2("A")
+"RTN","PSBOMH1",60,0)
+ ...I $P(^PSB(53.79,PSBIEN,0),U,9)'="G",PSBDT=$P(^PSB(53.79,PSBIEN,0),U,6)  D PSBCK1^PSBOMH2("B")
+"RTN","PSBOMH1",61,0)
+ ...I PSBDT'=$P(^PSB(53.79,PSBIEN,0),U,6),$P(^PSB(53.79,PSBIEN,0),U,9)="RM" D
+"RTN","PSBOMH1",62,0)
+ ....D DDAUD
+"RTN","PSBOMH1",63,0)
+ ....S I="" F  S I=$O(PSBTAR(I),-1) Q:I=""  I $P(PSBTAR(I),U,1)=PSBDT D
+"RTN","PSBOMH1",64,0)
+ .....S PSBS=$P(PSBTAR(I),U,3)
+"RTN","PSBOMH1",65,0)
+ .....I PSBS="GIVEN",$P($G(PSBTAR(I-1)),U,3)="NOT GIVEN" Q  ; canceled - not given
+"RTN","PSBOMH1",66,0)
+ .....I PSBS="NOT GIVEN" Q
+"RTN","PSBOMH1",67,0)
+ .....S PSBS=$S(PSBS="INFUSING":"I",PSBS="GIVEN":"G",PSBS="COMPLETED":"C",PSBS="HELD":"H",PSBS="REFUSED":"R",PSBS="REMOVED":"RM",PSBS="STOPPED":"S",PSBS["MISSING":"M",1:"NO ACTION")
+"RTN","PSBOMH1",68,0)
+ .....D PSBCTAR^PSBOMH2
+"RTN","PSBOMH1",69,0)
+ .....S X=$P(PSBTAR(I),U,1,2)_U_PSBS_U_PSBIEN
+"RTN","PSBOMH1",70,0)
+ ...Q:'+X  ;Quit if invalid data is returned, PSB*3*67
+"RTN","PSBOMH1",71,0)
+ ...;
+"RTN","PSBOMH1",72,0)
+ ...;Remove event, insert Give 1st, then re-add Remove event       *83
+"RTN","PSBOMH1",73,0)
+ ...I $P(X,U,3)="RM" D
+"RTN","PSBOMH1",74,0)
+ ....S Z=X                               ;save remove event
+"RTN","PSBOMH1",75,0)
+ ....S X=$$FINDGIVE^PSBUTL($P(Z,U,4))     ;find Give and add to grid
+"RTN","PSBOMH1",76,0)
+ ....S Y=$O(^TMP("PSB",$J,PSBWEEK,PSBORD,$P(X,".",1)\1,""),-1)+1
+"RTN","PSBOMH1",77,0)
+ ....S ^TMP("PSB",$J,PSBWEEK,PSBORD,$P(X,U)\1,Y)=X
+"RTN","PSBOMH1",78,0)
+ ....S ^TMP("PSB",$J,PSBWEEK,PSBORD,$P(X,U)\1,0)=Y
+"RTN","PSBOMH1",79,0)
+ ....S X=Z                               ;restore remove event to grid
+"RTN","PSBOMH1",80,0)
+ ...;
+"RTN","PSBOMH1",81,0)
+ ...S Y=$O(^TMP("PSB",$J,PSBWEEK,PSBORD,PSBDT\1,""),-1)+1
+"RTN","PSBOMH1",82,0)
+ ...S ^TMP("PSB",$J,PSBWEEK,PSBORD,PSBDT\1,Y)=X ;PSB*3*67
+"RTN","PSBOMH1",83,0)
+ ...S ^TMP("PSB",$J,PSBWEEK,PSBORD,PSBDT\1,0)=Y
+"RTN","PSBOMH1",84,0)
+ ...D PSBOUT($P((X),"^",1),$P((X),"^",2))
+"RTN","PSBOMH1",85,0)
+ ...Q
+"RTN","PSBOMH1",86,0)
+ ..;
+"RTN","PSBOMH1",87,0)
+ ..; 1-Time On Call or PRN
+"RTN","PSBOMH1",88,0)
+ ..D:$P($G(^PSB(53.79,PSBIEN,.1)),U,2)'="C"
+"RTN","PSBOMH1",89,0)
+ ...I PSBDT'=$$GET1^DIQ(53.79,PSBIEN_",",.06,"I") Q
+"RTN","PSBOMH1",90,0)
+ ...S PSBINIT=$$GETINIT^PSBCSUTX(PSBIEN,"I") ;Get initials of who took action, PSB*3*72
+"RTN","PSBOMH1",91,0)
+ ...S PSBNAME=$$GETINIT^PSBCSUTX(PSBIEN,"N") ;Get name of who took action, PSB*3*72
+"RTN","PSBOMH1",92,0)
+ ...I PSBINIT="" S PSBINIT=99
+"RTN","PSBOMH1",93,0)
+ ...S (PSBXA,PSBM)=1,(PSBZ,PSBT,PSBFLG)=""
+"RTN","PSBOMH1",94,0)
+ ...I $$GET1^DIQ(53.79,PSBIEN_",",.09)="REMOVED"  D
+"RTN","PSBOMH1",95,0)
+ ....F I=1:1 S PSBXA=$O(^PSB(53.79,PSBIEN,.9,PSBXA)) Q:PSBXA=""  I PSBXA?1.3N  S PSBZ=PSBZ+1,PSBT(PSBZ)=^PSB(53.79,PSBIEN,.9,PSBXA,0)
+"RTN","PSBOMH1",96,0)
+ ....F S=1:1 Q:PSBM<1  S PSBM=PSBZ-S  I (PSBM>0) I (PSBT(PSBM)["GIVEN")  S PSBFLG="1" S PRELINE1=$P(PSBT(PSBM),"'",2)_" "_$$GET1^DIQ(53.79,PSBIEN_",",.04)_" "_$E($P(PSBT(PSBM),"'",4),1,3) Q
+"RTN","PSBOMH1",97,0)
+ ...I $D(^PSB(53.79,PSBIEN,.9,$P(PSBDT,"."))) D
+"RTN","PSBOMH1",98,0)
+ ....D INSTR^PSBOMH
+"RTN","PSBOMH1",99,0)
+ ....S ^TMP("PSB",$J,"LEGEND",PSBINIT,PSBNAME)=""
+"RTN","PSBOMH1",100,0)
+ ...I '$D(^PSB(53.79,PSBIEN,.9,$P(PSBDT,".")))  D PSBOUT(PSBDT,PSBINIT)
+"RTN","PSBOMH1",101,0)
+ ...S PSBLINE1=$$GET1^DIQ(53.79,PSBIEN_",",.09)_" "_$$GET1^DIQ(53.79,PSBIEN_",",.06)_" "_PSBINIT_"            "_$$GET1^DIQ(53.79,PSBIEN_",",.21),PSBLINE2=""
+"RTN","PSBOMH1",102,0)
+ ...I PSBINIT[99 S PSBINIT=""
+"RTN","PSBOMH1",103,0)
+ ...D:$P($G(^PSB(53.79,PSBIEN,.1)),U,2)="P"
+"RTN","PSBOMH1",104,0)
+ ....I $P($G(^PSB(53.79,PSBIEN,.2)),U,2)="" S PSBLINE2="  Results: <No PRN Results On File>"
+"RTN","PSBOMH1",105,0)
+ ....E  D
+"RTN","PSBOMH1",106,0)
+ .....S PSBINIT=$$GET1^DIQ(53.79,PSBIEN_",","PRN EFFECTIVENESS ENTERED BY:INITIAL")
+"RTN","PSBOMH1",107,0)
+ .....S PSBNAME=$$GET1^DIQ(53.79,PSBIEN_",","PRN EFFECTIVENESS ENTERED BY:NAME")
+"RTN","PSBOMH1",108,0)
+ .....I PSBINIT="" S PSBINIT=99
+"RTN","PSBOMH1",109,0)
+ .....I $D(^PSB(53.79,PSBIEN,.9,$P(PSBDT,"."))) D
+"RTN","PSBOMH1",110,0)
+ ......S PSBINIT=PSBINIT_"*",PSBNAME=PSBNAME_"/"_$P(^PSB(53.79,PSBIEN,.9,$P(PSBDT,"."),0),U,3)_"  "_$$GET1^DIQ(53.79,PSBIEN_",",.24)
+"RTN","PSBOMH1",111,0)
+ ......S ^TMP("PSB",$J,"LEGEND",PSBINIT,PSBNAME)=""
+"RTN","PSBOMH1",112,0)
+ .....I '$D(^PSB(53.79,PSBIEN,.9,$P(PSBDT,".")))  D
+"RTN","PSBOMH1",113,0)
+ ......D:$D(^PSB(53.79,PSBIEN,.9,0))
+"RTN","PSBOMH1",114,0)
+ .......S (PSBXA2,PSBFG)=0,PSBEFFDT=$P(^PSB(53.79,PSBIEN,.2),U,4) F  S PSBXA2=$O(^PSB(53.79,PSBIEN,.9,PSBXA2)) Q:+PSBXA2'>0  D  Q:PSBFG=1
+"RTN","PSBOMH1",115,0)
+ ........D:($P(^PSB(53.79,PSBIEN,.9,PSBXA2,0),U)=PSBEFFDT)&($P(^PSB(53.79,PSBIEN,.9,PSBXA2,0),U,3)["Instruct")&($P(^PSB(53.79,PSBIEN,.2),U,3)=$P(^PSB(53.79,PSBIEN,.9,PSBXA2,0),U,2))
+"RTN","PSBOMH1",116,0)
+ .........S PSBINIT=PSBINIT_"*",PSBNAME=PSBNAME_"/"_$P(^PSB(53.79,PSBIEN,.9,PSBXA2,0),U,3)_"  "_$$GET1^DIQ(53.79,PSBIEN_",",.24)
+"RTN","PSBOMH1",117,0)
+ .........S ^TMP("PSB",$J,"LEGEND",PSBINIT,PSBNAME)="",PSBFG=1
+"RTN","PSBOMH1",118,0)
+ .....S PSBLINE2="  Results: "_$$GET1^DIQ(53.79,PSBIEN_",",.22)
+"RTN","PSBOMH1",119,0)
+ .....S PSBRTXTW="     Entered By "_PSBINIT_" on "_$$GET1^DIQ(53.79,PSBIEN_",",.24)
+"RTN","PSBOMH1",120,0)
+ .....N PSBEIECMT,PSBCMTCH S PSBEIECMT="",PSBCMTCH=0 F  S PSBCMTCH=$O(^PSB(53.79,PSBIEN,.3,PSBCMTCH)) Q:'PSBCMTCH  D
+"RTN","PSBOMH1",121,0)
+ ......I $P($G(^PSB(53.79,PSBIEN,.3,PSBCMTCH,0)),U)["**Pain Score of" S PSBEIECMT=" **This Pain Score may have been Entered in Error. See Vitals Package.**"
+"RTN","PSBOMH1",122,0)
+ .....S PSBLINE2=PSBLINE2_PSBEIECMT
+"RTN","PSBOMH1",123,0)
+ .....I PSBINIT[99 S PSBINIT=""
+"RTN","PSBOMH1",124,0)
+ ...S X=PSBADMDT D H^%DTC F PSBWEEK=+$G(PSBAR(%H)):-7 Q:$D(^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",0))!('$D(PSBAR(PSBWEEK)))
+"RTN","PSBOMH1",125,0)
+ ...S X=$O(^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",""),-1)+1
+"RTN","PSBOMH1",126,0)
+ ...I PSBFLG="1" S ^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",X)=PRELINE1
+"RTN","PSBOMH1",127,0)
+ ...S ^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",X+1)=PSBLINE1
+"RTN","PSBOMH1",128,0)
+ ...I $G(PSBLINE2)]"" D
+"RTN","PSBOMH1",129,0)
+ ....I $L(PSBLINE2)<=90 S ^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",X+2)=PSBLINE2 S:$$GET1^DIQ(53.79,PSBIEN_",",.24)'="" ^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",X+3)="      "_PSBRTXTW
+"RTN","PSBOMH1",130,0)
+ ....I $L(PSBLINE2)>90 D
+"RTN","PSBOMH1",131,0)
+ .....S ^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",X+2)=$E(PSBLINE2,1,90)
+"RTN","PSBOMH1",132,0)
+ .....S ^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",X+3)="           "_$E(PSBLINE2,91,169)
+"RTN","PSBOMH1",133,0)
+ .....I $L(PSBLINE2)'>169 S ^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",X+4)="     "_PSBRTXTW
+"RTN","PSBOMH1",134,0)
+ .....I $L(PSBLINE2)>169 S ^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",X+4)="           "_$E(PSBLINE2,170,245),^TMP("PSB",$J,PSBWEEK,PSBORD,"AT",X+5)="     "_PSBRTXTW
+"RTN","PSBOMH1",135,0)
+ D RELINE^PSBOMH3(PSBWEEK) ;Line up administrations with their admin times - PSB*3*67
+"RTN","PSBOMH1",136,0)
+ Q
+"RTN","PSBOMH1",137,0)
+ ;
+"RTN","PSBOMH1",138,0)
+DDAUD ;  audits for dispen drugs
+"RTN","PSBOMH1",139,0)
+ ;
+"RTN","PSBOMH1",140,0)
+ M PSBMLA=^PSB(53.79,PSBIEN)
+"RTN","PSBOMH1",141,0)
+ S PSBGA="" I $D(PSBMLA(.9,0)) D
+"RTN","PSBOMH1",142,0)
+ .F PSBX=1:1 Q:'$D(PSBMLA(.9,PSBX))  I ((PSBMLA(.9,PSBX,0)["ACTION STATUS")!(PSBMLA(.9,PSBX,0)["ADMINISTRATION STATUS")) D  Q
+"RTN","PSBOMH1",143,0)
+ ..I $D(PSBMLA(.9,PSBX-2,0)) D DT^DILF("ENPST",$P(PSBMLA(.9,PSBX-2,0),"'",2),.PSBDATE)
+"RTN","PSBOMH1",144,0)
+ ..I '$D(PSBMLA(.9,PSBX-2,0)) S PSBDATE=$P(^PSB(53.79,PSBIEN,0),U,6)
+"RTN","PSBOMH1",145,0)
+ ..S PSBTMP(10000000-PSBDATE,"B")=PSBDATE_U_$$INITIAL^PSBRPC2($P(PSBMLA(0),U,5))_U_$P(PSBMLA(.9,PSBX,0),"'",2)
+"RTN","PSBOMH1",146,0)
+ ..S PSBGA=1
+"RTN","PSBOMH1",147,0)
+ .F PSBX=1:1 Q:'$D(PSBMLA(.9,PSBX))  I ((PSBMLA(.9,PSBX,0)["ACTION STATUS")!(PSBMLA(.9,PSBX,0)["ADMINISTRATION STATUS")) D
+"RTN","PSBOMH1",148,0)
+ ..S PSBTMP(10000000-$P(PSBMLA(.9,PSBX,0),U,1),"B")=$P(PSBMLA(.9,PSBX,0),U,1)_U_$$INITIAL^PSBRPC2($P(PSBMLA(.9,PSBX,0),U,2))_U_$P($P(PSBMLA(.9,PSBX,0),U,3),"'",2)
+"RTN","PSBOMH1",149,0)
+ ..S PSBGA=1
+"RTN","PSBOMH1",150,0)
+ ;PSB*3*45 Remove Use of $Q(<>,-1)
+"RTN","PSBOMH1",151,0)
+ N PSBTMQ
+"RTN","PSBOMH1",152,0)
+ I PSBGA'=1 S PSBTMP(10000000-$P(PSBMLA(0),U,6),"A")=$P(PSBMLA(0),U,6)_U_$$INITIAL^PSBRPC2($P(PSBMLA(0),U,7))
+"RTN","PSBOMH1",153,0)
+ S PSBQRY="PSBTMP",PSBCNT=1 F  S PSBTMQ=PSBQRY,PSBQRY=$Q(@PSBQRY) Q:PSBQRY=""  D  ; does comment go with action
+"RTN","PSBOMH1",154,0)
+ .S PSBPQRY=$G(PSBTMQ)
+"RTN","PSBOMH1",155,0)
+ .I PSBPQRY="" S PSBTAR(PSBCNT)=@PSBQRY,PSBCNT=PSBCNT+1 Q  ; no prev action
+"RTN","PSBOMH1",156,0)
+ .I $QS(PSBPQRY,2)="C"  S PSBTAR(PSBCNT)=@PSBQRY,PSBCNT=PSBCNT+1 Q  ; prev line = comment
+"RTN","PSBOMH1",157,0)
+ .I $QS(PSBQRY,2)="C",$E($P(@PSBTMQ,U,1),1,12)=$E($P(@PSBQRY,U,1),1,12),$P(@PSBTMQ,U,2)=$P(@PSBQRY,U,2) D  Q
+"RTN","PSBOMH1",158,0)
+ ..S X=$P(@PSBQRY,U,4) S:X[":" X=$P(X,":",2) S $P(PSBTAR(PSBCNT-1),U,4)=X Q
+"RTN","PSBOMH1",159,0)
+ .S PSBTAR(PSBCNT)=@PSBQRY,PSBCNT=PSBCNT+1
+"RTN","PSBOMH1",160,0)
+ Q
+"RTN","PSBOMH1",161,0)
+ ;
+"RTN","PSBOMH1",162,0)
+PSBOUT(PSBTET,PSBOT1) ;
+"RTN","PSBOMH1",163,0)
+ I '$D(^PSB(53.79,PSBIEN,.9,0))  D PSBENT^PSBOMH2(PSBOT1)
+"RTN","PSBOMH1",164,0)
+ S PSBIDA="" I $P(^PSB(53.79,PSBIEN,0),U,6)=PSBTET S PSBIDA=$P(^PSB(53.79,PSBIEN,0),U,7),PSBOT1=$P(^VA(200,PSBIDA,0),"^",2),PSBNAME=$P(^VA(200,PSBIDA,0),"^",1)
+"RTN","PSBOMH1",165,0)
+ S PSBXA1=0
+"RTN","PSBOMH1",166,0)
+ F  S PSBXA1=$O(^PSB(53.79,PSBIEN,.9,PSBXA1)) Q:+PSBXA1'>0  I PSBXA1'=0  D  Q:$G(PSBOT1)["*"
+"RTN","PSBOMH1",167,0)
+ .I $L(PSBXA1)<4  D
+"RTN","PSBOMH1",168,0)
+ ..I $P(^PSB(53.79,PSBIEN,.9,PSBXA1,0),"^",1)=PSBTET  D
+"RTN","PSBOMH1",169,0)
+ ...S:$G(PSBIDA)="" PSBIDA=$P(^PSB(53.79,PSBIEN,.9,PSBXA1,0),"^",2),PSBOT1=$P(^VA(200,PSBIDA,0),"^",2),PSBNAME=$P(^VA(200,PSBIDA,0),"^",1)
+"RTN","PSBOMH1",170,0)
+ ...I (PSBIDA=$P(^PSB(53.79,PSBIEN,.9,PSBXA1,0),"^",2)),$P(^PSB(53.79,PSBIEN,.9,PSBXA1,0),"^",3)["Instruct"  D
+"RTN","PSBOMH1",171,0)
+ ....S INSDD=$P(^PSB(53.79,PSBIEN,.9,PSBXA1,0),"^",1),Y=INSDD D DD^%DT S INSDD=Y
+"RTN","PSBOMH1",172,0)
+ ....S PSBOT1=PSBOT1_"*",PSBNAME=PSBNAME_"/"_$P(^PSB(53.79,PSBIEN,.9,PSBXA1,0),U,3)_" "_INSDD
+"RTN","PSBOMH1",173,0)
+ I $G(PSBIDA)="",$P(^PSB(53.79,PSBIEN,0),U,4)=PSBTET D
+"RTN","PSBOMH1",174,0)
+ .S PSBIDA=$P(^PSB(53.79,PSBIEN,0),U,5),PSBOT1=$P(^VA(200,PSBIDA,0),"^",2),PSBNAME=$P(^VA(200,PSBIDA,0),"^",1)
+"RTN","PSBOMH1",175,0)
+ I $G(PSBNAME)="" D
+"RTN","PSBOMH1",176,0)
+ . S PSBIDA=$P(^PSB(53.79,PSBIEN,0),U,5),PSBOT1=$P(^VA(200,PSBIDA,0),"^",2),PSBNAME=$P(^VA(200,PSBIDA,0),"^",1)
+"RTN","PSBOMH1",177,0)
+ S ^TMP("PSB",$J,"LEGEND",$S($G(PSBOT1)="":99,1:PSBOT1),PSBNAME)=""
+"RTN","PSBOMH1",178,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",11071,6)
+^98
+**END**
+**END**
+

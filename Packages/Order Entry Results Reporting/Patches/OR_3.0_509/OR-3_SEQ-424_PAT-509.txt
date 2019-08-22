@@ -1,0 +1,282 @@
+$TXT Created by                  CPRS31A.DOMAIN.EXT  (KIDS) on Tuesday, 04/30/19 at 09:24
+=============================================================================
+Run Date: MAY 13, 2019                     Designation: OR*3*509
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #424                      Status: Released
+                  Compliance Date: MAY 30, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*434    <<= must be installed BEFORE `OR*3*509'
+
+Subject: CPRS31A WIN10
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ In order to comply with the enterprise rollout of Windows 10, the
+ following issues with the Computerized Patient Record System (CPRS) 
+ Graphical User Interface (GUI) have been identified for rapid resolution.
+ Because of the importance of the features released with CPRS v31a Windows 
+ 10, the deployment will be an expedited release with an 18-day compliance 
+ window.
+  
+  
+ This patch addresses five issues:
+  
+ 1. INC4322519 - CPRS v 31A in WIN 10 PC's    --  needs to go to CLIN 2 
+    HPS product Support [sic] (Informational Alert Processing Issue)
+ 2. INC2899055 - Consult - Unable to Forward a Consult with NEW Windows 10 
+    machine - able day prior on old machine
+ 3. When maximizing screen the top half of the title bar was being cut off.
+ 4. INC5435205 - Win10 CPRS- Delay and Crash when using "ADD OTHER HEALTH 
+    FACTOR" on    encounter form
+ 5. Update GUI Icon to keep color in Windows 10
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)           Field Name (Number)   New/Modified/Deleted
+ ------------------           -------------------   --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #                New/Modified/Deleted
+ ---------                    ------                --------------------
+ N/A
+  
+  
+ List Templates Associated:                         
+  
+ List Template Name                                 New/Modified/Deleted
+ -----------------                                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                    New/Modified/Deleted
+ ---------------                                    --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                  Type                  New/Modified/Deleted
+ -----------                  ----                  --------------------
+ OR CPRS GUI CHART            Broker                    Modified
+  
+  
+ Parameters Associated:
+  
+ Parameter Name                                      New/Modified/Deleted
+ --------------                                      --------------------
+ N/A
+  
+  
+ Protocols Associated:         
+  
+ Protocol Name                                       New/Modified/Deleted
+ -------------                                       --------------------
+ N/A
+   
+ Remote Procedure Calls Associated:
+  
+ Remote Procedure Call Name                          New/Modified/Deleted
+ --------------------------                          --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name                                    New/Modified/Deleted
+ -----------------                                    --------------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)      New/Modified/Deleted 
+ -------------      ----      ------------------      --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1.  INC4322519 - CPRS v 31A in WIN 10 PC's    --  needs to go to CLIN 2 
+     HPS product Support [sic] (Informational Alert Processing Issue) 
+     
+     Problem:
+     -------
+     When trying to process an alert via double click that does not leave 
+     the selection screen (informational or task stopped), the alert list
+     view appears to become unresponsive causing users to kill CPRS via
+     the Task Manager. Pressing the Escape key will allow the user to
+     continue, but this is an unknown and/or an unusual workaround for most
+     users.
+  
+     Resolution:
+     -----------
+     CPRS GUI code had a dependency on the mouse drag event when double
+     clicking on an alert. The code was updated to remove this dependency
+     such that double clicking would work as expected and the patient
+     selection screen will no longer become unresponsive.
+  
+   
+ 2.  INC2899055 - Consult - Unable to Forward a Consult with NEW Windows 10
+     machine - able day prior on old machine
+     INC1551560: Custom Consult View in CPRS not Working
+  
+     Problem:
+     -------
+     Using a Windows 10 computer, the following menu options on the 
+     Consults tab of the CPRS GUI may cause the application to become 
+     unresponsive, lose connection to VistA, and eventually crash. The
+     Forward action (Action menu > Consult Tracking > Forward), the Custom
+     View (View menu > Custom View), and Consults by Service (View menu >
+     Consults by Service). The actions are generally able to complete on a
+     Windows 7 machine, but the associated windows can take a long time
+     (minutes) to display.
+  
+     Resolution:
+     ----------
+     The CPRS GUI code was updated to improve efficiency when loading the
+     consult service hierarchy during the Forward, Custom View, and
+     Consults by Status actions.
+  
+  
+ 3.  When maximizing the CPRS GUI screen the top half of the title bar was
+     being cut off.
+  
+     Problem:
+     -------
+     When maximizing the main screen of CPRS, part of the title bar was
+     being cut off.
+  
+  
+     Resolution:
+     ----------
+     CPRS GUI code was corrected to no longer cut off the title bar when
+     the main form is being maximized.
+  
+  
+ 4.  INC5435205 - Win10 CPRS- Delay and Crash when using "ADD OTHER HEALTH 
+     FACTOR" on encounter form
+  
+     Problem:
+     -------
+     In CPRS GUI, the Health Factors tab of the Encounter form has a button
+     named 'Other Health Factor'. Clicking this button will load all of the
+     active Categories and Factors from VistA. The GUI code for this
+     process is very inefficient and can take several minutes to finish
+     processing. On a Windows 10 machine, CPRS may often encounter an error
+     and crash before the process completes. Also, the cursor does not
+     change to Windows spinning circle to indicate that CPRS is busy.
+  
+     Resolution:
+     ----------
+     The GUI code has been modified to greatly improve the performance of 
+     loading the health factors via the 'Other Health Factor' button. The
+     cursor will also change to a spinning circle to indicate CPRS is busy.
+  
+  
+ 5.  Update the CPRS GUI Icon to keep color in Windows 10.
+  
+     Problem:
+     -------
+     The icon for the CPRS GUI appears white in Windows 10.
+  
+     Resolution:
+     ----------
+     The original icon color was created using yellow and white in the 
+     chess-board pattern. As a result, the icon appeared as pale-yellow. 
+     When Windows 10 shrinks the icon to fit the upper left corner of the
+     GUI window the color becomes white, not pale-yellow. To fix the
+     appearance the icon was rebuilt using yellow as the only color.
+  
+ Test Sites:
+ -----------
+ Central Texas, TX
+ Little Rock, AK
+ Minneapolis, MN
+ Pittsburgh, PA
+  
+ Software & Documentation:
+ -------------
+ The PackMan message will be distributed using the normal release process 
+ from the National Patch Module on FORUM.
+  
+ For the updated CPRS GUI executable and the Deployment, Implementation, 
+ Backout, and Rollback Guide, the preferred method is to Secure File
+ Transfer Protocol (SFTP) the files from download.vista.domain.ext. This
+ transmits the files from the first available SFTP server. Sites may also
+ elect to retrieve software directly from a specific server as follows:
+  
+   Hines          sftp.domain.ext   
+   Salt Lake City sftp.domain.ext     
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Below is a list of the files related to this patch that will be needed 
+ and available via the SFTP sites listed above.
+  
+   File Name                  Contents                     FTP Mode
+   ================================================================
+   OR_30_509_IG.PDF/DOC       CPRS v31a Windows 10          Binary
+                              (OR*3*509) Deployment, 
+                              Back-Out, and Rollback 
+                              Guide
+   
+   OR_30_509.ZIP              Borlndmm.dll                  Binary
+                              CPRSChart.exe
+                              CPRSChart.map
+                              RoboEx32.dll
+                              Help files
+                              
+  
+ Patch Installation:
+ ------------------- 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Please refer to the "CPRS GUI v31a Windows 10 Deployment, Installation, 
+ Back-Out and Rollback Guide" for installation and set-up information. 
+ This document is exported as OR_30_509_IG.doc and OR_30_509_IG.pdf and
+ will be available on the Vista Document Library (VDL) upon national
+ release.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 11, 2019
+Completed By:                               Date Completed: MAY 09, 2019
+Released By :                               Date Released : MAY 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,256 @@
+
+=============================================================================
+Run Date: JUN 24, 2019                     Designation: SD*5.3*729
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #582                    Status: Released
+                  Compliance Date: JUL 25, 2019
+=============================================================================
+
+
+Subject: INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Subject:  Unschedule Daily Recall Reminder, SDRR CLEAN-UP, Task Job
+  
+ Category:  INFORMATIONAL
+  
+ Description:
+ ===========
+  
+ The Office of Veterans Access to Care is requesting that all VistA 
+ instances discontinue running the daily SDRR CLEAN-UP job.   Sites are 
+ prepared for the unscheduling/disabling of this job starting on June 24, 
+ 2019. Please note that some VistA instances may already have the job 
+ unscheduled. 
+  
+ Please ensure all VistA instances have discontinued running SDRR CLEAN-UP 
+ by July 23, 2019.
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)               New/Modified/Deleted
+ -------------          --------------------------- --------------------
+ n/a
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ n/a
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ n/a
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ n/a
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ n/a
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ n/a
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)           New/Modified/Deleted
+ -------------      ----      ------------------      --------------------
+ n/a
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+  
+ Defect Tracking Ticket(s) & Overviews:
+ -----------------------------
+  
+  
+  
+ Problem:  
+ -------
+ It has been identified that SDRR CLEAN-UP job could potentially close a 
+ Recall Reminder that should not be closed without review.  This could 
+ potentially cause a patient to be lost to follow up care. Facilities are 
+ actively changing their workflow to manually close/manage active Recalls 
+ instead of relying on the SDRR CLEAN-UP job. This is a formal campaign at 
+ the national level through the Office of Veteran Access to Care (OVAC), 
+ and sites have been actively engaged to prepare for this workflow change.
+  
+ Resolution:
+ ----------
+ Unschedule the SDRR CLEAN-UP job and do not reschedule it.   
+ Sites/National Office can monitor the successful Unscheduling at each 
+ site through a report on the VHA Support Service Center (VSSC) website. 
+ The monthly "Auto-Routine" column statistics should be blank after a site 
+ has unscheduled the SDRR CLEAN-UP job.  This report is open to anyone 
+ behind the VA firewall at:
+  
+ https://reports.vssc.domain.ext/reportserver/Pages/reportviewer.aspx?/Acce
+ ss/Recall%20Reminder%20-%20Removal%20Drill%20Down&rs:Command=Render
+  
+  
+ Problem:  
+ -------
+ Instructions are needed for staff who are tasked to unschedule the SDRR 
+ CLEAN-UP job. 
+  
+ Resolution:
+ ----------
+ Unscheduling this job uses the existing option Schedule/Unschedule 
+ Options [XUTM SCHEDULE] as it is designed to be used.  This particular 
+ job falls into the Scheduling (SD) namespace, but anyone who can 
+ schedule/unschedule tasks with Taskman Management can perform this task.
+  
+ Navigate to Schedule/Unschedule Options [XUTM SCHEDULE].  It is located 
+ under the Taskman Management [XUTM MGR] at most sites.
+  
+           Schedule/Unschedule Options [XUTM SCHEDULE]
+           One-time Option Queue [XU OPTION QUEUE]
+           Taskman Management Utilities ... [XUTM UTIL]
+           List Tasks [XUTM INQ]
+           Dequeue Tasks [XUTM DQ]
+           Requeue Tasks [XUTM REQ]
+           Delete Tasks [XUTM DEL]
+           Print Options that are Scheduled to run [XUTM BACKGROUND PRINT]
+           Cleanup Task List [XUTM TL CLEAN]
+           Print Options Recommended for Queueing [XUTM BACKGROUND 
+ RECOMMENDED]
+  
+ Select Taskman Management <TEST ACCOUNT> Option: Schedule/Unschedule 
+ Options
+  
+ Select OPTION to schedule or reschedule: SDRR
+      1   SDRR CLEAN-UP       Clean Up Clinic Recall Entries
+      2   SDRR TASK JOB       Auto Print for Recall Reminder
+ CHOOSE 1-2: 1  SDRR CLEAN-UP     Clean Up Clinic Recall Entries      (R)
+                    
+  
+  
+                          Edit Option Schedule
+     Option Name: SDRR CLEAN-UP                 
+     Menu Text: Clean Up Clinic Recall Entries            TASK ID: 8614125
+   
+ _________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME: JUN 10,2019@23:00             
+  
+ DEVICE FOR QUEUED JOB OUTPUT:                               
+  
+  QUEUED TO RUN ON VOLUME SET:                      
+  
+       RESCHEDULING FREQUENCY: 1D                            
+  
+              TASK 
+ PARAMETERS:                                                 
+  
+             SPECIAL QUEUEING:                     
+  
+ _________________________________________________________________________
+  
+ COMMAND:                                         Press <PF1>H for help  
+ Insert 
+  
+  
+ Option Schedule module opens (screen shot above).  
+  
+ 1. Ensure you are looking at Option Name: SDRR CLEAN-UP on the first 
+ line.  ***If you accidently chose SDRR TASK JOB, stop and start over.***
+  
+ 2. Look at the information already entered.   You should see Option Name 
+ and Menu Text filled in at the top.  If you do not have any information 
+ in ANY prompt below the solid line under Menu Text, STOP, and skip to 
+ end.  You just confirmed that the job is not scheduled at this site, and 
+ no future action on your part is needed.  
+  
+ 3. If you do see information in the prompts on the screen, use your down 
+ arrow to put your curser into the first space of the first prompt that 
+ contains information.  Type the @ sign (overwrites the first letter of 
+ the current information) and Return.
+  
+ 4. Repeat for each prompt that contains information.
+  
+ 5. When you arrive at the last prompt, down arrow one last time to jump 
+ to the COMMAND: prompt.  Enter S to save and E to exit. 
+  
+ 6. Verify that the system took the change.  Reopen option 
+ Schedule/Unschedule Options [XUTM SCHEDULE] and choose SDRR CLEAN-UP.  
+ The information in each prompt should be blank (below).   If there is 
+ information in any prompt, please repeat steps 2-5.  
+  
+  
+                          Edit Option Schedule
+  
+     Option Name: SDRR CLEAN-UP                 
+     Menu Text: Clean Up Clinic Recall Entries            TASK ID: 8614125
+   
+ _________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME: 
+  
+ DEVICE FOR QUEUED JOB OUTPUT:                               
+  
+  QUEUED TO RUN ON VOLUME SET:                      
+  
+       RESCHEDULING FREQUENCY:                            
+  
+              TASK 
+ PARAMETERS:                                                 
+  
+             SPECIAL QUEUEING:                     
+  
+ _________________________________________________________________________
+  
+ COMMAND:                                         Press <PF1>H for help  
+  
+  
+ Test Sites: N/A
+ -----------
+  
+  
+ Routine Information:
+ ====================
+  
+  
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 13, 2019
+Completed By:                               Date Completed: JUN 24, 2019
+Released By :                               Date Released : JUN 24, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,360 @@
+
+=============================================================================
+Run Date: JUL 15, 2019                     Designation: PSJ*5*327
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #331                      Status: Released
+                  Compliance Date: AUG 14, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*54    <<= must be installed BEFORE `PSJ*5*327'
+                    (v)PSJ*5*299   <<= must be installed BEFORE `PSJ*5*327'
+                    (v)PSJ*5*344   <<= must be installed BEFORE `PSJ*5*327'
+                    (v)PSJ*5*353   <<= must be installed BEFORE `PSJ*5*327'
+                    (v)PSJ*5*355   <<= must be installed BEFORE `PSJ*5*327'
+                    (v)PSJ*5*357   <<= must be installed BEFORE `PSJ*5*327'
+                    (v)PSJ*5*366   <<= must be installed BEFORE `PSJ*5*327'
+                    (v)PSJ*5*367   <<= must be installed BEFORE `PSJ*5*327'
+                    (v)PSJ*5*378   <<= must be installed BEFORE `PSJ*5*327'
+                    (v)PSJ*5*382   <<= must be installed BEFORE `PSJ*5*327'
+
+Subject: MENTAL HEALTH NCC PROJECT 5.01
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will add enhancements to the Inpatient Order Entry routines for
+ the National Clozapine Coordination project.  Below is a list of all the 
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    MENTAL HEALTH (MH) V. 5.01                            YS*5.01*122
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*457 
+    INPATIENT MEDICATIONS (IP) V. 5.0                     PSJ*5*327
+    ORDER ENTRY/RESULTS REPORTING (OR) V. 3.0             OR*3*427
+  
+ The patches (YS*5.01*122, PSO*7*457, PSJ*5*327, and OR*3*427) are 
+ being released in the Kernel Installation and Distribution System (KIDS)
+ multi-build distribution MENTAL HEALTH NCC PROJECT 5.01.
+  
+ Abbreviations for terms used in the multi-build patch descriptions 
+ include the National Clozapine Coordinating Center (NCCC) located in
+ Dallas, Texas; Absolute Neutrophil Count (ANC); White Blood Cells (WBC);
+ Initial Operating Capability (IOC); and Computerized Patient Record 
+ System (CPRS).
+  
+ The purpose of this software package is to maintain compliance with 
+ legislative and federal mandates, as well as to add Clozapine Order
+ Checking to the Inpatient Pharmacy application. In addition, this 
+ package replaces the weekly roll-up functionality and now transmits 
+ data to the National Clozapine server nightly.
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+ The routines for the VistA Inpatient Order Entry [PSJ OE] option
+ will be modified to
+  
+ 1. Add logic to verify that the ordering provider holds the
+    YSCL AUTHORIZED key when the pharmacist enters a new 
+    Clozapine order in back door pharmacy. If the ordering provider
+    does NOT hold the YSCL AUTHORIZED key a message will be
+    displayed and will prevent the order from being entered.
+  
+ 2. Add logic to verify that the pharmacist holds the PSOLOCKCLOZ
+    key. A local override is needed when the ANC lab values are
+    >= 1000 and < 1500. This key will allow the pharmacist to
+    perform the override action, if needed.
+  
+ 3. A new routine ^PSJCLOZ will be created to perform various 
+    order checks and override functions.
+  
+ 4. A new file CLOZAPINE MEDICATION OVERRIDES (#53.8) will be a
+    cloned from the CLOZAPINE PRESCRIPTION OVERRIDE file (#52.52) and
+    will hold the override data for Inpatient Medication orders.
+  
+ 5. A new menu PSJL MANAGER (Clozapine Inpatient Medications Manager)
+    contains options used to control inpatient Clozapine dispensing.
+  
+ 6. A new option PSJLAB LIST (Display Inpatient Lab Tests and Results)
+    displays results of lab tests for patients receiving clozapine as
+    required by the circular regarding patient management protocol for
+    the use of clozapine. This is for inpatient pharmacy.
+  
+ 7. A new option PSJLIST OVERRIDES (List Inpatient Clozapine Overrides)
+    is used to generate a list of inpatient ordered clozapine
+    prescriptions entered by overriding the lockout.
+  
+ 8. The new menu PSJU MGR (Unit Dose Medications) is the main menu for
+    the Unit Dose Medications software. This menu must be given to all
+    Unit Dose Medications users.
+  
+ 9. Add new field CLOZAPINE DOSAGE (MG/DAY) (#301) to the sub-file
+    UNIT DOSE (#55.06) of the PHARMACY PATIENT file (#55) to hold
+    the Clozapine Total Daily Dose verified/entered by the Pharmacist.
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ File Name (Number)              Field Name (Number)              
+ New/Modified/Deleted
+ --------------------            ---------------------              
+ CLOZAPINE MEDICATION OVERRIDES  DATE TIME [1D] (#.01)                   
+ NEW
+ (#53.8)                         ORDER NUMBER [2P:100] (#1)              
+ NEW
+                                 USER ENTERING [3P:20 0] (#2)
+ NEW
+                                 APPROVING TEAM MEMBER [4P:200] (#3)     
+ NEW
+                                 REASON FOR OVERRIDE [5P:52.54] (#4)     
+ NEW
+                                 COMMENTS [6F] (#5)                      
+ NEW
+                                 SECOND APPROVING TEAM MEMBER [1P:200] 
+ (#6) NEW
+ PHARMACY PATIENT file (#55)
+ sub-file UNIT DOSE (#55.06)     CLOZAPINE DOSAGE (MG/DAY) (#301)        
+ NEW
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                   Type           New/Modified/Deleted
+ -----------                   ----           --------------------
+ PSJL MANAGER                  Menu                 New
+ PSJLAB LIST                Run Routine             New
+ PSJLIST OVERRIDES          Run Routine             New
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name                 New/Modified/Deleted
+ ----------------------            --------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ Request Name: National Clozapine Coordination Project
+   Request ID: 20100703
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Known Defects:
+ --------------
+ The following defect was identified during IOC testing and will be fixed
+ during this patch's warranty period:
+  
+ Defect 940970 - During pharmacist verification the system correctly, 
+ automatically overrode the stop date to reflect the 7-day limit for the 
+ "weekly" patient, but the Duration field still displays 90 days.
+  
+ Test Sites:
+ -----------
+  Battle Creek VA Medical Center
+  VA Black Hills Health Care System
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+                                   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+          Hines: domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+  
+ --------------------------------------------------------------------------
+ Title                                  File Name               FTP Mode
+ --------------------------------------------------------------------------
+ MENTAL HEALTH NCC PROJECT 5.01     MH_NCC_PROJ_5_01.KID (ASCII)
+  
+ MENTAL HEALTH NCC PROJECT 5.01     MH_NCC_Proj_5_01_UG_R0719.PDF (binary) 
+ Technical Manual / Security Guide
+    Inpatient Medications           psj_5_p327_tm.PDF         (binary)
+ Nurse's User Manual                psj_5_p327_nurse_um.PDF   (binary)
+ Pharmacist's User Manual           psj_5_p327_phar_um.PDF    (binary)
+ Deploy Install BO RB Guide    MH_NCC_Proj_5_01_UG_R0719.PDF  (binary)
+ Quick Reference Card   MH_NCC_Proj_5_01_PSO_PSJ_QR_R0719.PDF (binary)
+  
+ Patch Installation:
+  
+ Pre-Install/Install/Post-Install Instructions
+ ---------------------------------------------
+ The components sent with this patch PSJ*5*327 have been included in the 
+ host file MH_NCC_PROJ_5_01.KID
+  
+ Please follow the (pre/install/post) installation instructions listed in
+ the patch description for patch YS*5.01*122.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 114
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGNE3
+    Before: B86543610   After: B96072062  **4,26,47,50,63,69,105,80,111,
+                                           183,193,179,275,378,327**
+Routine Name: PSGOD
+    Before: B30464827   After: B41024059  **67,58,111,133,181,286,281,
+                                           315,338,256,347,367,327**
+Routine Name: PSGOE41
+    Before:B104146997   After:B134934850  **50,63,64,69,58,111,136,113,
+                                           267,315,334,373,366,327**
+Routine Name: PSGOE42
+    Before: B10268792   After: B13181041  **366,327**
+Routine Name: PSGOE7
+    Before: B40589301   After: B45336185  **9,26,34,52,55,50,87,111,181,
+                                           254,267,260,288,281,317,355,
+                                           327**
+Routine Name: PSGOE8
+    Before: B54413557   After: B60586386  **47,50,65,72,110,111,188,192,
+                                           113,223,269,287,315,338,366,
+                                           327**
+Routine Name: PSGOE81
+    Before:B117103092   After:B156313151  **26,50,64,58,82,110,111,136,
+                                           113,267,315,334,373,366,327**
+Routine Name: PSGOE82
+    Before: B34233969   After: B42921710  **2,35,50,67,58,81,127,168,181,
+                                           276,317,366,327**
+Routine Name: PSGOE91
+    Before:B122701385   After:B154370497  **50,64,58,110,111,136,113,179,
+                                           265,267,285,315,334,373,366,
+                                           327**
+Routine Name: PSGOE92
+    Before: B43075516   After: B47365647  **2,35,50,58,81,110,215,237,
+                                           276,316,317,366,327**
+Routine Name: PSGOEC
+    Before: B75500256   After: B76544319  **23,58,110,175,201,134,181,
+                                           260,288,257,299,327**
+Routine Name: PSGOEE
+    Before:B108119491   After:B130091847  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179,181,254,267,
+                                           268,281,315,338,373,366,327**
+Routine Name: PSGOEF
+    Before:B126624363   After:B147534789  **7,30,29,35,39,47,50,56,80,
+                                           116,110,111,133,153,134,222,
+                                           113,181,260,199,281,315,256,
+                                           373,327**
+Routine Name: PSGOER
+    Before: B90786181   After: B93777816  **11,30,29,35,70,58,95,110,111,
+                                           133,141,198,181,246,278,281,
+                                           315,338,256,347,327**
+Routine Name: PSGOER0
+    Before: B23514547   After: B25398399  **11,45,47,50,63,64,70,69,58,
+                                           80,110,127,136,181,281,327**
+Routine Name: PSGOERS
+    Before: B39916956   After: B41465316  **11,29,35,47,58,110,281,327**
+Routine Name: PSGOETO
+    Before: B39634920   After: B46539798  **3,13,25,31,33,50,68,58,85,
+                                           105,90,117,110,111,112,161,254,
+                                           267,268,315,327**
+Routine Name: PSGOEV
+    Before: B95461290   After:B102409211  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241,267,
+                                           268,260,288,199,281,256,347,
+                                           327**
+Routine Name: PSGON
+    Before: B39542310   After: B39542310  **2,22,54,327**
+Routine Name: PSGOT
+    Before: B23271906   After: B26696723  **13,68,90,110,173,134,161,254,
+                                           267,257,315,327**
+Routine Name: PSGPEN
+    Before: B58018481   After: B58080181  **30,37,50,58,115,110,127,129,
+                                           323,317,357,386,327**
+Routine Name: PSJ327P
+    Before:       n/a   After:   B688619  **327**
+Routine Name: PSJCLOLS
+    Before:       n/a   After: B10135228  **327**
+Routine Name: PSJCLOZ
+    Before:       n/a   After:B192160082  **327**
+Routine Name: PSJCOM
+    Before: B43877303   After: B47683425  **110,186,267,281,315,338,327**
+Routine Name: PSJCOM1
+    Before: B49883276   After: B54823711  **110,127,281,315,327**
+Routine Name: PSJLMPRU
+    Before: B25811546   After: B26845194  **16,58,85,110,185,181,267,323,
+                                           317,373,327**
+Routine Name: PSJLMUDE
+    Before: B97320744   After: B98434237  **7,47,50,63,64,58,80,116,110,
+                                           111,164,175,201,181,254,267,
+                                           228,315,317,338,373,327**
+Routine Name: PSJOE
+    Before:B108530036   After:B121657110  **7,26,29,33,42,50,56,72,58,
+                                           85,95,80,110,111,133,140,151,
+                                           149,181,252,281,315,256,344,
+                                           327**
+Routine Name: PSJOE1
+    Before: B33458884   After: B42053305  **2,7,25,30,47,56,64,179,181,
+                                           252,281,315,338,373,353,327**
+Routine Name: PSJOEA
+    Before: B33792351   After: B34137251  **110,127,133,167,171,254,315,
+                                           367,327**
+Routine Name: PSJOEA1
+    Before: B31393636   After: B31482767  **110,127,133,171,254,382,327**
+Routine Name: PSJRXLAB
+    Before:       n/a   After: B37749956  **327**
+ 
+Routine list of preceding patches: 54, 299, 344, 353, 355, 366, 367, 378
+                           382, 386
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 06, 2016
+Completed By:                               Date Completed: JUL 15, 2019
+Released By :                               Date Released : JUL 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

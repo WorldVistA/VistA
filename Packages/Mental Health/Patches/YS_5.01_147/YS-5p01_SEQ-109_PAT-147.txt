@@ -1,0 +1,227 @@
+$TXT Created by                    SPPNXT.HMP-PILOT.DOMAIN.EXT  (KIDS) on Wednesday, 04/03/19 at 13:09
+=============================================================================
+Run Date: JUN 25, 2019                     Designation: YS*5.01*147
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #109                   Status: Released
+                  Compliance Date: JUL 26, 2019
+=============================================================================
+
+Associated patches: (v)YS*5.01*123 <<= must be installed BEFORE `YS*5.01*147'
+
+Subject: SUICIDE PREVENTION INSTRUMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  New Mental Health Instruments: 
+  ------------------------------
+ 1. AD8
+ 2. EPDS
+ 3. CES
+ 4. FTND
+ 5. BASIS-24-PSYSCOSIS
+ 6. IJSS
+ 7. MPI-PAIN-INTRF (WHYMPI-INTRF)
+  
+ The patch also includes changes to file 601.71 MH Test and Surveys, field 
+ number 7.5 Reference. The definition was changed from 200 characters to 
+ 1000 characters.
+  
+ The post install routine will now change the Generate Progress Note
+ field in file 601.71 MH TESTS AND SURVEYS NAME to "Y" if is null. It will
+ NOT change if is set "N". 
+  
+ Patch Components:
+ =================
+ Files & Fields Associated:
+  File Name (Number)                Field Name (Number)   New/Mod/Del
+ ------------------                ------------------    -----------
+ MH TEST AND SURVEYS (601.71)                             Modified
+ MH QUESTIONS (601.72)                                    Modified
+ MH INTRODUCTIONS (601.73)                                Modified
+ MH INSTRUMENT CONTENT (601.76)                           Modified
+ MH SKIPPED QUESTIONS (601.79)                            Modified
+ MH RULES (601.82)                                        Modified
+ MH INSTRUMENT RULES (601.83)                             Modified
+ MH ANSWERS (601.85)                                      Modified
+ MH SCALE GROUPS (601.86)                                 Modified
+ MH SCALES (601.87)                                       Modified
+ MH CHOICE IDENTIFIERS (601.89)                           Modified
+ MH SCORING KEYS (601.91) Target (#3)                     Modified
+ MH INSTRUMENT EXCHANGE (601.95)                          Modified
+ Forms Associated:
+  Form Name                  File #                       New/Mod/Del
+ ---------                  ------                       -----------
+ N/A
+  
+ HL7 Application Parameters Associated:
+  HL7 Application Parameter Name                          New/Mod/Del
+ ------------------------------                          -----------
+ N/A
+  
+ List Templates Associated:
+  List Template Name                                      New/Mod/Del
+ ------------------                                      -----------
+ N/A
+  
+ Mail Groups Associated:
+  Mail Group Name                                         New/Mod/Del
+ ---------------                                         -----------
+ N/A
+  
+ Options Associated:
+  Option Name                       Type                  New/Mod/Del
+ N/A
+  
+  
+ Protocols Associated:
+ Protocol Name                     Type                  New/Mod/Del
+ -------------                     ----                  -----------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  Remote Procedure Name                                   New/Mod/Del
+ ---------------------                                   -----------
+ N/A
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  Template Name               Type    File Name (Number)  New/Mod/Del 
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Orlando
+ Milwaukee
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ The preferred method is to retrieve files from:
+   
+     download.vista.domain.ext.
+   
+ This transmits the files from the first available server. Sites may
+ also elect to retrieve files directly from a specific server.
+   
+ Sites may retrieve the software and install guide directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ These files should be downloaded in BINARY format.
+   
+     File Name:              Description:                    Protocol
+     ==========              ============                    =========
+     YS_501_147_IG.pdf       MHA3 Patch 147 Install Guide    BINARY
+     YS_MHA_TM.PDF           MHA3 Technical Manual           BINARY
+     YS_MHA_UM.PDF           MHA3 User Manual                BINARY
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www4.domain.ext/vdl/
+  
+  
+  
+ Installation:
+ ============= 
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low. Installation time will be
+ less than 5 minutes.
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+     Select Kernel Installation & Distribution System Option: Installation
+          1      Load a Distribution
+          2      Verify Checksums in Transport Global
+          3      Print Transport Global
+          4      Compare Transport Global to Current System
+          5      Backup a Transport Global
+          6      Install Package(s)
+                 Restart Install of Package(s)
+                 Unload a Distribution
+   
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter YS*5.01*147):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+  4.  Use the Install Package(s) option and select the package
+      YS*5.01*147.
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? NO//", answer NO.
+     b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 283
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS147PST
+    Before:       n/a   After:  B1460614  **147**
+Routine Name: YTQAPI2D
+    Before: B68236793   After:  B7153551  **147**
+Routine Name: YTSBS24P
+    Before:       n/a   After:  B6225923  **123,147**
+Routine Name: YTSCES
+    Before:       n/a   After: B12449983  **123,147**
+Routine Name: YTSFTND
+    Before:       n/a   After:  B6748082  **147**
+Routine Name: YTSIJSS
+    Before:       n/a   After: B16509466  **123,147**
+Routine Name: YTSMPIPN
+    Before:       n/a   After:  B4553724  **123,147**
+ 
+Routine list of preceding patches: 123
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 29, 2019
+Completed By:                               Date Completed: JUN 24, 2019
+Released By :                               Date Released : JUN 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

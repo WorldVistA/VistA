@@ -1,0 +1,193 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/27/18 at 10:56
+=============================================================================
+Run Date: MAY 01, 2019                     Designation: LR*5.2*512
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #422                    Status: Released
+                  Compliance Date: JUN 01, 2019
+=============================================================================
+
+Associated patches: (v)LR*5.2*440  <<= must be installed BEFORE `LR*5.2*512'
+                    (v)LR*5.2*461  <<= must be installed BEFORE `LR*5.2*512'
+                    (v)LR*5.2*462  <<= must be installed BEFORE `LR*5.2*512'
+
+Subject: INCORRECT CPRS LAB ORDER STATUS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses one (1) VistA Laboratory issue:
+  
+ The status for a lab order in CPRS might display incorrectly.
+  
+ New Service Requests (NSRs):
+ ===========================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ None
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*512 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*512 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*512 have no adverse effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch. 
+  
+  
+ Participating Test Sites:
+ ========================
+ Northport VAMC
+ Charleston VAMC
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ===========================================
+  
+ INC1403529: Incorrect CPRS Lab Order Status
+  
+ Problem:
+ -------
+  
+ Statuses may display incorrectly in CPRS for various situations depending 
+ on tests ordered and workflow.  For example, if a panel is incompletely 
+ verified (i.e. one or more atomic tests within the panel are pending), 
+ the panel status might display as "complete".  If three atomic tests are 
+ ordered separately and verified at different times, the first atomic test 
+ might revert to an "active" status when it should be "complete".  When 
+ Laboratory panels are ordered in combination with other panels, the CPRS 
+ status might display incorrectly as "complete" depending on the timing of 
+ result verification - whether components within the panels are verified 
+ separately, etc. 
+  
+ Resolution: 
+ ----------
+  
+ Modify routines LRVER1, LRVER3A, LRVR1, and LR7OB3 to ensure that CPRS 
+ statuses are correct for panel tests as well as atomic tests.  Atomic 
+ tests display as "complete" if result verification is complete.  Panel 
+ test statuses display as "complete" only after all components of the 
+ panels are verified. These changes apply to manual result verification, 
+ instrument and Laboratory Electronic Data Interchange (LEDI) result 
+ verification, as well as auto release/verification.
+  
+ Note: The CPRS order status may display incorrectly for some workflow 
+ scenarios after install of this patch if certain configurations are 
+ employed.  Examples could include a panel which includes only one 
+ accession area among all components and an accession area is not defined 
+ for the panel, or if a panel test contains another panel test in the LAB 
+ TEST INCLUDED IN PANEL multiple.
+  
+ It is encouraged in the "super panel" scenario that CPRS Order Sets are
+ defined instead. For more information, refer to the Computerized Patient 
+ Record System (CPRS) Technical Manual in the VA Software Document Library 
+ (VDL) at this link: https://www.domain.ext/vdl/application.asp?appid=61
+  
+ Routines: LRVER1, LRVER3A, LRVR1, LR7OB3 
+  
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   Install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*512'.
+  
+       When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+       Install? NO//', choose 'NO'.
+  
+       When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', choose 'NO'.
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+  
+ Installation Verification:
+ --------------------------
+  
+ Compare the checksums of the routines to the "after" checksums listed in 
+ this patch description.
+  
+ Back-out Procedures:
+ --------------------
+  
+ Restore the routines from the backup PackMan message which was generated 
+ before patch install. In the event of a catastrophic failure, the 
+ Facility CIO may make the decision to back-out the patch. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OB3
+    Before: B27184019   After: B41472620  **121,187,272,291,462,512**
+Routine Name: LRVER1
+    Before: B51164514   After: B54953290  **42,153,201,215,239,240,263,
+                                           232,286,291,350,468,484,461,
+                                           512**
+Routine Name: LRVER3A
+    Before: B25488291   After:B124646001  **1,5,42,100,121,153,190,221,
+                                           254,263,266,274,295,373,350,
+                                           512**
+Routine Name: LRVR1
+    Before: B56559612   After: B62383256  **42,153,221,286,291,350,424,
+                                           440,512**
+ 
+Routine list of preceding patches: 440, 461, 462
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 23, 2018
+Completed By:                               Date Completed: MAY 01, 2019
+Released By :                               Date Released : MAY 01, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

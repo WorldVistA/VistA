@@ -1,0 +1,235 @@
+$TXT Created by                L at DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 02/14/19 at 10:45
+=============================================================================
+Run Date: MAY 08, 2019                     Designation: RA*5*154
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #138                      Status: Released
+                  Compliance Date: JUN 07, 2019
+=============================================================================
+
+Associated patches: (v)RA*5*47     <<= must be installed BEFORE `RA*5*154'
+                    (v)RA*5*65     <<= must be installed BEFORE `RA*5*154'
+                    (v)RA*5*99     <<= must be installed BEFORE `RA*5*154'
+                    (v)RA*5*144    <<= must be installed BEFORE `RA*5*154'
+
+Subject: REGISTRATION FINE TUNING AND MORE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ Associated Ticket(s):
+ =====================
+ INC3656442
+ INC2613742
+ INC4044622
+ INC4314097
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Martinsburg VAMC
+ Rocky Mountain Regional (Denver) VAMC
+  
+ Problem A:
+ ----------
+ It was discovered that one can sign on to one location and register an 
+ order from a different modality.  Radiology prompts the application end 
+ user [AEU] to switch to the correct location, but the AEU can simply plug 
+ in the same location as before and continue.  At the procedure prompt, 
+ they are again stopped because the imaging type of the procedure and 
+ location do not match.  The AEU can then change the procedure to one with 
+ a different imaging type.
+  
+ Resolution A:
+ -------------
+ The routine RAREG3 is modified to check the AEUs sign-on location after 
+ they switch.  They cannot proceed with the registration unless they are 
+ signed on to the correct location. 
+  
+ Problem B:
+ ----------
+ An undefined error on array node HL("SAN") was reported while processing 
+ radiology result messages:
+  
+ $ZE= <UNDEFINED>EM+9^RAHLACK *HL("SAN")
+ Last Global Ref: ^%ZOSF("OS")
+ S RAMPG=$P($$GETAPP^HLCS2(HL("SAN")),U,1) ;RAMPG="G.RAD HL7 MESSAGES"
+  
+ Additionally it was discovered that HL7 was doing a lookup that didn't
+ account for multiple entries and resulted in this error: "Invalid 
+ Receiving Application for this Event"
+  
+ RESOLUTION B:
+ -------------
+ Modify RAHLACK to data check variable HL("SAN") before using it. 
+  
+ The second part of this problem is on the HL7 side and will be 
+ addressed by HL7 patch HL*1.6*171.
+  
+ PROBLEM C:
+ ----------
+ When using the Procedure Enter/Edit [RA PROCEDURE] an inactive CPT code
+ can be entered on a detailed or series procedure.
+  
+ RESOLUTION C:
+ -------------
+ Update the CPT field [#9] in the NEW RAD PROCEDURE WORKUP file [#71.11]
+ with an input transform to screen the inactive CPT codes.
+  
+ PROBLEM D:
+ ----------
+ The new style cross "AS" cross reference on the Exam Status field 
+ [70.03;3] isn't updating with nuclear medicine studies that have
+ radio-pharmaceuticals entered through the Exam Status Tracking option.   
+ Specifically the practice of entering a new "LOT NO" causes some variable
+ corruption within Fileman and the "AS" cross reference does not get
+ updated with the status change. Additionally, the exam's activity log does
+ not accurately reflect the option used to update the exam.
+  
+ RESOLUTION D:
+ -------------
+ The Exam Status Tracking input template 'RA STATUS CHANGE' is modified so 
+ the exam status field [70.03;3] is updated outside of the input template
+ with FILE^DIE to set the field. RADD3 is modified to update the activity
+ log with the correct option code for 'Exam Status Tracking' which is 'S'
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ There are no documentation changes associated with this patch.
+  
+  
+  
+    ===================  Installation Instructions ====================
+   If installed during the normal workday, it is recommended that the
+   Radiology users be off the system. **Voice Recognition activity 
+   should be stopped.**  Other VISTA users will not be affected.
+  
+   Install Time - less than 2 minutes
+  
+   1. Load Transport Global:
+      ----------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+   2. Start Up KIDS:
+      --------------
+    Start up the Kernel Installation and Distribution System Menu [XPD
+    MAIN]:
+  
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+  
+            Load a Distribution
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+            Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3. Select Installation Option:
+      ---------------------------
+       When prompted for the INSTALL NAME, enter RA*5.0*154
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+   4. Select Installation Option: Install Package(s):
+      -----------------------------------------------
+       **This is the step to start the installation of this KIDS patch:
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+       ,answer YES unless your site rebuilds menu trees nightly.
+  
+    c. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       YES//', answer NO.
+  
+    d. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Options, and Protocols? YES//', answer YES.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of order':',
+       enter the following options:
+  
+       Disable the following VistA RIS options:
+       ----------------------------------------
+       Register Patient for Exams      [RA REG]
+       Status Tracking of Exams        [RA STATRACK]
+  
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of
+       order':',press <ENTER>.
+  
+ Backout/Roll-back Strategy:
+ ===========================
+  
+  Back-out will be done only with the concurrence and participation of
+  development team and appropriate VA site/region personnel. The decision
+  to back-out or rollback software will be a joint decision between
+  development team, VA site/region personnel and other appropriate VA
+  personnel. A national help desk ticket should be logged before attempting
+  any backout procedures.
+  
+  Prior to installing an updated KIDS package, the site/region should have
+  saved a backup of the routines in a mail message using the Backup a
+  Transport Global [XPD BACKUP] menu option (this is done at time of
+  install). The message containing the backed up routines can be loaded
+  with the "Xtract PackMan" function at the Message Action prompt. The
+  Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+  backed up routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RADD3
+    Before: B25368385   After: B26368598  **18,65,154**
+Routine Name: RAHLACK
+    Before: B10346213   After: B10594351  **47,154**
+Routine Name: RAREG3
+    Before: B30473392   After: B30767634  **8,137,144,154**
+Routine Name: RASTED
+    Before: B54871068   After: B54897245  **1,10,18,28,45,71,82,99,154**
+ 
+Routine list of preceding patches: 47, 65, 99, 144
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 27, 2018
+Completed By:                               Date Completed: MAY 08, 2019
+Released By :                               Date Released : MAY 08, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

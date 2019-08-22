@@ -1,0 +1,239 @@
+
+=============================================================================
+Run Date: JUL 05, 2019                     Designation: GMRC*3*135
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3       SEQ #115                      Status: Released
+                  Compliance Date: JUL 08, 2019
+=============================================================================
+
+
+Subject: DECISION SUPPORT TOOL (DST) INFORMATIONAL PATCH FOR VERSION 1.0.07
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  ******************************************************************************
+  This is an informational patch for the Decision Support Tool application
+  version 1.0.07. There is no VistA component to this new build.
+  This patch is for informational purposes only and defines the scope of the
+  changes that have been made including defects that have been resolved in DST. 
+  ******************************************************************************
+  
+  Decision Support Tool version 1.0.07 has the following functionality changes
+  and defect fixes:
+  
+ 
+ 1. Story 1064322: DST will show all facilities with service availability
+ within the search radius (Specialty Care = 100 miles, Primary Care/Mental
+ Health = 40 miles).
+ 
+ 2. Story 1066852:  This update supports revisions to the GFI mapping table
+ to support updates to the clinical service/stop code/SEOC mapping table from
+ the DST Support Team in Office of Care Coordination.
+ 
+ 3. Story 1064828:    The DST dashboard will display a message on the
+ facility list when no facilities are found so that notification to the user is
+ provided that the search completed when no facilities are found.   
+ 
+ 4. Story 1025031: This is a technical story.  It fixes infrastructure
+ changes to the local development setup for developers. The kubernetes
+ deployment files were updated so that when running the app on the developer's
+ machines, kubernetes only uses the environment variables for local development.
+ 
+ 5. Story 1023656: This update will allow the user to accept the default
+ mapping or select the desired clinical service from the drop-down (typeahead)
+ list on the DST dashboard.  It also adds a dropdown list capability to the user
+ interface control to allow the user to browse the entire list of clinical
+ services without having to enter a search string.
+ 
+ 6. Defect 1052271: This fix was to make sure that Social Security Numbers
+ (SSN) are not being logged anywhere in the application logs to protect PII
+ data.
+ 
+ 7. Defect 1025039: The blacklist conditions are provided with every new
+ GFI mapping spreadsheet.  The logic is put into the nightly etls jobs.  9999 is
+ still going to be used.  The requirement for blacklist is listed in the GFI
+ spreadsheet.  Each night when the ETL jobs run, the blacklisted consults are
+ assigned to stop code 9999, which will prevent DST from opening.
+ 
+ 8. Defect 1024321:  This is a technical defect.  Column service_NA for the
+ clinical service has been removed with the new mappings received from the
+ business. Changes were made to the backend and the DST database to remove this
+ column that is no longer being used.
+ 
+ 9. Defect 1021687: The "No Appointment Available" Community Care
+ eligibility flag for Veterans Community Care Program Eligibility consults will
+ now update correctly on the DST dashboard when the No Later Than Date is
+ changed.
+ 
+ 10. Defect 1064335: This is a technical defect.  This update is to set an
+ AppDynamics key associate with End User Monitoring, where the output will be
+ sent to a defined Production section (DST-PROD) within the production
+ AppDynamics dashboard.
+  
+   
+  Patch Components:
+  -----------------
+  N/A 
+   
+  Files & Fields Associated:
+   
+  File Name (Number)          Field Name (Number)       New/Modified/Deleted
+  ------------------          -------------------       --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name                   File Number               New/Modified/Deleted
+  ---------                   -----------               --------------------
+  N/A
+   
+   
+  Mail Groups Associated:
+   
+  Mail Group Name             New/Modified/Deleted
+  ---------------             --------------------
+  N/A
+   
+  Options Associated:
+   
+  Option Name                 Type                      New/Modified/Deleted
+  -----------                 ----                      --------------------
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name               New/Modified/Deleted
+  -------------               --------------------
+  N/A
+   
+  Security Keys Associated: 
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name         Type    File Name (Number)      New/Modified/Deleted
+  -------------         ----    ------------------      --------------------
+  N/A
+   
+   
+  Remote Procedures Associated:
+   
+  Remote Procedure Name       New/Modified/Deleted
+  ---------------------       --------------------
+  N/A
+   
+   
+  Parameter Definitions Associated:
+   
+  Parameter Name              New/Modified/Deleted
+  --------------              --------------------
+  N/A
+   
+   
+  Additional Information:
+  -----------------------
+   
+  Blood Bank Team Coordination:
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  N/A
+   
+   
+  Defect Tracking System & Overview:
+   
+   
+  Test Sites:
+  -----------
+  Kansas City, MO
+  Madison, WI
+  Philadelphia, PA  
+   
+  Software and Documentation Retrieval Instructions:
+  --------------------------------------------------
+  Documentation describing the new functionality and/or a host file containing a
+  build may be included in this release.
+   
+  The preferred method is to retrieve the files from  download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may also elect
+  to retrieve the files directly from a specific server.
+   
+  Sites may retrieve the software and/or documentation directly using Secure
+  File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+  following OI Field Offices:
+   
+  Hines:          domain.ext  
+  Salt Lake City: domain.ext
+   
+  Documentation can also be found on the VA Software Documentation Library
+  at: https://www.domain.ext/vdl/
+   
+  Documentation Title            File Name                     FTP Mode
+  ---------------------------------------------------------------------
+  
+          
+  Host File Name                           FTP Mode
+  ---------------------------------------------------------------------
+  N/A
+   
+   
+  Patch Installation:
+  -------------------
+   
+   
+  Pre/Post Installation Overview:
+  N/A
+   
+   
+  Pre-Installation Instructions:
+  N/A
+   
+   
+  Installation Instructions:
+  N/A
+   
+   
+  Post-Installation Instructions:
+  N/A
+   
+   
+  Back-Out/Roll Back Plan:
+  ------------------------
+  N/A
+  
+  
+  Routine Information:
+  ====================
+  No routines included.
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 26, 2019
+Completed By:                               Date Completed: JUL 05, 2019
+Released By :                               Date Released : JUL 05, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

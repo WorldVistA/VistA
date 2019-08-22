@@ -1,0 +1,222 @@
+$TXT Created by               at CPRS31A.DOMAIN.EXT  (KIDS) on Thursday, 02/28/19 at 15:08
+=============================================================================
+Run Date: JUN 14, 2019                     Designation: PSN*4*567
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #549                      Status: Released
+                  Compliance Date: JUL 14, 2019
+=============================================================================
+
+Associated patches: (v)PSN*4*80    <<= must be installed BEFORE `PSN*4*567'
+
+Subject: NEW API FOR FILE #50.605
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Please refer to the Deployment, Implementation, and Rollback Guide 
+ (PSN_4_0_567_IG.pdf) for instructions on backing up the data dictionary as
+ well as installation instructions for PSN*4.0*567.
+  
+ The purpose of this patch is to release a new Application Program 
+ Interface (API) to return the VA DRUG CLASS file (#50.605) contents.
+  
+ In addition, the patch distributes the data dictionary for the VA DRUG 
+ CLASS file (#50.605) in order to make it available for Health Summary
+ Component file selection.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ VA DRUG CLASS (50.605)      Full DD                   Modified (attribute
+                                                       updated, no field)
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+  
+ Additional Information:
+ -----------------------
+  
+ Blood Bank Team Coordination:
+ N/A
+  
+  
+  
+ New Service Requests (NSRs):
+ ---------------------------
+ NSR 20120407 Drug Class and Select Drug Object
+  
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ -------------------------------------------
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+  
+  
+ Test Sites:
+ -----------
+ VA Boston Health Care System, MA
+ Tuscaloosa VA Medical Center, AL
+ VA San Diego Healthcare System, CA 
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Documentation describing the new functionality is included in this
+ release.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files directly from
+ a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: https://www.domain.ext/vdl/
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ API Manual - Pharmacy          phar_1_api_r0619.pdf          Binary
+  Reengineering (PRE)
+ Installation Guide             PSN_4_0_567_IG.pdf            Binary
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ ------------------------------ 
+ It is imperative that you backup the data dictionary for the VA DRUG CLASS file
+ (#50.605) BEFORE you install the patch.
+  
+ This patch will be distributed using PackMan. It may be installed with users on
+ the system although it is recommended that it be installed during non-peak hours
+ to minimize potential disruption to users. This patch should take
+ less than
+ 5 minutes to install.
+  
+  
+ Pre-Installation Instructions:
+ -----------------------------
+ Please refer to the Deployment, Implementation, and Rollback Guide 
+ (PSN_4_0_567_IG.pdf) for instructions on backing up the data dictionary as
+ well as installation instructions for PSN*4.0*567.
+  
+  
+ Installation Instructions:
+ ------------------------- 
+ Please refer to the Deployment, Implementation, and Rollback Guide 
+ (PSN_4_0_567_IG.pdf) for instructions on backing up the data dictionary as
+ well as installation instructions for PSN*4.0*567.
+  
+ Post-Installation Instructions:
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Please refer to the Deployment, Implementation, and Rollback Guide 
+ (PSN_4_0_567_IG.pdf) for instructions on backing out patch PSN*4.0*567.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**;30 Oct 98;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN50P65
+    Before: B15666372   After: B18328809  **80,567**
+ 
+Routine list of preceding patches: 80
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 07, 2018
+Completed By:                               Date Completed: JUN 13, 2019
+Released By :                               Date Released : JUN 14, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

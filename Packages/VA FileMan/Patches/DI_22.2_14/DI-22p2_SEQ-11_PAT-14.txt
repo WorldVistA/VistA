@@ -1,0 +1,292 @@
+$TXT Created by              at FMB.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 04/02/19 at 10:47
+=============================================================================
+Run Date: JUN 10, 2019                     Designation: DI*22.2*14
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2        SEQ #11                   Status: Released
+                  Compliance Date: JUL 11, 2019
+=============================================================================
+
+Associated patches: (v)DI*22.2*13  <<= must be installed BEFORE `DI*22.2*14'
+
+Subject: BUG FIXES TO VA FILEMAN
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  This patch corrects twelve issues with VA FileMan 22.2.  These issues were
+  discovered at sites that have installed VA FileMan 22.2 and DI*22.2*10.
+  
+  
+ Patch Components:
+ -----------------
+  
+ File Name (#)                Field Name (#)      New/Modified/Deleted
+ -------------                --------------      -------------
+ AUDIT (#1.1)                 OLD VALUE (2)       Modified
+                              NEW VALUE (3)
+  
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ 2/5/2019
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22.2*14 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22.2*14 have no adverse effect on
+ Blood Bank software functionality, therefore RISK is none. 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1.  Ticket:   I12133765FY17
+  Problem:
+   Sort templates don't show previous values when editing the template
+  Resolution:
+   Change DIP1 to display previous value
+  
+ 2.  Ticket:   I10027710FY16
+  Problem:
+   Date utility, %DT, allows incorrect time.  Calling %DT with X=3160707.8
+   should return Y=-1
+  Resolution:
+   Change DIDT to return Y=-1 if X contains an incorrect time. Post install
+   routine DI14POST will resave DIDT as %DT.
+  
+ 3.  Ticket:   R13378947FY17
+  Problem:
+   Can't print OLD VALUE (#2) and NEW VALUE (#3) fields from AUDIT (#1.1) file
+  Resolution:
+   Change the logic in the computed fields #2 and #3.  Replace If statement
+   with $Select.  Also, change DINIT20, which sets the logic when FileMan
+   is initialized.
+  
+ 4.  Ticket:   INC3327007
+  Problem:
+   Add APPLICATION GROUP to Data Dictionary List File Attributes option
+  Resolution:
+   Change DIDH1 to display APPLICATION GROUP
+  
+ 5.  Ticket:   INC1570061
+  Problem:
+   Maximum length of new style cross reference is too short
+  Resolution:
+   Change MAXIMUM LENGTH (#6) field in INDEX (#.11) file from 240 to 999.
+   Add change to DI14POST and DINIT2A4
+  
+ 6.  Ticket:   INC1550303
+  Problem:
+   Undefined error when doing an Inquire to a file that has a computed field
+   that calls EN^DIQ1
+  Resolution:
+   Change DIQ1 to new the variables C and DI at tag EN
+  
+ 7.  Ticket:   I16938507FY18
+  Problem:
+   The variable DISYS is undefined when calling EN^DIEZ in background
+  Resolution:
+   Move the call to DT^DICRW to earlier in the routine.  It sets DISYS.
+  
+ 8.  Ticket:   I17087603FY18
+  Problem:
+   When a partial Data Dictionary containing a multiple is distributed using
+   KIDS, the zero node of sub dictionary has the wrong first piece
+  Resolution:
+   Change DIFROMS2; comment out line that was setting the sub dictionary zero
+   node incorrectly to fix the bug.  Post Install EN^DI14POST will check and
+   correct any corrupted sub dictionaries.
+  
+ 9.  Ticket:   INC0105488
+  Problem:
+   Queries for data that utilizes a variable pointer field could be missing
+   results
+  Resolution:
+   Change to DICOMP0 to handle variable pointers correctly
+  
+ 10.  Ticket:   I16902120FY18
+  Problem:
+   If the variable %DT(0) is defined when an Input Transform is executed,
+   it causes incorrect information
+  Resolution:
+   Change DICN to new the variable before executing the Input Transform
+  
+ 11.  Ticket:   I17417683FY18, I10449501FY16
+  Problem:
+   Audit is not recording changes if it happens during a trigger to another
+   file
+  Resolution:
+   The problem is the DA variable is changed.  Change DICR to save the DA
+   array and other variables before auditing and then restore the variables
+  
+ 12.  Ticket:   R15604177FY17
+  Problem:
+   If the records being transferred is in a file that contain a multiple field
+   that uses DINUM in the Input Transform, then FileMan stacks the DA array,
+   but never unstacks it when it tries to delete the record
+  Resolution:
+   Change DIT0 to reset DA to the correct record before deleting
+  
+   
+ Test Sites:
+ -----------
+  West Palm Beach, Florida
+  North Chicago, IL
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software is being released as a KIDS Build on Forum.
+  
+  
+ Patch Installation:
+    
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be queued for installation.  TaskMan does not have to be
+ stopped, Health Level 7 (HL7) filers do not need to be stopped, and
+ users may be on the system.  The patch should be installed during
+ non-peak hours to minimize potential for disruption to users.  This
+ patch should take less than 1 minute to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the MailMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following options. When prompted for the INSTALL NAME enter
+    DI*22.2*14.
+  a. Print Transport Global - This option lets you print the contents
+     of a Transport Global that is currently loaded in the ^XTMP
+     global.
+  b. Backup a Transport Global - This option will create a backup
+     message of any routines exported with this patch. It will not
+     backup any other changes such as functions.
+  c. Compare Transport Global to Current System - This option will
+     allow you to view all changes that will be made when this patch
+     is installed.  It compares all components of this patch
+     (routines, DDs, templates, etc.).
+  d. Verify Checksums in Transport Global - This option will allow
+     you to ensure the integrity of the routines that are in the
+     transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option
+    and when prompted for the INSTALL NAME, enter DI*22.2*14.
+  
+ 5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO//' respond NO.
+  
+ 7. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+    NO//" respond NO.
+  
+ 8. If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//" respond NO. 
+  
+ 9. If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ You need to run D EN^DI14POST to check for bad nodes on multiples. This
+ is issue #8.  The routine will find all bad nodes and prompt you to fix
+ them.  The results will be kept in the ^XTMP("DI14") global for 30 days,
+ unless you run the report again, and can be reversed by using the 
+ RESTORE^DI14POST call.
+  
+  
+  TST>D EN^DI14POST
+  
+  This will check your account for bad ^DD(file #,0) nodes.  It will look
+  for multiples that don't have the field name as the 1st piece of the node.
+  It will display its results and ask you if you want to make the changes.
+  This will take 5 to 10 minutes.
+  
+  You already have bad nodes identified in the ^XTMP("DI14") global.
+  If you proceed this data will be overwritten.
+  
+  Do you want to run the check?
+  Enter Yes or No: NO// YES
+  ..
+  
+  DD(100.008,0)
+  DD(8989.41,0)
+  
+  2 bad node(s) found.  Do you want to repair?
+  Enter Yes or No: NO// YES
+  
+  Done
+  
+  TST>
+   
+   
+   
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch consists of routines and a fix to the AUDIT file. During the VistA
+ Installation Procedure of the KIDS build, the installer should back up the
+ modified routines by the use of the 'Backup a Transport Global' action
+ (step 3b in the Installations Instructions above).
+  
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the
+ patch.  The changes to the two fields in the AUDIT file can remain.
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.2;VA FileMan;**[Patch List]**;Jan 05, 2016;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DI14POST
+    Before:       n/a   After:  B9063359  **14**
+Routine Name: DICN
+    Before: B21480119   After: B21929121  **2,5,13,14**
+Routine Name: DICOMP0
+    Before: B23489999   After: B27698020  **2,14**
+Routine Name: DICR
+    Before: B25667667   After: B26163162  **14**
+Routine Name: DIDH1
+    Before: B22350242   After: B23605706  **14**
+Routine Name: DIDT
+    Before: B25746733   After: B26129943  **14**
+Routine Name: DIEZ
+    Before: B23918443   After: B24336790  **14**
+Routine Name: DIFROMS2
+    Before: B45453261   After: B51492784  **3,5,14**
+Routine Name: DINIT20
+    Before: B30255167   After: B30371045  **2,14**
+Routine Name: DINIT2A4
+    Before: B37901832   After: B37907044  **14**
+Routine Name: DIP1
+    Before: B36571552   After: B36617181  **14**
+Routine Name: DIQ1
+    Before:  B9302112   After:  B9407505  **14**
+Routine Name: DIT0
+    Before:  B5572177   After:  B5692057  **14**
+ 
+Routine list of preceding patches: 13
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 14, 2017
+Completed By:                               Date Completed: JUN 10, 2019
+Released By :                               Date Released : JUN 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

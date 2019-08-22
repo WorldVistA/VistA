@@ -1,0 +1,252 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/14/19 at 15:01
+=============================================================================
+Run Date: JUN 18, 2019                     Designation: HL*1.6*171
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #135                    Status: Released
+                  Compliance Date: JUL 19, 2019
+=============================================================================
+
+Associated patches: (v)HL*1.6*108  <<= must be installed BEFORE `HL*1.6*171'
+
+Subject: HL7 ISSUE DISCOVERED WITH INTERNAL TO INTERNAL MESSAGING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch will address 1 issue:
+  
+  1. When several HL7 event driver protocols share the same sending
+     application, message type, event type, and version ID, the HL7 software
+     will only retrieve the first protocol, even if it is not the correct
+     protocol for the current message being processed.
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+  
+ 1. INC2613742 - HL7 issue discovered with internal to internal messaging
+  
+ Problem:
+ --------
+ The HL7 software currently reads from the "AHL1" or "AHL21" 
+ cross-reference in the PROTOCOL (#101) file to get the event driver 
+ protocol for the current message being processed. The cross-references
+ are sorted by sending application, message type, event type, and
+ version ID. If several protocols share the same sending application,
+ message type, event type, and version ID, the software will only read
+ the first entry in the cross-reference. The first entry is not
+ necessarily the correct protocol for the current message, and this can
+ lead to the incorrect protocol being returned.  
+  
+ Resolution:
+ -----------
+ The routine HLTPCK1A will be updated to no longer use the "AHL1" or
+ "AHL21" cross-references, and instead use the message ID from the 
+ message header to retrieve the correct protocol for the current message.
+ 
+   
+ Test Sites:
+ -----------
+ VA Heartland - East (St. Louis, Poplar Bluff, Marion)
+ VA Butler Healthcare (Butler)
+ VA Pittsburgh Health Care System (Pittsburgh University Dr., H. J. Heinz 
+ Campus, Pittsburgh Highland Dr.)
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ -------------------
+  
+  
+ Pre/Post Installation Overview:
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ This patch does not require any menu options to be disabled during
+ patch installation.
+  
+  
+ Installation Instructions:
+  
+ 1.  If the release is provided using PackMan, choose the PackMan message
+     containing this build. Then select the INSTALL/CHECK MESSAGE PackMan
+     option to load the build.
+  
+     If this release is provided using a Host file, use the Load a
+     Distribution option contained on the Kernel Installation and
+     Distribution System Menu to load the Host file.
+  
+  
+  2. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, 
+  
+     A. Select the Verify Checksums in Transport Global option to confirm 
+        the integrity of the routines that are in the transport global. When 
+        prompted for the INSTALL NAME enter the patch or build name (ex.  
+        HL*1.6*171).
+  
+        NOTE: Using <spacebar><enter> will not bring up a Multi-Package
+              build even if it was loaded immediately before this step.
+              It will only bring up the last patch in the build.
+  
+     B. Select the Backup a Transport Global option to create a backup
+        message of any routines exported with this patch. It will not backup
+        any other changes such as DDs or templates.
+  
+     C. You may also elect to use the following options: 
+        i. Print Transport Global - This option will allow you to view
+           the components of the KIDS build.
+       ii. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all of the components of this patch,
+           such as routines, DDs, templates, etc.
+  
+     D. Select the Install Package(s) option and choose the patch to install.
+ 
+       i. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//', answer NO.
+   
+      ii. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+           and Protocols? NO//', answer NO.
+  
+  
+ Post-Installation Instructions:
+ N/A
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system.
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLTPCK1A
+    Before: B58203578   After: B70261249  **2,25,34,57,59,108,171**
+ 
+Routine list of preceding patches: 108
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 10, 2018
+Completed By:                               Date Completed: JUN 17, 2019
+Released By :                               Date Released : JUN 18, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

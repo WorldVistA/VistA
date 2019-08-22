@@ -1,0 +1,341 @@
+
+=============================================================================
+Run Date: JUL 23, 2019                     Designation: PSO*7*528
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #465                      Status: Released
+                  Compliance Date: AUG 23, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*442   <<= must be installed BEFORE `PSO*7*528'
+                    (v)PSO*7*512   <<= must be installed BEFORE `PSO*7*528'
+
+Subject: MCCF EDI TAS EPHARMACY BUILD 10
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*528
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*624
+  
+ Both of these patches are being released via Kernel Installation and
+ Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name:  PSO IB BUNDLE 10.0
+   KIDS Host File name:  PSO_7_528_IB.KID
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  
+   1. This patch changes the manner in which the system handles non-
+      billable pseudo-rejects (eT/eC).  The eT/eC reject will now be put
+      on the prescription prior to presenting the user with the Reject
+      Notification screen rather than after.
+  
+   2. Several enhancements are being made to the TRICARE CHAMPVA Bypass/
+      Override Report [PSO TRI CVA OVERRIDE REPORT].  The enhancements
+      include:
+      - Modify the report to display the correct quantity and $BILLED
+        amount for partial fills
+      - Remove the word "Bypass" from the report name
+      - Display all overrides, even if multiple overrides occur
+        on the same day
+      - Address inefficiencies in the report, while keeping the
+        same functionality
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                      File Name (Number)           Deleted
+ ---------                      ------------------         -------------
+ N/A
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ PSO TRI CVA OVERRIDE REPORT    run routine                  Modified
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ N/A
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+ Templates Associated:
+                                                           New/Modified/
+ List Templates                 File Name (Number)           Deleted
+ -------------                  ------------------         -------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ BIRMINGHAM VAMC (521)
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:  https://www.domain.ext/vdl/
+  
+ Title                               File Name                Transfer Mode
+ --------------------------------------------------------------------------
+ User Manual - Manager - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P528_MAN_UM.PDF      Binary
+ User Manual - Pharmacist - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P528_PHAR_UM.PDF     Binary
+ Technical Manual/Security Guide - Outpatient Pharmacy V.7.0
+                                     PSO_7_0_P528_TM.PDF          Binary
+ *PSO Deploy Install Rollback Guide (PSO*7*528)
+                                        PSO_7_0_P528_IG.PDF       Binary
+  
+ *A single Deployment, Installation, Back-Out, and Rollback Guide will be
+  released with this multi-build.  It can be found on the Outpatient
+  Pharmacy page of the VDL.
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This multi-build installation may take up to 2 minutes to install 
+ depending on the amount of data in the files being converted.
+  
+ This multi-build installation can be queued but should not be queued at a 
+ time when the BPS NIGHTY BACKGROUND JOB or CMOP transmission processes
+ are scheduled.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file PSO_7_528_IB.KID, which contains the
+     following patches:
+  
+         PSO*7.0*528
+         IB*2.0*624
+  
+     Sites may retrieve VistA software from download.vista.domain.ext.  
+     This transmits the file from the first available server.  Sites may
+     also elect to retrieve this file directly from a specific server.
+  
+     Sites may retrieve the software directly using Secure File Transfer 
+     (SFTP) from the ANONYMOUS.SOFTWARE directory at the following Field
+     Offices:
+    
+         Hines:                  domain.ext    
+         Salt Lake City:         domain.ext
+  
+     File Name                            Transfer Mode
+     --------------------------------------------------
+     PSO_7_528_IB.KID                         ASCII
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: Installation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where the host file PSO_7_528_IB.KID was saved (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]PSO_7_528_IB.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         PSO IB BUNDLE 10.0
+         PSO*7.0*528
+         IB*2.0*624
+  
+       Use INSTALL NAME: PSO IB BUNDLE 10.0 to install this
+       Distribution.
+  
+ 4.  RUN INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     PSO IB BUNDLE 10.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the PSO IB BUNDLE 10.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter PSO IB
+         BUNDLE 10.0.
+     c.  When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", press Enter to accept the default.
+     d.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", press Enter to accept the default.
+     e.  When prompted "Device: HOME//", respond with the correct device.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ None.
+  
+ Back-Out Plan:
+ --------------
+ For a description of how to back-out this patch, please refer to the
+ PSO Deploy Install Rollback Guide listed above (PSO_7_0_P528_IG.PDF).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBORP0
+    Before: B13846157   After: B13070904  **358,385,415,528**
+Routine Name: PSOBORP1
+    Before:B123532809   After:B122430244  **358,385,415,427,528**
+Routine Name: PSOBORP2
+    Before: B22525034   After: B24488979  **358,385,427,528**
+Routine Name: PSOBORP3
+    Before:B197783254   After:B198511557  **358,359,385,427,528**
+Routine Name: PSOREJP2
+    Before:B228260947   After:B228344655  **148,247,260,287,289,358,385,
+                                           403,421,427,448,482,512,528**
+Routine Name: PSOREJP3
+    Before:B272735549   After:B276853501  **260,287,289,290,358,359,385,
+                                           403,421,427,448,482,512,528**
+Routine Name: PSOREJP5
+    Before: B57088844   After: B58255274  **359,421,512,528**
+Routine Name: PSOREJU3
+    Before:B146070419   After:B153391658  **287,290,358,359,385,421,427,
+                                           448,478,513,482,528**
+Routine Name: PSOREJUT
+    Before:B113532440   After:B114631275  **148,247,260,287,289,290,358,
+                                           359,385,403,421,427,448,478,
+                                           528**
+Routine Name: PSORXPA1
+    Before: B35364749   After: B38381777  **11,27,56,77,130,152,181,174,
+                                           287,385,442,528**
+Routine Name: PSOTRI
+    Before: B18379619   After: B32068290  **358,385,427,528**
+ 
+Routine list of preceding patches: 442, 512
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2018
+Completed By:                               Date Completed: JUL 23, 2019
+Released By :                               Date Released : JUL 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

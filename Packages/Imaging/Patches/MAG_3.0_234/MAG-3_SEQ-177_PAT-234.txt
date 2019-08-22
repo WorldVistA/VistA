@@ -1,0 +1,417 @@
+
+=============================================================================
+Run Date: JUN 06, 2019                     Designation: MAG*3*234
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #177                      Status: Released
+                  Compliance Date: JUL 08, 2019
+=============================================================================
+
+
+Subject: Clinical Display - Windows 10 Defect 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches: This patch must be installed after MAG*3.0*216.
+ ===================
+  
+ Subject: Clinical Display Issues
+ ========
+  
+ Category: Other
+ =========
+  
+ Description:
+ ============
+ This document describes MAG*3.0*234, a patch that provides fixes to VistA 
+ Imaging Clinical Display.
+ This patch addresses the following issues:
+      1. Operating System is not displaying in Message History on Windows
+         10 workstations.
+      2. Site specific Accession Number (SSAN) is not being displayed
+         correctly.
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files. This document, 
+ MAG3_0P 234_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.
+ MAG3_0P234_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software and Documentation:
+ ===========================
+ This document, MAG3_0P234_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+ Table 1: Software and Documentation Files
+  
+ File Name                               Description
+ =========                               ===========
+ MAG3_0P234.KID                          Kernel Installation and
+                                         Distribution System (KIDS) build
+                                         for Patch 234
+ MAG3_0P234_Clinical_Display_Setup.exe   Clinical Display client
+                                         installation file.
+ MAG3_0P234_CLINICAL_DISPLAY_INSTALL.MSI Clinical Display push 
+                                         installation file.
+ MAG3_0P234_Patch_Description.pdf        Patch Description for P234 
+  
+ Files & Fields Associated: 
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated: 
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated: 
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated: 
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated: 
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated: 
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================= 
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Tickets
+ =============================== 
+ 1.  Defect 901131 - Operating System is not displaying in Message 
+     History on Windows 10 workstations.
+  
+ Problem:
+ ========  
+ When running Vista Image Clinical Display on a Windows 10 operating system
+ the Message History screen does not show the proper Operating System.  The
+ message history displays:
+  
+    Imaging Session : message history.
+    *** Operating System: CANNOT DETERMINE OPERATING SYSTEM TYPE
+  
+ This error does not prevent Clinical Display from working on a workstation
+ using the Windows 10 operating system. The operating system is for
+ informational purposes in the Message History.
+  
+ Resolution: 
+ ===========
+ Code was added to search for an operating system's major and minor
+ versions equal to Windows 10.  When a match is located the message history
+ will display:
+    Imaging Session: message history.
+    *** Operating System: WINDOWS 10
+  
+ 2.  Defect 885360 (Trouble Ticket INC1683367) The Specific Accession 
+     Number is not being displayed 
+  
+ Problem: 
+ ========
+ Site Specific Accession Numbers (SSAN) do not display in the Radiology 
+ Exam window. 
+  
+ Resolution:
+ =========== 
+ The MAGGRADLIST Remote Procedure was updated to return a site-specific 
+ accession when the radiology exam has a site-specific accession number 
+ defined (file 70, field 31).
+  
+ Test Sites
+ ==========
+ The following sites are test sites for this patch:
+     Jack C. Montgomery VA Medical Center (Muskogee)
+  
+ Software and Documentation Retrieval Instructions
+ =================================================
+ Software being released and/or documentation describing the new
+ functionality introduced by this patch are available.
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ OI Field Offices
+ ================
+ Location        Site
+ ========        ====
+ Hines           domain.ext 
+ Salt Lake City  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Patch Installation
+ ==================
+ Supported Client Versions:
+ ==========================
+ When MAG*3.0*234 KIDS is installed at a site, the list of supported
+ versions of the Clinical Display client will change:
+  
+ Supported Client Versions
+ =========================
+ Supported Versions      No Longer Supported 
+ ==================      ===================               
+ 3.0.234                 3.0.130 
+ 3.0.216                 3.0.149 
+ 3.0.188                 3.0.131 
+ 3.0.191                 3.0.122 
+ 3.0.181                 3.0.117 
+ 3.0.167                 3.0.106
+ 3.0.161                 3.0.94
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*234 must be installed on the VistA System and on 64-bit
+ workstations on which the VistA Imaging Applications will be used. This 
+ patch must be installed by the compliance date.
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+ Note: All previously released VistA Imaging patches must be installed on 
+       the VistA system before installing MAG*3.0*234.
+  
+ VistA System (KIDS) Installation Instructions:
+ ==============================================
+ Installation Steps: 
+ ===================
+ 1.  On the VistA system, access the Kernel Installation and Distribution
+     System Menu [XPD MAIN].
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+ 3.  Load the KIDS file by performing the following steps:
+     a.  Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load
+         the KIDS distribution.
+     b.  When prompted, enter the path and file name (MAG3_0P234.KID) of
+         the Patch 234 KIDS file.
+     c.  When prompted to continue with the load, enter YES. A Distribution
+         OK! message will be displayed when the load is complete.
+ 4.  After loading the KIDS file, use the following options to verify 
+     the contents of the patch and to back up any affected routines.
+     a.  Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+         this option to ensure the integrity of the routines in the patch. 
+     b.  Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+         - Run this option to view all changes that will be made when the 
+         patch is installed. All components (routines, options, and so on)
+         in the patch will be compared.
+     c.  Backup a Transport Global [XPD BACKUP] - Run this option to create
+         a backup message of any routines exported with the patch. It will 
+         NOT back up any of the other changes.
+ 5.  After performing the load and any optional verification steps, install
+     the KIDS file by performing the following steps:
+     a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+     b.  When prompted for the install name, enter MAG*3.0*234.
+     c.  Answer NO to the following prompts:
+         Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+         Want KIDS to INHIBIT LOGONs during the install? NO//
+         Want to DISABLE Scheduled Options, Menu Options, and Protocols?
+         NO//
+ 6.  When installation is finished, an Install Complete message will 
+     be displayed.
+  
+ KIDS Installation Example:
+ ==========================
+ This example shows the output when the KIDS file is installed for the 
+ first time. If the patch has already been installed and the installation 
+ of the KIDS file is in a namespace where it has been previously 
+ installed, then the output may be different.
+  
+ Select Installation <TEST ACCOUNT> Option: install Package(s)
+  
+ Select INSTALL NAME:  MAG*3.0*234  7/5/18@16:13:49
+    => VistA Imaging V3 - Patch 234  - Display install  ;Created on Jul 
+ 05, 2018@
+ 15:45:05
+  This Distribution was loaded on Jul 05, 2018@16:13:49 with header of
+   VistA Imaging V3 - Patch 234  - Display install  ;Created on Jul 05, 
+ 2018@
+ 15:45:05
+   It consisted of the following Install(s):
+   MAG*3.0*234
+ Checking Install for Package MAG*3.0*234
+ Install Questions for MAG*3.0*234
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+ DEVICE: HOME//  HERE
+  Running Pre-Install Routine: PRE^MAGIP234
+  Running Post-Install Routine: POS^MAGIP234
+  Post Install Mail Message: Jul 05, 2018@16:13:59
+  Updating Routine file...
+  Updating KIDS files...
+  MAG*3.0*234 Installed.
+         Jul 05, 2018@16:14
+  Not a production UCI
+  NO Install Message sent
+ 100%
+ Complete
+ Install Completed
+  
+ Installing the Application Client:
+ ==================================
+ The VistA Imaging Clinical Display client software can be updated using 
+ one of the methods outlined below:
+         Manual installation
+         Automatic installation using other methods (SMS, PSexec, etc.).
+ Note: The Clinical Display Application is only supported on Windows 7 and 
+       10 operating systems; other operating systems are not officially 
+       supported.
+ Clinical Display is distributed with an MSI and EXE installation. The MSI 
+ is intended for sites that want to do a push installation (using SCCM or 
+ another tool). The EXE is intended for use to install on a single
+ workstation. 
+ After client installation is complete, log in to an updated workstation 
+ and use the Help | About menu option to verify that the version number is 
+ 3.0.234.1.
+  
+ Post-Installation Instructions
+ ==============================
+ Manual Installation:
+ ====================
+ The MAG3_0P234_Clinical_Display_Setup.exe file can be installed manually 
+ on workstations as described in the section, Single Workstation 
+ Installation, in the VistA Imaging System Installation Guide.
+  
+ Auto-update Installation:
+ =========================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ Back Out Plan 
+ =============
+ Uninstalling the Application:
+ =============================
+ If it is necessary to uninstall the MAG*3.0*234 client, then use the 
+ Uninstall option from Programs and Features within Windows Control Panel 
+ to Uninstall: VistA Imaging Clinical Display.  Then install the previous 
+ version of Clinical Display, MAG*3.0*216.
+  
+ KIDS Uninstall:
+ ===============
+ If it is necessary to uninstall the MAG*3.0*234 VistA KIDS administrators 
+ will need to use the PackMan function INSTALL/CHECK MESSAGE. Check 
+ MailMan messages for the backup message sent by the Backup a Transport 
+ Global function executed prior to patch install (See Installation Steps 
+ section, Step 4c; this must be done before the patch is installed).
+  
+ 1.  Select the message shown below:
+     Backup of MAG*3.0*234 install on <mmm dd, yyyy>  <user name>
+ 2.  Select the Xtract PackMan option.
+ 3.  Select the Install/Check Message option.
+ 4.  Enter Yes at the prompt.
+ 5.  Enter No at the backup prompt. There is no need to back up the 
+     backup.
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+   Answer with PackMan function NUMBER, or NAME
+   Choose from:
+   1      ROUTINE LOAD
+   2      GLOBAL LOAD
+   3      PACKAGE LOAD
+   4      SUMMARIZE MESSAGE
+   5      PRINT MESSAGE
+   6      INSTALL/CHECK MESSAGE
+   7      INSTALL SELECTED ROUTINE(S)
+   8      TEXT PRINT/DISPLAY
+   9      COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6 INSTALL/CHECK MESSAGE
+  
+ Warning: Installing this message will cause a permanent update of globals
+          and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up. NO other parts
+ are backed up, not even globals. You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+  
+ Line 2  Message #43934   Unloading Routine  MAGGTRA1 (PACKMAN_BACKUP)
+ Line 249 Message #43934   Unloading Routine  MAGGTU4D (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information
+ ===================
+ VistA KIDS Checksums
+ ====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+ ;;3.0;IMAGING;**[Patch List]**; Mar 19, 2002;Build 3
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine Checksums
+ =================
+ Routine         Checksum        Checksum        Patch List
+                 Before          After
+ MAGGTRA1        12935730        15269320        **234**
+ MAGGTU4D        5541945         5754905         **93,94,106,117,122,131,
+                                                 149,138,156,161,167,181,
+                                                 188,191,216,234**
+ MAGIP234        NA              4110397         **234**
+  
+ Routine MAGIP234 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 01, 2002;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGGTRA1
+    Before: B12935730   After: B15269320  **234**
+Routine Name: MAGGTU4D
+    Before:  B5541945   After:  B5754905  **93,94,106,117,122,131,149,
+                                           138,156,161,167,181,191,188,
+                                           216,234**
+Routine Name: MAGIP234
+    Before:       n/a   After:  B4110397  **234**
+ 
+Routine list of preceding patches: 216
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 22, 2019
+Completed By:                               Date Completed: MAY 31, 2019
+Released By :                               Date Released : JUN 06, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

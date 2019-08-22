@@ -1,0 +1,350 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Wednesday, 11/14/18 at 16:16
+=============================================================================
+Run Date: JUL 11, 2019                     Designation: XU*8*693
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #550                      Status: Released
+                  Compliance Date: AUG 11, 2019
+=============================================================================
+
+Associated patches: (v)XU*8*514    <<= must be installed BEFORE `XU*8*693'
+                    (v)XU*8*645    <<= must be installed BEFORE `XU*8*693'
+
+Subject: EDIT DEACTIVATE BULLETIN
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Patch XU*8*693 will provide the following edits in the area of Mailman
+ Bulletins that are related to user access.  In essence, this patch will
+ provide four updates:
+  
+ 1)  Edits to the existing XUSERDEAC Mailman Bulletin - This patch 
+     will add three fields to the Bulletin message - The Station Name, the
+     Station Number, and the DUZ / IEN (#200) of the User whose access is
+     being deactivated.
+ 2)  The creation of a new XUSERDIS Bulletin for "DISUSERed" users - 
+     setting the DISUSER field to 'Yes' for a user will trigger this 
+     Bulletin.  Data fields displayed will be the same as the XUSERDEAC 
+     Mailman Bulletin.
+ 3)  The creation of a new Mailgroup ISO SECURITY for receiving both of
+     these Bulletins.
+ 4) New cross reference on the DISUSER (#7) field on the NEW PERSON (#200):
+     CROSS-REFERENCE:  200^AL^MUMPS 
+                  1)= D SEND1^XUSTERM1(DA,X)
+                  2)= Q
+                  This cross reference sends a message to an
+                  Authority group when the DISUSER status 
+                  of a user is set to 'YES'.
+   
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ NEW PERSON (#200)              DISUSER (#7)           Modified
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ ISO SECURITY    New 
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ XUSERDEA BULLETIN Modified
+ XUSERDIS BULLETIN New
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ Email request.
+  
+ Problem:
+ --------
+ The Information Security Officers request to be informed whenever
+ a user is deactivated or disusered from a VistA system.
+    
+ Resolution:
+ -----------
+  
+ The XUSERDEAC Mailman Bulletin is generated when the Automatic 
+ Deactivation of Users [XUAUTODEACTIVATE] option is used, and is sent to 
+ the Mailgroup designated in the Bulletin's parameters.  The Automatic 
+ Deactivation of Users option is tasked to run daily via Taskman.  The new 
+ XUSERDIS Mailman Bulletin will be sent to the designated mailgroup when 
+ the DISUSER field in the New Person (#200) File is set to 'Yes' for a 
+ particular user.  Setting this field to 'Yes' will only disable the 
+ user's ability to log on to the VistA system.  It will leave all Menus, 
+ Security Keys and other attributes intact.
+  
+ Enhancements:
+  
+ 1.  Additions to the XUSERDEAC Bulletin information display:
+  
+ a.      Add the DUZ / IEN of the User whose access is being deactivated 
+         to the Bulletin.
+ b.      Add the Station Number and Station Name to the Bulletin.
+ c.      A mockup of the updated XUSERDEAC Bulletin is included below:
+  
+  
+ Subj: XUSER DEACTIVATION  [#55995] 03/15/18@09:48  8 lines
+ From:LASTNAME,FIRSTNAME  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+       User name : LAST,FIRST C
+       Title     : DEVELOPER
+       Service   : VHIT Field Office
+       IEN       : 1039
+       Station # : 662 SAN FRANCISCO
+  
+ was deactivated on Mar 15, 2018.
+  
+ Enter message action (in IN basket): Ignore//
+  
+  
+  
+ 2.  Creation of a new XUSERDIS Bulletin:
+  
+ a.  Due to the need to differentiate between DISUSERed and 
+     Deactivated users, a new XUSERDIS Bulletin will be created.  Setting
+     the DISUSER field to 'Yes' for a user will trigger this Bulletin.  As
+     mentioned before, setting this field to 'Yes' will only disable the 
+     user's ability to log on to the VistA system.  It will leave all
+     Menus, Security Keys and other attributes intact.
+ b.  Data fields displayed will be the same as the XUSERDEAC Mailman 
+     Bulletin. 
+ c.  A mockup of the XUSERDIS Bulletin is included below:
+  
+  
+ Subj: USER DISUSERED  [#306499] 02/26/18@16:46  1 line
+ From: LASTNAME,FIRSTNAME (VHA OCC)  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+  
+       User name : LAST,TEST C
+       Title     : DEVELOPER
+       Service   : VHIT Field Office
+       IEN       : 1039
+       Station # : 662 SAN FRANCISCO
+   
+   was DISUSERED on Apr 05, 2018.  
+  
+ Enter message action (in IN basket): Ignore//
+  
+  
+ 3.  Add a new Mailgroup, and set that as the recipient Mailgroup for the 
+     XUSERDEAC and the XUSERDIS Mailman bulletins.
+  
+ a.  Create a new Mailman mailgroup called ISO SECURITY as part 
+     of the patch install process.  Information Security Officers (ISOs)
+     and their alternates will be instructed to request membership in the
+     Mailgroup at their facility.
+ b.  The post routine XU8P693 adds the ISO SECURITY Mailgroup as a
+     recipient of the XUSERDEAC and the XUSERDIS Mailman bulletins.
+  
+ Shown below is a screen capture of the Bulletin edit option; the field 
+ for designating the Mailgroup is highlighted.
+  
+ Select Group/Distribution Management <TEST ACCOUNT> Option:  Bulletin edit
+  
+ Select BULLETIN NAME:    XUSERDEAC
+ NAME: XUSERDEAC// 
+ SUBJECT: XUSER DEACTIVATION// 
+ Select MAIL GROUP: ISO SECURITY//
+ RETENTION DAYS: 
+ DESCRIPTION:
+   This bulletin will be sent to an assigned mail Group when a user gets
+   deactivated.
+ EDIT Option: 
+ MESSAGE:
+    
+         User name : |1|
+         Title     : |2|
+         Service   : |3|
+         IEN       : |4|
+         Station # : |5|
+   was deactivated on |6|.
+ EDIT Option: 
+ Select PARAMETER: 4// 
+   DESCRIPTION:
+   Date of user gets deactivated.
+ EDIT Option: 
+ Select PARAMETER: 
+ PRIORITY?:
+  
+ 4) New cross reference on the DISUSER (#7) field on the NEW PERSON (#200):
+    CROSS-REFERENCE:  200^AL^MUMPS 
+                 1)= D SEND1^XUSTERM1(DA,X)
+                 2)= Q
+                 This cross reference sends a message to an
+                 Authority group when the DISUSER status 
+                 of a user is set to 'YES'.
+  
+  
+ Test Sites:
+ -----------
+ - NORTH FLORIDA/SOUTH GEORGIA HCS
+ - TAMPA, FL HCS
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software for this patch is being released as a KIDS Build.  There's no
+ updated Documentation being released with this patch.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 05/01/2018
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*693 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*693 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post-routine XU8P693 will be automatically deleted after the
+ installation completion.
+ You may use the option [Verify Checksums in Transport Global] to verify 
+ the checksum if you wish.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ The install cannot be queued. 
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+    3. From the Kernel Installation and Distribution System Menu, select 
+       the Installation Menu. From this menu, you may elect to use the
+       following options. When prompted for the INSTALL NAME enter the
+       patch #XU*8*693:
+           a. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DDs or templates.
+           b. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed. It compares all components of this patch
+              routines, DDs, templates, etc.).
+           c. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+  
+     4. From the Installation Menu, select the Install Package(s) option 
+        and choose the patch to install.
+     
+     5. Add the Coordinator for a new Mail Group 'ISO SECURITY'.
+     Incoming Mail Groups:
+  
+     Enter the Coordinator for Mail Group 'ISO SECURITY': 
+  
+     6. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//N
+     7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//N
+  
+     8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//N/A
+     
+     9. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Optional: verify the routine XU8P693 is deleted.
+  
+ Backout and Rollback Procedure:
+ -------------------------------
+ This patch consists of updating the routine XUSTREM1.
+ If assistance is needed to rollback/backout the patch please, log a CA
+ Service Desk Manager (SDM) ticket so the development team can assist in
+ this process.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P693
+    Before:       n/a   After:  B1561387  **693**
+Routine Name: XUSTERM
+    Before: B21697739   After: B23116686  **36,73,135,148,169,222,313,
+                                           384,489,527,588,645,693**
+Routine Name: XUSTERM1
+    Before: B25005360   After: B29820738  **102,180,208,222,274,313,332,
+                                           360,384,436,514,693**
+ 
+Routine list of preceding patches: 514, 645
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 08, 2018
+Completed By:                               Date Completed: JUL 10, 2019
+Released By :                               Date Released : JUL 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

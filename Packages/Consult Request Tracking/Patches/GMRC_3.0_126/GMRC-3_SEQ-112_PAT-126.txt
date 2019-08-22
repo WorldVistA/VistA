@@ -1,0 +1,137 @@
+
+=============================================================================
+Run Date: JUN 13, 2019                     Designation: GMRC*3*126
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3       SEQ #112                      Status: Released
+                  Compliance Date: JUN 14, 2019
+=============================================================================
+
+
+Subject: STANDARDIZED EPISODES OF CARE (SEOC) UI AND API UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ This is an informational patch explaining development of the Standardized 
+ Episodes of Care (SEOC) application.
+  
+ NOTE: This patch is loaded to an internal VA hosting environment and will 
+ be available for use within the VA network.
+  
+ There is nothing that local sites can or need to do. 
+ **************************************************************************
+  
+ This software is a reference database for managing care bundles for use by
+ Veterans Information Systems and Technology Architecture (VistA) and other
+ VA systems. Services are grouped together within the SEOC system into 
+ bundles so that clinicians can add these bundles to patients consult 
+ records in a standardized fashion, reducing the amount of time spent 
+ manually entering consult instructions, and providing uniformity among 
+ the patient records and across facilities for how patient care is 
+ prescribed for similar complaints.
+  
+ These bundles group together one or more services that are preselected for
+ different specialties to be added to the consult records. In addition, the
+ clinician is provided with information regarding prescribing rules and
+ preauthorization requirements, so they can make the most informed 
+ decisions regarding patient care.
+  
+ Additionally, SEOC data will be accessible outside of the 
+ VistA/Computerized Patient Record System (CPRS) so that users of 
+ downstream applications will be accessing the same data, and SEOC 
+ descriptions, reducing the chances of discrepancies.
+  
+ Additional Information:
+ -------------------- 
+ The software is installed in the VA Austin Information Technology Center
+ (AITC) environment, and is accessible via the VA intranet. An API is made
+ available for downstream applications to access SEOC data in a JavaScript 
+ Object Notation (JSON) format.
+  
+ **************************************************************************
+ Version 1.8 provides updates to the user interface layer for the SEOC
+ database consistent with business requirements. An updated API layer is 
+ also included to support requirements of the UI.
+  
+ The Create Read Update Delete (CRUD) ser Interface (UI) for authorized 
+ SEOC Administrators will be enhanced based on business priority. Updates 
+ planned for this build include:
+ - Add a Revenue Flag (REV) to SEOCs that are appropriately flagged
+ - Add the ability to select future effective dates for SEOCs
+ - Add the ability to see the billing code numbers in the confirmation 
+   message when updating or deleting billing codes
+ - Add the ability to mark lookup table entries as "Discontinued"
+ - Add the ability to enter new billing code types 
+ - Add a new Role that allows the generation of JSON file without update 
+   capability
+ - Modify text entry controls to limit the available character set to 
+   avoid entering incompatible characters in specific fields
+ - Modify the initial SEOC view to filter for Active SEOCs, but allow all 
+   published SEOCs to be viewed if desired
+ - Modify the Visits and Allowed Visits fields in the Payable Service 
+   table to new display as Visits/ Units and Allowed Visits / Units 
+   throughout the GUI
+ - Update the SEOC database schema as required to support these features
+  
+ **************************************************************************
+  
+ INSTALLATION INSTRUCTIONS:
+  
+ New Service Requests (NSRs):
+ --------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------
+ N/A
+  
+ Test Sites:
+ --------------------
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ SEOC Software is installed on servers in the Infrastructure Operations
+ (IO) environment, and no remote installation is required.  The 
+ Technical Manual will be placed on the following anonymous directories:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at:
+ http://www.domain.ext/vdl/
+  
+ Title                          File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ SEOC API Manual                seoc_1_0_api.pdf               Binary
+ SEOC API Manual                seoc_1_0_api.docx              Binary
+ SEOC User Guide                seoc_1_0_ug.pdf                Binary
+ SEOC User Guide                seoc_1_0_ug.docx               Binary
+  
+ Patch Installation
+ --------------------
+ Installation of this software will be performed by Infrastructure 
+ Operations (IO) System Administrators, no action is to be taken by 
+ local sites.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 30, 2019
+Completed By:                               Date Completed: JUN 13, 2019
+Released By :                               Date Released : JUN 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
