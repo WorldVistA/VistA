@@ -17,14 +17,11 @@
 """ This is a python module to convert VA FileMan Like Data to HTML DataTable
 """
 
-from builtins import str
 from string import Template
-"""
-  html header using JQuery Table Sorter Plugin
-  http://tablesorter.com/docs/
-"""
 
-table_sorter_header="""
+#  html header using JQuery Table Sorter Plugin
+#  http://tablesorter.com/docs/
+table_sorter_header = """
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="https://tablesorter.com/__jquery.tablesorter.js"></script>
 <script type="text/javascript" id="js">
@@ -37,10 +34,8 @@ table_sorter_header="""
 }); </script>
 """
 
-"""
-  html header using JQuery DataTable Plugin
-  https://datatables.net/
-"""
+#  html header using JQuery DataTable Plugin
+#  https://datatables.net/
 data_table_reference = """
 <link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
 <link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
@@ -343,13 +338,13 @@ def data_table_record_init_setup(tableName):
 }); </script>
 """ % tableName
 
-""" Some Utilitity functions for some TablelizedData
-"""
+# Some Utilitity functions for some TablelizedData
 def outputDataListTableHeader(output, tName, columns=None,
                               searchColumnNames=None, hideColumnNames=None):
   output.write("%s\n" % data_table_reference)
   if columns is None:
-    initSet = data_table_list_init_setup.substitute(tableName=tName, downloadTitle=tName)
+    initSet = data_table_list_init_setup.substitute(tableName=tName,
+                                                    downloadTitle=tName)
   else:
     columnNames = []
     for col in columns:
@@ -471,20 +466,9 @@ def writeTableListInfo(output, tName):
   output.write("</tr>\n")
   output.write("</thead>\n")
 
-def safeFileName(name):
-  """ convert to base64 encoding """
-  import base64
-  # b64Encode requires a bytes object but would prefer strings
-  return str(base64.urlsafe_b64encode(name.encode('utf-8')))
-
 def safeElementId(name):
   import base64
-  """
-  it turns out that '=' is not a valid html element id
-  remove the padding
-  """
   # b64Encode requires a bytes object but would prefer strings
   name = name.encode('utf-8')
-  extraChr = str('__').encode('utf-8')
-  returnStr = str(base64.b64encode(name, extraChr))
+  returnStr = base64.b64encode(name, b'__').decode('utf-8')
   return returnStr.replace('=','').replace('.','')

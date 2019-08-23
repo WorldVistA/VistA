@@ -20,21 +20,24 @@ def fmDtToPyDt(fileManDt):
   """ convert fileman time to Python datetime
       return None if format is not valid
   """
-  """ check to see if datetime is valid or not"""
+  # check to see if datetime is valid or not
   validFmt = re.compile('^(?P<date>[0-9]{6,})(?P<time>\.[0-9]{0,6})?$')
   result = validFmt.search(fileManDt)
   if result:
     datePart = result.group('date')
     timePart = result.group('time')
-    if not datePart: return None # must at least have a date part
+    if not datePart:
+      return None # must at least have a date part
     if len(datePart) < 7:
       datePart = datePart.ljust(7,'0')
     try:
       year = int(datePart[0:-4])
       month = int(datePart[-4:-2])
-      if month == 0: month = 1
+      if month == 0:
+        month = 1
       day = int(datePart[-2:])
-      if day == 0: day = 1
+      if day == 0:
+        day = 1
       outDate = date(year + 1700, month, day)
     except ValueError:
       return None
@@ -58,18 +61,3 @@ def fmDtToPyDt(fileManDt):
           return None
     return datetime.combine(outDate, outTime)
   return None
-
-def testFmDtToPyDt():
-  fileManDt = ("3121201.2308",
-               "2970919.12",
-               "2970919.24",
-               "2930913.146",
-               "2970919.082701",
-               "3091203.09072",
-               "3110000",
-               )
-  for fmDt in fileManDt:
-    print fmDtToPyDt(fmDt)
-
-if __name__ == '__main__':
-  testFmDtToPyDt()

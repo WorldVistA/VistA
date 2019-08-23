@@ -22,6 +22,7 @@ import re
 from datetime import datetime
 
 from LogManager import logger
+from UtilityFunctions import convertToType, getKeys, sortDataEntryFloatFirst
 
 class ItemValue(object):
   def __init__(self, value):
@@ -99,35 +100,6 @@ class GlobalNode(object):
     return (sys.getsizeof(self.child) +
             sys.getsizeof(self.value) +
             sys.getsizeof(self.subscript))
-
-def sortDataEntryFloatFirst(data1, data2):
-  isData1Float = convertToType(data1, float)
-  isData2Float = convertToType(data2, float)
-  if isData1Float and isData2Float:
-    return cmp(float(data1), float(data2))
-  if isData1Float:
-    return -1 # float first
-  if isData2Float:
-    return 1
-  return cmp(data1, data2)
-
-def convertToType(data1, convertFunc):
-  try:
-    convertFunc(data1)
-    return True
-  except ValueError:
-    return False
-
-def getKeys(globalRoot, func=int):
-  outKey = []
-  for key in globalRoot:
-    try:
-      idx = func(key)
-      outKey.append(key)
-    except ValueError:
-      pass
-  outKey.sort()
-  return outKey
 
 def createGlobalNodeByZWRFile(inputFileName):
   globalRoot = None
