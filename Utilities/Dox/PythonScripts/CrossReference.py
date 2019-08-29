@@ -1509,7 +1509,9 @@ class CrossReference(object):
             genericRoutine.setHasSourceCode(False)
             callerRoutines = genericRoutine.getCallerRoutines()
             for routineDict in callerRoutines.values():
-                for routine in routineDict:
+                # The routineDict is changed in the loop, so we must use a copy
+                # of the keys for iteration
+                for routine in list(routineDict.keys()):
                     routineName = routine.getName()
                     if self.isPlatformDependentRoutineByName(routineName):
                         value = routineDict.pop(routine)
