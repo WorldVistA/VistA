@@ -14,10 +14,15 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import range
+import codecs
 import csv
 import json
 import re
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from PDFUtilityFunctions import *
 
@@ -203,7 +208,7 @@ def getGlobalHtmlFileNameByName(globalName):
 
 def normalizeGlobalName(globalName):
     import base64
-    return base64.urlsafe_b64encode(globalName)
+    return base64.urlsafe_b64encode(codecs.encode(globalName, 'utf-8'))
 
 def getGlobalPDFFileNameByName(globalName):
     return ("Global_%s.pdf" %
@@ -213,17 +218,17 @@ def getFileManSubFileHtmlFileName(subFile):
     return getFileManSubFileHtmlFileNameByName(subFile.getFileNo())
 
 def getFileManSubFileHtmlFileNameByName(subFileNo):
-    return urllib.quote("SubFile_%s.html" % subFileNo)
+    return urllib.parse.quote("SubFile_%s.html" % subFileNo)
 
 def getFileManSubFilePDFFileNameByName(subFileNo):
-    return urllib.quote("SubFile_%s.pdf" % subFileNo)
+    return urllib.parse.quote("SubFile_%s.pdf" % subFileNo)
 
 def getPackageHtmlFileName(packageName):
-    return urllib.quote("Package_%s.html" %
+    return urllib.parse.quote("Package_%s.html" %
                         normalizePackageName(packageName))
 
 def getPackagePdfFileName(packageName):
-    return urllib.quote("Package_%s.pdf" %
+    return urllib.parse.quote("Package_%s.pdf" %
                         normalizePackageName(packageName))
 
 def getPackageDependencyHtmlFileName(packageName, depPackageName):
@@ -252,11 +257,11 @@ def getPackageObjHtmlFileName(option):
     return filename
 
 def getPackageComponentLink(option):
-    return urllib.quote(getPackageObjHtmlFileName(option))
+    return urllib.parse.quote(getPackageObjHtmlFileName(option))
 
 def getRoutineLink(routineName):
     filename = "Routine_%s.html" % normalizeName(routineName)
-    return urllib.quote(filename)
+    return urllib.parse.quote(filename)
 
 def getRoutineHRefLink(rtnName, dox_url, **kargs):
     crossRef = None
@@ -272,11 +277,11 @@ def getRoutineHRefLink(rtnName, dox_url, **kargs):
 
 def getRoutinePdfFileName(routineName):
     filename = "Routine_%s.pdf" % normalizeName(routineName)
-    return urllib.quote(filename)
+    return urllib.parse.quote(filename)
 
 def getRoutineSourceHtmlFileName(routineName):
     filename = "Routine_%s_source.html" % normalizeName(routineName)
-    return urllib.quote(filename)
+    return urllib.parse.quote(filename)
 
 def normalizeName(name):
     return re.sub("[ /.*?&<>:\\\"|]", '_', name)
@@ -365,7 +370,7 @@ def getPackageGraphEdgePropsByMetrics(depMetricsList,
 def mergeAndSortDependencyListByPackage(package, isDependencyList):
     depPackageMerged = mergePackageDependenciesList(package, isDependencyList)
     # sort by the sum of the total # of routines
-    depPackages = sorted(depPackageMerged.keys(),
+    depPackages = sorted(list(depPackageMerged.keys()),
                        key=lambda item: sum(depPackageMerged[item][0:7:2]),
                        reverse=True)
     return (depPackages, depPackageMerged)
@@ -391,37 +396,37 @@ def mergePackageDependenciesList(package, isDependencies=True):
         fileManDeps = package.getPackageFileManFileDependents()
         dbCallDeps = package.getPackageFileManDbCallDependents()
         optionDeps = {}
-    for (package, depTuple) in routineDeps.iteritems():
+    for (package, depTuple) in routineDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][0] = len(depTuple[0])
         packageDepDict[package][1] = len(depTuple[1])
-    for (package, depTuple) in globalDeps.iteritems():
+    for (package, depTuple) in globalDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][2] = len(depTuple[0])
         packageDepDict[package][3] = len(depTuple[1])
-    for (package, depTuple) in fileManDeps.iteritems():
+    for (package, depTuple) in fileManDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][4] = len(depTuple[0])
         packageDepDict[package][5] = len(depTuple[1])
-    for (package, depTuple) in dbCallDeps.iteritems():
+    for (package, depTuple) in dbCallDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][6] = len(depTuple[0])
         packageDepDict[package][7] = len(depTuple[1])
-    for (package, depTuple) in optionDeps.iteritems():
+    for (package, depTuple) in optionDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][8] = len(depTuple[0])
         packageDepDict[package][9] = len(depTuple[1])
-    for (package, depTuple) in globalRtnDeps.iteritems():
+    for (package, depTuple) in globalRtnDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][10] = len(depTuple[0])
         packageDepDict[package][11] = len(depTuple[1])
-    for (package, depTuple) in globalGblDeps.iteritems():
+    for (package, depTuple) in globalGblDeps.items():
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][12] = len(depTuple[0])

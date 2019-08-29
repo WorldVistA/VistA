@@ -17,6 +17,8 @@
 # limitations under the License.
 #----------------------------------------------------------------
 
+from builtins import range
+from builtins import object
 import glob
 import re
 import os
@@ -118,7 +120,7 @@ def checkCSVDeps(self,CrossReference,optionText,keyVal):
 #===============================================================================
 # Interface to parse a section of the XINDEX log file
 #===============================================================================
-class ISectionParser:
+class ISectionParser(object):
     def __init__(self):
         pass
     def onSectionStart(self, line, section, crossRef):
@@ -345,7 +347,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
         self._curPackage = None
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in SECTION_HEADER_REGEX.iteritems():
+        for (regex, section) in SECTION_HEADER_REGEX.items():
             if regex.search(curLine):
                 if section == IXindexLogFileParser.ROUTINE:
                   routineName = ROUTINE_START.search(curLine).group('name')
@@ -390,7 +392,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
           self._localHandler._varPrefix = line[0:DEFAULT_NAME_FIELD_START_INDEX]
           self._varNames = re.split("[,]",line[spaceVal:])
           self._localHandler._varName = line[DEFAULT_NAME_FIELD_START_INDEX:spaceVal].strip()
-          if self._localHandler._varName == "NONE":
+          if self._localHandler._varName == "NONE" or self._localHandler._varName is None:
             return
           for index, location in enumerate(self._varNames):
             if location != ' ':
@@ -421,7 +423,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
           if "+" in line:
             self._localHandler._varPrefix = line[0:DEFAULT_NAME_FIELD_START_INDEX]
             self._varNames = re.split("[,]",line[self._valueStartIdx:])
-            if self._localHandler._varName == "NONE":
+            if self._localHandler._varName == "NONE" or self._localHandler._varName is None:
               return
             for index, location in enumerate(self._varNames):
               if location != ' ':
@@ -553,7 +555,7 @@ class PackageObjectListingSectionParser (AbstractSectionParser):
 #===============================================================================
 # Interface for a Xindex Log File Parser
 #===============================================================================
-class IXindexLogFileParser:
+class IXindexLogFileParser(object):
     # some enum like constant for section header
     LOCAL_VARIABLE=1
     GLOBAL_VARIABLE=2
@@ -683,7 +685,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         if not os.path.exists(logFileName):
             logger.error("File: %s does not exist" % logFileName)
             return
-        logFile = open(logFileName, "rb")
+        logFile = open(logFileName, 'r')
         for curLine in logFile:
             curLine = curLine.rstrip("\r\n")
             if PRESS_RETURN.search(curLine):
@@ -720,7 +722,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         return PRESS_RETURN.search(curLine) or CROSS_REF.search(curLine)
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in self._sectionHeaderRegex.iteritems():
+        for (regex, section) in self._sectionHeaderRegex.items():
             if regex.search(curLine):
                 if section == IXindexLogFileParser.ROUTINE:
                   routineName = ROUTINE_START.search(curLine).group('name')
@@ -760,14 +762,14 @@ class CallerGraphLogFileParser(object):
     def outputPackageCSVFile(self, outputFile):
         output = csv.writer(open(outputFile, 'w'), lineterminator='\n')
         allPackages = self._crossRef.getAllPackages()
-        sortedPackage = sorted(allPackages.keys(),
+        sortedPackage = sorted(list(allPackages.keys()),
                              key=lambda item: allPackages[item].getOriginalName())
         for packageName in sortedPackage:
             package = allPackages[packageName]
             namespaceList = package.getNamespaces()
             globalnamespaceList = package.getGlobalNamespace()
             globals = package.getAllGlobals()
-            globalList = sorted(globals.values(),
+            globalList = sorted(list(globals.values()),
                               key=lambda item: float(item.getFileNo()))
             maxRows = max(len(namespaceList),
                         len(globalnamespaceList),

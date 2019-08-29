@@ -114,7 +114,7 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
         if generateHTML:
             _generateICRSummaryPageImpl(allpkgJson, 'ICR List', 'All', date,
                                         outDir, crossRef, isForAll=True)
-            for pkgName, outJson in pkgJson.items():
+            for pkgName, outJson in list(pkgJson.items()):
                 _generateICRSummaryPageImpl(outJson, 'ICR List', pkgName, date,
                                             outDir, crossRef)
             logger.warn('Total # entry in pkgJson is [%s]', len(pkgJson))

@@ -18,6 +18,8 @@
 # limitations under the License.
 #----------------------------------------------------------------
 
+from builtins import range
+from builtins import object
 import glob
 import re
 import os
@@ -44,7 +46,7 @@ SUBFILE_REGEX = re.compile("Multiple #(?P<File>[.0-9]+)")
 FILE_REGEX = re.compile("^ +(?P<File>[0-9\.]+) +")
 POINTED_TO_BY_VALUE_REGEX = re.compile("field \(#(?P<fieldNo>[0-9.]+)\) (of the .*? sub-field \(#(?P<subFieldNo>[0-9.]+)\))?.*of the (?P<Name>.*) File \(#(?P<FileNo>[0-9.]+)\)$")
 
-class IDDSectionParser:
+class IDDSectionParser(object):
     def __init__(self):
         pass
     def onSectionStart(self, line, section, Global, CrossReference):
@@ -377,7 +379,7 @@ class FileManFieldSectionParser(IDDSectionParser):
             self._field.setPointedToSubFile(subFile)
             CrossReference.addFileManSubFile(subFile)
             return
-        for (key, value) in self.StringTypeMappingDict.iteritems():
+        for (key, value) in self.StringTypeMappingDict.items():
             if fType.startswith(key):
                 self._field = FileManFieldFactory.createField(fieldNo, fName, value, fLocation)
                 break
@@ -447,7 +449,7 @@ class PointedToBySectionParser(IDDSectionParser):
         else:
             logger.error("Could not parse pointer reference [%s] in file [%s]" % (line, self._global.getFileNo()))
 
-class IDataDictionaryListFileLogParser:
+class IDataDictionaryListFileLogParser(object):
     # Enum for section value
     DESCRIPTION_SECTION = 1
     COMPILED_CROSS_REFERENCE_ROUTINE_SECTION = 2
@@ -571,7 +573,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         if not os.path.exists(logFileName):
             logger.error("File: %s does not exist" % logFileName)
             return
-        logFileHandle = open(logFileName, "rb")
+        logFileHandle = open(logFileName, 'r')
         baseName = os.path.basename(logFileName)
         fileNo = baseName[:-len(".schema")]
         self._curGlobal = self._crossRef.getGlobalByFileNo(fileNo)
@@ -595,7 +597,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
                 self._curParser.parseLine(line, self._curGlobal, self._crossRef)
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in self._sectionHeaderRegEx.iteritems():
+        for (regex, section) in self._sectionHeaderRegEx.items():
             if regex.search(curLine):
                 return section
         return None

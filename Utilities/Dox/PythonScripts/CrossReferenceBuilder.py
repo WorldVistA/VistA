@@ -17,6 +17,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import object
 import argparse
 from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
 from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
