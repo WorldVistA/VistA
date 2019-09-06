@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ---------------------------------------------------------------------------
-
+from future.utils import itervalues
 import argparse
 import json
 from CrossReferenceBuilder import createCrossReferenceLogArgumentParser
@@ -27,13 +27,13 @@ def outputAllPackageDependency(crossRef, outputFile):
     routines = {}
     files = {}
     fields = {}
-    for pkg in crossRef.getAllPackages().values():
+    for pkg in itervalues(crossRef.getAllPackages()):
         pkgName = pkg.getName()
         routines[pkgName] = len(pkg.getAllRoutines())
         numFiles = 0
         numFields = 0
         allGlobals = pkg.getAllGlobals()
-        for globalVar in allGlobals.values():
+        for globalVar in itervalues(allGlobals):
             if globalVar.isFileManFile():
                 numFiles += 1
                 allFields = globalVar.getAllFileManFields()

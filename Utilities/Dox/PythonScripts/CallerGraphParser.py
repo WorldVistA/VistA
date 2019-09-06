@@ -19,6 +19,9 @@
 
 from builtins import range
 from builtins import object
+from future.utils import iteritems
+from future.utils import itervalues
+
 import glob
 import re
 import os
@@ -347,7 +350,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
         self._curPackage = None
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in SECTION_HEADER_REGEX.items():
+        for (regex, section) in iteritems(SECTION_HEADER_REGEX):
             if regex.search(curLine):
                 if section == IXindexLogFileParser.ROUTINE:
                   routineName = ROUTINE_START.search(curLine).group('name')
@@ -623,6 +626,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         self._sectionHeaderRegex[EXTERNAL_REFERENCES_START] = IXindexLogFileParser.EXTERNEL_REFERENCE
         self._sectionHeaderRegex[ROUTINE_DETAIL_START] = IXindexLogFileParser.ROUTINE_PRINT
         self._sectionHeaderRegex[COMPONENT_LIST_START] = IXindexLogFileParser.PACKAGE_COMPONENT_LIST_SECTION
+        # TODO: Remove self._sectionHeaderRegex and just use SECTION_HEADER_REGEX
         global SECTION_HEADER_REGEX
         SECTION_HEADER_REGEX =  self._sectionHeaderRegex
 
@@ -722,7 +726,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         return PRESS_RETURN.search(curLine) or CROSS_REF.search(curLine)
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in self._sectionHeaderRegex.items():
+        for (regex, section) in iteritems(self._sectionHeaderRegex):
             if regex.search(curLine):
                 if section == IXindexLogFileParser.ROUTINE:
                   routineName = ROUTINE_START.search(curLine).group('name')
@@ -769,7 +773,7 @@ class CallerGraphLogFileParser(object):
             namespaceList = package.getNamespaces()
             globalnamespaceList = package.getGlobalNamespace()
             globals = package.getAllGlobals()
-            globalList = sorted(list(globals.values()),
+            globalList = sorted(list(itervalues(globals)),
                               key=lambda item: float(item.getFileNo()))
             maxRows = max(len(namespaceList),
                         len(globalnamespaceList),

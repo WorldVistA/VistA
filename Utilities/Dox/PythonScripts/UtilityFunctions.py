@@ -18,6 +18,7 @@ from future import standard_library
 standard_library.install_aliases()
 from builtins import str
 from builtins import range
+from future.utils import iteritems
 import csv
 import json
 import re
@@ -426,37 +427,37 @@ def mergePackageDependenciesList(package, isDependencies=True):
         fileManDeps = package.getPackageFileManFileDependents()
         dbCallDeps = package.getPackageFileManDbCallDependents()
         optionDeps = {}
-    for (package, depTuple) in routineDeps.items():
+    for (package, depTuple) in iteritems(routineDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][0] = len(depTuple[0])
         packageDepDict[package][1] = len(depTuple[1])
-    for (package, depTuple) in globalDeps.items():
+    for (package, depTuple) in iteritems(globalDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][2] = len(depTuple[0])
         packageDepDict[package][3] = len(depTuple[1])
-    for (package, depTuple) in fileManDeps.items():
+    for (package, depTuple) in iteritems(fileManDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][4] = len(depTuple[0])
         packageDepDict[package][5] = len(depTuple[1])
-    for (package, depTuple) in dbCallDeps.items():
+    for (package, depTuple) in iteritems(dbCallDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][6] = len(depTuple[0])
         packageDepDict[package][7] = len(depTuple[1])
-    for (package, depTuple) in optionDeps.items():
+    for (package, depTuple) in iteritems(optionDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][8] = len(depTuple[0])
         packageDepDict[package][9] = len(depTuple[1])
-    for (package, depTuple) in globalRtnDeps.items():
+    for (package, depTuple) in iteritems(globalRtnDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][10] = len(depTuple[0])
         packageDepDict[package][11] = len(depTuple[1])
-    for (package, depTuple) in globalGblDeps.items():
+    for (package, depTuple) in iteritems(globalGblDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][12] = len(depTuple[0])

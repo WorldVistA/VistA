@@ -17,6 +17,7 @@
 from __future__ import division
 
 from builtins import str
+from future.utils import iteritems
 from past.utils import old_div
 import json
 import os.path
@@ -114,7 +115,7 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
         if generateHTML:
             _generateICRSummaryPageImpl(allpkgJson, 'ICR List', 'All', date,
                                         outDir, crossRef, isForAll=True)
-            for pkgName, outJson in list(pkgJson.items()):
+            for pkgName, outJson in iteritems(pkgJson):
                 _generateICRSummaryPageImpl(outJson, 'ICR List', pkgName, date,
                                             outDir, crossRef)
             logger.warn('Total # entry in pkgJson is [%s]', len(pkgJson))

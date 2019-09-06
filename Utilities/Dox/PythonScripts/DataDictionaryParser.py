@@ -20,6 +20,7 @@
 
 from builtins import range
 from builtins import object
+from future.utils import iteritems
 import glob
 import re
 import os
@@ -379,7 +380,7 @@ class FileManFieldSectionParser(IDDSectionParser):
             self._field.setPointedToSubFile(subFile)
             CrossReference.addFileManSubFile(subFile)
             return
-        for (key, value) in self.StringTypeMappingDict.items():
+        for (key, value) in iteritems(self.StringTypeMappingDict):
             if fType.startswith(key):
                 self._field = FileManFieldFactory.createField(fieldNo, fName, value, fLocation)
                 break
@@ -597,7 +598,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
                 self._curParser.parseLine(line, self._curGlobal, self._crossRef)
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in self._sectionHeaderRegEx.items():
+        for (regex, section) in iteritems(self._sectionHeaderRegEx):
             if regex.search(curLine):
                 return section
         return None
