@@ -111,7 +111,7 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
                 summaryInfo = _convertICREntryToSummaryInfo(icrEntry, crossRef)
                 allpkgJson.append(summaryInfo)
                 if 'CUSTODIAL PACKAGE' in icrEntry:
-                    pkgJson.setdefault(icrEntry['CUSTODIAL PACKAGE'],[]).append(summaryInfo)
+                    pkgJson.setdefault(icrEntry['CUSTODIAL PACKAGE'], []).append(summaryInfo)
         if generateHTML:
             _generateICRSummaryPageImpl(allpkgJson, 'ICR List', 'All', date,
                                         outDir, crossRef, isForAll=True)
@@ -144,7 +144,7 @@ def _getICRIndividualHtmlFileLinkByIen(value, icrEntry, **kargs):
           ienDescription += '\n'
         else:
           ienDescription += ' ' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
-    return '<a title=\"%s\" href=\"%s\">%s</a>' % (ienDescription,'%s/ICR/ICR-%s.html' % 	 (VIVIAN_URL,ien), value)
+    return '<a title=\"%s\" href=\"%s\">%s</a>' % (ienDescription, '%s/ICR/ICR-%s.html' % 	 (VIVIAN_URL, ien), value)
 
 
 def _getGeneralDescription(value, icrEntry, **kargs):
@@ -275,19 +275,19 @@ def _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef):
             continue
         if 'CUSTODIAL PACKAGE' in icrItem:
             curPkg = icrItem['CUSTODIAL PACKAGE']
-            outDep.setdefault(curPkg,{})
+            outDep.setdefault(curPkg, {})
             if 'SUBSCRIBING PACKAGE' in icrItem:
                 for subPkg in icrItem['SUBSCRIBING PACKAGE']:
                     if 'SUBSCRIBING PACKAGE' in subPkg:
                         subPkgName = subPkg['SUBSCRIBING PACKAGE']
-                        if isinstance(subPkgName,list):
+                        if isinstance(subPkgName, list):
                           for subPkgNameEntry in subPkgName:
-                            subDep = outDep.setdefault(subPkgNameEntry, {}).setdefault('dependencies',{})
+                            subDep = outDep.setdefault(subPkgNameEntry, {}).setdefault('dependencies', {})
                             subDep.setdefault(curPkg, []).append(curIaNum)
                             curDep = outDep.setdefault(curPkg, {}).setdefault('dependents', {})
                             curDep.setdefault(subPkgNameEntry, []).append(curIaNum)
                         else:
-                          subDep = outDep.setdefault(subPkgName, {}).setdefault('dependencies',{})
+                          subDep = outDep.setdefault(subPkgName, {}).setdefault('dependencies', {})
                           subDep.setdefault(curPkg, []).append(curIaNum)
                           curDep = outDep.setdefault(curPkg, {}).setdefault('dependents', {})
                           curDep.setdefault(subPkgName, []).append(curIaNum)
@@ -460,10 +460,10 @@ def _generateICRIndividualPagePDF(icrJson, date, pdfOutDir):
     buf = io.BytesIO()
     doc = SimpleDocTemplate(
         buf,
-        rightMargin=old_div(inch,2),
-        leftMargin=old_div(inch,2),
-        topMargin=old_div(inch,2),
-        bottomMargin=old_div(inch,2),
+        rightMargin=old_div(inch, 2),
+        leftMargin=old_div(inch, 2),
+        topMargin=old_div(inch, 2),
+        bottomMargin=old_div(inch, 2),
         pagesize=letter,
     )
     pdf = []
@@ -583,11 +583,11 @@ def _writeGlobalReferenceToPDF(section, pdf, doc):
                             row.append(Paragraph("", STYLES['Normal']))
                     table.append(row)
             columns = 12
-            columnWidth = old_div(doc.width,columns)
+            columnWidth = old_div(doc.width, columns)
             t = Table(table,
                       colWidths=[columnWidth, columnWidth*2, columnWidth*2, columnWidth*6, columnWidth])
-            t.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-                                  ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+            t.setStyle(TableStyle([('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+                                  ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
                                   ]))
             globalReferenceSection.append(t)
             pdf.append(KeepTogether(globalReferenceSection))
@@ -649,10 +649,10 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
                 # TODO: Parsing error! See ICR-28
                 pass
         columns = 10
-        columnWidth = old_div(doc.width,columns)
+        columnWidth = old_div(doc.width, columns)
         t = Table(table, colWidths=[columnWidth*2, columnWidth, columnWidth*7])
-        t.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-                              ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+        t.setStyle(TableStyle([('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+                              ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
                               ]))
         componentSection.append(t)
     pdf.append(KeepTogether(componentSection))

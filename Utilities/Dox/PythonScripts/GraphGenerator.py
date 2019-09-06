@@ -244,7 +244,7 @@ class GraphGenerator(object):
                     escapedDepRoutineName = re.escape(depRoutine.getName())
                     htmlFileName = getPackageComponentLink(depRoutine)
                     output.write("\t\t\"%s\" [penwidth=2 color=\"%s\" URL=\"%s\" tooltip=\"%s\"];\n" %
-                                    (escapedDepRoutineName,COLOR_MAP[depRoutine.getObjectType()],
+                                    (escapedDepRoutineName, COLOR_MAP[depRoutine.getObjectType()],
                                      htmlFileName, htmlFileName))
                     if str(depPackage) == packageName:
                         output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
@@ -265,9 +265,9 @@ class GraphGenerator(object):
     #  Generate Color legend image
     #==========================================================================
     def generateColorLegend(self):
-        self._generateImagesFromDotFile(os.path.join(self._outDir,"colorLegend.png"),
-                                        os.path.join(self._outDir,"colorLegend.cmapx"),
-                                        os.path.join(self._docRepDir,'callerGraph_color_legend.dot'))
+        self._generateImagesFromDotFile(os.path.join(self._outDir, "colorLegend.png"),
+                                        os.path.join(self._outDir, "colorLegend.cmapx"),
+                                        os.path.join(self._docRepDir, 'callerGraph_color_legend.dot'))
 
     #==========================================================================
 
@@ -312,13 +312,13 @@ if __name__ == '__main__':
         parents=[crossRefArgParse])
     parser.add_argument('-dot', required=True,
                         help='path to the folder containing dot excecutable')
-    parser.add_argument('-icr','--icrJsonFile', required=True,
+    parser.add_argument('-icr', '--icrJsonFile', required=True,
                         help='JSON formatted information of DBIA/ICR')
-    parser.add_argument('-st','--sortTemplateDep', required=True,
+    parser.add_argument('-st', '--sortTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Sort Templates')
-    parser.add_argument('-it','--inputTemplateDep', required=True,
+    parser.add_argument('-it', '--inputTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Input Templates')
-    parser.add_argument('-pt','--printTemplateDep', required=True,
+    parser.add_argument('-pt', '--printTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Print Templates')
     result = parser.parse_args()
 

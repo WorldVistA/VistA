@@ -363,7 +363,7 @@ def findRelevantIndex(sectionGenLst, existingOutFile):
     if item['data'](*extraarg):
       indexList.append(item['name'])
       idxLst.append(idx)
-  return indexList,idxLst
+  return indexList, idxLst
 
 def getICRHtmlFileName(icrEntry):
     return ("%s/ICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"]))
@@ -531,7 +531,7 @@ def generatePDFListData(listData):
         return generateParagraph("")
     list = []
     for item in listData:
-        list.append(ListItem(generateParagraph(item),leftIndent=7))
+        list.append(ListItem(generateParagraph(item), leftIndent=7))
     return generateList(list)
 
 def generateList(data):
@@ -590,10 +590,10 @@ class WebPageGenerator(object):
       else:
         pagesize = landscape(letter)
       self.doc = SimpleDocTemplate(self.buf,
-                                   rightMargin=old_div(inch,2),
-                                   leftMargin=old_div(inch,2),
-                                   topMargin=old_div(inch,2),
-                                   bottomMargin=old_div(inch,2),
+                                   rightMargin=old_div(inch, 2),
+                                   leftMargin=old_div(inch, 2),
+                                   topMargin=old_div(inch, 2),
+                                   bottomMargin=old_div(inch, 2),
                                    pagesize=pagesize,
                                   )
 
@@ -610,11 +610,11 @@ class WebPageGenerator(object):
     def __generateLegend__(self):
       self.legend = "<h3>Legends:</h3>"
       self.legend += "<div class=\"contents colorLegendGrp\">\n"
-      self.legend += "<img id=\"colorLegendImg\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"caller_colors\"/>\n" % (urllib.parse.quote("colorLegend.png"),"Legend of Colors")
+      self.legend += "<img id=\"colorLegendImg\"src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"caller_colors\"/>\n" % (urllib.parse.quote("colorLegend.png"), "Legend of Colors")
       cmapFile = open(os.path.join(self._outDir, "colorLegend.cmapx"), 'r')
       for line in cmapFile:
           self.legend += line
-      self.legend += PC_LEGEND.replace("<td class=\"","<td class=\"colorLegend ")
+      self.legend += PC_LEGEND.replace("<td class=\"", "<td class=\"colorLegend ")
       self.legend += "</div>\n"
 
 # -----------------------------------------------------------------------------
@@ -654,7 +654,7 @@ class WebPageGenerator(object):
                 (onClickOpenAccordion, archName.split(" ")[0], archName, inputList[i]))
         if not isIndex:
             outputFile.write("<a %s class=\"qindex Allaccord\" href=\"#%s\">%s</a>\n" %
-                (onClickOpenAccordion, "All","All"))
+                (onClickOpenAccordion, "All", "All"))
         outputFile.write("</div>\n")
         if printButton:
             outputFile.write("<div class=\"qindex\">\n")
@@ -991,54 +991,54 @@ class WebPageGenerator(object):
                 rtnIndexes = [
                    {
                      "name": "External References", # this is also the link name
-                     "data" : globalVar.getExternalReference, # the data source
+                     "data": globalVar.getExternalReference, # the data source
                    },
                    # Interaction Code section
                    {
                      "name": "Interaction Calls", # this is also the link name
-                     "data" : globalVar.getInteractionEntries, # the data source
+                     "data": globalVar.getInteractionEntries, # the data source
                    },
                    # Used in RPC section
                    {
                      "name": "Used in RPC", # this is also the link name
-                     "data" : self.__getRpcReferences__, # the data source
-                     "dataarg" : [globalName], # extra arguments for data source
+                     "data": self.__getRpcReferences__, # the data source
+                     "dataarg": [globalName], # extra arguments for data source
                    },
                    # Used in HL7 Interface section
                    {
                      "name": "Used in HL7 Interface", # this is also the link name
-                     "data" : self.__getHl7References__, # the data source
-                     "dataarg" : [globalName], # extra arguments for data source
+                     "data": self.__getHl7References__, # the data source
+                     "dataarg": [globalName], # extra arguments for data source
                    },
                    # FileMan Files Accessed Via FileMan Db Call section
                    {
                      "name": "FileMan Files Accessed Via FileMan Db Call", # this is also the link name
-                     "data" : globalVar.getFilemanDbCallGlobals, # the data source
+                     "data": globalVar.getFilemanDbCallGlobals, # the data source
                    },
                    # Global Variables Directly Accessed section
                    {
                      "name": "Global Variables Directly Accessed", # this is also the link name
-                     "data" : globalVar.getGlobalVariables, # the data source
+                     "data": globalVar.getGlobalVariables, # the data source
                    },
                    # Label References section
                    {
                      "name": "Label References", # this is also the link name
-                     "data" : globalVar.getLabelReferences, # the data source
+                     "data": globalVar.getLabelReferences, # the data source
                    },
                    # Naked Globals section
                    {
                      "name": "Naked Globals", # this is also the link name
-                     "data" : globalVar.getNakedGlobals, # the data source
+                     "data": globalVar.getNakedGlobals, # the data source
                    },
                    # Local Variables section
                    {
                      "name": "Local Variables", # this is also the link name
-                     "data" : globalVar.getLocalVariables, # the data source
+                     "data": globalVar.getLocalVariables, # the data source
                    },
                    # Marked Items section
                    {
                      "name": "Marked Items", # this is also the link name
-                     "data" : globalVar.getMarkedItems, # the data source
+                     "data": globalVar.getMarkedItems, # the data source
                    }
                 ]
 
@@ -1046,7 +1046,7 @@ class WebPageGenerator(object):
                 with open(filename, 'w') as outputFile:
                     self.__includeHeader__(outputFile)
 
-                    icrList = self.queryICRInfo(packageName.upper(),"GLOBAL", globalName[1:])
+                    icrList = self.queryICRInfo(packageName.upper(), "GLOBAL", globalName[1:])
                     if icrList:
                         # Note: This must match the key in 'titleDic' in the
                         # 'Global' section (PDF_Script.js). Also, must be
@@ -1058,10 +1058,10 @@ class WebPageGenerator(object):
                     pdfEntryList=[]
                     pdfEntryRow = []
                     if globalVar.getFileNo():
-                      jsonFile = os.path.join(self._outDir, globalVar.getFileNo().replace('.','_')+".json")
+                      jsonFile = os.path.join(self._outDir, globalVar.getFileNo().replace('.', '_')+".json")
                       if os.path.isfile(jsonFile):
                         logger.info("Checking %s for entries" % jsonFile)
-                        with open(jsonFile,"r") as entryData:
+                        with open(jsonFile, "r") as entryData:
                           try:
                             globalVals = json.load(entryData)
                             indexList.append("Found Entries")
@@ -1080,7 +1080,7 @@ class WebPageGenerator(object):
                         while len(pdfEntryRow) < 8:
                           pdfEntryRow.append("")
                         pdfEntryList.append(pdfEntryRow)
-                    rtnIndexList, idxLst = findRelevantIndex(rtnIndexes,None)
+                    rtnIndexList, idxLst = findRelevantIndex(rtnIndexes, None)
                     indexList = indexList + rtnIndexList
                     outputFile.write("<script>var titleList = " + str(indexList) + "</script>\n")
                     outputFile.write("")
@@ -1169,12 +1169,12 @@ class WebPageGenerator(object):
                                                     nameFunc=self.getGlobalEntryName,
                                                     classid="gblEntry",
                                                     useColor=False,
-                                                    additionalDetailsURL="%s/%s/%s.html" % (VIVIAN_URL,globalVar.getFileNo().replace('.','_'), globalVar.getFileNo()))
+                                                    additionalDetailsURL="%s/%s/%s.html" % (VIVIAN_URL, globalVar.getFileNo().replace('.', '_'), globalVar.getFileNo()))
                       if self._generatePDFBundle:
                           columns = 8
-                          columnWidth = old_div(self.doc.width,columns)
+                          columnWidth = old_div(self.doc.width, columns)
                           colWidths = [columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth, columnWidth]
-                          self.__writeGenericTablizedPDFData__([], pdfEntryList, pdf,isString=True,columnWidths=colWidths)
+                          self.__writeGenericTablizedPDFData__([], pdfEntryList, pdf, isString=True, columnWidths=colWidths)
                       writeSectionEnd(outputFile)
                     if icrList:
                        self.writeSectionHeader("%s, Total: %d" % (icrSectionName, len(icrList)),
@@ -1386,7 +1386,7 @@ class WebPageGenerator(object):
         self.writeGenericTablizedHtmlData(fieldHeaderList, outputFieldsList, outputFile, "fmFields")
         if self._generatePDFBundle:
             columns = 13
-            columnWidth = old_div(self.doc.width,columns)
+            columnWidth = old_div(self.doc.width, columns)
             colWidths = [columnWidth, columnWidth*2, columnWidth, columnWidth*2, columnWidth*7]
             self.__writeGenericTablizedPDFData__(fieldHeaderList, pdfOutputFieldsList, pdf,
                                                   columnWidths=colWidths, isString=False)
@@ -1544,7 +1544,7 @@ class WebPageGenerator(object):
         self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid)
         if pdf and self._generatePDFBundle:
             columns = 8
-            columnWidth = old_div(self.doc.width,columns)
+            columnWidth = old_div(self.doc.width, columns)
             colWidths = [columnWidth, columnWidth, columnWidth * 6]
             self.__writeGenericTablizedPDFData__(infoHeader, pdfItemList, pdf,
                                                  columnWidths=colWidths, isString=False)
@@ -1596,7 +1596,7 @@ class WebPageGenerator(object):
         self.writeGenericTablizedHtmlData(infoHeader, itemList, outputFile, classid)
         if self._generatePDFBundle:
             columns = 8
-            columnWidth = old_div(self.doc.width,columns)
+            columnWidth = old_div(self.doc.width, columns)
             colWidths = [columnWidth, columnWidth, columnWidth * 6]
             self.__writeGenericTablizedPDFData__(infoHeader, pdfItemList, pdf, colWidths)
 
@@ -1669,7 +1669,7 @@ class WebPageGenerator(object):
                     fieldsReferencedPDF, generateParagraph(description)]
           icrTablePDF.append(pdfRow)
           columns = 10
-          columnWidth = old_div(self.doc.width,columns)
+          columnWidth = old_div(self.doc.width, columns)
           colWidths = [columnWidth, columnWidth * 2, columnWidth * 3, columnWidth * 4]
           self.__writeGenericTablizedPDFData__(headerList, icrTablePDF, pdf,
                                                   columnWidths=colWidths, isString=False)
@@ -2036,7 +2036,7 @@ class WebPageGenerator(object):
           (interaction['formatting'], interaction['string'], interaction['variable']) = tuple(setup)
         routine.addInteractionEntry(interaction)
 
-    def __parseWriteCmd__(self,line, routine,lineNo):
+    def __parseWriteCmd__(self, line, routine, lineNo):
       # splits the line into a space separated list which ignores spaces found within quotes
       lineList =  SPLIT_LINE.split(line)
       lastIndex = 0
@@ -2108,7 +2108,7 @@ class WebPageGenerator(object):
                             routine.addEntryPoint(entry, comment, icrJson)
                             comment=[]
                           inComment = True
-                          foundLine = line.replace("\t"," ").split(" ",1)
+                          foundLine = line.replace("\t", " ").split(" ", 1)
                           if len(foundLine) > 1:
                             entry = foundLine[0]
                             commentString = foundLine[1]
@@ -2122,7 +2122,7 @@ class WebPageGenerator(object):
                             comment = []
                             # if No comment on the first line, assume no other comments will follow it
                             inComment =  False
-                          icrJson = self.queryICRInfo(packageName.upper(),"ROUTINE", routineName)
+                          icrJson = self.queryICRInfo(packageName.upper(), "ROUTINE", routineName)
                           idVal = "id=\"%s\"" % currentEntryPoint
                         # Check for more comments that are 1 space in from the beginning of the line
                         elif inComment and COMMENT.search(line):
@@ -2148,14 +2148,14 @@ class WebPageGenerator(object):
                               for value in itervalues(calledRoutines):
                                 if Routine(pair[1]) in value:
                                   replaceLink = line[start:stop]
-                                  entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1].replace('%',''), pair[0], pair[0], pair[1])
+                                  entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s^%s</a>" % (DOX_URL, pair[1].replace('%', ''), pair[0], pair[0], pair[1])
                                   replaceString = "%s^%s" % pair
                                   line = line[:start] + replaceLink.replace(replaceString, entryLink)+ line[stop:]
                             elif pair[0] in labels:
-                              entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s</a>" % (DOX_URL, routineName.replace('%',''), pair[0], pair[0])
+                              entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#%s\">%s</a>" % (DOX_URL, routineName.replace('%', ''), pair[0], pair[0])
                               replaceLink = line[start:stop]
                               line = line[:start] + replaceLink.replace(pair[0], entryLink)+ line[stop:]
-                        outputFile.write("<pre style=\"padding:unset; border: none; margin:unset; display: inline;\" %s class=\"prettyprint lang-mumps linenums:%s\">%s</pre>" % (idVal, lineNo,line))
+                        outputFile.write("<pre style=\"padding:unset; border: none; margin:unset; display: inline;\" %s class=\"prettyprint lang-mumps linenums:%s\">%s</pre>" % (idVal, lineNo, line))
                         lineNo += 1
                         entryOffset += 1
             except Exception as e:
@@ -2173,7 +2173,7 @@ class WebPageGenerator(object):
                 line = line.replace(">", "&gt")
                 rtnLinks = routineCallExpanded.search(line)
                 if lineNo > 1 and ENTRY_POINT.search(line):
-                  foundLine = line.replace("\t"," ").split(" ",1)
+                  foundLine = line.replace("\t", " ").split(" ", 1)
                   if len(foundLine) > 1:
                     entry = foundLine[0]
                   else:
@@ -2186,10 +2186,10 @@ class WebPageGenerator(object):
                     #  replace them with links to new pages
                       for value in itervalues(calledRoutines):
                         if Routine(pair[1]) in value:
-                          entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#_%s\">%s^%s</a>" % (DOX_URL, pair[1].replace("%",''), pair[0], pair[0], pair[1])
+                          entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#_%s\">%s^%s</a>" % (DOX_URL, pair[1].replace("%", ''), pair[0], pair[0], pair[1])
                           line = line.replace("%s^%s" % pair, entryLink)
                     elif pair[0] in labels:
-                      entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#_%s\">%s</a>" % (DOX_URL, routineName.replace("%",''), pair[0], pair[0])
+                      entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#_%s\">%s</a>" % (DOX_URL, routineName.replace("%", ''), pair[0], pair[0])
                       line = line.replace(pair[0], entryLink)
                 if len(line):
                   outputFile.write("<pre style=\"padding:unset; border: none; margin:unset;\" %s class=\"prettyprint lang-mumps linenums:%s\">%s</pre>\n" % (idVal, lineNo, line))
@@ -2244,7 +2244,7 @@ class WebPageGenerator(object):
           return "Entry: %s" % routine["IENum"]
 
     def getGlobalEntryHTML(self, routine):
-        return "%s/%s/%s-%s.html" % (VIVIAN_URL, routine["GlobalNum"].replace(".","_"),routine["GlobalNum"],routine["IENum"])
+        return "%s/%s/%s-%s.html" % (VIVIAN_URL, routine["GlobalNum"].replace(".", "_"), routine["GlobalNum"], routine["IENum"])
 
 #===============================================================================
 # Method to generate routine Index page
@@ -2527,13 +2527,13 @@ class WebPageGenerator(object):
         elif not isinstance(columnWidths, list):
             # Evenly spaced columns
             columns = columnWidths
-            t = Table(data, colWidths=[old_div(self.doc.width,columns)]*columns)
+            t = Table(data, colWidths=[old_div(self.doc.width, columns)]*columns)
         else:
             # Custom width columns
             t = Table(data, colWidths=columnWidths)
-        t.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-                               ('BOX', (0,0), (-1,-1), 0.25, colors.black),
-                               ('VALIGN', (0,0), (-1,-1), 'TOP'),
+        t.setStyle(TableStyle([('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+                               ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
+                               ('VALIGN', (0, 0), (-1, -1), 'TOP'),
                                ]))
         return t
 
@@ -2637,7 +2637,7 @@ class WebPageGenerator(object):
             dependentPackages, dependentPackagesMerged = \
                 mergeAndSortDependencyListByPackage(package, False)
             # Find all ICR entries that have the package as a "CUSTODIAL Package"
-            icrList = self.queryICRInfo(packageName.upper(),"*","*")
+            icrList = self.queryICRInfo(packageName.upper(), "*", "*")
             # Separate fileman files and non-fileman globals
             fileManList, globalList = [], []
             allGlobals = package.getAllGlobals()
@@ -2672,7 +2672,7 @@ class WebPageGenerator(object):
                   totalObjectDict = package.getAllPackageComponents(keyVal)
                   if totalObjectDict:
                       generatePackageComponents = True
-                      indexList.append(keyVal.replace("_"," "))
+                      indexList.append(keyVal.replace("_", " "))
 
             filename = os.path.join(self._outDir, getPackageHtmlFileName(packageName))
             with open(filename, 'w') as outputFile:
@@ -2835,7 +2835,7 @@ class WebPageGenerator(object):
             for value in itervalues(totalObjectDict):
                 totalComponents.append(value)
             sortedComponents = sorted(totalComponents, key=lambda x:x.getName())
-            componentType = keyVal.replace("_"," ")
+            componentType = keyVal.replace("_", " ")
             self.generatePackageSection(componentType,
                                         getPackageComponentLink,
                                         self.getPackageComponentDisplayName,
@@ -2844,7 +2844,7 @@ class WebPageGenerator(object):
 
 
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
-      return "%s/%s/%s-%s.html" % (VIVIAN_URL, fileNo.replace('.','_'), fileNo, ien)
+      return "%s/%s/%s-%s.html" % (VIVIAN_URL, fileNo.replace('.', '_'), fileNo, ien)
 
     def __convertRPCDataReference__(self, variables, routine=None):
         return self.__convertRtnDataReference__(variables, '8994')
@@ -2897,7 +2897,7 @@ class WebPageGenerator(object):
 
     def __convertExternalReferenceToTableData__(self, variables, routine=None):
         output = []
-        allVars = sorted(iter(list(variables.keys())), key=itemgetter(0,1))
+        allVars = sorted(iter(list(variables.keys())), key=itemgetter(0, 1))
         for nameTag in allVars:
             lineOccurrencesString = self.__generateLineOccurrencesString__(variables[nameTag], routine)
             output.append(("%s^%s" %(nameTag[1], getRoutineHypeLinkByName(nameTag[0])),
@@ -2911,7 +2911,7 @@ class WebPageGenerator(object):
             if routine:
               searchRes = SPLITVAL.search(offset)
               if searchRes:
-                  offsetStr = self.__findDataURL__(offset,routine,searchRes.group("splitval"))
+                  offsetStr = self.__findDataURL__(offset, routine, searchRes.group("splitval"))
             if index > 0:
                 lineOccurrencesString += ",&nbsp;"
             lineOccurrencesString += offsetStr
@@ -3015,7 +3015,7 @@ class WebPageGenerator(object):
         if self._generatePDFBundle:
             # 'Line Occurrences' column can be really long
             columns = 4
-            columnWidth = old_div(self.doc.width,columns)
+            columnWidth = old_div(self.doc.width, columns)
             columnWidths = [columnWidth, columnWidth * 3]
             self.__writeGenericTablizedPDFData__(tableHeader, outputList,
                                                  pdfSection, columnWidths)
@@ -3025,7 +3025,7 @@ class WebPageGenerator(object):
     def __generateICRInformation__(self, icrVals):
       icrString = ""
       for icrEntry in icrVals:
-        icrString += "<li><a href='%s'>ICR #%s</a></li>" % (getICRHtmlFileName(icrEntry),icrEntry["NUMBER"])
+        icrString += "<li><a href='%s'>ICR #%s</a></li>" % (getICRHtmlFileName(icrEntry), icrEntry["NUMBER"])
         if "STATUS" in icrEntry:
           icrString +="<ul><li>Status: %s</li></ul>" % (icrEntry["STATUS"])
         if "USAGE" in icrEntry:
@@ -3056,9 +3056,9 @@ class WebPageGenerator(object):
         if key in entry:
           val = ''
           try:
-            val = codecs.decode(entry[key].replace('<','&lt').replace('>','&gt'),'utf-8','ignore')
+            val = codecs.decode(entry[key].replace('<', '&lt').replace('>', '&gt'), 'utf-8', 'ignore')
           except TypeError as e:
-            val = entry[key].replace('<','&lt').replace('>','&gt')
+            val = entry[key].replace('<', '&lt').replace('>', '&gt')
           outstring += "<li>%s %s</li>" % (entryDict[key], val)
       outstring +=  "</ul>"
       return outstring
@@ -3075,7 +3075,7 @@ class WebPageGenerator(object):
                  }
       for key in entryDict:
         if key in entry:
-          text = "%s %s" % (entryDict[key],entry[key])
+          text = "%s %s" % (entryDict[key], entry[key])
           # TODO: Want to use 'Preformatted' instead of 'Paragraph' but it
           # doesn't wrap! Filter out problematic characters instead
           text = re.sub(r'<.*?>', "", text)
@@ -3097,7 +3097,7 @@ class WebPageGenerator(object):
                 pdfRow = []
             comments = entryPoints[entry]["comments"] if entryPoints[entry]["comments"] else ""
             # Build table row
-            sourceLink = "<a href='%s/Routine_%s_source.html#%s'>%s</a>" % (DOX_URL, routine.getName(),entry.split('(')[0],entry)
+            sourceLink = "<a href='%s/Routine_%s_source.html#%s'>%s</a>" % (DOX_URL, routine.getName(), entry.split('(')[0], entry)
             row.append(sourceLink)
             if self._generatePDFBundle:
                 pdfRow.append(generateParagraph(entry))
@@ -3127,7 +3127,7 @@ class WebPageGenerator(object):
                                     outputFile, pdf, classid, tableHeader):
         self.writeSectionHeader("Interaction Calls", "Interaction Calls",
                                 outputFile, pdf)
-        calledRtns = routine.getFilteredExternalReference(['DIR','VALM','DDS','DIE','DIC','%ZIS','DIALOG','DIALOGU'])
+        calledRtns = routine.getFilteredExternalReference(['DIR', 'VALM', 'DDS', 'DIE', 'DIC', '%ZIS', 'DIALOG', 'DIALOGU'])
         if self._generatePDFBundle:
             self.__writePDFInteractionSection__(data, calledRtns, pdf, tableHeader)
         tableData = []
@@ -3308,7 +3308,7 @@ class WebPageGenerator(object):
             paragraphs.append(Paragraph(subSectionHeader, styles['Heading3']))
             pdfTableData.append(generatePDFTableHeader(tableHeader, False))
             columns = 10
-            columnWidth = old_div(self.doc.width,columns)
+            columnWidth = old_div(self.doc.width, columns)
             columnWidths = [columnWidth * 2, columnWidth, columnWidth * 7]
             t = self.__generatePDFTable__(pdfTableData, columnWidths)
             paragraphs.append(t)
@@ -3484,7 +3484,7 @@ class WebPageGenerator(object):
         if not existingOutFile:
             self.generateNavigationBar(outputFile, indexList, printList=indexList)
             if isPackageComponent:
-                title = routine._title.replace("_"," ") + ": " + routineName
+                title = routine._title.replace("_", " ") + ": " + routineName
                 routineHeader = title
             else:
                 title = "Routine: %s" % routineName
@@ -3570,7 +3570,7 @@ class WebPageGenerator(object):
     def __writePackageComponentSourceSection__(self, routine, data, header,
                                                link, outputFile, pdf, classid):
         fileNo = PACKAGE_COMPONENT_MAP[routine.getObjectType()]
-        sourcePath = os.path.join(self._outDir, "..", fileNo.replace(".",'_'),
+        sourcePath = os.path.join(self._outDir, "..", fileNo.replace(".", '_'),
                                   "%s-%s.html" % (fileNo, routine.getIEN()))
         self.writeSectionHeader(header, link, outputFile, pdf, isAccordion=False)
         try:
@@ -3607,7 +3607,7 @@ class WebPageGenerator(object):
                         pdfRow.append(DTmatch.groups()[0])
                       else:
                         pdfRow[1] += "\n\r" + DTmatch.groups()[0]
-                outputFile.write(line.replace('<tr>','<tr class="%s">' % classid).replace('<td>','<td class="IndexValue %s">' % classid).replace('<th>','<th class="indexkey %s">' % classid))
+                outputFile.write(line.replace('<tr>', '<tr class="%s">' % classid).replace('<td>', '<td class="IndexValue %s">' % classid).replace('<th>', '<th class="indexkey %s">' % classid))
                 if self._generatePDFBundle and "</tr>" in line:
                   pdfTableData.append(pdfRow)
                   pdfRow = []
@@ -3638,7 +3638,7 @@ class WebPageGenerator(object):
 
     def generatePackageComponentIndexPage(self, keyVal, outputFile):
         outputFile.write('<div class="componentList" style="display: none;" id=%s>' % keyVal)
-        title = keyVal.replace("_"," ")
+        title = keyVal.replace("_", " ")
 
         indexList = [char for char in string.ascii_uppercase]
         indexList.insert(0, "%")
@@ -3659,7 +3659,7 @@ class WebPageGenerator(object):
         outputFile.write('</div>')
 
     def generatePackageComponentListIndexPage(self):
-        with open(os.path.join(self._outDir,"PackageComponents.html"), 'w') as outputFile:
+        with open(os.path.join(self._outDir, "PackageComponents.html"), 'w') as outputFile:
             self.__includeHeader__(outputFile)
             outputFile.write("""
 <script type='text/javascript'>
@@ -3678,7 +3678,7 @@ $( document ).ready(function() {
             allObjects = sorted(PACKAGE_COMPONENT_MAP.keys())
             outputFile.write("<select id='componentSelector'>")
             for objectKey in allObjects:
-                outputFile.write("<option class=\"IndexKey\">%s</option>" % objectKey.replace("_"," "))
+                outputFile.write("<option class=\"IndexKey\">%s</option>" % objectKey.replace("_", " "))
             outputFile.write("</select>\n")
             for objectKey in allObjects:
                 self.generatePackageComponentIndexPage(objectKey, outputFile)
@@ -3760,20 +3760,20 @@ if __name__ == '__main__':
         parents=[crossRefArgParse])
     parser.add_argument('-po', '--pdfOutDir', required=True,
                         help='Output PDF directory')
-    parser.add_argument('-rj','--rtnJson', required=True,
+    parser.add_argument('-rj', '--rtnJson', required=True,
                         help='routine reference in VistA data file in JSON format')
-    parser.add_argument('-icr','--icrJsonFile', required=True,
+    parser.add_argument('-icr', '--icrJsonFile', required=True,
                         help='JSON formatted information of DBIA/ICR')
-    parser.add_argument('-st','--sortTemplateDep', required=True,
+    parser.add_argument('-st', '--sortTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Sort Templates')
-    parser.add_argument('-it','--inputTemplateDep', required=True,
+    parser.add_argument('-it', '--inputTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Input Templates')
-    parser.add_argument('-pt','--printTemplateDep', required=True,
+    parser.add_argument('-pt', '--printTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Print Templates')
     parser.add_argument('-local', help='Use links to local DOX pages')
     parser.add_argument('-pdf', action='store_true',
                         help='generate html')
-    parser.add_argument('-fj','--filesJson', required=True,
+    parser.add_argument('-fj', '--filesJson', required=True,
                         help='Repository information in JSON format')
     result = parser.parse_args();
 

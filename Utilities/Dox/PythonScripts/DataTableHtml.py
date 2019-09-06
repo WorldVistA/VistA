@@ -364,7 +364,7 @@ def outputDataListTableHeader(output, tName, columns=None,
                                                                       columnNames=",".join(columnNames),
                                                                       searchColumns="||".join(searchColumns),
                                                                       hideColumns=hideColumnsStr
-                                                                      ,downloadTitle=tName)
+                                                                      , downloadTitle=tName)
   output.write("%s\n" % initSet)
   clear_filters = data_table_clear_filters.safe_substitute(tableName=tName.replace(" ", ""))
   output.write("%s\n" % clear_filters)
@@ -391,7 +391,7 @@ def outputLargeDataListTableHeader(output, src, tName, columns=None,
                                                                             columnNames=",".join(columnNames),
                                                                             searchColumns="||".join(searchColumns),
                                                                             hideColumns="||".join(hideColumns)
-                                                                            ,downloadTitle=tName)
+                                                                            , downloadTitle=tName)
   output.write("%s\n" % initSet)
 
   clear_filters = data_table_clear_filters.safe_substitute(tableName=tName.replace(" ", ""))
@@ -471,4 +471,4 @@ def safeElementId(name):
   # b64Encode requires a bytes object but would prefer strings
   name = name.encode('utf-8')
   returnStr = base64.b64encode(name, b'__').decode('utf-8')
-  return returnStr.replace('=','').replace('.','')
+  return returnStr.replace('=', '').replace('.', '')

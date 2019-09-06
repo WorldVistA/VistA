@@ -146,13 +146,13 @@ def findDotColor(object):
 
 def readIntoDictionary(infileName):
   values = {}
-  with open(infileName,"r") as templateData:
+  with open(infileName, "r") as templateData:
     sniffer = csv.Sniffer()
     dialect = sniffer.sniff(templateData.read(1024))
     templateData.seek(0)
     hasHeader = sniffer.has_header(templateData.read(1024))
     templateData.seek(0)
-    for index, line in enumerate(csv.reader(templateData,dialect)):
+    for index, line in enumerate(csv.reader(templateData, dialect)):
       if index == 0:
         continue
       if line[1] not in values:
@@ -186,7 +186,7 @@ def parseICRJson(icrJson):
             parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"][entry["ROUTINE"]] = []
           parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"][entry["ROUTINE"]].append(entry)
         elif "GLOBAL ROOT" in entry:
-          globalRoot = entry['GLOBAL ROOT'].replace(',','')
+          globalRoot = entry['GLOBAL ROOT'].replace(',', '')
           if not (globalRoot in parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"]):
             parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"][globalRoot] = []
           parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"][globalRoot].append(entry)
@@ -360,19 +360,19 @@ def getPackageGraphEdgePropsByMetrics(depMetricsList,
                                                                  depMetricsList[13],
                                                                  toolTipEndPackage)
               )
-    labelText =("%s(R)->(R)%s" % (depMetricsList[0],depMetricsList[1]),
-                "%s(R)->(G)%s" % (depMetricsList[2],depMetricsList[3]),
-                "%s(F)->(F)%s" % (depMetricsList[4],depMetricsList[5]),
-                "%s(R)->(F)%s" % (depMetricsList[6],depMetricsList[7]),
-                "%s(PC)->(R)%s" % (depMetricsList[8],depMetricsList[9]),
-                "%s(G)->(R)%s" % (depMetricsList[10],depMetricsList[11]),
-                "%s(G)->(G)%s" % (depMetricsList[12],depMetricsList[13])
+    labelText =("%s(R)->(R)%s" % (depMetricsList[0], depMetricsList[1]),
+                "%s(R)->(G)%s" % (depMetricsList[2], depMetricsList[3]),
+                "%s(F)->(F)%s" % (depMetricsList[4], depMetricsList[5]),
+                "%s(R)->(F)%s" % (depMetricsList[6], depMetricsList[7]),
+                "%s(PC)->(R)%s" % (depMetricsList[8], depMetricsList[9]),
+                "%s(G)->(R)%s" % (depMetricsList[10], depMetricsList[11]),
+                "%s(G)->(G)%s" % (depMetricsList[12], depMetricsList[13])
                 )
 
     metricValue = 0
-    (edgeLabel, edgeToolTip, edgeStyle) = ("","","")
+    (edgeLabel, edgeToolTip, edgeStyle) = ("", "", "")
     metricValue = 0
-    for i in range(0,7):
+    for i in range(0, 7):
         if depMetricsList[i*2]:
             if not edgeLabel:
               edgeLabel = labelText[i]

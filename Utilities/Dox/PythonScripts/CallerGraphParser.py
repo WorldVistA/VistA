@@ -95,7 +95,7 @@ packageNameMismatchDict = {"NOIS TRACKING":"NATIONAL ONLINE INFORMATION SHARING"
                          "BLOOD BANK":"VBECS"}
 structuredSource=[]
 
-def checkCSVDeps(self,CrossReference,optionText,keyVal):
+def checkCSVDeps(self, CrossReference, optionText, keyVal):
   if CrossReference._inputTemplateDeps:
     if (keyVal == "Input_Template") and (optionText in CrossReference._inputTemplateDeps):
       for entry in CrossReference._inputTemplateDeps[optionText]:
@@ -187,7 +187,7 @@ class AbstractSectionParser (ISectionParser):
         line = line[0:DEFAULT_NAME_FIELD_START_INDEX]
         return line != "   " and line != ">> "
 
-    def onSectionStart(self, line, section,crossRef):
+    def onSectionStart(self, line, section, crossRef):
         assert section == self._section
         self.__resetVar__()
 
@@ -370,11 +370,11 @@ class PackageInfoSectionParser (AbstractSectionParser):
         self._headerIndex = PackageComponentInfoDict[routineName]['_headerIndex']
         self._curKey = PackageComponentInfoDict[routineName]['_curKey']
 
-      sourcePath = os.path.join(CrossReference.outDir,self._fileNumber.replace(".","_")+".json")
+      sourcePath = os.path.join(CrossReference.outDir, self._fileNumber.replace(".", "_")+".json")
       if CrossReference.outDir and os.path.isfile(sourcePath):
-        with open(sourcePath,"r") as file:
+        with open(sourcePath, "r") as file:
           self._returnJSON = json.load(file)
-      self._curRoutine= PackageComponent("object",0,self._curPackage)
+      self._curRoutine= PackageComponent("object", 0, self._curPackage)
       self._curGetAllFunction = self._curPackage.getAllPackageComponents
       self._curGetFunction = self._curPackage.getPackageComponent
       self._curAddFunction = self._curPackage.addPackageComponent
@@ -387,13 +387,13 @@ class PackageInfoSectionParser (AbstractSectionParser):
         self._localHandler = sectHandleDict.get(sectionHeader)
       if self.__ignoreLine__(line):
           return
-      result = self.__isNameValuePairLine__(line,pkgInfo=True)
+      result = self.__isNameValuePairLine__(line, pkgInfo=True)
       if result:
           spaceVal =self._valueStartIdx-1
           if line[spaceVal] != " ":
-            spaceVal = line.find(" ",spaceVal)
+            spaceVal = line.find(" ", spaceVal)
           self._localHandler._varPrefix = line[0:DEFAULT_NAME_FIELD_START_INDEX]
-          self._varNames = re.split("[,]",line[spaceVal:])
+          self._varNames = re.split("[,]", line[spaceVal:])
           self._localHandler._varName = line[DEFAULT_NAME_FIELD_START_INDEX:spaceVal].strip()
           if self._localHandler._varName == "NONE" or self._localHandler._varName is None:
             return
@@ -411,7 +411,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
               if optionNumber not in self._curGetAllFunction(self._curKey):
                 self._curAddFunction(self._curKey, self._curType(optionText, optionNumber, self._curPackage))
                 self._curRoutine = self._curGetFunction(self._curKey, optionNumber)
-                checkCSVDeps(self, CrossReference, optionText,self._curKey)
+                checkCSVDeps(self, CrossReference, optionText, self._curKey)
               self._curRoutine = self._curGetFunction(self._curKey, optionNumber)
               if  self.componentTypeStr:
                 self._curRoutine.componentType =  self.componentTypeStr
@@ -425,7 +425,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
           self._suspiousLine = False
           if "+" in line:
             self._localHandler._varPrefix = line[0:DEFAULT_NAME_FIELD_START_INDEX]
-            self._varNames = re.split("[,]",line[self._valueStartIdx:])
+            self._varNames = re.split("[,]", line[self._valueStartIdx:])
             if self._localHandler._varName == "NONE" or self._localHandler._varName is None:
               return
             for index, location in enumerate(self._varNames):
@@ -439,7 +439,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
                 if optionNumber not in self._curGetAllFunction(self._curKey):
                   self._curAddFunction(self._curKey, self._curType(optionText, optionNumber, self._curPackage))
                   self._curRoutine = self._curGetFunction(self._curKey, optionNumber)
-                  checkCSVDeps(self, CrossReference, optionText,self._curKey)
+                  checkCSVDeps(self, CrossReference, optionText, self._curKey)
                 self._curRoutine = self._curGetFunction(self._curKey, optionNumber)
                 if self._localHandler._addVarToRoutine:
                     self._localHandler._addVarToRoutine(self._curRoutine, CrossReference)
@@ -524,7 +524,7 @@ class ExternalReferenceSectionParser (AbstractSectionParser):
 class RoutinePrintSectionParser (AbstractSectionParser):
   def __init__(self):
     AbstractSectionParser.__init__(self, IXindexLogFileParser.ROUTINE_PRINT)
-  def onSectionStart(self, curLine, sectionHeader,crossRef):
+  def onSectionStart(self, curLine, sectionHeader, crossRef):
     global structuredSource
     structuredSource=[]
   def parseLine(self, line, Routine, CrossReference):
@@ -538,7 +538,7 @@ class PackageObjectListingSectionParser (AbstractSectionParser):
   def __init__(self):
     AbstractSectionParser.__init__(self, IXindexLogFileParser.PACKAGE_COMPONENT_LIST_SECTION)
 
-  def onSectionStart(self, curLine, sectionHeader,crossRef):
+  def onSectionStart(self, curLine, sectionHeader, crossRef):
     matchKey = KEY_OBJECT.match(curLine.strip())
     if matchKey:
       self.curKeyType = PackageComponentInfoDict[matchKey.group("name")]["_curKey"]
@@ -552,8 +552,8 @@ class PackageObjectListingSectionParser (AbstractSectionParser):
     elif matchObjNo:
       self._curRoutine = PackageComponent(matchObjNo.groups()[1], matchObjNo.groups()[0], self._curPackage)
       optionText = matchObjNo.groups()[1]
-      checkCSVDeps(self, CrossReference, optionText,self.curKeyType)
-      self._curPackage.addPackageComponent(self.curKeyType,self._curRoutine)
+      checkCSVDeps(self, CrossReference, optionText, self.curKeyType)
+      self._curPackage.addPackageComponent(self.curKeyType, self._curRoutine)
 
 #===============================================================================
 # Interface for a Xindex Log File Parser
@@ -645,7 +645,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         sectHandleDict =  self._sectHandleDict
 
     # implementation of section parser interface for Routine Section
-    def onSectionStart(self, line, section,crossRef):
+    def onSectionStart(self, line, section, crossRef):
         if section != IXindexLogFileParser.ROUTINE:
             logger.error("Invalid section Header --> %s", line)
             return False
@@ -751,7 +751,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
 # A class to parse XINDEX log file output and convert to Routine/Package
 #===============================================================================
 class CallerGraphLogFileParser(object):
-    def __init__(self, crossRef,icrJson):
+    def __init__(self, crossRef, icrJson):
         self._crossRef = crossRef
         self._crossRef._icrJson = icrJson
 
@@ -840,6 +840,6 @@ def createCallGraphLogAugumentParser():
     return parser
 
 def parseAllCallGraphLog(xindexLogDir, crossRef, icrJson):
-    xindexLogParser = CallerGraphLogFileParser(crossRef,icrJson)
+    xindexLogParser = CallerGraphLogFileParser(crossRef, icrJson)
     xindexLogParser.parseAllCallerGraphLog(xindexLogDir, "*.log")
     return xindexLogParser

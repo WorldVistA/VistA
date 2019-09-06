@@ -50,7 +50,7 @@ class ICRFileToJson(object):
         self._curStack = []
 
     def parse(self, inputFilename, outputFilename):
-        with open(inputFilename,'r') as ICRFile:
+        with open(inputFilename, 'r') as ICRFile:
             curLineNo = 0
             curNumber = None
             # Free text fields may contain field names and
@@ -214,7 +214,7 @@ class ICRFileToJson(object):
             # Will also create intermediate directories if needed
             os.makedirs(outputDir)
         with open(outputFilename, 'w') as out_file:
-            json.dump(self._outObject,out_file, indent=4)
+            json.dump(self._outObject, out_file, indent=4)
 
     def _startOfNewItem(self, name, number, matchObj, line):
         self._curField = None
@@ -315,7 +315,7 @@ class ICRFileToJson(object):
         while self._curStack: # we are in subFile Mode
             if not isSubFileField(self._curStack[-1][1], self._curField):
                 preStack = self._curStack.pop()
-                preStack[0].setdefault(preStack[1],[]).append(self._curRecord)
+                preStack[0].setdefault(preStack[1], []).append(self._curRecord)
                 self._curRecord = preStack[0]
             else:
                 break

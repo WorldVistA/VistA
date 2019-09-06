@@ -397,13 +397,13 @@ class FileManFieldSectionParser(IDDSectionParser):
         outType = fType
         for nameAttr in self.FieldAttributesInfoList:
             if outType.find(nameAttr[0]) != -1:
-                outType = outType.replace(nameAttr[0],"")
+                outType = outType.replace(nameAttr[0], "")
         return outType.strip()
 
     def __parseFieldAttributes__(self, fType):
         for nameAttr in self.FieldAttributesInfoList:
             if fType.find(nameAttr[0]) != -1:
-                fType = fType.replace(nameAttr[0],"")
+                fType = fType.replace(nameAttr[0], "")
                 self._field.__setattr__(nameAttr[1], True)
         fType.strip()
         self._field.setTypeName(fType)

@@ -166,7 +166,7 @@ def isWordProcessingField(field):
     return field in WORDS_FIELDS
 
 def getDate(icrFilename):
-    with open(icrFilename,'r') as ICRFile:
+    with open(icrFilename, 'r') as ICRFile:
         for line in ICRFile:
             line = line.rstrip("\r\n")
             match = INTEGRATION_REFERENCES_LIST.match(line)

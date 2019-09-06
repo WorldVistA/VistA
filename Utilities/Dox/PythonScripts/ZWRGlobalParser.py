@@ -105,7 +105,7 @@ class GlobalNode(object):
 def createGlobalNodeByZWRFile(inputFileName):
   globalRoot = None
   with open(inputFileName, "r") as input:
-    for idx, line in enumerate(input,0):
+    for idx, line in enumerate(input, 0):
       if idx <=1:
         continue
       line = line.strip('\r\n')

@@ -156,7 +156,7 @@ class InitCrossReferenceGenerator(object):
           globalDes = line.strip()
           # Removing the extra text in the header of the ZWR file
           # to tell if it needs to be added or skipped
-          globalDes = globalDes.replace("OSEHRA ZGO Export: ",'')
+          globalDes = globalDes.replace("OSEHRA ZGO Export: ", '')
           if globalDes.startswith("^"):
             logger.info("No Description: Skip this file: %s" % file)
             skipFile.append(file)

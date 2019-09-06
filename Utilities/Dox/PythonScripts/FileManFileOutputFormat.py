@@ -27,7 +27,7 @@
 """
 
 FILEMAN_FILE_OUTPUT_FORMAT = {
-      "8994" : { # REMOTE PROCEDURE FILE # 8994
+      "8994": { # REMOTE PROCEDURE FILE # 8994
                 "Fields": [
                     { 'id': '.01', }, # Name
                     { 'id': '.02', }, # Tag
