@@ -794,8 +794,7 @@ class FileManDataToHtml(object):
   def _fileManDataEntryToHtml(self, output, dataEntry, isRoot):
     if not isRoot:
       output.write("<li>\n")
-    fields = list(dataEntry.fields)
-    fields.sort()
+    fields = sorted(dataEntry.fields.keys())
     for fldId in fields:
       dataField = dataEntry.fields[fldId]
       fieldType = dataField.type

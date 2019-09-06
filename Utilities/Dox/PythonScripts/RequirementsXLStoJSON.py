@@ -111,7 +111,7 @@ def checkReqForUpdate(curNode,pastJSONObj,curDate):
   foundDate = curDate
   noHistory=False;
   BFFList = []
-  if type(curNode['BFFlink']) is list:
+  if isinstance(curNode['BFFlink'], list):
     for BFFlink in curNode['BFFlink']:
       BFFList.append(BFFlink)
   else:
@@ -134,7 +134,7 @@ def checkReqForUpdate(curNode,pastJSONObj,curDate):
                 continue
               oldVal = entry[val] if (val in entry) else None
               newVal = curNode[val]
-              if type(oldVal) == list:
+              if isinstance(oldVal, list):
                 oldVal.sort()
                 newVal.sort()
               if not (oldVal == newVal):

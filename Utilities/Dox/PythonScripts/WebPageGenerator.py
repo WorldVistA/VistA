@@ -1630,7 +1630,7 @@ class WebPageGenerator(object):
         if "SUBSCRIBING PACKAGE" in entry:
             subscribingPackages = []
             for value in entry["SUBSCRIBING PACKAGE"]:
-                pkgName = value["SUBSCRIBING PACKAGE"][0] if type(value["SUBSCRIBING PACKAGE"]) is list else value["SUBSCRIBING PACKAGE"]
+                pkgName = value["SUBSCRIBING PACKAGE"][0] if isinstance(value["SUBSCRIBING PACKAGE"], list) else value["SUBSCRIBING PACKAGE"]
                 subscribingPackage += "<li>" + self.getPackageHyperLinkByName(pkgName) + "</li>"
                 mappedPkgName = self._crossRef.getMappedPackageName(pkgName)
                 if mappedPkgName is not None:
@@ -2524,7 +2524,7 @@ class WebPageGenerator(object):
         if columnWidths is None:
             # Auto-generated columns
             t = Table(data)
-        elif type(columnWidths) is not list:
+        elif not isinstance(columnWidths, list):
             # Evenly spaced columns
             columns = columnWidths
             t = Table(data, colWidths=[old_div(self.doc.width,columns)]*columns)
@@ -2883,8 +2883,7 @@ class WebPageGenerator(object):
     def __convertVariableToTableData__(self, variables, isGlobal=False,
                                        routine=None):
         output = []
-        allVars = list(variables.keys())
-        allVars.sort()
+        allVars = sorted(variables.keys())
         for varName in allVars:
             if varName is None:
               continue
@@ -2935,8 +2934,7 @@ class WebPageGenerator(object):
 
     def __convertFileManDbCallToTableData__(self, variables, routine=None):
         output = []
-        fileNos = list(variables.keys())
-        fileNos.sort()
+        fileNos = sorted(variables.keys())
         for fileNo in fileNos:
             varInst, tags = variables[fileNo]
             if varInst.getFileNo() and varInst.isSubFile():
@@ -3146,7 +3144,7 @@ class WebPageGenerator(object):
           val = "<ul>"
           val += "<li>" + entry[0] + "</li>"
           # Nicely show the ENTRYPOINT+OFFSET values for location
-          if type(calledRtns[entry]) is list:
+          if isinstance(calledRtns[entry], list):
             val += "<li>Line Location:</li>"
             val += "<ul>"
             for location in calledRtns[entry]:
@@ -3174,7 +3172,7 @@ class WebPageGenerator(object):
             pdfVal = []
             pdfVal.append(entry[0])
             # Nicely show the ENTRYPOINT+OFFSET values for location
-            if type(calledRtns[entry]) is list:
+            if isinstance(calledRtns[entry], list):
                 pdfVal.append("Line Location:")
                 for location in calledRtns[entry]:
                     pdfVal.append(location)
@@ -3270,8 +3268,7 @@ class WebPageGenerator(object):
             for depRoutine in sorted(data[depPackage].keys()):
                 totalNum += 1
                 if isDependency: # append tag information for called routines
-                    allTags = list(data[depPackage][depRoutine].keys())
-                    allTags.sort()
+                    allTags = sorted(data[depPackage][depRoutine].keys())
                     # format the tag
                     tagString = ",".join(allTags)
                     if len(allTags) > 1:
@@ -3678,8 +3675,7 @@ $( document ).ready(function() {
             self._writeIndexTitleBlock("Package Component", outputFile)
             outputFile.write(PC_LEGEND)
             outputFile.write("<div><label for=\"componentSelector\">Select Package Component Type:</label></div>")
-            allObjects = list(PACKAGE_COMPONENT_MAP.keys())
-            allObjects.sort()
+            allObjects = sorted(PACKAGE_COMPONENT_MAP.keys())
             outputFile.write("<select id='componentSelector'>")
             for objectKey in allObjects:
                 outputFile.write("<option class=\"IndexKey\">%s</option>" % objectKey.replace("_"," "))

@@ -35,7 +35,7 @@ def convertBFFLinks(linkList, reqEntry, **kargs):
         return returnList
 def convertNSRLinks(linkVal, reqEntry, **kargs):
         returnList = []
-        if type(linkVal) is list:
+        if isinstance(linkVal, list):
           for entry in linkVal:
             returnList.append('<a href="%s-%s.html">%s</a>' % (entry.split(":")[0],"Req", entry))
         else:
@@ -95,7 +95,7 @@ class RequirementsConverter(object):
                 output.write("<tr>\n")
                 # List of objects should be displayed as a UL object
                 output.write("<td>%s</td>"% item)
-                if type(reqSummary[idx]) is list:
+                if isinstance(reqSummary[idx], list):
                   output.write("<td><ul>")
                   for entry in reqSummary[idx]:
                     output.write("<li>%s</li>\n" %  entry)
@@ -162,7 +162,7 @@ class RequirementsConverter(object):
                       reqSummary = reqEntry
                     for idx,item in enumerate(fieldList):
                         # List of objects should be displayed as a UL object
-                        if type(reqSummary[idx]) is list:
+                        if isinstance(reqSummary[idx], list):
                           output.write("<td><ul>")
                           for entry in reqSummary[idx]:
                             if pkgName in entry:
@@ -194,7 +194,7 @@ class RequirementsConverter(object):
 
     def findNSRValues(self,d,nsrSummary):
       if "NSRLink" in d:
-        if type(d["NSRLink"]) is list:
+        if isinstance(d["NSRLink"], list):
           for entry in d["NSRLink"]:
             NSRVal = entry.split(":")[0]
             if not (NSRVal in nsrSummary):

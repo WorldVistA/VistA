@@ -322,7 +322,7 @@ class ICRFileToJson(object):
 
     """ This will append the line in word processing fields """
     def _appendWordsFieldLine(self, line):
-        if not (type(self._curRecord[self._curField]) is list):
+        if not (isinstance(self._curRecord[self._curField], list)):
             preVal = self._curRecord[self._curField]
             self._curRecord[self._curField] = []
             self._curRecord[self._curField].append(preVal)

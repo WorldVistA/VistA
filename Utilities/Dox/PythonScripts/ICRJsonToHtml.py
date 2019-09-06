@@ -532,7 +532,7 @@ def _icrDataEntryToPDF(pdf, icrJson, doc):
             if "GENERAL DESCRIPTION" == field:
                 description = []
                 description.append(Paragraph('GENERAL DESCRIPTION', STYLES['Heading3']))
-                if type(value) is list:
+                if isinstance(value, list):
                     for line in value:
                         description.append(Paragraph(cgi.escape(line), STYLES['Normal']))
                 else:
@@ -573,7 +573,7 @@ def _writeGlobalReferenceToPDF(section, pdf, doc):
             header = [x if x != "LOCATION" else "LOC." for x in header]
             table.append(generatePDFTableHeader(header))
             for f in fieldNumber:
-                if type(f) is dict:
+                if isinstance(f, dict):
                     row =[]
                     row.append(_convertIndividualFieldValuePDF('FIELD NUMBER', f['FIELD NUMBER'], False))
                     for field in SUBFILE_FIELDS['FIELD NUMBER']:
@@ -601,7 +601,7 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
     if 'COMPONENT DESCRIPTION' in component:
         # TODO: Each line should be its own Paragraph
         description = component["COMPONENT DESCRIPTION"]
-        if type(description) is list:
+        if isinstance(description, list):
             description = " ".join(description)
         componentSection.append(_convertIndividualFieldValuePDF('COMPONENT DESCRIPTION', description, True))
         componentSection.append(Spacer(1, 20))
@@ -610,10 +610,10 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
         table = []
         table.append(generatePDFTableHeader(["VARIABLES", "TYPE", "VARIABLES DESCRIPTION"]))
         for variable in variables:
-            if type(variable) is dict:
+            if isinstance(variable, dict):
                 row =[]
                 _variables = variable['VARIABLES']
-                if type(_variables) is list:
+                if isinstance(_variables, list):
                     _variables = _variables[0]
                     if "-" in _variables:
                         # TODO: This is a workaround for an error in original
@@ -626,7 +626,7 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
                         variable['VARIABLES'] = ""
                 row.append(_convertIndividualFieldValuePDF('VARIABLES', variable['VARIABLES'], False))
                 if 'TYPE' in variable:
-                    if type(variable['TYPE']) is list:
+                    if isinstance(variable['TYPE'], list):
                         # TODO: ICR-6551 VARIABLES are not
                         # parsed correctly. Skip them for now.
                         variable['TYPE'] = ""
@@ -635,7 +635,7 @@ def _writeComponentEntryPointToPDF(section, pdf, doc):
                     row.append(Paragraph("", STYLES['Normal']))
                 if 'VARIABLES DESCRIPTION' in variable:
                     description = variable['VARIABLES DESCRIPTION']
-                    if type(description) is list:
+                    if isinstance(description, list):
                         description = " ".join(description)
                         if len(description) > 1000:
                             # TODO: Skipping long descriptions for now
@@ -678,8 +678,7 @@ def _writeTableOfValue(output, field, value, crossRef):
       return
 
   # Make sure the header list is in a known order, with the field name first
-  headerList = list(headerList)
-  headerList.sort()
+  headerList = sorted(headerList)
   if field in headerList:
     headerList.remove(field)
     headerList.insert(0, field)
@@ -694,8 +693,8 @@ def _writeTableOfValue(output, field, value, crossRef):
     # Find the result based on the header "key"
     for val in headerList:
       if val in entry:
-        if (type(entry[val]) is list) and (type(entry[val][0]) is dict):
-          if val == "VARIABLES" and entry[val][0]["VARIABLES"] and type(entry[val][0]["VARIABLES"]) is list:
+        if (isinstance(entry[val], list)) and (isinstance(entry[val][0], dict)):
+          if val == "VARIABLES" and entry[val][0]["VARIABLES"] and isinstance(entry[val][0]["VARIABLES"], list):
             # This is a workaround for an error in original file,
             # VARIABLES section is not formatted correctly
             variables = entry[val][0]["VARIABLES"][0]
@@ -732,7 +731,7 @@ def _icrSubFileToHtml(output, icrJson, subFile, crossRef):
             if field in icrEntry: # we have this field
                 value = icrEntry[field]
                 if isSubFile(field) and field != subFile: # avoid recursive subfile for now
-                    if type(value) is list:
+                    if isinstance(value, list):
                         _writeTableOfValue(output, field, value, crossRef)
                     else:
                         output.write ("<dl><dt>%s:</dt>\n" % field)
@@ -761,12 +760,12 @@ def _icrSubFileToPDF(pdf, icrJson, subFile):
 
 def _convertIndividualFieldValue(field, icrEntry, value, crossRef):
     if isWordProcessingField(field):
-        if type(value) is list:
+        if isinstance(value, list):
             value = "\n".join(value)
         value = '<pre>\n' + cgi.escape(value) + '\n</pre>\n'
         return value
     if field in FIELD_CONVERT_MAP:
-        if type(value) is list:
+        if isinstance(value, list):
             return value
         value = FIELD_CONVERT_MAP[field](value, icrEntry, crossRef=crossRef)
         return value
@@ -776,7 +775,7 @@ def _convertIndividualFieldValue(field, icrEntry, value, crossRef):
 def _convertIndividualFieldValuePDF(field, value, writeField=False,
                                     keepTogether=True):
     if isWordProcessingField(field):
-        if type(value) is list:
+        if isinstance(value, list):
             cell = []
             for item in value:
                 text = cgi.escape(item)
@@ -794,7 +793,7 @@ def _convertIndividualFieldValuePDF(field, value, writeField=False,
               text = "%s : %s" % (field, text)
             # TODO: "Field:" should not be styled as 'Code'
             return Paragraph(text, STYLES['Normal'])
-    if type(value) is list:
+    if isinstance(value, list):
         cell = []
         for item in value:
             text = item
