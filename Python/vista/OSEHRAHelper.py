@@ -59,6 +59,15 @@ try:
 except ImportError as no_paramiko:
   pass
 
+def encode(command):
+  if sys.version_info[0] == 3:
+    if isinstance(command, str):
+      return codecs.encode(command, 'utf-8','ignore')
+    else:
+      return command
+  else:
+    return unicode(command)
+
 #---------------------------------------------------------------------------
 # Initial Global Variables to use over the course of connecting
 
@@ -166,19 +175,19 @@ class ConnectWinCache(ConnectMUMPS):
     self.optionMenuTextDict = []
 
   def write(self, command):
-    self.connection.write(command.encode('utf-8') + b'\r')
+    self.connection.write(codecs.encode(command, 'utf-8') + b'\r')
     logging.debug('connection.write:' + command)
     self.log.flush()
 
   def writectrl(self, command):
-    self.connection.write(command.encode('utf-8'))
+    self.connection.write(codecs.encode(command, 'utf-8'))
     logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.namespace + '>'
-    rbuf = self.connection.read_until(command.encode('utf-8'), tout).decode('utf-8')
+    rbuf = self.connection.read_until(codecs.encode(command, 'utf-8')).decode('utf-8')
     if rbuf.find(command) == -1:
         command=str(command)
         rbuf=str(rbuf)
@@ -268,8 +277,7 @@ class ConnectWinCache(ConnectMUMPS):
 class ConnectLinuxCache(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
-    if sys.version_info[0] == 3 : self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None, encoding='utf-8')
-    else                        : self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None)
+    self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None, encoding='utf-8')
     if len(namespace) == 0:
       namespace = 'VISTA'
     self.namespace = namespace
@@ -283,18 +291,18 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.optionMenuTextDict = []
 
   def write(self, command):
-    self.connection.send(command + '\r')
+    self.connection.send(command.encode('utf-8') + '\r')
     logging.debug('connection.write:' + command)
 
   def writectrl(self, command):
-    self.connection.send(command)
+    self.connection.send(command.encode('utf-8'))
     logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.namespace + '>'
-    rbuf = self.connection.expect_exact(command.encode('utf-8'), tout)
+    rbuf = self.connection.expect_exact(unicode(command), tout)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
@@ -368,12 +376,11 @@ class ConnectLinuxGTM(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
     gtm_command = os.getenv('gtm_dist')+'/mumps -dir'
-    if sys.version_info[0] == 3 : self.connection = pexpect.spawn(gtm_command, timeout=None, encoding='utf-8')
-    else                        : self.connection = pexpect.spawn(gtm_command, timeout=None)
+    self.connection = pexpect.spawn(gtm_command, timeout=None, encoding='utf-8')
     if len(namespace) == 0:
         self.prompt = os.getenv("gtm_prompt")
         if self.prompt == None:
-          self.prompt = "GTM>"
+          self.prompt = encode("GTM>")
     self.connection.logfile_read = codecs.open(logfile, 'w', encoding='utf-8', errors='ignore')
     self.type = 'GTM'
     path,filename = os.path.split(logfile)
@@ -384,18 +391,18 @@ class ConnectLinuxGTM(ConnectMUMPS):
     self.coverageRoutines = ""
 
   def write(self, command):
-    self.connection.send(command + '\r')
+    self.connection.send(encode(command)+encode('\r'))
     logging.debug('connection.write: ' + command)
 
   def writectrl(self, command):
-    self.connection.send(command)
+    self.connection.send(encode(command))
     logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.prompt
-    rbuf = self.connection.expect_exact(str(command), tout)
+    rbuf = self.connection.expect_exact(encode(command), tout)
     logging.debug('RECEIVED: ' + command)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
@@ -407,14 +414,17 @@ class ConnectLinuxGTM(ConnectMUMPS):
   def wait_re(self, command, timeout=None):
     logging.debug('connection.expect: ' + str(command))
     if not timeout: timeout = -1
-    compCommand = re.compile(command,re.I)
+    compCommand = re.compile(encode(command)	,re.I)
     self.connection.expect(compCommand, timeout)
     self.lastconnection=self.connection.before
 
   def multiwait(self, options, tout=15):
     logging.debug('connection.expect: ' + str(options))
     if isinstance(options, list):
-      index = self.connection.expect(options, tout)
+      encOptions=[]
+      for index in options:
+        encOptions.append(encode(index))
+      index = self.connection.expect(encOptions, tout)
       if index == -1:
         logging.debug('ERROR: expected: ' + str(options))
         raise TestHelper.TestError('ERROR: expected: ' + str(options))
