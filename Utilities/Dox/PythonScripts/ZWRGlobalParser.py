@@ -146,8 +146,6 @@ class DefaultZWRRootGenerator(object):
     return self
   def __del__(self):
     self.inputFile.close()
-  def __next__(self):
-    return next(self)
 
   def __next__(self):
     if self.inputFile.closed:
@@ -178,6 +176,8 @@ class DefaultZWRRootGenerator(object):
         continue
       if result:
         return result
+
+  next = __next__  # for Python 2
 
   def filterResult(self, line):
     """

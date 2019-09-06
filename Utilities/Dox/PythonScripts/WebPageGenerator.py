@@ -20,7 +20,6 @@
 from __future__ import division
 from future import standard_library
 standard_library.install_aliases()
-from builtins import next
 from builtins import str
 from builtins import range
 from builtins import object
@@ -3244,7 +3243,7 @@ class WebPageGenerator(object):
                     self.__writeImageToPDF__(imageFileName, pdfSection)
                 # Skip first line - id and name are incorrect for routines that
                 # start with %
-                next(cmapFile)
+                cmapFile.readline()
                 # Re-write line with correct id and name
                 outputFile.write("<map id=\"%s\" name=\"%s\">"
                                     % (fileNamePrefix, fileNamePrefix))
