@@ -16,6 +16,7 @@
 from past.builtins import cmp
 from builtins import str
 from builtins import object
+import codecs
 import os
 import sys
 import re
@@ -138,7 +139,7 @@ class DefaultZWRRootGenerator(object):
       else:
         self.index = 0
     self.curRoot = None
-    self.inputFile = open(inputFileName, "r")
+    self.inputFile = codecs.open(inputFileName, 'r', encoding='utf-8', errors='ignore')
     self.lineNo = 0
 
   def __iter__(self):
