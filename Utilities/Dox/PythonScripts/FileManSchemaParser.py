@@ -13,40 +13,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-from builtins import object
-import os
-import sys
 import re
-from datetime import datetime
-
+from builtins import object
+from future.utils import itervalues
 from CrossReference import FileManFile, FileManFieldFactory
 from CrossReference import FileManField, Global
-from ZWRGlobalParser import getKeys
-from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from LogManager import logger
-
-FILE_DIR = os.path.dirname(os.path.abspath(__file__))
-SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
-if SCRIPTS_DIR not in sys.path:
-  sys.path.append(SCRIPTS_DIR)
+from UtilityFunctions import getKeys
+from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 
 FILE_REGEX = re.compile("P(?P<file>[0-9.]+)('?)")
 SUBFILE_REGEX = re.compile("(?P<subFile>^[0-9.]+)")
 
-"""
-  Utility Function to set the Type/Specifier
-"""
+# Utility Function to set the Type/Specifier
 def setTypeAndSpecifer(types, specifier, values):
   if values and len(values) == 3:
-    if values[0] and values[0] not in types: types.append(values[0])
-    if values[1] and values[1] not in types: types.append(values[1])
-    if values[2] and values[2] not in specifier: specifier.append(values[2])
-"""
-  A Tuple of two elements:
-  1. Matching string
-  4. Argument if present, in the form of
-     (Type, subType, Extra Specifier)
-"""
+    if values[0] and values[0] not in types:
+      types.append(values[0])
+    if values[1] and values[1] not in types:
+      types.append(values[1])
+    if values[2] and values[2] not in specifier:
+      specifier.append(values[2])
+
+# A Tuple of two elements:
+#  1. Matching string
+#  2. Argument if present, in the form of
+#    (Type, subType, Extra Specifier)
 FIELD_TYPE_MAP_LIST = (
   ('Cm',
    (FileManField.FIELD_TYPE_COMPUTED,
@@ -180,7 +172,7 @@ class FileManSchemaParser(object):
     """
     out = set()
     allFiles = set(self._fileDep.keys())
-    for key, values in self._fileDep.items():
+    for values in itervalues(self._fileDep):
       allFiles.update(values)
     for key in allFiles:
       self._fileDep.setdefault(key,set())
@@ -213,7 +205,8 @@ class FileManSchemaParser(object):
       handle the "PT" and "SB" subscript first
     """
     for key in getKeys(rootNode, float):
-      if key == '0': continue # ignore the fields 0
+      if key == '0':
+        continue # ignore the fields 0
       field = self._parseSchemaField(key, rootNode[key], fileSchema)
       if field:
         fileSchema.addFileManField(field)
@@ -246,7 +239,8 @@ class FileManSchemaParser(object):
         if multipleType in types and types[0] != multipleType:
           types.remove(multipleType)
           types.insert(0, multipleType)
-          if not subFile: subFile = filePointedTo
+          if not subFile:
+            subFile = filePointedTo
     if not types:
       logger.debug('Cannot determine the type for %s, fn: %s, file:%s' %
                    (zeroFields, fieldNo, fileSchema.getFileNo()))
@@ -276,7 +270,7 @@ class FileManSchemaParser(object):
         fileGlobalRoot = zeroFields[2]
       if filePointedTo:
         if filePointedTo not in self._allSchema:
-          """ create a new fileman file """
+          # create a new fileman file
           self._allSchema[filePointedTo] = Global(fileGlobalRoot,
                                                   filePointedTo,
                                                   "")
@@ -369,11 +363,11 @@ class FileManSchemaParser(object):
 
   def _updateMultiple(self):
     allSchemaDict = self._allSchema
-    for file, schema in allSchemaDict.items():
+    for schema in itervalues(allSchemaDict):
       allFields = schema.getAllFileManFields()
       if not allFields:
         continue
-      for field, detail in schema.getAllFileManFields().items():
+      for detail in itervalues(schema.getAllFileManFields()):
         if detail.getType() == FileManField.FIELD_TYPE_SUBFILE_POINTER:
           subFile = detail.getPointedToSubFile()
           if subFile:

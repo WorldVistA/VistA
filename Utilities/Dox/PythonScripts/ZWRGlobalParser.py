@@ -16,12 +16,14 @@
 from past.builtins import cmp
 from builtins import str
 from builtins import object
+import codecs
 import os
 import sys
 import re
 from datetime import datetime
 
 from LogManager import logger
+from UtilityFunctions import convertToType, getKeys, sortDataEntryFloatFirst
 
 class ItemValue(object):
   def __init__(self, value):
@@ -100,35 +102,6 @@ class GlobalNode(object):
             sys.getsizeof(self.value) +
             sys.getsizeof(self.subscript))
 
-def sortDataEntryFloatFirst(data1, data2):
-  isData1Float = convertToType(data1, float)
-  isData2Float = convertToType(data2, float)
-  if isData1Float and isData2Float:
-    return cmp(float(data1), float(data2))
-  if isData1Float:
-    return -1 # float first
-  if isData2Float:
-    return 1
-  return cmp(data1, data2)
-
-def convertToType(data1, convertFunc):
-  try:
-    convertFunc(data1)
-    return True
-  except ValueError:
-    return False
-
-def getKeys(globalRoot, func=int):
-  outKey = []
-  for key in globalRoot:
-    try:
-      idx = func(key)
-      outKey.append(key)
-    except ValueError:
-      pass
-  outKey.sort()
-  return outKey
-
 def createGlobalNodeByZWRFile(inputFileName):
   globalRoot = None
   with open(inputFileName, "r") as input:
@@ -166,7 +139,7 @@ class DefaultZWRRootGenerator(object):
       else:
         self.index = 0
     self.curRoot = None
-    self.inputFile = open(inputFileName, "r")
+    self.inputFile = codecs.open(inputFileName, 'r', encoding='utf-8', errors='ignore')
     self.lineNo = 0
 
   def __iter__(self):

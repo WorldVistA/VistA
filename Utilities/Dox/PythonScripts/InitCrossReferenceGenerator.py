@@ -17,6 +17,7 @@
 from builtins import object
 import glob
 import re
+import codecs
 import csv
 import os
 import sys
@@ -131,7 +132,7 @@ class InitCrossReferenceGenerator(object):
       if not crossReference.hasPackage(packageName):
         crossReference.addPackageByName(packageName)
       package = allPackages.get(packageName)
-      zwrFile = open(file, 'r')
+      zwrFile = codecs.open(file, 'r', encoding='utf-8', errors='ignore')
       lineNo = 0
       fileName = os.path.basename(file)
       result = ZWR_FILENO_REGEX.search(fileName)

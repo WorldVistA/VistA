@@ -154,7 +154,7 @@ endif()
 if (GENERATE_DOX OR GENERATE_VIVIAN)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/FileManGlobalDataParser.cmake.in ${SCRIPT_OUTPUT_DIR}/FileManGlobalDataParser.cmake @ONLY)
   add_test(FileManGlobalDataParser ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/FileManGlobalDataParser.cmake)
-  set_tests_properties(FileManGlobalDataParser PROPERTIES TIMEOUT 9000)
+  set_tests_properties(FileManGlobalDataParser PROPERTIES TIMEOUT 18000)
 endif()
 
 # 5. Run ICR Parser Script to parse and convert the downloaded ICR text file

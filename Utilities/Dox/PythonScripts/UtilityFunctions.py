@@ -18,7 +18,6 @@ from future import standard_library
 standard_library.install_aliases()
 from builtins import str
 from builtins import range
-import codecs
 import csv
 import json
 import re
@@ -208,7 +207,7 @@ def getGlobalHtmlFileNameByName(globalName):
 
 def normalizeGlobalName(globalName):
     import base64
-    return base64.urlsafe_b64encode(codecs.encode(globalName, 'utf-8'))
+    return base64.urlsafe_b64encode(globalName.encode('utf-8')).decode("utf-8")
 
 def getGlobalPDFFileNameByName(globalName):
     return ("Global_%s.pdf" %
@@ -288,6 +287,37 @@ def normalizeName(name):
 
 def getDataEntryHtmlFileName(ien, fileNo):
   return "%s-%s.html" % (fileNo, ien)
+
+###############################################################################
+
+def getKeys(data, func=int):
+  outKey = []
+  for key in data:
+    try:
+      func(key)
+      outKey.append(key)
+    except ValueError:
+      pass
+  outKey.sort()
+  return outKey
+
+def sortDataEntryFloatFirst(data1, data2):
+  isData1Float = convertToType(data1, float)
+  isData2Float = convertToType(data2, float)
+  if isData1Float and isData2Float:
+    return (float(data1) > float(data2)) - (float(data1) < float(data2))
+  if isData1Float:
+    return -1 # float first
+  if isData2Float:
+    return 1
+  return (data1 > data2) - (data1 < data2)
+
+def convertToType(data, convertFunc):
+  try:
+    convertFunc(data)
+    return True
+  except ValueError:
+    return False
 
 ###############################################################################
 

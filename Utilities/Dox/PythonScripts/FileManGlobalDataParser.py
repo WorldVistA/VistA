@@ -13,36 +13,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
-import os
-import sys
-import re
+import functools
 import gc
-import subprocess
-from datetime import datetime
+import glob
 import json
+import os
+import re
+import sys
+from builtins import object
+from builtins import str
+from datetime import datetime
+from future.utils import iteritems
+from future.utils import itervalues
+from future.utils import listvalues
 
-# Necessary to find FileManDateTimeUtil and PatchOrderGenerator for import
+# Necessary to find FileManDateTimeUtil for import
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
+from FileManDateTimeUtil import fmDtToPyDt
 
 from CrossReference import FileManField
-from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst
-from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
-from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from FileManSchemaParser import FileManSchemaParser
-from UtilityFunctions import getDOXURL, getViViaNURL
 from LogManager import initLogging, logger
-from FileManDateTimeUtil import fmDtToPyDt
-from PatchOrderGenerator import PatchOrderGenerator
-import glob
+from UtilityFunctions import getDOXURL, getViViaNURL
+from UtilityFunctions import convertToType, getKeys, sortDataEntryFloatFirst
+from ZWRGlobalParser import createGlobalNodeByZWRFile
+from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 
-""" These are used to capture install entries that don't use the
-package prefix as their install name or have odd capitalization
-after being passed through the title function
-"""
+
+# These are used to capture install entries that don't use the
+# package prefix as their install name or have odd capitalization
+# after being passed through the title function
 INSTALL_DEPENDENCY_DICT = {"MultiBuild": {} }
 INSTALL_PACKAGE_FIX = {"VA FILEMAN 22.0": "VA FileMan",
                        "DIETETICS 5.5" : "Dietetics"
@@ -92,18 +95,13 @@ def getMumpsRoutine(mumpsCode):
     via regular expression.
     return an iterator with (routine, tag, rtnpos)
   """
-  pos = 0
-  endpos = 0
   for result in REGEX_RTN_CODE.finditer(mumpsCode):
     if result:
       routine = result.group('rtn')
       if routine:
         tag = result.group('tag')
         start, end = result.span('rtn')
-        endpos = result.end()
-        pos = endpos
         yield (routine, tag, start)
-  raise StopIteration
 
 class FileManFileData(json.JSONEncoder):
   """
@@ -195,9 +193,10 @@ class FileManDataField(json.JSONEncoder):
 
 def sortSchemaByLocation(fileSchema):
   locFieldDict = {}
-  for fldAttr in fileSchema.getAllFileManFields().itervalues():
+  for fldAttr in itervalues(fileSchema.getAllFileManFields()):
     loc = fldAttr.getLocation()
-    if not loc: continue
+    if not loc:
+      continue
     locInfo = loc.split(';')
     if len(locInfo) != 2:
       logger.error("Unknown location info %s for %r" % (loc, fldAttr))
@@ -208,9 +207,7 @@ def sortSchemaByLocation(fileSchema):
     locFieldDict[index][pos] = fldAttr
   return locFieldDict
 
-"""
-  hard code initial map due to the way the ^DIC is extracted
-"""
+# hard code initial map due to the way the ^DIC is extracted
 initGlobalLocationMap = {
     x: "^DIC(" + x for x in (
           '.2', '3.1', '3.4', '4', '4.001', '4.005',
@@ -227,7 +224,7 @@ initGlobalLocationMap = {
           '627.9', '6910', '6910.1', '6921', '6922',
           )
   }
-""" handle file# 0 or the schema file """
+# handle file# 0 or the schema file
 initGlobalLocationMap['0'] = '^DD('
 
 class FileManGlobalDataParser(object):
@@ -260,7 +257,7 @@ class FileManGlobalDataParser(object):
       return fileNo if found, otherwise return None
     """
     outLoc = normalizeGlobalLocation(glbLoc)
-    for key, value in self._glbLocMap.iteritems():
+    for key, value in iteritems(self._glbLocMap):
       if value == outLoc:
         return key
     return None
@@ -288,7 +285,8 @@ class FileManGlobalDataParser(object):
       result = ZWR_FILE_REGEX.search(fileName)
       if result:
         fileNo = result.group('fileNo')
-        if fileNo.startswith('0'): fileNo = fileNo[1:]
+        if fileNo.startswith('0'):
+          fileNo = fileNo[1:]
         globalDes = result.group('des')
         if fileNo not in outFiles:
           outFiles[fileNo] = {'name': globalDes,
@@ -311,31 +309,33 @@ class FileManGlobalDataParser(object):
     if fileNumber in self._glbLocMap:
       glbLoc = self._glbLocMap[fileNumber]
       for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
-        if not dataRoot: continue
+        if not dataRoot:
+          continue
         self._dataRoot = dataRoot
         fileDataRoot = dataRoot
         (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
         if detail:
           self._addFileKeyIndex(fileNumber, ien, detail)
 
-  """
-  Generate a map Field Value => IEN
-  """
   def generateFileFieldMap(self, inputFileList, fileNumber, fieldNo):
+    """
+    Generate a map Field Value => IEN
+    """
     schemaFile = self._allSchemaDict[fileNumber]
     if not schemaFile.hasField(fieldNo):
       logger.error("File does not have a [%s] field, ignore", fieldNo)
-      return
+      return dict()
     keyField = schemaFile.getFileManFieldByFieldNo(fieldNo)
     keyLoc = keyField.getLocation()
     if not keyLoc:
       logger.error("[%s] field does not have a location", fieldNo)
-      return
+      return dict()
     glbLoc = self._glbLocMap[fileNumber]
     fieldMap = {}
     for inputFileName in inputFileList:
       for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
-        if not dataRoot: continue
+        if not dataRoot:
+          continue
         fileDataRoot = dataRoot
         (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
         if detail:
@@ -397,16 +397,16 @@ class FileManGlobalDataParser(object):
       self._updateInstallReference()
 
   def outRtnReferenceDict(self):
-    if len(self._rtnRefDict):
-      """ generate the dependency in json file """
+    if self._rtnRefDict:
+      # generate the dependency in json file
       with open(os.path.join(self.outdir, "Routine-Ref.json"), 'w') as output:
         logger.info("Generate File: %s" % output.name)
         json.dump(self._rtnRefDict, output)
 
   def _updateBuildReference(self):
     build = self._glbData['9.6']
-    for ien in sorted(build.dataEntries.keys(),key=lambda x: float(x)):
-      if not build.dataEntries[ien].name in INSTALL_DEPENDENCY_DICT.keys():
+    for ien in sorted(list(build.dataEntries), key=lambda x: float(x)):
+      if not build.dataEntries[ien].name in INSTALL_DEPENDENCY_DICT:
         INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name] = {"ien":ien, "multi": -1}
       if '10' in build.dataEntries[ien].fields:
         INSTALL_DEPENDENCY_DICT[build.dataEntries[ien].name]['multi']= 1
@@ -422,7 +422,7 @@ class FileManGlobalDataParser(object):
 
   def _updateHLOReference(self):
     hlo = self._glbData['779.2']
-    for ien in sorted(hlo.dataEntries.keys(),key=lambda x: float(x)):
+    for ien in sorted(list(hlo.dataEntries.keys()),key=lambda x: float(x)):
       hloEntry = hlo.dataEntries[ien]
       entryName = hloEntry.name
       namespace, package = \
@@ -433,8 +433,7 @@ class FileManGlobalDataParser(object):
 
   def _updateHL7Reference(self):
     protocol = self._glbData['101']
-    outJSON = {}
-    for ien in sorted(protocol.dataEntries.keys(), key=lambda x: float(x)):
+    for ien in sorted(list(protocol.dataEntries), key=lambda x: float(x)):
       protocolEntry = protocol.dataEntries[ien]
       if '4' in protocolEntry.fields:
         type = protocolEntry.fields['4'].value
@@ -470,7 +469,7 @@ class FileManGlobalDataParser(object):
 
   def _updateRPCRefence(self):
     rpcData = self._glbData['8994']
-    for ien in sorted(rpcData.dataEntries.keys(), key=lambda x: float(x)):
+    for ien in sorted(list(rpcData.dataEntries.keys()), key=lambda x: float(x)):
       rpcEntry = rpcData.dataEntries[ien]
       rpcRoutine = None
       if rpcEntry.name:
@@ -482,7 +481,7 @@ class FileManGlobalDataParser(object):
           rpcRoutine = rpcEntry.fields['.03'].value
         else:
           if rpcRoutine:
-            """ try to categorize by routine called """
+            # try to categorize by routine called
             namespace, package = \
             self._crossRef.__categorizeVariableNameByNamespace__(rpcRoutine)
             if package:
@@ -490,7 +489,7 @@ class FileManGlobalDataParser(object):
           else:
             logger.error("Cannot find package for RPC: %s" %
                           (rpcEntry.name))
-        """ Generate the routine referenced based on RPC Call """
+        # Generate the routine referenced based on RPC Call
         if rpcRoutine:
           rpcInfo = {"name": rpcEntry.name,
                      "ien" : ien
@@ -502,12 +501,10 @@ class FileManGlobalDataParser(object):
 
   def _findInstallPackage(self,packageList, installEntryName,checkNamespace=True):
     package=None
-    """
-      checkNamespace is used by the "version change" check to match the
-      package name in the install name but not the namespace in the install
-      name, which should help eliminate multibuilds from being found as
-      package changes
-    """
+    # checkNamespace is used by the "version change" check to match the
+    # package name in the install name but not the namespace in the install
+    # name, which should help eliminate multibuilds from being found as
+    # package changes
     if checkNamespace:
       namespace, package = self._crossRef.__categorizeVariableNameByNamespace__(installEntryName)
     # A check to remove the mis-categorized installs which happen to fall in a namespace
@@ -539,7 +536,7 @@ class FileManGlobalDataParser(object):
     installJSONData = {}
     packageList = self._crossRef.getAllPackages()
     with open(output, 'w') as installDataOut:
-      for ien in sorted(installData.dataEntries.keys(), key=lambda x: float(x)):
+      for ien in sorted(list(installData.dataEntries.keys()), key=lambda x: float(x)):
         installItem = {}
         installEntry = installData.dataEntries[ien]
         package = self._findInstallPackage(packageList, installEntry.name)
@@ -555,16 +552,16 @@ class FileManGlobalDataParser(object):
           if installEntry.name in INSTALL_DEPENDENCY_DICT:
             installItem['BUILD_ien'] = INSTALL_DEPENDENCY_DICT[installEntry.name]["ien"]
             installchildren = []
-            if 'multi' in INSTALL_DEPENDENCY_DICT[installEntry.name].keys():
+            if 'multi' in INSTALL_DEPENDENCY_DICT[installEntry.name]:
               installItem['multi'] = INSTALL_DEPENDENCY_DICT[installEntry.name]['multi']
-            if 'builds' in INSTALL_DEPENDENCY_DICT[installEntry.name].keys():
+            if 'builds' in INSTALL_DEPENDENCY_DICT[installEntry.name]:
                 for child in INSTALL_DEPENDENCY_DICT[installEntry.name]['builds']:
                   childPackage = self._findInstallPackage(packageList,child)
                   childEntry = {"name": child, "package": childPackage}
-                  if child in INSTALL_DEPENDENCY_DICT.keys():
-                      if 'multi' in INSTALL_DEPENDENCY_DICT[child].keys():
+                  if child in INSTALL_DEPENDENCY_DICT:
+                      if 'multi' in INSTALL_DEPENDENCY_DICT[child]:
                         childEntry['multi'] = INSTALL_DEPENDENCY_DICT[child]['multi']
-                  installchildren.append(childEntry);
+                  installchildren.append(childEntry)
                 installItem['children'] = installchildren
           if '11' in installEntry.fields:
             installItem['installDate'] = installEntry.fields['11'].value.strftime("%Y-%m-%d")
@@ -581,9 +578,9 @@ class FileManGlobalDataParser(object):
             # Assume a package switch name will be just a package name and a version
             capture = PACKAGE_NAME_VAL_REGEX.match(installEntry.name)
             if capture:
-                  checkPackage = self._findInstallPackage(packageList, capture.groups()[0],False)
-                  if (not (checkPackage == "Unknown") or (len(capture.groups()[0]) <= 4 )):
-                    installItem['packageSwitch'] = True
+              checkPackage = self._findInstallPackage(packageList, capture.groups()[0],False)
+              if ((checkPackage != "Unknown") or (len(capture.groups()[0]) <= 4)):
+                installItem['packageSwitch'] = True
           installJSONData[package][installEntry.name] = installItem
       logger.info("About to dump data into %s" % output)
       json.dump(installJSONData,installDataOut)
@@ -593,10 +590,11 @@ class FileManGlobalDataParser(object):
     for fileNo in self._pointerRef:
       if fileNo in self._glbData:
         fileData = self._glbData[fileNo]
-        for ien, fields in self._pointerRef[fileNo].iteritems():
+        for ien, fields in iteritems(self._pointerRef[fileNo]):
           if ien in fileData.dataEntries:
             name = fileData.dataEntries[ien].name
-            if not name: name = str(ien)
+            if not name:
+              name = str(ien)
             for field in fields:
               field.value = "^".join((field.value, name))
     del self._pointerRef
@@ -611,7 +609,7 @@ class FileManGlobalDataParser(object):
   def _parseDataBySchema(self, dataRoot, fileSchema, outGlbData):
     """ first sort the schema Root by location """
     locFieldDict = sortSchemaByLocation(fileSchema)
-    """ for each data entry, parse data by location """
+    # for each data entry, parse data by location
     floatKey = getKeys(dataRoot, float)
     for ien in floatKey:
       if float(ien) <=0:
@@ -619,7 +617,7 @@ class FileManGlobalDataParser(object):
       dataEntry = dataRoot[ien]
       outDataEntry = FileManDataEntry(fileSchema.getFileNo(), ien)
       dataKeys = [x for x in dataEntry]
-      sortedKey = sorted(dataKeys, cmp=sortDataEntryFloatFirst)
+      sortedKey = sorted(dataKeys, key=functools.cmp_to_key(sortDataEntryFloatFirst))
       for locKey in sortedKey:
         if locKey == '0' and fileSchema.getFileNo() == '1':
           self._parseFileDetail(dataEntry[locKey], ien)
@@ -627,7 +625,7 @@ class FileManGlobalDataParser(object):
           fieldDict = locFieldDict[locKey] # a dict of {pos: field}
           curDataRoot = dataEntry[locKey]
           if len(fieldDict) == 1:
-            fieldAttr = fieldDict.values()[0]
+            fieldAttr = listvalues(fieldDict)[0]
             if fieldAttr.isSubFilePointerType(): # Multiple
               self._parseSubFileField(curDataRoot, fieldAttr, outDataEntry)
             else:
@@ -663,7 +661,8 @@ class FileManGlobalDataParser(object):
     if not dataRoot.value:
       return
     values = dataRoot.value.split('^')
-    if not values: return # this is very import to check
+    if not values:
+      return # this is very import to check
     for idx, value in enumerate(values, 1):
       if value and str(idx) in fieldDict:
         fieldAttr = fieldDict[str(idx)]
@@ -672,7 +671,7 @@ class FileManGlobalDataParser(object):
   def _parseIndividualFieldDetail(self, value, fieldAttr, outDataEntry):
     value = value.strip(' ')
     if not value:
-      return
+      return ""
     fieldDetail = value
     pointerFileNo = None
     if fieldAttr.isSetType():
@@ -749,11 +748,6 @@ class FileManGlobalDataParser(object):
       if ien in self._fileKeyIndex[fileNo]:
         return self._fileKeyIndex[fileNo][ien]
     return None
-
-  def _addFileFieldMap(self, fileNo, ien, value):
-    fldDict = self._fileKeyIndex.setdefault(fileNo, {})
-    if ien not in ienDict:
-      ienDict[ien] = value
 
   def _parseSubFileField(self, dataRoot, fieldAttr, outDataEntry):
     subFile = fieldAttr.getPointedToSubFile()
