@@ -18,6 +18,7 @@ from future import standard_library
 standard_library.install_aliases()
 from builtins import str
 from builtins import range
+from future.utils import iteritems
 import csv
 import json
 import re
@@ -145,13 +146,13 @@ def findDotColor(object):
 
 def readIntoDictionary(infileName):
   values = {}
-  with open(infileName,"r") as templateData:
+  with open(infileName, "r") as templateData:
     sniffer = csv.Sniffer()
     dialect = sniffer.sniff(templateData.read(1024))
     templateData.seek(0)
     hasHeader = sniffer.has_header(templateData.read(1024))
     templateData.seek(0)
-    for index, line in enumerate(csv.reader(templateData,dialect)):
+    for index, line in enumerate(csv.reader(templateData, dialect)):
       if index == 0:
         continue
       if line[1] not in values:
@@ -185,7 +186,7 @@ def parseICRJson(icrJson):
             parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"][entry["ROUTINE"]] = []
           parsedICRJSON[entry['CUSTODIAL PACKAGE']]["ROUTINE"][entry["ROUTINE"]].append(entry)
         elif "GLOBAL ROOT" in entry:
-          globalRoot = entry['GLOBAL ROOT'].replace(',','')
+          globalRoot = entry['GLOBAL ROOT'].replace(',', '')
           if not (globalRoot in parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"]):
             parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"][globalRoot] = []
           parsedICRJSON[entry['CUSTODIAL PACKAGE']]["GLOBAL"][globalRoot].append(entry)
@@ -359,19 +360,19 @@ def getPackageGraphEdgePropsByMetrics(depMetricsList,
                                                                  depMetricsList[13],
                                                                  toolTipEndPackage)
               )
-    labelText =("%s(R)->(R)%s" % (depMetricsList[0],depMetricsList[1]),
-                "%s(R)->(G)%s" % (depMetricsList[2],depMetricsList[3]),
-                "%s(F)->(F)%s" % (depMetricsList[4],depMetricsList[5]),
-                "%s(R)->(F)%s" % (depMetricsList[6],depMetricsList[7]),
-                "%s(PC)->(R)%s" % (depMetricsList[8],depMetricsList[9]),
-                "%s(G)->(R)%s" % (depMetricsList[10],depMetricsList[11]),
-                "%s(G)->(G)%s" % (depMetricsList[12],depMetricsList[13])
+    labelText =("%s(R)->(R)%s" % (depMetricsList[0], depMetricsList[1]),
+                "%s(R)->(G)%s" % (depMetricsList[2], depMetricsList[3]),
+                "%s(F)->(F)%s" % (depMetricsList[4], depMetricsList[5]),
+                "%s(R)->(F)%s" % (depMetricsList[6], depMetricsList[7]),
+                "%s(PC)->(R)%s" % (depMetricsList[8], depMetricsList[9]),
+                "%s(G)->(R)%s" % (depMetricsList[10], depMetricsList[11]),
+                "%s(G)->(G)%s" % (depMetricsList[12], depMetricsList[13])
                 )
 
     metricValue = 0
-    (edgeLabel, edgeToolTip, edgeStyle) = ("","","")
+    (edgeLabel, edgeToolTip, edgeStyle) = ("", "", "")
     metricValue = 0
-    for i in range(0,7):
+    for i in range(0, 7):
         if depMetricsList[i*2]:
             if not edgeLabel:
               edgeLabel = labelText[i]
@@ -426,37 +427,37 @@ def mergePackageDependenciesList(package, isDependencies=True):
         fileManDeps = package.getPackageFileManFileDependents()
         dbCallDeps = package.getPackageFileManDbCallDependents()
         optionDeps = {}
-    for (package, depTuple) in routineDeps.items():
+    for (package, depTuple) in iteritems(routineDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][0] = len(depTuple[0])
         packageDepDict[package][1] = len(depTuple[1])
-    for (package, depTuple) in globalDeps.items():
+    for (package, depTuple) in iteritems(globalDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][2] = len(depTuple[0])
         packageDepDict[package][3] = len(depTuple[1])
-    for (package, depTuple) in fileManDeps.items():
+    for (package, depTuple) in iteritems(fileManDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][4] = len(depTuple[0])
         packageDepDict[package][5] = len(depTuple[1])
-    for (package, depTuple) in dbCallDeps.items():
+    for (package, depTuple) in iteritems(dbCallDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][6] = len(depTuple[0])
         packageDepDict[package][7] = len(depTuple[1])
-    for (package, depTuple) in optionDeps.items():
+    for (package, depTuple) in iteritems(optionDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][8] = len(depTuple[0])
         packageDepDict[package][9] = len(depTuple[1])
-    for (package, depTuple) in globalRtnDeps.items():
+    for (package, depTuple) in iteritems(globalRtnDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][10] = len(depTuple[0])
         packageDepDict[package][11] = len(depTuple[1])
-    for (package, depTuple) in globalGblDeps.items():
+    for (package, depTuple) in iteritems(globalGblDeps):
         if package not in packageDepDict:
             packageDepDict[package] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         packageDepDict[package][12] = len(depTuple[0])

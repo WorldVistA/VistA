@@ -35,7 +35,7 @@ def run(args):
       xlsfileName="Open Needs_Epics with BFFs (for Open Source)_Feb2018.xlsx"
       logger.info("Downloading %s from http://code.osehra.org" % xlsfileName)
       quotedURL = urllib.parse.quote("code.osehra.org/files/requirements/"+xlsfileName)
-      urllib.request.urlretrieve("http://%s" % quotedURL,xlsfileName)
+      urllib.request.urlretrieve("http://%s" % quotedURL, xlsfileName)
     if args.localPast:
       logger.info("Using local pastData file: %s" % args.localPast)
       pastDataFileName = args.localPast
@@ -43,7 +43,7 @@ def run(args):
       pastDataURL= "code.osehra.org/files/requirements/requirements_July_2017/Requirements.json"
       logger.info("Downloading %s" % pastDataURL)
       quotedURL = urllib.parse.quote(pastDataURL)
-      urllib.request.urlretrieve("http://%s" % quotedURL,"oldRequirements.json")
+      urllib.request.urlretrieve("http://%s" % quotedURL, "oldRequirements.json")
       pastDataFileName = "oldRequirements.json"
 
     args.ReqJsonFile = os.path.join(args.outDir, "requirements.json")
@@ -59,12 +59,12 @@ def run(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='VistA Requirements Parser')
-    parser.add_argument('-o','--outDir', help='path to the output web page directory')
+    parser.add_argument('-o', '--outDir', help='path to the output web page directory')
     parser.add_argument('-lf', '--logFileDir', required=True,
                         help='Logfile directory')
-    parser.add_argument('-lr','--localReq',
+    parser.add_argument('-lr', '--localReq',
                         help='path to a local requirements file')
-    parser.add_argument('-lp','--localPast',
+    parser.add_argument('-lp', '--localPast',
                         help='path to a local JSON of the previous requirements information')
     result = parser.parse_args()
     initLogging(result.logFileDir, "RequirementsParser.log")

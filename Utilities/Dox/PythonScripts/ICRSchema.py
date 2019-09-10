@@ -15,6 +15,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from future.utils import itervalues
 import re
 import os
 from functools import reduce
@@ -126,7 +127,7 @@ SUBFILE_FIELDS = {
 }
 
 """ This is to get all the keywords in sub files """
-SUBFILE_KEYWORDS = reduce(set.union, [set(y) for y in list(SUBFILE_FIELDS.values())], set()) | set([x for x in list(SUBFILE_FIELDS.keys())])
+SUBFILE_KEYWORDS = reduce(set.union, [set(y) for y in list(itervalues(SUBFILE_FIELDS))], set()) | set([x for x in list(SUBFILE_FIELDS.keys())])
 
 ICR_FILE_KEYWORDS = ICR_FILE_KEYWORDS | SUBFILE_KEYWORDS
 
@@ -165,7 +166,7 @@ def isWordProcessingField(field):
     return field in WORDS_FIELDS
 
 def getDate(icrFilename):
-    with open(icrFilename,'r') as ICRFile:
+    with open(icrFilename, 'r') as ICRFile:
         for line in ICRFile:
             line = line.rstrip("\r\n")
             match = INTEGRATION_REFERENCES_LIST.match(line)

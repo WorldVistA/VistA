@@ -201,7 +201,7 @@ def sortSchemaByLocation(fileSchema):
     if len(locInfo) != 2:
       logger.error("Unknown location info %s for %r" % (loc, fldAttr))
       continue
-    index,pos = locInfo
+    index, pos = locInfo
     if index not in locFieldDict:
       locFieldDict[index] = {}
     locFieldDict[index][pos] = fldAttr
@@ -214,7 +214,7 @@ initGlobalLocationMap = {
           '4.009', '4.05', '4.1', '4.11', '4.2', '4.2996',
           '5', '7', '7.1', '8', '8.1', '8.2', '9.2', '9.4',
           '9.8', '10', '10.2', '10.3', '11', '13', '19', '19.1',
-          '19.2', '19.8', '21', '22', '23', '25','30', '31', '34',
+          '19.2', '19.8', '21', '22', '23', '25', '30', '31', '34',
           '35', '36', '37', '39.1', '39.2', '39.3', '40.7', '40.9',
           '42', '42.4', '42.55', '43.4', '45.1', '45.3', '45.6',
           '45.61', '45.68', '45.7', '45.81', '45.82', '45.88', '45.89',
@@ -272,7 +272,7 @@ class FileManGlobalDataParser(object):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
 
   def _getAllFileManZWRFiles(self):
-    dirName = os.path.join(self.MRepositDir,'Packages')
+    dirName = os.path.join(self.MRepositDir, 'Packages')
     pattern = "*/Globals/*.zwr"
     searchFiles = glob.glob(os.path.join(dirName, pattern))
     outFiles = {}
@@ -422,7 +422,7 @@ class FileManGlobalDataParser(object):
 
   def _updateHLOReference(self):
     hlo = self._glbData['779.2']
-    for ien in sorted(list(hlo.dataEntries.keys()),key=lambda x: float(x)):
+    for ien in sorted(list(hlo.dataEntries.keys()), key=lambda x: float(x)):
       hloEntry = hlo.dataEntries[ien]
       entryName = hloEntry.name
       namespace, package = \
@@ -465,7 +465,7 @@ class FileManGlobalDataParser(object):
                          "ien": ien}
               if tag:
                 hl7Info['tag'] = tag
-              self._rtnRefDict.setdefault(rtn,{}).setdefault('101',[]).append(hl7Info)
+              self._rtnRefDict.setdefault(rtn, {}).setdefault('101', []).append(hl7Info)
 
   def _updateRPCRefence(self):
     rpcData = self._glbData['8994']
@@ -497,7 +497,7 @@ class FileManGlobalDataParser(object):
           if '.02' in rpcEntry.fields:
             rpcTag = rpcEntry.fields['.02'].value
             rpcInfo['tag'] = rpcTag
-          self._rtnRefDict.setdefault(rpcRoutine,{}).setdefault('8994',[]).append(rpcInfo)
+          self._rtnRefDict.setdefault(rpcRoutine, {}).setdefault('8994', []).append(rpcInfo)
 
   def _findInstallPackage(self,packageList, installEntryName,checkNamespace=True):
     package=None
@@ -512,7 +512,7 @@ class FileManGlobalDataParser(object):
       package = INSTALL_PACKAGE_FIX[installEntryName]
     # If it cannot match a package by namespace, capture the name via Regular Expression
     if package is None:
-      pkgMatch = re.match("[A-Z./ \&\-\']+",installEntryName)
+      pkgMatch = re.match("[A-Z./ \&\-\']+", installEntryName)
       if pkgMatch:
         # if a match is found, switch to title case and remove extra spaces
         targetName = pkgMatch.group(0).title().strip()
@@ -556,7 +556,7 @@ class FileManGlobalDataParser(object):
               installItem['multi'] = INSTALL_DEPENDENCY_DICT[installEntry.name]['multi']
             if 'builds' in INSTALL_DEPENDENCY_DICT[installEntry.name]:
                 for child in INSTALL_DEPENDENCY_DICT[installEntry.name]['builds']:
-                  childPackage = self._findInstallPackage(packageList,child)
+                  childPackage = self._findInstallPackage(packageList, child)
                   childEntry = {"name": child, "package": childPackage}
                   if child in INSTALL_DEPENDENCY_DICT:
                       if 'multi' in INSTALL_DEPENDENCY_DICT[child]:
@@ -578,12 +578,12 @@ class FileManGlobalDataParser(object):
             # Assume a package switch name will be just a package name and a version
             capture = PACKAGE_NAME_VAL_REGEX.match(installEntry.name)
             if capture:
-              checkPackage = self._findInstallPackage(packageList, capture.groups()[0],False)
+              checkPackage = self._findInstallPackage(packageList, capture.groups()[0], False)
               if ((checkPackage != "Unknown") or (len(capture.groups()[0]) <= 4)):
                 installItem['packageSwitch'] = True
           installJSONData[package][installEntry.name] = installItem
       logger.info("About to dump data into %s" % output)
-      json.dump(installJSONData,installDataOut)
+      json.dump(installJSONData, installDataOut)
 
   def _resolveSelfPointer(self):
     """ Replace self-reference with meaningful data """
@@ -844,7 +844,7 @@ def horologToDateTime(input):
     convert Mumps Horolog time to python datatime
   """
   from datetime import timedelta
-  originDt = datetime(1840,12,31,0,0,0)
+  originDt = datetime(1840, 12, 31, 0, 0, 0)
   if input.find(',') < 0: # invalid format
     return None
   days, seconds = input.split(',')

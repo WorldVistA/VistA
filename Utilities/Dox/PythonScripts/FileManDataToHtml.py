@@ -75,12 +75,12 @@ class OSEHRAEncoder(JSONEncoder):
     elif "datetime.datetime" in str(type(o)):
       return o.isoformat() #.strftime("%m/%d/%Y, %H:%M:%S")
     else:
-      return JSONEncoder.default(self,o)
+      return JSONEncoder.default(self, o)
 
 
 def getFileHtmlLink(dataEntry, value, **kargs):
   htmlFile = getDataEntryHtmlFileName(dataEntry.ien, dataEntry.fileNo)
-  return "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, dataEntry.fileNo.replace(".","_"),htmlFile, value)
+  return "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, dataEntry.fileNo.replace(".", "_"), htmlFile, value)
 
 def _getRoutineHRefLink(dataEntry, routineName, **kargs):
   tagRoutine = routineName.split('^')
@@ -121,7 +121,7 @@ def getFreeTextLink(dataEntry, value, **kargs):
     if 'glbData' in kargs:
       glbData = kargs['glbData']
       # Acquire the field and file of the target information
-      file,field = kargs["targetField"].split("/")
+      file, field = kargs["targetField"].split("/")
       # Check if the target file hasn't already been parsed
       if file not in glbData.outFileManData:
         glbData._glbData[file] = FileManFileData(file,
@@ -144,7 +144,7 @@ def getFreeTextLink(dataEntry, value, **kargs):
       for entry in dataEntries:
         if value == dataEntries[entry].fields[field].value:
           return '<a href="%s/%s/%s-%s.html">%s</a>' % (VIV_URL,
-                                                        dataEntries[entry].fileNo.replace(".","_"),
+                                                        dataEntries[entry].fileNo.replace(".", "_"),
                                                         file, entry, value)
   return value
 
@@ -185,7 +185,7 @@ hl7_table_header_fields = (
      """),
   )
 
-hl7_column_names = ["Name", "Type", "Transaction","Response",
+hl7_column_names = ["Name", "Type", "Transaction", "Response",
                     "Event Type", "Sender", "Receiver"]
 
 """
@@ -206,7 +206,7 @@ fields and logic to convert to html for HLO List
 HLO_list_fields = (
        ("Name", '.01', getFileHtmlLink), # Name
        ("Package", '2', getFileManFilePointerLink), # Type
-       ("HL7 Type Tag", '1/.01', "771.2/.01" ,getFreeTextLink), # Action Tag
+       ("HL7 Type Tag", '1/.01', "771.2/.01", getFreeTextLink), # Action Tag
        ("Action Tag", '1/.04', None), # Action Tag
        ("Action Routine", '1/.05', _getRoutineHRefLink), # Action Routine
    )
@@ -278,7 +278,7 @@ def convertFilePointerToHtml(inputValue):
   fields = inputValue.split('^')
   if len(fields) == 3: # fileNo, ien, name
     refFile = getDataEntryHtmlFileName(fields[1], fields[0])
-    value = '<a href="%s/%s/%s">%s</a>' % (VIV_URL, fields[0].replace(".","_"), refFile, fields[-1])
+    value = '<a href="%s/%s/%s">%s</a>' % (VIV_URL, fields[0].replace(".", "_"), refFile, fields[-1])
     name = fields[-1]
   elif len(fields) == 2:
     value = 'File: %s, IEN: %s' % (fields[0], fields[1])
@@ -316,7 +316,7 @@ class FileManDataToHtml(object):
     fileManDataMap = gblDataParser.outFileManData
     self.dataMap = gblDataParser
     fileManData = fileManDataMap[fileNo]
-    fileNoPathSafe = fileNo.replace('.','_')
+    fileNoPathSafe = fileNo.replace('.', '_')
     fileNoOutDir = os.path.join(self.outDir, fileNoPathSafe)
     if not os.path.exists(fileNoOutDir):
       os.mkdir(fileNoOutDir)
@@ -361,7 +361,7 @@ class FileManDataToHtml(object):
         if allProtocols:
           self._generateProtocolListByPackage(allProtocols, "All",
                                               fileNoOutDir)
-      self._generateMenuDependency(allProtoMenuList, allProtocols,menuOutDir)
+      self._generateMenuDependency(allProtoMenuList, allProtocols, menuOutDir)
     elif fileNo == '779.2':
       if crossRef:
         allPackages = crossRef.getAllPackages()
@@ -407,7 +407,7 @@ class FileManDataToHtml(object):
 
 
       self._generateServerMenu(allMenuList, allOptionList, serverMenuList)
-      self._generateMenuDependency(allMenuList, allOptionList,menuOutDir)
+      self._generateMenuDependency(allMenuList, allOptionList, menuOutDir)
 
     allObjectsList = []
     outJSON = {}
@@ -551,8 +551,8 @@ class FileManDataToHtml(object):
   def _addChildMenusToJson(self, children, menuDepDict, outJson, parent):
     for item in children:
       synonym=''
-      if (parent.name,item.name) in self.synonymMap:
-        synonym = self.synonymMap[(parent.name,item.name)]
+      if (parent.name, item.name) in self.synonymMap:
+        synonym = self.synonymMap[(parent.name, item.name)]
       childDict = {}
       childDict['name'] = synonym + item.name
       childDict['ien'] = item.ien
@@ -567,7 +567,7 @@ class FileManDataToHtml(object):
         childDict['type'] = item.fields['4'].value
       if item in menuDepDict:
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, childDict, item)
-      outJson.setdefault('_children',[]).append(childDict)
+      outJson.setdefault('_children', []).append(childDict)
 
   def _generateRPCListHtml(self, dataEntryLst, pkgName, fileNoOutDir):
     """
@@ -656,23 +656,23 @@ class FileManDataToHtml(object):
           # If value has / in it, we take the first value as usual
           # but assume the information is a "multiple" field and
           # attempt to find the second bit of information within it
-          idVal, multval = id[1].split('/') if (len(id[1].split('/')) > 1) else (id[1],None)
+          idVal, multval = id[1].split('/') if (len(id[1].split('/')) > 1) else (id[1], None)
           if idVal in allFields:
             value = allFields[idVal].value
             if multval:  # and (multval in value.dataEntries["1"].fields)
-              value = self.findSubValue(dataEntry, value,multval,id)
+              value = self.findSubValue(dataEntry, value, multval, id)
             if isinstance(value, list) and id[0] != "Description":
               # Don't write out descriptions as lists
               tmpValue="<ul>"
               for entry in value:
                 if id[-1]:
-                  tmpValue += "<li>"+id[-1](dataEntry, entry,sourceField=id[1], targetField=id[-2], glbData=self.dataMap, crossRef=self.crossRef)+"</li>"
+                  tmpValue += "<li>"+id[-1](dataEntry, entry, sourceField=id[1], targetField=id[-2], glbData=self.dataMap, crossRef=self.crossRef)+"</li>"
                 else:
                   tmpValue += "<li>"+ entry +"</li>"
               value = tmpValue+"</ul>"
             else:
               if id[-1]:
-                value = id[-1](dataEntry, value,sourceField=id[1], targetField=id[-2], glbData=self.dataMap, crossRef=self.crossRef)
+                value = id[-1](dataEntry, value, sourceField=id[1], targetField=id[-2], glbData=self.dataMap, crossRef=self.crossRef)
             tableRow[idx] = value
         for item in tableRow:
           #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
@@ -718,7 +718,7 @@ class FileManDataToHtml(object):
     outJson = {"aaData": self._getTableRows(fileManData, fileNo, fieldNamesList)}
     with open(os.path.join(outDir, ajexSrc), 'w') as output:
       # Ensure that the OSEHRA Encoder is used to write out data.
-      json.dump(outJson, output,ensure_ascii=False, cls=OSEHRAEncoder)
+      json.dump(outJson, output, ensure_ascii=False, cls=OSEHRAEncoder)
 
   def _getTableRows(self, fileManData, fileNo, fieldsList):
     rows = []
@@ -733,7 +733,7 @@ class FileManDataToHtml(object):
         name = str(name)
       if name is None:
         name = str(name)
-      dataHtmlLink = "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, fileNo.replace(".","_"),
+      dataHtmlLink = "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, fileNo.replace(".", "_"),
                                                       getDataEntryHtmlFileName(ien, fileNo),
                                                       name)
       for field in dataEntry.fields:
@@ -757,7 +757,7 @@ class FileManDataToHtml(object):
       outDir = self.outDir
       fileNo = dataEntry.fileNo
       if fileNo:
-        outDir = os.path.join(self.outDir, fileNo.replace(".","_"))
+        outDir = os.path.join(self.outDir, fileNo.replace(".", "_"))
       tName = safeElementId("%s-%s" % (pathSafeFileManDataFileNo, ien))
       if isFilePointerType(dataEntry):
         link, name = convertFilePointerToHtml(name)
@@ -770,7 +770,7 @@ class FileManDataToHtml(object):
         output.write ("<h1>%s (%s) &nbsp;&nbsp;  %s (%s)</h1>\n" % (name, ien,
                                                                     fileManData.name,
                                                                     fileManDataFileNo))
-        if fileNo in ['19','101']:
+        if fileNo in ['19', '101']:
           # Todo: Check if the object exists in options/menus first.
           output.write("<a style='font-size: 15px;' href='%s/../vista_menus.php#%s?name=%s'>View in ViViaN Menu</a>" %
                           (VIV_URL, fileNo, urllib.parse.quote_plus(name)))
@@ -794,8 +794,7 @@ class FileManDataToHtml(object):
   def _fileManDataEntryToHtml(self, output, dataEntry, isRoot):
     if not isRoot:
       output.write("<li>\n")
-    fields = list(dataEntry.fields)
-    fields.sort()
+    fields = sorted(dataEntry.fields.keys())
     for fldId in fields:
       dataField = dataEntry.fields[fldId]
       fieldType = dataField.type

@@ -20,6 +20,7 @@
 
 from builtins import range
 from builtins import object
+from future.utils import iteritems
 import glob
 import re
 import os
@@ -379,7 +380,7 @@ class FileManFieldSectionParser(IDDSectionParser):
             self._field.setPointedToSubFile(subFile)
             CrossReference.addFileManSubFile(subFile)
             return
-        for (key, value) in self.StringTypeMappingDict.items():
+        for (key, value) in iteritems(self.StringTypeMappingDict):
             if fType.startswith(key):
                 self._field = FileManFieldFactory.createField(fieldNo, fName, value, fLocation)
                 break
@@ -396,13 +397,13 @@ class FileManFieldSectionParser(IDDSectionParser):
         outType = fType
         for nameAttr in self.FieldAttributesInfoList:
             if outType.find(nameAttr[0]) != -1:
-                outType = outType.replace(nameAttr[0],"")
+                outType = outType.replace(nameAttr[0], "")
         return outType.strip()
 
     def __parseFieldAttributes__(self, fType):
         for nameAttr in self.FieldAttributesInfoList:
             if fType.find(nameAttr[0]) != -1:
-                fType = fType.replace(nameAttr[0],"")
+                fType = fType.replace(nameAttr[0], "")
                 self._field.__setattr__(nameAttr[1], True)
         fType.strip()
         self._field.setTypeName(fType)
@@ -597,7 +598,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
                 self._curParser.parseLine(line, self._curGlobal, self._crossRef)
 
     def __isSectionHeader__(self, curLine):
-        for (regex, section) in self._sectionHeaderRegEx.items():
+        for (regex, section) in iteritems(self._sectionHeaderRegEx):
             if regex.search(curLine):
                 return section
         return None

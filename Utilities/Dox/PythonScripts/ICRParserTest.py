@@ -75,8 +75,7 @@ class testICRParser(unittest.TestCase):
                                 args.patchRepositDir, generated_icr_output_dir)
 
         # Check that expected HTML files were generated
-        generated_files = os.listdir(generated_icr_output_dir)
-        generated_files.sort()
+        generated_files = sorted(os.listdir(generated_icr_output_dir))
         self.assertEqual(TEST_ICR_FILES, generated_files)
         # And that they contain the expected content
         for f in TEST_ICR_FILES:
@@ -95,18 +94,14 @@ class testICRParser(unittest.TestCase):
                                args.patchRepositDir, generated_pdf_output_dir)
 
         # Check that expected subdirectories were generated
-        expected_dirs = list(EXPECTED_PDFS.keys())
-        expected_dirs.sort()
-        generated_dirs = os.listdir(generated_pdf_output_dir)
-        generated_dirs.sort()
+        expected_dirs = sorted(EXPECTED_PDFS.keys())
+        generated_dirs = sorted(os.listdir(generated_pdf_output_dir))
         self.assertEqual(expected_dirs, generated_dirs)
         # Check that expected PDFS were generated
         # Note: Content is NOT checked
         for pdf_dir in expected_dirs:
-            expected_files = EXPECTED_PDFS[pdf_dir]
-            expected_files.sort()
-            generated_files = os.listdir(os.path.join(generated_pdf_output_dir, pdf_dir))
-            generated_files.sort()
+            expected_files = sorted(EXPECTED_PDFS[pdf_dir])
+            generated_files = sorted(os.listdir(os.path.join(generated_pdf_output_dir, pdf_dir)))
             self.assertEqual(expected_files, generated_files)
 
         # TODO: Remove generated_output_dir?
@@ -121,8 +116,7 @@ class testICRParser(unittest.TestCase):
                                generated_pdf_output_dir)
 
         # Check that expected HTML files were generated
-        generated_html_files = os.listdir(generated_icr_output_dir)
-        generated_html_files.sort()
+        generated_html_files = sorted(os.listdir(generated_icr_output_dir))
         self.assertEqual(TEST_ICR_FILES, generated_html_files)
         # And that they contain the expected content
         for f in TEST_ICR_FILES:
@@ -132,18 +126,14 @@ class testICRParser(unittest.TestCase):
                 self.fail("%s is not the same as %s" % (expected_file, generated_file))
 
         # Check that expected subdirectories were generated
-        expected_pdf_dirs = list(EXPECTED_PDFS.keys())
-        expected_pdf_dirs.sort()
-        generated_pdf_dirs = os.listdir(generated_pdf_output_dir)
-        generated_pdf_dirs.sort()
+        expected_pdf_dirs = sorted(EXPECTED_PDFS.keys())
+        generated_pdf_dirs = sorted(os.listdir(generated_pdf_output_dir))
         self.assertEqual(expected_pdf_dirs, generated_pdf_dirs)
         # Check that expected PDFS were generated
         # Note: Content is NOT checked
         for pdf_dir in expected_pdf_dirs:
-            expected_pdf_files = EXPECTED_PDFS[pdf_dir]
-            expected_pdf_files.sort()
-            generated_pdf_files = os.listdir(os.path.join(generated_pdf_output_dir, pdf_dir))
-            generated_pdf_files.sort()
+            expected_pdf_files = sorted(EXPECTED_PDFS[pdf_dir])
+            generated_pdf_files = sorted(os.listdir(os.path.join(generated_pdf_output_dir, pdf_dir)))
             self.assertEqual(expected_pdf_files, generated_pdf_files)
 
         # TODO: Remove generated_output_dir?
@@ -168,8 +158,7 @@ if __name__ == '__main__':
     TEST_ICR_FILE = os.path.join(scripts_dir, "ICRTest.txt")
     TEST_ICR_JSON = os.path.join(scripts_dir, "ICRTest.JSON")
     TEST_ICR_DIR = os.path.join(scripts_dir, "ICR_TEST", "ICR")
-    TEST_ICR_FILES = os.listdir(TEST_ICR_DIR)
-    TEST_ICR_FILES.sort()
+    TEST_ICR_FILES = sorted(os.listdir(TEST_ICR_DIR))
 
     initLogging(args.testOutDir, "TESTICRParser.log", level=logging.ERROR)
 

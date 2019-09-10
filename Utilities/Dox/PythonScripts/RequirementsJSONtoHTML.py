@@ -19,27 +19,27 @@ def createArgParser():
     parser.add_argument('outDir', help='path to the output web page directory')
     return parser
 
-fieldList = ["Name",'Id','Description',"BFFLink",'New Service Request','Type', 'Date Updated', "Update Status"]
-searchColumnList = ["Name",'Id','Description',"BFFLink",'New Service Request']
+fieldList = ["Name", 'Id', 'Description', "BFFLink", 'New Service Request', 'Type', 'Date Updated', "Update Status"]
+searchColumnList = ["Name", 'Id', 'Description', "BFFLink", 'New Service Request']
 
 allReqs = []
 reqSummary=[]
 def getReqHTMLLink(reqID, reqEntry, **kargs):
-        rpcFilename = '%s-%s.html' % ("BFFReq",reqID )
+        rpcFilename = '%s-%s.html' % ("BFFReq", reqID )
         return '<a href=\"%s\">%s</a>' % (rpcFilename, reqID)
 
 def convertBFFLinks(linkList, reqEntry, **kargs):
         returnList = []
         for entry in linkList:
-          returnList.append('<a href="%s-%s.html">%s</a>' % (entry.replace('/','_'),"Req", entry))
+          returnList.append('<a href="%s-%s.html">%s</a>' % (entry.replace('/', '_'), "Req", entry))
         return returnList
 def convertNSRLinks(linkVal, reqEntry, **kargs):
         returnList = []
-        if type(linkVal) is list:
+        if isinstance(linkVal, list):
           for entry in linkVal:
-            returnList.append('<a href="%s-%s.html">%s</a>' % (entry.split(":")[0],"Req", entry))
+            returnList.append('<a href="%s-%s.html">%s</a>' % (entry.split(":")[0], "Req", entry))
         else:
-          returnList.append( '<a href="%s-%s.html">%s</a>' % (linkVal.split(":")[0],"Req", linkVal))
+          returnList.append( '<a href="%s-%s.html">%s</a>' % (linkVal.split(":")[0], "Req", linkVal))
         return returnList
 
 summary_list_fields = [
@@ -76,7 +76,7 @@ class RequirementsConverter(object):
                 output.write ("<td>%s</td>\n" % value)
                 output.write ("</tr>\n")
 
-    def _generateIndividualRequirementsPage(self,reqJSON):
+    def _generateIndividualRequirementsPage(self, reqJSON):
         ien = reqJSON['busNeedId']
         outReqFile = os.path.join(self._outDir, 'BFFReq-' + str(ien) + '.html')
         tName = safeElementId("%s-%s" % ('BFFReq', ien))
@@ -91,11 +91,11 @@ class RequirementsConverter(object):
             outputFileEntryTableList(output, tName)
             """ table body """
             reqSummary = self._convertReqEntryToSummaryInfo(reqJSON)
-            for idx,item in enumerate(fieldList):
+            for idx, item in enumerate(fieldList):
                 output.write("<tr>\n")
                 # List of objects should be displayed as a UL object
                 output.write("<td>%s</td>"% item)
-                if type(reqSummary[idx]) is list:
+                if isinstance(reqSummary[idx], list):
                   output.write("<td><ul>")
                   for entry in reqSummary[idx]:
                     output.write("<li>%s</li>\n" %  entry)
@@ -119,8 +119,8 @@ class RequirementsConverter(object):
         listName = listName.strip()
         pkgName = pkgName.strip()
         # TODO: Use Utility functions to generate filename name
-        pkgHtmlName = pkgName.replace('/','_')
-        outFilename = "%s/%s-%s.html" % (outDir, pkgName.replace('/','_'), listName)
+        pkgHtmlName = pkgName.replace('/', '_')
+        outFilename = "%s/%s-%s.html" % (outDir, pkgName.replace('/', '_'), listName)
         if not isForAll:
             outFilename = "%s/%s-Req.html" % (outDir, pkgHtmlName)
         with open(outFilename, 'w+') as output:
@@ -160,9 +160,9 @@ class RequirementsConverter(object):
                         allReqs.append(reqSummary)
                     else:
                       reqSummary = reqEntry
-                    for idx,item in enumerate(fieldList):
+                    for idx, item in enumerate(fieldList):
                         # List of objects should be displayed as a UL object
-                        if type(reqSummary[idx]) is list:
+                        if isinstance(reqSummary[idx], list):
                           output.write("<td><ul>")
                           for entry in reqSummary[idx]:
                             if pkgName in entry:
@@ -192,9 +192,9 @@ class RequirementsConverter(object):
             output.write("</div>\n")
             output.write ("</body></html>\n")
 
-    def findNSRValues(self,d,nsrSummary):
+    def findNSRValues(self, d, nsrSummary):
       if "NSRLink" in d:
-        if type(d["NSRLink"]) is list:
+        if isinstance(d["NSRLink"], list):
           for entry in d["NSRLink"]:
             NSRVal = entry.split(":")[0]
             if not (NSRVal in nsrSummary):
@@ -216,7 +216,7 @@ class RequirementsConverter(object):
         for key in inputJson:
           self._generateRequirementsSummaryPageImpl(inputJson, 'Requirement List', key, False)
           for bffEntry in inputJson[key]:
-            nsrSummary= self.findNSRValues(bffEntry,nsrSummary)
+            nsrSummary= self.findNSRValues(bffEntry, nsrSummary)
             self._generateIndividualRequirementsPage(bffEntry)
         for NSRKey in nsrSummary:
           self._generateRequirementsSummaryPageImpl(nsrSummary, 'Requirement List', NSRKey, False)

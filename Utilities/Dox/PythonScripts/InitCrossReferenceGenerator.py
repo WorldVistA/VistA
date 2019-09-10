@@ -15,6 +15,7 @@
 # ---------------------------------------------------------------------------
 
 from builtins import object
+from future.utils import iteritems
 import glob
 import re
 import codecs
@@ -110,7 +111,7 @@ class InitCrossReferenceGenerator(object):
             routineDict[currentName] = []
         routineDict[currentName].append(line[-1])
       routineDict[currentName].append([line[1], line[2]])
-    for (routineName, mappingList) in routineDict.items():
+    for (routineName, mappingList) in iteritems(routineDict):
       crossRef.addPlatformDependentRoutineMapping(routineName,
                                                   mappingList[0],
                                                   mappingList[1:])
@@ -155,7 +156,7 @@ class InitCrossReferenceGenerator(object):
           globalDes = line.strip()
           # Removing the extra text in the header of the ZWR file
           # to tell if it needs to be added or skipped
-          globalDes = globalDes.replace("OSEHRA ZGO Export: ",'')
+          globalDes = globalDes.replace("OSEHRA ZGO Export: ", '')
           if globalDes.startswith("^"):
             logger.info("No Description: Skip this file: %s" % file)
             skipFile.append(file)

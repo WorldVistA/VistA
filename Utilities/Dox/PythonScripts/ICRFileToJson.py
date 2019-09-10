@@ -50,7 +50,7 @@ class ICRFileToJson(object):
         self._curStack = []
 
     def parse(self, inputFilename, outputFilename):
-        with open(inputFilename,'r') as ICRFile:
+        with open(inputFilename, 'r') as ICRFile:
             curLineNo = 0
             curNumber = None
             # Free text fields may contain field names and
@@ -214,7 +214,7 @@ class ICRFileToJson(object):
             # Will also create intermediate directories if needed
             os.makedirs(outputDir)
         with open(outputFilename, 'w') as out_file:
-            json.dump(self._outObject,out_file, indent=4)
+            json.dump(self._outObject, out_file, indent=4)
 
     def _startOfNewItem(self, name, number, matchObj, line):
         self._curField = None
@@ -315,14 +315,14 @@ class ICRFileToJson(object):
         while self._curStack: # we are in subFile Mode
             if not isSubFileField(self._curStack[-1][1], self._curField):
                 preStack = self._curStack.pop()
-                preStack[0].setdefault(preStack[1],[]).append(self._curRecord)
+                preStack[0].setdefault(preStack[1], []).append(self._curRecord)
                 self._curRecord = preStack[0]
             else:
                 break
 
     """ This will append the line in word processing fields """
     def _appendWordsFieldLine(self, line):
-        if not (type(self._curRecord[self._curField]) is list):
+        if not (isinstance(self._curRecord[self._curField], list)):
             preVal = self._curRecord[self._curField]
             self._curRecord[self._curField] = []
             self._curRecord[self._curField].append(preVal)

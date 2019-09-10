@@ -18,6 +18,8 @@
 
 from builtins import str
 from builtins import object
+from future.utils import iteritems
+from future.utils import itervalues
 import argparse
 import os
 import re
@@ -47,7 +49,7 @@ class GraphGenerator(object):
 
         # Check for package directories once
         # TODO: Should delete empty directories after graphs are generated?
-        for package in self._allPackages.values():
+        for package in itervalues(self._allPackages):
             try:
                 packageName = package.getName()
                 dirName = os.path.join(self._outDir, packageName)
@@ -79,7 +81,7 @@ class GraphGenerator(object):
         # Make the Pool of workers
         pool = ThreadPool(4)
         # Create graphs in their own threads
-        pool.map(self._generatePackageDependencyGraph, list(self._allPackages.values()))
+        pool.map(self._generatePackageDependencyGraph, itervalues(self._allPackages))
         # close the pool and wait for the work to finish
         pool.close()
         pool.join()
@@ -156,12 +158,12 @@ class GraphGenerator(object):
 
         # Make a list of all routines we want to process
         allRoutines = []
-        for package in self._allPackages.values():
-            for routine in package.getAllRoutines().values():
+        for package in itervalues(self._allPackages):
+            for routine in itervalues(package.getAllRoutines()):
                 isPlatformGenericRoutine = self._crossRef.isPlatformGenericRoutineByName(routine.getName())
                 if self._isDependency and isPlatformGenericRoutine:
                     platformRoutines = routine.getAllPlatformDepRoutines()
-                    for routineInfo in platformRoutines.values():
+                    for routineInfo in itervalues(platformRoutines):
                         allRoutines.append(routineInfo[0])
                 else:
                     allRoutines.append(routine)
@@ -171,8 +173,8 @@ class GraphGenerator(object):
         #       WebPageGenerator::generatePackageInformationPages(),
         #       could be improved in both places
         for keyVal in PACKAGE_COMPONENT_MAP:
-            for package in self._allPackages.values():
-                allRoutines.extend(iter(package.getAllPackageComponents(keyVal).values()))
+            for package in itervalues(self._allPackages):
+                allRoutines.extend(itervalues(package.getAllPackageComponents(keyVal)))
 
         # Make the Pool of workers
         pool = ThreadPool(4)
@@ -206,7 +208,7 @@ class GraphGenerator(object):
             return
         # Count total number of routines
         totalRoutines = 0
-        for callDict in depRoutines.values():
+        for callDict in itervalues(depRoutines):
             totalRoutines += len(callDict)
         if totalRoutines > MAX_DEPENDENCY_LIST_SIZE:
             logger.debug("Skipping... Found %d dep routines for routine:%s package:%s (max allowed %d)" %
@@ -236,13 +238,13 @@ class GraphGenerator(object):
                 output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
                 output.write("\t}\n")
 
-            for (depPackage, callDict) in depRoutines.items():
+            for (depPackage, callDict) in iteritems(depRoutines):
                 output.write("\tsubgraph \"cluster_%s\"{\n" % depPackage)
                 for depRoutine in callDict:
                     escapedDepRoutineName = re.escape(depRoutine.getName())
                     htmlFileName = getPackageComponentLink(depRoutine)
                     output.write("\t\t\"%s\" [penwidth=2 color=\"%s\" URL=\"%s\" tooltip=\"%s\"];\n" %
-                                    (escapedDepRoutineName,COLOR_MAP[depRoutine.getObjectType()],
+                                    (escapedDepRoutineName, COLOR_MAP[depRoutine.getObjectType()],
                                      htmlFileName, htmlFileName))
                     if str(depPackage) == packageName:
                         output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
@@ -263,9 +265,9 @@ class GraphGenerator(object):
     #  Generate Color legend image
     #==========================================================================
     def generateColorLegend(self):
-        self._generateImagesFromDotFile(os.path.join(self._outDir,"colorLegend.png"),
-                                        os.path.join(self._outDir,"colorLegend.cmapx"),
-                                        os.path.join(self._docRepDir,'callerGraph_color_legend.dot'))
+        self._generateImagesFromDotFile(os.path.join(self._outDir, "colorLegend.png"),
+                                        os.path.join(self._outDir, "colorLegend.cmapx"),
+                                        os.path.join(self._docRepDir, 'callerGraph_color_legend.dot'))
 
     #==========================================================================
 
@@ -310,13 +312,13 @@ if __name__ == '__main__':
         parents=[crossRefArgParse])
     parser.add_argument('-dot', required=True,
                         help='path to the folder containing dot excecutable')
-    parser.add_argument('-icr','--icrJsonFile', required=True,
+    parser.add_argument('-icr', '--icrJsonFile', required=True,
                         help='JSON formatted information of DBIA/ICR')
-    parser.add_argument('-st','--sortTemplateDep', required=True,
+    parser.add_argument('-st', '--sortTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Sort Templates')
-    parser.add_argument('-it','--inputTemplateDep', required=True,
+    parser.add_argument('-it', '--inputTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Input Templates')
-    parser.add_argument('-pt','--printTemplateDep', required=True,
+    parser.add_argument('-pt', '--printTemplateDep', required=True,
                         help='CSV formatted "Relational Jump" field data for Print Templates')
     result = parser.parse_args()
 

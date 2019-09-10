@@ -175,7 +175,7 @@ class FileManSchemaParser(object):
     for values in itervalues(self._fileDep):
       allFiles.update(values)
     for key in allFiles:
-      self._fileDep.setdefault(key,set())
+      self._fileDep.setdefault(key, set())
     for scc in strongly_connected_components(allFiles, self._fileDep):
       out |= scc
     return out
@@ -351,7 +351,7 @@ class FileManSchemaParser(object):
     for match, args in FIELD_TYPE_MAP_LIST:
       if match in typeField:
         setTypeAndSpecifer(types, specifier, args)
-        typeField = typeField.replace(match,'') # get rid of the match
+        typeField = typeField.replace(match, '') # get rid of the match
     subFile = None
     result = SUBFILE_REGEX.search(typeField)
     if result:
