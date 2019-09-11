@@ -24,6 +24,7 @@
 #---------------------------------------------------------------------------
 from builtins import object
 import argparse
+import codecs
 import os
 import sys
 
@@ -37,7 +38,7 @@ class SplitZWR(object):
         else:
            self.num=0
            self.name=nameSplit[0]
-        self.input = open(filepath, 'r')
+        self.input = codecs.open(filepath, 'r', encoding='ISO-8859-1', errors='ignore')
         self.headers = []
         while len(self.headers) < 2:
             self.headers.append(self.input.readline())

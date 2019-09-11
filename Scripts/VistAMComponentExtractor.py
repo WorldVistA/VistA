@@ -18,6 +18,7 @@
 from __future__ import print_function
 from __future__ import with_statement
 from builtins import object
+import codecs
 import sys
 import os
 import subprocess
@@ -164,7 +165,7 @@ class VistADataExtractor(object):
     logfile = os.path.join(self._outputLogDir, "unpackro.log")
     logger.info("Unpack routines from %s to %s" %
                 (routinesOutputFile, outputDir))
-    with open(routinesOutputFile, 'r') as routineFile: # open as txt
+    with codecs.open(routinesOutputFile, 'r', encoding='ISO-8859-1', errors='ignore') as routineFile: # open as txt
       with open(logfile, 'w') as logFile:
         unpack(routineFile, out=logFile, odir=outputDir)
 
