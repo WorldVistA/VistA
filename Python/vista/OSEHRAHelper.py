@@ -39,19 +39,11 @@ import time
 import re
 import logging
 import csv
+import socket
 
 filedir = os.path.dirname(os.path.abspath(__file__))
-pexpectdir = os.path.normpath(os.path.join(filedir, "../Pexpect"))
-import socket
 paramikoedir = os.path.normpath(os.path.join(filedir, "../"))
-sys.path.append(pexpectdir)
 sys.path.append(paramikoedir)
-
-try:
-  import pexpect
-  no_pexpect = None
-except ImportError as no_pexpect:
-  pass
 
 try:
   import paramiko
@@ -661,8 +653,8 @@ class ConnectRemoteSSH(ConnectMUMPS):
         escaped_str += c
     return escaped_str
 
-def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0.0.1', remote_conn_details=None):
-
+def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA',
+                   location='127.0.0.1', remote_conn_details=None):
     # self.namespace = namespace
     # self.location = location
     # print "You are using " + sys.platform
@@ -676,17 +668,13 @@ def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0
     if sys.platform == 'win32':
       return ConnectWinCache(logfile, instance, namespace, location)
     elif (sys.platform == 'linux2' or sys.platform == 'linux' or sys.platform == 'cygwin'):
-      if no_pexpect:
-        raise no_pexpect
       if os.getenv('gtm_dist'):
         try:
           return ConnectLinuxGTM(logfile, instance, namespace, location)
-        except pexpect.ExceptionPexpect as no_gtm:
-           if (no_gtm):
-             raise "Cannot find a MUMPS instance"
+        except:
+          raise "Cannot find a MUMPS instance"
       else:
         try:
           return ConnectLinuxCache(logfile, instance, namespace, location)
-        except pexpect.ExceptionPexpect as no_cache:
-         if (no_cache):
-           raise "Cannot find a MUMPS instance"
+        except:
+          raise "Cannot find a MUMPS instance"
