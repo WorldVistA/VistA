@@ -109,8 +109,8 @@ def createOptionParentDictionary(VistA,filepath="blah2.txt"):
   import re
   if not os.path.exists(filepath):
     printMenuParentPairs(VistA,filepath)
-  testinfo = file(filepath,"r").readlines()
-  header = re.compile("^OPTION[ ]+PARENTS")
+  testinfo = open(filepath,"r").readlines()
+  header = re.compile("^OPTION\s+PARENTS")
   width = re.compile("PARENTS")
   for line in testinfo:
     result = header.search(line)
@@ -131,8 +131,8 @@ def createOptionMenuTextDictionary(VistA,filepath="blah3.txt"):
   import re
   if not os.path.exists(filepath):
     printMenuTextPairs(VistA,filepath)
-  testinfo = file(filepath,"r").readlines()
-  header = re.compile("^NAME[ ]+MENU TEXT")
+  testinfo = open(filepath,"r").readlines()
+  header = re.compile("^NAME\s+MENU TEXT")
   width = re.compile("MENU TEXT")
   for line in testinfo:
     result = header.search(line)
