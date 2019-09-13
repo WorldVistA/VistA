@@ -37,6 +37,7 @@ import telnetlib
 import TestHelper
 import time
 import re
+import pexpect
 import logging
 import csv
 import socket
@@ -672,9 +673,9 @@ def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA',
         try:
           return ConnectLinuxGTM(logfile, instance, namespace, location)
         except:
-          raise "Cannot find a MUMPS instance"
+          raise BaseException("Cannot find a MUMPS instance")
       else:
         try:
           return ConnectLinuxCache(logfile, instance, namespace, location)
         except:
-          raise "Cannot find a MUMPS instance"
+          raise BaseException("Cannot find a MUMPS instance")
