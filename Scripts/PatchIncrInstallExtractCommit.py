@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from builtins import range
+from builtins import object
 import sys
 import os
 import subprocess
@@ -113,7 +115,7 @@ class PatchIncrInstallExtractCommit(object):
     logger.debug(output)
     """ logic to check if we need to recover from cache backup data """
     found = False
-    for idx in xrange(0,len(output)):
+    for idx in range(0,len(output)):
       if output[idx][0] == installNames[-1]:
         found = True
         break

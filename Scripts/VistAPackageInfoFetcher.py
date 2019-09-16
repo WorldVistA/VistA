@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2012-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
 from __future__ import with_statement
+from builtins import range
+from builtins import object
 import sys
 import re
 import argparse
@@ -41,28 +43,29 @@ class VistAPackageInfoFetcher(object):
   """ get all packages and package namespace mapping from a running Vista """
   def createAllPackageMapping(self):
     self._packageMapping.clear()
+
     connection = self._testClient.getConnection()
     result = None
     menuUtil = VistAMenuUtil(duz=1) # set duz as 1
     menuUtil.gotoFileManPrintFileEntryMenu(self._testClient)
     # print file entry
     connection.send("9.4\r") # Package file with fileman #9.4
-    connection.expect(re.compile("SORT BY:", re.I))
+    connection.expect("SORT BY:")
     connection.send("\r")
-    connection.expect(re.compile("START WITH", re.I))
+    connection.expect("START WITH")
     connection.send("\r")
-    connection.expect(re.compile("FIRST PRINT FIELD:", re.I))
+    connection.expect("FIRST PRINT FIELD:")
     connection.send(".01\r") # fileman field# .01 is NAME
-    connection.expect(re.compile("THEN PRINT FIELD:", re.I))
+    connection.expect("THEN PRINT FIELD:")
     connection.send("1\r") # fileman field# 1 is the PREFIX
-    connection.expect(re.compile("THEN PRINT FIELD:", re.I))
+    connection.expect("THEN PRINT FIELD:")
     connection.send("\r")
-    connection.expect(re.compile("PACKAGE LIST//", re.I))
+    connection.expect("PACKAGE LIST//")
     connection.send("\r")
     connection.expect("DEVICE:")
     connection.send(";132;99999\r")
     connection.expect("Select OPTION: ")
-    self.__parseAllPackages__(connection.before)
+    self.__parseAllPackages__(connection.lastconnection)
     menuUtil.exitFileManMenu(self._testClient, waitOption=False)
 
   def __parseAllPackages__(self, allPackageString):
@@ -97,7 +100,7 @@ class VistAPackageInfoFetcher(object):
                                   "Select Utilities ",
                                   "CHOOSE [0-9]+-[0-9]+"])
       if index == 3:
-        outchoice = findChoiceNumber(connection.before, packageName, namespace)
+        outchoice = findChoiceNumber(connection.lastconnection, packageName, namespace)
         if outchoice:
           connection.send("%s\r" % outchoice)
         else: # no match
@@ -133,7 +136,7 @@ class VistAPackageInfoFetcher(object):
             connection.send(";132;99999\r")
             break
         connection.expect("Select Utilities ")
-        result = parsePackagePatchHistory(connection.before,
+        result = parsePackagePatchHistory(connection.lastconnection,
                                           packageName, namespace, version)
         break
       else:
@@ -198,26 +201,26 @@ class VistAPackageInfoFetcher(object):
     connection.send("\r")
     connection.expect("STORE RESULTS OF SEARCH IN TEMPLATE: ")
     connection.send("\r")
-    connection.expect([re.compile("SORT BY: ", re.I),
-                       re.compile("SORT BY: NAME// ", re.I)])
+    connection.expect(["SORT BY: ",
+                       "SORT BY: NAME// "])
     connection.send("17\r") # sort by INSTALL COMPLETE TIME
-    connection.expect([re.compile("START WITH INSTALL COMPLETE TIME: ", re.I),
-                       re.compile("START WITH INSTALL COMPLETE TIME: FIRST// ",re.I)])
+    connection.expect(["START WITH INSTALL COMPLETE TIME: ",
+                       "START WITH INSTALL COMPLETE TIME: FIRST// "])
     connection.send("\r")
-    connection.expect(re.compile("WITHIN INSTALL COMPLETE TIME, SORT BY: ", re.I))
+    connection.expect("WITHIN INSTALL COMPLETE TIME, SORT BY: ")
     connection.send("\r")
-    connection.expect(re.compile("FIRST PRINT FIELD: ", re.I))
+    connection.expect("FIRST PRINT FIELD: ")
     connection.send("NAME\r")
-    connection.expect(re.compile("THEN PRINT FIELD: ", re.I))
+    connection.expect("THEN PRINT FIELD: ")
     connection.send("17\r")
-    connection.expect(re.compile("THEN PRINT FIELD: ", re.I))
+    connection.expect("THEN PRINT FIELD: ")
     connection.send("\r")
-    connection.expect(re.compile("Heading \(S/C\): INSTALL SEARCH// ", re.I))
+    connection.expect("Heading \(S/C\): INSTALL SEARCH// ")
     connection.send("\r") # use default heading
     connection.expect("DEVICE:")
     connection.send(";132;99999\r")
     connection.expect("[0-9]+ MATCH(ES)? FOUND\.")
-    result = connection.before.split("\r\n")
+    result = connection.lastconnection.split("\r\n")
     output = []
     resultStart = False
     DATETIME_INDENT = 52
@@ -237,7 +240,7 @@ class VistAPackageInfoFetcher(object):
   def getAllPackagesPatchHistory(self):
     self.createAllPackageMapping()
     self._packagePatchHist.clear()
-    for (namespace, package) in self._packageMapping.iteritems():
+    for (namespace, package) in self._packageMapping.items():
       logger.info("Parsing Package %s, namespace %s" % (package, namespace))
       #if not (package[0] == "PHARMACY" and package[1] == "PS"): continue
       self.getPackagePatchHistory(package, namespace)
@@ -251,7 +254,7 @@ class VistAPackageInfoFetcher(object):
       result = self._getPackageHistListByVer(packageName, version)
       if result:
         return result
-    for (namespace, package) in self._packageMapping.iteritems():
+    for (namespace, package) in self._packageMapping.items():
       if package == packageName:
         result = self.getPackagePatchHistory(package, namespace, version)
         return result
@@ -266,7 +269,7 @@ class VistAPackageInfoFetcher(object):
       else:
         return None
     else:
-      return verDict[sorted(verDict.keys(),reverse=True)[0]]
+      return verDict[sorted(list(verDict.keys()),reverse=True)[0]]
 
   def getPackagePatchHistByNamespace(self, namespace, version=None):
     if not self._packageMapping:
@@ -295,7 +298,7 @@ class VistAPackageInfoFetcher(object):
     return self._packageMapping.get(namespace)
 
   def getPackageNamespaceByName(self, pgkName):
-    for (namespace, packageName) in self._packageMapping.iteritems():
+    for (namespace, packageName) in self._packageMapping.items():
       if pgkName == packageName:
         return namespace
     return None
@@ -384,7 +387,7 @@ class VistAPackageInfoFetcher(object):
         connection.send("\r")
         connection.expect("IN TEMPLATE")
         connection.send("\r")
-        connection.expect(re.compile("SORT BY: ", re.I))
+        connection.expect("SORT BY: ")
         connection.send("\r")
         connection.expect("Start with")
         connection.send("\r")
@@ -397,7 +400,7 @@ class VistAPackageInfoFetcher(object):
         connection.expect("DEVICE:")
         connection.send(";132;99999\r")
         connection.expect("Select OPTION: ")
-        linesToSearch = connection.before.split("\r\n")
+        linesToSearch = connection.lastconnection.split("\r\n")
         for line in linesToSearch: # only care the the first line
           line = line.strip("\r\n ")
           tmpResult = indexOfInstallStatus(line)
@@ -418,7 +421,7 @@ class VistAPackageInfoFetcher(object):
     connection.send('W $$PATCH^XPDUTL("%s")\r' % installName)
     self._testClient.waitForPrompt()
     connection.send('\r')
-    result = connection.before
+    result = connection.lastconnection
     for line in result.split('\r\n'):
       line = line.strip(' \r\n')
       if re.search('^[0-1]$', line):
@@ -436,7 +439,7 @@ class VistAPackageInfoFetcher(object):
       print ("--- Package %s Patch History Info ---" % packageName)
       print ("-----------------------------------------")
       verDict = self._packagePatchHist[packageName]
-      for ver in sorted(verDict.keys(), reverse=True):
+      for ver in sorted(list(verDict.keys()), reverse=True):
         pprint.pprint(verDict[float(ver)].patchHistory)
 
   def printPackageLastPatch(self, packageName):
@@ -446,7 +449,7 @@ class VistAPackageInfoFetcher(object):
       print ("--- Package %s Last Patch Info ---" % packageName)
       print ("-----------------------------------------")
       verDict = self._packagePatchHist[packageName]
-      for ver in sorted(verDict.keys(), reverse=True):
+      for ver in sorted(list(verDict.keys()), reverse=True):
         pprint.pprint("VERSION: %s" % ver)
         pprint.pprint(verDict[float(ver)].patchHistory[-1])
 
@@ -575,7 +578,7 @@ class PatchInstallLog(object):
       try:
         self.patchNo = int(patchPart.strip())
       except ValueError as ex:
-        print ex
+        print(ex)
         logger.error("History Line is %s" % historyLine)
         self.patchNo = 0
 
@@ -679,7 +682,7 @@ def parsePatchInstallDatetime(dtString):
         if fmtStr.find(date_time_seperator) >= 0:
           fmtStr = fmtStr[0:fmtStr.find(date_time_seperator)]
       outDatetime = datetime.strptime(dtStr, fmtStr)
-    except ValueError, ve:
+    except ValueError as ve:
       pass
 
   if not outDatetime:
@@ -696,7 +699,7 @@ def getPackageLatestVersionByNamespace(pkgNamespace, vistATestClient):
   conn.send('W $$VERSION^XPDUTL("%s")\r' % pkgNamespace)
   vistATestClient.waitForPrompt()
   conn.send('\r')
-  return conn.before.strip('\r\n ').split('\r\n')[-1]
+  return conn.lastconnection.strip('\r\n ').split('\r\n')[-1]
 
 """ test the fetcher class """
 def testMain():
@@ -768,7 +771,7 @@ def main():
     packagePatchHist.getPackagePatchHistByNamespace("DI", "22.0")
     packagePatchHist.printPackagePatchHist("VA FILEMAN")
     ver = getPackageLatestVersionByNamespace("DI", testClient)
-    print "the latest version is [%s]" % ver
+    print("the latest version is [%s]" % ver)
     output = packagePatchHist.getAllPatchesInstalledByTime(datetime(2012,8,24))
     pprint.pprint(output)
     output = packagePatchHist.getAllPatchInstalledAfterByTime("T-1000")

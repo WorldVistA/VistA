@@ -7,7 +7,7 @@
 #   python PatchSequenceApply.py -h
 #
 #---------------------------------------------------------------------------
-# Copyright 2011-2012 The Open Source Electronic Health Record Agent
+# Copyright 2011-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,8 +21,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
 from __future__ import with_statement
+from builtins import str
+from builtins import range
+from builtins import object
 import sys
 import os
 import re
@@ -303,6 +306,8 @@ class PatchSequenceApply(object):
     seqNo = patchInfo.seqNo
     logFileName = self._logFileName
     multiBuildsList = patchInfo.multiBuildsList
+    if multiBuildsList:
+      installName = multiBuildsList[0]
     kidsInstaller = None
     """ handle patch stored as external link """
     if patchInfo.kidsSha1Path != None:
@@ -353,7 +358,7 @@ class PatchSequenceApply(object):
     """ check patch sequence no to see if it is out of order """
     if patchInfo.seqNo:
       seqNo = patchHist.getLatestSeqNo()
-      if patchInfo.seqNo < seqNo:
+      if int(patchInfo.seqNo) < seqNo:
         logger.error("SeqNo out of order, %s less than latest one %s" % (patchInfo.seqNo, seqNo))
         return False
     # check all the dependencies

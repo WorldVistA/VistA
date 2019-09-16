@@ -3,7 +3,7 @@
 #
 #
 #---------------------------------------------------------------------------
-# Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2011-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
+from builtins import range
+from builtins import object
 import sys
 import os
+import codecs
 import argparse
 import re
 
@@ -28,7 +32,7 @@ from PatchInfoParser import installNameToDirName
 """
   KIDS Section Parser Interface
 """
-class ISectionParser:
+class ISectionParser(object):
   def __init__(self, **kargs):
     pass
   """
@@ -64,7 +68,7 @@ class DebugSectionParser(ISectionParser):
     logger.debug("Function reset is called")
     self.__logKargs__(**kargs)
   def __logKargs__(self, **kargs):
-    for key in kargs.iterkeys():
+    for key in kargs:
       logger.debug("Key: %s" % (key))
 
   def __logFunctionCallInfo__(self, funcName, section, lines, **kargs):
@@ -400,7 +404,7 @@ class Routine(object):
 """
   class to parse KIDS Build, also implement ISectionParser Interface for install Name
 """
-class KIDSBuildParser(object, ISectionParser):
+class KIDSBuildParser(ISectionParser):
   """
     enum for section
   """
@@ -513,13 +517,14 @@ class KIDSBuildParser(object, ISectionParser):
     assert os.path.exists(kidsBuild)
     logger.info("Parsing KIDS file %s" % kidsBuild)
     lines = None
-    with open(kidsBuild, 'r') as input:
-      curLine = input.readline()
+    with codecs.open(kidsBuild, 'r', encoding='utf-8', errors='ignore') as input:
+      curLine = input.readline().rstrip('\r\n')
       lineNum = 0
       while len(curLine) > 0:
         lineNum += 1
         """ read one more line """
-        lines = (curLine.rstrip('\r\n'), input.readline().rstrip('\r\n'))
+        linetext = input.readline()
+        lines = (curLine.rstrip('\r\n'), linetext.rstrip('\r\n'))
         if lineNum == 1:
           self.__parseKIDSHeader__(lines)
         elif self._end: # should not be any more lines after end section
@@ -537,23 +542,23 @@ class KIDSBuildParser(object, ISectionParser):
                                          kidsBuild=self._curKidsBuild)
         # goto the next line #
         lineNum += 1
-        curLine = input.readline()
+        curLine = input.readline().rstrip('\r\n')
       else: # at end of file
         self.__resetCurrentSection__(None, None, lines)
 
   def unregisterSectionHandler(self, section):
     if section in self._sectionHandler:
       self._sectionHandler[section] = None
-    for regex in self._regExSectionMapping.iterkeys():
+    for regex in self._regExSectionMapping:
       if self._regExSectionMapping[regex][0] == section:
         self._regExSectionMapping[regex] = (section, None)
   """
     print the result
   """
   def printResult(self):
-    print self.installNameList
+    print(self.installNameList)
     for kidsBuild in self._kidsBuilds:
-      print kidsBuild
+      print(kidsBuild)
       if kidsBuild.preInstallRoutine:
         preRtn = kidsBuild.preInstallRoutine.split('^')[-1]
         assert preRtn in [x.name for x in kidsBuild.routineList]
@@ -571,7 +576,7 @@ class KIDSBuildParser(object, ISectionParser):
   """
   def __verifyResult__(self):
     for kidsBuild in self._kidsBuilds:
-      print kidsBuild
+      print(kidsBuild)
       if kidsBuild.preInstallRoutine:
         preRtn = kidsBuild.preInstallRoutine.split('^')[-1]
         if preRtn not in [x.name for x in kidsBuild.routineList]:
@@ -644,7 +649,7 @@ class KIDSBuildParser(object, ISectionParser):
     @return (None, None) if not valid, else return (section, parser)
   """
   def __isSectionLine__(self, curLine):
-    for regex in self._regExSectionMapping.iterkeys():
+    for regex in self._regExSectionMapping:
       if regex.search(curLine):
         return self._regExSectionMapping[regex]
     return (None, None)
@@ -749,7 +754,7 @@ def routineLineCheckSum(routineLine, lineNum):
       #still count data lines (";;")
       totalLen = pos
   checkSum = 0
-  for i in xrange(totalLen):
+  for i in range(totalLen):
     checkSum += (lineNum+i+1)*ord(routineLine[i])
   return checkSum
 

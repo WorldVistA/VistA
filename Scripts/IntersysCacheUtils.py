@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,8 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import with_statement
+from __future__ import print_function
+import codecs
 import os
 import sys
 import subprocess
@@ -91,13 +93,13 @@ def isInstanceRunning(instanceName):
   RUNNING_REGEX = re.compile("^running", re.IGNORECASE)
   try:
     output = subprocess.Popen(cmdLst, stdout=subprocess.PIPE).communicate()[0]
-    lines = output.split('\n')
+    lines = codecs.decode(output, 'utf-8', 'ignore').split('\n')
     for line in lines:
       resultList = line.split('^')
       if resultList[0] == instanceName:
         return (RUNNING_REGEX.search(resultList[3].split(',')[0]) != None)
   except OSError as ex:
-    print ex
+    print(ex)
   return False
 """
   dismount/mount a local database via InterSystem Cache ^DATABASE call
@@ -322,7 +324,7 @@ def testMountDisMountLocalDb():
                            'Make sure InterSystem ^DATABASE routine is accessable via'
                            ' specified namespace.')
   result = parser.parse_args();
-  print result
+  print(result)
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
   with testClient:
     if result.action == 'D':

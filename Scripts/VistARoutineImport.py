@@ -1,5 +1,6 @@
+
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2012-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
 from __future__ import with_statement
+from builtins import object
 import sys
 import os
 import argparse
@@ -93,7 +95,7 @@ def main():
   assert testClient
   with testClient as vistAClient:
     logFilename = getTempLogFile(DEFAULT_OUTPUT_LOG_FILE_NAME)
-    print "Log File is %s" % logFilename
+    print("Log File is %s" % logFilename)
     vistAClient.setLogFile(logFilename)
     vistARoutineImport = VistARoutineImport()
     vistARoutineImport.importRoutines(vistAClient, routineImportFile,

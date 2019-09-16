@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from builtins import zip
+import codecs
 import os
 import sys
 import subprocess
@@ -113,25 +115,26 @@ def addChangeSet(gitRepoDir=None, patternList=[]):
               if i == len(outList):
                 results.append("OK")
                 break
-              if s[0]=="-":
-                diffStack.append(s[2:])
-              if s[0] == "+":
-                if len(diffStack):
-                  if re.search("DIC\(9.8,",s[2:]):
-                    break
-                  if re.search("[0-9]{7}(\.[0-9]{4,6})*",s[2:]) or re.search("[0-9]{7}(\.[0-9]{4,6})*",diffStack[0]):
-                    results.append("DATE")
-                    break
-                  if re.search("[0-9]{2}\-[A-Z]{3}\-[0-9]{4}",s[2:]) or re.search("[0-9]{2}\:[0-9]{2}\:[0-9]{2}",diffStack[0]) :
-                    results.append("DATE")
-                    break
-                  if re.search("[0-9]{2}:[0-9]{2}:[0-9]{2}",s[2:]) or re.search("[0-9]{2}\:[0-9]{2}\:[0-9]{2}",diffStack[0]) :
-                    results.append("DATE")
-                    break
-                  # Removes a specific global entry in DEVICE file which maintains a count of the times the device was opened
-                  if re.search("%ZIS\([0-9]+,[0-9]+,5",s[2:]):
-                    break
-                  diffStack.pop(0)
+              if s:
+                if s[0]=="-":
+                  diffStack.append(s[2:])
+                if s[0] == "+":
+                  if len(diffStack):
+                    if re.search("DIC\(9.8,",s[2:]):
+                      break
+                    if re.search("[0-9]{7}(\.[0-9]{4,6})*",s[2:]) or re.search("[0-9]{7}(\.[0-9]{4,6})*",diffStack[0]):
+                      results.append("DATE")
+                      break
+                    if re.search("[0-9]{2}\-[A-Z]{3}\-[0-9]{4}",s[2:]) or re.search("[0-9]{2}\:[0-9]{2}\:[0-9]{2}",diffStack[0]) :
+                      results.append("DATE")
+                      break
+                    if re.search("[0-9]{2}:[0-9]{2}:[0-9]{2}",s[2:]) or re.search("[0-9]{2}\:[0-9]{2}\:[0-9]{2}",diffStack[0]) :
+                      results.append("DATE")
+                      break
+                    # Removes a specific global entry in DEVICE file which maintains a count of the times the device was opened
+                    if re.search("%ZIS\([0-9]+,[0-9]+,5",s[2:]):
+                      break
+                    diffStack.pop(0)
             outLineStack.pop(0)
         else:
           results.append("OK")
@@ -139,7 +142,7 @@ def addChangeSet(gitRepoDir=None, patternList=[]):
   git_command_list = ["git", "add", "--"]
   totalIncludeList = patternList + patternIncludeList
   for file in totalIncludeList:
-    git_command = git_command_list + [file.encode('string-escape')]
+    git_command = git_command_list + [file]
     result, output = _runGitCommand(git_command, gitRepoDir)
     if not result:
       logger.error("Git add command failed: " + output)
@@ -153,7 +156,7 @@ def addChangeSet(gitRepoDir=None, patternList=[]):
   git_command_list = ["git","add"]
   for file in lsFilesOutput.split("\n"):
     if len(file):
-      git_command = git_command_list + [file.encode('string-escape')]
+      git_command = git_command_list + [file]
       result, output = _runGitCommand(git_command, gitRepoDir)
       if not result:
         logger.error("Git ls-files command failed: " + output)
@@ -203,7 +206,7 @@ def getCommitInfo(gitRepoDir=None, revision='HEAD'):
   git_command_list.extend([fmtStr, "-n1", revision])
   result, output = _runGitCommand(git_command_list, gitRepoDir)
   if result:
-    return dict(zip(outfmtLst, output.strip('\r\n').split(delim)))
+    return dict(list(zip(outfmtLst, output.strip('\r\n').split(delim))))
   return None
 
 def _runGitCommand(gitCmdList, workingDir):
@@ -221,11 +224,11 @@ def _runGitCommand(gitCmdList, workingDir):
                              stdout=subprocess.PIPE)
     output = popen.communicate()[0]
     if popen.returncode != 0: # command error
-      return (False, output)
-    return (True, output)
+      return (False, codecs.decode(output,'utf-8','ignore'))
+    return (True, codecs.decode(output, 'utf-8', 'ignore'))
   except OSError as ex:
     logger.error(ex)
-  return (False, output)
+  return (False, codecs.decode(output, 'utf-8', 'ignore'))
 
 def main():
   initConsoleLogging()

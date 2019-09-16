@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2012-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,9 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
+from __future__ import print_function
 from __future__ import with_statement
+from builtins import object
 import sys
 import os
 import re
@@ -25,7 +27,7 @@ from LoggerManager import getTempLogFile
 
 class VistARoutineExport(object):
   """ regular expression constants """
-  REGEX_ROUTINES = re.compile("Routine(\(s\))?: ")
+  REGEX_ROUTINES = "Routine(\(s\))?: "
   def __init__(self):
     pass
   def __setupOutputInfoCache__(self, connection, outputFileName):
@@ -124,7 +126,7 @@ def main():
   assert testClient
   with testClient as vistAClient:
     logFilename = getTempLogFile(DEFAULT_OUTPUT_LOG_FILE_NAME)
-    print "Log File is %s" % logFilename
+    print("Log File is %s" % logFilename)
     vistAClient.setLogFile(logFilename)
     isAllRoutines = result.allRoutines
     vistARoutineExport = VistARoutineExport()

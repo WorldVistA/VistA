@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2012-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+from __future__ import print_function
 from __future__ import with_statement
+from builtins import range
+from builtins import object
 import os # to get gtm environment variables
+import datetime
 import sys
 import subprocess
 import re
@@ -35,6 +39,8 @@ else:
   from pexpect import TIMEOUT
   from winpexpect import winspawn
 
+from OSEHRAHelper import ConnectWinCache, ConnectLinuxCache, ConnectLinuxGTM
+
 DEFAULT_TIME_OUT_VALUE = 30
 CACHE_PROMPT_END = ">"
 DEFAULT_HOST='127.0.0.1'
@@ -49,6 +55,7 @@ class VistATestClient(object):
   GTM_ON_LINUX = 3
   PLATFORM_LAST = 4
   def __init__(self, platform, prompt = None, namespace = None):
+    self.resfile = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S_{fname}').format(fname="VistAInteraction" + '.txt')
     self._connection = None
     assert int(platform) > self.PLATFORM_NONE and int(platform) < self.PLATFORM_LAST
     self._platform = platform
@@ -75,7 +82,8 @@ class VistATestClient(object):
   def isGTM(self):
     return self._platform == self.GTM_ON_LINUX
   def setLogFile(self, logFilename):
-    self._connection.logfile = open(logFilename, 'wb')
+    self._connection.connection.logfile_read = open(logFilename, 'w')
+    self._connection.log = open(logFilename, 'w')
   def getInstanceName(self):
     return self._instance
   """ Implementation context manager methods """
@@ -85,9 +93,13 @@ class VistATestClient(object):
     logger.debug("__exit__ is called %s,%s,%s" % (exc_type, exc_value, traceback))
     connection = self._connection
     if exc_type is KeyboardInterrupt:
-      connection.terminate()
+      try:
+        connection.connection.close()
+      except ExceptionPexpect as ose:
+        logger.error(ose)
+        connection.connection.terminate()
       return True
-    if connection is not None and connection.isalive():
+    if connection is not None:
     # try to close the connection gracefully
       try:
         for i in range(0,3):
@@ -98,18 +110,15 @@ class VistATestClient(object):
         connection.send("H\r") # Halt VistA connection
       except Exception as ex:
         logger.error(ex)
-      if isLinuxSystem():
-        if connection.isalive():
-          """ pexpect close() will close all open handlers and is non-blocking """
-          try:
-            connection.close()
-          except ExceptionPexpect as ose:
-            logger.error(ose)
-    connection.terminate()
+      try:
+        connection.connection.close()
+      except ExceptionPexpect as ose:
+        logger.error(ose)
+        connection.connection.terminate()
     return
   def __del__(self):
     if self._connection is not None:
-      self._connection.terminate()
+      self._connection.connection.close()
 
 """ implementation of GTM test client in linux """
 class VistATestClientGTMLinux(VistATestClient):
@@ -124,14 +133,15 @@ class VistATestClientGTMLinux(VistATestClient):
     if gtm_dist:
       self.DEFAULT_GTM_COMMAND = os.path.join(gtm_dist,
                                               self.DEFAULT_GTM_COMMAND)
+
     VistATestClient.__init__(self, self.GTM_ON_LINUX, gtm_prompt, None)
   def createConnection(self, command, instance,
                        username = None, password = None,
                        hostname=DEFAULT_HOST, port=DEFAULT_PORT):
     if not command:
       command = self.DEFAULT_GTM_COMMAND
-    self._connection = pexpect.spawn(command, timeout = DEFAULT_TIME_OUT_VALUE)
-    assert self._connection.isalive()
+    self._connection = ConnectLinuxGTM(self.resfile, instance, self.getPrompt(), "127.0.0.1") # pexpect.spawn(command, timeout = DEFAULT_TIME_OUT_VALUE)
+    assert self._connection.connection.isalive()
 
 """ common base class for cache test client """
 class VistATestClientCache(VistATestClient):
@@ -147,11 +157,12 @@ class VistATestClientCache(VistATestClient):
     child.expect("Password:")
     child.send("%s\r" % password)
 
+
+
 """ Implementation of Cache on windows system
     Make sure that plink is in you %path%
 """
-class VistATestClientCacheWindows(VistATestClientCache):
-  DEFAULT_WIN_TELNET_CMD =  "plink.exe -telnet"
+class VistATestClientCacheWindows(VistATestClientCache, ConnectWinCache):
   def __init__(self, namespace):
     assert namespace, "Must provide a namespace"
     prompt = namespace + CACHE_PROMPT_END
@@ -160,19 +171,15 @@ class VistATestClientCacheWindows(VistATestClientCache):
   def createConnection(self, command, instance,
                        username = None, password = None,
                        hostname=DEFAULT_HOST, port=DEFAULT_PORT):
-    if not command:
-      command = self.DEFAULT_WIN_TELNET_CMD
-    if (hostname and port):
-      command += " %s -P %s" % (hostname, port)
     self._instance = instance
-    self._connection = winspawn(command, timeout = DEFAULT_TIME_OUT_VALUE)
-    assert self._connection.isalive()
+    self._connection = ConnectWinCache(self.resfile, self._instance, self._namespace, "127.0.0.1")
+    #assert self._connection.connection.isalive()
     if username and password:
       self.__signIn__(username, password)
     self.__changeNamesapce__()
 
 """ Implementation of Cache on Linux system """
-class VistATestClientCacheLinux(VistATestClientCache):
+class VistATestClientCacheLinux(VistATestClientCache, ConnectLinuxCache):
   DEFAULT_CACHE_CMD = "ccontrol session"
   def __init__(self, namespace):
     assert namespace, "Must provide a namespace"
@@ -186,8 +193,8 @@ class VistATestClientCacheLinux(VistATestClientCache):
       assert instance
       command = "%s %s" % (self.DEFAULT_CACHE_CMD, instance)
     self._instance = instance
-    self._connection = pexpect.spawn(command, timeout = DEFAULT_TIME_OUT_VALUE)
-    assert self._connection.isalive()
+    self._connection = ConnectLinuxCache(self.resfile, self._instance, self._namespace, "127.0.0.1")
+    #assert self._connection.connection.isalive()
     if username and password:
       self.__signIn__(username, password)
     self.__changeNamesapce__()
