@@ -1,0 +1,109 @@
+
+=============================================================================
+Run Date: MAY 13, 2019                     Designation: GMRC*3*125
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3       SEQ #105                      Status: Released
+                  Compliance Date: MAY 17, 2019
+=============================================================================
+
+
+Subject: DECISION SUPPORT TOOL (DST) CACHE SSL/TLS ENCRYPTION SETUP
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ When a consult order is signed if there is a DST ID number listed 
+ in the ORDER file (#100), this DST patch will query the DST server 
+ and retrieve the detailed DST information from the database and 
+ create a Consult Comment in the REQUEST/CONSULTATION file(#123) 
+ that includes the structured consult  factor text to enable 
+ analytic reporting using the same approach as 
+ Consult Tool Box (CTB).
+ 
+ This Information only patch guides the setup for enabling DST to
+ communicate through an encrypted connection.
+ 
+ *NOTE: Unless the instructions in this patch are followed
+ the features and functions in patch GMRC*3.0*124 will not function. 
+ 
+ In order for patch GMRC*3.0*124 to connect to the DST servers
+ it is necessary to add SSL/TLS encryption to the Cache Management
+ Portal. This MUST be done for ALL nodes. The following instructions 
+ will guide a system administrator through this process.
+   
+  
+ The instructions for Cache 2014 and 2017 are slightly different - see 
+ step 12 below.
+  
+ *NOTE*- Private key type RSA is automatically checked.  Do not change.
+    
+ Steps:
+    1. Access the Cache Management Portal using either the appropriate
+    URL for the site or the link via the Cache Cube
+    2. Navigate to the System > Security Management > SSL/TLS 
+    Configuration
+    3. If a configuration called "encrypt_only_all" already exists then 
+    use the Edit option to ensure the configuration is correct
+    4. If no "encrypt_only_all" configuration exists use the "Create New 
+    Configuration" option
+    5. Configuration Name: encrypt_only_all
+    6. Description: encrypt only all for DST
+    7. Enable: Ensure check box is checked
+    8. Type: Client radio button should be selected
+    9. Peer Certificate Verification level: None radio button should be 
+    selected
+    10. File Containing Trusted Certificate: Leave Blank
+    11. This Client Credentials: Leave entire section blank, see NOTE above
+    12. Cryptographic settings for Protocols: For Cache 2014, TLSv1 should 
+    be checked, uncheck other boxes
+    For Cache 2017, check TLSv1.0, uncheck other boxes
+    13. Enabled ciphersuites should remain default as shown below
+    Cache 2014 - TLSv1:SSlv3:!ADH:!LOW:!EXP:@STRENGTH
+    Cache 2017 - ALL:!aNULL:!eNULL:!EXP:!SSLv2
+    14. Save configuration. *Note test option will not work.
+ 
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+ 
+ The documentation will be in the form of Adobe Acrobat files.
+ 
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+ 
+ Title                         File Name                       SFTP Mode
+ ----------------------------------------------------------------------- 
+ DST User Guide                dst_ug.docx                     binary
+ DST User Guide                dst_ug.pdf                      binary
+ DST DIBORG                    dst_dibr.docx                   binary
+        
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 12, 2019
+Completed By:                               Date Completed: MAY 13, 2019
+Released By :                               Date Released : MAY 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

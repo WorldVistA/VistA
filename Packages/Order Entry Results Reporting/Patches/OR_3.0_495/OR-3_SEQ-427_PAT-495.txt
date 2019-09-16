@@ -1,0 +1,298 @@
+
+=============================================================================
+Run Date: JUL 17, 2019                     Designation: OR*3*495
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #427                      Status: Released
+                  Compliance Date: AUG 17, 2019
+=============================================================================
+
+
+Subject: VISTA SECURITY REMEDIATION RPC REFERENCE PARAMETER TYPE RPC UPDATES
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Patch OR*3.0*495 is being released to support the security vulnerability
+ solution for the Veterans Health Information Systems and Technology
+ Architecture (VistA) Security Remediation (VSR) program that focuses on 
+ updates to the REFERENCE Parameter Type Remote Procedure Calls (RPCs).
+  
+ Patch OR*3.0*495 is being released as a supporting patch for the 
+ Beneficiary Travel Patch DGBT*1.0*35.  OR*3.0*495 contains data entry updates 
+ to the REMOTE PROCEDURE File (#8994) that include the following.
+  
+ Defects:
+ 957767 - DEF - RPC call ORVAA VAA
+ 957768 - DEF - RPC call ORWDBA1 GETORDX
+ 957769 - DEF - RPC call ORWDBA2 GETDUDC
+ 957771 - DEF - RPC call ORWDBA2 GETPDL
+ 957772 - DEF - RPC call ORWDBA4 GETBAUSR
+ 957773 - DEF - RPC call ORWDBA2 ADDPDL
+ 957775 - DEF - RPC call ORWDBA2 DELPDL
+  
+ 1. Remote Procedure call ORVAA VAA
+  
+    a. This RPC allows for an input parameter (DFN) to be passed in as a 
+       reference type which could be a potential security risk.
+  
+    b. Changed the reference type parameter to literal in the REMOTE PROCEDURE
+       File (#8994) and maximum length from 255 to 20.
+  
+ 2. Remote Procedure call ORWDBA1 GETORDX
+  
+    a. This RPC allows for an input parameter (ORIEN) to be passed in as a 
+       reference type which could be a potential security risk.
+  
+    b. Changed the reference type parameter to literal in the REMOTE PROCEDURE 
+       File (#8994) and maximum length from 255 to 20.
+  
+ 3. Remote Procedure call ORWDBA2 GETDUDC
+  
+    a. This RPC allows for two input parameters (ORCIEN and ORPTIEN) to be 
+       passed in as reference types which could be a potential security risk.
+  
+    b. Changed the reference type parameters to literal in the REMOTE 
+       PROCEDURE File (#8994) and corrected the Input Parameter sequence.
+  
+ 4. Remote Procedure call ORWDBA2 GETPDL
+  
+    a. This RPC allows for input parameter (ORCIEN) to be passed in as a
+       reference type which could be a potential security risk.
+  
+    b. Changed the reference type parameters to literal in the REMOTE 
+       PROCEDURE File (#8994) and corrected the Input Parameter sequence and   
+       maximum length from 255 to 30.
+  
+ 5. Remote Procedure call ORWDBA4 GETBAUSR
+  
+    a. This RPC allows for input parameter (ORCIEN) to be passed in as a
+       reference type which could be a potential security risk.
+  
+    b. Changed the reference type parameters to literal in the REMOTE 
+       PROCEDURE file (#8994) and corrected the Input Parameter sequence and   
+       Maximum length from 255 to 30.
+  
+ 6. Remote Procedure call ORWDBA2 ADDPDL
+  
+     a. This RPC allows for input parameter (ORCIEN) to be passed in as a
+        reference type which could be a potential security risk.
+  
+     b. Changed the reference type parameter to literal in the REMOTE 
+        PROCEDURE File (#8994) and corrected the Input Parameter sequence and 
+        maximum length from 255 to 30.
+  
+ 7. Remote Procedure call ORWDBA2 DELPDL
+  
+     a. This RPC allows for input parameter (ORCIEN) to be passed in as a
+         reference type which could be a potential security risk.
+  
+     b. Changed the reference type parameter to literal in the REMOTE 
+        PROCEDURE File (#8994) and corrected the Input Parameter sequence and
+        maximum length from 255 to 30.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+ Integration Control Registration IA #5939 has been updated for this patch
+       5939     NAME: ORVAA VAA
+ CUSTODIAL PACKAGE:  ORDER ENTRY/RESULTS REPORTING              
+ SUBSCRIBING PACKAGE: VISTA INTEGRATION ADAPTOR                  
+                         VIA will use this RPC in the VIAB*1*1 patch. One of
+                         the charges to the VIA project is exposing RPCs and
+                         creating ICRs for those RPCs that are already in use
+                         by the MDWS infrastructure. VIA provides a Class I
+                         product of services that work with VistaLink,
+                         replacing the need for developers to use MDWS
+                         services.  The OR*3*392 patch is associated with the
+                         VIAB*1*1 patch.  
+               USAGE: Private             ENTERED: JUN 26,2013
+              STATUS: Under Revision      EXPIRES: 
+            DURATION: Till Otherwise Agr  VERSION: 
+         DESCRIPTION:                        TYPE: Remote Procedure
+    This ICR was created for VIA. The RPC was used by MDWS, and never 
+    previously documented in an ICR.  Since MDWS already uses this RPC, and 
+    VIA is responsible for exposing all RPCs used by MDWS, the CPRS 
+    development team agrees to the use of the RPC. 
+     
+    For future subscribers there first needs to be a check for an RPC created 
+    in the namespace that owns the data accessed by this RPC.  
+     
+    A new OR*3*392 patch will be distributed that turns on this RPC's flag - 
+    APP PROXY ENABLED. The OR*3*392 patch is associated with the VIAB*1*1 
+    patch. Patch OR*3*495 modified this ICR and changed PARAMETER TYPE of 
+    REFERENCE to LITERAL.  This is in concordance with the VistA Security 
+    Remediation (VSR) project.  
+     
+    The following is the definition of the Remote Procedure: NAME: ORVAA VAA   
+                         TAG: VAA 
+      ROUTINE: ORVAA                        RETURN VALUE TYPE: ARRAY 
+      APP PROXY ALLOWED: Yes 
+     DESCRIPTION:   
+     Returns the policy name for a veteran with VA Advantage. If the veteran 
+     does not have VA Advantage the return value will be 0.  INPUT PARAMETER:
+    DFN                    PARAMETER TYPE: LITERAL 
+      MAXIMUM DATA LENGTH: 255              REQUIRED: YES 
+      SEQUENCE NUMBER: 1 
+     DESCRIPTION:   
+     The DFN is the veteran patient's Internal Entry Number in the PATIENT 
+     file.  
+    Returns the policy name for a veteran with VA Advantage. If the veteran 
+    does not have VA Advantage the return value will be 0.
+  
+ TAG^ROUTINE: VAA^ORVAA
+            KEYWORDS:
+  
+                              ********************
+   
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Tucson, AZ
+ West Palm Beach, FL
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality and/or a host file containing 
+ a build may be included in this release.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the 
+ following OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ N/A
+  
+ Patches for this installation are combined in the following host file for
+ distribution: DGBT_1_P35.KID. 
+  
+ The host file was created to simplify installation at Veterans
+ Health Administration (VHA) facilities. This file can be obtained from 
+ one of the anonymous Secure File Transfer Protocol (SFTP) directories.
+  
+ File Name                           Contents           Retrieval Format
+ ----------------------------        --------           ----------------
+ DGBT_1_P35.KID                      DGBT*1.0*35          ASCII
+                                     GMRC*3.0*105
+                                     MD*1.0*67
+                                     GMRV*5.0*39
+                                     OR*3.0*495
+                                     PSB*3.0*113
+                                     SD*5.3*713
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+   
+ Installation Instructions:
+ --------------------------
+ Please refer to the DGBT*1.0*35 patch description for installation 
+ instructions. 
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Please refer to the DGBT*1.0*35 patch description for back out plan.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 17, 2018
+Completed By:                               Date Completed: JUL 16, 2019
+Released By :                               Date Released : JUL 17, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

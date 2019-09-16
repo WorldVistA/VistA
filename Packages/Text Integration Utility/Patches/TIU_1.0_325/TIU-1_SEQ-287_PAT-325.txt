@@ -1,0 +1,411 @@
+
+=============================================================================
+Run Date: JUN 11, 2019                     Designation: TIU*1*325
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #287                      Status: Released
+                  Compliance Date: JUL 12, 2019
+=============================================================================
+
+
+Subject: INFORMATIONAL - VIE TO HEALTH CONNECT MIGRATION
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ **************************************************************************
+ This is an informational patch describing the migration from Vitria
+ Interface Engine (VIE) to InterSystems Health Connect (HC). HC is a
+ part of the suite of products grouped under HealthShare.
+  
+ This informational patch applies only for VistA sites that utilize the
+ Remote Order Entry System (ROES)interface. Please disregard if your
+ Site does NOT use Remote Order Entry System (ROES).(See live ROES Sites 
+ below).
+ **************************************************************************
+    
+ The Health Connect (HC) product will be replacing the Vitria Interface 
+ Engine (VIE). During the transition phase, HC and VIE will be running 
+ concurrently.
+   
+ The Remote Order Entry System (ROES) allows authorized individuals and
+ Department of Veterans Affairs (VA) clinicians to place orders online for
+ products and/or services available through the VA Denver Acquisition &
+ Logistics Center (DLC). The VIE enables the exchange of data between the 
+ VistA sites and ROES to support the addition of CPRS notes based on 
+ ROES actions. The ROES is located at DLC in Denver, CO and it
+ exchanges Health Level Seven (HL7) messages with the VistA system at 
+ various Veterans Affairs Medical Centers (VAMCs). The flow of HL7 messages 
+ and application acknowledgements (AAs) is bi-directional between these 
+ systems using the VistA logical link TIUACKROES.  The HC software will 
+ replace VIE to transmit these messages. Each VistA site utilizing the 
+ notes interface from ROES will reconfigure the TIUACKROES logical link
+ to point to the respective Regional Health Connect (HC) instead of VIE.
+       
+ Patch Components:
+ ================
+     
+ Files & Fields Associated:
+    
+ File Name (#)                     Field Name   New/Modified/Deleted
+ ------------                      ----------   --------------------
+ N/A
+    
+ Form Name             File #                  New/Modified/Deleted
+ ---------             ------                  --------------------
+ N/A
+    
+ Kernel Parameters Associated:
+    
+ Kernel Parameter Name              Entities                   Values
+ ---------------------       ---------------                 --------
+ N/A
+    
+ Mail Groups Associated:
+    
+ Mail Group Name                                New/Modified/Deleted
+ ---------------                                --------------------
+ N/A
+    
+ Options Associated:
+    
+ Option Name                          Type         New/Modified/Deleted
+ -----------                          ----         --------------------
+ N/A
+    
+     
+ Protocols Associated:
+    
+ Protocol Name                              New/Modified/Deleted
+ -------------                              --------------------
+ N/A
+     
+ Security Keys Associated:
+   
+ Security Key Name                           New/Modified/Deleted
+ -----------------                           --------------------
+ N/A
+   
+ Templates Associated:
+   
+ Template Name               Type  File Name (#)  New/Modified/Deleted
+ -------------               ----  ------------   --------------------
+ N/A
+    
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+    
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+   
+   
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ TEST Sites: There are no test sites for ROES.
+ ===========
+  
+ Production Sites:
+ =================
+ The following list details the sites that currently utilize ROES
+ functionality.
+  
+     Station #   DNS                       Site Name       VISN   Region
+ =======================================================================
+  1. 644         PHOENIX.DOMAIN.EXT        Phoenix          18     1DVR 
+ -----------------------------------------------------------------------
+  2. 687         WALLA-WALLA.DOMAIN.EXT    Walla Walla      20     1SAC 
+ -----------------------------------------------------------------------
+  3. 502         ALEXANDRIA.DOMAIN.EXT     Alexandria       16     2
+  4. 502GB       ALEXANDRIA.DOMAIN.EXT     LaFayette        16     2
+  5. 520         BILOXI.DOMAIN.EXT         Biloxi           16     2
+  6. 520GA       BILOXI.DOMAIN.EXT         Mobile           16     2
+  7. 520BZ       BILOXI.DOMAIN.EXT         Pensacola        16     2 
+  8. 556         N-CHICAGO.DOMAIN.EXT      North Chicago    12     2
+  9. 580         HOUSTON.DOMAIN.EXT        Houston          16     2
+ 10. 656         ST-CLOUD.DOMAIN.EXT       St. Cloud        23     2
+ 11. 656GA       ST-CLOUD.DOMAIN.EXT       Brainerd         23     2
+ 12. 656GB       ST-CLOUD.DOMAIN.EXT       Montevideo       23     2
+ 13. 656GC       ST-CLOUD.DOMAIN.EXT       Alexandria       23     2
+ 14. 676         TOMAH.DOMAIN.EXT          Tomah            12     2
+ 15. 676GD       TOMAH.DOMAIN.EXT          Wisconsin Rapids 12     2
+ 16. 676GE       TOMAH.DOMAIN.EXT          Clark County     12     2
+ 17. 676GA       TOMAH.DOMAIN.EXT          Wausau           12     2
+ 18. 676GC       TOMAH.DOMAIN.EXT          La Crosse        12     2
+ -----------------------------------------------------------------------
+ 19. 528         V02.DOMAIN.EXT            Buffalo          2      4BYN   
+ 20. 528A5       CANANDAIGUA.DOMAIN.EXT    Canandaigua      2      4BYN 
+ 21. 528A6       BATH.DOMAIN.EXT           Bath             2      4BYN
+ 22. 528A7       SYRACUSE.DOMAIN.EXT       Syracuse         2      4BYN 
+ 23. 528A8       ALBANY.DOMAIN.EXT         Albany           2      4BYN
+ 24. 528GE       V02.DOMAIN.EXT            Rochester        2      4BYN
+ -----------------------------------------------------------------------
+ 25. 503         ALTOONA.DOMAIN.EXT        Altoona          4      4PITC
+ 26. 595         LEBANON.DOMAIN.EXT        Lebanon          4      4PITC 
+ =======================================================================
+  
+    
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ There is no VistA software being released for this migration. The 
+ documentation describing this new functionality is available.
+    
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+    
+ Sites may retrieve the software documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at
+ the following OI Field Offices:
+   
+ Hines          domain.ext
+ Salt Lake City domain.ext
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+   
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ File Description                         File Name                FTP Mode
+ --------------------------------------------------------------------------
+   
+ Health Connect/ROES                    tiu_1_p325_dibr.pdf       Binary
+ Deployment, Installation, Back-Out
+ and Rollback Guide  
+  
+ Health Connect/ROES                    tiu_1_p325_dibr.docx       Binary
+ Deployment, Installation, Back-Out
+ and Rollback Guide  
+  
+ Text Integration Utilities (TIU)       tiuhl7.pdf               Binary
+ Generic HL7 Interface Handbook
+  
+ Text Integration Utilities (TIU)       tiuhl7.docx               Binary
+ Generic HL7 Interface Handbook
+    
+ Patch Installation: 
+    
+ Pre/Post Installation Overview
+ ------------------------------
+ **************************************************************************
+ The following instructions are to be performed only when directed to do so 
+ by the HealthShare National Admin Team. These changes can only be 
+ implemented in collaboration and coordination with the HealthShare National
+ Admin Team, the Health Connect Support Operations Team, VistA HL7 support, 
+ and ROES Implementation Support.
+    
+ Please refer to the Health Connect/ROES Deployment, Installation, 
+ Back-Out and Rollback Guide for the overall implementation of the ROES 
+ to Health Connect deployment.
+ *************************************************************************** 
+     
+ Installation Instructions
+ -------------------------
+  
+ **************************************************************************
+ The following instructions are to be performed only when directed to do so 
+ by the Healthshare National Admin Team. These changes can only be 
+ implemented in collaboration and coordination with Implementation Support, 
+ Clinical Product Support and Healthshare National Admin Team. 
+ **************************************************************************
+  
+ After HealthShare's Health Connect (HC) is deployed, and the HC
+ Regional Production instance is ready to process incoming and outgoing 
+ messages, the site administrator will need to edit the HL LOGICAL LINK file
+ (#870) for the TIUACKROES entry. The VistA outbound logical link will need 
+ to reference a TCP/IP address and port associated with the HL7 Listener 
+ Service of the Regional Health Connect production.
+ NOTE:
+  (1) The Financial Admin Team will make the configuration change.
+  (2) Prior to making any changes to the Logical Links as listed above, IO
+ VistA Application Analyst should take screen shots of the logical Link
+ configuration (FileMan Print Option, from File#870 HL LOGICAL 
+ LINK, entry: TIUACKROES) prior to making any changes should a back out be
+ required.
+ The screen shots will be used to reference to restore prior
+ configurations should it be necessary.
+    
+ The following steps will have to be performed in the VistA HL7 application 
+ for TIUACKROES outbound link entry:
+    
+ Step 1.  Stop the TIUACKROES Logical Link using the HL7 Menu option: 
+          Start/Stop Links. The following is an example:
+    
+    Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+    
+             Event monitoring menu ...
+             Systems Link Monitor
+             Filer and Link Management Options ...  <===
+             Message Management Options ...
+             Interface Developer Options ...
+             Site Parameter Edit
+      HLO    HL7 (Optimized) MAIN MENU ...
+    
+   Select HL7 Main Menu <TEST ACCOUNT> Option: FILER AND LINK Management 
+                                               Options
+    
+    
+      SM     Systems Link Monitor
+      FL     Monitor, Start, Stop Filers
+      LM     TCP Link Manager Start/Stop
+      SA     Stop All Messaging Background Processes
+      RA     Restart/Start All Links and Filers
+      DF     Default Filers Startup
+      SL     Start/Stop Links  <===
+      PI     Ping (TCP Only)
+      ED     Link Edit
+      ER     Link Errors ...
+    
+   Select Filer and Link Management Options <TEST ACCOUNT> Option: sl  
+                                                          
+   This option is used to launch the lower level protocol for the
+   appropriate device.  Please select the node with which you want
+   to communicate
+    
+   Select HL LOGICAL LINK NODE: TIUACKROES
+   The LLP was last started on MAR 07, 2019 12:17:34.
+   
+   Okay to shut down this job? YES
+   The job for the TIUACKROES Lower Level Protocol will be shut down.
+   
+ STEP 2. Reset the TIUACKROES Logical Link  Queue Count (as instructed by 
+ Enterprise HL7 Support Team on the call):
+              HL7 Main Menu 
+                FI Filer and Link Management Options
+                 ER  Link Errors
+                  RESET Link's Counters (TCP Only)
+                   Select a TCP link:TIUACKROES
+  
+ Step 3. Edit the TIUACKROES Logical Link with the Link Edit HL7 menu
+ option:
+    
+      SM     Systems Link Monitor
+      FL     Monitor, Start, Stop Filers
+      LM     TCP Link Manager Start/Stop
+      SA     Stop All Messaging Background Processes
+      RA     Restart/Start All Links and Filers
+      DF     Default Filers Startup
+      SL     Start/Stop Links
+      PI     Ping (TCP Only)
+      ED     Link Edit     <===
+      ER     Link Errors ...
+    
+   Select HL LOGICAL LINK NODE:    TIUACKROES
+    
+ Step 4. On the first screen, change AUTOSTART to Enabled. 
+    Next, move the cursor to the field LLP TYPE and press Enter. 
+    This will present the second screen (as shown is step 5).
+   
+ Step 5. On the first screen, edit the DNS DOMAIN field as 
+    instructed below.
+     
+                           HL7 LOGICAL LINK
+    ------------------------------------------------------------------------
+    
+                   NODE: TIUACKROES                     DESCRIPTION:
+                   ----
+            INSTITUTION:
+    
+         MAILMAN DOMAIN:
+    
+              AUTOSTART: Disabled  
+    
+             QUEUE SIZE: 10    
+    
+               LLP TYPE: TCP  <=== Highlight this field and hit <ENTER>.
+               --------            The TCP LOWER LEVEL PARAMETERS window
+                                   will open up (shown in step 6 below.
+                                   >>>PERFORM THIS STEP BEFORE UPDATING THE
+                                   DNS DOMAIN BELOW<<<
+             DNS DOMAIN: XXXX <=== Set this field to the value for your
+                                   regional Health Connect system
+                                   
+    _________________________________________________________________________
+    
+    
+    COMMAND:                              Press <PF1>H for help    Insert
+    
+    
+ Step 6. Replace the existing TCP/IP ADDRESS with null and existing TCP/IP 
+         PORT with the Health Connect IP address and port as shown:
+                                                                            
+    
+                             HL7 LOGICAL LINK
+    -----------------------------------------------------------------------
+    
+     |------------------TCP LOWER LEVEL PARAMETERS---------------------|
+     |                  TIUACKROES                                     |
+     |                                                                 |
+     |  TCP/IP SERVICE TYPE: CLIENT (SENDER)                           |
+     |       TCP/IP ADDRESS: XXXXXX  <=== Delete the existing value and|
+     |                                    leave it blank.              |
+     |                                    Type:                        |
+     |                                    @<Enter>                     |
+     |         TCP/IP PORT: XXXX     <=== Enter the new TCP/IP PORT for|
+     |                                    your site regional Health Connect
+     |                                    system
+     |         TCP/IP PORT (OPTIMIZED):                                |
+     |                                                                 |
+     |   ACK TIMEOUT:                   RE-TRANSMISION ATTEMPTS:       |
+     |  READ TIMEOUT:                 EXCEED RE-TRANSMIT ACTION:       |
+     |    BLOCK SIZE:                                  SAY HELO:       |
+     |                                  TCP/IP OPENFAIL TIMEOUT:       |
+     |STARTUP NODE:                                  PERSISTENT:       |
+     |   RETENTION:                        UNI-DIRECTIONAL WAIT:       |
+     |_________________________________________________________________|
+    
+     ______________________________________________________________________
+    
+    
+    COMMAND:                             Press <PF1>H for help    Insert
+   
+   
+ Note:  Please WAIT until further instructed to restart the 
+        logical link. To restart the TIUACKROES logical link use SL
+        Start/Stop Links menu as shown in Step 1 above.
+  
+ POST INSTALLATION INSTRUCTIONS:
+ ===============================
+  
+ STEP 7: Restart the TIUACKROES Logical Link use SL Start/Stop Links menu
+ as shown in Step 1 above.
+  
+ STEP 8: Check/monitor the TIUACKROES Logical Link queues:
+        a. Check STATUS (report if OPEN/FAIL or ERROR) using the SM 
+           Systems Link Monitor menu option; 
+        b. Check Queue Counts are the same for columns: TO SEND and SENT 
+           using the SM Systems Link Monitor menu option;
+        c. Check IP Address has filled in by performing a FileMan Inquiry 
+           to File #870, HL LOGICAL LINK for the TIUACKROES Logical
+           Link; or using:
+              HL7 Main Menu 
+                FI Filer and Link Management Options
+                 ER  Link Errors
+                  Display One Link (TCP Only)
+                   Select a TCP link:TIUACKROES
+  
+ STEP 9: Monitor TIUACKROES Logical Link-using the SM Systems Link Monitor
+ menu option. Report back on the call any issues.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 15, 2019
+Completed By:                               Date Completed: JUN 11, 2019
+Released By :                               Date Released : JUN 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

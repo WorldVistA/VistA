@@ -1,0 +1,428 @@
+$TXT Created by            at COC-CCAD-DEV.AAC.DOMAIN.EXT  (KIDS) on Thursday, 02/07/19 at 12:09
+=============================================================================
+Run Date: AUG 01, 2019                     Designation: PRCA*4.5*338
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #307                    Status: Released
+                  Compliance Date: AUG 08, 2019
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*253<<= must be installed BEFORE `PRCA*4.5*338'
+                    (v)PRCA*4.5*326<<= must be installed BEFORE `PRCA*4.5*338'
+                    (v)PRCA*4.5*335<<= must be installed BEFORE `PRCA*4.5*338'
+                    (v)PRCA*4.5*337<<= must be installed BEFORE `PRCA*4.5*338'
+                    (v)PRCA*4.5*339<<= must be installed BEFORE `PRCA*4.5*338'
+                    (v)PRCA*4.5*340<<= must be installed BEFORE `PRCA*4.5*338'
+
+Subject: COMMUNITY CARE ACCOUNTS RECEIVABLE ENHANCEMENTS
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+  ****************************************************************
+                NOTICE!!!!!  7 DAYS COMPLIANCE DATE
+  ****************************************************************
+  
+  
+  *****************************************************************
+  
+   WARNING!!!!
+  
+   If this patch, PRCA*4.5*338, has already been installed,
+  
+  
+      ******************* DO NOT RE-INSTALL *******************
+  
+   This pertains to ALL sites, but with special attention to the 3
+   test sites listed below:
+    
+  
+     Edward J Hines VA Hospital (Chicago, IL) - Station 578
+     Hunter Holmes McGuire VA Medical Center (Richmond, VA) 
+        - Station 652 
+     Central Alabama Veterans Healthcare System (Montgomery, AL) 
+        - Station 619
+  
+  
+   Doing so will cause the duplication of entries into the
+   ACCOUNTS RECEIVABLE CATEGORY (430.2) file, which would prevent the
+   ACCOUNTS RECEIVABLE Packages from working correctly.
+  
+ ********************************************************************
+  
+  
+  IMPORTANT INSTALLATION NOTE:
+  ----------------------------
+  There are five patches associated with this project - PRCA*4.5*338,
+  IB*2.0*618, PRCA*4.5*351, IB*2.0*645, and IB*2.0*646. All of the patches
+  are to be installed as PackMan files.  There is no bundle.
+   
+  The patches for this project MUST be installed in this order:
+  1.)  PRCA*4.5*338
+  2.)  IB*2.0*618
+  3.)  PRCA*4.5*351
+  4.)  IB*2.0*645
+  5.)  IB*2.0*646
+  
+  
+  Description
+  ============
+  The Office of Community Care (OCC) is requesting system enhancements to
+  the Veterans Health Information Systems and Technology Architecture
+  (VistA) Integrated Billing (IB), Accounts Receivable (AR), and Fee 
+  Basis (FB) software modules that would allow segregating all billing
+  and collection activities for Non-Department of Veterans Affairs (VA)
+  Care Third Party Insurance carriers' reimbursement.
+  
+  The primary goal of this enhancement is to increase timeliness and
+  collections of billable Non-Veterans Affairs (VA) care services.
+  Enhancements to existing VistA IB, AR, and Fee software applications
+  would allow for increased efficiency in workflow processes leading to
+  best practices that would ultimately be reflected in improved customer
+  service to our Veteran population.
+  
+  The second goal of this enhancement is to prepare the IB and AR software 
+  modules for the implementation of the changes required by the Maintaining
+  Internal Systems and Strengthening Integrated Outside Networks 
+  (MISSION) Act.
+  
+  In order to meet these goals, this patch:
+  
+  1. Creates 36 new entries in the ACCOUNTS RECEIVABLE CATEGORY file
+     (#430.2).
+   
+     - Categories are included for Community Care (CC), Community Care 
+       Network (CCN), Choice and TriCare.
+   
+  2. Creates 84 new entries in the REVENUE SOURCE CODE file (#347.3).
+  
+     - The entries were required to properly link the new AR Categories
+       to the correct fund and accounting data.
+   
+  3. Adds 3 new fields to the ACCOUNTS RECEIVABLE CATEGORY file (430.2)
+     to streamline debt collection referrals for the active referral
+     programs. The fields are REFER TO DMC (1.01), REFER TO TOP (1.02),
+     and REFER TO CS (1.03).
+  
+     NOTE:  Referrals prior to 8/1/2015 will be reviewed for assignment 
+            to TOP.  Referrals after 8/1/2015 are sent directly to TCSP as 
+            appropriate.
+                 
+  
+  4. Allows Contract Adjustments on all new Third Party AR Categories.
+  
+  5. Modifies the AR Nightly Process to check the new REFER to DMC field
+     to see of a receivable can be sent to Debt Management Center (DMC)
+     debt referral program.
+  
+  6. Modifies the AR Nightly Process to check the new REFER to TOP field
+     to see of a receivable can be sent to Treasury Offset Program (TOP)
+     debt referral program.
+  
+  7. Modifies the AR Nightly Process to check the new REFER to CS field
+     to see of a receivable can be sent to Cross Servicing (CS) debt
+     referral program.
+  
+  8. Modifies the Bad Debt report to correctly link the new AR Categories
+     with their corresponding Fund and SGLs
+  
+  9. Modifies the Deposit Reconcilliation Report to allow the new First
+     Party and Third Party Community Care (CC) AR Categories to appear.
+  
+  10. Modifies the Claims Matching Report to allow the new CC AR
+      Categories to appear on the report. 
+  
+  11. Modifies the Revenue Source Code (RSC) Report to display all of the
+      new RSCs generated for the CC project.
+  
+  12. Allows the Calculate Revenue Source Code option [PRCA FMS RSC 
+      CALCULATE] to calculate the new RSC codes using the new AR 
+      Categories.
+  
+  13. Associates the new AR Categories with their corresponding FUNDs.
+  
+  14. Associates the new FUND 528714 with its corresponding AR Categories. 
+  
+  
+  Patch Components:
+  -----------------
+  
+  Files & Fields Associated:
+  
+  File Name (Number)     Field Name (Number)     New/Modified/Deleted
+  ------------------     -------------------     --------------------
+  ACCOUNTS RECEIVABLE CATEGORY (430.2)
+                         REFER TO DMC? (1.01)          New
+                         REFER TO TOP? (1.02)          New
+                         REFER TO CS?  (1.03)          New
+  
+  Forms Associated:
+  
+  Form Name      File #  New/Modified/Deleted
+  ---------      ------  --------------------
+  N/A
+  
+  
+  Mail Groups Associated:
+  
+  Mail Group Name        New/Modified/Deleted
+  ---------------        --------------------
+  N/A
+  
+  
+  Options Associated:
+  
+  Option Name    Type    New/Modified/Deleted
+  -----------    ----    -------------------- 
+  N/A
+  
+  
+  Protocols Associated:
+  
+  Protocol Name  New/Modified/Deleted
+  -------------  -------------------- 
+  N/A
+  
+  
+  Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  
+  Templates Associated:
+  
+  Template Name  Type    File Name (Number)  New/Modified/Deleted 
+  -------------  ----    ------------------  --------------------
+  N/A
+  
+  
+  Additional Information:
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  ----------------------------
+  Billing Interface for Fee Care Business (#20080918)
+  
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overviews:
+  -----------------------------
+  N/A
+   
+   
+  Test Sites:
+  ----------
+  Edward J Hines VA Hospital (Chicago, IL) - Station 578
+  Hunter Holmes McGuire VA Medical Center (Richmond, VA) - Station 652 
+  Central Alabama Veterans Healthcare System (Montgomery, AL) - Station 619
+  
+   
+  DOCUMENTATION RETRIEVAL INSTRUCTIONS
+  ------------------------------------
+  Updated documentation describing the new functionality introduced by this
+  patch is available.
+  
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may also 
+  select to retrieve files directly from a specific server.
+  
+  Sites may retrieve the documentation directly using Secure File Transfer
+  Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+  Field Offices:
+  
+    Hines:                domain.ext
+    Salt Lake City:       domain.ext
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at:  http://www.domain.ext/vdl/
+  
+  
+  Title                                 File Name            Transfer Mode
+  -------------------------------------------------------------------------
+  
+  Deployment, Installation, Back-out    PRCA_4_5_P338_IG       Binary
+  and Rollback Guide                    
+  Technical/Security Manual             PRCA_4_5_P338_TM.PDF   Binary
+  AR User Manual - Clerk's AR Menu -    PRCA_4_5_P338_CLERK2.  Binary
+     Part 2                             PDF 
+  
+  
+  Patch Installation:
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  The only pre/post install requirement is to place four options out 
+  of order before installation.
+   
+   
+  Pre-Installation Instructions:
+  ------------------------------
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install.             
+   
+  The following options should be placed out of order before installation:
+    Revenue Source Code Report [PRCA FMS RSC REPORT] 
+    Calculate Revenue Source Code for a Bill [PRCA FMS RSC CALCULATE]
+    Bad Debt Report [PRCA NR BAD DEBT ACCR. REPORT]
+    Deposit Reconciliation Report [PRCA DEPOSIT RECON REPORT]
+  
+   
+  Installation Instructions:
+  --------------------------
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch PRCA*4.5*338.
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global. 
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  5.  When prompted Want KIDS to INHIBIT LOGONs during the install? NO// 
+      answer NO
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? YES// answer YES
+  
+  7.  When prompted 'Enter options you wish to mark as 'Out Of Order:', 
+      enter the following options:
+  
+      Revenue Source Code Report [PRCA FMS RSC REPORT] 
+      Calculate Revenue Source Code for a Bill [PRCA FMS RSC CALCULATE]
+      Bad Debt Report [PRCA NR BAD DEBT ACCR. REPORT]
+      Deposit Reconciliation Report [PRCA DEPOSIT RECON REPORT]
+   
+  8. If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+   
+                                              
+  Post-Installation Instructions
+  ------------------------------
+  There are no special tasks to perform after this patch installation.
+  
+  
+  Back-Out Plan:
+  --------------
+  Please refer to sections 5 and 6 of the Deployment, Installation,
+  Back-Out and Rollback guide (PRCA_4_5_P338_IG.PDF) for the Back-Out and
+  Rollback.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 69
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAACC
+    Before:  B8690733   After:  B8752523  **60,74,90,101,157,203,220,273,
+                                           310,338**
+Routine Name: PRCABIL1
+    Before: B39821270   After: B39930904  **57,64,109,147,220,276,315,338**
+Routine Name: PRCABJ2
+    Before: B20492059   After: B20492059  **304,321,326,332,338**
+Routine Name: PRCABJV
+    Before: B39357110   After: B54348019  **1,48,63,114,141,170,176,173,
+                                           192,220,296,310,315,338**
+Routine Name: PRCACPV
+    Before: B16867430   After: B17132531  **1,48,90,119,204,192,235,295,
+                                           315,338**
+Routine Name: PRCAFUT
+    Before: B42447114   After: B42522073  **5,39,64,92,104,169,188,194,
+                                           220,231,315,338**
+Routine Name: PRCAP338
+    Before:       n/a   After:B162416898  **338**
+Routine Name: PRCASVC
+    Before: B11763521   After: B26611476  **1,21,48,90,136,138,249,274,
+                                           315,338**
+Routine Name: RCBEADJ
+    Before:B102510722   After:B106126105  **169,172,204,173,208,233,298,
+                                           301,315,326,338**
+Routine Name: RCDMC90
+    Before: B61870555   After: B63494730  **45,108,133,121,163,190,192,
+                                           236,237,229,253,338**
+Routine Name: RCDPRTP
+    Before: B14083064   After: B16040807  **151,186,315,339,338**
+Routine Name: RCDPRTP0
+    Before: B54155958   After: B54790234  **151,315,339,338**
+Routine Name: RCDPRTP2
+    Before: B20782087   After: B20901251  **151,276,303,315,338**
+Routine Name: RCRJRBD
+    Before: B78999395   After: B99557360  **101,139,170,193,203,215,220,
+                                           138,239,273,282,310,315,340,
+                                           338**
+Routine Name: RCRJRBDT
+    Before: B57917736   After: B66401701  **101,170,191,138,239,273,310,338**
+Routine Name: RCRJRCOC
+    Before: B61570527   After: B81559216  **156,170,182,203,220,138,239,
+                                           272,273,334,335,338**
+Routine Name: RCRJRCOR
+    Before: B66919784   After: B71059694  **68,96,139,103,156,170,174,
+                                           191,220,138,239,320,338**
+Routine Name: RCRJRCOU
+    Before:B133028607   After:B143002587  **103,320,335,338**
+Routine Name: RCRJRDEP
+    Before: B64337684   After: B67133793  **101,114,203,220,273,310,338**
+Routine Name: RCRJROIG
+    Before: B27320049   After: B29874403  **103,174,203,205,220,270,335,338**
+Routine Name: RCTCSPD
+    Before:B168268375   After:B162525249  **301,327,315,338**
+Routine Name: RCTOPD
+    Before: B72886643   After: B79395575  **141,187,224,236,229,301,315,
+                                           337,338**
+Routine Name: RCXFMSC1
+    Before: B18818760   After: B23554655  **90,96,106,113,135,98,173,220,338**
+Routine Name: RCXFMSPR
+    Before: B37660808   After: B75044670  **90,96,101,156,170,203,273,
+                                           310,315,338**
+Routine Name: RCXFMSUF
+    Before: B38763717   After: B57862958  **90,101,135,157,160,165,170,
+                                           203,207,173,211,192,220,235,
+                                           273,315,338**
+Routine Name: RCXFMSUR
+    Before: B63503809   After:B118788042  **90,101,170,203,173,220,231,
+                                           273,310,315,338**
+Routine Name: RCXFMSUV
+    Before: B15839120   After: B24853879  **90,119,98,165,192,220,315,338**
+ 
+Routine list of preceding patches: 253, 332, 335, 337, 339, 340
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 31, 2018
+Completed By:                               Date Completed: AUG 01, 2019
+Released By :                               Date Released : AUG 01, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

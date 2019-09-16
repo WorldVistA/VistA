@@ -1,0 +1,231 @@
+$TXT Created by                      DEVVPP.DOMAIN.EXT  (KIDS) on Tuesday, 02/13/18 at 14:10
+=============================================================================
+Run Date: MAY 29, 2019                     Designation: FB*3.5*164
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #155                    Status: Released
+                  Compliance Date: JUN 28, 2019
+=============================================================================
+
+Associated patches: (v)FB*3.5*123  <<= must be installed BEFORE `FB*3.5*164'
+                    (v)FB*3.5*154  <<= must be installed BEFORE `FB*3.5*164'
+                    (v)FB*3.5*158  <<= must be installed BEFORE `FB*3.5*164'
+
+Subject: PURCHASED CARE ATTACHMENT ID
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch adds fields to options in VistA Fee Basis to display
+ Attachment IDs (and associated record types) if the claim has associated
+ electronic attachments. These IDs can be used in combination with the
+ Attachment Retrieval System (ARS) in order to view those attachments.
+  
+ The following options include the new fields:
+ FBAA CLOSE BATCH
+ FBAA LIST BATCH
+ FBAA VOUCHER DELETE REJECT
+ FBAA REJECT PRINT
+ FBAA REINITIATE REJECTS
+ FBAA SUPERVISOR RELEASE
+ FBAA FINALIZE BATCH
+ FBCH PRICER RELEASE
+ FB VENDOR/VETERAN PAYMENTS
+ FBCH INVOICE DISPLAY
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)            New/Mod/Del
+ ------------------         -------------------            -----------
+ FEE BASIS PAYMENT (#162)   Subfile ATTACHMENT ID (#84)    Mod
+                            ATTACHMENT ID (.01)            Mod
+                            ATTACHMENT REPORT TYPE (#.02)  Mod
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+  
+ Remote Procedures (RPCs):
+  
+ Remote Procedure Name        New/Modified/Deleted
+ ---------------------        --------------------
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ Problem:
+ -------
+  
+ Resolution:
+ ----------
+  
+ Test Sites:
+ ----------
+ Roseburg VA Hospital
+ Iowa City VA Hospital
+ St. Louis VA Medical Center
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Fee Basis User Manual         FB_3_5_UM_R0519.PDF           (binary)
+ Fee Basis Technical Manual    FB_3_5_TM_R0519.PDF           (binary)
+  /Security Guide
+ Fee Basis Install Guide       FB_3_5_p164_IG.PDF            (binary)
+ Fee Basis Release Notes       FB_3_5_p164_RN.PDF            (binary)
+         
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+ There are no options to disable for this installation.
+  
+ Installation Instructions:
+ --------------------------
+ The installation will install new and modified routines, Data Dictionaries,
+ and Input Templates.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. FB*3.5*164):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  162 FEE BASIS PAYMENT (Partial Definition) Note: You already have the 
+     "FEE BASIS PAYMENT" File.
+  
+ 6.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' Answer NO unless your system does not do this in a   
+     nightly TaskMan process.  
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0/'  respond 0.
+  
+  
+  
+ Post-Installation Instructions:
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAACCB
+    Before: B34771662   After: B39441611  **4,61,77,116,154,164**
+Routine Name: FBAACCB1
+    Before: B28490763   After: B36081848  **55,61,116,108,164**
+Routine Name: FBAAPIN
+    Before: B39786989   After: B45830813  **4,61,122,133,108,135,123,164**
+Routine Name: FBCHVH
+    Before: B38454495   After: B48116454  **55,61,122,108,135,144,123,164**
+ 
+Routine list of preceding patches: 123, 154
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 10, 2015
+Completed By:                               Date Completed: MAY 29, 2019
+Released By :                               Date Released : MAY 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,245 @@
+$TXT Created by                   CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 04/16/19 at 09:59
+=============================================================================
+Run Date: MAY 29, 2019                     Designation: PSB*3*118
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #97                      Status: Released
+                  Compliance Date: JUN 28, 2019
+=============================================================================
+
+Associated patches: (v)PSB*3*96    <<= must be installed BEFORE `PSB*3*118'
+
+Subject: BCMA WINDOWS 10, DELPHI 10 UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Department of Veterans Affairs Office of Information and 
+ Technology requires that applications remain compliant with the Technical 
+ Reference Model (TRM) regarding the version of tools used for 
+ development. This patch accomplished this by updating the version of 
+ Delphi to XE10.2 used for the Bar Code Medication Administration (BCMA) 
+ client and parameters applications.
+  
+ The patch will also resolve the following issues:
+ 1. INC3309234 - Unable to use right click options in BCMA on Windows 10 
+    machine.
+  
+ 2. INC3309019 - BCMA display differences between Windows 7 and Windows 10
+  
+ 3. I9893211FY16: BCMA: Help Does not work
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC3309234 - Unable to use right click options in BCMA on Windows 10 
+    machine.
+  
+    Problem:
+    --------  
+    Users reported that when trying to use right click menu options 
+    in BCMA on Windows 10 test machines, they would not work 
+    correctly.
+   
+    Resolution:
+    -----------  
+    The Delphi Graphical User Interface (GUI) code has been updated to call
+    the correct menu options when the menu is called via the right click
+    option. 
+  
+ 2. INC3309019 - BCMA display differences between Windows 7 and Windows 10
+  
+    Problem:
+    --------
+    Users reported display differences in certain fields when BCMA was 
+    being run on a Windows 10 machine versus a Windows 7 machine. 
+    This reported difference includes fields such as Requestor Phone Number
+    and Preferred Contact Method. Also reported are visual differences in
+    the pop up windows on a Windows 10 machine.
+  
+    Resolution:
+    -----------
+    The Delphi code has been converted to Delphi 10.2, and updated to 
+    Windows 10 standards to keep the displays and pop up windows 
+    consistent with how they looked on Windows 7 machines. 
+  
+ 3. I9893211FY16: BCMA: Help Does not work
+  
+    Problem: 
+    --------
+    BCMA users reported help not working correctly on a Windows 10 
+    Machine. 
+  
+    Resolution:
+    -----------
+    The help files are being updated to be compatible with Windows 10, and 
+    are being converted to a supported current version of RoboHelp. 
+  
+    NOTE:  A pop-up window, Downloading Help File, may display when a user 
+    first logs into BCMA on a computer. The help file is downloaded to the
+    user's local application data folder.  The message in the pop-up window
+    says:
+    Retrieving help file for Bar Code Medication Administration
+    Press "ABORT" to cancel this process.
+    
+ Test Sites:
+ -----------
+ MINNEAPOLIS, MN- HCS
+ TAMPA, FL  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ Files can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices. The preferred method is to retrieve the file using
+ Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT, which
+ will transmit the file from the first available server. Alternatively,
+ sites may elect to retrieve the file from a specific OI Field Office.
+   
+     OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT          
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by 
+ this patch is available.
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www.domain.ext/vdl/
+  
+ Title               File Name                               FTP Mode
+ ---------------------------------------------------------------------
+ BCMA V.3.0 Installation Guide
+                     psb_3_p118_ig.pdf                       binary
+  
+  
+ Client Retrieval Instructions:
+ ------------------------------
+ Retrieve one of the below installation files from the ANONYMOUS.SOFTWARE 
+ directory mentioned above:
+  
+      FILE NAME           BYTES        SFTP MODE
+      -------------       --------     ---------
+      PSB3_0P118.MSI      7,772,000     binary
+      PSB3_0P118.EXE      8,499,000     binary
+  
+ The software installation distribution includes these modified files:
+  
+ FILE NAME     DESCRIPTION            FILE VERSION   BYTES    FTP MODE
+ -----------   ---------------------- ------------  --------  --------
+ BCMA.EXE      Client                  3.0.118      6,226,000  binary 
+ BCMApar.EXE   Parameters Client       3.0.118      3,759,000  binary
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ --------------------------
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+    1. Choose the PackMan message containing this patch.
+  
+    2. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    3. From the Kernel Installation & Distribution System menu, select
+       the Installation menu. From this menu, you may select to use the
+       following options (when prompted for INSTALL NAME, enter
+       PSB*3.0*118):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this
+              patch (routines, DD's, templates, etc.).
+          
+    4.  From the Installation Menu, select the Backup Transport Global 
+        and backup the Transport Global. This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+  
+    5. Use the Install Package(s) option and select the package 
+       PSB*3.0*118.
+    
+    6. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    
+    7. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO// respond NO.
+  
+  
+ Client Installation Instructions:
+ ---------------------------------
+ 1. Prior client compatible with patch:  NO
+ 2. Client can be copied instead of installed:  YES
+  
+ If BCMA is currently running, please exit BCMA. This client
+ installation patch file can be used to upgrade an existing version of
+ BCMA, or can be used for a brand new installation.
+  
+     1. Double Click on PSB3_0P118.EXE or PSB3_0P118.MSI, which will launch
+        the InstallShield Wizard.
+  
+     2. When the InstallShield Wizard Welcome screen is displayed, click
+        "Next".
+  
+     3. On the Choose Destination Location screen, simply click "Next"
+        If you would like to change the destination folder to one other
+        than default, click "Browse" to navigate to the folder of your
+        choice. Click "Next".
+  
+     4. On the "Setup Type" screen select one of the following options:
+              a. Typical - installs only the BCMA client program,
+                 which is necessary for medication administration.
+              b. Complete - installs the BCMA client and the
+                 GUI BCMA site parameters definition program.
+              c. Custom - allows you to select which programs to install.
+                 Typical is selected by default. Click "Next".
+  
+     5. The InstallShield Wizard Ready to Install the Program screen
+        will display. Click "Install" to proceed with the installation.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ Back-out of this patch will be performed only with the concurrence and
+ participation of the appropriate VA site/region personnel. The decision
+ to back out the patch will be a joint decision between VA site/region
+ personnel and other appropriate VA personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBRPC3
+    Before:   B292026   After:   B293459  **6,3,4,16,13,10,32,28,42,58,
+                                           68,70,83,97,96,118**
+ 
+Routine list of preceding patches: 96
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 03, 2019
+Completed By:                               Date Completed: MAY 28, 2019
+Released By :                               Date Released : MAY 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

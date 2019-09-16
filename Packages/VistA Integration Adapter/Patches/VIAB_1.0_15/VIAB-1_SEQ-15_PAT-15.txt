@@ -1,0 +1,226 @@
+$TXT Created by                   at VIALAB1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 05/01/19 at 13:06
+=============================================================================
+Run Date: MAY 23, 2019                     Designation: VIAB*1*15
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: EMERGENCY
+Version : 1        SEQ #15                      Status: Released
+                  Compliance Date: MAY 28, 2019
+=============================================================================
+
+Associated patches: (v)VIAB*1*11   <<= must be installed BEFORE `VIAB*1*15'
+
+Subject: BMS LISTORDERS/LISTORDERACTIONS MODIFICATIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This EMERGENCY patch is required to allow Bed Management System (BMS) to
+ migrate off of MDWS to VIA per the White House Mandate and to remediate
+ known security issues.
+  
+ Changes include:
+  
+ 1. The LISTORDERS and LISTORDERACTIONS target of the VIAB BMS RPC is
+ being modified to sort by the DATE/TIME ORDERED field and use the "AF"
+ cross reference on the ORDER file for lookup.
+  
+ 2. The CURRENT ACTION field of the Order is the only ORDER ACTION
+ sub-entry evaluated.
+  
+ 3. DATE/TIME ORDERED sub-field of the ORDER ACTION sub-entry of the
+ Order is the field value used between the evaluating BMS start and end
+ times.
+  
+ Patch Components: 
+ -----------------
+ Files & Fields Associated:
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+    
+ Forms Associated:
+ Form Name                  File Number             New/Modified/Deleted
+ ---------                  -----------             --------------------
+ N/A   
+  
+ Mail Groups Associated:
+ Mail Group Name           New/Modified/Deleted
+ ---------------           -------------------- 
+ N/A
+  
+ Options Associated: 
+ Option Name                    Type              New/Modified/Deleted
+ ---------------                -----------       --------------------
+ N/A
+   
+ Protocols Associated:
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+ Parameter Definitions Associated:
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ New Service Requests (NSRs):
+ N/A
+     
+ Patient Safety Issues (PSIs):
+ N/A
+     
+ Defect Tracking System Ticket(s) & Overview:
+ 1. INC3515187 - D/T Discharge Icons not showing on Dashboard
+                   
+ Problem:
+ --------
+ At times, "D" and "T" icons are not showing on the Bed Management System
+ (BMS) Dashboard after a patient has a discharge or transfer order placed.
+ It was determined that using the Clinical Reminders Index, with regards to
+ the order start date, wasn't a datetime value all the time.  Rather, start
+ date could be datetime, or, date only.  These, date only, values were not
+ picked up by the Bed Management System (BMS) background queues when run.
+  
+ Resolution:
+ -----------
+ The LISTORDERS and LISTORDERACTIONS target of the RPC is being modified to
+ sort by DATE/TIME ORDERED and use the "AF" cross-reference on the ORDER
+ file for lookup.
+  
+ Test Sites:
+ -----------
+ North Texas Veterans Health Care System
+ Indianapolis VA Medical Center
+   
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Documentation describing the new functionality and/or a host file 
+ containing a build may be included in this release.
+  
+ The preferred method is to retrieve the files from 
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www.domain.ext/vdl/application.asp?appid=221
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A 
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+ Patch Installation:
+ -------------------  
+ Pre/Post Installation Overview:
+ This patch contains pre installation instructions.
+  
+ Pre-Installation Instructions:
+ This patch may be installed with users on the system. This patch should 
+ take less than 5 minutes to install.
+  
+ No menu options need to be disabled.
+  
+ Installation Instructions:
+  1.  This release is provided using PackMan, choose the PackMan 
+      message containing this build. Select the INSTALL/CHECK MESSAGE 
+      PackMan option to load the build.
+    
+  2.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu:
+  
+       A.  Select the Verify Checksums in Transport Global option to 
+           confirm the integrity of the routines that are in the transport 
+           global. When prompted for the INSTALL NAME enter the patch or 
+           build name VIAB*1*15.
+  
+       B.  Select the Backup a Transport Global option to create a backup 
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DDs or templates.
+  
+       C.  You may also elect to use the following options: 
+           i.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+  
+           ii. Compare Transport Global to Current System - This option 
+               will allow you to view all changes that will be made when 
+               this patch is installed. It compares all of the components
+               of this patch, such as routines, DDs, templates, etc.
+  
+       D.  Select the Install Package(s) option and choose the patch 
+           (VIAB*1*15) to install.
+           i.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+               of Install? YES//', press <ENTER>.
+  
+           ii. When prompted 'Want KIDS to INHIBIT LOGONs during the 
+               install? NO//', press <ENTER>.
+    
+           iii. When prompted 'Want to DISABLE Scheduled Options, Menu
+                Options and Protocols? NO//', press <ENTER>.
+                a. When prompted 'Enter options you wish to mark as 'Out 
+                   Of Order':', press <ENTER>.
+                b. When prompted 'Enter protocols you wish to mark as 'Out 
+                   Of Order':', press <ENTER>.
+                c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//',
+                   answer 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-2014;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIABMS
+    Before:B223339724   After:B225861141  **8,10,11,15**
+Routine Name: VIABMS4
+    Before:       n/a   After: B31028755  **15**
+ 
+Routine list of preceding patches: 11
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 17, 2018
+Completed By:                               Date Completed: MAY 15, 2019
+Released By :                               Date Released : MAY 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

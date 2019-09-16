@@ -1,0 +1,166 @@
+$TXT Created by               F at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Monday, 02/11/19 at 10:49
+=============================================================================
+Run Date: JUN 06, 2019                     Designation: PSB*3*116
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #98                      Status: Released
+                  Compliance Date: JUL 06, 2019
+=============================================================================
+
+Associated patches: (v)PSB*3*83    <<= must be installed BEFORE `PSB*3*116'
+                    (v)PSB*3*112   <<= must be installed BEFORE `PSB*3*116'
+
+Subject: BCMA MED ADMIN HISTORY REPORT ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue:
+  
+ The Bar Code Medication Administration (BCMA) Medication Admin History 
+ report (also known as the Med Admin History (BCMA) report in CPRS) throws
+ an <UNDEFINED> error (and causes CPRS to exit) when generated for a
+ specific date range.
+  
+       
+ Defect Tracking System Ticket(s) & Overview:
+ -------------------------------------------
+ 1) INC3683945 - AEU can't look at med admin history (BCMA) due to an 
+                 error after inputting a date range
+     dup INC3570947
+     dup INC3507924
+     dup INC4109840
+     dup INC4866891
+            
+ Problem: 
+ -------
+ After the release of PSB*3*112 a new issue was introduced that causes the 
+ BCMA Medication Admin History report to throw an <UNDEFINED> error. 
+ Similarly, in CPRS, the Med Admin History (BCMA) report throws an 
+ <UNDEFINED> error and then exits the application. The problem is specific
+ to a patient with a PATCH medication that has a ONE TIME schedule (e.g.
+ Start Date of D and End Date of D+1); after the PATCH is given on day D
+ and marked removed on day D+1, the error occurs when the user runs the
+ report for the date range D through D.
+  
+ Resolution:
+ ----------
+ This patch prevents the error from happening when the BCMA Medication Admin
+ History Report is run following the instructions above. The PSBOMH and
+ PSBOMH1 routines have been modified to prevent the PSBAR array from 
+ crashing when the subscript is undefined.
+     
+  
+ Test Sites:
+ ----------
+ William S. Middleton Memorial Veterans Hospital (Madison)
+ VISN 2 - Upstate New York HCS
+    
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ----------------------------- 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to install.
+   
+ Installation Instructions:
+ -------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.
+  
+ 4. From the Installation menu, select Backup a Transport Global and when
+    prompted for the INSTALL NAME enter the patch PSB*3.0*116. This option
+    will create a backup message of any routines exported with this patch.
+    It will not backup any other changes such as DDs or templates. If for
+    any reason the patch is to be rolled back, this backup will be required
+    to restore the patch's routine(s) to the pre-installation version(s).
+  
+ 5. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch: PSB*3.0*116 
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+        to ensure the integrity of the routines that are in the transport
+        global.
+     
+     b. Print Transport Global - This option will allow you to print only 
+        a summary of the patch, to print a summary of the patch and the
+        routines in the transport global, or to print only the routines in
+        the transport global.
+  
+     c. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch is
+        installed. (It compares all components of this patch's routines,
+        DDs, templates, etc.).
+   
+ 6. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 7. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 8. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ Installation Verification:
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+   
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004
+  
+ The Calculate and Show Checksum Values option [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in this patch
+ description.
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOMH
+    Before:B103792484   After:B105048172  **5,9,38,57,67,68,70,76,83,116**
+Routine Name: PSBOMH1
+    Before: B95783446   After: B96588224  **6,3,9,11,26,38,45,51,50,57,
+                                           67,64,72,83,97,112,116**
+ 
+Routine list of preceding patches: 112
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 16, 2019
+Completed By:                               Date Completed: JUN 06, 2019
+Released By :                               Date Released : JUN 06, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

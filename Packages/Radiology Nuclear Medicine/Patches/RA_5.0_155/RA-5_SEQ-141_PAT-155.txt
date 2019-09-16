@@ -1,0 +1,129 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 05/09/19 at 07:39
+=============================================================================
+Run Date: JUL 30, 2019                     Designation: RA*5*155
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #141                      Status: Released
+                  Compliance Date: AUG 30, 2019
+=============================================================================
+
+Associated patches: (v)RA*5*147    <<= must be installed BEFORE `RA*5*155'
+
+Subject: 2019 MAINT OF RADIOLOGY FILE #73.2 (RADIOLOGY CPT BY PROCEDURE TYPE)
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch will correct the following issue:
+      
+ The Radiology Program Office sends out an updated listing of the RADIOLOGY
+ CPT BY PROCEDURE TYPE file (#73.2) on a yearly basis. This update needs to
+ be distributed to the sites.
+      
+                    
+ Defect Tracking System Ticket(s) & Overview:
+ -------------------------------------------
+ Rational Work Item - 911223 - Yearly update to Radiology procedure
+       
+ Problem:
+ -------
+ RADIOLOGY CPT BY PROCEDURE TYPE file (#73.2) needs to be updated with the
+ yearly updates provided by the Radiology Program Office.
+        
+ Resolution:
+ ----------     
+ This patch will update the RADIOLOGY CPT BY PROCEDURE TYPE file (#73.2)
+ for distribution to the sites.
+  
+          
+ Test Sites:
+ ----------
+ Miami VA HCS
+ James J. Peters VAMC (the Bronx)      
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ -----------------------------    
+ Create a backup of the following global file before continuing:
+ When you are creating a backup of a subscripted global, you are saving a
+ partial global (a file within a global). You should use the utility
+ ^%GOGEN, and when prompted for a global, enter the open global reference
+ as shown below.
+  
+    Example:
+  
+        Enter            To create a Backup copy of:
+        -----            --------------------------
+        ^RA(73.2,        RADIOLOGY CPT BY PROCEDURE TYPE
+      
+ If installed during the normal workday, it is recommended that the 
+ Radiology users be off the system. Other VistA users will not be affected.
+ This patch will take less than 2 minutes to install.
+   
+ Installation Instructions:
+ -------------------------     
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option to load the KIDS patch
+    onto your system.
+  
+ 3. From the Kernel Installation & Distribution System Menu (KIDS), select
+    the Installation Menu.
+  
+ 4. From the Installation Menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch RA*5.0*155.
+  
+    a. Print Transport Global - This option will allow you to print only 
+       a summary of the patch, to print a summary of the patch and the
+       routines in the transport global, or to print only the routines in
+       the transport global.
+  
+     b. Compare Transport Global to Current System - This option will 
+        allow you to view all changes that will be made when this patch is
+        installed. (It compares all components of this patch's routines,
+        DDs, templates, etc.).
+  
+ 5. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+    respond 'NO'.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, And
+    Protocols? NO//', respond 'NO'.
+  
+      
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+      
+ This patch involves data modifications. Please log a Help Desk ticket. 
+ HPS will assist with deletion of the RA*5.0*155 version of the RADIOLOGY
+ CPT BY PROCEDURE TYPE file (#73.2) and the restore of file #73.2 file from
+ the backup specified in the Pre-Installation Instructions.
+      
+ Note: This process should only be done with the concurrence and
+       participation of the development team and the appropriate
+       VA Site/Region personnel.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 23, 2019
+Completed By:                               Date Completed: JUL 30, 2019
+Released By :                               Date Released : JUL 30, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

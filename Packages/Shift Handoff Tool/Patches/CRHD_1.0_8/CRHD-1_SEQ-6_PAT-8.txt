@@ -1,0 +1,124 @@
+$TXT Created by                  CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 05/22/19 at 09:17
+=============================================================================
+Run Date: JUN 18, 2019                     Designation: CRHD*1*8
+Package : CRHD - SHIFT CHANGE HANDOFF TOOL    Priority: Mandatory
+Version : 1         SEQ #6                      Status: Released
+                  Compliance Date: JUL 19, 2019
+=============================================================================
+
+Associated patches: (v)CRHD*1*7    <<= must be installed BEFORE `CRHD*1*8'
+
+Subject: HELP FILE UPDATE AND DELPHI UPGRADE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will resolve the following issue in the Shift Change Handoff 
+ applications:
+  
+ 1.      While evaluating Windows 10, it was discovered that the Help 
+ files would not display correctly. This patch will correct this problem 
+ by converting the help files to a new format.
+ 2.      The Department of Veterans Affairs Office of Information and 
+ Technology requires that applications remain compliant with the Technical 
+ Reference Model (TRM) regarding the version of tools used for 
+ development. This patch accomplished this by updating the version of 
+ Delphi to XE10.2.
+ 3.      Many of the VistA instances are now pushing their Graphical User 
+ Interface (GUI) installations to network share drives, rather than 
+ installing on individual machines. It was discovered that the online help 
+ would not work when the application was installed on the network share 
+ drive. This patch corrects this problem.
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ ========================= 
+ Denver
+ Madison VAMC
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ This Software is being released with both a VistA component, and an 
+ updated Graphical User Interfaces (GUI). Files and documentation 
+ pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from:
+  
+   download.vista.domain.ext.
+  
+ This transmits the files from the first available server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Title                     File Name           FTP Mode
+ -----------------------------------------------------------------------
+ CRHD*1.0*8 Shift Change   CRHD_1_8_IG.pdf     Binary
+ Handoff Installation Guide
+  
+ GUI Files                 CRHD_1_8.zip        Binary
+ GUI Source Files          CRHD_1_8_SRC.zip    Binary
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users and needs to be installed at the same
+ time as the GUI installation.
+ This patch should take less than 5 minutes to install.
+  
+ Installation Instructions
+ ------------------------------
+  
+ Please reference the CRHD*1.0*8 Shift Change Handoff Installation 
+ Guide as this server install needs to be coordinated with the GUIs 
+ installation.
+  
+ Backout/Rollback Instructions
+ -------------------------------
+ Refer to the Shift Change Handoff Tool (CRHD*1.0*8) Installation Guide.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CRHD;**[Patch List]**;Jan 28, 2008;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: CRHD6
+    Before: B23982080   After: B24441298  **8**
+Routine Name: CRHD8PST
+    Before:       n/a   After:   B923810  ****
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 14, 2018
+Completed By:                               Date Completed: JUN 18, 2019
+Released By :                               Date Released : JUN 18, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

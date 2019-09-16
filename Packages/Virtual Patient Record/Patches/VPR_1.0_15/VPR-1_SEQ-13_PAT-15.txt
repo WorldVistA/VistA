@@ -1,0 +1,171 @@
+$TXT Created by                     FMB.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 05/14/19 at 11:35
+=============================================================================
+Run Date: MAY 28, 2019                     Designation: VPR*1*15
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1        SEQ #13                      Status: Released
+                  Compliance Date: MAY 31, 2019
+=============================================================================
+
+Associated patches: (v)VPR*1*10    <<= must be installed BEFORE `VPR*1*15'
+
+Subject: DATA UPDATE LISTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch to the Virtual Patient Record (VPR) application will modify the 
+ data monitoring utility, to prevent multiple entries from being stored in 
+ the ^VPR("AVPR") and ^VPR("ANEW") update lists. When the Qualifying Patient 
+ Query is run in preparation for the Regional Health Connect servers, data 
+ monitoring is turned on but the RHC is not processing the updates yet so 
+ these lists can get quite large. Instead of capturing every transaction, 
+ the data monitor will now only make one entry in the appropriate ^VPR list 
+ per VistA record.
+  
+ A post-init routine will queue a task to loop through the existing entries 
+ in ^VPR("AVPR") and ^VPR("ANEW") and remove extraneous nodes, to keep global 
+ growth in check. The routine supporting the management options on the 
+ VPR HS MENU option menu is also updated to reflect and support this change.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Entities Associated:               N/A
+  
+ Files & Fields Associated:         N/A
+  
+ Forms Associated:                  N/A
+  
+ Mail Groups Associated:            N/A
+  
+ Options Associated:                N/A
+  
+ Protocols Associated:              N/A
+  
+ Remote Procedure Calls Associated: N/A
+  
+ Security Keys Associated:          N/A
+  
+ Templates Associated:              N/A
+  
+ Blood Bank Team Coordination:      N/A
+  
+ New Service Requests (NSRs):       N/A
+  
+ Patient Safety Issues (PSIs):      N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC5449997  VistA error: UPD+4^VPRSR
+  
+ VPRSR routine has been modified to prevent this error from happening.
+  
+  
+  
+ Test Sites:
+ -----------
+ Charleston, SC
+ North Chicago, IL
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ The software for this patch is being released as a KIDS build.
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME, enter VPR*1.0*15.
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted Want KIDS to INHIBIT LOGONs during the install?
+     NO// enter NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// enter NO.
+  
+ 7.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ A post-init routine will queue a task that will loop through the existing 
+ entries in ^VPR("AVPR") and ^VPR("ANEW") and remove duplicate nodes. If 
+ there are no nodes in either of these lists, no task will be queued. A 
+ message will display the task# on screen, and in the Install file capture.
+  
+  
+ Backout Procedures:
+ -------------------
+ During the VistA Installation Procedure of the KIDS build, the
+ installer should use the 'Backup a Transport Global' action (step 3a
+ in the Installations Instructions below). If rollback/backout is 
+ required, the installer can use the MailMan message to restore routines 
+ that were saved prior to installing the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPREVNT
+    Before:B125233310   After:B123186510  **8,10,15**
+Routine Name: VPRHS
+    Before: B24940964   After: B45375819  **8,10,15**
+Routine Name: VPRHSX
+    Before: B13465259   After: B43786312  **8,15**
+Routine Name: VPRP15
+    Before:       n/a   After:  B8459164  **15**
+Routine Name: VPRSR
+    Before:  B1588116   After:  B1592543  **8,10,15**
+ 
+Routine list of preceding patches: 10
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 27, 2019
+Completed By:                               Date Completed: MAY 23, 2019
+Released By :                               Date Released : MAY 28, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

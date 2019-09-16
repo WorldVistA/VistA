@@ -1,0 +1,194 @@
+
+=============================================================================
+Run Date: JUN 26, 2019                     Designation: IB*2*633
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #585                      Status: Released
+                  Compliance Date: JUL 26, 2019
+=============================================================================
+
+Associated patches: (v)IB*2*516    <<= must be installed BEFORE `IB*2*633'
+                    (v)IB*2*609    <<= must be installed BEFORE `IB*2*633'
+
+Subject: MCCF EDI TAS EPAYMENTS BUILD 7/8
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Below is a list of all the applications involved in this patch along
+ with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                      PRCA*4.5*332
+    INTEGRATED BILLING (IB) V. 2.0                         IB*2.0*633
+  
+ The patches (PRCA*4.5*332 and IB*2.0*633) are being released in the
+ Kernel Installation and Distribution System (KIDS) multi-build 
+ distribution as PRCA_IB_EPAYMENTS_BUNDLE_4_0.KID.
+  
+ Routine "IBCEOB0' was modified to determine if a 'Claim was not billed 
+ electronically' error message needs to be displayed on the EP screen of
+ the Third Party Joint Inquiry (TPJI) [IBJ THIRD PARTY JOINT INQUIRY] 
+ option.
+  
+ Routine "IBJTEP" was modified to display all of the ERAs associated with
+ an EEOB on the EP screen of the Third Party Joint Inquiry (TPJI) 
+ [IBJ THIRD PARTY JOINT INQUIRY] option.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name        Type      File Name (Number)    New/Modified/Deleted
+ -------------        ----      ------------------    --------------------
+ N/A
+  
+ Additional Information:
+ ----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------- 
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Washington, DC
+ Baltimore MARYLAND HCS
+ Tennessee Valley HCS
+ Dallas NORTH TEXAS HCS
+  
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    Hines:                domain.ext
+    Salt Lake City:       domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www.domain.ext/vdl/
+  
+ Title                              File Name                  SFTP Mode
+ -----------------------------------------------------------------------
+ Deployment, Installation,          prca_4_5_332_ig.pdf        Binary
+  Back-Out, and Rollback
+  Guide (IB*2.0*633 and PRCA*4.5*332)
+  
+  
+  
+ Installation Instructions:
+ -------------------------
+ The components sent with this patch IB*2.0*633 have been included in the
+ host file PRCA_IB_EPAYMENTS_BUNDLE_4_0.KID. Please follow the installation
+ instructions listed in the patch description for patch PRCA*4.5*332.
+  
+  
+   ****************************************************************
+   * Follow the installation instructions for patch PRCA*4.5*332. *
+   ****************************************************************
+  
+  
+ The host file PRCA_IB_EPAYMENTS_BUNDLE_4_0.KID, contains the following 
+ patches:
+  
+         PRCA*4.5*332
+         IB*2.0*633
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCEOB0
+    Before: B91995821   After: B98733929  **135,280,155,431,488,516,633**
+Routine Name: IBJTEP
+    Before:B143453029   After:B170521408  **530,609,633**
+Routine Name: IBJTEP1
+    Before: B37006051   After: B58092745  **530,633**
+Routine Name: IBJTPE
+    Before:B134537091   After:B134610496  **530,609,633**
+ 
+Routine list of preceding patches: 516, 609
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 01, 2018
+Completed By:                               Date Completed: JUN 26, 2019
+Released By :                               Date Released : JUN 26, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

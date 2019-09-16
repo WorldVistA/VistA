@@ -1,0 +1,633 @@
+Released HL*1.6*171 SEQ #135
+Extracted from mail message
+**KIDS**:HL*1.6*171^
+
+**INSTALL NAME**
+HL*1.6*171
+"BLD",11245,0)
+HL*1.6*171^HEALTH LEVEL SEVEN^0^3190314^y
+"BLD",11245,1,0)
+^^6^6^3181012^
+"BLD",11245,1,1,0)
+ This patch will address 1 issue:
+"BLD",11245,1,2,0)
+ 
+"BLD",11245,1,3,0)
+ 1. When several HL7 event driver protocols share the same sending
+"BLD",11245,1,4,0)
+    application, message type, event type, and version ID, the HL7 
+"BLD",11245,1,5,0)
+    software will only retrieve the first protocol, even if it is not the
+"BLD",11245,1,6,0)
+    correct protocol for the current message being processed.
+"BLD",11245,4,0)
+^9.64PA^^
+"BLD",11245,6.3)
+4
+"BLD",11245,"KRN",0)
+^9.67PA^779.2^20
+"BLD",11245,"KRN",.4,0)
+.4
+"BLD",11245,"KRN",.401,0)
+.401
+"BLD",11245,"KRN",.402,0)
+.402
+"BLD",11245,"KRN",.403,0)
+.403
+"BLD",11245,"KRN",.5,0)
+.5
+"BLD",11245,"KRN",.84,0)
+.84
+"BLD",11245,"KRN",3.6,0)
+3.6
+"BLD",11245,"KRN",3.8,0)
+3.8
+"BLD",11245,"KRN",9.2,0)
+9.2
+"BLD",11245,"KRN",9.8,0)
+9.8
+"BLD",11245,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",11245,"KRN",9.8,"NM",1,0)
+HLTPCK1A^^0^B70261249
+"BLD",11245,"KRN",9.8,"NM","B","HLTPCK1A",1)
+
+"BLD",11245,"KRN",19,0)
+19
+"BLD",11245,"KRN",19.1,0)
+19.1
+"BLD",11245,"KRN",101,0)
+101
+"BLD",11245,"KRN",409.61,0)
+409.61
+"BLD",11245,"KRN",771,0)
+771
+"BLD",11245,"KRN",779.2,0)
+779.2
+"BLD",11245,"KRN",870,0)
+870
+"BLD",11245,"KRN",8989.51,0)
+8989.51
+"BLD",11245,"KRN",8989.52,0)
+8989.52
+"BLD",11245,"KRN",8994,0)
+8994
+"BLD",11245,"KRN","B",.4,.4)
+
+"BLD",11245,"KRN","B",.401,.401)
+
+"BLD",11245,"KRN","B",.402,.402)
+
+"BLD",11245,"KRN","B",.403,.403)
+
+"BLD",11245,"KRN","B",.5,.5)
+
+"BLD",11245,"KRN","B",.84,.84)
+
+"BLD",11245,"KRN","B",3.6,3.6)
+
+"BLD",11245,"KRN","B",3.8,3.8)
+
+"BLD",11245,"KRN","B",9.2,9.2)
+
+"BLD",11245,"KRN","B",9.8,9.8)
+
+"BLD",11245,"KRN","B",19,19)
+
+"BLD",11245,"KRN","B",19.1,19.1)
+
+"BLD",11245,"KRN","B",101,101)
+
+"BLD",11245,"KRN","B",409.61,409.61)
+
+"BLD",11245,"KRN","B",771,771)
+
+"BLD",11245,"KRN","B",779.2,779.2)
+
+"BLD",11245,"KRN","B",870,870)
+
+"BLD",11245,"KRN","B",8989.51,8989.51)
+
+"BLD",11245,"KRN","B",8989.52,8989.52)
+
+"BLD",11245,"KRN","B",8994,8994)
+
+"BLD",11245,"QUES",0)
+^9.62^^
+"BLD",11245,"REQB",0)
+^9.611^1^1
+"BLD",11245,"REQB",1,0)
+HL*1.6*108^2
+"BLD",11245,"REQB","B","HL*1.6*108",1)
+
+"MBREQ")
+0
+"PKG",243,-1)
+1^1
+"PKG",243,0)
+HEALTH LEVEL SEVEN^HL^DHCP IMPLEMENTATION OF HEALTH LEVEL SEVEN^
+"PKG",243,22,0)
+^9.49I^1^1
+"PKG",243,22,1,0)
+1.6^2951013^2981102^66481
+"PKG",243,22,1,"PAH",1,0)
+171^3190314
+"PKG",243,22,1,"PAH",1,1,0)
+^^6^6^3190314
+"PKG",243,22,1,"PAH",1,1,1,0)
+ This patch will address 1 issue:
+"PKG",243,22,1,"PAH",1,1,2,0)
+ 
+"PKG",243,22,1,"PAH",1,1,3,0)
+ 1. When several HL7 event driver protocols share the same sending
+"PKG",243,22,1,"PAH",1,1,4,0)
+    application, message type, event type, and version ID, the HL7 
+"PKG",243,22,1,"PAH",1,1,5,0)
+    software will only retrieve the first protocol, even if it is not the
+"PKG",243,22,1,"PAH",1,1,6,0)
+    correct protocol for the current message being processed.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","HLTPCK1A")
+0^1^B70261249^B58203578
+"RTN","HLTPCK1A",1,0)
+HLTPCK1A ;SAW/AISC - Message Header Validation Routine for HL7 (Con't) ;03/24/2004  15:12
+"RTN","HLTPCK1A",2,0)
+ ;;1.6;HEALTH LEVEL SEVEN;**2,25,34,57,59,108,171**;Oct 13, 1995;Build 4
+"RTN","HLTPCK1A",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","HLTPCK1A",4,0)
+ ;
+"RTN","HLTPCK1A",5,0)
+ S ERR=""
+"RTN","HLTPCK1A",6,0)
+SP ;Get local site parameters
+"RTN","HLTPCK1A",7,0)
+ S HLPARAM=$$PARAM^HLCS2,HLDOM=$P(HLPARAM,U,2),HLINSTN=$P(HLPARAM,U,6)
+"RTN","HLTPCK1A",8,0)
+MT ;Validate message type
+"RTN","HLTPCK1A",9,0)
+ I (ARY("MTN")="") S:(ERR="") ERR="Invalid Message Type" Q
+"RTN","HLTPCK1A",10,0)
+ S ARY("MTP")=0
+"RTN","HLTPCK1A",11,0)
+ S:(ARY("MTN")'="") ARY("MTP")=+$O(^HL(771.2,"B",ARY("MTN"),0))
+"RTN","HLTPCK1A",12,0)
+ I ('ARY("MTP")) S:(ERR="") ERR="Invalid Message Type" Q
+"RTN","HLTPCK1A",13,0)
+ ;
+"RTN","HLTPCK1A",14,0)
+AT ;Determine if message is an acknowledgement type
+"RTN","HLTPCK1A",15,0)
+ I (("ACK,ADR,MCF,MFK,MFR,ORF,ORR,RRA,RRD,RRE,RRG,TBR"[ARY("MTN"))&($G(MSA)="")) S:(ERR="") ERR="MSA Segment Missing" Q
+"RTN","HLTPCK1A",16,0)
+ ;
+"RTN","HLTPCK1A",17,0)
+AAT ;Validate accept ack type and application ack type
+"RTN","HLTPCK1A",18,0)
+ I ($G(ARY("ACAT"))'="") I ("AL,NE,ER,SU"'[ARY("ACAT")) S:(ERR="") ERR="Invalid accept ack type" Q
+"RTN","HLTPCK1A",19,0)
+ I ($G(ARY("APAT"))'="") I ("AL,NE,ER,SU"'[ARY("APAT")) S:(ERR="") ERR="Invalid application ack type" Q
+"RTN","HLTPCK1A",20,0)
+ ;
+"RTN","HLTPCK1A",21,0)
+RA ;Validate receiving application
+"RTN","HLTPCK1A",22,0)
+ S ARY("RAN")=$P(HDR,FS,5)
+"RTN","HLTPCK1A",23,0)
+ I (ARY("RAN")="") S:(ERR="") ERR="Invalid Receiving Application" Q
+"RTN","HLTPCK1A",24,0)
+ S ARY("RAP")=0
+"RTN","HLTPCK1A",25,0)
+ ;
+"RTN","HLTPCK1A",26,0)
+ ; patch HL*1.6*108 start
+"RTN","HLTPCK1A",27,0)
+ ;S:(ARY("RAN")'="") ARY("RAP")=+$O(^HL(771,"B",ARY("RAN"),0))
+"RTN","HLTPCK1A",28,0)
+ S:(ARY("RAN")'="") ARY("RAP")=+$O(^HL(771,"B",$E(ARY("RAN"),1,30),0))
+"RTN","HLTPCK1A",29,0)
+ I (('ARY("RAP"))&(ARY("RAN")'="")) D
+"RTN","HLTPCK1A",30,0)
+ .S X=$$UPPER^HLFNC(ARY("RAN"))
+"RTN","HLTPCK1A",31,0)
+ .;S ARY("RAP")=+$O(^HL(771,"B",ARY("RAN"),0))
+"RTN","HLTPCK1A",32,0)
+ .S ARY("RAP")=+$O(^HL(771,"B",$E(ARY("RAN"),1,30),0))
+"RTN","HLTPCK1A",33,0)
+ ; patch HL*1.6*108 end
+"RTN","HLTPCK1A",34,0)
+ ;
+"RTN","HLTPCK1A",35,0)
+ I ('ARY("RAP")) S:(ERR="") ERR="Invalid Receiving Application" Q
+"RTN","HLTPCK1A",36,0)
+ S X2=$G(^HL(771,ARY("RAP"),0))
+"RTN","HLTPCK1A",37,0)
+ I (X2="") S:(ERR="") ERR="Invalid Receiving Application" Q
+"RTN","HLTPCK1A",38,0)
+ I ($P(X2,"^",2)'="a") S:(ERR="") ERR="Receiving Application is Inactive" Q
+"RTN","HLTPCK1A",39,0)
+ ;
+"RTN","HLTPCK1A",40,0)
+SA ;Validate sending application
+"RTN","HLTPCK1A",41,0)
+ S ARY("SAN")=$P(HDR,FS,3)
+"RTN","HLTPCK1A",42,0)
+ I (ARY("SAN")="") S:(ERR="") ERR="Invalid Sending Application" Q
+"RTN","HLTPCK1A",43,0)
+ S ARY("SAP")=0
+"RTN","HLTPCK1A",44,0)
+ ;
+"RTN","HLTPCK1A",45,0)
+ ; patch HL*1.6*108 start
+"RTN","HLTPCK1A",46,0)
+ ;S:(ARY("SAN")'="") ARY("SAP")=+$O(^HL(771,"B",ARY("SAN"),0))
+"RTN","HLTPCK1A",47,0)
+ S:(ARY("SAN")'="") ARY("SAP")=+$O(^HL(771,"B",$E(ARY("SAN"),1,30),0))
+"RTN","HLTPCK1A",48,0)
+ I (('ARY("SAP"))&(ARY("SAN")'="")) D
+"RTN","HLTPCK1A",49,0)
+ .S X=$$UPPER^HLFNC(ARY("SAN"))
+"RTN","HLTPCK1A",50,0)
+ .;S ARY("SAP")=+$O(^HL(771,"B",ARY("SAN"),0))
+"RTN","HLTPCK1A",51,0)
+ .S ARY("SAP")=+$O(^HL(771,"B",$E(ARY("SAN"),1,30),0))
+"RTN","HLTPCK1A",52,0)
+ ; patch HL*1.6*108 end
+"RTN","HLTPCK1A",53,0)
+ ;
+"RTN","HLTPCK1A",54,0)
+ I ('ARY("SAP")) S:(ERR="") ERR="Invalid Sending Application" Q
+"RTN","HLTPCK1A",55,0)
+ ;
+"RTN","HLTPCK1A",56,0)
+VN ;Validate version number
+"RTN","HLTPCK1A",57,0)
+ I (ARY("VER")="") S:(ERR="") ERR="Missing HL7 Version" Q
+"RTN","HLTPCK1A",58,0)
+ S X=0
+"RTN","HLTPCK1A",59,0)
+ S:(ARY("VER")'="") X=+$O(^HL(771.5,"B",ARY("VER"),0))
+"RTN","HLTPCK1A",60,0)
+ S ARY("VEP")=X
+"RTN","HLTPCK1A",61,0)
+ I ('X) S:(ERR="") ERR="Invalid HL7 Version" Q
+"RTN","HLTPCK1A",62,0)
+ ;
+"RTN","HLTPCK1A",63,0)
+ET ; Check for Event Type if version 2.2 or above
+"RTN","HLTPCK1A",64,0)
+ ; if response use message id/original message to resolve event type
+"RTN","HLTPCK1A",65,0)
+ ;I ARY("ETN")="",ARY("VER")>2.1,$G(MSA)'="" D  Q:ERR]""
+"RTN","HLTPCK1A",66,0)
+ ;. ;N HLZMID,HLZEP,HLZ770
+"RTN","HLTPCK1A",67,0)
+ ;. ;S HLZMID=$O(^HL(772,"C",+$P(MSA,FS,2),0))
+"RTN","HLTPCK1A",68,0)
+ ;. ;I HLZMID D
+"RTN","HLTPCK1A",69,0)
+ ;..  ;I '$G(^HL(772,HLZMID,0)) S:(ERR="") ERR="Original Outgoing Message not found" Q
+"RTN","HLTPCK1A",70,0)
+ ;..  ;S HLZEP=$P($G(^HL(772,HLZMID,0)),U,10)
+"RTN","HLTPCK1A",71,0)
+ ;..  ;I HLZEP'>0 S:(ERR="") ERR="Event Protocol pointer (field #772,10) missing" Q
+"RTN","HLTPCK1A",72,0)
+ ;..  ;S HLZ770=$G(^ORD(101,HLZEP,770))
+"RTN","HLTPCK1A",73,0)
+ ;..  ;S ARY("ETN")=$P($G(^HL(779.001,+$P(HLZ770,U,4),0)),U)
+"RTN","HLTPCK1A",74,0)
+ ;. ;K HLZMID,HLZEP,HLZ770
+"RTN","HLTPCK1A",75,0)
+ ;
+"RTN","HLTPCK1A",76,0)
+ I (ARY("ETN")=""),ARY("VER")>2.1,$G(MSA)="" S:(ERR="") ERR="Event Type REQUIRED" Q
+"RTN","HLTPCK1A",77,0)
+ S ARY("ETP")=0
+"RTN","HLTPCK1A",78,0)
+ I $G(MSA)="",(ARY("ETN")'="") S ARY("ETP")=+$O(^HL(779.001,"B",ARY("ETN"),0)) I ('ARY("ETP")) S:(ERR="") ERR="Invalid Event Type" Q
+"RTN","HLTPCK1A",79,0)
+ ;
+"RTN","HLTPCK1A",80,0)
+MS ;Check for Message Structure Code
+"RTN","HLTPCK1A",81,0)
+ I $G(ARY("MTN_ETN"))'="" D
+"RTN","HLTPCK1A",82,0)
+ . S ARY("MTP_ETP")=0
+"RTN","HLTPCK1A",83,0)
+ . S ARY("MTP_ETP")=+$O(^HL(779.005,"B",ARY("MTN_ETN"),0))
+"RTN","HLTPCK1A",84,0)
+ . I ('ARY("MTP_ETP")) S:(ERR="") ERR="Invalid Message Structure Code" Q
+"RTN","HLTPCK1A",85,0)
+ ;
+"RTN","HLTPCK1A",86,0)
+MSA ;Get receiving application data from Protocol file
+"RTN","HLTPCK1A",87,0)
+ ;I (ARY("SAP")) D  Q:ERR]""
+"RTN","HLTPCK1A",88,0)
+ I $D(MSA) D  Q
+"RTN","HLTPCK1A",89,0)
+ .;Message is an acknowledgement - deliver to Server Protocol that
+"RTN","HLTPCK1A",90,0)
+ .;  message came from
+"RTN","HLTPCK1A",91,0)
+ .I '$G(ARY("SAP")) S ERR="Missing Sending Application" Q
+"RTN","HLTPCK1A",92,0)
+ .S ARY("MTIENS")=0
+"RTN","HLTPCK1A",93,0)
+ .F  S ARY("MTIENS")=+$O(^HL(772,"AH",ARY("SAP"),$P(MSA,FS,2),ARY("MTIENS"))) Q:'ARY("MTIENS")!($P($G(^HL(772,+ARY("MTIENS"),0)),U,4)="O")
+"RTN","HLTPCK1A",94,0)
+ .S X=$G(^HL(772,+ARY("MTIENS"),0))
+"RTN","HLTPCK1A",95,0)
+ .S ARY("EIDS")=$P(X,"^",10)
+"RTN","HLTPCK1A",96,0)
+ .I ('ARY("EIDS")) S:(ERR="") ERR="Invalid Message Control ID in MSA Segment" Q
+"RTN","HLTPCK1A",97,0)
+ .S ARY("MTIEN")=+$P(X,"^",8)
+"RTN","HLTPCK1A",98,0)
+ .S ARY("ACK")=$P(X,"^",7)
+"RTN","HLTPCK1A",99,0)
+ .S X=$G(^HL(772,+$P(X,"^",8),0))
+"RTN","HLTPCK1A",100,0)
+ .S ARY("EID")=$P(X,"^",10)
+"RTN","HLTPCK1A",101,0)
+ .I ('ARY("EID")) S:(ERR="") ERR="Event Protocol not found" Q
+"RTN","HLTPCK1A",102,0)
+ .D EVENT^HLUTIL1(ARY("EIDS"),"770,773",.HLN)
+"RTN","HLTPCK1A",103,0)
+ .;Get Logical Link info if defined on subscriber
+"RTN","HLTPCK1A",104,0)
+ .S ARY("LL")=$P($G(HLN(770)),"^",7)
+"RTN","HLTPCK1A",105,0)
+ ;
+"RTN","HLTPCK1A",106,0)
+ I ARY("MTP") D
+"RTN","HLTPCK1A",107,0)
+ .;Find Server Protocol - based on sending application, message type,
+"RTN","HLTPCK1A",108,0)
+ .;event type and version ID
+"RTN","HLTPCK1A",109,0)
+ .;I ARY("ETP") S ARY("EID")=+$O(^ORD(101,"AHL1",ARY("SAP"),ARY("MTP"),ARY("ETP"),ARY("VEP"),0)) ; Removed in HL*1.6*171
+"RTN","HLTPCK1A",110,0)
+ .;
+"RTN","HLTPCK1A",111,0)
+ .;Find Server Protocol - based on sending application, message type,
+"RTN","HLTPCK1A",112,0)
+ .;and version ID
+"RTN","HLTPCK1A",113,0)
+ .;I 'ARY("ETP") S ARY("EID")=+$O(^ORD(101,"AHL21",ARY("SAP"),ARY("MTP"),ARY("VEP"),0)) ; Removed in HL*1.6*171
+"RTN","HLTPCK1A",114,0)
+ .;
+"RTN","HLTPCK1A",115,0)
+ .N HL772 S HL772=0 F  S HL772=$O(^HL(772,"C",ARY("MID"),HL772)) Q:HL772'>0  D  Q:ARY("EID")  ; HL*171 - Get file #772 IEN from "C" xref using message ID
+"RTN","HLTPCK1A",116,0)
+ ..S ARY("EID")=HL772
+"RTN","HLTPCK1A",117,0)
+ ..;HL*171 - If #772 entry matches date/time and sending application of message, save protocol from RELATED EVENT PROTOCOL field (#10) to ARY("EID")
+"RTN","HLTPCK1A",118,0)
+ ..S:ARY("EID") ARY("EID")=$S($P(^HL(772,ARY("EID"),0),U,1)=$$HL7TFM^XLFDT(ARY("DTM"))&($P(^HL(772,ARY("EID"),0),U,2)=ARY("SAP")):$P(^HL(772,ARY("EID"),0),U,10),1:"")
+"RTN","HLTPCK1A",119,0)
+ .;HL*171 - If message was not found in file #772, try file #773
+"RTN","HLTPCK1A",120,0)
+ .I '$G(ARY("EID")) S ARY("EID")=$O(^HLMA("C",ARY("MID"),0)) S:ARY("EID") ARY("EID")=$P(^HLMA(ARY("EID"),0),U) S:ARY("EID") ARY("EID")=$P(^HL(772,ARY("EID"),0),U,10)
+"RTN","HLTPCK1A",121,0)
+ .;
+"RTN","HLTPCK1A",122,0)
+ .I ('ARY("EID")) S:(ERR="") ERR="Event Protocol not found" Q
+"RTN","HLTPCK1A",123,0)
+ .;Find Client Protocol - in ITEM multiple of Server Protocol
+"RTN","HLTPCK1A",124,0)
+ .S ARY("EIDS")=0
+"RTN","HLTPCK1A",125,0)
+ .F  S ARY("EIDS")=+$O(^ORD(101,ARY("EID"),775,"B",ARY("EIDS"))) Q:('ARY("EIDS"))  D  Q:$G(X1)
+"RTN","HLTPCK1A",126,0)
+ ..S (X,X1)=0
+"RTN","HLTPCK1A",127,0)
+ ..S X=$G(^ORD(101,ARY("EIDS"),770))
+"RTN","HLTPCK1A",128,0)
+ ..I $P(X,U,2)=ARY("RAP") S X1=1
+"RTN","HLTPCK1A",129,0)
+ .I 'ARY("EIDS") S:(ERR="") ERR="Invalid Receiving Application for this Event" Q
+"RTN","HLTPCK1A",130,0)
+ .D EVENT^HLUTIL1(ARY("EIDS"),"770,773",.HLN)
+"RTN","HLTPCK1A",131,0)
+ ;
+"RTN","HLTPCK1A",132,0)
+LLP ;Get logical link pointer
+"RTN","HLTPCK1A",133,0)
+ S ARY("LL")=$P($G(HLN(770)),"^",7)
+"RTN","HLTPCK1A",134,0)
+ ;
+"RTN","HLTPCK1A",135,0)
+FAC ;Get sending/rec facility, validate if necessary
+"RTN","HLTPCK1A",136,0)
+ ;
+"RTN","HLTPCK1A",137,0)
+ S HLCS=$E(ECH,1) ;Get component separator
+"RTN","HLTPCK1A",138,0)
+ S ARY("RAF")=$P(HDR,FS,6) ;Receiving Facility
+"RTN","HLTPCK1A",139,0)
+ S ARY("SAF")=$P(HDR,FS,4) ;Sending Facility
+"RTN","HLTPCK1A",140,0)
+ ;Get sending/receiving facility from Application Parameter file(771)
+"RTN","HLTPCK1A",141,0)
+ S HL771SF=$P($G(^HL(771,ARY("SAP"),0)),U,3)
+"RTN","HLTPCK1A",142,0)
+ S HL771RF=$P($G(^HL(771,ARY("RAP"),0)),U,3)
+"RTN","HLTPCK1A",143,0)
+ ;Sending/Receiving facility required?
+"RTN","HLTPCK1A",144,0)
+ S X=$G(^ORD(101,ARY("EIDS"),773))
+"RTN","HLTPCK1A",145,0)
+ S HLSFREQ=+X,HLRFREQ=+$P(X,U,2)
+"RTN","HLTPCK1A",146,0)
+RF ;Validate Receiving Facility
+"RTN","HLTPCK1A",147,0)
+ I HLRFREQ D
+"RTN","HLTPCK1A",148,0)
+ .I ARY("RAF")="" S:ERR="" ERR="Missing required receiving facility" Q
+"RTN","HLTPCK1A",149,0)
+ .I HL771RF]"" D  Q
+"RTN","HLTPCK1A",150,0)
+ ..;Facility data in 771 overrides data in site paramter file
+"RTN","HLTPCK1A",151,0)
+ ..;For backward compatibility, don't validate
+"RTN","HLTPCK1A",152,0)
+ ..Q
+"RTN","HLTPCK1A",153,0)
+ ..Q:HL771RF=ARY("RAF")
+"RTN","HLTPCK1A",154,0)
+ ..S:ERR="" ERR="Receiving Facility/App Parameter mismatch."
+"RTN","HLTPCK1A",155,0)
+ .;Check against local default value (site parameters)
+"RTN","HLTPCK1A",156,0)
+ .Q:ARY("RAF")=(HLINSTN_HLCS_HLDOM_HLCS_"DNS")
+"RTN","HLTPCK1A",157,0)
+ .S:ERR="" ERR="Receiving Facility mismatch."
+"RTN","HLTPCK1A",158,0)
+SF ;Validate Sending Facility
+"RTN","HLTPCK1A",159,0)
+ I HLSFREQ D
+"RTN","HLTPCK1A",160,0)
+ .I ARY("SAF")="" S:ERR="" ERR="Missing required sending facility" Q
+"RTN","HLTPCK1A",161,0)
+ .I HL771SF]"" D  Q
+"RTN","HLTPCK1A",162,0)
+ ..;Check for facility data in 771
+"RTN","HLTPCK1A",163,0)
+ ..Q
+"RTN","HLTPCK1A",164,0)
+ ..Q:HL771SF=ARY("SAF")
+"RTN","HLTPCK1A",165,0)
+ ..S:ERR="" ERR="Sending Facility/App Parameter mismatch."
+"RTN","HLTPCK1A",166,0)
+ .;If default value was sent, validate that DOMAIN RESOLVES TO LOGICAL LINK
+"RTN","HLTPCK1A",167,0)
+ .;If so, use this instead of Protocol definition for return path
+"RTN","HLTPCK1A",168,0)
+ .S HLDOMP=$P(ARY("SAF"),HLCS,2),HLDOMP=$O(^DIC(4.2,"B",HLDOMP,0))
+"RTN","HLTPCK1A",169,0)
+ .I 'HLDOMP S:ERR="" ERR="Unrecognized domain in sending facility"
+"RTN","HLTPCK1A",170,0)
+ .Q:HLDOMP=$P(HLPARAM,U)  ;This is local app to app
+"RTN","HLTPCK1A",171,0)
+ .I HLDOMP N HLNK S HLNK=+$O(^HLCS(870,"D",HLDOMP,0))
+"RTN","HLTPCK1A",172,0)
+ .I HLNK S ARY("LL")=HLNK
+"RTN","HLTPCK1A",173,0)
+ ;
+"RTN","HLTPCK1A",174,0)
+PID ;Validate processing ID
+"RTN","HLTPCK1A",175,0)
+ I ("DTP"'[ARY("PID")) S:(ERR="") ERR="Invalid HL7 Processing ID" Q
+"RTN","HLTPCK1A",176,0)
+ S HLPID=$P(HLPARAM,U,3) ;site param
+"RTN","HLTPCK1A",177,0)
+ S X=$G(^ORD(101,ARY("EID"),770)),X=$P(X,U,6) ;event driver
+"RTN","HLTPCK1A",178,0)
+ ;I X=""&($G(HLPID))="" S:ERR="" ERR="Cannot validate PROCESSING ID"
+"RTN","HLTPCK1A",179,0)
+ ;If message is 'debug' then event driver must be 'debug.'
+"RTN","HLTPCK1A",180,0)
+ ;If message is 'test' or 'production', then site param must match
+"RTN","HLTPCK1A",181,0)
+ I ARY("PID")="D"&(X'="D") S:ERR="" ERR="Processing ID Mismatch with Event Driver"
+"RTN","HLTPCK1A",182,0)
+ I ARY("PID")'="D"&(HLPID'=ARY("PID")) S:ERR="" ERR="Processing ID Mismatch with Site Parameters"
+"RTN","HLTPCK1A",183,0)
+ ;
+"RTN","HLTPCK1A",184,0)
+SEC ;Validate security field - access code and electronic signature
+"RTN","HLTPCK1A",185,0)
+ I ($P($G(HLN(773)),"^",3)) D
+"RTN","HLTPCK1A",186,0)
+ .S X=$P($P(HDR,FS,8),$E(ECH))
+"RTN","HLTPCK1A",187,0)
+ .S X=$$UPPER^HLFNC(X)
+"RTN","HLTPCK1A",188,0)
+ .D ^XUSHSH
+"RTN","HLTPCK1A",189,0)
+ .I ((X="")&('$D(MSA))) S:(ERR="") ERR="Invalid access code" Q
+"RTN","HLTPCK1A",190,0)
+ .S ARY("DUZ")=0
+"RTN","HLTPCK1A",191,0)
+ .S:(X'="") ARY("DUZ")=+$O(^VA(200,"A",X,0))
+"RTN","HLTPCK1A",192,0)
+ .I ('ARY("DUZ")) S:(ERR="") ERR="Invalid access code" Q
+"RTN","HLTPCK1A",193,0)
+ .I (($P($G(^VA(200,ARY("DUZ"),.1)),"^")="")&('$D(MSA))) S ARY("DUZ")=0 S:(ERR="") ERR="Invalid access code" Q
+"RTN","HLTPCK1A",194,0)
+ .S X=$P($P(HDR,FS,8),$E(ECH),3) I (X'="") D
+"RTN","HLTPCK1A",195,0)
+ ..S X1=$G(^VA(200,ARY("DUZ"),20))
+"RTN","HLTPCK1A",196,0)
+ ..I (X1="") S:(ERR="") ERR="No Signature Code on File" Q
+"RTN","HLTPCK1A",197,0)
+ ..S X=$$UPPER^HLFNC(X)
+"RTN","HLTPCK1A",198,0)
+ ..D HASH^XUSHSHP
+"RTN","HLTPCK1A",199,0)
+ ..I ((X'=$P(X1,"^",4))!($P(X1,"^",2)="")) S:(ERR="") ERR="Invalid Electronic Signature Code" Q
+"RTN","HLTPCK1A",200,0)
+ ..S ARY("ESIG")=$P(X1,"^",2)
+"RTN","HLTPCK1A",201,0)
+ I $D(ARY) M HLREC=ARY
+"RTN","HLTPCK1A",202,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",11245,6)
+^135
+**END**
+**END**
+

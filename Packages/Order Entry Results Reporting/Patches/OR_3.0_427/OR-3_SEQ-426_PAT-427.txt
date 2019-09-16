@@ -1,0 +1,376 @@
+
+=============================================================================
+Run Date: JUL 15, 2019                     Designation: OR*3*427
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #426                      Status: Released
+                  Compliance Date: AUG 15, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*427'
+
+Subject: MENTAL HEALTH NCC PROJECT 5.01
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch will add enhancements to the Inpatient Order Entry routines for
+ the National Clozapine Coordination project.  Below is a list of all the 
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    MENTAL HEALTH (MH) V. 5.01                          YS*5.01*122
+    OUTPATIENT PHARMACY (OP) V. 7.0                     PSO*7*457 
+    INPATIENT MEDICATIONS (IP) V. 5.0                   PSJ*5*327
+    ORDER ENTRY/RESULTS REPORTING (OR) V. 3.0           OR*3*427
+  
+ The patches (YS*5.01*122, PSO*7*457, PSJ*5*327, and OR*3*427) are 
+ being released  in the Kernel Installation and Distribution System
+ (KIDS) multi-build distribution MENTAL HEALTH NCC PROJECT 5.01.
+  
+ Abbreviations for terms used in the multi-build patch descriptions 
+ include the National Clozapine Coordinating Center (NCCC) located in
+ Dallas, Texas; Absolute Neutrophil Count (ANC); White Blood Cells (WBC);
+ Initial Operating Capability (IOC); and Computerized Patient Record 
+ System (CPRS).
+  
+ The purpose of this software package is to maintain compliance with 
+ legislative and federal mandates, as well as to add Clozapine Order
+ Checking to the Inpatient Pharmacy application. In addition, this 
+ package replaces the weekly roll-up functionality and now transmits 
+ data to the National Clozapine server nightly.
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+ The ORDER CHECK RULE file (#860.2) and the ORDER CHECK ELEMENT file 
+ (#860.3) need to be modified to meet the new FDA Clozapine reporting
+ guidelines.  
+  
+ 1. The CLOZAPINE entry in the ORDER CHECK RULE file (#860.2) will be 
+    modified to:
+    a. Remove the WBC order checks
+    b. Modify the ANC order check values to meet new FDA guidelines
+ 2. Add new entries to the ORDER CHECK ELEMENT file (#860.3)
+    a. ELEMENT NAME: CLOZAPINE ANC >= 1.0 & < 1.5
+    c. ELEMENT NAME: CLOZAPINE ANC < 1.0
+ 3. Modify the ^ORALWORD routine to display the appropriate order check
+    message based on:
+    a. The new ANC (Absolute Neutrophil Count) values
+    b. Outpatient
+   
+      *** Permission to dispense clozapine has been denied based on the
+      available lab tests related to the clozapine treatment program. ***
+  
+      For a National Override to dispense at the patient's normal
+      frequency, contact the NCCC.
+  
+      A local override for an Outpatient can be approved for: (1)
+      weather-related conditions, (2) mail order delays of clozapine, 
+      or (3) inpatient going on leave.
+  
+      For an Outpatient Special Conditions Local Override, a written 
+      prescription from the provider with documentation to the pharmacist
+      is required to dispense a one-time emergency 4-day supply.
+  
+    c. Inpatient
+  
+      *** Permission to dispense clozapine has been denied based on 
+      the available lab tests related to the clozapine treatment program.
+      ***
+  
+      For a National Override to dispense at the patient's normal
+      frequency, contact the NCCC.
+  
+      A local emergency override for an Inpatient can be approved for:
+      IP Order Override with Outside Lab Results.
+  
+      For a Special Conditions Local Override, a written order
+      from the provider with documentation to the pharmacist
+      is required to dispense a one-time emergency 4-day supply. 
+    
+      The provider must record the ANC from another facility including 
+      date/time in both the Provider Progress Note and Comment field in
+      CPRS.
+  
+  
+    Message will be added and enforce a hard stop on the order.
+  
+ Before:
+ ORDER CHECK RULE LIST                          FEB 16,2016  14:29 PAGE 1 
+ -------------------------------------------------------------------------
+  
+ NUMBER: 57                              NAME: CLOZAPINE
+ LABEL: NO WBC W/IN 7 DAYS
+   ELEMENT NAME: CLOZAPINE NO WBC W/IN 7 DAYS
+   TYPE: SIMPLE DEFINITION
+ LABEL: WBC < 3.0                        ELEMENT NAME: CLOZAPINE WBC < 3.0
+   TYPE: SIMPLE DEFINITION
+ LABEL: ANC < 1.5                        ELEMENT NAME: CLOZAPINE ANC < 1.5
+   TYPE: SIMPLE DEFINITION
+ LABEL: 3.0 <= WBC < 3.5
+   ELEMENT NAME: CLOZAPINE WBC >= 3.0 & < 3.5
+   TYPE: SIMPLE DEFINITION
+ LABEL: NO ANC W/IN 7 DAYS
+   ELEMENT NAME: CLOZAPINE NO ANC W/IN 7 DAYS
+   TYPE: SIMPLE DEFINITION
+ LABEL: CLOZAPINE                        ELEMENT NAME: CLOZAPINE DRUG 
+ SELECTED
+   TYPE: SIMPLE DEFINITION
+ LABEL: ANC >= 1.5                       ELEMENT NAME: CLOZAPINE ANC >= 1.5
+   TYPE: SIMPLE DEFINITION
+ LABEL: WBC >= 3.5                       ELEMENT NAME: CLOZAPINE WBC >= 3.5
+   TYPE: SIMPLE DEFINITION
+ LABEL: 1.5 <= ANC < 2.0
+   ELEMENT NAME: CLOZAPINE ANC >= 1.5 & < 2.0
+   TYPE: SIMPLE DEFINITION
+   STATUS: ACTIVE
+ RELATION INDEX: 1                       ORDER CHECK: CLOZAPINE 
+ APPROPRIATENESS
+   RELATION EXPRESSION: CLOZAPINE AND (NO WBC W/IN 7 DAYS OR NO ANC W/IN 7 
+ DAYS)
+   ORDER CHECK MESSAGE: Clozapine orders require a CBC/Diff within past 7 
+                        days. Please order CBC/Diff with WBC and ANC
+                        immediately.
+                        Most recent results - |CLOZ LAB RSLTS|
+ RELATION INDEX: 2                       ORDER CHECK: CLOZAPINE 
+ APPROPRIATENESS
+   RELATION EXPRESSION: CLOZAPINE AND (WBC < 3.0 OR ANC < 1.5)
+   ORDER CHECK MESSAGE: WBC < 3.0 and/or ANC < 1.5 - pharmacy cannot fill
+                        clozapine  order. Most recent results - |CLOZ LAB 
+ RSLTS|
+ RELATION INDEX: 3                       ORDER CHECK: CLOZAPINE 
+ APPROPRIATENESS
+   RELATION EXPRESSION: CLOZAPINE AND 3.0 <= WBC < 3.5 AND ANC >= 1.5
+   ORDER CHECK MESSAGE: WBC between 3.0 and 3.5 with ANC >= 1.5 - please 
+                        repeat CBC/Diff including WBC and ANC immediately
+                        and twice weekly.  Most recent results - 
+                        |CLOZ LAB RSLTS|
+ RELATION INDEX: 4                       ORDER CHECK: CLOZAPINE 
+ APPROPRIATENESS
+   RELATION EXPRESSION: CLOZAPINE AND 1.5 <= ANC < 2.0
+   ORDER CHECK MESSAGE: ANC between 1.5 and 2.0 - please repeat CBC/Diff
+                        including WBC and ANC immediately and twice weekly.
+                        Most recent results - |CLOZ LAB RSLTS|
+  
+ AFTER:
+ ORDER CHECK RULE LIST                     FEB 16,2016  14:29    PAGE 1
+ --------------------------------------------------------------------------
+ NUMBER: 57                             NAME: CLOZAPINE
+ LABEL: NO WBC W/IN 7 DAYS
+   ELEMENT NAME: CLOZAPINE NO WBC W/IN 7 DAYS
+   TYPE: SIMPLE DEFINITION
+   ELEMENT EXPRESSION: CLOZAPINE AND NO WBC W/IN 7 DAYS
+ LABEL: ANC < 1.0                       ELEMENT NAME: CLOZAPINE ANC < 1.0
+   TYPE: SIMPLE DEFINITION
+ LABEL: NO ANC W/IN 7 DAYS
+   ELEMENT NAME: CLOZAPINE NO ANC W/IN 7 DAYS
+   TYPE: SIMPLE DEFINITION
+ LABEL: CLOZAPINE                       ELEMENT NAME: CLOZAPINE DRUG 
+ SELECTED
+   TYPE: SIMPLE DEFINITION
+ LABEL: 1.0 >= ANC < 1.5
+   ELEMENT NAME: CLOZAPINE ANC >= 1.0 & < 1.5
+   TYPE: SIMPLE DEFINITION
+   STATUS: ACTIVE
+ RELATION INDEX: 1                       ORDER CHECK: CLOZAPINE 
+ APPROPRIATENESS
+   RELATION EXPRESSION: CLOZAPINE AND (NO WBC W/IN 7 DAYS OR NO ANC W/IN 7 
+ DAYS)
+   ORDER CHECK MESSAGE: Clozapine orders require a CBC/Diff within past 7 
+                        days. Please order CBC/Diff with WBC and ANC
+                        immediately.  Most recent results -
+                        |CLOZ LAB RSLTS|
+ RELATION INDEX: 2                       ORDER CHECK: CLOZAPINE 
+ APPROPRIATENESS
+   RELATION EXPRESSION: CLOZAPINE AND ANC < 1.0
+   ORDER CHECK MESSAGE: Moderate/Severe Neutropenia - please repeat 
+                        CBC/Diff including WBC and ANC tests immediately
+                        and Daily until ANC stabilizes to greater than or
+                        equal to 1000.  
+                        Most recent results - |CLOZ LAB RSLTS|
+ RELATION INDEX: 3                       ORDER CHECK: CLOZAPINE 
+ APPROPRIATENESS
+   RELATION EXPRESSION: CLOZAPINE AND (1.0 >= ANC < 1.5)
+   ORDER CHECK MESSAGE: Mild Neutropenia - please repeat CBC/Diff 
+                        including WBC and ANC tests immediately and 3X
+                        weekly until ANC stabilize to greater than or equal
+                        to 1500. Most recent results - |CLOZ LAB RSLTS|
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch OR*3*427 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch OR*3*427 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)              
+ New/Modified/Deleted
+ --------------------    -------------------              
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                   Type           New/Modified/Deleted
+ -----------                   ----           --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name                 New/Modified/Deleted
+ ----------------------            --------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ Request Name: National Clozapine Coordination Project
+   Request ID: 20100703
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ -------------------------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+  Battle Creek VA Medical Center
+  VA Black Hills Health Care System
+  
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+          Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+  
+  
+ --------------------------------------------------------------------------
+ Title                                  File Name               FTP Mode
+ --------------------------------------------------------------------------
+ MENTAL HEALTH NCC PROJECT 5.01    MH_NCC_PROJ_5_01.KID          (ASCII)
+  
+ MENTAL HEALTH NCC PROJECT 5.01    MH_NCC_Proj_5_01_UG_R0719.PDF (binary) 
+ User Guide CPRS                   cprsguium.PDF                 (binary)
+ Deploy Install BO RB Guide        MH_NCC_Proj_5_01_IG_R0719.PDF (binary)
+  
+ Patch Installation:
+  
+ Pre-Install/Installation Instructions
+ -------------------------------------
+ The components sent with this patch OR*3*427 have been included in the 
+ host file MH_NCC_PROJ_5_01.KID. Please follow the 
+ (pre/install/post) installation instructions listed in the patch
+ description for patch YS*5.01*122.
+  
+ Post-Installation Instructions
+ ------------------------------
+     This patch will run the following post install routines. These 
+     routines will not be removed by the patch and should be removed after
+     successful installation of the patch.
+  
+     ORY4270,ORY42701,ORY42702,ORY42703,ORY42704,ORY42705,ORY42706,ORY42707
+     ORY42708,ORY4271,ORY4272,ORY4273,ORY4274,ORY427ES
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 105
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORALWORD
+    Before: B47499175   After: B87912660  **243,427**
+Routine Name: ORY4270
+    Before:       n/a   After: B16073184  **427**
+Routine Name: ORY42701
+    Before:       n/a   After: B71203449  **427**
+Routine Name: ORY42702
+    Before:       n/a   After: B78453694  **427**
+Routine Name: ORY42703
+    Before:       n/a   After: B78751328  **427**
+Routine Name: ORY42704
+    Before:       n/a   After: B84076912  **427**
+Routine Name: ORY42705
+    Before:       n/a   After: B62931901  **427**
+Routine Name: ORY42706
+    Before:       n/a   After: B67973600  **427**
+Routine Name: ORY42707
+    Before:       n/a   After: B69950041  **427**
+Routine Name: ORY42708
+    Before:       n/a   After: B34877645  **427**
+Routine Name: ORY4271
+    Before:       n/a   After: B41095023  **427**
+Routine Name: ORY4272
+    Before:       n/a   After: B28301234  **427**
+Routine Name: ORY4273
+    Before:       n/a   After: B13307046  **427**
+Routine Name: ORY4274
+    Before:       n/a   After: B13859060  **427**
+Routine Name: ORY427ES
+    Before:       n/a   After: B12947340  **427**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 06, 2016
+Completed By:                               Date Completed: JUL 15, 2019
+Released By :                               Date Released : JUL 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

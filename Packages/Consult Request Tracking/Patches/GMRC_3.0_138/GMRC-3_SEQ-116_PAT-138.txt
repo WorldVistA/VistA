@@ -1,0 +1,230 @@
+
+=============================================================================
+Run Date: JUL 16, 2019                     Designation: GMRC*3*138
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3       SEQ #116                      Status: Released
+                  Compliance Date: JUL 17, 2019
+=============================================================================
+
+
+Subject: DECISION SUPPORT TOOL (DST) INFORMATIONAL PATCH FOR VERSION 1.0.08
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+ ******************************************************************************
+   This is an informational patch for the Decision Support Tool application
+   version 1.0.08. There is no VistA component to this new build.
+   This patch is for informational purposes only and defines the scope of the
+   changes that have been made including defects that have been resolved in DST. 
+  
+ ******************************************************************************
+   
+   Decision Support Tool version 1.0.08 has the following functionality changes
+   and defect fixes:
+   
+  
+  1. Story 1072499: This technical story will continue to improve the build
+     pipeline steps used to build the DST software.  An example of this 
+     activity is adjusted build steps to stop pipeline when a step fails 
+     and alerting the team that there is a potential problem with software.  
+     This alert may mean a degradation in quality or regression of 
+     application code. 
+  
+  2. Story 1019126: This story addresses several 508 findings and will
+     improve the user experience for accessibility users.
+  
+  3. Defect 1072486: This technical defect will shut down the containers. 
+     It will kill all keep alive connections, wait for in progress 
+     transactions to finish, and then shut down the containers when 
+     complete. This will help minimize disruption of services during 
+     deployments.
+  
+  4. Defect 1069720: This is a work item to delay the kick-off of the 
+     30-day DST database record deletion routine until the defect causing 
+     errors when trying to re-open DST with a DST_ID that is not in the 
+     database.
+  
+  5. Defect 1068833: This fix will stop DST from showing Drive-time
+     eligibility when the empty facility list is caused by an error from 
+     the Enrollment System resulting in the Veteran residential address 
+     not to be retrieved.
+  
+  6. Defect 1066493: This fix will allow Veteran residential addresses that
+     contain the # character to be used by PPMS to return the appropriate 
+     VHA facilities.
+  
+  7. Defect 1065990: This fix will address an edge case where MVI returns
+     multiple unique identifiers.
+  
+  8. Defect 1052871: This is a technical fix to address error logging of
+     MVI external service error exception not being saved in the database.
+  
+  9. Defect 932774: This fix will remove the error that occurs when DST is
+     re-opened and the DST ID cannot be found in the database.  It will allow 
+     the 30-day record cleanup to be initiated.
+   
+    
+   Patch Components:
+   -----------------
+   N/A 
+    
+   Files & Fields Associated:
+    
+   File Name (Number)          Field Name (Number)       New/Modified/Deleted
+   ------------------          -------------------       --------------------
+   N/A
+    
+   Forms Associated:
+    
+   Form Name                   File Number               New/Modified/Deleted
+   ---------                   -----------               --------------------
+   N/A
+    
+    
+   Mail Groups Associated:
+    
+   Mail Group Name             New/Modified/Deleted
+   ---------------             --------------------
+   N/A
+    
+   Options Associated:
+    
+   Option Name                 Type                      New/Modified/Deleted
+   -----------                 ----                      --------------------
+   N/A
+    
+   Protocols Associated:
+    
+   Protocol Name               New/Modified/Deleted
+   -------------               --------------------
+   N/A
+    
+   Security Keys Associated: 
+    
+   Security Key Name
+   -----------------
+   N/A
+    
+   Templates Associated:
+    
+   Template Name         Type    File Name (Number)      New/Modified/Deleted
+   -------------         ----    ------------------      --------------------
+   N/A
+    
+    
+   Remote Procedures Associated:
+    
+   Remote Procedure Name       New/Modified/Deleted
+   ---------------------       --------------------
+   N/A
+    
+    
+   Parameter Definitions Associated:
+    
+   Parameter Name              New/Modified/Deleted
+   --------------              --------------------
+   N/A
+    
+    
+   Additional Information:
+   -----------------------
+    
+   Blood Bank Team Coordination:
+   N/A
+    
+    
+   New Service Requests (NSRs):
+   N/A
+    
+    
+   Patient Safety Issues (PSIs):
+   N/A
+    
+    
+   Defect Tracking System & Overview:
+    
+    
+   Test Sites:
+   -----------
+   Kansas City, MO
+   Madison, WI
+    
+    
+   Software and Documentation Retrieval Instructions:
+   --------------------------------------------------
+   Documentation describing the new functionality and/or a host file containing
+   a build may be included in this release.
+    
+   The preferred method is to retrieve the files from 
+   download.vista.domain.ext. This transmits the files from the first 
+   available server. Sites may also elect to retrieve the files directly 
+   from a specific server.
+    
+   Sites may retrieve the software and/or documentation directly using Secure
+   File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+   following OI Field Offices:
+    
+   Hines:          domain.ext  
+   Salt Lake City: domain.ext
+    
+   Documentation can also be found on the VA Software Documentation Library
+   at: https://www.domain.ext/vdl/
+    
+   Documentation Title            File Name                     FTP Mode
+   ---------------------------------------------------------------------
+   DST DIBORG                       dst_dibr.docx                   binary
+   
+           
+   Host File Name                           FTP Mode
+   ---------------------------------------------------------------------
+   N/A
+    
+    
+   Patch Installation:
+   -------------------
+    
+    
+   Pre/Post Installation Overview:
+   N/A
+    
+    
+   Pre-Installation Instructions:
+   N/A
+    
+    
+   Installation Instructions:
+   N/A
+    
+    
+   Post-Installation Instructions:
+   N/A
+    
+    
+   Back-Out/Roll Back Plan:
+   ------------------------
+   N/A
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 03, 2019
+Completed By:                               Date Completed: JUL 16, 2019
+Released By :                               Date Released : JUL 16, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

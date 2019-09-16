@@ -1,0 +1,141 @@
+
+=============================================================================
+Run Date: JUN 07, 2019                     Designation: GMRC*3*128
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3       SEQ #110                      Status: Released
+                  Compliance Date: JUN 11, 2019
+=============================================================================
+
+
+Subject: CARE ASSESSMENT NEED (CAN) SCORE IMPL FOR CONSULT TOOLBOX
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+ **************************************************************************
+ This is an informational patch explaining deployment of an update to the 
+ CAN Score Application Programming Interface (API) in support of Consult 
+ Toolbox (CTB).
+  
+ NOTE: This patch is loaded to a server in the Austin Information 
+ Technology Center (AITC) Data Center. There is nothing that local sites 
+ can or need to do besides communicate changes to the clinical users. No 
+ code changes were made to the Consult Toolbox client application to 
+ accommodate these enhancements.
+ **************************************************************************
+  
+ This release enables the automation of CAN Score retrieval from VA 
+ Corporate Data Warehouse (CDW).
+  
+ The CAN Score API Server allows automated population of CAN Score Data
+ within the existing CTB Application.  Users will note a minor change 
+ in the behavior of the Clinical Triage dialog, resulting in CAN Score
+ information being automatically populated when available. If CAN Score 
+ information is auto-populated, the ability to manually update the CAN
+ Score will be disabled.
+  
+ This software was created by the Atlanta VA Medical Center in response to 
+ a need to manage the process of consult management. During the life of a 
+ consult, there are prescribed steps of actions to be taken, and there is 
+ a need to be able track these steps at an individual patient level. 
+ Additionally, there is a need to be able to understand the overall status 
+ of consult management at a macro level, and identify specific services 
+ needing attention or resources. Without opening and reading a patient 
+ medical record, it is difficult to identify which patients have had which 
+ scheduling steps completed.
+  
+ This software does several things. First, it makes it very easy for staff 
+ to document actions completed quickly and consistently. Second, it uses 
+ consistent verbiage to document these steps. Third, it eliminates the 
+ need to take a second action or make a separate entry to track scheduling 
+ steps. Fourth, this consistent verbiage allows software analysis of 
+ records without needing to have software changes to VistA or Computerized 
+ Patient Record System (CPRS).
+  
+ A separate process using corporate data warehouse queries and reports 
+ allows creation of views showing such things as patients who have not had 
+ first call, second call, scheduling letter sent or how much time has 
+ passed between these events.
+  
+ Together, these allow tracking and managing consults without the need to 
+ keep a separate list or other workflow to know which consults need 
+ attention.
+  
+  
+ Additional Information:
+ ----------------------- 
+ This software watches keyboard and mouse activity, and comes to life 
+ when certain conditions occur.
+  
+ 1. It only activates when the currently active windows title 
+    "Receive Consult", "Add Comment to Consult" or "Discontinue Consult." 
+    Otherwise nothing happens 
+  
+ 2. When the user initiates a trigger event when either of 
+    these windows have the focus, then depending on the open window a menu 
+    appears for the user to select the appropriate action, then the
+    software inserts the appropriate text into the comment box.
+  
+ 3.  The defined trigger is a right mouse click in the supported CPRS 
+     consult actions.
+  
+ New Service Requests (NSRs):
+ --------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------
+ N/A
+  
+ Test Sites:
+ --------------------
+ Anchorage, AK
+ Salisbury, NC
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software is being released via SCCM package to ESE.  User Guide will be 
+ placed on the following anonymous directories:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                          File Name                     FTP Mode   
+ -----------------------------------------------------------------------
+ Consult Toolbox User Guide     consult_toolbox_1_0_um.pdf    Binary
+ Consult Toolbox User Guide     consult_toolbox_1_0_um.docx   Binary 
+  
+ Patch Installation
+ --------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ Installation of this software will be performed by Infrastructure 
+ Operations (IO) System Administrators, no action is to be taken by 
+ local sites.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 17, 2019
+Completed By:                               Date Completed: JUN 06, 2019
+Released By :                               Date Released : JUN 07, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,349 @@
+
+=============================================================================
+Run Date: MAY 22, 2019                     Designation: GMRC*3*129
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3       SEQ #107                      Status: Released
+                  Compliance Date: MAY 23, 2019
+=============================================================================
+
+
+Subject: DST Information patch for Version 1.0.03
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This is an information only patch for the Decision Support Tools application
+ version 1.0.03 Build 13. There is no VistA component to this new build. This
+ patch is for informational purposes only and is to list the defects that have
+ been resolved in the application release.
+  
+ Google Analytics Integration Google Analytics is a web analytics that is 
+ provided as software as service that tracks and reports website traffic. 
+ The tool provides basic page metrics for tracking but can also be 
+ expanded in complexity over time, with support Google Tag Manager to 
+ follow specific fields and events on the site.  The tool is served in 
+ dashboard format with a different endpoint for any approved user to view, 
+ configure, and monitor page traffic for the DST site.  The tool will 
+ monitor the following environments DEV, SQA, DEMO, PREPROD, and PROD for 
+ complete insight to all of DST.  Google Analytics is configured per TRM 
+ requirements, such as the removal of identifying data and the prevention 
+ of cookies being shared by domains.  
+  
+ Planned Metrics:
+  - Page Views
+  - Page Timings
+  - Custom Event metrics (e.g., Button Click)
+  - Association with back-end services
+  
+ Google Analytics is not visible to the average end user of DST. 
+  
+ Patch Components:
+ -----------------
+ N/A 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+  
+ Blood Bank Team Coordination:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+  
+ Defect Tracking System & Overview:
+  
+ 1. #991516 Restore_Refreshing Browser Changes Date and Urgency Display
+  
+ Problem: 
+ --------
+ Restore_Refreshing Browser Changes Date and Urgency Display
+  
+ Resolution:
+ -----------
+ This change was applied to the DST UI and DST API endpoints.  This has
+ fixed the logic to return the right UI flags to help restore the UI under this
+ condition.
+  
+ 2. #996885 Consult Will Not Restore If API Data Calls Fail from Remote Data
+ Sources
+  
+ Problem: 
+ --------
+ Consult Will Not Restore If API Data Calls Fail from Remote Data Sources 
+ (e.g. MVI or Enrollment Service (ES))
+  
+ Resolution:
+ -----------
+ This change was on the DST UI.  The team fixed the logical order of the data
+ calls to fill the DST dashboard.  When there is an error from a partner
+ interface, the DST dashboard will continue load the screen to help the user
+ view all possible information to continue workflow. 
+  
+ 3. #998942 Quality Code Review Validation Report (MVP) 
+  
+ Problem: 
+ --------
+ Quality Code Review Validation Report (MVP)
+  
+ Resolution:
+ -----------
+ Changes to clean up quality were applied to the cprs-api, MVI, Orchestration,
+ and PPMS microservices to help improve application code quality.
+  
+ 4. #1002972 "Missing Required Fields" Modal Is Not Correctly Trapping All User
+ Input
+  
+ Problem: 
+ --------
+ "Missing Required Fields" Modal Is Not Correctly Trapping All User Input
+  
+ Resolution:
+ -----------
+ This change was on DST UI to make sure that information, structure, and
+ relationships conveyed through presentation can be understood by User.
+  
+ 5. #1002978 Focusable components in the content do not receive focus in an
+ order that preserves meaning and operability
+  
+ Problem: 
+ --------
+ Focusable components in the content do not receive focus in an order that
+ preserves meaning and operability.
+  
+ Resolution:
+ -----------
+ This fix ensures that focusable components in the content receive focus in an
+ order that preserves meaning and operability.
+  
+ 6. #1002982 Keyboard operable user interface elements do not have a visible
+ indication of focus.
+  
+ Problem: 
+ --------
+ Keyboard operable user interface elements do not have a visible indication of
+ focus.
+  
+ Resolution:
+ -----------
+ These fixes were made to ensure keyboard operable interface elements have a
+ visible indication of focus to User.
+  
+ 7. #1002985 When components receive focus, it initiates a change of context.
+  
+ Problem: 
+ --------
+ When components receive focus, it initiates a change of context.
+  
+ Resolution:
+ -----------
+ This change ensures that no change of context is initiated solely by a
+ component receiving focus.
+  
+ 8. #1002990 Changing the setting of user interface component automatically
+ causes a change of context without advising the user of this behavior.
+  
+ Problem: 
+ -------- 
+ Changing the setting of user interface component automatically causes a change
+ of context without advising the user of this behavior.
+  
+ Resolution:
+ -----------
+ This change ensure context is not initiated simply by an input receiving focus.
+ If an input receiving focus initiates a change of context, a user must be
+ advised of this behavior in DST UI.
+  
+ 9. #1002992 Labels and instructions are not provided when content requires user
+ input.
+  
+ Problem: 
+ --------
+ Labels and instructions are not provided when content requires user input.
+  
+ Resolution:
+ -----------
+ This change ensures that labels and instructions are provided appropriately
+ when content requires user input in DST UI.
+  
+ 10. #1002996 The name, role, state or value of user interface elements in the
+ product cannot be understood.
+  
+ Problem: 
+ --------
+ The name, role, state or value of user interface elements in the product cannot
+ be understood.
+  
+ Resolution:
+ -----------
+ Change was applied to ensure that the name, role, state or value of user
+ interface elements in DST can be understood.
+  
+ 11. #1003417 Dashboard allows the user to save a No Community Care Eligible
+ patient when Consult Decision is not shown or selected.
+  
+ Problem: 
+ --------
+ Dashboard allows the user to save a No Community Care Eligible patient when
+ Consult Decision is not shown or selected.
+  
+ Resolution:
+ -----------
+ This change was applied to the DST UI to show the consult decision as a
+ selected radio option on the UI.  This allows validation and save operations to
+ execute properly.
+  
+ 12. #1003854 Community Care (669) is displayed in Clinical Service typeahead
+  
+ Problem: 
+ --------
+ Community Care (669) is displayed in Clinical Service typeahead
+  
+ Resolution:
+ -----------
+ This change was made in the CDW microservice to query all stop codes except
+ stop code 669 and has a required_dst validation flag set.  This will show only
+ the right consult services data (that are not community care) within the
+ clinical service typeahead.
+  
+ Test Sites:
+ -----------
+ N/A
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Documentation describing the new functionality and/or a host file containing 
+ a build may be included in this release.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files
+ directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: https://www.domain.ext/vdl/
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ DST User Guide                dst_ug.docx                     binary
+ DST User Guide                dst_ug.pdf                      binary
+         
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ -------------------
+  
+  
+ Pre/Post Installation Overview:
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ N/A
+  
+  
+ Installation Instructions:
+ N/A
+  
+  
+ Post-Installation Instructions:
+ N/A
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 21, 2019
+Completed By:                               Date Completed: MAY 22, 2019
+Released By :                               Date Released : MAY 22, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

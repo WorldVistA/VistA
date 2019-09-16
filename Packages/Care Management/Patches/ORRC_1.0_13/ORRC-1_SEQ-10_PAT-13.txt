@@ -1,0 +1,148 @@
+$TXT Created by                   A at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 04/15/19 at 14:21
+=============================================================================
+Run Date: MAY 30, 2019                     Designation: ORRC*1*13
+Package : ORRC - CARE MANAGEMENT              Priority: Mandatory
+Version : 1        SEQ #10                      Status: Released
+                  Compliance Date: JUN 30, 2019
+=============================================================================
+
+
+Subject: CARE MANAGEMENT ROUTINE REMOVAL 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to remove unused routines in the Care 
+ Management (CM) package from VistA.
+  
+ The following routines will be kept due to dependencies with the 
+ Computerized Patient Record System (CRPS) and the Computerized Patient 
+ Record System Query Tool. 
+  
+ ORRCACK
+ ORRCLNP
+ ORRCQLPT
+  
+ The post install routine ORRC13P is included to remove the entries
+ in the Routine file (#9.8).
+  
+ Test Sites:
+ -----------
+ Asheville
+ Oklahoma VAMC
+  
+ Installation Instructions:
+ --------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+    1. Choose the PackMan message containing this patch.
+  
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+    3. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  From this menu, you may select to use the
+       following options: 
+  
+         a. Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+         b. Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch 
+            routines, DDs, templates, etc.
+  
+         c. Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+    4. From the Installation menu, select the Install Package(s) option and
+       when prompted for INSTALL NAME, enter the package "ORRC*1.0*13" to
+       install.
+  
+    5. When prompted 'Rebuild Menu Tree Upon Completion?
+       NO//' respond NO. 
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', respond NO.
+  
+    7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+    8. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0.
+  
+ Back-out Procedures:
+ ====================
+ Back-out Procedures are only needed if there are major problems resulting 
+ from the installation of this patch. You must have concurrence from Health
+ Product Support before a rollback can occur. Enter a ServiceNow ticket to
+ obtain this concurrence. The development team will need to issue one or
+ more follow-up patches in order to comprehensively back out this patch,
+ after coordination with the VA Project Manager and Contracting Officer
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Care Management;**[Patch List]**;April 11th, 2019;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORRC13P
+    Before:       n/a   After:   B711449  **13**
+Routine Name: ORRCACK
+    Before: B69951493   After: B69951493  
+Routine Name: ORRCDPT
+    Before: B27732159   After:    Delete  
+Routine Name: ORRCDPT1
+    Before: B23709488   After:    Delete  
+Routine Name: ORRCEVT
+    Before: B52026948   After:    Delete  
+Routine Name: ORRCLNP
+    Before:   B585941   After:   B585941  **1**
+Routine Name: ORRCLPT
+    Before:   B266293   After:    Delete  
+Routine Name: ORRCOA
+    Before: B11062549   After:    Delete  
+Routine Name: ORRCOR
+    Before: B48128294   After:    Delete  
+Routine Name: ORRCQLPT
+    Before:  B1006284   After:  B1006284  
+Routine Name: ORRCSIG
+    Before: B11096954   After:    Delete  
+Routine Name: ORRCTIU
+    Before: B31325045   After:    Delete  
+Routine Name: ORRCTSK
+    Before: B44307761   After:    Delete  
+Routine Name: ORRCVIT
+    Before: B17118495   After:    Delete  
+Routine Name: ORRCXQ
+    Before: B20320443   After:    Delete  
+Routine Name: ORRCY08
+    Before:  B2082563   After:    Delete  
+Routine Name: ORRCY7
+    Before:  B1627643   After:    Delete  
+Routine Name: ORRCYP01
+    Before:  B1869759   After:    Delete  
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 14, 2019
+Completed By:                               Date Completed: MAY 30, 2019
+Released By :                               Date Released : MAY 30, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

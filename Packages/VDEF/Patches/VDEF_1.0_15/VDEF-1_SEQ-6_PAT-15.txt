@@ -1,0 +1,421 @@
+
+=============================================================================
+Run Date: JUN 12, 2019                     Designation: VDEF*1*15
+Package : VDEF - VDEF                         Priority: Mandatory
+Version : 1         SEQ #6                      Status: Released
+                  Compliance Date: JUL 13, 2019
+=============================================================================
+
+
+Subject: INFORMATIONAL- VIE TO HEALTH CONNECT MIGRATION
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ **************************************************************************
+ This is an informational patch describing the migration from VistA
+ Interface Engine (VIE), a.k.a. Vitria, to InterSystems Health Connect
+ (HC). HC is a part of the suite of products grouped under HealthShare.
+ **************************************************************************
+  
+ The Health Connect (HC) product will be replacing the Vitria Interface 
+ Engine (VIE). During the transition phase, HC and VIE will be running 
+ concurrently.
+ >>>>>>>> NATIONAL RELEASE PLANNED FOR THURSDAY JUNE 13TH, 2019 <<<<<<<<<
+  
+ VIE is the middleware that receives HL7 messages from VistA and transmits 
+ those messages to the Health Data Repository (HDR) and Clinical Health 
+ Data Repository (CHDR). These include Vitals, Allergies, and Pharmacy 
+ using the VistA Logical Links:
+  -  VDEFVIE1- Vitals,
+  -  VDEFVIE2- Allergy,
+  -  VDEFVIE3- Pharmacy.
+  
+ The HC software will replace VIE to transmit these messages.
+  
+ Additionally, the VDEFVIE4 Logical Link (Lab) will use HC as middleware 
+ starting with this change.
+  
+ Each VistA site will reconfigure these Logical Links to point to its 
+ respective Regional Health Connect (HC) instead of VIE.  A "roll-call" meeting
+ will be held to facilitate the rapid transition of all VistA sites after the 
+ release of this informational patch. During this meeting, sites will be 
+ provided the specific TCP/IP address and port information for their VistA 
+ instance.
+  
+ Patch Components:
+ =================
+   
+ Files & Fields Associated:
+  
+ File Name (#)                     Field Name   New/Modified/Deleted
+ ------------                      ----------   --------------------
+ N/A
+  
+ Form Name             File #                  New/Modified/Deleted
+ ---------             ------                  --------------------
+ N/A
+  
+ Kernel Parameters Associated:
+  
+ Kernel Parameter Name              Entities                   Values
+ ---------------------       ---------------                 --------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                New/Modified/Deleted
+ ---------------                                --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                          Type         New/Modified/Deleted
+ -----------                          ----         --------------------
+ N/A
+  
+   
+ Protocols Associated:
+  
+ Protocol Name                              New/Modified/Deleted
+ -------------                              --------------------
+ N/A
+    
+ Security Keys Associated:
+  
+ Security Key Name                           New/Modified/Deleted
+ -----------------                           --------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name               Type  File Name (#)  New/Modified/Deleted
+ -------------               ----  ------------   --------------------
+ N/A
+   
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A  
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+     
+  
+ TEST Sites (Region 3):
+ =====================
+ Mountain Home, TN (Station 621)
+ Atlanta, GA (Station 508)
+      
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ There is no VistA software being released for this migration. The 
+ documentation describing this new functionality is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at
+ the following OI Field Offices:
+  
+  Hines          domain.ext
+  Salt Lake City domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ File Description                         File Name                FTP Mode
+ --------------------------------------------------------------------------
+  
+ Intersystems Health Connect/HDR-CHDR    vdef_1_p15_dibr.pdf       Binary
+ Deployment, Installation, Back-Out
+ and Rollback Guide  
+  
+ PATCH INSTALLATION: 
+ ===================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ **************************************************************************
+ The following instructions are to be performed only when directed to do so 
+ by the HealthShare National Admin Team. These changes can only be 
+ implemented in collaboration and coordination with the HealthShare National
+ Admin Team, the Health Connect Support Operations Team, VistA HL7 support, 
+ and HDR/CHDR Support.
+  
+ Please refer to the Health Connect/HDR-CHDR Deployment, Installation, 
+ Back-Out and Rollback Guide for the overall implementation of the HDR/CHDR 
+ to Health Connect deployment.
+ *************************************************************************** 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ --------------------------
+  
+ After HealthShare's Health Connect (HC) is deployed, and the HC
+ Regional Production instance is ready to process incoming and outgoing 
+ messages, the site administrator will need to edit the HL LOGICAL LINK file
+ (#870) for the VDEFVIE# entries (where # represents 1-4). The VistA outbound 
+ logical links will need to reference a TCP/IP address and port associated with 
+ the HL7 Listener Service of the Regional Health Connect production.
+  
+ The following steps will have to be performed in the VistA HL7 application for
+ VDEFVIE1 (Vitals), VDEFVIE2 (Allergies), VDEFVIE3 (Pharmacy), and 
+ VDEFVIE4 (Labs) outbound Logical Link entries:
+  
+ NOTE:  Prior to making any changes to the Logical Links as listed above, 
+ IO VistA Application Analyst should take screen shots of the Logical Link 
+ configuration prior to making any changes should a back out be required.  
+ The screen shots will be used to reference to restore prior 
+ configurations should it be necessary.
+  
+ STEP 1.  Stop the VDEFVIE1 Logical Link using the HL7 Menu option:
+ Start/Stop Links. The following is an example:
+    
+  
+  Select OPTION NAME: HL7 MAIN MENU  HL MAIN MENU     HL7 Main Menu
+  
+  
+           Event monitoring menu ...
+           Systems Link Monitor
+           Filer and Link Management Options ...  <===
+           Message Management Options ...
+           Interface Developer Options ...
+           Site Parameter Edit
+    HLO    HL7 (Optimized) MAIN MENU ...
+  
+ Select HL7 Main Menu <TEST ACCOUNT> Option: FILER AND LINK Management 
+                                             Options
+  
+  
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links  <===
+    PI     Ping (TCP Only)
+    ED     Link Edit
+    ER     Link Errors ...
+  
+ Select Filer and Link Management Options <TEST ACCOUNT> Option: SL  
+                                                        
+ This option is used to launch the lower level protocol for the
+ appropriate device.  Please select the node with which you want
+ to communicate
+  
+ Select HL LOGICAL LINK NODE: VDEFVIE
+      1   VDEFVIE1  
+      2   VDEFVIE2  
+      3   VDEFVIE3  
+      4   VDEFVIE4  
+ CHOOSE 1-4: 1  VDEFVIE1
+ The LLP was last started on MAR 07, 2019 12:17:34.
+  
+ Okay to shut down this job? YES
+ The job for the VDEFVIE1 Lower Level Protocol will be shut down.
+  
+ STEP 2. Reset the VDEFVIE1 Logical Link  Queue Count. As instructed by
+ Enterprise HL7 Support Team on the call, execute these menu options:
+              HL7 Main Menu 
+                FI Filer and Link Management Options
+                 ER  Link Errors
+                  RESET Link's Counters (TCP Only)
+                   Select a TCP link:VDEFVIE1
+  
+ STEP 3. Edit the VDEFVIE1 Logical Link with the Link Edit HL7 menu option:
+  
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links
+    PI     Ping (TCP Only)
+    ED     Link Edit     <===
+    ER     Link Errors ...
+  
+ Select HL LOGICAL LINK NODE:    VDEFVIE1
+  
+ STEP 4. On the first screen, change AUTOSTART to Enabled. 
+  Next, move the cursor to the field LLP TYPE and press Enter. 
+  This will present the second screen (as shown is step 5).
+  
+  
+ STEP 5. On the first screen, edit the DNS DOMAIN field as 
+  instructed below.
+  
+  
+                         HL7 LOGICAL LINK
+  ------------------------------------------------------------------------
+  
+  
+  
+                 NODE: VDEFVIE1                     DESCRIPTION:
+                 ----
+          INSTITUTION:
+  
+       MAILMAN DOMAIN:
+  
+            AUTOSTART: Disabled  
+  
+           QUEUE SIZE: 10    
+  
+             LLP TYPE: TCP  <=== Highlight this field and hit <ENTER>.
+             --------            The TCP LOWER LEVEL PARAMETERS window
+                                 will open up (shown in step 6 below).
+                                   >>>PERFORM THIS STEP BEFORE UPDATING THE
+                                   DNS DOMAIN BELOW<<<
+  
+           DNS DOMAIN: XXXX <=== Set this field to the value for your
+                                 regional Health Connect system
+                                 
+  _________________________________________________________________________
+  
+  
+  COMMAND:                              Press <PF1>H for help    Insert
+  
+  
+  STEP 6. Replace the existing TCP/IP ADDRESS with null and existing TCP/IP
+          PORT with the Health Connect IP address and port as shown:
+    
+  
+  
+                           HL7 LOGICAL LINK
+  -----------------------------------------------------------------------
+  
+   |------------------TCP LOWER LEVEL PARAMETERS---------------------|
+   |                  VDEFVIE1                                       |
+   |                                                                 |
+   |  TCP/IP SERVICE TYPE: CLIENT (SENDER)                           |
+   |       TCP/IP ADDRESS: XXXXXX  <=== Delete the existing value and|
+   |                                    leave it blank.              |
+   |                                    Type:                        |
+   |                                    @<Enter>                     |
+   |         TCP/IP PORT: XXXX     <=== Enter the new TCP/IP PORT for|
+   |                                    your site regional Health Connect
+   |                                    system 
+   |         TCP/IP PORT (OPTIMIZED):                                |
+   |                                                                 |
+   |   ACK TIMEOUT:                   RE-TRANSMISION ATTEMPTS:       |
+   |  READ TIMEOUT:                 EXCEED RE-TRANSMIT ACTION:       |
+   |    BLOCK SIZE:                                  SAY HELO:       |
+   |                                  TCP/IP OPENFAIL TIMEOUT:       |
+   |STARTUP NODE:                                  PERSISTENT:       |
+   |   RETENTION:                        UNI-DIRECTIONAL WAIT:       |
+   |_________________________________________________________________|
+  
+   ______________________________________________________________________
+  
+  
+  COMMAND:                             Press <PF1>H for help    Insert
+  
+ REPEAT STEPS 1 - 6 for the next 3 VDEFVIE# links. 
+  
+ NOTE:  Please WAIT until further instructed to restart the logical Links.
+  
+  
+ POST INSTALLATION INSTRUCTIONS:
+ ===============================
+  
+ STEP 7: Restart the VDEFVIE# Logical Link use SL Start/Stop Links menu as
+ shown in Step 1 above.
+  
+ STEP 8: Check/monitor the VDEFVIE# Logical Links queues:
+        a. Check STATUS (report if OPEN/FAIL or ERROR) using the SM 
+           Systems Link Monitor menu option; 
+        b. Check Queue Counts are the same for columns: TO SEND and SENT 
+           using the SM Systems Link Monitor menu option;
+        c. Check IP Address has filled in by performing a FileMan Inquiry 
+           to File 870, HL LOGICAL LINK on each of the affected HL7 Logical
+           Link;
+           or using:
+              HL7 Main Menu 
+                FI Filer and Link Management Options
+                 ER  Link Errors
+                  Display One Link (TCP Only)
+                   Select a TCP link:VDEFVIE#
+  
+        d. Add VDEFVIE4 to the VDEF View (as instructed by Enterprise HL7 
+           Support Team on the call), using the following menu options:
+              HL7 Main Menu
+               Site Parameter Edit-
+               Tab to System Link Monitor VIEWS and select VDEF View:
+        
+             Edit HL7 Site Parameters                  Page 1 of 2
+ -------------------------------------------------------------------------
+ | 
+ |                      Current Domain: DEVEHR.VACO.DOMAIN.EXT            
+ |                 Current Institution: EHR TEST 1                    
+ |Is this a Production or Test Account? training  
+ | 
+ |               Mail Group for Alerts: HL7 TRANS                     
+ | 
+ | 
+ |System Link Monitor VIEWS
+ |-------------------------
+ |VBECS               
+ |VDEF   <=====             
+ |VIC                 
+ |VIE                 
+ |            [Goto next page to edit Background Process Parameters]
+ |
+ __________________________________________________________________________
+  
+         On the next pop-up form add VDEFVIE4 as last entry in the LOGICAL 
+ LINK colum:
+ +-------------------------------------------------------------------------
+ |                       Edit HL7 Site Parameters              Page 1 of 2
+ |----------------------------------------------------------------------- 
+ |    +---------------------System Link Monitor View---+
+ |    |                    NAME: VDEF                  |
+ |    |                                                |
+ |    | LOGICAL LINK         DISPLAY ORDER             |
+ |    | ------------         -------------             |
+ |    | VDEFVIE1               1                       |
+ |    | VDEFVIE2               2                       |
+ |    | VDEFVIE3               3                       |
+ |    | VDEFVIE4               4  <====                |
+ |    |                                                |
+ |    +------------------------------------------------+
+ | 
+ |                    
+ |            [Goto next page to edit Background Process Parameters]
+ |
+ __________________________________________________________________________
+  
+  
+ STEP 9: Monitor VDEFVIE1-4 Logical Links-using the SM Systems Link Monitor
+ menu option. Report back on the call any issues.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 04, 2019
+Completed By:                               Date Completed: JUN 12, 2019
+Released By :                               Date Released : JUN 12, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

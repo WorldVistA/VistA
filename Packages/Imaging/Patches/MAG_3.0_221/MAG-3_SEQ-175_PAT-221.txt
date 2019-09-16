@@ -1,0 +1,572 @@
+
+=============================================================================
+Run Date: MAY 23, 2019                     Designation: MAG*3*221
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #175                      Status: Released
+                  Compliance Date: JUN 24, 2019
+=============================================================================
+
+Associated patches: (v)MAG*3*119   <<= must be installed BEFORE `MAG*3*221'
+                    (v)MAG*3*167   <<= must be installed BEFORE `MAG*3*221'
+                    (v)MAG*3*201   <<= must be installed BEFORE `MAG*3*221'
+
+Subject: VIX IMAGE VIEWER VERSION 3.2
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ MAG*3.0*221 adds enhancements to the Zero footprint HTML 5 based image  
+ viewer.
+  
+ MAG*3.0*221 contains the following new features: 
+   
+ 1) Image Quality Assurance (QA) 
+    . Apply advance QA filters 
+    . Perform QA 
+    . Run QA report 
+ 2) Release of Information (ROI) 
+    . Process ROI request 
+ 3) Additional SOP Class Support
+  
+ **NOTE 1**  There is a Post Installation Step that needs to be completed. 
+ The menu option Delete work items [MAG WORK ITEMS DELETE] must be run 
+ IMMEDIATELY AFTER the installation of the MAG*3.0*221 KIDs and BEFORE the 
+ installation of the VIX.msi.
+  
+ **NOTE 2**  ROI functionality impaired by IE11 structure that sites cannot
+ change. There is a tested fix that did not make this patch that does 
+ allow sites to download physical document ROI release. The fix will be 
+ held for a future patch. Meanwhile, ROI functionality remains in VistA 
+ Imaging Display and can be utilized.
+  
+ Patch Components:
+ ----------------- 
+  
+ This patch includes the following files. MAG3_0P221_README.txt, if 
+ present, is an informative file associated with the patch released:
+  
+  
+ File Name                 Description
+ ---------                 ------------      
+ MAG3_0P221.KID            KIDS (Kernel Installation & Distribution System)
+                           package to be installed on the VistA System
+ MAG3_0P221_VIX_Setup.msi  Installation file for the VIX software 
+                           Version 30.221.5.6517
+ MAG3_0P221_Patch_
+  Description.pdf          This document
+ MAG3_0P221_VIX_
+  Installation_Guide.pdf   VIX Installation Guide for this patch
+ MAG3_0P221_User_Guide.pdf User Guide for this patch 
+   
+ This patch installs the following software versions: 
+   
+ Apache Tomcat: 8.0.52 
+ Java: 8_0_171 version
+   
+ Documentation: 
+ --------------  
+ This document provides an overview, explains the changes, and outlines the 
+ installation for this patch. 
+   
+ Files & Fields Associated: 
+ -------------------------- 
+ File Name (Number)         Field Name (Number)    New/Modified/Deleted 
+ ------------------         -------------------    --------------------
+ MAG WORK ITEM (#2006.941)                         Modified
+                                                   New C Cross Reference
+  
+ Forms Associated: 
+ Form Name              File #            New/Modified/Deleted
+ ---------              ------            ---------------------
+ N/A 
+  
+ Mail Groups Associated: 
+ Mail Group Name                          New/Modified/Deleted 
+ ---------------                          --------------------
+ N/A 
+  
+ Options Associated: 
+ Option Name            Type              New/Modified/Deleted
+ -----------            ----              ---------------------
+ N/A 
+  
+ Protocols Associated: 
+ Protocol Name                            New/Modified/Deleted
+ -------------                            --------------------
+ N/A
+  
+ Remote Procedure Calls (RPC) Associated:
+ RPC Name                                 New/Modified/Deleted
+ --------                                 --------------------
+ MAGN PATIENT IMAGE LIST                       Modified
+ MAGN PRECACHE BY CPT                          New
+  
+ Parameters Associated:
+ Parameter Name                           New/Modified/Deleted
+ --------------                           --------------------
+ MAG PRECACHE ACQ ENABLED                      Modified
+ MAG PRECACHE RAD REG ENABLED                  Modified
+  
+  
+ Security Keys Associated: 
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated: 
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -------------------------------------
+ This project is initiated by Requirement BR 8.0 of the Health Information
+ Exchange Viewer BRD #01-02-03-05-08-003.
+  
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ There are no patient safety issues associated with this patch. 
+  
+ Supported SOP Classes
+ ----------------------
+  
+ The following table includes the newly supported SOP classes in 
+ MAG*3.0*221. The Hybrid DICOM Image Gateway (HDIG) validates the objects
+ associated with these classes and stores them in the new database that
+ then can be viewed via the new Image Viewer.
+  
+ Each SOP class must be enabled individually to be stored. The patch 
+ distributes all SOP classes disabled as the default. To enable the storage
+ of new SOP classes, please enter a ServiceNow ticket, or contact the
+ National Help Desk to request assistance from the CLIN3 Support Team.
+  
+ NOTE: Newly Supported SOP Classes are not currently viewable with Clinical
+ Display or VistARad. 
+  
+ SOP Classes Newly Supported in MAG*3.0*221
+  
+ SOP Class Name                        SOP Class UID
+ --------------                        -------------
+ X-Ray Angiographic Image Storage      1.2.840.10008.5.1.4.1.1.12.1
+ Enhanced SR                           1.2.840.10008.5.1.4.1.1.88.22
+ Enhanced MR Color Image Storage       1.2.840.10008.5.1.4.1.1.4.3
+ Enhanced XA Image Storage             1.2.840.10008.5.1.4.1.1.12.1.1
+ Breast Tomosynthesis Image Storage    1.2.840.10008.5.1.4.1.1.13.1.3
+ Ophthalmic Photography 8 Bit 
+    Image Storage                      1.2.840.10008.5.1.4.1.1.77.1.5.1
+ Basic Text SR                         1.2.840.10008.5.1.4.1.1.88.11
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. Defect 961648 - VRAD Users impacted by Patch 201
+  
+    Problem: The VRAD problem occurred when VRAD tried to retrieve cached 
+    metadata.
+    
+    Resolution: ImagingExchangeCache-01.jar fixes the VRAD issue.
+  
+ 2. Defect 961600 - ROI Password change not working as expected in Patch
+                    201
+    Problem: Release of Information (ROI) errors processing periodic 
+    commands. The system was unable to start periodic commands
+    because the ROI service account credentials are invalid.
+   
+    Resolution: The fix was made in the ROIWebApp - ROI was modified to 
+    update both the ROIPeriodicCommandConfiguration.config and
+    PeriodicCommandConfiguration.config files.
+  
+ 3. Defect 970712 - Precache entries in #2006.941 "MAG WORK ITEM"
+  
+    Problem: Precaching should not be occurring
+  
+    Resolution: Routine MAGNWRK1 has been updated to prevent a new 
+    PRECACHE work item being created during P34 object acquisition.
+  
+ 4. Defect 963272 - Issues found during IOC at San Diego
+  
+    Problem: QA Review Slow performance caused by image compression issue
+  
+    Resolution: ImageConversion-01.jar fixes the performance issue by 
+    handling DICOM compression issue.
+  
+ Test Sites: 
+ -------------
+ San Diego, CA
+ Baltimore, MD
+ Iron Mountain, MI
+ Mountain Home, TN
+  
+ Software and Documentation Retrieval Instructions: 
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available. 
+  
+ The preferred method is to retrieve files from
+  
+    download.vista.domain.ext.
+  
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS software directory at
+ the following OI Field Offices: 
+  
+ Hines              domain.ext
+ Salt Lake City     domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Name                      File                            FTP Mode
+ ----                      ----                            --------
+ MAG*3.0*221 KIDS       MAG3_0P221.KID                     ASCII
+ MAG*3.0*221 VIX Setup  MAG3_0P221_VIX_Setup.msi           Binary
+                        Version 30.221.5.6517
+ MAG*3.0*221 Patch      MAG3_0P221_Patch Description.pdf   Binary
+  Description           
+ MAG*3.0*221 VIX        MAG3_0P221_VIX_Installation        Binary
+                          _Guide.pdf               
+  
+ Patch Installation: 
+ Pre/Post Installation Overview:
+ -------------------------------
+ See MAG*3.0*221 VIX Installation Guide for additional information. 
+  
+ **Note** - There is an important Post Installation Step that must be 
+ completed after the installation of the KIDs and BEFORE the installation 
+ of the VIX msi.
+  
+ Pre-Installation Instructions: 
+ ------------------------------
+ Verify that the patches listed in the Associated Patches section of this
+ document have been previously installed. 
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. 
+  
+ There are no Menu Options to disable. 
+  
+ Installation Prerequisites
+ --------------------------
+ Before installing this patch, you will need to download the MAG*3.0*221
+ files from the Anonymous SFTP site to a local storage location.
+  
+ Verify that required patches and any optional patches that support desired
+ or needed features have been installed. For a summary of associated 
+ patches, see the Associated Patches section of this document.
+  
+ Installation Instructions: 
+ --------------------------
+ This patch contains a VIX installation and a KIDS installation. 
+  
+ Installation instructions for the VIX install of this patch can be found
+ in the VIX Installation Guide. The KIDS build is to be installed on the
+ VistA System and the VIX client executable (.msi) should be installed on
+ the VIX server. 
+  
+ This patch must be installed by the compliance date to conform with VHA
+ Directive 2001-023.
+  
+ NOTE: All sites running VistA Imaging 3.2 must install both the KIDS 
+ portion as well as the VIX portion of this patch. 
+  
+ This patch may be loaded while VistA Imaging System is active. All Sites
+ must install the KIDS build of this patch. 
+  
+ The MAG*3.0*221 KIDS may be loaded while users are using the VistA Imaging
+ System. Installing the KIDS will take less than one minute. 
+  
+ After the KIDS portion of this patch is installed, sites will need to
+ update their VIX. For detailed information, refer to the VIX installation
+ Guide.
+  
+ KIDS Installation
+ All sites must install the KIDS portion of this patch. 
+  
+ Installing the KIDS Package
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+  
+ 2. Run the Installation option [XPD INSTALLATION MENU]. 
+  
+ 3. Load the KIDS file by performing the following steps. 
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load
+       the KIDS distribution
+    b. When prompted, enter the path and file name (MAG3_0P221.KID) of the
+       MAG*3.0*221 KIDS file that you downloaded from the SFTP server.
+    c. When prompted to continue with the load, enter YES. A Distribution
+       OK! message will be displayed when the load is complete.
+  
+ 4. You may elect to use the following options:
+  
+    a. Backup a Transport Global [XPD BACKUP] -   
+       This option will create a backup message of any routines exported
+       with this patch. It will not backup any other changes such as DD's
+       or templates.
+  
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]- 
+       This option will allow you to view all changes that will be made
+       when this patch is installed. It compares all components of this
+       patch (routines, DD's, templates, etc.).
+  
+    c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- 
+       This option will allow you to ensure the integrity of the routines
+       that are in the backup any other changes such as DD's or templates.
+  
+ 5. After performing the load and any optional verification steps, perform
+ the following steps to install the KIDS file. 
+  
+    a. Run the Install Package(s) option [XPD INSTALL BUILD]
+    b. When prompted for the install name, enter MAG*3.0*221
+    c. Answer NO to the following prompts:
+       i. Want KIDS to INHIBIT LOGONs during the install? no//NO
+       ii. Want to DISABLE Scheduled Options, Menu Options, and Protocols?
+           //NO
+  
+ 6. When installation has finished, an Install Complete message will be
+ displayed. 
+  
+ Sample KIDS Installation 
+ ------------------------
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*221    4/1/19@09:16:34
+      => VistA Imaging V3.0 Patch 221 - Image Viewer v3.2 - 02/25/2019 
+ 10:20
+  
+ This Distribution was loaded on Apr 01, 2019@09:16:34 with header of 
+    VistA Imaging V3.0 Patch 221 - Image Viewer v3.2 - 02/25/2019 
+ 10:20AM  ;Created on Feb 25, 2019@10:20:10
+    It consisted of the following Install(s):
+     MAG*3.0*221
+ Checking Install for Package MAG*3.0*221
+  
+ Install Questions for MAG*3.0*221
+  
+ Incoming Files:
+  
+  
+    2006.941  MAG WORK ITEM  (Partial Definition)
+ Note:  You already have the 'MAG WORK ITEM' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   Linux Telnet/SSH
+ --------------------------------------------------------------------------
+ ------
+  
+  Install Started for MAG*3.0*221 : 
+                Apr 01, 2019@09:20:51
+  
+ Build Distribution Date: Feb 25, 2019
+  
+  Installing Routines:
+                Apr 01, 2019@09:20:51
+  
+  Running Pre-Install Routine: PRE^MAGIP221
+  
+  Installing Data Dictionaries: 
+                Apr 01, 2019@09:20:51
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing REMOTE PROCEDURE
+  
+  Installing PARAMETER DEFINITION
+                Apr 01, 2019@09:20:51
+  
+  Running Post-Install Routine: POS^MAGIP221
+  
+    Attaching RPCs to the 'MAG WINDOWS' option...
+    MAG STORAGE FETCH SET
+    MAGN PRECACHE BY CPT
+    RPCs have been successfully attached.
+  
+    Attaching RPCs to the 'MAG DICOM VISA' option...
+    MAGN PRECACHE BY CPT
+    RPCs have been successfully attached.
+    Rebuild of cross-references in MAG WORK ITEM file (#2006.941) has been 
+ completed.
+  
+ Post Install Mail Message: Apr 01, 2019@09:20:51
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*221 Installed. 
+                Apr 01, 2019@09:20:52
+  
+  
+ Install Completed
+  
+ Post Installation
+ -----------------
+  
+ The menu option Delete work items [MAG WORK ITEMS DELETE] was introduced 
+ in MAG*3.0*201. This menu option should be assigned to the IRM staff 
+ responsible for overseeing VistA Imaging.
+  
+ **NOTE** - The menu option Delete work items [MAG WORK ITEMS DELETE] must 
+ be run IMMEDIATELY AFTER the installation of the MAG*3.0*221 KIDs and 
+ BEFORE the installation of the VIX.msi.
+  
+ Date Range should be from 2/20/19 to the current day
+ Work Item Type should be PRECACHE
+ Work Item Subtype should be ACQUISITION
+  
+ Sample:
+  
+ Select Systems Manager Menu <TEST ACCOUNT> Option: delete work items
+ Enter from date:  2/20/19  (FEB 20, 2019)
+ Enter through date:  t  (APR 10, 2019)
+ Select work item type: PRECACHE  
+ Select work item subtype: ACQUISITION  
+ ARE YOU SURE YOU WANT TO DELETE WORK ITEMS? NO// y  YES
+  
+ Installation Verification
+ =========================
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures
+ ===================
+ Back-out will be done only with the concurrence and participation of the 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between the 
+ development team, VA site/region personnel and other appropriate VA
+ personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install).  The message containing the backed up routines can be loaded
+ with the "Xtract PackMan" function at the Message Action prompt. The
+ Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+ backed up routines onto the VistA System.
+  
+ Validation of Roll Back Procedure
+ =================================
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the MAG Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ MAG*3.0*221 patch have been rolled back the first two lines of the
+ routines will no longer contain the designation of patch 2 in the patch
+ list section on line 2.
+  
+ Routine Name  Old(before)Checksum * New(after)Checksum * Patch List (2nd line)
+ ------------  --------------------- -------------------- ----------------------
+ MAGDQR21      172485019             188496027            **83,104,123,119
+ MAGGSIA       36655133              35830061             **7,21,8,59,93,201,221
+ MAGGTIA1      34882923              34088332             **21,8,59,93,201,221
+ MAGIP221      New                   8533414              **211
+ MAGNPCHE      New                   19371617             **211
+ MAGNUTL2      9894691               23733574             **201,221
+ MAGNVQ04      18123604              30558931             **185,221
+ MAGNVQ05      6884375               35641804             **185,221
+ MAGNVQ07      New                   5002623              **221
+ MAGNWRK1      51777875              53919420             **201,221
+ MAGSIXG1      37750042              40907827       **8,48,59,93,117,221**93,221
+ MAGSIXG2      63440737              69913945             **93,221
+ MAGSIXG3      84985360              109262683          **93,117,150,138,167,221
+ MAGUTL06      18816077              19148168             **93,221
+ MAGVIM01      190017162             195265246            **118,138,221
+  
+ Checksum is using D CHECK1^XTSUMBLD to verify before/after KIDS installation.
+ Note: Routine MAGIP221 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+  
+ Rollback, Back Out or Uninstalling MAG*3.0*221
+ ==============================================
+ If it is necessary to uninstall the MAG*3.0*221 VIX service, use the Uninstall 
+ option from Windows Control Panel to uninstall: "VIX Service Installation Wizard
+ 30.221.3.6515".  Then install the previous version of VIX which was included in
+ MAG*3.0*177. To back out the VIX and replace it with prior version, please see 
+ the MAG*3.0*221 VIX Installation Guide for more detail.
+   
+ However, if it is necessary to uninstall the MAG*3.0*221 VistA KIDS, you need to
+ select the "Kernel Installation & Distribution System" menu option, "Backup a 
+ Transport Global" (see KID installation section above, step 4), before you 
+ uninstall the patch.
+  
+ Administrators will need to use the PackMan function INSTALL/CHECK MESSAGE.  
+ Check your VistA MailMan messages for the backup message sent by the "Backup a 
+ Transport Global" function by following these steps:
+  
+ 1.|TAB|Select the inbox message shown below:
+  
+ Backup of MAG*3.0*221 install on <mmm dd, yyyy>    <user name>
+  
+ 2.|TAB|Select the Xtract PackMan option.
+ 3.|TAB|Select the Install/Check Message option.
+ 4.|TAB|Enter "Yes" at the prompt.
+ 5.|TAB|Enter "No" at the backup prompt.  There is no need to back up the backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? YES// NO
+ No backup message built.
+  
+ Line 2    Message #42925     Unloading Routine   MAGxxxx (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ . . .
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 11, 2018
+Completed By:                               Date Completed: MAY 23, 2019
+Released By :                               Date Released : MAY 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included in message

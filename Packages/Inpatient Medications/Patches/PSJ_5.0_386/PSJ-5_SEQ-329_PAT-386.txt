@@ -1,0 +1,136 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 03/04/19 at 14:08
+=============================================================================
+Run Date: MAY 15, 2019                     Designation: PSJ*5*386
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #329                      Status: Released
+                  Compliance Date: JUN 15, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*357   <<= must be installed BEFORE `PSJ*5*386'
+
+Subject: PADE PHARMACY ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses an issue where next cart exchange may be displayed along
+ with a value for Pre-Exchange DOSES erroneously with Clinic orders. 
+  
+ Patient Safety Issues (HITPS):
+ -----------------------------
+ NONE
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ INC3938395  Pharmacy PADE issue
+    
+  
+ Problem: 
+ ========
+ A clinic order was entered for an Outpatient patient, whom had just been 
+ discharge.  The medication that was ordered is also marked as a PADE drug 
+ where the sites PICK LIST had already been run for the future.
+  
+ When this order is finished in VISTA and verified, the user is seeing "The 
+ next cart exchange is XX/XX/XX @ HH:MM" along with a value for Pre-Exchange 
+ DOSES.  
+  
+ The user should not see a chart exchange message and the pre-exchange DOSES 
+ should not have a value.
+  
+  
+ Resolution:
+ ===========
+  
+ To resolve this issue, code was modified in routine PSGPEN to check if the
+ order is a clinic order.
+  
+  
+ Test Sites:
+ ===========
+ Albany VAMC
+ Connecticut HCS
+  
+ Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following
+        options. When prompted for the INSTALL NAME enter the patch 
+        PSJ*5.0*386
+  
+   a.   Backup a Transport Global - This option will create a backup message of
+        any routines exported with this patch. It will not backup any other 
+        changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  (It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option and
+        choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond 'NO'.
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from this patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGPEN
+    Before: B57889018   After: B58018481  **30,37,50,58,115,110,127,129,
+                                           323,317,357,386**
+ 
+Routine list of preceding patches: 357
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 12, 2019
+Completed By:                               Date Completed: MAY 14, 2019
+Released By :                               Date Released : MAY 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

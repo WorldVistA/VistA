@@ -1,0 +1,249 @@
+$TXT Created by             MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 04/16/19 at 16:57
+=============================================================================
+Run Date: JUN 25, 2019                     Designation: SD*5.3*724
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #583                    Status: Released
+                  Compliance Date: JUL 26, 2019
+=============================================================================
+
+Associated patches: (v)SD*5.3*684  <<= must be installed BEFORE `SD*5.3*724'
+
+Subject: MORE+2 SDC ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ 1. Sites are receiving an <UNDEFINED>MORE+2^SDC error when they attempt to
+    cancel a clinic availability.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)       New/Modified/Deleted
+ ------------------         -------------------       --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name                  File Number               New/Modified/Deleted
+ ---------                  -----------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name            New/Modified/Deleted
+ ---------------            --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                Type                      New/Modified/Deleted
+ -----------                ----                      --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name              New/Modified/Deleted
+ -------------              --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name        Type    File Name (Number)      New/Modified/Deleted
+ -------------        ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+  
+ Blood Bank Team Coordination:
+ =============================
+ N/A
+  
+ New Service Requests (NSRs):
+ ============================
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+  
+ 1. INC4036008 Togus error <UNDEFINED>MORE+2^SDC
+    
+    Duplicates:
+    ===========
+    INC3347551 Error in vista when cancelling a clinic causing program
+               to stop working
+    INC3944489 Scheduling/VistA Error when canceling clinic / White River
+               Junction 405
+    INC4076449 [VistA]Remove encounters
+    INC4421509 Remove File Entry
+    INC4432563 <UNDEFINED> MORE+2^SDC - Batch Cancellations creating
+               Open Encounters (TOG)
+  
+    Problem:
+    --------
+    Sites are receiving an <UNDEFINED>MORE+2^SDC error when they cancel a
+    clinic that has appointments scheduled for that day.  The error occurs
+    when sites add the third-party protocol 'DSIH DATABRIDGE CONSULT
+    ROUTER' as an item to the 'GMRC EVSEND OR' protocol. The 'DSIH
+    DATABRIDGE CONSULT ROUTER'protocol eventually calls routine VADPT
+    which kills the variable, "I", that used in routine SDC.
+  
+    Resolution:
+    -----------
+    The routine SDC has been modified to namespace the variable "I". 
+  
+  
+ Test Sites:
+ -----------
+ VA Maine HCS (Togus)
+ White River Junction VAMC
+ VA North Florida/South Georgia HCS   
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ ===============================
+  
+ Pre-Installation Instructions:
+ ==============================
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+  
+ 1.  If the release is provided using PackMan, choose the PackMan message
+     containing this build. Then select the INSTALL/CHECK MESSAGE PackMan
+     option to load the build.
+  
+  2. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, 
+  
+     A. Select the Verify Checksums in Transport Global option to confirm
+        the integrity of the routines that are in the transport global. 
+        When prompted for the INSTALL NAME enter the patch name SD*5.3*724.
+  
+        NOTE: Using <spacebar><enter> will not bring up a Multi-Package 
+              build even if it was loaded immediately before this step. 
+              It will only bring up the last patch in the build.
+  
+     B. Select the Backup a Transport Global option to create a backup
+        message of any routines exported with this patch. It will not 
+        backup any other changes such as DDs or templates. 
+  
+     C. You may also elect to use the following options: 
+  
+        i.  Print Transport Global - This option will allow you to view
+            the components of the KIDS build.
+       ii.  Compare Transport Global to Current System - This option 
+            will allow you to view all changes that will be made when 
+            this patch is installed.  It compares all of the components of
+            this patch, such as routines, DDs, templates, etc.
+  
+     D. Select the Install Package(s) option and choose the patch to 
+        install. 
+   
+        i.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+            Install? NO//', answer NO.
+     
+       ii.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+            NO//', answer NO.
+   
+      iii.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+            and Protocols? NO//', answer YES.
+  
+            a. When prompted 'Enter options you wish to mark as 'Out Of
+               Order':', select the following option<s>:
+   
+               Option Name          Menu Text
+               -----------          ---------
+               SDCANCEL             Cancel Clinic Availability
+  
+               Press the Enter key when you are done selecting options.
+                   
+            b. When prompted 'Enter protocols you wish to mark as 'Out Of
+               Order':', press the Enter key.
+  
+            c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//',
+               answer 0.
+  
+       
+ Post-Installation Instructions:
+ N/A
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDC
+    Before: B27776469   After: B28152855  **15,32,79,132,167,478,487,523,
+                                           545,627,684,724**
+ 
+Routine list of preceding patches: 684
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2019
+Completed By:                               Date Completed: JUN 20, 2019
+Released By :                               Date Released : JUN 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,191 @@
+
+=============================================================================
+Run Date: MAY 13, 2019                     Designation: MAG*3*205
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #174                      Status: Released
+                  Compliance Date: JUN 13, 2019
+=============================================================================
+
+Associated patches: (v)MAG*3*171   <<= must be installed BEFORE `MAG*3*205'
+
+Subject: ENTERPRISE SECURITY COMPLIANCE AND EMBEDDED FRAGMENTS INTEGRATION
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This document describes MAG*3.0*205, the Enterprise Security Compliance and
+ Embedded Fragments Registry (EFR) Integration patch. 
+  
+ Note: If you are upgrading from P171 CVIX to P205 CVIX you must remove 
+ the old (retired) SQL2014 features first by hand (remove & reboot) before 
+ running the P205 CVIX Setup Wizard. Please see details in the 
+ MAG3_0P205_CVIX_INSTALLATION_GUIDE.pdf 
+  
+ Note: During installation, do not enable the Cluster Cache option. 
+ Enabling this feature was found to cause a performance issue.
+  
+ This patch adds new features to the Data Access Service (DAS) Realignment
+ Patch MAG*3.0*171. Major changes for this patch are summarized below.
+  
+ MAG*3.0*205 contains the following new features: 
+  
+ CVIX Update
+ ===========
+ Load Balancer Cluster Aware of Cache
+  - Makes the render service use a shared copy of the processed image 
+    information in a load balanced cluster
+  - To remediate Nessus' findings, an updated version of SQL Express 
+    2017 was installed.
+  - The platform components were updated by the infrastructure team. 
+    This was verified with Fortify 4.7.2.
+  - The code was scanned with Fortify 17.2. No issues were reported.
+  
+ Support for EFR
+ ===============
+ Log Actions of Users
+  - The VIX Service will log actions of users viewing images without
+    an account in VistA
+ Support certificate based trust
+  - The VIX Service supports certificate based trust between an
+    application and the VIX, i.e., the Embedded Registry Application
+ Get list of treating facilities
+  - The VIX gets and returns the list of treating facilities for the
+    patient
+  Secure Application Support
+  - The VIX Service securely supports application which pass a patient ID
+    to the VIX service, e.g., the Embedded Registry
+ Support authentication via VA Broker Security Enhancement (BSE)
+  - The VIX Service supports authentication via BSE. The VIX shall generate
+    the token. 
+  
+ Viewer Changes
+ ==============
+ Global annotation settings of images 
+  - User annotation preferences 
+  - View annotation audit history (user, time, etc.) 
+ Annotate DICOM images 
+ Release of Information (ROI) patient's images or studies or report
+    document.
+  - Viewer patient ROI submission and processing 
+  - Monitor ROI submitted print queue status
+  
+ Patch Components:
+ -----------------
+ This patch includes the following files: 
+ File name                              Description
+ ---------                              ----------- 
+ MAG3_0P205_CVIX_Setup.msi              Installation file
+                                        for the CVIX software
+ MAG3_0P205_Patch_Description.pdf       This document
+ MAG3_0P205_CVIX_Installation_Guide.pdf MAG*3.0*205 CVIX Installation Guide
+ MAG3_0P205_CVIX_POM.pdf                MAG*3.0*205 CVIX Administrator's
+                                         Guide and Product Operations 
+                                         Manual
+ MAG3_0P205_User_Guide.pdf              User Guide for this patch
+  
+ This patch requires the following versions: 
+ Apache Tomcat: 8.0.52
+ Java: 1.8.0_171
+  
+ Documentation: 
+ --------------
+ This document provides an overview, explains the changes, and outlines
+ the installation for this patch. 
+  
+ Files and Fields Associated: 
+ File Name (Number)    Field name (Number)     New/Modified/Deleted
+ ------------------    -------------------     --------------------
+ N/A
+  
+ Forms Associated: 
+ Form Name          File #              New/Modified/Deleted
+ ---------          ------              --------------------
+ N/A
+   
+ Mail Groups Associated: 
+ Mail Group Name                   New/Modified/Deleted
+ ---------------                   --------------------
+ N/A
+   
+ Options Associated: 
+ Option Name       Type       New/Modified/Deleted
+ -----------       ----       --------------------
+ N/A
+   
+ Protocols Associated: 
+ Protocol Name         New/Modified/Deleted
+ --------------        --------------------
+ N/A
+   
+ Security Keys Associated:
+ ------------------------
+ Security Key Name
+ N/A
+   
+ Templates Associated 
+ Template Name     Type     File Name (Number)   New/Modified/Deleted
+ -------------     ----    -------------------   --------------------
+ N/A
+   
+ New Service Requests (NSRs): 
+ This project is initiated by Requirement BR 8.0 of the Health Information
+ Exchange Viewer BRD #01-02-03-05-08-003. 
+  
+ Patient Safety Issues (PSIs):
+ N/A
+   
+ Defect Tracking System Ticket(s) & Overview: 
+ N/A
+  
+ Test Sites: 
+ N/A Enterprise Release 
+  
+ Software and Documentation Retrieval Instructions:
+ MAG*3.0*205 is installed at VA enterprise datacenters and is not 
+ distributed to VHA sites. MAG*3.0*205 binary files are made available at 
+ AITC/PITC datacenter staff and the VA Clin 3 team.
+  
+ Patch Installation: 
+ -------------------
+  
+ Installation Instructions: 
+  
+ This patch contains a CVIX Installation appropriate to be installed at VA 
+ Enterprise Datacenters such as AITC and PITC.
+  
+ KIDS Installation
+ N/A
+  
+ CVIX Installation 
+ For the MAG*3.0*205 CVIX Installation information, see the MAG*3.0*205
+ CVIX Installation Guide.
+  
+ For additional information about the CVIX installation, see the
+ MAG*3.0*205 CVIX documentation for the Product Operations Manual (POM)
+ and the Administrator's Guide. 
+  
+ Backout Plan
+ 1. Using programs/features, uninstall the VIX Service Installation Wizard
+ 2. Install the previous version of the CVIX. 
+ 3. Follow the steps in the Patch Description Document provided by the 
+    previous version.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 05, 2018
+Completed By:                               Date Completed: MAY 08, 2019
+Released By :                               Date Released : MAY 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

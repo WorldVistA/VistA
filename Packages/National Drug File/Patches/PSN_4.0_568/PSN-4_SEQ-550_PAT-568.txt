@@ -1,0 +1,193 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 03/19/19 at 11:46
+=============================================================================
+Run Date: JUN 27, 2019                     Designation: PSN*4*568
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #550                      Status: Released
+                  Compliance Date: JUL 28, 2019
+=============================================================================
+
+
+Subject: NDC/UPN FILE UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues.
+  
+ 1. Package size incorrect for 2 NDC numbers for insulin glargine 300 
+    unit/ml pen
+  
+ 2. Bad/Corrupt Pointer for NDC 70501-0922-00 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ INC4072762 - Package size incorrect for 2 NDC numbers for insulin 
+              glargine 300 unit/ml pen
+  
+ INC4612445 - bad/corrupt Pointer for NDC 70501-0922-00
+  
+  
+  
+ 1. INC4072762 - Package size incorrect for 2 NDC numbers for insulin 
+                 glargine 300 unit/ml pen
+  
+ Problem: 
+ --------
+ It was reported that the PACKAGE SIZE field of the NDC/UPN file (#50.67) 
+ of some entries is incorrect and does not match with PPS-N system.
+  
+ Resolution:
+ -----------
+ This patch fixes the mismatched items in the NDC/UPN file (#50.67) 
+ to be aligned with PPS-N.
+  
+  
+  
+ 2. INC4612445 - bad/corrupt Pointer for NDC 70501-0922-00
+  
+ Problem: 
+ --------
+ The Benefits Management (PBM) team requested to delete NDC 
+ number '070501092200' from VistA files as this NDC does not exist in the
+ First Data Bank (FDB) nor in PPSN/NDF.
+  
+ Resolution:
+ -----------
+ This patch deletes NDC number '070501092200' entry from the NDC/UPN file
+ (#50.67).
+  
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+         
+ Test Sites:
+ -----------
+ Central Plains HCS
+ Chillicothe VAMC 
+  
+  
+ Pre/Post Installation Overview:  
+ ------------------------------- 
+ The PSN568PO post-install process performs the following actions:
+   - Fixes the mismatched PACKAGE SIZE field (#8) of the NDC/UPN file 
+     (#50.67) entries. 
+   - Generates a MailMan message with all updated entries and it will be
+     sent to the patch installer as well as all "PSNMGR" key holders.
+   - Deletes the bad/corrupt Pointer for NDC number '070501-0922-00' 
+  
+ The post install routine PSN568PO is deleted at the end of patch
+ installation.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 2 
+ minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch should take less than 2 minutes to install.
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the
+    following options. When prompted for the INSTALL NAME enter the patch
+    PSN*4.0*568.
+  
+   a. Backup a Transport Global - This option will create a backup 
+      message of any routines exported with this patch. It will not backup
+      any other changes such as DDs or templates.
+  
+   b. Compare Transport Global to Current System - This option will allow
+      you to view all changes that will be made when this patch is
+      installed.  (It compares all components of this patch routines,
+      DDs, templates, etc.).
+  
+   c. Verify Checksums in Transport Global - This option will allow you 
+      to ensure the integrity of the routines that are in the transport
+      global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//', respond 'NO'.
+  
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', respond 'NO'.
+  
+ 7. If prompted 'Delay Install (Minutes): (0-60): 0//' respond 0. 
+  
+  
+ Installation Verification
+ -------------------------
+ Successful installation can be verified by reviewing the first 2 lines of
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+   
+ ;;4.0;NATIONAL DRUG FILE;**[PATCH LIST]**; 30 Oct 98
+    
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run 
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures
+ -------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of 
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSN Routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSN*4.0*568 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch PSN*4.0*568 in
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN568PO
+    Before:       n/a   After: B10575802  **568**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 04, 2019
+Completed By:                               Date Completed: JUN 27, 2019
+Released By :                               Date Released : JUN 27, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

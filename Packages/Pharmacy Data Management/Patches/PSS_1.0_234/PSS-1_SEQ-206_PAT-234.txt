@@ -1,0 +1,228 @@
+$TXT Created by                            CPRS31A.DOMAIN.EXT  (KIDS) on Monday, 01/28/19 at 09:22
+=============================================================================
+Run Date: JUN 14, 2019                     Designation: PSS*1*234
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #206                      Status: Released
+                  Compliance Date: JUL 14, 2019
+=============================================================================
+
+Associated patches: (v)PSS*1*199   <<= must be installed BEFORE `PSS*1*234'
+                    (v)PSS*1*225   <<= must be installed BEFORE `PSS*1*234'
+
+Subject: ADDITIONAL API FOR FILE #50.7
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Please refer to the Deployment, Implementation, and Rollback Guide 
+ (PSS_1_0_234_IG.pdf) for instructions on backing up the data dictionary as
+ well as installation instructions for PSS*1*234.
+  
+ The purpose of this patch is to release a new Application Program 
+ Interface (API) to return the PHARMACY ORDERABLE ITEM file (#50.7) 
+ information.
+  
+ In addition, the patch distributes the data dictionary for the PHARMACY 
+ ORDERABLE ITEM file (#50.7) in order to make it available for Health 
+ Summary Component file selection.
+  
+ The third change, informational only, is an update to activate the API 
+ ALL^PSS50P66. Both a new Integration Control Registration (ICR) (#6918) 
+ is now in place and the Pharmacy Reengineering (PRE) Application 
+ Program Interface (API) Manual has been updated to reflect this API is now
+ active.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ PHARMACY ORDERABLE ITEM     Full DD                   Modified APPLICATION
+   (50.7)                                              GROUP attribute
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+  
+ Additional Information:
+ -----------------------
+  
+ Blood Bank Team Coordination:
+ N/A
+  
+  
+  
+ New Service Requests (NSRs):
+ ---------------------------
+ NSR 20120407 - Two new Health Summary Components
+  
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+  
+  
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+  
+  
+  
+  
+ Test Sites:
+ -----------
+ VA Boston Health Care System, MA
+ Tuscaloosa, AL
+ VA San Diego Healthcare System, CA 
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Documentation describing the new functionality will be included in this
+ release.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files directly from
+ a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: https://www.domain.ext/vdl/
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ API Manual - Pharmacy          phar_1_api_r0619.pdf          Binary
+  Reengineering (PRE)
+ Installation Guide             PSS_1_0_234_IG.pdf            Binary
+  
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ ------------------------------
+ It is imperative that you backup the data dictionary for the PHARMACY 
+ ORDERABLE ITEM file (#50.7) BEFORE you install the patch.
+  
+ This patch is being distributed using PackMan. It may be installed with
+ users on the system although it is recommended that it be installed during
+ non-peak hours to minimize potential disruption to users. This patch
+ should take less than 5 minutes to install.
+  
+ Pre-Installation Instructions:
+ -----------------------------
+  
+ Installation Instructions:
+ ------------------------- 
+ Please refer to the Deployment, Implementation, and Rollback Guide 
+ (PSS_1_0_234_IG.pdf) for instructions on backing up the data dictionary as
+ well as installation instructions for PSS*1*234.
+  
+ Post-Installation Instructions:
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Please refer to the Deployment, Implementation, and Rollback Guide 
+ (PSS_1_0_234_IG.pdf) for instructions on backing out PSS*1*234.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS50P7
+    Before: B43180168   After: B48392474  **85,91,199,234**
+ 
+Routine list of preceding patches: 199
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 07, 2018
+Completed By:                               Date Completed: JUN 13, 2019
+Released By :                               Date Released : JUN 14, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

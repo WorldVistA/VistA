@@ -1,0 +1,186 @@
+
+=============================================================================
+Run Date: JUL 02, 2019                     Designation: GMRC*3*131
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: EMERGENCY
+Version : 3       SEQ #114                      Status: Released
+                  Compliance Date: JUL 12, 2019
+=============================================================================
+
+
+Subject: CONSULT TOOLBOX 1.9.0044 DEFECT REMEDIATION
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ This is an informational patch explaining changes in Consult Toolbox.
+ NOTE: This patch is loaded on individual PC workstations via SCCM 
+ software update push from local/regional OIT. 
+ There is nothing that local sites can or need to do besides communicate 
+ changes to the clinical users. No code changes were made to the Consult 
+ application to accommodate these enhancements. 
+ **************************************************************************
+  
+ Version 1.9.0044 modifies the Consult Toolbox application as described 
+ below: 
+  
+ 1.      Modified the text of the Launch DST dialog to "Mission Act 
+         Requires the use of DST to complete the consult, when clinically 
+         appropriate"
+  
+ 2.      Remediated the defect related to the DST window moving behind all 
+         open windows after selecting the Provisional diagnosis 
+  
+ 3.      Remediated the defect related to Consult Toolbox not auto 
+         displaying; previously, when the CPRS Window opens (e.g. Add
+         Comment to Consult or Receive Consult), Toolbox automatically
+         opens it's right click menu (auto display)
+  
+ 4.      Remediated the defect related to patients with a CAN Score of 75; 
+         this particular CAN Score was not placed into the correct range
+         when displayed on the Admin Triage page, it now does
+  
+ 5.      Remediated the defect related to incorrect comments from the 
+         Receive Consult dialog; the error was when a radio button is
+         selected, the text corresponding to that selection is NOT
+         displayed; the fix placed the selected radio button text into the
+         Consult Comment
+  
+ 6.      Remediated the defect related to DST not being disabled when CTB 
+         is Disabled; previously when Toolbox is disabled in the CPRS Tools
+         submenu, only the ConsultToolbox was closed; now when the disable
+         option is selected both ConsultToolbox and DSTLauncher are closed
+         (the windows processes are ended)
+  
+ 7.      Remediated the defect related to the CPRS Order a Consult Window 
+         being hidden behind the Orders Menu when User Closes the Launch
+         DST Pop Up Box
+  
+ 8.      Remediated the defect related to the Link DST window (that 
+         includes a button to add the information retrieved from DST to a
+         consult note) does not display after the DST browser is closed
+  
+  
+ This software was created by the Atlanta VA Medical Center in response to 
+ a need to manage the process of consult management. During the life of a 
+ consult, there are prescribed steps of actions to be taken, and there is 
+ a need to be able track these steps at an individual patient level. 
+ Additionally, there is a need to be able to understand the overall status 
+ of consult management at a macro level, and identify specific services 
+ needing attention or resources. Without opening and reading a patient 
+ medical record, it is difficult to identify which patients have had which 
+ scheduling steps completed.
+  
+ This software does several things. First, it makes it very easy for staff 
+ to document actions completed quickly and consistently. Second, it uses 
+ consistent verbiage to document these steps. Third, it eliminates the 
+ need to take a second action or make a separate entry to track scheduling 
+ steps. Fourth, this consistent verbiage allows software analysis of 
+ records without needing to have software changes to VistA or CPRS.
+  
+ A separate process using corporate data warehouse queries and reports 
+ allows creation of views showing such things as patients who have not had 
+ first call, second call, scheduling letter sent or how much time has 
+ passed between these events.
+  
+ Together, these allow tracking and managing consults without the need to 
+ keep a separate list or other workflow to know which consults need 
+ attention.
+  
+  
+ Additional Information:
+ ----------------------- 
+ This software watches keyboard and mouse activity, and comes to life 
+ when certain conditions occur.
+  
+ 1. It only activates when the currently active windows title 
+    "Receive Consult", "Add Comment to Consult" or "Discontinue Consult." 
+    Otherwise nothing happens 
+  
+ 2. When the user initiates a trigger event when either of 
+    these windows have the focus, then depending on the open window a menu 
+    appears for the user to select the appropriate action, then the
+    software inserts the appropriate text into the comment box.
+  
+ 3. The defined trigger is a right mouse click in the supported CPRS 
+    consult actions.
+  
+ New Service Requests (NSRs):
+ --------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------
+  
+ 1.      INC5651439 - #MISSION SDC-URGENT: Consult tool box version 
+         1.9.0004 when receiving consults, the wrong comment sporadically
+         is being entered
+  
+ Problem:
+ --------
+ Consult tool box new version 1.9.0004 when receiving consults, the wrong 
+ comment sporadically is being entered. Multiple clerks have indicated 
+ that when selecting a choice in consult toolbox that a different comment 
+ is pasting into the consult toolbox and must enter the selection again to 
+ get it to work properly - this could cause data accuracy errors. 
+  
+ Resolution:
+ -----------
+ In Receive Consult, the selections made will display correctly in the 
+ Receive Consult Comments.
+  
+ Test Sites:
+ --------------------
+ Anchorage, AK
+ Salisbury, NC
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software is being released via SCCM package to ESE.  User Guide will be 
+ placed on the following anonymous directories:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+ Title                          File Name                     FTP Mode   
+ -----------------------------------------------------------------------
+ Deployment, Installation,
+ Back-Out, and Rollback Guide   ctb_dibr.pdf                  Binary
+ Deployment, Installation, 
+ Back-Out, and Rollback Guide   ctb_dib.docx                  Binary
+  
+ Patch Installation
+ --------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ Software is being released via SCCM package to ESE. 
+ This software installs on the PC desktop at the windows level and will 
+ reside in the system tray.
+ Installation of this Windows feature will occur via a SCCM software push 
+ to PCs via a Local/ Regional process. 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 30, 2019
+Completed By:                               Date Completed: JUL 02, 2019
+Released By :                               Date Released : JUL 02, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

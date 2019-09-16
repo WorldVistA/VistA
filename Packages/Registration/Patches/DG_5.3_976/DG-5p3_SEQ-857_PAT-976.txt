@@ -1,0 +1,354 @@
+$TXT Created by                 NTHONY at DEVVOO.DOMAIN.EXT  (KIDS) on Thursday, 05/02/19 at 10:10
+=============================================================================
+Run Date: MAY 21, 2019                     Designation: DG*5.3*976
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #857                    Status: Released
+                  Compliance Date: MAY 24, 2019
+=============================================================================
+
+Associated patches: (v)DG*5.3*941  <<= must be installed BEFORE `DG*5.3*976'
+
+Subject: HEALTH BENEFIT PLAN CHANGES TO SUPPORT THE MISSION ACT
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Patch DG*5.3*976 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on
+ updates for the Enrollment System Modernization (ESM) Phase 2 project, 
+ which supports Enrollment System Community Care (ESCC).
+  
+ DG*5.3*976 is also being released in support of the Enrollment System 
+ (ES) 5.6 release. Refer to Informational Patch EAS*1*178 (Enrollment 
+ Application System) for additional details regarding the ES release.
+  
+ The U.S. Department of Veterans Affairs (VA) MISSION Act Of 2018 (VA 
+ Maintaining Systems and Strengthening Integrated Outside Networks Act) 
+ consolidates VA's community care programs into a new Veterans Community 
+ Care Program (CCP), which will help to ensure Veterans choose VA by 
+ getting them the right care at the right time from the right provider. 
+ Veterans Health Information System and Technology Architecture (VistA) 
+ Registration, Eligibility, & Enrollment (REE) supports the MISSION Act by 
+ accepting, processing, and storing Health Benefit Plan (HBP) changes 
+ received from ES (the authoritative source). 
+  
+ The HBP information is in sync in the Veterans Health Administration 
+ (VHA) systems when VistA accepts and processes the Health Level Seven 
+ (HL7) ORF/ORU-Z11 message with the HBP field(s) from ES.
+  
+ Patch DG*5.3*976 adds five Health Benefit Plans to the HEALTH BENEFIT
+ PLAN file (#25.11) in VistA.
+  
+ Patch Components:
+ -----------------
+ Post-install routine DG53976P adds five new Health Benefit Plans to 
+ the HEALTH BENEFIT PLAN file (#25.11).  These plans consist of the 
+ following field values.
+  
+ Field (Number)              Value
+ --------------              -----
+ NAME (#.01)                 Veteran Plan - CCP Grandfather
+ PLAN CODE (#.02)            211
+ SHORT DESCRIPTION (#.03)    Veteran Plan - CCP Grandfather
+ LONG DESCRIPTION (#.04)     Grandfathered Veterans have their eligibility 
+                             extended from Veterans Choice Program to the
+                             new Community Care Program established under
+                             the MISSION Act. There are two groups of
+                             Grandfathered Veterans: "5 Lowest Population 
+                             Density States" or "Received Title 38 Care".  
+                             Both groups require that the enrolled Veteran
+                             (1) was distance-eligible on the day before
+                             the MISSION Act was signed (June 5, 2018), and
+                             (2) live in a place that is still
+                             distance-eligible under Veterans Choice rules
+                             as of the start of the MISSION Act on June 6,
+                             2019.
+ COVERAGE CODE (#.05)        CC01001
+  
+ Field (Number)              Value
+ --------------              -----
+ NAME (#.01)                 Veteran Plan - CCP State with no Full-Service 
+                             Medical Facility 
+ PLAN CODE (#.02)            209
+ SHORT DESCRIPTION (#.03)    Veteran Plan - CCP State with no Full-Service 
+                             Medical Facility 
+ LONG DESCRIPTION (#.04)     Enrolled Veterans who reside in a state with 
+                             no full-service VA health care facility.  This
+                             eligibility will be determined and assigned
+                             with the start of the MISSION Act on June 6,
+                             2019.
+ COVERAGE CODE (#.05)        CC01002
+  
+ Field (Number)              Value
+ --------------              -----
+ NAME (#.01)                 Veteran Plan - CCP Urgent Care  
+ PLAN CODE (#.02)            210
+ SHORT DESCRIPTION (#.03)    Veteran Plan - CCP Urgent Care  
+ LONG DESCRIPTION (#.04)     Enrolled Veterans who have received Title 38 
+                             care within the past two years who meet the
+                             administrative eligibility for non-VA Urgent
+                             Care for services. This eligibility will be 
+                             determined and assigned with the start of the
+                             MISSION Act on June 6, 2019.
+ COVERAGE CODE (#.05)        CC01003
+  
+ Field (Number)              Value
+ --------------              -----
+ NAME (#.01)                 Veteran Plan - CCP Basic
+ PLAN CODE (#.02)            208
+ SHORT DESCRIPTION (#.03)    Veteran Plan - CCP Basic
+ LONG DESCRIPTION (#.04)     The Veteran must be enrolled in the VA  
+                             healthcare system. Veteran is eligible for
+                             the Community Care Program but does not meet
+                             the criteria for Community Care services.
+ COVERAGE CODE (#.05)        CC01006
+  
+ Field (Number)              Value
+ --------------              -----
+ NAME (#.01)                 Veteran Plan - CCP Hardship Determination
+ PLAN CODE (#.02)            212
+ SHORT DESCRIPTION (#.03)    Veteran Plan - CCP Hardship Determination
+ LONG DESCRIPTION (#.04)     The Veteran must be enrolled in the VA health 
+                             care system. The Veteran who may 
+                             meet new MISSION Act access standards (wait
+                             time and drive time) may still face
+                             an unusual or excessive burden in accessing
+                             care at the VA based on:
+                             . Geographical challenges
+                             . Environmental factors such as:
+                               o Roads that are not accessible to the
+                                 general public, such as a road through a
+                                 military base or restricted area
+                               o Traffic, or
+                               o Hazardous weather conditions
+                             . A medical condition that impacts the ability
+                               to travel
+                               Or 
+                             . Meets MISSION Act access standard, but, must
+                               travel by air, boat, or ferry And
+                             . Veteran has received a "COMMUNITY 
+                               CARE-HARDSHIP DETERMINATON" consult and the
+                               consult has not expired then the Veteran 
+                               will be eligible for Hardship.
+ COVERAGE CODE (#.05)        CC01007
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A 
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A 
+  
+ Blood Bank Team Coordination:
+ -----------------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+  
+ Test Sites:
+ -----------
+ C.W. Bill Young VA Medical Center, Bay Pines, FL
+ West Palm Beach VA Medical Center, West Palm Beach, FL
+ VA NY Harbor Healthcare System, New York, NY
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available. 
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                  File Name               SFTP Mode
+ --------------------------------------------------------------------------
+ Release Notes                         DG_53_P976_RN.PDF       (binary) 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post install process runs the post install routine DG53976P to 
+ set up the five new Health Benefit Plans (HBPs) in the HEALTH BENEFIT
+ PLAN file (#25.11). The routine first checks to see if these HBPs exist.
+ The routine then sets up the required fields to prepare to load the HBPs
+ to the file. If they do not already exist in the file, the HBPs are
+ added.  During the post install process, a message is displayed regarding
+ which HBPs were added and which already existed. If the HBPs already
+ exist, they are updated with the data in the post install routine. The
+ install process also displays this message "An Error occurred during
+ updating Plan: (Health Benefit Plan) Please log Your IT Services ticket",
+ if an error occurred while trying to update the HBPs.
+  
+ The post install routine DG53976P will be automatically deleted after the
+ patch installation completes.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ The following menu options should be disabled during installation: 
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ 1. If the release is provided using PackMan, choose the PackMan   
+    message containing this build. Then select the INSTALL/CHECK MESSAGE 
+    PackMan option to load the build.
+  
+    If this release is provided using a Host file, use the Load a 
+    Distribution option contained on the Kernel Installation and    
+    Distribution System Menu to load the Host file.
+  
+ 2. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu,
+       A. Select the Verify Checksums in Transport Global option to 
+          confirm the integrity of the routines that are in the transport
+          global. When prompted for the INSTALL NAME enter the patch or
+          build name (DG*5.3*976).
+  
+       B. You may also elect to use the following options: 
+          i.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          ii. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all of the components of
+              this patch, such as routines, DDs, templates, etc.
+  
+       C. Select the Install Package(s) option and choose the patch to 
+          install. 
+          i.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+              of Install? NO//', answer NO.
+          ii. When prompted 'Want KIDS to INHIBIT LOGONs during the 
+              install? NO//', answer NO.
+         iii. When prompted 'Want to DISABLE Scheduled Options, Menu 
+              Options, and Protocols? NO//', answer No
+  
+        D. When prompted 'Delay Install (Minutes):  (0 - 60): 0//',
+           answer 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A 
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service
+ Desk (ESD) for assistance with the procedure.
+  
+ Any issues would need to be evaluated to determine if: a back-out of the 
+ software is appropriate; a new patch is needed; or if data requires 
+ correction or restoration.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53976P
+    Before:       n/a   After: B70401607  **976**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 27, 2018
+Completed By:                               Date Completed: MAY 21, 2019
+Released By :                               Date Released : MAY 21, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

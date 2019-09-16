@@ -1,0 +1,291 @@
+$TXT Created by            at COC-CCAD-DEV.AAC.DOMAIN.EXT  (KIDS) on Wednesday, 05/22/19 at 10:03
+=============================================================================
+Run Date: AUG 01, 2019                     Designation: IB*2*645
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #589                      Status: Released
+                  Compliance Date: AUG 08, 2019
+=============================================================================
+
+Associated patches: (v)IB*2*451    <<= must be installed BEFORE `IB*2*645'
+                    (v)IB*2*604    <<= must be installed BEFORE `IB*2*645'
+                    (v)IB*2*618    <<= must be installed BEFORE `IB*2*645'
+                    (v)IB*2*632    <<= must be installed BEFORE `IB*2*645'
+
+Subject: COMMUNITY CARE INTEGRATED BILLING BUILD 11
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  ****************************************************************
+                NOTICE!!!!!  7 DAYS COMPLIANCE DATE
+  ****************************************************************
+  
+  IMPORTANT INSTALLATION NOTE:
+  ----------------------------
+  There are five patches associated with this project - PRCA*4.5*338,
+  IB*2.0*618, PRCA*4.5*351, IB*2.0*645, and IB*2.0*646. All of the patches
+  are to be installed as PackMan files.  There is no bundle.
+   
+  The patches for this project MUST be installed in this order:
+  1.)  PRCA*4.5*338
+  2.)  IB*2.0*618
+  3.)  PRCA*4.5*351
+  4.)  IB*2.0*645
+  5.)  IB*2.0*646
+  
+  
+  DESCRIPTION
+  ===========
+  The Office of Community Care (OCC) is requesting system enhancements to 
+  the Veterans Health Information Systems and Technology Architecture
+  (VistA) Integrated Billing (IB), Accounts Receivable (AR), and Fee 
+  Basis (FB) software modules that would allow segregating all billing
+  and collection activities for Non-Department of Veterans Affairs (VA)
+  Care Third Party Insurance carriers' reimbursement.
+  
+  The primary goal of this enhancement is to increase timeliness and
+  collections of billable Non-Veterans Affairs (VA) care services.
+  Enhancements to existing VistA IB, AR, and Fee software applications
+  would allow for increased efficiency in workflow processes leading to
+  best practices that would ultimately be reflected in improved customer
+  service to our Veteran population.
+  
+  The second goal of this enhancement is to prepare the IB and AR software 
+  modules for the implementation of the changes required by the Maintaining
+  Internal Systems and Strengthening Integrated Outside Networks 
+  (MISSION) Act.
+  
+  In order to meet these goals, this patch:
+  
+  1. Corrects the LIST ALL BILLS report to display the Action Type
+     without truncating the first word.
+  
+  2. Changes the Rate Schedules for the specialized DoD and TRICARE
+     Rate Types to use the Interagency Charge Sets for Inpatient Billing 
+     and TRICARE RX for Pharmacy Billing.
+  
+     Note: For ECME Pharmacy billing - the TriCare Rate Type should be 
+     used instead of the TriCare RX until a subsequent patch is
+     developed to ensure the data reports appropriately.
+  
+  3. Ensures that the Rate Schedules for the Community Care No Fault
+     Rate Types added in IB*2.0*618 are properly defined in the event
+     that a site does not have it'S No Fault Rate Schedules defined
+     and loaded. This may occur in At-Fault states that do not border a 
+     No-Fault state.
+  
+  4. Corrected the Eligibility Logic (field 40) in the Action Type File 
+     (350.1) for the CC and CHOICE RX Action types to prevent an error from
+     occurring during Outpatient Pharmacy processing. [INC 5750961] 
+  
+     - CC and CHOICE RX action types are treated as outpatient encounters.
+  
+  
+  
+  Patch Components:
+  -----------------
+  
+  Files & Fields Associated:
+  
+  File Name (Number)     Field Name (Number)     New/Modified/Deleted
+  ------------------     -------------------     --------------------
+  N/A
+  
+  
+  Forms Associated:
+  
+  Form Name      File #  New/Modified/Deleted
+  ---------      ------  --------------------
+  N/A
+  
+  
+  Mail Groups Associated:
+  
+  Mail Group Name        New/Modified/Deleted
+  ---------------        --------------------
+  N/A
+  
+  
+  Options Associated:
+  
+  Option Name    Type    New/Modified/Deleted
+  -----------    ----    -------------------- 
+  N/A
+  
+  
+  Protocols Associated:
+  
+  Protocol Name  New/Modified/Deleted
+  -------------  -------------------- 
+  N/A
+  
+  
+  Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  
+  Templates Associated:
+  
+  Template Name  Type    File Name (Number)  New/Modified/Deleted 
+  -------------  ----    ------------------  --------------------
+  N/A
+  
+  
+  Additional Information:
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  ----------------------------
+  Billing Interface for Fee Care Business (#20080918)
+  
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overviews:
+  -----------------------------
+  
+  INC5750961:
+  -----------
+  Hines reported an error, <SYNTAX>X1+10^IBARX, was occurring while 
+  When Outpatient Pharmacy was filling and releasing prescriptions.
+  
+   
+  Test Sites:
+  ----------
+  Edward J Hines VA Hospital (Chicago, IL) - Station 578
+  Hunter Holmes McGuire VA Medical Center (Richmond, VA) - Station 652 
+  Central Alabama Veterans Healthcare System
+   
+  
+  DOCUMENTATION RETRIEVAL INSTRUCTIONS
+  ------------------------------------
+  Updated documentation describing the new functionality introduced by this
+  patch is available.
+  
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may also 
+  select to retrieve files directly from a specific server.
+  
+  Sites may retrieve the documentation directly using Secure File Transfer
+  Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+  Field Offices:
+  
+    Hines:                domain.ext
+    Salt Lake City:       domain.ext
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at:  http://www.domain.ext/vdl/
+  
+  
+  Title                                 File Name            Transfer Mode
+  ------------------------------------------------------------------------
+  Deployment, Installation, Back-out,   IB_2_0_P645_IG.PDF   Binary
+  and Rollback Guide
+  
+    
+  Patch Installation:
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  Prior to the start of the installation, please contact your CPAC 
+  Billing Manager to confirm that the INTERAGENCY Rate Schedules (file 363)
+  are properly defined and have Charge Sets associated with that Rate
+  Schedule.  
+   
+   
+  Pre-Installation Instructions:
+  ------------------------------
+  To avoid disruptions, this patch should be installed during non-peak 
+  outpatient hours when there is minimal activity on the system and ideally
+  there are no Accounts Receivable or Outpatient Pharmacy users on the 
+  system. This patch should take less than 5 minutes to install.
+  
+  
+  Installation Instructions:
+  --------------------------
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch IB*2.0*645.
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global. 
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  5.  When prompted Want KIDS to INHIBIT LOGONs during the install? NO// 
+      answer NO
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO// answer No
+   
+  7. If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+   
+                                              
+  Post-Installation Instructions
+  ------------------------------
+  There are no special tasks to perform after this patch installation.
+  
+  
+  Back-Out Plan:
+  --------------
+  Prior to installing the updated KIDS package, the site/region should 
+  have saved a backup of the routines in a mail message using the Backup a
+  Transport Global [XPD BACKUP] menu option.  The message containing the 
+  backed up routines can be loaded with the "Xtract PackMan" function at 
+  the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE 
+  is then used to install the backed up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Integrated Billing;**[Patch List]**;Mar 20, 1995;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P645
+    Before:       n/a   After:B123706935  **645**
+Routine Name: IBARX
+    Before: B52663311   After: B56596853  **101,150,156,168,186,237,308,
+                                           563,604,645**
+Routine Name: IBOA32
+    Before:  B7690123   After:  B8874260  **7,95,347,433,451,645**
+ 
+Routine list of preceding patches: 451, 604
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 26, 2019
+Completed By:                               Date Completed: AUG 01, 2019
+Released By :                               Date Released : AUG 01, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

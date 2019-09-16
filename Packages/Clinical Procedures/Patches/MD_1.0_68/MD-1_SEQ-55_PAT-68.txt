@@ -1,0 +1,271 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Friday, 04/12/19 at 13:17
+=============================================================================
+Run Date: JUL 29, 2019                     Designation: MD*1*68
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #55                      Status: Released
+                  Compliance Date: AUG 29, 2019
+=============================================================================
+
+Associated patches: (v)MD*1*59     <<= must be installed BEFORE `MD*1*68'
+
+Subject: CP FLOWSHEETS TERMINOLOGY UPDATES
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+  
+   The Clinical Procedures (CP) Terminology TERM file (#704.101) contains
+   terms used during data entry/display in CP Flowsheet.  The Office of
+   Informatics and Analytics - Applied Informatics Services (AIS) 
+   Terminology Review Group submitted a spreadsheet requesting additions
+   or updates of Terms.
+       
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) INC3510791 - CP Flowsheets Terminology Update
+             
+ Problem:
+ --------
+ The Clinical Procedures (CP) Terminology TERM file (#704.101) contains
+ terms used during data entry/display in CP Flowsheet.  The Office of 
+ Informatics and Analytics - Applied Informatics Services (AIS) 
+ Terminology Review Group submitted a spreadsheet requesting additions
+ or updates of Terms.
+       
+ The following list documents the approved changes for INC3510791
+  
+ Newly Added Terms:
+ ------------------
+ CARDIOVASCULAR: Conditions
+ CARDIOVASCULAR: DVT Prevention
+ CARDIOVASCULAR: JVD
+ Inhaler
+ Musculoskeletal: Ankle ROM
+ Musculoskeletal: Conditions
+ Musculoskeletal: Elbow ROM
+ Musculoskeletal: Wrist ROM
+ NEURO ASSESSMENT: SPEECH 
+ NEURO ASSESSMENT: AUDITORY
+ NEURO ASSESSMENT: CORNEAL REFLEX
+ NEURO ASSESSMENT: COUGH REFLEX
+ NEURO ASSESSMENT: GAG REFLEX
+ NEURO ASSESSMENT: HAND GRIP
+ NEURO ASSESSMENT: MENTAL STATUS 
+ NEURO ASSESSMENT: MOTOR LOWER EXTREMITIES
+ NEURO ASSESSMENT: MOTOR UPPER EXTREMITIES
+ NEURO ASSESSMENT: ORIENTATION
+ NEURO ASSESSMENT: PLANTAR (BABINSKI) REFLEX
+ NEURO ASSESSMENT: REFLEXES PRESENT 
+ NEURO ASSESSMENT: SEIZURE ACTIVITY
+ NEURO ASSESSMENT: SENSATION LOWER EXTREMITIES
+ NEURO ASSESSMENT: SENSATION UPPER EXTREMITIES
+ NEURO ASSESSMENT: Sensory Testing
+ NEURO ASSESSMENT: Shoulder Shrug
+ NEURO ASSESSMENT: SLEEP
+ NEURO ASSESSMENT: SWALLOW REFLEX
+ NEURO ASSESSMENT: SYMPTOMS
+ NEURO ASSESSMENT: VISION
+ Oral Care: Dentures/Removable Appliance
+ Oral Care: Patient Education
+ Oral Care: Performed/Observed
+ Oral Care: Referral or Consult to Dental/Dental Hygiene
+ Oral Care: Supplies in Room
+ Oral Care: Symptoms or Problems
+ Oral Care: Type
+ PCA: Max Limit Per Hour
+ PERIPHERAL-VASCULAR: Movement
+ Rounding: Patient Off Unit
+ Rounding: Privacy Maintained
+ Rounding: Toileting
+  
+ Modified Terms:
+ ---------------
+ CARDIOVASCULAR: Capillary Refill
+ CARDIOVASCULAR: Cardiac Abnormal Beats Per Minute
+ CARDIOVASCULAR: Cardiac Ectopy
+ CARDIOVASCULAR: Cardiac Rhythm
+ CARDIOVASCULAR: Cardiac Rhythm Lead
+ CARDIOVASCULAR: Edema #1
+ CARDIOVASCULAR: Edema #2
+ CARDIOVASCULAR: Edema #3
+ CARDIOVASCULAR: Edema #4
+ CARDIOVASCULAR: Edema Amount
+ CARDIOVASCULAR: Edema Severity
+ CARDIOVASCULAR: Heart Sounds
+ CARDIOVASCULAR: PA Catheter Repositioned/Discontinued Reason
+ CARDIOVASCULAR: Pacemaker Atrial mA
+ CARDIOVASCULAR: Pacemaker AV Interval
+ CARDIOVASCULAR: Pacemaker Capture
+ CARDIOVASCULAR: Pacemaker Mode
+ CARDIOVASCULAR: Pacemaker On
+ CARDIOVASCULAR: Pacemaker Rate
+ CARDIOVASCULAR: Pacemaker Sense
+ CARDIOVASCULAR: Pacemaker Sensitivity Atrial
+ CARDIOVASCULAR: Pacemaker Sensitivity Ventricular
+ CARDIOVASCULAR: Pacemaker Type
+ CARDIOVASCULAR: Pacemaker Unit ID
+ CARDIOVASCULAR: Pacemaker Ventricular mA
+ CARDIOVASCULAR: Pacemaker Wires
+ CARDIOVASCULAR: Pulse Strength
+ Enteral Nutrition Type
+ MUSCULOSKELETAL: HIP ROM
+ MUSCULOSKELETAL: JOINT CONDITION
+ MUSCULOSKELETAL: KNEE ROM
+ MUSCULOSKELETAL: SHOULDER ROM
+ NEURO ASSESSMENT: PUPIL
+ NEURO ASSESSMENT: PUPIL SIZE
+ Oral Care
+      
+ Resolution:
+ -----------
+ The above Additions/Updates will be made to the CP Terminology TERM 
+ File (#704.101). The details of each of these terms is in the Clinical 
+ Observation (CliO) Terminology Dictionary and Clinical Data Model 
+ Documentation that is listed below.
+      
+ Test Sites:
+ -----------
+ Edward Hines Jr. VA Hospital (IL)
+ Huntington VA Medical Center (WV)
+      
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+ Documentation describing the new functionality introduced by this patch
+ is available.
+      
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+      
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+       
+       Hines:                   ftp.domain.ext
+       Salt Lake City:          ftp.domain.ext
+       
+ File Name:            Description:                     Protocol:
+ ==========            ============                     =========
+ MD1_0P68TERM.PDF      CliO Terminology Dictionary      Binary
+                       And Clinical Data Model
+       
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+      
+ Patch Installation:
+ ===================     
+      
+ Pre-Installation Instructions:
+ ------------------------------
+ If installed during the normal workday, it is recommended that the 
+ Clinical Procedures users be off the system.  Other VISTA users
+ will not be affected.
+       
+ Install Time - less than 5 minutes (unless otherwise indicated)
+      
+ Installation Instructions:
+ --------------------------    
+ 1.  Load Transport Global 
+     ---------------------
+       
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     ---------------------------    
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*68):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+ --------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch install.
+       
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO. 
+       
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', answer NO. 
+           
+ Back-out/Rollback Strategy:
+ ====================
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+      
+ This patch involves data modifications.  A rollback would need to be 
+ implemented.
+      
+ To rollback, please re-install patch MD*1.0*59
+      
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Aug 2, 2012;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDTERMX
+    Before:  B4314808   After:  B4314808  **48,59,68**
+ 
+Routine list of preceding patches: 59
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 14, 2018
+Completed By:                               Date Completed: JUL 25, 2019
+Released By :                               Date Released : JUL 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

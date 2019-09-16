@@ -1,0 +1,476 @@
+$TXT Created by                LLOYD at NUMI.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 02/14/19 at 08:17
+=============================================================================
+Run Date: MAY 09, 2019                     Designation: PSO*7*551
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #457                      Status: Released
+                  Compliance Date: JUN 08, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*508   <<= must be installed BEFORE `PSO*7*551'
+                    (v)PSO*7*520   <<= must be installed BEFORE `PSO*7*551'
+                    (v)PSO*7*527   <<= must be installed BEFORE `PSO*7*551'
+
+Subject: INBOUND ERX V3 MAINTENANCE PATCH 1
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ Veterans' Health Administration (VHA) has requested a maintenance build 
+ be released to remedy the current high priority defects that persist in 
+ the Electronic Prescription(eRx) software. Patch PSO*7.0*551 addresses 
+ workflow concerns during the creation of an eRx, resolves formatting 
+ issues, and corrects the locking functionality of the Inbound eRx 
+ software. 
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Input Templates Associated:
+ ---------------------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Option Name                                        
+ -----------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Rational Defects:
+ -----------------
+  
+ Defect: 738681
+ --------------
+ After accepting an eRx and sending it to Outpatient Pharmacy, when a user 
+ attempts to "finish" a prescription using the "FN" action and selects 
+ "YES" when prompted to attach the patient instructions to the provider 
+ comments, an extra space will appear between the provider comments and 
+ patient instructions.
+  
+ Resolution:
+ -----------
+ Routine PSOERXU6 has been modified to remove the extra space between the 
+ patient instructions and provider comments.
+  
+ Defect: 748657:
+ ---------------
+ No display of the eRx Look-Back value is present in the eRx Holding Queue 
+ or the Patient Centric View.
+  
+ Resolution:
+ -----------
+ Routines PSOERX and PSOERXC1 have been modified to display the eRx 
+ Look-Back value in the header of the eRx Holding Queue and the Patient 
+ Centric View.
+  
+ Defect: 842997:
+ ---------------
+ On the Patient Validation Screen, the "Pharmacy Narrative" field is 
+ displaying a maximum of 60 characters instead of the required 250 
+ characters.
+  
+ Resolution:
+ -----------
+ Routine PSOERXP1 has been modified to allow the "Pharmacy Narrative" 
+ field to display the required 250 characters.
+  
+ Defect: 862482
+ --------------
+ A user can lock the same patient in two different terminal sessions.
+  
+ Resolution:
+ -----------
+ Routine PSOERX1A has been modified to prevent the user from locking the 
+ same patient in two different terminal sessions. When a user attempts to 
+ lock a patient in two different sessions, the message "You have this 
+ patient locked in another open session" will appear and prevent the user 
+ from completing the action.
+  
+ Defect: 862505
+ --------------
+ The lock functionality in Inbound eRx can be bypassed by using the search 
+ function to search by eRx reference number, thus allowing a user to 
+ access a record that is currently locked by another user.
+  
+ Resolution:
+ -----------
+ Routines PSOERX and PSOERXC1 have been modified to include lock 
+ functionality when searching by eRx reference number.
+  
+ Defect: 865086
+ --------------
+ The field "Code List Qualifier" is being displayed as "Quantity 
+ Qualifier" on the eRx Print Screen, the Drug Validation Screen, and in 
+ Outpatient Pharmacy.
+  
+ Resolution:
+ -----------
+ The field "Quantity Qualifier has been changed to "Code List Qualifier" 
+ on the eRx Print Screen, the Drug Validation Screen, and in Outpatient 
+ Pharmacy.
+  
+ Defect: 874828
+ --------------
+ When a user accepts a validation on the Patient Validation Screen, and a 
+ second user bypasses the lock functionality and accesses the same record 
+ via the eRx Reference Number search, a hard error will occur when the 
+ second user attempts to accept a validation on the Patient Validation 
+ screen.
+  
+ Resolution:
+ -----------
+ Routines PSOERX and PSOERXC1 have been modified to include lock 
+ functionality when searching by eRx reference number.
+  
+ Defect: 874852
+ --------------
+ By using the eRx Reference Number Search feature, a user is able to 
+ access records that are outside of the current, selected division.
+  
+ Resolution:
+ -----------
+ Routines PSOERX and PSOERXC1 have been modified to prevent the user from 
+ accessing records outside of the current, selected division. If the user 
+ attempts to access records outside of the selected division, the message 
+ "eRx does not belong to this division." will appear, and the user will be 
+ blocked from completing the action.
+  
+ Defect: 877392
+ --------------
+ If a user attempts to send a Refill Request with no values defined in the 
+ Payer Identification fields of the Benefits Coordination section, a hard 
+ error occurs. To reproduce this scenario, the user must send a new 
+ prescription to the eRx Holding Queue with no values defined in the Payer
+ Identification fields of the Benefits Coordination section, accept all
+ validations, accept the eRx and send it to Outpatient Pharmacy, then
+ attempt the Refill Request.
+  
+ Resolution:
+ -----------
+ Routine PSOERXX3 has been modified to allow empty fields in the Payer 
+ Identification section of Benefits Coordination.
+  
+ Defect: 888567:
+ ---------------
+ If the maximum 210 characters are displayed in the eRx notes field of the 
+ eRx Summary Screen, duplicate words will be displayed at the start of a 
+ new line. 
+  
+ Resolution:
+ -----------
+ Routine PSOERX1 has been modified to prevent duplicate words from 
+ displaying in the eRx Notes field of the eRx Summary Screen.
+  
+ Defect: 888603
+ --------------
+ A field titled "Comments" is displaying on the Patient Validation Screen.
+  
+ Resolution:
+ -----------
+ Routine PSOERXP1 has been modified to remove the "Comments" field from 
+ the Patient Validation Screen.
+  
+ Defect: 596375
+ --------------
+ When validating a drug, if a user selects "NO" when asked if they would 
+ like to use the selected drug, the default prompt when the user is 
+ returned back to the Drug Validation Screen is "Quit//"
+  
+ Resolution:
+ -----------
+ Routine PSOERXD2 has been modified to change the described default prompt 
+ to "Edit//".
+  
+ Defect: 616456
+ --------------
+ The display of "Substitutions? :Yes/No" is not displaying on the eRx 
+ Print Screen, the eRx Summary Screen, the Drug Validation Screen, the 
+ Drug Validation Edit Screen, and in Outpatient Pharmacy.
+  
+ Resolution:
+ -----------
+ "Substitutions? :Yes/No" is now displaying on the eRx Print Screen, the 
+ eRx Summary Screen, the Drug Validation Screen, the Drug Validation Edit 
+ Screen, or in Outpatient Pharmacy.
+  
+ Defect: 728330
+ --------------
+ On the Patient Validation Screen, there is no column displaying the name 
+ of the user who currently holds a lock against a particular patient.
+  
+ Resolution:
+ -----------
+ The column "Last User" has been changed to "Locked by". The previous 
+ column, "Last User", would display the name of the last user who accessed 
+ the record of a particular patient. The new column, "Locked By", displays 
+ the name of the user who currently holds a lock against a patient.
+  
+ Defect: 897118
+ --------------
+ The eRx Log displays an incorrect page number as well as preventing the 
+ user from accessing the CMOP Log in Outpatient Pharmacy.
+  
+ Resolution:
+ -----------
+ Routine PSOORAL1 has been modified to correct the issue displaying the 
+ incorrect page number and preventing the user from accessing the CMOP Log.
+  
+ Defect: 733768
+ --------------
+ When entering a drug on the Drug Validation Screen, the Days Supply value 
+ is not auto-calculated based off the Dose, Schedule, and Quantity entered 
+ by the user.
+  
+ Resolution:
+ -----------
+ The Days Supply is now auto-calculated based on the Dose, Schedule, and 
+ Quantity entered by the user. This functionality will only run if the 
+ drug in question has required doses that the user is forced to choose 
+ from, thus having a "Unit Per Dose" attached to the Dosage entered by the 
+ user. Anytime an edit is made to the Dose, Schedule, or Quantity of an 
+ existing drug, a new auto-calculation will occur for Days Supply. Anytime 
+ an auto-calculation is made for Days Supply, the suggested value will be 
+ displayed as the default answer to the prompt, however, the user is not 
+ forced to accept this value. 
+  
+ Defect: 911602
+ --------------
+ When sending a Refill Request, the observation segment is incomplete on 
+ the outbound message.
+  
+ Resolution:
+ -----------
+ Routines PSOERXX3 and PSOERXA1 has been modified to include all data 
+ elements from the Observation Segment.
+  
+ Defect 911576:
+ --------------
+ When sending a refill request, The Duration Segment of Structured Sig
+ on the outbound message is incomplete.
+  
+ Resolution:
+ -----------
+ Routine PSOERXX5 has been modified to include all data elements of the 
+ Duration Segment of Structured Sig.
+  
+ Defect 914131:
+ --------------
+ The "DURATION" prompt is still a part of the workflow when creating a 
+ drug, even though the eRx software does not offer tapering or complex 
+ doses.
+  
+ Resolution:
+ -----------
+ The "DURATION" prompt has been removed the eRx workflow when creating a 
+ drug. 
+  
+ Defect 921703:
+ --------------
+ The user is unable to enter the Validate Drug Screen and edit the Days 
+ Supply value of an eRx.
+  
+ Resolution:
+ -----------
+ Routine PSOERXD2 has been modified to allow the user to edit the Days 
+ Supply value on the Validate Drug Screen.
+  
+ New Service Requests (NSRs):
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ Test Sites:
+ ----------
+ Meds By Mail
+ Fayetteville, Arkansas
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+  
+ This transmits the files from the first available server. Sites may also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: https://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ ------------------------------------------------------------------------
+ Installation Guide - Inbound ePrescribing 
+                               PSO_7_0_p551_IG.PDF              Binary
+ User Manual - Inbound ePrescribing 
+                               PSO_7_0_p551_UM.PDF              Binary
+ Deployment Installation Rollback and Back-Out Guide - Inbound 
+ ePrescribing  
+                               PSO_7_0_p551_DIRB.PDF            Binary
+  
+  
+                       
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     PSO*7.0*551
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Back-out Procedures
+ -------------------
+  
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. You must have concurrence from Health Product
+ Support before a rollback can occur. Enter a ServiceNow helpdesk ticket 
+ to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed up routines 
+ onto the VistA System.
+   
+   
+ Validation of Roll Back Procedure
+ ---------------------------------
+  
+ The Roll Back Procedure can be verified by printing the first 2 lines of 
+ the PSO Routines contained in this patch using the option First Line 
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the 
+ PSO*7.0*551 patch have been rolled back, the first two lines of the 
+ Routines will no longer contain the designation of patch PSO*7.0*551 in 
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 37
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOERX
+    Before:B122296708   After:B132801417  **467,527,508,551**
+Routine Name: PSOERX1
+    Before: B96375321   After: B99497004  **467,520,527,508,551**
+Routine Name: PSOERX1A
+    Before:B140048297   After:B150463790  **467,527,508,551**
+Routine Name: PSOERX1B
+    Before:B200556396   After:B203269485  **467,506,520,527,508,551**
+Routine Name: PSOERX1C
+    Before: B61030450   After: B64623473  **467,520,527,508,551**
+Routine Name: PSOERXA1
+    Before:B188146400   After:B188036698  **467,520,508,551**
+Routine Name: PSOERXC1
+    Before: B92546733   After:B104037085  **508,551**
+Routine Name: PSOERXD1
+    Before:B127051416   After:B131924629  **467,520,551**
+Routine Name: PSOERXD2
+    Before:B182647633   After:B183875290  **467,506,520,508,551**
+Routine Name: PSOERXP1
+    Before: B30549693   After: B28678984  **467,520,527,551**
+Routine Name: PSOERXU1
+    Before:B144420314   After:B152819795  **467,520,508,551**
+Routine Name: PSOERXU4
+    Before: B33741259   After: B68679574  **520,508,551**
+Routine Name: PSOERXU6
+    Before:B111664391   After:B117656460  **508,551**
+Routine Name: PSOERXX3
+    Before: B84060041   After: B88483865  **467,508,551**
+Routine Name: PSOERXX5
+    Before:B161348685   After:B161912387  **467,508,551**
+Routine Name: PSOORAL1
+    Before:B141679409   After:B156831785  **71,156,148,247,240,287,354,
+                                           367,408,482,508,551**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 07, 2018
+Completed By:                               Date Completed: MAY 08, 2019
+Released By :                               Date Released : MAY 09, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

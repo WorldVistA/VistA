@@ -1,0 +1,466 @@
+
+=============================================================================
+Run Date: JUL 22, 2019                     Designation: MAG*3*204
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #180                      Status: Released
+                  Compliance Date: AUG 22, 2019
+=============================================================================
+
+
+Subject: HDIG Adaptive Maintenance Updates
+
+Category: 
+  - Other
+
+Description:
+============
+
+ Associated Patches: 
+ ===================
+ This patch must be installed after MAG*3.0*194 and MAG*3.0*218.
+  
+ Subject: Hybrid DICOM Image Gateway (HDIG) Adaptive Maintenance Updates
+ ========
+  
+ Category: Other
+ =========
+  
+ Description:
+ ============
+ This document describes MAG*3.0*204, a patch that provides fixes to the 
+ HDIG application.
+ This patch addresses the following issues:
+ 1. VistA Imaging environment upgrade Java Common Internet File System
+    (JCIFS) 1.317 to Java Common Internet File System Next Generation
+    (JCIFS NG 1.2.1) for HDIG to support SMB 2.0 protocol.
+ 2. VistA Imaging environment upgrade Apache Tomcat Upgrade 6.x to 8.0.45
+    for HDIG.
+ 3. VistA Imaging environment upgrade Java 1.6.0.45 to Java 1.80.121.
+ 4. VistA Imaging environment upgrade from SleepyCat Java Edition (JE)
+    4.1.6 to JE 5.0.73.
+ 5. VistA Imaging environment upgrade from .NET 4.0 to .NET 4.6.2 and 
+    above.
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P204_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.
+ MAG3_0P204_README.txt, if present, is an informative file associated with 
+ the patch.
+  
+ Software and Documentation:
+ ===========================
+ Software and Documentation Files
+ ================================
+  
+ File Name                             Description
+ =========                             ===========
+ MAG3_0P204.KID                        Kernel Installation and Distribution
+                                       System (KIDS) build for MAG*3.0*204
+ MAG3_0P204_HDIG_Setup.msi             Hybrid DICOM Gateway Installation
+                                       File
+ IMGsecgd.pdf                          VistA Imaging System Security Guide
+ IMGtechman.pdf                        VistA Imaging System Technical
+                                       Manual
+ MAG_DICOMug.pdf                       VistA Imaging DICOM Gateway User
+                                       Manual
+ MAG_HDIGig.pdf                        VistA Imaging Hybrid DICOM Image 
+                                       Gateway Installation Guide
+ MAG3_0P204_Patch_Description.pdf      Patch Description for MAG*3.0*204
+ MAG3_0P204_DIBORG.pdf                 Deployment, Installation, Back-Out,
+                                       and Roll-back Guide for MAG*3.0*204
+  
+ Files & Fields Associated: 
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated: 
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated: 
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated: 
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated: 
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated: 
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information: 
+ =======================
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Tickets
+ ==============================
+ 1. Adaptive Maintenance: User Story 789848 - JCIFS Library Upgrade for
+    HDIG
+  
+ Problem: 
+ ========
+ Upgrade the environment for HDIG from JCIFS 1.3.17 to JCIFS NG 1.2.1. The
+ upgrade fixes a moderate security issue related to the Windows Network
+ LAN Manager (NTLM) authentication for http connections. This upgrade also
+ supports Server Message Block (SMB) 2.0 protocol, which is a network
+ protocol used by Windows-based computers that allows systems within the
+ same network to share files. 
+  
+ Resolution:  
+ ===========
+ The SMB version in HDIG has been upgraded by implementing the JCIFS NG 
+ product.  The related application code has been updated.
+  
+ 2. Adaptive Maintenance: User Story 372286 - Update Apache Tomcat for HDIG
+  
+ Problem: 
+ ========
+ Upgrade the environment for HDIG from Apache Tomcat 6.x and 8.0.45.  This 
+ application server upgrade ensures HDIG is in compliance with the latest 
+ approved version of Apache Tomcat.
+  
+ Resolution:  
+ ===========
+ The version of Apache Tomcat has been upgraded to Apache Tomcat 8.0.
+  
+ 3. Adaptive Maintenance: User Story 372568 - Upgrade the version of 
+ Java for HDIG
+  
+ Problem: 
+ ========
+ Upgrade the environments for HDIG from Java 1.6.0.45 to Java 1.80.121.  
+ This upgrade fixes identified Continuous Readiness in Information 
+ Security Program (CRISP) vulnerabilities.
+  
+ Resolution:  
+ ===========
+ The version of Java has been upgraded to Java 1.80.121.
+  
+ 4. Adaptive Maintenance: User Story 746082: JE Upgrade for HDIG
+  
+ Problem: 
+ ========
+ Upgrade the environment for the HDIG application from SleepyCat Java
+ Edition 4.1.6 to 5.0.73.  The upgrade addresses a bug that could be 
+ caused due to the rotation of transaction log files where the log files 
+ in the environment cannot be opened.
+  
+ Resolution:
+ ===========  
+ The SleepCat JE version in HDIG has been updated to the SleepyCat Java 
+ Edition 5.0.73.
+  
+ 5. Adaptive Maintenance: User Story 932702: Upgrade the version of .NET
+ for the HDIG Installer
+  
+ Problem: 
+ ========
+ Upgrade the environments for HDIG installer from .NET 4.0 to .NET 4.6.2 
+ and above.  This upgrade ensures compliance with the VA Technical 
+ Reference Model (TRM).
+  
+ Resolution:
+ ===========  
+ The version of .NET used with the HDIG installer has been upgraded to 
+ .NET 4.6.2 and above.
+  
+  
+ Test Sites
+ ==========
+ The following sites are test sites for this patch:
+     Philadelphia VA Medical Center
+     Salisbury VA Medical Center
+     Sioux Falls VA Medical Center
+     VA Palo Alto Health Care System
+  
+ Software and Documentation Retrieval Instructions
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory on the server download.vista.domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Patch Installation
+ ==================
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*204 must be installed on the VistA System and on 64-bit HDIG
+ servers.  This patch must be installed by the compliance date. All sites
+ running VistA Imaging 3.0 must install the KIDS portion of this patch.  
+ This patch can be loaded while the VistA Imaging System is active and
+ users are on the system.  Installing the MAG*3.0*204 KIDS takes 2-5 
+ minutes.
+  
+ Note:  HDIG will not install on 2003 and 2008 servers.  
+ =====
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note:  Use Windows Updater to install any security updates available for 
+ =====  .NET 4.6.2 and above. If there are issues installing the .NET
+        framework please reach out to the Helpdesk or Clin3.
+  
+ Note:  More recent .NET updates can be installed, but make sure that .NET 
+ =====  4.6.2 and above are included in the installation.
+  
+ Note:  If the Tier 1 equipment vendor (i.e., HP) template is used to 
+ =====  create the virtual machine, then the appropriate .NET version will
+        be included.
+  
+ Verify the current .NET Version that is installed:
+ ==================================================
+ 1.  From the Start menu, choose Run, enter regedit, and then select 
+     OK.
+  
+ Note:  You must have administrative credentials to run regedit.
+ =====
+  
+ 2.  In the Registry Editor, open the following subkey: 
+     HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full.
+     If the Full subkey isn't present, then you don't have the .NET
+     Framework 4.5 or later installed.
+  
+ Note:  The NET Framework Setup folder in the registry does not begin with 
+ =====  a period.
+  
+ 3.  Check for a DWORD entry named Release. If it exists, then you have
+     .NET Framework 4.5 or later versions installed. Its value is a release
+     key that corresponds to a particular version of the .NET Framework. In
+     the following figure, for example, the value of the Release entry is
+     378389, which is the release key for .NET Framework 4.5.
+   
+ 4.  Check to make sure .NET 4.6.2 and above is installed before installing
+     the HDIG Installer.  Reference the Hybrid DICOM Installation Guide for
+     more information. 
+  
+ VistA System (KIDS) Installation Instructions:
+ ==============================================
+ Installation Steps: 
+ ===================
+ KIDS installation will take less than one minute.
+ 1  On the VistA system, access the Kernel Installation and Distribution
+    System Menu [XPD MAIN].
+ 2  Run the Installation option [XPD INSTALLATION MENU].
+ 3  Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load
+       the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P204.KID) of
+       the MAG*3.0*204 KIDS file.
+    c. When prompted to continue with the load, enter YES. A Distribution
+       OK! message will be displayed when the load is complete.
+ 4  After loading the KIDS file, use the following options to verify the
+    contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this
+       option if you want to ensure the integrity of the routines in the 
+       patch. 
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+       Run this option if you want to view all changes that will be made
+       when the patch is installed. All components (routines, options, and
+       so on) in the patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option if you want
+       to create a backup message of any routines exported with the patch.
+       It will NOT back up any of the other changes.
+ 5  After performing the load and any optional verification steps, install
+    the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*204.
+    c. Answer NO to the following prompts, if they appear:
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+       Want KIDS to INHIBIT LOGONs during the install? NO//
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+    When installation is finished, an Install Complete message will be
+    displayed.
+  
+ KIDS Installation Example:
+ ==========================
+ This example shows the output when the KIDS file is installed for the
+ first time. If the patch has already been installed and the KIDS files is 
+ being installed in a namespace on which it has previously been installed, 
+ the output may be different.
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*204      9/6/18@14:57
+      => VistA Imaging 3.0 - Patch 204  ;Created on Sep 06, 2018@13:50:52
+  
+ This Distribution was loaded on Sep 06, 2018@14:57 with header of
+    VistA Imaging 3.0 - Patch 204  ;Created on Sep 06, 2018@13:50:52
+    It consisted of the following Install(s):
+     MAG*3.0*204
+ Checking Install for Package MAG*3.0*204
+  
+ Install Questions for MAG*3.0*204
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*204 :
+                Sep 06, 2018@15:11:46
+  
+ Build Distribution Date: Sep 06, 2018
+  
+  Installing Routines:..
+                Sep 06, 2018@15:11:46
+  
+  Running Post-Install Routine: POS^MAGIP204.
+  
+ Post Install Mail Message: Sep 06, 2018@15:11:46
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*204 Installed.
+                Sep 06, 2018@15:11:46
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+ Installing and Updating the HDIG: 
+ =================================
+ For installing or updating the HDIG, refer to the Hybrid DICOM Image 
+ Gateway (HDIG) Installation Guide.
+  
+ .NET Installation Error Handling
+ =================================
+ When attempting to run the HDIG Installation Wizard, you may receive the 
+ following .NET Framework is not installed error:
+  
+ Please refer to the Hybrid DICOM Installation Guide for detailed
+ information on handling this error.  
+  
+ Post-Installation Instructions
+ ==============================
+ N/A
+  
+ Back Out Plan 
+ =============
+ Uninstalling the MAG*3.0*204 KIDS:
+ ==================================
+ If it is necessary to uninstall the MAG*3.0*204 VistA KIDS, you needed to 
+ select the Kernel Installation & Distribution System menu option, Backup 
+ a Transport Global (see section above, Vista System (KIDS) Installation 
+ Instructions, step 4c), before you installed the patch.
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check your MailMan messages for the backup message sent by the 
+ Backup a Transport Global function.
+ 1. Select the message shown below:
+    Backup of MAG*3.0*204 install on <mm dd, yyyy> <user name>
+ 2. Select the Xtract PackMan option.
+ 3. Select the Install/Check Message option.
+ 4. Enter Yes at the prompt.
+ 5. Enter No at the backup prompt. There is no need to back up the backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+  Answer with PackMan function NUMBER, or NAME
+  Choose from:
+  1   ROUTINE LOAD
+  2   GLOBAL LOAD
+  3   PACKAGE LOAD
+  4   SUMMARIZE MESSAGE
+  5   PRINT MESSAGE
+  6   INSTALL/CHECK MESSAGE
+  7   INSTALL SELECTED ROUTINE(S)
+  8   TEXT PRINT/DISPLAY
+  9   COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6 INSTALL/CHECK MESSAGE
+  
+ Warning: Installing this message will cause a permanent update of globals
+          and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up. NO other parts
+ are backed up, not even globals. You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2 Message #42925  Unloading Routine MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ . . .
+  
+ Uninstalling the HDIG Client: 
+ =============================
+ For uninstalling the HDIG, refer to the Hybrid DICOM Image Gateway (HDIG) 
+ Installation Guide.
+  
+ Routine Information:
+ ====================
+  
+ VistA KIDS Checksums
+ ====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+ ;;3.0;IMAGING;** [Patch List]**;**;Mar 19, 2002;Build 25
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum       Checksum      Patch List
+                 Before         After
+ MAGIP204        New            4110373       ***204***
+  
+ Routine MAGIP204 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGIP204
+    Before:       n/a   After:  B4110373  **204**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 29, 2017
+Completed By:                               Date Completed: JUL 19, 2019
+Released By :                               Date Released : JUL 22, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

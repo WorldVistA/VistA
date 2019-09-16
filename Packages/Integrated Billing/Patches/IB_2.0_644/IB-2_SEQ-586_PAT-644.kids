@@ -1,0 +1,595 @@
+Released IB*2*644 SEQ #586
+Extracted from mail message
+**KIDS**:IB*2.0*644^
+
+**INSTALL NAME**
+IB*2.0*644
+"BLD",11455,0)
+IB*2.0*644^INTEGRATED BILLING^0^3190425^y
+"BLD",11455,1,0)
+^^6^6^3190425^
+"BLD",11455,1,1,0)
+This patch addresses the following issues:
+"BLD",11455,1,2,0)
+ 
+"BLD",11455,1,3,0)
+-Insurance claims with multiple service line items/dates on the bill were
+"BLD",11455,1,4,0)
+ not transmitted electronically properly.
+"BLD",11455,1,5,0)
+-The BILLING FACILITY NAME (#200) field in the INSTITUTION (#4) file was 
+"BLD",11455,1,6,0)
+ not correctly populated on the uniform billing form UB-04 FL-1.
+"BLD",11455,4,0)
+^9.64PA^^
+"BLD",11455,6.3)
+4
+"BLD",11455,"INIT")
+POST^IB20P644
+"BLD",11455,"KRN",0)
+^9.67PA^1.5^24
+"BLD",11455,"KRN",.4,0)
+.4
+"BLD",11455,"KRN",.401,0)
+.401
+"BLD",11455,"KRN",.402,0)
+.402
+"BLD",11455,"KRN",.403,0)
+.403
+"BLD",11455,"KRN",.5,0)
+.5
+"BLD",11455,"KRN",.84,0)
+.84
+"BLD",11455,"KRN",1.5,0)
+1.5
+"BLD",11455,"KRN",1.6,0)
+1.6
+"BLD",11455,"KRN",1.61,0)
+1.61
+"BLD",11455,"KRN",1.62,0)
+1.62
+"BLD",11455,"KRN",3.6,0)
+3.6
+"BLD",11455,"KRN",3.8,0)
+3.8
+"BLD",11455,"KRN",9.2,0)
+9.2
+"BLD",11455,"KRN",9.8,0)
+9.8
+"BLD",11455,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",11455,"KRN",9.8,"NM",1,0)
+IBCEFG1^^0^B23251268
+"BLD",11455,"KRN",9.8,"NM",2,0)
+IB20P644^^0^B7540275
+"BLD",11455,"KRN",9.8,"NM","B","IB20P644",2)
+
+"BLD",11455,"KRN",9.8,"NM","B","IBCEFG1",1)
+
+"BLD",11455,"KRN",19,0)
+19
+"BLD",11455,"KRN",19.1,0)
+19.1
+"BLD",11455,"KRN",101,0)
+101
+"BLD",11455,"KRN",409.61,0)
+409.61
+"BLD",11455,"KRN",771,0)
+771
+"BLD",11455,"KRN",779.2,0)
+779.2
+"BLD",11455,"KRN",870,0)
+870
+"BLD",11455,"KRN",8989.51,0)
+8989.51
+"BLD",11455,"KRN",8989.52,0)
+8989.52
+"BLD",11455,"KRN",8994,0)
+8994
+"BLD",11455,"KRN","B",.4,.4)
+
+"BLD",11455,"KRN","B",.401,.401)
+
+"BLD",11455,"KRN","B",.402,.402)
+
+"BLD",11455,"KRN","B",.403,.403)
+
+"BLD",11455,"KRN","B",.5,.5)
+
+"BLD",11455,"KRN","B",.84,.84)
+
+"BLD",11455,"KRN","B",1.5,1.5)
+
+"BLD",11455,"KRN","B",1.6,1.6)
+
+"BLD",11455,"KRN","B",1.61,1.61)
+
+"BLD",11455,"KRN","B",1.62,1.62)
+
+"BLD",11455,"KRN","B",3.6,3.6)
+
+"BLD",11455,"KRN","B",3.8,3.8)
+
+"BLD",11455,"KRN","B",9.2,9.2)
+
+"BLD",11455,"KRN","B",9.8,9.8)
+
+"BLD",11455,"KRN","B",19,19)
+
+"BLD",11455,"KRN","B",19.1,19.1)
+
+"BLD",11455,"KRN","B",101,101)
+
+"BLD",11455,"KRN","B",409.61,409.61)
+
+"BLD",11455,"KRN","B",771,771)
+
+"BLD",11455,"KRN","B",779.2,779.2)
+
+"BLD",11455,"KRN","B",870,870)
+
+"BLD",11455,"KRN","B",8989.51,8989.51)
+
+"BLD",11455,"KRN","B",8989.52,8989.52)
+
+"BLD",11455,"KRN","B",8994,8994)
+
+"BLD",11455,"QUES",0)
+^9.62^^
+"BLD",11455,"REQB",0)
+^9.611^1^1
+"BLD",11455,"REQB",1,0)
+IB*2.0*377^2
+"BLD",11455,"REQB","B","IB*2.0*377",1)
+
+"INIT")
+POST^IB20P644
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+644^3190425
+"PKG",200,22,1,"PAH",1,1,0)
+^^6^6^3190425
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch addresses the following issues:
+"PKG",200,22,1,"PAH",1,1,2,0)
+ 
+"PKG",200,22,1,"PAH",1,1,3,0)
+-Insurance claims with multiple service line items/dates on the bill were
+"PKG",200,22,1,"PAH",1,1,4,0)
+ not transmitted electronically properly.
+"PKG",200,22,1,"PAH",1,1,5,0)
+-The BILLING FACILITY NAME (#200) field in the INSTITUTION (#4) file was 
+"PKG",200,22,1,"PAH",1,1,6,0)
+ not correctly populated on the uniform billing form UB-04 FL-1.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","IB20P644")
+0^2^B7540275^n/a
+"RTN","IB20P644",1,0)
+IB20P644 ;ALB/CXW - POST INIT ROUTINE FOR IB*2.0*644 ;04/01/2019
+"RTN","IB20P644",2,0)
+ ;;2.0;INTEGRATED BILLING;**644**;21-MAR-94;Build 4
+"RTN","IB20P644",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IB20P644",4,0)
+ Q
+"RTN","IB20P644",5,0)
+ ;
+"RTN","IB20P644",6,0)
+POST ; post init to update Format Code for Billing Provider Name (FL-1/1) in the #364.7 file
+"RTN","IB20P644",7,0)
+ N IBZ,U S U="^"
+"RTN","IB20P644",8,0)
+ D MSG("    IB*2.0*644 Post-Install starts .....")
+"RTN","IB20P644",9,0)
+ D MSG(""),UPDATE,MSG("")
+"RTN","IB20P644",10,0)
+ D MSG("    IB*2.0*644 Post-Install is complete.")
+"RTN","IB20P644",11,0)
+ Q
+"RTN","IB20P644",12,0)
+ ;
+"RTN","IB20P644",13,0)
+UPDATE ; Format Code updates based on output formatter files
+"RTN","IB20P644",14,0)
+ N IBCODE,IBX,IB353,IB353EN,IB3645,IB3645EN,IB3646,IB3646EN,IB3647EN,DA,DIE,DR,X,Y
+"RTN","IB20P644",15,0)
+ S (IB353EN,IB3645EN,IB3646EN,IB3647EN)=0
+"RTN","IB20P644",16,0)
+ S IB353="UB-04"
+"RTN","IB20P644",17,0)
+ S IBX=0 F  S IBX=$O(^IBE(353,"B",IB353,IBX)) Q:'IBX  I $P($G(^IBE(353,IBX,2)),U,4) S IB353EN=IBX Q
+"RTN","IB20P644",18,0)
+ I 'IB353EN D MSG(" >> ERROR: cannot find National "_IB353_" bill form in the #353 file") Q
+"RTN","IB20P644",19,0)
+ S IB3646="BILLING PROVIDER NAME (FL-1/1)"
+"RTN","IB20P644",20,0)
+ S IBX=0 F  S IBX=$O(^IBA(364.6,"C",IB3646,IBX)) Q:'IBX  I $P($G(^IBA(364.6,IBX,0)),U,1,2)=(IB353EN_"^N") S IB3646EN=IBX Q
+"RTN","IB20P644",21,0)
+ I 'IB3646EN D MSG(" >> ERROR: cannot find National "_IB3646_" field in the #364.6 file") Q 
+"RTN","IB20P644",22,0)
+ S IB3645="N-BILLING PROVIDER"
+"RTN","IB20P644",23,0)
+ S IBX=0 F  S IBX=$O(^IBA(364.5,"B",IB3645,IBX)) Q:'IBX  I $P($G(^IBA(364.5,IBX,0)),U,2)="N" S IB3645EN=IBX Q
+"RTN","IB20P644",24,0)
+ I 'IB3645EN D MSG(" >> ERROR: cannot find National "_IB3645_" field in the #364.5 file") Q
+"RTN","IB20P644",25,0)
+ S IBX=0 F  S IBX=$O(^IBA(364.7,"B",IB3646EN,IBX)) Q:'IBX  I $P($G(^IBA(364.7,IBX,0)),U,2,3)="N^"_IB3645EN S IB3647EN=IBX Q
+"RTN","IB20P644",26,0)
+ I 'IB3647EN D MSG(" >> ERROR: cannot find National "_IB3646_" field in the #364.7 file") Q
+"RTN","IB20P644",27,0)
+ S IBCODE=$P($T(CODE+1),";",3)
+"RTN","IB20P644",28,0)
+ I $G(^IBA(364.7,IB3647EN,1))=IBCODE D MSG("  Format code has already been updated for National "_IB3646_" in the #364.7 file!") Q
+"RTN","IB20P644",29,0)
+ ;
+"RTN","IB20P644",30,0)
+ ; set in format code 
+"RTN","IB20P644",31,0)
+ S DA=IB3647EN,DIE="^IBA(364.7,",DR="1///"_IBCODE D ^DIE
+"RTN","IB20P644",32,0)
+ ;
+"RTN","IB20P644",33,0)
+ D MSG("  Format code updated for National "_IB3646_" in the #364.7 file!")
+"RTN","IB20P644",34,0)
+ Q
+"RTN","IB20P644",35,0)
+ ;
+"RTN","IB20P644",36,0)
+MSG(IBZ) ;
+"RTN","IB20P644",37,0)
+ D MES^XPDUTL(IBZ) Q
+"RTN","IB20P644",38,0)
+ ;
+"RTN","IB20P644",39,0)
+CODE ; format code - IA#2171 $$BNIEN^XUAF4 
+"RTN","IB20P644",40,0)
+ ;;S IBXSAVE("BPDATA")=IBXDATA,IBXDATA=$$BNIEN^XUAF4(+IBXSAVE("BPDATA")) S:IBXDATA="" IBXDATA=$$GETFAC^IBCEP8(+IBXSAVE("BPDATA"),0,0)
+"RTN","IB20P644",41,0)
+ ;;
+"RTN","IBCEFG1")
+0^1^B23251268^B23263677
+"RTN","IBCEFG1",1,0)
+IBCEFG1 ;ALB/TMP - OUTPUT FORMATTER DATA DEFINITION UTILITIES ;18-JAN-96
+"RTN","IBCEFG1",2,0)
+ ;;2.0;INTEGRATED BILLING;**52,51,137,181,197,232,288,349,371,377,644**;21-MAR-94;Build 4
+"RTN","IBCEFG1",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCEFG1",4,0)
+ ;
+"RTN","IBCEFG1",5,0)
+EDIBILL(IBXFORM,IBXDA,IBINS,IBTYP) ; Find element associated with form fld
+"RTN","IBCEFG1",6,0)
+ ; IBXFORM = (REQUIRED) actual form being extracted (in file 353)
+"RTN","IBCEFG1",7,0)
+ ; IBXDA = (REQUIRED) form definition file (364.6) entry to use to find
+"RTN","IBCEFG1",8,0)
+ ;         extract data element definition entry (in file 364.7)
+"RTN","IBCEFG1",9,0)
+ ; IBINS = (REQUIRED) insurance co. ien for the current insurance on bill
+"RTN","IBCEFG1",10,0)
+ ; IBTYP = (REQUIRED) bill type (I/O)
+"RTN","IBCEFG1",11,0)
+ ;
+"RTN","IBCEFG1",12,0)
+ ; Returns ien of the entry in file 364.7 if a match on override criteria
+"RTN","IBCEFG1",13,0)
+ ;  was found.  Returns -1 if a screen form and the criteria fails for a
+"RTN","IBCEFG1",14,0)
+ ;  field without an override
+"RTN","IBCEFG1",15,0)
+ ;
+"RTN","IBCEFG1",16,0)
+ N IBX,IBPARFM,IBSCREEN,IBNMATCH,EDIQ,IB1
+"RTN","IBCEFG1",17,0)
+ I $G(IBXDA)=""!($G(IBXFORM)="") G EDIQ
+"RTN","IBCEFG1",18,0)
+ S EDIQ=0
+"RTN","IBCEFG1",19,0)
+ S IBPARFM=$P($G(^IBE(353,IBXFORM,2)),U,5) S:'IBPARFM IBPARFM=IBXFORM
+"RTN","IBCEFG1",20,0)
+ S IBSCREEN=($P($G(^IBE(353,+IBXFORM,2)),U,2)="S")
+"RTN","IBCEFG1",21,0)
+ S IB1=(IBPARFM=IBXFORM) ; Not a local field that is not a parent
+"RTN","IBCEFG1",22,0)
+ ;
+"RTN","IBCEFG1",23,0)
+ I $G(IBINS)'="",$G(IBTYP)'="" D:$O(^IBA(364.7,"AINTYP",IBXDA,""))'=""  G:EDIQ EDIQ
+"RTN","IBCEFG1",24,0)
+ . I '$D(^IBA(364.7,"AINTYP",IBXDA,IBINS,IBTYP)) S IBNMATCH=1 Q
+"RTN","IBCEFG1",25,0)
+ . S IBX=+$O(^IBA(364.7,"AINTYP",IBXDA,IBINS,IBTYP,"")),EDIQ=1 S:IBX IBNMATCH=0 ;by ins co and type of bill
+"RTN","IBCEFG1",26,0)
+ ;
+"RTN","IBCEFG1",27,0)
+ I $G(IBINS)'="" D:$O(^IBA(364.7,"AINS",IBXDA,""))'=""  G:EDIQ EDIQ
+"RTN","IBCEFG1",28,0)
+ . I '$D(^IBA(364.7,"AINS",IBXDA,IBINS)) S IBNMATCH=1 Q
+"RTN","IBCEFG1",29,0)
+ . S IBX=+$O(^IBA(364.7,"AINS",IBXDA,IBINS,"")),EDIQ=1 S:IBX IBNMATCH=0 ;ins co only
+"RTN","IBCEFG1",30,0)
+ ;
+"RTN","IBCEFG1",31,0)
+ I $G(IBTYP)'="" D:$O(^IBA(364.7,"ATYPE",IBXDA,""))'=""  G:EDIQ EDIQ
+"RTN","IBCEFG1",32,0)
+ . I '$D(^IBA(364.7,"ATYPE",IBXDA,IBTYP)) S IBNMATCH=1 Q
+"RTN","IBCEFG1",33,0)
+ . S IBX=+$O(^IBA(364.7,"ATYPE",IBXDA,IBTYP,"")),EDIQ=1 S:IBX IBNMATCH=0 ;type of bill only
+"RTN","IBCEFG1",34,0)
+ ;
+"RTN","IBCEFG1",35,0)
+ I IBXFORM,$S(IBXFORM'=IBPARFM:1,1:IBSCREEN) D  G EDIQ
+"RTN","IBCEFG1",36,0)
+ . S IBX=+$O(^IBA(364.7,"ALL",IBXDA,"")) ; Check for all ins co and types
+"RTN","IBCEFG1",37,0)
+ . I IBX,+$O(^IBA(364.7,"ALL",IBXDA,IBX)) D  ; Find override for 'ALL'
+"RTN","IBCEFG1",38,0)
+ .. N Z
+"RTN","IBCEFG1",39,0)
+ .. S Z=0 F  S Z=$O(^IBA(364.7,"ALL",IBXDA,Z)) Q:'Z  I $P($G(^IBA(364.7,Z,0)),U)'=IBXDA S IBX=Z Q
+"RTN","IBCEFG1",40,0)
+ . I 'IBX,+$O(^IBA(364.7,"B",IBXDA,"")) S IBX=$O(^(""))
+"RTN","IBCEFG1",41,0)
+ . S:IBX IBNMATCH=0
+"RTN","IBCEFG1",42,0)
+ ;
+"RTN","IBCEFG1",43,0)
+ I IBXFORM,$O(^IBA(364.6,"APAR",IBXFORM,IBXDA,"")) S IBX=+$O(^("")),IBX=+$O(^IBA(364.7,"B",IBX,0)) I IBX G EDIQ
+"RTN","IBCEFG1",44,0)
+ S IBX=+$O(^IBA(364.7,"B",IBXDA,""))
+"RTN","IBCEFG1",45,0)
+EDIQ I IBSCREEN,$G(IBNMATCH) S IBX=-1
+"RTN","IBCEFG1",46,0)
+ Q $G(IBX)
+"RTN","IBCEFG1",47,0)
+ ;
+"RTN","IBCEFG1",48,0)
+DT(DATE1,DATE2,FORMAT) ; Return date in DATE1 (and optionally DATE2)
+"RTN","IBCEFG1",49,0)
+ ;   (input in Fileman format) converted to X12 format
+"RTN","IBCEFG1",50,0)
+ ; FORMAT (required)
+"RTN","IBCEFG1",51,0)
+ ; DATE1,DATE2 in FILEMAN date format
+"RTN","IBCEFG1",52,0)
+ N DATE S DATE=""
+"RTN","IBCEFG1",53,0)
+ I DATE1=0 S DATE1=""
+"RTN","IBCEFG1",54,0)
+ I $E(FORMAT)="D" D  G DTQ
+"RTN","IBCEFG1",55,0)
+ .S DATE=$E(DATE1,2,7) Q:$P(FORMAT,"D",2)=6  ;YYMMDD
+"RTN","IBCEFG1",56,0)
+ .S:DATE1 DATE=($E(DATE1)+17)_DATE ;CCYYMMDD
+"RTN","IBCEFG1",57,0)
+ I $E(FORMAT)="R" D
+"RTN","IBCEFG1",58,0)
+ .S:DATE1 DATE=$E(DATE1,2,7)_"-"_$E($S($G(DATE2):DATE2,1:DATE1),2,7) ;YYMMDD-YYMMDD
+"RTN","IBCEFG1",59,0)
+ .Q:FORMAT["6"
+"RTN","IBCEFG1",60,0)
+ .S DATE=($E(DATE1)+17)_DATE,$P(DATE,"-",2)=($E($S($G(DATE2):DATE2,1:DATE1))+17)_$P(DATE,"-",2) ;CCYYMMDD-CCYYMMDD
+"RTN","IBCEFG1",61,0)
+DTQ Q DATE
+"RTN","IBCEFG1",62,0)
+ ;
+"RTN","IBCEFG1",63,0)
+NAME(IBNM1,COMB) ; Parse person's nm into 5 pieces LAST^FIRST^MIDDLE^CRED^SUFFIX
+"RTN","IBCEFG1",64,0)
+ ; IBNM1 = NAME in LAST,FIRST MIDDLE^vp file ien (200 or 355.93)^bill ien^prv type
+"RTN","IBCEFG1",65,0)
+ ;      OR         FIRST MIDDLE LAST^vp file ien (200 or 355.93)^bill ien^prv type
+"RTN","IBCEFG1",66,0)
+ ; COMB = if set to 1, then combine the first and middle name
+"RTN","IBCEFG1",67,0)
+ ;        if set to 2, combine the last and middle names
+"RTN","IBCEFG1",68,0)
+ N PC,IBIEN,IBCRED,IBNM,IBNMC,IBPIEN
+"RTN","IBCEFG1",69,0)
+ S IBIEN=$P(IBNM1,U,2),IBNMC=$P(IBNM1,U)
+"RTN","IBCEFG1",70,0)
+ S IBPIEN=+$O(^DGCR(399,+$P(IBNM1,U,3),"PRV","B",+$P(IBNM1,U,4),0))
+"RTN","IBCEFG1",71,0)
+ S IBCRED=$$CRED^IBCEU(IBIEN,+$P(IBNM1,U,3),IBPIEN) ;Degree
+"RTN","IBCEFG1",72,0)
+ I IBNMC="DEPT VETERANS AFFAIRS" S IBNMC="VETERANS AFFAIRS,DEPT"
+"RTN","IBCEFG1",73,0)
+ I IBNMC["," D  G NAMEQ
+"RTN","IBCEFG1",74,0)
+ . S IBNMC=$TR(IBNMC,".") D NAMECOMP^XLFNAME(.IBNMC)
+"RTN","IBCEFG1",75,0)
+ . S IBNM=$G(IBNMC("FAMILY"))_U_$G(IBNMC("GIVEN"))_U_$G(IBNMC("MIDDLE"))_U_IBCRED_U_$G(IBNMC("SUFFIX"))
+"RTN","IBCEFG1",76,0)
+ D STDNAME^XLFNAME(.IBNMC,"C")
+"RTN","IBCEFG1",77,0)
+ S IBNM=$G(IBNMC("FAMILY"))_U_$G(IBNMC("GIVEN"))_U_$G(IBNMC("MIDDLE"))_U_IBCRED_U_$G(IBNMC("SUFFIX"))
+"RTN","IBCEFG1",78,0)
+ I $P(IBNM1,U,2)["355.93",$P($G(^IBA(355.93,+$P(IBNM1,U,2),0)),U,2)=1 D  G NAMEQ  ; group performing provider
+"RTN","IBCEFG1",79,0)
+ . S IBNM=$P(IBNM1,U)_U_U_U_IBCRED_U
+"RTN","IBCEFG1",80,0)
+ I $G(COMB)=1,$G(IBNMC("MIDDLE"))'="" S IBNM=$P(IBNM,U)_U_$P(IBNM,U,2)_" "_$P(IBNM,U,3)_U_IBCRED_U_$P(IBNM,U,5)
+"RTN","IBCEFG1",81,0)
+ I $G(COMB)=2,$G(IBNMC("MIDDLE"))'="" S IBNM=$P(IBNM,U)_" "_$P(IBNM,U,3)_U_$P(IBNM,U,2)_U_IBCRED_U_$P(IBNM,U,5)
+"RTN","IBCEFG1",82,0)
+ ;
+"RTN","IBCEFG1",83,0)
+NAMEQ Q IBNM
+"RTN","IBCEFG1",84,0)
+ ;
+"RTN","IBCEFG1",85,0)
+DOLLAR(AMT) ; Format amount in AMT so it is numeric including cents, without
+"RTN","IBCEFG1",86,0)
+ ; the decimal and commas.
+"RTN","IBCEFG1",87,0)
+ N DOLR,CENT
+"RTN","IBCEFG1",88,0)
+ I AMT'="" S AMT=$TR(AMT,","),DOLR=$P(AMT,"."),CENT=$E($P(AMT,".",2)_"00",1,2),AMT=DOLR_CENT
+"RTN","IBCEFG1",89,0)
+ Q AMT
+"RTN","IBCEFG1",90,0)
+ ;
+"RTN","IBCEFG1",91,0)
+STATE(CODE) ;Return state code from state pointer
+"RTN","IBCEFG1",92,0)
+ Q $P($G(^DIC(5,+CODE,0)),U,2)
+"RTN","IBCEFG1",93,0)
+ ;
+"RTN","IBCEFG1",94,0)
+SEX(CODE) ;Return the X12 code for sex
+"RTN","IBCEFG1",95,0)
+ ; CODE = DHCP code for sex
+"RTN","IBCEFG1",96,0)
+ Q $S(CODE="":"U","MF"[$E(CODE):$E(CODE),1:"U")
+"RTN","IBCEFG1",97,0)
+ ;
+"RTN","IBCEFG1",98,0)
+EMPLST(CODE) ;Return the X12 code for employment status
+"RTN","IBCEFG1",99,0)
+ ; CODE = DHCP code for employment status
+"RTN","IBCEFG1",100,0)
+ N X12
+"RTN","IBCEFG1",101,0)
+ S X12=""
+"RTN","IBCEFG1",102,0)
+ S:CODE'="" X12=$P($P("1;FT^2;PT^3;NE^4;SE^5;RT^6;AU^9;UK",CODE_";",2),U)
+"RTN","IBCEFG1",103,0)
+ S:X12="" X12="UK"
+"RTN","IBCEFG1",104,0)
+ Q X12
+"RTN","IBCEFG1",105,0)
+ ;
+"RTN","IBCEFG1",106,0)
+MARITAL(CODE) ;Return the X12 code for marital status
+"RTN","IBCEFG1",107,0)
+ ; CODE = ien of code for marital status
+"RTN","IBCEFG1",108,0)
+ N X12
+"RTN","IBCEFG1",109,0)
+ S X12=$P($G(^DIC(11,+CODE,0)),U,3)
+"RTN","IBCEFG1",110,0)
+ I X12'="" S X12=$P($P("D;D^M;M^N;I^S;X^W;W^U;K",X12_";",2),U)
+"RTN","IBCEFG1",111,0)
+ Q X12
+"RTN","IBCEFG1",112,0)
+ ;
+"RTN","IBCEFG1",113,0)
+TOS(CODE) ;Return the X12 code for type of service
+"RTN","IBCEFG1",114,0)
+ ; CODE = DHCP code for type of service
+"RTN","IBCEFG1",115,0)
+ N X12
+"RTN","IBCEFG1",116,0)
+ S X12=$S(CODE>0&(CODE<10):CODE,1:$P($P("0;10^A;11^B;13^H;45^L;18^M;15^N;63^V;19^Y;20^Z;21^43;96^53;96",CODE_";",2),U)) S:X12="" X12=CODE
+"RTN","IBCEFG1",117,0)
+ Q X12
+"RTN","IBCEFG1",118,0)
+ ;
+"RTN","IBCEFG1",119,0)
+FIXLEN(DATA,LEN) ; Create a fixed length field from data DATA length LEN
+"RTN","IBCEFG1",120,0)
+ Q $E(DATA_$J("",LEN),1,LEN)
+"RTN","IBCEFG1",121,0)
+ ;
+"RTN","IBCEFG1",122,0)
+RCDT(IBXSAVE,IBXDATA,IBDT) ; Format date for multiple revenue code transmission)
+"RTN","IBCEFG1",123,0)
+ ;IBXSAVE = array containing the extracted service line data for the UB format bill
+"RTN","IBCEFG1",124,0)
+ ;IBXDATA = array returned with service line dates formatted in YYYYMMDD format
+"RTN","IBCEFG1",125,0)
+ ;IBDT = the default date for the revenue codes on the bill
+"RTN","IBCEFG1",126,0)
+ ; *644 - replace 1st date with multiple dates
+"RTN","IBCEFG1",127,0)
+ N Q,W
+"RTN","IBCEFG1",128,0)
+ S Q=0 F  S Q=$O(IBXSAVE("INPT",Q)) Q:'Q  S W=$$DT($P(IBXSAVE("INPT",Q),U,10),,"D8"),IBXDATA(Q)=$S(W:W,1:IBDT)
+"RTN","IBCEFG1",129,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",11455,6)
+^586
+**END**
+**END**
+

@@ -1,0 +1,242 @@
+$TXT Created by                D at CHEY20.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 02/19/19 at 20:14
+=============================================================================
+Run Date: MAY 13, 2019                     Designation: DVB*4*68
+Package : DVB - HINQ                          Priority: Mandatory
+Version : 4        SEQ #64                      Status: Released
+                  Compliance Date: JUN 13, 2019
+=============================================================================
+
+Associated patches: (v)DVB*4*67    <<= must be installed BEFORE `DVB*4*68'
+
+Subject: UPDATE DISABILITY CONDITION (#31) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DVB*4.0*68 will update the DISABILITY CONDITION (#31) file by adding
+ seventeen new disability conditions.
+  
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) INC2660303 - Incorrect Diagnostic code and printed forms (VIS / VISTA/),
+                 SAVAHCS, Tucson
+    
+ Problem:
+ --------
+ A request was made by the Chief Business Office (CBO) to add seventeen
+ missing disability codes to the DISABILITY CONDITION (#31) file.
+  
+  Conditions being added:
+  -----------------------
+  6040   DIABETIC RETINOPATHY
+  6042   RETINAL DYSTROPHY (INCLUDING RETINITIS PIGMENTOSA)
+  6046   POST-CHIASMAL DISORDERS
+  7630   MALIGNANT NEOPLASMS OF THE BREAST
+  7631   BENIGN NEOPLASMS OF THE BREAST AND OTHER INJURIES OF THE BREAST
+  7632   FEMALE SEXUAL AROUSAL DISORDER (FSAD)
+  7718   ESSENTIAL THROMBOCYTHEMIA/PRIMARY MYELOFIBROSIS
+  7719   CHRONIC MYELOGENOUS LEUKEMIA
+  7720   IRON DEFICIENCY ANEMIA
+  7721   FOLIC ACID DEFICIENCY
+  7722   PERNICIOUS ANEMIA AND VITAMIN B12 DEFICIENCY ANEMIA
+  7723   ACQUIRED HEMOLYTIC ANEMIA
+  7724   SOLITARY PLASMACYTOMA
+  7725   MYELODYSPLASTIC SYNDROMES
+  7906   THYROIDITIS
+  9917   NEOPLASM, HARD AND SOFT TISSUE, BENIGN
+  9918   NEOPLASM, HARD AND SOFT TISSUE, MALIGNANT
+  
+  
+ Resolution:
+ -----------           
+ This patch updates the DISABILITY CONDITION (#31) file with seventeen
+ new disability conditions.
+  
+  
+ Test Sites:
+ -----------
+ Dayton VA Medical Center
+ Louisville VA Medical Center
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A 
+  
+  
+ Documentation Title            File Name                     FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch can be installed with users in the system, but it is recommended
+ that it be installed when user activity is very low.
+  
+ Installation time will be less than five minutes.
+  
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch DVB*4.0*68:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//," respond NO.
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//," respond NO.
+    
+      7. During install, verify that all entries were added successfully.
+         If an error is displayed, please create a ticket.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routine DVB68PT from your production system after
+ the patch has been successfully installed.
+  
+ Back-Out Plan:
+ --------------
+ To back-out this patch, log a ServiceNow ticket so the development team 
+ can assist in this process.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;HINQ;**[Patch List]**;03/25/92;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVB68PT
+    Before:       n/a   After:  B5167388  **68**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 07, 2019
+Completed By:                               Date Completed: MAY 09, 2019
+Released By :                               Date Released : MAY 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

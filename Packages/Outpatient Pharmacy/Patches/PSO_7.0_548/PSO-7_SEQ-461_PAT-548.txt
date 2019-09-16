@@ -1,0 +1,173 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/14/18 at 15:08
+=============================================================================
+Run Date: JUL 09, 2019                     Designation: PSO*7*548
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #461                      Status: Released
+                  Compliance Date: AUG 08, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*444   <<= must be installed BEFORE `PSO*7*548'
+
+Subject: EXPIRATION DATE INCORRECT ON NON-CONTROLLED RX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Description:
+ ------------
+ When finishing a non-controlled drug order immediately after finishing a 
+ renewal of a controlled drug, an incorrect expiration date occurs. The 
+ non-controlled drugs are finished with the expiration date of the 
+ controlled drug.
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC2138569 - Non-controlled rx - expiration calculated incorrectly
+  
+ Problem:
+ -------
+ A non-controlled rx for 90-day supply with 3 refills expires after 6 
+ months. It should be one year.
+  
+ Resolution:
+ ----------
+ The problem results from finishing the non-controlled rx immediately 
+ after finishing a renewed controlled rx. The DEA("CS") variable is not 
+ cleaned up after the renewal finish process, resulting in the 
+ non-controlled rx being incorrectly identified as controlled. I made a 
+ change to PSORENW1 to kill the variable after it is used. 
+  
+ Test Sites:
+ ----------
+ Wichita HCS 
+ Battle Creek VAMC
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+  
+ There are no documentation updates associated with this patch.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no tasks or routines executed before or after the installation 
+ of this patch.It is not necessary to disable any options.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the 
+ Installation Menu.  From this menu, you may elect to use the following 
+ options. When prompted for the INSTALL NAME enter the patch number 
+ PSO*7*548:
+  
+ a. Backup a Transport Global - This option will create a backup message 
+ of any routines exported with this patch. It will not backup any other 
+ changes such as DDs or templates.
+  
+ b. Compare Transport Global to Current System - This option will (allow 
+ you to view all changes that will be made when this patch       is 
+ installed.  It compares all components of this patch routines, DDs, 
+ templates, etc.).
+  
+ c. Verify Checksums in Transport Global - This option will allow you to 
+ ensure the integrity of the routines that are in the transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and 
+ choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+ Install? NO// respond NO. 
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO// 
+ respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+ Protocols? NO// respond NO.
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out/Rollback Strategy:
+ -------------------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSO routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSO*7.0*548 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch PSO*7.0*548 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSORENW1
+    Before: B63022534   After: B63062494  **20,37,51,46,71,117,157,143,
+                                           219,239,225,444,548**
+ 
+Routine list of preceding patches: 444
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 13, 2018
+Completed By:                               Date Completed: JUL 08, 2019
+Released By :                               Date Released : JUL 09, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

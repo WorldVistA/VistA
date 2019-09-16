@@ -1,0 +1,368 @@
+$TXT Created by                DEVVJJ.DOMAIN.EXT  (KIDS) on Thursday, 03/07/19 at 14:38
+=============================================================================
+Run Date: JUL 11, 2019                     Designation: EC*2*145
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #139                      Status: Released
+                  Compliance Date: AUG 11, 2019
+=============================================================================
+
+Associated patches: (v)EC*2*130    <<= must be installed BEFORE `EC*2*145'
+                    (v)EC*2*139    <<= must be installed BEFORE `EC*2*145'
+
+Subject: Event Capture FY 19 Sustainment
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Managerial Cost Accounting Office (MCAO) requests modifications to
+ the Event Capture System that would provide the field with improved data
+ entry capabilities so that accurate costing information can be gathered
+ nationally.  This patch contains the modifications for Fiscal Year 2019
+  
+ Functional Overview
+ ===================
+  
+ 1) Added "VOCATIONAL REHABILITATION" to the MEDICAL SPECIALTY file (#723).
+  
+ 2) Modified the Event Code Screen option under the Management Menu to
+    allow filtering of event code screens by status (active/inactive).
+  
+ 3) Modified the Event Code Screens with CPT Codes report to include the
+    associated clinic's stop code, credit stop code and CHAR4 information.
+  
+ 4) Fixed an issue where older, incorrectly set up DSS units would appear
+    in the DSS units listing in the Event Code Screens set up option but
+    did not appear in the DSS Unit option under the Management Menu. All
+    DSS units are reviewed as part of the patch installation to ensure
+    they're correctly set up.  An email is sent to holders of the ECMGR key
+    with the results of the review.
+  
+ 5) Added the ability to "cancel" the exporting of a report to Excel.  The
+    user can now stop the exporting of a report prior to completion of the
+    export.
+  
+ 6) Modified the Data Entry by Patient and Data Entry by Procedure options
+    so that the form is inactive until a valid date/time is entered.  Once
+    a valid date/time is entered the remainder of the form will be
+    available for data entry.
+  
+ 7) Modified the regular spreadsheet upload process to ensure that the
+    standard Event Capture spreadsheet template is being used for upload.
+  
+ 8) Modified column sorting on all grids so that numerical based columns
+    are sorted numerically rather than alphanumerically.  This will ensure
+    that columns are sorted as expected, in numerical order.
+  
+ 9) For any exported report where the title of the report appeared in row
+    one of the Excel spreadsheet, the title has been removed from row one.
+    This information will now appear in the worksheet tab in Excel.
+  
+ 10) Modified the Same Procedure, Multiple Patient data entry screen so 
+     that attempting to change the primary diagnosis field doesn't cause
+     an error.  Previously, if the primary diagnosis field was auto 
+     populated, it would cause an error if you attempted to change it.
+  
+ 11) Modified the Event Capture Encounters Report so that the volume 
+     reported is the total procedure volume for the encounter.
+  
+ 12) Fixed a problem where a multi-divisional user may be prompted for 
+     access credentials when using the Event Capture Interface from the
+     CPRS tools menu.  Event Capture Interface will now open when started
+     from the CPRS tools menu without forcing re-entry of credentials.
+  
+ 13) Improvements were made throughout the application related to screen
+     reader and dictation software usage.
+  
+ 14) Fixed an issue where the date/time field would be automatically set
+     to the current date/time ("now") when an invalid date/time was
+     entered.  The default date/time of "now" should not be automatically
+     entered when the DSS unit is not defined with a default date/time of
+     "now".
+  
+ 15) Increased the time allowed before closing Event Capture due to 
+     inactivity from 10 seconds to 30 seconds.
+  
+ 16) Fixed an issue in several reports where the DSS unit may not match the
+     unit selected by the user.  If the DSS unit had a UNIT NUMBER assigned
+     that matched the Internal Entry Number (IEN) of a different DSS unit,
+     the incorrect DSS unit would be used in the report.
+  
+ 17) Modified all reports so that the user can choose to export the report
+     from the print preview screen.
+  
+ 18) Fixed an issue where future visits were showing in the 'recent visits'
+     box during data entry by patient. In some cases, there were so many
+     future visits listed that the user couldn't find today's visits.
+     Modified the 'recent visits' box so that it will only show future
+     visits through the end of the day, in addition to recent past visits.
+  
+ 19) Modified the data entry process so that workload can be entered for a
+     future visit if the visit date/time is prior to midnight of the
+     current day.
+  
+ 20) Modified the state home spreadsheet entry process so that if only one
+     DSS unit is available for the selected location that the DSS unit is
+     automatically selected.  Prior to the change, the DSS unit would 
+     display but not be selected until the user clicked on it.
+  
+ 21) Modified the state home spreadsheet upload process so that patients
+     in the adjudicated SC rate category are assigned the SN200, SD200, or
+     SH200 feeder key value.
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Components Sent With Patch
+ ==========================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name (Number)           Field Name (Number)       
+ New/Modified/Deleted
+ --------------------------------------------------------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+  
+ Form Name                       File #            New/Modified/Deleted
+ ----------------------------------------------------------------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+  
+ Mail Group Name                    New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+  
+ Options
+ -------
+ EC GUI CONTEXT
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name                      New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+  
+ Security Key
+ ------------
+ N/A
+  
+ Help Frames
+ -----------
+ ECRECER
+ ECSCPT
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ The following sites participated in the testing of this patch.
+  
+  
+ Test Sites
+ ================
+ Albuquerque
+ Detroit
+ Battle Creek
+ Northern Indiana
+ Indianapolis
+ Danville 
+  
+ Software and Documentation Retrieval
+ ====================================
+  
+ The VistA server software for this patch is being distributed through 
+ the National Patch Module (NPM).
+  
+ The Event Capture GUI client software is being distributed as a self-
+ extracting Install Shield executable.  The installed executable for
+ this patch is client version 2.6.0.0.
+  
+ The GUI client software and documentation for this patch may be retrieved
+ directly using Secure File Transfer Protocol (SFTP) from the
+ ANONYMOUS.SOFTWARE directory at the following Office of Information (OI)
+ Field Offices:
+  
+   OIFO               SFTP ADDRESS               
+   ------------       ------------------------   
+   First available    download.vista.domain.ext
+   Hines              domain.ext
+   Salt Lake City     domain.ext
+  
+ The following files will be available:
+  
+   File Name           Format        Description
+   ---------           ------        -----------
+   EC_2_P145.ZIP       BINARY        EC GUI client installer zip file
+  
+   
+   File Name           Description
+   ----------------    ----------------------------------------
+   ECS_DIBR.PDF        Deployment, Installation, Back-out, Rollback
+                       Guide (Install Guide)
+   ECS_UG.PDF          Users Guide
+   ECS_TM.PDF          Technical Manual
+   ECS_VDD.PDF         Version Description Document (Release
+                       Notes)
+  
+ The VistA Documentation Library [VDL] web site will also contain the
+ updated patch documentation.
+  
+ This web site is usually updated within 1-3 days of the patch release
+ date.
+  
+ The VDL address is http://www.domain.ext/vdl/application.asp?appid=39.
+  
+ Installation Instructions
+ ========================= 
+  
+ Pre-Installation Items:
+ =======================
+  
+ * Environment Check:
+      
+   Programmer access is required for installing this patch.
+  
+   ** NOTE ** -- Prior to installation, the installer must ensure the  
+                 DUZ(0) node of the DUZ array is set to the "@" symbol.
+   
+ * Users On the System:
+    
+   This patch modifies routines used by the Event Capture application and
+   may affect many users.
+  
+   This patch may be installed with users on the system, but should be
+   loaded during non-peak hours to minimize disruption to users and to
+   reduce the possibility of errors when the routines are updated.
+  
+   If installed during the normal workday, it is recommended that the
+   following selection(s) in the OPTION (#19) file, and all of their
+   descendants be disabled to prevent possible conflicts while running
+   the KIDS Install. Other VISTA users will not be affected.
+  
+         EC GUI Context version 2.5.0.0   ... EC GUI CONTEXT
+    
+ * Software Installation Time:
+  
+   The estimated installation time is less than 5 minutes during off peak
+   hours.
+  
+ * Required Builds:
+    
+   The following is a list of REQUIRED builds for this KIDS
+   distribution.  KIDS will not allow the installation of this patch
+   without their prior installation.
+  
+   Required Build(s):
+   ------------------
+   EC*2.0*130
+   EC*2.0*139
+  
+ Installation Steps:
+ ===================
+   
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+  
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter EC*2.0*145):
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4.  Use the Install Package(s) option and select the package EC*2.0*145.
+  
+   5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//'  Answer YES unless your system does this in a
+       nightly TaskMan process.
+  
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' answer NO.
+  
+   7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//' answer YES.
+     
+   8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+       Enter the following options:
+      
+       EC GUI Context version 2.5.0.0   ... EC GUI CONTEXT
+  
+   9.  When prompted 'Enter protocols you wish to mark as 'Out Of
+       Order':' press <enter>.
+  
+  10.  If desired, any post-install routines can be deleted after
+       successful installation of the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P145
+    Before:       n/a   After: B43388452  **145**
+Routine Name: ECRECER
+    Before: B38346891   After: B40589127  **112,122,126,139,145**
+Routine Name: ECRRPT
+    Before: B61480819   After: B61567239  **25,32,41,56,61,82,94,95,108,
+                                           112,119,122,126,145**
+Routine Name: ECRRPT1
+    Before: B60357464   After: B61512971  **25,32,33,61,78,72,90,95,100,
+                                           107,112,119,139,145**
+Routine Name: ECSCPT
+    Before: B14113911   After: B15400710  **72,92,95,119,139,145**
+Routine Name: ECSCPT1
+    Before: B15662403   After: B18251454  **72,95,119,131,139,145**
+Routine Name: ECUTL1
+    Before: B67581197   After: B72494106  **10,13,17,42,54,76,107,122,
+                                           126,130,145**
+Routine Name: ECUURPC
+    Before:  B6184913   After:  B7313644  **25,42,49,94,95,76,104,124,139,145**
+ 
+Routine list of preceding patches: 130, 139
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 10, 2018
+Completed By:                               Date Completed: JUL 09, 2019
+Released By :                               Date Released : JUL 11, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

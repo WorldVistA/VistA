@@ -1,0 +1,200 @@
+$TXT Created by              at BBMGR-DOMAIN.EXT  (KIDS) on Wednesday, 02/13/19 at 16:01
+=============================================================================
+Run Date: JUN 12, 2019                     Designation: VBEC*2*3
+Package : VBEC - VBECS                        Priority: Mandatory
+Version : 2         SEQ #3                      Status: Released
+                  Compliance Date: AUG 12, 2019
+=============================================================================
+
+Associated patches: (v)VBEC*2*1        install with patch       `VBEC*2*3'
+
+Subject: VBECS 2.3.1 RELEASE
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ This patch (VBEC*2*3) serves to alert VA facilities using the Vista Blood 
+ Establishment Computer Software (VBECS) that VBECS 2.3.1 server patch has 
+ been released for installation.
+  
+ Sites who have not installed VBECS have no action to take with this patch.
+  
+ VBECS 2.3.1 will be installed by System Administrators at the Austin 
+ Information Technology Center (AITC). Please refer to VBECS 2.3.1 Release 
+ Notes for details.
+  
+ A full description of patch changes and implementation process are 
+ included in the VBECS 2.3.1 Release Notes.
+  
+ The patch is released with a sixty (60) day compliance date.
+  
+ BLOOD BANK CLEARANCE
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VBEC*2*3 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch VBEC*2*3 have no adverse effect on 
+ VistA Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS:
+ ========================
+ The VBECS 2.3.1 server patch requires customer validation in the local 
+ Test account prior to installation in Production to meet Food & Drug 
+ Administration (FDA) requirements. The user validates the Blood Bank 
+ software for its intended use prior to its acceptance and use for patient 
+ care. The VBECS 2.3.1 Release Notes contain descriptions of the changes 
+ made in this patch and includes validation scenarios.
+  
+ It is imperative that the AITC coordinate the installation of the VBECS 
+ 2.3.1 server patch with Pathology & Laboratory Medicine Service staff to 
+ allow adequate time for impact analysis and testing the changes prior to 
+ installation in Production.
+  
+ PRIORITY:
+ =========
+ Mandatory
+  
+ Category:
+ =========
+ Routine
+ Informational
+  
+ COMPONENTS:
+ ===========
+ Routines:
+    VBEC2P3
+    VBECHLRT
+  
+ DEFECT TRACKING SYSTEM TICKET(S) & OVERVIEW:
+ ============================================
+ INC1232882 - update to the VBECS Blood Product Code file
+  
+ TEST SITES:
+ ===========
+ Iowa City
+ Milwaukee
+ San Diego
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS:
+ =====================================
+ Documentation describing the new functionality introduced by this patch 
+ is available. (.docx and .pdf files)
+  
+ Veterans Health Administration (VHA) Customer Documents:
+ VistA Blood Establishment Computer Software (VBECS) 2.3.1 Administrator 
+ User Guide
+ VistA Blood Establishment Computer Software (VBECS) 2.3.1 Release 
+ Notes.docx
+ VistA Blood Establishment Computer Software (VBECS) 2.3.1 Technical 
+ Manual-Security Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 2.3.1 User Guide.docx
+ VBECS 2.3.1 Known Defects and Anomalies.docx
+  
+ Documentation can be found on the VA Software Documentation Library at: 
+ http://www4.domain.ext/vdl/
+  
+  
+ PATCH INSTALLATION:
+ ===================
+  
+ Pre/Post installation Overview:
+ ===============================
+ Refer to the VistA Blood Establishment Computer Software (VBECS) 2.3.1 
+ Release 
+ Notes document for pre and post installation information and instructions.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Refer to the VistA Blood Establishment Computer Software (VBECS) 2.3.1 
+ Release 
+ Notes document for pre and post installation information and instructions.
+  
+ Installation Instructions:
+ ==========================
+ This patch may be loaded with users on the system.
+ Installation will take less than 5 minutes.
+  
+     1) Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+     2) From the Kernel Installation and Distribution System Menu,
+        select the Installation menu.
+     3) From this menu, you may elect to use the following options
+        (when prompted for the INSTALL NAME, enter VBEC*2*3).
+        a) Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b) Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch
+           (routines, DDs, templates, etc.).
+        c) Verify Checksums in Transport Global - this option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+        d) Print Transport Global - this option will allow you to view 
+           the components of the KIDS build.
+     4) Use the Install Package(s) option and select the package 
+        VBEC*2*3.
+     5) When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//'  respond NO
+     6) When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//'  respond NO.
+  
+ Back-Out Plan
+  -------------
+  During installation, if the option to back up routines was run as 
+  directed, "Backup a Transport Global", then routines will have the 
+  ability to be restored from the "backup" MailMan message that was 
+  generated. However, the KIDS installation process does not perform a 
+  restore of other VistA components, such as data dictionary, 
+  cross-reference, and template changes, etc. 
+   
+  Prior to attempting a back-out of the software, submit a YOUR IT 
+ Services 
+  ticket with the Enterprise Service Desk (ESD) for assistance with the 
+  procedure. 
+   
+  For VistA patches, the general strategy for back-out is to repair the 
+  code with another follow-on patch. Depending on each individual patch, 
+  sites will be given a procedure detailing how to complete the back-out.
+   
+  If any issue(s) with the software are discovered after it is nationally 
+  released the development team will research the issue and provide 
+  guidance for any immediate, possible work around.
+   
+  Long-term solutions will be one of the following: installation of a 
+  follow-up patch to correct the defect, a follow-up patch to remove the 
+  defective updates, or a procedure detailing how the software can be 
+  safely backed out of the production system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;VBEC;**[Patch List]**;Jan 14 2019;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VBEC2P3
+    Before:       n/a   After:  B1924998  **3**
+Routine Name: VBECHLRT
+    Before:  B3777483   After:  B3919288  **3**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 09, 2019
+Completed By:                               Date Completed: JUN 10, 2019
+Released By :                               Date Released : JUN 12, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

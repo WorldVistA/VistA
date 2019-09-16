@@ -1,0 +1,394 @@
+
+=============================================================================
+Run Date: MAY 23, 2019                     Designation: MAG*3*233
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #176                      Status: Released
+                  Compliance Date: JUN 24, 2019
+=============================================================================
+
+
+Subject: CLINICAL CAPTURE WINDOWS 10 Defect
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated Patches: This patch must be installed after MAG*3.0*223.
+ ==================
+  
+ Subject: Clinical Capture Defect Fix
+ ========
+  
+ Category: Other
+ =========
+  
+ Description:
+ ============
+ This document describes MAG*3.0*233, a patch that provides fixes to the 
+ Clinical Capture application.  This patch addresses the following issue:
+  
+         Operating System is not displaying in Message History on Windows 
+         10 workstations
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P 233_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P233_README.txt, if present, is an informative file associated with 
+ the patch released.
+  
+ Software and Documentation:
+ ===========================
+ Software and Documentation Files
+ ================================
+ File Name                                  Description
+ =========                                  ===========
+ MAG3_0P233.KID                             Kernel Installation and
+                                            Distribution System (KIDS)
+                                            build for Patch 233
+ MAG3_0P233_Clinical_Capture_Setup.exe      Clinical Capture client 
+                                            installation file
+ MAG3_0P233_Clinical Capture_Install.msi    Clinical Capture installation
+                                            file
+ MAG3_0P233_Patch_Description.pdf           Patch Description for P233
+  
+ Files & Fields Associated: 
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated: 
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated: 
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated:
+ ===================== 
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated:
+ ========================= 
+ There are no security keys associated with this patch.
+  
+ Templates Associated: 
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================= 
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch.
+  
+ Defect Tracking System Tickets:
+ ===============================
+ 1.  Defect 738278 - Operating System is not displaying in Message
+ History on Windows 10 workstations. 
+  
+ Problem:
+ ========
+ When running Vista Image Clinical Capture on a Windows 10 operating 
+ system the Message History screen does not show the proper Operating 
+ System.  The message history displays:
+  
+    Imaging Session: message history.
+    *** Operating System: CANNOT DETERMINE OPERATING SYSTEM TYPE
+  
+ This error does not prevent Clinical Capture from working on a 
+ workstation using the Windows 10 operating system. The operating system 
+ is for information purposes in the Message History.
+  
+ Resolution:
+ ===========
+ Code was added to search for an additional operating system's major and 
+ minor versions equal to Windows 10.  When a match is located the message 
+ history will display:
+ Imaging Session: message history. *** Operating System: WINDOWS 10
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+     Boise VA Medical Center
+  
+ Software and Documentation Retrieval Instructions
+ =================================================
+ Software being released and/or documentation describing the new
+ functionality introduced by this patch are available.
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ OI Field Offices
+ ================
+ Location          Site
+ ========          ====
+ Hines             domain.ext 
+ Salt Lake City    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Patch Installation
+ ==================
+ Supported Client Versions:
+ ==========================
+ When MAG*3.0*233 is released, the list of supported versions of Clinical 
+ Capture will change to:
+  
+ Supported Client Versions
+ =========================
+ Supported Versions      No Longer Supported 
+ ==================      ===================
+ 3.0.233                 3.0.211
+ 3.0.223                 3.0.189
+ 3.0.215                 3.0.178
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*233 must be installed on the VistA System and on 64-bit 
+ workstations on which the VistA Imaging Applications will be used. This 
+ patch must be installed by the compliance date.
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch. This patch can be loaded while the VistA Imaging System is active, 
+ and users are on the system. Installing the MAG*3.0*233 KIDS takes 1-5 
+ minutes.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note: All previously released VistA Imaging patches must be installed on 
+       the VistA system before installing MAG*3.0*233.
+  
+ VistA System (KIDS) Installation Instructions:
+ ==============================================
+ Installation Steps: 
+ ===================
+ 1.  On the VistA system, access the Kernel Installation and Distribution
+     System Menu [XPD MAIN].
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+ 3.  Load the KIDS file by performing the following steps:
+     a.  Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+         load the KIDS distribution.
+     b.  When prompted, enter the full path and file name (MAG3_0P233.KID)
+         of the MAG*3.0*233 KIDS file.
+     c.  When prompted to continue with the load, enter "YES". A 
+         Distribution OK! message will be displayed when the load is
+         complete.
+ 4.      After loading the KIDS file, use the following options to verify 
+         the contents of the patch and to back up any affected routines.
+     a.  Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+         this option if you want to ensure the integrity of the routines in
+         the patch.
+     b.  Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+         - Run this option if you want to view all changes that will be
+         made when the patch is installed.  All components (routines,
+         options, and so on) in the patch will be compared.
+     c.  Backup a Transport Global [XPD BACKUP] - Run this option if you
+         want to create a backup message of any routines exported with the
+         patch.
+         It will NOT back up any of the other changes.
+ 5.      After performing the load and any optional verification steps,
+         install the KIDS file by performing the following steps:
+         a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+         b.  When prompted for the install name, enter "MAG*3.0*233".
+         c.  Answer "NO" to the following prompts, if they appear:
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6.  When installation is finished, an Install Complete message will 
+     be displayed.
+  
+ KIDS Installation Example:
+ ==========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ then your output may be different.
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*233      10/16/18@22:48:58
+      => VistA Imaging 3.0 - Patch 233 - Clinical Capture  ;Created on Oct 
+ 09, 2018
+  This Distribution was loaded on Oct 16, 2018@22:48:58 with header of
+    VistA Imaging 3.0 - Patch 233 - Clinical Capture  ;Created on Oct 09, 
+ 2018@14:
+ 16:26
+    It consisted of the following Install(s):
+     MAG*3.0*233
+ Checking Install for Package MAG*3.0*233
+ Install Questions for MAG*3.0*233
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+ DEVICE: HOME//   HERE
+  Install Started for MAG*3.0*233 :
+                Oct 16, 2018@22:49:08
+  Build Distribution Date: Oct 09, 2018
+   Installing Routines:...
+                Oct 16, 2018@22:49:08
+  Running Pre-Install Routine: PRE^MAGIP233.
+  Running Post-Install Routine: POS^MAGIP233.
+ Post Install Mail Message: Oct 16, 2018@22:49:08
+  Updating Routine file......
+  Updating KIDS files.......
+  MAG*3.0*233 Installed.
+                Oct 16, 2018@22:49:08 
+   100% Complete
+ Install Completed
+  
+ Installing the Application Client:
+ ================================== 
+ The Clinical Capture client software can be updated using one of the 
+ methods outlined below:
+     Manual installation
+     Automatic installation using other methods (SMS, PSexec, etc.)
+  
+ Note: The Clinical Capture Application is only supported on Windows 7 and 
+       10 operating systems. Other operating systems are not officially 
+       supported.
+ Clinical Capture is distributed as an MSI and EXE installation. The MSI 
+ is intended for sites that want to do a push installation (using SCCM or 
+ another tool). The EXE is intended for use to install on a single 
+ workstation. 
+ After the client installation is complete, log into an updated 
+ workstation and use the Help About menu option to verify that the version 
+ number is 3.0.233.1.
+  
+ Post-Installation Instructions
+ ==============================
+ Manual Installation:
+ ====================
+ The MAG3_0P223_Clinical_Capture_Setup.exe file can be installed manually 
+ on workstations as described in Section "Single Workstation Installation" 
+ in the VistA Imaging System Installation Guide.
+  
+ Auto-update Installation:
+ =========================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ Back Out Plan
+ =============
+ Uninstalling the Application:
+ =============================
+ If it is necessary to uninstall the MAG*3.0*233 client, then use the 
+ Uninstall option from Windows Control Panel to uninstall: "VistA Imaging 
+ Clinical Capture". Then install the previous version of Clinical Capture 
+ client which was included in MAG*3.0*223.
+  
+ KIDS Uninstall:
+ ===============
+ If it is necessary to uninstall the MAG*3.0*233 VistA KIDS, then select 
+ the "Kernel Installation & Distribution System" menu option, "Backup a 
+ Transport Global". Installation Step 4c must have been done at the time 
+ of patch install.
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check MailMan messages for the backup message sent by the 
+ "Backup a Transport Global" function executed prior to the patch install.
+ 1.  Select the message shown below:
+     Backup of MAG*3.0*233 install on <mmm dd, yyyy>    <user name>
+ 2.  Select the Xtract PackMan option.
+ 3.  Select the Install/Check Message option.
+ 4.  Enter "Yes" at the prompt.
+ 5.  Enter "No" at the backup prompt.  There is no need to back up the 
+     backup.
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+           and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+  
+ Line 2    Message #43934     Unloading Routine   MAG233x (PACKMAN_BACKUP)
+ Line 249  Message #43934     Unloading Routine   MAG233x (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums
+ ====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 
+  
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine Checksums
+ =================
+ Routine         Checksum      Checksum          Patch List
+                 Before        After
+ MAGIP233        New           4110380           **233**
+ MAGGTU4C        5567180       5780139           **93,94,106,117,122,129,
+                                                 129,140,151,178,189,211,
+                                                 215,223,233** 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGGTU4C
+    Before:  B5567180   After:  B5780139  **93,94,106,117,122,129,140,
+                                           151,178,189,211,215,223,233**
+Routine Name: MAGIP233
+    Before:       n/a   After:  B4110388  **233**
+ 
+Routine list of preceding patches: 223
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 22, 2019
+Completed By:                               Date Completed: MAY 08, 2019
+Released By :                               Date Released : MAY 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,209 @@
+
+=============================================================================
+Run Date: JUL 23, 2019                     Designation: IB*2*624
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #587                      Status: Released
+                  Compliance Date: AUG 23, 2019
+=============================================================================
+
+Associated patches: (v)IB*2*575    <<= must be installed BEFORE `IB*2*624'
+                    (v)IB*2*592    <<= must be installed BEFORE `IB*2*624'
+                    (v)IB*2*617    <<= must be installed BEFORE `IB*2*624'
+
+Subject: MCCF EDI TAS EPHARMACY BUILD 10
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) electronic 
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch numbers:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*528
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*624
+  
+ Both of these patches are being released via Kernel Installation and
+ Distribution System (KIDS) multi-build distribution.
+  
+ KIDS multi-build name:  PSO IB BUNDLE 10.0
+   KIDS Host File name:  PSO_7_528_IB.KID
+  
+  
+ This patch contains the following functionality:
+ ---------------------------------------------------------
+  
+   1. The VA Mission Act of 2018 modified the 7332 requirements concerning
+      signed ROIs and the billing of services related to sensitive
+      diagnoses.  The system is being updated to no longer check for ROI
+      for sensitive drugs to validate billable status during claim
+      submission if the date of service of the claim is on or after 
+      1/28/2019.  For claims with a date of service prior to that date, the
+      system will continue to perform existing ROI checks. 
+  
+   2. The determination of billing eligibility is being modified in how it
+      evaluates patients with both TRICARE and CHAMPVA eligibility.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-File Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                      File Name (Number)           Deleted
+ ---------                      ------------------         -------------
+ N/A
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           ------------
+ N/A
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ N/A
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             ------------
+ N/A
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         ------------
+ N/A
+  
+ Templates Associated:
+                                                           New/Modified/
+ Template Name                  File Name (Number)           Deleted
+ -------------                  ------------------         -------------
+ N/A
+  
+ Additional Information:
+  
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ BIRMINGHAM VAMC (521)
+ VA HEARTLAND - WEST, VISN 15 (589)
+ LEXINGTON VAMC-LEESTOWN (596)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  https://www.domain.ext/vdl/
+  
+  
+ Title                                  File Name          Transfer Mode
+ -----------------------------------------------------------------------
+ Integrated Billing (IB) V.2.0 User Manual
+                                        IB_2_0_P624_UM.PDF       Binary
+ *PSO Deploy Install Rollback Guide (PSO*7*528)
+                                        PSO_7_0_P528_IG.PDF       Binary
+  
+ *A single Deployment, Installation, Back-Out, and Rollback Guide will be
+  released with this multi-build.  It can be found on the Outpatient
+  Pharmacy page of the VDL.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ Please see the Installation Instructions associated with patch 
+ PSO*7.0*528.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCBB14
+    Before:  B4923293   After:  B5537292  **591,592,624**
+Routine Name: IBNCPBB
+    Before: B95799702   After:B100599501  **276,347,384,435,575,624**
+Routine Name: IBNCPBB1
+    Before:  B4476268   After:  B5537097  **384,550,624**
+Routine Name: IBNCPDP1
+    Before:B180640575   After:B183785127  **223,276,339,363,383,405,384,
+                                           411,434,437,435,455,452,473,
+                                           494,534,550,617,624**
+Routine Name: IBNCPDPU
+    Before:B126640808   After:B131499435  **223,276,347,383,405,384,437,
+                                           435,452,511,534,550,624**
+Routine Name: IBNCPDR4
+    Before: B31809366   After: B36522017  **384,550,624**
+Routine Name: IBTRKR3
+    Before: B54454971   After: B57116605  **13,43,121,160,247,275,260,
+                                           309,336,312,339,347,405,384,
+                                           550,624**
+ 
+Routine list of preceding patches: 575, 592, 617
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2018
+Completed By:                               Date Completed: JUL 23, 2019
+Released By :                               Date Released : JUL 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

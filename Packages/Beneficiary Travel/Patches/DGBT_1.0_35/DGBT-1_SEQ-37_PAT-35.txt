@@ -1,0 +1,327 @@
+
+=============================================================================
+Run Date: JUL 17, 2019                     Designation: DGBT*1*35
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #37                      Status: Released
+                  Compliance Date: AUG 17, 2019
+=============================================================================
+
+Associated patches: (v)DGBT*1*20   <<= must be installed BEFORE `DGBT*1*35'
+
+Subject: VISTA SECURITY REMEDIATION RPC REFERENCE PARAMETER TYPE RPC UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DGBT*1.0*35 is being released to support the security vulnerability
+ solution for the Veterans Health Information Systems and Technology
+ Architecture (VistA) Security Remediation (VSR) program that focuses on 
+ updates to the REFERENCE Parameter Type Remote Procedure Calls (RPCs).
+    
+ Patch DGBT*1.0*35 is being released with the following patches in host file
+ DGBT_1_P35.KID.
+  
+ Consult/Request Tracking GMRC*3.0*105
+ Clinical Procedures MD*1.0*67
+ General Medical Records - Vitals GMRV*5.0*39
+ Order Entry/Results Reporting OR*3.0*495
+ Bar Code Medical Administration PSB*3.0*113
+ Scheduling SD*5.3*713
+  
+ Defect:
+ 957396 - DEF - RPC call DGBT CLAIM DEDUCTIBLE PAID
+  
+ Included in this patch is the following updates:
+ 1. Remote Procedure call DGBT CLAIM DEDUCTIBLE PAID
+    a. This RPC allows for an input parameter to be passed in and then uses 
+       this parameter as the return. There is no validation of this input 
+       parameter and is a potential security risk as is. This includes
+       an update to the data entry within the REMOTE PROCEDURE File (#8994).
+  
+    b. This RPC is used by the Beneficiary Travel Package to retrieve travel
+       claim information about any travel claims for a patient. 
+  
+    c. A code modification was made at RPC+1^DGBTRDV to add a kill statement 
+       for variable DGBTRET. This was necessary since DGBTRET was changed 
+       from an input parameter to an output parameter.
+  
+    d. Removed REFERENCE Parameter Type from DGBT CLAIM DEDUCTIBLE PAID and
+       corrected the Input Parameter sequence.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Tuscon, AZ
+ West Palm Beach, FL
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality and/or a host file containing 
+ a build may be included in this release.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the 
+ following OI Field Offices:
+  
+ Hines:                 domain.ext  
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.domain.ext/vdl/
+  
+ Title                               File Name               SFTP Mode
+ ----------------------------------------------------------------------
+ N/A
+  
+ Patches for this installation are combined in the following host file for
+ distribution: DGBT_1_P35.KID. 
+  
+ The host file was created to simplify installation at Veterans
+ Health Administration (VHA) facilities. This file can be obtained from 
+ one of the anonymous Secure File Transfer Protocol (SFTP) directories.
+  
+ File Name                           Contents           Retrieval Format
+ ----------------------------        --------           ----------------
+ DGBT_1_P35.KID                      DGBT*1.0*35          ASCII
+                                     GMRC*3.0*105
+                                     MD*1.0*67
+                                     GMRV*5.0*39
+                                     OR*3.0*495
+                                     PSB*3.0*113
+                                     SD*5.3*713
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This post-install process will run the post install routine DGBT1P35 to
+ delete input parameters that are used as return variables for the following 
+ Remote Procedure Calls that were unable to be updated within the KIDS build
+ components:
+  
+ DGBT CLAIM DEDUCTIBLE PAID
+ GMV PTSELECT
+ PSB UTL XSTATUS SRCH
+   
+ The post-installation routine DGBT1P35 is set to be deleted after the 
+ install via the KIDS build components.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+ The following KIDS build DGBT_1_P35.KID will be installed.
+  
+ Use Global Output Function to backup data entries in the REMOTE PROCEDURE 
+ File (#8994) by running the command below (be sure to enter "V" for the 
+ Parameters). You will need to specify a local directory and file name for the 
+ Device. This update does not include Data Dictionary File/Field definition 
+ updates, therefore there is no need to backup the ^DD global.  
+  
+ MNTVBB>D ^%GOGEN
+  
+ Device: /home/devvista/RPC_DATA_MNTVBB_JLS.GBL
+ Parameters? ("V") => V
+ Global ^XWB(8994 -- NOTE: translation in effect
+ Global ^
+ MNTVBB> 
+   
+ Installation Instructions:
+ --------------------------
+ 1. Download DGBT_1_P35.KID into your local directory.
+  
+ 2. From the Kernel Installation and Distribution System Menu (KIDS), 
+    select the Installation Menu. From this menu, select the 'Load a 
+    Distribution' option. You may need to prepend a directory name. When 
+    prompted for "Enter a Host File: ", respond with DGBT_1_P35.KID
+  
+    Example: USER$:[ABC]DGBT_1_P35.KID
+  
+    A. Select the Verify Checksums in Transport Global option to confirm 
+       the integrity of the routines that are in the transport global. When 
+       prompted for the INSTALL NAME enter the patch or build name (ex.  
+       DGBT*1.0*35).
+  
+  
+       NOTE: Using <spacebar><enter> will not bring up a Multi-Package build 
+             even if it was loaded immediately before this step. It will only 
+             bring up the last patch in the build.
+  
+    B. Select the Backup a Transport Global option to create a backup message   
+       of any routines exported with this patch. It will not backup any other   
+       changes such as DDs or templates. 
+  
+    C. You may also elect to use the following options: 
+       i.  Print Transport Global - This option will allow you to view
+           the components of the KIDS build.
+       
+       ii. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all of the components of this patch,
+           such as routines, DDs, templates, etc.
+  
+    D. Select the Install Package(s) option and choose the patch to install.
+       i.   If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+            Install? NO//', answer NO
+  
+       ii.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?    
+            NO//', answer NO
+  
+       iii. When prompted 'Want to DISABLE Scheduled Options, Menu Options,  
+            and Protocols? NO//', answer NO
+            a. When prompted 'Enter options you wish to mark as 'Out Of
+               Order':', press the Enter key.
+           
+            b. When prompted 'Enter protocols you wish to mark as 'Out Of
+               Order':', press the Enter key.
+  
+     iiii. When prompted "DEVICE: HOME//"  respond with the desired device. 
+  
+ Post-Installation Instructions:
+ -------------------------------
+ This post-install process will run the post install routine DGBT1P35 to
+ delete input parameters that are used as return variables for the following 
+ Remote Procedure Calls that were unable to be updated within the KIDS build
+ components:
+  
+ DGBT CLAIM DEDUCTIBLE PAID
+ GMV PTSELECT
+ PSB UTL XSTATUS SRCH
+   
+ The post-installation routine DGBT1P35 is set to be deleted after the 
+ install via the KIDS build components.
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ This patch consists of routines. During the VistA Installation
+ Procedure of the KIDS build, the installer should back up the modified
+ routines by the use of the 'Backup a Transport Global' action
+ (step 2B in the Installations Instructions above).
+  
+ This patch consists of data entry updates. During the VistA Installation 
+ instructions, a backup of the REMOTE PROCEDURE File (#8994) was saved.
+  
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the
+ patch and restore the global by performing the following.  Run the 
+ command below (be sure to enter "V" for the parameters). You will
+ need to specify the local directory and file name for the Device that was 
+ used during the installation of this patch.  
+  
+ MNTVBB>D ^%GIGEN
+ Device: /home/devvista/RPC_DATA_MNTVBB_JLS.GBL
+ Parameters? "R" => V
+ Transfer entire set of files?  No=> Y
+ Transferring files on Jun 25 2018 at  1:54 PM
+ From global ^XWB(8994
+ To global ^XWB(8994
+  
+ Transfer completed
+ Done for this set of files.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;Beneficiary Travel;**[Patch List]**;08/28/2018;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBT1P35
+    Before:       n/a   After:  B2851120  **35**
+Routine Name: DGBTRDV
+    Before: B21663244   After: B21772950  **20,35**
+ 
+Routine list of preceding patches: 20
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 08, 2018
+Completed By:                               Date Completed: JUL 16, 2019
+Released By :                               Date Released : JUL 17, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

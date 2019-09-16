@@ -1,0 +1,323 @@
+$TXT Created by                     at DEVCSE.DOMAIN.EXT  (KIDS) on Wednesday, 05/15/19 at 15:56
+=============================================================================
+Run Date: JUL 02, 2019                     Designation: PRCA*4.5*347
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #306                    Status: Released
+                  Compliance Date: AUG 02, 2019
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*253<<= must be installed BEFORE `PRCA*4.5*347'
+
+Subject: CSE PHASE 3
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ Patch PRCA*4.5*347 modifies menu [PRCA RCDMC REFERRAL MENU] "DMC Referral
+ Menu" to allow accounts receivable cross-servicing users to have the
+ option to run four new reports for debt reconciliation. The new reports
+ are option [RCDMCR4 0-40 PERC SC CHNG RPT] "0 to 40 Percent SC Change
+ Reconciliation Report", option [RCDMCR5 1ST PARTY IB CANC RPT] "First 
+ Party Charge IB Cancellation Recon Report", option [RCDMCR6 50-100SC EXMPT
+ RPT] "50-100% SC Exempt Charge Reconciliation Report" and option [RCDMCR7
+ 10-40% COPAY RPT] "10-40% SC Med Care Copay Exempt Chrg Recon Report".
+  
+ 1) [RCDMCR4 0-40 PERC SC CHNG RPT] "0 to 40 Percent SC Change
+    Reconciliation Report" assists users in reviewing first party bills for
+    veterans who received a new or updated change to a 0-40% Service
+    Connected (SC) eligibility factor and received the change in VistA
+    during the report time frame requested. This report prints information 
+    on bills/charges without an IB Status of "Cancelled" and with an A/R 
+    Status of Active, Cancellation, Suspended, Open, Write-Off, Collected/
+    Closed or with an IB Bill Status of On Hold, for episodes of care 
+    within a user selected time frame.  
+  
+    The report does not include bills for:
+    a) debtors whose Service Connection is 50% or more, 
+    b) debtors who are receiving a VA pension (regardless of their SC%),
+    c) or debtors receiving Aid and Attendance
+  
+ 2) [RCDMCR5 1ST PARTY IB CANC RPT] "First Party Charge IB Cancellation
+    Recon Report" assists users in reviewing first party charges receiving
+    Integrated Billing (IB) cancellation for potential refund activities or
+    charge cancellation accuracy, and to identify and monitor cancellation 
+    activity productivity so veteran customers can receive refunds due to 
+    them for retroactive eligibility exemptions. The report provides data 
+    for first party charges receiving IB cancellation for a user defined
+    bill cancellation date range.
+  
+    The report also provides the option to print only bills with payments
+    or print all bills within the user specified bill cancellation date
+    range. If only bills with payments are printed, the report will include
+    bills with an IB Status of "Cancelled" that have charges AND a payment.
+    If all bills are printed, the report will include bills with an IB
+    Status of "Cancelled" regardless of presence of payments.
+  
+ 3) [RCDMCR6 50-100SC EXMPT RPT] "50-100% SC Exempt Charge Reconciliation 
+    Report" assists users in reviewing all bills containing charges with
+    a distinct date of service on or after the co-payment exemption 
+    effective date for Veterans with Primary or Secondary Eligibility 
+    equal to 50 to 100% Service Connected.
+  
+    The report captures any charges without an IB status of cancelled, and
+    with an AR Status of Active, Cancellation, Open, Suspended, Write-Off,
+    or Collected/Closed or an IB Status of On-Hold, with a date of service
+    on or after the exemption effective date.
+  
+ 4) [RCDMCR7 10-40% COPAY RPT] "10-40% SC Med Care Copay Exempt Chrg Recon
+    Report" assists users in reviewing all medical care copayment bills 
+    containing charges with a distinct date of service on or after the 
+    copayment exemption effective date for Veterans with SC Percent equal 
+    to 10 to 40% and does not show prescription copayment bills.
+  
+    The report captures any medical care copayment charge without an IB 
+    status of cancelled, and with an AR Status of Active, Cancellation,
+    Open, Suspended, Write-Off, or Collected/Closed OR an IB Status of 
+    On-Hold, with a date of service on or after the exemption effective 
+    date.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                        Type               New/Modified/Deleted
+ -----------                        ----               --------------------
+ PRCA RCDMC REFERRAL MENU           MENU               MODIFIED
+ RCDMCR4 0-40 PERC SC CHNG RPT      RUN ROUTINE        NEW
+ RCDMCR5 1ST PARTY IB CANC RPT      RUN ROUTINE        NEW
+ RCDMCR6 50-100SC EXMPT RPT         RUN ROUTINE        NEW
+ RCDMCR7 10-40% COPAY RPT           RUN ROUTINE        NEW 
+ PRCA RCDMC 90 DAY REPORT           RUN ROUTINE        ATTACH TO MENU
+ PRCA RCDMC REFERRED RPT            RUN ROUTINE        ATTACH TO MENU
+ PRCA RCDMC LESSER WITHHOLDING      RUN ROUTINE        ATTACH TO MENU
+ PRCA RCDMC CANCEL                  RUN ROUTINE        ATTACH TO MENU
+ RCDMCR1 DEBT VALIDITY REPORT       RUN ROUTINE        ATTACH TO MENU
+ RCDMCR2 DEBT VALIDITY MGMT RPT     RUN ROUTINE        ATTACH TO MENU
+ RCDMCR3 RD ELIG CHANGE REPORT      RUN ROUTINE        ATTACH TO MENU
+ RCDMCEDT ENTER/EDIT DMC DEBT       RUN ROUTINE        ATTACH TO MENU
+ RCDMC EDIT RD # OF DAYS PARAME     RUN ROUTINE        ATTACH TO MENU
+ RCDMC EDIT DMC REPORT # OF DAY     RUN ROUTINE        ATTACH TO MENU
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ 1. N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A 
+  
+  
+ Test Sites:
+ -----------
+ Bay Pines VA Healthcare System - Bay Pines (#516)
+ Upstate New York HCS - Syracuse (#528)
+ Charles George VAMC - Asheville (#637)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext 
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:
+ https://www.domain.ext/vdl/
+  
+ Title                          File Name                     SFTP Mode
+ ----------------------------------------------------------------------
+  
+ Deployment, Installation,      PRCA_4_5_P347_IG.PDF          BINARY
+  Back-Out, and Rollback Guide
+  (PRCA*4.5*347)
+  
+ Debt Management Center (DMC)   PRCA_4_5_P347_DMC_UG.PDF      BINARY
+  Referral Process User Guide     
+  
+ AR Technical Manual/           PRCA_4_5_P347_TM.PDF          BINARY
+  Security Guide (PRCA*4.5*347)
+  
+ AR Release Notes               prca_4_5_p347_rn.pdf          BINARY
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ To avoid disruptions, this patch should be installed during non-peak hours
+ when there is minimal activity on the system and there are no Accounts
+ Receivable users on the system.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is
+ *strongly* recommended that it be installed during non-peak hours to
+ minimize potential disruption to users. This patch should take less than
+ 10 minutes to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the
+     patch #(ex. PRCA*4.5*347):
+  
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch 
+        is installed. It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option 
+     and choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//' Answer YES
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+     NO//' Answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//', answer NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-installation considerations.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 47
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCDMCR4A
+    Before:       n/a   After:B101685386  **347**
+Routine Name: RCDMCR4B
+    Before:       n/a   After: B61391663  **347**
+Routine Name: RCDMCR5A
+    Before:       n/a   After: B35467262  **347**
+Routine Name: RCDMCR5B
+    Before:       n/a   After: B25961483  **347**
+Routine Name: RCDMCR6A
+    Before:       n/a   After: B29334553  **347**
+Routine Name: RCDMCR6B
+    Before:       n/a   After: B27513091  **347**
+Routine Name: RCDMCR7A
+    Before:       n/a   After: B24147917  **347**
+Routine Name: RCDMCR7B
+    Before:       n/a   After: B26651749  **347**
+Routine Name: RCDMCUT1
+    Before: B42349665   After: B47425932  **253,347**
+Routine Name: RCDMCUT2
+    Before: B38071706   After: B70369247  **253,347**
+ 
+Routine list of preceding patches: 253
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 07, 2019
+Completed By:                               Date Completed: JUL 02, 2019
+Released By :                               Date Released : JUL 02, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

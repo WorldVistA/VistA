@@ -1,0 +1,177 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 01/10/19 at 12:07
+=============================================================================
+Run Date: MAY 23, 2019                     Designation: PSO*7*543
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #459                      Status: Released
+                  Compliance Date: JUN 23, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*505   <<= must be installed BEFORE `PSO*7*543'
+
+Subject: CONVERTING TITRATION RX WITH MAX DOSE PER DAY ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue.
+  
+ INC2950399 - Z-STACK ERROR WHEN CONVERTING AN OUTPATIENT PRESCRIPTION 
+              FROM TITRATION TO A MAINTENANCE PRESCRIPTION
+  
+   
+       
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC2950399 - Z-STACK ERROR WHEN CONVERTING AN OUTPATIENT PRESCRIPTION 
+              FROM TITRATION TO A MAINTENANCE PRESCRIPTION
+  
+           
+ Problem: 
+ --------
+ It was reported that when a dispense drug has a Maximum Dose Per Day
+ value, and a prescription using this drug is converted from Titration to 
+ maintenance using the "TR-Convert Titration Rx" action while using the 
+ Patient Prescription Processing [PSO LM BACKDOOR ORDERS] option, and the 
+ conversion results in a change to the number of refills, then this causes 
+ a hard code error (<UNDEFINED>REFILL+36^PSODIR1 *PSODIR("# OF REFILLS"))
+        
+ Resolution:
+ -----------
+ This patch resolves the undefined error and software will prompt the user 
+ with the correct number of refills.
+  
+  
+   
+ Technical Resolution:
+ ---------------------
+ Changed routine PSODIR1 at REFILL+36 label to prevent the error and 
+ default to PSOX variable if others are not defined.
+  
+  
+ S DIR("B")=$S($G(COPY)&('$G(PSOTITRX)):$G(PSODIR("# OF 
+ REFILLS")),$G(PSODIR("N# REF"))]"":PSODIR("N# REF"),$G(PSODIR("# OF 
+ REFILLS"))]"":PSODIR("# OF REFILLS"),$G(RFTT)>PSOX:RFTT,1:PSOX)
+  
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+         
+ Test Sites:
+ -----------
+ VA Illiana HCS (Danville, IL)
+ Oklahoma City - VAMC
+    
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to 
+ install.
+  
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu, you may elect to use the following
+    options.  When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSO*7.0*543):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch.  It will not backup any
+       other changes, such as DDs or templates.
+    
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    c. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 7. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+   
+ Installation Verification:
+ --------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+  ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997
+   
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out Procedures:
+ --------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODIR1
+    Before: B95371987   After: B95790697  **23,46,78,102,121,131,146,166,
+                                           184,222,268,206,266,340,391,
+                                           444,446,505,543**
+ 
+Routine list of preceding patches: 505
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 22, 2018
+Completed By:                               Date Completed: MAY 22, 2019
+Released By :                               Date Released : MAY 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

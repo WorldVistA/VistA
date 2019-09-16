@@ -1,0 +1,396 @@
+$TXT Created by            at COC-CCAD-DEV.AAC.DOMAIN.EXT  (KIDS) on Thursday, 01/17/19 at 07:32
+=============================================================================
+Run Date: AUG 01, 2019                     Designation: IB*2*618
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #588                      Status: Released
+                  Compliance Date: AUG 08, 2019
+=============================================================================
+
+Associated patches: (v)IB*2*433    <<= must be installed BEFORE `IB*2*618'
+                    (v)IB*2*449    <<= must be installed BEFORE `IB*2*618'
+                    (v)IB*2*516    <<= must be installed BEFORE `IB*2*618'
+                    (v)IB*2*568    <<= must be installed BEFORE `IB*2*618'
+                    (v)IB*2*604    <<= must be installed BEFORE `IB*2*618'
+                    (v)IB*2*614    <<= must be installed BEFORE `IB*2*618'
+                    (v)IB*2*616    <<= must be installed BEFORE `IB*2*618'
+                    (v)PRCA*4.5*338<<= must be installed BEFORE `IB*2*618'
+
+Subject: COMMUNITY CARE INTEGRATED BILLING ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  ****************************************************************
+                NOTICE!!!!!  7 DAYS COMPLIANCE DATE
+  ****************************************************************
+  
+  
+  
+  *****************************************************************
+                         WARNING!!!!
+  
+   If this patch, IB*2.0*618, has already been installed,
+  
+  
+      ******************* DO NOT RE-INSTALL *********************
+  
+   This pertains to ALL sites, but with special attention to the 3
+   test sites listed below:
+    
+  
+     Edward J Hines VA Hospital (Chicago, IL) - Station 578
+     Hunter Holmes McGuire VA Medical Center (Richmond, VA) 
+        - Station 652 
+     Central Alabama Veterans Healthcare System (Montgomery, AL) 
+        - Station 619
+  
+   Doing so will cause the duplication of entries into the IB ACTION
+   TYPE (350.1), RATE TYPE (399.3), IB ACTION CHARGES (350.2), and/or
+   the RATE SCHEDULE (363) files, which would prevent the INTEGRATED
+   BILLING Package and ACCOUNTS RECEIVABLES packages from working
+   correctly.
+  
+   ********************************************************************
+  
+  
+  IMPORTANT INSTALLATION NOTE:
+  ----------------------------
+  There are five patches associated with this project - PRCA*4.5*338,
+  IB*2.0*618, PRCA*4.5*351, IB*2.0*645, and IB*2.0*646. All of the patches
+  are to be installed as PackMan files.  There is no bundle.
+   
+  The patches for this project MUST be installed in this order:
+  1.)  PRCA*4.5*338
+  2.)  IB*2.0*618
+  3.)  PRCA*4.5*351
+  4.)  IB*2.0*645
+  5.)  IB*2.0*646
+  
+  
+  Description
+  ============
+  The Office of Community Care (OCC) is requesting system enhancements to 
+  the Veterans Health Information Systems and Technology Architecture
+  (VistA) Integrated Billing (IB), Accounts Receivable (AR), and Fee 
+  Basis (FB) software modules that would allow segregating all billing
+  and collection activities for Non-Department of Veterans Affairs (VA)
+  Care Third Party Insurance carriers' reimbursement.
+  
+  The primary goal of this enhancement is to increase timeliness and
+  collections of billable Non-Veterans Affairs (VA) care services.
+  Enhancements to existing VistA IB, AR, and Fee software applications
+  would allow for increased efficiency in workflow processes leading to
+  best practices that would ultimately be reflected in improved customer
+  service to our Veteran population.
+  
+  The second goal of this enhancement is to prepare the IB and AR software 
+  modules for the implementation of the changes required by the Maintaining
+  Internal Systems and Strengthening Integrated Outside Networks 
+  (MISSION) Act.
+   
+  In order to meet these goals, this patch:
+  
+  1. Creates 19 new entries in the Rate Type File (#399.3).
+  
+    - Adds options for billers to choose Community Care (CC), Community
+      Care Network (CCN) or Choice for No-Fault Auto, Reimbursable 
+      Insurance, Tort Feasor & Worker's Comp. Also adds options for
+      Disability Evaluations, Spinal Cord Injuries (SCI), Traumatic Brain
+      Injuries (TBI), Blind Rehabilitation and TriCare Dental & Pharmacy.
+      (i.e. CC Reimbursable Ins, CCN No Fault Auto, DOD Spinal Cord Injury,
+      Tricare Dental)
+  
+  
+  2. Creates new entries in the IB ACTION TYPE file (350.1)
+  
+    - Adds options for clerks to choose CC, CCN or Choice for Inpatient,
+      Outpatient, RX, Military Treatment Facilities (MTF) and Long-Term
+      Care (LTC) charge types for 1st party charges (i.e. CC OPT, CCN
+      INPT, Choice Respite Care, CC RX Copayment).
+  
+  3. Adds the INACTIVE field to the IB ACTION TYPE file (350.1)
+  
+  4. Inactivates all variations of the FEE Action Type entries in the IB
+     ACTION TYPE file (350.1)
+  
+  5. Creates 118 new entries in the Rate Schedule file (363) for the new
+     Rate Types listed in item 1.
+  
+  6. Allows the following Follow Up reports to produce reports using these 
+     new Rate Types and Action Types.
+  
+     a. First Party Follow-up Report
+     b. CHAMPVA/TRICARE Follow-up Report
+     c. Miscellaneous Bills Follow-up Report
+     d. Third Party Follow-up Report
+     e. Third Party Follow-up Summary Report
+  
+  7. Ensures that only active Action Types (#350.1) will appear when
+     selecting charges in Cancel/Edit/Add Patient Charges Menu Option
+     [IB CANCEL/EDIT/ADD CHARGES].
+  
+  8. Ensures that the Held Charges Reports (IB OUTPUT HELD CHARGES LM and
+     IB OUTPUT HELD CHARGES) will work correctly with the new Rate Types.
+  
+  9. Ensures that the Catastrophically Disabled Copay Report (IB CD CHARGE
+     REPORT) will work correctly with the new Rate Types.
+  
+ 10. Ensures that the Billing Activity List (IB MT BILLING REPORT) will
+     work correctly with the new Rate Types.
+  
+  
+  Patch Components:
+  -----------------
+  
+  Files & Fields Associated:
+  
+  File Name (Number)     Field Name (Number)     New/Modified/Deleted
+  ------------------     -------------------     --------------------
+  IB ACTION TYPE (350.1) INACTIVE (.12)          New 
+  
+  
+  Forms Associated:
+  
+  Form Name      File #  New/Modified/Deleted
+  ---------      ------  --------------------
+  N/A
+  
+  
+  Mail Groups Associated:
+  
+  Mail Group Name        New/Modified/Deleted
+  ---------------        --------------------
+  N/A
+  
+  
+  Options Associated:
+  
+  Option Name    Type    New/Modified/Deleted
+  -----------    ----    -------------------- 
+  N/A
+  
+  
+  Protocols Associated:
+  
+  Protocol Name  New/Modified/Deleted
+  -------------  -------------------- 
+  N/A
+  
+  
+  Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  
+  Templates Associated:
+  
+  Template Name  Type    File Name (Number)  New/Modified/Deleted 
+  -------------  ----    ------------------  --------------------
+  N/A
+  
+  
+  Additional Information:
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  ----------------------------
+  Billing Interface for Fee Care Business (#20080918)
+  
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overviews:
+  -----------------------------
+  N/A
+   
+   
+  Test Sites:
+  ----------
+  Edward J Hines VA Hospital (Chicago, IL) - Station 578
+  Hunter Holmes McGuire VA Medical Center (Richmond, VA) - Station 652 
+  Central Alabama Veterans Healthcare System (Montgomery, AL) - Station 619
+  
+  
+  DOCUMENTATION RETRIEVAL INSTRUCTIONS
+  ------------------------------------
+  Updated documentation describing the new functionality introduced by this
+  patch is available.
+  
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may also 
+  select to retrieve files directly from a specific server.
+  
+  Sites may retrieve the documentation directly using Secure File Transfer
+  Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+  Field Offices:
+  
+    Hines:                domain.ext
+    Salt Lake City:       domain.ext
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at:  http://www.domain.ext/vdl/
+  
+  
+  
+  Title                                 File Name            Transfer Mode
+  ------------------------------------------------------------------------
+  DM Reports Manual                     IB_2_0_P618_DM.PDF   Binary
+  User Manual                           IB_2_0_P618_UM.PDF   Binary
+  Deployment, Installation, Back-out,   IB_2_0_P618_IG.PDF   Binary
+  and Rollback Guide
+    
+  Patch Installation:
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  To avoid disruptions, this patch should be installed during non-peak 
+  outpatient hours when there is minimal activity on the system and ideally
+  there are no Accounts Receivable or Outpatient Pharmacy users on the 
+  system. This patch should take less than 5 minutes to install.
+  
+  
+  Pre-Installation Instructions:
+  ------------------------------
+  N/A
+  
+   
+  Installation Instructions:
+  --------------------------
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch IB*2.0*618.
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global. 
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted Want KIDS to INHIBIT LOGONs during the install? NO// 
+      answer NO
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? YES// answer No
+   
+  7. If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+   
+                                              
+  Post-Installation Instructions
+  ------------------------------
+  There are no special tasks to perform after this patch installation.
+  
+  
+  Back-Out Plan:
+  --------------
+  Please refer to sections 5 and 6 of the Deployment, Installation,
+  Back-Out and Rollback guide (IB_2_0_P618_IG.PDF) for the Back-Out and
+  Rollback.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Integrated Billing;**[Patch List]**;Mar 20, 1995;Build 61
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P618
+    Before:       n/a   After:B168640602  **618**
+Routine Name: IBECEA3
+    Before: B73673307   After: B81661482  **7,57,52,132,150,153,166,156,
+                                           167,176,198,188,183,202,240,
+                                           312,402,454,563,614,618**
+Routine Name: IBECEA33
+    Before: B23198132   After: B23530923  **57,52,132,153,167,176,188,618**
+Routine Name: IBECEAU2
+    Before: B32399245   After: B34191708  **7,52,153,176,545,563,614,618**
+Routine Name: IBECEAU3
+    Before:  B7348522   After:  B8064716  **132,150,167,183,341,563,618**
+Routine Name: IBEFURF
+    Before: B19666061   After: B21059318  **130,347,459,604,618**
+Routine Name: IBJDF1
+    Before: B36261585   After: B38760357  **69,118,128,205,554,618**
+Routine Name: IBJDF11
+    Before: B30230903   After: B39397116  **69,80,118,128,204,205,227,
+                                           451,530,554,568,618**
+Routine Name: IBJDF12
+    Before: B23000114   After: B26906871  **69,118,128,123,204,205,554,618**
+Routine Name: IBJDF2
+    Before: B68533516   After: B82293894  **69,91,100,118,133,205,554,
+                                           597,568,618**
+Routine Name: IBJDF4
+    Before: B43681161   After: B44100210  **123,204,220,568,618**
+Routine Name: IBJDF41
+    Before:B103009700   After:B109334634  **123,159,204,356,451,473,568,618**
+Routine Name: IBJDF42
+    Before: B55007532   After: B65167304  **123,204,568,618**
+Routine Name: IBJDF51
+    Before: B58912743   After: B60268800  **123,185,240,356,452,516,618**
+Routine Name: IBJDF52
+    Before: B27532688   After: B28589932  **123,159,240,618**
+Routine Name: IBJDF53
+    Before: B23014780   After: B26261562  **123,185,240,618**
+Routine Name: IBJDF6
+    Before: B33441927   After: B36325924  **123,159,618**
+Routine Name: IBJDF61
+    Before: B55100419   After: B66883609  **123,159,356,618**
+Routine Name: IBJDF62
+    Before: B32110617   After: B35799175  **123,159,618**
+Routine Name: IBJDF63
+    Before: B20214465   After: B22433470  **123,618**
+Routine Name: IBOCDRPT
+    Before: B17809803   After: B19445750  **449,618**
+Routine Name: IBOHDT1
+    Before: B18542858   After: B18269083  **70,95,347,452,618**
+Routine Name: IBOHLD1
+    Before: B18906739   After: B21577919  **70,95,133,356,347,618**
+Routine Name: IBOHLD2
+    Before: B31564132   After: B32477589  **70,95,133,153,347,452,618**
+Routine Name: IBOHLS1
+    Before: B99684965   After:B100301549  **554,616,618**
+Routine Name: IBOLK
+    Before: B18563160   After: B19580786  **199,420,433,618**
+Routine Name: IBOMTC1
+    Before: B11625301   After: B13744112  **145,176,618**
+Routine Name: IBP618A
+    Before:       n/a   After:B102033920  **618**
+Routine Name: IBP618B
+    Before:       n/a   After:B119788887  **618**
+ 
+Routine list of preceding patches: 433, 449, 516, 568, 604, 614, 616
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 31, 2018
+Completed By:                               Date Completed: AUG 01, 2019
+Released By :                               Date Released : AUG 01, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

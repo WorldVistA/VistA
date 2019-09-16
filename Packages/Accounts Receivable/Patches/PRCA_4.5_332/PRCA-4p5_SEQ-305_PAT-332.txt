@@ -1,0 +1,829 @@
+
+=============================================================================
+Run Date: JUN 26, 2019                     Designation: PRCA*4.5*332
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #305                    Status: Released
+                  Compliance Date: JUL 26, 2019
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*315<<= must be installed BEFORE `PRCA*4.5*332'
+                    (v)PRCA*4.5*319<<= must be installed BEFORE `PRCA*4.5*332'
+                    (v)PRCA*4.5*326<<= must be installed BEFORE `PRCA*4.5*332'
+
+Subject: MCCF EDI TAS EPAYMENTS BUILD 7/8
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ Below is a list of all the applications involved in this patch along 
+ with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                     PRCA*4.5*332
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2.0*633
+  
+  
+ The patches (PRCA*4.5*332 and IB*2.0*633) are being released in the
+ Kernel Installation and Distribution System (KIDS) multi-build 
+ distribution as PRCA_IB_EPAYMENTS_BUNDLE_4_0.KID.
+  
+  
+ The purpose of this patch is to meet the requirements of the Medical Care
+ Collection Fund (MCCF) Electronic Data Interchange (EDI) Transaction 
+ Application Suite (TAS) Phase 1 project as related to Accounts Receivable
+ (PRCA). This project ensures the Department of Veterans Affairs (VA)
+ compliance with Electronic Funds Transfer (EFT) and Electronic Remittance
+ Advice (ERA) Operating Rules, and enables VA to more effectively use
+ ERA data, resulting in better revenue and cash flow management. It will
+ provide the infrastructure foundation for electronic exchange of claim
+ payment information and promotes an interoperable system. It will reduce
+ the time elapsed between receipt of the EDI 835 Electronic Remittance
+ Advice Transaction and receipt of the Cash Concentration or Disbursement
+ (CCD+) transactions. It will ensure that trace numbers between payments
+ and remittances can be used by VA, reducing the level of open accounts
+ receivable, allow claim denials to be more quickly addressed, and
+ standardizes Electronic Funds Transfer (EFT) & ERA enrollment to reduce
+ workload burden on VA staff.
+  
+ This patch contains changes to the ePayments (835 and EFT) program area 
+ to ensure compliance. Specifically, enhancements to the Veterans 
+ Health Information Systems and Technology Architecture (VistA) Third Party
+ EDI Lockbox module to increase timely and accurate processing of payments
+ for electronic claims in compliance with Health Insurance Portability
+ and Accountability Act (HIPAA) and Veterans Health Administration (VHA)
+ Fiscal Accounting policies. The ePayments system is used by Accounts
+ Receivable (AR) staff to process payments from third party payers for
+ both medical and pharmacy claims. 
+  
+ The following features of the PRCA software will be affected by this 
+ patch.
+  
+ 1.  A new report EEOBs marked for Auto-Post Report (EMA)
+     [RCDPE MARKED AUTO-POST REPORT] was added to the EDI LOCKBOX
+     REPORTS Menu [RCDPE EDI LOCKBOX REPORTS MENU].
+     a) Allows the user to identify the users that marked an EEOB for
+        auto-posting for a specified date range and other filter 
+        criteria.
+  
+ 2.  A new report Pending EFT Override Report (PEO) 
+     [RCDPE EFT OVERRIDE REPORT] was added to the EDI LOCKBOX
+     REPORTS Menu [RCDPE EDI LOCKBOX REPORTS MENU].
+     a) Shows a listing of unposted medical EFTs that are older than the
+        limit set in the NUMBER OF DAYS (AGE) OF UNPOSTED MEDICAL EFTS TO
+        PREVENT POSTING parameter in a list manger.
+  
+ 3.  A new option Duplicate ERA Worklist (DUP) 
+     [RCDPE DUPLICATE ERA WORKLIST] was added to the EDI LOCKBOX Menu 
+     [RCDPE EDI LOCKBOX MENU].
+     a) Allows the user to see all the incoming ERA messages that were 
+        determined to be duplicates.
+     b) For each duplicate in the list, the user can view the detail, 
+        delete the duplicate or file the duplicate as a new ERA.  If the
+        user files the duplicate as new ERA, 'DUP' is appended to the end
+        of the trace number to indicate that the ERA was created from a
+        duplicate.
+  
+ 4.  A new report Auto Parameter History Report
+     [RCDPE AUTO PARAM HIST REPORT] was added to the Site Parameter Edit
+     menu of the Supervisor's AR Menu.
+     a) Displays a history of changes to auto-activity site parameters.
+  
+ 5.  The user initials column on the List or Receipts Report 
+     [RCDP LIST OF RECEIPTS REPORT] was expanded to show the first four
+     letters of the user's last name followed by a comma followed by the
+     first letter of the user's first name.  Note: if the receipt was
+     processed by the Nightly job, the user's initials will remain 'ar'.
+  
+ 6)  A change was made to the EFT/ERA Trending Report (ETR) 
+     [RCDPE EFT-ERA TRENDING REPORT] to show the 'TOTAL DIFFERENCE 
+     BETWEEN ERAs (PAID) - EFTs (COLLECTED): ' as the last line of the
+     first page instead of the first line of the second page when the
+     report is run in 'GRAND TOTALS ONLY' mode.
+  
+ 7.  The following changes were made to the Active Bills With EEOB Report
+     (AB) [RCDPE ACTIVE WITH EEOB REPORT]
+    a) The filter question 'RUN REPORT FOR (A)LL EEOBs or (Z)ERO PAYMENT 
+       EEOBs only: ALL//' was changed to 'RUN REPORT FOR (P)AYMENT EEOBs 
+       or (Z)ERO PAYMENT EEOBs or (A)LL: ALL//'
+    b) The report now includes EEOBs with a posting status of 'NOT POSTED'
+       or removed.  Previously, these were omitted from the report
+  
+ 8.  The following changes were made to the 'Manual Match' 
+     [RCDPE EFT ERA MANUAL MATCH] action on the ERA WORKLIST 
+     [RCDPE EDI LOCKBOX WORKLIST].
+    a) The name of the action was changed to 'ERA Manual Match'.
+    b) After entering filtering criteria, a new list manager form is 
+       displayed to show all the EFTs that partially match the ERA in
+       weighted order such that the most likely EFT matches are 
+       displayed at the top and the least likely matches are displayed at
+       the bottom.  EFTs that only match the ERA by the payer TIN are
+       not displayed in the list.
+  
+ 9.  A new parameter 'NUMBER OF DAYS (AGE) OF UNPOSTED MEDICAL TRICARE TO 
+     PREVENT POSTING:' was added to the EDI Lockbox Parameters
+     [RCDPE EDI LOCKBOX PARAMETERS].
+    a) The default of the new parameter is 30.  The range is 14-60
+    b) Any time the value of this parameter is changed, the change is 
+       reflected in the EDI Lockbox Parameters Audit Report
+       [RCDPE PARAMETER AUDIT REPORT].
+    c) If the user tries to select an ERA associated with a Tricare 
+       Payer in the ERA WORKLIST [RCDPE EDI LOCKBOX WORKLIST], that
+       contains EFTs older than the new site parameter, a lock-out
+       error message is displayed.
+    d) The user may override the Tricare lock-out using the Unposted EFT
+       Override [RCDPE UNPOSTED EFT OVERRIDE] menu option.
+  
+ 10. The 'Mismatched Procedure Code' error message that is displayed in the
+     Third Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY] on the EP
+     screen when a claim was billed electronically has been changed to
+     'Claim was not billed electronically'.
+  
+ 11. The Extended Check/Trace/Credit Card Search (EX)
+     [RCDP EXTENDED CHECK/CC SEARCH] was modified in the following manner:
+    a) The filter prompt 'Check, Credit Card or Trace #' was changed to
+       'Check, Credit Card, Trace # or All' with a default of all.
+    b) If 'All' is chosen for the filter above, the target string will be 
+       searched as a Check, Credit Card and Trace #. If all is not chosen,
+       the target string is only checked for selected search type.
+    c) a minimum of three characters is required to perform the search.
+    d) The search is case insensitive such that a search for trace number
+       containing 'zzz' will also show results where the trace # contains
+       'ZZZ'.
+    e) If the user does NOT select 'All' as a search filter and the target
+       string is not found, the user is then asked to perform a new search
+       for the same target but a different search type.
+  
+ 12.  When the user splits/edits a claim on an ERA line and puts all the 
+      payment dollars into suspense, the associated EEOB is no longer 
+      removed from the ERA Line. An EEOB is only removed from an ERA line
+      when all of the payment dollars have been distributed to other 
+      claims.
+  
+ 13.  The Receipt Processing [RCDP RECEIPT PROCESSING] option has been
+      modified in the following manner:
+   a) When the user selects the Customize [RCDP DEPOSIT PROFILE CUSTOMIZ]
+      action, prompt 'Do you want to show check, and credit card 
+      information?' has been modified to 'Do you want to show trace #,
+      check, and credit card information?'.
+   b) If the type of payment of the receipt is 'EDI LOCKBOX', then the 
+      trace # displays in lieu of the check and/or credit card information.
+  
+ 14.  The Nightly AR Process has been modified in the following manner:
+   a) A new site parameter 'ENABLE AUTO-AUDIT FOR TRICARE ELECTRONIC BILLS 
+      (Y/N): No//' has been added to the EDI Lockbox Parameters [RCDPE EDI 
+       LOCKBOX PARAMETERS] after the auto-audit parameter for Pharmacy.
+   b) Any time the value of this parameter is changed, the change is 
+       reflected in the EDI Lockbox Parameters Audit Report
+       [RCDPE PARAMETER AUDIT REPORT].
+   c) If auto-auditing of Tricare claims is turned on all new bills for 
+      claims with payers flagged as Tricare will be audited.
+  
+ 15.  The EDI Lockbox (ePayments) Reports Menu [RCDPE EDI LOCKBOX 
+      REPORTS MENU] has been re-organized with the following new sub-menus:
+   a) A new sub-menu 'Workload Reports' [RCDPE EDI LOCKBOX REPORTS WORKLOAD
+      MENU] was added to allow access to all of the workload reports as 
+      follows:
+      1. EFT Daily Activity Report [RCDPE EDI LOCKBOX ACT REPORT]
+      2. EFT Unmatched Aging Report [RCDPE EFT AGING REPORT]
+      3. ERA Unmatched Aging Report [RCDPE ERA AGING REPORT]
+      4. Pending EFT Override Report [RCDPE EFT OVERRIDE REPORT]
+      5. Unapplied EFT Deposits Report [UNAPPLIED EFT DEP REPORT]
+   b) A new sub-menu 'Adjustment Code Reports' [RCDPE EDI LOCKBOX REPORTS 
+      ADJ CODE MENU] was added to allow access to all of the workload
+      reports as follows:
+      1. 835 CARC Data Report [RCDPE CARC CODE PAYER REPORT]
+      2. Provider Level Adjustments Report [RCDPE PROVIDER LVL ADJ REPORT]
+      3. CARC/RARC Quick Search [RCDPE CARC/RARC QUICK SEARCH]
+      4. CARC/RARC Table Data Report [RCDPE CARC/RARC TABLE REPORT]
+   c) A new sub menu 'Additional Research Reports' 
+      [RCDPE EDI LOCKBOX REPORTS RESEARCH MENU] was added to allow access 
+      to all of the research reports as follows:
+      1. EFT/ERA TRENDING Report [RCDPE EFT-ERA TRENDING REPORT     ]
+      2. Active Bills With EEOB Report [RCDPE ACTIVE WITH EEOB REPOR]
+   d) A new sub menu 'Audit Reports' [RCDPE EDI LOCKBOX REPORTS AUDIT 
+      MENU] was added to allow access to all of the audit reports as
+      follows:
+      1. Auto-Decrease Adjustment report [RCDPE AUTO-DECREASE REPORT]
+      2. Auto-Post Report [RCDPE AUTO-POST REPORT]
+      3. Auto-Posted Receipt Report [RCDPE AUTO-POST RECEIPT REPORT]
+      4. Auto Parameter History Report [RCDPE AUTO PARAM HIST REPORT]
+      5. EFT Transaction Audit Report [RCDPE EFT TRANSACTION AUD REP]
+      6. ERA Status Change Audit Report [RCDPE ERA STATUS CHNG AUD REP]
+      7. Duplicate EFT Deposits Audit Report [RCDPE EFT AUDIT REPORT]
+      8. EEOB Move/Copy/Remove Audit Report [RCDPE EEOB MOVE/COPY/RMOVE 
+         RPT].
+      9. EEOBs Marked for Auto-Post Audit Report [RCDPE MARKED AUTO-POST 
+         REPORT].
+      10. ERAs Posted with Paper EOB Audit Report [RCDPE ERA W/PAPER EOB 
+          REPORT].
+      11. Payer Implementation Report [RCDPE PAYER EXCLUSION NAME TIN]
+      12. [Remove ERA from Active Worklist Audit Report RCDPE REMOVED ERA 
+          AUDIT].
+  
+ 16.  The RCDPEAR security key was removed from the Administrative Cost 
+      Adjustment [PRCAF ADJ ADMIN] menu option.
+  
+ 17.  The Viewing/Printing of ERA information has been modified to allow 
+      the user to view it in a list manager so that specific information
+      can be searched for easily.  The following areas were changed:
+   a) The View/Print ERA [RCDPE VIEW/PRINT ERA] menu option.
+   b) The View/Print ERA action [RCDPE ERA LIST VIEW ERA] on the ERA 
+      Worklist [RCDPE EDI LOCKBOX WORKLIST].
+   c) The View/Print ERA action [RCDPE APAR VIEW/PRINT ERA] from the 
+      Auto-Post Awaiting Resolution (APAR) Worklist [RCDPE APAR].
+  
+ 18.  The Refresh Line action was added to Auto-Post Awaiting Resolution
+      (APAR) RCDPE APAR.  The refresh line action allows the user to
+      refresh Split/Edit a Line actions that haven't been auto-posted yet.
+  
+  
+  
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                               New/Modified/
+   Sub-file Name (#)     Field Name (Number)                     Deleted
+ -------------------     -----------------------------       -------------
+ AR SITE PARAMETER (#342)                                      MODIFIED
+                         AUTO-AUDIT TRICARE EDI BILLS (#7.09)  NEW
+ AR EDI LOCKBOX MESSAGES (#344.5)                              MODIFIED
+                         DUPLICATE INDICATOR (#.15)            NEW
+ RCDPE PARAMETER (#344.61)                                     MODIFIED
+                         PHARMACY EFT POST PREVENT DAYS (#.07) MODIFIED
+                         TRICARE EFT POST PREVENT DAYS (#.13)  NEW
+                         TRICARE EFT OVERRIDE (#26)            NEW
+                         USER - TRICARE OVERRIDE               NEW
+                         (#27)
+                         COMMENT - TRICARE OVERRIDE            NEW
+                         (#28)
+  HISTORY (#344.611)                                           NEW
+                         DATE (#.01)                           NEW
+                         USER (#.02)                           NEW
+                         PARAMETER (#1)                        NEW
+                         DETAIL (#2)                           NEW
+                         OLD VALUE (#3)                        NEW
+                         NEW VALUE (#4)                        NEW
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ N/A
+  
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:                                     
+ Option Name                            Type               SEND/ATTACH
+ -----------                            ----               -------------
+ PRCA BIL AGENCY                        ACTION             ATTACH TO MENU
+ PRCA CBO PARAMETERS                    RUN ROUTINE        ATTACH TO MENU
+ PRCA DEACTIVATE GROUP                  ACTION             ATTACH TO MENU
+ PRCA NOTIFICATION PARAMETERS           ACTION             ATTACH TO MENU
+ PRCA RC PARAMETERS                     RUN ROUTINE        ATTACH TO MENU
+ PRCA SITE PARAMETER                    MENU               SEND TO SITE
+ PRCAF U ADMIN.RATE                     ACTION             ATTACH TO MENU
+ RCDP EXTENDED CHECK/CC SEARCH          RUN ROUTINE        SEND TO SITE
+ RCDPE ACTIVE WITH EEOB REPORT          RUN ROUTINE        ATTACH TO MENU
+ RCDPE APAR                             RUN ROUTINE        ATTACH TO MENU
+ RCDPE AUTO PARAM HIST REPORT           RUN ROUTINE        SEND TO SITE
+ RCDPE AUTO-DECREASE REPORT             RUN ROUTINE        ATTACH TO MENU
+ RCDPE AUTO-POST RECEIPT REPORT         RUN ROUTINE        ATTACH TO MENU
+ RCDPE AUTO-POST REPORT                 RUN ROUTINE        ATTACH TO MENU
+ RCDPE CARC CODE PAYER REPORT           RUN ROUTINE        ATTACH TO MENU
+ RCDPE CARC/RARC QUICK SEARCH           RUN ROUTINE        ATTACH TO MENU
+ RCDPE CARC/RARC TABLE REPORT           RUN ROUTINE        ATTACH TO MENU
+ RCDPE DUPLICATE ERA WORKLIST           ACTION             SEND TO SITE
+ RCDPE EDI LOCKBOX ACT REPORT           RUN ROUTINE        ATTACH TO MENU
+ RCDPE EDI LOCKBOX ADJCDE RPRTS         MENU               SEND TO SITE
+ RCDPE EDI LOCKBOX ARSRCH RPRTS         MENU               SEND TO SITE
+ RCDPE EDI LOCKBOX AUDIT RPRTS          MENU               SEND TO SITE
+ RCDPE EDI LOCKBOX MENU                 MENU               SEND TO SITE
+ RCDPE EDI LOCKBOX PARAMETERS           RUN ROUTINE        ATTACH TO MENU
+ RCDPE EDI LOCKBOX REPORTS MENU         MENU               SEND TO SITE
+ RCDPE EDI LOCKBOX WORKLD RPRTS         MENU               SEND TO SITE
+ RCDPE EDI LOCKBOX WORKLIST             RUN ROUTINE        ATTACH TO MENU
+ RCDPE EEOB MOVE/COPY/REMOVE            RUN ROUTINE        ATTACH TO MENU
+ RCDPE EEOB MOVE/COPY/RMOVE RPT         RUN ROUTINE        ATTACH TO MENU
+ RCDPE EFT AGING REPORT                 RUN ROUTINE        ATTACH TO MENU
+ RCDPE EFT AUDIT REPORT                 RUN ROUTINE        ATTACH TO MENU
+ RCDPE EFT OVERRIDE REPORT              RUN ROUTINE        SEND TO SITE
+ RCDPE EFT TRANSACTION AUD REP          RUN ROUTINE        ATTACH TO MENU
+ RCDPE EFT-ERA TRENDING REPORT          RUN ROUTINE        ATTACH TO MENU
+ RCDPE ERA AGING REPORT                 RUN ROUTINE        ATTACH TO MENU
+ RCDPE ERA POSTED BY PAPER EOB          RUN ROUTINE        ATTACH TO MENU
+ RCDPE ERA STATUS CHNG AUD REP          RUN ROUTINE        ATTACH TO MENU
+ RCDPE ERA W/PAPER EOB REPORT           RUN ROUTINE        ATTACH TO MENU
+ RCDPE EXCEPTION PROCESSING             RUN ROUTINE        ATTACH TO MENU
+ RCDPE EXCLUSION AUDIT REPORT           RUN ROUTINE        ATTACH TO MENU
+ RCDPE MANUAL MATCH EFT-ERA             RUN ROUTINE        SEND TO SITE
+ RCDPE MARK 0-BAL EFT MATCHED           RUN ROUTINE        ATTACH TO MENU
+ RCDPE MARKED AUTO-POST REPORT          RUN ROUTINE        SEND TO SITE
+ RCDPE MATCH EFT TO ERA                 RUN ROUTINE        ATTACH TO MENU
+ RCDPE PARAMETER AUDIT REPORT           RUN ROUTINE        ATTACH TO MENU
+ RCDPE PAYER EXCLUSION NAME TIN         RUN ROUTINE        ATTACH TO MENU
+ RCDPE PAYER IDENTIFY                   RUN ROUTINE        ATTACH TO MENU
+ RCDPE PROVIDER LVL ADJ REPORT          RUN ROUTINE        ATTACH TO MENU
+ RCDPE REMOVE DUP DEPOSITS              RUN ROUTINE        ATTACH TO MENU
+ RCDPE REMOVE ERA FROM WORKLIST         RUN ROUTINE        ATTACH TO MENU
+ RCDPE REMOVED ERA AUDIT                RUN ROUTINE        ATTACH TO MENU
+ RCDPE SITE PARAMETER REPORT            RUN ROUTINE        ATTACH TO MENU
+ RCDPE UNAPPLIED EFT DEP REPORT         RUN ROUTINE        ATTACH TO MENU
+ RCDPE UNMATCH ERA                      RUN ROUTINE        ATTACH TO MENU
+ RCDPE UNPOSTED EFT OVERRIDE            RUN ROUTINE        ATTACH TO MENU
+ RCDPE VIEW/PRINT ERA                   RUN ROUTINE        ATTACH TO MENU
+  
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           
+ Protocol Name                                             SEND/ATTACH    
+ -------------                                             -------------
+ RCDPE EFT ERA MANUAL MATCH                                SEND TO SITE
+ RCDPE EFT PARTIAL MATCH MENU                              SEND TO SITE
+ RCDPE EFT PARTIAL MATCH SELECT                            SEND TO SITE
+ RCDPEX DELETE DUP MESSAGE                                 SEND TO SITE
+ RCDPEX DUP EXCEPTION MENU                                 SEND TO SITE
+ RCDPEX FILE DUPLICATE MESSAGE                             SEND TO SITE
+ RCDPEX VIEW/PRINT DUP MESSAGE                             SEND TO SITE
+ VALM QUIT                                                 SEND TO SITE 
+  
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, List Associated:
+                                                           
+ Template Name                    Type                     SEND/ATTACH
+ -------------                    ----                     -------------
+ RCDP LIST OF RECEIPTS REPORT     PROTOCOL                 SEND TO SITE
+ RCDPE EEOB MARKED FOR AP AUDIT   PROTOCOL                 SEND TO SITE
+ RCDPE EFT PARTIAL MATCH          PROTOCOL                 SEND TO SITE
+ RCDPE VIEW ERA DETAIL            PROTOCOL                 SEND TO SITE
+ RCDPEX DUPLICATE ERA LIST        PROTOCOL                 SEND TO SITE
+  
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Washington, DC
+ Baltimore MARYLAND HCS
+ Tennessee Valley HCS
+ Dallas NORTH TEXAS HCS
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve the files from 
+ download.vista.domain.ext/. This transmits the files from the first
+ available server. Sites may also elect to retrieve software directly from
+ a specific server.
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+  
+    Hines:                  domain.ext    
+    Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name               SFTP Mode
+ -----------------------------------------------------------------------
+ Deployment, Installation, prca_4_5_332_ig.pdf                 Binary
+  Back-Out, and Rollback Guide (PRCA*4.5*332, IB*2.0*633)
+  
+  
+ ePayments User Manual     epayments_user_manual_r0619.pdf        Binary
+  (EDI Lockbox) 
+  
+ AR Technical Manual/      prca_4_5_p332_tm.pdf                   Binary
+  Security Guide (PRCA*4.5*332) 
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Do not install this patch while the "Accounts Receivable Nightly
+ Process Background Job" [PRCA NIGHTLY PROCESS] is running. To avoid
+ disruptions, this patch should be installed during non-peak hours
+ when there is minimal activity on the system and there are no Accounts
+ Receivable users on the system.
+  
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+   ******************************************************************
+   *  Do _NOT_ install this patch while the "Account Receivable     *
+   *  Nightly Process Background Job" [PRCA NIGHTLY PROCESS] is     *
+   *  running.                                                      *
+   *                                                                *
+   *  You should install this patch during non-peak hours, when no  *
+   *  Accounts Receivable users are on the system.                  *
+   ******************************************************************
+  
+ This patch may be installed with users on the system although it is 
+ *strongly* recommended that it be installed during non-peak hours to 
+ minimize potential disruption to users.  This patch should take less 
+ than 5 minutes to install.
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+  
+     Obtain the host file PRCA_IB_EPAYMENTS_BUNDLE_4_0.KID which 
+     contains the following patches:
+  
+        PRCA*4.5*332
+        IB*2.0*633
+  
+     Sites can retrieve VistA software from download.vista.domain.ext. 
+     This transmits the file from the first available server.  Sites may
+     also elect to retrieve this file directly from a specific server.
+  
+     Sites may retrieve software directly using Secure File Transfer 
+     Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the 
+     following OI Field Offices:
+  
+        Hines                   domain.ext
+        Salt Lake City          domain.ext
+  
+     The PRCA_IB_EPAYMENTS_BUNDLE_4_0.KID host file is located in the
+      directory. Use the American Standard Code for
+     Information Interchange (ASCII) Mode when downloading the file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+        Edits and Distribution ...
+        Utilities ...
+        Installation ...
+  
+     Select Kernel Installation & Distribution System Option: 
+     Installation
+                                                              ----
+        Load a Distribution
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Install Package(s)
+        Restart Install of Package(s)
+        Unload a Distribution
+        Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+    
+     When prompted for "Enter a Host File:", enter the full directory 
+     path where you saved the host file PRCA_IB_EPAYMENTS_BUNDLE_4_0.KID
+     (e.g., SYS$SYSDEVICE:[ANONYMOUS]PRCA_IB_EPAYMENTS_BUNDLE_4_0.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         PRCA IB EPAYMENTS BUNDLE 4.0
+         PRCA*4.5*332
+         IB*2.0*633
+  
+     Use INSTALL NAME: PRCA IB EPAYMENTS BUNDLE 4.0 to install this 
+     distribution.
+  
+ 4.  RUN INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter:
+     PRCA IB EPAYMENTS BUNDLE 4.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the PRCA IB EPAYMENTS BUNDLE 4.0.
+  
+     a. Choose the Install Package(s) option to start the patch install.
+     b. When prompted 'Select INSTALL NAME:', enter
+        PRCA IB EPAYMENTS BUNDLE 4.0.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//', enter YES.
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', enter NO.
+    
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', enter NO.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ 10.  When prompted 'Device: HOME//', respond with the correct device.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ The post-install routine POST^RCP332 sets a default of 30 for new EDI
+ Site Parameter 'TRICARE EFT POST PREVENT DAYS' (#344.61, .13).
+  
+ In order to verify the patch post-installation routine was run 
+ successfully, please examine the Install File for this patch and 
+ report any error message to Product Support.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCABJ2
+    Before: B15862562   After: B20492059  **304,321,326,332**
+Routine Name: PRCAEXM
+    Before: B13816393   After: B15458126  **67,103,196,301,318,315,332**
+Routine Name: RCBEADJ1
+    Before: B18611715   After: B18586021  **173,276,321,326,332**
+Routine Name: RCBEUTRA
+    Before: B30280657   After: B30998596  **153,169,204,326,332**
+Routine Name: RCDPAYER
+    Before: B25164505   After: B25767365  **269,276,298,326,332**
+Routine Name: RCDPEAA2
+    Before:B156548123   After:B160927525  **298,304,318,321,326,332**
+Routine Name: RCDPEAA3
+    Before:B103351099   After:B141250003  **298,304,318,332**
+Routine Name: RCDPEAC
+    Before:B168209657   After:B169995417  **208,269,276,298,303,326,332**
+Routine Name: RCDPEAD
+    Before:B225208697   After:B232051747  **298,304,318,326,332**
+Routine Name: RCDPEARL
+    Before: B37930557   After: B41725584  **298,321,332**
+Routine Name: RCDPEE
+    Before:       n/a   After:B114741630  **332**
+Routine Name: RCDPEFTL
+    Before:       n/a   After: B84961666  **332**
+Routine Name: RCDPEM2
+    Before:B136538323   After:B146585710  **173,208,276,284,293,298,303,
+                                           304,321,326,332**
+Routine Name: RCDPEM4
+    Before:B215103817   After:B215421276  **276,284,298,304,321,326,332**
+Routine Name: RCDPEM5
+    Before:B154473324   After:B169813342  **173,208,276,298,321,332**
+Routine Name: RCDPEM9
+    Before: B81945399   After: B81919705  **276,284,318,326,332**
+Routine Name: RCDPEMA1
+    Before:       n/a   After: B72907594  **332**
+Routine Name: RCDPEMAP
+    Before:       n/a   After:B105695606  **332**
+Routine Name: RCDPENR3
+    Before:B205654805   After:B210652613  **304,321,326,332**
+Routine Name: RCDPEP
+    Before:B153033159   After:B154349379  **321,326,332**
+Routine Name: RCDPESP
+    Before:B156068474   After:B142229287  **298,304,318,321,326,332**
+Routine Name: RCDPESP1
+    Before:B115604323   After:B113871339  **298,304,318,321,326,332**
+Routine Name: RCDPESP2
+    Before:B186739461   After:B101041466  **298,304,317,321,326,332**
+Routine Name: RCDPESP5
+    Before:B246127471   After:B268946794  **304,321,326,332**
+Routine Name: RCDPESP6
+    Before: B44732260   After: B65240726  **326,332**
+Routine Name: RCDPESP8
+    Before:       n/a   After: B22209300  **332**
+Routine Name: RCDPESPA
+    Before:       n/a   After: B72015265  *332**
+Routine Name: RCDPESR2
+    Before: B91233703   After: B93198829  **173,216,208,230,252,264,269,
+                                           271,298,321,332**
+Routine Name: RCDPESR6
+    Before: B47026238   After: B60062437  **173,214,208,230,252,269,271,
+                                           298,321,332**
+Routine Name: RCDPEU1
+    Before:B118506999   After:B121893428  **326,332**
+Routine Name: RCDPEU2
+    Before:  B9466209   After: B44759277  **326,332**
+Routine Name: RCDPEUPO
+    Before: B40462165   After: B47349551  **298,332**
+Routine Name: RCDPEWL0
+    Before:B210141800   After:B222344847  **173,208,252,269,298,317,321,
+                                           326,332**
+Routine Name: RCDPEWL7
+    Before:B237405649   After:B240834871  **208,222,269,276,298,304,318,
+                                           321,326,332**
+Routine Name: RCDPEWLD
+    Before:B136472540   After:B136795643  **252,317,321,326,332**
+Routine Name: RCDPEWLP
+    Before:B174410829   After:B201114317  **298,303,304,319,332**
+Routine Name: RCDPEWLZ
+    Before: B23932525   After: B23906831  **326,332**
+Routine Name: RCDPEX
+    Before: B80310750   After: B80574890  **173,208,269,298,332**
+Routine Name: RCDPEX1
+    Before: B19648805   After: B23011676  **173,262,298,304,326,332**
+Routine Name: RCDPEX5
+    Before:       n/a   After: B66895490  **332**
+Routine Name: RCDPLPL3
+    Before: B59761517   After: B61808211  **153,304,301,321,332**
+Routine Name: RCDPLPL4
+    Before:B246541574   After:B248709221  **304,301,321,326,332**
+Routine Name: RCDPRLIS
+    Before:B128405994   After:B143635402  **114,304,321,332**
+Routine Name: RCDPRPL2
+    Before: B68740543   After: B57949754  **114,148,173,217,332**
+Routine Name: RCDPRPL4
+    Before: B36743675   After: B36707329  **169,172,173,269,276,326,332**
+Routine Name: RCDPRPLM
+    Before: B92487304   After:B101101074  **114,148,149,173,196,220,217,
+                                           321,326,332**
+Routine Name: RCDPRSEA
+    Before: B21515890   After: B85725448  **114,148,208,269,304,332**
+Routine Name: RCP332
+    Before:       n/a   After: B12721543  **332**
+ 
+Routine list of preceding patches: 315, 319, 326
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 31, 2017
+Completed By:                               Date Completed: JUN 26, 2019
+Released By :                               Date Released : JUN 26, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
