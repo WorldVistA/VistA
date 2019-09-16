@@ -56,10 +56,16 @@ def encode(command):
   if sys.version_info[0] == 3:
     if isinstance(command, str):
       return codecs.encode(command, 'utf-8','ignore')
-    else:
+  elif not sys.platform == 'win32':
+      return unicode(command)
+  else:
+      return command
+
+def decode(command):
+  if isinstance(command, str):
       return command
   else:
-    return unicode(command)
+      return codecs.decode(command, 'utf-8', 'ignore')
 
 #---------------------------------------------------------------------------
 # Initial Global Variables to use over the course of connecting
@@ -113,7 +119,7 @@ class ConnectMUMPS(object):
       test = match[1].span()
       VistAboxvol = ''
       for i in range(test[0], test[1]):
-        VistAboxvol = VistAboxvol + match[2].decode('utf-8')[i]
+        VistAboxvol = VistAboxvol + decode(match[2])[i]
       self.boxvol = VistAboxvol.strip()
     else:
       self.wait_re(volume + ':.+\s', None)
@@ -140,7 +146,7 @@ class ConnectMUMPS(object):
       test = match[1].span()
       number = ''
       for i in range(test[0], test[1]):
-        number = number + match[2].decode('utf-8')[i]
+        number = number + decode(match[2])[i]
       number = number.lstrip('\r\n')
       self.IENumber = number
     else:
@@ -177,19 +183,19 @@ class ConnectWinCache(ConnectMUMPS):
     self.optionMenuTextDict = []
 
   def write(self, command):
-    self.connection.write(codecs.encode(command, 'utf-8') + b'\r')
+    self.connection.write(encode(command) + encode('\r'))
     logging.debug('connection.write:' + command)
     self.log.flush()
 
   def writectrl(self, command):
-    self.connection.write(codecs.encode(command, 'utf-8'))
+    self.connection.write(encode(command))
     logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.namespace + '>'
-    rbuf = self.connection.read_until(codecs.encode(command, 'utf-8')).decode('utf-8')
+    rbuf = decode(self.connection.read_until(encode(command)))
     if rbuf.find(command) == -1:
         command=str(command)
         rbuf=str(rbuf)
@@ -197,25 +203,25 @@ class ConnectWinCache(ConnectMUMPS):
         logging.debug('ERROR: expected: ' + command + 'actual: ' + rbuf)
         raise TestHelper.TestError('ERROR: expected: ' + command + 'actual: ' + rbuf)
     else:
-        self.log.write(rbuf.decode('utf-8'))
+        self.log.write(decode(rbuf))
         logging.debug(rbuf)
-        self.lastconnection=rbuf.decode('utf-8')
+        self.lastconnection=decode(rbuf)
         return 1
 
   def wait_re(self, command, timeout=30):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.prompt
-    compCommand = re.compile(command.encode('utf-8'),re.I)
+    compCommand = re.compile(encode(command),re.I)
     output = self.connection.expect([compCommand], timeout)
     self.match = output[1]
     self.before = output[2]
     if output[0] == -1 and output[1] == None:
       raise Exception("Timed out")
     if output[2]:
-      self.log.write(output[2].decode('utf-8'))
+      self.log.write(decode(output[2]))
       self.log.flush()
-      self.lastconnection=output[2].decode('utf-8')
+      self.lastconnection=decode(output[2])
       return output
 
   def multiwait(self, options, tout=15):
@@ -223,13 +229,13 @@ class ConnectWinCache(ConnectMUMPS):
     encodedOptions = []
     if isinstance(options, list):
       for option in options:
-        encodedOptions.append(option.encode('utf-8'))
+        encodedOptions.append(encode(option))
       index = self.connection.expect(encodedOptions, tout)
       if index == -1:
         logging.debug('ERROR: expected: ' + str(options))
         raise TestHelper.TestError('ERROR: expected: ' + str(options))
-      self.log.write(index[2].decode('utf-8'))
-      self.lastconnection=index[2].decode('utf-8')
+      self.log.write(decode(index[2]))
+      self.lastconnection=decode(index[2])
       return index[0]
     else:
       raise IndexError('Input to multiwait function is not a list')
@@ -293,23 +299,23 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.optionMenuTextDict = []
 
   def write(self, command):
-    self.connection.send(command.encode('utf-8') + '\r')
+    self.connection.send(command + '\r')
     logging.debug('connection.write:' + command)
 
   def writectrl(self, command):
-    self.connection.send(command.encode('utf-8'))
+    self.connection.send(command)
     logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.namespace + '>'
-    rbuf = self.connection.expect_exact(unicode(command), tout)
+    rbuf = self.connection.expect_exact(encode(command), tout)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
     else:
-        self.lastconnection=self.connection.before.decode('utf-8')
+        self.lastconnection=decode(self.connection.before)
         return 1
 
   def wait_re(self, command, timeout=15):
@@ -317,17 +323,20 @@ class ConnectLinuxCache(ConnectMUMPS):
     if not timeout: timeout = -1
     compCommand = re.compile(command,re.I)
     self.connection.expect(compCommand, timeout)
-    self.lastconnection=self.connection.before.decode('utf-8')
+    self.lastconnection = decode(self.connection.before)
 
   def multiwait(self, options, tout=15):
     logging.debug('connection.expect: ' + str(options))
+    encodedOptions = []
     if isinstance(options, list):
-      index = self.connection.expect(options, tout)
+      for option in options:
+        encodedOptions.append(option)
+      index = self.connection.expect(encodedOptions, tout)
       if index == -1:
         logging.debug('ERROR: expected: ' + options)
         raise TestHelper.TestError('ERROR: expected: ' + options)
       self.connection.logfile_read.write(options[index])
-      self.lastconnection=self.connection.before.decode('utf-8')
+      self.lastconnection=decode(self.connection.before)
       return index
     else:
       raise IndexError('Input to multiwait function is not a list')
@@ -393,7 +402,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
     self.coverageRoutines = ""
 
   def write(self, command):
-    self.connection.send(encode(command)+encode('\r'))
+    self.connection.send(encode(command + '\r'))
     logging.debug('connection.write: ' + command)
 
   def writectrl(self, command):
@@ -410,7 +419,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
         logging.debug('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
     else:
-        self.lastconnection=self.connection.before.decode('utf-8')
+        self.lastconnection=decode(self.connection.before)
         return 1
 
   def wait_re(self, command, timeout=None):
@@ -420,7 +429,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
     if not timeout: timeout = -1
     compCommand = re.compile(encode(command), re.I)
     self.connection.expect(compCommand, timeout)
-    self.lastconnection=self.connection.before.decode('utf-8')
+    self.lastconnection=decode(self.connection.before)
 
   def multiwait(self, options, tout=15):
     logging.debug('connection.expect: ' + str(options))
@@ -432,8 +441,8 @@ class ConnectLinuxGTM(ConnectMUMPS):
       if index == -1:
         logging.debug('ERROR: expected: ' + str(options))
         raise TestHelper.TestError('ERROR: expected: ' + str(options))
-      self.connection.logfile_read.write(options[index].encode("utf-8"))
-      self.lastconnection=self.connection.before.decode('utf-8')
+      self.connection.logfile_read.write(encode(options[index]))
+      self.lastconnection=decode(self.connection.before)
       return index
     else:
       raise IndexError('Input to multiwait function is not a list')
