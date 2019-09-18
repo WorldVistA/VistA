@@ -16,13 +16,9 @@
 from __future__ import division
 from builtins import object
 from past.utils import old_div
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 28861418c2d51c981943bb7c670342f28390750e
-import sys
-=================================================================================
 import argparse
 import codecs
 import glob
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Add FOIA patches from May-July 2019
 import os
 import re
 import shutil
