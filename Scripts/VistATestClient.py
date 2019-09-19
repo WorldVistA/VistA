@@ -39,6 +39,8 @@ else:
   from pexpect import TIMEOUT
   from winpexpect import winspawn
 
+OSEHRA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..", "Python", "vista")
+sys.path.append(OSEHRA_DIR)
 from OSEHRAHelper import ConnectWinCache, ConnectLinuxCache, ConnectLinuxGTM
 
 DEFAULT_TIME_OUT_VALUE = 30
