@@ -240,6 +240,8 @@ endforeach()
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/MenuTraversalTest.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalTest.py")
 add_test(PYTHON_MenuTraversal ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalTest.py")
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/MenuTraversalSmokeTest.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalSmokeTest.py")
+# Test is commented out due to expected failures. Not all menu options are reachable due to security key restrictions
+#add_test(PYTHON_MenuTraversalSmokeTest ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalSmokeTest.py")
 
 #-----------------------------------------------------------------------------#
 ##### SECTION TO ADD USER GENERATED TESTS #####

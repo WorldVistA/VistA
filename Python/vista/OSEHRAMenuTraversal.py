@@ -107,8 +107,9 @@ def findparentmenus(VistA,goal):
 
 def createOptionParentDictionary(VistA,filepath="blah2.txt"):
   import re
-  if not os.path.exists(filepath):
-    printMenuParentPairs(VistA,filepath)
+  if os.path.exists(filepath):
+    os.remove(filepath)
+  printMenuParentPairs(VistA,filepath)
   testinfo = open(filepath,"r").readlines()
   header = re.compile("^OPTION\s+PARENTS")
   width = re.compile("PARENTS")
@@ -129,8 +130,9 @@ def createOptionParentDictionary(VistA,filepath="blah2.txt"):
 
 def createOptionMenuTextDictionary(VistA,filepath="blah3.txt"):
   import re
-  if not os.path.exists(filepath):
-    printMenuTextPairs(VistA,filepath)
+  if os.path.exists(filepath):
+    os.remove(filepath)
+  printMenuTextPairs(VistA,filepath)
   testinfo = open(filepath,"r").readlines()
   header = re.compile("^NAME\s+MENU TEXT")
   width = re.compile("MENU TEXT")
@@ -154,9 +156,9 @@ def findMenuPath(VistA,targetmenu,optionprintDirectory):
   parentfile    = os.path.join(optionprintDirectory,"MenuParentMap.txt")
   menutextfile  = os.path.join(optionprintDirectory,"MenuTextMap.txt")
   if not VistA.optionParentDict:
-    VistA.optionParentDict   =createOptionParentDictionary(VistA,parentfile)
+    VistA.optionParentDict = createOptionParentDictionary(VistA,parentfile)
   if not VistA.optionMenuTextDict:
-    VistA.optionMenuTextDict =createOptionMenuTextDictionary(VistA,menutextfile)
+    VistA.optionMenuTextDict = createOptionMenuTextDictionary(VistA,menutextfile)
   test = findparentmenus(VistA,targetmenu)
   menupath = test[1].split("|")
   for menu in menupath:
