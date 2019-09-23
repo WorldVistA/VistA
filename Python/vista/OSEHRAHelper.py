@@ -310,7 +310,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.namespace + '>'
-    rbuf = self.connection.expect_exact(encode(command), tout)
+    rbuf = self.connection.expect_exact(command, tout)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
