@@ -47,7 +47,7 @@ class TestZTMGRSET(unittest.TestCase):
             testClient.waitForPrompt()
             connection.send("D PATCH^ZTMGRSET(" + patchNumber + ")\r")
             testClient.waitForPrompt()
-            result = self.lineParser(connection.before, "^ALL DONE")
+            result = self.lineParser(connection.lastconnection, "^ALL DONE")
             if expectedResult:
                 self.assertEqual(result, "ALL DONE", msg="ZTMGRSET Failed")
             else:
@@ -82,7 +82,7 @@ class TestZTMGRSET(unittest.TestCase):
             connection.expect("load:")
             connection.send(patchNumber + "\r")
             testClient.waitForPrompt()
-            result = self.lineParser(connection.before, "^ALL DONE")
+            result = self.lineParser(connection.lastconnection, "^ALL DONE")
             if expectedResult:
                 self.assertEqual(result, "ALL DONE", msg="ZTMGRSET Failed")
             else:
