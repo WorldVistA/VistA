@@ -20,6 +20,7 @@
 #---------------------------------------------------------------------------
 
 import sys
+import codecs
 import os
 
 def unpack(ro, out=sys.stdout, odir=None):
@@ -46,7 +47,7 @@ def unpack(ro, out=sys.stdout, odir=None):
             rname = name+'.m'
             if odir:
               rname = os.path.join(odir, rname)
-            m = open(rname,'w')
+            m = codecs.open(rname,'w', encoding='ISO-8859-1', errors='ignore')
             # Report the new routine name for human reference.
             out.write('%s\n' % name)
     if m:
