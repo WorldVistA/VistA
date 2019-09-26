@@ -32,6 +32,7 @@ from builtins import range
 from builtins import object
 import sys
 import codecs
+import chardet
 import os, errno
 import telnetlib
 import TestHelper
@@ -52,10 +53,15 @@ try:
 except ImportError as no_paramiko:
   pass
 
+def determineEncoding(encString):
+  encoding = chardet.detect(encode(encString))['encoding']
+  if not encoding:
+    encoding = "ISO-8859-1"
+  return encoding
+
 def encode(command):
   if sys.version_info[0] == 3:
-    if isinstance(command, str):
-      return codecs.encode(command, 'utf-8','ignore')
+      return codecs.encode(command, 'ISO-8859-1','ignore')
   elif not sys.platform == 'win32':
       return unicode(command)
   else:
@@ -65,7 +71,7 @@ def decode(command):
   if isinstance(command, str):
       return command
   else:
-      return codecs.decode(command, 'utf-8', 'ignore')
+      return codecs.decode(command, determineEncoding(command), 'ignore')
 
 #---------------------------------------------------------------------------
 # Initial Global Variables to use over the course of connecting
@@ -285,7 +291,7 @@ class ConnectWinCache(ConnectMUMPS):
 class ConnectLinuxCache(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
-    self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None, encoding='utf-8')
+    self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None, encoding='utf-8', codec_errors='ignore')
     if len(namespace) == 0:
       namespace = 'VISTA'
     self.namespace = namespace
@@ -387,7 +393,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
     gtm_command = os.getenv('gtm_dist')+'/mumps -dir'
-    self.connection = pexpect.spawn(gtm_command, timeout=None, encoding='utf-8')
+    self.connection = pexpect.spawn(gtm_command, timeout=None, encoding='utf-8', codec_errors='ignore')
     if len(namespace) == 0:
         self.prompt = os.getenv("gtm_prompt")
         if self.prompt == None:

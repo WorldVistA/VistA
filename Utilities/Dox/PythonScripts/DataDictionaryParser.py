@@ -29,6 +29,7 @@ import sys
 import subprocess
 import re
 import csv
+import codecs
 import argparse
 
 from datetime import datetime, date, time
@@ -574,7 +575,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         if not os.path.exists(logFileName):
             logger.error("File: %s does not exist" % logFileName)
             return
-        logFileHandle = open(logFileName, 'r')
+        logFileHandle = codecs.open(logFileName, 'r', encoding='ISO-8859-1', errors='ignore')
         baseName = os.path.basename(logFileName)
         fileNo = baseName[:-len(".schema")]
         self._curGlobal = self._crossRef.getGlobalByFileNo(fileNo)
