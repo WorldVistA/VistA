@@ -397,7 +397,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
     if len(namespace) == 0:
         self.prompt = os.getenv("gtm_prompt")
         if self.prompt == None:
-          self.prompt = encode("GTM>")
+          self.prompt = "GTM>"
     self.connection.logfile_read = codecs.open(logfile, 'w', encoding='utf-8', errors='ignore')
     self.type = 'GTM'
     path,filename = os.path.split(logfile)
@@ -408,18 +408,18 @@ class ConnectLinuxGTM(ConnectMUMPS):
     self.coverageRoutines = ""
 
   def write(self, command):
-    self.connection.send(encode(command + '\r'))
+    self.connection.send(command + '\r')
     logging.debug('connection.write: ' + command)
 
   def writectrl(self, command):
-    self.connection.send(encode(command))
+    self.connection.send(command)
     logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.prompt
-    rbuf = self.connection.expect_exact(encode(command), tout)
+    rbuf = self.connection.expect_exact(command, tout)
     logging.debug('RECEIVED: ' + command)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
@@ -430,24 +430,19 @@ class ConnectLinuxGTM(ConnectMUMPS):
 
   def wait_re(self, command, timeout=None):
     logging.debug('connection.expect: ' + str(command))
-    if isinstance(command,str):
-      command=command.encode('utf-8')
     if not timeout: timeout = -1
-    compCommand = re.compile(encode(command), re.I)
+    compCommand = re.compile(command, re.I)
     self.connection.expect(compCommand, timeout)
     self.lastconnection=decode(self.connection.before)
 
   def multiwait(self, options, tout=15):
     logging.debug('connection.expect: ' + str(options))
     if isinstance(options, list):
-      encOptions=[]
-      for index in options:
-        encOptions.append(encode(index))
-      index = self.connection.expect(encOptions, tout)
+      index = self.connection.expect(options, tout)
       if index == -1:
         logging.debug('ERROR: expected: ' + str(options))
         raise TestHelper.TestError('ERROR: expected: ' + str(options))
-      self.connection.logfile_read.write(encode(options[index]))
+      self.connection.logfile_read.write(options[index])
       self.lastconnection=decode(self.connection.before)
       return index
     else:
