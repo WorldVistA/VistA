@@ -1,3 +1,5 @@
+from __future__ import print_function
+from builtins import range
 #!/usr/bin/env python
 #---------------------------------------------------------------------------
 # Copyright 2013 The Open Source Electronic Health Record Agent
@@ -38,7 +40,7 @@ def parse_gtmroutines():
   var = os.getenv('gtmroutines')
   final_list = extract_m_source_dirs(var)
   final_str = ';'.join(final_list)
-  print final_str
+  print(final_str)
 
 def extract_m_source_dirs(var):
   #First, replace unescaped spaces with semicolons
@@ -46,7 +48,7 @@ def extract_m_source_dirs(var):
   tmpl = tmp.split(";")
   num_elements = len(tmpl)
   final_list = []
-  for ind in xrange(num_elements):
+  for ind in range(num_elements):
     element = tmpl[ind]
     element = element.strip(")")
     paren_check = [m.start() for m in re.finditer("\(",element)]
