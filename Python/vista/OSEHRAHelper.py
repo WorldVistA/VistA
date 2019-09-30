@@ -54,7 +54,7 @@ except ImportError as no_paramiko:
   pass
 
 def determineEncoding(encString):
-  encoding = chardet.detect(encode(encString))['encoding']
+  encoding = chardet.detect(encString)['encoding']
   if not encoding:
     encoding = "ISO-8859-1"
   return encoding
