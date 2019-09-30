@@ -51,7 +51,7 @@ class SplitZWR(object):
         self.index += 1
         outName = '%s-%d+%s' % (self.num, self.index, self.name)
         outPath = os.path.join(self.dir, outName)
-        self.outFile = open(outPath, 'w')
+        self.outFile = codecs.open(outPath, 'w', encoding="ISO-8859-1", errors='ignore')
         self.outFile.writelines(self.headers)
         self.outSize = self.hdrSize
         sys.stdout.write(' %s\n' % outPath)
