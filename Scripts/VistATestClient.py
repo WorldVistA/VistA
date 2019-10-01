@@ -26,18 +26,11 @@ import argparse
 from LoggerManager import logger, initConsoleLogging
 
 
-# Utility class to find out the OS platform
+""" Utility class to find out the OS platform """
 def isLinuxSystem():
   return sys.platform.startswith("linux")
 def isWindowsSystem():
   return sys.platform.startswith("win")
-
-# import right pexpect package
-curDir = os.path.dirname(os.path.abspath(__file__))
-testingDir = os.path.normpath(os.path.join(curDir, "../Testing"))
-if testingDir not in sys.path:
-  sys.path.append(testingDir)
-import pexpectTest
 
 if isLinuxSystem():
   import pexpect
