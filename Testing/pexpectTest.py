@@ -14,6 +14,14 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import print_function
+import os
+import sys
+
+# import right pexpect package
+filedir = os.path.dirname(os.path.abspath(__file__))
+pexpectdir = os.path.normpath(os.path.join(filedir, "../Python/Pexpect"))
+sys.path.append(pexpectdir)
+
 try:
     import pexpect
 except:
