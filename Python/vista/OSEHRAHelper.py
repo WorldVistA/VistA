@@ -33,12 +33,12 @@ from builtins import object
 import sys
 import codecs
 import chardet
-import os
-import errno
+import os, errno
 import telnetlib
 import TestHelper
 import time
 import re
+import pexpect
 import logging
 import csv
 import socket
@@ -52,13 +52,6 @@ try:
   no_paramiko = None
 except ImportError as no_paramiko:
   pass
-
-# import right pexpect package
-curDir = os.path.dirname(os.path.abspath(__file__))
-testingDir = os.path.normpath(os.path.join(curDir, "../../Testing"))
-if testingDir not in sys.path:
-  sys.path.append(testingDir)
-import pexpectTest
 
 def determineEncoding(encString):
   encoding = chardet.detect(encString)['encoding']
