@@ -22,6 +22,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+import codecs
 import sys
 import os
 
@@ -33,7 +34,7 @@ def pack(files, output):
             continue
         n = os.path.basename(f)[:-2]
         n = n.replace("_","%")
-        m = open(f,"r")
+        m = codecs.open(f,"r", 'ISO-8859-1', 'ignore')
         output.write('%s\n'%n)
         for line in m:
             output.write(line)
