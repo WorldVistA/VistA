@@ -14,6 +14,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import print_function
+import codecs
 import sys
 import os
 import PackRO
@@ -38,8 +39,8 @@ for outputfile in ["routines.ro", "globals.lst"]:
   except OSError:
     pass
 
-routputfile = open(os.path.join(result.outputdir,"routines.ro"),'w')
-goutputfile = open(os.path.join(result.outputdir,"globals.lst"),'w')
+routputfile = codecs.open(os.path.join(result.outputdir,"routines.ro"), 'w', 'ISO-8859-1', 'ignore')
+goutputfile = codecs.open(os.path.join(result.outputdir,"globals.lst"), 'w', 'ISO-8859-1', 'ignore')
 
 routines=[]
 globals=[]
