@@ -14,7 +14,10 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import print_function
+import sys
+
 try:
-    import pexpect
+    if sys.platform.startswith("linux"):
+        import pexpect
 except:
     print("No Pexpect")
