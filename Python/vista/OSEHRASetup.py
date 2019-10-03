@@ -324,17 +324,28 @@ def setupVistADomain(VistA,site_name):
   VistA.wait(PROMPT,60)
   VistA.write('S $P(^XWB(8994.1,1,0),"^")=' + VistA.IENumber)
   VistA.write('S $P(^XTV(8989.3,1,0),"^")=' + VistA.IENumber)
+  reindexFile(VistA, "8989.3")
+  reindexFile(VistA, "8994.1")
+
+def reindexFile(VistA, fileNo):
   # Then, re-index both files with the FileMan Utility.
   startFileman(VistA)
   VistA.write('UTILITY')
   VistA.wait('UTILITY OPTION')
   VistA.write('RE')
   VistA.wait_re('MODIFY WHAT FILE')
-  VistA.write('8989.3\rNO\rY\rY')
-  VistA.wait('UTILITY OPTION')
-  VistA.write('RE')
-  VistA.wait_re('MODIFY WHAT FILE')
-  VistA.write('8994.1\rNO\rY\rY\r')
+  VistA.write(fileNo)
+  VistA.wait("PARTICULAR INDEX")
+  VistA.write('NO')
+  VistA.wait("EXISTING")
+  VistA.write('Y')
+  VistA.wait("RE-CROSS-REFERENCE")
+  VistA.write('Y')
+  index = VistA.multiwait(['UTILITY OPTION', "Start Time"])
+  if index == 1:
+    VistA.write('')
+    VistA.wait('UTILITY OPTION')
+  VistA.write("")
   VistA.wait('Select OPTION')
   VistA.write("")
 
@@ -432,7 +443,7 @@ def setupVolumeSet(VistA,site_name,volume_set,namespace=""):
   VistA.wait('VOLUME SET')
   VistA.write('\r\r')
 
-def scheduleOption(VistA,optionName):
+def scheduleOption(VistA,optionName, scheduleValue, scheduleTime="0030"):
   # If using Cache as the M environment, Schedule a task to start the
   # XWB Listener Starter on the start up of TaskMan
   VistA.wait(PROMPT)
@@ -446,7 +457,15 @@ def scheduleOption(VistA,optionName):
   VistA.wait('reschedule:')
   VistA.write(optionName + '\rY')
   VistA.wait('COMMAND:')
-  VistA.write('\r^SPECIAL QUEUEING\rSTARTUP\rS\rE\r')
+  if scheduleValue == 'STARTUP':
+    VistA.write('\r^SPECIAL QUEUEING\rSTARTUP')
+  else:
+    VistA.write('^RESCHEDULING FREQUENCY\r%s' % scheduleValue)
+    VistA.write('^QUEUED TO RUN AT WHAT TIME\rT+1@%s' % scheduleTime)
+    VistA.write('^')
+  VistA.write('S\rE')
+  VistA.wait('reschedule:')
+  VistA.write('')
   VistA.wait('Select Taskman Management')
   VistA.write('')
   VistA.wait('Systems Manager Menu')
