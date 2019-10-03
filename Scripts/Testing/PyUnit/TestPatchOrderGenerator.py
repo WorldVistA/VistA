@@ -53,33 +53,32 @@ class TestPatchOrderGenerator(unittest.TestCase):
 
   def verifySampleOrder(self, patchOrder):
     self.assertTrue(patchOrder, "no valid patch order is generated")
-    expectedOrder = ['LR*5.2*382', 'HDI*1.0*7', 'LR*5.2*350',
-                     'LA*5.2*74', 'LR*5.2*420'
-                    ]
     installList = [x.installName for x in patchOrder]
-    self.assertEqual(installList, expectedOrder)
+    self.assertTrue(installList.index('HDI*1.0*7') < installList.index('LR*5.2*350'))
+    self.assertTrue(installList.index('LR*5.2*350') < installList.index('LA*5.2*74'))
+
+    expectedPatches = ['LR*5.2*382', 'HDI*1.0*7', 'LR*5.2*350',
+                       'LA*5.2*74', 'LR*5.2*420'
+                      ]
+    self.assertEqual(sorted(installList), sorted(expectedPatches))
 
   def test_topologicSort(self):
     depDict = {'2':  ['11'],
                '9':  ['11', '8'],
                '10': ['11', '3'],
                '11': ['7', '5'],
-               '8':  ['7' , '3'],
+               '8':  ['7', '3'],
                '12': [],
               }
     result = topologicSort(depDict)
     self.assertTrue(result, "no valid order is generated")
     self.assertTrue('12' in result, "orphan node is ignored")
-    print result
     result = topologicSort(depDict, '9')
     self.assertTrue(result, "no valid order is generated")
-    print result
     result = topologicSort(depDict, '10')
     self.assertTrue(result, "no valid order is generated")
-    print result
     result = topologicSort(depDict, '2')
     self.assertTrue(result, "no valid order is generated")
-    print result
     self.assertTrue(result, "no valid order is generated")
    # this will create a cycle among 5, 11, 10
     depDict.update({'5':  ['10']})
