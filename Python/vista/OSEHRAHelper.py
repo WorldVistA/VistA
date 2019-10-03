@@ -38,7 +38,6 @@ import telnetlib
 import TestHelper
 import time
 import re
-import pexpect
 import logging
 import csv
 import socket
@@ -52,6 +51,12 @@ try:
   no_paramiko = None
 except ImportError as no_paramiko:
   pass
+
+def isLinuxSystem():
+  return sys.platform.startswith("linux")
+if isLinuxSystem():
+  import pexpect
+  from pexpect import TIMEOUT
 
 def determineEncoding(encString):
   encoding = chardet.detect(encString)['encoding']
@@ -80,6 +85,7 @@ def decode(command):
 # log =False
 
 #---------------------------------------------------------------------------
+
 class PROMPT(object):
   """Wait for a VISTA> prompt in current namespace."""
 

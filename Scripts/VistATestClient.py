@@ -32,13 +32,6 @@ def isLinuxSystem():
 def isWindowsSystem():
   return sys.platform.startswith("win")
 
-if isLinuxSystem():
-  import pexpect
-  from pexpect import TIMEOUT, ExceptionPexpect
-else:
-  from pexpect import TIMEOUT
-  from winpexpect import winspawn
-
 OSEHRA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),"..", "Python", "vista")
 sys.path.append(OSEHRA_DIR)
 from OSEHRAHelper import ConnectWinCache, ConnectLinuxCache, ConnectLinuxGTM
@@ -142,7 +135,7 @@ class VistATestClientGTMLinux(VistATestClient):
                        hostname=DEFAULT_HOST, port=DEFAULT_PORT):
     if not command:
       command = self.DEFAULT_GTM_COMMAND
-    self._connection = ConnectLinuxGTM(self.resfile, instance, self.getPrompt(), "127.0.0.1") # pexpect.spawn(command, timeout = DEFAULT_TIME_OUT_VALUE)
+    self._connection = ConnectLinuxGTM(self.resfile, instance, self.getPrompt(), "127.0.0.1")
     assert self._connection.connection.isalive()
 
 """ common base class for cache test client """
