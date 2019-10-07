@@ -631,8 +631,7 @@ class WebPageGenerator(object):
 #   3. Non-Index footer (no Print buttons or open accordion function)
 # -----------------------------------------------------------------------------
     def generateNavigationBar(self, outputFile, inputList, archList=None,
-                              printButton=True, printList=None,
-                              packageName=None, isIndex=False):
+                              printButton=True, packageName=None, isIndex=False):
         if not inputList:
             return
         if isIndex:
@@ -678,9 +677,9 @@ class WebPageGenerator(object):
             outputFile.write("<p>Select the objects that you wish to see in the downloaded PDF</p>\n")
             outputFile.write("</div>\n")
 
-            if printList:
+            if printButton:
               # Generate list of printable sections
-              writePDFCustomization(outputFile, printList)
+              writePDFCustomization(outputFile, inputList)
 
     # Navigation Bar + footer
     def generateFooterWithNavigationBar(self, outputFile, indexList,
@@ -1084,7 +1083,7 @@ class WebPageGenerator(object):
                     indexList = indexList + rtnIndexList
                     outputFile.write("<script>var titleList = " + str(indexList) + "</script>\n")
                     outputFile.write("")
-                    self.generateNavigationBar(outputFile, indexList, printList=indexList)
+                    self.generateNavigationBar(outputFile, indexList)
                     title = "Global: %s" % globalName
                     self.writeTitleBlock(title, title, package, outputFile, pdf)
                     if isFileManFile:
@@ -1168,7 +1167,6 @@ class WebPageGenerator(object):
                                                     self.getGlobalEntryHTML,
                                                     nameFunc=self.getGlobalEntryName,
                                                     classid="gblEntry",
-                                                    useColor=False,
                                                     additionalDetailsURL="%s/%s/%s.html" % (VIVIAN_URL, globalVar.getFileNo().replace('.', '_'), globalVar.getFileNo()))
                       if self._generatePDFBundle:
                           columns = 8
@@ -1213,7 +1211,7 @@ class WebPageGenerator(object):
 
             # write the same _header file
             self.__includeHeader__(outputFile)
-            self.generateNavigationBar(outputFile, indexList, printList=indexList)
+            self.generateNavigationBar(outputFile, indexList)
             # get the root file package
             fileIter = subFile
             topDownList=[fileIter]
@@ -1742,9 +1740,7 @@ class WebPageGenerator(object):
         # TODO: Refactor code so that we don't have to call
         # writePDFCustomization directly and can use generateNavigationBar
         # Generate PDF customization dialog
-        pdfList = titleList
-        pdfList.append("Legend Graph")
-        writePDFCustomization(outputFile, pdfList)
+        writePDFCustomization(outputFile, titleList)
 
         optionCalledHtml = "<span class=\"comment\">%d</span>" % len(optionCalledRoutines)
         optionCallerHtml = "<span class=\"comment\">%d</span>" % len(optionCallRoutines)
@@ -1803,8 +1799,7 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="callerRoutines",
-                                              useColor=False)
+                                              classid="callerRoutines")
             if calledRoutines:
                 header = "Called Routines List in %s : %s" % \
                           (depPackageHyperLink, totalCalledHtml)
@@ -1813,8 +1808,7 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="calledRoutines",
-                                              useColor=False)
+                                              classid="calledRoutines")
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1839,8 +1833,7 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="gcalledRoutines",
-                                              useColor=False)
+                                              classid="gcalledRoutines")
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1890,8 +1883,7 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="PCcalledRoutines",
-                                              useColor=False)
+                                              classid="PCcalledRoutines")
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1907,8 +1899,7 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="referredRoutines",
-                                              useColor=False)
+                                              classid="referredRoutines")
             if referredGlobals:
                 header = "Referenced Globals List in %s : %s" % \
                           (depPackageHyperLink, totalReferredGlobalHtml)
@@ -1957,8 +1948,7 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="dbCallRoutines",
-                                              useColor=False)
+                                              classid="dbCallRoutines")
             if dbCallFileManFiles:
                 header = "FileMan Db Call Accessed FileMan Files List in %s : %s" % \
                           (depPackageHyperLink, totalDbCallFileManFilesHtml)
@@ -1966,8 +1956,7 @@ class WebPageGenerator(object):
                 self.generateTablizedItemList(sorted(dbCallFileManFiles),
                                               outputFile,
                                               getGlobalHtmlFileName,
-                                              classid="dbCallFileManFiles",
-                                              useColor=False)
+                                              classid="dbCallFileManFiles")
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
         outputFile.write("<br/>\n")
@@ -1996,7 +1985,7 @@ class WebPageGenerator(object):
                               (packageHyperLink, depPackageHyperLink))
 
             # Legends
-            outputFile.write(self.legend)
+            outputFile.write(PC_LEGEND)
 
             # Accordion
             outputFile.write(ACCORDION)
@@ -2461,7 +2450,7 @@ class WebPageGenerator(object):
 #==============================================================================
     def generateTablizedItemList(self, sortedItemList, outputFile,
                                  htmlMappingFunc, nameFunc=None, totalCol=8,
-                                 classid="", useColor=True, additionalDetailsURL=""):
+                                 classid="", additionalDetailsURL=""):
         pdfTable = []
         objectCount = 0
         totalNumRoutine = 0
@@ -2479,16 +2468,12 @@ class WebPageGenerator(object):
                     if position < totalNumRoutine:
                         item = sortedItemList[position]
                         linkName = htmlMappingFunc(item)
-                        if useColor:
-                            borderColorString = findDotColor(item)
-                        else:
-                            borderColorString = "black"
                         if nameFunc:
                             displayName = nameFunc(item)
                         else:
                             displayName = item
-                        outputFile.write("<td style=\"border: 2px solid %s;\" class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
-                                   % (borderColorString, linkName, displayName))
+                        outputFile.write("<td class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
+                                          % (linkName, displayName))
                         objectCount += 1
                         if self._generatePDFBundle:
                             # format name for pdf
@@ -2679,11 +2664,7 @@ class WebPageGenerator(object):
                 # Write the _header part
                 self.__includeHeader__(outputFile)
 
-                pdfList = indexList
-                if generatePackageComponents:
-                    pdfList.append("Legend Graph")
                 self.generateNavigationBar(outputFile, indexList,
-                                           printList=pdfList,
                                            packageName=packageName)
 
                 # Title
@@ -2716,8 +2697,7 @@ class WebPageGenerator(object):
                     sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
                     self.generatePackageSection(icrSectionName, getICRHtmlFileName,
                                                 getICRDisplayName, "icrVals",
-                                                sortedICRList, outputFile, pdf,
-                                                useColor=False)
+                                                sortedICRList, outputFile, pdf)
 
                 # FileMan files
                 if fileManList:
@@ -2751,7 +2731,7 @@ class WebPageGenerator(object):
 
                 # Package Components
                 if generatePackageComponents:
-                    outputFile.write(self.legend)
+                    outputFile.write(PC_LEGEND)
                     if self._generatePDFBundle:
                         pdf.append(Spacer(1, 10))
                         self.__writePDFLegends__(pdf)
@@ -2770,8 +2750,7 @@ class WebPageGenerator(object):
 #==============================================================================
     def generatePackageSection(self, sectionName, htmlMappingFunction,
                                nameFunction, classid, sortedDataList,
-                               outputFile, pdf, pdfColumnWidths=None,
-                               useColor=True):
+                               outputFile, pdf, pdfColumnWidths=None):
         pdfSection = []
         self.writeSectionHeader("%s, Total: %d"
                                     % (sectionName, len(sortedDataList)),
@@ -2779,8 +2758,7 @@ class WebPageGenerator(object):
         pdfData = self.generateTablizedItemList(sortedDataList, outputFile,
                                                 htmlMappingFunction,
                                                 nameFunc=nameFunction,
-                                                classid=classid,
-                                                useColor=useColor)
+                                                classid=classid)
         if pdfData and self._generatePDFBundle:
             table = self.__generatePDFTable__(pdfData, pdfColumnWidths)
             pdfSection.append(table)
@@ -3482,7 +3460,7 @@ class WebPageGenerator(object):
         else:
             indexList, idxLst = findRelevantIndex(sectionGenLst, existingOutFile)
         if not existingOutFile:
-            self.generateNavigationBar(outputFile, indexList, printList=indexList)
+            self.generateNavigationBar(outputFile, indexList)
             if isPackageComponent:
                 title = routine._title.replace("_", " ") + ": " + routineName
                 routineHeader = title
@@ -3528,7 +3506,7 @@ class WebPageGenerator(object):
         filename = os.path.join(self._outDir, getPackageObjHtmlFileName(genericRoutine))
         with open(filename, 'w') as outputFile:
             self.__includeHeader__(outputFile)
-            self.generateNavigationBar(outputFile, indexList, printList=indexList)
+            self.generateNavigationBar(outputFile, indexList)
             title = "Routine: %s" % routineName
             self.writeTitleBlock(title, title, package, outputFile, pdf,
                                  accordion=False)
