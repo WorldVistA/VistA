@@ -1063,7 +1063,6 @@ class WebPageGenerator(object):
                         with open(jsonFile, "r") as entryData:
                           try:
                             globalVals = json.load(entryData)
-                            indexList.append("Found Entries")
                             for entry in globalVals:
                                 globalVals[entry]["GlobalNum"] = globalVar.getFileNo()
                                 globalVals[entry]["IENum"] = entry
@@ -1074,11 +1073,14 @@ class WebPageGenerator(object):
                                 if len(pdfEntryRow) == 8:
                                   pdfEntryList.append(pdfEntryRow)
                                   pdfEntryRow = []
+                            if entryList:
+                              indexList.append("Found Entries")
                           except ValueError:
                             pass
                         while len(pdfEntryRow) < 8:
                           pdfEntryRow.append("")
                         pdfEntryList.append(pdfEntryRow)
+
                     rtnIndexList, idxLst = findRelevantIndex(rtnIndexes, None)
                     indexList = indexList + rtnIndexList
                     outputFile.write("<script>var titleList = " + str(indexList) + "</script>\n")
