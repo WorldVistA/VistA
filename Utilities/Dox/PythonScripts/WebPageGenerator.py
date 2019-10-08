@@ -313,14 +313,12 @@ def writePDFCustomization(outputFile, titleList):
 OPEN_ACCORDION_FUNCTION = """
     <script type='text/javascript'>
         function openAccordionVal(event) {
-          if ($(".sectionHeader").length > 5) {
-            $('.accordion').accordion( {active:false, collapsible:true });
-            classVal = ".accordion"
-            if (event.target.classList[1] != "Allaccord") {
-              classVal= classVal+"."+event.target.classList[1]
-            }
-            $(classVal).accordion( 'option', 'active',0 );
+          $('.accordion').accordion( {active:false, collapsible:true });
+          classVal = ".accordion"
+          if (event.target.classList[1] != "Allaccord") {
+            classVal= classVal+"."+event.target.classList[1]
           }
+          $(classVal).accordion( 'option', 'active',0 );
         }
     </script>
 
@@ -338,13 +336,11 @@ ACCORDION =  """
            $("html, body").animate({ scrollTop: scrollPos }, 1000);
        }
        $( document ).ready(function() {
-           if ($(".sectionHeader").length > 5) {
-               $( '.accordion' ).accordion({
-                   heightStyle: "content",
-                   collapsible: true,
-                   active: false
-               })
-           }
+           $( '.accordion' ).accordion({
+               heightStyle: "content",
+               collapsible: true,
+               active: false
+           })
           if(window.location.hash) {
                locationHashChanged()
           }
@@ -352,18 +348,6 @@ ACCORDION =  """
        })
     </script>
   """
-
-def findRelevantIndex(sectionGenLst, existingOutFile):
-  indexList = []
-  idxLst = []
-  for idx, item in enumerate(sectionGenLst):
-    if existingOutFile and (idx < 5):
-      continue
-    extraarg = item.get('dataarg', [])
-    if item['data'](*extraarg):
-      indexList.append(item['name'])
-      idxLst.append(idx)
-  return indexList, idxLst
 
 def getICRHtmlFileName(icrEntry):
     return ("%s/ICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"]))
@@ -631,15 +615,18 @@ class WebPageGenerator(object):
 #   3. Non-Index footer (no Print buttons or open accordion function)
 # -----------------------------------------------------------------------------
     def generateNavigationBar(self, outputFile, inputList, archList=None,
-                              printButton=True, packageName=None, isIndex=False):
+                              printButton=True, packageName=None,
+                              isIndex=False, accordion=True):
         if not inputList:
             return
         if isIndex:
             printButton = False
-        else:
+            accordion = False
+
+        if accordion:
             outputFile.write(OPEN_ACCORDION_FUNCTION)
         hasArchList = archList and len(archList) == len(inputList)
-        if isIndex:
+        if not accordion:
             onClickOpenAccordion = ""
         else:
             onClickOpenAccordion = "onclick=\"openAccordionVal(event)\""
@@ -649,9 +636,14 @@ class WebPageGenerator(object):
                 archName = archList[i]
             else:
                 archName = inputList[i]
-            outputFile.write("<a %s class=\"qindex %s\" href=\"#%s\">%s</a>&nbsp;|&nbsp;\n" %
+            outputFile.write("<a %s class=\"qindex %s\" href=\"#%s\">%s</a>" %
                 (onClickOpenAccordion, archName.split(" ")[0], archName, inputList[i]))
-        if not isIndex:
+            if i < (len(inputList) - 1):
+                outputFile.write("&nbsp;|&nbsp;")
+            outputFile.write("\n")
+
+        if accordion:
+            outputFile.write("&nbsp;|&nbsp;")
             outputFile.write("<a %s class=\"qindex Allaccord\" href=\"#%s\">%s</a>\n" %
                 (onClickOpenAccordion, "All", "All"))
         outputFile.write("</div>\n")
@@ -683,15 +675,15 @@ class WebPageGenerator(object):
 
     # Navigation Bar + footer
     def generateFooterWithNavigationBar(self, outputFile, indexList,
-                                        archList=None):
+                                        archList=None, accordion=True):
         self.generateNavigationBar(outputFile, indexList, archList,
-                                   printButton=False)
+                                   printButton=False, accordion=accordion)
         outputFile.write(FOOTER)
 
 #------------------------------------------------------------------------------
 
-    def writeSectionHeader(self, headerName, archName, outputFile,
-                           pdf=None, isAccordion=True):
+    def writeSectionHeader(self, headerName, archName, outputFile, pdf,
+                           isAccordion):
         if isAccordion:
           accordionClass = 'accordion'
         else:
@@ -1081,17 +1073,22 @@ class WebPageGenerator(object):
                           pdfEntryRow.append("")
                         pdfEntryList.append(pdfEntryRow)
 
-                    rtnIndexList, idxLst = findRelevantIndex(rtnIndexes, None)
-                    indexList = indexList + rtnIndexList
+                    for idx, item in enumerate(rtnIndexes):
+                      extraarg = item.get('dataarg', [])
+                      if item['data'](*extraarg):
+                        indexList.append(item['name'])
                     outputFile.write("<script>var titleList = " + str(indexList) + "</script>\n")
                     outputFile.write("")
-                    self.generateNavigationBar(outputFile, indexList)
+                    useAccordion = len(indexList) > 5
+                    self.generateNavigationBar(outputFile, indexList,
+                                               accordion=useAccordion)
                     title = "Global: %s" % globalName
-                    self.writeTitleBlock(title, title, package, outputFile, pdf)
+                    self.writeTitleBlock(title, title, package, outputFile,
+                                         pdf, useAccordion)
                     if isFileManFile:
                         # Information
-                        self.writeSectionHeader("Information", "Info", outputFile,
-                                                pdf, isAccordion=False)
+                        self.writeSectionHeader("Information", "Info",
+                                                outputFile, pdf, False)
                         infoHeader = ["FileMan FileNo", "FileMan Filename", "Package"]
                         itemList = [[globalVar.getFileNo(),
                                   globalVar.getFileManName(),
@@ -1101,8 +1098,8 @@ class WebPageGenerator(object):
                             self.__writeGenericTablizedPDFData__(infoHeader, itemList, pdf)
 
                         # Description
-                        self.writeSectionHeader("Description", "Desc", outputFile,
-                                                pdf, isAccordion=False)
+                        self.writeSectionHeader("Description", "Desc",
+                                                outputFile, pdf, False)
                         # TODO: Write as a normal paragraph or series of paragraphs (i.e. not a list)
                         writeListData(globalVar.getDescription(), outputFile, classid="description")
                         if self._generatePDFBundle:
@@ -1114,7 +1111,7 @@ class WebPageGenerator(object):
                         self.writeSectionHeader("Directly Accessed By Routines, Total: %d" \
                                                     % globalVar.getTotalNumberOfReferencedRoutines(),
                                                 "Directly Accessed By Routines",
-                                                outputFile, pdf)
+                                                outputFile, pdf, useAccordion)
                         self.generateGlobalRoutineDependentsSection(globalVar.getAllReferencedRoutines(),
                                                                     outputFile, pdf, classid="directCall")
                         writeSectionEnd(outputFile)
@@ -1126,7 +1123,7 @@ class WebPageGenerator(object):
                         self.writeSectionHeader("Accessed By FileMan Db Calls, Total: %d" %
                                                 totalNumDbCallRtns,
                                                 "Accessed By FileMan Db Calls",
-                                                outputFile, pdf)
+                                                outputFile, pdf, useAccordion)
                         self.generateGlobalRoutineDependentsSection(fileManDbCallRtns,
                                                                     outputFile,
                                                                     pdf,
@@ -1138,7 +1135,7 @@ class WebPageGenerator(object):
                             self.writeSectionHeader("Pointed To By FileMan Files, Total: %d"
                                                         % globalVar.getTotalNumberOfReferredGlobals(),
                                                     "Pointed To By FileMan Files",
-                                                    outputFile, pdf)
+                                                    outputFile, pdf, useAccordion)
                             self.generateGlobalPointedToSection(globalVar, outputFile,
                                                                 pdf, True,
                                                                 classid="gblPointedTo")
@@ -1149,7 +1146,7 @@ class WebPageGenerator(object):
                             self.writeSectionHeader("Pointer To FileMan Files, Total: %d"
                                                         % globalVar.getTotalNumberOfReferencedGlobals(),
                                                     "Pointer To FileMan Files",
-                                                    outputFile, pdf)
+                                                    outputFile, pdf, useAccordion)
                             self.generateGlobalPointedToSection(globalVar, outputFile,
                                                                 pdf, False, classid="gblPointerTo")
                             writeSectionEnd(outputFile)
@@ -1157,13 +1154,15 @@ class WebPageGenerator(object):
                         # Fields
                         if allFields:
                             self.writeSectionHeader("Fields, Total: %d" % len(allFields),
-                                                    "Fields", outputFile, pdf)
+                                                    "Fields", outputFile, pdf,
+                                                    useAccordion)
                             self.__generateFileManFileDetails__(globalVar, outputFile, pdf)
                             writeSectionEnd(outputFile)
                     # Generate the listing of objects
                     if entryList:
                       self.writeSectionHeader("Found Entries, Total: %d" % len(entryList),
-                                              "Found Entries", outputFile, pdf)
+                                              "Found Entries", outputFile, pdf,
+                                              useAccordion)
                       self.generateTablizedItemList(sorted(entryList, key=lambda x: self.getGlobalEntryName(x)),
                                                     outputFile,
                                                     self.getGlobalEntryHTML,
@@ -1178,13 +1177,15 @@ class WebPageGenerator(object):
                       writeSectionEnd(outputFile)
                     if icrList:
                        self.writeSectionHeader("%s, Total: %d" % (icrSectionName, len(icrList)),
-                                               icrSectionName, outputFile, pdf)
+                                               icrSectionName, outputFile, pdf,
+                                               useAccordion)
                        self.generateGlobalICRSection(icrList, outputFile, pdf)
                        writeSectionEnd(outputFile)
                     self.__generateIndividualRoutinePage__(globalVar, pdf,
                                                            platform=None,
                                                            existingOutFile=outputFile)
-                    self.generateFooterWithNavigationBar(outputFile, indexList)
+                    self.generateFooterWithNavigationBar(outputFile, indexList,
+                                                         accordion=useAccordion)
 
                 if self._generatePDFBundle:
                     self.__writePDFFile__(pdf, pdfFileName)
@@ -1210,10 +1211,11 @@ class WebPageGenerator(object):
                 pdf = []
             else:
                 pdf = None
-
+            useAccordion = False
             # write the same _header file
             self.__includeHeader__(outputFile)
-            self.generateNavigationBar(outputFile, indexList)
+            self.generateNavigationBar(outputFile, indexList,
+                                       accordion=useAccordion)
             # get the root file package
             fileIter = subFile
             topDownList=[fileIter]
@@ -1248,13 +1250,14 @@ class WebPageGenerator(object):
                     if self._generatePDFBundle:
                         linkPDFTxt += "-->"
                 index += 1
+
             self.writeTitleBlock(title, title, package, outputFile, pdf,
-                                 linkHtmlTxt, linkPDFTxt)
+                                 useAccordion, linkHtmlTxt, linkPDFTxt)
             packageName = package.getName();
 
             # Information
             self.writeSectionHeader("Information", "Info", outputFile, pdf,
-                                    isAccordion=False)
+                                    useAccordion)
             infoHeader = ["Parent File", "Name", "Number", "Package"]
             parentFile = subFile.getParentFile()
             parentFileLink = ""
@@ -1270,11 +1273,13 @@ class WebPageGenerator(object):
                 self.__writeGenericTablizedPDFData__(infoHeader, itemList, pdf)
 
             # Details
-            self.writeSectionHeader("Details", "Details", outputFile, pdf)
+            self.writeSectionHeader("Details", "Details", outputFile, pdf,
+                                    useAccordion)
             self.__generateFileManFileDetails__(subFile, outputFile, pdf)
             writeSectionEnd(outputFile)
 
-            self.generateFooterWithNavigationBar(outputFile, indexList)
+            self.generateFooterWithNavigationBar(outputFile, indexList,
+                                                 accordion=useAccordion)
 
         if self._generatePDFBundle:
             pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
@@ -1788,10 +1793,17 @@ class WebPageGenerator(object):
                                                                                              depPackageHyperLink)
         writeSubSectionHeader(summaryHeader, outputFile, classid="summary")
 
+        # Always use accordions on this page
+        useAccordion = True
+
+        # Not included in PDF bundle
+        pdf = None
+
         # Print out the routine details
         if callerRoutines or calledRoutines:
             sectionHeader = "Routines --> Routines"
-            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile,
+                                    pdf, useAccordion)
             writeSectionBegin(outputFile)
             if callerRoutines:
                 header = "Caller Routines List in %s : %s" % \
@@ -1817,7 +1829,8 @@ class WebPageGenerator(object):
         # print out the Global -> routine details
         if globalRtnCallRoutines or globalRtnCalledRoutines:
             sectionHeader = "Globals --> Routines"
-            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile,
+                                    pdf, useAccordion)
             writeSectionBegin(outputFile)
             if globalRtnCallRoutines:
                 header = "Caller Global List in %s : %s" % \
@@ -1842,7 +1855,8 @@ class WebPageGenerator(object):
         # print out the Global -> global details
         if globalGblCallRoutines or globalGblCalledRoutines:
             sectionHeader = "Globals --> Globals"
-            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile,
+                                    pdf, useAccordion)
             writeSectionBegin(outputFile)
             if globalGblCallRoutines:
                 header = "Caller Global List in %s : %s" % \
@@ -1866,7 +1880,8 @@ class WebPageGenerator(object):
         # print out the Package Component details
         if optionCallRoutines or optionCalledRoutines:
             sectionHeader = "Package Components List --> Routines"
-            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile,
+                                    pdf, useAccordion)
             writeSectionBegin(outputFile)
             if optionCallRoutines:
                 header = "Caller Package Components List in %s : %s" % \
@@ -1891,7 +1906,8 @@ class WebPageGenerator(object):
 
         if referredRoutines or referredGlobals:
             sectionHeader = "Routines --> Globals"
-            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile,
+                                    pdf, useAccordion)
             writeSectionBegin(outputFile)
             if referredRoutines:
                 header = "Referred Routines List in %s : %s" % \
@@ -1915,7 +1931,8 @@ class WebPageGenerator(object):
 
         if referredFileManFiles or referencedFileManFiles:
             sectionHeader = "FileMan Files --> FileMan Files"
-            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile,
+                                    pdf, useAccordion)
             writeSectionBegin(outputFile)
             if referredFileManFiles:
                 header = "Referred FileMan Files List in %s : %s" % \
@@ -1940,7 +1957,8 @@ class WebPageGenerator(object):
 
         if dbCallRoutines or dbCallFileManFiles:
             sectionHeader = "FileMan Db Call Routines --> FileMan Files"
-            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile)
+            self.writeSectionHeader(sectionHeader, sectionHeader, outputFile,
+                                    pdf, useAccordion)
             writeSectionBegin(outputFile)
             if dbCallRoutines:
                 header = "FileMan Db Call Routines List in %s : %s" % \
@@ -1978,7 +1996,12 @@ class WebPageGenerator(object):
             inputList = ["%s-->%s" % (package.getName(), depPackage.getName()),
                          "%s-->%s" % (depPackage.getName(), package.getName())]
             archList = [package.getName(), depPackage.getName()]
-            self.generateNavigationBar(outputFile, inputList, archList)
+
+            # Always use accordions on this page
+            useAccordion = True
+
+            self.generateNavigationBar(outputFile, inputList, archList,
+                                       accordion=useAccordion)
 
             # Title and header
             pageTitle = package.getName() + " : " + depPackage.getName()
@@ -1994,19 +2017,21 @@ class WebPageGenerator(object):
 
             # Package --> Dep. Package
             self.writeSectionHeader("%s-->%s :" % (packageHyperLink, depPackageHyperLink),
-                                    package.getName(), outputFile,
-                                    isAccordion=False)
+                                    package.getName(), outputFile, None, False) # Don't accordion this header
             self.generatePackageRoutineDependencyDetailPage(package, depPackage,
                                                             outputFile, "_1")
             writeSectionEnd(outputFile)
+
             # Dep. Package --> Package
             self.writeSectionHeader("%s-->%s :" % (depPackageHyperLink, packageHyperLink),
-                                    depPackage.getName(), outputFile,
-                                    isAccordion=False)
+                                    depPackage.getName(), outputFile, None, False) # Don't accordion this header
             self.generatePackageRoutineDependencyDetailPage(depPackage, package,
                                                             outputFile, "_2")
             writeSectionEnd(outputFile)
-            self.generateFooterWithNavigationBar(outputFile, inputList, archList)
+
+            self.generateFooterWithNavigationBar(outputFile, inputList,
+                                                 archList,
+                                                 accordion=useAccordion)
 
     ###########################################################################
     def __parseReadCmd__(self, matchArray, routine, lineNo):
@@ -2316,8 +2341,7 @@ class WebPageGenerator(object):
         else:
             paragraphs = None
         self.writeSectionHeader(sectionGraphHeader, sectionGraphHeader,
-                                outputFile, paragraphs,
-                                isAccordion=False)
+                                outputFile, paragraphs, False)
         # TODO: This section is copy + paste from __writeRoutineDepGraph__
         outputFile.write("<div class=\"contents\">\n")
         # TODO: Copy + paste from GraphGenerator::_generatePackageDependencyGraph
@@ -2407,8 +2431,7 @@ class WebPageGenerator(object):
 #
 #==============================================================================
     def writeTitleBlock(self, pageTitle, title, package, outputFile, pdf,
-                        extraHtmlHeader=None, extraPDFHeader=None,
-                        accordion=True):
+                        accordion, extraHtmlHeader=None, extraPDFHeader=None):
         if self._generatePDFBundle:
             self.__writePDFTitleBlock__(title, package, pdf, extraPDFHeader)
 
@@ -2666,12 +2689,15 @@ class WebPageGenerator(object):
                 # Write the _header part
                 self.__includeHeader__(outputFile)
 
+                useAccordion = len(indexList) > 5
                 self.generateNavigationBar(outputFile, indexList,
-                                           packageName=packageName)
+                                           packageName=packageName,
+                                           accordion=useAccordion)
 
                 # Title
                 title = "Package: %s" % packageName
-                self.writeTitleBlock(title, title, None, outputFile, pdf)
+                self.writeTitleBlock(title, title, None, outputFile, pdf,
+                                     useAccordion)
 
                 # Namespace
                 # Note: We're passing the package here, NOT the packageName
@@ -2699,7 +2725,8 @@ class WebPageGenerator(object):
                     sortedICRList = sorted(icrList, key=lambda item: float(item["NUMBER"]))
                     self.generatePackageSection(icrSectionName, getICRHtmlFileName,
                                                 getICRDisplayName, "icrVals",
-                                                sortedICRList, outputFile, pdf)
+                                                sortedICRList, outputFile, pdf,
+                                                useAccordion)
 
                 # FileMan files
                 if fileManList:
@@ -2708,8 +2735,9 @@ class WebPageGenerator(object):
                     # Note: In generateTablizedItemList, number of columns is set to 8
                     self.generatePackageSection("FileMan Files",
                                                 getGlobalHtmlFileName,
-                                                getGlobalDisplayName, "fmFiles",
-                                                sortedFileManList, outputFile, pdf,
+                                                getGlobalDisplayName,
+                                                "fmFiles", sortedFileManList,
+                                                outputFile, pdf, useAccordion,
                                                 pdfColumnWidths=8)
 
                 # Non-FileMan Globals
@@ -2718,8 +2746,9 @@ class WebPageGenerator(object):
                     sortedGlobalList = sorted(globalList, key=lambda item: item.getName())
                     self.generatePackageSection("Non-FileMan Globals",
                                                 getGlobalHtmlFileName,
-                                                getGlobalDisplayName, "nonfmFiles",
-                                                sortedGlobalList, outputFile, pdf)
+                                                getGlobalDisplayName,
+                                                "nonfmFiles", sortedGlobalList,
+                                                outputFile, pdf, useAccordion)
 
                 # Routines
                 if routinesList:
@@ -2729,7 +2758,7 @@ class WebPageGenerator(object):
                                                 getPackageComponentLink,
                                                 self.getRoutineDisplayName,
                                                 "rtns", sortedRoutinesList,
-                                                outputFile, pdf)
+                                                outputFile, pdf, useAccordion)
 
                 # Package Components
                 if generatePackageComponents:
@@ -2738,9 +2767,11 @@ class WebPageGenerator(object):
                         pdf.append(Spacer(1, 10))
                         self.__writePDFLegends__(pdf)
                     # Note: We're passing the package here, NOT the packageName
-                    self.generatePackageComponentsSections(package, outputFile, pdf)
+                    self.generatePackageComponentsSections(package, outputFile,
+                                                           pdf, useAccordion)
 
-                self.generateFooterWithNavigationBar(outputFile, indexList)
+                self.generateFooterWithNavigationBar(outputFile, indexList,
+                                                     accordion=useAccordion)
 
             if self._generatePDFBundle:
                 pdfFileName = os.path.join(self.__getPDFDirectory__(packageName),
@@ -2752,11 +2783,12 @@ class WebPageGenerator(object):
 #==============================================================================
     def generatePackageSection(self, sectionName, htmlMappingFunction,
                                nameFunction, classid, sortedDataList,
-                               outputFile, pdf, pdfColumnWidths=None):
+                               outputFile, pdf, accordion,
+                               pdfColumnWidths=None):
         pdfSection = []
         self.writeSectionHeader("%s, Total: %d"
                                     % (sectionName, len(sortedDataList)),
-                                sectionName, outputFile, pdfSection)
+                                sectionName, outputFile, pdfSection, accordion)
         pdfData = self.generateTablizedItemList(sortedDataList, outputFile,
                                                 htmlMappingFunction,
                                                 nameFunc=nameFunction,
@@ -2772,7 +2804,7 @@ class WebPageGenerator(object):
 #==============================================================================
     def generatePackageNamespaceSection(self, package, outputFile, pdf):
         self.writeSectionHeader("Namespace", "Namespace", outputFile, pdf,
-                                isAccordion=False)
+                                False)
         outputFile.write("<div class=packageNamespace>")
         namespace = "Namespace: %s" \
                         % listDataToCommaSeperatorString(package.getNamespaces())
@@ -2794,7 +2826,7 @@ class WebPageGenerator(object):
 #==============================================================================
     def generatePackageDocumentationSection(self, package, outputFile):
         self.writeSectionHeader("Documentation", "Doc", outputFile, None,
-                                isAccordion=False)
+                                False)
         if len(package.getDocLink()) > 0:
             outputFile.write("<div><p><h4 id=\"packageDocs\">VA documentation in the <a target='blank' href=\"%s\">VistA Documentation Library</a></p></div>" % package.getDocLink())
             if len(package.getDocMirrorLink()) > 0:
@@ -2806,7 +2838,8 @@ class WebPageGenerator(object):
 #==============================================================================
 # Method to generate Package Components sections
 #==============================================================================
-    def generatePackageComponentsSections(self, package, outputFile, pdf):
+    def generatePackageComponentsSections(self, package, outputFile, pdf,
+                                          useAccordion):
         for keyVal in PACKAGE_COMPONENT_MAP:
             totalObjectDict = package.getAllPackageComponents(keyVal)
             if not totalObjectDict:
@@ -2820,7 +2853,7 @@ class WebPageGenerator(object):
                                         getPackageComponentLink,
                                         self.getPackageComponentDisplayName,
                                         keyVal+"_data", sortedComponents,
-                                        outputFile, pdf, 8)
+                                        outputFile, pdf, useAccordion, 8)
 
 
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
@@ -2953,8 +2986,8 @@ class WebPageGenerator(object):
     ###########################################################################
     # Generator functions
     def __writeRoutineInfoSection__(self, routine, data, header, link,
-                                    outputFile, pdf, classid):
-        self.writeSectionHeader(header, link, outputFile, pdf, isAccordion=False)
+                                    outputFile, pdf, classid, isAccordion):
+        self.writeSectionHeader(header, link, outputFile, pdf, False) # Never accordion this section
         outputFile.write("<div>")
         for comment in data:
             outputFile.write("<p><span class=\"information %s\">%s</span></p>\n" % (classid, comment))
@@ -2963,10 +2996,9 @@ class WebPageGenerator(object):
         outputFile.write("</div>")
 
     def __writeRoutineSourceSection__(self, routine, data, header, link,
-                                      outputFile, pdf, classid,
-                                      isAccordion=False):
+                                      outputFile, pdf, classid, isAccordion):
         # Do not write source file link in PDF
-        self.writeSectionHeader(header, link, outputFile, None, isAccordion)
+        self.writeSectionHeader(header, link, outputFile, None, False) # Never accordion this section
         outputFile.write("<div class=\"%s\">" % classid)
         outputFile.write("<p><span class=\"sourcefile\">Source file &lt;<a class=\"el\" href=\"%s\">%s.m</a>&gt;</span></p>"
             % (getRoutineSourceHtmlFileName(routine.getOriginalName()),
@@ -2976,13 +3008,14 @@ class WebPageGenerator(object):
     # Generate routine variables sections
     # (e.g. Local Variables or Global Variables)
     def __writeRoutineVariableSection__(self, routine, data, header, link,
-                                        outputFile, pdf, classid, tableHeader,
-                                        convFunc):
+                                        outputFile, pdf, classid, isAccordion,
+                                        tableHeader, convFunc):
         if self._generatePDFBundle:
             pdfSection = []
         else:
             pdfSection = None
-        self.writeSectionHeader(header, header, outputFile, pdfSection)
+        self.writeSectionHeader(header, header, outputFile, pdfSection,
+                                isAccordion)
         outputFile.write("<div class=\"contents\">\n")
         if header == "Local Variables":
             outputFile.write(XINDEXLegend)
@@ -3064,9 +3097,10 @@ class WebPageGenerator(object):
       return generateList(out)
 
     def __writeEntryPointSection__(self, routine, data, header, link,
-                                   outputFile, pdf, classid, tableHeader):
+                                   outputFile, pdf, classid, isAccordion,
+                                   tableHeader):
         self.writeSectionHeader("Entry Points", "Entry Points",
-                                outputFile, pdf)
+                                outputFile, pdf, isAccordion)
         entryPoints = routine.getEntryPoints()
         tableData = []
         if self._generatePDFBundle:
@@ -3104,9 +3138,10 @@ class WebPageGenerator(object):
             self.__writeGenericTablizedPDFData__(tableHeader, pdfData, pdf, isString=False)
 
     def __writeInteractionSection__(self, routine, data, header, link,
-                                    outputFile, pdf, classid, tableHeader):
+                                    outputFile, pdf, classid, isAccordion,
+                                    tableHeader):
         self.writeSectionHeader("Interaction Calls", "Interaction Calls",
-                                outputFile, pdf)
+                                outputFile, pdf, isAccordion)
         calledRtns = routine.getFilteredExternalReference(['DIR', 'VALM', 'DDS', 'DIE', 'DIC', '%ZIS', 'DIALOG', 'DIALOGU'])
         if self._generatePDFBundle:
             self.__writePDFInteractionSection__(data, calledRtns, pdf, tableHeader)
@@ -3165,10 +3200,10 @@ class WebPageGenerator(object):
     ###########################################################################
     # Generator function
     def __writeRoutineDepGraphSection__(self, routine, data, header, link,
-                                        outputFile, pdf, classid, isDependency=True):
+                                        outputFile, pdf, classid, isAccordion,
+                                        isDependency=True):
         pdfSection = []
-        self.writeSectionHeader(header, link, outputFile, pdfSection,
-                                isAccordion=False)
+        self.writeSectionHeader(header, link, outputFile, pdfSection, False) # Never accordion this section
         # sort the key by Total # of routines
         sortedDepRoutines = sorted(sorted(data.keys()),
                                    key=lambda item: len(data[item]),
@@ -3451,18 +3486,23 @@ class WebPageGenerator(object):
             htmlFileName = getPackageObjHtmlFileName(routine)
             outputFile = open(os.path.join(self._outDir, htmlFileName), 'w')
             self.__includeHeader__(outputFile)
-        if isPackageComponent:
-            indexList = []
-            idxLst = []
-            for idx, item in enumerate(sectionGenLst):
-                extraarg = item.get('dataarg', [])
-                if item['data'](*extraarg):
-                    indexList.append(item['name'])
-                    idxLst.append(idx)
-        else:
-            indexList, idxLst = findRelevantIndex(sectionGenLst, existingOutFile)
+
+
+        indexNameList = []
+        indexList = []
+        for idx, item in enumerate(sectionGenLst):
+            if existingOutFile and (idx < 5):
+                continue
+            extraarg = item.get('dataarg', [])
+            if item['data'](*extraarg):
+                indexNameList.append(item['name'])
+                indexList.append(idx)
+
+        useAccordion = existingOutFile or len(indexList) > 5
+
         if not existingOutFile:
-            self.generateNavigationBar(outputFile, indexList)
+            self.generateNavigationBar(outputFile, indexNameList,
+                                       accordion=useAccordion)
             if isPackageComponent:
                 title = routine._title.replace("_", " ") + ": " + routineName
                 routineHeader = title
@@ -3472,9 +3512,8 @@ class WebPageGenerator(object):
                 if platform:
                     routineHeader += " Platform: %s" % platform
             self.writeTitleBlock(title, routineHeader, package,
-                                 outputFile, pdf,
-                                 accordion=not isPackageComponent)
-        for idx in idxLst:
+                                 outputFile, pdf, useAccordion)
+        for idx in indexList:
             sectionGen = sectionGenLst[idx]
             data = sectionGen['data'](*sectionGen.get('dataarg', []))
             link = sectionGen['name']
@@ -3482,12 +3521,13 @@ class WebPageGenerator(object):
             classid  = sectionGen.get('classid', "")
             geneargs = sectionGen.get('geneargs', []) # optional
             sectionGen['generator'](routine, data, header, link, outputFile,
-                                    pdf, classid, *geneargs)
+                                    pdf, classid, useAccordion, *geneargs)
             writeSectionEnd(outputFile)
             if isPackageComponent and header == "Local Variables":
                 outputFile.write("</div>\n")
         if not existingOutFile:
-            self.generateFooterWithNavigationBar(outputFile, indexList)
+            self.generateFooterWithNavigationBar(outputFile, indexNameList,
+                                                 accordion=useAccordion)
             outputFile.close()
 
 #===============================================================================
@@ -3508,14 +3548,17 @@ class WebPageGenerator(object):
         filename = os.path.join(self._outDir, getPackageObjHtmlFileName(genericRoutine))
         with open(filename, 'w') as outputFile:
             self.__includeHeader__(outputFile)
-            self.generateNavigationBar(outputFile, indexList)
+            useAccordion = False
+            self.generateNavigationBar(outputFile, indexList,
+                                       accordion=useAccordion)
             title = "Routine: %s" % routineName
             self.writeTitleBlock(title, title, package, outputFile, pdf,
-                                 accordion=False)
+                                 useAccordion)
 
             # 'Platform Dependent Routines' section
             self.writeSectionHeader("Platform Dependent Routines",
-                                    "DepRoutines", outputFile, pdf)
+                                    "DepRoutines", outputFile, pdf,
+                                    useAccordion)
             tableRowList = []
             pdfTableRowList = []
             for routineInfo in itervalues(platformDepRoutines):
@@ -3539,20 +3582,23 @@ class WebPageGenerator(object):
                                                      sectionGraphHeader,
                                                      outputFile, pdf,
                                                      "callerG",
+                                                     False, # Graph sections are never accordion'ed
                                                      isDependency=False)
 
             outputFile.write("<br/>\n")
-            self.generateFooterWithNavigationBar(outputFile, indexList)
+            self.generateFooterWithNavigationBar(outputFile, indexList,
+                                                 accordion=useAccordion)
 
 #===============================================================================
 # Method to generate all individual Package Components pages
 #===============================================================================
     def __writePackageComponentSourceSection__(self, routine, data, header,
-                                               link, outputFile, pdf, classid):
+                                               link, outputFile, pdf, classid,
+                                               isAccordion):
         fileNo = PACKAGE_COMPONENT_MAP[routine.getObjectType()]
         sourcePath = os.path.join(self._outDir, "..", fileNo.replace(".", '_'),
                                   "%s-%s.html" % (fileNo, routine.getIEN()))
-        self.writeSectionHeader(header, link, outputFile, pdf, isAccordion=False)
+        self.writeSectionHeader(header, link, outputFile, pdf, False) # Never accordion this section
         try:
           with open(sourcePath, 'r') as file:
               fileLines = file.readlines()
