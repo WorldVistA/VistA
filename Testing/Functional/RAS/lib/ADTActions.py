@@ -949,7 +949,10 @@ class ADTActions (Actions):
             self.VistA.write('Summary')
             self.VistA.wait('START DATE:')
             self.VistA.write('t-100')
-            self.VistA.wait('END DATE')
+            index = self.VistA.multiwait(['whole month', 'END DATE'])
+            if index == 0:
+                self.VistA.write("N")
+                self.VistA.wait('END DATE')
             self.VistA.write('t')
             self.VistA.wait('DEVICE')
             self.VistA.write('HOME')
