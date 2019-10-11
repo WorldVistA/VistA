@@ -967,6 +967,8 @@ class WebPageGenerator(object):
                     if allFields:
                         indexList.append("Fields")
                 else:
+                    fileManDbCallRtns = []
+                    allFields = []
                     indexList = ["Directly Accessed By Routines"]
                 htmlFileName = os.path.join(self._outDir,
                                                getGlobalHtmlFileNameByName(globalName))
