@@ -1813,7 +1813,8 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="callerRoutines")
+                                              classid="callerRoutines",
+                                              useColor=True)
             if calledRoutines:
                 header = "Called Routines List in %s : %s" % \
                           (depPackageHyperLink, totalCalledHtml)
@@ -1822,7 +1823,8 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="calledRoutines")
+                                              classid="calledRoutines",
+                                              useColor=True)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1839,7 +1841,8 @@ class WebPageGenerator(object):
                 self.generateTablizedItemList(sorted(globalRtnCallRoutines),
                                               outputFile,
                                               getGlobalHtmlFileName,
-                                              classid="rcallerGlobals")
+                                              classid="rcallerGlobals",
+                                              useColor=True)
             if globalRtnCalledRoutines:
                 header = "Called Routines List in %s : %s" % \
                           (depPackageHyperLink, gblRtnCalledHtml)
@@ -1848,7 +1851,8 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="gcalledRoutines")
+                                              classid="gcalledRoutines",
+                                              useColor=True)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1865,7 +1869,8 @@ class WebPageGenerator(object):
                 self.generateTablizedItemList(sorted(globalGblCallRoutines),
                                               outputFile,
                                               getGlobalHtmlFileName,
-                                              classid="gCallerGlobals")
+                                              classid="gCallerGlobals",
+                                              useColor=True)
             if globalGblCalledRoutines:
                 header = "Called Globals List in %s : %s" % \
                           (depPackageHyperLink, gblGblCalledHtml)
@@ -1873,7 +1878,8 @@ class WebPageGenerator(object):
                 self.generateTablizedItemList(sorted(globalGblCalledRoutines),
                                               outputFile,
                                               getGlobalHtmlFileName,
-                                              classid="calledGlobals")
+                                              classid="calledGlobals",
+                                              useColor=True)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1891,7 +1897,8 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getPackageComponentDisplayName,
-                                              classid="PCObjects")
+                                              classid="PCObjects",
+                                              useColor=True)
             if optionCalledRoutines:
                 header = "Called Routines in %s : %s" % \
                           (depPackageHyperLink, optionCalledHtml)
@@ -1900,7 +1907,8 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="PCcalledRoutines")
+                                              classid="PCcalledRoutines",
+                                              useColor=True)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1917,7 +1925,8 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="referredRoutines")
+                                              classid="referredRoutines",
+                                              useColor=True)
             if referredGlobals:
                 header = "Referenced Globals List in %s : %s" % \
                           (depPackageHyperLink, totalReferredGlobalHtml)
@@ -1925,7 +1934,8 @@ class WebPageGenerator(object):
                 self.generateTablizedItemList(sorted(referredGlobals),
                                               outputFile,
                                               getGlobalHtmlFileName,
-                                              classid="referredGlobals")
+                                              classid="referredGlobals",
+                                              useColor=True)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1942,7 +1952,8 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getGlobalHtmlFileName,
                                               nameFunc=getGlobalDisplayName,
-                                              classid="referredFileManFiles")
+                                              classid="referredFileManFiles",
+                                              useColor=True)
             if referencedFileManFiles:
                 header = "Referenced FileMan Files List in %s : %s" % \
                           (depPackageHyperLink, totalReferencedFileManFilesHtml)
@@ -1951,7 +1962,8 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getGlobalHtmlFileName,
                                               nameFunc=getGlobalDisplayName,
-                                              classid="referencedFileManFiles")
+                                              classid="referencedFileManFiles",
+                                              useColor=True)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
 
@@ -1968,7 +1980,8 @@ class WebPageGenerator(object):
                                               outputFile,
                                               getPackageComponentLink,
                                               nameFunc=self.getRoutineDisplayName,
-                                              classid="dbCallRoutines")
+                                              classid="dbCallRoutines",
+                                              useColor=True)
             if dbCallFileManFiles:
                 header = "FileMan Db Call Accessed FileMan Files List in %s : %s" % \
                           (depPackageHyperLink, totalDbCallFileManFilesHtml)
@@ -1976,7 +1989,8 @@ class WebPageGenerator(object):
                 self.generateTablizedItemList(sorted(dbCallFileManFiles),
                                               outputFile,
                                               getGlobalHtmlFileName,
-                                              classid="dbCallFileManFiles")
+                                              classid="dbCallFileManFiles",
+                                              useColor=True)
             writeSectionEnd(outputFile)
             writeSectionEnd(outputFile) # Close accordion
         outputFile.write("<br/>\n")
@@ -2010,7 +2024,7 @@ class WebPageGenerator(object):
                               (packageHyperLink, depPackageHyperLink))
 
             # Legends
-            outputFile.write(PC_LEGEND)
+            outputFile.write(self.legend)
 
             # Accordion
             outputFile.write(ACCORDION)
@@ -2470,12 +2484,13 @@ class WebPageGenerator(object):
         outputFile.write("</div>\n") # headertitle
         outputFile.write("<br/>\n")
 
-#===============================================================================
+#==============================================================================
 # method to generate a tablized representation of data
 #==============================================================================
     def generateTablizedItemList(self, sortedItemList, outputFile,
                                  htmlMappingFunc, nameFunc=None, totalCol=8,
-                                 classid="", additionalDetailsURL=""):
+                                 classid="", additionalDetailsURL="",
+                                 useColor=False):
         pdfTable = []
         objectCount = 0
         totalNumRoutine = 0
@@ -2493,12 +2508,16 @@ class WebPageGenerator(object):
                     if position < totalNumRoutine:
                         item = sortedItemList[position]
                         linkName = htmlMappingFunc(item)
+                        if useColor:
+                            borderColorString = findDotColor(item)
+                        else:
+                            borderColorString = "black"
                         if nameFunc:
                             displayName = nameFunc(item)
                         else:
                             displayName = item
-                        outputFile.write("<td class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
-                                          % (linkName, displayName))
+                        outputFile.write("<td style=\"border: 2px solid %s;\" class=\"indexkey\"><a class=\"e1\" href=\"%s\">%s</a>&nbsp;&nbsp;&nbsp;&nbsp;</td>"
+                            % (borderColorString, linkName, displayName))
                         objectCount += 1
                         if self._generatePDFBundle:
                             # format name for pdf
