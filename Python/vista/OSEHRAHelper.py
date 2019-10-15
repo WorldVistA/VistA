@@ -65,7 +65,7 @@ def determineEncoding(encString):
   return encoding
 
 def encode(connection, command):
-  if 'allowed_string_types' in command:
+  if 'allowed_string_types' in dir(connection):
     if type(command) in connection.allowed_string_types:
       return command
   if sys.version_info[0] == 3:
@@ -186,7 +186,7 @@ class ConnectWinCache(ConnectMUMPS):
     if len(namespace) == 0:
       namespace = 'VISTA'
     self.namespace = namespace
-    self.prompt = self.namespace + '>'
+    self.prompt = encode(self.connection, self.namespace + '>')
     self.log = codecs.open(logfile, 'w', encoding='utf-8', errors='ignore')
     self.type = 'cache'
     path,filename = os.path.split(logfile)
@@ -207,7 +207,7 @@ class ConnectWinCache(ConnectMUMPS):
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
-      command = self.namespace + '>'
+      command = self.prompt
     rbuf = decode(self.connection.read_until(encode(self.connection, command)))
     if rbuf.find(command) == -1:
         command=str(command)
@@ -302,7 +302,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     if len(namespace) == 0:
       namespace = 'VISTA'
     self.namespace = namespace
-    self.prompt = self.namespace + '>'
+    self.prompt = encode(self.connection, self.namespace + '>')
     self.connection.logfile_read = codecs.open(logfile, 'w', encoding='utf-8', errors='ignore')
     self.type = 'cache'
     path,filename = os.path.split(logfile)
@@ -322,7 +322,7 @@ class ConnectLinuxCache(ConnectMUMPS):
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
-      command = self.namespace + '>'
+      command = self.prompt
     rbuf = self.connection.expect_exact(encode(command), tout)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
@@ -402,9 +402,9 @@ class ConnectLinuxGTM(ConnectMUMPS):
     gtm_command = os.getenv('gtm_dist')+'/mumps -dir'
     self.connection = pexpect.spawn(gtm_command, timeout=None, encoding='utf-8', codec_errors='ignore')
     if len(namespace) == 0:
-        self.prompt = os.getenv("gtm_prompt")
+        self.prompt =  encode(self.connection, os.getenv("gtm_prompt"))
         if self.prompt == None:
-          self.prompt = "GTM>"
+          self.prompt = encode(self.connection, "GTM>")
     self.connection.logfile_read = codecs.open(logfile, 'w', encoding='utf-8', errors='ignore')
     self.type = 'GTM'
     path,filename = os.path.split(logfile)
