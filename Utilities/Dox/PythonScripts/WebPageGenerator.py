@@ -2193,7 +2193,8 @@ class WebPageGenerator(object):
             except Exception as e:
                 logger.error(e)
                 return
-            routine.addEntryPoint(entry, comment, icrJson)
+            if entry:
+                routine.addEntryPoint(entry, comment, icrJson)
 
             outputFile.write("</div>\n")
             if routine._structuredCode:
