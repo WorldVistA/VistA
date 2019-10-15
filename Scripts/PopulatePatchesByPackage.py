@@ -23,6 +23,7 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 from __future__ import with_statement
+from functools import cmp_to_key
 import sys
 import os
 import csv
@@ -147,7 +148,7 @@ def populate(input):
       place(src,dest)
 
   # Map by package namespace (prefix).
-  for ns in sorted(list(namespaces.keys()),order_long_to_short):
+  for ns in sorted(list(namespaces.keys()), key=cmp_to_key(order_long_to_short)):
     path = namespaces[ns]
     nsPatchList = [x.installName for x in patchList if x.namespace==ns]
     for patch in nsPatchList:
