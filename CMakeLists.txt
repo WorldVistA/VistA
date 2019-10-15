@@ -68,7 +68,11 @@ if(TEST_VISTA OR DOCUMENT_VISTA)
   set(VISTA_TCP_HOST "127.0.0.1" CACHE STRING "Server address of the machine that will have the VistA TCP listener")
   set(VISTA_TCP_PORT "9210" CACHE STRING "Port number of the opened TCP listener." )
 
-
+  option(VIRTUAL_ENV "Running in a virtual environment?" OFF)
+  if (NOT ${VIRTUAL_ENV})
+    set(PIP_USER_OPTION "--user")
+  endif()
+  execute_process(COMMAND "${PYTHON_EXECUTABLE}" "-m" "pip" "install" "future" ${PIP_USER_OPTION} RESULT_VARIABLE return OUTPUT_VARIABLE ERROR)
   include(FindCacheOrGTM)
 endif()
 

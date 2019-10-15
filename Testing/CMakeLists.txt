@@ -24,7 +24,6 @@ endif()
 option(TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES "Use warnings as a failure condition for XINDEX tests?" OFF)
 option(TEST_VISTA_FRESH "Overwrite the database file during build phase of testing? To remove this option, delete the CMake Cache" OFF)
 
-option(VIRTUAL_ENV "Running in a virtual environment?" OFF)
 
 #Execute the python script which checks for PExpect
 execute_process(COMMAND "${PYTHON_EXECUTABLE}"  "${CMAKE_CURRENT_SOURCE_DIR}/pexpectTest.py" RESULT_VARIABLE return OUTPUT_VARIABLE ERROR)
