@@ -3563,11 +3563,16 @@ class WebPageGenerator(object):
                                                    routineInfo[1])
 
         # Generate page for the platform-dependent generic routine page
-        indexList = ["Platform Dependent Routines", "Caller Graph"]
-        routineName = genericRoutine.getName()
-        package = genericRoutine.getPackage()
+        indexList = ["Platform Dependent Routines"]
+        callerRoutines = genericRoutine.getCallerRoutines()
+        if callerRoutines:
+            indexList.append("Caller Graph")
+
         filename = os.path.join(self._outDir, getPackageObjHtmlFileName(genericRoutine))
         with open(filename, 'w') as outputFile:
+            routineName = genericRoutine.getName()
+            package = genericRoutine.getPackage()
+
             self.__includeHeader__(outputFile)
             useAccordion = False
             self.generateNavigationBar(outputFile, indexList,
@@ -3578,7 +3583,7 @@ class WebPageGenerator(object):
 
             # 'Platform Dependent Routines' section
             self.writeSectionHeader("Platform Dependent Routines",
-                                    "DepRoutines", outputFile, pdf,
+                                    "Platform Dependent Routines", outputFile, pdf,
                                     useAccordion)
             tableRowList = []
             pdfTableRowList = []
@@ -3594,7 +3599,6 @@ class WebPageGenerator(object):
                 self.__writeGenericTablizedPDFData__(headerList, pdfTableRowList, pdf)
 
             # 'Caller Graph' and 'Caller Routines' sections
-            callerRoutines = genericRoutine.getCallerRoutines()
             if callerRoutines:
                 sectionGraphHeader = "Caller Graph"
                 self.__writeRoutineDepGraphSection__(genericRoutine,
