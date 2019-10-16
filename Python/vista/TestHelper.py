@@ -57,24 +57,15 @@ class TestError(Exception):
         return repr(self.value)
 
 class CSVFileReader(object):
-    ''' The CSVFileReader class extends the object class.
-
-    CSVFileReader provides the getfiledata() method to open a CSV file and return a table or specified row (record)
-    '''
-
-    def getfiledata (self, fname, fhkey, getrow=None):
-        '''This method opens a CSV file with DictReader and returns a table or specified row'''
+    def getfiledata (self, fname):
+        '''This method opens a CSV file with DictReader and returns a table'''
         infile = open(fname)
         csvreader = csv.DictReader(infile, delimiter='|')
         table = {}
         for rowdata in csvreader:
-            key = rowdata.pop(fhkey)
+            key = rowdata.pop('key')
             table[key] = rowdata
-        if getrow is None:
-            return table
-        else:
-            row = {getrow: table[getrow]}
-            return row
+        return table
 
 class TestSuiteDriver(object):
     '''
