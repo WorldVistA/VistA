@@ -201,7 +201,6 @@ option(TEST_VISTA_SETUP "Prepopulate the database with sample data including use
 if(TEST_VISTA_SETUP)
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/PostImport.log")
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/PostImportSetupScript.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Setup/PostImportSetupScript.py")
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/importPats.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Setup/importPats.py")
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/ClinicSetup.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Setup/ClinicSetup.py")
 endif()
 if((TEST_VISTA_FUNCTIONAL_SIK OR TEST_VISTA_FUNCTIONAL_RAS) AND TEST_VISTA_SETUP)
