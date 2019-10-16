@@ -72,6 +72,8 @@ def encode(connection, command):
       return codecs.encode(command, 'ISO-8859-1', 'ignore')
   elif not sys.platform == 'win32':
       return unicode(command)
+  else:
+      return command
 
 def decode(command):
   if isinstance(command, str):
