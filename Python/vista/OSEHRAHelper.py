@@ -295,7 +295,12 @@ class ConnectWinCache(ConnectMUMPS):
     self.wait('continue')
     self.write('')
     self.wait('choice')
-    self.write('1\r')
+    self.write('1')
+    index = self.multiwait(['Are you sure', 'choice'])
+    if index == 0:
+        self.write('Y')
+        self.wait('choice')
+    self.write('')
 
 class ConnectLinuxCache(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
@@ -396,7 +401,12 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.wait('continue')
     self.write('')
     self.wait('choice')
-    self.write('1\r')
+    self.write('1')
+    index = self.multiwait(['Are you sure', 'choice'])
+    if index == 0:
+        self.write('Y')
+        self.wait('choice')
+    self.write('')
 
 class ConnectLinuxGTM(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
