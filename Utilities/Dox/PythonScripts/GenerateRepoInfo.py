@@ -26,7 +26,7 @@ def run(result):
             os.chdir(result.MRepositDir)
             gitCommand = "\"" + result.git + "\"" + " rev-parse --verify HEAD"
             result = subprocess.check_output(gitCommand, shell=True)
-            sha1Key = result.strip()
+            sha1Key = result.strip().decode('ascii')
         else:
             sha1Key = "Non-Git Directory"
         file.write("""{
