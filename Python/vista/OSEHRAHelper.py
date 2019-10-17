@@ -314,18 +314,18 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.optionMenuTextDict = []
 
   def write(self, command):
-    self.connection.send(encode(command) + '\r')
+    self.connection.send(encode(self.connection, self.command) + '\r')
     logging.debug('connection.write:' + command)
 
   def writectrl(self, command):
-    self.connection.send(encode(command))
+    self.connection.send(encode(self.connection, command))
     logging.debug('connection.writectrl: ' + command)
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.prompt
-    rbuf = self.connection.expect_exact(encode(command), tout)
+    rbuf = self.connection.expect_exact(encode(self.connection, command), tout)
     if rbuf == -1:
         logging.debug('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
@@ -336,7 +336,7 @@ class ConnectLinuxCache(ConnectMUMPS):
   def wait_re(self, command, timeout=15):
     logging.debug('connection.expect: ' + str(command))
     if not timeout: timeout = -1
-    compCommand = re.compile(encode(command),re.I)
+    compCommand = re.compile(encode(self.connection, command),re.I)
     self.connection.expect(compCommand, timeout)
     self.lastconnection = decode(self.connection.before)
 
@@ -345,7 +345,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     encodedOptions = []
     if isinstance(options, list):
       for option in options:
-        encodedOptions.append(encode(option))
+        encodedOptions.append(encode(self.connection, option))
       index = self.connection.expect(encodedOptions, tout)
       if index == -1:
         logging.debug('ERROR: expected: ' + options)
