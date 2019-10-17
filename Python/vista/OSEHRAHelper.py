@@ -314,7 +314,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.optionMenuTextDict = []
 
   def write(self, command):
-    self.connection.send(encode(self.connection, self.command) + '\r')
+    self.connection.send(encode(self.connection, command) + '\r')
     logging.debug('connection.write:' + command)
 
   def writectrl(self, command):
