@@ -79,7 +79,7 @@ def reg_test001(test_suite_details):
         reg.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -111,7 +111,7 @@ def reg_test002(test_suite_details):
         reg.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -145,7 +145,7 @@ def reg_test003(test_suite_details):
         reg.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -172,7 +172,7 @@ def reg_test004(test_suite_details):
         reg.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -191,7 +191,7 @@ def reg_test005(test_suite_details):
         reg.signon()
         reg.adt_menu_smoke(ssn='323554567')
         reg.signoff()
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -212,7 +212,7 @@ def reg_test006(test_suite_details):
         reg.discharge_patient(ssn='444678924', dtime='NOW')
         reg.det_inpatient_inquiry(ssn='444678924', item='1', vlist=['DIRECT', '2-B', 'ALEXANDER,ROBER', 'SMITH,MARY'])
         reg.signoff()
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -248,7 +248,7 @@ def reg_test007(test_suite_details):
         reg.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -267,7 +267,7 @@ def reg_logflow(test_suite_details):
         reg.logflow(['DGPMV', 'DGSWITCH'])
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -288,7 +288,7 @@ def startmon(test_suite_details):
         VistA1.startCoverage(test_suite_details.coverage_subset)
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -314,7 +314,7 @@ def stopmon(test_suite_details):
         VistA1.stopCoverage(path, test_suite_details.coverage_type)
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)

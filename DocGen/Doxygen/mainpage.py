@@ -23,6 +23,5 @@
 ## - Initialize.py.in
 ## - PostImportSetupScript.py.in
 ## - ClinicSetup.py.in
-## - importPats.py.in
 ##
 ##

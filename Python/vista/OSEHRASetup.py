@@ -1528,12 +1528,13 @@ def setupElectronicSignature(VistA,AC,VC1,VC2,sigcode):
 
   # Add patient through the
   # Function arguments:
-  # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
-def addPatient(VistA,pfile):
+  # VistA, Patient Name, Patient Sex, Patient DOB, Patient SSN, Patient Veteran?
+def addPatient(VistA, pfile):
     '''Add ALL patients from specified CSV '''
     preader = TestHelper.CSVFileReader()
-    prec = preader.getfiledata(pfile, 'key')
-    for pitem in prec:
+    prec = preader.getfiledata(pfile)
+    for key in sorted(prec):
+      patient_data = prec[key]
       VistA.write('L  S DUZ=1 D ^XUP')
       VistA.wait('Select OPTION NAME')
       VistA.write('Core Applications\r')
@@ -1552,23 +1553,24 @@ def addPatient(VistA,pfile):
       if index == 1:
         VistA.write("NULL")
         VistA.wait('PATIENT NAME')
-      VistA.write(prec[pitem]['fullname'].rstrip().lstrip())
+      VistA.write(patient_data['fullname'].strip())
       index = VistA.multiwait(['ARE YOU ADDING','Enterprise Search'])
       VistA.write('Y')
       if index == 1:
         while True:
           index = VistA.multiwait(['FAMILY','GIVEN','MIDDLE NAME','PREFIX','SUFFIX',
-          'DEGREE','SOCIAL SECURITY','DATE OF BIRTH','SEX','MAIDEN NAME','CITY','STATE',
-          'MULTIPLE BIRTH','PHONE NUMBER','ARE YOU ADDING'])
+                                   'DEGREE','SOCIAL SECURITY','DATE OF BIRTH','SEX',
+                                   'MAIDEN NAME','CITY','STATE', 'MULTIPLE BIRTH',
+                                   'PHONE NUMBER','ARE YOU ADDING'])
           if index == 14:
             VistA.write('Y')
             break
           elif index == 6:
-            VistA.write(pitem)
+            VistA.write(patient_data['ssn'])
           elif index == 7:
-            VistA.write(prec[pitem]['dob'].rstrip().lstrip())
+            VistA.write(patient_data['dob'].strip())
           elif index == 8:
-            VistA.write(prec[pitem]['sex'].rstrip().lstrip())
+            VistA.write(patient_data['sex'].strip())
           else:
             VistA.write('')
         VistA.wait('to continue')
@@ -1579,19 +1581,19 @@ def addPatient(VistA,pfile):
         VistA.write('')
       else:
         VistA.wait('SEX')
-        VistA.write(prec[pitem]['sex'].rstrip().lstrip())
+        VistA.write(patient_data['sex'].strip())
         VistA.wait('DATE OF BIRTH')
-        VistA.write(prec[pitem]['dob'].rstrip().lstrip())
+        VistA.write(patient_data['dob'].strip())
         VistA.wait('SOCIAL SECURITY NUMBER')
-        VistA.write(pitem)
+        VistA.write(patient_data['ssn'])
         VistA.wait('TYPE')
-        VistA.write(prec[pitem]['type'].rstrip().lstrip())
+        VistA.write(patient_data['type'].strip())
         VistA.wait('PATIENT VETERAN')
-        VistA.write(prec[pitem]['veteran'].rstrip().lstrip())
+        VistA.write(patient_data['veteran'].strip())
         VistA.wait('SERVICE CONNECTED')
-        VistA.write(prec[pitem]['service'].rstrip().lstrip())
+        VistA.write(patient_data['service'].strip())
         VistA.wait('MULTIPLE BIRTH INDICATOR')
-        VistA.write(prec[pitem]['twin'].rstrip().lstrip())
+        VistA.write(patient_data['twin'].strip())
         index = VistA.multiwait(["Do you still",'FAMILY'])
         if index == 0:
           VistA.write('Y')
@@ -1600,9 +1602,9 @@ def addPatient(VistA,pfile):
         VistA.wait('MAIDEN NAME:')
         VistA.write('')
       VistA.wait('[CITY]')
-      VistA.write(prec[pitem]['cityob'].rstrip().lstrip())
+      VistA.write(patient_data['cityob'].strip())
       VistA.wait('[STATE]')
-      VistA.write(prec[pitem]['stateob'].rstrip().lstrip())
+      VistA.write(patient_data['stateob'].strip())
       VistA.wait('ALIAS')
       VistA.write('')
       while True:
@@ -1675,7 +1677,8 @@ def addPatient(VistA,pfile):
       VistA.wait_re("SELECT PATIENT NAME")
       VistA.write('^')
       while True:
-        index = VistA.multiwait(["to halt","Core Applications",'to continue','Select ADT Manager Menu',"Registration Menu"])
+        index = VistA.multiwait(["to halt","Core Applications", "to continue",
+                                 "Select ADT Manager Menu", "Registration Menu"])
         VistA.write('')
         if index == 0:
           break

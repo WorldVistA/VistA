@@ -62,13 +62,12 @@ class PLActions (Actions):
     def write(self, string):
         self.VistA.write(string)
 
-    def addcsv(self, ssn, pfile=None, getrow=None, slist=None):
-        '''Add a list of problems to a patient's record (ignore Select List if present)'''
-        prec = [1]
-        if pfile is not None:
-            preader = TestHelper.CSVFileReader()
-            prec = preader.getfiledata(pfile, 'key', getrow)
-        for pitem in prec:
+    def addcsv(self, ssn, pfile):
+        '''Add a list of problems to a patient's record'''
+        preader = TestHelper.CSVFileReader()
+        prec = preader.getfiledata(pfile)
+        for key in sorted(prec):
+            problem_data = prec[key]
             self.VistA.wait('Problem List Mgt Menu')
             self.VistA.write('Patient Problem List')
             self.VistA.wait('PATIENT NAME')
@@ -76,14 +75,16 @@ class PLActions (Actions):
             self.VistA.wait('Select Action')
             self.VistA.write('AD')
             self.VistA.wait('Clinic')
-            self.VistA.write(prec[pitem]['clinic'].rstrip().lstrip())
+            self.VistA.write(problem_data['clinic'].strip())
             while True:
               index = self.VistA.multiwait(['Select Item','PROBLEM:',"No items available"])
-              if (slist is not None) or (index == 0) :  # if there is a SL, the skip it...
+              if index == 0:
                   self.VistA.write('AD')
               else:
                   self.VistA.write('?')
-              probID =[prec[pitem]['icd'].rstrip().lstrip(),prec[pitem]['icd10'].rstrip().lstrip(),prec[pitem]['snomed'].rstrip().lstrip()]
+              probID =[problem_data['icd'].strip(),
+                       problem_data['icd10'].strip(),
+                       problem_data['snomed'].strip()]
               valIndex = 0
               while True:
                 index = self.VistA.multiwait(['Ok','PROBLEM:'])
@@ -99,19 +100,19 @@ class PLActions (Actions):
               #    self.VistA.wait('//'); self.VistA.write('')
               index = self.VistA.multiwait(['COMMENT','already an ACTIVE problem'])
               if index == 0:
-                self.VistA.write(prec[pitem]['comment1'].rstrip().lstrip())
+                self.VistA.write(problem_data['comment1'].strip())
                 self.VistA.wait('ANOTHER COMMENT')
-                self.VistA.write(prec[pitem]['comment2'].rstrip().lstrip())
+                self.VistA.write(problem_data['comment2'].strip())
                 self.VistA.wait('DATE OF ONSET')
-                self.VistA.write(prec[pitem]['onsetdate'].rstrip().lstrip())
+                self.VistA.write(problem_data['onsetdate'].strip())
                 self.VistA.wait('STATUS')
-                self.VistA.write(prec[pitem]['status'].rstrip().lstrip())
+                self.VistA.write(problem_data['status'].strip())
                 self.VistA.wait('hronic')
-                self.VistA.write(prec[pitem]['acutechronic'].rstrip().lstrip())
+                self.VistA.write(problem_data['acutechronic'].strip())
                 rval = self.VistA.multiwait(['service-connected condition',
                                          'uit w/o saving'])
                 if rval == 0:
-                  self.VistA.write(prec[pitem]['service'].rstrip().lstrip())
+                  self.VistA.write(problem_data['service'].strip())
                   self.VistA.wait('uit w/o saving?')
                   self.VistA.write('Save')
 

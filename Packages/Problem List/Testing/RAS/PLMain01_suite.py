@@ -34,6 +34,7 @@ Created on Mar 9, 2012
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
 
+from builtins import range
 import sys
 sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys.path
 from PLActions import PLActions
@@ -76,7 +77,7 @@ def pl_test001(test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -116,7 +117,7 @@ def pl_test002(test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -158,7 +159,7 @@ def pl_test003(test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -207,7 +208,7 @@ def pl_test004(test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -265,7 +266,7 @@ def pl_test005(test_suite_details):
         pl1.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -300,7 +301,7 @@ def pl_test006 (test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -337,7 +338,7 @@ def pl_test007 (test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -372,7 +373,7 @@ def pl_test008 (test_suite_details):
         pl2.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -417,7 +418,7 @@ def pl_test009 (test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -442,7 +443,7 @@ def pl_test010(test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -468,7 +469,7 @@ def pl_test011(test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -527,7 +528,7 @@ def pl_test012(test_suite_details):
         p5.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -569,7 +570,7 @@ def pl_test013(test_suite_details):
         pl.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -611,7 +612,7 @@ def pl_test014(test_suite_details):
         cp.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -650,7 +651,7 @@ def pl_test015(test_suite_details):
         pl1.signoff()
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -691,7 +692,7 @@ def pl_test016(resultlog, result_dir, namespace):
                    onsetdate='t', status='Active', acutechronic='A', service='N',
                    icd='787.1', prompt='yes', uselex='yes', screendups='yes', isdup='yes', prob='Heartburn')
         pl.signoff()
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         resultlog.write(e.value)
         logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
     else:
@@ -728,7 +729,7 @@ def pl_test017(resultlog, result_dir, namespace):
         pl.sellistad(listname='List001', catname='cat002', hdrname='SKINNYcat', seqnum='1')
         pl.sellistad(listname='List001', catname='cat003', hdrname='blackCAT', seqnum='5')
         pl.signoff()
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         resultlog.write(e.value)
         logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
     else:
@@ -748,7 +749,7 @@ def startmon(test_suite_details):
         VistA1.startCoverage(test_suite_details.coverage_subset)
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
@@ -776,7 +777,7 @@ def stopmon (test_suite_details):
         VistA1.stopCoverage(path, test_suite_details.coverage_type)
 
         test_driver.post_test_run(test_suite_details)
-    except TestHelper.TestError, e:
+    except TestHelper.TestError as e:
         test_driver.exception_handling(test_suite_details, e)
     else:
         test_driver.try_else_handling(test_suite_details)
