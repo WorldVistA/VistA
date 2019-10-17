@@ -58,6 +58,8 @@ selectionList = [VistA.prompt,
 while True:
   index = VistA.multiwait(selectionList)
   if index == 0:
+    if '@TEST_VISTA_COVERAGE@'=='ON':
+      VistA.stopCoverage(os.path.normpath("@LOGFILENAME@"))
     sys.exit(0)
   if index == len(selectionList) - 1:
     VistA.write('No')
