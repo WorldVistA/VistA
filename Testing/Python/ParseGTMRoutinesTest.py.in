@@ -1,5 +1,6 @@
+
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
+from builtins import range
 import os
 import random
 import shutil
@@ -29,15 +31,15 @@ class TestParseGTMRoutines(unittest.TestCase):
   def generateGTMRoutinesVariable(self):
     # Create temporary directories to use in paths for the gtmroutines variable
     tf.tempdir = ('${CMAKE_BINARY_DIR}/Testing/Temporary')
-    top_level_dirs = [tf.mkdtemp() for _ in xrange(random.randint(1,5))]
-    self.files = [tf.mkstemp(suffix='.so')[1] for _ in xrange(random.randint(1,5))]
+    top_level_dirs = [tf.mkdtemp() for _ in range(random.randint(1,5))]
+    self.files = [tf.mkstemp(suffix='.so')[1] for _ in range(random.randint(1,5))]
     self.dir_dict = {}
     for topdir in top_level_dirs:
       tf.tempdir = topdir
-      mid_level_dirs = [tf.mkdtemp() for _ in xrange(random.randint(0,5))]
+      mid_level_dirs = [tf.mkdtemp() for _ in range(random.randint(0,5))]
       if not mid_level_dirs:
         # Randomize between object/source and object only.
-        [tf.mkstemp() for _ in xrange(random.randint(0,1))]
+        [tf.mkstemp() for _ in range(random.randint(0,1))]
       self.dir_dict[topdir] = mid_level_dirs
 
     # Create the gtmroutines style input variable
@@ -60,7 +62,7 @@ class TestParseGTMRoutines(unittest.TestCase):
     sys.stdout.write("\nSimulated 'gtmroutines': \"")
     sys.stdout.write(self.final_str)
     sys.stdout.write("\"\n")
-    print "\nOutput GTM source dirs:", self.output_lst, "\n"
+    print("\nOutput GTM source dirs:", self.output_lst, "\n")
 
   def tearDown(self):
     for a_dir in self.dir_dict:
