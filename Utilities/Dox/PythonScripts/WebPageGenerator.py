@@ -1036,7 +1036,7 @@ class WebPageGenerator(object):
                 ]
 
                 filename = os.path.join(self._outDir, getGlobalHtmlFileNameByName(globalName))
-                with open(filename, 'w') as outputFile:
+                with codecs.open(filename, 'w', encoding="ISO-8859-1", errors='ignore') as outputFile:
                     self.__includeHeader__(outputFile)
 
                     icrList = self.queryICRInfo(packageName.upper(), "GLOBAL", globalName[1:])
