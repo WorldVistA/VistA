@@ -779,6 +779,8 @@ def run(args):
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
   from FileManDataToHtml import FileManDataToHtml
 
+  logger.progress("Start FileMan Global Data Parser")
+
   # Ensure that output directory exists
   if not os.path.exists(os.path.join(args.outDir, "dox")):
     os.makedirs(os.path.join(args.outDir, "dox"))
@@ -786,22 +788,25 @@ def run(args):
   crossRef = parseCrossRefGeneratorWithArgs(args)
 
   # Populate glbDataParse
+  logger.progress("Populate global data parser")
   glbDataParser = FileManGlobalDataParser(args.MRepositDir, crossRef)
   glbDataParser.parseZWRGlobalFileBySchemaV2(glbDataParser.allFiles['1']['path'][0], '1', '^DIC(')
   del glbDataParser.outFileManData['1']
   glbDataParser.outdir = args.outDir
   glbDataParser.patchDir = args.patchRepositDir
 
+  logger.progress("Fileman data to html")
   _doxURL = getDOXURL(args.local)
   _vivianURL = getViViaNURL(args.local)
   htmlGen = FileManDataToHtml(crossRef, glbDataParser.schemaParser,
                               args.outDir, _doxURL, _vivianURL)
 
   if not args.all:
+    logger.progress("Checking files...")
     assert set(args.fileNos).issubset(glbDataParser.allFiles)
     for fileNo in args.fileNos:
         assert fileNo in glbDataParser.globalLocationMap
-
+    logger.progress("Process files...")
     processFiles(glbDataParser, htmlGen, args.fileNos)
   else:
     # Start with 'Strongly connected components'
@@ -823,9 +828,14 @@ def run(args):
 
     # Make sure to only use files that are in glbDataParser.allFiles.keys()
     fileSet &= set(glbDataParser.allFiles.keys())
+    n = 0
+    numFiles = len(fileSet)
     for file in fileSet:
+      n += 1
+      logger.progress("Processing %s (file %d/%d)" % (file, n, numFiles))
       for zwrFile in glbDataParser.allFiles[file]['path']:
         glbDataParser.generateFileIndex(zwrFile, file)
+    logger.progress("Process files...")
     processFiles(glbDataParser, htmlGen, fileSet)
 
   glbDataParser.outRtnReferenceDict()
@@ -833,7 +843,7 @@ def run(args):
 def processFiles(glbDataParser, htmlGen, files):
   for file in files:
     for zwrFile in glbDataParser.allFiles[file]['path']:
-      logger.info("Parsing file: %s at %s" % (file, zwrFile))
+      logger.progress("Parsing file: %s at %s" % (file, zwrFile))
       glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
     htmlGen.outputFileManDataAsHtml(file, glbDataParser)
     glbDataParser.outFileManData.pop(file)

@@ -50,6 +50,7 @@ def getVDLHttpLinkByID(vdlId):
 
 class InitCrossReferenceGenerator(object):
   def __init__(self):
+    logger.progress("Create cross reference generator...")
     self.crossRef = CrossReference()
 
   @property

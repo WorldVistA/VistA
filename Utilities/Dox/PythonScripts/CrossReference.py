@@ -1532,6 +1532,7 @@ class CrossReference(object):
                 self._allRoutines.pop(routineName)
 
     def generateAllPackageDependencies(self):
+        logger.progress("Generate all package dependencies")
         self.__fixPlatformDependentRoutines__()
         self.__generatePlatformDependentRoutineDependencies__()
         for package in itervalues(self._allPackages):

@@ -27,6 +27,7 @@ from LogManager import initLogging, logger
 # must match the argument names *exactly*
 def generate_json(icrFile=None, icrJsonFile=None):
     # Convert ICR file to JSON
+    logger.progress("Convert ICR to JSON")
     convertICRToJson(icrFile, icrJsonFile)
 
 
@@ -57,6 +58,7 @@ def _generate(icrFile, icrJsonFile, MRepositDir=None, patchRepositDir=None,
     if generateHTML or generatePDF:
         # Look for date file was created
         date = ICRSchema.getDate(icrFile)
+        logger.progress("Convert JSON to HTML")
         convertJson(icrJsonFile, date, MRepositDir, patchRepositDir,
                     generateHTML=generateHTML, generatePDF=generatePDF,
                     outDir=outDir, pdfOutDir=pdfOutDir, local=local)

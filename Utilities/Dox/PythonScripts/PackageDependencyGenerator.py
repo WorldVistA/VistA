@@ -29,6 +29,7 @@ def outputAllPackageDependency(crossRef, outputFile):
     fields = {}
     for pkg in itervalues(crossRef.getAllPackages()):
         pkgName = pkg.getName()
+        logger.progress("Processing package %s" % pkgName)
         routines[pkgName] = len(pkg.getAllRoutines())
         numFiles = 0
         numFields = 0
