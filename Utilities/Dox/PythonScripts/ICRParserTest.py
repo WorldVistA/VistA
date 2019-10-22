@@ -25,7 +25,7 @@ import unittest
 import ICRParser
 
 from ArgParserHelper import createArgParser
-from LogManager import initLogging, logger
+from LogManager import initLogging
 
 EXPECTED_PDFS = {
     "807": ["ICR-4887.pdf"],

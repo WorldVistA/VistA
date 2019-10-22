@@ -393,7 +393,7 @@ def getPackageGraphEdgePropsByMetrics(depMetricsList,
         edgeStyle = "dotted"
     else:
         edgeStyle = "solid"
-    return (edgeLabel, edgeToolTip, edgeStyle)
+    return edgeLabel, edgeToolTip, edgeStyle
 
 #==============================================================================
 ## Method to generate merge and sorted Dependeny list by Package
@@ -404,7 +404,7 @@ def mergeAndSortDependencyListByPackage(package, isDependencyList):
     depPackages = sorted(list(depPackageMerged.keys()),
                        key=lambda item: sum(depPackageMerged[item][0:7:2]),
                        reverse=True)
-    return (depPackages, depPackageMerged)
+    return depPackages, depPackageMerged
 
 #==============================================================================
 # Return a dict with package as key, a list of 6 as value

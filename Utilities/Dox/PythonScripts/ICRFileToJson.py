@@ -159,7 +159,7 @@ class ICRFileToJson(object):
                         else:
                             # Starting to process general description
                             self._curField = fieldName
-                            self._rewindStack();
+                            self._rewindStack()
                             self._findKeyValueInLine(match, line)
                     elif subscribingDetails:
                         fieldName = 'SUBSCRIBING DETAILS'
@@ -227,7 +227,7 @@ class ICRFileToJson(object):
 
     def _findKeyValueInLine(self, match, line):
         """ parse all name value pair in a line and put back in self._curRecord"""
-        name = match.group('name'); # this is the name part
+        name = match.group('name')  # this is the name part
         """ add logic to ignore some of the field """
 
         # now find if there is any other name value pair in the same line
@@ -294,8 +294,8 @@ class ICRFileToJson(object):
                 # just continue with more of the same subfile
                 # append the previous result
                 self._curStack[-1][0].setdefault(subFile, []).append(self._curRecord)
-                break;
-            else: # this is a different subfile, now check if it is a nested subfile
+                break
+            else:  # this is a different subfile, now check if it is a nested subfile
                 if isSubFileField(prevSubFile, subFile):
                     # this is a nested subFile, push to stack
                     self._curStack.append((self._curRecord, subFile))

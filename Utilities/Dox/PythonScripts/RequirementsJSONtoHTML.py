@@ -3,8 +3,6 @@ from builtins import object
 import json
 import argparse
 import os.path
-import cgi
-import sys
 
 from LogManager import logger
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
@@ -155,7 +153,7 @@ class RequirementsConverter(object):
                 for reqEntry in reqData:
                     output.write("<tr>\n")
                     if not isForAll:
-                      reqSummary = self._convertReqEntryToSummaryInfo(reqEntry);
+                      reqSummary = self._convertReqEntryToSummaryInfo(reqEntry)
                       if not reqSummary in allReqs:
                         allReqs.append(reqSummary)
                     else:

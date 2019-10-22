@@ -23,12 +23,9 @@ from future.utils import iteritems
 from future.utils import itervalues
 
 import glob
-import re
 import os
 import json
 import os.path
-import sys
-import subprocess
 import re
 import csv
 import argparse
@@ -494,7 +491,7 @@ class ExternalReferenceSectionParser (AbstractSectionParser):
                 logger.warning("invalid Routine Name: %s in routine:%s, package: %s" %
                              (routineName, Routine, Routine.getPackage()))
                 return
-            if (routineName.startswith("%")):
+            if routineName.startswith("%"):
                CrossReference.addPercentRoutine(routineName)
                # ignore mumps routine for now
                if CrossReference.isMumpsRoutine(routineName):
@@ -529,7 +526,7 @@ class RoutinePrintSectionParser (AbstractSectionParser):
     structuredSource=[]
   def parseLine(self, line, Routine, CrossReference):
     global structuredSource
-    structuredSource.append(line);
+    structuredSource.append(line)
 
 #===============================================================================
 # Implementation of a Package Object listing parser section
