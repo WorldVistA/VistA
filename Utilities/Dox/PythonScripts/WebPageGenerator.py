@@ -716,21 +716,36 @@ class WebPageGenerator(object):
 
     def generateWebPage(self):
         self.failures = []
+        logger.progress("Generate Index page")
         self.generateIndexHtmlPage()
+        logger.progress("Generate Package Namespace Global Mapping page")
         self.generatePackageNamespaceGlobalMappingPage()
+        logger.progress("Generate Global Name index page")
         self.generateGlobalNameIndexPage()
+        logger.progress("Generate Global pages")
         self.generateIndividualGlobalPage()
+        logger.progress("Generate Global File Number index page")
         self.generateGlobalFileNoIndexPage()
+        logger.progress("Generate FileMan SubFile index page")
         self.generateFileManSubFileIndexPage()
+        logger.progress("Generate Package index page")
         self.generatePackageIndexPage()
+        logger.progress("Generate Routine index page")
         self.generateRoutineIndexPage()
+        logger.progress("Generate Source Code pages")
         self.generateAllSourceCodePage()
+        logger.progress("Generate Routine pages")
         self.generateAllIndividualRoutinePage()
+        logger.progress("Generate Package to Package Interaction Detail pages")
         self.generatePackagePackageInteractionDetail()
+        logger.progress("Generate Package Component pages")
         self.generatePackageInformationPages()
+        logger.progress("Generate Package pages")
         self.generateIndividualPackagePage()
+        logger.progress("Generate Package Component index page")
         self.generatePackageComponentListIndexPage()
 
+        logger.progress("Copy generated files to output directory...")
         self.copyFilesToOutputDir()
         if self._generatePDFBundle:
             self.zipPDFFiles()
@@ -3792,7 +3807,7 @@ def run(args):
                                                                    sortTemplateDeps=readIntoDictionary(args.sortTemplateDep),
                                                                    printTemplateDeps=readIntoDictionary(args.printTemplateDep)
                                                                    )
-    logger.info ("Starting generating web pages....")
+    logger.progress("Starting generating web pages....")
     doxDir = os.path.join(args.patchRepositDir, 'Utilities/Dox')
     webPageGen = WebPageGenerator(crossRef,
                                   args.outDir,

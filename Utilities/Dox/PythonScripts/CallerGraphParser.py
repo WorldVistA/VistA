@@ -658,8 +658,8 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
           if self._crossRef.routineNeedRename(routineName):
               renamedRoutineName = self._crossRef.getRenamedRoutineName(routineName)
           if not self._crossRef.hasRoutine(renamedRoutineName):
-              logger.error("Invalid Routine: '%s': Rename Routine '%s'" %
-                           (routineName, renamedRoutineName))
+              logger.warning("Invalid Routine: '%s': Rename Routine '%s'" %
+                              (routineName, renamedRoutineName))
               return False
           self._curRoutine = self._crossRef.getRoutineByName(renamedRoutineName)
           self._curRoutine._structuredCode = structuredSource
@@ -682,6 +682,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
             return False
         self._curRoutine = None
         return True
+
     def registerSectionHandle(self, section, AbstractSectionParser):
         self._sectHandleDict[section] = AbstractSectionParser
 
@@ -840,6 +841,7 @@ def createCallGraphLogAugumentParser():
     return parser
 
 def parseAllCallGraphLog(xindexLogDir, crossRef, icrJson):
+    logger.progress("Parse call graph logfiles")
     xindexLogParser = CallerGraphLogFileParser(crossRef, icrJson)
     xindexLogParser.parseAllCallerGraphLog(xindexLogDir, "*.log")
     return xindexLogParser

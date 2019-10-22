@@ -59,10 +59,15 @@ class GraphGenerator(object):
                 logger.error("Error making dir %s : Error: %s" % (dirName, e))
 
     def generateGraphs(self):
+        logger.progress("Generate Package Dependencies graphs")
         self.generatePackageDependenciesGraph()
+        logger.progress("Generate Package Dependents graphs")
         self.generatePackageDependentsGraph()
+        logger.progress("Generate Routine Call graphs")
         self.generateRoutineCallGraph()
+        logger.progress("Generate Routine Caller graphs")
         self.generateRoutineCallerGraph()
+        logger.progress("Generate Color Legend")
         self.generateColorLegend()
 
     #==========================================================================
@@ -288,10 +293,9 @@ class GraphGenerator(object):
 # main
 #===============================================================================
 def run(args):
-    logger.info ("Parsing ICR JSON file....")
+    logger.progress("Parsing ICR JSON file....")
     icrJsonFile = os.path.abspath(args.icrJsonFile)
     parsedICRJSON = parseICRJson(icrJsonFile)
-    logger.info ("Building cross reference....")
     doxDir = os.path.join(args.patchRepositDir, 'Utilities/Dox')
     crossRef = CrossReferenceBuilder().buildCrossReferenceWithArgs(args,
                                                                    icrJson=parsedICRJSON,
@@ -299,11 +303,9 @@ def run(args):
                                                                    sortTemplateDeps=readIntoDictionary(args.sortTemplateDep),
                                                                    printTemplateDeps=readIntoDictionary(args.printTemplateDep)
                                                                    )
-    logger.info ("Starting generating graphs....")
+    logger.progress("Starting generating graphs....")
     graphGenerator = GraphGenerator(crossRef, args.outDir, doxDir, args.dot)
     graphGenerator.generateGraphs()
-
-    logger.info ("End of generating graphs")
 
 if __name__ == '__main__':
     crossRefArgParse = createCrossReferenceLogArgumentParser()

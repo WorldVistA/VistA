@@ -27,13 +27,23 @@ FORMAT_STRING = '%(asctime)s %(levelname)s %(message)s'
 
 # Logging Levels
 # CRITICAL
+# PROGESS
 # ERROR
 # WARNING (default, root)
 # INFO
 # DEBUG
 # NOTSET (default, all others)
 
-def initLogging(outputDir, outputFileName, level=logging.DEBUG):
+PROGESS_LOG_LEVEL = 49
+
+def logProgress(self, message, *args, **kws):
+    if self.isEnabledFor(PROGESS_LOG_LEVEL):
+        self._log(PROGESS_LOG_LEVEL, message, args, **kws)
+
+def initLogging(outputDir, outputFileName, level=logging.ERROR):
+    # Use this level to display progress messages, is between CRITCAL and ERROR
+    logging.addLevelName(PROGESS_LOG_LEVEL, "PROGRESS ---->")
+    logging.Logger.progress = logProgress
     # Set root logging level. This level is checked first and then the
     # individual handers' levels are checked.
     logger.setLevel(level)
@@ -42,7 +52,7 @@ def initLogging(outputDir, outputFileName, level=logging.DEBUG):
         os.makedirs(outputDir)
     _setupFileLogging(os.path.join(outputDir, outputFileName),
                       logging.DEBUG, formatter)
-    _setupConsoleLogging(logging.WARNING, formatter)
+    _setupConsoleLogging(logging.ERROR, formatter)
 
 def _getTempLogFile(filename):
     return os.path.join(tempfile.gettempdir(), filename)

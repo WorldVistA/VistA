@@ -45,12 +45,13 @@ class FileManDbCallParser(object):
 
     def getCrossReference(self):
         return self._crossRef
+
     def parseFileManDbJSONFile(self, dbJsonFile):
-        logger.info("Start parsing JSON file [%s]" % dbJsonFile)
+        logger.progress("Start parsing JSON file [%s]" % dbJsonFile)
         with open(dbJsonFile, 'r') as jsonFile:
             dbCallJson = json.load(jsonFile)
             for pkgItem in dbCallJson:
-                """ find all the routines under that package """
+                # find all the routines under that package
                 routines = pkgItem['routines']
                 for rtn in routines:
                     rtnName = rtn['name']
@@ -72,8 +73,8 @@ class FileManDbCallParser(object):
             if fileManFile:
                 routine.addFilemanDbCallGlobal(fileManFile)
             else: # ignore non-fileman global, could be false positive
-                logger.error("global [%s] is not a valid Fileman file for"
-                             " routine %s" % (fileManGbl, routine))
+                logger.warning("global [%s] is not a valid Fileman file for"
+                                " routine %s" % (fileManGbl, routine))
                 return
 
     def isFunctionIgnored(self, callDetail):
@@ -102,8 +103,8 @@ class FileManDbCallParser(object):
                     assert rootFile
                     routine.addFilemanDbCallGlobal(subFile, callTag)
                 else:
-                    logger.error("file #%s[%s] is not a valid fileman file, for"
-                        " routine [%s]" % (fileNo, callDetail, routine))
+                    logger.warning("file #%s[%s] is not a valid fileman file, for"
+                                    " routine [%s]" % (fileNo, callDetail, routine))
 
 
 def createFileManDBFileAugumentParser(isRequired=True):

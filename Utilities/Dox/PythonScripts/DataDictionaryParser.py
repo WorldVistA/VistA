@@ -339,8 +339,9 @@ class FileManFieldSectionParser(IDDSectionParser):
                     if result:
                         filePointedTo = CrossReference.getGlobalByFileNo(result.group('File'))
                         if not filePointedTo:
-                            # log an error for now, will handle this case later
-                            logger.error("INVALID File! File is %s, Global is %s" % (result.group('File'), Global))
+                            # log an warning for now, will handle this case later
+                            logger.warning("INVALID File! File is %s, Global is %s" %
+                                            (result.group('File'), Global))
                             continue
                         if not fileList: fileList = []
                         fileList.append(filePointedTo)
@@ -360,7 +361,8 @@ class FileManFieldSectionParser(IDDSectionParser):
                                                           FileManField.FIELD_TYPE_FILE_POINTER,
                                                           fLocation)
             if not filePointedTo:
-                logger.error("Could not find file pointed to [%s], [%s], line:[%s]" % (fileNo, self._curFile, line))
+                logger.warning("Could not find file pointed to [%s], [%s], line:[%s]" %
+                                (fileNo, self._curFile, line))
             else:
                 self._field.setPointedToFile(filePointedTo)
             return
@@ -449,7 +451,8 @@ class PointedToBySectionParser(IDDSectionParser):
                 logger.warning("Could not find global based on %s, %s" %
                                (fileManNo, result.group("Name")))
         else:
-            logger.error("Could not parse pointer reference [%s] in file [%s]" % (line, self._global.getFileNo()))
+            logger.warning("Could not parse pointer reference [%s] in file [%s]" %
+                            (line, self._global.getFileNo()))
 
 class IDataDictionaryListFileLogParser(object):
     # Enum for section value
@@ -561,6 +564,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
 
     def getCrossReference(self):
         return self._crossRef
+
     #===========================================================================
     # pass the log file and get all routines ready
     #===========================================================================
@@ -580,7 +584,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         fileNo = baseName[:-len(".schema")]
         self._curGlobal = self._crossRef.getGlobalByFileNo(fileNo)
         if not self._curGlobal:
-            logger.error("Could not find global based on file# %s" % fileNo)
+            logger.warning("Could not find global based on file# %s" % fileNo)
             return
         for line in logFileHandle:
             # handle the empty line
@@ -605,6 +609,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         return None
 
 def parseDataDictionaryLogFile(crossRef, fileSchemaDir):
+    logger.progress("Parse data dictionary logfile")
     DDFileParser = DataDictionaryListFileLogParser(crossRef)
     DDFileParser.parseAllDataDictionaryListLog(fileSchemaDir, "*.schema")
     DDFileParser.parseAllDataDictionaryListLog(fileSchemaDir, ".*.schema")
