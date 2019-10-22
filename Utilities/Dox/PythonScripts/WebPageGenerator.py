@@ -1411,7 +1411,7 @@ class WebPageGenerator(object):
         for (name, values) in propList:
             output += "<li><dl><dt>%s&nbsp;&nbsp;<code>%s</code></dt>" % (name, values[0])
             for value in values[1:]:
-                output += "<dd><p>%s</p></dd>" % value
+                output += "<dd><code>%s</code></dd>" % value
             output += "</dl></li>"
         output += "</ul>"
         return output
