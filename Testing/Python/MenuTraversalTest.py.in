@@ -1,5 +1,6 @@
+
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
 ### set up the IO that is need by unit test
+from builtins import str
 import sys,os
 sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 from OSEHRAMenuTraversal import findMenuPath,goToOption
@@ -27,7 +29,7 @@ if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
 if VistA.type=='cache':
   try:
     VistA.ZN('${VISTA_CACHE_NAMESPACE}')
-  except IndexError,no_namechange:
+  except IndexError as no_namechange:
     pass
 VistA.wait(PROMPT, 60)
 
@@ -35,17 +37,17 @@ expectedresult=['Systems Manager Menu', 'Core Applications', 'Dietetic Administr
 menutextresult,pathresult=findMenuPath(VistA,"FHPRFM","${VISTA_BINARY_DIR}")
 
 if menutextresult==expectedresult:
-  print "Output of test matches expected output"
+  print("Output of test matches expected output")
 else:
-  print "Error: Expected output was " + str(expectedresult)
-  print "The test returned " + str(menutextresult)
+  print("Error: Expected output was " + str(expectedresult))
+  print("The test returned " + str(menutextresult))
   sys.exit(1)
 goToOption(VistA,"FHPRFM","${VISTA_BINARY_DIR}")
-print VistA.MenuLocation
+print(VistA.MenuLocation)
 goToOption(VistA,"FHPROM","${VISTA_BINARY_DIR}")
-print VistA.MenuLocation
+print(VistA.MenuLocation)
 goToOption(VistA,"XPD MAIN","${VISTA_BINARY_DIR}")
-print VistA.MenuLocation
+print(VistA.MenuLocation)
 VistA.exitToPrompt()
 VistA.write("K")
 goToOption(VistA,"EVE","${VISTA_BINARY_DIR}","SM1234")

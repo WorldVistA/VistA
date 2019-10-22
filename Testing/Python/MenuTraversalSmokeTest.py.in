@@ -1,5 +1,5 @@
 #---------------------------------------------------------------------------
-# Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2013-2019 The Open Source Electronic Health Record Alliance
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+from __future__ import print_function
 ### set up the IO that is need by unit test
 import sys,os,json
 sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
@@ -22,12 +22,12 @@ from OSEHRAMenuTraversal import goToOption,createOptionParentDictionary,createOp
 
 def visitChildren(VistA,targetmenu,results):
   results.write("Going to " + targetmenu + "\n")
-  print "Going to " + targetmenu
+  print("Going to " + targetmenu)
   try:
     goToOption(VistA,targetmenu,"${VISTA_BINARY_DIR}",'',True)
     results.write("Going to " + targetmenu + " --- Success\n")
-    print "Going to " + targetmenu + " --- Success"
-    for menu in VistA.optionParentDict.keys():
+    print("Going to " + targetmenu + " --- Success")
+    for menu in VistA.optionParentDict:
       if VistA.optionParentDict[menu] == targetmenu and ("MENU" in menu or ("Applications" in VistA.optionMenuTextDict[menu] or "Menu" in VistA.optionMenuTextDict[menu] and not "a Menu Template" in VistA.optionMenuTextDict[menu] and not "Print" in VistA.optionMenuTextDict[menu] and not "List " in VistA.optionMenuTextDict[menu])):
         visitChildren(VistA,menu,results)
   except NameError:
@@ -42,7 +42,7 @@ if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
 if VistA.type=='cache':
   try:
     VistA.ZN('${VISTA_CACHE_NAMESPACE}')
-  except IndexError,no_namechange:
+  except IndexError as no_namechange:
     pass
 VistA.wait(PROMPT, 60)
 VistA.optionParentDict = createOptionParentDictionary(VistA,os.path.join("${VISTA_BINARY_DIR}","MenuParentMap.txt"))
@@ -51,9 +51,9 @@ counter = 0
 with open('${VISTA_BINARY_DIR}/Testing/Temporary/SmokeTestResults.log','w') as results:
   results.write("Results of the Menu Traversal Smoke Test\n")
 
-  for menu in VistA.optionParentDict.keys():
+  for menu in VistA.optionParentDict:
     if VistA.optionParentDict[menu] == '** no parents **' and ("MENU" in menu or ("Applications" in VistA.optionMenuTextDict[menu] or "Menu" in VistA.optionMenuTextDict[menu] and not "a Menu Template" in VistA.optionMenuTextDict[menu] and not "Print" in VistA.optionMenuTextDict[menu] and not "List " in VistA.optionMenuTextDict[menu])):
-      print "Visiting top level menu: " + menu
+      print("Visiting top level menu: " + menu)
       visitChildren(VistA,menu,results)
   results.close()
 VistA.write('h')
