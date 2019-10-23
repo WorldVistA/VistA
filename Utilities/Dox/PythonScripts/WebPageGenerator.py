@@ -54,6 +54,7 @@ from CrossReference import *
 
 from HTMLUtilityFunctions import FOOTER
 from UtilityFunctions import *
+from UtilityFunctions import cOpen as open
 
 # constants
 DEFAULT_OUTPUT_LOG_FILE_NAME = "WebPageGen.log"

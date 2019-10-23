@@ -19,6 +19,7 @@ standard_library.install_aliases()
 from builtins import str
 from builtins import range
 from future.utils import iteritems
+import codecs
 import csv
 import json
 import re
@@ -124,6 +125,9 @@ COLOR_MAP = {
 }
 
 ###############################################################################
+
+def cOpen(fileName, openParams):
+  return codecs.open(fileName, openParams, encoding="ISO-8859-1", errors="ignore")
 
 def getDOXURL(local):
     if local:
