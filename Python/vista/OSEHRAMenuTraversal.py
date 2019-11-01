@@ -33,7 +33,7 @@ def printMenuParentPairs(VistA,outputFile):
   VistA.write("HFS")
   VistA.wait("HOST FILE NAME")
   VistA.write(os.path.normpath(outputFile))
-  VistA.wait("ADDRESS/PARAMETERS")
+  VistA.wait("PARAMETERS")
   if VistA.type=="GTM":
     VistA.write("NEWVERSION:NOREADONLY:VARIABLE")
   else:
@@ -68,7 +68,7 @@ def printMenuTextPairs(VistA,outputFile):
   VistA.write("HFS")
   VistA.wait("HOST FILE NAME")
   VistA.write(os.path.normpath(outputFile))
-  VistA.wait("ADDRESS/PARAMETERS")
+  VistA.wait("PARAMETERS")
   if VistA.type=="GTM":
     VistA.write("NEWVERSION:NOREADONLY:VARIABLE")
   else:
@@ -113,6 +113,7 @@ def createOptionParentDictionary(VistA,filepath="blah2.txt"):
   testinfo = open(filepath,"r").readlines()
   header = re.compile("^OPTION\s+PARENTS")
   width = re.compile("PARENTS")
+  space = 0
   for line in testinfo:
     result = header.search(line)
     if result:
@@ -136,6 +137,7 @@ def createOptionMenuTextDictionary(VistA,filepath="blah3.txt"):
   testinfo = open(filepath,"r").readlines()
   header = re.compile("^NAME\s+MENU TEXT")
   width = re.compile("MENU TEXT")
+  space = 0
   for line in testinfo:
     result = header.search(line)
     if result:
