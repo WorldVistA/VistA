@@ -283,6 +283,40 @@ def configureConsoleDevice(VistA):
   VistA.wait("Select OPTION")
   VistA.write("")
 
+def configureHFSDevice(VistA):
+  # Ensure that the console device is correctly configured by adding
+  # sign-on capabilities
+  startFileman(VistA)
+  VistA.write('1')
+  VistA.wait_re('INPUT TO WHAT FILE')
+  VistA.write('DEVICE')
+  VistA.wait('EDIT WHICH FIELD')
+  VistA.write('OPEN PARAMETERS')
+  VistA.wait_re("then edit field")
+  VistA.write('ASK PARAMETERS')
+  VistA.wait_re("then edit field")
+  VistA.write('SUBTYPE')
+  VistA.wait_re("then edit field")
+  VistA.write('')
+  VistA.wait('NAME:')
+  VistA.write('HFS')
+  VistA.wait('OPEN PARAMETERS')
+  if VistA.type=='cache':
+    VistA.write('"NWS"')
+  else:
+    VistA.write('"nowrap:stream:newversion"')
+  VistA.wait("ASK PARAMETERS")
+  VistA.write("1")
+  VistA.wait("SUBTYPE")
+  VistA.write("P-OTHER")
+  index= VistA.multiwait(['CHOOSE', 'DEVICE NAME'])
+  if index == 0:
+    VistA.write('1')
+    VistA.wait("Select DEVICE")
+  VistA.write('')
+  VistA.wait("Select OPTION")
+  VistA.write("")
+
 def setupVistADomain(VistA,site_name):
   # Enter the site name into the DOMAIN file via FileMan
   startFileman(VistA)

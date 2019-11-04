@@ -71,6 +71,11 @@ OSEHRASetup.configureNULLDevice(VistA)
 
 OSEHRASetup.configureConsoleDevice(VistA)
 
+# Change the HFS device to set the proper open
+# parameters for the M environment
+
+OSEHRASetup.configureHFSDevice(VistA)
+
 # Create and Christen the New Domain:
 # Enter the site name into the DOMAIN file then
 # christen the domain via the XMUDCHR routine.
