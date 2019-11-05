@@ -194,7 +194,7 @@ def generateSha1SumCommon(fileObject, buf=1024):
   while True:
     nByte = fileObject.read(buf)
     if nByte:
-      hashString += nByte.encode('ascii')
+      hashString += codecs.encode(nByte, encoding="ascii", errors='ignore')
     else:
       break
   return hashlib.sha1(hashString).hexdigest()
