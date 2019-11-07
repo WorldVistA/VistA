@@ -1,0 +1,249 @@
+
+=============================================================================
+Run Date: AUG 20, 2019                     Designation: PSO*7*571
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #467                      Status: Released
+                  Compliance Date: AUG 22, 2019
+=============================================================================
+
+
+Subject: Pharmacy National Clozapine Coordination (NCC) Follow Up
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this patch is to prevent a patient safety issue by 
+ correcting a possible historical data error in the PHARMACY PATIENT file 
+ (#55) that can prevent clozapine patients from receiving their clozapine 
+ prescriptions.  The patients who have this data error may need to have 
+ their clozapine status changed.  Patients should NOT be edited until the 
+ NCC staff provide an update to the site.
+    
+ A report will be made that shows those patients with a clozapine treatment
+ status of "PRE-TREATMENT" and can be sent to the National Clozapine
+ Coordinating Center (NCCC).  This patch is a follow up to the Mental
+ Health NCCC multi-build which contained the patches YS*5.01*122,
+ PSO*7.0*457, PSJ*5.0*327, and OR*3.0*427.  The multi-build was released
+ nationally on July 15, 2019 with a compliance date of August 14, 2019.
+  
+ Patients who have a status of PRE-TREATMENT will not be able to get their 
+ clozapine prescriptions.  
+  
+ This will require a user that has FileMan experience and access to file 
+ #55.  A FileMan search will be performed on a cross-referenced field 
+ so the results will be returned quickly.  It is anticipated that it will 
+ take less than 20 minutes to generate the report.  If patients are found 
+ with a pre-treatment status the report should also be sent in an Outlook 
+ message as described below.
+  
+ The FileMan search will find those patients who have a CLOZAPINE STATUS 
+ (field #54) of PRE-TREATMENT.  These patients need to be identified as 
+ soon as possible so that their clozapine status can be edited, if 
+ needed.  It is possible that the search will not find any patients with a 
+ PRE-TREATMENT status.  The report will include the DATE OF DEATH field 
+ (#.351) from the PATIENT file (#2).  It is likely that the DATE OF DEATH 
+ field will be blank for most, if not all, patients on the report (if any 
+ pre-treatment patients are found).
+   
+ The MailMan message should be sent to yourself and the PSOCLOZ Mail 
+ Group.  It is advised that this patch description be made available to 
+ the recipients of the MailMan message described below to avoid any 
+ confusion as to why they received the email.  The patch description 
+ message can be forwarded to the PSOCLOZ mail group, or any other 
+ concerned users.
+  
+ Since the report is sent as a MailMan message you will be able to forward 
+ it, if needed.  The email message will contain personally identifiable 
+ information (PII) and should be handled following all VA security rules 
+ and guidelines.
+  
+ If the site staff have any questions about registering active clozapine 
+ patients they should contact the NCCC for guidance.
+  
+ If patients are found with a PRE-TREATMENT status then send the report as
+ an encrypted Outlook message to the VHA CLOZAPINE national mail group.  If
+ the message is sent the subject should be the site name, site number, and
+ the term PRE-TREATMENT.  For example: "San Diego 664 PRE-TREATMENT".
+  
+ *** Instructions on how to Search the PHARMACY PATIENT file (#55) ***
+  
+ Note: The results of the search will be stored in a SORT TEMPLATE named 
+ PSO CLOZAPINE PRE-TREATMENT.  When entering the description of the 
+ template it may be useful to put the date into the text.  An example is 
+ shown below.  A print template named PSO CLOZAPINE STATUS is created.  
+ This print template can be used to list any pharmacy patients that need 
+ to be checked.
+  
+ Select Systems Manager Menu Option: FM  VA FileMan
+  
+           VA FileMan Version 22.2
+  
+           Enter or Edit File Entries
+           Print File Entries
+           Search File Entries
+           Modify File Attributes
+           Inquire to File Entries
+           Utility Functions ...
+           Data Dictionary Utilities ...
+           Transfer Entries
+           Other Options ...
+  
+ Select VA FileMan Option: SEARCH File Entries
+  
+ Output from what File: PHARMACY PATIENT//   (40 entries)
+  
+   -A- SEARCH FOR PHARMACY PATIENT FIELD: 54  CLOZAPINE STATUS
+   -A- CONDITION: EQUALS  
+   -A- EQUALS: PRE-TREATMENT
+  
+   -B- SEARCH FOR PHARMACY PATIENT FIELD: 
+  
+ IF: A//     CLOZAPINE STATUS EQUALS "P" (PRE-TREATMENT)
+  
+ TORE RESULTS OF SEARCH IN TEMPLATE: PSO CLOZAPINE PRE-TREATMENT
+   Are you adding 'PSO CLOZAPINE PRE-TREATMENT' as 
+     a new SORT TEMPLATE? No// Y  (Yes)
+ DESCRIPTION:
+   1>List of clozapine patients with pre-treatment status
+   2>File snapshot August 16, 2019
+   3>
+ EDIT Option: 
+  
+ Sort by: NUMBER// 53  CLOZAPINE REGISTRATION NUMBER
+ Start with CLOZAPINE REGISTRATION NUMBER: FIRST// 
+   Within CLOZAPINE REGISTRATION NUMBER, Sort by: 
+ First Print FIELD: NAME;S1  
+ Then Print FIELD: 54  CLOZAPINE STATUS
+ Then Print FIELD: NAME:DATE OF DEATH;C1
+ Then Print FIELD: 55;C40  DATE OF LAST CLOZAPINE RX
+ Then Print FIELD: 
+ Heading (S/C): PHARMACY PATIENT Search  Replace 
+ STORE PRINT LOGIC IN TEMPLATE: PSO CLOZAPINE STATUS
+   Are you adding 'PSO CLOZAPINE STATUS' as 
+     a new PRINT TEMPLATE? No// Y  (Yes)
+ DEVICE: P-MESSAGE  MESSAGE P-MESSAGE-HFS-OPENM-NT  HFS (OpenM-NT) FILE 
+ =>  MESSAGE
+  
+ Subject: Clozapine Patients with PRE-TREATMENT status
+  
+      Select one of the following:
+  
+           M         Me
+           P         Postmaster
+  
+ From whom: Me// 
+ Send mail to: HRUBOVCAK,JC//   HRUBOVCAK,JC
+ Select basket to send to: IN//   
+ And Send to: G.PSOCLOZ  
+ 1 Local:
+  
+ HRUBOVCAK,JC
+ And Send to: 
+  
+ Moving to MailMan message...
+ ...
+ Finished moving.
+ Sending [22712]...
+   Sent
+  
+ Press RETURN to continue...
+  
+ *** Verify that the MailMan message was sent ***
+  
+ Note: In the MailMan message below one patient has a DATE OF DEATH.  
+ It is listed directly below the patient's name.
+  
+ VA MailMan 8.0 service for HRUBOVCAK.JC@CLOZA.DEVSLC.DOMAIN.EXT
+ You last used MailMan: 08/15/19@09:19
+ You have 163 new messages.
+  
+    NML    New Messages and Responses
+    RML    Read/Manage Messages
+    SML    Send a Message
+           Query/Search for Messages
+    AML    Become a Surrogate (SHARED,MAIL or Other)
+           Personal Preferences ...
+           Other MailMan Functions ...
+           Help (User/Group Info., etc.) ...
+  
+  
+ You've got PRIORITY mail!
+  
+  
+ Select MailMan Menu Option: R  Read/Manage Messages
+ Read mail in basket: IN//        (351 messages, 146 new)
+ Last message number: 351   Messages in basket: 351 (146 new)
+ Enter ??? for help.
+  
+ Subj: Clozapine Patients with PRE-TREATMENT status  [#22712] 
+ 08/16/19@12:38   29 lines
+ From:               In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+  
+ PHARMACY PATIENT Search                              AUG 16, 2019@12:38   
+ PAGE 1
+ NAME                            CLOZAPINE STATUS
+                                        DATE OF
+                                        LAST
+                                        CLOZAPINE
+ NAME:DATE OF DEATH                     RX
+ --------------------------------------------------------------------------
+  
+         CLOZAPINE REGISTRATION NUMBER: DD23456
+  
+ INPATIENT,TEST SIXTY-TWO        PRE-TREATMENT
+ AUG 13,2019                            JUL 24,2019
+         CLOZAPINE REGISTRATION NUMBER: GG98765
+  
+ OPCLOZ,TESTC FORTY-THREE        PRE-TREATMENT
+                                        
+  
+ Subj: Clozapine Patients with PRE-TREATMENT status  [#22712]   Page 2
+ --------------------------------------------------------------------------
+         CLOZAPINE REGISTRATION NUMBER: OP00505
+  
+ OUTPATIENT,TEST SEVENTEEN       PRE-TREATMENT
+                                        AUG 14,2019
+         CLOZAPINE REGISTRATION NUMBER: Z999023
+  
+ IPI,TEST FORTY-FIVE             PRE-TREATMENT
+                                        AUG 6,2019
+  
+  
+  
+                          4 MATCHES FOUND.
+  
+  
+ Enter message action (in IN basket): Ignore//
+  
+ End reached.  Begin again? No//   NO
+  
+        * * * 
+  
+ Note: If no patients are found with a PRE-TREATMENT status then no 
+ further action is needed.  The clinical staff need to be consulted as to 
+ which patients should have their status changed to ACTIVE.
+  
+ To change this status a privileged user can use FileMan to edit the 
+ PHARMACY PATIENT file (#55) and change the value in the CLOZAPINE STATUS 
+ field (#54) to "ACTIVE" for specific patients.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 15, 2019
+Completed By:                               Date Completed: AUG 20, 2019
+Released By :                               Date Released : AUG 20, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

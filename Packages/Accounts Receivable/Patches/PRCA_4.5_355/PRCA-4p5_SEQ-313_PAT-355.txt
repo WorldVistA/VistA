@@ -1,0 +1,388 @@
+$TXT Created by                at DEVESS.DOMAIN.EXT  (KIDS) on Thursday, 07/11/19 at 11:48
+=============================================================================
+Run Date: OCT 16, 2019                     Designation: PRCA*4.5*355
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #313                    Status: Released
+                  Compliance Date: NOV 16, 2019
+=============================================================================
+
+
+Subject: STATEMENT SCHEDULE UPDATE
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch Components:
+ -----------------
+ This Accounts Receivable (AR) patch supports changes to the Veterans 
+ Health Information System and Technology Architecture (VistA) to support
+ the Patient Statement Enhancements Project (PSE).
+  
+ ***
+ *** QUEUEING OF THIS PATCH HAS BEEN DISABLED 
+ ***
+ *** SELECTED SITES MUST INSTALL ON SPECIFIC DAYS.
+ *** Upon the first installation of this patch in a production account,
+ *** an environment check will ensure that the patch is only installed
+ *** on allowed days. The allowable days depends on which site you are.
+ ***
+ *** If your site is not listed in the chart below you can install on 
+ *** any day of the month. If your site is listed in the chart below,
+ *** allowable days to install in production are as follows:
+ ***
+ *** Sites listed in the chart below may install the patch on the 
+ *** 1st of the month through the 16th of the month (inclusive).
+ *** In addition, the 29th through the last day of the month (inclusive) 
+ *** are also valid install days. 
+ ***
+ *** For example, if your site is listed in the chart below, 
+ *** October 1st through October 16th are valid install days. In addition,
+ *** October 29th through October 31st are also valid install days.
+ ***
+  
+ This patch updates the STATEMENT DAY field (#340,.03) that point to
+ entries in the PATIENT file (#2). The patch also updates the SITE
+ STATEMENT DAY field (#342,.11). The existing values for those fields are
+ being modified to be a different day of the month for sixteen (16)
+ Veterans Administration sites. If your site is not listed below then the
+ patch will install but will not make any modifications to your system.
+  
+                                      Current   New 
+ Site    VAMC                            Date   Date
+ ----    ---------------------        -------   ----
+ 438     SIOUX FALLS VA HCS               21     26
+ 501     ALBUQUERQUE, NEW MEXICO HCS      21     26
+ 504     AMARILLO HCS                     21     26
+ 542     COATESVILLE VAMC                 21     26
+ 562     ERIE VAMC                        21     26
+ 568     FORT MEADE, BLACK HILLS HCS      21     26
+ 649     PRESCOTT, NORTHERN ARIZONA HCS   21     26
+ 656     SAINT CLOUD VA HCS               21     26
+ 688     WASHINGTON                       21     26
+ 756     EL PASO VA HCS                   21     26
+  
+ 664     SAN DIEGO HCS                    22     28
+ 565     FAYETTEVILLE NC VAMC             22     28
+ 658     SALEM VAMC                       22     28
+ 671     SAN ANTONIO, SOUTH TEXAS HCS     22     28
+ 740     TEXAS VALLEY COASTAL BEND HCS    22     28  
+ 621     MOUNTAIN HOME VAMC               22     28
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. N/A
+  
+ Problem:
+ -------
+ N/A 
+  
+ Resolution:
+ ----------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Erie, PA
+ Richmond, VA
+ Fayetteville, NC 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ https://www.domain.ext/vdl/
+  
+  
+ Title                           File Name                 FTP Mode
+ -----------------------------------------------------------------------
+ Deployment, Installation,       PRCA_4_5_P355_IG.pdf      BINARY
+  Back-out, and Rollback Guide 
+  (PRCA*4.5*355)   
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ All modifications made in this patch will be addressed by the 
+ post-install routine.  See above for an explanation of what is being 
+ modified.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ NOTE: The Post-installation routines are ONLY executed the very first time
+       PRCA*4.5*355 is installed. It will not be executed on any subsequent
+       installation.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ There are no options to disable for installing this patch.
+  
+  
+ **************************************************************************
+ * IMPORTANT:                                                             *
+ *                                                                        *
+ *    If you ARE one of the sites listed in the chart above you should do *
+ *    the following. If you ARE NOT one of the sites listed above, skip   *
+ *    this un-scheduling step.                                            *
+ *                                                                        *
+ *    The VistA option "Accounts Receivable Nightly Process Background    *
+ *    Job" [PRCA NIGHTLY PROCESS] should be unscheduled in TaskMan before *
+ *    installing PRCA*4.5*355.                                            *
+ **************************************************************************
+  
+ It will be necessary for those sites listed in the chart at the top of 
+ this patch to un-schedule the "Accounts Receivable Nightly Process
+ Background Job" [PRCA NIGHTLY PROCESS] option before installing 
+ the patch.
+  
+ Here's an example of how to un-schedule this option via TaskMan:
+  
+  1. At the option prompt select the option: TaskMan Management
+  2. When prompted for "Select TaskMan Management Option", enter 
+     "Schedule/Unschedule Options"
+  3. When prompted for "Select OPTION to schedule or reschedule",
+     enter "PRCA NIGHTLY PROCESS"
+  4. When prompted for " ...OK? Yes//", enter "YES"
+  
+  5. On the following screen ... 
+  
+  ===> * Note the date/time the task is set to "Queued to run".  You 
+          need this for post installation steps when rescheduling.
+  ===> Press Enter until you arrive at the "QUEUED TO RUN AT WHAT TIME:" 
+          prompt.
+  ===> Type @ and press Enter.
+  
+  _________________________________________________________________________
+                           Edit Option Schedule
+     Option Name: PRCA NIGHTLY PROCESS          
+     Menu Text: Accounts Receivable Nightly Proc          TASK ID:        
+  ________________________________________________________________________
+  
+    QUEUED TO RUN AT WHAT TIME: JUN 4,2018@02:00   @               
+  
+                            >> Enter the '@' sign as shown above.
+                            >> This will automatically delete the date/time
+  
+  DEVICE FOR QUEUED JOB OUTPUT:                               
+   QUEUED TO RUN ON VOLUME SET:                      
+        RESCHEDULING FREQUENCY: 1D                            
+               TASK PARAMETERS:
+              SPECIAL QUEUEING: Persistent          
+  _________________________________________________________________________
+  
+  
+  6. After deleting the "Queued to run at what time", save and step out of
+     the option.
+  
+ ===> At the "COMMAND:" prompt, type s and Enter to Save changes
+ ===> At the "COMMAND:" prompt, type q and Enter to quit out of this option
+  
+   
+  _________________________________________________________________________
+                           Edit Option Schedule
+     Option Name: PRCA NIGHTLY PROCESS          
+     Menu Text: Accounts Receivable Nightly Proc          TASK ID:        
+  _________________________________________________________________________
+  
+    QUEUED TO RUN AT WHAT TIME:                               
+  DEVICE FOR QUEUED JOB OUTPUT:                               
+   QUEUED TO RUN ON VOLUME SET:                      
+        RESCHEDULING FREQUENCY: 1D                            
+               TASK PARAMETERS:
+              SPECIAL QUEUEING: Persistent          
+  _________________________________________________________________________
+  Exit    Save    Next Page    Refresh    Quit
+  
+  Enter a COMMAND, or "^" followed by the CAPTION of a FIELD to jump to.
+  
+  COMMAND: S  Save
+  COMMAND: Q  Quit
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+ **************************************************************************
+ * IMPORTANT for those sites listed above:                                *
+ *    The VistA option "Accounts Receivable Nightly Process Background    *
+ *    Job" [PRCA NIGHTLY PROCESS] must be unscheduled in TaskMan before   *
+ *    installing PRCA*4.5*355. Please refer to the pre-installation       *
+ *    instructions to un-schedule this option.                            *
+ *                                                                        *
+ *    DO NOT FORGET to reschedule this option, after installing the patch.*
+ **************************************************************************
+    
+  
+    
+   1. Choose the PackMan message containing this patch.  
+   
+   2. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+   3. From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu. From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the
+      patch PRCA*4.5*355.
+   
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+   
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed. It compares all components of this patch
+         routines, DDs, templates, etc.
+   
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+    
+   4. From the Installation Menu, select the Install Package(s)
+      option and choose the patch to install.
+  
+   5. When prompted "Want KIDS to Rebuild Menu Trees Upon Completion
+      of Install? NO//", respond NO.
+  
+   6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+      NO//", respond NO.  
+    
+   7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//", respond NO.
+  
+   8. If prompted, 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+   9. When prompted "Device: Home//" respond with the correct device.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+  
+ *************************************************************************
+ * IMPORTANT/CRITICAL:  This MUST be done !!!                            *
+ *                                                                       *
+ * Once the patch has COMPLETED INSTALLATION, reschedule the "Accounts   *
+ * Receivable Nightly Process Background Job" [PRCA NIGHTLY PROCESS]     *
+ * option that was un-scheduled during pre-installation. Please schedule * 
+ * this option to run once a day using the date/time you noted when you  *
+ * unscheduled the option during the pre-installation steps.             *
+ *************************************************************************
+  
+  
+ Back-Out Plan:
+ --------------------
+ If any problems arise, please log a ticket for support.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCA355E
+    Before:       n/a   After:  B4119342  **355**
+Routine Name: PRCA355P
+    Before:       n/a   After:  B3717658  **355**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 24, 2019
+Completed By:                               Date Completed: OCT 15, 2019
+Released By :                               Date Released : OCT 16, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

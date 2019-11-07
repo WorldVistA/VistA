@@ -1,0 +1,308 @@
+$TXT Created by                    P at CHY0035D.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 09/19/19 at 15:21
+=============================================================================
+Run Date: OCT 23, 2019                     Designation: SD*5.3*733
+Package : SD - SCHEDULING                     Priority: EMERGENCY
+Version : 5.3       SEQ #590                    Status: Released
+                  Compliance Date: OCT 25, 2019
+=============================================================================
+
+Associated patches: (v)SD*5.3*704  <<= must be installed BEFORE `SD*5.3*733'
+
+Subject: TMP FIXES FOR TELE HEALTH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses three issues introduced by installing patch 
+ SD*5.3*704:
+  
+  1. # 1120361 - After installing the patch, undefined errors for routine 
+  SDTMPHLA were found in the VistA error trap at several sites. The
+  "<UNDEFINED>EN+39^SDTMPHLA" error was caused because the status of the
+  new appointment was not being checked for the correct status condition.
+  As a result, variables were not set correctly and caused the process to
+  abort. This patch corrects the check of the appointment status.
+  
+  2. # 1120407: - After installing the patch, errors were found at several 
+  VistA sites in routine SDTMPHLB. These errors were
+  "<COMMAND>EN+11^SDTMPHLB *Function must return a value at
+  CHKCLIN+1^SDTMPH" this error is caused when a clinic setup 
+  has a primary stop code but the secondary stop code field is not
+  populated. The function that checks the stop codes has been corrected to
+  return a value when either of the stop codes are defined or is null.
+  
+  3. # 1120947: - This patch also modifies the new cross reference on the 
+  Hospital Location File (#44) to only fire when the editing of a clinic
+  completes. As originally installed, the cross reference fired after each
+  field was entered. This field level trigger caused other required
+  variables to not be defined as the message was created and caused the  
+  edit of the clinic to abort.
+  
+   
+  Patch Components:
+  ------------------
+   
+  Files & Fields Associated: 
+  -------------------------- 
+  File Name (Number)    Field Name (Number)    New/Modified/Deleted 
+  ------------------    -------------------    --------------------
+  N/A 
+   
+  Forms Associated: 
+  Form Name              File #            New/Modified/Deleted
+  ---------              ------            ---------------------
+  N/A 
+   
+  Mail Groups Associated: 
+  Mail Group Name                          New/Modified/Deleted 
+  ---------------                          --------------------
+  N/A 
+   
+  Options Associated: 
+  Option Name            Type              New/Modified/Deleted
+  -----------            ----              ---------------------
+  N/A 
+   
+  Protocols Associated: 
+  Protocol Name                            New/Modified/Deleted
+  -------------                            --------------------
+  N/A
+   
+  Security Keys Associated: 
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated: 
+  Template Name         Type    File Name (Number)      
+  New/Modified/Deleted
+  --------------         ----    ------------------      
+  N/A 
+   
+  New Service Requests (NSRs):
+  ---------------------------------------
+  N/A 
+   
+  Patient Safety Issues (PSIs): 
+  -----------------------------
+  HITPS-6851
+   
+  Test Sites:
+  --------------
+  Boise, ID 
+   
+  Documentation Retrieval Instructions
+  ------------------------------------
+  Software is being released as a PackMan build.
+   
+  Back-out/Rollback Strategy:
+  --------------------------
+  In the event of a catastrophic failure, the Facility CIO may make the 
+  decision to back-out the patch.
+    
+  It is imperative that you have performed a backup of the routines 
+  included in this patch prior to installation.
+   
+  The back-out plan is to restore the routines from the backup created.  No
+  data was modified by this patch installation and, therefore, no rollback
+  strategy is required.
+   
+  To verify the back-out completed successfully, ensure the checksum 
+  matches the pre-patch checksum from the patch descriptions.
+   
+  Patch Installation:
+  -------------------
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize 
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install.
+   
+  Installation Instructions:
+   
+  1.  Choose the PackMan message containing this patch.
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.          
+  3.  From the Kernel Installation and Distribution System [XPD MAIN]
+      menu, select the Installation [XPD INSTALLATION MENU] menu.  From 
+      this menu, you may elect to use the following option. When prompted
+      for the INSTALL enter the patch # (SD*5.3*733):
+      a. Backup a Transport Global [XPD BACKUP] - This option will create a
+         backup message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates. THIS 
+         OPTION MUST BE USED IN ORDER TO BACK OUT THIS PATCH.
+      b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+         This option will allow you to view all changes that will be made
+         when this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - 
+         This option will allow you to ensure the integrity of the routines
+         that are in the transport global.
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install. Enter SD*5.3*733.
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//', respond NO.
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+   
+  Installation Verification:
+  -------------------------
+  Compare the "After" checksum for the routines to the ones listed 
+  in the patch descriptions.
+   
+  Sample Installation
+  -------------------
+  Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+  Select INSTALL NAME:    SD*5.3*733    9/17/19@08:41:31
+      => SD*5.3*733
+  
+  This Distribution was loaded on Sep 17, 2019@08:41:31 with header of 
+    SD*5.3*733
+    It consisted of the following Install(s):
+      SD*5.3*733
+  Checking Install for Package SD*5.3*733
+  
+  Install Questions for SD*5.3*733
+  
+  Want KIDS to INHIBIT LOGONs during the install? NO// 
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+  Enter the Device you want to print the Install messages.
+  You can queue the install by enter a 'Q' at the device prompt.
+  Enter a '^' to abort the install.
+  
+  DEVICE: HOME//   HOME  (CRT)
+  -------------------------------------------------------------------------
+  Install Started for SD*5.3*733 : 
+                Sep 17, 2019@08:42:41
+  
+  Build Distribution Date: Sep 16, 2019
+  
+  Installing Routines:
+                Sep 17, 2019@08:42:41
+  
+  Running Post-Install Routine: ATMP1^SDTMP733
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  SD*5.3*733 Installed. 
+                Sep 17, 2019@08:42:41
+  
+  Sample Backout:
+  ---------------
+  VA MailMan 8.0 service for TESTER@CHY0035D.FO-BAYPINES.DOMAIN.EXT
+  You last used MailMan: 09/17/19@08:41
+  You have 117 new messages.
+  
+  Select MailMan Option: READ/MANAGE MESSAGES  
+  
+  Select message reader: Classic// 
+  Read mail in basket: IN//        (176 messages, 117 new)
+  Last message number: 176   Messages in basket: 176 (117 new)
+  Enter ??? for help.
+  
+  IN Basket Search
+  *=New/!=Priority.........Subject...................Lines.From.........Rea
+  d/Rcvd
+   173. [363855] 09/16/19 SD*5.3*733 SEP 16          2094 TESTER 
+   175. [363857] 09/17/19 SD*5.3*733 TEST v1         2143 <"NPM    
+   176. [363858] 09/17/19 Backup of SD*5.3*733 insta  922 TESTER  
+  Search finished.
+  Subj: Backup of SD*5.3*733 install on Sep 17, 2019  [#363858] 
+  09/17/19@08:42 922 lines
+  From: TESTER  In 'IN' basket.   Page 1
+  -------------------------------------------------------------------------
+  $TXT PACKMAN BACKUP Created on Tuesday, 9/17/19 at 08:42:32 byTESTER at
+  CHY0035D.FO-BAYPINES.DOMAIN.EXT 
+  $ROU SDHL7APT (PACKMAN_BACKUP)
+  SDHL7APT ;MS/TG,PH - TMP HL7 Routine;AUG 17, 2018
+  ;;5.3;Scheduling;**704,733**;AUG 17, 2018;Build 53
+  ;
+  ;  Integration Agreements:
+  Q
+  ;
+  PROCSIU ;Process SIU^S12 messages from the "TMP VISTA" Subscriber 
+  protocol
+  ;ENT ;
+  ;EN ;
+  ;
+  ; This routine and subroutines assume that all VistA HL7 environment
+  ; variables are properly initialized and will produce a fatal error
+  ; if they are missing.
+  ;
+  ;  The message will be checked to see if it is a valid SIU. If valid - 
+  the SIU
+  
+  Type <Enter> to continue or '^' to exit: ^
+  
+  Enter message action (in IN basket): Ignore// Xtract PackMan
+  Select PackMan function: IN
+      1   INSTALL SELECTED ROUTINE(S)  
+      2   INSTALL/CHECK MESSAGE  
+  CHOOSE 1-2: 2  INSTALL/CHECK MESSAGE
+  
+  
+  Warning:  Installing this message will cause a permanent update of 
+  globals and routines. Do you really want to do this? NO// YES
+  
+  Routines are the only parts that are backed up.  NO other parts
+  are backed up, not even globals.  You may use the 'Summarize Message'
+  option of PackMan to see what parts the message contains.
+  Those parts that are not routines should be backed up separately
+  if they need to be preserved.
+  
+  
+  Shall I preserve the routines on disk in a separate back-up message? 
+  YES// 
+  
+  Subject: BACKUP 733 
+  Send mail to: TESTER//   TESTER
+  Select basket to send to: IN//   
+  And Send to: 
+  Building PackMan backup message with subject BACKUP 733
+  
+  
+  PackMan backup message [363859] sent.
+  Line 409  Message #363858    Unloading Routine   SDTMP733 
+ (PACKMAN_BACKUP)
+  Line 459  Message #363858    Unloading Routine   SDTMPHLA 
+ (PACKMAN_BACKUP)
+  Line 750  Message #363858    Unloading Routine   SDTMPHLB 
+ (PACKMAN_BACKUP)
+  
+  Select PackMan function: 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;SEP 16, 2019;Build 72
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDTMP733
+    Before:       n/a   After:  B9279014  **733**
+Routine Name: SDTMPHLA
+    Before:B121959808   After:B122143881  **704,733**
+Routine Name: SDTMPHLB
+    Before: B46065382   After: B46631820  **704,733**
+ 
+Routine list of preceding patches: 704
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 16, 2019
+Completed By:                               Date Completed: OCT 22, 2019
+Released By :                               Date Released : OCT 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

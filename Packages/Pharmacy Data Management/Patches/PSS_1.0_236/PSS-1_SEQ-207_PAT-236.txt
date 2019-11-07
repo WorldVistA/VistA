@@ -1,0 +1,258 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 09/23/19 at 11:13
+=============================================================================
+Run Date: OCT 23, 2019                     Designation: PSS*1*236
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #207                      Status: Released
+                  Compliance Date: NOV 23, 2019
+=============================================================================
+
+Associated patches: (v)PSS*1*227   <<= must be installed BEFORE `PSS*1*236'
+
+Subject: PSSPRICE ERRORS IN TRACKER MESSAGE, PADE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1) When using option PSS DRUG ENTER/EDIT to populate field #13 PRICE PER 
+ ORDER UNIT, a background job is triggered that causes a hard error 
+ <SUBSCRIPT>HIS+8^PSSPRICE.
+  
+ 2) Patch PSS*1*227 introduced a bulletin named the Pharmacy Price Tracker
+ which is sent whenever a drug's PRICE PER DISPENSE UNIT value is added or
+ changed. However, when a user edits both the values of the PRICE PER ORDER
+ UNIT and the DISPENSE UNITS PER ORDER UNIT, using option PSS DRUG 
+ ENTER/EDIT, this bulletin is not being created.
+  
+ 3) When using option PSS DRUG ENTER/EDIT to populate field #13 PRICE PER 
+ ORDER UNIT or #15 DISPENSE UNITS PER ORDER UNIT, a background job is 
+ triggered that send a price tracker message. The price tracker message is 
+ being enhanced to display which field was edited.
+  
+ 4) Pharmacy PADE issues.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) INC4679742 - PSSPRICE error if all entries deleted
+ 2) INC2333383 - Pharmacy Price Tracker bulletin not being created
+ 3) INC6753074 - PSSPRICE does not report which price component changed
+ 4) INC4556579 - Pharmacy PADE issue 
+  
+  
+ 1) INC4679742 - PSSPRICE error if all entries deleted
+  
+ Problem:
+ --------
+ When using option PSS DRUG ENTER/EDIT and populating field #13 PRICE PER 
+ ORDER UNIT, a cross reference on that field triggers background job 
+ HIS^PSSPRICE. This job does the following: 
+  
+ - Purges entries in the file #50 field #50.095 DT/TM DISP UNIT PRICE
+   CHANGED multiple 
+ - Adds a new entry to the multiple 
+ - Sends a "Pharmacy Price Tracker" email 
+  
+ Parameter PSS DRUG AUDIT RETENTION MOS determines the date range of 
+ entries to purge. If the purge causes all the entries in the multiple to 
+ be deleted, then a hard error <SUBSCRIPT>HIS+8^PSSPRICE occurs. This 
+ error also has the side effects of not adding a new entry to the field 
+ #50.095 DT/TM DISP UNIT PRICE CHANGED multiple and not sending the 
+ "Pharmacy Price Tracker" email.
+  
+ Resolution:
+ ----------
+ Routine PSSPRICE was modified to exit normally if there are no more
+ entries to evaluate. Exiting this loop in a controlled manner adds the new
+ entry for the current price change and restores the "Pharmacy Price
+ Tracker " email.
+  
+  
+ 2) INC2333383 - Pharmacy Price Tracker bulletin not being created
+  
+ Problem:
+ --------
+ Patch PSS*1*227 introduced a bulletin named the Pharmacy Price Tracker 
+ which is sent whenever a drug's PRICE PER DISPENSE UNIT value is added or
+ changed. However, when a user edits both the values of the PRICE PER ORDER
+ UNIT and the DISPENSE UNITS PER ORDER UNIT, using option PSS DRUG
+ ENTER/EDIT, this bulletin is not being created.
+  
+ Resolution:
+ -----------
+ Routine PSSPRICE was modified to add a new cross reference (DUO) to the
+ DISPENSE UNITS PER ORDER UNIT field (#15) of the Drug file (#50) that is
+ designed to create the Pharmacy Price Tracker bulletin when a new value is
+ entered into this field. Also modified the routine PSSPRICE by adding a
+ timestamp to the Pharmacy Price Tracker bulletin.
+  
+  
+ 3) INC6753074 - PSSPRICE does not report which price component changed
+  
+ Problem:
+ --------
+ During testing of PSS*1*236 it was determined that the Pharmacy Price 
+ Tracker bulletin messages generated during testing were vague. The user 
+ requested additional wording be added to the messages to clarify what 
+ changes were being made to the prices in #50, Drug file.
+  
+ Resolution:
+ ----------
+ The Pharmacy Tracker email message that is sent when there is a change to 
+ file #50, field #16 PRICE PER DISPENSE UNIT was corrected to report which 
+ component of the price per dispense unit changed. It can be a change to 
+ field #13, PRICE PER ORDER UNIT or a change to field #15, DISPENSE UNITS 
+ PER ORDER UNIT.
+  
+  
+ 4) INC4556579 - Pharmacy PADE issue
+  
+ Problem:
+ --------
+ It was reported that while defining a new drug using the PSS DRUG 
+ ENTER/EDIT [PSS DRUG ENTER/EDIT] option with the following conditions:
+  
+  - The drug is marked for Unit Dosage or IV packages
+  - The user enters data for the PRICE PER ORDER UNIT field (#13)
+  - The Pharmacy Automated Dispensing Equipment (PADE) is flagged to 
+    send "NEW DRUGS"
+  
+ The user will not get prompted "Would you like to send this new drug to 
+ PADE?" and the new drug information will not be sent to PADE.
+  
+ Resolution:
+ -----------
+ Routine PSSPRICE was modified so the patch fixes the issue by renewing the
+ PSSNEW variable which was overwritten while editing the PRICE PER ORDER
+ UNIT field (#13) of the DRUG file (#50).
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)      Field Name (#)                New/Modified/Deleted
+ ------------ ----------------------------------- --------------------
+ DRUG (#50)   DISPENSE UNITS PER ORDER UNIT (#15)     Modified
+  
+  
+ Test Sites:
+ -----------
+ Cleveland VAMC
+ Manchester VAMC
+  
+  
+ There are no documentation updates associated with this patch.
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no tasks or routines executed before or after the installation
+ of this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+ Installation Menu.  From this menu, you may elect to use the following
+ options. When prompted for the INSTALL NAME enter the patch number:
+ PSS*1*236
+  
+ a. Backup a Transport Global - This option will create a backup message
+ of any routines exported with this patch. It will not backup any other
+ changes such as DDs or templates.
+  
+ b. Compare Transport Global to Current System - This option will (allow
+ you to view all changes that will be made when this patch is installed.  
+ It compares all components of this patch routines, DDs, templates, etc.).
+  
+ c. Verify Checksums in Transport Global - This option will allow you to
+ ensure the integrity of the routines that are in the transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+ choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+ Install? NO// '
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO// 
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out/Rollback Strategy:
+ -------------------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ Validation of Back Out Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSS Routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSS*1.0*236 patch have been backed out, the first two lines of the
+ Routines will no longer contain the designation of patch PSS*1.0*236 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;2/28/17;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSPRICE
+    Before:  B5169572   After:  B8639633  **227,236**
+ 
+Routine list of preceding patches: 227
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 11, 2019
+Completed By:                               Date Completed: OCT 22, 2019
+Released By :                               Date Released : OCT 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,657 @@
+$TXT Created by               at DEVVOO.DOMAIN.EXT  (KIDS) on Friday, 10/04/19 at 14:16
+=============================================================================
+Run Date: OCT 15, 2019                     Designation: DG*5.3*987
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #860                    Status: Released
+                  Compliance Date: OCT 17, 2019
+=============================================================================
+
+Associated patches: (v)DG*5.3*871  <<= must be installed BEFORE `DG*5.3*987'
+                    (v)DG*5.3*941  <<= must be installed BEFORE `DG*5.3*987'
+
+Subject: VETERAN MEDICAL BENEFIT PLANS
+
+Category: 
+  - Routine
+  - Enhancement ()
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ Patch DG*5.3*987 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on
+ updates for the Enrollment System Modernization (ESM) Phase 2 project. 
+  
+ Patch DG*5.3*987 is also being released in support of the Enrollment
+ System (ES) 5.8 release. Refer to Informational Patch Enrollment 
+ Application System EAS*1*180 and EAS*1*181 for additional details 
+ regarding the ES release.
+  
+ Veterans Health Information Systems and Technology Architecture (VistA) 
+ Registration, Eligibility & Enrollment (REE) patch DG*5.3*987 renames 
+ Health Benefit Plans (HBPs) as Veteran Medical Benefit Plans (VMBPs) to 
+ support the Electronic Health Record (EHR) in Cerner's Millennium 
+ application and adds additional VMBPs to VistA. ES now automatically 
+ assigns the correct VMBP(s) to a patient's record based on the patient's
+ traits, such as eligibilities. ES transmits the VMBPs assigned to the
+ patient to VistA REE. VMBPs associated to a patient are displayed in
+ VistA, but cannot be assigned or removed from the patient's record. VistA
+ Registration screens are updated to refer to the plans as either "Veteran
+ Medical Benefit Plan" or "VMBP".
+   
+ DG*5.3*987 modifies the HEALTH BENEFIT PLAN file (#25.11) to store 21 new 
+ core VMBP names, codes, and short and long descriptions. VistA will 
+ accept the new plans from ES via Health Level Seven (HL7) ORF-Z11/ORU-Z11 
+ messages.
+  
+ A new VMBP <11.3.1> screen is added to display detailed plan information. 
+ VistA REE displays the VMBP <11.3.1> screen when the user selects 
+ "Expand Entry" from the View History [DGEN HBP VIEW] action protocol on
+ the VMBP <11.1> screen.
+  
+ The Patient Inquiry [DG PATIENT INQUIRY] option and Patient Inquiry 
+ application program interface (API) (DGRPD) is updated to display 
+ "Veteran Medical Benefit Plan" instead of "Health Benefit Plan". The API 
+ DGRPD is called from VistA REE menu options, subscribers to API DGRPD, 
+ and other VistA packages.
+  
+ Integration Control Registration (ICR) 10037 (DGRPD) is updated to display
+ "Veteran Medical Benefit Plan" instead of "Health Benefit Plan". 
+ ICR 10037      NAME: DGRPD
+   CUSTODIAL PACKAGE: REGISTRATION
+ SUBSCRIBING PACKAGE: 
+               USAGE: Supported
+  
+ The DG*5.3*987 patch adds a new INACTIVE (#.06) field to the HEALTH 
+ BENEFIT PLAN (#25.11) file to allow HBPs to be inactivated in VistA REE. 
+ When the INACTIVE (#.06) field is set to YES, then the plan will not be 
+ displayed when the user selects the View All HBP Detail [DGEN HBP DETAIL] 
+ action protocol to display the HEALTH BENEFIT PLAN <11.4> screen in VistA 
+ REE Registration options.   
+  
+ The Maintaining Internal Systems and Strengthening Integrated Outside 
+ Networks (MISSION) Act enactment on June 6, 2019 recalculated Veteran's
+ Community Care VMBPs in ES and transmitted the HL7 ORF-Z11/ORU-Z11
+ messages to VistA. If the message did not transmit successfully, an
+ inactive Veterans Choice plan may display on screens that should display
+ the current VMBP of the Veteran. Plan names preceded by "zz" indicate that
+ the plan is inactive. If an inactive plan is displayed, the user may send
+ an eligibility query by using the SQ Send Query [DGEN SEND ENROLLMENT
+ QUERY] action protocol located in the Patient Enrollment [DGEN PATIENT
+ ENROLLMENT] option. ES will send the VMBPs on file to the requesting site
+ in an ORF-Z11 message. If the ORF-Z11 does not upload successfully, the
+ user should open an incident by calling the Enterprise Service Desk (ESD)
+ at 855-673-4357 or through YourIT.
+  
+ DG*5.3*987 also updates the LONG DESCRIPTION (#.04) field in the HEALTH
+ BENEFIT PLAN (#25.11) file for the plan VETERAN PLAN - CCP HARDSHIP
+ DETERMINATION.
+  
+ DG*5.3*987 converts the text to uppercase in the NAME (#.01) field of the
+ HEALTH BENEFIT PLAN (#25.11) file. HBPs now display in uppercase letters 
+ in VistA screens.
+  
+ Listing of Updates
+ ==================
+ This patch includes the following enhancements to VistA REE:
+  
+ 1. A new INACTIVE (#.06) field is added to the HEALTH BENEFIT PLAN 
+    (#25.11) file to indicate that an HBP is inactivated. When the   
+    INACTIVE (#.06) field is set to YES, then the plan will not be
+    displayed when the user selects the View All HBP Detail [DGEN HBP 
+    DETAIL] action protocol to display the HEALTH BENEFIT PLAN <11.4>
+    screen in VistA REE Registration options.
+  
+    If a Veteran was assigned to HBPs that are inactivated, the HBPs 
+    will remain on the Veteran's profile so that they may be viewed 
+    under "Current Health Benefit Plans" on the HEALTH BENEFIT PLAN 
+    <11.1> screen.
+  
+    Inactivation of Veteran Plans occurs in the HEALTH BENEFIT PLAN
+    (#25.11) file utilizing the new INACTIVE (#.06) field. The INACTIVE 
+    (#.06) field is set to YES for the following HBPs:
+       a. VETERAN PLAN - VC UNUSUAL OR EXCESSIVE BURDEN
+       b. VETERAN PLAN - VETERANS CHOICE AIR, BOAT, OR FERRY
+       c. VETERAN PLAN - VETERANS CHOICE BASIC 
+       d. VETERAN PLAN - VETERANS CHOICE MILEAGE
+       e. VETERAN PLAN - VETERANS CHOICE WAIT-TIME  
+  
+ 2. The LONG DESCRIPTION (#.04) field in the HEALTH BENEFIT PLAN (#25.11) 
+    file for the VETERAN PLAN - CCP HARDSHIP DETERMINATION plan is updated
+    to the following:
+  
+    The Veteran must be enrolled in the VA health care system. The 
+    Veteran who may meet new MISSION Act access standards (wait time and
+    drive time) may still face an unusual or excessive burden in accessing
+    care at the VA based on:
+    . Geographical challenges
+    . Environmental factors such as:
+      o Roads that are not accessible to the general public, such as a road
+        through a military base or restricted area
+      o Traffic, or
+      o Hazardous weather conditions
+    . A medical condition that impacts the ability to travel
+    . Meets MISSION Act access standard, but, must travel by air, boat, or
+      ferry
+    And
+    . Veteran has received a "COMMUNITY CARE-HARDSHIP DETERMINATION"  
+      consult and the consult has not expired then the Veteran will be 
+      eligible for Hardship.  
+  
+ 3. The text of the data in the HEALTH BENEFIT PLAN (#25.11) file in 
+    the NAME (#.01) field is converted from mixed case to uppercase. All  
+    entries within the file are converted. In the Inquire to File Entries 
+    [DIINQUIRE] option, HBP name inquiries are now case insensitive. The
+    conversion is done by a pre-install routine.
+  
+    HBPs now display in uppercase letters in VistA screens as a result
+    of the case conversion. Registration options/screens that display the
+    Veteran's current HBP(s) are the following: 
+  
+    - Registration options that display HEALTH BENEFIT PLAN <11.1> screen, 
+      HEALTH BENEFIT PLAN <11.3> screen, and HEALTH BENEFIT PLAN <11.4> 
+      screen. 
+  
+    - The Patient Inquiry [DG PATIENT INQUIRY] option and VistA Packages
+      that call the Patient Inquiry API (DGRPD) display a Veteran's 
+      current HBP(s) and this inquiry display is also initially presented
+      in the Registration options such as Register A Patient [DG REGISTER
+      PATIENT] option and Load/Edit Patient Information [DG LOAD PATIENT   
+      DATA] option.
+  
+ 4. Twenty-one new plans have been added to the HEALTH BENEFIT PLAN 
+    file (#25.11). The data is provided in the build with the full data
+    dictionary of the HEALTH BENEFIT PLAN file (#25.11).
+     a. VETERAN - FULL MEDICAL BENEFITS TREATMENT & RX COPAY EXEMPT
+     b. VETERAN - FULL MEDICAL BENEFITS TREATMENT COPAY EXEMPT & RX COPAY 
+        REQUIRED
+     c. VETERAN - FULL MEDICAL BENEFITS TREATMENT COPAY REQUIRED & RX 
+        COPAY EXEMPT (A)
+     d. VETERAN - FULL MEDICAL BENEFITS TREATMENT COPAY REQUIRED & RX 
+        COPAY EXEMPT (B)               
+     e. VETERAN - FULL MEDICAL BENEFITS TREATMENT COPAY REQUIRED & RX 
+        COPAY EXEMPT (C)
+     f. VETERAN - FULL MEDICAL BENEFITS TREATMENT & RX COPAY REQUIRED (A)
+     g. VETERAN - FULL MEDICAL BENEFITS TREATMENT & RX COPAY REQUIRED (B)
+     h. VETERAN - FULL MEDICAL BENEFITS TREATMENT GMT COPAY REQUIRED & RX 
+        COPAY EXEMPT (A)
+     i. VETERAN - FULL MEDICAL BENEFITS TREATMANT GMT COPAY REQUIRED & RX
+        COPAY EXEMPT
+     j. VETERAN - FULL MEDICAL BENEFITS TREATMENT GMT COPAY REQUIRED & RX 
+        COPAY REQUIRED (A)
+     k. VETERAN - FULL MEDICAL BENEFITS TREATMENT GMT COPAY REQUIRED & RX 
+        COPAY REQUIRED
+     l. VETERAN - RESTRICTED MEDICAL BENEFITS
+     m. NON-VETERAN - OTHER RESTRICTED MEDICAL BENEFITS
+     n. RESTRICTED EXAMINATION ONLY
+     o. HUMANITARIAN
+     p. APPLICANT IN PROCESS
+     q. ALLIED BENEFICIARIES
+     r. OTHER FEDERAL AGENCY
+     s. ACTIVE DUTY & SHARING AGREEMENTS
+     t. VETERAN - FULL MEDICAL BENEFITS TREATMENT & RX COPAY EXEMPT (X)
+     u. VETERAN - FULL MEDICAL BENEFITS TREATMENT COPAY EXEMPT & RX COPAY 
+        REQUIRED (Y)
+  
+ 5. The ELIGIBILITY VERIFICATION DATA SCREEN <11> screen is updated to 
+    display "Veteran Medical Benefit Plan (VMBP):" instead of "Health 
+    Benefit Plan:".
+  
+  BEGIN SCREEN CAPTURE
+  
+  ELIGIBILITY VERIFICATION DATA, SCREEN <11>
+  PATIENT, NAME;  XXX-XX-XXXX                             SC VETERAN
+  =========================================================================
+  [1] Eligibility Status: VERIFIED         Status Date: FEB 28, 2019 
+  
+       Status Entered By: POSTMASTER (#.5)
+        Interim Response: UNANSWERED (NOT REQUIRED)
+           Verif. Method: CEV/talked to VBA
+           Verif. Source: HEC
+  [2]     Money Verified: NOT VERIFIED
+  [3]   Service Verified: NOT VERIFIED
+  [4] Rated Disabilities:  SC%: 30   EFF. DATE OF COMBINED SC%: MAY 5, 2018
+                                                     Orig           Curr
+    Rated Disability                        Extr     Eff Dt         Eff Dt
+    9411-POST-TRAUMATIC STRESS DISORDER (30% SC)    - MAY 5, 2018 -
+   
+  [5] Veteran Medical Benefit Plan (VMBP):  (1 Plan on file)
+  
+  <RET> to CONTINUE, 5 to EXPAND, ^N for screen N or '^' to QUIT:
+  
+  END SCREEN CAPTURE
+  
+ 6. The template for the VMBP <11.1> screen is updated so that the 
+    header text of the screen reads "VMBP".  The plans are now labeled 
+    "Current VMBP".
+  
+  
+  BEGIN SCREEN CAPTURE
+  
+  VMBP <11.1>    Nov 11, 2019@08:16:12                 Page: 1 of 1
+  Patient: PATIENT,NAME (XXXX)                  NSC VETERAN
+                                                                                 
+                                                     
+     Current VMBP
+  <1>  VETERAN - FULL MEDICAL BENEFITS TREATMENT GMT COPAY REQUIRED & RX
+  
+           Enter ?? for more actions                            >>>
+  
+  VH  View History          VD  View All VMBP Detail
+  Select Action:Quit//
+  
+  END SCREEN CAPTURE                    
+  
+ 7. The template for the VMBP <11.3> screen is updated so that the header 
+    text of the screen reads "VMBP". In addition, the "ADD" label is
+    changed to read "ASSIGN" and the "DELETE" label is changed to read
+    "UNASSIGN". A new Expand Entry [DGEN HBP VIEWEXP] list template is
+    added to display detailed plan information.
+  
+  BEGIN SCREEN CAPTURE
+  
+  VMBP <11.3>           Nov 11, 2019@08:21:48             Page:  1 of  3
+  Patient: PATIENT,NAME (XXXX)                         NSC VETERAN
+       Action   Date         Plan Name
+  [1]  ASSIGN   NOV 11,2019  VETERAN PLAN - CCP BASIC
+  [2]  ASSIGN   NOV 11,2019  VETERAN - FULL MEDICAL BENEFITS TREATMENT GMT
+                             COPAY REQUIRED & RX COPAY REQUIRED
+        
+  +         Enter ?? for more actions                                   >>>
+  
+  EP  Expand Entry
+  Select Action:Next Screen// ep   Expand Entry  
+  Select Plan:  (1-16): 2
+  
+  END SCREEN CAPTURE
+  
+ 8. A new VMBP <11.3.1> screen is added to display detailed plan 
+    information. VistA REE displays the VMBP <11.3.1> screen when the 
+    user selects "Expand Entry" from the View History [DGEN HBP VIEW]
+    action protocol on the VMBP <11.3> screen.
+   
+  BEGIN SCREEN CAPTURE
+  
+  VMBP <11.3.1>                 Nov 11, 2019@08:23:14     Page:    1 of  3
+   
+   Patient: PATIENT,NAME (XXXX)                          NSC VETERAN
+  
+    Action   Date         Plan Name
+    ------   ----         ---------
+    ASSIGN   NOV 11,2019  VETERAN - FULL MEDICAL BENEFITS TREATMENT GMT 
+                          COPAY REQUIRED & RX COPAY REQUIRED
+    
+ Description                                                               
+     
+    All enrolled Veterans have a comprehensive medical benefits package, 
+    which VA administers through an annual patient enrollment system.
+    Veterans who meet Veteran status for VA healthcare benefits and must
+    complete a Means Test to determine their copay status for their
+    inpatient, outpatient services and medications.
+                                                                                 
+    Veterans with gross household income below the geographically 
+    adjusted income limits for their resident location and who agreed to
+    pay copays. The Means Test outcome of GMT Copay Required and outcome of
+    their Rx Exemption status is Non-Exempt. These Veterans are subject to
+    copays for inpatient services at a reduced rate, copayment for their
+  
+   +         + Next Screen   - Prev Screen   ?? More Actions
+  
+  Select Action:Next Screen//   
+  
+  END SCREEN CAPTURE
+  
+ 9. The template for the VMBP <11.4> screen is updated so that the header 
+    text of the screen reads "VMBP" and the label "HBP View All Detail"
+    is updated to display "VMBP View All Detail".
+  
+ 10. In the Patient Inquiry [DG PATIENT INQUIRY] option, the label 
+     "Health Benefit Plan Currently Assigned to Veteran:" is updated to 
+     display "Veteran Medical Benefit Plan Currently Assigned to Veteran:".
+  
+     Note: The label change is also displayed in external applications and 
+     packages that make use of the Patient Inquiry API; Integration
+     Control Registrations (ICRs) #2041, #10037, and #740; and Remote 
+     Procedure Call (RPC) #2089; and reflect the label change.
+     The applications include:
+  
+     The applications include:
+          Womens Health (WV)
+          Barcode Medication Administration (BCMA)
+          VISTA IMAGING - CLINICAL DISPLAY
+          Order Entry Results Reporting 
+          Outpatient Pharmacy Manager (PSO MANAGER)
+          Computerized Patient Record System (CPRS)
+          Clinical Information Resource Network (CIRN)
+          Automated Medical Information Exchange (AMIE)
+          Regional Office Patient Inquiry (DVBA REG OFF PATIENT INQ)
+  
+     The following VistA REE menu options also make use of the Patient 
+     Inquiry API and reflect the label change:
+          Collateral Patient Register [DG COLLATERAL PATIENT] option
+          Load/Edit Patient [DG LOAD PATIENT DATA] option
+          Register A Patient [DG REGISTER PATIENT] option          
+  
+  BEGIN SCREEN CAPTURE
+  
+  PATIENT,NAME;  
+ ======================================================================
+                           
+  Veteran Medical Benefit Plan Currently Assigned to Veteran:
+    VETERAN - FULL MEDICAL BENEFITS TREATMENT GMT COPAY REQUIRED & RX
+    COPAY EXEMPT (A)
+                            
+  END SCREEN CAPTURE
+  
+ 11. A "zz" indicator is added to the display of any current VMBPs that 
+     are inactive. The Veteran's current VMBP(s) are displayed in
+     Registration options that display the updated VMBP <11.1> screen, and
+     Patient Inquiry [DG PATIENT INQUIRY] option.
+  
+  BEGIN SCREEN CAPTURE
+  
+  VMBP <11.1>                   NOV 11,2019@16:36:29    Page:  1  of    1
+  Patient: PATIENT,NAME (XXXX)                        SC VETERAN
+  
+    Current VMBP
+     <1>  zz VETERAN PLAN - VETERANS CHOICE BASIC
+  
+   + Next Screen     - Prev Screen     ?? More Actions
+  
+  VH View History        VD View All VMBP Detail
+  Select Action:Quit//
+  
+  END SCREEN CAPTURE
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)            Field Name (Number)     New/Modified/Deleted
+ ------------------            -------------------     --------------------
+ HEALTH BENEFIT PLAN (#25.11)  INACTIVE (.06)          New
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A 
+  
+  
+ Options Associated:
+  
+ Option Name              Type                 New/Modified/Deleted
+ -----------              ----                 -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name      New/Modified/Deleted
+ -------------      -------------------- 
+ DGEN HBP DETAIL    Modified
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type      File Name (Number)    New/Modified/Deleted
+ -------------     ----      ------------------    --------------------
+ DGEN HBP PATIENT  Protocol  List Template (#409.61)  Modified
+ DGEN HBP VIEW     Display   List Template (#409.61)  Modified
+ DGEN HBP VIEWEXP  Display   List Template (#409.61)  New
+ DGEN HBP DETAIL   Display   List Template (#409.61)  Modified
+   
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+   
+ Additional Information:
+ ---------------------- 
+  
+ Blood Bank Team Coordination:
+ N/A
+  
+ New Service Requests (NSRs): 
+ N/A
+  
+ Patient Safety Issues (PSIs): 
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+  
+ 572854      Problem: Inquire to FileMan search in VistA for HBPs are case
+             sensitive - plan names should be UPPERCASE in file #25.11.
+             Resolution: The text of the data in the HEALTH PLAN BENEFIT
+             (#25.11) file in the NAME (#.01) field is converted to upper 
+             case text which will allow mixed case lookup for the HBP name
+             in the FileMan INQUIRE TO FILE ENTRIES option.
+  
+ 998188      Problem: Long description change for plan Veteran Plan - CCP
+             Hardship Determination is needed.
+             Resolution: The long description for the VETERAN PLAN - CCP
+             HARDSHIP DETERMINATION is updated. 
+  
+ Test Sites:
+ ----------
+ Central Alabama Veterans Health Care System (CAVHCS), Montgomery & 
+ Tuskegee, AL
+ VA Maine Healthcare System - Togus, Augusta, ME
+ White River Junction VA Medical Center, White River Junction, VT 
+  
+ Software and Documentation Retrieval Instructions: 
+ ---------------------------------------------------- 
+ This software is being released as a patch (PackMan) message.
+ Documentation describing the new functionality is included in this 
+ release. 
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files directly from
+ a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at: https://www.domain.ext/vdl
+  
+ Documentation Title                File Name                SFTP Mode
+ -----------------------------------------------------------------------
+ DG*5.3*987 Release Notes           DG_5_3_987_RN.PDF        (binary)
+ User Manual - Registration Menu    PIMS_REG_UM.PDF          (binary) 
+  
+ Host File Name                     FTP Mode 
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ ------------------ 
+  
+ Pre/Post Installation Overview:
+  
+ A pre-install routine is included in this build. This routine converts 
+ all NAME field (#.01) values in the HEALTH BENEFIT PLAN file (#25.11) to
+ uppercase.
+  
+ The pre-installation routine DG53987P will be automatically deleted
+ upon installation of this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ 1. The HL7 incoming/outgoing filers should be stopped. Stop All 
+    Messaging Background Processes by using the [HL STOP ALL] option on
+    the Filer and Link Management Options [HL MENU FILER LINK MGT] menu on
+    the HL7 Main Menu [HL MAIN MENU].
+  
+ 2. This patch may be installed with users on the system; although
+    it is recommended that it be installed during non-peak hours to
+    minimize potential disruption to users.  This patch should take less
+    than 5 minutes to install.   
+  
+     
+ Installation Instructions:  
+ -------------------------
+  
+ 1. Choose the PackMan message containing this build. Then select the   
+    INSTALL/CHECK MESSAGE PackMan option to load the build.
+  
+ 2. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu. From this menu, 
+  
+    A. Select the Verify Checksums in Transport Global option to 
+       confirm the integrity of the routines that are in the transport  
+       global. When prompted for the INSTALL NAME enter the patch or build
+       name DG*5.3*987.
+  
+       NOTE: Using <spacebar><enter> will not bring up a Multi-Package 
+             build even if it was loaded immediately before this step. It
+             will only bring up the last patch in the build.
+  
+    B. Select the Backup a Transport Global option to create a backup 
+       message of any routines exported with this patch. It will not backup
+       any other changes such as DDs or templates.
+  
+    C. You may also elect to use the following options: 
+       i. Print Transport Global - This option will allow you to view the
+          components of the KIDS build.
+       ii. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this 
+           patch is installed.  It compares all of the components of this
+           patch, such as routines, DDs, templates, etc.
+  
+    D. Select the Install Package(s) option and choose the patch to 
+       install. 
+   
+       i. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+           Install? NO//', answer NO.
+       
+       ii. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+           NO//', answer NO.
+       
+       iii. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+            and Protocols? YES//', answer YES.
+  
+         a. When prompted 'Enter options you wish to mark as 'Out 
+            Of Order':', select the following option<s>:
+   
+               Option Name                 Menu Text
+               -----------                 ---------
+               Register a Patient          [DG REGISTER PATIENT]
+               Load/Edit Patient Data      [DG LOAD PATIENT DATA]
+               View Registration Data      [DG REGISTRATION VIEW]
+               Patient Inquiry             [DG PATIENT INQUIRY]
+               Collateral Patient Register [DG COLLATERAL PATIENT]
+               Preregister a Patient       [DGPRE PRE-REGISTER OPTION]
+               Admit a Patient             [DG ADMIT PATIENT]
+  
+         b. When prompted 'Enter protocols you wish to mark as 
+            'Out Of Order':', press the Enter key.
+  
+         c. If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond
+            0.
+  
+ Post-Installation Instructions: 
+ -------------------------------
+ The HL7 incoming filers should be restarted. Use the Restart/Start All 
+ Links and Filers [HL TASK RESTART] option on the Filer and Link
+ Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu    
+ [HL MAIN MENU].
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the ESD for assistance
+ with the procedure.
+  
+ Any issues would need to be evaluated to determine if: a back-out of the 
+ software is appropriate; a new patch is needed; or if data requires 
+ correction or restoration.
+   
+ During installation, if the option to back up routines was run as
+ directed, "Backup a Transport Global", then routines will have the 
+ ability to be restored from the "backup" MailMan message that was 
+ generated. However, the KIDS installation process does not perform a
+ backup of other VistA software components, such as DD, cross-reference,
+ and template changes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53987P
+    Before:       n/a   After:  B6052298  **987**
+Routine Name: DGHBPUTL
+    Before: B37209374   After: B38465896  **871,987**
+Routine Name: DGR111
+    Before:  B7250700   After:  B9243867  **871,987**
+Routine Name: DGR113
+    Before:  B3780049   After:  B7068957  **871,987**
+Routine Name: DGR1131
+    Before:       n/a   After:  B5332919  **987**
+Routine Name: DGR114
+    Before:  B5179815   After:  B6048898  **871,987**
+Routine Name: DGRP11
+    Before: B13083153   After: B13288054  **327,631,709,871,987**
+Routine Name: DGRPD
+    Before:B102167809   After:B110727160  **109,124,121,57,161,149,286,
+                                           358,436,445,489,498,506,513,
+                                           518,550,545,568,585,677,703,
+                                           688,887,907,925,936,940,941,
+                                           987**
+ 
+Routine list of preceding patches: 871, 941
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 23, 2019
+Completed By:                               Date Completed: OCT 15, 2019
+Released By :                               Date Released : OCT 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

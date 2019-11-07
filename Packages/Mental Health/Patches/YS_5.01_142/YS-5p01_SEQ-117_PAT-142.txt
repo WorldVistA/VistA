@@ -1,0 +1,215 @@
+$TXT Created by               at INITIAL.HMP-PILOT.DOMAIN.EXT  (KIDS) on Thursday, 09/19/19 at 17:15
+=============================================================================
+Run Date: OCT 31, 2019                     Designation: YS*5.01*142
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #117                   Status: Released
+                  Compliance Date: DEC 01, 2019
+=============================================================================
+
+Associated patches: (v)YS*5.01*139 <<= must be installed BEFORE `YS*5.01*142'
+
+Subject: MHA SCALE FIXES AND REPORT UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates the following Mental Health instruments:
+  
+ AIMS (Abnormal Involuntary Movement Scale)
+   A disclaimer is no longer added when the progress note text is
+   generated.
+  
+ C-SSRS (Columbia Suicide Severity Rating Scale)
+   A Key Indicator is now added if the response to question 3 is 'Yes'.
+  
+ MMPI-2-RF (Minnesota Multiphasic Personality Inventory 2 - Restructured 
+ Form)
+   The T-score for the EID (Emotional/Internalizing Dysfunction) scale 
+   is now correct.
+   The score for the PSYC-r (Psychoticism-Revised) scale now accounts for 
+   the value of question 216.
+  
+ QOLI (Quality of Life Inventory)
+   A scoring error originally introduced in YS*5.01*139 is corrected.
+  
+ If the administration of an instrument with many scales preceded an
+ instrument with fewer scales during a session, additional scales were
+ sometimes carried over to the second instrument.  This was visible in the
+ Health Summary component and TIU objects.  It could also affect the
+ display of Special Reports.  This is corrected with this patch.  
+ Additionally, the patch checks previous administrations to make sure each
+ administration has only the correct scales associated.
+  
+ Additional record locks were added to the PSYCH INSTRUMENT PATIENT file 
+ (#601.2) to reduce the likelihood of errors when generating a report for a
+ legacy instrument.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A  
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A    
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Remote Procedures Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ NSD Ticket(s) & Overview:
+ -------------------------
+ INC5314646
+ TIU data object, |PHQ-9 (MOST RECENT)| is pulling over PHQ-9 and the 
+ WHODAS scores.  WHODAS scores should not be pulled.
+  
+ INC5011932
+ The special report wizard is not displaying scores for some of the 
+ assessment measures.
+  
+ Test Sites:
+ ----------
+ Milwaukee
+ Orlando
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+   YS*5.01*142 Install Guide                    YS_501_142_IG.PDF
+   
+ Sites may retrieve the install guide directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext 
+  
+ Patch Installation
+ ==================
+  
+ NOTE:  In step 3b, after loading the patch, if you choose to use the
+ option "Compare Transport Global to Current System" and select the choice
+ "Second line of Routines only", a warning may appear under the routine,
+ YTQAPI2B:
+  
+   *** WARNING, you are missing one or more Patches ***.
+  
+ This warning is expected and may be safely ignored.  It appears because 
+ the previous version of the routine omitted 136 in the patch list on the 
+ 2nd line.  This patch is correcting that omission.
+  
+  
+ This patch can be loaded with users on the system. Installation time will
+ be less than 5 minutes.
+  
+  1. Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2. Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+     Select Kernel Installation & Distribution System Option: 
+     Installation
+          1      Load a Distribution
+          2      Verify Checksums in Transport Global
+          3      Print Transport Global
+          4      Compare Transport Global to Current System
+          5      Backup a Transport Global
+          6      Install Package(s)
+                 Restart Install of Package(s)
+  
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter YS*5.01*142):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+  
+  4. Use the Install Package(s) option and select the package
+     YS*5.01*142.
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the 
+         install? NO//", answer NO.
+     b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//", answer NO.
+  
+    
+ Back-Out Plan
+ -------------
+ This patch updates routines. To back-out the patch, restore the routines 
+ from the backup that was created in step 3 of the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS142FIX
+    Before:       n/a   After:  B6004222  **142**
+Routine Name: YS142PST
+    Before:       n/a   After:  B2733566  **142**
+Routine Name: YTQAPI2B
+    Before:B121041515   After:B111166703  **134,136,139,142**
+Routine Name: YTQAPI3
+    Before: B23768089   After: B24455598  **85,142**
+Routine Name: YTQAPI6
+    Before:  B8407277   After:  B9004706  **85,103,142**
+Routine Name: YTQAPI8
+    Before: B47316797   After: B52136273  **85,121,123,142**
+Routine Name: YTQAPI9
+    Before: B30004209   After: B30575385  **85,96,119,121,142**
+Routine Name: YTQTIU
+    Before: B22796222   After: B23135815  **85,96,123,142**
+Routine Name: YTSCORE
+    Before: B54651706   After: B55110883  **119,123,142**
+Routine Name: YTSMPI2T
+    Before: B46267603   After: B46285456  **123,142**
+Routine Name: YTSMPIRD
+    Before: B38704344   After: B38734658  **123,142**
+Routine Name: YTSQOLI
+    Before: B63479643   After: B64971354  **123,142**
+ 
+Routine list of preceding patches: 103, 123, 139
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 17, 2018
+Completed By:                               Date Completed: OCT 31, 2019
+Released By :                               Date Released : OCT 31, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

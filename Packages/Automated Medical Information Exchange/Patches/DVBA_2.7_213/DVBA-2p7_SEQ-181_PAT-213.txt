@@ -1,0 +1,240 @@
+ 
+=============================================================================
+Run Date: AUG 22, 2019                     Designation: DVBA*2.7*213
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #181                    Status: Released
+                  Compliance Date: SEP 21, 2019
+=============================================================================
+
+
+Subject: REMOVE DVBA CAPRI GETVBADOCS KEY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DVBA*2.7*213 will fix the following issue:
+  
+ Compensation and Pension Record Interchange (CAPRI) error when accessing
+ the "Get Docs from Virtual VA" option.
+  
+   
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)               Field Name (Number) New/Modified/Deleted
+ ------------------               ------------------- --------------------
+  
+  
+ Forms Associated:
+  
+ Form Name       File #   New/Modified/Deleted
+ ---------       ------   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name    New/Modified/Deleted
+ ---------------    --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name       Type    New/Modified/Deleted
+ -----------       ----    -------------------- 
+ N/A
+  
+  
+ Parameter Definition Associated:
+  
+ Parameter Definition Name       New/Modified/Deleted
+ ------------------------        -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Remote Procedure Call:
+  
+ RPC NAME                 New/Modified/Deleted
+ --------                 --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ DVBA CAPRI GETVBADOCS
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number) New/Modified/Deleted
+ -------------   ----   ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ INC4575143 - CAPRI error when accessing the "Get Docs from Virtual VA" 
+              option.
+   
+    Problem: 
+    --------
+    The "Get Docs from Virtual VA" option is still visible in CAPRI for 
+    some users even though it has been discontinued. This is due to users
+    still holding instances of the 'DVBA CAPRI GETVBADOCS' key from the
+    SECURITY KEY (#19.1) File.
+   
+    Resolution:
+    -----------
+    Post install routine DVBA213P will remove this key from the SECURITY 
+    KEY (#19.1) File, which will remove this option from appearing in CAPRI
+    for any users.
+  
+  
+ TEST SITES:
+ -----------
+ Asheville VAMC
+ Central Texas HCS
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+  
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:   domain.ext  
+ Salt Lake City:    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+  
+ Documentation Title                File Name                     FTP Mode
+ --------------------------------------------------------------------------
+ CAPRI GUI User Manual              DVBA_27_P213_UM                Binary
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install. The post installation routine can be deleted after patch 
+ install as it will not automatically be deleted.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch DVBA*2.7*213:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//", respond NO.
+  
+   
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup 
+ Transport Global [XPD BACKUP] menu option.  The message containing the 
+ backed-up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed-up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;May 1, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA213P
+    Before:       n/a   After:  B1569262  **213**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 09, 2019
+Completed By:                               Date Completed: AUG 21, 2019
+Released By :                               Date Released : AUG 22, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

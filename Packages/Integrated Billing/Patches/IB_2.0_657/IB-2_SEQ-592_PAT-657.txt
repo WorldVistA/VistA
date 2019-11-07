@@ -1,0 +1,276 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 09/23/19 at 12:32
+=============================================================================
+Run Date: OCT 02, 2019                     Designation: IB*2*657
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #592                      Status: Released
+                  Compliance Date: OCT 04, 2019
+=============================================================================
+
+
+Subject: FY20 IB STOP CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ Fiscal year 2020 changes, effective 10/01/2019.
+  
+ **************************************************************************
+ * Due to this patch being released after the effective date of 10/1/2019,*
+ * for the Integrated Billing Clinic Stop Codes, this patch has a 2-day   *
+ * compliance date. Please install this patch as soon as possible.        *
+ **************************************************************************
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+  
+ Security Keys Associated: 
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs): N/A
+  
+ Patient Safety Issues (PSIs): N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+  
+  
+ 1. INC6784003 - FY20 IB CLINIC STOP CODE BILLABLE TYPES UPDATE
+  
+ Problem:
+ --------
+ As requested by the Chief Business Office (CBO), the IB CLINIC
+ STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+ reflect changes for Fiscal Year 2020.
+  
+  
+ Resolution:
+ -----------
+ Add and update requested Stop Codes as described below:
+  
+  
+ STOP CODE ADDED
+ ---------------
+  
+ STOP   EFFECTIVE                                                OVERRIDE
+ CODE   DATE         BILLABLE TYPE  DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 391   OCT 1,2019   SPECIALTY CARE  CARDIAC ECHO
+ 392   OCT 1,2019   SPECIALTY CARE  AMBULATORY ECG MONITORING
+  
+  
+  
+ STOP CODE MODIFIED
+ ------------------
+  
+ OLD: 
+   
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE         BILLABLE TYPE   DESCRIPTION                    FLAG
+ --------------------------------------------------------------------------
+ 311    DEC 06, 2001  SPECIALTY CARE  PACEMAKER                    
+ 369    OCT 01, 2010  SPECIALTY CARE  EP LAB                      OVERRIDE
+ 718    FEB 15, 2008  NON-BILLABLE    DIABETIC RETINAL SCREENING  OVERRIDE
+  
+  
+ NEW: 
+   
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE         BILLABLE TYPE   DESCRIPTION                    FLAG
+ --------------------------------------------------------------------------
+ 311    OCT 1,2019    SPECIALTY CARE  CARD IMPLANT ELEC DEV (CIED)
+ 369    OCT 1,2019    SPECIALTY CARE  ELECTROPHYSIOLOGY LAB       OVERRIDE
+ 718    OCT 1,2019    NON-BILLABLE    EYE TELEHEALTH SCREENING    OVERRIDE
+  
+  
+ Test Sites:
+ -----------
+ Erie VA Medical Center
+ Bay Pines VA Healthcare System 
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ ------------------- 
+  
+ Pre/Post Installation Overview:
+  
+  
+ Pre-Installation Instructions:
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+  
+ 1. Choose the PackMan message containing this build. Then select the
+    INSTALL/CHECK MESSAGE PackMan option to load the build.
+  
+  
+  2. From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu,
+  
+     A. Select the Verify Checksums in Transport Global option to confirm
+        the integrity of the routines that are in the transport global.
+        When prompted for the INSTALL NAME enter the patch or build name
+        IB*2.0*657.
+  
+         NOTE: Using <spacebar><enter> will not bring up a Multi-Package
+         build even if it was loaded immediately before this step. It will
+         only bring up the last patch in the build.
+  
+     B. Select the Backup a Transport Global option to create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates. 
+  
+     C. You may also elect to use the following options: 
+          i. Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         
+         ii. Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this
+             patch is installed.  It compares all the components of
+             this patch, such as routines, DDs, templates, etc.
+  
+     D. Select the Install Package(s) option and choose the patch to
+        install, IB*2.0*657
+   
+          i. When prompted 'Want KIDS to INHIBIT LOGONs during the
+             install? NO//', answer NO.
+            
+         ii. When prompted 'Want to DISABLE Scheduled Options, Menu 
+             Options, and Protocols? NO//', answer NO
+  
+ Post-Installation Instructions
+ -------------------------------
+  
+ You may delete routine IB20P657 after the installation.
+  
+ Please review the installation to verify the Stop Codes were added. 
+  
+ See below:
+     NOTE: If any type of error message is displayed during installation
+     create a ticket to resolve the issue.
+  
+ DSS Clinic Stop Codes, Post-Install Starting
+  
+  Adding new codes to file 352.5
+  
+    391  CARDIAC ECHO
+  
+    392  AMBULATORY ECG MONITORING
+  
+      2 entries added to 352.5
+  
+  Updating Stop Code entries in file 352.5
+  
+    311  CARD IMPLANT ELEC DEV (CIED)
+  
+    369  ELECTROPHYSIOLOGY LAB
+  
+    718  EYE TELEHEALTH SCREENING
+  
+      3 updates added to file 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Due to the complexity of this patch, it is not recommended for back-out, 
+ and a restore from a backup of the Transport Global should not be attempted.  
+ In the event that a site decides to back out this patch, the site should
+ log a Service Now ticket or reach out to the Enterprise Service Desk at
+ 855-673-4357, option 5. The development team will need to issue a
+ follow-on patch in order to comprehensively back-out this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P657
+    Before:       n/a   After: B11366767  **657**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 29, 2019
+Completed By:                               Date Completed: OCT 02, 2019
+Released By :                               Date Released : OCT 02, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,207 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 09/04/19 at 16:31
+=============================================================================
+Run Date: OCT 23, 2019                     Designation: USR*1*39
+Package : USR - AUTHORIZATION/SUBSCRIPTION    Priority: Mandatory
+Version : 1        SEQ #36                      Status: Released
+                  Compliance Date: NOV 23, 2019
+=============================================================================
+
+Associated patches: (v)USR*1*33    <<= must be installed BEFORE `USR*1*39'
+
+Subject: VISTA SECURITY REMEDIATION UPDATES FOR FOUR SLASHES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch USR*1.0*39 is being released to support the security vulnerability
+ solution for the VistA Security Remediation (VSR) program that focuses on 
+ updates to the four-slash logic (////) with three-slash logic (///).
+  
+ Defect:
+ 995649 - DEF - Four Slash (////) logic to USRMEMBR routine
+    
+ Included in this patch is the following update:
+ Modifications were made to the routine that supports the User 
+ Class Definition [USR CLASS DEFINITION] option under the User Class
+ Management [USR CLASS MANAGEMENT MENU] option.
+  
+ When a user performs the Schedule Changes under a class definition by 
+ entering the CLASS, EFFECTIVE DATE/TIME and EXPIRATION DATE/TIME, the
+ data was being 'stuffed' in the data fields without validation. This patch
+ will modify routine USRMEMBR to change the four-slash coding (////) to 
+ three-slash coding (///) to ensure data is validated before storing.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Fayetteville, AR
+ VA Maine (Togus)
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+ ------------------- 
+  
+ Pre/Post Installation Overview:
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+ Pre-Installation Instructions:
+  
+ N/A
+   
+ Installation Instructions:
+  
+ 1. If the release is provided using PackMan, choose the PackMan   
+    message containing this build. Then select the INSTALL/CHECK MESSAGE 
+    PackMan option to load the build.
+  
+    If this release is provided using a Host file, use the Load a 
+    Distribution option contained on the Kernel Installation and    
+    Distribution System Menu to load the Host file.
+  
+ 2. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu,
+       A. Select the Verify Checksums in Transport Global option to 
+          confirm the integrity of the routines that are in the transport
+          global. When prompted for the INSTALL NAME enter the patch or
+          build name (USR*1.0*39).
+  
+       B. Select the Backup a Transport Global option to create a backup  
+          message of any routines exported with this patch. It will not 
+          backup any other changes such as Data Dictionaries, templates, 
+          etc.
+  
+       C. You may also elect to use the following options: 
+          i.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          ii. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all of the components of
+              this patch, such as routines, DDs, templates, etc.
+  
+       D. Select the Install Package(s) option and choose the patch to 
+          install. 
+          i.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+              of Install? NO//', answer NO.
+          ii. When prompted 'Want KIDS to INHIBIT LOGONs during the 
+              install? NO//', answer NO.
+         iii. When prompted 'Want to DISABLE Scheduled Options, Menu 
+              Options, and Protocols? NO//', answer NO.
+  
+ Post-Installation Instructions:
+  
+ N/A 
+  
+ Back-Out Plan:
+  
+ This patch consists of routines. During the VistA Installation
+ Procedure of the PackMan message, the installer should back up the
+ modified routines by the use of the 'Backup a Transport Global' action
+ (step 2b in the Installations Instructions above).
+  
+ If rollback/backout is required, the installer can restore the routines
+ using the MailMan message that were saved prior to installing the
+ patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;AUTHORIZATION/SUBSCRIPTION;**[Patch List]**;Jun 20, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: USRMEMBR
+    Before: B24624500   After: B25177770  **2,3,6,7,29,33,39**
+ 
+Routine list of preceding patches: 33
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 19, 2019
+Completed By:                               Date Completed: OCT 23, 2019
+Released By :                               Date Released : OCT 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

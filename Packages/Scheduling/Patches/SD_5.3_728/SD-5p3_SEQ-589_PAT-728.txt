@@ -1,0 +1,359 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 06/06/19 at 11:04
+=============================================================================
+Run Date: SEP 18, 2019                     Designation: SD*5.3*728
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #589                    Status: Released
+                  Compliance Date: OCT 01, 2019
+=============================================================================
+
+Associated patches: (v)SD*5.3*696  <<= must be installed BEFORE `SD*5.3*728'
+
+Subject: FY20 STOP CODE CHANGES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ SD*5.3*728 provides Fiscal Year 2020 updates to the CLINIC STOP (#40.7)
+ file as requested by the Office of Finance, Managerial Cost Accounting
+ Office (MCAO).
+  
+                          *** IMPORTANT NOTE ***
+ **************************************************************************
+ *  This patch is being released with a compliance date of October 1,     *
+ *  2019 and should be installed as close to Close of Business (COB) on   *
+ *  September 30, 2019 as possible, but not after October 1, 2019. Early  *
+ *  installation of this patch could result in transmission of incorrect  *
+ *  Stop Codes that will result in errors from Austin.  Coordination with *
+ *  the MAS (Medical Administration Service) PAS (Program Application     *
+ *  Specialist)/ADPAC (Automated Data Processing Application Coordinator) *
+ *  is imperative as SD*5.3*728 will cause changes to the CLINIC STOP     *
+ *  (#40.7) file. Testing can be done in a site's mirror account before   *
+ *  installation in production to verify changes. SD*5.3*728 modifies and *
+ *  creates Stop Codes effective October 1, 2019; therefore, installing   *
+ *  early may modify certain Stop Codes that may currently be in use at   *
+ *  your site.  It is advised that clinics with Stop Codes assigned that  *
+ *  will incur restriction date/type changes should be corrected as soon  *
+ *  as possible after installation. Please keep in mind that new Stop     *
+ *  Codes should not be assigned in MAS/Scheduling until October 1, 2019  *
+ *  as the PCE encounters bearing FY20 Stop Codes will not be accepted in *
+ *  Austin until that date.  All other MAS Stop Code changes should be    *
+ *  made as early as possible on October 1, 2019.                         *
+ **************************************************************************
+  
+ Instructions for the FY20 Stop Code Patch:
+  
+ SD*5.3*728 makes additions and changes to the CLINIC STOP (#40.7) file
+ as of October 1, 2019. No clinic can be created using any new Stop Codes 
+ contained in the patch until after this patch is implemented.
+  
+ Scheduling & IRM should coordinate to perform the following sequence: 
+  
+ 1. IRM installs the patch late on September 30 or early on October 1, 
+    2019.
+  
+ 2. Scheduling staff: Run the Non-Conforming Clinics Stop Code Report 
+    [SD CLN STOP CODE REP] to list those clinics that need changes in the
+    HOSPITAL LOCATION (#44) file for FY20.
+  
+ 3. Scheduling staff: Make changes in the HOSPITAL LOCATION (#44) 
+    file so that the clinics will have the correct Stop Codes in place 
+    for October 1st clinic appointments.
+  
+ MCA Staff:
+  
+ 1. Before October 1 (prior to installation of the patch) run Option 2:
+    Create DSS Clinic Stop Code File [ECXSCLOAD] from the Setup for DSS 
+    Clinic Information menu [ECX SETUP CLINIC].
+  
+ 2. Follow normal procedures to run the DSS CLI Extract for September 2019.
+    It is the create and edit, not the 'approve', that changes the values 
+    included in the CLI extract.  Perform normal AUDITS for the CLI 
+    Extract.
+  
+ 3. DO NOT make changes for October clinics at this time.  
+  
+ 4. Between October 12 and 31, after auditing and receiving confirmation 
+    of successful deblocking of the transmitted September CLI Extract,
+    proceed with FY20 Stop Code changes to the DSS Clinics and Stop Codes
+    Worksheet:
+  
+    a. After the September extract has been run, transmitted and is 
+       considered final (in your mind, no re-run/re-transmit needed), you
+       may run Option 2 CREATE DSS Clinic Stop Code File [ECXSCLOAD].  
+       This option creates local entries in the CLINICS AND STOP CODES
+       (#728.44) file and compares this file to the HOSPITAL LOCATION (#44)
+       file to see if there are any differences since the last time the
+       file was reviewed.
+  
+    b. After Option 2 has completed, use the Option 3:  Clinics and DSS
+       Stop Codes Print [ECXSCLIST].  This option produces a worksheet of
+       (A) All Clinics, (C) Active, (I) Inactive, or only the (U) 
+       Unreviewed Clinics that are awaiting approval.
+  
+    c. Run Option 7:  Clinic & Stop Codes Validity Report [ECX STOP CODE
+       VALIDITY].  This step will check that all Stop Codes conform.  
+       Note:  a 'blank' output indicates there are no problems with Stop
+       Code and credit stop validity.
+  
+    d. Update for FY20 as needed using Option 4:  Enter/Edit Clinic 
+       Parameters [ECXSCEDIT] option.
+  
+    e. Approve changes using Option 5:  Approve Reviewed DSS Clinic 
+       Worksheet [ECXSCAPPROV] option.  Finalize all Stop Code changes on 
+       the worksheet to be ready to run the October DSS CLI Extract.
+  
+    f. MCA teams with questions, please log a WonderDesk ticket through
+       http://vaww.dss.domain.ext/helpdsktckt.asp or by sending an
+       Outlook message to the VHA MCAO CSHD mail group.
+  
+  
+ Patch Components:
+ =================
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+  
+ Mail Group Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Request (NSRs):
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC5881919   FY20 Stop Code Changes
+  
+    Problem:
+    --------
+    The Office of Finance, Managerial Cost Accounting Office (MCAO), has
+    requested Fiscal Year 2020 Stop Code changes to the CLINIC STOP file
+    (#40.7).
+  
+    Resolution:
+    -----------
+    Post-init routine SD53FY20 has been created to update the CLINIC STOP 
+    file  (#40.7) by adding two (2) new stop codes and changing the names
+    for two (2) existing stop codes, effective 10/1/2019.
+  
+    Listed below are the applicable stop code updates:
+  
+    New Stop Code being added (will take effect when the patch is 
+    installed)
+  
+    Stop Code   Name/Description        Restriction Type   Restriction Date
+  
+       391      CARDIAC ECHO                     E
+       392      AMB ECG MONITORING               E               
+  
+    Stop Code with Name Change only (will take effect when the patch is 
+    installed.)
+  
+       311      Old Name: PACEMAKER
+                New Name: CIED DEVICES
+  
+       718      Old Name: DIABETIC RETINAL SCREENING
+                New Name: EYE TELE SCREENING
+  
+  
+ Test Sites:
+ -----------
+ Bay Pines 
+ Pittsburgh
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A 
+  
+  
+ Installation Instruction:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ NOTE: This patch should be installed as close to 9/30/2019 as 
+ possible, but not after 10/1/19.
+  
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize 
+ potential disruption to users. 
+  
+ This patch should take less than 2 minutes to install.
+  
+ Post installation routine can be deleted after they run, they are not 
+ automatically deleted.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Prior to install this patch, backup file ^DIC(40.7) using your site's 
+ policy for backing up data.
+  
+ If the steps are unknown, please follow the following procedures:
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GOGEN.
+    3. At the device prompt, enter the directory and file name where 
+       the global backup is to be stored.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the Global prompt, enter ^DIC(40.7
+    6. Verify that the file was created and exists in the directory 
+       specified.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+    1. Choose the PackMan message containing this patch.
+     
+    2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+    3. From the Kernel Installation & Distribution System Menu, select 
+       the Installation Menu. From this menu, you may select to use the 
+       following options.  When prompted for the INSTALL NAME, enter the
+       patch SD*5.3*728:
+  
+       a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+       b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+  
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+     
+    4. From the Installation Menu, select the Install Package(s) option
+       and choose the patch to install.
+    
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+     
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//" respond NO.
+  
+ ** 7. During install, verify that all entries were added successfully.
+       If an error is displayed, please create a ticket.  
+  
+  
+ Post-Installation Instructions:
+ ------------------------------- 
+  
+    1. Details of the changes applied by this patch are provided during 
+       the installation and may also be reviewed with the Install File 
+       Print option on the Utilities menu on the Kernel Installation and 
+       Distribution System menu.
+  
+    2. It is important to check the CLINIC STOP file (#40.7) post 
+       installation to make sure that all of the updates are correctly 
+       reflected in the CLINIC STOP file (#40.7).  If any discrepancies
+       are found, you should enter a CA SDM ticket.
+  
+    3. You may delete the routine SD53FY20 from your production system 
+       after the patch has been successfully verified.
+  
+  
+ Back-Out Plan:
+ --------------
+  
+ Please use %GIGEN for restoring the CLINIC STOP file (#40.7) if needed.
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GIGEN.
+    3. At the device prompt, enter the directory and file name created in
+       the pre-install instructions.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the 'Transfer entire set of files? No=>', type 'Yes'.
+    6. At the From global prompt, enter ^DIC(40.7
+    7. At the To global ^DIC(40.7=>, enter ^DIC(40.7
+    8. At the OK to transfer? Yes=> prompt, select Yes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53FY20
+    Before:       n/a   After:B107270057  **728**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 05, 2019
+Completed By:                               Date Completed: SEP 18, 2019
+Released By :                               Date Released : SEP 18, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

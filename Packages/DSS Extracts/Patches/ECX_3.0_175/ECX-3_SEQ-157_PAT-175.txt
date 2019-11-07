@@ -1,0 +1,216 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/15/19 at 13:31
+=============================================================================
+Run Date: SEP 24, 2019                     Designation: ECX*3*175
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #157                      Status: Released
+                  Compliance Date: OCT 01, 2019
+=============================================================================
+
+Associated patches: (v)ECX*3*172   <<= must be installed BEFORE `ECX*3*175'
+
+Subject: FY20 CHARS CODE CHANGES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*175 updates the SHORT DESCRIPTION (#1) field of four 
+ existing entries in the NATIONAL CLINIC (#728.441) file.
+  
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be 
+ installed as close to 10/1/2019 as possible. Sites will need the updates 
+ for Fiscal Year (FY) 20.
+ *************************************************************************
+  
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+ N/A
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+ N/A
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ Remote Procedures Associated:
+ N/A
+  
+ Parameter Definitions Associated:
+ N/A
+  
+ Additional Information:
+  
+ Blood Bank Team Coordination:
+ -----------------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC5882411 - FY20 CHAR4 CODE CHANGES FOR NATIONAL CLINIC (#728.441) 
+                 FILE
+  
+    Problem:
+    --------
+    A request was made by the Managerial Cost Accounting Office (MCAO) to
+    update the SHORT DESCRIPTION (#1) field of four existing entries in the
+    NATIONAL CLINIC (#728.441) file.
+  
+    Resolution:
+    -----------
+    Routine ECX3P175 has been created to update the NATIONAL CLINIC 
+    (#728.441) file by modifying the SHORT DESCRIPTION (#1) field of
+    four existing entries effective 10/1/2019.
+  
+    The descriptions of the following entries have changed:
+   
+     Existing Code       New Short Description
+     -------------       ---------------------
+         DE00            SVH Telehealth (StateVetHom)
+         HTAC            Take Chrg MyLife&Hlth Grp
+         IDHC            Whole Health Clinical Care
+         RFLX            Intro to Whole Health
+  
+  
+ Test Sites:
+ ----------
+ Boston
+ Louisville 
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+        
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than 2 minutes to install this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Prior to install this patch, backup file ^ECX(728.441) using your site's 
+ policy for backing up data.
+  
+ If the steps are unknown, please follow the following procedures:
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GOGEN.
+    3. At the device prompt, enter the directory and file name where the 
+       global backup is to be stored.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the Global prompt, enter ^ECX(728.441
+    6. Verify that the file was created and exists in the directory 
+       specified.
+  
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch ECX*3*175:
+  
+        a. Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+        b. Print Transport Global - This option will allow you to view
+           the components of the KIDS build.
+        c. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this 
+           patch is installed. It compares all components of this patch
+           (routines, DD's, templates, etc.).
+        d. Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+     
+     4. From the Installation Menu, select the Install Package(s) option
+        and choose the patch to install.
+    
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+     
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? NO//" respond NO.
+  
+  ** 7. During install, verify that all entries were added successfully.
+        If an error is displayed, please create a ticket.  
+   
+     8. You may delete the routine ECX3P175 from your production system 
+        after the patch has been successfully verified.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Please use %GIGEN for restoring the NATIONAL CLINIC file (#728.441) if
+ needed.
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GIGEN.
+    3. At the device prompt, enter the directory and file name created in
+       the pre-install instructions.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the 'Transfer entire set of files? No=>', type 'Yes'.
+    6. At the From global prompt, enter ^ECX(728.441
+    7. At the To global ^ECX(728.441=>, enter ^ECX(728.441
+    8. At the OK to transfer? Yes=> prompt, select Yes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P175
+    Before:       n/a   After:  B4040738  **175**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 05, 2019
+Completed By:                               Date Completed: SEP 19, 2019
+Released By :                               Date Released : SEP 24, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,263 @@
+$TXT Created by                 CPRS32.DOMAIN.EXT  (KIDS) on Tuesday, 07/23/19 at 09:47
+=============================================================================
+Run Date: OCT 02, 2019                     Designation: OR*3*500
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #430                      Status: Released
+                  Compliance Date: NOV 04, 2019
+=============================================================================
+
+
+Subject: VIEW ALERTS OPTIMIZATION
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch includes a new List Manager Application entitled "Bulk 
+ Parameter Editor for Notifications" that allows users to view and edit
+ multiple OERR/CPRS notification parameter settings simultaneously.
+  
+ It is very important that users read the documentation before using 
+ the new interface and how it can impact large amounts of notifications.
+  
+ A new menu option, Bulk Parameter Editor for Notifications, is included on
+ the "Notification Mgmt Menu" [ORB NOT COORD MENU].
+  
+ Build Components:
+ ================
+  
+ Option Name                       Type
+ ===========                       ====
+ ORB NOT COORD MENU                LINK FOR MENU/ITEM
+ ORB3 LM  1 MAIN MENU              MENU
+ ORB3 LM 01 E/D NOTIFICATIONS      MENU OPTION
+ ORB3 LM 02 SET URGENCY            MENU OPTION
+ ORB3 LM 03 DEL PARAM              MENU OPTION
+ ORB3 LM 04 DEF RECIPIENTS         MENU OPTION
+ ORB3 LM 05 DEF RECIP DEV          MENU OPTION
+ ORB3 LM 06 PROV RECIP             MENU OPTION
+ ORB3 LM 07 FLAG ORD ITEMS MENU    MENU
+ ORB3 LM 07A FLAG INPT ORD         MENU OPTION
+ ORB3 LM 07B FLAG INPT ORD PR      MENU OPTION
+ ORB3 LM 07C FLAG INPT RESULTS     MENU OPTION
+ ORB3 LM 07D FLAG INPT RSLTS PR    MENU OPTION
+ ORB3 LM 07E FLAG INPT EXP ORD     MENU OPTION
+ ORB3 LM 07F FLAG INPT EO PR       MENU OPTION
+ ORB3 LM 07G FLAG OUTPT ORD        MENU OPTION
+ ORB3 LM 07H FLAG OUTPT ORD PR     MENU OPTION
+ ORB3 LM 07I FLAG OUTPT RESULTS    MENU OPTION
+ ORB3 LM 07J FLAG OUTPT RSLT PR    MENU OPTION
+ ORB3 LM 07K FLAG OUTPT EXP ORD    MENU OPTION
+ ORB3 LM 07L FLAG OUTPT EO PR      MENU OPTION
+ ORB3 LM 08 ARCHIVE DEL            MENU OPTION
+ ORB3 LM 09 FORWARD NOTIF MENU     MENU
+ ORB3 LM 09A FOR UNP NOT SUP       MENU OPTION
+ ORB3 LM 09B FOR UNP NOT SUR       MENU OPTION
+ ORB3 LM 09C FOR UNP NOT BKR       MENU OPTION
+ ORB3 LM 10 SET DELAYS MENU        MENU
+ ORB3 LM 10A DELAY UNV ORDERS      MENU OPTION
+ ORB3 LM 10B DEL UNV MED ORDERS    MENU OPTION
+ ORB3 LM 11 FLAG ORD BULLETIN      MENU OPTION
+ ORB3 LM 12 E/D SYSTEM             MENU OPTION
+ ORB3 ALERT RECIPIENTS             MENU OPTION
+ ORB3 ALERT TRACKING REPORT        MENU OPTION
+ ORB3 DETERMINE RECIPIENTS         MENU OPTION
+ ORB3 RECIP NOTIFICATIONS          MENU OPTION
+ ORB3 LM 14 NOTS FOR USERS         MENU OPTION
+  
+ Protocol Name                     Type
+ =============                     ====
+ ORNOT DEFAULT ENTITY SELECTIONS   NEW
+ ORNOT DEFAULT SELECTIONS          NEW
+ ORNOT LISTMAN 1 ENTITY MENU       NEW
+ ORNOT LISTMAN 1 MAIN MENU         NEW
+ ORNOT LISTMAN EDIT ENTITIES       NEW
+ ORNOT LISTMAN EDIT VALUE          NEW
+ ORNOT LISTMAN ENTITY ADD          NEW
+ ORNOT LISTMAN ENTITY REMOVE       NEW
+ ORNOT LISTMAN ENTITY REMOVE ALL   NEW
+ ORNOT LISTMAN ENTITY VIEW         NEW
+ ORNOT LISTMAN INSTANCE ALL        NEW
+ ORNOT LISTMAN INSTANCE VIEW       NEW
+ ORNOT LISTMAN QUIT                NEW
+ ORNOT LISTMAN BLANK               NEW
+  
+ List Template                     Type
+ =============                     ====
+ OR PARAMETER MGR                  NEW
+ OR PARAMETER SELECT               NEW
+  
+ Remote Procedure                  Type
+ ================                  ====
+ ORALEAPI REPORT                   NEW
+  
+ New Service Request(s) Addressed
+ ================================
+ 20150302 Alert/Notification Enhancement
+  
+ This request is for enhancements to the alert/notification system in 
+ VistA. Currently, the system does not allow for changing an alert to 
+ Mandatory for all users at one time. This requires a FileMan report to be 
+ run to obtain names of all users with a setting other than Mandatory, and 
+ then entering each user individually in order to change the setting to 
+ Mandatory. This enhancement will provide the ability for the Clinical 
+ Application Coordinator (CAC) or Information Resources Management (IRM) 
+ to change the alert setting at a system level.
+  
+ Test Sites:
+ ==========
+ Bedford
+ Houston
+ Miami
+ Shreveport
+  
+ Documentation:
+ =============
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+    
+ The preferred method is to sFTP the files from download.vista.domain.ext.
+ This transmits the files from the first available sFTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+   Hines          ftp.domain.ext   
+   Salt Lake City ftp.domain.ext     
+    
+ This documentation will be in the form of an Adobe Acrobat file.
+   
+ Documentation can also be found at:  http://www.domain.ext/vdl
+  
+ Below is a list of the files related to this patch that will be needed 
+ and available via the sFTP sites listed above.
+  
+   File Description                          File Name         FTP Mode
+   ====================================================================
+   User Manual                     or_3_0_500_bpen_ug.pdf/.doc     Binary
+   Test Scripts                    or_3_0_500_bpen_ts.pdf/.doc     Binary
+   CPRS Technical Manual Updated             cprslmtm.pdf/.doc     Binary
+  
+ Installation Instructions:
+ =========================
+ This patch may be installed with users on the system.
+ Installation of this patch should take less than 2 minutes.
+  
+ 1.  Use the INSTALL/CHECK MESSAGE option on the Packman Menu.  
+   
+ 2.  From the Kernel Installation and Distribution System (KIDS) Menu, 
+     select the Installation menu.  
+   
+ 3.  Use the Install Package(s) option and select the package OR*3.0*500.
+  
+ 4.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? YES//', respond NO.
+  
+ 5.  If prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//',
+     respond NO.
+  
+ 6.  If prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? YES//', respond NO.
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0-60): 0//', respond '0'.
+  
+  
+ Post Installation Instructions:
+ ==============================
+ It is recommended but not mandatory to re-index the "B" index of the
+ ORDERABLE ITEMS File [#101.43].
+  
+ From the VA FileMan [DIUSER] option, take the following actions:
+  
+           VA FileMan Version 22.2
+  
+           Enter or Edit File Entries
+           Print File Entries
+           Search File Entries
+           Modify File Attributes
+           Inquire to File Entries
+           Utility Functions ...
+           Data Dictionary Utilities ...
+           Transfer Entries
+           Other Options ...
+  
+ Select VA FileMan <TEST ACCOUNT> Option: UTILity Functions
+  
+  
+           Verify Fields
+           Cross-Reference A Field
+           Identifier
+           Re-Index File
+           Input Transform (Syntax)
+           Edit File
+           Output Transform
+           Template Edit
+           Uneditable Data
+           Mandatory/Required Field Check
+           Key Definition
+  
+ Select Utility Functions <TEST ACCOUNT> Option: RE-INdex File
+  
+ Modify what File: ORDERABLE ITEMS//       (34991 entries)
+  
+ THERE ARE 36 INDICES WITHIN THIS FILE
+ DO YOU WISH TO RE-CROSS-REFERENCE ONE PARTICULAR INDEX? No// Y  (Yes)
+  
+ Select FIELD: .01  NAME
+  
+  
+ CURRENT CROSS-REFERENCES:
+         1     REGULAR 'B' INDEX OF FILE
+         2     MUMPS 'C2' INDEX OF FILE
+         3     MUMPS 'S0' INDEX OF FILE
+         4     MUMPS 'COMMON2' INDEX OF FILE
+         5     MUMPS 'SS2' INDEX OF FILE
+ WANT TO RE-CROSS-REFERENCE ONE OF THEM? No// Y  (Yes)
+ WHICH NUMBER: 1
+ ARE YOU SURE YOU WANT TO DELETE AND RE-CROSS-REFERENCE THE 'B' INDEX? 
+ No// Y
+   (Yes)
+ ...HMMM, LET ME PUT YOU ON 'HOLD' FOR A 
+ SECOND.........................DONE!
+  
+  
+ Backout/Rollback Strategy:
+ =========================
+ In the event of a catastrophic failure, the Area Manager may make the 
+ decision to back-out the patch.  If needed, a back-out patch will be
+ provided that will remove all of the components of the patch.
+  
+ Since all of the routines are new, there is no need to restore any data.
+  
+ For immediate disabling of this patch, remove or rename the 3 routines
+ listed below and DISABLE the ORB3 LM  1 MAIN MENU option.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORALEAPI
+    Before:       n/a   After: B36178698  **500**
+Routine Name: ORPARMG1
+    Before:       n/a   After:B105920424  **500**
+Routine Name: ORPARMGR
+    Before:       n/a   After:B152220468  **500**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 04, 2018
+Completed By:                               Date Completed: OCT 02, 2019
+Released By :                               Date Released : OCT 02, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

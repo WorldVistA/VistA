@@ -1,0 +1,62 @@
+
+=============================================================================
+Run Date: AUG 22, 2019                     Designation: HDS*1*27
+Package : HDS - HEALTH DATA REPOSITORY        Priority: Mandatory
+Version : 1        SEQ #24                      Status: Released
+                  Compliance Date: SEP 22, 2019
+=============================================================================
+
+
+Subject: HDR Release 3.26.1 includes TRM upgrades and defect fixes.
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ HDR Release 3.26.1 includes the following TRM Upgrades to support compliance
+  with VA standards; this release also includes Defect fixes:
+  
+  * JAXB (Java Architecture for Extensible Markup Language(XML) Binding)
+    Reference Implementation (RI) allows for marshalling and 
+    un-marshalling of Java objects to XML. 
+  * HAPI (Health Level Seven (HL7) Application Programming Interface is 
+    an open source, object-oriented HL7 parser for Java. 
+  * JSON (JavaScript Object Notation) is a reference implementation of a 
+    JSON package in Java.
+  * Defect 1061213: Messages were stored in the relational tables when 
+    Monitor. AUDIT_CLOB_STR was set to read only (PS 2.0, DMP, and Census)
+  * Defect 1061213: Messages were stored in the relational tables when 
+    Monitor. AUDIT_CLOB_STR was set to read only (PS 2.0, DMP, and Census)
+  * Defect 1073008: CA/AR not logged with invalid/NULL completed date 
+    time for PS and DMP messages.
+  * Defect 1077568: For HTH Vital writes CR and only one Acknowledgement 
+    is returned in HDR 3.26.1.1 build in SQA2.
+  * Defect 1079246: For HTH Vital writes is giving null point exception 
+    in HDR 3.26.1.1 build in SQA2
+  
+ The Home Telehealth (HTH) client supports the Veterans in their homes with
+ biometric monitoring and measurement technologies to help maintain their 
+ independent living capability, reduce hospital admissions, and improve 
+ health outcomes and writes results to the HDR database.
+  
+ The deployment date for HDR 3.26.1 is scheduled August 20, 2019 by the 
+ AITC.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : AUG 05, 2019
+Entered By  :                               Date Entered  : JUL 29, 2019
+Completed By:                               Date Completed: AUG 19, 2019
+Released By :                               Date Released : AUG 22, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,219 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 09/17/19 at 12:36
+=============================================================================
+Run Date: OCT 16, 2019                     Designation: PSJ*5*380
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #335                      Status: Released
+                  Compliance Date: NOV 16, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*214   <<= must be installed BEFORE `PSJ*5*380'
+                    (v)PSJ*5*327   <<= must be installed BEFORE `PSJ*5*380'
+
+Subject: START DATE ISSUE/CLINIC ORDER/ORDER FREQUENCY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issues.
+  
+ 1. INC3307676-Inconsistency on updating start date when editing a starred
+    field and a non-starred field depending on when you perform the edit.
+  
+ 2. INC3400229-Patient on Specific Drugs (PSD) Not Displaying Clinic Order
+    When Division Selected.
+  
+ 3. INC3835935-Order changed in VistA, creating a new order. Bar Code 
+    Medication Administration (BCMA) does not show the new active order;
+    only shows discontinued order.
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------- 
+ HITPS-6504:  Inpatient Medication Orders with Invalid Frequency Do Not 
+ Populate on BCMA's Virtual Due List
+  
+ Summary: Where the medication route is edited, a new order is created. 
+ The new order does not contain a valid Frequency, and, therefore, cannot 
+ be displayed on BCMA's Virtual Due List (VDL). This problem occurs when a 
+ user is set to Auto-Verify inpatient med orders.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC3307676 - There is an inconsistency for updating start date when 
+                 editing a starred field and a non-starred field depending
+                 on when you perform the edit.
+  
+ Problem: 
+ --------
+ It was reported that after editing the Start Date/Time field for an
+ IV-Inpatient order and then modifying the Administration Times field via
+ Inpatient Order Entry [PSJ OE] option for the second order of the same 
+ medication, the Start Date/Time gets changed automatically to something 
+ else other than what was entered. This happens when the two fields are
+ edited simultaneously. 
+  
+ Resolution:
+ -----------
+ A change was made to the intravenous (IV) Inpatient Order Entry [PSJ OE]
+ option to prevent re-calculation of the Start Date/Time when the field is
+ manually being edited by the user.
+  
+ The routine PSGOEF has been modified at line tag FINISH+2 to re-initialize
+ the PSIVCAL variable.
+  
+  
+ 2. INC3400229 - PSD Not Displaying Clinic Order When Division Selected
+  
+ Problem: 
+ --------
+ Orlando Inpatient staff identified an issue when using the Patients on
+ Specific Drug(s) [PSJ PDV] option to list orders of selected patient 
+ where certain Clinic Orders are not displayed if the user selects a
+ specific division. If the user does not pre-select a specific Division and
+ instead accepts the default of ALL Divisions the Clinic Order will appear.
+  
+ Resolution:
+ -----------
+ The logic of the Patients on Specific Drug(s) report has been modified to 
+ include the Inpatient clinic orders when generating the report for a 
+ specific division.
+  
+  
+ 3. INC3835935 - Order changed in VistA, creating a new order. BCMA does
+    not show the new active order; only shows discontinued order
+  
+    INC2390586 - TVH -- Invalid Frequency received from order (Duplicate)
+  
+ Problem: 
+ --------
+ The Tennessee Valley Healthcare System - Alvin C. York (Murfreesboro) 
+ Campus and VA Pittsburgh Healthcare System H.J. Heinz Campus sites
+ reported issues with orders disappearing from BCMA right after being
+ finished by pharmacy. 
+  
+ It was determined that the cause of the problem is that the FREQUENCY 
+ (in minutes) (#42) field in the UNIT DOSE (#55.06) sub-file in the
+ PHARMACY PATIENT (#55) file was getting deleted after the MED ROUTE (#3) 
+ field was edited prior or after finishing a pending unit dose order from
+ CPRS when the Auto-Verify parameter for the user performing the edit is
+ set to YES.
+  
+ Resolution:
+ -----------
+ Changed the software to preserve the variable used to store the order 
+ frequency value after the MED ROUTE (#3) field is edited. 
+  
+ NEWed the variable PSGS0XT at 3^PSGOE8 and 3^PSGOE9. This variable is 
+ used to store the Order frequency and was being overwritten after the MED
+ ROUTE (#3) field was being edited, which is handled by these two entry
+ points.
+  
+  
+ Test Sites:
+ -----------
+ Orlando VAMC
+ Pittsburgh HCS
+  
+ Patch Installation:
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch
+     (ex. PSJ*5*380):
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to back-out this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if back-out of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.  
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE8
+    Before: B60586386   After: B60937566  **47,50,65,72,110,111,188,192,
+                                           113,223,269,287,315,338,366,
+                                           327,380**
+Routine Name: PSGOE9
+    Before: B47270955   After: B47574767  **11,47,50,72,110,111,188,192,
+                                           207,113,223,269,315,338,352,
+                                           366,380**
+Routine Name: PSJLIFN
+    Before: B58490722   After: B58549614  **1,29,34,37,42,47,50,56,94,
+                                           80,116,110,181,261,252,313,333,
+                                           256,380**
+Routine Name: PSJPDV0
+    Before: B28813203   After: B33361495  **12,22,33,214,380**
+ 
+Routine list of preceding patches: 214, 256, 327
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 12, 2018
+Completed By:                               Date Completed: OCT 15, 2019
+Released By :                               Date Released : OCT 16, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,287 @@
+
+=============================================================================
+Run Date: OCT 21, 2019                     Designation: EAS*1*181
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #152                      Status: Released
+                  Compliance Date: NOV 21, 2019
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.8 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.8. This release, developed in Java
+ technology, contains Enrollment System Modernization (ESM) Phase 2 
+ development and upgrade efforts, including enhancements to support ES
+ Sustainment.
+  
+ ES 5.8 was successfully deployed on Saturday, October 19, 2019.
+  
+ The following functionality is updated in this ES 5.8 release:
+  
+ Enrollment System Modernization (ESM)
+ 1. ES is enhanced to send eligibility, enrollment, and registration 
+    changes to VET360 and receive updates through VET360 for changes made
+    to beneficiary records in Cerner Millennium.
+  
+ 2. ES is enhanced to display, assign, and share Veteran Medical Benefit 
+    Plans (VMBPs). ES will continue sending Veteran Medical Benefit Plan 
+    data to VistA sites using the existing framework. Nineteen new Core and
+    Supplemental VMBPs are added to ES with an abbreviated name, plan code,
+    and description for each plan. 
+    a. Core: A record can only have a single core plan and will be
+       automatically assigned the best core plan for which the record is
+       eligible.
+    b. Supplemental: A record can have zero, one, or multiple supplemental
+       plans and will be automatically assigned all supplemental plans for
+       which the record qualifies.
+  
+ 3. The ES User Interface (UI) has been modified so that all instances of 
+    the Health Benefit Plans (HBPs) will now be labeled as Veteran Medical
+    Benefit Plans (VMBPs).
+  
+ 4. ES will automatically assign a Veteran Medical Benefit Plan, based on
+    eligibility rules, to new and existing records within the system. 
+    Veteran Medical Benefit Plans will be assigned to new records upon
+    completing the Add a Person (AAP) process. Veteran Medical Benefit
+    Plans will be assigned to existing records by an automated batch
+    process when ES 5.8 is deployed.
+    a. The batch process will begin with the deployment of ES 5.8 and will
+       assign new Core and Supplemental VMBPs to existing records at a 
+       rate of approximately 5,000 per hour. This will take a period of
+       time (Potentially multiple months) to complete.
+    b. Note: During this time period, it should not cause concern if a 
+       record is located and is not yet assigned a Core VMBP.
+  
+ 5. ES will automatically assign and/or unassign VMBPs based on system 
+    updates from the authoritative sources and updates by staff. The
+    assigning and unassigning of Core Veteran Medical Benefit Plans will
+    not impact the assigning and/or unassigning of Community Care plans.
+  
+ 6. The Veteran Medical Benefit Plan on file for each record will be 
+    included as an available field within the E&E webservice. Object names
+    within the E&E service requests will remain "healthBenefitPlans".
+  
+ 7. ES calculates the RX copay exemption status result, based on the 
+    income information entered by a HEC user, to determine if the Veteran
+    has a prescription copay, and uses the result in determining the
+    Veteran Medical Benefit Plan and to assign and  unassign Veteran
+    Medical Benefit Plans based on eligibility rules.
+  
+ Operational Decision Management (ODM) 
+ Under ODM, the 71 iLOG rule sets were transferred from iLOG to ODM. A
+ Mediation Framework was established to allow the System Administrators to
+ switch between the iLOG and ODM rules sets as the rules sets are
+ integrated into the ES application. Once the migration is fully completed
+ to ODM, the rules will not be switched back to iLOG unless there is a
+ systemic issue with ODM. ES 5.8 integrates the rule sets that support the
+ Process Health Benefit Profile functionalities.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+  
+ 521867      Problem: Army Post Office/Fleet Post Office (APO/FPO) 
+             addresses cause ORU Z05 messages to fail in VistA. If an
+             address does not have a county code, VistA will send an error
+             back to the ES application.
+             Resolution: Updated refactoring method to send a county code 
+             for APO/FPO/Diplomatic Post Office (DPO) addresses.
+  
+ 525193      Problem: A defect was reported where the Enrollment System
+             Redesign (ESR) alters the Mother's Maiden Name (MMN) field in 
+             a new registration.
+             Resolution: Corrected parsing of the MMN field so the 
+             information wouldn't run together.
+  
+ 778045      Problem: While entering confidential address, a defect was
+             discovered where the ES won't save or display the confidential
+             phone number. The confidential phone number was not being 
+             added to the phone list because the confidential phone number
+             did not contain a change date.
+             Resolution: Added a change date set to the confidential phone
+             number of the transmission date when the incoming Z07 message 
+             was received.
+  
+ 866364      Problem: Section 508 - Report EE22 table data is not well 
+             placed for a screen reader user.
+             Resolution: Removed blank table cells and rearranged the 
+             table so that the Veterans Integrated Service Networks (VISN)
+             name and Facility name read on the same line.
+  
+ 866376      Problem: Section 508 - Report EED23table data is not well 
+             placed for a screen reader user.
+             Resolution: Removed blank table cells and rearranged the 
+             table so that the VISN name and Facility name read on the same
+             line. 
+  
+ 871698      Problem: The rated disability name lookup never returns a 
+             value. When the user enters their disability code, the
+             description box displays "looking up description..." and never
+             goes past this screen. Due to this, the user cannot verify
+             that they are entering the correct disability code.
+             Resolution: Changed the implementation of the
+             handleRDHttpResponse method of the ESR-Script.js to handle the
+             encoded data return from the RatedDisabilityLookupAction
+             class. 
+  
+ 1085747     Problem: If a Confidential Address comes in on an in incoming
+             message with a future Start Date and there is no Confidential
+             Address on file, a Null Pointer Exception (NPE) occurs on the
+             Process Address Rule.
+             Resolution: Added a Null Check to the Rule.
+  
+  
+ 1104367     Problem: ManageContactInformation Rule execution is failing 
+             for zip code 00662.
+             Resolution: The ADR team created a new County_Type  from the
+             STD_County table by eliminating duplicate rows. The 
+             combination of CountyNumber and State_ID should be unique. The
+             Hibernating mapping file is updated to refer to a new view.
+  
+  
+ 1111747     Problem: Logs are filling up due to hibernate flush errors.
+             Resolution: Removed the Phone object mapping from the CIPhone
+             object and mapped phone_id instead.
+  
+  
+ 1115687     Problem: Prescriptions were mis-mailed in August 2019 caused 
+             by a batch delete on the corporate side where ES mistakenly
+             updated the addresses to end-dated values from VET360.
+             Resolution: Added check to ignore address updates from VET360
+             where effective end date is set in
+             VET360InboundProcessService.
+  
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Patch (PackMan) message and documentation 
+ describing the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.8 Release Notes            ES_5_8_RN.PDF                  binary
+ ES 5.8 User Guide               ES_5_8_UG.PDF                  binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 08, 2019
+Completed By:                               Date Completed: OCT 21, 2019
+Released By :                               Date Released : OCT 21, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

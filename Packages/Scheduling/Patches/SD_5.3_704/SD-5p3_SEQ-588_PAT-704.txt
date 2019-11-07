@@ -1,0 +1,762 @@
+$TXT Created by                    P at CHY0035D.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 08/13/19 at 16:31
+=============================================================================
+Run Date: SEP 13, 2019                     Designation: SD*5.3*704
+Package : SD - SCHEDULING                     Priority: EMERGENCY
+Version : 5.3       SEQ #588                    Status: Released
+                  Compliance Date: SEP 16, 2019
+=============================================================================
+
+Associated patches: (v)SD*5.3*650  <<= must be installed BEFORE `SD*5.3*704'
+
+Subject: Tele Health Scheduling Enhancements
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  
+                          *** IMPORTANT NOTE ***
+ **************************************************************************
+ *  Emergency Patches SD*5.3*704 and OR*3.0*496 will be released          *
+ *  09/13/2019. Production testing of these patches along with the        *
+ *  Tele Health Management Platform (TMP) application will be conducted   *
+ *  on 09/15/2019 by the following test sites: Fargo, Minneapolis and     *
+ *  Boise.                                                                *
+ *                                                                        *
+ *  A Go/No Go decision will be made on 09/15/2019 by the project         *
+ *  management team and communicated to the Regional Patch install teams  *
+ *  no later than 09/15/2019 via the Forum Patch Messaging system via the *
+ *  G.Patch Mail Group.                                                   *
+ *                                                                        *
+ *  Do not install these patches until notified to do so.                 *
+ *                                                                        *
+ **************************************************************************
+  
+ Tele Health Management Platform (TMP) is implementing processes that will
+ keep Veterans Health Information Systems and Technology Architecture 
+ (VistA) clinic and appointment data for tele health clinics and
+ appointments in sync with the TMP application. These real time updates 
+ are triggered when appointments are made or cancelled in a clinic
+ that has a stop code or credit stop code that is associated with tele
+ health. 
+  
+ Real-time clinic updates are triggered when a new tele health clinic is
+ added at a medical center or if the stop code, credit stop code, clinic 
+ name, treating specialty, service, or overbooks allowed fields are
+ edited. A real-time clinic update is also triggered if a tele health
+ clinic is inactivated or if an inactive tele health clinic is 
+ reactivated. Tele health clinics are identified by stop code or credit 
+ stop codes.
+  
+ The current Get Consults (ORQQCN LIST) Remote Procedure Call (RPC) 
+ doesn't return the Clinically Indicated Date (CID) when the consults are
+ returned to the calling application. TMP is replacing the call to the RPC
+ with an HL7 query/response message. The new process returns a list of the
+ patient's consults over the last two years and includes the CID field with
+ the data if it is available. Displaying the CID with the consult in TMP
+ provides the scheduler with the information needed to schedule an
+ appointment for the consults within the 30 day window after the CID.
+  
+ If end users/customers need TMP technical support during Go Live or 
+ anytime thereafter, they can reach out to the National Telehealth 
+ Technology Help Desk (NTTHD) at 866-651-3180 or via email at 
+ VHA_NTTHD@domain.ext.
+  
+ Patch Components:
+ -----------------
+  
+ Bulletins:
+ ---------
+ N/A 
+  
+ Files & Fields Associated:
+ --------------------------
+ TMP is adding two new indices to the PATIENT File (#2), the APPOINTMENT 
+ Multiple field (#2.98). These new indices will trigger an update to be
+ sent to TMP when an appointment is made or cancelled.
+  
+ TMP is adding one new index on the HOSPITAL LOCATION File (#44) on the 
+ fields list below. This new index triggers an update to TMP when one or 
+ more of these fields are edited.
+  
+ These new indices are installed with a post install routine.
+  
+ File Name(#),
+ Sub-File Name (#)       Field Numbers        New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ PATIENT (#2),
+ APPOINTMENT (#2.98)     .01                  New Index: AX298
+                           3                  New Index: AY298
+ SD TELE HEALTH STOP 
+   CODE FILE (#40.6)                          New File
+ HOSPITAL LOCATION (#44) .01,8,2503,9.5,9,16,
+                         1918,2505,2506       New Index: ATMP1 
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name                   Type          New/Modified/Deleted
+ -----------                   ----          -------------------- 
+ EDIT TELE HEALTH STOP CODES   run routine         NEW
+   [SD EDIT TELE HEALTH STOP CODES]
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     -------------------- 
+ SD IFS EVENT DRIVER                     NEW
+ SD IFS SUBSCRIBER                       NEW
+ SD TMP RECEIVE CANCEL INTRA             NEW
+ SD TMP RECEIVE INTRAFACILITY            NEW
+ SD TMP S12 CLIENT SUBSCRIBER            NEW
+ SD TMP S12 SERVER EVENT DRIVER          NEW
+ SD TMP S15 CLIENT SUBSCRIBER            NEW
+ SD TMP S15 SERVER EVENT DRIVER          NEW
+ SD TMP SEND CANCEL INTRA                NEW
+ SD TMP SEND INTRAFACILITY               NEW
+ SD TMP SIU-12 SERVER                    NEW
+ SD TMP SIU-S12 CLIENT                   NEW
+ TMP QBP-Q13 Event Driver                NEW
+ TMP QBP-Q13 Subscriber                  NEW
+ TMP RTB-K13 Event Driver                NEW
+ TMP RTB-K13 Subscriber                  NEW
+  
+ HL7 Application Parameters:
+  
+ Parameter Name:
+ ---------------
+  
+ SD TMP APPT RECEIVE
+ SD TMP APPT SEND
+ SD TMP IFS RECEIVE
+ SD TMP IFS SEND
+ SD TMP RECEIVE CANCEL INTRA
+ SD TMP RECEIVE INTRAFACILITY
+ SD TMP SEND CANCEL INTRA
+ SD TMP SEND INTRAFACILITY
+ SD-TMP-IN
+ SD-TMP-OUT
+ TMP GET CONSULTS
+ TMP SEND CONSULTS
+ TMP VIMT
+ TMP_OUT
+  
+ HLO APPLICATION REGISTRY:
+  
+ Registry Name:
+ --------------
+ TMP_VIMT
+ TMP_OUT
+  
+ HL LOGICAL LINKS:
+ TMP adds a new link to connect to the TMP HealthShare server.
+  
+ HL LOGICAL LINK:
+ ----------------
+ TMP_SEND
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Fargo, ND
+ Minneapolis, MN
+ Boise, ID    
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software is being released as a PackMan build and/or documentation 
+ describing the new functionality introduced by this patch.
+  
+ The following technical documentation with known issues can be retrieved 
+ from the VA Software Document Library (VDL):
+ TMP Release Notes D365 v4.6
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+     
+      Hines:                  domain.ext    
+      Salt Lake City:         domain.ext
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  https://www.domain.ext/vdl/
+   
+ Title                           File  Name              Transfer Mode
+ --------------------------------------------------------------------------
+ TMP Release Notes D365 v4.6     TMP_4.6_rn.doc          Binary
+  
+ Patch Installation:
+ ------------------
+  
+ Installation Instructions:
+ ---------------------------------
+  
+ These steps can be completed with users on the system. Installing 
+ this patch should take less than 15 minutes to install and configure.
+  
+  
+  1.  Choose the PackMan message containing this patch.
+    
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+    
+  3.  From the KIDS Menu, select the Installation Menu.  From this menu, 
+      you may elect to use the following options. When prompted for the
+      INSTALL NAME, SD*5.3*704.
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as Data Dictionaries (DDs) or
+          templates. IN ORDER TO BACK OUT THIS PATCH, THIS OPTION MUST BE 
+          USED TO CREATE A BACKUP OF THE ROUTINES.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      when prompted for the INSTALL NAME, enter SD*5.3*704.
+  
+  5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//' respond NO.
+    
+  6.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+    
+  7.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//" respond NO. 
+    
+  8.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+    
+  
+ Sample Install:
+ ---------------
+  
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    SD*5.3*704    8/16/18@08:59:32
+      => TMP HL7  ;Created on Aug 15, 2018@08:05:45
+  
+ This Distribution was loaded on Aug 16, 2018@08:59:32 with header of 
+    TMP HL7  ;Created on Aug 15, 2018@08:05:45
+    It consisted of the following Install(s):
+      SD*5.3*704
+ Checking Install for Package SD*5.3*704
+  
+ Install Questions for SD*5.3*704
+  
+ Incoming Files:
+  
+  
+    2         PATIENT  (Partial Definition)
+ Note:  You already have the 'PATIENT' File.
+  
+  
+    40.6      SD TELE HEALTH STOP CODE FILE  (including data)
+ Note:  You already have the 'SD TELE HEALTH STOP CODE FILE' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    44        HOSPITAL LOCATION  (Partial Definition)
+ Note:  You already have the 'HOSPITAL LOCATION' File.
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// NO
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HOME
+                                    
+ SD*5.3*704                                   
+  
+  Installing PROTOCOL
+  
+  Installing HLO APPLICATION REGISTRY
+                Mar 19, 2019@12:01:44
+  
+  Running Post-Install Routine: EN^SDTMP704
+  
+ TMP_Send Link has been updated.
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  SD*5.3*704 Installed. 
+                Mar 19, 2019@12:01:45
+  
+  Not a production UCI
+  
+  Install Message sent 
+   100%    ?             25             50             75               ?
+ Complete 
+  
+ Install Completed
+    
+ Post-Installation Instructions:
+ -------------------------------
+ Post Install Tasks:
+ 1. After the patch has been installed, verify the TMP_Send HL logical link
+ was installed, configured and started:
+  
+ ***Note: The screen capture below shows the INSTITUTION file as the TMP 
+ Development VistA system. INSTITUTION should be the local VistA site 
+ Institution Name where the patch was installed.
+  
+ Using FileMan:
+ VA FileMan 22.2
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+ Output from what File: PATIENT// HL LOGICAL LINK    (322 entries)
+ Select HL LOGICAL LINK NODE: TMP_SEND  
+ Another one: 
+ Standard Captioned Output? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO//  - No record number (IEN), no 
+ Computed
+  Fields
+ Display Audit Trail? No//   NO
+  
+ NODE: TMP_SEND                          INSTITUTION: TEST CHEYENNE VAMC
+   LLP TYPE: TCP                         STATE: Enabled
+   AUTOSTART: Enabled                    TIME STOPPED: JUL 18, 
+ 2019@13:46:53
+   SHUTDOWN LLP ?: YES                   QUEUE SIZE: 10
+   TCP/IP ADDRESS: vaauscluhshhl7rtr401.aac.domain.ext
+   TCP/IP PORT: 6950                     TCP/IP SERVICE TYPE: CLIENT 
+ (SENDER)
+   TCP/IP PORT (OPTIMIZED): 6950         IN QUEUE BACK POINTER: 8
+   IN QUEUE FRONT POINTER: 7
+  
+ 2. Using Fileman, check to be sure the new style cross references were 
+ installed in the PATIENT FILE (#2).
+  
+ Checking the PATIENT FILE (#2):
+  
+ Select OPTION: DATA DICTIONARY UTILITIES  
+ Select DATA DICTIONARY UTILITY OPTION: LIST FILE ATTRIBUTES  
+  START WITH What File: PATIENT//          (1625 entries)
+       GO TO What File: PATIENT//          (1625 entries)
+       Select SUB-FILE: APPOINTMENT  
+ Select LISTING FORMAT: STANDARD// INDEXES ONLY  
+ What type of cross-reference (Traditional or New)? Both// NEW
+ Which field: ALL// 
+  
+ DEVICE: ;;1000  TELNET PORT    Right Margin: 80// 
+ NEW-STYLE INDEX LIST -- FILE #2INDEX AND CROSS-REFERENCE LIST -- FILE 
+ #27/24/19 PAGE 1
+ --------------------------------------------------------------------------
+  
+ Subfile #2.98
+  
+   New-Style Indexes:
+  
+   AX (#1602)    RECORD    MUMPS    IR    ACTION    WHOLE FILE (#2)
+       Short Descr:  Action cross reference to send HL7 notification to 
+                     TMP when a new appt is made.
+       Description:  The Tele Health Management Platform (TMP) application
+                     allows users to schedule and cancel tele health
+                     appointments in VistA. TMP needs to be kept up to 
+                     date with appointments scheduled by other applications
+                     in order to be able to accurately display open
+                     appointment slots. This index will trigger an HL7
+                     message sent to TMP that will update the clinic's and
+                     patient's appointments in the TMP database system.
+         Set Logic:  D EN^SDTMPHLA(DA(1),DA)
+          Set Cond:  S X=X1(1)=""
+        Kill Logic:  Q
+              X(1):  CLINIC  (2.98,.01)
+          NO RE-INDEXING ALLOWED!
+  
+   AY (#1603)    RECORD    MUMPS    IR    ACTION    WHOLE FILE (#2)
+       Short Descr:  Action cross reference to send an HL7 notification 
+                     when an appt is cancelled.
+       Description:  The Tele Health Management Platform (TMP) application
+                     allows users to schedule and cancel tele health
+                     appointments in VistA. TMP needs to be kept up to 
+                     date with appointments are cancelled by other
+                     applications in order to be able to accurately display
+                     open appointment slots. This index will trigger an HL7
+                     message sent to TMP that will update the clinic's and
+                     patient's appointments in the TMP database system to
+                     reflect the cancellation.  
+         Set Logic:  D EN^SDTMPHLA(DA(1),DA)
+          Set Cond:  S X=X1(1)=""
+        Kill Logic:  Q
+              X(1):  STATUS  (2.98,3)
+          NO RE-INDEXING ALLOWED!
+  
+ 3. Using FileMan check the HOSPITAL LOCATION FILE (#44) for the new cross 
+ references:
+  
+ Select OPTION: DATA DICTIONARY UTILITIES  
+ Select DATA DICTIONARY UTILITY OPTION: LIST FILE ATTRIBUTES  
+  START WITH What File: HOSPITAL LOCATION//   (424 entries)
+       GO TO What File: HOSPITAL LOCATION//   (424 entries)
+       Select SUB-FILE: 
+ Select LISTING FORMAT: STANDARD// INDEXES ONLY  
+ What type of cross-reference (Traditional or New)? Both// NEW
+ Which field: ALL// .01  NAME
+ DEVICE: ;;1000  TELNET PORT    Right Margin: 80// 
+ NEW-STYLE INDEX LIST -- FILE #44, FIELD #.01INDEX AND CROSS-REFERENCE 
+ LIST -- FILE #44                                   7/24/19
+ PAGE 1
+ --------------------------------------------------------------------------
+  
+   AG (#1386)    RECORD    REGULAR    IR    SORTING ONLY
+       Short Descr:  Index by TYPE and NAME.
+       Description:  This cross reference is used to sort by TYPE and 
+                     NAME.  
+         Set Logic:  S ^SC("AG",X(1),X(2),DA)=""
+        Kill Logic:  K ^SC("AG",X(1),X(2),DA)
+        Whole Kill:  K ^SC("AG")
+              X(1):  TYPE  (44,2)  (Subscr 1)  (forwards)
+              X(2):  NAME  (44,.01)  (Subscr 2)  (forwards)
+  
+   ATMP1 (#1601)    FIELD    MUMPS    IR    ACTION
+       Short Descr:  TMP HL7
+       Description:  The Tele Health Management Platform (TMP) application 
+                     allows users to schedule and cancel appointments in 
+                     VistA.  TMP needs to be kept up to date with specific
+                     clinic information in order to accurately display
+                     clinic information.
+                      
+                     This index will trigger an update to be sent to the
+                     TMP platform via HL7 when one of the fields below is
+                     edited for a tele health clinic or if a new tele
+                     health clinic is added. Tele health clinics are
+                     identified by either the Stop Code Number (primary
+                     stop code) or the Credit Stop Code (secondary stop
+                     code).  Name (#.01) Stop Code Number (#8) Credit Stop
+                     Code (#2504) Service (#9) Treating Specialty (#9.5)
+                     Overbooks/Day Maximum (#1918) Inactivate Date (#2505)
+                     Reactivate Date (#2506).
+         Set Logic:  D EN^SDTMPHLB(DA)
+          Set Cond:  S X=X1(1)'=""!X1(2)'=""!X1(3)'=""!X1(4)'=""!
+                     X1(5)'=""!X1(6) '=""!X1(7)'=""!X1(8)'=""!X1(9)'=""
+        Kill Logic:  Q
+              X(1):  NAME  (44,.01)
+              X(2):  STOP CODE NUMBER  (44,8)
+              X(3):  CREDIT STOP CODE  (44,2503)
+              X(4):  TREATING SPECIALTY  (44,9.5)
+              X(5):  SERVICE  (44,9)
+              X(6):  DEFAULT PROVIDER  (44,16)
+              X(7):  OVERBOOKS/DAY MAXIMUM  (44,1918)
+              X(8):  INACTIVATE DATE  (44,2505)
+              X(9):  REACTIVATE DATE  (44,2506)
+          NO RE-INDEXING ALLOWED!
+  
+ 4. Using FileMan check to be sure the new SD TELE HEALTH STOP CODE FILE
+ (#40.6) was installed. This file is distributed with the current stop 
+ list of tele health stops at the time this patch was released.
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+  
+ Output from what File: PATIENT// 40.6  SD TELE HEALTH STOP CODE FILE
+                                           (34 entries)
+ Select SD TELE HEALTH STOP CODE FILE STOP CODE NUMBER: ??
+     
+    Choose from:
+    111   
+    118   
+    136   
+    160   
+    179   
+    184   
+    185   
+    186   
+    189   
+    323   
+    348   
+    371   
+    490   
+    491   
+    502   
+    534   
+    648   
+    674   
+    683   
+    684                                      
+    685   
+    690   
+    692   
+    693   
+    694   
+    695   
+    696   
+    697   
+    698   
+    699   
+    708   
+    719   
+    901   
+    674685   
+  
+ 5. Using FileMan verify the new VETERAN VIDEO CALL URL field has been 
+ created in the HOSPITAL LOCATION FILE (#44) in the APPOINTMENT Sub File 
+ (#44.03). The capture below only shows the new field, not all field in 
+ the sub file.
+  
+ Select OPTION: DATA DICTIONARY UTILITIES  
+ Select DATA DICTIONARY UTILITY OPTION: LIST FILE ATTRIBUTES  
+  START WITH What File: HOSPITAL LOCATION//   (4840 entries)
+       GO TO What File: HOSPITAL LOCATION//   (4840 entries)
+       Select SUB-FILE: APPOINTMENT  
+       Select SUB-FILE: 
+ Select LISTING FORMAT: STANDARD//   
+ Start with field: FIRST// .01  APPOINTMENT DATE/TIME
+ Go to field: 
+ DEVICE: ;;10000  HOME  (CRT)    Right Margin: 80// 
+ STANDARD DATA DICTIONARY #44.001 -- APPOINTMENT SUB-FILE      7/24/19    
+ PAGE 1
+ STORED IN ^SC(D0,"S",   SITE: TEST.CHYLAB.FO-BAYPINES.DOMAIN.EXT   UCI: 
+ CHY0035D ,ROU
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 44.001,.01    APPOINTMENT DATE/TIME  0;1 DATE (Multiply asked)
+  
+               INPUT TRANSFORM:  I X K X W !,"This node may not be set 
+                                 through fileman!!" I $D(X) S %DT="ETX" D
+                                 ^%DT S M=Y K:DT+20000<X!(DT>X) X,DINUM
+               LAST EDITED:      AUG 01, 1986 
+               HELP-PROMPT:      TYPE A DATE BETWEEN DT AND DT+2000
+               DESCRIPTION:      Date/time of a veteran's appointment to an
+                                 outpatient clinic.  
+  
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY 
+                                 PROGRAMMER
+  
+ ...
+ 44.003,400      VETERAN VIDEO CALL URL URL;1 FREE TEXT
+  
+                 INPUT TRANSFORM:K:$L(X)>200!($L(X)<3) X
+                 MAXIMUM LENGTH:   200
+                 LAST EDITED:    OCT 30, 2018 
+                 HELP-PROMPT:    Answer must be 3-200 characters in length.
+  
+ Patch Back out Instructions:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.  No
+ data was modified by this patch installation and, therefore, no rollback
+ strategy is required.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ After installing the backed-up routines, the site will need to use the 
+ HL7/HLO options to edit the HL Logical Links and either delete these 
+ entries or delete the IP and Port information.
+  
+ The site will need to use FileMan to delete the new indices on the 
+ Patient File (#2), Appointment Multiple field (#2.98) and to delete the
+ new index on the Hospital Location File (#44). These new indices are 
+ triggers that cause HL7 messages to be sent out of VistA to the TMP 
+ application. If this patch is backed out, these new indices need to be 
+ deleted to prevent the triggers from firing and creating the HL7 
+ messages.
+  
+ The other database changes do not need to be deleted as they do not 
+ impact any code or other functionality.
+  
+ VA FileMan 22.2
+  
+  
+ Select OPTION: UTILITY FUNCTIONS  
+ Select UTILITY OPTION: CROSS-REFERENCE A FIELD OR FILE  
+  
+ What type of cross-reference (Traditional or New)? Traditional// NEW
+  
+ Modify what File: HL7 APPLICATION PARAMETER// 44  HOSPITAL LOCATION
+                                           (930 entries)
+ Select Subfile: 
+  
+ Current Indexes on file #44:
+   445    'ACST' index
+   446    'AST' index
+   1346   'AG' index
+   1478   'ATMP1' index
+  
+ Choose E (Edit)/D (Delete)/C (Create): DELETE
+  
+ Which Index do you wish to delete? 1478  ATMP1
+ Are you sure you want to delete the index definition? NO// YES
+  
+   Index definition deleted.
+  
+ Do you want to execute the old kill logic now? NO 
+  
+  
+ Compiling SDB Input Template of File 
+ 44.........................................
+ ..
+ 'SDBT' ROUTINE FILED...
+ 'SDBT1' ROUTINE FILED...
+ 'SDBT2' ROUTINE FILED..
+ 'SDBT3' ROUTINE FILED..
+ 'SDBT4' ROUTINE FILED.
+ 'SDBT5' ROUTINE FILED.
+  
+ Current Indexes on file #44:
+   445    'ACST' index
+   446    'AST' index
+   1346   'AG' index
+  
+ Choose E (Edit)/D (Delete)/C (Create):
+  
+ Select UTILITY OPTION:    CROSS-REFERENCE A FIELD OR FILE
+  
+ What type of cross-reference (Traditional or New)? Traditional// new  NEW
+  
+ Modify what File: HOSPITAL LOCATION// 2  PATIENT  (1755 entries)
+ Select Subfile: APPOINTMENT    (Subfile #2.98)
+  
+ Current Indexes on subfile #2.98:
+   1333   'AX' whole file index (resides on file #2)
+   1477   'AY' whole file index (resides on file #2)
+  
+ Choose E (Edit)/D (Delete)/C (Create): DELETE
+  
+ Which Index do you wish to delete? 1333  AX
+ Are you sure you want to delete the index definition? NO// YES
+  
+   Index definition deleted.
+  
+ Do you want to execute the old kill logic now? NO
+  
+ Current Indexes on subfile #2.98:
+   1477   'AY' whole file index (resides on file #2)
+  
+ Choose E (Edit)/D (Delete)/C (Create): DELETE
+  
+ Which Index do you wish to delete? 1477//   AY
+ Are you sure you want to delete the index definition? NO// YES
+  
+   Index definition deleted.
+  
+ Do you want to execute the old kill logic now? NO
+  
+ There are no INDEX file cross-references defined on subfile #2.98.
+ Want to create a new index for this file? No//   NO
+  
+ Select UTILITY OPTION: 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 17, 2018;Build 64
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDHL7APT
+    Before:       n/a   After:B250668355  **704**
+Routine Name: SDHL7APU
+    Before:       n/a   After:B268564203  **704**
+Routine Name: SDHL7CON
+    Before:       n/a   After:B108890103  **704**
+Routine Name: SDHL7UL
+    Before:       n/a   After: B60504057  **704**
+Routine Name: SDHLAPT1
+    Before:       n/a   After:B192619176  **704**
+Routine Name: SDHLAPT2
+    Before:       n/a   After: B22091553  **704**
+Routine Name: SDM1A
+    Before:B131891737   After:B133660852  **26,94,155,206,168,223,241,
+                                           263,327,478,446,544,621,622,
+                                           627,658,665,650,704**
+Routine Name: SDTMBUS
+    Before:       n/a   After: B30769228  **704**
+Routine Name: SDTMP08
+    Before:       n/a   After:B208934197  **704**
+Routine Name: SDTMP704
+    Before:       n/a   After: B46513744  **704**
+Routine Name: SDTMPHLA
+    Before:       n/a   After:B121959808  **704**
+Routine Name: SDTMPHLB
+    Before:       n/a   After: B46065382  **704**
+ 
+Routine list of preceding patches: 650
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 02, 2018
+Completed By:                               Date Completed: SEP 13, 2019
+Released By :                               Date Released : SEP 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

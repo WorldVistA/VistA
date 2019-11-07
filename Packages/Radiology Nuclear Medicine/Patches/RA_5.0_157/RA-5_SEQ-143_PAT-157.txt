@@ -1,0 +1,258 @@
+Original message: "RA5_0P157T2_3190724" [#94668066]
+=============================================================================
+Run Date: AUG 28, 2019                     Designation: RA*5*157
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #143                      Status: Released
+                  Compliance Date: SEP 28, 2019
+=============================================================================
+
+Associated patches: (v)RA*5*77     <<= must be installed BEFORE `RA*5*157'
+                    (v)RA*5*106    <<= must be installed BEFORE `RA*5*157'
+                    (v)RA*5*154    <<= must be installed BEFORE `RA*5*157'
+
+Subject: ABNORMAL REPORT FORMATTING & DX CODE PROCESSING
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Associated Ticket(s):
+ =====================
+ INC4644465
+ INC4753897
+ INC2890615
+ INC6714227
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ White River Junction VAMC
+ South Texas HCS (San Antonio)
+  
+ Problem A:
+ ----------
+ The Abnormal Exam Report [RA ABNORMAL] is formatted in a way that is 
+ sometimes misleading as to which diagnostic codes go with which exams.
+  
+ Resolution A:
+ ------------- 
+ Routine RAPRINT1 is modified to adjust the report formatting so that 
+ the diagnostic code header is clearly positioned above the exams it 
+ represents.
+  
+ Problem B:
+ ----------
+ A subscript error was reported when attempting to process a "Procedure 
+ Changed" alert [#67] in CPRS: 
+  
+ <SUBSCRIPT>SET1+25^RAO7PC4
+  
+ The 'changed from' procedure is missing from the 'DATA FOR PROCESSING' 
+ field [#2] in the ALERT TRACKING [#8992.1] file.
+  
+ RESOLUTION B:
+ -------------
+ Routine RAO7PC4 is modified as follows:
+  
+ If the 'changed from' procedure is missing in the alert data, it will 
+ first try to get the procedure information from the order, if available, 
+ and if that fails it will display an 'UNKNOWN' on the alert when 
+ processed.
+  
+ PROBLEM C:
+ ----------
+ Radiology identifies the primary and secondary diagnostic codes (DX) based
+ on the order they are received in the OBX segments of the report message
+ (HL7 version 2.4 only). A primary designation on Powerscribe does not
+ dictate the order that they are sent, but instead they are sorted by the
+ DX code's number (highest to lowest).  So, a secondary code number of 1200
+ (AAA Not Present) will be above the primary code of 1000 (no alert
+ required) and therefore be filed as Primary in Radiology.
+  
+ RESOLUTION C:
+ -------------
+ Voice Recognition sends the Primary designation along with the DX code. 
+ VistA Radiology will check for that designation and assign the code as
+ Primary regardless of its position in the HL7 message.  If no Primary
+ designation is sent, the first code will still be identified as Primary.
+  
+ PROBLEM D:
+ ----------
+ The radiology registration menu enforces a location switch to the 
+ modality of the ordered procedure. There are times when it is necessary 
+ to register an exam under a different modality than what was ordered, as 
+ decided by the radiologist at the time of the procedure. Currently, the 
+ package prevents the modality from being changed and the order must be 
+ discontinued and reordered.
+  
+ RESOLUTION D:
+ -------------
+ A new security key (RA SWITCHLOC) is distributed with this patch. Holders 
+ of this key will be able to register an exam under a different modality 
+ than the ordered procedure when appropriate. Routine RAREG3 is modified to
+ check for this security key at the time of exam registration.
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ These are the documentation changes associated with this patch:
+  
+ Radiology/Nuclear Medicine Technical Manual 
+  
+ These manuals are available on the ANONYMOUS.SOFTWARE directory at one of
+ the following Office of Information (OI) Field Offices. These files
+ should be retrieved in binary format.
+  
+ Sites may retrieve documentation as follows:
+  
+     The preferred method is to SFTP the files from
+     download.vista.domain.ext, which will transmit the files from the
+     first available FTP server.
+  
+ The documentation distribution includes:
+  
+ File Name             Description                           Protocol
+ ---------             -----------                           --------
+ RA5_0TM.DOCX          Technical Manual                      BINARY
+  
+  
+  
+  
+    ===================  Installation Instructions ====================
+   If installed during the normal workday, it is recommended that the
+   Radiology users be off the system. **Voice Recognition activity 
+   should be stopped.**  Other VISTA users will not be affected.
+  
+  
+   Install Time - less than 2 minutes
+  
+   1. Load Transport Global:
+      ----------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+   2. Start Up KIDS:
+      --------------
+    Start up the Kernel Installation and Distribution System Menu [XPD
+    MAIN]:
+  
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+  
+            Load a Distribution
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+            Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3. Select Installation Option:
+      ---------------------------
+       When prompted for the INSTALL NAME, enter RA*5.0*157
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+   4. Select Installation Option: Install Package(s):
+      -----------------------------------------------
+       **This is the step to start the installation of this KIDS patch:
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+       ,answer YES unless your site rebuilds menu trees nightly.
+  
+    c. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       YES//', answer NO.
+  
+    d. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Options, and Protocols? YES//', answer YES.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of order':',
+       enter the following options:
+  
+       Disable the following VistA RIS options:
+       ----------------------------------------
+       Abnormal Exam Report       [RA ABNORMAL]
+       Register Patient for Exams [RA REG]
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of
+       order':',press <ENTER>.
+  
+ Backout/Roll-back Strategy:
+ ===========================
+  
+  Back-out will be done only with the concurrence and participation of
+  development team and appropriate VA site/region personnel. The decision
+  to back-out or rollback software will be a joint decision between
+  development team, VA site/region personnel and other appropriate VA
+  personnel. A national help desk ticket should be logged before attempting
+  any backout procedures.
+  
+  Prior to installing an updated KIDS package, the site/region should have
+  saved a backup of the routines in a mail message using the Backup a
+  Transport Global [XPD BACKUP] menu option (this is done at time of
+  install). The message containing the backed up routines can be loaded
+  with the "Xtract PackMan" function at the Message Action prompt. The
+  Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAHLO1
+    Before: B66582328   After: B66347162  **4,5,12,17,21,27,48,55,66,87,
+                                           84,94,104,47,157**
+Routine Name: RAHLO2
+    Before: B23673505   After: B26410150  **55,80,84,144,157**
+Routine Name: RAHLTCPB
+    Before: B71900626   After: B76979466  **12,17,25,51,71,81,84,106,157**
+Routine Name: RAHLTCPX
+    Before:B103640512   After:B105636791  **47,114,129,141,144,157**
+Routine Name: RAO7PC4
+    Before: B40834055   After: B43547246  **28,32,31,45,77,157**
+Routine Name: RAPRINT1
+    Before: B29745884   After: B30536433  **34,97,47,157**
+Routine Name: RAREG3
+    Before: B30767634   After: B31537156  **8,137,144,154,157**
+ 
+Routine list of preceding patches: 77, 106, 154
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 14, 2019
+Completed By:                               Date Completed: AUG 28, 2019
+Released By :                               Date Released : AUG 28, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

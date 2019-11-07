@@ -1,0 +1,4711 @@
+Released SD*5.3*717 SEQ #587
+Extracted from mail message
+**KIDS**:SD*5.3*717^
+
+**INSTALL NAME**
+SD*5.3*717
+"BLD",11248,0)
+SD*5.3*717^SCHEDULING^0^3190620^y
+"BLD",11248,1,0)
+^^294^294^3181106^
+"BLD",11248,1,1,0)
+This patch corrects the problem of appointment processing in VistA
+"BLD",11248,1,2,0)
+Scheduling (VS) GUI not invoking the event driver protocol (SDAM 
+"BLD",11248,1,3,0)
+APPOINTMENT
+"BLD",11248,1,4,0)
+EVENTS) that roll and scroll VistA does. This protocol allows other apps
+"BLD",11248,1,5,0)
+to tie functionality, including interfaces to external systems such as
+"BLD",11248,1,6,0)
+Pyxis, Omnicell, and EDIS,to appointment events. Actions currently being
+"BLD",11248,1,7,0)
+executed for appointment events in legacy VistA will also be executed for
+"BLD",11248,1,8,0)
+appointments when those events (make appointment, check in, undo check in,
+"BLD",11248,1,9,0)
+check out, undo check out, cancel appointment, no show) are triggered by
+"BLD",11248,1,10,0)
+the GUI. (However, this patch does not require a GUI update.)
+"BLD",11248,1,11,0)
+  
+"BLD",11248,1,12,0)
+Patch Components
+"BLD",11248,1,13,0)
+================
+"BLD",11248,1,14,0)
+ 
+"BLD",11248,1,15,0)
+Files & Fields Associated:
+"BLD",11248,1,16,0)
+ 
+"BLD",11248,1,17,0)
+File Name (#)                                             New/Modified/
+"BLD",11248,1,18,0)
+  Sub-file Name (#)   Field Name (Number)                   Deleted
+"BLD",11248,1,19,0)
+-------------------   ---------------------------------   -------------
+"BLD",11248,1,20,0)
+N/A
+"BLD",11248,1,21,0)
+ 
+"BLD",11248,1,22,0)
+Bulletins Associated:
+"BLD",11248,1,23,0)
+                                                          New/Modified/
+"BLD",11248,1,24,0)
+Bulletin Name                                               Deleted    
+"BLD",11248,1,25,0)
+-------------                                             -------------
+"BLD",11248,1,26,0)
+N/A
+"BLD",11248,1,27,0)
+ 
+"BLD",11248,1,28,0)
+ 
+"BLD",11248,1,29,0)
+ 
+"BLD",11248,1,30,0)
+Dialogs Associated:
+"BLD",11248,1,31,0)
+                                                          New/Modified/
+"BLD",11248,1,32,0)
+Dialog Name                                                 Deleted    
+"BLD",11248,1,33,0)
+-----------                                               -------------
+"BLD",11248,1,34,0)
+N/A
+"BLD",11248,1,35,0)
+ 
+"BLD",11248,1,36,0)
+ 
+"BLD",11248,1,37,0)
+ 
+"BLD",11248,1,38,0)
+Forms Associated:
+"BLD",11248,1,39,0)
+                                                          New/Modified/
+"BLD",11248,1,40,0)
+Form Name                    File Name (Number)             Deleted    
+"BLD",11248,1,41,0)
+---------                    ------------------           -------------
+"BLD",11248,1,42,0)
+N/A
+"BLD",11248,1,43,0)
+ 
+"BLD",11248,1,44,0)
+ 
+"BLD",11248,1,45,0)
+ 
+"BLD",11248,1,46,0)
+Functions Associated:
+"BLD",11248,1,47,0)
+                                                          New/Modified/
+"BLD",11248,1,48,0)
+Function Name                                               Deleted    
+"BLD",11248,1,49,0)
+-------------                                             -------------
+"BLD",11248,1,50,0)
+N/A
+"BLD",11248,1,51,0)
+ 
+"BLD",11248,1,52,0)
+ 
+"BLD",11248,1,53,0)
+ 
+"BLD",11248,1,54,0)
+HL Logical Link:
+"BLD",11248,1,55,0)
+                                                          New/Modified/
+"BLD",11248,1,56,0)
+HL Logical Name                                             Deleted    
+"BLD",11248,1,57,0)
+---------------                                           -------------
+"BLD",11248,1,58,0)
+N/A
+"BLD",11248,1,59,0)
+ 
+"BLD",11248,1,60,0)
+ 
+"BLD",11248,1,61,0)
+ 
+"BLD",11248,1,62,0)
+HL7 Application Parameters:
+"BLD",11248,1,63,0)
+                                                          New/Modified/
+"BLD",11248,1,64,0)
+HL7 Parameter Name                                          Deleted    
+"BLD",11248,1,65,0)
+------------------                                        -------------
+"BLD",11248,1,66,0)
+N/A
+"BLD",11248,1,67,0)
+ 
+"BLD",11248,1,68,0)
+ 
+"BLD",11248,1,69,0)
+ 
+"BLD",11248,1,70,0)
+HLO Application Registry:
+"BLD",11248,1,71,0)
+                                                          New/Modified/
+"BLD",11248,1,72,0)
+HLO Registry Name                                           Deleted    
+"BLD",11248,1,73,0)
+-----------------                                         -------------
+"BLD",11248,1,74,0)
+N/A
+"BLD",11248,1,75,0)
+ 
+"BLD",11248,1,76,0)
+ 
+"BLD",11248,1,77,0)
+ 
+"BLD",11248,1,78,0)
+Help Frames Associated:
+"BLD",11248,1,79,0)
+                                                          New/Modified/
+"BLD",11248,1,80,0)
+Help Frame Name                                             Deleted    
+"BLD",11248,1,81,0)
+---------------                                           -------------
+"BLD",11248,1,82,0)
+N/A
+"BLD",11248,1,83,0)
+ 
+"BLD",11248,1,84,0)
+ 
+"BLD",11248,1,85,0)
+ 
+"BLD",11248,1,86,0)
+Mail Groups Associated:
+"BLD",11248,1,87,0)
+                                                          New/Modified/
+"BLD",11248,1,88,0)
+Mail Group Name                                             Deleted    
+"BLD",11248,1,89,0)
+---------------                                           -------------
+"BLD",11248,1,90,0)
+N/A
+"BLD",11248,1,91,0)
+ 
+"BLD",11248,1,92,0)
+ 
+"BLD",11248,1,93,0)
+ 
+"BLD",11248,1,94,0)
+Options Associated:
+"BLD",11248,1,95,0)
+                                                                  
+"BLD",11248,1,96,0)
+New/Modified/
+"BLD",11248,1,97,0)
+Option Name                                              Type       
+"BLD",11248,1,98,0)
+Deleted    
+"BLD",11248,1,99,0)
+-----------                                              ----     
+"BLD",11248,1,100,0)
+-------------
+"BLD",11248,1,101,0)
+N/A
+"BLD",11248,1,102,0)
+ 
+"BLD",11248,1,103,0)
+ 
+"BLD",11248,1,104,0)
+ 
+"BLD",11248,1,105,0)
+Parameter Definitions:
+"BLD",11248,1,106,0)
+                                                          New/Modified/
+"BLD",11248,1,107,0)
+Parameter Name                                              Deleted    
+"BLD",11248,1,108,0)
+--------------                                            -------------
+"BLD",11248,1,109,0)
+N/A
+"BLD",11248,1,110,0)
+ 
+"BLD",11248,1,111,0)
+ 
+"BLD",11248,1,112,0)
+ 
+"BLD",11248,1,113,0)
+Parameter Template:
+"BLD",11248,1,114,0)
+                                                          New/Modified/
+"BLD",11248,1,115,0)
+Template Name                                               Deleted    
+"BLD",11248,1,116,0)
+-------------                                             -------------
+"BLD",11248,1,117,0)
+N/A
+"BLD",11248,1,118,0)
+ 
+"BLD",11248,1,119,0)
+ 
+"BLD",11248,1,120,0)
+ 
+"BLD",11248,1,121,0)
+Protocols Associated:
+"BLD",11248,1,122,0)
+                                                          New/Modified/
+"BLD",11248,1,123,0)
+Protocol Name                                               Deleted    
+"BLD",11248,1,124,0)
+-------------                                             -------------
+"BLD",11248,1,125,0)
+N/A
+"BLD",11248,1,126,0)
+ 
+"BLD",11248,1,127,0)
+ 
+"BLD",11248,1,128,0)
+ 
+"BLD",11248,1,129,0)
+Remote Procedures Associated:
+"BLD",11248,1,130,0)
+                                                          New/Modified/
+"BLD",11248,1,131,0)
+Remote Procedure Name                                       Deleted    
+"BLD",11248,1,132,0)
+---------------------                                     -------------
+"BLD",11248,1,133,0)
+N/A
+"BLD",11248,1,134,0)
+ 
+"BLD",11248,1,135,0)
+ 
+"BLD",11248,1,136,0)
+ 
+"BLD",11248,1,137,0)
+Security Keys Associated:
+"BLD",11248,1,138,0)
+                                                          New/Modified/
+"BLD",11248,1,139,0)
+Security Key Name                                           Deleted    
+"BLD",11248,1,140,0)
+-----------------                                         -------------
+"BLD",11248,1,141,0)
+N/A
+"BLD",11248,1,142,0)
+ 
+"BLD",11248,1,143,0)
+ 
+"BLD",11248,1,144,0)
+ 
+"BLD",11248,1,145,0)
+Templates, Input Associated:
+"BLD",11248,1,146,0)
+                                                          New/Modified/
+"BLD",11248,1,147,0)
+Template Name      Type      File Name (Number)             Deleted    
+"BLD",11248,1,148,0)
+-------------      ----      ------------------           -------------
+"BLD",11248,1,149,0)
+N/A
+"BLD",11248,1,150,0)
+ 
+"BLD",11248,1,151,0)
+ 
+"BLD",11248,1,152,0)
+ 
+"BLD",11248,1,153,0)
+Templates, List Associated:
+"BLD",11248,1,154,0)
+                                                          New/Modified/
+"BLD",11248,1,155,0)
+Template Name      Type                                     Deleted    
+"BLD",11248,1,156,0)
+-------------      ----                                   -------------
+"BLD",11248,1,157,0)
+N/A
+"BLD",11248,1,158,0)
+ 
+"BLD",11248,1,159,0)
+ 
+"BLD",11248,1,160,0)
+ 
+"BLD",11248,1,161,0)
+Templates, Print Associated:
+"BLD",11248,1,162,0)
+                                                            New/Modified/
+"BLD",11248,1,163,0)
+Template Name         Type  File Name (Number)                 Deleted    
+"BLD",11248,1,164,0)
+-------------         ----  ------------------              -------------
+"BLD",11248,1,165,0)
+N/A
+"BLD",11248,1,166,0)
+ 
+"BLD",11248,1,167,0)
+ 
+"BLD",11248,1,168,0)
+ 
+"BLD",11248,1,169,0)
+Templates, Sort Associated:
+"BLD",11248,1,170,0)
+                                                               
+"BLD",11248,1,171,0)
+New/Modified/
+"BLD",11248,1,172,0)
+Template Name             Type File Name (Number)                 
+"BLD",11248,1,173,0)
+Deleted    
+"BLD",11248,1,174,0)
+-------------             ---- ------------------              
+"BLD",11248,1,175,0)
+-------------
+"BLD",11248,1,176,0)
+N/A
+"BLD",11248,1,177,0)
+ 
+"BLD",11248,1,178,0)
+ 
+"BLD",11248,1,179,0)
+Additional Information:
+"BLD",11248,1,180,0)
+N/A
+"BLD",11248,1,181,0)
+ 
+"BLD",11248,1,182,0)
+ 
+"BLD",11248,1,183,0)
+New Service Requests (NSRs)
+"BLD",11248,1,184,0)
+----------------------------  
+"BLD",11248,1,185,0)
+N/A
+"BLD",11248,1,186,0)
+ 
+"BLD",11248,1,187,0)
+ 
+"BLD",11248,1,188,0)
+Patient Safety Issues (PSIs)
+"BLD",11248,1,189,0)
+-----------------------------
+"BLD",11248,1,190,0)
+N/A
+"BLD",11248,1,191,0)
+ 
+"BLD",11248,1,192,0)
+ 
+"BLD",11248,1,193,0)
+ServiceNow Ticket(s) & Overview
+"BLD",11248,1,194,0)
+-----------------------------------------------
+"BLD",11248,1,195,0)
+I17005764FY18  Pyxis and EDIS are not recognizing clinic check in actions
+"BLD",11248,1,196,0)
+  
+"BLD",11248,1,197,0)
+Problem:
+"BLD",11248,1,198,0)
+-------
+"BLD",11248,1,199,0)
+When a user performs appointment actions in VS GUI, downstream systems 
+"BLD",11248,1,200,0)
+such
+"BLD",11248,1,201,0)
+as Pyxis (or other unit dosing devices, such as Omnicell) and EDIS are not
+"BLD",11248,1,202,0)
+updated, whereas they are when the appointment actions are taken in legacy
+"BLD",11248,1,203,0)
+VistA.
+"BLD",11248,1,204,0)
+ 
+"BLD",11248,1,205,0)
+Resolution:
+"BLD",11248,1,206,0)
+----------
+"BLD",11248,1,207,0)
+The GUI now invokes the SDAM APPOINTMENT EVENTS protocol just like legacy
+"BLD",11248,1,208,0)
+VistA, meaning that the downstream systems will be notified in the same
+"BLD",11248,1,209,0)
+way whether actions are taken on them in GUI or legacy.
+"BLD",11248,1,210,0)
+ 
+"BLD",11248,1,211,0)
+Test Sites:
+"BLD",11248,1,212,0)
+----------
+"BLD",11248,1,213,0)
+TBA
+"BLD",11248,1,214,0)
+ 
+"BLD",11248,1,215,0)
+Software and Documentation Retrieval Instructions:
+"BLD",11248,1,216,0)
+----------------------------------------------------
+"BLD",11248,1,217,0)
+ 
+"BLD",11248,1,218,0)
+Software being released as a host file and/or documentation describing
+"BLD",11248,1,219,0)
+the new functionality introduced by this patch are available.
+"BLD",11248,1,220,0)
+  
+"BLD",11248,1,221,0)
+The preferred method is to retrieve files from download.vista.domain.ext.
+"BLD",11248,1,222,0)
+This transmits the files from the first available server. Sites may
+"BLD",11248,1,223,0)
+also elect to retrieve files directly from a specific server.  
+"BLD",11248,1,224,0)
+  
+"BLD",11248,1,225,0)
+Sites may retrieve the software and/or documentation directly using 
+"BLD",11248,1,226,0)
+Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+"BLD",11248,1,227,0)
+directory at the following OI Field Offices:
+"BLD",11248,1,228,0)
+  
+"BLD",11248,1,229,0)
+  Hines:          domain.ext
+"BLD",11248,1,230,0)
+  Salt Lake City: domain.ext
+"BLD",11248,1,231,0)
+ 
+"BLD",11248,1,232,0)
+ 
+"BLD",11248,1,233,0)
+Documentation can also be found on the VA Software Documentation Library 
+"BLD",11248,1,234,0)
+at:
+"BLD",11248,1,235,0)
+http://www4.domain.ext/vdl/
+"BLD",11248,1,236,0)
+ 
+"BLD",11248,1,237,0)
+Title                                          File Name          FTP Mode
+"BLD",11248,1,238,0)
+--------------------------------------------------------------------------
+"BLD",11248,1,239,0)
+VistA Scheduling Enhancements GUI User Guide   SCHEDULING_UG.PDF  Binary
+"BLD",11248,1,240,0)
+VistA Scheduling Enhancements Technical Manual SCHEDULING_TM.PDF  Binary
+"BLD",11248,1,241,0)
+ 
+"BLD",11248,1,242,0)
+ 
+"BLD",11248,1,243,0)
+Patch Installation:
+"BLD",11248,1,244,0)
+ 
+"BLD",11248,1,245,0)
+ 
+"BLD",11248,1,246,0)
+Pre/Post Installation Overview
+"BLD",11248,1,247,0)
+------------------------------
+"BLD",11248,1,248,0)
+There are no pre- or post-installation tasks for this patch.
+"BLD",11248,1,249,0)
+  
+"BLD",11248,1,250,0)
+Installation Instructions
+"BLD",11248,1,251,0)
+-------------------------
+"BLD",11248,1,252,0)
+Install Time - less than 5 minutes.
+"BLD",11248,1,253,0)
+    
+"BLD",11248,1,254,0)
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+"BLD",11248,1,255,0)
+   
+"BLD",11248,1,256,0)
+   2. From the Kernel Installation & Distribution System menu, select
+"BLD",11248,1,257,0)
+      the Installation menu.
+"BLD",11248,1,258,0)
+   
+"BLD",11248,1,259,0)
+   3. From this menu, you may select to use the following options
+"BLD",11248,1,260,0)
+      (when prompted for INSTALL NAME, enter SD*5.3*717):
+"BLD",11248,1,261,0)
+          a.  Verify Checksums in Transport Global - This option will 
+"BLD",11248,1,262,0)
+allow
+"BLD",11248,1,263,0)
+              you to ensure the integrity of the routines that are in the
+"BLD",11248,1,264,0)
+              transport global.
+"BLD",11248,1,265,0)
+          b.  Print Transport Global - This option will allow you to view
+"BLD",11248,1,266,0)
+              the components of the KIDS build.
+"BLD",11248,1,267,0)
+          c.  Compare Transport Global to Current System - This option 
+"BLD",11248,1,268,0)
+will
+"BLD",11248,1,269,0)
+              allow you to view all changes that will be made when this 
+"BLD",11248,1,270,0)
+              patch is installed.  It compares all components of this
+"BLD",11248,1,271,0)
+              patch (routines, DD's, templates, etc.).
+"BLD",11248,1,272,0)
+          d.  Backup a Transport Global - This option will create a backup
+"BLD",11248,1,273,0)
+              message of any routines exported with this patch. It will 
+"BLD",11248,1,274,0)
+not
+"BLD",11248,1,275,0)
+              backup any other changes such as DD's or templates.
+"BLD",11248,1,276,0)
+   
+"BLD",11248,1,277,0)
+   4. Use the Install Package(s) option and select the package SD*5.3*717.
+"BLD",11248,1,278,0)
+   
+"BLD",11248,1,279,0)
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+"BLD",11248,1,280,0)
+      respond NO.
+"BLD",11248,1,281,0)
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+"BLD",11248,1,282,0)
+      Protocols? NO//", respond NO
+"BLD",11248,1,283,0)
+ 
+"BLD",11248,1,284,0)
+Back-Out/Roll Back Plan:
+"BLD",11248,1,285,0)
+------------------------
+"BLD",11248,1,286,0)
+In the event of a catastrophic failure, the Facility Chief Information 
+"BLD",11248,1,287,0)
+Officer may make the decision to back-out the patch.
+"BLD",11248,1,288,0)
+ 
+"BLD",11248,1,289,0)
+It is imperative that you have performed a backup of the routines and
+"BLD",11248,1,290,0)
+the routines included matches the pre-patch checksum from the patch
+"BLD",11248,1,291,0)
+description.
+"BLD",11248,1,292,0)
+ 
+"BLD",11248,1,293,0)
+This patch only contains routine updates. To back-out the patch please
+"BLD",11248,1,294,0)
+restore the backup message from the patch installation process.
+"BLD",11248,4,0)
+^9.64PA^^
+"BLD",11248,6)
+5^
+"BLD",11248,6.3)
+12
+"BLD",11248,"KRN",0)
+^9.67PA^1.61^23
+"BLD",11248,"KRN",.4,0)
+.4
+"BLD",11248,"KRN",.401,0)
+.401
+"BLD",11248,"KRN",.402,0)
+.402
+"BLD",11248,"KRN",.403,0)
+.403
+"BLD",11248,"KRN",.5,0)
+.5
+"BLD",11248,"KRN",.84,0)
+.84
+"BLD",11248,"KRN",1.6,0)
+1.6
+"BLD",11248,"KRN",1.61,0)
+1.61
+"BLD",11248,"KRN",1.62,0)
+1.62
+"BLD",11248,"KRN",3.6,0)
+3.6
+"BLD",11248,"KRN",3.8,0)
+3.8
+"BLD",11248,"KRN",9.2,0)
+9.2
+"BLD",11248,"KRN",9.8,0)
+9.8
+"BLD",11248,"KRN",9.8,"NM",0)
+^9.68A^8^7
+"BLD",11248,"KRN",9.8,"NM",1,0)
+SDAMEVT^^0^B32857672
+"BLD",11248,"KRN",9.8,"NM",2,0)
+SDCO3^^0^B4283789
+"BLD",11248,"KRN",9.8,"NM",3,0)
+SDCODEL^^0^B14749068
+"BLD",11248,"KRN",9.8,"NM",4,0)
+SDEC07B^^0^B86344811
+"BLD",11248,"KRN",9.8,"NM",5,0)
+SDEC08^^0^B217036692
+"BLD",11248,"KRN",9.8,"NM",6,0)
+SDEC25^^0^B151472805
+"BLD",11248,"KRN",9.8,"NM",8,0)
+SDEC31^^0^B34969907
+"BLD",11248,"KRN",9.8,"NM","B","SDAMEVT",1)
+
+"BLD",11248,"KRN",9.8,"NM","B","SDCO3",2)
+
+"BLD",11248,"KRN",9.8,"NM","B","SDCODEL",3)
+
+"BLD",11248,"KRN",9.8,"NM","B","SDEC07B",4)
+
+"BLD",11248,"KRN",9.8,"NM","B","SDEC08",5)
+
+"BLD",11248,"KRN",9.8,"NM","B","SDEC25",6)
+
+"BLD",11248,"KRN",9.8,"NM","B","SDEC31",8)
+
+"BLD",11248,"KRN",19,0)
+19
+"BLD",11248,"KRN",19.1,0)
+19.1
+"BLD",11248,"KRN",101,0)
+101
+"BLD",11248,"KRN",409.61,0)
+409.61
+"BLD",11248,"KRN",771,0)
+771
+"BLD",11248,"KRN",779.2,0)
+779.2
+"BLD",11248,"KRN",870,0)
+870
+"BLD",11248,"KRN",8989.51,0)
+8989.51
+"BLD",11248,"KRN",8989.52,0)
+8989.52
+"BLD",11248,"KRN",8994,0)
+8994
+"BLD",11248,"KRN","B",.4,.4)
+
+"BLD",11248,"KRN","B",.401,.401)
+
+"BLD",11248,"KRN","B",.402,.402)
+
+"BLD",11248,"KRN","B",.403,.403)
+
+"BLD",11248,"KRN","B",.5,.5)
+
+"BLD",11248,"KRN","B",.84,.84)
+
+"BLD",11248,"KRN","B",1.6,1.6)
+
+"BLD",11248,"KRN","B",1.61,1.61)
+
+"BLD",11248,"KRN","B",1.62,1.62)
+
+"BLD",11248,"KRN","B",3.6,3.6)
+
+"BLD",11248,"KRN","B",3.8,3.8)
+
+"BLD",11248,"KRN","B",9.2,9.2)
+
+"BLD",11248,"KRN","B",9.8,9.8)
+
+"BLD",11248,"KRN","B",19,19)
+
+"BLD",11248,"KRN","B",19.1,19.1)
+
+"BLD",11248,"KRN","B",101,101)
+
+"BLD",11248,"KRN","B",409.61,409.61)
+
+"BLD",11248,"KRN","B",771,771)
+
+"BLD",11248,"KRN","B",779.2,779.2)
+
+"BLD",11248,"KRN","B",870,870)
+
+"BLD",11248,"KRN","B",8989.51,8989.51)
+
+"BLD",11248,"KRN","B",8989.52,8989.52)
+
+"BLD",11248,"KRN","B",8994,8994)
+
+"BLD",11248,"QUES",0)
+^9.62^^
+"BLD",11248,"REQB",0)
+^9.611^6^5
+"BLD",11248,"REQB",1,0)
+DVBA*2.7*208^2
+"BLD",11248,"REQB",2,0)
+SD*5.3*443^2
+"BLD",11248,"REQB",3,0)
+SD*5.3*466^2
+"BLD",11248,"REQB",5,0)
+SD*5.3*671^2
+"BLD",11248,"REQB",6,0)
+SD*5.3*683^2
+"BLD",11248,"REQB","B","DVBA*2.7*208",1)
+
+"BLD",11248,"REQB","B","SD*5.3*443",2)
+
+"BLD",11248,"REQB","B","SD*5.3*466",3)
+
+"BLD",11248,"REQB","B","SD*5.3*671",5)
+
+"BLD",11248,"REQB","B","SD*5.3*683",6)
+
+"MBREQ")
+0
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813^2930930
+"PKG",16,22,1,"PAH",1,0)
+717^3190620^520881757
+"PKG",16,22,1,"PAH",1,1,0)
+^^294^294^3190620
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch corrects the problem of appointment processing in VistA
+"PKG",16,22,1,"PAH",1,1,2,0)
+Scheduling (VS) GUI not invoking the event driver protocol (SDAM 
+"PKG",16,22,1,"PAH",1,1,3,0)
+APPOINTMENT
+"PKG",16,22,1,"PAH",1,1,4,0)
+EVENTS) that roll and scroll VistA does. This protocol allows other apps
+"PKG",16,22,1,"PAH",1,1,5,0)
+to tie functionality, including interfaces to external systems such as
+"PKG",16,22,1,"PAH",1,1,6,0)
+Pyxis, Omnicell, and EDIS,to appointment events. Actions currently being
+"PKG",16,22,1,"PAH",1,1,7,0)
+executed for appointment events in legacy VistA will also be executed for
+"PKG",16,22,1,"PAH",1,1,8,0)
+appointments when those events (make appointment, check in, undo check in,
+"PKG",16,22,1,"PAH",1,1,9,0)
+check out, undo check out, cancel appointment, no show) are triggered by
+"PKG",16,22,1,"PAH",1,1,10,0)
+the GUI. (However, this patch does not require a GUI update.)
+"PKG",16,22,1,"PAH",1,1,11,0)
+  
+"PKG",16,22,1,"PAH",1,1,12,0)
+Patch Components
+"PKG",16,22,1,"PAH",1,1,13,0)
+================
+"PKG",16,22,1,"PAH",1,1,14,0)
+ 
+"PKG",16,22,1,"PAH",1,1,15,0)
+Files & Fields Associated:
+"PKG",16,22,1,"PAH",1,1,16,0)
+ 
+"PKG",16,22,1,"PAH",1,1,17,0)
+File Name (#)                                             New/Modified/
+"PKG",16,22,1,"PAH",1,1,18,0)
+  Sub-file Name (#)   Field Name (Number)                   Deleted
+"PKG",16,22,1,"PAH",1,1,19,0)
+-------------------   ---------------------------------   -------------
+"PKG",16,22,1,"PAH",1,1,20,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,21,0)
+ 
+"PKG",16,22,1,"PAH",1,1,22,0)
+Bulletins Associated:
+"PKG",16,22,1,"PAH",1,1,23,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,24,0)
+Bulletin Name                                               Deleted    
+"PKG",16,22,1,"PAH",1,1,25,0)
+-------------                                             -------------
+"PKG",16,22,1,"PAH",1,1,26,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,27,0)
+ 
+"PKG",16,22,1,"PAH",1,1,28,0)
+ 
+"PKG",16,22,1,"PAH",1,1,29,0)
+ 
+"PKG",16,22,1,"PAH",1,1,30,0)
+Dialogs Associated:
+"PKG",16,22,1,"PAH",1,1,31,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,32,0)
+Dialog Name                                                 Deleted    
+"PKG",16,22,1,"PAH",1,1,33,0)
+-----------                                               -------------
+"PKG",16,22,1,"PAH",1,1,34,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,35,0)
+ 
+"PKG",16,22,1,"PAH",1,1,36,0)
+ 
+"PKG",16,22,1,"PAH",1,1,37,0)
+ 
+"PKG",16,22,1,"PAH",1,1,38,0)
+Forms Associated:
+"PKG",16,22,1,"PAH",1,1,39,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,40,0)
+Form Name                    File Name (Number)             Deleted    
+"PKG",16,22,1,"PAH",1,1,41,0)
+---------                    ------------------           -------------
+"PKG",16,22,1,"PAH",1,1,42,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,43,0)
+ 
+"PKG",16,22,1,"PAH",1,1,44,0)
+ 
+"PKG",16,22,1,"PAH",1,1,45,0)
+ 
+"PKG",16,22,1,"PAH",1,1,46,0)
+Functions Associated:
+"PKG",16,22,1,"PAH",1,1,47,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,48,0)
+Function Name                                               Deleted    
+"PKG",16,22,1,"PAH",1,1,49,0)
+-------------                                             -------------
+"PKG",16,22,1,"PAH",1,1,50,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,51,0)
+ 
+"PKG",16,22,1,"PAH",1,1,52,0)
+ 
+"PKG",16,22,1,"PAH",1,1,53,0)
+ 
+"PKG",16,22,1,"PAH",1,1,54,0)
+HL Logical Link:
+"PKG",16,22,1,"PAH",1,1,55,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,56,0)
+HL Logical Name                                             Deleted    
+"PKG",16,22,1,"PAH",1,1,57,0)
+---------------                                           -------------
+"PKG",16,22,1,"PAH",1,1,58,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,59,0)
+ 
+"PKG",16,22,1,"PAH",1,1,60,0)
+ 
+"PKG",16,22,1,"PAH",1,1,61,0)
+ 
+"PKG",16,22,1,"PAH",1,1,62,0)
+HL7 Application Parameters:
+"PKG",16,22,1,"PAH",1,1,63,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,64,0)
+HL7 Parameter Name                                          Deleted    
+"PKG",16,22,1,"PAH",1,1,65,0)
+------------------                                        -------------
+"PKG",16,22,1,"PAH",1,1,66,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,67,0)
+ 
+"PKG",16,22,1,"PAH",1,1,68,0)
+ 
+"PKG",16,22,1,"PAH",1,1,69,0)
+ 
+"PKG",16,22,1,"PAH",1,1,70,0)
+HLO Application Registry:
+"PKG",16,22,1,"PAH",1,1,71,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,72,0)
+HLO Registry Name                                           Deleted    
+"PKG",16,22,1,"PAH",1,1,73,0)
+-----------------                                         -------------
+"PKG",16,22,1,"PAH",1,1,74,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,75,0)
+ 
+"PKG",16,22,1,"PAH",1,1,76,0)
+ 
+"PKG",16,22,1,"PAH",1,1,77,0)
+ 
+"PKG",16,22,1,"PAH",1,1,78,0)
+Help Frames Associated:
+"PKG",16,22,1,"PAH",1,1,79,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,80,0)
+Help Frame Name                                             Deleted    
+"PKG",16,22,1,"PAH",1,1,81,0)
+---------------                                           -------------
+"PKG",16,22,1,"PAH",1,1,82,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,83,0)
+ 
+"PKG",16,22,1,"PAH",1,1,84,0)
+ 
+"PKG",16,22,1,"PAH",1,1,85,0)
+ 
+"PKG",16,22,1,"PAH",1,1,86,0)
+Mail Groups Associated:
+"PKG",16,22,1,"PAH",1,1,87,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,88,0)
+Mail Group Name                                             Deleted    
+"PKG",16,22,1,"PAH",1,1,89,0)
+---------------                                           -------------
+"PKG",16,22,1,"PAH",1,1,90,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,91,0)
+ 
+"PKG",16,22,1,"PAH",1,1,92,0)
+ 
+"PKG",16,22,1,"PAH",1,1,93,0)
+ 
+"PKG",16,22,1,"PAH",1,1,94,0)
+Options Associated:
+"PKG",16,22,1,"PAH",1,1,95,0)
+                                                                  
+"PKG",16,22,1,"PAH",1,1,96,0)
+New/Modified/
+"PKG",16,22,1,"PAH",1,1,97,0)
+Option Name                                              Type       
+"PKG",16,22,1,"PAH",1,1,98,0)
+Deleted    
+"PKG",16,22,1,"PAH",1,1,99,0)
+-----------                                              ----     
+"PKG",16,22,1,"PAH",1,1,100,0)
+-------------
+"PKG",16,22,1,"PAH",1,1,101,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,102,0)
+ 
+"PKG",16,22,1,"PAH",1,1,103,0)
+ 
+"PKG",16,22,1,"PAH",1,1,104,0)
+ 
+"PKG",16,22,1,"PAH",1,1,105,0)
+Parameter Definitions:
+"PKG",16,22,1,"PAH",1,1,106,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,107,0)
+Parameter Name                                              Deleted    
+"PKG",16,22,1,"PAH",1,1,108,0)
+--------------                                            -------------
+"PKG",16,22,1,"PAH",1,1,109,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,110,0)
+ 
+"PKG",16,22,1,"PAH",1,1,111,0)
+ 
+"PKG",16,22,1,"PAH",1,1,112,0)
+ 
+"PKG",16,22,1,"PAH",1,1,113,0)
+Parameter Template:
+"PKG",16,22,1,"PAH",1,1,114,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,115,0)
+Template Name                                               Deleted    
+"PKG",16,22,1,"PAH",1,1,116,0)
+-------------                                             -------------
+"PKG",16,22,1,"PAH",1,1,117,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,118,0)
+ 
+"PKG",16,22,1,"PAH",1,1,119,0)
+ 
+"PKG",16,22,1,"PAH",1,1,120,0)
+ 
+"PKG",16,22,1,"PAH",1,1,121,0)
+Protocols Associated:
+"PKG",16,22,1,"PAH",1,1,122,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,123,0)
+Protocol Name                                               Deleted    
+"PKG",16,22,1,"PAH",1,1,124,0)
+-------------                                             -------------
+"PKG",16,22,1,"PAH",1,1,125,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,126,0)
+ 
+"PKG",16,22,1,"PAH",1,1,127,0)
+ 
+"PKG",16,22,1,"PAH",1,1,128,0)
+ 
+"PKG",16,22,1,"PAH",1,1,129,0)
+Remote Procedures Associated:
+"PKG",16,22,1,"PAH",1,1,130,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,131,0)
+Remote Procedure Name                                       Deleted    
+"PKG",16,22,1,"PAH",1,1,132,0)
+---------------------                                     -------------
+"PKG",16,22,1,"PAH",1,1,133,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,134,0)
+ 
+"PKG",16,22,1,"PAH",1,1,135,0)
+ 
+"PKG",16,22,1,"PAH",1,1,136,0)
+ 
+"PKG",16,22,1,"PAH",1,1,137,0)
+Security Keys Associated:
+"PKG",16,22,1,"PAH",1,1,138,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,139,0)
+Security Key Name                                           Deleted    
+"PKG",16,22,1,"PAH",1,1,140,0)
+-----------------                                         -------------
+"PKG",16,22,1,"PAH",1,1,141,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,142,0)
+ 
+"PKG",16,22,1,"PAH",1,1,143,0)
+ 
+"PKG",16,22,1,"PAH",1,1,144,0)
+ 
+"PKG",16,22,1,"PAH",1,1,145,0)
+Templates, Input Associated:
+"PKG",16,22,1,"PAH",1,1,146,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,147,0)
+Template Name      Type      File Name (Number)             Deleted    
+"PKG",16,22,1,"PAH",1,1,148,0)
+-------------      ----      ------------------           -------------
+"PKG",16,22,1,"PAH",1,1,149,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,150,0)
+ 
+"PKG",16,22,1,"PAH",1,1,151,0)
+ 
+"PKG",16,22,1,"PAH",1,1,152,0)
+ 
+"PKG",16,22,1,"PAH",1,1,153,0)
+Templates, List Associated:
+"PKG",16,22,1,"PAH",1,1,154,0)
+                                                          New/Modified/
+"PKG",16,22,1,"PAH",1,1,155,0)
+Template Name      Type                                     Deleted    
+"PKG",16,22,1,"PAH",1,1,156,0)
+-------------      ----                                   -------------
+"PKG",16,22,1,"PAH",1,1,157,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,158,0)
+ 
+"PKG",16,22,1,"PAH",1,1,159,0)
+ 
+"PKG",16,22,1,"PAH",1,1,160,0)
+ 
+"PKG",16,22,1,"PAH",1,1,161,0)
+Templates, Print Associated:
+"PKG",16,22,1,"PAH",1,1,162,0)
+                                                            New/Modified/
+"PKG",16,22,1,"PAH",1,1,163,0)
+Template Name         Type  File Name (Number)                 Deleted    
+"PKG",16,22,1,"PAH",1,1,164,0)
+-------------         ----  ------------------              -------------
+"PKG",16,22,1,"PAH",1,1,165,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,166,0)
+ 
+"PKG",16,22,1,"PAH",1,1,167,0)
+ 
+"PKG",16,22,1,"PAH",1,1,168,0)
+ 
+"PKG",16,22,1,"PAH",1,1,169,0)
+Templates, Sort Associated:
+"PKG",16,22,1,"PAH",1,1,170,0)
+                                                               
+"PKG",16,22,1,"PAH",1,1,171,0)
+New/Modified/
+"PKG",16,22,1,"PAH",1,1,172,0)
+Template Name             Type File Name (Number)                 
+"PKG",16,22,1,"PAH",1,1,173,0)
+Deleted    
+"PKG",16,22,1,"PAH",1,1,174,0)
+-------------             ---- ------------------              
+"PKG",16,22,1,"PAH",1,1,175,0)
+-------------
+"PKG",16,22,1,"PAH",1,1,176,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,177,0)
+ 
+"PKG",16,22,1,"PAH",1,1,178,0)
+ 
+"PKG",16,22,1,"PAH",1,1,179,0)
+Additional Information:
+"PKG",16,22,1,"PAH",1,1,180,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,181,0)
+ 
+"PKG",16,22,1,"PAH",1,1,182,0)
+ 
+"PKG",16,22,1,"PAH",1,1,183,0)
+New Service Requests (NSRs)
+"PKG",16,22,1,"PAH",1,1,184,0)
+----------------------------  
+"PKG",16,22,1,"PAH",1,1,185,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,186,0)
+ 
+"PKG",16,22,1,"PAH",1,1,187,0)
+ 
+"PKG",16,22,1,"PAH",1,1,188,0)
+Patient Safety Issues (PSIs)
+"PKG",16,22,1,"PAH",1,1,189,0)
+-----------------------------
+"PKG",16,22,1,"PAH",1,1,190,0)
+N/A
+"PKG",16,22,1,"PAH",1,1,191,0)
+ 
+"PKG",16,22,1,"PAH",1,1,192,0)
+ 
+"PKG",16,22,1,"PAH",1,1,193,0)
+ServiceNow Ticket(s) & Overview
+"PKG",16,22,1,"PAH",1,1,194,0)
+-----------------------------------------------
+"PKG",16,22,1,"PAH",1,1,195,0)
+I17005764FY18  Pyxis and EDIS are not recognizing clinic check in actions
+"PKG",16,22,1,"PAH",1,1,196,0)
+  
+"PKG",16,22,1,"PAH",1,1,197,0)
+Problem:
+"PKG",16,22,1,"PAH",1,1,198,0)
+-------
+"PKG",16,22,1,"PAH",1,1,199,0)
+When a user performs appointment actions in VS GUI, downstream systems 
+"PKG",16,22,1,"PAH",1,1,200,0)
+such
+"PKG",16,22,1,"PAH",1,1,201,0)
+as Pyxis (or other unit dosing devices, such as Omnicell) and EDIS are not
+"PKG",16,22,1,"PAH",1,1,202,0)
+updated, whereas they are when the appointment actions are taken in legacy
+"PKG",16,22,1,"PAH",1,1,203,0)
+VistA.
+"PKG",16,22,1,"PAH",1,1,204,0)
+ 
+"PKG",16,22,1,"PAH",1,1,205,0)
+Resolution:
+"PKG",16,22,1,"PAH",1,1,206,0)
+----------
+"PKG",16,22,1,"PAH",1,1,207,0)
+The GUI now invokes the SDAM APPOINTMENT EVENTS protocol just like legacy
+"PKG",16,22,1,"PAH",1,1,208,0)
+VistA, meaning that the downstream systems will be notified in the same
+"PKG",16,22,1,"PAH",1,1,209,0)
+way whether actions are taken on them in GUI or legacy.
+"PKG",16,22,1,"PAH",1,1,210,0)
+ 
+"PKG",16,22,1,"PAH",1,1,211,0)
+Test Sites:
+"PKG",16,22,1,"PAH",1,1,212,0)
+----------
+"PKG",16,22,1,"PAH",1,1,213,0)
+TBA
+"PKG",16,22,1,"PAH",1,1,214,0)
+ 
+"PKG",16,22,1,"PAH",1,1,215,0)
+Software and Documentation Retrieval Instructions:
+"PKG",16,22,1,"PAH",1,1,216,0)
+----------------------------------------------------
+"PKG",16,22,1,"PAH",1,1,217,0)
+ 
+"PKG",16,22,1,"PAH",1,1,218,0)
+Software being released as a host file and/or documentation describing
+"PKG",16,22,1,"PAH",1,1,219,0)
+the new functionality introduced by this patch are available.
+"PKG",16,22,1,"PAH",1,1,220,0)
+  
+"PKG",16,22,1,"PAH",1,1,221,0)
+The preferred method is to retrieve files from download.vista.domain.ext.
+"PKG",16,22,1,"PAH",1,1,222,0)
+This transmits the files from the first available server. Sites may
+"PKG",16,22,1,"PAH",1,1,223,0)
+also elect to retrieve files directly from a specific server.  
+"PKG",16,22,1,"PAH",1,1,224,0)
+  
+"PKG",16,22,1,"PAH",1,1,225,0)
+Sites may retrieve the software and/or documentation directly using 
+"PKG",16,22,1,"PAH",1,1,226,0)
+Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+"PKG",16,22,1,"PAH",1,1,227,0)
+directory at the following OI Field Offices:
+"PKG",16,22,1,"PAH",1,1,228,0)
+  
+"PKG",16,22,1,"PAH",1,1,229,0)
+  Hines:          domain.ext
+"PKG",16,22,1,"PAH",1,1,230,0)
+  Salt Lake City: domain.ext
+"PKG",16,22,1,"PAH",1,1,231,0)
+ 
+"PKG",16,22,1,"PAH",1,1,232,0)
+ 
+"PKG",16,22,1,"PAH",1,1,233,0)
+Documentation can also be found on the VA Software Documentation Library 
+"PKG",16,22,1,"PAH",1,1,234,0)
+at:
+"PKG",16,22,1,"PAH",1,1,235,0)
+http://www4.domain.ext/vdl/
+"PKG",16,22,1,"PAH",1,1,236,0)
+ 
+"PKG",16,22,1,"PAH",1,1,237,0)
+Title                                          File Name          FTP Mode
+"PKG",16,22,1,"PAH",1,1,238,0)
+--------------------------------------------------------------------------
+"PKG",16,22,1,"PAH",1,1,239,0)
+VistA Scheduling Enhancements GUI User Guide   SCHEDULING_UG.PDF  Binary
+"PKG",16,22,1,"PAH",1,1,240,0)
+VistA Scheduling Enhancements Technical Manual SCHEDULING_TM.PDF  Binary
+"PKG",16,22,1,"PAH",1,1,241,0)
+ 
+"PKG",16,22,1,"PAH",1,1,242,0)
+ 
+"PKG",16,22,1,"PAH",1,1,243,0)
+Patch Installation:
+"PKG",16,22,1,"PAH",1,1,244,0)
+ 
+"PKG",16,22,1,"PAH",1,1,245,0)
+ 
+"PKG",16,22,1,"PAH",1,1,246,0)
+Pre/Post Installation Overview
+"PKG",16,22,1,"PAH",1,1,247,0)
+------------------------------
+"PKG",16,22,1,"PAH",1,1,248,0)
+There are no pre- or post-installation tasks for this patch.
+"PKG",16,22,1,"PAH",1,1,249,0)
+  
+"PKG",16,22,1,"PAH",1,1,250,0)
+Installation Instructions
+"PKG",16,22,1,"PAH",1,1,251,0)
+-------------------------
+"PKG",16,22,1,"PAH",1,1,252,0)
+Install Time - less than 5 minutes.
+"PKG",16,22,1,"PAH",1,1,253,0)
+    
+"PKG",16,22,1,"PAH",1,1,254,0)
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+"PKG",16,22,1,"PAH",1,1,255,0)
+   
+"PKG",16,22,1,"PAH",1,1,256,0)
+   2. From the Kernel Installation & Distribution System menu, select
+"PKG",16,22,1,"PAH",1,1,257,0)
+      the Installation menu.
+"PKG",16,22,1,"PAH",1,1,258,0)
+   
+"PKG",16,22,1,"PAH",1,1,259,0)
+   3. From this menu, you may select to use the following options
+"PKG",16,22,1,"PAH",1,1,260,0)
+      (when prompted for INSTALL NAME, enter SD*5.3*717):
+"PKG",16,22,1,"PAH",1,1,261,0)
+          a.  Verify Checksums in Transport Global - This option will 
+"PKG",16,22,1,"PAH",1,1,262,0)
+allow
+"PKG",16,22,1,"PAH",1,1,263,0)
+              you to ensure the integrity of the routines that are in the
+"PKG",16,22,1,"PAH",1,1,264,0)
+              transport global.
+"PKG",16,22,1,"PAH",1,1,265,0)
+          b.  Print Transport Global - This option will allow you to view
+"PKG",16,22,1,"PAH",1,1,266,0)
+              the components of the KIDS build.
+"PKG",16,22,1,"PAH",1,1,267,0)
+          c.  Compare Transport Global to Current System - This option 
+"PKG",16,22,1,"PAH",1,1,268,0)
+will
+"PKG",16,22,1,"PAH",1,1,269,0)
+              allow you to view all changes that will be made when this 
+"PKG",16,22,1,"PAH",1,1,270,0)
+              patch is installed.  It compares all components of this
+"PKG",16,22,1,"PAH",1,1,271,0)
+              patch (routines, DD's, templates, etc.).
+"PKG",16,22,1,"PAH",1,1,272,0)
+          d.  Backup a Transport Global - This option will create a backup
+"PKG",16,22,1,"PAH",1,1,273,0)
+              message of any routines exported with this patch. It will 
+"PKG",16,22,1,"PAH",1,1,274,0)
+not
+"PKG",16,22,1,"PAH",1,1,275,0)
+              backup any other changes such as DD's or templates.
+"PKG",16,22,1,"PAH",1,1,276,0)
+   
+"PKG",16,22,1,"PAH",1,1,277,0)
+   4. Use the Install Package(s) option and select the package SD*5.3*717.
+"PKG",16,22,1,"PAH",1,1,278,0)
+   
+"PKG",16,22,1,"PAH",1,1,279,0)
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+"PKG",16,22,1,"PAH",1,1,280,0)
+      respond NO.
+"PKG",16,22,1,"PAH",1,1,281,0)
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+"PKG",16,22,1,"PAH",1,1,282,0)
+      Protocols? NO//", respond NO
+"PKG",16,22,1,"PAH",1,1,283,0)
+ 
+"PKG",16,22,1,"PAH",1,1,284,0)
+Back-Out/Roll Back Plan:
+"PKG",16,22,1,"PAH",1,1,285,0)
+------------------------
+"PKG",16,22,1,"PAH",1,1,286,0)
+In the event of a catastrophic failure, the Facility Chief Information 
+"PKG",16,22,1,"PAH",1,1,287,0)
+Officer may make the decision to back-out the patch.
+"PKG",16,22,1,"PAH",1,1,288,0)
+ 
+"PKG",16,22,1,"PAH",1,1,289,0)
+It is imperative that you have performed a backup of the routines and
+"PKG",16,22,1,"PAH",1,1,290,0)
+the routines included matches the pre-patch checksum from the patch
+"PKG",16,22,1,"PAH",1,1,291,0)
+description.
+"PKG",16,22,1,"PAH",1,1,292,0)
+ 
+"PKG",16,22,1,"PAH",1,1,293,0)
+This patch only contains routine updates. To back-out the patch please
+"PKG",16,22,1,"PAH",1,1,294,0)
+restore the backup message from the patch installation process.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+7
+"RTN","SDAMEVT")
+0^1^B32857672^B27512966
+"RTN","SDAMEVT",1,0)
+SDAMEVT ;ALB/MJK - Appt Event Driver Utilities ; 12/1/91 [ 09/19/96  1:39 PM ]
+"RTN","SDAMEVT",2,0)
+ ;;5.3;Scheduling;**15,132,443,717**;Aug 13, 1993;Build 12
+"RTN","SDAMEVT",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified
+"RTN","SDAMEVT",4,0)
+ ;
+"RTN","SDAMEVT",5,0)
+BEFORE(SDATA,DFN,SDT,SDCL,SDDA,SDHDL) ; -- get before values
+"RTN","SDAMEVT",6,0)
+ K ^TMP("SDAMEVT",$J)
+"RTN","SDAMEVT",7,0)
+ D CAPTURE("BEFORE",.SDATA,.DFN,.SDT,.SDCL,.SDDA,.SDHDL)
+"RTN","SDAMEVT",8,0)
+ Q
+"RTN","SDAMEVT",9,0)
+ ;
+"RTN","SDAMEVT",10,0)
+AFTER(SDATA,DFN,SDT,SDCL,SDDA,SDHDL) ; -- get after values
+"RTN","SDAMEVT",11,0)
+ D CAPTURE("AFTER",.SDATA,.DFN,.SDT,.SDCL,.SDDA,.SDHDL)
+"RTN","SDAMEVT",12,0)
+ Q
+"RTN","SDAMEVT",13,0)
+ ;
+"RTN","SDAMEVT",14,0)
+HANDLE(SDORG) ; -- get evt handle
+"RTN","SDAMEVT",15,0)
+ ;  SDORG = originating process (1=appt , 2=a/e , 3=disp)
+"RTN","SDAMEVT",16,0)
+ S (Y,^($J))=$G(^TMP("SDEVT HANDLE",$J))+1
+"RTN","SDAMEVT",17,0)
+ Q Y
+"RTN","SDAMEVT",18,0)
+ ;
+"RTN","SDAMEVT",19,0)
+CLEAN(SDHDL) ;
+"RTN","SDAMEVT",20,0)
+ K ^TMP("SDEVT",$J,SDHDL)
+"RTN","SDAMEVT",21,0)
+ Q
+"RTN","SDAMEVT",22,0)
+ ;
+"RTN","SDAMEVT",23,0)
+HDLKILL ; -- kill off handle data
+"RTN","SDAMEVT",24,0)
+ K SDHDL,^TMP("SDEVT HANDLE",$J),^TMP("SDEVT",$J)
+"RTN","SDAMEVT",25,0)
+ Q
+"RTN","SDAMEVT",26,0)
+ ;
+"RTN","SDAMEVT",27,0)
+CAPTURE(SDCAP,SDATA,DFN,SDT,SDCL,SDDA,SDHDL) ;
+"RTN","SDAMEVT",28,0)
+ N Z
+"RTN","SDAMEVT",29,0)
+ S (Z,^TMP("SDAMEVT",$J,SDCAP,"DPT"),^TMP("SDEVT",$J,SDHDL,1,"DPT",0,SDCAP))=$G(^DPT(DFN,"S",SDT,0))
+"RTN","SDAMEVT",30,0)
+ S (^TMP("SDAMEVT",$J,SDCAP,"SC"),^TMP("SDEVT",$J,SDHDL,1,"SC",0,SDCAP))=$G(^SC(SDCL,"S",SDT,1,+SDDA,0))
+"RTN","SDAMEVT",31,0)
+ S (^TMP("SDAMEVT",$J,SDCAP,"STATUS"),SDATA(SDCAP,"STATUS"))=$TR($$STATUS^SDAM1(DFN,SDT,SDCL,Z,SDDA),";","^")
+"RTN","SDAMEVT",32,0)
+ D:$P(Z,U,20) OE(.SDCAP,1,$P(Z,U,20),.SDHDL)
+"RTN","SDAMEVT",33,0)
+ Q
+"RTN","SDAMEVT",34,0)
+ ;
+"RTN","SDAMEVT",35,0)
+ ;
+"RTN","SDAMEVT",36,0)
+EVT(SDATA,SDAMEVT,SDMODE,SDHDL) ; -- calls the sdam event protocol
+"RTN","SDAMEVT",37,0)
+ N OROLD
+"RTN","SDAMEVT",38,0)
+ K DTOUT,DIROUT
+"RTN","SDAMEVT",39,0)
+ I $G(SDATA("BEFORE","STATUS"))=$G(SDATA("AFTER","STATUS")),'$$COMP^SDAMEVT4(SDHDL,SDAMEVT) G EVTQ  ; SD*5.3*443
+"RTN","SDAMEVT",40,0)
+ S:$P(SDATA,U,3) $P(SDATA,U,5)=$$REQ^SDM1A(+$P(SDATA,U,3))
+"RTN","SDAMEVT",41,0)
+ I SDMODE=2 N DGQUIET S DGQUIET=1  ;*zeb 10/4/18 717 set DGQUIET to suppress user interaction when called from GUI
+"RTN","SDAMEVT",42,0)
+ S X=+$O(^ORD(101,"B","SDAM APPOINTMENT EVENTS",0))_";ORD(101,"
+"RTN","SDAMEVT",43,0)
+ D EN^XQOR
+"RTN","SDAMEVT",44,0)
+EVTQ K XQORPOP,X,^TMP("SDAMEVT",$J) D CLEAN(SDHDL) Q
+"RTN","SDAMEVT",45,0)
+ ;
+"RTN","SDAMEVT",46,0)
+ ;
+"RTN","SDAMEVT",47,0)
+MAKE(DFN,SDT,SDCL,SDDA,SDMODE) ; -- make appt event #1
+"RTN","SDAMEVT",48,0)
+ N SDATA,%,SDMKHDL,SDHDL K ^TMP("SDAMEVT",$J)
+"RTN","SDAMEVT",49,0)
+ S SDMKHDL=$$HANDLE(1)
+"RTN","SDAMEVT",50,0)
+ S (^TMP("SDAMEVT",$J,"BEFORE","DPT"),^TMP("SDAMEVT",$J,"BEFORE","SC"),SDATA("BEFORE","STATUS"),^TMP("SDAMEVT",$J,"BEFORE","STATUS"),^TMP("SDEVT",$J,SDMKHDL,1,"DPT",0,"BEFORE"),^TMP("SDEVT",$J,SDMKHDL,1,"SC",0,"BEFORE"))=""
+"RTN","SDAMEVT",51,0)
+ D AFTER(.SDATA,DFN,SDT,SDCL,SDDA,SDMKHDL)
+"RTN","SDAMEVT",52,0)
+ S SDATA=SDDA_U_DFN_U_SDT_U_SDCL
+"RTN","SDAMEVT",53,0)
+ D EVT(.SDATA,1,+$G(SDMODE),SDMKHDL)  ;*zeb 10/25/18 717 fix typo with SDMODE so SDMODE is passed correctly
+"RTN","SDAMEVT",54,0)
+ Q:SDMODE=2  ;*zeb 10/24/18 717 don't need check in/out code below if calling from GUI
+"RTN","SDAMEVT",55,0)
+ ; -- if appt d/t is less than NOW then check-in
+"RTN","SDAMEVT",56,0)
+ D NOW^%DTC
+"RTN","SDAMEVT",57,0)
+ I SDT<% W:'$G(SDMODE) ! D
+"RTN","SDAMEVT",58,0)
+ .N SDACT,SDCOQUIT
+"RTN","SDAMEVT",59,0)
+ .S SDDA=+SDATA,DFN=$P(SDATA,U,2),SDT=$P(SDATA,U,3),SDCL=$P(SDATA,U,4) K SDATA
+"RTN","SDAMEVT",60,0)
+ .I $$REQ^SDM1A(SDT)="CO",'$G(SDCOACT) D
+"RTN","SDAMEVT",61,0)
+ ..S SDACT=$S(SDT<DT:"CO",1:$$ASK^SDAMEX) I SDACT']"" S SDCOQUIT=1 Q
+"RTN","SDAMEVT",62,0)
+ ..I SDACT="CO" D CO^SDCO1(DFN,SDT,SDCL,SDDA,0,SDT)
+"RTN","SDAMEVT",63,0)
+ .I '$G(SDCOQUIT),$G(SDACT)'="CO" D ONE^SDAM2(DFN,SDCL,SDT,SDDA,0,SDT)
+"RTN","SDAMEVT",64,0)
+ Q
+"RTN","SDAMEVT",65,0)
+ ;
+"RTN","SDAMEVT",66,0)
+ ;
+"RTN","SDAMEVT",67,0)
+CANCEL(SDATA,DFN,SDT,SDCL,SDDA,SDMODE,SDHDL) ; -- cancel event #2
+"RTN","SDAMEVT",68,0)
+ D AFTER(.SDATA,DFN,SDT,SDCL,SDDA,SDHDL)
+"RTN","SDAMEVT",69,0)
+ I (SDMODE'=2),("^5^7^9^10^"[("^"_+SDATA("AFTER","STATUS")_"^")),($P($G(^DPT(DFN,"S",SDT,0)),"^",20)) D EN^SDCODEL(+$P(^(0),"^",20),0,SDHDL),OENUL^SDAMEVT1("AFTER",SDHDL)  ;*zeb 10/25/18 717 status has already changed for GUI calls
+"RTN","SDAMEVT",70,0)
+ S SDATA=SDDA_U_DFN_U_SDT_U_SDCL
+"RTN","SDAMEVT",71,0)
+ D EVT(.SDATA,2,$S(SDMODE=2:2,1:0),SDHDL)  ;*zeb 10/25/18 717 don't assume SDMODE is 0 if it is 2
+"RTN","SDAMEVT",72,0)
+ Q
+"RTN","SDAMEVT",73,0)
+ ;
+"RTN","SDAMEVT",74,0)
+ ;
+"RTN","SDAMEVT",75,0)
+NOSHOW(SDATA,DFN,SDT,SDCL,SDDA,SDMODE,SDHDL) ; -- no-show event #3
+"RTN","SDAMEVT",76,0)
+ D AFTER(.SDATA,DFN,SDT,SDCL,SDDA,SDHDL)
+"RTN","SDAMEVT",77,0)
+ I "^4^6^"[("^"_+SDATA("AFTER","STATUS")_"^"),$P($G(^DPT(DFN,"S",SDT,0)),"^",20) D EN^SDCODEL(+$P(^(0),"^",20),0,SDHDL),OENUL^SDAMEVT1("AFTER",SDHDL)
+"RTN","SDAMEVT",78,0)
+ S SDATA=SDDA_U_DFN_U_SDT_U_SDCL
+"RTN","SDAMEVT",79,0)
+ D EVT(.SDATA,3,0,SDHDL)
+"RTN","SDAMEVT",80,0)
+ Q
+"RTN","SDAMEVT",81,0)
+ ;
+"RTN","SDAMEVT",82,0)
+OE(SDCAP,SDORG,SDOE,SDHDL) ; -- set up encounter data
+"RTN","SDAMEVT",83,0)
+ N I,OP,FILE,X,SDKID
+"RTN","SDAMEVT",84,0)
+ ;
+"RTN","SDAMEVT",85,0)
+ ; -- set up 'OP'posite variable
+"RTN","SDAMEVT",86,0)
+ S OP=$S(SDCAP="BEFORE":"AFTER",1:"BEFORE")
+"RTN","SDAMEVT",87,0)
+ ;
+"RTN","SDAMEVT",88,0)
+ ; -- set zero of oe
+"RTN","SDAMEVT",89,0)
+ S X=$G(^SCE(SDOE,0))
+"RTN","SDAMEVT",90,0)
+ S ^TMP("SDEVT",$J,SDHDL,SDORG,"SDOE",SDOE,0,SDCAP)=X
+"RTN","SDAMEVT",91,0)
+ S:'$D(^TMP("SDEVT",$J,SDHDL,SDORG,"SDOE",SDOE,0,OP)) ^(OP)=""
+"RTN","SDAMEVT",92,0)
+ ;
+"RTN","SDAMEVT",93,0)
+ ; -- save other data
+"RTN","SDAMEVT",94,0)
+ S FILE=409.42
+"RTN","SDAMEVT",95,0)
+ S I=0 F  S I=$O(^SDD(FILE,"OE",SDOE,I)) Q:'I  D
+"RTN","SDAMEVT",96,0)
+ . S X=$G(^SDD(FILE,I,0))
+"RTN","SDAMEVT",97,0)
+ . S ^TMP("SDEVT",$J,SDHDL,SDORG,"SDOE",SDOE,"CL",I,0,SDCAP)=X
+"RTN","SDAMEVT",98,0)
+ . S:'$D(^TMP("SDEVT",$J,SDHDL,SDORG,"SDOE",SDOE,"CL",I,0,OP)) ^(OP)=""
+"RTN","SDAMEVT",99,0)
+ ;
+"RTN","SDAMEVT",100,0)
+ IF SDORG'=1,SDORG'=3 G OEQ
+"RTN","SDAMEVT",101,0)
+ ;
+"RTN","SDAMEVT",102,0)
+ ; -- gets children oe's
+"RTN","SDAMEVT",103,0)
+ S SDKID=0
+"RTN","SDAMEVT",104,0)
+ F  S SDKID=$O(^SCE("APAR",SDOE,SDKID)) Q:'SDKID  D
+"RTN","SDAMEVT",105,0)
+ . S X=$G(^SCE(SDKID,0))
+"RTN","SDAMEVT",106,0)
+ . IF $P(X,U,8)'=4 Q  ; -- must be a credit stop encounter
+"RTN","SDAMEVT",107,0)
+ . S ^TMP("SDEVT",$J,SDHDL,4,"SDOE",SDKID,0,SDCAP)=X
+"RTN","SDAMEVT",108,0)
+ . S:'$D(^TMP("SDEVT",$J,SDHDL,4,"SDOE",SDKID,0,OP)) ^(OP)=""
+"RTN","SDAMEVT",109,0)
+OEQ Q
+"RTN","SDAMEVT",110,0)
+ ;
+"RTN","SDAMEVT",111,0)
+OECHG(SDORG,SDHDL) ; -- compare befores and afters
+"RTN","SDAMEVT",112,0)
+ N Y,I,SDOE S (Y,SDOE)=0
+"RTN","SDAMEVT",113,0)
+ F  S SDOE=$O(^TMP("SDEVT",$J,SDHDL,SDORG,"SDOE",SDOE)) Q:'SDOE  D  Q:Y
+"RTN","SDAMEVT",114,0)
+ . S I=0
+"RTN","SDAMEVT",115,0)
+ . F  S I=$O(^TMP("SDEVT",$J,SDHDL,SDORG,"SDOE",SDOE,"CL",I)) Q:'I  I $G(^(I,0,"BEFORE"))='$G(^("AFTER")) S Y=1 Q
+"RTN","SDAMEVT",116,0)
+ Q Y
+"RTN","SDAMEVT",117,0)
+ ;
+"RTN","SDAMEVT",118,0)
+OEVT(SDOE,SDCAP,SDHDL,SDATA,SDOE0) ; -- event driver calls by oe
+"RTN","SDAMEVT",119,0)
+ ; SDATA only required for appts
+"RTN","SDAMEVT",120,0)
+ ; SDOE0 only required for check out deletion AFTER
+"RTN","SDAMEVT",121,0)
+ ;
+"RTN","SDAMEVT",122,0)
+ N SD0,SDORG,SDT,DFN,SDDA,SDCL,SDOEP
+"RTN","SDAMEVT",123,0)
+ S SD0=$S($D(^SCE(SDOE,0)):^(0),1:$G(SDOE0)),SDOEP=$P(SD0,U,6)
+"RTN","SDAMEVT",124,0)
+ I SD0']""!(SDOEP) G OEVTQ
+"RTN","SDAMEVT",125,0)
+ S SDT=+SD0,DFN=+$P(SD0,U,2),SDCL=+$P(SD0,U,4),SDORG=+$P(SD0,U,8),SDDA=$P(SD0,U,9)
+"RTN","SDAMEVT",126,0)
+ I SDCAP="BEFORE" D
+"RTN","SDAMEVT",127,0)
+ .I SDORG=1 D BEFORE(.SDATA,DFN,SDT,SDCL,SDDA,SDHDL) Q
+"RTN","SDAMEVT",128,0)
+ .I SDORG=2 D BEFORE^SDAMEVT2(SDOE,SDHDL) Q
+"RTN","SDAMEVT",129,0)
+ .I SDORG=3 D BEFORE^SDAMEVT3(DFN,SDT,9,SDHDL)
+"RTN","SDAMEVT",130,0)
+ I SDCAP="AFTER" D
+"RTN","SDAMEVT",131,0)
+ .I SDORG=1 S SDATA=SDDA_"^"_DFN_"^"_SDT_"^"_SDCL D AFTER(.SDATA,DFN,SDT,SDCL,SDDA,SDHDL),EVT(.SDATA,5,0,SDHDL) Q
+"RTN","SDAMEVT",132,0)
+ .I SDORG=2 D EVT^SDAMEVT2(SDOE,7,SDHDL) Q
+"RTN","SDAMEVT",133,0)
+ .I SDORG=3 D EVT^SDAMEVT3(DFN,SDT,9,SDHDL)
+"RTN","SDAMEVT",134,0)
+OEVTQ Q
+"RTN","SDAMEVT",135,0)
+ ;
+"RTN","SDAMEVT",136,0)
+ ; -- SEE SDAMEVT0 FOR DOC ON VARIABLES
+"RTN","SDCO3")
+0^2^B4283789^B3913935
+"RTN","SDCO3",1,0)
+SDCO3 ;ALB/RMO - Provider - Check Out;08 DEC 1992 4:05 pm
+"RTN","SDCO3",2,0)
+ ;;5.3;Scheduling;**28,27,44,67,71,132,466,717**;08/13/93;Build 12
+"RTN","SDCO3",3,0)
+ ;
+"RTN","SDCO3",4,0)
+EN ;Entry point for SDCO PROVIDER protocol
+"RTN","SDCO3",5,0)
+ ; Input  -- SDOE
+"RTN","SDCO3",6,0)
+ ;
+"RTN","SDCO3",7,0)
+ S VALMBCK=""
+"RTN","SDCO3",8,0)
+ ;
+"RTN","SDCO3",9,0)
+ ; -- if OLD encounter, quit
+"RTN","SDCO3",10,0)
+ IF '$$EDITOK($G(SDOE),1) G ENQ
+"RTN","SDCO3",11,0)
+ ;
+"RTN","SDCO3",12,0)
+ ; -- call PCE interview
+"RTN","SDCO3",13,0)
+ N SDVISIT,SDHL
+"RTN","SDCO3",14,0)
+ S SDVISIT=$P($G(^SCE(+SDOE,0)),U,5)
+"RTN","SDCO3",15,0)
+ S X=$$INTV^PXAPI("PRV","SD","PIMS",SDVISIT)
+"RTN","SDCO3",16,0)
+ D BLD^SDCO S VALMBCK="R"
+"RTN","SDCO3",17,0)
+ENQ Q
+"RTN","SDCO3",18,0)
+ ;
+"RTN","SDCO3",19,0)
+PRASK(SDOE) ;Ask Provider on Check Out
+"RTN","SDCO3",20,0)
+ ; Input  -- SDOE      Outpatient Encounter IEN
+"RTN","SDCO3",21,0)
+ ; Output -- 0=No, 1=Yes/Required, 2=Yes/Not Required
+"RTN","SDCO3",22,0)
+ N SDCL,SDOE0,SDORG,Y
+"RTN","SDCO3",23,0)
+ S SDOE0=$G(^SCE(+SDOE,0)),SDCL=+$P(SDOE0,"^",4),SDORG=+$P(SDOE0,"^",8)
+"RTN","SDCO3",24,0)
+ I $$REQ^SDM1A(+SDOE0)'="CO" G PRASKQ
+"RTN","SDCO3",25,0)
+ I SDORG=1,'$$CLINIC^SDAMU(SDCL) G PRASKQ
+"RTN","SDCO3",26,0)
+ ;I "^1^2^"[("^"_SDORG_"^"),$$INP^SDAM2(+$P(SDOE0,"^",2),+SDOE0)="I" G PRASKQ  ;SD*5.3*466 allow provider check for inpatients 
+"RTN","SDCO3",27,0)
+ I +SDOE0<2961001 S Y=2 G PRASKQ
+"RTN","SDCO3",28,0)
+ I SDCL S Y=1 G PRASKQ
+"RTN","SDCO3",29,0)
+ I SDORG=3 S Y=1
+"RTN","SDCO3",30,0)
+PRASKQ Q +$G(Y)
+"RTN","SDCO3",31,0)
+ ;
+"RTN","SDCO3",32,0)
+SET(SDOE) ;Set-up Provider Array for Outpatient Encounter
+"RTN","SDCO3",33,0)
+ ; Input  -- SDOE      Outpatient Encounter IEN
+"RTN","SDCO3",34,0)
+ ; Output -- SDPRY     Provider Array Subscripted by a Number
+"RTN","SDCO3",35,0)
+ ;           SDCNT     Number of Array Entries
+"RTN","SDCO3",36,0)
+ N SDVA200,SDVPRV,SDPRVS
+"RTN","SDCO3",37,0)
+ K SDPRY
+"RTN","SDCO3",38,0)
+ D GETPRV^SDOE(SDOE,"SDPRVS")
+"RTN","SDCO3",39,0)
+ S (SDCNT,SDVPRV)=0
+"RTN","SDCO3",40,0)
+ F  S SDVPRV=$O(SDPRVS(SDVPRV)) Q:'SDVPRV  D
+"RTN","SDCO3",41,0)
+ . S SDVA200=+$G(SDPRVS(SDVPRV))
+"RTN","SDCO3",42,0)
+ . S SDCNT=SDCNT+1
+"RTN","SDCO3",43,0)
+ . S SDPRY(SDCNT)=SDVPRV_"^"_SDVA200
+"RTN","SDCO3",44,0)
+SETQ Q
+"RTN","SDCO3",45,0)
+ ;
+"RTN","SDCO3",46,0)
+LIST(SDPRY) ;List Provider Array
+"RTN","SDCO3",47,0)
+ ; Input  -- SDPRY     Provider Array Subscripted by a Number
+"RTN","SDCO3",48,0)
+ ; Output -- List Provider Array
+"RTN","SDCO3",49,0)
+ N I
+"RTN","SDCO3",50,0)
+ W !
+"RTN","SDCO3",51,0)
+ S I=0 F  S I=$O(SDPRY(I)) Q:'I  W !?2,I,"  ",$$PR^SDCO31(+$P(SDPRY(I),"^",2))
+"RTN","SDCO3",52,0)
+ Q
+"RTN","SDCO3",53,0)
+ ;
+"RTN","SDCO3",54,0)
+EDITOK(SDOE,SDMODE) ; -- ok to edit?
+"RTN","SDCO3",55,0)
+ ; input:  SDOE   := ien of 409.68                  [required]
+"RTN","SDCO3",56,0)
+ ;         SDMODE := 1 -- interactive ; 0 -- silent [required]
+"RTN","SDCO3",57,0)
+ ;
+"RTN","SDCO3",58,0)
+ ; returned:  1 -- yes, it's ok to edit or delete SDOE entry
+"RTN","SDCO3",59,0)
+ ;            0 -- no, cannot not change SDOE entry
+"RTN","SDCO3",60,0)
+ ;
+"RTN","SDCO3",61,0)
+ N DIR,SDOK
+"RTN","SDCO3",62,0)
+ S SDOK=$$NEW^SDPCE($P($G(^SCE(+$G(SDOE),0)),U))
+"RTN","SDCO3",63,0)
+ IF 'SDOK,SDMODE=1 D OLDMSG  ;*zeb 10/25/18 717 support SDMODE=2 for GUI
+"RTN","SDCO3",64,0)
+EDITOKQ Q SDOK
+"RTN","SDCO3",65,0)
+ ;
+"RTN","SDCO3",66,0)
+OLDMSG ; -- display message to user
+"RTN","SDCO3",67,0)
+ W !!,">>> Editing and deleting old encounters not allowed.",!
+"RTN","SDCO3",68,0)
+ N DIR
+"RTN","SDCO3",69,0)
+ S DIR(0)="E"
+"RTN","SDCO3",70,0)
+ S DIR("A")="Press Return key to continue"
+"RTN","SDCO3",71,0)
+ D ^DIR
+"RTN","SDCO3",72,0)
+ Q
+"RTN","SDCO3",73,0)
+ ;
+"RTN","SDCODEL")
+0^3^B14749068^B11313917
+"RTN","SDCODEL",1,0)
+SDCODEL ;ALB/RMO - Delete Check Out ;JAN 15, 2016
+"RTN","SDCODEL",2,0)
+ ;;5.3;Scheduling;**20,27,44,97,105,110,132,257,627,717**;Aug 13, 1993;Build 12
+"RTN","SDCODEL",3,0)
+ ;
+"RTN","SDCODEL",4,0)
+EN(SDOE,SDMOD,SDELHDL,SDELSRC) ;Delete Check Out
+"RTN","SDCODEL",5,0)
+ ; Input  -- SDOE     Outpatient Encounter file IEN
+"RTN","SDCODEL",6,0)
+ ;           SDMOD    1=Interactive and 0=Non-interactive, 2=Non-interactive/from GUI
+"RTN","SDCODEL",7,0)
+ ;           SDELHDL  Check Out Deletion Handle  [Optional]
+"RTN","SDCODEL",8,0)
+ ;           SDELSRC  Source of delete
+"RTN","SDCODEL",9,0)
+ ; Output -- Delete Check Out
+"RTN","SDCODEL",10,0)
+ N DA,DFN,DE,DIE,DR,SDCL,SDDA,SDEVTF,SDOE0,SDOEP,SDORG,SDT,SDVSAV,SDVFLG
+"RTN","SDCODEL",11,0)
+ D SET(SDOE,.SDOE0,.SDT,.DFN,.SDCL,.SDORG,.SDDA)
+"RTN","SDCODEL",12,0)
+ S SDVSAV=$P(SDOE0,U,5)
+"RTN","SDCODEL",13,0)
+ ;
+"RTN","SDCODEL",14,0)
+ ; -- ok to delete?
+"RTN","SDCODEL",15,0)
+ IF '$$EDITOK^SDCO3(SDOE,SDMOD) G ENQ
+"RTN","SDCODEL",16,0)
+ ;
+"RTN","SDCODEL",17,0)
+ S SDELSRC=$G(SDELSRC)  ;*zeb+1 717 11/6/18 suppress event if coming from cancel appointment
+"RTN","SDCODEL",18,0)
+ IF SDELSRC'="PCE" S X=$$DELVFILE^PXAPI("ALL",$P($G(^SCE(SDOE,0)),U,5),"","","",1)
+"RTN","SDCODEL",19,0)
+ S SDVFLG=1
+"RTN","SDCODEL",20,0)
+ ;
+"RTN","SDCODEL",21,0)
+ ; -- get handle if not passed and do 'before'
+"RTN","SDCODEL",22,0)
+ I '$G(SDELHDL),("^CANCEL^NOSHOW^"'["^"_SDELSRC_"^") N SDATA,SDELHDL S SDEVTF=1 D EVT^SDCOU1(SDOE,"BEFORE",.SDELHDL,.SDATA)  ;*zeb 717 11/6/18 suppress event if coming from cancel or no show
+"RTN","SDCODEL",23,0)
+ ;
+"RTN","SDCODEL",24,0)
+ I $G(SDMOD)=1 W !!,">>> Deleting check out information..."  ;*zeb 10/25/18 717 fix test for SDMOD=2 for GUI
+"RTN","SDCODEL",25,0)
+ ;
+"RTN","SDCODEL",26,0)
+ ; -- delete child data for appts, disposition and stop code addition
+"RTN","SDCODEL",27,0)
+ I "^1^2^3^"[("^"_SDORG_"^") D CHLD(SDOE,SDMOD) ;SD/257
+"RTN","SDCODEL",28,0)
+ ;
+"RTN","SDCODEL",29,0)
+ ; -- delete SDOE pointers and co d/t
+"RTN","SDCODEL",30,0)
+ I SDORG=1 D
+"RTN","SDCODEL",31,0)
+ .S DA(1)=DFN,DA=SDT,DIE="^DPT("_DFN_",""S"",",DR="21///@" D ^DIE
+"RTN","SDCODEL",32,0)
+ .I $G(SDMOD) W !?3,"...deleting check out date/time"
+"RTN","SDCODEL",33,0)
+ .S DR="303///@" D DIE^SDCO1(SDCL,SDT,+SDDA,DR)
+"RTN","SDCODEL",34,0)
+ I SDORG=3 D
+"RTN","SDCODEL",35,0)
+ .S DA(1)=DFN,DA=+SDDA,DIE="^DPT("_DFN_",""DIS"",",DR="18///@" D ^DIE
+"RTN","SDCODEL",36,0)
+ ;
+"RTN","SDCODEL",37,0)
+ ; -- do final deletes for sdoe
+"RTN","SDCODEL",38,0)
+ D CO(SDOE,SDMOD)
+"RTN","SDCODEL",39,0)
+ D OE(SDOE,SDMOD)
+"RTN","SDCODEL",40,0)
+ D SDEC(DFN,SDT,SDCL)   ;delete checkout in SDEC APPOINTMENT  ;alb/sat 627
+"RTN","SDCODEL",41,0)
+ ;
+"RTN","SDCODEL",42,0)
+ I $G(SDMOD) W !,">>> done."
+"RTN","SDCODEL",43,0)
+ ;
+"RTN","SDCODEL",44,0)
+ ; -- if handle not passed, then 'after' and event
+"RTN","SDCODEL",45,0)
+ I $G(SDEVTF),(SDELSRC'="CANCEL") D EVT^SDCOU1(SDOE,"AFTER",SDELHDL,.SDATA,SDOE0)  ;*zeb 717 11/6/18 suppress event if coming from cancel appointment
+"RTN","SDCODEL",46,0)
+ ;
+"RTN","SDCODEL",47,0)
+ ; -- call pce to make sure its data is gone
+"RTN","SDCODEL",48,0)
+ I $G(SDVFLG) D DEAD^PXUTLSTP(SDVSAV)
+"RTN","SDCODEL",49,0)
+ENQ Q
+"RTN","SDCODEL",50,0)
+ ;
+"RTN","SDCODEL",51,0)
+CHLD(SDOEP,SDMOD) ;Delete Children
+"RTN","SDCODEL",52,0)
+ N DFN,SDCL,SDDA,SDOE0,SDOEC,SDORG,SDT
+"RTN","SDCODEL",53,0)
+ S SDOEC=0
+"RTN","SDCODEL",54,0)
+ F  S SDOEC=$O(^SCE("APAR",SDOEP,SDOEC)) Q:'SDOEC  D
+"RTN","SDCODEL",55,0)
+ .D SET(SDOEC,.SDOE0,.SDT,.DFN,.SDCL,.SDORG,.SDDA)
+"RTN","SDCODEL",56,0)
+ .D OE(SDOEC,SDMOD)
+"RTN","SDCODEL",57,0)
+ Q
+"RTN","SDCODEL",58,0)
+ ;
+"RTN","SDCODEL",59,0)
+SET(SDOE,SDOE0,SDT,DFN,SDCL,SDORG,SDDA) ;Set Variables
+"RTN","SDCODEL",60,0)
+ S SDOE0=$G(^SCE(+SDOE,0)),SDT=+SDOE0,DFN=+$P(SDOE0,"^",2),SDCL=+$P(SDOE0,"^",4),SDORG=+$P(SDOE0,"^",8),SDDA=$P(SDOE0,"^",9)
+"RTN","SDCODEL",61,0)
+ Q
+"RTN","SDCODEL",62,0)
+ ;
+"RTN","SDCODEL",63,0)
+CO(SDOE,SDMOD) ;Delete Classification
+"RTN","SDCODEL",64,0)
+ N DA,DIK,SDFL,SDI
+"RTN","SDCODEL",65,0)
+ I $P($G(^SCE(SDOE,0)),"^",6) G COQ
+"RTN","SDCODEL",66,0)
+ I $O(^SDD(409.42,"AO",SDOE,0))>0 D
+"RTN","SDCODEL",67,0)
+ .I $G(SDMOD) W !?3,"...deleting classifications"
+"RTN","SDCODEL",68,0)
+ .D DEL(SDOE,409.42)
+"RTN","SDCODEL",69,0)
+COQ Q
+"RTN","SDCODEL",70,0)
+ ;
+"RTN","SDCODEL",71,0)
+DEL(SDOE,SDFL) ;Delete Classification
+"RTN","SDCODEL",72,0)
+ N DA,DIK,SDI
+"RTN","SDCODEL",73,0)
+ S DIK="^SDD("_SDFL_",",SDI=0
+"RTN","SDCODEL",74,0)
+ F  S SDI=$O(^SDD(SDFL,"AO",SDOE,SDI)) Q:'SDI  S DA=+$O(^(SDI,0)) D ^DIK
+"RTN","SDCODEL",75,0)
+ Q
+"RTN","SDCODEL",76,0)
+ ;
+"RTN","SDCODEL",77,0)
+OE(SDOE,SDMOD) ;Delete Outpatient Encounter
+"RTN","SDCODEL",78,0)
+ N DA,DIK,SDVSIT,SDORG,SDAT
+"RTN","SDCODEL",79,0)
+ IF '$$EDITOK^SDCO3(SDOE,SDMOD) G OEQ
+"RTN","SDCODEL",80,0)
+ S SDAT=$P($G(^SCE(+SDOE,0)),U,1)
+"RTN","SDCODEL",81,0)
+ S SDVSIT=$P($G(^SCE(SDOE,0)),U,5),SDORG=$P($G(^SCE(SDOE,0)),U,8)
+"RTN","SDCODEL",82,0)
+ S DA=SDOE,DIK="^SCE(" D ^DIK
+"RTN","SDCODEL",83,0)
+ S X=$$KILL^VSITKIL(SDVSIT)
+"RTN","SDCODEL",84,0)
+OEQ Q
+"RTN","SDCODEL",85,0)
+ ;
+"RTN","SDCODEL",86,0)
+COMDT(SDOE,SDMOD) ;Delete Check Out Process Completion Date
+"RTN","SDCODEL",87,0)
+ N DA,DE,DIE,DQ,DR
+"RTN","SDCODEL",88,0)
+ I $G(SDMOD) W !?3,"...deleting check out process completion date"
+"RTN","SDCODEL",89,0)
+ S DA=SDOE,DIE="^SCE(",DR=".07///@" D ^DIE
+"RTN","SDCODEL",90,0)
+ Q
+"RTN","SDCODEL",91,0)
+ ;
+"RTN","SDCODEL",92,0)
+SDEC(DFN,SDT,SDCL)   ;delete check out in SDEC APPOINTMENT  ;alb/sat 627
+"RTN","SDCODEL",93,0)
+ N SDECAPID
+"RTN","SDCODEL",94,0)
+ S SDECAPID=$$APPTGET^SDECUTL(DFN,SDT,SDCL)
+"RTN","SDCODEL",95,0)
+ D CANAPPT^SDEC25(SDECAPID)
+"RTN","SDCODEL",96,0)
+ Q
+"RTN","SDEC07B")
+0^4^B86344811^B55538827
+"RTN","SDEC07B",1,0)
+SDEC07B ;ALB/SAT - VISTA SCHEDULING RPCS ; 26 Mar 2019  7:44 AM
+"RTN","SDEC07B",2,0)
+ ;;5.3;Scheduling;**627,658,665,669,717**;Aug 13, 1993;Build 12
+"RTN","SDEC07B",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified
+"RTN","SDEC07B",4,0)
+ ;
+"RTN","SDEC07B",5,0)
+ Q
+"RTN","SDEC07B",6,0)
+ ;
+"RTN","SDEC07B",7,0)
+MAKE(BSDR) ;PEP; call to store appt made
+"RTN","SDEC07B",8,0)
+ ;
+"RTN","SDEC07B",9,0)
+ ; Make call using: S ERR=$$MAKE^SDEC07B(.ARRAY)
+"RTN","SDEC07B",10,0)
+ ;
+"RTN","SDEC07B",11,0)
+ ; Input Array -
+"RTN","SDEC07B",12,0)
+ ; BSDR("PAT") = ien of patient in file 2
+"RTN","SDEC07B",13,0)
+ ; BSDR("CLN") = ien of clinic in file 44
+"RTN","SDEC07B",14,0)
+ ; BSDR("TYP") = C&P if appointment type is C&P, 3 for scheduled appts, 4 for walkins
+"RTN","SDEC07B",15,0)
+ ; BSDR("COL") = collateral if appointment type is COLLATERAL OF VET.
+"RTN","SDEC07B",16,0)
+ ; BSDR("APT") = Appointment type pointer to APPOINTMENT TYPE file 409.1
+"RTN","SDEC07B",17,0)
+ ; BSDR("ADT") = appointment date and time
+"RTN","SDEC07B",18,0)
+ ; BSDR("LEN") = appointment length in minutes (5-120)
+"RTN","SDEC07B",19,0)
+ ; BSDR("OI")  = reason for appt - up to 150 characters
+"RTN","SDEC07B",20,0)
+ ; BSDR("USR") = user who made appt
+"RTN","SDEC07B",21,0)
+ ; BSDR("RES") = resource pointer to SDEC RESOURCE ^SDEC(409.831,
+"RTN","SDEC07B",22,0)
+ ; BSDR("MTR") = MTRC flag (multiple appointments) 0=False (default)  1=True
+"RTN","SDEC07B",23,0)
+ ; BSDR("DDT") = Desired Date of Appt in fm format
+"RTN","SDEC07B",24,0)
+ ; BSDR("REQ") = Requested By - valid values are 1=PROVIDER  2=PATIENT or ""
+"RTN","SDEC07B",25,0)
+ ; BSDR("LAB") = LAB date/time in fm format
+"RTN","SDEC07B",26,0)
+ ; BSDR("EKG") = EKG date/time in fm format
+"RTN","SDEC07B",27,0)
+ ; BSDR("XRA") = XRAY date/time in fm format
+"RTN","SDEC07B",28,0)
+ ; BSDR("CON") = Consult link - pointer to file 123
+"RTN","SDEC07B",29,0)
+ ; BSDR("OVB") = overbook flag - 1=yes, this is an overbook
+"RTN","SDEC07B",30,0)
+ ; BSDR("ELG") = Patient Eligibilty
+"RTN","SDEC07B",31,0)
+ ; 
+"RTN","SDEC07B",32,0)
+ ;Output: error status and message
+"RTN","SDEC07B",33,0)
+ ;   = 0 or null:  everything okay
+"RTN","SDEC07B",34,0)
+ ;   = 1^message:  error and reason
+"RTN","SDEC07B",35,0)
+ ;
+"RTN","SDEC07B",36,0)
+ I '$D(^DPT(+$G(BSDR("PAT")),0)) Q 1_U_"Patient not on file: "_$G(BSDR("PAT"))
+"RTN","SDEC07B",37,0)
+ I '$D(^SC(+$G(BSDR("CLN")),0)) Q 1_U_"Clinic not on file: "_$G(BSDR("CLN"))
+"RTN","SDEC07B",38,0)
+ I "1234"'[$G(BSDR("TYP")) Q 1_U_"Appt Type error: "_$G(BSDR("TYP"))
+"RTN","SDEC07B",39,0)
+ I $G(BSDR("ADT")) S BSDR("ADT")=+$E(BSDR("ADT"),1,12)  ;remove seconds
+"RTN","SDEC07B",40,0)
+ I $G(BSDR("ADT"))'?7N1".".4N Q 1_U_"Appt Date/Time error: "_$G(BSDR("ADT"))
+"RTN","SDEC07B",41,0)
+ ;
+"RTN","SDEC07B",42,0)
+ I ($G(BSDR("LEN"))<5)!($G(BSDR("LEN"))>240) Q 1_U_"Appt Length error: "_$G(BSDR("LEN"))
+"RTN","SDEC07B",43,0)
+ I '$D(^VA(200,+$G(BSDR("USR")),0)) Q 1_U_"User Who Made Appt Error: "_$G(BSDR("USR"))
+"RTN","SDEC07B",44,0)
+ I $D(^DPT(BSDR("PAT"),"S",BSDR("ADT"),0)),$P(^DPT(BSDR("PAT"),"S",BSDR("ADT"),0),U,2)'="C",$P(^DPT(BSDR("PAT"),"S",BSDR("ADT"),0),U,2)'="PC" Q 1_U_"Patient "_$$GET1^DIQ(2,BSDR("PAT")_",",.01)_" already has appt at "_$$FMTE^XLFDT(BSDR("ADT"))
+"RTN","SDEC07B",45,0)
+ ;
+"RTN","SDEC07B",46,0)
+ N DIC,DA,Y,X,DD,DO,DLAYGO
+"RTN","SDEC07B",47,0)
+ N SDECERR
+"RTN","SDEC07B",48,0)
+ N SDFU,SDNA,SDRET,SDSRT,PATCH722,PATCH717 ; 717/722 WTC 3/26/19
+"RTN","SDEC07B",49,0)
+ S PATCH722=$$PATCHSTS(722) ;
+"RTN","SDEC07B",50,0)
+ S PATCH717=$$PATCHSTS(717) ;
+"RTN","SDEC07B",51,0)
+ ;
+"RTN","SDEC07B",52,0)
+ S BSDR("APT")=+$G(BSDR("APT"))
+"RTN","SDEC07B",53,0)
+ S BSDR("COL")=+$G(BSDR("COL"))
+"RTN","SDEC07B",54,0)
+ ;get scheduling request type AND next ava. appt. indicator
+"RTN","SDEC07B",55,0)
+ S SDSRT=$$SDSRT(BSDR("TYP"),BSDR("MTR"),BSDR("DDT"),BSDR("REQ"))
+"RTN","SDEC07B",56,0)
+ ; next ava.appt. indicator field 26
+"RTN","SDEC07B",57,0)
+ S SDNA=$P(SDSRT,U,2)
+"RTN","SDEC07B",58,0)
+ ; scheduling request type field 25
+"RTN","SDEC07B",59,0)
+ S SDSRT=$P(SDSRT,U,1)
+"RTN","SDEC07B",60,0)
+ ;determine if Follow-up visit field 28
+"RTN","SDEC07B",61,0)
+ S SDRET=""
+"RTN","SDEC07B",62,0)
+ D PCSTGET^SDEC(.SDRET,BSDR("PAT"),BSDR("CLN"))
+"RTN","SDEC07B",63,0)
+ S SDFU=$P($P(@SDRET@(1),U,2),$C(30,31),1)
+"RTN","SDEC07B",64,0)
+ S SDFU=$S(SDFU="YES":1,1:0)
+"RTN","SDEC07B",65,0)
+ K @SDRET
+"RTN","SDEC07B",66,0)
+ ;store
+"RTN","SDEC07B",67,0)
+ N SDECCOND ;  722/717 wtc 3/26/2019 
+"RTN","SDEC07B",68,0)
+ S SDECCOND=0 I $D(^DPT(BSDR("PAT"),"S",BSDR("ADT"),0)),(($P(^DPT(BSDR("PAT"),"S",BSDR("ADT"),0),U,2)="C")!($P(^DPT(BSDR("PAT"),"S",BSDR("ADT"),0),U,2)="PC")) S SDECCOND=1 ;
+"RTN","SDEC07B",69,0)
+ ;
+"RTN","SDEC07B",70,0)
+ I SDECCOND D
+"RTN","SDEC07B",71,0)
+ . ; "un-cancel" existing appt in file 2
+"RTN","SDEC07B",72,0)
+ . N SDECFDA,SDECIENS,SDECMSG
+"RTN","SDEC07B",73,0)
+ . S SDECIENS=BSDR("ADT")_","_BSDR("PAT")_","
+"RTN","SDEC07B",74,0)
+ . ;
+"RTN","SDEC07B",75,0)
+ . I PATCH722'=3 D  ;  Execute code if patch 722 not installed.
+"RTN","SDEC07B",76,0)
+ .. S SDECFDA(2.98,SDECIENS,".01")=BSDR("CLN")
+"RTN","SDEC07B",77,0)
+ .. S SDECFDA(2.98,SDECIENS,"3")=$S($G(^DPT(+$G(BSDR("PAT")),.1))'="":"I",1:"")
+"RTN","SDEC07B",78,0)
+ .. S SDECFDA(2.98,SDECIENS,"5")=BSDR("LAB")    ;lab date/time
+"RTN","SDEC07B",79,0)
+ .. S SDECFDA(2.98,SDECIENS,"6")=BSDR("XRA")    ;xray date/time
+"RTN","SDEC07B",80,0)
+ .. S SDECFDA(2.98,SDECIENS,"7")=BSDR("EKG")    ;ekg date/time
+"RTN","SDEC07B",81,0)
+ .. S SDECFDA(2.98,SDECIENS,"9")=BSDR("TYP")
+"RTN","SDEC07B",82,0)
+ .. S:+BSDR("APT") SDECFDA(2.98,SDECIENS,"9.5")=BSDR("APT")
+"RTN","SDEC07B",83,0)
+ .. S:+BSDR("COL") SDECFDA(2.98,SDECIENS,"13")=BSDR("COL")
+"RTN","SDEC07B",84,0)
+ .. S SDECFDA(2.98,SDECIENS,"14")=""
+"RTN","SDEC07B",85,0)
+ .. S SDECFDA(2.98,SDECIENS,"15")=""
+"RTN","SDEC07B",86,0)
+ .. S SDECFDA(2.98,SDECIENS,"16")=""
+"RTN","SDEC07B",87,0)
+ .. S SDECFDA(2.98,SDECIENS,"17")=""   ;alb/sat 658
+"RTN","SDEC07B",88,0)
+ .. S SDECFDA(2.98,SDECIENS,"19")=DUZ           ;data entry clerk
+"RTN","SDEC07B",89,0)
+ .. S SDECFDA(2.98,SDECIENS,"20")=$$NOW^XLFDT
+"RTN","SDEC07B",90,0)
+ .. S SDECFDA(2.98,SDECIENS,"25")=SDSRT         ;scheduling request type
+"RTN","SDEC07B",91,0)
+ .. S SDECFDA(2.98,SDECIENS,"26")=SDNA          ;next ava. appt. indicator
+"RTN","SDEC07B",92,0)
+ .. S SDECFDA(2.98,SDECIENS,"27")=BSDR("DDT")   ;desired date of appt
+"RTN","SDEC07B",93,0)
+ .. S SDECFDA(2.98,SDECIENS,"28")=SDFU          ;follow-up visit  yes/no
+"RTN","SDEC07B",94,0)
+ . ;
+"RTN","SDEC07B",95,0)
+ . I PATCH722=3 D  ;  Excecute code if patch 722 is installed
+"RTN","SDEC07B",96,0)
+ .. S SDECFDA(2.98,SDECIENS,".01")=$$NULLDEL(BSDR("CLN")) ;*zeb+19 722 2/19/19 completely replace old appt's data if overlaying; prevent chimera appt
+"RTN","SDEC07B",97,0)
+ .. S SDECFDA(2.98,SDECIENS,"3")=$$NULLDEL($S($G(^DPT(+$G(BSDR("PAT")),.1))'="":"I",1:""))
+"RTN","SDEC07B",98,0)
+ .. S SDECFDA(2.98,SDECIENS,"5")=$$NULLDEL(BSDR("LAB"))    ;lab date/time
+"RTN","SDEC07B",99,0)
+ .. S SDECFDA(2.98,SDECIENS,"6")=$$NULLDEL(BSDR("XRA"))    ;xray date/time
+"RTN","SDEC07B",100,0)
+ .. S SDECFDA(2.98,SDECIENS,"7")=$$NULLDEL(BSDR("EKG"))    ;ekg date/time
+"RTN","SDEC07B",101,0)
+ .. S SDECFDA(2.98,SDECIENS,"9")=$$NULLDEL(BSDR("TYP"))
+"RTN","SDEC07B",102,0)
+ .. S SDECFDA(2.98,SDECIENS,"9.5")=$$NULLDEL(BSDR("APT"))
+"RTN","SDEC07B",103,0)
+ .. S SDECFDA(2.98,SDECIENS,"13")=$$NULLDEL(BSDR("COL"))
+"RTN","SDEC07B",104,0)
+ .. S SDECFDA(2.98,SDECIENS,"14")="@"
+"RTN","SDEC07B",105,0)
+ .. S SDECFDA(2.98,SDECIENS,"15")="@"
+"RTN","SDEC07B",106,0)
+ .. S SDECFDA(2.98,SDECIENS,"16")="@"
+"RTN","SDEC07B",107,0)
+ .. S SDECFDA(2.98,SDECIENS,"17")="@"   ;alb/sat 658
+"RTN","SDEC07B",108,0)
+ .. S SDECFDA(2.98,SDECIENS,"19")=$$NULLDEL(DUZ)           ;data entry clerk
+"RTN","SDEC07B",109,0)
+ .. S SDECFDA(2.98,SDECIENS,"20")=$$NOW^XLFDT
+"RTN","SDEC07B",110,0)
+ .. S SDECFDA(2.98,SDECIENS,"21")="@"                      ;outpatient encounter ;*zeb 722 2/26/19 clear to fix OE link issue if cancelled again
+"RTN","SDEC07B",111,0)
+ .. S SDECFDA(2.98,SDECIENS,"25")=$$NULLDEL(SDSRT)         ;scheduling request type
+"RTN","SDEC07B",112,0)
+ .. S SDECFDA(2.98,SDECIENS,"26")=$$NULLDEL(SDNA)          ;next ava. appt. indicator
+"RTN","SDEC07B",113,0)
+ .. S SDECFDA(2.98,SDECIENS,"27")=$$NULLDEL(BSDR("DDT"))   ;desired date of appt
+"RTN","SDEC07B",114,0)
+ .. S SDECFDA(2.98,SDECIENS,"28")=$$NULLDEL(SDFU)          ;follow-up visit  yes/no. ;
+"RTN","SDEC07B",115,0)
+ . ;
+"RTN","SDEC07B",116,0)
+ . D FILE^DIE("","SDECFDA","SDECMSG")
+"RTN","SDEC07B",117,0)
+ . ;
+"RTN","SDEC07B",118,0)
+ . I PATCH722'=3 N SDECTEMP S SDECTEMP=$G(SDECMSG)
+"RTN","SDEC07B",119,0)
+ . I PATCH722=3 N SDECTEMP S SDECTEMP=$$NULLDEL($G(SDECMSG))
+"RTN","SDEC07B",120,0)
+ . ;
+"RTN","SDEC07B",121,0)
+ I 'SDECCOND D  I $G(SDECERR(1)) Q 1_U_"FileMan add to DPT error: Patient="_BSDR("PAT")_" Appt="_BSDR("ADT")
+"RTN","SDEC07B",122,0)
+ . ; add appt to file 2
+"RTN","SDEC07B",123,0)
+ . N SDECFDA,SDECIENS,SDECMSG
+"RTN","SDEC07B",124,0)
+ . S SDECIENS="?+2,"_BSDR("PAT")_","
+"RTN","SDEC07B",125,0)
+ . S SDECIENS(2)=BSDR("ADT")
+"RTN","SDEC07B",126,0)
+ . S SDECFDA(2.98,SDECIENS,.01)=BSDR("CLN")
+"RTN","SDEC07B",127,0)
+ . S SDECFDA(2.98,SDECIENS,"3")=$S($G(^DPT(+$G(BSDR("PAT")),.1))'="":"I",1:"")
+"RTN","SDEC07B",128,0)
+ . S SDECFDA(2.98,SDECIENS,"5")=BSDR("LAB")    ;lab date/time
+"RTN","SDEC07B",129,0)
+ . S SDECFDA(2.98,SDECIENS,"6")=BSDR("XRA")    ;xray date/time
+"RTN","SDEC07B",130,0)
+ . S SDECFDA(2.98,SDECIENS,"7")=BSDR("EKG")    ;ekg date/time
+"RTN","SDEC07B",131,0)
+ . S SDECFDA(2.98,SDECIENS,"9")=BSDR("TYP")
+"RTN","SDEC07B",132,0)
+ . S:+BSDR("APT") SDECFDA(2.98,SDECIENS,"9.5")=BSDR("APT")
+"RTN","SDEC07B",133,0)
+ . S:+BSDR("COL") SDECFDA(2.98,SDECIENS,"13")=BSDR("COL")
+"RTN","SDEC07B",134,0)
+ . S SDECFDA(2.98,SDECIENS,"14")=""
+"RTN","SDEC07B",135,0)
+ . S SDECFDA(2.98,SDECIENS,"15")=""
+"RTN","SDEC07B",136,0)
+ . S SDECFDA(2.98,SDECIENS,"16")=""
+"RTN","SDEC07B",137,0)
+ . S SDECFDA(2.98,SDECIENS,"17")=""   ;alb/sat 658
+"RTN","SDEC07B",138,0)
+ . S SDECFDA(2.98,SDECIENS,"19")=DUZ           ;data entry clerk
+"RTN","SDEC07B",139,0)
+ . S SDECFDA(2.98,SDECIENS,"20")=$$NOW^XLFDT
+"RTN","SDEC07B",140,0)
+ . S SDECFDA(2.98,SDECIENS,"25")=SDSRT         ;scheduling request type
+"RTN","SDEC07B",141,0)
+ . S SDECFDA(2.98,SDECIENS,"26")=SDNA          ;next ava. appt. indicator
+"RTN","SDEC07B",142,0)
+ . S SDECFDA(2.98,SDECIENS,"27")=BSDR("DDT")   ;desired date of appt
+"RTN","SDEC07B",143,0)
+ . S SDECFDA(2.98,SDECIENS,"28")=SDFU          ;follow-up visit  yes/no
+"RTN","SDEC07B",144,0)
+ . D UPDATE^DIE("","SDECFDA","SDECIENS","SDECERR(1)")
+"RTN","SDEC07B",145,0)
+ ;
+"RTN","SDEC07B",146,0)
+ ; add appt to file 44
+"RTN","SDEC07B",147,0)
+ K DIC,DA,X,Y,DLAYGO,DD,DO
+"RTN","SDEC07B",148,0)
+ I '$D(^SC(BSDR("CLN"),"S",0)) S ^SC(BSDR("CLN"),"S",0)="^44.001DA^^"
+"RTN","SDEC07B",149,0)
+ I '$D(^SC(BSDR("CLN"),"S",BSDR("ADT"),0)) D  I Y<1 Q 1_U_"Error adding date to file 44: Clinic="_BSDR("CLN")_" Date="_BSDR("ADT")
+"RTN","SDEC07B",150,0)
+ . S DIC="^SC("_BSDR("CLN")_",""S"",",DA(1)=BSDR("CLN"),(X,DINUM)=BSDR("ADT")
+"RTN","SDEC07B",151,0)
+ . S DIC("P")="44.001DA",DIC(0)="L",DLAYGO=44.001
+"RTN","SDEC07B",152,0)
+ . S Y=1 I '$D(@(DIC_X_")")) D FILE^DICN
+"RTN","SDEC07B",153,0)
+ ;
+"RTN","SDEC07B",154,0)
+ K DIC,DA,X,Y,DLAYGO,DD,DO,DINUM
+"RTN","SDEC07B",155,0)
+ S DIC="^SC("_BSDR("CLN")_",""S"","_BSDR("ADT")_",1,"
+"RTN","SDEC07B",156,0)
+ S DA(2)=BSDR("CLN"),DA(1)=BSDR("ADT"),X=BSDR("PAT")
+"RTN","SDEC07B",157,0)
+ S DIC("DR")="1////"_BSDR("LEN")_";3///"_$E($G(BSDR("OI")),1,150)_";7////"_BSDR("USR")_";8////"_$$NOW^XLFDT_";30////"_BSDR("ELG")_$S(+$G(BSDR("OVB")):";9////O",1:"")
+"RTN","SDEC07B",158,0)
+ S DIC("P")="44.003PA",DIC(0)="L",DLAYGO=44.003
+"RTN","SDEC07B",159,0)
+ D FILE^DICN
+"RTN","SDEC07B",160,0)
+ ;add consult link
+"RTN","SDEC07B",161,0)
+ I $G(BSDR("CON")) D
+"RTN","SDEC07B",162,0)
+ .N SDFDA,SDIEN
+"RTN","SDEC07B",163,0)
+ .S SDIEN=+Y
+"RTN","SDEC07B",164,0)
+ .Q:SDIEN=-1
+"RTN","SDEC07B",165,0)
+ .S SDFDA(44.003,SDIEN_","_BSDR("ADT")_","_BSDR("CLN")_",",688)=BSDR("CON")
+"RTN","SDEC07B",166,0)
+ .D UPDATE^DIE("","SDFDA")
+"RTN","SDEC07B",167,0)
+ ;
+"RTN","SDEC07B",168,0)
+ I PATCH717'=3 Q 0  ;*zeb 10/24/18 717 comment out quit to enable event driver ; WTC 3/26/19 Enable line only if patch 717 not installed yet.
+"RTN","SDEC07B",169,0)
+ ; call event driver
+"RTN","SDEC07B",170,0)
+ NEW DFN,SDT,SDCL,SDDA,SDMODE
+"RTN","SDEC07B",171,0)
+ S DFN=BSDR("PAT"),SDT=BSDR("ADT"),SDCL=BSDR("CLN"),SDMODE=2
+"RTN","SDEC07B",172,0)
+ S SDDA=$$SCIEN^SDECU2(BSDR("PAT"),BSDR("CLN"),BSDR("ADT"))
+"RTN","SDEC07B",173,0)
+ D MAKE^SDAMEVT(DFN,SDT,SDCL,SDDA,SDMODE)
+"RTN","SDEC07B",174,0)
+ Q 0
+"RTN","SDEC07B",175,0)
+ ;
+"RTN","SDEC07B",176,0)
+NULLDEL(STR) ;return "@" to delete a field if the new data would be null ;*zeb+tag 722 2/19/19 added to support APPADD
+"RTN","SDEC07B",177,0)
+ Q $S(STR]"":STR,1:"@")
+"RTN","SDEC07B",178,0)
+ ;
+"RTN","SDEC07B",179,0)
+SDSRT(TYP,MTR,DDT,REQ) ;get SCHEDULING REQUEST TYPE and NEXT AVA.APPT. INDICATOR
+"RTN","SDEC07B",180,0)
+ ;INPUT:
+"RTN","SDEC07B",181,0)
+ ; TYP =  3 for scheduled appts, 4 for walkins
+"RTN","SDEC07B",182,0)
+ ; MTR = MTRC flag (multiple appointments) 0=False (default)  1=True
+"RTN","SDEC07B",183,0)
+ ; DDT = Desired Date of Appt in fm format
+"RTN","SDEC07B",184,0)
+ ; REQ = Requested By - valid values are 1=PROVIDER  2=PATIENT or ""
+"RTN","SDEC07B",185,0)
+ ;RETURN: 2 ^ pieces:
+"RTN","SDEC07B",186,0)
+ ;     1 - SCHEDULING REQUEST TYPE  internal format - valid values:
+"RTN","SDEC07B",187,0)
+ ;          N:'NEXT AVAILABLE' APPT.
+"RTN","SDEC07B",188,0)
+ ;          C:OTHER THAN 'NEXT AVA.' (CLINICIAN REQ.)
+"RTN","SDEC07B",189,0)
+ ;          P:OTHER THAN 'NEXT AVA.' (PATIENT REQ.)
+"RTN","SDEC07B",190,0)
+ ;          W:WALKIN APPT.
+"RTN","SDEC07B",191,0)
+ ;          M:MULTIPLE APPT. BOOKING
+"RTN","SDEC07B",192,0)
+ ;          A:AUTO REBOOK
+"RTN","SDEC07B",193,0)
+ ;          O:OTHER THAN 'NEXT AVA.' APPT.
+"RTN","SDEC07B",194,0)
+ ;     2 - NEXT AVA. APPT. INDICATOR  internal format - valid values:
+"RTN","SDEC07B",195,0)
+ ;          N:'NEXT AVAILABLE' APPT.
+"RTN","SDEC07B",196,0)
+ ;          C:OTHER THAN 'NEXT AVA.' (CLINICIAN REQ.)
+"RTN","SDEC07B",197,0)
+ ;          P:OTHER THAN 'NEXT AVA.' (PATIENT REQ.)
+"RTN","SDEC07B",198,0)
+ ;          W:WALKIN APPT.
+"RTN","SDEC07B",199,0)
+ ;          M:MULTIPLE APPT. BOOKING
+"RTN","SDEC07B",200,0)
+ ;          A:AUTO REBOOK
+"RTN","SDEC07B",201,0)
+ ;          O:OTHER THAN 'NEXT AVA.' APPT.
+"RTN","SDEC07B",202,0)
+ ;
+"RTN","SDEC07B",203,0)
+ N RET
+"RTN","SDEC07B",204,0)
+ S RET=""
+"RTN","SDEC07B",205,0)
+ ;1. If user creates a walkin appointment would be W:WALKIN APPT, 0:NOT INDICATED TO BE A 'NEXT AVA.' APPT
+"RTN","SDEC07B",206,0)
+ I TYP=4 Q "W^0"
+"RTN","SDEC07B",207,0)
+ ;2. If user creates an rm request with MTRC flagged
+"RTN","SDEC07B",208,0)
+ ;   AND desired date is 'today'
+"RTN","SDEC07B",209,0)
+ ; would be M:MULTIPLE APPT. BOOKING, 3:'NEXT AVA.' APPT. INDICATED BY USER & CALCULATION
+"RTN","SDEC07B",210,0)
+ I +MTR,$P($$NOW^XLFDT,".",1)=DDT Q "M^3"
+"RTN","SDEC07B",211,0)
+ ;3. If user creates an rm request with MTRC flagged
+"RTN","SDEC07B",212,0)
+ ;   AND desired date is not 'today'
+"RTN","SDEC07B",213,0)
+ ; would be M:MULTIPLE APPT. BOOKING, 0:'NOT INDICATED TO BE A 'NEXT AVA.' APPT
+"RTN","SDEC07B",214,0)
+ I +MTR,$P($$NOW^XLFDT,".",1)'=DDT Q "M^0"
+"RTN","SDEC07B",215,0)
+ ;4. If the user enters a desired date for the clinic stop that is today
+"RTN","SDEC07B",216,0)
+ ;  then N:'NEXT AVAILABLE' APPT., 1:'NEXT AVA.' APPT. INDICATED BY USER
+"RTN","SDEC07B",217,0)
+ I $P($$NOW^XLFDT(),".",1)=DDT Q "N^1"
+"RTN","SDEC07B",218,0)
+ ;5. If the user enters a desired date not today
+"RTN","SDEC07B",219,0)
+ ;   AND the request is by patient
+"RTN","SDEC07B",220,0)
+ ; then P:OTHER THAN 'NEXT AVA.' (PATIENT REQ.); 0:NOT INDICATED TO BE A 'NEXT AVA.' APPT.
+"RTN","SDEC07B",221,0)
+ I $P($$NOW^XLFDT(),".",1)'=DDT,REQ=2 Q "P^0"
+"RTN","SDEC07B",222,0)
+ ;6. If the user enters a desired date not today
+"RTN","SDEC07B",223,0)
+ ;   AND the request is by provider
+"RTN","SDEC07B",224,0)
+ ; then C:OTHER THAN 'NEXT AVA.' (CLINICIAN REQ.); 0:NOT INDICATED TO BE A 'NEXT AVA.' APPT.
+"RTN","SDEC07B",225,0)
+ I $P($$NOW^XLFDT(),".",1)'=DDT,REQ=1 Q "C^0"
+"RTN","SDEC07B",226,0)
+ Q RET
+"RTN","SDEC07B",227,0)
+ ;
+"RTN","SDEC07B",228,0)
+ ;Create Appointment  ;alb/sat 665 moved from SDEC07
+"RTN","SDEC07B",229,0)
+APPVISTA(SDECLEN,SDECNOTE,DFN,SDECRESD,SDECSTART,SDECWKIN,SDCL,SDECI) ;
+"RTN","SDEC07B",230,0)
+ N SDECC,SDECERR,SDECRNOD
+"RTN","SDEC07B",231,0)
+ S SDECRNOD=$G(^SDEC(409.831,SDECRESD,0))
+"RTN","SDEC07B",232,0)
+ I SDECRNOD="" D ERR^SDEC07(SDECI+1,"SDEC07 Error: Unable to add appointment -- invalid Resource entry.") Q 1
+"RTN","SDEC07B",233,0)
+ S SDECERR=""
+"RTN","SDEC07B",234,0)
+ I +SDCL,$D(^SC(SDCL,0)) D  I +SDECERR D ERR^SDEC07(SDECI+1,SDECERR) Q SDECERR
+"RTN","SDEC07B",235,0)
+ . S SDECC("PAT")=DFN
+"RTN","SDEC07B",236,0)
+ . S SDECC("CLN")=SDCL
+"RTN","SDEC07B",237,0)
+ . S SDECC("TYP")=3 ;3 for scheduled appts, 4 for walkins
+"RTN","SDEC07B",238,0)
+ . S:SDECWKIN SDECC("TYP")=4
+"RTN","SDEC07B",239,0)
+ . S SDECC("ADT")=SDECSTART
+"RTN","SDEC07B",240,0)
+ . S SDECC("LEN")=SDECLEN
+"RTN","SDEC07B",241,0)
+ . S SDECC("OI")=$E($G(SDECNOTE),1,150) ;File 44 has 150 character limit on OTHER field
+"RTN","SDEC07B",242,0)
+ . S SDECC("OI")=$TR(SDECC("OI"),";"," ") ;No semicolons allowed
+"RTN","SDEC07B",243,0)
+ . S SDECC("OI")=$$STRIP^SDEC07(SDECC("OI")) ;Strip control characters from note
+"RTN","SDEC07B",244,0)
+ . S SDECC("RES")=SDECRESD
+"RTN","SDEC07B",245,0)
+ . S SDECC("USR")=DUZ
+"RTN","SDEC07B",246,0)
+ . S SDECERR=$$MAKE^SDEC07B(.SDECC)
+"RTN","SDEC07B",247,0)
+ . Q:SDECERR
+"RTN","SDEC07B",248,0)
+ . D AVUPDT^SDEC07(SDCL,SDECSTART,SDECLEN)
+"RTN","SDEC07B",249,0)
+ . ;L
+"RTN","SDEC07B",250,0)
+ . Q
+"RTN","SDEC07B",251,0)
+ Q +SDECERR
+"RTN","SDEC07B",252,0)
+ ;
+"RTN","SDEC07B",253,0)
+PATCHSTS(NUMBER) ; 717/722 WTC 3/26/19
+"RTN","SDEC07B",254,0)
+ ;
+"RTN","SDEC07B",255,0)
+ ;  Determine if patch has been installed.  Return status from Install file (#9.7).
+"RTN","SDEC07B",256,0)
+ ;
+"RTN","SDEC07B",257,0)
+ N X,DA ;
+"RTN","SDEC07B",258,0)
+ S DA=$O(^XPD(9.7,"B","SD*5.3*"_NUMBER,99999),-1) I 'DA Q "" ;
+"RTN","SDEC07B",259,0)
+ S X=$P($G(^XPD(9.7,DA,0)),U,9) Q X ;
+"RTN","SDEC07B",260,0)
+ ;
+"RTN","SDEC08")
+0^5^B217036692^B209647726
+"RTN","SDEC08",1,0)
+SDEC08 ;ALB/SAT/JSM - VISTA SCHEDULING RPCS ;JUN 21, 2017
+"RTN","SDEC08",2,0)
+ ;;5.3;Scheduling;**627,651,658,665,717**;Aug 13, 1993;Build 12
+"RTN","SDEC08",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified
+"RTN","SDEC08",4,0)
+ ;
+"RTN","SDEC08",5,0)
+ Q
+"RTN","SDEC08",6,0)
+ ;
+"RTN","SDEC08",7,0)
+APPDEL(SDECY,SDECAPTID,SDECTYP,SDECCR,SDECNOT,SDECDATE,SDUSER) ;Cancels appointment
+"RTN","SDEC08",8,0)
+ ;APPDEL(SDECY,SDECAPTID,SDECTYP,SDECCR,SDECNOT,SDECDATE,SDUSER)  external parameter tag is in SDEC
+"RTN","SDEC08",9,0)
+ ;SDECAPTID - (required) pointer to SDEC APPOINTMENT file
+"RTN","SDEC08",10,0)
+ ;SDECTYP   - (required) appointment Status valid values:
+"RTN","SDEC08",11,0)
+ ;                          C=CANCELLED BY CLINIC
+"RTN","SDEC08",12,0)
+ ;                         PC=CANCELLED BY PATIENT
+"RTN","SDEC08",13,0)
+ ;SDECCR    - (optional) pointer to CANCELLATION REASON File (409.2)
+"RTN","SDEC08",14,0)
+ ;SDECNOT   - (optional) text representing user note
+"RTN","SDEC08",15,0)
+ ;SDECDATE   - (optional) Cancel Date/Time in external format; defaults to NOW
+"RTN","SDEC08",16,0)
+ ;SDUSER     - (optional) User that cancelled appt; defaults to current user
+"RTN","SDEC08",17,0)
+ ;Returns error code in recordset field ERRORID
+"RTN","SDEC08",18,0)
+ ;
+"RTN","SDEC08",19,0)
+ N SDECNOD,SDECPATID,SDECSTART,DIK,DA,SDECID,SDECI,SDECZ,SDECERR
+"RTN","SDEC08",20,0)
+ N SDECLOC,SDECLEN,SDECSCIEN,SDECSCIEN1
+"RTN","SDEC08",21,0)
+ N SDECNOEV,SDECSC1,SDRET
+"RTN","SDEC08",22,0)
+ N %DT,X,Y
+"RTN","SDEC08",23,0)
+ S SDECNOEV=1 ;Don't execute SDEC CANCEL APPOINTMENT protocol
+"RTN","SDEC08",24,0)
+ S SDECSCIEN1=0
+"RTN","SDEC08",25,0)
+ ;
+"RTN","SDEC08",26,0)
+ S SDECI=0
+"RTN","SDEC08",27,0)
+ S SDECY="^TMP(""SDEC08"","_$J_",""APPDEL"")"
+"RTN","SDEC08",28,0)
+ K @SDECY
+"RTN","SDEC08",29,0)
+ S @SDECY@(SDECI)="T00020ERRORID"_$C(30)
+"RTN","SDEC08",30,0)
+ S SDECI=SDECI+1
+"RTN","SDEC08",31,0)
+ ;validate SDEC APPOINTMENT pointer (required)
+"RTN","SDEC08",32,0)
+ I '$D(^SDEC(409.84,+$G(SDECAPTID),0)) D ERR(SDECI,"SDEC08: Invalid Appointment ID") Q
+"RTN","SDEC08",33,0)
+ ;validate appointment status type (required)
+"RTN","SDEC08",34,0)
+ S SDECTYP=$G(SDECTYP)
+"RTN","SDEC08",35,0)
+ S SDECTYP=$S(SDECTYP="C":"C",SDECTYP="CANCELLED BY CLINIC":"C",SDECTYP="PC":"PC",SDECTYP="CANCELLED BY PATIENT":"PC",1:"")
+"RTN","SDEC08",36,0)
+ I SDECTYP="" D ERR(SDECI,"SDEC08: Invalid status type") Q
+"RTN","SDEC08",37,0)
+ ;validate CANCELLATION REASON pointer (optional)
+"RTN","SDEC08",38,0)
+ S SDECCR=$G(SDECCR)
+"RTN","SDEC08",39,0)
+ I SDECCR'="" I '$D(^SD(409.2,+SDECCR,0)) S SDECCR=$O(^SD(409.2,"B","SDECCR",0))
+"RTN","SDEC08",40,0)
+ ;validate SDECNOT
+"RTN","SDEC08",41,0)
+ S SDECNOT=$TR(SDECNOT,"^"," ")  ;alb/sat 658 - strip out ^
+"RTN","SDEC08",42,0)
+ ;validate cancel date/time
+"RTN","SDEC08",43,0)
+ S SDECDATE=$G(SDECDATE)
+"RTN","SDEC08",44,0)
+ I SDECDATE'="" S %DT="T" S X=SDECDATE D ^%DT S SDECDATE=Y I Y=-1 S SDECDATE=""
+"RTN","SDEC08",45,0)
+ I $G(SDECDATE)="" S SDECDATE=$$NOW^XLFDT
+"RTN","SDEC08",46,0)
+ ;validate user
+"RTN","SDEC08",47,0)
+ S SDUSER=$G(SDUSER)
+"RTN","SDEC08",48,0)
+ I SDUSER'="" I '$D(^VA(200,+SDUSER,0)) S SDUSER=""
+"RTN","SDEC08",49,0)
+ I SDUSER="" S SDUSER=DUZ
+"RTN","SDEC08",50,0)
+ ;
+"RTN","SDEC08",51,0)
+ TSTART
+"RTN","SDEC08",52,0)
+ ;
+"RTN","SDEC08",53,0)
+ ;Delete APPOINTMENT entries
+"RTN","SDEC08",54,0)
+ S SDECNOD=^SDEC(409.84,SDECAPTID,0)
+"RTN","SDEC08",55,0)
+ S SDECPATID=$P(SDECNOD,U,5)
+"RTN","SDEC08",56,0)
+ S SDECSTART=$P(SDECNOD,U)
+"RTN","SDEC08",57,0)
+ ;
+"RTN","SDEC08",58,0)
+ ;Lock SDEC node
+"RTN","SDEC08",59,0)
+ L +^SDEC(409.84,SDECPATID):5 I '$T D ERR(SDECI+1,"Another user is working with this patient's record.  Please try again later") TROLLBACK  Q
+"RTN","SDEC08",60,0)
+ ;cancel check-in if walk-in
+"RTN","SDEC08",61,0)
+ I $P(SDECNOD,U,13)="y" D
+"RTN","SDEC08",62,0)
+ .S SDRET=""
+"RTN","SDEC08",63,0)
+ .D CHECKIN^SDEC25(.SDRET,SDECAPTID,"@")
+"RTN","SDEC08",64,0)
+ ;cancel SDEC APPOINTMENT record
+"RTN","SDEC08",65,0)
+ D SDECCAN(SDECAPTID,SDECTYP,SDECCR,SDECNOT,SDECDATE,SDUSER,1)
+"RTN","SDEC08",66,0)
+ ;
+"RTN","SDEC08",67,0)
+ S SDECSC1=$P(SDECNOD,U,7) ;RESOURCEID
+"RTN","SDEC08",68,0)
+ I SDECSC1]"",$D(^SDEC(409.831,SDECSC1,0)) D  I +$G(SDECZ) S SDECERR=+SDECZ D ERR(SDECI,$P(SDECZ,U,2)) Q
+"RTN","SDEC08",69,0)
+ . S SDECNOD=^SDEC(409.831,SDECSC1,0)
+"RTN","SDEC08",70,0)
+ . S SDECLOC=$P(SDECNOD,U,4) ;HOSPITAL LOCATION
+"RTN","SDEC08",71,0)
+ . Q:'+SDECLOC
+"RTN","SDEC08",72,0)
+ . S SDECSCIEN=$$SCIEN^SDECU2(SDECPATID,SDECLOC,SDECSTART) I SDECSCIEN="" D  I 'SDECZ Q  ;Q:SDECZ
+"RTN","SDEC08",73,0)
+ . . S SDECERR="SDEC08: Unable to find associated appointment for this patient. "
+"RTN","SDEC08",74,0)
+ . . S SDECZ=1
+"RTN","SDEC08",75,0)
+ . . I '$D(^SDEC(409.831,SDECSC1,20)) S SDECZ=0 Q
+"RTN","SDEC08",76,0)
+ . . N SDEC1
+"RTN","SDEC08",77,0)
+ . . S SDEC1=0
+"RTN","SDEC08",78,0)
+ . . F  S SDEC1=$O(^SDEC(409.831,SDECSC1,20,SDEC1)) Q:'+SDEC1  Q:SDECZ=0  D
+"RTN","SDEC08",79,0)
+ . . . Q:'$D(^SDEC(409.831,SDECSC1,20,SDEC1,0))
+"RTN","SDEC08",80,0)
+ . . . S SDECLOC=$P(^SDEC(409.831,SDECSC1,20,SDEC1,0),U)
+"RTN","SDEC08",81,0)
+ . . . S SDECSCIEN=$$SCIEN^SDECU2(SDECPATID,SDECLOC,SDECSTART) I +SDECSCIEN S SDECZ=0 Q
+"RTN","SDEC08",82,0)
+ . S SDECERR="SDEC08: CANCEL^SDEC08 Returned "
+"RTN","SDEC08",83,0)
+ . I SDECLOC']"" S SDECZ="0^Unable to find associated appointment for this patient." Q
+"RTN","SDEC08",84,0)
+ . I '$D(^SC(SDECLOC,0)) S SDECZ="0^Unable to find associated appointment for this patient." Q
+"RTN","SDEC08",85,0)
+ . S SDECNOD=$G(^SC(SDECLOC,"S",SDECSTART,1,+SDECSCIEN,0))
+"RTN","SDEC08",86,0)
+ . I SDECNOD="" S SDECZ="0^Unable to find associated appointment for this patient." Q
+"RTN","SDEC08",87,0)
+ . S SDECLEN=$P(SDECNOD,U,2)
+"RTN","SDEC08",88,0)
+ . D APCAN(.SDECZ,SDECLOC,SDECPATID,SDECSTART,SDECAPTID,SDECLEN)
+"RTN","SDEC08",89,0)
+ . Q:+$G(SDECZ)
+"RTN","SDEC08",90,0)
+ . D AVUPDT(SDECLOC,SDECSTART,SDECLEN)
+"RTN","SDEC08",91,0)
+ . D AR433D^SDECAR2(SDECAPTID)
+"RTN","SDEC08",92,0)
+ . ;L
+"RTN","SDEC08",93,0)
+ ;
+"RTN","SDEC08",94,0)
+ TCOMMIT
+"RTN","SDEC08",95,0)
+ L -^SDEC(409.84,SDECPATID)
+"RTN","SDEC08",96,0)
+ S SDECI=SDECI+1
+"RTN","SDEC08",97,0)
+ S @SDECY@(SDECI)=""_$C(30)
+"RTN","SDEC08",98,0)
+ S SDECI=SDECI+1
+"RTN","SDEC08",99,0)
+ S @SDECY@(SDECI)=$C(31)
+"RTN","SDEC08",100,0)
+ Q
+"RTN","SDEC08",101,0)
+ ;
+"RTN","SDEC08",102,0)
+AVUPDT(SDECSCD,SDECSTART,SDECLEN) ;Update Clinic availability
+"RTN","SDEC08",103,0)
+ ;See SDCNP0
+"RTN","SDEC08",104,0)
+ N HSI,I,S,SB,SD,SDDIF,SI,SL,SS,ST,STARTDAY,STR,X,Y
+"RTN","SDEC08",105,0)
+ S (SD,S)=SDECSTART
+"RTN","SDEC08",106,0)
+ S I=SDECSCD
+"RTN","SDEC08",107,0)
+ Q:'$D(^SC(I,"ST",SD\1,1))
+"RTN","SDEC08",108,0)
+ S SL=^SC(I,"SL"),X=$P(SL,U,3),STARTDAY=$S($L(X):X,1:8),SB=STARTDAY-1/100,X=$P(SL,U,6),HSI=$S(X:X,1:4),SI=$S(X="":4,X<3:4,X:X,1:4),STR="#@!$* XXWVUTSRQPONMLKJIHGFEDCBA0123456789jklmnopqrstuvwxyz",SDDIF=$S(HSI<3:8/HSI,1:2)
+"RTN","SDEC08",109,0)
+ S SL=SDECLEN
+"RTN","SDEC08",110,0)
+ S S=^SC(I,"ST",SD\1,1),Y=SD#1-SB*100,ST=Y#1*SI\.6+(Y\1*SI),SS=SL*HSI/60
+"RTN","SDEC08",111,0)
+ I Y'<1 F I=ST+ST:SDDIF S Y=$E(STR,$F(STR,$E(S,I+1))) Q:Y=""  S S=$E(S,1,I)_Y_$E(S,I+2,999),SS=SS-1 Q:SS'>0
+"RTN","SDEC08",112,0)
+ S ^SC(SDECSCD,"ST",SD\1,1)=S
+"RTN","SDEC08",113,0)
+ Q
+"RTN","SDEC08",114,0)
+ ;
+"RTN","SDEC08",115,0)
+APCAN(SDECZ,SDECLOC,SDECDFN,SDECSD,SDECAPTID,SDECLEN) ;
+"RTN","SDEC08",116,0)
+ ;Cancel appointment for patient SDECDFN in clinic SDECSC1
+"RTN","SDEC08",117,0)
+ ;at time SDECSD
+"RTN","SDEC08",118,0)
+ N SDECPNOD,SDECC,DA,DIE,DPTST,DR,%H
+"RTN","SDEC08",119,0)
+ ;save data into SDEC APPOINTMENT in case of un-cancel (status & appt length)
+"RTN","SDEC08",120,0)
+ S SDECPNOD=^DPT(SDECPATID,"S",SDECSD,0)
+"RTN","SDEC08",121,0)
+ S DPTST=$P(SDECPNOD,U,2)
+"RTN","SDEC08",122,0)
+ S DIE=409.84
+"RTN","SDEC08",123,0)
+ S DA=SDECAPTID
+"RTN","SDEC08",124,0)
+ S DR=".17///"_DPTST_";"_".18///"_SDECLEN
+"RTN","SDEC08",125,0)
+ D ^DIE
+"RTN","SDEC08",126,0)
+ S SDECC("PAT")=SDECDFN
+"RTN","SDEC08",127,0)
+ S SDECC("CLN")=SDECLOC
+"RTN","SDEC08",128,0)
+ S SDECC("TYP")=SDECTYP
+"RTN","SDEC08",129,0)
+ S SDECC("ADT")=SDECSD
+"RTN","SDEC08",130,0)
+ S %H=$H D YMD^%DTC
+"RTN","SDEC08",131,0)
+ S SDECC("CDT")=SDECDATE   ;X+%
+"RTN","SDEC08",132,0)
+ S SDECC("NOT")=SDECNOT
+"RTN","SDEC08",133,0)
+ S:+SDECCR SDECC("CR")=SDECCR
+"RTN","SDEC08",134,0)
+ S SDECC("USR")=SDUSER
+"RTN","SDEC08",135,0)
+ ;
+"RTN","SDEC08",136,0)
+ S SDECZ=$$CANCEL(.SDECC)
+"RTN","SDEC08",137,0)
+ Q
+"RTN","SDEC08",138,0)
+ ;
+"RTN","SDEC08",139,0)
+SDECCAN(SDECAPTID,SDECTYP,SDECCR,SDECNOT,SDECDATE,SDUSER,SDF) ;cancel SDEC APPOINTMENT entry
+"RTN","SDEC08",140,0)
+ ;SDECAPTID - (required) pointer to SDEC APPOINTMENT file
+"RTN","SDEC08",141,0)
+ ;SDECTYP   - (required) appointment Status valid values:
+"RTN","SDEC08",142,0)
+ ;                          C=CANCELLED BY CLINIC
+"RTN","SDEC08",143,0)
+ ;                         PC=CANCELLED BY PATIENT
+"RTN","SDEC08",144,0)
+ ;SDECCR    - (optional) pointer to CANCELLATION REASON File (409.2)
+"RTN","SDEC08",145,0)
+ ;SDECNOT   - (optional) text representing user note
+"RTN","SDEC08",146,0)
+ ;SDECDATE   - (optional) Cancel Date/Time in fm format; defaults to NOW) ;
+"RTN","SDEC08",147,0)
+ ;SDF       - (optional) flags
+"RTN","SDEC08",148,0)
+ ;                       1. called from GUI (update consult only if called from GUI)
+"RTN","SDEC08",149,0)
+ ;                       2. called from cancel in SDAM (CAN^SDCNP0) (do not reopen appt)
+"RTN","SDEC08",150,0)
+ ;Cancel SDEC APPOINTMENT entry
+"RTN","SDEC08",151,0)
+ N DFN,PROVIEN,Y
+"RTN","SDEC08",152,0)
+ N SAVESTRT,SDAPTYP,SDCL,SDI,SDIEN,SDECIENS,SDECFDA,SDECMSG,SDECWP,SDRES,SDT   ;alb/sat 651 add SAVESTRT and SDRES
+"RTN","SDEC08",153,0)
+ S SDF=$G(SDF,0)
+"RTN","SDEC08",154,0)
+ S DFN=$$GET1^DIQ(409.84,SDECAPTID_",",.05)   ;alb/sat 658
+"RTN","SDEC08",155,0)
+ S SDT=$$GET1^DIQ(409.84,SDECAPTID_",",.01,"I")
+"RTN","SDEC08",156,0)
+ S SAVESTRT=$$GET1^DIQ(409.84,SDECAPTID_",",.01)   ;alb/sat 651
+"RTN","SDEC08",157,0)
+ S SDRES=$$GET1^DIQ(409.84,SDECAPTID_",",.07,"I")  ;alb/sat 651
+"RTN","SDEC08",158,0)
+ S SDECIENS=SDECAPTID_","
+"RTN","SDEC08",159,0)
+ S SDECFDA(409.84,SDECIENS,.12)=$S($G(SDECDATE)'="":SDECDATE,1:$$NOW^XLFDT)
+"RTN","SDEC08",160,0)
+ S SDECFDA(409.84,SDECIENS,.121)=$S($G(SDUSER)'="":SDUSER,1:DUZ)
+"RTN","SDEC08",161,0)
+ S:$G(SDECCR)'="" SDECFDA(409.84,SDECIENS,.122)=SDECCR
+"RTN","SDEC08",162,0)
+ S SDECFDA(409.84,SDECIENS,.17)=SDECTYP
+"RTN","SDEC08",163,0)
+ K SDECMSG
+"RTN","SDEC08",164,0)
+ D FILE^DIE("","SDECFDA","SDECMSG")
+"RTN","SDEC08",165,0)
+ S SDAPTYP=$$GET1^DIQ(409.84,SDECAPTID_",",.22,"I")
+"RTN","SDEC08",166,0)
+ ;alb/sat 658 modification begin
+"RTN","SDEC08",167,0)
+ S SDECNOT=$G(SDECNOT),SDECNOT=$E(SDECNOT,1,160)
+"RTN","SDEC08",168,0)
+ I $L(SDECNOT)>2,'$E(SDF,2) K SDECFDA S SDECFDA(2.98,SDT_","_DFN_",",17)=SDECNOT D UPDATE^DIE("","SDECFDA")
+"RTN","SDEC08",169,0)
+ ;alb/sat 658 modification end
+"RTN","SDEC08",170,0)
+ I $P(SDAPTYP,";",2)="GMR(123,",$E(SDF,1) D
+"RTN","SDEC08",171,0)
+ .S SDCL=$$SDCL^SDECUTL(SDECAPTID)
+"RTN","SDEC08",172,0)
+ .S PROVIEN=$$GET1^DIQ(44,SDCL_",",16,"I")
+"RTN","SDEC08",173,0)
+ .D REQSET^SDEC07A($P(SDAPTYP,";",1),PROVIEN,"",2,SDECTYP,SDECNOT,SAVESTRT,SDRES)  ;alb/sat 651 added SAVESTRT
+"RTN","SDEC08",174,0)
+ I $P(SDAPTYP,";",2)="SDWL(409.3," D   ;update EWL
+"RTN","SDEC08",175,0)
+ .S DFN=$$GET1^DIQ(409.3,$P(SDAPTYP,";",1)_",",.01,"I")
+"RTN","SDEC08",176,0)
+ .Q:DFN=""
+"RTN","SDEC08",177,0)
+ .S SDIEN=0 F  S SDIEN=$O(^SDWL(409.3,"B",DFN,SDIEN)) Q:SDIEN=""  D
+"RTN","SDEC08",178,0)
+ ..I $$GET1^DIQ(409.3,SDIEN_",",13,"I")=SDT D
+"RTN","SDEC08",179,0)
+ ...K SDECFDA,SDECMSG,SDECWP
+"RTN","SDEC08",180,0)
+ ...;S SDIEN=$P(SDAPTYP,";",1)
+"RTN","SDEC08",181,0)
+ ...S SDECFDA(409.3,SDIEN_",",13)="@"
+"RTN","SDEC08",182,0)
+ ...S SDECFDA(409.3,SDIEN_",",13.1)="@"
+"RTN","SDEC08",183,0)
+ ...S SDECFDA(409.3,SDIEN_",",13.2)="@"
+"RTN","SDEC08",184,0)
+ ...S SDECFDA(409.3,SDIEN_",",13.3)="@"
+"RTN","SDEC08",185,0)
+ ...S SDECFDA(409.3,SDIEN_",",13.4)="@"
+"RTN","SDEC08",186,0)
+ ...S SDECFDA(409.3,SDIEN_",",13.5)="@"
+"RTN","SDEC08",187,0)
+ ...S SDECFDA(409.3,SDIEN_",",13.6)="@"
+"RTN","SDEC08",188,0)
+ ...S SDECFDA(409.3,SDIEN_",",13.7)="@"
+"RTN","SDEC08",189,0)
+ ...S SDECFDA(409.3,SDIEN_",",13.8)="@"
+"RTN","SDEC08",190,0)
+ ...D UPDATE^DIE("","SDECFDA")
+"RTN","SDEC08",191,0)
+ ...D:'$E(SDF,2) WLOPEN^SDECWL("","",SDIEN)  ;alb/jsm 658 do not reopen if called from SDEC^SDCNP0
+"RTN","SDEC08",192,0)
+ I $P(SDAPTYP,";",2)="SDEC(409.85," D   ;update APPT
+"RTN","SDEC08",193,0)
+ .K SDECFDA,SDECMSG,SDECWP
+"RTN","SDEC08",194,0)
+ .D:'$E(SDF,2) AROPEN^SDECAR("",SDECAPTID)  ;alb/jsm 658 do not reopen if called from SDEC^SDCNP0
+"RTN","SDEC08",195,0)
+ .S SDIEN=$P(SDAPTYP,";",1)
+"RTN","SDEC08",196,0)
+ .S SDECFDA(409.85,SDIEN_",",13)="@"
+"RTN","SDEC08",197,0)
+ .S SDECFDA(409.85,SDIEN_",",13.1)="@"
+"RTN","SDEC08",198,0)
+ .S SDECFDA(409.85,SDIEN_",",13.2)="@"
+"RTN","SDEC08",199,0)
+ .S SDECFDA(409.85,SDIEN_",",13.3)="@"
+"RTN","SDEC08",200,0)
+ .S SDECFDA(409.85,SDIEN_",",13.4)="@"
+"RTN","SDEC08",201,0)
+ .S SDECFDA(409.85,SDIEN_",",13.5)="@"
+"RTN","SDEC08",202,0)
+ .S SDECFDA(409.85,SDIEN_",",13.6)="@"
+"RTN","SDEC08",203,0)
+ .S SDECFDA(409.85,SDIEN_",",13.7)="@"
+"RTN","SDEC08",204,0)
+ .S SDECFDA(409.85,SDIEN_",",13.8)="@"
+"RTN","SDEC08",205,0)
+ .D UPDATE^DIE("","SDECFDA")
+"RTN","SDEC08",206,0)
+ Q
+"RTN","SDEC08",207,0)
+ ;
+"RTN","SDEC08",208,0)
+CANEVT(SDECPAT,SDECSTART,SDECSC) ;EP Called by SDEC CANCEL APPOINTMENT event
+"RTN","SDEC08",209,0)
+ ;when appointments cancelled via PIMS interface.
+"RTN","SDEC08",210,0)
+ ;Propagates cancellation to SDECAPPT and raises refresh event to running GUI clients
+"RTN","SDEC08",211,0)
+ N SDECFOUND,SDECRES
+"RTN","SDEC08",212,0)
+ Q:+$G(SDECNOEV)
+"RTN","SDEC08",213,0)
+ Q:'+$G(SDECSC)
+"RTN","SDEC08",214,0)
+ S SDECFOUND=0
+"RTN","SDEC08",215,0)
+ I $D(^SDEC(409.831,"ALOC",SDECSC)) S SDECRES=$O(^SDEC(409.831,"ALOC",SDECSC,0)) S SDECFOUND=$$CANEVT1(SDECRES,SDECSTART,SDECPAT)
+"RTN","SDEC08",216,0)
+ I SDECFOUND D CANEVT3(SDECRES) Q
+"RTN","SDEC08",217,0)
+ Q
+"RTN","SDEC08",218,0)
+ ;
+"RTN","SDEC08",219,0)
+CANEVT1(SDECRES,SDECSTART,SDECPAT) ;
+"RTN","SDEC08",220,0)
+ ;Get appointment id in SDECAPT
+"RTN","SDEC08",221,0)
+ ;If found, call SDECCAN(SDECAPPT) and return 1
+"RTN","SDEC08",222,0)
+ ;else return 0
+"RTN","SDEC08",223,0)
+ N SDECFOUND,SDECAPPT
+"RTN","SDEC08",224,0)
+ S SDECFOUND=0
+"RTN","SDEC08",225,0)
+ Q:'+SDECRES SDECFOUND
+"RTN","SDEC08",226,0)
+ Q:'$D(^SDEC(409.84,"ARSRC",SDECRES,SDECSTART)) SDECFOUND
+"RTN","SDEC08",227,0)
+ S SDECAPPT=0 F  S SDECAPPT=$O(^SDEC(409.84,"ARSRC",SDECRES,SDECSTART,SDECAPPT)) Q:'+SDECAPPT  D  Q:SDECFOUND
+"RTN","SDEC08",228,0)
+ . S SDECNOD=$G(^SDEC(409.84,SDECAPPT,0)) Q:SDECNOD=""
+"RTN","SDEC08",229,0)
+ . I $P(SDECNOD,U,5)=SDECPAT,$P(SDECNOD,U,12)="" S SDECFOUND=1 Q
+"RTN","SDEC08",230,0)
+ I SDECFOUND,+$G(SDECAPPT) D SDECCAN(SDECAPPT,,,,,,1)
+"RTN","SDEC08",231,0)
+ Q SDECFOUND
+"RTN","SDEC08",232,0)
+ ;
+"RTN","SDEC08",233,0)
+CANEVT3(SDECRES) ;
+"RTN","SDEC08",234,0)
+ ;Call RaiseEvent to notify GUI clients
+"RTN","SDEC08",235,0)
+ ;
+"RTN","SDEC08",236,0)
+ Q
+"RTN","SDEC08",237,0)
+ N SDECRESN
+"RTN","SDEC08",238,0)
+ S SDECRESN=$G(^SDEC(409.831,SDECRES,0))
+"RTN","SDEC08",239,0)
+ Q:SDECRESN=""
+"RTN","SDEC08",240,0)
+ S SDECRESN=$P(SDECRESN,"^")
+"RTN","SDEC08",241,0)
+ ;D EVENT^SDEC23("SCHEDULE-"_SDECRESN,"","","")
+"RTN","SDEC08",242,0)
+ ;D EVENT^BMXMEVN("SDEC SCHEDULE",SDECRESN)
+"RTN","SDEC08",243,0)
+ Q
+"RTN","SDEC08",244,0)
+ ;
+"RTN","SDEC08",245,0)
+CANCEL(BSDR) ;EP; called to cancel appt
+"RTN","SDEC08",246,0)
+ ;
+"RTN","SDEC08",247,0)
+ ; Make call using: S ERR=$$CANCEL^SDEC08(.ARRAY)
+"RTN","SDEC08",248,0)
+ ;
+"RTN","SDEC08",249,0)
+ ; Input Array -
+"RTN","SDEC08",250,0)
+ ; BSDR("PAT") = ien of patient in file 2
+"RTN","SDEC08",251,0)
+ ; BSDR("CLN") = ien of clinic in file 44
+"RTN","SDEC08",252,0)
+ ; BSDR("TYP") = C for canceled by clinic; PC for patient canceled
+"RTN","SDEC08",253,0)
+ ; BSDR("ADT") = appointment date and time
+"RTN","SDEC08",254,0)
+ ; BSDR("CDT") = cancel date and time
+"RTN","SDEC08",255,0)
+ ; BSDR("USR") = user who canceled appt
+"RTN","SDEC08",256,0)
+ ; BSDR("CR")  = cancel reason - pointer to file 409.2
+"RTN","SDEC08",257,0)
+ ; BSDR("NOT") = cancel remarks - optional notes to 160 characters
+"RTN","SDEC08",258,0)
+ ;
+"RTN","SDEC08",259,0)
+ ;Output: error status and message
+"RTN","SDEC08",260,0)
+ ;   = 0 or null:  everything okay
+"RTN","SDEC08",261,0)
+ ;   = 1^message:  error and reason
+"RTN","SDEC08",262,0)
+ ;
+"RTN","SDEC08",263,0)
+ I '$D(^DPT(+$G(BSDR("PAT")),0)) Q 1_U_"Patient not on file: "_$G(BSDR("PAT"))
+"RTN","SDEC08",264,0)
+ I '$D(^SC(+$G(BSDR("CLN")),0)) Q 1_U_"Clinic not on file: "_$G(BSDR("CLN"))
+"RTN","SDEC08",265,0)
+ I ($G(BSDR("TYP"))'="C"),($G(BSDR("TYP"))'="PC") Q 1_U_"Cancel Status error: "_$G(BSDR("TYP"))
+"RTN","SDEC08",266,0)
+ I $G(BSDR("ADT")) S BSDR("ADT")=+$E(BSDR("ADT"),1,12)  ;remove seconds
+"RTN","SDEC08",267,0)
+ I $G(BSDR("ADT"))'?7N1".".4N Q 1_U_"Appt Date/Time error: "_$G(BSDR("ADT"))
+"RTN","SDEC08",268,0)
+ I $G(BSDR("CDT")) S BSDR("CDT")=+$E(BSDR("CDT"),1,12)  ;remove seconds
+"RTN","SDEC08",269,0)
+ I $G(BSDR("CDT"))'?7N1".".4N Q 1_U_"Cancel Date/Time error: "_$G(BSDR("CDT"))
+"RTN","SDEC08",270,0)
+ I '$D(^VA(200,+$G(BSDR("USR")),0)) Q 1_U_"User Who Canceled Appt Error: "_$G(BSDR("USR"))
+"RTN","SDEC08",271,0)
+ I '$D(^SD(409.2,+$G(BSDR("CR")))) Q 1_U_"Cancel Reason error: "_$G(BSDR("CR"))
+"RTN","SDEC08",272,0)
+ ;
+"RTN","SDEC08",273,0)
+ NEW IEN,DIE,DA,DR,SDMODE,HLAPTIEN ;*zeb+1 722 2/21/19 save IEN for canceling appt
+"RTN","SDEC08",274,0)
+ S IEN=$$SCIEN^SDECU2(BSDR("PAT"),BSDR("CLN"),BSDR("ADT")),HLAPTIEN=IEN
+"RTN","SDEC08",275,0)
+ I 'IEN Q 1_U_"Error trying to find appointment for cancel: Patient="_BSDR("PAT")_" Clinic="_BSDR("CLN")_" Appt="_BSDR("ADT")
+"RTN","SDEC08",276,0)
+ ;
+"RTN","SDEC08",277,0)
+ I $$CI^SDECU2(BSDR("PAT"),BSDR("CLN"),BSDR("ADT"),IEN) Q 1_U_"Patient already checked in; cannot cancel until check-in deleted: Patient="_BSDR("PAT")_" Clinic="_BSDR("CLN")_" Appt="_BSDR("ADT")
+"RTN","SDEC08",278,0)
+ ;
+"RTN","SDEC08",279,0)
+ ; remember before status
+"RTN","SDEC08",280,0)
+ NEW SDATA,DFN,SDT,SDCL,SDDA,SDCPHDL
+"RTN","SDEC08",281,0)
+ S DFN=BSDR("PAT"),SDT=BSDR("ADT"),SDCL=BSDR("CLN"),SDMODE=2,SDDA=IEN
+"RTN","SDEC08",282,0)
+ S SDCPHDL=$$HANDLE^SDAMEVT(1),SDATA=SDDA_U_DFN_U_SDT_U_SDCL
+"RTN","SDEC08",283,0)
+ D BEFORE^SDAMEVT(.SDATA,DFN,SDT,SDCL,SDDA,SDCPHDL)
+"RTN","SDEC08",284,0)
+ ;
+"RTN","SDEC08",285,0)
+ ; get user who made appt and date appt made from ^SC
+"RTN","SDEC08",286,0)
+ ;    because data in ^SC will be deleted
+"RTN","SDEC08",287,0)
+ NEW USER,DATE
+"RTN","SDEC08",288,0)
+ S USER=$P($G(^SC(SDCL,"S",SDT,1,IEN,0)),U,6)
+"RTN","SDEC08",289,0)
+ S DATE=$P($G(^SC(SDCL,"S",SDT,1,IEN,0)),U,7)
+"RTN","SDEC08",290,0)
+ ;
+"RTN","SDEC08",291,0)
+ ; update file 2 info
+"RTN","SDEC08",292,0)
+ NEW DIE,DA,DR
+"RTN","SDEC08",293,0)
+ N SDFDA,SDIEN,SDMSG
+"RTN","SDEC08",294,0)
+ S SDFDA="SDFDA(2.98,SDT_"",""_DFN_"","")"
+"RTN","SDEC08",295,0)
+ S @SDFDA@(3)=BSDR("TYP")
+"RTN","SDEC08",296,0)
+ S @SDFDA@(14)=BSDR("USR")
+"RTN","SDEC08",297,0)
+ S @SDFDA@(15)=BSDR("CDT")
+"RTN","SDEC08",298,0)
+ S:+$G(BSDR("CR")) @SDFDA@(16)=BSDR("CR")
+"RTN","SDEC08",299,0)
+ S:$G(BSDR("NOT"))]"" @SDFDA@(17)=$E(BSDR("NOT"),1,160)
+"RTN","SDEC08",300,0)
+ S @SDFDA@(19)=USER
+"RTN","SDEC08",301,0)
+ S @SDFDA@(20)=DATE
+"RTN","SDEC08",302,0)
+ D UPDATE^DIE("","SDFDA")
+"RTN","SDEC08",303,0)
+ N SDPCE
+"RTN","SDEC08",304,0)
+ S SDPCE=$P($G(^DPT(DFN,"S",SDT,0)),U,20)
+"RTN","SDEC08",305,0)
+ D:+SDPCE EN^SDCODEL(SDPCE,2,"","CANCEL")  ;remove OUTPATIENT ENCOUNTER link  ;*zeb 10/25/18 717 pass in correct SDMODE and delete source
+"RTN","SDEC08",306,0)
+ ;
+"RTN","SDEC08",307,0)
+ ; cancel appointment in ^SC
+"RTN","SDEC08",308,0)
+ ;NEW DIK,DA  ;*zeb+4 722 2/21/19 mark as canceled instead of (failing to) delete so expand entry works correctly
+"RTN","SDEC08",309,0)
+ ;S DIK="^SC("_BSDR("CLN")_",""S"","_BSDR("ADT")_",1,"
+"RTN","SDEC08",310,0)
+ ;S DA(2)=BSDR("CLN"),DA(1)=BSDR("ADT"),DA=IEN
+"RTN","SDEC08",311,0)
+ ;D ^DIK
+"RTN","SDEC08",312,0)
+ S $P(^SC(BSDR("CLN"),"S",BSDR("ADT"),1,HLAPTIEN,0),"^",9)="C"
+"RTN","SDEC08",313,0)
+ ; call event driver
+"RTN","SDEC08",314,0)
+ S SDATA=SDDA_U_DFN_U_SDT_U_SDCL
+"RTN","SDEC08",315,0)
+ D CANCEL^SDAMEVT(.SDATA,DFN,SDT,SDCL,SDDA,SDMODE,SDCPHDL)  ;*zeb 10/25/18 717 uncomment to re-enable event driver
+"RTN","SDEC08",316,0)
+ Q 0
+"RTN","SDEC08",317,0)
+ ;
+"RTN","SDEC08",318,0)
+UNDOCANA(SDECY,SDECAPTID) ;Undo Cancel Appointment
+"RTN","SDEC08",319,0)
+ ;UNDOCANA(SDECY,SDECAPTID)  external parameter tag in SDEC
+"RTN","SDEC08",320,0)
+ ;called by SDEC UNCANCEL APPT
+"RTN","SDEC08",321,0)
+ ; SDECAPTID = ien of appointment in SDEC APPOINTMENT (^SDECAPPT) file 409.84
+"RTN","SDEC08",322,0)
+ N SDECDAM,SDECDEC,SDECI,SDECNOD,SDECPATID,SDECSTART
+"RTN","SDEC08",323,0)
+ S SDECNOEV=1 ;Don't execute SDEC CANCEL APPOINTMENT protocol  ;is this used?
+"RTN","SDEC08",324,0)
+ ;
+"RTN","SDEC08",325,0)
+ S SDECI=0
+"RTN","SDEC08",326,0)
+ K ^TMP("SDEC",$J)
+"RTN","SDEC08",327,0)
+ S SDECY="^TMP(""SDEC"","_$J_")"
+"RTN","SDEC08",328,0)
+ S ^TMP("SDEC",$J,SDECI)="T00020ERRORID"_$C(30)
+"RTN","SDEC08",329,0)
+ TSTART
+"RTN","SDEC08",330,0)
+ I '+SDECAPTID TROLLBACK  D ERR(SDECI+1,"Invalid Appointment ID.") Q
+"RTN","SDEC08",331,0)
+ I '$D(^SDEC(409.84,SDECAPTID,0)) TROLLBACK  D ERR(SDECI+1,"Invalid Appointment ID") Q
+"RTN","SDEC08",332,0)
+ ;Make sure appointment is cancelled
+"RTN","SDEC08",333,0)
+ I $$GET1^DIQ(409.84,SDECAPTID_",",.12)="" TROLLBACK  D ERR(SDECI+1,"Appointment is not Cancelled.") Q
+"RTN","SDEC08",334,0)
+ S SDECNOD=^SDEC(409.84,SDECAPTID,0)
+"RTN","SDEC08",335,0)
+ ;appts cancelled by patient cannot be un-cancelled. /* removed 9/17/2010 */
+"RTN","SDEC08",336,0)
+ ;I $P(^DPT($P(SDECNOD,U,5),"S",$P(SDECNOD,U,1),0),U,2)="PC" TROLLBACK  D ERR(SDECI+1,"Cancelled by patient appointment cannot be uncancelled.") Q
+"RTN","SDEC08",337,0)
+ ;get appointment data
+"RTN","SDEC08",338,0)
+ S SDECNOD=^SDEC(409.84,SDECAPTID,0)
+"RTN","SDEC08",339,0)
+ S SDECDAM=$P(SDECNOD,U,9)                  ;date appt made
+"RTN","SDEC08",340,0)
+ S SDECDEC=$P(SDECNOD,U,8)                  ;data entry clerk
+"RTN","SDEC08",341,0)
+ S SDECLEN=$P(SDECNOD,U,18)                 ;length of appt in minutes
+"RTN","SDEC08",342,0)
+ S SDECNOTE=$G(^SDEC(409.84,SDECAPTID,1,1,0))  ;note from SDEC APPOINTMENT
+"RTN","SDEC08",343,0)
+ S SDECPATID=$P(SDECNOD,U,5)                ;pointer to VA PATIENT file 2
+"RTN","SDEC08",344,0)
+ S SDECSC1=$P($G(SDECNOD),U,7)              ;resource
+"RTN","SDEC08",345,0)
+ S SDECSTART=$P(SDECNOD,U)                  ;appt start time
+"RTN","SDEC08",346,0)
+ S SDECWKIN=$P($G(SDECNOD),U,13)            ;walk-in
+"RTN","SDEC08",347,0)
+ ;lock SDEC node
+"RTN","SDEC08",348,0)
+ L +^SDEC(409.84,SDECPATID):5 I '$T D ERR(SDECI+1,"Another user is working with this patient's record.  Please try again later") TROLLBACK  Q
+"RTN","SDEC08",349,0)
+ ;un-cancel SDEC APPOINTMENT
+"RTN","SDEC08",350,0)
+ D SDECUCAN(SDECAPTID)
+"RTN","SDEC08",351,0)
+ I SDECSC1]"",$D(^SDEC(409.831,SDECSC1,0)) D  I +$G(SDECZ) S SDECERR=SDECERR_$P(SDECZ,U,2) D ERR(SDECI,SDECERR) Q
+"RTN","SDEC08",352,0)
+ . S SDECLOC=""
+"RTN","SDEC08",353,0)
+ . S SDECNOD=^SDEC(409.831,SDECSC1,0)
+"RTN","SDEC08",354,0)
+ . S SDECLOC=$P(SDECNOD,U,4) ;HOSPITAL LOCATION   ;support for single HOSPITAL LOCATION in SDEC RESOURCE
+"RTN","SDEC08",355,0)
+ . I SDECLOC="" S SDECLOC=$$SDCL^SDECUTL(SDECAPTID)  ;HOSPITAL LOCATION
+"RTN","SDEC08",356,0)
+ . Q:'+SDECLOC
+"RTN","SDEC08",357,0)
+ . ;un-cancel patient appointment and re-instate clinic appointment
+"RTN","SDEC08",358,0)
+ . S SDECZ=""
+"RTN","SDEC08",359,0)
+ . D APUCAN(.SDECZ,SDECLOC,SDECPATID,SDECSTART,SDECDAM,SDECDEC,SDECLEN,SDECNOTE,SDECSC1,SDECWKIN)
+"RTN","SDEC08",360,0)
+ TCOMMIT
+"RTN","SDEC08",361,0)
+ L -^SDEC(409.84,SDECPATID)
+"RTN","SDEC08",362,0)
+ S SDECI=SDECI+1
+"RTN","SDEC08",363,0)
+ S ^TMP("SDEC",$J,SDECI)=""_$C(30)
+"RTN","SDEC08",364,0)
+ S SDECI=SDECI+1
+"RTN","SDEC08",365,0)
+ S ^TMP("SDEC",$J,SDECI)=$C(31)
+"RTN","SDEC08",366,0)
+ Q
+"RTN","SDEC08",367,0)
+ ;
+"RTN","SDEC08",368,0)
+SDECUCAN(SDECAPTID) ;called internally to update SDEC APPOINTMENT by clearing cancel date/time
+"RTN","SDEC08",369,0)
+ N PROVIEN,SDAPTYP,SDCL,SDRES
+"RTN","SDEC08",370,0)
+ S SDECIENS=SDECAPTID_","
+"RTN","SDEC08",371,0)
+ S SDECFDA(409.84,SDECIENS,.12)=""
+"RTN","SDEC08",372,0)
+ K SDECMSG
+"RTN","SDEC08",373,0)
+ D FILE^DIE("","SDECFDA","SDECMSG")
+"RTN","SDEC08",374,0)
+ S SDAPTYP=$$GET1^DIQ(409.84,SDECAPTID_",",.22,"I")
+"RTN","SDEC08",375,0)
+ I $P(SDAPTYP,";",2)="GMR(123," D
+"RTN","SDEC08",376,0)
+ .S SDCL=$$SDCL^SDECUTL(SDECAPTID)
+"RTN","SDEC08",377,0)
+ .S PROVIEN=$$GET1^DIQ(44,SDCL_",",16,"I")
+"RTN","SDEC08",378,0)
+ .D REQSET^SDEC07A($P(SDAPTYP,";",1),PROVIEN,"",1)
+"RTN","SDEC08",379,0)
+ Q
+"RTN","SDEC08",380,0)
+ ;
+"RTN","SDEC08",381,0)
+APUCAN(SDECZ,SDECLOC,SDECPATID,SDECSTART,SDECDAM,SDECDEC,SDECLEN,SDECNOTE,SDECRES,SDECWKIN) ;
+"RTN","SDEC08",382,0)
+ ;un-Cancel appointment for patient SDECDFN in clinic SDECSC1
+"RTN","SDEC08",383,0)
+ ;  SDECLOC   = pointer to hospital location ^SC file 44
+"RTN","SDEC08",384,0)
+ ;  SDECPATID = pointer to VA Patient ^DPT file 2
+"RTN","SDEC08",385,0)
+ ;  SDECSTART = Appointment time
+"RTN","SDEC08",386,0)
+ ;  SDECDAM   = Date appointment made in FM format
+"RTN","SDEC08",387,0)
+ ;  SDECDEC   = Data entry clerk - pointer to NEW PERSON file 200
+"RTN","SDEC08",388,0)
+ N SDECC,%H
+"RTN","SDEC08",389,0)
+ S SDECC("PAT")=SDECPATID
+"RTN","SDEC08",390,0)
+ S SDECC("CLN")=SDECLOC
+"RTN","SDEC08",391,0)
+ S SDECC("ADT")=SDECSTART
+"RTN","SDEC08",392,0)
+ S SDECC("NOTE")=SDECNOTE  ;user note
+"RTN","SDEC08",393,0)
+ S SDECC("RES")=SDECRES
+"RTN","SDEC08",394,0)
+ S SDECC("USR")=DUZ
+"RTN","SDEC08",395,0)
+ S SDECC("LEN")=SDECLEN
+"RTN","SDEC08",396,0)
+ S SDECC("WKIN")=SDECWKIN
+"RTN","SDEC08",397,0)
+ ;
+"RTN","SDEC08",398,0)
+ S SDECZ=$$UNCANCEL(.SDECC)
+"RTN","SDEC08",399,0)
+ Q
+"RTN","SDEC08",400,0)
+ ;
+"RTN","SDEC08",401,0)
+UNCANCEL(BSDR) ;PEP; called to un-cancel appt
+"RTN","SDEC08",402,0)
+ ;
+"RTN","SDEC08",403,0)
+ ; Make call using: S ERR=$$UNCANCEL(.ARRAY)
+"RTN","SDEC08",404,0)
+ ;
+"RTN","SDEC08",405,0)
+ ; Input Array -
+"RTN","SDEC08",406,0)
+ ; BSDR("PAT") = ien of patient in file 2
+"RTN","SDEC08",407,0)
+ ; BSDR("CLN") = ien of clinic in file 44
+"RTN","SDEC08",408,0)
+ ; BSDR("ADT") = appointment date and time
+"RTN","SDEC08",409,0)
+ ; BSDR("USR") = user who un-canceled appt
+"RTN","SDEC08",410,0)
+ ; BSDR("NOTE") = appointment note from SDEC APPOINTMENT
+"RTN","SDEC08",411,0)
+ ; BSDR("LEN") = appt length in minutes (numeric)
+"RTN","SDEC08",412,0)
+ ; BSDR("RES") = resource
+"RTN","SDEC08",413,0)
+ ; BSDR("WKIN")= walk-in
+"RTN","SDEC08",414,0)
+ ;
+"RTN","SDEC08",415,0)
+ ;Output: error status and message
+"RTN","SDEC08",416,0)
+ ;   = 0 or null:  everything okay
+"RTN","SDEC08",417,0)
+ ;   = 1^message:  error and reason
+"RTN","SDEC08",418,0)
+ ;
+"RTN","SDEC08",419,0)
+ N DPTNOD,DPTNODR
+"RTN","SDEC08",420,0)
+ I '$D(^DPT(+$G(BSDR("PAT")),0)) Q 1_U_"Patient not on file: "_$G(BSDR("PAT"))
+"RTN","SDEC08",421,0)
+ I '$D(^SC(+$G(BSDR("CLN")),0)) Q 1_U_"Clinic not on file: "_$G(BSDR("CLN"))
+"RTN","SDEC08",422,0)
+ I $G(BSDR("ADT")) S BSDR("ADT")=+$E(BSDR("ADT"),1,12)  ;remove seconds
+"RTN","SDEC08",423,0)
+ I $G(BSDR("ADT"))'?7N1".".4N Q 1_U_"Appt Date/Time error: "_$G(BSDR("ADT"))
+"RTN","SDEC08",424,0)
+ I '$D(^VA(200,+$G(BSDR("USR")),0)) Q 1_U_"User Who Canceled Appt Error: "_$G(BSDR("USR"))
+"RTN","SDEC08",425,0)
+ ;
+"RTN","SDEC08",426,0)
+ S SDECERR=$$APPVISTA^SDEC07B(BSDR("LEN"),BSDR("NOTE"),BSDR("PAT"),BSDR("RES"),BSDR("ADT"),BSDR("WKIN"),BSDR("CLN"),.SDECI)  ;alb/sat 665 APPVISTA moved to SDEC07B
+"RTN","SDEC08",427,0)
+ Q SDECERR
+"RTN","SDEC08",428,0)
+ ;
+"RTN","SDEC08",429,0)
+ERR(SDECI,SDECERR) ;Error processing
+"RTN","SDEC08",430,0)
+ S SDECI=SDECI+1
+"RTN","SDEC08",431,0)
+ S SDECERR=$TR(SDECERR,"^","~")
+"RTN","SDEC08",432,0)
+ TROLLBACK
+"RTN","SDEC08",433,0)
+ S ^TMP("SDEC",$J,SDECI)=SDECERR_$C(30)
+"RTN","SDEC08",434,0)
+ S SDECI=SDECI+1
+"RTN","SDEC08",435,0)
+ S ^TMP("SDEC",$J,SDECI)=$C(31)
+"RTN","SDEC08",436,0)
+ Q
+"RTN","SDEC08",437,0)
+ ;
+"RTN","SDEC08",438,0)
+ETRAP ;EP Error trap entry
+"RTN","SDEC08",439,0)
+ D ^%ZTER
+"RTN","SDEC08",440,0)
+ I '$D(SDECI) N SDECI S SDECI=999999
+"RTN","SDEC08",441,0)
+ S SDECI=SDECI+1
+"RTN","SDEC08",442,0)
+ D ERR(SDECI,"SDEC08 Error")
+"RTN","SDEC08",443,0)
+ Q
+"RTN","SDEC25")
+0^6^B151472805^B115273682
+"RTN","SDEC25",1,0)
+SDEC25 ;ALB/SAT - VISTA SCHEDULING RPCS ;MAY 15, 2017
+"RTN","SDEC25",2,0)
+ ;;5.3;Scheduling;**627,665,671,717**;Aug 13, 1993;Build 12
+"RTN","SDEC25",3,0)
+ ;
+"RTN","SDEC25",4,0)
+ Q
+"RTN","SDEC25",5,0)
+ ;
+"RTN","SDEC25",6,0)
+CHECKIN(SDECY,SDECAPTID,SDECCDT,SDECCC,SDECPRV,SDECROU,SDECVCL,SDECVFM,SDECOG,SDECCR,SDECPCC,SDECWHF) ;Check in appointment
+"RTN","SDEC25",7,0)
+ ;CHECKIN(SDECY,SDECAPTID,SDECCDT,SDECCC,SDECPRV,SDECROU,SDECVCL,SDECVFM,SDECOG,SDECCR,SDECPCC,SDECWHF)
+"RTN","SDEC25",8,0)
+ ;  external parameter tag is in SDEC
+"RTN","SDEC25",9,0)
+ ;
+"RTN","SDEC25",10,0)
+ ; INPUT: SDECAPTID - (required) Appointment ID
+"RTN","SDEC25",11,0)
+ ;        SDECCDT   - (optional) Check-in date/time
+"RTN","SDEC25",12,0)
+ ;                               "@" - indicates delete check-in
+"RTN","SDEC25",13,0)
+ ;        SDECCC    - (????????) Clinic Stop pointer to CLINIC STOP file
+"RTN","SDEC25",14,0)
+ ;        SDECPRV   - (optional) Provider pointer to NEW PERSON file
+"RTN","SDEC25",15,0)
+ ;                               default to current user
+"RTN","SDEC25",16,0)
+ ;        SDECROU   - (optional) Print Routing Slip flag, valid values:
+"RTN","SDEC25",17,0)
+ ;                                 0=false   1=true
+"RTN","SDEC25",18,0)
+ ;        SDECVCL   - (????????) Clinic pointer to HOSPITAL LOCATION
+"RTN","SDEC25",19,0)
+ ;        SDECVFM   - FORM
+"RTN","SDEC25",20,0)
+ ;        SDECOG    - OUTGUIDE FLAG
+"RTN","SDEC25",21,0)
+ ;        SDECCR    - Generate Chart request upon check-in? (1-Yes, otherwise no)
+"RTN","SDEC25",22,0)
+ ;        SDECPCC   - ien of PWH Type in HEALTH SUMMARY PWH TYPE file ^APCHPWHT
+"RTN","SDEC25",23,0)
+ ;        SDECWHF   - Print Patient Wellness Handout flag
+"RTN","SDEC25",24,0)
+ ;
+"RTN","SDEC25",25,0)
+ENDBG ;
+"RTN","SDEC25",26,0)
+ N BSDVSTN,EMSG
+"RTN","SDEC25",27,0)
+ N SDECNOD,SDECPATID,SDECSTART,DIK,DA,SDECID,SDECI,SDECZ,SDECIENS,SDECVEN
+"RTN","SDEC25",28,0)
+ N SDECNOEV,SDECCAN,SDECR1,%DT,X,Y
+"RTN","SDEC25",29,0)
+ S SDECNOEV=1 ;Don't execute protocol
+"RTN","SDEC25",30,0)
+ S SDECCAN=0
+"RTN","SDEC25",31,0)
+ ;
+"RTN","SDEC25",32,0)
+ S SDECI=0
+"RTN","SDEC25",33,0)
+ K ^TMP("SDEC",$J)
+"RTN","SDEC25",34,0)
+ S SDECY="^TMP(""SDEC"","_$J_")"
+"RTN","SDEC25",35,0)
+ S ^TMP("SDEC",$J,0)="T00020ERRORID^T00150MESSAGE"_$C(30)
+"RTN","SDEC25",36,0)
+ ;validate SDEC appointment ID
+"RTN","SDEC25",37,0)
+ I '+$G(SDECAPTID) D ERR("SDEC25: Invalid Appointment ID") Q
+"RTN","SDEC25",38,0)
+ I '$D(^SDEC(409.84,+SDECAPTID,0)) D ERR("SDEC25: Invalid Appointment ID") Q
+"RTN","SDEC25",39,0)
+ ;validate checkin date/time (required)
+"RTN","SDEC25",40,0)
+ S SDECCDT=$G(SDECCDT)
+"RTN","SDEC25",41,0)
+ S:SDECCDT="@" SDECCAN=1
+"RTN","SDEC25",42,0)
+ I 'SDECCAN,SDECCDT'="" S %DT="T" S X=SDECCDT D ^%DT S SDECCDT=Y I Y=-1 S SDECCDT=""
+"RTN","SDEC25",43,0)
+ I SDECCDT="" D ERR("SDEC25: Invalid Check-In Time") Q
+"RTN","SDEC25",44,0)
+ ;validate clinic stop code
+"RTN","SDEC25",45,0)
+ S SDECCC=$G(SDECCC)
+"RTN","SDEC25",46,0)
+ I SDECCC'="" I '$D(^DIC(40.7,SDECCC,0)) S SDECCC=""
+"RTN","SDEC25",47,0)
+ ;validate provider (optional)
+"RTN","SDEC25",48,0)
+ S SDECPRV=$G(SDECPRV)
+"RTN","SDEC25",49,0)
+ I SDECPRV'="" I '$D(^VA(200,+SDECPRV,0)) S SDECPRV=""
+"RTN","SDEC25",50,0)
+ ;I SDECPRV="" S SDECPRV=DUZ
+"RTN","SDEC25",51,0)
+ ;I SDECPRV="" S SDECPRV=""
+"RTN","SDEC25",52,0)
+ ;validate routine slip flag (optional)
+"RTN","SDEC25",53,0)
+ S SDECROU=$$UP^XLFSTR($G(SDECROU))
+"RTN","SDEC25",54,0)
+ S SDECROU=$S(SDECROU=1:"true",SDECROU="TRUE":"true",1:0)
+"RTN","SDEC25",55,0)
+ ;validate clinic
+"RTN","SDEC25",56,0)
+ S SDECVCL=$G(SDECVCL)
+"RTN","SDEC25",57,0)
+ I SDECVCL'="" I '$D(^SC(SDECVCL,0)) S SDECVCL=""
+"RTN","SDEC25",58,0)
+ I SDECCC="",SDECVCL'="" S SDECCC=$P($G(^SC(SDECVCL,0)),U,7)   ;get clinic stop from 44
+"RTN","SDEC25",59,0)
+ ;
+"RTN","SDEC25",60,0)
+ S SDECNOD=^SDEC(409.84,SDECAPTID,0)
+"RTN","SDEC25",61,0)
+ S DFN=$P(SDECNOD,U,5)
+"RTN","SDEC25",62,0)
+ S SDECPATID=$P(SDECNOD,U,5)
+"RTN","SDEC25",63,0)
+ S SDECSTART=$P(SDECNOD,U)
+"RTN","SDEC25",64,0)
+ ;
+"RTN","SDEC25",65,0)
+ S SDECR1=$P(SDECNOD,U,7) ;RESOURCEID
+"RTN","SDEC25",66,0)
+ ;if resourceId is not null AND there is a valid resource record
+"RTN","SDEC25",67,0)
+ I SDECR1]"",$D(^SDEC(409.831,SDECR1,0)) D  I +$G(SDECZ) D ERR($P(SDECZ,U,2)) Q
+"RTN","SDEC25",68,0)
+ . S SDECNOD=^SDEC(409.831,SDECR1,0)
+"RTN","SDEC25",69,0)
+ . S SDECSC1=$P(SDECNOD,U,4) ;HOSPITAL LOCATION
+"RTN","SDEC25",70,0)
+ . ;Hospital Location is required for CHECKIN
+"RTN","SDEC25",71,0)
+ . ;I 'SDECSC1]"",'$D(^SC(+SDECSC1,0)) D ERR("SDEC25: Clinic not defined for this Resource: "_$P(SDECNOD,U,1)_" ("_SDECSC1_")") Q
+"RTN","SDEC25",72,0)
+ . I 'SDECSC1]"",'$D(^SC(+SDECSC1,0)) D ERR("Clinic not defined for this Resource: "_$P(SDECNOD,U,1)_" ("_SDECSC1_")") Q
+"RTN","SDEC25",73,0)
+ . ;
+"RTN","SDEC25",74,0)
+ . ;  Event driver "BEFORE" actions - wtc SD*5.3*717 10/24/18
+"RTN","SDEC25",75,0)
+ . ;
+"RTN","SDEC25",76,0)
+ . N SDATA,SDDA,SDCIHDL ;
+"RTN","SDEC25",77,0)
+ . S SDDA=$$FIND(DFN,SDECSTART,SDECSC1),SDATA=SDDA_U_DFN_U_SDECSTART_U_SDECSC1,SDCIHDL=$$HANDLE^SDAMEVT(1) ;
+"RTN","SDEC25",78,0)
+ . D BEFORE^SDAMEVT(.SDATA,DFN,SDECSTART,SDECSC1,SDDA,SDCIHDL) ;
+"RTN","SDEC25",79,0)
+ . ;
+"RTN","SDEC25",80,0)
+ . I 'SDECCAN D  ;
+"RTN","SDEC25",81,0)
+ .. ;
+"RTN","SDEC25",82,0)
+ .. ;  Checkin SDEC APPOINTMENT entry - wtc SD*5.3*717 10/24/18
+"RTN","SDEC25",83,0)
+ .. ;
+"RTN","SDEC25",84,0)
+ .. D SDECCHK(SDECAPTID,SDECCDT) ; sets field .03 (Checkin), in file 409.84
+"RTN","SDEC25",85,0)
+ .. D APCHK(.SDECZ,SDECSC1,SDECPATID,SDECCDT,SDECSTART)
+"RTN","SDEC25",86,0)
+ .. I $G(SDECPRV) S DIE="^SDEC(409.84,",DA=SDECAPTID,DR=".16///"_SDECPRV D ^DIE
+"RTN","SDEC25",87,0)
+ . ;
+"RTN","SDEC25",88,0)
+ . I SDECCAN D  ;
+"RTN","SDEC25",89,0)
+ .. ;
+"RTN","SDEC25",90,0)
+ .. ;  Cancel check in - wtc SD*5.3*717 10/24/18
+"RTN","SDEC25",91,0)
+ .. ;
+"RTN","SDEC25",92,0)
+ .. D SDECCHK(SDECAPTID,"") ; sets field .03 (Checkin), in file 409.84
+"RTN","SDEC25",93,0)
+ .. D CANCHKIN(SDECPATID,SDECSC1,SDECSTART) ;
+"RTN","SDEC25",94,0)
+ . ;
+"RTN","SDEC25",95,0)
+ . ;  Event driver "AFTER" actions - wtc SD*5.3*717 10/24/18
+"RTN","SDEC25",96,0)
+ . ;
+"RTN","SDEC25",97,0)
+ . D AFTER^SDAMEVT(.SDATA,DFN,SDECSTART,SDECSC1,SDDA,SDCIHDL) ;
+"RTN","SDEC25",98,0)
+ . ;
+"RTN","SDEC25",99,0)
+ . ;  Execute event driver.  4=check in (see #409.66), 2=non-interactive - wtc SD*5.3*717 10/25/18
+"RTN","SDEC25",100,0)
+ . ;
+"RTN","SDEC25",101,0)
+ . ;*zeb+1 717 3/19/19 prevent extra cancel check-in when canceling a checked-in appointment
+"RTN","SDEC25",102,0)
+ . I '((SDECCDT="@")&($G(SDECTYP)]"")) D EVT^SDAMEVT(.SDATA,4,2,SDCIHDL) ;assumes SDECTYP, which is defined if coming from APPDEL^SDEC08
+"RTN","SDEC25",103,0)
+ ;
+"RTN","SDEC25",104,0)
+ S SDECI=SDECI+1
+"RTN","SDEC25",105,0)
+ S ^TMP("SDEC",$J,SDECI)="0^"_$S($G(EMSG)'="":EMSG,1:"")_$C(30)
+"RTN","SDEC25",106,0)
+ S SDECI=SDECI+1
+"RTN","SDEC25",107,0)
+ S ^TMP("SDEC",$J,SDECI)=$C(31)
+"RTN","SDEC25",108,0)
+ Q
+"RTN","SDEC25",109,0)
+ ;
+"RTN","SDEC25",110,0)
+SDECCHK(SDECAPTID,SDECCDT) ;
+"RTN","SDEC25",111,0)
+ N SDECFDA,SDECMSG
+"RTN","SDEC25",112,0)
+ S SDECIENS=SDECAPTID_","
+"RTN","SDEC25",113,0)
+ S SDECFDA(409.84,SDECIENS,.03)=SDECCDT
+"RTN","SDEC25",114,0)
+ S SDECFDA(409.84,SDECIENS,.04)=$S(SDECCDT'="":$$NOW^XLFDT,1:"")
+"RTN","SDEC25",115,0)
+ D FILE^DIE("","SDECFDA","SDECMSG")
+"RTN","SDEC25",116,0)
+ Q
+"RTN","SDEC25",117,0)
+ ;
+"RTN","SDEC25",118,0)
+APCHK(SDECZ,SDECSC1,SDECDFN,SDECCDT,SDECSTART)         ;
+"RTN","SDEC25",119,0)
+ ;Checkin appointment for patient SDECDFN in clinic SDECSC1
+"RTN","SDEC25",120,0)
+ ;at time SDECSD
+"RTN","SDEC25",121,0)
+ N APTN,BSDMSG,SDECC
+"RTN","SDEC25",122,0)
+ S SDECC("PAT")=SDECPATID
+"RTN","SDEC25",123,0)
+ S SDECC("HOS LOC")=SDECSC1
+"RTN","SDEC25",124,0)
+ S SDECC("CLINIC CODE")=SDECCC
+"RTN","SDEC25",125,0)
+ S SDECC("PROVIDER")=SDECPRV
+"RTN","SDEC25",126,0)
+ S SDECC("APPT DATE")=SDECSTART
+"RTN","SDEC25",127,0)
+ S SDECC("CDT")=SDECCDT
+"RTN","SDEC25",128,0)
+ S SDECC("USR")=DUZ
+"RTN","SDEC25",129,0)
+ ;find IEN in ^SC multiple or null
+"RTN","SDEC25",130,0)
+ S APTN=$$FIND^SDAM2(SDECC("PAT"),SDECC("APPT DATE"),SDECC("HOS LOC"))
+"RTN","SDEC25",131,0)
+ ;
+"RTN","SDEC25",132,0)
+ ;Required by NEW API:
+"RTN","SDEC25",133,0)
+ S SDECC("SRV CAT")="A"
+"RTN","SDEC25",134,0)
+ S SDECC("TIME RANGE")=-1
+"RTN","SDEC25",135,0)
+ S SDECC("VISIT DATE")=SDECCDT
+"RTN","SDEC25",136,0)
+ S SDECC("SITE")=$G(DUZ(2))
+"RTN","SDEC25",137,0)
+ S SDECC("VISIT TYPE")="V"
+"RTN","SDEC25",138,0)
+ S SDECC("CLN")=SDECC("HOS LOC")
+"RTN","SDEC25",139,0)
+ S SDECC("ADT")=SDECC("APPT DATE")
+"RTN","SDEC25",140,0)
+ ;
+"RTN","SDEC25",141,0)
+ ;Set up SDECVEN array containing VEN EHP CLINIC, VEN EHP FORM, OUTGUIDE FLAG
+"RTN","SDEC25",142,0)
+ ;These values come from input param
+"RTN","SDEC25",143,0)
+ S SDECVEN("CLINIC")=SDECVCL
+"RTN","SDEC25",144,0)
+ S SDECVEN("FORM")=SDECVFM
+"RTN","SDEC25",145,0)
+ S SDECVEN("OUTGUIDE")=SDECOG
+"RTN","SDEC25",146,0)
+ ;
+"RTN","SDEC25",147,0)
+ N SDECOUT
+"RTN","SDEC25",148,0)
+ D GETVISIT^SDECAPI4(.SDECC,.SDECOUT)
+"RTN","SDEC25",149,0)
+ ;K SDECC
+"RTN","SDEC25",150,0)
+ ;I SDECOUT(0)=1 S BSDVSTN=$O(SDECOUT(0))         ;if match found, set visit IEN
+"RTN","SDEC25",151,0)
+ ;D VISIT^SDECV(SDECC("HOS LOC"),SDECC("APPT DATE"),APTN,SDECC("PAT"),SDECC("CLINIC CODE"),SDECC("PROVIDER"),,.BSDMSG,.BSDVSTN,.SDECC)   ;replace GETVISIT^SDECAPI4 to make sure all visit data is updated
+"RTN","SDEC25",152,0)
+ Q
+"RTN","SDEC25",153,0)
+ ;
+"RTN","SDEC25",154,0)
+CANCHKIN(DFN,SDCL,SDT) ; Logic to cancel a checkin if the checkin date/time is passed in as '@'
+"RTN","SDEC25",155,0)
+ ; input:  DFN := ifn of patient
+"RTN","SDEC25",156,0)
+ ;        SDCL := clinic#
+"RTN","SDEC25",157,0)
+ ;         SDT := appt d/t
+"RTN","SDEC25",158,0)
+ ;
+"RTN","SDEC25",159,0)
+ N SDDA
+"RTN","SDEC25",160,0)
+ S SDDA=$$FIND(DFN,SDT,SDCL)
+"RTN","SDEC25",161,0)
+ ;I 'SDDA D ERR("SDEC25: Could not locate appointment in database or appointment is cancelled.") Q
+"RTN","SDEC25",162,0)
+ ;I 'SDDA D ERR("Could not locate appointment in database or appointment is cancelled.") Q
+"RTN","SDEC25",163,0)
+ ;
+"RTN","SDEC25",164,0)
+ ;  Disabled event driver calls as they are present above in CHECKIN.  SD*5.3*717 wtc 10/25/2018
+"RTN","SDEC25",165,0)
+ ;
+"RTN","SDEC25",166,0)
+ ;N SDATA,SDCIHDL,X S SDATA=SDDA_U_DFN_U_SDT_U_SDCL,SDCIHDL=$$HANDLE^SDAMEVT(1)
+"RTN","SDEC25",167,0)
+ ;D BEFORE^SDAMEVT(.SDATA,DFN,SDT,SDCL,SDDA,SDCIHDL)
+"RTN","SDEC25",168,0)
+ S FDA(44.003,SDDA_","_SDT_","_SDCL_",",309)="" D FILE^DIE(,"FDA","ERR")
+"RTN","SDEC25",169,0)
+ ;D AFTER^SDAMEVT(.SDATA,DFN,SDT,SDCL,SDDA,SDCIHDL)
+"RTN","SDEC25",170,0)
+ ;D CHKEVTD(DFN,SDT,SDCL)
+"RTN","SDEC25",171,0)
+ K FDA,ERR
+"RTN","SDEC25",172,0)
+ Q
+"RTN","SDEC25",173,0)
+ ;
+"RTN","SDEC25",174,0)
+FIND(DFN,SDT,SDCL) ; -- return appt ifn for pat
+"RTN","SDEC25",175,0)
+ ;   input:        DFN := ifn of pat.
+"RTN","SDEC25",176,0)
+ ;                 SDT := appt d/t
+"RTN","SDEC25",177,0)
+ ;                SDCL := ifn of clinic
+"RTN","SDEC25",178,0)
+ ;  output: [returned] := ifn if pat has appt on date/time
+"RTN","SDEC25",179,0)
+ ;
+"RTN","SDEC25",180,0)
+ N Y
+"RTN","SDEC25",181,0)
+ S Y=0 F  S Y=$O(^SC(SDCL,"S",SDT,1,Y)) Q:'Y  I $D(^(Y,0)),DFN=+^(0),$D(^DPT(+DFN,"S",SDT,0)),$$VALID(DFN,SDCL,SDT,Y) Q
+"RTN","SDEC25",182,0)
+ Q Y
+"RTN","SDEC25",183,0)
+ ;
+"RTN","SDEC25",184,0)
+VALID(DFN,SDCL,SDT,SDDA) ; -- return valid appt.
+"RTN","SDEC25",185,0)
+ ; **NOTE:  For speed consideration the ^SC and ^DPT nodes must be
+"RTN","SDEC25",186,0)
+ ;          check to see they exist prior to calling this entry point.
+"RTN","SDEC25",187,0)
+ ;   input:        DFN := ifn of pat.
+"RTN","SDEC25",188,0)
+ ;                 SDT := appt d/t
+"RTN","SDEC25",189,0)
+ ;                SDCL := ifn of clinic
+"RTN","SDEC25",190,0)
+ ;                SDDA := ifn of appt
+"RTN","SDEC25",191,0)
+ ;  output: [returned] := 1 for valid appt., 0 for not valid
+"RTN","SDEC25",192,0)
+ Q $S($P(^SC(SDCL,"S",SDT,1,SDDA,0),U,9)'="C":1,$P(^DPT(DFN,"S",SDT,0),U,2)["C":1,1:0)
+"RTN","SDEC25",193,0)
+ ;
+"RTN","SDEC25",194,0)
+CHKEVT(SDECPAT,SDECSTART,SDECSC) ;EP Called by SDEC CHECKIN APPOINTMENT event
+"RTN","SDEC25",195,0)
+ ;when appointments CHECKIN via PIMS interface.
+"RTN","SDEC25",196,0)
+ ;Propagates CHECKIN to SDECAPPT and raises refresh event to running GUI clients
+"RTN","SDEC25",197,0)
+ ;
+"RTN","SDEC25",198,0)
+ Q:+$G(SDECNOEV)
+"RTN","SDEC25",199,0)
+ Q:'+$G(SDECSC)
+"RTN","SDEC25",200,0)
+ N SDECSTAT,SDECFOUND,SDECRES
+"RTN","SDEC25",201,0)
+ S SDECSTAT=""
+"RTN","SDEC25",202,0)
+ S:$G(SDATA("AFTER","STATUS"))["CHECKED IN" SDECSTAT=$P(SDATA("AFTER","STATUS"),"^",4)
+"RTN","SDEC25",203,0)
+ S SDECFOUND=0
+"RTN","SDEC25",204,0)
+ I $D(^SDEC(409.831,"ALOC",SDECSC)) S SDECRES=$O(^SDEC(409.831,"ALOC",SDECSC,0)) S SDECFOUND=$$CHKEVT1(SDECRES,SDECSTART,SDECPAT,SDECSTAT)
+"RTN","SDEC25",205,0)
+ I SDECFOUND D CHKEVT3(SDECRES) Q
+"RTN","SDEC25",206,0)
+ Q
+"RTN","SDEC25",207,0)
+ ;
+"RTN","SDEC25",208,0)
+CHKEVT1(SDECRES,SDECSTART,SDECPAT,SDECSTAT) ;
+"RTN","SDEC25",209,0)
+ ;Get appointment id in SDECAPT
+"RTN","SDEC25",210,0)
+ ;If found, call SDECNOS(SDECAPPT) and return 1
+"RTN","SDEC25",211,0)
+ ;else return 0
+"RTN","SDEC25",212,0)
+ N SDECFOUND,SDECAPPT
+"RTN","SDEC25",213,0)
+ S SDECFOUND=0
+"RTN","SDEC25",214,0)
+ Q:'+$G(SDECRES) SDECFOUND
+"RTN","SDEC25",215,0)
+ Q:'$D(^SDEC(409.84,"ARSRC",SDECRES,SDECSTART)) SDECFOUND
+"RTN","SDEC25",216,0)
+ S SDECAPPT=0 F  S SDECAPPT=$O(^SDEC(409.84,"ARSRC",SDECRES,SDECSTART,SDECAPPT)) Q:'+SDECAPPT  D  Q:SDECFOUND
+"RTN","SDEC25",217,0)
+ . S SDECNOD=$G(^SDEC(409.84,SDECAPPT,0)) Q:SDECNOD=""
+"RTN","SDEC25",218,0)
+ . I $P(SDECNOD,U,5)=SDECPAT,$P(SDECNOD,U,12)="" S SDECFOUND=1 Q
+"RTN","SDEC25",219,0)
+ I SDECFOUND,+$G(SDECAPPT) D SDECCHK(SDECAPPT,SDECSTAT)
+"RTN","SDEC25",220,0)
+ Q SDECFOUND
+"RTN","SDEC25",221,0)
+ ;
+"RTN","SDEC25",222,0)
+CHKEVT3(SDECRES) ;
+"RTN","SDEC25",223,0)
+ ;Call RaiseEvent to notify GUI clients
+"RTN","SDEC25",224,0)
+ ;
+"RTN","SDEC25",225,0)
+ Q
+"RTN","SDEC25",226,0)
+ N SDECRESN
+"RTN","SDEC25",227,0)
+ S SDECRESN=$G(^SDEC(409.831,SDECRES,0))
+"RTN","SDEC25",228,0)
+ Q:SDECRESN=""
+"RTN","SDEC25",229,0)
+ S SDECRESN=$P(SDECRESN,"^")
+"RTN","SDEC25",230,0)
+ ;D EVENT^SDEC23("SCHEDULE-"_SDECRESN,"","","")
+"RTN","SDEC25",231,0)
+ ;D EVENT^BMXMEVN("SDEC SCHEDULE",SDECRESN)
+"RTN","SDEC25",232,0)
+ Q
+"RTN","SDEC25",233,0)
+ ;
+"RTN","SDEC25",234,0)
+CHKEVTD(SDECPAT,SDECSTART,SDECSC) ;EP Called by SDEC CHECKIN APPOINTMENT event
+"RTN","SDEC25",235,0)
+ ;when  an appointment CHECKIN is deleted via.
+"RTN","SDEC25",236,0)
+ ;Deletes CHECKIN to and raises refresh event to running GUI clients
+"RTN","SDEC25",237,0)
+ ;
+"RTN","SDEC25",238,0)
+ ;
+"RTN","SDEC25",239,0)
+ Q:+$G(SDECNOEV)
+"RTN","SDEC25",240,0)
+ Q:'+$G(SDECSC)
+"RTN","SDEC25",241,0)
+ N SDECSTAT,SDECFOUND,SDECRES
+"RTN","SDEC25",242,0)
+ S SDECSTAT=""
+"RTN","SDEC25",243,0)
+ S:$G(SDATA("AFTER","STATUS"))'="CHECKED IN" SDECSTAT=$P(SDATA("AFTER","STATUS"),"^",4)
+"RTN","SDEC25",244,0)
+ I SDECSTAT="" S SDECRES=$O(^SDEC(409.831,"ALOC",SDECSC,0))
+"RTN","SDEC25",245,0)
+ I SDECRES D CHKEVT3(SDECRES) Q
+"RTN","SDEC25",246,0)
+ S SDECFOUND=0
+"RTN","SDEC25",247,0)
+ ;
+"RTN","SDEC25",248,0)
+ ;I $D(^SDEC(409.831,"ALOC",SDECSC)) S SDECRES=$O(^SDEC(409.831,"ALOC",SDECSC,0)) S SDECFOUND=$$CHKEVT1(SDECRES,SDECSTART,SDECPAT,SDECSTAT)
+"RTN","SDEC25",249,0)
+ ;I SDECFOUND D CHKEVT3(SDECRES) Q
+"RTN","SDEC25",250,0)
+ Q
+"RTN","SDEC25",251,0)
+ ;
+"RTN","SDEC25",252,0)
+ ;CHECK OUT APPOINTMENT - RPC
+"RTN","SDEC25",253,0)
+CHECKOUT(SDECY,DFN,SDT,SDCODT,SDECAPTID,VPRV) ;Check Out appointment
+"RTN","SDEC25",254,0)
+ ;CHECKOUT(SDECY,DFN,SDT,SDCODT,SDECAPTID,VPRV)  external parameter tag is in SDEC
+"RTN","SDEC25",255,0)
+ ; Returns   SDECY
+"RTN","SDEC25",256,0)
+ ; Input  -- DFN      Patient file IEN
+"RTN","SDEC25",257,0)
+ ;           SDT      Appointment Date/Time in FM format
+"RTN","SDEC25",258,0)
+ ;           SDCODT   Date/Time of Check Out FM FORMAT [REQUIRED]
+"RTN","SDEC25",259,0)
+ ;           SDECAPTID - Appointment ID
+"RTN","SDEC25",260,0)
+ ;           VPRV      - V Provider
+"RTN","SDEC25",261,0)
+ ;SETUP ERROR TRACKING
+"RTN","SDEC25",262,0)
+ N APIERR,CNT,ERR,%DT,X,Y
+"RTN","SDEC25",263,0)
+ N SDCL,SDASK,SDCOACT,SDCOALBF,SDDA,SDLNE,SDQUIET
+"RTN","SDEC25",264,0)
+ N SDECI,SDECNOD,RPCPERM
+"RTN","SDEC25",265,0)
+ S SDECI=0
+"RTN","SDEC25",266,0)
+ K ^TMP("SDEC",$J)
+"RTN","SDEC25",267,0)
+ S SDECY="^TMP(""SDEC"","_$J_")"
+"RTN","SDEC25",268,0)
+ S ^TMP("SDEC",$J,0)="T00020ERRORID"_$C(30)
+"RTN","SDEC25",269,0)
+ S RPCPERM=""
+"RTN","SDEC25",270,0)
+ S RPCPERM=$$KCHK^XUSRB("SD SUPERVISOR",DUZ) I RPCPERM=0 D ERR("THE SD SUPERVISOR KEY IS REQUIRED TO PERFORM THIS ACTION.") Q
+"RTN","SDEC25",271,0)
+ I '+SDECAPTID D ERR("Invalid Appointment ID.") Q
+"RTN","SDEC25",272,0)
+ I '$D(^SDEC(409.84,SDECAPTID,0)) D ERR("Invalid Appointment ID.") Q
+"RTN","SDEC25",273,0)
+ ;INITIALIZE VARIABLES
+"RTN","SDEC25",274,0)
+ S %DT="T"
+"RTN","SDEC25",275,0)
+ S X=SDT
+"RTN","SDEC25",276,0)
+ D ^%DT   ; GET FM FORMAT FOR APPOINTMENT DATE/TIME
+"RTN","SDEC25",277,0)
+ S SDT=Y
+"RTN","SDEC25",278,0)
+ S X=SDCODT
+"RTN","SDEC25",279,0)
+ D ^%DT   ; GET FM FORMAT FOR CHECKOUT DATE/TIME
+"RTN","SDEC25",280,0)
+ ;ChecOut time cannot be in the future
+"RTN","SDEC25",281,0)
+ S SDCODT=Y
+"RTN","SDEC25",282,0)
+ I SDCODT>$$HTFM^XLFDT($H) D ERR("Check Out time cannot be in the future.") Q
+"RTN","SDEC25",283,0)
+ ;
+"RTN","SDEC25",284,0)
+ ;appointment record
+"RTN","SDEC25",285,0)
+ S SDECNOD=^SDEC(409.84,SDECAPTID,0)
+"RTN","SDEC25",286,0)
+ ;make sure CHECKOUT time is after CHECKIN time
+"RTN","SDEC25",287,0)
+ I SDCODT'>$P(SDECNOD,U,3) D ERR("Check Out time must be at least 1 minute after the Check In time of "_$TR($$FMTE^XLFDT($P(SDECNOD,U,3)),"@"," ")_".") Q   ;alb/sat 665
+"RTN","SDEC25",288,0)
+ ;Hospital Location of RESOURCE
+"RTN","SDEC25",289,0)
+ S SDECRES=$P(SDECNOD,U,7) ;RESOURCEID
+"RTN","SDEC25",290,0)
+ S SDECNOD=^SDEC(409.831,SDECRES,0)
+"RTN","SDEC25",291,0)
+ S SDCL=$P(SDECNOD,U,4) ;HOSPITAL LOCATION
+"RTN","SDEC25",292,0)
+ ;
+"RTN","SDEC25",293,0)
+ S SDDA=0
+"RTN","SDEC25",294,0)
+ S SDASK=0
+"RTN","SDEC25",295,0)
+ S SDCOALBF=""
+"RTN","SDEC25",296,0)
+ S SDCOACT="CO"
+"RTN","SDEC25",297,0)
+ S SDLNE=""
+"RTN","SDEC25",298,0)
+ S SDQUIET=1
+"RTN","SDEC25",299,0)
+ K APIERR
+"RTN","SDEC25",300,0)
+ S APIERR=0
+"RTN","SDEC25",301,0)
+ ;
+"RTN","SDEC25",302,0)
+ ;  Event driver "BEFORE" actions - wtc SD*5.3*717 10/25/18
+"RTN","SDEC25",303,0)
+ ;
+"RTN","SDEC25",304,0)
+ N SDATA,SDDA,SDCIHDL ;
+"RTN","SDEC25",305,0)
+ S SDDA=$$FIND(DFN,SDT,SDCL),SDATA=SDDA_U_DFN_U_SDT_U_SDCL,SDCIHDL=$$HANDLE^SDAMEVT(1) ;
+"RTN","SDEC25",306,0)
+ ;
+"RTN","SDEC25",307,0)
+ ;  Event driver "BEFORE" actions - wtc SD*5.3*717 10/25/18
+"RTN","SDEC25",308,0)
+ ;
+"RTN","SDEC25",309,0)
+ D BEFORE^SDAMEVT(.SDATA,DFN,SDT,SDCL,SDDA,SDCIHDL) ;
+"RTN","SDEC25",310,0)
+ ;
+"RTN","SDEC25",311,0)
+ D CO^SDEC25A(DFN,SDT,SDCL,SDDA,SDASK,SDCODT,SDCOACT,SDLNE,.SDCOALBF,SDECAPTID,SDQUIET,VPRV,.APIERR) ;Appt Check Out
+"RTN","SDEC25",312,0)
+ ;
+"RTN","SDEC25",313,0)
+ ;  Skip event driver actions if error occurred checking appointment out. - wtc SD*5.3*717 10/25/2018
+"RTN","SDEC25",314,0)
+ ;
+"RTN","SDEC25",315,0)
+ I 'APIERR D  ;
+"RTN","SDEC25",316,0)
+ . ;
+"RTN","SDEC25",317,0)
+ . ;  Event driver "AFTER" actions - wtc SD*5.3*717 10/25/18
+"RTN","SDEC25",318,0)
+ . ;
+"RTN","SDEC25",319,0)
+ . D AFTER^SDAMEVT(.SDATA,DFN,SDT,SDCL,SDDA,SDCIHDL) ;
+"RTN","SDEC25",320,0)
+ . ;
+"RTN","SDEC25",321,0)
+ . ;  Execute event driver.  5=check out (see #409.66), 2=non-interactive - wtc SD*5.3*717 10/25/18
+"RTN","SDEC25",322,0)
+ . ;
+"RTN","SDEC25",323,0)
+ . D EVT^SDAMEVT(.SDATA,5,2,SDCIHDL) ;
+"RTN","SDEC25",324,0)
+ ;
+"RTN","SDEC25",325,0)
+ ;ERROR(S) FOUND
+"RTN","SDEC25",326,0)
+ I APIERR>0 D
+"RTN","SDEC25",327,0)
+ . S CNT=""
+"RTN","SDEC25",328,0)
+ . F  S CNT=$O(APIERR(CNT)) Q:CNT=""  S ERR=APIERR(CNT) S SDECI=SDECI+1 D ERR(ERR)
+"RTN","SDEC25",329,0)
+ ;NO ERROR
+"RTN","SDEC25",330,0)
+ I APIERR<1 D
+"RTN","SDEC25",331,0)
+ . S SDECI=SDECI+1
+"RTN","SDEC25",332,0)
+ . S ^TMP("SDEC",$J,SDECI)="0"_$C(30)
+"RTN","SDEC25",333,0)
+ . S SDECI=SDECI+1
+"RTN","SDEC25",334,0)
+ . S ^TMP("SDEC",$J,SDECI)=$C(31)
+"RTN","SDEC25",335,0)
+ Q
+"RTN","SDEC25",336,0)
+ ;
+"RTN","SDEC25",337,0)
+ ;CHECK OUT APPOINTMENT - RPC
+"RTN","SDEC25",338,0)
+CANCKOUT(SDECY,SDECAPTID) ;Cancel Check Out appointment
+"RTN","SDEC25",339,0)
+ ;CANCKOUT(SDECY,SDECAPTID)  external parameter tag is in SDEC
+"RTN","SDEC25",340,0)
+ ; Returns   SDECY
+"RTN","SDEC25",341,0)
+ ; Input  -- SDECAPTID - Appointment ID
+"RTN","SDEC25",342,0)
+ N APS,DA,DFN,DIE,DR,RES
+"RTN","SDEC25",343,0)
+ N SDCL,SDN,SDOE,SDT,SDV
+"RTN","SDEC25",344,0)
+ N SDECI,SDECNOD,RPCPERM
+"RTN","SDEC25",345,0)
+ S SDECI=0
+"RTN","SDEC25",346,0)
+ K ^TMP("SDEC",$J)
+"RTN","SDEC25",347,0)
+ S SDECY="^TMP(""SDEC"","_$J_")"
+"RTN","SDEC25",348,0)
+ S ^TMP("SDEC",$J,0)="T00020ERRORID"_$C(30)
+"RTN","SDEC25",349,0)
+ S RPCPERM=""
+"RTN","SDEC25",350,0)
+ S RPCPERM=$$KCHK^XUSRB("SD SUPERVISOR",DUZ) I RPCPERM=0 D ERR("THE SD SUPERVISOR KEY IS REQUIRED TO PERFORM THIS ACTION.") Q
+"RTN","SDEC25",351,0)
+ I '+SDECAPTID D ERR("Invalid Appointment ID.") Q
+"RTN","SDEC25",352,0)
+ I '$D(^SDEC(409.84,SDECAPTID,0)) D ERR("Invalid Appointment ID.") Q
+"RTN","SDEC25",353,0)
+ S SDECNOD=^SDEC(409.84,SDECAPTID,0)
+"RTN","SDEC25",354,0)
+ S APS=$P(SDECNOD,U,19)
+"RTN","SDEC25",355,0)
+ S DFN=$P(SDECNOD,U,5)
+"RTN","SDEC25",356,0)
+ S SDT=$P(SDECNOD,U)
+"RTN","SDEC25",357,0)
+ S RES=$P(SDECNOD,U,7)
+"RTN","SDEC25",358,0)
+ S SDCL=$P(^SDEC(409.831,RES,0),U,4)
+"RTN","SDEC25",359,0)
+ I $P(SDECNOD,U,14)="" D ERR("Appointment is not Checked Out.") Q
+"RTN","SDEC25",360,0)
+ ;
+"RTN","SDEC25",361,0)
+ ;  Event driver "BEFORE" actions - wtc SD*5.3*717 10/25/18
+"RTN","SDEC25",362,0)
+ ;
+"RTN","SDEC25",363,0)
+ N SDATA,SDDA,SDCIHDL ;
+"RTN","SDEC25",364,0)
+ S SDDA=$$FIND(DFN,SDT,SDCL),SDATA=SDDA_U_DFN_U_SDT_U_SDCL,SDCIHDL=$$HANDLE^SDAMEVT(1) ;
+"RTN","SDEC25",365,0)
+ ;
+"RTN","SDEC25",366,0)
+ ;  Event driver "BEFORE" actions - wtc SD*5.3*717 10/25/18
+"RTN","SDEC25",367,0)
+ ;
+"RTN","SDEC25",368,0)
+ D BEFORE^SDAMEVT(.SDATA,DFN,SDT,SDCL,SDDA,SDCIHDL) ;
+"RTN","SDEC25",369,0)
+ ;
+"RTN","SDEC25",370,0)
+ ; ^SDECAPPT: update piece 8: Data Entry Clerk; clear piece 14: CHECKOUT;
+"RTN","SDEC25",371,0)
+ S DIE="^SDEC(409.84,"
+"RTN","SDEC25",372,0)
+ S DA=SDECAPTID
+"RTN","SDEC25",373,0)
+ S DR=".14////@;.08///"_DUZ
+"RTN","SDEC25",374,0)
+ D ^DIE
+"RTN","SDEC25",375,0)
+ ; ^SC file 44: clear piece C;3: CHECKED OUT; clear piece C;4: CHECK OUT USER; clear C;6: CHECK OUT ENTERED
+"RTN","SDEC25",376,0)
+ S DIE="^SC("_SDCL_",""S"","_SDT_",1,"
+"RTN","SDEC25",377,0)
+ S DA(2)=SDCL,DA(1)=SDT,(DA,SDN)=$$SCIEN^SDECU2(DFN,SDCL,SDT)
+"RTN","SDEC25",378,0)
+ S DR="303///@;304///@;306///@"
+"RTN","SDEC25",379,0)
+ D ^DIE
+"RTN","SDEC25",380,0)
+ ; ^AUPNVSIT file 9000010: clear piece 18: CHECK OUT DATE&TIME
+"RTN","SDEC25",381,0)
+ S SDOE=$$GETAPT^SDVSIT2(DFN,SDT,SDCL)
+"RTN","SDEC25",382,0)
+ S SDV=$$GET1^DIQ(409.68,SDOE,.05,"I")
+"RTN","SDEC25",383,0)
+ I +SDV D
+"RTN","SDEC25",384,0)
+ . S DIE="^AUPNVSIT(",DA=SDV
+"RTN","SDEC25",385,0)
+ . S DR=".18///@"
+"RTN","SDEC25",386,0)
+ . D ^DIE
+"RTN","SDEC25",387,0)
+ ; ^SCE file 409.68: Set piece 12 back to CHECKED IN, pointer to APPOINTMENT STATUS file 409.63; clear piece 7: CHECK OUT PROCESS COMPLETION
+"RTN","SDEC25",388,0)
+ I +APS D
+"RTN","SDEC25",389,0)
+ . S DIE=409.68,DA=SDOE,DR=".07///@;.12///"_APS_";101///"_DUZ_";102///"_$$NOW^XLFDT
+"RTN","SDEC25",390,0)
+ . D ^DIE
+"RTN","SDEC25",391,0)
+ ;
+"RTN","SDEC25",392,0)
+ ;  Event driver "AFTER" actions - wtc SD*5.3*717 10/25/18
+"RTN","SDEC25",393,0)
+ ;
+"RTN","SDEC25",394,0)
+ D AFTER^SDAMEVT(.SDATA,DFN,SDT,SDCL,SDDA,SDCIHDL) ;
+"RTN","SDEC25",395,0)
+ ;
+"RTN","SDEC25",396,0)
+ ;  Execute event driver.  5=check out (see #409.66), 2=non-interactive - wtc SD*5.3*717 10/25/18
+"RTN","SDEC25",397,0)
+ ;
+"RTN","SDEC25",398,0)
+ D EVT^SDAMEVT(.SDATA,5,2,SDCIHDL) ;
+"RTN","SDEC25",399,0)
+ ;
+"RTN","SDEC25",400,0)
+ S SDECI=SDECI+1
+"RTN","SDEC25",401,0)
+ S ^TMP("SDEC",$J,SDECI)="0"_$C(30)
+"RTN","SDEC25",402,0)
+ S SDECI=SDECI+1
+"RTN","SDEC25",403,0)
+ S ^TMP("SDEC",$J,SDECI)=$C(31)
+"RTN","SDEC25",404,0)
+ Q
+"RTN","SDEC25",405,0)
+ ;
+"RTN","SDEC25",406,0)
+CANAPPT(SDECAPTID)  ;external call to cancel check out in SDEC APPOINTMENT called by SDCODEL for VistA Delete Check Out
+"RTN","SDEC25",407,0)
+ N APS,DA,DIE,DR,DFN,RES,SDCL,SDT
+"RTN","SDEC25",408,0)
+ N SDECNOD
+"RTN","SDEC25",409,0)
+ I '+$G(SDECAPTID) Q
+"RTN","SDEC25",410,0)
+ I '$D(^SDEC(409.84,+SDECAPTID,0)) Q
+"RTN","SDEC25",411,0)
+ S SDECNOD=^SDEC(409.84,SDECAPTID,0)
+"RTN","SDEC25",412,0)
+ S APS=$P(SDECNOD,U,19)
+"RTN","SDEC25",413,0)
+ S DFN=$P(SDECNOD,U,5)
+"RTN","SDEC25",414,0)
+ S SDT=$P(SDECNOD,U)
+"RTN","SDEC25",415,0)
+ S RES=$P(SDECNOD,U,7)
+"RTN","SDEC25",416,0)
+ S SDCL=$P(^SDEC(409.831,RES,0),U,4)
+"RTN","SDEC25",417,0)
+ I $P(SDECNOD,U,14)="" Q
+"RTN","SDEC25",418,0)
+ ; ^SDEC(409.84: update piece 8: Data Entry Clerk; clear piece 14: CHECKOUT;
+"RTN","SDEC25",419,0)
+ S DIE="^SDEC(409.84,"
+"RTN","SDEC25",420,0)
+ S DA=SDECAPTID
+"RTN","SDEC25",421,0)
+ S DR=".14////@;.08///"_DUZ
+"RTN","SDEC25",422,0)
+ D ^DIE
+"RTN","SDEC25",423,0)
+ Q
+"RTN","SDEC25",424,0)
+ ;
+"RTN","SDEC25",425,0)
+ERROR ;
+"RTN","SDEC25",426,0)
+ D ERR("VISTA Error")
+"RTN","SDEC25",427,0)
+ Q
+"RTN","SDEC25",428,0)
+ ;
+"RTN","SDEC25",429,0)
+ERR(ERRNO) ;Error processing
+"RTN","SDEC25",430,0)
+ S SDECI=SDECI+1
+"RTN","SDEC25",431,0)
+ S ^TMP("SDEC",$J,SDECI)=ERRNO_$C(30)
+"RTN","SDEC25",432,0)
+ S SDECI=SDECI+1
+"RTN","SDEC25",433,0)
+ S ^TMP("SDEC",$J,SDECI)=$C(31)
+"RTN","SDEC25",434,0)
+ Q
+"RTN","SDEC31")
+0^8^B34969907^B26336338
+"RTN","SDEC31",1,0)
+SDEC31 ;ALB/SAT - VISTA SCHEDULING RPCS ;JAN 15, 2016
+"RTN","SDEC31",2,0)
+ ;;5.3;Scheduling;**627,683,717**;Aug 13, 1993;Build 12
+"RTN","SDEC31",3,0)
+ ;
+"RTN","SDEC31",4,0)
+ Q
+"RTN","SDEC31",5,0)
+ ;
+"RTN","SDEC31",6,0)
+NOSHOW(SDECY,SDECAPTID,SDECNS,USERIEN,SDECDATE)  ;Sets appointment noshow flag in SDEC APPOINTMENT file
+"RTN","SDEC31",7,0)
+ ;NOSHOW(SDECY,SDECAPTID,SDECNS,USERIEN,SDECDATE)  external parameter tag is in SDEC
+"RTN","SDEC31",8,0)
+ ;Called by SDEC NOSHOW
+"RTN","SDEC31",9,0)
+ ;SDECAPTID - (required) Appointment ID - Pointer to SDEC APPOINTMENT file
+"RTN","SDEC31",10,0)
+ ;SDECNS    - (required) Cancel flag  1=YES (Set NOSHOW); 0=NO (Cancel NOSHOW)
+"RTN","SDEC31",11,0)
+ ;USERIEN   - (optional) User that entered NoShow pointer to NEW PERSON
+"RTN","SDEC31",12,0)
+ ;                       default to current user
+"RTN","SDEC31",13,0)
+ ;SDECDATE  - (optional) Date/Time that No-show was entered in external format
+"RTN","SDEC31",14,0)
+ ;                      default to NOW.
+"RTN","SDEC31",15,0)
+ ;Calls CANCEL^SDEC08 to set noshow data in ^DPT  <<== NOT TRUE wtc 10/25/18
+"RTN","SDEC31",16,0)
+ ;Returns error code in recordset field ERRORID
+"RTN","SDEC31",17,0)
+ ;
+"RTN","SDEC31",18,0)
+ N SDECNOD,DFN,SDECSTART,SDECID,SDECI,SDECZ,SDECERR,SDECMSG,SDFDA,SDECIENS
+"RTN","SDEC31",19,0)
+ N SDECNOEV,%DT,X,Y,SDECOE
+"RTN","SDEC31",20,0)
+ S SDECNOEV=1 ;Don't execute protocol
+"RTN","SDEC31",21,0)
+ ;
+"RTN","SDEC31",22,0)
+ S SDECI=0
+"RTN","SDEC31",23,0)
+ K ^TMP("SDEC",$J)
+"RTN","SDEC31",24,0)
+ S SDECY="^TMP(""SDEC"","_$J_")"
+"RTN","SDEC31",25,0)
+ S ^TMP("SDEC",$J,SDECI)="I00020ERRORID^T00030ERRORTEXT"_$C(30)
+"RTN","SDEC31",26,0)
+ S SDECI=SDECI+1
+"RTN","SDEC31",27,0)
+ ;validate SDEC appointment ID
+"RTN","SDEC31",28,0)
+ I '+SDECAPTID D ERR(0,"SDEC31: Invalid Appointment ID") Q
+"RTN","SDEC31",29,0)
+ I '$D(^SDEC(409.84,SDECAPTID,0)) D ERR(0,"SDEC31: Invalid Appointment ID") Q
+"RTN","SDEC31",30,0)
+ ;validate cancel flag
+"RTN","SDEC31",31,0)
+ S SDECNS=$G(SDECNS)
+"RTN","SDEC31",32,0)
+ S SDECNS=$S(SDECNS="YES":1,SDECNS=1:1,SDECNS="NO":0,SDECNS=0:0,1:"")
+"RTN","SDEC31",33,0)
+ I SDECNS="" D ERR(0,"SDEC31: Invalid No Show value") Q
+"RTN","SDEC31",34,0)
+ ;validate user IEN (optional)
+"RTN","SDEC31",35,0)
+ S USERIEN=$G(USERIEN)
+"RTN","SDEC31",36,0)
+ I USERIEN'="" I '$D(^VA(200,+USERIEN,0)) S USERIEN=""
+"RTN","SDEC31",37,0)
+ I USERIEN="" S USERIEN=DUZ
+"RTN","SDEC31",38,0)
+ ;validate cancel date/time (optional)
+"RTN","SDEC31",39,0)
+ S SDECDATE=$G(SDECDATE)
+"RTN","SDEC31",40,0)
+ I SDECDATE'="" S %DT="T" S X=SDECDATE D ^%DT S SDECDATE=Y I Y=-1 S SDECDATE=""
+"RTN","SDEC31",41,0)
+ I $G(SDECDATE)="" S SDECDATE=$$NOW^XLFDT
+"RTN","SDEC31",42,0)
+ TSTART
+"RTN","SDEC31",43,0)
+ ;
+"RTN","SDEC31",44,0)
+ ;Edit SDEC APPOINTMENT entry NOSHOW field
+"RTN","SDEC31",45,0)
+ S SDECNOD=^SDEC(409.84,SDECAPTID,0)
+"RTN","SDEC31",46,0)
+ ;I SDECNOD="" D ERR(0,"SDEC31: Invalid Appointment ID") Q
+"RTN","SDEC31",47,0)
+ S DFN=$P(SDECNOD,U,5)
+"RTN","SDEC31",48,0)
+ S SDECSTART=$P(SDECNOD,U)
+"RTN","SDEC31",49,0)
+ ;
+"RTN","SDEC31",50,0)
+ ;  Event driver "BEFORE" actions - wtc SD*5.3*717 10/25/18
+"RTN","SDEC31",51,0)
+ ;
+"RTN","SDEC31",52,0)
+ N SDATA,SDDA,SDCIHDL,SDECR1,SDECSC1 ;
+"RTN","SDEC31",53,0)
+ S SDECR1=$P(SDECNOD,U,7) ;RESOURCEID
+"RTN","SDEC31",54,0)
+ I SDECR1="" D ERR(0,"SDEC31: Missing resource") Q  ;
+"RTN","SDEC31",55,0)
+ S SDECNOD=$G(^SDEC(409.831,SDECR1,0)) I SDECNOD="" D ERR(0,"SDEC31: Resource node missing") Q  ;
+"RTN","SDEC31",56,0)
+ S SDECSC1=$P(SDECNOD,U,4) ;HOSPITAL LOCATION
+"RTN","SDEC31",57,0)
+ I SDECSC1=""  D ERR(0,"SDEC31: No location for resource") Q  ;
+"RTN","SDEC31",58,0)
+ I '$D(^SC(SDECSC1,0)) D ERR(0,"SDEC31: Location node missing") Q  ;
+"RTN","SDEC31",59,0)
+ ;
+"RTN","SDEC31",60,0)
+ S SDDA=$$FIND^SDEC25(DFN,SDECSTART,SDECSC1),SDATA=SDDA_U_DFN_U_SDECSTART_U_SDECSC1,SDCIHDL=$$HANDLE^SDAMEVT(1) ;
+"RTN","SDEC31",61,0)
+ D BEFORE^SDAMEVT(.SDATA,DFN,SDECSTART,SDECSC1,SDDA,SDCIHDL) ;
+"RTN","SDEC31",62,0)
+ ;
+"RTN","SDEC31",63,0)
+ ;  Process no show
+"RTN","SDEC31",64,0)
+ ;
+"RTN","SDEC31",65,0)
+ D SDECNOS(SDECAPTID,SDECNS,USERIEN,SDECDATE) ;
+"RTN","SDEC31",66,0)
+ I $D(SDECMSG("DIERR")) S SDECMSG=$G(SDECMSG("DIERR",1,"TEXT",1)) D ERR(0,"SDEC31: "_SDECMSG) Q  ; 
+"RTN","SDEC31",67,0)
+ D APNOSHO(.SDECZ,SDECSC1,DFN,SDECSTART,SDECNS,USERIEN,SDECDATE,SDECAPTID) ;
+"RTN","SDEC31",68,0)
+ I +$G(SDECZ) S SDECERR="SDEC31: APNOSHO Returned: "_SDECZ D ERR(0,SDECERR) Q  ;
+"RTN","SDEC31",69,0)
+ ;
+"RTN","SDEC31",70,0)
+ ;*zeb+2 683 2/6/18 fix action required in PCE after no-show from GUI
+"RTN","SDEC31",71,0)
+ S SDECOE=$P($G(^DPT(DFN,"S",SDECSTART,0)),"^",20)
+"RTN","SDEC31",72,0)
+ I SDECOE D EN^SDCODEL(SDECOE,2,"","NOSHOW")  ;*zeb 717 11/13/18 suppress event logging for cancel checkout when no-showing
+"RTN","SDEC31",73,0)
+ ;
+"RTN","SDEC31",74,0)
+ ;  Event driver "AFTER" actions - wtc SD*5.3*717 10/24/18
+"RTN","SDEC31",75,0)
+ ;
+"RTN","SDEC31",76,0)
+ D AFTER^SDAMEVT(.SDATA,DFN,SDECSTART,SDECSC1,SDDA,SDCIHDL) ;
+"RTN","SDEC31",77,0)
+ ;
+"RTN","SDEC31",78,0)
+ ;  Execute event driver.  3=no show (see #409.66), 2=non-interactive - wtc SD*5.3*717 10/25/18
+"RTN","SDEC31",79,0)
+ ;
+"RTN","SDEC31",80,0)
+ D EVT^SDAMEVT(.SDATA,3,2,SDCIHDL) ;
+"RTN","SDEC31",81,0)
+ ;
+"RTN","SDEC31",82,0)
+ TCOMMIT
+"RTN","SDEC31",83,0)
+ S SDECI=SDECI+1
+"RTN","SDEC31",84,0)
+ S ^TMP("SDEC",$J,SDECI)="1^"_$C(30)
+"RTN","SDEC31",85,0)
+ S SDECI=SDECI+1
+"RTN","SDEC31",86,0)
+ S ^TMP("SDEC",$J,SDECI)=$C(31)
+"RTN","SDEC31",87,0)
+ Q
+"RTN","SDEC31",88,0)
+ ;
+"RTN","SDEC31",89,0)
+APNOSHO(SDECZ,SDCL,DFN,SDT,SDECNS,USERIEN,SDECCDT,SDAPID)  ;
+"RTN","SDEC31",90,0)
+ ; update file 2 info
+"RTN","SDEC31",91,0)
+ ;Set noshow for patient DFN in clinic SDCL
+"RTN","SDEC31",92,0)
+ ;at time SDT
+"RTN","SDEC31",93,0)
+ N SDECC,%H,SDECIEN,SDRTYP
+"RTN","SDEC31",94,0)
+ N SDECIENS,SDFDA,SDECMSG,IEN
+"RTN","SDEC31",95,0)
+ S %H=$H D YMD^%DTC
+"RTN","SDEC31",96,0)
+ ;
+"RTN","SDEC31",97,0)
+ S SDECIENS=SDT_","_DFN_","
+"RTN","SDEC31",98,0)
+ I +SDECNS D
+"RTN","SDEC31",99,0)
+ . S SDFDA(2.98,SDECIENS,3)="N"
+"RTN","SDEC31",100,0)
+ . S SDFDA(2.98,SDECIENS,14)=USERIEN
+"RTN","SDEC31",101,0)
+ . S SDFDA(2.98,SDECIENS,15)=SDECCDT
+"RTN","SDEC31",102,0)
+ E  D
+"RTN","SDEC31",103,0)
+ . S SDFDA(2.98,SDECIENS,3)=""
+"RTN","SDEC31",104,0)
+ . S SDFDA(2.98,SDECIENS,14)=""
+"RTN","SDEC31",105,0)
+ . S SDFDA(2.98,SDECIENS,15)=""
+"RTN","SDEC31",106,0)
+ K SDECIEN
+"RTN","SDEC31",107,0)
+ D UPDATE^DIE("","SDFDA","SDECIEN","SDECMSG")
+"RTN","SDEC31",108,0)
+ S SDECZ=$G(SDECMSG("DIERR",1,"TEXT",1))
+"RTN","SDEC31",109,0)
+ S SDRTYP=$$GET1^DIQ(409.84,SDAPID_",",.22,"I")
+"RTN","SDEC31",110,0)
+ I $P(SDRTYP,";",2)="GMR(123," D
+"RTN","SDEC31",111,0)
+ .S IEN=$$SCIEN^SDECU2(DFN,SDCL,SDT)
+"RTN","SDEC31",112,0)
+ .D NOSHOW^SDCNSLT(SDCL,SDT,DFN,$P(SDRTYP,";",1),IEN)     ;,AUTO,NSDIE,NSDA)
+"RTN","SDEC31",113,0)
+ Q
+"RTN","SDEC31",114,0)
+ ;
+"RTN","SDEC31",115,0)
+SDECNOS(SDECAPTID,SDECNS,USERIEN,SDECDATE) ;
+"RTN","SDEC31",116,0)
+ ;
+"RTN","SDEC31",117,0)
+ N SDFDA,SDECIENS
+"RTN","SDEC31",118,0)
+ S SDECIENS=SDECAPTID_","
+"RTN","SDEC31",119,0)
+ S SDFDA(409.84,SDECIENS,.1)=SDECNS ;NOSHOW
+"RTN","SDEC31",120,0)
+ S SDFDA(409.84,SDECIENS,.101)=$S(+SDECNS:SDECDATE,1:"")  ;NOSHOW DATE
+"RTN","SDEC31",121,0)
+ S SDFDA(409.84,SDECIENS,.102)=$S(+SDECNS:USERIEN,1:"")   ;NOSHOW USER
+"RTN","SDEC31",122,0)
+ S SDFDA(409.84,SDECIENS,.17)=$S(+SDECNS:"N",1:"") ;  Update STATUS SD*5.3*717 wtc 10/25/18
+"RTN","SDEC31",123,0)
+ D FILE^DIE("","SDFDA","SDECMSG")
+"RTN","SDEC31",124,0)
+ ;
+"RTN","SDEC31",125,0)
+ Q
+"RTN","SDEC31",126,0)
+ ;
+"RTN","SDEC31",127,0)
+NOSEVT(SDECPAT,SDECSTART,SDECSC) ;EP Called by SDEC NOSHOW APPOINTMENT event
+"RTN","SDEC31",128,0)
+ ;when appointments NOSHOW via PIMS interface.
+"RTN","SDEC31",129,0)
+ ;Propagates NOSHOW to SDECAPPT and raises refresh event to running GUI clients
+"RTN","SDEC31",130,0)
+ ;
+"RTN","SDEC31",131,0)
+ Q:+$G(SDECNOEV)
+"RTN","SDEC31",132,0)
+ Q:'+$G(SDECSC)
+"RTN","SDEC31",133,0)
+ ;Q:$G(SDATA("AFTER","STATUS"))["AUTO RE-BOOK"
+"RTN","SDEC31",134,0)
+ N SDECSTAT,SDECFOUND,SDECRES
+"RTN","SDEC31",135,0)
+ S SDECSTAT=1
+"RTN","SDEC31",136,0)
+ ;S:$G(SDATA("BEFORE","STATUS"))["NO-SHOW" SDECSTAT=0
+"RTN","SDEC31",137,0)
+ S SDECFOUND=0
+"RTN","SDEC31",138,0)
+ I $D(^SDEC(409.831,"ALOC",SDECSC)) S SDECRES=$O(^SDEC(409.831,"ALOC",SDECSC,0)) S SDECFOUND=$$NOSEVT1(SDECRES,SDECSTART,SDECPAT,SDECSTAT)
+"RTN","SDEC31",139,0)
+ I SDECFOUND D NOSEVT3(SDECRES) Q
+"RTN","SDEC31",140,0)
+ Q
+"RTN","SDEC31",141,0)
+ ;
+"RTN","SDEC31",142,0)
+NOSEVT1(SDECRES,SDECSTART,SDECPAT,SDECSTAT) ;
+"RTN","SDEC31",143,0)
+ ;Get appointment id in SDECAPT
+"RTN","SDEC31",144,0)
+ ;If found, call SDECNOS(SDECAPPT) and return 1
+"RTN","SDEC31",145,0)
+ ;else return 0
+"RTN","SDEC31",146,0)
+ N SDECFOUND,SDECAPPT
+"RTN","SDEC31",147,0)
+ S SDECFOUND=0
+"RTN","SDEC31",148,0)
+ Q:'+$G(SDECRES) SDECFOUND
+"RTN","SDEC31",149,0)
+ Q:'$D(^SDEC(409.84,"ARSRC",SDECRES,SDECSTART)) SDECFOUND
+"RTN","SDEC31",150,0)
+ S SDECAPPT=0 F  S SDECAPPT=$O(^SDEC(409.84,"ARSRC",SDECRES,SDECSTART,SDECAPPT)) Q:'+SDECAPPT  D  Q:SDECFOUND
+"RTN","SDEC31",151,0)
+ . S SDECNOD=$G(^SDEC(409.84,SDECAPPT,0)) Q:SDECNOD=""
+"RTN","SDEC31",152,0)
+ . I $P(SDECNOD,U,5)=SDECPAT,$P(SDECNOD,U,12)="" S SDECFOUND=1 Q
+"RTN","SDEC31",153,0)
+ I SDECFOUND,+$G(SDECAPPT) D SDECNOS(SDECAPPT,SDECSTAT)
+"RTN","SDEC31",154,0)
+ Q SDECFOUND
+"RTN","SDEC31",155,0)
+ ;
+"RTN","SDEC31",156,0)
+NOSEVT3(SDECRES) ;
+"RTN","SDEC31",157,0)
+ ;Call RaiseEvent to notify GUI clients
+"RTN","SDEC31",158,0)
+ ;
+"RTN","SDEC31",159,0)
+ Q
+"RTN","SDEC31",160,0)
+ N SDECRESN
+"RTN","SDEC31",161,0)
+ S SDECRESN=$G(^SDEC(409.831,SDECRES,0))
+"RTN","SDEC31",162,0)
+ Q:SDECRESN=""
+"RTN","SDEC31",163,0)
+ S SDECRESN=$P(SDECRESN,"^")
+"RTN","SDEC31",164,0)
+ ;D EVENT^BMXMEVN("SDEC SCHEDULE",SDECRESN)
+"RTN","SDEC31",165,0)
+ Q
+"RTN","SDEC31",166,0)
+ ;
+"RTN","SDEC31",167,0)
+ ;
+"RTN","SDEC31",168,0)
+ERR(SDECERID,ERRTXT) ;Error processing
+"RTN","SDEC31",169,0)
+ S:'+$G(SDECI) SDECI=999999
+"RTN","SDEC31",170,0)
+ S SDECI=SDECI+1
+"RTN","SDEC31",171,0)
+ TROLLBACK
+"RTN","SDEC31",172,0)
+ S ^TMP("SDEC",$J,SDECI)=SDECERID_"^"_ERRTXT_$C(30)
+"RTN","SDEC31",173,0)
+ S SDECI=SDECI+1
+"RTN","SDEC31",174,0)
+ S ^TMP("SDEC",$J,SDECI)=$C(31)
+"RTN","SDEC31",175,0)
+ Q
+"RTN","SDEC31",176,0)
+ ;
+"RTN","SDEC31",177,0)
+ETRAP ;EP Error trap entry
+"RTN","SDEC31",178,0)
+ D ^%ZTER
+"RTN","SDEC31",179,0)
+ I '$D(SDECI) N SDECI S SDECI=999999
+"RTN","SDEC31",180,0)
+ S SDECI=SDECI+1
+"RTN","SDEC31",181,0)
+ D ERR(0,"SDEC31 Error")
+"RTN","SDEC31",182,0)
+ Q
+"RTN","SDEC31",183,0)
+ ;
+"RTN","SDEC31",184,0)
+IMHERE(SDECRES) ;I'm Here
+"RTN","SDEC31",185,0)
+ ;IMHERE(SDECRES)  external parameter tag is in SDEC
+"RTN","SDEC31",186,0)
+ ;Entry point for SDEC IM HERE remote procedure
+"RTN","SDEC31",187,0)
+ ; Returns a simple value to client.  Used to establish continued existence
+"RTN","SDEC31",188,0)
+ ; of the client to the server; resets the server READ timeout.
+"RTN","SDEC31",189,0)
+ S SDECRES=1
+"RTN","SDEC31",190,0)
+ Q
+"RTN","SDEC31",191,0)
+ ;
+"VER")
+8.0^22.2
+**END**
+**END**
+

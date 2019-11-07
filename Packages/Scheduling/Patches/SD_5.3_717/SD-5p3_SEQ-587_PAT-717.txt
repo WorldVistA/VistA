@@ -1,0 +1,400 @@
+$TXT Created by            S at CHY0025.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 06/20/19 at 13:31
+=============================================================================
+Run Date: AUG 19, 2019                     Designation: SD*5.3*717
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #587                    Status: Released
+                  Compliance Date: AUG 30, 2019
+=============================================================================
+
+Associated patches: (v)SD*5.3*443  <<= must be installed BEFORE `SD*5.3*717'
+                    (v)SD*5.3*466  <<= must be installed BEFORE `SD*5.3*717'
+                    (v)SD*5.3*671  <<= must be installed BEFORE `SD*5.3*717'
+                    (v)SD*5.3*683  <<= must be installed BEFORE `SD*5.3*717'
+                    (v)DVBA*2.7*208<<= must be installed BEFORE `SD*5.3*717'
+
+Subject: INVOKE SDAM APPOINTMENT EVENTS FROM VS GUI
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects the problem of appointment processing in VistA
+ Scheduling (VS) Graphical User Interface (GUI) not invoking the event
+ driver protocol (SDAM APPOINTMENT EVENTS) that roll and scroll VistA does.
+ This protocol allows other apps to tie functionality, including interfaces
+ to external systems such as Pyxis, Omnicell, and Emergency Department 
+ Information System (EDIS), to appointment events. Actions currently being
+ executed for appointment events in legacy VistA will also be executed for
+ appointments when those events (make appointment, check in, undo check in,
+ check out, undo check out, cancel appointment, no show) are triggered by
+ the GUI. (However, this patch does not require a GUI update.)
+   
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ N/A
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ N/A
+  
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                                   New/Modified/
+ Option Name                                              Type       Deleted    
+ -----------                                              ----     -------------
+ N/A
+  
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ N/A
+  
+  
+  
+ Templates, Print Associated:
+                                                             New/Modified/
+ Template Name         Type  File Name (Number)                 Deleted    
+ -------------         ----  ------------------              -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                                New/Modified/
+ Template Name             Type File Name (Number)                 Deleted    
+ -------------             ---- ------------------              -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ ServiceNow Ticket(s) & Overview
+ -----------------------------------------------
+ 1. I17005764FY18 Pyxis and EDIS are not recognizing clinic check in
+ actions.
+   
+ Problem:
+ -------
+ When a user performs appointment actions in VS GUI, downstream systems such
+ as Pyxis (or other unit dosing devices, such as Omnicell) and EDIS are not
+ updated, whereas they are when the appointment actions are taken in legacy
+ VistA.
+  
+ Resolution:
+ ----------
+ The GUI now invokes the SDAM APPOINTMENT EVENTS protocol just like legacy
+ VistA, meaning that the downstream systems will be notified in the same
+ way whether actions are taken on them in GUI or legacy.
+  
+ 2.  Status in Appointment file (#409.84) not updated by no show 
+ scheduling action.
+  
+ Problem:
+ -------
+ When the no show action is performed in VS GUI, the status of the 
+ appointment is not changed to NO SHOW.
+  
+ Resolution:
+ ----------
+ The Remote Procedure Call (RPC) now sets the NO SHOW status in the
+ Appointment file.
+  
+ 3. Rational ID 865407 Pharmacy Automated Dispensing Equipment (PADE)
+ Protocol Fix
+  
+ Problem:
+ -------
+ Parent Defect for the PADE protocol issues.
+  
+ Resolution:
+ ----------
+ The Scheduling RPC's used by VSE GUI did not invoke the SD APPOINTMENTS
+ EVENT protocol. This patch adds that functionality.
+  
+ 4. Rational ID 839958 EDIS patch protocol trigger
+  
+ Problem:
+ -------
+ The EDIS patch requires the scheduling protocol trigger protocol to function
+ with events from VS GUI in order to process those events. The existing patch
+ will not work and cannot be completely tested until the Protocol is functional.
+  
+ Resolution:
+ ----------
+ The Scheduling RPC's used by VSE GUI did not invoke the SD APPOINTMENTS
+ EVENT protocol. This patch adds that functionality.
+  
+ 5. Rational ID 839957 SDAM APPOINTMENT EVENT protocol
+  
+ Problem:
+ -------
+ It is necessary for the VS GUI to update the SDAM APPOINTMENT EVENT protocol
+ with any changes in the same way Roll and Scroll VistA does.
+  
+ Resolution:
+ ----------
+ The Scheduling RPC's used by VSE GUI did not invoke the SD APPOINTMENTS
+ EVENT protocol. This patch adds that functionality.
+  
+ 6. Rational ID 839533 Omnicell/Pyxis/PADE patch protocol trigger
+  
+ Problem:
+ -------
+ The Omnicell/Pyxis/PADE patch requires the scheduling protocol trigger protocol
+ to function with events from VS GUI in order to process those events. The
+ existing patch will not work and cannot be completely tested until the 
+ protocol is functional.
+  
+ Resolution:
+ ----------
+ The Scheduling RPC's used by VSE GUI did not invoke the SD APPOINTMENTS
+ EVENT protocol. This patch adds that functionality.
+  
+ 7. Rational ID 836671 Support Event Driver Protocols to Correct Integration of
+ Medical Devices
+  
+ Problem:
+ -------
+ Research by the Commercial-Off-The-Shelf (COTS) team has revealed that the
+ issues currently being looked into regarding integration with unit dose
+ devices, such as Pyxis and Omnicell, as well as EDIS, could be resolved by
+ hooking up the implemented but uncalled event driver protocol for VS GUI
+ events.
+  
+ Resolution:
+ ----------
+ The Scheduling RPC's used by VSE GUI did not invoke the SD APPOINTMENTS
+ EVENT protocol. This patch adds that functionality.
+  
+ Test Sites:
+ ----------
+ Danville, IL
+ Hines, IL
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+  
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre- or post-installation tasks for this patch.
+   
+ Installation Instructions
+ -------------------------
+ Install Time - less than 5 minutes.
+     
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select the following options
+       (when prompted for INSTALL NAME, enter SD*5.3*717):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package SD*5.3*717.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//", respond NO
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a Transport
+ Global [XPD BACKUP] menu option.  The message containing the backed-up
+ routines can be loaded with the "Xtract PackMan" function at the Message
+ Action prompt. The PackMan function INSTALL/CHECK MESSAGE is then used to
+ install the backed up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAMEVT
+    Before: B27512966   After: B32857672  **15,132,443,717**
+Routine Name: SDCO3
+    Before:  B3913935   After:  B4283789  **28,27,44,67,71,132,466,717**
+Routine Name: SDCODEL
+    Before: B11313917   After: B14749068  **20,27,44,97,105,110,132,257,
+                                           627,717**
+Routine Name: SDEC07B
+    Before: B55538827   After: B86344811  **627,658,665,669,717**
+Routine Name: SDEC08
+    Before:B209647726   After:B217036692  **627,651,658,665,717**
+Routine Name: SDEC25
+    Before:B115273682   After:B151472805  **627,665,671,717**
+Routine Name: SDEC31
+    Before: B26336338   After: B34969907  **627,683,717**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 10, 2018
+Completed By:                               Date Completed: AUG 14, 2019
+Released By :                               Date Released : AUG 19, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,182 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 08/02/19 at 10:46
+=============================================================================
+Run Date: OCT 21, 2019                     Designation: PSO*7*557
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #472                      Status: Released
+                  Compliance Date: NOV 21, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*457   <<= must be installed BEFORE `PSO*7*557'
+                    (v)PSO*7*508   <<= must be installed BEFORE `PSO*7*557'
+
+Subject: COMPLETE ORDERS FROM OERR SECONDARY FILTER ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ When choosing a primary sort of PATIENT or ROUTE and secondary sort of 
+ FLAGGED, no orders are displayed. Also, when changing orderable item 
+ on a prescription, if the units are omitted from the dose, the DISPENSE 
+ UNITS PER DOSE field is computed incorrectly.
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC3902798 - PSO*7*505 Flagged Order Sorting Issue
+  
+ Problem:
+ -------
+ Patient has 2 Pending Orders, one is flagged and one is not flagged.
+ If Primary sort is flagged, I see the flagged order. If primary sort is 
+ Patient or Route, I see the unflagged orders. But if Primary sort is 
+ Patients/all or Route, and my secondary sort is flagged, I don't see the 
+ flagged order or unflagged order.
+  
+ Resolution:
+ ----------
+ Routines PSOORFI3, PSOORFI5 and PSOORFIN were modified to only exclude the
+ flagged orders if the secondary sort is not flagged.
+  
+ 2. INC3796474 - VISTA does not calculate correctly when changing orderable
+ item strengths. This issue is related to Patient Safety Issue HITPS-6473.
+  
+ Problem:
+ -------
+ When changing the orderable item for a prescription, if the new dose is 
+ entered without units, the default quantity displayed for dispense units 
+ field is incorrect.
+  
+ Resolution:
+ ----------
+ Routine PSOBKDED was modified to compute the correct dispense units even 
+ if the units are omitted in the answer.
+  
+  
+ Test Sites:
+ ----------
+ Martinsburg VAMC 
+ Boise VA Medical Center
+  
+  
+ There are no documentation updates associated with this patch.
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There are no tasks or routines executed before or after the installation
+ of this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+ Installation Menu.  From this menu, you may elect to use the following
+ options. When prompted for the INSTALL NAME enter the patch number:
+ PSO*7*557
+  
+ a. Backup a Transport Global - This option will create a backup message
+ of any routines exported with this patch. It will not backup any other
+ changes such as DDs or templates.
+  
+ b. Compare Transport Global to Current System - This option will (allow
+ you to view all changes that will be made when this patch is installed.  
+ It compares all components of this patch routines, DDs, templates, etc.).
+  
+ c. Verify Checksums in Transport Global - This option will allow you to
+ ensure the integrity of the routines that are in the transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+ choose the patch to install.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+ Install? NO// '
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO// 
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-out/Rollback Strategy:
+ -------------------------------
+ Back-out will be done only with the concurrence and participation of
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed-up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+  
+ Validation of Roll Back Procedure
+ ---------------------------------
+ The Roll Back Procedure can be verified by printing the first 2 lines of
+ the PSO Routines contained in this patch using the option First Line
+ Routine Print [XU FIRST LINE PRINT]. Once the routines contained in the
+ PSO*7.0*557 patch have been rolled back, the first two lines of the
+ Routines will no longer contain the designation of patch PSO*7.0*557 in
+ the patch list section on line 2.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBKDED
+    Before: B94241318   After: B95683954  **11,46,91,78,99,117,133,143,
+                                           268,378,416,282,450,402,518,
+                                           525,538,457,557**
+Routine Name: PSOORFI3
+    Before: B77499735   After: B77850540  **15,27,32,46,84,99,130,117,
+                                           139,172,225,300,384,372,505,
+                                           557**
+Routine Name: PSOORFI5
+    Before: B76809208   After: B77628062  **225,315,266,391,372,416,504,
+                                           505,557**
+Routine Name: PSOORFIN
+    Before: B72090334   After: B73391798  **7,15,27,32,44,46,84,106,111,
+                                           117,131,146,139,195,225,315,
+                                           266,338,391,372,416,446,505,
+                                           508,557**
+ 
+Routine list of preceding patches: 457, 508
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 15, 2019
+Completed By:                               Date Completed: OCT 17, 2019
+Released By :                               Date Released : OCT 21, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

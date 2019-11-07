@@ -1,0 +1,304 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/19/19 at 10:28
+=============================================================================
+Run Date: AUG 29, 2019                     Designation: OR*3*510
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #428                      Status: Released
+                  Compliance Date: SEP 29, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*331    <<= must be installed BEFORE `OR*3*510'
+
+Subject: LAB ORDER CHECKING ISSUES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ The patch addresses two (2) issues:
+  
+ 1. Lab order checking for order frequency does not occur for future 
+    collection dates.
+  
+ 2. Lab order checking for duplicate orders does not occur for future 
+    collection dates.
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+  
+ Associated ticket(s):
+ =====================
+  
+ 1. INC5439465 - Lab Frequency Order Checks
+ 2. INC5439361 - Lab Duplicate Order Checks
+  
+ Files & Fields Associated:
+  
+ File Name (Number)    Field Name (Number)          New/Modified/Deleted
+ ------------------    --------------------------   --------------------
+  
+ COLLECTION SAMPLE     MAX. ORDER FREQ (#4)         Modified
+ SUB-FIELD (#60.03)
+  
+ COLLECTION SAMPLE     SINGLE DAY MAX               Modified
+ SUB-FIELD (#60.03)    ORDER FREQ (#4.5)
+  
+ Associated NSR(s):
+ ==================
+  
+ N/A
+  
+ Participating Test Sites:
+ =========================
+  
+ San Diego VAMC
+ Tuscaloosa VAMC
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+  
+ 1. INC5439465 - Lab Frequency Order Checks
+  
+    Problem:
+    --------
+    
+    Order checking for the "maximum frequency" that a test should be
+    ordered is checking against the date/time the order is placed.  The
+    collection date/time should be checked instead since orders may be
+    placed for future collection dates.
+  
+    Resolution:
+    -----------
+  
+    1. Modify routine ORKLR2 to perform maximum frequency order checks
+       against the collection date/time of Lab orders.
+    2. Clarify the "Help Prompt" and "Description" fields for the MAX. 
+       ORDER FREQ. (#4) and SINGLE DAY MAX ORDER FREQ (#4.5) fields of the 
+       COLLECTION SAMPLE SUB-FIELD (#60.03) sub-file of the LABORATORY TEST
+       (#60) file.
+    3. Add further explanations to the Laboratory Planning Implementation
+       Guide (PIG) Version 5.2 pertaining to order check functionality on
+       frequency-related fields. 
+    4. Add clarification to the CPRS Setup Guide that order checks may 
+       occur for "frequency" as defined in the LABORATORY TEST (#60) file
+       in addition to duplicate order checks.
+  
+    Routine: ORKLR2
+  
+ Data Dictionaries Before:
+ ========================
+  
+ 60.03,4   MAX. ORDER FREQ.  0;5 NUMBER
+  
+           INPUT TRANSFORM:  K:+X'=X!(X>120)!(X<1)!(X?.E1"."1N.N) X
+           LAST EDITED:      AUG 28, 1989 
+           HELP-PROMPT:      Type a Number between 1 and 120, 0 Decimal
+                             Digits   --  This test may only be ordered
+                             once within this number of day(s).
+           DESCRIPTION:      Use this field to control how often a test may
+                             be ordered within a certain time period (# of
+                             days). The entry will then force the system to
+                             remind the ordering person that the order they
+                             are placing for this test exceeds the maximum
+                             order frequency.  If you enter 3, the test may
+                             only be ordered once every three days. 
+  
+ 60.03,4.5 SINGLE DAY MAX    0;7 NUMBER
+           ORDER FREQ
+  
+           INPUT TRANSFORM:  K:+X'=X!(X>50)!(X<1)!(X?.E1"."1N.N) X
+           LAST EDITED:      AUG 28, 1989 
+           HELP-PROMPT:      Type a Number between 1 and 50, 0 Decimal 
+                             Digits  --  Enter the number of times this
+                             test may be ordered in one day.
+           DESCRIPTION:      Enter a number specifying the maximum number
+                             of times a test can be ordered in a single
+                             day.  
+  
+ Data Dictionaries After:
+ =======================
+  
+ 60.03,4   MAX. ORDER FREQ.  0;5 NUMBER
+  
+           INPUT TRANSFORM:  K:+X'=X!(X>120)!(X<1)!(X?.E1"."1.N) X
+           LAST EDITED:      MAY 21, 2019 
+           HELP-PROMPT:      Enter the timeframe in number of days (between
+                             1 and 120) that the test should be ordered to
+                             be collected only once.
+           DESCRIPTION:      Use this field to control how often a test may
+                             be ordered to be collected within a certain
+                             time period (# of days). If you enter "3", the
+                             test should only be ordered to be collected
+                             once every three days. The entry will then 
+                             force CPRS to remind the ordering person that
+                             the order being placed for this test exceeds
+                             the maximum order frequency.
+  
+ 60.03,4.5 SINGLE DAY MAX    0;7 NUMBER
+           ORDER FREQ 
+  
+           INPUT TRANSFORM:  K:+X'=X!(X>50)!(X<1)!(X?.E1"."1.N) X
+           LAST EDITED:      MAY 21, 2019 
+           HELP-PROMPT:      Enter the maximum number of times (between 1
+                             and 50) that a test should be ordered to be
+                             collected on a single day. 
+           DESCRIPTION:      If this test should not be ordered to be
+                             collected more than a certain number of times
+                             per day, enter a number (between 1 and 50)
+                             specifying the maximum frequency per day. The 
+                             entry will then cause CPRS to remind the
+                             ordering person that the order being placed
+                             for this test exceeds the "single day maximum
+                             frequency" for the specified collection date.
+  
+ 2. INC5439361 - Lab Duplicate Order Checks
+  
+    Problem:
+    -------
+  
+    Order checking for "duplicate orders" is checking against the date/time
+    the order is placed.  The collection date/time should be checked
+    instead since orders may be placed for future collection dates.
+  
+    Resolution:
+    ----------
+  
+    Modify routine ORKLR to perform duplicate order checks against the 
+    collection date/time of Lab orders.
+  
+    Routine: ORKLR
+  
+ Components:
+ ===========
+  
+ N/A
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:  https://www.domain.ext/vdl/
+  
+ Title                               File Name                Transfer Mode
+ --------------------------------------------------------------------------
+ Setup Guide                         cprssetup.pdf            Binary
+  
+ Laboratory Planning Implementation
+ Guide (PIG) Version 5.2             lab5_2pi.pdf             Binary
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ The install time for this patch is less than 2 minutes. This patch can be
+ installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system to avoid
+ problems loading and/or installing this patch.
+  
+ 1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This option
+    will load the KIDS patch onto your system.
+  
+ 2. The patch has now been loaded into a Transport global on your system.
+    You now need to use KIDS to install the transport global.
+  
+ 3. On the 'Kernel Installation & Distribution System' Menu (KIDS), select
+    the 'Installation' menu.
+  
+ 4. Use the 'Verify Checksum in Transport Global' option and verify that
+    all routines have the correct checksums.
+     
+ 5. On the KIDS menu, under the 'Installation' menu, use the following
+    options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+    To preserve a copy of the routines exported in this patch prior to
+    installation, you should use the 'Backup a Transport Global' option at
+    this time. You may also compare the routines in your production account
+    to the routines in the patch by using the 'Compare a Transport Global
+    to Current System' option.
+  
+ 6. Use the 'Install Package(s)' option under the 'Installation' Menu and
+    select the package 'OR*3.0*510'.
+  
+    If prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//,
+    choose 'NO'.
+  
+    If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? YES//', choose 'NO'.
+  
+ Installation Verification:
+ --------------------------
+  
+ 1. Compare the checksum of the routines ORKLR and ORKLR2 to the "After"
+    checksums listed in the patch description.
+  
+ 2. Compare the data dictionary changes to the "Data Dictionaries After" 
+    section of this patch description.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+  
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.  No
+ data was modified by this patch installation and, therefore, no rollback
+ strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum matches
+ the pre-patch checksum from the patch descriptions.
+  
+ It should not be necessary to back out the Data Dictionary changes for 
+ this patch since only text was added to clarify intended functionality.  
+ The functionality itself was not modified by the Data Dictionary changes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORKLR
+    Before: B32383308   After: B37075143  **6,32,51,92,105,243,331,510**
+Routine Name: ORKLR2
+    Before: B48995773   After: B63880797  **510**
+ 
+Routine list of preceding patches: 331
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 03, 2019
+Completed By:                               Date Completed: AUG 27, 2019
+Released By :                               Date Released : AUG 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

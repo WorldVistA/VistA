@@ -1,0 +1,170 @@
+$TXT Created by               R at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 06/21/19 at 12:27
+=============================================================================
+Run Date: AUG 21, 2019                     Designation: PSJ*5*391
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #332                      Status: Released
+                  Compliance Date: SEP 21, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*279   <<= must be installed BEFORE `PSJ*5*391'
+
+Subject: REMOVE IV DELETE OPTION AND CORRECT NATURE OF ORDER
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will put option PSJI DELETE ORDER out of order and correct an 
+ issue with NATURE OF ORDER for IV orders.
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ 1. INC5391470 - IV Order entered under wrong patient name
+  
+  
+ Problem:
+ -------
+ An IV order was placed for the wrong patient. The site discovered this 
+ and attempted to delete the order using the Delete Orders (IV) [PSJI 
+ DELETE ORDER] option . The option would not delete the order because a
+ label had been printed for it. In addition, the documentation for the
+ option in the Inpatient Medications Supervisor's User Manual says the
+ option is temporarily unavailable. However, the site was able to use the
+ option.
+  
+ Resolution:
+ ----------
+ Changed routine PSJHL2 so the Delete Orders (IV) [PSJI DELETE ORDER] 
+ option has been placed out of order due to the absence of functionality 
+ to detect BCMA actions on an order to be deleted.  Sites should mark 
+ affected orders as Discontinued in situations where the Delete Orders 
+ (IV) [PSJI DELETE ORDER] option would previously have been used.
+  
+ 2. INC2263383 - Nature of order mismatch between pharmacy package and
+                 CPRS for IV order
+  
+ Problem:
+ -------
+ When using the Inpatient Order Entry [PSJ OE] option, the wrong "Nature 
+ of Order" value can be stored in the ORDER file [#100] for IV orders when 
+ a unit dose order is processed immediately before it.  
+  
+ Resolution:
+ ----------
+ Changed routine PSJHL2 so there are additional checks to the Nature of 
+ Order assignment in order to properly assign the correct Nature of Order 
+ value for an IV order that is processed after a unit dose order.
+  
+  
+  
+ Test Sites:
+ ----------
+ N. FL/S. GA HCS
+ Birmingham VAMC
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ This patch will disable the PSJI DELETE ORDER option.
+  
+ 1.      Choose the PackMan message containing this patch.
+  
+ 2.      Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.      From the Kernel Installation and Distribution System Menu, select 
+         the Installation Menu.  From this menu, you may elect to use the 
+         following options. When prompted for the INSTALL NAME enter the
+         patch number: PSJ*5*391
+  
+ a.      Backup a Transport Global - This option will create a backup 
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+  
+ b.      Compare Transport Global to Current System - This option will 
+         (allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch routines,
+         DDs, templates, etc.).
+  
+ c.      Verify Checksums in Transport Global - This option will allow you 
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+ 4.      From the Installation Menu, select the Install Package(s) option 
+         and choose the patch to install.
+  
+ 5.      When prompted Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO// 
+  
+ Post-Installation Instructions:
+ -------------------------------
+ None
+  
+ Back-out/Rollback Strategy:
+ -------------------------------
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from 
+ the installation of this patch. You must have concurrence from Health 
+ Product Support before a rollback can occur. Enter a ServiceNow helpdesk 
+ ticket to obtain this concurrence.
+  
+ Prior to installing a patch, the site/region should have saved a backup 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message
+ containing the backed-up routines can be loaded with the "Xtract PackMan" 
+ function at the Message Action prompt. The Packman function 
+ "INSTALL/CHECK MESSAGE" is then used to install the backed-up routines 
+ onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJHL2
+    Before: B42288788   After: B44780289  **1,18,16,23,28,42,50,70,58,
+                                           100,102,110,111,112,144,141,
+                                           134,279,391**
+ 
+Routine list of preceding patches: 279
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 17, 2019
+Completed By:                               Date Completed: AUG 21, 2019
+Released By :                               Date Released : AUG 21, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

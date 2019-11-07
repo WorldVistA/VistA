@@ -1,0 +1,153 @@
+$TXT Created by                  at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 08/23/19 at 12:53
+=============================================================================
+Run Date: SEP 30, 2019                     Designation: PSJ*5*390
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #334                      Status: Released
+                  Compliance Date: OCT 31, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*274   <<= must be installed BEFORE `PSJ*5*390'
+                    (v)PSJ*5*327   <<= must be installed BEFORE `PSJ*5*390'
+
+Subject: PRE-EXCHANGE DOSES FOR CLINIC ORDERS/DECEASED PATIENT ACTIVE ORDERS NOT DC'D
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ Patient Safety Issues (HITPS):
+ -----------------------------
+ NONE
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC5234880- Pre-Exchange DOSES issue
+ 2. INC5915715- Clinical orders not discontinued for deceased patients
+  
+  
+ 1. INC5234880  Pre-Exchange DOSES issue
+    
+ Problem: 
+ ========
+ An issue was discovered with an Outpatient Clinic order when the clinic and the
+ medication are both tied to a PADE device on the patients previous ward.  If
+ the patient was previous admitted to a ward then obtained a clinic order for a
+ PADE medication, the Pre-Exchange DOSES default value will display differently
+ based on the Inpatient Ward Parameters Edit opton  (PSJ IWP EDIT). 
+  
+ It was also noticed that the message "The dispense drug for this order is a
+ PADE item"  would only display if the patients prior ward parameter was set to
+ YES.
+  
+  
+ Resolution:
+ ===========
+ A modification will be made to routine PSGPEN to ensure that clinic orders
+ display the appropriate Pre-Exchange values and the message "The dispense drug
+ for this order is a PADE item" if the clinic and medication are tied to a PADE
+ device. 
+  
+  
+ 2. INC5915715- Clinical orders not discontinued for deceased patients
+  
+ Problem: 
+ ========
+ Upon the entry of a date of death for a patient the patient's active 
+ clinical orders (IMO) are not being discontinued.
+  
+ Resolution:
+ ===========
+ The process has been modified to allow the process to discontinue all of 
+ the active clinical orders for a patient when a date of death is entered 
+ via VA Fileman. 
+  
+  
+ Test Sites:
+ ===========
+ Albany VAMC
+ Connecticut HCS
+  
+ Installation Instructions:
+ ------------------------------ 
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 2 
+ minutes to install.
+  
+ 1.     Choose the PackMan message containing this patch.
+  
+ 2.     Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.     From the Kernel Installation and Distribution System Menu, select the
+        Installation Menu.  From this menu, you may elect to use the following
+        options. When prompted for the INSTALL NAME enter the patch 
+        PSJ*5.0*390
+  
+   a.   Backup a Transport Global - This option will create a backup message of
+        any routines exported with this patch. It will not backup any other 
+        changes such as DDs or templates.
+  
+   b.   Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  (It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+   c.   Verify Checksums in Transport Global - This option will allow you to
+        ensure the integrity of the routines that are in the transport global.
+  
+ 4.     From the Installation Menu, select the Install Package(s) option and
+        choose the patch to install.
+  
+ 5.     When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//', respond 'NO'.
+  
+ 6.     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond 'NO'.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from this patch description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGPEN
+    Before: B58080181   After: B60242312  **30,37,50,58,115,110,127,129,
+                                           323,317,357,386,327,390**
+Routine Name: PSJADT0
+    Before: B33182966   After: B33746201  **17,111,112,135,181,274,390**
+ 
+Routine list of preceding patches: 274, 327
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 06, 2019
+Completed By:                               Date Completed: SEP 25, 2019
+Released By :                               Date Released : SEP 30, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

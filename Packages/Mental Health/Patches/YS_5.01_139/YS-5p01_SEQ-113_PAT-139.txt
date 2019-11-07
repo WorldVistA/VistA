@@ -1,0 +1,264 @@
+$TXT Created by                    SPPNXT.HMP-PILOT.DOMAIN.EXT  (KIDS) on Tuesday, 08/20/19 at 15:18
+=============================================================================
+Run Date: SEP 09, 2019                     Designation: YS*5.01*139
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01       SEQ #113                   Status: Released
+                  Compliance Date: OCT 10, 2019
+=============================================================================
+
+Associated patches: (v)YS*5.01*134 <<= must be installed BEFORE `YS*5.01*139'
+                    (v)YS*5.01*136 <<= must be installed BEFORE `YS*5.01*139'
+
+Subject: SUICIDE PREVENTION INSTRUMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+   This patch adds new instruments for use with the Mental Health Assistant
+   (MHA). These new instruments will help clinicians and administrators 
+   analyze the effectiveness of treatment, help clarify diagnoses and 
+   provide empirical measures for treatment outcomes.
+  
+    
+   New Mental Health Instruments: 
+   ------------------------------
+   Suicide and Depression Screening:
+   D.ERS (*108)
+   CSDD-RS 
+   BBHI2 - Behavioral for Health Improvement (Finish)
+   COPD
+   RAID - to remove access to the instrument
+  
+ This patch will also correct defects for the following Instruments:
+  
+ 1. BPRS-A
+    a) 864326 - Progress Note is not wrapping
+    b) 864326 - Question 3 -the word 'withdrawal' should be capitalized
+    c) 864331 - Question 6-Response options 3 and 4 need capitalization
+    d) 864429 - Question 17-Response option 3, the word 'irritable' should be
+       capitalized
+ 2. HSI 
+    a) 822855 -  There is a unneeded quotation mark in the instrument
+                 description
+ 3. PCL-5 
+    a) 851229 - Weekly - Cluster E should read 15-20
+ 4. PC-PTSD-5+I9
+    a) 788023 - Correct Report wrapping issue for the PTSD Screen
+    b) 894344 - Add text "PC-PTSD-5+I9" in front of PTSD Screen 
+    c) 894355 - Add PC-PTSD-5+I9" in front of Suicide Screen
+    d) 791407 - Update scoring text to add the score on the line above the 
+                descriptive text
+ 5. PHQ-2+I9
+    a) 788882 - The letter 'd' is missing from the word 'require' under 
+                the copywrite information
+ 6. PSS-3 2nd
+    a) 864312 -  Question 3 - the word Patient should be lower case
+ 7. MHRM
+    a) 836311 - Scores are reported twice in the graph
+ 8. QOLI
+    a) 852417 - Inconsistent Capitalization
+ 9. MPI-PAIN-INTRF 
+    a) 6795047 - New MH Instrument MPI-PAIN-INTRF is not sending progress
+                 note text back when used in a reminder dialog
+  
+  
+   Patch Components:
+   =================
+   Files & Fields Associated:
+   File Name (Number)                Field Name (Number)   New/Mod/Del
+   ------------------                ------------------    -----------
+   MH TEST AND SURVEYS (601.71)                             Modified
+   MH QUESTIONS (601.72)                                    Modified
+   MH INTRODUCTIONS (601.73)                                Modified
+   MH INSTRUMENT CONTENT (601.76)                           Modified
+   MH SKIPPED QUESTIONS (601.79)                            Modified
+   MH RULES (601.82)                                        Modified
+   MH INSTRUMENT RULES (601.83)                             Modified
+   MH ANSWERS (601.85)                                      Modified
+   MH SCALE GROUPS (601.86)                                 Modified
+   MH SCALES (601.87)                                       Modified
+   MH CHOICE IDENTIFIERS (601.89)                           Modified
+   MH SCORING KEYS (601.91)          Target (#3)            Modified
+   MH INSTRUMENT EXCHANGE (601.95)                          Modified
+   
+   Forms Associated:
+   Form Name                  File #                       New/Mod/Del
+   ---------                  ------                       -----------
+   N/A
+    
+   HL7 Application Parameters Associated:
+   HL7 Application Parameter Name                          New/Mod/Del
+   ------------------------------                          -----------
+   N/A
+    
+   List Templates Associated:
+   List Template Name                                      New/Mod/Del
+   ------------------                                      -----------
+   N/A
+    
+   Mail Groups Associated:
+   Mail Group Name                                         New/Mod/Del
+   ---------------                                         -----------
+   N/A
+    
+   Options Associated:
+   Option Name                       Type                  New/Mod/Del
+   ------------                      ----                  -----------
+   N/A
+  
+   Protocols Associated:
+   Protocol Name                     Type                  New/Mod/Del
+   -------------                     ----                  -----------
+   YTXCHG BROWSE SPEC                action                New
+   YTXCHG CREATE ENTRY               action                New
+   YTXCHG DELETE ENTRY               action                New
+   YTXCHG DRYRUN                     action                New
+   YTXCHG INSTALL                    action                New
+   YTXCHG LOAD HOST                  action                New
+   YTXCHG LOAD URL                   action                New
+   YTXCHG MAIN MENU                  menu                  New
+   YTXCHG REBUILD ENTRY              action                New
+   YTXCHG SAVE HOST                  action                New
+    
+   Remote Procedures Associated:
+   Remote Procedure Name                                   New/Mod/Del
+   ---------------------                                   -----------
+   N/A
+    
+   Security Keys Associated:
+   Security Key Name
+   -----------------
+   N/A
+    
+   Templates Associated:
+   Template Name               Type    File Name (Number)  New/Mod/Del 
+   -------------               ----    ------------------  -----------
+   N/A
+    
+   Additional Information:
+    
+   New Service Requests (NSRs):
+   ----------------------------  
+   N/A
+    
+   Patient Safety Issues (PSIs):
+   -----------------------------
+   
+   N/A
+   
+  
+   Remedy Ticket(s) & Overview:
+   ----------------------------
+   N/A
+    
+   Test Sites:
+   ----------
+   TBD
+    
+   Documentation Retrieval Instructions:
+   ------------------------------------- 
+ The documentation files are available on the following OI Field Offices' 
+ [ANONYMOUS.SOFTWARE] directories. Use the following FTP address to 
+ connect to the first available FTP server: download.vista.domain.ext
+ OI FIELD OFFICE      FTP ADDRESS                DIRECTORY
+ ---------------------------------------------------------------
+ HINES            domain.ext       [ANONYMOUS.SOFTWARE]
+ SALT LAKE CITY   domain.ext         [ANONYMOUS.SOFTWARE]
+  
+  
+   Documentation can also be found on the VA Software Documentation 
+   Library at:  http://www4.domain.ext/vdl/
+  
+ Title                   File Name                     SFTP Mode
+ --------------------------------------------------------------------------
+ YS_501_139_IG.PDF       MHA3 Patch 139 Install Guide  BINARY
+ YS_MHA_TM.PDF           MHA3 Technical Manual         BINARY
+ YS_MHA_UM.PDF           MHA3 User Manual              BINARY
+  
+  
+   Installation:
+   ============= 
+   
+   This patch can be loaded with users in the system but it is recommended 
+   that it be installed when user activity is low. Installation time will 
+   be less than 5 minutes.
+  
+   1.  Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+   2.  Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]: 
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+         Select Kernel Installation & Distribution System Option: 
+           Installation
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+   3.  From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter YS*5.01*139):
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will
+           not backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option
+           will allow you to view all changes that will be made when
+           this patch is installed.  It compares all components of this
+           patch (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will
+           allow you to ensure the integrity of the routines that are
+           in the transport global.
+    4.  Use the Install Package(s) option and select the package
+        YS*5.01*139.
+       a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+           install? NO//", answer NO.
+       b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+           Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 134
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS139PST
+    Before:       n/a   After:  B7187988  **139**
+Routine Name: YTQAPI2B
+    Before:B119361091   After:B121041515  **134,139**
+Routine Name: YTQAPI2C
+    Before: B68236793   After: B69081811  **136,139**
+Routine Name: YTSBBHI2
+    Before:       n/a   After:B135884915  **139**
+Routine Name: YTSCOPD
+    Before:       n/a   After:  B8066283  **139**
+Routine Name: YTSCSDD
+    Before:       n/a   After:  B4028102  **139**
+Routine Name: YTSDERS
+    Before:       n/a   After:  B6417196  **139**
+Routine Name: YTSRAID
+    Before:       n/a   After:  B9494345  **139**
+ 
+Routine list of preceding patches: 134, 136
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 31, 2018
+Completed By:                               Date Completed: SEP 03, 2019
+Released By :                               Date Released : SEP 09, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,256 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 08/13/19 at 09:34
+=============================================================================
+Run Date: OCT 01, 2019                     Designation: PRCA*4.5*348
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #311                    Status: Released
+                  Compliance Date: NOV 01, 2019
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*184<<= must be installed BEFORE `PRCA*4.5*348'
+                    (v)PRCA*4.5*301<<= must be installed BEFORE `PRCA*4.5*348'
+
+Subject: PATIENT STATEMENT COMPILATION ISSUE;BUILD CCPC FILE TIME CONTROL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PRCA*4.5*348 addresses two issues
+  
+ 1. Patient Statements are NOT printing for veterans due to a compilation 
+    issue.
+  
+ 2. An error is received when the start time control is queued when
+    accessing patient statements.
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name               File #                  New/Modified/Deleted
+ ---------               ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name         New/Modified/Deleted
+ ---------------         --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name             Type                    New/Modified/Deleted
+ -----------             ----                    --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)      New/Modified/Deleted
+ -------------   ----    ------------------      --------------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name           New/Modified/Deleted
+ ---------------------           --------------------
+ N/A                             N/A
+   
+   
+ Parameter Definitions Associated:
+   
+ Parameter Name           New/Modified/Deleted
+ --------------           --------------------
+ N/A                      N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ --------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1) INC2744354 - Patient statements NOT printing for veterans.
+  
+  
+ Problem:
+ --------
+ If a veteran has no patient statement entry (type=2), in the
+ AR EVENT (#341) file, the statement compilation logic would go
+ go back to the veteran's initial bill on file and capture all
+ billing history up through current date.
+  
+ This issue creates a statement exceeding the maximum number of
+ lines allowed (max = 286) and will not be sent to the
+ Consolidated Co-payment Processing Center (CCPC) for printing,
+ but will print on an isolated printer located somewhere within
+ each site as defined in the AR SITE PARAMETER (#342) file.
+ These overflow statements do not print on a local printer and
+ nothing is done toward getting these bills to the rightful veteran.
+  
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to ensure that a veteran with no AR EVENT 
+ (#341) file patient statement entry (type=2) will use either the day 
+ preceding his first active bill on file or the current date if there are 
+ no active bills are on file.
+  
+  
+ Routines: PRCAGU, RCCPCPS, RCFN01
+  
+  
+ 2) INC6204360 - Coding error in queue start time check when kicking off 
+                 statements in option 'Build CCPC file for transmission'
+  
+  
+ Problem:
+ --------
+ A coding error was found when reviewing the Build CCPC file for 
+ transmission [RCCPC BUILD] option that controls the allowable start
+ time for the queued task.
+   
+  
+  
+ Resolution:
+ -----------
+ Modification has been made to the code that ensures that the Build
+ CCPC file for transmission [RCCPC BUILD] option queuing task CANNOT
+ run between 8am and 6pm. However, code was added to allow any start
+ time for Saturday or Sunday queuing.
+  
+  
+ Routines: RCCPCPS 
+  
+  
+ TEST SITES:
+ -----------
+ Wilkes-Barre VAMC
+ VISN 2 - Upstate New York HCS
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ You may install this patch at any time without interruption to users. It
+ should take less than five minutes to install this patch.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+    1. Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE     PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select the 
+        Installation menu.  
+   
+    3. From this menu, you may select to use the following options: (when 
+       prompted for INSTALL NAME, enter PRCA*4.5*348).
+   
+       a.  Verify Checksums in Transport Global - This option allows you 
+           to ensure the integrity of the routines that are in the 
+           transport global.
+       b.  Print Transport Global - This option allows you to view the 
+           components of the KIDS build.
+       c.  Compare Transport Global to Current System - This option allows 
+           you to view all changes that are made when this patch is 
+           installed. It compares all components of this patch (routines, 
+           DD's, templates, etc.).
+       d.  Backup a Transport Global - This option creates a backup 
+           message of any routines exported with this patch. It will not 
+           backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        PRCA*4.5*348.
+  
+     5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//" 
+        respond NO.
+  
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//", hit ENTER.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ Back-Out Plan:
+ --------------
+ Prior to installing the updated KIDS package, the site/region should have 
+ saved a backup of the routines in a mail message using the Backup a 
+ Transport Global [XPD BACKUP] menu option. The message containing the 
+ backed-up routines can be loaded with the "Xtract PackMan" function at 
+ the Message Action prompt. The PackMan function INSTALL/CHECK MESSAGE is 
+ then used to install the backed-up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCAGU
+    Before: B12887006   After: B13801963  **181,219,301,348**
+Routine Name: RCCPCPS
+    Before: B80898915   After: B85553915  **34,70,80,48,104,116,149,170,
+                                           181,190,223,237,219,265,301,
+                                           348**
+Routine Name: RCFN01
+    Before:  B7441074   After: B12850449  **39,65,104,184,348**
+ 
+Routine list of preceding patches: 184, 301
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 16, 2019
+Completed By:                               Date Completed: SEP 30, 2019
+Released By :                               Date Released : OCT 01, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

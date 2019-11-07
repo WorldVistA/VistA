@@ -1,0 +1,2177 @@
+EMERGENCY Released GMRC*3*123 SEQ #121
+Extracted from mail message
+**KIDS**:GMRC*3.0*123^
+
+**INSTALL NAME**
+GMRC*3.0*123
+"BLD",11230,0)
+GMRC*3.0*123^CONSULT/REQUEST TRACKING^0^3190730^y
+"BLD",11230,1,0)
+^^16^16^3190610^
+"BLD",11230,1,1,0)
+   The Community Care Referrals and Authorizations (CCR&A) application is 
+"BLD",11230,1,2,0)
+   an enterprise-wide system used by Community Care (CC) staff to 
+"BLD",11230,1,3,0)
+   automatically generate referrals and authorizations for all Veterans 
+"BLD",11230,1,4,0)
+   receiving care in the community. Clinical and VA CC staff located at 
+"BLD",11230,1,5,0)
+   VA Medical Centers, Outpatient Clinics, Community Based Outpatient
+"BLD",11230,1,6,0)
+   Clinics, and VISN offices use this application.  The CCR&A solution is
+"BLD",11230,1,7,0)
+   an integral component of the VA Community Care Information Technology
+"BLD",11230,1,8,0)
+   (IT) architecture that allows Veterans to receive care from Community 
+"BLD",11230,1,9,0)
+   Providers. 
+"BLD",11230,1,10,0)
+   
+"BLD",11230,1,11,0)
+   This patch builds upon the HL7 processes created in patches 
+"BLD",11230,1,12,0)
+   GMRC*3.0*99 and GMRC*3.0*106.  It includes an update to the Other
+"BLD",11230,1,13,0)
+   Health Information (OHI) data being sent from VistA to the HealthShare
+"BLD",11230,1,14,0)
+   Referral Management system (HSRM), adding several new OHI fields and
+"BLD",11230,1,15,0)
+   the provider NPI value. It also allows VistA to receive consult status
+"BLD",11230,1,16,0)
+   updates from HSRM and associated consult notes.
+"BLD",11230,4,0)
+^9.64PA^^
+"BLD",11230,6)
+9^
+"BLD",11230,6.3)
+51
+"BLD",11230,"ABPKG")
+n
+"BLD",11230,"INI")
+LINK^GMRC123P
+"BLD",11230,"INID")
+^n^n
+"BLD",11230,"INIT")
+
+"BLD",11230,"KRN",0)
+^9.67PA^1.61^23
+"BLD",11230,"KRN",.4,0)
+.4
+"BLD",11230,"KRN",.401,0)
+.401
+"BLD",11230,"KRN",.402,0)
+.402
+"BLD",11230,"KRN",.403,0)
+.403
+"BLD",11230,"KRN",.5,0)
+.5
+"BLD",11230,"KRN",.84,0)
+.84
+"BLD",11230,"KRN",1.6,0)
+1.6
+"BLD",11230,"KRN",1.61,0)
+1.61
+"BLD",11230,"KRN",1.62,0)
+1.62
+"BLD",11230,"KRN",3.6,0)
+3.6
+"BLD",11230,"KRN",3.8,0)
+3.8
+"BLD",11230,"KRN",3.8,"NM",0)
+^9.68A^1^1
+"BLD",11230,"KRN",3.8,"NM",1,0)
+GMRCCCRA NOTIFICATIONS^^0
+"BLD",11230,"KRN",3.8,"NM","B","GMRCCCRA NOTIFICATIONS",1)
+
+"BLD",11230,"KRN",9.2,0)
+9.2
+"BLD",11230,"KRN",9.8,0)
+9.8
+"BLD",11230,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",11230,"KRN",9.8,"NM",1,0)
+GMRCCCRI^^0^B82258247
+"BLD",11230,"KRN",9.8,"NM",2,0)
+GMRCCCRA^^0^B199071432
+"BLD",11230,"KRN",9.8,"NM",3,0)
+GMRCCCR1^^0^B33693828
+"BLD",11230,"KRN",9.8,"NM",4,0)
+GMRC123P^^0^B12761878
+"BLD",11230,"KRN",9.8,"NM","B","GMRC123P",4)
+
+"BLD",11230,"KRN",9.8,"NM","B","GMRCCCR1",3)
+
+"BLD",11230,"KRN",9.8,"NM","B","GMRCCCRA",2)
+
+"BLD",11230,"KRN",9.8,"NM","B","GMRCCCRI",1)
+
+"BLD",11230,"KRN",19,0)
+19
+"BLD",11230,"KRN",19.1,0)
+19.1
+"BLD",11230,"KRN",101,0)
+101
+"BLD",11230,"KRN",101,"NM",0)
+^9.68A^4^4
+"BLD",11230,"KRN",101,"NM",1,0)
+GMRC HSRM-CCRA REF-I13 CLIENT^^0
+"BLD",11230,"KRN",101,"NM",2,0)
+GMRC HSRM-CCRA REF-I14 CLIENT^^0
+"BLD",11230,"KRN",101,"NM",3,0)
+GMRC HSRM-CCRA REF-I13 SERVER^^0
+"BLD",11230,"KRN",101,"NM",4,0)
+GMRC HSRM-CCRA REF-I14 SERVER^^0
+"BLD",11230,"KRN",101,"NM","B","GMRC HSRM-CCRA REF-I13 CLIENT",1)
+
+"BLD",11230,"KRN",101,"NM","B","GMRC HSRM-CCRA REF-I13 SERVER",3)
+
+"BLD",11230,"KRN",101,"NM","B","GMRC HSRM-CCRA REF-I14 CLIENT",2)
+
+"BLD",11230,"KRN",101,"NM","B","GMRC HSRM-CCRA REF-I14 SERVER",4)
+
+"BLD",11230,"KRN",409.61,0)
+409.61
+"BLD",11230,"KRN",771,0)
+771
+"BLD",11230,"KRN",771,"NM",0)
+^9.68A^2^2
+"BLD",11230,"KRN",771,"NM",1,0)
+GMRC HSRM-CCRA RECEIVE^^0
+"BLD",11230,"KRN",771,"NM",2,0)
+GMRC HSRM-CCRA SEND^^0
+"BLD",11230,"KRN",771,"NM","B","GMRC HSRM-CCRA RECEIVE",1)
+
+"BLD",11230,"KRN",771,"NM","B","GMRC HSRM-CCRA SEND",2)
+
+"BLD",11230,"KRN",779.2,0)
+779.2
+"BLD",11230,"KRN",870,0)
+870
+"BLD",11230,"KRN",870,"NM",0)
+^9.68A^^0
+"BLD",11230,"KRN",8989.51,0)
+8989.51
+"BLD",11230,"KRN",8989.52,0)
+8989.52
+"BLD",11230,"KRN",8994,0)
+8994
+"BLD",11230,"KRN","B",.4,.4)
+
+"BLD",11230,"KRN","B",.401,.401)
+
+"BLD",11230,"KRN","B",.402,.402)
+
+"BLD",11230,"KRN","B",.403,.403)
+
+"BLD",11230,"KRN","B",.5,.5)
+
+"BLD",11230,"KRN","B",.84,.84)
+
+"BLD",11230,"KRN","B",1.6,1.6)
+
+"BLD",11230,"KRN","B",1.61,1.61)
+
+"BLD",11230,"KRN","B",1.62,1.62)
+
+"BLD",11230,"KRN","B",3.6,3.6)
+
+"BLD",11230,"KRN","B",3.8,3.8)
+
+"BLD",11230,"KRN","B",9.2,9.2)
+
+"BLD",11230,"KRN","B",9.8,9.8)
+
+"BLD",11230,"KRN","B",19,19)
+
+"BLD",11230,"KRN","B",19.1,19.1)
+
+"BLD",11230,"KRN","B",101,101)
+
+"BLD",11230,"KRN","B",409.61,409.61)
+
+"BLD",11230,"KRN","B",771,771)
+
+"BLD",11230,"KRN","B",779.2,779.2)
+
+"BLD",11230,"KRN","B",870,870)
+
+"BLD",11230,"KRN","B",8989.51,8989.51)
+
+"BLD",11230,"KRN","B",8989.52,8989.52)
+
+"BLD",11230,"KRN","B",8994,8994)
+
+"BLD",11230,"QUES",0)
+^9.62^^0
+"BLD",11230,"REQB",0)
+^9.611^2^2
+"BLD",11230,"REQB",1,0)
+GMRC*3.0*106^1
+"BLD",11230,"REQB",2,0)
+GMRC*3.0*112^1
+"BLD",11230,"REQB","B","GMRC*3.0*106",1)
+
+"BLD",11230,"REQB","B","GMRC*3.0*112",2)
+
+"INI")
+LINK^GMRC123P
+"KRN",3.8,1493,-1)
+0^1
+"KRN",3.8,1493,0)
+GMRCCCRA NOTIFICATIONS^PU^^^^^
+"KRN",3.8,1493,2,0)
+^^4^4^3180412^
+"KRN",3.8,1493,2,1,0)
+This mail group is used to send messages to the CCRA support team when an 
+"KRN",3.8,1493,2,2,0)
+issue or problem with the GMRC CCRA SEND HL7 Application Parameter 
+"KRN",3.8,1493,2,3,0)
+detects a problem with sending HL7 messages to the CCRA HealthShare 
+"KRN",3.8,1493,2,4,0)
+server.
+"KRN",3.8,1493,3)
+
+"KRN",101,8457,-1)
+0^1
+"KRN",101,8457,0)
+GMRC HSRM-CCRA REF-I13 CLIENT^Consult update REF-I13 from HSRM to CCRA^^S^^^^^^^^
+"KRN",101,8457,1,0)
+^^3^3^3190607^^^
+"KRN",101,8457,1,1,0)
+Sends HL7 REF^I13 v2.5 messages from HSRM application to CCRA.
+"KRN",101,8457,1,2,0)
+This is to update the consult record with new status (scheduled / 
+"KRN",101,8457,1,3,0)
+complete)
+"KRN",101,8457,99)
+65224,57680
+"KRN",101,8457,770)
+^GMRC HSRM-CCRA RECEIVE^^I13^^^CCRA-NAK^^^^ACK
+"KRN",101,8457,771)
+D EN^GMRCCCRI
+"KRN",101,8457,773)
+1^1
+"KRN",101,8458,-1)
+0^2
+"KRN",101,8458,0)
+GMRC HSRM-CCRA REF-I14 CLIENT^Consult update REF-I14 message from HSRM to cancel appt^^S^^^^^^^^
+"KRN",101,8458,1,0)
+^^2^2^3190607^^^
+"KRN",101,8458,1,1,0)
+Sends HL7 REF^I14 v2.5 messages from HSRM application to CCRA
+"KRN",101,8458,1,2,0)
+This message type is to send to VistA an update to cancel the consult
+"KRN",101,8458,99)
+65224,57680
+"KRN",101,8458,770)
+^GMRC HSRM-CCRA RECEIVE^^I14^^^CCRA-NAK^^^^ACK
+"KRN",101,8458,771)
+D EN^GMRCCCRI
+"KRN",101,8458,773)
+1^1
+"KRN",101,8459,-1)
+0^3
+"KRN",101,8459,0)
+GMRC HSRM-CCRA REF-I13 SERVER^Consult update REF-I13 from HSRM to CCRA^^E^^^^^^^^
+"KRN",101,8459,1,0)
+^^2^2^3190607^^^
+"KRN",101,8459,1,1,0)
+Sends HL7 REF^I12 v2.5 messages from HSRM application to CCRA
+"KRN",101,8459,1,2,0)
+This is for consult status updates from HSRM
+"KRN",101,8459,4)
+^^^[D
+"KRN",101,8459,99)
+65224,57680
+"KRN",101,8459,770)
+GMRC HSRM-CCRA SEND^^REF^I13^^^^AL^NE^2.5.1^
+"KRN",101,8459,775,0)
+^101.0775PA^1^1
+"KRN",101,8459,775,1,0)
+8457
+"KRN",101,8459,775,1,"^")
+GMRC HSRM-CCRA REF-I13 CLIENT
+"KRN",101,8460,-1)
+0^4
+"KRN",101,8460,0)
+GMRC HSRM-CCRA REF-I14 SERVER^Consult update REF-I14 from HSRM to CCRA^^E^^^^^^^^
+"KRN",101,8460,1,0)
+^^2^2^3190607^^^
+"KRN",101,8460,1,1,0)
+Sends HL7 REF^I12 v2.5 messages from HSRM application to CCRA
+"KRN",101,8460,1,2,0)
+This is for consult status updates - cancel appointment
+"KRN",101,8460,99)
+65224,57680
+"KRN",101,8460,770)
+GMRC HSRM-CCRA SEND^^REF^I14^^^^AL^NE^2.5.1^
+"KRN",101,8460,775,0)
+^101.0775PA^1^1
+"KRN",101,8460,775,1,0)
+8458
+"KRN",101,8460,775,1,"^")
+GMRC HSRM-CCRA REF-I14 CLIENT
+"KRN",771,282,-1)
+0^1
+"KRN",771,282,0)
+GMRC HSRM-CCRA RECEIVE^a^442^GMRCCCRA NOTIFICATIONS^^^USA
+"KRN",771,282,"EC")
+^~\&
+"KRN",771,282,"FS")
+|
+"KRN",771,283,-1)
+0^2
+"KRN",771,283,0)
+GMRC HSRM-CCRA SEND^a^200^GMRCCCRA NOTIFICATIONS^^^USA
+"KRN",771,283,"EC")
+^~\&
+"KRN",771,283,"FS")
+|
+"MBREQ")
+0
+"ORD",11,3.8)
+3.8;11;;;MAILG^XPDTA1;MAILGF1^XPDIA1;MAILGE1^XPDIA1;MAILGF2^XPDIA1;;MAILGDEL^XPDIA1(%)
+"ORD",11,3.8,0)
+MAIL GROUP
+"ORD",14,771)
+771;14;;;HLAP^XPDTA1;HLAPF1^XPDIA1;HLAPE1^XPDIA1;HLAPF2^XPDIA1;;HLAPDEL^XPDIA1(%)
+"ORD",14,771,0)
+HL7 APPLICATION PARAMETER
+"ORD",15,101)
+101;15;;;PRO^XPDTA;PROF1^XPDIA;PROE1^XPDIA;PROF2^XPDIA;;PRODEL^XPDIA
+"ORD",15,101,0)
+PROTOCOL
+"PKG",406,-1)
+1^1
+"PKG",406,0)
+CONSULT/REQUEST TRACKING^GMRC^CONSULTS/REQUESTS
+"PKG",406,22,0)
+^9.49I^1^1
+"PKG",406,22,1,0)
+3.0^2980101^2981113^1
+"PKG",406,22,1,"PAH",1,0)
+123^3190730
+"PKG",406,22,1,"PAH",1,1,0)
+^^16^16^3190730
+"PKG",406,22,1,"PAH",1,1,1,0)
+   The Community Care Referrals and Authorizations (CCR&A) application is 
+"PKG",406,22,1,"PAH",1,1,2,0)
+   an enterprise-wide system used by Community Care (CC) staff to 
+"PKG",406,22,1,"PAH",1,1,3,0)
+   automatically generate referrals and authorizations for all Veterans 
+"PKG",406,22,1,"PAH",1,1,4,0)
+   receiving care in the community. Clinical and VA CC staff located at 
+"PKG",406,22,1,"PAH",1,1,5,0)
+   VA Medical Centers, Outpatient Clinics, Community Based Outpatient
+"PKG",406,22,1,"PAH",1,1,6,0)
+   Clinics, and VISN offices use this application.  The CCR&A solution is
+"PKG",406,22,1,"PAH",1,1,7,0)
+   an integral component of the VA Community Care Information Technology
+"PKG",406,22,1,"PAH",1,1,8,0)
+   (IT) architecture that allows Veterans to receive care from Community 
+"PKG",406,22,1,"PAH",1,1,9,0)
+   Providers. 
+"PKG",406,22,1,"PAH",1,1,10,0)
+   
+"PKG",406,22,1,"PAH",1,1,11,0)
+   This patch builds upon the HL7 processes created in patches 
+"PKG",406,22,1,"PAH",1,1,12,0)
+   GMRC*3.0*99 and GMRC*3.0*106.  It includes an update to the Other
+"PKG",406,22,1,"PAH",1,1,13,0)
+   Health Information (OHI) data being sent from VistA to the HealthShare
+"PKG",406,22,1,"PAH",1,1,14,0)
+   Referral Management system (HSRM), adding several new OHI fields and
+"PKG",406,22,1,"PAH",1,1,15,0)
+   the provider NPI value. It also allows VistA to receive consult status
+"PKG",406,22,1,"PAH",1,1,16,0)
+   updates from HSRM and associated consult notes.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","GMRC123P")
+0^4^B12761878^n/a
+"RTN","GMRC123P",1,0)
+GMRC123P ;;MS/PB/MJ - CCRA PRE INSTALL;APR 22, 2019
+"RTN","GMRC123P",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**123**;APR 22, 2019;Build 51
+"RTN","GMRC123P",3,0)
+ ;;Per VA directive 6402, this routine should not be modified.
+"RTN","GMRC123P",4,0)
+ ;Pre install routine for patch GMRC*3.0*123.
+"RTN","GMRC123P",5,0)
+ ;
+"RTN","GMRC123P",6,0)
+ ;Checks for the CCRA-NAK logical link, if it exists, it doesn't re-install the link
+"RTN","GMRC123P",7,0)
+ ;if it doesn't exist, it gets the HealthShare server address and port and installs
+"RTN","GMRC123P",8,0)
+ ;and configures the link.
+"RTN","GMRC123P",9,0)
+ Q
+"RTN","GMRC123P",10,0)
+LINK ; update the TMP_Send Link
+"RTN","GMRC123P",11,0)
+ N LIEN,OPSITE,DOMAIN,VAL,GMRCERR,FDA,PRE1,PRE2,X,STOP
+"RTN","GMRC123P",12,0)
+ D MES^XPDUTL("Checking VistA system for CCRA-NAK logical link setup...")
+"RTN","GMRC123P",13,0)
+ S VAL="CCRA-NAK",STOP=0
+"RTN","GMRC123P",14,0)
+ S LIEN=$$FIND1^DIC(870,,"B",.VAL)
+"RTN","GMRC123P",15,0)
+ I LIEN D MES^XPDUTL("Link already exists, no new setup needed") Q
+"RTN","GMRC123P",16,0)
+ D MES^XPDUTL("")
+"RTN","GMRC123P",17,0)
+ D MES^XPDUTL("")
+"RTN","GMRC123P",18,0)
+ D MES^XPDUTL("")
+"RTN","GMRC123P",19,0)
+ D MES^XPDUTL("CCRA-NAK logical link being set up now.  We'll need some information from you.")
+"RTN","GMRC123P",20,0)
+ D MES^XPDUTL("Please have the HealthConnect server IP address and Port number ready.")
+"RTN","GMRC123P",21,0)
+ D MES^XPDUTL("")
+"RTN","GMRC123P",22,0)
+ D MES^XPDUTL("")
+"RTN","GMRC123P",23,0)
+ D MES^XPDUTL("")
+"RTN","GMRC123P",24,0)
+ ;
+"RTN","GMRC123P",25,0)
+Q1 ; QUESTION 1 - IP ADDRESS - PRE 1
+"RTN","GMRC123P",26,0)
+ S DIR("A")="PLEASE ENTER THE HEALTHCONNECT SERVER IP ADDRESS"
+"RTN","GMRC123P",27,0)
+ S DIR(0)="F"
+"RTN","GMRC123P",28,0)
+ D ^DIR S PRE1=X
+"RTN","GMRC123P",29,0)
+ I $G(PRE1)="^"!($G(PRE1)="") D
+"RTN","GMRC123P",30,0)
+ . N X,Y,DIR,DTOUT,DUOUT,DIRUT
+"RTN","GMRC123P",31,0)
+ . S DIR(0)="Y"
+"RTN","GMRC123P",32,0)
+ . S DIR("A",1)="Quitting out will result in the CCRA-NAK logical link not being installed."
+"RTN","GMRC123P",33,0)
+ . S DIR("A",2)="The CCRA-NAK logical link is required and must be configured for this patch to work properly."
+"RTN","GMRC123P",34,0)
+ . S DIR("A")="Are you sure you want to exit out of the PRE-install process?"
+"RTN","GMRC123P",35,0)
+ . D ^DIR
+"RTN","GMRC123P",36,0)
+ . S:$G(Y)'=0 STOP=1
+"RTN","GMRC123P",37,0)
+ . G:$G(Y)=0 Q1
+"RTN","GMRC123P",38,0)
+ . D APPERROR^%ZTER("pre-install Q1 after '^' entered on 2nd DIR call")
+"RTN","GMRC123P",39,0)
+ . G:$G(STOP)=1 QABORT
+"RTN","GMRC123P",40,0)
+ ;
+"RTN","GMRC123P",41,0)
+Q2 ; QUESTION 2 - PORT NUMBER - PRE 2
+"RTN","GMRC123P",42,0)
+ G:$G(STOP)=1 QABORT
+"RTN","GMRC123P",43,0)
+ N X,Y,DIR,DTOUT,DUOUT,DIRUT
+"RTN","GMRC123P",44,0)
+ S DIR("A")="PLEASE ENTER THE HEALTHCONNECT SERVER PORT NUMBER"
+"RTN","GMRC123P",45,0)
+ S DIR(0)="F"
+"RTN","GMRC123P",46,0)
+ D ^DIR S PRE2=X
+"RTN","GMRC123P",47,0)
+ I $G(PRE2)="^"!($G(PRE2)="") D
+"RTN","GMRC123P",48,0)
+ . N X,Y,DIR,DTOUT,DUOUT,DIRUT
+"RTN","GMRC123P",49,0)
+ . S DIR(0)="Y"
+"RTN","GMRC123P",50,0)
+ . S DIR("A",1)="Quitting out will result in the CCRA-NAK logical link not being installed."
+"RTN","GMRC123P",51,0)
+ . S DIR("A",2)="The CCRA-NAK logical link is required and must be configured for this patch to work properly."
+"RTN","GMRC123P",52,0)
+ . S DIR("A")="Are you sure you want to exit out of the PRE-install process?"
+"RTN","GMRC123P",53,0)
+ . D ^DIR
+"RTN","GMRC123P",54,0)
+ . S:$G(Y)'=0 STOP=1
+"RTN","GMRC123P",55,0)
+ . G:$G(Y)=0 Q2
+"RTN","GMRC123P",56,0)
+ G:$G(STOP)=1 QABORT
+"RTN","GMRC123P",57,0)
+ ;
+"RTN","GMRC123P",58,0)
+ ; file link with IP address and port entered
+"RTN","GMRC123P",59,0)
+ K FDA,LIEN,GMRCERR
+"RTN","GMRC123P",60,0)
+ S FDA(870,"+1,",.01)="CCRA-NAK"
+"RTN","GMRC123P",61,0)
+ S FDA(870,"+1,",.02)=$$KSP^XUPARAM("INST") ; site station number
+"RTN","GMRC123P",62,0)
+ S FDA(870,"+1,",2)=4              ; TCP/IP
+"RTN","GMRC123P",63,0)
+ S FDA(870,"+1,",4.5)=1            ; auto start
+"RTN","GMRC123P",64,0)
+ S FDA(870,"+1,",400.01)=$G(PRE1) ; ip address
+"RTN","GMRC123P",65,0)
+ S FDA(870,"+1,",400.02)=$G(PRE2) ; hl7 port
+"RTN","GMRC123P",66,0)
+ S FDA(870,"+1,",400.03)="C"       ; Client (Sender) TCP/IP Service Type
+"RTN","GMRC123P",67,0)
+ ; S FDA(870,"+1,",400.08)=$G(PRE2) ; hlo port
+"RTN","GMRC123P",68,0)
+ D UPDATE^DIE(,"FDA","LIEN","GMRCERR") K FDA
+"RTN","GMRC123P",69,0)
+ D MES^XPDUTL("")
+"RTN","GMRC123P",70,0)
+ I $D(GMRCERR) D  Q  ; something went wrong
+"RTN","GMRC123P",71,0)
+ .D MES^XPDUTL("FileMan error when creating the CCCRA-NAK Link.")
+"RTN","GMRC123P",72,0)
+ D MES^XPDUTL("CCRA-NAK Link has been updated.")
+"RTN","GMRC123P",73,0)
+QEND K DIR Q
+"RTN","GMRC123P",74,0)
+ ;
+"RTN","GMRC123P",75,0)
+QABORT S XPDABORT=1 K DIR Q
+"RTN","GMRCCCR1")
+0^3^B33693828^B8898550
+"RTN","GMRCCCR1",1,0)
+GMRCCCR1 ;MJ - Receive HL7 Message for HCP ;3/21/18 09:00
+"RTN","GMRCCCR1",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**99,106,112,123**;JUN 1, 2018;Build 51
+"RTN","GMRCCCR1",3,0)
+ ;
+"RTN","GMRCCCR1",4,0)
+ ;DBIA# Supported Reference
+"RTN","GMRCCCR1",5,0)
+ ;----- --------------------------------
+"RTN","GMRCCCR1",6,0)
+ ;10106 HLADDR^HLFNC
+"RTN","GMRCCCR1",7,0)
+ ;
+"RTN","GMRCCCR1",8,0)
+ ; MJ - 5/24/2018 patch 106 changes to add - GETADD function
+"RTN","GMRCCCR1",9,0)
+ ; MJ - 2/28/2019 patch 112 subroutines added or split from GMRCCCRA
+"RTN","GMRCCCR1",10,0)
+ ; MJ - 4/02/2019 patch 123 updated to find VistA user from HSRM message and create NAK if invalid
+"RTN","GMRCCCR1",11,0)
+ ;
+"RTN","GMRCCCR1",12,0)
+ Q
+"RTN","GMRCCCR1",13,0)
+ ;
+"RTN","GMRCCCR1",14,0)
+GETADD(INSP) ;
+"RTN","GMRCCCR1",15,0)
+ ; INSP contains internal value of insurance plan for this patient (IN1 segment)
+"RTN","GMRCCCR1",16,0)
+ N ADDLN1,ADDLN2,ADDLN3,ADDCITY,ADDST,ADDZIP,VADD,VCSZ,X
+"RTN","GMRCCCR1",17,0)
+ S ADDLN1=$$GET1^DIQ(36,INSP_",",.111)
+"RTN","GMRCCCR1",18,0)
+ S ADDLN2=$$GET1^DIQ(36,INSP_",",.112)
+"RTN","GMRCCCR1",19,0)
+ S ADDLN3=$$GET1^DIQ(36,INSP_",",.113)
+"RTN","GMRCCCR1",20,0)
+ S ADDCITY=$$GET1^DIQ(36,INSP_",",.114)
+"RTN","GMRCCCR1",21,0)
+ S ADDST=$$GET1^DIQ(36,INSP_",",.115,"I") ; S:ADDST ADDST=ADDST_"~"_$$GET1^DIQ(36,INSP_",",.115)
+"RTN","GMRCCCR1",22,0)
+ S ADDZIP=$$GET1^DIQ(36,INSP_",",.116)
+"RTN","GMRCCCR1",23,0)
+ S VADD=ADDLN1_"^"_ADDLN2,VCSZ=ADDCITY_"^"_ADDST_"^"_ADDZIP
+"RTN","GMRCCCR1",24,0)
+ S X=$$HLADDR^HLFNC(VADD,VCSZ)
+"RTN","GMRCCCR1",25,0)
+ S:X]"" $P(X,"^",7)="M" ; address type = 'mailing'
+"RTN","GMRCCCR1",26,0)
+ Q X
+"RTN","GMRCCCR1",27,0)
+ ; end patch 106 mod
+"RTN","GMRCCCR1",28,0)
+ ;
+"RTN","GMRCCCR1",29,0)
+MESSAGE(MSGID,ERRARY) ; Send a MailMan Message with the errors
+"RTN","GMRCCCR1",30,0)
+ ; moved here for patch 112
+"RTN","GMRCCCR1",31,0)
+ N MSGTEXT,DUZ,XMDUZ,XMSUB,XMTEXT,XMY,XMMG,XMSTRIP,XMROU,DIFROM,XMYBLOB,XMZ,XMMG,DATE,I,J
+"RTN","GMRCCCR1",32,0)
+ S DATE=$$FMTE^XLFDT($$FMDATE^HLFNC($P(HL("DTM"),"-",1)))
+"RTN","GMRCCCR1",33,0)
+ S XMSUB="GMRC CCRA Consults to HSRM HL7 Error"
+"RTN","GMRCCCR1",34,0)
+ S MSGTEXT(1)=" "
+"RTN","GMRCCCR1",35,0)
+ S MSGTEXT(2)="Error in transmitting HL7 message to HSRM"
+"RTN","GMRCCCR1",36,0)
+ S MSGTEXT(3)="Date: "_DATE
+"RTN","GMRCCCR1",37,0)
+ S MSGTEXT(4)="Message ID: "_MSGID
+"RTN","GMRCCCR1",38,0)
+ S MSGTEXT(5)="Error(s):"
+"RTN","GMRCCCR1",39,0)
+ S I=0,J=5 F  S I=$O(ERRARY(I)) Q:'I  D
+"RTN","GMRCCCR1",40,0)
+ . S J=J+1,MSGTEXT(J)=" "
+"RTN","GMRCCCR1",41,0)
+ . S J=J+1,MSGTEXT(J)=" "_$P($G(ERRARY(I,3)),U)_" - "_$P($G(ERRARY(I,3)),U,2)
+"RTN","GMRCCCR1",42,0)
+ . I $P($G(ERRARY(I,2)),U,1)'="" S J=J+1,MSGTEXT(J)=" Segment: "_$P($G(ERRARY(I,2)),U,1)
+"RTN","GMRCCCR1",43,0)
+ . I $P($G(ERRARY(I,2)),U,2)'="" S J=J+1,MSGTEXT(J)=" Sequence: "_$P($G(ERRARY(I,2)),U,2)
+"RTN","GMRCCCR1",44,0)
+ . I $P($G(ERRARY(I,2)),U,3)'="" S J=J+1,MSGTEXT(J)=" Field: "_$P($G(ERRARY(I,2)),U,3)
+"RTN","GMRCCCR1",45,0)
+ . I $P($G(ERRARY(I,2)),U,4)'="" S J=J+1,MSGTEXT(J)=" Fld Rep: "_$P($G(ERRARY(I,2)),U,4)
+"RTN","GMRCCCR1",46,0)
+ . I $P($G(ERRARY(I,2)),U,5)'="" S J=J+1,MSGTEXT(J)=" Component: "_$P($G(ERRARY(I,2)),U,5)
+"RTN","GMRCCCR1",47,0)
+ . I $P($G(ERRARY(I,2)),U,6)'="" S J=J+1,MSGTEXT(J)=" Sub-component: "_$P($G(ERRARY(I,2)),U,6)
+"RTN","GMRCCCR1",48,0)
+ S XMTEXT="MSGTEXT("
+"RTN","GMRCCCR1",49,0)
+ S XMDUZ="GMRC-CCRA->HSRP Transaction Error"
+"RTN","GMRCCCR1",50,0)
+ S XMY("G.GMRC HCP HL7 MESSAGES")=""
+"RTN","GMRCCCR1",51,0)
+ D ^XMD
+"RTN","GMRCCCR1",52,0)
+ Q
+"RTN","GMRCCCR1",53,0)
+ ;
+"RTN","GMRCCCR1",54,0)
+MESSAGE2(MSGID,ABORT,CONID) ; Send a MailMan Message with the errors
+"RTN","GMRCCCR1",55,0)
+ N MSGTEXT,DUZ,XMDUZ,XMSUB,XMTEXT,XMY,XMMG,XMSTRIP,XMROU,DIFROM,XMYBLOB,XMZ,XMMG,DATE,J,SITE,MSG
+"RTN","GMRCCCR1",56,0)
+ S SITE=$$KSP^XUPARAM("INST")
+"RTN","GMRCCCR1",57,0)
+ S DATE=$$FMTE^XLFDT($$FMDATE^HLFNC($P(HL("DTM"),"-",1)))
+"RTN","GMRCCCR1",58,0)
+ S XMSUB="Consult ID "_CONID_" - GMRC CCRA Scheduling Updates from HSRM - HL7 Error"
+"RTN","GMRCCCR1",59,0)
+ S MSGTEXT(1)=" "
+"RTN","GMRCCCR1",60,0)
+ S MSGTEXT(2)="Error in receiving HL7 message from HSRM"
+"RTN","GMRCCCR1",61,0)
+ S MSGTEXT(3)="Date:       "_DATE
+"RTN","GMRCCCR1",62,0)
+ S MSGTEXT(4)="Message ID: "_MSGID
+"RTN","GMRCCCR1",63,0)
+ S MSG="Error(s): "_$P(ABORT,"^",2)_"/VISTA "_SITE_"/Consult ID:"_CONID_". Please manually synchronize the consult"
+"RTN","GMRCCCR1",64,0)
+ S MSG=MSG_" in VistA #"_SITE_" with the information currently available in HSRM."
+"RTN","GMRCCCR1",65,0)
+ S MSGTEXT(5)=MSG
+"RTN","GMRCCCR1",66,0)
+ S XMTEXT="MSGTEXT("
+"RTN","GMRCCCR1",67,0)
+ S XMDUZ="GMRC-CCRA <-HSRM Transaction Error"
+"RTN","GMRCCCR1",68,0)
+ S XMY("G.GMRC HSRM SIU HL7 MESSAGES")=""  ;  ** CHECK THIS OUT **
+"RTN","GMRCCCR1",69,0)
+ D ^XMD
+"RTN","GMRCCCR1",70,0)
+ Q
+"RTN","GMRCCCR1",71,0)
+ ;
+"RTN","GMRCCCR1",72,0)
+CCONTROL(GMRCDA) ; patch 112
+"RTN","GMRCCCR1",73,0)
+ ; remove control characters from data before building OBR segment
+"RTN","GMRCCCR1",74,0)
+ ;
+"RTN","GMRCCCR1",75,0)
+ S YY=0 F  S YY=$O(^GMR(123,GMRCDA,40,YY)) Q:YY'>0  D
+"RTN","GMRCCCR1",76,0)
+ .S XX=0 F  S XX=$O(^GMR(123,GMRCDA,40,YY,1,XX)) Q:XX'>0  D
+"RTN","GMRCCCR1",77,0)
+ ..K NODE
+"RTN","GMRCCCR1",78,0)
+ .. ;S TESTSTRING=$C(13)
+"RTN","GMRCCCR1",79,0)
+ ..S NODE=$G(^GMR(123,GMRCDA,40,YY,1,XX,0))
+"RTN","GMRCCCR1",80,0)
+ ..I $G(NODE)[$C(13,10,10) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(13,10,10)," ") ; <cr><lf><lf>
+"RTN","GMRCCCR1",81,0)
+ ..I $G(NODE)[$C(13,10) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(13,10)," ") ; <cr><lf>
+"RTN","GMRCCCR1",82,0)
+ ..I $G(NODE)[$C(13) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(13)," ") ; TERM char
+"RTN","GMRCCCR1",83,0)
+ ..I $G(NODE)[$C(1) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(1)," ") ; SOH
+"RTN","GMRCCCR1",84,0)
+ ..I $G(NODE)[$C(2) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(2)," ") ; STX
+"RTN","GMRCCCR1",85,0)
+ ..I $G(NODE)[$C(3) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(3)," ") ; ETX
+"RTN","GMRCCCR1",86,0)
+ ..I $G(NODE)[$C(4) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(4)," ") ; EOT
+"RTN","GMRCCCR1",87,0)
+ ..I $G(NODE)[$C(5) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(5)," ") ; ENQ
+"RTN","GMRCCCR1",88,0)
+ ..I $G(NODE)[$C(6) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(6)," ") ; ACK
+"RTN","GMRCCCR1",89,0)
+ ..I $G(NODE)[$C(21) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(21)," ") ; NAK
+"RTN","GMRCCCR1",90,0)
+ ..I $G(NODE)[$C(23) S ^GMR(123,GMRCDA,40,YY,1,XX,0)=$TR(^GMR(123,GMRCDA,40,YY,1,XX,0),$C(23)," ") ; ETB
+"RTN","GMRCCCR1",91,0)
+ ..;I $C(13,10,10)[$G(NODE) W !,XX," ",NODE
+"RTN","GMRCCCR1",92,0)
+ ..K NODE ;,TESTSTRING
+"RTN","GMRCCCR1",93,0)
+ K XX,YY
+"RTN","GMRCCCR1",94,0)
+ Q
+"RTN","GMRCCCR1",95,0)
+ ;
+"RTN","GMRCCCR1",96,0)
+ANAK(NAKMSG,USERMAIL,ICN,DFN,CONID,GMRCDT) ; Application Error, send NAK back
+"RTN","GMRCCCR1",97,0)
+ N PATNAME,EID,EIDS,MSGN,SITE,CONPAT,RES,NAKMSG1
+"RTN","GMRCCCR1",98,0)
+ Q:$G(NAKMSG)=""
+"RTN","GMRCCCR1",99,0)
+ Q:$G(DFN)'>0
+"RTN","GMRCCCR1",100,0)
+ Q:$G(CONID)=""
+"RTN","GMRCCCR1",101,0)
+ Q:$G(GMRCDT)=""
+"RTN","GMRCCCR1",102,0)
+ Q:$G(^DPT(DFN,0))=""
+"RTN","GMRCCCR1",103,0)
+ S CONPAT=$$GET1^DIQ(123,CONID_",",.02,"I")
+"RTN","GMRCCCR1",104,0)
+ Q:$G(CONPAT)'=DFN  ;Patient in appt msg not the same as patient in the consult
+"RTN","GMRCCCR1",105,0)
+ S PATNAME=$P(^DPT(DFN,0),"^"),SITE=$$KSP^XUPARAM("INST")
+"RTN","GMRCCCR1",106,0)
+ S:$G(ICN)="" ICN=$P(^DPT(DFN,"MPI"),"^",10)
+"RTN","GMRCCCR1",107,0)
+ S EID=$G(HL("EID"))
+"RTN","GMRCCCR1",108,0)
+ S EIDS=$G(HL("EIDS"))
+"RTN","GMRCCCR1",109,0)
+ S MSGN=$G(HL("MID"))
+"RTN","GMRCCCR1",110,0)
+ ; S NAKMSG1=NAKMSG_"/VISTA "_SITE_"/Consult ID:"_CONID_". Please manually synchronize the consult"
+"RTN","GMRCCCR1",111,0)
+ ; S NAKMSG1=NAKMSG1_" in VistA #"_SITE_" with the information currently available in HSRM."
+"RTN","GMRCCCR1",112,0)
+ S HLA("HLA",1)="MSA|AE|"_$G(MSGN)_"|"_$G(USERMAIL)_" "_$G(NAKMSG)_"|||"_$G(ICN)_"^"_$G(PATNAME)_"^"_SITE_"^"_CONID_"^"_GMRCDT
+"RTN","GMRCCCR1",113,0)
+ D GENACK^HLMA1(EID,$G(HLMTIENS),EIDS,"LM",1,.RES)
+"RTN","GMRCCCR1",114,0)
+ Q
+"RTN","GMRCCCR1",115,0)
+TIUC(X) ; Check each segment of the TIU notes for HL7 control characters
+"RTN","GMRCCCR1",116,0)
+ Q:$G(X)=""
+"RTN","GMRCCCR1",117,0)
+ I $G(X)[$C(13,10,10) S X=$TR(X,$C(13,10,10),"") ; <cr><lf><lf>
+"RTN","GMRCCCR1",118,0)
+ I $G(X)[$C(13,10) S X=$TR(X,$C(13,10),"") ; <cr><lf>
+"RTN","GMRCCCR1",119,0)
+ I $G(X)[$C(13) S X=$TR(X,$C(13),"") ; TERM char
+"RTN","GMRCCCR1",120,0)
+ I $G(X)[$C(1) S X=$TR(X,$C(1),"") ; SOH
+"RTN","GMRCCCR1",121,0)
+ I $G(X)[$C(2) S X=$TR(X,$C(2),"") ; STX
+"RTN","GMRCCCR1",122,0)
+ I $G(X)[$C(3) S X=$TR(X,$C(3),"") ; ETX
+"RTN","GMRCCCR1",123,0)
+ I $G(X)[$C(4) S X=$TR(X,$C(4),"") ; EOT
+"RTN","GMRCCCR1",124,0)
+ I $G(X)[$C(5) S X=$TR(X,$C(5),"") ; ENQ
+"RTN","GMRCCCR1",125,0)
+ I $G(X)[$C(6) S X=$TR(X,$C(6),"") ; ACK
+"RTN","GMRCCCR1",126,0)
+ I $G(X)[$C(21) S X=$TR(X,$C(21),"") ; NAK
+"RTN","GMRCCCR1",127,0)
+ I $G(X)[$C(23) S X=$TR(X,$C(23),"") ; ETB
+"RTN","GMRCCCR1",128,0)
+ Q X
+"RTN","GMRCCCRA")
+0^2^B199071432^B197931435
+"RTN","GMRCCCRA",1,0)
+GMRCCCRA ;COG/PB/LB/MJ - Receive HL7 Message for HCP ;3/21/18 09:00
+"RTN","GMRCCCRA",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**99,106,112,123**;JUN 1, 2018;Build 51
+"RTN","GMRCCCRA",3,0)
+ ;
+"RTN","GMRCCCRA",4,0)
+ ;DBIA# Supported Reference
+"RTN","GMRCCCRA",5,0)
+ ;----- --------------------------------
+"RTN","GMRCCCRA",6,0)
+ ;2161  INIT^HLFNC2
+"RTN","GMRCCCRA",7,0)
+ ;2164  GENERATE^HLMA
+"RTN","GMRCCCRA",8,0)
+ ;2944  TGET^TIUSRVR1
+"RTN","GMRCCCRA",9,0)
+ ;3267  SSN^DPTLK1
+"RTN","GMRCCCRA",10,0)
+ ;3630  BLDPID^VAFCQRY
+"RTN","GMRCCCRA",11,0)
+ ;5807  GETLINK^TIUSRVT1
+"RTN","GMRCCCRA",12,0)
+ ;10103 FMTE^XLFDT, FMTHL7^XLFDT
+"RTN","GMRCCCRA",13,0)
+ ;10104 UP^XLFSTR
+"RTN","GMRCCCRA",14,0)
+ ;10106 FMDATE^HLFNC
+"RTN","GMRCCCRA",15,0)
+ ;1252  OUTPTPR^SDUTL3
+"RTN","GMRCCCRA",16,0)
+ ;6917  EN^VAFHLIN1
+"RTN","GMRCCCRA",17,0)
+ ;10106 HLADDR^HLFNC
+"RTN","GMRCCCRA",18,0)
+ ;2467  OR^ORX8
+"RTN","GMRCCCRA",19,0)
+ ;2171  NS^XUAF4
+"RTN","GMRCCCRA",20,0)
+ ;2693  EXTRACT^TIULQ
+"RTN","GMRCCCRA",21,0)
+ ;
+"RTN","GMRCCCRA",22,0)
+ ;;Patch 85 fix for CA SDM ticket R6063960FY16
+"RTN","GMRCCCRA",23,0)
+ ;;Patch 99 fix for screen to send community care consults HL7 messages -  Cognosante - PB Mar 5 2018
+"RTN","GMRCCCRA",24,0)
+ ;;Patch 99 commented out PCP code- 2nd  PRD  segment -until Intersystems ready M14/M15- Cognosante-LB Apr 3 2018
+"RTN","GMRCCCRA",25,0)
+ ;;Patch 106 added code to include IN1 segments with reimburse flag, and division value in PV1.
+"RTN","GMRCCCRA",26,0)
+ ;;Patch 106 cleaned up per several ICRs.
+"RTN","GMRCCCRA",27,0)
+ ;;Patch 112 critical fix to remove control characters before sending consult, as bad data was causing infinite loop of HL7 process.
+"RTN","GMRCCCRA",28,0)
+ ;;Patch 123 consult status updates inbound to VistA, OHI additions outbound from VistA in IN1 segment
+"RTN","GMRCCCRA",29,0)
+ ;
+"RTN","GMRCCCRA",30,0)
+ ;
+"RTN","GMRCCCRA",31,0)
+EN(MSG) ;Entry point to routine from GMRC CONSULTS TO CCRA protocol attached to GMRC EVSEND OR
+"RTN","GMRCCCRA",32,0)
+ ;MSG = local array which contains the HL7 segments
+"RTN","GMRCCCRA",33,0)
+ N I,QUIT,MSGTYP,DFN,ORC,GMRCDA,FS,MSGTYP2,MSGTYP3,ACTIEN,FROMSVC,OK,OKFROM,STATUS
+"RTN","GMRCCCRA",34,0)
+ N UCID ;ABV/SCR 12/14/2017 *96*
+"RTN","GMRCCCRA",35,0)
+ S (I,QUIT)=0,I=$O(MSG(I)) Q:'I  S MSG=MSG(I) Q:$E(MSG,1,3)'="MSH"  D  Q:QUIT
+"RTN","GMRCCCRA",36,0)
+ .S FS=$E(MSG,4) I $P(MSG,FS,3)'="CONSULTS" S QUIT=1 Q
+"RTN","GMRCCCRA",37,0)
+ .S MSGTYP=$P(MSG,FS,9) I ",ORR,ORM,"'[","_MSGTYP_"," S QUIT=1 Q  ;ORR is new consult, ORM are updates
+"RTN","GMRCCCRA",38,0)
+ .Q
+"RTN","GMRCCCRA",39,0)
+ F  S I=$O(MSG(I)) Q:'I!QUIT  S MSG=MSG(I) D
+"RTN","GMRCCCRA",40,0)
+ .I $E(MSG,1,3)="PID" S DFN=+$P(MSG,FS,4) I 'DFN!('$D(^DPT(DFN))) S QUIT=1 Q
+"RTN","GMRCCCRA",41,0)
+ .I $E(MSG,1,3)="ORC" S ORC=MSG S GMRCDA=+$P(ORC,FS,4),MSGTYP2=$P(ORC,FS,2),MSGTYP3=$P(ORC,FS,6) D
+"RTN","GMRCCCRA",42,0)
+ ..D CCONTROL^GMRCCCR1(GMRCDA) ; strip out consult lines that contain only $C(13,10,10) to fix infinite msg loop - patch 112
+"RTN","GMRCCCRA",43,0)
+ ..I MSGTYP3="IP" S ACTIEN=$O(^GMR(123,GMRCDA,40,99999),-1) D
+"RTN","GMRCCCRA",44,0)
+ ...I ACTIEN S FROMSVC=$P($G(^GMR(123,GMRCDA,40,ACTIEN,0)),U,6) I FROMSVC S OKFROM=$$FEE(FROMSVC)
+"RTN","GMRCCCRA",45,0)
+ ..S OK=$$FEE($$GET1^DIQ(123,GMRCDA,1,"I"))
+"RTN","GMRCCCRA",46,0)
+ ..I '$G(OKFROM)&'$G(OK) S QUIT=1 ;not a Fee service or not forwarded from a fee service
+"RTN","GMRCCCRA",47,0)
+ ..Q
+"RTN","GMRCCCRA",48,0)
+ .Q
+"RTN","GMRCCCRA",49,0)
+ Q:QUIT
+"RTN","GMRCCCRA",50,0)
+ I MSGTYP="ORR" S MSGTYP3="NW"
+"RTN","GMRCCCRA",51,0)
+ S STATUS=$$STATUS(MSGTYP2,MSGTYP3) I STATUS="UNKNOWN" Q  ;don't process anything we haven't coded for
+"RTN","GMRCCCRA",52,0)
+ ;done verifying this consult needs to go to HCP, start building HL7 message
+"RTN","GMRCCCRA",53,0)
+ N SNAME,GMRCHL,ZERR,ZCNT,ECH,DATA,GDATA,URG,TYP,RES,EFFDT,PDUZ,PN,ADDR,PH,GMRCP,SENS,DX,DXCODE
+"RTN","GMRCCCRA",54,0)
+ N PCP,PCDUZ,PCPN,PCADDR,PCPH
+"RTN","GMRCCCRA",55,0)
+ ;S SNAME="GMRC HCP REF-"_$S(MSGTYP2="DR":"I14",MSGTYP="ORR":"I12",MSGTYP2="OC":"I14",MSGTYP2="OD":"I14",1:"I13")_" SERVER"
+"RTN","GMRCCCRA",56,0)
+ S SNAME="GMRC CCRA-HSRM REF-"_$S(MSGTYP2="DR":"I14",MSGTYP="ORR":"I12",MSGTYP2="OC":"I14",MSGTYP2="OD":"I14",1:"I13")_" SERVER"
+"RTN","GMRCCCRA",57,0)
+ S GMRCHL("EID")=$$FIND1^DIC(101,,"X",SNAME)
+"RTN","GMRCCCRA",58,0)
+ Q:'GMRCHL("EID")  D INIT^HLFNC2(GMRCHL("EID"),.GMRCHL)
+"RTN","GMRCCCRA",59,0)
+ S ZERR="",ZCNT=0,ECH=$E(GMRCHL("ECH")) ;component separator
+"RTN","GMRCCCRA",60,0)
+ ;start creating the segments.
+"RTN","GMRCCCRA",61,0)
+ S DATA=$NA(^TMP("GMRCHL7CCRA",$J)) K @DATA D GETS^DIQ(123,GMRCDA,"*","IE",DATA)
+"RTN","GMRCCCRA",62,0)
+ S GDATA=$NA(^TMP("GMRCHL7CCRA",$J,123,+GMRCDA_",")) ;File 123 data
+"RTN","GMRCCCRA",63,0)
+ ;RF1 segment
+"RTN","GMRCCCRA",64,0)
+ K GMRCM
+"RTN","GMRCCCRA",65,0)
+ S URG=$G(@GDATA@(5,"E")) ;I URG]"" S URG=$S(URG["ROUTINE":"R",URG["STAT":"S",1:"A")
+"RTN","GMRCCCRA",66,0)
+ S URG=$P(URG,"- ",2)
+"RTN","GMRCCCRA",67,0)
+ S TYP=$G(@GDATA@(1,"I"))_ECH_$G(@GDATA@(1,"E")) D GETLINK^TIUSRVT1(.RES,+TYP_";GMR(123.5,")
+"RTN","GMRCCCRA",68,0)
+ S TYP=TYP_ECH_ECH_$P($G(RES),U)_ECH_$P($G(RES),U,4)
+"RTN","GMRCCCRA",69,0)
+ S EFFDT=$$FMTHL7^XLFDT($G(@GDATA@(.01,"I")))
+"RTN","GMRCCCRA",70,0)
+ S ZCNT=ZCNT+1,GMRCM(ZCNT)="RF1|"_STATUS_"|"_URG_"|"_TYP_"||"_$G(@GDATA@(14,"I"))_"|"_GMRCDA_"|"_EFFDT_"||||"
+"RTN","GMRCCCRA",71,0)
+ S UCID=$$GET1^DIQ(123,GMRCDA,80)
+"RTN","GMRCCCRA",72,0)
+ S:$G(UCID)'="" GMRCM(ZCNT)="RF1|"_STATUS_"|"_URG_"|"_TYP_"||"_$G(@GDATA@(14,"I"))_"|"_UCID_"|"_EFFDT_"||||"
+"RTN","GMRCCCRA",73,0)
+ S:$G(UCID)="" ^XTMP("GMRCHL7H","UCID IS EMPTY",GMRCDA)=GMRCDA ;TEMP ERROR HANDLER
+"RTN","GMRCCCRA",74,0)
+ ;PRD segments 
+"RTN","GMRCCCRA",75,0)
+ ;"RP"- Referring Provider segment 
+"RTN","GMRCCCRA",76,0)
+ S PDUZ=+$G(@GDATA@(10,"I")),PN=$G(@GDATA@(10,"E")),PN=$$HLNAME^XLFNAME(PN,"S",ECH),$P(PN,ECH,9)=PDUZ
+"RTN","GMRCCCRA",77,0)
+ N NPI S NPI=$P($G(^VA(200,PDUZ,"NPI")),"^")
+"RTN","GMRCCCRA",78,0)
+ S ADDR=$$ADDR^GMRCHL7P(PDUZ,.GMRCHL),PH=$$PH^GMRCHL7P(PDUZ,.GMRCHL)
+"RTN","GMRCCCRA",79,0)
+ S ZCNT=ZCNT+1,GMRCM(ZCNT)="PRD|RP|"_PN_"|"_$G(ADDR)_"||"_$G(PH)_"||"_+$G(NPI)
+"RTN","GMRCCCRA",80,0)
+ ;;commented out PCP code- 2nd PRD segment -until Intersystems ready M14/M15- Cognosante-LB Apr 3 2018
+"RTN","GMRCCCRA",81,0)
+ ;;PCP code-starts here-
+"RTN","GMRCCCRA",82,0)
+ ;;"PP"- Primary Care Provider segment if the info exists 
+"RTN","GMRCCCRA",83,0)
+ S PCP=$$OUTPTPR^SDUTL3(DFN)
+"RTN","GMRCCCRA",84,0)
+ I +PCP  D
+"RTN","GMRCCCRA",85,0)
+ . S PCDUZ=+PCP,PCPN=$P(PCP,"^",2),PCPN=$$HLNAME^XLFNAME(PCPN,"S",ECH),$P(PCPN,ECH,9)=PCDUZ
+"RTN","GMRCCCRA",86,0)
+ . S PCADDR=$$ADDR^GMRCHL7P(PCDUZ,.GMRCHL),PCPH=$$PH^GMRCHL7P(PCDUZ,.GMRCHL)
+"RTN","GMRCCCRA",87,0)
+ . S NPI=$P($G(^VA(200,PCDUZ,"NPI")),"^")
+"RTN","GMRCCCRA",88,0)
+ . S ZCNT=ZCNT+1,GMRCM(ZCNT)="PRD|PP|"_PCPN_"|"_$G(PCADDR)_"||"_$G(PCPH)_"||"_+$G(NPI)
+"RTN","GMRCCCRA",89,0)
+ ;;PCP code-ends here-
+"RTN","GMRCCCRA",90,0)
+ ;PID segment May be multiple nodes in the return array - make nodes 2-n sub nodes
+"RTN","GMRCCCRA",91,0)
+ D BLDPID^VAFCQRY(DFN,1,"ALL",.GMRCP,.GMRCHL,ZERR)
+"RTN","GMRCCCRA",92,0)
+ S I=0 F  S I=$O(GMRCP(I)) Q:'I  D
+"RTN","GMRCCCRA",93,0)
+ .I I=1 S ZCNT=ZCNT+1,GMRCM(ZCNT)=$TR(GMRCP(I),"""") Q
+"RTN","GMRCCCRA",94,0)
+ .S GMRCM(ZCNT,I)=$TR(GMRCP(I),"""")
+"RTN","GMRCCCRA",95,0)
+ K GMRCP
+"RTN","GMRCCCRA",96,0)
+ ; MJ - 5/24/2018 patch 106 changes to add - IN1 segments
+"RTN","GMRCCCRA",97,0)
+ N GMRC0,I,INSP,INSPX,RETVAL,X,GMRCIN1,N,GMRCSTR,PLAN,PRECERT,TYPE ; PLAN, PRECERT, TYPE added for patch 123
+"RTN","GMRCCCRA",98,0)
+ S GMRCSTR=",3,4,5,7,8,9,12,13,15,16,17,28,36"    ; IN1 fields to capture
+"RTN","GMRCCCRA",99,0)
+ D EN^VAFHLIN1(DFN,GMRCSTR,,"|","GMRCIN1","^~\&") ; get IN1 segments
+"RTN","GMRCCCRA",100,0)
+ ; loop through IN1 segments found
+"RTN","GMRCCCRA",101,0)
+ F I=0:0 S I=$O(GMRCIN1(I)) Q:'I  I I>0 D
+"RTN","GMRCCCRA",102,0)
+ . S GMRC0=$G(GMRCIN1(I,0)) I GMRC0']"" Q
+"RTN","GMRCCCRA",103,0)
+ . S INSP=$P(GMRC0,"|",4)
+"RTN","GMRCCCRA",104,0)
+ . S PRECERT=""  ; added for patch 123
+"RTN","GMRCCCRA",105,0)
+ . S N=0 F  S N=$O(^DPT(DFN,.312,N)) Q:'N  I $D(^(N,0)) D
+"RTN","GMRCCCRA",106,0)
+ .. S X=^DPT(DFN,.312,N,0)
+"RTN","GMRCCCRA",107,0)
+ .. ; begin patch 123 mods
+"RTN","GMRCCCRA",108,0)
+ .. N COORDBEN,LASTVER,Y
+"RTN","GMRCCCRA",109,0)
+ .. S COORDBEN=$P(X,"^",20)
+"RTN","GMRCCCRA",110,0)
+ .. S COORDBEN=$S(COORDBEN=1:"PRIMARY",COORDBEN=2:"SECONDARY",COORDBEN=3:"TERTIARY",1:"")
+"RTN","GMRCCCRA",111,0)
+ .. S $P(GMRC0,"|",22)=COORDBEN
+"RTN","GMRCCCRA",112,0)
+ .. S Y=$G(^DPT(DFN,.312,N,1)),LASTVER=$P(Y,"^",3)
+"RTN","GMRCCCRA",113,0)
+ .. I +LASTVER>0 S LASTVER=LASTVER+17000000
+"RTN","GMRCCCRA",114,0)
+ .. S $P(GMRC0,"|",30)=LASTVER
+"RTN","GMRCCCRA",115,0)
+ .. S PLAN=+$P(X,"^",18)
+"RTN","GMRCCCRA",116,0)
+ .. S PRECERT=$G(^IBA(355.3,PLAN,0)),TYPE=$P(PRECERT,"^",15),PRECERT=$P(PRECERT,"^",6)
+"RTN","GMRCCCRA",117,0)
+ .. S PRECERT=$S(PRECERT=1:"YES",0:"NO",1:"")
+"RTN","GMRCCCRA",118,0)
+ .. S $P(GMRC0,"|",16)=TYPE
+"RTN","GMRCCCRA",119,0)
+ .. S PLANID=+$G(^IBA(355.3,PLAN,6)) S:PLANID=0 PLANID=""
+"RTN","GMRCCCRA",120,0)
+ .. I $L(PLANID)>0 S PLANID=$P($G(^IBCNR(366.03,PLANID,0)),"^",1)
+"RTN","GMRCCCRA",121,0)
+ .. S $P(GMRC0,"|",3)=PLANID ; 
+"RTN","GMRCCCRA",122,0)
+ .. K COORDBEN,LASTVER,PLANID,Y
+"RTN","GMRCCCRA",123,0)
+ .. ; end patch 123 mods
+"RTN","GMRCCCRA",124,0)
+ .. N X1 S X1=$G(^DIC(36,+X,0)) I X1="" Q   ; no insurance company entry
+"RTN","GMRCCCRA",125,0)
+ .. S INSPX=$P(X,U,1)
+"RTN","GMRCCCRA",126,0)
+ .. I INSP=INSPX D                          ; insurance plan found matches that of the segment
+"RTN","GMRCCCRA",127,0)
+ ... S RETVAL=$$GET1^DIQ(36,INSP_",",1,"I") ; get reimbursable flag
+"RTN","GMRCCCRA",128,0)
+ ... S RETVAL=$S(RETVAL="Y":"YES",RETVAL="*":"*",RETVAL="**":"**",RETVAL="":"YES",RETVAL="N":"NO",1:"?")
+"RTN","GMRCCCRA",129,0)
+ ... S $P(GMRC0,"|",33)=RETVAL              ; add flag back into segment
+"RTN","GMRCCCRA",130,0)
+ ... ; get address
+"RTN","GMRCCCRA",131,0)
+ ... S $P(GMRC0,"|",6)=$$GETADD^GMRCCCR1(INSP) ; get address info and put it into segment field 5
+"RTN","GMRCCCRA",132,0)
+ ... S GMRCIN1(I,0)=GMRC0
+"RTN","GMRCCCRA",133,0)
+ . S ZCNT=ZCNT+1,GMRCM(ZCNT)=GMRCIN1(I,0) ; add segment to message
+"RTN","GMRCCCRA",134,0)
+ . ; patch 123 mods - if PRECERT value exists, create IN3 segment
+"RTN","GMRCCCRA",135,0)
+ . I $L(PRECERT) S ZCNT=ZCNT+1,GMRCM(ZCNT)="IN3",$P(GMRCM(ZCNT),"|",21)="^"_PRECERT,PRECERT=""
+"RTN","GMRCCCRA",136,0)
+ . ; end patch 123 mods
+"RTN","GMRCCCRA",137,0)
+ K GMRC0,I,INSP,INSPX,RETVAL,X,GMRCIN1,N,GMRCSTR,PLAN,PRECERT,TYPE ; PLAN, PRECERT, TYPE added for patch 123
+"RTN","GMRCCCRA",138,0)
+ ; end patch 106 changes
+"RTN","GMRCCCRA",139,0)
+ ;DG1 segment ;Patch 85 modified
+"RTN","GMRCCCRA",140,0)
+ S DX=$G(@GDATA@(30,"E"))
+"RTN","GMRCCCRA",141,0)
+ S DXCODE=$G(@GDATA@(30.1,"E"))
+"RTN","GMRCCCRA",142,0)
+ I $G(DX)["(" S DX=$P(DX,"(")
+"RTN","GMRCCCRA",143,0)
+ S ZCNT=ZCNT+1,GMRCM(ZCNT)="DG1|1||"_$G(DXCODE)_ECH_$G(DX)_"|||W"
+"RTN","GMRCCCRA",144,0)
+ ;OBR segment
+"RTN","GMRCCCRA",145,0)
+ S ZCNT=ZCNT+1,GMRCM(ZCNT)="OBR|1|"_$P(ORC,FS,3)_"|"_$P(ORC,FS,4)_"|ZZ||"_$$FMTHL7^XLFDT($G(@GDATA@(17,"I")))
+"RTN","GMRCCCRA",146,0)
+ ;PV1 segment
+"RTN","GMRCCCRA",147,0)
+ D IN5^VADPT ;VAIP(18)=Attending Physician, VAIP(13,5)=Primary Physician for admission
+"RTN","GMRCCCRA",148,0)
+ S ZCNT=ZCNT+1,GMRCM(ZCNT)="PV1|1|"_$S(VAIP(13):"I",1:"O")_"|||||"_VAIP(18)_"|"
+"RTN","GMRCCCRA",149,0)
+ I VAIP(5) S $P(GMRCM(ZCNT),"|",4)=VAIP(5) ;location for last movement event
+"RTN","GMRCCCRA",150,0)
+ ; patch 106 - add in division value
+"RTN","GMRCCCRA",151,0)
+ N GMRCDIV
+"RTN","GMRCCCRA",152,0)
+ S GMRCDIV=$$NS^XUAF4(DUZ(2)),GMRCDIV=$P(GMRCDIV,"^",2)
+"RTN","GMRCCCRA",153,0)
+ N A,B S A="&"_GMRCDIV,B=$P(GMRCM(ZCNT),"|",4),$P(B,"^",4)=A,$P(GMRCM(ZCNT),"|",4)=B K A,B
+"RTN","GMRCCCRA",154,0)
+ K GMRCDIV
+"RTN","GMRCCCRA",155,0)
+ ; end patch 106 mod
+"RTN","GMRCCCRA",156,0)
+ ;
+"RTN","GMRCCCRA",157,0)
+ S SENS=$$SSN^DPTLK1(DFN) I SENS["*SENSITIVE*" S $P(GMRCM(ZCNT),"|",17)="R" ;sensitive patient
+"RTN","GMRCCCRA",158,0)
+ S $P(GMRCM(ZCNT),"|",18)=VAIP(13,5)
+"RTN","GMRCCCRA",159,0)
+ ; begin patch 106 mod
+"RTN","GMRCCCRA",160,0)
+ K VAIP
+"RTN","GMRCCCRA",161,0)
+ ; end patch 106 mod
+"RTN","GMRCCCRA",162,0)
+ D KVA^VADPT
+"RTN","GMRCCCRA",163,0)
+ ;NTE segment
+"RTN","GMRCCCRA",164,0)
+ D NTE(.GMRCHL)
+"RTN","GMRCCCRA",165,0)
+ K ^TMP("GMRCHL7CCRA",$J)
+"RTN","GMRCCCRA",166,0)
+ ;
+"RTN","GMRCCCRA",167,0)
+ ; When done, re-serve the (modified) referral message to CCRA
+"RTN","GMRCCCRA",168,0)
+ N HL,HLA,GMRCRES,GMRCHLP
+"RTN","GMRCCCRA",169,0)
+ M HL=GMRCHL,HLA("HLS")=GMRCM
+"RTN","GMRCCCRA",170,0)
+ M GMRCHL=^XTMP("GMRCHL7H","MESSAGE")
+"RTN","GMRCCCRA",171,0)
+ D GENERATE^HLMA(GMRCHL("EID"),"LM",1,.GMRCRES,"",.GMRCHLP)
+"RTN","GMRCCCRA",172,0)
+ Q
+"RTN","GMRCCCRA",173,0)
+NTE(HL) ;Find Reason for Request for New or Resubmit entries, Find TIU for complete, find Activity Comment for others
+"RTN","GMRCCCRA",174,0)
+ N NTECNT,X S NTECNT=1
+"RTN","GMRCCCRA",175,0)
+ I (MSGTYP="ORR"&(MSGTYP2'="DR"))!((MSGTYP3="IP")&'$G(OKFROM)) D  Q
+"RTN","GMRCCCRA",176,0)
+ .D AUTHDTTM
+"RTN","GMRCCCRA",177,0)
+ .S ZCNT=ZCNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"|P|Reason for Request"
+"RTN","GMRCCCRA",178,0)
+ .S I=0 F  S I=$O(@GDATA@(20,I)) Q:'I  S X=@GDATA@(20,I) Q:X["^TMP"  D
+"RTN","GMRCCCRA",179,0)
+ ..S X=$$TRIM^XLFSTR(X) I $L(X)=0 Q
+"RTN","GMRCCCRA",180,0)
+ ..I X=$C(9,9) Q
+"RTN","GMRCCCRA",181,0)
+ ..; S X=$$TIUC^GMRCCCR1(X)
+"RTN","GMRCCCRA",182,0)
+ ..D HL7TXT^GMRCHL7P(.X,.HL,"\")
+"RTN","GMRCCCRA",183,0)
+ ..S ZCNT=ZCNT+1,NTECNT=NTECNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||"_X
+"RTN","GMRCCCRA",184,0)
+ ..Q
+"RTN","GMRCCCRA",185,0)
+ .Q
+"RTN","GMRCCCRA",186,0)
+ ; Build NTE for CM^ADDENDED
+"RTN","GMRCCCRA",187,0)
+ I MSGTYP2="XX",MSGTYP3="CM" D  Q
+"RTN","GMRCCCRA",188,0)
+ .N GMRCN,GMRCTXT,GMRCCMP,GMRCASTR
+"RTN","GMRCCCRA",189,0)
+ .D AUTHDTTM
+"RTN","GMRCCCRA",190,0)
+ .S ZCNT=ZCNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"|P|Progress Note"
+"RTN","GMRCCCRA",191,0)
+ .S GMRCN=$P($G(^GMR(123,GMRCDA,50,1,0)),U) I GMRCN'["TIU(8925," Q
+"RTN","GMRCCCRA",192,0)
+ .D TGET^TIUSRVR1(.GMRCTXT,$S(+$G(GMRCPARN):+GMRCPARN,+$G(TIUDA):+TIUDA,1:+GMRCN),"VIEW")
+"RTN","GMRCCCRA",193,0)
+ .;
+"RTN","GMRCCCRA",194,0)
+ .; line below modified in patch 106 to use GET1^DIQ call for date
+"RTN","GMRCCCRA",195,0)
+ .S GMRCCMP=$$DATE^GMRCCCRA($$GET1^DIQ(8925,+TIUDA_",",1301,"I"),"MM/DD/CCYY")_" ADDENDUM"_" STATUS: "_$$GET1^DIQ(8925,+TIUDA_",",.05)
+"RTN","GMRCCCRA",196,0)
+ .S (I,GMRCASTR)=0
+"RTN","GMRCCCRA",197,0)
+ .F  S I=$O(@GMRCTXT@(I)) Q:I=""  S X=@GMRCTXT@(I) D
+"RTN","GMRCCCRA",198,0)
+ ..I X=GMRCCMP S GMRCASTR=I
+"RTN","GMRCCCRA",199,0)
+ .;
+"RTN","GMRCCCRA",200,0)
+ .I GMRCASTR D
+"RTN","GMRCCCRA",201,0)
+ ..S I=GMRCASTR-1
+"RTN","GMRCCCRA",202,0)
+ ..F  S I=$O(@GMRCTXT@(I)) Q:I=""  S X=@GMRCTXT@(I) D
+"RTN","GMRCCCRA",203,0)
+ ...S X=$$TRIM^XLFSTR(X) I $L(X)=0 Q
+"RTN","GMRCCCRA",204,0)
+ ...D HL7TXT^GMRCHL7P(.X,.HL,"\")
+"RTN","GMRCCCRA",205,0)
+ ...; S X=$$TIUC^GMRCCCR1(X)
+"RTN","GMRCCCRA",206,0)
+ ...S ZCNT=ZCNT+1,NTECNT=NTECNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||"_X
+"RTN","GMRCCCRA",207,0)
+ .K ^TMP("TIUVIEW",$J) ;clean up results of TIUSRVR1 call
+"RTN","GMRCCCRA",208,0)
+ ;
+"RTN","GMRCCCRA",209,0)
+ I MSGTYP3="CM" D  Q
+"RTN","GMRCCCRA",210,0)
+ .N GMRCN,GMRCTXT
+"RTN","GMRCCCRA",211,0)
+ .D AUTHDTTM
+"RTN","GMRCCCRA",212,0)
+ .S ZCNT=ZCNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"|P|Progress Note"
+"RTN","GMRCCCRA",213,0)
+ .S GMRCN=$P($G(^GMR(123,GMRCDA,50,1,0)),U) I GMRCN'["TIU(8925," Q
+"RTN","GMRCCCRA",214,0)
+ .D TGET^TIUSRVR1(.GMRCTXT,$S(+$G(TIUDA):+TIUDA,1:+GMRCN),"VIEW") S I=0
+"RTN","GMRCCCRA",215,0)
+ .F  S I=$O(@GMRCTXT@(I)) Q:I=""  S X=@GMRCTXT@(I) D
+"RTN","GMRCCCRA",216,0)
+ ..S X=$$TRIM^XLFSTR(X) I $L(X)=0 Q
+"RTN","GMRCCCRA",217,0)
+ ..D HL7TXT^GMRCHL7P(.X,.HL,"\")
+"RTN","GMRCCCRA",218,0)
+ ..; S X=$$TIUC^GMRCCCR1(X)
+"RTN","GMRCCCRA",219,0)
+ ..S ZCNT=ZCNT+1,NTECNT=NTECNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||"_X
+"RTN","GMRCCCRA",220,0)
+ ..Q
+"RTN","GMRCCCRA",221,0)
+ .K ^TMP("TIUVIEW",$J) ;clean up results of TIUSRVR1 call
+"RTN","GMRCCCRA",222,0)
+ .Q
+"RTN","GMRCCCRA",223,0)
+ I (MSGTYP2="DR") D  Q
+"RTN","GMRCCCRA",224,0)
+ .N ORIEN,CMT
+"RTN","GMRCCCRA",225,0)
+ .D AUTHDTTM
+"RTN","GMRCCCRA",226,0)
+ .S ZCNT=ZCNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"|L|Activity Comment"
+"RTN","GMRCCCRA",227,0)
+ .S ORIEN=$G(@GDATA@(.03,"I")) I 'ORIEN Q
+"RTN","GMRCCCRA",228,0)
+ .S CMT=$$GET1^DIQ(100,ORIEN_",",64),CMT=$$TRIM^XLFSTR($G(CMT))
+"RTN","GMRCCCRA",229,0)
+ .S CMT=$TR($G(CMT),$C(13,10,10),$C(10,10))
+"RTN","GMRCCCRA",230,0)
+ .D HL7TXT^GMRCHL7P(.CMT,.HL,"\")
+"RTN","GMRCCCRA",231,0)
+ .;S CMT=$$TIUC^GMRCCCR1(CMT)
+"RTN","GMRCCCRA",232,0)
+ .S ZCNT=ZCNT+1,GMRCM(ZCNT)="NTE|2||"_CMT
+"RTN","GMRCCCRA",233,0)
+ .Q
+"RTN","GMRCCCRA",234,0)
+ N ACT,ACTD,ACTIEN,Q
+"RTN","GMRCCCRA",235,0)
+ S Q=0,ACTIEN=9999 F  S ACTIEN=$O(^GMR(123,GMRCDA,40,ACTIEN),-1) Q:'ACTIEN!Q  S X=$G(^GMR(123,GMRCDA,40,ACTIEN,0)) D
+"RTN","GMRCCCRA",236,0)
+ .S ACT=$P(X,U,2),ACTD=$P($P($G(^GMR(123.1,+ACT,0)),U)," ")
+"RTN","GMRCCCRA",237,0)
+ .I $P($P(STATUS,ECH,2)," ")'=ACTD Q
+"RTN","GMRCCCRA",238,0)
+ .I +$O(^GMR(123,GMRCDA,40,ACTIEN,1,0)) D AUTHDTTM
+"RTN","GMRCCCRA",239,0)
+ .S I=0 F  S I=$O(^GMR(123,GMRCDA,40,ACTIEN,1,I)) Q:'I  S X=$G(^GMR(123,GMRCDA,40,ACTIEN,1,I,0)) D
+"RTN","GMRCCCRA",240,0)
+ ..I 'Q S ZCNT=ZCNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"|L|Activity Comment",Q=1
+"RTN","GMRCCCRA",241,0)
+ ..S X=$$TRIM^XLFSTR(X) I $L(X)=0 Q
+"RTN","GMRCCCRA",242,0)
+ ..D HL7TXT^GMRCHL7P(.X,.HL,"\")
+"RTN","GMRCCCRA",243,0)
+ ..; S X=$$TIUC^GMRCCCR1(X)
+"RTN","GMRCCCRA",244,0)
+ ..S ZCNT=ZCNT+1,NTECNT=NTECNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||"_X
+"RTN","GMRCCCRA",245,0)
+ ..Q
+"RTN","GMRCCCRA",246,0)
+ .Q
+"RTN","GMRCCCRA",247,0)
+ Q
+"RTN","GMRCCCRA",248,0)
+AUTHDTTM ; Add Author and Date/Time to NTE
+"RTN","GMRCCCRA",249,0)
+ S ACTIEN=$G(ACTIEN,$O(^GMR(123,GMRCDA,40,99999),-1))
+"RTN","GMRCCCRA",250,0)
+ I '+ACTIEN D  Q
+"RTN","GMRCCCRA",251,0)
+ .S ZCNT=ZCNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||Author\R\\R\"
+"RTN","GMRCCCRA",252,0)
+ .S ZCNT=ZCNT+1,NTECNT=NTECNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||Datetime\R\\R\"
+"RTN","GMRCCCRA",253,0)
+ .S ZCNT=ZCNT+1,NTECNT=NTECNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||Comment\R\\R\"
+"RTN","GMRCCCRA",254,0)
+ .S NTECNT=4
+"RTN","GMRCCCRA",255,0)
+ ;
+"RTN","GMRCCCRA",256,0)
+ S ZCNT=ZCNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||Author\R\\R\"_$$GET1^DIQ(123.02,ACTIEN_","_GMRCDA_",",4)
+"RTN","GMRCCCRA",257,0)
+ S ZCNT=ZCNT+1,NTECNT=NTECNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||Datetime\R\\R\"_$$FMTHL7^XLFDT($$GET1^DIQ(123.02,ACTIEN_","_GMRCDA_",",2,"I"))
+"RTN","GMRCCCRA",258,0)
+ S ZCNT=ZCNT+1,NTECNT=NTECNT+1,GMRCM(ZCNT)="NTE|"_NTECNT_"||Comment\R\\R\"
+"RTN","GMRCCCRA",259,0)
+ S NTECNT=4
+"RTN","GMRCCCRA",260,0)
+ Q
+"RTN","GMRCCCRA",261,0)
+STATUS(T1,T2) ;get status for event
+"RTN","GMRCCCRA",262,0)
+ ;also add IP^COMMENT when those events are captured
+"RTN","GMRCCCRA",263,0)
+ I T2="DC"!(T1="DR") Q "DC^DISCONTINUED"
+"RTN","GMRCCCRA",264,0)
+ I T2="NW" Q "NW^CPRS RELEASED ORDER"
+"RTN","GMRCCCRA",265,0)
+ I T1="SC"&(T2="SC") Q "SC^RECEIVED"
+"RTN","GMRCCCRA",266,0)
+ I T1="SC"&(T2="ZC") Q "SC^SCHEDULED"
+"RTN","GMRCCCRA",267,0)
+ I T1="XX"&(T2="XX") Q "IP^ADDED COMMENT"
+"RTN","GMRCCCRA",268,0)
+ I T2="CA" Q "CA^CANCELLED"
+"RTN","GMRCCCRA",269,0)
+ I T2="CM" D
+"RTN","GMRCCCRA",270,0)
+ .I '+$G(GMRCPARN),'+$G(TIUDA) S GMRCPARN=$P($G(^GMR(123,GMRCDA,50,1,0)),U)
+"RTN","GMRCCCRA",271,0)
+ .S $P(ORC,FS,4)=$S(+$G(GMRCPARN):+GMRCPARN_";TIU^TIU",+$G(TIUDA):+TIUDA_";TIU^TIU",1:$P(ORC,FS,4))
+"RTN","GMRCCCRA",272,0)
+ I T1="XX"&(T2="CM") Q "CM^ADDENDED"
+"RTN","GMRCCCRA",273,0)
+ I T2="CM" Q "CM^COMPLETE"
+"RTN","GMRCCCRA",274,0)
+ I T1="XX"&(T2="IP")&$G(OKFROM) Q "XX^FORWARDED"
+"RTN","GMRCCCRA",275,0)
+ I T1="XX"&(T2="IP") Q "IP^RESUBMITTED"
+"RTN","GMRCCCRA",276,0)
+ Q "UNKNOWN"
+"RTN","GMRCCCRA",277,0)
+FEE(FEESVC) ;send only if name contains HCPS
+"RTN","GMRCCCRA",278,0)
+ I $G(FEESVC)="" Q 0
+"RTN","GMRCCCRA",279,0)
+ N VAL
+"RTN","GMRCCCRA",280,0)
+ S VAL=0
+"RTN","GMRCCCRA",281,0)
+ I $$UP^XLFSTR($$GET1^DIQ(123.5,FEESVC,.01,"E"))["HCPS" S VAL=1
+"RTN","GMRCCCRA",282,0)
+ I $$UP^XLFSTR($$GET1^DIQ(123.5,FEESVC,.01,"E"))["COMMUNITY CARE" S VAL=1 ;*99 - PB - Mar 5, 2018
+"RTN","GMRCCCRA",283,0)
+ I $$UP^XLFSTR($$GET1^DIQ(123.5,FEESVC,.01,"E"))["DOD TREATMENT" S VAL=1 ;*99 - PB - Mar 5, 2018
+"RTN","GMRCCCRA",284,0)
+ Q VAL
+"RTN","GMRCCCRA",285,0)
+COMMENT(GMRCDA) ;send comments on Non VA Care consults to HCP
+"RTN","GMRCCCRA",286,0)
+ ;create a fake event for HCP since there is no HL7 event passed to GMRC EVSEND OR
+"RTN","GMRCCCRA",287,0)
+ I '$G(GMRCDA) Q
+"RTN","GMRCCCRA",288,0)
+ ;N DFN S DFN=$$GET1^DIQ(123,GMRCDA,.02,"I") I 'DFN,'$D(^DPT(DFN)) Q ; modified "," to "!" within patch 106
+"RTN","GMRCCCRA",289,0)
+ N DFN S DFN=+$$GET1^DIQ(123,GMRCDA,.02,"I") I 'DFN!('$D(^DPT(DFN))) Q
+"RTN","GMRCCCRA",290,0)
+ N T S T(1)="MSH|^~\&|CONSULTS||||||ORM"
+"RTN","GMRCCCRA",291,0)
+ S T(2)="PID|||"_DFN
+"RTN","GMRCCCRA",292,0)
+ S T(4)="ORC|XX|"_$$GET1^DIQ(123,GMRCDA,.03,"I")_";"_$$OITEM($$GET1^DIQ(123,GMRCDA,.03,"I"))_"^OR|"_GMRCDA_";GMRC^GMRC||XX|"
+"RTN","GMRCCCRA",293,0)
+ D EN(.T)
+"RTN","GMRCCCRA",294,0)
+ Q
+"RTN","GMRCCCRA",295,0)
+ADDEND(TIUDA) ;send addendums on Non VA Care consults to HCP
+"RTN","GMRCCCRA",296,0)
+ ;create a fake event for HCP since there is no HL7 event passed to GMRC EVSEND OR
+"RTN","GMRCCCRA",297,0)
+ ;
+"RTN","GMRCCCRA",298,0)
+ ; modified in patch GMRC*3.0*106 to use ICR 2693
+"RTN","GMRCCCRA",299,0)
+ I '$G(TIUDA) Q
+"RTN","GMRCCCRA",300,0)
+ Q:'$D(^TIU(8925,+TIUDA,0))
+"RTN","GMRCCCRA",301,0)
+ N TIUTYP,DFN,GMRCPARN,GMRCO,GMRCD,GMRCDA,GMRCD1,GMRC8925,T
+"RTN","GMRCCCRA",302,0)
+ D EXTRACT^TIULQ(TIUDA)
+"RTN","GMRCCCRA",303,0)
+ ;
+"RTN","GMRCCCRA",304,0)
+ ; Quit if not an addendum
+"RTN","GMRCCCRA",305,0)
+ S TIUTYP=^TMP("TIULQ",$J,+TIUDA,.01,"I")
+"RTN","GMRCCCRA",306,0)
+ I TIUTYP'=81 Q
+"RTN","GMRCCCRA",307,0)
+ ;
+"RTN","GMRCCCRA",308,0)
+ S DFN=^TMP("TIULQ",$J,+TIUDA,.02,"I")
+"RTN","GMRCCCRA",309,0)
+ I 'DFN!('$D(^DPT(DFN))) Q
+"RTN","GMRCCCRA",310,0)
+ ;
+"RTN","GMRCCCRA",311,0)
+ ; Get parent note IEN, if addendum IEN is passed in:
+"RTN","GMRCCCRA",312,0)
+ S GMRCPARN=^TMP("TIULQ",$J,+TIUDA,.06,"I")
+"RTN","GMRCCCRA",313,0)
+ ;
+"RTN","GMRCCCRA",314,0)
+ ; Quit if not an addendum
+"RTN","GMRCCCRA",315,0)
+ ;S TIUTYP=$$GET1^DIQ(8925,TIUDA,.01,"I")
+"RTN","GMRCCCRA",316,0)
+ ;I TIUTYP'=81 Q
+"RTN","GMRCCCRA",317,0)
+ ;
+"RTN","GMRCCCRA",318,0)
+ ;S DFN=$$GET1^DIQ(8925,TIUDA,.02,"I")
+"RTN","GMRCCCRA",319,0)
+ ;I 'DFN,'$D(^DPT(DFN)) Q
+"RTN","GMRCCCRA",320,0)
+ ;
+"RTN","GMRCCCRA",321,0)
+ ; Get parent note IEN, if addendum IEN is passed in:
+"RTN","GMRCCCRA",322,0)
+ ;S GMRCPARN=$$GET1^DIQ(8925,TIUDA,.06,"I")
+"RTN","GMRCCCRA",323,0)
+ ;
+"RTN","GMRCCCRA",324,0)
+ ; end patch 106 mods
+"RTN","GMRCCCRA",325,0)
+ ;
+"RTN","GMRCCCRA",326,0)
+ S (GMRCO,GMRCD)=0
+"RTN","GMRCCCRA",327,0)
+ F  S GMRCD=$O(^GMR(123,"AD",DFN,GMRCD)) Q:'GMRCD!(GMRCO)  D
+"RTN","GMRCCCRA",328,0)
+ .S GMRCDA=0
+"RTN","GMRCCCRA",329,0)
+ .F  S GMRCDA=$O(^GMR(123,"AD",DFN,GMRCD,GMRCDA)) Q:'GMRCDA!(GMRCO)  D
+"RTN","GMRCCCRA",330,0)
+ ..S GMRCD1=0
+"RTN","GMRCCCRA",331,0)
+ ..F  S GMRCD1=$O(^GMR(123,GMRCDA,50,GMRCD1)) Q:'GMRCD1!(GMRCO)  D
+"RTN","GMRCCCRA",332,0)
+ ...S GMRC8925=$$GET1^DIQ(123.03,GMRCD1_","_GMRCDA_",",.01,"I")
+"RTN","GMRCCCRA",333,0)
+ ...I +GMRC8925=$S(+GMRCPARN:+GMRCPARN,1:TIUDA) S GMRCO=GMRCDA
+"RTN","GMRCCCRA",334,0)
+ Q:'GMRCO
+"RTN","GMRCCCRA",335,0)
+ ;
+"RTN","GMRCCCRA",336,0)
+ S T(1)="MSH|^~\&|CONSULTS||||||ORM"
+"RTN","GMRCCCRA",337,0)
+ S T(2)="PID|||"_DFN
+"RTN","GMRCCCRA",338,0)
+ S T(4)="ORC|XX|"_$$GET1^DIQ(123,GMRCO,.03,"I")_";"_$$OITEM($$GET1^DIQ(123,GMRCO,.03,"I"))_"^OR|"_GMRCO_";GMRC^GMRC||CM|"
+"RTN","GMRCCCRA",339,0)
+ I $$FEE($$GET1^DIQ(123,GMRCO,1,"I")) D EN(.T)
+"RTN","GMRCCCRA",340,0)
+ Q
+"RTN","GMRCCCRA",341,0)
+TIME(X,FMT) ; Copied from $$TIME^TIULS
+"RTN","GMRCCCRA",342,0)
+ ; Receives X as 2910419.01 and FMT=Return Format of time (HH:MM:SS).
+"RTN","GMRCCCRA",343,0)
+ N HR,MIN,SEC,TIUI
+"RTN","GMRCCCRA",344,0)
+ I $S('$D(FMT):1,'$L(FMT):1,1:0) S FMT="HR:MIN"
+"RTN","GMRCCCRA",345,0)
+ S X=$P(X,".",2),HR=$E(X,1,2)_$E("00",0,2-$L($E(X,1,2))),MIN=$E(X,3,4)_$E("00",0,2-$L($E(X,3,4))),SEC=$E(X,5,6)_$E("00",0,2-$L($E(X,5,6)))
+"RTN","GMRCCCRA",346,0)
+ F TIUI="HR","MIN","SEC" S:FMT[TIUI FMT=$P(FMT,TIUI)_@TIUI_$P(FMT,TIUI,2)
+"RTN","GMRCCCRA",347,0)
+ Q FMT
+"RTN","GMRCCCRA",348,0)
+DATE(X,FMT) ; Copied from $$DATE^TIULS
+"RTN","GMRCCCRA",349,0)
+ ; Call with X=2910419.01 and FMT=Return Format of date ("MM/DD")
+"RTN","GMRCCCRA",350,0)
+ N AMTH,MM,CC,DD,YY,TIUI,TIUTMP
+"RTN","GMRCCCRA",351,0)
+ I +X'>0 S $P(TIUTMP," ",$L($G(FMT))+1)="",FMT=TIUTMP G QDATE
+"RTN","GMRCCCRA",352,0)
+ I $S('$D(FMT):1,'$L(FMT):1,1:0) S FMT="MM/DD/YY"
+"RTN","GMRCCCRA",353,0)
+ S MM=$E(X,4,5),DD=$E(X,6,7),YY=$E(X,2,3),CC=17+$E(X)
+"RTN","GMRCCCRA",354,0)
+ S:FMT["AMTH" AMTH=$P("JAN^FEB^MAR^APR^MAY^JUN^JUL^AUG^SEP^OCT^NOV^DEC","^",+MM)
+"RTN","GMRCCCRA",355,0)
+ F TIUI="AMTH","MM","DD","CC","YY" S:FMT[TIUI FMT=$P(FMT,TIUI)_@TIUI_$P(FMT,TIUI,2)
+"RTN","GMRCCCRA",356,0)
+ I FMT["HR" S FMT=$$TIME(X,FMT)
+"RTN","GMRCCCRA",357,0)
+QDATE Q FMT
+"RTN","GMRCCCRA",358,0)
+OITEM(GMRCORDN) ; Orderable Item
+"RTN","GMRCCCRA",359,0)
+ ; patch 106 - modified to use ICR 2467
+"RTN","GMRCCCRA",360,0)
+ N RETVAL ;,GMRCOITM
+"RTN","GMRCCCRA",361,0)
+ S RETVAL=1
+"RTN","GMRCCCRA",362,0)
+ ;S GMRCOITM=+$O(^OR(100,GMRCORDN,.1,0))
+"RTN","GMRCCCRA",363,0)
+ ;I GMRCOITM D
+"RTN","GMRCCCRA",364,0)
+ ;.S RETVAL=+$G(^OR(100,GMRCORDN,.1,GMRCOITM,0))
+"RTN","GMRCCCRA",365,0)
+ ;.I 'RETVAL S RETVAL=1
+"RTN","GMRCCCRA",366,0)
+ S RETVAL=+$$OI^ORX8(GMRCORDN)
+"RTN","GMRCCCRA",367,0)
+ I 'RETVAL S RETVAL=1
+"RTN","GMRCCCRA",368,0)
+ ; end patch 106 mods
+"RTN","GMRCCCRA",369,0)
+ Q RETVAL
+"RTN","GMRCCCRA",370,0)
+ACK ; Process ACK HL7 messages
+"RTN","GMRCCCRA",371,0)
+ N GMRCMSG,I,X,DONE,MSGID,ERRARY,ERRI
+"RTN","GMRCCCRA",372,0)
+ ;Get the message
+"RTN","GMRCCCRA",373,0)
+ S ERRI=0
+"RTN","GMRCCCRA",374,0)
+ F I=1:1 X HLNEXT Q:(HLQUIT'>0)  D
+"RTN","GMRCCCRA",375,0)
+ . S GMRCMSG(I,1)=HLNODE
+"RTN","GMRCCCRA",376,0)
+ . S X=0 F  S X=+$O(HLNODE(X)) Q:'X  S GMRCMSG(I,(X+1))=HLNODE(X)
+"RTN","GMRCCCRA",377,0)
+ S DONE=0
+"RTN","GMRCCCRA",378,0)
+ S I=0 F  S I=$O(GMRCMSG(I)) Q:'+I  D  Q:DONE
+"RTN","GMRCCCRA",379,0)
+ . I $P($G(GMRCMSG(I,1)),"|",1)="MSA" D  Q
+"RTN","GMRCCCRA",380,0)
+ . . I $P($G(GMRCMSG(I,1)),"|",2)="AA" S DONE=1 Q
+"RTN","GMRCCCRA",381,0)
+ . . S MSGID=$P($G(GMRCMSG(I,1)),"|",3)
+"RTN","GMRCCCRA",382,0)
+ . I $P($G(GMRCMSG(I,1)),"|",1)="ERR" D
+"RTN","GMRCCCRA",383,0)
+ . . ;Process Error
+"RTN","GMRCCCRA",384,0)
+ . . S ERRI=ERRI+1
+"RTN","GMRCCCRA",385,0)
+ . . S ERRARY(ERRI,2)=$P($G(GMRCMSG(I,1)),"|",3)
+"RTN","GMRCCCRA",386,0)
+ . . I $P($G(GMRCMSG(I,1)),"|",6)'="" D  Q
+"RTN","GMRCCCRA",387,0)
+ . . . S ERRARY(ERRI,3)=$P($P($G(GMRCMSG(I,1)),"|",6),"^",4)_"^"_$P($P($G(GMRCMSG(I,1)),"|",6),"^",5)
+"RTN","GMRCCCRA",388,0)
+ . . S ERRARY(ERRI,3)=$P($G(GMRCMSG(I,1)),"|",4)
+"RTN","GMRCCCRA",389,0)
+ I $D(ERRARY) D MESSAGE(MSGID,.ERRARY)
+"RTN","GMRCCCRA",390,0)
+ Q
+"RTN","GMRCCCRA",391,0)
+MESSAGE(MSGID,ERRARY) ; Send a MailMan Message with the errors
+"RTN","GMRCCCRA",392,0)
+ D MESSAGE^GMRCCCR1(MSGID,.ERRARY)
+"RTN","GMRCCCRI")
+0^1^B82258247^n/a
+"RTN","GMRCCCRI",1,0)
+GMRCCCRI ;DAL/PHH/MBJ - PROCESS HL7 RRI^I13 MESSAGES FROM HSRM ;8/29/18
+"RTN","GMRCCCRI",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**123**;FEB 2019;Build 51
+"RTN","GMRCCCRI",3,0)
+ ;
+"RTN","GMRCCCRI",4,0)
+ ; Built from pieces of GMRCHL7I and modified for CCRA consult status update
+"RTN","GMRCCCRI",5,0)
+ Q
+"RTN","GMRCCCRI",6,0)
+ ; Documented API's and Integration Agreements
+"RTN","GMRCCCRI",7,0)
+ ; ----------------------------------------------
+"RTN","GMRCCCRI",8,0)
+ ; 2165   GENACK^HLMA1
+"RTN","GMRCCCRI",9,0)
+ ; 2701   $$GETDFN^MPIF001
+"RTN","GMRCCCRI",10,0)
+ ; 2701   $$GETICN^MPIF001
+"RTN","GMRCCCRI",11,0)
+ ; 3535   MAKEADD^TIUSRVP2
+"RTN","GMRCCCRI",12,0)
+ ; 10103  $$HL7TFM^XLFDT
+"RTN","GMRCCCRI",13,0)
+ ;
+"RTN","GMRCCCRI",14,0)
+EN ; Entry point for routine
+"RTN","GMRCCCRI",15,0)
+ N FS,CS,RS,ES,SS,MID,HLQUIT,HLNODE,I13MSG,ABORT,ERR1,NAKMSG
+"RTN","GMRCCCRI",16,0)
+ S FS=$G(HL("FS"),"|")
+"RTN","GMRCCCRI",17,0)
+ S CS=$E($G(HL("ECH")),1) S:CS="" CS="^"
+"RTN","GMRCCCRI",18,0)
+ S RS=$E($G(HL("ECH")),2) S:RS="" RS="~"
+"RTN","GMRCCCRI",19,0)
+ S ES=$E($G(HL("ECH")),3) S:ES="" ES="\"
+"RTN","GMRCCCRI",20,0)
+ S SS=$E($G(HL("ECH")),4) S:SS="" SS="&"
+"RTN","GMRCCCRI",21,0)
+ S MID=$G(HL("MID"))
+"RTN","GMRCCCRI",22,0)
+ S (HLQUIT,HLNODE)=0
+"RTN","GMRCCCRI",23,0)
+ D COPYMSG(.I13MSG)
+"RTN","GMRCCCRI",24,0)
+ Q:$$CHKMSG(.I13MSG)
+"RTN","GMRCCCRI",25,0)
+ Q:$$PROCMSG(.I13MSG)
+"RTN","GMRCCCRI",26,0)
+ D ACK("CA",MID)
+"RTN","GMRCCCRI",27,0)
+ Q
+"RTN","GMRCCCRI",28,0)
+ ;
+"RTN","GMRCCCRI",29,0)
+COPYMSG(Y) ; Copy HL7 Message to array Y (by reference)
+"RTN","GMRCCCRI",30,0)
+ ; Based on HL*1.6*56 VISTA HL7 Site Manager & Developer Manual
+"RTN","GMRCCCRI",31,0)
+ ; Paragraph 9.7, page 9-4
+"RTN","GMRCCCRI",32,0)
+ I $L($G(HLNEXT)) ;HL7 context
+"RTN","GMRCCCRI",33,0)
+ E  Q
+"RTN","GMRCCCRI",34,0)
+ N I,J
+"RTN","GMRCCCRI",35,0)
+ F I=1:1 X HLNEXT Q:HLQUIT'>0  D
+"RTN","GMRCCCRI",36,0)
+ .S Y(I)=HLNODE,J=0
+"RTN","GMRCCCRI",37,0)
+ .F  S J=$O(HLNODE(J)) Q:'J  D
+"RTN","GMRCCCRI",38,0)
+ ..S Y(I)=Y(I)_HLNODE(J)
+"RTN","GMRCCCRI",39,0)
+ Q
+"RTN","GMRCCCRI",40,0)
+ ;
+"RTN","GMRCCCRI",41,0)
+CHKMSG(Y) ; Check Message for all required segments
+"RTN","GMRCCCRI",42,0)
+ N QUIT,REQSEG,SEGFND,I,SEGTYP,ICN,DFN
+"RTN","GMRCCCRI",43,0)
+ S QUIT=0
+"RTN","GMRCCCRI",44,0)
+ F REQSEG="MSH","RF1","PRD","PID","PV1" D  Q:QUIT
+"RTN","GMRCCCRI",45,0)
+ .S (SEGFND,I)=0
+"RTN","GMRCCCRI",46,0)
+ .F  S I=$O(Y(I)) Q:'I!(SEGFND)  D
+"RTN","GMRCCCRI",47,0)
+ ..S SEGTYP=$E(Y(I),1,3)
+"RTN","GMRCCCRI",48,0)
+ ..I SEGTYP=REQSEG S SEGFND=1
+"RTN","GMRCCCRI",49,0)
+ ..;
+"RTN","GMRCCCRI",50,0)
+ ..I SEGTYP="MSH",$P(Y(I),FS,10)="" D
+"RTN","GMRCCCRI",51,0)
+ ...S QUIT=1
+"RTN","GMRCCCRI",52,0)
+ ...D ACK("CE",MID,"MSH","",10,101,"MESSAGE CONTROL ID MISSING")
+"RTN","GMRCCCRI",53,0)
+ ..;
+"RTN","GMRCCCRI",54,0)
+ .I 'SEGFND D
+"RTN","GMRCCCRI",55,0)
+ ..S QUIT=1
+"RTN","GMRCCCRI",56,0)
+ ..D ACK("CE",MID,REQSEG,"","",100,REQSEG_" SEGMENT MISSING OR OUT OF ORDER")
+"RTN","GMRCCCRI",57,0)
+ Q QUIT
+"RTN","GMRCCCRI",58,0)
+ ;
+"RTN","GMRCCCRI",59,0)
+PROCMSG(Y) ; Process message
+"RTN","GMRCCCRI",60,0)
+ N QUIT,I,SEGTYP,GMRCRF1,GMRCPID,GMRCPRD,GMRCOBR,GMRCNTE,GMRCIEN,GMRCICN,GMRCEML
+"RTN","GMRCCCRI",61,0)
+ N GMRCDFN,GMRCTIU,GMRCTIUS,ADDTXT,GMRCATIU,STID,PROGAUTH,REFDT,REFXDT,XDT
+"RTN","GMRCCCRI",62,0)
+ S (QUIT,I)=0,GMRCEML=""
+"RTN","GMRCCCRI",63,0)
+ F  S I=$O(Y(I)) Q:'I  D
+"RTN","GMRCCCRI",64,0)
+ .S SEGTYP=$E(Y(I),1,3)
+"RTN","GMRCCCRI",65,0)
+ .I SEGTYP="RF1" D RF1(Y(I),.GMRCRF1)
+"RTN","GMRCCCRI",66,0)
+ .I SEGTYP="PID" D PID(Y(I),.GMRCPID)
+"RTN","GMRCCCRI",67,0)
+ .I SEGTYP="PRD" D PRD(Y(I),.GMRCPRD)
+"RTN","GMRCCCRI",68,0)
+ ;
+"RTN","GMRCCCRI",69,0)
+ S GMRCIEN=+GMRCRF1,GMRCSTS=$P(GMRCRF1,FS,2)
+"RTN","GMRCCCRI",70,0)
+ ;
+"RTN","GMRCCCRI",71,0)
+ I 'GMRCIEN!('$D(^GMR(123,+GMRCIEN,0))) D  Q QUIT
+"RTN","GMRCCCRI",72,0)
+ .S QUIT=1
+"RTN","GMRCCCRI",73,0)
+ .D ACK("CE",MID,"RF1","",6,"VA207","INVALID IEN FOR CONSULT",1)
+"RTN","GMRCCCRI",74,0)
+ ;
+"RTN","GMRCCCRI",75,0)
+ S GMRCICN=GMRCPID
+"RTN","GMRCCCRI",76,0)
+ S GMRCDFN=$$GETDFN^MPIF001($P(GMRCICN,"V"))
+"RTN","GMRCCCRI",77,0)
+ I GMRCDFN'>0 D  Q QUIT
+"RTN","GMRCCCRI",78,0)
+ .S QUIT=1
+"RTN","GMRCCCRI",79,0)
+ .D ACK("CE",MID,"PID",1,3,"VA207",$P(GMRCDFN,"^",2),1)
+"RTN","GMRCCCRI",80,0)
+ I GMRCICN'=$$GETICN^MPIF001(GMRCDFN) D  Q QUIT
+"RTN","GMRCCCRI",81,0)
+ .S QUIT=1
+"RTN","GMRCCCRI",82,0)
+ .D ACK("CE",MID,"PID",1,3,"VA207","ICN CHECKSUM DOES NOT MATCH CHECKSUM IN DATABASE",1)
+"RTN","GMRCCCRI",83,0)
+ ;
+"RTN","GMRCCCRI",84,0)
+ I $P(^GMR(123,GMRCIEN,0),"^",2)'=GMRCDFN D  Q QUIT
+"RTN","GMRCCCRI",85,0)
+ .S QUIT=1
+"RTN","GMRCCCRI",86,0)
+ .D ACK("CE",MID,"RF1","",6,"VA207","ICN DOES NOT MATCH PATIENT DFN IN CONSULT",1)
+"RTN","GMRCCCRI",87,0)
+ ;
+"RTN","GMRCCCRI",88,0)
+ ; check for valid VistA user via user email value, create NAK if invalid and quit
+"RTN","GMRCCCRI",89,0)
+ S GMRCDT=$$NOW^XLFDT(),GMRCDT1=$$FMTE^XLFDT(GMRCDT,2)
+"RTN","GMRCCCRI",90,0)
+ ; S XDT=$E($P(GMRCDT1,".",2)+1000000,2,5),GMRCDT1=$P(GMRCDT1,".")_XDT
+"RTN","GMRCCCRI",91,0)
+ S GMRCUSER=$$LOW^XLFSTR(GMRCEML)
+"RTN","GMRCCCRI",92,0)
+ I GMRCUSER'="" S GMRCUSER=$O(^VA(200,"ADUPN",$G(GMRCUSER),""))
+"RTN","GMRCCCRI",93,0)
+ I GMRCUSER'>0 S (NAKMSG,ERR1)="HSRM USER DOESN'T HAVE AN ACCOUNT ON THIS SYSTEM",ABORT="1^"_ERR1
+"RTN","GMRCCCRI",94,0)
+ I $G(NAKMSG)'="" S QUIT=1 D ANAK^GMRCCCR1($G(NAKMSG),$G(GMRCEML),$G(GMRCICN),$G(GMRCDFN),$G(GMRCIEN),GMRCDT1)
+"RTN","GMRCCCRI",95,0)
+ I +$G(ABORT)>0 D MESSAGE2^GMRCCCR1(MID,.ABORT,GMRCIEN) Q 1
+"RTN","GMRCCCRI",96,0)
+ ;
+"RTN","GMRCCCRI",97,0)
+ ; Reject if Referral Status is not valid
+"RTN","GMRCCCRI",98,0)
+ S STID=$P(GMRCSTS,CS)
+"RTN","GMRCCCRI",99,0)
+ I "A,AC,AP,BP,C,D,P,RJ,X,"'[STID_"," D
+"RTN","GMRCCCRI",100,0)
+ .S QUIT=1
+"RTN","GMRCCCRI",101,0)
+ .D ACK("CE",MID,"RF1","",1,"VA207","INVALID REFERRAL STATUS",1)
+"RTN","GMRCCCRI",102,0)
+ ;
+"RTN","GMRCCCRI",103,0)
+ Q:QUIT
+"RTN","GMRCCCRI",104,0)
+ S GMRCSTS=$S(STID="A":"SCHEDULED",STID="AC":"ACTIVE",STID="AP":"ACTIVE",STID="BP":"COMPLETE",STID="C":"ACTIVE",STID="D":"COMPLETE",STID="P":"PENDING",STID="RJ":"ACTIVE",STID="X":"CANCELLED",1:"")
+"RTN","GMRCCCRI",105,0)
+ I GMRCSTS'="" D
+"RTN","GMRCCCRI",106,0)
+ . ; file status into field 8 of consult file
+"RTN","GMRCCCRI",107,0)
+ . K FDA S FDA(123,GMRCIEN_",",8)=GMRCSTS
+"RTN","GMRCCCRI",108,0)
+ . D FILE^DIE("E","FDA")
+"RTN","GMRCCCRI",109,0)
+ . K FDA,GMRCFDA
+"RTN","GMRCCCRI",110,0)
+ . ;
+"RTN","GMRCCCRI",111,0)
+ . S GMRCSTID=$S(STID="X":"CANCELLED",STID="A":"SCHEDULED",STID="BP":"COMPLETE/UPDATE",STID="D":"COMPLETE/UPDATE",1:"ADDED COMMENT")
+"RTN","GMRCCCRI",112,0)
+ . S GMRCSTID=$O(^GMR(123.1,"B",GMRCSTID,""))
+"RTN","GMRCCCRI",113,0)
+ . K FDA S FDA(123,GMRCIEN_",",9)=GMRCSTID
+"RTN","GMRCCCRI",114,0)
+ . D FILE^DIE("","FDA") K FDA
+"RTN","GMRCCCRI",115,0)
+ . ;
+"RTN","GMRCCCRI",116,0)
+ . ; create consult note for new status
+"RTN","GMRCCCRI",117,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",.01)=GMRCDT
+"RTN","GMRCCCRI",118,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",1)=GMRCSTID
+"RTN","GMRCCCRI",119,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",2)=GMRCDT
+"RTN","GMRCCCRI",120,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",4)=GMRCUSER
+"RTN","GMRCCCRI",121,0)
+ . D UPDATE^DIE("","GMRCFDA","GMRCCIEN")
+"RTN","GMRCCCRI",122,0)
+ . S GMRCTXT(1)="CONSULT STATUS CHANGED TO "_GMRCSTS_" "_GMRCDT1
+"RTN","GMRCCCRI",123,0)
+ . D WP^DIE(123.02,GMRCCIEN(1)_","_GMRCIEN_",",5,"","GMRCTXT","GMRCERR")
+"RTN","GMRCCCRI",124,0)
+ . K FDA,GMRCFDA,GMRCCIEN,GMRCTXT,GMRCERR
+"RTN","GMRCCCRI",125,0)
+ ;
+"RTN","GMRCCCRI",126,0)
+ ; create consult note with new referral date from HSRM
+"RTN","GMRCCCRI",127,0)
+ I REFDT]"" D
+"RTN","GMRCCCRI",128,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",.01)=GMRCDT
+"RTN","GMRCCCRI",129,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",2)=GMRCDT
+"RTN","GMRCCCRI",130,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",4)=GMRCUSER
+"RTN","GMRCCCRI",131,0)
+ . D UPDATE^DIE("","GMRCFDA","GMRCCIEN","GMRCERR")
+"RTN","GMRCCCRI",132,0)
+ . S GMRCTXT(1)="REFERRAL DATE IS "_REFDT ;
+"RTN","GMRCCCRI",133,0)
+ . D WP^DIE(123.02,GMRCCIEN(1)_","_GMRCIEN_",",5,"","GMRCTXT","GMRCERR")
+"RTN","GMRCCCRI",134,0)
+ . K FDA,GMRCFDA,GMRCCIEN,GMRCTXT,GMRCERR
+"RTN","GMRCCCRI",135,0)
+ ;
+"RTN","GMRCCCRI",136,0)
+ ; create consult note with new referral expiration date from HSRM
+"RTN","GMRCCCRI",137,0)
+ I REFXDT]"" D
+"RTN","GMRCCCRI",138,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",.01)=GMRCDT
+"RTN","GMRCCCRI",139,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",2)=GMRCDT
+"RTN","GMRCCCRI",140,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",4)=GMRCUSER
+"RTN","GMRCCCRI",141,0)
+ . D UPDATE^DIE("","GMRCFDA","GMRCCIEN")
+"RTN","GMRCCCRI",142,0)
+ . S GMRCTXT(1)="REFERRAL EXPIRATION DATE IS "_REFXDT ;
+"RTN","GMRCCCRI",143,0)
+ . D WP^DIE(123.02,GMRCCIEN(1)_","_GMRCIEN_",",5,"","GMRCTXT","GMRCERR")
+"RTN","GMRCCCRI",144,0)
+ . K FDA,GMRCFDA,GMRCCIEN,GMRCTXT,GMRCERR
+"RTN","GMRCCCRI",145,0)
+ ;
+"RTN","GMRCCCRI",146,0)
+ ; create consult note with new program authority value from HSRM
+"RTN","GMRCCCRI",147,0)
+ I PROGAUTH]"" D
+"RTN","GMRCCCRI",148,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",.01)=GMRCDT
+"RTN","GMRCCCRI",149,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",2)=GMRCDT
+"RTN","GMRCCCRI",150,0)
+ . S GMRCFDA(123.02,"+1,"_GMRCIEN_",",4)=GMRCUSER
+"RTN","GMRCCCRI",151,0)
+ . D UPDATE^DIE("","GMRCFDA","GMRCCIEN")
+"RTN","GMRCCCRI",152,0)
+ . S GMRCTXT(1)="PROGRAM AUTHORITY IS "_PROGAUTH
+"RTN","GMRCCCRI",153,0)
+ . D WP^DIE(123.02,GMRCCIEN(1)_","_GMRCIEN_",",5,"","GMRCTXT","GMRCERR")
+"RTN","GMRCCCRI",154,0)
+ . K FDA,GMRCFDA,GMRCCIEN,GMRCTXT,GMRCERR
+"RTN","GMRCCCRI",155,0)
+ ;
+"RTN","GMRCCCRI",156,0)
+ K GMRCFDA,GMRCDT,GMRCDT1,GMRCCIEN,GMRCSTID,GMRCTXT,GMRCUSER
+"RTN","GMRCCCRI",157,0)
+ Q QUIT
+"RTN","GMRCCCRI",158,0)
+ ;
+"RTN","GMRCCCRI",159,0)
+RF1(RF1SEG,RETVAL) ; Process RF1 Segment
+"RTN","GMRCCCRI",160,0)
+ N GMRCSTS,GMRCIEN
+"RTN","GMRCCCRI",161,0)
+ S GMRCSTS=$P(RF1SEG,FS,2)
+"RTN","GMRCCCRI",162,0)
+ S GMRCIEN=$P(RF1SEG,FS,7)
+"RTN","GMRCCCRI",163,0)
+ S REFDT=$P($P(RF1SEG,FS,8),CS)
+"RTN","GMRCCCRI",164,0)
+ S REFXDT=$P($P(RF1SEG,FS,9),CS)
+"RTN","GMRCCCRI",165,0)
+ S PROGAUTH=$P($P(RF1SEG,FS,11),CS,2)
+"RTN","GMRCCCRI",166,0)
+ S RETVAL=GMRCIEN_FS_GMRCSTS
+"RTN","GMRCCCRI",167,0)
+ Q
+"RTN","GMRCCCRI",168,0)
+ ;
+"RTN","GMRCCCRI",169,0)
+PID(PIDSEG,RETVAL) ; Process PID Segment
+"RTN","GMRCCCRI",170,0)
+ N GMRCICN,I,J,GMRCI,GMRCJ
+"RTN","GMRCCCRI",171,0)
+ S GMRCJ=$P(PIDSEG,FS,4),GMRCICN=""
+"RTN","GMRCCCRI",172,0)
+ F J=1:1:$L(GMRCJ,RS) D  Q:GMRCICN'=""
+"RTN","GMRCCCRI",173,0)
+ . S GMRCI=$P(GMRCJ,RS,J)
+"RTN","GMRCCCRI",174,0)
+ . F I=1:1:$L(GMRCI,CS) D  Q:GMRCICN'=""
+"RTN","GMRCCCRI",175,0)
+ .. I $P($P(GMRCJ,CS,I),RS)["NI" S GMRCICN=$P(GMRCI,CS,J) Q
+"RTN","GMRCCCRI",176,0)
+ S RETVAL=GMRCICN
+"RTN","GMRCCCRI",177,0)
+ Q
+"RTN","GMRCCCRI",178,0)
+ ;
+"RTN","GMRCCCRI",179,0)
+PRD(PRDSEG,RETVAL) ; Process PRD segment
+"RTN","GMRCCCRI",180,0)
+ I $L(GMRCEML)>0 S RETVAL=GMRCEML Q RETVAL ; already found in previous PRD segment
+"RTN","GMRCCCRI",181,0)
+ I $P($P(PRDSEG,FS,2),CS,1)'="RP" S RETVAL=0 Q RETVAL
+"RTN","GMRCCCRI",182,0)
+ S GMRCEML=$P(PRDSEG,FS,6),GMRCEML=$P(GMRCEML,CS,4)
+"RTN","GMRCCCRI",183,0)
+ S RETVAL=GMRCEML Q RETVAL
+"RTN","GMRCCCRI",184,0)
+ ;
+"RTN","GMRCCCRI",185,0)
+ACK(STAT,MID,SID,SEG,FLD,CD,TXT,ACKTYP) ; Creates ACKs for HL7 Message
+"RTN","GMRCCCRI",186,0)
+ ;STAT = Status (Acknowledgment Code) (REQUIRED)
+"RTN","GMRCCCRI",187,0)
+ ;MID = Message ID (REQUIRED)
+"RTN","GMRCCCRI",188,0)
+ ;SID = Segment ID (set if ERR occurred in segment) (OPTIONAL)
+"RTN","GMRCCCRI",189,0)
+ ;SEG = Segment location of error (OPTIONAL)
+"RTN","GMRCCCRI",190,0)
+ ;FLD = Field location of error (OPTIONAL)
+"RTN","GMRCCCRI",191,0)
+ ;CD = Error Code (OPTIONAL)
+"RTN","GMRCCCRI",192,0)
+ ;TXT = Text describing error (OPTIONAL)
+"RTN","GMRCCCRI",193,0)
+ ;ACKTYP = Acknowledgment Type (OPTIONAL)
+"RTN","GMRCCCRI",194,0)
+ ;
+"RTN","GMRCCCRI",195,0)
+ N HLA,EID,EIDS,RES,ERRI
+"RTN","GMRCCCRI",196,0)
+ ;
+"RTN","GMRCCCRI",197,0)
+ ;Make sure the parameters are defined
+"RTN","GMRCCCRI",198,0)
+ S STAT=$G(STAT),MID=$G(MID),SID=$G(SID),SEG=$G(SEG)
+"RTN","GMRCCCRI",199,0)
+ S FLD=$G(FLD),CD=$G(CD),TXT=$G(TXT)
+"RTN","GMRCCCRI",200,0)
+ ;
+"RTN","GMRCCCRI",201,0)
+ ;Create MSA Segment
+"RTN","GMRCCCRI",202,0)
+ S HLA("HLA",1)="MSA"_FS_STAT_FS_MID
+"RTN","GMRCCCRI",203,0)
+ S EID=$G(HL("EID"))
+"RTN","GMRCCCRI",204,0)
+ S EIDS=$G(HL("EIDS"))
+"RTN","GMRCCCRI",205,0)
+ Q:((EID="")!($G(HLMTIENS)="")!(EIDS=""))
+"RTN","GMRCCCRI",206,0)
+ ;
+"RTN","GMRCCCRI",207,0)
+ S RES=""
+"RTN","GMRCCCRI",208,0)
+ ;If Segment ID (SID) is set, create ERR segment
+"RTN","GMRCCCRI",209,0)
+ D:$L(SID)>0
+"RTN","GMRCCCRI",210,0)
+ . K ERRARY
+"RTN","GMRCCCRI",211,0)
+ . S HLA("HLA",2)="ERR"
+"RTN","GMRCCCRI",212,0)
+ . S $P(HLA("HLA",2),FS,3)=SID_CS_SEG_CS_FLD
+"RTN","GMRCCCRI",213,0)
+ . S $P(HLA("HLA",2),FS,5)="E"
+"RTN","GMRCCCRI",214,0)
+ . ;
+"RTN","GMRCCCRI",215,0)
+ . ; Commit Error
+"RTN","GMRCCCRI",216,0)
+ . I '+$G(ACKTYP) D
+"RTN","GMRCCCRI",217,0)
+ .. S $P(HLA("HLA",2),FS,4)=CD_CS_TXT_CS_"0357"
+"RTN","GMRCCCRI",218,0)
+ . ;
+"RTN","GMRCCCRI",219,0)
+ . ; Application Error
+"RTN","GMRCCCRI",220,0)
+ . I +$G(ACKTYP)=1 D
+"RTN","GMRCCCRI",221,0)
+ .. S ERRI=0
+"RTN","GMRCCCRI",222,0)
+ .. S $P(HLA("HLA",2),FS,6)=CS_CS_CS_CD_CS_TXT
+"RTN","GMRCCCRI",223,0)
+ .. ;Process Error
+"RTN","GMRCCCRI",224,0)
+ .. S ERRI=ERRI+1
+"RTN","GMRCCCRI",225,0)
+ .. S ERRARY(ERRI,2)=$P($G(HLA("HLA",2)),"|",3)
+"RTN","GMRCCCRI",226,0)
+ .. I $P($G(HLA("HLA",2)),"|",6)'="" D  ;
+"RTN","GMRCCCRI",227,0)
+ ... S ERRARY(ERRI,3)=$P($P($G(HLA("HLA",2)),"|",6),"^",4)_"^"_$P($P($G(HLA("HLA",2)),"|",6),"^",5)
+"RTN","GMRCCCRI",228,0)
+ .. I $P($G(HLA("HLA",2)),"|",6)="" S ERRARY(ERRI,3)=$P($G(HLA("HLA",2)),"|",4)
+"RTN","GMRCCCRI",229,0)
+ . I $D(ERRARY) D MESSAGE(MID,.ERRARY)
+"RTN","GMRCCCRI",230,0)
+ . ; build message for MailMan
+"RTN","GMRCCCRI",231,0)
+ ;
+"RTN","GMRCCCRI",232,0)
+ D GENACK^HLMA1(EID,$G(HLMTIENS),EIDS,"LM",1,.RES)
+"RTN","GMRCCCRI",233,0)
+ Q
+"RTN","GMRCCCRI",234,0)
+MESSAGE(MSGID,ERRARY) ; Send a MailMan Message with the errors
+"RTN","GMRCCCRI",235,0)
+ N MSGTEXT,DUZ,XMDUZ,XMSUB,XMTEXT,XMY,XMMG,XMSTRIP,XMROU,DIFROM,XMYBLOB,XMZ,XMMG,DATE,J
+"RTN","GMRCCCRI",236,0)
+ S DATE=$$FMTE^XLFDT($$FMDATE^HLFNC($P(HL("DTM"),"-",1)))
+"RTN","GMRCCCRI",237,0)
+ S XMSUB="GMRC CCRA Consult Updates from HSRM HL7 Error"
+"RTN","GMRCCCRI",238,0)
+ S MSGTEXT(1)=" "
+"RTN","GMRCCCRI",239,0)
+ S MSGTEXT(2)="Error in receiving HL7 message from HSRM"
+"RTN","GMRCCCRI",240,0)
+ S MSGTEXT(3)="Date:       "_DATE
+"RTN","GMRCCCRI",241,0)
+ S MSGTEXT(4)="Message ID: "_MSGID
+"RTN","GMRCCCRI",242,0)
+ S MSGTEXT(5)="Error(s):"
+"RTN","GMRCCCRI",243,0)
+ S I=0,J=5 F  S I=$O(ERRARY(I)) Q:'I  D
+"RTN","GMRCCCRI",244,0)
+ . S J=J+1,MSGTEXT(J)=" "
+"RTN","GMRCCCRI",245,0)
+ . S J=J+1,MSGTEXT(J)="   "_$P($G(ERRARY(I,3)),U)_" - "_$P($G(ERRARY(I,3)),U,2)
+"RTN","GMRCCCRI",246,0)
+ . I $P($G(ERRARY(I,2)),U,1)'="" S J=J+1,MSGTEXT(J)="      Segment:       "_$P($G(ERRARY(I,2)),U,1)
+"RTN","GMRCCCRI",247,0)
+ . I $P($G(ERRARY(I,2)),U,2)'="" S J=J+1,MSGTEXT(J)="      Sequence:      "_$P($G(ERRARY(I,2)),U,2)
+"RTN","GMRCCCRI",248,0)
+ . I $P($G(ERRARY(I,2)),U,3)'="" S J=J+1,MSGTEXT(J)="      Field:         "_$P($G(ERRARY(I,2)),U,3)
+"RTN","GMRCCCRI",249,0)
+ . I $P($G(ERRARY(I,2)),U,4)'="" S J=J+1,MSGTEXT(J)="      Fld Rep:       "_$P($G(ERRARY(I,2)),U,4)
+"RTN","GMRCCCRI",250,0)
+ . I $P($G(ERRARY(I,2)),U,5)'="" S J=J+1,MSGTEXT(J)="      Component:     "_$P($G(ERRARY(I,2)),U,5)
+"RTN","GMRCCCRI",251,0)
+ . I $P($G(ERRARY(I,2)),U,6)'="" S J=J+1,MSGTEXT(J)="      Sub-component: "_$P($G(ERRARY(I,2)),U,6)
+"RTN","GMRCCCRI",252,0)
+ S XMTEXT="MSGTEXT("
+"RTN","GMRCCCRI",253,0)
+ S XMDUZ="GMRC-CCRA<-HSRP Transaction Error"
+"RTN","GMRCCCRI",254,0)
+ S XMY("G.GMRC HCP HL7 MESSAGES")=""  ;  ** CHECK THIS OUT **
+"RTN","GMRCCCRI",255,0)
+ D ^XMD
+"RTN","GMRCCCRI",256,0)
+ Q
+"VER")
+8.0^22.2
+"BLD",11230,6)
+^121
+**END**
+**END**
+

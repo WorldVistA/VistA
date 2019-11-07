@@ -1,0 +1,246 @@
+
+=============================================================================
+Run Date: SEP 09, 2019                     Designation: IVM*2*180
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #149                      Status: Released
+                  Compliance Date: OCT 10, 2019
+=============================================================================
+
+Associated patches: (v)IVM*2*164   <<= must be installed BEFORE `IVM*2*180'
+
+Subject: HL7 MODIFICATIONS FOR MANAGEMENT EDIT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Patch IVM*2.0*180 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on
+ updates for the Enrollment System Modernization (ESM) Phase 2 project.
+  
+ Patch IVM*2.0*180 is also being released in support of the Enrollment
+ System (ES) 5.6 release. Refer to Informational Patch EAS*1*178
+ (Enrollment Application System) for additional details regarding the ES
+ release.
+  
+ IVM*2.0*180 is being released with DG*5.3*978 in Host File DG_53_P978.KID.
+  
+ Patch DG*5.3*978 provides a mechanism for updating the appointment request
+ field from NO to YES after registration via the Management Edit [DGEN
+ NEACL REQUEST MGT EDIT] option.
+  
+ When an appointment request is modified, an ORU-Z07 message is triggered
+ to send the appointment request information to ES. This patch modifies the
+ VistA Health Level 7 (HL7) interface with ES to add four additional data
+ elements in the ZIO segment of the ORF/ORU-Z07 message. Of these four 
+ new fields, only the appointment request change date/time is inserted into
+ the ZIO segment to provide ES with the date and time the change was made.
+  
+ Listing of Updates
+ ==================
+ This patch makes the following enhancements to Veterans Health Information
+ Systems and Technology Architecture (VistA) Registration, Eligibility, &
+ Enrollment (REE):
+  
+ 1. The HL7 interface with ES is modified to include four additional data
+    elements in the ZIO segment of the ORF/ORU-Z07 message. 
+    a. Sequence 7: UPDATE DATE/TIME corresponding to APPT REQUEST 1010EZ 
+       CHG DT/TM field (#1010.1515) of the PATIENT file (#2). 
+    b. Sequence 8: ORIGINAL APPOINTMENT REQUEST corresponding to ORIGINAL
+       APPOINTMENT REQUEST field (#1010.1512) of the PATIENT file (#2). 
+       This field will be blank in the segment.
+    c. Sequence 9: ORIGINAL APPOINTMENT REQUEST DATE corresponding to 
+       ORIGINAL APPT REQUEST DATE field (#1010.1513) of the PATIENT file
+       (#2). This field will be blank in the segment.
+    d. Sequence 10: UPDATE DATE/TIME corresponding to ORIG APPT REQUEST CHG
+       DT/TM field (#1010.1514) of the PATIENT file (#2). This field will 
+       be blank in the segment.
+  
+ 2. When the APPOINTMENT REQUEST ON 1010EZ field (#1010.159) or 
+    APPOINTMENT REQUEST DATE field (#1010.1511) of the PATIENT file (#2) is
+    modified, VistA REE triggers an ORU-Z07 message to ES. This message is 
+    modified to include the APPT REQUEST 1010EZ CHG DT/TM field
+    (#1010.1515) in sequence 7.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name              Type                 New/Modified/Deleted
+ -----------              ----                 -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name      New/Modified/Deleted
+ -------------      -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A 
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A 
+  
+  
+ Blood Bank Team Coordination:
+ -----------------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Jesse Brown VA Medical Center (Chicago Westside, Chicago Lakeside),
+  Chicago, IL
+ Oklahoma City VA Medical Center, Oklahoma City, OK
+ West Palm Beach VA Medical Center, West Palm Beach, FL
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Documentation describing the new functionality and/or a host file 
+ containing a build may be included in this release.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files directly from
+ a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: https://www.domain.ext/vdl/
+  
+ Documentation Title             File Name             FTP Mode
+ -----------------------------------------------------------------------
+ DG_53_P978.KID  Release Notes   DG_5_3_P978_RN.PDF    (binary)   
+ IVM Technical Manual            IVM_2_TM.PDF          (binary)
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ DG_53_P978.KID                            ASCII
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A 
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A 
+  
+ Installation Instructions:
+ --------------------------
+ Please see the Patch Description for patch DG*5.3*978 for installation 
+ instructions.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ Please see the Patch Description for patch DG*5.3*978 for the 
+ Back-Out/Roll Back Plan.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;21-OCT-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPTRN9
+    Before: B54344683   After: B55375213  **9,11,19,12,21,17,46,50,53,
+                                           34,49,58,79,99,116,105,115,152,
+                                           160,164,180**
+ 
+Routine list of preceding patches: 164
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 12, 2019
+Completed By:                               Date Completed: SEP 09, 2019
+Released By :                               Date Released : SEP 09, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

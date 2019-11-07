@@ -1,0 +1,173 @@
+$TXT Created by                  at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 04/04/19 at 15:50
+=============================================================================
+Run Date: AUG 20, 2019                     Designation: MD*1*70
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #56                      Status: Released
+                  Compliance Date: SEP 20, 2019
+=============================================================================
+
+Associated patches: (v)MD*1*66     <<= must be installed BEFORE `MD*1*70'
+
+Subject: CP HEMO DEFAULT DATE 12-30-1899
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will resolve the following issue in the Clinical Procedures
+ package:
+  
+ 1. INC3064685 - Need assistance from National CLIN III Support Team for 
+ changes that need to be made to Clinical Procedures V 1.0 Hemodialysis 
+ module
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC3064685 - Need assistance from National CLIN III Support Team for
+ changes that need to be made to Clinical Procedures V 1.0 Hemodialysis
+ module 
+  
+ Problem 1:
+ ----------
+ The default value for Diagnosis date and Initial Therapy date is set to 
+ the arbitrarily value of 12-30-1899. Initial analysis showed that the 
+ code was looking for that specific date to replace it with a null entry, 
+ but this code was being bypassed incorrectly
+  
+ Resolution 1:
+ -------------
+ The CP Hemodialysis GUI was modified to prevent the "Correction" 
+ code from being bypassed.
+  
+ Test Sites:
+ -----------
+ Louis Stokes Cleveland VA Medical Center, OH
+ Edward Hines Jr. VA Hospital, IL
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ This Software is being released with both a VistA component, and an 
+ updated Graphical User Interface (GUI). Files and documentation
+ pertaining to this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Please refer to the "CP Hemodialysis (MD*1.0*70) Installation Guide"
+ for installation and set-up information. This document is available
+ on the VA Software Document Library (VDL).
+  
+ Title                                  File Name          FTP Mode
+ -------------------------------------------------------------------
+ CP Hemodialysis (MD*1.0*70)            MD_1_70_IG.pdf     Binary
+ Installation Guide
+  
+ MD*1.0*70 GUI MSI Install files        MD_1_70.zip        Binary
+ (CP Hemodialysis) 
+  
+ Zip File Name       Zip Contents (size)                
+ ----------------    -------------------------------------          
+ Hemodialysis.chm    CP Hemodialysis Help file (328,716)
+ Hemodialysis.exe    CP Hemodialysis Executable (8,429,568)
+  
+  
+ PATCH INSTALLATION:
+ =================== 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Clinical Procedures users should be off the system when this patch is 
+ installed. Installation will take less than 5 minutes. This patch should 
+ be installed during non-peak requirement hours.
+  
+ NOTE: Installation of this patch requires both this KIDS build, and the 
+ installation of the GUI files included in the zip file. This needs to be 
+ a coordinated install, both need to happen concurrently.
+  
+ Installation Instructions:
+ -------------------------- 
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 2. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+   
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter MD*1.0*70).      
+  
+    a. Backup a Transport Global - this option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - this option will
+       allow you to view all changes that will be made when the patch 
+       is installed
+    c. Verify Checksums in Transport Global - this option will ensure
+       the integrity of the routines that are in the transport global.
+    d. Print Transport Global - this option will allow you to view
+       the components of the KIDS build.
+      
+ 4. Use the Install Package(s) option and select the package: MD*1.0*70.
+   
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond NO.
+   
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Post-installation routine MDPOST70 is provided which updates Clinical
+ Procedures with the expected version number for CP Hemodialysis.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+   
+ Please reference the CP Hemodialysis MD*1.0*70 Installation Guide for 
+ back-out/rollback instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDPOST70
+    Before:       n/a   After:  B2579845  **70**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 14, 2019
+Completed By:                               Date Completed: AUG 16, 2019
+Released By :                               Date Released : AUG 20, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

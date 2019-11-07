@@ -1,0 +1,291 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 09/09/19 at 10:39
+=============================================================================
+Run Date: OCT 16, 2019                     Designation: MPIF*1*71
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #68                      Status: Released
+                  Compliance Date: NOV 16, 2019
+=============================================================================
+
+Associated patches: (v)MPIF*1*61   <<= must be installed BEFORE `MPIF*1*71'
+                    (v)DG*5.3*981  <<= must be installed BEFORE `MPIF*1*71'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - EHRM SUPPORT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems or the FORUM CLAIMS system (since it is NOT a
+       Veterans Affair Medical Center (VAMC) VistA system).
+  
+ MPIF*1.0*61 and DG*5.3*981 are the required builds for patch
+ MPIF*1.0*71.
+    
+ NOTE: Master Patient Index (MPI) 'EHRM (Electronic Health Record
+       Modernization) SUPPORT' enhancements are being distributed
+       in four VistA namespaces: DG, MPIF, RG and XU.
+       The only build enforced requirement is that:
+         - DG*5.3*981 be installed before MPIF*1.0*71.
+       
+       **Note: Patches RG*1.0*72 and XU*8.0*710 can be installed
+               in any order as there are NO dependencies to these
+               other patches.
+       
+       (Do NOT install MPIF*1.0*71 or RG*1.0*72 on legacy sites or
+        on the FORUM CLAIMS system)
+  
+ NOTE: Legacy sites and the FORUM CLAIMS system can install just the
+       DG*5.3*981 and XU*8.0*710 patches. MPIF*1.0*71 and RG*1.0*72
+       should NOT be installed on legacy sites or on the FORUM CLAIMS
+       system.   
+  
+ The following enhancement exported in this patch is needed to
+ support the transition of sites to the EHRM (CERNER) application.  
+  
+ Enhancement
+ To support EHRM during the creation of patients that have potential
+ matching Department of Defense (DoD) records being returned for
+ selection in Enterprise Registration, an additional entry labeled
+ 'selectedIdentifier' will be transmitted in the eXtensible Markup
+ Language (XML) explicit 'ADD' message to MPI upon creation of the
+ patient at the site. The 'selectedIdentifier' entry will contain
+ one of the following values below to identify the existing record
+ that was selected from Enterprise Registration if applicable:
+  
+    - "" 
+         Null if no results returned or nothing selected from results.
+    - "<EDIPI>^NI^200DOD^USDOD"
+         (DoD's) Electronic Data Interchange Personal Identifier 
+         (EDIPI) if a DoD record was selected from the results list.
+    - "<ICN>^NI^200M^USVHA"
+         Integration Control Number (ICN) if any other Non-DoD record
+         was selected from the results list.
+  
+ NOTE: The identifier value will be determined/created in routine
+       DPTLK7 and then added to the XML message for transmission to
+       the MPI in routine MPIFXMLI.
+  
+       
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Louisville KY VAMC
+ Sheridan WY VAMC
+   
+   
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.    
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system. 
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      UPDATE BATCH JOB FOR HL7 v2.3               [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu       [RG ADMIN COORD MENU]
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. MPIF*1.0*71):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+      
+     a. When prompted 'Enter options you wish to mark as 'Out Of Order':',
+        select the following options:
+     
+          Option Name                    Menu Text                       
+          -----------                    ---------
+          [DG LOAD PATIENT DATA]         Load/Edit Patient Data
+          [DG REGISTER PATIENT]          Register a Patient 
+          [DGPRE PRE-REGISTER OPTION]    Preregister a Patient
+          [EAS EZ 1010EZ PROCESSING]     Electronic 10-10EZ Processing
+          [VAFC BATCH UPDATE]            UPDATE BATCH JOB FOR HL7 v2.3
+          [RG ADMIN COORD MENU]          MPI/PD Patient Admin Coordinator
+                                          Menu
+          [MPIF LOC/MIS ICN RES]         Local/Missing ICN Resolution
+                                          Background Job 
+     
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+        press the Enter key.
+  
+     c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+   
+ Back-Out Plan
+ -------------
+ The MPIF patch back-out procedure would consist of restoring the original
+ routine using the back-up message created during the patch installation.
+   
+ If assistance is still required to back-out the patch please contact the
+ National Service Desk (NSD) to log a help desk ticket so the development
+ team can assist in the process.
+  
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFXMLI
+    Before: B39708353   After: B41378999  **61,71**
+ 
+Routine list of preceding patches: 61
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2019
+Completed By:                               Date Completed: OCT 16, 2019
+Released By :                               Date Released : OCT 16, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

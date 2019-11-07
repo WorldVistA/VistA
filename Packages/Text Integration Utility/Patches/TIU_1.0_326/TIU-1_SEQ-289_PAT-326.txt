@@ -1,0 +1,165 @@
+$TXT Created by                CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 06/28/19 at 10:37
+=============================================================================
+Run Date: SEP 09, 2019                     Designation: TIU*1*326
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #289                      Status: Released
+                  Compliance Date: OCT 10, 2019
+=============================================================================
+
+Associated patches: (v)TIU*1*255   <<= must be installed BEFORE `TIU*1*326'
+
+Subject: INEFFICIENT CODE FOUND DURING RESEARCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue
+      
+ During analysis of another ticket INC5361702, an area of code associated 
+ with the Alert Tracking module was discovered to need remediation.  This 
+ patch will correct this design to not completely rebuild the Alert Tracking 
+ entry for each multiple Additional Signer that is added but rather make a 
+ single call to the TIU alert routine for all additional signers that will 
+ create only one new Alert Tracker record each time one or more 
+ additional signers are added.
+      
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+       
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+       
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ RTC Defect 1023789 - INC6113588 Inefficient code found during 
+                                 research of INC5361702
+       
+ Problem:
+ --------
+ Presently, for each time an additional signer is added to a note, the code
+ loops through and 'deletes' the original instance and rebuilds the new 
+ updated information for each additional signer and adds a deleted 
+ date/time stamp. This process occurs once for each additional signer 
+ added.  This creates multiple Alert Tracking records when there are 
+ multiple additional signers added.  This is not efficient coding and can 
+ be misleading when reviewing the alert tracking file.  
+       
+ Resolution:
+ -----------
+ This patch will correct this design to create only one new Alert Tracker 
+ record for all multiple Additional Signer that exist for the note.  Instead 
+ of multiple calls to the TIU alert routine only a single call will be 
+ made.  Routine TIULX will be modified to make a single call to
+ SEND^TIUALRT when additional signers exist on the note.
+      
+ Test Sites:
+ ----------
+ VA Illiana Health Care System
+ Wilmington VAMC
+  
+       
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ N/A
+       
+ Patch Installation:
+       
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+       
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ highly recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 1 minute
+ to install.
+        
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+       
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+       
+ 3.  From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu.  From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter the patch#
+     TIU*1.0*326:
+       
+    a.  Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+       
+    b.  Compare Transport Global to Current System - This option will 
+        (allow you to view all changes that will be made when this patch  
+        is installed.  It compares all components of this patch routines,
+        DDs, templates, etc.).
+       
+    c.  Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option 
+     and choose the patch TIU*1.0*326 to install.
+       
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? NO// YES' 
+        
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO// NO
+       
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// NO' 
+       
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+       
+       
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+       
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+        
+ It is imperative that you have performed a backup of the routine 
+ included in this patch prior to installation.
+       
+ The back-out plan is to restore the routine from the backup created.
+       
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+       
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIULX
+    Before: B48956159   After: B50975960  **1,28,79,100,136,219,255,326**
+ 
+Routine list of preceding patches: 255
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 14, 2019
+Completed By:                               Date Completed: SEP 09, 2019
+Released By :                               Date Released : SEP 09, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
