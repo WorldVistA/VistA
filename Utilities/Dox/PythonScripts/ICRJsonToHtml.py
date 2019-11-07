@@ -37,7 +37,7 @@ from ICRSchema import isSubFile, isWordProcessingField, SUBFILE_FIELDS
 from UtilityFunctions import getPackageHtmlFileName, getGlobalHtmlFileNameByName
 from UtilityFunctions import getRoutineHRefLink, normalizePackageName
 from UtilityFunctions import generatePDFTableHeader
-from UtilityFunctions import getDOXURL, getViViaNURL
+from UtilityFunctions import getDOXURL, getViViaNURL, getFilesURL
 from DataTableHtml import outputDataTableHeader, outputDataTableFooter
 from DataTableHtml import outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
@@ -47,7 +47,7 @@ from DataTableHtml import outputFileEntryTableList, safeElementId
 STYLES = getSampleStyleSheet()
 
 DOX_URL = None
-VIVIAN_URL = None
+FILES_URL = None
 FAILURES = []
 RPC_NAME_TO_IEN_MAPPING = dict()
 
@@ -62,9 +62,11 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
         raise Exception("Nothing to generate!")
 
     global DOX_URL
-    global VIVIAN_URL
-    DOX_URL = getDOXURL(local)
-    VIVIAN_URL = getViViaNURL(local)
+    global FILES_URL
+
+    # Data here also requires the extra step up.
+    DOX_URL = os.path.join("..", getDOXURL(local))
+    FILES_URL = os.path.join("..", getFilesURL(local))
 
     if generateHTML:
         if not outDir:
@@ -144,7 +146,7 @@ def _getICRIndividualHtmlFileLinkByIen(value, icrEntry, **kargs):
           ienDescription += '\n'
         else:
           ienDescription += ' ' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
-    return '<a title=\"%s\" href=\"%s\">%s</a>' % (ienDescription, '%s/ICR/ICR-%s.html' % 	 (VIVIAN_URL, ien), value)
+    return '<a title=\"%s\" href=\"%s\">%s</a>' % (ienDescription, '%s/ICR/ICR-%s.html' % 	 (FILES_URL, ien), value)
 
 
 def _getGeneralDescription(value, icrEntry, **kargs):
@@ -214,7 +216,7 @@ def _getRoutineHRefLink(rtnName, icrEntry, **kargs):
 def _getRPCHRefLink(rpcName, icrEntry, **kargs):
     if rpcName in RPC_NAME_TO_IEN_MAPPING:
         filename ="%s-%s.html" % (RPC_FILE_NO, RPC_NAME_TO_IEN_MAPPING[rpcName])
-        rpcFilename = "%s/%s/%s" % (VIVIAN_URL, RPC_FILE_NO, filename)
+        rpcFilename = "%s/%s/%s" % (FILES_URL, RPC_FILE_NO, filename)
         return '<a href=\"%s\">%s</a>' % (rpcFilename, rpcName)
     return rpcName
 

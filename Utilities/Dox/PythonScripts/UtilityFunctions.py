@@ -130,16 +130,13 @@ def cOpen(fileName, openParams):
   return codecs.open(fileName, openParams, encoding="ISO-8859-1", errors="ignore")
 
 def getDOXURL(local):
-    if local:
         return "../dox"
-    else:
-        return "https://code.osehra.org/dox"
 
 def getViViaNURL(local):
-    if local:
-        return local
-    else:
-        return "https://code.osehra.org/vivian/files"
+        return "../vivian" 
+
+def getFilesURL(local):
+        return "../files"
 
 ###############################################################################
 

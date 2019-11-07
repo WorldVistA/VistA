@@ -37,15 +37,15 @@ table_sorter_header = """
 #  html header using JQuery DataTable Plugin
 #  https://datatables.net/
 data_table_reference = """
-<link rel="stylesheet" type="text/css" href="../../css/vivian.css"/>
-<link rel="stylesheet" type="text/css" href="../../datatable/css/jquery.dataTables.css"/>
-<link rel="stylesheet" type="text/css" href="../../datatable/css/buttons.dataTables.css"/>
-<link rel="stylesheet" type="text/css" href="../../datatable/css/dataTables.searchHighlight.css"/>
+<link rel="stylesheet" type="text/css" href="../../vivian/css/vivian.css"/>
+<link rel="stylesheet" type="text/css" href="../../vivian/datatable/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../vivian/datatable/css/buttons.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="../../vivian/datatable/css/dataTables.searchHighlight.css"/>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="../../datatable/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="../../datatable/js/buttons.colVis.min.js"></script>
-<script type="text/javascript" src="../../datatable/js/jquery.highlight.js"></script>
-<script type="text/javascript" src="../../datatable/js/dataTables.searchHighlight.min.js"></script>
+<script type="text/javascript" src="../../vivian/datatable/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../vivian/datatable/js/buttons.colVis.min.js"></script>
+<script type="text/javascript" src="../../vivian/datatable/js/jquery.highlight.js"></script>
+<script type="text/javascript" src="../../vivian/datatable/js/dataTables.searchHighlight.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>

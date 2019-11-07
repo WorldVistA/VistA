@@ -539,6 +539,7 @@ class WebPageGenerator(object):
         self._allRoutines = crossReference.getAllRoutines()
         self._allGlobals = crossReference.getAllGlobals()
         self._outDir = outDir
+        self._dataDir = os.path.join(self._outDir,'..','files')
         self._pdfOutDir = pdfOutDir
         if not os.path.exists(self._pdfOutDir):
             os.mkdir(self._pdfOutDir)
@@ -1067,7 +1068,7 @@ class WebPageGenerator(object):
                     pdfEntryList=[]
                     pdfEntryRow = []
                     if globalVar.getFileNo():
-                      jsonFile = os.path.join(self._outDir, globalVar.getFileNo().replace('.', '_')+".json")
+                      jsonFile = os.path.join(self._dataDir, globalVar.getFileNo().replace('.', '_')+".json")
                       if os.path.isfile(jsonFile):
                         logger.info("Checking %s for entries" % jsonFile)
                         with open(jsonFile, "r") as entryData:
