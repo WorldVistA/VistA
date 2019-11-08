@@ -37,7 +37,7 @@ def pack(files, output):
         m = codecs.open(f,"r", 'ISO-8859-1', 'ignore')
         output.write('%s\n'%n)
         for line in m:
-            output.write(line)
+            output.write('%s\n' % line.rstrip('\n\r'))
         output.write('\n')
     output.write('\n')
     output.write('\n')
