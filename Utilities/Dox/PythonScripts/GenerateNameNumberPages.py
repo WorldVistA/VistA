@@ -44,7 +44,7 @@ def generateListingPage(outDir, pageData, dataType):
       outputDataListTableHeader(output, dataType, pageData["headers"], pageData["headers"], [])
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
-      output.write("<h1> %s Data List</h1>" % (dataType))
+      output.write("<h1> %s Data List</h1>" % dataType)
       outputCustomDataTableHeader(output, pageData["headers"], dataType)
       output.write("<tbody>\n")
       for object in pageData["records"]:

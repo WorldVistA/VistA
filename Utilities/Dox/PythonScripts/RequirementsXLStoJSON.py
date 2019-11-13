@@ -66,7 +66,7 @@ def parseStringVal(value, index):
       if re.match(',[ ]*', bffValue) or (bffValue == ''):
         continue
       if not (bffValue in returnArray):
-        returnArray.append(bffValue);
+        returnArray.append(bffValue)
       if not (bffValue in rootNode):
         rootNode[bffValue] = []
     return returnArray
@@ -74,7 +74,7 @@ def parseStringVal(value, index):
     returnArray=[]
     for nsrEntry in value.split("\n"):
       if not (nsrEntry in returnArray):
-        returnArray.append(nsrEntry);
+        returnArray.append(nsrEntry)
     return returnArray
   if not (value.find(" [") == -1):
     return value[:value.find(" [")]
@@ -109,7 +109,7 @@ RequirementsFieldsConvert = {
 def checkReqForUpdate(curNode, pastJSONObj, curDate):
   diffFlag=False
   foundDate = curDate
-  noHistory=False;
+  noHistory=False
   BFFList = []
   if isinstance(curNode['BFFlink'], list):
     for BFFlink in curNode['BFFlink']:
@@ -120,8 +120,8 @@ def checkReqForUpdate(curNode, pastJSONObj, curDate):
   # Remove all recentUpdate attributes
   for BFFEntry in BFFList:
     if pastJSONObj:
-      diffFlag=False;
-      noHistory=False;
+      diffFlag=False
+      noHistory=False
       if BFFEntry in pastJSONObj:
         ret = [x for x in pastJSONObj[BFFEntry] if x['name'] == curNode['name']]
         if ret:
@@ -145,7 +145,7 @@ def checkReqForUpdate(curNode, pastJSONObj, curDate):
       curNode['recentUpdate'] = "Update"
       curNode['dateUpdated']  = curDate
     else:
-      curNode['recentUpdate'] = "None" if (noHistory) else "New Requirement"
+      curNode['recentUpdate'] = "None" if noHistory else "New Requirement"
       curNode['dateUpdated']= foundDate
     rootNode[BFFEntry].append(curNode)
 
@@ -163,14 +163,10 @@ def convertExcelToJson(input, output, pastData, curDate):
   sheet = book.sheet_by_index(0)
   data_row = 1
   row_index= 0
-  fields = None
-  all_nodes = dict(); # all the nodes
-  fields = sheet.row_values(row_index)
   fields = list(map(RequirementsFieldsConvertFunc, fields))
   # Read rest of the BFF data from data_row
   for row_index in range(data_row, sheet.nrows):
     curNode = dict()
-    curNode['isRequirement'] = True
     curNode['isRequirement'] = True
     for col_index in range(sheet.ncols):
       cell = sheet.cell(row_index, col_index)

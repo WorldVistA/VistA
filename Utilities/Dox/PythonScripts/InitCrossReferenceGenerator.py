@@ -28,7 +28,6 @@ SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
-from ArgParserHelper import createArgParser as createInitialCrossRefGenArgParser
 from CrossReference import CrossReference, Routine, Package, Global, PlatformDependentGenericRoutine
 from LogManager import logger
 
@@ -235,7 +234,7 @@ class InitCrossReferenceGenerator(object):
       crossReference.addRoutineToPackageByName(routineName, packageName)
       if needRename:
         routine = crossReference.getRoutineByName(routineName)
-        assert(routine)
+        assert routine
         routine.setOriginalName(origName)
       if A_ROUTINE_EX.search(routineName):
         pass

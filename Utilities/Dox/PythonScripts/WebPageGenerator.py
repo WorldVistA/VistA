@@ -305,9 +305,9 @@ find the routine/global via
 def writePDFCustomization(outputFile, titleList):
   outputFile.write("<script>initTitleList=%s\n" % str(titleList))
   outputFile.write(" initTitleList.forEach(function(obj) {\n")
-  outputFile.write('''   if (obj == "Doc") {return }\n''');
-  outputFile.write('''   $("#pdfSelection").append('<input class="headerVal" type="checkbox" val="'+obj+'" checked>'+obj+'</input>')\n''');
-  outputFile.write('''   $("#pdfSelection").append('<br/>')\n''');
+  outputFile.write('''   if (obj == "Doc") {return }\n''')
+  outputFile.write('''   $("#pdfSelection").append('<input class="headerVal" type="checkbox" val="'+obj+'" checked>'+obj+'</input>')\n''')
+  outputFile.write('''   $("#pdfSelection").append('<br/>')\n''')
   outputFile.write(" })\n")
   outputFile.write("</script>\n")
 
@@ -325,7 +325,7 @@ OPEN_ACCORDION_FUNCTION = """
 
 """
 
-ACCORDION =  """
+ACCORDION = """
     <script type='text/javascript'>
        function locationHashChanged() {
            locationString = window.location.hash.substring(1)
@@ -351,7 +351,7 @@ ACCORDION =  """
   """
 
 def getICRHtmlFileName(icrEntry):
-    return ("%s/ICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"]))
+    return "%s/ICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"])
 
 def getGlobalDisplayName(globalVar):
     if globalVar.isFileManFile():
@@ -371,7 +371,7 @@ def getICRDisplayName(icrEntry):
     if "STATUS" in icrEntry:
       outString +="<li>Status: %s</li>" % (icrEntry["STATUS"])
     if "USAGE" in icrEntry:
-      outString +="<li>Usage: %s</li></ul>" % (icrEntry["USAGE"])
+      outString += "<li>Usage: %s</li></ul>" % (icrEntry["USAGE"])
     return outString
 
 # FileMan File (Global) related Functions
@@ -553,8 +553,8 @@ class WebPageGenerator(object):
         self._generatePDFBundle = generatePDF
         self.__generateLegend__()
 
-    def __includeHeader__(self, outputFile, indexList=""):
-        for line in (self._header):
+    def __includeHeader__(self, outputFile):
+        for line in self._header:
             outputFile.write(line)
 
     def __includeSourceHeader__(self, outputFile):
@@ -590,7 +590,6 @@ class WebPageGenerator(object):
           fd.write(self.buf.getvalue())
       except:
         self.failures.append(pdfFileName)
-        pass
 
     def __generateLegend__(self):
       self.legend = "<h3>Legends:</h3>"
@@ -1010,29 +1009,29 @@ class WebPageGenerator(object):
                    # Used in RPC section
                    {
                      "name": "Used in RPC", # this is also the link name
-                     "data": self.__getRpcReferences__, # the data source
-                     "dataarg": [globalName], # extra arguments for data source
+                     "data": self.__getRpcReferences__,  # the data source
+                     "dataarg": [globalName],  # extra arguments for data source
                    },
                    # Used in HL7 Interface section
                    {
-                     "name": "Used in HL7 Interface", # this is also the link name
-                     "data": self.__getHl7References__, # the data source
-                     "dataarg": [globalName], # extra arguments for data source
+                     "name": "Used in HL7 Interface",  # this is also the link name
+                     "data": self.__getHl7References__,  # the data source
+                     "dataarg": [globalName],  # extra arguments for data source
                    },
                    # FileMan Files Accessed Via FileMan Db Call section
                    {
-                     "name": "FileMan Files Accessed Via FileMan Db Call", # this is also the link name
-                     "data": globalVar.getFilemanDbCallGlobals, # the data source
+                     "name": "FileMan Files Accessed Via FileMan Db Call",  # this is also the link name
+                     "data": globalVar.getFilemanDbCallGlobals,  # the data source
                    },
                    # Global Variables Directly Accessed section
                    {
-                     "name": "Global Variables Directly Accessed", # this is also the link name
-                     "data": globalVar.getGlobalVariables, # the data source
+                     "name": "Global Variables Directly Accessed",  # this is also the link name
+                     "data": globalVar.getGlobalVariables,  # the data source
                    },
                    # Label References section
                    {
-                     "name": "Label References", # this is also the link name
-                     "data": globalVar.getLabelReferences, # the data source
+                     "name": "Label References",  # this is also the link name
+                     "data": globalVar.getLabelReferences,  # the data source
                    },
                    # Naked Globals section
                    {
@@ -1271,7 +1270,7 @@ class WebPageGenerator(object):
 
             self.writeTitleBlock(title, title, package, outputFile, pdf,
                                  useAccordion, linkHtmlTxt, linkPDFTxt)
-            packageName = package.getName();
+            packageName = package.getName()
 
             # Information
             self.writeSectionHeader("Information", "Info", outputFile, pdf,
@@ -1343,7 +1342,7 @@ class WebPageGenerator(object):
                 text = "************************REQUIRED FIELD************************"
                 fieldDetails += "<div style='text-align: center'><b>%s</b></div>" % text
                 if self._generatePDFBundle:
-                    pdfCell.append(generateParagraph(("<b>****REQUIRED FIELD****</b>")))
+                    pdfCell.append(generateParagraph("<b>****REQUIRED FIELD****</b>"))
             if value.isSetType():
                 # nice display of set members
                 setIter = value.getSetMembers()
@@ -1664,7 +1663,7 @@ class WebPageGenerator(object):
         fieldsReferenced = ""
         if self._generatePDFBundle:
             fieldsReferencedPDF = []
-        if ("GLOBAL REFERENCE" in entry):
+        if "GLOBAL REFERENCE" in entry:
           for reference in entry["GLOBAL REFERENCE"]:
             if "FIELD NUMBER" in reference:
               for value in reference["FIELD NUMBER"]:
@@ -1679,7 +1678,7 @@ class WebPageGenerator(object):
         elif self._generatePDFBundle:
             fieldsReferencedPDF.append(generateParagraph(""))
         description = ""
-        if ("GLOBAL REFERENCE" in entry):
+        if "GLOBAL REFERENCE" in entry:
           for reference in entry["GLOBAL REFERENCE"]:
             if "GLOBAL DESCRIPTION" in reference:
               for value in reference["GLOBAL DESCRIPTION"]:
@@ -2069,7 +2068,7 @@ class WebPageGenerator(object):
     def __parseReadCmd__(self, matchArray, routine, lineNo):
       for matchObj in matchArray:
         setup = matchObj[0].split(",")
-        interaction = {}
+        interaction = dict()
         interaction["type"]= "READ"
         interaction["line"]= str(lineNo)
         interaction['timeout'] = matchObj[1]
@@ -2240,7 +2239,7 @@ class WebPageGenerator(object):
                     elif pair[0] in labels:
                       entryLink ="<a class=\"pln\" href=\"%s/Routine_%s_source.html#_%s\">%s</a>" % (DOX_URL, routineName.replace("%", ''), pair[0], pair[0])
                       line = line.replace(pair[0], entryLink)
-                if len(line):
+                if line:
                   outputFile.write("<pre style=\"padding:unset; border: none; margin:unset;\" %s class=\"prettyprint lang-mumps linenums:%s\">%s</pre>\n" % (idVal, lineNo, line))
                   lineNo = lineNo + 1
               outputFile.write("</div>\n")
@@ -2378,7 +2377,7 @@ class WebPageGenerator(object):
         # TODO: This section is copy + paste from __writeRoutineDepGraph__
         outputFile.write("<div class=\"contents\">\n")
         # TODO: Copy + paste from GraphGenerator::_generatePackageDependencyGraph
-        if totalPackages > 0 and totalPackages <= MAX_DEPENDENCY_LIST_SIZE:
+        if 0 < totalPackages <= MAX_DEPENDENCY_LIST_SIZE:
             try:
                 # write the image of the dependency graph
                 fileNamePrefix = normalizePackageName(packageName) + packageSuffix
@@ -2550,10 +2549,10 @@ class WebPageGenerator(object):
                             if len(lines) > 1:
                                 pdfCell = []
                                 for line in lines:
-                                    pdfCell.append(generateParagraph((line)))
+                                    pdfCell.append(generateParagraph(line))
                                 pdfRow.append(pdfCell)
                             else:
-                                pdfRow.append(generateParagraph((displayName)))
+                                pdfRow.append(generateParagraph(displayName))
                 outputFile.write("</tr>\n")
                 if self._generatePDFBundle and pdfRow:
                     pdfTable.append(pdfRow)
@@ -2630,9 +2629,9 @@ class WebPageGenerator(object):
     def writeGenericTablizedHtmlData(self, headerList, itemList, outputFile, classid):
         outputFile.write("<div><table>\n")
         if headerList:
-            outputFile.write("<tr class=\"%s\" >\n" % (classid))
+            outputFile.write("<tr class=\"%s\" >\n" % classid)
             for header in headerList:
-                outputFile.write("<th class=\"IndexKey\">%s</th>\n" % ( header))
+                outputFile.write("<th class=\"IndexKey\">%s</th>\n" % header)
             outputFile.write("</tr>\n")
         for itemRow in itemList:
             writeTableRow(itemRow, outputFile, rowClassId=classid)
@@ -2657,7 +2656,7 @@ class WebPageGenerator(object):
                     data = data.replace("</a>", "")
                     data = re.sub(r'<.*?>', "", data)
                     data = re.sub(r'<.*?', "", data)
-                    row.append(generateParagraph((data)))
+                    row.append(generateParagraph(data))
                 else:
                     row.append(data)
                 table.append(row)
@@ -3252,7 +3251,7 @@ class WebPageGenerator(object):
         totalRoutines = 0
         for callDict in itervalues(data):
             totalRoutines += len(callDict)
-        if totalRoutines > 0 and totalRoutines <= MAX_DEPENDENCY_LIST_SIZE:
+        if 0 < totalRoutines <= MAX_DEPENDENCY_LIST_SIZE:
             self.__writeRoutineDepGraph__(routine, header, outputFile, pdfSection,
                                           isDependency)
         self.__writeRoutineDepTable__(data, header, outputFile, pdfSection,
@@ -3843,7 +3842,7 @@ if __name__ == '__main__':
                         help='generate html')
     parser.add_argument('-fj', '--filesJson', required=True,
                         help='Repository information in JSON format')
-    result = parser.parse_args();
+    result = parser.parse_args()
 
     initLogging(result.logFileDir, DEFAULT_OUTPUT_LOG_FILE_NAME)
     logger.debug(result)

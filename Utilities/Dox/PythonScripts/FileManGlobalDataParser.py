@@ -353,18 +353,18 @@ class FileManGlobalDataParser(object):
         continue
       dataEntry = dataEntry[index]
       if not dataEntry.value:
-        return (ien, None)
+        return ien, None
       values = dataEntry.value.split('^')
       dataValue = None
       if convertToType(loc, int):
         intLoc = int(loc)
-        if intLoc > 0 and intLoc <= len(values):
+        if 0 < intLoc <= len(values):
           dataValue = values[intLoc-1]
       else:
         dataValue = str(dataEntry.value)
       if dataValue:
-        return (ien, self._parseIndividualFieldDetail(dataValue, keyField, None))
-    return (None, None)
+        return ien, self._parseIndividualFieldDetail(dataValue, keyField, None)
+    return None, None
 
   def parseZWRGlobalFileBySchemaV2(self, inputFileName, fileNumber, glbLoc=None):
     schemaFile = self._allSchemaDict[fileNumber]
@@ -437,14 +437,14 @@ class FileManGlobalDataParser(object):
       protocolEntry = protocol.dataEntries[ien]
       if '4' in protocolEntry.fields:
         type = protocolEntry.fields['4'].value
-        if (type != 'event driver' and type != 'subscriber'):
+        if type != 'event driver' and type != 'subscriber':
           entryName = protocolEntry.name
           namespace, package = \
             self._crossRef.__categorizeVariableNameByNamespace__(entryName)
           if package:
             package.protocol.append(protocolEntry)
         # only care about the event drive and subscriber type
-        elif (type == 'event driver' or type == 'subscriber'):
+        elif type == 'event driver' or type == 'subscriber':
           entryName = protocolEntry.name
           namespace, package = \
             self._crossRef.__categorizeVariableNameByNamespace__(entryName)
@@ -487,13 +487,11 @@ class FileManGlobalDataParser(object):
             if package:
               package.rpcs.append(rpcEntry)
           else:
-            logger.error("Cannot find package for RPC: %s" %
-                          (rpcEntry.name))
+            logger.error("Cannot find package for RPC: %s" % rpcEntry.name)
         # Generate the routine referenced based on RPC Call
         if rpcRoutine:
           rpcInfo = {"name": rpcEntry.name,
-                     "ien" : ien
-                    }
+                     "ien" : ien}
           if '.02' in rpcEntry.fields:
             rpcTag = rpcEntry.fields['.02'].value
             rpcInfo['tag'] = rpcTag
@@ -579,7 +577,7 @@ class FileManGlobalDataParser(object):
             capture = PACKAGE_NAME_VAL_REGEX.match(installEntry.name)
             if capture:
               checkPackage = self._findInstallPackage(packageList, capture.groups()[0], False)
-              if ((checkPackage != "Unknown") or (len(capture.groups()[0]) <= 4)):
+              if (checkPackage != "Unknown") or (len(capture.groups()[0]) <= 4):
                 installItem['packageSwitch'] = True
           installJSONData[package][installEntry.name] = installItem
       logger.info("About to dump data into %s" % output)

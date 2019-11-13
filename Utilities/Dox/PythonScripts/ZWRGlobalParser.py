@@ -19,11 +19,8 @@ from builtins import object
 import codecs
 import os
 import sys
-import re
-from datetime import datetime
 
 from LogManager import logger
-from UtilityFunctions import convertToType, getKeys, sortDataEntryFloatFirst
 
 class ItemValue(object):
   def __init__(self, value):
@@ -85,7 +82,7 @@ class GlobalNode(object):
   def keys(self):
     return list(self.child.keys())
   def values(self):
-    return self.child.value()
+    return self.child.values()
   def getIndex(self):
     if self.parent:
       if self.parent.isRoot():

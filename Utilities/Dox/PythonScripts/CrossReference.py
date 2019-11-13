@@ -19,11 +19,7 @@
 from builtins import object
 from future.utils import iteritems
 from future.utils import itervalues
-import sys
-import types
-import csv
 import json
-from operator import itemgetter, attrgetter
 
 from LogManager import logger
 from UtilityFunctions import PACKAGE_MAP, PACKAGE_COMPONENT_MAP
@@ -287,7 +283,7 @@ class Routine(object):
         return "Routine: %s" % self._name
     def __eq__(self, other):
         if not isinstance(other, Routine):
-            return False;
+            return False
         return self._name == other._name
     def __lt__(self, other):
         if not isinstance(other, Routine):
@@ -719,7 +715,7 @@ class FileManVariablePointerTypeField(FileManField):
     def getPointedToFiles(self):
         return self._pointedToFiles
     def __repr__(self):
-        return ("%s, %s" % (FileManField.__repr__(self), self._pointedToFiles))
+        return "%s, %s" % (FileManField.__repr__(self), self._pointedToFiles)
 
 class FileManSubFileTypeField(FileManField):
     def __init__(self, fieldNo, name, fType ,location = None):
@@ -825,7 +821,7 @@ class Global(FileManFile):
     def addPointedToByFile(self, Global, fieldNo, subFileNo=None):
         self.__addReferenceGlobalFilesCommon__(Global, fieldNo, subFileNo, True)
         Global.__addPointedToFiles__(self, fieldNo, subFileNo)
-    def getPointedByFilesByPackage(self, Package):
+    def getPointedByFilesByPackage(self, package):
         return self._filePointedBy.get(package)
     def __addPointedToFiles__(self, Global, fieldNo, subFileNo):
         self.__addReferenceGlobalFilesCommon__(Global, fieldNo, subFileNo, False)
@@ -867,7 +863,7 @@ class Global(FileManFile):
         return "Global: %s" % self._name
     def __eq__(self, other):
         if not isinstance(other, Global):
-            return False;
+            return False
         return self._name == other._name
     def __lt__(self, other):
         if not isinstance(other, Global):
@@ -1200,7 +1196,7 @@ class Package(object):
         return "Package: %s" % self._name
     def __eq__(self, other):
         if not isinstance(other, Package):
-            return False;
+            return False
         return self._name == other._name
     def __lt__(self, other):
         if not isinstance(other, Package):
@@ -1495,7 +1491,7 @@ class CrossReference(object):
             if isGlobal:
                 for globalNameSpace in package.getGlobalNamespace():
                     if variableName.startswith(globalNameSpace):
-                        return (globalNameSpace, package)
+                        return globalNameSpace, package
             for namespace in package.getNamespaces():
                 if variableName.startswith(namespace):
                     hasMatch = True
@@ -1508,8 +1504,8 @@ class CrossReference(object):
                         matchNamespace = ""
                         break
             if hasMatch:
-                return (matchNamespace, package)
-        return (None, None)
+                return matchNamespace, package
+        return None, None
 
     def __generatePlatformDependentRoutineDependencies__(self):
         for genericRoutine in itervalues(self._platformDepRoutines):
