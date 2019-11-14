@@ -2556,9 +2556,10 @@ class WebPageGenerator(object):
                 outputFile.write("</tr>\n")
                 if self._generatePDFBundle and pdfRow:
                     pdfTable.append(pdfRow)
-                if objectCount > 1000:
-                    outputFile.write("<tr><td colspan=\"%s\">For the entire list of entries see: <a href=\"%s\">Here</a></td></tr>" % (totalCol, additionalDetailsURL) )
-                    break
+                if  additionalDetailsURL != "":
+                    if (objectCount > 1000):
+                        outputFile.write("<tr><td colspan=\"%s\">For the entire list of entries see: <a href=\"%s\">Here</a></td></tr>" % (totalCol, additionalDetailsURL) )
+                        break
             outputFile.write("</table>\n</div>\n")
         else:
             outputFile.write("<div>\n</div>\n")
