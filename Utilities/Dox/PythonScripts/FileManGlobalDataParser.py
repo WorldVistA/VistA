@@ -533,57 +533,71 @@ class FileManGlobalDataParser(object):
       os.mkdir(self.outdir+"/9_7")
     installData = self._glbData['9.7']
     output = os.path.join(self.outdir, "install_information.json")
+    depOutput = os.path.join(self.outdir, "install_dependent_information.json")
     installJSONData = {}
+    dependentBuilds = {} # build => Builds that depend upon it.
     packageList = self._crossRef.getAllPackages()
     with open(output, 'w') as installDataOut:
-      for ien in sorted(list(installData.dataEntries.keys()), key=lambda x: float(x)):
-        installItem = {}
-        installEntry = installData.dataEntries[ien]
-        package = self._findInstallPackage(packageList, installEntry.name)
-        # if this is the first time the package is found, add an entry in the install JSON data.
-        if package not in installJSONData:
-          installJSONData[package]={}
-        if installEntry.name:
-          installItem['name'] = installEntry.name
-          installItem['ien'] = installEntry.ien
-          installItem['label'] = installEntry.name
-          installItem['value'] = installEntry.name
-          installItem['parent']= package
-          if installEntry.name in INSTALL_DEPENDENCY_DICT:
-            installItem['BUILD_ien'] = INSTALL_DEPENDENCY_DICT[installEntry.name]["ien"]
-            installchildren = []
-            if 'multi' in INSTALL_DEPENDENCY_DICT[installEntry.name]:
-              installItem['multi'] = INSTALL_DEPENDENCY_DICT[installEntry.name]['multi']
-            if 'builds' in INSTALL_DEPENDENCY_DICT[installEntry.name]:
-                for child in INSTALL_DEPENDENCY_DICT[installEntry.name]['builds']:
-                  childPackage = self._findInstallPackage(packageList, child)
-                  childEntry = {"name": child, "package": childPackage}
-                  if child in INSTALL_DEPENDENCY_DICT:
-                      if 'multi' in INSTALL_DEPENDENCY_DICT[child]:
-                        childEntry['multi'] = INSTALL_DEPENDENCY_DICT[child]['multi']
-                  installchildren.append(childEntry)
-                installItem['children'] = installchildren
-          if '11' in installEntry.fields:
-            installItem['installDate'] = installEntry.fields['11'].value.strftime("%Y-%m-%d")
-          if '1' in installEntry.fields:
-            installItem['packageLink'] = installEntry.fields['1'].value
-          if '40' in installEntry.fields:
-            installItem['numRoutines'] = len(installEntry.fields['40'].value.dataEntries)
-          if '14' in installEntry.fields:
-            installItem['numFiles'] = len(installEntry.fields['14'].value.dataEntries)
-          # Checks for the absence of asterisks which usually denotes a package change, also make it more specific to
-          # eliminate the multibuilds that are being marked as package changes
-          testMatch = PACKAGE_CHANGE_REGEX.search(installEntry.name)
-          if testMatch is None:
-            # Assume a package switch name will be just a package name and a version
-            capture = PACKAGE_NAME_VAL_REGEX.match(installEntry.name)
-            if capture:
-              checkPackage = self._findInstallPackage(packageList, capture.groups()[0], False)
-              if ((checkPackage != "Unknown") or (len(capture.groups()[0]) <= 4)):
-                installItem['packageSwitch'] = True
-          installJSONData[package][installEntry.name] = installItem
-      logger.info("About to dump data into %s" % output)
-      json.dump(installJSONData, installDataOut)
+      with open(depOutput, 'w') as installDepDataOut:
+        for ien in sorted(list(installData.dataEntries.keys()), key=lambda x: float(x)):
+          installItem = {}
+          installEntry = installData.dataEntries[ien]
+          package = self._findInstallPackage(packageList, installEntry.name)
+          # if this is the first time the package is found, add an entry in the install JSON data.
+          if package not in installJSONData:
+            installJSONData[package]={}
+          if installEntry.name:
+            installItem['name'] = installEntry.name
+            installItem['ien'] = installEntry.ien
+            installItem['label'] = installEntry.name
+            installItem['value'] = installEntry.name
+            installItem['parent']= package
+            if installEntry.name in INSTALL_DEPENDENCY_DICT:
+              installItem['BUILD_ien'] = INSTALL_DEPENDENCY_DICT[installEntry.name]["ien"]
+              installchildren = []
+              if 'multi' in INSTALL_DEPENDENCY_DICT[installEntry.name]:
+                installItem['multi'] = INSTALL_DEPENDENCY_DICT[installEntry.name]['multi']
+              if 'builds' in INSTALL_DEPENDENCY_DICT[installEntry.name]:
+                  for child in INSTALL_DEPENDENCY_DICT[installEntry.name]['builds']:
+                    childPackage = self._findInstallPackage(packageList, child)
+                    if childPackage not in dependentBuilds:
+                      dependentBuilds[childPackage]={}
+                    childEntry = {"name": child, "label": child, "value": child, "package": childPackage, 'parent':childPackage,'children':[]}
+                    if not child in dependentBuilds[childPackage]:
+                      dependentBuilds[childPackage][child] = childEntry
+                    dependentBuilds[childPackage][child]['children'].append({
+                      'label': installEntry.name,
+                      'value': installEntry.name,
+                      "name": installEntry.name,
+                      "package": package
+                    })
+                    if child in INSTALL_DEPENDENCY_DICT:
+                        if 'multi' in INSTALL_DEPENDENCY_DICT[child]:
+                          childEntry['multi'] = INSTALL_DEPENDENCY_DICT[child]['multi']
+                    installchildren.append(childEntry)
+                  installItem['children'] = installchildren
+            if '11' in installEntry.fields:
+              installItem['installDate'] = installEntry.fields['11'].value.strftime("%Y-%m-%d")
+            if '1' in installEntry.fields:
+              installItem['packageLink'] = installEntry.fields['1'].value
+            if '40' in installEntry.fields:
+              installItem['numRoutines'] = len(installEntry.fields['40'].value.dataEntries)
+            if '14' in installEntry.fields:
+              installItem['numFiles'] = len(installEntry.fields['14'].value.dataEntries)
+            # Checks for the absence of asterisks which usually denotes a package change, also make it more specific to
+            # eliminate the multibuilds that are being marked as package changes
+            testMatch = PACKAGE_CHANGE_REGEX.search(installEntry.name)
+            if testMatch is None:
+              # Assume a package switch name will be just a package name and a version
+              capture = PACKAGE_NAME_VAL_REGEX.match(installEntry.name)
+              if capture:
+                checkPackage = self._findInstallPackage(packageList, capture.groups()[0], False)
+                if ((checkPackage != "Unknown") or (len(capture.groups()[0]) <= 4)):
+                  installItem['packageSwitch'] = True
+            installJSONData[package][installEntry.name] = installItem
+        logger.info("About to dump data into %s" % output)
+        json.dump(installJSONData, installDataOut)
+        json.dump(dependentBuilds, installDepDataOut)
 
   def _resolveSelfPointer(self):
     """ Replace self-reference with meaningful data """
