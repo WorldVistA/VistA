@@ -22,6 +22,7 @@
 import sys
 import codecs
 import os
+import re
 
 def unpack(ro, out=sys.stdout, odir=None):
     # Write out the two header lines for human reference.
@@ -31,7 +32,7 @@ def unpack(ro, out=sys.stdout, odir=None):
     m = None
 
     for line in ro:
-        if line == '\n':
+        if re.match('^[\n\r]+$', line):
             # Routine terminated by blank line
             if m:
                 m.close()
