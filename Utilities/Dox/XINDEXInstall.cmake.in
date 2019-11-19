@@ -21,7 +21,7 @@ SetVendorArgsConfig(vendor_args "@VENDOR_NAME@" "@VISTA_CACHE_NAMESPACE@"
                      "@VISTA_CACHE_PASSWORD@")
 set(XINDEX_PATCH_DIR "@CMAKE_CURRENT_SOURCE_DIR@/Patches")
 set(PATCH_INSTALL_SCRIPT "@VISTA_SOURCE_DIR@/Scripts/PatchSequenceApply.py")
-set(LOG_DIR "@DOCUMENT_VISTA_OUTPUT_DIR@")
+set(LOG_DIR "@DOCUMENT_VISTA_FILES_OUTPUT_DIR@")
 list(APPEND vendor_args -p "${XINDEX_PATCH_DIR}" -l "${LOG_DIR}" -i -n "all")
 execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@VISTA_SOURCE_DIR@/Scripts/PatchSequenceApply.py" ${vendor_args}
                 RESULT_VARIABLE retCode

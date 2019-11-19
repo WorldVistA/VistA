@@ -37,7 +37,7 @@ from FileManDateTimeUtil import fmDtToPyDt
 from CrossReference import FileManField
 from FileManSchemaParser import FileManSchemaParser
 from LogManager import initLogging, logger
-from UtilityFunctions import getDOXURL, getViViaNURL
+from UtilityFunctions import getDOXURL, getViViaNURL, getFilesURL
 from UtilityFunctions import convertToType, getKeys, sortDataEntryFloatFirst
 from ZWRGlobalParser import createGlobalNodeByZWRFile
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
@@ -798,8 +798,9 @@ def run(args):
   logger.progress("Fileman data to html")
   _doxURL = getDOXURL(args.local)
   _vivianURL = getViViaNURL(args.local)
+  _filesURL = getFilesURL(args.local)
   htmlGen = FileManDataToHtml(crossRef, glbDataParser.schemaParser,
-                              args.outDir, _doxURL, _vivianURL)
+                              args.outDir, _doxURL, _vivianURL, _filesURL)
 
   if not args.all:
     logger.progress("Checking files...")

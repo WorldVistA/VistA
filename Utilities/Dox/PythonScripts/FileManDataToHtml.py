@@ -48,6 +48,7 @@ from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 
 DOX_URL = None
 VIV_URL = None
+FILES_URL = None
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
@@ -80,7 +81,7 @@ class OSEHRAEncoder(JSONEncoder):
 
 def getFileHtmlLink(dataEntry, value, **kargs):
   htmlFile = getDataEntryHtmlFileName(dataEntry.ien, dataEntry.fileNo)
-  return "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, dataEntry.fileNo.replace(".", "_"), htmlFile, value)
+  return "<a href=\"%s/%s/%s\">%s</a>" % (FILES_URL, dataEntry.fileNo.replace(".", "_"), htmlFile, value)
 
 def _getRoutineHRefLink(dataEntry, routineName, **kargs):
   tagRoutine = routineName.split('^')
@@ -143,7 +144,7 @@ def getFreeTextLink(dataEntry, value, **kargs):
       dataEntries = glbData.outFileManData[file].dataEntries
       for entry in dataEntries:
         if value == dataEntries[entry].fields[field].value:
-          return '<a href="%s/%s/%s-%s.html">%s</a>' % (VIV_URL,
+          return '<a href="%s/%s/%s-%s.html">%s</a>' % (FILES_URL,
                                                         dataEntries[entry].fileNo.replace(".", "_"),
                                                         file, entry, value)
   return value
@@ -278,7 +279,7 @@ def convertFilePointerToHtml(inputValue):
   fields = inputValue.split('^')
   if len(fields) == 3: # fileNo, ien, name
     refFile = getDataEntryHtmlFileName(fields[1], fields[0])
-    value = '<a href="%s/%s/%s">%s</a>' % (VIV_URL, fields[0].replace(".", "_"), refFile, fields[-1])
+    value = '<a href="%s/%s/%s">%s</a>' % (FILES_URL, fields[0].replace(".", "_"), refFile, fields[-1])
     name = fields[-1]
   elif len(fields) == 2:
     value = 'File: %s, IEN: %s' % (fields[0], fields[1])
@@ -292,14 +293,17 @@ class FileManDataToHtml(object):
   """
     class to Genetate HTML pages based on FileManData
   """
-  def __init__(self, crossRef, schemaParser, outDir, doxURL, vivURL):
+  def __init__(self, crossRef, schemaParser, outDir, doxURL, vivURL, filesURL):
     global DOX_URL
     global VIV_URL
+    global FILES_URL
     self.crossRef = crossRef
     self.schemaParser = schemaParser
     self.outDir = outDir
-    DOX_URL = doxURL
-    VIV_URL = vivURL
+    DOX_URL = os.path.join("..", doxURL)
+    # Data generated here requires an extra step up to find the common folder
+    VIV_URL = os.path.join("..", vivURL)
+    FILES_URL = os.path.join("..", filesURL)
     # a map of a tuple of menu options (parent, child) which point to the synonym for the child option
     #
     #  Example: ('DGBT BENE TRAVEL MENU', 'DGBT TRAVEL REPORTS MENU') : [RPTS]
@@ -415,7 +419,7 @@ class FileManDataToHtml(object):
       dataEntry = fileManData.dataEntries[ien]
       outJSON[ien] = dataEntry.fields
       allObjectsList.append(dataEntry)
-    with open(os.path.join(self.outDir, "dox", "%s.json" % fileNoPathSafe), 'w') as output:
+    with open(os.path.join(self.outDir, "%s.json" % fileNoPathSafe), 'w') as output:
       json.dump(outJSON, output, ensure_ascii=False, cls=OSEHRAEncoder)
 
     self._generateDataTableHtml(fileManData, fileNo, fileNoOutDir)
@@ -733,7 +737,7 @@ class FileManDataToHtml(object):
         name = str(name)
       if name is None:
         name = str(name)
-      dataHtmlLink = "<a href=\"%s/%s/%s\">%s</a>" % (VIV_URL, fileNo.replace(".", "_"),
+      dataHtmlLink = "<a href=\"%s/%s/%s\">%s</a>" % (FILES_URL, fileNo.replace(".", "_"),
                                                       getDataEntryHtmlFileName(ien, fileNo),
                                                       name)
       for field in dataEntry.fields:
@@ -772,7 +776,7 @@ class FileManDataToHtml(object):
                                                                     fileManDataFileNo))
         if fileNo in ['19', '101']:
           # Todo: Check if the object exists in options/menus first.
-          output.write("<a style='font-size: 15px;' href='%s/../vista_menus.php#%s?name=%s'>View in ViViaN Menu</a>" %
+          output.write("<a style='font-size: 15px;' href='%s/vista_menus.php#%s?name=%s'>View in ViViaN Menu</a>" %
                           (VIV_URL, fileNo, urllib.parse.quote_plus(name)))
         outputFileEntryTableList(output, tName)
         # table body

@@ -23,6 +23,10 @@ include(UseJava)
 
 find_program(DOT_EXECUTABLE NAMES dot REQUIRED)
 
+set(DOCUMENT_VISTA_DOX_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/dox")
+set(DOCUMENT_VISTA_FILES_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/files")
+set(DOCUMENT_VISTA_PDF_OUTPUT_DIR "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}/PDF")
+
 set(DOCUMENT_VISTA_M_DIR "" CACHE PATH
   "Path to the folder that contains the routines and globals from OSEHRA")
 STRING(REGEX REPLACE "\\\\" "/" DOCUMENT_VISTA_M_DIR ${DOCUMENT_VISTA_M_DIR})
@@ -38,22 +42,18 @@ if(NOT EXISTS ${DOCUMENT_VISTA_OUTPUT_DIR})
   message(WARNING "DOCUMENT_VISTA_OUTPUT_DIR is required.")
 endif()
 
-set(DOCUMENT_VISTA_ICR_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/ICR")
+set(DOCUMENT_VISTA_ICR_OUTPUT_DIR "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}/ICR")
 set(ICR_FILE "" CACHE FILEPATH "ICR File from http://foia-vista.osehra.org/VistA_Integration_Agreement/")
 if(NOT EXISTS ${ICR_FILE})
   message(WARNING "ICR_FILE is required.")
 else()
   # Get file name without directory or longest extension
   get_filename_component(ICR_JSON_FILE ${ICR_FILE} NAME_WE)
-  set(ICR_JSON_FILE "${DOCUMENT_VISTA_OUTPUT_DIR}/${ICR_JSON_FILE}.JSON")
+  set(ICR_JSON_FILE "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}/${ICR_JSON_FILE}.JSON")
   STRING(REGEX REPLACE "\\\\" "/" ICR_JSON_FILE ${ICR_JSON_FILE})
 endif()
 
-set(DOCUMENT_VISTA_DOX_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/dox")
-set(DOCUMENT_VISTA_PDF_OUTPUT_DIR "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}/PDF")
-
 set(PYTHONSCRIPTS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/PythonScripts")
-set(LOCAL_DOX_LINKS "FALSE" CACHE BOOL "Use a local links for DOX page connections")
 set(GENERATE_DOX "TRUE" CACHE BOOL "Generate the DOX pages")
 mark_as_advanced(GENERATE_DOX)
 
@@ -66,16 +66,6 @@ if(GENERATE_PDF_BUNDLE)
   set(GENERATE_PDF "-pdf")
 else()
   set(GENERATE_PDF "")
-endif()
-
-if(LOCAL_DOX_LINKS)
-  set(LOCAL_VIVIAN_FILES_URL "" CACHE STRING "A local ViViaN/files URL to point to")
-  if(NOT LOCAL_VIVIAN_FILES_URL)
-    message(SEND_ERROR "Must supply a local ViViaN/files/ URL.")
-  endif()
-  set(GENERATE_LOCAL_LINKS "-local ${LOCAL_VIVIAN_FILES_URL}")
-else()
-  set(GENERATE_LOCAL_LINKS "")
 endif()
 
 if (NOT GENERATE_DOX AND NOT GENERATE_VIVIAN)
@@ -137,7 +127,7 @@ if (GENERATE_DOX OR GENERATE_VIVIAN)
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GetFilemanSchema.cmake.in ${SCRIPT_OUTPUT_DIR}/GetFilemanSchema.cmake @ONLY)
   add_test(GetFilemanSchema ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GetFilemanSchema.cmake)
   set_tests_properties(GetFilemanSchema PROPERTIES TIMEOUT 7200)
-  set(FILEMANDBCALL_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/filemanDBCall.json")
+  set(FILEMANDBCALL_JSON "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}/filemanDBCall.json")
 endif()
 
 # 3. Download, compile and run 'M Routine Analyzer' tool
@@ -167,13 +157,12 @@ endif()
 # 6. Write repository information to 'filesInfo.json'.
 # Data is displayed in both ViViaN and DOX (GenerateIndexPage)
 if (GENERATE_DOX OR GENERATE_VIVIAN)
-  set(FILESINFO_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/filesInfo.json")
+  set(FILESINFO_JSON "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}/filesInfo.json")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GenerateRepoInfo.cmake.in ${SCRIPT_OUTPUT_DIR}/GenerateRepoInfo.cmake @ONLY)
   add_test(GenerateRepoInfo ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GenerateRepoInfo.cmake)
 endif()
 
 if (GENERATE_DOX)
-  set(DOCUMENT_VISTA_DOX_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}/dox")
   file(MAKE_DIRECTORY "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}")
   file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/Web/code_pretty_scripts" DESTINATION "${DOCUMENT_VISTA_DOX_OUTPUT_DIR}")
 
@@ -184,8 +173,8 @@ if (GENERATE_DOX)
   set_tests_properties(GraphGenerator PROPERTIES TIMEOUT 7200)
 
 # 8. Run the Web Page Generator script to create DOX pages and PDF bundles
-  set(ROUTINEREF_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/Routine-Ref.json")
-  set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/PackageDep.json") # TODO: Where is this file used?
+  set(ROUTINEREF_JSON "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}/Routine-Ref.json")
+  set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}/PackageDep.json") # TODO: Where is this file used?
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/WebPageGenerator.cmake.in ${SCRIPT_OUTPUT_DIR}/WebPageGenerator.cmake @ONLY)
   add_test(WebPageGenerator ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/WebPageGenerator.cmake)
   set_tests_properties(WebPageGenerator PROPERTIES TIMEOUT 28000)
@@ -194,14 +183,14 @@ endif()
 if(GENERATE_VIVIAN)
   # 9. Run Package Dependency Generator script
   # Generates PackageDependency file used in ViViaN
-  set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_OUTPUT_DIR}/pkgdep.json")
+  set(PACKAGEDEP_JSON "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}/pkgdep.json")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/GeneratePackageDep.cmake.in ${SCRIPT_OUTPUT_DIR}/GeneratePackageDep.cmake @ONLY)
   add_test(GeneratePackageDep ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/GeneratePackageDep.cmake)
   set_tests_properties(GeneratePackageDep PROPERTIES TIMEOUT 7200)
 
   # 10. Run Requirements parser to generate the data needed for the BFF & Requirements page
   # to json and html (ViViaN)
-  set(DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR "${DOCUMENT_VISTA_OUTPUT_DIR}")
+  set(DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}")
   set(DOCUMENT_VISTA_REQUIREMENTS_INPUT CACHE FILEPATH "")
   mark_as_advanced(DOCUMENT_VISTA_REQUIREMENTS_INPUT)
   set(DOCUMENT_VISTA_REQUIREMENTS_PASTDATA CACHE FILEPATH "")
