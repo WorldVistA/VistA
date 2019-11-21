@@ -136,7 +136,7 @@ def getViViaNURL(local):
         return "../vivian" 
 
 def getFilesURL(local):
-        return "../files"
+        return "../vivian-data"
 
 ###############################################################################
 
