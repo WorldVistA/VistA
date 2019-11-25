@@ -98,8 +98,8 @@ PACKAGE_OBJECT_SECTION_HEADER_LIST = ["Name", "Field # of Occurrence",]
 
 LINE_TAG_PER_LINE = 10
 
-VIVIAN_URL = None
 DOX_URL = None
+FILES_URL = None
 
 ENTRY_POINT = re.compile("^[A-Z0-9]+[(]?")
 # Complicated regex to avoid 'catastropic backtracking'
@@ -351,7 +351,7 @@ ACCORDION =  """
   """
 
 def getICRHtmlFileName(icrEntry):
-    return ("%s/ICR/ICR-%s.html" % (VIVIAN_URL, icrEntry["NUMBER"]))
+    return ("%s/ICR/ICR-%s.html" % (FILES_URL, icrEntry["NUMBER"]))
 
 def getGlobalDisplayName(globalVar):
     if globalVar.isFileManFile():
@@ -1187,7 +1187,7 @@ class WebPageGenerator(object):
                                                     self.getGlobalEntryHTML,
                                                     nameFunc=self.getGlobalEntryName,
                                                     classid="gblEntry",
-                                                    additionalDetailsURL="%s/%s/%s.html" % (VIVIAN_URL, globalVar.getFileNo().replace('.', '_'), globalVar.getFileNo()))
+                                                    additionalDetailsURL="%s/%s/%s.html" % (FILES_URL, globalVar.getFileNo().replace('.', '_'), globalVar.getFileNo()))
                       if self._generatePDFBundle:
                           columns = 8
                           columnWidth = old_div(self.doc.width, columns)
@@ -2294,7 +2294,7 @@ class WebPageGenerator(object):
           return "Entry: %s" % routine["IENum"]
 
     def getGlobalEntryHTML(self, routine):
-        return "%s/%s/%s-%s.html" % (VIVIAN_URL, routine["GlobalNum"].replace(".", "_"), routine["GlobalNum"], routine["IENum"])
+        return "%s/%s/%s-%s.html" % (FILES_URL, routine["GlobalNum"].replace(".", "_"), routine["GlobalNum"], routine["IENum"])
 
 #===============================================================================
 # Method to generate routine Index page
@@ -2897,7 +2897,7 @@ class WebPageGenerator(object):
 
 
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
-      return "%s/%s/%s-%s.html" % (VIVIAN_URL, fileNo.replace('.', '_'), fileNo, ien)
+      return "%s/%s/%s-%s.html" % (FILES_URL, fileNo.replace('.', '_'), fileNo, ien)
 
     def __convertRPCDataReference__(self, variables, routine=None):
         return self.__convertRtnDataReference__(variables, '8994')
@@ -3798,9 +3798,9 @@ $( document ).ready(function() {
 # main
 #===============================================================================
 def run(args):
-    global VIVIAN_URL
     global DOX_URL
-    VIVIAN_URL = getViViaNURL(args.local)
+    global FILES_URL
+    FILES_URL = getFilesURL(args.local)
     DOX_URL = getDOXURL(args.local)
     icrJsonFile = os.path.abspath(args.icrJsonFile)
     parsedICRJSON = parseICRJson(icrJsonFile)
