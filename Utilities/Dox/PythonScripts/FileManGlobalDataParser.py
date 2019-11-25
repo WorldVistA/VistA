@@ -832,6 +832,7 @@ def run(args):
     fileSet.add('8994')   #Remote Procedure
     fileSet.add('19')     #Option
     fileSet.add('779.2')  #HLO Application
+    fileSet.add('9.6')    #Build (needs to be before install)
     fileSet.add('9.7')    #Install
     fileSet.add('.5')     #Function
     fileSet.add('409.61') #List Template
@@ -845,13 +846,15 @@ def run(args):
     fileSet &= set(glbDataParser.allFiles.keys())
     n = 0
     numFiles = len(fileSet)
-    for file in fileSet:
+    fileList = list(fileSet)
+    fileList.sort()
+    for file in fileList:
       n += 1
       logger.progress("Processing %s (file %d/%d)" % (file, n, numFiles))
       for zwrFile in glbDataParser.allFiles[file]['path']:
         glbDataParser.generateFileIndex(zwrFile, file)
     logger.progress("Process files...")
-    processFiles(glbDataParser, htmlGen, fileSet)
+    processFiles(glbDataParser, htmlGen, fileList)
 
   glbDataParser.outRtnReferenceDict()
 
