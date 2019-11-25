@@ -539,7 +539,7 @@ class WebPageGenerator(object):
         self._allRoutines = crossReference.getAllRoutines()
         self._allGlobals = crossReference.getAllGlobals()
         self._outDir = outDir
-        self._dataDir = os.path.join(self._outDir,'..','files')
+        self._dataDir = os.path.join(self._outDir, getFilesURL(False))
         self._pdfOutDir = pdfOutDir
         if not os.path.exists(self._pdfOutDir):
             os.mkdir(self._pdfOutDir)
