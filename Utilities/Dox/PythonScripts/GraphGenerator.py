@@ -226,11 +226,11 @@ class GraphGenerator(object):
             routineSuffix = "called"
         else:
             routineSuffix = "caller"
-        fileNameRoot = os.path.join(dirName, "%s_%s" % (normalizedName, routineSuffix))
+        routineType = routine.getObjectType()
+        fileNameRoot = os.path.join(dirName, "%s_%s_%s" % (routineType, normalizedName, routineSuffix))
         dotFilename = "%s.dot" % fileNameRoot
         pngFilename = "%s.png" % fileNameRoot
         cmapxFilename = "%s.cmapx" % fileNameRoot
-
         with open(dotFilename, 'w') as output:
             escapedName = re.escape(routineName)
             output.write("digraph \"%s\" {\n" % fileNameRoot)
@@ -240,7 +240,7 @@ class GraphGenerator(object):
     #        output.write("\tedge [fontsize=12];\n") # set the edge label and size props
             if package not in depRoutines:
                 output.write("\tsubgraph \"cluster_%s\"{\n" % package)
-                output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
+                output.write("\t\t\"%s\" [id='main' style=filled fillcolor=orange];\n" % escapedName)
                 output.write("\t}\n")
 
             for (depPackage, callDict) in iteritems(depRoutines):
