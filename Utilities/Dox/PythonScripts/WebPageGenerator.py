@@ -3272,7 +3272,7 @@ class WebPageGenerator(object):
         else:
             routineSuffix = "caller"
         normalizedRoutineName = normalizeName(routineName)
-        fileNamePrefix = "%s_%s" % (normalizedRoutineName, routineSuffix)
+        fileNamePrefix = "%s_%s_%s" % (routine.getObjectType(), normalizedRoutineName, routineSuffix)
         fileName = os.path.join(self._outDir, packageName, fileNamePrefix + ".cmapx")
         try:
             # append the content of map outputFile
