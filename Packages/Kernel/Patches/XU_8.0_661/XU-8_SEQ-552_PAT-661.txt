@@ -1,0 +1,165 @@
+
+=============================================================================
+Run Date: AUG 15, 2019                     Designation: XU*8*661
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #552                      Status: Released
+                  Compliance Date: SEP 15, 2019
+=============================================================================
+
+
+Subject: Update %ZOSF to support SACWG changes
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch supports the change of the SAC for longer Tags and Routine
+ names.  It increases the length from 8 to 16 characters.  
+  
+ This patch also makes several changes to the ZOSFONT routine, but only
+ the ^%ZOSF("TEST") node will be set.
+  
+ The routine ZOSFONT has the following changes:
+        1.      A new tag, NOASK, allows the setup of the %ZOSF global without
+                  user interaction.
+        2.      A new tag, ONE(X) allows the setup of a single node in the
+                 %ZOSF global.  This allows this patch to update just
+                 %ZOSF("TEST").
+        3.      There is now a short description for each %ZOSF node in the
+                 text.
+  
+ There are 2 changes to the ^%ZOSF global:
+   1. The node ^%ZOSF("TEST") is changed, the checking of routine pattern has
+     been removed.  It is changed from
+      I X?1(1""%"",1A).7AN,$D(^$ROUTINE(X)) to
+      I X]"",$D(^$ROUTINE(X)).
+   2. The node ^%ZOSF("GSEL;Select Globals") is deleted.  This node
+      was incorrectly defined in patch XU*8*365.  Patch 365 was
+      suppose to set the ^%ZOSF("GSEL") global, but mistakenly set the wrong
+      global node.
+                        
+ The post install routine XU8P661 cleans up the ^%ZOSF global.
+        1. The node ^%ZOSF("GSEL;Select Globals") is deleted
+        2. Sets node ^%ZOSF("TEST")
+  
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ BUILD file #9.6               PRE-TRANSPORTATION ROUTINE   #900
+                               ENVIRONMENT CHECK ROUTINE    #913
+                               DEL ENV ROUTINE              #913.1
+                               POST-INSTALL ROUINTE         #914
+                               PRE-INSTALL ROUINTE          #916
+ INSTALL file #9.7             ROUTINES  multiple           #40
+ ROUTINE file #9.8             NAME                         #.01
+                               TAG                          #5
+ TASKS file   #14.4            Entry Point                  #.01
+                               Routine Name                 #2
+ OPTION file  #19              ROUTINE                      #25
+ XQAB ERRORS LOGGED
+     file 8991.5               ROUTINE                      #.02
+ ALERT TRACKING file #8992.1   ROUTINE TAG                  #1.03
+ REMOTE PROCEDURE file #8994   TAG                          #.02
+                               ROUTINE                      #.03
+  
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+ N/A
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ New Service Requests (NSRs):
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ N/A
+  
+  
+ Blood Bank Clearance
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*661 contains
+ changes to a package referenced in ProPath standard titled: BBM Team Review
+ of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+ software design safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8.0*661 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+ Ticket: I9055002FY16 - XINDEX doesn't support SACC changes to routine
+         names and tags
+  
+ Problem:
+  XINDEX utility needs to support routine name and labels to 16 characters
+  and local variables names to 16 characters
+  
+ Resolution:
+  Change %ZOSF("TEST") to check for 16 characters instead of 8 in routine
+  ZOSFONT
+  
+  
+ Test Sites: 
+ ===========
+ Fargo, ND
+ South Texas, TX
+  
+  
+ Software and Documentation Retrieve Instructions:
+ =================================================
+ This patch is part of the TOOLKIT XINDEX 7.3 bundle.  Please see
+ the Software and Document Retrieve Instruction in patch XT*7.3*140
+  
+  
+ Patch Installation:
+ ===================
+ This patch is part of the TOOLKIT XINDEX 7.3 bundle.  Please see
+ the Patch Installation in patch XT*7.3*140
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P661
+    Before:       n/a   After:    B83899  **661**
+Routine Name: ZOSFONT
+    Before: B19625334   After: B28658128  **34,104,365,661**
+ 
+Routine list of preceding patches: 365
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 31, 2015
+Completed By:                               Date Completed: AUG 15, 2019
+Released By :                               Date Released : AUG 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

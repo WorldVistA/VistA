@@ -1,0 +1,558 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Thursday, 08/15/19 at 14:15
+=============================================================================
+Run Date: OCT 31, 2019                     Designation: ECX*3*174
+Package : ECX - DSS EXTRACTS                  Priority: EMERGENCY
+Version : 3       SEQ #158                      Status: Released
+                  Compliance Date: NOV 05, 2019
+=============================================================================
+
+Associated patches: (v)ECX*3*173   <<= must be installed BEFORE `ECX*3*174'
+
+Subject: DSS FY 2020 ANNUAL SUSTAINMENT
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ ***********************************************************************
+ ** This patch is being released with an Emergency status because of  **
+ ** the shortened compliance date and must be installed in all        **
+ ** systems no later than the compliance requirement date. This patch **
+ ** must be installed on or before 11/05/19 so that the October DSS   **
+ ** Extracts can be generated using the updated Fiscal Year 20 logic. **
+ ** Failure to comply with the installation date will cause delays in **
+ ** extracting and reporting data.                                    **
+ ***********************************************************************
+  
+ The MCAO FY20 Extract Enhancements shall provide the means of exporting 
+ data from selected VistA software modules and transmitting it to an MCAO 
+ database residing at the AITC (Austin Information Technology Center). This
+ transfer is accomplished through a set of extract routines, intermediate
+ files, and transmission routines. Data from VistA packages is stored by
+ the extract routines in the intermediate files, where it is temporarily
+ available for local use and auditing. The data is then transmitted to the
+ AITC, where it is formatted and uploaded into commercial software.
+  
+ Included in the MCAO FY20 scope are:
+  
+      o       MCAO Extract field additions and modifications
+      o       MCAO menu additions and modifications
+      o       MCAO report modifications
+      o       Changes related to user, technical, or business 
+              documentation.
+  
+ Components Sent With Patch
+ --------------------------
+  
+ The following is a list of files included in this patch:
+   
+                                            UP    SEND  DATA               
+                                            DATE  SEC.  COMES  SITE   RSLV 
+ FILE #   NAME                              DD    CODE  W/FILE DATA   PTS 
+ ------------------------------------------------------------------------
+ 727.802  ADMISSION EXTRACT                 YES   YES   NO         
+ 727.808  PHYSICAL MOVEMENT EXTRACT         YES   YES   NO
+ 727.809  UNIT DOSE LOCAL EXTRACT           YES   YES   NO                 
+ 727.81   PRESCRIPTION EXTRACT              YES   YES   NO                 
+ 727.813  LABORATORY EXTRACT                YES   YES   NO
+ 727.814  RADIOLOGY EXTRACT                 YES   YES   NO                 
+ 727.815  EVENT CAPTURE LOCAL EXTRACT       YES   YES   NO
+ 727.819  IV DETAIL EXTRACT                 YES   YES   NO
+ 727.824  LAB RESULTS EXTRACT               YES   YES   NO
+ 727.825  QUASAR EXTRACT                    YES   YES   NO                 
+ 727.826  PROSTHETICS EXTRACT               YES   YES   NO                 
+ 727.827  CLINIC EXTRACT                    YES   YES   NO
+ 727.829  BLOOD BANK EXTRACT                YES   YES   NO
+ 727.833  BCMA EXTRACT                      YES   YES   NO
+ 728.44   CLINICS AND STOP CODES            YES   YES   NO
+  
+ The following is a list of product features for this release:
+ =============================================================
+  
+ 1.  Validate data dictionary descriptions for accuracy.
+  
+ 2.  Changed field name from RELIGION to PLACEHOLD RELIGION in the ADM
+     extract as the field is no longer needed.
+  
+ 3.  Changed field name from ADM DRG to PLACEHOLD ADM DRG in the ADM 
+     extract as the field is no longer needed.
+  
+ 4.  Changed field name from SHARING AGREEMENT PAYOR to PLACEHOLD SHARE
+     AGREEMNT PAYOR in the ADM, CLI, PRE, and PRO extracts as the field is 
+     no longer needed.
+  
+ 5.  Changed field name from NATIONAL PATIENT RECORD FLAG to PLACEHOLD 
+     NAT'L PAT REC FLAG in the ADM and CLI extracts as the field is no 
+     longer needed.
+  
+ 6.  Changed field name from DSS PRODUCT DEPARTMENT to PLACEHOLD DSS 
+     PRODUCT DEPT in the CLI extract as the field is no longer needed.
+  
+ 7.  Added the SERVICE CONNECTED STATUS field to the CLI extract and 
+     modified the CLI extract logic to populate this field with the 
+     patient's service connected status.
+  
+ 8.  Modified various fields in the IVP and UDP extract files to update 
+     the technical descriptions to give additional details on the source 
+     of the data in the pharmacy package.
+  
+ 9.  Modified the PRO extract logic so that all monthly rental transactions
+     will be expressed in days, rather than months.  In addition, various
+     prosthetics reports were updated to include a note indicating that
+     monthly rentals are now expressed in days.
+  
+ 10. Modified the SUR extract logic to get the stop code for outpatient
+     procedures. If no associated clinic can be identified, then the stop
+     code will default to 435 for NON-OR based procedures or 429 for all
+     other procedures. The encounter number logic was also modified to use 
+     the stop code provided without changing it due to the surgical
+     specialty.
+  
+ 11. Modified the feeder key logic to create an NDC when the pharmacy item
+     is a drug item and does not have an NDC code assigned and isn't 
+     linked to a national drug file entry. In those cases, the NDC portion
+     of the feeder key will be the letters "LCD" concatenated with the IEN
+     of the item from file 50.  If the IEN is less than 9 characters, the
+     number will be left padded with zeroes. The previously added "LCL" 
+     logic for supply items was modified to only update when both the NDC 
+     and the national drug file link were missing.
+  
+ 12. Removed options Add/Edit Lab Results Translation Table and Lab 
+     Results Extract Untranslatable Results Report from the Lab 
+     Maintenance menu.  The Lab Results DSS LOINC Code Report option was 
+     moved from the Lab Maintenance menu to the Maintenance menu.  The Lab 
+     Maintenance menu was also deleted.
+  
+ 13. Modified the MOV extract logic so that the treating specialty at 
+     discharge is now stored in the TREATING SPECIALTY field.  In addition,
+     the description and technical description were updated in the TREATING
+     SPECIALTY field.
+  
+ 14. Created a new report for cost by feeder key for each of the pharmacy 
+     related extracts; IVP, PRE, UDP, and BCM.
+  
+ 15. Modified the LAB extract logic to obtain CPT codes for all workload 
+     where CPT code information is available.  Previously, this was only 
+     collected for specific lab workload.
+  
+ 16. Changed field name from COST OF TRANSACTION to PLACEHOLD COST OF 
+     TRANSACTION in the PRO extract as the field is being replaced.
+  
+ 17. Changed field name from LAB LABOR COST to PLACEHOLD LAB LABOR COST in 
+     the PRO extract as the field is being replaced.
+  
+ 18. Changed field name from LAB MATERIAL COST to PLACEHOLD LAB MATERIAL 
+     COST in the PRO extract as the field is being replaced.
+  
+ 19. Added field NEW COST OF TRANSACTION to the PRO extract and modified
+     the PRO extract logic to populate the field.
+  
+ 20. Added field NEW LAB LABOR COST to the PRO extract and modified the 
+     PRO extract logic to populate the field.
+  
+ 21. Added field NEW LAB MATERIAL COST to the PRO extract and modified the 
+     PRO extract logic to populate the field.
+  
+ 22. Modified the MOV extract to remove the TYPE field as it is no longer 
+     needed.
+   
+ 23. Changed field name from DSS IP# to PLACEHOLD DSS IP# in the CLI, ECS, 
+     ECQ, IVP, LAB, LBB, PRE, PRO, RAD, and UDP extracts as the field is no
+     longer needed.
+  
+ 24. Changed field name from ENCOUNTER SC to PLACEHOLD ENCOUNTER SC in the 
+     LAB, LBB, LAR, PRE, PRO, and RAD extracts as the field is no longer 
+     needed.
+  
+ 25. Modified the instructions for capturing output to be exported to be 
+     consistent with the current reflections software.
+  
+ 26. Modified the Print Feeder Locations Report so that the user can 
+     select one, many, or all feeder systems.  In addition, the station
+     number associated with each feeder location is now included in the
+     report.
+  
+ 27. Created a new report that will show institution and division 
+     information for the site.
+  
+ 28. Modified the BCM extract logic to handle values in the unit of 
+     administration and doses given fields of the BCMA MEDICATION LOG file 
+     that could be incorrectly processed as exponential numbers.
+  
+ 29. Modified the Pharmacy Unusual Volume report so that any entries that 
+     could be incorrectly processed as exponential numbers are correctly 
+     handled.
+  
+ 30. Modified the Prosthetics Rental Report so that all rentals are 
+     displayed. Added the ability to sort by division and added the unit of
+     issue and division to the report.
+  
+ 31. Modified the UDP extract so that the setting of the division is based 
+     on the ward if it's an inpatient or on the clinic if it's a clinic 
+     medication (inpatient medication for outpatients).
+  
+ 32. Updated the help text for the Action to Send prompt in the Enter/Edit 
+     Clinic Parameters option to reflect recent changes.
+  
+ 33. Modified the Print Feeder Keys option to allow for sorting the PHA 
+     feeder system by drug or non-drug.  Also modified the logic so that 
+     feeder keys that contain LCL or LCD are included.
+  
+ 34. Changed field name from ENCOUNTER CAMP LEJEUNE to PLACEHOLD ENC CAMP 
+     LEJEUNE in the LAR, PRE, PRO, and RAD extracts as the field is no
+     longer needed.
+  
+ 35. Changed field name from ENCOUNTER SHAD to PLACEHOLD ENCOUNTER SHAD in 
+     the PRE and PRO extracts as the field is no longer needed.
+   
+ 36. Changed field name from ENCOUNTER CV to PLACEHOLD ENCOUNTER CV in the
+     PRE and PRO extracts as the field is no longer needed.
+   
+ 37. Changed field name from ENCOUNTER SWAC to PLACEHOLD ENCOUNTER SWAC
+     in the PRE and PRO extracts as the field is no longer needed.
+   
+ 38. Changed field name from AGENT ORANGE ENC INDICATOR to PLACEHOLD 
+     AGENT ORANGE ENC in the PRO and PRE extracts as the field is no longer
+     needed.
+   
+ 39. Changed field name from ENC HEAD/NECK CA to PLACEHOLD ENC HEAD/NECK CA
+     in the PRO and PRE extracts as the field is no longer needed.
+   
+ 40. Changed field name from ENCOUNTER MST to PLACEHOLD ENCOUNTER MST in
+     the PRO and PRE extracts as the field is no longer needed.
+   
+ 41. Changed field name from RADIATION ENCOUNTER INDICATOR to PLACEHOLD
+     RADIATION ENCOUNTER in the PRO and PRE extracts as the field is no
+     longer needed.
+   
+ 42. Changed field name from SHARING AGREEMENT INSURANCE to PLACEHOLD 
+     SHARE AGREEMNT INSUR in the ADM, PRE, and PRO extracts as the field is
+     no longer needed.
+   
+ 43. Changed field name from SHARING AGREEMENT INSURANCE CO to PLACEHOLD 
+     SHARE AGREEMNT INSUR in the CLI extract as the field is no longer
+     needed.
+  
+ 44. Modified the admission and movement extract audit reports to give
+     additional information about ASIH other facility movements.
+  
+ 45. Added field NON-COUNT FLAG to the CLI extract and modified the CLI
+     extract logic to populate the field.
+  
+ 46. Added field STATE HOME NAME to the ECS extract and modified the ECS 
+     extract logic to populate the field.
+  
+ 47. Modified the missing clinics email that is sent when the CLI extract 
+     is run and the clinic isn't found in the CLINICS AND STOP CODES file 
+     (#728.44). Previously, the email was showing the IEN of the stop code.
+     It was updated to show the actual stop code.
+  
+ 48. Added field VISTA DEA SPECIAL HDLG to the BCM, IVP, PRE, and UDP 
+     extracts and modified the extract logic in each to populate the field.
+  
+ 49. Changed field name from LAB RESULTS TRANSLATION to PLACEHOLD LAB 
+     RESULTS TRANS in the LAR extract as the field is no longer needed.
+  
+ 50. Modified the logic in the PRE extract so that prescriptions that are
+     part of the Community Care Network (CCN) program are identified in the
+     REMARKS field of the PRESCRIPTION EXTRACT file (#727.81).
+  
+ Security Key
+ ------------
+ ECX DSS TEST
+  
+ The purpose of this key is to allow future fiscal year extracts to be run 
+ by test sites only.
+  
+ Print Template
+ --------------
+ ECX PRO RENTAL EXPORT
+ ECX PRO RENTAL PRINT
+ ECX INST PRINT
+ ECX INST EXPORT
+ ECX DIV PRINT
+ ECX DIV EXPORT
+  
+ Sort Template
+ -------------
+ ECX PRO RENTAL SORT
+ ECX PRO RENTAL SORT EXPORT
+  
+ The following is a list of options included in this patch:
+  
+ Option Name                     Type               New/Modified
+ ------------------              ----               ------------
+ ECXPROMR                        Run                Modified
+ ECXINDIV                        Run                New
+ ECX PHA COST AUDIT              Run                New
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available and may be retrieved directly using Secure File 
+ Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following Office of Information (OI) Field Offices:
+  
+   OIFO               SFTP ADDRESS               
+   ------------       ------------------------   
+   First available    download.vista.domain.ext
+   Hines              domain.ext
+   Salt Lake City     domain.ext
+   
+ Below is a list of the files related to this patch that will be needed and
+ available via the SFTP sites listed above.
+  
+ File Description                       File Name             
+ -------------------------------------------------------------
+ Users Guide                             DSS_UG.pdf  
+ Technical Manual                        DSS_TM.pdf  
+ Deployment, Install, Backout,
+ Rollback Guide (Installation Guide)     DSS_DIBR.pdf
+ Medical Records Data Definitions Doc    DSS_DDD.pdf 
+ Version Description Doc (Release Notes) DSS_VDD.pdf 
+  
+ Documentation can also be found on the System Design and Development Web 
+ page at: https://www.domain.ext/vdl/application.asp?appid=35 
+  
+ Test Sites:
+ -----------
+ Fort Harrison
+ Houston
+ Little Rock
+ Boston
+  
+ INSTALLATION:
+ =============
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+                 Extract Manager's Options [ECXMGR]
+  
+  
+ Install Time - less than 5 minutes (unless otherwise indicated)
+  
+ ***********************************************************  
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke the 
+         INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS 
+         -------------
+         Start up the Kernel Installation and Distribution System Menu 
+         [XPD MAIN]: 
+  
+              Edits and Distribution ...  
+              Utilities ...
+              Installation ...  
+     
+    Select Kernel Installation & Distribution System Option: INStallation 
+                                                             ---
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s) 
+              Restart Install of Package(s) 
+              Unload a Distribution 
+              Backup a Transport Global 
+     
+    Select Installation Option:
+  
+    3.   Select Installation Option: 
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the INSTALL
+                NAME, enter ECX*3.0*174):
+        
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will
+             not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option 
+             will allow you to view all changes that will be made when 
+             this patch is installed.  It compares all components of this 
+             patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that are 
+             in the transport global.
+       
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch: 
+     
+        a.  Choose the Install Package(s) option to start the patch
+            install.  Enter ECX*3.0*174 when prompted for a build name.
+        b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+            of Install? NO//' respond YES.
+        c.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+            install?  NO//' respond NO.
+        d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? NO//' respond YES.
+        e.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':'  Enter the following options:
+   
+                    Extract Manager's Options [ECXMGR]
+  
+        f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':' press <return>.
+        g.  If prompted 'Delay Install (Minutes):  (0-60):  0//'
+            answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 33
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P174
+    Before:       n/a   After:  B4389685  **174**
+Routine Name: ECXAADM
+    Before: B98478030   After:B102641030  **8,33,149,170,173,174**
+Routine Name: ECXADM
+    Before: B72580110   After: B74725038  **1,4,11,8,13,24,33,39,46,71,
+                                           84,92,107,105,120,127,132,136,
+                                           144,149,154,161,166,170,174**
+Routine Name: ECXAMOV
+    Before:B137341561   After:B139192970  **8,33,149,173,174**
+Routine Name: ECXAPHA2
+    Before: B51669266   After: B54052377  **40,49,84,104,105,113,136,143,
+                                           144,174**
+Routine Name: ECXAPRO1
+    Before: B20521932   After: B23482975  **9,21,132,144,174**
+Routine Name: ECXAPRO2
+    Before: B27505336   After: B30073076  **9,21,39,144,154,174**
+Routine Name: ECXBCM
+    Before:B101525951   After:B109767545  **107,127,132,136,143,144,148,
+                                           149,154,160,161,166,170,174**
+Routine Name: ECXBCM1
+    Before: B11048241   After: B11332195  **154,170,174**
+Routine Name: ECXCBFK
+    Before:       n/a   After: B40340319  **174**
+Routine Name: ECXCPRO1
+    Before: B17918535   After: B20695361  **21,84,132,144,174**
+Routine Name: ECXDRUG1
+    Before: B48164231   After: B45593074  **40,68,144,166,170,174**
+Routine Name: ECXDRUG2
+    Before: B17542635   After: B18759376  **40,68,84,105,111,144,174**
+Routine Name: ECXEC
+    Before:B122320440   After:B125329305  **11,8,13,24,27,33,39,46,49,
+                                           71,89,92,105,120,127,132,136,
+                                           144,149,154,161,166,170,173,
+                                           174**
+Routine Name: ECXFEKE1
+    Before: B41656153   After: B44999287  **11,8,40,149,174**
+Routine Name: ECXFEKEY
+    Before: B68411696   After: B79304655  **10,11,8,40,84,92,123,132,136,
+                                           149,166,174**
+Routine Name: ECXFELOC
+    Before: B24259425   After: B55281670  **1,8,105,132,136,149,174**
+Routine Name: ECXINDIV
+    Before:       n/a   After: B18793350  **174**
+Routine Name: ECXLABN
+    Before: B76780222   After: B76155251  **1,11,8,13,28,24,30,31,32,33,
+                                           39,42,46,70,71,80,92,107,105,
+                                           112,127,132,144,149,154,161,
+                                           170,174**
+Routine Name: ECXLABR
+    Before: B26556726   After: B27703345  **8,24,33,37,39,46,71,80,107,
+                                           105,112,127,144,154,161,170,
+                                           174**
+Routine Name: ECXMOV
+    Before: B64293383   After: B69296108  **8,24,33,39,41,42,46,65,84,
+                                           107,105,128,127,161,166,170,
+                                           173,174**
+Routine Name: ECXNDC
+    Before: B11146910   After: B11645042  **10,11,24,84,170,174**
+Routine Name: ECXOPRX
+    Before: B72012795   After: B73357882  **10,11,8,13,24,30,33,38,39,
+                                           46,49,71,81,84,92,105,112,120,
+                                           127,136,144,149,154,166,170,
+                                           174**
+Routine Name: ECXOPRX1
+    Before: B11978223   After: B13095111  **92,107,105,120,127,144,149,
+                                           154,161,166,170,174**
+Routine Name: ECXPCT
+    Before: B11599611   After: B17048643  **149,174**
+Routine Name: ECXPIVD2
+    Before: B11130859   After: B11365956  **105,120,127,144,149,161,166,
+                                           170,174**
+Routine Name: ECXPIVDN
+    Before: B64708339   After: B65038645  **10,11,8,13,24,33,39,46,49,
+                                           71,84,96,92,107,105,112,120,
+                                           127,136,143,144,149,166,170,
+                                           174**
+Routine Name: ECXPRO
+    Before: B54041445   After: B62368301  **9,13,15,21,24,33,39,46,71,
+                                           92,105,120,127,132,136,144,149,
+                                           154,161,166,169,170,174**
+Routine Name: ECXPRO1
+    Before: B20310309   After: B22199672  **9,11,13,15,21,24,33,37,39,
+                                           100,105,112,132,154,174**
+Routine Name: ECXPROEE
+    Before: B16595376   After: B18440604  **161,174**
+Routine Name: ECXPROMR
+    Before: B12457652   After: B25110645  **166,170,174**
+Routine Name: ECXRAD
+    Before: B56359517   After: B59147647  **11,8,13,16,24,33,39,46,71,
+                                           84,92,105,120,127,136,144,149,
+                                           153,154,161,166,170,174**
+Routine Name: ECXSCLD1
+    Before: B73913458   After: B87540104  **132,136,144,149,154,161,166,174**
+Routine Name: ECXSCX1
+    Before:B105520040   After:B109233189  **8,28,24,27,29,30,31,33,84,
+                                           92,105,127,132,144,149,154,166,
+                                           170,174**
+Routine Name: ECXSCX2
+    Before: B10651540   After: B11084200  **39,46,49,71,84,92,105,120,
+                                           127,144,149,170,174**
+Routine Name: ECXSCXN
+    Before:B112519738   After:B119100680  **24,27,29,30,31,32,33,39,46,
+                                           49,52,71,84,92,107,105,120,124,
+                                           127,132,136,144,149,156,154,
+                                           161,166,170,174**
+Routine Name: ECXSCXN1
+    Before: B18069575   After: B19367167  **71,105,127,132,136,144,166,
+                                           170,174**
+Routine Name: ECXSURG
+    Before:B118025382   After:B113479714  **1,11,8,13,25,24,33,39,41,42,
+                                           46,50,71,84,92,99,105,112,128,
+                                           127,132,144,149,154,161,166,
+                                           170,174**
+Routine Name: ECXUD
+    Before: B98520338   After:B108261994  **10,8,24,33,39,46,49,71,84,
+                                           92,107,105,120,127,144,149,154,
+                                           161,166,170,174**
+Routine Name: ECXUTL1
+    Before: B85180146   After: B98939748  **9,49,136,144,149,174**
+Routine Name: ECXUTL4
+    Before: B48775679   After: B50126475  **39,41,46,49,78,92,105,112,
+                                           120,127,154,170,174**
+Routine Name: ECXUTL5
+    Before: B49444262   After: B48451207  **71,84,92,103,105,120,136,166,
+                                           170,174**
+Routine Name: ECXUTL6
+    Before:B107741652   After:B105501848  **92,105,112,119,132,154,170,
+                                           173,174**
+ 
+Routine list of preceding patches: 173
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 16, 2019
+Completed By:                               Date Completed: OCT 30, 2019
+Released By :                               Date Released : OCT 31, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,136 @@
+
+=============================================================================
+Run Date: SEP 27, 2019                     Designation: WEBE*3*2
+Package : WEBE - COMMUNITY VIEWER             Priority: Mandatory
+Version : 3         SEQ #2                      Status: Released
+                  Compliance Date: OCT 28, 2019
+=============================================================================
+
+
+Subject: Community Viewer 3.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 3.1 of the Community Viewer (CV) will be promoted to the      *
+ * production server for national release on 9/26/19.                    *
+ *                                                                       *
+ * NOTE: This patch is loaded on the National CV server. There is        *
+ * nothing that local sites can or need to do besides communicate        *
+ * changes to users and download the updated manuals and documents       *
+ * from the SFTP site.                                                   *
+ *                                                                       *
+ *************************************************************************
+  
+ CV version 3.1 includes the following changes:
+  
+ CV:
+  - Adds National report placeholder entries to the Health Summary and 
+    Reports widget for the Medication Administration History (MAH) and
+    Medication Administration Log (MAL)
+  - Updates the Clinical Reminders functionality to allow processing of a
+    list of valid clinical reminders so as to be able to remove all
+    clinical reminders that are no longer in use and are causing errors
+    in the system
+  - Provide the ability to see surgeries and procedures that the patient
+    has had that are stored only in surgery files in the Surgery/
+    Procedures Reports widget
+  - Add the Procedure Column to the minimized view of the Surgery/
+    Procedures Reports widget
+  - Provides a single summary report of a patient's cumulative lab
+    results for each site
+  - Provides a single report of the patient's Cytopathology results for 
+    each site
+  - Provides a single summary report of a patient's Surgical Pathology
+    results for each site
+  - CV will close all tabs and windows that have been opened when a user
+    switches patients, logs out, or closes the browser
+  - Rename the Health Summaries - VA Only widget to "Health Summaries and
+    Reports - VA Only
+  - Add the Blood Bank report as a National Report
+  - Add an MAH/MAL column to the expanded view of the Inpatient 
+    Medications widget
+  - Filter drop-down boxes are sized so that they can be easily selected/
+    de-selected
+  - Includes Discontinued and Expired medications (going back up to 120
+    days) in the data when user selects "Copy Active RXs"
+  
+ CCPM:
+  - Indicate if a Community Care Provider has an existing password
+  
+ User Acceptance Testing (UAT):
+ =========================
+ User Acceptance Tests: Anchorage, Hampton, and Orlando -
+ Julie Reloza-Keating (Anchorage), Rebecca Meade (Hampton), and Scott
+ Davis (Orlando) have signed off following completion of UAT.
+  
+ JR Ruble, CV Business PM, on behalf of the user acceptance testers, has 
+ concurred that the UAT was successful and that CV 3.1 is ready for 
+ production deployment.
+  
+ The requirements planned for the CV 3.1 Sprints 1-2 were verified and 
+ validated during the Development Independent Testing (DIT) phase of 
+ testing. All requirements mapped to the test scripts. The scripts are 
+ designed to be end-to-end functional tests of the system to evaluate 
+ all the technical requirements including the testing of external 
+ interfaces where appropriate.
+  
+ The DIT cycle consisted of smoke testing and the formal DIT. Before 
+ starting the DIT cycle, a Community Viewer Web application baseline is 
+ installed on the system. Tests are then run against this software 
+ baseline. Any issues found and potential resolutions are assessed for 
+ possible inclusion in the software baseline.
+  
+ During DIT, the test team validated the requirements provided in the 
+ RM requirements collection using the test scripts and the test cases.
+  
+ Any issue encountered is recorded as a defect in Rational CCM.
+  
+ Defect Tracking System Ticket(s):
+ =================================
+ N/A
+  
+ Documentation Instructions:
+ ==========================
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory on download.vista.domain.ext.
+    
+ File Name                                   Contents               
+ ---------                                   --------               
+ CV_3_1_VA_STAFF_USER_GUIDE_APPROVED.PDF     CV User Guide for VA Staff
+ CV_3_1_CCP_USER_GUIDE_APPROVED.PDF          CV User Guide for 
+                                             Community Providers
+ CV_3_1_RM_VA_STAFF_USER_GUIDE_APPROVED.PDF  CV User Guide for Risk
+                                             Management VA Staff 
+ CV_3_1_DIBR_APPROVED.PDF                    CV Deployment, Installation,
+                                             Backout and Rollback
+                                             Plan
+ CV_3_1_POM_APPROVED.PDF                     CV Production Operations
+                                             Manual
+  
+ Installation Instructions: 
+ ==========================
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 05, 2019
+Completed By:                               Date Completed: SEP 27, 2019
+Released By :                               Date Released : SEP 27, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

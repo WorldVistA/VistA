@@ -1,0 +1,164 @@
+
+=============================================================================
+Run Date: OCT 31, 2019                     Designation: XU*8*607
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #555                      Status: Released
+                  Compliance Date: DEC 01, 2019
+=============================================================================
+
+Associated patches: (v)XU*8*672    <<= must be installed BEFORE `XU*8*607'
+
+Subject: XULM LOCK DICTIONARY
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Description:
+ ===========
+  
+ Two related patches are being distributed in a single host file.  These
+ patches provide a new Kernel utility, the Lock Manager.  It is based on 
+ the Class 3 VistA Lock Manager developed by Tommy Martin. Both patches are
+ listed below and will be installed in the order listed.
+  
+ XU*8.0*608      - This patch contains all the software components that 
+                   make up the Kernel Lock Manager.
+  
+  
+ XU*8.0*607      - This patch will populate the new XULM LOCK DICTIONARY 
+                   file (#8993).  It requires the KIDS enhancement patch
+                   XU*8.0*672.
+  
+  
+  
+ Patch XU*8.0*607 contains the contents of the XULM LOCK DICTIONARY file
+ (#8993), which is a database of descriptions for locks set by 
+ applications. Entries in the XULM LOCK DICTIONARY file (#8993) belong to
+ the various applications that use the locks and may be included in patches
+ and distributed via KIDS.  The XULM LOCK DICTIONARY file (#8993) provides
+ the application-specific expertise that enables the Kernel Lock Dictionary
+ to provide feedback and guidance to users that are investigating locks
+ found within the VistA CACHE lock table.
+  
+ XULM LOCK DICTIONARY (#8993) entries included in this patch:
+ ===========================================================
+ AUPNPAT(IEN)                                   
+ AUPNPROB(IEN)                                  
+ AUPNVPOV(IEN)                                  
+ DGBT(392,IEN)                                  
+ DGCR(399,IEN)                                  
+ DGM(IEN)                                       
+ DGPT(IEN)                                      
+ DPT(DFN)                                       
+ DVB(396.17,IEN)                                
+ GMR(120.86,DFN)                                
+ GMR(123,IEN)                                   
+ LR(LRDFN)                                      
+ OR(100,IEN)                                    
+ PS(55,DFN)                                     
+ PSB(53.79,IEN)                                 
+ PSRX("B",RX)                                   
+ RADPT(IEN)                                     
+ RARPT(IEN)                                     
+ TIU(8925,IEN)                                  
+ XTMP("PSSLOCK",DFN)                            
+ XTMP(ORPTLK)                                   
+ XTMP(SRLOCK)                                   
+  
+ Obtaining the Software:
+ ======================
+  
+ The KIDS distribution and documentation for the Kernel Lock Manager can be
+ obtained by using SFTP from the appropriate Customer Service directory:
+  
+  
+ OI FIELD OFFICE    FTP ADDRESS      DIRECTORY
+ ======================================================
+ First available    download.vista.domain.ext
+ Hines              ftp.domain.ext
+ Salt Lake City     ftp.domain.ext
+  
+  
+ Host File Name:
+  
+ XU_8_608_607.KID                KIDS distribution for patches XU*8.0*608
+                                 and XU*8.0*607. 
+  
+ Documentation Retrieval Instructions: 
+ ==================================== 
+ The Kernel Lock Manager Supplement to Patch Description (XU*8.0*608 & 607)
+ is available on the VA Software Document Library (VDL) at the following
+ Internet Website: http://www.domain.ext/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOCX) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ Lock Manager documentation includes:
+  
+ * Patches XU*8.0*608, 607, and 672 Lock Manager Supplement to Patch 
+ Description
+  
+ Post patch release, the content in the supplemental document will be 
+ incorporated into the following Kernel baseline documents:
+  
+ * Kernel 8.0 & Kernel Toolkit 7.3 Systems Management Guide
+ * Kernel 8.0 & Kernel Toolkit 7.3 Developer's Guide
+ * Kernel 8.0 & Kernel Toolkit 7.3 Technical Manual 
+  
+ New Service Requests (NSRs)
+ ==========================
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ============================
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ===========================
+ N/A
+  
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS
+ ============================================
+ Patch XU*8*607 contains changes to a package referenced in VHA OI SEPG SOP
+ 192-023 Review of VISTA Patches for Effects on VISTA Blood Bank Software.
+ This patch does not alter or modify any VistA Blood Bank software design
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*607 have no effect on Blood Bank
+ software functionality, therefore RISK is none. 
+  
+  
+ Test Sites:
+ ===========
+ Boston VAMC
+ Northport VAMC
+ Martinsburg VAMC
+ Dublin VAMC
+ St. Cloud VAMC
+  
+  
+ Patch Installation:
+ ===================
+  
+ Please refer to the patch XU*8.0*608 for the installation instructions.  
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 14, 2012
+Completed By:                               Date Completed: OCT 31, 2019
+Released By :                               Date Released : OCT 31, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,402 @@
+$TXT Created by                 K at DEVFEX.DOMAIN.EXT  (KIDS) on Tuesday, 09/17/19 at 08:46
+=============================================================================
+Run Date: OCT 08, 2019                     Designation: DVBA*2.7*212
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #182                    Status: Released
+                  Compliance Date: NOV 07, 2019
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*209<<= must be installed BEFORE `DVBA*2.7*212'
+
+Subject: CAPRI XML DATA TYPES UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Compensation and Pension Record Interchange (CAPRI) currently operates on
+ XML schema 1.0 when transmitting Disability Benefits Questionnaires
+ (DBQ's). To comply with Information Exchange Packet Documentation
+ standards for transmitting data and to maintain system and security
+ standards, an update is required to the most current standards.
+ These changes are for the following fields of data:
+ -Facility Type
+ -Service Provider Client Association Type
+ -Exam Detail Type
+ -Claim Information Type
+ -Veteran of Interest Type
+ -Document Type
+ -Service Provider Type
+ -Approver Type
+ -Person Type
+ -Client Type
+  
+  
+ Patch DVBA*2.7*212 will also fix the following issues:
+ -Other Facilities Visited button/message will be updated to display an 
+  appropriate message to users
+ -Date Completed and Date Released do not get populated when exam 
+  templates are co-signed
+ -Enterprise Search not routing appropriately
+ -Transmission to VLER Failed message not accurate in some cases
+  
+ Patch Components: 
+ ---------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)               Field Name (Number) New/Modified/Deleted
+ ------------------               ------------------- --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #   New/Modified/Deleted
+ ---------       ------   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name    New/Modified/Deleted
+ ---------------    --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name       Type    New/Modified/Deleted
+ -----------       ----    -------------------- 
+ DVBA CAPRI GUI    Broker        Modified
+  
+  
+ Parameter Definition Associated:
+  
+ Parameter Definition Name       New/Modified/Deleted
+ ------------------------        -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Remote Procedure Call:
+  
+ RPC NAME                 New/Modified/Deleted
+ --------                 --------------------
+ DVBA CAPRI GET EDIPI2     New
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number) New/Modified/Deleted
+ -------------   ----   ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+  
+ 1) INC4579384 - bad message treatment facilities
+  
+    Problem:
+    ---------
+    The other facilities visited button/message was displaying a generic 
+    message that was not clear as to why switching to a site was rejected
+    if it was a non-treatment facility.
+    The previous message would inform the user to attempt manually 
+    switching sites using File->Switch Sites. This lead users down a wild
+    goose chase as non-treatment facilities cannot be accessed this way
+    either. 
+  
+    Resolution:
+    -----------
+    CAPRI will be updated to display an appropriate message to users as to 
+    the reason they cannot access the site.
+  
+  
+ 2) INC5702037 - CAPRI - cannot cosign templates/exams
+  
+    Problem:
+    --------
+    Using the CPRS C&P Cosignature Transfer Utility option in CAPRI to 
+    cosign exams lead to errors caused from incorrect data being passed to 
+    VistA when it is updated/saved. Version control logic that was making a
+    broker call overwrote the results needed to properly cosign an exam
+  
+  
+    Resolution: 
+    -----------
+    By moving the version control logic to the beginning of the procedure, 
+    we prevent the accidental override of data. This will allow users to 
+    cosign exams successfully utilizing the CPRS C&P Cosignature Transfer 
+    Utility option.
+  
+  
+ 3) INC5890511 - Enterprise Search not routing appropriately for 
+                 Fayetteville,NC
+  
+    Problem:
+    --------
+    When using the CAPRI Enterprise Search to find a veteran, if the 
+    veteran has a record in Fayetteville, NC when you select the site and
+    click the "Connect to Site" button, CAPRI takes you to Fayetteville, AR
+    instead.
+    If you search for a Fayetteville, AR patient it will correctly take 
+    you to Fayetteville, AR.
+  
+    Resolution:
+    -----------
+    Modified the validation logic utilized when selecting a site to 
+    evaluate the entire site name, thus preventing CAPRI from connecting
+    the user to the incorrect site (such as Fayetteville,AR instead of
+    Fayetteville,NC). The user will now be routed to the correct
+    destination.
+  
+ 4) INC5523597 - "Transmission to VLER Failed" message not accurate in 
+                  some cases
+  
+    Problem:
+    --------
+    In CAPRI patch DVBA*2.7*209 a change was made when an exam failed to 
+    transmit it will attempt to re-transmit up to 5 times, after the fifth-
+    re-attempt, a message is presented to the user "Transmission to VLER 
+    failed.  Please contact the IT National Service Desk at 
+    1-855-673-4357."
+  
+    Since the release of this patch multiple tickets have been submitted 
+    where CAPRI attempts to re-transmit 5 times, but indicates that all 5
+    attempts failed.  However, in some cases the attempt was successful.
+  
+    Resolution:
+    ----------
+    Modification was made to the logic used to determine if the re-attempt
+    was successful.  This modification will accurately account for a
+    transmission that may have been transmitted correctly within the 5 
+    re-attempts.
+  
+ 5) RTC1118254 - IOC testing Defect Found at Tampa VAMC
+  
+    Problem
+    -------
+    Extra characters are being generated within the EDIPI field when 
+    running CAPRI Vista patch DVBA*2.7*212 V2 with CAPRI GUI
+    DVBA*2.7*209.01(current production version)
+  
+    Resolution
+    ----------
+    Due to the possibility of C&P sites not installing both patches at the 
+    same time the team created a new RPC's for VistA that can pull the
+    correct data field for patch 209 and 212.
+  
+ Test Sites:
+ ----------
+ Tampa
+ Minneapolis
+ Greater LA 
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following 
+  
+ OI Field Offices:
+  
+ Hines:    domain.ext  
+ Salt Lake City:    domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+  
+ Title                       File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ CAPRI GUI ZIP          DVBA_27_P212_7.ZIP                 BINARY
+  
+ Zip file contents:
+  
+           - CAPRI.exe            CAPRI v212 executable
+           - VACAPRIVVA.dll       Virtual VA dynamically linked library
+           - CAPRI_Help.chm       CAPRI On-line Help
+           - CAPRI.map            CAPRI error map
+           - CAPRISession.rdox    MicroFocus Reflection session 
+                                  configuration
+           - CapriTerminalEmulators.ini
+           - ssh_config           Secure Shell configuration       
+           - Libeay32.dll         VLER /DAS dynamically linked library
+           - Ssleay32.dll         VLER /DAS dynamically linked library
+           - QPDF.exe             Support PDF compression and Linearization
+           - QPDF13.dll           Support PDF compression and Linearization
+           - LIBGCC_S_DW2-1.dll   Support PDF compression and Linearization
+           - LIBSTDC++-6.dll      Support PDF compression and Linearization
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system without impact. 
+ Install of patch will take 5 minutes or less.
+  
+ Installation Instructions:
+ --------------------------
+ The CAPRI GUI is CAPRI.exe contained in DVBA_27_P212_7.ZIP. 
+ Please refer to the CAPRI_GUI_ISG.doc document within the VA Software 
+ Documentation Library at: http://www.domain.ext/vdl/
+ for supplemental installation instructions regarding the installation of
+ the following files:
+   
+              VACAPRIVVA.dll        Virtual VA dynamically linked library
+              CapriTerminalEmulators.ini
+              CAPRI_Help.chm        CAPRI On-line Help
+              CAPRI.map             CAPRI error map
+              ssh_config            Secure Shell configuration
+              Libeay32.dll          VLER /DAS dynamically linked library
+              Ssleay32.dll          VLER /DAS dynamically linked library
+              QPDF.exe              Support PDF compression and 
+                                    Linearization
+              QPDF13.dll            Support PDF compression and 
+                                    Linearization
+              LIBGCC_S_DW2-1.dll    Support PDF compression and 
+                                    Linearization
+              LIBSTDC++-6.dll       Support PDF compression and 
+                                    Linearization
+              CAPRISession.rdox     Micro Focus Reflections configuration
+  
+  
+  
+ NOTE:  DVBA*2.7*212 MUST be installed in all production VistA instances 
+ throughout the enterprise prior to the deployment of CAPRI GUIv2.7.212.7 
+ to avoid possible disruptions of services by VBA and National CAPRI GUI 
+ users.  
+ Post release installation and deployment schedule: 
+  
+ Day 1-5:   Install DVBA*2.7*212 in all production VistA Instances 
+ Day 6-30:  Deploy CAPRI GUI v2.7.212.7 to all CAPRI GUI users. 
+  
+  
+ The installation of the patch will be introducing new files, updating 
+ routines, parameters, remote procedure calls and options.
+  
+ 1. Choose the PackMan message containing this patch.
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+ 3. From the Kernel Installation and Distribution System Menu, select 
+    the Installation Menu.  From this menu, you may elect to use the 
+    following options. When prompted for the INSTALL NAME enter the patch 
+    DVBA*2.7*212):
+ a. Backup a Transport Global - This option will create a backup 
+    message of any routines exported with this patch. It will not backup
+    any other changes such as DDs or templates.
+ b. Compare Transport Global to Current System - This option will 
+    allow you to view all changes that will be made when this patch is 
+    installed.  It compares all components of this patch's routines, DDs, 
+    templates, etc.
+ c. Verify Checksums in Transport Global - This option will allow you    
+    to ensure the integrity of the routines that are in the transport
+    global.
+ 4. From the Installation Menu, select the Install Package(s) option 
+    and choose the patch to install.
+    When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//NO
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+    NO//NO
+ 6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//NO 
+ 7. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+ 8. CAPRI GUI users may be upgraded to the new version of the CAPRI GUI 
+    v212 (CAPRI.exe [DVBA_27_P212_7.ZIP]), after installation of this
+    patch in all Vista PRODUCTION instances.
+ 9. All CAPRI GUI users MUST receive CAPRI GUI v2.7.212.7 by
+    November 15, 2019 or they will be unable to access the GUI application.
+  
+  
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------------
+ Back-out Procedures are only needed if there are major problems (examples 
+ include the KIDS notice of incompletion or hard errors) resulting from the
+ installation of this patch. Log a ServiceNow helpdesk ticket so the 
+ development team can assist in this process.
+  
+  
+ Prior to installing a patch, the site/region should have saved a back-up 
+ of the routines in a mail message using the Backup a Transport Global 
+ [XPD BACKUP] menu option (this is done at time of install). The message 
+ containing the backed-up routines can be loaded with the "Xtract PackMan" 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995 ;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBC212P
+    Before:       n/a   After:  B2066642  **212**
+Routine Name: DVBCENQ
+    Before:  B4653684   After:  B6229164  **209,212**
+ 
+Routine list of preceding patches: 209
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 14, 2019
+Completed By:                               Date Completed: OCT 08, 2019
+Released By :                               Date Released : OCT 08, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

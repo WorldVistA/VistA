@@ -1,0 +1,748 @@
+
+=============================================================================
+Run Date: SEP 09, 2019                     Designation: DG*5.3*978
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #859                    Status: Released
+                  Compliance Date: OCT 10, 2019
+=============================================================================
+
+Associated patches: (v)DG*5.3*824  <<= must be installed BEFORE `DG*5.3*978'
+                    (v)DG*5.3*842  <<= must be installed BEFORE `DG*5.3*978'
+                    (v)DG*5.3*909  <<= must be installed BEFORE `DG*5.3*978'
+
+Subject: MANAGEMENT EDIT CHANGES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ Patch DG*5.3*978 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on
+ updates for the Enrollment System Modernization (ESM) Phase 2 project.
+  
+ NOTE: DG*5.3*978 is being released with IVM*2.0*180 in Host File    
+       DG_53_P978.KID. 
+       
+ Patch DG*5.3*978 is also being released in support of the Enrollment
+ System (ES) 5.6 release. Refer to Informational Patch EAS*1*178
+ (Enrollment Application System) for additional details regarding the ES
+ release.
+  
+ Veterans Health Information System and Technology Architecture (VistA)
+ Registration, Eligibility & Enrollment (REE) currently does not allow a
+ user to request an initial appointment for a newly enrolled Veteran after
+ registration. Welcome To My VA (W2myVA) makes an outbound call from a VA
+ representative in conjunction with the introductory letter and
+ personalized handbook each Veteran receives upon enrollment. If the 
+ Veteran requests an appointment during that conversation, the VistA
+ Preferred Facility cannot change the Appointment Request to YES. As a
+ result, the Veteran will not show on the local New Enrollee Appointment
+ Request (NEAR) list to disposition the Veteran's appointment. The Veteran
+ is kept on the W2myVA reports, negatively impacting the W2myVA reporting
+ that captures the total amount of time Veterans wait to be scheduled for
+ an appointment.
+  
+  
+ Patch DG*5.3*978 provides a mechanism for updating the appointment request
+ field from NO to YES after registration via the Management Edit [DGEN 
+ NEACL REQUEST MGT EDIT] option.  
+  
+ The Management Edit Call List [DGEN NEACL MGT RPT1] and Tracking Report 
+ [DGEN NEACL MGT RPT2] options are modified, and new fields are added to 
+ the database to track the original appointment request and original
+ request date made during registration.
+  
+ Currently there is no mechanism for a VistA user to add a Veteran to the
+ local NEAR list, unless the user indicates the Veteran wants to be seen 
+ by a doctor when completing a VA Form 10-10EZ in ES, VistA, or online.  
+ When the New Enrollee makes an appointment request at the W2myVA follow-up
+ phone call, VistA users at the Preferred Facility or an associated
+ Satellite Facility need the ability to change the response from NO to
+ YES. Once the appointment is requested, it places the Veteran on the
+ local NEAR list (Call List [DGEN NEACL MGT RPT1], Call List (background
+ job) [DGEN NEACL MGT RPT1BK] and the Tracking Report [DGEN NEACL MGT RPT2]
+ options). This allows a VistA user to disposition the appointment request
+ in the Management Edit [DGEN NEACL REQUEST MGT EDIT] option.  Lack of this
+ functionality impacts accurate reporting of the total amount of time
+ Veterans wait to be scheduled for an appointment.
+  
+ The Management Edit [DGEN NEACL REQUEST MGT EDIT] option is updated to
+ either present an appointment request prompt to the user or to present
+ the current prompts for dispositioning an appointment request. The 
+ Tracking Report [DGEN NEACL MGT RPT2] option is updated to include a new
+ column for the date of the appointment request if the Veteran initially
+ answered YES when completing a VA Form 10-10EZ in ES, VistA, or online.
+ The Call List [DGEN NEACL MGT RPT1] option detailed format includes a new
+ row to display the date of the appointment request if the Veteran
+ initially answered YES when completing a VA Form 10-10EZ in ES, VistA, or
+ online.  
+  
+ The ^XINDEX issue 'Line is longer than 245 bytes' encountered in Primary 
+ Developer Review is due to a Kernel Toolkit defect, it is not due to patch
+ DG*5.3*978.  Incident INC4991239 was entered and it will be fixed in patch
+ XT*7.3*140.
+  
+ Compiled list of Errors and Warnings              Apr 11, 2019@10:37:33 
+ page 1
+  
+ |dd2     * *  68 Lines,  4678 Bytes, Checksum: 
+          K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S 
+ Y(1)=$S($D(^DPT(D0,1010.15)):^
+           (1010.15),1:"") S X=$P(Y(1),U,13)="" I X S X=DIV S 
+ Y(1)=$S($D(^DPT(D0,
+           1010.15)):^(1010.15),1:"") S X=$P(Y(1),U,13),X=X S DIU=X K Y S 
+ X=DIV S
+            X=DIV,X=X X ^DD(2,1010.1511,1,4,1.4)
+    1010.1511XRF4S+1
+                 S - Line is longer than 245 bytes.
+  
+ Listing of Updates
+ ==================
+  
+ This patch includes the following enhancements to VistA REE: 
+  
+ 1. The Management Edit [DGEN NEACL REQUEST MGT EDIT] option is modified
+    as follows: 
+    a. The user is prompted to enter "Does the New Enrollee want an appt.
+       with a VA doctor/provider at [Preferred Facility]?" if the patient
+       has not requested an appointment and if the other conditions defined
+       below in item d are met.
+  
+ * BEGIN SCREEN CAPTURE *
+  
+ Select New Enrollee Appointment Request Management Menu <TEST ACCOUNT> 
+ Option: ED
+   Management Edit
+ Select PATIENT NAME:   TESTPATIENT,ONE  5-21-54    #########     NO
+ NSC VETERAN      
+  
+ Enrollment Priority: GROUP 8c   Category: ENROLLED      End Date: 
+  
+ PREFERRED FACILITY: ZZ DUP ALBANY.DOMAIN.EXT (500)
+ APPOINTMENT REQUEST ON 1010EZ: NO
+ Does the New Enrollee want an appt. with a VA doctor/provider
+ at ZZ DUP ALBANY.DOMAIN.EXT (500)?: NO//
+  
+ * END SCREEN CAPTURE *
+  
+      b. If the user answers YES at this prompt, the Veteran is placed on
+         the NEAR Call List [DGEN NEACL MGT RPT1], Call List (background
+         job) [DGEN NEACL MGT RPT1BK] and NEAR Tracking Report [DGEN NEACL
+         MGT RPT2] options.
+      c. The response is stored in the APPOINTMENT REQUEST ON 1010EZ field
+         (#1010.159) in the PATIENT File (#2).
+      d. The conditions that result in displaying "Does the New Enrollee
+         want an appt. with a VA doctor/provider at [Preferred Facility]?"
+         are:
+         i. The value of the patient's APPOINTMENT REQUEST ON 1010EZ field
+            (#1010.159) in the PATIENT file (#2) is NULL or NO.
+        ii. The patient's ENROLLMENT STATUS field (#.04) in the PATIENT
+            ENROLLMENT file (#27.11) is equal to ENROLLED.
+       iii. The VistA site is a Primary or Satellite Facility of the 
+            PREFERRED FACILITY. This is defined as the first three 
+            characters of the VistA Site number (STATION NUMBER field
+            (#.04) in the STATION NUMBER (TIME SENSITIVE) file (#389.9))
+            match the first three characters of the patient's PREFERRED
+            FACILITY field (#27.02) in the PATIENT file (#2). Otherwise the
+            message "Site is not Patient's Preferred Facility. Preferred
+            Facility must be updated." appears.
+  
+ * BEGIN SCREEN CAPTURE *
+  
+ Select PATIENT NAME:  TESTPATIENT,ONE  1-1-47    xxxxxxxx    NO
+ NSC VETERAN   
+    
+  Enrollment Priority: GROUP 1    Category: ENROLLED    End Date: 
+  
+ PREFERRED FACILITY: MANCHESTER (608)
+ Site is not Patient's Preferred Facility. Preferred Facility must be 
+ updated.
+  
+  
+ Select PATIENT NAME: 
+  
+ * END SCREEN CAPTURE *
+  
+  
+ * BEGIN SCREEN CAPTURE *
+  
+ Select PATIENT NAME:   TESTPATIENT,ONE  5-21-54 #########     NO
+ NSC VETERAN      
+  
+  Enrollment Priority: GROUP 8c   Category: ENROLLED      End Date: 
+  
+ PREFERRED FACILITY: ZZ DUP ALBANY.DOMAIN.EXT (500)
+ APPOINTMENT REQUEST ON 1010EZ: NO 
+ Does the New Enrollee want an appt. with a VA doctor/provider
+ at ZZ DUP ALBANY.DOMAIN.EXT (500)?: NO// NO
+  
+ APPOINTMENT REQUEST ON 1010EZ: NO
+ Enter RETURN to continue: 
+  
+  
+ Select PATIENT NAME:
+  
+ * END SCREEN CAPTURE *
+  
+    e. If the response to "Does the New Enrollee want an appt. with a VA
+       doctor/provider at [Preferred Facility]?" is YES, the system prompts
+       for "Date the Appointment Request Made" and the response is stored
+       in the APPOINTMENT REQUEST DATE field (#1010.1511) in the PATIENT
+       file (#2).
+        i. The date may not be in the future.
+       ii. The user may press RETURN and is returned to the "Does the New
+           Enrollee want an appt. with a VA doctor/provider at [Preferred
+           Facility]?" prompt.
+           
+  
+ * BEGIN SCREEN CAPTURE *
+  
+ Select New Enrollee Appointment Request Management Menu <TEST ACCOUNT> 
+ Option: ED
+   Management Edit
+  
+ Select PATIENT NAME:   TESTPATIENT,ONE         11-11-11    #########     
+ YES     SC VETERAN
+  Enrollment Priority: GROUP 1    Category: ENROLLED      End Date: 
+  
+  
+ PREFERRED FACILITY: ZZ DUP ALBANY.DOMAIN.EXT (500)
+ APPOINTMENT REQUEST ON 1010EZ: NO
+ Does the New Enrollee want an appt. with a VA doctor/provider
+ at ZZ DUP ALBANY.DOMAIN.EXT (500)?: NO// YES
+ Date the Appointment Request Made?: // T-30  (JAN 31, 2019)
+  
+ Select PATIENT NAME:
+  
+ * END SCREEN CAPTURE *
+  
+ 2. There are no changes to the Management Edit [DGEN NEACL REQUEST MGT 
+    EDIT] option if the Veteran has already requested an appointment in ES,
+    VistA, or online.
+  
+ 3. The Tracking Report [DGEN NEACL MGT RPT2] option is modified. The
+    report ("APPT.REQUEST") column now displays the appointment request
+    date whenever the appointment was requested, including from the 
+    Management Edit [DGEN NEACL REQUEST MGT EDIT] option. The report
+    includes a new column ("ORIGINAL APPT. REQUEST"). This column is 
+    populated with the date the user answered the appointment request
+    question, and does not indicate the Veteran requested an appointment 
+    on that date. The Original Appointment Request Date is not used in 
+    any other reporting or calculations. 
+    a. Detail and Summary Reports have the report filter labels changed
+       from "APPOINTMENT REQUEST ON 1010EZ START DATE" to "APPOINTMENT
+       REQUEST START DATE" and "APPOINTMENT REQUEST ON 1010EZ END DATE" to
+       "APPOINTMENT REQUEST END DATE".
+    b. A new column "ORIGINAL APPT. REQUEST" is added to the Detailed
+       Report as the 4th column and displays the ORIGINAL APPOINTMENT 
+       REQUEST DATE field (#1010.1513) in the PATIENT file (#2). The date 
+       of the Veteran's first response to the "Does the New Enrollee
+       want an appt. with a VA doctor/provider at [Preferred Facility]?"
+       prompt will display in this column.
+    c. The Detailed Report layout is modified to abbreviate column
+       headings to fit the additional column.
+  
+ * BEGIN SCREEN CAPTURE *
+  
+ Select New Enrollee Appointment Request Management Menu <TEST ACCOUNT> 
+ Option: TR
+   Tracking Report
+  
+      Select one of the following:
+  
+           D         DETAILED
+           S         SUMMARY
+  
+ Select report format: SUMMARY// DETAILED
+ APPOINTMENT REQUEST START DATE: MAR 08, 2019//   (MAR 08, 2019)
+ APPOINTMENT REQUEST END DATE: MAR 15, 2019//   (MAR 15, 2019)
+ Select individual Preferred Facilities? NO// 
+ DEVICE: HOME//   UCX/TELNET 
+  
+  
+  
+  
+     NEW ENROLLEE APPOINTMENT REQUEST TRACKING REPORT  Date: MAR 15, 2019
+  
+                                                ORIGINAL  SCHEDULED
+                                      APPT.     APPT.     APPT.     #    
+ REQ
+ NAME                           EP/CV REQUEST   REQUEST   DATE      DAYS 
+ STA
+ ============================   ===== ========= ========= ========= =======
+ ADAM(####)                      8/   03/14/19  03/14/19  03/15/19    1   F
+    COMMENT: AutoComm:null|FILLED
+ SMITH(####)                     2/   03/12/19            03/15/19    4   F
+  
+ SUMMARY
+ ==========================================================================
+  
+ Total number of veteran's with CANCELLED request status               0
+ Total number of veteran's with EWL request status                     0
+ Total number of veteran's with FILLED request status                  2
+ Total number of veteran's with CONTACTED - IN PROCESS request status  0
+ Total number of veteran's PENDING ACTION                              0
+  
+ * END SCREEN CAPTURE *
+  
+ 4. The Call List [DGEN NEACL MGT RPT1] option and Call List (background 
+    job) [DGEN NEACL MGT RPT1BK] option are modified.  The short format and
+    detailed format reports now display the appointment request date
+    whenever the appointment was requested, including from the Management
+    Edit [DGEN NEACL REQUEST MGT EDIT] option. The Detailed Report now
+    displays the date of the appointment request if the Veteran initially
+    answered YES when completing a VA Form 10-10EZ in ES, VistA, or online.
+    a. The Detailed Report has an additional row "ORIGINAL APPOINTMENT 
+       DATE" displaying the ORIGINAL APPT. REQUEST DATE field (#1010.1513)
+       in the PATIENT file (#2). This row is populated with the date the 
+       user answered the appointment request question, and does not 
+       indicate the Veteran requested an appointment on that date. The
+       Original Appointment Request Date is not used in any other reporting
+       or calculations.
+    b. The Detailed Report field label "1010EZ APPT. REQUEST DATE:" 
+       is changed to "APPT. REQUEST DATE:".
+  
+ * BEGIN SCREEN CAPTURE *
+  
+ Select New Enrollee Appointment Request Management Menu <TEST ACCOUNT> 
+ Option: l
+   Call List
+  
+      Select one of the following:
+  
+           D         DETAILED
+           S         SHORT
+  
+ Select report format: SHORT// d  DETAILED
+ Select individual Preferred Facilities? NO// 
+ DEVICE: HOME// ;;;  HOME 
+  
+  
+ --------------------------------------------------------------
+  
+ NEW ENROLLEE APPOINTMENT REQUEST CALL LIST   Date: DEC 13, 2018
+                                                             Page: 1
+  
+     ---------------------------------------------------------------
+  Enrollment Priority: GROUP 1    Category: ENROLLED      End Date: 
+ TEST, FIRST (9999)
+ ORIGINAL APPT. REQUEST DATE:   
+ APPT. REQUEST DATE:    NOV 27, 2018
+  
+ REQUEST STATUS:   
+ COMMENT: 
+ PHONE [RESIDENCE]: 99999999999               PHONE [CELLULAR]: 9999999999
+ PREFERRED FACILITY: CHEY6 TEST LAB(987)
+     ---------------------------------------------------------------
+ TEST, FOURTH (9999)
+  Enrollment Priority: GROUP 4    Category: ENROLLED      End Date: 
+  
+ ORIGINAL APPT. REQUEST DATE:  NOV 27, 2018
+ APPT. REQUEST DATE:    NOV 27, 2018
+ REQUEST STATUS:   
+ COMMENT: 
+ PHONE [RESIDENCE]: (999)999-9999            PHONE [CELLULAR]: 
+ (999)999-9999
+ PREFERRED FACILITY: CHEY6 TEST LAB(987)
+     ---------------------------------------------------------------
+  
+ SUMMARY
+ =======================================================================
+ Total number of veteran's with EWL request status                     0
+ Total number of veteran's with CONTACTED - IN PROCESS request status  0
+ Total number of veteran's PENDING ACTION                             13
+  
+ * END SCREEN CAPTURE *
+  
+ 5. Four new fields are added to the PATIENT file (#2) for historical 
+    purposes and NEAR List reporting: Call List [DGEN NEACL MGT RPT1],
+    Call List (background job)[DGEN NEACL MGT RPT1BK] and Tracking Report
+    [DGEN NEACL MGT RPT2] options:
+    a. ORIGINAL APPOINTMENT REQUEST field (#1010.1512)
+    b. ORIGINAL APPT REQUEST DATE field (#1010.1513)
+    c. ORIG APPT REQUEST CHG DT/TM field (#1010.1514)
+    d. APPT REQUEST 1010EZ CHG DT/TM field (#1010.1515) 
+  
+ 6. The following fields in the PATIENT file (#2) are modified to turn on
+    auditing:
+    a. APPOINTMENT REQUEST ON 1010EZ field (#1010.159)
+    b. APPOINTMENT REQUEST DATE field (#1010.1511) 
+  
+ * BEGIN SCREEN CAPTURE *
+  
+ Select PATIENT NAME: TESTPATIENT,ONE        7-1-71    #########     NO 
+     NSC VETERAN      
+ Another one: 
+ Standard Captioned Output? Yes//   (Yes)
+ Include COMPUTED fields:  (N/Y/R/B): NO// BOTH Computed Fields and Record 
+ Number
+ (IEN)
+ Display Audit Trail? No// YES
+ .
+ .
+ <patient data is listed here>
+ .
+ .
+ APPOINTMENT REQUEST DATE:
+     Created on MAR 14, 2019@00:51:10 by User #101101 
+ APPOINTMENT REQUEST ON 1010EZ:
+     Changed from "NO" on MAR 14, 2019@00:51:10 by User #101101
+  
+ * END SCREEN CAPTURE *
+  
+ 7. The ORIG APPT REQUEST CHG DT/TM field (#1010.1514) in the PATIENT file
+    (#2) will capture the last change date/time of the appointment request
+    or appointment request date (date/time when the ORIGINAL APPOINTMENT 
+    REQUEST field (#1010.1512) in the PATIENT file (#2) or ORIG APPT 
+    REQUEST DATE field (#1010.1513) in the PATIENT file (#2) is updated).
+  
+ 8. Two triggers are added to the APPOINTMENT REQUEST ON 1010EZ field
+    (#1010.159) in the PATIENT file (#2) when the field is updated:
+    a. The APPT REQUEST 1010EZ CHG DT/TM field (#1010.1515) in the PATIENT
+       file (#2) will capture the date/time when APPOINTMENT REQUEST ON 
+       1010EZ field (#1010.159) in the PATIENT file (#2) is updated.
+    b. The ORIGINAL APPOINTMENT REQUEST field (#1010.1512) in the PATIENT 
+       file (#2) captures the value of the APPOINTMENT REQUEST ON 1010EZ
+       field (#1010.159) in the PATIENT file (#2) the first time that value
+       is set.
+  
+ 9. Two triggers are added to the APPOINTMENT REQUEST DATE field
+    (#1010.1511) in the PATIENT file (#2) when the field is updated:
+    a. The APPT REQUEST 1010EZ CHG DT/TM field (#1010.1515) in the PATIENT
+       file (#2) will capture the date/time when the APPOINTMENT REQUEST
+       DATE field (#1010.1511) in the PATIENT file (#2) is updated.
+    b. The ORIGINAL APPT REQUEST DATE field (#1010.1513) in the PATIENT 
+       file (#2) captures the value of the APPOINTMENT REQUEST DATE field
+       (#1010.1511) in the PATIENT file (#2) the first time that value is 
+       set. 
+  
+ 10. The HL7 interface with ES is modified to add four additional data
+     elements in the ZIO segment of the ORF/ORU-Z11 message.   
+     a. Sequence 7: UPDATE DATE/TIME corresponding to APPT REQUEST 1010EZ 
+        CHG DT/TM field (#1010.1515) in the PATIENT file (#2).
+     b. Sequence 8: ORIGINAL APPOINTMENT REQUEST corresponding to ORIGINAL
+        APPOINTMENT REQUEST field (#1010.1512) in the PATIENT file (#2).
+     c. Sequence 9: ORIGINAL APPOINTMENT REQUEST DATE corresponding to 
+        ORIGINAL APPT REQUEST DATE field (#1010.1513) in the PATIENT file
+        (#2).
+     d. Sequence 10: UPDATE DATE/TIME corresponding to ORIG APPT REQUEST
+        CHG DT/TM field (#1010.1514) in the PATIENT file (#2).
+  
+    Note: The ZIO segment includes sequence 5 APPOINTMENT REQUEST ON 1010EZ
+          corresponding to the APPOINTMENT REQUEST ON 1010EZ field
+          (#1010.159) in the PATIENT file (#2) and sequence 6 APPOINTMENT
+          REQUEST DATE corresponding to the APPOINTMENT REQUEST DATE field
+          (#1010.1511).  
+  
+ 11. When VistA receives an ORF/ORU-Z11 message, the processing of 
+     these sequences is as follows:
+     a. If the ORIGINAL APPOINTMENT REQUEST field (#1010.1512) in the 
+        PATIENT file (#2) is empty, sequences 8, 9 and 10 are stored 
+        in their corresponding fields.
+     b. If the date/time in the APPT REQUEST 1010EZ CHG DT/TM field
+        (#1010.1515) in the PATIENT file (#2) is more recent than the 
+        date/time in sequence 7, the data in sequences 5, 6, and 7 are 
+        not stored in VistA.
+     c. If the APPOINTMENT REQUEST ON 1010EZ field (#1010.159) in the 
+        PATIENT file (#2) is YES and sequence 5 is NO, an Application Error
+        (AE) is sent back to ES.
+     d. If the APPOINTMENT REQUEST DATE in sequence 6 is a future date, an 
+        AE is sent back to ES.
+     e. Otherwise the data in sequences 5, 6 and 7 are stored in their 
+        corresponding fields.
+     f. If any sequence being filed contains double quotes (""), the
+        corresponding field in VistA is deleted.
+  
+ Patch Components:
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ PATIENT (#2)            APPOINTMENT REQUEST     Modified
+                         ON 1010EZ (#1010.159)          
+                         APPOINTMENT REQUEST     Modified
+                         DATE (#.1010.1511)
+                         ORIGINAL APPOINTMENT    New
+                         REQUEST (#.1010.1512)
+                         ORIGINAL APPT REQUEST   New
+                         DATE (#.1010.1513)
+                         ORIG APPT REQUEST       New
+                         CHG DT/TM (#.1010.1514)
+                         APPT REQUEST 1010EZ     New
+                         CHG DT/TM (#.1010.1515)       
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name     New/Modified/Deleted
+ ---------------     --------------------
+ N/A 
+  
+  
+ Options Associated:
+  
+ Option Name              Type                 New/Modified/Deleted
+ -----------              ----                 -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name      New/Modified/Deleted
+ -------------      -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ DGEN NEACL      INPUT    PATIENT (#2)       Modified
+  
+   
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A
+  
+   
+ Additional Information:
+ ---------------------- 
+  
+ Blood Bank Team Coordination:
+ N/A
+  
+ New Service Requests (NSRs): 
+ N/A
+  
+ Patient Safety Issues (PSIs): 
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview: 
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Jesse Brown VA Medical Center (Chicago Westside, Chicago Lakeside),
+  Chicago, IL
+ Oklahoma City VA Medical Center, Oklahoma City, OK
+ West Palm Beach VA Medical Center, West Palm Beach, FL
+  
+  
+ Software and Documentation Retrieval Instructions: 
+ ---------------------------------------------------- 
+ Documentation describing the new functionality and/or a host file 
+ containing a build may be included in this release.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files directly from
+ a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at: https://www.domain.ext/vdl
+  
+ Documentation Title                File Name                SFTP Mode
+ -----------------------------------------------------------------------
+ DG_53_P978.KID Release Notes       DG_5_3_P978_RN.PDF       (binary)
+ User Manual - Appointment Menu     APPT.PDF                 (binary)
+  
+  
+ Host File Name                     FTP Mode 
+ ---------------------------------------------------------------------
+ DG_53_P978.KID                     (ASCII)   
+  
+  
+ Patch Installation:
+ ------------------ 
+  
+ Pre/Post Installation Overview:
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ 1. This patch should NOT be installed while the IVM BACKGROUND JOB 
+    [IVM BACKGROUND JOB] is running. The IVM BACKGROUND JOB [IVM BACKGROUND
+    JOB] should be unscheduled. Use the Schedule/Unschedule Options [XUTM
+    SCHEDULE] option on the Taskman Management [XUTM MGR] menu. Note the
+    currently scheduled date/time.
+  
+ 2. The HL7 incoming/outgoing filers should be stopped. Stop All 
+    Messaging Background Processes by using the [HL STOP ALL] option on
+    the Filer and Link Management Options [HL MENU FILER LINK MGT] menu on
+    the HL7 Main Menu [HL MAIN MENU].
+  
+ 3. Ensure that the Call List (background job)[DGEN NEACL MGT RPT1BK] is 
+    not scheduled to run during installation.
+  
+ 4. The following options should be disabled during installation:
+     
+    Patient Enrollment                      [DGEN PATIENT ENROLLMENT]
+    Register a Patient                      [DG REGISTER PATIENT]
+    Management Edit                         [DGEN NEACL REQUEST MGT EDIT] 
+    Call List (background job)              [DGEN NEACL MGT RPT1BK]
+    Call List                               [DGEN NEACL MGT RPT1]
+    Tracking Report                         [DGEN NEACL MGT RPT2]
+    Disposition an Application              [DG DISPOSITION APPLICATION] 
+    
+    This patch may be installed with users on the system; however, we
+    suggest it be installed during non-peak hours to minimize potential 
+    disruption to users. This patch should take less than 5 minutes to
+    install.
+  
+ Installation Instructions:  
+ -------------------------
+  
+ 1. Load the Host File
+    a. Download DG_53_P978.KID into your local directory.
+    b. From the Kernel Installation and Distribution System (KIDS) Menu,
+       select the Installation menu.
+    c. Use Load a Distribution option. You may need to prepend a 
+       directory name. When prompted for "Enter a Host File: ", respond
+       with DG_53_P978.KID
+       Example: /srv/vista/dev/user/hfs/patches/DG_53_P978.KID
+  
+ 2. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, 
+  
+    A. Select the Verify Checksums in Transport Global option to confirm
+    the integrity of the routines that are in the transport global. When 
+    prompted for the INSTALL NAME enter the patch DG*5.3*978.
+    B. Backup a Transport Global - This option will create a backup message
+    of any routines exported with this patch. It will not backup any other
+    changes such as Data Dictionaries (DDs) or templates.
+    C. Use the following options:
+       i. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+      ii. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all of the components of this patch,
+          such as routines, DDs, templates, etc.
+    D. Select the Install Package(s) option and choose the patch to 
+    install. 
+       i. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+          Install? NO//', answer NO
+      ii. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+          NO//', answer NO
+     iii. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//', answer YES
+          a. When prompted 'Enter options you wish to mark as 'Out Of
+             Order':', select the following option(s):
+             Option Name                Menu Text
+             -----------                ---------
+             Patient Enrollment         [DGEN PATIENT ENROLLMENT]
+             Register a Patient         [DG REGISTER PATIENT]
+             Patient Enrollment         [DGEN PATIENT ENROLLMENT]
+             Management Edit            [DGEN NEACL REQUEST MGT EDIT]
+             Call List (background job) [DGEN NEACL MGT RPT1BK]
+             Call List                  [DGEN NEACL MGT RPT1]
+             Tracking Report            [DGEN NEACL MGT RPT2]
+             Disposition an Application [DG DISPOSITION APPLICATION]
+             Press the Enter key when you are done selecting options.
+          b. When prompted 'Enter protocols you wish to mark as 'Out Of
+             Order':', press the Enter key.
+          c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//',
+             answer 0.
+  
+ Post-Installation Instructions: 
+ -------------------------------
+ The HL7 incoming filers should be restarted. Use the Restart/Start All 
+ Links and Filers [HL TASK RESTART] option on the Filer and Link
+ Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu    
+ [HL MAIN MENU]. 
+  
+ The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be rescheduled.
+ Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the 
+ Taskman Management [XUTM MGR] menu.
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service 
+ Desk (ESD) for assistance with the procedure.
+  
+ Any issues would need to be evaluated to determine if: a back-out of the 
+ software is appropriate; a new patch is needed; or if data requires 
+ correction or restoration.
+   
+ During installation, if the option to back up routines was run as
+ directed, "Backup a Transport Global", then routines will have the 
+ ability to be restored from the "backup" MailMan message that was 
+ generated. However, the KIDS installation process does not perform a
+ backup of other VistA software components, such as DD, cross-reference,
+ and template changes. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;08/13/93;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENACL
+    Before: B18482166   After: B18566549  **779,788,824,978**
+Routine Name: DGENACL1
+    Before: B43383479   After: B63749530  **779,788,978**
+Routine Name: DGENPTA1
+    Before: B25498748   After: B30646011  **121,147,314,677,659,653,688,
+                                           810,754,838,841,842,978**
+Routine Name: DGENUPLA
+    Before: B71424515   After: B96425185  **397,379,497,451,564,672,659,
+                                           583,653,688,754,909,978**
+ 
+Routine list of preceding patches: 824, 842, 909
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 28, 2019
+Completed By:                               Date Completed: SEP 09, 2019
+Released By :                               Date Released : SEP 09, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

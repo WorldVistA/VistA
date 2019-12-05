@@ -1,0 +1,346 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Thursday, 09/05/19 at 13:22
+=============================================================================
+Run Date: OCT 16, 2019                     Designation: XU*8*710
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #553                      Status: Released
+                  Compliance Date: NOV 16, 2019
+=============================================================================
+
+Associated patches: (v)XU*8*343    <<= must be installed BEFORE `XU*8*710'
+                    (v)XU*8*711    <<= must be installed BEFORE `XU*8*710'
+
+Subject: KERNEL VISTA ENHANCEMENTS - EHRM SUPPORT
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ XU*8.0*343 and XU*8.0*711 are the required builds for patch XU*8.0*710.
+  
+ The following enhancements exported in this patch are in support of
+ the Electronic Health Record Modernization (EHRM) that the Master
+ Veteran Index (MVI) team has implemented to assist with the transition
+ as sites move to the CERNER application. The enhancements listed below
+ work in conjunction with the MVI changes that have been exported in
+ patch MPI*1.0*129.
+  
+ Enhancement #1  
+ A new restricted Remote Procedure Call (RPC) [XUS MVI NEW PERSON BULK
+ GET] has been created to allow the MVI system to remotely retrieve
+ delimited attribute information for 'ACTIVE' record entries from the
+ NEW PERSON (#200) file. MVI will then export these returned results
+ for a specific site to a flat file, which will then be imported by the
+ Person Service Identity Management (PSIM) system so that the entries
+ can be evaluated further.  
+  
+   NEW PERSON Attributes: 
+   ---------------------
+      - Internal Entry Number
+      - NAME (#.01)
+      - Address
+           STREET ADDRESS 1 (#.111)
+           STREET ADDRESS 2 (#.112)
+           STREET ADDRESS 3 (#.113)
+           CITY (#.114)
+           STATE (#.115)
+           ZIP CODE (#.116)
+      - OFFICE PHONE (#.132)
+      - EMAIL ADDRESS (#.151)
+      - SEX (#4)
+      - DOB (#5)
+      - SSN (#9)
+      - NAME COMPONENTS (#10.1) [*Pointer to NAME COMPONENTS (#20) file]
+           FAMILY (LAST) NAME (#1)   
+           GIVEN (FIRST) NAME (#2)
+           MIDDLE NAME (#3)
+           PREFIX (#4)
+           SUFFIX (#5)
+           DEGREE (#6)
+      - DIVISION (#16) [*Multiple entries possible]
+      - NPI (#41.99)
+      - KEYS (#51) [*Multiple entries possible]
+      - DEA# (#53.2)
+      - PRIMARY MENU OPTION (#201)
+      - SECONDARY MENU OPTIONS (#203) [*Multiple entries possible]
+      - SUBJECT ORGANIZATION (#205.2)
+      - SUBJECT ORGANIZATION ID (#205.3)
+      - UNIQUE USER ID (#205.4)
+      - NETWORK USERNAME (#501.1)
+      - DEA EXPIRATION DATE (#747.44)
+  
+   Note: NEW PERSON (#200) file records are determined to be 'ACTIVE'
+         for this RPC when the following 3 statements are ALL verified
+         as 'TRUE':
+          1. NOT Disuser'd
+          2. NOT Terminated
+          3. Has a Primary Menu Option assigned
+   
+ Enhancement #2
+ The existing RPC [XUS MVI NEW PERSON UPDATE] and corresponding routine
+ XUMVINPU have been modified to allow the NPI (National Provider
+ Identifier) field (#41.99) in the NEW PERSON (#200) file to be updated
+ remotely by MVI for a specific user entry. In addition, the FileMan (FM)
+ filer call FILE^DIE in routine XUMVINPU has been modified to set the
+ optional 'FLAGS' property to "E", to ensure that values entered are
+ validated through the field Input Transforms if they exist.
+    
+ Issue #1
+ To ensure that both 'Active' and 'Visitor' NEW PERSON (#200) file
+ records are counted independently when the [XUS MVI NEW PERSON DATA]
+ RPC is called by MVI, routine XUMVIDTA was modified to remove the QUIT
+ statement after the 'Visitor' record has been tallied to allow other
+ additional counts (ie. 'Active') to be processed if they apply, as it
+ is possible to have both an 'Active' and 'Visitor' entry at sites. 
+   
+ Issue #2
+ Upon release of patch XU*8.0*343, the Name Standardization process in
+ routine XLFNAME2 was modified and introduced an unknown defect where 
+ the maximum length of the source field being edited was replaced with a
+ hard-coded value of 35, which has allowed for the creation/storage of
+ names in the PATIENT file (#2) that are greater than the data definition
+ of 30-characters. Therefore, routine XLFNAME2 was updated to revert back
+ to using the data defined length of the source field or the passed in
+ character limit as long as it doesn't exceed the data defined length,
+ instead of the hard-coded 35-character limit.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ ------------------       -------------------       --------------------
+ N/A
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ XUS MVI NEW PERSON BULK GET       NEW
+ XUS MVI NEW PERSON UPDATE         MODIFIED
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+  
+ Blood Bank Team Coordination
+ ----------------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8.0*710 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8.0*710 have no adverse effect
+ on Blood Bank software functionality, therefore RISK is none.
+  
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ INC6745453 - Emergency Department Information System (EDIS) Name
+              Component Issue
+  
+ Problem:
+ --------
+ When the name fields in the NAME COMPONENTS file (#20) are edited,
+ it is possible that the full name built from those components could 
+ exceed 30 characters in length, and up to 35 characters could then be
+ stored in the NAME field (#.01) of the PATIENT file (#2) even though
+ the data definition of that field only allows for a maximum of 
+ 30-characters. This is due to an issue in the Name Standardization
+ process that was updated and released in patch XU*8.0*343 when the
+ field length was set to a hard-coded value of 35-characters.
+  
+ Note: The Name Standardization process also updates the NEW PERSON file
+       (#200), but the NAME (#.01) value there allows for 35-characters
+       to be entered.
+  
+ Resolution:
+ -----------
+ Routine XLFNAME2 was modified to revert back to using the data defined
+ length of the source field being updated or the routine parameter that
+ is passed in defining the requested character limit to use as long as
+ it doesn't exceed the data defined length, else the data defined length
+ of the source field will be used in determining how many characters to
+ store in the field.
+  
+  
+ Test Sites:
+ ----------
+ Louisville KY VAMC
+ Sheridan WY VAMC
+  
+   
+  
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre/post installation routines processes.
+  
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than a minute to install, but to minimize the
+ impact on users, it is recommended that it be installed or queued to
+ run after normal business hours. Users may be on the system while this
+ patch is installed.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. XU*8.0*710):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Back-Out Plan
+ -------------
+ The back-out procedure for this patch would consist of executing all
+ of the following processes below:
+    
+      1. Restoring the original routine XLFNAME2 using the back-up
+         message created during the patch installation.
+      2. Restoring the RPC [XUS MVI NEW PERSON UPDATE] and routine
+         XUMVINPU, which can be accomplished by re-installing the
+         KERNEL patch XU*8.0*711 again.
+      3. Deleting the new routine 'XUMVINPB' and also the new RPC
+         [XUS MVI NEW PERSON BULK GET] (through FileMan (FM)) from
+         the REMOTE PROCEDURE (#8994) file from the system.
+      
+ If assistance is still required to back-out the patch please contact the
+ National Service Desk (NSD) to log a help desk ticket so the development
+ team can assist in the process.
+   
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XLFNAME2
+    Before: B10615051   After: B11304736  **134,211,301,343,710**
+Routine Name: XUMVIDTA
+    Before:  B9059477   After: B10198216  **705,711,710**
+Routine Name: XUMVINPB
+    Before:       n/a   After: B45050310  **710**
+Routine Name: XUMVINPU
+    Before:B124825166   After:B125047049  **691,711,710**
+ 
+Routine list of preceding patches: 343, 711
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2019
+Completed By:                               Date Completed: OCT 16, 2019
+Released By :                               Date Released : OCT 16, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

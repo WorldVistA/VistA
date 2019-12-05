@@ -1,0 +1,173 @@
+$TXT Created by                    CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 05/17/19 at 12:40
+=============================================================================
+Run Date: SEP 25, 2019                     Designation: PSJ*5*389
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #333                      Status: Released
+                  Compliance Date: OCT 25, 2019
+=============================================================================
+
+Associated patches: (v)PSJ*5*353   <<= must be installed BEFORE `PSJ*5*389'
+                    (v)PSJ*5*379   <<= must be installed BEFORE `PSJ*5*389'
+
+Subject: ADMINISTRATION SCHEDULE LOOKUP ISSUE/INCORRECT PATIENT CLASS FOR PADE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issues.
+  
+ 1. INC5265212 - Hard error when performing schedule lookup
+ 2. INC5174261 - Incorrect patient class in PADE HL7 message 
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC5265212 - Hard error when performing schedule lookup
+  
+  
+ Problem: 
+ --------
+ A hard error generated while displaying of the ADMINISTRATION 
+ SCHEDULE file (#51.1) entries while editing the ListMan when
+ trying to edit the "Schedule:" field #8 during finishing an order using 
+ the Inpatient Order Entry [PSJ OE] option. This is happening only if the
+ patient is an outpatient (not admitted).
+  
+  
+ Resolution:
+ -----------
+ This patch fixes the hard error generated when performing a lookup on the 
+ ADMINISTRATION SCHEDULE file (#51.1) in case of outpatient.
+  
+  
+ 2. INC5174261 - Incorrect patient class in PADE HL7 message 
+  
+ Problem: 
+ --------
+ The Patient Class code for clinical appointments that is being transmitted
+ to PADE devices via HL7 messaging is incorrectly being sent to indicate
+ that a patient is an outpatient when, in fact, the patient is an 
+ inpatient.
+   
+  
+ Resolution:
+ -----------
+ Added an indicator to the process that creates the HL7 message for PADE
+ for reporting clinical appointments that will be utilized to properly 
+ identify the patient as an inpatient and set the Patient Class code in
+ the PV1 segment of the HL7 message to represent that the patient is an 
+ inpatient. 
+  
+ Test Sites:
+ -----------
+ Wichita VAMC
+ Connecticut HCS
+  
+  
+ Patch Installation:
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 3 minutes
+ to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch
+     (ex. PSJ*5*389):
+     a.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     b.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select the installation option Backup a Transport Global. This 
+     option will create a backup message of any routines exported with 
+     this patch in case you need to back-out this patch. It will not backup
+     any other changes such as Data Dictionaries (DD's) or templates. It 
+     is important this step be followed, because if back-out of this patch 
+     is necessary, having the backup will make the process much easier.
+  
+ 5.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'.  
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer 'NO'.
+  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+  ;;5.0;INPATIENT MEDICATIONS;**[PATCH LIST]**;16 DEC 97
+  
+ The Calculate and Show Checksum Values [XTSUMBLD-CHECK] option can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ Back-out will be done only with the concurrence and participation of 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel.
+  
+ Prior to installing an updated KIDS package, the site/region should have
+ saved a backup of the routines in a mail message using the Backup a
+ Transport Global [XPD BACKUP] menu option (this is done at time of
+ install). The message containing the backed up routines can be loaded with
+ the "Xtract PackMan" function at the Message Action prompt. The Packman
+ function "INSTALL/CHECK MESSAGE" is then used to install the backed up
+ routines onto the VistA System.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJDDUT
+    Before: B79498515   After: B79591153  **40,44,50,83,116,111,113,194,
+                                           353,389**
+Routine Name: PSJPDAPP
+    Before: B26391444   After: B26733972  **317,389**
+Routine Name: PSJPDCL
+    Before: B62118639   After: B62778627  **317,337,347,379,389**
+ 
+Routine list of preceding patches: 353, 379
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 30, 2019
+Completed By:                               Date Completed: SEP 24, 2019
+Released By :                               Date Released : SEP 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,346 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 08/26/19 at 12:29
+=============================================================================
+Run Date: OCT 16, 2019                     Designation: DG*5.3*981
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #861                    Status: Released
+                  Compliance Date: NOV 16, 2019
+=============================================================================
+
+Associated patches: (v)DG*5.3*825  <<= must be installed BEFORE `DG*5.3*981'
+                    (v)DG*5.3*863  <<= must be installed BEFORE `DG*5.3*981'
+                    (v)DG*5.3*967  <<= must be installed BEFORE `DG*5.3*981'
+                    (v)DG*5.3*974  <<= must be installed BEFORE `DG*5.3*981'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - EHRM SUPPORT
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ NOTE: Master Patient Index (MPI) 'EHRM (Electronic Health Record
+       Modernization) SUPPORT' enhancements are being distributed
+       in four VistA namespaces: DG, MPIF, RG and XU.
+       The only build enforced requirement is that:
+         - DG*5.3*981 be installed before MPIF*1.0*71.
+       
+       **Note: Patches RG*1.0*72 and XU*8.0*710 can be installed
+               in any order as there are NO dependencies to these
+               other patches.
+       
+       (Do NOT install MPIF*1.0*71 or RG*1.0*72 on legacy sites or
+        on the FORUM CLAIMS system)
+  
+ NOTE: Legacy sites and the FORUM CLAIMS system can install just the
+       DG*5.3*981 and XU*8.0*710 patches. MPIF*1.0*71 and RG*1.0*72
+       should NOT be installed on legacy sites or on the FORUM CLAIMS
+       system.  
+  
+ DG*5.3*825, DG*5.3*863, DG*5.3*967 and DG*5.3*974 are the required
+ builds for patch DG*5.3*981.
+  
+ The following enhancements exported in this patch are needed to
+ support the transition of sites to the EHRM (CERNER) application.
+    
+ Enhancement #1
+ To ensure that TREATING FACILITY LIST (#391.91) data returned from
+ the Remote Procedure Call (RPC) [VAFC LOCAL GETCORRESPONDINGIDS] for
+ a patient correctly identifies the IDENTIFIER STATUS (#12) of the
+ record, the following enhancements will be implemented:
+  
+   - Created a new file "EHRM MIGRATED FACILITIES" (#391.919) that
+     will store the facilities that have migrated to/implemented the
+     CERNER application in support of EHRM.
+  
+     Note: The "ACRNR" new-style cross-reference (X-REF) was created
+           at the record level of this file to allow for a quick check
+           to determine if a facility has migrated to/implemented CERNER.
+   
+   - Created a new RPC [VAFC MVI MGRTD FACILITIES UPDT] that can be
+     called from the Master Patient Index (MPI) to remotely add, update
+     and maintain the facilities that are currently implementing CERNER
+     in the EHRM MIGRATED FACILITIES (#391.919) file.     
+    
+   - Created a new routine VAFCCRNR that will be triggered by the RPC
+     [VAFC MVI MGRTD FACILITIES UPDT] to receive a list of Station
+     Numbers from MPI for facilities that have migrated to CERNER for 
+     maintaining the EHRM MIGRATED FACILITIES (#391.919) file with.
+     
+   - Finally, routine VAFCTFU2 associated with the RPC [VAFC LOCAL
+     GETCORRESPONDINGIDS] was modified so that the returned IDENTIFIER
+     STATUS (#12) value in the TREATING FACILITY LIST (#391.91) file is
+     transmitted as "C" if it is currently assigned an "A" (Active) or
+     NULL value AND the facility has migrated to/implemented CERNER.
+  
+     Note: Merged "H" identifier statuses will continue to be returned
+           as denoted even if the treating facility has migrated 
+           to/implemented CERNER. 
+  
+ Enhancement #2
+ To support EHRM during the creation of patients that have potential
+ matching Department of Defense (DoD) records being returned for
+ selection in Enterprise Registration, an additional entry labeled
+ 'selectedIdentifier' will be transmitted in the eXtensible Markup
+ Language (XML) explicit 'ADD' message to MPI upon creation of the
+ patient at the site. The 'selectedIdentifier' entry will contain
+ one of the following values below to identify the existing record
+ that was selected from Enterprise Registration if applicable:
+  
+    - "" 
+         Null if no results returned or nothing selected from results.
+    - "<EDIPI>^NI^200DOD^USDOD"
+         (DoD's) Electronic Data Interchange Personal Identifier 
+         (EDIPI) if a DoD record was selected from the results list.
+    - "<ICN>^NI^200M^USVHA"
+         Integration Control Number (ICN) if any other Non-DoD record
+         was selected from the results list.
+  
+ NOTE: The identifier value will be determined/created in routine
+       DPTLK7 and then added to the XML message for transmission to
+       the MPI in routine MPIFXMLI.
+  
+ Enhancement #3
+ In support of the Health Administration Center (HAC) and MPI integration
+ routine VAFCQRY1 (Patient Demographics Query for building the Patient
+ Identification (PID) Health Level Seven (HL7) segment) was updated to
+ include the HAC local modifications in support of CH*1.3*22529. These
+ modifications will ensure that the correct Station Number of '741MM' is
+ used when the HAC Station Number of '741' is encountered.
+       
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)       Field Name (Number)       New/Modified/Deleted
+ ------------------       -------------------       --------------------
+ EHRM MIGRATED FACILITIES         N/A               *NEW FILE
+ (#391.919)
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+  
+ Remote Procedures Associated:
+   
+ Remote Procedure Name             New/Modified/Deleted
+ ---------------------------       -------------------- 
+ VAFC MVI MGRTD FACILITIES UPDT    NEW
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name                    New/Modified/Deleted
+ ---------------------------       -------------------- 
+ N/A 
+  
+  
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ N/A
+  
+   
+ Test Sites:
+ ----------
+ Louisville KY VAMC
+ Sheridan WY VAMC
+   
+  
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes. 
+  
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than a minute to install. This patch may be 
+ installed with users on the system, but it is recommended that
+ installation occur during off hours. 
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      UPDATE BATCH JOB FOR HL7 v2.3               [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu       [RG ADMIN COORD MENU]
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+   
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+     
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. DG*5.3*981):
+   
+     a.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch, such as
+         routines, DDs, templates, etc.
+     d.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+      
+     a. When prompted 'Enter options you wish to mark as 'Out Of Order':',
+        select the following options:
+     
+          Option Name                    Menu Text                       
+          -----------                    ---------
+          [DG LOAD PATIENT DATA]         Load/Edit Patient Data
+          [DG REGISTER PATIENT]          Register a Patient 
+          [DGPRE PRE-REGISTER OPTION]    Preregister a Patient
+          [EAS EZ 1010EZ PROCESSING]     Electronic 10-10EZ Processing
+          [VAFC BATCH UPDATE]            UPDATE BATCH JOB FOR HL7 v2.3
+          [RG ADMIN COORD MENU]          MPI/PD Patient Admin Coordinator
+                                          Menu
+          [MPIF LOC/MIS ICN RES]         Local/Missing ICN Resolution
+                                          Background Job 
+     
+     b. When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+        press the Enter key.
+  
+     c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU]. 
+  
+ Back-Out Plan
+ -------------
+ The DG patch back-out procedure would consist of restoring the original
+ routines using the back-up message created during the patch installation,
+ deleting the NEW routine 'VAFCCRNR', RPC [VAFC MVI MGRTD FACILITIES UPDT]
+ from the REMOTE PROCEDURE (#8994) file and file EHRM MIGRATED FACILITIES
+ (#391.919). 
+  
+ If assistance is still required to back-out the patch please contact the
+ National Service Desk (NSD) to log a help desk ticket so the development
+ team can assist in the process.
+    
+      Note: This process should only be done with the concurrence and
+            participation of the development team and the appropriate
+            VA Site/Region personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DPTLK7
+    Before:B199815452   After:B207157129  **915,919,926,967,981**
+Routine Name: VAFCCRNR
+    Before:       n/a   After:  B4581659  **981**
+Routine Name: VAFCQRY1
+    Before: B93833983   After: B99425329  **428,474,477,575,627,648,698,
+                                           711,707,837,874,937,974,981**
+Routine Name: VAFCRPC
+    Before:  B7679300   After:  B7979176  **414,440,474,477,479,825,981**
+Routine Name: VAFCTFU2
+    Before: B47004597   After: B48038371  **821,856,863,981**
+ 
+Routine list of preceding patches: 825, 863, 967, 974
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2019
+Completed By:                               Date Completed: OCT 16, 2019
+Released By :                               Date Released : OCT 16, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

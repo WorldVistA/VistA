@@ -1,0 +1,220 @@
+
+=============================================================================
+Run Date: AUG 15, 2019                     Designation: XT*7.3*140
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #111                    Status: Released
+                  Compliance Date: SEP 15, 2019
+=============================================================================
+
+
+Subject: Update XINDEX to support SACWG changes
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This build deploys changes to XINDEX and the ZOSF routine via 2 patches
+ being released in HOST file TOOLKIT_XINDEX_73.KID
+   1. Patch XT*7.3*140
+     a) Contains 14 XINDEX routines
+     b) Will update the XINDEX utility to support the new changes to the
+         Standards and Conventions (SAC).  The following changes have been
+         approved by SAC Committee:
+            1) Routine name and labels can be 16 uppercase characters
+            2) Local variable names can be 16 characters. 
+            3) Namespaced variables must be all uppercase.
+   2. Patch XU*8*661
+     a) The ZOSFONT routine
+     b) 14 fields from 8 files that references a routine or tag  
+  
+ Patch Components
+ ================
+  none
+  
+  
+ Blood Bank Clearance
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*140 contains
+ changes to a package referenced in ProPath standard titled: BBM Team
+ Review of VistA Patches. This patch does not alter or modify any VistA
+ Blood Bank software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XT*7.3*140 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================ 
+ Ticket: I9055002FY16 - XINDEX doesn't support SACC changes to routine
+         names and tags
+  
+ Problem:
+  XINDEX utility needs to support routine name and labels to 16 characters
+  and local variables names to 16 characters. Add support for all areas in
+  VA FileMan that can contain M code.
+  
+ Resolution:
+  Change the following routines to support 16 characters and other M code:
+  XINDX1
+  XINDX11
+  XINDX12
+  XINDX13
+  XINDX2
+  XINDX3
+  XINDX5
+  XINDX51
+  XINDX52
+  XINDX53
+  XINDX6
+  XINDX7
+  XINDX8
+  XINDX9 
+  
+  
+ Test Site:
+ ==========
+ Fargo, ND
+ South Texas, TX
+  
+  
+ Software and Documentation Retrieve Instructions:
+ =================================================
+ No changes have been made to Kernel documentation as a result of this
+ patch.  However, the most up-to-date VA Kernel documentation is
+ available on the VHA Software Documentation Library (VDL) at the
+ following:
+  http://www.domain.ext/vdl/application.asp?appid=10
+  
+ An updated copy of the SAC is available at:
+  http://go.domain.ext/sacc
+  
+ Download TOOLKIT_XINDEX_73.KID from the ftp site.  The preferred method is
+ to SFTP the file from sftp://download.vista.domain.ext/.  This transmits the
+ file from the first available SFTP server. Sites may also elect to retrieve
+ software directly from a specific server as follows:
+  
+ Hines             sftp://ftp.domain.ext
+ Salt Lake City    sftp://ftp.domain.ext
+  
+ The necessary file is TOOLKIT_XINDEX_73.KID, which is an ASCII file.
+ Make a note of the directory name where the file was saved.
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre-Installation Instructions:
+  
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minutes
+ to install.  TaskMan doesn't need to be stopped or paused
+  
+ Installation Instructions:
+   
+  1. From the Kernel Installation and Distribution System (KIDS) menu select
+     Installation Menu.
+    
+  2. Use the Load a Distribution option to load the TOOLKIT_XINDEX_73.KID file
+  
+  3. You may select the following options:
+  
+     A. Select the Verify Checksums in Transport Global option to confirm 
+        the integrity of the routines that are in the transport global. When 
+        prompted for the INSTALL NAME enter XT*7.3*140
+  
+         NOTE: Using <spacebar><enter> will not bring up a Multi-Package build 
+               even if it was loaded immediately before this step. It will only 
+               bring up the last patch in the build.
+  
+     B. Select the Backup a Transport Global option to create a backup message
+        of any routines exported with this patch. It will not backup any other
+        changes such as DDs or templates. 
+  
+     C. You may also elect to use the following options: 
+          i.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          ii. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this patch
+              is installed.  It compares all of the components of this patch,
+              such as routines, DDs, templates, etc.
+  
+     D. Select the Install Package(s) option and choose the patch to install. 
+    
+           Select Installation Option: Install Package(s)
+           Select INSTALL NAME: XT*7.3*140
+  
+      Want KIDS to INHIBIT LOGONs during the install? NO//
+  
+      Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+  
+  Post-Installation Instructions:
+  -------------------------------
+  none
+   
+    
+  Backout and Rollback Procedure:
+  ------------------------------- 
+  If rollback/backout is required, the installer can restore the routines
+  using the MailMan message that were saved prior to installing the
+  patch.  The Data Dictionary changes are backwards compatible and can stay
+  in production.
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 39
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XINDX1
+    Before: B20704192   After: B21263152  **20,61,66,68,110,121,128,133,140**
+Routine Name: XINDX11
+    Before: B11308547   After: B37513284  **20,27,121,132,140**
+Routine Name: XINDX12
+    Before:       n/a   After: B86657332  **140**
+Routine Name: XINDX13
+    Before:       n/a   After:B306834020  **140**
+Routine Name: XINDX2
+    Before: B28042462   After: B28369536  **20,27,48,110,121,133,140**
+Routine Name: XINDX3
+    Before: B15082410   After: B15493765  **20,27,61,68,110,121,128,132,
+                                           133,140**
+Routine Name: XINDX5
+    Before: B11294544   After: B11300370  **20,27,61,121,133,140**
+Routine Name: XINDX51
+    Before: B26771263   After: B32298369  **20,48,61,110,133,140**
+Routine Name: XINDX52
+    Before:  B2709275   After:  B2792889  **20,140**
+Routine Name: XINDX53
+    Before:  B6321698   After:  B6801223  **20,140**
+Routine Name: XINDX6
+    Before: B20048257   After: B20500720  **20,27,66,110,132,140**
+Routine Name: XINDX7
+    Before: B10829991   After: B11070196  **20,27,48,68,110,140**
+Routine Name: XINDX8
+    Before: B15029849   After: B15758649  **20,27,61,140**
+Routine Name: XINDX9
+    Before: B32506175   After: B33427538  **20,27,48,61,66,68,110,121,
+                                           132,133,140**
+ 
+Routine list of preceding patches: 133
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 20, 2015
+Completed By:                               Date Completed: AUG 15, 2019
+Released By :                               Date Released : AUG 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

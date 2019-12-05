@@ -1,0 +1,318 @@
+$TXT Created by                    P at CHY0035D.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 07/23/19 at 15:36
+=============================================================================
+Run Date: SEP 13, 2019                     Designation: OR*3*496
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: EMERGENCY
+Version : 3       SEQ #429                      Status: Released
+                  Compliance Date: SEP 16, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*280    <<= must be installed BEFORE `OR*3*496'
+
+Subject: DISPLAY VVC URL IN CPRS APPOINTMENT WINDOW
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+                          *** IMPORTANT NOTE ***
+ **************************************************************************
+ *  Emergency Patches SD*5.3*704 and OR*3.0*496 will be released          *
+ *  09/13/2019. Production testing of these patches along with the        *
+ *  Tele Health Management Platform (TMP) application will be conducted   *
+ *  on 09/15/2019 by the following test sites: Fargo, Minneapolis and     *
+ *  Boise.                                                                *
+ *                                                                        *
+ *  A Go/No Go decision will be made on 09/15/2019 by the project         *
+ *  management team and communicated to the Regional Patch install teams  *
+ *  no later than 09/15/2019 via the Forum Patch Messaging system via the *
+ *  G.Patch Mail Group.                                                   *
+ *                                                                        *
+ *  Do not install these patches until notified to do so.                 *
+ *                                                                        *
+ **************************************************************************
+  
+ SD*5.3*704 adds a new field to the Appointment multiple in the Hospital 
+ Location File (#44) to store the Veteran Video Call (VVC) URL. The field 
+ is populated when the tele health appointment is created in VistA by the 
+ TMP app.
+  
+ This patch adds functionality to CPRS to display the URL for the tele 
+ health appointment video conference call when the user clicks on the 
+ appointment in the appointment window on the CPRS cover sheet. 
+  
+ If end users/customers need TMP technical support during Go Live or 
+ anytime thereafter, they can reach out to the National Telehealth 
+ Technology Help Desk (NTTHD) at 866-651-3180 or via email at 
+ VHA_NTTHD@domain.ext.
+  
+ Patch Components:
+ ------------------
+  
+ Files & Fields Associated: 
+ -------------------------- 
+ File Name (Number)    Field Name (Number)    New/Modified/Deleted 
+ ------------------    -------------------    --------------------
+ N/A 
+  
+ Forms Associated: 
+ Form Name              File #            New/Modified/Deleted
+ ---------              ------            ---------------------
+ N/A 
+  
+ Mail Groups Associated: 
+ Mail Group Name                          New/Modified/Deleted 
+ ---------------                          --------------------
+ N/A 
+  
+ Options Associated: 
+ Option Name            Type              New/Modified/Deleted
+ -----------            ----              ---------------------
+ N/A 
+  
+ Protocols Associated: 
+ Protocol Name                            New/Modified/Deleted
+ -------------                            --------------------
+ N/A
+  
+ Security Keys Associated: 
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated: 
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A 
+  
+ New Service Requests (NSRs):
+ ---------------------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ --------------
+ Fargo, ND
+ Minneapolis, MN
+ Boise, ID 
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software is being released as a PackMan build and/or documentation 
+ describing the new functionality introduced by this patch.
+  
+ The following technical documentation with known issues can be retrieved 
+ from the VA Software Document Library (VDL):
+ TMP Release Notes D365 v4.6
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+      Hines:                  domain.ext    
+      Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  https://www.domain.ext/vdl/
+  
+ Title                           File  Name              Transfer Mode
+ --------------------------------------------------------------------------
+ TMP Release Notes D365 v4.6     TMP_4.6_rn.doc          Binary
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.  No
+ data was modified by this patch installation and, therefore, no rollback
+ strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum matches
+ the pre-patch checksum from the patch descriptions.
+  
+ Patch Installation:
+ -------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ Installation Instructions:
+  
+ 1.  Choose the PackMan message containing this patch.
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.          
+ 3.  From the Kernel Installation and Distribution System [XPD MAIN]
+     menu, select the Installation [XPD INSTALLATION MENU] menu.  From this
+     menu, you may elect to use the following option. When prompted for the
+     INSTALL enter the patch # (OR*3.0*496):
+     a. Backup a Transport Global [XPD BACKUP] - This option will create a
+        backup message of any routines exported with this patch. It will
+        not backup any other changes such as DD's or templates. THIS OPTION
+        MUST BE USED IN ORDER TO BACK OUT THIS PATCH.
+     b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+        This option will allow you to view all changes that will be made
+        when this patch is installed.  It compares all components of this
+        patch (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - 
+        This option will allow you to ensure the integrity of the routines
+        that are in the transport global.
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter OR*3.0*496.
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ Installation Verification:
+ -------------------------
+ Compare the "After" checksum for the ORWCV routine to the ones listed 
+ in the patch descriptions.
+  
+ Sample Installation
+ -------------------
+ Select INSTALL NAME:    OR*3.0*496    7/23/19@15:46:23
+      => TMP OR  ;Created on Jul 23, 2019@15:45:43
+  
+ This Distribution was loaded on Jul 23, 2019@15:46:23 with header of 
+    TMP OR  ;Created on Jul 23, 2019@15:45:43
+    It consisted of the following Install(s):
+      OR*3.0*496
+ Checking Install for Package OR*3.0*496
+  
+ Install Questions for OR*3.0*496
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HOME  (CRT)
+                                    
+ OR*3.0*496                                   
+ --------------------------------------------------------------------------
+  Install Started for OR*3.0*496 : 
+                Jul 23, 2019@15:46:37
+  
+ Build Distribution Date: Jul 23, 2019
+  
+  Installing Routines:
+                Jul 23, 2019@15:46:37
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  OR*3.0*496 Installed. 
+                Jul 23, 2019@15:46:37
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+ --------------------------------------------------------------------------
+ ------
+           +------------------------------------------------------------+
+   100%    |             25             50             75               |
+ Complete  +------------------------------------------------------------+
+  
+ Install Completed
+  
+ Sample Backout:
+ ---------------
+ Subj: Backup of OR*3.0*496 install on Jul 23, 2019  [#363726] 
+ 252 lines
+ From: INSTALLER,PATCH  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+ $TXT PACKMAN BACKUP Created on Tuesday, 7/23/19 at 15:46:29 by 
+ INSTALLER,PATCH at CHY0035D.FO-BAYPINES.DOMAIN.EXT
+ $ROU ORWCV (PACKMAN_BACKUP)
+ ORWCV ; SLC/KCM,MS/PB - Background Cover Sheet Load; ; 06/10/09
+  ;;3.0;ORDER ENTRY/RESULTS 
+ REPORTING;**10,85,109,132,209,214,195,215,260,243,28
+ 2,302,280,496**;Nov 19, 2018;Build 1
+  ;
+  ;
+  ; DBIA 1096    Reference to ^DGPM("ATID1"
+  ; DBIA 1894    Reference to GETENC^PXAPI
+  ; DBIA 1895    Reference to APPT2VST^PXAPI
+  ; DBIA 2096    Reference to ^SD(409.63
+  ; DBIA 2437    Reference to ^DGPM(
+  ; DBIA 2965    Reference to ^DIC(405.1
+  ; DBIA 4011    Access ^XWB(8994)
+  ; DBIA 4313    Direct R/W permission to capacity mgmt global 
+ ^KMPTMP("KMPDT")
+  ; DBIA 4325    References to AWCMCPR1
+  ; DBIA 10061   Reference to ^UTILITY
+  
+ Type <Enter> to continue or '^' to exit: ^
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: IN
+      1   INSTALL SELECTED ROUTINE(S)  
+      2   INSTALL/CHECK MESSAGE  
+ CHOOSE 1-2: 2  INSTALL/CHECK MESSAGE
+  
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #363726    Unloading Routine   ORWCV (PACKMAN_BACKUP)
+  
+ Select PackMan function: 
+  
+  
+  
+ Enter message action (in IN basket): Ignore// 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Nov 19, 2018;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWCV
+    Before: B80219268   After: B90464307  **10,85,109,132,209,214,195,
+                                           215,260,243,282,302,280,496**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 20, 2018
+Completed By:                               Date Completed: SEP 13, 2019
+Released By :                               Date Released : SEP 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,115 @@
+
+=============================================================================
+Run Date: SEP 26, 2019                     Designation: OHRS*1.4*18
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4        SEQ #18                    Status: Released
+                  Compliance Date: OCT 28, 2019
+=============================================================================
+
+
+Subject: OHRS 1.4.18 Maintenance Release 
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch announces the National Release of Occupational Health 
+ Record-Keeping System (OHRS) version 1.4.18. No additional action is 
+ necessary for sites except to communicate the below modifications of OHRS 
+ 1.4.18 to users. 
+  
+ The new OHRS 1.4.18 version has been configured for read-only access. 
+ Users will no longer be able to create or update data within the 
+ application. All write privileges have been removed, and a message has 
+ been added to the CISS home page to alert users of the change. 
+ Additionally, data updates to and from external systems (e.g., PAID, STS, 
+ etc.) have been disabled. Users may still access OHRS to obtain 
+ historical information.
+  
+  
+ Templates Associated:
+ ---------------------
+  
+ Template Name  Type    File Name (Number)  New/Modified/Deleted 
+ -------------  ----    ------------------  --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+ Testing:
+ ========
+ Testing and verification of the patch completed via UFT (User Functional
+ Testing).
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The User Guide is available on VA Documentation Library (VDL) at:
+     http://www.domain.ext/vdl/ in the HealtheVet section.
+  
+ Patch Installation:
+ -------------------
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ Read-only configuration is accomplished through the application GUI and 
+ the CMS GUI.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+   
+ Installation Instructions:
+ --------------------------
+   1) Use the CMS portal for CISS to add the read-only notification 
+ message to the CISS home page.
+   2) Use the application GUI to remove write privileges from all roles 
+ defined within OHRS.
+  
+    
+ Post-Installation Instructions:
+ -------------------------------
+ 1) Validate that users no longer have write access.
+  
+  
+ Back-Out Strategy/Recovery:
+ ===========================
+   1) Use the CMS portal for CISS to remove the read-only notification 
+ message to the CISS home page.
+   2) Use the application GUI to add write privileges back to applicable 
+ roles defined within OHRS.
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ Problems associated with the OHRS application should be reported   
+  by contacting the National Service Desk (NSD) at 
+ 1-855-673-4357 and logging a ServiceNow Ticket.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 26, 2019
+Completed By:                               Date Completed: SEP 26, 2019
+Released By :                               Date Released : SEP 26, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

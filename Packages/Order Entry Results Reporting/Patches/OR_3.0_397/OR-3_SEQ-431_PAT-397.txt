@@ -1,0 +1,434 @@
+$TXT Created by                    CPRS30.DOMAIN.EXT  (KIDS) on Tuesday, 09/03/19 at 18:41
+=============================================================================
+Run Date: OCT 28, 2019                     Designation: OR*3*397
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #431                      Status: Released
+                  Compliance Date: NOV 28, 2019
+=============================================================================
+
+Associated patches: (v)OR*3*111    <<= must be installed BEFORE `OR*3*397'
+                    (v)OR*3*382    <<= must be installed BEFORE `OR*3*397'
+                    (v)OR*3*409    <<= must be installed BEFORE `OR*3*397'
+                    (v)OR*3*441    <<= must be installed BEFORE `OR*3*397'
+                    (v)OR*3*490    <<= must be installed BEFORE `OR*3*397'
+                    (v)OR*3*494    <<= must be installed BEFORE `OR*3*397'
+
+Subject: Supply and Other Fixes
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ The following issues are addressed by this patch:
+  
+ 1. OR*3*389 added a new utility to convert Unit Dose and IV Medication 
+ quick orders to Clinic Orders. 'Create Clinic Order QOs from Inpatient 
+ QOs' [OR CONV INPT QO TO CLIN ORD QO]. This utility also allows the 
+ user to delete a given quick order after a copy has been made. This same
+ patch also restored the ability to delete a quick order from the
+ 'Enter/edit quick orders ' [ORCM QUICK ORDERS utility.]
+  
+ Both utilities use the same underlying logic for the delete 
+ operation. There was a flaw in this logic where the delete operation 
+ was not finding the orders placed using the selected order dialog. 
+ This has now been corrected. Jazz 356443
+  
+ 2. An issue was discovered with consult/procedure auto-accept quick 
+ orders and Clinically Indicated Date (CID). If the CID is blank, and all 
+ other required fields are pre-populated, the quick order will be accepted 
+ by the system. This results in an order without a CID value. The consult 
+ and procedure order dialogs (GMRCOR CONSULT and GMRCOR REQUEST) have been 
+ updated to set the CID response as required. Additionally, coding logic 
+ for processing order dialogs has been modified to validate if the CID is 
+ valued or not and ensure the order dialog in CPRS will be displayed when 
+ necessary. Jazz 338586
+  
+ 3. An issue was reported with the DSS DataBridge not being able to be 
+ notified appropriately when a nursing order was completed via CPRS. This 
+ patch addresses this problem by creating a new protocol: OR COMPLETE 
+ ORDER, which will be invoked whenever an order is marked complete. Any 
+ application or product that needs to be notified of complete orders may 
+ subscribe to this protocol. PSPO 2563 Jazz 328335
+  
+ 4. A request was made, during testing of supply orders, that all supply 
+ orders, regardless of how they were entered, should display in the supply 
+ display group. In addition, an issue was reported with edits made to 
+ supply orders during finishing. When an edit occurred, the supply order 
+ would revert to the outpatient medication display group. This patch 
+ corrects both these issues by ensuring any dispense drug that is a supply 
+ drug, displays in the supply display group. Jazz 329491, 258326, and 
+ 303788
+  
+ 5. CPRS GUI v30b (OR*3.0*350) introduced a new security key, ORSUPPLY. The
+ purpose of this key is to identify those non-provider users who are
+ allowed to order supplies using the PSO SUPPLY order dialog. This patch,
+ OR*3.0*397, will add the ORSUPPLY key to the list of security keys that
+ may be assigned via the Allocate OE/RR Security Keys [ORCL KEY
+ ALLOCATION]. Jazz 298588
+  
+ 6. As part of the installation of patch OR*3*350 (CPRS v30b), all 
+ Outpatient Medication quick orders that were built for orderable items 
+ that were considered supply items were converted to the PSO SUPPLY dialog.
+ However, because of issues that were found with the PSO SUPPLY dialog,
+ patch OR*3*423 (CPRS v30c) reversed that, and moved them back to use the
+ Outpatient Medication (PSO OERR) dialog. This patch corrects the PSO
+ SUPPLY dialog issues. Therefore, a new option, CONVERT SUPPLY QUICK ORDERS
+ [OR SUPPLY QO CONVERSION], is being added to the SUPPLY COVERSION UTILITY
+ MENU [OR SUPPLY UTIL MENU]. When (if) a site wishes to move their supply
+ quick orders back to the PSO SUPPLY dialog, this option can be used to
+ accomplish that. Jazz 581005
+  
+ 7. An issue was reported that a nurse without the ORSUPPLY key can enter 
+ and release a supply order if the encounter provider is someone other than
+ themselves, and is authorized to write med orders. This patch adds checks
+ when releasing a supply order to make sure the user releasing the order
+ has the ORSUPPLY key or is authorized to write med orders. It also blocks 
+ the user from releasing the supply order as verbal or telephone. Jazz
+ 313956
+  
+ 8. An issue was reported that a user with the ORES, PROVIDER, and 
+ ORSUPPLY keys (without authorization to write meds) was not able to place 
+ a supply quick order. This issue will be fixed with this patch. Jazz 
+ 258733
+  
+ 9. An issue was reported that supply orders were not able to be renewed. 
+ This will be fixed with this patch. Jazz 473803 SDM R11123709FY17 
+  
+ 10. An issue was found that a user without the ORSUPPLY key (and without 
+ authorization to write meds) was able to place a supply quick order that 
+ was set to auto accept. This will be fixed with this patch. Jazz 812936
+  
+ 11. An issue was reported that Clinic Infusions quick orders do not get
+ prompted to Auto Accept. This will be fixed with this patch. Jazz 413439
+  
+ 12. An issue was found that the 'D' cross-reference on the ORDER file 
+ (#100) was not always getting set. This patch will fix that and will task 
+ off a job in the post-install to rebuild the 'D' cross-reference. Jazz 
+ 356440
+  
+ 13. Problem with statuses not being updated properly when a VBECS order 
+ was discontinued. SDM R13286486FY17
+  
+ 14. An issue was reported that when renewing a supply Order in CPRS, the 
+ system was not allowing the user to change refills or pick-up. This will
+ be fixed with this patch. Jazz 1013616
+  
+ 15. An issue was found that when a supply order is entered via CPRS and 
+ changed in backdoor pharmacy, when the Order (#100) is updated, the DIALOG
+ field changes from PSO SUPPLY to PSO OERR. This will be fixed with this
+ patch. Jazz 1013631
+  
+  
+ Patch Components:
+ =================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                Type               New/Modified/Deleted
+ -----------                ----               -------------------- 
+ OR SUPPLY QO CONVERSION    RUN ROUTINE        NEW
+ OR SUPPLY UTIL MENU        MENU               MODIFIED
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ OR COMPLETE ORDER   New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 2563 - Charting Action of Complete
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ R11123709FY17 (Original)
+ R13286486FY17 
+  
+ 1. R11123709FY17 - Supply order can not be renewed
+  
+ Problem:
+ -------
+ When trying to renew a supply order, the user receives an error: "Unable 
+ to renew order".
+  
+ Solution:
+ --------
+ Modified routine ORCACT01 to allow a supply order to be renewed.
+  
+ 2. R13286486FY17 - VBECS order not discontinuing completely.
+  
+ Problem:
+ --------
+ Blood Bank order is being discontinued, but not updating status 
+ appropriately - order is Dc'd, but still says pending in CPRS and VBECS, 
+ but order is canceled in VistA. If you cancel the order in VBECS you can 
+ re-cancel the VistA order again - which updates CPRS as dc'd. The 
+ provider still thinks an order is pending, but we can't do anything with 
+ the order in VBECS/VistA.
+  
+ Solution:
+ ---------
+ Routine ORCSAVE was modified to appropriately discontinue all components 
+ of a multi-part blood bank order. (Jazz 529132)
+  
+  
+ Test Sites:
+ ----------
+ Erie VA Medical Center
+ Salem VA Medical Center
+ VA Nebraska-Western Iowa HCS (Omaha)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ----------------------------------------------------
+ Updated documentation describing the new functionality is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may  also 
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory  at the following OI
+ Field Offices:
+   
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www.domain.ext/vdl/
+  
+ File Name                   Contents                             FTP Mode
+ -----------------           ----------                           ---------
+ cprsguitm.pdf               CPRS Technical Manual: GUI Version   Binary
+ cprsguium.pdf               CPRS User Guide: GUI Version         Binary
+ cprslmtm.pdf                CPRS Technical Manual                Binary
+ cprssetup.pdf               CPRS Setup Guide                     Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu. From this menu, you may also elect to use the
+     following options. When prompted for the INSTALL NAME enter
+     OR*3.0*397:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option. When
+     prompted for the INSTALL NAME enter OR*3.0*397.
+  
+     The following messages display:
+   
+         Incoming Files:
+  
+  
+            101.41    ORDER DIALOG  (including data)
+         Note:  You already have the 'ORDER DIALOG' File.
+         I will REPLACE your data with mine.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', press Enter to accept the default.     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', press Enter to accept the default.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', press Enter to accept the default. 
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ A post install routine, ORY397A, is included to rebuild the 'D' 
+ cross-reference for the ORDER file (#100). Since this process can be 
+ intensive in regards to the usage of journal files, it has been written 
+ to task itself off and only process a certain number of records before 
+ pausing for five minutes. This means the process will most likely take
+ several days to complete. Upon completion, the job will send a message to
+ the CPRS development team to let them know.
+  
+ The routine is also set up to honor requests to stop from TaskMan.
+  
+ If you encounter any errors in ORY397A or you find it necessary to stop 
+ the task due to system issues or journal file problems, please log a 
+ defect ticket so we can assist in resolving the issue and completing the 
+ rebuild of the 'D' cross-reference.
+  
+ ***IMPORTANT NOTE***
+ Please make a note of the task number when the job is started. You will 
+ need this if a situation occurs where you need to stop the job.
+  
+  
+ Back-Out Plan
+ =============
+ In the event of a major issue with the patch, the Facility Chief 
+ Information Officer (FCIO) may make the decision to back-out the patch.
+ However, this decision should include both Health Product Support and the
+ CPRS development team.
+  
+ Prior to installing this patch, the site/region should have saved a backup
+ of the routines in a mail message using the Backup a Transport Global [XPD
+ BACKUP] menu option (this is done at time of install).
+  
+ Back-out Procedures
+ -------------------
+ 1. Back-Out Routines: The message containing the backed up routines can be
+ loaded with the "Xtract PackMan" function at the Message Action prompt.
+ The Packman function "INSTALL/CHECK MESSAGE" is then used to install the
+ backed up routines onto the VistA System.
+  
+ 2. Back-Out Other Components: The CPRS development team has created a 
+ patch to back-out other (non-routine) components. Please request this 
+ patch from the CPRS development team and install it.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCACT01
+    Before: B77384512   After: B89927371  **94,116,134,141,163,187,190,
+                                           213,243,306,374,350,397**
+Routine Name: ORCMEDT4
+    Before: B93356095   After:B106382562  **8,46,95,245,313,389,397**
+Routine Name: ORCMEDT9
+    Before: B52002206   After: B56544037  **389,423,397**
+Routine Name: ORCSAVE
+    Before:B127544119   After:B127708326  **7,56,70,73,92,94,116,141,163,
+                                           187,190,195,243,303,293,280,
+                                           306,286,269,423,421,382,397**
+Routine Name: ORMPS1
+    Before: B71534901   After: B74117658  **86,92,94,116,134,152,158,149,
+                                           190,195,215,265,275,243,280,
+                                           350,382,397**
+Routine Name: ORSPUTIL
+    Before:  B5339128   After: B24172750  **423,397**
+Routine Name: ORUPREF1
+    Before: B12497628   After: B13019106  **132,397**
+Routine Name: ORUTL3
+    Before:  B1549938   After:  B3158346  **111,397**
+Routine Name: ORUTL5
+    Before:  B1343402   After:  B2631005  **461,397**
+Routine Name: ORWDPS3
+    Before: B24262284   After: B22042687  **85,94,116,132,187,195,215,
+                                           280,350,397**
+Routine Name: ORWDPS32
+    Before: B77153006   After: B78799489  **10,85,94,190,195,237,243,350,397**
+Routine Name: ORWDX
+    Before: B85570425   After: B92501053  **10,85,125,131,132,141,164,
+                                           178,187,190,195,215,246,243,
+                                           283,296,280,306,350,424,421,
+                                           461,490,397**
+Routine Name: ORWDXA
+    Before:B119097370   After:B119665285  **10,85,116,132,148,141,149,
+                                           187,213,195,215,243,280,306,
+                                           390,421,436,434,397**
+Routine Name: ORWDXM1
+    Before:B114227639   After:B121528037  **10,85,131,132,141,178,185,
+                                           187,215,243,280,331,388,350,
+                                           423,434,494,397**
+Routine Name: ORWDXM3
+    Before:B120942767   After:B121166242  **10,85,131,132,141,185,187,
+                                           190,195,215,243,303,296,280,
+                                           350,434,441,397**
+Routine Name: ORWDXR
+    Before: B60135290   After: B60290017  **10,85,125,131,134,141,149,
+                                           187,190,213,243,331,306,349,
+                                           374,409,397**
+Routine Name: ORY397
+    Before:       n/a   After:    B90876  **397**
+Routine Name: ORY397A
+    Before:       n/a   After:  B9488198  **397**
+ 
+Routine list of preceding patches: 111, 382, 409, 441, 490, 494
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 03, 2014
+Completed By:                               Date Completed: OCT 24, 2019
+Released By :                               Date Released : OCT 28, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

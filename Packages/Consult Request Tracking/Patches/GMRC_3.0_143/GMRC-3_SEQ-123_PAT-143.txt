@@ -1,0 +1,161 @@
+
+=============================================================================
+Run Date: SEP 23, 2019                     Designation: GMRC*3*143
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3       SEQ #123                      Status: Released
+                  Compliance Date: OCT 24, 2019
+=============================================================================
+
+
+Subject: STANDARDIZED EPISODES OF CARE (SEOC) UI AND API UPDATES (V1.9)
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+ **************************************************************************
+ This is an informational patch explaining development of the Standardized 
+ Episodes of Care (SEOC) application.
+  
+ NOTE: This patch is loaded to an internal VA hosting environment and will 
+ be available for use within the VA network.
+  
+ There is nothing that local sites can or need to do. 
+ **************************************************************************
+  
+ This software is a reference database for managing care bundles for use by
+ Veterans Information Systems and Technology Architecture (VistA) and other
+ VA systems. Services are grouped together within the SEOC system into 
+ bundles so that clinicians can add these bundles to patients consult 
+ records in a standardized fashion, reducing the amount of time spent 
+ manually entering consult instructions, and providing uniformity among 
+ the patient records and across facilities for how patient care is 
+ prescribed for similar complaints.
+  
+ These bundles group together one or more services that are preselected for
+ different specialties to be added to the consult records. In addition, the
+ clinician is provided with information regarding prescribing rules and
+ preauthorization requirements, so they can make the most informed 
+ decisions regarding patient care.
+  
+ Additionally, SEOC data will be accessible outside of the 
+ VistA/Computerized Patient Record System (CPRS) so that users of 
+ downstream applications will be accessing the same data, and SEOC 
+ descriptions, reducing the chances of discrepancies.
+  
+ Additional Information:
+ -------------------- 
+ The software is installed in the VA Austin Information Technology Center
+ (AITC) environment, and is accessible via the VA intranet. An API is made
+ available for downstream applications to access SEOC data in a JavaScript 
+ Object Notation (JSON) format.
+  
+ **************************************************************************
+ Version 1.9 provides updates to the user interface layer for the SEOC
+ database consistent with business requirements. An updated API layer is 
+ also included to support requirements of the UI.
+  
+ The Create Read Update Delete (CRUD) ser Interface (UI) for authorized 
+ SEOC Administrators will be enhanced based on business priority. Updates 
+ included in this build are:
+  
+ - the ability for both PRCT and REV to be included in the name of the 
+   SEOC as appropriate 
+  
+ - the ability to view the SEOC PreCert VA Webpage which displays the 
+   table listing of SEOCs and their billing codes updated with live 
+   data
+  
+ - the abiltiy to sort the SEOCs in alphabetical order
+  
+ - the length of the total visits per payable service line has been
+   increased from 3 to 4 digits
+  
+ - the ability to associate a frequency type to each frequency number is 
+   now enforced
+  
+ - the length of the frequency number has been increased to 3 digits
+  
+ - functionality has been modified to ensure extra spaces are no longer 
+   considered when checking for duplicate SEOC names
+  
+ - a list of acceptable characters has been implemented to ensure   
+   consistency throughout the API and UI
+  
+ - the method for monitoring activity within the application has been 
+   modified so users are not incorrectly logged out of the application for 
+   inactivity
+  
+ - a confirmation pop-up box has been added after selecting Activate to 
+   ensure the correct acitivation date was selected
+  
+ - the visits field at the payable service level has been modified to 
+   accept a null value
+  
+ - updates to core libraries and settings have been made to maintain 
+   consistency with VA standards
+  
+ - outstanding 508 and other defects have been remediated
+  
+  
+ **************************************************************************
+  
+ INSTALLATION INSTRUCTIONS:
+  
+ New Service Requests (NSRs):
+ --------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------
+ N/A
+  
+ Test Sites:
+ --------------------
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ SEOC Software is installed on servers in the Infrastructure Operations
+ (IO) environment, and no remote installation is required.  The 
+ Technical Manual will be placed on the following anonymous directories:
+  
+ Hines:                  domain.ext  
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation 
+ Library at:
+ http://www.domain.ext/vdl/
+  
+ Title                          File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ SEOC API Manual                seoc_1_0_api.pdf               Binary
+ SEOC API Manual                seoc_1_0_api.docx              Binary
+ SEOC User Guide                seoc_1_0_ug.pdf                Binary
+ SEOC User Guide                seoc_1_0_ug.docx               Binary
+  
+ Patch Installation
+ --------------------
+ Installation of this software will be performed by Infrastructure 
+ Operations (IO) System Administrators, no action is to be taken by 
+ local sites.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 26, 2019
+Completed By:                               Date Completed: SEP 23, 2019
+Released By :                               Date Released : SEP 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

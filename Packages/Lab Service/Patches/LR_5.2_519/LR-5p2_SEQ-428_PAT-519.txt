@@ -1,0 +1,298 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/16/19 at 08:16
+=============================================================================
+Run Date: OCT 15, 2019                     Designation: LR*5.2*519
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #428                    Status: Released
+                  Compliance Date: NOV 15, 2019
+=============================================================================
+
+Associated patches: (v)LR*5.2*316  <<= must be installed BEFORE `LR*5.2*519'
+                    (v)LR*5.2*411  <<= must be installed BEFORE `LR*5.2*519'
+                    (v)LR*5.2*438  <<= must be installed BEFORE `LR*5.2*519'
+                    (v)LR*5.2*453  <<= must be installed BEFORE `LR*5.2*519'
+                    (v)LR*5.2*459  <<= must be installed BEFORE `LR*5.2*519'
+
+Subject: LAB PANEL DISPLAY, DATA NAME CORRUPTION, GROUP VERIFY PRINTING ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses three (3) issues:
+  
+ 1. When a lab panel (cosmic) test is set up so the atomic tests in the
+    panel split to separate accession areas (e.g.: one Chemistry and one
+    Toxicology), results of the ordered panel test do not display all of
+    the results of the atomic tests in the panel when viewed in CPRS from
+    the Orders tab or from the Cover Sheet.  
+  
+ 2. Corruption can occur in the data dictionary - ^DD(63.04 - if one or
+    more users are adding or editing data names for Laboratory tests.
+  
+ 3. A VistA software error might be generated during execution of option 
+    "Group verify (EA, EL, EW)" if results are being printed.
+  
+  
+ Blood Bank Review:
+ ==================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*519 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*519 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*519 have no adverse effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated ticket(s):
+ =====================
+  
+ 1. INC2298578 - Lab Panel Displays Incorrectly in CPRS
+ 2. INC4830471 - VistA Data Collision
+ 3. INC3357612 - Group Verify Printing Issue
+  
+  
+ Participating Test Sites:
+ =========================
+ San Francisco HCS
+ Madison VAMC 
+             
+  
+ Defect Tracking System Ticket(s) & Overview:
+ ============================================
+  
+ 1. INC2298578 - Lab Panel Displays Incorrectly in CPRS
+  
+    Problem:
+    --------
+  
+    When there are two (2) accessions created during the accessioning 
+    process, the date.time value used to store data about the tests in the
+    LAB DATA file (#63) can be slightly different (e.g.: 6819595.864069 and
+    6819595.86407). Only one (1) date.time value is stored in the ORDER
+    file (#100).  Invariably, a $ORDER based on those parameters will
+    exceed the end date (or be beyond the start date) after the first pass
+    and then it will QUIT.  Consequently, only one (1) set of results will
+    be returned.
+  
+    Resolution:
+    -----------
+  
+    The routines ^LR7OR1 and ^LR7OR2 are modified to search for results in 
+    the LAB DATA FILE (#63) for date.time entries that contain results for 
+    the proper order number.
+  
+    Routines: LR7OR1, LR7OR2
+  
+ 2. INC4830471 - VistA Data Collision
+  
+    Problem:
+    -------
+  
+    An issue might occur if two users are defining or modifying a
+    Laboratory test data name at the same time using the VistA options "Add
+    a new data name", "Modify an existing data name" or FileMan option
+    "MODIFY FILE ATTRIBUTES". The issue is that two internal entry numbers
+    (IENs) might be defined for identical data names. It is also possible
+    that an IEN might have two name entries. However, this issue does not
+    cause any harm because an IEN might have both a name and a synonym on
+    file.
+  
+    Resolution:
+    ----------
+  
+    (1) Modify options "Add a new data name" and "Modify an existing data 
+        name" so that an internal entry number (IEN) is locked which 
+        prevents more than one user from defining information for the same
+        IEN at the same time.
+  
+    (2) Add a documentation update to the Laboratory Planning and 
+        Implementation Guide (PIG) that FileMan should not be used to add 
+        or edit data names since FileMan does not contain locking logic.
+  
+    (3) Add logic to the tasked option "LRTASK NIGHTY" (sic) to check for 
+        the "one name / two IENs" issue in case users continue to use
+        FileMan for adding and editing.  Any instances of the issue found
+        will be detailed in a MailMan message to users already specified
+        for receipt of messages generated by the option "LRTASK NIGHTY".
+  
+    (4) Post-install routine LR519 will search for the "one name / two 
+        IENs" issue. A MailMan message will be sent to the LMI group with
+        details of instances found. NOTE: This message is not delivered 
+        NEW. The LIM must actively look for the message in the IN basket.  
+        It is important to find and read this message.
+  
+    Routines: LRWU5, LRWU6, LRWU9, LRWU9A, LR519
+  
+    Documentation Updates
+    ---------------------
+  
+    The Laboratory Planning and Implementation Guide (PIG) has been 
+    updated in the section titled: "Add a new data name".
+  
+    The Laboratory Technical Manual has been updated in the section titled:
+    "New Data Names" and in the section titled "Routine Descriptions".
+  
+    Both manuals are located in the VA Document Library (VDL) at:
+    https://www.domain.ext/vdl/application.asp?appid=71
+  
+ 3. INC3357612 - Group Verify Printing Issue
+  
+    Problem:
+    -------
+  
+    A "READ" error might occur during execution of the VistA option "Group 
+    verify (EA, EL, EW)" if an accession contains more than ten lines of
+    comments to be processed.  The error is caused by a variable not being
+    set which indicates the option has been queued to print results rather
+    than displaying results to the user's screen.
+  
+    Resolution:
+    ----------
+  
+    Add logic to the option "Group verify (EA,EL, EW)" which will determine
+    whether results have been queued to a printer.
+  
+    Routines: LRGV, LRGV2
+  
+ Components:
+ ===========
+  
+ N/A
+  
+ Software and Documentation Retrieval Instructions:
+ -------------------------------------------------- 
+  
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:  domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                                File Name          FTP Mode
+ -------------------------------------------------------------------------
+ Laboratory Planning Implementation   lab5_2pi.doc       Binary
+ Guide (PIG) Version 5.2
+ Laboratory Technical Manual          lab5_2tm.doc       Binary
+ Version 5.2
+  
+ Installation Instructions:
+ ==========================
+  
+ The install time for this patch is less than 2 minutes. This patch can be
+ installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system to avoid
+ problems loading and/or installing this patch.
+  
+ 1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This option
+    will load the KIDS patch onto your system.
+  
+ 2. The patch has now been loaded into a Transport global on your system.
+    You now need to use KIDS to install the transport global.
+  
+ 3. On the 'Kernel Installation & Distribution System' Menu (KIDS), select
+    the 'Installation' menu.
+  
+ 4. Use the 'Verify Checksum in Transport Global' option and verify that
+    all routines have the correct checksums.
+     
+ 5. On the KIDS menu, under the 'Installation' menu, use the following
+    options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+    To preserve a copy of the routines exported in this patch prior to
+    installation, you should use the 'Backup a Transport Global' option at
+    this time. You may also compare the routines in your production account
+    to the routines in the patch by using the 'Compare a Transport Global
+    to Current System' option.
+  
+ 6. Use the 'Install Package(s)' option under the 'Installation' Menu and
+    select the package 'LR*5.2*519'.
+  
+    If prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//,
+    choose 'NO'.
+  
+    If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? YES//', choose 'NO'.
+  
+ Back-out/Rollback Strategy:
+ --------------------------
+  
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+   
+ It is imperative that you have performed a backup of the routines 
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR519
+    Before:       n/a   After: B15159031  **519**
+Routine Name: LR7OR1
+    Before: B34879723   After: B54568389  **121,187,219,230,256,310,340,
+                                           348,350,427,459,519**
+Routine Name: LR7OR2
+    Before: B40671777   After: B41093086  **121,187,219,285,286,372,350,
+                                           453,519**
+Routine Name: LRGV
+    Before: B42006074   After: B43021696  **269,411,519**
+Routine Name: LRGV2
+    Before: B10100135   After: B10216842  **121,153,269,350,438,519**
+Routine Name: LRWU5
+    Before: B21988281   After: B36481062  **140,171,177,206,316,519**
+Routine Name: LRWU6
+    Before: B22920488   After: B26245556  **316,402,350,519**
+Routine Name: LRWU9
+    Before:B186697780   After:B188843345  **350,427,519**
+Routine Name: LRWU9A
+    Before:       n/a   After:  B8489328  **519**
+ 
+Routine list of preceding patches: 411, 438, 453, 459
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2019
+Completed By:                               Date Completed: OCT 10, 2019
+Released By :                               Date Released : OCT 15, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

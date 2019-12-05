@@ -1,0 +1,385 @@
+$TXT Created by                    VISTA-LOAD-AITC-6.AAC.DOMAIN.EXT  (KIDS) on Monday, 07/29/19 at 09:44
+=============================================================================
+Run Date: AUG 08, 2019                     Designation: SD*5.3*707
+Package : SD - SCHEDULING                     Priority: EMERGENCY
+Version : 5.3       SEQ #586                    Status: Released
+                  Compliance Date: AUG 14, 2019
+=============================================================================
+
+
+Subject: HSRM APPOINTMENT ACTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Associated patches:  (v)GMRC*3.0*99  <<= must be installed
+                      (v)GMRC*3.0*106 <<= must be installed
+  
+ *********************************************************************
+ ***                                NOTE:                          ***
+ * The installer will be required to enter the unique HealthConnect  *
+ * Server IP address and port for a specific VA Medical Center when  *
+ * this patch is installed.  This IP/Port information can be found   *
+ * by accessing the CCRA_HealthConnect_Data.pdf document available   *
+ * on the Secure File Transfer Protocol (SFTP) from the              *
+ * ANONYMOUS.SOFTWARE  directory at: download.vista.domain.ext       *
+ *                                                                   *
+ * If there are any questions about the installation or about the IP *
+ * and port information, please contact Rene Farabaugh at:           *
+ * rene.farabaugh@domain.ext.                                            *
+ *********************************************************************
+  
+ The Community Care Referrals and Authorizations (CCR&A) application is an
+ enterprise-wide system used by Community Care (CC) staff to automatically
+ generate referrals and authorizations for all Veterans receiving care in
+ the community. Clinical and VA CC staff located at VA Medical Centers,
+ Outpatient Clinics, Community Based Outpatient Clinics, and Veterans 
+ Integrated Service Network offices use this application.  The CCR&A
+ solution is an integral component of the VA Community Care Information
+ Technology (IT) architecture that allows Veterans to receive care from
+ Community Providers.
+  
+ This patch implements functionality to make, cancel and mark as NO Show 
+ appointments for Community Care Referral appointments in non-count clinics
+ at the Veteran's home Vista site. The appointment actions are completed in
+ the HealthShare Referral Manager (HSRM) software by non-VA and VA care
+ coordination staff. Appointment information for appointments made in the
+ community is recorded in HSRM, and this data is then automatically pushed
+ into Vista using HL7 Scheduling Information Unsolicited (SIU) messages.
+  
+ NOTE: THIS PATCH IS AN INTERACTIVE PATCH. THE PATCH INSTALLER IS 
+ REQUIRED TO ENTER/RESPOND TO PROMPTS DURING THE INSTALLATION.
+  
+ NOTE: This patch creates the  GMRC HSRM SIU HL7 MESSAGES VistA Mail 
+ Group. This mail group will send a VistA email message to the members of 
+ this group if there is a problem with filing the HSRM consult 
+ appointment due to not being able to match the consult title to a VistA 
+ clinic. This group should be populated after the patch install is
+ completed. Members of this mail group should be VistA users that can 
+ resolve the issue with the clinic name and consult title.
+  
+ Patch Components:
+ -----------------
+  
+ ROUTINES:
+ ---------
+ SDCCRSEN
+ SDCCSCU
+ SDCCGAP
+ SDCCCOR
+ SDPRE707
+  
+ Bulletins:
+ ---------
+ N/A 
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)  New/Modified/Deleted
+ ------------------      -------------------  --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                 New/Modified/Deleted
+ ---------------                 --------------------
+ GMRC HSRM SIU HL7 MESSAGES      New
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                   New/Modified/Deleted
+ -------------                   -------------------- 
+ CCRA HSRM SIU-S12 CLIENT        New
+ CCRA HSRM SIU-S12 SERVER        New
+ CCRA HSRM SIU-S15 CLIENT        New
+ CCRA HSRM SIU-S15 SERVER        New
+ CCRA HSRM SIU-S26 CLIENT        New
+ CCRA HSRM SIU-S26 SERVER        New
+  
+ HL7 Logical Links               New/Modified/Deleted
+ -----------------               --------------------
+ CCRA NACK                       New                  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Problem:
+ --------
+ N/A 
+  
+ Resolution:
+ -----------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Lebanon, PA
+ Philadelphia, PA
+ Ft Harrison, MT 
+ Togus, ME
+ White River Junction, VT
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+   
+ Sites may retrieve the documentation directly using Secure File Transfer
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+   
+    Hines:                        domain.ext   
+    Salt Lake City:               domain.ext
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at: 
+   
+ http://www.domain.ext/vdl/
+   
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Patient Information Management System (PIMS) Technical Manual
+                               PIMSTM.PDF                      Binary
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software is distributed by PackMan.
+  
+ Backout and rollback Procedure:
+ -------------------------------
+ In order to back out this patch, sites must use the
+ KIDS option to Backup a Transport Global after loading
+ the patch. If this option is not used, then backing out
+ the patch is not possible.
+  
+ Patch Installation:
+ ------------------
+ N/A 
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A                  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ NOTE: THIS PATCH IS AN INTERACTIVE INSTALL. THE INSTALLER IS REQUIRED TO 
+ ENTER INFORMATION DURING THE INSTALL. THIS PATCH CAN NOT BE QUEUED FOR A 
+ LATER UNATTENDED INSTALL.
+  
+ This patch contains a pre install process that checks to see if the 
+ CCRA-NAK logical link exists in the HL LOGICAL LINK File (#870), if it 
+ exists, it will not be edited or reinstalled as part of this patch. If
+ the link doesn't exist, the user will be asked to provide the address and 
+ port for the HealthShare server to connect to. 
+  
+ Setup/Configuration Instructions:
+ ---------------------------------
+  
+ These steps can be completed with users on the system. This should take 
+ less than 15 minutes to configure. NOTE: Patches GMRC*3.0*99 and 
+ GMRC*3.0*106 must be installed in order to install this patch.
+  
+ ***NOTE: Installers will need the fully qualified domain name and port for
+ the new CCRA NACK HL7 logical link.
+  
+ 1.  Choose the PackMan message containing this patch.
+    
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+    
+  3.  From the KIDS Menu, select the Installation Menu.  From this menu, 
+      you may elect to use the following options. When prompted for the
+      INSTALL NAME, enter SD*5.3*707.
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as Data Dictionaries (DDs) or
+          templates. IN ORDER TO BACKOUT THIS PATCH, THIS OPTION MUST BE 
+          USED.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      when prompted for the INSTALL NAME, enter SD*5.3*707.
+  
+  5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//' respond NO.
+    
+  6.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+    
+  7.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//" respond NO. 
+    
+  8.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+    
+  
+ Sample Install:
+ ---------------
+ ***Note in this sample install, the CCRA-NAK link has not been installed
+ on this system so the user is prompted for the HealthShare server
+ information. 
+  
+ If the CCRA-NAK link has been installed, the user will not be prompted to
+ enter the HealthShare server information.
+  
+ Sample if the CCRA-NAK Logical Link doesn't exist:
+  
+ Select Installation <TEST ACCOUNT> Option: INstall Package(s)
+ Select INSTALL NAME:    SD*5.3*707    4/23/19@12:47:48
+      => SD*5.3*707
+  
+ This Distribution was loaded on Apr 23, 2019@12:47:48 with header of 
+    SD*5.3*707 TEST v4
+    It consisted of the following Install(s):
+      SD*5.3*707
+ Checking Install for Package SD*5.3*707
+  
+ Install Questions for SD*5.3*707
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HOME  (CRT)
+                                    
+ SD*5.3*707                                   
+ --------------------------------------------------------------------------
+ Install Started for SD*5.3*707 : 
+                Apr 23, 2019@12:52:40
+  
+ Installing Routines:
+                Apr 23, 2019@12:52:40
+  
+ Running Pre-Install Routine: LINK^SDPRE707
+  
+ Checking VistA system for CCRA-NAK logical link setup...
+  
+ CCRA-NAK logical link being set up now.  We'll need some information from 
+ you.
+ Please have the HealthConnect server IP address and Port number ready.
+  
+ PLEASE ENTER THE HEALTHCONNECT SERVER IP ADDRESS: XXX.XXX.XXX.XXX
+ PLEASE ENTER THE HEALTHCONNECT SERVER PORT NUMBER: XXXX
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing HL7 APPLICATION PARAMETER
+  
+  Installing PROTOCOL
+                Apr 23, 2019@12:49:01
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  SD*5.3*707 Installed. 
+                Apr 23, 2019@12:49:01
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+ --------------------------------------------------------------------------
+           +------------------------------------------------------------+
+   100%    |             25             50             75               |
+ Complete  +------------------------------------------------------------+
+  
+  
+  Not a production UCI
+  
+  
+  
+ Install Completed
+    
+ Post-Installation Instructions:
+ -------------------------------
+ After this patch is installed, add members to the GMRC HSRM SIU HL7
+ MESSAGES VistA mail group. Members of this mail group should be VistA 
+ users that can resolve differences in matching a Community Care consult 
+ title to VistA Clinic.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;APR 4, 2019;Build 57
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDCCRCOR
+    Before:       n/a   After: B91692691  **707**
+Routine Name: SDCCRGAP
+    Before:       n/a   After: B27289606  **707**
+Routine Name: SDCCRSCU
+    Before:       n/a   After: B91336223  **707**
+Routine Name: SDCCRSEN
+    Before:       n/a   After:B147345634  **707**
+Routine Name: SDPRE707
+    Before:       n/a   After: B12266652  **707**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 10, 2018
+Completed By:                               Date Completed: AUG 07, 2019
+Released By :                               Date Released : AUG 08, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

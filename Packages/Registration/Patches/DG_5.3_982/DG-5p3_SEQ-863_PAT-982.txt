@@ -1,0 +1,530 @@
+$TXT Created by                  at DEVVOO.DOMAIN.EXT  (KIDS) on Tuesday, 05/21/19 at 14:10
+=============================================================================
+Run Date: OCT 29, 2019                     Designation: DG*5.3*982
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #863                    Status: Released
+                  Compliance Date: FEB 12, 2020
+=============================================================================
+
+Associated patches: (v)DG*5.3*824  <<= must be installed BEFORE `DG*5.3*982'
+                    (v)DG*5.3*893  <<= must be installed BEFORE `DG*5.3*982'
+                    (v)DG*5.3*978  <<= must be installed BEFORE `DG*5.3*982'
+
+Subject: PRIMARY CARE APPOINTMENTS - NEAR LIST PROCESSING
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Input Template
+
+Description:
+============
+
+ Patch DG*5.3*982 is being released to support the enhancements for the
+ Enterprise Health Benefits Determination (EHBD) program that focuses on
+ updates for the Enrollment System Modernization (ESM) Phase 2 project.
+  
+ Patch DG*5.3*982 is also being released in support of the Enrollment
+ System (ES) 5.7 release. Refer to Informational Patch EAS*1*180
+ (Enrollment Application System) for additional details regarding the ES
+ release.
+  
+ ==========================================================================
+ IMPORTANT NOTE:
+ ==========================================================================
+ Deployment of patch DG*5.3*982 will be conducted using a phased approach. 
+ Facilities not involved in the New Enrollee Appointment Request 
+ Scheduling Standardization Initiative (NEAR-SSI) pilot should not install 
+ the DG*5.3*982 patch until the second wave of deployment in January 2020. 
+ Once the patch is installed, automatic removal from the NEAR is limited 
+ to primary care encounters and appointments scheduled in a primary care 
+ stop code. Training will be offered prior to the January 2020 nationwide 
+ deployment. For those sites not participating in the pilot project,
+ additional DG namespace patches may be released in the intervening period
+ between phase 1 and phase 2 of the pilot project. Instructions will be
+ provided as to if those patches are approved to install out of sequence. 
+  
+ Installation by a facility not involved with the NEAR-SSI pilot prior to 
+ January 2020 poses a risk to the accuracy and quality of the NEAR list 
+ data. Once the patch is installed, specialty care appointments will now 
+ remain on the NEAR list, and users will not have received training and 
+ education to manually disposition select specialty care appointments. This
+ will result in inaccurate reporting and mismanagement of the NEAR list.
+ This risk can be mitigated by a site that inadvertently installs the patch
+ prior to January 2020 by following the instructions below:
+  
+ Patch DG*5.3*982 Primary Care Appointments, NEAR List Processing, 
+ modifies the Call List option and New Enrollee Appointment Request 
+ Tracking Report to indicate the New Enrollee Appointment Request (NEAR) 
+ request as "filled" when a primary care appointment is scheduled, or an 
+ encounter is completed in a clinic with a primary care stop code. Once 
+ the appointment is scheduled, or the encounter completed, the entry is 
+ automatically removed from the list and NEAR report. Scheduled 
+ appointments and completed encounters in stop codes other than the 
+ designated primary stop codes will no longer auto disposition as "filled" 
+ and be removed from the NEAR list. Staff will be required to manually 
+ disposition the NEAR in the VistA NEAR Management Menu using the 
+ Management Edit option change the status to "cancelled" in order to 
+ remove it from the list and NEAR reports.
+  
+ NEAR list entries manually dispositioned due to an appointment scheduled 
+ in a stop code other than primary care are dispositioned as "cancelled".
+ Staff will enter one of the following notations in the appointment request
+ comments free text field:
+  
+   - Specialty Care Appointment:    SC Appt Requested
+   - Mental Health Appointment:  MH Appt Requested
+   - Community Care Appointment:  CC Appt Requested
+  
+ * BEGIN SCREEN CAPTURE *
+  
+ Select PATIENT NAME:    NEWAPPT,PATIENT        5-5-50    00000232     
+ NO      NSC VETERAN      
+  Enrollment Priority: GROUP 5    Category: ENROLLED      End Date: 
+  
+ APPOINTMENT REQUEST ON 1010EZ:YES//  (no editing)
+ APPOINTMENT REQUEST DATE:JUN 27, 2019//  (no editing)
+ STATUS: IN PROCESS/VETERAN CONTACTED//  (last edited: OCT 23, 
+ 2019@14:47:33)
+ STATUS: IN PROCESS/VETERAN CONTACTED// ?
+      Enter status of appointment request.
+      Choose from: 
+        C        CANCELLED
+        E        EWL
+        F        FILLED
+        I        IN PROCESS/VETERAN CONTACTED
+ STATUS: IN PROCESS/VETERAN CONTACTED// C  CANCELLED
+ COMMENT:   //  (last edited: OCT 23, 2019@14:47:36)
+ COMMENT:   // SC Appt Requested
+  
+ * END SCREEN CAPTURE *
+  
+ National Release for the following 36 sites involved in NEAR-SSI pilot is 
+ October 29, 2019 with 4 days compliance:
+  
+ V01/405 - White River Junction, VT HCS
+ V01/518 - Bedford, MA HCS
+ V01/523 - Boston, MA HCS
+ V01/608 - Manchester, NH HCS
+ V01/631 - Central Western Massachusetts HCS
+ V01/650 - Providence, RI HCS
+ V01/689 - Connecticut HCS
+ V02/528A5 - Canandaigua, NY HCS
+ V02/528A8 - Albany, NY HCS
+ V02/632 - Northport, NY HCS
+ V04/503 - Altoona, PA HCS
+ V04/529 - Butler, PA HCS
+ V04/562 - Erie, PA HCS
+ V04/595 - Lebanon, PA HCS
+ V04/693 - Wilkes-Barre, PA HCS
+ V06/565 - Fayetteville, NC HCS
+ V06/637 - Asheville, NC HCS
+ V06/652 - Richmond, VA HCS
+ V06/659 - Salisbury, NC HCS
+ V07/534 - Charleston, SC HCS
+ V08/546 - Miami, FL HCS
+ V08/548 - West Palm Beach, FL HCS
+ V08/673 - Tampa, FL HCS
+ V08/675 - Orlando, FL HCS
+ V10/506 - Ann Arbor, MI HCS
+ V10/539 - Cincinnati, OH HCS
+ V10/553 - Detroit, MI HCS
+ V12/556 - North Chicago, IL HCS
+ V15/589 - Kansas City, MO HCS
+ V15/657A4 - Poplar Bluff, MO HCS
+ V16/564 - Fayetteville, AR HCS
+ V17/740 - Texas Valley Coastal Bend HCS
+ V19/436 - Montana HCS
+ V19/623 - Muskogee, OK HCS
+ V19/666 - Sheridan, WY HCS
+ V21/459 - Honolulu, HI HCS
+  
+ The remaining sites should install this patch starting January 13, 2020 
+ with a regular compliance of 30 days (02/12/2020). 
+  
+ This patch will modify the New Enrollee Appointment Request (NEAR) list 
+ so that Veterans will only be removed from the NEAR list if a Primary 
+ Care Appointment type is scheduled for the Veteran. All other scheduled 
+ appointment types will not impact the NEAR list. This will help ensure 
+ that a Primary Care Appointment is scheduled for the Veteran in a timely 
+ manner. Additionally, the NEAR List Tracking report will better reflect 
+ the current scheduling status for the Veterans on the report.
+ ==========================================================================
+  
+ Currently, in Veterans Health Information System and Technology 
+ Architecture (VistA) Registration, Eligibility & Enrollment (REE), the 
+ Call List option [DGEN NEACL MGT RPT1] displays newly enrolled Veterans 
+ who applied for VA Healthcare and indicated they want an appointment with 
+ a VA health care provider. VistA users can use the New Enrollee 
+ Appointment Request (NEAR) Call List (generated by the Call List option 
+ [DGEN NEACL MGT RPT1]) to view newly enrolled Veterans waiting to have 
+ appointments scheduled. This list is sometimes referred to as the local 
+ NEAR list, or local NEAR Call List. A patient remains on the local NEAR 
+ Call List until any appointment is scheduled for the patient.
+  
+ With patch DG*5.3*982, the Call List option [DGEN NEACL MGT RPT1] is
+ modified to include a Veteran on the local NEAR Call List until they have
+ been scheduled for a Primary Care Appointment. The Tracking Report option 
+ [DGEN NEACL MGT RPT2] is modified so that only Primary Care Appointments 
+ will populate the SCHEDULED APPT DATE column of the Tracking Report.
+  
+ An appointment or encounter is considered a Primary Care Appointment only
+ when the clinic is configured with primary and secondary position stop
+ codes as one of the combinations listed below. This portion of the clinic
+ configuration is in the HOSPITAL LOCATION file (#44) STOP CODE NUMBER
+ field (#8) and the CREDIT STOP CODE field (#2503).
+  
+ Primary    Primary Position             Secondary   Secondary Position
+ Position   STOP CODE NUMBER             Position    CREDIT STOP CODE
+ STOP CODE  Name (#40.7,.01)             CREDIT      Name (#40.7,.01)
+ NUMBER                                  STOP CODE
+ (#44,8)                                 (#44,2503)
+ ==========================================================================
+ 322        COMP WOMEN'S HLTH              117       NURSING (2ND ONLY)
+ 322        COMP WOMEN'S HLTH              160       CLINICAL PHARMACY
+ 322        COMP WOMEN'S HLTH              185       NURSE PRACTIONER
+ 322        COMP WOMEN'S HLTH              186       PHYSICIAN ASSISTANT
+ 322        COMP WOMEN'S HLTH              187       CLINICAL NURSE 
+                                                     SPECIALIST
+ 322        COMP WOMEN'S HLTH              188       FELLOW/RESIDENT
+ 322        COMP WOMEN'S HLTH              Null
+ 323        PRIMARY CARE/MEDICINE          117       NURSING (2ND ONLY)
+ 323        PRIMARY CARE/MEDICINE          160       CLINICAL PHARMACY 
+ 323        PRIMARY CARE/MEDICINE          185       NURSE PRACTIONER
+ 323        PRIMARY CARE/MEDICINE          186       PHYSICIAN ASSISTANT
+ 323        PRIMARY CARE/MEDICINE          187       CLINICAL NURSE 
+                                                     SPECIALIST
+ 323        PRIMARY CARE/MEDICINE          188       FELLOW/RESIDENT
+ 323        PRIMARY CARE/MEDICINE          Null      
+ 348        PRIMARY CARE SHARED APPT       117       NURSING (2ND ONLY)
+ 348        PRIMARY CARE SHARED APPT       160       CLINICAL PHARMACY 
+ 348        PRIMARY CARE SHARED APPT       185       NURSE PRACTIONER
+ 348        PRIMARY CARE SHARED APPT       186       PHYSICIAN ASSISTANT
+ 348        PRIMARY CARE SHARED APPT       187       CLINICAL NURSE 
+                                                     SPECIALIST
+ 348        PRIMARY CARE SHARED APPT       188       FELLOW/RESIDENT
+ 348        PRIMARY CARE SHARED APPT       Null      
+ 350        GERIPACT                       117       NURSING (2ND ONLY)
+ 350        GERIPACT                       160       CLINICAL PHARMACY
+ 350        GERIPACT                       185       NURSE PRACTIONER
+ 350        GERIPACT                       186       PHYSICIAN ASSISTANT
+ 350        GERIPACT                       187       CLINICAL NURSE 
+                                                     SPECIALIST
+ 350        GERIPACT                       188       FELLOW/RESIDENT
+ 350        GERIPACT                       Null      
+ 160        CLINICAL PHARMACY              322       COMP WOMEN'S HLTH 
+ 160        CLINICAL PHARMACY              323       PRIMARY CARE/MEDICINE 
+ 210        SPINAL CORD INJURY (SCI)       322       COMP WOMEN'S HLTH 
+ 210        SPINAL CORD INJURY (SCI)       323       PRIMARY CARE/MEDICINE 
+ 310        INFECTIOUS DISEASE             322       COMP WOMEN'S HLTH 
+ 310        INFECTIOUS DISEASE             323       PRIMARY CARE/MEDICINE 
+ 313        RENAL/NEPHROL(EXCEPT DIALYSIS) 322       COMP WOMEN'S HLTH 
+ 313        RENAL/NEPHROL(EXCEPT DIALYSIS) 323       PRIMARY CARE/MEDICINE
+  
+ The Management Edit [DGEN NEACL REQUEST MGT EDIT] option displays the
+ informational message "The Veteran has been removed from the NEAR 
+ Call List." when the user sets the Appointment Request Status to FILLED:
+  
+ * BEGIN SCREEN CAPTURE *
+  
+ Select PATIENT NAME:  PRIMARYAPPT,SECOND MD   2-29-92  666329876    NO
+      SC VETERAN      
+  Enrollment Priority: GROUP 5    Category: ENROLLED      End Date: 
+  
+ APPOINTMENT REQUEST ON 1010EZ:YES//  (no editing)
+ APPOINTMENT REQUEST DATE:APR 10, 2019//  (no editing)
+ STATUS: F  FILLED
+  
+ The Veteran has been removed from the NEAR Call List.
+  
+ COMMENT:
+  
+ * END SCREEN CAPTURE *
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          -------------------       --------------------
+ N/A 
+  
+  
+ Forms Associated:
+  
+ Form Name                   File Number               New/Modified/Deleted
+ ---------                   -----------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name             New/Modified/Deleted
+ ---------------             --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                 Type                      New/Modified/Deleted
+ -----------                 ----                      --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name               New/Modified/Deleted
+ -------------               --------------------
+ N/A
+  
+ Security Keys Associated: 
+  
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ DGEN NEACL            INPUT   PATIENT (#2)            Modified 
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name       New/Modified/Deleted
+ ---------------------       --------------------
+ N/A 
+  
+  
+ Parameter Definitions Associated:
+  
+ Parameter Name              New/Modified/Deleted
+ --------------              --------------------
+ N/A 
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ Blood Bank Team Coordination:
+ -----------------------------
+ N/A 
+  
+  
+ New Service Requests (NSRs): 
+ N/A
+  
+  
+ Patient Safety Issues (PSIs): 
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview: 
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Durham VA Medical Center, Durham, NC
+ West Palm VA Medical Center, West Palm Beach, FL 
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ This software is being released as a patch (PackMan) message.
+  
+ Documentation describing the new functionality is included in this 
+ release.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve the files directly from
+ a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Hines:          domain.ext  
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: https://www.domain.ext/vdl/
+                              
+ Documentation Title               File Name                FTP Mode
+ ---------------------------------------------------------------------
+ DG*5.3*982 Release Notes          DG_5_3_982_RN.PDF        (binary)
+ DG*5.3*982 Deployment, 
+  Installation, Back-out, and 
+  Rollback Guide                   DG_5_3_982_DIBRG.PDF     (binary)
+ User Manual - Appointment Menu    APPT.PDF                 (binary)
+ PIMS Technical Manual             PIMSTM.PDF               (binary) 
+  
+ Host File Name                           FTP Mode
+ ---------------------------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+ -------------------
+  
+  
+ Pre/Post Installation Overview:
+ ------------------------------- 
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ 1. Ensure that the Call List (background job) [DGEN NEACL MGT RPT1BK] is 
+    not scheduled to run during installation.
+  
+    If the decision is made to unschedule this option, make note of the
+    frequency and time, as it will need to be rescheduled after the patch
+    install.
+  
+ 2. The following options should be disabled during installation:
+     
+    Management Edit                   [DGEN NEACL REQUEST MGT EDIT]
+    Call List (background job)        [DGEN NEACL MGT RPT1BK]
+    Call List                         [DGEN NEACL MGT RPT1]
+    Tracking Report                   [DGEN NEACL MGT RPT2] 
+  
+ 3. If installed during the normal workday, it is recommended that the 
+    following selection(s) in the OPTION (#19) file, and all of their 
+    descendants be disabled to prevent possible conflicts while running the
+    installation. Other VISTA users will not be affected.
+   
+    Appointment Management             [SDAM APPT MGT]
+  
+ 4. This patch may be installed with users on the system although it is
+    recommended that it be installed during non-peak hours to minimize
+    potential disruption to users.  This patch should take less than 5
+    minutes to install.
+  
+  
+ Installation Instructions:
+ -------------------------- 
+ 1. If the release is provided using PackMan, choose the PackMan 
+    message containing this build. Then select the INSTALL/CHECK MESSAGE 
+    PackMan option to load the build.
+  
+    If this release is provided using a Host file, use the Load a 
+    Distribution option contained on the Kernel Installation and
+    Distribution System Menu to load the Host file.
+  
+ 2. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, 
+  
+    A. Select the Verify Checksums in Transport Global option to 
+       confirm the integrity of the routines that are in the transport
+       global. When prompted for the INSTALL NAME enter the patch or build
+       name (ex. DG*5.3*982).
+  
+       NOTE: Using <spacebar><enter> will not bring up a Multi-Package 
+       build even if it was loaded immediately before this step. It will
+       only bring up the last patch in the build.
+  
+    B. Select the Backup a Transport Global option to create a backup 
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DDs or templates.
+  
+    C. You may also elect to use the following options: 
+       i. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+      ii. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed.  It compares all of the components of this
+          patch, such as routines, DDs, templates, etc.
+  
+    D. Select the Install Package(s) option and choose the patch to 
+       install. 
+   
+       i. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+          Install? NO//', answer NO.
+  
+      ii. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+          NO//', answer NO.
+   
+     iii. When prompted 'Want to DISABLE Scheduled Options, Menu 
+          Options, and Protocols? NO//', answer YES. 
+  
+          a. When prompted 'Enter options you wish to mark as 'Out Of
+             Order':', select the following option(s):
+   
+             Option Name                    Menu Text
+             -----------                    ---------
+             Management Edit                [DGEN NEACL REQUEST MGT EDIT]
+             Tracking Report                [DGEN NEACL MGT RPT2]
+             Call List                      [DGEN NEACL MGT RPT1]
+             Call List (background job)     [DGEN NEACL MGT RPT1BK]
+             Appointment Management         [SDAM APPT MGT]
+             Appointment Status Update      [SDAM APPT UPDATE]
+             Appointment Check-in/Check-out [SDAM APPT CHECK IN/OUT]
+             Cancel Appointment             [SD CANCEL APPOINTMENT]
+  
+             Press the Enter key when you are done selecting options.
+  
+          b. When prompted 'Enter protocols you wish to mark as 'Out Of
+             Order':', enter the following protocols:
+   
+             Appointment Event Driver       [SDAM APPOINTMENT EVENTS]
+  
+          c. When prompted 'Delay Install (Minutes):  (0 - 60): 0//',
+             answer 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ Reschedule the Call List (background job) [DGEN NEACL MGT RPT1BK] if it
+ was unscheduled.
+  
+  
+ Back-Out/Roll Back Plan:
+ ------------------------
+ In the event a site determines that this patch should be backed out, the 
+ site should submit a YOUR IT Services ticket with the Enterprise Service 
+ Desk (ESD) for assistance with the procedure.
+  
+ Any issues would need to be evaluated to determine if: a back-out of the 
+ software is appropriate; a new patch is needed; or if data requires 
+ correction or restoration.
+   
+ During installation, if the option to back up routines was run as
+ directed, "Backup a Transport Global", then routines will have the 
+ ability to be restored from the "backup" MailMan message that was 
+ generated. However, the KIDS installation process does not perform a
+ backup of other VistA software components, such as DD, cross-reference,
+ and template changes. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13,1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGENA2
+    Before: B47383662   After: B68415941  **121,122,147,232,327,469,491,
+                                           779,788,824,982**
+Routine Name: DGENACL2
+    Before: B20337882   After: B31147989  **788,893,982**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 10, 2019
+Completed By:                               Date Completed: OCT 29, 2019
+Released By :                               Date Released : OCT 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

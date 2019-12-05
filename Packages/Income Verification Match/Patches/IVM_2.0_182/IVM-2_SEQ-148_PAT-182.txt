@@ -1,0 +1,219 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 07/18/19 at 13:04
+=============================================================================
+Run Date: SEP 05, 2019                     Designation: IVM*2*182
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #148                      Status: Released
+                  Compliance Date: OCT 06, 2019
+=============================================================================
+
+
+Subject: ADD VET360 TO ADDRESS CHANGE SOURCE
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ Patch IVM*2*182 will fix the following issue:
+  
+ -Code VET360 not found in IVM ADDRESS CHANGE LOG (#301.7) file in ADDRESS 
+ CHANGE SOURCE (#3) field.
+  
+   
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)               Field Name (Number)  New/Modified/Deleted
+ ------------------               -------------------  --------------------
+ IVM ADDRESS CHANGE LOG (#301.7)  ADDRESS CHANGE SOURCE (#3) Modified 
+  
+  
+ Forms Associated:
+  
+ Form Name       File #   New/Modified/Deleted
+ ---------       ------   --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name    New/Modified/Deleted
+ ---------------    --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name       Type    New/Modified/Deleted
+ -----------       ----    -------------------- 
+ N/A
+  
+  
+ Parameter Definition Associated:
+  
+ Parameter Definition Name       New/Modified/Deleted
+ ------------------------        -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Remote Procedure Call:
+  
+ RPC NAME                 New/Modified/Deleted
+ --------                 --------------------
+ N/A     
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number) New/Modified/Deleted
+ -------------   ----   ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+  
+ INC5216655 - Code VET360 not found in file 301.7 address change source
+ field.
+  
+   
+    Problem: 
+    --------
+    The business owners have requested 'VET360' be added as a selection to 
+    the ADDRESS CHANGE SOURCE (#3) Field in the IVM ADDRESS CHANGE LOG
+    (#301.7) File. This field should match the values available in ADDRESS
+    CHANGE SOURCE (#.119) Field in the PATIENT (#2) File. Otherwise there
+    may be issues utilizing FileMan utilities in the future.
+   
+    Resolution:
+    -----------
+    We have updated the data dictionary for the ADDRESS CHANGE SOURCE (#3)
+    Field in the IVM ADDRESS CHANGE LOG (#301.7) File to contain the option
+    'VET360'. This will resolve any potential issues.
+  
+ TEST SITES:
+ -----------
+ Cincinnati VAMC
+ Clarksburg VAMC
+ Beckley VAMC
+ Altoona VAMC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended it be queued to run after normal business hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+     1. Choose the PackMan message containing this patch.
+     
+     2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+     
+     3. From the Kernel Installation & Distribution System Menu, select the
+        Installation Menu. From this menu, you may select to use the
+        following options. When prompted for the INSTALL NAME, enter
+        the patch IVM*2.0*182:
+           a. Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+           b. Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+           c. Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed. It compares all components of this patch
+              (routines, DD's, templates, etc.).
+           d. Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+     
+      4. From the Installation Menu, select the Install Package(s) option
+         and choose the patch to install.
+    
+      5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//" respond NO.  
+     
+      6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//" respond NO.
+  
+         a. When Prompted "Enter options you wish to mark as 'Out Of 
+            Order':", Press <ENTER>.
+  
+         b. When Prompted "Enter protocols you wish to mark as 'Out Of 
+             Order':", Press <ENTER>.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+ Back-Out Plan:
+ --------------
+ Due to the complexity of this patch, it is not recommended for back-out, 
+ and a restore from a backup of the Transport Global should not be
+ attempted. In the event that a site decides to back out this patch, the
+ site should contact the Enterprise Service Desk (ESD) to submit a help
+ desk ticket. The development team will need to issue a follow-on patch in
+ order to comprehensively back-out this patch and restore the system to a
+ functioning state.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 07, 2019
+Completed By:                               Date Completed: SEP 05, 2019
+Released By :                               Date Released : SEP 05, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

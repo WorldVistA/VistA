@@ -1,0 +1,177 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Monday, 08/12/19 at 16:42
+=============================================================================
+Run Date: SEP 05, 2019                     Designation: PSO*7*564
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #469                      Status: Released
+                  Compliance Date: OCT 06, 2019
+=============================================================================
+
+Associated patches: (v)PSO*7*438   <<= must be installed BEFORE `PSO*7*564'
+                    (v)PSO*7*452   <<= must be installed BEFORE `PSO*7*564'
+                    (v)PSO*7*558   <<= must be installed BEFORE `PSO*7*564'
+
+Subject: REPORT PAGINATION INCORRECT / CPRS ORDER DETAILS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1. INC5135935 - Tech order entry in VistA not being converted to 
+                 Computerized Patient Record System (CPRS) note correctly.
+  
+ 2. INC5849471 - Outpatient Rx Profile report has incorrect page numbering.
+  
+       
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC5135935 - Tech order entry in VistA not being converted to CPRS note
+                 correctly.
+  
+ Problem: 
+ --------
+ Wichita Veterans Administration Medical Center (VAMC) reported that when
+ outpatient orders placed by a technician in backdoor pharmacy and verified
+ by pharmacist, the name of the technician appears under the "Pharmacist"
+ field of the CPRS order details screen. The VERIFYING PHARMACIST (#104) 
+ field of the PRESCRIPTION (#52) file and not the FINISHING PERSON (#38) 
+ field should show up under the "Pharmacist" field of the CPRS order
+ details screen.
+  
+ Resolution:
+ -----------
+ This patch makes a code change to check if the order is having a VERIFYING
+ PHARMACIST (#104) field, then to pull that data value as the "Pharmacist"
+ field on the CPRS details of the order.
+  
+ Technical Resolution:
+ ---------------------
+ Changed routine PSOORRL at OEL+11 label to get the data of the
+ "Pharmacist" field of the CPRS order details from the VERIFYING 
+ PHARMACIST (#104) field first. Otherwise, to pull it from the FINISHING
+ PERSON (#38) field.
+  
+  
+ 2. INC5849471 - Outpatient Rx Profile report has incorrect page numbering.
+  
+ Problem: 
+ --------
+ When printing the Outpatient Rx Profile report the report will display the
+ first 2 pages numbered with page 1. The first page 1 includes the patient
+ name/DOB/address as a header and the 2nd page is numbered page 1
+ incorrectly.
+  
+ Resolution:
+ -----------
+ This patch makes code changes that correct the pagination of the 
+ Outpatient RX Profile Report.  
+  
+ Technical Resolution:
+ ---------------------
+ Changed routines PSODEMSB and PSOPATLK so that any logical use of the 
+ variable PG is updated to use the variable PAGE.
+  
+ Test Sites:
+ -----------
+ Central California HCS (Fresno)
+ Robert J. Dole VAMC (Wichita)
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is not necessary to disable any options.  
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 2 minutes to 
+ install.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the  
+    Installation Menu.  From this menu select Backup a Transport Global.
+    When prompted for the INSTALL NAME enter the patch #  
+    (ex. PSO*7.0*564):
+  
+ 4. From the Installation Menu you may elect to use the following
+    options and choose the patch when prompted:
+  
+    a. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch:  routines,
+       DDs, templates, etc.).
+       
+    b. Verify Checksums in Transport Global - This option will allow you
+       to ensure the integrity of the routines that are in the transport
+       global.
+   
+ 5. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.
+  
+ 6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+   
+ 7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//" respond NO.
+  
+ 8. If prompted 'Delay Install (Minutes):  (0-60): 0//' respond 0.
+  
+ Post Installation Instructions:
+ -------------------------------
+ None.
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch descriptions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;Dec 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODEMSB
+    Before: B62505884   After: B62149131  **452,564**
+Routine Name: PSOORRL
+    Before: B66471559   After: B66889915  **4,20,9,34,54,82,124,132,159,
+                                           214,225,318,558,564**
+Routine Name: PSOPATLK
+    Before:  B6969813   After:  B6979395  **326,348,438,564**
+ 
+Routine list of preceding patches: 438, 452, 558
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 05, 2019
+Completed By:                               Date Completed: SEP 04, 2019
+Released By :                               Date Released : SEP 05, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

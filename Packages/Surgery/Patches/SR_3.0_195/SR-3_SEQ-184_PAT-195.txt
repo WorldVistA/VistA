@@ -1,0 +1,134 @@
+$TXT Created by               at CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 05/21/19 at 09:27
+=============================================================================
+Run Date: AUG 19, 2019                     Designation: SR*3*195
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #184                      Status: Released
+                  Compliance Date: SEP 18, 2019
+=============================================================================
+
+Associated patches: (v)SR*3*184    <<= must be installed BEFORE `SR*3*195'
+
+Subject: CPT EXCLUSIONS FILE #137 UPDATE - FY19
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ The CPT EXCLUSIONS file (#137) needs to be updated for fiscal year 2019 
+ (FY19).
+       
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ INC5135058 - CPT EXCLUSIONS file (#137) update for FY19
+  
+ Problem: 
+ --------
+ The last update to the CPT EXCLUSIONS file (#137) occurred with VistA 
+ Surgery patch SR*3.0*184. The CPT EXCLUSIONS file (#137) needs to be 
+ updated with all excluded CPT codes.
+  
+ Resolution:
+ -----------
+ This patch updates the CPT EXCLUSIONS file (#137) with data for FY19. New
+ SR195UT* post-install routines have been created to update the CPT 
+ EXCLUSIONS file (#137).
+  
+         
+ Test Sites:
+ -----------
+ Memphis VAMC
+ St. Louis VA HCS   
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------ 
+ This patch should be installed during non-peak hours to minimize potential
+ disruption to users. This patch should take less than 5 minutes to 
+ install. It is not necessary to disable any options/protocols.
+   
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.
+  
+ 4. From the Installation menu, you may elect to use the following options.
+    When prompted for the INSTALL NAME enter the patch: SR*3.0*195
+  
+  
+     a. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global. All components of this patch are new, so the option Backup 
+        a Transport Global and the option Compare Transport Global to
+        Current System do not have to be invoked.
+  
+   
+ 5. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install: SR*3.0*195
+  
+ 6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.  
+   
+ 7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ The routines SR195UTL, SR195UT0, SR195UT1, and SR195UT2 are automatically 
+ deleted at the end of patch installation.
+   
+ Installation Verification:
+ --------------------------
+ Since the routines are automatically deleted, the routines cannot be
+ verified. IRM staff can use the "Install File Print" under the Kernel
+ Installation & Distribution System [XPD MAIN] menu to verify that the
+ patch has been installed successfully.
+  
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ Back-out will be done only with the concurrence and participation of the
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between 
+ the development team, VA site/region personnel and other appropriate VA
+ personnel.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery;**[Patch List]**;24 Jun 93;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SR195UT0
+    Before:       n/a   After: B81816940  **195**
+Routine Name: SR195UT1
+    Before:       n/a   After: B98239050  **195**
+Routine Name: SR195UT2
+    Before:       n/a   After: B46402026  **195**
+Routine Name: SR195UTL
+    Before:       n/a   After:B108483795  **195**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 25, 2019
+Completed By:                               Date Completed: AUG 15, 2019
+Released By :                               Date Released : AUG 19, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

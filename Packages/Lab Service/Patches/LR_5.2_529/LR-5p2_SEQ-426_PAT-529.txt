@@ -1,0 +1,157 @@
+
+=============================================================================
+Run Date: AUG 29, 2019                     Designation: LR*5.2*529
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #426                    Status: Released
+                  Compliance Date: SEP 29, 2019
+=============================================================================
+
+
+Subject: INFORMATIONAL PATCH TO ACCOMPANY OR*3.0*510
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch is informational only concerning updates to VistA Laboratory 
+ Data Dictionary and to VistA Laboratory documentation.  The updates were 
+ included in VistA ORDER ENTRY/RESULTS REPORTING patch OR*3.0*510.
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+  
+ Associated ticket(s):
+ =====================
+  
+ INC5439465 - Lab Frequency Order Checks
+  
+ (Ticket INC5439361 is also included in OR*3.0*510 but did not require 
+ updates to the Laboratory Data Dictionary and to Laboratory 
+ documentation.)
+  
+ VistA ORDER ENTRY/RESULTS REPORTING patch OR*3*510 addresses the 
+ following:
+  
+  
+    1. Modify routine ORKLR2 to perform maximum frequency order checks
+       against the collection date/time of Lab orders.
+    2. Clarify the "Help Prompt" and "Description" fields for the MAX. 
+       ORDER FREQ. (#4) and SINGLE DAY MAX ORDER FREQ (#4.5) fields of the 
+       COLLECTION SAMPLE SUB-FIELD (#60.03) sub-file of the LABORATORY TEST
+       (#60) file.
+    3. Add further explanations to the Laboratory Planning Implementation
+       Guide (PIG) Version 5.2 pertaining to order check functionality on
+       frequency-related fields. 
+    4. Add clarification to the CPRS Setup Guide that order checks may 
+       occur for "frequency" as defined in the LABORATORY TEST (#60) file
+       in addition to duplicate order checks.
+  
+ Data Dictionaries Before:
+ ========================
+  
+ 60.03,4   MAX. ORDER FREQ.  0;5 NUMBER
+  
+           INPUT TRANSFORM:  K:+X'=X!(X>120)!(X<1)!(X?.E1"."1N.N) X
+           LAST EDITED:      AUG 28, 1989 
+           HELP-PROMPT:      Type a Number between 1 and 120, 0 Decimal
+                             Digits   --  This test may only be ordered
+                             once within this number of day(s).
+           DESCRIPTION:      Use this field to control how often a test may
+                             be ordered within a certain time period (# of
+                             days). The entry will then force the system to
+                             remind the ordering person that the order they
+                             are placing for this test exceeds the maximum
+                             order frequency.  If you enter 3, the test may
+                             only be ordered once every three days. 
+  
+ 60.03,4.5 SINGLE DAY MAX    0;7 NUMBER
+           ORDER FREQ
+  
+           INPUT TRANSFORM:  K:+X'=X!(X>50)!(X<1)!(X?.E1"."1N.N) X
+           LAST EDITED:      AUG 28, 1989 
+           HELP-PROMPT:      Type a Number between 1 and 50, 0 Decimal 
+                             Digits  --  Enter the number of times this
+                             test may be ordered in one day.
+           DESCRIPTION:      Enter a number specifying the maximum number
+                             of times a test can be ordered in a single
+                             day.  
+  
+ Data Dictionaries After:
+ =======================
+  
+ 60.03,4   MAX. ORDER FREQ.  0;5 NUMBER
+  
+           INPUT TRANSFORM:  K:+X'=X!(X>120)!(X<1)!(X?.E1"."1.N) X
+           LAST EDITED:      MAY 21, 2019 
+           HELP-PROMPT:      Enter the timeframe in number of days (between
+                             1 and 120) that the test should be ordered to
+                             be collected only once.
+           DESCRIPTION:      Use this field to control how often a test may
+                             be ordered to be collected within a certain
+                             time period (# of days). If you enter "3", the
+                             test should only be ordered to be collected
+                             once every three days. The entry will then 
+                             force CPRS to remind the ordering person that
+                             the order being placed for this test exceeds
+                             the maximum order frequency.
+  
+ 60.03,4.5 SINGLE DAY MAX    0;7 NUMBER
+          ORDER FREQ 
+  
+           INPUT TRANSFORM:  K:+X'=X!(X>50)!(X<1)!(X?.E1"."1.N) X
+           LAST EDITED:      MAY 21, 2019 
+           HELP-PROMPT:      Enter the maximum number of times (between 1
+                             and 50) that a test should be ordered to be
+                             collected on a single day. 
+           DESCRIPTION:      If this test should not be ordered to be
+                             collected more than a certain number of times
+                             per day, enter a number (between 1 and 50)
+                             specifying the maximum frequency per day. The 
+                             entry will then cause CPRS to remind the
+                             ordering person that the order being placed
+                             for this test exceeds the "single day maximum
+                             frequency" for the specified collection date.
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Software being released as a host file and/or documentation describing
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server.  Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+    
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:  https://www.domain.ext/vdl/
+  
+ Title                               File Name                Transfer Mode
+ --------------------------------------------------------------------------
+ Laboratory Planning Implementation
+ Guide (PIG) Version 5.2             lab5_2pi.pdf             Binary
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 29, 2019
+Completed By:                               Date Completed: AUG 29, 2019
+Released By :                               Date Released : AUG 29, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

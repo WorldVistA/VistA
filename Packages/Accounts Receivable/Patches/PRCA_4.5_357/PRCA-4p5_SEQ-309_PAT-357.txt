@@ -1,0 +1,261 @@
+$TXT Created by            A at COC-DEV-S2.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 07/23/19 at 09:07
+=============================================================================
+Run Date: SEP 13, 2019                     Designation: PRCA*4.5*357
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #309                    Status: Released
+                  Compliance Date: SEP 18, 2019
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*351<<= must be installed BEFORE `PRCA*4.5*357'
+
+Subject: CCAD IB AR PHASE 2 BUILD 1
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+  ****************************************************************
+                NOTICE!!!!!  5 DAYS COMPLIANCE DATE
+  ****************************************************************
+  
+  The Office of Community Care (OCC) is requesting system enhancements to
+  the Veterans Health Information Systems and Technology Architecture
+  (VistA) Integrated Billing (IB), Accounts Receivable (AR), and Fee 
+  Basis (FB) software modules that would allow segregating all billing
+  and collection activities for Non-Department of Veterans Affairs (VA)
+  Care Third Party Insurance carriers' reimbursement.
+  
+  The primary goal of this enhancement is the continued preparation of the
+  AR software module for the implementation of further changes required by
+  the Maintaining Internal Systems and Strengthening Integrated Outside
+  Networks (MISSION) Act.
+  
+  The second goal of this enhancement is to increase timeliness and
+  collections of billable Non-Veterans Affairs (VA) care services.
+  Enhancements to existing VistA IB, AR, and Fee software applications
+  would allow for increased efficiency in workflow processes leading to
+  best practices that would ultimately be reflected in improved customer
+  service to our Veteran population.
+  
+  In order to meet these goals, this patch:
+  
+  1. Updates the Deposit Reconciliation Report [PRCA DEPOSIT RECON REPORT]
+     to allow for the display of the forthcoming CC URGENT CARE copayments.
+  
+  2. Updates the Revenue Source Code (RSC) Report [PRCA FMS RSC REPORT] to 
+     include the new 8CCU RSC for Urgent Care Copayments.
+  
+  3. Modified the Bad Debt Report to allow the Bad Debt SSV to include 
+     funds 528713 and 528714 for delivery to FMS.
+  
+  
+  
+  Patch Components:
+  -----------------
+  
+  Files & Fields Associated:
+  
+  File Name (Number)     Field Name (Number)     New/Modified/Deleted
+  ------------------     -------------------     --------------------
+  N/A
+  
+  
+  Forms Associated:
+  
+  Form Name      File #  New/Modified/Deleted
+  ---------      ------  --------------------
+  N/A
+  
+  
+  Mail Groups Associated:
+  
+  Mail Group Name        New/Modified/Deleted
+  ---------------        --------------------
+  N/A
+  
+  
+  Options Associated:
+  
+  Option Name    Type    New/Modified/Deleted
+  -----------    ----    -------------------- 
+  N/A
+  
+  
+  Protocols Associated:
+  
+  Protocol Name  New/Modified/Deleted
+  -------------  -------------------- 
+  N/A
+  
+  
+  Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  
+  Templates Associated:
+  
+  Template Name  Type    File Name (Number)  New/Modified/Deleted 
+  -------------  ----    ------------------  --------------------
+  N/A
+  
+  
+  Additional Information:
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  ----------------------------
+  Billing Interface for Fee Care Business (#20080918)
+  
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overviews:
+  -----------------------------
+  N/A
+   
+   
+  Test Sites:
+  ----------
+  Edward J Hines VA Hospital (Chicago, IL) - Station 578
+  Hunter Holmes McGuire VA Medical Center (Richmond, VA) - Station 652 
+  Central Alabama Veterans Healthcare System (Alabama) - Station 619 
+  
+   
+  DOCUMENTATION RETRIEVAL INSTRUCTIONS
+  ------------------------------------
+  Updated documentation describing the new functionality introduced by this
+  patch is available.
+  
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may also 
+  select to retrieve files directly from a specific server.
+  
+  Sites may retrieve the documentation directly using Secure File Transfer
+  Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+  Field Offices:
+  
+    Hines:                domain.ext
+    Salt Lake City:       domain.ext
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at:  http://www.domain.ext/vdl/
+  
+  
+  Title                                 File Name            Transfer Mode
+  -------------------------------------------------------------------------
+  
+  Deployment, Installation, Back-out,   PRCA_4_5_357_IG.pdf      Binary
+  and Rollback Guide(PRCA*4.5*357)      
+  
+  
+  Patch Installation:
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  N/A
+  
+   
+  Pre-Installation Instructions:
+  ------------------------------
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install.             
+   
+   
+  Installation Instructions:
+  --------------------------
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch PRCA*4.5*357.
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global. 
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  5.  When prompted Want KIDS to INHIBIT LOGONs during the install? NO// 
+      answer NO
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO// answer NO
+   
+  7.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+   
+                                              
+  Post-Installation Instructions
+  ------------------------------
+  There are no special tasks to perform after this patch installation.
+  
+  
+  Back-Out Plan:
+  --------------
+  Prior to installing the updated KIDS package, the site/region should 
+  have saved a backup of the routines in a mail message using the Backup a
+  Transport Global [XPD BACKUP] menu option.  The message containing the 
+  backed up routines can be loaded with the "Xtract PackMan" function at 
+  the Message Action prompt.  The PackMan function INSTALL/CHECK MESSAGE 
+  is then used to install the backed up routines onto the VistA system.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCACPV
+    Before: B17132531   After: B18311422  **1,48,90,119,204,192,235,295,
+                                           315,338,357**
+Routine Name: PRCASVC1
+    Before:  B1372959   After:  B1742212  **1,68,48,84,157,295,315,357**
+Routine Name: RCRJRDEP
+    Before: B68618854   After: B68618854  **101,114,203,220,273,310,338,
+                                           351,357**
+Routine Name: RCXFMSPR
+    Before: B59053655   After: B60261992  **90,96,101,156,170,203,273,
+                                           310,315,338,351,357**
+Routine Name: RCXFMSSV
+    Before: B61841858   After: B72765558  **96,101,135,139,98,156,170,
+                                           191,203,220,138,184,239,273,
+                                           357**
+ 
+Routine list of preceding patches: 351
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 12, 2019
+Completed By:                               Date Completed: SEP 13, 2019
+Released By :                               Date Released : SEP 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

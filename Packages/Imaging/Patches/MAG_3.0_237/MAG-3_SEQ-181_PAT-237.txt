@@ -1,0 +1,364 @@
+
+=============================================================================
+Run Date: AUG 23, 2019                     Designation: MAG*3*237
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #181                      Status: Released
+                  Compliance Date: SEP 23, 2019
+=============================================================================
+
+
+Subject: Importer .Net Framework 4.6 Upgrade
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Associated Patches: 
+ ===================
+ This patch must be installed after MAG*3.0*217.
+  
+ Subject: Importer .NET Upgrade
+ ========
+  
+ Category: Other
+ =========
+  
+ Description:
+ ============
+ This document describes MAG*3.0*237, a patch that provides a .NET upgrade 
+ to the Importer application.
+  
+ Patch Components:
+ =================
+ This patch includes software and documentation files.  This document,
+ MAG3_0P 237_Patch_Description.pdf, provides an overview, explains the
+ changes, and outlines the installation for this patch,
+ MAG3_0P237_README.txt, if present, is an informative file associated with 
+ the patch released.
+  
+ Software and Documentation:
+ ===========================
+ Software and Documentation Files
+  
+ File Name                               Description
+ =========                               ===========
+ MAG3_0P237.KID                          Kernel Installation and
+                                         Distribution System (KIDS) build
+                                         for Patch 237.
+ MAG3_0P237_ImporterIII_setup.msi        Importer installation file.
+ MAG3_0P237_ImporterIII_setup.exe        Importer installation file.
+ MAG3_0P237_Patch_Description.pdf        Patch Description for P237 
+ MAG3_0P237_DIBORG.pdf                   Deployment, Installation,
+                                         Back-Out, and Rollback Guide
+  
+ Files & Fields Associated: 
+ ==========================
+ There are no files or fields associated with this patch.
+  
+ Forms Associated: 
+ =================
+ There are no forms associated with this patch.
+  
+ Mail Groups Associated:
+ =======================
+ There are no mail groups associated with this patch.
+  
+ Options Associated: 
+ ===================
+ There are no options associated with this patch.
+  
+ Protocols Associated: 
+ =====================
+ There are no protocols associated with this patch.
+  
+ Security Keys Associated: 
+ =========================
+ There are no security keys associated with this patch.
+  
+ Templates Associated: 
+ =====================
+ There are no templates associated with this patch.
+  
+ Additional Information:
+ ======================= 
+ New Service Requests (NSRs):
+ ============================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ There are no patient safety issues associated with this patch. 
+  
+ Defect Tracking System Tickets:
+ =============================== 
+ 1.  Story 924982 Upgrade .NET version
+  
+ Problem: 
+ ========
+ Upgrading the version of .net used by the Importer from 4.0 to 4.6.2 to 
+ remain compliant with the VA Technical Reference Model (TRM).
+  
+ Resolution:  
+ ===========
+ Upgraded the application and all its projects to .NET 4.6.2
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+     Gulf Coast Veterans HCS - Biloxi
+  
+ Software and Documentation Retrieval Instructions
+ =================================================
+ Software being released and/or documentation describing the new 
+ functionality introduced by this patch are available.
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory on server download.vista.domain.ext 
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/ 
+  
+ Patch Installation
+ ==================
+ Supported Client Versions:
+ ==========================
+ When MAG*3.0*237 is released, the list of supported versions of Importer 
+ will change:
+ Supported Client Versions
+ =========================
+ Supported Versions      No Longer Supported
+ ==================      ===================
+ 3.0.237                 3.0.118
+ 3.0.217
+ 3.0.206
+ 3.0.136
+  
+ Pre/Post Installation Overview:
+ ===============================
+ MAG*3.0*237 must be installed on the VistA System. This patch must be 
+ installed by the compliance date.
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch. This patch can be loaded while the VistA Imaging System is active, 
+ and users are on the system. Installing the MAG*3.0*237 KIDS only takes 
+ 2-3 minutes.
+  
+ Pre-Installation Instructions:
+ ==============================
+ Verify that the patches listed in the Associated Patches section of this 
+ document have been previously installed.
+  
+ Note: All released VistA Imaging patches must be installed on the VistA 
+       system before installing MAG*3.0*237.
+  
+ Prerequisite: With the release of patch MAG*3.0*206 KIDS package, all 
+               users who access the Importer application must be assigned
+               the secondary menu option called MAGTP WORKLIST MGR in
+               VistA. This is required because currently the REMOTE
+               APPLICATION file has no entry available for the Importer
+               application. This is a temporary work around until there is
+               an entry created for the Importer application via a patch
+               release.
+  
+ VistA System (KIDS) Installation Instructions:
+ ==============================================
+ Installation Steps: 
+ ===================
+ 1.  On the VistA system, access the Kernel Installation and Distribution
+     System Menu [XPD MAIN].
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+ 3.  Load the KIDS file by performing the following steps:
+     a.  Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+         load the KIDS distribution.
+     b.  When prompted, enter the full path and file name (MAG3_0P237.KID) 
+         of the MAG*3.0*237 KIDS file.
+     c.  When prompted to continue with the load, enter YES. A Distribution
+         OK! message will be displayed when the load is complete.
+ 4.  After loading the KIDS file, use the following options to verify the
+     contents of the patch and to back up any affected routines.
+     a.  Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run
+         this option to ensure the integrity of the routines in the patch. 
+     b.  Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+         - Run this to view all changes that will be made when the patch is
+         installed. All components (routines, options, and so on) in the
+         patch will be compared.
+     c.  Backup a Transport Global [XPD BACKUP] - Run this option to create
+         a backup message of any routines exported with the patch. It will 
+         NOT back up any of the other changes.
+ 5.  After performing the load and any optional verification steps, install
+     the KIDS file by performing the following steps:
+     a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+     b.  When prompted for the install name, enter MAG*3.0*237.
+     c.  Answer NO to the following prompts, if they appear:
+         o Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+         o Want KIDS to INHIBIT LOGONs during the install? NO//
+         o Want to DISABLE Scheduled Options, Menu Options, and Protocols?
+           NO//
+ 6.  When installation is finished, an Install Complete message will be
+     displayed.
+  
+ KIDS Installation Example:
+ ==========================
+ This example shows the output when the KIDS file is installed for the 
+ first time. If the patch has already been installed and the KIDS files is 
+ being installed in in a namespace on which it has previously been
+ installed, the output may be different.
+ Select Installation <TEST ACCOUNT> Option: 6 Install Package(s)
+ Select INSTALL NAME: MAG*3.0*237   7/25/18@16:35:13
+    => VistA Imaging 3.0 - Patch 237 Importer III ;Created on Jul 20, 
+ 2018@10:38:54
+  
+ This Distribution was loaded on Jul 25, 2018@16:35:13 with header of
+   VistA Imaging 3.0 - Patch 237 Importer III ;Created on Jul 20, 
+ 2018@10:38:54
+   It consisted of the following Install(s):
+   MAG*3.0*237
+ Checking Install for Package MAG*3.0*237
+  
+ Install Questions for MAG*3.0*237
+   
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//  HERE
+   
+  Install Started for MAG*3.0*237 :
+         Jul 25, 2018@16:35:27
+  
+ Build Distribution Date: Jul 20, 2018
+  
+  Installing Routines:..
+         Jul 25, 2018@16:35:27
+  
+  Running Post-Install Routine: POS^MAGIP237.
+  
+ Post Install Mail Message: Jul 25, 2018@16:35:27
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*237 Installed.
+         Jul 25, 2018@16:35:27
+  
+  Not a production UCI
+  
+  NO Install Message sent
+  
+ Installing the Application Client: 
+ ==================================
+ For installing or updating Importer III, refer to the MAG DICOM Importer 
+ III User Manual.
+  
+ Post-Installation Instructions
+ ==============================
+ Manual Installation:
+ ====================
+ N/A
+  
+ Auto-update Installation:
+ =========================
+ VistA Imaging Auto-update functionality is no longer supported.
+  
+ Back Out Plan 
+ =============
+ Uninstalling the Importer III Client:
+ =====================================
+ For uninstalling Importer III, please refer to the MAG DICOM Importer III 
+ User Manual.
+  
+ KIDS Uninstall:
+ ===============
+ If it is necessary to uninstall the MAG*3.0*237 VistA KIDS, then you 
+ needed to select the Kernel Installation & Distribution System menu 
+ option, Backup a Transport Global (see installation section above, step 
+ 4c), before you installed the patch.
+ Administrators will need to use the PackMan function INSTALL/CHECK 
+ MESSAGE. Check your MailMan messages for the backup message sent by the 
+ Backup a Transport Global function.
+ 1.      Select the message shown below:
+ Backup of MAG*3.0*237 install on <mmm dd, yyyy>  <user name>
+ 2.      Select the Xtract PackMan option.
+ 3.      Select the Install/Check Message option.
+ 4.      Enter Yes at the prompt.
+ 5.      Enter No at the backup prompt. There is no need to back up the 
+         backup.
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+   Answer with PackMan function NUMBER, or NAME
+   Choose from:
+   1      ROUTINE LOAD
+   2      GLOBAL LOAD
+   3      PACKAGE LOAD
+   4      SUMMARIZE MESSAGE
+   5      PRINT MESSAGE
+   6      INSTALL/CHECK MESSAGE
+   7      INSTALL SELECTED ROUTINE(S)
+   8      TEXT PRINT/DISPLAY
+   9      COMPARE MESSAGE
+  
+ Select PackMan function: Select PackMan function: 6 INSTALL/CHECK MESSAGE
+  
+ Warning: Installing this message will cause a permanent update of globals
+          and routines.
+ Do you really want to do this? NO// YES<Enter>
+  
+ Routines are the only parts that are backed up. NO other parts
+ are backed up, not even globals. You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2  Message #42925   Unloading Routine  MAGT7MA (PACKMAN_BACKUP)
+  
+ Select PackMan function:<Enter>
+  
+ Routine Information:
+ ====================
+ VistA KIDS Checksums
+ ====================
+ This section lists modified routines for the VistA KIDS build. For each 
+ routine, the second line will contain the following information: 
+  
+ ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 19;Mar 27, 2015
+ CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Routine         Checksum        Checksum           Patch List
+                 Before          After
+ MAGIP237        New             4110424            **237**
+  
+ Routine MAGIP237 is an installation routine that is automatically deleted
+ after the KIDS installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGIP237
+    Before:       n/a   After:  B4110424  **237**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 07, 2019
+Completed By:                               Date Completed: AUG 15, 2019
+Released By :                               Date Released : AUG 23, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

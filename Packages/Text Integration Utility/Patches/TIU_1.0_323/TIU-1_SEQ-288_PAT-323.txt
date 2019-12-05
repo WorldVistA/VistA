@@ -1,0 +1,382 @@
+$TXT Created by                    VISTA-LOAD-AITC-6.AAC.DOMAIN.EXT  (KIDS) on Friday, 05/03/19 at 09:51
+=============================================================================
+Run Date: AUG 08, 2019                     Designation: TIU*1*323
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: EMERGENCY
+Version : 1       SEQ #288                      Status: Released
+                  Compliance Date: AUG 14, 2019
+=============================================================================
+
+Associated patches: (v)GMRC*3*106  <<= must be installed BEFORE `TIU*1*323'
+
+Subject: CCRA MDM-T02 OUTBOUND FROM VISTA TO CCRA/HSRM
+
+Category: 
+  - Routine
+  - Enhancement ()
+
+Description:
+============
+
+  
+  *********************************************************************
+  ***                                NOTE:                          ***
+  * The installer will be required to enter the unique HealthConnect  *
+  * Server IP address and port for a specific VA Medical Center when  *
+  * the patch is installed. This IP/Port information can be found by  *
+  * accessing the CCRA_HealthConnect_Data.pdf document available on   *
+  * the Secure File Transfer Protocol (SFTP) from the                 *
+  * ANONYMOUS.SOFTWARE  directory at: download.vista.domain.ext       *
+  *                                                                   *
+  * If there are any questions about the installation or about the IP *
+  * and port information, please contact Rene Farabaugh at:           *
+  * rene.farabaugh@domain.ext.                                            *
+  *********************************************************************
+  
+  
+ The Community Care Referrals and Authorizations (CCR&A) application is 
+ an enterprise-wide system used by Community Care (CC) staff to 
+ automatically generate referrals and authorizations for all Veterans 
+ receiving care in the community. Clinical and VA CC staff located at VA 
+ Medical Centers, Outpatient Clinics, Community Based Outpatient Clinics, 
+ and Veterans Integrated Service Network (VISN) offices use this
+ application.  The CCR&A solution is an integral component of the VA
+ Community Care Information Technology (IT) architecture that allows
+ Veterans to receive care from Community Providers.
+  
+ This patch builds upon the Health Level 7(HL7) processes created in
+ patches GMRC*3.0*99 and GMRC*3.0*106. It sends from Veterans Health 
+ Information Systems and Technology Architecture (VistA) to HealthShare
+ Referral Management system (HSRM) the CCRA progress notes filed by a
+ provider for a patient in Computerized Patient Record System(CPRS).
+  
+ This patch builds and sends a VistA Outbound Medical Document Management 
+ HL7 Message type (MDM-T02) v.2.5.1 message for any of the following CCRA
+ Progress Note Titles that are used to file a historical Progress Notes
+ from CPRS:
+       1   COMMUNITY CARE-PATIENT LETTER       TITLE  
+           Std Title: NONVA PROGRESS NOTE
+       2   COMMUNITY CARE-ADMINISTRATIVE REQUEST       TITLE  
+           Std Title: ADMINISTRATIVE NOTE
+       3   COMMUNITY CARE-COORDINATION NOTE       TITLE  
+           Std Title: NONVA PROGRESS NOTE
+       4   COMMUNITY CARE-HOSPITAL NOTIFICATION NOTE       TITLE  
+           Std Title: PRIMARY CARE ADMINISTRATIVE NOTE
+  
+ The patch installs also the following HL7 1.6 components:
+         - new HL logical link: TIUCCRA 
+         - new HL7 applications: TIU CCRA SEND and TIU HSRM RECEIVE
+         - new HL7 Protocols:
+                 1   TIU CCRA-HSRM MDM-T02 CLIENT
+                 2   TIU CCRA-HSRM MDM-T02 SERVER
+  
+ The message is triggered by the routine in the POST-SIGNATURE CODE field 
+ (#4.9), from the TIU Document Definition file (#8925.1).
+  
+ All CCRA Progress Note Titles that are created for COMMUNITY CARE
+ Historical Notes and are required to trigger  the MDM-T02 message to HSRM.
+  
+ Please update the following for the above Note Titles. It requires 
+ programmer access to edit the Post Signature Code field.
+  
+ In the TIU Document Definition file (#8925.1), in the POST-SIGNATURE CODE 
+ field (#4.9) add this value: "D EN^TIUCCRHL()" (no quotes).
+  
+ Please refer to the OneConsult_Technical Guide, Section 14.0, for
+ instruction on how to set up all the COMMUNITY CARE TIU Titles.
+  
+ <<<<<< NOTE: THIS PATCH IS AN INTERACTIVE PATCH. THE PATCH INSTALLER IS
+ REQUIRED TO ENTER/RESPOND TO PROMPTS DURING THE INSTALLATIONS.>>>>>>>
+  
+ Patch Components:
+  -----------------
+  Routines:
+  TIUCCRHL 
+  TIUP323
+   
+  Bulletins:
+  ---------
+  N/A 
+   
+   
+  Files & Fields Associated:
+   
+  File Name (Number)      Field Name (Number)  New/Modified/Deleted
+  ------------------      -------------------  --------------------
+  N/A 
+   
+  Forms Associated:
+   
+  Form Name       File #  New/Modified/Deleted
+  ---------       ------  --------------------
+  N/A 
+   
+  Mail Groups Associated:
+   
+  Mail Group Name New/Modified/Deleted
+  --------------- --------------------
+  GMRCCCRA NOTIFICATIONS MODIFIED
+   
+  Options Associated:
+   
+  Option Name     Type    New/Modified/Deleted
+  -----------     ----    -------------------- 
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name   New/Modified/Deleted
+  -------------   -------------------- 
+  TIU CCRA-HSRM MDM-T02 CLIENT   NEW
+  TIU CCRA-HSRM MDM-T02 SERVER   NEW
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A 
+   
+  Templates Associated:
+   
+  Template Name   Type    File Name (Number)  New/Modified/Deleted
+  -------------   ----    ------------------  --------------------
+  N/A
+   
+  Additional Information:
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  ----------------------------
+  N/A 
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Defect Tracking System Ticket(s) & Overview:
+  --------------------------------------------
+  N/A 
+   
+  Problem:
+  --------
+  N/A 
+   
+  Resolution:
+  -----------
+  N/A 
+  
+  
+ Test Sites:
+ -----------
+    Lebanon, PA Station #595
+    Philadelphia, PA Station #642
+    Montana Ft. Harrison, MT Station #436
+    Togus, ME Station #402
+    White River Junction, VT Station #405
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  Updated documentation describing the new functionality introduced by this
+  patch is available.
+    
+  The preferred method is to retrieve files from download.vista.domain.ext.
+  This transmits the files from the first available server. Sites may also
+  elect to retrieve files directly from a specific server.
+    
+  Sites may retrieve the documentation directly using Secure File Transfer
+  Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+  Field Offices:
+    
+     Hines:                        domain.ext   
+     Salt Lake City:               domain.ext
+    
+  Documentation can also be found on the VA Software Documentation Library 
+  at: 
+    
+  http://www.domain.ext/vdl/
+  
+  Title                         File Name                       FTP Mode
+  ------------------------------------------------------------------------
+ Technical Manual              tiutm.pdf /.docx                     binary
+ TIU HL7 Guide                 tiuhl7.pdf /.docx                    binary
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software is distributed by PackMan.
+  
+ Backout and rollback Procedure:
+ -------------------------------
+ In order to back out this patch, sites must use the
+ KIDS option to Backup a Transport Global after loading
+ the patch. They can then restore the routines from the
+ backup message. If this option is not used, then backing
+ out is not possible.
+  
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch.
+  
+ It is imperative that you have performed a backup of the routines
+ included in this patch prior to installation.
+  
+ The back-out plan is to restore the routines from the backup created.
+  
+ No data was modified by this patch installation and, therefore, no 
+ rollback strategy is required.
+  
+ To verify the back-out completed successfully, ensure the checksum 
+ matches the pre-patch checksum from the patch description.
+  
+ This patch consists of routines and HL7 Logical Link and HL7 Application 
+ Parameters and HL7 Protocols. The routines installed by this patch are new
+ routines. There are no changes to existing routines.
+  
+ If a backout or rollback is required, the site HL7 management team can 
+ stop the HL7 Logical Link TIUCCRA that was installed by this patch.
+  
+ Stopping the TIUCCRA HL7 Logical Link will stop sending messages to the 
+ TIU CCRA HealthShare server.
+  
+  
+  
+ Patch Installation:
+ ===================
+ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ NOTE: THIS PATCH IS AN INTERACTIVE INSTALL. THE INSTALLER IS 
+ REQUIRED TO ENTER INFORMATION DURING THE INSTALL. THIS PATCH CAN NOT BE
+ QUEUED FOR A LATER UNATTENDED INSTALL.
+ This patch install requires installers with access to Programming Mode.
+ >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  
+ Prior to installing this patch, installers will be provided with the 
+ IP address and port for their HealthShare server.
+  
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  The patch is distributed in KIDS format
+ in a PackMan message.  This patch requires GMRC*3.0*106 and installation
+ time is less than 5 minutes.
+  
+ Setup/Configuration Instructions:
+ ---------------------------------
+  
+ These steps can be completed with users on the system. 
+ GMRC*3.0*106 must be installed in order to install this patch. This patch
+ should take less than 15 minutes to install.
+  
+ Prior to starting the install you will need the IP address, Port and 
+ DNS Name for the HealthShare Server to connect to.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+    
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+    
+  3.  From the KIDS Menu, select the Installation Menu.  From this menu, 
+      you may elect to use the following options. When prompted for the
+      INSTALL NAME, enter TIU*1.0*323.
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as Data Dictionaries (DDs) or
+          templates.
+          IN ORDER TO BACKOUT THIS PATCH, THIS OPTION MUST BE USE.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      when prompted for the INSTALL NAME, enter TIU*1.0*323.
+  
+  5.  At the prompt, "Enter the IP address for the HealthShare server", 
+      enter the IP address for the HealthShare server you will send the
+      NON-VA Consults to.
+  
+  6.  At the prompt, "Enter the Port for the HealthShare server:", enter   
+      the port the HealthShare server is listening on.
+     
+  7.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//' respond NO.
+    
+  8.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+    
+  9.  If prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//" respond NO. 
+    
+  10.  If prompted "Delay Install (Minutes):  (0 - 60): 0//" respond 0.
+   
+  
+ Sample Installation:
+ ===================
+ Select Installation <TEST ACCOUNT> Option: Install Package(s)
+ Select INSTALL NAME:    TIU*1.0*323    2/1/19@13:47:46
+      => CCR TIU OUTBOUND  ;Created on Feb 01, 2019@14:41:14
+  
+ This Distribution was loaded on Feb 01, 2019@13:47:46 with header of 
+    CCR TIU OUTBOUND  ;Created on Feb 01, 2019@14:41:14
+    It consisted of the following Install(s):
+     TIU*1.0*323
+ Checking Install for Package TIU*1.0*323
+  
+ Install Questions for TIU*1.0*323
+  
+  
+ Enter the IP address for the HealthShare Server: xxx.xxx.xxx.xxx
+ Enter the Port for the HealthShare server: xxxx
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// NO
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HOME  (CRT)
+  
+ TIU*1.0*323                                   
+ --------------------------------------------------------------------------
+                Feb 01, 2019@13:49:51
+  
+  Running Post-Install Routine: POST^TIUP323
+  
+ TIUCCRA Link has been updated.
+  
+ The TIU CCRA SEND Application Parameter has been updated.
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  TIU*1.0*323 Installed. 
+                Feb 01, 2019@13:49:51
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Feb 1, 2019;Build 33
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUCCRHL
+    Before:       n/a   After: B92952231  **323**
+Routine Name: TIUP323
+    Before:       n/a   After:  B6435461  **323**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 11, 2018
+Completed By:                               Date Completed: AUG 07, 2019
+Released By :                               Date Released : AUG 08, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,293 @@
+$TXT Created by                    at DEV.DEV.DOMAIN.EXT  (KIDS) on Thursday, 07/18/19 at 11:17
+=============================================================================
+Run Date: AUG 22, 2019                     Designation: RA*5*158
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #142                      Status: Released
+                  Compliance Date: SEP 22, 2019
+=============================================================================
+
+Associated patches: (v)RA*5*86     <<= must be installed BEFORE `RA*5*158'
+                    (v)RA*5*124    <<= must be installed BEFORE `RA*5*158'
+                    (v)RA*5*129    <<= must be installed BEFORE `RA*5*158'
+                    (v)RA*5*138    <<= must be installed BEFORE `RA*5*158'
+
+Subject:  RA COMMON PROCEDURE UPDATES & REASON STANDARDIZATION/LOCKDOWN
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Issue one: Changing the name of an active common procedure to the name of
+ another non-common radiology procedure of the same imaging type corrupts
+ the ORDERABLE ITEMS [#101.43] file record.
+  
+ Solution one: Prevent the editing of a common procedure name if that 
+ common procedure is active.
+  
+ --- 
+  
+ Issue two: If a front door order is signed and the order is comprised of a
+ a series procedure and one or more procedure modifiers (PMODs) with the
+ AMIS CREDIT INDICATORS field defined that order is rejected by the RIS.
+  
+ Solution two: AMIS is no longer user to track workload. The series 
+ procedure/PMODs with the AMIS CREDIT INDICATOR field check has been 
+ removed.
+  
+ ---
+  
+ Issue three: The 'ORIGINAL PROCEDURE?' [#8] field of the RAD/NUC MED 
+ PROCEDURE [#71] file whose original purpose was to prevent the procedure 
+ from being modified. 
+  
+ Solution three: The 'ORIGINAL PROCEDURE?' designation is no longer a 
+ business rule to be enforced.  A post-init will be tasked to remove the 
+ 'ORIGINAL PROCEDURE?' flag from procedure records.
+  
+ --- 
+  
+ Issue four: To add new national cancel reason data to the RAD/NUC MED 
+ REASON [#75.2] file, to standardize and to lock down the file.
+  
+ Solution four: Add the new data to file 75.2. Remove all local reasons 
+ from being selected by the user. Lock down file 75.2 so only those with 
+ '@' can edit it.
+  
+ Removing the RA REASON EDIT Option from file 19.
+  
+ NAME: RA REASON EDIT                    MENU TEXT: Reason Edit
+   TYPE: run routine                     CREATOR: XXXXX,XXXX
+ DESCRIPTION:   This option allows ADPACs to modify and add reasons that 
+ can be selected by users who are cancelling and holding Imaging orders.
+   ROUTINE: 14^RAMAIN                    DIC {DIC}: RA(75.2,
+   DIC(0): AEQML                         DIE: RA(75.2,
+   DR {DIE}: .01;2;3;S:$$ORVR^RAORDU()<3 Y="@99";4;@99
+   UPPERCASE MENU TEXT: REASON EDIT
+  
+ ---
+  
+ Issue five: After the conversion from Radiology HL7 version 2.3 to 2.4 the
+ printset indicator on order (ORM) messages broadcast to our subscribers is
+ not valid.
+  
+ Solution five: Update ORC-4 on our ORM 2.4 HL7 messages that the study is 
+ part of a printset.
+  
+ Associated Ticket(s):
+ =====================
+ INC5231910
+ INC6620428
+  
+ Associated Patient Safety Ticket(s):
+ ====================================
+ HITPS 6616: Invalid Modifier for Series Procedure
+ HITPS 6534: Invalid Procedure, Inactive, no Imaging Type or no Procedure 
+ Type 
+  
+ Participating Test Sites:
+ =========================
+ Indianapolis, IN VAMC
+ Northern California HCS
+  
+ Documentation Retrieval:
+ ========================
+ There are four documentation changes associated with this patch:
+  
+ Radiology/Nuclear Medicine Technical Manual
+ Radiology/Nuclear Medicine ADPAC Guide
+ Radiology/Nuclear Medicine User Manual
+ Radiology/Nuclear Medicine 5.0 HL7 Interface Specification
+  
+  
+ These manuals are available on the ANONYMOUS.SOFTWARE directory at one of
+ the following Office of Information (OI) Field Offices. These files
+ should be retrieved in binary format.
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Documentation describing the new functionality and/or a host file 
+ containing a build may be included in this release.
+  
+ Sites may retrieve the software and/or documentation directly using
+ an FTP Client using  Secure File Transfer Protocol (SFTP) from the 
+ ANONYMOUS.SOFTWARE directory on:
+  
+ download.vista.domain.ext 
+  
+ The documentation distribution includes:
+  
+ File Name             Description                           Protocol
+ ---------             -----------                           --------
+ RA5_0TM.DOCX          Technical Manual                      Binary
+ RA5_0AG.DOCX          ADPAC Guide                           Binary
+ RA5_0UM.DOCX          User Manual                           Binary
+ RA5_0HL7IS.DOCX       HL7 Interface Specifications          Binary
+  
+  
+   =================  Pre-Installation Instructions ==================
+   ***IMPORTANT***: Back up the RAD/NUC MED REASON [#75.2] data global
+   data; this step is necessary if the data must be restored.
+  
+   Back up data files using your site's policy for backing up data.
+   If the steps are unknown, follow the instructions below:
+  
+   This backup file will be small but make sure space is available
+   before proceeding:
+   It should take less than five minutes to create the backup file.
+  
+     1) Go to a command prompt.
+     2) At the prompt, enter D GOGEN^%ZSPECIAL.
+     3) At the device prompt, enter the name of the local directory where
+        the file is to be stored with the name of the file.
+        Example: VA1$:[SITEDIR]PRE_RA5P158_RA_REASON_752_BKUP_YYYYMMDD.GBL
+     4) At the Parameters? Prompt, press <enter>.
+     5) At the Global prompt, enter the file global below
+  
+                 RAD/NUC MED REASON    #75.2   ^RA(75.2,
+  
+     6) Verify that the file was created and exists in the directory
+        specified
+  
+        Example:
+        VISTA>d GOGEN^%ZSPECIAL
+  
+        Device: VA1$:[SITEDIR]PRE_RA5P158_RA_REASON_752_BKUP_20190606.GBL
+        Parameters? "WNS" =>
+        Use a "V" format to avoid problems with control characters.
+  
+        Global ^RA(75.2 -- NOTE: translation in effect
+  
+     Verify that the file was created and exists in the directory
+     specified.
+  
+  
+ ===================  Installation Instructions ====================
+  
+   If installed during the normal workday, it is recommended that the
+   Radiology users be off the system. Other VISTA users will not be
+   affected.
+  
+   Install Time - less than two minutes
+  
+   1. Load Transport Global:
+      ----------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+   2. Access the KIDS main menu:
+      --------------------------
+    Start with the Kernel Installation and Distribution System Menu [XPD
+    MAIN]:
+  
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+  
+   Select Kernel Installation & Distribution System Option: INStallation
+  
+            Load a Distribution
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+            Backup a Transport Global
+  
+   Select Installation Option:
+  
+   3. Select Installation Option:
+      ---------------------------
+       NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter RA*5.0*158):
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+   4. Select Installation Option: Install Package(s):
+      -----------------------------------------------
+       **This is the step to start the installation of this KIDS patch:
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+  
+    c. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       YES//', answer NO.
+  
+    d. When prompted 'Want to DISABLE Scheduled Options, Menu
+       Options, and Protocols? YES//', answer YES.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of order':',
+       enter the following options:
+         Common Procedure Enter/Edit   [RA COMMON PROCEDURE]
+         Reason Edit                   [RA REASON EDIT]
+  
+ Backout/Roll-back strategy
+ ==========================
+ Follow the pre-installation instructions.
+  
+ During installation, if the option to back up routines was run as
+ directed, "Backup a Transport Global", then routines will have the ability
+ to be restored from the "backup" MailMan message that was generated.
+  
+ Back-out will be done only with the concurrence and participation of the
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between development
+ team, VA site/region personnel and other appropriate VA personnel. A
+ national help desk ticket should be logged before attempting any backout
+ procedure. A national help desk ticket should be logged before attempting
+ any backout procedure and the 'Released by' person on the patch should be 
+ notified.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RADD2
+    Before: B26464377   After: B32807085  **84,47,124,158**
+Routine Name: RAHLR1
+    Before: B26243078   After: B28687576  **47,125,129,158**
+Routine Name: RAIPS158
+    Before:       n/a   After: B22138051  **158**
+Routine Name: RAMAIN2
+    Before: B63318644   After: B65131513  **45,62,71,65,127,138,158**
+Routine Name: RAO7MFN
+    Before: B40096491   After: B53390914  **1,6,10,18,45,158**
+Routine Name: RAO7RO1
+    Before:  B8274058   After:  B8486631  **2,75,86,158**
+Routine Name: RAO7RON1
+    Before: B30720358   After: B31114736  **69,75,98,129,158**
+Routine Name: RAUTL17
+    Before: B16524260   After: B18028998  **158**
+ 
+Routine list of preceding patches: 86, 124, 129, 138
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 16, 2019
+Completed By:                               Date Completed: AUG 22, 2019
+Released By :                               Date Released : AUG 22, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

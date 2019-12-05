@@ -1,0 +1,366 @@
+
+=============================================================================
+Run Date: SEP 25, 2019                     Designation: MAG*3*230
+Package : MAG - IMAGING                       Priority: EMERGENCY
+Version : 3       SEQ #182                      Status: Released
+                  Compliance Date: OCT 04, 2019
+=============================================================================
+
+Associated patches: (v)MAG*3*221   <<= must be installed BEFORE `MAG*3*230'
+
+Subject: VISTA IMAGING EXCHANGE (VIX) INGEST SERVICES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ **Note - During Initial Operating Capability (IOC) testing, an issue was 
+ found when viewing PDF files that had been converted from TIFF files.  
+ When viewing the PDF files, some of the pages would be blank and a popup 
+ error would display stating "Insufficient data for an image". To correct 
+ this, MAG*3.0*230 replaces the .PDF conversion utility in the VIX with an 
+ updated version.
+  
+ Because of this issue, MAG*3.0*230 is being released as an emergency 
+ patch.  Sites will be required to have both the KIDS portion as well as 
+ the MAG3_0P230_VIX_setup.msi installed on their site VIX servers.
+  
+ The Ingest service is an extension to the existing VistA Imaging Services
+ Architecture (VISA) framework. It provides web services to attach
+ non-DICOM images to new or existing Text Integrated Utilities (TIU) notes
+ or create new TIU notes for attaching non-DICOM images related to
+ consults.
+  
+ This functionality will be utilized by mobile applications that are 
+ currently under development. In order to prepare for the use of the Ingest
+ Services, the VistA sites will need to install the updated VIX.
+  
+ MAG*3.0*230 contains the following services and their respective 
+ endpoints. The Integration Control Document (ICD) contains additional 
+ information for applications wishing to integrate. Contact the VA Help
+ Desk and log a ticket so that the Product Support Team can provide the
+ ICD.
+  
+ Ingest WebApp Service
+ The ingest WebApp is introduced in MAG*3.0*230 as the entry point for 
+ external applications to attach images. The WebApp follows the regular 
+ VIX implementation patterns.  The WebApp exposes VistA data in an 
+ implementation agnostic manner allowing application developers to 
+ concentrate on workflow and not VistA internals such as specific APIs, 
+ RPCs, database mapping, etc.
+  
+ Federation Web Service
+ MAG*3.0*230 makes modifications to the federation Web Services to support 
+ the Ingest WebApp, the Index Term and TIU services. 
+  
+ Authentication Web Service
+ Fetch structured security token - Fetch the security token to be used for 
+ the rest of the api along with VIX security token for VIX operations. 
+ This request must be made with a valid client certificate 
+  
+ IndexTerm Services
+ There are four IndexTerm Services that invoke its IndexTerm specific 
+ command. Each corresponding command is represented by one of the four use 
+ cases the extend the invoke use case.
+  
+ The following methods are accessible through the Index Term Service:
+  - getOrigins
+  - getProcedureEvents
+  - getProcedureEventsForSpecialties
+  - getSpecialties
+  - getSpecialtiesForEvents
+  - getTypes
+  - getTypesForClasses
+  
+ TIU Services
+ There are many TIU Services that invoke its TIU specific command. Each 
+ corresponding command is represented by one of the many use cases the 
+ extend the invoke use case.
+  
+ The following methods are accessible through the TIU Services:
+  - getTIUNoteTitles
+  - getTIUNoteLocations
+  - getTIUNoteAuthors
+  - createTIUNote
+  - electronicallySignTIUNote
+  - electronicallyFileTIUNote
+  - getPatientTIUNotes
+  - isTIUNoteAConsult
+  - isTIUNoteTitleAdvanceDirective
+  - isPatientTIUNoteAdvanceDirective
+  - getPatientTIUNoteText
+  - createTIUNoteAddendum
+  
+ Consult Services
+ Consult orders associated with a patient.
+ There is only one Consult command that needs to be invoked based on the 
+ Consult Services. The Consult specific command is referenced by the get 
+ consults use case.
+  
+ The following methods are accessible through the Consult Services:
+  - getPatientConsults
+  
+ Patient
+ Searching Patients
+  
+ The following methods are accessible through the Patient Services:
+  - getTreatingFacilities
+  - getPatientList
+  - getPatientSensitivityLevel
+  - logSensitivePatientAccess
+  - getPatientInformation
+  - getPatientHealthSummaries
+  - getPatientMeansTest
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: 
+ -------------------------- 
+ File Name (Number)    Field Name (Number)    New/Modified/Deleted 
+ ------------------    -------------------    --------------------
+ N/A 
+  
+ Forms Associated: 
+ Form Name              File #            New/Modified/Deleted
+ ---------              ------            ---------------------
+ N/A 
+  
+ Mail Groups Associated: 
+ Mail Group Name                          New/Modified/Deleted 
+ ---------------                          --------------------
+ N/A 
+  
+ Options Associated: 
+ Option Name            Type              New/Modified/Deleted
+ -----------            ----              ---------------------
+ N/A 
+  
+ Protocols Associated: 
+ Protocol Name                            New/Modified/Deleted
+ -------------                            --------------------
+ N/A
+  
+ Security Keys Associated: 
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated: 
+ Template Name         Type    File Name (Number)      New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs): 
+ -----------------------------
+ N/A 
+  
+ Test Sites:
+ -----------
+ Baltimore, MD
+ Mountain Home, TN
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve the files from 
+ download.vista.domain.ext.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www4.domain.ext/vdl/
+  
+ Title                           File Name                   FTP Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*230 KIDS          MAG3_0P230.KID                     ASCII
+ MAG*3.0*230 VIX Setup     MAG3_0P230_VIX_Setup.msi           Binary
+ MAG*3.0*230 CVIX Setup    MAG3_0P230_CVIX_Setup.msi          N/A
+ MAG*3.0*230 Patch         MAG3_0P230_Patch Description.PDF   Binary
+  Description                 
+ MAG*3.0*230 DIBORG        MAG3_0P230_DIBORG.pdf              Binary
+ MAG*3.0*230 VIX           MAG3_0P230_VIX_Installation        Binary
+  Installation Guide         _Guide.pdf
+ MAG*3.0*230 CVIX          MAG3_0P230_CVIX_Installation       N/A
+  Installation Guide         _Guide.pdf
+  
+ This patch installs the following software versions: 
+   
+ Apache Tomcat 8.0.53 
+ Java 8 update 202
+  
+ Note: Only the KIDS and VIX client for MAG*3.0*230 should be installed at 
+ medical centers.  As a result, the MAG3_0P230_CVIX_Setup.msi and related 
+ CVIX installation guide are not provided to sites on the SFTP server.
+  
+ The MAG3_0P230_VIX_Setup.msi will update the Tomcat service 
+ account and SQL service account passwords to conform to the fourteen (14) 
+ character password policy.
+  - The password is case-sensitive and only alphanumeric characters are
+    allowed.
+  - The password is case sensitive, must contain at least fourteen
+    (14) characters and must contain at least one capital letter and one
+    number.
+  
+  
+ Patch Installation:
+ -------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Installation Instructions:
+ KIDS installation will take 2 - 5 minutes. 
+  
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+    System Menu [XPD MAIN]. 
+ 2. Run the Installation option [XPD INSTALLATION MENU]. 
+ 3. Load the KIDS file by performing the following steps: 
+    a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load
+       the KIDS distribution.
+    b. When prompted, enter the full path and file name MAG3_0P230.KID of
+       the MAG*3.0*230 KIDS file.
+    c. When prompted to continue with the load, enter YES. A Distribution
+       OK! message will be displayed when the load is complete.
+ 4. After loading the KIDS file, use the following options to verify the 
+    contents of the patch and to back up any affected routines. 
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this
+       option to ensure the integrity of the routines in the patch. 
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+       Run this option to view all changes that will be made when the patch
+       is installed. All components (routines, options, and so on) in the
+       patch will be compared.
+    c. Backup a Transport Global [XPD BACKUP] - Run this option to create
+       a backup message for any routines exported with the patch. It will
+       NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+    the KIDS file by performing the following steps: 
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option. 
+    b. When prompted for the install name, enter MAG*3.0*230. 
+    c. Answer NO to the following prompts, if they appear: 
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+       Want KIDS to INHIBIT LOGONs during the install? NO// 
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 6. When installation is finished, an Install Complete message will be 
+    displayed. 
+  
+ Sample Installation
+ -------------------
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME:    MAG*3.0*230    6/19/19@04:56:13
+      => VistA Imaging V3.0 Patch 230 - Ingest - 02/20/2019 11:54AM  
+ ;Create
+  
+ This Distribution was loaded on Jun 19, 2019@04:56:13 with header of 
+    VistA Imaging V3.0 Patch 230 - Ingest - 02/20/2019 11:54AM  
+ ;Created on Feb 20, 2019@11:54:33
+    It consisted of the following Install(s):
+     MAG*3.0*230
+ Checking Install for Package MAG*3.0*230
+  
+ Install Questions for MAG*3.0*230
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   Linux Telnet/SSH
+ --------------------------------------------------------------------------
+  
+  Install Started for MAG*3.0*230 : 
+                Jun 19, 2019@04:58:41
+  
+ Build Distribution Date: Feb 20, 2019
+  
+  Installing Routines:
+                Jun 19, 2019@04:58:42
+  
+  Running Pre-Install Routine: PRE^MAGIP230
+  
+  Running Post-Install Routine: POS^MAGIP230
+  
+ Post Install Mail Message: Jun 19, 2019@04:58:42
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*230 Installed. 
+                Jun 19, 2019@04:58:42
+  
+ Install Completed
+  
+ Installation Verification
+ =========================
+ Successful installation can be verified by reviewing the first 2 lines of 
+ the routines contained in the patch. The second line will contain the 
+ patch number in the [PATCH LIST] section.
+  
+ The option Calculate and Show Checksum Values [XTSUMBLD-CHECK] can be run
+ to compare the routine checksums to what is documented in the patch
+ description.
+  
+ Back-out Procedures
+ ===================
+ Back-out will be done only with the concurrence and participation of the 
+ development team and appropriate VA site/region personnel. The decision to
+ back-out or rollback software will be a joint decision between the 
+ development team, VA site/region personnel and other appropriate VA
+ personnel.
+  
+  
+ Routine MAGIP230 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+  
+ Rollback, Back Out or Uninstalling MAG*3.0*230
+ ==============================================
+ If it is necessary to uninstall the MAG*3.0*230 VIX service, use the 
+ Uninstall option from Windows Control Panel to uninstall: "VIX Service
+ Installation Wizard 30.230.3.6670".  Then install the previous version of
+ VIX which was included in MAG*3.0*221. To back out the VIX and replace it
+ with prior version, please see the MAG*3.0*230 VIX Installation Guide for
+ more detail.
+  
+ New Routine Information
+ -----------------------
+  
+ Routine Name  Before Checksum  After Checksum  Patch List (2nd line)
+ ------------  ---------------  --------------  ---------------------
+ MAGIP230            N/A           4189203         **230**
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 27, 2018
+Completed By:                               Date Completed: SEP 24, 2019
+Released By :                               Date Released : SEP 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

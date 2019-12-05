@@ -1,0 +1,1107 @@
+
+=============================================================================
+Run Date: OCT 31, 2019                     Designation: XU*8*608
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #554                      Status: Released
+                  Compliance Date: DEC 01, 2019
+=============================================================================
+
+Associated patches: (v)XU*8*584    <<= must be installed BEFORE `XU*8*608'
+                    (v)XU*8*672    <<= must be installed BEFORE `XU*8*608'
+
+Subject: KERNEL LOCK MANAGER
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Description:
+ ===========
+  
+ Two related patches are being distributed in a single host file.  These
+ patches provide a new Kernel utility, the Lock Manager.  It is based on 
+ the Class 3 VistA Lock Manager developed by Tommy Martin. Both patches are
+ listed below and will be installed in the order listed.
+  
+ XU*8.0*608      - This patch contains all the software components that 
+                   make up the Kernel Lock Manager.
+  
+ XU*8.0*607      - This patch populates the new XULM LOCK DICTIONARY file
+                   (#8993). It requires the KIDS enhancement patch
+                   XU*8.0*672.
+  
+  
+ The principal use of the Lock Manager is to assist the user in locating 
+ locks whose process has become dissociated from an active user, and once
+ located to kill the process that owns the lock, thereby releasing the
+ locks held by that process.
+  
+ The advantages of this utility over the existing Cache utilities are:
+   1) You can use the Lock Manager from within VistA.
+   2) You will not need to log into multiple nodes, even if the process
+      that holds the lock is on a different node than the one you currently
+      logged onto.
+   3) The Lock Manager has built-in VistA expertise, providing in-depth
+      details about the locks, the files that the locks reference, and
+      the processes that hold the locks.  The sources of the VistA
+      expertise is the new XULM LOCK DICTIONARY file (#8993).
+   4) The lock dictionary is extendible.  You can add information about
+      locks not included in the initial release of the lock dictionary.  
+      The new component, the XULM LOCK DICTIONARY ENTRY, added to KIDS by
+      KIDS patch, XU*8.0*672, allowing application developers to add to the
+      lock dictionary and distribute their additions via KIDS.
+  
+  
+ Obtaining the Software:
+ ======================
+  
+ The KIDS distribution and user manual for the Kernel Lock Manager can be
+ obtained by using SFTP from the appropriate Customer Service directory:
+  
+  
+ OI FIELD OFFICE    FTP ADDRESS      DIRECTORY
+ ======================================================
+ First available    download.vista.domain.ext
+ Hines              ftp.domain.ext
+ Salt Lake City     ftp.domain.ext
+  
+  
+ Host File Name:
+  
+ XU_8_608_607.KID                KIDS distribution for patches XU*8.0*608
+                                 and XU*8.0*607.
+  
+ New Housekeeping APIs:
+ ======================
+ When an application terminates, there may be housekeeping required.  A
+ prime example is the need to delete temporary data kept in the ^TMP and
+ ^XTMP globals.  An application that is terminated by the lock manager 
+ won't have the opportunity to do its own cleanup, but the lock manager
+ will do it for the application if it registered a cleanup routine via the
+ new API described below.
+  
+  
+ SETCLEAN^XULMU(RTN,.VAR)
+   Description:  The purpose of this API is to register a cleanup
+       routine that should be executed when the process is terminated
+       by the Kernel Lock Manager.  An entry is created on a stack kept
+       for the process.  The location is ^XTMP("XULM CLEANUP_"_$J) where
+       $J uniquely identifies the process.  A process may call 
+       SETCLEAN^XULMU repeatedly, and each time a new entry is placed on
+       the stack.
+  
+   *Important*: Once an application calls SETCLEAN, upon exiting it must
+        either execute its housecleaning stack or delete it, using 
+        either the API CLEAN or UNCLEAN. 
+  
+    Input:
+        RTN - The routine to be executed when the process is terminated.
+  
+        VAR - A list of variables that should be defined when the
+            routine is executed.  It is up to the application to insure
+            that all the required variables are defined.
+    Output:
+            Function return value - An integer is returned that identifies
+            the entry created on the stack.  The application needs to 
+            retain the value in order to either execute the entry
+            on the housecleaning stack or to remove it.
+  
+    Example:  
+            Suppose the application has a cleanup routine CLEANUP^XXAPP,
+            and it needs to be executed with DUZ defined with its present
+            value.  The application would use this API as follows:
+  
+                    N VAR,CLEANUP
+                    S VAR("DUZ")=DUZ
+                    S CLEANUP=$$SETCLEAN^XULMU("CLEANUP^XXAPP",.VAR)
+  
+            The application's housekeeping stack would look like this:
+  
+            ^XTMP("XULM CLEANUP",$J,1,"ROUTINE")="CLEANUP^XXAPP"
+            ^XTMP("XULM CLEANUP",$J,1,"VARIABLES","DUZ")=1000061
+  
+ UNCLEAN^XULMU(LAST)
+   Description - this removes entries from the housecleaning stack set by
+       calling SETCLEAN^XULMU. Entries are removed in FIFO order.  If LAST 
+       is not passed in, then the entire stack is deleted, otherwise just
+       the entries back to LAST are removed.
+  
+   Input:
+       LAST - Identifies the last entry on the housekeeping stack to 
+              remove. Entries are removed in FIFO order, so the first entry
+              removed is the last entry that was added, and the last entry
+              removed is LAST. If not passed in, the entire housecleaning
+              stack is deleted.
+  
+     Output: none
+  
+     Example: This would remove the entire housecleaning stack: 
+  
+                     DO UNCLEAN^XULMU
+  
+     Example: If an application is called by another application, then the
+              the first application may have already placed entries of its
+              own on the stack.   So the parameter LAST needs to be passed,
+              with LAST being the first entry placed on the stack.  It will
+              be the last entry deleted, since that stack is executed in 
+              FIFO order.
+  
+  
+               DO UNCLEAN^XULMU(LAST)
+  
+  
+  
+  
+ CLEANUP^XULMU(LAST)
+  
+   Description:  This API will execute the housecleaning stack set by the
+       process identified by DOLLARJ. Entries are executed in the FIFO
+       order, with the last entry added being the first to be executed, and
+       LAST being the last entry executed. If LAST is not passed in, then
+       the entire stack is executed.
+  
+    Input:
+              XULAST (optional) - This is the last entry that will be
+              executed. If not passed in, then the entire housecleaning
+              stack is executed.
+  
+    Output: none
+  
+    Example:  An application may execute the entire housecleaning stack
+              with the following code:
+  
+               DO CLEANUP^XULMU
+  
+    Example:  If an application is called by another application, then the
+              the first application may have already placed entries of its
+              own on the stack.  So the parameter LAST needs to be passed,
+              with LAST being the first entry placed on the stack.  It will
+              be the last entry executed, since that stack is executed in 
+              FIFO order.
+  
+               DO CLEANUP^XULM(LAST)
+  
+  
+ Patch Components:
+ ================
+  
+  
+ Modified Options:
+ ================
+   XUSITEMGR [Operations Management]
+     The new XULM LOCK MANAGER MENU [LOCK MANAGER MENU] is now located on
+     this menu.
+  
+  
+ Files & Fields Associated:
+ =========================
+ XULM LOCK DICTIONARY (#8993)
+     This file contains descriptions and specifications for locks held by
+     various applications.  The Lock Manager uses it to provide 
+     information and guidance to the user about locks found in the lock 
+     table.
+  
+ Field Name                     Field Number           New/Modified/Deleted
+ ==========================================================================
+ LOCK TEMPLATE                  .01                             N
+ PACKAGE                        1.01                            N
+ GLOBAL LOCK?                   1.02                            N
+ PARTIAL MATCH ALLOWED?         1.03                            N
+ ARRAY SUBSCRIPTS               2                               N
+  -SUBSCRIPT ORDER NUMBER       .01                             N
+  -SUBSCRIPT                    .02                             N
+  -TYPE                         .04                             N
+  -VARIABLE CHECK LOGIC         1                               N
+ COMPUTABLE FILE REFERENCES     3                               N
+  -FILE                         .01                             N
+  -FILE REFERENCE LOGIC         1                               N
+  -DESCRIPTION                  2                               N
+ USAGE                          4                               N
+  -USAGE                        .O1                             N
+  
+  
+ XULM LOCK MANAGER LOG (#8993.2)
+     This file records each instance of the Kernel Lock Manager being
+     used to terminate a process and the locks that the process held.
+  
+ Field Name                             Field Number   New/Modified/Deleted
+ ==========================================================================
+ DATE/TIME PROCESS TERMINATED           .01                     N
+ THE TERMINATOR                         .02                     N
+ PROCESS DESCRIPTION                    1                       N
+  -PROCESS DESCRIPTION                  .01                     N
+  
+  
+ XULM LOCK MANAGER PARAMETERS (#8993.1)
+     This is the parameter file for the Kernel Lock Manager.  It should
+     contain only one entry.
+  
+ Field Name                             Field Number   New/Modified/Deleted
+ ==========================================================================
+ SITE NAME                              .01                     N
+ APPLICATION STATUS                     1                       N
+ NODES                                  3                       N
+  -NODES                                .01                     N
+  -TCP/IP ADDRESS                       .02                     N
+  -BROKER PORT                          .03                     N
+  -SHORT DISPLAY NAME                   .04                     N
+ PARAM FILE LAST EDITED                 4                       N
+ LAST EDITED BY                         4.5                     N
+ SYSTEM LOCKS                           5                       N
+  -VARIABLE NAME                        .01                     N
+  -SYSTEM LOCK                          .02                     N
+  -GLOBAL LOCK?                         .03                     N
+ NETWORK LATENCY DELAY                  6                       N
+ USE ABBREVIATED MENU?                  7                       N
+ ABBREVIATED MENU DEFAULT #             8                       N
+ FULL MENU DEFAULT #                    9                       N
+  
+  
+ Forms Associated:
+ ================
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+ ======================
+ N/A
+  
+ Options Associated:
+ ==================
+   XULM LOCK MANAGER MENU [LOCK MANAGER MENU]
+     This menu holds all the options for the Kernel Lock Manager.
+  
+   XULM LOCK MANAGER [KERNEL LOCK MANAGER]
+     This option allows the user to display the lock table and
+     terminate processes that hold problem locks.
+  
+   XULM VIEW LOCK MANAGER LOG [VIEW LOCK MANAGER LOG]
+     This option is for viewing the Kernel Lock Manager Log. 
+  
+   XULM PURGE LOCK MANAGER LOG [PURGE LOCK MANAGER LOG]
+     This option is used to purge the Lock Manger Log of old 
+     entries.
+  
+   XULM EDIT PARAMETERS [EDIT LOCK MANAGER PARAMETERS]
+     This option is for editing the site parameters for the Kernel
+     Lock Manager.  
+  
+   XULM EDIT LOCK DICTIONARY    [Edit Lock Dictionary]
+     This option allows users to add entries to the lock dictionary
+     or edit existing entries.
+  
+   XULM RPC BROKER CONTEXT      [KERNEL LOCK MANAGER]
+     This is the 'B' type option used by the Kernel Lock Manager.  
+  
+  
+ Protocols Associated:
+ ====================
+   XULM DISPLAY SYSTEM LOCKS
+     This List Template action protocol displays a list of the system
+     locks.  System locks are generally ignored within the Lock Manager.
+     They are locks held by infrastructure packages, such as the Kernel
+     or HL7 package.  
+  
+   XULM LOCK MANAGER MENU
+     This is the protocol menu for the Kernel Lock Manager List Manager
+     screen.  
+  
+   XULM REFRESH LOCKS
+     This List Manager action protocol re-builds the list of locks by
+     reading the lock table. 
+  
+   XULM SELECT LOCK
+     This action allows a user to select a lock from the list.  It then
+     displays a new screen with detailed information about the lock.      
+  
+   XULM GO TO
+     This List Manager action asks the user where he wants to go to on the
+     list and then shifts the display to that location.  
+  
+   XULM SORT/SCREEN LOCKS
+     This action provides the user with several options for how the list 
+     locks should be displayed.  The options include sorting the list by
+     patient name, sorting the list by the user name, sorting the list by
+     the lock string, or screening the entries by lock reference, which
+     means that only locks that relate to a specific file will be included
+     in the display. 
+  
+   XULM SELECT NODE
+     This action allows the user to select either a single computer node or
+     all the computer nodes.  If the user selects a single node then the
+     display of locks will include only locks placed by processes running
+     on that node.   
+  
+   XULM SINGLE LOCK MENU
+     This is the protocol menu for the XULM DISPLAY SINGLE LOCK List 
+     Template.    
+  
+   XULM TERMINATE PROCESS
+     This List Manager action protocol will terminate the process that is
+     currently selected.  
+  
+ Security Keys Associated:
+ ========================  
+   XULM LOCKS
+     Controls access to the Kernel Lock Manager.
+   
+   XULM SYSTEM LOCKS 
+     Controls access to the system-level locks.
+  
+ Templates Associated:
+ ====================
+  
+ Name                        Type    File Name       # New/Modified/Deleted
+ ==========================================================================
+ XULM LOCK MANAGER           LIST    N/A             N/A        N
+ XULM DISPLAY SINGLE LOCK    LIST    N/A             N/A        N
+ XULM EDIT PARAMETERS        INPUT   XULM LOCK       8993.1     N
+                                     MANAGER
+                                     PARAMETERS
+  
+  
+ Remote Procedures Associated:
+ ============================
+ XULM GET LOCK TABLE
+  This RPC is used by the Lock Manager to obtain the lock table on a 
+  specific node.  The lock table is returned in a global.
+  
+ XULM KILL PROCESS
+  This RPC is used by the Kernel Lock Manager to terminate a process.
+  
+ Additional Information:
+ ======================
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ ============================
+ N/A
+  
+ New Service Requests (NSRs):
+ ==========================
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ===========================
+ N/A
+  
+  
+ Blood Bank Clearance:
+ ====================
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS
+ ============================================
+ Patch XU*8*608 contains changes to a package referenced in VHA OI SEPG SOP
+ 192-023 Review of VISTA Patches for Effects on VISTA Blood Bank Software.
+ This patch does not alter or modify any VistA Blood Bank software design
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*608 have no effect on Blood Bank
+ software functionality, therefore, RISK is none.
+  
+  
+ Test Sites:
+ ===========
+ Martinsburg VAMC
+ Northport VAMC
+ Dublin VAMC
+ Boston VAMC
+ St. Cloud VAMC
+  
+ Documentation Retrieval Instructions: 
+ ==================================== 
+ The Kernel Lock Manager Supplement to Patch Description (XU*8.0*608 & 607)
+ is available on the VA Software Document Library (VDL) at the following
+ Internet Website: http://www.domain.ext/vdl/application.asp?appid=10   
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOCX) and Adobe Acrobat Portable Document Format (.PDF).  
+  
+ Lock Manager documentation includes:
+  
+ * Patches XU*8.0*608, 607, and 672 Lock Manager Supplement to Patch 
+ Description
+  
+ Post patch release, the content in the supplemental document will be 
+ incorporated into the following Kernel baseline documents:
+  
+ * Kernel 8.0 & Kernel Toolkit 7.3 Systems Management Guide
+ * Kernel 8.0 & Kernel Toolkit 7.3 Developer's Guide
+ * Kernel 8.0 & Kernel Toolkit 7.3 Technical Manual 
+  
+  
+ Patch Installation:
+ ================== 
+  
+ *******************************************************
+ * These installation instructions cover 2 patches:    *
+ *    XU*8.0*608                                       *
+ *    XU*8.0*607                                       *
+ *                                                     *
+ * Both patches will be loaded from a single host      *
+ * file and installed at the same time.                *
+ *                                                     *
+ *******************************************************
+  
+ Cache Install/Update scripts Include %ZLMLIB
+ ============================================
+  
+ The routine %ZLMLIB is essential to the proper functioning of the Kernel 
+ Lock Manager, to address the issue of requiring elevated privileges to 
+ save the %ZLMLIB routine in CACHESYS, HSP has proposed including the 
+ %ZLMLIB routine as part of their Cache Install and Upgrade scripts for 
+ Linux and VMS platforms. This also addresses the issue of the %ZLMLIB 
+ routine being deleted upon a Cache upgrade. HSP has already acted on this 
+ proposal by including %ZLMLIB routine for the Cache Install and Upgrade 
+ scripts for both Linux and VMS platforms.
+  
+   
+ Pre/Post Installation Overview
+ ==============================
+ The Post-Installation routine for patch XU*8.0*608 populates the LOCK 
+ MANAGER PARAMETERS file (#8993.1)
+  
+  
+  
+ Installation Instructions:
+ =========================
+ There are no options that need be disabled.
+  
+  
+ Pre-Installation Instructions:
+ =============================
+  - Users may remain on the system.
+  - Make sure no other patch is being installed at the same time.
+  - TaskMan does *not* need to be stopped or put in wait state. 
+  - This installation can be queued.
+  - Installation should take less than 2 minutes.
+  
+ 1. Obtain the host file via SFTP from one of the sites listed above 
+    and place it on your system.  The host file contains these patches:
+  
+    XU*8.0*608
+    XU*8.0*607
+  
+  
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu. Then select the Load a Distribution option.
+  
+    You will be prompted to enter the name of the host file.  Enter
+    the full name, including the directory.  
+  
+    KIDS will load both patches from the host file.
+  
+  
+ 3. From the Installation Menu, you may elect to use the
+    following option. When prompted for the INSTALL enter the patch # 
+    XU*8.0*608.  This install contains the two patches listed above.
+  
+    a.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+    c.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    when prompted for the patch to install enter XU*8.0*608.  Both
+    patches will be installed in the correct order.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+    Install? NO//'     
+    
+     Answer NO.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+    NO//
+  
+     Answer NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO// 
+  
+     Answer NO. 
+  
+ 8. If prompted Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Sample Installation:
+ ===================
+  
+ Select Kernel Installation & Distribution System <TEST ACCOUNT> Option:
+ INSTallation
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation <TEST ACCOUNT> Option: 1  Load a Distribution
+ Enter a Host File: USER$:[ANONYMOUS]XU_8_608_607.KID
+  
+ KIDS Distribution saved on Feb 05, 2015@07:15:54
+ Comment: Iteration 3
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    XU*8.0*608
+    XU*8.0*607
+ Distribution OK!
+  
+ Want to Continue with Load? YES// YES
+ Loading Distribution...
+  
+    XU*8.0*608
+    XU*8.0*607
+  
+ Use INSTALL NAME: XU*8.0*608 to install this Distribution.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation <TEST ACCOUNT> Option: 2  Verify Checksums in
+ Transport Global
+  
+ Select INSTALL NAME:    XU*8.0*607     Loaded from Distribution   
+ 2/5/15@07:52:25
+      => Release of Kernel Lock Manager  ;Created on Feb 05, 2015@07:15:54
+  
+ This Distribution was loaded on Feb 05, 2015@07:52:25 with header of 
+    Iteration 3  ;Created on Feb 05, 2015@07:15:54
+    It consisted of the following Install(s):
+      XU*8.0*607
+  
+ Want each Routine Listed with Checksums: Yes// NO
+ DEVICE: HOME//   Network
+  
+ PACKAGE: XU*8.0*607     Feb 05, 2015 7:53 am                          
+ PAGE 1
+ --------------------------------------------------------------------------
+    0 Routine checked, 0 failed.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ <CPM> Select Installation <TEST ACCOUNT> Option: COMPare Transport Global 
+ to Current System
+  
+ Select INSTALL NAME: XU*8.0*608      10/29/19@10:48:26
+      => Kernel Lock Manager  ;Created on Oct 28, 2019@13:30:02
+  
+ This Distribution was loaded on Oct 29, 2019@10:48:26 with header of
+    Kernel Lock Manager  ;Created on Oct 28, 2019@13:30:02
+    It consisted of the following Install(s):
+      XU*8.0*608     XU*8.0*607
+  
+      Select one of the following:
+  
+           1         Full Comparison
+           2         Second line of Routines only
+           3         Routines only
+           4         Old style Routine compare
+  
+ Type of Compare: 1  Full Comparison
+ DEVICE: HOME// ;;99999  CONSOLE
+  
+ Compare KIDS package XU*8.0*608 to current site (Disk)
+ Site: VEHU.DOMAIN.EXT  UCI: GOLD,ROU  Oct 29, 2019@10:49:14
+    KIDS                                    Disk
+ --------------------------------------------------------------------------
+  
+ *ADD* Routine: XU8P608
+  
+ *ADD* Routine: XU8P608B
+  
+ *ADD* Routine: XULM
+  
+ *ADD* Routine: XULM1
+  
+ *ADD* Routine: XULMLD
+  
+ *ADD* Routine: XULMLOG
+  
+ *ADD* Routine: XULMOUT
+  
+ *ADD* Routine: XULMP
+  
+ *ADD* Routine: XULMRPC
+  
+ *ADD* Routine: XULMU
+  
+ *ADD* Routine: XULMUI
+  
+ *ADD* Routine: XULMUI1
+  
+  
+ --------------------------------------------------------------------------
+  
+                           ENTRIES IN FILE #.11 (INDEX)
+  
+  *ADD* INDEX: AC^Used to find global references.
+  
+  
+ --------------------------------------------------------------------------
+  
+                           ENTRIES IN FILE #.11 (INDEX)
+  
+  *ADD* INDEX: C^Uniqueness Index for Key 'A' of File #8993
+  
+  
+ --------------------------------------------------------------------------
+  
+                           ENTRIES IN FILE #.11 (INDEX)
+  
+  *ADD* INDEX: E^Lookup on the #1.02 and .01 fields
+  
+  
+ --------------------------------------------------------------------------
+  
+                           ENTRIES IN FILE #.11 (INDEX)
+  
+  *ADD* INDEX: C^Uniqueness Index for Key 'A' of Subfile #8993.03
+  
+  
+ --------------------------------------------------------------------------
+  
+                           ENTRIES IN FILE #.11 (INDEX)
+  
+  *ADD* INDEX: AC^Used for matching entries to the lock table.
+  
+                FILE # 8993 (XULM LOCK DICTIONARY) is NEW
+  
+  
+                FILE # 8993.1 (XULM LOCK MANAGER PARAMETERS) is NEW
+  
+  
+                FILE # 8993.2 (XULM LOCK MANAGER LOG) is NEW
+  
+  
+  
+  
+ --------------------------------------------------------------------------
+  
+                       ENTRIES IN FILE #19.1 (SECURITY KEY)
+  
+  *ADD* SECURITY KEY: XULM LOCKS
+  
+  *ADD* SECURITY KEY: XULM SYSTEM LOCKS
+  
+  
+ --------------------------------------------------------------------------
+  
+                      ENTRIES IN FILE #.402 (INPUT TEMPLATE)
+  
+  *ADD* INPUT TEMPLATE: XULM EDIT PARAMETERS
+  
+  
+ --------------------------------------------------------------------------
+  
+                         ENTRIES IN FILE #101 (PROTOCOL)
+  
+  *ADD* PROTOCOL: XULM LOCK MANAGER MENU
+  
+  *ADD* PROTOCOL: XULM SELECT LOCK
+  
+  *ADD* PROTOCOL: XULM SINGLE LOCK MENU
+  
+  *ADD* PROTOCOL: XULM DISPLAY SYSTEM LOCKS
+  
+  *ADD* PROTOCOL: XULM REFRESH LOCKS
+  
+  *ADD* PROTOCOL: XULM TERMINATE PROCESS
+  
+  *ADD* PROTOCOL: XULM GO TO
+  
+  *ADD* PROTOCOL: XULM SORT/SCREEN LOCKS
+  
+  *ADD* PROTOCOL: XULM SELECT NODE
+  
+  
+ --------------------------------------------------------------------------
+  
+                     ENTRIES IN FILE #8994 (REMOTE PROCEDURE)
+  
+  *ADD* REMOTE PROCEDURE: XULM GET LOCK TABLE
+  
+  *ADD* REMOTE PROCEDURE: XULM KILL PROCESS
+  
+  
+ --------------------------------------------------------------------------
+  
+                     ENTRIES IN FILE #409.61 (LIST TEMPLATE)
+  
+  *ADD* LIST TEMPLATE: XULM LOCK MANAGER
+  
+  *ADD* LIST TEMPLATE: XULM DISPLAY SINGLE LOCK
+  
+  
+  
+ --------------------------------------------------------------------------
+  
+                           ENTRIES IN FILE #19 (OPTION)
+                                OPTION: XUSITEMGR
+   PACKAGE: KERNEL
+  
+  *ADD* OPTION: XULM EDIT LOCK DICTIONARY
+  
+  *ADD* OPTION: XULM RPC BROKER CONTEXT
+  
+  *ADD* OPTION: XULM LOCK MANAGER
+  
+  *ADD* OPTION: XULM LOCK MANAGER MENU
+  
+  *ADD* OPTION: XULM VIEW LOCK MANAGER LOG
+  
+  *ADD* OPTION: XULM PURGE LOCK MANAGER LOG
+  
+  *ADD* OPTION: XULM EDIT PARAMETERS
+  
+ Compare KIDS package XU*8.0*607 to current site (Disk)
+ Site: VEHU.DOMAIN.EXT  UCI: GOLD,ROU  Oct 29, 2019@10:49:14
+    KIDS                                    Disk
+ --------------------------------------------------------------------------
+  
+                                 No Routines
+  
+  
+  File 8993 is not XULM LOCK DICTIONARY, nothing can be installed.
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ <CPM> Select Installation <TEST ACCOUNT> Option: COMPare Transport Global 
+ to Current System
+  
+ Select INSTALL NAME: XU*8.0*607      10/29/19@10:48:26
+      => Kernel Lock Manager  ;Created on Oct 28, 2019@13:30:02
+  
+ This Distribution was loaded on Oct 29, 2019@10:48:26 with header of
+    Kernel Lock Manager  ;Created on Oct 28, 2019@13:30:02
+    It consisted of the following Install(s):
+      XU*8.0*607
+  
+      Select one of the following:
+  
+           1         Full Comparison
+           2         Second line of Routines only
+           3         Routines only
+           4         Old style Routine compare
+  
+ Type of Compare: 1  Full Comparison
+ DEVICE: HOME// ;;99999  CONSOLE
+  
+ Compare KIDS package XU*8.0*607 to current site (Disk)
+ Site: VEHU.DOMAIN.EXT  UCI: GOLD,ROU  Oct 29, 2019@10:49:29
+    KIDS                                    Disk
+ --------------------------------------------------------------------------
+  
+                                 No Routines
+  
+  
+  File 8993 is not XULM LOCK DICTIONARY, nothing can be installed. 
+  
+  
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation <TEST ACCOUNT> Option: 5  Backup a Transport Global
+ Select INSTALL NAME: XU*8.0*608       Loaded from Distribution   
+ 2/5/15@07:52:25
+      => Iteration 3  ;Created on Feb 05, 2015@07:15:54
+  
+ This Distribution was loaded on Feb 05, 2015@07:52:25 with header of 
+    Iteration 3  ;Created on Feb 05, 2015@07:15:54
+    It consisted of the following Install(s):
+      XU*8.0*608     XU*8.0*607
+ Subject: Backup of XU*8.0*608 install on Feb 05, 2015
+   Replace 
+ Loading Routines for XU*8.0*608
+ Routine XU8P608 is not on the disk..
+ Routine XU8P608B is not on the disk..
+ Routine XULM is not on the disk..
+ Routine XULM1 is not on the disk..
+ Routine XULMLD is not on the disk..
+ Routine XULMLOG is not on the disk..
+ Routine XULMOUT is not on the disk..
+ Routine XULMP is not on the disk..
+ Routine XULMRPC is not on the disk..
+ Routine XULMU is not on the disk..
+ Routine XULMUI is not on the disk..
+ Routine XULMUI1 is not on the disk..
+ Loading Routines for XU*8.0*603......
+ No routines for XU*8.0*607
+  
+ Send mail to: GABER,ROY G//   GABER,ROY G
+ Select basket to send to: IN//   
+ And Send to: 
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME: XU*8.0*608       Loaded from Distribution   
+ 2/5/15@07:52:2
+ 5
+      => Iteration 3  ;Created on Feb 05, 2015@07:15:54
+  
+ This Distribution was loaded on Feb 05, 2015@07:52:25 with header of 
+    Iteration 3  ;Created on Feb 05, 2015@07:15:54
+    It consisted of the following Install(s):
+      XU*8.0*608     XU*8.0*603     XU*8.0*607
+ Checking Install for Package XU*8.0*608
+  
+ Install Questions for XU*8.0*608
+  
+ Incoming Files:
+  
+  
+    8993      XULM LOCK DICTIONARY
+  
+    8993.1    XULM LOCK MANAGER PARAMETERS
+  
+    8993.2    XULM LOCK MANAGER LOG
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+ Checking Install for Package XU*8.0*607
+  
+ Install Questions for XU*8.0*607
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   Network
+ --------------------------------------------------------------------------
+  
+  Install Started for XU*8.0*608 : 
+                Feb 05, 2015@07:55:36
+  
+ Build Distribution Date: Feb 05, 2015
+  
+  Installing Routines:
+                Feb 05, 2015@07:55:36
+  
+  Installing Data Dictionaries: 
+                Feb 05, 2015@07:55:36
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing SECURITY KEY
+  
+  Installing INPUT TEMPLATE
+  
+  Installing PROTOCOL
+  
+  Installing REMOTE PROCEDURE
+  
+  Installing LIST TEMPLATE
+  
+  Installing OPTION
+                Feb 05, 2015@07:55:37
+  
+  Running Post-Install Routine: POST^XU8P608
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  XU*8.0*608 Installed. 
+                Feb 05, 2015@07:55:37
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+  
+  Not a production UCI
+  
+  NO Install Message sent 
+  
+  Install Started for XU*8.0*607 : 
+                Feb 05, 2015@07:55:37
+  
+ Build Distribution Date: Feb 05, 2015
+  
+  Installing Routines:
+                Feb 05, 2015@07:55:37
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing XULM LOCK DICTIONARY
+                Feb 05, 2015@07:55:38
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  XU*8.0*607 Installed. 
+                Feb 05, 2015@07:55:38
+  
+  Not a production UCI
+  
+  
+  
+ Install Completed
+  
+  
+  
+  
+ Post-Installation Instructions
+ ==============================
+  
+ These steps are needed to complete the installation:
+  
+  
+ 1) Site parameters must be entered using the option XULM EDIT PARAMETERS
+    [EDIT LOCK MANAGER PARAMETERS] located on the XUSITEMGR menu option
+    [Operations Management].  This needs to be done for both the test 
+    account and the production account.
+  
+    Using this option:
+  
+    A. Set the APPLICATION STATUS to ENABLED.
+    B. For each node in the system configuration, do the following:
+       a. At the "Select NODES:" prompt, enter the name of the node.  The 
+       name can be obtained by logging onto the node and entering at the
+       MUMPS prompt:   W ##class(%SYS.System).GetInstanceName()
+  
+          The instance name is returned.   
+  
+          In this example the instance is named ISFKDASVR.
+  
+          
+ Example:
+          W ##class(%SYS.System).GetInstanceName()
+          ISFKDASVR  <-- Instance name is returned
+          
+  
+       Note: If the instance name is entered incorrectly, or later it 
+       changes, the Lock Manager will automatically correct it the next
+       time it is used to display the lock table. It does this by
+       node, using the IP address and port for that node, to query that 
+       node for its instance name.
+  
+       b. At the 'TCP/IP ADDRESS' prompt, enter the IP address.
+  
+       c. At the 'BROKER PORT' prompt, enter the port number of the Broker
+          running on that port.  Either the RPC Broker port or the M-to-M 
+          port can be used, but the RPC Broker port is recommended and is
+          more widely available.
+  
+       d. The 'SHORT DISPLAY NAME' prompt is optional.  If the node's name 
+          is over 8 characters, it is necessary at times to display a
+          shortened version.  The default is to display only the last 8
+          characters. If the result isn't satisfactory, you may enter a
+          shortened name for the node to use as an alternative.  This
+          pertains especially to Linux systems.
+  
+  
+ 2) For each user that needs access to the Lock Manager:
+    A. Assign the user the XULM LOCKS security key.
+    B. Assign the user the XULM RPC BROKER CONTEXT option, which is the
+       context option used by the RPC broker for the Lock Manager when 
+       making remote procedure calls.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;8.0;KERNEL;**[Patch List]**;JUL 10, 1995;Build 84
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P608
+    Before:       n/a   After: B17447365  **608**
+Routine Name: XU8P608B
+    Before:       n/a   After:   B804645  **608**
+Routine Name: XULM
+    Before:       n/a   After: B81106667  **608**
+Routine Name: XULM1
+    Before:       n/a   After: B50526613  **608**
+Routine Name: XULMLD
+    Before:       n/a   After: B21250798  **608**
+Routine Name: XULMLOG
+    Before:       n/a   After:  B1246554  **608**
+Routine Name: XULMOUT
+    Before:       n/a   After:  B5021337  **608**
+Routine Name: XULMP
+    Before:       n/a   After:  B4650714  **608**
+Routine Name: XULMRPC
+    Before:       n/a   After:  B1268183  **608**
+Routine Name: XULMU
+    Before:       n/a   After: B42882077  **608**
+Routine Name: XULMUI
+    Before:       n/a   After:B168290703  **608**
+Routine Name: XULMUI1
+    Before:       n/a   After: B48620576  **608**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 15, 2012
+Completed By:                               Date Completed: OCT 31, 2019
+Released By :                               Date Released : OCT 31, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

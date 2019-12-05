@@ -1,0 +1,610 @@
+$TXT Created by                  at TAS-EINS-HFD.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 08/27/19 at 06:16
+=============================================================================
+Run Date: OCT 10, 2019                     Designation: IB*2*631
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #593                      Status: Released
+                  Compliance Date: NOV 09, 2019
+=============================================================================
+
+Associated patches: (v)IB*2*621    <<= must be installed BEFORE `IB*2*631'
+
+Subject: MCCF EDI TAS EINSURANCE BUILD 10/13
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The purpose of this patch is to meet the requirements of the Medical Care
+ Collection Fund (MCCF) Electronic Data Interchange (EDI) Transaction 
+ Application Suite (TAS) Phase 2 project.
+  
+  
+ 1.  VistA has been modified to tell the Financial Services Center (FSC),
+     when sending insurance inquiry messages, how the inquiry was created 
+     or if it is a retransmission or re-try.
+  
+ 2.  VistA has been modified so that unwanted coverage limitation dates and
+     related values can be quickly identified and deleted without
+     compromising the group.
+  
+ 3.  VistA has been modified to store the method of response processing for
+     all insurance verification that take place in VistA.  The system will
+     capture whether the inquiry was created by a human or no-touch method.
+     The system will also capture how the insurance information was
+     processed, whether it be by a human or a no-touch method.
+   
+ 4.  VistA has been modified so that when the Medicare electronic 
+     Explanation of Benefits (eEOB) returns, the system will persist the
+     Source of Information (SOI) if it is populated with a valid value on
+     the patient policy.
+  
+ 5.  Corrected the VistA software where an invalid value was being
+     populated in the Source of Information field when a new Patient Policy
+     was created.
+  
+ 6.  VistA has been modified to correct the Insurance Import misfiling. Now
+     an Insurance Verifier can see all data elements of an imported patient
+     insurance policy in the correct fields in the option PROCESS INSURANCE
+     BUFFER so that electronic Insurance Verification (eIV) can attempt to
+     verify the eligibility for benefits and thus the buffer entries can be
+     processed properly.
+  
+ 7.  VistA has been modified to change the name of the Source Of
+     Information (SOI) file (#355.12) entry's DESCRIPTION field (#.02) from
+     "PURCHASED CARE CHOICE" to "COMMUNITY CARE NETWORK". Also, changed the
+     IB BUFFER ACRONYM field (#.03) from "PCC" to "CCN" for the same SOI
+     entry.
+  
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)
+  Sub-file Name (#)   Field Name (Number)@           New/Modified/Deleted
+ -------------------  ------------------------------ --------------------
+ IIV TRANSMISSION QUEUE (#365.1)                           Modified
+                       WHICH EXTRACT (#.1)                 Modified
+ CREATION TO PROCESSING TRACKING (#355.36)                 New
+  
+  
+ Bulletins Associated:
+  
+ Bulletin Name                                       New/Modified/Deleted
+ -------------                                       --------------------
+ N/A                                                 
+  
+  
+ Dialogs Associated:
+  
+ Dialog Name                                         New/Modified/Deleted
+ -----------                                         --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File Name (Number)     New/Modified/Deleted
+ ---------                    ------------------     --------------------
+ N/A
+  
+  
+ Functions Associated:
+  
+ Function Name                                       New/Modified/Deleted
+ -------------                                       --------------------
+ N/A
+  
+  
+ HL Logical Link:
+  
+ HL Logical Name                                     New/Modified/Deleted
+ ---------------                                     --------------------
+ N/A
+  
+  
+ HL7 Application Parameters:
+  
+ HL7 Parameter Name                                  New/Modified/Deleted
+ ------------------                                  --------------------
+ N/A
+  
+  
+ HLO Application Registry:
+  
+ HLO Registry Name                                   New/Modified/Deleted
+ -----------------                                   --------------------
+ N/A
+  
+  
+ Help Frames Associated:
+  
+ Help Frame Name                                     New/Modified/Deleted
+ ---------------                                     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                     New/Modified/Deleted
+ ---------------                                     --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                             Type        New/Modified/Deleted
+ -----------                             ----        --------------------
+ N/A
+  
+  
+ Parameter Definitions:
+  
+ Parameter Name                                      New/Modified/Deleted
+ --------------                                      --------------------
+ N/A
+  
+  
+ Parameter Template:
+  
+ Template Name                                       New/Modified/Deleted
+ -------------                                       --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                       New/Modified/Deleted
+ -------------                                       --------------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name                               New/Modified/Deleted
+ ---------------------                               --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name                                   New/Modified/Deleted
+ -----------------                                   --------------------
+ N/A
+  
+  
+ Templates, Input Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted
+ -------------      ----      ------------------     --------------------
+ N/A
+  
+  
+ Templates, List Associated:
+  
+ Template Name      Type                             New/Modified/Deleted
+ -------------      ----                             --------------------
+ N/A
+  
+  
+ Templates, Print Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted
+ -------------      ----      ------------------     --------------------
+ N/A
+  
+  
+ Templates, Sort Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted
+ -------------      ----      ------------------     --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview
+ -------------------------------------------
+ 1. N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ ALEXANDRIA, LA
+ CLARKSBURG, WV
+ KANSAS CITY, MO
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Hines:          domain.ext 
+ Salt Lake City: domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at:  https://www.domain.ext/vdl/
+  
+ Title                          File Name                     SFTP Mode
+ ----------------------------------------------------------------------
+  
+ Deployment, Installation,      IB_2_0_P631_IG.PDF            Binary
+  Back-out, and Rollback Guide
+  (IB*2.0*631) 
+  
+ Electronic Insurance           IB_2_0_P631_EIV_TM.PDF        Binary
+  Verification (eIV)
+  Technical Manual/Security Guide
+  
+ Integrated Billing (IB)        IB_2_0_P631_TM.PDF            Binary
+  V. 2.0 Technical Manual
+  
+ Electronic Insurance           IB_2_0_P631_EIV_UM.PDF        Binary
+  Verification (eIV) User Guide
+  
+ Integrated Billing (IB)        IB_2_0_P631_UM.PDF            Binary
+  V. 2.0 User Manual
+  
+  
+                               
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ DO NOT QUEUE the installation of this patch.
+                       
+ To avoid disruptions, this patch should be installed during non-peak 
+ hours when there is minimal activity on the system and there are no 
+ Integrated Billing users on the system.
+  
+ The post install routine IBY631PO may be deleted after the installation 
+ is complete. Refer to the post-installation instructions for more details
+ regarding what this routine specifically does.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ *****************************************************************
+ * You should install this patch during non-peak hours, when no  *
+ * Integrated Billing users are on the system.                   *
+ *****************************************************************
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ **************************************************************************
+ *IMPORTANT: The IIV EC HL7 Logical Link will need to be shut down before *
+ *           installing IB*2.0*631 and restarted after the installation is*
+ *           complete.                                                    *
+ *                                                                        *
+ * CRITICAL: Manila OC, PI (Station #358) You do NOT have this logical    *
+ *           link running.  Skip this step. Go straight to step 1 of      *
+ *           installation, as you are only installing this patch.  You are*
+ *           not running or scheduling anything.                          *
+ **************************************************************************
+                                                                        
+            To shut down the IIV EC HL7 Logical Link perform the following
+            steps.
+  
+            1.  At the option prompt, select the option: HL7 MAIN MENU
+            2.  Then select the option: FILER and Link Management Options
+            3.  Then select the option: START/Stop Links
+            4.  When prompted for "HL LOGICAL LINK NODE", enter "IIV EC"
+            5.  When prompted for "Okay to shut down this job?", enter 
+                "YES"
+  
+ **************************************************************************
+ *IMPORTANT:The VistA option eIV Nightly Process [IBCNE IIV BATCH PROCESS]*
+ *          should be unscheduled in TaskMan before installing IB*2.0*631.*
+ *                                                                        *
+ * CRITICAL: Manila OC, PI (Station #358) You do NOT have this option     *
+ *           scheduled. Skip this 'unschedule' step.  You will only be    *
+ *           installing this patch.  You will not be scheduling this      *
+ *           option after installation.                                   *
+ **************************************************************************
+  
+            It will be necessary to unschedule the eIV Nightly Process
+            [IBCNE IIV BATCH PROCESS] option before installing the patch.
+  
+            An example of how to unschedule this option in TaskMan is
+            shown below:
+  
+  
+            eIV Nightly Process [IBCNE IIV BATCH PROCESS] option
+            ----------------------------------------------------      
+  
+            1. At the option prompt select the option: TaskMan Management
+            2. When prompted for "Select TaskMan Management Option", enter 
+               "Schedule/Unschedule Options"
+            3. When prompted for "Select OPTION to schedule or reschedule",
+               enter "IBCNE IIV BATCH PROCESS"
+            4. When prompted for " ...OK? Yes//", enter "YES"
+  
+  
+              Example below:
+              ------------- 
+  
+                           Edit Option Schedule
+     Option Name: IBCNE IIV BATCH PROCESS
+     Menu Text: eIV NIGHTLY PROCESS                       TASK ID: 279418
+   
+ __________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME: JUN 4,2019@22:00 @ ?
+  
+                            >> Enter the '@' sign as shown above.
+                            >> This will automatically delete the date/time
+  
+  
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+  QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 1D
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING:
+  
+ _____________________________________________________________________   
+ Exit     Save     Next Page     Refresh
+  
+ Enter a command or '^' followed by a caption to jump to a specific field.
+  
+  
+  
+  
+     Edit Option Schedule
+     Option Name: IBCNE IIV BATCH PROCESS
+     Menu Text: eIV NIGHTLY PROCESS                       TASK ID:
+   
+ __________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME:
+  
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+  QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 1D
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING:
+  
+ __________________________________________________________________________
+ Exit     Save     Next Page     Refresh
+  
+ Enter a command or '^' followed by a caption to jump to a specific field.
+  
+  
+ COMMAND: S ? Save the work               
+  
+  
+                            >> Enter 'S' to Save, as shown above.
+  
+  
+  
+     Edit Option Schedule
+     Option Name: IBCNE IIV BATCH PROCESS
+     Menu Text: eIV NIGHTLY PROCESS                       TASK ID:
+   
+ __________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME:
+  
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+  QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 1D
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING:
+  
+ __________________________________________________________________________
+ Exit     Save     Next Page     Refresh
+  
+ Enter a command or '^' followed by a caption to jump to a specific field.
+  
+  
+ COMMAND: E  ? Exit, You're done  
+  
+  
+                            >> Enter 'E' to Exit, as shown above.
+  
+   
+  
+ Installation Instructions:
+ --------------------------
+ With the exception of Manila OC, PI (Station #358): 
+   ** Do not install this patch without shutting down the IIV EC HL7 
+      Logical link.  Please refer to the Pre-Installation instructions for
+      directions on how to shut down the IIV EC HL7 Logical Link.
+  
+   ** Do not install this patch when the eIV NIGHTLY PROCESS [IBCNE IIV 
+      BATCH PROCESS] background job is running or scheduled to run. Please
+      refer to the Pre-installation instructions for the un-scheduling of
+      this option.
+  
+ Install Time: Less than 5 minutes.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the
+     patch #(ex. IB*2.0*631):
+  
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch 
+        is installed. It compares all components of this patch routines,
+        DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Press return to accept the default of NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Press return to accept the default of NO.
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ 8.  When prompted "Device: HOME//", respond with the correct device
+     but do * NOT * queue this install.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The post install will automatically send a Site Registration Message to
+ FSC. In addition, the post install will change the DESCRIPTION and ACRONYM
+ for the "PURCHASED CARE CHOICE" entry in the Source of Information (SOI)
+ file (#355.12). Upon completion, the post install will display the 
+ message: "POST-Install Completed".
+  
+ *****************************************************************
+ * IMPORTANT                                                     *
+ * Once the patch has COMPLETED INSTALLATION, the IIV EC HL7     *
+ * Logical Link that was stopped during pre-installation must be *
+ * restarted. Please follow the steps in the pre-installation    *
+ * for stopping the IIV EC HL7 Logical Link to restart it. NOTE: *
+ * step 4 is not prompted when restarting an HL7 Logical Link.   *
+ *                                                               *
+ * CRITICAL: Manila OC, PI (Station #358) DO NOT start this HL7  *
+ *           Logical Link !!!                                    *
+ *****************************************************************
+  
+ *****************************************************************
+ * IMPORTANT                                                     *
+ * Once the patch has COMPLETED INSTALLATION, reschedule the eIV *
+ * NIGHTLY PROCESS [IBCNE IIV BATCH PROCESS] option that was     *
+ * unscheduled during pre-installation.  Please schedule this    *
+ * option to run once a day (like you had before) for 22:00 local*
+ * time.                                                         * 
+ *                                                               *
+ * CRITICAL: Manila OC, PI (Station #358) DO NOT schedule this   *
+ *           option !!!                                          *
+ *****************************************************************
+  
+   
+ Backout Procedure:
+ ------------------
+ The Backout procedure of this patch will be performed only with the
+ concurrence and participation of the appropriate VA site/region
+ personnel. The decision to back out the patch will be a joint decision
+ between VA site/region personnel and other appropriate VA personnel. For
+ more information pertaining to the Backout Procedure, please refer to the
+ "Deployment, Installation, Back-out/Rollback Guide" for this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCEOB01
+    Before: B25712240   After: B26160583  **377,516,631**
+Routine Name: IBCNBAR
+    Before: B66826717   After: B90065671  **82,240,345,413,416,497,528,
+                                           554,595,631**
+Routine Name: IBCNBLL
+    Before:B157960738   After:B158628352  **82,149,153,183,184,271,345,
+                                           416,438,435,506,519,528,549,
+                                           601,595,631**
+Routine Name: IBCNEHL1
+    Before:B194684337   After:B213735283  **300,345,416,444,438,497,506,
+                                           549,593,601,595,621,631**
+Routine Name: IBCNEHLM
+    Before: B24096430   After: B24245896  **184,251,300,416,438,497,506,
+                                           549,601,621,631**
+Routine Name: IBCNEHLQ
+    Before:B100204371   After:B108956868  **184,271,300,361,416,438,467,
+                                           497,533,516,601,621,631**
+Routine Name: IBCNEMS1
+    Before:  B7021261   After: B11188278  **621,631**
+Routine Name: IBCNEQU
+    Before:B176017271   After:B176309456  **184,271,416,438,497,582,601,631**
+Routine Name: IBCNERP8
+    Before:B110475563   After:B111034768  **184,271,345,416,506,621,631**
+Routine Name: IBCNERTQ
+    Before: B48024033   After: B51002672  **438,467,497,549,582,593,601,631**
+Routine Name: IBCNERTU
+    Before:       n/a   After:  B8303401  **631**
+Routine Name: IBCNRDV
+    Before:B144659738   After:B146805068  **214,231,361,371,452,593,631**
+Routine Name: IBCNSJ51
+    Before: B28017829   After: B64267141  **43,631**
+Routine Name: IBCNSM3
+    Before: B15749953   After: B16082217  **6,28,85,211,251,399,506,516,631**
+Routine Name: IBY631PO
+    Before:       n/a   After:  B6066647  **631**
+ 
+Routine list of preceding patches: 43, 621
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 30, 2018
+Completed By:                               Date Completed: OCT 10, 2019
+Released By :                               Date Released : OCT 10, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

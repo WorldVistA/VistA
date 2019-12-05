@@ -1,0 +1,492 @@
+
+=============================================================================
+Run Date: AUG 19, 2019                     Designation: EAS*1*180
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #151                      Status: Released
+                  Compliance Date: SEP 19, 2019
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 5.7 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch description is to announce the 
+ release of the Enrollment System (ES) 5.7. This release, developed in Java
+ technology, contains Enrollment System Modernization (ESM) Phase 2 
+ development and upgrade efforts, including enhancements to support ES
+ Community Care (ESCC) and ES Sustainment.
+  
+ ES 5.7 was successfully deployed on Saturday, August 17, 2019.
+  
+ The following functionality is updated in this ES 5.7 release:
+  
+ ESM
+ 1. ES is being modified to support entry and sharing of a single personal 
+    email address only.  ES will no longer support entry or sharing of a 
+    business email address.  Business email addresses entered prior to the
+    ES 5.7 release will continue to be displayed; however, they will be
+    greyed out and cannot be updated.   Users will be limited to deleting
+    the business email addresses.
+  
+ Enrollment System Community Care (ESCC)
+ 1. ES has been modified to include a new "View Geocode Transmit History"
+    hyperlink on the "Community Care Determination" page. Once selected, 
+    the user is navigated to a new "Geocode Transmit History" page. The
+    "Geocode Transmit History" screen data is populated with all the
+    historical data from Planning Systems Support Group (PSSG). If there is
+    no Geocode Transmit History data present for the Veteran, a green
+    banner is presented at the top of the "Community Care Determination"
+    screen stating, "No Geocode Transmit History Data available for this
+    Veteran" and the "View Geocode Transmit History" hyperlink is disabled.
+    The "Geocode Transmit History" page allows users to export the Geocode
+    Transmit History data in .csv file format. Once exported, users can
+    load the export file in Excel or any application that can read .csv
+    file formatted files.
+  
+ 2. The success message that ES displays when a user clicks the "Send to
+    Contractors" button to share Veteran data with Third Party 
+    Administrator (TPA) and Community Care Network (CCN) contractors now
+    reads as, "Person data marked to send to TPA and CCN Contractors." This
+    is a confirmation message to the ES user stating that the demographic
+    data has been sent to the TPA and CCN Contractors. ES is modified so
+    that it will generate an email to the VA OCC CORs whenever an Other
+    Health Insurance (OHI) file is received from a CCN Contractor. When OHI
+    is received and processed from a CCN contractor, the notification email
+    will go to the respective region. For example, Region 1 COR Team will
+    only get notifications for Region 1.
+  
+ 3. Staff members that are on the email distribution list (Mail Groups) can
+    view the summary level of OHI information sent to ES and they can 
+    verify that the email notification was sent when OHI was received from
+    any of the CCN contractors. "CCN OHI Report" is added in the Subject
+    line of the email. The body of the email will include the following
+    embedded content: CCN Contractor Name; File Name; # of Records Sent by
+    CCN Contractor; # of Records Received by ES; # of records Processed by
+    ES; and the # of Records Rejected by ES due to Validation Errors. ES
+    will generate a single notification per OHI file received.
+  
+ 4. ESCC enhancements and modifications also include the following:
+    a. Support MISSION Act defects in production
+    b. Support CCN testing
+    c. Support CCN defects from testing
+    d. Development environment code clean up
+    e. Extract, Transform, and Load (ETL) logging and reporting
+  
+ Operational Decision Management (ODM)
+ 1. Under ODM, the 71 iLOG rule sets were transferred from iLOG to ODM. A 
+    Mediation Framework was established to allow the System Administrators 
+    to switch between the iLOG and ODM rules sets as the rules sets are
+    integrated into the ES application. Once the migration is fully 
+    completed to ODM, the rules will not be switched back to iLOG unless
+    there is a systemic issue with ODM. ES 5.7 integrates the rule sets
+    that support the Person Eligibility, Enrollment, Financial, and
+    Military Service functionalities.
+  
+ 2. Updates also include rule retirement for the following:
+    a. Integrate Beneficiary Travel Rules
+    b. Integrate Calculate Financial Decisions Rules
+    c. PatientVistSummary
+    d. ProcessPersonSignature
+    e. NonVeteran
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)     New/Modified/Deleted
+ ------------------     -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name      File #  New/Modified/Deleted
+ ---------      ------  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name        New/Modified/Deleted
+ ---------------        --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name    Type    New/Modified/Deleted
+ -----------    ----    -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name  New/Modified/Deleted
+ -------------  -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name  Type    File Name (Number) New/Modified/Deleted 
+ -------------  ----    ------------------ --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ---------------------------- 
+ N/A
+  
+ Rational Team Concert (RTC):
+  
+ RTC #       Problem / Resolution:
+ --------    --------------------
+  
+ 681161      Problem: A Section 508 defect was reported where the Jaws 
+             Reader Voice tool was not always reading out errors to the
+             user for some required fields if the required field was not
+             being completed correctly in Add a Person.
+             Resolution: Changed code so that each required field has an
+             ActionMessage that will individually mark the respective field
+             with error and the Jaws Reader Voice tool reads out the error 
+             to the end user for all required fields marked with an error
+             if they are not completed correctly.
+  
+ 716753      Problem: INC0207738 - A defect was reported where ES users 
+             were unable to enter a new Copay Test as part of a Veteran's
+             Financial Assessment.
+             Resolution: Updated back-end code to apply Veteran Financial
+             Assessment (VFA) rules to Means Test only. ES users are now 
+             able to enter a new Copay Test as part of the Veteran's
+             Financial Assessment.
+  
+ 951065      Problem: A Section 508 defect was reported for users requiring
+             assistive technologies where required fields were not always
+             displaying an error condition to the user if the required 
+             field was not being completed correctly on the
+             "Demographics/Identity Traits" pages.
+             Resolution: Added an else-block to check if the Date of Birth 
+             is left null. The code was modified to mark individual fields
+             with error on the "Demographics/Identity Traits" pages. Also,
+             the Jaws Reader Voice tool reads out the error to the end
+             user.
+  
+ 951071      Problem: A Section 508 defect was reported for users requiring
+             assistive technologies where required fields were not always
+             displaying an error condition to the user if the required 
+             field was not being completed correctly on the
+             "Demographics/Personal" pages.
+             Resolution: Added code to put focus on error message banner 
+             when applicable. Modified code to get required fields to be
+             individually marked when there is an error on the
+             "Demographics/Personal" pages, and the Jaws Reader Voice tool
+             reads out the error to the end use.
+  
+ 951076      Problem: A Section 508 defect was reported for users requiring
+             assistive technologies where required fields were not always
+             displaying an error condition to the user if the required 
+             field was not being completed correctly on the "Search Items
+             Tab - Create Date Range To:" page
+             Resolution: The property for this field is improperly 
+             labeled. It was changed to "createDateTo", this way it matches
+             the Action Form and generate the error. Also, the Jaws Reader
+             Voice tool reads out the error to the end user.
+  
+ 963122      Problem: A defect was reported where the HBP names for 
+             Wait-time and Mileage or Hardship and Wait-Time was being
+             truncated in the Detail Report when multiple HBP entries were
+             being added.
+             Resolution: Updated the height of the HBP field in the report 
+             to accommodate multiple HBP entries and updated the names of
+             the Health Benefit Plans in the code. The HBP for post MISSON
+             Act now displays one HBP for the corresponding Veterans Choice
+             Eligibility (VCE).
+  
+ 984135      Problem: A defect was reported where the "Send to Contractors"
+             button was not being displayed on the Community Care
+             Determination screen if the Community Care Eligibility is
+             Ineligible (X).  The expected functionality is that when the
+             enroll status is Deceased, Not Eligible, or 
+             Cancelled/Declined, the VCE Community Care Eligibility is
+             Ineligible (X) and the send to Contractor button should be
+             available in the Community Care Determination Page.
+             Resolution: This issue is now resolved and when the Community
+             Care eligibility code is Ineligible (X) in the Community Care
+             Determination screen, the "Send to Contractor" button is
+             displayed.
+  
+ 984183      Problem: A defect was reported where the CCN Contractor 
+             Message Search page is not displaying the correct result for
+             Selected CCN Contractor Search field.
+             Resolution: This issue was resolved by including the 
+             Contractor field as a search filter.
+  
+ 985996      Problem: A defect was reported regarding the errant creation 
+             of the ORU Z05 message when users selected the Add
+             email>>>Update option. This defect affected newly created
+             records or records that already had an email associated with
+             the record.
+             Resolution: This issue is now resolved and the ORU Z05 
+             message is no longer created in these scenarios.
+  
+ 986816      Problem: A defect was reported regarding the 
+             cancelled/declined enrollment workflows due to the
+             implementation of the VA MISSION Act (MA). For affected
+             Veterans, their eligibility for Community Care was not being
+             calculated correctly. For a record that was Enrolled, then
+             Cancelled/Declined, and then set back to Enrolled, it should
+             be treated as a new application for CC determination.
+             Resolution: Initial Grandfather (G) eligible record must also
+             have Enrollment Date After MA Enactment Date. Enrolled persons
+             recalculation for CHOICE requires Enrollment Date After MA
+             Enactment Date in addition to requirement of "was ever G". The
+             Enrollment Date is After MA Enactment Date only if the 
+             Enrollment Date is not null and is after June 5, 2018. A null
+             Enrollment Date is considered before MA Enactment Date.
+  
+ 986817      Problem: A defect was reported where the VCE code and
+             descriptions were being displayed in the Community Care
+             Determination Manual Override New Outcomes field.
+             Resolution: Removed VCE codes from CCD Manual Override New
+             Outcome labels and only the VCE description is now displayed 
+             in the Override New Outcomes field.
+  
+ 986896      Problem: A defect was reported where the Temporary Mailing
+             Address displays in the Third-Party Administrator (TPA) and 
+             CCN log but not in the Export spreadsheet.
+             Resolution: Updated header column to correctly display the
+             Permanent/Temporary Mailing Address in the Export spreadsheet.
+  
+ 987253      Problem: A defect was reported where the CCN and TPA export 
+             files were not displaying the column headers/labels correctly
+             in the Export file. The Enrollment Effective Date, Province
+             Foreign Address, and Postal Code for Foreign Address labels
+             were incorrect.
+             Resolution: Updated the column labels with the correct values
+             "Enrollment Effective Date", "Province Foreign Address", and
+             "Postal Code for Foreign Address"; in addition, the record 
+             with the greatest number of VCEs is now being used to generate
+             the column headers for the Export file. This change was made
+             for both the CCN and the TPA files.
+  
+ 988514      Problem: A defect was reported in the TPA Message Log Export
+             spreadsheet where Social Security Numbers (SSN)s that started
+             with a zero were not being displayed correctly.
+             Resolution: This issue was resolved and only the last four 
+             digits of the SSN are displayed in the TPA Message Log Export
+             spreadsheet.
+  
+ 988523      Problem: A defect was reported in the CCN Contractor Message 
+             Log screen where the "RETURN TO COMMUNITY CARE DETERMINATION"
+             hyperlink was missing.
+             Resolution: The CCN Contract Message Log has been updated to 
+             show the RETURN TO COMMUNITY CARE DETERMINATION link next to
+             the Export button.
+  
+ 994063      Problem: A defect was reported when an email and/or phone 
+             number is deleted in VistA, ES was not deleting the email
+             and/or phone number for the record in Vet360.
+             Resolution: This issue has been resolved. When an email and/or
+             phone number is deleted in VistA, ES now send the deletion
+             message to Vet360 so the Vet360 record will reflect the
+             deletion(s).
+  
+ 997063      Problem: A defect was reported where the confidential address 
+             was being shared with the CCN.
+             Resolution: Confidential address is no longer shared with CCN.
+             Only the Residential Address, Permanent Mailing Address or
+             Temporary Mailing Address is shared with CCN.
+  
+ 998576      Problem: A defect was reported in the Appointment Request 
+             screen when the Appointment Request value was changed from a
+             Yes to a No, the Appointment Request Date was being populated
+             with the system date that the Appointment Request was changed
+             to No instead of showing a blank date field.
+             Resolution: When an Appointment Request is changed from Yes to
+             No, the Appointment Request Date now displays as blank.
+  
+ 998758      Problem: A defect was reported where the New Hardship
+             Determination was not being displayed in red text in the
+             Community Care (CC) Determination History page when the
+             clinically indicated date was removed
+             Resolution: When the clinically indicated date is now removed,
+             the CC Determination History page displays the New Hardship
+             Determination in red text.
+  
+ 999788      Problem: A defect was reported where the Purple Heart status 
+             was not updating correctly in ES. When a Purple Heart is
+             initially marked as rejected, but then later updated to
+             accepted, ES was not accepting the change and left the Purple
+             Heart status as rejected.
+             Resolution: Removed Purple Heart rules from ODM parameter and 
+             the status can now be updated correctly.
+  
+ 1001388     Problem: A defect was reported where VET360 was not sending 
+             the personal email to the CCN contractors via the VET360
+             interface.
+             Resolution: Fixed code in
+             VET360InboundProcessService.updateEmails; email was not added 
+             to the incoming person. When the incoming person was sent via
+             the VET360 interface, since the email was missing in the
+             person object it couldn't process it.
+  
+ 1001810     Problem: A defect was reported where ES was throwing an
+             application error when users tried to perform a Person 
+             Un-Merge.
+             Resolution: Changed the obtain call to use IdMWebservice call 
+             and user can now perform the Person Un-Merge in ES.
+  
+ 1005908     Problem: A defect was reported for incoming changes from 
+             VET360 for addresses, phones and emails which updates the
+             address, email or phone database tables. The geocoding
+             required flag was not being set for any change in address, for
+             this reason not deliverable addresses and address updates were
+             not being geocoded.
+             Resolution: The geocoding required flag is set for any change 
+             in address, resulting on address updates now populating with
+             the geocoding. Incoming VET360 updated addresses are now
+             geocoded.
+  
+ 1007551     Problem: A defect was reported with the address validation 
+             tool where city names that are greater than 15 characters
+             would throw the "City cannot be greater than 13 characters"
+             error message and prevent the user from adding/updating the
+             address.
+             Resolution: When accepting the address returned from the
+             validation service, if the city name has more than 15 
+             characters, then the short city name is substituted. In
+             addition, new validation was added to avoid users saving a
+             validated address that includes a city name greater than 15
+             characters.
+  
+ 1009725     Problem: A defect was reported when retransmitting CCN 
+             records. The retransmittal message was not including the
+             Priority Group and Enrollment Date values.
+             Resolution: Added code to include Priority Group and 
+             Enrollment Date to the CCN Service Log record.
+  
+ 1022891     Problem: A defect was reported where the Means Test status was
+             being displayed on the banner for the Financials Overview 
+             screen.
+             Resolution: The Means Test status is no longer displayed in 
+             the Financial Overview Screen banner.
+  
+ 1055069     Problem: A defect was reported where CC Basic plans are
+             getting assigned to Non-Veterans with one of the Non-Veteran
+             Eligibility Codes Enroll status=NOT APPLICABLE.
+             Resolution: Change in iLOG rule for "not applicable enrollment
+             status" to flow through DetermineVCE rules.
+  
+ 1057055     Problem: A defect was reported in Production where the TPA
+             file is failing to transmit through DAS.
+             Resolution: This defect was resolved by adding a configuration
+             (directory) parameter for TPA files, adding an error handling
+             logic to handle the file not found errors, and adding
+             additional debug statements.
+  
+ 1062529     Problem: A defect was reported where the Community Care Manual
+             Override option was still available after the Veteran's
+             enrollment status was changed to Cancelled/Declined and the 
+             VCE was not being recalculated.
+             Resolution: Corrected manual override, which was comparing
+             incorrect variable. When the enrollment status is changed to
+             Cancelled/Declined, the Manual Override button is now removed 
+             and the VCE is recalculated correctly.
+  
+ 1063879     Problem: A defect was reported in the Enrollment and 
+             Eligibility (E&E) Webservice schema where the data was not
+             matching the healthBenefitPlan.planName data.
+             Resolution: Corrected schema element for
+             healthBenefitPlan.planName. The E&E Webservice schema now 
+             matches healthBenefitPlan.planName data.
+  
+ 1065737     Problem: A defect was reported in production where ES 
+             inadvertently deleting the Date of Death (DOD) caused by an
+             inherent delay from the time DOD is updated in MVI and the
+             time ESR gets the notification.
+             Resolution: This was fixed by ES syncing the Date of Death 
+             upon the retrieval from MVI and prior to sending any 1302
+             update.
+  
+ Test Sites:
+ ----------
+ Health Eligibility Center (HEC)
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a Patch (PackMan) message and documentation 
+ describing the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+ Hines:                 domain.ext 
+ Salt Lake City:        domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ ES 5.7 Release Notes            ES_5_7_RN.PDF                  binary
+ ES 5.7 User Guide               ES_5_7_UG.PDF                  binary
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Patch Installation:
+ ES will be installed at the Austin Information Technology Center (AITC).
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Installation Instructions:
+ ------------
+ ES will be installed at the AITC only.
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done by sites. ******
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 19, 2019
+Completed By:                               Date Completed: AUG 19, 2019
+Released By :                               Date Released : AUG 19, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,279 @@
+$TXT Created by                   CLN1G1.AAC.DOMAIN.EXT  (KIDS) on Friday, 05/31/19 at 14:07
+=============================================================================
+Run Date: OCT 30, 2019                     Designation: TIU*1*324
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #290                      Status: Released
+                  Compliance Date: NOV 30, 2019
+=============================================================================
+
+Associated patches: (v)TIU*1*296   <<= must be installed BEFORE `TIU*1*324'
+
+Subject: TIU TEXT EVENT NOT SENDING ALERT
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Informational
+
+Description:
+============
+
+ This patch will resolve the following issues in the Text Integration 
+ Utilities package: 
+  
+ 1. INC4179486 - Post-Signature alert using text event not sending alert
+    Duplicate(s): 
+    INC5332570 - TIU1305 patch question... unable to add post signature 
+                 alert for a team
+  
+ 2. INC4799473 - TIU Text Alerts code does not work for addendums.
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC4179486 - Post-Signature alert using text event not sending alert
+  
+ Problem 1:
+ -----------
+ If the first Internal Entry Number (IEN) in TIU TEXT EVENTS (#8925.71) 
+ file has INCLUDE SPACES=NO, and no matches are found during the search for
+ that first IEN, then all subsequent searches will be missed.
+  
+ The "CASE SENSITIVE" parameter is not working as designed. The code 
+ automatically converts all the search strings to lowercase. When the code 
+ loops through each line of the TIU note, it also automatically converts 
+ each line of text to lowercase. 
+  
+ The "INCLUDE SPACES" parameter is not working, when the code loops through
+ each line of the TIU note, setting this parameter to "no" strips all
+ spaces out of the TIU line. That means when this parameter is "no", then
+ the Search Text should be entered without any spaces.
+  
+ Resolution 1:
+ -------------
+ This functionality was added with patch TIU*1.0*296 and has the flaws 
+ noted in the problem listed above.  
+  
+ When the first IEN in TIU TEXT EVENTS (#8925.71) file has INCLUDE SPACES =
+ NO and the corresponding search text is not found in the note text, then
+ no other TIU Events' search text will work.  The 'Include Spaces'
+ functionality is also flawed in that when it was set to NO, spaces were
+ only stripped from the TIU Note text and not from the search text.  This
+ patch removes the prompt for INCLUDE SPACES and spaces will now be removed
+ from both search text as well as TIU note text during the text search
+ comparison. 
+  
+ The Case Sensitivity functionality was not fully programmed and will be 
+ removed since case sensitivity would increase the odds of an alert not 
+ being sent due only to a case mismatch.  This patch removes the prompt for
+ CASE SENSITIVE from the Text Event Edit [TIU TEXT EVENT EDIT] option and
+ the search will not be case sensitive.
+  
+ When testing this patch, it was also found that when the Visit Search 
+ String is entered in lower case, it is then compared to each VISIT 
+ LOCATION names without converting to upper case (VISIT LOCATION (#5)
+ fields are always stored in upper case).  Routine TIUTIUS was also
+ modified to convert the Visit Search String to upper case for comparison
+ to all VISIT LOCATION names.
+  
+ 2. INC4799473 - TIU Text Alerts code does not work for addendums
+  
+ Problem 2:
+ ----------
+ MUMPS code 'D TASK^TIUTIUS(DA)' entered in the POST-SIGNATURE CODE (#4.9)
+ field of the TIU DOCUMENT DEFINITION (#8925.1) file causes signature of
+ the addendum to a TIU documents to initiate scanning the parent document
+ for TIU Text Event alert phrases. This is incorrect as the parent document
+ was scanned upon its signature and the text in the addendum is not
+ scanned.
+  
+ Resolution 2:
+ -------------
+ This functionality was added with patch TIU*1.0*296 and has the flaws 
+ noted in the problem listed above.  
+  
+ When an addendum was signed it did not search for any text in that 
+ addendum because the parent IEN was passed to the routine instead of the 
+ addendum's IEN. After the installation of this patch, post signature code 
+ will now need to be set to D TASK^TIUTIUS($S($G(DAORIG):DAORIG,1:DA)) in 
+ order to correctly search either a parent note or addendum when each is 
+ signed. 
+  
+ Also, during investigation of these issues, it was found that there was no
+ fail-safe code to execute the post-signature search (DQ^TIUTIUS) if it
+ failed to run it as a background task.  Code was added to run it in the
+ foreground if the background failed to run.
+  
+ Test Sites:
+ ----------
+ West Palm Beach VA Medical Center, FL
+ Clement J. Zablocki Veterans Affairs Medical Center (Milwaukee, WI)  
+  
+ Files & Fields Associated:
+ ==========================
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ TIU TEXT EVENTS (#8925.71)  CASE SENSITIVE (#.03)        Modified
+                             INCLUDE SPACES (#.04)        Modified
+  
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ TIU TEXT EVENT EDIT    Edit                       Modified
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS:
+ =====================================
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the documentation directly using Secure File Transfer 
+ Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following OI
+ Field Offices:
+    
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+  
+    http://www.domain.ext/vdl/
+  
+ Title                                  File Name            SFTP Mode
+ -----------------------------------------------------------------------
+ Clinical Coordinator and User Manual   tiuum.pdf             Binary
+ Technical Manual                       tiutm.pdf             Binary 
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system but users should not 
+ be accessing the TIU TEXT EVENT EDIT option during the install.
+ Installation should take less than 1 minute to complete.
+  
+ Installation Instructions:
+ --------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, you may elect to use the following
+    options. When prompted for the INSTALL NAME enter the patch TIU*1.0*324
+          
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any
+       other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is
+       installed.  It compares all components of this patch routines, DDs,
+       templates, etc.
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport
+       global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install TIU*1.0*324
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//', answer No.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//', 
+    answer No.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', answer No.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ For this patch to work correctly, all post-signature codes that are
+ defined as:             "TASK^TIUTIUS(DA)"
+ should be modified to:  "TASK^TIUTIUS($S($G(DAORIG):DAORIG,1:DA))"
+  
+ OI&T should work with the Clinical Application Coordinators to modify 
+ this field appropriately.
+  
+ To locate TIU DOCUMENT DEFINITIONS that need updating, run a VA FileMan 
+ search:
+  
+ Select OPTION: SEARCH FILE ENTRIES  
+  
+ Output from what File: TIU DOCUMENT DEFINITION//   (1835 entries)
+  
+   -A- SEARCH FOR TIU DOCUMENT DEFINITION FIELD: POST-SIGNATURE CODE  
+   -A- CONDITION: CONTAINS
+   -A- EQUALS: TASK^TIUTIUS(DA)
+  
+   -B- SEARCH FOR TIU DOCUMENT DEFINITION FIELD: 
+  
+ IF: A//    
+ POST-SIGNATURE CODE EQUALS (case-insensitive) ("TASK"_$C(94)_"TI
+ UTIUS(DA)")
+  
+ STORE RESULTS OF SEARCH IN TEMPLATE: 
+  
+ Sort by: NAME// 
+ Start with NAME: FIRST// 
+ First Print FIELD: NAME  
+ Then Print FIELD: 
+ Heading (S/C): TIU DOCUMENT DEFINITION Search  Replace 
+ DEVICE:   HOME  (CRT)    Right Margin: 80// 
+  
+ Modify each Document Definition listed to update the POST-SIGNATURE CODE
+  
+ Back-out/Rollback Strategy:
+ ---------------------------
+ In the event of a catastrophic failure, the Facility CIO may make the 
+ decision to back-out the patch. Because this patch contains Option file 
+ changes and changes to fields in file #8925.71, back-out must be done 
+ with the participation of the sustainment team.
+  
+ It is imperative that you have performed a backup of the routines included
+ in this patch prior to installation.
+  
+ The back-out plan is to restore the routines plus the Option and File 
+ changes.  Because there is no current option to backup the option/file 
+ changes, please call the national help desk or enter a help desk ticket.
+  
+ To verify the back-out completed successfully, ensure the checksum(s) of 
+ the routine(s) matches the pre-patch checksum from the patch description.
+  
+ No patient data was modified by this patch installation and, therefore, no
+ rollback strategy is required.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;JUN 20, 1997;Build 4;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUTIUS
+    Before: B33045323   After: B38570158  **296,324**
+ 
+Routine list of preceding patches: 296
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 04, 2019
+Completed By:                               Date Completed: OCT 29, 2019
+Released By :                               Date Released : OCT 30, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

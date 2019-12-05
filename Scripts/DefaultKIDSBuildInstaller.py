@@ -60,7 +60,7 @@ class DefaultKIDSBuildInstaller(object):
   """
   KIDS_MENU_OPTION_ACTION_LIST = [
       ("Want to continue installing this build\?","YES", False),
-      ("Enter the Coordinator for Mail Group", "", False),
+      ("Enter the Coordinator for Mail Group", "POSTMASTER", False),
       ("Want KIDS to Rebuild Menu Trees Upon Completion of Install\?",
        "", False),
       ("Want KIDS to INHIBIT LOGONs during the install?",

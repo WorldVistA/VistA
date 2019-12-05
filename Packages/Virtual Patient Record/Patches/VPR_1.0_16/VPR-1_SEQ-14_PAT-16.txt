@@ -1,0 +1,181 @@
+$TXT Created by                     FMB.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Monday, 07/29/19 at 13:52
+=============================================================================
+Run Date: AUG 13, 2019                     Designation: VPR*1*16
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1        SEQ #14                      Status: Released
+                  Compliance Date: AUG 20, 2019
+=============================================================================
+
+Associated patches: (v)VPR*1*15    <<= must be installed BEFORE `VPR*1*16'
+
+Subject: DATA VALIDATION FOR HS
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch to the Virtual Patient Record (VPR) application addresses four
+ issues discovered during the pre-load of the HealthShare Edge Cache 
+ Repositories (ECR):
+  
+ 1. The $$DATE^VPRSDA function will be updated to do additional validation
+    checks before sending the value to the ECR.
+  
+ 2. Test patients, and patients being merged into another DFN, will now be
+    screened out of the AVPR update list in production accounts.
+  
+ 3. Invalid City names that are longer than 50 characters will be 
+    truncated to prevent errors when saving in the ECR.
+  
+ 4. Person Class X12 codes containing an "E" were being interpreted as
+    exponential numbers, causing a Max Number error.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Entities Associated:
+  
+ Entity Name                        New/Modified/Deleted
+ -----------                        --------------------
+ VPR FACILITY ADDRESS               Modified
+ VPR INS COMPANY ADDRESS            Modified
+ VPR INSURED ADDRESS                Modified
+ VPR PATIENT ADDRESS                Modified
+ VPR PATIENT BIRTHPLACE             Modified
+ VPR PATIENT ECON ADDRESS           Modified
+ VPR PATIENT EMPLOYER ADDRESS       Modified
+ VPR PATIENT LANGUAGE               Modified
+ VPR PATIENT NOK ADDRESS            Modified
+ VPR TEAM MEMBER                    Modified
+  
+  
+ Files & Fields Associated:         N/A
+  
+ Forms Associated:                  N/A
+  
+ Mail Groups Associated:            N/A
+  
+ Options Associated:                N/A
+  
+ Protocols Associated:              N/A
+  
+ Remote Procedure Calls Associated: N/A
+  
+ Security Keys Associated:          N/A
+  
+ Templates Associated:              N/A
+  
+ Blood Bank Team Coordination:      N/A
+  
+ New Service Requests (NSRs):       N/A
+  
+ Patient Safety Issues (PSIs):      N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ North Chicago, IL
+ Charleston, SC
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ The software for this patch is being released as a KIDS build.
+  
+  
+ Patch Installation:
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME, enter VPR*1.0*16.
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted Want KIDS to INHIBIT LOGONs during the install?
+     NO// enter NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// enter NO.
+  
+ 7.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ A post-init routine will queue a task that will loop through the existing 
+ entries in ^VPR("AVPR") and ^VPR("ANEW") and remove entries for test 
+ patients, and patients being merged. A message will display the task# 
+ on screen, and in the Install file capture.
+  
+  
+ Backout Procedures:
+ -------------------
+ During the VistA Installation Procedure of the KIDS build, the
+ installer should use the 'Backup a Transport Global' action (step 3a
+ in the Installations Instructions below). If rollback/backout is 
+ required, the installer can use the MailMan message to restore routines 
+ that were saved prior to installing the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRHS
+    Before: B45375819   After: B67709194  **8,10,15,16**
+Routine Name: VPRP16
+    Before:       n/a   After:  B4532811  **16**
+Routine Name: VPRSDA
+    Before:B238403489   After:B243968845  **8,10,16**
+ 
+Routine list of preceding patches: 15
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 30, 2019
+Completed By:                               Date Completed: AUG 12, 2019
+Released By :                               Date Released : AUG 13, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,259 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/29/19 at 14:52
+=============================================================================
+Run Date: SEP 25, 2019                     Designation: EC*2*147
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #140                      Status: Released
+                  Compliance Date: OCT 01, 2019
+=============================================================================
+
+Associated patches: (v)EC*2*146    <<= must be installed BEFORE `EC*2*147'
+
+Subject: FY20 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date because it must be 
+ installed as close to 10/1/2019 as possible. Sites will need the updates 
+ for Fiscal Year (FY) 20.
+ *************************************************************************
+  
+ This patch will update the EC NATIONAL PROCEDURE (#725) file by adding 
+ eight (8) new procedures, inactivating eleven (11) existing procedures, 
+ changing four (4) CPT codes, and changing six (6) procedure names in the 
+ file.
+   
+ Patch Components:
+ -----------------
+ Files & Fields Associated:
+ N/A          
+  
+ Forms Associated:
+ N/A
+  
+ Mail Groups Associated:
+ N/A
+  
+ Options Associated:
+ N/A
+  
+ Protocols Associated:
+ N/A
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+ Remote Procedures Associated:
+ N/A
+  
+ Parameter Definitions Associated:
+ N/A
+  
+ Additional Information:
+  
+ Blood Bank Team Coordination:
+ ----------------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. INC5882027 - FY20 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+   
+    Problem:
+    --------
+    The Managerial Cost Accounting Office (MCAO) requested an update to the
+    EC NATIONAL PROCEDURE (#725) file. The request is to add eight (8) new 
+    procedures, inactivate eleven (11) existing procedures, change four (4)
+    CPT codes, and change six (6) procedure names in the file.
+   
+    Resolution:
+    -----------
+    The routines (EC2P147A, EC2P147B, and EC2P147C) included in this patch
+    will update the EC NATIONAL PROCEDURE file (#725) by adding eight (8) 
+    new procedures, inactivating eleven (11) existing procedures, changing 
+    four (4) CPT codes, and changing six (6) procedure names in the file.
+    
+    The entries that will be added to the NATIONAL PROCEDURE (#725) file 
+    are:
+  
+    Natl #      Description                         CPT CODE
+    ------      -----------------------------       --------  
+    NU600       HYPOGLYCEMIA                          NONE
+    NU217       HLTH ED GP,2-5PT,1ST 30M              99078
+    NU218       HLTH ED GP,6-10PT,1ST 30M             99078
+    NU219       HLTH ED GP,11-20PT,1ST 30M            99078
+    NU220       HLTH ED GP,>20PT,1ST 30M              99078
+    NU410       INTERV-NO PROB                        NONE
+    NU502       M&E PROBLEM UNRESOLVED                NONE
+    NU503       M&E PROBLEM NO LONGER APPROPR         NONE
+  
+    The entries that will be inactivated in the NATIONAL PROCEDURE (#725)
+    file on 10/01/19 are:
+    
+    Natl #      Description                  
+    ------      -------------------------------
+    NU006       MED RECORD REVIEW,INPT,5M
+    NU159       OPT ASSMNT ONLY EA A'L 10M
+    NU187       INPT NUTR ED,IND EA 15M
+    NU160       IP INTERDISC IND VISIT,EA15M
+    NU043       DISCUSS W/OTHR HC PROV 5M
+    NU012       CALORIE COUNT-NO PROBLEM PRESENT
+    NU013       MENU ANLYS/MEAL PLN DEV,5M
+    NU015       TEAM ROUNDS,5M (W/WO PT)
+    NU016       INTERDISC CARE PLN MTG,3M
+    NU018       COMMUNITY REFERRAL, 5M
+    NU155       NON-NUTR INPT ED,EA 15M
+  
+    The entries whose CPT codes will be changed in the NATIONAL PROCEDURE 
+    (#725) file are:
+  
+    Natl #      Description                   CPT CODE
+    ------      ----------------------        --------  
+    NU069       WT MGT 2-5PT,1ST 30M           G0473
+    NU070       WT MGT 6-10PT,1ST 30M          G0473
+    NU071       WT MGT 11-20PT,1ST 30M         G0473
+    NU072       WT MGT >20PT,1ST 30M           G0473
+  
+    The entries whose procedure names will be changed in the NATIONAL 
+    PROCEDURE (#725) file are:
+  
+    Natl #      Description               
+    ------      ---------------------------           
+    SP362       HEARING SCREENING
+    SP363       HEARING AID ASSESSMENT/EVAL
+    NU007       ASSMT-NO PROBLEM 5M
+    NU008       ASSMT-PREDICTED PROBLEM 5M
+    NU009       ASSMT-PROBLEM PRESENT 5M
+    NU014       INTERDISC MTG/MDS
+  
+  
+    This patch will also create a task during install to inactivate any
+    Event Code Screens that are associated with inactive EC National 
+    Procedure codes.
+  
+  
+ Test Sites:
+ ----------
+ Louisville VA Medical Center  
+ New Mexico VA Health Care System (Albuquerque) 
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ N/A
+    
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+    
+ Installation will take less than 2 minutes. This patch may be installed 
+ with users on the system
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ Prior to installation of this patch, backup file ^EC(725) using your 
+ site's policy for backing up data.
+  
+ If the steps are unknown, please follow the following procedures:
+  
+    1. Go to a command prompt.
+    2. At the prompt, enter D ^%GOGEN.
+    3. At the device prompt, enter the directory and file name where the 
+       global backup is to be stored.
+    4. At the Parameter? prompt, press <enter>.
+    5. At the Global prompt, enter ^EC(725
+    6. Verify that the file was created and exists in the directory 
+       specified.
+  
+ Installation Instructions:
+ --------------------------    
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+     
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+     
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter EC*2.0*147)
+     
+       a.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+       b.  Print Transport Global - This option will allow you to view
+           the components of the KIDS build.
+       c.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+     
+    4. Use the Install Package(s) option and select the package EC*2.0*147.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+     
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+    7. Review the installation message for notifications.
+  
+                
+ Post-Installation Instructions:
+ -------------------------------
+ You may delete the routines EC2P147A, EC2P147B and EC2P147C from your 
+ production system after the patch has been successfully verified.
+  
+ Back-Out Plan:
+ --------------
+ Due to the complexity of this patch, it is not recommended for back-out, 
+ and a restore from a backup of the Transport Global should not be 
+ attempted. In the event that a site decides to back out this patch, the
+ site should log a Service Now ticket or reach out to the Enterprise
+ Service Desk at 855-673-4357, option 5. The development team will need to
+ issue a follow-on patch in order to comprehensively back-out this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P147A
+    Before:       n/a   After:  B3858258  **147**
+Routine Name: EC2P147B
+    Before:       n/a   After: B15934488  **147**
+Routine Name: EC2P147C
+    Before:       n/a   After: B10572290  **147**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 01, 2019
+Completed By:                               Date Completed: SEP 24, 2019
+Released By :                               Date Released : SEP 25, 2019
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
