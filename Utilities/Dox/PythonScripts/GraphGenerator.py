@@ -233,6 +233,7 @@ class GraphGenerator(object):
         cmapxFilename = "%s.cmapx" % fileNameRoot
         with open(dotFilename, 'w') as output:
             escapedName = re.escape(routineName)
+            nodeName = "root"
             output.write("digraph \"%s\" {\n" % fileNameRoot)
             output.write("\tnode [shape=box fontsize=14];\n") # set the node shape to be box
             output.write("\tnodesep=0.45;\n") # set the node sep to be 0.15
@@ -240,7 +241,7 @@ class GraphGenerator(object):
     #        output.write("\tedge [fontsize=12];\n") # set the edge label and size props
             if package not in depRoutines:
                 output.write("\tsubgraph \"cluster_%s\"{\n" % package)
-                output.write("\t\t\"%s\" [id='main' style=filled fillcolor=orange];\n" % escapedName)
+                output.write("\t\t\"%s\" [label=\"%s\" style=filled fillcolor=orange];\n" % (nodeName, escapedName))
                 output.write("\t}\n")
 
             for (depPackage, callDict) in iteritems(depRoutines):
@@ -252,15 +253,15 @@ class GraphGenerator(object):
                                     (escapedDepRoutineName, COLOR_MAP[depRoutine.getObjectType()],
                                      htmlFileName, htmlFileName))
                     if str(depPackage) == packageName:
-                        output.write("\t\t\"%s\" [style=filled fillcolor=orange];\n" % escapedName)
+                        output.write("\t\t\"%s\" [label=\"%s\" style=filled fillcolor=orange];\n" % (nodeName, escapedName))
                 output.write("\t\tlabel=\"%s\";\n" % depPackage)
                 output.write("\t}\n")
                 for depRoutine in callDict:
                     escapedDepRoutineName = re.escape(depRoutine.getName())
                     if self._isDependency:
-                        output.write("\t\t\"%s\"->\"%s\"" % (escapedName, escapedDepRoutineName))
+                        output.write("\t\t\"%s\"->\"%s\"" % (nodeName, escapedDepRoutineName))
                     else:
-                        output.write("\t\t\"%s\"->\"%s\"" % (escapedDepRoutineName, escapedName))
+                        output.write("\t\t\"%s\"->\"%s\"" % (escapedDepRoutineName, nodeName))
                     output.write(";\n")
             output.write("}\n")
 
