@@ -675,6 +675,9 @@ class WebPageGenerator(object):
               # Generate list of printable sections
               writePDFCustomization(outputFile, inputList)
 
+    def createSourceLink(self, routineName, entry):
+        return "<a href='%s/Routine_%s_source.html#%s'>%s</a>" % (DOX_URL, routineName, entry.split('(')[0], entry)
+
     # Navigation Bar + footer
     def generateFooterWithNavigationBar(self, outputFile, indexList,
                                         archList=None, accordion=True):
@@ -2919,31 +2922,34 @@ class WebPageGenerator(object):
 
     def __convertGlobalVarToTableData__(self, variables, routine=None):
         return self.__convertVariableToTableData__(variables, isGlobal=True,
-                                                   routine=routine)
+                                                   routine=routine, linkEntries=True)
 
     def __convertNakedGlobaToTableData__(self, variables, routine=None):
         return self.__convertVariableToTableData__(variables, isGlobal=False,
-                                                   routine=routine)
+                                                   routine=routine, linkEntries=True)
 
     def __convertMarkedItemToTableData__(self, variables, routine=None):
         return self.__convertVariableToTableData__(variables, isGlobal=False,
-                                                   routine=routine)
+                                                   routine=routine, linkEntries=True)
 
     def __convertLabelReferenceToTableData__(self, variables, routine=None):
         return self.__convertVariableToTableData__(variables, isGlobal=False,
-                                                   routine=routine)
+                                                   routine=routine, linkEntries=True)
 
     def __convertVariableToTableData__(self, variables, isGlobal=False,
-                                       routine=None):
+                                       routine=None, linkEntries=False):
         output = []
         allVars = sorted(variables.keys())
         for varName in allVars:
             if varName is None:
               continue
             var = variables[varName]
-            if isGlobal and varName in self._allGlobals:
-                globalVar = self._allGlobals[varName]
-                varName = getFileManFileHyperLinkWithNameFileNo(globalVar)
+            if linkEntries:
+                if isGlobal and varName in self._allGlobals:
+                    globalVar = self._allGlobals[varName]
+                    varName = getFileManFileHyperLinkWithNameFileNo(globalVar)
+                elif routine and (varName.strip('*') in routine.getEntryPoints()):
+                    varName = self.createSourceLink(routine.getName(), varName.strip('*!'))
             lineOccurrencesString = self.__generateLineOccurrencesString__(var.getLineOffsets(), routine)
             output.append(((var.getPrefix()+varName).strip(), lineOccurrencesString))
         return output
@@ -2953,7 +2959,7 @@ class WebPageGenerator(object):
         allVars = sorted(iter(list(variables.keys())), key=itemgetter(0, 1))
         for nameTag in allVars:
             lineOccurrencesString = self.__generateLineOccurrencesString__(variables[nameTag], routine)
-            output.append(("%s^%s" %(nameTag[1], getRoutineHypeLinkByName(nameTag[0])),
+            output.append(("%s^%s" %(self.createSourceLink(nameTag[0], nameTag[1]), getRoutineHypeLinkByName(nameTag[0])),
                            lineOccurrencesString))
         return output
 
@@ -2965,6 +2971,11 @@ class WebPageGenerator(object):
               searchRes = SPLITVAL.search(offset)
               if searchRes:
                   offsetStr = self.__findDataURL__(offset, routine, searchRes.group("splitval"))
+              offsetPair =  offset.split("+")
+              if (offsetPair[0] in routine.getEntryPoints()) or (offsetPair[0] == routine.getName()):
+                offsetStr=self.createSourceLink(routine.getName(), offsetPair[0])
+                if len(offsetPair) > 1: 
+                    offsetStr += "+%s" % offsetPair[1]
             if index > 0:
                 lineOccurrencesString += ",&nbsp;"
             lineOccurrencesString += offsetStr
@@ -3151,7 +3162,7 @@ class WebPageGenerator(object):
                 pdfRow = []
             comments = entryPoints[entry]["comments"] if entryPoints[entry]["comments"] else ""
             # Build table row
-            sourceLink = "<a href='%s/Routine_%s_source.html#%s'>%s</a>" % (DOX_URL, routine.getName(), entry.split('(')[0], entry)
+            sourceLink = self.createSourceLink(routine.getName(),entry )
             row.append(sourceLink)
             if self._generatePDFBundle:
                 pdfRow.append(generateParagraph(entry))
@@ -3322,17 +3333,20 @@ class WebPageGenerator(object):
             index = 0
             for depRoutine in sorted(data[depPackage].keys()):
                 totalNum += 1
+                depRoutineName = depRoutine.getName()
                 if isDependency: # append tag information for called routines
                     allTags = sorted(data[depPackage][depRoutine].keys())
                     # format the tag
-                    tagString = ",".join(allTags)
+                    allTagLinks=[]
+                    for tag in allTags:
+                        allTagLinks.append(self.createSourceLink(depRoutineName, tag))
+                    tagString = ",".join(allTagLinks)
                     if len(allTags) > 1:
                         tagString = "(%s)" % tagString
                     tagString += "^"
                     routineNameLink += tagString
                     if self._generatePDFBundle:
                         routineName += tagString
-                depRoutineName = depRoutine.getName()
                 routineNameLink += "<a href=%s>%s</a>" % (getPackageComponentLink(depRoutine),
                                                           depRoutineName)
                 routineNameLink += "&nbsp;&nbsp;"
