@@ -41,8 +41,9 @@ from FileManGlobalDataParser import FileManDataEntry, FileManDataField
 from FileManGlobalDataParser import FileManFileData
 from FileManGlobalDataParser import getMumpsRoutine
 from LogManager import logger
+import UtilityFunctions
 from UtilityFunctions import getDataEntryHtmlFileName, getKeys
-from UtilityFunctions import getPackageHtmlFileName, getRoutineHRefLink
+from UtilityFunctions import getPackageHtmlFileName
 from UtilityFunctions import normalizePackageName
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 
@@ -83,14 +84,16 @@ def getFileHtmlLink(dataEntry, value, **kargs):
   htmlFile = getDataEntryHtmlFileName(dataEntry.ien, dataEntry.fileNo)
   return "<a href=\"%s/%s/%s\">%s</a>" % (FILES_URL, dataEntry.fileNo.replace(".", "_"), htmlFile, value)
 
-def _getRoutineHRefLink(dataEntry, routineName, **kargs):
+def getRoutineHRefLink(dataEntry, routineName, **kargs):
+  return _getRoutineHRefLink(routineName, **kargs)
+
+def _getRoutineHRefLink(routineName, **kargs):
   tagRoutine = routineName.split('^')
   if len(tagRoutine) == 1:
     rtnName = routineName
   else:
     rtnName = tagRoutine[-1]
-
-  link = getRoutineHRefLink(rtnName, DOX_URL, **kargs)
+  link = UtilityFunctions.getRoutineHRefLink(rtnName, DOX_URL, **kargs)
   if link is None:
     return routineName
   pos = routineName.find(rtnName)
@@ -153,7 +156,7 @@ def getFreeTextLink(dataEntry, value, **kargs):
 rpc_list_fields = (
        ("Name", '.01', getFileHtmlLink), # Name
        ("Tag", '.02', None), # Tag
-       ("Routine", '.03', _getRoutineHRefLink), # Routine
+       ("Routine", '.03', getRoutineHRefLink), # Routine
        ("Availability", '.05', None),# Availability
        ("Description", '1', getWordProcessingDataBrief),# Description
    )
@@ -209,7 +212,7 @@ HLO_list_fields = (
        ("Package", '2', getFileManFilePointerLink), # Type
        ("HL7 Type Tag", '1/.01', "771.2/.01", getFreeTextLink), # Action Tag
        ("Action Tag", '1/.04', None), # Action Tag
-       ("Action Routine", '1/.05', _getRoutineHRefLink), # Action Routine
+       ("Action Routine", '1/.05', getRoutineHRefLink), # Action Routine
    )
 
 HLO_table_header_fields = (
@@ -264,7 +267,7 @@ def getMumpsRoutineHtmlLinks(inputString, crosRef=None):
   for routine, tag, start in getMumpsRoutine(inputString):
     if routine:
       output += (inputString[startpos:start] +
-                 _getRoutineHRefLink(None, routine, crossRef=crosRef))
+                 _getRoutineHRefLink(routine, crossRef=crosRef))
       startpos = start + len(routine)
   if startpos < len(inputString):
     output += inputString[startpos:]
@@ -679,7 +682,6 @@ class FileManDataToHtml(object):
                 value = id[-1](dataEntry, value, sourceField=id[1], targetField=id[-2], glbData=self.dataMap, crossRef=self.crossRef)
             tableRow[idx] = value
         for item in tableRow:
-          #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
           output.write("<td>%s</td>\n" % item)
         output.write("</tr>\n")
       output.write("</tbody>\n")
@@ -740,13 +742,13 @@ class FileManDataToHtml(object):
       dataHtmlLink = "<a href=\"%s/%s/%s\">%s</a>" % (FILES_URL, fileNo.replace(".", "_"),
                                                       getDataEntryHtmlFileName(ien, fileNo),
                                                       name)
-      for field in dataEntry.fields:
+      for fldId in dataEntry.fields:
+        dataField = dataEntry.fields[fldId]
         # Use index of field name to place data correctly in row
-        if field == '.01':
-          row[fieldsList.index(dataEntry.fields[field].name)] = dataHtmlLink
+        if fldId == '.01':
+          row[fieldsList.index(dataField.name)] = dataHtmlLink
         else:
-          row[fieldsList.index(dataEntry.fields[field].name)] = dataEntry.fields[field].value
-
+          row[fieldsList.index(dataField.name)] = self._dataFieldToHtml(dataField, False, dataField.name, writeLabels=False)
       rows.append(row)
     return rows
 
@@ -781,63 +783,79 @@ class FileManDataToHtml(object):
         outputFileEntryTableList(output, tName)
         # table body
         output.write("<tbody>\n")
-        self._fileManDataEntryToHtml(output, dataEntry, True)
+        output.write(self._fileManDataEntryToHtml(dataEntry, True, None))
         output.write("</tbody>\n")
         output.write("</table>\n")
         output.write("</div>\n")
         output.write("</div>\n")
         output.write ("</body></html>")
 
-  def _convertFileManSubFileDataToHtml(self, output, fileManData):
-    output.write ("<ol>\n")
+  def _convertFileManSubFileDataToHtml(self, fileManData, parentName):
+    retval = "<ul>\n"
     for ien in getKeys(fileManData.dataEntries, float):
       dataEntry = fileManData.dataEntries[ien]
-      self._fileManDataEntryToHtml(output, dataEntry, False)
-    output.write ("</ol>\n")
+      retval += self._fileManDataEntryToHtml(dataEntry, False, parentName)
+    retval += "</ul>\n"
+    return retval
 
-  def _fileManDataEntryToHtml(self, output, dataEntry, isRoot):
+  def _fileManDataEntryToHtml(self, dataEntry, isRoot, parentName):
+    retval = ""
     if not isRoot:
-      output.write("<li>\n")
+      retval += "<li>\n"
     fields = sorted(dataEntry.fields.keys())
     for fldId in fields:
       dataField = dataEntry.fields[fldId]
-      fieldType = dataField.type
-      name = dataField.name
-      value = dataField.value
-      if fieldType == FileManField.FIELD_TYPE_MUMPS:
-        value = getMumpsRoutineHtmlLinks(value, self.crossRef)
-      elif fieldType == FileManField.FIELD_TYPE_FREE_TEXT and name.find("ROUTINE") >=0:
-        value = _getRoutineHRefLink(dataEntry, str(value), crossRef=self.crossRef)
-      elif fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
-        if value and value.dataEntries:
-          if isRoot:
-            output.write("<tr>\n")
-            output.write("<td>%s</td>\n" % name)
-            output.write("<td>\n")
-          else:
-            output.write ("<dl><dt>%s:</dt>\n" % name)
-            output.write ("<dd>\n")
-          self._convertFileManSubFileDataToHtml(output, value)
-          if isRoot:
-            output.write("</td>\n")
-            output.write ("</tr>\n")
-          else:
-            output.write ("</dd></dl>\n")
-        continue
-      elif (fieldType == FileManField.FIELD_TYPE_FILE_POINTER or
-            fieldType == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER) :
-        if value:
-          value, tmp = convertFilePointerToHtml(value)
-      elif fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
-        value = "\n".join(value)
-        value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
-      if isRoot:
-        output.write ("<tr>\n")
-        output.write ("<td>%s</td>\n" % name)
-        output.write ("<td>%s</td>\n" % value)
-        output.write ("</tr>\n")
-      else:
-        output.write ("<dt>%s:  &nbsp;&nbsp;%s</dt>\n" % (name, value))
-        #output.write ("<dd>%s</dd>\n" % value)
+      retval += self._dataFieldToHtml(dataField, isRoot, parentName)
     if not isRoot:
-      output.write("</li>\n")
+      retval += "</li>\n"
+    return retval
+
+  def _dataFieldToHtml(self, dataField, isRoot, parentName, writeLabels=True):
+    fieldType = dataField.type
+    name = dataField.name
+    value = dataField.value
+    retval = ""
+    if fieldType == FileManField.FIELD_TYPE_MUMPS:
+      value = getMumpsRoutineHtmlLinks(value, self.crossRef)
+    elif fieldType == FileManField.FIELD_TYPE_FREE_TEXT and name.find("ROUTINE") >=0:
+      value = _getRoutineHRefLink(str(value), crossRef=self.crossRef)
+    elif fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
+      if value and value.dataEntries:
+        if isRoot:
+          retval += "<tr>\n"
+          retval += "<td>%s</td>\n" % name
+          retval += "<td>\n"
+        elif writeLabels:
+          retval += "<dl><dt>%s:</dt>\n" % name
+          retval += "<dd>\n"
+        else:
+          retval += "<dl>\n"
+          retval += "<dd>\n"
+        retval += self._convertFileManSubFileDataToHtml(value, name)
+        if isRoot:
+          retval += "</td>\n"
+          retval += "</tr>\n"
+        else:
+          retval += "</dd></dl>\n"
+      return retval
+    elif (fieldType == FileManField.FIELD_TYPE_FILE_POINTER or
+          fieldType == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER):
+      if value:
+        value, tmp = convertFilePointerToHtml(value)
+    elif (fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING or
+          fieldType == FileManField.FIELD_TYPE_FREE_TEXT and "FILE COMMENT" == name):
+      if isinstance(value, list):
+        value = "\n".join(value)
+      value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
+
+    if isRoot:
+      retval += "<tr>\n"
+      retval += "<td>%s</td>\n" % name
+      retval += "<td>%s</td>\n" % value
+      retval += "</tr>\n"
+    elif parentName != name:
+      retval += "<dt>%s:  &nbsp;&nbsp;%s</dt>\n" % (name, value)
+    else:
+      retval += "<dt>%s</dt>\n" % value
+
+    return retval
