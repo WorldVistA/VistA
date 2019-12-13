@@ -68,26 +68,38 @@ Required Tools
 In addition, a webserver that can handle PHP is required to host the ViViaN
 pages. For example, WampServer_ can be used on Windows.
 
+For this document, we will assume that the document root for our webserver is
+``C:\wamp64\www``. After completing the generation process described in this
+document, three subdirectories will be created in the root directory:
+``vivian``, ``vivian-data`` and ``dox``. While the root directory may change,
+the relative location of these subdirectories is fixed.
+
 
 Source Files
 ************
 
 Download the latest FOIA released ICR_.
 
+ViViAN Repository
+*****************
 
-OSEHRA Source Repositories
-**************************
+Use Git to clone the Product-Management or ViViAN repository.
 
-+-----------------+--------------------------------------------------------+
-|   Code Bases    |   Web Link                                             |
-+-----------------+--------------------------------------------------------+
-|   VistA         | https://github.com/OSEHRA/VistA                        |
-+-----------------+--------------------------------------------------------+
-|   ViViaN        | https://github.com/OSEHRA-Sandbox/Product-Management   |
-+-----------------+--------------------------------------------------------+
+.. parsed-literal::
 
-Use Git to make a local clone of these repositories. For example, to download
-the VistA repository:
+  $ git clone https://github.com/OSEHRA-Sandbox/Product-Management
+  Cloning into 'Product-Management'...
+  .
+  .
+  .
+
+Create a symbolic link from ``Product-Management/Visual`` to the ``vivian``
+directory, e.g. ``C:\wamp64\www\vivian``.
+
+VistA Repository
+****************
+
+Clone of the OSEHRA VistA repository.
 
 .. parsed-literal::
 
@@ -103,10 +115,10 @@ Vista-M Repository
 OSEHRA VistA
 ++++++++++++
 
-If the desired version of VistA to generate ViViaN and the Dox pages from is
-the OSEHRA version, see ObtainingVistAMCode_ to obtain the source code. Next,
-follow the instructions below based upon which type of MUMPS database will be
-utilized for the VistA installation:
+If generating the ViViaN and the Dox pages from OSEHRA VistA, see
+ObtainingVistAMCode_ to obtain the source code. Next, follow the instructions
+below based upon which type of MUMPS database will be utilized for the VistA
+installation:
 
 Caché
 ~~~~~
@@ -152,7 +164,7 @@ at the top of the window so that the source code points to the VistA
 repository. The binaries path can be set to any directory, preferably one
 outside of the VistA repository tree.
 
-.. figure:: http://code.osehra.org/content/named/SHA1/82B12B-launchCmakeGUI.png
+.. figure:: http://code.osehra.org/content/named/SHA1/f4a9de-launchCmakeGUI.png
    :align: center
    :alt:  Initial CMake-GUI page
 
@@ -167,23 +179,24 @@ continue the configuration process.
    :alt:  Generator selection
 
 Following generator selection, the interface will produce a highlighted display
-with two options:
+with three options:
 
-.. figure:: http://code.osehra.org/content/named/SHA1/8262A6-initialCMakeGUI.png
+.. figure:: http://code.osehra.org/content/named/SHA1/1086c5-initialCMakeGUI.png
    :align: center
    :alt:  Result of first CMake configuration
 
 Select `DOCUMENT_VISTA` and click the \"Configure\" button again. The CMake-GUI
-will be updated with the following entries:
+will be updated new entries and an error message:
 
-.. figure:: http://code.osehra.org/content/named/SHA1/0D2EBC-configureCMakeGUI.png
+.. figure:: http://code.osehra.org/content/named/SHA1/835c6c-configureCMakeGUI.png
    :align: center
    :alt:  Result of CMake configuration after DOCUMENT_VISTA is selected
 
-Some variables are optional or have reasonable default values. Others will need
-to be adjusted or set for each specific system. To aid in the configuration
-process, variables have a tooltip which explains in greater detail what the
-variable should contain.
+Select OK, we will populate the missing informtion now. Some variables are
+optional or have reasonable default values. Others will need to be adjusted or
+set for each specific system. To aid in the configuration process, variables
+have a tooltip which explains in greater detail what the variable should
+contain.
 
 If set, the `GENERATE_PDF_BUNDLE` variable creates a PDF version of all the
 Package, Routine, Global, Sub-File and ICR pages. The PDFs are be organized by
@@ -198,37 +211,32 @@ The following variables are required for both Cache and GT.M environments.
 +---------------------------+---------------------------------------------------------------+
 | DOT_EXECUTABLE            | Dot executable                                                |
 +---------------------------+---------------------------------------------------------------+
-| GIT_EXECUTABLE            | Git executable                                                |
-+---------------------------+---------------------------------------------------------------+
-| PYTHON_EXECUTABLE         | Python executable                                             |
-+---------------------------+---------------------------------------------------------------+
-| LOCAL_DOX_LINKS           | Enable to create links to the local DOX pages instead of the  |
-|                           | pages found at http://code.osehra.org/dox                     |
-+---------------------------+---------------------------------------------------------------+
 | ICR_FILE                  | Path to downloaded ICR_ File                                  |
 +---------------------------+---------------------------------------------------------------+
 | DOCUMENT_VISTA_M_DIR      | Path to VistA-M directory                                     |
 +---------------------------+---------------------------------------------------------------+
-| DOCUMENT_VISTA_OUTPUT_DIR | Path where ViViaN data and DOX pages will be generated.       |
-|                           | ViViaN expects this to be in the ``Visual/files`` subdirectory|
-|                           | of the ViViaN repository. Depending on the setup of the       |
-|                           | development environment, it may make more sense to generate   |
-|                           | files in a different directory and create a symbolic link.    |
-|                           | See `Format Data`_.                                           |
+| DOCUMENT_VISTA_OUTPUT_DIR | Root path for ViViaN, ViViaN data and DOX pages. This should  |
+|                           | the document root of the webserver. If using wamp, for        |
+|                           | example, this would be set to `C:/wamp64/www`. The generation |
+|                           | scripts will create and populate the `dox` and `vivian-data`  |
+|                           |  subdirectories. See `Format Data`_.                          |
 +---------------------------+---------------------------------------------------------------+
 
 **NOTE:** The CMake-GUI attempts to find the GIT_EXECUTABLE and
-PYTHON_EXECUTABLE during configuration, to see the default values, click on the
-\"Advanced\" toggle in the CMake-GUI.
+PYTHON_EXECUTABLE during configuration, to see or update the default values,
+click on the \"Advanced\" toggle in the CMake-GUI.
 
-These variables are Cache- or GT.M- specific.
+These variables are Cache- or GT.M- specific and will pre-populated with
+default values.
 
 +------------------------+------------------------------------+------------------------------------+
 |   Variable Name        |     Value for Testing in Caché     |     Value for Testing in GT.M      |
 +------------------------+------------------------------------+------------------------------------+
 | CCONTROL_EXECUTABLE    |      Path to CControl Executable   |                    N/A             |
+| (Advanced)             |                                    |                                    |
 +------------------------+------------------------------------+------------------------------------+
 | CTERM_EXECUTABLE       |      Path to CTerm Executable      |                    N/A             |
+| (Advanced)             |                                    |                                    |
 +------------------------+------------------------------------+------------------------------------+
 | VISTA_CACHE_NAMESPACE  |      Namespace of VistA routines   |                    N/A             |
 +------------------------+------------------------------------+------------------------------------+
@@ -248,7 +256,7 @@ These variables are Cache- or GT.M- specific.
 
 Once the options are set, press \"Configure\" again and then \"Generate\".
 
-.. figure:: http://code.osehra.org/content/named/SHA1/563C00-generateCMakeGUI.png
+.. figure:: http://code.osehra.org/content/named/SHA1/6ce087-generateCMakeGUI.png
    :align: center
    :alt:  Result of CMake generate
 
@@ -297,7 +305,6 @@ from the command line and enter the following command:
   Test #141: GeneratePackageDep
   Test #142: RequirementsParser
   Test #143: GenerateNameNumberDisplay
-
 
 Generate ViViaN Data and DOX
 ----------------------------
@@ -409,36 +416,17 @@ Each test and corresponding Python script is described below.
 two files: ``LastTest.log`` (test output) and ``LastTestsFailed.log`` (list of
 failed tests).
 
-Generate DOX or ViViaN Separately
----------------------------------
-
-It is possible to configure the scripts to only generate the DOX pages or the
-ViViaN backend data. After following the instructions in `Configure Scripts`_,
-uncheck either the `GENERATE_DOX` or `GENERATE_VIVIAN` variable under the
-\"Advanced\" section in the CMake-GUI. Select \"Configure\" again and then
-\"Generate\".
-
-**NOTE:** PDF bundles are only generated if `GENERATE_DOX` and
-`GENERATE_PDF_BUNDLE` are both selected.
-
-.. figure:: http://code.osehra.org/content/named/SHA1/138DF2-buildViViaNOnly.png
-   :align: center
-   :alt:  Set CMake variables in the CMake-GUI to only generate ViViaN
-
-
 Format Data
 -----------
 
-After the data parse scripts have been run successfully, a series of file
+After the generation scripts have been run successfully, a series of file
 manipulation steps are necessary to get all of the generated files into the
 correct locations. All of these changes are made in the Visual directory of the
 Product-Management (ViViaN) repository.
 
-1. If needed, generate a symbolic link ``files`` pointing to the
-   DOCUMENT_VISTA_OUTPUT_DIR specified during configuration.
-2. Update ``PackageCategories.json``, ``Packages.csv``,
+1. Update ``PackageCategories.json``, ``Packages.csv``,
    ``scripts/PackageDes.json`` if needed.
-4. [Optional] Run ``check_him_data.py`` to update ``himData.json``.
+2. [Optional] Run ``check_him_data.py`` to update ``himData.json``.
 
 
 Source Code Highlighting
@@ -446,7 +434,7 @@ Source Code Highlighting
 
 To enable the color highlighting of the M routine source page copy the
 ``code_pretty_scripts`` directory from the ``VistA/Utilities/Dox/Web`` folder
-into the `files/dox` directory.  The folder contains code taken from the
+into the `dox` directory.  The folder contains code taken from the
 `google_code_prettify`_ repository which is released under the Apache 2.0
 license.
 
@@ -456,38 +444,36 @@ ViViaN Setup Script
 
 Finally, execute the setup script from the ViViaN scripts
 (``Product-Management/Visual/scripts``) directory: ``python setup.py`` to
-generate other JSON and csv files. The script does not take any input parameters
-but requires:
+generate other JSON and csv files.
 
-* ``files`` directory created above
-* ``PackageCategories.json``, ``Packages.csv``, ``scripts/PackageDes.json`` and
-  ``himData.json``.
-* A version of the 'VHA Business Function Framework' spreadsheet in the
-  ``scripts/`` directory, currently ``BFF_version_2-12.xlsx``
-* The xlrd_ package to be installed in the Python environment
+The setup script has two optional arguments, ``files_dir`` and ``dox_dir``.
 
-The setup script creates the following in the ``files`` directory:
-``menu_autocomplete.json``, ``option_autocomplete.json``,
-``PackageInterface.csv``, ``packages.json``, ``packages_autocomplete.json``,
-``install_autocomplete.json`` and `bff.json`.
+We could use the following command:
 
-The setup script also copies ``himData.json`` to the ``files`` directory.
+.. parsed-literal::
+
+  $ python setup.py --files_dir=/c/wamp64/www/vivian-data --dox_dir=/c/wamp64/www/dox
+
+  *** Updated C:\wamp64\www\vivian-data/menu_autocomplete.json
+  *** Updated C:\wamp64\www\vivian-data/protocol_menu_autocomplete.json
+  *** Updated C:\wamp64\www\vivian-data/option_autocomplete.json
+  *** Updated C:\wamp64\www\vivian-data/protocol_option_autocomplete.json
+  *** Updated C:\wamp64\www\vivian-data/PackageInterface.csv
+  *** Updated C:\wamp64\www\vivian-data/packages.json
+  *** Updated C:\wamp64\www\vivian-data/packages_autocomplete.json
+  *** Updated C:\wamp64\www\vivian-data/install_autocomplete.json
+  *** Updated C:\wamp64\www\vivian-data/bff.json
+  *** Copied C:\wamp64\www\vivian-data/himData.json
+  *** Created directory 'mapping' for ViViaN web pages
+
 
 Review the Results
 ------------------
 
-To review ViViaN, open the ``index.php`` file from your favorite web browser.
+To review ViViaN, open the ``localhost/vivian`` file from your favorite
+web browser. Likewise, to review the DOX pages, open the ``localhost/dox``
+file from your favorite web browser.
 
-.. figure:: http://code.osehra.org/content/named/SHA1/0F8FA8-localVivian.png
-   :align: center
-   :alt:  Local ViViaN
-
-To review the DOX pages, open the ``files/dox/index.html`` file from your
-favorite web browser.
-
-.. figure:: http://code.osehra.org/content/named/SHA1/60275D-localDox.png
-   :align: center
-   :alt:  Local copy of Dox pages
 
 .. _WampServer: http://www.wampserver.com/en/
 .. _ICR: http://foia-vista.osehra.org/VistA_Integration_Agreement
