@@ -4,9 +4,14 @@ Instructions for Using Docker to Generate ViViaN and DOX
 
 .. sectnum::
 
-This document describes the steps required to generate the Visualizing VistA and Namespace (ViViaN) tool and the Visual Cross Reference Documentation (DOX) pages utilizing a set of OSEHRA developed Docker scripts.  These scripts are provided to minimize the set up work necessary and automate the generation of a local copy of ViViaN and the DOX pages.
+This document describes the steps required to generate the Visualizing VistA
+and Namespace (ViViaN) tool and the Visual Cross Reference Documentation (DOX)
+pages utilizing a set of OSEHRA developed Docker scripts.  These scripts are
+provided to minimize the set up work necessary and automate the generation of a
+copy of ViViaN and the DOX pages.
 
-For instructions on the manual process needed for a non-Cache system, see `Generate ViViaN and DOX`_
+For instructions on the manual process needed for a non-Cache system, see
+`Generate ViViaN and DOX`_.
 
 The scripts will
 
@@ -53,7 +58,9 @@ The scripts expect three files to be supplied in order to set up the environment
 Docker Set Up
 --------------
 
-OSEHRA recommends that the settings of the default Docker container be updated prior to executing these scripts.  The testing machines were built with the following settings:
+OSEHRA recommends that the settings of the default Docker container be updated
+prior to executing these scripts. The testing machines were built with the
+following settings:
 
 +-----------------+--------------------------------------------------------+
 |  Setting        |   Value                                                |
@@ -97,7 +104,8 @@ Use Git to make a local clone of the docker-vista repository.
 Place Source files
 ------------------
 
-Now that the repository has been cloned, copy the three Cache source files from the above table into the ``docker-vista/cache-files`` directory.
+Now that the repository has been cloned, copy the three Cache source files from
+the above table into the ``docker-vista/cache-files`` directory.
 
 The testing instances used had the following ``cache-files`` directory:
 
@@ -111,18 +119,26 @@ The testing instances used had the following ``cache-files`` directory:
 Execute Docker Build
 --------------------
 
-**This process will take several hours and should not require the user to interact with the process.**
+**This process will take several hours and should not require the user to
+interact with the process.**
 
-The Docker command to execute the building of the files is as follows. The only argument in the following command that can be modified by the user is the value given to the ``-t`` flag. This will be used as the tag of the image and will be referenced when starting the image in a container.
+The Docker command to execute the building of the files is as follows. The only
+argument in the following command that can be modified by the user is the value
+given to the ``-t`` flag. This will be used as the tag of the image and will be
+referenced when starting the image in a container.
 
 .. parsed-literal::
 
   docker build --build-arg flags="-c -b -v" --build-arg postInstallScript="-p ./Common/pvPostInstall.sh" -t vivian .
 
-Docker will then execute the commands in the DockerFile, culminating in a Docker image which has all of the necessary programs and files to view the ViViaN and DOX pages via a web browser.
+Docker will then execute the commands in the DockerFile, culminating in a
+Docker image which has all of the necessary programs and files to view the
+ViViaN and DOX pages via a web browser.
 
 
-The script will describe each step as the Docker process runs and will print a large amount of information to the terminal window. A snippet of the run looks as below:
+The script will describe each step as the Docker process runs and will print a
+large amount of information to the terminal window. A snippet of the run looks
+as below:
 
 .. parsed-literal::
 
@@ -164,21 +180,25 @@ The script will describe each step as the Docker process runs and will print a l
   .
   .
 
-When the command returns, after the 23rd step, the image has been built and can be started in a Docker container with the next command.
+When the command returns, after the 23rd step, the image has been built and can
+be started in a Docker container with the next command.
 
 Start Docker Container
 **********************
 
-To run the recently built image in a Docker container, we execute a command in the ``docker-vista`` directory again. This command forwards a series of ports on the host machine to ports on the running container. This is done to allow:
+To run the recently built image in a Docker container, we execute a command in
+the ``docker-vista`` directory again. This command forwards a series of ports on
+the host machine to ports on the running container. This is done to allow:
 
 * SSH access to the Docker container
 * viewing of the Cache Management Portal
 * access the web server that is on the container.
 * allow VistA GUI connections to the running instance
 
-The final argument given to the command is the tag of the image built in the previous step. If you changed the tag there, ensure that it is changed here as well.
+The final argument given to the command is the tag of the image built in the
+previous step. If you changed the tag there, ensure that it is changed here a
+well.
 
-The execution of the
 
 .. parsed-literal::
 
@@ -199,7 +219,9 @@ An explanation of the arguments to the command is broken down here:
 |       tag                   | Tag specified when ``docker build`` was run                   |
 +-----------------------------+---------------------------------------------------------------+
 
-In most setups, the user should not need to modify the port forwarding commands. If the host port is in use, modifiy the first number of the pair to an available port.
+In most setups, the user should not need to modify the port forwarding
+commands. If the host port is in use, modifiy the first number of the pair to
+an available port.
 
 The initial return of the command is simply the ID of the started container.
 
@@ -208,7 +230,9 @@ The initial return of the command is simply the ID of the started container.
   $ docker run -p 9430:9430 -p 8001:8001 -p 2222:22 -p 8080:8080 -p 57772:57772 -p 3080:80 -d --name=vivianvista viviandocker ps
     d8b6e1b46aa7
 
-The Docker container can be verified as running by executing the ``docker ps`` command to display running tasks. An example of the output after running the command above is shown here:
+The Docker container can be verified as running by executing the ``docker ps``
+command to display running tasks. An example of the output after running the
+command above is shown here:
 
 .. parsed-literal::
 
@@ -219,7 +243,9 @@ The Docker container can be verified as running by executing the ``docker ps`` c
 Review the Results
 ******************
 
-Once the container is up and running, the HTML pages of ViViaN and DOX can be accessed from a web browser on the host system. A container run using the above command would be accessed through the following URLs:
+Once the container is up and running, the HTML pages of ViViaN and DOX can be
+accessed from a web browser on the host system. A container run using the above
+command would be accessed through the following URLs:
 
 ViViaN:
 
@@ -231,6 +257,6 @@ or the DOX pages:
 
 .. parsed-literal::
 
-   http://localhost:3080/vivian/files/dox/
+   http://localhost:3080/dox/
 
 .. _`Generate ViViaN and DOX`: ./generateViViaNAndDox.rst
