@@ -219,7 +219,7 @@ The following variables are required for both Cache and GT.M environments.
 |                           | the document root of the webserver. If using wamp, for        |
 |                           | example, this would be set to `C:/wamp64/www`. The generation |
 |                           | scripts will create and populate the `dox` and `vivian-data`  |
-|                           |  subdirectories. See `Format Data`_.                          |
+|                           | subdirectories. See `Format Data`_.                           |
 +---------------------------+---------------------------------------------------------------+
 
 **NOTE:** The CMake-GUI attempts to find the GIT_EXECUTABLE and
