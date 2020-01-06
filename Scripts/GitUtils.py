@@ -138,6 +138,9 @@ def addChangeSet(gitRepoDir=None, patternList=[]):
             outLineStack.pop(0)
         else:
           results.append("OK")
+    # Ensure that the last object is captured, if necessary
+    if ("OK" in results) or len(outLineStack):
+      patternIncludeList.append(currentFile)
   """ Now add everything that can be found or was called for"""
   git_command_list = ["git", "add", "--"]
   totalIncludeList = patternList + patternIncludeList
