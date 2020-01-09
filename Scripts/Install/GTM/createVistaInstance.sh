@@ -192,13 +192,7 @@ echo "source $basedir/etc/env" >> $basedir/.bashrc
 
 # Setup base gtmroutines
 gtmroutines="\$basedir/r/\$gtmver(\$basedir/r)"
-
-# 64bit GT.M can use a shared library instead of $gtm_dist
-if [[ $gtm_arch == "x86_64" && -e $basedir/lib/gtm/libgtmutil.so ]]; then
-    echo "export gtmroutines=\"$gtmroutines $basedir/lib/gtm/libgtmutil.so $basedir/lib/gtm\"" >> $basedir/etc/env
-else
-    echo "export gtmroutines=\"$gtmroutines $basedir/lib/gtm\"" >> $basedir/etc/env
-fi
+echo "export gtmroutines=\"$gtmroutines $basedir/lib/gtm/libgtmutil.so\"" >> $basedir/etc/env
 
 # prog.sh - priviliged (programmer) user access
 # Allow access to ZSY
