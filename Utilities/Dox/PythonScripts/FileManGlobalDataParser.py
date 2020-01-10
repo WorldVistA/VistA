@@ -680,7 +680,11 @@ class FileManGlobalDataParser(object):
     for idx, value in enumerate(values, 1):
       if value and str(idx) in fieldDict:
         fieldAttr = fieldDict[str(idx)]
-        self._parseIndividualFieldDetail(value, fieldAttr, outDataEntry)
+        try:
+          self._parseIndividualFieldDetail(value, fieldAttr, outDataEntry)
+        except:
+          logger.error("Field data didn't match: %s as %s" % (value, fieldAttr))
+          continue
 
   def _parseIndividualFieldDetail(self, value, fieldAttr, outDataEntry):
     value = value.strip(' ')
@@ -847,7 +851,14 @@ def run(args):
     n = 0
     numFiles = len(fileSet)
     fileList = list(fileSet)
-    fileList.sort()
+    # HACK: Sorts by File number coerced to float. Fixes some "dependency"
+    # issues between files needed for later information.
+    #
+    #      Depends
+    #  9.7    =>   9.6, to write out dependency information for patches
+    #  19     =>   9.4, to find and query for Package names of options found.
+
+    fileList = sorted(fileList, key=lambda x: float(x))
     for file in fileList:
       n += 1
       logger.progress("Processing %s (file %d/%d)" % (file, n, numFiles))
@@ -864,7 +875,9 @@ def processFiles(glbDataParser, htmlGen, files):
       logger.progress("Parsing file: %s at %s" % (file, zwrFile))
       glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile, file)
     htmlGen.outputFileManDataAsHtml(file, glbDataParser)
-    glbDataParser.outFileManData.pop(file)
+    # Pop out everything that isn't the package file.
+    if file != "9.4":
+      glbDataParser.outFileManData.pop(file)
     gc.collect()
 
 def horologToDateTime(input):

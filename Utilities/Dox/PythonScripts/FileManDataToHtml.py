@@ -441,30 +441,6 @@ class FileManDataToHtml(object):
     # Add virtual menu for all "Server" type OPTIONS to be a child of
     menuArray = {}
     fileDataArray = {}
-    package_name_dict = {"3": "Kernel",
-                         "4": "MailMan",
-                         "5": "Toolkit",
-                         "14": "Lab Service",
-                         "33": "Health Level Seven",
-                         "49": "Integrated Billing",
-                         "52": "IFCAP",
-                         "53": "Accounts Receivable",
-                         "73": "Network Health Exchange",
-                         "82": "CMOP",
-                         "85": "Patient Data Exchange",
-                         "93": "Automated Med Information Exchange",
-                         "99": "EEO Complaint Tracking",
-                         "114": "Fee Basis",
-                         "115": "Radiology/Nuclear Medicine",
-                         "124": "Medicine",
-                         "127": "Surgery",
-                         "128": "Oncology",
-                         "147": "Remote Order/Entry System",
-                         "149": "Voluntary Timekeepting",
-                         "165": "DSS Extracts",
-                         "181": "Enrollment Application System",
-                         "188": "Functional Independence",
-                         "201": "Health Data & Informatics"}
     menuArray['0'] = FileManDataEntry(19, "9999990")
     menuArray['0'].addField(FileManDataField('1', 4, 'MENU TEXT', 'Unknown'))
     menuArray['0'].addField(FileManDataField('4', 2, 'TYPE', 'menu'))
@@ -482,9 +458,10 @@ class FileManDataToHtml(object):
     for menu in serverMenuList:
       if '12' in menu.fields:
         menuIEN = menu.fields['12'].value.split('^')[1]
+        packageName = normalizePackageName(self.dataMap.outFileManData['9.4'].dataEntries[menuIEN].name)
         if menuIEN not in menuArray:
           menuArray[menuIEN] = FileManDataEntry(19, "999999" + menuIEN)
-          menuArray[menuIEN].addField(FileManDataField('1', 4, 'MENU TEXT', package_name_dict[menuIEN]))
+          menuArray[menuIEN].addField(FileManDataField('1', 4, 'MENU TEXT', packageName))
           menuArray[menuIEN].addField(FileManDataField('4', 2, 'TYPE', 'menu'))
           menuArray[menuIEN].type = 'menu'
           menuArray[menuIEN].name = "19^999999" + str(menuIEN)
@@ -519,7 +496,7 @@ class FileManDataToHtml(object):
               continue
             value = subEntry.name
             childIen = value.split('^')[1]
-            if '2' in subEntry.fields:
+            if '2' in subEntry.fields and (childIen in menuDict):
               self.synonymMap[(dataEntry.name, menuDict[childIen].name)] =  "[" + subEntry.fields['2'].value+ "]"
             if childIen in menuDict:
               menuDepDict[dataEntry].add(menuDict[childIen])

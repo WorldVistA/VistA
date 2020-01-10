@@ -275,7 +275,7 @@ class FileManSchemaParser(object):
                                                   filePointedTo,
                                                   "")
         pointedToFile = self._allSchema[filePointedTo]
-        assert pointedToFile.isRootFile()
+        # assert pointedToFile.isRootFile()
         fileField.setPointedToFile(pointedToFile)
         globalName = pointedToFile.getName()
         fileNo = fileSchema.getFileNo()
