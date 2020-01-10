@@ -638,6 +638,8 @@ class FileManDataToHtml(object):
         tName = normalizePackageName(pkgName)
       outputDataListTableHeader(output, tName, columnNames, searchColumnNames)
       output.write("<body id=\"dt_example\">")
+      output.write("<a class=\"brand\" href=\"%s\" style=\"height:50px; padding: 0px;\"> \
+                  <img src=\"https://osehra.org/sites/default/files/vivian.png\" width=\"137\" height=\"50\"/></a>" % VIV_URL)
       output.write("""<div id="container" style="width:80%">""")
       if pkgName == "All":
         pkgLinkName = pkgName
@@ -710,6 +712,8 @@ class FileManDataToHtml(object):
                                      searchColumnNames=fieldNamesList,
                                      hideColumnNames=[""] )
       output.write("<body id=\"dt_example\">")
+      output.write("<a class=\"brand\" href=\"%s\" style=\"height:50px; padding: 0px;\"> \
+                  <img src=\"https://osehra.org/sites/default/files/vivian.png\" width=\"137\" height=\"50\"/></a>" % VIV_URL)
       output.write("""<div id="container" style="width:80%">""")
       output.write("<h1>File %s(%s) Data List</h1>" % (tName, fileNo))
       outputDataTableHeader(output, fieldNamesList, tName)
@@ -772,6 +776,8 @@ class FileManDataToHtml(object):
         output.write ("<html>")
         outputDataRecordTableHeader(output, tName)
         output.write("<body id=\"dt_example\">")
+        output.write("<a class=\"brand\" href=\"%s\" style=\"height:50px; padding: 0px;\"> \
+                    <img src=\"https://osehra.org/sites/default/files/vivian.png\" width=\"137\" height=\"50\"/></a>" % VIV_URL)
         output.write("""<div id="container" style="width:80%">""")
         output.write ("<h1>%s (%s) &nbsp;&nbsp;  %s (%s)</h1>\n" % (name, ien,
                                                                     fileManData.name,
