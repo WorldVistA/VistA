@@ -50,8 +50,7 @@ The scripts expect three files to be supplied in order to set up the environment
 +--------------------------------+---------------------------------------------------------------+
 | cache-<version>lnxrhx64.tar.gz | A Cache install zip file for RedHat Linux                     |
 |                                | **Must contain a cinstall_silent file to be executed,**       |
-|                                | **other earlier versions will not be installed correctly**    |
-|                                | (Tested using the 2016.1.0.56.0 version)                      |
+|                                | (Tested using the 2014.1.3 & 2016.1.0 version)                |
 +--------------------------------+---------------------------------------------------------------+
 
 
