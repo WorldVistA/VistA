@@ -1185,7 +1185,7 @@ class WebPageGenerator(object):
                       self.writeSectionHeader("Found Entries, Total: %d" % len(entryList),
                                               "Found Entries", outputFile, pdf,
                                               useAccordion)
-                      self.generateTablizedItemList(sorted(entryList, key=lambda x: self.getGlobalEntryName(x)),
+                      self.generateTablizedItemList(sorted(entryList, key=lambda x: float(x['IENum'])),
                                                     outputFile,
                                                     self.getGlobalEntryHTML,
                                                     nameFunc=self.getGlobalEntryName,
