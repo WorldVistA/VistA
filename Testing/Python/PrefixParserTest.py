@@ -26,7 +26,7 @@ if len(sys.argv) <= 1:
   sys.exit()
 
 from ParseCSVforPackagePrefixes import FindPackagePrefixes
-ExpectedOutput = ["'%", "'ABC", "'BCD", "'DEF", 'ABCD', "'CDEH", 'DEFG']
+ExpectedOutput = ["'%", "'ABC", "'BCD", "'DEF", "'GTM", "'gtm", 'ABCD', "'CDEH", 'DEFG']
 TestOutput = FindPackagePrefixes(sys.argv[1],sys.argv[2])
 
 if ExpectedOutput == TestOutput:
