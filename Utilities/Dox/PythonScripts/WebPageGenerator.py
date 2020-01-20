@@ -106,8 +106,8 @@ ENTRY_POINT = re.compile("^[A-Z0-9]+[(]?")
 # https://www.regular-expressions.info/catastrophic.html
 # https://stackoverflow.com/questions/13577372/do-python-regular-expressions-have-an-equivalent-to-rubys-atomic-grouping
 #
-routineCall = re.compile(r'(?:D(?= )|[G,$])(?::\S+)* ?(?P<entry>\w*)?(?:\^?(?P<rtn>(?<=\^)[%A-Za-z0-9]*)?)')  # re.compile("[DG] (?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>.+)\b")
-routineCallExpanded = re.compile(r'(?:DO|GOTO|\$) ?(?P<entry>[A-Za-z0-9]+)?(?:\^(?P<rtn>(?<=\^)[%A-Za-z0-9]+)?)?')  # re.compile("[DG] (?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>.+)\b")
+routineCall = re.compile(r"(?: [DG](?=[: ])|$$|,)(?::\S+)* ?(?P<entry>\w*(?![)]))?(?:\^?(?P<rtn>(?<=\^)[%A-Za-z0-9]*)?)")
+routineCallExpanded = re.compile(r'(?:DO|GOTO|\$\$) ?(?P<entry>[A-Za-z0-9]+)?(?:\^(?P<rtn>(?<=\^)[%A-Za-z0-9]+)?)?')  # re.compile("[DG] (?P<entry>[A-Za-z0-9]+)?\^(?P<rtn>.+)\b")
 COMMENT  = re.compile("^ ; ")
 READ_CMD = re.compile(" R (?P<params>.+?):(?! )(?P<timeout>.+?) ")
 WRITE_CMD = re.compile(" W (?P<string>.+?)\s")
