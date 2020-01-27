@@ -59,7 +59,7 @@ VALID_OBJECT = re.compile("[|](?P<name>[a-z0-9.]+)$")
 COMPONENT_LIST_START = re.compile("[|](?P<name>[a-z]+)[ ]+[*] [*]")
 LOCATION_INFO = re.compile("(?P<globalName>^ +\^[A-Z]+[(][0-9.]+)+(?P<locationInfo>.+$)")
 
-COMPONENT_OBJECT = re.compile("(?P<objIEN>[0-9]+)[ ;]+ (?P<objName>[A-Z0-9 -]+) [-]")
+COMPONENT_OBJECT = re.compile("(?P<objIEN>[0-9]+)[ ;]+ (?P<objName>[\S ]+?) [-]")
 KEY_OBJECT = re.compile("[|](?P<name>[a-z]+)[ ]+[*;]")
 
 OPTION = re.compile("([ ]|^)(?P<optionIEN>[.0-9]+)(?P<optionLocation>.*?)[+](?P<_varValue>[0-9]+)")
@@ -370,7 +370,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
         self._headerIndex = PackageComponentInfoDict[routineName]['_headerIndex']
         self._curKey = PackageComponentInfoDict[routineName]['_curKey']
 
-      sourcePath = os.path.join(CrossReference.outDir, self._fileNumber.replace(".", "_")+".json")
+      sourcePath = os.path.join(CrossReference.outDir,'..','vivian-data', self._fileNumber.replace(".", "_")+".json")
       if CrossReference.outDir and os.path.isfile(sourcePath):
         with open(sourcePath, "r") as file:
           self._returnJSON = json.load(file)
@@ -693,12 +693,8 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         logFile = open(logFileName, 'r')
         for curLine in logFile:
             curLine = curLine.rstrip("\r\n")
-            if PRESS_RETURN.search(curLine):
-                continue
-            if CROSS_REF.match(curLine.strip()):
-                break
             # check to see if it is a section header or we just in the routine header part
-            if not self._curSection or self._curSection == IXindexLogFileParser.ROUTINE:
+            if not self._curSection or (self._curSection in [IXindexLogFileParser.ROUTINE, IXindexLogFileParser.PACKAGE_COMPONENT_LIST_SECTION]):
                 sectionHeader = self.__isSectionHeader__(curLine)
                 if sectionHeader:
                     self._curSection = sectionHeader
@@ -707,7 +703,8 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
                         self._curHandler._curPackage = self._curPackage
                         self._curHandler.onSectionStart(curLine, sectionHeader, self._crossRef)
                     self._sectionStack.append(sectionHeader)
-                continue
+                if not self._curSection or (self._curSection in [IXindexLogFileParser.ROUTINE]):
+                    continue
             if self.__isEndOfSection__(curLine, self._curSection):
                 if self._curHandler:
                     self._curHandler.onSectionEnd(curLine, self._curSection,
@@ -722,6 +719,10 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
                 continue
             if self._curHandler:
                 self._curHandler.parseLine(curLine, self._curRoutine, self._crossRef)
+            elif PRESS_RETURN.search(curLine):
+                continue
+            elif CROSS_REF.match(curLine.strip()):
+                break
 
     def __ignoreCurrentLine__(self, curLine):
         return PRESS_RETURN.search(curLine) or CROSS_REF.search(curLine)
@@ -738,6 +739,7 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
         return None
 
     def __isEndOfSection__(self, curLine, section):
+        # Don't end on new line for the COMPONENT List either.
         if section in [IXindexLogFileParser.ROUTINE, IXindexLogFileParser.PACKAGE_COMPONENT_SECTION]:
             return ROUTINE_END.search(curLine)
         else:
