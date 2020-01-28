@@ -511,7 +511,15 @@ class DefaultKIDSBuildInstaller(object):
     pass
   """ intended to be implemented by subclass """
   def extraFixWork(self, vistATestClient):
-    pass
+    # use KIDS entry point to manually create package link for install
+    if self._updatePackageLink:
+      logger.warn("Attempting to manually creating the package link for: %s" %
+            (self._kidsInstallName))
+      connection = vistATestClient.getConnection()
+      # Luckily, the command just takes the patch information in order, ie "SD", "5.3", "701"
+      connection.write("W $$PKGPAT^XPDIP($$FIND1^DIC(9.4,,\"QXM\",\"%s\"),%s,\"%s^\"_$$NOW^XLFDT_\"^1\")" % tuple(self._kidsInstallName.split("*")))
+      connection.expect(vistATestClient._prompt, 30)
+
   """ default action for Send Mail To option
     please override or enhance it if more action is needed
   """
@@ -529,10 +537,8 @@ class DefaultKIDSBuildInstaller(object):
     extraInfo = connection.lastconnection
     logger.debug(extraInfo)
     if re.search("No link to PACKAGE file", extraInfo):
+      # Sets flag to attempt to include information when back at VistA's prompt
       self._updatePackageLink = True
-      logger.warn("You might have to update KIDS build %s to link"
-                  " to Package file" %
-                  (self._kidsInstallName))
 
   """ default action for installation error
     please override or enhance it if more action is needed
