@@ -184,7 +184,7 @@ class DefaultKIDSBuildInstaller(object):
     kidsMenuActionLst = self.KIDS_MENU_OPTION_ACTION_LIST
     while True:
       index = connection.expect([x[0] for x in kidsMenuActionLst])
-      if index > 0:
+      if index >= 0:
         sendCmd = kidsMenuActionLst[index][1]
         if sendCmd != None:
           connection.send("%s\r" % sendCmd)
