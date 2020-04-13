@@ -1,6 +1,7 @@
 ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 12/3/18 9:21pm
  ;---------------------------------------------------------------------------
  ; Copyright 2018 The Open Source Electronic Health Record Agent
+ ; Copyright 2020 Sam Habiel
  ;
  ; Licensed under the Apache License, Version 2.0 (the "License");
  ; you may not use this file except in compliance with the License.
@@ -97,13 +98,6 @@ ASKDIR ; Ask directory
 SLASH(DIR) ; Check for an ending slash
  I $E(DIR,$L(DIR))?1(1"/",1"\") Q 1
  E  U $P W "Output directory must end in a slash!" Q 0
-WRITEHDR(VAL) ; Writes out the date/time in the header
- N Y
- I +VAL=47 Q $ZDATE($HOROLOG,"DD-MON-YEAR 12:60:SS")
- I $L(VAL,":")=2 D  Q Y ; Cache date time
- . N MLIST S MLIST=" JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC"
- . S Y=$TR($ZDATE($HOROLOG,2,MLIST)," ","-")_" "_$ZTIME($P($HOROLOG,",",2))
- Q 0
 DUMPALL ; Dump All globals
  ; Do we have globals already?
  N X,Y S Y="" S X=DIR_"*" X CONFIG("LISTF")
@@ -199,7 +193,7 @@ RUNJOBS ; [Private] Run child workers
  L -^ZGO($J)
  QUIT
 VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, export that separately.
- s $et="d ^%ZTER HALT"
+ s $ET="d ^%ZTER HALT"
  w !,$J,": ",G,!
  n gDev ; global device
  N gHasFiles S gHasFiles=$O(FILES(G,""))'=""!($d(FILES(G))=1)
@@ -308,13 +302,13 @@ OPENGBL(G) ;
  N IO S IO=$$HOSTPATH($E(G,2,$L(G)))
  U $P W IO,!
  D OPEN(IO)
- U IO W "OSEHRA ZGO Export: "_G,!,$$WRITEHDR($SY)_" ZWR",!
+ U IO W "OSEHRA ZGO Export: "_G,!,"ZWR",!
  Q IO
 OPENFILE(F) ;
  N IO S IO=$$HOSTFILE(F)
  U $P W IO,!
  D OPEN(IO)
- U IO W "OSEHRA ZGO Export: "_$$FILENAME(@F),!,$$WRITEHDR($SY)_" ZWR",!
+ U IO W "OSEHRA ZGO Export: "_$$FILENAME(@F),!,"ZWR",!
  Q IO
 OPEN(IO) ;
  ;U $P W "OPEN ",IO,!
