@@ -69,7 +69,7 @@ class DefaultKIDSBuildInstaller(object):
        "NO", False),
       ("Delay Install \(Minutes\):  \(0\-60\):", "0", False),
       ("do you want to include disabled components\?", "NO", False),
-      ("DEVICE:", None, True)
+      ("DEVICE:", '0;P-OTHER;80;999999999', True)
   ]
 
   """ A list of tuple, defined the action list corresponding to KIDS Build
@@ -517,8 +517,9 @@ class DefaultKIDSBuildInstaller(object):
             (self._kidsInstallName))
       connection = vistATestClient.getConnection()
       # Luckily, the command just takes the patch information in order, ie "SD", "5.3", "701"
-      connection.write("W $$PKGPAT^XPDIP($$FIND1^DIC(9.4,,\"QXM\",\"%s\"),%s,\"%s^\"_$$NOW^XLFDT_\"^1\")" % tuple(self._kidsInstallName.split("*")))
-      connection.expect(vistATestClient._prompt, 30)
+      if "*" in self._kidsInstallName:
+        connection.write("W $$PKGPAT^XPDIP($$FIND1^DIC(9.4,,\"QXM\",\"%s\"),%s,\"%s^\"_$$NOW^XLFDT_\"^1\")" % tuple(self._kidsInstallName.split("*")))
+        connection.expect(vistATestClient._prompt, 30)
 
   """ default action for Send Mail To option
     please override or enhance it if more action is needed
