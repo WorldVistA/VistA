@@ -184,7 +184,7 @@ def generateSha1Sum(inputFilename):
   buf = old_div(fileSize,50)
   if buf > MAX_READ_SIZE:
     buf = MAX_READ_SIZE
-  with open(inputFilename, "r") as inputFile:
+  with open(inputFilename, "rb") as inputFile:
     return generateSha1SumCommon(inputFile, buf)
 
 """ utility method to generate sha1 hash key for file like object """
@@ -194,7 +194,7 @@ def generateSha1SumCommon(fileObject, buf=1024):
   while True:
     nByte = fileObject.read(buf)
     if nByte:
-      hashString += codecs.encode(nByte, encoding="ascii", errors='ignore')
+      hashString += nByte
     else:
       break
   return hashlib.sha1(hashString).hexdigest()
