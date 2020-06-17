@@ -46,6 +46,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <Icon_MainIcon>@SOURCE@/CPRSChart_Icon.ico</Icon_MainIcon>
         <DCC_UnitSearchPath> @SOURCE@\..\CPRS-Lib;@SOURCE@\..\VA;@SOURCE@\..\..\..\RPC Broker\BDK\Source;@SOURCE@\..\VA\VA508Accessibility;@SOURCE@\..\PKI;$(DCC_UnitSearchPath);@SOURCE@\XE8\508\Source;@SOURCE@\XE8\Borland\Source;@SOURCE@\XE8\Broker\Source;@SOURCE@\XE8\CopyPaste\Source;@SOURCE@\XE8\ExceptionLogger\Source;@SOURCE@\XE8\FilemanComponents\Source;@SOURCE@\XE8\VA\Source;</DCC_UnitSearchPath>
         <SanitizedProjectName>CPRSChart</SanitizedProjectName>
         <DCC_MapFile>3</DCC_MapFile>
@@ -54,22 +55,21 @@
         <ImageDebugInfo>true</ImageDebugInfo>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Release>31</VerInfo_Release>
-        <VerInfo_Build>118</VerInfo_Build>
+        <VerInfo_Build>121</VerInfo_Build>
         <DCC_DcuOutput>.\dcu</DCC_DcuOutput>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <DCC_ImageBase>00400000</DCC_ImageBase>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;VCLTee;Vcl.Win;System.Win;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_F>false</DCC_F>
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=7/17/2019;FileVersion=1.0.31.118;InternalName=1.0.31.118 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch 509;ProductName=Computerized Patient Record System;ProductVersion=1.0.31.118;Comments=Version 1.0.31.118;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=;FileVersion=1.0.31.121;InternalName=1.0.31.121 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch 434;ProductName=Computerized Patient Record System;ProductVersion=1.0.31.121;Comments=Version 1.0.31.121;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
         <DCC_S>false</DCC_S>
         <DCC_E>false</DCC_E>
         <DCC_K>false</DCC_K>
         <DCC_N>false</DCC_N>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=7/17/2019;FileVersion=1.0.31.118;InternalName=1.0.31.118 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch 509;ProductName=Computerized Patient Record System;ProductVersion=1.0.31.118;Comments=Version 1.0.31.118A;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
-        <Icon_MainIcon>@SOURCE@/CPRSChart_Icon.ico</Icon_MainIcon>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=;FileVersion=1.0.31.121;InternalName=1.0.31.121 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch 485;ProductName=Computerized Patient Record System;ProductVersion=1.0.31.121;Comments=Version 1.0.31.121;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
         <DCC_DcuOutput>.\dcu</DCC_DcuOutput>
         <DCC_ImageBase>00400000</DCC_ImageBase>
         <DCC_F>false</DCC_F>
@@ -90,7 +90,8 @@
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=7/17/2019;FileVersion=1.0.31.118;InternalName=1.0.31.118 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch 509;ProductName=Computerized Patient Record System;ProductVersion=1.0.31.118;Comments=Version 1.0.31.118A;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=;FileVersion=1.0.31.121;InternalName=1.0.31.121 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch 485;ProductName=Computerized Patient Record System;ProductVersion=1.0.31.121;Comments=Version 1.0.31.121;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
+        <Icon_MainIcon>@SOURCE@/CPRSChart.ico</Icon_MainIcon>
         <DCC_DebugInfoInExe>false</DCC_DebugInfoInExe>
         <DCC_DcuOutput>.\dcu</DCC_DcuOutput>
         <DCC_ImageBase>00400000</DCC_ImageBase>
@@ -101,6 +102,8 @@
         <DCC_N>false</DCC_N>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <Icon_MainIcon>@SOURCE@/CPRSChart.ico</Icon_MainIcon>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=;FileVersion=1.0.31.121;InternalName=1.0.31.121 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch 485;ProductName=Computerized Patient Record System;ProductVersion=1.0.31.121;Comments=Version 1.0.31.121;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
         <DCC_RangeChecking>true</DCC_RangeChecking>
         <DCC_MapFile>3</DCC_MapFile>
         <DCC_Optimize>false</DCC_Optimize>
@@ -108,7 +111,7 @@
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=7/17/2019;FileVersion=1.0.31.118;InternalName=1.0.31.118 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch 509;ProductName=Computerized Patient Record System;ProductVersion=1.0.31.118;Comments=Version 1.0.31.118A;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
+        <Icon_MainIcon>CPRSChart_Icon.ico</Icon_MainIcon>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -962,10 +965,7 @@
                     <VersionInfoKeys Name="CFBundleAllowMixedLocalizations"/>
                     <VersionInfoKeys Name="CFBundleExecutable"/>
                 </VersionInfoKeys>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k220.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp220.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <Platforms>
                 <Platform value="Win32">True</Platform>
@@ -976,7 +976,13 @@
             </ActiveXProjectInfo>
             <ModelSupport>False</ModelSupport>
             <Deployment Version="2">
-                <DeployFile LocalName="CPRSChart.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="CPRSChart.ridl" Configuration="Release" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="CPRSChart.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>CPRSChart.exe</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -985,6 +991,12 @@
                 <DeployFile LocalName="CPRSChart.ridl" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="CPRSChart.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>CPRSChart.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

@@ -142,6 +142,7 @@ type
     DigitalSigningSetup1: TMenuItem;
     mnuFocusChanges: TMenuItem;
     txtCmdFlags: TVA508StaticText;
+    pnlOtherInfo: TKeyClickPanel;
     procedure tabPageChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -255,6 +256,11 @@ type
     procedure DigitalSigningSetup1Click(Sender: TObject);
     procedure mnuFocusChangesClick(Sender: TObject);
     procedure AppEventsMessage(var Msg: tagMSG; var Handled: Boolean);
+    procedure pnlOtherInfoClick(Sender: TObject);
+    procedure pnlOtherInfoMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure pnlOtherInfoMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     FProccessingNextClick : boolean;
     FJustEnteredApp : boolean;
@@ -293,6 +299,9 @@ type
     FOrderPrintForm: boolean;
     FReviewclick: boolean;
     FCtrlTabUsed: boolean;
+    fotherPanelUseColor: boolean;
+    fotherPanelType: string;
+    fotherPanelShowReportBox: boolean;
     procedure RefreshFixedStatusWidth;
     procedure FocusApplicationTopForm;
     procedure AppActivated(Sender: TObject);
@@ -319,6 +328,7 @@ type
     procedure SetupPatient(AFlaggedList : TStringList = nil);
     procedure RemindersChanged(Sender: TObject);
     procedure ReportsOnlyDisplay;
+    procedure setOtherInfoPanel;
     procedure UMInitiate(var Message: TMessage);   message UM_INITIATE;
     procedure UMNewOrder(var Message: TMessage);   message UM_NEWORDER;
     procedure UMStatusText(var Message: TMessage); message UM_STATUSTEXT;
@@ -396,7 +406,7 @@ implementation
 
 uses
   ORNet, rCore, fPtSelMsg, fPtSel, fCover, fProbs, fMeds, fOrders, rOrders, fNotes, fConsults, fDCSumm,
-  rMisc, Clipbrd, fLabs, fReports, rReports, fPtDemo, fEncnt, fPtCWAD, uCore, fAbout, fReview, {fxBroker,}
+  rMisc, Clipbrd, fLabs, fReports, rReports, fPtDemo, fEncnt, fPtCWAD, uCore, fAbout, fReview, fxBroker,
   fxLists, fxServer, ORSystem, fRptBox, fSplash, rODAllergy, uInit, fLabTests, fLabInfo, uGlobalVar,
   uReminders, fReminderTree, ORClasses, fDeviceSelect, fDrawers, fReminderDialog, ShellAPI, rVitals,
   fOptions, fGraphs, fGraphData, rTemplates, fSurgery, rSurgery, uEventHooks, uSignItems,
@@ -406,8 +416,7 @@ uses
   , CCOW_const
   {$ENDIF}
   , VA508AccessibilityRouter, fOtherSchedule, VAUtils, uVA508CPRSCompatibility, fIVRoutes,
-  fPrintLocation, fTemplateEditor, fTemplateDialog, fCombatVet, fFocusedControls,
-  uGN_RPCLog;
+  fPrintLocation, fTemplateEditor, fTemplateDialog, fCombatVet, fFocusedControls;
 
 var
   IsRunExecuted: Boolean = FALSE;
@@ -713,7 +722,7 @@ end;
 procedure TfrmFrame.FormCreate(Sender: TObject);
 { connect to server, create tab pages, select a patient, & initialize core objects }
 var
-  ClientVer, ServerVer, ServerReq, SAN: string;
+  ClientVer, ServerVer, ServerReq, SAN, otherPanelControls: string;
 begin
   FJustEnteredApp := false;
   SizeHolder := TSizeHolder.Create;
@@ -854,6 +863,33 @@ begin
     Close;
     Exit;
   end;
+  //otherPanelControls := otherInformationPanelControls;
+  otherPanelControls := '0';
+  if Piece(otherPanelControls, U, 1) = '0' then
+    begin
+      pnlOtherInfo.Enabled := false;
+      pnlOtherInfo.Visible := false;
+    end
+  else
+    begin
+      fotherPanelUseColor := Piece(otherPanelControls, u, 2) = '1';
+      if fotherPanelUseColor then
+        begin
+          self.pnlOtherInfo.ParentBackground := false;
+          self.pnlOtherInfo.ParentColor := false;
+        end
+      else
+        begin
+          pnlOtherInfo.Color := get508CompliantColor(clYellow);
+          self.pnlOtherInfo.ParentBackground := true;
+          self.pnlOtherInfo.ParentColor := true;
+          self.pnlOtherInfo.Color := clBtnFace;
+          self.pnlOtherInfo.Repaint;
+        end;
+      fotherPanelShowReportBox := Piece(otherPanelControls, u, 3) = '1';
+      pnlOtherInfo.tabstop := screenReaderActive;
+    end;
+
   // Global flags set by server
   IsLeJeuneActive := ServerHasPatch(CampLejeunePatch);
   SpansIntlDateLine := SiteSpansIntlDateLine;
@@ -1231,6 +1267,24 @@ begin
   Z6.Visible              := IsProgrammer;
 end;
 
+procedure TfrmFrame.setOtherInfoPanel;
+var
+info: string;
+begin
+  pnlOtherInfo.Caption := '';
+  if patient.DFN = '' then exit;
+  //info := otherInformationPanel(Patient.DFN);
+  info := 'zzz^booo';
+  pnlOtherInfo.Caption := Piece(info, u, 2);
+  fotherPanelType := Piece(info, u, 1);
+  if screenReaderActive then
+    begin
+      GetScreenReader.Speak(Piece(info, u, 2));
+
+    end;
+//  self.pnlOtherInfo.Refresh;
+end;
+
 { Updates posted to MainForm --------------------------------------------------------------- }
 
 procedure TfrmFrame.UMNewOrder(var Message: TMessage);
@@ -1434,6 +1488,7 @@ begin
     SetUpCIRN;
     DisplayEncounterText;
     SetShareNode(DFN, Handle);
+    setOtherInfoPanel;
     with Patient do
       NotifyOtherApps(NAE_NEWPT, SSN + U + FloatToStr(DOB) + U + Name);
     SelectMsg := '';
@@ -1696,6 +1751,8 @@ begin
   PtSelCancelled := FALSE;
   if not FRefreshing then mnuFile.Tag := 0
   else mnuFile.Tag := 1;
+  pnlOtherInfo.Caption := '';
+  pnlOtherInfo.Repaint;
   DetermineNextTab;
   //if Sender <> mnuFileNext then        //CQ 16273 & 16419 - Missing Review/Sign Changes dialog when clicking 'Next' button.
   ThisSessionChanges := TChanges.Create;
@@ -1766,6 +1823,7 @@ begin
           TChangeItem(ThisSessionChanges.PCE.Items[i]).DCOrder,
           TChangeItem(ThisSessionChanges.PCE.Items[i]).Delay);
         end;
+        setOtherInfoPanel;
         Exit;
       end;
   finally
@@ -1908,7 +1966,10 @@ begin
     end;
   finally
     if (not FRefreshing) and (Patient.DFN = SaveDFN) then
-      RemindersStarted := OldRemindersStarted;
+      begin
+        RemindersStarted := OldRemindersStarted;
+        setOtherInfoPanel;
+      end;
     FFirstLoad := False;
   end;
  {Begin BillingAware}
@@ -2630,7 +2691,7 @@ begin
            end;
          end;
       //end VAA
-
+      pnlOtherInfo.Font.Size := NewFontSize;
       RefreshFixedStatusWidth;
       FormResize( self );
     finally
@@ -3561,6 +3622,8 @@ begin
   tmpDFN := Patient.DFN;
   Patient.Clear;
   Patient.DFN := tmpDFN;
+  pnlOtherInfo.Caption := '';
+  pnlOtherInfo.Repaint;
   uCore.TempEncounterLoc := 0;  //hds7591  Clinic/Ward movement.
   uCore.TempEncounterLocName := ''; //hds7591  Clinic/Ward movement.
   uCore.TempEncounterText := '';
@@ -3630,6 +3693,7 @@ begin
     FPrevInPatient := True;
   end;
   DisplayEncounterText;
+  setOtherInfoPanel;
 end;
 
 procedure TfrmFrame.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -4226,7 +4290,7 @@ var
   PtSubject: string;
 begin
   data := IContextItemCollection(aContextItemCollection) ;
-  anItem := data.Present('[hds_med_va.gov]request.id.name');
+  anItem := data.Present('[hds_med_domain]request.id.name');
   // Retrieve the ContextItem name and value as strings
   if anItem <> nil then
     begin
@@ -4296,6 +4360,7 @@ begin
   mnuView.Enabled := True;
   mnuTools.Enabled := True;
   if FNextButtonActive then FNextButton.Visible := True;
+//  setOtherInfoPanel;
 end;
 
 
@@ -4309,6 +4374,37 @@ procedure TfrmFrame.pnlFlagMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   pnlFlag.BevelOuter := bvRaised;
+end;
+
+procedure TfrmFrame.pnlOtherInfoClick(Sender: TObject);
+var
+details: TStrings;
+begin
+  inherited;
+  if not fotherPanelShowReportBox then exit;
+  details := TStringList.Create;
+  try
+    //otherInformationPanelDetails(patient.DFN, fotherPanelType, details);
+    ReportBox(details, self.pnlOtherInfo.Caption, True);
+  finally
+    FreeAndNil(details);
+  end;
+end;
+
+procedure TfrmFrame.pnlOtherInfoMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  if not fotherPanelShowReportBox then exit;
+  pnlOtherInfo.BevelOuter := bvLowered;
+end;
+
+procedure TfrmFrame.pnlOtherInfoMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  if not fotherPanelShowReportBox then exit;
+  pnlOtherInfo.BevelOuter := bvRaised;
 end;
 
 procedure TfrmFrame.pnlFlagClick(Sender: TObject);
@@ -4598,7 +4694,7 @@ begin
       end;
     4:begin
         if laMHV.Caption = 'MHV' then
-          ShellExecute(laMHV.Handle, 'open', PChar('http://www.adomadomain.ext/'), '', '', SW_NORMAL);
+          ShellExecute(laMHV.Handle, 'open', PChar('http://www.myhealth.domain/'), '', '', SW_NORMAL);
       end;
     5:begin
         if fCover.VAAFlag[0] <> '0' then //'0' means subscriber not found
