@@ -8,14 +8,10 @@ inherited frmFrame: TfrmFrame
   Menu = mnuFrame
   OldCreateOrder = True
   Visible = True
-  OnActivate = FormActivate
-  OnClose = FormClose
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnResize = FormResize
   ExplicitWidth = 819
-  ExplicitHeight = 731
+  ExplicitHeight = 732
   PixelsPerInch = 96
   TextHeight = 13
   object pnlNoPatientSelected: TPanel [0]
@@ -43,7 +39,7 @@ inherited frmFrame: TfrmFrame
     TabOrder = 0
     object bvlPageTop: TBevel
       Left = 1
-      Top = 50
+      Top = 91
       Width = 801
       Height = 2
       Margins.Left = 4
@@ -51,7 +47,7 @@ inherited frmFrame: TfrmFrame
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alTop
-      ExplicitWidth = 791
+      ExplicitTop = 200
     end
     object pnlToolbar: TPanel
       Left = 1
@@ -855,7 +851,7 @@ inherited frmFrame: TfrmFrame
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 2
       TabPosition = tpBottom
       OnChange = tabPageChange
       OnMouseDown = tabPageMouseDown
@@ -863,9 +859,9 @@ inherited frmFrame: TfrmFrame
     end
     object pnlPage: TPanel
       Left = 1
-      Top = 52
+      Top = 93
       Width = 801
-      Height = 577
+      Height = 536
       Align = alClient
       BevelOuter = bvNone
       Font.Charset = DEFAULT_CHARSET
@@ -874,7 +870,7 @@ inherited frmFrame: TfrmFrame
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 3
       object lstCIRNLocations: TORListBox
         Left = 522
         Top = 0
@@ -909,6 +905,25 @@ inherited frmFrame: TfrmFrame
         CheckBoxes = True
         CheckEntireLine = True
       end
+    end
+    object pnlOtherInfo: TKeyClickPanel
+      Left = 1
+      Top = 50
+      Width = 801
+      Height = 41
+      Align = alTop
+      Color = clYellow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 1
+      OnClick = pnlOtherInfoClick
+      OnMouseDown = pnlOtherInfoMouseDown
+      OnMouseUp = pnlOtherInfoMouseUp
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -1019,6 +1034,9 @@ inherited frmFrame: TfrmFrame
         'Status = stsDefault')
       (
         'Component = txtCmdFlags'
+        'Status = stsDefault')
+      (
+        'Component = pnlOtherInfo'
         'Status = stsDefault'))
   end
   object mnuFrame: TMainMenu
