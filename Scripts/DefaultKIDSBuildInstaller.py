@@ -183,7 +183,7 @@ class DefaultKIDSBuildInstaller(object):
       return False
     kidsMenuActionLst = self.KIDS_MENU_OPTION_ACTION_LIST
     while True:
-      index = connection.expect([x[0] for x in kidsMenuActionLst])
+      index = connection.expect([x[0] for x in kidsMenuActionLst], 60)
       if index >= 0:
         sendCmd = kidsMenuActionLst[index][1]
         if sendCmd != None:
@@ -336,8 +336,9 @@ class DefaultKIDSBuildInstaller(object):
       ("Menu Rebuild Complete:", None , False),
       ("Installing PACKAGE COMPONENTS:", None ,False),
       ("Send mail to: ", self.handleSendMailToOptions, False),
-      ("Select Installation ", self.handleInstallError, True),
-      ("Install Completed", self.installCompleted, True)
+      ("Installed", self.installCompleted, True),
+      ("Install Completed", self.installCompleted, True),
+      ("Select Installation ", self.installCompleted, True)
     ]
     """ Bulid the status update action list """
     statusActionList = []
@@ -537,6 +538,7 @@ class DefaultKIDSBuildInstaller(object):
   def installCompleted(self, connection, **kargs):
     extraInfo = connection.lastconnection
     logger.debug(extraInfo)
+    logger.info("Installation succeeded for %s" % self._kidsInstallName)
     if re.search("No link to PACKAGE file", extraInfo):
       # Sets flag to attempt to include information when back at VistA's prompt
       self._updatePackageLink = True
