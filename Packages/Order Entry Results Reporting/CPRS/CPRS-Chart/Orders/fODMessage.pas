@@ -25,7 +25,7 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn;
+uses ORFn, VAUtils;
 
 var
   frmODMessage: TfrmODMessage;

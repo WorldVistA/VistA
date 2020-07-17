@@ -23,6 +23,7 @@ type
 
 {Key/value -internal/external pairs}
  TKeyVal=class(TObject)
+ public
    Id:string;
    name:string; {may want to use instead of id sometime}
    intern:string;
@@ -30,12 +31,12 @@ type
    internOrig:string;
    externOrig:string;
    function GetDHCPField:string;
- public
    procedure DHCPtoKeyVal(DHCPFld:String);
    property DHCPField:string read GetDHCPField;
  end;
 
  TComment=class(TObject)
+ public
    IFN:string;
    Facility:string;
    Narrative:string;
@@ -54,6 +55,7 @@ type
  end;
 
  TCoordExpr = class(TObject)
+ public
    IFN:                   String;
    icdId:                 String;
    icdCode:               String;
@@ -68,6 +70,7 @@ type
 
   {patient qualifiers}
  TPLPt=class(TObject)
+ public
    PtVAMC:string;
    PtDead:string;
    PtBid:string;
@@ -86,6 +89,7 @@ type
 
  { User params}
  TPLUserParams=class(TObject)
+ public
    usPrimeUser:Boolean; {GMPLUSER true if clinical entry, false if clerical}
    usDefaultView:String;
    usCurrentView:String; {what view does user currently have? (OP,IP,Preferred,Unfilterred)}
@@ -112,6 +116,7 @@ type
 
  {filter lists}
  TPLFilters = class(TObject)
+ public
    ProviderList:TstringList;
    ClinicList:TstringList;
    ServiceList:TStringList;

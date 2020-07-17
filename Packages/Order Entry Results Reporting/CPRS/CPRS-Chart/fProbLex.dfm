@@ -7,7 +7,6 @@ inherited frmPLLex: TfrmPLLex
   Constraints.MinHeight = 480
   Constraints.MinWidth = 640
   OldCreateOrder = True
-  Position = poOwnerFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnHelp = nil

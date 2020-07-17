@@ -133,6 +133,7 @@ procedure TCPRSBroker.CallRPC(const RPCName: WideString);
 var
   err: boolean;
   tmpRPCVersion: string;
+  tmpRPCName: string;
   tmpClearParameters: boolean;
   tmpClearResults: boolean;
   tmpResults: string;
@@ -142,45 +143,53 @@ begin
   EnsureEventHookObjects;
   uCPRSEventHookManager.EnterCriticalSection;
   try
-    err := (FContext = '');
-    if(not err) then
-      err := not UpdateContext(FContext);
-    if (not err) then
-      err := IsBaseContext;
-    if err then
-      raise EOleException.Create('Invalid Broker Context', OLE_E_FIRST, Application.ExeName ,'', 0)
-    else
-    begin
-      if RPCName <> '' then
-      begin
-        tmpRPCVersion := String(RPCBrokerV.RpcVersion);
-        tmpClearParameters := RPCBrokerV.ClearParameters;
-        tmpClearResults := RPCBrokerV.ClearResults;
-        tmpResults := RPCBrokerV.Results.Text;
-        tmpParam := TParams.Create(nil);
-        try
-          RPCBrokerV.RemoteProcedure := RPCName;
-          RPCBrokerV.RpcVersion := FRPCVersion;
-          RPCBrokerV.ClearParameters := FClearParameters;
-          RPCBrokerV.ClearResults := FClearResults;
-          RPCBrokerV.Param.Assign(FParam);
-          CallBrokerInContext;
-          FParam.Assign(RPCBrokerV.Param);
-          FResults := RPCBrokerV.Results.Text;
-        finally
-          RPCBrokerV.RpcVersion := tmpRPCVersion;
-          RPCBrokerV.ClearParameters := tmpClearParameters;
-          RPCBrokerV.ClearResults := tmpClearResults;
-          RPCBrokerV.Results.Text := tmpResults;
-          RPCBrokerV.Param.Assign(tmpParam);
-          tmpParam.Free;
-        end;
-      end
+    LockBroker;
+    try
+      err := (FContext = '');
+      if(not err) then
+        err := not UpdateContext(FContext);
+      if (not err) then
+        err := IsBaseContext;
+      if err then
+        raise EOleException.Create('Invalid Broker Context', OLE_E_FIRST, Application.ExeName ,'', 0)
       else
       begin
-        RPCBrokerV.Results.Clear;
-        FResults := '';
+        if RPCName <> '' then
+        begin
+          tmpRPCVersion := String(RPCBrokerV.RpcVersion);
+          tmpRPCName := RPCBrokerV.RemoteProcedure;
+          tmpClearParameters := RPCBrokerV.ClearParameters;
+          tmpClearResults := RPCBrokerV.ClearResults;
+          tmpResults := RPCBrokerV.Results.Text;
+          tmpParam := TParams.Create(nil);
+          tmpParam.Assign(RPCBrokerV.Param);
+          try
+            RPCBrokerV.RemoteProcedure := RPCName;
+            RPCBrokerV.RpcVersion := FRPCVersion;
+            RPCBrokerV.ClearParameters := FClearParameters;
+            RPCBrokerV.ClearResults := FClearResults;
+            RPCBrokerV.Param.Assign(FParam);
+            CallBrokerInContext;
+            FParam.Assign(RPCBrokerV.Param);
+            FResults := RPCBrokerV.Results.Text;
+          finally
+            RPCBrokerV.RpcVersion := tmpRPCVersion;
+            RPCBrokerV.RemoteProcedure := tmpRPCName;
+            RPCBrokerV.ClearParameters := tmpClearParameters;
+            RPCBrokerV.ClearResults := tmpClearResults;
+            RPCBrokerV.Results.Text := tmpResults;
+            RPCBrokerV.Param.Assign(tmpParam);
+            tmpParam.Free;
+          end;
+        end
+        else
+        begin
+          RPCBrokerV.Results.Clear;
+          FResults := '';
+        end;
       end;
+    finally
+      UnlockBroker;
     end;
   finally
     uCPRSEventHookManager.LeaveCriticalSection;
@@ -483,7 +492,7 @@ var
   DoHalt: boolean;
   ModuleName: string;
   HelpPath: WideString;
-  Buffer: array[0..261] of Char;
+  Buffer: array[0..MAX_PATH] of Char;
   Handle: THandle;
   UnregisterProc: TUnregisterProc;
   LibAttr: PTLibAttr;
@@ -500,7 +509,7 @@ begin
   end;
 
   try
-    SetString(ModuleName, Buffer, Windows.GetModuleFileName(HInstance, Buffer, SizeOf(Buffer)));
+    SetString(ModuleName, Buffer, Windows.GetModuleFileName(HInstance, Buffer, MAX_PATH));
     if ModuleName <> '' then
     begin
       OleCheck(LoadTypeLib(PWideChar(WideString(ModuleName)), CPRSLib)); // will register if needed

@@ -11,7 +11,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
   OnDestroy = FormDestroy
   OnResize = FormResize
   ExplicitWidth = 804
-  ExplicitHeight = 455
+  ExplicitHeight = 458
   PixelsPerInch = 96
   TextHeight = 13
   object splLeft: TSplitter [0]
@@ -163,6 +163,17 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       Align = alBottom
       Beveled = True
     end
+    object lblCommCareLock: TLabel
+      Left = 1
+      Top = 1
+      Width = 354
+      Height = 13
+      Align = alTop
+      Caption = 'This template field has been locked and may not be edited.'
+      Visible = False
+      WordWrap = True
+      ExplicitWidth = 278
+    end
     object pnlPreview: TPanel
       Left = 1
       Top = 281
@@ -196,6 +207,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         ScrollBars = ssVertical
         TabOrder = 0
         WantTabs = True
+        Zoom = 100
         OnChange = reNotesChange
         OnEnter = edtpopControlEnter
         OnKeyUp = reNotesKeyUp
@@ -204,15 +216,17 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
     end
     object pnlObjInfo: TPanel
       Left = 1
-      Top = 1
+      Top = 14
       Width = 354
-      Height = 277
+      Height = 264
       Align = alClient
       TabOrder = 0
       OnResize = FormResize
+      ExplicitTop = 27
+      ExplicitHeight = 251
       DesignSize = (
         354
-        277)
+        264)
       object lblName: TLabel
         Left = 4
         Top = 8
@@ -229,7 +243,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       end
       object lblLM: TLabel
         Left = 3
-        Top = 194
+        Top = 181
         Width = 42
         Height = 13
         Hint = 'Text to replace template field when used in List Manager'
@@ -237,6 +251,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Caption = 'LM Text:'
         ParentShowHint = False
         ShowHint = True
+        ExplicitTop = 194
       end
       object lblS1: TLabel
         Left = 4
@@ -304,7 +319,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         MaxLength = 60
         ParentFont = False
         PopupMenu = popText
-        TabOrder = 2
+        TabOrder = 1
         OnChange = edtNameChange
         OnEnter = edtpopControlEnter
         OnExit = edtNameExit
@@ -312,7 +327,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       end
       object edtLMText: TCaptionEdit
         Left = 50
-        Top = 189
+        Top = 176
         Width = 300
         Height = 22
         Hint = 'Text to replace template field when used in List Manager'
@@ -331,6 +346,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         OnChange = edtLMTextChange
         OnEnter = edtpopControlEnter
         Caption = 'LM Text'
+        ExplicitTop = 163
       end
       object cbxType: TORComboBox
         Left = 50
@@ -365,7 +381,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Pieces = '2'
         Sorted = False
         SynonymChars = '<>'
-        TabOrder = 3
+        TabOrder = 2
         Text = ''
         OnChange = cbxTypeChange
         CharsNeedMatch = 1
@@ -376,7 +392,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Width = 26
         Height = 21
         Anchors = [akTop, akRight]
-        TabOrder = 7
+        TabOrder = 5
         Text = '0'
         OnChange = edtTextLenChange
         Caption = 'Text Length'
@@ -389,16 +405,17 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Anchors = [akTop, akRight]
         Associate = edtTextLen
         Max = 240
-        TabOrder = 8
+        TabOrder = 6
       end
       object pnlSwap: TPanel
         Left = 50
         Top = 49
         Width = 300
-        Height = 140
+        Height = 127
         Anchors = [akLeft, akTop, akRight, akBottom]
         BevelOuter = bvNone
-        TabOrder = 9
+        TabOrder = 7
+        ExplicitHeight = 114
         object edtDefault: TCaptionEdit
           Left = 0
           Top = 0
@@ -456,7 +473,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Associate = edtDefNum
             Min = -9999
             Max = 9999
-            TabOrder = 3
+            TabOrder = 2
             Thousands = False
           end
           object edtDefNum: TCaptionEdit
@@ -464,7 +481,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Top = 0
             Width = 34
             Height = 21
-            TabOrder = 1
+            TabOrder = 0
             Text = '0'
             OnChange = edtDefNumChange
             Caption = 'Default Number'
@@ -485,7 +502,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Top = 0
             Width = 34
             Height = 21
-            TabOrder = 4
+            TabOrder = 3
             Text = '0'
             OnChange = edtMinValChange
             Caption = 'Minimum'
@@ -506,7 +523,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Top = 0
             Width = 26
             Height = 21
-            TabOrder = 9
+            TabOrder = 8
             Text = '1'
             OnChange = edtIncChange
             Caption = 'Increment'
@@ -556,7 +573,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Left = 0
           Top = 110
           Width = 300
-          Height = 30
+          Height = 17
           Align = alClient
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -568,12 +585,14 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           ScrollBars = ssVertical
           TabOrder = 7
           WantTabs = True
+          Zoom = 100
           OnChange = reItemsChange
           OnEnter = edtpopControlEnter
           OnExit = ControlExit
           OnKeyUp = reNotesKeyUp
           OnResizeRequest = reItemsResizeRequest
           OnSelectionChange = reItemsSelectionChange
+          ExplicitHeight = 4
         end
         object cbxDefault: TORComboBox
           Left = 0
@@ -680,7 +699,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Width = 19
         Height = 21
         Anchors = [akTop, akRight]
-        TabOrder = 4
+        TabOrder = 3
         Text = '1'
         OnChange = edtLenChange
         Caption = 'Field Length'
@@ -695,16 +714,17 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Min = 1
         Max = 70
         Position = 1
-        TabOrder = 5
+        TabOrder = 4
       end
       object gbIndent: TGroupBox
         Left = 232
-        Top = 213
+        Top = 200
         Width = 118
         Height = 59
         Anchors = [akLeft, akBottom]
         Caption = ' Indent '
         TabOrder = 13
+        ExplicitTop = 187
         object lblIndent: TLabel
           Left = 10
           Top = 14
@@ -762,12 +782,13 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       end
       object gbMisc: TGroupBox
         Left = 10
-        Top = 213
+        Top = 200
         Width = 207
         Height = 59
         Anchors = [akLeft, akBottom]
         Caption = ' Miscellaneous '
         TabOrder = 12
+        ExplicitTop = 187
         object cbActive: TCheckBox
           Left = 6
           Top = 14

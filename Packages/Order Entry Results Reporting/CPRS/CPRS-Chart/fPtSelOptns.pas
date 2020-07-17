@@ -26,6 +26,7 @@ type
     radClinics: TRadioButton;
     radWards: TRadioButton;
     radAll: TRadioButton;
+    radPcmmTeams: TRadioButton;
     procedure radHideSrcClick(Sender: TObject);
     procedure radShowSrcClick(Sender: TObject);
     procedure radLongSrcClick(Sender: TObject);
@@ -65,7 +66,8 @@ const
   TAG_SRC_SPEC = 14;                             // patient list by treating specialty
   TAG_SRC_CLIN = 16;                             // patient list by clinic
   TAG_SRC_WARD = 17;                             // patient list by ward
-  TAG_SRC_ALL  = 18;                             // all patients
+  TAG_SRC_PCMM = 18;                             // patient list by PCMM team added 5/27/2014 by TDP
+  TAG_SRC_ALL  = 19;                             // all patients
 
 var
   frmPtSelOptns: TfrmPtSelOptns;
@@ -86,6 +88,7 @@ const
   TX_LS_SPEC = 'A specialty must be selected to save patient list settings.';
   TX_LS_CLIN = 'A clinic and a date range must be selected to save settings for a clinic.';
   TX_LS_WARD = 'A ward must be selected to save patient list settings.';
+  TX_LS_PCMM = 'A PCMM team must be selected to save patient list settings.';
   TC_LS_FAIL = 'Unable to Save Patient List Settings';
   TX_LS_SAV1 = 'Save ';
   TX_LS_SAV2 = CRLF + 'as your default patient list setting?';
@@ -168,6 +171,7 @@ begin
     TAG_SRC_TEAM: ListTeamAll(Items);
     TAG_SRC_SPEC: ListSpecialtyAll(Items);
     TAG_SRC_WARD: ListWardAll(Items);
+    TAG_SRC_PCMM: ListPcmmAll(Items);  // TDP - Added 5/27/2014 PCMM team
     end;
     Visible := True;
   end;
@@ -241,7 +245,7 @@ resulting in a "B" xref that looks like this:
 ^SC("B","zzz-hbpc-phone-jung",1830) = 
 ^SC("B","zzz-hbpcphone cocohran",1825) = 
 ^SC("B","zzz-home service",1428) = 
-^SC("B","zzz-phone-deloye",1834) = 
+^SC("B","zzz-phone-deloye",1834) =
 ^SC("B","zzz/gmonti impotence",2193) =
 
 ASCII sort mode puts those entries at the end of the "B" xref, but when retrieved by CPRS and upper-cased, it
@@ -351,6 +355,11 @@ begin
                   then InfoBox(TX_LS_WARD, TC_LS_FAIL, MB_OK)
                   else x := 'W^' + IntToStr(cboList.ItemIEN) + U + U +
                             'Ward = ' + cboList.Text;
+  // TDP - Added 5/27/2014 to handle PCMM team addition
+  TAG_SRC_PCMM: if cboList.ItemIEN <= 0
+                  then InfoBox(TX_LS_PCMM, TC_LS_FAIL, MB_OK)
+                  else x := 'E^' + IntToStr(cboList.ItemIEN) + U + U +
+                            'PCMM Team = ' + cboList.Text;
   TAG_SRC_ALL : x := 'A';
   end;
   if (x <> '') then
@@ -378,6 +387,10 @@ end;
 
 procedure TfrmPtSelOptns.SetDefaultPtList(Dflt: string);
 begin
+  //blj 22 September 2017 258066 - We will not show the Default patient list button unless
+  //     we actually have a default patient list coming in.
+  radDflt.Visible := Length(Dflt) > 0;
+
   if Length(Dflt) > 0 then                   // if default patient list available, use it
   begin
     radDflt.Caption := '&Default: ' + Dflt;
@@ -386,7 +399,6 @@ begin
   else                                       // otherwise, select from all patients
   begin
     radDflt.Enabled := False;
-    radDflt.Visible := not ScreenReaderActive;
     radAll.Checked := True;                  // causes radHideSrcClick to be called
     bvlPtList.TabStop := True;
     bvlPtList.Hint := 'No default radio button unavailable 1 of 7 to move to the other patient list categories press tab';

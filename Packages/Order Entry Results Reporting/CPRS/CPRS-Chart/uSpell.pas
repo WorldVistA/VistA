@@ -76,7 +76,7 @@ type
     FDocDlg: OleVariant;
     FText: string;
     FSpellCheck: boolean;
-    FSucceeded: boolean;
+
     FCanceled: boolean;
     FTitle: string;
     FDocWindowHandle: HWnd;
@@ -120,7 +120,6 @@ type
   public
     procedure RefocusSpellCheckDialog;
     property Text: string read FText;
-    property Succeeded: boolean read FSucceeded;
     property Canceled: boolean read FCanceled;
   end;
 
@@ -342,7 +341,7 @@ var
   procedure BuildResultMessage;
   begin
     FResultMessage := '';
-    if FCanceled or (not FSucceeded) then
+    if FCanceled then
     begin
       if FSpellCheck then
         FResultMessage := TX_SPELL_CANCELLED
@@ -351,7 +350,6 @@ var
       FResultMessage := FResultMessage + CRLF + TX_NO_CORRECTIONS;
     end
     else
-    if FSucceeded then
     begin
       if FSpellCheck then
         FResultMessage := TX_SPELL_COMPLETE
@@ -590,7 +588,7 @@ procedure TMSWordThread.ReportResults;
 var
   icon: TShow508MessageIcon;
 begin
-  if FSucceeded then
+  if not FCanceled then
     icon := smiInfo
   else
     icon := smiWarning;
@@ -693,13 +691,13 @@ begin
     FDocDlg.Content.CheckSpelling;
 //      FDoc.CheckSpelling(FNullStr, FEmptyVar, FEmptyVar, {Ignore, Suggest, }FNullStr, FNullStr,
 //                         FNullStr, FNullStr, FNullStr, FNullStr, FNullStr, FNullStr, FNullStr);
-    FSucceeded := FDoc.Content.SpellingChecked;
+//    FSucceeded := FDoc.Content.SpellingChecked;
     FText := FDoc.Content.Text;
   end
   else
   begin
     FDoc.Content.CheckGrammar;
-    FSucceeded := FDoc.Content.GrammarChecked;
+//    FSucceeded := FDoc.Content.GrammarChecked;
     FText := FDoc.Content.Text;
   end;
   FCanceled := (FText = '');
@@ -817,7 +815,7 @@ var
   i: integer;
   Lines: TStringList;
 begin
-  if FSucceeded and (not FCanceled) then
+  if (not FCanceled) then
   begin
     Lines := TStringList.Create;
     try
@@ -991,7 +989,6 @@ begin
 
   GetTextFromComponent;
 
-  FSucceeded := FALSE;
   FCanceled := FALSE;
   FTitle := WordDocTitle;
   FreeOnTerminate := True;

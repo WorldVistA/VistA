@@ -35,7 +35,7 @@ implementation
 
 {$R *.DFM}
 
-uses XWBHash, rCore, rOrders, System.UITypes;
+uses XWBHash, rCore, rOrders, System.UITypes, VAUtils;
 
 const
   TX_CHART_REVIEW = 'The following orders will be marked as reviewed -';

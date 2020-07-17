@@ -10,7 +10,7 @@ procedure ResetDCSummTitles;
 function  DfltDCSummTitle: Integer;
 function  DfltDCSummTitleName: string;
 procedure ListDCSummTitlesShort(Dest: TStrings);
-function SubSetOfDCSummTitles(const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): TStrings;
+function SubSetOfDCSummTitles(const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean; aReturn: TStrings): integer;
 
 { TIU Preferences }
 procedure ResetDCSummPreferences;
@@ -26,7 +26,8 @@ procedure ActOnDCDocument(var AuthSts: TActionRec; IEN: Integer; const ActionNam
 procedure ListSummsForTree(Dest: TStrings; Context: Integer; Early, Late: TFMDateTime;
   Person: int64; OccLim: Integer; SortAscending: Boolean);
 procedure GetDCSummForEdit(var EditRec: TEditDCSummRec; IEN: Integer);
-function  LoadDCUrgencies: TStrings;
+procedure GetCSummEditTextOnly(ResultList: TStrings; IEN: Integer);
+function  LoadDCUrgencies(aReturn: TStrings): integer;
 function  GetAttending(const DFN: string): string;  //*DFN*
 function  GetDischargeDate(const DFN: string; AdmitDateTime: string): string;  //*DFN*
 function RequireRelease(ANote, AType: Integer): Boolean;
@@ -35,11 +36,11 @@ function AllowMultipleSummsPerAdmission(ANote, AType: Integer): Boolean;
 
 { Data Storage }
 procedure DeleteDCDocument(var DeleteSts: TActionRec; IEN: Integer; const Reason: string);
-procedure SignDCDocument(var SignSts: TActionRec; IEN: Integer; const ESCode: string); 
+procedure SignDCDocument(var SignSts: TActionRec; IEN: Integer; const ESCode: string);
 procedure PutNewDCSumm(var CreatedDoc: TCreatedDoc; const DCSummRec: TDCSummRec);
-procedure PutDCAddendum(var CreatedDoc: TCreatedDoc; const DCSummRec: TDCSummRec; AddendumTo: 
+procedure PutDCAddendum(var CreatedDoc: TCreatedDoc; const DCSummRec: TDCSummRec; AddendumTo:
 Integer);
-procedure PutEditedDCSumm(var UpdatedDoc: TCreatedDoc; const DCSummRec: TDCSummRec; NoteIEN: 
+procedure PutEditedDCSumm(var UpdatedDoc: TCreatedDoc; const DCSummRec: TDCSummRec; NoteIEN:
 Integer);
 procedure ChangeAttending(IEN: integer; AnAttending: int64);
 
@@ -62,15 +63,23 @@ procedure LoadDCSummTitles;
 { private - called one time to set up the uNoteTitles object }
 var
   x: string;
+  aLst: TStringList;
 begin
-  if uDCSummTitles <> nil then Exit;
-  CallV('TIU PERSONAL TITLE LIST', [User.DUZ, CLS_DC_SUMM]);
-  RPCBrokerV.Results.Insert(0, '~SHORT LIST');  // insert so can call ExtractItems
-  uDCSummTitles := TDCSummTitles.Create;
-  ExtractItems(uDCSummTitles.ShortList, RPCBrokerV.Results, 'SHORT LIST');
-  x := ExtractDefault(RPCBrokerV.Results, 'SHORT LIST');
-  uDCSummTitles.DfltTitle := StrToIntDef(Piece(x, U, 1), 0);
-  uDCSummTitles.DfltTitleName := Piece(x, U, 2);
+  if uDCSummTitles = nil then
+    begin
+      aLst := TStringList.Create;
+      try
+        CallVistA('TIU PERSONAL TITLE LIST', [User.DUZ, CLS_DC_SUMM], aLst);
+        aLst.Insert(0, '~SHORT LIST'); // insert so can call ExtractItems
+        uDCSummTitles := TDCSummTitles.Create;
+        ExtractItems(uDCSummTitles.ShortList, aLst, 'SHORT LIST');
+        x := ExtractDefault(aLst, 'SHORT LIST');
+        uDCSummTitles.DfltTitle := StrToIntDef(Piece(x, U, 1), 0);
+        uDCSummTitles.DfltTitleName := Piece(x, U, 2);
+      finally
+        FreeAndNil(aLst);
+      end;
+    end;
 end;
 
 procedure ResetDCSummTitles;
@@ -109,17 +118,13 @@ begin
   end;
 end;
 
-function SubSetOfDCSummTitles(const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): TStrings;
-{ returns a pointer to a list of Discharge Summary titles (for use in a long list box) -
-  The return value is a pointer to RPCBrokerV.Results, so the data must be used BEFORE
-  the next broker call! }
+function SubSetOfDCSummTitles(const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean; aReturn: TStrings): integer;
 begin
   if IDNoteTitlesOnly then
-    CallV('TIU LONG LIST OF TITLES', [CLS_DC_SUMM, StartFrom, Direction, IDNoteTitlesOnly])
+    CallVistA('TIU LONG LIST OF TITLES', [CLS_DC_SUMM, StartFrom, Direction, IDNoteTitlesOnly], aReturn)
   else
-    CallV('TIU LONG LIST OF TITLES', [CLS_DC_SUMM, StartFrom, Direction]);
-  //MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+    CallVistA('TIU LONG LIST OF TITLES', [CLS_DC_SUMM, StartFrom, Direction], aReturn);
+  Result := aReturn.Count;
 end;
 
 { TIU Preferences  ------------------------------------------------------------------------- }
@@ -131,17 +136,17 @@ var
 begin
   uDCSummPrefs := TDCSummPrefs.Create;
   with uDCSummPrefs do
-  begin
-    x := sCallV('TIU GET PERSONAL PREFERENCES', [User.DUZ]);
-    DfltLoc := StrToIntDef(Piece(x, U, 2), 0);
-    DfltLocName := ExternalName(DfltLoc, FN_HOSPITAL_LOCATION);
-    SortAscending := Piece(x, U, 4) = 'A';
-    MaxSumms := StrToIntDef(Piece(x, U, 10), 0);
-    x := GetAttending(Patient.DFN);
-    DfltCosigner := StrToInt64Def(Piece(x, U, 1), 0);
-    DfltCosignerName := ExternalName(DfltCosigner, FN_NEW_PERSON);
-    AskCosigner := User.DUZ <> DfltCosigner;
-  end;
+    begin
+      CallVistA('TIU GET PERSONAL PREFERENCES', [User.DUZ], x);
+      DfltLoc := StrToIntDef(Piece(x, U, 2), 0);
+      DfltLocName := ExternalName(DfltLoc, FN_HOSPITAL_LOCATION);
+      SortAscending := Piece(x, U, 4) = 'A';
+      MaxSumms := StrToIntDef(Piece(x, U, 10), 0);
+      x := GetAttending(Patient.DFN);
+      DfltCosigner := StrToInt64Def(Piece(x, U, 1), 0);
+      DfltCosignerName := ExternalName(DfltCosigner, FN_NEW_PERSON);
+      AskCosigner := User.DUZ <> DfltCosigner;
+    end;
 end;
 
 procedure ResetDCSummPreferences;
@@ -180,7 +185,7 @@ begin
     AuthSts.Reason := '';
     Exit;
   end;
-  x := sCallV('TIU AUTHORIZATION', [IEN, ActionName]);
+  CallVistA('TIU AUTHORIZATION', [IEN, ActionName], x);
   AuthSts.Success := Piece(x, U, 1) = '1';
   AuthSts.Reason  := Piece(x, U, 2);
 end;
@@ -225,10 +230,7 @@ const
 begin
   if SortAscending then SortSeq := 'A' else SortSeq := 'D';
   if Context > 0 then
-    begin
-      CallV('TIU DOCUMENTS BY CONTEXT', [CLS_DC_SUMM, Context, Patient.DFN, Early, Late, Person, OccLim, SortSeq, SHOW_ADDENDA]);
-      FastAssign(RPCBrokerV.Results, Dest);
-    end;
+    CallVistA('TIU DOCUMENTS BY CONTEXT', [CLS_DC_SUMM, Context, Patient.DFN, Early, Late, Person, OccLim, SortSeq, SHOW_ADDENDA], Dest);
 end;
 
 procedure GetDCSummForEdit(var EditRec: TEditDCSummRec; IEN: Integer);
@@ -236,117 +238,142 @@ procedure GetDCSummForEdit(var EditRec: TEditDCSummRec; IEN: Integer);
   Fields: Title:.01, RefDate:1301, Author:1204, Cosigner:1208, Subject:1701, Location:1205 }
 var
   i, j: Integer;
+  aLst: TStringList;
 
   function FindDT(const FieldID: string): TFMDateTime;
   var
-    i: Integer;
+    x: string;
   begin
     Result := 0;
-    with RPCBrokerV do for i := 0 to Results.Count - 1 do
-      if Piece(Results[i], U, 1) = FieldID then
-      begin
-        Result := MakeFMDateTime(Piece(Results[i], U, 2));
-        Break;
-      end;
+    for x in aLst do
+      if Piece(x, U, 1) = FieldID then
+        begin
+          Result := MakeFMDateTime(Piece(x, U, 2));
+          Break;
+        end;
   end;
 
   function FindExt(const FieldID: string): string;
   var
-    i: Integer;
+    x: string;
   begin
     Result := '';
-    with RPCBrokerV do for i := 0 to Results.Count - 1 do
-      if Piece(Results[i], U, 1) = FieldID then
-      begin
-        Result := Piece(Results[i], U, 3);
-        Break;
-      end;
+    for x in aLst do
+      if Piece(x, U, 1) = FieldID then
+        begin
+          Result := Piece(x, U, 3);
+          Break;
+        end;
   end;
 
   function FindInt(const FieldID: string): Integer;
   var
-    i: Integer;
+    x: string;
   begin
     Result := 0;
-    with RPCBrokerV do for i := 0 to Results.Count - 1 do
-      if Piece(Results[i], U, 1) = FieldID then
-      begin
-        Result := StrToIntDef(Piece(Results[i], U, 2), 0);
-        Break;
-      end;
+    for x in aLst do
+      if Piece(x, U, 1) = FieldID then
+        begin
+          Result := StrToIntDef(Piece(x, U, 2), 0);
+          Break;
+        end;
   end;
 
-  function FindInt64(const FieldID: string): Int64;
+  function FindInt64(const FieldID: string): int64;
   var
-    i: Integer;
+    x: string;
   begin
     Result := 0;
-    with RPCBrokerV do for i := 0 to Results.Count - 1 do
-      if Piece(Results[i], U, 1) = FieldID then
-      begin
-        Result := StrToInt64Def(Piece(Results[i], U, 2), 0);
-        Break;
-      end;
+    for x in aLst do
+      if Piece(x, U, 1) = FieldID then
+        begin
+          Result := StrToInt64Def(Piece(x, U, 2), 0);
+          Break;
+        end;
   end;
-
 
 begin
-  CallV('TIU LOAD RECORD FOR EDIT', [IEN, '.01;.06;.07;.09;1202;1205;1208;1209;1301;1302;1307;1701']);
-  FillChar(EditRec, SizeOf(EditRec), 0);
-  with EditRec do
-  begin
-    Title                 := FindInt('.01');
-    TitleName             := FindExt('.01');
-    AdmitDateTime         := FindDT('.07');
-    DischargeDateTime     := FindDT('1301');
-    UrgencyName           := FindExt('.09');
-    Urgency               := Copy(UrgencyName,1,1);
-    Dictator              := FindInt64('1202');
-    DictatorName          := FindExt('1202');
-    Cosigner              := FindInt64('1208');
-    CosignerName          := FindExt('1208');
-    DictDateTime          := FindDT('1307');
-    Attending             := FindInt64('1209');
-    AttendingName         := FindExt('1209');
-    Transcriptionist      := FindInt64('1302');
-    TranscriptionistName  := FindExt('1302');
-    Location              := FindInt('1205');
-    LocationName          := FindExt('1205');
-    if Title = TYP_ADDENDUM then Addend := FindInt('.06');
-    with RPCBrokerV do
-    begin
-      for i := 0 to Results.Count - 1 do if Results[i] = '$TXT' then break;
-      for j := i downto 0 do Results.Delete(j);
-      // -------------------- v19.1 (RV) LOST NOTES?----------------------------
-      //Lines := Results;   'Lines' is being overwritten by subsequent Broker calls
-      if not Assigned(Lines) then Lines := TStringList.Create;
-      FastAssign(RPCBrokerV.Results, Lines);
-      // -----------------------------------------------------------------------
-    end;
+  aLst := TStringList.Create;
+  try
+    CallVistA('TIU LOAD RECORD FOR EDIT', [IEN, '.01;.06;.07;.09;1202;1205;1208;1209;1301;1302;1307;1701'], aLst);
+    FillChar(EditRec, SizeOf(EditRec), 0);
+    with EditRec do
+      begin
+        Title := FindInt('.01');
+        TitleName := FindExt('.01');
+        AdmitDateTime := FindDT('.07');
+        DischargeDateTime := FindDT('1301');
+        UrgencyName := FindExt('.09');
+        Urgency := Copy(UrgencyName, 1, 1);
+        Dictator := FindInt64('1202');
+        DictatorName := FindExt('1202');
+        Cosigner := FindInt64('1208');
+        CosignerName := FindExt('1208');
+        DictDateTime := FindDT('1307');
+        Attending := FindInt64('1209');
+        AttendingName := FindExt('1209');
+        Transcriptionist := FindInt64('1302');
+        TranscriptionistName := FindExt('1302');
+        Location := FindInt('1205');
+        LocationName := FindExt('1205');
+        if Title = TYP_ADDENDUM then Addend := FindInt('.06');
+
+        for i := 0 to aLst.Count - 1 do
+          if aLst[i] = '$TXT' then Break;
+
+        for j := i downto 0 do aLst.Delete(j);
+        // -------------------- v19.1 (RV) LOST NOTES?----------------------------
+        // Lines := Results;   'Lines' is being overwritten by subsequent Broker calls
+        if not Assigned(Lines) then Lines := TStringList.Create;
+        FastAssign(aLst, Lines);
+        // -----------------------------------------------------------------------
+      end;
+  finally
+    FreeAndNil(aLst);
   end;
 end;
 
-function LoadDCUrgencies: TStrings;
+procedure GetCSummEditTextOnly(ResultList: TStrings; IEN: Integer);
+var
+ RtnLst: TStringList;
+begin
+ RtnLst := TStringList.Create;
+ try
+  CallVistA('TIU LOAD RECORD TEXT', [IEN], RtnLst);
+
+  if RtnLst[0] = '$TXT' then
+  begin
+
+   //Remove the indicator
+   RtnLst.Delete(0);
+
+   //assign the remaining
+   ResultList.Assign(RtnLst);
+
+  end;
+
+ finally
+  RtnLst.Free;
+ end;
+end;
+
+
+function LoadDCUrgencies(aReturn: TStrings): integer;
 var
   i: integer;
 begin
-  CallV('TIU GET DS URGENCIES',[nil]);
-  with RPCBrokerV do
-    for i := 0 to Results.Count-1 do
-      Results[i] := MixedCase(UpperCase(Results[i]));
-  Result := RPCBrokerV.Results;
+  CallVistA('TIU GET DS URGENCIES', [nil], aReturn);
+  for i := 0 to aReturn.Count-1 do
+    aReturn[i] := MixedCase(aReturn[i]);
+  Result := aReturn.Count;
 end;
 
 { Data Updates ----------------------------------------------------------------------------- }
 
 procedure DeleteDCDocument(var DeleteSts: TActionRec; IEN: Integer; const Reason: string);
 { delete a TIU document given the internal entry number, return reason if unable to delete }
-var
-  x: string;
 begin
-  x := sCallV('TIU DELETE RECORD', [IEN, Reason]);
-  DeleteSts.Success := Piece(x, U, 1) = '0';
-  DeleteSts.Reason  := Piece(x, U, 2);
+  DeleteDocument(DeleteSts, IEN, Reason);
 end;
 
 procedure SignDCDocument(var SignSts: TActionRec; IEN: Integer; const ESCode: string);
@@ -359,12 +386,12 @@ begin
     ClearParameters := True;
     RemoteProcedure := 'TIU UPDATE RECORD';
     Param[0].PType := literal;
-    Param[0].Value := IntToStr(IEN);            
+    Param[0].Value := IntToStr(IEN);
     Param[1].PType := list;
     with Param[1] do Mult['.11']  := '0';       // **** block removed in v19.1 - {RV} ****
     CallBroker;
   end;                                         // temp - end*)
-  x := sCallV('TIU SIGN RECORD', [IEN, ESCode]);
+  CallVistA('TIU SIGN RECORD', [IEN, ESCode], x);
   SignSts.Success := Piece(x, U, 1) = '0';
   SignSts.Reason  := Piece(x, U, 2);
 end;
@@ -377,53 +404,58 @@ procedure PutNewDCSumm(var CreatedDoc: TCreatedDoc; const DCSummRec: TDCSummRec)
 var
   ErrMsg: string;
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU CREATE RECORD';
-    Param[0].PType := literal;
-    Param[0].Value := Patient.DFN;  //*DFN*
-    Param[1].PType := literal;
-    Param[1].Value := IntToStr(DCSummRec.Title);
-    Param[2].PType := literal;
-    Param[2].Value := '';
-    Param[3].PType := literal;
-    Param[3].Value := '';
-    Param[4].PType := literal;
-    Param[4].Value := '';
-    Param[5].PType := list;
-    with Param[5] do
+  LockBroker;
+  try
+    with RPCBrokerV do
     begin
-      Mult['.07']    := FloatToStr(DCSummRec.AdmitDateTime);
-      Mult['.09']    := DCSummRec.Urgency;
-      Mult['1202']   := IntToStr(DCSummRec.Dictator);
-      Mult['1205']   := IntToStr(Encounter.Location);
-      Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime);
-      Mult['1307']   := FloatToStr(DCSummRec.DictDateTime);
-      if DCSummRec.Cosigner > 0 then
-        begin
-          Mult['1208'] := IntToStr(DCSummRec.Cosigner);
-          Mult['1506'] := '1';
-        end
-      else
-        begin
-          Mult['1208'] := '';
-          Mult['1506'] := '0';
-        end  ;
-      Mult['1209']   := IntToStr(DCSummRec.Attending);
-      Mult['1302']   := IntToStr(DCSummRec.Transcriptionist);
-      if DCSummRec.IDParent > 0 then Mult['2101'] := IntToStr(DCSummRec.IDParent);
-(*      if DCSummRec.Lines <> nil then
-        for i := 0 to DCSummRec.Lines.Count - 1 do
-          Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(DCSummRec.Lines[i]);*)
+      ClearParameters := True;
+      RemoteProcedure := 'TIU CREATE RECORD';
+      Param[0].PType := literal;
+      Param[0].Value := Patient.DFN;  //*DFN*
+      Param[1].PType := literal;
+      Param[1].Value := IntToStr(DCSummRec.Title);
+      Param[2].PType := literal;
+      Param[2].Value := '';
+      Param[3].PType := literal;
+      Param[3].Value := '';
+      Param[4].PType := literal;
+      Param[4].Value := '';
+      Param[5].PType := list;
+      with Param[5] do
+      begin
+        Mult['.07']    := FloatToStr(DCSummRec.AdmitDateTime);
+        Mult['.09']    := DCSummRec.Urgency;
+        Mult['1202']   := IntToStr(DCSummRec.Dictator);
+        Mult['1205']   := IntToStr(Encounter.Location);
+        Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime);
+        Mult['1307']   := FloatToStr(DCSummRec.DictDateTime);
+        if DCSummRec.Cosigner > 0 then
+          begin
+            Mult['1208'] := IntToStr(DCSummRec.Cosigner);
+            Mult['1506'] := '1';
+          end
+        else
+          begin
+            Mult['1208'] := '';
+            Mult['1506'] := '0';
+          end  ;
+        Mult['1209']   := IntToStr(DCSummRec.Attending);
+        Mult['1302']   := IntToStr(DCSummRec.Transcriptionist);
+        if DCSummRec.IDParent > 0 then Mult['2101'] := IntToStr(DCSummRec.IDParent);
+  (*      if DCSummRec.Lines <> nil then
+          for i := 0 to DCSummRec.Lines.Count - 1 do
+            Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(DCSummRec.Lines[i]);*)
+      end;
+      Param[6].PType := literal;
+      Param[6].Value := DCSummRec.VisitStr;
+      Param[7].PType := literal;
+      Param[7].Value := '1';  // suppress commit logic
+      CallBroker;
+      CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
+      CreatedDoc.ErrorText := Piece(Results[0], U, 2);
     end;
-    Param[6].PType := literal;
-    Param[6].Value := DCSummRec.VisitStr;
-    Param[7].PType := literal;
-    Param[7].Value := '1';  // suppress commit logic
-    CallBroker;
-    CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
-    CreatedDoc.ErrorText := Piece(Results[0], U, 2);
+  finally
+    UnlockBroker;
   end;
   if ( DCSummRec.Lines <> nil ) and ( CreatedDoc.IEN <> 0 ) then
   begin
@@ -436,7 +468,7 @@ begin
   end;
 end;
 
-procedure PutDCAddendum(var CreatedDoc: TCreatedDoc; const DCSummRec: TDCSummRec; AddendumTo: 
+procedure PutDCAddendum(var CreatedDoc: TCreatedDoc; const DCSummRec: TDCSummRec; AddendumTo:
 Integer);
 { create a new addendum for note identified in AddendumTo, returns IEN of new document
   load broker directly since there isn't a good way to set up multiple subscript arrays }
@@ -445,38 +477,43 @@ Integer);
 var
   ErrMsg: string;
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU CREATE ADDENDUM RECORD';
-    Param[0].PType := literal;
-    Param[0].Value := IntToStr(AddendumTo);
-    Param[1].PType := list;
-    with Param[1] do
+  LockBroker;
+  try
+    with RPCBrokerV do
     begin
-      Mult['.09']    := DCSummRec.Urgency;
-      Mult['1202']   := IntToStr(DCSummRec.Dictator);
-      Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime);
-      Mult['1307']   := FloatToStr(DCSummRec.DictDateTime);
-      if DCSummRec.Cosigner > 0 then
-        begin
-          Mult['1208'] := IntToStr(DCSummRec.Cosigner);
-          Mult['1506'] := '1';
-        end
-      else
-        begin
-          Mult['1208'] := '';
-          Mult['1506'] := '0';
-        end  ;
-(*      if DCSummRec.Lines <> nil then
-        for i := 0 to DCSummRec.Lines.Count - 1 do
-          Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(DCSummRec.Lines[i]);*)
+      ClearParameters := True;
+      RemoteProcedure := 'TIU CREATE ADDENDUM RECORD';
+      Param[0].PType := literal;
+      Param[0].Value := IntToStr(AddendumTo);
+      Param[1].PType := list;
+      with Param[1] do
+      begin
+        Mult['.09']    := DCSummRec.Urgency;
+        Mult['1202']   := IntToStr(DCSummRec.Dictator);
+        Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime);
+        Mult['1307']   := FloatToStr(DCSummRec.DictDateTime);
+        if DCSummRec.Cosigner > 0 then
+          begin
+            Mult['1208'] := IntToStr(DCSummRec.Cosigner);
+            Mult['1506'] := '1';
+          end
+        else
+          begin
+            Mult['1208'] := '';
+            Mult['1506'] := '0';
+          end  ;
+  (*      if DCSummRec.Lines <> nil then
+          for i := 0 to DCSummRec.Lines.Count - 1 do
+            Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(DCSummRec.Lines[i]);*)
+      end;
+      Param[2].PType := literal;
+      Param[2].Value := '1';  // suppress commit logic
+      CallBroker;
+      CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
+      CreatedDoc.ErrorText := Piece(Results[0], U, 2);
     end;
-    Param[2].PType := literal;
-    Param[2].Value := '1';  // suppress commit logic
-    CallBroker;
-    CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
-    CreatedDoc.ErrorText := Piece(Results[0], U, 2);
+  finally
+    UnlockBroker;
   end;
   if ( DCSummRec.Lines <> nil ) and ( CreatedDoc.IEN <> 0 ) then
   begin
@@ -499,47 +536,52 @@ var
   ErrMsg: string;
 begin
   // First, file field data
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU UPDATE RECORD';
-    Param[0].PType := literal;
-    Param[0].Value := IntToStr(NoteIEN);
-    Param[1].PType := list;
-    with Param[1] do
+  LockBroker;
+  try
+    with RPCBrokerV do
     begin
-      if DCSummRec.Addend = 0 then
-        begin
-          Mult['.01']  := IntToStr(DCSummRec.Title);
-          //Mult['.11']  := BOOLCHAR[DCSummRec.NeedCPT];  //  **** removed in v19.1  {RV} ****
-        end;
-      if (DCSummRec.Status in [TIU_ST_UNREL(*, TIU_ST_UNVER*)]) then Mult['.05'] := IntToStr(DCSummRec.Status);
-      Mult['1202']   := IntToStr(DCSummRec.Dictator);
-      Mult['1209']   := IntToStr(DCSummRec.Attending);
-      Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime);  
-      if DCSummRec.Cosigner > 0 then
-        begin
-          Mult['1208'] := IntToStr(DCSummRec.Cosigner);
-          Mult['1506'] := '1';
-        end
-      else
-        begin
-          Mult['1208'] := '';
-          Mult['1506'] := '0';
-        end  ;
-(*      for i := 0 to DCSummRec.Lines.Count - 1 do
-        Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(DCSummRec.Lines[i]);*)
+      ClearParameters := True;
+      RemoteProcedure := 'TIU UPDATE RECORD';
+      Param[0].PType := literal;
+      Param[0].Value := IntToStr(NoteIEN);
+      Param[1].PType := list;
+      with Param[1] do
+      begin
+        if DCSummRec.Addend = 0 then
+          begin
+            Mult['.01']  := IntToStr(DCSummRec.Title);
+            //Mult['.11']  := BOOLCHAR[DCSummRec.NeedCPT];  //  **** removed in v19.1  {RV} ****
+          end;
+        if (DCSummRec.Status in [TIU_ST_UNREL(*, TIU_ST_UNVER*)]) then Mult['.05'] := IntToStr(DCSummRec.Status);
+        Mult['1202']   := IntToStr(DCSummRec.Dictator);
+        Mult['1209']   := IntToStr(DCSummRec.Attending);
+        Mult['1301']   := FloatToStr(DCSummRec.DischargeDateTime);
+        if DCSummRec.Cosigner > 0 then
+          begin
+            Mult['1208'] := IntToStr(DCSummRec.Cosigner);
+            Mult['1506'] := '1';
+          end
+        else
+          begin
+            Mult['1208'] := '';
+            Mult['1506'] := '0';
+          end  ;
+  (*      for i := 0 to DCSummRec.Lines.Count - 1 do
+          Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(DCSummRec.Lines[i]);*)
+      end;
+      CallBroker;
+      UpdatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
+      UpdatedDoc.ErrorText := Piece(Results[0], U, 2);
     end;
-    CallBroker;
-    UpdatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
-    UpdatedDoc.ErrorText := Piece(Results[0], U, 2);
+  finally
+    UnlockBroker;
   end;
 
   if UpdatedDoc.IEN <= 0 then              //v22.12 - RV
   //if UpdatedDoc.ErrorText <> '' then    //v22.5 - RV
     begin
       UpdatedDoc.ErrorText := UpdatedDoc.ErrorText + #13#10 + #13#10 + 'Document #:  ' + IntToStr(NoteIEN);
-      exit;  
+      exit;
     end;
 
     // next, if no error, file document body
@@ -552,51 +594,63 @@ begin
 end;
 
 function GetAttending(const DFN: string): string;  //*DFN*
+var
+  aStr: string;
 begin
-  CallV('ORQPT ATTENDING/PRIMARY',[DFN]);
-  Result := Piece(RPCBrokerV.Results[0],';',1);
+  CallVistA('ORQPT ATTENDING/PRIMARY', [DFN], aStr);
+  Result := Piece(aStr, ';', 1);
 end;
 
 function GetDischargeDate(const DFN: string; AdmitDateTime: string): string;  //*DFN*
 begin
-  CallV('ORWPT DISCHARGE',[DFN, AdmitDateTime]);
-  Result := RPCBrokerV.Results[0];
+  CallVistA('ORWPT DISCHARGE', [DFN, AdmitDateTime], Result);
 end;
 
 function RequireRelease(ANote, AType: Integer): Boolean;
 { returns true if a discharge summary must be released }
+var
+  aStr: string;
 begin
   if ANote > 0 then
-    Result := Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [ANote]), U, 2) = '1'
+    CallVistA('TIU GET DOCUMENT PARAMETERS', [ANote], aStr)
   else
-    Result := Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [0, AType]), U, 2) = '1';
+    CallVistA('TIU GET DOCUMENT PARAMETERS', [0, AType], aStr);
+  Result := (Piece(aStr, U, 2) = '1');
 end;
 
-function RequireMASVerification(ANote, AType: Integer): Boolean;
+function RequireMASVerification(ANote, AType: Integer): boolean;
 { returns true if a discharge summary must be verified }
 var
-  AValue: integer;
+  AValue: Integer;
+  aStr: string;
 begin
-  Result := False;
   if ANote > 0 then
-    AValue := StrToIntDef(Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [ANote]), U, 3), 0)
+    CallVistA('TIU GET DOCUMENT PARAMETERS', [ANote], aStr)
   else
-    AValue := StrToIntDef(Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [0, AType]), U, 3), 0);
+    CallVistA('TIU GET DOCUMENT PARAMETERS', [0, AType], aStr);
+
+  AValue := StrToIntDef(Piece(aStr, U, 3), 0);
+
   case AValue of
-    0:  Result := False;   //  NO
-    1:  Result := True;    //  ALWAYS
-    2:  Result := False;   //  UPLOAD ONLY
-    3:  Result := True;    //  DIRECT ENTRY ONLY
+    0: Result := False; // NO
+    1: Result := True; // ALWAYS
+    2: Result := False; // UPLOAD ONLY
+    3: Result := True; // DIRECT ENTRY ONLY
+  else
+    Result := False; // Default
   end;
 end;
 
 function AllowMultipleSummsPerAdmission(ANote, AType: Integer): Boolean;
 { returns true if a discharge summary must be released }
+var
+  aStr: string;
 begin
   if ANote > 0 then
-    Result := Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [ANote]), U, 10) = '1'
+    CallVistA('TIU GET DOCUMENT PARAMETERS', [ANote], aStr)
   else
-    Result := Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [0, AType]), U, 10) = '1';
+    CallVistA('TIU GET DOCUMENT PARAMETERS', [0, AType], aStr);
+  Result := (aStr = '1');
 end;
 
 procedure ChangeAttending(IEN: integer; AnAttending: int64);
@@ -604,28 +658,33 @@ var
   AttendingIsNotCurrentUser: boolean;
 begin
   AttendingIsNotCurrentUser := (AnAttending <> User.DUZ);
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU UPDATE RECORD';
-    Param[0].PType := literal;
-    Param[0].Value := IntToStr(IEN);
-    Param[1].PType := list;
-    with Param[1] do
-      begin
-        Mult['1209']   := IntToStr(AnAttending);
-        if AttendingIsNotCurrentUser then
+  LockBroker;
+  try
+    with RPCBrokerV do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'TIU UPDATE RECORD';
+      Param[0].PType := literal;
+      Param[0].Value := IntToStr(IEN);
+      Param[1].PType := list;
+      with Param[1] do
         begin
-          Mult['1208'] := IntToStr(AnAttending);
-          Mult['1506'] := '1';
-        end
-      else
-        begin
-          Mult['1208'] := '';
-          Mult['1506'] := '0';
-        end  ;
-      end;
-    CallBroker;
+          Mult['1209']   := IntToStr(AnAttending);
+          if AttendingIsNotCurrentUser then
+          begin
+            Mult['1208'] := IntToStr(AnAttending);
+            Mult['1506'] := '1';
+          end
+        else
+          begin
+            Mult['1208'] := '';
+            Mult['1506'] := '0';
+          end  ;
+        end;
+      CallBroker;
+    end;
+  finally
+    UnlockBroker;
   end;
 end;
 
@@ -634,7 +693,7 @@ var
   x: string;
   AContext: TTIUContext;
 begin
-  x := sCallV('ORWTIU GET DCSUMM CONTEXT', [User.DUZ]) ;
+  CallVistA('ORWTIU GET DCSUMM CONTEXT', [User.DUZ], x);
   with AContext do
     begin
       Changed       := True;
@@ -656,7 +715,7 @@ begin
   Result := AContext;
 end;
 
-procedure SaveCurrentDCSummContext(AContext: TTIUContext) ;
+procedure SaveCurrentDCSummContext(AContext: TTIUContext);
 var
   x: string;
 begin
@@ -678,7 +737,7 @@ begin
       SetPiece(x, ';', 11, SearchField);
       SetPiece(x, ';', 12, KeyWord);
     end;
-  CallV('ORWTIU SAVE DCSUMM CONTEXT', [x]);
+  CallVistA('ORWTIU SAVE DCSUMM CONTEXT', [x]);
 end;
 
 initialization

@@ -27,10 +27,11 @@ type
   end;
 
 procedure ClearMedList(AList: TList);
-function DetailMedLM(ID: string): TStrings;
-function MedAdminHistory(OrderID: string): TStrings;
+function DetailMedLM(ID: string; aReturn: TStrings): integer;
+procedure ExtractActiveMeds(Dest: TStrings; Src: TStrings);
+function MedAdminHistory(OrderID: string; aReturn: TStrings): integer;
 function MedStatusGroup(const s: string): Integer;
-procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer; var DateRange: string);
+procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer; var DateRange: string; var DateRangeIp: string; var DateRangeOp: string);
 function GetNewDialog: string;
 function PickUpDefault: string;
 procedure Refill(AnOrderID, PickUpAt: string);
@@ -53,16 +54,80 @@ begin
   //AList.Clear;
 end;
 
-function DetailMedLM(ID: string): TStrings;
+function DetailMedLM(ID: string; aReturn: TStrings): Integer;
 begin
-  CallV('ORWPS DETAIL', [Patient.DFN, UpperCase(ID)]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWPS DETAIL', [Patient.DFN, UpperCase(ID)], aReturn);
+  Result := aReturn.Count;
 end;
 
-function MedAdminHistory(OrderID: string): TStrings;
+procedure ExtractActiveMeds(Dest: TStrings; Src: TStrings);
+const
+  MED_TYPE: array [boolean] of string = ('INPT', 'OUTPT');
+var
+  i: Integer;
+  MedType, NonVA, x: string;
+  MarkForDelete: boolean;
 begin
-  CallV('ORWPS MEDHIST', [Patient.DFN, OrderID]);
-  Result := RPCBrokerV.Results;
+  NonVA := 'N;';
+  if Patient.Inpatient then
+    begin
+      if Patient.WardService = 'D' then
+        MedType := 'IO' // Inpatient - DOM - show both
+      else
+        MedType := 'I'; // Inpatient non-DOM
+    end
+  else
+    MedType := 'O'; // Outpatient
+
+  for i := Src.Count - 1 downto 0 do
+    begin
+      MarkForDelete := False;
+
+      // clear outpt meds if inpt, inpt meds if outpt.  Keep all for DOM patients.
+      if (Pos(Piece(Piece(Src[i], U, 1), ';', 2), MedType) = 0)
+        and (Piece(Src[i], U, 5) <> 'C') then
+        MarkForDelete := True;
+
+      // Non-VA Med
+      if Pos(NonVA, Piece(Src[i], U, 1)) > 0 then
+        begin
+          MarkForDelete := False; // always display non-VA meds
+          x := Src[i];
+          SetPiece(x, U, 2, 'Non-VA  ' + Piece(x, U, 2));
+          Src[i] := x;
+        end;
+
+      // Clin Meds
+      if (Piece(Src[i], U, 5) = 'C') then
+        begin
+          MarkForDelete := False; // always display non-VA meds
+          x := Src[i];
+          SetPiece(x, U, 2, 'Clin Meds  ' + Piece(x, U, 2));
+          Src[i] := x;
+        end;
+
+      // clear non-active meds   (SHOULD THIS INCLUDE PENDING ORDERS?)
+      if MedStatusGroup(Piece(Src[i], U, 4)) = MED_NONACTIVE then
+        MarkForDelete := True;
+      if MarkForDelete then
+        Src.Delete(i)
+      else if MedType = 'IO' then // for DOM patients only, distinguish between inpatient/outpatient meds
+        begin
+          x := Src[i];
+          SetPiece(x, U, 2, MED_TYPE[Piece(Piece(x, U, 1), ';', 2) = 'O'] + ' - ' + Piece(x, U, 2));
+          Src[i] := x;
+        end;
+    end;
+
+  if Src.Count = 0 then
+    Src.Add('0^No active medications found');
+  FastAssign(Src, Dest);
+end;
+
+function MedAdminHistory(OrderID: string; aReturn: TStrings): Integer;
+begin
+  CallVistA('ORWPS MEDHIST', [Patient.DFN, OrderID], aReturn);
+  Result := aReturn.Count;
 end;
 
 function MedStatusGroup(const s: string): Integer;
@@ -155,12 +220,13 @@ begin
   else Result := 0;
 end;
 
-procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer; var DateRange: string);
+procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer; var DateRange: string; var DateRangeIp: string; var DateRangeOp: string);
 var
   idx, ASeq: Integer;
   x, y: string;
   ClinMeds, tmpInPtMeds: TList;
   AMed: TMedListRec;
+  aTmpList: TStringList;
 begin
   //Check for CQ 9814 this should prevent an M error is DFn is not defined.
   if patient=nil then exit;
@@ -170,41 +236,47 @@ begin
   ClearMedList(InPtMeds);
   ClearMedList(OutPtMeds);
   ClearMedList(NonVAMeds);
-  CallV('ORWPS ACTIVE', [Patient.DFN, User.DUZ, view, '1']);
-  ASeq := 0;
-  if (view = 0) and (RPCBrokerV.Results.Count > 0) then
-    view := StrToIntDef(Piece(RPCBrokerV.Results.Strings[0], U, 1), 0);
-  DateRange := Piece(RPCBrokerV.Results.Strings[0], U, 2);
-  with RPCBrokerV do while Results.Count > 0 do
-  begin
-    x := Results[0];
-    Results.Delete(0);
-    if CharAt(x, 1) <> '~' then Continue;        // only happens if out of synch
-    y := '';
-    while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') do
-    begin
-      if CharAt(Results[0], 1) = '\' then y := y + CRLF;
-      y := y + Copy(Results[0], 2, Length(Results[0])) + ' ';
-      Results.Delete(0);
-    end;
-    AMed := TMedListRec.Create;
-    SetMedFields(AMed, x, y);
-    Inc(ASeq);
-    AMed.SrvSeq := ASeq;
-    if (AMed.Inpatient) then
-    begin
-      tmpInPtMeds.Add(AMed);
-      //if (Copy(x,2,2)='CP') then tmpInPtMeds.Add(AMed);
-     // if (Copy(x,2,2)='CP') and ((view = 2) or (view = 0)) then ClinMeds.Add(AMed)
-     // else tmpInPtMeds.Add(AMed);
-    end
-    else
-    if  AMed.NonVAMed then
-        NonVAMeds.Add(AMed)
-    else
-       OutPtMeds.Add(AMed);
+
+  aTmpList := TStringList.Create;
+  try
+    CallVistA('ORWPS ACTIVE', [Patient.DFN, User.DUZ, view, '1'], aTmpList);
+    ASeq := 0;
+    if (view = 0) and (aTmpList.Count > 0) then
+      view := StrToIntDef(Piece(aTmpList[0], U, 1), 0);
+    DateRange := Piece(aTmpList[0], U, 2);
+    DateRangeIp := Piece(aTmpList[0], U, 3);
+    DateRangeOp := Piece(aTmpList[0], U, 4);
+    while aTmpList.Count > 0 do
+      begin
+        x := aTmpList[0];
+        aTmpList.Delete(0);
+        if CharAt(x, 1) <> '~' then Continue; // only happens if out of synch
+        y := '';
+        while (aTmpList.Count > 0) and (CharAt(aTmpList[0], 1) <> '~') do
+          begin
+            if CharAt(aTmpList[0], 1) = '\' then y := y + CRLF;
+            y := y + Copy(aTmpList[0], 2, Length(aTmpList[0])) + ' ';
+            aTmpList.Delete(0);
+          end;
+        AMed := TMedListRec.Create;
+        SetMedFields(AMed, x, y);
+        Inc(ASeq);
+        AMed.SrvSeq := ASeq;
+        if (AMed.Inpatient) then
+          begin
+            tmpInPtMeds.Add(AMed);
+          end
+        else
+        if AMed.NonVAMed then
+          NonVAMeds.Add(AMed)
+        else
+          OutPtMeds.Add(AMed);
+      end;
+  finally
+    FreeAndNil(aTmpList);
   end;
- // 12-4 if view <> 1 then ClinMeds.Sort(ByStatusThenStop);
+
+  // 12-4 if view <> 1 then ClinMeds.Sort(ByStatusThenStop);
  // 12-4 if view = 1 then tmpInPtMeds.Sort(ByStatusThenLocation)
  // 12-4 else tmpInPtMeds.Sort(ByStatusThenStop);
   //tmpInPtMeds.Sort(ByStatusThenStop);                           //IMO
@@ -222,29 +294,35 @@ end;
 function GetNewDialog: string;
 { get dialog for new medications depending on patient being inpatient or outpatient }
 begin
-  Result := sCallV('ORWPS1 NEWDLG', [Patient.Inpatient]);
+  CallVistA('ORWPS1 NEWDLG', [Patient.Inpatient], Result);
 end;
 
 function PickUpDefault: string;
 { returns 'C', 'W', or 'M' for location to pickup refill }
 begin
-  Result := sCallV('ORWPS1 PICKUP', [nil]);
+  CallVistA('ORWPS1 PICKUP', [nil], Result);
 end;
 
 procedure Refill(AnOrderID, PickUpAt: string);
 { sends request for refill to pharmacy }
 begin
-  CallV('ORWPS1 REFILL', [AnOrderID, PickUpAt, Patient.DFN, Encounter.Provider, Encounter.Location]);
+  CallVistA('ORWPS1 REFILL', [AnOrderID, PickUpAt, Patient.DFN, Encounter.Provider, Encounter.Location]);
 end;
 
-function IsFirstDoseNowOrder(OrderID: string): boolean;
+function IsFirstDoseNowOrder(OrderID: string): Boolean;
+var
+  aStr: string;
 begin
-  Result := SCallV('ORWDXR ISNOW',[OrderID])= '1';
+  CallVistA('ORWDXR ISNOW', [OrderID], aStr);
+  Result := (aStr = '1');
 end;
 
-function GetMedStatus(MedID: TStringList): boolean;
+function GetMedStatus(MedID: TStringList): Boolean;
+var
+  aStr: string;
 begin
- Result := SCallV('ORWDX1 STCHANGE',[Patient.DFN, MedID])= '1';
+  CallVistA('ORWDX1 STCHANGE', [Patient.DFN, MedID], aStr);
+  Result := (aStr = '1');
 end;
 
 end.

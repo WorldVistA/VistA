@@ -8,8 +8,8 @@ inherited frmPtDemo: TfrmPtDemo
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 588
-  ExplicitHeight = 305
+  ExplicitWidth = 596
+  ExplicitHeight = 309
   PixelsPerInch = 96
   TextHeight = 13
   object lblFontTest: TLabel [0]
@@ -30,7 +30,7 @@ inherited frmPtDemo: TfrmPtDemo
     Left = 0
     Top = 0
     Width = 580
-    Height = 234
+    Height = 240
     Align = alClient
     Color = clCream
     Font.Charset = ANSI_CHARSET
@@ -49,42 +49,53 @@ inherited frmPtDemo: TfrmPtDemo
     TabOrder = 0
     WantReturns = False
     WordWrap = False
+    Zoom = 100
+    ExplicitTop = 31
+    ExplicitHeight = 209
   end
-  object pnlTop: TORAutoPanel [2]
+  object pnlTop: TPanel [2]
     Left = 0
-    Top = 234
+    Top = 240
     Width = 580
-    Height = 37
+    Height = 31
     Align = alBottom
     BevelOuter = bvNone
+    Caption = 'pnlTop'
+    ShowCaption = False
     TabOrder = 1
     object cmdNewPt: TButton
-      Left = 8
-      Top = 8
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
       Width = 121
-      Height = 21
+      Height = 25
+      Align = alLeft
       Caption = 'Select New Patient'
       TabOrder = 0
       OnClick = cmdNewPtClick
     end
     object cmdClose: TButton
-      Left = 501
-      Top = 8
+      AlignWithMargins = True
+      Left = 505
+      Top = 3
       Width = 72
-      Height = 21
+      Height = 25
+      Align = alRight
       Cancel = True
       Caption = 'Close'
       Default = True
-      TabOrder = 2
+      TabOrder = 1
       OnClick = cmdCloseClick
     end
     object cmdPrint: TButton
-      Left = 411
-      Top = 8
+      AlignWithMargins = True
+      Left = 424
+      Top = 3
       Width = 75
-      Height = 21
+      Height = 25
+      Align = alRight
       Caption = 'Print'
-      TabOrder = 1
+      TabOrder = 2
       OnClick = cmdPrintClick
     end
   end
@@ -92,6 +103,9 @@ inherited frmPtDemo: TfrmPtDemo
     Data = (
       (
         'Component = memPtDemo'
+        'Status = stsDefault')
+      (
+        'Component = frmPtDemo'
         'Status = stsDefault')
       (
         'Component = pnlTop'
@@ -104,13 +118,21 @@ inherited frmPtDemo: TfrmPtDemo
         'Status = stsDefault')
       (
         'Component = cmdPrint'
-        'Status = stsDefault')
-      (
-        'Component = frmPtDemo'
         'Status = stsDefault'))
   end
   object dlgPrintReport: TPrintDialog
-    Left = 265
-    Top = 245
+    Left = 25
+    Top = 61
+  end
+  object CPPtDemo: TCopyEditMonitor
+    CopyMonitor = frmFrame.CPAppMon
+    OnCopyToMonitor = CopyToMonitor
+    RelatedPackage = '8925'
+    TrackOnlyEdits = <
+      item
+        TrackObject = memPtDemo
+      end>
+    Left = 24
+    Top = 122
   end
 end

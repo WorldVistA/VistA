@@ -7,7 +7,7 @@ uses
   fHSplit, StdCtrls, ExtCtrls, ORCtrls, ComCtrls, Grids, Buttons, fLabTest,
   fLabTests, fLabTestGroups, ORFn, TeeProcs, TeEngine, Chart, Series, Menus,
   uConst, ORDtTmRng, OleCtrls, SHDocVw, Variants, StrUtils, fBase508Form,
-  VA508AccessibilityManager, ORDtTm, VclTee.TeeGDIPlus;
+  VA508AccessibilityManager, ORDtTm, VA508ImageListLabeler, VclTee.TeeGDIPlus;
 
 type
   TGrdLab508Manager = class(TVA508ComponentManager)
@@ -120,6 +120,7 @@ type
     btnAppearLt: TButton;
     lbl508Footer: TVA508StaticText;
     sptHorzRightTop: TSplitter;
+    imgLblImages: TVA508ImageListLabeler;
     pnlLeftBotUpper: TPanel;
     pnlOtherTests: TORAutoPanel;
     bvlOtherTests: TBevel;
@@ -132,6 +133,8 @@ type
     lblQualifier: TOROffsetLabel;
     lstDates: TORListBox;
     lstQualifier: TORListBox;
+    Label4: TLabel;
+    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure DisplayHeading(aRanges: string);
     procedure lstHeadersClick(Sender: TObject);
@@ -329,7 +332,7 @@ var
 implementation
 
 uses uCore, rLabs, rCore, rCover, rOrders, fLabPrint, fFrame, fRptBox, Printers, fReportsPrint,
-     clipbrd, rReports, rGraphs, activex, mshtml, VA508AccessibilityRouter, uReports,
+     clipbrd, rReports, rGraphs, activex, mshtml, VA508AccessibilityRouter, uReports, dShared,
   VAUtils;
 
 const
@@ -403,7 +406,7 @@ begin
           InfoBox('Please select from one of the Date Range items before printing', 'Incomplete Information', MB_OK);
         end
       else
-        PrintReports(uRptID, piece(uRemoteType,'^',4));
+        PrintReports(uRptID, piece(uLabRemoteType,'^',4));
     end
   else
     if uQualifierType = 0 then
@@ -414,13 +417,13 @@ begin
                InfoBox('Unable to print ''Most Recent'' report.', 'No Print Available', MB_OK);
              end;
           2: begin
-               PrintLabs(IntToStr(aID), piece(uRemoteType,'^',4), lstDates.ItemIEN);
+               PrintLabs(IntToStr(aID), piece(uLabRemoteType,'^',4), lstDates.ItemIEN);
              end;
           3: begin
-               PrintLabs(IntToStr(aID), piece(uRemoteType,'^',4), lstDates.ItemIEN);
+               PrintLabs(IntToStr(aID), piece(uLabRemoteType,'^',4), lstDates.ItemIEN);
              end;
           4: begin
-               PrintLabs(IntToStr(aID), piece(uRemoteType,'^',4), lstDates.ItemIEN);
+               PrintLabs(IntToStr(aID), piece(uLabRemoteType,'^',4), lstDates.ItemIEN);
              end;
           5: begin
                InfoBox('Unable to print ''Worksheet'' report.', 'No Print Available', MB_OK);
@@ -429,24 +432,24 @@ begin
                if chtChart.Visible then PrintLabGraph;
              end;
           8: begin
-               PrintLabs(IntToStr(aID), piece(uRemoteType,'^',4), lstDates.ItemIEN);
+               PrintLabs(IntToStr(aID), piece(uLabRemoteType,'^',4), lstDates.ItemIEN);
              end;
           9: begin
-               PrintLabs(IntToStr(aID), piece(uRemoteType,'^',4), lstDates.ItemIEN);
+               PrintLabs(IntToStr(aID), piece(uLabRemoteType,'^',4), lstDates.ItemIEN);
              end;
          10: begin
-               PrintLabs(IntToStr(aID), piece(uRemoteType,'^',4), lstDates.ItemIEN);
+               PrintLabs(IntToStr(aID), piece(uLabRemoteType,'^',4), lstDates.ItemIEN);
              end;
          20: begin
-               PrintLabs(IntToStr(aID), piece(uRemoteType,'^',4), lstDates.ItemIEN);
+               PrintLabs(IntToStr(aID), piece(uLabRemoteType,'^',4), lstDates.ItemIEN);
              end;
          21: begin
-               PrintLabs(IntToStr(aID), piece(uRemoteType,'^',4), lstDates.ItemIEN);
+               PrintLabs(IntToStr(aID), piece(uLabRemoteType,'^',4), lstDates.ItemIEN);
              end;
         end;
       end
     else
-      PrintLabs(uRptID, piece(uRemoteType,'^',4), lstDates.ItemIEN);
+      PrintLabs(uRptID, piece(uLabRemoteType,'^',4), lstDates.ItemIEN);
 end;
 
 
@@ -594,6 +597,10 @@ begin
   uUseRadioButton := UseRadioButtons;
   if uUseRadioButton then
     begin
+      if not (uReportType = 'M') then
+        RightTopHeader(30)
+      else
+        RightTopHeader(0);
       pnlRightTopHeaderMid.Visible := true;
       lblDates.Visible := false;
       lblQualifier.Visible := false;
@@ -604,7 +611,11 @@ begin
     end
   else
     begin
+      RightTopHeader(0);
       pnlRightTopHeaderMid.Visible := false;
+      lstQualifier.Visible := true;
+      lstDates.Visible := true;
+      pnlLeftBotLower.Visible := true;
     end;
 
   if InitPage then
@@ -741,15 +752,16 @@ end;
 
 procedure TfrmLabs.LoadListView(aReportData: TStringList);
 var
-  j,k,aErr: integer;
+  i,j,k,aErr: integer;
   aTmpAray: TStringList;
   aColCtr, aCurCol, aCurRow, aColID: integer;
-  x,y,z,c,aSite: string;
+  x,y,z,c,aSite,RptID: string;
   ListItem: TListItem;
 begin
   aSite := '';
   aErr := 0;
   ListItem := nil;
+  RptID := Piece(uRptID,':',1);
   case uQualifierType of
     QT_HSCOMPONENT:
       begin      //      = 5
@@ -922,6 +934,21 @@ begin
               end;
             aTmpAray.Free;
           end;
+        //set image indicator for "Anatomic Pathology" reports
+        if (RptID = 'OR_APL') or (RptID = 'OR_CYL') or (RptID = 'OR_EML') or (RptID = 'OR_SPL') then with lvReports do
+          begin
+            SmallImages := dmodShared.imgImages;
+            imgLblImages.ComponentImageListChanged;
+            for i := 0 to Items.Count - 1 do
+              if (Items[i].SubItems.Count > 6) and (StrToInt(Items[i].SubItems[6]) > 0) then
+                Items[i].SubItemImages[1] := IMG_1_IMAGE
+              else
+                Items[i].SubItemImages[1] := IMG_NO_IMAGES;
+          end
+        else begin
+          lvReports.SmallImages := uEmptyImageList;
+          imgLblImages.ComponentImageListChanged;
+        end;
       end;
   end;
   if aErr = 1 then
@@ -991,7 +1018,7 @@ begin
               x := x + x1;
         end;
       end;
-    if piece(uRemoteType, '^', 9) = '1' then x := x + ' <<ONLY REMOTE DATA INCLUDED IN REPORT>>';
+    if piece(uLabRemoteType, '^', 9) = '1' then x := x + ' <<ONLY REMOTE DATA INCLUDED IN REPORT>>';
     Caption := x;
   end;
   lvReports.Caption := x;
@@ -1111,8 +1138,12 @@ procedure TfrmLabs.lstQualifierClick(Sender: TObject);
   MoreID: String;  //Restores MaxOcc value
   aRemote, aHDR, aFHIE, aMax, aQualAdd, aQualifier, aStartTime, aStopTime: string;
   i: integer;
-  x,x1,x2: string;
+  x,x1,x2,aID: string;
   aQualMatch: boolean;
+  date1, date2: TFMDateTime;
+  daysback: integer;
+  today: TDateTime;
+  tmpList: TStringList;
 begin
   inherited;
   if uFrozen = True then
@@ -1136,10 +1167,10 @@ begin
     and (StrToInt(aMax)<101) then
       MoreID := ';101';
   Timer1.Interval := 3000;
-  aRemote :=  piece(uRemoteType,'^',1);
-  aHDR := piece(uRemoteType,'^',7);
-  aFHIE := piece(uRemoteType,'^',8);
-  SetPiece(uRemoteType,'^',5,lstQualifier.ItemID);
+  aRemote :=  piece(uLabRemoteType,'^',1);
+  aHDR := piece(uLabRemoteType,'^',7);
+  aFHIE := piece(uLabRemoteType,'^',8);
+  SetPiece(uLabRemoteType,'^',5,lstQualifier.ItemID);
   uHTMLDoc := '';
   if uReportType = 'H' then
     begin
@@ -1175,11 +1206,11 @@ begin
          end
        else if (Length(TextOfStart) > 0) and (Length(TextOfStop) > 0) then
          begin
-           if (Length(piece(uRemoteType,'^',6)) > 0) and (StrToInt(piece(uRemoteType,'^',6)) > 0) then
-             if abs(FMDateTimeToDateTime(FMDateStart) - FMDateTimeToDateTime(FMDateStop)) > StrToInt(piece(uRemoteType,'^',6)) then
+           if (Length(piece(uLabRemoteType,'^',6)) > 0) and (StrToInt(piece(uLabRemoteType,'^',6)) > 0) then
+             if abs(FMDateTimeToDateTime(FMDateStart) - FMDateTimeToDateTime(FMDateStop)) > StrToInt(piece(uLabRemoteType,'^',6)) then
                begin
                  InfoBox('The Date Range selected is greater than the' + CRLF + 'Maximum Days Allowed of '
-                   + piece(uRemoteType,'^',6) + ' for this report.' + CRLF + CRLF
+                   + piece(uLabRemoteType,'^',6) + ' for this report.' + CRLF + CRLF
                    + 'Please reselect a valid Date Range.', 'No Report Generated',MB_OK);
                  uDateOverride := true;
                  lstQualifier.ItemIndex := -1;
@@ -1191,7 +1222,7 @@ begin
                  rdo1Year.Checked := false;
                  rdo2Year.Checked := false;
                  rdoAllResults.Checked := false;
-                 DisplayHeading('d' + piece(uRemoteType,'^',6) + MoreID);
+                 DisplayHeading('d' + piece(uLabRemoteType,'^',6) + MoreID);
                  aQualAdd := aStartTime + ';' + aStopTime + '^' + aStartTime + ' to ' + aStopTime;
                  aQualMatch := false;
                  for i := 0 to lstQualifier.Items.Count - 1 do
@@ -1209,7 +1240,7 @@ begin
            lstDates.ItemIndex := lstDates.Items.Add(RelativeStart + ';' +
                 RelativeStop + U + TextOfStart + ' to ' + TextOfStop);
            DisplayHeading(lstQualifier.ItemID + MoreID);
-           SetPiece(uRemoteType,'^',5,lstQualifier.ItemID);
+           SetPiece(uLabRemoteType,'^',5,lstQualifier.ItemID);
            uRDOStick := true;
            uRDOPick := lstQualifier.ItemIndex;
          end
@@ -1224,7 +1255,7 @@ begin
                lstDates.ItemIndex := lstDates.Items.Add(RelativeStart + ';' +
                 RelativeStop + U + TextOfStart + ' to ' + TextOfStop);
                DisplayHeading(lstQualifier.ItemID + MoreID);
-               SetPiece(uRemoteType,'^',5,lstQualifier.ItemID);
+               SetPiece(uLabRemoteType,'^',5,lstQualifier.ItemID);
                uRDOStick := true;
                uRDOPick := lstQualifier.ItemIndex;
              end
@@ -1236,11 +1267,11 @@ begin
              end;
          end;
     end;
-  if (CharAt(lstQualifier.ItemID,1) = 'd') and (Length(piece(uRemoteType,'^',6)) > 0) and (StrToInt(piece(uRemoteType,'^',6)) > 0) then
-    if ExtractInteger(lstQualifier.ItemID) > (StrToInt(piece(uRemoteType,'^',6))) then
+  if (CharAt(lstQualifier.ItemID,1) = 'd') and (Length(piece(uLabRemoteType,'^',6)) > 0) and (StrToInt(piece(uLabRemoteType,'^',6)) > 0) then
+    if ExtractInteger(lstQualifier.ItemID) > (StrToInt(piece(uLabRemoteType,'^',6))) then
       begin
         InfoBox('The Date Range selected is greater than the' + CRLF + 'Maximum Days Allowed of '
-          + piece(uRemoteType,'^',6) + ' for this report.' + CRLF + CRLF
+          + piece(uLabRemoteType,'^',6) + ' for this report.' + CRLF + CRLF
           + 'Please reselect a valid Date Range.', 'No Report Generated',MB_OK);
         uDateOverride := true;
         lstQualifier.ItemIndex := -1;
@@ -1252,7 +1283,7 @@ begin
         rdo1Year.Checked := false;
         rdo2Year.Checked := false;
         rdoAllResults.Checked := false;
-        DisplayHeading('d' + piece(uRemoteType,'^',6) + MoreID);
+        DisplayHeading('d' + piece(uLabRemoteType,'^',6) + MoreID);
         aQualAdd := aStartTime + ';' + aStopTime + '^' + aStartTime + ' to ' + aStopTime;
         aQualMatch := false;
         for i := 0 to lstQualifier.Items.Count - 1 do
@@ -1284,7 +1315,7 @@ begin
             GoRemote(uLabRemoteReportData, 'L:' + uRptID, lstQualifier.ItemID + MoreID, uReportRPC, uHState, aHDR, aFHIE)
           else
             if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
-          if not(piece(uRemoteType, '^', 9) = '1') then
+          if not(piece(uLabRemoteType, '^', 9) = '1') then
             if (length(piece(uHState,';',2)) > 0) then
               begin
                 if not(aRemote = '2') then
@@ -1314,6 +1345,7 @@ begin
           lvReports.Items.Clear;
           LabRowObjects.Clear;
           memLab.Lines.Clear;
+          MoreID := ''; // Removes Max/site for this type of report
           if ((aRemote = '1') or (aRemote = '2'))  then
             begin
               Screen.Cursor := crDefault;
@@ -1321,7 +1353,7 @@ begin
             end
           else
             if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
-          if not(piece(uRemoteType, '^', 9) = '1') then
+          if not(piece(uLabRemoteType, '^', 9) = '1') then
             if (length(piece(uHState,';',2)) > 0) then
               begin
                 if not(aRemote = '2') then
@@ -1345,16 +1377,200 @@ begin
         end
       else
         begin
-          if ((aRemote = '1') or (aRemote = '2')) then
-            GoRemote(uLabRemoteReportData, uRptID, lstQualifier.ItemID + MoreID, uReportRPC, uHState, aHDR, aFHIE)
+         today := FMToDateTime(floattostr(FMToday));
+         if lstDates.ItemIEN > 0 then
+           begin
+             daysback := lstDates.ItemIEN;
+             date1 := FMToday;
+             If daysback = 1 then
+               date2 := DateTimeToFMDateTime(today)
+             else
+               date2 := DateTimeToFMDateTime(today - daysback);
+           end
+           else
+             BeginEndDates(date1,date2,daysback);
+          date1 := date1 + 0.2359;
+          aID := piece(uRptID,':',1);
+          if aID = '21' then
+            begin                // Cumulative
+              lstHeaders.Clear;
+              memLab.Clear;
+              uLabLocalReportData.Clear;
+              uLabRemoteReportData.Clear;
+              StatusText('Retrieving data for cumulative report...');
+              GoRemoteOld(uLabRemoteReportData,21,2,'',uReportRPC,'',IntToStr(daysback),'',date1,date2);
+              TabControl1.OnChange(nil);
+              Cumulative(uLabLocalReportData, Patient.DFN, daysback, date1, date2, uReportRPC);
+              splLeft.Visible := true;
+              splLeftLower.Visible := true;
+              if lstHeaders.Height < 20 then lstHeaders.Height := 50;
+              if uLabLocalReportData.Count > 0 then
+               begin
+                 TabControl1.OnChange(nil);
+                 if lstHeaders.Items.Count > 0 then
+                   begin
+                     lstHeaders.ItemIndex := 0;
+                     pnlLeftBottom.Visible := true;
+                     splLeft.Visible := true;
+                     lstHeaders.TabStop := true;
+                     if pnlLeftBotUpper.Height < 150 then pnlLeftBotUpper.Height := 150;
+                   end;
+               end;
+              memLab.Lines.Insert(0,' ');
+              memLab.Lines.Delete(0);
+            end
           else
-            if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
-          if not(piece(uRemoteType, '^', 9) = '1') then
-            begin
-             LoadReportText(uLabLocalReportData, uRptID, lstQualifier.ItemID + MoreID, uReportRPC, uHState);
-             if TabControl1.TabIndex < 1 then
+          if aID = '3' then
+            begin            // Interim
+              memLab.Clear;
+              uLabLocalReportData.Clear;
+              uLabRemoteReportData.Clear;
+              StatusText('Retrieving data for interim report...');
+              GoRemoteOld(uLabRemoteReportData,3,3,'',uReportRPC,'','','',date1,date2);
+              TabControl1.OnChange(nil);
+              Interim(uLabLocalReportData, Patient.DFN, date1, date2, uReportRPC);
+              if uLabLocalReportData.Count < 1 then
+               uLabLocalReportData.Add('<No results for this date range.>');
+              if TabControl1.TabIndex < 1 then
                QuickCopy(uLabLocalReportData,memLab);
-            end;
+              memLab.Lines.Insert(0,' ');
+              memLab.Lines.Delete(0);
+              memLab.SelStart := 0;
+            end
+          else if aID = '4' then
+            begin            // Interim for Selected Tests
+              memLab.Clear;
+              uLabLocalReportData.Clear;
+              uLabRemoteReportData.Clear;
+              try
+               StatusText('Retrieving data for selected tests...');
+               FastAssign(InterimSelect(Patient.DFN, date1, date2, lstTests.Items), uLabLocalReportData);
+               if uLabLocalReportData.Count > 0 then
+                 QuickCopy(uLabLocalReportData,memLab)
+               else
+                 memLab.Lines.Add('<No results for selected tests in this date range.>');
+               memLab.SelStart := 0;
+              finally
+              end;
+            end
+          else if aID = '5' then
+            begin            // Worksheet
+              chtChart.BottomAxis.Automatic := true;
+              chkZoom.Checked := false;
+              chkAbnormals.Checked := false;
+              memLab.Clear;
+              uLabLocalReportData.Clear;
+              uLabRemoteReportData.Clear;
+              grdLab.Align := alClient;
+              StatusText('Retrieving data for worksheet...');
+              FastAssign(Worksheet(Patient.DFN, date1, date2,
+               Piece(lblSpecimen.Caption, '^', 1), lstTests.Items), tmpGrid);
+              if ragHorV.ItemIndex = 0 then
+               HGrid(tmpGrid)
+              else
+               VGrid(tmpGrid);
+              GraphList(tmpGrid);
+              GridComments(tmpGrid);
+              ragCorGClick(self);
+            end
+          else if aID = '6' then
+            begin            // Graph
+             if not uGraphingActivated then
+               begin
+                 chtChart.BottomAxis.Automatic := true;
+                 chkGraphZoom.Checked := false;
+                 chkGraphZoomClick(self);
+                 memLab.Clear;
+                 uLabLocalReportData.Clear;
+                 uLabRemoteReportData.Clear;
+                 tmpList := TStringList.Create;
+                 try
+                   StatusText('Retrieving data for graph...');
+                   FastAssign(GetChart(Patient.DFN, date1, date2,
+                     Piece(lblSpecimen.Caption, '^', 1),
+                     Piece(lblSingleTest.Caption, '^', 1)), tmpList);
+                   if tmpList.Count > 1 then
+                   begin
+                     chtChart.Visible := true;
+                     GraphChart(lblSingleTest.Caption, tmpList);
+                     //chtChart.ZoomPercent(ZOOM_PERCENT);
+                     for i := strtoint(Piece(tmpList[0], '^', 1)) + 1 to tmpList.Count - 1
+                       do memLab.Lines.Add(tmpList[i]);
+                     if memLab.Lines.Count < 2 then
+                       memLab.Lines.Add('<No comments on specimens.>');
+                     memLab.SelStart := 0;
+                     lblGraph.Visible := false;
+                   end
+                   else
+                   begin
+                     lblGraph.Left := chtChart.Left + ((chtChart.Width - lblGraph.Width) div 2);
+                     lblGraph.Top := 2;
+                     lblGraph.Visible := true;
+                     if Piece(lblSpecimen.Caption, '^', 1) = '0' then
+                       pnlChart.Caption := '<No results can be graphed for ' +
+                         Piece(lblSingleTest.Caption, '^', 2) + ' in this date range.> '
+                         + 'Results may be available, but cannot be graphed. Please try an alternate view.'
+                     else
+                       pnlChart.Caption := '<No results can be graphed for ' +
+                         Piece(lblSingleTest.Caption, '^', 2)
+                         + ' (' + Piece(lblSpecimen.Caption, '^', 2) +
+                           ') in this date range.> '
+                         + 'Results may be available, but cannot be graphed. Please try an alternate view.';
+                     chtChart.Visible := false;
+                   end;
+                 finally
+                   tmpList.Free;
+                 end;
+               end;
+            end
+          else if aID = '9' then
+            begin            // Micro
+              memLab.Clear;
+              uLabLocalReportData.Clear;
+              uLabRemoteReportData.Clear;
+              StatusText('Retrieving microbiology data...');
+              GoRemoteOld(uLabRemoteReportData,4,4,'',uReportRPC,'','','',date1,date2);
+              TabControl1.OnChange(nil);
+              Micro(uLabLocalReportData, Patient.DFN, date1, date2, uReportRPC);
+              if uLabLocalReportData.Count < 1 then
+               uLabLocalReportData.Add('<No microbiology results for this date range.>');
+              if TabControl1.TabIndex < 1 then
+               QuickCopy(uLabLocalReportData,memLab);
+              memLab.Lines.Insert(0,' ');
+              memLab.Lines.Delete(0);
+              memLab.SelStart := 0;
+            end
+          else if aID = '10' then
+            begin           // Lab Status
+              memLab.Clear;
+              uLabLocalReportData.Clear;
+              uLabRemoteReportData.Clear;
+              StatusText('Retrieving lab status data...');
+              GoRemoteOld(uLabRemoteReportData,10,1,'',uReportRPC,'',IntToStr(daysback),'',date1,date2);
+              TabControl1.OnChange(nil);
+              Reports(uLabLocalReportData,Patient.DFN, 'L:10', '', IntToStr(daysback),'',
+               date1, date2, uReportRPC);
+              if uLabLocalReportData.Count < 1 then
+                uLabLocalReportData.Add('<No laboratory orders for this date range.>');
+              if TabControl1.TabIndex < 1 then
+                QuickCopy(uLabLocalReportData,memLab);
+              memLab.Lines.Insert(0,' ');
+              memLab.Lines.Delete(0);
+              memLab.SelStart := 0;
+            end
+
+          else begin //Anything else
+            if ((aRemote = '1') or (aRemote = '2')) then
+              GoRemote(uLabRemoteReportData, uRptID, lstQualifier.ItemID + MoreID, uReportRPC, uHState, aHDR, aFHIE)
+            else
+              if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
+            if not(piece(uLabRemoteType, '^', 9) = '1') then
+              begin
+               LoadReportText(uLabLocalReportData, uRptID, lstQualifier.ItemID + MoreID, uReportRPC, uHState);
+               if TabControl1.TabIndex < 1 then
+                 QuickCopy(uLabLocalReportData,memLab);
+              end;
+          end;
           Screen.Cursor := crDefault;
         end;
     end;
@@ -2592,7 +2808,7 @@ end;
 
 procedure TfrmLabs.RDOChange(rdoIndex: integer);
 var
-  aID, aCategory, aHDR, aQualifier, aRptCode, x, x1, x2, MoreID: string;
+  aID, aCategory, aHDR, aQualifier, aRptCode, MoreID: string;
   aIndex: integer;
 begin
   inherited;
@@ -2690,41 +2906,6 @@ begin
       begin      //      = ?
 
       end;
-    end;
-  x := Piece(aQualifier, ';', 3);
-  if (CharAt(lstQualifier.ItemID,1) = 'd')
-    and (length(x)>0)
-    and (StrToInt(x)<101) then
-      x := '101';
-  if length(x)>0
-    then MoreID := ';' + x
-    else MoreID := '';
-  if lstQualifier.ItemIndex > -1 then
-    begin
-    if not (aHDR = '1') then
-      if (aCategory <> '0') and (not WebBrowser.Visible) then
-          begin
-            DisplayHeading(lstQualifier.ItemID + MoreID) ;
-          end
-      else
-        DisplayHeading('');
-    end
-  else
-    begin
-      if not (aHDR = '1') and (lstDates.ItemIndex > -1) then
-        if (aCategory <> '0') and (not WebBrowser.Visible) then
-          begin
-            if uRDOStick and (uRDOPick > 0) and uRDOChanging then lstDates.ItemIndex := uRDOPick;
-            x := lstDates.DisplayText[lstDates.ItemIndex];
-            x1 := piece(x,' ',1);
-            x2 := piece(x,' ',3);
-            if (Uppercase(Copy(x1,1,1)) = 'T') and (Uppercase(Copy(x2,1,1)) = 'T') then
-              DisplayHeading(piece(x,' ',1) + ';' + piece(x,' ',2) + MoreID)
-            else
-              DisplayHeading('d' + lstDates.ItemID + MoreID);
-          end
-        else
-          DisplayHeading('');
     end;
   uRDOChanging := false;
 end;
@@ -3002,7 +3183,7 @@ var
   i,j,k: integer;
   aBasket: TStringList;
   aWPFlag: Boolean;
-  x, HasImages: string;
+  x, HasImages, RptIDAbr: string;
 
 begin
   inherited;
@@ -3010,6 +3191,7 @@ begin
   aBasket := TStringList.Create;
   uLabLocalReportData.Clear;
   aWPFlag := false;
+  RptIDAbr := Piece(uRptID,':',1);
   with lvReports do
     begin
       aID := Item.SubItems[0];
@@ -3032,7 +3214,7 @@ begin
               end;
             QT_HSWPCOMPONENT:
               begin      //      = 6
-                if lvReports.SelCount < 3 then
+                if lvReports.SelCount < 2 then
                   begin
                     memLab.Lines.Clear;
                     ulvSelectOn := false;
@@ -3108,6 +3290,14 @@ begin
                     begin
                       if StrToIntDef(Item.SubItems[7], 0) > 0 then HasImages := '1' else HasImages := '0';
                       x := 'PN^' + Item.SubItems[7] + U + Item.SubItems[1] + U + Item.Caption;
+                      SetPiece(x, U, 10, HasImages);
+                      NotifyOtherApps(NAE_REPORT, x);
+                    end;
+                if (RptIDAbr = 'OR_APL') or (RptIDAbr = 'OR_CYL') or (RptIDAbr = 'OR_EML') or (RptIDAbr = 'OR_SPL') then
+                  if (Item.SubItems.Count > 7) then
+                    begin
+                      if StrToIntDef(Item.SubItems[6], 0) > 0 then HasImages := '1' else HasImages := '0';
+                      x := 'TIU^' + Item.SubItems[7];
                       SetPiece(x, U, 10, HasImages);
                       NotifyOtherApps(NAE_REPORT, x);
                     end;
@@ -3329,13 +3519,16 @@ begin
      tvReportsClick(self);
    end;
 
-  case Notifications.FollowUp of
-    NF_LAB_RESULTS          :   Notifications.Delete;
-    NF_ABNORMAL_LAB_RESULTS :   Notifications.Delete;
-    NF_SITE_FLAGGED_RESULTS :   Notifications.Delete;
-    NF_STAT_RESULTS         :   Notifications.Delete;
-    NF_CRITICAL_LAB_RESULTS :   Notifications.Delete;
-    NF_LAB_THRESHOLD_EXCEEDED : Notifications.Delete;
+  if Notifications.Processing then
+  begin
+    case Notifications.FollowUp of
+      NF_LAB_RESULTS          :   Notifications.Delete;
+      NF_ABNORMAL_LAB_RESULTS :   Notifications.Delete;
+      NF_SITE_FLAGGED_RESULTS :   Notifications.Delete;
+      NF_STAT_RESULTS         :   Notifications.Delete;
+      NF_CRITICAL_LAB_RESULTS :   Notifications.Delete;
+      NF_LAB_THRESHOLD_EXCEEDED : Notifications.Delete;
+    end;
   end;
 end;
 
@@ -3612,7 +3805,6 @@ begin
   uRDOStick := false;
   uRDOPick := 0;
   lstQualifier.Clear;
-  lstDates.Clear;
   LoadTreeView;
   if uRDOStick and (uRDOPick > 0) then lstDates.ItemIndex := uRDOPick;
   if tvReports.Items.Count > 0 then
@@ -3762,6 +3954,7 @@ begin
   aRptCode    :=  Piece(aQualifier,';',4);
   aQualifierID:= '';
   uTVLabReportSet:= true;
+  uUseRadioButton := UseRadioButtons;
   if chkMaxFreq.checked = true then
     begin
       aMax := '';
@@ -3805,7 +3998,7 @@ begin
   uReportType := aReportType;
   uQualifier := aQualifier;
   uSortOrder := aSortOrder;
-  uRemoteType := aRemote + '^' + aReportType + '^' + IntToStr(aIFN) + '^' + aHeading + '^' + aRptCode + '^' + aDaysBack + '^' + aHDR + '^' + aFHIE + '^' + aFHIEONLY;
+  uLabRemoteType := aRemote + '^' + aReportType + '^' + IntToStr(aIFN) + '^' + aHeading + '^' + aRptCode + '^' + aDaysBack + '^' + aHDR + '^' + aFHIE + '^' + aFHIEONLY;
   pnlRightTop.Height := lblTitle.Height;  // see below
   RedrawSuspend(tvReports.Handle);
   RedrawSuspend(memLab.Handle);
@@ -3828,7 +4021,7 @@ begin
   lvReports.Items.Clear;
   lvReports.Columns.Clear;
   DisplayHeading('');
-  if (Length(piece(uRemoteType,'^',6)) > 0) and (StrToInt(piece(uRemoteType,'^',6)) > 0) then
+  if (Length(piece(uLabRemoteType,'^',6)) > 0) and (StrToInt(piece(uLabRemoteType,'^',6)) > 0) then
     uDateOverride := true;
   if uRDOStick and not uDateOverride then
     begin
@@ -3889,6 +4082,11 @@ begin
                   uNewColumn.Width := 0;
               end;
             Columns.EndUpdate;
+            ResetTinyColumns;
+            for i := 0 to Columns.Count -1 do
+              if Columns[i].Width > TINY_COLS_MAX_WIDTH then
+                Columns[i].MinWidth := 12;
+
             RedrawActivate(lvReports.Handle);
           end;
         pnlRightTopHeader.Visible := true;
@@ -3952,11 +4150,11 @@ begin
     end
   else
     begin
-    if (CharAt(lstQualifier.ItemID,1) = 'd') and (Length(piece(uRemoteType,'^',6)) > 0) and (StrToInt(piece(uRemoteType,'^',6)) > 0) then
-      if ExtractInteger(lstQualifier.ItemID) > (StrToInt(piece(uRemoteType,'^',6))) then
+    if (CharAt(lstQualifier.ItemID,1) = 'd') and (Length(piece(uLabRemoteType,'^',6)) > 0) and (StrToInt(piece(uLabRemoteType,'^',6)) > 0) then
+      if ExtractInteger(lstQualifier.ItemID) > (StrToInt(piece(uLabRemoteType,'^',6))) then
         begin
           InfoBox('The Date Range selected is greater than the' + CRLF + 'Maximum Days Allowed of '
-            + piece(uRemoteType,'^',6) + ' for this report.' + CRLF + CRLF
+            + piece(uLabRemoteType,'^',6) + ' for this report.' + CRLF + CRLF
             + 'Please reselect a valid Date Range.', 'No Report Generated',MB_OK);
           uDateOverride := true;
           lstQualifier.ItemIndex := -1;
@@ -3968,7 +4166,7 @@ begin
           rdo1Year.Checked := false;
           rdo2Year.Checked := false;
           rdoAllResults.Checked := false;
-          DisplayHeading('d' + piece(uRemoteType,'^',6) + ';' + aMax);
+          DisplayHeading('d' + piece(uLabRemoteType,'^',6) + ';' + aMax);
           aQualAdd := aStartTime + ';' + aStopTime + '^' + aStartTime + ' to ' + aStopTime;
           aQualMatch := false;
           for i := 0 to lstQualifier.Items.Count - 1 do
@@ -4095,6 +4293,9 @@ begin
                       begin
                         RightTopHeader(0);
                         pnlRightTopHeaderMid.Visible := false;
+                        lstQualifier.Visible := true;
+                        lstDates.Visible := true;
+                        pnlLeftBotLower.Visible := true;
                       end;
                     end
                     else
@@ -4109,11 +4310,11 @@ begin
                      lstTests.Clear;
                      lblSpecimen.Caption := '';
                     end;
+                    CommonComponentVisible(false,false,true,true,true,true,true,false,false,false,false,false);
                     SelectTestGroups(Font.Size);
                     if lstTests.Items.Count > 0 then
                     begin
                      pnlRighttop.Visible := false;
-                     CommonComponentVisible(false,false,true,true,true,true,true,false,false,false,false,false);
                      pnlRighttop.Height := pnlRight.Height - (pnlRight.Height div 2);
                      chtChart.Visible := true;
                      memLab.Visible := false;
@@ -4171,6 +4372,9 @@ begin
                       begin
                         RightTopHeader(0);
                         pnlRightTopHeaderMid.Visible := false;
+                        lstQualifier.Visible := true;
+                        lstDates.Visible := true;
+                        pnlLeftBotLower.Visible := true;
                       end;
                      if ScreenReaderSystemActive then
                      begin
@@ -4183,6 +4387,9 @@ begin
                     else
                       begin
                         tvReports.Selected := uPrevReportNode;
+                        DisplayHeading('');
+                        tvReportsClick(self);
+                        Exit;
                       end;
                     if upnlRightTopHeight_2 > 0 then
                       pnlRightTop.Height := upnlRightTopHeight_2;
@@ -4356,6 +4563,9 @@ begin
                             begin
                               RightTopHeader(0);
                               pnlRightTopHeaderMid.Visible := false;
+                              lstQualifier.Visible := true;
+                              lstDates.Visible := true;
+                              pnlLeftBotLower.Visible := true;
                             end;
                          end;
                       2: begin
@@ -4407,13 +4617,15 @@ begin
                               lblQualifier.Visible := false;
                               lstQualifier.Visible := false;
                               lstDates.Visible := false;
-                              //splLeftLower.Visible := false;
                               pnlLeftBotLower.Visible := false;
                             end
                           else
                             begin
                               RightTopHeader(0);
                               pnlRightTopHeaderMid.Visible := false;
+                              lstQualifier.Visible := true;
+                              lstDates.Visible := true;
+                              pnlLeftBotLower.Visible := true;
                             end;
                          end;
                     end;
@@ -4425,7 +4637,6 @@ begin
             //else if aID = '2:BLOOD BANK' then
 
             //else if aID = '10:LAB STATUS' then
-
 
             else
               begin
@@ -4441,7 +4652,7 @@ begin
                   if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
                 uReportInstruction := #13#10 + 'Retrieving data...';
                 TabControl1.OnChange(nil);
-                if not(piece(uRemoteType, '^', 9) = '1') then
+                if not(piece(uLabRemoteType, '^', 9) = '1') then
                   begin
                     LoadReportText(uLabLocalReportData, 'L:' + aID, aRptCode, aRPC, uHState);
                     QuickCopy(uLabLocalReportData, memLab);
@@ -4525,6 +4736,9 @@ begin
               begin
                 RightTopHeader(0);
                 pnlRightTopHeaderMid.Visible := false;
+                lstQualifier.Visible := true;
+                lstDates.Visible := true;
+                pnlLeftBotLower.Visible := true;
               end;
             uPrevReportNode := tvReports.Selected;
           end;
@@ -4634,7 +4848,7 @@ begin
                       GoRemote(uLabRemoteReportData, 'L:' + aID, aQualifier, aRPC, uHState, aHDR, aFHIE)
                     else
                       if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
-                    if not(piece(uRemoteType, '^', 9) = '1') then
+                    if not(piece(uLabRemoteType, '^', 9) = '1') then
                       begin
                         LoadReportText(uLabLocalReportData, 'L:' + aID, aQualifier, aRPC, uHState);
                         LoadListView(uLabLocalReportData);
@@ -4656,7 +4870,7 @@ begin
                   GoRemote(uLabRemoteReportData, 'L:' + aID, aQualifier, aRPC, uHState, aHDR, aFHIE)
                 else
                   if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
-                if not(piece(uRemoteType, '^', 9) = '1') then
+                if not(piece(uLabRemoteType, '^', 9) = '1') then
                   LoadReportText(uLabLocalReportData, 'L:' + aID, aQualifier, aRPC, uHState);
                 if uLabLocalReportData.Count < 1 then
                   uReportInstruction := '<No Report Available>'
@@ -4725,6 +4939,9 @@ begin
                       begin
                         RightTopHeader(0);
                         pnlRightTopHeaderMid.Visible := false;
+                        lstQualifier.Visible := true;
+                        lstDates.Visible := true;
+                        pnlLeftBotLower.Visible := true;
                       end;
                   end
                 else
@@ -4836,6 +5053,9 @@ begin
                       begin
                         RightTopHeader(0);
                         pnlRightTopHeaderMid.Visible := false;
+                        lstQualifier.Visible := true;
+                        lstDates.Visible := true;
+                        pnlLeftBotLower.Visible := true;
                       end;
                   end
                 else
@@ -4844,7 +5064,7 @@ begin
                       GoRemote(uLabRemoteReportData, 'L:' + aID, aQualifier, aRPC, uHState, aHDR, aFHIE)
                     else
                       if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
-                    if not (aRemote = '2' ) and (not(piece(uRemoteType, '^', 9) = '1')) then
+                    if not (aRemote = '2' ) and (not(piece(uLabRemoteType, '^', 9) = '1')) then
                       begin
                         LoadReportText(uLabLocalReportData, 'L:' + aID, aQualifier, aRPC, uHState);
                         LoadListView(uLabLocalReportData);
@@ -4864,7 +5084,7 @@ begin
                   GoRemote(uLabRemoteReportData, 'L:' + aID, aQualifier, aRPC, uHState, aHDR, aFHIE)
                 else
                   if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
-                if not(piece(uRemoteType, '^', 9) = '1') then
+                if not(piece(uLabRemoteType, '^', 9) = '1') then
                   LoadReportText(uLabLocalReportData, 'L:' + aID, aQualifier, aRPC, uHState);
                 if uLabLocalReportData.Count < 1 then
                   uReportInstruction := '<No Report Available>'
@@ -4931,7 +5151,7 @@ begin
               if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
             uReportInstruction := #13#10 + 'Retrieving data...';
             TabControl1.OnChange(nil);
-            if not(piece(uRemoteType, '^', 9) = '1') then
+            if not(piece(uLabRemoteType, '^', 9) = '1') then
               LoadReportText(uLabLocalReportData, 'L:' + aID, '', aRPC, uHState);
             if uLabLocalReportData.Count < 1 then
               uReportInstruction := '<No Report Available>'
@@ -4996,7 +5216,7 @@ begin
       else
         DisplayHeading(lstQualifier.ItemID + ';' + aMax);
     end; }
-  if aCategory <> '0' then
+  if (aCategory <> '0') and (aCategory <> '5') then
     begin
       if upnlRightTopHeight_3 > 0 then pnlRightTop.Height := upnlRightTopHeight_3;
       if upnlLeftTopHeight_4 >0 then pnlLefTop.Height := upnlLeftTopHeight_4;
@@ -5066,7 +5286,7 @@ begin
   Omega := 0;
   Seq := '';
   aVistaWebLabel := GetVistaWeb_JLV_LabelName;
-  if aVistaWebLabel = '' then aVistaWebLabel := 'VistaWeb';
+  if aVistaWebLabel = '' then aVistaWebLabel := 'VistAWeb';
   if AHDR = '1' then
     begin
       if HDRActive = '0' then

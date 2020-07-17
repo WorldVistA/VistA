@@ -86,6 +86,7 @@ type
   end;
 
   TOrderMenu = class
+  public
     IEN: Integer;
     NumCols: Integer;
     Title: string;
@@ -94,6 +95,7 @@ type
   end;
 
   TOrderMenuItem = class
+  public
     IEN: Integer;
     Row: Integer;
     Col: Integer;
@@ -137,6 +139,7 @@ type
   end;
 
   TOrderView = class
+  public
     Changed:    Boolean;                         // true when view has been modified
     DGroup:     Integer;                         // display group (pointer value)
     Filter:     Integer;                         // FLGS parameter passed to ORQ
@@ -317,7 +320,7 @@ procedure GetTSListForEvt(Dest: TStrings; AnEvtID:integer);
 procedure GetChildEvent(var AChildList: TStringList; APtEvtID: string);
 
 { Order Checking }
-function IsMonograph(): Boolean; 
+function IsMonograph(): Boolean;
 procedure DeleteMonograph();
 procedure GetMonographList(ListOfMonographs: TStringList);
 procedure GetMonograph(Monograph: TStringList; x: Integer);
@@ -341,6 +344,7 @@ procedure SaveCoPayStatus(AList: TStrings);
 {IMO: inpatient medication for outpatient}
 function LocationType(Location: integer): string;
 function IsValidIMOLoc(LocID: integer; PatientID: string): boolean;   //IMO
+function IsValidIMOLocOrderCom(LocID: integer; PatientID: string): boolean;   //IMO
 function IsIMOOrder(OrderID: string): boolean;
 function IsInptQO(DlgID: integer): boolean;
 function IsIVQO(DlgID: integer): boolean;
@@ -414,7 +418,7 @@ begin
   EventName    := Source.EventName;
   OrderLocIEN  := Source.OrderLocIEN;
   OrderLocName := Source.OrderLocName;
-  ParentID     := Source.ParentID;  
+  ParentID     := Source.ParentID;
   LinkObject   := Source.LinkObject;
   IsControlledSubstance   := Source.IsControlledSubstance;
   IsDetox   := Source.IsDetox;
@@ -730,8 +734,8 @@ begin
   AView.CtxtTime := MakeFMDateTime(Piece(RPCBrokerV.Results[0], U, 3));
   with RPCBrokerV do for i := 1 to Results.Count - 1 do   // if orders found (skip 0 element)
   begin
-    if (Piece(RPCBrokerV.Results[i], U, 1) = '0') or (Piece(RPCBrokerV.Results[i], U, 1) = '') then Continue;  
-    if (DelimCount(Results[i],U) = 2) then Continue;  
+    if (Piece(RPCBrokerV.Results[i], U, 1) = '0') or (Piece(RPCBrokerV.Results[i], U, 1) = '') then Continue;
+    if (DelimCount(Results[i],U) = 2) then Continue;
     AnOrder := TOrder.Create;
     with AnOrder do
     begin
@@ -807,17 +811,19 @@ begin
 
 procedure LoadOrderSheetsED(Dest: TStrings);
 var
+  aReturn: TStrings;
   i: integer;
 begin
-  CallV('OREVNTX PAT', [Patient.DFN]);
-  MixedCaseByPiece(RPCBrokerV.Results, U, 2);
+  aReturn := TStringList.Create;
+  CallVistA('OREVNTX PAT', [Patient.DFN], aReturn);
+  MixedCaseByPiece(aReturn, U, 2);
   Dest.Add('C;O^Current View');
-  if RPCBrokerV.Results.Count > 1 then
+  if aReturn.Count > 1 then
   begin
-    RPCBrokerV.Results.Delete(0);
-    for i := 0 to RPCbrokerV.Results.Count - 1 do
-      RPCBrokerV.Results[i] := RPCBrokerV.Results[i] + ' Orders';
-    Dest.AddStrings(RPCBrokerV.Results);
+    aReturn.Delete(0);
+    for i := 0 to aReturn.Count - 1 do
+      aReturn[i] := aReturn[i] + ' Orders';
+    Dest.AddStrings(aReturn);
   end;
 end;
 
@@ -848,17 +854,22 @@ procedure LoadUnsignedOrders(IDList, HaveList: TStrings);
 var
   i: Integer;
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'ORWOR UNSIGN';
-    Param[0].PType := literal;
-    Param[0].Value := Patient.DFN;
-    Param[1].PType := list;
-    Param[1].Mult['0'] := '';  // (to prevent broker from hanging if empty list)
-    for i := 0 to Pred(HaveList.Count) do Param[1].Mult['"' + HaveList[i] + '"'] := '';
-    CallBroker;
-    FastAssign(RPCBrokerV.Results,IDList);
+  LockBroker;
+  try
+    with RPCBrokerV do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'ORWOR UNSIGN';
+      Param[0].PType := literal;
+      Param[0].Value := Patient.DFN;
+      Param[1].PType := list;
+      Param[1].Mult['0'] := '';  // (to prevent broker from hanging if empty list)
+      for i := 0 to Pred(HaveList.Count) do Param[1].Mult['"' + HaveList[i] + '"'] := '';
+      CallBroker;
+      FastAssign(RPCBrokerV.Results,IDList);
+    end;
+  finally
+    UnlockBroker;
   end;
 end;
 
@@ -1527,47 +1538,52 @@ begin
 
   try
     with RenewFields do
-       begin
-       tmplst.SetText(PChar(Comments));
-       tmplst.Insert(0, IntToStr(BaseType) + U + StartTime + U + StopTime + U + IntToStr(Refills) + U + Pickup);
-       end;
-
+    begin
+      tmplst.SetText(PChar(Comments));
+      tmplst.Insert(0, IntToStr(BaseType) + U + StartTime + U + StopTime + U +
+        IntToStr(Refills) + U + Pickup);
+    end;
     with RPCBrokerV do
     begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORWDXR RENEW';
-      Param[0].PType := literal;
-      Param[0].Value := AnOrder.ID;
-      Param[1].PType := literal;
-      Param[1].Value := Patient.DFN;
-      Param[2].PType := literal;
-      Param[2].Value := IntToStr(Encounter.Provider);
-      Param[3].PType := literal;
-      Param[3].Value := IntToStr(Encounter.Location);
-      Param[4].PType := list;
-      for i := 0 to tmplst.Count - 1 do
-        Param[4].Mult[IntToStr(i+1)] := tmplst[i];
-      Param[4].Mult['"ORCHECK"'] := IntToStr(OCList.Count);
-      for i := 0 to OCList.Count - 1 do
-      begin
-      // put quotes around everything to prevent broker from choking
-      y := '"ORCHECK","' + Piece(OCList[i], U, 1) + '","' + Piece(OCList[i], U, 3) +
-        '","' + IntToStr(i+1) + '"';
-      Param[4].Mult[y] := Pieces(OCList[i], U, 2, 4);
+      LockBroker;
+      try
+        ClearParameters := True;
+        RemoteProcedure := 'ORWDXR RENEW';
+        Param[0].PType := literal;
+        Param[0].Value := AnOrder.ID;
+        Param[1].PType := literal;
+        Param[1].Value := Patient.DFN;
+        Param[2].PType := literal;
+        Param[2].Value := IntToStr(Encounter.Provider);
+        Param[3].PType := literal;
+        Param[3].Value := IntToStr(Encounter.Location);
+        Param[4].PType := list;
+        for i := 0 to tmplst.Count - 1 do
+          Param[4].Mult[IntToStr(i + 1)] := tmplst[i];
+        Param[4].Mult['"ORCHECK"'] := IntToStr(OCList.Count);
+        for i := 0 to OCList.Count - 1 do
+        begin
+          // put quotes around everything to prevent broker from choking
+          y := '"ORCHECK","' + Piece(OCList[i], U, 1) + '","' +
+            Piece(OCList[i], U, 3) + '","' + IntToStr(i + 1) + '"';
+          Param[4].Mult[y] := Pieces(OCList[i], U, 2, 4);
+        end;
+        Param[5].PType := literal;
+        Param[5].Value := IntToStr(IsComplex);
+        Param[6].PType := literal;
+        Param[6].Value := FloatToStr(AnIMOOrderAppt);
+        CallBroker;
+        SetOrderFromResults(AnOrder);
+      finally
+        UnlockBroker;
+      end;
+
+      { Begin Billing Aware }
+      UBAGlobals.TargetOrderID := AnOrder.ID; // the ID of the renewed order
+      UBAGlobals.CopyTreatmentFactorsDxsToRenewedOrder;
+      { End Billing Aware }
+
     end;
-    Param[5].PType := literal;
-    Param[5].Value := IntToStr(IsComplex);
-    Param[6].PType := literal;
-    Param[6].Value := FloatToStr(AnIMOOrderAppt);
-    CallBroker;
-    SetOrderFromResults(AnOrder);
-
-     {Begin Billing Aware}
-       UBAGlobals.TargetOrderID := AnOrder.ID; //the ID of the renewed order
-       UBAGlobals.CopyTreatmentFactorsDxsToRenewedOrder;
-     {End Billing Aware}
-
-  end;
   finally
     tmplst.Free;
   end;
@@ -1957,7 +1973,7 @@ end;
 
 function GetDispGroupForLES: string;
 begin
-  Result := SCallV('ORWDPS5 LESGRP',[nil]);  
+  Result := SCallV('ORWDPS5 LESGRP',[nil]);
 end;
 
 function GetOrderPtEvtID(AnOrderID: string): string;
@@ -2246,7 +2262,7 @@ end;
 function FillerIDForDialog(IEN: Integer): string;
 begin
   Result := sCallV('ORWDXC FILLID', [IEN]);
-end;  
+end;
 function IsMonograph(): Boolean;
 var ret: string;
 begin
@@ -2269,7 +2285,7 @@ end;
 procedure DeleteMonograph();
 begin
   CallV('ORCHECK DELMONO', []);
-end;  
+end;
 
 procedure GetXtraTxt(OCText: TStringList; x: String; y: String);
 begin
@@ -2320,39 +2336,44 @@ var
  i, inc, len, numLoop, remain: integer;
  OCStr, TmpStr: string;
 begin
-  //CallV('ORWDXC SAVECHK', [Patient.DFN, AReason, ListOfChecks]);
-  { no result used currently }
-  RPCBrokerV.ClearParameters := True;
-  RPCBrokerV.RemoteProcedure := 'ORWDXC SAVECHK';
-  RPCBrokerV.Param[0].PType := literal;
-  RPCBrokerV.Param[0].Value := Patient.DFN;  //*DFN*
-  RPCBrokerV.Param[1].PType := literal;
-  RPCBrokerV.Param[1].Value := AReason;
-  RPCBrokerV.Param[2].PType := list;
-  RPCBrokerV.Param[2].Mult['"ORCHECKS"'] := IntToStr(ListOfChecks.count);
-  for i := 0 to ListOfChecks.Count - 1 do
-    begin
-       OCStr := ListofChecks.Strings[i];
-       len := Length(OCStr);
-       if len > 255 then
-        begin
-          numLoop := len div 255;
-          remain := len mod 255;
-          inc := 0;
-          while inc <= numLoop do
-            begin
-              tmpStr := Copy(OCStr, 1, 255);
-              OCStr := Copy(OCStr, 256, Length(OcStr));
-              RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i) + ',' + InttoStr(inc)] := tmpStr;
-              inc := inc +1;
-            end;
-          if remain > 0 then  RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i) + ',' + inttoStr(inc)] := OCStr;
+  LockBroker;
+  try
+    //CallV('ORWDXC SAVECHK', [Patient.DFN, AReason, ListOfChecks]);
+    { no result used currently }
+    RPCBrokerV.ClearParameters := True;
+    RPCBrokerV.RemoteProcedure := 'ORWDXC SAVECHK';
+    RPCBrokerV.Param[0].PType := literal;
+    RPCBrokerV.Param[0].Value := Patient.DFN;  //*DFN*
+    RPCBrokerV.Param[1].PType := literal;
+    RPCBrokerV.Param[1].Value := AReason;
+    RPCBrokerV.Param[2].PType := list;
+    RPCBrokerV.Param[2].Mult['"ORCHECKS"'] := IntToStr(ListOfChecks.count);
+    for i := 0 to ListOfChecks.Count - 1 do
+      begin
+         OCStr := ListofChecks.Strings[i];
+         len := Length(OCStr);
+         if len > 255 then
+          begin
+            numLoop := len div 255;
+            remain := len mod 255;
+            inc := 0;
+            while inc <= numLoop do
+              begin
+                tmpStr := Copy(OCStr, 1, 255);
+                OCStr := Copy(OCStr, 256, Length(OcStr));
+                RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i) + ',' + InttoStr(inc)] := tmpStr;
+                inc := inc +1;
+              end;
+            if remain > 0 then  RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i) + ',' + inttoStr(inc)] := OCStr;
 
-        end
-      else
-       RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i)] := OCStr;
-    end;
-   CallBroker;
+          end
+        else
+         RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i)] := OCStr;
+      end;
+     CallBroker;
+  finally
+    UnlockBroker;
+  end;
 end;
 
 function DeleteCheckedOrder(const OrderID: string): Boolean;
@@ -2473,10 +2494,15 @@ end;
 { Copay }
 procedure GetCoPay4Orders;
 begin
-  RPCBrokerV.RemoteProcedure := 'ORWDPS4 CPLST';
-  RPCBrokerV.Param[0].PType := literal;
-  RPCBrokerV.Param[0].Value := Patient.DFN;
-  CallBroker;
+  LockBroker;
+  try
+    RPCBrokerV.RemoteProcedure := 'ORWDPS4 CPLST';
+    RPCBrokerV.Param[0].PType := literal;
+    RPCBrokerV.Param[0].Value := Patient.DFN;
+    CallBroker;
+  finally
+    UnlockBroker;
+  end;
 end;
 
 procedure SaveCoPayStatus(AList: TStrings);
@@ -2486,12 +2512,17 @@ var
 begin
   if AList.Count > 0 then
   begin
-    RPCBrokerV.ClearParameters := True;
-    RPCBrokerV.RemoteProcedure := 'ORWDPS4 CPINFO';
-    RPCBrokerV.Param[0].PType := list;
-    for i := 0 to AList.Count-1 do
-      RPCBrokerV.Param[0].Mult[IntToStr(i+1)] := AList[i];
-    CallBroker;
+    LockBroker;
+    try
+      RPCBrokerV.ClearParameters := True;
+      RPCBrokerV.RemoteProcedure := 'ORWDPS4 CPINFO';
+      RPCBrokerV.Param[0].PType := list;
+      for i := 0 to AList.Count-1 do
+        RPCBrokerV.Param[0].Mult[IntToStr(i+1)] := AList[i];
+      CallBroker;
+    finally
+      UnlockBroker;
+    end;
   end;
 end;
 
@@ -2506,6 +2537,15 @@ var
 begin
 //  Result := IsCliniCloc(LocID);
   rst := SCallV('ORIMO IMOLOC',[LocID, PatientID]);
+  Result := StrToIntDef(rst,-1) > -1;
+end;
+
+function IsValidIMOLocOrderCom(LocID: integer; PatientID: string): boolean;   //IMO
+var
+  rst: string;
+begin
+//  Result := IsCliniCloc(LocID);
+  rst := SCallV('ORIMO IMOLOC',[LocID, PatientID, 1]);
   Result := StrToIntDef(rst,-1) > -1;
 end;
 
@@ -2586,4 +2626,3 @@ finalization
   if uDGroupMap <> nil then uDGroupMap.Free;
 
 end.
-

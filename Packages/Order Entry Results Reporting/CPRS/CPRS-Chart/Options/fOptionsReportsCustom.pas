@@ -68,7 +68,7 @@ procedure DialogOptionsHSCustom(topvalue, leftvalue, fontsize: integer; var acti
 
 implementation
 
-uses rOptions, uOptions, fReports, fLabs, uCore;
+uses rOptions, uOptions, fReports, fLabs, uCore, VAUtils;
 
 {$R *.DFM}
 

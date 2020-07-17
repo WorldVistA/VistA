@@ -46,6 +46,7 @@ inherited frmOptionsNotes: TfrmOptionsNotes
     OnChange = txtAutoSaveChange
     OnExit = txtAutoSaveExit
     OnKeyPress = txtAutoSaveKeyPress
+    Caption = ''
   end
   object spnAutoSave: TUpDown [4]
     Left = 51
@@ -101,6 +102,7 @@ inherited frmOptionsNotes: TfrmOptionsNotes
     Sorted = True
     SynonymChars = '<>'
     TabOrder = 4
+    Text = ''
     OnExit = cboCosignerExit
     OnNeedData = cboCosignerNeedData
     CharsNeedMatch = 1

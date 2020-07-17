@@ -77,7 +77,7 @@ implementation
 {$R *.DFM}
 
 uses
-    rODBase, uCore, rCore, rCover, rODAllergy, fAllgyFind, fPtCWAD;
+    rODBase, uCore, rCore, rCover, rODAllergy, fAllgyFind, fPtCWAD, VAUtils;
 
 const
   TX_NO_ALLERGY       = 'An allergy must be specified.'    ;

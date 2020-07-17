@@ -12,7 +12,7 @@ type
 
   TfrmPCEBaseGrid = class(TfrmPCEBase)
     pnlGrid: TPanel;
-    lstRenameMe: TCaptionListView;
+    lstCaptionList: TCaptionListView;
   private
     FSel: string;
     function GetGridIndex: integer;
@@ -47,10 +47,10 @@ var
 begin
   Result := -1;
 
-  if(lstRenameMe.SelCount > 0) then
+  if(lstCaptionList.SelCount > 0) then
   begin
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
       begin
         Result := i;
         exit;
@@ -63,14 +63,14 @@ var
   i: integer;
 
 begin
-  for i := 0 to lstRenameMe.Items.Count-1 do
-    lstRenameMe.Items[i].Selected := (i = Value);
+  for i := 0 to lstCaptionList.Items.Count-1 do
+    lstCaptionList.Items[i].Selected := (i = Value);
   UpdateControls;
 end;
 
 procedure TfrmPCEBaseGrid.ClearGrid;
 begin
-  lstRenameMe.ClearSelection;
+  lstCaptionList.ClearSelection;
   UpdateControls;
 end;
 
@@ -83,8 +83,8 @@ var
   i: integer;
 
 begin
-  for I := 0 to lstRenameMe.Items.Count - 1 do
-   lstRenameMe.Items[i].Selected :=  (copy(FSel,i+1,1) = BOOLCHAR[TRUE]);
+  for I := 0 to lstCaptionList.Items.Count - 1 do
+   lstCaptionList.Items[i].Selected :=  (copy(FSel,i+1,1) = BOOLCHAR[TRUE]);
 end;
 
 procedure TfrmPCEBaseGrid.SaveGridSelected;
@@ -92,8 +92,8 @@ var
   i: integer;
 begin
   FSel := '';
-  for i := 0 to lstRenameMe.Items.Count-1 do
-    FSel := FSel + BOOLCHAR[lstRenameMe.Items[i].Selected];
+  for i := 0 to lstCaptionList.Items.Count-1 do
+    FSel := FSel + BOOLCHAR[lstCaptionList.Items[i].Selected];
 end;
 
 

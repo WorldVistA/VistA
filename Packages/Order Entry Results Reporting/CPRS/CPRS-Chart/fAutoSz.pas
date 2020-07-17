@@ -33,6 +33,7 @@ uses
   ORfn, VA508AccessibilityRouter;
 type
   TSizeRatio = class         // records relative sizes and positions for resizing logic
+  public
     FControl: TControl;
     FLeft: Extended;
     FTop: Extended;

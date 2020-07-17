@@ -13,18 +13,20 @@ type
     lblDTRead: TLabel;
     lblReading: TLabel;
     lblDTGiven: TLabel;
-    UpDnReading: TUpDown;
-    EdtReading: TCaptionEdit;
     edtDtRead: TCaptionEdit;
     edtDTGiven: TCaptionEdit;
     cboSkinResults: TORComboBox;
+    cboReading: TComboBox;
     procedure cboSkinResultsChange(Sender: TObject);
-    procedure EdtReadingChange(Sender: TObject);
+//    procedure EdtReadingChange(Sender: TObject);
     procedure edtDtReadChange(Sender: TObject);
     procedure edtDTGivenChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure UpDnReadingChanging(Sender: TObject;
-      var AllowChange: Boolean);
+//    procedure UpDnReadingChanging(Sender: TObject;
+//      var AllowChange: Boolean);
+    procedure lstCaptionListSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+    procedure cboReadingChange(Sender: TObject);
+
   private
   protected
     procedure UpdateNewItemStr(var x: string); override;
@@ -42,6 +44,24 @@ implementation
 uses
   fEncounterFrame, VA508AccessibilityRouter;
 
+procedure TfrmSkinTests.cboReadingChange(Sender: TObject);
+var
+read: string;
+i: integer;
+begin
+  inherited;
+begin
+  if(NotUpdating) then
+  begin
+    read := cboReading.Text;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
+        TPCESkin(lstCaptionList.Objects[i]).Reading := read;
+    GridChanged;
+  end;
+end;
+end;
+
 procedure TfrmSkinTests.cboSkinResultsChange(Sender: TObject);
 var
   i: integer;
@@ -49,9 +69,21 @@ var
 begin
   if(NotUpdating) and (cboSkinResults.Text <> '') then
   begin
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCESkin(lstRenameMe.Objects[i]).Results := cboSkinResults.ItemID;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then begin
+        TPCESkin(lstCaptionList.Objects[i]).Results := cboSkinResults.ItemID;
+        If UpperCase(cboSkinResults.Text) = 'NO TAKE' then begin
+          cboReading.Visible := false;
+//          EdtReading.Visible := False;
+//          UpDnReading.Visible := False;
+//          lblReading.Visible := False;
+        end else begin
+          cboReading.Visible := true;
+//          EdtReading.Visible := True;
+//          UpDnReading.Visible := True;
+//          lblReading.Visible := True;
+        end;
+      end;
 
     GridChanged;
   end;
@@ -64,21 +96,21 @@ end;
 //Location: ISL
 //Description:Change the reading assigned to the skin test.
 ///////////////////////////////////////////////////////////////////////////////}
-procedure TfrmSkinTests.EdtReadingChange(Sender: TObject);
-var
-  x, i: integer;
-
-begin
-  if(NotUpdating) then
-  begin
-    x := StrToIntDef(EdtReading.Text, 0);
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCESkin(lstRenameMe.Objects[i]).Reading := x;
-
-    GridChanged;
-  end;
-end;
+//procedure TfrmSkinTests.EdtReadingChange(Sender: TObject);
+//var
+//  x, i: integer;
+//
+//begin
+//  if(NotUpdating) then
+//  begin
+//    x := StrToIntDef(EdtReading.Text, 0);
+//    for i := 0 to lstCaptionList.Items.Count-1 do
+//      if(lstCaptionList.Items[i].Selected) then
+//        TPCESkin(lstCaptionList.Objects[i]).Reading := x;
+//
+//    GridChanged;
+//  end;
+//end;
 
 procedure TfrmSkinTests.edtDtReadChange(Sender: TObject);
 begin
@@ -155,10 +187,27 @@ begin
   PCELoadORCombo(cboSkinResults);
 end;
 
+procedure TfrmSkinTests.lstCaptionListSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+begin
+  inherited;
+  If UpperCase(cboSkinResults.Text) = 'NO TAKE' then begin
+    cboReading.Visible := false;
+//   EdtReading.Visible := False;
+//   UpDnReading.Visible := False;
+//   lblReading.Visible := False;
+  end else begin
+    cboReading.Visible := true;
+//   EdtReading.Visible := True;
+//   UpDnReading.Visible := True;
+//   lblReading.Visible := True;
+  end;
+
+end;
+
 procedure TfrmSkinTests.UpdateNewItemStr(var x: string);
 begin
   SetPiece(x, U, pnumSkinResults, NoPCEValue);
-  SetPiece(x, U, pnumSkinReading, '0');
+  SetPiece(x, U, pnumSkinReading, '');
 //  SetPiece(x, U, pnumSkinDTRead);
 //  SetPiece(x, U, pnumSkinDTGiven);
 end;
@@ -166,10 +215,11 @@ end;
 procedure TfrmSkinTests.UpdateControls;
 var
   ok, First: boolean;
-  SameRes, SameRead: boolean;
-  i: integer;
+  SameRes, SameRead, objRead: boolean;
+  i,idx: integer;
   Res: string;
-  Read: integer;
+//  Read: integer;
+  Read: string;
   Obj: TPCESkin;
 
 begin
@@ -178,36 +228,41 @@ begin
   begin
     BeginUpdate;
     try
-      ok := (lstRenameMe.SelCount > 0);
+      ok := (lstCaptionList.SelCount > 0);
       lblSkinResults.Enabled := ok;
       lblReading.Enabled := ok;
       cboSkinResults.Enabled := ok;
-      EdtReading.Enabled := ok;
-      UpDnReading.Enabled := ok;
+      cboReading.Enabled := ok;
+//      EdtReading.Enabled := ok;
+//      UpDnReading.Enabled := ok;
       if(ok) then
       begin
         First := TRUE;
         SameRes := TRUE;
         SameRead := TRUE;
         Res := NoPCEValue;
-        Read := 0;
-       for i := 0 to lstRenameMe.Items.Count-1 do
+        objRead := false;
+        Read := '0';
+       for i := 0 to lstCaptionList.Items.Count-1 do
         begin
-          if lstRenameMe.Items[i].Selected then
+          if lstCaptionList.Items[i].Selected then
           begin
-            Obj := TPCESkin(lstRenameMe.Objects[i]);
+            Obj := TPCESkin(lstCaptionList.Objects[i]);
             if(First) then
             begin
               First := FALSE;
               Res := Obj.Results;
               Read := Obj.Reading;
+              objRead := true;
             end
             else
             begin
               if(SameRes) then
                 SameRes := (Res = Obj.Results);
               if(SameRead) then
-                SameRead := (Read = Obj.Reading);
+                begin
+                  SameRead := (Read = Obj.Reading);
+                end;
             end;
           end;
         end;
@@ -218,20 +273,29 @@ begin
           cboSkinResults.Text := '';
         if(SameRead) then
         begin
-          UpDnReading.Position := Read;
-          EdtReading.Text := IntToStr(Read);
-          EdtReading.SelStart := length(EdtReading.Text);
+          if not objRead then cboReading.ItemIndex := 0
+          else
+            begin
+              idx := cboReading.Items.IndexOf(Read);
+              cboReading.ItemIndex := idx;
+            end;
+//          UpDnReading.Position := Read;
+//          EdtReading.Text := IntToStr(Read);
+//          EdtReading.SelStart := length(EdtReading.Text);
         end
         else
         begin
-          UpDnReading.Position := 0;
-          EdtReading.Text := '';
+          cboReading.ItemIndex := -1;
+//          UpDnReading.Position := 0;
+//          EdtReading.Text := '';
         end;
       end
       else
       begin
         cboSkinResults.Text := '';
-        EdtReading.Text := '';
+//        EdtReading.Text := '';
+        cboReading.ItemIndex := -1;
+        cboReading.Text := '';
       end;
     finally
       EndUpdate;
@@ -239,13 +303,13 @@ begin
   end;
 end;
 
-procedure TfrmSkinTests.UpDnReadingChanging(Sender: TObject;
-  var AllowChange: Boolean);
-begin
-  inherited;
-  if(UpDnReading.Position = 0) then
-    EdtReadingChange(Sender);
-end;
+//procedure TfrmSkinTests.UpDnReadingChanging(Sender: TObject;
+//  var AllowChange: Boolean);
+//begin
+//  inherited;
+//  if(UpDnReading.Position = 0) then
+//    EdtReadingChange(Sender);
+//end;
 
 initialization
   SpecifyFormIsNotADialog(TfrmSkinTests);

@@ -43,7 +43,6 @@ var
   uShutDown: boolean = FALSE;
   Events: IInterfaceList = nil;
   AccPropServices: IAccPropServices = nil;
-  NamePropIDs: array [0 .. 0] of TGUID;
   uNotifier: TVANotificationEventComponent;
 
 type
@@ -94,17 +93,17 @@ type
     FComponent: TWinControl;
     FOldWndProc: TWndMethod;
     function ImageEventIndex(Event: TVA508OnImageIndexQueryEvent): integer;
-    function ManagerEventIndex(): integer;
     function ListProcIndex(Proc: TVA508ListQueryProc): integer;
     function ProcIndex(Proc: TVA508QueryProc): integer;
     procedure Attach;
-    procedure Detatch;
+    procedure Detach;
     procedure Hook;
     procedure UnHook;
     procedure AssignServerType(AServerType: TServerType);
     procedure UnassignServerType(AServerType: TServerType);
   protected
     procedure MSAAWindowProc(var Message: TMessage);
+    function ManagerEventIndex(): integer;
   public
     constructor Create(AComponent: TWinControl);
     destructor Destroy; override;
@@ -165,7 +164,6 @@ begin
   if AccServicesCount = 0 then
   begin
     AccPropServices := CoCAccPropServices.Create;
-    NamePropIDs[0] := PROPID_ACC_NAME;
     TMethod(m).Code := @NotifyEvent;
     TMethod(m).Data := nil;
     uNotifier := TVANotificationEventComponent.NotifyCreate(nil, m);
@@ -449,16 +447,29 @@ begin
 end;
 
 procedure TMSAAServer.Attach;
+var
+  NamePropIDs: array [0 .. 0] of TGUID;
 begin
-  if (not FAttached) and (not uShutDown) and (FComponent.Handle <> 0) then
-  begin
-    // if FServerType = stNormal then
-    // FAttached := Succeeded(AccPropServices.SetHwndPropServer(FComponent.Handle,
-    // OBJID_CLIENT, CHILDID_SELF, @NamePropIDs, 1, Self, ANNO_THIS))
-    // else
-    FAttached := Succeeded(AccPropServices.SetHwndPropServer(FComponent.Handle,
-      OBJID_CLIENT, CHILDID_SELF, @NamePropIDs, 1, Self, ANNO_CONTAINER));
-  end;
+  // blj 22 Feb 2018.  We need to sanitize all of the parameters going to
+  // SetHwndPropServer.
+  //
+  if not FAttached or uShutdown then
+    exit;
+
+  if not Assigned(FComponent) then
+    exit;
+
+  if FComponent.Handle < 1 then
+    exit;
+
+  NamePropIDs[0] := PROPID_ACC_NAME;
+  // if FServerType = stNormal then
+  // FAttached := Succeeded(AccPropServices.SetHwndPropServer(FComponent.Handle,
+  // OBJID_CLIENT, CHILDID_SELF, @NamePropIDs, 1, Self, ANNO_THIS))
+  // else
+  FAttached := Succeeded(AccPropServices.SetHwndPropServer(FComponent.Handle,
+    OBJID_CLIENT, CHILDID_SELF, @NamePropIDs, 1, Self, ANNO_CONTAINER));
+
 end;
 
 constructor TMSAAServer.Create(AComponent: TWinControl);
@@ -475,29 +486,38 @@ end;
 
 destructor TMSAAServer.Destroy;
 begin
-  Detatch;
+  Detach;
   FreeAndNil(FEventData);
   DecAccServices;
   inherited;
 end;
 
-procedure TMSAAServer.Detatch;
+procedure TMSAAServer.Detach;
 var
-  Ok2Detatch: boolean;
+  NamePropIDs: array [0 .. 0] of TGUID;
 begin
-  if FAttached and (not uShutDown) then
-  begin
-    Ok2Detatch := (not(csDestroying in FComponent.ComponentState)) and
-      FComponent.visible;
-    if Ok2Detatch then
-    begin
-      if Succeeded(AccPropServices.ClearHwndProps(FComponent.Handle,
-        OBJID_CLIENT, CHILDID_SELF, @NamePropIDs, 1)) then
-        FAttached := FALSE;
-    end
-    else
-      FAttached := FALSE;
-  end;
+  NamePropIDs[0] := PROPID_ACC_NAME;
+
+
+  // blj 22 Feb 2018.  Just like Attach(), we need to sanitize the inputs here.
+  //  The OS does not give us a window to debug, so we have to make sure that
+  //  everything is as clean as we can make it before calling ClearHwndProps.
+
+  if not(FAttached) or uShutDown then
+    exit;
+
+  if not Assigned(FComponent) then
+    exit;
+
+  if FComponent.Handle < 1 then
+    exit;
+
+  if (csDestroying in FComponent.ComponentState) or not FComponent.Visible then
+    exit;
+
+  if Succeeded(AccPropServices.ClearHwndProps(FComponent.Handle,
+    OBJID_CLIENT, CHILDID_SELF, @NamePropIDs, 1)) then
+    FAttached := FALSE;
 end;
 
 function TMSAAServer.EventCount: integer;

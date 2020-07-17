@@ -72,7 +72,7 @@ type
 implementation
 
 uses
- fProbs, rProbs, fProbEdt, uCore, rCore;
+ fProbs, rProbs, fProbEdt, uCore, rCore, VAUtils;
 
 {$R *.DFM}
 
@@ -221,14 +221,14 @@ begin
     end;
     Exit;
   end
-  else if TriedExtend and ((tgfLex.SelectedNode.Code = '')
-       or  ((tgfLex.SelectedNode.Code = FProblemNOS)
+  {else if TriedExtend and ((tgfLex.SelectedNode.Code = '')
+       or  ((tgfLex.SelectedNode.TargetCode = FProblemNOS)
        and (ProblemNOSs.IndexOf(tgfLex.SelectedNode.Code) < 0))) then
   begin
-    if (not FI10Active) and (InfoBox(FContinueNOS + UpperCase(tgfLex.SelectedNode.Text) + '?', 'Unmapped Problem Selected',
+    if (InfoBox(FContinueNOS + UpperCase(tgfLex.SelectedNode.Text) + '?', 'Unmapped Problem Selected',
       MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) <> IDYES) then Exit;
     PLProblem := setProblem;
-  end
+  end}
   else
     PLProblem := setProblem;
 
@@ -532,9 +532,9 @@ begin  {processSearch body}
     if (v <> '') then
     begin
       if Extend then
-        ProblemList.Assign(ProblemLexiconSearch(v, DateOfInterest, True))
+        ProblemLexiconSearch(ProblemList, v, DateOfInterest, True)
       else
-        ProblemList.Assign(ProblemLexiconSearch(v, DateOfInterest));
+        ProblemLexiconSearch(ProblemList, v, DateOfInterest);
     end;
     if ProblemList.count > 0 then
     begin
@@ -667,7 +667,7 @@ begin
   else
   begin
     tgfLex.ShowCode := True;
-    tgfLex.ShowTargetCode := not FI10Active;
+    tgfLex.ShowTargetCode := FI10Active;
   end;
   tgfLex.ShowDescription := True;
 

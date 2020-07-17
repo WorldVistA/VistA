@@ -551,6 +551,7 @@ const
   TX_ERR_CAP = 'Print Error';
   TX_FONT_SIZE = 10;
   TX_FONT_NAME = 'Courier New';
+  TX_FONT_COLOR = clBlack;
 begin
   aHeader := TStringList.Create;
   aGoHead := '';
@@ -580,10 +581,15 @@ begin
             begin*)
               Printer.Canvas.Font.Size := TX_FONT_SIZE;
               Printer.Canvas.Font.Name := TX_FONT_NAME;
+              Printer.Canvas.Font.Color := TX_FONT_COLOR;
               Printer.Title := ATitle;
               x := Trunc(Printer.Canvas.TextWidth(StringOfChar('=', TX_FONT_SIZE)) * 0.75);
               LineHeight := Printer.Canvas.TextHeight(TX_FONT_NAME);
               y := LineHeight * 5;            // 5 lines = .83" top margin   v15.9 (RV)
+
+//              try
+//              Printer.Copies := Printer.Copies; // RTC 1223892
+
               Printer.BeginDoc;
 
               //Do we need to add the header?
@@ -617,6 +623,11 @@ begin
                     end;
                 end;
               Printer.EndDoc;
+//              except
+//                on E: Exception do
+//                  InfoBox(E.Message, 'Printing error',MB_OK);
+//              end;
+
 (*            end
           else                               // removed in v15.9 (RV)  TRichEdit.Print no longer used.
             try

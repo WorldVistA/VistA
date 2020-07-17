@@ -107,24 +107,23 @@ var
 
 implementation
 
-uses fReportsAdhocSubItem1, fReports, uCore, rReports, System.Types;
+uses fReportsAdhocSubItem1, fReports, uCore, rReports, System.Types, VAUtils;
 
 {$R *.DFM}
 type
 PHSCompRec = ^THSCompRec;
 THSCompRec = object
-  ID: integer;
-  Segment: string;
-  Name: string;
-  OccuranceLimit: string;
-  TimeLimit: string;
-  Header: string;
-  HospitalLocation: string;
-  ICDText: string;
-  ProviderNarrative: string;
-
-
-end;
+  public
+    ID: integer;
+    Segment: string;
+    Name: string;
+    OccuranceLimit: string;
+    TimeLimit: string;
+    Header: string;
+    HospitalLocation: string;
+    ICDText: string;
+    ProviderNarrative: string;
+  end;
 
 function ExecuteAdhoc1: Boolean;
 begin

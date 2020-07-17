@@ -6,12 +6,12 @@ inherited frmOptionsTitles: TfrmOptionsTitles
   BorderStyle = bsSingle
   Caption = 'Document Titles'
   ClientHeight = 237
-  ClientWidth = 527
+  ClientWidth = 533
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   OnShow = FormShow
-  ExplicitWidth = 533
-  ExplicitHeight = 265
+  ExplicitWidth = 539
+  ExplicitHeight = 270
   PixelsPerInch = 96
   TextHeight = 13
   object lblDocumentClass: TLabel [0]
@@ -174,19 +174,21 @@ inherited frmOptionsTitles: TfrmOptionsTitles
   object pnlBottom: TPanel [12]
     Left = 0
     Top = 204
-    Width = 527
+    Width = 533
     Height = 33
     HelpContext = 9230
     Align = alBottom
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 9
+    ExplicitWidth = 527
     object bvlBottom: TBevel
       Left = 0
       Top = 0
-      Width = 527
+      Width = 533
       Height = 2
       Align = alTop
+      ExplicitWidth = 527
     end
     object btnOK: TButton
       Left = 367

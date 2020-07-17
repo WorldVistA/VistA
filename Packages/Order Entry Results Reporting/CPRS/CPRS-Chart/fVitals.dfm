@@ -3,8 +3,8 @@ inherited frmVitals: TfrmVitals
   Top = 211
   BorderIcons = [biSystemMenu]
   Caption = 'Vitals'
-  ClientHeight = 462
-  ClientWidth = 633
+  ClientHeight = 375
+  ClientWidth = 514
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
@@ -12,40 +12,28 @@ inherited frmVitals: TfrmVitals
   OnKeyUp = FormKeyUp
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   object pnlTop: TPanel [0]
     Left = 0
     Top = 0
-    Width = 633
-    Height = 272
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 514
+    Height = 221
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
     object lblNoResults: TStaticText
-      Left = 241
-      Top = 71
-      Width = 271
-      Height = 20
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 196
+      Top = 58
+      Width = 217
+      Height = 17
       Caption = 'No measurement to graph for this date range.'
       TabOrder = 2
     end
     object chtChart: TChart
-      Left = 117
+      Left = 95
       Top = 0
-      Width = 516
-      Height = 272
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 419
+      Height = 221
       AllowPanning = pmNone
       BackWall.Brush.Color = clWhite
       BackWall.Brush.Style = bsClear
@@ -156,24 +144,17 @@ inherited frmVitals: TfrmVitals
     object pnlLeft: TORAutoPanel
       Left = 0
       Top = 0
-      Width = 117
-      Height = 272
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 95
+      Height = 221
       Align = alLeft
       TabOrder = 0
       object lstDates: TORListBox
         Left = 1
-        Top = 31
-        Width = 115
-        Height = 162
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 25
+        Width = 93
+        Height = 132
         Align = alTop
+        ItemHeight = 13
         Items.Strings = (
           '1^Today'
           '8^One Week'
@@ -195,50 +176,34 @@ inherited frmVitals: TfrmVitals
       end
       object pnlLeftClient: TORAutoPanel
         Left = 1
-        Top = 193
-        Width = 115
-        Height = 84
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 157
+        Width = 93
+        Height = 68
         BevelOuter = bvNone
         TabOrder = 2
         object chkValues: TCheckBox
-          Left = 11
-          Top = 10
-          Width = 94
-          Height = 21
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 9
+          Top = 8
+          Width = 76
+          Height = 17
           Caption = 'Values'
           TabOrder = 0
           OnClick = chkValuesClick
         end
         object chk3D: TCheckBox
-          Left = 11
-          Top = 52
-          Width = 94
-          Height = 21
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 9
+          Top = 42
+          Width = 76
+          Height = 17
           Caption = '3D'
           TabOrder = 2
           OnClick = chk3DClick
         end
         object chkZoom: TCheckBox
-          Left = 11
-          Top = 31
-          Width = 94
-          Height = 21
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Left = 9
+          Top = 25
+          Width = 76
+          Height = 17
           Caption = 'Zoom'
           TabOrder = 1
           OnClick = chkZoomClick
@@ -247,25 +212,17 @@ inherited frmVitals: TfrmVitals
       object pnlEnterVitals: TPanel
         Left = 1
         Top = 1
-        Width = 115
-        Height = 30
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 93
+        Height = 24
         Align = alTop
         Caption = 'pnlEnterVitals'
         TabOrder = 0
         OnResize = pnlEnterVitalsResize
         object btnEnterVitals: TButton
-          Left = 10
+          Left = 8
           Top = 0
-          Width = 92
-          Height = 31
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
+          Width = 75
+          Height = 25
           Caption = 'Enter Vitals'
           TabOrder = 0
           OnClick = btnEnterVitalsClick
@@ -275,24 +232,16 @@ inherited frmVitals: TfrmVitals
   end
   object pnlBottom: TPanel [1]
     Left = 0
-    Top = 272
-    Width = 633
-    Height = 190
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 221
+    Width = 514
+    Height = 154
     Align = alBottom
     TabOrder = 1
     object grdVitals: TCaptionStringGrid
-      Left = 118
+      Left = 96
       Top = 1
-      Width = 514
-      Height = 188
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 417
+      Height = 152
       Align = alClient
       Color = clCream
       ColCount = 6
@@ -302,7 +251,7 @@ inherited frmVitals: TfrmVitals
       RowCount = 8
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -15
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing]
@@ -322,27 +271,19 @@ inherited frmVitals: TfrmVitals
     object pnlButtons: TPanel
       Left = 1
       Top = 1
-      Width = 117
-      Height = 188
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 95
+      Height = 152
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       DesignSize = (
-        117
-        188)
+        95
+        152)
       object lstVitals: TCaptionListBox
         Left = 0
-        Top = 20
-        Width = 117
-        Height = 146
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 16
+        Width = 95
+        Height = 119
         Style = lbOwnerDrawFixed
         Anchors = [akLeft, akTop, akRight, akBottom]
         Items.Strings = (

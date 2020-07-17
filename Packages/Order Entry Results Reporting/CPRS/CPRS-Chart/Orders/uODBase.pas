@@ -28,7 +28,7 @@ procedure PopKeyVars(NumLevels: Integer = 1);
 procedure PushKeyVars(const NewVals: string);
 procedure ExpandOrderObjects(var Txt: string; var ContainsObjects: boolean; msg: string = '');
 procedure CheckForAutoDCDietOrders(EvtID: integer; DispGrp: integer; CurrentText: string;
-            var CancelText: string; Sender: TObject);
+            var CancelText: string; Sender: TObject; tubefeeding: boolean = false);
 
 implementation
 
@@ -214,7 +214,7 @@ end;
 // Check for diet orders that will be auto-DCd on release because of start/stop overlaps.
 // Moved here for visibility because it also needs to be checked on an auto-accept order.
 procedure CheckForAutoDCDietOrders(EvtID: integer; DispGrp: integer; CurrentText: string;
-            var CancelText: string; Sender: TObject);
+            var CancelText: string; Sender: TObject; tubefeeding: boolean = false);
 const
   TX_CX_CUR = 'A new diet order will CANCEL and REPLACE this current diet now unless' + CRLF +
               'you specify a start date for when the new diet should replace the current' + CRLF +
@@ -245,12 +245,17 @@ begin
       AStringList := TStringList.Create;
       try
         AStringList.Text := x;
-        CancelText := TX_CX_CUR + #9 + Piece(AStringList[0], ':', 1) + ':' + CRLF + CRLF
+        if tubefeeding = false then CancelText := TX_CX_CUR + #9 + Piece(AStringList[0], ':', 1) + ':' + CRLF + CRLF
+                 + #9 + Copy(AStringList[0], 16, 99) + CRLF
+        else CancelText := Piece(AStringList[0], ':', 1) + ':' + CRLF + CRLF
                  + #9 + Copy(AStringList[0], 16, 99) + CRLF;
         if AStringList.Count > 1 then
         begin
-          CancelText := CancelText + CRLF + CRLF +
+          if tubefeeding = false then CancelText := CancelText + CRLF + CRLF +
                    TX_CX_FUT + #9 + Piece(AStringList[1], ':', 1) + ':' + CRLF + CRLF
+                   + #9 + Copy(AStringList[1], 22, 99) + CRLF
+          else CancelText := CancelText + CRLF + CRLF +
+                   'Future Orders:' + #9 + Piece(AStringList[1], ':', 1) + ':' + CRLF + CRLF
                    + #9 + Copy(AStringList[1], 22, 99) + CRLF;
           if AStringList.Count > 2 then
           for i := 2 to AStringList.Count - 1 do

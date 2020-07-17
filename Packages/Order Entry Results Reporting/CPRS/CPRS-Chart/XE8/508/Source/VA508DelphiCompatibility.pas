@@ -81,6 +81,7 @@ var
   i: integer;
   include: boolean;
   CtrlManager: TVA508AccessibilityManager;
+  ColValue: boolean;
 
   function Append(data: array of string): string; overload;
   var
@@ -149,7 +150,17 @@ begin
 
 
     temp := item.Caption;
-    if (temp = '') and (CtrlManager.AccessColumns[view].ColumnValues[0]) then
+
+    // Added to protect from a/v in case CtrlManager isn't assigned.
+    ColValue := false;
+
+    if assigned (CtrlManager) then
+    begin
+      if assigned (CtrlManager.AccessColumns[view]) then
+        ColValue := CtrlManager.AccessColumns[view].ColumnValues[0];
+    end;
+
+    if (temp = '') and ColValue then
       temp := 'blank';
     temp := Append([ImgTxt, temp]);
     Append(temp);
@@ -173,8 +184,20 @@ begin
           temp := item.SubItems[i-1]
         else
           temp := '';
-        if (temp = '') and (CtrlManager.AccessColumns[view].ColumnValues[I]) then
+
+        // Added to protect from a/v in case CtrlManager isn't assigned.
+        ColValue := false;
+
+        if assigned (CtrlManager) then
+        begin
+          if assigned (CtrlManager.AccessColumns[view]) then
+            ColValue := CtrlManager.AccessColumns[view].ColumnValues[0];
+        end;
+
+        if (temp = '') and ColValue then
+        begin
           temp := 'blank';
+        end;
 
         temp := Append([ImgTxt, temp]);
 

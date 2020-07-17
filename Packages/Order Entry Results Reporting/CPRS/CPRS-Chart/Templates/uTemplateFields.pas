@@ -4,7 +4,7 @@ interface
 
 uses
   Forms, SysUtils, Classes, Dialogs, StdCtrls, ExtCtrls, Controls, Contnrs,
-  Graphics, ORClasses, ComCtrls, ORDtTm, uDlgComponents, TypInfo, ORFn, StrUtils;
+  Graphics, ORClasses, ComCtrls, ORDtTm, uDlgComponents, TypInfo, ORFn, StrUtils, uConst;
 
 type
   TTemplateFieldType = (dftUnknown, dftEditBox, dftComboBox, dftButton, dftCheckBoxes,
@@ -54,7 +54,8 @@ type
     procedure DoChange(Sender: TObject);
     function GetControlText(CtrlID: integer; NoCommas: boolean;
                             var FoundEntry: boolean; AutoWrap: boolean;
-                            emField: string = ''): string;
+                            emField: string = ''; CrntLnTxt: String = '';  AutoWrapIndent:Integer = 0;
+                            NoFormat: Boolean = false): string;
     procedure SetControlText(CtrlID: integer; AText: string);
   public
     constructor Create(AParent: TWinControl; AID, Text: string);
@@ -98,6 +99,7 @@ type
     FModified: boolean;
     FID: string;
     FLocked: boolean;
+    FCommunityCare: boolean;
     procedure SetEditDefault(const Value: string);
     procedure SetFldName(const Value: string);
     procedure SetFldType(const Value: TTemplateFieldType);
@@ -152,6 +154,7 @@ type
     property DateType: TTmplFldDateType read FDateType write SetDateType;
     property Notes: string read FNotes write SetNotes;
     property TemplateFieldDefault: string read GetTemplateFieldDefault;
+    property CommunityCare: boolean read FCommunityCare;
   end;
 
   TIntStruc = class(TObject)
@@ -163,7 +166,7 @@ function GetDialogEntry(AParent: TWinControl; AID, AText: string): TTemplateDial
 procedure FreeEntries(SL: TStrings);
 procedure AssignFieldIDs(var Txt: string); overload;
 procedure AssignFieldIDs(SL: TStrings); overload;
-function ResolveTemplateFields(Text: string; AutoWrap: boolean; Hidden: boolean = FALSE; IncludeEmbedded: boolean = FALSE): string;
+function ResolveTemplateFields(Text: string; AutoWrap: boolean; Hidden: boolean = FALSE; IncludeEmbedded: boolean = FALSE; AutoWrapIndent: Integer = 0): string;
 function AreTemplateFieldsRequired(const Text: string; FldValues: TORStringList =  nil): boolean;
 function HasTemplateField(txt: string): boolean;
 
@@ -180,6 +183,12 @@ function StripEmbedded(iItems: string): string;
 procedure StripScreenReaderCodes(var Text: string); overload;
 procedure StripScreenReaderCodes(SL: TStrings); overload;
 function HasScreenReaderBreakCodes(SL: TStrings): boolean;
+
+Function RightTrimChars(Str: String; TrimChars: TSysCharSet): String;
+function SafeWrapText(const Line, BreakStr: string;
+    const BreakChars: TSysCharSet; const MaxCol: integer; MaxLineLength: integer = -1): string;
+function SafeWrapTextVariable(const Line, BreakStr: string; const BreakChars: TSysCharSet;
+  const MaxCol1, MaxCol2: integer; Const MaxLineLength: integer = -1): string;
 
 const
   TemplateFieldSignature = '{FLD';
@@ -278,8 +287,10 @@ const
 implementation
 
 uses
-  rTemplates, ORCtrls, mTemplateFieldButton, dShared, uConst, uCore, rCore, Windows,
-  VAUtils, VA508AccessibilityManager, VA508AccessibilityRouter, System.UITypes, System.Types;
+  rTemplates, ORCtrls, mTemplateFieldButton, dShared, uCore, rCore, Windows,
+  VAUtils, VA508AccessibilityManager, VA508AccessibilityRouter, System.UITypes, System.Types, system.Math,
+  uTemplates;
+
 
 const
   NewTemplateField = 'NEW TEMPLATE FIELD';
@@ -294,6 +305,8 @@ var
   uRadioGroupIndex: integer = 0;
 
   uInternalFieldIDCount: integer = 0;
+
+
 
 const
   FieldIDDelim = '`';
@@ -393,6 +406,7 @@ procedure WordWrapText(var Txt: string);
 var
   TmpSL: TStringList;
   i: integer;
+  lineSpacer: string;
 
   function WrappedText(const Str: string): string;
   var
@@ -443,7 +457,7 @@ var
     until (i = 0);
 
     Result := Result + Temp;
-    Result := WrapText(Result, #13#10, [' '], MAX_ENTRY_WIDTH);
+    Result := SafeWrapText(Result, #13#10, [' '], MAX_WRAP_WIDTH);
     repeat
       i := pos(#1, Result);
       if i > 0 then
@@ -452,34 +466,36 @@ var
   end;
 
 begin
-  if length(Txt) > MAX_ENTRY_WIDTH then
-  begin
-    TmpSL := TStringList.Create;
-    try
-      TmpSL.Text := Txt;
-      Txt := '';
-      for i := 0 to TmpSL.Count-1 do
+  TmpSL := TStringList.Create;
+  try
+    TmpSL.Text := Txt;
+    txt := '';
+    lineSpacer := '';
+    for i := 0 to TmpSL.Count - 1 do
       begin
-        if Txt <> '' then
-          Txt := Txt + CRLF;
-        Txt := Txt + WrappedText(TmpSL[i]);
+        if i > 0 then lineSpacer := CRLF;
+        if length(tmpsl[i]) > Max_Wrap_Width then
+            Txt := Txt + lineSpacer + WrappedText(tmpsl[i])
+        else
+            txt := txt + lineSpacer + tmpsl[i];
       end;
-    finally
-      TmpSL.Free;
-    end;
+  finally
+    TmpSL.Free;
   end;
 end;
 
 function ResolveTemplateFields(Text: string;
                                AutoWrap: boolean;
                                Hidden: boolean = FALSE;
-                               IncludeEmbedded: boolean = FALSE): string;
+                               IncludeEmbedded: boolean = FALSE;
+                               AutoWrapIndent: Integer = 0): string;
 var
   flen, CtrlID, i, j: integer;
   Entry: TTemplateDialogEntry;
   iField, Temp, NewTxt, Fld: string;
   FoundEntry: boolean;
   TmplFld: TTemplateField;
+  TempCopy: String;
 
   procedure AddNewTxt;
   begin
@@ -492,6 +508,9 @@ var
   end;
 
 begin
+  if AutoWrapIndent > 0 then
+    MAX_WRAP_WIDTH := AutoWrapIndent;
+  try
   if(not assigned(uEntries)) then
     uEntries := TStringList.Create;
   Result := Text;
@@ -534,7 +553,11 @@ begin
               iField := Fld
             else
               iField := '';
-            NewTxt := Entry.GetControlText(CtrlID, FALSE, FoundEntry, AutoWrap, iField);
+            TempCopy := copy(Temp, 1, i - 1);
+            if POS(CRLF, TempCopy) > 0 then
+              TempCopy := Copy(TempCopy, LastDelimiter(CRLF, TempCopy) + 1, i);
+
+            NewTxt := Entry.GetControlText(CtrlID, FALSE, FoundEntry, AutoWrap, iField, TempCopy, AutoWrapIndent);
             TmplFld := GetTemplateField(Fld, FALSE);
             if (assigned(TmplFld)) and (TmplFld.DateType in DateComboTypes) then {if this is a TORDateBox}
                NewTxt := Piece(NewTxt,':',1);          {we only want the first piece of NewTxt}
@@ -552,6 +575,9 @@ begin
   until(i = 0);
   if not AutoWrap then
     WordWrapText(Result);
+  finally
+    MAX_WRAP_WIDTH := MAX_ENTRY_WIDTH;
+  end;
 end;
 
 function AreTemplateFieldsRequired(const Text: string; FldValues: TORStringList =  nil): boolean;
@@ -624,41 +650,45 @@ end;
 function GetTemplateField(ATemplateField: string; ByIEN: boolean): TTemplateField;
 var
   i, idx: integer;
-  AData: TStrings;
-
+  aData: TStringList;
 begin
   Result := nil;
-  if(not assigned(uTmplFlds)) then
+  if (not assigned(uTmplFlds)) then
     uTmplFlds := TList.Create;
   idx := -1;
-  for i := 0 to uTmplFlds.Count-1 do
-  begin
-    if(ByIEN) then
+  for i := 0 to uTmplFlds.Count - 1 do
     begin
-      if(TTemplateField(uTmplFlds[i]).FID = ATemplateField) then
-      begin
-        idx := i;
-        break;
+      if (ByIEN) then
+        begin
+          if (TTemplateField(uTmplFlds[i]).FID = ATemplateField) then
+            begin
+              idx := i;
+              break;
+            end;
+        end
+      else
+        begin
+          if (TTemplateField(uTmplFlds[i]).FFldName = ATemplateField) then
+            begin
+              idx := i;
+              break;
+            end;
+        end;
+    end;
+  if (idx < 0) then
+    begin
+      AData := TStringList.Create;
+      try
+        if (ByIEN) then
+          LoadTemplateFieldByIEN(ATemplateField, aData)
+        else
+          LoadTemplateField(ATemplateField, AData);
+        if (AData.Count > 1) then
+          Result := TTemplateField.Create(AData);
+      finally
+        FreeAndNil(AData);
       end;
     end
-    else
-    begin
-      if(TTemplateField(uTmplFlds[i]).FFldName = ATemplateField) then
-      begin
-        idx := i;
-        break;
-      end;
-    end;
-  end;
-  if(idx < 0) then
-  begin
-    if(ByIEN) then
-      AData := LoadTemplateFieldByIEN(ATemplateField)
-    else
-      AData := LoadTemplateField(ATemplateField);
-    if(AData.Count > 1) then
-      Result := TTemplateField.Create(AData);
-  end
   else
     Result := TTemplateField(uTmplFlds[idx]);
 end;
@@ -922,7 +952,7 @@ begin
     if edt.Text <> s then
       edt.Text := s;
   end;
-  edt.SelStart := edt.GetTextLen;    
+  edt.SelStart := edt.GetTextLen;
 end;
 
 function TemplateFieldCode2Field(const Code: string): TTemplateFieldType;
@@ -1033,6 +1063,7 @@ begin
       FMaxVal    := StrToIntDef(Piece(AData[1],U,14),0);
       FIncrement := StrToIntDef(Piece(AData[1],U,15),0);
       FDateType  := TemplateDateCode2DateType(Piece(AData[1],U,16));
+      FCommunityCare := (Piece(AData[1],U,17) = '1');
       FModified  := FALSE;
       FNameChanged := FALSE;
     end;
@@ -1420,7 +1451,7 @@ begin
     if(Value = dftWP) then
     begin
       if (FMaxLen = 0) then
-        FMaxLen := MAX_ENTRY_WIDTH
+        FMaxLen := MAX_WRAP_WIDTH
       else
       if (FMaxLen < 5) then
           FMaxLen := 5;
@@ -1604,6 +1635,7 @@ begin
   FIncrement     := AFld.FIncrement;
   FDateType      := AFld.FDateType;
   FURL           := AFld.FURL;
+  FCommunityCare := AFld.FCommunityCare;
 end;
 
 function TTemplateField.Width: integer;
@@ -1856,179 +1888,263 @@ begin
     FOnChange(Self);
 end;
 
-function TTemplateDialogEntry.GetControlText(CtrlID: integer; NoCommas: boolean;
-                            var FoundEntry: boolean; AutoWrap: boolean;
-                            emField: string = ''): string;
+function TTemplateDialogEntry.GetControlText(CtrlID: integer; NoCommas: boolean; var FoundEntry: boolean; AutoWrap: boolean; emField: string = ''; CrntLnTxt: String = ''; AutoWrapIndent: integer = 0; NoFormat: boolean = false): string;
 var
   x, i, j, ind, idx: integer;
-  Ctrl: TControl;
+  ctrl: TControl;
   Done: boolean;
   iString: string;
   iField: TTemplateField;
   iTemp: TStringList;
+  TmpChar, IndPos: integer;
+  RtnString, aStr, WrapTxt, TmpCrnt: String;
+  TmpEvt: TNotifyEvent;
+  TmpSelStart: Integer;
 
   function GetOriginalItem(istr: string): string;
   begin
     Result := '';
     if emField <> '' then
-      begin
-        iField := GetTemplateField(emField,FALSE);
-        iTemp := nil;
-        if ifield <> nil then
-          try
-            iTemp := TStringList.Create;
-            iTemp.Text := StripEmbedded(iField.Items);
-            x := iTemp.IndexOf(istr);
-            if x >= 0 then
-              begin
-              iTemp.Text := iField.Items;
-              Result := iTemp.Strings[x];
-              end;
-          finally
-            iTemp.Free;
+    begin
+      iField := GetTemplateField(emField, false);
+      iTemp := nil;
+      if iField <> nil then
+        try
+          iTemp := TStringList.Create;
+          iTemp.Text := StripEmbedded(iField.Items);
+          x := iTemp.IndexOf(istr);
+          if x >= 0 then
+          begin
+            iTemp.Text := iField.Items;
+            Result := iTemp.Strings[x];
           end;
-      end;
+        finally
+          iTemp.Free;
+        end;
+    end;
   end;
-
 
 begin
   Result := '';
-  Done := FALSE;
+  Done := false;
   ind := -1;
-  for i := 0 to FControls.Count-1 do
+  TmpEvt := nil;
+  for i := 0 to FControls.Count - 1 do
   begin
-    Ctrl := TControl(FControls.Objects[i]);
-    if(assigned(Ctrl)) and (Ctrl.Tag = CtrlID) then
+    ctrl := TControl(FControls.Objects[i]);
+    if (assigned(ctrl)) and (ctrl.Tag = CtrlID) then
     begin
       FoundEntry := TRUE;
       Done := TRUE;
       if ind < 0 then
       begin
-        idx := FIndents.IndexOfObject(Ctrl);
+        idx := FIndents.IndexOfObject(ctrl);
         if idx >= 0 then
           ind := StrToIntDef(Piece(FIndents[idx], U, 2), 0)
         else
           ind := 0;
       end;
-      if(Ctrl is TCPRSTemplateFieldLabel) then
+      if (ctrl is TCPRSTemplateFieldLabel) then
       begin
-        if not TCPRSTemplateFieldLabel(Ctrl).Exclude then begin
-          if emField <> '' then begin
-            iField := GetTemplateField(emField,FALSE);
+        if not TCPRSTemplateFieldLabel(ctrl).Exclude then
+        begin
+          if emField <> '' then
+          begin
+            iField := GetTemplateField(emField, false);
             case iField.FldType of
-              dftHyperlink: if iField.EditDefault <> '' then
-                              Result := iField.EditDefault
-                            else
-                              Result := iField.URL;
-              dftText:      begin
-                              iString := iField.Items;
-                              if copy(iString,length(iString)-1,2) = CRLF then
-                                delete(iString,length(iString)-1,2);
-                              Result := iString;
-                            end;
-            else {case}
-              Result := TCPRSTemplateFieldLabel(Ctrl).Caption
-            end; {case iField.FldType}
-            end {if emField}
+              dftHyperlink:
+                if iField.EditDefault <> '' then
+                  Result := iField.EditDefault
+                else
+                  Result := iField.URL;
+              dftText:
+                begin
+                  iString := iField.Items;
+                  if copy(iString, Length(iString) - 1, 2) = CRLF then
+                    Delete(iString, Length(iString) - 1, 2);
+                  Result := iString;
+                end;
+            else { case }
+              Result := TCPRSTemplateFieldLabel(ctrl).Caption
+            end; { case iField.FldType }
+          end { if emField }
           else
-            Result := TCPRSTemplateFieldLabel(Ctrl).Caption;
+            Result := TCPRSTemplateFieldLabel(ctrl).Caption;
         end;
       end
       else
-      //!!!!!! CODE ADDED BACK IN - ZZZZZZBELLC !!!!!!
-      if(Ctrl is TEdit) then
-        Result := TEdit(Ctrl).Text
-      else
-      if(Ctrl is TORComboBox) then begin
-        Result := TORComboBox(Ctrl).Text;
-        iString := GetOriginalItem(Result);
-        if iString <> '' then
-          Result := iString;
-        end
-      else
-      if(Ctrl is TORDateCombo) then
-        Result := TORDateCombo(Ctrl).Text + ':' + FloatToStr(TORDateCombo(Ctrl).FMDate)
-      else
-     {!!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
-      if(Ctrl is TORDateBox) then begin
-        if TORDateBox(Ctrl).IsValid then
-         Result := TORDateBox(Ctrl).Text
-        else
-         Result := '';
-      end else
-      }
-      //!!!!!! CODE ADDED BACK IN - ZZZZZZBELLC !!!!!!
-      if(Ctrl is TORDateBox) then
-        Result := TORDateBox(Ctrl).Text
-      else
-      if(Ctrl is TRichEdit) then
-      begin
-        if((ind = 0) and (not AutoWrap)) then
-          Result := TRichEdit(Ctrl).Lines.Text
-        else
+        // !!!!!! CODE ADDED BACK IN - ZZZZZZBELLC !!!!!!
+        if (ctrl is TEdit) then
+          Result := TEdit(ctrl).Text
+        else if (ctrl is TORComboBox) then
         begin
-          for j := 0 to TRichEdit(Ctrl).Lines.Count-1 do
-          begin
-            if AutoWrap then
-            begin
-              if(Result <> '') then
-                Result := Result + ' ';
-              Result := Result + TRichEdit(Ctrl).Lines[j];
-            end
-            else
-            begin
-              if(Result <> '') then
-                Result := Result + CRLF;
-              Result := Result + StringOfChar(' ', ind) + TRichEdit(Ctrl).Lines[j];
-            end;
-          end;
-          ind := 0;
-        end;
-      end
-      else
-     {!!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
-      if(Ctrl is TEdit) then
-        Result := TEdit(Ctrl).Text
-      else }
-      if(Ctrl is TORCheckBox) then
-      begin
-        Done := FALSE;
-        if(TORCheckBox(Ctrl).Checked) then
-        begin
-          if(Result <> '') then
-          begin
-            if NoCommas then
-              Result := Result + '|'
-            else
-              Result := Result + ', ';
-          end;
-          iString := GetOriginalItem(TORCheckBox(Ctrl).Caption);
-          if iString <> '' then
-            Result := Result + iString
-          else
-            Result := Result + TORCheckBox(Ctrl).Caption;
-        end;
-      end
-      else
-      if(Ctrl is TfraTemplateFieldButton) then
-        begin
-          Result := TfraTemplateFieldButton(Ctrl).ButtonText;
+          Result := TORComboBox(ctrl).Text;
           iString := GetOriginalItem(Result);
           if iString <> '' then
             Result := iString;
         end
-      else
-      if(Ctrl is TPanel) then
-      begin
-        for j := 0 to Ctrl.ComponentCount-1 do
-          if Ctrl.Components[j] is TUpDown then
+        else if (ctrl is TORDateCombo) then
+          Result := TORDateCombo(ctrl).Text + ':' + FloatToStr(TORDateCombo(ctrl).FMDate)
+        else
+          { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
+            if(Ctrl is TORDateBox) then begin
+            if TORDateBox(Ctrl).IsValid then
+            Result := TORDateBox(Ctrl).Text
+            else
+            Result := '';
+            end else
+          }
+          // !!!!!! CODE ADDED BACK IN - ZZZZZZBELLC !!!!!!
+          if (ctrl is TORDateBox) then
+            Result := TORDateBox(ctrl).Text
+          else if (ctrl is TRichEdit) then
           begin
-            Result := IntToStr(TUpDown(Ctrl.Components[j]).Position);
-            break;
-          end;
-      end;
+            // If we do not need to format this (Reminder values) or there is no indent and not autowrap
+            if ((ind = 0) and (not AutoWrap)) or NoFormat then
+              //Result := TRichEdit(ctrl).Lines.Text
+              Result := TRichEdit(ctrl).Text
+            else
+            begin
+              { for j := 0 to TRichEdit(Ctrl).Lines.Count-1 do
+                begin
+                if AutoWrap then
+                begin
+                if(Result <> '') then
+                Result := Result + ' ';
+                Result := Result + TRichEdit(Ctrl).Lines[j];
+                end
+                else
+                begin
+                if(Result <> '') then
+                Result := Result + CRLF;
+                Result := Result + StringOfChar(' ', ind) + TRichEdit(Ctrl).Lines[j];
+                end;
+                end; }
+              // If the object shares a line with text than take this into account
+              If Length(CrntLnTxt) > 0 then
+              begin
+                // Save the previous version of the text
+                RtnString := TRichEdit(ctrl).Text;
+                // We nee di disable the onchange event temporarily (Reminders)
+                TmpEvt := nil;
+                TmpEvt := TRichEdit(ctrl).OnChange;
+                TRichEdit(ctrl).OnChange := nil;
+                TmpSelStart := TRichEdit(ctrl).SelStart;
+
+                //Account for the header
+                TRichEdit(ctrl).Text :=  CrntLnTxt + TRichEdit(ctrl).Text;
+
+              end
+              else
+                TmpSelStart := 0;
+              // If we are adding CTLF and we exceed MAX_WRAP_WIDTH characters
+              if (not AutoWrap) and ((ind + Length(TRichEdit(ctrl).Lines[0])) > MAX_WRAP_WIDTH) then
+              begin
+                // If we are sharing a line, do not add leading indent
+                WrapTxt := TRichEdit(ctrl).Text;
+
+                // Wrap the text
+                If Length(CrntLnTxt) > 0 then
+                 WrapTxt := SafeWrapTextVariable(WrapTxt, CRLF + StringOfChar(' ', ind), [' '], MAX_WRAP_WIDTH, (MAX_WRAP_WIDTH - ind), MAX_WRAP_WIDTH)
+                else
+                 WrapTxt := SafeWrapText(WrapTxt, CRLF + StringOfChar(' ', ind), [' '], (MAX_WRAP_WIDTH - ind), MAX_WRAP_WIDTH);
+
+                if Length(CrntLnTxt) > 0 then
+                  Result := WrapTxt
+                else
+                  Result := StringOfChar(' ', ind) +  WrapTxt;
+              end
+              else
+              begin
+                // If this is autowrap then wrap with END OF LINE ASCII char
+                if AutoWrap then
+                begin
+                  // If we are sharing a line, do not add leading indent
+                  WrapTxt := TRichEdit(ctrl).Text;
+
+                  // Wrap the text
+                  If Length(CrntLnTxt) > 0 then
+                    WrapTxt := SafeWrapTextVariable(WrapTxt, #3 + StringOfChar(' ', ind), [' '], AutoWrapIndent, (AutoWrapIndent - ind), AutoWrapIndent)
+                  else
+                    WrapTxt := SafeWrapText(WrapTxt, #3 + StringOfChar(' ', ind), [' '], (AutoWrapIndent - ind), AutoWrapIndent);
+
+
+                  if Length(CrntLnTxt) > 0 then
+                    Result := WrapTxt
+                  else
+                    Result := StringOfChar(' ', ind) +  WrapTxt;
+                end else
+                begin
+                  // we can fit our text within MAX_WRAP_WIDTH.
+                  for j := 0 to TRichEdit(ctrl).Lines.Count - 1 do
+                  begin
+                    if (Result <> '') then
+                      Result := Result + CRLF + StringOfChar(' ', ind);
+                    if (Length(CrntLnTxt) = 0) and (Result = '') then
+                      Result := StringOfChar(' ', ind) + TRichEdit(ctrl).Lines[j]
+                    else
+                      Result := Result + TRichEdit(ctrl).Lines[j];
+                  end;
+                end;
+              end;
+              // If we are sharing a line then we need to remove its text from the
+              if Length(CrntLnTxt) > 0 then
+              begin
+                Delete(Result, 1, Length(CrntLnTxt));
+
+                // Reset text and change event
+                TRichEdit(ctrl).Text := RtnString;
+                if TRichEdit(ctrl).SelStart <> TmpSelStart then
+                  TRichEdit(ctrl).SelStart := TmpSelStart;
+                TRichEdit(ctrl).OnChange := TmpEvt;
+                TmpEvt := nil;
+              end;
+              ind := 0;
+            end;
+          end
+          else
+            { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
+              if(Ctrl is TEdit) then
+              Result := TEdit(Ctrl).Text
+              else }
+            if (ctrl is TORCheckBox) then
+            begin
+              Done := false;
+              if (TORCheckBox(ctrl).Checked) then
+              begin
+                if (Result <> '') then
+                begin
+                  if NoCommas then
+                    Result := Result + '|'
+                  else
+                    Result := Result + ', ';
+                end;
+                iString := GetOriginalItem(TORCheckBox(ctrl).Caption);
+                if iString <> '' then
+                  Result := Result + iString
+                else
+                  Result := Result + TORCheckBox(ctrl).Caption;
+              end;
+            end
+            else if (ctrl is TfraTemplateFieldButton) then
+            begin
+              Result := TfraTemplateFieldButton(ctrl).ButtonText;
+              iString := GetOriginalItem(Result);
+              if iString <> '' then
+                Result := iString;
+            end
+            else if (ctrl is TPanel) then
+            begin
+              for j := 0 to ctrl.ComponentCount - 1 do
+                if ctrl.Components[j] is TUpDown then
+                begin
+                  Result := IntToStr(TUpDown(ctrl.Components[j]).Position);
+                  break;
+                end;
+            end;
     end;
-    if Done then break;
+    if Done then
+      break;
   end;
   if (ind > 0) and (not NoCommas) then
     Result := StringOfChar(' ', ind) + Result;
@@ -2057,7 +2173,7 @@ begin
           CtrlID := Ctrl.Tag;
           if(TmpIDs.IndexOf(Pointer(CtrlID)) < 0) then
           begin
-            TmpSL.Add(IntToStr(CtrlID) + U + GetControlText(CtrlID, TRUE, Dummy, FALSE));
+            TmpSL.Add(IntToStr(CtrlID) + U + StringReplace(GetControlText(CtrlID,TRUE, Dummy, FALSE, '','',0,true), CRLF, '',[rfReplaceAll, rfIgnoreCase]));
             TmpIDs.Add(Pointer(CtrlID));
           end;
         end;
@@ -2562,6 +2678,120 @@ begin
       exit;
   end;
   Result := FALSE;
+end;
+
+Function RightTrimChars(Str: String; TrimChars: TSysCharSet): String;
+var
+  x: integer;
+begin
+  // Loop by char and remove any trailing
+  for x := Length(Str) - 1 downto 0 do
+    if CharInSet(Str[x + 1], TrimChars) then
+      Delete(Str, x + 1, 1)
+    else
+      break;
+  Result := Str;
+end;
+
+function SafeWrapText(const Line, BreakStr: string;
+  const BreakChars: TSysCharSet; const MaxCol: integer; MaxLineLength: integer = -1): string;
+Const
+  ARep = #26;
+  QRep = #28;
+var
+  TmpStrLst, RtnLst, MainLst: TStringList;
+  MainStr, tmpStr: String;
+  WrapAt: integer;
+begin
+  // Setup
+  TmpStrLst := TStringList.Create;
+  RtnLst := TStringList.Create;
+  MainLst := TStringList.Create;
+  try
+    // clear the return
+    RtnLst.Clear;
+    // get all "current' lines for the wrap
+    MainLst.Text := Line;
+
+    //Set the max length to the col if not passed in
+    if MaxLineLength = -1 then
+      MaxLineLength := MaxCol;
+
+    // Loop through all lines in the text and wrap
+    for MainStr in MainLst do
+    begin
+      // replace the apostrophes
+      tmpStr := StringReplace(MainStr, '''', aRep, [rfReplaceAll, rfIgnoreCase]);
+
+      // replace the quote
+      tmpStr := StringReplace(tmpStr, '"', QRep, [rfReplaceAll, rfIgnoreCase]);
+
+      // Wrap the text
+      WrapAt := Min(MaxCol, MaxLineLength);
+      TmpStrLst.Text := WrapText(tmpStr, BreakStr, BreakChars, WrapAt);
+
+      // Replace the apostrophes
+      TmpStrLst.Text := StringReplace(TmpStrLst.Text, ARep, '''', [rfReplaceAll, rfIgnoreCase]);
+
+      // Replace the quote
+      TmpStrLst.Text := StringReplace(TmpStrLst.Text, QRep, '"', [rfReplaceAll, rfIgnoreCase]);
+
+      // If we have already added text then add the break string
+      if RtnLst.Count > 0 then
+        RtnLst.Text := RightTrimChars(RtnLst.Text, [#10, #13]) + BreakStr + RightTrimChars(TmpStrLst.Text, [#10, #13])
+      else
+      // else just add this line
+        RtnLst.Text := RightTrimChars(RtnLst.Text, [#10, #13]) + RightTrimChars(TmpStrLst.Text, [#10, #13]);
+    end;
+
+  finally
+    // Set the result
+    Result := RightTrimChars(RtnLst.Text, [#10, #13]);
+    // Cleanup
+    MainLst.Free;
+    TmpStrLst.Free;
+    RtnLst.Free;
+  end;
+
+end;
+
+function SafeWrapTextVariable(const Line, BreakStr: string;
+  const BreakChars: TSysCharSet; const MaxCol1, MaxCol2: integer; const MaxLineLength
+  : integer = -1): string;
+var
+  TmpStrLst: TStringList;
+  RemainTxt: String;
+begin
+  // Setup
+  TmpStrLst := TStringList.Create;
+  try
+    // Wrap first line
+    TmpStrLst.Text := SafeWrapText(Line, BreakStr, BreakChars, MaxCol1, MaxLineLength);
+    if TmpStrLst.Count > 0 then
+    begin
+      // Add the first line
+      Result := TmpStrLst[0];
+
+      // grab remianign text
+      RemainTxt := Line;
+
+      // Remove the added line
+      Delete(RemainTxt, 1, Length(TmpStrLst[0]));
+
+      if Length(RemainTxt) > 0 then
+      begin
+        // wrap the remaining lines
+        TmpStrLst.Text := SafeWrapText(RemainTxt, BreakStr, BreakChars, MaxCol2,
+          MaxLineLength);
+        // Add to the result
+        Result := Result + BreakStr + TmpStrLst.Text;
+      end;
+    end;
+
+  finally
+    // Cleanup
+    TmpStrLst.Free;
+  end;
 end;
 
 initialization

@@ -13,17 +13,10 @@ object frmBase508Form: TfrmBase508Form
   KeyPreview = True
   OldCreateOrder = False
   Position = poOwnerFormCenter
-  OnActivate = FormActivate
-  OnClose = FormClose
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  OnDeactivate = FormDeactivate
-  OnHide = FormHide
   OnHelp = FormHelp
   OnKeyDown = FormKeyDown
-  OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   object amgrMain: TVA508AccessibilityManager
     Data = (
       (

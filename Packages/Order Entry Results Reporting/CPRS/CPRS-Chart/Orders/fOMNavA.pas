@@ -94,7 +94,7 @@ implementation
 {$R *.DFM}
 
 uses rODBase, ORFn, fODBase,fODGen, fODAuto, fOMVerify, uCore, rMisc, uODBase,
-  fOrders, VAUtils, System.UITypes, System.Types;
+  fOrders, VAUtils, System.UITypes, System.Types, fOMSet;
 
 const
   TX_NOFORM    = 'This selection does not have an associated windows form.';
@@ -107,10 +107,12 @@ const
 
 type
   TMenuPath = class
+  public
     IENList: array of Integer;
     OwnedBy: TComponent;
     RefNum:  Integer;
     Current: Integer;
+    destructor Destroy; override;
   end;
 
 procedure TfrmOMNavA.ClearMenuGrid;
@@ -190,7 +192,18 @@ procedure TfrmOMNavA.SetNewMenu(MenuIEN: Integer; AnOwner: TComponent; ARefNum: 
 { Creates a new 'starting' menu.  For initial menu or menu from inside order set. }
 var
   NewMenuPath: TMenuPath;
+  I: Integer;
 begin
+  //SMT if we are adding from an OrderMenu in an Orderset, we just update
+  //    the RefNum (position in Orderset) because we insert above the menu
+  //    so that we will return to the menu.
+  for I := 0 to FStack.Count - 1 do
+  if TMenuPath(Fstack.Items[I]).IENList[0] = MenuIEN then
+  begin
+    TMenuPath(FStack.Items[I]).RefNum := ARefNum;
+    Exit;
+  end;
+
   NewMenuPath := TMenuPath.Create;
   SetLength(NewMenuPath.IENList, 1);
   NewMenuPath.IENList[0] := MenuIEN;
@@ -245,10 +258,20 @@ end;
 procedure TfrmOMNavA.cmdDoneClick(Sender: TObject);
 var
   MenuPath: TMenuPath;
+  OMset :TComponent;
 begin
   if FSelecting then Exit;
-  with FStack do MenuPath := TMenuPath(Items[Count - 1]);
-  with FStack do Delete(Count - 1);
+  //SMT If we are in the middle of an orderset, check if we want to bail out before closing.
+  OMSet := FindComponent('frmOMSet');
+  if FStack.Count = 1 then
+    if (OMSet <> nil) and not TfrmOMSet(OMSet).CloseQuery then Exit;
+
+  //BLJ 353683: Per conversation with Chris Bell, we need to check bounds before we
+  //  do any of the garbage below.
+  if FStack.Count < 1 then
+    exit;
+  MenuPath := TMenuPath(FStack.Items[FStack.Count - 1]);
+  FStack.Delete(FStack.Count - 1);
   if FStack.Count = 0 then Close;
   with MenuPath do if (OwnedBy <> nil) and (OwnedBy is TWinControl)
     then SendMessage(TWinControl(OwnedBy).Handle, UM_DESTROY, RefNum, 0);
@@ -467,45 +490,48 @@ begin
   //frmFrame.UpdatePtInfoOnRefresh;
   if Key in [VK_RETURN, VK_SPACE] then with grdMenu do
   begin
-    If AlreadyRunning then Exit
-    else AlreadyRunning := true;
-
-    if frmOrders <> nil then
-    begin
-       if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
-         and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
-       begin
-         FDelayEvent.EventType := #0;
-         FDelayEvent.EventIFN  := 0;
-         FDelayEvent.TheParent := TParentEvent.Create;
-         FDelayEvent.EventName := '';
-         FDelayEvent.PtEventIFN := 0;
-       end;
-    end;
-    //frmFrame.UpdatePtInfoOnRefresh;
-    FOrderMenuItem := TOrderMenuItem(Objects[Col, Row]);
-    if Assigned(FOrderMenuItem) then
-      if FOrderMenuItem.Display > 0 then FOrderMenuItem := nil;          // display only
-    if FOrderMenuItem <> nil then
-    begin
-      FOrderMenuItem.Selected := True;
-      if ssCtrl in Shift
-        then AddToSelectList(FOrderMenuItem)
-        else ActivateDialog(FOrderMenuItem);
-      FOrderMenuItem := nil;
-      Key := 0;
-    end;
-    if frmOrders <> nil then
-    begin
-       if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
-         and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
-       begin
-         FDelayEvent.EventType := #0;
-         FDelayEvent.EventIFN  := 0;
-         FDelayEvent.TheParent := TParentEvent.Create;
-         FDelayEvent.EventName := '';
-         FDelayEvent.PtEventIFN := 0;
-       end;
+    If AlreadyRunning then Exit;
+    AlreadyRunning := true;
+    try
+      if frmOrders <> nil then
+      begin
+         if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
+           and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
+         begin
+           FDelayEvent.EventType := #0;
+           FDelayEvent.EventIFN  := 0;
+           FDelayEvent.TheParent := TParentEvent.Create;
+           FDelayEvent.EventName := '';
+           FDelayEvent.PtEventIFN := 0;
+         end;
+      end;
+      //frmFrame.UpdatePtInfoOnRefresh;
+      FOrderMenuItem := TOrderMenuItem(Objects[Col, Row]);
+      if Assigned(FOrderMenuItem) then
+        if FOrderMenuItem.Display > 0 then FOrderMenuItem := nil;          // display only
+      if FOrderMenuItem <> nil then
+      begin
+        FOrderMenuItem.Selected := True;
+        if ssCtrl in Shift
+          then AddToSelectList(FOrderMenuItem)
+          else ActivateDialog(FOrderMenuItem);
+        FOrderMenuItem := nil;
+        Key := 0;
+      end;
+      if frmOrders <> nil then
+      begin
+         if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
+           and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
+         begin
+           FDelayEvent.EventType := #0;
+           FDelayEvent.EventIFN  := 0;
+           FDelayEvent.TheParent := TParentEvent.Create;
+           FDelayEvent.EventName := '';
+           FDelayEvent.PtEventIFN := 0;
+         end;
+      end;
+    finally
+      AlreadyRunning := false;
     end;
   end;
   if Key = VK_BACK then
@@ -518,7 +544,6 @@ begin
     cmdDoneClick(Self);
     Key := 0;
   end;
-  AlreadyRunning := false;
 end;
 
 procedure TfrmOMNavA.grdMenuKeyUp(Sender: TObject; var Key: Word;
@@ -541,30 +566,36 @@ begin
     FTheShift := [ssDouble];
     Exit;  // ignore a double click
   end;
-  if frmOrders <> nil then
-  begin
-    if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
-      and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
+  If AlreadyRunning then Exit;
+  AlreadyRunning := true;
+  try
+    if frmOrders <> nil then
     begin
-      FDelayEvent.EventType := #0;
-      FDelayEvent.EventIFN  := 0;
-      FDelayEvent.TheParent := TParentEvent.Create;
-      FDelayEvent.EventName := '';
-      FDelayEvent.PtEventIFN := 0;
+      if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
+        and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
+      begin
+        FDelayEvent.EventType := #0;
+        FDelayEvent.EventIFN  := 0;
+        FDelayEvent.TheParent := TParentEvent.Create;
+        FDelayEvent.EventName := '';
+        FDelayEvent.PtEventIFN := 0;
+      end;
     end;
-  end;
-  //frmFrame.UpdatePtInfoOnRefresh;
-  with grdMenu do
-  begin
-    MouseToCell(X, Y, ACol, ARow);
-    if (ACol > -1) and (ARow > -1) and (ACol < grdMenu.ColCount) and (ARow < grdMenu.RowCount) then
+    //frmFrame.UpdatePtInfoOnRefresh;
+    with grdMenu do
     begin
-      FMouseDown := True;
-      FOrderMenuItem := TOrderMenuItem(Objects[ACol, ARow]);
-      // check to see if this is a display only field
-      if (FOrderMenuItem <> nil) and (FOrderMenuItem.Display > 0) then FOrderMenuItem := nil;
-      if  FOrderMenuItem <> nil then FOrderMenuItem.Selected := True;
+      MouseToCell(X, Y, ACol, ARow);
+      if (ACol > -1) and (ARow > -1) and (ACol < grdMenu.ColCount) and (ARow < grdMenu.RowCount) then
+      begin
+        FMouseDown := True;
+        FOrderMenuItem := TOrderMenuItem(Objects[ACol, ARow]);
+        // check to see if this is a display only field
+        if (FOrderMenuItem <> nil) and (FOrderMenuItem.Display > 0) then FOrderMenuItem := nil;
+        if  FOrderMenuItem <> nil then FOrderMenuItem.Selected := True;
+      end;
     end;
+  finally
+    AlreadyRunning := false;
   end;
 end;
 
@@ -594,37 +625,39 @@ begin
     Exit;
   end;
 
-  If AlreadyRunning then Exit
-  else AlreadyRunning := true;
-
-  FMouseDown := False;
-  //grdMenu.Invalidate;
-  // may want to check here to see if mouse still over the same item
-  if ssCtrl in Shift then AddToSelectList(FOrderMenuItem) else
-  begin
-    if FCtrlUp then
+  If AlreadyRunning then Exit;
+  AlreadyRunning := true;
+  try
+    FMouseDown := False;
+    //grdMenu.Invalidate;
+    // may want to check here to see if mouse still over the same item
+    if ssCtrl in Shift then AddToSelectList(FOrderMenuItem) else
     begin
-      FCtrlUp := False;
-      AddToSelectList(FOrderMenuItem);
-      DoSelectList;
-    end
-    else ActivateDialog(FOrderMenuItem);
-  end;
-  FCtrlUp := False;
-  FOrderMenuItem := nil;
-  if frmOrders <> nil then
-  begin
-    if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
-      and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
-    begin
-      FDelayEvent.EventType := #0;
-      FDelayEvent.EventIFN  := 0;
-      FDelayEvent.TheParent := TParentEvent.Create;
-      FDelayEvent.EventName := '';
-      FDelayEvent.PtEventIFN := 0;
+      if FCtrlUp then
+      begin
+        FCtrlUp := False;
+        AddToSelectList(FOrderMenuItem);
+        DoSelectList;
+      end
+      else ActivateDialog(FOrderMenuItem);
     end;
+    FCtrlUp := False;
+    FOrderMenuItem := nil;
+    if frmOrders <> nil then
+    begin
+      if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
+        and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
+      begin
+        FDelayEvent.EventType := #0;
+        FDelayEvent.EventIFN  := 0;
+        FDelayEvent.TheParent := TParentEvent.Create;
+        FDelayEvent.EventName := '';
+        FDelayEvent.PtEventIFN := 0;
+      end;
+    end;
+  finally
+    AlreadyRunning := False;
   end;
-  AlreadyRunning := False;
 end;
 
 procedure TfrmOMNavA.CMMouseLeave(var Message: TMessage);
@@ -745,6 +778,17 @@ procedure TfrmOMNavA.ResizeFont;
 begin
   ResizeAnchoredFormToFont(Self);
   grdMenu.Canvas.Font := grdMenu.Font;
+  grdMenu.Invalidate;
+  pnlTool.Font.Size := Font.Size;
+  cmdDone.Font.Size := Font.Size;
+end;
+
+{ TMenuPath }
+
+destructor TMenuPath.Destroy;
+begin
+  SetLength(IENList, 0);
+  inherited;
 end;
 
 end.

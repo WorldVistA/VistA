@@ -17,13 +17,6 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     function FormHelp(Command: Word; Data: NativeInt;
       var CallHelp: Boolean): Boolean;
-    procedure FormActivate(Sender: TObject);
-    procedure FormDeactivate(Sender: TObject);
-    procedure FormShow(Sender: TObject);
-    procedure FormHide(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     HelpClicked: boolean;
     OldCursor: TCursor;
@@ -58,8 +51,7 @@ procedure UnfocusableControlEnter(Self, Sender: TObject);
 
 implementation
 
-uses ORSystem, ShellAPI, ORFn, VA508AccessibilityRouter, VAUtils, uHelpManager
-, uGN_RPCLog;
+uses ORSystem, ShellAPI, ORFn, VA508AccessibilityRouter, VAUtils, uHelpManager;
 
 {$R *.dfm}
 
@@ -214,6 +206,8 @@ begin
       TExposedBtn(tempDefaultBtn).Click;
 end;
 
+
+
 constructor TfrmBase508Form.Create(AOwner: TComponent);
 
   procedure AdjustControls(Control: TWinControl);
@@ -316,30 +310,8 @@ begin
       DoOnHelp(1, ActiveControl.HelpContext, CallHelp)
     else
       DoOnHelp(1, Self.HelpContext, CallHelp);
-    Key := 0
-  end
-  // RPCLog modification ------------------------------------------------ begin
-  else if (Key = VK_F2) and (ssCtrl in Shift) then
-  begin
-    Key := 0;
-    ShowBroker;
-  end
-  else if (Key = VK_F3) and (ssCtrl in Shift) then
-  begin
-    AddFlag('',self.Caption + ' (' + self.Name + ')');
-    Key := 0;
-  end
-  else if (Key = VK_F4) and (ssCtrl in Shift) then
-  begin
-    RPCLogPrev;
-    Key := 0;
-  end
-  else if (Key = VK_F5) and (ssCtrl in Shift) then
-  begin
-    RPCLogNext;
     Key := 0;
   end;
-  // RPCLog modification -------------------------------------------------- end
 end;
 
 {=============================================================================================}
@@ -377,57 +349,6 @@ begin
     inherited;
 end;
 
-// RPCLog modification -------------------------------------------------- begin
-
-procedure TfrmBase508Form.FormActivate(Sender: TObject);
-begin
-  inherited;
-  if RPCLog_TrackForms then
-    AddLogLine('Form Activate: '+ self.Name,RPCLog_OnActivate+self.Caption + ' ('+self.Name+')');
-end;
-
-procedure TfrmBase508Form.FormShow(Sender: TObject);
-begin
-  inherited;
-  if RPCLog_TrackForms then
-    AddLogLine('Form Show: '+ self.Name,RPCLog_OnActivate+self.Caption + ' ('+self.Name+')');
-end;
-
-procedure TfrmBase508Form.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  inherited;
-  if RPCLog_TrackForms then
-    AddLogLine('Form Close: '+ self.Name,RPCLog_OnClose+self.Caption + ' ('+self.Name+')');
-end;
-
-procedure TfrmBase508Form.FormCreate(Sender: TObject);
-begin
-  inherited;
-  if RPCLog_TrackForms then
-    AddLogLine('Form Create: '+ self.Name,RPCLog_OnCreate+self.Caption + ' ('+self.Name+')');
-end;
-
-procedure TfrmBase508Form.FormDeactivate(Sender: TObject);
-begin
-  inherited;
-  if RPCLog_TrackForms then
-    AddLogLine('Form DeActivate: '+ self.Name,RPCLog_OnDeActivate+self.Caption + ' ('+self.Name+')');
-end;
-
-procedure TfrmBase508Form.FormDestroy(Sender: TObject);
-begin
-  inherited;
-  if RPCLog_TrackForms then
-    AddLogLine('Form Destroy: '+ self.Name,RPCLog_OnDestroy+self.Caption + ' ('+self.Name+')');
-end;
-
-procedure TfrmBase508Form.FormHide(Sender: TObject);
-begin
-  inherited;
-  if RPCLog_TrackForms then
-    AddLogLine('Form Hide: '+ self.Name,RPCLog_OnHide+self.Caption + ' ('+self.Name+')');
-end;
-// RPCLog modification ----------------------------------------------------- end
 
 initialization
   KeyMonitorHook   := SetWindowsHookEx(WH_KEYBOARD, KeyMonitorProc,   0, GetCurrentThreadID);

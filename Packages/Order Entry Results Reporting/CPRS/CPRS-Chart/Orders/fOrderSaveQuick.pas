@@ -149,7 +149,6 @@ begin
         DGroupName := NameOfDGroup(InptDisp)
       else
         DGroupName := NameOfDGroup(ResponseSet.DisplayGroup);
-
       if DGroupName = 'Inpt. Meds' then
         begin
           ResponseSet.DisplayGroup := InptDisp;

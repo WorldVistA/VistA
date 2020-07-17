@@ -6,7 +6,7 @@ unit uCore;
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses, uCombatVet;
+uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses, uCombatVet, system.json;
 
 type
   TUser = class(TObject)
@@ -19,6 +19,7 @@ type
     FOrderRole:       Integer;
     FNoOrdering:      Boolean;
     FEnableVerify:    Boolean;
+    FActOneStep:      Boolean;
     FDTIME:           Integer;
     FCountDown:       Integer;
     FCurrentPrinter:  string;
@@ -40,6 +41,7 @@ type
     FGECStatus:       Boolean;
     FStationNumber:   string;
     FIsProductionAccount: boolean;
+    FJobNumber:       string;
   public
     constructor Create;
     function HasKey(const KeyName: string): Boolean;
@@ -52,6 +54,7 @@ type
     property OrderRole:       Integer read FOrderRole;
     property NoOrdering:      Boolean read FNoOrdering;
     property EnableVerify:    Boolean read FEnableVerify;
+    property EnableActOneStep: Boolean read FActOneStep;
     property DTIME:           Integer read FDTIME;
     property CountDown:       Integer read FCountDown;
     property PtMsgHang:       Integer read FPtMsgHang;
@@ -71,6 +74,7 @@ type
     property GECStatus:       Boolean read FGECStatus;
     property StationNumber:   string  read FStationNumber;
     property IsProductionAccount: boolean read FIsProductionAccount;
+    property JobNumber:       string read FJobNumber;
   end;
 
   TPatient = class(TObject)
@@ -89,7 +93,7 @@ type
     FLocation:   Integer;                        // IEN in Hosp Loc if inpatient
     FWardService: string;
     FSpecialty:  Integer;                        // IEN of the treating specialty if inpatient
-    FSpecialtySvc: string;                       // treating specialty service if inpatient                                                                               
+    FSpecialtySvc: string;                       // treating specialty service if inpatient
     FAdmitTime:  TFMDateTime;                    // Admit date/time if inpatient
     FSrvConn:    Boolean;                        // True if patient is service connected
     FSCPercent:  Integer;                        // Per Cent Service Connection
@@ -102,12 +106,22 @@ type
     FDateDied: TFMDateTime;                      // Date of Patient Death (<=0 or still alive)
     FDateDiedLoaded: boolean;                    // Used to determine of DateDied has been loaded
     FCombatVet : TCombatVet;                     // Object Holding CombatVet Data
+    FVAAData: TStringList;                       // Holds raw insurance information
+    FMHVData: TStringList;                       // Holds raw MyHealthyVet information
     procedure SetDFN(const Value: string);
     function GetDateDied: TFMDateTime;
     function GetCombatVet: TCombatVet;       // *DFN*
+    function GetPtIsVAA: boolean;
+    function GetPtIsMHV: boolean;
   public
-    procedure Clear;
+    constructor Create;
     destructor Destroy; override;
+
+    procedure Clear;
+    procedure RefreshVAAStatus;
+    procedure RefreshMHVStatus;
+    procedure GetVAAInformation(var aSubscriberName: string; aReportText: TStrings);
+
     property DFN:              string      read FDFN write SetDFN;  //*DFN*
     property ICN:              string      read FICN;
     property Name:             string      read FName;
@@ -133,6 +147,8 @@ type
     property InProvider:        string     read FInProvider;
     property MHTC:             string      read FMHTC;
     property CombatVet:        TCombatVet  read GetCombatVet;
+    property PtIsMHV:          boolean     read GetPtIsMHV;
+    property PtIsVAA:          boolean     read GetPtIsVAA;
   end;
 
   TEncounter = class(TObject, IORNotifier)
@@ -262,6 +278,8 @@ type
     //AlertData: string;
     RecordID: string;
     HighLightSection: String;
+    Data: TStringList;
+    Processing: boolean;
   end;
 
   TNotifications = class
@@ -278,11 +296,14 @@ type
     function GetIndOrderDisplay: Boolean;
     function GetRecordID: string;
     function GetText: string;
+    function GetData: TStringList;
+    function GetProcessing: boolean;
     procedure SetIndOrderDisplay(Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Add(const ADFN: string; AFollowUp: Integer; const ARecordID: string; AHighLightSection : string = '');  //*DFN*  CB
+    procedure Add(const ADFN: string; AFollowUp: Integer; const ARecordID: string;
+      AHighLightSection : string; AData : TStringList; AProcessing: boolean = true);
     procedure Clear;
     procedure Next;
     procedure Prior;
@@ -294,6 +315,8 @@ type
     property AlertData: string read GetAlertData;
     property RecordID: string  read GetRecordID;
     property Text:     string  read GetText;
+    property Data:     TStringList  read GetData;
+    property Processing: boolean read GetProcessing;
     property HighLightSection: String read GetHighLightSection; //cb
     property IndOrderDisplay:  Boolean read GetIndOrderDisplay write SetIndOrderDisplay;
   end;
@@ -386,6 +409,19 @@ type
     HDR      : String;         //HDR is source of data if = 1
   end;
 
+  TSystemParameters = class(TObject)
+  private
+    fdataValues: TJsonValue;
+  public
+    function getJsonValueString(const name: string): String;
+    function getJsonValueStrings(const name: string): TStringList;
+    function getJsonValue(const name: string): TJsonValue;
+    property dataValues: TJsonValue read fdataValues write fdataValues;
+    Property JsonValue[const aName: String]: TJsonValue read getJsonValue;
+    Property StringValues[const aName: String]: TStringList read getJsonValueStrings;
+    Property StringValue[const aName: String]: String read getJsonValueString;
+  end;
+
 var
   User: TUser;
   Patient: TPatient;
@@ -398,6 +434,8 @@ var
   HasFlag: boolean;
   FlagList: TStringList;
   ICD10ImplDate: TFMDateTime;
+  EncLoadDateTime: TDateTime = 0;
+  PLUpdateDateTime: TDateTime = 0;
   //hds7591  Clinic/Ward movement.
   TempEncounterLoc: Integer; // used to Save Encounter Location when user selected "Review Sign Changes" from "File"
   TempEncounterLocName: string; // since in the path PatientRefresh is done prior to checking if patient has been admitted while entering OPT orders.
@@ -410,6 +448,7 @@ var
   SavedEncounterDateTime: TFMDateTime;
   SavedEncounterVisitCat: Char;
   SavedEncounterReason: string; //used to store why it will be reverted to the saved value
+  systemParameters: TSystemParameters;
 
 procedure NotifyOtherApps(const AppEvent, AppData: string);
 procedure FlushNotifierBuffer;
@@ -729,6 +768,7 @@ begin
   FAutoSave      := UserInfo.AutoSave;
   FInitialTab    := UserInfo.InitialTab;
   FUseLastTab    := UserInfo.UseLastTab;
+  FActOneStep    := UserInfo.EnableActOneStep;
   if(URLMonHandle = 0) then
     FWebAccess := FALSE
   else
@@ -744,6 +784,7 @@ begin
   FGECStatus       := UserInfo.GECStatusCheck;
   FStationNumber   := UserInfo.StationNumber;
   FIsProductionAccount := UserInfo.IsProductionAccount;
+  FJobNumber       := UserInfo.JobNumber;
 end;
 
 function TUser.HasKey(const KeyName: string): Boolean;
@@ -753,6 +794,20 @@ begin
 end;
 
 { TPatient methods ------------------------------------------------------------------------- }
+
+constructor TPatient.Create;
+begin
+  FMHVData := TStringList.Create;
+  FVAAData := TStringList.Create;
+end;
+
+destructor TPatient.Destroy;
+begin
+  FreeAndNil(FCombatVet);
+  FreeAndNil(FVAAData);
+  FreeAndNil(FMHVData);
+  inherited;
+end;
 
 procedure TPatient.Clear;
 { clears all fields in the Patient object }
@@ -778,13 +833,9 @@ begin
   FPrimProv     := '';
   FAttending    := '';
   FMHTC         := '';
+  FMHVData.Clear;
+  FVAAData.Clear;
   FreeAndNil(FCombatVet);
-end;
-
-destructor TPatient.Destroy;
-begin
-  FreeAndNil(FCombatVet);
-  inherited;
 end;
 
 function TPatient.GetCombatVet: TCombatVet;
@@ -802,6 +853,54 @@ begin
     FDateDiedLoaded := TRUE;
   end;
   Result := FDateDied;
+end;
+
+function TPatient.GetPtIsMHV: Boolean;
+begin
+  if FMHVData.Count = 0 then
+    RefreshMHVStatus;
+  if FMHVData.Count > 0 then
+    Result := FMHVData[0] <> '0'
+  else
+    Result := False;
+end;
+
+function TPatient.GetPtIsVAA: Boolean;
+begin
+  if FVAAData.Count = 0 then
+    RefreshVAAStatus;
+  if FVAAData.Count > 0 then
+    Result := FVAAData[0] <> '0'
+  else
+    Result := False;
+end;
+
+procedure TPatient.GetVAAInformation(var aSubscriberName: string; aReportText: TStrings);
+begin
+  if GetPtIsVAA then
+    try
+      aSubscriberName := Piece(FVAAData[12], ':', 1) + ': ' + Trim(Piece(FVAAData[12], ':', 2));
+      aReportText.Text := FVAAData.Text;
+      aReportText.Delete(0);
+    except
+      aSubscriberName := 'Error in VAA information';
+      aReportText.Clear;
+    end
+  else
+    begin
+      aSubscriberName := '';
+      aReportText.Clear;
+    end;
+end;
+
+procedure TPatient.RefreshMHVStatus;
+begin
+  GetMHVData(FDFN, FMHVData);
+end;
+
+procedure TPatient.RefreshVAAStatus;
+begin
+  GetVAAData(FDFN, FVAAData);
 end;
 
 procedure TPatient.SetDFN(const Value: string);  //*DFN*
@@ -836,7 +935,9 @@ begin
   FAttending  := PtSelect.Attending;
   FAssociate  := PtSelect.Associate;
   FInProvider := PtSelect.InProvider;
-  FMHTC       := PtSelect.MHTC
+  FMHTC       := PtSelect.MHTC;
+  RefreshVAAStatus;
+  RefreshMHVStatus;
 end;
 
 { TEncounter ------------------------------------------------------------------------------- }
@@ -1463,7 +1564,8 @@ begin
   inherited Destroy;
 end;
 
-procedure TNotifications.Add(const ADFN: string; AFollowUp: Integer; const ARecordID: string; AHighLightSection : string = '');  //*DFN*
+procedure TNotifications.Add(const ADFN: string; AFollowUp: Integer; const ARecordID: string;
+            AHighLightSection : string; AData : TStringList; AProcessing: boolean = true);
 var
   NotifyItem: TNotifyItem;
 begin
@@ -1471,6 +1573,11 @@ begin
   NotifyItem.DFN := ADFN;
   NotifyItem.FollowUp := AFollowUp;
   NotifyItem.RecordID := ARecordId;
+  NotifyItem.Data := TStringList.Create;
+  NotifyItem.Processing := AProcessing;
+//  AData.Assign(NotifyItem.Data);
+  NotifyItem.Data.Assign(AData);
+
   If AHighLightSection <> '' then NotifyItem.HighLightSection := AHighLightSection;
   FList.Add(NotifyItem);
   FActive := True;
@@ -1480,7 +1587,11 @@ procedure TNotifications.Clear;
 var
   i: Integer;
 begin
-  with FList do for i := 0 to Count - 1 do with TNotifyItem(Items[i]) do Free;
+  with FList do for i := 0 to Count - 1 do with TNotifyItem(Items[i]) do
+  begin
+    TNotifyItem(Items[i]).Data.Free;
+    Free;
+  end;
   FList.Clear;
   FActive := False;
   FCurrentIndex := -1;
@@ -1499,10 +1610,19 @@ begin
 end;
 
 function TNotifications.GetAlertData: string;
+var
+  x: string;
 begin
-  if FNotifyItem <> nil
-    then Result := GetXQAData(Piece(FNotifyItem.RecordID, U, 2))
-    else Result := '';
+  if FNotifyItem <> nil then
+  begin
+    if FNotifyItem.Processing then
+      x := ''
+    else
+      x := '1';
+    Result := GetXQAData(Piece(FNotifyItem.RecordID, U, 2), x);
+  end
+  else
+    Result := '';
 end;
 
 function TNotifications.GetRecordID: string;
@@ -1517,6 +1637,11 @@ begin
     else Result := '';
 end;
 
+function TNotifications.GetData: TStringList;
+begin
+  if FNotifyItem <> nil then Result := FNotifyItem.Data else Result := nil;
+end;
+
 function TNotifications.GetHighLightSection: String; //CB
 begin
   if FNotifyItem <> nil then Result := FNotifyItem.HighLightSection else Result := '';
@@ -1525,6 +1650,11 @@ end;
 function TNotifications.GetIndOrderDisplay: Boolean;
 begin
   Result := FNotifIndOrders;
+end;
+
+function TNotifications.GetProcessing: boolean;
+begin
+  if FNotifyItem <> nil then Result := FNotifyItem.Processing else Result := False;
 end;
 
 procedure TNotifications.SetIndOrderDisplay(Value: Boolean);
@@ -1566,7 +1696,7 @@ end;
 constructor TRemoteSite.Create(ASite: string);
 begin
   FSiteID   := Piece(ASite, U, 1);
-  FSiteName := MixedCase(Piece(ASite, U, 2));
+  FSiteName := VariableMixedCase(Piece(ASite, U, 2));
   FLastDate := StrToFMDateTime(Piece(ASite, U, 3));
   FSelected := False;
   FQueryStatus := '';
@@ -1774,6 +1904,76 @@ begin
   begin
     if AnsiCompareText(FOrderGrp[i],oldGrpName)= 0 then
       FOrderGrp[i] := newGrpName;
+  end;
+end;
+
+{ TSystemParameters }
+
+function TSystemParameters.getJsonValue(const name: string): TJsonValue;
+var
+ jo: TJSONObject;
+ JSV: TJsonValue;
+begin
+ Result := nil;
+ jo := dataValues as TJSONObject;
+ if jo.TryGetValue(name, JSV) then
+ begin
+    Result := JSV;
+ end;
+
+end;
+
+function TSystemParameters.getJsonValueString(const name: string): String;
+var
+  aTmp: TStringlist;
+begin
+  Result := '';
+  aTmp := TStringlist.create;
+  try
+    aTmp := getJsonValueStrings(name);
+    if aTmp.count = 1 then
+      Result := aTmp[0];
+  finally
+    aTmp.free;
+  end;
+end;
+
+function TSystemParameters.getJsonValueStrings(const name: string): TStringList;
+var
+  i: integer;
+  arrayjson: TJSONArray;
+  jo: TJSONObject;
+  JSV, value: TJsonValue;
+  JP: TJSONPair;
+  S: String;
+begin
+  Result := TStringList.Create;
+
+  result.Clear;
+  jo := dataValues as TJSONObject;
+  if jo.TryGetValue(name, JSV) then
+  begin
+    if (JSV is TJSONArray) then
+    begin
+      arrayjson := JSV as TJSONArray;
+      for value in arrayjson do
+      begin
+        s := '';
+        for I := 0 to (value as TJSONObject).Count - 1 do
+        begin
+        JP := (value as TJSONObject).Pairs[i];
+        if s <> '' then
+          s := s + '^';
+        S := s + JP.JsonString.value + '=' + JP.JsonValue.value;
+        end;
+        result.Add(S);
+      end;
+    end
+    else
+    begin
+      JSV.TryGetValue(S);
+      result.Add(S);
+    end;
   end;
 end;
 

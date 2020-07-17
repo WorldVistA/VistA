@@ -28,6 +28,7 @@ inherited frmODGen: TfrmODGen
     Height = 185
     Align = alTop
     TabOrder = 4
+    ExplicitWidth = 555
   end
   inherited cmdAccept: TButton
     Top = 209

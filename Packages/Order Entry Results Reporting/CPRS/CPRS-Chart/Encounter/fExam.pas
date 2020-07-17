@@ -37,11 +37,11 @@ var
 begin
   if(NotUpdating) and (cboExamResults.Text <> '') then
   begin
-    TPCEExams(lstRenameMe.Objects[lstRenameMe.Selected.Index]).Results := cboExamResults.ItemID;
+    TPCEExams(lstCaptionList.Objects[lstCaptionList.Selected.Index]).Results := cboExamResults.ItemID;
 
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCEExams(lstRenameMe.Objects[lstRenameMe.Selected.Index]).Results := cboExamResults.ItemID;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
+        TPCEExams(lstCaptionList.Objects[lstCaptionList.Selected.Index]).Results := cboExamResults.ItemID;
 
     GridChanged;
   end;
@@ -76,7 +76,7 @@ begin
   begin
     BeginUpdate;
     try
-      ok := (lstRenameMe.SelCount > 0);
+      ok := (lstCaptionList.SelCount > 0);
       lblExamResults.Enabled := ok;
       cboExamResults.Enabled := ok;
       if(ok) then
@@ -85,11 +85,11 @@ begin
         SameR := TRUE;
         Res := NoPCEValue;
 
-        for i := 0 to lstRenameMe.Items.Count-1 do
+        for i := 0 to lstCaptionList.Items.Count-1 do
         begin
-          if lstRenameMe.Items[i].Selected then
+          if lstCaptionList.Items[i].Selected then
           begin
-            Obj := TPCEExams(lstRenameMe.Objects[i]);
+            Obj := TPCEExams(lstCaptionList.Objects[i]);
             if(First) then
             begin
               First := FALSE;

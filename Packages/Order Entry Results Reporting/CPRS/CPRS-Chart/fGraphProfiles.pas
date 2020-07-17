@@ -252,32 +252,24 @@ begin
 end;
 
 procedure TfrmGraphProfiles.FormCreate(Sender: TObject);
-var
-  IsScreenReaderActive: boolean;
 begin
   FPublicEditor := GraphPublicEditor;
-  IsScreenReaderActive := ScreenReaderActive;
-  lbl508EditInfo.Enabled := IsScreenReaderActive;
-  lbl508EditInfo.Visible := IsScreenReaderActive;
-  lbl508EditInfo.TabStop := IsScreenReaderActive;
-  lbl508EditInfo1.Enabled := IsScreenReaderActive;
-  lbl508EditInfo1.Visible := IsScreenReaderActive;
-  lbl508EditInfo1.TabStop := IsScreenReaderActive;
-  lbl508SelectionInfo.Enabled := IsScreenReaderActive;
-  lbl508SelectionInfo.Visible := IsScreenReaderActive;
-  lbl508SelectionInfo.TabStop := IsScreenReaderActive;
-  lbl508Apply.Enabled := IsScreenReaderActive;
-  lbl508Apply.Visible := IsScreenReaderActive;
-  lbl508Apply.TabStop := IsScreenReaderActive;
-  lbl508SelectOthers.TabStop := IsScreenReaderActive;
-  lblEditInfo.Enabled := not IsScreenReaderActive;
-  lblEditInfo.Visible := not IsScreenReaderActive;
-  lblEditInfo1.Enabled := not IsScreenReaderActive;
-  lblEditInfo1.Visible := not IsScreenReaderActive;
-  lblSelectionInfo.Enabled := not IsScreenReaderActive;
-  lblSelectionInfo.Visible := not IsScreenReaderActive;
-  lblApply.Enabled := not IsScreenReaderActive;
-  lblApply.Visible := not IsScreenReaderActive;
+  if ScreenReaderActive then
+  begin
+    lbl508EditInfo.Enabled := True;
+    lbl508EditInfo.Visible := True;
+    lbl508EditInfo.TabStop := True;
+    lbl508EditInfo1.Enabled := True;
+    lbl508EditInfo1.Visible := True;
+    lbl508EditInfo1.TabStop := True;
+    lbl508SelectionInfo.Enabled := True;
+    lbl508SelectionInfo.Visible := True;
+    lbl508SelectionInfo.TabStop := True;
+    lbl508Apply.Enabled := True;
+    lbl508Apply.Visible := True;
+    lbl508Apply.TabStop := True;
+    lbl508SelectOthers.TabStop := True;
+  end;
 end;
 
 procedure TfrmGraphProfiles.FormShow(Sender: TObject);

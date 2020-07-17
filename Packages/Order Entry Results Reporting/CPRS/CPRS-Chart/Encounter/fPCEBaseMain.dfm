@@ -44,7 +44,7 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
     Width = 475
     TabOrder = 0
     ExplicitWidth = 475
-    inherited lstRenameMe: TCaptionListView
+    inherited lstCaptionList: TCaptionListView
       Width = 475
       Columns = <
         item
@@ -53,10 +53,10 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
         item
           Width = 120
         end>
-      OnChange = lstRenameMeChange
-      OnClick = lstRenameMeClick
-      OnExit = lstRenameMeExit
-      OnInsert = lstRenameMeInsert
+      OnChange = lstCaptionListChange
+      OnClick = lstCaptionListClick
+      OnExit = lstCaptionListExit
+      OnInsert = lstCaptionListInsert
       ExplicitWidth = 475
     end
   end

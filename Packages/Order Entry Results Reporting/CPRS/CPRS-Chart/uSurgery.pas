@@ -7,6 +7,7 @@ uses
 
 type
   TSurgeryTitles = class
+  public
     ClassName: string;
     DfltTitle: Integer;
     DfltTitleName: string;

@@ -11,6 +11,8 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
   Position = poScreenCenter
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitWidth = 413
+  ExplicitHeight = 334
   PixelsPerInch = 96
   TextHeight = 13
   object lblAddby: TLabel [0]
@@ -38,8 +40,9 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     Lines.Strings = (
       'You can change your combinations by adding '
       'or removing  specific wards, clinics, providers, '
-      'specialties, or lists. Patients meeting this '
-      'criteria can be used for patient selection.')
+      'specialties, lists, or PCMM teams. Patients '
+      'meeting this criteria can be used for patient'
+      'selection.')
     ReadOnly = True
     TabOrder = 6
   end
@@ -57,7 +60,8 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
       '&Clinic'
       '&Provider'
       '&Specialty'
-      '&List')
+      '&List'
+      'PC&MM')
     TabOrder = 0
     OnClick = radAddByTypeClick
   end
@@ -83,6 +87,7 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     Sorted = True
     SynonymChars = '<>'
     TabOrder = 1
+    Text = ''
     OnChange = lstAddByChange
     OnDblClick = btnAddClick
     OnEnter = lstAddByEnter
@@ -191,6 +196,7 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     OnColumnClick = lvwCombinationsColumnClick
     OnCompare = lvwCombinationsCompare
     OnDblClick = btnRemoveClick
+    AutoSize = False
     Caption = 'Combinations'
   end
   inherited amgrMain: TVA508AccessibilityManager

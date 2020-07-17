@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ORCtrls, ComCtrls, Buttons, ExtCtrls, Menus, ActnList,
-  uTemplates, ORClasses, System.Actions;
+  uTemplates, ORClasses, System.Actions, U_CPTPasteDetails;
 
 type
   // Indicates what a drawer is doing at the moment
@@ -185,7 +185,7 @@ type
     FOnDrawerButtonClick: TNotifyEvent;
     FOnUpdateVisualsEvent: TNotifyEvent;
     fTemplateEditEvent: TTemplateEditEvent;
-
+    FCopyMonitor: TCopyPasteDetails;
     procedure SetEncounterState(const Value: TDrawerState);
     procedure SetOrderState(const Value: TDrawerState);
     procedure SetReminderState(const Value: TDrawerState);
@@ -215,7 +215,6 @@ type
     FTotalButtonHeight: integer; // height of all the non-hidden buttons
     constructor Create(AOwner: TComponent); Override;
     destructor Destroy; Override;
-
     property TemplateState: TDrawerState read fTemplateState write SetTemplateState;    // state of the template drawer
     property EncounterState: TDrawerState read fEncounterState write SetEncounterState; // state of the encounter drawer
     property ReminderState: TDrawerState read fReminderState write SetReminderState;    // state of the reminder drawer
@@ -252,6 +251,7 @@ type
     function ButtonByDrawer(Value: TDrawer): TBitBtn;
     procedure SaveDrawerConfiguration(var Configuration: TDrawerConfiguration);
     procedure LoadDrawerConfiguration(Configuration: TDrawerConfiguration);
+     Property CopyMonitor: TCopyPasteDetails read fCopyMonitor write fCopyMonitor;
   end;
 
 var
@@ -264,12 +264,27 @@ implementation
 uses
   VAUtils, rTemplates, dShared, fTemplateDialog, RichEdit, fFindingTemplates,
   Clipbrd, VA508AccessibilityRouter, ORFn, fRptBox, fTemplateEditor, fIconLegend,
-  fTemplateView, fReminderDialog, uReminders, uVA508CPRSCompatibility, System.Types;
+  fTemplateView, fReminderDialog, uReminders, uVA508CPRSCompatibility, System.Types,
+  uConst;
 
 const
   FindNextText = 'Find Next';
 
 { TfraDrawers }
+
+constructor TfraDrawers.Create(AOwner: TComponent);
+begin
+  inherited;
+  dmodShared.AddDrawerTree(Self);
+  FHasPersonalTemplates := FALSE;
+end;
+
+destructor TfraDrawers.Destroy;
+begin
+  dmodShared.RemoveDrawerTree(Self);
+  KillObj(@RemNotifyList);
+ inherited;
+end;
 
 {------------------------------------}
 {  MoveCaret - Copied from fDrawers  }
@@ -346,7 +361,7 @@ begin
   begin
     Template := TTemplate(tvTemplates.Selected.Data);
     txt := Template.Text;
-    CheckBoilerplate4Fields(txt, 'Template: ' + Template.PrintName, false);
+    CheckBoilerplate4Fields(txt, 'Template: ' + Template.PrintName, false, FCopyMonitor);
     if txt <> '' then
     begin
       Clipboard.SetTextBuf(PChar(txt));
@@ -673,13 +688,6 @@ end;
 {-----------------------------------------}
 {  DisplayDrawers - Copied from fDrawers  }
 {-----------------------------------------}
-destructor TfraDrawers.Destroy;
-begin
-  dmodShared.RemoveDrawerTree(Self);
-  KillObj(@RemNotifyList);
-  inherited;
-end;
-
 procedure TfraDrawers.DisplayDrawers(Show: Boolean; OpenDrawer: TDrawer; AEnable, ADisplay: TDrawers);
 begin
   if not show then ADisplay := [];
@@ -808,6 +816,7 @@ end;
 {-------------------------------------}
 {  InsertText - Copied from fDrawers  }
 {-------------------------------------}
+
 procedure TfraDrawers.InsertText;
 var
   BeforeLine, AfterTop: integer;
@@ -820,6 +829,7 @@ begin
   begin
     Template := TTemplate(tvTemplates.Selected.Data);
     Template.TemplatePreviewMode := FALSE;
+    Template.ExtCPMon := FCopyMonitor;
     if Template.IsReminderDialog then begin
       FocusMonitorOn := False;
       Template.ExecuteReminderDialog(TForm(Owner));
@@ -834,12 +844,17 @@ begin
         CheckBoilerplate4Fields(txt, 'Template: ' + Template.PrintName);
         if (txt <> '') and (FRichEditControl.CanFocus) then begin
           BeforeLine := SendMessage(FRichEditControl.Handle, EM_EXLINEFROMCHAR, 0, FRichEditControl.SelStart);
+          //Limit the editable recatnge
+          SendMessage(Application.MainForm.Handle, UM_NOTELIMIT, 1, 1);
           FRichEditControl.SelText := txt;
           FRichEditControl.SetFocus;
           SendMessage(FRichEditControl.Handle, EM_SCROLLCARET, 0, 0);
           AfterTop := SendMessage(FRichEditControl.Handle, EM_GETFIRSTVISIBLELINE, 0, 0);
           SendMessage(FRichEditControl.Handle, EM_LINESCROLL, 0, -1 * (AfterTop - BeforeLine));
           SpeakTextInserted;
+
+          //show copy/paste entries
+          CopyMonitor.ManuallyShowNewHighlights;
         end;
       end;
     end;
@@ -1146,13 +1161,6 @@ begin
       FInternalExpand := FALSE;
     end;
   end;
-end;
-
-constructor TfraDrawers.Create(AOwner: TComponent);
-begin
-  inherited;
-  dmodShared.AddDrawerTree(Self);
-  FHasPersonalTemplates := FALSE;
 end;
 
 {-------------------------------------------}
@@ -1541,7 +1549,7 @@ begin
 
   if  (TemplateState <> dshidden) or  (EncounterState <> dshidden) or  (ReminderState <> dshidden) or
   (OrderState <> dshidden) then
-   Result := True;;
+   Result := True;
 
 end;
 

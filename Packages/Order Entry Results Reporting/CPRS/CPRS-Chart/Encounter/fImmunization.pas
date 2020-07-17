@@ -48,9 +48,9 @@ var
 begin
   if(NotUpdating) and (cboImmSeries.Text <> '') then
   begin
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCEImm(lstRenameMe.Objects[i]).Series := cboImmSeries.ItemID;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
+        TPCEImm(lstCaptionList.Objects[i]).Series := cboImmSeries.ItemID;
     GridChanged;
   end;
 end;
@@ -62,9 +62,9 @@ var
 begin
   if(NotUpdating) and (cboImmReaction.Text <> '') then
   begin
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCEImm(lstRenameMe.Objects[i]).Reaction := cboImmReaction.ItemID;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
+        TPCEImm(lstCaptionList.Objects[i]).Reaction := cboImmReaction.ItemID;
     GridChanged;
   end;
 end;
@@ -76,9 +76,9 @@ var
 begin
   if(NotUpdating) then
   begin
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCEImm(lstRenameMe.Objects[i]).Contraindicated := ckbContra.Checked;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
+        TPCEImm(lstCaptionList.Objects[i]).Contraindicated := ckbContra.Checked;
     GridChanged;
   end;
 end;
@@ -144,7 +144,7 @@ begin
   begin
     BeginUpdate;
     try
-      ok := (lstRenameMe.SelCount > 0);
+      ok := (lstCaptionList.SelCount > 0);
       lblSeries.Enabled := ok;
       lblReaction.Enabled := ok;
       cboImmSeries.Enabled := ok;
@@ -159,11 +159,11 @@ begin
         Contra := FALSE;
         Ser := NoPCEValue;
         React := NoPCEValue;
-        for i := 0 to lstRenameMe.Items.Count-1 do
+        for i := 0 to lstCaptionList.Items.Count-1 do
         begin
-          if lstRenameMe.Items[i].Selected then
+          if lstCaptionList.Items[i].Selected then
           begin
-            Obj := TPCEImm(lstRenameMe.Objects[i]);
+            Obj := TPCEImm(lstCaptionList.Objects[i]);
             if(First) then
             begin
               First := FALSE;

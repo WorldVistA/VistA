@@ -52,7 +52,7 @@ type
 implementation
 
 uses
-  ORFn, rTemplates, uTemplateFields, fTemplateDialog, ORClasses;
+  ORFn, rTemplates, uTemplateFields, fTemplateDialog, ORClasses, VAUtils;
 
 {$R *.DFM}
 
@@ -85,15 +85,18 @@ begin
   pnlBottomSR.Height := lblSRCont1.Height * 4 + 5;
 end;
 
-procedure TfrmTemplateFields.cboObjectsNeedData(Sender: TObject;
-  const StartFrom: String; Direction, InsertAt: Integer);
+procedure TfrmTemplateFields.cboObjectsNeedData(Sender: TObject; const StartFrom: String; Direction, InsertAt: Integer);
 var
-  tmp: TStrings;
-
+  tmp: TStringList;
 begin
-  tmp := SubSetOfTemplateFields(StartFrom, Direction);
-  ConvertCodes2Text(tmp, FALSE);
-  cboObjects.ForDataUse(tmp);
+  tmp := TStringList.Create;
+  try
+    SubSetOfTemplateFields(StartFrom, Direction, tmp);
+    ConvertCodes2Text(tmp, FALSE);
+    cboObjects.ForDataUse(tmp);
+  finally
+    FreeAndNil(tmp);
+  end;
 end;
 
 procedure TfrmTemplateFields.InsertField;

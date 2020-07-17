@@ -377,14 +377,15 @@ function UseRadioButtons: Boolean;
 var
   aRPC :TStringList;
 begin
-  aRPC := TStringList.Create;
-  aRPC.Clear;
   Result := false;
-  aRPC.Add('ORWRP1A RADIO^1');
-  if RPCCheck(aRPC) then //checks for RPC (valid/active)
-    Result := sCallV(piece(aRPC[0],'^',1),[nil]) = '1';
-  aRPC.Clear;
-  aRPC.Free;
+  aRPC := TStringList.Create;
+  try
+    aRPC.Add('ORWRP1A RADIO^1');
+    if RPCCheck(aRPC) then //checks for RPC (valid/active)
+      Result := sCallV(piece(aRPC[0],'^',1),[nil]) = '1';
+  finally
+    aRPC.Free;
+  end;
 end;
 
 end.

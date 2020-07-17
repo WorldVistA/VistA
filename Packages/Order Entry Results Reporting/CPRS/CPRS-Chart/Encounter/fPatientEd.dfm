@@ -24,7 +24,7 @@ inherited frmPatientEd: TfrmPatientEd
   end
   inherited pnlGrid: TPanel
     TabOrder = 1
-    inherited lstRenameMe: TCaptionListView
+    inherited lstCaptionList: TCaptionListView
       Columns = <
         item
           Caption = 'Level of Understanding'

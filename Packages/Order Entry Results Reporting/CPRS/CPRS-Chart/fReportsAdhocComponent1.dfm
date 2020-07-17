@@ -6,7 +6,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
   ClientHeight = 452
   ClientWidth = 633
   OldCreateOrder = False
-  Position = poOwnerFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow

@@ -7,7 +7,8 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fHSplit, StdCtrls, ExtCtrls, Menus, ComCtrls, ORCtrls, ORFn, uConst, ORDtTm,
   uPCE, ORClasses, fDrawers, rDCSumm, uDocTree, uDCSumm, uTIU, fPrintList,
-  VA508AccessibilityManager, fBase508Form, VA508ImageListLabeler, ORextensions;
+  VA508AccessibilityManager, fBase508Form, VA508ImageListLabeler, fFrame,
+  U_CPTPasteDetails, ORextensions, ORNetIntf;
 
 type
   TfrmDCSumm = class(TfrmHSplit)
@@ -36,9 +37,9 @@ type
     lblSumms: TOROffsetLabel;
     pnlRead: TPanel;
     lblTitle: TOROffsetLabel;
-    memSumm: TRichEdit;
+    memSumm: ORextensions.TRichEdit;
     pnlWrite: TPanel;
-    memNewSumm: TRichEdit;
+    memNewSumm: ORextensions.TRichEdit;
     Z3: TMenuItem;
     mnuViewAll: TMenuItem;
     mnuViewByAuthor: TMenuItem;
@@ -146,6 +147,10 @@ type
     mnuViewPostings: TMenuItem;
     imgLblNotes: TVA508ImageListLabeler;
     imgLblImages: TVA508ImageListLabeler;
+    CPMemSumm: TCopyPasteDetails;
+    spDetails: TSplitter;
+    CPMemNewSumm: TCopyPasteDetails;
+    SpEditDetails: TSplitter;
     procedure mnuChartTabClick(Sender: TObject);
     procedure lstSummsClick(Sender: TObject);
     procedure pnlRightResize(Sender: TObject);
@@ -223,6 +228,13 @@ type
     procedure popSummMemoInsTemplateClick(Sender: TObject);
     procedure ViewInfo(Sender: TObject);
     procedure mnuViewInformationClick(Sender: TObject);
+    procedure CopyToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+    procedure LoadPastedText(Sender: TObject; LoadList: TStrings; var ProcessLoad, PreLoaded: Boolean);
+    procedure SaveTheMonitor(Sender: TObject; SaveList: TStringList; var ReturnList: TStringList);
+    procedure PasteToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+    procedure CPHide(Sender: TObject);
+    procedure CPShow(Sender: TObject);
+
   private
     FEditingIndex: Integer;                      // index of Summary being currently edited
     FChanged: Boolean;                           // true if any text has changed in the Summary
@@ -268,6 +280,7 @@ type
     procedure  EnableDisableIDNotes;
     procedure DoAttachIDChild(AChild, AParent: TORTreeNode);
     function SetSummTreeLabel(AContext: TTIUContext): string;
+    Procedure UpdateConstraints;
   public
     function  AllowContextChange(var WhyNot: string): Boolean; override;
     procedure ClearPtData; override;
@@ -277,6 +290,7 @@ type
     procedure SetFontSize(NewFontSize: Integer); override;
     procedure SaveSignItem(const ItemID, ESCode: string);
     procedure LstSummsToPrint;
+    procedure LimitEditableNote;
   published
     property Drawers: TFrmDrawers read GetDrawers; // Keep Drawers published
   end;
@@ -288,12 +302,12 @@ implementation
 
 {$R *.DFM}
 
-uses fFrame, fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem, fEncounterFrame,
+uses  fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem, fEncounterFrame,
      rPCE, Clipbrd, fNotePrt, fAddlSigners, fNoteDR, uSpell, rVitals, fTIUView,
      fTemplateEditor, rTIU, fDCSummProps, fNotesBP, fTemplateFieldEditor, uTemplates,
      fReminderDialog, dShared, rTemplates, fIconLegend, fNoteIDParents, rECS, ORNet, trpcb,
      fTemplateDialog, uVA508CPRSCompatibility, VA508AccessibilityRouter, System.Types,
-     System.UITypes;
+     System.UITypes, System.IniFiles, U_CPTEditMonitor, VAUtils;
 
 const
   NA_CREATE     = 0;                             // New Summ action - create new Summ
@@ -308,7 +322,7 @@ const
   DC_ACT_ADDENDUM  = 3;
   DC_ACT_EDIT_SUMM = 4;
   DC_ACT_ID_ENTRY  = 5;
- 
+
   TX_NEED_VISIT = 'A visit is required before creating a new Discharge Summary.';
   TX_NO_VISIT   = 'Insufficient Visit Information';
   TX_BOILERPLT  = 'You have modified the text of this Discharge Summary.  Changing the title will' +
@@ -484,6 +498,8 @@ begin
   uPCEShow.Clear;
   uPCEEdit.Clear;
   frmDrawers.ResetTemplates;
+  CPMemSumm.EditMonitor.ItemIEN := -1;
+  CPMemNewSumm.EditMonitor.ItemIEN := -1;
 end;
 
 procedure TfrmDCSumm.DisplayPage;
@@ -526,7 +542,7 @@ var
 begin
   with lstSumms do
   begin
-    if ItemIndex = EditingIndex then  
+    if ItemIndex = EditingIndex then
     //if ItemIEN < 0 then
     begin
       SaveCurrentSumm(Saved);
@@ -572,6 +588,31 @@ begin
   frmDrawers.Font.Size := NewFontSize;
   SetEqualTabStops(memNewSumm);
   // adjust heights of pnlAction, pnlFields, and lstEncntShow
+  //Update the constraints based on the font
+  UpdateConstraints;
+end;
+
+Procedure TfrmDCSumm.UpdateConstraints;
+const
+  LEFT_MARGIN = 4;
+var
+ MinWdth: Integer;
+begin
+
+  //What is the min width these notes should be
+  MinWdth := TextWidthByFont(memNewSumm.Font.Handle, StringOfChar('X', MAX_ENTRY_WIDTH)) + (LEFT_MARGIN * 2) + ScrollBarWidth;
+
+  //Set the minimum size
+  PnlRight.Constraints.MinWidth := MinWdth;
+
+  //Set the edit width based on the update
+  LimitEditableNote;
+end;
+
+procedure TfrmDCSumm.LimitEditableNote;
+begin
+  //Adjust the editable rectange
+   LimitEditWidth(memNewSumm, MAX_ENTRY_WIDTH - 1);
 end;
 
 procedure TfrmDCSumm.mnuChartTabClick(Sender: TObject);
@@ -621,6 +662,7 @@ begin
   // set the tracking variables to initial state
   EditingIndex := -1;
   FChanged := False;
+  CPMemNewSumm.EditMonitor.ItemIEN := -1;
 end;
 
 procedure TfrmDCSumm.ShowPCEControls(ShouldShow: Boolean);
@@ -843,8 +885,9 @@ begin
     if assigned(TmpBoilerPlate) then
     begin
       DocInfo := MakeXMLParamTIU(IntToStr(CreatedSumm.IEN), FEditDCSumm);
-      ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo);
+      ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo, CPMemNewSumm);
       memNewSumm.Lines.Text := TmpBoilerPlate.Text;
+      memNewSumm.SelStart := Length(memNewSumm.Lines.Text); //CQ: 16461
       SpeakStrings(TmpBoilerPlate);
       TmpBoilerPlate.Free;
     end;
@@ -946,6 +989,7 @@ var
 begin
   if not PreserveValues then ClearEditControls;
   if not LockSumm(lstSumms.ItemIEN) then Exit;
+  CPMemNewSumm.EditMonitor.ClearTheMonitor;
   EditingIndex := lstSumms.ItemIndex;
   Changes.Add(CH_SUM, lstSumms.ItemID, GetTitleText(EditingIndex), '', CH_SIGN_YES);
   if not PreserveValues then GetDCSummForEdit(FEditDCSumm, lstSumms.ItemIEN);
@@ -1058,6 +1102,11 @@ begin
   timAutoSave.Enabled := False;
   try
     PutEditedDCSumm(UpdatedSumm, FEditDCSumm, lstSumms.GetIEN(EditingIndex));
+
+    //Save copied text here
+    if (memNewSumm.lines.Count > 0) and (CPMemNewSumm.CopyPasteEnabled) then
+      CPMemNewSumm.SaveTheMonitor(UpdatedSumm.IEN);
+
   finally
     timAutoSave.Enabled := True;
   end;
@@ -1095,20 +1144,45 @@ end;
 
 procedure TfrmDCSumm.pnlRightResize(Sender: TObject);
 { memSumm (TRichEdit) doesn't repaint appropriately unless its parent panel is refreshed }
+var
+ AdjustBy: Integer;
+ Rect: TRect;
 begin
   inherited;
+
+    //CQ7012 Added test for nil
+  if Assigned(Self) and Assigned(pnlLeft) and Assigned(pnlWrite) and Assigned(sptHorz) then
+  begin
+    if PnlRight.Width =  PnlRight.Constraints.MinWidth then
+    begin
+      //Grab the current bounds
+      Rect := BoundsRect;
+      //What should they be?
+      ForceInsideWorkArea(Rect);
+      //if we our outside of our bounds then take away from the left
+      if BoundsRect.Right > Rect.Right then
+      begin
+        AdjustBy := BoundsRect.Right - Rect.Right;
+        pnlLeft.Width :=  pnlLeft.Width - sptHorz.Width - AdjustBy;
+
+        //Ensure that the form will fit on the work area
+        if WindowState <> wsMaximized then
+        begin
+          frmFrame.Width := frmFrame.Width - sptHorz.Width - AdjustBy;
+        end;
+      end;
+    end;
+  end;
+
   pnlRight.Refresh;
   memSumm.Repaint;
 end;
 
 procedure TfrmDCSumm.pnlWriteResize(Sender: TObject);
-const
-  LEFT_MARGIN = 4;
+
 begin
   inherited;
-  LimitEditWidth(memNewSumm, MAX_ENTRY_WIDTH - 1);
-  memNewSumm.Constraints.MinWidth := TextWidthByFont(memNewSumm.Font.Handle, StringOfChar('X', MAX_ENTRY_WIDTH)) + (LEFT_MARGIN * 2) + ScrollBarWidth;
-  pnlLeft.Width := self.ClientWidth - pnlWrite.Width - sptHorz.Width;
+  LimitEditableNote
 end;
 
 { Left panel (selector) events ------------------------------------------------------------- }
@@ -1127,6 +1201,7 @@ begin
     mnuViewDetail.Enabled := False;
     mnuActChange.Enabled     := True;
     mnuActLoadBoiler.Enabled := True;
+    CPMemNewSumm.LoadPasteText;
   end else
   begin
     StatusText('Retrieving selected Discharge Summary...');
@@ -1145,11 +1220,14 @@ begin
     mnuActLoadBoiler.Enabled := False;
     Screen.Cursor := crDefault;
     StatusText('');
+    CPMemSumm.LoadPasteText();
   end;
   DisplayPCE;
   pnlRight.Refresh;
   memNewSumm.Repaint;
   memSumm.Repaint;
+  if lstSumms.ItemIndex = EditingIndex then
+    LimitEditableNote;
   x := 'TIU^' + lstSumms.ItemID;
   SetPiece(x, U, 10, Piece(lstSumms.Items[lstSumms.ItemIndex], U, 11));
   NotifyOtherApps(NAE_REPORT, x);
@@ -1170,6 +1248,199 @@ begin
   cmdPCE.Enabled := True;
   if frmFrame.Closing then exit;
   DisplayPCE;
+end;
+
+procedure TfrmDCSumm.CopyToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+begin
+  inherited;
+  CPMemSumm.EditMonitor.ItemIEN := lstSumms.ItemIEN;
+  AllowMonitor := lstSumms.ItemIndex <> EditingIndex;
+end;
+
+procedure TfrmDCSumm.CPHide(Sender: TObject);
+begin
+  inherited;
+   if Sender  is TCopyPasteDetails then
+  begin
+   if TCopyPasteDetails(Sender).Name = 'CPMemSumm' then
+    spDetails.Visible := false
+   else
+    spEditDetails.Visible := False;
+  end;
+end;
+
+procedure TfrmDCSumm.CPShow(Sender: TObject);
+begin
+  inherited;
+  if Sender  is TCopyPasteDetails then
+  begin
+   if TCopyPasteDetails(Sender).Name = 'CPMemSumm' then
+   begin
+    spDetails.Visible := true;
+    spDetails.Top := CPMemSumm.Top;
+   end else begin
+    spEditDetails.Visible := true;
+    spEditDetails.Top := CPMemNewSumm.Top;
+   end;
+  end;
+end;
+
+procedure TfrmDCSumm.PasteToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+begin
+  inherited;
+  CPMemNewSumm.EditMonitor.ItemIEN := lstSumms.ItemIEN;
+  AllowMonitor := CPMemNewSumm.CopyMonitor.ExcludedList.IndexOf(IntToStr(FEditDCSumm.Title)) = -1;
+  ScrubTheClipboard;
+end;
+
+procedure TfrmDCSumm.SaveTheMonitor(Sender: TObject; SaveList: TStringList;
+  var ReturnList: TStringList);
+var
+  i, X, Total, LineCnt, SubCnt, z: Integer;
+  DivisionID, aName, aValue: string;
+  aList: iORNetMult;
+  LookUpLst: THashedStringList;
+begin
+  inherited;
+  Total := StrToIntDef(SaveList.values['TotalToSave'], -1);
+  DivisionID := Piece(RPCBrokerV.User.Division, '^', 1);
+  If Trim(DivisionID) = '' then
+    DivisionID := GetDivisionID;
+
+  if Total > -1 then
+  begin
+    LookUpLst := THashedStringList.create;
+    try
+      LookUpLst.BeginUpdate;
+      LookUpLst.Assign(SaveList);
+      LookUpLst.EndUpdate;
+      neworNetMult(aList);
+
+      for i := 1 to Total do
+      begin
+        aList.AddSubscript([i, 0], LookUpLst.values[IntToStr(i) + ',0']);
+
+        LineCnt := StrToIntDef(LookUpLst.values[IntToStr(i) + ',-1'], -1);
+        for X := 1 to LineCnt  do
+        begin
+          aName := IntToStr(i) + ',' + IntToStr(X);
+          aValue := FilteredString(LookUpLst.values[aName]);
+          aList.AddSubscript([i,x], aValue);
+        end;
+
+        // Send in the original if needed
+        LineCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',Copy,-1'], -1);
+        for X := 1 to LineCnt do
+        begin
+         aName := IntToStr(i) + ',Copy,' + IntToStr(X);
+         aValue := FilteredString(LookupLst.values[aName]);
+         aList.AddSubscript([i,0,x], aValue);
+        end;
+
+        // Send in the "Paste"
+        if StrToIntDef(Piece(LookupLst.values[IntToStr(i) + ',Paste,-1'], '^', 2), 0) >
+        (TCopyEditMonitor(Sender).CopyMonitor.SaveCutOff * 1000) then
+        begin
+          LineCnt := StrToIntDef(Piece(LookupLst.values[IntToStr(i) + ',Paste,-1'], '^', 1), -1);
+          for X := 1 to LineCnt do
+          begin
+           SubCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',Paste,' + IntToStr(X) + ',-1'], -1);
+           for Z := 1 to SubCnt do
+           begin
+            aName := IntToStr(i) + ',Paste,' + IntToStr(X) +','+ IntToStr(z);
+            aValue := FilteredString(LookupLst.values[aName]);
+            aList.AddSubscript([i,'Paste',x,z], aValue);
+           end;
+          end;
+        end;
+      end;
+
+      CallVistA('ORWTIU SVPASTE', [aList, DivisionID], ReturnList);
+
+    finally
+      LookUpLst.free;
+    end;
+  end;
+end;
+
+procedure TfrmDCSumm.LoadPastedText(Sender: TObject; LoadList: TStrings;
+  var ProcessLoad, PreLoaded: Boolean);
+var
+  DivId, ParamStr, tmpRtn: string;
+  AddlSigners: TStrings;
+  i: Integer;
+  IsCoSigner: Boolean;
+begin
+  DivID := Piece(RPCBrokerV.User.Division, '^', 1);
+  If Trim(DivID) = '' then
+    DivID := GetDivisionID;
+  CallVistA('ORWTIU VIEWCOPY', [User.DUZ, lstSumms.ItemIEN, DivId], tmpRtn);
+  ProcessLoad := Not(Trim(tmpRtn) = '0');
+  IsCoSigner := False;
+  With TCopyPasteDetails(Sender) do
+  begin
+
+    // check for preload
+    if ProcessLoad then
+    begin
+
+
+      AddlSigners := GetCurrentSigners(lstSumms.ItemIEN);
+      for i := 0 to AddlSigners.Count - 1 do
+      begin
+        if Piece(AddlSigners.Strings[i], U, 3) = 'Expected Cosigner' then
+        begin
+          IsCoSigner := (Piece(AddlSigners.Strings[i], U, 1)
+            = IntToStr(User.DUZ));
+          break;
+        end;
+      end;
+
+      if IsCoSigner and (not EditMonitor.CopyMonitor.DisplayPaste) then
+      begin
+        // Setup default indication
+        EditMonitor.CopyMonitor.MatchStyle := [fsBold];
+        EditMonitor.CopyMonitor.MatchHighlight := True;
+        EditMonitor.CopyMonitor.HighlightColor := clYellow;
+      end
+      else if not EditMonitor.CopyMonitor.DisplayPaste then
+      begin
+        EditMonitor.CopyMonitor.MatchStyle := [];
+        EditMonitor.CopyMonitor.MatchHighlight := False;
+        ProcessLoad := False;
+      end;
+    end;
+
+    if ProcessLoad then
+    begin
+      PreLoaded := False;
+
+      // Pre load off but make sure we need to actually reload
+      if not EditMonitor.ReadyForLoadTransfer then
+        PreLoaded := EditMonitor.ItemIEN = lstSumms.ItemIEN;
+
+      EditMonitor.ItemIEN := lstSumms.ItemIEN;
+      // If user is cosigner then show all paste actions
+      ShowAllPaste := IsCoSigner;
+
+      if not PreLoaded then
+      begin
+        ParamStr := IntToStr(EditMonitor.ItemIEN) + ';' +
+          EditMonitor.RelatedPackage;
+        LoadList.BeginUpdate;
+        CallVistA('ORWTIU GETPASTE', [ParamStr, DivId], LoadList);
+        LoadList.EndUpdate;
+      end;
+    end;
+
+    // Load has happened so no more transfers
+    CPMemNewSumm.DefaultSelectAll := IsCoSigner;
+    CPMemSumm.DefaultSelectAll := IsCoSigner;
+    CPMemNewSumm.EditMonitor.ReadyForLoadTransfer := False;
+    CPMemSumm.EditMonitor.ReadyForLoadTransfer := False;
+    EditMonitor.ItemIEN := lstSumms.ItemIEN;
+  end;
+  inherited;
 end;
 
 procedure TfrmDCSumm.cmdOrdersClick(Sender: TObject);
@@ -1534,7 +1805,9 @@ begin
   ReasonForDelete := SelectDeleteReason(lstSumms.ItemIEN);
   if ReasonForDelete = DR_CANCEL then Exit;
   // suppress prompt for deletion when called from SaveEditedNote (Sender = Self)
-  if (Sender <> Self) and (InfoBox(MakeDCSummDisplayText(lstSumms.Items[lstSumms.ItemIndex]) + TX_DEL_OK,
+  if (Sender <> Self) and (InfoBox(MakeDCSummDisplayText(lstSumms.Items[lstSumms.ItemIndex])
+    + AncillaryPackageMessages(lstSumms.ItemIEN, 'DELETE')
+    + TX_DEL_OK,
     TX_DEL_CNF, MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) <> IDYES) then Exit;
   // do the appropriate locking
   if not LockSumm(lstSumms.ItemIEN) then Exit;
@@ -1703,7 +1976,7 @@ begin
           GetTitleText(lstSumms.ItemIndex),TX_SIGN ,MB_YESNO)= ID_NO) then exit;
     end;
     if(OK) then
-    begin                                       
+    begin
       with lstSumms do SignatureForItem(Font.Size, MakeDCSummDisplayText(Items[ItemIndex]), SignTitle, ESCode);
       if Length(ESCode) > 0 then
       begin
@@ -1843,8 +2116,8 @@ begin
     else FEditCtrl := nil;
   if FEditCtrl <> nil then
   begin
-    popSummMemoCut.Enabled      := FEditCtrl.SelLength > 0;
-    popSummMemoCopy.Enabled     := popSummMemoCut.Enabled;
+    popSummMemoCut.Enabled      := (FEditCtrl.SelLength > 0) and (not TORExposedCustomEdit(FEditCtrl).ReadOnly);
+    popSummMemoCopy.Enabled     := FEditCtrl.SelLength > 0;
     popSummMemoPaste.Enabled    := (not TORExposedCustomEdit(FEditCtrl).ReadOnly) and
                                    Clipboard.HasFormat(CF_TEXT);
     popSummMemoTemplate.Enabled := frmDrawers.CanEditTemplates and popSummMemoCut.Enabled;
@@ -1891,7 +2164,8 @@ procedure TfrmDCSumm.popSummMemoPasteClick(Sender: TObject);
 begin
   inherited;
   //FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
-  ScrubTheClipboard;
+  if not CPMemNewSumm.EditMonitor.CopyMonitor.Enabled then
+   ScrubTheClipboard;
   FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
 end;
 
@@ -1988,8 +2262,13 @@ begin
   frmDrawers.RichEditControl := memNewSumm;
   frmDrawers.Splitter := splDrawers;
   frmDrawers.DefTempPiece := 3;
+  frmDrawers.CopyMonitor := CPMemNewSumm;
   FImageFlag := TBitmap.Create;
   FDocList := TStringList.Create;
+
+  //safteynet
+  CPMemSumm.CopyMonitor := frmFrame.CPAppMon;
+  CPMemNewSumm.CopyMonitor := frmFrame.CPAppMon;
 end;
 
 procedure TfrmDCSumm.mnuViewDetailClick(Sender: TObject);
@@ -2002,6 +2281,7 @@ begin
       StatusText('Retrieving discharge summary details...');
       Screen.Cursor := crHourGlass;
       LoadDetailText(memSumm.Lines, lstSumms.ItemIEN);
+       CPMemSumm.LoadPasteText();
       Screen.Cursor := crDefault;
       StatusText('');
       memSumm.SelStart := 0;
@@ -2157,11 +2437,15 @@ begin
   tvSumms.Items.EndUpdate;
   uChanging := False;
   tvSummsChange(Self, tvSumms.Selected);
-  case Notifications.Followup of
-    NF_DCSUMM_UNSIGNED_NOTE:   ;  //Automatically deleted by sig action!!!
+
+  if Notifications.Processing then
+  begin
+    case Notifications.Followup of
+      NF_DCSUMM_UNSIGNED_NOTE:   ;  //Automatically deleted by sig action!!!
+    end;
+    if Copy(Piece(Notifications.RecordID, U, 2), 1, 6) = 'TIUADD' then Notifications.Delete;
+    if Copy(Piece(Notifications.RecordID, U, 2), 1, 5) = 'TIUID' then Notifications.Delete;
   end;
-  if Copy(Piece(Notifications.RecordID, U, 2), 1, 6) = 'TIUADD' then Notifications.Delete;
-  if Copy(Piece(Notifications.RecordID, U, 2), 1, 5) = 'TIUID' then Notifications.Delete;
 end;
 
 procedure TfrmDCSumm.SetViewContext(AContext: TTIUContext);
@@ -2300,7 +2584,7 @@ begin
   mnuEditSharedTemplates.Enabled := frmDrawers.CanEditShared;
   mnuNewSharedTemplate.Enabled := frmDrawers.CanEditShared;
   mnuEditDialgFields.Enabled := CanEditTemplateFields;
-end;         
+end;
 
 procedure TfrmDCSumm.mnuEditSharedTemplatesClick(Sender: TObject);
 begin
@@ -2404,7 +2688,7 @@ procedure TfrmDCSumm.DoAutoSave(Suppress: integer = 1);
 var
   ErrMsg: string;
 begin
-  if fFrame.frmFrame.DLLActive = True then Exit;  
+  if fFrame.frmFrame.DLLActive = True then Exit;
   if (EditingIndex > -1) and FChanged then
   begin
     StatusText('Autosaving note...');
@@ -2412,6 +2696,11 @@ begin
     timAutoSave.Enabled := False;
     try
       SetText(ErrMsg, memNewSumm.Lines, lstSumms.GetIEN(EditingIndex), Suppress);
+
+      if (memNewSumm.lines.Count > 0) and (CPMemNewSumm.CopyPasteEnabled) then
+        //Save copied text here
+        CPMemNewSumm.SaveTheMonitor(lstSumms.GetIEN(EditingIndex));
+
     finally
       timAutoSave.Enabled := True;
     end;
@@ -2501,8 +2790,9 @@ var
 
   procedure AssignBoilerText;
   begin
-    ExecuteTemplateOrBoilerPlate(BoilerText, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo);
+    ExecuteTemplateOrBoilerPlate(BoilerText, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo, CPMemNewSumm);
     memNewSumm.Lines.Text := BoilerText.Text;
+    memNewSumm.SelStart := Length(memNewSumm.Lines.Text); //CQ: 16461
     SpeakStrings(BoilerText);
     FChanged := False;
   end;
@@ -2522,7 +2812,7 @@ begin
         case QueryBoilerPlate(BoilerText) of
           0:  { do nothing } ;                         // ignore
           1: begin
-               ExecuteTemplateOrBoilerPlate(BoilerText, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo);
+               ExecuteTemplateOrBoilerPlate(BoilerText, FEditDCSumm.Title, ltTitle, Self, 'Title: ' + FEditDCSumm.TitleName, DocInfo, CPMemNewSumm);
                memNewSumm.Lines.AddStrings(BoilerText);  // append
                SpeakStrings(BoilerText);
              end;
@@ -2817,8 +3107,10 @@ begin
         end;
 
       //display orphaned warning
-      if PDocTreeObject(Selected.Data)^.Orphaned then
-       MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
+//      if PDocTreeObject(Selected.Data)^.Orphaned then -- 1211117
+      if assigned(Selected) and assigned(Selected.Data) and
+        PDocTreeObject(Selected.Data)^.Orphaned then
+        MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
 
       SendMessage(tvSumms.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
       RedrawActivate(lvSumms.Handle);
@@ -3236,9 +3528,11 @@ procedure TfrmDCSumm.sptHorzCanResize(Sender: TObject; var NewSize: Integer;
   var Accept: Boolean);
 begin
   inherited;
-  if pnlWrite.Visible then
-     if NewSize > frmDCSumm.ClientWidth - memNewSumm.Constraints.MinWidth - sptHorz.Width then
-        NewSize := frmDCSumm.ClientWidth - memNewSumm.Constraints.MinWidth - sptHorz.Width;
+  if NewSize > frmDCSumm.ClientWidth - PnlRight.Constraints.MinWidth - sptHorz.Width then
+  begin
+    NewSize := frmDCSumm.ClientWidth - PnlRight.Constraints.MinWidth - sptHorz.Width;
+    Accept := false;
+  end;
 end;
 
 procedure TfrmDCSumm.popSummMemoPreviewClick(Sender: TObject);

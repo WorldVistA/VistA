@@ -557,15 +557,14 @@ var
             if fMethodSection.Count > 0 then
             begin
               // Grab the last address
-              LAddrStr := Piece(fMethodSection[fMethodSection.Count - 1], '^', 2);
+              LAddrStr := Piece(aObj.ResultList.Strings[0], '^', 1);
               // Need to tack this on to the new line
-              NewText := aObj.ResultList.Strings[0];
-              SetPiece(NewText, '^', 1, LAddrStr);
-              aObj.ResultList.Strings[0] := NewText;
+              NewText := fMethodSection[fMethodSection.Count - 1];
+              SetPiece(NewText, '^', 2, LAddrStr);
+              fMethodSection[fMethodSection.Count - 1] := NewText;
             end;
             // Add these results to the list
             fMethodSection.AddStrings(aObj.ResultList);
-
           end;
         TYPE_LINES:
           begin
@@ -1085,7 +1084,7 @@ begin
       Inc(idx);
       if idx < fLines.Count - 1 then
       begin
-        if ((fLines[idx] = '') or (Pos(UnitSection, fLines[idx]) > 0)) and insertLastLine then
+        if ((fLines[idx] = '') or (Pos(UnitSection, fLines[idx]) > 0)) and (fLinesSections.IndexOfPiece(UnitName, UnitIdx + 1) < 0) and insertLastLine then
         begin
           fLines.Insert(idx, ' XXX 0001:' + IntToHex(StrToIntDef(FUnitMax.Values[UnitName], 0), 8));
           insertLastLine := false;

@@ -104,7 +104,7 @@ implementation
 uses
     rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, ORClasses,
     clipbrd, fPreReq, uTemplates, fFrame, uODBase, VA508AccessibilityRouter,
-    uVA508CPRSCompatibility;
+    uVA508CPRSCompatibility, VAUtils;
 
 
 var
@@ -923,6 +923,8 @@ begin
 end;
 
 procedure TfrmODProc.FormResize(Sender: TObject);
+const
+  LEFT_MARGIN = 4;
 begin
   inherited;
   if Patient.CombatVet.IsEligible then
@@ -933,6 +935,8 @@ begin
    begin
        memOrder.Top := PnlReason.Top + PnlReason.Height + 7;
    end;
+  LimitEditWidth(memReason, MAX_PROGRESSNOTE_WIDTH-7); //puts memReason at 74 characters
+  Self.Constraints.MinWidth := TextWidthByFont(memReason.Font.Handle, StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 10) + ScrollBarWidth;
 
 end;
 

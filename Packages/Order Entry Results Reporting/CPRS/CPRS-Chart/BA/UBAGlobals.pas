@@ -7,7 +7,15 @@
 interface
 
 uses
-  Classes, ORNet, uConst, ORFn, Sysutils, Dialogs, Windows,Messages, rOrders;
+  Classes,
+  ORNet,
+  uConst,
+  ORFn,
+  Sysutils,
+  Dialogs,
+  Windows,
+  Messages,
+  rOrders;
 
 type
 
@@ -21,6 +29,7 @@ type
 
  {patient qualifiers}
  TBAPLPt=class(TObject)
+ public
    PtVAMC:string;
    PtDead:string;
    PtBid:string;
@@ -31,7 +40,7 @@ type
    PtHNC:boolean;
    PtMST:boolean;
    PtSHAD:boolean;
-   PtCL: Boolean;
+    PtCL: boolean;
    constructor Create(Alist:TStringList);
    function GetGMPDFN(dfn:string;name:String):string;
  public
@@ -52,6 +61,7 @@ type
   end;
 
  TBADxRecord = class(TObject)
+ public
      FExistingRecordID: string;
      FOrderID: string;
      FBADxCode: string; //Primary Dx
@@ -66,16 +76,19 @@ type
  end;
 
  TBACopiedOrderFlags = class
+ public
      OrderID: string;
-end;
+ end;
 
  TBATreatmentFactorsInRec = class(TObject)
+ public
      FBAOrderID:   string;
      FBAEligible:  string;
      FBATFactors:  string;
  end;
 
  TBAUnsignedBillingRec = class(TObject)
+ public
      FBAOrderID:  string;
      FBASTSFlags: string;
      FBADxCode:   string;
@@ -85,6 +98,7 @@ end;
  end;
 
  TBAConsultOrderRec = class(TObject)
+ public
     FBAOrderID:  string;
     FBADxCode:   string;
     FBASecDx1:   string;
@@ -94,6 +108,7 @@ end;
  end;
 
  TBAClearedBillingRec = class(TObject)
+ public
      FBAOrderID:  string;
      FBASTSFlags: string;
      FBADxCode:   string;
@@ -103,6 +118,7 @@ end;
  end;
 
   TBAFactorsRec = class(TObject)
+  public
      FBAFactorActive    : boolean;
      FBAFactorSC        : string;
      FBAFactorMST       : string;
@@ -112,10 +128,11 @@ end;
      FBAFactorHNC       : string;
      FBAFactorCV        : string;
      FBAFactorSHAD       : string;
-     FBAFactorCL        : String;
+    FBAFactorCL: string;
   end;
 
   TBAPLFactorsIN = class(TOBject)
+  public
       FPatientID         : string; // UProblems.piece 1
       FBADxText          : string; // UProblems.piece 2
       FBADxCode          : string; // UProblems.piece 3
@@ -125,6 +142,7 @@ end;
   end;
 
   TBACBStsFlagsIN = class(TOBject) // Y/N/U
+  public
      CB_Sts_Flags       :string;
   //   CB_SC              :string;
      CB_AO              :string;
@@ -201,20 +219,20 @@ var
   BACopiedOrderFlags: TStringList; //BAPHII 1.3.2
   BANurseConsultOrders: TStringList;
 
- // Used to display Dx's on fordersSign and fReview grids
+ // Used to display Dx's on grids
   Dx1               : string;
   Dx2               : string;
   Dx3               : string;
   Dx4               : string;
   TFactors          : string;
   SC,AO,IR          : string;
-  MST,HNC,CV,SHD,EC,CL  : string;
+  MST, HNC, CV, SHD, EC, CL: string;
   PLFactorsIndexes  : TStringList;
   BAHoldPrimaryDx   : string;     //  used to verify primart dx has been changed.
   BAPrimaryDxChanged: boolean;
   NonBillableOrderList : TStringList;  // contains reference to those selected orders that are non billable
   OrderListSCEI    : TSTringList;  //   OrderID Exists SCEI are required.
-  UnsignedOrders   : TStringList;  //    List of Orders from fReview when "don't sign" action
+  UnsignedOrders   : TStringList;  //    List of Orders when "don't sign" action
   BAUnSignedOrders  : TStringList;  // OrderID^StsFlags  ie., 12345^NNNNNNN
   BATFHints        : TStringList;
   BASelectedList   : TStringList;  //  contains list of orders selected for signature.
@@ -226,7 +244,17 @@ var
 
 implementation
 
-uses fBALocalDiagnoses, fOrdersSign, fReview, uCore, rCore, rPCE,uPCE, UBAConst, UBAMessages, UBACore,
+uses
+  fBALocalDiagnoses,
+  fOrdersSign,
+  fReview,
+  uCore,
+  rCore,
+  rPCE,
+  uPCE,
+  UBAConst,
+  UBAMessages,
+  UBACore,
   VAUtils;
 
 procedure RemoveOrderFromDxList(thisOrderID: string);
@@ -278,36 +306,10 @@ begin
 end;
 
 procedure BACopyOrder(sourceOrderList: TStringList);
-{ BAPHII 1.3.2
- Copy source order to target order, including Dx's, Dx descriptions, Treatment Factors and Clinical Indicators
-}
-var
-  newList,rList: TStringList;
-  i: integer;
-  x: string;
-
 begin
-   newList := TStringList.Create;
-   rList := TSTRingList.Create;
-   newList.Clear;
-   rList.Clear;
-
-   CopyDxRecord(UBAGlobals.SourceOrderID, UBAGlobals.TargetOrderID); //copy dx's to tempDxList record
-   newList.Add(UBAGlobals.SourceOrderID);
-   rList := rpcGetUnsignedOrdersBillingData(newList);
-
-   if RList.Count > 0 then
-   begin
-      for i := 0 to rList.Count-1 do
-      begin
-         x := rList.Strings[i];
-         BACopiedOrderFlags.Add(TargetOrderID + '^' + Piece(x,U,2) );
-      end;
-    end
-    else
-      begin
-        BACopiedOrderFlags.Add(TargetOrderID + '^' + frmSignOrders.GetCheckBoxStatus(sourceOrderID) );
-      end;
+  {
+    Removed, no longer used
+  }
 end;
 
 procedure CopyTreatmentFactorsDxsToCopiedOrder(pSourceOrderID:string; pTargetOrderID:string);
@@ -472,22 +474,20 @@ begin
 end;
 
 function AllSelectedDxBlank(const Caller: smallint) : boolean;
+{
 var
   i: smallint;
   selectedOrderID: string;
+}
 begin
   Result := true;
 
   case Caller of
      F_ORDERS_SIGN: begin
                        try
-                          for i := 0 to fOrdersSign.frmSignOrders.clstOrders.Items.Count-1 do
-                              if (frmSignOrders.clstOrders.Selected[i]) then
-                                 begin
-                                 selectedOrderID :=  TOrder(fOrdersSign.frmSignOrders.clstOrders.Items.Objects[i]).ID;
-                                 if (tempDxNodeExists(selectedOrderID)) then
-                                      Result := false;
-                                 end;
+                          {
+                          Removed, no longer used with this form
+                          }
                        except
                            on EListError do
                              begin
@@ -498,13 +498,9 @@ begin
                     end;
      F_REVIEW:      begin
                        try
-                          for i := 0 to fReview.frmReview.lstReview.Items.Count-1 do
-                              if (fReview.frmReview.lstReview.Selected[i]) then
-                                 begin
-                                 selectedOrderID :=  TOrder(fReview.frmReview.lstReview.Items.Objects[i]).ID;
-                                 if tempDxNodeExists(selectedOrderID) then
-                                      Result := false;
-                                 end;
+                          {
+                          Removed, no longer used with this form
+                          }
                        except
                            on EListError do
                              begin
@@ -575,7 +571,7 @@ end;
 
 function CountSelectedOrders(const Caller: smallint) : smallint;
 var
-  i: integer;
+  //i: integer;
   selectedOrders: smallint;
 begin
   selectedOrders := 0;
@@ -584,9 +580,9 @@ begin
   case Caller of
      F_ORDERS_SIGN: begin
                        try
-                          for i := 0 to (fOrdersSign.frmSignOrders.clstOrders.Items.Count-1) do
-                              if (fOrdersSign.frmSignOrders.clstOrders.Selected[i]) then
-                                   Inc(selectedOrders);
+                          {
+                          Removed, no longer used with this form
+                          }
                        except
                           on EListError do
                              begin
@@ -597,9 +593,7 @@ begin
                     end;
      F_REVIEW:      begin
                        try
-                          for i := 0 to (fReview.frmReview.lstReview.Items.Count-1) do
-                              if (fReview.frmReview.lstReview.Selected[i]) then
-                                   Inc(selectedOrders);
+                          { Removed no longer used with this form }
                        except
                           on EListError do
                              begin
@@ -616,11 +610,11 @@ end;
 
 function CompareOrderDx(const Caller: smallint) : boolean;
 var
-  i: integer;
+  //i: integer;
   firstSelectedID: string;
-  thisOrderID: string;
+  //thisOrderID: string;
   firstDxRec: TBADxRecord;
-  compareDxRec: TBADxRecord;
+  //compareDxRec: TBADxRecord;
   thisStringList: TStringList;
   thatStringList: TStringList;
 begin
@@ -636,12 +630,9 @@ begin
   case Caller of
      F_ORDERS_SIGN: begin
                        try
-                          for i := 0 to (fOrdersSign.frmSignOrders.clstOrders.Items.Count-1) do
-                              if (fOrdersSign.frmSignOrders.clstOrders.Selected[i]) then
-                                 begin
-                                 firstSelectedID := TChangeItem(fOrdersSign.frmSignOrders.clstOrders.Items.Objects[i]).ID;
-                                 Break;
-                                 end;
+                          {
+                          Removed, no longer used with this form
+                          }
                        except
                           on EListError do
                              begin
@@ -652,12 +643,9 @@ begin
                     end;
      F_REVIEW:      begin
                        try
-                          for i := 0 to (fReview.frmReview.lstReview.Items.Count-1) do
-                              if (fReview.frmReview.lstReview.Selected[i]) then
-                                 begin
-                                 firstSelectedID := TChangeItem(fReview.frmReview.lstReview.Items.Objects[i]).ID;
-                                 Break;
-                                 end;
+                          {
+                          Removed, no longer used with this form
+                          }
                        except
                           on EListError do
                              begin
@@ -681,28 +669,9 @@ begin
   case Caller of
      F_ORDERS_SIGN: begin
                        try
-                          for i := 0 to fOrdersSign.frmSignOrders.clstOrders.Items.Count-1 do
-                              if (fOrdersSign.frmSignOrders.clstOrders.Selected[i]) then
-                                 begin
-                                 thisOrderID := TChangeItem(fOrdersSign.frmSignOrders.clstOrders.Items.Objects[i]).ID;
-                                 // If order ID is same as the first selected order, then skip it
-                                 if thisOrderID = firstSelectedID then
-                                      Continue
-                                 else
-                                     begin
-                                     compareDxRec := TBADxRecord.Create;
-                                     InitializeNewDxRec(compareDxRec);
-                                     GetBADxListForOrder(compareDxRec, thisOrderID);
-
-                                     thatStringList.Add(compareDxRec.FBADxCode);
-                                     thatStringList.Add(compareDxRec.FBASecDx1);
-                                     thatStringList.Add(compareDxRec.FBASecDx2);
-                                     thatStringList.Add(compareDxRec.FBASecDx3);
-
-                                     if DiagnosesMatch(thisStringList, thatStringList) then
-                                         Result := true;
-                                     end;
-                                 end;
+                          {
+                          Removed, no longer used with this form
+                          }
                        except
                           on EListError do
                              begin
@@ -713,28 +682,9 @@ begin
                     end;
      F_REVIEW:      begin
                        try
-                          for i := 0 to fReview.frmReview.lstReview.Items.Count-1 do
-                              if (fReview.frmReview.lstReview.Selected[i]) then
-                                 begin
-                                 thisOrderID := TChangeItem(fReview.frmReview.lstReview.Items.Objects[i]).ID;
-                                 // If order ID is same as the first selected order, then skip it
-                                 if thisOrderID = firstSelectedID then
-                                      Continue
-                                 else
-                                     begin
-                                     compareDxRec := TBADxRecord.Create;
-                                     InitializeNewDxRec(compareDxRec);
-                                     GetBADxListForOrder(compareDxRec, thisOrderID);
-
-                                     thatStringList.Add(compareDxRec.FBADxCode);
-                                     thatStringList.Add(compareDxRec.FBASecDx1);
-                                     thatStringList.Add(compareDxRec.FBASecDx2);
-                                     thatStringList.Add(compareDxRec.FBASecDx3);
-
-                                     if DiagnosesMatch(thisStringList, thatStringList) then
-                                         Result := true;
-                                     end;
-                                 end;
+                          {
+                          Removed, no longer used with this form
+                          }
                           except
                           on EListError do
                              begin
@@ -1038,7 +988,7 @@ begin
   PLlist.Add('GMPFLD(1.09)=' + '"'+ FloatToStr(FMToday) +'"');
   PLlist.Add('GMPFLD(10,0)=' + '"'+'0'+ '"');
   Result := PLlist;
-  
+
 end;
 
 function TBAPLRec.FMToDateTime(FMDateTime: string): TDateTime;
@@ -1047,8 +997,10 @@ var
 begin
   { Note: TDateTime cannot store month only or year only dates }
   x := FMDateTime + '0000000';
-  if Length(x) > 12 then x := Copy(x, 1, 12);
-  if StrToInt(Copy(x, 9, 4)) > 2359 then x := Copy(x,1,7) + '.2359';
+  if Length(x) > 12 then
+    x := Copy(x, 1, 12);
+  if StrToInt(Copy(x, 9, 4)) > 2359 then
+    x := Copy(x, 1, 7) + '.2359';
   Year := IntToStr(17 + StrToInt(Copy(x,1,1))) + Copy(x,2,2);
   x := Copy(x,4,2) + '/' + Copy(x,6,2) + '/' + Year + ' ' + Copy(x,9,2) + ':' + Copy(x,11,2);
   Result := StrToDateTime(x);
@@ -1061,17 +1013,28 @@ var
 begin
   for i := 0 to AList.Count - 1 do
     case i of
-      0: PtVAMC             := Copy(Alist[i],1,999);
-      1: PtDead             := AList[i];
-      2: PtServiceConnected := (AList[i] = '1');
-      3: PtAgentOrange      := (AList[i] = '1');
-      4: PtRadiation        := (AList[i] = '1');
-      5: PtEnvironmental    := (AList[i] = '1');
-      6: PtBID              := Alist[i];
-      7: PtHNC              := (AList[i] = '1');
-      8: PtMST              := (AList[i] = '1');
-      9: PtSHAD              := (AList[i] = '1');
-      10: PtCL              := (AList[i] = '1');
+      0:
+        PtVAMC := Copy(Alist[i], 1, 999);
+      1:
+        PtDead := Alist[i];
+      2:
+        PtServiceConnected := (Alist[i] = '1');
+      3:
+        PtAgentOrange := (Alist[i] = '1');
+      4:
+        PtRadiation := (Alist[i] = '1');
+      5:
+        PtEnvironmental := (Alist[i] = '1');
+      6:
+        PtBid := Alist[i];
+      7:
+        PtHNC := (Alist[i] = '1');
+      8:
+        PtMST := (Alist[i] = '1');
+      9:
+        PtSHAD := (Alist[i] = '1');
+      10:
+        PtCL := (Alist[i] = '1');
     end;
 end;
 
@@ -1180,6 +1143,3 @@ Initialization
   BADeltedOrders.Clear;
 
 end.
-
-
-

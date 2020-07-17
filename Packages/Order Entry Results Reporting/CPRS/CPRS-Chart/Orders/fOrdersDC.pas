@@ -265,7 +265,7 @@ end;
 
 procedure TfrmDCOrders.unMarkedOrignalOrderDC(OrderArr: TStringList);
 begin
- CallV('ORWDX1 UNDCORIG', [OrderArr]);
+  CallVistA('ORWDX1 UNDCORIG', [OrderArr]);
 end;
 
 end.

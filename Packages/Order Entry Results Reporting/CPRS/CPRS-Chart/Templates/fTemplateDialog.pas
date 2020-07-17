@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ORCtrls, ORFn, AppEvnts, uTemplates, fBase508Form, uConst,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, U_CPTEditMonitor, U_CPTPasteDetails;
 
 type
   TfrmTemplateDialog = class(TfrmBase508Form)
@@ -17,6 +17,7 @@ type
     btnNone: TButton;
     lblFootnote: TStaticText;
     btnPreview: TButton;
+    CPTemp: TCopyEditMonitor;
     procedure btnAllClick(Sender: TObject);
     procedure btnNoneClick(Sender: TObject);
     procedure FormPaint(Sender: TObject);
@@ -68,9 +69,9 @@ type
   end;
 
 // Returns True if Cancel button is pressed
-function DoTemplateDialog(SL: TStrings; const CaptionText: string; PreviewMode: boolean = FALSE): boolean;
-procedure CheckBoilerplate4Fields(SL: TStrings; const CaptionText: string = ''; PreviewMode: boolean = FALSE); overload;
-procedure CheckBoilerplate4Fields(var AText: string; const CaptionText: string = ''; PreviewMode: boolean = FALSE); overload;
+function DoTemplateDialog(SL: TStrings; const CaptionText: string; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil): boolean;
+procedure CheckBoilerplate4Fields(SL: TStrings; const CaptionText: string = ''; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil); overload;
+procedure CheckBoilerplate4Fields(var AText: string; const CaptionText: string = ''; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil); overload;
 procedure ShutdownTemplateDialog;
 
 var
@@ -134,7 +135,7 @@ begin
 end;
 
 // Returns True if Cancel button is pressed
-function DoTemplateDialog(SL: TStrings; const CaptionText: string; PreviewMode: boolean = FALSE): boolean;
+function DoTemplateDialog(SL: TStrings; const CaptionText: string; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil): boolean;
 var
   i, j, idx, Indent: integer;
   DlgProps, Txt: string;
@@ -246,6 +247,7 @@ begin
         frmTemplateDialog.btnAll.Visible := FALSE;
       end;
       frmTemplateDialog.BuildAllControls;
+      frmTemplateDialog.CPTemp.RelatedPackage := 'Template: ' + CaptionText;
       repeat
          frmTemplateDialog.ShowModal;
          if(frmTemplateDialog.ModalResult = mrOK) then
@@ -275,8 +277,13 @@ begin
       SL.Clear;
   finally
     //frmTemplateDialog.Free;    v22.11e RV
+    if (Sl.Count > 0) and Assigned(ExtCPMon) then
+      frmTemplateDialog.CPTemp.TransferData(ExtCPMon.EditMonitor);
+
     frmTemplateDialog.Release;
     //frmTemplateDialog := nil;  access violation source?  removed 7/28/03 RV
+    Application.ProcessMessages;
+
     for i := 0 to DlgIDCounts.Count-1 do begin
       DlgIDCounts.Objects[i].Free;
     end;
@@ -288,9 +295,9 @@ begin
   else
   begin
     SetTemplateDialogCanceled(FALSE);
-    CheckBoilerplate4Fields(SL, CaptionText, PreviewMode);
+    CheckBoilerplate4Fields(SL, CaptionText, PreviewMode, ExtCPMon);
   end;
-  
+
 end;
 
 procedure ShutdownTemplateDialog;
@@ -302,14 +309,26 @@ begin
   end;
 end;
 
-procedure CheckBoilerplate4Fields(SL: TStrings; const CaptionText: string = ''; PreviewMode: boolean = FALSE);
+procedure CheckBoilerplate4Fields(SL: TStrings; const CaptionText: string = ''; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil);
+var
+  i: integer;
+  line: string;
+
 begin
+  for i := 0 to SL.Count - 1 do
+  begin
+    line := TrimRight(SL[i]);
+    if line = '' then
+      line := ' ';
+    if line <> SL[i] then
+      SL[i] := line;
+  end;
   while(HasTemplateField(SL.Text)) do
   begin
     if (BoilerplateTemplateFieldsOK(SL.Text)) then
     begin
       SL[SL.Count-1] := SL[SL.Count-1] + DlgPropMarker + '00100;0;-1;;0' + ObjMarker;
-      DoTemplateDialog(SL, CaptionText, PreviewMode);
+      DoTemplateDialog(SL, CaptionText, PreviewMode, ExtCPMon);
     end
     else
       SL.Clear;
@@ -317,7 +336,7 @@ begin
   StripScreenReaderCodes(SL);
 end;
 
-procedure CheckBoilerplate4Fields(var AText: string; const CaptionText: string = ''; PreviewMode: boolean = FALSE);
+procedure CheckBoilerplate4Fields(var AText: string; const CaptionText: string = ''; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil);
 var
   tmp: TStringList;
 
@@ -325,7 +344,7 @@ begin
   tmp := TStringList.Create;
   try
     tmp.text := AText;
-    CheckBoilerplate4Fields(tmp, CaptionText, PreviewMode);
+    CheckBoilerplate4Fields(tmp, CaptionText, PreviewMode, ExtCPMon);
     AText := tmp.text;
   finally
     tmp.free;
@@ -677,6 +696,7 @@ begin
       amgrMain.RefreshComponents;
       Application.ProcessMessages;
     end;
+    CPTemp.MonitorAllAvailable;
   finally
     FBuilding := FALSE;
   end;
@@ -703,6 +723,8 @@ begin
 end;
 
 procedure TfrmTemplateDialog.FormCreate(Sender: TObject);
+var
+ DteStr: String;
 begin
   uTemplateDialogRunning := True;
   FFirstBuild := TRUE;
@@ -712,10 +734,12 @@ begin
   FOldHintEvent := Application.OnShowHint;
   Application.OnShowHint := AppShowHint;
   //ResizeAnchoredFormToFont(Self);
-  FMaxPnlWidth := FontWidthPixel(sbMain.Font.Handle) * MAX_ENTRY_WIDTH; //AGP change Template Dialog to wrap at 80 instead of 74
+  FMaxPnlWidth := FontWidthPixel(sbMain.Font.Handle) * MAX_WRAP_WIDTH;
   SetFormPosition(Self);
   ResizeAnchoredFormToFont(Self);
   SizeFormToCancelBtn();
+  DteStr := FormatDateTime('mmddyyhhmmss', Now);
+  CPTemp.ItemIEN := StrToInt64Def(DteStr, 3) * -1;
 end;
 
 procedure TfrmTemplateDialog.AppShowHint(var HintStr: string; var CanShow: Boolean; var HintInfo: Controls.THintInfo);
@@ -736,7 +760,7 @@ begin
   FreeEntries(Entries);
   Entries.Free;
   BuildIdx.Free;
-  uTemplateDialogRunning := False;  
+  uTemplateDialogRunning := False;
 end;
 
 procedure TfrmTemplateDialog.FormMouseWheel(Sender: TObject; Shift: TShiftState;
@@ -849,7 +873,7 @@ var
 begin
   ctrl := TWinControl(Message.WParam);
   // Refresh the accessibility manager entry -
-  // fixes bug where first focusable check boxes weren't working correctly  
+  // fixes bug where first focusable check boxes weren't working correctly
   if ctrl is TCPRSDialogParentCheckBox then
   begin
     item := amgrMain.AccessData.FindItem(ctrl, FALSE);
@@ -860,4 +884,3 @@ begin
 end;
 
 end.
-

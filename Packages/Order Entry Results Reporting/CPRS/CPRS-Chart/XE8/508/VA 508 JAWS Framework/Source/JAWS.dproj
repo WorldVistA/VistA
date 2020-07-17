@@ -3,7 +3,7 @@
         <ProjectGuid>{4F206385-C253-446E-B839-CB6A9C7B6F8E}</ProjectGuid>
         <MainSource>JAWS.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Library</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -61,13 +61,16 @@
         <DCC_F>false</DCC_F>
         <DCC_E>false</DCC_E>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <DCC_UnitSearchPath>...;..\;$(BDS)\lib;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>...;..\;$(BDS)\lib;..\..\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_UsePackage>vcl;vclx;dbrtl;Rave65VCL;bdertl;rtl;vcldb;adortl;dbxcds;dbexpress;vclib;ibxpress;xmlrtl;vclactnband;inet;IntrawebDB_80_100;Intraweb_80_100;vclie;inetdbbde;inetdbxpress;IndyCore;IndySystem;dclOfficeXP;VclSmp;soaprtl;dsnap;IndyProtocols;teeui;teedb;tee;vcldbx;XWB_R2006;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=Jaws Framework DLL;FileVersion=1.11.0.1;InternalName=;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.11.0.1;Comments=Last modified by ZZZZZZBELLC</VerInfo_Keys>
         <DCC_MapFile>3</DCC_MapFile>
         <DCC_N>true</DCC_N>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <Debugger_CWD>&quot;C:\Users\ZZZZZZJuergB\Desktop\31B Testing&quot;</Debugger_CWD>
+        <Debugger_HostApplication>C:\Users\ZZZZZZJuergB\Desktop\31B Testing\CPRSChart.exe</Debugger_HostApplication>
+        <Debugger_RunParams>s=10.5.21.65 p=9040 /SCREADER:jfw.exe</Debugger_RunParams>
         <DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
@@ -81,11 +84,12 @@
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <Debugger_CWD>&quot;C:\Users\ZZZZZZJuergB\Desktop\31B Testing&quot;</Debugger_CWD>
         <VerInfo_Build>2</VerInfo_Build>
         <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=Jaws Framework DLL;FileVersion=1.11.0.2;InternalName=;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.11.0.2;Comments=Last modified by ZZZZZZBELLC</VerInfo_Keys>
         <DCC_ExeOutput>..\SR_SR3</DCC_ExeOutput>
-        <Debugger_RunParams>s=127.00.0.1 p=9009</Debugger_RunParams>
-        <Debugger_HostApplication>C:\Users\zzzzzzbellc\Desktop\508 testing\CPRSChart.exe</Debugger_HostApplication>
+        <Debugger_RunParams>s=10.5.21.65 p=9040 /SCREADER:jfw.exe</Debugger_RunParams>
+        <Debugger_HostApplication>C:\Users\ZZZZZZJuergB\Desktop\31B Testing\CPRSChart.exe</Debugger_HostApplication>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Optimize>false</DCC_Optimize>
@@ -93,10 +97,13 @@
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=Jaws Framework DLL;FileVersion=1.12.0.1;InternalName=;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.11.0.1;Comments=Last modified by ZZZZZZJUERG</VerInfo_Keys>
+        <VerInfo_MinorVer>12</VerInfo_MinorVer>
+        <DCC_WriteableConstants>true</DCC_WriteableConstants>
+        <Debugger_RunParams>s=10.5.21.65 p=9040 /SCREADER:jfw.exe -JL</Debugger_RunParams>
+        <DCC_DebugDCUs>true</DCC_DebugDCUs>
+        <Debugger_CWD>C:\CPRS\Workspaces\CPRS_Packages\CPRS_srcPackages\XE8\508\VA 508 JAWS Framework\Source</Debugger_CWD>
         <DCC_UnitSearchPath>C:\Temp\FastMM;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-        <DCC_ExeOutput>C:\Users\zzzzzzbellc\Desktop\508 testing</DCC_ExeOutput>
-        <Debugger_RunParams>s=127.00.0.1 p=9009 -FORCEUPD</Debugger_RunParams>
-        <Debugger_HostApplication>C:\Users\zzzzzzbellc\Desktop\508 testing\CPRSChart.exe</Debugger_HostApplication>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -118,6 +125,7 @@
             <Form>SplashScrn</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="ORProcessUtilities.pas"/>
         <None Include="JAWS.todo"/>
         <RcItem Include="FrameWork_Icon.ico">
             <ResourceType>ICON</ResourceType>
@@ -184,14 +192,9 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment Version="2">
-                <DeployFile LocalName="..\..\JAWS.rsm" Configuration="Release" Class="DebugSymbols">
+                <DeployFile LocalName="..\SR_SR3\JAWS.dll" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>JAWS.rsm</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="..\..\JAWS.SR" Configuration="Release" Class="ProjectOutput">
-                    <Platform Name="Win32">
+                        <RemoteName>JAWS.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

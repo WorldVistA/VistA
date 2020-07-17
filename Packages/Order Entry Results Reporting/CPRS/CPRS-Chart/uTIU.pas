@@ -67,7 +67,8 @@ type
     SearchString: String;  // Text Search CQ: HDS00002856
   end ;
 
-  TNoteTitles = class
+  TNoteTitles = class (TObject)
+  public
     DfltTitle: Integer;
     DfltTitleName: string;
     ShortList: TStringList;
@@ -75,7 +76,8 @@ type
     destructor Destroy; override;
   end;
 
-  TTIUPrefs = class
+  TTIUPrefs = class (TObject)
+  public
     DfltLoc: Integer;
     DfltLocName: string;
     SortAscending: Boolean;

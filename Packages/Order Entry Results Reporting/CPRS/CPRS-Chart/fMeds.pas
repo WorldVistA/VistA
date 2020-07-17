@@ -1,4 +1,4 @@
-                                                                       unit fMeds;
+unit fMeds;
 
 {$OPTIMIZATION OFF}                              // REMOVE AFTER UNIT IS DEBUGGED
 
@@ -59,18 +59,7 @@ type
     mnuChartSurgery: TMenuItem;
     mnuViewHistory: TMenuItem;
     popMedHistory: TMenuItem;
-    pnlBottom: TORAutoPanel;
-    splitBottom: TSplitter;
-    pnlMedIn: TPanel;
-    lstMedsIn: TCaptionListBox;
-    hdrMedsIn: THeaderControl;
-    pnlNonVA: TPanel;
-    lstMedsNonVA: TCaptionListBox;
-    hdrMedsNonVA: THeaderControl;
     splitTop: TSplitter;
-    pnlTop: TORAutoPanel;
-    lstMedsOut: TCaptionListBox;
-    hdrMedsOut: THeaderControl;
     mnuViewInformation: TMenuItem;
     mnuViewDemo: TMenuItem;
     mnuViewVisits: TMenuItem;
@@ -86,11 +75,24 @@ type
     SortbyClinicOrderthenStatusthenStopDate1: TMenuItem;
     SortbyDrugalphabeticallystatusactivestatusrecentexpired1: TMenuItem;
     N3: TMenuItem;
-    pnlView: TPanel;
-    txtView: TVA508StaticText;
     mnuActUnhold: TMenuItem;
     Z5: TMenuItem;
     mnuActOneStep: TMenuItem;
+    gdpSort: TGridPanel;
+    txtView: TVA508StaticText;
+    gdpOut: TGridPanel;
+    txtDateRangeOp: TVA508StaticText;
+    hdrMedsOut: THeaderControl;
+    lstMedsOut: TCaptionListBox;
+    gdpNon: TGridPanel;
+    txtDateRangeNon: TVA508StaticText;
+    hdrMedsNonVA: THeaderControl;
+    lstMedsNonVA: TCaptionListBox;
+    splitBottom: TSplitter;
+    gdpIn: TGridPanel;
+    txtDateRangeIp: TVA508StaticText;
+    hdrMedsIn: THeaderControl;
+    lstMedsIn: TCaptionListBox;
     procedure mnuChartTabClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -165,6 +167,7 @@ type
     FIterating: Boolean;
     FActionOnMedsTab: Boolean;
     FParentComplexOrderID: string;
+    FPrevInPatient: Boolean;
     uMedListIn: TList;
     uMedListOut: TList;
     uMedListNonVA: TList;
@@ -239,13 +242,16 @@ var
 
   oldFont: integer; //CQ9182
 
+  const
+    PSPO_1157 = 'OR*3.0*498'; //Check for required patch to enable PSPO 1157 functionality. Can be removed once 498 is released
+
 
 implementation
 
 uses uCore, rCore, fFrame, fRptBox, uOrders, fODBase, fOrdersDC, fOrdersHold, fOrdersUnhold,
-     fOrdersRenew, fOMNavA, fOrdersRefill, fMedCopy, fOrders, fODChild, rODBase, 
+     fOrdersRenew, fOMNavA, fOrdersRefill, fMedCopy, fOrders, fODChild, rODBase,
      StrUtils, fActivateDeactivate, VA2006Utils, VA508AccessibilityRouter,
-     VAUtils, System.UITypes;
+     VAUtils, System.UITypes, rMisc;  //rMisc added for Patch Check of OR*3.0*498
 
 {$R *.DFM}
 
@@ -272,7 +278,7 @@ const
   TX_NO_RENEW   = CRLF + CRLF + '- cannot be changed.' + CRLF + CRLF + 'Reason: ';
   TC_NO_RENEW   = 'Unable to Renew Order';
   TX_NO_HOLD    = CRLF + CRLF + '- cannot be placed on hold.' + CRLF + CRLF + 'Reason:  ';
-  TC_NO_HOLD    = 'Unable to Hold';  
+  TC_NO_HOLD    = 'Unable to Hold';
   TX_NO_UNHOLD  = CRLF + CRLF + '- cannot be released from hold.' + CRLF + CRLF + 'Reason: ';
   TC_NO_UNHOLD  = 'Unable to Release from Hold';
   TX_NO_COPY    = CRLF + CRLF + '- cannot be copied.' + CRLF + CRLF + 'Reason: ';
@@ -307,11 +313,14 @@ procedure TfrmMeds.DisplayPage;
 const
  RATIO_SMALL = 0.13; //0.1866;
 
-
 begin
   inherited DisplayPage;
-
   frmFrame.ShowHideChartTabMenus(mnuViewChart);
+  if InitPage then
+  begin
+    mnuActOneStep.Enabled    := User.EnableActOneStep;
+    FPrevInPatient := Patient.Inpatient;
+  end;
 
   if InitPage and User.NoOrdering then
   begin
@@ -325,52 +334,98 @@ begin
 
   //Swap Inpatient/Outpatient list display positions depending in inpatient/outpatient status
   if InitPage and User.DisableHold then
+  begin
      mnuActHold.Visible := False;
+     mnuActUnhold.visible := False;
+  end;
 
   if Patient.Inpatient then
   begin
-     splitBottom.Align := alNone;
-     hdrMedsIn.Align  := alNone;
-     lstMedsIn.Align   := alNone;
+    if (not FPrevInPatient) or InitPage then
+      begin
+        gdpIn.Align             := alNone;
+        splitBottom.Align       := alNone;
+        gdpNon.Align            := alNone;
+        splitTop.Align          := alNone;
+        gdpOut.Align            := alNone;
 
-     lstMedsIn.Parent  := pnlTop;
-     lstMedsIn.Align   := alClient;
-     lstMedsOut.Parent := pnlMedIn;
+        gdpIn.Align             := alTop;
+        splitTop.Align          := alTop;
+        gdpNon.Align            := alClient;
 
-     hdrMedsIn.Parent  := pnlTop;
-     hdrMedsIn.Align   := alTop;
+        gdpOut.Align            := alBottom;
+        splitBottom.Align       := alBottom;
 
-     hdrMedsOut.Parent := pnlMedIn;
-     splitBottom.Align := alBottom;
+        gdpIn.Repaint;
+        splitTop.Repaint;
+        gdpNon.Repaint;
+        splitBottom.Repaint;
+        gdpOut.Repaint;
+      end;
 
-     lstMedsIn.Height  := lstMedsIn.Height - 1; // added to cause repaint if user makes area small
-     lstMedsIn.Height  := lstMedsIn.Height + 1; // added to cause repaint if user makes area small.
-     lstMedsOut.Height := lstMedsOut.Height + 1;  // added to cause repaint if user makes area small
-     lstMedsOut.Height := lstMedsOut.Height - 1; // added to cause repaint if user makes area small
-
+     if txtDateRangeOp.Font.Size > 12 then
+       begin
+         gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 3);
+         gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 3);
+         gdpIn.RowCollection[0].Value  := (txtDateRangeIp.Height + 3);
+         gdpIn.RowCollection[1].Value  := (hdrMedsIn.Height + 3);
+         gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 3);
+         gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 3);
+       end
+       else
+         begin
+           gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 1);
+           gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 1);
+           gdpIn.RowCollection[0].Value  := (txtDateRangeIp.Height + 1);
+           gdpIn.RowCollection[1].Value  := (hdrMedsIn.Height + 1);
+           gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 1);
+           gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 1);
+         end;
   end
-  else
+  else     //Outpatient
      begin
-        splitBottom.Align := alNone;
-        hdrMedsIn.Align   := alNone;
+       if FPrevInPatient then
+        begin
+          gdpOut.Align          := alNone;
+          splitBottom.Align     := alNone;
+          gdpNon.Align          := alNone;
+          splitTop.Align        := alNone;
+          gdpIn.Align           := alNone;
 
-        lstMedsIn.Parent  := pnlMedIn;
-        lstMedsOut.Parent := pnlTop;
-        lstMedsOut.Align  := alClient;
+          gdpOut.Align          := alTop;
+          gdpOut.Repaint;
+          splitTop.Align        := alTop;
+          splitTop.Repaint;
+          gdpNon.Align          := alClient;
+          gdpNon.Repaint;
 
-        hdrMedsIn.Parent  := pnlMedIn;
-        hdrMedsIn.Align   := alTop;
+          gdpIn.Align           := alBottom;
+          gdpIn.Repaint;
+          splitBottom.Align     := alBottom;
+          splitBottom.Repaint;
+        end;
 
-        hdrMedsOut.Parent := pnlTop;
-        splitBottom.Align := alBottom;
-
-        lstMedsIn.Height  := lstMedsIn.Height - 1; // added to cause repaint if user makes area small
-        lstMedsIn.Height  := lstMedsIn.Height + 1; // added to cause repaint if user makes area small.
-        lstMedsOut.Height := lstMedsOut.Height + 1;  // added to cause repaint if user makes area small
-        lstMedsOut.Height := lstMedsOut.Height - 1; // added to cause repaint if user makes area small
+        if txtDateRangeOp.Font.Size > 12 then
+          begin
+           gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 3);
+           gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 3);
+           gdpIn.RowCollection[0].Value  := (txtDateRangeIp.Height + 3);
+           gdpIn.RowCollection[1].Value  := (hdrMedsIn.Height + 3);
+           gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 3);
+           gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 3);
+          end
+          else
+           begin
+             gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 1);
+             gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 1);
+             gdpIn.RowCollection[0].Value  := (txtDateRangeIp.Height + 1);
+             gdpIn.RowCollection[1].Value  := (hdrMedsIn.Height + 1);
+             gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 1);
+             gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 1);
+           end;
      end;
    RefreshMedLists;
-
+   FPrevInPatient := Patient.Inpatient;
 end;
 
 procedure TfrmMeds.mnuChartTabClick(Sender: TObject);
@@ -384,10 +439,10 @@ var
   AMedList: TList;
   AStringList: TStringList;
   NewMedRec: TMedListRec;
-  i, idx, Match: Integer;
+  i, Match: Integer;
   j: integer;
   AChildList: TStringlist;
-  CplxOrderID: string;
+  CplxOrderID, action: string;
 
   procedure SetCurrentOrderID;
   var
@@ -472,20 +527,22 @@ begin
   ORDER_ACT:  { sent by DC, Hold, & Renew actions }
     if AMedList <> nil then
     begin
-      if Piece(AnOrder.ActionOn, '=', 2) = 'CA' then
-      begin
-        // cancel action, remove from PendingChanges
-        for idx := uPendingChanges.Count-1 downto 0 do
-        begin
-          Match := IndexForCurrentID(Piece(AnOrder.ActionOn, '=', 1));
-          if Match > -1 then uPendingChanges.Delete(Match);
-        end;
-      end
-      else if Piece(AnOrder.ActionOn, '=', 2) = 'DL' then
+//      if Piece(AnOrder.ActionOn, '=', 2) = 'CA' then
+//      begin
+//        // cancel action, remove from PendingChanges
+//        for idx := uPendingChanges.Count-1 downto 0 do
+//        begin
+//          Match := IndexForCurrentID(Piece(AnOrder.ActionOn, '=', 1));
+//          if Match > -1 then uPendingChanges.Delete(Match);
+//        end;
+//      end
+//      else
+      action := Piece(AnOrder.ActionOn, '=', 2);
+      if (action = 'CA') or (action = 'DL') then
       begin
         // delete action, show as deleted (set OrderID's to 0 so not confused with next order)
         Match := IndexForCurrentID(Piece(AnOrder.ActionOn, '=', 1));
-        if Match > -1 then uPendingChanges[Match] := '0=DL';
+        if Match > -1 then uPendingChanges[Match] := '0=' + action;
         if AMedList = uMedListIn
         then AStringList := uPharmacyOrdersIn
         else if AMedList = uMedListOut
@@ -550,9 +607,9 @@ end;
 
 procedure TfrmMeds.FormCreate(Sender: TObject);
 var
- medsSplitFnd : boolean;
-  retList : TStringList;
-  i: integer;
+  medsSplitFnd: Boolean;
+  retList: TStringList;
+  i: Integer;
   x: string;
 begin
   inherited;
@@ -560,69 +617,70 @@ begin
   FixHeaderControlDelphi2006Bug(hdrMedsOut);
   FixHeaderControlDelphi2006Bug(hdrMedsNonVA);
   PageID := CT_MEDS;
-  uMedListIn  := TList.Create;
+  uMedListIn := TList.Create;
   uMedListOut := TList.Create;
   uMedListNonVA := TList.Create;
   uPendingChanges := TStringList.Create;
   uDGrp[DG_OUT] := DGroupIEN('O RX');
-  uDGrp[DG_IN]  := DGroupIEN('I RX');
-  uDGrp[DG_UD]  := DGroupIEN('UD RX');
-  uDGrp[DG_IV]  := DGroupIEN('IV RX');
+  uDGrp[DG_IN] := DGroupIEN('I RX');
+  uDGrp[DG_UD] := DGroupIEN('UD RX');
+  uDGrp[DG_IV] := DGroupIEN('IV RX');
   uDGrp[DG_TPN] := DGroupIEN('TPN');
   uDGrp[DG_NVA] := DGroupIEN('NV RX');
   uDGrp[DG_IMO] := DGroupIEN('C RX');
-  uPharmacyOrdersIn  := TStringList.Create;
+  uPharmacyOrdersIn := TStringList.Create;
   uPharmacyOrdersOut := TStringList.Create;
-  uNonVAOrdersOut    := TStringList.Create;
-  FActionOnMedsTab   := False;
+  uNonVAOrdersOut := TStringList.Create;
+  FActionOnMedsTab := False;
   FParentComplexOrderID := '';
   ChildODList := TStringList.Create;
 
-
-
-  //DETECT 1st TIME USER.
-  //If first time user (medSplitFound=false), then manually set panel heights.
-  //if NOT first time user (medSplitFound=true), then set Meds tab windows to saved settings.
-  medsSplitFnd := FALSE;
+  // DETECT 1st TIME USER.
+  // If first time user (medSplitFound=false), then manually set panel heights.
+  // if NOT first time user (medSplitFound=true), then set Meds tab windows to saved settings.
+  medsSplitFnd := False;
   if Assigned(frmMeds) then
-     begin
-     retList := TStringList.Create;
-     tCallV(retList, 'ORWCH LOADALL', [nil]);
+    begin
+      retList := TStringList.Create;
+      try
+        CallVistA('ORWCH LOADALL', [nil], retList);
+        for i := 0 to retList.Count - 1 do
+          begin
+            x := retList[i];
+            if strPos(PChar(x), PChar(MEDS_SPLIT_FORM)) <> nil then
+              begin
+                medsSplitFnd := False; // TRUE;
+                Break;
+              end;
+          end;
+      finally
+        FreeAndNil(retList);
+      end;
 
-     for i := 0 to retList.Count-1 do
+      if not medsSplitFnd then
         begin
-        x := retList.strings[i];
-        if strPos(PChar(x),PChar(MEDS_SPLIT_FORM)) <> nil then
-           begin
-           medsSplitFnd := False;//TRUE;
-           Break;
-           end;
+          gdpIn.Height := frmMeds.Height div 2;
+          gdpOut.Height := gdpIn.Height div 2;
         end;
+    end;
 
-     if not medsSplitFnd then
-        begin
-          pnlBottom.Height := frmMeds.Height div 2;
-          pnlMedIn.Height := pnlBottom.Height div 2;
-        end;
-     end;
-
-  //CQ9622
+  // CQ9622
   if hdrMedsIn.Sections[1].Width < 100 then
-     begin
-     hdrMedsIn.Sections[1].Width := 100;
-     hdrMedsIn.Refresh;
-     end;
+    begin
+      hdrMedsIn.Sections[1].Width := 100;
+      hdrMedsIn.Refresh;
+    end;
   if hdrMedsNonVA.Sections[1].Width < 100 then
-     begin
-     hdrMedsNonVA.Sections[1].Width := 100;
-     lstMedsNonVA.Refresh;
-     end;
+    begin
+      hdrMedsNonVA.Sections[1].Width := 100;
+      lstMedsNonVA.Refresh;
+    end;
   if hdrMedsOut.Sections[1].Width < 100 then
-     begin
-     hdrMedsOut.Sections[1].Width := 100;
-     hdrMedsOut.Refresh;
-     end;
-  //end CQ9622
+    begin
+      hdrMedsOut.Sections[1].Width := 100;
+      hdrMedsOut.Refresh;
+    end;
+  // end CQ9622
   AddMessageHandler(lstMedsIn, lstMedsInRightClickHandler);
   AddMessageHandler(lstMedsNonVA, lstMedsNonVARightClickHandler);
   AddMessageHandler(lstMedsOut, lstMedsOutRightClickHandler);
@@ -654,8 +712,9 @@ procedure TfrmMeds.mnuViewDetailClick(Sender: TObject);
 var
   AnID, ATitle, AnOrder: string;
   AListBox: TListBox;
-  i,j,idx: Integer;
+  i, j, idx: Integer;
   tmpList: TStringList;
+  aTmpList: TStringList;
 begin
   inherited;
   tmpList := TStringList.Create;
@@ -667,38 +726,46 @@ begin
     else if AListBox = lstMedsNonVA then ATitle := 'Non VA Medication Details'
     else ATitle := 'Inpatient Medication Details';
     FIterating := True;
-    with GetPharmacyOrders(AListBox) do for i := 0 to Count - 1 do if AListBox.Selected[i] then
-    begin
-      AnID := Piece(Strings[i], U, 1);
-      if AnID <> '' then
-        begin
-          FastAssign(DetailMedLM(AnID), tmpList);
-        end;
-      AnOrder := Piece(Strings[i], U, 2);
-      if AnOrder <> '' then
-        begin
-          tmpList.Add('');
-          tmpList.Add(StringOfChar('=', 74));
-          tmpList.Add('');
-          FastAddStrings(MedAdminHistory(AnOrder), tmpList);
-        end;
-      if CheckOrderGroup(AnOrder)=1 then  // if it's UD group
-      begin
-        for j := 0 to tmpList.Count - 1 do
-        begin
-          if Pos('PICK UP',UpperCase(tmpList[j]))>0 then
+    with GetPharmacyOrders(AListBox) do
+      for i := 0 to Count - 1 do
+        if AListBox.Selected[i] then
           begin
-            idx := j;
-            Break;
+            AnID := Piece(Strings[i], U, 1);
+            if AnID <> '' then
+              begin
+                DetailMedLM(AnID, tmpList);
+              end;
+            AnOrder := Piece(Strings[i], U, 2);
+            if AnOrder <> '' then
+              begin
+                tmpList.Add('');
+                tmpList.Add(StringOfChar('=', 74));
+                tmpList.Add('');
+                aTmpList := TStringList.Create;
+                try
+                  MedAdminHistory(AnOrder, aTmpList);
+                  FastAddStrings(aTmpList, tmpList);
+                finally
+                  FreeAndNil(aTmpList);
+                end;
+              end;
+            if CheckOrderGroup(AnOrder) = 1 then // if it's UD group
+              begin
+                for j := 0 to tmpList.Count - 1 do
+                  begin
+                    if Pos('PICK UP', UpperCase(tmpList[j])) > 0 then
+                      begin
+                        idx := j;
+                        Break;
+                      end;
+                  end;
+                if idx > 0 then
+                  tmpList.Delete(idx);
+              end;
+            if tmpList.Count > 0 then ReportBox(tmpList, ATitle, True);
+            if (frmFrame.TimedOut) or (frmFrame.CCOWDrivedChange) then Exit; // code added to correct access violation on timeout
+            Exit;
           end;
-        end;
-        if idx > 0 then
-          tmpList.Delete(idx);
-      end;
-      if tmpList.Count > 0 then ReportBox(tmpList, ATitle, True);
-      if (frmFrame.TimedOut) or (frmFrame.CCOWDrivedChange) then Exit; //code added to correct access violation on timeout
-        Exit;
-    end;
     FIterating := False;
     ResetSelectedForList(AListBox);
     AListBox.SetFocus;
@@ -712,6 +779,7 @@ var
   ATitle, AnOrder: string;
   AListBox: TListBox;
   i: Integer;
+  aTmpList: TStringList;
 begin
   inherited;
   AListBox := ListSelected(TX_NOSEL);
@@ -724,7 +792,15 @@ begin
   begin
     AnOrder := Piece(Strings[i], U, 2);
     if AnOrder <> '' then
-      ReportBox(MedAdminHistory(AnOrder), ATitle, True);
+      begin
+        aTmpList := TStringList.Create;
+        try
+          MedAdminHistory(AnOrder, aTmpList);
+          ReportBox(aTmpList, ATitle, True);
+        finally
+          FreeAndNil(aTmpList);
+        end;
+      end;
   end;
   FIterating := False;
   ResetSelectedForList(AListBox);
@@ -738,38 +814,56 @@ var
   i, view: Integer;
   AMed: TMedListRec;
   DateRange: string;
+  DateRangeIp: string;
+  DateRangeOp: string;
+  PatchInstalled: boolean;    //All code in fMeds related to this patch check for OR*3*498 can be removed in the future after patch 498 is released
 begin
-  if frmFrame.TimedOut then Exit;  
+  if frmFrame.TimedOut then Exit;
   lstMedsIn.Clear;
   lstMedsOut.Clear;
   lstMedsNonVA.Clear;
+  txtDateRangeOp.Caption := '';
+  txtDateRangeIp.Caption := '';
+  txtDateRangeNon.Caption := '';
   DateRange := '';
+  DateRangeIp := '';
+  DateRangeOp := '';
   StatusText('Retrieving active medications...');
   view := self.FSortView;
+  PatchInstalled := ServerHasPatch(PSPO_1157);  // OR*3*498 Related
   //AGP Fix for CQ 10410 added view arguement to control Meds Tab sort criteria
-  LoadActiveMedLists(uMedListIn, uMedListOut, uMedListNonVA, view, DateRange);
+  LoadActiveMedLists(uMedListIn, uMedListOut, uMedListNonVA, view, DateRange, DateRangeIp, DateRangeOp);
       self.FSortView := view;
       if view = 1 then
         begin
           self.SortbyStatusthenLocation1.Checked := True;
-          SetViewCaption(SortbyStatusthenLocation1.Caption + ' ' + DateRange);
+          SetViewCaption(SortbyStatusthenLocation1.Caption);
           self.SortbyClinicOrderthenStatusthenStopDate1.Checked := False;
           self.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.checked := false;
+          if not(PatchInstalled) then SetViewCaption(SortbyStatusthenLocation1.Caption + ' ' + DateRange);  // OR*3*498 Related
         end
       else if view = 2 then
         begin
           self.SortbyStatusthenLocation1.Checked := False;
           self.SortbyClinicOrderthenStatusthenStopDate1.Checked := True;
-          SetViewCaption(SortbyClinicOrderthenStatusthenStopDate1.Caption + ' ' + DateRange);
+          SetViewCaption(SortbyClinicOrderthenStatusthenStopDate1.Caption);
           self.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Checked := false;
+          if not(PatchInstalled) then SetViewCaption(SortbyClinicOrderthenStatusthenStopDate1.Caption + ' ' + DateRange); // OR*3*498 Related
         end
       else if view = 3 then
         begin
           self.SortbyStatusthenLocation1.Checked := False;
           self.SortbyClinicOrderthenStatusthenStopDate1.Checked := false;
           self.SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Checked := true;
-          SetViewCaption(SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Caption + ' ' + DateRange);
+          SetViewCaption(SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Caption);
+          if not(PatchInstalled) then SetViewCaption(SortbyDrugalphabeticallystatusactivestatusrecentexpired1.Caption + ' ' + DateRange);  // OR*3*498 Related
         end;
+  if PatchInstalled then    // OR*3*498 Related
+    begin
+      txtDateRangeOp.Caption := '            Outpatient Medications Date Range: ' + DateRangeOp;
+      txtDateRangeIp.Caption := '            Inpatient Medications Date Range: ' + DateRangeIp;
+      txtDateRangeNon.Caption := '            Non-VA Medications Date Range: ' + DateRangeOp; //non-VA Meds uses same date range as Outpatient Meds
+    end;
   uPharmacyOrdersIn.Clear;
   uPharmacyOrdersOut.Clear;
   uNonVAOrdersOut.Clear;
@@ -813,9 +907,9 @@ begin
     else if Abbreviation = 'RF' then result := 'Refill'
     else if Abbreviation = 'HD' then result := 'Hold'
     else if Abbreviation = 'DL' then result := 'Deleted'
+    else if Abbreviation = 'CA' then result := 'Canceled'
     else if Abbreviation = 'DC' then result := 'DC'
     else if Abbreviation = 'UH' then result := 'Unhold'
-         
     else result := Abbreviation;
   end;
 end;
@@ -891,7 +985,7 @@ begin
     TAG_NONVA: result := hdrMedsNonVA;
     TAG_INPT:  result := hdrMedsIn;
 
-    else       
+    else
     result := nil;
   end;
 end;
@@ -1040,7 +1134,7 @@ var
   i: integer;
 begin
   inherited;
-  
+
   //if PatientStatusChanged then exit;
   with lstMedsOut do for i := 0 to Items.Count -1 do
     Selected[i] := false;
@@ -1063,7 +1157,7 @@ var
   i: integer;
 begin
   inherited;
- 
+
   //if PatientStatusChanged then exit;
   with lstMedsIn do for i := 0 to Items.Count -1 do
     Selected[i] := false;
@@ -1246,7 +1340,7 @@ begin
 end;
 
 procedure TfrmMeds.mnuActUnholdClick(Sender: TObject);
-var    
+var
   ActiveList: TListBox;
   SelectedList: TList;
 begin
@@ -1263,11 +1357,11 @@ begin
     MakeSelectedList(ActiveList, SelectedList);                           // build list of selected orders
     if ExecuteUnholdOrders(SelectedList) then
     begin
-      AddSelectedToChanges(SelectedList);   
+      AddSelectedToChanges(SelectedList);
       ResetSelectedForList(ActiveList);
       SynchListToOrders(ActiveList, SelectedList);
     end;
-  finally  
+  finally
     ActiveList.SetFocus;
     FIterating := False;
     SelectedList.Free;
@@ -1351,7 +1445,7 @@ begin
   TempEvent := DelayEvent;
   DoesDestEvtOccur := False;
   ActiveList := ListSelected(TX_NOSEL);
-  if not assigned(ActiveList) then exit;  
+  if not assigned(ActiveList) then exit;
   if CheckMedStatus(ActiveList) = True then Exit;
   if ActiveList = nil then Exit;
   NewOrderCreated := False;
@@ -1740,10 +1834,12 @@ begin
       if self.Height > parent.ClientHeight then
          self.Height := parent.ClientHeight;
       maxPanelHeight := round((parent.ClientHeight-20)/3);
-      if pnlTop.Height + pnlBottom.Height > parent.ClientHeight then
+      if gdpOut.Height + gdpIn.Height + gdpNon.Height > parent.ClientHeight then
         begin
-          pnlBottom.Height := maxPanelHeight*2;
-          pnlTop.Height := maxPanelHeight;
+          //gdpIn.Height := maxPanelHeight*2;
+          gdpIn.Height := maxPanelHeight;
+          gdpNon.Height := maxPanelHeight;
+          gdpOut.Height := maxPanelHeight;
         end;
      end;    //assigned(self.parent)
   end;
@@ -1803,53 +1899,56 @@ procedure TfrmMeds.splitBottomMoved(Sender: TObject);
 begin
   inherited;
   splitBottom.Height := 5;
+  splitBottom.Repaint;
 end;
 
 procedure TfrmMeds.splitTopMoved(Sender: TObject);
 begin
   inherited;
    splitTop.Height := 5;
+   splitTop.Repaint;
 end;
 
 procedure TfrmMeds.InitfMedsSize;
 var
-  retList : TStringList;
-  strSizeFlds,x: string;
-  i: integer;
-  medsSplitFnd : boolean;
-  panelBottom, panelMedIn : integer;
+  retList: TStringList;
+  strSizeFlds, X: string;
+  i: Integer;
+  medsSplitFnd: Boolean;
+  panelBottom, panelMedIn: Integer;
 begin
-  //CQ3229
-  //DETECT 1st TIME USER.
-  //If first time user (medSplitFound=false), then manually set panel heights.
-  //if NOT first time user (medSplitFound=true), then set Meds tab windows to saved settings.
-  medsSplitFnd := FALSE;
+  // CQ3229
+  // DETECT 1st TIME USER.
+  // If first time user (medSplitFound=false), then manually set panel heights.
+  // if NOT first time user (medSplitFound=true), then set Meds tab windows to saved settings.
+  medsSplitFnd := False;
   if Assigned(frmMeds) then
-     begin
-     retList := TStringList.Create;
-     tCallV(retList, 'ORWCH LOADALL', [nil]);
-
-     for i := 0 to retList.Count-1 do
+    begin
+      retList := TStringList.Create;
+      try
+        CallVistA('ORWCH LOADALL', [nil], retList);
+        for i := 0 to retList.Count - 1 do
+          begin
+            X := retList.Strings[i];
+            if strPos(PChar(X), PChar(MEDS_SPLIT_FORM)) <> nil then
+              begin
+                medsSplitFnd := True;
+                Break;
+              end;
+          end;
+      finally
+        FreeAndNil(retList);
+      end;
+      if not medsSplitFnd then
         begin
-        x := retList.strings[i];
-        if strPos(PChar(x),PChar(MEDS_SPLIT_FORM)) <> nil then
-        begin
-           medsSplitFnd := TRUE;
-           Break;
-           end;
-        end;
-
-     if not medsSplitFnd then
-        begin
-          pnlBottom.Height := frmMeds.Height div 2;
-          pnlMedIn.Height := pnlBottom.Height div 2;
-          panelBottom := pnlBottom.Height;
-          panelMedIn  := pnlMedIn.Height;
+          gdpIn.Height := frmMeds.Height div 2;
+          gdpIn.Height := gdpIn.Height div 2;
+          panelBottom := gdpIn.Height;
+          panelMedIn := gdpIn.Height;
           strSizeFlds := IntToStr(panelBottom) + ',' + IntToStr(panelMedIn) + ',' + '0' + ',' + '0';
-          CallV('ORWCH SAVESIZ', [MEDS_SPLIT_FORM, strSizeFlds]);
+          CallVistA('ORWCH SAVESIZ', [MEDS_SPLIT_FORM, strSizeFlds]);
         end;
-     end;
-
+    end;
 end;
 
 {function TfrmMeds.PatientStatusChanged: boolean;
@@ -1971,8 +2070,8 @@ begin
     lstMedsOut.Refresh;
   end;
   //end CQ9622
-  pnlBottom.Height := pnlBottom.Height - 1;  // forces autopanel resize
-  pnlBottom.Height := pnlBottom.Height + 1;  // forces autopanel resize
+  gdpOut.Height := gdpOut.Height - 1;  // forces autopanel resize
+  gdpOut.Height := gdpOut.Height + 1;  // forces autopanel resize
 end;
 
 procedure TfrmMeds.hdrMedsNonVAMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -2002,8 +2101,8 @@ begin
     lstMedsNonVA.Refresh;
   end;
   //end CQ9622
-  pnlNonVA.Height := pnlNonVA.Height - 1;  // forces autopanel resize
-  pnlNonVA.Height := pnlNonVA.Height + 1;  // forces autopanel resize
+  gdpNon.Height := gdpNon.Height - 1;  // forces autopanel resize
+  gdpNon.Height := gdpNon.Height + 1;  // forces autopanel resize
 end;
 
 procedure TfrmMeds.hdrMedsInMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -2033,8 +2132,8 @@ begin
     lstMedsIn.Refresh;
   end;
   //end CQ9622
-  pnlBottom.Height := pnlBottom.Height - 1;  // forces autopanel resize
-  pnlBottom.Height := pnlBottom.Height + 1;  // forces autopanel resize
+  gdpIn.Height := gdpIn.Height - 1;  // forces autopanel resize
+  gdpIn.Height := gdpIn.Height + 1;  // forces autopanel resize
 end;
 
 procedure TfrmMeds.ClearChildODList;
@@ -2121,7 +2220,7 @@ procedure TfrmMeds.mnuOptimizeFieldsClick(Sender: TObject);
 var
   totalSectionsWidth, unit1, unit2, unit8: integer;
 begin
-  totalSectionsWidth := pnlTop.Width - 5;
+  totalSectionsWidth := gdpOut.Width - 5;
   if totalSectionsWidth < 16 then exit;
   unit1 := (totalSectionsWidth div 16) - 1;
   unit2 := unit1 * 2;
@@ -2147,6 +2246,7 @@ begin
   end;
   hdrMedsInSectionResize(hdrMedsIn, hdrMedsIn.Sections[0]);
   hdrMedsIn.Repaint;
+
   with hdrMedsOut do
   begin
     Sections[0].Width := unit1;
@@ -2158,6 +2258,28 @@ begin
   end;
   hdrMedsOutSectionResize(hdrMedsOut, hdrMedsOut.Sections[0]);
   hdrMedsOut.Repaint;
+
+  if txtDateRangeOp.Font.Size > 12 then
+       begin
+         gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 3);
+         gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 3);
+         gdpIn.RowCollection[0].Value := (txtDateRangeIp.Height + 3);
+         gdpIn.RowCollection[1].Value := (hdrMedsIn.Height + 3);
+         gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 3);
+         gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 3);
+       end
+       else
+         begin
+           gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 1);
+           gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 1);
+           gdpIn.RowCollection[0].Value := (txtDateRangeIp.Height + 1);
+           gdpIn.RowCollection[1].Value := (hdrMedsIn.Height + 1);
+           gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 1);
+           gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 1);
+         end;
+  gdpOut.Repaint;
+  gdpIn.Repaint;
+  gdpNon.Repaint;
 end;
 
 procedure TfrmMeds.hdrMedsOutSectionClick(HeaderControl: THeaderControl;
@@ -2211,4 +2333,3 @@ initialization
   SpecifyFormIsNotADialog(TfrmMeds);
 
 end.
-

@@ -2,24 +2,20 @@ inherited frmODActive: TfrmODActive
   Left = 267
   Top = 216
   Caption = 'Copy active orders for selected event'
-  ClientHeight = 389
-  ClientWidth = 663
+  ClientHeight = 311
+  ClientWidth = 530
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 240
-  PixelsPerInch = 120
-  TextHeight = 16
+  ExplicitWidth = 546
+  ExplicitHeight = 346
+  PixelsPerInch = 96
+  TextHeight = 13
   object lblCaption: TLabel [0]
     Left = 0
     Top = 0
-    Width = 663
-    Height = 36
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 530
+    Height = 29
     Align = alTop
     AutoSize = False
     Caption = '  Highlight orders to be copied to delayed release event'
@@ -28,43 +24,31 @@ inherited frmODActive: TfrmODActive
   end
   object pnlClient: TPanel [1]
     Left = 0
-    Top = 36
-    Width = 663
-    Height = 353
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 29
+    Width = 530
+    Height = 282
     Align = alClient
     BevelOuter = bvNone
     Locked = True
     TabOrder = 0
     DesignSize = (
-      663
-      353)
+      530
+      282)
     object btnOK: TButton
-      Left = 475
-      Top = 332
-      Width = 70
-      Height = 25
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 380
+      Top = 266
+      Width = 56
+      Height = 20
       Anchors = [akRight, akBottom]
       Caption = 'OK'
       TabOrder = 0
       OnClick = btnOKClick
     end
     object btnCancel: TButton
-      Left = 564
-      Top = 332
-      Width = 70
-      Height = 25
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 451
+      Top = 266
+      Width = 56
+      Height = 20
       Anchors = [akRight, akBottom]
       Caption = 'Cancel'
       TabOrder = 3
@@ -72,13 +56,9 @@ inherited frmODActive: TfrmODActive
     end
     object lstActiveOrders: TCaptionListBox
       Left = 0
-      Top = 26
-      Width = 663
-      Height = 298
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 21
+      Width = 530
+      Height = 238
       Style = lbOwnerDrawVariable
       Align = alTop
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -92,12 +72,8 @@ inherited frmODActive: TfrmODActive
     object hdControl: THeaderControl
       Left = 0
       Top = 0
-      Width = 663
-      Height = 26
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 530
+      Height = 21
       Sections = <
         item
           ImageIndex = -1
@@ -127,6 +103,8 @@ inherited frmODActive: TfrmODActive
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 24
+    Top = 8
     Data = (
       (
         'Component = pnlClient'

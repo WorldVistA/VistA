@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORFn, ComCtrls, ExtCtrls, fFrame, fBase508Form,
-  VA508AccessibilityManager, uReports, Vcl.Menus;
+  VA508AccessibilityManager, uReports, Vcl.Menus, U_CPTEditMonitor, fDeviceSelect,
+  WinApi.ShellApi, WinApi.RichEdit;
 
 type
   TfrmReportBox = class(TfrmBase508Form)
@@ -17,17 +18,29 @@ type
     cmdClose: TButton;
     pmnu: TPopupMenu;
     mnuCopy: TMenuItem;
+    CPRptBox: TCopyEditMonitor;
     procedure memReportClick(Sender: TObject);
     procedure cmdPrintClick(Sender: TObject);
     procedure cmdCloseClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure mnuCopyClick(Sender: TObject);
+    procedure CPRptBoxCopyToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+   private
+    fPrintHeader: Boolean;
+    fVistAPrint: boolean;
+    property PrintHeader: Boolean read fPrintHeader write fPrintHeader;
+    property VistAPrint: boolean read fVistaPrint write fVistAPrint;
+   protected
+     procedure WndProc(var Message: TMessage); override;
+   public
+    VistADevice: string;
   end;
 
-procedure ReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean);
-function ModelessReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean): TfrmReportBox;
-procedure PrintStrings(Form: TForm; StringText: TStrings; const Title, Trailer: string);
+procedure ReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean; includeHeader: boolean = true);
+function ModelessReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean; includeHeader: boolean = true): TfrmReportBox;
+function VistAPrintReportBox(ReportText: TStrings; ReportTitle: string): string;
+procedure PrintStrings(Form: TForm; StringText: TStrings; const Title, Trailer: string; includeHeader: boolean = true);
 
 implementation
 
@@ -36,7 +49,8 @@ uses
 
 {$R *.DFM}
 
-function CreateReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean): TfrmReportBox;
+function CreateReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean; includeHeader: boolean = true;
+                        VistAPrintOnly: boolean = true): TfrmReportBox;
 var
   i, AWidth, MinWidth, MaxWidth, AHeight: Integer;
   Rect: TRect;
@@ -51,6 +65,11 @@ begin
   try
     with Result do
     begin
+      { Enable URL detection in the memReport TRichEdit }
+      i := SendMessage(memReport.Handle, EM_GETEVENTMASK, 0, 0);
+      SendMessage(memReport.Handle, EM_SETEVENTMASK, 0, i or ENM_LINK);
+      SendMessage(memReport.Handle, EM_AUTOURLDETECT, Integer(True), 0);
+
       k := 0;
       MinWidth := 0;
       with pnlButton do for j := 0 to ControlCount - 1 do
@@ -58,8 +77,8 @@ begin
           begin
             SetLength(BtnArray, k+1);
             SetLength(BtnRight, k+1);
-            BtnArray[j] := TButton(Controls[j]);
-            BtnRight[j] := ResizeWidth(Font, MainFont, BtnArray[j].Width - BtnArray[j].Width - BtnArray[j].Left);
+            BtnArray[k] := TButton(Controls[j]);
+            BtnRight[k] := ResizeWidth(Font, MainFont, BtnArray[k].Width - BtnArray[k].Width - BtnArray[k].Left);
             k := k + 1;
           end;
       //cmdCloseRightMargin := ResizeWidth(Font, MainFont, pnlButton.Width - cmdClose.Width - cmdClose.Left);
@@ -71,6 +90,9 @@ begin
         if AWidth > MaxWidth then MaxWidth := AWidth;
       end;
       cmdPrint.Visible := AllowPrint;
+      printHeader := includeHeader;
+      vistaPrint := VistaPrintOnly;
+      vistaDevice := '';
       MaxWidth := MaxWidth + GetSystemMetrics(SM_CXVSCROLL);
       AHeight := (ReportText.Count * (lblFontTest.Height + 2)) + pnlbutton.Height;
       AHeight := HigherOf(AHeight, 250);
@@ -104,6 +126,9 @@ begin
       Rect := BoundsRect;
       ForceInsideWorkArea(Rect);
       BoundsRect := Rect;
+      SetLength(BtnArray, 0);
+      SetLength(BtnRight, 0);
+      SetLength(BtnLeft, 0);
     end;
   except
     KillObj(@Result);
@@ -111,14 +136,14 @@ begin
   end;
 end;
 
-procedure ReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean);
+procedure ReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean; includeHeader: boolean = true);
 var
   frmReportBox: TfrmReportBox;
-  
+
 begin
   Screen.Cursor := crHourglass;  //wat cq 18425 added hourglass and disabled mnuFileOpen
   fFrame.frmFrame.mnuFileOpen.Enabled := False;
-  frmReportBox := CreateReportBox(ReportText, ReportTitle, AllowPrint);
+  frmReportBox := CreateReportBox(ReportText, ReportTitle, AllowPrint, includeHeader, false);
   try
     frmReportBox.ShowModal;
   finally
@@ -128,14 +153,32 @@ begin
   end;
 end;
 
-function ModelessReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean): TfrmReportBox;
+function ModelessReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean; includeHeader: boolean = true): TfrmReportBox;
 begin
-  Result := CreateReportBox(ReportText, ReportTitle, AllowPrint);
+  Result := CreateReportBox(ReportText, ReportTitle, AllowPrint, includeHeader, false);
   Result.FormStyle := fsStayOnTop;
   Result.Show;
 end;
 
-procedure PrintStrings(Form: TForm; StringText: TStrings; const Title, Trailer: string);
+function VistAPrintReportBox(ReportText: TStrings; ReportTitle: string): string;
+var
+  frmReportBox: TfrmReportBox;
+
+begin
+  Screen.Cursor := crHourglass;  //wat cq 18425 added hourglass and disabled mnuFileOpen
+  fFrame.frmFrame.mnuFileOpen.Enabled := False;
+  frmReportBox := CreateReportBox(ReportText, ReportTitle, true, false, true);
+  try
+    frmReportBox.ShowModal;
+    Result := frmReportBox.VistADevice;
+    finally
+    frmReportBox.Release;
+    Screen.Cursor := crDefault;
+    fFrame.frmFrame.mnuFileOpen.Enabled := True;
+  end;
+end;
+
+procedure PrintStrings(Form: TForm; StringText: TStrings; const Title, Trailer: string; includeHeader: boolean = true);
 var
   AHeader: TStringList;
   memPrintReport: TRichEdit;
@@ -159,7 +202,7 @@ begin
     if dlgPrintReport.Execute then
     begin
       AHeader := TStringList.Create;
-      CreatePatientHeader(AHeader, Title);
+      if includeHeader then  CreatePatientHeader(AHeader, Title);
       memPrintReport := CreateReportTextComponent(Form);
       try
         MaxLines := 60 - AHeader.Count;
@@ -201,7 +244,7 @@ begin
                     end;
                 end;
               until LastLine >= StringText.Count - 1;
-            PrintWindowsReport(memPrintReport, PAGE_BREAK, Title, ErrMsg, True);
+            PrintWindowsReport(memPrintReport, PAGE_BREAK, Title, ErrMsg, includeHeader);
           end;
       finally
         memPrintReport.Free;
@@ -217,6 +260,29 @@ begin
   end;
 end;
 
+{ Enable URL detection in the memReport TRichEdit }
+procedure TfrmReportBox.WndProc(var Message: TMessage);
+var
+  p: TENLink;
+  aURL: string;
+begin
+  if (Message.Msg = WM_NOTIFY) then
+    begin
+      if (PNMHDR(Message.LParam).code = EN_LINK) then
+        begin
+          p := TENLink(Pointer(TWMNotify(Message).NMHdr)^);
+          if (p.Msg = WM_LBUTTONDOWN) then
+            begin
+              SendMessage(memReport.Handle, EM_EXSETSEL, 0, LongInt(@(p.chrg)));
+              aURL := memReport.SelText;
+              ShellExecute(Handle, 'open', PChar(aURL), NIL, NIL, SW_SHOWNORMAL);
+            end
+        end
+    end;
+
+  inherited;
+end;
+
 procedure TfrmReportBox.memReportClick(Sender: TObject);
 begin
   //Close;
@@ -230,8 +296,23 @@ end;
 
 procedure TfrmReportBox.cmdPrintClick(Sender: TObject);
 begin
-  PrintStrings(Self, memReport.Lines, Self.Caption, 'End of report');
-  memReport.Invalidate;
+  if VistAPrint then
+    begin
+      VistaDevice := SelectDevice(Self, Encounter.Location, FALSE, 'Print Device Selection');
+    end
+  else
+    begin
+      PrintStrings(Self, memReport.Lines, Self.Caption, 'End of report', PrintHeader);
+      memReport.Invalidate;
+    end;
+end;
+
+procedure TfrmReportBox.CPRptBoxCopyToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+begin
+  inherited;
+  CPRptBox.RelatedPackage := self.Caption+';'+ Patient.Name;
+  CPRptBox.ItemIEN := -1;
+  AllowMonitor := true;
 end;
 
 procedure TfrmReportBox.cmdCloseClick(Sender: TObject);
@@ -251,5 +332,7 @@ begin
   inherited;
   self.memReport.Refresh;
 end;
+
+
 
 end.

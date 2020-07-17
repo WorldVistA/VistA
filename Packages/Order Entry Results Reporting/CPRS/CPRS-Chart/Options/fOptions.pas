@@ -16,6 +16,12 @@ type
     constructor Create(aOwner: TComponent); override;
   end;
 
+  TColorBox = Class(Extctrls.TColorBox)
+   private
+    procedure CMFontChanged(var Message: TMessage); message CM_FONTCHANGED;
+    procedure AdjustSizeOfSelf;
+  End;
+
   TfrmOptions = class(TfrmAutoSz)
     pnlMain: TPanel;
     pnlBottom: TPanel;
@@ -111,6 +117,30 @@ type
     imgReport2: TImage;
     PnlNoteTop: TPanel;
     PnlNoteCl: TPanel;
+    tsCopyPaste: TTabSheet;
+    PnlNoteBtm: TPanel;
+    bvlCopyPasteTitle: TBevel;
+    ImgCopyPaste: TImage;
+    lblCopyPaste: TStaticText;
+    GroupBox1: TGroupBox;
+    pnlCPMain: TPanel;
+    Panel1: TPanel;
+    lblCP: TStaticText;
+    CopyPasteOptions: TCheckListBox;
+    lbCPhighLight: TStaticText;
+    cpHLColor: TColorBox;
+    GroupBox2: TGroupBox;
+    pblCPLCS: TPanel;
+    CPLCSToggle: TCheckBox;
+    pnlCPLCsSub: TPanel;
+    CPLcsMemo: TMemo;
+    CPLCSCOLOR: TColorBox;
+    CPLCSIDENT: TCheckListBox;
+    CPLCSLimit: TEdit;
+    CPLcsLimitText: TStaticText;
+    lblTextColor: TStaticText;
+    pnlCPOptions: TPanel;
+    cbkCopyPaste: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnCoverDaysClick(Sender: TObject);
@@ -144,6 +174,15 @@ type
     procedure pagOptionsEnter(Sender: TObject);
     procedure pagOptionsDrawTab(Control: TCustomTabControl; TabIndex: Integer;
       const Rect: TRect; Active: Boolean);
+    procedure cbkCopyPasteClick(Sender: TObject);
+    procedure CPOptionsClickCheck(Sender: TObject);
+    procedure CPOptionsDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; aState: TOwnerDrawState);
+   procedure cpHLColorChange(Sender: TObject);
+    procedure CPLCSLimitKeyPress(Sender: TObject; var Key: Char);
+    procedure CPLCSToggleClick(Sender: TObject);
+    procedure CPLCSCOLORChange(Sender: TObject);
+    procedure CPLCSIDENTClickCheck(Sender: TObject);
+    procedure CPLCSLimitChange(Sender: TObject);
   private
     { Private declarations }
     FdirtyNotifications: boolean;  // used to determine edit changes to Notifications
@@ -154,15 +193,21 @@ type
     FsortAscending: boolean;
     FLastClickedItem: TListItem;
     FGiveMultiTabMessage: boolean;
+    CopyPasteColor: TColor;  //Color used for copy paste
+    LCSIdentColor: TColor;  //Color used for copy paste LCS
     procedure Offset(var topnum: integer; topoffset: integer; var leftnum: integer; leftoffset: integer);
     procedure LoadNotifications;
     procedure LoadOrderChecks;
     procedure ApplyNotifications;
     procedure ApplyOrderChecks;
     procedure ApplyOtherStuff;
+    Procedure ApplyCopyPaste;
     procedure CheckApply;
     procedure LoadListView(aListView: TListView; aList: TStrings);
     procedure ChangeOnOff(aListView: TListView; aListItem: TListItem);
+    function  CopyPasteChanged(): Boolean;
+    procedure LoadCopyPaste();
+    function VerifySaveCondition(Sender: TObject): Integer;
   public
     { Public declarations }
   end;
@@ -178,8 +223,10 @@ uses fOptionsDays, fOptionsReminders, fOptionsSurrogate,
      fOptionsPatientSelection, fOptionsLists, fOptionsTeams, fOptionsCombinations,
      fOptionsOther, fOptionsNotes, fOptionsTitles, fOptionsReportsCustom, fOptionsReportsDefault,
      fGraphs, fGraphSettings, fGraphProfiles, rGraphs, uGraphs,
-     rOptions, rCore, uCore, uOptions, UBACore, fFrame, UITypes, VA508AccessibilityRouter, Themes;
+     rOptions, rCore, uCore, uOptions, UBACore, fFrame, UITypes, VA508AccessibilityRouter;
      //fTestDialog;
+
+// This needs to be changed in the 32 branch
 
 {$R *.DFM}
 
@@ -275,12 +322,28 @@ end;
 
 procedure TfrmOptions.FormCreate(Sender: TObject);
 // initialize form
+Var
+ I:integer;
 begin
   LoadNotifications;
   LoadOrderChecks;
   FdirtyNotifications := false;
   FdirtyOrderChecks := false;
   FdirtyOtherStuff := false;
+  //Retrieve the Copy Paste options
+  if frmFrame.CPAppMon.Enabled then
+   LoadCopyPaste;
+
+  for i := 0 to pagOptions.PageCount -1 do
+  begin
+    if pagOptions.Pages[i].Name = 'tsCopyPaste' then
+    begin
+    pagOptions.Pages[i].TabVisible := frmFrame.CPAppMon.Enabled;
+    break;
+    end;
+  end;
+  tsCopyPaste.Visible := frmFrame.CPAppMon.Enabled;
+
   CheckApply;
 
   if (Encounter.Provider = 0) and not IsCIDCProvider(User.DUZ) then
@@ -395,6 +458,8 @@ end;
 
 procedure TfrmOptions.btnApplyClick(Sender: TObject);
 // save actions without exiting
+Var
+ Verified: Integer;
 begin
   if FdirtyNotifications then
     ApplyNotifications;
@@ -402,6 +467,13 @@ begin
     ApplyOrderChecks;
   if FdirtyOtherStuff then
     ApplyOtherStuff;
+  if CopyPasteChanged then begin
+    Verified := VerifySaveCondition(sender);
+    if Verified = -1 then
+     ApplyCopyPaste
+    else if Verified = mrOk then
+      exit;
+  end;
   CheckApply;
   if Sender = btnOK then begin
     ModalResult := mrOk;
@@ -413,8 +485,15 @@ procedure TfrmOptions.LoadNotifications;
 // load Notification tab
 var
   notifydefaults, surrogateinfo, flag, enableerase: string;
+  aResults: TStringList;
 begin
-  LoadListView(lvwNotifications, rpcGetNotifications);
+  aResults := TStringList.Create;
+  try
+    rpcGetNotifications(aResults);
+    LoadListView(lvwNotifications, aResults);
+  finally
+    FreeAndNil(aResults);
+  end;
   lvwNotificationsColumnClick(lvwNotifications, lvwNotifications.Column[0]); // make sure sorted
   notifydefaults := rpcGetNotificationDefaults;
   flag := Piece(notifydefaults, '^', 2);
@@ -428,61 +507,75 @@ end;
 
 procedure TfrmOptions.LoadOrderChecks;
 // load Order Check tab
+var
+  aResults: TStringList;
 begin
-  LoadListView(lvwOrderChecks, rpcGetOrderChecks);
-  lvwOrderChecks.Checkboxes := true;
+  aResults := TStringList.Create;
+  try
+    rpcGetOrderChecks(aResults);
+    LoadListView(lvwOrderChecks, aResults);
+    lvwOrderChecks.Checkboxes := true;
+  finally
+    FreeAndNil(aResults);
+  end;
 end;
 
 procedure TfrmOptions.ApplyNotifications;
 // save Notification changes
 var
-  i: integer;
+  i: Integer;
   newonoff: string;
   aRule: TRule;
   aList: TStringList;
 begin
   aList := TStringList.Create;
-  for i := 0 to lvwNotifications.Items.Count - 1 do
-  begin
-    aRule := TRule(lvwNotifications.Items.Item[i].SubItems.Objects[2]);
-    if lvwNotifications.Items.Item[i].SubItems[1] <> 'Mandatory' then
-    begin
-      newonoff := Uppercase(lvwNotifications.Items.Item[i].SubItems[0]);
-      if aRule.OriginalValue <> newonoff then
+  try
+    for i := 0 to lvwNotifications.Items.Count - 1 do
       begin
-        //***Show508Message(aRule.IEN + ' ' + aRule.OriginalValue + ' ' + newonoff);
-        aList.Add(aRule.IEN + '^' + newonoff);
-        aRule.OriginalValue := lvwNotifications.Items.Item[i].SubItems[0];
+        aRule := TRule(lvwNotifications.Items.Item[i].SubItems.Objects[2]);
+        if lvwNotifications.Items.Item[i].SubItems[1] <> 'Mandatory' then
+          begin
+            newonoff := Uppercase(lvwNotifications.Items.Item[i].SubItems[0]);
+            if aRule.OriginalValue <> newonoff then
+              begin
+                // ***Show508Message(aRule.IEN + ' ' + aRule.OriginalValue + ' ' + newonoff);
+                aList.Add(aRule.IEN + '^' + newonoff);
+                aRule.OriginalValue := lvwNotifications.Items.Item[i].SubItems[0];
+              end;
+          end;
       end;
-    end;
+    rpcSetNotifications(aList);
+    FdirtyNotifications := false;
+  finally
+    aList.free;
   end;
-  rpcSetNotifications(aList);
-  aList.free;
-  FdirtyNotifications := false;
 end;
 
 procedure TfrmOptions.ApplyOrderChecks;
 // save Order Check changes
 var
-  i: integer;
+  i: Integer;
   newonoff: string;
   aRule: TRule;
   aList: TStringList;
 begin
   aList := TStringList.Create;
-  for i := 0 to lvwOrderChecks.Items.Count - 1 do
-  begin
-    aRule := TRule(lvwOrderChecks.Items.Item[i].SubItems.Objects[2]);
-    newonoff := Uppercase(lvwOrderChecks.Items.Item[i].SubItems[0]);
-    if aRule.OriginalValue <> newonoff then
-    begin
-      aList.Add(aRule.IEN + '^' + newonoff);
-      aRule.OriginalValue := lvwOrderChecks.Items.Item[i].SubItems[0];
-    end;
+  try
+    for i := 0 to lvwOrderChecks.Items.Count - 1 do
+      begin
+        aRule := TRule(lvwOrderChecks.Items.Item[i].SubItems.Objects[2]);
+        newonoff := Uppercase(lvwOrderChecks.Items.Item[i].SubItems[0]);
+        if aRule.OriginalValue <> newonoff then
+          begin
+            aList.Add(aRule.IEN + '^' + newonoff);
+            aRule.OriginalValue := lvwOrderChecks.Items.Item[i].SubItems[0];
+          end;
+      end;
+    rpcSetOrderChecks(aList);
+    FdirtyOrderChecks := false;
+  finally
+    aList.free;
   end;
-  rpcSetOrderChecks(aList);
-  aList.free;
-  FdirtyOrderChecks := false;
 end;
 
 procedure TfrmOptions.ApplyOtherStuff;
@@ -502,7 +595,20 @@ end;
 procedure TfrmOptions.CheckApply;
 // determine if Apply button is enabled
 begin
-  btnApply.Enabled :=  FdirtyOrderChecks or FdirtyNotifications or FdirtyOtherStuff;
+  btnApply.Enabled :=  FdirtyOrderChecks or FdirtyNotifications or FdirtyOtherStuff or CopyPasteChanged;
+end;
+
+
+procedure TfrmOptions.cbkCopyPasteClick(Sender: TObject);
+begin
+  inherited;
+  pnlCPOptions.Visible := cbkCopyPaste.Checked;
+  if cbkCopyPaste.Checked then
+    cbkCopyPaste.Caption := 'Copy/Paste viewing is currently enabled.'
+  else
+    cbkCopyPaste.Caption := 'Copy/Paste viewing is currently disabled.';
+
+  CheckApply;
 end;
 
 procedure TfrmOptions.chkNotificationsFlaggedClick(Sender: TObject);
@@ -771,6 +877,396 @@ begin
   end;
 end;
 
+// COPY PASTE
+
+procedure TfrmOptions.cpHLColorChange(Sender: TObject);
+begin
+  inherited;
+  CopyPasteColor := Get508CompliantColor(cpHLColor.Selected);
+  CopyPasteOptions.Repaint;
+  CheckApply;
+end;
+
+procedure TfrmOptions.CPLCSCOLORChange(Sender: TObject);
+begin
+  inherited;
+  LCSIdentColor := Get508CompliantColor(CPLCSCOLOR.Selected);
+  CheckApply;
+end;
+
+procedure TfrmOptions.CPLCSLimitChange(Sender: TObject);
+begin
+  inherited;
+  CheckApply;
+end;
+
+procedure TfrmOptions.CPLCSLimitKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if not CharInSet(Key, [#8, '0'..'9']) then begin
+    // Discard the key
+    Key := #0;
+  end;
+
+end;
+
+function TfrmOptions.CopyPasteChanged(): Boolean;
+// Determines if the user changed any options
+// Bold^Italics^Underline^Highlight^Highlight Color
+//var
+// I: Integer;
+// OptionList: TStringList;
+// OurFlag: Boolean;
+begin
+ Result := false;
+ if not frmFrame.CPAppMon.Enabled then
+  exit;
+ With frmFrame.CPAppMon do begin
+   if not result then
+    result := (DisplayPaste <> cbkCopyPaste.Checked);
+  if not result then
+   result := (CopyPasteOptions.Checked[0] <> (fsBold in MatchStyle));
+  if not result then
+   result := (CopyPasteOptions.Checked[1] <> (fsItalic in MatchStyle));
+  if not result then
+   result := (CopyPasteOptions.Checked[2] <> (fsUnderline in MatchStyle));
+  if not result then
+   result := (CopyPasteOptions.Checked[3] <> MatchHighlight);
+  //When off color is set to background color
+  if (not Result) and (CopyPasteColor <> CopyPasteOptions.Color) then
+   Result := HighlightColor <> CopyPasteColor;
+
+  //LCS Change
+  if not result then
+   Result := (CPLCSToggle.Checked <> LCSToggle);
+  if not result then
+    result := (CPLCSIDENT.Checked[0] <> (fsBold in LCSTextStyle));
+  if not result then
+    result := (CPLCSIDENT.Checked[1] <> (fsItalic in LCSTextStyle));
+  if not result then
+    result := (CPLCSIDENT.Checked[2] <> (fsUnderline in LCSTextStyle));
+  if not result then
+   result := (CPLCSIDENT.Checked[3] <> LCSUseColor);
+  //When off color is set to background color
+  if (not Result) and (LCSIdentColor <> CPLCSIDENT.color) then
+   Result := LCSTextColor <> LCSIdentColor;
+  if not result then
+   result := StrToIntDef(CPLCSLimit.Text, 0) <> LCSCharLimit;
+ end;
+
+end;
+
+procedure TfrmOptions.CPLCSIDENTClickCheck(Sender: TObject);
+begin
+  inherited;
+  if (Sender as TCheckListBox).ItemIndex = 3 then begin
+   if (Sender as TCheckListBox).Checked[(Sender as TCheckListBox).ItemIndex] then begin
+      CPLCSCOLOR.Selected := LCSIdentColor;
+      lblTextColor.Visible := true;
+      CPLCSCOLOR.Visible := true;
+      if ScreenReaderSystemActive then
+       GetScreenReader.Speak('Text color selection box now available.');
+   end else begin
+     lblTextColor.Visible := false;
+     CPLCSCOLOR.Visible := false;
+   end;
+  end;
+  CheckApply;
+end;
+
+procedure TfrmOptions.CPOptionsClickCheck(Sender: TObject);
+//Display the color selection if highlight checked
+begin
+  inherited;
+  if (Sender as TCheckListBox).ItemIndex = 3 then begin
+   if (Sender as TCheckListBox).Checked[(Sender as TCheckListBox).ItemIndex] then begin
+      cpHLColor.Selected := CopyPasteColor;
+      lbCPhighLight.Visible := true;
+      cpHLColor.Visible := true;
+      if ScreenReaderSystemActive then
+       GetScreenReader.Speak('Highlight color selection box now available.');
+   end else begin
+     lbCPhighLight.Visible := false;
+     cpHLColor.Visible := false;
+   end;
+  end;
+  CheckApply;
+end;
+
+procedure TfrmOptions.CPOptionsDrawItem(Control: TWinControl;
+  Index: Integer; Rect: TRect; aState: TOwnerDrawState);
+//Draw the copy paste options
+begin
+ Inherited;
+ with TCheckListBox(Control) do
+  begin
+     case Index of
+     0: Canvas.Font.Style := [fsBold];
+     1: Canvas.Font.Style := [fsItalic];
+     2: Canvas.Font.Style := [fsUnderline];
+     3: begin
+      If TCheckListBox(Control).Name = 'CPLCSIDENT' then
+      begin
+       // if not (odSelected in aState) then
+        Canvas.Font.Color := LCSIdentColor;
+       Canvas.Font.Style := [];
+      end else begin
+       if not (odSelected in aState) then
+        Canvas.Brush.Color := CopyPasteColor;
+       Canvas.Font.Style := [];
+      end;
+     end;
+    end;
+    Canvas.FillRect(Rect);
+    Canvas.TextOut(Rect.Left + 2, Rect.Top, Items[Index]);
+    if odFocused in aState then
+      Canvas.DrawFocusRect(Rect) ;
+   end;
+end;
+
+procedure TfrmOptions.ApplyCopyPaste;
+// Setup the RPC
+// Bold,Italics,Underline,Highlight,Highlight Color
+var
+  aString{, OurFlag}: string;
+//  I: integer;
+begin
+ if cbkCopyPaste.Checked then
+ begin
+ With frmFrame.CPAppMon do begin
+ MatchStyle := [];
+ if CopyPasteOptions.Checked[0] then begin
+   aString := aString + '1,';
+   MatchStyle := MatchStyle + [fsBold];
+ end else
+   aString := aString + '0,';
+
+ if CopyPasteOptions.Checked[1] then begin
+   aString := aString + '1,';
+   MatchStyle := MatchStyle + [fsItalic];
+ end else
+   aString := aString + '0,';
+
+  if CopyPasteOptions.Checked[2] then begin
+   aString := aString + '1,';
+   MatchStyle := MatchStyle + [fsUnderline];
+  end else
+   aString := aString + '0,';
+
+  if CopyPasteOptions.Checked[3] then
+   aString := aString + '1,'
+  else
+   aString := aString + '0,';
+  MatchHighlight := CopyPasteOptions.Checked[3];
+
+  aString := aString + IntToStr(CopyPasteColor) +',';
+  HighlightColor := CopyPasteColor;
+
+  DisplayPaste := true;
+
+  Enabled := True;
+  //LCS
+  if CPLCSToggle.Checked then
+   aString := aString + '1,'
+  else
+   aString := aString + '0,';
+   LCSToggle := CPLCSToggle.Checked;
+
+  LCSTextStyle := [];
+  if CPLCSIDENT.Checked[0] then begin
+   aString := aString + '1,';
+   LCSTextStyle := LCSTextStyle + [fsBold];
+ end else
+   aString := aString + '0,';
+
+ if CPLCSIDENT.Checked[1] then begin
+   aString := aString + '1,';
+   LCSTextStyle := LCSTextStyle + [fsItalic];
+ end else
+   aString := aString + '0,';
+
+  if CPLCSIDENT.Checked[2] then begin
+   aString := aString + '1,';
+   LCSTextStyle := LCSTextStyle + [fsUnderline];
+  end else
+   aString := aString + '0,';
+
+  if CPLCSIDENT.Checked[3] then
+   aString := aString + '1,'
+  else
+   aString := aString + '0,';
+  LCSUseColor := CPLCSIDENT.Checked[3];
+
+  aString := aString + IntToStr(LCSIdentColor) +','+ IntToStr(StrToIntDef(CPLCSLimit.Text, 0));
+  LCSTextColor := LCSIdentColor;
+  LCSCharLimit := StrToIntDef(CPLCSLimit.Text, 5000)
+ end
+ end else begin
+   frmFrame.CPAppMon.DisplayPaste := False;
+   aString := '-1;Visual Disable Override';
+ end;
+
+ rpcSetCopyPaste(aString);
+end;
+
+procedure TfrmOptions.CPLCSToggleClick(Sender: TObject);
+begin
+  inherited;
+  pnlCPLCsSub.Visible := CPLCSToggle.Checked;
+ { CPLcsMemo.Visible := CPLCSToggle.Enabled;
+  CPLcsLimitText.Visible := CPLCSToggle.Enabled;
+  CPLCSLimit.Visible := CPLCSToggle.Enabled;
+  CPLCSIDENT.Visible := CPLCSToggle.Enabled;
+  if CPLCSIDENT.Checked[3]then begin
+      lblTextColor.Visible := true;
+      CPLCSCOLOR.Visible := true;
+      if ScreenReaderSystemActive then
+       GetScreenReader.Speak('Text color selection box now available.');
+   end else begin
+     lblTextColor.Visible := false;
+     CPLCSCOLOR.Visible := false;
+   end;   }
+end;
+
+procedure TfrmOptions.LoadCopyPaste();
+//var
+// I: Integer;
+// OurFlag: Boolean;
+begin
+ With frmFrame.CPAppMon do begin
+  //Try to load the properties (if not loaded)
+  LoadTheProperties;
+
+  if not DisplayPaste or not Enabled then
+  begin
+   cbkCopyPaste.Checked := False;
+   cbkCopyPasteClick(cbkCopyPaste);
+   CopyPasteOptions.Checked[0] := false;
+   CopyPasteOptions.Checked[1] := false;
+   CopyPasteOptions.Checked[2] := false;
+   CopyPasteOptions.Checked[3] := false;
+   MatchHighlight := False;
+   CopyPasteColor := CopyPasteOptions.Color;
+   lbCPhighLight.Visible := false;
+   cpHLColor.Visible := false;
+
+
+   //setup the LCS
+   CPLCSToggle.Checked := false;
+   LCSToggle := False;
+   CPLCSIDENT.Checked[0] := false;
+   CPLCSIDENT.Checked[1] := false;
+   CPLCSIDENT.Checked[2] := false;
+   CPLCSIDENT.Checked[3] := false;
+   LCSUseColor := False;
+   LCSIdentColor := clWindowText;
+   lblTextColor.Visible := false;
+   CPLCSCOLOR.Visible := false;
+
+  end else begin
+    CPLcsMemo.Text :='Please note that the Difference Identifier process is memory intensive. '+
+      'The default number of characters is set at 5000. Changing this to a higher number may '+
+      'increase the time for the system to display all the differences.';
+
+   cbkCopyPaste.Checked := true;
+   cbkCopyPasteClick(cbkCopyPaste);
+   //Now load the options
+   CopyPasteOptions.Checked[0] := (fsBold in MatchStyle);
+   CopyPasteOptions.Checked[1] := (fsItalic in MatchStyle);
+   CopyPasteOptions.Checked[2] := (fsUnderline in MatchStyle);
+   CopyPasteOptions.Checked[3] := MatchHighlight;
+   CopyPasteColor := HighlightColor;
+   cpHLColor.Selected := CopyPasteColor;
+   if MatchHighlight then begin
+    lbCPhighLight.Visible := true;
+    cpHLColor.Visible := true;
+   end else begin
+    lbCPhighLight.Visible := false;
+    cpHLColor.Visible := false;
+   end;
+
+
+   //setup the LCS
+   CPLCSToggle.Checked := LCSToggle;
+   CPLCSIDENT.Checked[0] := (fsBold in LCSTextStyle);
+   CPLCSIDENT.Checked[1] := (fsItalic in LCSTextStyle);
+   CPLCSIDENT.Checked[2] := (fsUnderline in LCSTextStyle);
+   CPLCSIDENT.Checked[3] := LCSUseColor;
+   LCSIdentColor := LCSTextColor;
+   CPLCSCOLOR.Selected := LCSIdentColor;
+   if LCSUseColor then begin
+    lblTextColor.Visible := true;
+    CPLCSCOLOR.Visible := true;
+   end else begin
+    lblTextColor.Visible := false;
+    CPLCSCOLOR.Visible := false;
+   end;
+   CPLCSLimit.Text := IntToStr(LCSCharLimit);
+  end;
+
+ end;
+end;
+
+function TfrmOptions.VerifySaveCondition(Sender: TObject): Integer;
+const
+  Msg = 'Copy/Paste GUI options DID NOT save. You must have at least one option selected.'
+    + #13 + 'Please check the following section(s): ' + #13#13 + '%s' + #13 +
+    'Click OK to reverify your selection';
+Var
+  DlgButtons: TMsgDlgButtons;
+  ShowErr: Boolean;
+  AddMsg: String;
+begin
+  Result := -1;
+  ShowErr := false;
+  // Copy paste options (at least one selected)
+  if Sender = btnOK then
+    DlgButtons := [mbOK, mbIgnore]
+  else
+    DlgButtons := [mbOK];
+
+  if (cbkCopyPaste.Checked) and (not CopyPasteOptions.Checked[0]) and
+    (not CopyPasteOptions.Checked[1]) and (not CopyPasteOptions.Checked[2]) and
+    (not CopyPasteOptions.Checked[3]) then
+  begin
+    ShowErr := true;
+    AddMsg := 'Text Identification' + #13;
+  end;
+  if (cbkCopyPaste.Checked) and CPLCSToggle.Checked and
+    (not CPLCSIDENT.Checked[0]) and (not CPLCSIDENT.Checked[1]) and
+    (not CPLCSIDENT.Checked[2]) and (not CPLCSIDENT.Checked[3]) then
+  begin
+    ShowErr := true;
+    AddMsg := AddMsg + 'Paste Differences' + #13;
+  end;
+
+  if not ShowErr then
+  begin
+    if (not frmFrame.CPAppMon.DisplayPaste) and (cbkCopyPaste.Checked) then
+    begin
+      if MessageDlg('Saving will re-enable copy/paste. Are you sure?',
+        mtWarning, [mbYes, mbNo], -1) = mrYes then
+        Result := -1
+      else
+      begin
+        Result := 0;
+        cbkCopyPaste.Checked := false;
+        cbkCopyPasteClick(cbkCopyPaste);
+        CopyPasteOptions.Checked[0] := false;
+        CopyPasteOptions.Checked[1] := false;
+        CopyPasteOptions.Checked[2] := false;
+        CopyPasteOptions.Checked[3] := false;
+        frmFrame.CPAppMon.MatchHighlight := false;
+        lbCPhighLight.visible := false;
+        cpHLColor.visible := false;
+      end;
+    end;
+  end
+  else
+    Result := MessageDlg(Format(Msg, [AddMsg]), mtError, DlgButtons, -1)
+
+end;
+
 
 //----------------- TTabSheet -----------------//
 constructor TTabSheet.Create(aOwner: TComponent);
@@ -786,5 +1282,33 @@ begin
     Msg.Result := 1;
 end;
 
-end.
+//----------------- TColorBox -----------------//
+procedure TColorBox.CMFontChanged(var Message: TMessage);
+begin
+  inherited;
+  AdjustSizeOfSelf;
+end;
 
+procedure TColorBox.AdjustSizeOfSelf;
+var
+  FontHeight: Integer;
+//  cboBtnX, cboBtnY: integer;
+  cboYMargin: integer;
+
+begin
+  DroppedDown := False;
+  FontHeight := FontHeightPixel(Self.Font.Handle);
+
+  cboYMargin := 8;
+//  cboBtnX := 5;
+//  cboBtnY := 5;
+
+  ItemHeight := HigherOf(FontHeight + cboYMargin, ItemHeight); // must be at least as high as text
+  self.SetBounds(0, 0, Width, FontHeight + cboYMargin);
+
+  //ItemHeight := FontHeight + cboYMargin; // DropDown can only be text height
+
+end;
+
+
+end.

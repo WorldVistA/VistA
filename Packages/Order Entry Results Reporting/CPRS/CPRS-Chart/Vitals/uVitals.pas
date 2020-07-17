@@ -6,8 +6,8 @@ unit uVitals;
 interface
 
 uses
-  SysUtils, Dialogs, Controls, Windows, Classes, ORClasses, ORCtrls, ORFn, Forms
-  , TRPCB ;
+  SysUtils, Dialogs, Controls, Windows, Classes, ORClasses, ORCtrls, ORFn, Forms,
+  TRPCB, rMisc, WinAPI.Messages;
 
 const
   NoVitalOverrideValue = '^None^';
@@ -128,8 +128,9 @@ var
 const
   VitalsDLLName = 'GMV_VitalsViewEnter.dll';
 
-procedure LoadVitalsDLL;
+Function LoadVitalsDLL(): TDllRtnRec;
 procedure UnloadVitalsDLL;
+procedure ShutdownVitals;
 
 const
   VitalTagSet = [TAG_VITBP..TAG_VITPAIN];
@@ -178,7 +179,7 @@ const
 implementation
 
 uses
-  rMisc, uCore, rCore, rVitals, Contnrs, fVitalsDate, VAUtils;
+  uCore, rCore, rVitals, Contnrs, fVitalsDate, VAUtils;
   
 var
   uVitalFrames: TComponentList = nil;
@@ -622,14 +623,13 @@ begin
   for i := 1 to Length(x) do if not CharInSet(x[i], ['0'..'9','.']) then Result := False;
 end;
 
-procedure LoadVitalsDLL;
-//var
-//  GMV_LibName: WideString;
+function LoadVitalsDLL(): TDllRtnRec;
+// If error then set VitalsDLLHandle to -1 and show error
 begin
-  if VitalsDLLHandle = 0 then begin
-//    GMV_LibName := ExcludeTrailingPathDelimiter(GetProgramFilesPath) + SHARE_DIR + VitalsDLLName;
-//    VitalsDLLHandle := LoadLibrary(PWideChar(GMV_LibName));
-    VitalsDLLHandle := LoadDll(VitalsDLLName);
+  if VitalsDLLHandle = 0 then
+  begin
+   Result := LoadDll(VitalsDLLName);
+   VitalsDLLHandle := Result.DLL_HWND;
   end;
 end;
 
@@ -639,6 +639,34 @@ begin
   begin
     FreeLibrary(VitalsDLLHandle);
     VitalsDLLHandle := 0;
+  end;
+end;
+
+procedure ShutdownVitals;
+var
+  vHandle: TList;
+  i: Integer;
+
+  function FindThreadWindow(Window: HWND; var vitals: TList): BOOL; stdcall;
+  var
+    clsName: string;
+  begin
+    SetLength(clsName, 256);
+    SetLength(clsName, GetClassName(Window, PChar(clsName), Length(clsName) - 1));
+    if (clsName = 'TfrmVitals') or (clsName = 'TfrmGMV_InputLite') then
+      vitals.Add(Pointer(Window));
+
+    Result := True;
+  end;
+
+begin
+  vHandle := TList.Create;
+  try
+    EnumThreadWindows(GetCurrentThreadID, @FindThreadWindow, Integer(@vHandle));
+    for i := 0 to vHandle.Count - 1 do
+      PostMessage(HWND(vHandle[i]), WM_CLOSE, 0, 0);
+  finally
+    FreeAndNil(vHandle);
   end;
 end;
 

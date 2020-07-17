@@ -1,0 +1,2 @@
+inherited fraCoverSheetDisplayPanel_CPRS_Vitals: TfraCoverSheetDisplayPanel_CPRS_Vitals
+end

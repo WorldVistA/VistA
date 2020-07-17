@@ -120,11 +120,17 @@ end;
 
 procedure TfrmActivateDeactive.GetOriginalOrders(OrderID: TStringList; var OriginalOrder: TORStringList);
 var
-i: integer;
+  i: integer;
+  aTmpList: TStringList;
 begin
-  CallV('ORWDX1 DCREN', [OrderID]);
-  for i := 0 to RPCBrokerV.Results.Count-1 do
-    OriginalOrder.Add(RPCBrokerV.Results.Strings[i]);
+  aTmpList := TStringList.Create;
+  try
+    CallVistA('ORWDX1 DCREN', [OrderID], aTmpList);
+    for i := 0 to aTmpList.Count-1 do
+      OriginalOrder.Add(aTmpList[i]);
+  finally
+    FreeAndNil(aTmpList);
+  end;
 end;
 
 function TfrmActivateDeactive.PromptForm(Text: String): String;
@@ -165,7 +171,7 @@ end;
 
 procedure TfrmActivateDeactive.DCOriginalOrder(OrderID: string);
 begin
- CallV('ORWDX1 DCORIG', [OrderID]);
+  CallVistA('ORWDX1 DCORIG', [OrderID]);
 end;
 
 end.

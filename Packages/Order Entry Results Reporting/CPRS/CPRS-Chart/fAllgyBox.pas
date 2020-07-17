@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, fRptBox, StdCtrls, ExtCtrls, ComCtrls, fARTAllgy, ORFn,
-  VA508AccessibilityManager, Vcl.Menus;
+  VA508AccessibilityManager, Vcl.Menus, U_CPTEditMonitor;
 
 type
   TfrmAllgyBox = class(TfrmReportBox)
@@ -32,7 +32,7 @@ implementation
 
 {$R *.dfm}
 
-uses rCover, fCover, rODAllergy, uCore;
+uses rCover, rODAllergy, uCore;
 
 const
   NEW_ALLERGY = True;

@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ComCtrls, ImgList, uTemplates, ORFn, ORNet, ExtCtrls, ORCtrls, Richedit,
-  VA508ImageListLabeler;
+  VA508ImageListLabeler, System.ImageList;
 
 type
   TdmodShared = class(TDataModule)
@@ -81,7 +81,7 @@ implementation
 
 uses
   mDrawers, fDrawers, rTemplates, uCore, uTemplateFields, uEventHooks, VA508AccessibilityRouter,
-  System.UITypes;
+  System.UITypes, VAUtils;
 
 {$R *.DFM}
 
@@ -107,7 +107,7 @@ const
                             (8,20), (9,21),
                             (11,22),(12,23),
                             (14,24),(15,25));
-                            
+
   RemDlgIdx: array[boolean] of integer = (26, 27);
   COMObjIdx: array[boolean] of integer = (29, 28);
 
@@ -207,7 +207,7 @@ begin
         end;
       until Done;
     end;
-    if(assigned(NewNode) and (InEditor or (not tmpl.HideItems)) and 
+    if(assigned(NewNode) and (InEditor or (not tmpl.HideItems)) and
                              ((tmpl.Children in [tcActive, tcBoth]) or
                              ((tmpl.Children <> tcNone) and AllowInactive))) then
     begin
@@ -276,7 +276,7 @@ var
   var
     tmpl: TTemplate;
     IDX: string;
-    
+
   begin
     inc(IDCount);
     Result := '';
@@ -544,19 +544,24 @@ end;
 procedure TdmodShared.LoadTIUObjects;
 var
   i: integer;
-
+  aLst: TStringList;
 begin
-  if(not assigned(FTIUObjects)) or (FRefreshObject = true)  then
-  begin
-    if(not assigned(FTIUObjects)) then
-      FTIUObjects := TStringList.Create;
-    FTIUObjects.Clear;
-    GetObjectList;
-    for i := 0 to RPCBrokerV.Results.Count-1 do
-      FTIUObjects.Add(MixedCase(Piece(RPCBrokerV.Results[i],U,2))+U+RPCBrokerV.Results[i]);
-    FTIUObjects.Sort;
-    FRefreshObject := False;
-   end;
+  if (not assigned(FTIUObjects)) or (FRefreshObject = TRUE) then
+    begin
+      if (not assigned(FTIUObjects)) then
+        FTIUObjects := TStringList.Create;
+      FTIUObjects.Clear;
+      aLst := TStringList.Create;
+      try
+        GetObjectList(aLst);
+        for i := 0 to aLst.Count - 1 do
+          FTIUObjects.Add(MixedCase(Piece(aLst[i], U, 2)) + U + aLst[i]);
+      finally
+        FreeAndNil(aLst);
+      end;
+      FTIUObjects.Sort;
+      FRefreshObject := FALSE;
+    end;
 end;
 
 function TdmodShared.NeedsCollapsing(Tree: TTreeView): boolean;
@@ -657,7 +662,7 @@ begin
   Result := (cnt = ErrCount);
   if(not Result) then
   begin
-    Err.Insert(0,'Boilerplate Contains Errors:'); 
+    Err.Insert(0,'Boilerplate Contains Errors:');
     Err.Insert(1,'');
     if(BadObj) then
     begin
@@ -778,6 +783,8 @@ begin
           IEN := '';
       end;
     until (i < 1) or (IEN = '');
+    if Assigned(Tree.selected) then
+      Tree.selected.MakeVisible;
   end;
 end;
 
@@ -904,8 +911,8 @@ begin
   //Set the background color
   FillChar(Format, SizeOf(Format), 0);
   Format.cbSize := SizeOf(Format);
-  Format.dwMask := CFM_BACKCOLOR;
-  Format.crBackColor := Color;
+  Format.dwMask := CFM_BACKCOLOR ;
+  Format.crBackColor := ColorToRGB(Color);
   Rich.Perform(EM_SETCHARFORMAT, SCF_SELECTION, Longint(@Format));
   //Set the style of the found word
   Rich.SelAttributes.Style := Style;
@@ -955,8 +962,3 @@ initialization
   SpecifyFormIsNotADialog(TdmodShared);
 
 end.
-
-
-
-
-

@@ -82,7 +82,7 @@ implementation
 {$R *.DFM}
 
 uses
-  fEncounterFrame, uCore, uConst, VA508AccessibilityRouter;
+  fEncounterFrame, uCore, uConst, VA508AccessibilityRouter, VAUtils;
 
 const
   FN_NEW_PERSON = 200;

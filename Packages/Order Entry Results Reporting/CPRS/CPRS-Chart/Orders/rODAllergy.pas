@@ -4,7 +4,7 @@ unit rODAllergy;
 
 interface
 
-uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, TRPCB, dialogs, rMisc,fNotes ;
+uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, TRPCB, dialogs, rMisc, fNotes;
 
 type
   TAllergyRec = record
@@ -102,7 +102,7 @@ end;
 
 function GetCWADInfo(const DFN: string): string;
 begin
-  Result := sCallV('ORWPT CWAD',[DFN]);
+  CallVista('ORWPT CWAD', [DFN], Result);
 end;
 
 function LoadAllergyForEdit(AllergyIEN: integer): TAllergyRec;
@@ -169,8 +169,9 @@ function SaveAllergy(EditRec: TAllergyRec): string;
 var
   i: integer;
 begin
-
-  with RPCBrokerV, EditRec do
+  LockBroker;
+  try
+    with RPCBrokerV, EditRec do
     begin
       ClearParameters := True;
       RemoteProcedure := 'ORWDAL32 SAVE ALLERGY';
@@ -254,11 +255,16 @@ begin
        else
           exit;
         end;
+  finally
+    UnlockBroker;
+  end;
 end;
 
 function RPCEnterNKAForPatient: string;
 begin
-  with RPCBrokerV do
+  LockBroker;
+  try
+    with RPCBrokerV do
     begin
       ClearParameters := True;
       RemoteProcedure := 'ORWDAL32 SAVE ALLERGY';
@@ -272,13 +278,18 @@ begin
       CallBroker;
       Result := Results[0];
     end;
+  finally
+    UnlockBroker;
+  end;
 end;
 
 function SendARTBulletin(AFreeTextEntry: string; AComment: TStringList): string;
 var
   i: integer;
 begin
-  with RPCBrokerV do
+  LockBroker;
+  try
+    with RPCBrokerV do
     begin
       ClearParameters := True;
       RemoteProcedure := 'ORWDAL32 SEND BULLETIN';
@@ -298,6 +309,9 @@ begin
       CallBroker;
       Result := Results[0];
     end;
+  finally
+    UnlockBroker;
+  end;
 end;
 
 // Site parameter functions

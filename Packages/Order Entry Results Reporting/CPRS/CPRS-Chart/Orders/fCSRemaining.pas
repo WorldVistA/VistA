@@ -42,6 +42,7 @@ begin
     HaveOrders  := TStringList.Create;
     UnsignedOrders := TStringList.Create;
     frmCSRemaining := TfrmCSRemaining.Create(Application);
+    try
     LoadUnsignedOrders(UnsignedOrders,HaveOrders);
     for i := 0 to Pred(UnsignedOrders.Count) do
     begin
@@ -88,6 +89,13 @@ begin
     end;
 
     if frmCSRemaining.lstCSRemaining.Count>0 then frmCSRemaining.ShowModal;
+
+    finally
+      FreeAndNil(OthersCSOrders);
+      FreeAndNil(HaveOrders);
+      FreeAndNil(UnsignedOrders);
+      FreeAndNil(frmCSRemaining);
+    end;
 end;
 
 {$R *.dfm}

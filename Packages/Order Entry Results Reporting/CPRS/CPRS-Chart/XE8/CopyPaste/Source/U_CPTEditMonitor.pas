@@ -1,9 +1,9 @@
 ﻿{ ******************************************************************************
 
-    ___  __  ____  _  _      _    ____   __   ____  ____  ____
-   / __)/  \(  _ \( \/ )    / )  (  _ \ / _\ / ___)(_  _)(  __)
-  ( (__(  O )) __/ )  /    / /    ) __//    \\___ \  )(   ) _)
-   \___)\__/(__)  (__/    (_/    (__)  \_/\_/(____/ (__) (____)
+   ___  __  ____  _  _      _    ____   __   ____  ____  ____
+  / __)/  \(  _ \( \/ )    / )  (  _ \ / _\ / ___)(_  _)(  __)
+ ( (__(  O )) __/ )  /    / /    ) __//    \\___ \  )(   ) _)
+  \___)\__/(__)  (__/    (_/    (__)  \_/\_/(____/ (__) (____)
 
 
   Edit Monitor Control unit
@@ -28,131 +28,76 @@ uses
   System.Classes, U_CPTAppMonitor, U_CPTExtended, Winapi.Windows, Vcl.ComCtrls,
   U_CptUtils, U_CPTCommon, System.SysUtils,
   Vcl.StdCtrls, Winapi.Messages, ClipBrd, Vcl.Dialogs, System.UITypes,
-  Vcl.Forms, Vcl.Controls, System.IniFiles;
+  Vcl.Forms, Vcl.Controls, System.IniFiles, System.SyncObjs;
 
 type
-  /// <summary><para>Non visual control that hooks into a control and monitors copy/paste. Sends data back to <see cref="U_CPTAppMonitor|TCopyApplicationMonitor" /> </para></summary>
   TCopyEditMonitor = class(TComponent)
   private
-
     FReadyForLoadTransfer: Boolean;
-
-    /// <summary><para>External event to fire when copying</para><para><b>Type: </b><c><see cref="CopyMonitor|TAllowMonitorEvent" /></c></para></summary>
     FCopyToMonitor: TAllowMonitorEvent;
-
-    /// <summary><para>The current document IEN</para><para><b>Type: </b><c>Int64</c></para></summary>
     fItemIEN: Int64;
-    /// <summary><para>External event to fire when loading</para><para><b>Type: </b><c><see cref="CopyMonitor|TLoadEvent" /></c></para></summary>
     FLoadPastedText: TLoadEvent;
-    /// <summary><para>Stop Watch for metric information</para><para><b>Type: </b><c><see cref="CopyMonitor|TStopWatch" /></c></para></summary>
     fStopWatch: TStopWatch;
-    /// <summary><para>External event to fire when pasting</para><para><b>Type: </b><c><see cref="CopyMonitor|TAllowMonitorEvent" /></c></para></summary>
     FPasteToMonitor: TAllowMonitorEvent;
-    /// <summary><para>Package related to this monitor</para><para><b>Type: </b><c>string</c></para>
-    /// <para><b>Example:</b> if copied from a note (TIU package) this would be <example>8925</example></para></summary>
     FRelatedPackage: string;
-    /// <summary><para>External save of recalculated percentage event</para><para><b>Type: </b><c><see cref="CopyMonitor|TRecalculateEvent" /></c></para></summary>
     FRecalPer: TRecalculateEvent;
-    /// <summary><para>External event to fire when saving</para><para><b>Type: </b><c><see cref="CopyMonitor|TSaveEvent" /></c></para></summary>
     FSaveTheMonitor: TSaveEvent;
-    /// <summary><para>Array of object to monitor</para>
-    /// <para><b>Type: </b><c>TCustomEdit</c></para>
-    /// <para><b>Note:</b>This is used in addition to FMonitor <example></example></para>
-    /// </summary>
     FTrackOnlyObjects: TTrackOnlyCollection;
-    /// <summary><para>Call used to determine if visual panel should show. Should only be called from <c><see cref="CopyMonitor|TCopyPasteDetails" /></c></para><para><b>Type: </b><c><see cref="CopyMonitor|TVisualMessage" /></c></para></summary>
     FVisualMessage: TVisualMessage;
-
-    /// <summary><para>Setter for Application monitor</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="value">Application monitor to use<para><b>Type: </b><c><see cref="CopyMonitor|TCopyApplicationMonitor" /></c></para></param>
+    FCopyMonitor: TCopyApplicationMonitor;
+    Function GetCopyMonitor: TCopyApplicationMonitor;
     procedure SetCopyMonitor(Value: TCopyApplicationMonitor);
-    /// <summary>Sets the ItemIEN</summary>
-    /// <param name="NewItemIEN">New IEN to set to<para><b>Type: </b><c>Int64</c></para></param>
+    Function GetItemIEN: Int64;
     procedure SetItemIEN(NewItemIEN: Int64);
-    /// <summary><para>Setter for the track items</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Value">Value<para><b>Type: </b><c>TTrackOnlyCollection</c></para></param>
     procedure SetOurCollection(const Value: TTrackOnlyCollection);
+    function GetReadyForLoadTransfer: Boolean;
+    procedure SetReadyForLoadTransfer(const Value: Boolean);
+    function GetRelatedPackage: string;
+    procedure SetRelatedPackage(const Value: string);
 
   public
-    /// <summary><para>"Overall" component that this should report to</para>
-    /// <para><b>Type: </b><c><see cref="CopyMonitor|TCopyApplicationMonitor" /></c></para></summary>
-    FCopyMonitor: TCopyApplicationMonitor;
-    /// <summary><para>Holds all records of pasted text for the specific document</para>
-    /// <para><b>Type: </b><c>Array of <see cref="CopyMonitor|TPasteText" /></c></para></summary>
     PasteText: TPasteArray;
-    /// <summary>Clears the <see cref="CopyMonitor|TCopyEditMonitor.PasteText" /></summary>
     procedure ClearPasteArray();
-    /// <summary><para>Calls <see cref="CopyMonitor|TCopyApplicationMonitor.ClearCopyPasteClipboard" /></para><para><b>Type: </b><c>Integer</c></para></summary>
     procedure ClearTheMonitor();
-    /// <summary><para>Event triggered when data is copied from the monitoring object</para></summary>
-    /// <param name="Sender">Object that is making the call<para><b>Type: </b><c>TObject</c></para></param>
-    /// <param name="AllowMonitor">Flag indicates if this is excluded or not<para><b>Type: </b><c>Boolean</c></para></param>
-    /// <param name="Msg">The message to process<para><b>Type: </b><c>TMessage</c></para></param>
     function CopyToMonitor(Sender: TObject; AllowMonitor: Boolean;
       Msg: uint): Boolean;
 
-    /// <summary>constructor</summary>
     constructor Create(AOwner: TComponent); override;
-    /// <summary>Destructor</summary>
     destructor Destroy; override;
-    /// <summary><para>The current document's IEN</para><para><b>Type: </b><c>Integer</c></para></summary>
-    property ItemIEN: Int64 read fItemIEN write SetItemIEN;
-    /// <summary><para>Event to fire when loading the pasted text</para><para><b>Type: </b><c>TLoadEvent</c></para></summary>
+    property ItemIEN: Int64 read GetItemIEN write SetItemIEN;
     Property LoadPastedText: TLoadEvent read FLoadPastedText
       write FLoadPastedText;
-    /// <summary><para>Loads the identifiable text for a given entry (ignore leading and trailing spaces)</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="TheRich">The richedit we want to search in<para><b>Type: </b><c>TRichEdit</c></para></param>
-    /// <param name="SearchText">The text we want to find<para><b>Type: </b><c>TStringList</c></para></param>
-    /// <param name="HighRec">The higlight record the results fill into<para><b>Type: </b><c> <see cref="CopyMonitor|THighlightRecordArray" /></c></para></param>
-    /// <returns><para><b>If we were able to identify the text or not</b><c>Boolean</c></para> - </returns>
     function LoadIdentLines(TheRich: TRichEdit; SearchText: TStringList;
       var HighRec: THighlightRecordArray): Boolean;
-    /// <summary><para>Add all available objects to the track items</para><para><b>Type: </b><c>Integer</c></para></summary>
     Procedure MonitorAllAvailable();
-    /// <summary><para>Event triggered when data is pasted into the monitoring object</para></summary>
-    /// <param name="Sender">Object that is making the call<para><b>Type: </b><c>TObject</c></para></param>
-    /// <param name="AllowMonitor">Flag indicates if this is excluded or not<para><b>Type: </b><c>Boolean</c></para></param>
-    /// <param name="AllowMonitor">Information about the clipboard source<para><b>Type: </b><c>tClipInfo</c></para></param>
     procedure PasteToMonitor(Sender: TObject; PasteObj: TObject;
       AllowMonitor: Boolean; ClipInfo: tClipInfo);
-    /// <summary><para>Save the Monitor for the current document</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="ItemID">Document's IEN<para><b>Type: </b><c>Integer</c></para></param>
     procedure SaveTheMonitor(Sender: TObject; ItemID: Int64);
     Function StartStopWatch(): Boolean;
     Function StopStopWatch(): Boolean;
     property StopWatch: TStopWatch read fStopWatch write fStopWatch;
-    /// <summary><para>transfer data between TcopyEditMonitors</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Dest">Dest<para><b>Type: </b><c>TCopyEditMonitor</c></para></param>
     procedure TransferData(Dest: TCopyEditMonitor);
     procedure TransferPasteText(Dest: TCopyEditMonitor);
-    /// <summary><para>Visual message to fire when comming from PasteDetails</para><para><b>Type: </b><c>TVisualMessage</c></para></summary>
     Property VisualMessage: TVisualMessage read FVisualMessage
       write FVisualMessage;
 
-    Property ReadyForLoadTransfer: Boolean read FReadyForLoadTransfer
-      write FReadyForLoadTransfer;
+    Property ReadyForLoadTransfer: Boolean read GetReadyForLoadTransfer
+      write SetReadyForLoadTransfer;
   published
-    /// <summary><para>The "Parent" component that monitors the application</para><para><b>Type: </b><c><see cref="CopyMonitor|TCopyApplicationMonitor" /></c></para></summary>
-    property CopyMonitor: TCopyApplicationMonitor read FCopyMonitor
+    property CopyMonitor: TCopyApplicationMonitor read GetCopyMonitor
       write SetCopyMonitor;
-    /// <summary><para>Event to fire when copying</para><para><b>Type: </b><c><see cref="CopyMonitor|TAllowMonitorEvent" /></c></para></summary>
     property OnCopyToMonitor: TAllowMonitorEvent read FCopyToMonitor
       write FCopyToMonitor;
-    /// <summary><para>Event to fire when loading</para><para><b>Type: </b><c><see cref="CopyMonitor|TSaveEvent" /></c></para></summary>
     property OnLoadPastedText: TLoadEvent read FLoadPastedText
       write FLoadPastedText;
-    /// <summary><para>Event to fire when pasting</para><para><b>Type: </b><c><see cref="CopyMonitor|TAllowMonitorEvent" /></c></para></summary>
     property OnPasteToMonitor: TAllowMonitorEvent read FPasteToMonitor
       write FPasteToMonitor;
-    /// <summary><para>Event to fire when saving</para><para><b>Type: </b><c><see cref="CopyMonitor|TSaveEvent" /></c></para></summary>
     property OnSaveTheMonitor: TSaveEvent read FSaveTheMonitor
       write FSaveTheMonitor;
-    /// <summary>Call to recalculate the percentage </summary>
     property RecalculatePercentage: TRecalculateEvent read FRecalPer
       write FRecalPer;
-    /// <summary><para>Package this object's monitor is related to</para><para><b>Type: </b><c><see cref="CopyMonitor|TCopyEditMonitor.FRelatedPackage" /></c></para></summary>
-    property RelatedPackage: string read FRelatedPackage write FRelatedPackage;
-    /// <summary><para>Collection of tracked items</para><para><b>Type: </b><c>Integer</c></para></summary>
+    property RelatedPackage: string read GetRelatedPackage
+      write SetRelatedPackage;
     property TrackOnlyEdits: TTrackOnlyCollection read FTrackOnlyObjects
       write SetOurCollection;
   end;
@@ -181,9 +126,9 @@ Function TCopyEditMonitor.CopyToMonitor(Sender: TObject; AllowMonitor: Boolean;
   Msg: uint): Boolean;
 begin
   Result := false;
-  if not Assigned(FCopyMonitor) then
+  if not Assigned(CopyMonitor) then
     Exit;
-  if not FCopyMonitor.Enabled then
+  if not CopyMonitor.Enabled then
     Exit;
   inherited;
   if Assigned(FCopyToMonitor) then
@@ -193,7 +138,7 @@ begin
       FCopyToMonitor(Self, AllowMonitor);
     finally
       If StopStopWatch then
-        FCopyMonitor.LogText('METRIC', 'Allow Copy RPC: ' + fStopWatch.Elapsed);
+        CopyMonitor.LogText('METRIC', 'Allow Copy RPC: ' + fStopWatch.Elapsed);
     end;
   end;
 
@@ -204,7 +149,7 @@ begin
   begin
     CopyMonitor.CopyToCopyPasteClipboard(Trim(TCustomEdit(Sender).SelText),
       RelatedPackage, ItemIEN);
-    if (Msg = WM_CUT) then
+    if (Msg = WM_CUT) and (not TCustomEdit(Sender).ReadOnly) then
       TCustomEdit(Sender).SelText := '';
   end;
 end;
@@ -231,9 +176,9 @@ Var
   Tag: string;
 
 begin
-  if not Assigned(FCopyMonitor) then
+  if not Assigned(CopyMonitor) then
     Exit;
-  if not FCopyMonitor.Enabled then
+  if not CopyMonitor.Enabled then
     Exit;
 {$WARN SYMBOL_PLATFORM OFF}
   inherited;
@@ -244,8 +189,7 @@ begin
       FPasteToMonitor(Self, AllowMonitor);
     finally
       If StopStopWatch then
-        FCopyMonitor.LogText('METRIC', 'Allow Paste RPC: ' +
-          fStopWatch.Elapsed);
+        CopyMonitor.LogText('METRIC', 'Allow Paste RPC: ' + fStopWatch.Elapsed);
     end;
   end;
 
@@ -287,24 +231,25 @@ begin
           CompareText := TStringList.Create;
           try
             CompareText.Text := Trim(PstStr);
-            for I := Low(FCopyMonitor.CPRSClipBoard)
-              to High(FCopyMonitor.CPRSClipBoard) do
+            for I := Low(CopyMonitor.CPRSClipBoard)
+              to High(CopyMonitor.CPRSClipBoard) do
             begin
-              if Assigned(FCopyMonitor.CPRSClipBoard[I].CopiedText) then
+              if Assigned(CopyMonitor.CPRSClipBoard[I].CopiedText) then
               begin
                 If AnsiSameText
-                  (Trim(FCopyMonitor.CPRSClipBoard[I].CopiedText.Text),
+                  (Trim(CopyMonitor.CPRSClipBoard[I].CopiedText.Text),
                   Trim(CompareText.Text)) then
                 begin
-                  if (FCopyMonitor.CPRSClipBoard[I].CopiedFromIEN <> ItemIEN) then
+                  if (CopyMonitor.CPRSClipBoard[I].CopiedFromIEN <> ItemIEN)
+                  then
                     ProcessPaste := true;
                 end;
               end;
             end;
 
             if not ProcessPaste then
-              if (FCopyMonitor.WordCount(CompareText.Text) >=
-                FCopyMonitor.NumberOfWords) then
+              if (CopyMonitor.WordCount(CompareText.Text) >=
+                CopyMonitor.NumberOfWords) then
                 ProcessPaste := true;
 
           finally
@@ -316,7 +261,7 @@ begin
         Inc(RetryCnt);
         Sleep(100);
         If RetryCnt > Max_Retry then
-          ClpLckInfo := FCopyMonitor.GetClipSource(true);
+          ClpLckInfo := CopyMonitor.GetClipSource(true);
       End;
     end;
 
@@ -339,24 +284,31 @@ begin
   end;
 
   Tag := '';
+
   TCustomEdit(PasteObj).SelText := PstStr;
 
   if AllowMonitor and ProcessPaste then
   begin
-    FCopyMonitor.LogText('PASTE', 'Data pasted to IEN(' +
+    CopyMonitor.LogText('PASTE', 'Data pasted to IEN(' +
       IntToStr(ItemIEN) + ')');
 
     if Trim(PasteDetails) <> '' then
-      FCopyMonitor.LogText('PASTE', 'Cross session clipboard found');
+      CopyMonitor.LogText('PASTE', 'Cross session clipboard found');
 
-    SetLength(FCopyMonitor.FCopyPasteThread,
-      Length(FCopyMonitor.FCopyPasteThread) + 1);
-    FCopyMonitor.FCopyPasteThread[High(FCopyMonitor.FCopyPasteThread)] :=
-      TCopyPasteThread.Create(Trim(PstStr), PasteDetails, ItemIEN, FCopyMonitor,
-      Sender, ClipInfo);
+    CopyMonitor.CriticalSection.Enter;
+    try
+      SetLength(CopyMonitor.FCopyPasteThread,
+        Length(CopyMonitor.FCopyPasteThread) + 1);
+      CopyMonitor.FCopyPasteThread[High(CopyMonitor.FCopyPasteThread)] :=
+        TCopyPasteThread.Create(Trim(PstStr), PasteDetails, ItemIEN,
+        CopyMonitor, Sender, ClipInfo);
 {$WARN SYMBOL_DEPRECATED OFF}
-    FCopyMonitor.FCopyPasteThread[High(FCopyMonitor.FCopyPasteThread)].Start;
+      CopyMonitor.FCopyPasteThread[High(CopyMonitor.FCopyPasteThread)].Start;
 {$WARN SYMBOL_DEPRECATED ON}
+    finally
+      CopyMonitor.CriticalSection.Leave;
+    end;
+
     SetLength(PasteText, Length(PasteText) + 1);
     PasteText[High(PasteText)].DateTimeOfPaste :=
       FloatToStr(DateTimeToFMDateTime(Now));
@@ -369,10 +321,10 @@ begin
 
     if Assigned(FVisualMessage) then
     begin
-      if not FCopyMonitor.DisplayPaste then
+      if not CopyMonitor.DisplayPaste then
         FVisualMessage(Self, Hide_Panel, [true])
       else
-        FVisualMessage(Self, ShowHighlight, [true]);
+        FVisualMessage(Self, ShowHighlight, [true], true);
     end;
 
   end;
@@ -382,23 +334,42 @@ end;
 
 procedure TCopyEditMonitor.ClearTheMonitor();
 begin
-  if not Assigned(FCopyMonitor) then
+  if not Assigned(CopyMonitor) then
     Exit;
-  if not FCopyMonitor.Enabled then
+  if not CopyMonitor.Enabled then
     Exit;
   CopyMonitor.ClearCopyPasteClipboard;
 end;
 
 procedure TCopyEditMonitor.SetItemIEN(NewItemIEN: Int64);
 begin
-  if not Assigned(FCopyMonitor) then
+  if not Assigned(CopyMonitor) then
     Exit;
-  if not FCopyMonitor.Enabled then
+  if not CopyMonitor.Enabled then
     Exit;
-  fItemIEN := NewItemIEN;
-  // do not show the pannel if there is no note loaded
-  if Assigned(FVisualMessage) then
-    FVisualMessage(Self, Hide_Panel, [(fItemIEN < 1)]);
+  CopyMonitor.CriticalSection.Enter;
+  try
+    fItemIEN := NewItemIEN;
+    // do not show the pannel if there is no note loaded
+    if Assigned(FVisualMessage) then
+      FVisualMessage(Self, Hide_Panel, [(fItemIEN < 1)]);
+  finally
+    CopyMonitor.CriticalSection.Leave;
+  end;
+end;
+
+Function TCopyEditMonitor.GetItemIEN: Int64;
+begin
+  Result := -1;
+  if not Assigned(CopyMonitor) then
+    Exit;
+
+  CopyMonitor.CriticalSection.Enter;
+  try
+    Result := fItemIEN;
+  finally
+    CopyMonitor.CriticalSection.Leave;
+  end;
 end;
 
 procedure TCopyEditMonitor.SaveTheMonitor(Sender: TObject; ItemID: Int64);
@@ -409,9 +380,9 @@ var
   tmp: Double;
   TmpStr: String;
 begin
-  if not Assigned(FCopyMonitor) then
+  if not Assigned(CopyMonitor) then
     Exit;
-  if not FCopyMonitor.Enabled then
+  if not CopyMonitor.Enabled then
     Exit;
 
   SaveList := TStringList.Create;
@@ -427,16 +398,23 @@ begin
       while not CanContinue do
       begin
         CanContinue := true;
-        for I := Low(FCopyMonitor.FCopyPasteThread)
-          to High(FCopyMonitor.FCopyPasteThread) do
-        begin
-          if FCopyMonitor.FCopyPasteThread[I].TheadOwner = ItemID then
+        CopyMonitor.CriticalSection.Enter;
+        try
+          for I := Low(CopyMonitor.FCopyPasteThread)
+            to High(CopyMonitor.FCopyPasteThread) do
           begin
-            FCopyMonitor.LogText('SAVE', 'Thread still exist, can not save');
-            CanContinue := false;
-            Break;
+            if CopyMonitor.FCopyPasteThread[I].TheadOwner = ItemID then
+            begin
+              CopyMonitor.LogText('SAVE', 'Thread still exist, can not save');
+              CanContinue := false;
+              Break;
+            end;
           end;
+        Finally
+          CopyMonitor.CriticalSection.Leave;
         end;
+        if not CanContinue then
+          Sleep(1);
       end;
     finally
       StatusText('');
@@ -447,7 +425,7 @@ begin
     try
       ItemIEN := ItemID;
 
-      FCopyMonitor.LogText('SAVE', 'Saving paste data for IEN(' +
+      CopyMonitor.LogText('SAVE', 'Saving paste data for IEN(' +
         IntToStr(ItemID) + ')');
 
       // get information about new paste
@@ -464,67 +442,70 @@ begin
           FSaveTheMonitor(Self, SaveList, ReturnList);
         finally
           If StopStopWatch then
-            FCopyMonitor.LogText('METRIC',
-              'Save RPC: ' + FCopyMonitor.StopWatch.Elapsed);
+            CopyMonitor.LogText('METRIC', 'Save RPC: ' + StopWatch.Elapsed);
         end;
       end;
 
       // Pre fill the paste recs so the text is visible
       if Sender is TCopyPasteDetails then
       begin
-        if ReturnList.Count > 0 then
+        if CopyMonitor.DisplayPaste then
         begin
-          // Need to gather the paste rec index for the update
-          ClipIdx := -1;
-
-          LoopCnt := StrToIntDef(SaveList.Values['TotalToSave'], 0);
-          for I := 1 to LoopCnt do
+          if ReturnList.Count > 0 then
           begin
-            for x := high(CopyMonitor.CPRSClipBoard)
-              downto low(CopyMonitor.CPRSClipBoard) do
-            begin
-              if CopyMonitor.CPRSClipBoard[x].SaveItemID = I then
-              begin
-                ClipIdx := x;
-                Break;
-              end;
-            end;
+            // Need to gather the paste rec index for the update
+            ClipIdx := -1;
 
-            if ClipIdx > -1 then
+            LoopCnt := StrToIntDef(SaveList.Values['TotalToSave'], 0);
+            for I := 1 to LoopCnt do
             begin
-              for x := Low(PasteText) to High(PasteText) do
+              for x := high(CopyMonitor.CPRSClipBoard)
+                downto low(CopyMonitor.CPRSClipBoard) do
               begin
-                tmp := StrToFloatDef(PasteText[x].DateTimeOfPaste, 0) -
-                  StrToFloatDef(CopyMonitor.CPRSClipBoard[ClipIdx]
-                  .DateTimeOfPaste, 0);
-                if (PasteText[x].Status = PasteNew) and ((tmp * 1) < 1000) and
-                  (AnsiCompareText(CopyMonitor.CPRSClipBoard[ClipIdx]
-                  .CopiedText.Text, PasteText[x].PastedText.Text) = 0) then
+                if CopyMonitor.CPRSClipBoard[x].SaveItemID = I then
                 begin
-                  SaveList.Add(IntToStr(I) + ',ARRYIDX=' + IntToStr(x));
+                  ClipIdx := x;
                   Break;
                 end;
               end;
+
+              if ClipIdx > -1 then
+              begin
+                for x := Low(PasteText) to High(PasteText) do
+                begin
+                  tmp := StrToFloatDef(PasteText[x].DateTimeOfPaste, 0) -
+                    StrToFloatDef(CopyMonitor.CPRSClipBoard[ClipIdx]
+                    .DateTimeOfPaste, 0);
+                  if (PasteText[x].Status = PasteNew) and ((tmp * 1) < 1000) and
+                    (AnsiCompareText(CopyMonitor.CPRSClipBoard[ClipIdx]
+                    .CopiedText.Text, PasteText[x].PastedText.Text) = 0) then
+                  begin
+                    SaveList.Add(IntToStr(I) + ',ARRYIDX=' + IntToStr(x));
+                    Break;
+                  end;
+                end;
+              end;
             end;
+
+            // Take the return and update our "list" for the preload
+            for I := 0 to ReturnList.Count - 1 do
+            BEGIN
+              TmpStr := Piece(ReturnList.Strings[I], '=', 2);
+              SetPiece(TmpStr, '^', 8,
+                SaveList.Values[IntToStr(I + 1) + ',-1']);
+              SaveList.Values[Piece(ReturnList.Strings[I], '=', 1) + ',0']
+                := TmpStr;
+            END;
+
+            { DONE : Preload the paste records for this note. This way when the load gets called right away we do not need to re-run this }
+
+            // Since the preload is happening we need to filter the richedit so it matches the best to the load
+
+            // Call the preload since we may not need to try to "Load" since we just ran
+            TCopyPasteDetails(Sender).PreLoadPasteRecs(SaveList);
+
+            ReadyForLoadTransfer := true;
           end;
-
-          // Take the return and update our "list" for the preload
-          for I := 0 to ReturnList.Count - 1 do
-          BEGIN
-            TmpStr := Piece(ReturnList.Strings[I], '=', 2);
-            SetPiece(TmpStr, '^', 8, SaveList.Values[IntToStr(I + 1) + ',-1']);
-            SaveList.Values[Piece(ReturnList.Strings[I], '=', 1) + ',0']
-              := TmpStr;
-          END;
-
-          { DONE : Preload the paste records for this note. This way when the load gets called right away we do not need to re-run this }
-
-          // Since the preload is happening we need to filter the richedit so it matches the best to the load
-
-          // Call the preload since we may not need to try to "Load" since we just ran
-          TCopyPasteDetails(Sender).PreLoadPasteRecs(SaveList);
-
-          FReadyForLoadTransfer := true;
         end;
       end;
 
@@ -576,9 +557,10 @@ begin
   inherited Create(AOwner);
   FVisualMessage := nil;
   FTrackOnlyObjects := TTrackOnlyCollection.Create(Self);
+  if not(csDesigning in ComponentState) then
   SetLength(PasteText, 0);
 
-  if not(csDesigning in ComponentState) then
+
   begin
     for I := 1 to ParamCount do
     begin
@@ -617,6 +599,38 @@ begin
   inherited;
 end;
 
+function TCopyEditMonitor.GetReadyForLoadTransfer: Boolean;
+begin
+  Result := false;
+  if not Assigned(CopyMonitor) then
+    Exit;
+
+  CopyMonitor.CriticalSection.Enter;
+  try
+    Result := FReadyForLoadTransfer;
+  finally
+    CopyMonitor.CriticalSection.Leave;
+  end;
+end;
+
+function TCopyEditMonitor.GetRelatedPackage: string;
+begin
+  Result := '';
+  if (csDesigning in ComponentState) then
+    Result := FRelatedPackage
+  else
+  begin
+    if not Assigned(CopyMonitor) then
+    Exit;
+    CopyMonitor.CriticalSection.Enter;
+    try
+      Result := FRelatedPackage;
+    finally
+      CopyMonitor.CriticalSection.Leave;
+    end;
+  end;
+end;
+
 procedure TCopyEditMonitor.ClearPasteArray();
 Var
   I, x: Integer;
@@ -638,6 +652,36 @@ end;
 procedure TCopyEditMonitor.SetOurCollection(const Value: TTrackOnlyCollection);
 begin
   FTrackOnlyObjects.Assign(Value);
+end;
+
+procedure TCopyEditMonitor.SetReadyForLoadTransfer(const Value: Boolean);
+begin
+  if not Assigned(CopyMonitor) then
+    Exit;
+
+  CopyMonitor.CriticalSection.Enter;
+  try
+    FReadyForLoadTransfer := Value;
+  finally
+    CopyMonitor.CriticalSection.Leave;
+  end;
+end;
+
+procedure TCopyEditMonitor.SetRelatedPackage(const Value: string);
+begin
+  if (csDesigning in ComponentState) then
+    FRelatedPackage := Value
+  else
+  begin
+      if not Assigned(CopyMonitor) then
+    Exit;
+    CopyMonitor.CriticalSection.Enter;
+    try
+      FRelatedPackage := Value;
+    finally
+      CopyMonitor.CriticalSection.Leave;
+    end;
+  end;
 end;
 
 Procedure TCopyEditMonitor.MonitorAllAvailable();
@@ -683,11 +727,11 @@ var
   end;
 
 begin
-  if not Assigned(FCopyMonitor) then
+  if not Assigned(CopyMonitor) then
     Exit;
-  if not FCopyMonitor.Enabled then
+  if not CopyMonitor.Enabled then
     Exit;
-  FCopyMonitor.LogText('DYNAMIC', 'Monitor All Available');
+  CopyMonitor.LogText('DYNAMIC', 'Monitor All Available');
   list := TList.Create;
   try
     // Load our list with the components
@@ -727,11 +771,11 @@ procedure TCopyEditMonitor.TransferPasteText(Dest: TCopyEditMonitor);
 var
   I: Integer;
 begin
-  if not Assigned(FCopyMonitor) then
+  if not Assigned(CopyMonitor) then
     Exit;
-  if not FCopyMonitor.Enabled then
+  if not CopyMonitor.Enabled then
     Exit;
-  FCopyMonitor.LogText('DYNAMIC', 'Transfer Data');
+  CopyMonitor.LogText('DYNAMIC', 'Transfer Data');
 
   Dest.ClearPasteArray;
 
@@ -754,11 +798,11 @@ procedure TCopyEditMonitor.TransferData(Dest: TCopyEditMonitor);
 Var
   I: Integer;
 begin
-  if not Assigned(FCopyMonitor) then
+  if not Assigned(CopyMonitor) then
     Exit;
-  if not FCopyMonitor.Enabled then
+  if not CopyMonitor.Enabled then
     Exit;
-  FCopyMonitor.LogText('DYNAMIC', 'Transfer Data');
+  CopyMonitor.LogText('DYNAMIC', 'Transfer Data');
 
   // First move all IENs over
   for I := Low(CopyMonitor.CPRSClipBoard) to High(CopyMonitor.CPRSClipBoard) do
@@ -817,22 +861,31 @@ var
   TempHighlightArray: array of tHighlightRecord;
   HashSearch: THashedStringList;
 begin
-  { if not Assigned(FCopyMonitor) then
-    Exit;
-    if not FCopyMonitor.Enabled then
-    Exit; }
   Result := false;
-  if Assigned(FCopyMonitor) and FCopyMonitor.Enabled then
+  if Assigned(CopyMonitor) and CopyMonitor.Enabled then
   begin
     // First look for the entire text
-    Result := (TheRich.FindText(StringReplace(Trim(SearchText.Text), #10, '',
+    if CopyMonitor.WordCount(SearchText.Text) <= 2 then
+    begin
+      SetLength(HighRec, Length(HighRec) + 1);
+      with HighRec[high(HighRec)] do
+      begin
+        LineToHighlight := StringReplace((SearchText.Text), #10, '',
+          [rfReplaceAll]);
+        AboveWrdCnt := false;
+      end;
+      Result := true;
+      Exit;
+    end;
+
+    Result := (TheRich.FindText(StringReplace((SearchText.Text), #10, '',
       [rfReplaceAll]), 0, Length(TheRich.Text), []) > -1);
     if Result then
     begin
       SetLength(HighRec, Length(HighRec) + 1);
       with HighRec[high(HighRec)] do
       begin
-        LineToHighlight := StringReplace(Trim(SearchText.Text), #10, '',
+        LineToHighlight := StringReplace((SearchText.Text), #10, '',
           [rfReplaceAll]);
         AboveWrdCnt := true;
       end;
@@ -920,6 +973,25 @@ begin
             fSyncSizeList[High(fSyncSizeList)] := TCopyPasteDetails(ObjToUse);
           end;
         end;
+      end;
+    end;
+  end;
+end;
+
+Function TCopyEditMonitor.GetCopyMonitor: TCopyApplicationMonitor;
+begin
+  if (csDesigning in ComponentState) then
+    Result := FCopyMonitor
+  else
+  begin
+    Result := nil;
+    if Assigned(FCopyMonitor) then
+    begin
+      FCopyMonitor.CriticalSection.Enter;
+      try
+        Result := FCopyMonitor;
+      finally
+        FCopyMonitor.CriticalSection.Leave;
       end;
     end;
   end;

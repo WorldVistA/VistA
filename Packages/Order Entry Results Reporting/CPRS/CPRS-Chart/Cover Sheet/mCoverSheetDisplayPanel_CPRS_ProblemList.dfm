@@ -1,0 +1,2 @@
+inherited fraCoverSheetDisplayPanel_CPRS_ProblemList: TfraCoverSheetDisplayPanel_CPRS_ProblemList
+end

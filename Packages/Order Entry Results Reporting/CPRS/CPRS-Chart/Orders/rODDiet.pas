@@ -38,8 +38,8 @@ function DietAttributes(OI: Integer): string;
 function ExpandedQuantity(Product, Strength: Integer; const Qty: string): string;
 procedure LoadDietParams(var DietParams: TDietParams; ALocation: string);
 procedure AppendTFProducts(Dest: TStrings);
-function SubSetOfDiets(const StartFrom: string; Direction: Integer): TStrings;
-function SubSetOfOPDiets: TStrings;
+function SubSetOfDiets(aReturn: TStrings; const StartFrom: string; Direction: Integer): integer;
+function SubSetOfOPDiets(aReturn: TStrings): integer;
 procedure OrderLateTray(NewOrder: TOrder; Meal: Char; const MealTime: string; Bagged: Boolean);
 function IsolationID: string;
 function CurrentIsolation: string;
@@ -62,51 +62,68 @@ var
 
 function DietAttributes(OI: Integer): string;
 begin
-  CallV('ORWDFH ATTR', [OI]);
-  Result := RPCBrokerV.Results[0];
+  CallVistA('ORWDFH ATTR', [OI], Result);
 end;
 
 procedure LoadDietParams(var DietParams: TDietParams; ALocation: string);
+var
+  aLst: TStringList;
 begin
-  CallV('ORWDFH PARAM', [Patient.DFN, ALocation]);
-  with RPCBrokerV, DietParams do
-  begin
-    if Results.Count > 0 then
-    begin
-      BTimes := Pieces(Results[0], U,  1,  6);
-      NTimes := Pieces(Results[0], U,  7, 12);
-      ETimes := Pieces(Results[0], U, 13, 18);
-    end;
-    if Results.Count > 1 then
-    begin
-      Alarms := Pieces(Results[1], U, 1, 6);
-      Bagged := Piece(Results[1], U, 10) = 'Y';
-    end;
-    if Results.Count > 2 then
-    begin
-      Tray      := Pos('T', Results[2]) > 0;
-      Cafeteria := Pos('C', Results[2]) > 0;
-      DiningRm  := Pos('D', Results[2]) > 0;
-      RegIEN    := StrToIntDef(Piece(Results[2], U, 2), 0);
-      NPOIEN    := StrToIntDef(Piece(Results[2], U, 3), 0);
-      EarlyIEN  := Piece(Results[2], U, 4);
-      LateIEN   := Piece(Results[2], U, 5);
-      CurTF     := Piece(Results[2], U, 6);
-    end;
-    if (not Tray) and (not Cafeteria) and (not DiningRm) then Tray := True;
-    if Results.Count > 3 then
-      OPMaxDays := StrToIntDef(Results[3], 30)
+  aLst := TStringList.Create;
+  try
+    CallVistA('ORWDFH PARAM', [Patient.DFN, ALocation], aLst);
+
+    if aLst.Count > 0 then
+      begin
+        DietParams.BTimes := Pieces(aLst[0], U, 1, 6);
+        DietParams.NTimes := Pieces(aLst[0], U, 7, 12);
+        DietParams.ETimes := Pieces(aLst[0], U, 13, 18);
+      end;
+
+    if aLst.Count > 1 then
+      begin
+        DietParams.Alarms := Pieces(aLst[1], U, 1, 6);
+        DietParams.Bagged := Piece(aLst[1], U, 10) = 'Y';
+      end;
+
+    if aLst.Count > 2 then
+      begin
+        DietParams.Tray := Pos('T', aLst[2]) > 0;
+        DietParams.Cafeteria := Pos('C', aLst[2]) > 0;
+        DietParams.DiningRm := Pos('D', aLst[2]) > 0;
+        DietParams.RegIEN := StrToIntDef(Piece(aLst[2], U, 2), 0);
+        DietParams.NPOIEN := StrToIntDef(Piece(aLst[2], U, 3), 0);
+        DietParams.EarlyIEN := Piece(aLst[2], U, 4);
+        DietParams.LateIEN := Piece(aLst[2], U, 5);
+        DietParams.CurTF := Piece(aLst[2], U, 6);
+      end;
+
+    if (not DietParams.Tray) and (not DietParams.Cafeteria) and (not DietParams.DiningRm) then
+      DietParams.Tray := True;
+
+    if aLst.Count > 3 then
+      DietParams.OPMaxDays := StrToIntDef(aLst[3], 30)
     else
-      OPMaxDays := 30;
-    if Results.Count > 4 then
-      OPDefaultDiet := StrToIntDef(Results[4], 0)
+      DietParams.OPMaxDays := 30;
+
+    if aLst.Count > 4 then
+      DietParams.OPDefaultDiet := StrToIntDef(aLst[4], 0)
+  finally
+    FreeAndNil(aLst);
   end;
 end;
 
 function CurrentDietText: string;
+var
+  aLst: TStringList;
 begin
-  CallV('ORWDFH TXT', [Patient.DFN]);
-  Result := RPCBrokerV.Results.Text;
+  aLst := TStringList.Create;
+  try
+    CallVistA('ORWDFH TXT', [Patient.DFN], aLst);
+    Result := aLst.Text;
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 function CurrentTFText(const IENStr: string): string;
@@ -114,31 +131,37 @@ begin
 end;
 
 procedure AppendTFProducts(Dest: TStrings);
+var
+  aLst: TStringList;
 begin
-  CallV('ORWDFH TFPROD', [nil]);
-  FastAddStrings(RPCBrokerV.Results, Dest);
+  aLst := TStringList.Create;
+  try
+    CallVistA('ORWDFH TFPROD', [nil], aLst);
+    Dest.AddStrings(aLst);
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 function ExpandedQuantity(Product, Strength: Integer; const Qty: string): string;
 begin
-  Result := '';
-  if (Product = 0) or (Strength = 0) or (Length(Qty) = 0) then Exit;
-  Result := sCallV('ORWDFH QTY2CC', [Product, Strength, Qty]);
+  if (Product = 0) or (Strength = 0) or (Length(Qty) = 0) then
+    Result := ''
+  else
+    CallVistA('ORWDFH QTY2CC', [Product, Strength, Qty], Result);
 end;
 
-function SubSetOfDiets(const StartFrom: string; Direction: Integer): TStrings;
-{ returns a pointer to a list of orderable items matching an S.xxx cross reference (for use in
-  a long list box) -  The return value is  a pointer to RPCBrokerV.Results, so the data must
-  be used BEFORE the next broker call! }
+function SubSetOfDiets(aReturn: TStrings; const StartFrom: string; Direction: Integer): integer;
+{ returns a list of orderable items matching an S.xxx cross reference (for use in a long list box) }
 begin
-  CallV('ORWDFH DIETS', [StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDFH DIETS', [StartFrom, Direction], aReturn);
+  Result := aReturn.Count;
 end;
 
-function SubSetOfOPDiets: TStrings;
+function SubSetOfOPDiets(aReturn: TStrings): integer;
 begin
-  CallV('ORWDFH OPDIETS', [nil]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDFH OPDIETS', [nil], aReturn);
+  Result := aReturn.Count;
 end;
 
 procedure OrderLateTray(NewOrder: TOrder; Meal: Char; const MealTime: string; Bagged: Boolean);
@@ -149,29 +172,30 @@ end;
 
 function IsolationID: string;
 begin
-  Result := sCallV('ORWDFH ISOIEN', [nil]);
+  CallVistA('ORWDFH ISOIEN', [nil], Result);
 end;
 
 function CurrentIsolation: string;
 begin
-  Result := sCallV('ORWDFH CURISO', [Patient.DFN]);
+  CallVistA('ORWDFH CURISO', [Patient.DFN], Result);
 end;
 
 procedure LoadIsolations(Dest: TStrings);
 begin
-  CallV('ORWDFH ISOLIST', [nil]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWDFH ISOLIST', [nil], Dest);
 end;
 
 procedure LoadDietQuickList(Dest: TStrings; const GroupID: string);
 begin
-  CallV('ORWDXQ GETQLST', [GroupID, 'Q']);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWDXQ GETQLST', [GroupID, 'Q'], Dest);
 end;
 
 function DietDialogType(GroupIEN: Integer): Char;
+var
+  aStr: string;
 begin
-  Result := CharAt(sCallV('ORWDFH FINDTYP', [GroupIEN]), 1);
+  CallVistA('ORWDFH FINDTYP', [GroupIEN], aStr);
+  Result := CharAt(aStr, 1);
   if not CharInSet(Result, ['A', 'D', 'E', 'N', 'P', 'T', 'M']) then Result := 'D';
 end;
 
@@ -201,65 +225,74 @@ end;
 
 procedure GetCurrentRecurringOPMeals(Dest: TStrings; MealType: string = '');
 begin
-  CallV('ORWDFH CURRENT MEALS', [Patient.DFN, MealType]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWDFH CURRENT MEALS', [Patient.DFN, MealType], Dest);
   MixedCaseList(Dest);
 end;
 
 function OutpatientLocationConfigured(ALocation: string): boolean;
+var
+  aStr: string;
 begin
-  Result := (sCallV('ORWDFH NFSLOC READY', [ALocation]) = '1');
+  CallVistA('ORWDFH NFSLOC READY', [ALocation], aStr);
+  Result := (aStr = '1');
 end;
 
-procedure CheckForDelayedDietOrders(var OutPutText: String; CurrentView: TOrderView; DispGrp: integer);
-Var
- i, Z: Integer;
- AList: TList;
- EventList: TstringList;
- x, PtEvtIFN, PtEvtName: string;
+procedure CheckForDelayedDietOrders(var OutPutText: string; CurrentView: TOrderView; DispGrp: Integer);
+var
+  i, Z: Integer;
+  AList: TList;
+  EventList: TStringList;
+  x, PtEvtIFN, PtEvtName: string;
+  aReturn: TStringList;
 const
   TX_DEL = 'There are diet orders in future events which will not be affected by this action.';
 begin
-  CallV('OREVNTX PAT', [Patient.DFN]);
-  if RPCBrokerV.Results.Count > 1 then
-  begin
-   AList := TList.Create;
-   EventList := TStringList.Create;
-    try
-     for i := 1 to RPCbrokerV.Results.Count - 1 do EventList.Add(RPCBrokerV.Results.Strings[i]);
-     For i := 0 to EventList.Count - 1 do begin
-      PtEvtIFN := Piece(EventList.Strings[i], '^', 1);
-      PtEvtName := Piece(EventList.Strings[i], '^', 2);
-      LoadOrdersAbbr(AList, CurrentView, PtEvtIFN);
-      for Z := AList.Count - 1 downto 0 do
+  aReturn := TStringList.Create;
+  try
+    CallVistA('OREVNTX PAT', [Patient.DFN], aReturn);
+    if aReturn.Count > 1 then
       begin
-        if TOrder(Alist.Items[Z]).DGroup <> DispGrp then
-        begin
-          TOrder(AList.Items[Z]).Free;
-          AList.Delete(Z);
+        AList := TList.Create;
+        EventList := TStringList.Create;
+        try
+          for i := 1 to aReturn.Count - 1 do EventList.Add(aReturn[i]);
+          for i := 0 to EventList.Count - 1 do
+            begin
+              PtEvtIFN := Piece(EventList.Strings[i], '^', 1);
+              PtEvtName := Piece(EventList.Strings[i], '^', 2);
+              LoadOrdersAbbr(AList, CurrentView, PtEvtIFN);
+              for Z := AList.Count - 1 downto 0 do
+                begin
+                  if TOrder(AList.Items[Z]).DGroup <> DispGrp then
+                    begin
+                      TOrder(AList.Items[Z]).Free;
+                      AList.Delete(Z);
+                    end;
+                end;
+              if AList.Count > 0 then
+                begin
+                  x := '';
+                  RetrieveOrderFields(AList, 0, 0);
+                  OutPutText := OutPutText + CRLF + 'Delayed event: ' + PtEvtName;
+                  for Z := 0 to AList.Count - 1 do
+                    with TOrder(AList.Items[Z]) do
+                      begin
+                        x := x + #9 + StringReplace(Text, #13#10, #13#10#9, [rfReplaceAll, rfIgnoreCase]) + CRLF;
+                      end;
+                  OutPutText := OutPutText + CRLF + x;
+                end;
+            end;
+          if OutPutText > '' then OutPutText := TX_DEL + CRLF + OutPutText;
+        finally
+          EventList.Free;
+          with AList do
+            for i := 0 to Count - 1 do TOrder(Items[i]).Free;
+          AList.Free;
         end;
       end;
-      if AList.Count > 0 then
-      begin
-        x := '';
-        RetrieveOrderFields(AList, 0, 0);
-        OutPutText := OutPutText + CRLF + 'Delayed event: ' + PtEvtName;
-        for Z := 0 to AList.Count - 1 do
-          with TOrder(AList.Items[Z]) do
-          begin
-            x := x + #9 +  StringReplace(Text, #13#10, #13#10#9, [rfReplaceAll, rfIgnoreCase]) + CRLF;
-          end;
-        OutPutText := OutPutText + CRLF + x;
-       end;
-     end;
-     If OutPutText > '' then OutputText := TX_DEL + CRLF + OutputText;
-    finally
-      EventList.Free;
-      with AList do for i := 0 to Count - 1 do TOrder(Items[i]).Free;
-      AList.Free;
-    end;
+  finally
+    FreeAndNil(aReturn);
   end;
 end;
-
 
 end.

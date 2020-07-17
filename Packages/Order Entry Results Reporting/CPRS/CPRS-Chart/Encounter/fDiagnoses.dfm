@@ -54,7 +54,7 @@ inherited frmDiagnoses: TfrmDiagnoses
     Margins.Bottom = 5
     TabOrder = 1
     ExplicitWidth = 523
-    inherited lstRenameMe: TCaptionListView
+    inherited lstCaptionList: TCaptionListView
       Width = 523
       Columns = <
         item

@@ -120,7 +120,7 @@ inherited frmPCELex: TfrmPCELex
         Left = 11
         Top = 21
         Width = 526
-        Height = 25
+        Height = 19
         Margins.Left = 0
         Align = alClient
         Constraints.MinHeight = 20
@@ -172,6 +172,7 @@ inherited frmPCELex: TfrmPCELex
         TabOrder = 0
         Visible = False
         ShowAccelChar = True
+        ExplicitWidth = 186
       end
       inline tgfLex: TTreeGridFrame
         Left = 11

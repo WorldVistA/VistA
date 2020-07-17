@@ -1,0 +1,2 @@
+inherited fraCoverSheetDisplayPanel_CPRS_Labs: TfraCoverSheetDisplayPanel_CPRS_Labs
+end

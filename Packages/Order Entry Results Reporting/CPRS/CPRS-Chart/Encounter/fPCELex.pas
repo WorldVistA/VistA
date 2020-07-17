@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, uCore,
   fAutoSz, StdCtrls, ORFn, ORCtrls, ExtCtrls, Buttons, VA508AccessibilityManager,
-  ComCtrls, fBase508Form, CommCtrl, mTreeGrid, rCore;
+  ComCtrls, fBase508Form, CommCtrl, mTreeGrid, rCore, StrUtils;
 
 type
   TfrmPCELex = class(TfrmBase508Form)
@@ -71,7 +71,7 @@ implementation
 
 {$R *.DFM}
 
-uses rPCE, uProbs, rProbs, UBAGlobals, fEncounterFrame;
+uses rPCE, uProbs, rProbs, UBAGlobals, fEncounterFrame, VAUtils;
 
 var
   TriedExtend: Boolean = false;
@@ -125,7 +125,7 @@ begin
   FSingleCodeSys := True;
   FExtend := False;
   UserProps := TStringList.Create;
-  FastAssign(InitUser(User.DUZ), UserProps);
+  InitUser(User.DUZ, UserProps);
   PLUser := TPLUserParams.create(UserProps);
   FSuppressCodes := PLUser.usSuppressCodes;
   ResizeAnchoredFormToFont(self);
@@ -555,7 +555,7 @@ procedure TfrmPCELex.tgfLextvDblClick(Sender: TObject);
 begin
   inherited;
   tgfLextvClick(Sender);
-  if tgfLex.SelectedNode.VUID <> '+' then
+  if (tgfLex.SelectedNode <> nil) and (tgfLex.SelectedNode.VUID <> '+') then
     cmdOKClick(Sender);
 end;
 

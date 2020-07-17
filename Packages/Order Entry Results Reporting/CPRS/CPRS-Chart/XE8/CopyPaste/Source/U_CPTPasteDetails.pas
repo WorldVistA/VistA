@@ -35,10 +35,8 @@ uses
   U_CPTAppMonitor;
 
 type
-  /// <summary><para>Visual control that hooks into a control and monitors copy/paste. Sends data back to<seealso cref="TCopyApplicationMonitor" /> </para></summary>
   TCopyPasteDetails = class(TPanel)
   private
-    /// <summary><para>Button used to collapse the InfoPanel</para><para><b>Type: </b><c>TCollapseBtn</c></para></summary>
     FCollapseBtn: TCollapseBtn;
 
     CPFoundRecs: TCPFoundRecArray;
@@ -50,78 +48,44 @@ type
     fProgressBar: TProgressBar;
     FCopyMonitor: TCopyApplicationMonitor;
     fParentForm: TCustomForm;
-    /// <summary><para>Select the "All entries" or first item if on </para><para><b>Type: </b><c>Boolean</c></para></summary>
     fDefaultSelectAll: Boolean;
-    /// <summary><para>Uses all the same logic from <seealso cref="TCopyEditMonitor" /></para></summary>
     fEditMonitor: TCopyEditMonitor;
-    /// <summary><para>External event to fire when hiding the infopanel</para><para><b>Type: </b><c><seealso cref="TVisible" /></c></para></summary>
     FHide: TVisible;
-    /// <summary><para>Flag used to determine if the InfoPanel is collapsed</para><para><b>Type: </b><c>Boolean</c></para></summary>
     FInfoboxCollapsed: Boolean;
-    /// <summary><para>Contains the details for the selected entry in <seealso cref="FInfoSelector" /></para><para><b>Type: </b><c>TRichEdit</c></para></summary>
     FInfoMessage: TRichEdit;
-    /// <summary><para>List of pasted entries for <seealso cref="FMonitorObject" /></para><para><b>Type: </b><c>TSelectorBox</c></para></summary>
     FInfoSelector: TSelectorBox;
-    /// <summary><para>Last height of the  <see cref="TCopyEditMonitor.FInfoPanel" /></para><para><b>Type: </b><c>Integer</c></para></summary>
+    FCPSplitter: TSplitter;
     FLastInfoboxHeight: Integer;
-    /// <summary><para>Object to monitor</para><para><b>Type: </b><c>TCustomEdit</c></para></summary>
     FMonitorObject: TRichEdit;
-    /// <summary><para>New paste highlight is currently active</para><para><b>Type: </b><c>Boolean</c></para></summary>
     FNewShowing: Boolean;
-    /// <summary><para>original wnd proc</para><para><b>Type: </b><c>TWndMethod</c></para></summary>
+    fFromPaste: Boolean;
     FOurOrigWndProc: TWndMethod;
-    /// <summary><para>Cursor position in <see cref="CopyMonitor|TCopyEditMonitor.FMonitorObject" /> where the text was pasted</para><para><b>Type: </b><c>Integer</c></para></summary>
     FPasteCurPos: Integer;
-    /// <summary><para>External event to fire when showing the infopanel</para><para><b>Type: </b><c><see cref="CopyMonitor|TVisible" /></c></para></summary>
     FShow: TVisible;
-    /// <summary><para>Shows all paste actions</para><para><b>Type: </b><c>Integer</c></para></summary>
     FShowAllPaste: Boolean;
-    /// <summary><para>Flag to detemine if OnResize should be suspended</para><para><b>Type: </b><c>Boolean</c></para></summary>
     FSuspendResize: Boolean;
-    /// <summary><para>Flag to detemine if this panels size should sync with others</para><para><b>Type: </b><c>Boolean</c></para></summary>
     FSyncSizes: Boolean;
 
     FOnButtonToggle: TToggleEvent;
     FOnAnalyze: TSaveEvent;
     function CharLookup(LineNum: Integer; StartCheck: Boolean = False;
       EndCheck: Boolean = False): Boolean;
-    /// <summary>Highlights the pasted data in the monitor object (TRichedit)</summary>
-    /// <param name="Color">Color from  <see cref="CopyMonitor|TCopyApplicationMonitor.HighlightColor" /><para><b>Type: </b><c>TColor</c></para></param>
-    /// <param name="Style">Style from  <see cref="CopyMonitor|TCopyApplicationMonitor.MatchStyle" /><para><b>Type: </b><c>TFontStyles</c></para></param>
-    /// <param name="ShowHighlight">Flag from <see cref="CopyMonitor|TCopyApplicationMonitor.MatchHighlight" /><para><b>Type: </b><c>Boolean</c></para></param>
-    /// <param name="PasteText">Pasted data from <see cref="CopyMonitor|TCopyEditMonitor.PasteText" /> <para><b>Type: </b><c>String</c></para></param name="PasteText">
     procedure HighLightInfoPanel(Color: TColor; Style: TFontStyles;
       ShowHighlight: Boolean; PasteText: String;
       ClearPrevHighLight: Boolean = true);
-    /// <summary>Handles the manual resizing of the "Info Panel"</summary>
-    /// <param name="Sender">Object that is making the call<para><b>Type: </b><c>TObject</c></para></param>
     procedure InfoPanelResize(Sender: TObject);
 
     procedure LCSCompareStrings(DestRich: TRichEdit;
       OrigStr, ModStr: TStringList);
     procedure AuditClick(Sender: TObject);
 
-    /// <summary>Removes the highlighting from the monitoring object</summary>
-    /// <param name="Sender">Object that is making the call<para><b>Type: </b><c>TObject</c></para></param>
     procedure pnlMessageExit(Sender: TObject);
-    /// <summary><para>Custom WndProc</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Message">Message<para><b>Type: </b><c>TMessage</c></para></param>
     procedure OurWndProc(var Message: TMessage);
-    /// <summary>Responsible for loading the results into the "Info Panel"</summary>
     procedure ReloadInfoPanel();
-    /// <summary><para>Assign object to monitor</para></summary>
-    /// <param name="ACopyObject">Object to montior<para><b>Type: </b><c>TCustomEdit</c></para>
-    /// <para><b>Example:</b><example>TRichEdit</example></para></param>
     procedure SetObjectToMonitor(ACopyObject: TRichEdit);
-    /// <summary>Responsible for displaying the "Info Panel"</summary>
-    /// <param name="Toggle">Determines if this should display or not<para><b>Type: </b><c>Boolean</c></para></param>
     procedure ShowInfoPanel(Toggle: Boolean);
-    /// <summary><para>Determines if the panel should show</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="sender">sender<para><b>Type: </b><c>TObject</c></para></param>
-    /// <param name="CPmsg">CPmsg<para><b>Type: </b><c>Cardinal</c></para></param>
-    /// <param name="CPVars">CPVars<para><b>Type: </b><c>Array of Variant</c></para></param>
     Procedure VisualMesageCenter(Sender: TObject; const CPmsg: Cardinal;
-      CPVars: Array of Variant);
+      CPVars: Array of Variant; FromNewPaste: Boolean = false);
 
     procedure FindText(var FoundPOS: TCPFindTxtRecArray;
       PasteRec, NoteRec: TCPTextRec; MINLNGTH: Integer; NoteList: TStringList);
@@ -129,8 +93,6 @@ type
       NoteLineFullTxt: string = ''): Integer;
     Procedure LoadBlankLines(NoteArray: TCpTextRecArray;
       StrtLn, StopLn: Integer);
-    /// <summary><para>Find all lines that have a perfect match</para> </summary>
-    /// <param name="ResultArray">The return array<para><b>Type: </b><c><see cref="fFindPaste|TCPMatchingLinesArray" /></c></para></param>
     procedure FindMatchingLines(NoteArray, PasteArray: TCpTextRecArray;
       var ResultArray: TCPMatchingLinesArray);
     function FindMatchingSection(var DataArray: TCPMatchingLinesArray;
@@ -140,31 +102,21 @@ type
     function SPECIAL(FoundArray: TCPFoundRecArray;
       NoteLineNum: Integer): Boolean;
     procedure SetCopyMonitor(Value: TCopyApplicationMonitor);
+    function GetCopyPasteEnabled: Boolean;
+    function GetShowAllPaste: Boolean;
+    procedure SetShowAllPaste(const Value: Boolean);
   public
-    /// <summary><para>Check if paste were modified</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Sender">Sender<para><b>Type: </b><c>TComponent</c></para></param>
-    /// <param name="SaveList">SaveList<para><b>Type: </b><c>TStringList</c></para></param>
     procedure CheckForModifiedPaste(var SaveList: TStringList);
-    /// <summary>Handles the collapse/expand of the "Info Panel"</summary>
-    /// <param name="Sender">Object that is making the call<para><b>Type: </b><c>TObject</c></para></param>
     procedure CloseInfoPanel(Sender: TObject);
     procedure CPCOMPARE(const aPastedRec: TCprsClipboard;
       var OutList: TStringList; var FinalPercent: Double; var TimeTook: Int64);
-    /// <summary>constructor</summary>
     constructor Create(AOwner: TComponent); override;
-    /// <summary>Select all entries  by default</summary>
     Property DefaultSelectAll: Boolean read fDefaultSelectAll
       write fDefaultSelectAll;
-    /// <summary>Destructor</summary>
     destructor Destroy; override;
-    /// <summary><para>Override the DoExit procedure</para></summary>
     procedure DoExit; override;
-    /// <summary><para>Calls <see cref="CopyMonitor|TCopyEditMonitor.ShowInfoPanel" /></para><para><b>Type: </b><c>Integer</c></para></summary>
     property FInfoPanelVisible: Boolean write ShowInfoPanel;
-    /// <summary>Loads the details for the selected past entry</summary>
-    /// <param name="Sender">Object that is making the call<para><b>Type: </b><c>TObject</c></para></param>
     procedure lbSelectorClick(Sender: TObject);
-    /// <summary>Finds pasted text for a given document</summary>
     procedure LoadPasteText();
 
     procedure FillPasteArray(SourceData: THashedStringList;
@@ -173,12 +125,8 @@ type
     Procedure ManuallyShowNewHighlights();
     procedure PreLoadPasteRecs(LoadFrom: TStringList);
 
-    /// <summary><para>Save the Monitor for the current document</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="ItemID">Document's IEN<para><b>Type: </b><c>Integer</c></para></param>
     procedure SaveTheMonitor(ItemID: Integer);
-    /// <summary><para>show all paste actions</para><para><b>Type: </b><c>Boolean</c></para></summary>
-    property ShowAllPaste: Boolean read FShowAllPaste write FShowAllPaste;
-    /// <summary><para>Override the Resize procedure</para></summary>
+    property ShowAllPaste: Boolean read GetShowAllPaste write SetShowAllPaste;
     procedure Resize; override;
     property InfoBoxCollapsed: Boolean read FInfoboxCollapsed;
 
@@ -186,25 +134,17 @@ type
     Property RecStatBtnVisible: Boolean read fRecStatBtnVisible
       write fRecStatBtnVisible;
     property ParentForm: TCustomForm read fParentForm write fParentForm;
+    property CopyPasteEnabled: Boolean read GetCopyPasteEnabled;
   published
-    /// <summary><para>The "Parent" component that monitors the application</para><para><b>Type: </b><c><see cref="CopyMonitor|TCopyApplicationMonitor" /></c></para></summary>
     property CopyMonitor: TCopyApplicationMonitor read FCopyMonitor
       write SetCopyMonitor;
-    /// <summary><para>Button used to collapse or expand the panel</para><para><b>Type: </b><c>TCollapseBtn</c></para></summary>
     property CollapseBtn: TCollapseBtn read FCollapseBtn;
-    /// <summary><para>Uses all the same logic from <see cref="CopyMonitor|TCopyEditMonitor" /></para></summary>
     property EditMonitor: TCopyEditMonitor read fEditMonitor write fEditMonitor;
-    /// <summary><para>Contains the pasted details</para><para><b>Type: </b><c>TRichEdit</c></para></summary>
     property InfoMessage: TRichEdit read FInfoMessage;
-    /// <summary><para>Displays the selectable entries</para><para><b>Type: </b><c>TSelectorBox</c></para></summary>
     property InfoSelector: TSelectorBox read FInfoSelector;
-    /// <summary><para>Event to fire when hiding</para><para><b>Type: </b><c><see cref="CopyMonitor|TVisible" /></c></para></summary>
     property OnHide: TVisible read FHide write FHide;
-    /// <summary><para>Event to fire when showing</para><para><b>Type: </b><c><see cref="CopyMonitor|TVisible" /></c></para></summary>
     property OnShow: TVisible read FShow write FShow;
-    /// <summary><para>Flag to detemine if this panels size should sync with others</para><para><b>Type: </b><c>Boolean</c></para></summary>
     property SyncSizes: Boolean read FSyncSizes write FSyncSizes;
-    /// <summary><para>Object to monitor</para><para><b>Type: </b><c>TCustomEdit</c></para></summary>
     property VisualEdit: TRichEdit read FMonitorObject write SetObjectToMonitor;
     property OnButtonToggle: TToggleEvent read FOnButtonToggle
       write FOnButtonToggle;
@@ -215,6 +155,9 @@ type
 procedure Register;
 
 implementation
+
+uses
+  System.SyncObjs, VAUtils;
 
 procedure Register;
 begin
@@ -245,13 +188,13 @@ begin
 end;
 
 procedure TCopyPasteDetails.VisualMesageCenter(Sender: TObject;
-  const CPmsg: Cardinal; CPVars: Array of Variant);
+  const CPmsg: Cardinal; CPVars: Array of Variant; FromNewPaste: Boolean = false);
 var
   SelectAll: Boolean;
 begin
-  if not Assigned(EditMonitor.FCopyMonitor) then
+  if not Assigned(EditMonitor.CopyMonitor) then
     Exit;
-  if not EditMonitor.FCopyMonitor.Enabled then
+  if not EditMonitor.CopyMonitor.Enabled then
     Exit;
   Try
     case CPmsg of
@@ -327,7 +270,10 @@ begin
 
             FInfoSelector.SelectorColor := clLtGray;
             FNewShowing := true;
+            fFromPaste := FromNewPaste;
             lbSelectorClick(FInfoSelector);
+            FInfoSelector.SetFocus;
+            fFromPaste := false;
           end;
         End;
     end;
@@ -344,8 +290,10 @@ end;
 
 procedure TCopyPasteDetails.InfoPanelResize(Sender: TObject);
 begin
-  if Assigned(EditMonitor.FCopyMonitor) then
-    if not EditMonitor.FCopyMonitor.Enabled then
+  if not Assigned(EditMonitor) then
+    Exit;
+  if Assigned(EditMonitor.CopyMonitor) then
+    if not EditMonitor.CopyMonitor.Enabled then
       Exit;
   if Self.Constraints.MinHeight <> (fTopPanel.Top + fTopPanel.Height + 10) then
     Self.Constraints.MinHeight := (fTopPanel.Top + fTopPanel.Height + 10);
@@ -369,9 +317,9 @@ Procedure TCopyPasteDetails.ReloadInfoPanel();
 Var
   I: Integer;
 begin
-  if not Assigned(EditMonitor.FCopyMonitor) then
+  if not Assigned(EditMonitor.CopyMonitor) then
     Exit;
-  if not EditMonitor.FCopyMonitor.Enabled then
+  if not EditMonitor.CopyMonitor.Enabled then
     Exit;
   FInfoMessage.Text := '<-- Please select the desired paste date';
   With FInfoSelector, EditMonitor do
@@ -395,8 +343,8 @@ end;
 
 procedure TCopyPasteDetails.CloseInfoPanel(Sender: TObject);
 begin
-  if Assigned(EditMonitor.FCopyMonitor) then
-    if not EditMonitor.FCopyMonitor.Enabled then
+  if Assigned(EditMonitor.CopyMonitor) then
+    if not EditMonitor.CopyMonitor.Enabled then
       Exit;
   if Self.Constraints.MinHeight <> (fTopPanel.Top + fTopPanel.Height + 10) then
     Self.Constraints.MinHeight := (fTopPanel.Top + fTopPanel.Height + 10);
@@ -423,8 +371,8 @@ end;
 
 procedure TCopyPasteDetails.ShowInfoPanel(Toggle: Boolean);
 begin
-  if Assigned(EditMonitor.FCopyMonitor) then
-    if not EditMonitor.FCopyMonitor.Enabled then
+  if Assigned(EditMonitor.CopyMonitor) then
+    if not EditMonitor.CopyMonitor.Enabled then
       Exit;
   SendMessage(Parent.Handle, WM_SETREDRAW, 0, 0);
   try
@@ -456,19 +404,20 @@ procedure TCopyPasteDetails.pnlMessageExit(Sender: TObject);
 VAr
   Format: CHARFORMAT2;
   ResetMask: Integer;
-  LastCurPos, LastCurSel: Integer;
+  LastCurPos, LastCurSel, LastLineNum: Integer;
 begin
-  if Assigned(EditMonitor.FCopyMonitor) then
-    if not EditMonitor.FCopyMonitor.Enabled then
+  if Assigned(EditMonitor.CopyMonitor) then
+    if not EditMonitor.CopyMonitor.Enabled then
       Exit;
   with EditMonitor do
   begin
-    ResetMask := TRichEdit(FMonitorObject).Perform(EM_GETEVENTMASK, 0, 0);
-    TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, 0);
-    TRichEdit(FMonitorObject).Perform(WM_SETREDRAW, Ord(False), 0);
+ //   ResetMask := TRichEdit(FMonitorObject).Perform(EM_GETEVENTMASK, 0, 0);
+ //   TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, 0);
+  //  TRichEdit(FMonitorObject).Perform(WM_SETREDRAW, Ord(False), 0);
     try
       LastCurPos := TRichEdit(FMonitorObject).SelStart;
       LastCurSel := TRichEdit(FMonitorObject).SelLength;
+      LastLineNum := TRichEdit(FMonitorObject).perform( EM_GETFIRSTVISIBLELINE, 0, 0 );
       TRichEdit(FMonitorObject).SelStart := 0;
       TRichEdit(FMonitorObject).SelLength :=
         Length(TRichEdit(FMonitorObject).Text);
@@ -489,6 +438,7 @@ begin
 
       if not TRichEdit(FMonitorObject).ReadOnly and TRichEdit(FMonitorObject).Enabled
       then
+      begin
         if FNewShowing then
         begin
           TRichEdit(FMonitorObject).SelStart := LastCurPos;
@@ -497,157 +447,187 @@ begin
         else
           TRichEdit(FMonitorObject).SelStart := FPasteCurPos;
 
+        TRichEdit(FMonitorObject).perform( em_linescroll, 0,
+             LastLineNum -
+               TRichEdit(FMonitorObject).perform( EM_GETFIRSTVISIBLELINE, 0, 0 )
+            );
+      end;
+
     finally
-      TRichEdit(FMonitorObject).Perform(WM_SETREDRAW, Ord(true), 0);
-      InvalidateRect(TRichEdit(FMonitorObject).Handle, NIL, true);
-      TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, ResetMask);
+//      TRichEdit(FMonitorObject).Perform(WM_SETREDRAW, Ord(true), 0);
+ //     InvalidateRect(TRichEdit(FMonitorObject).Handle, NIL, true);
+ //     TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, ResetMask);
     end;
   end;
 end;
 
 procedure TCopyPasteDetails.lbSelectorClick(Sender: TObject);
 var
-  I, ii, iii, CharCnt, X, ReturnFSize: Integer;
+  I, ii, iii, CharCnt, X, ReturnFSize, RtnCurPos, RtnLineNum: Integer;
+  ResetMask: Integer;
   FirstClear: Boolean;
   Synamb, DisplayTxt: TStringList;
+  RtnCursor: TCursor;
 begin
-  if Assigned(EditMonitor.FCopyMonitor) then
-    if not EditMonitor.FCopyMonitor.Enabled then
+  if Assigned(EditMonitor.CopyMonitor) then
+    if not EditMonitor.CopyMonitor.Enabled then
       Exit;
   if TListBox(Sender).ItemIndex < 0 then
     Exit;
 
-  with EditMonitor do
-  begin
-    FInfoMessage.Clear;
-    if UpperCase(TListBox(Sender).Items[TListBox(Sender).ItemIndex]) = 'ALL ENTRIES'
-    then
+  RtnCursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass;
+  ResetMask := TRichEdit(FMonitorObject).Perform(EM_GETEVENTMASK, 0, 0);
+  TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, 0);
+  TRichEdit(FMonitorObject).Perform(WM_SETREDRAW, Ord(False), 0);
+  try
+    with EditMonitor do
     begin
-      FInfoMessage.SelAttributes.Style := [fsBold, fsUnderline];
-      ReturnFSize := FInfoMessage.SelAttributes.Size;
-      FInfoMessage.SelAttributes.Size := ReturnFSize + 2;
-      FInfoMessage.SelText := 'Paste Details';
-      FInfoMessage.Lines.Add('');
-      FInfoMessage.SelAttributes.Size := ReturnFSize;
-      FInfoMessage.SelAttributes.Style := [];
-      FInfoMessage.SelText := 'Details are provided for individual entries.';
-      FInfoMessage.Lines.Add('');
-
-      // now higlight all the items
-      for I := Low(PasteText) to High(PasteText) do
+      FInfoMessage.Clear;
+      if not FMonitorObject.ReadOnly and fFromPaste then
       begin
-        // Update highlight lines if its new (from transfer)
-        if not(PasteText[I].IdentFired) then
-        begin
-          PasteText[I].VisibleOnNote := LoadIdentLines(FMonitorObject,
-            PasteText[I].PastedText, PasteText[I].HiglightLines);
-          PasteText[I].IdentFired := true;
-        end;
+         RtnLineNum := FMonitorObject.perform( EM_GETFIRSTVISIBLELINE, 0, 0 );
+         RtnCurPos := FMonitorObject.SelStart;
+      end;
+      if UpperCase(TListBox(Sender).Items[TListBox(Sender).ItemIndex]) = 'ALL ENTRIES'
+      then
+      begin
+        FInfoMessage.SelAttributes.Style := [fsBold, fsUnderline];
+        ReturnFSize := FInfoMessage.SelAttributes.Size;
+        FInfoMessage.SelAttributes.Size := ReturnFSize + 2;
+        FInfoMessage.SelText := 'Paste Details';
+        FInfoMessage.Lines.Add('');
+        FInfoMessage.SelAttributes.Size := ReturnFSize;
+        FInfoMessage.SelAttributes.Style := [];
+        FInfoMessage.SelText := 'Details are provided for individual entries.';
+        FInfoMessage.Lines.Add('');
 
-        if PasteText[I].VisibleOnNote then
+        // now higlight all the items
+        for I := Low(PasteText) to High(PasteText) do
         begin
-          if Length(PasteText[I].GroupItems) > 0 then
+          // Update highlight lines if its new (from transfer)
+          if not(PasteText[I].IdentFired) then
           begin
-            // Loop through the groups
-            for ii := High(PasteText[I].GroupItems)
-              downto Low(PasteText[I].GroupItems) do
+            PasteText[I].VisibleOnNote := LoadIdentLines(FMonitorObject,
+              PasteText[I].PastedText, PasteText[I].HiglightLines);
+            PasteText[I].IdentFired := true;
+          end;
+
+          if PasteText[I].VisibleOnNote then
+          begin
+            if Length(PasteText[I].GroupItems) > 0 then
             begin
-              if PasteText[I].GroupItems[ii].GroupParent then
-                Continue;
-              // If the group is visible
-              if PasteText[I].GroupItems[ii].VisibleOnNote then
+              // Loop through the groups
+              for ii := High(PasteText[I].GroupItems)
+                downto Low(PasteText[I].GroupItems) do
               begin
-                // Loop through the highlights
-                for iii := Low(PasteText[I].GroupItems[ii].HiglightLines)
-                  to High(PasteText[I].GroupItems[ii].HiglightLines) do
+                if PasteText[I].GroupItems[ii].GroupParent then
+                  Continue;
+                // If the group is visible
+                if PasteText[I].GroupItems[ii].VisibleOnNote then
                 begin
-                  // If above word count
-                  if PasteText[I].GroupItems[ii].HiglightLines[iii].AboveWrdCnt
-                  then
+                  // Loop through the highlights
+                  for iii := Low(PasteText[I].GroupItems[ii].HiglightLines)
+                    to High(PasteText[I].GroupItems[ii].HiglightLines) do
                   begin
-                    HighLightInfoPanel(CopyMonitor.HighlightColor,
-                      CopyMonitor.MatchStyle, CopyMonitor.MatchHighlight,
-                      PasteText[I].GroupItems[ii].HiglightLines[iii]
-                      .LineToHighlight, False);
+                    // If above word count
+                    if PasteText[I].GroupItems[ii].HiglightLines[iii].AboveWrdCnt
+                    then
+                    begin
+                      HighLightInfoPanel(CopyMonitor.HighlightColor,
+                        CopyMonitor.MatchStyle, CopyMonitor.MatchHighlight,
+                        PasteText[I].GroupItems[ii].HiglightLines[iii]
+                        .LineToHighlight, False);
+                    end;
                   end;
                 end;
               end;
-            end;
-          end
-          else
-          begin
-            for ii := Low(PasteText[I].HiglightLines)
-              to High(PasteText[I].HiglightLines) do
+            end
+            else
             begin
-              if PasteText[I].HiglightLines[ii].AboveWrdCnt then
+              for ii := Low(PasteText[I].HiglightLines)
+                to High(PasteText[I].HiglightLines) do
               begin
-                HighLightInfoPanel(CopyMonitor.HighlightColor,
-                  CopyMonitor.MatchStyle, CopyMonitor.MatchHighlight,
-                  PasteText[I].HiglightLines[ii].LineToHighlight, False);
+                if PasteText[I].HiglightLines[ii].AboveWrdCnt then
+                begin
+                  HighLightInfoPanel(CopyMonitor.HighlightColor,
+                    CopyMonitor.MatchStyle, CopyMonitor.MatchHighlight,
+                    PasteText[I].HiglightLines[ii].LineToHighlight, False);
+                end;
               end;
             end;
           end;
         end;
-      end;
 
-      FInfoMessage.SelStart := 0;
-    end
-    else
-    begin
-
-      for I := Low(PasteText) to High(PasteText) do
+        FInfoMessage.SelStart := 0;
+      end
+      else
       begin
-        if PasteText[I].InfoPanelIndex = TListBox(Sender).ItemIndex then
+
+        for I := Low(PasteText) to High(PasteText) do
         begin
-          FInfoMessage.SelAttributes.Style := [fsBold, fsUnderline];
-          ReturnFSize := FInfoMessage.SelAttributes.Size;
-          FInfoMessage.SelAttributes.Size := ReturnFSize + 2;
-          FInfoMessage.SelText := 'Source (from)';
-          FInfoMessage.Lines.Add('');
-          FInfoMessage.SelAttributes.Size := ReturnFSize;
-
-          if PasteText[I].Status = PasteNew then
+          if PasteText[I].InfoPanelIndex = TListBox(Sender).ItemIndex then
           begin
-            FInfoMessage.SelAttributes.Style := [];
-            FInfoMessage.SelText := 'More details will be provided once saved';
+            FInfoMessage.SelAttributes.Style := [fsBold, fsUnderline];
+            ReturnFSize := FInfoMessage.SelAttributes.Size;
+            FInfoMessage.SelAttributes.Size := ReturnFSize + 2;
+            FInfoMessage.SelText := 'Source (from)';
             FInfoMessage.Lines.Add('');
-          end;
+            FInfoMessage.SelAttributes.Size := ReturnFSize;
 
-          if PasteText[I].DoNotFind then
-          begin
-            FInfoMessage.SelAttributes.Style := [fsBold];
-            FInfoMessage.SelText :=
-              'Paste exceeds GUI highlight limit and not highlight properly on in the GUI.'
-              + ' This will still appear in the report';
-            FInfoMessage.Lines.Add('');
-            FInfoMessage.SelAttributes.Style := [];
-          end;
-
-          if PasteText[I].DateTimeOfOriginalDoc <> '' then
-          begin
-            FInfoMessage.SelAttributes.Style := [fsBold];
-            FInfoMessage.SelText := 'Document created on: ';
-            FInfoMessage.SelAttributes.Style := [];
-            FInfoMessage.SelText := FormatFMDateTime('mmm dd,yyyy hh:nn',
-              StrToFloat(PasteText[I].DateTimeOfOriginalDoc));
-            FInfoMessage.Lines.Add('');
-          end;
-
-          if PasteText[I].CopiedFromLocation <> '' then
-          begin
-            if StrToIntDef(Piece(PasteText[I].CopiedFromLocation, ';', 1),
-              -1) = -1 then
+            if PasteText[I].Status = PasteNew then
             begin
-              CharCnt := 1;
-              for iii := 1 to Length(PasteText[I].CopiedFromLocation) do
-                if PasteText[I].CopiedFromLocation[iii] = ';' then
-                  Inc(CharCnt);
-              FInfoMessage.SelAttributes.Style := [fsBold];
-              FInfoMessage.SelText := 'Patient: ';
               FInfoMessage.SelAttributes.Style := [];
-              FInfoMessage.SelText := Piece(PasteText[I].CopiedFromLocation,
-                ';', CharCnt);
+              FInfoMessage.SelText :=
+                'More details will be provided once saved';
               FInfoMessage.Lines.Add('');
+            end;
+
+            if PasteText[I].DoNotFind then
+            begin
+              FInfoMessage.SelAttributes.Style := [fsBold];
+              FInfoMessage.SelText :=
+                'Paste exceeds GUI highlight limit and not highlight properly on in the GUI.'
+                + ' This will still appear in the report';
+              FInfoMessage.Lines.Add('');
+              FInfoMessage.SelAttributes.Style := [];
+            end;
+
+            if PasteText[I].DateTimeOfOriginalDoc <> '' then
+            begin
+              FInfoMessage.SelAttributes.Style := [fsBold];
+              FInfoMessage.SelText := 'Document created on: ';
+              FInfoMessage.SelAttributes.Style := [];
+              FInfoMessage.SelText := FormatFMDateTime('mmm dd,yyyy hh:nn',
+                StrToFloat(PasteText[I].DateTimeOfOriginalDoc));
+              FInfoMessage.Lines.Add('');
+            end;
+
+            if PasteText[I].CopiedFromLocation <> '' then
+            begin
+              if StrToIntDef(Piece(PasteText[I].CopiedFromLocation, ';', 1),
+                -1) = -1 then
+              begin
+                CharCnt := 1;
+                for iii := 1 to Length(PasteText[I].CopiedFromLocation) do
+                  if PasteText[I].CopiedFromLocation[iii] = ';' then
+                    Inc(CharCnt);
+                FInfoMessage.SelAttributes.Style := [fsBold];
+                FInfoMessage.SelText := 'Patient: ';
+                FInfoMessage.SelAttributes.Style := [];
+                FInfoMessage.SelText := Piece(PasteText[I].CopiedFromLocation,
+                  ';', CharCnt);
+                FInfoMessage.Lines.Add('');
+              end
+              else if PasteText[I].CopiedFromPatient <> '' then
+              begin
+                FInfoMessage.SelAttributes.Style := [fsBold];
+                FInfoMessage.SelText := 'Patient: ';
+                FInfoMessage.SelAttributes.Style := [];
+                FInfoMessage.SelText :=
+                  Piece(PasteText[I].CopiedFromPatient, ';', 2);
+                FInfoMessage.Lines.Add('');
+              end;
             end
             else if PasteText[I].CopiedFromPatient <> '' then
             begin
@@ -658,172 +638,105 @@ begin
                 Piece(PasteText[I].CopiedFromPatient, ';', 2);
               FInfoMessage.Lines.Add('');
             end;
-          end
-          else if PasteText[I].CopiedFromPatient <> '' then
-          begin
-            FInfoMessage.SelAttributes.Style := [fsBold];
-            FInfoMessage.SelText := 'Patient: ';
-            FInfoMessage.SelAttributes.Style := [];
-            FInfoMessage.SelText :=
-              Piece(PasteText[I].CopiedFromPatient, ';', 2);
-            FInfoMessage.Lines.Add('');
-          end;
 
-          if PasteText[I].CopiedFromDocument <> '' then
-          begin
-            FInfoMessage.SelAttributes.Style := [fsBold];
-            FInfoMessage.SelText := 'Title: ';
-            FInfoMessage.SelAttributes.Style := [];
-            FInfoMessage.SelText := PasteText[I].CopiedFromDocument;
-            FInfoMessage.Lines.Add('');
-          end;
-
-          if Piece(PasteText[I].CopiedFromAuthor, ';', 2) <> '' then
-          begin
-            FInfoMessage.SelAttributes.Style := [fsBold];
-            FInfoMessage.SelText := 'Author: ';
-            FInfoMessage.SelAttributes.Style := [];
-            FInfoMessage.SelText :=
-              Piece(PasteText[I].CopiedFromAuthor, ';', 2);
-            FInfoMessage.Lines.Add('');
-          end;
-
-          if PasteText[I].CopiedFromLocation <> '' then
-          begin
-            if StrToIntDef(Piece(PasteText[I].CopiedFromLocation, ';', 1), -1)
-              <> -1 then
+            if PasteText[I].CopiedFromDocument <> '' then
             begin
               FInfoMessage.SelAttributes.Style := [fsBold];
-              FInfoMessage.SelText := 'ID: ';
+              FInfoMessage.SelText := 'Title: ';
               FInfoMessage.SelAttributes.Style := [];
-              FInfoMessage.SelText :=
-                Piece(PasteText[I].CopiedFromLocation, ';', 1);
+              FInfoMessage.SelText := PasteText[I].CopiedFromDocument;
               FInfoMessage.Lines.Add('');
             end;
-            if Piece(PasteText[I].CopiedFromLocation, ';', 2) <> '' then
+
+            if Piece(PasteText[I].CopiedFromAuthor, ';', 2) <> '' then
             begin
               FInfoMessage.SelAttributes.Style := [fsBold];
-              FInfoMessage.SelText := 'From: ';
+              FInfoMessage.SelText := 'Author: ';
               FInfoMessage.SelAttributes.Style := [];
               FInfoMessage.SelText :=
-                Piece(PasteText[I].CopiedFromLocation, ';', 2);
+                Piece(PasteText[I].CopiedFromAuthor, ';', 2);
               FInfoMessage.Lines.Add('');
             end;
-          end;
 
-          if PasteText[I].CopiedFromApplication <> '' then
-          begin
-            FInfoMessage.SelAttributes.Style := [fsBold];
-            FInfoMessage.SelText := 'Application: ';
-            FInfoMessage.SelAttributes.Style := [];
-            FInfoMessage.SelText := PasteText[I].CopiedFromApplication;
-            FInfoMessage.Lines.Add('');
-          end;
-
-          FInfoMessage.Lines.Add('');
-
-          FInfoMessage.SelAttributes.Style := [fsBold, fsUnderline];
-          ReturnFSize := FInfoMessage.SelAttributes.Size;
-          FInfoMessage.SelAttributes.Size := ReturnFSize + 2;
-          FInfoMessage.SelText := 'Pasted Info';
-          FInfoMessage.Lines.Add('');
-          FInfoMessage.SelAttributes.Size := ReturnFSize;
-
-          if PasteText[I].DateTimeOfPaste <> '' then
-          begin
-            FInfoMessage.SelAttributes.Style := [fsBold];
-            FInfoMessage.SelText := 'Date: ';
-            FInfoMessage.SelAttributes.Style := [];
-            FInfoMessage.SelText := FormatFMDateTime('mmm dd,yyyy hh:nn',
-              StrToFloat(PasteText[I].DateTimeOfPaste));
-            FInfoMessage.Lines.Add('');
-          end;
-
-          if Piece(PasteText[I].UserWhoPasted, ';', 2) <> '' then
-          begin
-            FInfoMessage.SelAttributes.Style := [fsBold];
-            FInfoMessage.SelText := 'User: ';
-            FInfoMessage.SelAttributes.Style := [];
-            FInfoMessage.SelText := Piece(PasteText[I].UserWhoPasted, ';', 2);
-            FInfoMessage.Lines.Add('');
-          end;
-
-          if PasteText[I].PastedPercentage <> '' then
-          begin
-            FInfoMessage.SelAttributes.Style := [fsBold];
-            FInfoMessage.SelText := 'Percentage: ';
-            FInfoMessage.SelAttributes.Style := [];
-            FInfoMessage.SelText := PasteText[I].PastedPercentage;
-            FInfoMessage.Lines.Add('');
-          end;
-
-          // Update highlight lines if its new (from transfer)
-          if not(PasteText[I].IdentFired) then
-          begin
-            PasteText[I].VisibleOnNote := LoadIdentLines(FMonitorObject,
-              PasteText[I].PastedText, PasteText[I].HiglightLines);
-            PasteText[I].IdentFired := true;
-          end;
-          // check if we are not going to show some lines and add them to the list
-          Synamb := TStringList.Create;
-          try
-            if Length(PasteText[I].GroupItems) > 0 then
+            if PasteText[I].CopiedFromLocation <> '' then
             begin
-              // loop through the paste text
-              for ii := high(PasteText[I].GroupItems)
-                downto low(PasteText[I].GroupItems) do
+              if StrToIntDef(Piece(PasteText[I].CopiedFromLocation, ';', 1), -1)
+                <> -1 then
               begin
-                if PasteText[I].GroupItems[ii].GroupParent then
-                  Continue;
-                // If the group is visible
-                if PasteText[I].GroupItems[ii].VisibleOnNote then
-                begin
-                  // loop through highlights
-                  for iii := high(PasteText[I].GroupItems[ii].HiglightLines)
-                    downto low(PasteText[I].GroupItems[ii].HiglightLines) do
-                  begin
-                    // if its above the word count
-                    if not PasteText[I].GroupItems[ii].HiglightLines[iii].AboveWrdCnt
-                    then
-                      Synamb.Add(PasteText[I].GroupItems[ii].HiglightLines[iii]
-                        .LineToHighlight);
-                  end;
-                end;
+                FInfoMessage.SelAttributes.Style := [fsBold];
+                FInfoMessage.SelText := 'ID: ';
+                FInfoMessage.SelAttributes.Style := [];
+                FInfoMessage.SelText :=
+                  Piece(PasteText[I].CopiedFromLocation, ';', 1);
+                FInfoMessage.Lines.Add('');
               end;
-            end
-            else
-            begin
-              for ii := high(PasteText[I].HiglightLines)
-                downto low(PasteText[I].HiglightLines) do
+              if Piece(PasteText[I].CopiedFromLocation, ';', 2) <> '' then
               begin
-                if not PasteText[I].HiglightLines[ii].AboveWrdCnt then
-                  Synamb.Add(PasteText[I].HiglightLines[ii].LineToHighlight);
+                FInfoMessage.SelAttributes.Style := [fsBold];
+                FInfoMessage.SelText := 'From: ';
+                FInfoMessage.SelAttributes.Style := [];
+                FInfoMessage.SelText :=
+                  Piece(PasteText[I].CopiedFromLocation, ';', 2);
+                FInfoMessage.Lines.Add('');
               end;
             end;
 
-            if Synamb.Count > 0 then
+            if PasteText[I].CopiedFromApplication <> '' then
             begin
               FInfoMessage.SelAttributes.Style := [fsBold];
-              FInfoMessage.SelText :=
-              'During the save process, formatting changes occurred and tracking '+
-              'of pasted text was interrupted.  Potentially pasted text may be found in the highlighted area.';
+              FInfoMessage.SelText := 'Application: ';
               FInfoMessage.SelAttributes.Style := [];
-              for X := 0 to Synamb.Count - 1 do
-                FInfoMessage.Lines.Add(Synamb[X]);
+              FInfoMessage.SelText := PasteText[I].CopiedFromApplication;
               FInfoMessage.Lines.Add('');
             end;
 
-          finally
-            Synamb.Free;
-          end;
+            FInfoMessage.Lines.Add('');
 
-          FirstClear := true;
+            FInfoMessage.SelAttributes.Style := [fsBold, fsUnderline];
+            ReturnFSize := FInfoMessage.SelAttributes.Size;
+            FInfoMessage.SelAttributes.Size := ReturnFSize + 2;
+            FInfoMessage.SelText := 'Pasted Info';
+            FInfoMessage.Lines.Add('');
+            FInfoMessage.SelAttributes.Size := ReturnFSize;
 
-          DisplayTxt := TStringList.Create;
-          try
-            if PasteText[I].VisibleOnNote then
+            if PasteText[I].DateTimeOfPaste <> '' then
             begin
-              // if group
+              FInfoMessage.SelAttributes.Style := [fsBold];
+              FInfoMessage.SelText := 'Date: ';
+              FInfoMessage.SelAttributes.Style := [];
+              FInfoMessage.SelText := FormatFMDateTime('mmm dd,yyyy hh:nn',
+                StrToFloat(PasteText[I].DateTimeOfPaste));
+              FInfoMessage.Lines.Add('');
+            end;
+
+            if Piece(PasteText[I].UserWhoPasted, ';', 2) <> '' then
+            begin
+              FInfoMessage.SelAttributes.Style := [fsBold];
+              FInfoMessage.SelText := 'User: ';
+              FInfoMessage.SelAttributes.Style := [];
+              FInfoMessage.SelText := Piece(PasteText[I].UserWhoPasted, ';', 2);
+              FInfoMessage.Lines.Add('');
+            end;
+
+            if PasteText[I].PastedPercentage <> '' then
+            begin
+              FInfoMessage.SelAttributes.Style := [fsBold];
+              FInfoMessage.SelText := 'Percentage: ';
+              FInfoMessage.SelAttributes.Style := [];
+              FInfoMessage.SelText := PasteText[I].PastedPercentage;
+              FInfoMessage.Lines.Add('');
+            end;
+
+            // Update highlight lines if its new (from transfer)
+            if not(PasteText[I].IdentFired) then
+            begin
+              PasteText[I].VisibleOnNote := LoadIdentLines(FMonitorObject,
+                PasteText[I].PastedText, PasteText[I].HiglightLines);
+              PasteText[I].IdentFired := true;
+            end;
+            // check if we are not going to show some lines and add them to the list
+            Synamb := TStringList.Create;
+            try
               if Length(PasteText[I].GroupItems) > 0 then
               begin
                 // loop through the paste text
@@ -840,18 +753,10 @@ begin
                       downto low(PasteText[I].GroupItems[ii].HiglightLines) do
                     begin
                       // if its above the word count
-                      if PasteText[I].GroupItems[ii].HiglightLines[iii].AboveWrdCnt
+                      if not PasteText[I].GroupItems[ii].HiglightLines[iii].AboveWrdCnt
                       then
-                      begin
-                        HighLightInfoPanel(CopyMonitor.HighlightColor,
-                          CopyMonitor.MatchStyle, CopyMonitor.MatchHighlight,
-                          PasteText[I].GroupItems[ii].HiglightLines[iii]
-                          .LineToHighlight, FirstClear);
-                        if FirstClear then
-                          FirstClear := False;
-                      end;
-                      DisplayTxt.Add(PasteText[I].GroupItems[ii].HiglightLines
-                        [iii].LineToHighlight);
+                        Synamb.Add(PasteText[I].GroupItems[ii].HiglightLines
+                          [iii].LineToHighlight);
                     end;
                   end;
                 end;
@@ -861,100 +766,177 @@ begin
                 for ii := high(PasteText[I].HiglightLines)
                   downto low(PasteText[I].HiglightLines) do
                 begin
-                  if PasteText[I].HiglightLines[ii].AboveWrdCnt then
-                  begin
-                    HighLightInfoPanel(CopyMonitor.HighlightColor,
-                      CopyMonitor.MatchStyle, CopyMonitor.MatchHighlight,
-                      PasteText[I].HiglightLines[ii].LineToHighlight,
-                      FirstClear);
-                    if FirstClear then
-                      FirstClear := False;
-                  end;
-                  DisplayTxt.Add(PasteText[I].HiglightLines[ii]
-                    .LineToHighlight);
+                  if not PasteText[I].HiglightLines[ii].AboveWrdCnt then
+                    Synamb.Add(PasteText[I].HiglightLines[ii].LineToHighlight);
                 end;
               end;
+
+              if Synamb.Count > 0 then
+              begin
+                FInfoMessage.SelAttributes.Style := [fsBold];
+                FInfoMessage.SelText :=
+                  'During the save process, formatting changes occurred and tracking '
+                  + 'of pasted text was interrupted.  Potentially pasted text may be found in the highlighted area.';
+                FInfoMessage.SelAttributes.Style := [];
+                for X := 0 to Synamb.Count - 1 do
+                  FInfoMessage.Lines.Add(Synamb[X]);
+                FInfoMessage.Lines.Add('');
+              end;
+
+            finally
+              Synamb.Free;
             end;
 
-            if not(EditMonitor.FCopyMonitor.LCSToggle) or
-              (Length(PasteText[I].GroupItems) = 0) then
-            begin
+            FirstClear := true;
 
-              FInfoMessage.SelAttributes.Style := [fsBold];
+            DisplayTxt := TStringList.Create;
+            try
               if PasteText[I].VisibleOnNote then
-                FInfoMessage.SelText := 'Pasted Text: '
-              else
-                FInfoMessage.SelText :=
-                  'Pasted Text (Unable to identify on document): ';
-              FInfoMessage.SelAttributes.Style := [];
-
-              // If this is from the group then load the group parent
-              if Length(PasteText[I].GroupItems) > 0 then
               begin
-                for ii := high(PasteText[I].GroupItems)
-                  downto low(PasteText[I].GroupItems) do
+                // if group
+                if Length(PasteText[I].GroupItems) > 0 then
                 begin
-                  if PasteText[I].GroupItems[ii].GroupParent then
+                  // loop through the paste text
+                  for ii := high(PasteText[I].GroupItems)
+                    downto low(PasteText[I].GroupItems) do
                   begin
-                    for X := 0 to PasteText[I].GroupItems[ii]
-                      .GroupText.Count - 1 do
-                      FInfoMessage.Lines.Add
-                        (PasteText[I].GroupItems[ii].GroupText[X]);
-                    Break;
+                    if PasteText[I].GroupItems[ii].GroupParent then
+                      Continue;
+                    // If the group is visible
+                    if PasteText[I].GroupItems[ii].VisibleOnNote then
+                    begin
+                      // loop through highlights
+                      for iii := high(PasteText[I].GroupItems[ii].HiglightLines)
+                        downto low(PasteText[I].GroupItems[ii].HiglightLines) do
+                      begin
+                        // if its above the word count
+                        if PasteText[I].GroupItems[ii].HiglightLines[iii].AboveWrdCnt
+                        then
+                        begin
+                          HighLightInfoPanel(CopyMonitor.HighlightColor,
+                            CopyMonitor.MatchStyle, CopyMonitor.MatchHighlight,
+                            PasteText[I].GroupItems[ii].HiglightLines[iii]
+                            .LineToHighlight, FirstClear);
+                          if FirstClear then
+                            FirstClear := False;
+                        end;
+                        DisplayTxt.Add(PasteText[I].GroupItems[ii].HiglightLines
+                          [iii].LineToHighlight);
+                      end;
+                    end;
+                  end;
+                end
+                else
+                begin
+                  for ii := high(PasteText[I].HiglightLines)
+                    downto low(PasteText[I].HiglightLines) do
+                  begin
+                    if PasteText[I].HiglightLines[ii].AboveWrdCnt then
+                    begin
+                      HighLightInfoPanel(CopyMonitor.HighlightColor,
+                        CopyMonitor.MatchStyle, CopyMonitor.MatchHighlight,
+                        PasteText[I].HiglightLines[ii].LineToHighlight,
+                        FirstClear);
+                      if FirstClear then
+                        FirstClear := False;
+                    end;
+                    DisplayTxt.Add(PasteText[I].HiglightLines[ii]
+                      .LineToHighlight);
                   end;
                 end;
-              end
-              else
-              begin
-                for X := 0 to PasteText[I].PastedText.Count - 1 do
-                  FInfoMessage.Lines.Add(PasteText[I].PastedText[X]);
               end;
-            end
-            else if (EditMonitor.FCopyMonitor.LCSToggle) and
-              (Length(PasteText[I].GroupItems) > 0) then
-            begin
-              FInfoMessage.SelAttributes.Style := [fsBold];
-              if PasteText[I].VisibleOnNote then
-                FInfoMessage.SelText := 'Pasted Text: '
-              else
-                FInfoMessage.SelText :=
-                  'Pasted Text (Unable to identify on document): ';
-              FInfoMessage.SelAttributes.Style := [];
 
-              // If this is from the group then load the group parent
-              if Length(PasteText[I].GroupItems) > 0 then
+              if not(EditMonitor.CopyMonitor.LCSToggle) or
+                (Length(PasteText[I].GroupItems) = 0) then
               begin
-                for ii := high(PasteText[I].GroupItems)
-                  downto low(PasteText[I].GroupItems) do
+
+                FInfoMessage.SelAttributes.Style := [fsBold];
+                if PasteText[I].VisibleOnNote then
+                  FInfoMessage.SelText := 'Pasted Text: '
+                else
+                  FInfoMessage.SelText :=
+                    'Pasted Text (Unable to identify on document): ';
+                FInfoMessage.SelAttributes.Style := [];
+
+                // If this is from the group then load the group parent
+                if Length(PasteText[I].GroupItems) > 0 then
                 begin
-                  if PasteText[I].GroupItems[ii].GroupParent then
+                  for ii := high(PasteText[I].GroupItems)
+                    downto low(PasteText[I].GroupItems) do
                   begin
-                    LCSCompareStrings(FInfoMessage,
-                      PasteText[I].GroupItems[ii].GroupText, DisplayTxt);
-                    Break;
+                    if PasteText[I].GroupItems[ii].GroupParent then
+                    begin
+                      for X := 0 to PasteText[I].GroupItems[ii]
+                        .GroupText.Count - 1 do
+                        FInfoMessage.Lines.Add
+                          (PasteText[I].GroupItems[ii].GroupText[X]);
+                      Break;
+                    end;
                   end;
+                end
+                else
+                begin
+                  for X := 0 to PasteText[I].PastedText.Count - 1 do
+                    FInfoMessage.Lines.Add(PasteText[I].PastedText[X]);
                 end;
               end
-              else
+              else if (EditMonitor.CopyMonitor.LCSToggle) and
+                (Length(PasteText[I].GroupItems) > 0) then
               begin
-                for X := 0 to PasteText[I].PastedText.Count - 1 do
-                  FInfoMessage.Lines.Add(PasteText[I].PastedText[X]);
+                FInfoMessage.SelAttributes.Style := [fsBold];
+                if PasteText[I].VisibleOnNote then
+                  FInfoMessage.SelText := 'Pasted Text: '
+                else
+                  FInfoMessage.SelText :=
+                    'Pasted Text (Unable to identify on document): ';
+                FInfoMessage.SelAttributes.Style := [];
+
+                // If this is from the group then load the group parent
+                if Length(PasteText[I].GroupItems) > 0 then
+                begin
+                  for ii := high(PasteText[I].GroupItems)
+                    downto low(PasteText[I].GroupItems) do
+                  begin
+                    if PasteText[I].GroupItems[ii].GroupParent then
+                    begin
+                      LCSCompareStrings(FInfoMessage,
+                        PasteText[I].GroupItems[ii].GroupText, DisplayTxt);
+                      Break;
+                    end;
+                  end;
+                end
+                else
+                begin
+                  for X := 0 to PasteText[I].PastedText.Count - 1 do
+                    FInfoMessage.Lines.Add(PasteText[I].PastedText[X]);
+                end;
               end;
+
+            finally
+              DisplayTxt.Free;
             end;
 
-          finally
-            DisplayTxt.Free;
+            if not PasteText[I].VisibleOnNote then
+              pnlMessageExit(Self);
+
+            FInfoMessage.SelStart := 0;
+            Break;
           end;
 
-          if not PasteText[I].VisibleOnNote then
-            pnlMessageExit(Self);
-
-          FInfoMessage.SelStart := 0;
-          Break;
         end;
-
+      end;
+      if not FMonitorObject.ReadOnly and fFromPaste then
+      begin
+        FMonitorObject.SelStart := RtnCurPos;
+        FMonitorObject.perform( em_linescroll, 0, RtnLineNum -
+                        FMonitorObject.perform( EM_GETFIRSTVISIBLELINE, 0, 0 ));
       end;
     end;
+  finally
+     TRichEdit(FMonitorObject).Perform(WM_SETREDRAW, Ord(true), 0);
+      InvalidateRect(TRichEdit(FMonitorObject).Handle, NIL, true);
+      TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, ResetMask);
+    Screen.Cursor := RtnCursor;
   end;
 end;
 
@@ -1026,9 +1008,9 @@ begin
     Len1 := Length(aStr1);
     Len2 := Length(aStr2);
 
-    if EditMonitor.FCopyMonitor.LCSToggle and
-      ((Len1 <= EditMonitor.FCopyMonitor.LCSCharLimit) and
-      (Len2 <= EditMonitor.FCopyMonitor.LCSCharLimit)) then
+    if EditMonitor.CopyMonitor.LCSToggle and
+      ((Len1 <= EditMonitor.CopyMonitor.LCSCharLimit) and
+      (Len2 <= EditMonitor.CopyMonitor.LCSCharLimit)) then
     begin
 
       LCSAlgAry := FillLCSAlgAry(aStr1, aStr2);
@@ -1081,9 +1063,9 @@ begin
           if Diff.CharStatus = '-' then
           begin
             FInfoMessage.SelAttributes.Style :=
-              EditMonitor.FCopyMonitor.LCSTextStyle;
+              EditMonitor.CopyMonitor.LCSTextStyle;
             DestRich.SelAttributes.Color :=
-              EditMonitor.FCopyMonitor.LCSTextColor;
+              EditMonitor.CopyMonitor.LCSTextColor;
             DestRich.SelText := Diff.Character;
           end
           else
@@ -1139,9 +1121,9 @@ var
   end;
 
 begin
-  if not Assigned(EditMonitor.FCopyMonitor) then
+  if not Assigned(EditMonitor.CopyMonitor) then
     Exit;
-  if not EditMonitor.FCopyMonitor.Enabled then
+  if not EditMonitor.CopyMonitor.Enabled then
     Exit;
   ResetMask := TRichEdit(FMonitorObject).Perform(EM_GETEVENTMASK, 0, 0);
   TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, 0);
@@ -1156,7 +1138,7 @@ begin
       pnlMessageExit(Self);
     repeat
 
-      SearchString := StringReplace(Trim(PasteText), #10, '', [rfReplaceAll]);
+      SearchString := StringReplace((PasteText), #10, '', [rfReplaceAll]);
 
       // find the text and save the position
       CharPos2 := TRichEdit(FMonitorObject).FindText(SearchString, CharPos,
@@ -1184,7 +1166,11 @@ begin
         Application.ProcessMessages;
       end;
 
-      isSelectionHidden := TRichEdit(FMonitorObject).HideSelection;
+
+    until CharPos = 0;
+
+
+    isSelectionHidden := TRichEdit(FMonitorObject).HideSelection;
       try
         TRichEdit(FMonitorObject).HideSelection := False;
         TRichEdit(FMonitorObject).SelLength := 1;
@@ -1201,7 +1187,7 @@ begin
         TRichEdit(FMonitorObject).SelStart := TRichEdit(FMonitorObject).SelStart
           + Length(SearchString);
 
-    until CharPos = 0;
+
 
   finally
     TRichEdit(FMonitorObject).Perform(WM_SETREDRAW, Ord(true), 0);
@@ -1212,7 +1198,8 @@ end;
 
 constructor TCopyPasteDetails.Create(AOwner: TComponent);
 var
-  fLeftPnl { , MainPanel } : TPanel;
+  fLeftPnl, fRightPnl { , MainPanel } : TPanel;
+  aLbl: TLabel;
 begin
   inherited;
 
@@ -1225,6 +1212,7 @@ begin
     TabStop := False;
     ShowCaption := False;
     Visible := true;
+    ParentFont := true;
   end;
 
   fTopPanel := TPanel.Create(Self);
@@ -1237,6 +1225,7 @@ begin
     BevelOuter := bvNone;
     // AutoSize := true;
     Height := 20;
+    ParentFont := true;
   end;
 
   FCollapseBtn := TCollapseBtn.Create(Self);
@@ -1250,15 +1239,19 @@ begin
     Caption := 'Ú';
     font.Name := 'Wingdings';
     TabStop := False;
+    ParentFont := true;
   end;
 
-  With TLabel.Create(Self) do
+  aLbl := TLabel.Create(Self);
+  With aLbl do
   begin
     Name := 'PasteInfoLabel';
     Parent := fTopPanel;
     align := alClient;
     Caption := 'Pasted Data';
     font.Style := [fsBold];
+    ParentFont := true;
+    aLbl.AutoSize := true;
   end;
 
   Self.Constraints.MinHeight := fTopPanel.Height + 10;
@@ -1273,6 +1266,34 @@ begin
     BevelOuter := bvNone;
     Width := 117;
     Height := 20;
+    Constraints.MinWidth := 40
+  end;
+
+  fRightPnl := TPanel.Create(Self);
+  With fRightPnl do
+  begin
+    Name := 'CPRghtPnl';
+    Parent := Self;
+    ShowCaption := False;
+    align := alClient;
+    BevelOuter := bvNone;
+    Width := 117;
+    Height := 20;
+  end;
+
+  FCPSplitter := TSplitter.Create(Self);
+  With FCPSplitter do
+  begin
+    Name := 'splHorz';
+    Parent := Self;
+    Width := 8;
+    Left := 120;
+    align := alLeft;
+    Height := Parent.Height;
+    AutoSnap := true;
+    ResizeStyle := rsPattern;
+    Cursor := crHSplit;
+    Visible := true;
   end;
 
   FInfoSelector := TSelectorBox.Create(Self);
@@ -1282,7 +1303,7 @@ begin
     Name := 'PasteInfo';
     Parent := fLeftPnl;
     // Width := 117;
-    align := alClient;
+    align := alLeft;
     ItemHeight := 13;
     TabStop := true;
     AlignWithMargins := true;
@@ -1318,7 +1339,7 @@ begin
   begin
     SetSubComponent(true);
     Name := 'PasteInfoMessage';
-    Parent := Self;
+    Parent := fRightPnl;
     align := alClient;
     AlignWithMargins := true;
     ReadOnly := true;
@@ -1328,6 +1349,7 @@ begin
     WordWrap := False;
     Text := '<-- Please select the desired paste date';
   end;
+  FInfoSelector.LinkedRichEdit := FInfoMessage;
 
   fProgressBar := TProgressBar.Create(Self);
   with fProgressBar do
@@ -1364,8 +1386,8 @@ end;
 
 procedure TCopyPasteDetails.DoExit;
 begin
-  if Assigned(EditMonitor.FCopyMonitor) then
-    if not EditMonitor.FCopyMonitor.Enabled then
+  if Assigned(EditMonitor.CopyMonitor) then
+    if not EditMonitor.CopyMonitor.Enabled then
       Exit;
   inherited;
   pnlMessageExit(Self);
@@ -1376,12 +1398,12 @@ begin
   inherited;
 
   InfoPanelResize(Self);
-  if not Assigned(fParentForm)  then
-   fParentForm := GetParentForm(self, false);
+  if not Assigned(fParentForm) then
+    fParentForm := GetParentForm(Self, False);
 
   if FSyncSizes then
-    if Assigned(fEditMonitor.FCopyMonitor) then
-      fEditMonitor.FCopyMonitor.SyncSizes(Self);
+    if Assigned(fEditMonitor.CopyMonitor) then
+      fEditMonitor.CopyMonitor.SyncSizes(Self);
 end;
 
 procedure TCopyPasteDetails.SetObjectToMonitor(ACopyObject: TRichEdit);
@@ -1397,6 +1419,18 @@ begin
       FOurOrigWndProc := FMonitorObject.WindowProc;
       FMonitorObject.WindowProc := OurWndProc;
     end;
+  end;
+end;
+
+procedure TCopyPasteDetails.SetShowAllPaste(const Value: Boolean);
+begin
+  if not Assigned(EditMonitor.CopyMonitor) then
+    Exit;
+  EditMonitor.CopyMonitor.CriticalSection.Enter;
+  try
+    FShowAllPaste := Value;
+  finally
+    EditMonitor.CopyMonitor.CriticalSection.Leave;
   end;
 end;
 
@@ -1447,14 +1481,21 @@ var
         begin
 
           if GroupByArray[I].MainArrayLocation = -3 then
-            GrpRecToUse := UpdateRec
+          begin
+            GrpRecToUse := UpdateRec;
+            RecFound := true;
+          end
           else
           begin
+            if (GroupByArray[I].MainArrayLocation > -1) and
+              (GroupByArray[I].MainArrayLocation < Length(EditMonitor.PasteText)) then
+            begin
             GrpRecToUse := EditMonitor.PasteText
               [GroupByArray[I].MainArrayLocation];
+              RecFound := true;
           end;
-          RecFound := true;
-          with GrpRecToUse do
+          end;
+          if RecFound then with GrpRecToUse do
           begin
             // First time, we need to add the main text to the GroupText
             if Length(GroupItems) = 0 then
@@ -1864,9 +1905,9 @@ var
   end;
 
 begin
-  if not Assigned(EditMonitor.FCopyMonitor) then
+  if not Assigned(EditMonitor.CopyMonitor) then
     Exit;
-  if not EditMonitor.FCopyMonitor.Enabled then
+  if not EditMonitor.CopyMonitor.Enabled then
     Exit;
 
   EditMonitor.CopyMonitor.LoadTheProperties;
@@ -1885,8 +1926,8 @@ begin
           EditMonitor.LoadPastedText(Self, CopiedText, ProcessLoad, Preloaded);
         finally
           If EditMonitor.StopStopWatch then
-            EditMonitor.FCopyMonitor.LogText('METRIC',
-              'Load Paste RPC: ' + EditMonitor.FCopyMonitor.StopWatch.Elapsed);
+            EditMonitor.CopyMonitor.LogText('METRIC',
+              'Load Paste RPC: ' + EditMonitor.StopWatch.Elapsed);
         end;
       end;
 
@@ -1924,16 +1965,14 @@ begin
                 // begin
                 LoadPreviousNewPaste;
 
-                EditMonitor.FCopyMonitor.LogText('DEBUG',
-                  EditMonitor.PasteText);
+                EditMonitor.CopyMonitor.LogText('DEBUG', EditMonitor.PasteText);
 
                 // end;
                 // Final update for isvisible
               finally
                 If EditMonitor.StopStopWatch then
-                  EditMonitor.FCopyMonitor.LogText('METRIC',
-                    'Build Paste Internal: ' +
-                    EditMonitor.FCopyMonitor.StopWatch.Elapsed);
+                  EditMonitor.CopyMonitor.LogText('METRIC',
+                    'Build Paste Internal: ' + EditMonitor.StopWatch.Elapsed);
               end;
             end;
           end;
@@ -2093,7 +2132,7 @@ begin
         TheFillList.Add('(0,0)=' + IntToStr(CurrCnt));
 
         PRIDX := StrToIntDef(OurHasLst.Values[IntToStr(I) + ',ARRYIDX'], -1);
-        if PRIDX > -1 then
+        if (PRIDX > -1) and (PRIDX < Length(EditMonitor.PasteText)) then
         begin
           OutHash.Clear;
           OutHash.Assign(TheFillList);
@@ -2157,11 +2196,34 @@ var
     EditMonitorObj.CopyToMonitor(TheEdit, true, CMsg);
   end;
 
+  Procedure UpdateFont(TheEdit: TCustomEdit);
+  var
+    RtnPos: Integer;
+  begin
+    if Self.Visible and (FInfoSelector.ItemIndex <> -1) then
+    begin
+      if TheEdit is TRichEdit then
+      begin
+        TRichEdit(TheEdit).Lines.BeginUpdate;
+        try
+          RtnPos := TheEdit.SelStart;
+          TheEdit.SelStart := 0;
+          TheEdit.SelLength := Length(TheEdit.Text);
+          TRichEdit(TheEdit).SelAttributes.Size := TRichEdit(TheEdit).font.Size;
+          TheEdit.Repaint;
+          TheEdit.SelStart := RtnPos
+        finally
+          TRichEdit(TheEdit).Lines.EndUpdate;
+        end;
+      end;
+    end;
+  end;
+
 begin
   FireMessage := true;
-  if Assigned(EditMonitor.FCopyMonitor) then
+  if Assigned(EditMonitor.CopyMonitor) then
   begin
-    if EditMonitor.FCopyMonitor.Enabled then
+    if EditMonitor.CopyMonitor.Enabled then
     begin
       case Message.Msg of
         WM_PASTE:
@@ -2222,16 +2284,22 @@ begin
       end;
     end;
   end;
-  if FireMessage then
+  if FireMessage and Assigned(FOurOrigWndProc) then
     FOurOrigWndProc(Message);
 
+  case Message.Msg of
+    CM_FONTCHANGED:
+      begin
+        UpdateFont(FMonitorObject);
+      end;
+  end;
 end;
 
 procedure TCopyPasteDetails.SaveTheMonitor(ItemID: Integer);
 begin
-  if not Assigned(EditMonitor.FCopyMonitor) then
+  if not Assigned(EditMonitor.CopyMonitor) then
     Exit;
-  if not EditMonitor.FCopyMonitor.Enabled then
+  if not EditMonitor.CopyMonitor.Enabled then
     Exit;
   fEditMonitor.SaveTheMonitor(Self, ItemID);
 end;
@@ -2258,7 +2326,7 @@ var
       Inc(SaveCnt);
 
       SaveList.Add(IntToStr(SaveCnt) + ',0=' +
-        IntToStr(EditMonitor.FCopyMonitor.UserDuz) + '^' +
+        IntToStr(EditMonitor.CopyMonitor.UserDuz) + '^' +
         InfoRecord.DateTimeOfPaste + '^' + IntToStr(EditMonitor.ItemIEN) + ';' +
         EditMonitor.RelatedPackage + '^' + Piece(InfoRecord.CopiedFromLocation,
         ';', 1) + ';' + Piece(InfoRecord.CopiedFromLocation, ';', 2) + '^' +
@@ -2268,7 +2336,7 @@ var
       // Line Count (w/out OUR line breaks for size - code below)
 
       BreakUpLongLines(SaveList, IntToStr(SaveCnt), PasteText,
-        EditMonitor.FCopyMonitor.BreakUpLimit);
+        EditMonitor.CopyMonitor.BreakUpLimit);
 
       // Send in  the original text if needed
       If Assigned(InfoRecord.OriginalText) then
@@ -2276,7 +2344,7 @@ var
         SaveList.Add(IntToStr(SaveCnt) + ',Copy,-1=' +
           IntToStr(InfoRecord.OriginalText.Count));
         BreakUpLongLines(SaveList, IntToStr(SaveCnt) + ',COPY,0',
-          InfoRecord.OriginalText, EditMonitor.FCopyMonitor.BreakUpLimit);
+          InfoRecord.OriginalText, EditMonitor.CopyMonitor.BreakUpLimit);
       end;
 
       Tmp.CopiedText := PasteText;
@@ -2369,9 +2437,9 @@ var
 
 begin
   { DONE -oChris Bell : Check if the formated text matches and if not then re-find }
-  if not Assigned(EditMonitor.FCopyMonitor) then
+  if not Assigned(EditMonitor.CopyMonitor) then
     Exit;
-  if not EditMonitor.FCopyMonitor.Enabled then
+  if not EditMonitor.CopyMonitor.Enabled then
     Exit;
   // now check for modified text
   EditMonitor.StartStopWatch;
@@ -2400,9 +2468,10 @@ begin
       if fEditMonitor.PasteText[I].PasteDBID = -1 then
         Continue;
 
-      //Should only happen with addendums (parent/child paste display)
-      if (fEditMonitor.PasteText[I].PasteNoteIEN <> fEditMonitor.ItemIEN) and (fEditMonitor.PasteText[I].PasteNoteIEN <> -1) then
-       Continue;
+      // Should only happen with addendums (parent/child paste display)
+      if (fEditMonitor.PasteText[I].PasteNoteIEN <> fEditMonitor.ItemIEN) and
+        (fEditMonitor.PasteText[I].PasteNoteIEN <> -1) then
+        Continue;
 
       if Length(fEditMonitor.PasteText[I].GroupItems) > 0 then
       begin
@@ -2453,12 +2522,12 @@ begin
 
     SaveList.Values['TotalToSave'] := IntToStr(SaveCnt);
 
-    EditMonitor.FCopyMonitor.LogText('SAVE', 'Edited Records ' +
+    EditMonitor.CopyMonitor.LogText('SAVE', 'Edited Records ' +
       IntToStr(SaveCnt) + ' Items');
   finally
     If EditMonitor.StopStopWatch then
-      EditMonitor.FCopyMonitor.LogText('METRIC', 'Check modified build: ' +
-        EditMonitor.FCopyMonitor.StopWatch.Elapsed);
+      EditMonitor.CopyMonitor.LogText('METRIC', 'Check modified build: ' +
+        EditMonitor.StopWatch.Elapsed);
   end;
 end;
 
@@ -2471,9 +2540,9 @@ procedure TCopyPasteDetails.AuditClick(Sender: TObject);
   SndLst, RtnLst: TStringList;
   RtnHash: THashedStringList; }
 begin
-  if not Assigned(EditMonitor.FCopyMonitor) then
+  if not Assigned(EditMonitor.CopyMonitor) then
     Exit;
-  if not EditMonitor.FCopyMonitor.Enabled then
+  if not EditMonitor.CopyMonitor.Enabled then
     Exit;
   if not Assigned(FOnAnalyze) then
     Exit;
@@ -2811,20 +2880,21 @@ var
   LastP, LastN: Integer;
   Comp: IComparer<TCPMatchingLines>;
 
-  function BlankLineFound(var OffSet: Integer; const LookupNum: Integer; NoteArray: TCpTextRecArray): Boolean;
+  function BlankLineFound(var OffSet: Integer; const LookupNum: Integer;
+    NoteArray: TCpTextRecArray): Boolean;
   var
-   x: Integer;
+    X: Integer;
   begin
-    result := false;
+    Result := False;
     for X := OffSet + 1 to High(NoteArray) do
     begin
-     if NoteArray[X].LineNumber = (LookupNum) then
-      if Trim(NoteArray[X].Text) = '' then
-      begin
-        result := true;
-        OffSet := X;
-        Break;
-      end;
+      if NoteArray[X].LineNumber = (LookupNum) then
+        if Trim(NoteArray[X].Text) = '' then
+        begin
+          Result := true;
+          OffSet := X;
+          Break;
+        end;
     end;
   end;
 
@@ -2841,11 +2911,10 @@ var
 
     for X := StartPos to High(DataArray) do
     begin
-     //If consecutive
+      // If consecutive
       If ((DataArray[X].NoteLineNum = (NoteLine + 1)) and
         (DataArray[X].PasteLineNum = (PasteLine + 1))) or
-        (BlankFound and (DataArray[X].PasteLineNum = (PasteLine + 1)) )
-      then
+        (BlankFound and (DataArray[X].PasteLineNum = (PasteLine + 1))) then
       begin
         CallRecur := true;
         StartPos := X + 1;
@@ -2853,51 +2922,49 @@ var
       end;
     end;
 
-
-
-  {  for X := StartPos to High(DataArray) do
-    begin
+    { for X := StartPos to High(DataArray) do
+      begin
       If (DataArray[X].NoteLineNum = (NoteLine + 1)) and
-        (DataArray[X].PasteLineNum = (PasteLine + 1)) then
+      (DataArray[X].PasteLineNum = (PasteLine + 1)) then
       begin
-        CallRecur := true;
-        StartPos := X + 1;
+      CallRecur := true;
+      StartPos := X + 1;
 
-        Break;
+      Break;
       end;
-    end;
+      end;
 
-    if not CallRecur then
-    begin
+      if not CallRecur then
+      begin
       BlankFound := False;
       for X := PosA + 1 to High(NoteArray) do
       begin
-        if NoteArray[X].LineNumber = (NoteLine + 1) then
-          if Trim(NoteArray[X].Text) = '' then
-          begin
-            BlankFound := true;
-            PosA := X;
-            Break;
-          end;
+      if NoteArray[X].LineNumber = (NoteLine + 1) then
+      if Trim(NoteArray[X].Text) = '' then
+      begin
+      BlankFound := true;
+      PosA := X;
+      Break;
+      end;
       end;
 
       if BlankFound then
       begin
-        for X := PosB + 1 to High(PasteArray) do
-        begin
-          if PasteArray[X].LineNumber = (PasteLine + 1) then
-          begin
-          //  if Trim(PasteArray[X].Text) = '' then
-          //  begin
-              CallRecur := true;
-              PosB := X;
-              Break;
-          //  end;
-          end;
-        end;
+      for X := PosB + 1 to High(PasteArray) do
+      begin
+      if PasteArray[X].LineNumber = (PasteLine + 1) then
+      begin
+      //  if Trim(PasteArray[X].Text) = '' then
+      //  begin
+      CallRecur := true;
+      PosB := X;
+      Break;
+      //  end;
+      end;
+      end;
       end;
 
-    end; }
+      end; }
 
     if CallRecur then
     begin
@@ -3027,27 +3094,27 @@ NoteLineNum: Integer): Boolean;
 // F is Found array/object (TCPFoundRec)
 var
   TextFound, LineExist: Boolean;
-  Y, LookUpNum, HighLineNum, LowLineNum: Integer;
+  Y, LookupNum, HighLineNum, LowLineNum: Integer;
 begin
   Result := False;
 
   if Length(FoundArray) > 0 then
   begin
     TextFound := False;
-    LookUpNum := NoteLineNum;
+    LookupNum := NoteLineNum;
     HighLineNum := NoteLineNum + 1;
     LineExist := true; // assume the line exist
     // Look ahead line by line
-    while (not TextFound) and (LookUpNum < HighLineNum) and (LineExist) do
+    while (not TextFound) and (LookupNum < HighLineNum) and (LineExist) do
     begin
-      Inc(LookUpNum);
+      Inc(LookupNum);
       LineExist := False; // default not found
       for Y := Low(FoundArray) to High(FoundArray) do
       begin
         if HighLineNum < FoundArray[Y].NoteLine then
           HighLineNum := FoundArray[Y].NoteLine;
 
-        if FoundArray[Y].NoteLine = LookUpNum then
+        if FoundArray[Y].NoteLine = LookupNum then
         begin
           LineExist := true;
           if FoundArray[Y].LineIndicator = nochr then
@@ -3063,20 +3130,20 @@ begin
 
     if (not TextFound) then
     begin
-      LookUpNum := NoteLineNum;
+      LookupNum := NoteLineNum;
       LowLineNum := NoteLineNum - 1;
       LineExist := true; // assume the line exist
       // Look ahead line by line
-      while (not TextFound) and (LookUpNum > LowLineNum) and (LineExist) do
+      while (not TextFound) and (LookupNum > LowLineNum) and (LineExist) do
       begin
-        Dec(LookUpNum);
+        Dec(LookupNum);
         LineExist := False; // default not found
         for Y := Low(FoundArray) to High(FoundArray) do
         begin
           if LowLineNum > FoundArray[Y].NoteLine then
             LowLineNum := FoundArray[Y].NoteLine;
 
-          if FoundArray[Y].NoteLine = LookUpNum then
+          if FoundArray[Y].NoteLine = LookupNum then
           begin
             LineExist := true;
             if (FoundArray[Y].LineIndicator = allchr) or
@@ -3532,7 +3599,7 @@ var
   end;
 
 begin
-  { TODO : Compare Formated lines to find text - help with wrapping}
+  { TODO : Compare Formated lines to find text - help with wrapping }
   { TODO : Time limit for the find }
   // debug
   RtnCursor := Screen.Cursor;
@@ -3603,7 +3670,6 @@ begin
           // Pre load blank lines
           LoadBlankLines(NoteRecArry, SrchStrtLine, SrchEndLine);
 
-
           // Init variables
           MINLNGTH := 40;
 
@@ -3635,6 +3701,13 @@ begin
               if Trim(PasteRecArry[I].Text) = '' then
               begin
                 // No need to check the blank text in the future checks
+                PasteRecArry[I].Found := true;
+                Continue;
+              end;
+
+              if CopyMonitor.WordCount(Trim(PasteRecArry[I].Text)) <= 2 then
+              begin
+                // No need to check less than 2 words
                 PasteRecArry[I].Found := true;
                 Continue;
               end;
@@ -4188,8 +4261,10 @@ begin
       end;
     finally
       if WatchCreated then
+      begin
         EditMonitor.StopWatch.Free;
-      EditMonitor.StopWatch := nil;
+        EditMonitor.StopWatch := nil;
+      end;
     end;
 
   Finally
@@ -4207,8 +4282,24 @@ begin
   end;
 end;
 
+function TCopyPasteDetails.GetCopyPasteEnabled: Boolean;
+begin
+  Result := Assigned(FCopyMonitor) and FCopyMonitor.Enabled;
+end;
+
+function TCopyPasteDetails.GetShowAllPaste: Boolean;
+begin
+  Result := False;
+  if not Assigned(EditMonitor.CopyMonitor) then
+    Exit;
+  EditMonitor.CopyMonitor.CriticalSection.Enter;
+  try
+    Result := FShowAllPaste;
+  finally
+    EditMonitor.CopyMonitor.CriticalSection.Leave;
+  end;
+end;
+
 {$ENDREGION}
 
 end.
-
-

@@ -1,0 +1,2 @@
+inherited fraCoverSheetDisplayPanel_CPRS_WH: TfraCoverSheetDisplayPanel_CPRS_WH
+end

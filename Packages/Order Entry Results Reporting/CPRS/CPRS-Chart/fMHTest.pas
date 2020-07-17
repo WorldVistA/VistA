@@ -7,7 +7,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ORCtrls, ORFn, uConst, fBase508Form, uDlgComponents,
-  VA508AccessibilityManager, uCore, orNet, TRPCB, StrUtils, rCore, VAUtils
+  VA508AccessibilityManager, uCore, orNet, TRPCB, StrUtils, rCore, VAUtils, System.UITypes
   ;
 
 type
@@ -93,7 +93,7 @@ var
 
 implementation
 
-uses rMisc, fFrame,rReminders, VA508AccessibilityRouter;
+uses fFrame,rReminders, VA508AccessibilityRouter, uInit, rMisc;
 
 {$R *.DFM}
 
@@ -114,7 +114,6 @@ const
   SaveProc                    : TSaveProc = nil;
   RemoveTempVistaFile         : TRemoveTempVistaFile = nil;
   CloseProc                   : TCloseProc = nil;
-  SHARE_DIR = '\VISTA\Common Files\';
 var
   frmMHTest: TfrmMHTest;
   FFirstCtrl: TList;
@@ -153,26 +152,25 @@ type
 
 const
  DLL_PARAM = 'The YS MHA_A DLL NAME parameter is not setup on this system. Please contact your IRM';
- // MHDLLName = 'YS_MHA_A_XE3.DLL';
-  //MHDLLAUXName = 'YS_MHA_AUX.DLL';
 var
  MHDLLName: string;
 
-procedure LoadMHDLL;
-//var
-//  MHPath: string;
-
+function LoadMHDLL: TDllRtnRec;
 begin
-  if MHDLLHandle = 0 then begin
-    MHDLLName := GetUserParam('YS MHA_A DLL NAME');
-    if Trim(MHDLLName) = '' then begin
-      ShowMessage(DLL_PARAM);
- //    exit;
-    end else begin
-      MHDLLHandle := LoadDll(MHDLLName);
-    end;
-//    MHPath := GetProgramFilesPath + SHARE_DIR + MHDLLName;
-//    MHDLLHandle := LoadLibrary(PChar(MHPath));
+  if MHDLLHandle = 0 then
+  begin
+   //Get the dll name
+   MHDLLName := GetUserParam('YS MHA_A DLL NAME');
+   if Trim(MHDLLName) = '' then
+   begin
+    //missing parameter so se type as version error to show message
+    Result.Return_Type := DLL_VersionErr;
+    Result.Return_Message := DLL_PARAM;
+   end else begin
+    //Load the dll
+    Result := LoadDll(MHDLLName);
+    MHDLLHandle := Result.DLL_HWND;
+   end;
   end;
 end;
 
@@ -260,116 +258,98 @@ begin
   end; }
 end;
 
-function SaveMHTest(TestName, date, Loc: string): boolean;
+function SaveMHTest(TestName, Date, Loc: string): boolean;
 var
   save: string;
+  tmpRtnRec: TDllRtnRec;
 begin
-  LoadMHDLL;
-  Result := true;
-  if MHDLLHandle = 0 then
-    begin
-      InfoBox(MHDLLName + ' not available', 'Error', MB_OK);
-      Exit;
-    end
-  else
-    begin
-      try
-        @SaveProc := GetProcAddress(MHDLLHandle, 'SaveInstrument');
-
-        if @SaveProc = nil then
+  Result := false;
+  SuspendTimeout;
+  tmpRtnRec := LoadMHDLL;
+  try
+    case tmpRtnRec.Return_Type of
+      DLL_Success:
+        begin
+          @SaveProc := GetProcAddress(MHDLLHandle, 'SaveInstrument');
+          if assigned(SaveProc) then
           begin
-          // function not found.. misspelled?
-            infoBox('Save Instrument Function not found within ' + MHDLLName + '.', 'Error', MB_OK);
-            Exit;
-          end;
-
-        if Assigned(SaveProc) then
-         begin
-          try
-            SaveProc(RPCBrokerV,
-            UpperCase(TestName), //InstrumentName
-            Patient.DFN, //PatientDFN
-            InttoStr(User.duz), //OrderedByDUZ
-            InttoStr(User.duz), //AdministeredByDUZ
-            date,
-            Loc + 'V', //LocationIEN
-            save);
-          finally
-            if RPCBrokerV.CurrentContext <> 'OR CPRS GUI CHART' then
-               begin
-                 if RPCBrokerV.CreateContext('OR CPRS GUI CHART') = false then
-                    infoBox('Error switching broker context','Error', MB_OK);
-               end;
-          end;  {inner try..finally}
-         end;
-      finally
-        UnloadMHDLL;
-      end; {try..finally}
+            try
+              SaveProc(RPCBrokerV, UpperCase(TestName), // InstrumentName
+                Patient.DFN, // PatientDFN
+                InttoStr(User.duz), // OrderedByDUZ
+                InttoStr(User.duz), // AdministeredByDUZ
+                Date, Loc + 'V', // LocationIEN
+                save);
+              Result := true;
+            finally
+              if RPCBrokerV.CurrentContext <> 'OR CPRS GUI CHART' then
+              begin
+                if RPCBrokerV.CreateContext('OR CPRS GUI CHART') = false then
+                  infoBox('Error switching broker context', 'Error', MB_OK);
+              end;
+            end;
+          end
+          else
+            TaskMessageDlg('Function Missing',
+              'Can''t find function "SaveInstrument" within ' + MHDLLName + '.',
+              mtError, [mbok], 0);
+        end;
+      DLL_Missing:
+        TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,
+          mtError, [mbok], 0);
+      DLL_VersionErr:
+        TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,
+          mtError, [mbok], 0);
+    end;
+  finally
+    @SaveProc := nil;
+    UnloadMHDLL;
+    ResumeTimeout;
   end;
 end;
 
 procedure RemoveMHTest(TestName: string);
+var
+ tmpRtnRec: TDllRtnRec;
 begin
-  LoadMHDLL;
-  if MHDLLHandle = 0 then
-    begin
-      InfoBox(MHDLLName + ' not available', 'Error', MB_OK);
-      Exit;
-    end
-  else
-    begin
-      try
+  SuspendTimeout;
+  tmpRtnRec := LoadMHDLL;
+  try
+    case tmpRtnRec.Return_Type of
+      DLL_Success: begin
         @RemoveTempVistaFile := GetProcAddress(MHDLLHandle, 'RemoveTempVistaFile');
-
-        if @RemoveTempVistaFile = nil then
-          begin
-          // function not found.. misspelled?
-            InfoBox('Remove Temp File function not found within ' + MHDLLName + '.', 'Error', MB_OK);
-            Exit;
-          end;
-
-        if Assigned(RemoveTempVistaFile) then
-         begin
+        if assigned(RemoveTempVistaFile) then
+        begin
           try
             RemoveTempVistaFile(RPCBrokerV,
             UpperCase(TestName), //InstrumentName
             Patient.DFN);
           finally
             if RPCBrokerV.CurrentContext <> 'OR CPRS GUI CHART' then
-               begin
-                 if RPCBrokerV.CreateContext('OR CPRS GUI CHART') = false then
-                    infoBox('Error switching broker context','Error', MB_OK);
-               end;
-          end;  {inner try..finally}
-         end;
-      finally
-        UnloadMHDLL;
-      end; {try..finally}
+            begin
+              if RPCBrokerV.CreateContext('OR CPRS GUI CHART') = false then
+                infoBox('Error switching broker context','Error', MB_OK);
+            end;
+          end;
+        end else
+          TaskMessageDlg('Function Missing', 'Remove Temp File function not found within ' + MHDLLName + '.', mtError, [mbok], 0);
+      end;
+      DLL_Missing: TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,mtError,[mbok],0);
+      DLL_VersionErr: TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,mtError,[mbok],0);
+    end;
+  finally
+   @RemoveTempVistaFile := nil;
+   UnloadMHDLL;
+   ResumeTimeout;
   end;
 end;
 
 function CheckforMHDll: boolean;
+var
+ MHDLLName: string;
 begin
-  Result := True;
-    {if (UsedMHDll.Checked = True) and (UsedMHDll.Display = False) then Exit
-  else if UsedMHDll.Checked = false then
-    begin
-      UsedMHDll.Display := UsedMHDllRPC;
-      UsedMHDll.Checked := True;
-      if UsedMHDll.Display = false then
-        begin
-          Result := False;
-          exit;
-        end;
-    end;  }
-  if MHDLLHandle = 0 then // if not 0 the DLL already loaded - result = true
-  begin
-    LoadMHDLL;
-    if MHDLLHandle = 0 then
-      Result := false
-    else
-      UnloadMHDLL;
-  end;
+  MHDLLName := GetUserParam('YS MHA_A DLL NAME');
+  result := (MHDLLHandle <> 0) or (Trim(FindDllDir(MHDLLName)) <> '');
 end;
 
 procedure CloseMHDLL;
@@ -702,70 +682,56 @@ begin
 end;
 }
 function TfrmMHTest.CallMHDLL(TestName: string; Required: boolean): String;
-var                               
-  ProgressNote : string;
+var
+  ProgressNote: string;
+  tmpRtnRec: TDllRtnRec;
 begin
   ProgressNote := '';
- { if (UsedMHDll.Checked = True) and (UsedMHDll.Display = False) then Exit
-  else if UsedMHDll.Checked = false then
-    begin
-      UsedMHDll.Display := UsedMHDllRPC;
-      UsedMHDll.Checked := True;
-      if UsedMHDll.Display = false then exit;
-    end; }
-  LoadMHDLL;
   Result := '';
-  if MHDLLHandle = 0 then
-    begin
-      InfoBox('Mental Health DLL not found.' + CRLF +
-                  CRLF + 'Contact IRM to install the ' + MHDLLName +  ' file on this machine.', 'Warning', MB_OK);
-      //InfoBox(MHDLLName + ' not available.' + CRLF +
-      //                    'CPRS will continue processing the MH test using the previous format.' +
-      //            CRLF + CRLF + 'Contact IRM to install the ' + MHDLLName +
-      //                          ' file on this machine.', 'Warning', MB_OK);
-      Exit;
-    end
-  else
-    begin
-      try
-        @ShowProc := GetProcAddress(MHDLLHandle, 'ShowInstrument');
-
-        if @ShowProc = nil then
+  SuspendTimeout;
+  tmpRtnRec := LoadMHDLL;
+  try
+    case tmpRtnRec.Return_Type of
+      DLL_Success:
+        begin
+          @ShowProc := GetProcAddress(MHDLLHandle, 'ShowInstrument');
+          if assigned(ShowProc) then
           begin
-          // function not found.. misspelled?
-            InfoBox('Function ShowInstrument not found within ' + MHDLLName +
-                    ' not available', 'Error', MB_OK);
-            Exit;
-          end;
-
-        if Assigned(ShowProc) then
-           begin
-             Result := '';
-             try
-               ShowProc(RPCBrokerV,
-               UpperCase(TestName), //InstrumentName
-               Patient.DFN, //PatientDFN
-               '', //OrderedByName
-               InttoStr(User.duz), //OrderedByDUZ
-               User.Name, //AdministeredByName
-               InttoStr(User.duz), //AdministeredByDUZ
-               Encounter.LocationName, //Location
-               InttoStr(Encounter.Location) + 'V', //LocationIEN
-               Required,
-               ProgressNote);
-               Result := ProgressNote;
-           finally
-//           if RPCBrokerV.CurrentContext <> 'OR CPRS GUI CHART' then
-               begin
-                 if RPCBrokerV.CreateContext('OR CPRS GUI CHART') = false then
-                    infoBox('Error switching broker context','Error', MB_OK);
-                end;
-               end; {inner try ..finally}
+            try
+              ShowProc(RPCBrokerV, UpperCase(TestName), // InstrumentName
+                Patient.DFN, // PatientDFN
+                '', // OrderedByName
+                InttoStr(User.duz), // OrderedByDUZ
+                User.Name, // AdministeredByName
+                InttoStr(User.duz), // AdministeredByDUZ
+                Encounter.LocationName, // Location
+                InttoStr(Encounter.Location) + 'V', // LocationIEN
+                Required, ProgressNote);
+              Result := ProgressNote;
+            finally
+              // if RPCBrokerV.CurrentContext <> 'OR CPRS GUI CHART' then
+              begin
+                if RPCBrokerV.CreateContext('OR CPRS GUI CHART') = false then
+                  infoBox('Error switching broker context', 'Error', MB_OK);
+              end;
             end;
-      finally
-        UnloadMHDLL;
-      end; {try..finally}
-      //Result := ProgressNote;
+          end
+          else
+            TaskMessageDlg('Function Missing',
+              'Can''t find function "ShowInstrument" within ' + MHDLLName + '.',
+              mtError, [mbok], 0);
+        end;
+      DLL_Missing:
+        TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,
+          mtError, [mbok], 0);
+      DLL_VersionErr:
+        TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,
+          mtError, [mbok], 0);
+    end;
+  finally
+    @ShowProc := nil;
+    UnloadMHDLL;
+    ResumeTimeout;
   end;
 end;
 
@@ -922,7 +888,7 @@ begin
       LNLbl.Tag := FID + LineNumberTag;
       LNLbl.Text := IntToStr(QNum+1) + '.';
       if ScreenReaderSystemActive then
-        frmMHTest.amgrMain.AccessText[LNLbl] := 'Question';      
+        frmMHTest.amgrMain.AccessText[LNLbl] := 'Question';
       LNLbl.Width := TextWidthByFont(LNLbl.Font.Handle, LNLbl.Text);
       LNLbl.Height := TextHeightByFont(LNLbl.Font.Handle, LNLbl.Text);
       FObjects.Add(LNLbl);
@@ -1197,7 +1163,7 @@ begin
         ItemIndex := -1;
         OnChange(sbMain.Controls[i]);
       end;
-    end; 
+    end;
   end;
 end;
 

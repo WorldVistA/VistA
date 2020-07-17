@@ -5,84 +5,60 @@ inherited frmPrintLocation: TfrmPrintLocation
   AutoScroll = True
   BorderIcons = []
   Caption = 'Order Location'
-  Constraints.MinWidth = 542
+  Constraints.MinWidth = 440
   OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
   ExplicitWidth = 542
   ExplicitHeight = 472
   DesignSize = (
-    526
+    427
     434)
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   object lblEncounter: TLabel [0]
     Left = 0
-    Top = 466
-    Width = 347
-    Height = 16
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 379
+    Width = 280
+    Height = 13
     Caption = 'Where would you like to continue processing patient data? '
   end
   object pnlTop: TPanel [1]
     Left = 0
     Top = 0
-    Width = 636
-    Height = 188
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 517
+    Height = 153
     Anchors = [akLeft, akTop, akRight]
     BevelOuter = bvNone
     TabOrder = 0
     object lblText: TLabel
-      Left = 10
-      Top = 20
+      Left = 8
+      Top = 16
       Width = 3
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Height = 13
     end
     object orpnlTopBottom: TORAutoPanel
       Left = 0
-      Top = 138
-      Width = 636
-      Height = 50
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 112
+      Width = 517
+      Height = 41
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 0
       object btnClinic: TButton
-        Left = 178
-        Top = 10
-        Width = 93
-        Height = 31
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 145
+        Top = 8
+        Width = 75
+        Height = 25
         Caption = 'All Clinic'
         TabOrder = 0
         OnClick = btnClinicClick
       end
       object btnWard: TButton
-        Left = 283
-        Top = 10
-        Width = 92
-        Height = 31
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Left = 230
+        Top = 8
+        Width = 75
+        Height = 25
         Caption = 'All Ward'
         TabOrder = 1
         OnClick = btnWardClick
@@ -91,26 +67,18 @@ inherited frmPrintLocation: TfrmPrintLocation
   end
   object pnlBottom: TORAutoPanel [2]
     Left = 0
-    Top = 196
-    Width = 544
-    Height = 258
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 159
+    Width = 442
+    Height = 210
     TabOrder = 1
     object orderGrid: TStringGrid
       Left = 1
       Top = 1
-      Width = 542
-      Height = 256
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 440
+      Height = 208
       Align = alClient
       ColCount = 3
-      Constraints.MinWidth = 542
+      Constraints.MinWidth = 440
       DefaultRowHeight = 30
       DefaultDrawing = False
       Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSizing]
@@ -122,26 +90,18 @@ inherited frmPrintLocation: TfrmPrintLocation
       OnMouseDown = orderGridMouseDown
     end
     object pnlOrder: TPanel
-      Left = 325
-      Top = 69
-      Width = 119
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 264
+      Top = 56
+      Width = 97
+      Height = 25
       TabOrder = 0
       Visible = False
     end
     object cbolocation: TORComboBox
-      Left = 295
-      Top = 128
-      Width = 149
-      Height = 24
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 240
+      Top = 104
+      Width = 121
+      Height = 21
       Style = orcsDropDown
       AutoSelect = True
       Caption = ''
@@ -167,39 +127,27 @@ inherited frmPrintLocation: TfrmPrintLocation
   end
   object ORpnlBottom: TORAutoPanel [3]
     Left = 0
-    Top = 497
-    Width = 544
-    Height = 51
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 404
+    Width = 442
+    Height = 41
     BevelEdges = []
     BevelOuter = bvNone
     TabOrder = 3
     object btnOK: TButton
-      Left = 230
-      Top = 4
-      Width = 92
-      Height = 30
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 187
+      Top = 3
+      Width = 75
+      Height = 25
       Caption = 'OK'
       TabOrder = 0
       OnClick = btnOKClick
     end
   end
   object cboEncLoc: TComboBox [4]
-    Left = 350
-    Top = 462
-    Width = 220
-    Height = 24
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 284
+    Top = 375
+    Width = 179
+    Height = 21
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 2
   end

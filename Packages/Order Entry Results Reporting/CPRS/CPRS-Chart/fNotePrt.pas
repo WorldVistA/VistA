@@ -59,81 +59,84 @@ procedure PrintNote(ANote: Longint; const ANoteTitle: string; MultiNotes: boolea
 var
   frmNotePrint: TfrmNotePrint;
   DefPrt: string;
-  AllowToPrint: string;
-  AllowPrint: Shortint;
-
+  aAllowToPrint: string;
+  aAllowPrint: Integer;
 begin
-  AllowToPrint := AllowPrintOfNote(ANote);
-  AllowPrint := strtoint(Piece(AllowToPrint, U, 1));
-  if AllowPrint > 0 then
-  begin
-    frmNotePrint := TfrmNotePrint.Create(Application);
-    try
-      ResizeFormToFont(TForm(frmNotePrint));
-      with frmNotePrint do
+  aAllowToPrint := AllowPrintOfNote(ANote);
+  aAllowPrint := StrToIntDef(Piece(aAllowToPrint, '^', 1), 0);
+
+  if aAllowPrint < 1 then
+    begin
+      InfoBox(Piece(aAllowToPrint, U, 2), 'Not Allowed to Print', MB_OK);
+      Exit;
+    end;
+
+  frmNotePrint := TfrmNotePrint.Create(Application);
+  try
+    ResizeFormToFont(TForm(frmNotePrint));
+    with frmNotePrint do
       begin
         { check to see of Chart Print allowed outside of MAS }
-        //if AllowChartPrintForNote(ANote) then
-        if AllowPrint = 2 then
-        begin
-          {This next code begs the question: Why are we even bothering to check
-          radWorkCopy if we immediately check the other button?
-          Short answer: it seems to wokr better
-          Long answer: The checkboxes have to in some way register with the group
-          they are in.  If this doesn't happen, both will be initially included
-          the tab order.  This means that the first time tabbing through the
-          controls, the work copy button would be tabbed to and selected after the
-          chart copy.  Tabbing through controls should not change the group
-          selection.
-          }
-          radWorkCopy.Checked := True;
-          radChartCopy.Checked := True;
-        end else
-        begin
-          radChartCopy.Enabled := False;
-          radWorkCopy.Checked := True;
-        end;
+        // if AllowChartPrintForNote(ANote) then
+        if aAllowPrint = 2 then
+          begin
+            { This next code begs the question: Why are we even bothering to check
+              radWorkCopy if we immediately check the other button?
+              Short answer: it seems to wokr better
+              Long answer: The checkboxes have to in some way register with the group
+              they are in.  If this doesn't happen, both will be initially included
+              the tab order.  This means that the first time tabbing through the
+              controls, the work copy button would be tabbed to and selected after the
+              chart copy.  Tabbing through controls should not change the group
+              selection.
+            }
+            radWorkCopy.Checked := True;
+            radChartCopy.Checked := True;
+          end
+        else
+          begin
+            radChartCopy.Enabled := False;
+            radWorkCopy.Checked := True;
+          end;
 
         lblNoteTitle.Text := ANoteTitle;
         frmNotePrint.Caption := 'Print ' + Piece(Piece(ANoteTitle, #9, 2), ',', 1);
         FNote := ANote;
         DefPrt := GetDefaultPrinter(User.Duz, Encounter.Location);
 
-        if User.CurrentPrinter = '' then User.CurrentPrinter := DefPrt;
+        if User.CurrentPrinter = '' then
+          User.CurrentPrinter := DefPrt;
 
         with cboDevice do
-        begin
-          if Printer.Printers.Count > 0 then
-            begin
-              Items.Add('WIN;Windows Printer^Windows Printer');
-              Items.Add('^--------------------VistA Printers----------------------');
-            end;
-          if User.CurrentPrinter <> '' then
-            begin
-              InitLongList(Piece(User.CurrentPrinter, ';', 2));
-              SelectByID(User.CurrentPrinter);
-            end
-          else
-            InitLongList('');
-        end;
+          begin
+            if Printer.Printers.Count > 0 then
+              begin
+                Items.Add('WIN;Windows Printer^Windows Printer');
+                Items.Add('^--------------------VistA Printers----------------------');
+              end;
+            if User.CurrentPrinter <> '' then
+              begin
+                InitLongList(Piece(User.CurrentPrinter, ';', 2));
+                SelectByID(User.CurrentPrinter);
+              end
+            else
+              InitLongList('');
+          end;
 
-        if ((DefPrt = 'WIN;Windows Printer') and (User.CurrentPrinter = DefPrt)) then
+        { if ((DefPrt = 'WIN;Windows Printer') and (User.CurrentPrinter = DefPrt)) then
           cmdOKClick(frmNotePrint) //CQ6660
           //Commented out for CQ6660
           //or
           //((User.CurrentPrinter <> '') and
-            //(MultiNotes = True)) then
-            //frmNotePrint.cmdOKClick(frmNotePrint)
+          //(MultiNotes = True)) then
+          //frmNotePrint.cmdOKClick(frmNotePrint)
           //end CQ6660
-        else
-          frmNotePrint.ShowModal;
+          else }
+        frmNotePrint.ShowModal;
       end;
-    finally
-      frmNotePrint.Release;
-    end;
-  end
-  else
-    InfoBox(Piece(AllowToPrint, U, 2), 'Not Allowed to Print', MB_OK);
+  finally
+    frmNotePrint.Release;
+  end;
 end;
 
 procedure TfrmNotePrint.DisplaySelectDevice;

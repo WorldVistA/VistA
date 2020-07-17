@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ORFn, ORCtrls, ComCtrls, ImgList, VA508AccessibilityManager,
-  VA508ImageListLabeler, ExtCtrls;
+  VA508ImageListLabeler, ExtCtrls, System.ImageList;
 
 type
   TfrmAllgyFind = class(TfrmAutoSz)
@@ -42,7 +42,7 @@ implementation
 
 {$R *.DFM}
 
-uses rODAllergy, fARTFreeTextMsg, VA508AccessibilityRouter;
+uses rODAllergy, fARTFreeTextMsg, VA508AccessibilityRouter, VAUtils;
 
 const
   IMG_MATCHES_FOUND = 1;

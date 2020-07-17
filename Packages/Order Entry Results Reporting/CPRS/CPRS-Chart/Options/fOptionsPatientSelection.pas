@@ -51,6 +51,8 @@ type
     radTerminalDigit: TRadioButton;
     radSource: TRadioButton;
     bvlBottom: TBevel;
+    cboPCMM: TORComboBox;
+    lblPcmm: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure spnVisitStartClick(Sender: TObject; Button: TUDBtnType);
@@ -101,7 +103,7 @@ procedure DialogOptionsPatientSelection(topvalue, leftvalue, fontsize: integer; 
 
 implementation
 
-uses rOptions, uOptions, rCore;
+uses rOptions, uOptions, rCore, VAUtils;
 
 {$R *.DFM}
 
@@ -147,6 +149,7 @@ begin
   cboProvider.InitLongList('');
   ListSpecialtyAll(cboTreating.Items);
   ListTeamAll(cboTeam.Items);
+  ListPcmmAll(cboPcmm.Items);
   ListWardAll(cboWard.Items);
 end;
 
@@ -155,7 +158,8 @@ var
   visitstart, visitstop: integer;
   mon, tues, wed, thurs, fri, sat, sun: integer;
   visitstartdef, visitstopdef: integer;
-  defprovider, deftreating, deflist, defward: integer;
+  defprovider, deftreating, deflist, defward, defpcmm: integer;
+  //defsrc: string;
 begin
   rpcGetClinicUserDays(visitstart, visitstop);
   visitstartdef := visitstart;
@@ -190,6 +194,7 @@ begin
   if cboSunday.Text = '' then
     cboSunday.SetExactByIEN(sun, ExternalName(sun, 44));
 
+  // TDP - Modified 5/28/2014 to handle new possible "E" default list source
   with radListSource do
     case DfltPtListSrc of
       'P': ItemIndex := 0;
@@ -197,8 +202,20 @@ begin
       'T': ItemIndex := 2;
       'W': ItemIndex := 3;
       'C': ItemIndex := 4;
-      'M': ItemIndex := 5;
+      'E': ItemIndex := 5;
+      'M': ItemIndex := 6;
     end;
+  //defsrc := DefltPtListSrc;
+  {with radListSource do
+  begin
+    if defsrc = 'P' then ItemIndex := 0;
+    if defsrc = 'S' then ItemIndex := 1;
+    if defsrc = 'T' then ItemIndex := 2;
+    if defsrc = 'W' then ItemIndex := 3;
+    if defsrc = 'C' then ItemIndex := 4;
+    if defsrc = 'PT' then ItemIndex := 5;
+    if defsrc = 'M' then ItemIndex := 6;
+  end;    }
   radListSourceClick(self);
 
   case rpcGetListOrder of
@@ -223,11 +240,12 @@ begin
        radAlphabetical.Checked := true;
   end;
 
-  rpcGetListSourceDefaults(defprovider, deftreating, deflist, defward);
+  rpcGetListSourceDefaults(defprovider, deftreating, deflist, defward, defpcmm);
   cboProvider.SelectByIEN(defprovider);
   cboTreating.SelectByIEN(deftreating);
   cboTeam.SelectByIEN(deflist);
   cboWard.SelectByIEN(defward);
+  cboPcmm.SelectByIEN(defpcmm);
 
   radListSource.SetFocus;
 end;
@@ -311,8 +329,9 @@ end;
 procedure TfrmOptionsPatientSelection.btnOKClick(Sender: TObject);
 var
   StartDays, StopDays, mon, tues, wed, thurs, fri, sat, sun: integer;
-  PLSource, PLSort: Char;
-  prov, spec, team, ward: integer;
+  PLSort: Char;
+  PLSource: string;
+  pcmm, prov, spec, team, ward: integer;
 begin
   StartDays := txtVisitStart.Tag;
   StopDays := txtVisitStop.Tag;
@@ -330,7 +349,8 @@ begin
     2: PLSource := 'T';
     3: PLSource := 'W';
     4: PLSource := 'C';
-    5: PLSource := 'M';
+    5: PLSource := 'E'; // TDP - Added 5/27/2014 PCMM Team
+    6: PLSource := 'M';
     else
        PLSource := 'P';
   end;
@@ -343,7 +363,8 @@ begin
   spec := cboTreating.ItemIEN;
   team := cboTeam.ItemIEN;
   ward := cboWard.ItemIEN;
-  rpcSetPtListDefaults(PLSource, PLSort, prov, spec, team, ward);
+  pcmm := cboPcmm.ItemIEN; // TDP - Added 5/27/2014 PCMM Team
+  rpcSetPtListDefaults(PLSource, PLSort, prov, spec, team, ward, pcmm);
   ResetDfltSort;
 end;
 
@@ -388,8 +409,11 @@ end;
 procedure TfrmOptionsPatientSelection.cboProviderExit(Sender: TObject);
 begin
   with (Sender as TORComboBox) do
-  if ItemIndex < 0 then
-    Text := '';
+  begin
+    if Text = '' then ItemIndex := -1; // TDP (7/23/2014) - Added to clear combo box defaults during save consistently
+    if ItemIndex < 0 then
+      Text := '';
+  end;
 end;
 
 procedure TfrmOptionsPatientSelection.radListSourceClick(Sender: TObject);
@@ -408,7 +432,7 @@ begin
     radAppointmentDate.Enabled := false;
     radRoomBed.Enabled := true;
   end;
-  if radListSource.ItemIndex = 5 then
+  if radListSource.ItemIndex = 6 then
   begin
     radSource.Enabled := true;
     radAppointmentDate.Enabled := true;

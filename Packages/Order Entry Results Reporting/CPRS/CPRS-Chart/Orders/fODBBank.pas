@@ -169,6 +169,7 @@ type
 
 type
   TCollSamp = class(TObject)
+  public
     CollSampID: Integer;                  { IEN of CollSamp }
     CollSampName: string;                 { Name of CollSamp }
     SpecimenID: Integer;                  { IEN of default specimen }
@@ -182,6 +183,7 @@ type
   end;
 
   TLabTest = class(TObject)
+  public
     TestID: Integer;                      { IEN of Lab Test }
     TestName: string;                     { Name of Lab Test }
     ItemID: Integer;                      { Orderable Item ID }
@@ -356,11 +358,11 @@ begin
       EvtDelayLoc := StrToIntDef(GetEventLoc1(IntToStr(Self.EvtID)),0);
       EvtDivision := StrToIntDef(GetEventDiv1(IntToStr(Self.EvtID)),0);
       if EvtDelayLoc>0 then
-        FastAssign(ODForLab(EvtDelayLoc,EvtDivision), AList)
+        ODForLab(AList, EvtDelayLoc, EvtDivision)
       else
-        FastAssign(ODForLab(Encounter.Location,EvtDivision), AList);
+        ODForLab(AList, Encounter.Location, EvtDivision);
     end else
-      FastAssign(ODForLab(Encounter.Location), AList); // ODForLab returns TStrings with defaults
+      ODForLab(AList, Encounter.Location);
     CtrlInits.LoadDefaults(AList);
     InitDialog;
     GroupBox1.Visible := True;
@@ -1488,7 +1490,7 @@ begin
         begin
           OneSamp := TStringList.Create;
           try
-            FastAssign(GetOneCollSamp(StrToInt(LRFSAMP)), OneSamp);
+            GetOneCollSamp(OneSamp, StrToInt(LRFSAMP));
             FillCollSampList(OneSamp, CollSampList.Count);
           finally
             OneSamp.Free;

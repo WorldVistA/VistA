@@ -4,66 +4,79 @@ inherited frmSplash: TfrmSplash
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'CPRS Splash Screen'
-  ClientHeight = 507
-  ClientWidth = 475
+  ClientHeight = 520
+  ClientWidth = 371
   OldCreateOrder = True
   Position = poMainFormCenter
   OnCreate = FormCreate
-  ExplicitWidth = 475
-  ExplicitHeight = 507
-  PixelsPerInch = 120
-  TextHeight = 16
+  OnDestroy = FormDestroy
+  ExplicitWidth = 371
+  ExplicitHeight = 520
+  PixelsPerInch = 96
+  TextHeight = 13
   object pnlMain: TPanel [0]
     Left = 0
     Top = 0
-    Width = 475
-    Height = 507
+    Width = 371
+    Height = 520
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
     Align = alClient
     BevelWidth = 3
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clGrayText
-    Font.Height = -15
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 0
     object lblVersion: TStaticText
-      Left = 53
-      Top = 283
-      Width = 369
-      Height = 16
+      AlignWithMargins = True
+      Left = 6
+      Top = 251
+      Width = 359
+      Height = 17
+      Align = alTop
       Alignment = taCenter
-      AutoSize = False
       Caption = 'version main'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clGrayText
-      Font.Height = -15
+      Font.Color = clDefault
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
       TabOrder = 0
     end
     object lblCopyright: TStaticText
-      Left = 53
-      Top = 306
-      Width = 369
-      Height = 16
+      AlignWithMargins = True
+      Left = 6
+      Top = 274
+      Width = 359
+      Height = 17
+      Align = alTop
       Alignment = taCenter
-      AutoSize = False
       Caption = 'Department of Veterans Affairs'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clGrayText
-      Font.Height = -15
+      Font.Color = clDefault
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
       TabOrder = 1
     end
     object pnlImage: TPanel
-      Left = 49
-      Top = 49
-      Width = 377
-      Height = 205
+      AlignWithMargins = True
+      Left = 27
+      Top = 27
+      Width = 317
+      Height = 171
+      Margins.Left = 24
+      Margins.Top = 24
+      Margins.Right = 24
+      Margins.Bottom = 24
+      Align = alTop
       BevelInner = bvLowered
       BevelOuter = bvNone
       BevelWidth = 3
@@ -72,8 +85,12 @@ inherited frmSplash: TfrmSplash
       object Image1: TImage
         Left = 3
         Top = 3
-        Width = 371
-        Height = 199
+        Width = 311
+        Height = 165
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
         Align = alClient
         AutoSize = True
         Center = True
@@ -1605,69 +1622,90 @@ inherited frmSplash: TfrmSplash
           929293939393D4CF86CFD49392D1858A7C7B7B7B7B7B}
         Proportional = True
         Stretch = True
-        ExplicitLeft = 4
-        ExplicitTop = 4
-        ExplicitWidth = 369
-        ExplicitHeight = 195
+        ExplicitHeight = 159
       end
     end
     object pnl508Disclaimer: TPanel
-      Left = 39
-      Top = 335
-      Width = 395
-      Height = 123
+      AlignWithMargins = True
+      Left = 27
+      Top = 306
+      Width = 317
+      Height = 177
+      Margins.Left = 24
+      Margins.Top = 12
+      Margins.Right = 24
+      Margins.Bottom = 24
+      Align = alClient
       BevelKind = bkTile
       BevelOuter = bvNone
       Locked = True
       TabOrder = 3
-      object Memo1: TMemo
-        AlignWithMargins = True
-        Left = 3
-        Top = 3
-        Width = 385
-        Height = 113
+      object mm: TMemo
+        Left = 0
+        Top = 0
+        Width = 313
+        Height = 173
+        Margins.Top = 6
+        Margins.Bottom = 6
         Align = alClient
+        Alignment = taCenter
         BevelEdges = []
         BevelInner = bvNone
         BevelOuter = bvNone
         BorderStyle = bsNone
         Color = clBtnFace
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGrayText
-        Font.Height = -15
+        Font.Color = clDefault
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         Lines.Strings = (
-          'Veteran'#39's Administration OI&T Product Development staff have '
-          'made every effort during the design, development and testing of '
-          'this application to ensure full accessibility to all users in '
-          
-            'compliance with Section 508 of the Rehabilitation Action of 1973' +
-            ', '
-          'as amended. If any issues are encountered while running this '
-          'application, please contact your local help desk for support.')
+          ''
+          'Department of Veterans Affairs staff'
+          'have made every effort during the design, '
+          'development and testing of this application '
+          'to ensure full accessibility to all users in compliance '
+          'with Section 508 of the Rehabilitation Act of 1973. '
+          'If any issues are encountered '
+          'while running this application, please '
+          'contact your local help desk for support.')
         ParentFont = False
         ReadOnly = True
         TabOrder = 0
+        OnChange = mmChange
+        ExplicitLeft = 1
+        ExplicitTop = -8
       end
     end
-  end
-  object lblSplash: TStaticText [1]
-    Left = 76
-    Top = 261
-    Width = 322
-    Height = 22
-    Alignment = taCenter
-    AutoSize = False
-    Caption = 'Computerized Patient Record System'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clGrayText
-    Font.Height = -18
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 0
-    TabStop = True
+    object lblSplash: TStaticText
+      AlignWithMargins = True
+      Left = 6
+      Top = 225
+      Width = 359
+      Height = 20
+      Align = alTop
+      Alignment = taCenter
+      Caption = 'Computerized Patient Record System'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clDefault
+      Font.Height = -14
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 4
+      TabStop = True
+    end
+    object lblCRC: TStaticText
+      AlignWithMargins = True
+      Left = 6
+      Top = 510
+      Width = 356
+      Height = 4
+      Margins.Right = 6
+      Align = alBottom
+      Alignment = taCenter
+      TabOrder = 5
+    end
   end
   inherited amgrMain: TVA508AccessibilityManager
     Left = 8
@@ -1695,7 +1733,15 @@ inherited frmSplash: TfrmSplash
         'Component = pnl508Disclaimer'
         'Status = stsDefault')
       (
-        'Component = Memo1'
+        'Component = mm'
+        'Status = stsDefault')
+      (
+        'Component = lblCRC'
         'Status = stsDefault'))
+  end
+  object ae: TApplicationEvents
+    OnIdle = aeIdle
+    Left = 69
+    Top = 10
   end
 end

@@ -4,7 +4,7 @@ inherited frmMeds: TfrmMeds
   HelpContext = 3000
   VertScrollBar.Visible = False
   Caption = 'Medications Page'
-  ClientHeight = 671
+  ClientHeight = 668
   ClientWidth = 701
   HelpFile = 'qnoback'
   Menu = mnuMeds
@@ -14,7 +14,7 @@ inherited frmMeds: TfrmMeds
   OnResize = FormResize
   OnShow = FormShow
   ExplicitWidth = 717
-  ExplicitHeight = 725
+  ExplicitHeight = 727
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
@@ -32,7 +32,23 @@ inherited frmMeds: TfrmMeds
   end
   object splitTop: TSplitter [1]
     Left = 0
-    Top = 460
+    Top = 222
+    Width = 701
+    Height = 4
+    Cursor = crVSplit
+    Align = alTop
+    AutoSnap = False
+    Color = clBtnFace
+    Constraints.MaxHeight = 5
+    Constraints.MinHeight = 4
+    MinSize = 100
+    ParentColor = False
+    ResizeStyle = rsUpdate
+    OnMoved = splitTopMoved
+  end
+  object splitBottom: TSplitter [2]
+    Left = 0
+    Top = 363
     Width = 701
     Height = 4
     Cursor = crVSplit
@@ -43,223 +59,139 @@ inherited frmMeds: TfrmMeds
     Constraints.MinHeight = 4
     MinSize = 100
     ParentColor = False
-    OnMoved = splitTopMoved
+    ResizeStyle = rsUpdate
+    OnMoved = splitBottomMoved
   end
-  object pnlBottom: TORAutoPanel [2]
+  object gdpSort: TGridPanel [3]
     Left = 0
-    Top = 464
+    Top = 0
     Width = 701
-    Height = 207
-    Align = alBottom
-    Constraints.MinHeight = 40
-    Ctl3D = False
-    ParentCtl3D = False
-    TabOrder = 2
-    object splitBottom: TSplitter
-      Left = 1
-      Top = 102
-      Width = 699
-      Height = 4
-      Cursor = crVSplit
-      Align = alBottom
-      AutoSnap = False
-      Color = clBtnFace
-      Constraints.MaxHeight = 5
-      Constraints.MinHeight = 4
-      MinSize = 100
-      ParentColor = False
-      OnMoved = splitBottomMoved
-    end
-    object pnlMedIn: TPanel
-      Left = 1
-      Top = 106
-      Width = 699
-      Height = 100
-      Align = alBottom
-      Constraints.MinHeight = 100
-      TabOrder = 1
-      object lstMedsIn: TCaptionListBox
-        Tag = 2
-        Left = 1
-        Top = 17
-        Width = 697
-        Height = 82
-        Style = lbOwnerDrawVariable
-        Align = alClient
-        Color = clCream
-        Constraints.MinHeight = 65
-        Ctl3D = False
-        ItemHeight = 13
-        MultiSelect = True
-        ParentCtl3D = False
-        PopupMenu = popMed
-        TabOrder = 0
-        OnClick = lstMedsInClick
-        OnDblClick = lstMedsDblClick
-        OnDrawItem = lstMedsDrawItem
-        OnExit = lstMedsExit
-        OnMeasureItem = lstMedsMeasureItem
-        Caption = 'Inpatient Medications'
-        ExplicitLeft = 0
-        ExplicitTop = 23
+    Height = 18
+    Align = alTop
+    ColumnCollection = <
+      item
+        Value = 50.000000000000000000
       end
-      object hdrMedsIn: THeaderControl
-        Left = 1
-        Top = 1
-        Width = 697
-        Height = 16
-        BiDiMode = bdLeftToRight
-        Constraints.MinHeight = 16
-        Sections = <
-          item
-            ImageIndex = -1
-            MinWidth = 42
-            Text = 'Action'
-            Width = 42
-          end
-          item
-            ImageIndex = -1
-            MinWidth = 20
-            Text = 'Inpatient Medications'
-            Width = 100
-          end
-          item
-            ImageIndex = -1
-            MinWidth = 16
-            Text = 'Stop Date'
-            Width = 62
-          end
-          item
-            ImageIndex = -1
-            MinWidth = 16
-            Text = 'Status'
-            Width = 62
-          end
-          item
-            ImageIndex = -1
-            MinWidth = 16
-            Text = 'Location'
-            Width = 20
-          end>
-        OnSectionClick = hdrMedsInSectionClick
-        OnSectionResize = hdrMedsInSectionResize
-        ParentBiDiMode = False
-        OnMouseDown = hdrMedsInMouseDown
-        OnMouseUp = hdrMedsInMouseUp
-        OnResize = hdrMedsInResize
+      item
+        Value = 50.000000000000000000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        ColumnSpan = 2
+        Control = txtView
+        Row = 0
+        RowSpan = 2
+      end>
+    RowCollection = <
+      item
+        SizeStyle = ssAbsolute
+        Value = 20.000000000000000000
       end
-    end
-    object pnlNonVA: TPanel
-      Left = 1
-      Top = 1
-      Width = 699
-      Height = 101
-      Align = alClient
-      Caption = 'pnlNonVA'
-      Constraints.MinHeight = 40
-      TabOrder = 0
-      object lstMedsNonVA: TCaptionListBox
-        Tag = 3
-        Left = 1
-        Top = 17
-        Width = 697
-        Height = 83
-        Style = lbOwnerDrawVariable
-        Align = alClient
-        Color = clCream
-        Constraints.MinHeight = 40
-        Ctl3D = False
-        ItemHeight = 13
-        MultiSelect = True
-        ParentCtl3D = False
-        PopupMenu = popMed
-        TabOrder = 0
-        OnClick = lstMedsNonVAClick
-        OnDblClick = lstMedsDblClick
-        OnDrawItem = lstMedsDrawItem
-        OnExit = lstMedsExit
-        OnMeasureItem = lstMedsMeasureItem
-        Caption = 'Inpatient Medications'
-      end
-      object hdrMedsNonVA: THeaderControl
-        Left = 1
-        Top = 1
-        Width = 697
-        Height = 16
-        BiDiMode = bdLeftToRight
-        Constraints.MinHeight = 16
-        Sections = <
-          item
-            ImageIndex = -1
-            MinWidth = 42
-            Text = 'Action'
-            Width = 42
-          end
-          item
-            ImageIndex = -1
-            MinWidth = 20
-            Text = 'Non-VA Medications'
-            Width = 100
-          end
-          item
-            ImageIndex = -1
-            MinWidth = 16
-            Text = 'Start Date'
-            Width = 62
-          end
-          item
-            ImageIndex = -1
-            MinWidth = 16
-            Text = 'Status'
-            Width = 62
-          end>
-        OnSectionClick = hdrMedsNonVASectionClick
-        OnSectionResize = hdrMedsNonVASectionResize
-        ParentBiDiMode = False
-        OnMouseDown = hdrMedsNonVAMouseDown
-        OnMouseUp = hdrMedsNonVAMouseUp
-        OnResize = hdrMedsNonVAResize
-      end
-    end
-  end
-  object pnlTop: TORAutoPanel [3]
-    Left = 0
-    Top = 22
-    Width = 701
-    Height = 438
-    Align = alClient
-    Ctl3D = True
-    ParentCtl3D = False
-    TabOrder = 1
-    object lstMedsOut: TCaptionListBox
-      Tag = 1
-      Left = 1
-      Top = 17
-      Width = 699
-      Height = 420
-      Style = lbOwnerDrawVariable
-      Align = alClient
-      Color = clCream
-      Constraints.MinHeight = 40
-      Ctl3D = False
-      ItemHeight = 13
-      MultiSelect = True
-      ParentCtl3D = False
-      PopupMenu = popMed
-      TabOrder = 0
-      OnClick = lstMedsOutClick
-      OnDblClick = lstMedsDblClick
-      OnDrawItem = lstMedsDrawItem
-      OnExit = lstMedsExit
-      OnMeasureItem = lstMedsMeasureItem
-      Caption = 'Outpatient Medications'
-      ExplicitLeft = 0
-    end
-    object hdrMedsOut: THeaderControl
+      item
+        Value = 100.000000000000000000
+      end>
+    TabOrder = 0
+    object txtView: TVA508StaticText
+      Name = 'txtView'
       Left = 1
       Top = 1
       Width = 699
       Height = 16
+      Align = alClient
+      Alignment = taLeftJustify
+      Caption = 'txtView'
+      TabOrder = 0
+      ShowAccelChar = True
+    end
+  end
+  object gdpOut: TGridPanel [4]
+    Left = 0
+    Top = 18
+    Width = 701
+    Height = 204
+    Align = alTop
+    BiDiMode = bdLeftToRight
+    BorderStyle = bsSingle
+    ColumnCollection = <
+      item
+        Value = 26.002793129303330000
+      end
+      item
+        Value = 26.002793129303330000
+      end
+      item
+        Value = 24.909029174263860000
+      end
+      item
+        Value = 23.085384567129470000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = txtDateRangeOp
+        Row = 0
+      end
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = hdrMedsOut
+        Row = 1
+      end
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = lstMedsOut
+        Row = 2
+      end
+      item
+        Column = 0
+        Row = 3
+      end>
+    DoubleBuffered = False
+    ExpandStyle = emFixedSize
+    ParentBiDiMode = False
+    ParentDoubleBuffered = False
+    RowCollection = <
+      item
+        SizeStyle = ssAbsolute
+        Value = 20.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 20.000000000000000000
+      end
+      item
+        Value = 100.000000000000000000
+      end>
+    TabOrder = 1
+    object txtDateRangeOp: TVA508StaticText
+      Name = 'txtDateRangeOp'
+      Left = 1
+      Top = 1
+      Width = 695
+      Height = 15
+      Align = alTop
+      Alignment = taLeftJustify
+      BorderWidth = 1
+      Caption = '            txtDateRangeOp'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 0
+      ShowAccelChar = True
+    end
+    object hdrMedsOut: THeaderControl
+      Left = 1
+      Top = 21
+      Width = 695
+      Height = 16
+      Anchors = []
       BiDiMode = bdLeftToRight
       Constraints.MinHeight = 16
       Sections = <
@@ -306,24 +238,319 @@ inherited frmMeds: TfrmMeds
       OnMouseUp = hdrMedsOutMouseUp
       OnResize = hdrMedsOutResize
     end
+    object lstMedsOut: TCaptionListBox
+      Tag = 1
+      Left = 1
+      Top = 41
+      Width = 695
+      Height = 158
+      Style = lbOwnerDrawVariable
+      Align = alClient
+      Color = clCream
+      Constraints.MinHeight = 40
+      Ctl3D = False
+      DoubleBuffered = True
+      ItemHeight = 13
+      MultiSelect = True
+      ParentCtl3D = False
+      ParentDoubleBuffered = False
+      PopupMenu = popMed
+      TabOrder = 2
+      OnClick = lstMedsOutClick
+      OnDblClick = lstMedsDblClick
+      OnDrawItem = lstMedsDrawItem
+      OnExit = lstMedsExit
+      OnMeasureItem = lstMedsMeasureItem
+      Caption = 'Outpatient Medications'
+    end
   end
-  object pnlView: TPanel [4]
+  object gdpNon: TGridPanel [5]
     Left = 0
-    Top = 0
+    Top = 226
     Width = 701
-    Height = 22
-    Align = alTop
-    TabOrder = 0
-    object txtView: TVA508StaticText
-      Name = 'txtView'
-      Left = 9
-      Top = 3
-      Width = 36
+    Height = 137
+    Align = alClient
+    BorderWidth = 1
+    BorderStyle = bsSingle
+    ColumnCollection = <
+      item
+        Value = 25.104233731616910000
+      end
+      item
+        Value = 25.104233731616910000
+      end
+      item
+        Value = 24.791542078059250000
+      end
+      item
+        Value = 24.999990458706940000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = txtDateRangeNon
+        Row = 0
+      end
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = hdrMedsNonVA
+        Row = 1
+      end
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = lstMedsNonVA
+        Row = 2
+      end
+      item
+        Column = 0
+        Row = 3
+      end>
+    ExpandStyle = emFixedSize
+    RowCollection = <
+      item
+        SizeStyle = ssAbsolute
+        Value = 20.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 20.000000000000000000
+      end
+      item
+        Value = 100.000000000000000000
+      end>
+    TabOrder = 2
+    object txtDateRangeNon: TVA508StaticText
+      Name = 'txtDateRangeNon'
+      Left = 2
+      Top = 2
+      Width = 693
       Height = 15
+      Align = alTop
       Alignment = taLeftJustify
-      Caption = 'txtView'
+      Caption = 'txtDateRangeNon'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 0
       ShowAccelChar = True
+    end
+    object hdrMedsNonVA: THeaderControl
+      Left = 2
+      Top = 22
+      Width = 693
+      Height = 16
+      Anchors = []
+      BiDiMode = bdLeftToRight
+      Constraints.MinHeight = 16
+      Sections = <
+        item
+          ImageIndex = -1
+          MinWidth = 42
+          Text = 'Action'
+          Width = 42
+        end
+        item
+          ImageIndex = -1
+          MinWidth = 20
+          Text = 'Non-VA Medications (Documentation)'
+          Width = 100
+        end
+        item
+          ImageIndex = -1
+          MinWidth = 16
+          Text = 'Start Date'
+          Width = 62
+        end
+        item
+          ImageIndex = -1
+          MinWidth = 16
+          Text = 'Status'
+          Width = 62
+        end>
+      OnSectionClick = hdrMedsNonVASectionClick
+      OnSectionResize = hdrMedsNonVASectionResize
+      ParentBiDiMode = False
+      OnMouseDown = hdrMedsNonVAMouseDown
+      OnMouseUp = hdrMedsNonVAMouseUp
+      OnResize = hdrMedsNonVAResize
+    end
+    object lstMedsNonVA: TCaptionListBox
+      Tag = 3
+      Left = 2
+      Top = 42
+      Width = 693
+      Height = 89
+      Style = lbOwnerDrawVariable
+      Align = alClient
+      Color = clCream
+      Constraints.MinHeight = 40
+      Ctl3D = False
+      DoubleBuffered = True
+      ItemHeight = 13
+      MultiSelect = True
+      ParentCtl3D = False
+      ParentDoubleBuffered = False
+      PopupMenu = popMed
+      TabOrder = 2
+      OnClick = lstMedsNonVAClick
+      OnDblClick = lstMedsDblClick
+      OnDrawItem = lstMedsDrawItem
+      OnExit = lstMedsExit
+      OnMeasureItem = lstMedsMeasureItem
+      Caption = 'Inpatient Medications'
+    end
+  end
+  object gdpIn: TGridPanel [6]
+    Left = 0
+    Top = 367
+    Width = 701
+    Height = 301
+    Align = alBottom
+    BorderStyle = bsSingle
+    ColumnCollection = <
+      item
+        Value = 23.861971871927500000
+      end
+      item
+        Value = 24.996669996734980000
+      end
+      item
+        Value = 25.570679065668760000
+      end
+      item
+        Value = 25.570679065668760000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = txtDateRangeIp
+        Row = 0
+      end
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = hdrMedsIn
+        Row = 1
+      end
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = lstMedsIn
+        Row = 2
+      end
+      item
+        Column = 0
+        Row = 3
+      end>
+    ExpandStyle = emFixedSize
+    RowCollection = <
+      item
+        SizeStyle = ssAbsolute
+        Value = 20.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 20.000000000000000000
+      end
+      item
+        Value = 100.000000000000000000
+      end>
+    TabOrder = 3
+    object txtDateRangeIp: TVA508StaticText
+      Name = 'txtDateRangeIp'
+      Left = 1
+      Top = 1
+      Width = 695
+      Height = 15
+      Align = alTop
+      Alignment = taLeftJustify
+      Caption = 'txtDateRangeIp'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      ShowAccelChar = True
+    end
+    object hdrMedsIn: THeaderControl
+      Left = 1
+      Top = 21
+      Width = 695
+      Height = 16
+      Anchors = []
+      BiDiMode = bdLeftToRight
+      Constraints.MinHeight = 16
+      Sections = <
+        item
+          ImageIndex = -1
+          MinWidth = 42
+          Text = 'Action'
+          Width = 42
+        end
+        item
+          ImageIndex = -1
+          MinWidth = 20
+          Text = 'Inpatient Medications'
+          Width = 100
+        end
+        item
+          ImageIndex = -1
+          MinWidth = 16
+          Text = 'Stop Date'
+          Width = 62
+        end
+        item
+          ImageIndex = -1
+          MinWidth = 16
+          Text = 'Status'
+          Width = 62
+        end
+        item
+          ImageIndex = -1
+          MinWidth = 16
+          Text = 'Location'
+          Width = 20
+        end>
+      OnSectionClick = hdrMedsInSectionClick
+      OnSectionResize = hdrMedsInSectionResize
+      ParentBiDiMode = False
+      OnMouseDown = hdrMedsInMouseDown
+      OnMouseUp = hdrMedsInMouseUp
+      OnResize = hdrMedsInResize
+    end
+    object lstMedsIn: TCaptionListBox
+      Tag = 2
+      Left = 1
+      Top = 41
+      Width = 695
+      Height = 255
+      Style = lbOwnerDrawVariable
+      Align = alClient
+      Color = clCream
+      Constraints.MinHeight = 59
+      Ctl3D = False
+      DoubleBuffered = True
+      ItemHeight = 13
+      MultiSelect = True
+      ParentCtl3D = False
+      ParentDoubleBuffered = False
+      PopupMenu = popMed
+      TabOrder = 2
+      OnClick = lstMedsInClick
+      OnDblClick = lstMedsDblClick
+      OnDrawItem = lstMedsDrawItem
+      OnExit = lstMedsExit
+      OnMeasureItem = lstMedsMeasureItem
+      Caption = 'Inpatient Medications'
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -331,43 +558,49 @@ inherited frmMeds: TfrmMeds
     Top = 152
     Data = (
       (
-        'Component = pnlBottom'
+        'Component = frmMeds'
         'Status = stsDefault')
       (
-        'Component = pnlMedIn'
+        'Component = gdpSort'
         'Status = stsDefault')
       (
-        'Component = lstMedsIn'
+        'Component = txtView'
         'Status = stsDefault')
       (
-        'Component = hdrMedsIn'
+        'Component = gdpOut'
         'Status = stsDefault')
       (
-        'Component = pnlNonVA'
-        'Status = stsDefault')
-      (
-        'Component = lstMedsNonVA'
-        'Status = stsDefault')
-      (
-        'Component = hdrMedsNonVA'
-        'Status = stsDefault')
-      (
-        'Component = pnlTop'
-        'Status = stsDefault')
-      (
-        'Component = lstMedsOut'
+        'Component = txtDateRangeOp'
         'Status = stsDefault')
       (
         'Component = hdrMedsOut'
         'Status = stsDefault')
       (
-        'Component = frmMeds'
+        'Component = lstMedsOut'
         'Status = stsDefault')
       (
-        'Component = pnlView'
+        'Component = gdpNon'
         'Status = stsDefault')
       (
-        'Component = txtView'
+        'Component = txtDateRangeNon'
+        'Status = stsDefault')
+      (
+        'Component = hdrMedsNonVA'
+        'Status = stsDefault')
+      (
+        'Component = lstMedsNonVA'
+        'Status = stsDefault')
+      (
+        'Component = gdpIn'
+        'Status = stsDefault')
+      (
+        'Component = txtDateRangeIp'
+        'Status = stsDefault')
+      (
+        'Component = hdrMedsIn'
+        'Status = stsDefault')
+      (
+        'Component = lstMedsIn'
         'Status = stsDefault'))
   end
   object mnuMeds: TMainMenu

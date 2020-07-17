@@ -1,5 +1,5 @@
 unit fARTAllgy;
-  
+
 interface
 
 uses
@@ -155,7 +155,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rODBase, uCore, rCore, rCover, fCover, fAllgyFind, fPtCWAD, fRptBox, VA508AccessibilityRouter;
+  rODBase, uCore, rCore, rCover, iCoversheetIntf, {fCover,} fAllgyFind, fPtCWAD, fRptBox, VA508AccessibilityRouter, VAUtils;
 
 const
   TX_NO_ALLERGY       = 'A causative agent must be specified.'    ;
@@ -513,8 +513,11 @@ begin
       cboNatureOfReaction.SelectByID(Piece(NatureOfReaction, U, 1));
       FastAssign(SignsSymptoms, lstSelectedSymptoms.Items);
       calOriginated.FMDateTime := Originated;
-      cboOriginator.InitLongList(OriginatorName);
+
+      cboOriginator.Items.Clear;
+      cboOriginator.Items.Add(IntToStr(Originator) + U + OriginatorName);
       cboOriginator.SelectByIEN(Originator);
+
       { TODO -oRich V. -cART/Allergy : Change to calendar entry fields and prior entries button? }
       ckIDBand.Checked := IDBandMarked.Count > 0;
       ckChartMarked.Checked := ChartMarked.Count > 0;
@@ -978,8 +981,9 @@ begin
   uEditing := FALSE;
   uEnteredInError := FALSE;
   uUserCanVerify := FALSE;
-  frmCover.UpdateAllergiesList;
-  
+  //frmCover.UpdateAllergiesList;
+  CoverSheet.OnRefreshPanel(Self, CV_CPRS_ALLG);
+
   inherited;
 end;
 
@@ -1282,18 +1286,16 @@ begin
 end;
 
 
-procedure TfrmARTAllergy.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfrmARTAllergy.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  inherited;
-  Release;
   uEditing := False;
   uEnteredInError := False;
   uAddingNew := False;
   Application.HintHidePause := FOldHintPause;
-  Action  := caFree;
+  UnlockIfAble; // SMT Unlock when allergies close.
 
-  UnlockIfAble; //SMT Unlock when allergies close.
+  Action := caFree;
+  inherited;
 end;
 
 procedure TfrmARTAllergy.FormCloseQuery(Sender: TObject;
@@ -1313,14 +1315,14 @@ end;
 
 procedure TfrmARTAllergy.btnSevHelpClick(Sender: TObject);
 const
-  TX_SEV_DEFINITION = 'MILD - Requires minimal therapeutic intervention '+#13+#10+
+  TX_SEV_DEFINITION = 'MILD - Requires minimal therapeutic intervention '+
                      'such as discontinuation of drug(s)'+#13+#10+''+#13+#10+
-                     'MODERATE - Requires active treatment of adverse reaction, '+#13+#10+
-                     'or further testing or evaluation to assess extent of non-serious'+#13+#10+
+                     'MODERATE - Requires active treatment of adverse reaction, '+
+                     'or further testing or evaluation to assess extent of non-serious '+
                      'outcome (see SEVERE for definition of serious).'+#13+#10+''+#13+#10+
-                     'SEVERE - Includes any serious outcome, resulting in life- or'+#13+#10+
-                     'organ-threatening situation or death, significant or permanent'+#13+#10+
-                     'disability, requiring intervention to prevent permanent impairment '+#13+#10+
+                     'SEVERE - Includes any serious outcome, resulting in life or '+
+                     'organ-threatening situation or death, significant or permanent '+
+                     'disability, requiring intervention to prevent permanent impairment '+
                      'or damage, or requiring/prolonging hospitalization.';
   TC_SEV_CAPTION   = 'Severity Levels';
 begin

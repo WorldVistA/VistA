@@ -11,7 +11,7 @@ inherited frmGraphSettings: TfrmGraphSettings
   OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 545
-  ExplicitHeight = 437
+  ExplicitHeight = 434
   DesignSize = (
     539
     404)
@@ -148,7 +148,7 @@ inherited frmGraphSettings: TfrmGraphSettings
   object lblOptionsInfo: TLabel [10]
     Left = 16
     Top = 366
-    Width = 275
+    Width = 302
     Height = 32
     Margins.Left = 4
     Margins.Top = 4
@@ -211,8 +211,8 @@ inherited frmGraphSettings: TfrmGraphSettings
   object lblOutpatient: TLabel [15]
     Left = 383
     Top = 166
-    Width = 95
-    Height = 32
+    Width = 140
+    Height = 16
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -225,8 +225,8 @@ inherited frmGraphSettings: TfrmGraphSettings
   object lblInpatient: TLabel [16]
     Left = 383
     Top = 219
-    Width = 85
-    Height = 32
+    Width = 130
+    Height = 16
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -638,8 +638,8 @@ inherited frmGraphSettings: TfrmGraphSettings
     Name = 'lbl508Show'
     Left = 241
     Top = 287
-    Width = 111
-    Height = 22
+    Width = 90
+    Height = 18
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -655,8 +655,8 @@ inherited frmGraphSettings: TfrmGraphSettings
     Name = 'lbl508Save'
     Left = 233
     Top = 326
-    Width = 123
-    Height = 22
+    Width = 100
+    Height = 18
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4

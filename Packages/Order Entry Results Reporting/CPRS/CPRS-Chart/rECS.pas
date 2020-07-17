@@ -2,27 +2,30 @@ unit rECS;
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses, ORNet, uCore;
+uses
+  System.SysUtils,
+  System.Classes;
 
 type
   TECSReport = Class(TObject)
   private
-    FReportHandle: string;            // PCE report or Patient Summary report
-    FReportType  : string;            // D: display  P: print
-    FPrintDEV    : string;            // if Print, the print device IEN
-    FReportStart : string;            // Start Date
-    FReportEnd   : string;            // End Date
-    FNeedReason  : string;           // Need procedure reason ?
-    FECSPermit   : boolean;           // Authorized use of ECS
+    FReportHandle: string; // PCE report or Patient Summary report
+    FReportType: string; // D: display  P: print
+    FPrintDEV: string; // if Print, the print device IEN
+    FReportStart: string; // Start Date
+    FReportEnd: string; // End Date
+    FNeedReason: string; // Need procedure reason ?
+    FECSPermit: boolean; // Authorized use of ECS
   public
     constructor Create;
-    property ReportHandle: string       read FReportHandle  write FReportHandle;
-    property ReportType  : string       read FReportType    write FReportType;
-    property ReportStart : string       read FReportStart   write FReportStart;
-    property ReportEnd   : string       read FReportEnd     write FReportEnd;
-    property PrintDEV    : string       read FPrintDEV      write FPrintDEV;
-    property NeedReason  : string       read FNeedReason    write FNeedReason;
-    property ECSPermit   : boolean      read FECSPermit     write FECSPermit;
+
+    property ReportHandle: string read FReportHandle write FReportHandle;
+    property ReportType: string read FReportType write FReportType;
+    property ReportStart: string read FReportStart write FReportStart;
+    property ReportEnd: string read FReportEnd write FReportEnd;
+    property PrintDEV: string read FPrintDEV write FPrintDEV;
+    property NeedReason: string read FNeedReason write FNeedReason;
+    property ECSPermit: boolean read FECSPermit write FECSPermit;
   end;
 
 function GetVisitID: string;
@@ -34,27 +37,34 @@ procedure LoadECSReportText(Dest: TStrings; AnECSRpt: TECSReport);
 procedure PrintECSReportToDevice(AnECSRpt: TECSReport);
 
 implementation
-uses TRPCB;
+
+uses
+  TRPCB,
+  ORFn,
+  rCore,
+  ORNet,
+  uCore;
 
 constructor TECSReport.Create;
 begin
-  ReportHandle := '';
-  ReportType   := '';
-  ReportStart  := '';
-  ReportEnd    := '';
-  PrintDEV     := '';
-  FNeedReason  := '';
-  ECSPermit    := False;
+  inherited;
+  FReportHandle := '';
+  FReportType := '';
+  FReportStart := '';
+  FReportEnd := '';
+  FPrintDEV := '';
+  FNeedReason := '';
+  FECSPermit := False;
 end;
 
 function IsESSOInstalled: boolean;
 var
-  rtn: integer;
+  aStr: string;
 begin
-  Result := False;
-  rtn := StrToIntDef(SCallV('ORECS01 CHKESSO',[nil]),0);
-  if rtn > 0 then
-    Result := True;
+  if CallVistA('ORECS01 CHKESSO', [nil], aStr) then
+    Result := (StrToIntDef(aStr, 0) > 0)
+  else
+    Result := False;
 end;
 
 function GetVisitID: string;
@@ -62,86 +72,95 @@ var
   vsitStr: string;
 begin
   vsitStr := Encounter.VisitStr + ';' + Patient.DFN;
-  Result := SCallV('ORECS01 VSITID',[vsitStr]);
+  CallVistA('ORECS01 VSITID', [vsitStr], Result);
 end;
 
 function GetDivisionID: string;
-var
-  divID: string;
 begin
-  divID := SCallV('ORECS01 GETDIV',[nil]);
-  Result := divID;
+  CallVistA('ORECS01 GETDIV', [nil], Result);
 end;
 
 procedure SaveUserPath(APathInfo: string; var CurPath: string);
 begin
-  CurPath := SCallV('ORECS01 SAVPATH',[APathInfo]);
+  CallVistA('ORECS01 SAVPATH', [APathInfo], CurPath);
 end;
 
 procedure FormatECSDate(ADTStr: string; var AnECSRpt: TECSReport);
 var
-  x,DaysBack :string;
+  x, DaysBack: string;
   Alpha, Omega: double;
 begin
   Alpha := 0;
   Omega := 0;
   if CharAt(ADTStr, 1) = 'T' then
-  begin
-    Alpha := StrToFMDateTime(Piece(ADTStr,';',1));
-    Omega := StrToFMDateTime(Piece(ADTStr,';',2));
-  end;
+    begin
+      Alpha := StrToFMDateTime(Piece(ADTStr, ';', 1));
+      Omega := StrToFMDateTime(Piece(ADTStr, ';', 2));
+    end;
   if CharAt(ADTStr, 1) = 'd' then
-  begin
-    x := Piece(ADTStr,';',1);
-    DaysBack := Copy(x, 2, Length(x));
-    Alpha := StrToFMDateTime('T-' + DaysBack);
-    Omega := StrToFMDateTime('T');
-  end;
+    begin
+      x := Piece(ADTStr, ';', 1);
+      DaysBack := Copy(x, 2, Length(x));
+      Alpha := StrToFMDateTime('T-' + DaysBack);
+      Omega := StrToFMDateTime('T');
+    end;
   AnECSRpt.ReportStart := FloatToStr(Alpha);
-  AnECSRpt.ReportEnd   := FloatToStr(Omega);
+  AnECSRpt.ReportEnd := FloatToStr(Omega);
 end;
 
 procedure LoadECSReportText(Dest: TStrings; AnECSRpt: TECSReport);
 var
   userid: string;
 begin
-  with RPCBrokerv do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'ORECS01 ECRPT';
-    Param[0].PType  := list;
-    Param[0].Mult['"ECHNDL"'] := AnECSRpt.ReportHandle;
-    Param[0].Mult['"ECPTYP"'] := AnECSRpt.ReportType;
-    Param[0].Mult['"ECDEV"']  := AnECSRpt.PrintDEV;
-    Param[0].Mult['"ECDFN"']  := Patient.DFN;
-    Param[0].Mult['"ECSD"']   := AnECSRpt.ReportStart;
-    Param[0].Mult['"ECED"']   := AnECSRpt.ReportEnd;
-    Param[0].Mult['"ECRY"']   := AnECSRpt.NeedReason;
-    Param[0].Mult['"ECDUZ"']  := userid;
-    CallBroker;
+  // Defered until we can pass in an object with the Mult=Value pair - DRP@SLC
+  LockBroker;
+  try
+    with RPCBrokerv do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'ORECS01 ECRPT';
+      Param[0].PType := list;
+      Param[0].Mult['"ECHNDL"'] := AnECSRpt.ReportHandle;
+      Param[0].Mult['"ECPTYP"'] := AnECSRpt.ReportType;
+      Param[0].Mult['"ECDEV"'] := AnECSRpt.PrintDEV;
+      Param[0].Mult['"ECDFN"'] := Patient.DFN;
+      Param[0].Mult['"ECSD"'] := AnECSRpt.ReportStart;
+      Param[0].Mult['"ECED"'] := AnECSRpt.ReportEnd;
+      Param[0].Mult['"ECRY"'] := AnECSRpt.NeedReason;
+      Param[0].Mult['"ECDUZ"'] := userid;
+      CallBroker;
+    end;
+    QuickCopy(RPCBrokerv.Results, Dest);
+  finally
+    UnlockBroker;
   end;
-  QuickCopy(RPCBrokerV.Results,Dest);
 end;
 
 procedure PrintECSReportToDevice(AnECSRpt: TECSReport);
 var
   userid: string;
 begin
+  // Defered until we can pass in an object with the Mult=Value pair - DRP@SLC
   userid := IntToStr(User.DUZ);
-  with RPCBrokerV do
-  begin
-    clearParameters := True;
-    RemoteProcedure := 'ORECS01 ECPRINT';
-    Param[0].PType := List;
-    Param[0].Mult['"ECHNDL"'] := AnECSRpt.ReportHandle;
-    Param[0].Mult['"ECPTYP"'] := AnECSRpt.ReportType;
-    Param[0].Mult['"ECDEV"']  := AnECSRpt.PrintDEV;
-    Param[0].Mult['"ECDFN"']  := Patient.DFN;
-    Param[0].Mult['"ECSD"']   := AnECSRpt.ReportStart;
-    Param[0].Mult['"ECED"']   := AnECSRpt.ReportEnd;
-    Param[0].Mult['"ECRY"']   := AnECSRpt.NeedReason;
-    Param[0].Mult['"ECDUZ"']  := userid;
-    CallBroker;
+  LockBroker;
+  try
+    with RPCBrokerv do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'ORECS01 ECPRINT';
+      Param[0].PType := list;
+      Param[0].Mult['"ECHNDL"'] := AnECSRpt.ReportHandle;
+      Param[0].Mult['"ECPTYP"'] := AnECSRpt.ReportType;
+      Param[0].Mult['"ECDEV"'] := AnECSRpt.PrintDEV;
+      Param[0].Mult['"ECDFN"'] := Patient.DFN;
+      Param[0].Mult['"ECSD"'] := AnECSRpt.ReportStart;
+      Param[0].Mult['"ECED"'] := AnECSRpt.ReportEnd;
+      Param[0].Mult['"ECRY"'] := AnECSRpt.NeedReason;
+      Param[0].Mult['"ECDUZ"'] := userid;
+      CallBroker;
+    end;
+  finally
+    UnlockBroker;
   end;
 end;
 

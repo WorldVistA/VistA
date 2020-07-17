@@ -87,7 +87,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, fHSplit, StdCtrls,
   ExtCtrls, Menus, ORCtrls, ComCtrls, ORFn, rOrders, fODBase, uConst, uCore, uOrders,UBACore,
-  UBAGlobals, VA508AccessibilityManager, fBase508Form;
+  UBAGlobals, VA508AccessibilityManager, fBase508Form, fOrdersPickEvent;
 
 type
   TfrmOrders = class(TfrmHSplit)
@@ -221,6 +221,7 @@ type
     procedure mnuActChartRevClick(Sender: TObject);
     procedure mnuViewDfltShowClick(Sender: TObject);
     procedure mnuViewDfltSaveClick(Sender: TObject);
+    procedure pickEvent(itemList: TStrings; var aReturn: integer);
     procedure mnuViewCurrentClick(Sender: TObject);
     procedure mnuViewResultsHistoryClick(Sender: TObject);
     procedure btnDelayedOrderClick(Sender: TObject);
@@ -532,6 +533,7 @@ begin
     mnuActChartRev.Enabled   := User.EnableVerify;
     popOrderVerify.Enabled   := User.EnableVerify;
     popOrderChartRev.Enabled := User.EnableVerify;
+    mnuActOneStep.Enabled    := User.EnableActOneStep;
     if User.DisableHold then
     begin
       mnuActHold.Visible := False;
@@ -884,6 +886,10 @@ begin
     RedrawActivate(lstOrders.Handle);
     lblOrders.Caption := ViewName;
     lstOrders.Caption := ViewName;
+    if ViewName = 'Medications, Expiring' then
+      lblOrders.Font.Style := [fsbold]
+    else
+      lblOrders.Font.Style := [];
     imgHide.Visible := not ((Filter in [1, 2]) and (DGroup = DGroupAll));
     StatusText('');
   end;
@@ -1088,6 +1094,8 @@ begin
 end;
 
 procedure TfrmOrders.mnuViewDfltShowClick(Sender: TObject);
+var
+  eventIndex: integer;
 begin
   inherited;
   if not CanChangeOrderView then Exit;
@@ -1099,12 +1107,22 @@ begin
   FCurrentView := TOrderView(lstSheets.Items.Objects[lstSheets.ItemIndex]);
   LoadOrderViewDefault(TOrderView(lstSheets.Items.Objects[0]));
   lstSheets.Items[0] := 'C;0^' + TOrderView(lstSheets.Items.Objects[0]).ViewName;
+  if lstSheets.Count>1 then
+  begin
+     pickEvent(lstSheets.Items, eventIndex);
+     lstSheets.ItemIndex := eventIndex;
+  end;
   if lstSheets.ItemIndex > 0 then
     lstSheetsClick(Application)
   else
     RefreshOrderList(FROM_SERVER);
   if HighlightFromMedsTab > 0 then
     HighlightFromMedsTab := 0;
+end;
+
+procedure TfrmOrders.pickEvent(itemList: TStrings; var aReturn: integer);
+begin
+  aReturn := OrdersPickED(itemList);
 end;
 
 procedure TfrmOrders.mnuViewDfltSaveClick(Sender: TObject);
@@ -1132,6 +1150,7 @@ procedure TfrmOrders.mnuViewDetailClick(Sender: TObject);
 var
   i,j,idx: Integer;
   tmpList: TStringList;
+  aTmpList: TStringList;
   BigOrderID: string;
   AnOrderID: string;
 begin
@@ -1159,7 +1178,13 @@ begin
               tmpList.Add('');
               tmpList.Add(StringOfChar('=', 74));
               tmpList.Add('');
-              FastAddStrings(MedAdminHistory(AnOrderID), tmpList);
+              aTmpList := TStringList.Create;
+              try
+                MedAdminHistory(AnOrderID, aTmpList);
+                FastAddStrings(aTmpList, tmpList);
+              finally
+                FreeAndNil(aTmpList);
+              end;
             end;
 
           if CheckOrderGroup(AnOrderID)=1 then  // if it's UD group
@@ -2583,47 +2608,57 @@ begin
       NF_FLAGGED_ORDERS                :
         begin
           ViewAlertedOrders('', STS_FLAGGED, '', False, True, 'All Services, Flagged');
-          AutoUnflagAlertedOrders(Patient.DFN, Piece(Notifications.RecordID, U, 2));
+          if Notifications.Processing then
+            AutoUnflagAlertedOrders(Patient.DFN, Piece(Notifications.RecordID, U, 2));
         end;
       NF_ORDER_REQUIRES_ELEC_SIGNATURE :
         begin
           ViewAlertedOrders('', STS_UNSIGNED, '', False, True, 'All Services, Unsigned');
-          UnsignedOrderAlertFollowup(Piece(Notifications.RecordID, U, 2));
+          if Notifications.Processing then
+            UnsignedOrderAlertFollowup(Piece(Notifications.RecordID, U, 2));
         end;
       NF_IMAGING_REQUEST_CANCEL_HELD   :
         if Pos('HELD', UpperCase(Notifications.Text)) > 0 then
           begin
             ViewAlertedOrders(OrderIEN, STS_HELD, 'IMAGING', False, True, 'Imaging, On Hold');
-            Notifications.Delete;
+            if Notifications.Processing then
+              Notifications.Delete;
           end
         else
           begin
             ViewAlertedOrders(OrderIEN, STS_DISCONTINUED, 'IMAGING', False, True, 'Imaging, Cancelled');
-            Notifications.Delete;
+            if Notifications.Processing then
+              Notifications.Delete;
           end;
       NF_SITE_FLAGGED_RESULTS       :
         begin
           ViewAlertedOrders(OrderIEN, STS_COMPLETE, '', False, True, 'All Services, Site-Flagged');
-          with lstOrders do if Selected[ItemIndex] then
+          if Notifications.Processing then
           begin
-            BigOrderID := TOrder(Items.Objects[ItemIndex]).ID;
-            if Length(Piece(BigOrderID,';',1)) > 0 then
+            with lstOrders do if Selected[ItemIndex] then
             begin
-              ReportBox(ResultOrder(BigOrderID), 'Order Results - ' + BigOrderID, True);
-              Notifications.Delete;
+              BigOrderID := TOrder(Items.Objects[ItemIndex]).ID;
+              if Length(Piece(BigOrderID,';',1)) > 0 then
+              begin
+                ReportBox(ResultOrder(BigOrderID), 'Order Results - ' + BigOrderID, True);
+                Notifications.Delete;
+              end;
             end;
           end;
         end;
       NF_ORDERER_FLAGGED_RESULTS       :
         begin
           ViewAlertedOrders(OrderIEN, STS_COMPLETE, '', False, True, 'All Services, Orderer-Flagged');
-          with lstOrders do if Selected[ItemIndex] then
+          if Notifications.Processing then
           begin
-            BigOrderID := TOrder(Items.Objects[ItemIndex]).ID;
-            if Length(Piece(BigOrderID,';',1)) > 0 then
+            with lstOrders do if Selected[ItemIndex] then
             begin
-              ReportBox(ResultOrder(BigOrderID), 'Order Results - ' + BigOrderID, True);
-              Notifications.Delete;
+              BigOrderID := TOrder(Items.Objects[ItemIndex]).ID;
+              if Length(Piece(BigOrderID,';',1)) > 0 then
+              begin
+                ReportBox(ResultOrder(BigOrderID), 'Order Results - ' + BigOrderID, True);
+                Notifications.Delete;
+              end;
             end;
           end;
         end;
@@ -2632,7 +2667,8 @@ begin
       NF_LAB_ORDER_CANCELED            :
         begin
           ViewAlertedOrders(OrderIEN, STS_DISCONTINUED, 'LABORATORY', False, True, 'Lab, Cancelled');
-          Notifications.Delete;
+          if Notifications.Processing then
+            Notifications.Delete;
         end;
       NF_DNR_EXPIRING                  :
         ViewAlertedOrders('', STS_EXPIRING, '', False, True, 'All Services, Expiring');
@@ -2647,75 +2683,91 @@ begin
       NF_UNVERIFIED_MEDICATION_ORDER   :
         begin
           ViewAlertedOrders(OrderIEN, STS_UNVERIFIED, 'PHARMACY', False, True, 'Medications, Unverified');
-          if StrToIntDef(OrderIEN, 0) > 0 then    {**REV**}
+          if Notifications.Processing then
+          begin
+            if StrToIntDef(OrderIEN, 0) > 0 then    {**REV**}
             begin       // Delete alert if user can't verify
               ValidateOrderAction(OrderIEN, OA_VERIFY, ErrMsg);
               if Pos('COMPLEX-PSI',ErrMsg)>0 then
                 ErrMsg := TX_COMPLEX;
               if Length(ErrMsg) > 0 then Notifications.Delete;
             end;
-          UpdateUnverifiedMedAlerts(Patient.DFN);
+            UpdateUnverifiedMedAlerts(Patient.DFN);
+          end;
         end;
       NF_NEW_ORDER                     :
         begin
           ViewAlertedOrders(OrderIEN, STS_RECENT, '',  False, True, 'All Services, Recent Activity');
-          Notifications.Delete;
+          if Notifications.Processing then
+            Notifications.Delete;
         end;
       NF_UNVERIFIED_ORDER              :
         begin
           ViewAlertedOrders(OrderIEN, STS_UNVERIFIED, '',  False, True, 'All Services, Unverified');
-          if StrToIntDef(OrderIEN, 0) > 0 then    {**REV**}
+          if Notifications.Processing then
+          begin
+            if StrToIntDef(OrderIEN, 0) > 0 then    {**REV**}
             begin       // Delete alert if user can't verify
               ValidateOrderAction(OrderIEN, OA_SIGN, ErrMsg);
               if Pos('COMPLEX-PSI',ErrMsg)>0 then
                 ErrMsg := TX_COMPLEX;
               if Length(ErrMsg) > 0 then Notifications.Delete;
             end;
-          UpdateUnverifiedOrderAlerts(Patient.DFN);
+            UpdateUnverifiedOrderAlerts(Patient.DFN);
+          end;
         end;
       NF_FLAGGED_OI_RESULTS       :
         begin
           ViewAlertedOrders(OrderIEN, STS_COMPLETE, '', False, True, 'All Services, Orderable Item Flagged');
-          with lstOrders do if Selected[ItemIndex] then
+          if Notifications.Processing then
           begin
-            BigOrderID := TOrder(Items.Objects[ItemIndex]).ID;
-            if Length(Piece(BigOrderID,';',1)) > 0 then
+            with lstOrders do if Selected[ItemIndex] then
             begin
-              ReportBox(ResultOrder(BigOrderID), 'Order Results - ' + BigOrderID, True);
-              Notifications.Delete;
+              BigOrderID := TOrder(Items.Objects[ItemIndex]).ID;
+              if Length(Piece(BigOrderID,';',1)) > 0 then
+              begin
+                ReportBox(ResultOrder(BigOrderID), 'Order Results - ' + BigOrderID, True);
+                Notifications.Delete;
+              end;
             end;
           end;
         end;
       NF_DC_ORDER                      :
         begin
           ViewAlertedOrders(OrderIEN, STS_RECENT, '',  False, True, 'All Services, Recent Activity');
-          Notifications.Delete;
+          if Notifications.Processing then
+            Notifications.Delete;
         end;
       NF_DEA_AUTO_DC_CS_MED_ORDER      :
         begin
           ViewAlertedOrders(OrderIEN, STS_DISCONTINUED, 'PHARMACY',  False, True, 'Pharmacy, PKI Issues', 30);
-          Notifications.Delete;
+          if Notifications.Processing then
+            Notifications.Delete;
         end;
       NF_DEA_CERT_REVOKED              :
         begin
           ViewAlertedOrders(OrderIEN, STS_DISCONTINUED, 'PHARMACY',  False, True, 'Pharmacy, PKI Issues', 30);
-          Notifications.Delete;
+          if Notifications.Processing then
+            Notifications.Delete;
         end;
       NF_FLAGGED_OI_EXP_INPT           :
         begin
           ViewAlertedOrders('', STS_EXPIRING, '', False, True, 'All Services, Expiring');
-          UpdateExpiringFlaggedOIAlerts(Patient.DFN, NF_FLAGGED_OI_EXP_INPT);
+          if Notifications.Processing then
+            UpdateExpiringFlaggedOIAlerts(Patient.DFN, NF_FLAGGED_OI_EXP_INPT);
         end;
       NF_FLAGGED_OI_EXP_OUTPT          :
         begin
           ViewAlertedOrders('', STS_EXPIRING, '', False, True, 'All Services, Expiring');
-          UpdateExpiringFlaggedOIAlerts(Patient.DFN, NF_FLAGGED_OI_EXP_OUTPT);
+          if Notifications.Processing then
+            UpdateExpiringFlaggedOIAlerts(Patient.DFN, NF_FLAGGED_OI_EXP_OUTPT);
         end;
       NF_CONSULT_REQUEST_CANCEL_HOLD   :
         begin
           OrderIEN := GetConsultOrderNumber(Notifications.AlertData);
           ViewAlertedOrders(OrderIEN, STS_DISCONTINUED, 'CONSULTS',  False, True, 'Consults, Cancelled');
-          with lstOrders do Selected[ItemIndex] := True;
+          if Notifications.Processing then
+            with lstOrders do Selected[ItemIndex] := True;
         end;
       NF_RX_RENEWAL_REQUEST            :
         begin
@@ -2723,24 +2775,40 @@ begin
           begin
             Notifications.IndOrderDisplay := True;
             ViewAlertedOrders('', STS_FIXED, '',  False, True, 'Outpatient Medications');
-            UpdateIndOrderAlerts();
-          end
+            if Notifications.Processing then
+              UpdateIndOrderAlerts()
+            else
+              Notifications.IndOrderDisplay := False;
+            end
           else
           begin
-             SetOrderView(STS_ACTIVE, DGroupAll, 'Active Orders (includes Pending & Recent Activity) - ALL SERVICES', False);
+            SetOrderView(STS_ACTIVE, DGroupAll, 'Active Orders (includes Pending & Recent Activity) - ALL SERVICES', False);
           end;
         end;
       NF_LAPSED_ORDER                  :
         begin
           Notifications.IndOrderDisplay := True;
           ViewAlertedOrders('', STS_FIXED, '',  False, True, 'Lapsed (never processed) Orders - ALL SERVICES');
-          UpdateIndOrderAlerts();
+          if Notifications.Processing then
+            UpdateIndOrderAlerts()
+          else
+            Notifications.IndOrderDisplay := False;
         end;
       NF_RTC_CANCEL_ORDERS:
         begin
           ViewAlertedOrders('', STS_DISCONTINUED, 'CLINIC SCHEDULING', False, True, 'Cancel Appointment Request orders');
-          Notifications.Delete;
+          if Notifications.Processing then
+            Notifications.Delete;
         end;
+      NF_HIRISK_ORDER             :
+        begin
+          Notifications.IndOrderDisplay := True;
+          ViewAlertedOrders('', STS_FIXED, '',  False, True, 'Potentially Harmful Orders - SINGLE SERVICE');
+          if Notifications.Processing then
+            UpdateIndOrderAlerts()
+          else
+            Notifications.IndOrderDisplay := False;
+        end
     else mnuViewUnsignedClick(Self);
     end;
 end;
@@ -2765,22 +2833,25 @@ begin
     DGroups.Free;
   end;
   SetOrderView(Status, ADGroup, Title, True, aDaysOverride);
-  with lstOrders do
+  if Notifications.Processing then
+  begin
+    with lstOrders do
     begin
       if Length(OrderIEN) > 0 then
-        begin
-          for i := 0 to Items.Count-1 do
-            if Piece(TOrder(Items.Objects[i]).ID, ';', 1) = OrderIEN then
-              begin
-                ItemIndex := i;
-                Selected[i] := True;
-                break;
-              end;
-        end
+      begin
+        for i := 0 to Items.Count-1 do
+          if Piece(TOrder(Items.Objects[i]).ID, ';', 1) = OrderIEN then
+          begin
+            ItemIndex := i;
+            Selected[i] := True;
+            break;
+          end;
+      end
       else for i := 0 to Items.Count-1 do
         if Piece(TOrder(Items.Objects[i]).ID, ';', 1) <> '0' then Selected[i] := True;
       if SelCount = 0 then Notifications.Delete;
     end;
+  end;
 end;
 
 procedure TfrmOrders.pnlRightResize(Sender: TObject);
@@ -3504,6 +3575,7 @@ begin
   inherited;
   //force horizontal scrollbar
   //lstOrders.ScrollWidth := lstOrders.ClientWidth+1000; //CQ6170
+  //frmFrame.FormResize(frmFrame); // forces scroll bar if missing
 end;
 
 procedure TfrmOrders.hdrOrdersMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);

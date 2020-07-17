@@ -1,0 +1,2 @@
+inherited fraCoverSheetDisplayPanel_CPRS_ActiveMeds: TfraCoverSheetDisplayPanel_CPRS_ActiveMeds
+end

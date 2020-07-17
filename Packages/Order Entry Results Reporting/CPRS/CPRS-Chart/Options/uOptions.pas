@@ -34,7 +34,7 @@ const
 
 implementation
 
-uses rCore, fRptBox;
+uses rCore, fRptBox, VAUtils;
 
 function RelativeDate(entry: string): integer;
 // return the number of days for the entry  (e.g. -3 for T - 3)

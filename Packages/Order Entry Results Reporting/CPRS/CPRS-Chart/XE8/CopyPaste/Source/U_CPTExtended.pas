@@ -34,79 +34,50 @@ uses
 
 Type
   // -------- OverWrite Classes --------//
-
-  /// <summary><para>Extend the TButton class</para></summary>
   TCollapseBtn = class(TButton)
-  public
-    procedure Click; override;
+    public
+      procedure Click; override;
   end;
 
-  /// <summary><para>Extend the TListBox class</para></summary>
   TSelectorBox = class(TListBox)
   private
-    /// <summary>Color of the selector</summary>
     fSelectorColor: TColor;
-    /// <summary><para>Custom draw procedure</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Control">Control<para><b>Type: </b><c>TWinControl</c></para></param>
-    /// <param name="Index">Index<para><b>Type: </b><c>Integer</c></para></param>
-    /// <param name="Rect">Rect<para><b>Type: </b><c>TRect</c></para></param>
-    /// <param name="State">State<para><b>Type: </b><c>TOwnerDrawState</c></para></param>
+    fLinkedRichEdit: TRichEdit;
     procedure OurDrawItem(Control: TWinControl; Index: Integer; Rect: TRect;
       State: TOwnerDrawState);
-    /// <summary><para>Used to change the color when focus is set</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Message">Message<para><b>Type: </b><c>TWMSetFocus</c></para></param>
     procedure WMSetFocus(var Message: TWMSetFocus); message WM_SETFOCUS;
-    /// <summary><para>Used to change the color when focus is killed</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Message">Message<para><b>Type: </b><c>TWMSetFocus</c></para></param>
     procedure WMKilFocus(var Message: TWMKillFocus); message WM_KILLFOCUS;
+    procedure CMFontChanged(var Message: TMessage); message CM_FONTCHANGED;
   public
-    /// <summary><para>used to fire off the correct selection</para><para><b>Type: </b><c>Integer</c></para></summary>
     procedure Click; override;
-    /// <summary><para>constructor</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="AOwner">AOwner<para><b>Type: </b><c>TComponent</c></para></param>
     constructor Create(AOwner: TComponent); override;
     Property SelectorColor: TColor Read fSelectorColor write fSelectorColor;
+    Property LinkedRichEdit: TRichEdit read fLinkedRichEdit write fLinkedRichEdit;
   end;
 
-  /// <summary>The collection item for the MonitorCollection</summary>
   TTrackOnlyItem = class(TCollectionItem)
   private
-    /// <summary>The collection object to monitor</summary>
     FObject: TCustomEdit;
-    /// <summary>Pointer to the original WndProc</summary>
     FOurOrigWndProc: TWndMethod;
-    /// <summary><para>Setter for TrackObject which also hooks into the object</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Value">The object to monitor<para><b>Type: </b><c>TCustomEdit</c></para></param>
     procedure SetTrackObject(const Value: TCustomEdit);
-    /// <summary><para>Custom WndProc</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Message">Message<para><b>Type: </b><c>TMessage</c></para></param>
     procedure OurWndProc(var Message: TMessage);
   protected
-    /// <summary><para>Override for GetDisplayName</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <returns><para><b>Type: </b><c>String</c></para> </returns>
     function GetDisplayName: String; override;
     procedure SetCollection(Value: TCollection); override;
   public
-    /// <summary><para>Assigns the customedit to the trackitem</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="Source">Source<para><b>Type: </b><c>TPersistent</c></para></param>
     procedure Assign(Source: TPersistent); override;
     Property TrackObjectOrigWndProc: TWndMethod read FOurOrigWndProc
       write FOurOrigWndProc;
   published
-    /// <summary><para>The TCustomEdit we want to monitor</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="TrackItem">TrackItem<para><b>Type: </b><c>TTrackOnlyItem</c></para></param>
     property TrackObject: TCustomEdit read FObject write SetTrackObject;
   end;
 
-  /// <summary><para>The collection that will hold the items we want to track</para></summary>
   TTrackOnlyCollection = class(TCollection)
   private
     FOwner: TComponent;
     procedure SetObjectToMonitor(TrackItem: TTrackOnlyItem);
-    // procedure RemoveItem(Item: TCollectionItem); override;
   protected
     function GetOwner: TPersistent; override;
-    // function GetItem(Index: Integer): TTrackOnlyItem;
     procedure SetItem(Index: Integer; Value: TTrackOnlyItem);
     procedure Update(Item: TCollectionItem); override;
   public
@@ -122,37 +93,24 @@ Type
 
   // -------- Threads --------//
 
-  /// <summary>Thread used to task off the lookup when pasting</summary>
   TCopyPasteThread = class(TThread)
   private
-    /// <summary><para>Lookup item's <see cref="U_CPTAppMonitor|TCopyApplicationMonitor" /></para><para><b>Type: </b><c>TCopyApplicationMonitor</c></para></summary>
     fAppMonitor: TComponent;
 
     fEdtMonitor: TObject;
 
-    /// <summary><para>Lookup item's IEN</para><para><b>Type: </b><c>Integer</c></para></summary>
     fItemIEN: Int64;
-    /// <summary><para>Lookup item's copy/paste format details</para><para><b>Type: </b><c>String</c></para></summary>
     fPasteDetails: String;
-    /// <summary><para>Lookup item's text</para><para><b>Type: </b><c>String</c></para></summary>
     fPasteText: String;
 
     fClipInfo: tClipInfo;
 
   protected
-    /// <summary><para>Call to execute the thread</para></summary>
     procedure Execute; override;
   public
-    /// <summary><para>Constructor</para><para><b>Type: </b><c>Integer</c></para></summary>
-    /// <param name="PasteText">Pasted text<para><b>Type: </b><c>String</c></para></param>
-    /// <param name="PasteDetails">Pasted details<para><b>Type: </b><c>String</c></para></param>
-    /// <param name="ItemIEN">Documents IEN that text was pasted into<para><b>Type: </b><c>Integer</c></para></param>
-    /// <param name="EditMonitor">Documents <see cref="U_CPTEditMonitor|TCopyEditMonitor" /> that text was pasted into<para><b>Type: </b><c>TComponent</c></para></param>
     constructor Create(PasteText, PasteDetails: string; ItemIEN: Int64;
       AppMonitor: TComponent; EditMonitor: TObject; ClipInfo: tClipInfo);
-    /// <summary><para>Destructor</para></summary>
     destructor Destroy; override;
-    /// <summary><para>Item IEN that this thread belongs to</para><para><b>Type: </b><c>Integer</c></para></summary>
     property TheadOwner: Int64 read fItemIEN;
   end;
 
@@ -161,7 +119,8 @@ Type
 implementation
 
 Uses
-  U_CPTAppMonitor, U_CPTEditMonitor, U_CPTPasteDetails;
+  U_CPTAppMonitor, U_CPTEditMonitor, U_CPTPasteDetails,
+  WinApi.RichEdit, System.SyncObjs;
 
 {$REGION 'Thread'}
 
@@ -193,20 +152,16 @@ var
   begin
     with TCopyApplicationMonitor(fAppMonitor) do
     begin
+      TCopyApplicationMonitor(fAppMonitor).CriticalSection.Enter;
+    try
       ALength := Length(fCopyPasteThread);
       for x := Index + 1 to ALength - 1 do
         fCopyPasteThread[x - 1] := fCopyPasteThread[x];
       SetLength(fCopyPasteThread, ALength - 1);
+    finally
+     TCopyApplicationMonitor(fAppMonitor).CriticalSection.Leave;
+    end;
 
-      { ALength := Length(fCopyPasteThread);
-        Assert(ALength > 0);
-        Assert(Index < ALength);
-        TailElements := ALength - Index;
-        if TailElements > 0 then
-        Move(CopyPasteThread[Index + 1], CopyPasteThread[Index],
-        SizeOf(CopyPasteThread) * TailElements);
-
-        SetLength(CopyPasteThread, ALength - 1); }
     end;
   end;
 
@@ -214,7 +169,8 @@ begin
   inherited;
   with TCopyApplicationMonitor(fAppMonitor) do
   begin
-
+    TCopyApplicationMonitor(fAppMonitor).CriticalSection.Enter;
+    try
     for I := high(fCopyPasteThread) downto low(fCopyPasteThread) do
     begin
       if fCopyPasteThread[I] = Self then
@@ -223,6 +179,9 @@ begin
         LogText('THREAD', 'Thread deleted');
       end;
     end;
+    Finally
+      TCopyApplicationMonitor(fAppMonitor).CriticalSection.Leave;
+    end;
 
   end;
 
@@ -230,16 +189,10 @@ end;
 
 procedure TCopyPasteThread.Execute;
 begin
-  TCopyApplicationMonitor(fAppMonitor).CriticalSection.Acquire;
-  try
     TCopyApplicationMonitor(fAppMonitor).LogText('THREAD',
       'Looking for matches');
     TCopyApplicationMonitor(fAppMonitor).PasteToCopyPasteClipboard(fPasteText,
       fPasteDetails, fItemIEN, fClipInfo);
-
-  finally
-    TCopyApplicationMonitor(fAppMonitor).CriticalSection.Release;
-  end;
 end;
 
 {$ENDREGION}
@@ -295,6 +248,7 @@ begin
       Brush.Color := Self.SelectorColor;
 
     FillRect(Rect);
+
     TextOut(Rect.Left, Rect.Top, Self.Items[Index]);
     if odFocused In State then
     begin
@@ -303,6 +257,38 @@ begin
     end;
   end;
 end;
+
+ procedure TSelectorBox.CMFontChanged(var Message: TMessage);
+ var
+    ResetMask: Integer;
+ begin
+   inherited;
+   //grab the font
+   canvas.font := font;
+   with Self.Canvas do
+   begin
+    if ItemHeight <> TextHeight('Az') then
+    begin
+      //If font adjusted then update the item height
+      ItemHeight := TextHeight('Az');
+      Invalidate;
+      if Assigned(fLinkedRichEdit) then
+      begin
+        ResetMask := fLinkedRichEdit.Perform(EM_GETEVENTMASK, 0, 0);
+        fLinkedRichEdit.Perform(EM_SETEVENTMASK, 0, 0);
+        fLinkedRichEdit.Perform(WM_SETREDRAW, Ord(False), 0);
+        try
+          fLinkedRichEdit.SelAttributes.Size := font.Size;
+          fLinkedRichEdit.font.Size := font.Size;
+        finally
+          fLinkedRichEdit.Perform(WM_SETREDRAW, Ord(true), 0);
+          InvalidateRect(fLinkedRichEdit.Handle, NIL, true);
+          fLinkedRichEdit.Perform(EM_SETEVENTMASK, 0, ResetMask);
+        end;
+      end;
+    end;
+   end;
+ end;
 
 {$ENDREGION}
 {$REGION 'TTrackOnlyItem'}
@@ -368,9 +354,9 @@ begin
   if Assigned(TTrackOnlyCollection(Collection).FOwner) then
   begin
     if Assigned(TCopyEditMonitor(TTrackOnlyCollection(Collection).FOwner)
-      .FCopyMonitor) then
+      .CopyMonitor) then
     begin
-      if TCopyEditMonitor(TTrackOnlyCollection(Collection).FOwner).FCopyMonitor.Enabled
+      if TCopyEditMonitor(TTrackOnlyCollection(Collection).FOwner).CopyMonitor.Enabled
       then
       begin
         case Message.Msg of

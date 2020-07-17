@@ -1,0 +1,2 @@
+inherited fraCoverSheetDisplayPanel_CPRS_Postings: TfraCoverSheetDisplayPanel_CPRS_Postings
+end

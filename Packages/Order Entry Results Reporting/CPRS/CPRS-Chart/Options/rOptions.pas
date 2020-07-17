@@ -4,8 +4,8 @@ interface
 
 uses SysUtils, Classes, ORNet, ORFn, uCore, rCore, rTIU, rConsults;
 
-function rpcGetNotifications: TStrings;
-function rpcGetOrderChecks: TStrings;
+procedure rpcGetNotifications(aResults: TStrings);
+procedure rpcGetOrderChecks(aResults: TStrings);
 function rpcGetNotificationDefaults: String;
 function rpcGetSurrogateInfo: String;
 procedure rpcCheckSurrogate(surrogate: Int64; var ok: boolean; var msg: string);
@@ -17,17 +17,17 @@ procedure rpcSetOrderChecks(aList: TStringList);
 procedure rpcSetOtherStuff(aString: String);
 procedure rpcSetCopyPaste(aString: String);
 function rpcGetCopyPaste: String;
-function rpcGetOtherTabs: TStrings;
+procedure rpcGetOtherTabs(aResults: TStrings);
 function rpcGetOther: String;
 procedure rpcSetOther(info: String);
-function rpcGetCosigners(const StartFrom: string; Direction: Integer): TStrings;
+procedure rpcGetCosigners(const StartFrom: string; Direction: Integer; aResults: TStrings);
 function rpcGetDefaultCosigner: String;
 procedure rpcSetDefaultCosigner(value: Int64);
 function rpcGetSubject: boolean;
 procedure rpcSetSubject(value: boolean);
-function rpcGetClasses: TStrings;
-function rpcGetTitlesForClass(value: integer; const StartFrom: string; Direction: Integer): TStrings;
-function rpcGetTitlesForUser(value: integer): TStrings;
+procedure rpcGetClasses(aResults: TStrings);
+procedure rpcGetTitlesForClass(value: integer; const StartFrom: string; Direction: Integer; aResults: TStrings);
+procedure rpcGetTitlesForUser(value: integer; aResults: TStrings);
 function rpcGetTitleDefault(value: integer): integer;
 procedure rpcSaveDocumentDefaults(classvalue, titledefault: integer; aList: TStrings);
 
@@ -46,22 +46,24 @@ procedure rpcSetReminders(aList: TStringList);
 function rpcGetListOrder: Char;
 procedure rpcGetClinicUserDays(var StartDays: integer; var StopDays: integer);
 procedure rpcGetClinicDefaults(var mon, tues, wed, thurs, fri, sat, sun: integer);
-procedure rpcGetListSourceDefaults(var provider, treating, list, ward: integer);
+procedure rpcGetListSourceDefaults(var provider, treating, list, ward, pcmm: integer);
 procedure rpcSetClinicDefaults(StartDays, StopDays, mon, tues, wed, thurs, fri, sat, sun: integer);
-procedure rpcSetPtListDefaults(PLSource, PLSort: Char; prov, spec, team, ward: integer);
+procedure rpcSetPtListDefaults(PLSource: string; PLSort: Char; prov, spec, team, ward, pcmm: integer);
 
 procedure rpcGetPersonalLists(Dest: TStrings);
 procedure rpcGetAllTeams(Dest: TStrings);
 procedure rpcGetTeams(Dest: TStrings);
 procedure rpcGetATeams(Dest: TStrings);
+procedure rpcGetPcmmTeams(Dest: TStrings);
 procedure rpcDeleteList(aString: String);
 function rpcNewList(aString: String; Visibility: integer): String;
 procedure rpcSaveListChanges(aList: TStrings; aListIEN, aListVisibility: integer);
 procedure rpcListUsersByTeam(Dest: TStrings; teamid: integer);
+procedure rpcListUsersByPcmmTeam(Dest: TStrings; teamid: integer);
 procedure rpcRemoveList(aListIEN: integer);
 procedure rpcAddList(aListIEN: integer);
 
-function rpcGetCombo: TStrings;
+procedure rpcGetCombo(aResults: TStrings);
 procedure rpcSetCombo(aList: TStrings);
 
 procedure rpcGetDefaultReportsSetting(var int1: integer; var int2: integer; var int3: integer);
@@ -73,6 +75,10 @@ procedure rpcRetrieveDefaultSetting(var int1: integer; var int2: integer; var in
 
 procedure rpcGetRangeForMeds(var startDt, stopDt: TFMDateTime);
 procedure rpcPutRangeForMeds(TheVal: string);
+procedure rpcGetRangeForMedsIn(var startDt, stopDt: TFMDateTime);
+procedure rpcPutRangeForMedsIn(TheVal: string);
+procedure rpcGetRangeForMedsOp(var startDt, stopDt: TFMDateTime);
+procedure rpcPutRangeForMedsOp(TheVal: string);
 procedure rpcGetRangeForEncs(var StartDays, StopDays: integer; DefaultParams: Boolean);
 procedure rpcPutRangeForEncs(StartDays, StopDays: string);
 procedure rpcGetEncFutureDays(var FutureDays: string);
@@ -81,35 +87,34 @@ implementation
 
 //..............................................................................
 
-function rpcGetNotifications: TStrings;
+procedure rpcGetNotifications(aResults: TStrings);
 begin
-  CallV('ORWTPP GETNOT', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  result :=RPCBrokerV.Results;
+  CallVistA('ORWTPP GETNOT', [nil], aResults);
+  MixedCaseList(aResults);
 end;
 
-function rpcGetOrderChecks: TStrings;
+procedure rpcGetOrderChecks(aResults: TStrings);
 begin
-  CallV('ORWTPP GETOC', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  result :=RPCBrokerV.Results;
+  CallVistA('ORWTPP GETOC', [nil], aResults);
+  MixedCaseList(aResults);
 end;
 
 function rpcGetNotificationDefaults: String;
 begin
-  result := sCallV('ORWTPP GETNOTO', [nil]);
+  CallVistA('ORWTPP GETNOTO', [nil], Result);
 end;
 
 function rpcGetSurrogateInfo: String;
 begin
-  result := MixedCase(sCallV('ORWTPP GETSURR', [nil]));
+  CallVistA('ORWTPP GETSURR', [nil], Result);
+  Result := MixedCase(Result);
 end;
 
 procedure rpcCheckSurrogate(surrogate: Int64; var ok: boolean; var msg: string);
 var
   value: string;
 begin
-  value := sCallV('ORWTPP CHKSURR', [surrogate]);
+  CallVistA('ORWTPP CHKSURR', [surrogate], value);
   ok := Piece(value, '^', 1) = '1';
   msg := Piece(value, '^', 2);
 end;
@@ -123,126 +128,112 @@ procedure rpcSetSurrogateInfo(aString: String; var ok: boolean; var msg: string)
 var
   value: string;
 begin
-  value := sCallV('ORWTPP SAVESURR', [aString]);
+  CallVistA('ORWTPP SAVESURR', [aString], value);
   ok := Piece(value, '^', 1) = '1';
   msg := Piece(value, '^', 2);
 end;
 
-
 procedure rpcClearNotifications;
 begin
-  CallV('ORWTPP CLEARNOT', [nil]);
+  CallVistA('ORWTPP CLEARNOT', [nil]);
 end;
 
 procedure rpcSetNotifications(aList: TStringList);
 begin
-  CallV('ORWTPP SAVENOT', [aList]);
+  CallVistA('ORWTPP SAVENOT', [aList]);
 end;
 
 procedure rpcSetOrderChecks(aList: TStringList);
 begin
-  CallV('ORWTPP SAVEOC', [aList]);
+  CallVistA('ORWTPP SAVEOC', [aList]);
 end;
 
 procedure rpcSetOtherStuff(aString: String);
 begin
-  CallV('ORWTPP SAVENOTO', [aString]);
+  CallVistA('ORWTPP SAVENOTO', [aString]);
 end;
 
 procedure rpcSetCopyPaste(aString: String);
 begin
-  CallV('ORWTIU SVCPIDNT', [aString]);
+  CallVistA('ORWTIU SVCPIDNT', [aString]);
 end;
 
 //..............................................................................
 
 function rpcGetCopyPaste: String;
 begin
- Result := sCallV('ORWTIU LDCPIDNT', [nil]);
+  CallVistA('ORWTIU LDCPIDNT', [nil], Result);
 end;
 
-function rpcGetOtherTabs: TStrings;
+procedure rpcGetOtherTabs(aResults: TStrings);
 begin
-  CallV('ORWTPO GETTABS', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  result :=RPCBrokerV.Results;
+  CallVistA('ORWTPO GETTABS', [nil], aResults);
+  MixedCaseList(aResults);
 end;
 
 function rpcGetOther: String;
 begin
-  result := sCallV('ORWTPP GETOTHER', [nil]);
+  CallVistA('ORWTPP GETOTHER', [nil], Result);
 end;
 
 procedure rpcSetOther(info: String);
 begin
-  CallV('ORWTPP SETOTHER', [info]);
+  CallVistA('ORWTPP SETOTHER', [info]);
 end;
 
-function rpcGetCosigners(const StartFrom: string; Direction: Integer): TStrings;
+procedure rpcGetCosigners(const StartFrom: string; Direction: Integer; aResults: TStrings);
 begin
-  CallV('ORWTPP GETCOS', [StartFrom, Direction]);
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWTPP GETCOS', [StartFrom, Direction], aResults);
+  MixedCaseList(aResults);
 end;
 
 function rpcGetDefaultCosigner: String;
 begin
-  result := sCallV('ORWTPP GETDCOS', [nil]);
+  CallVistA('ORWTPP GETDCOS', [nil], Result);
 end;
 
 procedure rpcSetDefaultCosigner(value: Int64);
 begin
-  CallV('ORWTPP SETDCOS', [value])
+  CallVistA('ORWTPP SETDCOS', [value])
 end;
 
 function rpcGetSubject: boolean;
 var
   value: string;
 begin
-  value := sCallV('ORWTPP GETSUB', [nil]);
-  if value = '1' then result := true
-  else result := false;
+  CallVistA('ORWTPP GETSUB', [nil], value);
+  Result := (value = '1');
 end;
 
 procedure rpcSetSubject(value: boolean);
 begin
-  CallV('ORWTPP SETSUB', [value])
+  CallVistA('ORWTPP SETSUB', [value])
 end;
 
-function rpcGetClasses: TStrings;
+procedure rpcGetClasses(aResults: TStrings);
 begin
-  CallV('ORWTPN GETCLASS', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  result :=RPCBrokerV.Results;
+  CallVistA('ORWTPN GETCLASS', [nil], aResults);
+  MixedCaseList(aResults);
 end;
 
-function rpcGetTitlesForClass(value: integer; const StartFrom: string; Direction: Integer): TStrings;
+procedure rpcGetTitlesForClass(value: integer; const StartFrom: string; Direction: Integer; aResults: TStrings);
 begin
-(*  case value of
-    CLS_PROGRESS_NOTES: CallV('TIU LONG LIST OF TITLES', [value, StartFrom, Direction]);
-  else
-    CallV('ORWTPN GETTC', [value, StartFrom, Direction]);   //****** original
-  end;*)
-  CallV('TIU LONG LIST OF TITLES', [value, StartFrom, Direction]);
-  //MixedCaseList(RPCBrokerV.Results);
-  result :=RPCBrokerV.Results;
+  CallVistA('TIU LONG LIST OF TITLES', [value, StartFrom, Direction], aResults);
 end;
 
-function rpcGetTitlesForUser(value: integer): TStrings;
+procedure rpcGetTitlesForUser(value: integer; aResults: TStrings);
 begin
-  CallV('ORWTPP GETTU', [value]);
-  //MixedCaseList(RPCBrokerV.Results);
-  result :=RPCBrokerV.Results;
+  CallVistA('ORWTPP GETTU', [value], aResults);
 end;
 
 function rpcGetTitleDefault(value: integer): integer;
 begin
-  result := strtointdef(sCallV('ORWTPP GETTD', [value]), -1);
+  CallVistA('ORWTPP GETTD', [value], Result, -1);
 end;
 
 procedure rpcSaveDocumentDefaults(classvalue, titledefault: integer; aList: TStrings);
 begin
-  CallV('ORWTPP SAVET', [classvalue, titledefault, aList]);
+  CallVistA('ORWTPP SAVET', [classvalue, titledefault, aList]);
 end;
 
 //..............................................................................
@@ -251,7 +242,7 @@ procedure rpcGetLabDays(var InpatientDays: integer; var OutpatientDays:integer);
 var
   values: string;
 begin
-  values := sCallV('ORWTPO CSLABD', [nil]);
+  CallVistA('ORWTPO CSLABD', [nil], values);
   InpatientDays := strtointdef(Piece(values, '^', 1), 0);
   OutpatientDays := strtointdef(Piece(values, '^', 2), 0);
 end;
@@ -260,7 +251,7 @@ procedure rpcGetLabUserDays(var InpatientDays: integer; var OutpatientDays: inte
 var
   values: string;
 begin
-  values := sCallV('ORWTPP CSLAB', [nil]);
+  CallVistA('ORWTPP CSLAB', [nil], values);
   InpatientDays := -strtointdef(Piece(values, '^', 1), 0);
   OutpatientDays := -strtointdef(Piece(values, '^', 2), 0);
 end;
@@ -269,7 +260,7 @@ procedure rpcGetApptDays(var StartDays: integer; var StopDays: integer);
 var
   values, start, stop: string;
 begin
-  values := sCallV('ORWTPD1 GETCSDEF', [nil]);
+  CallVistA('ORWTPD1 GETCSDEF', [nil], values);
   start := Piece(values, '^', 1);
   stop  := Piece(values, '^', 2);
   StartDays := strtointdef(Piece(start, 'T', 2), 0);
@@ -280,7 +271,7 @@ procedure rpcGetApptUserDays(var StartDays: integer; var StopDays: integer);
 var
   values, start, stop: string;
 begin
-  values := sCallV('ORWTPD1 GETCSRNG', [nil]);
+  CallVistA('ORWTPD1 GETCSRNG', [nil], values);
   start := Piece(values, '^', 1);
   stop  := Piece(values, '^', 2);
   StartDays := strtointdef(Piece(start, 'T', 2), 0);
@@ -296,14 +287,14 @@ begin
   values := values + inttostr(OutpatientDays) + '^';
   values := values + inttostr(StartDays) + '^';
   values := values + inttostr(StopDays) + '^';
-  CallV('ORWTPD1 PUTCSRNG', [values]);
+  CallVistA('ORWTPD1 PUTCSRNG', [values]);
 end;
 
 procedure rpcGetImagingDays(var MaxNum: integer; var StartDays: integer; var StopDays: integer);
 var
   values, max, start, stop: string;
 begin
-  values := sCallV('ORWTPO GETIMGD', [nil]);
+  CallVistA('ORWTPO GETIMGD', [nil], values);
   //values := 'T-120;T;;;100';
   start := Piece(values, ';', 1);
   stop  := Piece(values, ';', 2);
@@ -317,7 +308,7 @@ procedure rpcGetImagingUserDays(var MaxNum: integer; var StartDays: integer; var
 var
   values, max, start, stop: string;
 begin
-  values := sCallV('ORWTPP GETIMG', [nil]);
+  CallVistA('ORWTPP GETIMG', [nil], values);
   //values := 'T-180;T;;;15';
   start := Piece(values, ';', 1);
   stop  := Piece(values, ';', 2);
@@ -329,35 +320,37 @@ end;
 
 procedure rpcSetImagingDays(MaxNum, StartDays, StopDays: integer);
 begin
-  CallV('ORWTPP SETIMG', [MaxNum, StartDays, StopDays]);
+  CallVistA('ORWTPP SETIMG', [MaxNum, StartDays, StopDays]);
 end;
 
 //..............................................................................
 
 procedure rpcGetReminders(Dest: TStrings);
 begin
-  CallV('ORWTPP GETREM', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWTPP GETREM', [nil], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure rpcSetReminders(aList: TStringList);
 begin
-  CallV('ORWTPP SETREM', [aList]);
+  CallVistA('ORWTPP SETREM', [aList]);
 end;
 
 //..............................................................................
 
 function rpcGetListOrder: Char;
+var
+  aResult: String;
 begin
-  result := CharAt(sCallV('ORWTPP SORTDEF', [nil]), 1);
+  CallVistA('ORWTPP SORTDEF', [nil], aResult);
+  Result := CharAt(aResult, 1);
 end;
 
 procedure rpcGetClinicUserDays(var StartDays: integer; var StopDays: integer);
 var
   values, start, stop: string;
 begin
-  values := sCallV('ORWTPP CLRANGE', [nil]);
+  CallVistA('ORWTPP CLRANGE', [nil], values);
   start := Piece(values, '^', 1);
   stop  := Piece(values, '^', 2);
   StartDays := strtointdef(Piece(start, 'T', 2), 0);
@@ -368,7 +361,7 @@ procedure rpcGetClinicDefaults(var mon, tues, wed, thurs, fri, sat, sun: integer
 var
   values: string;
 begin
-  values := sCallV('ORWTPP CLDAYS', [nil]);
+  CallVistA('ORWTPP CLDAYS', [nil], values);
   mon    := strtointdef(Piece(values, '^', 1), 0);
   tues   := strtointdef(Piece(values, '^', 2), 0);
   wed    := strtointdef(Piece(values, '^', 3), 0);
@@ -378,15 +371,16 @@ begin
   sun    := strtointdef(Piece(values, '^', 7), 0);
 end;
 
-procedure rpcGetListSourceDefaults(var provider, treating, list, ward: integer);
+procedure rpcGetListSourceDefaults(var provider, treating, list, ward, pcmm: integer);
 var
   values: string;
 begin
-  values := sCallV('ORWTPP LSDEF', [nil]);
+  CallVistA('ORWTPP LSDEF', [nil], values);
   provider := strtointdef(Piece(values, '^', 1), 0);
   treating := strtointdef(Piece(values, '^', 2), 0);
   list     := strtointdef(Piece(values, '^', 3), 0);
   ward     := strtointdef(Piece(values, '^', 4), 0);
+  pcmm     := strtointdef(Piece(values, '^', 6), 0);
 end;
 
 procedure rpcSetClinicDefaults(StartDays, StopDays, mon, tues, wed, thurs, fri, sat, sun: integer);
@@ -403,10 +397,11 @@ begin
   values := values + inttostr(fri) + '^';
   values := values + inttostr(sat) + '^';
   values := values + inttostr(sun) + '^';
-  CallV('ORWTPP SAVECD', [values]);
+  CallVistA('ORWTPP SAVECD', [values]);
 end;
 
-procedure rpcSetPtListDefaults(PLSource, PLSort: Char; prov, spec, team, ward: integer);
+procedure rpcSetPtListDefaults(PLSource: string; PLSort: Char; prov, spec, team, ward, pcmm: integer);
+// TDP - Modified 5/27/2014 - Changed PLSource to string and added pcmm input
 var
   values: string;
 begin
@@ -417,84 +412,91 @@ begin
   values := values + inttostr(spec) + '^';
   values := values + inttostr(team) + '^';
   values := values + inttostr(ward) + '^';
-  CallV('ORWTPP SAVEPLD', [values]);
+  values := values + inttostr(pcmm) + '^'; // TDP - Added 5/27/2014
+  CallVistA('ORWTPP SAVEPLD', [values]);
 end;
 
 //..............................................................................
 
 procedure rpcGetPersonalLists(Dest: TStrings);
 begin
-  CallV('ORWTPP PLISTS', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWTPP PLISTS', [nil], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure rpcGetAllTeams(Dest: TStrings);
 begin
-  CallV('ORWTPP PLTEAMS', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWTPP PLTEAMS', [nil], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure rpcGetTeams(Dest: TStrings);
 begin
-  CallV('ORWTPP TEAMS', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWTPP TEAMS', [nil], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure rpcGetATeams(Dest: TStrings);
 begin
-  CallV('ORWTPT ATEAMS', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWTPT ATEAMS', [nil], Dest);
+  MixedCaseList(Dest);
+end;
+
+procedure rpcGetPcmmTeams(Dest: TStrings);
+begin
+  CallVistA('ORWTPP PCMTEAMS', [nil], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure rpcDeleteList(aString: String);
 begin
-  CallV('ORWTPP DELLIST', [aString]);
+  CallVistA('ORWTPP DELLIST', [aString]);
 end;
 
 function rpcNewList(aString: String; Visibility: integer): String;
 begin
-  result := sCallV('ORWTPP NEWLIST', [aString, Visibility]);
-  result := MixedCase(result);
+  CallVistA('ORWTPP NEWLIST', [aString, Visibility], Result);
+  Result := MixedCase(Result);
 end;
 
 procedure rpcSaveListChanges(aList: TStrings; aListIEN, aListVisibility: integer);
 begin
-  CallV('ORWTPP SAVELIST', [aList, aListIEN, aListVisibility]);
+  CallVistA('ORWTPP SAVELIST', [aList, aListIEN, aListVisibility]);
 end;
 
 procedure rpcListUsersByTeam(Dest: TStrings; teamid: integer);
 begin
-  CallV('ORWTPT GETTEAM', [teamid]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWTPT GETTEAM', [teamid], Dest);
+  MixedCaseList(Dest);
+end;
+
+procedure rpcListUsersByPcmmTeam(Dest: TStrings; teamid: integer);
+begin
+  CallVistA('ORWTPT GETPTEAM', [teamid], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure rpcRemoveList(aListIEN: integer);
 begin
-  CallV('ORWTPP REMLIST', [aListIEN]);
+  CallVistA('ORWTPP REMLIST', [aListIEN]);
 end;
 
 procedure rpcAddList(aListIEN: integer);
 begin
-  CallV('ORWTPP ADDLIST', [aListIEN]);
+  CallVistA('ORWTPP ADDLIST', [aListIEN]);
 end;
 
 //..............................................................................
 
-function rpcGetCombo: TStrings;
+procedure rpcGetCombo(aResults: TStrings);
 begin
-  CallV('ORWTPP GETCOMBO', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  result := RPCBrokerV.Results;
+  CallVistA('ORWTPP GETCOMBO', [nil], aResults);
+  MixedCaseList(aResults);
 end;
 
 procedure rpcSetCombo(aList: TStrings);
 begin
-  CallV('ORWTPP SETCOMBO', [aList]);
+  CallVistA('ORWTPP SETCOMBO', [aList]);
 end;
 
 //..............................................................................
@@ -504,7 +506,7 @@ var
   values: string;
   startoffset,stopoffset: string;
 begin
-  values := sCallV('ORWTPD GETDFLT', [nil]);
+  CallVistA('ORWTPD GETDFLT', [nil], values);
   if length(values)=0 then
     exit;
   startoffset := Piece(values,';',1);
@@ -518,22 +520,22 @@ end;
 
 procedure rpcDeleteUserLevelReportsSetting;
 begin
-  sCallV('ORWTPD DELDFLT',[nil]);
+  CallVistA('ORWTPD DELDFLT',[nil]);
 end;
 
 procedure rpcActiveDefaultSetting;
 begin
-  sCallV('ORWTPD ACTDF',[nil]);
+  CallVistA('ORWTPD ACTDF',[nil]);
 end;
 
 procedure rpcSetDefaultReportsSetting(aString: string);
 begin
-  sCallV('ORWTPD SUDF',[aString]);
+  CallVistA('ORWTPD SUDF',[aString]);
 end;
 
 procedure rpcSetIndividualReportSetting(aString1:string; aString2:string);
 begin
-  sCallV('ORWTPD SUINDV',[aString1,aString2]);
+  CallVistA('ORWTPD SUINDV',[aString1,aString2]);
 end;
 
 procedure rpcRetrieveDefaultSetting(var int1: integer; var int2: integer; var int3: integer; var msg: string);
@@ -541,7 +543,7 @@ var
   values: string;
   startoffset,stopoffset: string;
 begin
-  values :=  sCallV('ORWTPD RSDFLT',[nil]);
+  CallVistA('ORWTPD RSDFLT',[nil], values);
   if length(values)=0 then
     begin
       msg := 'NODEFAULT';
@@ -561,7 +563,7 @@ var
   rst,sDt,eDt: string;
   td: TFMDateTime;
 begin
-  rst := SCallV('ORWTPD GETOCM',[nil]);
+  CallVistA('ORWTPD GETOCM', [nil], rst);
   sDt := Piece(rst,';',1);
   if lowerCase(sDt) <> 't' then
     Delete(sDt,1,1);
@@ -577,7 +579,55 @@ end;
 
 procedure rpcPutRangeForMeds(TheVal: string);
 begin
-  SCallV('ORWTPD PUTOCM',[TheVal]);
+  CallVistA('ORWTPD PUTOCM',[TheVal]);
+end;
+
+procedure rpcGetRangeForMedsIn(var startDt, stopDt: TFMDateTime);
+var
+  rst,sDt,eDt: string;
+  td: TFMDateTime;
+begin
+  CallVistA('ORWTPD GETOCMIN', [nil], rst);
+  sDt := Piece(rst,';',1);
+  if lowerCase(sDt) <> 't' then
+    Delete(sDt,1,1);
+  eDt := Piece(rst,';',2);
+  if lowerCase(eDt) <> 't' then
+    Delete(eDt,1,1);
+  td := FMToday;
+  if Length(sDt)>0 then
+    startDt := FMDateTimeOffsetBy(td, StrToIntDef(sDt,0));
+  if Length(eDt)>0 then
+    stopDt  := FMDateTimeOffsetBy(td, StrToIntDef(eDt,0));
+end;
+
+procedure rpcPutRangeForMedsIn(TheVal: string);
+begin
+  CallVistA('ORWTPD PUTOCMIN',[TheVal]);
+end;
+
+procedure rpcGetRangeForMedsOp(var startDt, stopDt: TFMDateTime);
+var
+  rst,sDt,eDt: string;
+  td: TFMDateTime;
+begin
+  CallVistA('ORWTPD GETOCMOP', [nil], rst);
+  sDt := Piece(rst,';',1);
+  if lowerCase(sDt) <> 't' then
+    Delete(sDt,1,1);
+  eDt := Piece(rst,';',2);
+  if lowerCase(eDt) <> 't' then
+    Delete(eDt,1,1);
+  td := FMToday;
+  if Length(sDt)>0 then
+    startDt := FMDateTimeOffsetBy(td, StrToIntDef(sDt,0));
+  if Length(eDt)>0 then
+    stopDt  := FMDateTimeOffsetBy(td, StrToIntDef(eDt,0));
+end;
+
+procedure rpcPutRangeForMedsOp(TheVal: string);
+begin
+  CallVistA('ORWTPD PUTOCMOP',[TheVal]);
 end;
 
 procedure rpcGetRangeForEncs(var StartDays, StopDays: integer; DefaultParams: Boolean);
@@ -585,9 +635,9 @@ var
   Start, Stop, Values: string;
 begin
   if DefaultParams then
-    Values := SCallV('ORWTPD1 GETEFDAT',[nil])
+    CallVistA('ORWTPD1 GETEFDAT', [nil], Values)
   else
-    Values := SCallV('ORWTPD1 GETEDATS',[nil]);
+    CallVistA('ORWTPD1 GETEDATS', [nil], Values);
   Start := Piece(Values, '^', 1);
   Stop  := Piece(Values, '^', 2);
   StartDays := StrToIntDef(Start, 0);
@@ -601,12 +651,12 @@ begin
   values := '';
   values := values + StartDays + '^';
   values := values + StopDays;
-  CallV('ORWTPD1 PUTEDATS',[values]);
+  CallVistA('ORWTPD1 PUTEDATS',[values]);
 end;
 
 procedure rpcGetEncFutureDays(var FutureDays: string);
 begin
-  FutureDays := SCallV('ORWTPD1 GETEAFL',[nil]);
+  CallVistA('ORWTPD1 GETEAFL', [nil], FutureDays);
 end;
 
 end.

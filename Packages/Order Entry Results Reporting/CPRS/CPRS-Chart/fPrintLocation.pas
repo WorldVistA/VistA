@@ -50,25 +50,19 @@ type
      { Public declarations }
   CloseOK: boolean;
   DisplayOrders: boolean;
-  procedure PrintLocation(OrderLst: TStringList; pEncounterLoc: integer; pEncounterLocName, pEncounterLocText: string;
+  class procedure PrintLocation(OrderLst: TStringList; pEncounterLoc: integer; pEncounterLocName, pEncounterLocText: string;
              pEncounterDT: TFMDateTime; pEncounterVC: Char; var ClinicLst, WardLst: TStringList;
              var wardIEN: integer; var wardLocation: string; ContainsIMOOrders: boolean; displayEncSwitch: boolean = false);
-  procedure SwitchEncounterLoction(pEncounterLoc: integer; pEncounterLocName, pEncounterLocText: string; pEncounterDT: TFMDateTime; pEncounterVC: Char);
-  function rpcIsPatientOnWard(Patient: string): string;
-  function rpcIsClinicOrder(IEN: string): string;
+  class procedure SwitchEncounterLoction(pEncounterLoc: integer; pEncounterLocName, pEncounterLocText: string; pEncounterDT: TFMDateTime; pEncounterVC: Char);
+  class function rpcIsPatientOnWard(Patient: string): string;
+  class function rpcIsClinicOrder(IEN: string): string;
   end;
-
-var
-  frmPrintLocation: TfrmPrintLocation;
-  ClinicIEN, WardIen: integer;
-  ASvc, ClinicLocation, WardLocation: string;
-  ClinicArr: TStringList;
-  WardArr: TStringList;
 
 implementation
 
 {$R *.dfm}
-//uses
+uses
+  VAUtils;
 //fFrame;
 
 Const
@@ -82,10 +76,14 @@ TAB           = #9;
   LOCATION_CHANGE_3  = 'What Location are these orders associated with?';
   LOCATION_CHANGE_4  = 'The patient has now been admitted to ward: ';
 
+var
+  frmPrintLocation: TfrmPrintLocation;
+//  ClinicIEN, WardIen: integer;
+//  ASvc, ClinicLocation, WardLocation: string;
+  ClinicArr: TStringList;
+  WardArr: TStringList;
 
 { TfrmPrintLocation }
-
-
 
 procedure TfrmPrintLocation.btnClinicClick(Sender: TObject);
 var
@@ -196,9 +194,14 @@ begin
 end;
 
 function TfrmPrintLocation.ClinicText(ALoc: integer): string;
+var
+  aStr: string;
 begin
-  if SCallV('ORIMO ISCLOC', [ALoc]) = '1' then Result := LOCATION_CHANGE_2
-  else Result := LOCATION_CHANGE_2W
+  CallVistA('ORIMO ISCLOC', [ALoc], aStr);
+  if (aStr = '1') then
+    Result := LOCATION_CHANGE_2
+  else
+    Result := LOCATION_CHANGE_2W;
 end;
 
 procedure TfrmPrintLocation.OrderGridDrawCell(Sender: TObject; ACol,
@@ -330,12 +333,12 @@ begin
 end;
 
 
-procedure TfrmPrintLocation.PrintLocation(OrderLst: TStringList; pEncounterLoc:integer; pEncounterLocName,
+class procedure TfrmPrintLocation.PrintLocation(OrderLst: TStringList; pEncounterLoc:integer; pEncounterLocName,
           pEncounterLocText: string; pEncounterDT: TFMDateTime; pEncounterVC: Char;
           var ClinicLst, WardLst: TStringList; var wardIEN: integer; var wardLocation: string;
           ContainsIMOOrders: boolean; displayEncSwitch: boolean = false);
 var
-OrderInfo, OrderText: string;
+ASvc, OrderInfo, OrderText: string;
 cidx, i, widx, count: integer;
 begin
   frmPrintLocation := TfrmPrintLocation.Create(Application);
@@ -360,6 +363,7 @@ begin
     if frmPrintLocation.rpcIsClinicOrder(OrderInfo)='0' then
       begin
       count := count+1;
+      frmPrintlocation.orderGrid.RowCount := count + 1;
       OrderText := AnsiReplaceText(Piece(OrderLst.Strings[i],':',2),CRLF,'');
       frmPrintLocation.orderGrid.Cells[COL_ORDERINFO,count] := OrderInfo;
       frmPrintLocation.orderGrid.Cells[COL_ORDERTEXT,count] := OrderText;
@@ -381,7 +385,7 @@ begin
   if count>0 then frmPrintLocation.ShowModal;
   if assigned(ClinicArr) then ClinicLst.AddStrings(ClinicArr);
   if assigned(WardArr) then WardLst.AddStrings(WardArr);
-  ProcessClinicOrders(WardLst, ClinicLst, WardIEN, pEncounterLoc, ContainsIMOOrders);
+  frmPrintLocation.ProcessClinicOrders(WardLst, ClinicLst, WardIEN, pEncounterLoc, ContainsIMOOrders);
   cidx := frmPrintLocation.cboEncLoc.Items.IndexOf(frmPrintLocation.CLoc);
   widx := frmPrintLocation.cboEncLoc.Items.IndexOf(frmPrintLocation.WLoc);
   if frmPrintLocation.cboEncLoc.ItemIndex = cidx then
@@ -424,23 +428,25 @@ procedure TfrmPrintLocation.rpcChangeOrderLocation(pOrderList:TStringList; Conta
 var
 IMO: string;
 begin
-// OrderIEN^Location^ISIMO  -- used to alter location if ward is selected.
-   if ContainsIMO = True then IMO := '1'
-   else IMO := '0';
-   CallV('ORWDX CHANGE',[pOrderList, Patient.DFN, IMO]);
+  // OrderIEN^Location^ISIMO  -- used to alter location if ward is selected.
+  if ContainsIMO = True then
+    IMO := '1'
+  else
+    IMO := '0';
+  CallVistA('ORWDX CHANGE',[pOrderList, Patient.DFN, IMO]);
 end;
 
 
-function TfrmPrintLocation.rpcIsPatientOnWard(Patient: string): string;
+class function TfrmPrintLocation.rpcIsPatientOnWard(Patient: string): string;
 begin
-  //Ward Loction Name^Ward Location IEN
-  result := sCallV('ORWDX1 PATWARD',[Patient]);
+  // Ward Loction Name^Ward Location IEN
+  CallVistA('ORWDX1 PATWARD', [Patient], Result);
 end;
 
 
-function TfrmPrintLocation.rpcIsClinicOrder(IEN: string): string;
+class function TfrmPrintLocation.rpcIsClinicOrder(IEN: string): string;
 begin
-  result := sCallV('ORUTL ISCLORD',[IEN]);
+  CallVistA('ORUTL ISCLORD', [IEN], Result);
 end;
 
 procedure TfrmPrintLocation.ShowEditor(ACol, ARow: Integer; AChar: Char);
@@ -486,7 +492,7 @@ begin
 
 end;
 
-procedure TfrmPrintLocation.SwitchEncounterLoction(pEncounterLoc: integer; pEncounterLocName, pEncounterLocText: string;
+class procedure TfrmPrintLocation.SwitchEncounterLoction(pEncounterLoc: integer; pEncounterLocName, pEncounterLocText: string;
                               pEncounterDT: TFMDateTime; pEncounterVC: Char);
 var
 cidx, widx, WardIEN: integer;

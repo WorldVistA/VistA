@@ -164,7 +164,6 @@ inherited frmODProc: TfrmODProc
         TabOrder = 0
         WantTabs = True
         OnChange = ControlChange
-        OnExit = memReasonExit
         OnKeyDown = memReasonKeyDown
         OnKeyPress = memReasonKeyPress
         OnKeyUp = memReasonKeyUp

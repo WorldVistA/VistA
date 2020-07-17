@@ -5,8 +5,6 @@ inherited frmODDiet: TfrmODDiet
   Height = 375
   Anchors = [akLeft, akTop, akRight, akBottom]
   Caption = 'Diet Order'
-  Constraints.MinHeight = 305
-  Constraints.MinWidth = 528
   ExplicitWidth = 650
   ExplicitHeight = 375
   PixelsPerInch = 96
@@ -16,7 +14,7 @@ inherited frmODDiet: TfrmODDiet
     Top = 0
     Width = 634
     Height = 194
-    ActivePage = pgeTubefeeding
+    ActivePage = pgeOutPt
     Align = alTop
     TabOrder = 4
     TabStop = False
@@ -51,13 +49,6 @@ inherited frmODDiet: TfrmODDiet
         Width = 96
         Height = 13
         Caption = 'Effective Date/Time'
-      end
-      object lblStop: TLabel
-        Left = 393
-        Top = 39
-        Width = 100
-        Height = 13
-        Caption = 'Expiration Date/Time'
       end
       object lblDelivery: TLabel
         Left = 393
@@ -138,17 +129,6 @@ inherited frmODDiet: TfrmODDiet
         RequireTime = False
         Caption = 'Effective Date/Time'
       end
-      object calDietStop: TORDateBox
-        Left = 393
-        Top = 52
-        Width = 115
-        Height = 21
-        TabOrder = 5
-        OnChange = DietChange
-        DateOnly = False
-        RequireTime = False
-        Caption = 'Expiration Date/Time'
-      end
       object cboDelivery: TORComboBox
         Left = 393
         Top = 90
@@ -169,7 +149,7 @@ inherited frmODDiet: TfrmODDiet
         Pieces = '2'
         Sorted = False
         SynonymChars = '<>'
-        TabOrder = 6
+        TabOrder = 5
         Text = ''
         OnChange = DietChange
         CharsNeedMatch = 1
@@ -181,7 +161,7 @@ inherited frmODDiet: TfrmODDiet
         Height = 17
         Caption = 'Cancel Tubefeeding'
         State = cbGrayed
-        TabOrder = 7
+        TabOrder = 6
         Visible = False
         OnClick = DietChange
       end
@@ -252,7 +232,7 @@ inherited frmODDiet: TfrmODDiet
         Width = 93
         Height = 155
         Caption = 'Days of Week'
-        TabOrder = 8
+        TabOrder = 7
         object chkOPMonday: TCheckBox
           Left = 8
           Top = 15
@@ -335,7 +315,7 @@ inherited frmODDiet: TfrmODDiet
         Top = 50
         Width = 120
         Height = 21
-        TabOrder = 5
+        TabOrder = 10
         OnChange = calOPStopChange
         DateOnly = True
         RequireTime = False
@@ -374,7 +354,7 @@ inherited frmODDiet: TfrmODDiet
         Width = 404
         Height = 21
         MaxLength = 80
-        TabOrder = 11
+        TabOrder = 9
         OnChange = OPChange
         Caption = 'Special Instructions'
       end
@@ -398,7 +378,7 @@ inherited frmODDiet: TfrmODDiet
         Pieces = '2'
         Sorted = False
         SynonymChars = '<>'
-        TabOrder = 6
+        TabOrder = 5
         Text = ''
         OnChange = OPChange
         CharsNeedMatch = 1
@@ -434,7 +414,7 @@ inherited frmODDiet: TfrmODDiet
         Height = 17
         Caption = 'Cancel Tubefeeding'
         State = cbGrayed
-        TabOrder = 7
+        TabOrder = 6
         Visible = False
         OnClick = OPChange
       end
@@ -529,7 +509,7 @@ inherited frmODDiet: TfrmODDiet
         Width = 504
         Height = 21
         MaxLength = 240
-        TabOrder = 8
+        TabOrder = 6
         OnChange = TFChange
         Caption = 'Special Instructions'
       end
@@ -562,15 +542,6 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'Remove'
         TabOrder = 4
         OnClick = cmdTFRemoveClick
-      end
-      object chkCancelTrays: TCheckBox
-        Left = 152
-        Top = 96
-        Width = 153
-        Height = 17
-        Caption = 'Cancel Future TRAY Orders'
-        TabOrder = 5
-        OnClick = TFChange
       end
       object txtQuantity: TCaptionEdit
         Tag = -1
@@ -649,7 +620,7 @@ inherited frmODDiet: TfrmODDiet
         Sorted = False
         SynonymChars = '<>'
         TabPositions = '12'
-        TabOrder = 6
+        TabOrder = 5
         TabStop = True
         Text = ''
         OnChange = TFChange
@@ -1083,7 +1054,7 @@ inherited frmODDiet: TfrmODDiet
   end
   inherited amgrMain: TVA508AccessibilityManager
     Left = 8
-    Top = 16
+    Top = 8
     Data = (
       (
         'Component = nbkDiet'
@@ -1106,10 +1077,6 @@ inherited frmODDiet: TfrmODDiet
       (
         'Component = calDietStart'
         'Text = Effective Date/Time. Press the enter key to access.'
-        'Status = stsOK')
-      (
-        'Component = calDietStop'
-        'Text = Expiration Date/Time. Press the enter key to access.'
         'Status = stsOK')
       (
         'Component = cboDelivery'
@@ -1187,9 +1154,6 @@ inherited frmODDiet: TfrmODDiet
         'Status = stsDefault')
       (
         'Component = cmdTFRemove'
-        'Status = stsDefault')
-      (
-        'Component = chkCancelTrays'
         'Status = stsDefault')
       (
         'Component = txtQuantity'

@@ -5,37 +5,39 @@ inherited frmOptionsTeams: TfrmOptionsTeams
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Team Information'
-  ClientHeight = 369
+  ClientHeight = 410
   ClientWidth = 384
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   OnCreate = FormCreate
+  ExplicitWidth = 390
+  ExplicitHeight = 438
   PixelsPerInch = 96
   TextHeight = 13
   object lblTeams: TLabel [0]
-    Left = 10
-    Top = 70
+    Left = 8
+    Top = 125
     Width = 115
     Height = 13
     Caption = 'You are on these teams:'
   end
   object lblPatients: TLabel [1]
-    Left = 200
-    Top = 70
+    Left = 198
+    Top = 102
     Width = 130
     Height = 13
     Caption = 'Patients on selected teams:'
   end
   object lblTeamMembers: TLabel [2]
-    Left = 200
-    Top = 214
+    Left = 198
+    Top = 246
     Width = 75
     Height = 13
     Caption = 'Team members:'
   end
   object lblSubscribe: TLabel [3]
     Left = 8
-    Top = 270
+    Top = 322
     Width = 97
     Height = 13
     Caption = 'Subscribe to a team:'
@@ -52,20 +54,20 @@ inherited frmOptionsTeams: TfrmOptionsTeams
       
         'View team information by selecting teams. You can subscribe or r' +
         'emove '
-      'yourself from teams.')
+      'yourself from all teams except PCMM teams here:')
     ReadOnly = True
-    TabOrder = 8
+    TabOrder = 9
   end
   object pnlBottom: TPanel [5]
     Left = 0
-    Top = 336
+    Top = 377
     Width = 384
     Height = 33
     HelpContext = 9090
     Align = alBottom
     BevelOuter = bvNone
     ParentColor = True
-    TabOrder = 7
+    TabOrder = 8
     object bvlBottom: TBevel
       Left = 0
       Top = 0
@@ -86,8 +88,8 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     end
   end
   object lstPatients: TORListBox [6]
-    Left = 200
-    Top = 86
+    Left = 198
+    Top = 118
     Width = 175
     Height = 121
     HelpContext = 9091
@@ -96,7 +98,7 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     PopupMenu = mnuPopPatient
     ShowHint = True
     Sorted = True
-    TabOrder = 5
+    TabOrder = 6
     OnMouseDown = lstPatientsMouseDown
     Caption = 'Patients on selected teams'
     ItemTipColor = clWindow
@@ -104,8 +106,8 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     Pieces = '2'
   end
   object lstTeams: TORListBox [7]
-    Left = 10
-    Top = 86
+    Left = 8
+    Top = 141
     Width = 175
     Height = 145
     HelpContext = 9092
@@ -114,7 +116,7 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     ParentShowHint = False
     ShowHint = True
     Sorted = True
-    TabOrder = 2
+    TabOrder = 3
     OnClick = lstTeamsClick
     Caption = 'You are on these teams'
     ItemTipColor = clWindow
@@ -122,8 +124,8 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     Pieces = '2'
   end
   object lstUsers: TORListBox [8]
-    Left = 200
-    Top = 230
+    Left = 198
+    Top = 262
     Width = 175
     Height = 97
     HelpContext = 9093
@@ -131,15 +133,15 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     ParentShowHint = False
     ShowHint = True
     Sorted = True
-    TabOrder = 6
+    TabOrder = 7
     Caption = 'Team members'
     ItemTipColor = clWindow
     LongList = False
     Pieces = '2'
   end
   object btnRemove: TButton [9]
-    Left = 10
-    Top = 241
+    Left = 8
+    Top = 292
     Width = 175
     Height = 22
     HelpContext = 9094
@@ -151,7 +153,7 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 4
     OnClick = btnRemoveClick
   end
   object chkPersonal: TCheckBox [10]
@@ -172,13 +174,13 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     HelpContext = 9097
     Caption = 'View only common members'
     Enabled = False
-    TabOrder = 1
+    TabOrder = 2
     Visible = False
     OnClick = chkRestrictClick
   end
   object cboSubscribe: TORComboBox [12]
-    Left = 12
-    Top = 287
+    Left = 8
+    Top = 338
     Width = 175
     Height = 21
     HelpContext = 9095
@@ -197,13 +199,26 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     Pieces = '2'
     Sorted = True
     SynonymChars = '<>'
-    TabOrder = 4
+    TabOrder = 5
+    Text = ''
     OnClick = cboSubscribeClick
     OnKeyDown = cboSubscribeKeyDown
     OnMouseClick = cboSubscribeMouseClick
     CharsNeedMatch = 1
   end
+  object chkPcmm: TCheckBox [13]
+    Left = 10
+    Top = 63
+    Width = 175
+    Height = 17
+    HelpContext = 9096
+    Caption = 'Include PCMM teams (View Only)'
+    TabOrder = 1
+    OnClick = chkPcmmClick
+  end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 8
+    Top = 376
     Data = (
       (
         'Component = lblInfo'
@@ -237,10 +252,14 @@ inherited frmOptionsTeams: TfrmOptionsTeams
         'Status = stsDefault')
       (
         'Component = frmOptionsTeams'
+        'Status = stsDefault')
+      (
+        'Component = chkPcmm'
         'Status = stsDefault'))
   end
   object mnuPopPatient: TPopupMenu
-    Top = 336
+    Left = 56
+    Top = 376
     object mnuPatientID: TMenuItem
       Caption = 'Patient ID...'
       OnClick = mnuPatientIDClick

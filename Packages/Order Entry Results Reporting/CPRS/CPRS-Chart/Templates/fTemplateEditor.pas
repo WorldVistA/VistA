@@ -211,6 +211,8 @@ type
     pnlNotes: TPanel;
     lblNotes: TLabel;
     reNotes: TRichEdit;
+    pnlComCare: TPanel;
+    lblComCare: TLabel;
     procedure btnNewClick(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -349,6 +351,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure splMainCanResize(Sender: TObject; var NewSize: Integer;
       var Accept: Boolean);
+    procedure cbxLinkEnter(Sender: TObject);
+    procedure cbxLinkChange(Sender: TObject);
   private
     FLastRect: TRect;
     FForceContainer: boolean;
@@ -393,6 +397,10 @@ type
     FShowingTemplate: TTemplate;
     FConsultServices: TStringList;
     FNavigatingTab: boolean;
+    FCurrentTreeNodeSel: TTreeNode;
+    FOriginalTreeNode: TTreeNode; //*SMT used to prevent template link issues.
+    FLastLinkIEN: Integer;
+    FLastLinkString: String;
   protected
     procedure UpdateXY(re: TRichEdit; lblX, lblY: TLabel);
     function IsTemplateLocked(Node: TTreeNode): boolean;
@@ -427,6 +435,8 @@ type
     procedure ShowGroupBoilerplate(Visible: boolean);
     procedure ShowBoilerPlate(Hide: Boolean);
     function GetLinkType(const ANode: TTreeNode): TTemplateLinkType;
+    function IsParentAConsult(Node: TTreeNode): Boolean;
+    function IsParentAConsultOrProcedure: Boolean;
   end;
 
 procedure EditTemplates(Form: TForm; NewTemplate: boolean = FALSE; CopiedText: string = ''; Shared: boolean = FALSE);
@@ -701,11 +711,10 @@ begin
   FSavePause := Application.HintHidePause;
   Application.HintHidePause := FSavePause * 2;
   if InteractiveRemindersActive then
-  begin
-//    QuickCopy(GetTemplateAllowedReminderDialogs, cbxRemDlgs.Items);
-    cbxRemDlgs.Items.Text := GetTemplateAllowedReminderDialogs.Text;
-    FCanDoReminders := (cbxRemDlgs.Items.Count > 0);
-  end
+    begin
+      GetTemplateAllowedReminderDialogs(cbxRemDlgs.Items);
+      FCanDoReminders := (cbxRemDlgs.Items.Count > 0);
+    end
   else
     FCanDoReminders := FALSE;
 
@@ -880,8 +889,17 @@ begin
       end
       else
         ok := FCanEditShared;
-      EnableControls(ok, (Template.RealType in AllTemplateRootTypes));
-      ShowInfo(Node);
+
+      if Template.IsComCare then
+      begin
+        EnableControls(FALSE, (Template.RealType in AllTemplateRootTypes));
+        ShowInfo(Node);
+      end
+      else
+      begin
+        EnableControls(ok, (Template.RealType in AllTemplateRootTypes));
+        ShowInfo(Node);
+      end;
     end;
   end;
   if not Something then
@@ -935,6 +953,7 @@ begin
   lblCOMObj.Enabled := ok;
   edtCOMParam.Enabled := ok;
   lblCOMParam.Enabled := ok;
+  lblComCare.Enabled := not ok;
   UpdateInsertsDialogs;
   EnableNavControls;
 end;
@@ -1064,6 +1083,13 @@ begin
           lblLink.Caption := ' Associated ' + lts + ': ';
           cbxLink.Caption := lblLink.Caption;
         end;
+
+        //Display Community Care Section
+        if IsParentAConsult(Node) and (IsComCare) then
+        begin
+          PnlComCare.Visible := True;
+        end else
+          PnlComCare.Visible := False;
 
         edtName.Text := PrintName;
         reNotes.Lines.Text := Description;
@@ -1264,9 +1290,12 @@ begin
   end;
   if cbLongLines.checked then
     Max := 240
+  else if IsParentAConsultOrProcedure then
+    Max := MAX_CONSULT_WIDTH - 1
   else
     Max := MAX_ENTRY_WIDTH - 1;
   LimitEditWidth(reBoil, Max);
+  reBoilChange(Self);
   LimitEditWidth(reNotes, MAX_ENTRY_WIDTH);
 end;
 
@@ -1411,6 +1440,7 @@ begin
     if (assigned(FCurTree)) then
     begin
       for i := low(TTemplateTreeControl) to high(TTemplateTreeControl) do
+       if Assigned(FTreeControl[TTemplateTreeType(FCurTree.Tag), i]) then
         FTreeControl[TTemplateTreeType(FCurTree.Tag), i].Enabled := FALSE;
     end;
     FCurTree := NewTree;
@@ -1499,7 +1529,7 @@ begin
           LongLines := FALSE;
           for i := 0 to TmpSL.Count - 1 do
           begin
-            if length(TmpSL[i]) > MAX_ENTRY_WIDTH then
+            if length(TmpSL[i]) > MAX_WRAP_WIDTH then
             begin
               LongLines := TRUE;
               break;
@@ -1882,7 +1912,8 @@ begin
     else
     begin
       for i := low(TTemplateTreeControl) to high(TTemplateTreeControl) do
-        FTreeControl[Tree, i].Enabled := FALSE;
+        if assigned(FTreeControl[Tree, i]) then
+          FTreeControl[Tree, i].Enabled := FALSE;
     end;
     if (FCurTree = tvShared) and (FCanEditShared) then
       btnNew.Enabled := TRUE
@@ -1948,6 +1979,17 @@ var
 begin
   if (assigned(FDragNode)) and (assigned(FDropNode)) and (FDragNode <> FDropNode) then
   begin
+     //SMT Reminder dialogs shouldn't be able to be added to Consult/Procedure reasons for request.
+    // remedy HD69685
+    if (IdxForced[FForceContainer, cbxType.ItemIndex] = tiRemDlg) then
+    begin
+      if (assigned(FDropNode.Parent) and (TTemplate(FDropNode.Parent.Data).RealType in [ttConsults, ttProcedures])) OR
+        (TTemplate(FDropNode.Data).RealType in [ttConsults, ttProcedures]) then
+      begin
+        ShowMsg('Can not assign a Reminder Dialog to a Reason for Request');
+        Exit;
+      end;
+    end;
     Item := TTemplate(FDragNode.Data);
     if (FDropInto) then
     begin
@@ -2773,7 +2815,7 @@ begin
     if ((assigned(FCurTree)) and (assigned(FCurTree.Selected))) then
       Warn := not AutoDel(TTemplate(FCurTree.Selected.Data));
   end;
-  if (Warn) then
+  if (Warn) and edtName.Enabled then
   begin
     InfoBox('Template has an invalid name: ' + edtName.Text + '.' + BadNameText, 'Error', MB_OK or MB_ICONERROR);
     edtName.SetFocus;
@@ -3250,13 +3292,20 @@ begin
       frmTemplateView := nil;
     end;
     tmpl := TTemplate(FCurTree.Selected.Data);
-    tmpl.TemplatePreviewMode := TRUE; // Prevents "Are you sure?" dialog when canceling
-    txt := tmpl.Text;
-    if (not tmpl.DialogAborted) then
-      ShowTemplateData(Self, tmpl.PrintName, txt);
-    if (Move) then
-      frmTemplateView.BoundsRect := R;
-    tmpl.TemplatePreviewMode := FALSE;
+    tmpl.TemplatePreviewMode := TRUE;
+    // Prevents "Are you sure?" dialog when canceling
+    if IsParentAConsultOrProcedure then
+      MAX_WRAP_WIDTH := MAX_CONSULT_WIDTH;
+    try
+      Txt := tmpl.Text;
+      if (not tmpl.DialogAborted) then
+        ShowTemplateData(Self, tmpl.PrintName, Txt);
+      if (Move) then
+        frmTemplateView.BoundsRect := R;
+      tmpl.TemplatePreviewMode := FALSE;
+    finally
+      MAX_WRAP_WIDTH := MAX_ENTRY_WIDTH;
+    end;
   end;
 end;
 
@@ -3513,9 +3562,15 @@ begin
           Tmpl.Add('<' + XMLHeader + '>');
           if TTemplate(FCurTree.Selected.Data).CanExportXML(Tmpl, Flds, 2) then
           begin
-            if (Flds.Count > 0) then begin
+            if (Flds.Count > 0) then
+            begin
               ExpandEmbeddedFields(Flds);
-              FastAssign(ExportTemplateFields(Flds), Flds);
+              LockBroker;
+              try
+                FastAssign(ExportTemplateFields(Flds), Flds);
+              finally
+                UnlockBroker;
+              end;
               for i := 0 to Flds.Count - 1 do
                 Flds[i] := '  ' + Flds[i];
               FastAddStrings(Flds, Tmpl);
@@ -4182,6 +4237,35 @@ begin
   end;
 end;
 
+function TfrmTemplateEditor.IsParentAConsult(Node: TTreeNode): Boolean;
+begin
+  if GetLinkType(Node) = ltConsult then
+    Result := True
+  else if assigned(Node.Parent) then
+    Result := IsParentAConsult(Node.Parent)
+  else
+    Result := FALSE;
+end;
+
+function TfrmTemplateEditor.IsParentAConsultOrProcedure: Boolean;
+
+  function IsConsultOrProcedure(Node: TTreeNode): Boolean;
+  begin
+    if GetLinkType(Node) in [ltConsult, ltProcedure] then
+      Result := True
+    else if assigned(Node.Parent) then
+      Result := IsConsultOrProcedure(Node.Parent)
+    else
+      Result := False;
+  end;
+
+begin
+  if assigned(FCurTree) and assigned(FCurTree.Selected) then
+    Result := IsConsultOrProcedure(FCurTree.Selected)
+  else
+    Result := False;
+end;
+
 procedure TfrmTemplateEditor.cbxLinkNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 var
@@ -4193,8 +4277,7 @@ begin
   tmpSL := TStringList.Create;
   try
     case TTemplateLinkType(pnlLink.Tag) of
-      ltTitle: FastAssign(SubSetOfAllTitles(StartFrom, Direction), tmpSL);
-//      ltConsult:
+      ltTitle: SubSetOfAllTitles(StartFrom, Direction, tmpSL);
       ltProcedure:
         begin
           FastAssign(SubSetOfProcedures(StartFrom, Direction), tmpSL);
@@ -4208,8 +4291,29 @@ begin
     end;
     cbxLink.ForDataUse(tmpSL);
   finally
-    tmpSL.Free;
+    FreeAndNil(tmpSL);
   end;
+end;
+
+procedure TfrmTemplateEditor.cbxLinkChange(Sender: TObject);
+begin
+  inherited;
+  if cbxLink.ItemIndex > -1 then
+  begin
+   FLastLinkIEN := cbxlink.ItemIEN;
+   fLastLinkString := Piece(cbxLink.Items[cbxLink.ItemIndex], U, 2);
+  end else begin
+   FLastLinkIEN := -1;
+   fLastLinkString := '';
+  end;
+end;
+
+procedure TfrmTemplateEditor.cbxLinkEnter(Sender: TObject);
+begin
+  inherited;
+  //*SMT Store the selected tree node so we can come back to it.
+  if (FCurTree = tvShared) then
+    FCurrentTreeNodeSel := FCurTree.Selected;
 end;
 
 procedure TfrmTemplateEditor.cbxLinkExit(Sender: TObject);
@@ -4221,6 +4325,23 @@ begin
   if ((not FUpdating) and (assigned(FCurTree)) and (assigned(FCurTree.Selected)) and
     (FCurTree = tvShared)) then
   begin
+    //*SMT need to re-select the tree node we are editing so that we don't
+    //  update the link on the wrong node. Also store the new treenode
+    //  selection so we can go back to it.
+    if (FCurrentTreeNodeSel <> FCurTree.Selected) then
+    begin
+      FOriginalTreeNode := FCurTree.Selected;
+      FCurTree.Selected := FCurrentTreeNodeSel;
+      tvTreeChange(FCurTree,FCurrentTreeNodeSel);
+      cbxLink.SelectByIEN(FLastLinkIEN);
+      if cbxLink.ItemIndex = -1 then
+      begin
+        //Need to init the list
+        cbxLink.InitLongList(fLastLinkString);
+        cbxLink.SelectByIEN(FLastLinkIEN);
+      end;
+    end;
+
     Template := TTemplate(FCurTree.Selected.Data);
     if assigned(Template) and Template.CanModify then
     begin
@@ -4232,7 +4353,7 @@ begin
         begin
           ShowMsg(GetLinkName(cbxLink.ItemID, TTemplateLinkType(pnlLink.tag)) +
             ' is already assigned to another template.');
-          cbxLink.SetFocus;
+        //  cbxLink.SetFocus;
           cbxLink.SelectByID(Template.LinkIEN);
           update := False;
         end
@@ -4247,6 +4368,15 @@ begin
         Template.FileLink := '';
       if update then
         UpdateApply(Template);
+    end;
+     //*SMT Go back to the selected treenode, so that the user sees
+    //  what they expect after clicking.
+    if Assigned(FOriginalTreeNode) then
+    begin
+     FCurTree.Selected := FOriginalTreeNode;
+     tvTreeChange(FCurTree,FOriginalTreeNode);
+     FOriginalTreeNode := nil;
+     FCurrentTreeNodeSel := nil;
     end;
   end;
 end;
@@ -4286,4 +4416,3 @@ begin
 end;
 
 end.
-

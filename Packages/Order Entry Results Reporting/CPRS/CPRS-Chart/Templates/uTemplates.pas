@@ -4,7 +4,8 @@ unit uTemplates;
 
 interface
 uses
-  Classes, Controls, SysUtils, Forms, ORFn, ORNet, Dialogs, MSXML_TLB, uTIU, uDCSumm, Variants;
+  Classes, Controls, SysUtils, Forms, ORFn, ORNet, Dialogs, MSXML_TLB, uTIU, uDCSumm, Variants,
+  U_CPTPasteDetails, uConst;
 
 type
   TTemplateType = (ttNone, ttMyRoot, ttRoot, ttTitles, ttConsults, ttProcedures,
@@ -111,6 +112,9 @@ type
     FLinkName: string;
     FCloning: boolean;            // Flag used to prevent locking during the cloning process
     FPreviewMode:  boolean;       // Flag to prevent "Are you sure you want to cancel?" dialog when previewing
+    FExtCPMon: TCopyPasteDetails;  // Edit mornitor used to transfer
+    fIsComCare: Boolean;
+    fParent: pointer;
   protected
     function TrueClone: TTemplate;
     function GetItems: TList;
@@ -176,7 +180,7 @@ type
     function LinkType: TTemplateLinkType;
     function LinkIEN: string;
     function LinkName: string;
-    procedure ExecuteReminderDialog(OwningForm: TForm); 
+    procedure ExecuteReminderDialog(OwningForm: TForm);
     property Nodes: TStringList read FNodes;
     property ID: string read FID;
     property PrintName: string read FPrintName write SetPrintName;
@@ -211,6 +215,9 @@ type
     property COMParam: string read FCOMParam write SetCOMParam;
     property FileLink: string read FFileLink write SetFileLink;
     property TemplatePreviewMode: boolean read FPreviewMode write FPreviewMode;
+    property ExtCPMon: TCopyPasteDetails read FExtCPMon write FExtCPMon;
+    property IsComCare: Boolean read fIsComCare;
+    property Parent: Pointer read Fparent write Fparent;
   end;
 
 function SearchMatch(const SubStr, Str: string; const WholeWordsOnly: boolean): boolean;
@@ -244,9 +251,9 @@ function DisplayGroupToLinkType(DGroup: integer): TTemplateLinkType;
 procedure ExecuteTemplateOrBoilerPlate(var AText: string; IEN: Integer; LType: TTemplateLinkType;
                                        OwningForm: TForm; const CaptionText: string = ''; DocInfo: string = ''); overload;*)
 procedure ExecuteTemplateOrBoilerPlate(SL: TStrings; IEN: Integer; LType: TTemplateLinkType;
-                                       OwningForm: TForm; CaptionText: string; var DocInfo: string); overload;
+                                       OwningForm: TForm; CaptionText: string; var DocInfo: string; ExtCPMon: TCopyPasteDetails = nil); overload;
 procedure ExecuteTemplateOrBoilerPlate(var AText: string; IEN: Integer; LType: TTemplateLinkType;
-                                       OwningForm: TForm; CaptionText: string; var DocInfo: string); overload;
+                                       OwningForm: TForm; CaptionText: string; var DocInfo: string; ExtCPMon: TCopyPasteDetails = nil); overload;
 
 procedure ExpandEmbeddedFields(flds: TStringList);
 function MakeXMLParamTIU(ANoteID: string; ANoteRec: TEditNoteRec): string;  overload;
@@ -284,11 +291,15 @@ var
   ProceduresTemplate: TTemplate = nil;
   uPersonalObjects: TStringList = nil;   // -------- CQ #8665 - RV ------------
 
+  // MAX_WRAP_WIDTH used to set the line wrap limit for template dialogs and field text
+  //   Consults / Procedures requires 74 characters; 80 for everything else
+  MAX_WRAP_WIDTH: integer = MAX_ENTRY_WIDTH;
+
 implementation
 
 uses
   Windows, rTemplates, uCore, dShared, fTemplateDialog, ActiveX, ComObj, uTemplateFields,
-  XMLUtils, fTemplateImport, uSpell, rCore, uConst, ORCtrls, uEventHooks,
+  XMLUtils, fTemplateImport, uSpell, rCore, ORCtrls, uEventHooks,
   fReminderDialog, rODBase
   {$IFDEF VER140}
   , Word97;
@@ -456,39 +467,44 @@ end;
 function UserTemplateAccessLevel: TTemplateAccess;
 var
   i: integer;
-
+  aLst: TStringList;
 begin
-  if(TemplateAccessLevelChecked and
-    (LastTemplateLocation = Encounter.Location)) then
+  if (TemplateAccessLevelChecked and
+  (LastTemplateLocation = Encounter.Location)) then
     Result := TemplateAccessLevelValue
   else
-  begin
-    TemplateAccessLevelChecked := FALSE;
-    LastTemplateLocation := 0;
-    if(not assigned(RootTemplate)) then
     begin
-      Result := taAll;
-      GetTemplateRoots;
-      for i := 0 to RPCBrokerV.Results.Count-1 do
-      begin
-        if(Piece(RPCBrokerV.Results[i],U,2)=TemplateTypeCodes[ttRoot]) then
+      TemplateAccessLevelChecked := FALSE;
+      LastTemplateLocation := 0;
+      if (not assigned(RootTemplate)) then
         begin
-          Result := TTemplateAccess(GetTemplateAccess(Piece(RPCBrokerV.Results[i],U,1)));
+          Result := taAll;
+          aLst := TStringList.Create;
+          try
+            GetTemplateRoots(aLst);
+            for i := 0 to aLst.Count - 1 do
+              begin
+                if (Piece(aLst[i], U, 2) = TemplateTypeCodes[ttRoot]) then
+                  begin
+                    Result := TTemplateAccess(GetTemplateAccess(Piece(aLst[i], U, 1)));
+                    LastTemplateLocation := Encounter.Location;
+                    TemplateAccessLevelChecked := TRUE;
+                    TemplateAccessLevelValue := Result;
+                    Break;
+                  end;
+              end;
+          finally
+            FreeAndNil(aLst);
+          end;
+        end
+      else
+        begin
+          Result := TTemplateAccess(GetTemplateAccess(RootTemplate.ID));
           LastTemplateLocation := Encounter.Location;
           TemplateAccessLevelChecked := TRUE;
           TemplateAccessLevelValue := Result;
-          Break;
         end;
-      end;
-    end
-    else
-    begin
-      Result := TTemplateAccess(GetTemplateAccess(RootTemplate.ID));
-      LastTemplateLocation := Encounter.Location;
-      TemplateAccessLevelChecked := TRUE;
-      TemplateAccessLevelValue := Result;
     end;
-  end;
 end;
 
 function AddTemplate(DataString: string; Owner: TTemplate = nil): TTemplate;
@@ -524,7 +540,10 @@ begin
   else
     tmpl := TTemplate(Templates.Objects[idx]);
   if(assigned(Owner)) and (assigned(tmpl)) then
+  begin
     Owner.AddChild(tmpl);
+    tmpl.Parent := Owner;
+  end;
   Result := tmpl;
 end;
 
@@ -532,28 +551,23 @@ procedure LoadTemplateData;
 var
   i: integer;
   TmpSL: TStringList;
-
 begin
-  if(not uTemplateDataLoaded) then
-  begin
-    StatusText(sLoading);
-    try
-      if(not assigned(Templates)) then
+  if (not uTemplateDataLoaded) then
+    begin
+      StatusText(sLoading);
+      if (not assigned(Templates)) then
         Templates := TStringList.Create;
       TmpSL := TStringList.Create;
       try
-        GetTemplateRoots;
-        FastAssign(RPCBrokerV.Results, TmpSL);
-        for i := 0 to TmpSL.Count-1 do
+        GetTemplateRoots(TmpSL);
+        for i := 0 to TmpSL.Count - 1 do
           AddTemplate(TmpSL[i]);
         uTemplateDataLoaded := TRUE;
       finally
-        TmpSL.Free;
+        StatusText('');
+        FreeAndNil(TmpSL);
       end;
-    finally
-      StatusText('');
     end;
-  end;
 end;
 
 procedure ExpandTemplate(tmpl: TTemplate);
@@ -562,32 +576,28 @@ var
   TmpSL: TStringList;
 
 begin
-  if(not tmpl.Expanded) then
-  begin
-    if(tmpl.Children <> tcNone) then
+  if (not tmpl.Expanded) then
     begin
-      StatusText(sLoading);
-      try
-        TmpSL := TStringList.Create;
-        try
-          GetTemplateChildren(tmpl.FID);
-          FastAssign(RPCBrokerV.Results, TmpSL);
-          for i := 0 to TmpSL.Count-1 do
-            AddTemplate(TmpSL[i], tmpl);
-        finally
-          TmpSL.Free;
+      if (tmpl.Children <> tcNone) then
+        begin
+          StatusText(sLoading);
+          TmpSL := TStringList.Create;
+          try
+            GetTemplateChildren(tmpl.FID, TmpSL);
+            for i := 0 to TmpSL.Count - 1 do
+              AddTemplate(TmpSL[i], tmpl);
+          finally
+            FreeAndNil(TmpSL);
+            StatusText('');
+          end;
         end;
-      finally
-        StatusText('');
-      end;
+      tmpl.Expanded := TRUE;
+      with tmpl, tmpl.FBkup do
+        begin
+          BItemIENs := ItemIENs;
+          SavedItemIENs := TRUE;
+        end;
     end;
-    tmpl.Expanded := TRUE;
-    with tmpl,tmpl.FBkup do
-    begin
-      BItemIENs := ItemIENs;
-      SavedItemIENs := TRUE;
-    end;
-  end;
 end;
 
 procedure ReleaseTemplates;
@@ -890,9 +900,9 @@ begin
         DescSL.Free;
       end;
     end;
-    
+
   end;
-    
+
   if(TempSL.Count > 0) then
   begin
     Tmp := UpdateTemplate(ID, TempSL);
@@ -1167,7 +1177,7 @@ var
       begin
         if Str <> '' then
           Str := Str + CRLF;
-        Str := Str + WrapText(TmpSL[i], #13#10, [' ','-'], MAX_ENTRY_WIDTH);
+        Str := Str + SafeWrapText(TmpSL[i], #13#10, [' ','-'], MAX_ENTRY_WIDTH);
       end;
     finally
       TmpSL.Free;
@@ -1502,53 +1512,60 @@ end;
 
 (*procedure ExecuteTemplateOrBoilerPlate(SL: TStrings; IEN: Integer; LType: TTemplateLinkType;
                                        OwningForm: TForm; const CaptionText: string = ''; DocInfo: string = '');*)
-procedure ExecuteTemplateOrBoilerPlate(SL: TStrings; IEN: Integer; LType: TTemplateLinkType;
-                                       OwningForm: TForm; CaptionText: string; var DocInfo: string);
+procedure ExecuteTemplateOrBoilerPlate(SL: TStrings; IEN: integer;
+  LType: TTemplateLinkType; OwningForm: TForm; CaptionText: string;
+  var DocInfo: string; ExtCPMon: TCopyPasteDetails = nil);
 
 var
   Template: TTemplate;
   txt: string;
 
 begin
-  SetTemplateDialogCanceled(FALSE);
-  SetTemplateBPHasObjects(FALSE);
-  Template := GetLinkedTemplate(IntToStr(IEN), LType);
-  if assigned(Template) then
-  begin
-    if Template.IsReminderDialog then
+  if (LType = ltConsult) or (LType = ltProcedure) then
+    MAX_WRAP_WIDTH := MAX_CONSULT_WIDTH;
+  Try
+    SetTemplateDialogCanceled(FALSE);
+    SetTemplateBPHasObjects(FALSE);
+    Template := GetLinkedTemplate(IntToStr(IEN), LType);
+    if assigned(Template) then
     begin
-      Template.ExecuteReminderDialog(OwningForm);
-      DocInfo := '';
-    end
-    else
-    begin
-      if Template.IsCOMObject then
-        txt := Template.COMObjectText(SL.Text, DocInfo)
+      if Template.IsReminderDialog then
+      begin
+        Template.ExecuteReminderDialog(OwningForm);
+        DocInfo := '';
+      end
       else
+      begin
+        if Template.IsCOMObject then
+          txt := Template.COMObjectText(SL.Text, DocInfo)
+        else
         begin
           txt := Template.Text;
           DocInfo := '';
         end;
-      if(txt <> '') then
-      begin
-        CheckBoilerplate4Fields(txt, CaptionText, False);
-        SL.Text := txt;
+        if (txt <> '') then
+        begin
+          CheckBoilerplate4Fields(txt, CaptionText, FALSE, ExtCPMon);
+          SL.Text := txt;
+        end;
       end;
+    end
+    else
+    begin
+      txt := SL.Text;
+      CheckBoilerplate4Fields(txt, CaptionText, FALSE, ExtCPMon);
+      DocInfo := '';
+      SL.Text := txt;
     end;
-  end
-  else
-  begin
-    txt := SL.Text;
-    CheckBoilerplate4Fields(txt, CaptionText, False);
-    DocInfo := '';
-    SL.Text := txt;
-  end;
+  Finally
+    MAX_WRAP_WIDTH := MAX_ENTRY_WIDTH;
+  End;
 end;
 
 (*procedure ExecuteTemplateOrBoilerPlate(var AText: string; IEN: Integer; LType: TTemplateLinkType;
                                        OwningForm: TForm; const CaptionText: string = ''; DocInfo: string = '');*)
 procedure ExecuteTemplateOrBoilerPlate(var AText: string; IEN: Integer; LType: TTemplateLinkType;
-                                       OwningForm: TForm; CaptionText: string; var DocInfo: string);
+                                       OwningForm: TForm; CaptionText: string; var DocInfo: string;  ExtCPMon: TCopyPasteDetails = nil);
 
 var
   tmp: TStringList;
@@ -1557,7 +1574,7 @@ begin
   tmp := TStringList.Create;
   try
     tmp.text := AText;
-    ExecuteTemplateOrBoilerPlate(tmp, IEN, LType, OwningForm, CaptionText, DocInfo);
+    ExecuteTemplateOrBoilerPlate(tmp, IEN, LType, OwningForm, CaptionText, DocInfo, ExtCPMon);
     AText := tmp.text;
   finally
     tmp.free;
@@ -1615,6 +1632,8 @@ begin
       else FChildren := tcNone;
     end;
     FLocked := FALSE;
+
+    fIsComCare := (Piece(DataString, U, 23) = '1');
   finally
     FCloning := FALSE;
   end;
@@ -1790,24 +1809,28 @@ begin
 end;
 
 function TTemplate.GetBoilerplate: string;
+var
+  aLst: TStringList;
 begin
   Result := '';
   if FIsReminderDialog or FIsCOMObject then exit;
-  if(RealType in [ttDoc, ttGroup]) then
-  begin
-    if(not FBoilerPlateLoaded) then
+  if (RealType in [ttDoc, ttGroup]) then
     begin
-      StatusText('Loading Template Boilerplate...');
-      try
-        GetTemplateBoilerplate(FID);
-        FBoilerplate := RPCBrokerV.Results.Text;
-        FBoilerPlateLoaded := TRUE;
-      finally
-        StatusText('');
-      end;
+      if (not FBoilerPlateLoaded) then
+        begin
+          StatusText('Loading Template Boilerplate...');
+          aLst := TStringList.Create;
+          try
+            GetTemplateBoilerplate(FID, aLst);
+            FBoilerplate := aLst.Text;
+            FBoilerPlateLoaded := TRUE;
+          finally
+            StatusText('');
+            FreeAndNil(aLst);
+          end;
+        end;
+      Result := FBoilerplate;
     end;
-    Result := FBoilerplate;
-  end;
 end;
 
 { Returns the cumulative boilerplate of a groups items }
@@ -1911,7 +1934,7 @@ begin
       end;
       GetTemplateText(TmpSL);
       if(IsDialog) then
-        FDialogAborted := DoTemplateDialog(TmpSL, 'Template: ' + FPrintName, TemplatePreviewMode);
+        FDialogAborted := DoTemplateDialog(TmpSL, 'Template: ' + FPrintName, TemplatePreviewMode, FExtCPMon);
       Result := TmpSL.Text;
     finally
       StatusText('');
@@ -2261,18 +2284,22 @@ begin
 end;
 
 function TTemplate.GetDescription: string;
+var
+  aLst: TStringList;
 begin
-  if(not FDescriptionLoaded) then
-  begin
-    StatusText('Loading Template Boilerplate...');
-    try
-      LoadTemplateDescription(FID);
-      FDescription := RPCBrokerV.Results.Text;
-    finally
-      StatusText('');
+  if (not FDescriptionLoaded) then
+    begin
+      StatusText('Loading Template Boilerplate...');
+      aLst := TStringList.Create;
+      try
+        LoadTemplateDescription(FID, aLst);
+        FDescription := aLst.Text;
+      finally
+        StatusText('');
+        FreeAndNil(aLst);
+      end;
+      FDescriptionLoaded := TRUE;
     end;
-    FDescriptionLoaded := TRUE;
-  end;
   Result := FDescription;
 end;
 
@@ -2483,7 +2510,7 @@ end;
 procedure TTemplate.UpdateImportedFieldNames(List: TStrings);
 const
   SafeCode = #1 + '^@^' + #2;
-  SafeCodeLen = length(SafeCode); 
+  SafeCodeLen = length(SafeCode);
 
 var
   i, p, l1: integer;
@@ -2902,27 +2929,24 @@ begin
    Result := Piece(FReminderDialog,U,3);
 end;
 
-// -------- CQ #8665 - RV ------------
 procedure UpdatePersonalObjects;
 var
   i: integer;
 begin
   if not assigned(uPersonalObjects) then
-  begin
-    uPersonalObjects := TStringList.Create;
-    GetAllowedPersonalObjects;
-    for i := 0 to RPCBrokerV.Results.Count-1 do
-      uPersonalObjects.Add(Piece(RPCBrokerV.Results[i],U,1));
-    uPersonalObjects.Sorted := TRUE;
-  end;
+    begin
+      uPersonalObjects := TStringList.Create;
+      GetAllowedPersonalObjects(uPersonalObjects);
+      for i := 0 to uPersonalObjects.Count - 1 do
+        uPersonalObjects[i] := Piece(uPersonalObjects[i], U, 1);
+      uPersonalObjects.Sorted := TRUE;
+    end;
 end;
-// -----end CQ #8665 ------------
-
 
 procedure SetTemplateDialogCanceled(value: Boolean);
 begin
   uTemplateDialogCanceled := value;
-end;  
+end;
 
 function WasTemplateDialogCanceled: Boolean;
 begin
@@ -2932,7 +2956,7 @@ end;
 procedure SetTemplateBPHasObjects(value: Boolean);
 begin
   uTemplateBPHasObjects := value;
-end;  
+end;
 
 function TemplateBPHasObjects: Boolean;
 begin
@@ -2944,4 +2968,3 @@ initialization
 finalization
   ReleaseTemplates;
 end.
-

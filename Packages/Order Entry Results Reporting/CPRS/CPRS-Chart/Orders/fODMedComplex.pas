@@ -63,7 +63,7 @@ implementation
 
 {$R *.DFM}
 
-uses rODBase, System.Types;
+uses rODBase, System.Types, VAUtils;
 
 const
   COL_SELECT   =  0;

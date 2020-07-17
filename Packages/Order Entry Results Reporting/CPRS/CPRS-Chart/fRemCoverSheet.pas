@@ -68,6 +68,8 @@ type
     lblView: TLabel;
     lblCAC: TVA508StaticText;
     VA508ImageListLabeler1: TVA508ImageListLabeler;
+    caMoveDown: TVA508ComponentAccessibility;
+    caMoveUP: TVA508ComponentAccessibility;
     procedure cbxLocationNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cbxServiceNeedData(Sender: TObject; const StartFrom: String;
@@ -131,6 +133,8 @@ type
     procedure cbSystemExit(Sender: TObject);
     procedure sbCopyRightExit(Sender: TObject);
     procedure btnOKExit(Sender: TObject);
+    procedure caMoveDownCaptionQuery(Sender: TObject; var Text: string);
+    procedure caMoveUPCaptionQuery(Sender: TObject; var Text: string);
   private
     FData: TORStringList;     // DataCode IEN ^ Modified Flag  Object=TStringList
     FUserInfo: TORStringList; // C^User Class, D^Division
@@ -287,6 +291,7 @@ var
   i, idx: integer;
   tmp, tmp2, tmp3: string;
   Node: TORTreeNode;
+  aList: TStrings;
 
 begin
   FTopSortTag := 3;
@@ -308,7 +313,14 @@ begin
   FUsers := TORStringList.Create;
   FMasterList := TORStringList.Create;
   //FMasterList.Assign(GetAllRemindersAndCategories);
-  FastAssign(GetAllRemindersAndCategories, FMasterList);
+  aList := TStringList.Create;
+  try
+    GetAllRemindersAndCategories(aList);
+    FastAssign(aList, FMasterList);
+  finally
+     FreeAndNil(aList);
+  end;
+
   for i := 0 to FMasterList.Count-1 do
   begin
     tmp := FMasterList[i];
@@ -422,8 +434,16 @@ end;
 
 procedure TfrmRemCoverSheet.cbxServiceNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  aLst: TStringList;
 begin
-  cbxService.ForDataUse(ServiceSearch(StartFrom, Direction, TRUE));
+  aLst := TStringList.Create;
+  try
+    ServiceSearch(aLst, StartFrom, Direction, TRUE);
+    cbxService.ForDataUse(aLst);
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 procedure TfrmRemCoverSheet.cbxUserNeedData(Sender: TObject;
@@ -774,6 +794,20 @@ begin
   end;
 end;
 
+procedure TfrmRemCoverSheet.caMoveDownCaptionQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  Text := 'Move item down list';
+end;
+
+procedure TfrmRemCoverSheet.caMoveUPCaptionQuery(Sender: TObject;
+  var Text: string);
+begin
+  inherited;
+  Text := 'Move item up list';
+end;
+
 procedure TfrmRemCoverSheet.cbEditLevelClick(Sender: TObject);
 var
   cb: TORCheckBox;
@@ -1016,8 +1050,9 @@ begin
   if idx < 0 then
   begin
     Result := TORStringList.Create;
+    tmpSL := TStringList.Create;
     try
-      tmpSL := GetCategoryItems(StrToIntDef(CatIEN,0));
+      if GetCategoryItems(StrToIntDef(CatIEN,0), tmpSL) = 0 then exit;
       for i := 0 to tmpSL.Count-1 do
       begin
         tmp := copy(tmpSL[i],1,1);
@@ -1032,8 +1067,10 @@ begin
         Result.Add(tmp);
       end;
       FCatInfo.AddObject(CatIEN, Result);
+      FreeAndNil(tmpSL);
     except
       Result.Free;
+      FreeAndNil(tmpSl);
       raise;
     end;
   end
@@ -1884,15 +1921,17 @@ function TfrmRemCoverSheet.GetCoverSheetLvlData(ALevel,
 var
   IEN: string;
   i, j: integer;
-
 begin
-  Result := GetCoverSheetLevelData(ALevel, AClass);
-  for i := 0 to Result.Count-1 do
+  Result := TStringList.Create;
+  if GetCoverSheetLevelData(ALevel, AClass, result) > 0 then
   begin
-    IEN := copy(piece(Result[i],U,2),2,MaxInt);
-    j := FMasterList.IndexOfPiece(IEN);
-    if j >= 0 then
-      Result[i] := Result[i] + piece(FMasterList[j],U,3);
+    for i := 0 to Result.Count-1 do
+      begin
+        IEN := copy(piece(Result[i],U,2),2,MaxInt);
+        j := FMasterList.IndexOfPiece(IEN);
+        if j >= 0 then
+          Result[i] := Result[i] + piece(FMasterList[j],U,3);
+      end;
   end;
 end;
 

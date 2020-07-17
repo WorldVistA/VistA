@@ -1,0 +1,2 @@
+inherited fraCoverSheetDisplayPanel_CPRS_Immunizations: TfraCoverSheetDisplayPanel_CPRS_Immunizations
+end

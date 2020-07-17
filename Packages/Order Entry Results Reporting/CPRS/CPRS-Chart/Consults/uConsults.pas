@@ -101,6 +101,7 @@ type
   end;
 
   TConsultTitles = class
+  public
     DfltTitle: Integer;
     DfltTitleName: string;
     ShortList: TStringList;
@@ -109,6 +110,7 @@ type
   end;
 
   TClinProcTitles = class
+  public
     DfltTitle: Integer;
     DfltTitleName: string;
     ShortList: TStringList;

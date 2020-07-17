@@ -6,7 +6,7 @@ uses
   SysUtils, windows, Messages, Classes, Graphics, Vcl.Controls,
   Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, Grids,
   ORCtrls, Vawrgrid, uCore, Menus, uConst, fBase508Form,
-  VA508AccessibilityManager, Vcl.ComCtrls;
+  VA508AccessibilityManager, Vcl.ComCtrls, iCoverSheetIntf;
 
 const
   SOC_QUIT = 1;        { close single dialog }
@@ -71,6 +71,7 @@ type
     Panel4: TPanel;
     ckNCL: TCheckBox;
     ckYCL: TCheckBox;
+    lblYN: TLabel;
     procedure bbQuitClick(Sender: TObject);
     procedure bbAddComClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -158,11 +159,12 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn, uProbs, fProbs, rProbs, fCover, rCover, rCore, rOrders, fProbCmt, fProbLex, rPCE, uInit  ,
+uses ORFn, uProbs, fProbs, rProbs, rCover, rCore, rOrders, fProbCmt, fProbLex, rPCE, uInit  ,
      VA508AccessibilityRouter, VAUtils, rMisc, uGlobalVar;
 
 type
   TDialogItem = class { for loading edits & quick orders }
+  public
     ControlName: string;
     DialogPtr: Integer;
     Instance: Integer;
@@ -489,7 +491,7 @@ begin
     if Reason <> 'A' then
       begin {edit,remove or display existing problem}
         problemIFN := Piece(subjProb, u, 1);
-        FastAssign(EditLoad(ProblemIFN), AList) ;   //V17.5   RV
+        EditLoad(ProblemIFN, AList);
       end
     else {new  problem}
       SetDefaultProb(Alist, subjProb);
@@ -886,18 +888,23 @@ begin
         begin
           ut := '';
           if PLUser.usPrimeUser then ut := '1';
-          FastAssign(EditSave(ProblemIFN, User.DUZ, PLPt.ptVAMC, ut, ProbRec.FilerObject, FSearchString), AList) ;    //V17.5  RV
+          EditSave(ProblemIFN, User.DUZ, PLPt.ptVAMC, ut, ProbRec.FilerObject, FSearchString, AList);
+          PLUpdateDateTime := Now;
         end;
       'A','a':  {new problem}
-         FastAssign(AddSave(PLPt.GetGMPDFN(Patient.DFN, Patient.Name),
-           pProviderID, PLPt.ptVAMC, ProbRec.FilerObject, FSearchString), AList) ;  //*DFN*
+        begin
+           AddSave(PLPt.GetGMPDFN(Patient.DFN, Patient.Name),
+           pProviderID, PLPt.ptVAMC, ProbRec.FilerObject, FSearchString, AList) ;  //*DFN*
+           PLUpdateDateTime := Now;
+        end;
       'R','r': {remove problem}
          begin
            remcom := '';
            if Probrec.commentcount > 0 then
              if TComment(Probrec.comments[pred(probrec.commentcount)]).IsNew then
                remcom := TComment(Probrec.comments[pred(probrec.commentcount)]).Narrative;
-           FastAssign(ProblemDelete(ProbRec.PIFN, User.DUZ, PLPt.ptVAMC, remcom), AList) ;    //changed in v14
+           ProblemDelete(ProbRec.PIFN, User.DUZ, PLPt.ptVAMC, remcom, AList);
+           PLUpdateDateTime := Now;
          end
     else exit;
     end; {case}
@@ -909,7 +916,7 @@ begin
         Alist.clear;
         vu:=PLUser.usViewAct;
         fChanged := True;  {ensure update of problem list on close}
-        Changes.RefreshCoverPL := True;
+        CoverSheet.OnRefreshPanel(Self, CV_CPRS_PROB);
         if RequestNTRT then
         begin
           PtID := Patient.Name + ' (' + Copy(Patient.Name, 0, 1) + Copy(Patient.SSN, (Length(Patient.SSN) - 3), 4) + ')';
@@ -1045,7 +1052,7 @@ var
 begin  {BODY }
   Today := PLPt.Today;
   EncounterDate := Trunc(Encounter.DateTime);
-  if Pos('ICD-9-CM',Piece(prob, u, 3)) > 0 then
+  if (Pos('ICD-9-CM',Piece(prob, u, 3)) > 0) or (Pos('ICD-10-CM',Piece(prob, u, 3)) > 0) then
     ICDCode := Piece(Piece(Piece(prob, u, 3),' ',2),')',1)
   else
     ICDCode := Piece(prob, u, 3);
@@ -1180,7 +1187,7 @@ begin
     begin
       alist := TstringList.create;
       try
-        FastAssign(ProviderList('', 25, V, V), AList) ;
+        ProviderList('', 25, V, V, AList);
         if alist.count > 0 then
           begin
             if cbProv.items.count + 25 > 100 then
@@ -1196,18 +1203,8 @@ begin
 end;
 
 procedure TfrmdlgProb.cbLocDropDown(Sender: TObject);
-var
-  alist: TstringList;
-  v: string;
 begin
-  v := uppercase(cbLoc.text);
-  alist := TstringList.create;
-  try
-    FastAssign(ClinicSearch(' '), AList) ;
-    if alist.count > 0 then FastAssign(Alist, cbLoc.Items);
-  finally
-    alist.free;
-  end;
+  ClinicSearch(' ', cbLoc.Items);
 end;
 
 procedure TfrmdlgProb.FormCreate(Sender: TObject);
@@ -1215,7 +1212,6 @@ begin
   FSilent := False;
   ckNCL.Visible := IsLejeuneActive;
   ckYCL.Visible := IsLejeuneActive;
-
 end;
 
 { old TPLDlgForm Methods }
@@ -1407,8 +1403,16 @@ end;
 
 procedure TfrmdlgProb.cbServNeedData(Sender: TObject; const StartFrom: String;
   Direction, InsertAt: Integer);
+var
+  aLst: TStringList;
 begin
-  cbServ.ForDataUse(ServiceSearch(StartFrom, Direction));
+  aLst := TstringList.Create;
+  try
+    ServiceSearch(aLst, StartFrom, Direction);
+    cbServ.ForDataUse(aLst);
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 //procedure TfraVisitRelated.HandleVA508Caption(ParentCheckBox: TCheckBox; chkEnabled: Boolean);
@@ -1455,8 +1459,7 @@ begin
    CheckBox := ParentCheckBox;
    OrigCaption := ParentCheckBox.Caption;
    OrigWidth := ParentCheckBox.Width;
-
-  ParentCheckBox.Width := 20;
+   ParentCheckBox.Width := 20;
    ParentCheckBox.Caption := '';
 
    VA508Label := TStaticText.Create(ParentCheckBox.Owner);

@@ -34,7 +34,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore;
+uses rCore, VAUtils;
 
 const
   TX_NO_TEXT = 'Some text must be entered.';
@@ -122,10 +122,19 @@ begin
 end;
 
 procedure TfrmODText.cmdAcceptClick(Sender: TObject);
+var
+  ReleasePending: boolean;
+  Msg: TMsg;
+
 begin
   inherited;
+  ReleasePending := PeekMessage(Msg, Handle, CM_RELEASE, CM_RELEASE, PM_REMOVE);
+
   Application.ProcessMessages; //CQ 14670
   memText.Lines.Text := Trim(memText.Lines.Text); //CQ 14670
+
+  if ReleasePending then
+    Release;
 end;
 
 procedure TfrmODText.ControlChange(Sender: TObject);

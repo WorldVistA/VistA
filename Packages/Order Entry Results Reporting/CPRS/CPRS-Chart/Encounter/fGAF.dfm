@@ -92,7 +92,7 @@ inherited frmGAF: TfrmGAF
     ExplicitLeft = 0
     ExplicitTop = 35
     ExplicitWidth = 624
-    inherited lstRenameMe: TCaptionListView
+    inherited lstCaptionList: TCaptionListView
       Width = 624
       Columns = <
         item

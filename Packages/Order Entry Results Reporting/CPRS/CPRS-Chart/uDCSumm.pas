@@ -45,6 +45,7 @@ type
   end;
 
   TDCSummTitles = class
+  public
     DfltTitle: Integer;
     DfltTitleName: string;
     ShortList: TStringList;
@@ -53,6 +54,7 @@ type
   end;
 
   TDCSummPrefs = class
+  public
     DfltLoc: Integer;
     DfltLocName: string;
     SortAscending: Boolean;

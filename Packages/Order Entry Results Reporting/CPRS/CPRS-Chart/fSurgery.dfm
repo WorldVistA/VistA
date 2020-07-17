@@ -3,18 +3,18 @@ inherited frmSurgery: TfrmSurgery
   Top = 224
   Align = alClient
   Caption = 'Surgery Page'
-  ClientHeight = 363
-  ClientWidth = 712
+  ClientHeight = 492
+  ClientWidth = 832
   HelpFile = 'overvw'
   Menu = mnuNotes
   OnDestroy = FormDestroy
-  ExplicitWidth = 728
-  ExplicitHeight = 421
+  ExplicitWidth = 848
+  ExplicitHeight = 551
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
-    Top = 358
-    Width = 712
+    Top = 487
+    Width = 832
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -24,7 +24,7 @@ inherited frmSurgery: TfrmSurgery
   end
   inherited sptHorz: TSplitter
     Left = 64
-    Height = 358
+    Height = 487
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -36,14 +36,14 @@ inherited frmSurgery: TfrmSurgery
   end
   inherited pnlLeft: TPanel
     Width = 64
-    Height = 358
+    Height = 487
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     Constraints.MinWidth = 37
     ExplicitWidth = 64
-    ExplicitHeight = 358
+    ExplicitHeight = 487
     object lblCases: TOROffsetLabel
       Left = 0
       Top = 0
@@ -60,16 +60,17 @@ inherited frmSurgery: TfrmSurgery
     end
     object lblSpace1: TLabel
       Left = 0
-      Top = 313
+      Top = 442
       Width = 64
       Height = 3
       Align = alBottom
       AutoSize = False
       Caption = ' '
+      ExplicitTop = 313
     end
     object cmdNewNote: TORAlignButton
       Left = 0
-      Top = 316
+      Top = 445
       Width = 64
       Height = 21
       Align = alBottom
@@ -80,7 +81,7 @@ inherited frmSurgery: TfrmSurgery
     end
     object cmdPCE: TORAlignButton
       Left = 0
-      Top = 337
+      Top = 466
       Width = 64
       Height = 21
       Align = alBottom
@@ -93,17 +94,18 @@ inherited frmSurgery: TfrmSurgery
       Left = 0
       Top = 19
       Width = 64
-      Height = 294
+      Height = 423
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       object splDrawers: TSplitter
         Left = 0
-        Top = 291
+        Top = 420
         Width = 64
         Height = 3
         Cursor = crVSplit
         Align = alBottom
+        ExplicitTop = 291
       end
       object lstNotes: TORListBox
         Left = 14
@@ -124,7 +126,7 @@ inherited frmSurgery: TfrmSurgery
         Left = 0
         Top = 0
         Width = 64
-        Height = 291
+        Height = 420
         Align = alClient
         Constraints.MinWidth = 30
         DragMode = dmAutomatic
@@ -146,28 +148,32 @@ inherited frmSurgery: TfrmSurgery
   end
   inherited pnlRight: TPanel
     Left = 68
-    Width = 644
-    Height = 358
+    Width = 764
+    Height = 487
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     Constraints.MinWidth = 30
+    OnResize = pnlRightResize
     ExplicitLeft = 68
-    ExplicitWidth = 644
-    ExplicitHeight = 358
+    ExplicitWidth = 764
+    ExplicitHeight = 487
     object sptVert: TSplitter
       Left = 0
-      Top = 309
-      Width = 644
+      Top = 438
+      Width = 764
       Height = 4
       Cursor = crVSplit
       Align = alBottom
+      AutoSnap = False
+      ExplicitTop = 309
+      ExplicitWidth = 644
     end
     object memPCEShow: TRichEdit
       Left = 0
-      Top = 313
-      Width = 644
+      Top = 442
+      Width = 764
       Height = 45
       Align = alBottom
       Color = clCream
@@ -184,22 +190,35 @@ inherited frmSurgery: TfrmSurgery
       ScrollBars = ssVertical
       TabOrder = 2
       WantReturns = False
+      Zoom = 100
     end
     object pnlWrite: TPanel
       Left = 0
       Top = 0
-      Width = 644
-      Height = 309
+      Width = 764
+      Height = 438
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       Visible = False
       OnResize = pnlWriteResize
+      object spEditDetails: TSplitter
+        Left = 0
+        Top = 334
+        Width = 764
+        Height = 4
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        Visible = False
+        ExplicitLeft = 24
+        ExplicitTop = 298
+      end
       object memNewNote: TRichEdit
         Left = 0
         Top = 67
-        Width = 644
-        Height = 242
+        Width = 764
+        Height = 267
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -213,20 +232,21 @@ inherited frmSurgery: TfrmSurgery
         ScrollBars = ssVertical
         TabOrder = 1
         WantTabs = True
+        Zoom = 100
         OnChange = memNewNoteChange
         OnKeyDown = memNewNoteKeyDown
       end
       object pnlFields: TPanel
         Left = 0
         Top = 0
-        Width = 644
+        Width = 764
         Height = 67
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         OnResize = pnlFieldsResize
         DesignSize = (
-          644
+          764
           67)
         object bvlNewTitle: TBevel
           Left = 5
@@ -247,7 +267,7 @@ inherited frmSurgery: TfrmSurgery
           ShowHint = True
         end
         object lblAuthor: TLabel
-          Left = 425
+          Left = 545
           Top = 6
           Width = 148
           Height = 13
@@ -258,6 +278,7 @@ inherited frmSurgery: TfrmSurgery
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
+          ExplicitLeft = 425
         end
         object lblVisit: TLabel
           Left = 6
@@ -268,7 +289,7 @@ inherited frmSurgery: TfrmSurgery
           ShowAccelChar = False
         end
         object lblCosigner: TLabel
-          Left = 330
+          Left = 450
           Top = 21
           Width = 243
           Height = 13
@@ -280,6 +301,7 @@ inherited frmSurgery: TfrmSurgery
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
+          ExplicitLeft = 330
         end
         object lblSubject: TLabel
           Left = 6
@@ -308,7 +330,7 @@ inherited frmSurgery: TfrmSurgery
           ShowHint = True
         end
         object cmdChange: TButton
-          Left = 579
+          Left = 699
           Top = 6
           Width = 58
           Height = 21
@@ -320,7 +342,7 @@ inherited frmSurgery: TfrmSurgery
         object txtSubject: TCaptionEdit
           Left = 48
           Top = 40
-          Width = 589
+          Width = 709
           Height = 21
           Hint = 'Subject is limited to a maximum of 80 characters.'
           Anchors = [akLeft, akTop, akRight]
@@ -332,19 +354,88 @@ inherited frmSurgery: TfrmSurgery
           Caption = 'Subject'
         end
       end
+      object CPMemNewNote: TCopyPasteDetails
+        Left = 0
+        Top = 338
+        Width = 764
+        Height = 100
+        Align = alBottom
+        BevelInner = bvRaised
+        BorderStyle = bsSingle
+        Caption = 'CPMemNewNote'
+        Constraints.MinHeight = 32
+        ShowCaption = False
+        TabOrder = 2
+        Visible = False
+        CopyMonitor = frmFrame.CPAppMon
+        CollapseBtn.Left = 739
+        CollapseBtn.Top = 0
+        CollapseBtn.Width = 17
+        CollapseBtn.Height = 20
+        CollapseBtn.Align = alRight
+        CollapseBtn.Caption = #218
+        CollapseBtn.Font.Charset = DEFAULT_CHARSET
+        CollapseBtn.Font.Color = clWindowText
+        CollapseBtn.Font.Height = -11
+        CollapseBtn.Font.Name = 'Wingdings'
+        CollapseBtn.Font.Style = []
+        CollapseBtn.ParentFont = False
+        CollapseBtn.TabOrder = 0
+        CollapseBtn.TabStop = False
+        EditMonitor.CopyMonitor = frmFrame.CPAppMon
+        EditMonitor.OnLoadPastedText = LoadPastedText
+        EditMonitor.OnPasteToMonitor = PasteToMonitor
+        EditMonitor.OnSaveTheMonitor = SaveTheMonitor
+        EditMonitor.RelatedPackage = '8925'
+        EditMonitor.TrackOnlyEdits = <>
+        InfoMessage.AlignWithMargins = True
+        InfoMessage.Left = 3
+        InfoMessage.Top = 3
+        InfoMessage.Width = 625
+        InfoMessage.Height = 49
+        InfoMessage.Align = alClient
+        InfoMessage.Font.Charset = ANSI_CHARSET
+        InfoMessage.Font.Color = clWindowText
+        InfoMessage.Font.Height = -11
+        InfoMessage.Font.Name = 'MS Sans Serif'
+        InfoMessage.Font.Style = []
+        InfoMessage.Lines.Strings = (
+          '<-- Please select the desired paste date')
+        InfoMessage.ParentFont = False
+        InfoMessage.ReadOnly = True
+        InfoMessage.ScrollBars = ssBoth
+        InfoMessage.TabOrder = 0
+        InfoMessage.WantReturns = False
+        InfoMessage.WordWrap = False
+        InfoMessage.Zoom = 100
+        InfoSelector.AlignWithMargins = True
+        InfoSelector.Left = 3
+        InfoSelector.Top = 3
+        InfoSelector.Width = 111
+        InfoSelector.Height = 49
+        InfoSelector.Style = lbOwnerDrawFixed
+        InfoSelector.Align = alClient
+        InfoSelector.ItemHeight = 13
+        InfoSelector.TabOrder = 0
+        OnHide = CPHide
+        OnShow = CPShow
+        SyncSizes = True
+        VisualEdit = memNewNote
+        SaveFindAfter = 0
+      end
     end
     object pnlRead: TPanel
       Left = 0
       Top = 0
-      Width = 644
-      Height = 309
+      Width = 764
+      Height = 438
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
       object lblTitle: TOROffsetLabel
         Left = 0
         Top = 0
-        Width = 644
+        Width = 764
         Height = 19
         Align = alTop
         Caption = 'No Surgery Cases Found'
@@ -362,11 +453,22 @@ inherited frmSurgery: TfrmSurgery
         WordWrap = False
         ExplicitWidth = 120
       end
+      object spDetails: TSplitter
+        Left = 0
+        Top = 334
+        Width = 764
+        Height = 4
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        ExplicitTop = 19
+        ExplicitWidth = 644
+      end
       object memSurgery: TRichEdit
         Left = 0
         Top = 19
-        Width = 644
-        Height = 290
+        Width = 764
+        Height = 315
         Align = alClient
         Color = clCream
         Ctl3D = True
@@ -388,6 +490,75 @@ inherited frmSurgery: TfrmSurgery
         TabOrder = 0
         WantReturns = False
         WordWrap = False
+        Zoom = 100
+      end
+      object CPMemSurgery: TCopyPasteDetails
+        Left = 0
+        Top = 338
+        Width = 764
+        Height = 100
+        Align = alBottom
+        BevelInner = bvRaised
+        BorderStyle = bsSingle
+        Caption = 'CPMemSurgery'
+        Constraints.MinHeight = 32
+        ShowCaption = False
+        TabOrder = 1
+        Visible = False
+        CopyMonitor = frmFrame.CPAppMon
+        CollapseBtn.Left = 739
+        CollapseBtn.Top = 0
+        CollapseBtn.Width = 17
+        CollapseBtn.Height = 20
+        CollapseBtn.Align = alRight
+        CollapseBtn.Caption = #218
+        CollapseBtn.Font.Charset = DEFAULT_CHARSET
+        CollapseBtn.Font.Color = clWindowText
+        CollapseBtn.Font.Height = -11
+        CollapseBtn.Font.Name = 'Wingdings'
+        CollapseBtn.Font.Style = []
+        CollapseBtn.ParentFont = False
+        CollapseBtn.TabOrder = 0
+        CollapseBtn.TabStop = False
+        EditMonitor.CopyMonitor = frmFrame.CPAppMon
+        EditMonitor.OnCopyToMonitor = CopyToMonitor
+        EditMonitor.OnLoadPastedText = LoadPastedText
+        EditMonitor.RelatedPackage = '8925'
+        EditMonitor.TrackOnlyEdits = <>
+        InfoMessage.AlignWithMargins = True
+        InfoMessage.Left = 3
+        InfoMessage.Top = 3
+        InfoMessage.Width = 625
+        InfoMessage.Height = 49
+        InfoMessage.Align = alClient
+        InfoMessage.Font.Charset = ANSI_CHARSET
+        InfoMessage.Font.Color = clWindowText
+        InfoMessage.Font.Height = -11
+        InfoMessage.Font.Name = 'MS Sans Serif'
+        InfoMessage.Font.Style = []
+        InfoMessage.Lines.Strings = (
+          '<-- Please select the desired paste date')
+        InfoMessage.ParentFont = False
+        InfoMessage.ReadOnly = True
+        InfoMessage.ScrollBars = ssBoth
+        InfoMessage.TabOrder = 0
+        InfoMessage.WantReturns = False
+        InfoMessage.WordWrap = False
+        InfoMessage.Zoom = 100
+        InfoSelector.AlignWithMargins = True
+        InfoSelector.Left = 3
+        InfoSelector.Top = 3
+        InfoSelector.Width = 111
+        InfoSelector.Height = 49
+        InfoSelector.Style = lbOwnerDrawFixed
+        InfoSelector.Align = alClient
+        InfoSelector.ItemHeight = 13
+        InfoSelector.TabOrder = 0
+        OnHide = CPHide
+        OnShow = CPShow
+        SyncSizes = True
+        VisualEdit = memSurgery
+        SaveFindAfter = 0
       end
     end
   end
@@ -440,6 +611,12 @@ inherited frmSurgery: TfrmSurgery
         'Status = stsDefault')
       (
         'Component = frmSurgery'
+        'Status = stsDefault')
+      (
+        'Component = CPMemSurgery'
+        'Status = stsDefault')
+      (
+        'Component = CPMemNewNote'
         'Status = stsDefault'))
   end
   object mnuNotes: TMainMenu
@@ -565,40 +742,40 @@ inherited frmSurgery: TfrmSurgery
         Caption = '-'
       end
       object mnuViewAll: TMenuItem
-        Tag = 1
+        Tag = -1
         Caption = '&All Cases'
         OnClick = mnuViewClick
       end
       object mnuViewBySurgeon: TMenuItem
-        Tag = 4
+        Tag = -4
         Caption = 'Cases by &Surgeon'
         Enabled = False
         Visible = False
         OnClick = mnuViewClick
       end
       object mnuViewByDate: TMenuItem
-        Tag = 5
+        Tag = -5
         Caption = 'Cases by Date &Range'
         Enabled = False
         Visible = False
         OnClick = mnuViewClick
       end
       object mnuViewUncosigned: TMenuItem
-        Tag = 3
+        Tag = -3
         Caption = 'Un&cosigned Notes'
         Enabled = False
         Visible = False
         OnClick = mnuViewClick
       end
       object mnuViewUnsigned: TMenuItem
-        Tag = 2
+        Tag = -2
         Caption = '&Unsigned Notes'
         Enabled = False
         Visible = False
         OnClick = mnuViewClick
       end
       object mnuViewCustom: TMenuItem
-        Tag = 6
+        Tag = -6
         Caption = 'Custo&m View'
         OnClick = mnuViewClick
       end

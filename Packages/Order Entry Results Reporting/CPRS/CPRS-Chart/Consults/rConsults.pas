@@ -20,8 +20,8 @@ function  IdentifyConsultsClass: integer;
 function  IdentifyClinProcClass: integer;
 procedure ListConsultTitlesShort(Dest: TStrings);
 procedure ListClinProcTitlesShort(Dest: TStrings);
-function SubSetOfConsultTitles(const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): TStrings;
-function SubSetOfClinProcTitles(const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): TStrings;
+function SubSetOfConsultTitles(aResults: TStrings; const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): Integer;
+function SubSetOfClinProcTitles(aResults: TStrings; const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): Integer;
 procedure ResetConsultTitles;
 procedure ResetClinProcTitles;
 
@@ -177,17 +177,11 @@ begin
   end;
 end;
 
-function SubSetOfConsultTitles(const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): TStrings;
-{ returns a pointer to a list of consults progress note titles (for use in a long list box) -
-  The return value is a pointer to RPCBrokerV.Results, so the data must be used BEFORE
-  the next broker call! }
+function SubSetOfConsultTitles(aResults: TStrings; const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): Integer;
+{ returns a pointer to a list of consults progress note titles (for use in a long list box)}
 begin
-(*  if IDNoteTitlesOnly then        //  This RPC not changed for initial ID Notes release
-    CallV('TIU LONG LIST CONSULT TITLES', [StartFrom, Direction, IDNoteTitlesOnly])
-  else*)
-    CallV('TIU LONG LIST CONSULT TITLES', [StartFrom, Direction]);
-  //MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+  CallVistA('TIU LONG LIST CONSULT TITLES', [StartFrom, Direction], aResults);
+  Result := aResults.Count;
 end;
 
 
@@ -250,17 +244,11 @@ begin
   end;
 end;
 
-function SubSetOfClinProcTitles(const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): TStrings;
-{ returns a pointer to a list of clinical procedures titles (for use in a long list box) -
-  The return value is a pointer to RPCBrokerV.Results, so the data must be used BEFORE
-  the next broker call! }
+function SubSetOfClinProcTitles(aResults: TStrings; const StartFrom: string; Direction: Integer; IDNoteTitlesOnly: boolean): Integer;
+{ returns a pointer to a list of clinical procedures titles (for use in a long list box)}
 begin
-(*  if IDNoteTitlesOnly then        //  This RPC not changed for initial ID Notes release
-    CallV('TIU LONG LIST CLINPROC TITLES', [StartFrom, Direction, IDNoteTitlesOnly])
-  else*)
-    CallV('TIU LONG LIST CLINPROC TITLES', [StartFrom, Direction]);
-  //MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+  CallVistA('TIU LONG LIST CLINPROC TITLES', [StartFrom, Direction], aResults);
+  result := aResults.Count;
 end;
 
 {--------------- data retrieval ------------------------------------------}
@@ -713,7 +701,9 @@ function ResubmitConsult(EditResubmitRec: TEditResubmitRec): string;
 var
   i: integer;
 begin
-  with RPCBrokerV, EditResubmitRec do
+  LockBroker;
+  try
+    with RPCBrokerV, EditResubmitRec do
     begin
       ClearParameters := True;
       RemoteProcedure := 'ORQQCN RESUBMIT';
@@ -759,6 +749,9 @@ begin
       Result := '0';
       //Result := Results[0];
     end;
+  finally
+    UnlockBroker;
+  end;
 end;
 
 function  GetCurrentContext: TSelectContext;

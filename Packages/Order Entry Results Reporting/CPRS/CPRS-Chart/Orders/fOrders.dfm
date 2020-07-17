@@ -3,52 +3,52 @@ inherited frmOrders: TfrmOrders
   Top = 177
   HelpContext = 4000
   Caption = 'Orders Page'
-  ClientHeight = 727
-  ClientWidth = 943
+  ClientHeight = 739
+  ClientWidth = 958
   HelpFile = 'overvw'
   Menu = mnuOrders
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 959
-  ExplicitHeight = 785
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 976
+  ExplicitHeight = 809
+  PixelsPerInch = 120
+  TextHeight = 16
   inherited shpPageBottom: TShape
-    Top = 722
-    Width = 943
+    Top = 733
+    Width = 958
     Margins.Left = 6
     Margins.Top = 6
     Margins.Right = 6
     Margins.Bottom = 6
-    ExplicitTop = 721
-    ExplicitWidth = 943
+    ExplicitTop = 733
+    ExplicitWidth = 958
   end
   inherited sptHorz: TSplitter
-    Left = 144
-    Height = 722
+    Left = 146
+    Height = 733
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
     OnMoved = sptHorzMoved
-    ExplicitLeft = 144
-    ExplicitHeight = 721
+    ExplicitLeft = 146
+    ExplicitHeight = 733
   end
   inherited pnlLeft: TPanel
-    Width = 144
-    Height = 722
+    Width = 146
+    Height = 733
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
     Constraints.MinWidth = 46
-    ExplicitWidth = 144
-    ExplicitHeight = 721
+    ExplicitWidth = 146
+    ExplicitHeight = 733
     object OROffsetLabel1: TOROffsetLabel
       Left = 0
       Top = 0
-      Width = 144
-      Height = 23
+      Width = 146
+      Height = 24
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -62,8 +62,8 @@ inherited frmOrders: TfrmOrders
     end
     object lblWrite: TLabel
       Left = 0
-      Top = 119
-      Width = 144
+      Top = 121
+      Width = 146
       Height = 24
       Margins.Left = 4
       Margins.Top = 4
@@ -79,8 +79,8 @@ inherited frmOrders: TfrmOrders
     end
     object sptVert: TSplitter
       Left = 0
-      Top = 92
-      Width = 144
+      Top = 94
+      Width = 146
       Height = 5
       Cursor = crVSplit
       Margins.Left = 4
@@ -92,16 +92,15 @@ inherited frmOrders: TfrmOrders
     end
     object lstSheets: TORListBox
       Left = 0
-      Top = 23
-      Width = 144
-      Height = 69
+      Top = 24
+      Width = 146
+      Height = 70
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alTop
-      Constraints.MinHeight = 37
-      ItemHeight = 13
+      Constraints.MinHeight = 38
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
@@ -113,15 +112,14 @@ inherited frmOrders: TfrmOrders
     end
     object lstWrite: TORListBox
       Left = 0
-      Top = 143
-      Width = 144
-      Height = 579
+      Top = 145
+      Width = 146
+      Height = 588
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alClient
-      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
@@ -130,12 +128,11 @@ inherited frmOrders: TfrmOrders
       ItemTipColor = clWindow
       LongList = False
       Pieces = '2'
-      ExplicitHeight = 578
     end
     object btnDelayedOrder: TORAlignButton
       Left = 0
-      Top = 97
-      Width = 144
+      Top = 99
+      Width = 146
       Height = 22
       Margins.Left = 4
       Margins.Top = 4
@@ -149,26 +146,26 @@ inherited frmOrders: TfrmOrders
     end
   end
   inherited pnlRight: TPanel
-    Left = 148
-    Width = 795
-    Height = 722
+    Left = 151
+    Width = 807
+    Height = 733
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    Constraints.MinWidth = 37
+    Constraints.MinWidth = 38
     ParentColor = True
     ParentCtl3D = False
     ParentFont = False
     OnResize = pnlRightResize
-    ExplicitLeft = 149
-    ExplicitWidth = 794
-    ExplicitHeight = 721
+    ExplicitLeft = 151
+    ExplicitWidth = 807
+    ExplicitHeight = 733
     object lblOrders: TOROffsetLabel
       Left = 0
       Top = 0
-      Width = 794
-      Height = 23
+      Width = 807
+      Height = 24
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -179,9 +176,10 @@ inherited frmOrders: TfrmOrders
       Transparent = False
       VertOffset = 6
       WordWrap = False
+      ExplicitWidth = 806
     end
     object imgHide: TImage
-      Left = 640
+      Left = 650
       Top = 0
       Width = 16
       Height = 16
@@ -207,8 +205,8 @@ inherited frmOrders: TfrmOrders
     end
     object hdrOrders: THeaderControl
       Left = 0
-      Top = 23
-      Width = 794
+      Top = 24
+      Width = 807
       Height = 21
       Margins.Left = 4
       Margins.Top = 4
@@ -280,9 +278,9 @@ inherited frmOrders: TfrmOrders
     end
     object lstOrders: TCaptionListBox
       Left = 0
-      Top = 44
-      Width = 794
-      Height = 677
+      Top = 45
+      Width = 807
+      Height = 688
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4

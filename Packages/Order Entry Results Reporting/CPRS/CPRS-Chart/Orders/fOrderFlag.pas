@@ -31,7 +31,7 @@ implementation
 
 {$R *.DFM}
 
-uses uCore, rCore;
+uses uCore, rCore, VAUtils;
 
 var AlertRecip: Int64;
 

@@ -3,20 +3,20 @@ inherited frmPtSelOptns: TfrmPtSelOptns
   Top = 190
   BorderStyle = bsNone
   Caption = 'frmPtSelOptns'
-  ClientHeight = 269
+  ClientHeight = 279
   ClientWidth = 190
   DefaultMonitor = dmDesktop
   Position = poDesigned
   OnCreate = FormCreate
   ExplicitWidth = 190
-  ExplicitHeight = 269
+  ExplicitHeight = 279
   PixelsPerInch = 96
   TextHeight = 13
   object orapnlMain: TORAutoPanel [0]
     Left = 0
     Top = 0
     Width = 190
-    Height = 269
+    Height = 279
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
@@ -29,7 +29,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
     end
     object lblDateRange: TLabel
       Left = 4
-      Top = 226
+      Top = 240
       Width = 98
       Height = 13
       Caption = 'List Appointments for'
@@ -38,25 +38,25 @@ inherited frmPtSelOptns: TfrmPtSelOptns
       Left = 4
       Top = 24
       Width = 180
-      Height = 84
+      Height = 96
       BevelOuter = bvLowered
       TabOrder = 0
       object radAll: TRadioButton
-        Tag = 18
-        Left = 116
-        Top = 58
-        Width = 55
+        Tag = 19
+        Left = 1
+        Top = 75
+        Width = 60
         Height = 17
         Caption = '&All'
-        TabOrder = 6
+        TabOrder = 7
         OnClick = radHideSrcClick
       end
       object radWards: TRadioButton
         Tag = 17
         Left = 116
-        Top = 40
-        Width = 58
-        Height = 16
+        Top = 39
+        Width = 60
+        Height = 17
         Caption = '&Wards'
         TabOrder = 5
         OnClick = radShowSrcClick
@@ -64,7 +64,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
       object radClinics: TRadioButton
         Tag = 16
         Left = 116
-        Top = 20
+        Top = 21
         Width = 60
         Height = 17
         Caption = '&Clinics'
@@ -76,7 +76,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
       object radSpecialties: TRadioButton
         Tag = 14
         Left = 1
-        Top = 58
+        Top = 57
         Width = 109
         Height = 17
         Caption = '&Specialties'
@@ -96,8 +96,8 @@ inherited frmPtSelOptns: TfrmPtSelOptns
       object radProviders: TRadioButton
         Tag = 12
         Left = 1
-        Top = 20
-        Width = 107
+        Top = 21
+        Width = 115
         Height = 17
         Caption = '&Providers'
         TabOrder = 1
@@ -113,10 +113,20 @@ inherited frmPtSelOptns: TfrmPtSelOptns
         TabOrder = 0
         OnClick = radHideSrcClick
       end
+      object radPcmmTeams: TRadioButton
+        Tag = 18
+        Left = 116
+        Top = 57
+        Width = 60
+        Height = 17
+        Caption = 'PC&MM'
+        TabOrder = 6
+        OnClick = radShowSrcClick
+      end
     end
     object cboList: TORComboBox
       Left = 4
-      Top = 109
+      Top = 121
       Width = 169
       Height = 116
       Style = orcsSimple
@@ -146,7 +156,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
     end
     object cboDateRange: TORComboBox
       Left = 4
-      Top = 244
+      Top = 254
       Width = 169
       Height = 21
       Style = orcsDropDown
@@ -172,6 +182,8 @@ inherited frmPtSelOptns: TfrmPtSelOptns
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 128
+    Top = 192
     Data = (
       (
         'Component = orapnlMain'
@@ -215,7 +227,11 @@ inherited frmPtSelOptns: TfrmPtSelOptns
         'Status = stsDefault')
       (
         'Component = frmPtSelOptns'
-        'Status = stsDefault'))
+        'Status = stsDefault')
+      (
+        'Component = radPcmmTeams'
+        'Text = Patient List PCMM Teams'
+        'Status = stsOK'))
   end
   object calApptRng: TORDateRangeDlg
     DateOnly = True

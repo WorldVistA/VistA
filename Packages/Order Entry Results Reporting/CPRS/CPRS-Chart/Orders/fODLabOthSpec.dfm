@@ -24,6 +24,7 @@ inherited frmODLabOthSpec: TfrmODLabOthSpec
       Height = 270
       Style = orcsSimple
       AutoSelect = True
+      Caption = ''
       Color = clWindow
       DropDownCount = 8
       ItemHeight = 13
@@ -37,6 +38,7 @@ inherited frmODLabOthSpec: TfrmODLabOthSpec
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 0
+      Text = ''
       OnDblClick = cboOtherSpecDblClick
       OnNeedData = cboOtherSpecNeedData
       CharsNeedMatch = 1

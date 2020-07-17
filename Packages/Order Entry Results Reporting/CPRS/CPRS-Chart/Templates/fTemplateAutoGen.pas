@@ -32,7 +32,7 @@ procedure GetAutoGenText(var AName, AText: string; InList: TStringList);
 
 implementation
 
-uses dShared, rTemplates, uTemplates;
+uses dShared, rTemplates, uTemplates, VAUtils;
 
 {$R *.DFM}
 
@@ -127,10 +127,17 @@ begin
   end;
 end;
 
-procedure TfrmTemplateAutoGen.cbxTitlesNeedData(Sender: TObject;
-  const StartFrom: String; Direction, InsertAt: Integer);
+procedure TfrmTemplateAutoGen.cbxTitlesNeedData(Sender: TObject; const StartFrom: String; Direction, InsertAt: Integer);
+var
+  aLst: TStringList;
 begin
-  cbxTitles.ForDataUse(SubSetOfBoilerplatedTitles(StartFrom, Direction));
+  aLst := TStringList.Create;
+  try
+    SubSetOfBoilerplatedTitles(StartFrom, Direction, aLst);
+    cbxTitles.ForDataUse(aLst);
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 procedure TfrmTemplateAutoGen.cbxTitlesDblClick(Sender: TObject);

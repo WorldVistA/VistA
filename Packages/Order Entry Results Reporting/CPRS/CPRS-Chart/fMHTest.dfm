@@ -9,8 +9,8 @@ inherited frmMHTest: TfrmMHTest
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitWidth = 516
+  ExplicitHeight = 471
   PixelsPerInch = 96
   TextHeight = 13
   object sbMain: TScrollBox [0]

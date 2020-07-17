@@ -9,7 +9,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, Buttons, ORCtrls, ComCtrls, ImgList, uTemplates,
   Menus, ORClasses, ORFn, fBase508Form, VA508AccessibilityManager,
-  VA508ImageListLabeler;
+  VA508ImageListLabeler, U_CPTPasteDetails;
 
 type
   TDrawer = (odNone, odTemplates, odEncounter, odReminders, odOrders);
@@ -146,6 +146,7 @@ type
     FNewNoteButton: TButton;
     FCurrentVisibleDrawers: TDrawers;
     FCurrentEnabledDrawers: TDrawers;
+    FCopyMonitor: TCopyPasteDetails;
     function GetAlign: TAlign;
     procedure SetAlign(const Value: TAlign);
     function MinDrawerControlHeight: integer;
@@ -202,6 +203,7 @@ type
     property LastOpenSize: integer read FLastOpenSize write FLastOpenSize;
     property DefTempPiece: integer read FDefTempPiece write FDefTempPiece;
     property TheOpenDrawer: TDrawer read FOpenDrawer;
+     Property CopyMonitor: TCopyPasteDetails read fCopyMonitor write fCopyMonitor;
   published
     property Align: TAlign read GetAlign write SetAlign;
   end;
@@ -870,6 +872,7 @@ begin
   begin
     Template := TTemplate(tvTemplates.Selected.Data);
     Template.TemplatePreviewMode := FALSE;
+    Template.ExtCPMon := FCopyMonitor;
     if Template.IsReminderDialog then
       Template.ExecuteReminderDialog(TForm(Owner))
     else
@@ -890,6 +893,9 @@ begin
           AfterTop := SendMessage(FRichEditControl.Handle, EM_GETFIRSTVISIBLELINE, 0, 0);
           SendMessage(FRichEditControl.Handle, EM_LINESCROLL, 0, -1 * (AfterTop - BeforeLine));
           SpeakTextInserted;
+
+          //show copy/paste entries
+          CopyMonitor.ManuallyShowNewHighlights;
         end;
       end;
     end;
@@ -1462,7 +1468,7 @@ begin
   begin
     Template := TTemplate(tvTemplates.Selected.Data);
     txt := Template.Text;
-    CheckBoilerplate4Fields(txt, 'Template: ' + Template.PrintName);
+    CheckBoilerplate4Fields(txt, 'Template: ' + Template.PrintName, False, FCopyMonitor);
     if txt <> '' then
     begin
       Clipboard.SetTextBuf(PChar(txt));

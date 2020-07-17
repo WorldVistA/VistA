@@ -2,7 +2,7 @@ unit rTIU;
 
 interface
 
-uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, uConst, TRPCB, uTIU;
+uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, uConst, TRPCB, uTIU, Dialogs, UITypes;
 
 type
   TPatchInstalled = record
@@ -20,7 +20,7 @@ function IsClinProcTitle(TitleIEN: Integer): Boolean;
 procedure ListNoteTitlesShort(Dest: TStrings);
 procedure LoadBoilerPlate(Dest: TStrings; Title: Integer);
 function PrintNameForTitle(TitleIEN: Integer): string;
-function SubSetOfNoteTitles(const StartFrom: string; Direction: Integer; IDNotesOnly: boolean): TStrings;
+function SubSetOfNoteTitles(aResults: TStrings; const StartFrom: string; Direction: Integer; IDNotesOnly: boolean): Integer;
 
 { TIU Preferences }
 procedure ResetTIUPreferences;
@@ -53,6 +53,7 @@ procedure ListDCSumm(Dest: TStrings);
 procedure LoadDetailText(Dest: TStrings; IEN: Integer);    //**KCM**
 procedure LoadDocumentText(Dest: TStrings; IEN: Integer);
 procedure GetNoteForEdit(var EditRec: TEditNoteRec; IEN: Integer);
+procedure GetNoteEditTextOnly(ResultList: TStrings; IEN: Integer);
 function VisitStrForNote(IEN: Integer): string;
 function GetCurrentSigners(IEN: integer): TStrings;
 function TitleForNote(IEN: Int64): Integer;
@@ -67,6 +68,7 @@ function GetTIUListItem(IEN: Int64): string;
 { Data Storage }
 //procedure ClearCPTRequired(IEN: Integer);
 procedure DeleteDocument(var DeleteSts: TActionRec; IEN: Integer; const Reason: string);
+function AncillaryPackageMessages(IEN: Integer; const Action: string): string;
 function JustifyDocumentDelete(IEN: Integer): Boolean;
 procedure SignDocument(var SignSts: TActionRec; IEN: Integer; const ESCode: string);
 procedure PutNewNote(var CreatedDoc: TCreatedDoc; const NoteRec: TNoteRec);
@@ -172,7 +174,7 @@ function IsPRFTitle(TitleIEN: Integer): Boolean;
 begin
   Result := False;
   if TitleIEN <= 0 then Exit;
-  Result := sCallV('TIU ISPRF', [TitleIEN]) = '1'; 
+  Result := sCallV('TIU ISPRF', [TitleIEN]) = '1';
 end;
 
 function IsClinProcTitle(TitleIEN: Integer): Boolean;
@@ -207,17 +209,17 @@ begin
   Result := sCallV('TIU GET PRINT NAME', [TitleIEN]);
 end;
 
-function SubSetOfNoteTitles(const StartFrom: string; Direction: Integer; IDNotesOnly: boolean): TStrings;
+function SubSetOfNoteTitles(aResults: TStrings; const StartFrom: string; Direction: Integer; IDNotesOnly: boolean): Integer;
 { returns a pointer to a list of progress note titles (for use in a long list box) -
   The return value is a pointer to RPCBrokerV.Results, so the data must be used BEFORE
   the next broker call! }
 begin
   if IDNotesOnly then
-    CallV('TIU LONG LIST OF TITLES', [CLS_PROGRESS_NOTES, StartFrom, Direction, IDNotesOnly])
+    CallVistA('TIU LONG LIST OF TITLES', [CLS_PROGRESS_NOTES, StartFrom, Direction, IDNotesOnly], aResults)
   else
-    CallV('TIU LONG LIST OF TITLES', [CLS_PROGRESS_NOTES, StartFrom, Direction]);
+    CallVistA('TIU LONG LIST OF TITLES', [CLS_PROGRESS_NOTES, StartFrom, Direction], aResults);
   //MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+  Result := aResults.Count;
 end;
 
 { TIU Preferences  ------------------------------------------------------------------------- }
@@ -349,7 +351,7 @@ end;
 
 function AuthorSignedDocument(IEN: Integer): boolean;
 begin
-  Result := SCallV('TIU HAS AUTHOR SIGNED?', [IEN, User.DUZ]) = '1'; 
+  Result := SCallV('TIU HAS AUTHOR SIGNED?', [IEN, User.DUZ]) = '1';
 end;
 
 function CosignDocument(IEN: Integer): Boolean;
@@ -464,7 +466,7 @@ procedure GetNoteForEdit(var EditRec: TEditNoteRec; IEN: Integer);
 { retrieves internal/external values for progress note fields & loads them into EditRec
   Fields: Title:.01, RefDate:1301, Author:1204, Cosigner:1208, Subject:1701, Location:1205 }
 var
-  i, j: Integer;
+  i, TxtIndx: Integer;
   //x: string;
 
   function FindDT(const FieldID: string): TFMDateTime;
@@ -557,15 +559,47 @@ begin
     if Title = TYP_ADDENDUM then Addend := FindInt('.06');
     with RPCBrokerV do
     begin
-      for i := 0 to Results.Count - 1 do if Results[i] = '$TXT' then break;
-      for j := i downto 0 do Results.Delete(j);
       // -------------------- v19.1 (RV) LOST NOTES?----------------------------
       //Lines := Results;   'Lines' is being overwritten by subsequent Broker calls
       if not Assigned(Lines) then Lines := TStringList.Create;
-      FastAssign(RPCBrokerV.Results, Lines);
+      //load the text if present
+      TxtIndx := Results.IndexOf('$TXT');
+      if TxtIndx > 0 then
+      begin
+        for i := TxtIndx + 1 to Results.Count - 1 do
+         Lines.Add(Results[i]);
+      end;
+
       // -----------------------------------------------------------------------
     end;
   end;
+end;
+
+procedure GetNoteEditTextOnly(ResultList: TStrings; IEN: Integer);
+var
+ RtnLst: TStringList;
+begin
+ RtnLst := TStringList.Create;
+ try
+  CallVistA('TIU LOAD RECORD TEXT', [IEN], RtnLst);
+
+  if RtnLst.Count > 0 then
+  begin
+    if RtnLst[0] = '$TXT' then
+    begin
+
+     //Remove the indicator
+     RtnLst.Delete(0);
+
+     //assign the remaining
+     ResultList.Assign(RtnLst);
+
+    end;
+  end;
+
+ finally
+  RtnLst.Free;
+ end;
 end;
 
 function VisitStrForNote(IEN: Integer): string;
@@ -635,7 +669,7 @@ begin
   begin
     ClearParameters := True;
     RemoteProcedure := 'TIU UPDATE RECORD';
-    Param[0].PType := literal;                     
+    Param[0].PType := literal;
     Param[0].Value := IntToStr(IEN);
     Param[1].PType := list;
     with Param[1] do Mult['.11']  := '0';          //  **** block removed in v19.1  {RV} ****
@@ -646,11 +680,46 @@ end;*)
 procedure DeleteDocument(var DeleteSts: TActionRec; IEN: Integer; const Reason: string);
 { delete a TIU document given the internal entry number, return reason if unable to delete }
 var
-  x: string;
+  Return: TStrings;
 begin
-  x := sCallV('TIU DELETE RECORD', [IEN, Reason]);
-  DeleteSts.Success := Piece(x, U, 1) = '0';
-  DeleteSts.Reason  := Piece(x, U, 2);
+  Return := TStringList.Create;
+  CallVistA('TIU DELETE RECORD', [IEN, Reason], Return);
+  if (Return.Count > 0) then
+  begin
+    DeleteSts.Success := Piece(Return.Strings[0], U, 1) = '0';
+    DeleteSts.Reason := Piece(Return.Strings[0], U, 2);
+  end
+  else
+  begin
+    DeleteSts.Success := False;
+    DeleteSts.Reason := 'The server did not return a status.';
+  end;
+  Return.Destroy;
+end;
+
+function AncillaryPackageMessages(IEN: Integer; const Action: string): string;
+var
+  Return: TStrings;
+  Line: integer;
+begin
+  Return := TStringList.Create;
+  CallVistA('TIU ANCILLARY PACKAGE MESSAGE', [IEN, Action], Return);
+  Result := '';
+  if (Return.Count > 0) then
+  begin
+    for Line := 0 to Return.Count - 1 do
+    begin
+      if (Piece(Return.Strings[Line], U, 1) = '~NPKG') then
+      begin
+        Result := Result + CRLF + CRLF + Piece(Return.Strings[Line], U, 2);
+      end
+      else
+      begin
+        Result := Result + ' ' + Return.Strings[Line];
+      end;
+    end;
+  end;
+  Return.Destroy;
 end;
 
 function JustifyDocumentDelete(IEN: Integer): Boolean;
@@ -667,7 +736,7 @@ begin
   begin
     ClearParameters := True;
     RemoteProcedure := 'TIU UPDATE RECORD';
-    Param[0].PType := literal;                           
+    Param[0].PType := literal;
     Param[0].Value := IntToStr(IEN);
     Param[1].PType := list;
     with Param[1] do Mult['.11']  := '0';                 //  **** block removed in v19.1  {RV} ****
@@ -686,42 +755,47 @@ procedure PutNewNote(var CreatedDoc: TCreatedDoc; const NoteRec: TNoteRec);
 var
   ErrMsg: string;
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU CREATE RECORD';
-    Param[0].PType := literal;
-    Param[0].Value := Patient.DFN;  //*DFN*
-    Param[1].PType := literal;
-    Param[1].Value := IntToStr(NoteRec.Title);
-    Param[2].PType := literal;
-    Param[2].Value := ''; //FloatToStr(Encounter.DateTime);
-    Param[3].PType := literal;
-    Param[3].Value := ''; //IntToStr(Encounter.Location);
-    Param[4].PType := literal;
-    Param[4].Value := '';
-    Param[5].PType := list;
-    with Param[5] do
+  LockBroker;
+  try
+    with RPCBrokerV do
     begin
-      //Mult['.11'] := BOOLCHAR[NoteRec.NeedCPT];  //  **** removed in v19.1  {RV} ****
-      Mult['1202'] := IntToStr(NoteRec.Author);
-      Mult['1301'] := FloatToStr(NoteRec.DateTime);
-      Mult['1205'] := IntToStr(Encounter.Location);
-      if NoteRec.Cosigner > 0 then Mult['1208'] := IntToStr(NoteRec.Cosigner);
-      if NoteRec.PkgRef <> '' then Mult['1405'] := NoteRec.PkgRef;
-      Mult['1701'] := FilteredString(Copy(NoteRec.Subject, 1, 80));
-      if NoteRec.IDParent > 0 then Mult['2101'] := IntToStr(NoteRec.IDParent);
-(*      if NoteRec.Lines <> nil then
-        for i := 0 to NoteRec.Lines.Count - 1 do
-          Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(NoteRec.Lines[i]);*)
+      ClearParameters := True;
+      RemoteProcedure := 'TIU CREATE RECORD';
+      Param[0].PType := literal;
+      Param[0].Value := Patient.DFN;  //*DFN*
+      Param[1].PType := literal;
+      Param[1].Value := IntToStr(NoteRec.Title);
+      Param[2].PType := literal;
+      Param[2].Value := ''; //FloatToStr(Encounter.DateTime);
+      Param[3].PType := literal;
+      Param[3].Value := ''; //IntToStr(Encounter.Location);
+      Param[4].PType := literal;
+      Param[4].Value := '';
+      Param[5].PType := list;
+      with Param[5] do
+      begin
+        //Mult['.11'] := BOOLCHAR[NoteRec.NeedCPT];  //  **** removed in v19.1  {RV} ****
+        Mult['1202'] := IntToStr(NoteRec.Author);
+        Mult['1301'] := FloatToStr(NoteRec.DateTime);
+        Mult['1205'] := IntToStr(Encounter.Location);
+        if NoteRec.Cosigner > 0 then Mult['1208'] := IntToStr(NoteRec.Cosigner);
+        if NoteRec.PkgRef <> '' then Mult['1405'] := NoteRec.PkgRef;
+        Mult['1701'] := FilteredString(Copy(NoteRec.Subject, 1, 80));
+        if NoteRec.IDParent > 0 then Mult['2101'] := IntToStr(NoteRec.IDParent);
+  (*      if NoteRec.Lines <> nil then
+          for i := 0 to NoteRec.Lines.Count - 1 do
+            Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(NoteRec.Lines[i]);*)
+      end;
+      Param[6].PType := literal;
+      Param[6].Value := Encounter.VisitStr;
+      Param[7].PType := literal;
+      Param[7].Value := '1';  // suppress commit logic
+      CallBroker;
+      CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
+      CreatedDoc.ErrorText := Piece(Results[0], U, 2);
     end;
-    Param[6].PType := literal;
-    Param[6].Value := Encounter.VisitStr;
-    Param[7].PType := literal;
-    Param[7].Value := '1';  // suppress commit logic
-    CallBroker;
-    CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
-    CreatedDoc.ErrorText := Piece(Results[0], U, 2);
+  finally
+    UnlockBroker;
   end;
   if ( NoteRec.Lines <> nil ) and ( CreatedDoc.IEN <> 0 ) then
   begin
@@ -742,27 +816,32 @@ procedure PutAddendum(var CreatedDoc: TCreatedDoc; const NoteRec: TNoteRec; Adde
 var
   ErrMsg: string;
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU CREATE ADDENDUM RECORD';
-    Param[0].PType := literal;
-    Param[0].Value := IntToStr(AddendumTo);
-    Param[1].PType := list;
-    with Param[1] do
+  LockBroker;
+  try
+    with RPCBrokerV do
     begin
-      Mult['1202'] := IntToStr(NoteRec.Author);
-      Mult['1301'] := FloatToStr(NoteRec.DateTime);
-      if NoteRec.Cosigner > 0 then Mult['1208'] := IntToStr(NoteRec.Cosigner);
-(*      if NoteRec.Lines <> nil then
-        for i := 0 to NoteRec.Lines.Count - 1 do
-          Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(NoteRec.Lines[i]);*)
+      ClearParameters := True;
+      RemoteProcedure := 'TIU CREATE ADDENDUM RECORD';
+      Param[0].PType := literal;
+      Param[0].Value := IntToStr(AddendumTo);
+      Param[1].PType := list;
+      with Param[1] do
+      begin
+        Mult['1202'] := IntToStr(NoteRec.Author);
+        Mult['1301'] := FloatToStr(NoteRec.DateTime);
+        if NoteRec.Cosigner > 0 then Mult['1208'] := IntToStr(NoteRec.Cosigner);
+  (*      if NoteRec.Lines <> nil then
+          for i := 0 to NoteRec.Lines.Count - 1 do
+            Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(NoteRec.Lines[i]);*)
+      end;
+      Param[2].PType := literal;
+      Param[2].Value := '1';  // suppress commit logic
+      CallBroker;
+      CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
+      CreatedDoc.ErrorText := Piece(Results[0], U, 2);
     end;
-    Param[2].PType := literal;
-    Param[2].Value := '1';  // suppress commit logic
-    CallBroker;
-    CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
-    CreatedDoc.ErrorText := Piece(Results[0], U, 2);
+  finally
+    UnlockBroker;
   end;
   if ( NoteRec.Lines <> nil ) and ( CreatedDoc.IEN <> 0 ) then
   begin
@@ -784,40 +863,45 @@ var
   ErrMsg: string;
 begin
   // First, file field data
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU UPDATE RECORD';
-    Param[0].PType := literal;
-    Param[0].Value := IntToStr(NoteIEN);
-    Param[1].PType := list;
-    with Param[1] do
+  LockBroker;
+  try
+    with RPCBrokerV do
     begin
-      if NoteRec.Addend = 0 then
-        begin
-          Mult['.01']  := IntToStr(NoteRec.Title);
-          //Mult['.11']  := BOOLCHAR[NoteRec.NeedCPT];  //  **** removed in v19.1  {RV} ****
-        end;
-      Mult['1202'] := IntToStr(NoteRec.Author);
-      if NoteRec.Cosigner > 0 then Mult['1208'] := IntToStr(NoteRec.Cosigner);
-      if NoteRec.PkgRef <> '' then Mult['1405'] := NoteRec.PkgRef;
-      Mult['1301'] := FloatToStr(NoteRec.DateTime);
-      Mult['1701'] := FilteredString(Copy(NoteRec.Subject, 1, 80));
-      if NoteRec.ClinProcSummCode > 0 then Mult['70201'] := IntToStr(NoteRec.ClinProcSummCode);
-      if NoteRec.ClinProcDateTime > 0 then Mult['70202'] := FloatToStr(NoteRec.ClinProcDateTime);
-(*      for i := 0 to NoteRec.Lines.Count - 1 do
-        Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(NoteRec.Lines[i]);*)
+      ClearParameters := True;
+      RemoteProcedure := 'TIU UPDATE RECORD';
+      Param[0].PType := literal;
+      Param[0].Value := IntToStr(NoteIEN);
+      Param[1].PType := list;
+      with Param[1] do
+      begin
+        if NoteRec.Addend = 0 then
+          begin
+            Mult['.01']  := IntToStr(NoteRec.Title);
+            //Mult['.11']  := BOOLCHAR[NoteRec.NeedCPT];  //  **** removed in v19.1  {RV} ****
+          end;
+        Mult['1202'] := IntToStr(NoteRec.Author);
+        if NoteRec.Cosigner > 0 then Mult['1208'] := IntToStr(NoteRec.Cosigner);
+        if NoteRec.PkgRef <> '' then Mult['1405'] := NoteRec.PkgRef;
+        Mult['1301'] := FloatToStr(NoteRec.DateTime);
+        Mult['1701'] := FilteredString(Copy(NoteRec.Subject, 1, 80));
+        if NoteRec.ClinProcSummCode > 0 then Mult['70201'] := IntToStr(NoteRec.ClinProcSummCode);
+        if NoteRec.ClinProcDateTime > 0 then Mult['70202'] := FloatToStr(NoteRec.ClinProcDateTime);
+  (*      for i := 0 to NoteRec.Lines.Count - 1 do
+          Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(NoteRec.Lines[i]);*)
+      end;
+      CallBroker;
+      UpdatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
+      UpdatedDoc.ErrorText := Piece(Results[0], U, 2);
     end;
-    CallBroker;
-    UpdatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
-    UpdatedDoc.ErrorText := Piece(Results[0], U, 2);
+  finally
+    UnlockBroker;
   end;
 
   if UpdatedDoc.IEN <= 0 then              //v22.12 - RV
   //if UpdatedDoc.ErrorText <> '' then    //v22.5 - RV
     begin
       UpdatedDoc.ErrorText := UpdatedDoc.ErrorText + #13#10 + #13#10 + 'Document #:  ' + IntToStr(NoteIEN);
-      exit;  
+      exit;
     end;
 
   // next, if no error, file document body
@@ -833,19 +917,24 @@ procedure PutTextOnly(var ErrMsg: string; NoteText: TStrings; NoteIEN: Int64);
 var
   i: Integer;
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU UPDATE RECORD';
-    Param[0].PType := literal;
-    Param[0].Value := IntToStr(NoteIEN);
-    Param[1].PType := list;
-    for i := 0 to Pred(NoteText.Count) do
-      Param[1].Mult['"TEXT",' + IntToStr(Succ(i)) + ',0'] := FilteredString(NoteText[i]);
-    Param[2].PType := literal;
-    Param[2].Value :='1';  // suppress commit code
-    CallBroker;
-    if Piece(Results[0], U, 1) = '0' then ErrMsg := Piece(Results[0], U, 2) else ErrMsg := '';
+  LockBroker;
+  try
+    with RPCBrokerV do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'TIU UPDATE RECORD';
+      Param[0].PType := literal;
+      Param[0].Value := IntToStr(NoteIEN);
+      Param[1].PType := list;
+      for i := 0 to Pred(NoteText.Count) do
+        Param[1].Mult['"TEXT",' + IntToStr(Succ(i)) + ',0'] := FilteredString(NoteText[i]);
+      Param[2].PType := literal;
+      Param[2].Value :='1';  // suppress commit code
+      CallBroker;
+      if Piece(Results[0], U, 1) = '0' then ErrMsg := Piece(Results[0], U, 2) else ErrMsg := '';
+    end;
+  finally
+    UnlockBroker;
   end;
 end;
 
@@ -860,16 +949,32 @@ begin
   pages := ( NoteText.Count div DOCUMENT_PAGE_SIZE );
   if (NoteText.Count mod DOCUMENT_PAGE_SIZE) > 0 then pages := pages + 1;
   page := 1;
-  InitParams( NoteIEN, Suppress );
-  // Loop through NoteRec.Lines
-  for i := 0 to NoteText.Count - 1 do
-  begin
-    j := i + 1;
-    //Add each successive line to Param[1].Mult...
-    RPCBrokerV.Param[1].Mult['"TEXT",' + IntToStr(j) + ',0'] := FilteredString(NoteText[i]);
-    // When current page is filled, call broker, increment page, itialize params,
-    // and continue...
-    if ( j mod DOCUMENT_PAGE_SIZE ) = 0 then
+  LockBroker;
+  try
+    InitParams( NoteIEN, Suppress );
+    // Loop through NoteRec.Lines
+    for i := 0 to NoteText.Count - 1 do
+    begin
+      j := i + 1;
+      //Add each successive line to Param[1].Mult...
+      RPCBrokerV.Param[1].Mult['"TEXT",' + IntToStr(j) + ',0'] := FilteredString(NoteText[i]);
+      // When current page is filled, call broker, increment page, itialize params,
+      // and continue...
+      if ( j mod DOCUMENT_PAGE_SIZE ) = 0 then
+      begin
+        RPCBrokerV.Param[1].Mult['"HDR"'] := IntToStr(page) + U + IntToStr(pages);
+        CallBroker;
+        if RPCBrokerV.Results.Count > 0 then
+          ErrMsg := Piece(RPCBrokerV.Results[0], U, 4)
+        else
+          ErrMsg := TX_SERVER_ERROR;
+        if ErrMsg <> '' then Exit;
+        page := page + 1;
+        InitParams( NoteIEN, Suppress );
+      end; // if
+    end;   // for
+    // finally, file any remaining partial page
+    if ( NoteText.Count mod DOCUMENT_PAGE_SIZE ) <> 0 then
     begin
       RPCBrokerV.Param[1].Mult['"HDR"'] := IntToStr(page) + U + IntToStr(pages);
       CallBroker;
@@ -877,20 +982,9 @@ begin
         ErrMsg := Piece(RPCBrokerV.Results[0], U, 4)
       else
         ErrMsg := TX_SERVER_ERROR;
-      if ErrMsg <> '' then Exit;
-      page := page + 1;
-      InitParams( NoteIEN, Suppress );
-    end; // if
-  end;   // for
-  // finally, file any remaining partial page
-  if ( NoteText.Count mod DOCUMENT_PAGE_SIZE ) <> 0 then
-  begin
-    RPCBrokerV.Param[1].Mult['"HDR"'] := IntToStr(page) + U + IntToStr(pages);
-    CallBroker;
-    if RPCBrokerV.Results.Count > 0 then
-      ErrMsg := Piece(RPCBrokerV.Results[0], U, 4)
-    else
-      ErrMsg := TX_SERVER_ERROR;
+    end;
+  finally
+    UnlockBroker;
   end;
 end;
 
@@ -912,13 +1006,13 @@ end;
 
 function AllowPrintOfNote(ANote: Integer): string;
 { returns
-          0 message Can't print at all (fails bus rules)
-          1 Can print work copy only
-          2 Can print work or chart copy (Param=1 or user is MAS)
- }
- begin
-   Result := sCallV('TIU CAN PRINT WORK/CHART COPY', [ANote]);
- end;
+  0 message Can't print at all (fails bus rules)
+  1 Can print work copy only
+  2 Can print work or chart copy (Param=1 or user is MAS)
+}
+begin
+  CallVistA('TIU CAN PRINT WORK/CHART COPY', [ANote], Result); // sCallV('TIU CAN PRINT WORK/CHART COPY', [ANote]);
+end;
 
 function AllowChartPrintForNote(ANote: Integer): Boolean;
 { returns true if a progress note may be printed outside of MAS }
@@ -962,19 +1056,24 @@ end;
 
 procedure ChangeCosigner(IEN: integer; Cosigner: int64);
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU UPDATE RECORD';
-    Param[0].PType := literal;
-    Param[0].Value := IntToStr(IEN);
-    Param[1].PType := list;
-    with Param[1] do
-      if Cosigner > 0 then
-        Mult['1208']  := IntToStr(Cosigner)
-      else
-        Mult['1208']  := '@';
-    CallBroker;
+  LockBroker;
+  try
+    with RPCBrokerV do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'TIU UPDATE RECORD';
+      Param[0].PType := literal;
+      Param[0].Value := IntToStr(IEN);
+      Param[1].PType := list;
+      with Param[1] do
+        if Cosigner > 0 then
+          Mult['1208']  := IntToStr(Cosigner)
+        else
+          Mult['1208']  := '@';
+      CallBroker;
+    end;
+  finally
+    UnlockBroker;
   end;
 end;
 

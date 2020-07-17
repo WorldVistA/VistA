@@ -6,13 +6,8 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, ORCtrls, Menus, TeeProcs, TeEngine, Series, Chart, Math,
   ComCtrls, GanttCh, ClipBrd, StrUtils, ORFn, ORDtTmRng, DateUtils, Printers,
-  OleServer, Variants, Word2000, ArrowCha, ORDtTm, uGraphs, fBase508Form, VCLTee.TeCanvas,
-  System.UITypes
-  {$IFDEF VER140}
-  ,Word97;
-  {$ELSE}
-  ,WordXP, VA508AccessibilityManager, VclTee.TeeGDIPlus;
-  {$ENDIF}
+  OleServer, Variants, ArrowCha, ORDtTm, uGraphs, fBase508Form, VCLTee.TeCanvas,
+  System.UITypes,WordXP, VA508AccessibilityManager, VclTee.TeeGDIPlus;
 
 type
   TfrmGraphs = class(TfrmBase508Form)
@@ -51,6 +46,7 @@ type
     mnuPopGraphCopy: TMenuItem;
     mnuPopGraphDates: TMenuItem;
     mnuPopGraphDefineViews: TMenuItem;
+    mnuPopGraphChangeViews: TMenuItem;
     mnuPopGraphDetails: TMenuItem;
     mnuPopGraphDualViews: TMenuItem;
     mnuPopGraphGradient: TMenuItem;
@@ -457,7 +453,7 @@ implementation
 
 uses fGraphSettings, fGraphProfiles, fGraphData, fGraphOthers, rGraphs,
   ComObj, ActiveX, ShellAPI, fFrame, uCore, rCore, uConst, fRptBox, fReports,
-  uFormMonitor, VA508AccessibilityRouter, VAUtils;
+  uFormMonitor, VAUtils;
 
 {$R *.DFM}
 
@@ -3557,6 +3553,7 @@ procedure TfrmGraphs.ChartStyle(aChart: TChart);
 var
   j: integer;
 begin
+
   with aChart do
   begin
     View3D := FGraphSetting.View3D;
@@ -3566,6 +3563,7 @@ begin
     Legend.Visible := FGraphSetting.Legend;
     HideDates(aChart);
     pnlHeader.Visible := pnlInfo.Visible;
+
     if FGraphSetting.ClearBackground then
     begin
       Color := clWindow;
@@ -3580,6 +3578,7 @@ begin
       pnlBlankTop.Color := clBtnFace;
       pnlBlankBottom.Color := clBtnFace;
     end;
+
     for j := 0 to SeriesCount - 1 do
     begin
       if Series[j] is TLineSeries then
@@ -4766,7 +4765,6 @@ begin
   5:  FMStartDate := FMDateTimeOffsetBy(FMToday, -365);
   6:  FMStartDate := FMDateTimeOffsetBy(FMToday, -730);
   7:  FMStartDate := FM_START_DATE;   // earliest recorded values
-
   else
       begin
         if dateranges = '' then dateranges := cboDateRange.Items[cboDateRange.ItemIndex];
@@ -7044,8 +7042,8 @@ begin
         if ClickedValue > -1 then break;
         ClickedMark := Marks.Clicked(FX, FY);
         if ClickedMark > -1 then break;
-        // ClickedLegend := Legend.Clicked(FX, FY);
-        // if ClickedLegend > -1 then break;
+        //ClickedLegend := Legend.Clicked(FX, FY);
+        //if ClickedLegend > -1 then break;
       end;
     end;
     if (ClickedValue > -1) or (ClickedMark > -1) then
@@ -7549,7 +7547,6 @@ end;
 
 procedure TfrmGraphs.lvwItemsTopEnter(Sender: TObject);
 begin
-  if ScreenReaderActive then GetScreenReader.Speak(pnlInfo.Caption);
   if lvwItemsTop.SelCount = 0 then
     if lvwItemsTop.Items.Count > 0 then
       lvwItemsTop.Items[0].Focused := true;

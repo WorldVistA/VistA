@@ -5,40 +5,40 @@ inherited frmOptionsLists: TfrmOptionsLists
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsSingle
   Caption = 'Personal Lists'
-  ClientHeight = 442
+  ClientHeight = 468
   ClientWidth = 407
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 413
-  ExplicitHeight = 474
+  ExplicitHeight = 493
   PixelsPerInch = 96
   TextHeight = 13
-  object lblAddby: TLabel [0]
-    Left = 7
-    Top = 97
+  object lblAddBy: TLabel [0]
+    Left = 8
+    Top = 126
     Width = 42
     Height = 13
     Caption = 'Provider:'
   end
   object lblPatientsAdd: TLabel [1]
-    Left = 7
-    Top = 200
+    Left = 8
+    Top = 229
     Width = 74
     Height = 13
     Caption = 'Patients to add:'
   end
   object lblPersonalPatientList: TLabel [2]
-    Left = 248
-    Top = 200
+    Left = 249
+    Top = 229
     Width = 114
     Height = 13
     Caption = 'Patients on personal list:'
   end
   object lblPersonalLists: TLabel [3]
-    Left = 248
-    Top = 97
+    Left = 249
+    Top = 126
     Width = 68
     Height = 13
     Caption = 'Personal Lists:'
@@ -59,7 +59,7 @@ inherited frmOptionsLists: TfrmOptionsLists
   end
   object pnlBottom: TPanel [5]
     Left = 0
-    Top = 409
+    Top = 435
     Width = 407
     Height = 33
     HelpContext = 9070
@@ -99,8 +99,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     end
   end
   object lstAddBy: TORComboBox [6]
-    Left = 7
-    Top = 112
+    Left = 8
+    Top = 141
     Width = 153
     Height = 81
     HelpContext = 9072
@@ -120,14 +120,15 @@ inherited frmOptionsLists: TfrmOptionsLists
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 1
+    Text = ''
     OnChange = lstAddByChange
     OnClick = lstAddByClick
     OnNeedData = lstAddByNeedData
     CharsNeedMatch = 1
   end
   object btnPersonalPatientRA: TButton [7]
-    Left = 166
-    Top = 296
+    Left = 167
+    Top = 325
     Width = 75
     Height = 22
     HelpContext = 9079
@@ -143,8 +144,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnClick = btnPersonalPatientRAClick
   end
   object btnPersonalPatientR: TButton [8]
-    Left = 166
-    Top = 271
+    Left = 167
+    Top = 300
     Width = 75
     Height = 22
     HelpContext = 9078
@@ -160,8 +161,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnClick = btnPersonalPatientRClick
   end
   object lstListPats: TORListBox [9]
-    Left = 7
-    Top = 215
+    Left = 8
+    Top = 244
     Width = 153
     Height = 134
     HelpContext = 9073
@@ -182,8 +183,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnChange = lstListPatsChange
   end
   object lstPersonalPatients: TORListBox [10]
-    Left = 248
-    Top = 215
+    Left = 249
+    Top = 244
     Width = 153
     Height = 134
     HelpContext = 9075
@@ -204,8 +205,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnChange = lstPersonalPatientsChange
   end
   object btnListAddAll: TButton [11]
-    Left = 166
-    Top = 241
+    Left = 167
+    Top = 270
     Width = 75
     Height = 22
     HelpContext = 9077
@@ -221,8 +222,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnClick = btnListAddAllClick
   end
   object btnNewList: TButton [12]
-    Left = 166
-    Top = 113
+    Left = 167
+    Top = 142
     Width = 75
     Height = 22
     HelpContext = 9081
@@ -237,8 +238,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnClick = btnNewListClick
   end
   object btnDeleteList: TButton [13]
-    Left = 165
-    Top = 171
+    Left = 166
+    Top = 200
     Width = 75
     Height = 22
     HelpContext = 9082
@@ -254,8 +255,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnClick = btnDeleteListClick
   end
   object lstPersonalLists: TORListBox [14]
-    Left = 248
-    Top = 112
+    Left = 249
+    Top = 141
     Width = 153
     Height = 81
     HelpContext = 9074
@@ -273,8 +274,8 @@ inherited frmOptionsLists: TfrmOptionsLists
   object radAddByType: TRadioGroup [15]
     Left = 7
     Top = 8
-    Width = 153
-    Height = 86
+    Width = 170
+    Height = 112
     HelpContext = 9071
     Caption = 'Select patients by '
     Columns = 2
@@ -285,13 +286,14 @@ inherited frmOptionsLists: TfrmOptionsLists
       '&Clinic'
       '&Provider'
       '&Specialty'
-      '&List')
+      '&List'
+      'PCMM &Team')
     TabOrder = 0
     OnClick = radAddByTypeClick
   end
   object btnListSaveChanges: TButton [16]
-    Left = 166
-    Top = 328
+    Left = 167
+    Top = 357
     Width = 75
     Height = 22
     HelpContext = 9080
@@ -307,8 +309,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnClick = btnListSaveChangesClick
   end
   object btnListAdd: TButton [17]
-    Left = 166
-    Top = 216
+    Left = 167
+    Top = 245
     Width = 75
     Height = 22
     HelpContext = 9076
@@ -325,7 +327,7 @@ inherited frmOptionsLists: TfrmOptionsLists
   end
   object grpVisibility: TRadioGroup [18]
     Left = 8
-    Top = 356
+    Top = 384
     Width = 391
     Height = 45
     Caption = 'Who should be able to see and use the selected  list?'
@@ -338,6 +340,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnClick = grpVisibilityClick
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 64
+    Top = 424
     Data = (
       (
         'Component = lblInfo'

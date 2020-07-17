@@ -98,10 +98,9 @@ inherited frmODRTC: TfrmODRTC
     end
     object cboRTCClinic: TORComboBox
       Left = 8
-      Top = 59
+      Top = 62
       Width = 595
       Height = 21
-      CaseChanged = False
       Style = orcsDropDown
       AutoSelect = True
       Caption = 'Clinic'
@@ -119,6 +118,7 @@ inherited frmODRTC: TfrmODRTC
       SynonymChars = '<>'
       TabOrder = 2
       Text = ''
+      OnChange = cboRTCClinicChange
       OnKeyUp = cboRTCClinicKeyUp
       OnMouseClick = cboRTCClinicMouseClick
       OnNeedData = cboRTCClinicNeedData

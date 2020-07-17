@@ -33,7 +33,7 @@ type
 implementation
 
 uses
-  rCore, uCore, ORNet, rODLab;
+  rCore, uCore, ORNet, rODLab, VAUtils;
 
 {$R *.DFM}
 function GetFutureLabTime(ACollDate: TFMDateTime): string;

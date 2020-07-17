@@ -70,13 +70,13 @@ begin
     for i := 1 to RPCBrokerV.Results.Count-1 do
     begin
       tmp := RPCBrokerV.Results[i];
-      lstRenameMe.Add(Piece(tmp,U,5) + U + Piece(Piece(tmp,U,2),NoPCEValue,1) + U +
+      lstCaptionList.Add(Piece(tmp,U,5) + U + Piece(Piece(tmp,U,2),NoPCEValue,1) + U +
                                 Piece(tmp,U,7) + U + Piece(tmp,U,8));
 
     end;
   end;
-   if lstRenameMe.Items.Count = 0 then
-     lstRenameMe.Add('No GAF scores found.');
+   if lstCaptionList.Items.Count = 0 then
+     lstCaptionList.Add('No GAF scores found.');
 end;
 
 procedure TfrmGAF.cboGAFProviderNeedData(Sender: TObject;

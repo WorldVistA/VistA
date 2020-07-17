@@ -122,20 +122,15 @@ begin
     DisableCheck(chkAOYes);
     DisableCheck(chkIRYes);
     DisableCheck(chkECYes);
-    DisableCheck(chkSHDYes);
-//    DisableCheck(chkMSTYes);
     DisableCheck(chkAONo);
     DisableCheck(chkIRNo);
     DisableCheck(chkECNo);
-    DisableCheck(chkSHDNo);
-//    DisableCheck(chkMSTNo);
   end else
   begin
     SetCheckEnable(chkSCYes,  chkSCNo,  FSCCond.SCAllow);
     SetCheckEnable(chkAOYes,  chkAONo,  FSCCond.AOAllow);
     SetCheckEnable(chkIRYes,  chkIRNo,  FSCCond.IRAllow);
     SetCheckEnable(chkECYes,  chkECNo,  FSCCond.ECAllow);
-    SetCheckEnable(chkSHDYEs, chkSHDNo, FSCCond.SHDAllow);
   end;
   SetCheckEnable(chkMSTYes, chkMSTNo, FSCCond.MSTAllow);
   SetCheckEnable(chkHNCYes, chkHNCNo, FSCCond.HNCAllow);
@@ -146,7 +141,7 @@ begin
   if ScreenReaderActive then
    HandleVA508Caption();
 
-  if chkAOYes.Checked or chkIRYes.Checked or chkECYes.Checked or chkSHDYes.Checked then //or chkMSTYes.Checked then
+  if chkAOYes.Checked or chkIRYes.Checked or chkECYes.Checked then
   begin
     if FSCCond.SCAllow then
     begin

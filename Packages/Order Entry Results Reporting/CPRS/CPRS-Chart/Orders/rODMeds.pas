@@ -46,9 +46,9 @@ function DurToQty(DaysSupply: Integer; const UnitStr, SchedStr: string): Integer
 function DefaultDays(const ADrug, UnitStr, SchedStr: string; OI : Integer): Integer;
 function CalcMaxRefills(const Drug: string; Days, OrdItem: Integer; Discharge: Boolean): Integer;
 function ScheduleRequired(OrdItem: Integer; const ARoute, ADrug: string): Boolean;
-function ODForMedsIn: TStrings;
-function ODForMedsOut: TStrings;
-function OIForMed(AnIEN: Integer; ForInpatient: Boolean; HavePI: boolean = True; PKIActive: Boolean = False): TStrings;
+function ODForMedsIn(aReturn: TStrings): integer;
+function ODForMedsOut(aReturn: TStrings): integer;
+function OIForMed(aReturn: TStrings; AnIEN: Integer; ForInpatient: Boolean; HavePI: boolean = True; PKIActive: Boolean = False): integer;
 function GetPickupForLocation(const Loc: string): string;
 function QOHasRouteDefined(AQOID: integer): boolean;
 procedure CheckExistingPI(AOrderId: string; var APtI: string);
@@ -62,6 +62,7 @@ procedure ClearMaxData;
 function DifferentOrderLocations(ID: string; Loc: integer): boolean;
 function IsClozapineOrder: boolean;
 //function ValidateQuantityErrorMsg(Quantity: integer): String;
+function GetMaxDS(OrderableIEN: string; DrugIEN: string): integer;
 function GetQOOrderableItem(DialogIEN: string): integer;
 
 
@@ -71,112 +72,143 @@ implementation
   uDrugHasMaxData: TDrugHasMaxData;
   uInpatientClozapineText : TInpatientClozapineText;
 
-function DEACheckFailed(AnOI: Integer; ForInpatient: Boolean): string;
+function DEACheckFailed(AnOI: integer; ForInpatient: boolean): string;
 var
   PtType: Char;
 begin
-  if ForInpatient then PtType := 'I' else PtType := 'O';
-  Result := sCallV('ORWDPS1 FAILDEA', [AnOI, Encounter.Provider, PtType]);
+  if ForInpatient then
+    PtType := 'I'
+  else
+    PtType := 'O';
+  CallVistA('ORWDPS1 FAILDEA', [AnOI, Encounter.Provider, PtType], Result);
 end;
 
-function DEACheckFailedAtSignature(AnOI: Integer; ForInpatient: Boolean): string;
+function DEACheckFailedAtSignature(AnOI: integer; ForInpatient: boolean): string;
 var
   PtType: Char;
 begin
-  if ForInpatient then PtType := 'I' else PtType := 'O';
-  Result := sCallV('ORWDPS1 FAILDEA', [AnOI, User.DUZ, PtType]);
+  if ForInpatient then
+    PtType := 'I'
+  else
+    PtType := 'O';
+  CallVistA('ORWDPS1 FAILDEA', [AnOI, User.DUZ, PtType], Result);
 end;
 
-function DEACheckFailedForIVOnOutPatient(AnOI: Integer; AnOIType: Char): string;
+function DEACheckFailedForIVOnOutPatient(AnOI: integer; AnOIType: Char): string;
 begin
-  Result := sCallV('ORWDPS1 IVDEA',[AnOI,AnOIType,Encounter.Provider]);
+  CallVistA('ORWDPS1 IVDEA', [AnOI, AnOIType, Encounter.Provider], Result);
 end;
 
-procedure ListForOrderable(var AListIEN, ACount: Integer; const DGrpNm: string);
-begin
-  CallV('ORWUL FV4DG', [DGrpNm]);
-  AListIEN := StrToIntDef(Piece(RPCBrokerV.Results[0], U, 1), 0);
-  ACount   := StrToIntDef(Piece(RPCBrokerV.Results[0], U, 2), 0);
-end;
-
-procedure SubsetOfOrderable(Dest: TStringList; Append: Boolean; ListIEN, First, Last: Integer);
+procedure ListForOrderable(var AListIEN, ACount: integer; const DGrpNm: string);
 var
-  i: Integer;
+  aStr: string;
 begin
-  CallV('ORWUL FVSUB', [ListIEN, First+1, Last+1]);  // M side not 0-based
-  if Append then FastAddStrings(RPCBrokerV.Results, Dest) else
-  begin
-    for i := Pred(RPCBrokerV.Results.Count) downto 0 do Dest.Insert(0, RPCBrokerV.Results[i]);
+  CallVistA('ORWUL FV4DG', [DGrpNm], aStr);
+  AListIEN := StrToIntDef(Piece(aStr, U, 1), 0);
+  ACount := StrToIntDef(Piece(aStr, U, 2), 0);
+end;
+
+procedure SubsetOfOrderable(Dest: TStringList; Append: boolean; ListIEN, First, Last: integer);
+var
+  i: integer;
+  aLst: TStringList;
+begin
+  aLst := TStringList.Create;
+  try
+    CallVistA('ORWUL FVSUB', [ListIEN, First + 1, Last + 1], aLst); // M side not 0-based
+    if Append then
+      FastAddStrings(aLst, Dest)
+    else
+      begin
+        for i := Pred(aLst.Count) downto 0 do
+          Dest.Insert(0, aLst[i]);
+      end;
+  finally
+    FreeAndNil(aLst);
   end;
 end;
 
-function IndexOfOrderable(ListIEN: Integer; From: string): Integer;
+function IndexOfOrderable(ListIEN: integer; From: string): integer;
 var
   x: string;
 begin
   Result := -1;
-  if From = '' then Exit;
+  if From = '' then
+    Exit;
   // decrement last char & concat '~' for $ORDER on M side, limit string length
   x := UpperCase(Copy(From, 1, 220));
   x := Copy(x, 1, Length(x) - 1) + Pred(x[Length(x)]) + '~';
-  x := sCallV('ORWUL FVIDX', [ListIEN, x]);
+  CallVistA('ORWUL FVIDX', [ListIEN, x], x);
   // use Pred to make the index 0-based (first value = 1 on M side)
-  if CompareText(Copy(Piece(x, U, 2), 1, Length(From)), From) = 0
-    then Result := Pred(StrToIntDef(Piece(x, U, 1), 0));
+  if CompareText(Copy(Piece(x, U, 2), 1, Length(From)), From) = 0 then
+    Result := Pred(StrToIntDef(Piece(x, U, 1), 0));
 end;
 
 procedure IsActivateOI(var AMsg: string; theOI: integer);
 begin
-  AMsg := SCallV('ORWDXA ISACTOI', [theOI]);
+  CallVistA('ORWDXA ISACTOI', [theOI], aMsg);
 end;
 
 procedure ListForQuickOrders(var AListIEN, ACount: Integer; const DGrpNm: string);
-begin
-  CallV('ORWUL QV4DG', [DGrpNm]);
-  AListIEN := StrToIntDef(Piece(RPCBrokerV.Results[0], U, 1), 0);
-  ACount   := StrToIntDef(Piece(RPCBrokerV.Results[0], U, 2), 0);
-end;
-
-procedure SubsetOfQuickOrders(Dest: TStringList; AListIEN, First, Last: Integer);
 var
-  i: Integer;
+  aStr: string;
 begin
- CallV('ORWUL QVSUB', [AListIEN,'','']);
- for i := 0 to RPCBrokerV.Results.Count -1 do
-   Dest.Add(RPCBrokerV.Results[i]);
+  CallVistA('ORWUL QV4DG', [DGrpNm], aStr);
+  AListIEN := StrToIntDef(Piece(aStr, U, 1), 0);
+  ACount   := StrToIntDef(Piece(aStr, U, 2), 0);
 end;
 
-function IndexOfQuickOrder(AListIEN: Integer; From: string): Integer;
+procedure SubsetOfQuickOrders(Dest: TStringList; AListIEN, First, Last: integer);
+var
+  i: integer;
+  aLst: TStringList;
+begin
+  aLst := TStringList.Create;
+  try
+    CallVistA('ORWUL QVSUB', [AListIEN, '', ''], aLst);
+    for i := 0 to aLst.Count - 1 do
+      Dest.Add(aLst[i]);
+  finally
+    FreeAndNil(aLst);
+  end;
+end;
+
+function IndexOfQuickOrder(AListIEN: integer; From: string): integer;
 var
   x: string;
 begin
   Result := -1;
-  if From = '' then Exit;
+  if From = '' then
+    Exit;
   // decrement last char & concat '~' for $ORDER on M side, limit string length
   x := UpperCase(Copy(From, 1, 220));
   x := Copy(x, 1, Length(x) - 1) + Pred(x[Length(x)]) + '~';
-  x := sCallV('ORWUL QVIDX', [AListIEN, x]);
+  CallVistA('ORWUL QVIDX', [AListIEN, x], x);
   // use Pred to made the index 0-based (first value = 1 on M side)
-  if CompareText(Copy(Piece(x, U, 2), 1, Length(From)), From) = 0
-    then Result := Pred(StrToIntDef(Piece(x, U, 1), 0));
+  if CompareText(Copy(Piece(x, U, 2), 1, Length(From)), From) = 0 then
+    Result := Pred(StrToIntDef(Piece(x, U, 1), 0));
 end;
 
-procedure LoadFormularyAltOI(AList: TStringList; AnIEN: Integer; ForInpatient: Boolean);
+procedure LoadFormularyAltOI(AList: TStringList; AnIEN: integer; ForInpatient: boolean);
 var
   PtType: Char;
 begin
-  if ForInpatient then PtType := 'I' else PtType := 'O';
-  CallV('ORWDPS1 FORMALT', [AnIEN, PtType]);
-  FastAssign(RPCBrokerV.Results, AList);
+  if ForInpatient then
+    PtType := 'I'
+  else
+    PtType := 'O';
+  CallVistA('ORWDPS1 FORMALT', [AnIEN, PtType], AList);
 end;
 
-procedure LoadFormularyAltDose(AList: TStringList; DispDrug, OI: Integer; ForInpatient: Boolean);
+procedure LoadFormularyAltDose(AList: TStringList; DispDrug, OI: integer; ForInpatient: boolean);
 var
   PtType: Char;
 begin
-  if ForInpatient then PtType := 'I' else PtType := 'O';
-  CallV('ORWDPS1 DOSEALT', [DispDrug, OI, PtType]);
-  FastAssign(RPCBrokerV.Results, AList);
+  if ForInpatient then
+    PtType := 'I'
+  else
+    PtType := 'O';
+  CallVistA('ORWDPS1 DOSEALT', [DispDrug, OI, PtType], AList);
 end;
 
 procedure LoadAdminInfo(const Schedule: string; OrdItem: Integer; var StartText: string;
@@ -184,103 +216,103 @@ procedure LoadAdminInfo(const Schedule: string; OrdItem: Integer; var StartText:
 var
   x: string;
 begin
-  x := sCallV('ORWDPS2 ADMIN', [Patient.DFN, Schedule, OrdItem, Encounter.Location, Admin]);
+  CallVistA('ORWDPS2 ADMIN', [Patient.DFN, Schedule, OrdItem, Encounter.Location, Admin], x);
   StartText := Piece(x, U, 1);
   AdminTime := MakeFMDateTime(Piece(x, U, 4));
   Duration  := Piece(x, U, 3);
 end;
 
-function GetAdminTime(const StartText, Schedule: string; OrdItem: Integer): TFMDateTime;
+function GetAdminTime(const StartText, Schedule: string; OrdItem: integer): TFMDateTime;
 var
   x: string;
 begin
-  x := sCallV('ORWDPS2 REQST', [Patient.DFN, Schedule, OrdItem, Encounter.Location, StartText]);
+  CallVistA('ORWDPS2 REQST', [Patient.DFN, Schedule, OrdItem, Encounter.Location, StartText], x);
   Result := MakeFMDateTime(x);
 end;
 
 procedure LoadSchedules(Dest: TStrings; IsInptDlg: boolean);
 begin
   // if uMedSchedules = nil then CallV('ORWDPS ALLSCHD', [nil]); uMedSchedules.Assign(...);
-  CallV('ORWDPS1 SCHALL', [patient.dfn, patient.location]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWDPS1 SCHALL', [patient.dfn, patient.location], Dest);
   If (Dest.IndexOfName('OTHER') < 0) and IsInptDlg then
     Dest.Add('OTHER');
 end;
 
 procedure LoadAllIVRoutes(Dest: TStrings);
 begin
-  CallV('ORWDPS32 ALLIVRTE', []);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWDPS32 ALLIVRTE', [], Dest);
 end;
 
 procedure LoadDosageFormIVRoutes(Dest: TStrings; OrderIDs: TStringList);
 begin
-  CallV('ORWDPS33 IVDOSFRM', [OrderIDs, False]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWDPS33 IVDOSFRM', [OrderIDs, False], Dest);
 end;
 
 function GetDefaultAddFreq(OID: integer): string;
 begin
-  result := sCallV('ORWDPS33 GETADDFR', [OID]);
+  CallVistA('ORWDPS33 GETADDFR', [OID], Result);
 end;
 
 procedure LoadDOWSchedules(Dest: TStrings);
 begin
   // if uMedSchedules = nil then CallV('ORWDPS ALLSCHD', [nil]); uMedSchedules.Assign(...);
-  CallV('ORWDPS1 DOWSCH', [patient.dfn, patient.location]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWDPS1 DOWSCH', [patient.dfn, patient.location], Dest);
 end;
 
-function QtyToDays(Quantity: Double;   const UnitsPerDose, Schedule, Duration, Drug: string): Integer;
+function QtyToDays(Quantity: Double; const UnitsPerDose, Schedule, Duration, Drug: string): integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDPS2 QTY2DAY',
-    [Quantity,   UnitsPerDose, Schedule, Duration, Patient.DFN, Drug]), 0);
+  CallVistA('ORWDPS2 QTY2DAY', [Quantity, UnitsPerDose, Schedule, Duration, Patient.DFN, Drug], Result, 0);
 end;
 
-function DaysToQty(DaysSupply: Integer; const UnitsPerDose, Schedule, Duration, Drug: string): Integer;
+function DaysToQty(DaysSupply: integer; const UnitsPerDose, Schedule, Duration, Drug: string): integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDPS2 DAY2QTY',
-    [DaysSupply, UnitsPerDose, Schedule, Duration, Patient.DFN, Drug]), 0);
-  if uDrugHasMaxData.CaptureMaxData = True then uDrugHasMaxData.MaxQuantity := Result;
+  CallVistA('ORWDPS2 DAY2QTY', [DaysSupply, UnitsPerDose, Schedule, Duration, Patient.DFN, Drug], Result, 0);
+  if uDrugHasMaxData.CaptureMaxData = True then
+    uDrugHasMaxData.MaxQuantity := Result;
 end;
 
-function DurToQty(DaysSupply: Integer; const UnitStr, SchedStr: string): Integer;
+function DurToQty(DaysSupply: integer; const UnitStr, SchedStr: string): integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDPS2 DAY2QTY', [DaysSupply, UnitStr, SchedStr]), 0);
+  CallVistA('ORWDPS2 DAY2QTY', [DaysSupply, UnitStr, SchedStr], Result, 0);
 end;
 
-function DefaultDays(const ADrug, UnitStr, SchedStr: string; OI : Integer): Integer;
+function DefaultDays(const ADrug, UnitStr, SchedStr: string; OI: integer): integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDPS1 DFLTSPLY', [UnitStr, SchedStr, Patient.DFN, ADrug, OI]), 0);
-  if uDrugHasMaxData.CaptureMaxData = True then uDrugHasMaxData.MaxSupply := Result;
+  CallVistA('ORWDPS1 DFLTSPLY', [UnitStr, SchedStr, Patient.DFN, ADrug, OI], Result, 0);
+  if uDrugHasMaxData.CaptureMaxData = True then
+    uDrugHasMaxData.MaxSupply := Result;
 end;
 
-function CalcMaxRefills(const Drug: string; Days, OrdItem: Integer; Discharge: Boolean): Integer;
+function CalcMaxRefills(const Drug: string; Days, OrdItem: integer; Discharge: boolean): integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDPS2 MAXREF', [Patient.DFN, Drug, Days, OrdItem, Discharge]), 0);
-  if uDrugHasMaxData.CaptureMaxData = True then uDrugHasMaxData.MaxRefills := Result;
+  CallVistA('ORWDPS2 MAXREF', [Patient.DFN, Drug, Days, OrdItem, Discharge], Result, 0);
+  if uDrugHasMaxData.CaptureMaxData = True then
+    uDrugHasMaxData.MaxRefills := Result;
 end;
 
 function ScheduleRequired(OrdItem: Integer; const ARoute, ADrug: string): Boolean;
+var
+  aStr: string;
 begin
-  Result := sCallV('ORWDPS2 SCHREQ', [OrdItem, ARoute, ADrug]) = '1';
+  CallVistA('ORWDPS2 SCHREQ', [OrdItem, ARoute, ADrug], aStr);
+  Result := aStr = '1';
 end;
 
-function ODForMedsIn: TStrings;
-{ Returns init values for inpatient meds dialog.  The results must be used immediately. }
+function ODForMedsIn(aReturn: TStrings): integer;
+{ Returns init values for inpatient meds dialog. }
 begin
-  CallV('ORWDPS1 ODSLCT', [PST_UNIT_DOSE, Patient.DFN, Encounter.Location]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDPS1 ODSLCT', [PST_UNIT_DOSE, Patient.DFN, Encounter.Location], aReturn);
+  Result := aReturn.Count;
 end;
 
-function ODForMedsOut: TStrings;
-{ Returns init values for outpatient meds dialog.  The results must be used immediately. }
+function ODForMedsOut(aReturn: TStrings): integer;
+{ Returns init values for outpatient meds dialog. }
 begin
-  CallV('ORWDPS1 ODSLCT', [PST_OUTPATIENT, Patient.DFN, Encounter.Location]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDPS1 ODSLCT', [PST_OUTPATIENT, Patient.DFN, Encounter.Location], aReturn);
+  Result := aReturn.Count;
 end;
 
-function OIForMed(AnIEN: Integer; ForInpatient: Boolean; HavePI: Boolean; PKIActive: Boolean): TStrings;
+function OIForMed(aReturn: TStrings; AnIEN: Integer; ForInpatient: Boolean; HavePI: Boolean; PKIActive: Boolean): integer;
 var
   PtType: Char;
   NeedPI: Char;
@@ -289,31 +321,36 @@ begin
   if HavePI then NeedPI := 'Y' else NeedPI := 'N';
   if ForInpatient then PtType := 'U' else PtType := 'O';
   if PKIActive then IsPKIActive := 'Y' else IsPKIActive := 'N';
-  CallV('ORWDPS2 OISLCT', [AnIEN, PtType, Patient.DFN, NeedPI, IsPKIActive]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDPS2 OISLCT', [AnIEN, PtType, Patient.DFN, NeedPI, IsPKIActive], aReturn);
+  Result := aReturn.Count;
 end;
 
 function GetPickupForLocation(const Loc: string): string;
 begin
-  Result := sCallV('ORWDPS1 LOCPICK',[Loc]);
+  CallVistA('ORWDPS1 LOCPICK',[Loc], Result);
 end;
 
 function QOHasRouteDefined(AQOID: integer): boolean;
+var
+  aStr: string;
 begin
-  Result := False;
-  if ( sCallV('ORWDPS1 HASROUTE',[AQOID])='1' ) then
-    Result := True;
+  if CallVistA('ORWDPS1 HASROUTE', [AQOID], aStr) then
+    Result := (aStr = '1')
+  else
+    Result := False;
 end;
 
 procedure CheckExistingPI(AOrderId: string; var APtI: string);
 begin
-  APtI := sCallV('ORWDPS2 CHKPI', [AOrderId]);
+  CallVistA('ORWDPS2 CHKPI', [AOrderId], APtI);
 end;
 
 function PassDrugTest(OI: integer; OrderType: string; InptOrder: boolean; CheckForClozapineOnly: boolean = false): boolean;
 var
-MessCap, MessText: string;
-i: integer;
+  MessCap: string;
+  MessText: string;
+  i: integer;
+  aLst: TStringList;
 begin
   result := false;
   MessText := '';
@@ -321,16 +358,24 @@ begin
   uDrugHasMaxData.MaxSupply := 0;
   uDrugHasMaxData.MaxQuantity := 0;
   uDrugHasMaxData.MaxRefills := 0;
-  CallV('ORALWORD ALLWORD', [Patient.DFN, OI, OrderType, Encounter.Provider]);
-  for i := 0 to RPCBrokerV.Results.Count -1 do
-    begin
-      if i = 0 then
-        begin
-          MessCap := Piece(RPCBrokerV.Results.strings[i],U,1);
-          if Piece(RPCBrokerV.Results.strings[i],U,2) = '1' then uDrugHasMaxData.CaptureMaxData := True;
-        end;
-      if i >0 then MessText := MessText + RPCBrokerV.Results.Strings[i] + CRLF;
-    end;
+  aLst := TStringList.Create;
+  try
+    CallVistA('ORALWORD ALLWORD', [Patient.DFN, OI, OrderType, Encounter.Provider], aLst);
+    for i := 0 to aLst.Count - 1 do
+      begin
+        if i = 0 then
+          begin
+            MessCap := Piece(aLst[i], U, 1);
+            if Piece(aLst[i], U, 2) = '1' then
+              uDrugHasMaxData.CaptureMaxData := True;
+          end;
+        if i > 0 then
+          MessText := MessText + aLst[i] + CRLF;
+      end;
+  finally
+    FreeAndNil(aLst);
+  end;
+
   if CheckForClozapineOnly = True then
     begin
       Result := uDrugHasMaxData.CaptureMaxData = True;
@@ -344,10 +389,16 @@ begin
           uDrugHasMaxData.CaptureMaxData := false;
           if uInpatientClozapineText.dispText = '' then
             begin
-              CallV('ORDDPAPI CLOZMSG', []);
-              for i := 0 to RPCBrokerV.Results.Count -1 do
-                 if i = 0 then uInpatientClozapineText.dispText := RPCBrokerV.Results.Strings[i]
-                 else uInpatientClozapineText.dispText := uInpatientClozapineText.dispText + CRLF + RPCBrokerV.Results.Strings[i];
+              aLst := TStringList.Create;
+              try
+                CallVistA('ORDDPAPI CLOZMSG', [], aLst);
+                for i := 0 to aLst.Count - 1 do
+                  if i = 0 then
+                    uInpatientClozapineText.dispText := aLst[i]
+                  else uInpatientClozapineText.dispText := uInpatientClozapineText.dispText + CRLF + aLst[i];
+              finally
+                FreeAndNil(aLst);
+              end;
             end;
           if uInpatientClozapineText.dispText <> '' then infoBox(uInpatientClozapineText.dispText, 'Inpatient Drug Warning', MB_OK);
         end;
@@ -358,16 +409,24 @@ end;
 
 function AdminTimeHelpText(): string;
 var
-i: integer;
+  i: integer;
+  aLst: TStringList;
 begin
-      if uAdminTimeHelpText.HelpText = '' then
-       begin
-          CallV('ORDDPAPI ADMTIME',[]);
-          for I := 0 to RPCBrokerV.Results.Count - 1 do
-            if I = 0 then uAdminTimeHelpText.HelpText := RPCBrokerV.Results.Strings[i]
-            else uAdminTimeHelpText.HelpText := uAdminTimeHelpText.HelpText + CRLF +RPCBrokerV.Results.Strings[i];
-       end;
-   Result := uAdminTimeHelpText.helpText
+  if uAdminTimeHelpText.HelpText = '' then
+    begin
+      aLst := TStringList.Create;
+      try
+        CallVistA('ORDDPAPI ADMTIME', [], aLst);
+        for i := 0 to aLst.Count - 1 do
+          if i = 0 then
+            uAdminTimeHelpText.HelpText := aLst[i]
+          else
+            uAdminTimeHelpText.HelpText := uAdminTimeHelpText.HelpText + CRLF + aLst[i];
+      finally
+        FreeAndNil(aLst);
+      end;
+    end;
+  Result := uAdminTimeHelpText.HelpText
 end;
 
 function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string; OI, tempSupply, tempRefills: integer; tempQuantity: Double): boolean;
@@ -470,19 +529,26 @@ begin
 end;
 
 function DifferentOrderLocations(ID: string; Loc: integer): boolean;
+var
+  aStr: string;
 begin
-   Result := (sCallV('ORWDPS33 COMPLOC', [ID, Loc])='1');
+  CallVistA('ORWDPS33 COMPLOC', [ID, Loc], aStr);
+  Result := (aStr = '1');
 end;
 
 function IsClozapineOrder: boolean;
 begin
-   if uDrugHasMaxData.CaptureMaxData = true then result := true
-   else result := false;
+  Result := uDrugHasMaxData.CaptureMaxData;
+end;
+
+function GetMaxDS(OrderableIEN: string; DrugIEN: string): integer;
+begin
+  CallVistA('ORWDPS1 MAXDS', [OrderableIEN, DrugIEN], Result, 0);
 end;
 
 function GetQOOrderableItem(DialogIEN: string): integer;
 begin
-  Result := StrtoInt(SCallV('ORWDPS1 QOMEDALT',[DialogIEN]))
+  CallVistA('ORWDPS1 QOMEDALT', [DialogIEN], Result, 0);
 end;
 
 end.

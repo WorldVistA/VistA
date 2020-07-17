@@ -28,6 +28,9 @@ implementation
 
 {$R *.DFM}
 
+uses
+  VAUtils;
+
 const
   TC_PUT_ERR = 'Unable to Save Comments';
 

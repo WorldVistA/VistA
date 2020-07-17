@@ -331,7 +331,7 @@ begin
     //CQ #17218 - Updated to properly filter co-signers - JCS
     //CT_DCSUMM:    TORComboBox(Sender).ForDataUse(SubSetOfProviders(StartFrom, Direction));
     CT_DCSUMM: (Sender as TORComboBox).ForDataUse(SubSetOfCosigners(StartFrom, Direction,
-        FMToday, 0, frmDCSumm.lstSumms.ItemIEN));
+        FMToday, frmDCSumm.lstSumms.ItemIEN, 0));
   end;
 end;
 

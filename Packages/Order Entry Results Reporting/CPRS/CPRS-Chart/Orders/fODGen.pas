@@ -9,6 +9,7 @@ uses
 
 type
   TDialogCtrl = class
+  public
     ID: string;
     DataType: Char;
     Required: Boolean;
@@ -73,7 +74,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, rOrders, uConst;
+uses rCore, rOrders, uConst, VAUtils;
 
 const
   HT_FRAME  = 8;
@@ -277,7 +278,7 @@ begin
       if Required then
       begin
         AResponse := Responses.FindResponseByName(ID, 1);
-        if (AResponse = nil) or ((AResponse <> nil) and (AResponse.EValue = ''))
+        if (AResponse = nil) or ((AResponse <> nil) and (Trim(AResponse.EValue) = ''))
           then SetError(ALabel + ' is required.');
       end;
       if ((DataType = 'D') or (DataType = 'R')) and (Editor <> nil) then
@@ -640,10 +641,19 @@ begin
 end;
 
 procedure TfrmODGen.cmdAcceptClick(Sender: TObject);
+var
+  ReleasePending: boolean;
+  Msg: TMsg;
+
 begin
   inherited;
+  ReleasePending := PeekMessage(Msg, Handle, CM_RELEASE, CM_RELEASE, PM_REMOVE);
+
   TrimAllMemos;
   Application.ProcessMessages;
+
+  if ReleasePending then
+    Release;
 end;
 
 procedure TfrmODGen.ControlChange(Sender: TObject);

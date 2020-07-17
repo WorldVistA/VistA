@@ -32,7 +32,7 @@ type
 function  DfltSurgeryTitle(AClassName: string): integer;
 function  DfltSurgeryTitleName(AClassName: string): string;
 procedure ListSurgeryTitlesShort(Dest: TStrings; AClassName: string);
-function SubSetOfSurgeryTitles(const StartFrom: string; Direction: Integer; AClassName: string): TStrings;
+function SubSetOfSurgeryTitles(const StartFrom: string; Direction: Integer; AClassName: string; aResults: TStrings): integer;
 function IsSurgeryTitle(TitleIEN: Integer): Boolean;
 procedure ResetSurgeryTitles;
 
@@ -59,12 +59,15 @@ var
   //uShowOpTop: TShowOpTop;
 
 function ShowSurgeryTab: boolean;
+var
+  aStr: String;
 begin
   with uShowSurgeryTab do
     begin
       if not Evaluated then
         begin
-          ShowIt := sCallV('ORWSR SHOW SURG TAB', [nil]) = '1';
+          CallVistA('ORWSR SHOW SURG TAB', [nil], aStr);
+          ShowIt := (aStr = '1');
           Evaluated := True;
         end;
       Result := ShowIt;
@@ -77,6 +80,7 @@ procedure LoadSurgeryTitles(AClassName: string);
 var
   SurgeryClass: integer;
   x: string;
+  aLst: TStringList;
 begin
   if uSurgeryTitles <> nil then
   begin
@@ -85,15 +89,21 @@ begin
     uSurgeryTitles := nil;
   end;
   // pass in class name to return OR/non-OR class, depending on selected case
-  SurgeryClass := StrToInt(sCallV('TIU IDENTIFY SURGERY CLASS',[AClassName]))  ;
-  CallV('TIU PERSONAL TITLE LIST', [User.DUZ, SurgeryClass]);
-  RPCBrokerV.Results.Insert(0, '~SHORT LIST');  // insert so can call ExtractItems
-  uSurgeryTitles := TSurgeryTitles.Create;
-  ExtractItems(uSurgeryTitles.ShortList, RPCBrokerV.Results, 'SHORT LIST');
-  x := ExtractDefault(RPCBrokerV.Results, 'SHORT LIST');
-  uSurgeryTitles.ClassName := AClassName;
-  uSurgeryTitles.DfltTitle := StrToIntDef(Piece(x, U, 1), 0);
-  uSurgeryTitles.DfltTitleName := Piece(x, U, 2);
+  CallVistA('TIU IDENTIFY SURGERY CLASS', [AClassName], SurgeryClass);
+
+  aLst := TStringList.Create;
+  try
+    CallVistA('TIU PERSONAL TITLE LIST', [User.DUZ, SurgeryClass], aLst);
+    aLst.Insert(0, '~SHORT LIST');  // insert so can call ExtractItems
+    uSurgeryTitles := TSurgeryTitles.Create;
+    ExtractItems(uSurgeryTitles.ShortList, aLst, 'SHORT LIST');
+    x := ExtractDefault(aLst, 'SHORT LIST');
+    uSurgeryTitles.ClassName := AClassName;
+    uSurgeryTitles.DfltTitle := StrToIntDef(Piece(x, U, 1), 0);
+    uSurgeryTitles.DfltTitleName := Piece(x, U, 2);
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 procedure ResetSurgeryTitles;
@@ -131,88 +141,80 @@ begin
   end;
 end;
 
-function SubSetOfSurgeryTitles(const StartFrom: string; Direction: Integer; AClassName: string): TStrings;
-{ returns a pointer to a list of Surgery progress note titles (for use in a long list box) -
-  The return value is a pointer to RPCBrokerV.Results, so the data must be used BEFORE
-  the next broker call! }
+function SubSetOfSurgeryTitles(const StartFrom: string; Direction: integer; AClassName: string; aResults: TStrings): integer;
 begin
-   // pass in class name based on OR/non-OR
-   CallV('TIU LONG LIST SURGERY TITLES', [StartFrom, Direction, AClassName]);
-  //MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+  // pass in class name based on OR/non-OR
+  CallVistA('TIU LONG LIST SURGERY TITLES', [StartFrom, Direction, AClassName], aResults);
+  Result := aResults.Count;
 end;
 
 function IsSurgeryTitle(TitleIEN: Integer): Boolean;
+var
+  aStr: String;
 begin
-  Result := False;
-  if not ShowSurgeryTab then exit;
-  if TitleIEN <= 0 then Exit;
-  Result := sCallV('TIU IS THIS A SURGERY?', [TitleIEN]) = '1';
+  if ShowSurgeryTab and (TitleIEN > 0) then
+    begin
+      CallVistA('TIU IS THIS A SURGERY?', [TitleIEN], aStr);
+      Result := (aStr = '1');
+    end
+  else
+    Result := False;
 end;
 
 {--------------- data retrieval ------------------------------------------}
 
 procedure GetSurgCaseList(Dest: TStrings; Early, Late: double; Context, Max: integer);
-{ returns a list of surgery cases for a patient, based on selected dates, service, status, or ALL}
+{ returns a list of surgery cases for a patient, based on selected dates, service, status, or ALL }
 (*
-CASE #^Operative Procedure^Date/Time of Operation^Surgeon;Surgeon name^^^^^^^^^+^Context*)
+  CASE #^Operative Procedure^Date/Time of Operation^Surgeon;Surgeon name^^^^^^^^^+^Context *)
 var
   date1, date2: string;
 begin
-  if Early <= 0 then date1 := '' else date1 := FloatToStr(Early) ;
-  if Late  <= 0 then date2 := '' else date2 := FloatToStr(Late)  ;
-  CallV('ORWSR LIST', [Patient.DFN, date1, date2, Context, Max]);
-  with RPCBrokerV do
-   begin
-    if Results.Count > 0 then
-      begin
-       SortByPiece(TStringList(Results), U, 2);
-       InvertStringList(TStringList(Results));
-       FastAssign(Results, Dest);
-     end
-    else
-     begin
-       Dest.Clear ;
-       Dest.Add('-1^No Matches') ;
-     end ;
-  end;
+  if Early <= 0 then
+    date1 := ''
+  else
+    date1 := FloatToStr(Early);
+  if Late <= 0 then
+    date2 := ''
+  else
+    date2 := FloatToStr(Late);
+
+  CallVistA('ORWSR LIST', [Patient.DFN, date1, date2, Context, Max], Dest);
+  if Dest.Count > 0 then
+    begin
+      SortByPiece(TStringList(Dest), U, 2);
+      InvertStringList(TStringList(Dest));
+    end
+  else
+    Dest.Add('-1^No Matches');
 end;
 
 procedure ListSurgeryCases(Dest: TStrings);
-{ returns a list of surgery cases for a patient, without documents, for fNoteProps case selection}
-//CASE #^Operative Procedure^Date/Time of Operation^Surgeon;Surgeon name)
+{ returns a list of surgery cases for a patient, without documents, for fNoteProps case selection }
+// CASE #^Operative Procedure^Date/Time of Operation^Surgeon;Surgeon name)
 begin
-  CallV('ORWSR CASELIST', [Patient.DFN]);
-  with RPCBrokerV do
-   begin
-    if Results.Count > 0 then
-      begin
-       SortByPiece(TStringList(Results), U, 3);
-       InvertStringList(TStringList(Results));
-       SetListFMDateTime('mmm dd,yy hh:nn', TStringList(Results), U, 3);
-       FastAssign(Results, Dest);
-     end
-    else
-     begin
-       Dest.Clear ;
-       Dest.Add('-1^No Cases Found') ;
-     end ;
-  end;
+  CallVistA('ORWSR CASELIST', [Patient.DFN], Dest);
+  if Dest.Count > 0 then
+    begin
+      SortByPiece(TStringList(Dest), U, 3);
+      InvertStringList(TStringList(Dest));
+      SetListFMDateTime('mmm dd,yy hh:nn', TStringList(Dest), U, 3);
+    end
+  else
+    Dest.Add('-1^No Cases Found');
 end;
 
 
 procedure LoadSurgReportText(Dest: TStrings; IEN: integer) ;
 { returns the text of a surgery report }
 begin
-  CallV('TIU GET RECORD TEXT', [IEN]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('TIU GET RECORD TEXT', [IEN], Dest);
 end;
 
 procedure LoadSurgReportDetail(Dest: TStrings; IEN: integer) ;
 { returns the detail of a surgery report }
 begin
-  CallV('TIU DETAILED DISPLAY', [IEN]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('TIU DETAILED DISPLAY', [IEN], Dest);
 end;
 
 (*procedure LoadOpTop(Dest: TStrings; ACaseIEN: integer; IsNonORProc, ShowReport: boolean) ;
@@ -234,23 +236,23 @@ var
   x: string;
   AContext: TSurgCaseContext;
 begin
-  x := sCallV('ORWSR GET SURG CONTEXT', [User.DUZ]) ;
+  CallVistA('ORWSR GET SURG CONTEXT', [User.DUZ], x);
   with AContext do
     begin
-      Changed       := True;
-      BeginDate     := Piece(x, ';', 1);
-      FMBeginDate   := StrToFMDateTime(BeginDate);
-      EndDate       := Piece(x, ';', 2);
-      FMEndDate     := StrToFMDateTime(EndDate);
-      Status        := Piece(x, ';', 3);
-      GroupBy       := Piece(x, ';', 4);
-      MaxDocs       := StrToIntDef(Piece(x, ';', 5), 0);
-      TreeAscending     := (Piece(x, ';', 6) = '1');
+      Changed := True;
+      BeginDate := Piece(x, ';', 1);
+      FMBeginDate := StrToFMDateTime(BeginDate);
+      EndDate := Piece(x, ';', 2);
+      FMEndDate := StrToFMDateTime(EndDate);
+      Status := Piece(x, ';', 3);
+      GroupBy := Piece(x, ';', 4);
+      MaxDocs := StrToIntDef(Piece(x, ';', 5), 0);
+      TreeAscending := (Piece(x, ';', 6) = '1');
     end;
   Result := AContext;
-end ;
+end;
 
-procedure SaveCurrentSurgCaseContext(AContext: TSurgCaseContext) ;
+procedure SaveCurrentSurgCaseContext(AContext: TSurgCaseContext);
 var
   x: string;
 begin
@@ -263,14 +265,14 @@ begin
       SetPiece(x, ';', 5, IntToStr(MaxDocs));
       SetPiece(x, ';', 6, BOOLCHAR[TreeAscending]);
     end;
-  CallV('ORWSR SAVE SURG CONTEXT', [x]);
-end;                                                                                 
+  CallVistA('ORWSR SAVE SURG CONTEXT', [x]);
+end;
 
 function GetSurgCaseRefForNote(NoteIEN: integer): string;
 var
   x: string;
 begin
-  x := sCallV('TIU GET REQUEST', [NoteIEN]);
+  CallVistA('TIU GET REQUEST', [NoteIEN], x);
   if Piece(x, ';', 2) <> 'SRF(' then
     Result := '-1'
   else
@@ -279,14 +281,12 @@ end;
 
 procedure GetSingleCaseListItemWithDocs(Dest: TStrings; NoteIEN: integer);
 begin
-  CallV('ORWSR ONECASE', [NoteIEN]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWSR ONECASE', [NoteIEN], Dest);
 end;
 
 function GetSingleCaseListItemWithoutDocs(NoteIEN: integer): string;
 begin
-  CallV('ORWSR ONECASE', [NoteIEN]);
-  if RPCBrokerV.Results.Count > 0 then Result := RPCBrokerV.Results[0];
+  CallVistA('ORWSR ONECASE', [NoteIEN], Result);
 end;
 
 (*function  ShowOpTopOnSignature(ACaseIEN: integer): integer;
@@ -303,8 +303,11 @@ begin
 end;*)
 
 function IsNonORProcedure(ACaseIEN: integer): boolean;
+var
+  aStr: string;
 begin
-  Result := sCallV('ORWSR IS NON-OR PROCEDURE', [ACaseIEN]) = '1';
+  CallVistA('ORWSR IS NON-OR PROCEDURE', [ACaseIEN], aStr);
+  Result := (aStr = '1');
 end;
 
 initialization

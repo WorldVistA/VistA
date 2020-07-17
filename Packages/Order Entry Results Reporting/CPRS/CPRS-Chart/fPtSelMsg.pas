@@ -36,7 +36,7 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn, uCore, fFrame;
+uses ORFn, uCore, fFrame, VAUtils;
 
 var
   frmPtSelMsg: TfrmPtSelMsg = nil;

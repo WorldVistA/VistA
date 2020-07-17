@@ -38,17 +38,17 @@ type
     cboCosigner: TORComboBox;
     cmdOK: TButton;
     cmdCancel: TButton;
-    pnlConsults: TORAutoPanel;
+    pnlConsults: TPanel;
     bvlConsult: TBevel;
     cboProcSummCode: TORComboBox;
-    lblProcSummCode: TOROffsetLabel;
+    lblProcSummCode: TLabel;
     calProcDateTime: TORDateBox;
-    lblProcDateTime: TOROffsetLabel;
+    lblProcDateTime: TLabel;
     pnlPRF: TORAutoPanel;
     lblPRF: TLabel;
     Bevel1: TBevel;
     lvPRF: TCaptionListView;
-    pnlSurgery: TORAutoPanel;
+    pnlSurgery: TPanel;
     bvlSurgery: TBevel;
     lblSurgery1: TStaticText;
     lblSurgery2: TStaticText;
@@ -61,7 +61,6 @@ type
     btnShowList: TButton;
     btnDetails: TButton;
     lstRequests: TCaptionListView;
-    procedure FormShow(Sender: TObject);
     procedure cboNewTitleNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure NewPersonNeedData(Sender: TObject; const StartFrom: String;
@@ -75,12 +74,10 @@ type
     procedure cboAuthorExit(Sender: TObject);
     procedure cboAuthorMouseClick(Sender: TObject);
     procedure cboAuthorEnter(Sender: TObject);
-    procedure cboNewTitleDropDownClose(Sender: TObject);
     procedure cboNewTitleDblClick(Sender: TObject);
     procedure cboCosignerNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure btnShowListClick(Sender: TObject);
-    procedure FormResize(Sender: TObject);
     procedure calNoteEnter(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnDetailsClick(Sender: TObject);
@@ -114,10 +111,9 @@ type
     procedure ShowPRFList(ShouldShow: Boolean);
     procedure ShowClinProcFields(YesNo: boolean);
     procedure SetGenericFormSize;
-    procedure UMDelayEvent(var Message: TMessage); message UM_DELAYEVENT;
+    procedure SelectNoteTitle;
   public
     { Public declarations }
-
   end;
 
 
@@ -137,7 +133,7 @@ implementation
 
 {$R *.DFM}
 
-uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter;
+uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter, VAUtils;
 
 { Initial values in ANote
 
@@ -208,6 +204,7 @@ var
   frmNoteProperties: TfrmNoteProperties;
 begin
   frmNoteProperties := TfrmNoteProperties.Create(Application);
+  frmNoteProperties.Font.Assign(Screen.IconFont);
   frmNoteProperties.FIsNewNote := ANote.IsNewNote;
   uConsultsList := TStringList.Create;
   try
@@ -412,26 +409,60 @@ begin
   end;
 end;
 
-{ Form events }
-
-procedure TfrmNoteProperties.FormShow(Sender: TObject);
-begin
-  //if cboNewTitle.Text = '' then PostMessage(Handle, UM_DELAYEVENT, 0, 0);
-end;
-
-procedure TfrmNoteProperties.UMDelayEvent(var Message: TMessage);
-{ let the window finish displaying before dropping list box, otherwise listbox drop
-  in the design position rather then new windows position (ORCtrls bug?) }
-begin
-//  Screen.Cursor := crArrow;
-//  FFixCursor := TRUE;
-//  cboNewTitle.DroppedDown := True;
-//  lblDateTime.Visible := False;
-//  lblAuthor.Visible   := False;
-//  lblCosigner.Visible := False;
-end;
-
 { General calls }
+
+procedure TfrmNoteProperties.SelectNoteTitle;
+const
+  TX_NEED_CONSULT_TITLE = 'You currently have unresolved consults awaiting completion.' + CRLF +
+                          'The selected title cannot be used to complete consults.' + CRLF +
+                          'You must select a Consults title to complete a consult.' + CRLF + CRLF +
+                          'Answer "YES" to continue with this title and not complete a consult.' + CRLF +
+                          'Answer "NO" to select a different title.' + CRLF + CRLF +
+                          'Do you want to use this title and continue?';
+  TC_NOT_CONSULT_TITLE = 'Not a consult title';
+var
+  WantsToCompleteConsult: boolean;
+  ConsultTitle: boolean;
+begin
+  with cboNewTitle do
+    if (ItemIEN > 0) and (ItemIEN = FLastTitle) then
+      Exit
+    else if ItemIEN = 0 then
+      begin
+        if FLastTitle > 0 then
+          SelectByIEN(FLastTitle)
+        else
+          ItemIndex := -1;
+        // Exit;
+      end;
+  case FCallingTab of
+    CT_CONSULTS:
+      ; // no action
+    CT_SURGERY:
+      ; // no action
+    CT_NOTES:
+      begin // v26.5 (RV) main changes here
+        WantsToCompleteConsult := False;
+        ConsultTitle := IsConsultTitle(cboNewTitle.ItemIEN);
+        if (pnlConsults.Visible) and
+          (lstRequests.Items.Count > 0) and
+          (not FStarting) and
+        (* (lstRequests.ItemID <> '') and *)
+          (not ConsultTitle) then
+          WantsToCompleteConsult := (InfoBox(TX_NEED_CONSULT_TITLE,
+            TC_NOT_CONSULT_TITLE,
+            MB_ICONWARNING or MB_YESNO or MB_DEFBUTTON2) = IDNO);
+        if WantsToCompleteConsult and (not ConsultTitle) then
+          cboNewTitle.ItemIndex := -1;
+        SetGenericFormSize;
+        ShowRequestList(WantsToCompleteConsult or ConsultTitle);
+        ShowSurgCaseList(IsSurgeryTitle(cboNewTitle.ItemIEN));
+        ShowPRFList(IsPRFTitle(cboNewTitle.ItemIEN));
+      end;
+  end;
+  SetCosignerRequired(True);
+  FLastTitle := cboNewTitle.ItemIEN;
+end;
 
 procedure TfrmNoteProperties.SetCosignerRequired(DoSetup: boolean);
 { called initially & whenever title or author changes }
@@ -530,18 +561,26 @@ end;
 
 { cboNewTitle events }
 
-procedure TfrmNoteProperties.cboNewTitleNeedData(Sender: TObject; const StartFrom: string;
-  Direction, InsertAt: Integer);
+procedure TfrmNoteProperties.cboNewTitleNeedData(Sender: TObject; const StartFrom: String; Direction, InsertAt: integer);
+var
+  aLst: TStringList;
 begin
-  case FCallingTab of
-    CT_CONSULTS:  begin
-                    if FIsClinProcNote then
-                      cboNewTitle.ForDataUse(SubSetOfClinProcTitles(StartFrom, Direction, FIDNoteTitlesOnly))
-                    else
-                      cboNewTitle.ForDataUse(SubSetOfConsultTitles(StartFrom, Direction, FIDNoteTitlesOnly));
-                  end;
-    CT_SURGERY:   cboNewTitle.ForDataUse(SubSetOfSurgeryTitles(StartFrom, Direction, FClassName));
-    CT_NOTES:     cboNewTitle.ForDataUse(SubSetOfNoteTitles(StartFrom, Direction, FIDNoteTitlesOnly));
+  aLst := TStringList.Create;
+  try
+    case FCallingTab of
+      CT_CONSULTS:
+        if FIsClinProcNote then
+          SubSetOfClinProcTitles(aLst, StartFrom, Direction, FIDNoteTitlesOnly)
+        else
+          SubSetOfConsultTitles(aLst, StartFrom, Direction, FIDNoteTitlesOnly);
+      CT_SURGERY:
+        SubSetOfSurgeryTitles(StartFrom, Direction, FClassName, aLst);
+      CT_NOTES:
+        SubSetOfNoteTitles(aLst, StartFrom, Direction, FIDNoteTitlesOnly);
+    end;
+    cboNewTitle.ForDataUse(aLst);
+  finally
+    FreeAndNil(aLst);
   end;
 end;
 
@@ -551,49 +590,8 @@ begin
 end;
 
 procedure TfrmNoteProperties.cboNewTitleMouseClick(Sender: TObject);
-const
-  TX_NEED_CONSULT_TITLE = 'You currently have unresolved consults awaiting completion.' + CRLF +
-                          'The selected title cannot be used to complete consults.' + CRLF +
-                          'You must select a Consults title to complete a consult.' + CRLF + CRLF +
-                          'Answer "YES" to continue with this title and not complete a consult.' + CRLF +
-                          'Answer "NO" to select a different title.' + CRLF + CRLF +
-                          'Do you want to use this title and continue?';                          
-  TC_NOT_CONSULT_TITLE = 'Not a consult title';
-var
-  WantsToCompleteConsult: boolean;
-  ConsultTitle: boolean;
 begin
-  with cboNewTitle do
-    if (ItemIEN > 0) and (ItemIEN = FLastTitle) then Exit
-    else if ItemIEN = 0 then
-      begin
-        if FLastTitle > 0 then SelectByIEN(FLastTitle)
-        else ItemIndex := -1;
-        //Exit;
-      end;
-    case FCallingTab of
-      CT_CONSULTS:  ;  // no action
-      CT_SURGERY :  ;  // no action
-      CT_NOTES   :  begin            // v26.5 (RV) main changes here
-                      WantsToCompleteConsult := False;
-                      ConsultTitle := IsConsultTitle(cboNewTitle.ItemIEN);
-                      if (pnlConsults.Visible) and
-                         (lstRequests.Items.Count > 0) and
-                         (not FStarting) and
-                         (*(lstRequests.ItemID <> '') and*)
-                         (not ConsultTitle) then
-                          WantsToCompleteConsult := (InfoBox(TX_NEED_CONSULT_TITLE,
-                                                            TC_NOT_CONSULT_TITLE,
-                                                            MB_ICONWARNING or MB_YESNO or MB_DEFBUTTON2) = IDNO);
-                      if WantsToCompleteConsult and (not ConsultTitle) then cboNewTitle.ItemIndex := -1;
-                      SetGenericFormSize;
-                      ShowRequestList(WantsToCompleteConsult or ConsultTitle);
-                      ShowSurgCaseList(IsSurgeryTitle(cboNewTitle.ItemIEN));
-                      ShowPRFList(IsPRFTitle(cboNewTitle.ItemIEN));
-                    end;
-    end;
-  SetCosignerRequired(True);
-  FLastTitle := cboNewTitle.ItemIEN;
+  SelectNoteTitle;
 end;
 
 procedure TfrmNoteProperties.cboNewTitleExit(Sender: TObject);
@@ -762,18 +760,6 @@ begin
   //Close;
 end;
 
-procedure TfrmNoteProperties.cboNewTitleDropDownClose(Sender: TObject);
-begin
-//  if FFixCursor then
-//  begin
-//    Screen.Cursor := crDefault;
-//    FFixCursor := FALSE;
-//  end;
-//  lblDateTime.Visible := True;
-//  lblAuthor.Visible   := True;
-//  lblCosigner.Visible := True;
-end;
-
 procedure TfrmNoteProperties.cboCosignerNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
@@ -807,17 +793,6 @@ begin
   with uUnresolvedConsults do if (UnresolvedConsultsExist and ShowNagScreen) then pnlConsults.Visible := TRUE;  //v26.27 (RV)
   ShowRequestList(pnlConsults.Visible);      //v26.5 (RV)
   //ShowRequestList(True);                   //v26.5 (RV)
-end;
-
-procedure TfrmNoteProperties.FormResize(Sender: TObject);
-const
-  SPACE: integer = 10;
-begin
-  cboNewTitle.Width := Self.ClientWidth - cboNewTitle.Left - cmdOK.Width - SPACE * 2;
-  cmdOK.Left := Self.ClientWidth - cmdOK.Width - SPACE;
-  cmdCancel.Left := Self.ClientWidth - cmdCancel.Width - SPACE;
-  if (cboAuthor.Width + cboAuthor.Left) > Self.ClientWidth then
-    cboAuthor.Width := Self.ClientWidth - cboAuthor.Left - SPACE;
 end;
 
 procedure TfrmNoteProperties.calNoteEnter(Sender: TObject);
@@ -889,8 +864,7 @@ end;
 
 procedure TPRFActions.Load(TitleIEN : Int64; DFN : String);
 begin
-  CallV('TIU GET PRF ACTIONS', [TitleIEN,DFN]);
-  FastAssign(RPCBrokerV.Results, FPRFActionList);
+  CallVistA('TIU GET PRF ACTIONS', [TitleIEN,DFN], FPRFActionList);
 end;
 
 function TPRFActions.SelActionHasNote(lstIndex: integer): boolean;

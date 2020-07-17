@@ -24,7 +24,7 @@ inherited frmExams: TfrmExams
   end
   inherited pnlGrid: TPanel
     TabOrder = 1
-    inherited lstRenameMe: TCaptionListView
+    inherited lstCaptionList: TCaptionListView
       Columns = <
         item
           Caption = 'Results'

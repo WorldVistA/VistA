@@ -177,16 +177,18 @@ end;
 
 procedure TfrmClinicWardMeds.rpcChangeOrderLocation(pOrderList:TStringList);
 begin
-// OrderIEN^Location^1  -- used to alter location if ward is selected RPC expected third value to determine if
-//order is an IMO order. If it is being called from here assumed IMO order.
+  // OrderIEN^Location^1  -- used to alter location if ward is selected RPC expected third value to determine if
+  // order is an IMO order. If it is being called from here assumed IMO order.
 
-   CallV('ORWDX CHANGE',[pOrderList, Patient.DFN, '1']);
+  CallVistA('ORWDX CHANGE',[pOrderList, Patient.DFN, '1']);
 end;
 
 function TfrmClinicWardMeds.rpcIsPatientOnWard(Patient: string): boolean;
+var
+  aStr: string;
 begin
-  result := sCallV('ORWDX1 PATWARD',[Patient]) = '1';
+  CallVistA('ORWDX1 PATWARD', [Patient], aStr);
+  Result := (aStr = '1');
 end;
-
 
 end.

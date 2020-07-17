@@ -9,12 +9,14 @@ uses
 
 type
   TSetItem = class
+  public
     DialogIEN: Integer;
     DialogType: Char;
     OIIEN: string;
     InPkg: string;
     OwnedBy: TComponent;
     RefNum: Integer;
+    MenuActive: Boolean;
   end;
 
   TfrmOMSet = class(TfrmBase508Form)
@@ -28,6 +30,7 @@ type
   private
     DoingNextItem : Boolean;
     CloseRequested : Boolean;
+    FromInterrupt: Boolean;
     FDelayEvent: TOrderDelayEvent;
     FClosing: Boolean;
     FRefNum: Integer;
@@ -38,11 +41,13 @@ type
     procedure DoNextItem;
     procedure UMDestroy(var Message: TMessage); message UM_DESTROY;
     procedure UMDelayEvent(var Message: TMessage); message UM_DELAYEVENT;
+    function GetActiveMenus: integer;
   public
     procedure InsertList(SetList: TStringList; AnOwner: TComponent; ARefNum: Integer;
                          const KeyVarStr: string; AnEventType:Char =#0);
     procedure SetEventDelay(AnEvent: TOrderDelayEvent);
     property RefNum: Integer read FRefNum write FRefNum;
+    property ActiveMenus: Integer read GetActiveMenus write FActiveMenus;
   end;
 
 var
@@ -86,11 +91,34 @@ const
                  'Click CANCEL to cancel the current order process.';
   TC_DEAFAIL   = 'Order not completed';
 var
-  i, InsertAt: Integer;
+  i, InsertAt, InsHold: Integer;
   SetItem: TSetItem;
   DEAFailStr, TX_INFO: string;
 begin
-  InsertAt := lstSet.ItemIndex + 1;
+
+  //SMT If we are not inserting at the beginning of the orderset, we are inserting
+  //   an orderset into an order set and want to insert above our current menu so that
+  //   we don't automatically skip the menu when selecting the order set.
+
+  InsertAt := 0;
+
+  if lstSet.ItemIndex > -1 then
+  begin
+    //Get the current order set
+    SetItem := TSetItem(lstSet.Items.Objects[lstSet.ItemIndex]);
+    if assigned(SetItem) then
+    begin
+      //If the current orderset is using a menu then add the order set items above
+      if SetItem.MenuActive then
+        InsertAt := lstSet.ItemIndex
+      else
+       InsertAt := lstSet.ItemIndex + 1;
+    end else
+       InsertAt := lstSet.ItemIndex + 1;
+
+  end;
+  InsHold := InsertAt;
+
   with SetList do for i := 0 to Count - 1 do
   begin
     SetItem := TSetItem.Create;
@@ -144,6 +172,8 @@ begin
     Inc(InsertAt);
   end;
   PushKeyVars(KeyVarStr);
+  //SMT reset the index after addition.
+  lstSet.ItemIndex := InsHold -1;
   DoNextItem;
 end;
 
@@ -161,67 +191,33 @@ var
   end;
 
 begin
-   DoingNextItem := true;
-  //frmFrame.UpdatePtInfoOnRefresh;
-  if FClosing then Exit;
-  if frmOrders <> nil then
-  begin
-   if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
-    and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
-   begin
-     FDelayEvent.EventType := #0;
-     FDelayEvent.EventIFN  := 0;
-     FDelayEvent.TheParent := TParentEvent.Create;
-     FDelayEvent.EventName := '';
-     FDelayEvent.PtEventIFN := 0;
-   end;
-  end;
-  with lstSet do
-  begin
-    if ItemIndex >= Items.Count - 1 then
+  DoingNextItem := true;
+  try
+    //frmFrame.UpdatePtInfoOnRefresh;
+    if FClosing then Exit;
+    if frmOrders <> nil then
     begin
-      Close;
-      Exit;
+     if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
+      and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
+     begin
+       FDelayEvent.EventType := #0;
+       FDelayEvent.EventIFN  := 0;
+       FDelayEvent.TheParent := TParentEvent.Create;
+       FDelayEvent.EventName := '';
+       FDelayEvent.PtEventIFN := 0;
+     end;
     end;
-    ItemIndex := ItemIndex + 1;
-    SetItem := TSetItem(Items.Objects[ItemIndex]);
-    case SetItem.DialogType of
-    'A':      if not ActivateAction(IntToStr(SetItem.DialogIEN), Self, ItemIndex) then
-              begin
-                if Not FClosing then
-                begin
-                  if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
-                    lstSet.Checked[lstSet.ItemIndex] := True
-                  else SkipToNext;
-                end;
-              end;
-    'D', 'Q': if not ActivateOrderDialog(IntToStr(SetItem.DialogIEN), FDelayEvent, Self, ItemIndex) then
-              begin
-                if Not FClosing then
-                begin
-                  if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
-                    lstSet.Checked[lstSet.ItemIndex] := True
-                  else SkipToNext;
-                end;
-              end;
-    'M':      begin
-                ok := ActivateOrderMenu(IntToStr(SetItem.DialogIEN), FDelayEvent, Self, ItemIndex);
-                if not FClosing then
-                begin
-                  if ok then
-                    Inc(FActiveMenus)
-                  else
-                  begin
-                    if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
-                      lstSet.Checked[lstSet.ItemIndex] := True
-                    else
-                      SkipToNext;
-                  end;
-                end;
-              end;
-    'O':      begin
-                if (Self.Owner.Name = 'frmOMNavA') then theOwner := Self.Owner else theOwner := self;
-                if not ActivateOrderSet( IntToStr(SetItem.DialogIEN), FDelayEvent, theOwner, ItemIndex) then
+    with lstSet do
+    begin
+      if ItemIndex >= Items.Count - 1 then
+      begin
+        Close;
+        Exit;
+      end;
+      ItemIndex := ItemIndex + 1;
+      SetItem := TSetItem(Items.Objects[ItemIndex]);
+      case SetItem.DialogType of
+      'A':      if not ActivateAction(IntToStr(SetItem.DialogIEN), Self, ItemIndex) then
                 begin
                   if Not FClosing then
                   begin
@@ -230,14 +226,52 @@ begin
                     else SkipToNext;
                   end;
                 end;
-              end;
-    else      begin
-                InfoBox('Unsupported dialog type: ' + SetItem.DialogType, 'Error', MB_OK);
-                SkipToNext;
-              end;
-    end; {case}
-  end; {with lstSet}
-  DoingNextItem := false;
+      'D', 'Q': if not ActivateOrderDialog(IntToStr(SetItem.DialogIEN), FDelayEvent, Self, ItemIndex) then
+                begin
+                  if Not FClosing then
+                  begin
+                    if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
+                      lstSet.Checked[lstSet.ItemIndex] := True
+                    else SkipToNext;
+                  end;
+                end;
+      'M':      begin
+                  ok := ActivateOrderMenu(IntToStr(SetItem.DialogIEN), FDelayEvent, Self, ItemIndex);
+                  if not FClosing then
+                  begin
+                    if ok then
+                      SetItem.MenuActive := true
+                    //  Inc(FActiveMenus)
+                    else
+                    begin
+                      if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
+                        lstSet.Checked[lstSet.ItemIndex] := True
+                      else
+                        SkipToNext;
+                    end;
+                  end;
+                end;
+      'O':      begin
+                  if (Self.Owner.Name = 'frmOMNavA') then theOwner := Self.Owner else theOwner := self;
+                  if not ActivateOrderSet( IntToStr(SetItem.DialogIEN), FDelayEvent, theOwner, ItemIndex) then
+                  begin
+                    if Not FClosing then
+                    begin
+                      if IsCreatedByMenu(SetItem) and (lstSet.ItemIndex < lstSet.Items.Count - 1) then
+                        lstSet.Checked[lstSet.ItemIndex] := True
+                      else SkipToNext;
+                    end;
+                  end;
+                end;
+      else      begin
+                  InfoBox('Unsupported dialog type: ' + SetItem.DialogType, 'Error', MB_OK);
+                  SkipToNext;
+                end;
+      end; {case}
+    end; {with lstSet}
+  finally
+    DoingNextItem := false;
+  end;
 end;
 
 procedure TfrmOMSet.UMDelayEvent(var Message: TMessage);
@@ -268,7 +302,9 @@ begin
   RefNum := Message.WParam;
   lstSet.Checked[RefNum] := True;
   SetItem := TSetItem(lstSet.Items.Objects[RefNum]);
-  if SetItem.DialogType = 'M' then Dec(FActiveMenus);
+  if SetItem.DialogType = 'M' then
+   SetItem.MenuActive := false;
+  //Dec(FActiveMenus);
   if (SetItem.OwnedBy <> nil) and (SetItem.DialogType <> 'O') then
   begin
     PopKeyVars;
@@ -292,10 +328,28 @@ begin
   PostMessage(Handle, UM_DELAYEVENT, RefNum, 0);
 end;
 
+function TfrmOMSet.GetActiveMenus: integer;
+var
+ SetItem: TSetItem;
+ i: integer;
+begin
+ Result := 0;
+ for I := 0 to lstSet.Items.Count - 1 do
+ begin
+   if Assigned(lstSet.Items.Objects[I]) then
+   begin
+     SetItem := TSetItem(lstSet.Items.Objects[I]);
+     if (SetItem.DialogType = 'M') and (SetItem.MenuActive) then
+      Inc(Result);
+   end;
+ end;
+end;
+
 procedure TfrmOMSet.FormCreate(Sender: TObject);
 begin
   FActiveMenus := 0;
-  FClosing := False;
+  FClosing:= False;
+  FromInterrupt := False;
   FClosebyDeaCheck := False;
   NoFresh := True;
   CloseRequested := false;
@@ -313,22 +367,43 @@ end;
 procedure TfrmOMSet.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 { if this is not the last item in the set, prompt whether to interrupt processing }
 begin
- if FClosebyDeaCheck then
-    CanClose := True
- else if lstSet.ItemIndex < (lstSet.Items.Count - 1)
-   then CanClose := InfoBox(TX_STOP, TC_STOP, MB_YESNO) = IDYES;
-   FClosing := CanClose;
+  if FClosebyDeaCheck then
+  begin
+    CanClose := True;
+    FClosing := CanClose;
+    FromInterrupt := False;
+  end
+  else if lstSet.ItemIndex < (lstSet.Items.Count - 1) then
+  begin
+    if DoingNextItem and (not CloseRequested) and (not FromInterrupt) then
+    begin
+      CloseRequested := True;
+      FClosing := True;
+      CanClose := False;
+    end
+    else
+    begin
+      CanClose := InfoBox(TX_STOP, TC_STOP, MB_YESNO) = IDYES;
+      FClosing := CanClose;
+      FromInterrupt := False;
+    end;
+  end;
 end;
 
 procedure TfrmOMSet.FormClose(Sender: TObject; var Action: TCloseAction);
 { Notify remaining owners that their item is done (or - really never completed) }
 var
-  i: Integer;
+  i, TotalActiveMenus: Integer;
   SetItem: TSetItem;
 begin
   // do we need to iterate thru and send messages where OwnedBy <> nil?
   FClosing := True;
-  for i := 1 to FActiveMenus do PopLastMenu;
+
+  TotalActiveMenus := ActiveMenus;
+  for i := 1 to TotalActiveMenus do
+   PopLastMenu;
+
+
   if lstSet.Items.Count > 0 then
   begin
     if lstSet.ItemIndex < 0 then lstSet.ItemIndex := 0;
@@ -346,6 +421,7 @@ end;
 
 procedure TfrmOMSet.cmdInteruptClick(Sender: TObject);
 begin
+  FromInterrupt := True;
   if DoingNextItem then
   begin
     CloseRequested := true;             //Fix for CQ: 8297

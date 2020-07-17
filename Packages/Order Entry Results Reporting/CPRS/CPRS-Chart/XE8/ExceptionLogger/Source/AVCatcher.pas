@@ -20,7 +20,8 @@ uses
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
   SHFolder, ShellAPI, Vcl.StdCtrls, Vcl.ExtCtrls,
   ComObj, UExceptHook, Vcl.ImgList, Vcl.Imaging.pngimage, Data.Bind.EngExt, Vcl.Bind.DBEngExt, System.Rtti,
-  System.Bindings.Outputs, Data.Bind.Components, Vcl.Bind.Editors;
+  System.Bindings.Outputs, Data.Bind.Components, Vcl.Bind.Editors,
+  System.ImageList;
 
 type
 
@@ -64,6 +65,8 @@ type
     procedure SetEnabled(aValue: Boolean);
     function GetAppException(): TAppException;
     procedure SetAppException(aValue: TAppException);
+    function GetAfterAppException(): TAppException;
+    procedure SetAfterAppException(aValue: TAppException);
     function GetCustomMethod(): TNotifyEvent;
     procedure SetCustomMethod(aValue: TNotifyEvent);
     function GetTerminateApp(): Boolean;
@@ -78,6 +81,8 @@ type
     property Enabled: Boolean read GetEnabled write SetEnabled;
     property OnAppException: TAppException read GetAppException
       write SetAppException;
+    property OnAfterAppException: TAppException read GetAfterAppException
+      write SetAfterAppException;
     property OnCustomMethod: TNotifyEvent read GetCustomMethod
       write SetCustomMethod;
     Property TerminateApp: Boolean read GetTerminateApp write SetTerminateApp;
@@ -88,6 +93,7 @@ type
   TExceptionLogger = class(TInterfacedObject, IExceptionInterface)
   private
     fAppException: TAppException;
+    fAfterAppException: TAppException;
     fCustomAction: TNotifyEvent;
     fAV_LogFileName: string; // Log file for the AV info
     fCustomBtnCap: String;
@@ -112,6 +118,8 @@ type
     procedure SetEnabled(aValue: Boolean);
     function GetAppException(): TAppException;
     procedure SetAppException(aValue: TAppException);
+    function GetAfterAppException(): TAppException;
+    procedure SetAfterAppException(aValue: TAppException);
     function GetCustomMethod(): TNotifyEvent;
     procedure SetCustomMethod(aValue: TNotifyEvent);
     function GetTerminateApp(): Boolean;
@@ -251,6 +259,9 @@ begin
   else
     Application.ShowException(E);
 
+  if assigned(fAfterAppException) and fEnabled then
+    fAfterAppException(Sender, E);
+
   if fTerminateApp and (not Application.Terminated) then
     Application.Terminate;
 
@@ -378,7 +389,7 @@ Var
   const
     SHGFP_TYPE_CURRENT = 0;
   var
-    path: array [0 .. MaxChar] of char;
+    path: array [0 .. MAX_PATH] of char;
   begin
     SHGetFolderPath(0, CSIDL_LOCAL_APPDATA, 0, SHGFP_TYPE_CURRENT, @path[0]);
     Result := StrPas(path);
@@ -456,6 +467,16 @@ end;
 procedure TExceptionLogger.SetAppException(aValue: TAppException);
 begin
   fAppException := aValue;
+end;
+
+function TExceptionLogger.GetAfterAppException(): TAppException;
+begin
+  Result := fAfterAppException;
+end;
+
+procedure TExceptionLogger.SetAfterAppException(aValue: TAppException);
+begin
+  fAfterAppException := aValue;
 end;
 
 function TExceptionLogger.GetCustomMethod(): TNotifyEvent;
@@ -580,7 +601,7 @@ end;
 Procedure TExceptionLogger.EmailError(LogMessage: string);
 const
   CannedBdy =
-    'An access violation has occured. Log file as follows (also attached to the email)';
+    'An access violation has occurred. Log file as follows (also attached to the email)';
 var
   EmailUsrs, TmpStr: string;
 
@@ -682,7 +703,7 @@ begin
   for TmpStr in fEmailTo do
   begin
     if (EmailUsrs <> '') then
-      EmailUsrs := EmailUsrs + ';';
+      EmailUsrs := EmailUsrs + '; ';
     EmailUsrs := EmailUsrs + TmpStr;
   end;
   SendMail('Error logged in ' + ExtractFileName(Application.ExeName),

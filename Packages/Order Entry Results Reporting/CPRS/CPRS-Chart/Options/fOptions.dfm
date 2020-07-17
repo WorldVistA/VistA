@@ -1,10 +1,10 @@
 inherited frmOptions: TfrmOptions
   Left = 315
   Top = 110
-  Width = 571
-  Height = 440
+  Width = 586
+  Height = 598
   HelpContext = 9999
-  VertScrollBar.Range = 360
+  VertScrollBar.Range = 450
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Options'
@@ -12,48 +12,64 @@ inherited frmOptions: TfrmOptions
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 571
-  ExplicitHeight = 440
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 586
+  ExplicitHeight = 598
+  PixelsPerInch = 120
+  TextHeight = 17
   object pnlBottom: TPanel [0]
     Left = 0
-    Top = 382
-    Width = 565
-    Height = 30
+    Top = 527
+    Width = 580
+    Height = 38
     HelpContext = 9999
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
     object btnOK: TButton
-      Left = 187
-      Top = 2
-      Width = 75
-      Height = 22
+      Left = 234
+      Top = 3
+      Width = 94
+      Height = 27
       HelpContext = 9007
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'OK'
       Default = True
       TabOrder = 0
       OnClick = btnApplyClick
     end
     object btnCancel: TButton
-      Left = 267
-      Top = 2
-      Width = 75
-      Height = 22
+      Left = 334
+      Top = 3
+      Width = 94
+      Height = 27
       HelpContext = 9008
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
       TabOrder = 1
     end
     object btnApply: TButton
-      Left = 347
-      Top = 2
-      Width = 75
-      Height = 22
+      Left = 434
+      Top = 3
+      Width = 94
+      Height = 27
       HelpContext = 9009
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Apply'
       Enabled = False
       TabOrder = 2
@@ -63,8 +79,12 @@ inherited frmOptions: TfrmOptions
   object pnlMain: TPanel [1]
     Left = 0
     Top = 0
-    Width = 565
-    Height = 382
+    Width = 580
+    Height = 527
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 5
@@ -73,9 +93,13 @@ inherited frmOptions: TfrmOptions
     object pagOptions: TPageControl
       Left = 5
       Top = 5
-      Width = 555
-      Height = 372
+      Width = 570
+      Height = 517
       HelpContext = 9999
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       ActivePage = tsCoverSheet
       Align = alClient
       OwnerDraw = True
@@ -84,31 +108,43 @@ inherited frmOptions: TfrmOptions
       OnEnter = pagOptionsEnter
       object tsCoverSheet: TTabSheet
         HelpContext = 9700
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'General'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         DesignSize = (
-          547
-          344)
+          562
+          485)
         object bvlCoverDays: TBevel
-          Left = 125
-          Top = 16
-          Width = 275
-          Height = 2
+          Left = 156
+          Top = 20
+          Width = 344
+          Height = 3
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object bvlCoverReminders: TBevel
-          Left = 112
-          Top = 102
-          Width = 288
+          Left = 140
+          Top = 128
+          Width = 360
           Height = 2
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgCoverDays: TImage
-          Left = 16
-          Top = 27
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 34
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Picture.Data = {
             055449636F6E0000010002002020100000000000E80200002600000010101000
             00000000280100000E0300002800000020000000400000000100040000000000
@@ -146,10 +182,14 @@ inherited frmOptions: TfrmOptions
             00000000000000000000000000000000000000000000000000000000}
         end
         object imgCoverReminders: TImage
-          Left = 16
-          Top = 115
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 144
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Picture.Data = {
             055449636F6E0000010002002020100000000000E80200002600000010101000
             00000000280100000E0300002800000020000000400000000100040000000000
@@ -187,16 +227,24 @@ inherited frmOptions: TfrmOptions
             8003000080070000E0070000F80F0000FE0F0000FF9F0000FFFF0000}
         end
         object bvlOtherParameters: TBevel
-          Left = 115
-          Top = 185
-          Width = 288
-          Height = 2
+          Left = 144
+          Top = 231
+          Width = 360
+          Height = 3
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgOtherParameters: TImage
-          Left = 15
-          Top = 197
-          Width = 41
-          Height = 41
+          Left = 19
+          Top = 246
+          Width = 51
+          Height = 52
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Picture.Data = {
             055449636F6E0000010002002020100000000000E80200002600000010101000
             00000000280100000E0300002800000020000000400000000100040000000000
@@ -234,10 +282,14 @@ inherited frmOptions: TfrmOptions
             C0000000C0000000E0000000E0000000F0000000F0000000FDB60000}
         end
         object lblCoverReminderDesc: TMemo
-          Left = 125
-          Top = 115
-          Width = 303
-          Height = 67
+          Left = 156
+          Top = 144
+          Width = 400
+          Height = 84
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           Anchors = [akLeft, akTop, akRight]
           BorderStyle = bsNone
@@ -249,24 +301,32 @@ inherited frmOptions: TfrmOptions
           TabOrder = 3
         end
         object lblCoverReminders: TStaticText
-          Left = 13
-          Top = 95
-          Width = 90
-          Height = 17
+          Left = 16
+          Top = 119
+          Width = 116
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Clinical Reminders'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 4
         end
         object lblCoverDaysDesc: TMemo
-          Left = 125
-          Top = 27
-          Width = 303
-          Height = 70
+          Left = 156
+          Top = 34
+          Width = 400
+          Height = 87
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           Anchors = [akLeft, akTop, akRight]
           BorderStyle = bsNone
@@ -278,38 +338,50 @@ inherited frmOptions: TfrmOptions
           TabOrder = 5
         end
         object lblCoverDays: TStaticText
-          Left = 13
-          Top = 9
-          Width = 102
-          Height = 17
+          Left = 16
+          Top = 11
+          Width = 127
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Date Range defaults'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 6
         end
         object lblOtherParameters: TStaticText
-          Left = 12
-          Top = 177
-          Width = 86
-          Height = 17
+          Left = 15
+          Top = 221
+          Width = 109
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Other Parameters'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 7
         end
         object lblOtherParametersDesc: TMemo
-          Left = 124
-          Top = 195
-          Width = 303
-          Height = 78
+          Left = 155
+          Top = 244
+          Width = 400
+          Height = 97
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           Anchors = [akLeft, akTop, akRight]
           BorderStyle = bsNone
@@ -323,16 +395,20 @@ inherited frmOptions: TfrmOptions
           TabOrder = 8
         end
         object btnCoverDays: TButton
-          Left = 283
-          Top = 67
-          Width = 115
-          Height = 22
+          Left = 375
+          Top = 84
+          Width = 143
+          Height = 27
           HelpContext = 9001
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Anchors = [akTop, akRight]
           Caption = '&Date Range Defaults...'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -340,16 +416,20 @@ inherited frmOptions: TfrmOptions
           OnClick = btnCoverDaysClick
         end
         object btnCoverReminders: TButton
-          Left = 283
-          Top = 150
-          Width = 115
-          Height = 22
+          Left = 375
+          Top = 188
+          Width = 143
+          Height = 27
           HelpContext = 9002
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Anchors = [akTop, akRight]
           Caption = '&Clinical Reminders...'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -357,16 +437,20 @@ inherited frmOptions: TfrmOptions
           OnClick = btnCoverRemindersClick
         end
         object btnOtherParameters: TButton
-          Left = 282
-          Top = 269
-          Width = 115
-          Height = 22
+          Left = 373
+          Top = 336
+          Width = 144
+          Height = 28
           HelpContext = 9003
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Anchors = [akTop, akRight]
           Caption = '&Other Parameters...'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -376,22 +460,30 @@ inherited frmOptions: TfrmOptions
       end
       object tsNotifications: TTabSheet
         HelpContext = 9030
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Notifications'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object bvlNotifications: TBevel
-          Left = 88
-          Top = 16
-          Width = 312
-          Height = 2
+          Left = 110
+          Top = 20
+          Width = 390
+          Height = 3
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgNotifications: TImage
-          Left = 16
-          Top = 28
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 35
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Picture.Data = {
             055449636F6E0000010002002020100000000000E80200002600000010101000
             00000000280100000E0300002800000020000000400000000100040000000000
@@ -429,65 +521,85 @@ inherited frmOptions: TfrmOptions
             00000000000000000000000098000000F8000000F8000000FFFF0000}
         end
         object lblNotificationView: TLabel
-          Left = 10
-          Top = 118
-          Width = 349
-          Height = 13
+          Left = 13
+          Top = 148
+          Width = 428
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 
             'You can turn on or off these notifications except those that are' +
             ' mandatory.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
         end
         object lblNotificationsOptions: TStaticText
-          Left = 125
-          Top = 27
-          Width = 164
-          Height = 17
+          Left = 156
+          Top = 34
+          Width = 207
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Change your notification options.'
           TabOrder = 4
         end
         object lblNotifications: TStaticText
-          Left = 13
-          Top = 9
-          Width = 62
-          Height = 17
+          Left = 16
+          Top = 11
+          Width = 77
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Notifications'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 5
         end
         object lblNotificationsSurrogate: TStaticText
-          Left = 9
-          Top = 100
-          Width = 53
-          Height = 17
+          Left = 11
+          Top = 125
+          Width = 66
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Surrogate:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 6
         end
         object lblNotificationsSurrogateText: TStaticText
-          Left = 60
-          Top = 100
-          Width = 130
-          Height = 17
+          Left = 75
+          Top = 125
+          Width = 164
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = '<no surrogate designated>'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -495,23 +607,28 @@ inherited frmOptions: TfrmOptions
         end
         object lvwNotifications: TCaptionListView
           Left = 0
-          Top = 185
-          Width = 547
-          Height = 159
+          Top = 286
+          Width = 562
+          Height = 199
           HelpContext = 9035
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alBottom
           Checkboxes = True
           Columns = <
             item
               Caption = 'Notification'
-              Width = 190
+              Width = 238
             end
             item
               Caption = 'On/Off'
+              Width = 63
             end
             item
               Caption = 'Comment'
-              Width = 145
+              Width = 181
             end>
           ReadOnly = True
           RowSelect = True
@@ -529,16 +646,20 @@ inherited frmOptions: TfrmOptions
             ' mandatory.'
         end
         object btnNotificationsRemove: TButton
-          Left = 191
-          Top = 73
-          Width = 160
-          Height = 22
+          Left = 239
+          Top = 91
+          Width = 200
+          Height = 28
           HelpContext = 9031
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = '&Remove Pending Notifications...'
           Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -546,25 +667,33 @@ inherited frmOptions: TfrmOptions
           OnClick = btnNotificationsRemoveClick
         end
         object chkNotificationsFlagged: TCheckBox
-          Left = 88
-          Top = 50
-          Width = 241
-          Height = 16
+          Left = 110
+          Top = 63
+          Width = 301
+          Height = 20
           HelpContext = 9032
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Send me a MailMan bulletin for flagged orders'
           TabOrder = 0
           OnClick = chkNotificationsFlaggedClick
         end
         object btnSurrogate: TButton
-          Left = 8
-          Top = 73
-          Width = 120
-          Height = 22
+          Left = 10
+          Top = 91
+          Width = 150
+          Height = 28
           HelpContext = 9033
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Surrogate Settings...'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -574,32 +703,44 @@ inherited frmOptions: TfrmOptions
       end
       object tsOrderChecks: TTabSheet
         HelpContext = 9040
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Order Checks'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lblOrderChecksDesc: TLabel
-          Left = 125
-          Top = 27
-          Width = 275
-          Height = 30
+          Left = 156
+          Top = 34
+          Width = 344
+          Height = 37
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           AutoSize = False
           Caption = 'Enable or disable your order checks.'
           WordWrap = True
         end
         object bvlOrderChecks: TBevel
-          Left = 88
-          Top = 16
-          Width = 312
-          Height = 2
+          Left = 110
+          Top = 20
+          Width = 390
+          Height = 3
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgOrderChecks: TImage
-          Left = 16
-          Top = 27
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 34
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Picture.Data = {
             055449636F6E0000010002002020100000000000E80200002600000010101000
             00000000280100000E0300002800000020000000400000000100040000000000
@@ -637,29 +778,37 @@ inherited frmOptions: TfrmOptions
             C0030000C0030000C0030000C0030000E0070000FC3F0000FFFF0000}
         end
         object lblOrderChecksView: TLabel
-          Left = 13
-          Top = 68
-          Width = 349
-          Height = 13
+          Left = 16
+          Top = 85
+          Width = 428
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 
             'You can turn on or off these notifications except those that are' +
             ' mandatory.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
         end
         object lblOrderChecks: TStaticText
-          Left = 13
-          Top = 9
-          Width = 69
-          Height = 17
+          Left = 16
+          Top = 11
+          Width = 86
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Order Checks'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -667,23 +816,28 @@ inherited frmOptions: TfrmOptions
         end
         object lvwOrderChecks: TCaptionListView
           Left = 0
-          Top = 136
-          Width = 547
-          Height = 208
+          Top = 225
+          Width = 562
+          Height = 260
           HelpContext = 9041
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alBottom
           Checkboxes = True
           Columns = <
             item
               Caption = 'Order Check'
-              Width = 190
+              Width = 238
             end
             item
               Caption = 'On/Off'
+              Width = 63
             end
             item
               Caption = 'Comment'
-              Width = 145
+              Width = 181
             end>
           ReadOnly = True
           RowSelect = True
@@ -703,23 +857,31 @@ inherited frmOptions: TfrmOptions
       end
       object tsListsTeams: TTabSheet
         HelpContext = 9050
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Lists/Teams'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object bvlPatientSelection: TBevel
-          Left = 144
-          Top = 16
-          Width = 256
-          Height = 2
+          Left = 180
+          Top = 20
+          Width = 320
+          Height = 3
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgPatientSelection: TImage
-          Left = 16
-          Top = 28
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 35
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Picture.Data = {
             055449636F6E0000010002002020100000000000E80200002600000010101000
             00000000280100000E0300002800000020000000400000000100040000000000
@@ -757,16 +919,24 @@ inherited frmOptions: TfrmOptions
             C0000000F0000000F8000000FF800000FF800000FF800000FF800000}
         end
         object bvlTeams: TBevel
-          Left = 144
-          Top = 155
-          Width = 256
+          Left = 180
+          Top = 194
+          Width = 320
           Height = 2
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgTeams: TImage
-          Left = 16
-          Top = 168
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 210
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Picture.Data = {
             055449636F6E0000010002002020100000000000E80200002600000010101000
             00000000280100000E0300002800000020000000400000000100040000000000
@@ -804,10 +974,14 @@ inherited frmOptions: TfrmOptions
             C0000000F0000000F8000000FF800000FF800000FF800000FF800000}
         end
         object lblPatientSelectionDesc: TMemo
-          Left = 125
-          Top = 27
-          Width = 275
-          Height = 78
+          Left = 156
+          Top = 34
+          Width = 344
+          Height = 97
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           BorderStyle = bsNone
           Color = clBtnFace
@@ -819,10 +993,14 @@ inherited frmOptions: TfrmOptions
           TabOrder = 7
         end
         object lblTeamsDesc: TMemo
-          Left = 125
-          Top = 168
-          Width = 275
-          Height = 73
+          Left = 156
+          Top = 210
+          Width = 344
+          Height = 91
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           BorderStyle = bsNone
           Color = clBtnFace
@@ -834,43 +1012,55 @@ inherited frmOptions: TfrmOptions
           TabOrder = 8
         end
         object lblPatientSelection: TStaticText
-          Left = 13
-          Top = 9
-          Width = 124
-          Height = 17
+          Left = 16
+          Top = 11
+          Width = 154
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Patient Selection defaults'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 5
         end
         object lblTeams: TStaticText
-          Left = 13
-          Top = 148
-          Width = 125
-          Height = 17
+          Left = 16
+          Top = 185
+          Width = 160
+          Height = 20
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Personal Lists and Teams'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 6
         end
         object btnPatientSelection: TButton
-          Left = 255
-          Top = 84
-          Width = 145
-          Height = 22
+          Left = 319
+          Top = 105
+          Width = 181
+          Height = 28
           HelpContext = 9051
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Patient &Selection Defaults...'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -878,15 +1068,19 @@ inherited frmOptions: TfrmOptions
           OnClick = btnPatientSelectionClick
         end
         object btnPersonalLists: TButton
-          Left = 255
-          Top = 210
-          Width = 145
-          Height = 22
+          Left = 319
+          Top = 263
+          Width = 181
+          Height = 27
           HelpContext = 9052
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Personal &Lists...'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -894,15 +1088,19 @@ inherited frmOptions: TfrmOptions
           OnClick = btnPersonalListsClick
         end
         object btnTeams: TButton
-          Left = 255
-          Top = 266
-          Width = 145
-          Height = 22
+          Left = 319
+          Top = 333
+          Width = 181
+          Height = 27
           HelpContext = 9053
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = '&Teams Information...'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -910,15 +1108,19 @@ inherited frmOptions: TfrmOptions
           OnClick = btnTeamsClick
         end
         object btnCombinations: TButton
-          Left = 255
-          Top = 117
-          Width = 145
-          Height = 22
+          Left = 319
+          Top = 146
+          Width = 181
+          Height = 28
           HelpContext = 9054
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Source &Combinations...'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -926,10 +1128,14 @@ inherited frmOptions: TfrmOptions
           OnClick = btnCombinationsClick
         end
         object btnDiagnoses: TButton
-          Left = 256
-          Top = 237
-          Width = 145
-          Height = 22
+          Left = 320
+          Top = 296
+          Width = 181
+          Height = 28
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Personal &Diagnoses List...'
           TabOrder = 3
           OnClick = btnDiagnosesClick
@@ -937,28 +1143,36 @@ inherited frmOptions: TfrmOptions
       end
       object tsNotes: TTabSheet
         HelpContext = 9200
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Notes'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object PnlNoteCl: TPanel
           Left = 0
-          Top = 89
-          Width = 547
-          Height = 255
+          Top = 111
+          Width = 562
+          Height = 374
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 1
           DesignSize = (
-            547
-            255)
+            562
+            374)
           object imgNotes: TImage
-            Left = 16
-            Top = 32
-            Width = 41
-            Height = 41
+            Left = 20
+            Top = 40
+            Width = 51
+            Height = 51
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Picture.Data = {
               055449636F6E0000010002002020100000000000E80200002600000010101000
               00000000280100000E0300002800000020000000400000000100040000000000
@@ -996,30 +1210,42 @@ inherited frmOptions: TfrmOptions
               00000000000000000000000000000000000000000000000000000000}
           end
           object bvlNotesTitles: TBevel
-            Left = 112
-            Top = 19
-            Width = 288
+            Left = 140
+            Top = 24
+            Width = 360
             Height = 2
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
           end
           object lblNotesTitles: TStaticText
-            Left = 13
-            Top = 9
-            Width = 81
-            Height = 17
+            Left = 16
+            Top = 11
+            Width = 101
+            Height = 20
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Document Titles'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
             TabOrder = 2
           end
           object lblNotesTitlesDesc: TMemo
-            Left = 125
-            Top = 33
-            Width = 303
-            Height = 78
+            Left = 156
+            Top = 41
+            Width = 713
+            Height = 98
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Anchors = [akLeft, akTop, akRight]
             BorderStyle = bsNone
             Color = clBtnFace
@@ -1029,16 +1255,20 @@ inherited frmOptions: TfrmOptions
             TabOrder = 0
           end
           object btnNotesTitles: TButton
-            Left = 283
-            Top = 81
-            Width = 115
-            Height = 22
+            Left = 688
+            Top = 101
+            Width = 143
+            Height = 28
             HelpContext = 9202
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Anchors = [akTop, akRight]
             Caption = '&Document Titles...'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
@@ -1049,25 +1279,37 @@ inherited frmOptions: TfrmOptions
         object PnlNoteTop: TPanel
           Left = 0
           Top = 0
-          Width = 547
-          Height = 89
+          Width = 562
+          Height = 111
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 0
           DesignSize = (
-            547
-            89)
+            562
+            111)
           object bvlNotesNotes: TBevel
-            Left = 88
-            Top = 16
-            Width = 312
-            Height = 2
+            Left = 110
+            Top = 20
+            Width = 390
+            Height = 3
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
           end
           object imgNotesNotes: TImage
-            Left = 16
-            Top = 27
-            Width = 41
-            Height = 41
+            Left = 20
+            Top = 34
+            Width = 51
+            Height = 51
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Picture.Data = {
               055449636F6E0000010002002020100000000000E80200002600000010101000
               00000000280100000E0300002800000020000000400000000100040000000000
@@ -1105,16 +1347,20 @@ inherited frmOptions: TfrmOptions
               00000000000000000000000000000000000000000000000000000000}
           end
           object btnNotesNotes: TButton
-            Left = 283
-            Top = 67
-            Width = 115
-            Height = 22
+            Left = 688
+            Top = 84
+            Width = 143
+            Height = 27
             HelpContext = 9201
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Anchors = [akTop, akRight]
             Caption = '&Notes...'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
@@ -1122,24 +1368,32 @@ inherited frmOptions: TfrmOptions
             OnClick = btnNotesNotesClick
           end
           object lblNotesNotes: TStaticText
-            Left = 13
-            Top = 9
-            Width = 32
-            Height = 17
+            Left = 16
+            Top = 11
+            Width = 40
+            Height = 20
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Notes'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
             TabOrder = 2
           end
           object lblNotesNotesDesc: TMemo
-            Left = 125
-            Top = 27
-            Width = 275
-            Height = 30
+            Left = 156
+            Top = 34
+            Width = 344
+            Height = 37
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             TabStop = False
             BorderStyle = bsNone
             Color = clBtnFace
@@ -1151,23 +1405,31 @@ inherited frmOptions: TfrmOptions
         end
       end
       object tsCprsReports: TTabSheet
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Reports'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object bvlReports: TBevel
-          Left = 80
-          Top = 16
-          Width = 321
-          Height = 2
+          Left = 100
+          Top = 20
+          Width = 401
+          Height = 3
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgReports: TImage
-          Left = 20
-          Top = 31
-          Width = 41
-          Height = 41
+          Left = 25
+          Top = 39
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Center = True
           Picture.Data = {
             055449636F6E0000010001002020100000000000E80200001600000028000000
@@ -1197,22 +1459,34 @@ inherited frmOptions: TfrmOptions
             FFFFFFFF}
         end
         object bvlReport1: TBevel
-          Left = 104
-          Top = 108
-          Width = 297
-          Height = 2
+          Left = 130
+          Top = 135
+          Width = 371
+          Height = 3
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object bvlReport2: TBevel
-          Left = 104
-          Top = 204
-          Width = 297
-          Height = 2
+          Left = 130
+          Top = 255
+          Width = 371
+          Height = 3
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgReport1: TImage
-          Left = 16
-          Top = 123
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 154
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Center = True
           Picture.Data = {
             055449636F6E0000010002002020100000000000E80200002600000010101000
@@ -1251,10 +1525,14 @@ inherited frmOptions: TfrmOptions
             00010000000000000200000083000000C7000000FF810000FFC30000}
         end
         object imgReport2: TImage
-          Left = 16
-          Top = 219
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 274
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Center = True
           Picture.Data = {
             055449636F6E0000010001002020000000000000A80800001600000028000000
@@ -1330,10 +1608,14 @@ inherited frmOptions: TfrmOptions
             FF9FFFFF}
         end
         object memReports: TMemo
-          Left = 128
-          Top = 27
-          Width = 273
-          Height = 41
+          Left = 160
+          Top = 34
+          Width = 341
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           BorderStyle = bsNone
           Color = clBtnFace
@@ -1346,10 +1628,14 @@ inherited frmOptions: TfrmOptions
           TabOrder = 4
         end
         object memReport1: TMemo
-          Left = 128
-          Top = 121
-          Width = 273
-          Height = 49
+          Left = 160
+          Top = 151
+          Width = 341
+          Height = 62
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           BorderStyle = bsNone
           Color = clBtnFace
@@ -1361,52 +1647,76 @@ inherited frmOptions: TfrmOptions
           TabOrder = 5
         end
         object lblReports: TStaticText
-          Left = 13
-          Top = 9
-          Width = 56
-          Height = 17
+          Left = 16
+          Top = 11
+          Width = 68
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'All Reports'
           TabOrder = 2
         end
         object lblReport1: TStaticText
-          Left = 9
-          Top = 101
-          Width = 91
-          Height = 17
+          Left = 11
+          Top = 126
+          Width = 113
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Individual Reports'
           TabOrder = 3
         end
         object btnReports: TButton
-          Left = 200
-          Top = 76
-          Width = 193
-          Height = 22
+          Left = 250
+          Top = 95
+          Width = 241
+          Height = 28
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Set All Reports...'
           TabOrder = 0
           OnClick = btnReportsClick
         end
         object btnReport1: TButton
-          Left = 200
-          Top = 167
-          Width = 193
-          Height = 22
+          Left = 250
+          Top = 209
+          Width = 241
+          Height = 27
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Set Individual Report...'
           TabOrder = 1
           OnClick = btnReport1Click
         end
         object lblReport2: TStaticText
-          Left = 5
-          Top = 197
-          Width = 90
-          Height = 17
+          Left = 6
+          Top = 246
+          Width = 115
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Remote Data Tool'
           TabOrder = 6
         end
         object memReport2: TMemo
-          Left = 135
-          Top = 212
-          Width = 273
-          Height = 48
+          Left = 169
+          Top = 265
+          Width = 341
+          Height = 60
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           BorderStyle = bsNone
           Color = clBtnFace
@@ -1419,26 +1729,34 @@ inherited frmOptions: TfrmOptions
         end
       end
       object tsGraphs: TTabSheet
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Graphs'
         ImageIndex = 6
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         DesignSize = (
-          547
-          344)
+          562
+          485)
         object bvlGraphSettings: TBevel
-          Left = 104
-          Top = 16
-          Width = 297
-          Height = 2
+          Left = 130
+          Top = 20
+          Width = 371
+          Height = 3
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgGraphSettings: TImage
-          Left = 16
-          Top = 163
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 204
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Center = True
           Picture.Data = {
             055449636F6E0000010001002020100000000000E80200001600000028000000
@@ -1468,16 +1786,24 @@ inherited frmOptions: TfrmOptions
             FFFFFFFF}
         end
         object bvlGraphViews: TBevel
-          Left = 104
-          Top = 155
-          Width = 297
+          Left = 130
+          Top = 194
+          Width = 371
           Height = 2
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
         end
         object imgGraphViews: TImage
-          Left = 16
-          Top = 27
-          Width = 41
-          Height = 41
+          Left = 20
+          Top = 34
+          Width = 51
+          Height = 51
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Center = True
           Picture.Data = {
             055449636F6E0000010001002020100000000000E80200001600000028000000
@@ -1507,44 +1833,64 @@ inherited frmOptions: TfrmOptions
             FFFFFFFF}
         end
         object lblGraphSettings: TStaticText
-          Left = 13
-          Top = 145
-          Width = 81
-          Height = 17
+          Left = 16
+          Top = 181
+          Width = 100
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Default Settings'
           TabOrder = 0
         end
         object btnGraphSettings: TButton
-          Left = 200
-          Top = 235
-          Width = 193
-          Height = 22
+          Left = 250
+          Top = 294
+          Width = 241
+          Height = 27
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Default Graph Settings...'
           TabOrder = 1
           OnClick = btnGraphSettingsClick
         end
         object lblGraphViews: TStaticText
-          Left = 13
-          Top = 9
-          Width = 79
-          Height = 17
+          Left = 16
+          Top = 11
+          Width = 97
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'View Definitions'
           TabOrder = 2
         end
         object btnGraphViews: TButton
-          Left = 200
-          Top = 100
-          Width = 193
-          Height = 22
+          Left = 250
+          Top = 125
+          Width = 241
+          Height = 28
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'View Definitions...'
           TabOrder = 3
           OnClick = btnGraphViewsClick
         end
         object memGraphSettings: TMemo
-          Left = 125
-          Top = 167
-          Width = 275
-          Height = 66
+          Left = 156
+          Top = 209
+          Width = 344
+          Height = 82
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           BorderStyle = bsNone
           Color = clBtnFace
@@ -1556,10 +1902,14 @@ inherited frmOptions: TfrmOptions
           TabOrder = 4
         end
         object memGraphViews: TMemo
-          Left = 125
-          Top = 27
-          Width = 303
-          Height = 68
+          Left = 156
+          Top = 34
+          Width = 400
+          Height = 85
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabStop = False
           Anchors = [akLeft, akTop, akRight]
           BorderStyle = bsNone
@@ -1571,10 +1921,606 @@ inherited frmOptions: TfrmOptions
           TabOrder = 5
         end
       end
+      object tsCopyPaste: TTabSheet
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Caption = 'Copy/Paste'
+        ImageIndex = 7
+        object PnlNoteBtm: TPanel
+          Left = 0
+          Top = 0
+          Width = 562
+          Height = 485
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 0
+          object bvlCopyPasteTitle: TBevel
+            AlignWithMargins = True
+            Left = 125
+            Top = 32
+            Width = 407
+            Height = 3
+            Margins.Left = 125
+            Margins.Top = 4
+            Margins.Right = 30
+            Margins.Bottom = 4
+            Align = alTop
+            ExplicitLeft = 130
+            ExplicitTop = 20
+            ExplicitWidth = 360
+          end
+          object ImgCopyPaste: TImage
+            Left = 20
+            Top = 40
+            Width = 48
+            Height = 48
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Picture.Data = {
+              07544269746D6170361B0000424D361B00000000000036000000280000003000
+              0000300000000100180000000000001B00000000000000000000000000000000
+              0000FF00FFD9D9D9DCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD9D9D9
+              D8D8D8D9D9D9DCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD9D9D9D8D8
+              D8D9D9D9DCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD9D9D9D8D8D8D9
+              D9D9DCDCDCFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6D6D60101010202020000000000
+              0000000000000000000000000000000002020203030302020200000000000000
+              0000000000000000000000000000020202030303020202000000000000000000
+              000000000000000000000000020202030303020202FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFD6D6D6010101141414424242434343434343434343434343434343434343
+              4343434242424242424242424343434343434343434343434343434343434343
+              4342424242424242424243434343434343434343434343434343434343434310
+              1111040404DDDDDDFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737050505D6D6D6FF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+              3737000000C8C9C9D9D9D9DADCDCFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFDADCDCDCDCDCFF00FFFF00FFFF00FFD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF3737370000001515150606060708080606
+              06000000000000000000000000000000000000000000050505040404020202BE
+              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+              37370000003E3E3E323232323434333333323434323232323232323232323232
+              323232323232323232141414030303BCBCBCD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F020202BB
+              BBBBD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5F5F5F000000BCBCBCD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+              BEBED6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
+              3838000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6010101474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF383838060606FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+              BEBED6D6D6010101464646FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
+              3838070808D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737060606D1D2D2FF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+              3737000000D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5D5D5D000000BEBEBED6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5C5E5E020202BE
+              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5D5D5D030303BCBCBCD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F020202BB
+              BBBBD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5F5F5F000000BCBCBCD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+              BEBED6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
+              3838000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6010101474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF383838060606FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+              BEBED6D6D6010101464646FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
+              3838070808D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737060606D1D2D2FF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+              3737000000D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5D5D5D000000BEBEBED6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5C5E5E020202BE
+              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5D5D5D030303BCBCBCD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F020202BB
+              BBBBD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5F5F5F000000BCBCBCD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+              BEBED6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8283
+              8360606065656565656565656565656565656565656565656560606060606019
+              1919000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6010101474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F070808060606000000000000000000
+              0000000000000000000000000606060708085D5F5FFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+              BEBED6D6D6010101464646FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
+              3F0606065D5D5D8081818686868787878787878787874A4A4A0000000000005C
+              5E5EFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000AAABABFF00FFFF00FFFF00FF
+              FF00FFC3C3C30C0C0C000000555555FF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
+              3F000000B5B5B5FF00FFFF00FFFF00FFC1C1C10C0C0C000000545454FF00FFFF
+              00FFFF00FFFF00FFA0A0A06F6F6F767676767676767676767676767676767676
+              7676766F6F6F7070702D2D2D000000BEBEBED6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000B7B7B7FF00FFFF00FFB3B4B4
+              101111000000545454FF00FFFF00FFFF00FFFF00FFFF00FF6363630708080606
+              060000000000000000000000000000000000000000000505050404043D3D3DFF
+              00FFD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
+              3F000000B7B7B7FF00FFC0C0C0101111070808525252FF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FF6767670606064A4A4A808181868686878787878787878787
+              5F5F5F000000000000383838FF00FFFF00FFD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000B7B7B7C1C1C10B0B0B000000
+              525252E3E4E4FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6767670000008687
+              87FF00FFFF00FFFF00FFFF00FFFF00FF1F1F1F0000002F2F2FFF00FFFF00FFFF
+              00FFD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
+              3F0000006F6F6F0707070000005F5F5FFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FF6767670000008E8E8EFF00FFFF00FFFF00FFDEDEDE202020
+              000000303030FF00FFFF00FFFF00FFFF00FFD6D6D6000000474747FF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000000000000000545454FF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6767670000008F8F
+              8FFF00FFFF00FFCDCDCD232323000000303030FF00FFFF00FFFF00FFFF00FFFF
+              00FFD6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3E3F
+              3F060606000000545454FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FF6767670000008F8F8FFF00FFDFDFDF232323070808313333
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6D6D60101011C1C1C6565656565
+              6565656565656565656565656565656560606060606060606065656565656565
+              65656565656565656565656565651C1C1C0708085A5C5CFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6767670000008F8F
+              8FFF00FF202020000000313333D8D8D8FF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFD6D6D6010101030303030404000000000000000000000000000000000000
+              0000000606060708080606060000000000000000000000000000000000000000
+              00515151E3E4E4FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FF676767000000727272212121000000313131FF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFBABABAB5B5B5B1B2B2AFB0
+              B0B9B9B9BABABABABABABABABABABABABABABAB9B9B9AFB0B0AEAEAEAFB0B031
+              3131424242BABABABABABABABABABCBCBCFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6363630000000000
+              000000003C3C3CFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF0304041F1F1FFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FF636363030404000000323232FF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF03
+              03030D0D0D656565656565656565656565656565656565656565636363626464
+              636363656565656565656565656565656565656565656565282A2A0303033D3D
+              3DFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FF0101010101010101010000000000000000
+              0000000000000000000000000001010101010101010100000000000000000000
+              0000000000000000000000373737FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFBA
+              BABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABA
+              BABABABABABABABABABABABABABABABABABABABABABABABABABABAFF00FFFF00
+              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+              00FF}
+            Proportional = True
+            Transparent = True
+          end
+          object lblCopyPaste: TStaticText
+            AlignWithMargins = True
+            Left = 8
+            Top = 4
+            Width = 550
+            Height = 20
+            Margins.Left = 8
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Align = alTop
+            Caption = 'Copy / Paste'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -14
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 0
+            ExplicitLeft = 40
+            ExplicitTop = 46
+            ExplicitWidth = 562
+          end
+          object pnlCPOptions: TPanel
+            Left = 0
+            Top = 71
+            Width = 562
+            Height = 414
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            Align = alClient
+            BevelOuter = bvNone
+            TabOrder = 1
+            Visible = False
+            object GroupBox1: TGroupBox
+              AlignWithMargins = True
+              Left = 125
+              Top = 4
+              Width = 407
+              Height = 121
+              Margins.Left = 125
+              Margins.Top = 4
+              Margins.Right = 30
+              Margins.Bottom = 1
+              Align = alTop
+              Caption = 'How text is identifed on the note'
+              TabOrder = 0
+              object pnlCPMain: TPanel
+                Left = 2
+                Top = 19
+                Width = 403
+                Height = 100
+                Margins.Left = 4
+                Margins.Top = 4
+                Margins.Right = 4
+                Margins.Bottom = 4
+                Align = alClient
+                BevelOuter = bvNone
+                TabOrder = 0
+                object Panel1: TPanel
+                  Left = 0
+                  Top = 0
+                  Width = 403
+                  Height = 101
+                  Margins.Left = 4
+                  Margins.Top = 4
+                  Margins.Right = 4
+                  Margins.Bottom = 4
+                  Align = alTop
+                  BevelOuter = bvNone
+                  ShowCaption = False
+                  TabOrder = 0
+                  object lblCP: TStaticText
+                    AlignWithMargins = True
+                    Left = 4
+                    Top = 4
+                    Width = 395
+                    Height = 21
+                    Margins.Left = 4
+                    Margins.Top = 4
+                    Margins.Right = 4
+                    Margins.Bottom = 4
+                    Align = alTop
+                    Caption = 'Configure visual element(s) for copy / paste'
+                    TabOrder = 0
+                    TabStop = True
+                  end
+                  object CopyPasteOptions: TCheckListBox
+                    AlignWithMargins = True
+                    Left = 6
+                    Top = 34
+                    Width = 243
+                    Height = 59
+                    Margins.Left = 6
+                    Margins.Top = 6
+                    Margins.Bottom = 6
+                    OnClickCheck = CPOptionsClickCheck
+                    AutoComplete = False
+                    Color = clBtnFace
+                    Columns = 2
+                    Items.Strings = (
+                      'Bold'
+                      'Italics'
+                      'Underline'
+                      'Highlight')
+                    Style = lbOwnerDrawFixed
+                    TabOrder = 1
+                    OnDrawItem = CPOptionsDrawItem
+                  end
+                  object lbCPhighLight: TStaticText
+                    Left = 273
+                    Top = 33
+                    Width = 92
+                    Height = 21
+                    Margins.Left = 4
+                    Margins.Top = 4
+                    Margins.Right = 4
+                    Margins.Bottom = 4
+                    Caption = 'Highlight Color'
+                    TabOrder = 2
+                    TabStop = True
+                    Visible = False
+                  end
+                  object cpHLColor: TColorBox
+                    AlignWithMargins = True
+                    Left = 273
+                    Top = 66
+                    Width = 112
+                    Height = 22
+                    Margins.Left = 4
+                    Margins.Top = 4
+                    Margins.Right = 4
+                    Margins.Bottom = 4
+                    Style = [cbStandardColors, cbPrettyNames]
+                    Color = clBtnFace
+                    TabOrder = 3
+                    Visible = False
+                    OnChange = cpHLColorChange
+                  end
+                end
+              end
+            end
+            object GroupBox2: TGroupBox
+              AlignWithMargins = True
+              Left = 125
+              Top = 127
+              Width = 407
+              Height = 273
+              Margins.Left = 125
+              Margins.Top = 1
+              Margins.Right = 30
+              Margins.Bottom = 4
+              Align = alTop
+              Caption = 'Display differences between paste in details section'
+              TabOrder = 1
+              object pblCPLCS: TPanel
+                Left = 2
+                Top = 19
+                Width = 403
+                Height = 252
+                Margins.Left = 4
+                Margins.Top = 4
+                Margins.Right = 4
+                Margins.Bottom = 4
+                Align = alClient
+                BevelOuter = bvNone
+                TabOrder = 0
+                object CPLCSToggle: TCheckBox
+                  AlignWithMargins = True
+                  Left = 4
+                  Top = 0
+                  Width = 399
+                  Height = 51
+                  Margins.Left = 4
+                  Margins.Top = 0
+                  Margins.Right = 0
+                  Margins.Bottom = 0
+                  Align = alTop
+                  Caption = 
+                    'Difference Identifier Toggle: In the Pasted Data section, this a' +
+                    'llows user to view differences between what the author pasted in' +
+                    'to the note and what was edited.'
+                  TabOrder = 0
+                  WordWrap = True
+                  OnClick = CPLCSToggleClick
+                end
+                object pnlCPLCsSub: TPanel
+                  AlignWithMargins = True
+                  Left = 4
+                  Top = 51
+                  Width = 399
+                  Height = 201
+                  Margins.Left = 4
+                  Margins.Top = 0
+                  Margins.Right = 0
+                  Margins.Bottom = 0
+                  Align = alClient
+                  BevelOuter = bvNone
+                  TabOrder = 1
+                  Visible = False
+                  object CPLcsMemo: TMemo
+                    Left = 3
+                    Top = 70
+                    Width = 438
+                    Height = 96
+                    Margins.Left = 4
+                    Margins.Top = 4
+                    Margins.Right = 4
+                    Margins.Bottom = 4
+                    BorderStyle = bsNone
+                    Color = clBtnFace
+                    Lines.Strings = (
+                      
+                        'Please note that the Difference Identifier process is memory int' +
+                        'ensive. '
+                      
+                        'The default number of characters is set at 5000. Changing this t' +
+                        'o a '
+                      
+                        'higher number may increase the time for the system to display al' +
+                        'l the '
+                      'differences.')
+                    ReadOnly = True
+                    TabOrder = 0
+                  end
+                  object CPLCSCOLOR: TColorBox
+                    AlignWithMargins = True
+                    Left = 269
+                    Top = 39
+                    Width = 116
+                    Height = 22
+                    Margins.Left = 4
+                    Margins.Top = 4
+                    Margins.Right = 4
+                    Margins.Bottom = 4
+                    Style = [cbStandardColors, cbPrettyNames]
+                    Color = clBtnFace
+                    TabOrder = 1
+                    Visible = False
+                    OnChange = CPLCSCOLORChange
+                  end
+                  object CPLCSIDENT: TCheckListBox
+                    AlignWithMargins = True
+                    Left = 3
+                    Top = 6
+                    Width = 242
+                    Height = 58
+                    Margins.Left = 6
+                    Margins.Top = 6
+                    Margins.Bottom = 6
+                    OnClickCheck = CPLCSIDENTClickCheck
+                    AutoComplete = False
+                    Color = clBtnFace
+                    Columns = 2
+                    Items.Strings = (
+                      'Bold'
+                      'Italics'
+                      'Underline'
+                      'Text Color')
+                    Style = lbOwnerDrawFixed
+                    TabOrder = 2
+                    OnDrawItem = CPOptionsDrawItem
+                  end
+                  object CPLCSLimit: TEdit
+                    Left = 110
+                    Top = 170
+                    Width = 80
+                    Height = 25
+                    Margins.Left = 4
+                    Margins.Top = 4
+                    Margins.Right = 4
+                    Margins.Bottom = 4
+                    TabOrder = 3
+                    Text = '5000'
+                    OnChange = CPLCSLimitChange
+                    OnKeyPress = CPLCSLimitKeyPress
+                  end
+                  object CPLcsLimitText: TStaticText
+                    AlignWithMargins = True
+                    Left = 3
+                    Top = 170
+                    Width = 101
+                    Height = 21
+                    Margins.Left = 4
+                    Margins.Top = 4
+                    Margins.Right = 4
+                    Margins.Bottom = 4
+                    Caption = 'Character Limit:'
+                    TabOrder = 4
+                    TabStop = True
+                  end
+                  object lblTextColor: TStaticText
+                    Left = 269
+                    Top = 4
+                    Width = 68
+                    Height = 21
+                    Margins.Left = 4
+                    Margins.Top = 4
+                    Margins.Right = 4
+                    Margins.Bottom = 4
+                    Caption = 'Text Color'
+                    TabOrder = 5
+                    TabStop = True
+                    Visible = False
+                  end
+                end
+              end
+            end
+          end
+          object cbkCopyPaste: TCheckBox
+            AlignWithMargins = True
+            Left = 125
+            Top = 42
+            Width = 433
+            Height = 21
+            Margins.Left = 125
+            Margins.Right = 4
+            Margins.Bottom = 8
+            Align = alTop
+            Caption = 'Copy/Paste viewing is currently disabled. '
+            TabOrder = 2
+            OnClick = cbkCopyPasteClick
+            ExplicitLeft = 130
+            ExplicitTop = 91
+          end
+        end
+      end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 8
+    Left = 56
+    Top = 328
     Data = (
       (
         'Component = pnlBottom'
@@ -1768,6 +2714,72 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = PnlNoteCl'
+        'Status = stsDefault')
+      (
+        'Component = tsCopyPaste'
+        'Status = stsDefault')
+      (
+        'Component = PnlNoteBtm'
+        'Status = stsDefault')
+      (
+        'Component = lblCopyPaste'
+        'Status = stsDefault')
+      (
+        'Component = GroupBox1'
+        'Status = stsDefault')
+      (
+        'Component = pnlCPMain'
+        'Status = stsDefault')
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = lblCP'
+        'Status = stsDefault')
+      (
+        'Component = CopyPasteOptions'
+        'Status = stsDefault')
+      (
+        'Component = lbCPhighLight'
+        'Status = stsDefault')
+      (
+        'Component = cpHLColor'
+        'Status = stsDefault')
+      (
+        'Component = GroupBox2'
+        'Status = stsDefault')
+      (
+        'Component = pblCPLCS'
+        'Status = stsDefault')
+      (
+        'Component = CPLCSToggle'
+        'Status = stsDefault')
+      (
+        'Component = pnlCPLCsSub'
+        'Status = stsDefault')
+      (
+        'Component = CPLcsMemo'
+        'Status = stsDefault')
+      (
+        'Component = CPLCSCOLOR'
+        'Status = stsDefault')
+      (
+        'Component = CPLCSIDENT'
+        'Status = stsDefault')
+      (
+        'Component = CPLCSLimit'
+        'Status = stsDefault')
+      (
+        'Component = CPLcsLimitText'
+        'Status = stsDefault')
+      (
+        'Component = lblTextColor'
+        'Status = stsDefault')
+      (
+        'Component = pnlCPOptions'
+        'Status = stsDefault')
+      (
+        'Component = cbkCopyPaste'
         'Status = stsDefault'))
   end
 end

@@ -5,15 +5,18 @@ inherited frmPtSel: TfrmPtSel
   Caption = 'Patient Selection'
   ClientHeight = 555
   ClientWidth = 785
+  Constraints.MinHeight = 500
+  Constraints.MinWidth = 500
   OldCreateOrder = True
   Position = poMainFormCenter
   OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
   OnShow = FormShow
   ExplicitWidth = 801
-  ExplicitHeight = 593
+  ExplicitHeight = 594
   PixelsPerInch = 96
   TextHeight = 13
   object sptVert: TSplitter [0]
@@ -42,18 +45,18 @@ inherited frmPtSel: TfrmPtSel
       Caption = 'Notifications'
     end
     object ggeInfo: TGauge
-      Left = 212
-      Top = 1
+      Left = 216
+      Top = 0
       Width = 100
       Height = 15
       BackColor = clHighlightText
       Color = clBtnFace
-      ForeColor = clHighlight
+      ForeColor = clSkyBlue
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clCaptionText
       Font.Height = -12
       Font.Name = 'MS Sans Serif'
-      Font.Style = []
+      Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
       Progress = 0
@@ -160,6 +163,18 @@ inherited frmPtSel: TfrmPtSel
     BevelOuter = bvNone
     TabOrder = 2
     Visible = False
+    object txtCmdDefer: TVA508StaticText
+      Name = 'txtCmdDefer'
+      Left = 682
+      Top = 1
+      Width = 106
+      Height = 15
+      Alignment = taLeftJustify
+      Caption = 'Defer Button Disabled'
+      TabOrder = 11
+      Visible = False
+      ShowAccelChar = True
+    end
     object txtCmdComments: TVA508StaticText
       Name = 'txtCmdComments'
       Left = 441
@@ -266,6 +281,20 @@ inherited frmPtSel: TfrmPtSel
       TabOrder = 0
       OnClick = cmdProcessInfoClick
     end
+    object cmdDefer: TButton
+      Left = 682
+      Top = 11
+      Width = 95
+      Height = 20
+      Margins.Left = 2
+      Margins.Top = 2
+      Margins.Right = 2
+      Margins.Bottom = 2
+      Caption = 'Defer'
+      Enabled = False
+      TabOrder = 10
+      OnClick = cmdDeferClick
+    end
   end
   object lstvAlerts: TCaptionListView [4]
     Left = 0
@@ -305,13 +334,27 @@ inherited frmPtSel: TfrmPtSel
       end
       item
         Caption = 'Forwarded By/When'
+        MinWidth = 12
         Tag = 6
         Width = 180
+      end
+      item
+        Width = 0
+      end
+      item
+        Width = 0
+      end
+      item
+        Width = 0
+      end
+      item
+        Caption = 'Ordering Provider'
       end>
     HideSelection = False
     HoverTime = 0
     IconOptions.WrapText = False
     MultiSelect = True
+    OwnerData = True
     ReadOnly = True
     RowSelect = True
     ParentShowHint = False
@@ -321,13 +364,17 @@ inherited frmPtSel: TfrmPtSel
     TabOrder = 1
     ViewStyle = vsReport
     OnColumnClick = lstvAlertsColumnClick
-    OnCompare = lstvAlertsCompare
+    OnData = lstvAlertsData
+    OnDataStateChange = lstvAlertsDataStateChange
     OnDblClick = lstvAlertsDblClick
     OnInfoTip = lstvAlertsInfoTip
     OnKeyDown = lstvAlertsKeyDown
     OnMouseUp = lstvAlertsMouseUp
     OnSelectItem = lstvAlertsSelectItem
+    AutoSize = False
     Caption = 'Notifications'
+    HideTinyColumns = True
+    Pieces = '1,2,3,4,5,6,7,11'
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -387,6 +434,12 @@ inherited frmPtSel: TfrmPtSel
         'Status = stsDefault')
       (
         'Component = txtCmdProcess'
+        'Status = stsDefault')
+      (
+        'Component = cmdDefer'
+        'Status = stsDefault')
+      (
+        'Component = txtCmdDefer'
         'Status = stsDefault'))
   end
   object popNotifications: TPopupMenu

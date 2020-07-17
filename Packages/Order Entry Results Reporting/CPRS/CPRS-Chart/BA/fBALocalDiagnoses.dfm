@@ -2,8 +2,8 @@ inherited frmBALocalDiagnoses: TfrmBALocalDiagnoses
   Left = 272
   Top = 142
   Caption = 'Assign Diagnoses to Order(s)'
-  ClientHeight = 636
-  ClientWidth = 753
+  ClientHeight = 517
+  ClientWidth = 612
   OldCreateOrder = False
   Position = poScreenCenter
   ShowHint = True
@@ -12,32 +12,24 @@ inherited frmBALocalDiagnoses: TfrmBALocalDiagnoses
   OnShow = FormShow
   ExplicitWidth = 620
   ExplicitHeight = 544
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object pnlTop: TPanel [0]
     Left = 0
     Top = 0
-    Width = 753
-    Height = 118
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 612
+    Height = 96
     Align = alTop
     Caption = 'pnlTop'
     TabOrder = 0
     DesignSize = (
-      753
-      118)
+      612
+      96)
     object lbOrders: TListBox
-      Left = 10
-      Top = 31
-      Width = 741
-      Height = 85
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 8
+      Top = 25
+      Width = 602
+      Height = 69
       Anchors = [akLeft, akTop, akRight, akBottom]
       IntegralHeight = True
       ItemHeight = 13
@@ -45,18 +37,14 @@ inherited frmBALocalDiagnoses: TfrmBALocalDiagnoses
       OnMouseMove = lbOrdersMouseMove
     end
     object lblPatientName: TStaticText
-      Left = 10
-      Top = 10
-      Width = 93
-      Height = 20
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 8
+      Top = 8
+      Width = 76
+      Height = 17
       Caption = 'PatientName'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -15
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
@@ -65,49 +53,34 @@ inherited frmBALocalDiagnoses: TfrmBALocalDiagnoses
   end
   object pnlMain: TPanel [1]
     Left = 0
-    Top = 118
-    Width = 753
-    Height = 319
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 96
+    Width = 612
+    Height = 259
     Align = alClient
     TabOrder = 1
     object lblDiagSect: TLabel
-      Left = 11
+      Left = 9
       Top = 1
-      Width = 297
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 241
+      Height = 17
       AutoSize = False
       Caption = 'Diagnosis Section'
     end
     object lblDiagCodes: TLabel
-      Left = 311
+      Left = 253
       Top = 1
-      Width = 435
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 353
+      Height = 17
       AutoSize = False
       Caption = 'Diagnosis Codes'
     end
     object lbSections: TORListBox
-      Left = 11
-      Top = 17
-      Width = 293
-      Height = 228
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 9
+      Top = 14
+      Width = 238
+      Height = 173
       IntegralHeight = True
+      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
@@ -119,28 +92,21 @@ inherited frmBALocalDiagnoses: TfrmBALocalDiagnoses
       Pieces = '3'
     end
     object btnOther: TButton
-      Left = 191
-      Top = 270
-      Width = 113
-      Height = 24
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 155
+      Top = 219
+      Width = 92
+      Height = 20
       Caption = 'Other &Diagnosis'
       TabOrder = 2
       OnClick = btnOtherClick
     end
     object lbDiagnosis: TORListBox
-      Left = 311
-      Top = 20
-      Width = 435
-      Height = 260
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 253
+      Top = 16
+      Width = 353
+      Height = 199
       IntegralHeight = True
+      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
@@ -153,146 +119,106 @@ inherited frmBALocalDiagnoses: TfrmBALocalDiagnoses
   end
   object pnlBottom: TORAutoPanel [2]
     Left = 0
-    Top = 437
-    Width = 753
-    Height = 199
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 355
+    Width = 612
+    Height = 162
     Align = alBottom
     TabOrder = 2
     DesignSize = (
-      753
-      199)
+      612
+      162)
     object cbAddToPDList: TCheckBox
-      Left = 565
-      Top = 41
-      Width = 159
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 459
+      Top = 33
+      Width = 129
+      Height = 17
       Caption = 'Add to Personal Dx List'
       TabOrder = 2
       OnClick = cbAddToPDListClick
     end
     object cbAddToPL: TCheckBox
-      Left = 565
-      Top = 21
-      Width = 183
-      Height = 20
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 459
+      Top = 17
+      Width = 149
+      Height = 16
       Anchors = [akLeft, akTop, akRight, akBottom]
       Caption = 'Add To Problem List'
       TabOrder = 0
       OnClick = cbAddToPLClick
     end
     object btnPrimary: TButton
-      Left = 591
-      Top = 70
-      Width = 88
-      Height = 24
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 480
+      Top = 57
+      Width = 72
+      Height = 19
       Caption = '&Primary'
       TabOrder = 3
       OnClick = btnPrimaryClick
     end
     object btnRemove: TButton
-      Left = 591
-      Top = 100
-      Width = 88
-      Height = 23
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 480
+      Top = 81
+      Width = 72
+      Height = 19
       Caption = '&Remove'
       TabOrder = 4
       OnClick = btnRemoveClick
     end
     object btnSelectAll: TButton
-      Left = 474
-      Top = 133
-      Width = 88
-      Height = 22
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 385
+      Top = 108
+      Width = 72
+      Height = 18
       Caption = '&Select All'
       TabOrder = 5
       OnClick = btnSelectAllClick
     end
     object buOK: TButton
-      Left = 473
-      Top = 167
-      Width = 88
-      Height = 26
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 384
+      Top = 136
+      Width = 72
+      Height = 21
       Caption = '&OK'
       TabOrder = 6
       OnClick = buOKClick
     end
     object buCancel: TButton
-      Left = 593
-      Top = 167
-      Width = 89
-      Height = 26
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 482
+      Top = 136
+      Width = 72
+      Height = 21
       Caption = '&Cancel'
       TabOrder = 7
       OnClick = buCancelClick
     end
     object gbProvDiag: TGroupBox
-      Left = 10
+      Left = 8
       Top = 0
-      Width = 552
-      Height = 129
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 449
+      Height = 105
       Caption = 'Provisional Diagnosis'
       TabOrder = 1
       object lvDxGrid: TListView
         Left = 2
-        Top = 18
-        Width = 548
-        Height = 109
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 15
+        Width = 445
+        Height = 88
         Align = alClient
         Color = clInfoBk
         Columns = <
           item
             Caption = 'Add To PL/PD'
-            Width = 105
+            Width = 85
           end
           item
             Caption = 'Primary'
             MinWidth = 65
-            Width = 80
+            Width = 65
           end
           item
             Caption = 'Diagnosis for Selected Orders'
             MinWidth = 275
-            Width = 357
+            Width = 290
           end>
         Ctl3D = False
         HideSelection = False

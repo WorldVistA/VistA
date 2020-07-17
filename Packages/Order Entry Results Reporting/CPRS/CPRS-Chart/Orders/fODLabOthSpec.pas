@@ -90,9 +90,17 @@ end;
 
 procedure TfrmODLabOthSpec.cboOtherSpecNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+var
+  aLst: TStringList;
 begin
   inherited;
-  cboOtherSpec.ForDataUse(SubsetOfSpecimens(StartFrom, Direction));
+  aLst := TStringList.Create;
+  try
+    SubsetOfSpecimens(aLst, StartFrom, Direction);
+    cboOtherSpec.ForDataUse(aLst);
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 end.

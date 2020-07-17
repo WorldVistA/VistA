@@ -9,12 +9,13 @@ unit fDebugReport;
 *
 *
 }
+{$WARN SYMBOL_PLATFORM OFF}
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ImgList, StdCtrls, Buttons, ExtCtrls, ORNet, Trpcb, uCore,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls, VAUtils;
 
 type
 
@@ -34,6 +35,13 @@ type
     constructor Create(ActionDescription: TStrings; RPCParams, CurContext: string);
     destructor Destroy; override;
   end;
+
+  tRPCArrayIdent = array of tRPCArray;
+
+  tRPCArrayIdentHelper = Record helper for tRPCArrayIdent
+    public
+     Procedure Clear;
+  End;
 
   TfrmDebugReport = class(TForm)
     pnlLeft: TPanel;
@@ -58,15 +66,37 @@ type
     procedure btnCancelClick(Sender: TObject);
   private
     { Private declarations }
-    RPCS: array of tRPCArray;
-    DebugReportBroker: TRPCBroker;
+    fRPCS: tRPCArrayIdent;
+    fDebugReportBroker: TRPCBroker;
+    fCallbackCrntLoop: Integer;
+    fCallBackKey: String;
+    fTaskDLG: TTaskDialog;
+    fErrTxt: String;
     procedure RunNonThread();
+    function GetTopRPCNumber: Integer;
   public
     { Public declarations }
+    destructor Destroy; override;
+    function FilteredString(const x: string; ATabWidth: Integer = 8): string;
+    procedure SendTheRpc(RPCList: TStringList; UniqueKey: string);
+    procedure SendTheDesc(Description: TStringList; UniqueKey: string);
+    procedure EnsureDebugBroker;
+    procedure SendDataCallback(Sender: TObject; TickCount: Cardinal; var Reset: Boolean);
+
+    Property TopRPCNumber: Integer read GetTopRPCNumber;
+    property RPCS: tRPCArrayIdent read fRPCS write fRPCS;
+    property DebugReportBroker: TRPCBroker read fDebugReportBroker write fDebugReportBroker;
+    property CallbackCurrentLoop: Integer read fCallbackCrntLoop write fCallbackCrntLoop;
+    property CallbackKey: String read fCallBackKey write fCallBackKey;
+    property ErrorText: String read fErrTxt write fErrTxt;
+    property TaskDlg: TTaskDialog read fTaskDLG write fTaskDLG;
   end;
+
+Procedure LogBrokerErrors(const ErrTxt: String);
 
 Const
   UseMultThread: Boolean = false;
+  MAX_CALLS = 95;
 
 var
   frmDebugReport: TfrmDebugReport;
@@ -74,6 +104,88 @@ var
 implementation
 
 {$R *.dfm}
+
+Procedure LogBrokerErrors(const ErrTxt: String);
+var
+  frmDebug: TfrmDebugReport;
+  ReturnCursor: Integer;
+begin
+  frmDebug := TfrmDebugReport.Create(nil);
+  ReturnCursor := Screen.cursor;
+  Screen.cursor := crHourGlass;
+  try
+    //set unique key
+    frmDebug.CallbackKey := IntToStr(User.DUZ) + '^' + FormatDateTime('mm/dd/yyyy hh:mm:ss', Now());
+    //save the Error text
+    frmDebug.ErrorText := ErrTxt;
+    //set the loop
+    frmDebug.CallbackCurrentLoop := frmDebug.TopRPCNumber;
+    //create the task dialog
+    frmDebug.TaskDLG := TTaskDialog.Create(nil);
+    with frmDebug.TaskDLG do
+    begin
+      try
+        Caption := 'CPRS Error Log';
+        Title := 'Capturing debug information';
+        Text := 'Please wait this may take a minute.';
+        CommonButtons := [tcbCancel];
+        MainIcon := tdiInformation;
+        ProgressBar.Position := 70;
+        ProgressBar.MarqueeSpeed := 1;
+        Flags := [tfShowMarqueeProgressBar, tfCallbackTimer, tfAllowDialogCancellation ];
+        OnTimer := frmDebug.SendDataCallback;
+        Execute;
+      finally
+        Free;
+      end
+    end;
+  Finally
+   Screen.cursor := ReturnCursor;
+   FreeAndNil(frmDebug);
+  end;
+end;
+
+procedure TfrmDebugReport.SendDataCallback(Sender: TObject; TickCount: Cardinal;
+  var Reset: Boolean);
+var
+  RPCData: TStringList;
+begin
+ RPCData := TStringList.Create;
+ //Pause the timer
+ fTaskDLG.OnTimer := nil;
+ try
+  // 1st call
+  if fCallbackCrntLoop = TopRPCNumber then
+  begin
+    // ensure the broker exist
+    EnsureDebugBroker;
+    //Send the error message
+    RPCData.Add(fErrTxt);
+    SendTheDesc(RPCData, fCallBackKey);
+    RPCData.Clear;
+  end;
+
+   //Need to sync this call
+   LoadRPCData(RPCData, fCallbackCrntLoop);
+
+   //Send in the rpc list
+   SendTheRpc(RPCData, fCallBackKey);
+
+   if fCallbackCrntLoop = MAX_CALLS then
+   begin
+    fTaskDLG.OnTimer := nil;
+    fTaskDLG.ProgressBar.Position := 100;
+    fTaskDLG.ModalResult := mrOk;
+    SendMessage(fTaskDLG.Handle, WM_CLOSE, 0 , 0);
+   end else
+    dec(fCallbackCrntLoop);
+
+ finally
+  // reset the timer
+  fTaskDLG.OnTimer := SendDataCallback;
+  FreeandNil(RPCData);
+ end;
+end;
 
 procedure TfrmDebugReport.ActionMemoChange(Sender: TObject);
 begin
@@ -88,34 +200,36 @@ end;
 procedure TfrmDebugReport.btnSendClick(Sender: TObject);
 var
   DebugThread: tDebugThread;
-  ConnectionParam: String;
+  ConnectionParam: string;
   ReturnCursor: Integer;
 begin
   ReturnCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   try
-   if UseMultThread then
-   begin
-    //threaded
-    if Trim(ActionMemo.Text) > '' then
-    begin
-     ConnectionParam := RPCBrokerV.Server + '^' +
-              IntToStr(RPCBrokerV.ListenerPort) + '^' +
-              GetAppHandle(RPCBrokerV) + '^' +
-              RPCBrokerV.User.Division;
+    if UseMultThread then
+      begin
+        // threaded
+        if Trim(ActionMemo.Text) > '' then
+          begin
+            ConnectionParam := RPCBrokerV.Server + '^' +
+            IntToStr(RPCBrokerV.ListenerPort) + '^' +
+            GetAppHandle(RPCBrokerV) + '^' +
+            RPCBrokerV.User.Division;
 
-     DebugThread := tDebugThread.Create(ActionMemo.Lines, ConnectionParam, RPCBrokerV.CurrentContext);
-     {$WARN SYMBOL_DEPRECATED OFF} // researched
-     DebugThread.Resume;
-     {$WARN SYMBOL_DEPRECATED ON} // researched
-     Self.Close;
-    end;
-   end else begin
-    //Non threaded
-    RunNonThread;
-   end;
+            DebugThread := tDebugThread.Create(ActionMemo.Lines, ConnectionParam, RPCBrokerV.CurrentContext);
+{$WARN SYMBOL_DEPRECATED OFF} // researched
+            DebugThread.Resume;
+{$WARN SYMBOL_DEPRECATED ON} // researched
+            Self.Close;
+          end;
+      end
+    else
+      begin
+        // Non threaded
+        RunNonThread;
+      end;
   finally
-   Screen.Cursor := ReturnCursor;
+    Screen.Cursor := ReturnCursor;
   end;
 end;
 
@@ -125,6 +239,11 @@ begin
   btnSend.Enabled := False;
   ActionMemo.SetFocus;
   PnlProg.Visible := false;
+end;
+
+function TfrmDebugReport.GetTopRPCNumber: Integer;
+begin
+ Result := (RetainedRPCCount - 1);
 end;
 
 constructor tDebugThread.Create(ActionDescription: TStrings; RPCParams, CurContext: string);
@@ -219,22 +338,26 @@ end;
   var
     LnCnt: Integer;
   begin
-    with ThreadBroker do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORDEBUG SAVERPCS';
+    LockBroker;
+    try
+      with ThreadBroker do
+      begin
+        ClearParameters := True;
+        RemoteProcedure := 'ORDEBUG SAVERPCS';
 
-      //send the unique key
-      Param[0].PType := literal;
-      Param[0].Value := UniqueKey;
+        //send the unique key
+        Param[0].PType := literal;
+        Param[0].Value := UniqueKey;
 
-      //send the RPC Data
-      Param[1].PType := list;
-      for LnCnt := 0 to RPCList.Count - 1 do
-        ThreadBroker.Param[1].Mult[IntToStr(LnCnt)] := FilteredString(RPCList.Strings[LnCnt]);
+        //send the RPC Data
+        Param[1].PType := list;
+        for LnCnt := 0 to RPCList.Count - 1 do
+          ThreadBroker.Param[1].Mult[IntToStr(LnCnt)] := FilteredString(RPCList.Strings[LnCnt]);
 
-      ThreadBroker.Call;
-
+        ThreadBroker.Call;
+      end;
+    finally
+      UnlockBroker;
     end;
   end;
 
@@ -242,23 +365,27 @@ end;
   var
     LnCnt: Integer;
   begin
-    with ThreadBroker do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORDEBUG SAVEDESC';
+    LockBroker;
+    try
+      with ThreadBroker do
+      begin
+        ClearParameters := True;
+        RemoteProcedure := 'ORDEBUG SAVEDESC';
 
-      //send the unique key
-      Param[0].PType := literal;
-      Param[0].Value := UniqueKey;
+        //send the unique key
+        Param[0].PType := literal;
+        Param[0].Value := UniqueKey;
 
-      //send the RPC Data
-      Param[1].PType := list;
-      for LnCnt := 0 to Description.Count - 1 do
-        ThreadBroker.Param[1].Mult[IntToStr(LnCnt)] := FilteredString(Description.Strings[LnCnt]);
+        //send the RPC Data
+        Param[1].PType := list;
+        for LnCnt := 0 to Description.Count - 1 do
+          ThreadBroker.Param[1].Mult[IntToStr(LnCnt)] := FilteredString(Description.Strings[LnCnt]);
 
-      ThreadBroker.Call;
-      //CallBroker;
-
+        ThreadBroker.Call;
+        //CallBroker;
+      end;
+    finally
+      UnlockBroker;
     end;
   end;
 
@@ -294,8 +421,79 @@ var
   I: Integer;
   UniqueKey: string;
   ActionDesc: TStringList;
+begin
+  RPCS.Clear;
+  DebugReportBroker := TRPCBroker.Create(nil);
+  try
+    //Setup the progress bar
+    DebugProgBar.Max := (RetainedRPCCount + 3);
+    DebugProgBar.Position := 0;
 
-  function FilteredString(const x: string; ATabWidth: Integer = 8): string;
+    PnlProg.Visible := True;
+
+    Application.ProcessMessages; //Allow the screen to draw
+    EnsureDebugBroker;
+
+    DebugProgBar.Position := DebugProgBar.Position + 1;
+
+    //set unique key
+    UniqueKey := IntToStr(User.DUZ) + '^' + FormatDateTime('mm/dd/yyyy hh:mm:ss', Now());
+
+    //save the users text
+    ActionDesc := TStringList.Create;
+    try
+     ActionDesc.assign(ActionMemo.Lines);
+     SendTheDesc(ActionDesc, UniqueKey);
+     DebugProgBar.Position := DebugProgBar.Position + 1;
+    finally
+     ActionDesc.Free;
+    end;
+
+
+   //Collect all the RPC's up to that point
+   for I := TopRPCNumber downto 0 do
+   begin
+    SetLength(fRPCS, Length(fRPCS) + 1);
+    fRPCS[High(fRPCS)].RPCData := TStringList.Create;
+    //Need to sync this call
+    LoadRPCData(fRPCS[High(fRPCS)].RPCData, I);
+   end;
+   DebugProgBar.Position := DebugProgBar.Position + 1;
+
+  //Send in the rpc list
+  for I := High(fRPCS) downto Low(fRPCS) do
+  begin
+    SendTheRpc(fRPCS[i].RPCData, UniqueKey);
+    DebugProgBar.Position := DebugProgBar.Position + 1;
+  end;
+
+  Sleep(1000); //ONE SEC
+  Finally
+   RPCS.Clear;
+   DebugReportBroker.Connected := false;
+   FreeAndNil(fDebugReportBroker);
+   Self.Close;
+  end;
+end;
+
+procedure TfrmDebugReport.EnsureDebugBroker;
+begin
+ if not Assigned(DebugReportBroker) then
+  DebugReportBroker := TRPCBroker.Create(nil);
+
+ //Setup the broker
+    DebugReportBroker.Server := RPCBrokerV.Server;
+    DebugReportBroker.ListenerPort := RPCBrokerV.ListenerPort;
+    DebugReportBroker.LogIn.LogInHandle := GetAppHandle(RPCBrokerV);
+    DebugReportBroker.LogIn.Division := RPCBrokerV.User.Division;
+    DebugReportBroker.LogIn.Mode := lmAppHandle;
+    DebugReportBroker.KernelLogIn := False;
+    DebugReportBroker.Connected := True;
+    if DebugReportBroker.CreateContext(RPCBrokerV.CurrentContext) = false then
+     ShowMessage('Error switching broker context');
+end;
+
+  function TfrmDebugReport.FilteredString(const x: string; ATabWidth: Integer = 8): string;
 var
   i, j: Integer;
   c: char;
@@ -320,118 +518,82 @@ begin
   if Copy(Result, Length(Result), 1) = ' ' then Result := TrimRight(Result) + ' ';
 end;
 
-  procedure SendTheRpc(RPCList: TStringList; UniqueKey: string);
+
+
+  procedure TfrmDebugReport.SendTheRpc(RPCList: TStringList; UniqueKey: string);
   var
     LnCnt: Integer;
   begin
-    with DebugReportBroker do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORDEBUG SAVERPCS';
-
-      //send the unique key
-      Param[0].PType := literal;
-      Param[0].Value := UniqueKey;
-
-      //send the RPC Data
-      Param[1].PType := list;
-      for LnCnt := 0 to RPCList.Count - 1 do
-        Param[1].Mult[IntToStr(LnCnt)] := FilteredString(RPCList.Strings[LnCnt]);
-
-      Call;
-
-    end;
-  end;
-
-  procedure SendTheDesc(Description: TStringList; UniqueKey: string);
-  var
-    LnCnt: Integer;
-  begin
-    with DebugReportBroker do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORDEBUG SAVEDESC';
-
-      //send the unique key
-      Param[0].PType := literal;
-      Param[0].Value := UniqueKey;
-
-      //send the RPC Data
-      Param[1].PType := list;
-      for LnCnt := 0 to Description.Count - 1 do
-        Param[1].Mult[IntToStr(LnCnt)] := FilteredString(Description.Strings[LnCnt]);
-
-      Call;
-
-    end;
-  end;
-
-begin
-  SetLength(RPCS, 0);
-  DebugReportBroker := TRPCBroker.Create(nil);
-  try
-    //Setup the progress bar
-    DebugProgBar.Max := (RetainedRPCCount + 3);
-    DebugProgBar.Position := 0;
-
-    PnlProg.Visible := True;
-
-    Application.ProcessMessages; //Allow the screen to draw
-    //Setup the broker
-    DebugReportBroker.Server := RPCBrokerV.Server;
-    DebugReportBroker.ListenerPort := RPCBrokerV.ListenerPort;
-    DebugReportBroker.LogIn.LogInHandle := GetAppHandle(RPCBrokerV);
-    DebugReportBroker.LogIn.Division := RPCBrokerV.User.Division;
-    DebugReportBroker.LogIn.Mode := lmAppHandle;
-    DebugReportBroker.KernelLogIn := False;
-    DebugReportBroker.Connected := True;
-    if DebugReportBroker.CreateContext(RPCBrokerV.CurrentContext) = false then
-     ShowMessage('Error switching broker context');
-
-    DebugProgBar.Position := DebugProgBar.Position + 1;
-
-    //set unique key
-    UniqueKey := IntToStr(User.DUZ) + '^' + FormatDateTime('mm/dd/yyyy hh:mm:ss', Now());
-
-    //save the users text
-    ActionDesc := TStringList.Create;
+    LockBroker;
     try
-     ActionDesc.assign(ActionMemo.Lines);
-     SendTheDesc(ActionDesc, UniqueKey);
-     DebugProgBar.Position := DebugProgBar.Position + 1;
+      with DebugReportBroker do
+      begin
+        ClearParameters := True;
+        RemoteProcedure := 'ORDEBUG SAVERPCS';
+
+        //send the unique key
+        Param[0].PType := literal;
+        Param[0].Value := UniqueKey;
+
+        //send the RPC Data
+        Param[1].PType := list;
+        for LnCnt := 0 to RPCList.Count - 1 do
+          Param[1].Mult[IntToStr(LnCnt)] := FilteredString(RPCList.Strings[LnCnt]);
+
+        Call;
+      end;
     finally
-     ActionDesc.Free;
+      UnlockBroker;
     end;
+  end;
 
-
-   //Collect all the RPC's up to that point
-   for I := (RetainedRPCCount - 1) downto 0 do
-   begin
-    SetLength(RPCS, Length(RPCS) + 1);
-    RPCS[High(RPCS)].RPCData := TStringList.Create;
-    //Need to sync this call
-    LoadRPCData(RPCS[High(RPCS)].RPCData, I);
-   end;
-   DebugProgBar.Position := DebugProgBar.Position + 1;
-
-  //Send in the rpc list
-  for I := High(RPCS) downto Low(RPCS) do
+  procedure TfrmDebugReport.SendTheDesc(Description: TStringList; UniqueKey: string);
+  var
+    LnCnt: Integer;
   begin
-    SendTheRpc(RPCS[i].RPCData, UniqueKey);
-    DebugProgBar.Position := DebugProgBar.Position + 1;
+    LockBroker;
+    try
+      with DebugReportBroker do
+      begin
+        ClearParameters := True;
+        RemoteProcedure := 'ORDEBUG SAVEDESC';
+
+        //send the unique key
+        Param[0].PType := literal;
+        Param[0].Value := UniqueKey;
+
+        //send the RPC Data
+        Param[1].PType := list;
+        for LnCnt := 0 to Description.Count - 1 do
+          Param[1].Mult[IntToStr(LnCnt)] := FilteredString(Description.Strings[LnCnt]);
+
+        Call;
+      end;
+    finally
+      UnlockBroker;
+    end;
   end;
 
-  Sleep(1000); //ONE SEC
-  Finally
-   for I := High(RPCS) downto Low(RPCS) do
-    if Assigned(RPCS[i].RPCData) then
-      FreeAndNil(RPCS[i].RPCData);
-   SetLength(RPCS, 0);
-   DebugReportBroker.Connected := false;
-   FreeAndNil(DebugReportBroker);
-   Self.Close;
+  destructor TfrmDebugReport.Destroy;
+  begin
+    if assigned(DebugReportBroker) then
+    begin
+      DebugReportBroker.Connected := false;
+      FreeAndNil(fDebugReportBroker);
+    end;
+    Inherited;
   end;
-end;
 
+  Procedure tRPCArrayIdentHelper.Clear;
+  Var
+    I: Integer;
+  begin
+    for I := High(self) downto Low(self) do
+    if Assigned(self[i].RPCData) then
+      FreeAndNil(self[i].RPCData);
+
+    SetLength(self, 0);
+  end;
+
+{$WARN SYMBOL_PLATFORM ON}
 end.
-

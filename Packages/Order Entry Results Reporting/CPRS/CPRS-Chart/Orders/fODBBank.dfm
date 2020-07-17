@@ -8,98 +8,126 @@ inherited frmODBBank: TfrmODBBank
   OnShow = FormShow
   ExplicitWidth = 700
   ExplicitHeight = 626
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Splitter1: TSplitter [0]
     Left = 0
     Top = 0
-    Width = 684
-    Height = 2
+    Width = 661
+    Height = 3
     Cursor = crVSplit
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
-    ExplicitWidth = 537
+    ExplicitWidth = 855
   end
   object pnlComments: TPanel [1]
-    Left = 12
-    Top = 25
-    Width = 534
-    Height = 368
+    Left = 15
+    Top = 31
+    Width = 668
+    Height = 460
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 5
     Visible = False
     object lblOrdComment: TLabel
-      Left = 25
-      Top = 3
-      Width = 87
-      Height = 13
+      Left = 31
+      Top = 4
+      Width = 108
+      Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Order Comment'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -15
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
     end
     object btnUpdateComments: TButton
-      Left = 372
-      Top = 174
-      Width = 115
-      Height = 25
+      Left = 465
+      Top = 218
+      Width = 144
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Update Comments'
       TabOrder = 0
       OnClick = btnUpdateCommentsClick
     end
     object btnCancelComment: TButton
-      Left = 279
-      Top = 174
-      Width = 75
-      Height = 25
+      Left = 349
+      Top = 218
+      Width = 94
+      Height = 31
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Cancel'
       TabOrder = 1
       OnClick = btnCancelCommentClick
     end
   end
   inherited memOrder: TCaptionMemo
-    Left = 4
-    Top = 503
-    Width = 449
-    Height = 59
+    Left = 5
+    Top = 629
+    Width = 561
+    Height = 74
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Visible = False
+    ExplicitLeft = 5
+    ExplicitTop = 629
+    ExplicitWidth = 561
+    ExplicitHeight = 74
+  end
+  object pgeProduct: TPageControl [3]
+    Left = 0
+    Top = 3
+    Width = 661
+    Height = 621
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    Visible = False
-    ExplicitLeft = 4
-    ExplicitTop = 503
-    ExplicitWidth = 449
-    ExplicitHeight = 59
-  end
-  object pgeProduct: TPageControl [3]
-    Left = 0
-    Top = 2
-    Width = 684
-    Height = 497
     ActivePage = TabDiag
     Align = alTop
     TabOrder = 4
     OnChange = pgeProductChange
     object TabInfo: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Patient Information'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object edtInfo: TCaptionRichEdit
         Left = 0
         Top = 0
-        Width = 676
-        Height = 469
+        Width = 653
+        Height = 590
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         BevelInner = bvNone
         BevelOuter = bvNone
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'Courier New'
         Font.Style = []
         ParentFont = False
@@ -107,17 +135,26 @@ inherited frmODBBank: TfrmODBBank
         ScrollBars = ssBoth
         TabOrder = 0
         WordWrap = False
+        Zoom = 100
         Caption = 'Patient Info'
       end
     end
     object TabDiag: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Blood Bank Orders'
       ImageIndex = 2
       object lblReqComment: TOROffsetLabel
-        Left = 300
-        Top = 25
-        Width = 108
-        Height = 37
+        Left = 375
+        Top = 31
+        Width = 135
+        Height = 47
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         HorzOffset = 2
         Transparent = False
         VertOffset = 2
@@ -125,10 +162,14 @@ inherited frmODBBank: TfrmODBBank
       end
       object pnlFields: TPanel
         Left = 0
-        Top = 145
-        Width = 676
-        Height = 210
+        Top = 181
+        Width = 653
+        Height = 263
         Hint = 'Data entered into these fields apply to the entire order.'
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         BevelEdges = []
         BevelOuter = bvNone
@@ -137,13 +178,17 @@ inherited frmODBBank: TfrmODBBank
         TabOrder = 2
         object lblDiagComment: TOROffsetLabel
           Left = 0
-          Top = 128
-          Width = 46
-          Height = 15
+          Top = 160
+          Width = 59
+          Height = 18
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Comment'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           HorzOffset = 2
@@ -155,63 +200,83 @@ inherited frmODBBank: TfrmODBBank
         object lblUrgency: TLabel
           Left = 0
           Top = -1
-          Width = 44
-          Height = 13
+          Width = 56
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Urgency*'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
         end
         object lblReason: TLabel
           Left = 0
-          Top = 40
-          Width = 95
-          Height = 13
+          Top = 50
+          Width = 120
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Reason for Request'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
         end
         object lblSurgery: TLabel
-          Left = 117
+          Left = 146
           Top = 0
-          Width = 36
-          Height = 13
+          Width = 47
+          Height = 16
           Hint = 
             'Enter the name of the surgical procedure that this request is fo' +
             'r.'
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Surgery'
           Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
         end
         object lblRequiredField: TLabel
-          Left = 398
-          Top = 38
-          Width = 122
-          Height = 13
+          Left = 498
+          Top = 48
+          Width = 154
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = '* Indicates a required field'
         end
         object lblTNS: TLabel
-          Left = 270
+          Left = 338
           Top = 0
-          Width = 14
-          Height = 13
+          Width = 17
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'tns'
           Color = clActiveBorder
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clMaroon
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentColor = False
@@ -219,24 +284,32 @@ inherited frmODBBank: TfrmODBBank
           Visible = False
         end
         object lblNoBloodReq: TLabel
-          Left = 341
-          Top = 21
-          Width = 176
-          Height = 13
+          Left = 426
+          Top = 26
+          Width = 223
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'No Blood Required for this Procedure'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clMaroon
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           Visible = False
         end
         object cboUrgency: TORComboBox
-          Left = 4
-          Top = 14
-          Width = 98
-          Height = 21
+          Left = 5
+          Top = 18
+          Width = 123
+          Height = 24
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Style = orcsDropDown
           AutoSelect = True
           Caption = 'Urgency'
@@ -244,10 +317,10 @@ inherited frmODBBank: TfrmODBBank
           DropDownCount = 8
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
-          ItemHeight = 13
+          ItemHeight = 16
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -265,16 +338,20 @@ inherited frmODBBank: TfrmODBBank
           CharsNeedMatch = 1
         end
         object chkConsent: TCheckBox
-          Left = 529
-          Top = 92
-          Width = 112
-          Height = 17
+          Left = 661
+          Top = 115
+          Width = 140
+          Height = 21
           Hint = 'Informed Consent Signed On Chart?'
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Alignment = taLeftJustify
           Caption = 'Informed Consent?'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -285,10 +362,14 @@ inherited frmODBBank: TfrmODBBank
           OnClick = chkConsentClick
         end
         object cboSurgery: TORComboBox
-          Left = 117
-          Top = 14
-          Width = 218
-          Height = 21
+          Left = 146
+          Top = 18
+          Width = 273
+          Height = 24
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Style = orcsDropDown
           AutoSelect = True
           Caption = 'Surgery'
@@ -297,10 +378,10 @@ inherited frmODBBank: TfrmODBBank
           Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
-          ItemHeight = 13
+          ItemHeight = 16
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = False
@@ -318,16 +399,20 @@ inherited frmODBBank: TfrmODBBank
           CharsNeedMatch = 1
         end
         object cboReasons: TORComboBox
-          Left = 4
-          Top = 55
-          Width = 525
-          Height = 74
+          Left = 5
+          Top = 69
+          Width = 656
+          Height = 92
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Style = orcsSimple
           AutoSelect = True
           Caption = ''
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 13
+          ItemHeight = 16
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = False
@@ -344,38 +429,51 @@ inherited frmODBBank: TfrmODBBank
           CharsNeedMatch = 1
         end
         object memDiagComment: TRichEdit
-          Left = 4
-          Top = 144
-          Width = 525
-          Height = 60
+          Left = 5
+          Top = 180
+          Width = 656
+          Height = 75
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
           TabOrder = 4
+          Zoom = 100
           OnChange = memDiagCommentChange
         end
       end
       object pnlSelect: TPanel
         Left = 0
-        Top = 35
-        Width = 676
-        Height = 110
+        Top = 44
+        Width = 653
+        Height = 137
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         BevelEdges = []
         BevelOuter = bvNone
         TabOrder = 1
         object pnlDiagnosticTests: TGroupBox
-          Left = 266
-          Top = 3
-          Width = 256
-          Height = 110
+          Left = 333
+          Top = 0
+          Width = 320
+          Height = 138
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Diagnostic Tests'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentFont = False
@@ -384,48 +482,64 @@ inherited frmODBBank: TfrmODBBank
           OnEnter = pnlDiagnosticTestsEnter
           OnExit = pnlDiagnosticTestsExit
           object lblCollType: TLabel
-            Left = 13
-            Top = 33
-            Width = 77
-            Height = 13
+            Left = 16
+            Top = 41
+            Width = 99
+            Height = 16
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Collection Type*'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
           end
           object lblCollTime: TLabel
-            Left = 12
-            Top = 70
-            Width = 100
-            Height = 13
+            Left = 15
+            Top = 88
+            Width = 128
+            Height = 16
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Collection Date/Time'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
           end
           object pnlCollTimeButton: TKeyClickPanel
-            Left = 178
-            Top = 82
-            Width = 21
-            Height = 21
+            Left = 223
+            Top = 103
+            Width = 26
+            Height = 26
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             BevelOuter = bvNone
             TabOrder = 5
             TabStop = True
             object cmdImmedColl: TSpeedButton
               Left = 0
               Top = 0
-              Width = 21
-              Height = 21
+              Width = 26
+              Height = 26
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alClient
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWindowText
-              Font.Height = -11
+              Font.Height = -20
               Font.Name = 'MS Sans Serif'
               Font.Style = [fsBold]
               Glyph.Data = {
@@ -440,18 +554,20 @@ inherited frmODBBank: TfrmODBBank
               ParentShowHint = False
               ShowHint = False
               OnClick = cmdImmedCollClick
-              ExplicitLeft = 5
-              ExplicitTop = -9
             end
           end
           object calCollTime: TORDateBox
-            Left = 12
-            Top = 82
-            Width = 165
-            Height = 21
+            Left = 15
+            Top = 103
+            Width = 206
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -15
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
@@ -463,10 +579,14 @@ inherited frmODBBank: TfrmODBBank
             Caption = ''
           end
           object cboAvailTest: TORComboBox
-            Left = 13
-            Top = 13
-            Width = 234
-            Height = 21
+            Left = 16
+            Top = 16
+            Width = 293
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Style = orcsDropDown
             AutoSelect = True
             Caption = 'Diagnostic Tests'
@@ -474,10 +594,10 @@ inherited frmODBBank: TfrmODBBank
             DropDownCount = 8
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
-            ItemHeight = 13
+            ItemHeight = 16
             ItemTipColor = clWindow
             ItemTipEnable = True
             ListItemsOnly = False
@@ -498,10 +618,14 @@ inherited frmODBBank: TfrmODBBank
             CharsNeedMatch = 1
           end
           object cboCollType: TORComboBox
-            Left = 12
-            Top = 46
-            Width = 197
-            Height = 21
+            Left = 15
+            Top = 58
+            Width = 246
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Style = orcsDropDown
             AutoSelect = True
             Caption = 'Collection Type'
@@ -509,10 +633,10 @@ inherited frmODBBank: TfrmODBBank
             DropDownCount = 8
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
-            ItemHeight = 13
+            ItemHeight = 16
             ItemTipColor = clWindow
             ItemTipEnable = True
             ListItemsOnly = True
@@ -531,10 +655,14 @@ inherited frmODBBank: TfrmODBBank
             CharsNeedMatch = 1
           end
           object cboCollTime: TORComboBox
-            Left = 12
-            Top = 82
-            Width = 165
-            Height = 21
+            Left = 15
+            Top = 103
+            Width = 206
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Style = orcsDropDown
             AutoSelect = True
             Caption = 'Collection Date/Time'
@@ -542,10 +670,10 @@ inherited frmODBBank: TfrmODBBank
             DropDownCount = 8
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
-            ItemHeight = 13
+            ItemHeight = 16
             ItemTipColor = clWindow
             ItemTipEnable = True
             ListItemsOnly = False
@@ -563,17 +691,15 @@ inherited frmODBBank: TfrmODBBank
             CharsNeedMatch = 1
           end
           object txtImmedColl: TCaptionEdit
-            Left = 12
-            Top = 82
-            Width = 165
-            Height = 21
+            Left = 15
+            Top = 103
+            Width = 206
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Color = clBtnFace
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'MS Sans Serif'
-            Font.Style = [fsBold]
-            ParentFont = False
             ReadOnly = True
             TabOrder = 3
             OnEnter = txtImmedCollEnter
@@ -581,15 +707,19 @@ inherited frmODBBank: TfrmODBBank
           end
         end
         object pnlBloodComponents: TGroupBox
-          Left = 4
+          Left = 5
           Top = 0
-          Width = 256
-          Height = 110
+          Width = 320
+          Height = 138
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Blood Components'
           Color = clBtnFace
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentColor = False
@@ -599,49 +729,65 @@ inherited frmODBBank: TfrmODBBank
           OnEnter = pnlBloodComponentsEnter
           OnExit = pnlBloodComponentsExit
           object lblQuantity: TLabel
-            Left = 198
+            Left = 248
             Top = 0
-            Width = 39
-            Height = 13
+            Width = 48
+            Height = 16
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Quantity'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
           end
           object lblModifiers: TLabel
-            Left = 7
-            Top = 33
-            Width = 42
-            Height = 13
+            Left = 9
+            Top = 41
+            Width = 55
+            Height = 16
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Modifiers'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
           end
           object lblWanted: TLabel
-            Left = 7
-            Top = 70
-            Width = 92
-            Height = 13
+            Left = 9
+            Top = 88
+            Width = 116
+            Height = 16
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Caption = 'Date/Time Wanted'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
           end
           object cboAvailComp: TORComboBox
-            Left = 11
-            Top = 13
-            Width = 181
-            Height = 21
+            Left = 14
+            Top = 16
+            Width = 226
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Style = orcsDropDown
             AutoSelect = True
             Caption = 'Blood Components'
@@ -649,10 +795,10 @@ inherited frmODBBank: TfrmODBBank
             DropDownCount = 8
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
-            ItemHeight = 13
+            ItemHeight = 16
             ItemTipColor = clWindow
             ItemTipEnable = True
             ListItemsOnly = False
@@ -673,13 +819,17 @@ inherited frmODBBank: TfrmODBBank
             CharsNeedMatch = 1
           end
           object tQuantity: TEdit
-            Left = 198
-            Top = 13
-            Width = 25
-            Height = 21
+            Left = 248
+            Top = 16
+            Width = 31
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
@@ -689,10 +839,14 @@ inherited frmODBBank: TfrmODBBank
             OnEnter = tQuantityEnter
           end
           object cboModifiers: TORComboBox
-            Left = 11
-            Top = 46
-            Width = 181
-            Height = 21
+            Left = 14
+            Top = 58
+            Width = 226
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Style = orcsDropDown
             AutoSelect = True
             Caption = 'Modifier'
@@ -700,10 +854,10 @@ inherited frmODBBank: TfrmODBBank
             DropDownCount = 8
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
-            ItemHeight = 13
+            ItemHeight = 16
             ItemTipColor = clWindow
             ItemTipEnable = True
             ListItemsOnly = True
@@ -720,13 +874,17 @@ inherited frmODBBank: TfrmODBBank
             CharsNeedMatch = 1
           end
           object calWantTime: TORDateBox
-            Left = 11
-            Top = 82
-            Width = 181
-            Height = 21
+            Left = 14
+            Top = 103
+            Width = 226
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -11
+            Font.Height = -14
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
@@ -742,40 +900,42 @@ inherited frmODBBank: TfrmODBBank
       object GroupBox1: TGroupBox
         Left = 0
         Top = 0
-        Width = 676
-        Height = 35
+        Width = 653
+        Height = 44
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         Caption = ' Personal Quick Orders'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -14
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         TabOrder = 0
         object cboQuick: TORComboBox
-          Left = 15
-          Top = 11
-          Width = 508
-          Height = 21
+          Left = 19
+          Top = 14
+          Width = 635
+          Height = 24
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Style = orcsDropDown
           AutoSelect = True
           Caption = ''
           Color = clWindow
           DropDownCount = 8
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ItemHeight = 13
+          ItemHeight = 16
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = False
           LongList = True
           LookupPiece = 0
           MaxLength = 0
-          ParentFont = False
           Pieces = '2'
           Sorted = False
           SynonymChars = '<>'
@@ -787,24 +947,32 @@ inherited frmODBBank: TfrmODBBank
       end
       object pnlSelectedTests: TGroupBox
         Left = 0
-        Top = 355
-        Width = 676
-        Height = 109
+        Top = 444
+        Width = 653
+        Height = 136
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         Caption = 'Selected Components and Tests'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -14
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 3
         Visible = False
         object lvSelectionList: TCaptionListView
-          Left = 5
-          Top = 15
-          Width = 430
-          Height = 91
+          Left = 6
+          Top = 19
+          Width = 538
+          Height = 114
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Columns = <
             item
               AutoSize = True
@@ -817,6 +985,7 @@ inherited frmODBBank: TfrmODBBank
             item
               AutoSize = True
               Caption = 'Modifiers'
+              MinWidth = 12
             end
             item
               Caption = 'ModifierItemIndex'
@@ -828,7 +997,7 @@ inherited frmODBBank: TfrmODBBank
             end>
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ReadOnly = True
@@ -840,16 +1009,21 @@ inherited frmODBBank: TfrmODBBank
           OnClick = lvSelectionListClick
           AutoSize = False
           Caption = 'lvSelectionList'
+          HideTinyColumns = True
         end
         object btnRemove: TButton
-          Left = 450
-          Top = 37
-          Width = 75
-          Height = 21
+          Left = 563
+          Top = 46
+          Width = 93
+          Height = 27
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Remove'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -857,14 +1031,18 @@ inherited frmODBBank: TfrmODBBank
           OnClick = btnRemoveClick
         end
         object btnRemoveAll: TButton
-          Left = 450
-          Top = 64
-          Width = 75
-          Height = 21
+          Left = 563
+          Top = 80
+          Width = 93
+          Height = 26
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Remove All'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -14
           Font.Name = 'MS Sans Serif'
           Font.Style = []
           ParentFont = False
@@ -874,87 +1052,90 @@ inherited frmODBBank: TfrmODBBank
       end
     end
     object TabResults: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Lab Results'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object edtResults: TCaptionRichEdit
         Left = 0
         Top = 0
-        Width = 676
-        Height = 469
+        Width = 653
+        Height = 590
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -12
+        Font.Height = -15
         Font.Name = 'Courier New'
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        Zoom = 100
         Caption = ''
       end
     end
   end
   inherited cmdAccept: TButton
-    Left = 455
-    Top = 503
-    Width = 75
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 569
+    Top = 629
+    Width = 94
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 2
     Visible = False
-    ExplicitLeft = 455
-    ExplicitTop = 503
-    ExplicitWidth = 75
+    ExplicitLeft = 569
+    ExplicitTop = 629
+    ExplicitWidth = 94
   end
   inherited cmdQuit: TButton
-    Left = 455
-    Top = 541
-    Width = 52
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 569
+    Top = 676
+    Width = 65
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 3
-    ExplicitLeft = 455
-    ExplicitTop = 541
-    ExplicitWidth = 52
+    ExplicitLeft = 569
+    ExplicitTop = 676
+    ExplicitWidth = 65
   end
   inherited pnlMessage: TPanel
-    Left = 8
-    Top = 513
-    Width = 409
-    Height = 49
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 10
+    Top = 641
+    Width = 511
+    Height = 62
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 1
-    ExplicitLeft = 8
-    ExplicitTop = 513
-    ExplicitWidth = 409
-    ExplicitHeight = 49
+    ExplicitLeft = 10
+    ExplicitTop = 641
+    ExplicitWidth = 511
+    ExplicitHeight = 62
     inherited imgMessage: TImage
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
     end
     inherited memMessage: TRichEdit
-      Left = 42
-      Top = 5
-      Width = 360
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Font.Height = -11
-      ExplicitLeft = 42
-      ExplicitTop = 5
-      ExplicitWidth = 360
+      Top = 6
+      Width = 450
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Font.Height = -14
+      ExplicitTop = 6
+      ExplicitWidth = 450
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

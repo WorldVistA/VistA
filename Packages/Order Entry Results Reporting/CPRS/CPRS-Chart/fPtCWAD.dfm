@@ -16,22 +16,20 @@ inherited frmPtCWAD: TfrmPtCWAD
     Left = 0
     Top = 129
     Width = 508
-    Height = 24
+    Height = 19
     Align = alTop
-    Caption = 'Crisis Notes, Warning Notes, Directives'
+    Caption = 'Crisis Notes, Warning Notes, Directives, Other'
     HorzOffset = 2
     Transparent = False
     VertOffset = 6
     WordWrap = False
-    ExplicitLeft = 80
-    ExplicitTop = 265
-    ExplicitWidth = 435
+    ExplicitWidth = 219
   end
   object lstNotes: TORListBox [1]
     Left = 0
-    Top = 153
+    Top = 148
     Width = 508
-    Height = 108
+    Height = 113
     Align = alClient
     ItemHeight = 13
     ParentShowHint = False
@@ -43,6 +41,8 @@ inherited frmPtCWAD: TfrmPtCWAD
     LongList = False
     Pieces = '2,3'
     TabPositions = '20'
+    ExplicitTop = 153
+    ExplicitHeight = 108
   end
   object pnlBottom: TPanel [2]
     Left = 0
@@ -102,6 +102,7 @@ inherited frmPtCWAD: TfrmPtCWAD
     ViewStyle = vsReport
     OnClick = lstAllergiesClick
     OnKeyDown = lstAllergiesKeyDown
+    AutoSize = False
     Caption = 'Allergies'
     Pieces = '2,3,4'
   end

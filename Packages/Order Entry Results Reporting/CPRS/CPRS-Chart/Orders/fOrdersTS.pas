@@ -5,23 +5,24 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ORCtrls, ORFn, ExtCtrls, rOrders, ORDtTm, mEvntDelay,uConst,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, ORNet, Vcl.ComCtrls, Vcl.OleCtrls, SHDocVw, rCore, ShellApi;
 
 type
   TfrmOrdersTS = class(TfrmAutoSz)
+    pnlMiddle: TPanel;
     pnlTop: TPanel;
     lblPtInfo: TVA508StaticText;
-    pnldif: TPanel;
-    Image1: TImage;
-    lblUseAdmit: TVA508StaticText;
-    lblUseTransfer: TVA508StaticText;
-    pnlBottom: TPanel;
-    fraEvntDelayList: TfraEvntDelayList;
     grpChoice: TGroupBox;
     radDelayed: TRadioButton;
-    radReleaseNow: TRadioButton;
+    pnldif: TPanel;
+    Image1: TImage;
     cmdOK: TButton;
     cmdCancel: TButton;
+    pnlBottom: TPanel;
+    fraEvntDelayList: TfraEvntDelayList;
+    radReleaseNow: TRadioButton;
+    memHelp: TRichEdit;
+    btnHelp: TButton;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -35,9 +36,11 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormResize(Sender: TObject);
+    procedure btnHelpClick(Sender: TObject);
   private
     OKPressed: Boolean;
     FResult  : Boolean;
+    helpString: string;
     FImmediatelyRelease: boolean;
     FCurrSpecialty: string;
     F1stClick: Boolean;
@@ -158,6 +161,9 @@ begin
 end;
 
 procedure TfrmOrdersTS.FormCreate(Sender: TObject);
+var
+  msgData: TStringList;
+  msgStr: string;
 begin
   inherited;
   if not Patient.Inpatient then
@@ -168,6 +174,23 @@ begin
   F1stClick           := True;
   FCurrSpecialty      := '';
   AutoSizeDisabled := true;
+
+  msgData := TStringList.Create;
+  CallVistA('ORDDPAPI RLSMSG',[],msgData);
+    for msgStr in msgData do
+      begin
+      memHelp.Lines.Add(msgStr);
+      end;
+
+  FreeAndNil(msgData);
+  helpString := GetUserParam('OR RELEASE FORM HELP');
+  btnHelp.Visible := false;
+  memHelp.Width := memHelp.Width + btnHelp.Width;
+  if (helpString <> '') then
+  begin
+    btnHelp.Visible := true;
+    memHelp.Width := memHelp.Width - btnHelp.Width;
+  end;
 end;
 
 
@@ -223,6 +246,13 @@ begin
   OKPressed := True;
   FResult   := True;
   Close;
+end;
+
+procedure TfrmOrdersTS.btnHelpClick(Sender: TObject);
+begin
+  inherited;
+//  InfoBox(helpString,'Info', MB_OK);
+    ShellExecute(0, 'OPEN', PChar(helpString), '', '', SW_SHOWNORMAL);
 end;
 
 procedure TfrmOrdersTS.cmdCancelClick(Sender: TObject);
@@ -308,10 +338,8 @@ begin
   if fraEvntDelayList.MatchedCancel then
   begin
     OKPressed := False;
-    //cq 21647 - Allow the user to make another selection after pop up message - jcs
-    fraEvntDelayList.MatchedCancel := False;
-    //Close;
-    //Exit;
+    Close;
+    Exit;
   end;
 end;
 

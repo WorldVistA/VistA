@@ -27,6 +27,7 @@ uses VA508AccessibilityRouter;
 
 type
   TSizeRatio = class         // records relative sizes and positions for resizing logic
+  public
     CLeft: Extended;
     CTop: Extended;
     CWidth: Extended;

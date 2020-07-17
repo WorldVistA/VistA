@@ -166,11 +166,11 @@ begin
   MoreID := '';
   aReport := TStringList.Create;
   if uQualifier = '' then
-    aQualifier := piece(uRemoteType,'^',5)  //Health Summary Type Report
+    aQualifier := piece(uLabRemoteType,'^',5)  //Health Summary Type Report
   else
     begin
       MoreID := ';' + Piece(uQualifier,';',3);
-      aQualifier := piece(uRemoteType,'^',5);
+      aQualifier := piece(uLabRemoteType,'^',5);
     end;
   with frmLabs.TabControl1 do
     if TabIndex > 0 then
@@ -213,7 +213,7 @@ begin
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
                           QuickCopy(GetFormattedReport(FReports, aQualifier,
                             Patient.DFN, nil , RemoteSiteID, RemoteQuery, uHState), FReportText);
-                          aCaption := piece(uRemoteType,'^',4);    //nil used to be uHSComponents
+                          aCaption := piece(uLabRemoteType,'^',4);    //nil used to be uHSComponents
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                         end;
@@ -228,7 +228,7 @@ begin
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
                           QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
                             Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
-                          aCaption := piece(uRemoteType,'^',4);
+                          aCaption := piece(uLabRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                         end;
@@ -239,10 +239,10 @@ begin
                       begin
                         FReportText.Clear;
                         aReport.Clear;
-                        CreatePatientHeader(aReport,piece(uRemoteType,'^',4));
+                        CreatePatientHeader(aReport,piece(uLabRemoteType,'^',4));
                         QuickCopy(aReport, FReportText);
                         FindVType;
-                        aCaption := piece(uRemoteType,'^',4) + ';1';
+                        aCaption := piece(uLabRemoteType,'^',4) + ';1';
                         PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                         if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                       end
@@ -250,7 +250,7 @@ begin
                       begin
                         QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
                           Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
-                        aCaption := piece(uRemoteType,'^',4);
+                        aCaption := piece(uLabRemoteType,'^',4);
                         PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                         if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                       end;
@@ -261,10 +261,10 @@ begin
                       begin
                         FReportText.Clear;
                         aReport.Clear;
-                        CreatePatientHeader(aReport,piece(uRemoteType,'^',4));
+                        CreatePatientHeader(aReport,piece(uLabRemoteType,'^',4));
                         QuickCopy(aReport, FReportText);
                         FindVType;
-                        aCaption := piece(uRemoteType,'^',4) + ';1';
+                        aCaption := piece(uLabRemoteType,'^',4) + ';1';
                         PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                         if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                       end
@@ -272,7 +272,7 @@ begin
                       begin
                         QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
-                        aCaption := piece(uRemoteType,'^',4);
+                        aCaption := piece(uLabRemoteType,'^',4);
                         PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                         if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                       end;
@@ -287,7 +287,7 @@ begin
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
                           QuickCopy(GetFormattedReport(FReports, aQualifier,
                             Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
-                          aCaption := piece(uRemoteType,'^',4);
+                          aCaption := piece(uLabRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                         end;
@@ -302,7 +302,7 @@ begin
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
                           QuickCopy(GetFormattedReport(FReports, aQualifier,
                             Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
-                          aCaption := piece(uRemoteType,'^',4);
+                          aCaption := piece(uLabRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                         end;
@@ -331,7 +331,7 @@ begin
                     aReport.Clear;
                     QuickCopy(FReportText.Lines, aReport);
                     ADevice := Piece(cboDevice.ItemID, ';', 2);
-                    PrintVReports(ErrMsg, ADevice, piece(uRemoteType,'^',4),aReport);
+                    PrintVReports(ErrMsg, ADevice, piece(uLabRemoteType,'^',4),aReport);
                     if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                   end
                 else
@@ -351,7 +351,7 @@ begin
                     aReport.Clear;
                     QuickCopy(FReportText, aReport);
                     ADevice := Piece(cboDevice.ItemID, ';', 2);
-                    PrintVReports(ErrMsg, ADevice, piece(uRemoteType,'^',4),aReport);
+                    PrintVReports(ErrMsg, ADevice, piece(uLabRemoteType,'^',4),aReport);
                     if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
                   end
                 else

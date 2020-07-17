@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, StdCtrls, ComCtrls, ExtCtrls, ORCtrls, Grids, Buttons, uConst, ORDtTm,
   Menus, XUDIGSIGSC_TLB, rMisc, uOrders, StrUtils, oRFn, contnrs,
-  VA508AccessibilityManager, Vcl.CheckLst;
+  VA508AccessibilityManager, Vcl.CheckLst, rODRTC;
 
 const
   UM_DELAYCLICK = 11037;  // temporary for listview click event
@@ -51,7 +51,6 @@ type
     vacaMoreInformation: TVA508ComponentAccessibility;
     procedure FormCreate(Sender: TObject);
     procedure ControlChange(Sender: TObject);
-    procedure pnlMessageEnter(Sender: TObject);
     procedure pnlMessageExit(Sender: TObject);
     procedure memMessageKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -73,11 +72,15 @@ type
     procedure txtIntervalChange(Sender: TObject);
     procedure cboPerQODropDownClose(Sender: TObject);
     procedure lstPreReqClickCheck(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
+    procedure loadAdditionalComments(input: string);
+    procedure loadPreReq(input: string);
+    procedure cboRTCClinicChange(Sender: TObject);
 
 
   private
     OffSet: integer;
+    systemInfo: boolean;
+    systemPre: boolean;
 
     {edit}
 
@@ -118,6 +121,8 @@ begin
 //    ClearAllFields;
   //FIVTypeDefined := false;
   ClearAllPrompts;
+  systemInfo := false;
+  systemPre := false;
   with CtrlInits do
     begin
       SetControl(cboPerQO, 'ShortList');
@@ -133,25 +138,31 @@ begin
       memInfo.Visible := true;
       lblMoreInfo.Visible := true;
       SetControl(memInfo, 'Info');
-      if memInfo.Lines.Count = 0 then
+      if memInfo.Lines.Count > 0 then systemInfo := true;
+      if lstPreReq.Items.Count < 1 then lstPreReq.Enabled := false
+      else
         begin
-          memInfo.Visible := false;
-          lblMoreInfo.Visible := false;
+          systemPre := true;
+          lstPreReq.Enabled := true;
         end;
-      if lstPreReq.Items.Count < 1 then lstPreReq.Enabled := false;
     end;
-//    cboRTCClinic.InitLongList(Copy(encounter.LocationName, 0, Length(encounter.LocationName)-1));
     cboRTCClinic.InitLongList(encounter.LocationName);
     cboRTCCLinic.SelectByIEN(encounter.Location);
-
+    if (not systemInfo) and (cboRTCClinic.ItemIndex > -1) then
+      begin
+        tmp := cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex];
+        loadAdditionalComments(tmp);
+      end;
+    if (not systemPre) and (cboRTCClinic.ItemIndex > -1) then
+      begin
+        tmp := cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex];
+        loadPreReq(tmp);
+      end;
     tmp := Piece(CtrlInits.TextOf('Offset'), U, 1);
     self.OffSet := StrToIntDef(tmp,0);
     if self.OffSet = 0 then self.OffSet := 30;
 
     txtNumAppts.Text := '1';
-//    cboInterval.Enabled := false;
-//  memorder.text := '';
-//  memOrder.Lines.Clear;
   if ScreenReaderActive then
   begin
     stQuickOrdersDisabled.TabStop := true;
@@ -205,6 +216,9 @@ begin
             self.cboRTCClinic.InitLongList(EXT);
             self.cboRTCClinic.SelectByIEN(StrToIntDef(int,0));
           end;
+        if cboRTCClinic.ItemIndex > -1 then
+          loadAdditionalComments(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+          loadPreReq(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
       end;
 
     //provider
@@ -339,13 +353,6 @@ var
 
 begin
   inherited;
-
-//    NO_CLINIC = 'No Clinic selected';
-//  BAD_DATE = 'Clinically Indicated Date cannot be in the past';
-//  NO_DATE = 'No Clinically Indicated Date Defined';
-//  NO_INTERVAL = 'Interval not defined';
-//  CANNOT_DEFINE_INTERVAL = 'Interval cannot be defined if appointment number is 1
-//  NO_APPT_DEFINED = 'Number of appointments not defined';
   int := StrToIntDef(self.txtInterval.Text, 0);;
   if self.cboRTCClinic.ItemIndex = -1 then SetError(NO_CLINIC);
   if (length(self.dateCIDC.Text) <1) then SetError(NO_DATE)
@@ -396,20 +403,6 @@ procedure TfrmODRTC.cboPerQOMouseClick(Sender: TObject);
 begin
   inherited;
   quickOrderSelected(cboPerQO.ItemIndex);
-//  try
-//    idx := cboPerQO.ItemIndex;
-//    if idx = -1 then exit;
-//    if CharAt(cboPerQO.ItemID, 1) <> 'Q' then exit;
-//    ResetAllPrompts;
-//
-//    Responses.QuickOrder := ExtractInteger(cboPerQO.ItemID);
-//    changing := true;
-//    SetValuesFromResponses;
-//    changing := false;
-//    ControlChange(self);
-//  finally
-//    changing := false;
-//  end;
 end;
 
 procedure TfrmODRTC.quickOrderSelected(idx: integer);
@@ -446,8 +439,9 @@ end;
 procedure TfrmODRTC.ControlChange(Sender: TObject);
 var
 cnt,idx: integer;
-ext, str, stop: string;
+str: string;
 CIDC: TFMDateTime;
+pp: integer;
 begin
   inherited;
   if csLoading in ComponentState then Exit;       // to prevent error caused by txtRefills
@@ -464,45 +458,42 @@ begin
       str := self.cboRTCClinic.Items[idx];
       Responses.Update('LOCATION', 1, Piece(str, u, 1), Piece(str, u, 2));
     end;
-//  //Provider
-//  idx := self.cboProvider.ItemIndex;
-//  if idx > -1 then
-//    begin
-//      str := self.cboProvider.Items[idx];
-//      Responses.Update('PROVIDER', 1, Piece(str, u, 1), Piece(str, u, 2));
-//    end;
   //CIDC and time sensitive
   str := self.dateCIDC.Text;
   if Length(str)> 0 then
     begin
-//      Responses.Update('CLINICALLY', 1, str, str);
-        CIDC := self.dateCIDC.FMDateTime;
-        if CIDC <> -1 then
+      CIDC := self.dateCIDC.FMDateTime;
+      if CIDC <> -1 then
+        begin
+          // RPC call doesn't like fractional part (the time part)
+          CIDC := Trunc(CIDC);
+          // Convert NOW to T
+          if 'NOW'.StartsWith(str.ToUpper) then
+            str := 'T';
+          // strip any @ times
+          pp := Pos('@', str);
+          if pp > 0 then
+            Delete(str, pp, Length(str));
+          if str <> '' then
           begin
-            stop := FloatToStr(FMDateTimeOffsetBy(CIDC,self.OffSet));
             if self.chkTimeSensitve.Checked = TRUE then
             begin
               Responses.Update('YN', 1, '1', 'Yes');
               Responses.varLeading := 'no later than ';
-//              ext := 'on or before ' + str;
-
-              {if str contains T+N save str instead of FLoatToStr}
-                if ((pos('T+',UpperCase(str))>0) or (pos('NOW',UpperCase(str))>0)) then Responses.Update('CLINICALLY', 1, str, str)
-                else Responses.Update('CLINICALLY', 1, FloatToStr(CIDC), str);
             end
             else
-              begin
-                Responses.Update('YN', 1, '0', 'No');
-                ext := 'on or around (' + str + ')';
-                Responses.varLeading := 'on or around (';
-                Responses.VarTrailing := ')';
-
-                {if str contains T+N save str instead of FLoatToStr}
-                if ((pos('T+',UpperCase(str))>0) or (pos('NOW',UpperCase(str))>0)) then Responses.Update('CLINICALLY', 1, str, str)
-                else Responses.Update('CLINICALLY', 1, FloatToStr(CIDC), str);
-              end;
-//            Responses.Update('STOP', 1, stop, ext);
+            begin
+              Responses.Update('YN', 1, '0', 'No');
+              Responses.varLeading := 'on or around (';
+              Responses.VarTrailing := ')';
+            end;
+            {if str contains T+N save str instead of FLoatToStr}
+            if (UpperCase(str[1])='T') then
+              Responses.Update('CLINICALLY', 1, str, str)
+            else
+              Responses.Update('CLINICALLY', 1, FloatToStr(CIDC), str);
           end;
+        end;
     end;
   //Number of Appt
   str := self.txtNumAppts.Text;
@@ -543,17 +534,39 @@ begin
   ControlChange(Sender);
 end;
 
+procedure TfrmODRTC.cboRTCClinicChange(Sender: TObject);
+begin
+  inherited;
+  if cboRTCClinic.ItemIndex > -1 then
+    begin
+      loadAdditionalComments(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+      loadPreReq(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+      ControlChange(Sender);
+    end;
+end;
+
 procedure TfrmODRTC.cboRTCClinicKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   inherited;
-  if (Key = VK_BACK) and (cboRTCClinic.Text = '') then cboRTCClinic.ItemIndex := -1;
+//  if (Key = VK_BACK) and (cboRTCClinic.Text = '') then cboRTCClinic.ItemIndex := -1;
+//  if cboRTCClinic.ItemIndex > -1 then
+//    begin
+//      loadAdditionalComments(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+//      loadPreReq(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+//      ControlChange(Sender);
+//    end;
 end;
 
 procedure TfrmODRTC.cboRTCClinicMouseClick(Sender: TObject);
 begin
   inherited;
-  ControlChange(Sender);
+//  ControlChange(Sender);
+//  if cboRTCClinic.ItemIndex > -1 then
+//    begin
+//      loadAdditionalComments(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+//      loadPreReq(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+//    end;
 end;
 
 procedure TfrmODRTC.cboRTCClinicNeedData(Sender: TObject; const StartFrom: string;
@@ -567,13 +580,6 @@ procedure TfrmODRTC.chkTimeSensitveClick(Sender: TObject);
 begin
   inherited;
   ControlChange(Sender);
-end;
-
-procedure TfrmODRTC.pnlMessageEnter(Sender: TObject);
-begin
-  inherited;
-//  DisableDefaultButton(self);
-//  DisableCancelButton(self);
 end;
 
 procedure TfrmODRTC.pnlMessageExit(Sender: TObject);
@@ -611,18 +617,10 @@ end;
 procedure TfrmODRTC.FormCreate(Sender: TObject);
 begin
  inherited;
-    frmFrame.pnlVisit.Enabled := false;
     AllowQuickOrder := True;
     Responses.Dialog := 'SD RTC';
     CtrlInits.LoadDefaults(ODForSD);
     initDialog;
-end;
-
-procedure TfrmODRTC.FormDestroy(Sender: TObject);
-begin
-  frmFrame.pnlVisit.Enabled := true;
-  inherited;
-
 end;
 
 procedure TfrmODRTC.lbStatementsClickCheck(Sender: TObject;
@@ -634,6 +632,42 @@ end;
 
 
 
+procedure TfrmODRTC.loadAdditionalComments(input: string);
+var
+locIen: string;
+addInfoText: TStrings;
+begin
+  if systemInfo then exit;
+  addInfoText := TStringList.Create;
+  try
+    locIen := Piece(input, U, 1);
+    memInfo.Lines.Clear;
+    getAdditionalInformation(locIen, 'INFO', addInfoText);
+    memInfo.Lines.AddStrings(addInfoText);
+  finally
+    FreeAndNil(addInfoText);
+  end;
+end;
+
+procedure TfrmODRTC.loadPreReq(input: string);
+var
+locIEN: string;
+prereq: TStrings;
+begin
+  if systemPre then exit;
+  prereq := TStringList.Create;
+  try
+    locIEN := Piece(input, U, 1);
+    ClearControl(self.lstPreReq);
+    getAdditionalInformation(locIEN, 'PRE', prereq);
+    self.lstPreReq.Items.AddStrings(prereq);
+    if lstPreReq.Items.Count > 0 then lstPreReq.Enabled := true;
+  finally
+    FreeAndNil(prereq);
+  end;
+
+end;
+
 procedure TfrmODRTC.lstPreReqClickCheck(Sender: TObject);
 begin
   inherited;
@@ -641,3 +675,4 @@ begin
 end;
 
 end.
+

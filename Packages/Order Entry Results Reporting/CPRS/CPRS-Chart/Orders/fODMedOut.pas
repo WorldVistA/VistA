@@ -80,7 +80,7 @@ implementation
 
 {$R *.DFM}
 
-uses rOrders, rODBase, fODMedFA, fODMedComplex, System.Types;
+uses rOrders, rODBase, fODMedFA, fODMedComplex, System.Types, VAUtils;
 
 const
   REFILLS_DFLT  = '0';

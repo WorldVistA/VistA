@@ -85,7 +85,7 @@ end;
 
 function ExecuteRenewOrders(var SelectedList: TList): Boolean;
 const
-  TC_IMO_ERROR  = 'Inpatient medication order on outpatient authorization required';
+  TC_IMO_ERROR  = 'Unable to order';
 var
   frmRenewOrders: TfrmRenewOrders;
   RenewFields: TOrderRenewFields;

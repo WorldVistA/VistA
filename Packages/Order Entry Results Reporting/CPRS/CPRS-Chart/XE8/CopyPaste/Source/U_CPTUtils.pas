@@ -1,9 +1,9 @@
 { ******************************************************************************
 
-    ___  __  ____  _  _      _    ____   __   ____  ____  ____
-   / __)/  \(  _ \( \/ )    / )  (  _ \ / _\ / ___)(_  _)(  __)
+  ___  __  ____  _  _      _    ____   __   ____  ____  ____
+  / __)/  \(  _ \( \/ )    / )  (  _ \ / _\ / ___)(_  _)(  __)
   ( (__(  O )) __/ )  /    / /    ) __//    \\___ \  )(   ) _)
-   \___)\__/(__)  (__/    (_/    (__)  \_/\_/(____/ (__) (____)
+  \___)\__/(__)  (__/    (_/    (__)  \_/\_/(____/ (__) (____)
 
 
   Utilities unit
@@ -61,19 +61,14 @@ type
   private
     FOwner: TObject;
     FCriticalSection: TCriticalSection;
-    /// <summary><para>Determines if we should log or not</para><para><b>Type: </b><c>Boolean</c></para></summary>
     fLogToFile: TLogfileLevel;
-    /// <summary><para>The name of the Log File</para><para><b>Type: </b><c>String</c></para></summary>
     fOurLogFile: String;
-    /// <summary><para>Gets the log file</para></summary>
-    /// <returns>The name of the log file<para><b>Type: </b><c>String</c></para> - </returns>
     function GetLogFileName(): String;
   public
     constructor Create(AOwner: TComponent);
     destructor Destroy; override;
     function Dump(Instance: TPasteArray): string;
     procedure LogText(Action, MessageTxt: String);
-    /// <summary>True if logging is turned on</summary>
     property LogToFile: TLogfileLevel read fLogToFile write fLogToFile;
     property LogFile: String read fOurLogFile;
   end;
@@ -105,37 +100,14 @@ type
     property IsRunning: Boolean read fIsRunning;
   end;
 
-  /// <summary><para>Breaks a string up so it can be sent via the RPC broker</para></summary>
-  /// <param name="SaveList">Stringlist that contains the result of the function<para><b>Type: </b><c>TStringList</c></para></param>
-  /// <param name="BaseNode">The base node</param>
-  /// <param name="OrigList">Stringlist that needs to be broken up<para><b>Type: </b><c>TStringList</c></para></param>
-  /// <param name="BreakLimit">Max Length of line</param>
-  /// <returns><para><b>Type: </b><c>TStringList</c></para> - </returns>
-  /// <remarks>Breaks up strings at <example></example></remarks>
 procedure BreakUpLongLines(var SaveList: TStringList; BaseNode: String;
   const OrigList: TStringList; BreakLimit: Integer);
 
 procedure BreakUpLongListLines(var aList: TStringList; BreakLimit: Integer);
 
-/// <summary><para>converts a Delphi date/time type to a Fileman date/time</para><para><b>Type: </b><c>Integer</c></para></summary>
-/// <param name="ADateTime">The date/time<para><b>Type: </b><c>TDateTime</c></para></param>
-/// <returns><para><b>Type: </b><c>Double</c></para> - </returns>
 function DateTimeToFMDateTime(ADateTime: TDateTime): Double;
-/// <summary><para>Remove special characters</para><para><b>Type: </b><c>Integer</c></para></summary>
-/// <param name="X">String to filter<para><b>Type: </b><c>string</c></para></param>
-/// <param name="ATabWidth">Length of the tab<para><b>Type: </b><c>Integer</c></para></param>
-/// <returns><para><b>Type: </b><c>string</c></para> - </returns>
 function FilteredStringCP(const X: string; ATabWidth: Integer = 8): string;
-/// <summary><para>Format fmDateTime</para></summary>
-/// <param name="AFormat">The format to use<para><b>Type: </b><c>string</c></para></param>
-/// <param name="ADateTime">The date/time<para><b>Type: </b><c>Double</c></para></param>
-/// <returns><para><b>Type: </b><c>string</c></para> - </returns>
 function FormatFMDateTime(AFormat: string; ADateTime: Double): string;
-/// <summary><para>Returns the Nth piece (PieceNum) of a string delimited by Delim</para></summary>
-/// <param name="S">String to search<para><b>Type: </b><c>string</c></para></param>
-/// <param name="Delim">Character used as the delemiter<para><b>Type: </b><c>char</c></para></param>
-/// <param name="PieceNum">Number of delemieted text for the return<para><b>Type: </b><c>Integer</c></para></param>
-/// <returns><para><b>Type: </b><c>string</c></para> - </returns>
 function Piece(const S: string; Delim: char; PieceNum: Integer): string;
 function Pieces(const S: string; Delim: char;
   FirstNum, LastNum: Integer): string;
@@ -876,7 +848,7 @@ Var
   const
     SHGFP_TYPE_CURRENT = 0;
   var
-    path: array [0 .. MaxChar] of char;
+    path: array [0 .. MAX_PATH] of char;
   begin
     SHGetFolderPath(0, CSIDL_LOCAL_APPDATA, 0, SHGFP_TYPE_CURRENT, @path[0]);
     Result := StrPas(path);
@@ -916,7 +888,7 @@ VAR
   X, CenterPad: Integer;
   TextToAdd, Suffix, Suffix2: String;
 begin
-  FCriticalSection.Acquire;
+  FCriticalSection.Enter;
   try
     if Trim(fOurLogFile) = '' then
       fOurLogFile := GetLogFileName;
@@ -971,11 +943,10 @@ begin
       AddText.Free;
     end;
   finally
-    FCriticalSection.Release;
+    FCriticalSection.Leave;
   end;
 end;
 
 {$ENDREGION}
 
 end.
-

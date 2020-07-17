@@ -2,6 +2,9 @@ inherited frmSkinTests: TfrmSkinTests
   Left = 213
   Top = 163
   Caption = 'Encounter Skin Test form'
+  ClientWidth = 657
+  ExplicitWidth = 673
+  ExplicitHeight = 438
   PixelsPerInch = 96
   TextHeight = 13
   object lblSkinResults: TLabel [0]
@@ -40,14 +43,18 @@ inherited frmSkinTests: TfrmSkinTests
     ExplicitWidth = 84
   end
   inherited btnOK: TBitBtn
-    TabOrder = 10
+    Left = 497
+    TabOrder = 8
+    ExplicitLeft = 497
   end
   inherited btnCancel: TBitBtn
-    TabOrder = 11
+    Left = 577
+    TabOrder = 9
+    ExplicitLeft = 577
   end
   inherited pnlGrid: TPanel
     TabOrder = 1
-    inherited lstRenameMe: TCaptionListView
+    inherited lstCaptionList: TCaptionListView
       Columns = <
         item
           Caption = 'Results'
@@ -62,6 +69,7 @@ inherited frmSkinTests: TfrmSkinTests
           Caption = 'Selected Skin Tests'
           Width = 150
         end>
+      OnSelectItem = lstCaptionListSelectItem
       Caption = 'Selected Skin Tests'
       Pieces = '1,2,3'
     end
@@ -69,48 +77,27 @@ inherited frmSkinTests: TfrmSkinTests
   inherited edtComment: TCaptionEdit
     TabOrder = 3
   end
-  object UpDnReading: TUpDown [12]
-    Left = 531
-    Top = 304
-    Width = 15
-    Height = 21
-    Associate = EdtReading
-    Max = 40
-    TabOrder = 6
-    OnChanging = UpDnReadingChanging
-  end
-  object EdtReading: TCaptionEdit [13]
-    Left = 490
-    Top = 304
-    Width = 41
-    Height = 21
-    Enabled = False
-    TabOrder = 5
-    Text = '0'
-    OnChange = EdtReadingChange
-    Caption = 'Reading'
-  end
-  object edtDtRead: TCaptionEdit [14]
+  object edtDtRead: TCaptionEdit [12]
     Left = 104
     Top = 376
     Width = 97
     Height = 21
-    TabOrder = 8
+    TabOrder = 6
     Text = 'edtDtRead'
     Visible = False
     Caption = 'Date Read'
   end
-  object edtDTGiven: TCaptionEdit [15]
+  object edtDTGiven: TCaptionEdit [13]
     Left = 280
     Top = 376
     Width = 81
     Height = 21
-    TabOrder = 9
+    TabOrder = 7
     Text = 'edtDTGiven'
     Visible = False
     Caption = 'Date Given'
   end
-  object cboSkinResults: TORComboBox [16]
+  object cboSkinResults: TORComboBox [14]
     Tag = 30
     Left = 490
     Top = 260
@@ -138,16 +125,81 @@ inherited frmSkinTests: TfrmSkinTests
     CharsNeedMatch = 1
   end
   inherited btnRemove: TButton
-    TabOrder = 7
+    TabOrder = 5
   end
   inherited btnSelectAll: TButton
     TabOrder = 2
     TabStop = True
   end
+  object cboReading: TComboBox [17]
+    Left = 492
+    Top = 309
+    Width = 119
+    Height = 21
+    TabOrder = 13
+    OnChange = cboReadingChange
+    Items.Strings = (
+      ''
+      '0'
+      '1'
+      '2'
+      '3'
+      '4'
+      '5'
+      '6'
+      '7'
+      '8'
+      '9'
+      '10'
+      '11'
+      '12'
+      '13'
+      '14'
+      '15'
+      '16'
+      '17'
+      '18'
+      '19'
+      '20'
+      '21'
+      '22'
+      '23'
+      '24'
+      '25'
+      '26'
+      '27'
+      '28'
+      '29'
+      '30'
+      '31'
+      '32'
+      '33'
+      '34'
+      '35'
+      '36'
+      '37'
+      '38'
+      '39'
+      '40'
+      '41'
+      '42'
+      '43'
+      '44'
+      '45'
+      '46'
+      '47'
+      '48'
+      '49'
+      '50')
+  end
   inherited pnlMain: TPanel
+    Width = 645
     TabOrder = 0
+    ExplicitWidth = 645
     inherited lbxSection: TORListBox
       Tag = 50
+      Width = 438
+      ExplicitWidth = 438
     end
     inherited pnlLeft: TPanel
       inherited lbSection: TORListBox
@@ -164,13 +216,6 @@ inherited frmSkinTests: TfrmSkinTests
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
-      (
-        'Component = UpDnReading'
-        'Status = stsDefault')
-      (
-        'Component = EdtReading'
-        'Label = lblReading'
-        'Status = stsOK')
       (
         'Component = edtDtRead'
         'Label = lblDTRead'
@@ -221,6 +266,9 @@ inherited frmSkinTests: TfrmSkinTests
         'Status = stsDefault')
       (
         'Component = frmSkinTests'
+        'Status = stsDefault')
+      (
+        'Component = cboReading'
         'Status = stsDefault'))
   end
 end

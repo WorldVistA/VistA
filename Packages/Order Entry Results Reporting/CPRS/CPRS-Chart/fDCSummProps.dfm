@@ -182,7 +182,6 @@ inherited frmDCSummProperties: TfrmDCSummProperties
     ParentBackground = False
     TabOrder = 4
     Visible = False
-    ExplicitWidth = 511
     object lblTranscriptionist: TLabel
       Left = 53
       Top = 13
@@ -261,8 +260,6 @@ inherited frmDCSummProperties: TfrmDCSummProperties
     ParentBackground = False
     TabOrder = 5
     Visible = False
-    ExplicitWidth = 506
-    ExplicitHeight = 192
     object lblDCSumm1: TStaticText
       Tag = 1
       AlignWithMargins = True
@@ -281,7 +278,6 @@ inherited frmDCSummProperties: TfrmDCSummProperties
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitWidth = 400
     end
     object lblDCSumm2: TStaticText
       Tag = 1
@@ -295,7 +291,6 @@ inherited frmDCSummProperties: TfrmDCSummProperties
       Align = alTop
       Caption = 'Select one of the following or press cancel.'
       TabOrder = 1
-      ExplicitWidth = 353
     end
     object lstAdmissions: TCaptionListView
       AlignWithMargins = True
@@ -340,8 +335,6 @@ inherited frmDCSummProperties: TfrmDCSummProperties
       AutoSize = False
       Caption = 'Associated Admission'
       Pieces = '3,5,4,9'
-      ExplicitWidth = 490
-      ExplicitHeight = 146
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

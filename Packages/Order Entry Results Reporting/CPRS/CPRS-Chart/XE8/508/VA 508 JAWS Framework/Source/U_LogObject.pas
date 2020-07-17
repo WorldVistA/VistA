@@ -75,7 +75,7 @@ Var
   const
     SHGFP_TYPE_CURRENT = 0;
   var
-    path: array [0 .. MaxChar] of char;
+    path: array [0 .. MAX_PATH] of char;
   begin
     SHGetFolderPath(0, CSIDL_LOCAL_APPDATA, 0, SHGFP_TYPE_CURRENT, @path[0]);
     Result := StrPas(path);

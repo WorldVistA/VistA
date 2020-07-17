@@ -461,24 +461,21 @@ end;
 procedure TfrmGraphSettings.FormCreate(Sender: TObject);
 var
   i: integer;
-  IsScreenReaderActive: boolean;
 begin
   btnPublicSave.Enabled := GraphPublicEditor;
   lblConversions.Enabled := btnPublicSave.Enabled;
   cboConversions.Enabled := btnPublicSave.Enabled;
   for i := 0 to lstOptions.Items.Count - 1 do
    chklstOptions.Items.Add(Piece(lstOptions.Items[i], '^', 1));
-  IsScreenReaderActive := ScreenReaderActive;
-  lbl508Save.Enabled := IsScreenReaderActive;
-  lbl508Save.Visible := IsScreenReaderActive;
-  lbl508Save.TabStop := IsScreenReaderActive;
-  lbl508Show.Enabled := IsScreenReaderActive;
-  lbl508Show.Visible := IsScreenReaderActive;
-  lbl508Show.TabStop := IsScreenReaderActive;
-  lblSave.Enabled := not IsScreenReaderActive;
-  lblSave.Visible := not IsScreenReaderActive;
-  lblShow.Enabled := not IsScreenReaderActive;
-  lblShow.Visible := not IsScreenReaderActive;
+  if ScreenReaderActive then
+  begin
+    lbl508Save.Enabled := True;
+    lbl508Save.Visible := True;
+    lbl508Save.TabStop := True;
+    lbl508Show.Enabled := True;
+    lbl508Show.Visible := True;
+    lbl508Show.TabStop := True;
+  end;
 end;
 
 procedure TfrmGraphSettings.btnAllClick(Sender: TObject);

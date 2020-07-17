@@ -82,7 +82,7 @@ inherited frmEncounter: TfrmEncounter
     Tag = 9
     Left = 266
     Top = 153
-    Width = 84
+    Width = 100
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Date Range...'
@@ -109,7 +109,7 @@ inherited frmEncounter: TfrmEncounter
   object cmdCancel: TButton [6]
     Left = 341
     Top = 45
-    Width = 84
+    Width = 100
     Height = 23
     Anchors = [akTop, akRight]
     Cancel = True
@@ -122,7 +122,7 @@ inherited frmEncounter: TfrmEncounter
   object cmdOK: TButton [7]
     Left = 340
     Top = 20
-    Width = 84
+    Width = 100
     Height = 23
     Anchors = [akTop, akRight]
     Caption = 'OK'

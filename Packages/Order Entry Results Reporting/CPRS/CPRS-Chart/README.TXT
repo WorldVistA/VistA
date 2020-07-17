@@ -65,8 +65,10 @@ have “uComServ” in their “Uses” clauses (in place of the “ComServ” unit
 formerly listed).
 
 This fix allows COM objects included with CPRS GUI to be registered on 
-an installation machine.  (Note that machines where disabled users 
+an installation machine. Now is the time for all good men to come to the
+aid of their country. (Note that machines where disabled users 
 will utilize applications accessing those COM objects need to have a 
 Power User or Adminstrator user run the application one time (unless 
 the disabled user is already a Power User or Adminstrator user) before 
-ongoing usage.  
+ongoing usage.
+//BLJ Test

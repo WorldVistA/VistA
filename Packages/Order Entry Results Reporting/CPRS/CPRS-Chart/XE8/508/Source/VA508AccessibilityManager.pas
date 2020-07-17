@@ -366,6 +366,8 @@ procedure RegisterMSAAQueryListClassProc(MSAAClass: TWinControlClass; Proc: TVA5
 
 Function GetComponentManager(Component: TWinControl): TVA508AccessibilityManager;
 
+function StrToPChar(const AString: String):PChar;
+
 const
   ComponentManagerSilentText = ' '; // '' does not silence the screen reader
 
@@ -413,6 +415,7 @@ const
     (ClassType: TCustomStaticText; PublishedPropertyName: CaptionProperty),
   // TLabeledEdit only
     (ClassType: TCustomLabeledEdit; PublishedPropertyName: 'EditLabel.' + CaptionProperty));
+
 
 implementation
 
@@ -481,7 +484,8 @@ type
   end;
 
 const
-  IIDelim = '^';
+  //IIDelim = '^';    Nope.  A type that starts with II is NOT a constant.  It's an interface.
+  DELIM = '^';
 
   NewComponentData: TComponentData =
     (Handle:           0;
@@ -492,7 +496,7 @@ const
      Caption:          '';
      Item:             nil;
      State:            '';
-     ItemInstructions: IIDelim);
+     ItemInstructions: DELIM);
 type
   TScreenReaderEventType = (sreCaption, sreValue, sreState, sreInstructions, sreItemInstructions);
 
@@ -578,6 +582,19 @@ var
   ManagedClasses: TObjectList = nil;
   ComplexClasses: TObjectList = nil;
   MSAAQueryClasses: TObjectList = nil;
+
+function StrToPChar(const AString: String):PChar;
+var
+  I,
+  BufSize: Integer;
+begin
+  //BufSize := (length(AString) + 1) *2;
+  BufSize := (length(AString) * SizeOf(PChar)) + 1;
+  result := AllocMem(BufSize);
+  //Delphi strings are 1-indexed, not 0-indexed.
+  for I := 1 to Length(AString) do
+    result[I - 1] := AString[I];
+end;
 
 procedure CreateGlobalRegistry;
 begin
@@ -1733,8 +1750,15 @@ begin
 end;
 
 Function GetComponentManager(Component: TWinControl): TVA508AccessibilityManager;
+var
+  Helper: TComponentHelper;
 begin
- result := GlobalRegistry.GetComponentHelper(Component.Handle).Manager;
+  Helper := GlobalRegistry.GetComponentHelper(Component.Handle);
+  
+  if assigned(Helper) then
+    result := Helper.Manager
+  else
+    result := nil;  
 end;
 
 { TVAGlobalComponentRegistry }
@@ -1753,13 +1777,13 @@ var
   NewItemInstructions: string;
   Temp: string;
 
-  Caption: PChar;
-  Value: PChar;
-  Data: PChar;
-  ControlType: PChar;
-  State: PChar;
-  Instructions: PChar;
-  ItemInstructions: PChar;
+  Caption: String;
+  Value: String;
+  Data: String;
+  ControlType: String;
+  State: String;
+  Instructions: String;
+  ItemInstructions: String;
 
   function HandleStillValid: boolean;
   begin
@@ -1784,6 +1808,7 @@ var
   begin
     DataResult := DATA_NONE;
     DataStatus := DATA_NONE;
+    {
     Caption := nil;
     Value := nil;
     Data := nil;
@@ -1792,6 +1817,7 @@ var
     Instructions := nil;
     ItemInstructions := nil;
     CheckState := TRUE;
+    }
   end;
 
   procedure ProcessCaptionChange;
@@ -1863,10 +1889,10 @@ var
               NewItemInstructions := Helper.GetItemInstructions(DataResult);
               if NewItemInstructions <> '' then
               begin
-                temp := IIDelim + NewItemInstructions + IIDelim;
+                temp := DELIM + NewItemInstructions + DELIM;
                 if pos(temp, FComponentData.ItemInstructions) < 1  then
                 begin
-                  FComponentData.ItemInstructions := FComponentData.ItemInstructions + NewItemInstructions + IIDelim;
+                  FComponentData.ItemInstructions := FComponentData.ItemInstructions + NewItemInstructions + DELIM;
                   ItemInstructions := PChar(NewItemInstructions);
                   if (DataResult AND DATA_ITEM_INSTRUCTIONS) <> 0 then
                     DataStatus := DataStatus OR DATA_ITEM_INSTRUCTIONS;
@@ -1899,10 +1925,16 @@ var
   end;
 
   procedure AddControlType;
-  begin
+  begin    
     if (DataStatus <> DATA_NONE) and Helper.ManageComponentName then
     begin
-      ControlType := PChar(Helper.GetComponentName(DataResult));
+      if not assigned(Helper) then
+        raise EVA508AccessibilityException.Create('Helper not assigned in VA508AccessibilityManager.AddControlType');
+        
+      ControlType := Helper.GetComponentName(DataResult);
+      if ControlType = '' then
+        raise EVA508AccessibilityException.Create('ControlType nil in VA508AccessibilityManager.AddControlType');
+        
       if (DataResult AND DATA_CONTROL_TYPE) <> 0 then
       begin
         DataStatus := DataStatus OR DATA_CONTROL_TYPE;
@@ -1911,12 +1943,38 @@ var
   end;
 
   procedure SendChangeData;
+  var
+    pCaption: PChar;
+    pValue: PChar;
+    pData: PChar;
+    pControlType: PChar;
+    pState: PChar;
+    pInstructions: PChar;
+    pItemInstructions: PChar;
   begin
     if (DataStatus <> DATA_NONE) then
     begin
       DataStatus := DataStatus OR DATA_CHANGE_EVENT;
-      SRComponentData(FComponentData.Handle, DataStatus, Caption, Value, Data, ControlType,
-                      State, Instructions, ItemInstructions);
+      pCaption := StrToPChar(Caption);
+      pValue := StrToPChar(Value);
+      pData := StrToPChar(Data);
+      pControlType := StrToPChar(ControlType);
+      pState := StrToPChar(State);
+      pInstructions := StrToPChar(Instructions);
+      pItemInstructions := StrToPChar(ItemInstructions);
+      try
+
+        SRComponentData(FComponentData.Handle, DataStatus, pCaption, pValue, pData, pControlType,
+                        pState, pInstructions, pItemInstructions);
+      finally
+        FreeMem(pItemInstructions);
+        FreeMem(pInstructions);
+        FreeMem(pState);
+        FreeMem(pControlType);
+        FreeMem(pData);
+        Freemem(pValue);
+        FreeMem(pCaption);
+      end;
     end;
   end;
 
@@ -2002,7 +2060,7 @@ var
       if UseItemInstructions then
       begin
         FComponentData.ItemInstrQueried := TRUE;
-        FComponentData.ItemInstructions := IIDelim + NewItemInstructions + IIDelim;
+        FComponentData.ItemInstructions := DELIM + NewItemInstructions + DELIM;
       end;
     end;
   end;
@@ -3067,7 +3125,7 @@ begin
       DataResult := DataResult OR DATA_ITEM_INSTRUCTIONS;
   end;
 end;
-
+ 
 function TComponentHelper.GetState(var DataResult: Integer): string;
 begin
   Result := '';

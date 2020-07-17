@@ -38,7 +38,7 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn, uConst, fFrame, rMisc, uODBase;
+uses ORFn, uConst, fFrame, rMisc, uODBase, VAUtils;
 
 procedure ShowVerifyText(var QuickLevel: Integer; var VerifyText: string; InptDispGrp: boolean);
 var

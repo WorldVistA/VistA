@@ -133,6 +133,12 @@ begin
            ListTeamAll(lstAddBy.Items);
            lblAddby.Caption := 'List:';
          end;
+      5: begin  // TDP - Added 5/27/2014 PCMM team mods
+           ListItemsOnly := false;
+           LongList := false;
+           ListPcmmAll(lstAddBy.Items);
+           lblAddby.Caption := 'PCMM:';
+         end;
     end;
     lstAddBy.Caption := lblAddby.Caption;
     ItemIndex := -1;
@@ -184,6 +190,9 @@ begin
   valuesource := radAddByType.Items[radAddByType.ItemIndex];
   if copy(valuesource, 1, 1) = '&' then
     valuesource := copy(valuesource, 2, length(valuesource) - 1);
+  // TDP - Added 5/27/2014 to handle PCMM team addition
+  if copy(valuesource, 3, 1) = '&' then
+    valuesource := copy(valuesource, 1, 2) + copy(valuesource, 4, length(valuesource) - 1);
  { if radAddByType.ItemIndex = 2 then
    valuename := Piece(lstAddBy.DisplayText[lstAddBy.ItemIndex], '-', 1)
   else } //Removed per PTM 274 - should not peice by the "-" at all
@@ -264,6 +273,9 @@ begin
     source := radAddByType.Items[radAddByType.ItemIndex];
     if copy(source, 1, 1) = '&' then
       source := copy(source, 2, length(source) - 1);
+    // TDP - Added 5/27/2014 to handle PCMM team addition
+    if copy(source, 3, 1) = '&' then
+      source := copy(source, 1, 2) + copy(source, 4, length(source) - 1);
     valueien := Piece(lstAddBy.Items[lstAddBy.ItemIndex], '^', 1);
     btnAdd.Enabled :=  not Duplicate(valueien, source);
   end;
@@ -297,22 +309,25 @@ end;
 
 procedure TfrmOptionsCombinations.btnOKClick(Sender: TObject);
 var
-  i: integer;
+  i: Integer;
   alist: TStringList;
-  aCombination :TCombination;
+  aCombination: TCombination;
 begin
   if FDirty then
-  begin
-    alist := TStringList.Create;
-    with lvwCombinations do
-    for i := 0 to Items.Count - 1 do
     begin
-      aCombination := TCombination(Items.Item[i].SubItems.Objects[1]);
-      with aCombination do alist.Add(IEN + '^' + Source);
+      alist := TStringList.Create;
+      try
+        with lvwCombinations do
+          for i := 0 to Items.Count - 1 do
+            begin
+              aCombination := TCombination(Items.Item[i].SubItems.Objects[1]);
+              with aCombination do alist.Add(IEN + '^' + Source);
+            end;
+        rpcSetCombo(alist);
+      finally
+        alist.Free;
+      end;
     end;
-    rpcSetCombo(alist);
-    alist.Free;
-  end;
 end;
 
 procedure TfrmOptionsCombinations.lstAddByEnter(Sender: TObject);
@@ -361,8 +376,16 @@ begin
 end;
 
 procedure TfrmOptionsCombinations.FormShow(Sender: TObject);
+var
+  aResults: TStringList;
 begin
-  LoadCombinations(rpcGetCombo);
+  aResults := TStringList.Create;
+  try
+    rpcGetCombo(aResults);
+    LoadCombinations(aResults);
+  finally
+    FreeAndNil(aResults);
+  end;
 end;
 
 end.

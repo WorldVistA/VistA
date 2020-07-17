@@ -162,7 +162,7 @@ begin
         Key := 0;
       end;
     end;
-  end;
+end;
 end;
 
 procedure TfrmOrderView.UpdateViewName;

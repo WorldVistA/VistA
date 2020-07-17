@@ -93,7 +93,7 @@ end;
 
 procedure TfrmODLabImmedColl.FormShow(Sender: TObject);
 begin
-  FastAssign(ImmediateCollectTimes, memImmedCollect.Lines);
+  ImmediateCollectTimes(memImmedCollect.Lines);
   if Length(FCollTime) > 0 then
     calImmedCollect.Text := FCollTime
   else

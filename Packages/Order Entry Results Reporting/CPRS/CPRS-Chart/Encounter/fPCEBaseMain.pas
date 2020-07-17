@@ -45,11 +45,11 @@ type
     procedure btnOtherExit(Sender: TObject);
     procedure lbxSectionExit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure lstRenameMeChange(Sender: TObject; Item: TListItem;
+    procedure lstCaptionListChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
-    procedure lstRenameMeClick(Sender: TObject);
-    procedure lstRenameMeExit(Sender: TObject);
-    procedure lstRenameMeInsert(Sender: TObject; Item: TListItem);
+    procedure lstCaptionListClick(Sender: TObject);
+    procedure lstCaptionListExit(Sender: TObject);
+    procedure lstCaptionListInsert(Sender: TObject; Item: TListItem);
   private
     FCommentItem: integer;
     FCommentChanged: boolean;
@@ -89,7 +89,7 @@ const
 implementation
 
 uses fPCELex, fPCEOther, fEncounterFrame, fHFSearch, VA508AccessibilityRouter,
-  ORCtrlsVA508Compatibility, fBase508Form, UBAConst;
+  ORCtrlsVA508Compatibility, fBase508Form, UBAConst, VAUtils;
 
 {$R *.DFM}
 
@@ -140,13 +140,13 @@ begin
   BeginUpdate;
   try
     SaveGridSelected;
-    FastAssign(lstRenameMe.ItemsStrings, tmpList);
-    for i := 0 to lstRenameMe.Items.Count-1 do
+    FastAssign(lstCaptionList.ItemsStrings, tmpList);
+    for i := 0 to lstCaptionList.Items.Count-1 do
     begin
-      tmpList[i] := TPCEItem(lstRenameMe.Objects[i]).ItemStr;
-      tmpList.Objects[i] := lstRenameMe.Objects[i];
+      tmpList[i] := TPCEItem(lstCaptionList.Objects[i]).ItemStr;
+      tmpList.Objects[i] := lstCaptionList.Objects[i];
     end;
-    lstRenameMe.ItemsStrings.Assign(tmpList);    //cq: 13228
+    lstCaptionList.ItemsStrings.Assign(tmpList);    //cq: 13228
     RestoreGridSelected;
   finally
     EndUpdate;
@@ -185,7 +185,7 @@ begin
     APCEItem := FPCEItemClass.Create;
     APCEItem.SetFromString(x);
 //    UpdateNewItem(APCEItem);
-    GridIndex := lstRenameMe.Add(APCEItem.ItemStr, APCEItem);
+    GridIndex := lstCaptionList.Add(APCEItem.ItemStr, APCEItem);
   end;
   UpdateControls;
 end;
@@ -194,8 +194,8 @@ procedure TfrmPCEBaseMain.btnOtherExit(Sender: TObject);
 begin
   inherited;
   if TabIsPressed then begin
-    if lstRenameMe.CanFocus then
-      lstRenameMe.SetFocus
+    if lstCaptionList.CanFocus then
+      lstCaptionList.SetFocus
   end
   else if ShiftTabIsPressed then
     if lbxSection.CanFocus then
@@ -209,7 +209,7 @@ begin
   begin
     FCommentChanged := FALSE;
     if(FCommentItem >= 0) then
-      TPCEItem(lstRenameMe.Objects[FCommentItem]).Comment := edtComment.text;
+      TPCEItem(lstCaptionList.Objects[FCommentItem]).Comment := edtComment.text;
   end;
 end;
 
@@ -234,10 +234,10 @@ begin
   inherited;
   FUpdatingGrid := TRUE;
   try
-    for i := lstRenameMe.Items.Count-1 downto 0 do if(lstRenameMe.Items[i].Selected) then
+    for i := lstCaptionList.Items.Count-1 downto 0 do if(lstCaptionList.Items[i].Selected) then
     begin
       CurCategory := GetCat;
-      APCEItem := TPCEDiag(lstRenameMe.Objects[i]);
+      APCEItem := TPCEDiag(lstCaptionList.Objects[i]);
       if APCEItem.Category = CurCategory then
       begin
         for j := 0 to lbxSection.Items.Count - 1 do
@@ -250,7 +250,7 @@ begin
         end;
       end;
       APCEItem.Free;
-      lstRenameMe.Items[i].Delete
+      lstCaptionList.Items[i].Delete
     end;
 
     ClearGrid;
@@ -264,18 +264,18 @@ var
   CommentOK: boolean;
 
 begin
-  btnSelectAll.Enabled := (lstRenameMe.Items.Count > 0);
-  btnRemove.Enabled := (lstRenameMe.Items.Count > 0);
+  btnSelectAll.Enabled := (lstCaptionList.Items.Count > 0);
+  btnRemove.Enabled := (lstCaptionList.Items.Count > 0);
   if(NotUpdating) then
   begin
     BeginUpdate;
     try
       inherited;
-      CommentOK := (lstRenameMe.SelCount = 1);
+      CommentOK := (lstCaptionList.SelCount = 1);
       lblComment.Enabled := CommentOK;
       edtComment.Enabled := CommentOK;
       if(CommentOK) then
-        edtComment.Text := TPCEItem(lstRenameMe.Objects[GridIndex]).Comment
+        edtComment.Text := TPCEItem(lstCaptionList.Objects[GridIndex]).Comment
       else
         edtComment.Text := '';
     finally
@@ -309,7 +309,7 @@ end;
 procedure TfrmPCEBaseMain.InitTab(ACopyProc: TCopyItemsMethod; AListProc: TListSectionsProc);
 begin
   AListProc(lbSection.Items);
-  ACopyProc(lstRenameMe);
+  ACopyProc(lstCaptionList);
   lbSection.ItemIndex := 0;
   lbSectionClick(lbSection);
   ClearGrid;
@@ -351,9 +351,9 @@ begin
   try
     if(lbSection.Items.Count < 1) then exit;
     CurCategory := GetCat;
-    for i := lstRenameMe.Items.Count - 1 downto 0 do
+    for i := lstCaptionList.Items.Count - 1 downto 0 do
     begin
-      APCEItem := TPCEItem(lstRenameMe.Objects[i]);
+      APCEItem := TPCEItem(lstCaptionList.Objects[i]);
       if APCEItem.Category = CurCategory then
       begin
 //        CodeNarr := APCEItem.Code + U + APCEItem.Narrative;
@@ -361,8 +361,7 @@ begin
         begin
           SCode := Piece(lbxSection.Items[j], U, 1);
           SNarr := Piece(lbxSection.Items[j], U, 2);
-          if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
-//          if (Pos(APCEItem.Code, SCode) > 0) then
+          if (Pos(APCEItem.Code, SCode) > 0) then
           begin
             if (CurCategory = 'Problem List Items') and ((Pos('#', Piece(lbxSection.Items[j], U, 4)) > 0) or
                (Pos('$', Piece(lbxSection.Items[j], U, 4)) > 0)) then
@@ -375,7 +374,7 @@ begin
                      TX_INACTIVE_CODE3, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
               lbxSection.Checked[j] := False;
               APCEItem.Free;
-              lstRenameMe.Items.Delete(i);
+              lstCaptionList.Items.Delete(i);
             end
             else
               lbxSection.Checked[j] := True;
@@ -396,8 +395,8 @@ begin
   inherited;
   BeginUpdate;
   try
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      lstRenameMe.Items[i].Selected := TRUE;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      lstCaptionList.Items[i].Selected := TRUE;
   finally
     EndUpdate;
   end;
@@ -433,7 +432,7 @@ var
   i, j: Integer;
   x, SCat, SCode, SNarr, CodeCatNarr: string;
   APCEItem: TPCEItem;
-  Found: boolean;
+  Found, OK: boolean;
 begin
   inherited;
   if FUpdatingGrid or FClosing then exit;
@@ -446,16 +445,23 @@ begin
     SNarr := Piece(x, U, 2);
     CodeCatNarr := SCode + U + SCat + U + SNarr;
     Found := FALSE;
-    for j := lstRenameMe.Items.Count - 1 downto 0 do
+    for j := lstCaptionList.Items.Count - 1 downto 0 do
     begin
-      APCEItem := TPCEItem(lstRenameMe.Objects[j]);
-      if (SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
-//      if (SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) then
+      APCEItem := TPCEItem(lstCaptionList.Objects[j]);
+      OK := (SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0);
+      if OK then
+      begin
+        if (FPCEItemClass = TPCEDiag) and (TPCEDiag(APCEItem).OldNarrative <> '') then
+          OK := (Pos(SNarr, TPCEDiag(APCEItem).OldNarrative) > 0)
+        else
+          OK := (Pos(SNarr, APCEItem.Narrative) > 0);
+      end;
+      if OK then
       begin
         Found := TRUE;
         if(lbxSection.Checked[i]) then break;
         APCEItem.Free;
-        lstRenameMe.Items.Delete(j);
+        lstCaptionList.Items.Delete(j);
       end;
     end;
     if(lbxSection.Checked[i] and (not Found)) then
@@ -466,8 +472,7 @@ begin
       UpdateNewItemStr(x);
       APCEItem := FPCEItemClass.Create;
       APCEItem.SetFromString(x);
-      GridIndex := lstRenameMe.Add(APCEItem.ItemStr, APCEItem);
-
+      GridIndex := lstCaptionList.Add(APCEItem.ItemStr, APCEItem);
     end;
   end;
 
@@ -486,20 +491,20 @@ begin
       lbSection.SetFocus;
 end;
 
-procedure TfrmPCEBaseMain.lstRenameMeChange(Sender: TObject; Item: TListItem;
+procedure TfrmPCEBaseMain.lstCaptionListChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
   inherited;
   UpdateControls;
 end;
 
-procedure TfrmPCEBaseMain.lstRenameMeClick(Sender: TObject);
+procedure TfrmPCEBaseMain.lstCaptionListClick(Sender: TObject);
 begin
   inherited;
   UpdateControls;
 end;
 
-procedure TfrmPCEBaseMain.lstRenameMeExit(Sender: TObject);
+procedure TfrmPCEBaseMain.lstCaptionListExit(Sender: TObject);
 begin
   inherited;
     if ShiftTabIsPressed then
@@ -507,7 +512,7 @@ begin
       btnOther.SetFocus;
 end;
 
-procedure TfrmPCEBaseMain.lstRenameMeInsert(Sender: TObject; Item: TListItem);
+procedure TfrmPCEBaseMain.lstCaptionListInsert(Sender: TObject; Item: TListItem);
 begin
   inherited;
   UpdateControls;
@@ -537,9 +542,9 @@ begin
   try
     cnt := 0;
     idx := -1;
-    for i := 0 to lstRenameMe.Items.Count - 1 do
+    for i := 0 to lstCaptionList.Items.Count - 1 do
     begin
-      if(lstRenameMe.Items[i].Selected) then
+      if(lstCaptionList.Items[i].Selected) then
       begin
         if(idx < 0) then idx := i;
         inc(cnt);
@@ -549,7 +554,7 @@ begin
     NewIdx := -1;
     if(cnt = 1) then
     begin
-      APCEItem := TPCEItem(lstRenameMe.Objects[idx]);
+      APCEItem := TPCEItem(lstCaptionList.Objects[idx]);
       if APCEItem.Category = GetCat then
       begin
         for i := 0 to lbxSection.Items.Count - 1 do
@@ -597,10 +602,11 @@ begin
 //      ACode := GetCat + U + Pieces(lbxSection.Items[idx], U, 1, 2)
 //    else
 //      ACode := '~@^~@^@~';
-    for i := 0 to lstRenameMe.Items.Count - 1 do
+    for i := 0 to lstCaptionList.Items.Count - 1 do
     begin
-      APCEItem := TPCEItem(lstRenameMe.Objects[i]);
-      lstRenameMe.Items[i].Selected := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0)) //(ACode = (Category + U + Code + U + Narrative));
+      APCEItem := TPCEItem(lstCaptionList.Objects[i]);
+      lstCaptionList.Items[i].Selected := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) >= 0)); //(ACode = (Category + U + Code + U + Narrative));
+//      lbGrid.Selected[i] := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0)) //(ACode = (Category + U + Code + U + Narrative));
     end;
   finally
     FUpdatingGrid := FALSE;

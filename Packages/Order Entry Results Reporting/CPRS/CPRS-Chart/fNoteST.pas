@@ -39,7 +39,7 @@ implementation
 
 {$R *.DFM}
 
-uses rTIU, rCore, uCore, rMisc;
+uses rTIU, rCore, uCore, rMisc, VAUtils;
 
 const
   TX_SEARCH_TEXT = 'Select a search string or press Cancel.';

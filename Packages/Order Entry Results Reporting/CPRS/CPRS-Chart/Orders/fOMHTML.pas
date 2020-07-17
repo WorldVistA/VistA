@@ -120,16 +120,21 @@ var
   i: Integer;
   Subs: string;
 begin
-  RPCBrokerV.ClearParameters := True;
-  RPCBrokerV.RemoteProcedure := 'ORWDHTM NV2DNM';
-  RPCBrokerV.Param[0].PType := list;
-  for i := 0 to Pred(Src.Count) do
-  begin
-    Subs := IntToStr(Succ(i));
-    RPCBrokerV.Param[0].Mult[Subs] := Copy(Src[i], 1, 245);
-  end; {for i}
-  CallBroker;
-  FastAssign(RPCBrokerV.Results, Dest);
+  LockBroker;
+  try
+    RPCBrokerV.ClearParameters := True;
+    RPCBrokerV.RemoteProcedure := 'ORWDHTM NV2DNM';
+    RPCBrokerV.Param[0].PType := list;
+    for i := 0 to Pred(Src.Count) do
+    begin
+      Subs := IntToStr(Succ(i));
+      RPCBrokerV.Param[0].Mult[Subs] := Copy(Src[i], 1, 245);
+    end; {for i}
+    CallBroker;
+    FastAssign(RPCBrokerV.Results, Dest);
+  finally
+    UnlockBroker;
+  end;
 end;
 
 procedure NameValueToOrderSet(Src, Dest: TStringList);
@@ -139,26 +144,31 @@ var
   Subs: string;
   WPText: TStringList;
 begin
-  RPCBrokerV.ClearParameters := True;
-  RPCBrokerV.RemoteProcedure := 'ORWDHTM NV2SET';
-  RPCBrokerV.Param[0].PType := list;
-  WPText := TStringList.Create;
-  for i := 0 to Pred(Src.Count) do
-  begin
-    WPText.Clear;
-    WPText.Text := Copy(Src[i], Pos(TAB, Src[i]) + 1, Length(Src[i]));
-    Subs := IntToStr(Succ(i));
-    if WPText.Count = 1 then RPCBrokerV.Param[0].Mult[Subs] := Src[i] else
+  LockBroker;
+  try
+    RPCBrokerV.ClearParameters := True;
+    RPCBrokerV.RemoteProcedure := 'ORWDHTM NV2SET';
+    RPCBrokerV.Param[0].PType := list;
+    WPText := TStringList.Create;
+    for i := 0 to Pred(Src.Count) do
     begin
-      RPCBrokerV.Param[0].Mult['"WP",' + Subs] :=
-        Piece(Src[i], TAB, 1) + TAB + 'NMVAL("WP",' + Subs + ')';
-      for j := 0 to Pred(WPText.Count) do
-        RPCBrokerV.Param[0].Mult['"WP",' + Subs + ',' + IntToStr(Succ(j)) + ',0'] := WPText[j];
-    end; {if WPText}
-  end; {for i}
-  CallBroker;
-  WPText.Free;
-  FastAssign(RPCBrokerV.Results, Dest);
+      WPText.Clear;
+      WPText.Text := Copy(Src[i], Pos(TAB, Src[i]) + 1, Length(Src[i]));
+      Subs := IntToStr(Succ(i));
+      if WPText.Count = 1 then RPCBrokerV.Param[0].Mult[Subs] := Src[i] else
+      begin
+        RPCBrokerV.Param[0].Mult['"WP",' + Subs] :=
+          Piece(Src[i], TAB, 1) + TAB + 'NMVAL("WP",' + Subs + ')';
+        for j := 0 to Pred(WPText.Count) do
+          RPCBrokerV.Param[0].Mult['"WP",' + Subs + ',' + IntToStr(Succ(j)) + ',0'] := WPText[j];
+      end; {if WPText}
+    end; {for i}
+    CallBroker;
+    WPText.Free;
+    FastAssign(RPCBrokerV.Results, Dest);
+  finally
+    UnlockBroker;
+  end;
 end;
 
 { general procedures }

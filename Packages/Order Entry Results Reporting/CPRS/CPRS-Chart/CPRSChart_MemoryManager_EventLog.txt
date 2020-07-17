@@ -1,0 +1,544 @@
+
+--------------------------------2016/9/6 10:02:03--------------------------------
+FastMM has detected an attempt to call a virtual method on a freed object. An access violation will now be raised in order to abort the current operation.
+
+Freed object class: TStringList
+
+Virtual method: Offset +88
+
+Virtual method address: 4BAC38
+
+The allocation number was: 245008
+
+The object was allocated by thread 0x19C0, and the stack trace (return addresses) at the time was:
+4066AA [System][@GetMem$qqri]
+4082D3 [System][TObject.NewInstance$qqrv]
+4089EA [System][@ClassCreate$qqrpvzc]
+4BAF9A [System.Classes][Classes.TStringList.$bctr$qqrv]
+4B83C3 [System.Classes][Classes.TCollection.$bctr$qqrp17System.TMetaClass]
+74299C [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bctr$qqrp52Va508accessibilitymanager.TVA508AccessibilityManager][733]
+742DAF [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bctr$qqrp25System.Classes.TComponent][849]
+4C37D0 [System.Classes][CreateComponent]
+4C39FD [System.Classes][Classes.TReader.ReadComponent$qqrp25System.Classes.TComponent]
+4C3CAE [System.Classes][Classes.TReader.ReadDataInner$qqrp25System.Classes.TComponent]
+4C3BED [System.Classes][Classes.TReader.ReadData$qqrp25System.Classes.TComponent]
+
+The object was subsequently freed by thread 0x19C0, and the stack trace (return addresses) at the time was:
+4066C6 [System][@FreeMem$qqrpv]
+4082F1 [System][TObject.FreeInstance$qqrv]
+408A35 [System][@ClassDestroy$qqrxp14System.TObject]
+4BA833 [System.Classes][Classes.TStringList.$bdtr$qqrv]
+4083EF [System][TObject.Free$qqrv]
+742A2D [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][743]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+The current thread ID is 0x19C0, and the stack trace (return addresses) leading to this error is:
+742C45 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.UnregisterComponent$qqrp24Vcl.Controls.TWinControl][808]
+742490 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityItem.$bdtr$qqrv][583]
+4083EF [System][TObject.Free$qqrv]
+4B8541 [System.Classes][Classes.TCollection.Clear$qqrv]
+4B83FF [System.Classes][Classes.TCollection.$bdtr$qqrv]
+742A3B [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][744]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+Current memory dump of 256 bytes starting at pointer address 7EA55010:
+8C 62 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 6C 43 3E 7A
+80 65 C2 00 80 65 C2 00 00 00 00 00 F0 0B A5 7E 00 00 00 00 00 00 00 00 A8 73 41 00 00 00 00 00
+CA 24 02 00 AA 66 40 00 CF A0 40 00 00 A3 40 00 39 9F 4B 00 81 9E 4B 00 E9 AB 71 00 8C AB 71 00
+08 04 72 00 07 FC 71 00 D0 75 41 00 F7 00 72 00 C0 19 00 00 C0 19 00 00 C6 66 40 00 EE A1 40 00
+1B FF 70 00 14 BD 70 00 B2 64 41 00 C1 64 41 00 E6 BA 71 00 D8 AB 71 00 39 B9 71 00 8C AB 71 00
+08 04 72 00 5E 00 00 00 B0 04 02 00 DF 35 DD 86 B0 04 02 00 01 00 00 00 28 00 00 00 35 00 30 00
+Œ  b  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  l  C  >  z
+€  e  Â  .  €  e  Â  .  .  .  .  .  ğ  .  ¥  ~  .  .  .  .  .  .  .  .  ¨  s  A  .  .  .  .  .
+Ê  $  .  .  ª  f  @  .  Ï     @  .  .  £  @  .  9  Ÿ  K  .      K  .  é  «  q  .  Œ  «  q  .
+.  .  r  .  .  ü  q  .  Ğ  u  A  .  ÷  .  r  .  À  .  .  .  À  .  .  .  Æ  f  @  .  î  ¡  @  .
+.  ÿ  p  .  .  ½  p  .  ²  d  A  .  Á  d  A  .  æ  º  q  .  Ø  «  q  .  9  ¹  q  .  Œ  «  q  .
+.  .  r  .  ^  .  .  .  °  .  .  .  ß  5  İ  †  °  .  .  .  .  .  .  .  (  .  .  .  5  .  0  .
+
+--------------------------------2016/9/6 10:19:05--------------------------------
+FastMM has detected an attempt to call a virtual method on a freed object. An access violation will now be raised in order to abort the current operation.
+
+Freed object class: TStringList
+
+Virtual method: Offset +88
+
+Virtual method address: 4BAC38
+
+The allocation number was: 213543
+
+The object was allocated by thread 0x162C, and the stack trace (return addresses) at the time was:
+4066AA [System][@GetMem$qqri]
+4082D3 [System][TObject.NewInstance$qqrv]
+4089EA [System][@ClassCreate$qqrpvzc]
+4BAF9A [System.Classes][Classes.TStringList.$bctr$qqrv]
+4B83C3 [System.Classes][Classes.TCollection.$bctr$qqrp17System.TMetaClass]
+74299C [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bctr$qqrp52Va508accessibilitymanager.TVA508AccessibilityManager][733]
+742DAF [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bctr$qqrp25System.Classes.TComponent][849]
+4C37D0 [System.Classes][CreateComponent]
+4C39FD [System.Classes][Classes.TReader.ReadComponent$qqrp25System.Classes.TComponent]
+4C3CAE [System.Classes][Classes.TReader.ReadDataInner$qqrp25System.Classes.TComponent]
+4C3BED [System.Classes][Classes.TReader.ReadData$qqrp25System.Classes.TComponent]
+
+The object was subsequently freed by thread 0x162C, and the stack trace (return addresses) at the time was:
+4066C6 [System][@FreeMem$qqrpv]
+4082F1 [System][TObject.FreeInstance$qqrv]
+408A35 [System][@ClassDestroy$qqrxp14System.TObject]
+4BA833 [System.Classes][Classes.TStringList.$bdtr$qqrv]
+4083EF [System][TObject.Free$qqrv]
+742A2D [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][743]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+The current thread ID is 0x162C, and the stack trace (return addresses) leading to this error is:
+742C45 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.UnregisterComponent$qqrp24Vcl.Controls.TWinControl][808]
+742490 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityItem.$bdtr$qqrv][583]
+4083EF [System][TObject.Free$qqrv]
+4B8541 [System.Classes][Classes.TCollection.Clear$qqrv]
+4B83FF [System.Classes][Classes.TCollection.$bdtr$qqrv]
+742A3B [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][744]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+Current memory dump of 256 bytes starting at pointer address 7EA206A0:
+8C 62 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 ED 0E 42 7A
+80 65 C2 00 80 65 C2 00 00 00 00 00 A0 B1 A1 7E 00 00 00 00 00 00 00 00 A8 73 41 00 00 00 00 00
+02 40 03 00 AA 66 40 00 D3 82 40 00 EA 89 40 00 9A AF 4B 00 9D 67 4B 00 FA 01 72 00 07 FC 71 00
+00 5E 41 00 D0 75 41 00 E5 75 41 00 F7 00 72 00 2C 16 00 00 2C 16 00 00 C6 66 40 00 F1 82 40 00
+35 8A 40 00 33 A8 4B 00 EF 83 40 00 E2 01 72 00 07 FC 71 00 00 5E 41 00 D0 75 41 00 E5 75 41 00
+F7 00 72 00 5C 00 00 00 40 90 49 00 9C 33 0B 86 40 90 49 00 00 00 00 00 00 00 00 00 C0 45 F9 7E
+Œ  b  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  í  .  B  z
+€  e  Â  .  €  e  Â  .  .  .  .  .     ±  ¡  ~  .  .  .  .  .  .  .  .  ¨  s  A  .  .  .  .  .
+.  @  .  .  ª  f  @  .  Ó  ‚  @  .  ê  ‰  @  .  š  ¯  K  .    g  K  .  ú  .  r  .  .  ü  q  .
+.  ^  A  .  Ğ  u  A  .  å  u  A  .  ÷  .  r  .  ,  .  .  .  ,  .  .  .  Æ  f  @  .  ñ  ‚  @  .
+5  Š  @  .  3  ¨  K  .  ï  ƒ  @  .  â  .  r  .  .  ü  q  .  .  ^  A  .  Ğ  u  A  .  å  u  A  .
+÷  .  r  .  \  .  .  .  @    I  .  œ  3  .  †  @    I  .  .  .  .  .  .  .  .  .  À  E  ù  ~
+
+--------------------------------2016/9/6 10:25:05--------------------------------
+FastMM has detected an attempt to call a virtual method on a freed object. An access violation will now be raised in order to abort the current operation.
+
+Freed object class: TStringList
+
+Virtual method: Offset +88
+
+Virtual method address: 4BAC38
+
+The allocation number was: 201244
+
+The object was allocated by thread 0x2280, and the stack trace (return addresses) at the time was:
+4066AA [System][@GetMem$qqri]
+4082D3 [System][TObject.NewInstance$qqrv]
+4089EA [System][@ClassCreate$qqrpvzc]
+4BAF9A [System.Classes][Classes.TStringList.$bctr$qqrv]
+4B83C3 [System.Classes][Classes.TCollection.$bctr$qqrp17System.TMetaClass]
+74299C [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bctr$qqrp52Va508accessibilitymanager.TVA508AccessibilityManager][733]
+742DAF [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bctr$qqrp25System.Classes.TComponent][849]
+4C37D0 [System.Classes][CreateComponent]
+4C39FD [System.Classes][Classes.TReader.ReadComponent$qqrp25System.Classes.TComponent]
+4C3CAE [System.Classes][Classes.TReader.ReadDataInner$qqrp25System.Classes.TComponent]
+4C3BED [System.Classes][Classes.TReader.ReadData$qqrp25System.Classes.TComponent]
+
+The object was subsequently freed by thread 0x2280, and the stack trace (return addresses) at the time was:
+4066C6 [System][@FreeMem$qqrpv]
+4082F1 [System][TObject.FreeInstance$qqrv]
+408A35 [System][@ClassDestroy$qqrxp14System.TObject]
+4BA833 [System.Classes][Classes.TStringList.$bdtr$qqrv]
+4083EF [System][TObject.Free$qqrv]
+742A2D [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][743]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+The current thread ID is 0x2280, and the stack trace (return addresses) leading to this error is:
+742C45 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.UnregisterComponent$qqrp24Vcl.Controls.TWinControl][808]
+742490 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityItem.$bdtr$qqrv][583]
+4083EF [System][TObject.Free$qqrv]
+4B8541 [System.Classes][Classes.TCollection.Clear$qqrv]
+4B83FF [System.Classes][Classes.TCollection.$bdtr$qqrv]
+742A3B [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][744]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+Current memory dump of 256 bytes starting at pointer address 7EA1FC50:
+8C 62 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 A0 30 42 7A
+80 65 C2 00 80 65 C2 00 00 00 00 00 A0 B1 A1 7E 00 00 00 00 00 00 00 00 A8 73 41 00 00 00 00 00
+1F 0F 03 00 AA 66 40 00 D3 82 40 00 EA 89 40 00 9A AF 4B 00 9D 67 4B 00 FA 01 72 00 07 FC 71 00
+00 5E 41 00 D0 75 41 00 E5 75 41 00 F7 00 72 00 80 22 00 00 80 22 00 00 C6 66 40 00 F1 82 40 00
+35 8A 40 00 33 A8 4B 00 EF 83 40 00 E2 01 72 00 07 FC 71 00 00 5E 41 00 D0 75 41 00 E5 75 41 00
+F7 00 72 00 5C 00 00 00 40 90 49 00 11 11 0B 86 40 90 49 00 00 00 00 00 00 00 00 00 C0 45 F9 7E
+Œ  b  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .     0  B  z
+€  e  Â  .  €  e  Â  .  .  .  .  .     ±  ¡  ~  .  .  .  .  .  .  .  .  ¨  s  A  .  .  .  .  .
+.  .  .  .  ª  f  @  .  Ó  ‚  @  .  ê  ‰  @  .  š  ¯  K  .    g  K  .  ú  .  r  .  .  ü  q  .
+.  ^  A  .  Ğ  u  A  .  å  u  A  .  ÷  .  r  .  €  "  .  .  €  "  .  .  Æ  f  @  .  ñ  ‚  @  .
+5  Š  @  .  3  ¨  K  .  ï  ƒ  @  .  â  .  r  .  .  ü  q  .  .  ^  A  .  Ğ  u  A  .  å  u  A  .
+÷  .  r  .  \  .  .  .  @    I  .  .  .  .  †  @    I  .  .  .  .  .  .  .  .  .  À  E  ù  ~
+
+--------------------------------2016/9/6 10:28:51--------------------------------
+FastMM has detected an attempt to call a virtual method on a freed object. An access violation will now be raised in order to abort the current operation.
+
+Freed object class: TStringList
+
+Virtual method: Offset +88
+
+Virtual method address: 4BAC38
+
+The allocation number was: 200845
+
+The object was allocated by thread 0x1F34, and the stack trace (return addresses) at the time was:
+4066AA [System][@GetMem$qqri]
+4082D3 [System][TObject.NewInstance$qqrv]
+4089EA [System][@ClassCreate$qqrpvzc]
+4BAF9A [System.Classes][Classes.TStringList.$bctr$qqrv]
+4B83C3 [System.Classes][Classes.TCollection.$bctr$qqrp17System.TMetaClass]
+74299C [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bctr$qqrp52Va508accessibilitymanager.TVA508AccessibilityManager][733]
+742DAF [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bctr$qqrp25System.Classes.TComponent][849]
+4C37D0 [System.Classes][CreateComponent]
+4C39FD [System.Classes][Classes.TReader.ReadComponent$qqrp25System.Classes.TComponent]
+4C3CAE [System.Classes][Classes.TReader.ReadDataInner$qqrp25System.Classes.TComponent]
+4C3BED [System.Classes][Classes.TReader.ReadData$qqrp25System.Classes.TComponent]
+
+The object was subsequently freed by thread 0x1F34, and the stack trace (return addresses) at the time was:
+4066C6 [System][@FreeMem$qqrpv]
+4082F1 [System][TObject.FreeInstance$qqrv]
+408A35 [System][@ClassDestroy$qqrxp14System.TObject]
+4BA833 [System.Classes][Classes.TStringList.$bdtr$qqrv]
+4083EF [System][TObject.Free$qqrv]
+742A2D [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][743]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+The current thread ID is 0x1F34, and the stack trace (return addresses) leading to this error is:
+742C45 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.UnregisterComponent$qqrp24Vcl.Controls.TWinControl][808]
+742490 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityItem.$bdtr$qqrv][583]
+4083EF [System][TObject.Free$qqrv]
+4B8541 [System.Classes][Classes.TCollection.Clear$qqrv]
+4B83FF [System.Classes][Classes.TCollection.$bdtr$qqrv]
+742A3B [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][744]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+Current memory dump of 256 bytes starting at pointer address 7EA1E300:
+8C 62 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 17 52 42 7A
+80 65 C2 00 80 65 C2 00 00 00 00 00 A0 B1 A1 7E 00 00 00 00 00 00 00 00 A8 73 41 00 00 00 00 00
+EF 50 03 00 AA 66 40 00 D3 82 40 00 EA 89 40 00 9A AF 4B 00 DC 82 40 00 EA 89 40 00 4B F4 94 00
+78 F2 94 00 83 76 96 00 01 86 96 00 67 71 96 00 34 1F 00 00 34 1F 00 00 C6 66 40 00 F1 82 40 00
+35 8A 40 00 33 A8 4B 00 EF 83 40 00 80 6F 96 00 F9 E5 BE 00 99 3A AA 00 9C 9B AA 00 74 3F 62 00
+6A 55 62 00 64 00 00 00 40 90 49 00 22 5C 68 88 44 1D 72 00 00 00 00 00 00 00 00 00 C0 45 F9 7E
+Œ  b  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  .  R  B  z
+€  e  Â  .  €  e  Â  .  .  .  .  .     ±  ¡  ~  .  .  .  .  .  .  .  .  ¨  s  A  .  .  .  .  .
+ï  P  .  .  ª  f  @  .  Ó  ‚  @  .  ê  ‰  @  .  š  ¯  K  .  Ü  ‚  @  .  ê  ‰  @  .  K  ô  ”  .
+x  ò  ”  .  ƒ  v  –  .  .  †  –  .  g  q  –  .  4  .  .  .  4  .  .  .  Æ  f  @  .  ñ  ‚  @  .
+5  Š  @  .  3  ¨  K  .  ï  ƒ  @  .  €  o  –  .  ù  å  ¾  .  ™  :  ª  .  œ  ›  ª  .  t  ?  b  .
+j  U  b  .  d  .  .  .  @    I  .  "  \  h  ˆ  D  .  r  .  .  .  .  .  .  .  .  .  À  E  ù  ~
+
+--------------------------------2016/9/6 10:34:49--------------------------------
+FastMM has detected an attempt to call a virtual method on a freed object. An access violation will now be raised in order to abort the current operation.
+
+Freed object class: TStringList
+
+Virtual method: Offset +88
+
+Virtual method address: 4BAC38
+
+The allocation number was: 200861
+
+The object was allocated by thread 0x1B20, and the stack trace (return addresses) at the time was:
+4066AA [System][@GetMem$qqri]
+4082D3 [System][TObject.NewInstance$qqrv]
+4089EA [System][@ClassCreate$qqrpvzc]
+4BAF9A [System.Classes][Classes.TStringList.$bctr$qqrv]
+4B83C3 [System.Classes][Classes.TCollection.$bctr$qqrp17System.TMetaClass]
+74299C [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bctr$qqrp52Va508accessibilitymanager.TVA508AccessibilityManager][733]
+742DAF [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bctr$qqrp25System.Classes.TComponent][849]
+4C37D0 [System.Classes][CreateComponent]
+4C39FD [System.Classes][Classes.TReader.ReadComponent$qqrp25System.Classes.TComponent]
+4C3CAE [System.Classes][Classes.TReader.ReadDataInner$qqrp25System.Classes.TComponent]
+4C3BED [System.Classes][Classes.TReader.ReadData$qqrp25System.Classes.TComponent]
+
+The object was subsequently freed by thread 0x1B20, and the stack trace (return addresses) at the time was:
+4066C6 [System][@FreeMem$qqrpv]
+4082F1 [System][TObject.FreeInstance$qqrv]
+408A35 [System][@ClassDestroy$qqrxp14System.TObject]
+4BA833 [System.Classes][Classes.TStringList.$bdtr$qqrv]
+4083EF [System][TObject.Free$qqrv]
+742A2D [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][743]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+The current thread ID is 0x1B20, and the stack trace (return addresses) leading to this error is:
+742C45 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.UnregisterComponent$qqrp24Vcl.Controls.TWinControl][808]
+742490 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityItem.$bdtr$qqrv][583]
+4083EF [System][TObject.Free$qqrv]
+4B8541 [System.Classes][Classes.TCollection.Clear$qqrv]
+4B83FF [System.Classes][Classes.TCollection.$bdtr$qqrv]
+742A3B [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][744]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+Current memory dump of 256 bytes starting at pointer address 7EA1E4E0:
+8C 62 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 4F 58 42 7A
+80 65 C2 00 80 65 C2 00 00 00 00 00 A0 B1 A1 7E 00 00 00 00 00 00 00 00 A8 73 41 00 00 00 00 00
+AB 0A 03 00 AA 66 40 00 D3 82 40 00 EA 89 40 00 9A AF 4B 00 9D 67 4B 00 FA 01 72 00 07 FC 71 00
+00 5E 41 00 D0 75 41 00 E5 75 41 00 F7 00 72 00 20 1B 00 00 20 1B 00 00 C6 66 40 00 F1 82 40 00
+35 8A 40 00 33 A8 4B 00 EF 83 40 00 E2 01 72 00 07 FC 71 00 00 5E 41 00 D0 75 41 00 E5 75 41 00
+F7 00 72 00 5C 00 00 00 40 90 49 00 6D E6 0A 86 40 90 49 00 00 00 00 00 00 00 00 00 C0 45 F9 7E
+Œ  b  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  O  X  B  z
+€  e  Â  .  €  e  Â  .  .  .  .  .     ±  ¡  ~  .  .  .  .  .  .  .  .  ¨  s  A  .  .  .  .  .
+«  .  .  .  ª  f  @  .  Ó  ‚  @  .  ê  ‰  @  .  š  ¯  K  .    g  K  .  ú  .  r  .  .  ü  q  .
+.  ^  A  .  Ğ  u  A  .  å  u  A  .  ÷  .  r  .     .  .  .     .  .  .  Æ  f  @  .  ñ  ‚  @  .
+5  Š  @  .  3  ¨  K  .  ï  ƒ  @  .  â  .  r  .  .  ü  q  .  .  ^  A  .  Ğ  u  A  .  å  u  A  .
+÷  .  r  .  \  .  .  .  @    I  .  m  æ  .  †  @    I  .  .  .  .  .  .  .  .  .  À  E  ù  ~
+
+--------------------------------2016/9/6 10:38:17--------------------------------
+FastMM has detected an attempt to call a virtual method on a freed object. An access violation will now be raised in order to abort the current operation.
+
+Freed object class: TStringList
+
+Virtual method: Offset +88
+
+Virtual method address: 4BAC38
+
+The allocation number was: 201413
+
+The object was allocated by thread 0x13D0, and the stack trace (return addresses) at the time was:
+4066AA [System][@GetMem$qqri]
+4082D3 [System][TObject.NewInstance$qqrv]
+4089EA [System][@ClassCreate$qqrpvzc]
+4BAF9A [System.Classes][Classes.TStringList.$bctr$qqrv]
+4B83C3 [System.Classes][Classes.TCollection.$bctr$qqrp17System.TMetaClass]
+74299C [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bctr$qqrp52Va508accessibilitymanager.TVA508AccessibilityManager][733]
+742DAF [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bctr$qqrp25System.Classes.TComponent][849]
+4C37D0 [System.Classes][CreateComponent]
+4C39FD [System.Classes][Classes.TReader.ReadComponent$qqrp25System.Classes.TComponent]
+4C3CAE [System.Classes][Classes.TReader.ReadDataInner$qqrp25System.Classes.TComponent]
+4C3BED [System.Classes][Classes.TReader.ReadData$qqrp25System.Classes.TComponent]
+
+The object was subsequently freed by thread 0x13D0, and the stack trace (return addresses) at the time was:
+4066C6 [System][@FreeMem$qqrpv]
+4082F1 [System][TObject.FreeInstance$qqrv]
+408A35 [System][@ClassDestroy$qqrxp14System.TObject]
+4BA833 [System.Classes][Classes.TStringList.$bdtr$qqrv]
+4083EF [System][TObject.Free$qqrv]
+742A2D [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][743]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+The current thread ID is 0x13D0, and the stack trace (return addresses) leading to this error is:
+742C45 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.UnregisterComponent$qqrp24Vcl.Controls.TWinControl][808]
+742490 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityItem.$bdtr$qqrv][583]
+4083EF [System][TObject.Free$qqrv]
+4B8541 [System.Classes][Classes.TCollection.Clear$qqrv]
+4B83FF [System.Classes][Classes.TCollection.$bdtr$qqrv]
+742A3B [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][744]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+Current memory dump of 256 bytes starting at pointer address 7EA25720:
+8C 62 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 87 F2 41 7A
+80 65 C2 00 80 65 C2 00 00 00 00 00 D0 24 A2 7E 00 00 00 00 00 00 00 00 A8 73 41 00 00 00 00 00
+2E 26 02 00 AA 66 40 00 CF A0 40 00 BB A6 40 00 C2 18 6F 00 CD 1A 6F 00 0D B8 7F 00 1E C5 7F 00
+3D 57 AA 00 1B 43 63 00 B3 3E 63 00 B2 64 41 00 D0 13 00 00 D0 13 00 00 C6 66 40 00 F1 82 40 00
+35 8A 40 00 33 A8 4B 00 EF 83 40 00 B7 AB 71 00 08 04 72 00 07 FC 71 00 A5 A8 4B 00 F7 00 72 00
+F1 09 72 00 56 00 00 00 40 90 49 00 A8 45 54 87 B0 04 02 00 01 00 00 00 24 00 00 00 2D 00 32 00
+Œ  b  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  ‡  ò  A  z
+€  e  Â  .  €  e  Â  .  .  .  .  .  Ğ  $  ¢  ~  .  .  .  .  .  .  .  .  ¨  s  A  .  .  .  .  .
+.  &  .  .  ª  f  @  .  Ï     @  .  »  ¦  @  .  Â  .  o  .  Í  .  o  .  .  ¸    .  .  Å    .
+=  W  ª  .  .  C  c  .  ³  >  c  .  ²  d  A  .  Ğ  .  .  .  Ğ  .  .  .  Æ  f  @  .  ñ  ‚  @  .
+5  Š  @  .  3  ¨  K  .  ï  ƒ  @  .  ·  «  q  .  .  .  r  .  .  ü  q  .  ¥  ¨  K  .  ÷  .  r  .
+ñ  .  r  .  V  .  .  .  @    I  .  ¨  E  T  ‡  °  .  .  .  .  .  .  .  $  .  .  .  -  .  2  .
+
+--------------------------------2016/9/6 10:54:18--------------------------------
+FastMM has detected an attempt to call a virtual method on a freed object. An access violation will now be raised in order to abort the current operation.
+
+Freed object class: TStringList
+
+Virtual method: Offset +88
+
+Virtual method address: 4BAC38
+
+The allocation number was: 200784
+
+The object was allocated by thread 0x22BC, and the stack trace (return addresses) at the time was:
+4066AA [System][@GetMem$qqri]
+4082D3 [System][TObject.NewInstance$qqrv]
+4089EA [System][@ClassCreate$qqrpvzc]
+4BAF9A [System.Classes][Classes.TStringList.$bctr$qqrv]
+4B83C3 [System.Classes][Classes.TCollection.$bctr$qqrp17System.TMetaClass]
+74299C [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bctr$qqrp52Va508accessibilitymanager.TVA508AccessibilityManager][733]
+742DAF [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bctr$qqrp25System.Classes.TComponent][849]
+4C37D0 [System.Classes][CreateComponent]
+4C39FD [System.Classes][Classes.TReader.ReadComponent$qqrp25System.Classes.TComponent]
+4C3CAE [System.Classes][Classes.TReader.ReadDataInner$qqrp25System.Classes.TComponent]
+4C3BED [System.Classes][Classes.TReader.ReadData$qqrp25System.Classes.TComponent]
+
+The object was subsequently freed by thread 0x22BC, and the stack trace (return addresses) at the time was:
+4066C6 [System][@FreeMem$qqrpv]
+4082F1 [System][TObject.FreeInstance$qqrv]
+408A35 [System][@ClassDestroy$qqrxp14System.TObject]
+4BA833 [System.Classes][Classes.TStringList.$bdtr$qqrv]
+4083EF [System][TObject.Free$qqrv]
+742A2D [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][743]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+The current thread ID is 0x22BC, and the stack trace (return addresses) leading to this error is:
+742C45 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.UnregisterComponent$qqrp24Vcl.Controls.TWinControl][808]
+742490 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityItem.$bdtr$qqrv][583]
+4083EF [System][TObject.Free$qqrv]
+4B8541 [System.Classes][Classes.TCollection.Clear$qqrv]
+4B83FF [System.Classes][Classes.TCollection.$bdtr$qqrv]
+742A3B [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][744]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+Current memory dump of 256 bytes starting at pointer address 7E9815A0:
+8C 62 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 A4 18 4C 7A
+80 65 C2 00 80 65 C2 00 00 00 00 00 10 C9 97 7E 00 00 00 00 00 00 00 00 A8 73 41 00 00 00 00 00
+B1 04 03 00 AA 66 40 00 D3 82 40 00 EA 89 40 00 9A AF 4B 00 AA 66 40 00 CF A0 40 00 6A A5 40 00
+2D 5C 86 00 F3 E5 9C 00 DC 3C 5A 00 BD 9A 86 00 BC 22 00 00 BC 22 00 00 F1 82 40 00 35 8A 40 00
+1D 2D 5A 00 EF 83 40 00 87 2F 5A 00 EF 83 40 00 CB 2F 5A 00 EC 49 5A 00 99 9A 86 00 4F AA 86 00
+5A 3E 43 00 5C 00 00 00 F0 28 5A 00 6B 55 C5 86 40 90 49 00 00 00 00 00 13 00 00 00 C0 45 F9 7E
+Œ  b  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  ¤  .  L  z
+€  e  Â  .  €  e  Â  .  .  .  .  .  .  É  —  ~  .  .  .  .  .  .  .  .  ¨  s  A  .  .  .  .  .
+±  .  .  .  ª  f  @  .  Ó  ‚  @  .  ê  ‰  @  .  š  ¯  K  .  ª  f  @  .  Ï     @  .  j  ¥  @  .
+-  \  †  .  ó  å  œ  .  Ü  <  Z  .  ½  š  †  .  ¼  "  .  .  ¼  "  .  .  ñ  ‚  @  .  5  Š  @  .
+.  -  Z  .  ï  ƒ  @  .  ‡  /  Z  .  ï  ƒ  @  .  Ë  /  Z  .  ì  I  Z  .  ™  š  †  .  O  ª  †  .
+Z  >  C  .  \  .  .  .  ğ  (  Z  .  k  U  Å  †  @    I  .  .  .  .  .  .  .  .  .  À  E  ù  ~
+
+--------------------------------2016/9/6 11:11:11--------------------------------
+FastMM has detected an attempt to call a virtual method on a freed object. An access violation will now be raised in order to abort the current operation.
+
+Freed object class: TStringList
+
+Virtual method: Offset +88
+
+Virtual method address: 4BAC38
+
+The allocation number was: 200953
+
+The object was allocated by thread 0x1E00, and the stack trace (return addresses) at the time was:
+4066AA [System][@GetMem$qqri]
+4082D3 [System][TObject.NewInstance$qqrv]
+4089EA [System][@ClassCreate$qqrpvzc]
+4BAF9A [System.Classes][Classes.TStringList.$bctr$qqrv]
+4B83C3 [System.Classes][Classes.TCollection.$bctr$qqrp17System.TMetaClass]
+74299C [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bctr$qqrp52Va508accessibilitymanager.TVA508AccessibilityManager][733]
+742DAF [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bctr$qqrp25System.Classes.TComponent][849]
+4C37D0 [System.Classes][CreateComponent]
+4C39FD [System.Classes][Classes.TReader.ReadComponent$qqrp25System.Classes.TComponent]
+4C3CAE [System.Classes][Classes.TReader.ReadDataInner$qqrp25System.Classes.TComponent]
+4C3BED [System.Classes][Classes.TReader.ReadData$qqrp25System.Classes.TComponent]
+
+The object was subsequently freed by thread 0x1E00, and the stack trace (return addresses) at the time was:
+4066C6 [System][@FreeMem$qqrpv]
+4082F1 [System][TObject.FreeInstance$qqrv]
+408A35 [System][@ClassDestroy$qqrxp14System.TObject]
+4BA833 [System.Classes][Classes.TStringList.$bdtr$qqrv]
+4083EF [System][TObject.Free$qqrv]
+742A2D [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][743]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+The current thread ID is 0x1E00, and the stack trace (return addresses) leading to this error is:
+742C45 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.UnregisterComponent$qqrp24Vcl.Controls.TWinControl][808]
+742490 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityItem.$bdtr$qqrv][583]
+4083EF [System][TObject.Free$qqrv]
+4B8541 [System.Classes][Classes.TCollection.Clear$qqrv]
+4B83FF [System.Classes][Classes.TCollection.$bdtr$qqrv]
+742A3B [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityCollection.$bdtr$qqrv][744]
+4083EF [System][TObject.Free$qqrv]
+742E09 [VA508AccessibilityManager.pas][VA508AccessibilityManager][TVA508AccessibilityManager.$bdtr$qqrv][857]
+4CD7FB [System.Classes][Classes.TComponent.Remove$qqrp25System.Classes.TComponent]
+4CD8F6 [System.Classes][Classes.TComponent.DestroyComponents$qqrv]
+4CD63C [System.Classes][Classes.TComponent.$bdtr$qqrv]
+
+Current memory dump of 256 bytes starting at pointer address 7EA2E4E0:
+8C 62 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00
+80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 80 65 C2 00 33 52 41 7A
+80 65 C2 00 80 65 C2 00 00 00 00 00 A0 B1 A2 7E 00 00 00 00 00 00 00 00 A8 73 41 00 00 00 00 00
+07 0B 03 00 AA 66 40 00 D3 82 40 00 EA 89 40 00 9A AF 4B 00 9D 67 4B 00 FA 01 72 00 07 FC 71 00
+00 5E 41 00 D0 75 41 00 E5 75 41 00 F7 00 72 00 00 1E 00 00 00 1E 00 00 C6 66 40 00 F1 82 40 00
+35 8A 40 00 33 A8 4B 00 EF 83 40 00 E2 01 72 00 07 FC 71 00 00 5E 41 00 D0 75 41 00 E5 75 41 00
+F7 00 72 00 5C 00 00 00 40 90 49 00 89 EC 0B 86 40 90 49 00 00 00 00 00 00 00 00 00 C0 45 F9 7E
+Œ  b  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .
+€  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  €  e  Â  .  3  R  A  z
+€  e  Â  .  €  e  Â  .  .  .  .  .     ±  ¢  ~  .  .  .  .  .  .  .  .  ¨  s  A  .  .  .  .  .
+.  .  .  .  ª  f  @  .  Ó  ‚  @  .  ê  ‰  @  .  š  ¯  K  .    g  K  .  ú  .  r  .  .  ü  q  .
+.  ^  A  .  Ğ  u  A  .  å  u  A  .  ÷  .  r  .  .  .  .  .  .  .  .  .  Æ  f  @  .  ñ  ‚  @  .
+5  Š  @  .  3  ¨  K  .  ï  ƒ  @  .  â  .  r  .  .  ü  q  .  .  ^  A  .  Ğ  u  A  .  å  u  A  .
+÷  .  r  .  \  .  .  .  @    I  .  ‰  ì  .  †  @    I  .  .  .  .  .  .  .  .  .  À  E  ù  ~

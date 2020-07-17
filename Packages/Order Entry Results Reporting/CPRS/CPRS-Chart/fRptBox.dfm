@@ -122,4 +122,14 @@ inherited frmReportBox: TfrmReportBox
       OnClick = mnuCopyClick
     end
   end
+  object CPRptBox: TCopyEditMonitor
+    CopyMonitor = frmFrame.CPAppMon
+    OnCopyToMonitor = CPRptBoxCopyToMonitor
+    TrackOnlyEdits = <
+      item
+        TrackObject = memReport
+      end>
+    Left = 312
+    Top = 96
+  end
 end

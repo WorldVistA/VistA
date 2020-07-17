@@ -15,7 +15,6 @@ type
     lblCompanyName: TStaticText;
     lblComments: TStaticText;
     lblCRC: TStaticText;
-    lblFileDescription: TStaticText;
     lblInternalName: TStaticText;
     lblOriginalFileName: TStaticText;
     pnlBottom: TPanel;
@@ -25,6 +24,9 @@ type
     lblLegalCopyright: TMemo;
     pnl508Disclaimer: TPanel;
     lbl508Notice: TMemo;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -46,7 +48,7 @@ var
 begin
   frmAbout := TfrmAbout.Create(Application);
   try
-    ResizeFormToFont(TForm(frmAbout));
+//    ResizeFormToFont(TForm(frmAbout));
     frmAbout.lblLegalCopyright.SelStart := 0;
     frmAbout.lblLegalCopyright.SelLength := 0;
     frmAbout.lbl508Notice.SelStart := 0;
@@ -61,7 +63,7 @@ procedure TfrmAbout.FormCreate(Sender: TObject);
 begin
   inherited;
   lblCompanyName.Caption        := 'Developed by the ' + FileVersionValue(Application.ExeName, FILE_VER_COMPANYNAME);
-  lblFileDescription.Caption    := 'Compiled ' + FileVersionValue(Application.ExeName, FILE_VER_FILEDESCRIPTION);  //date
+//  lblFileDescription.Caption    := 'Compiled ' + FileVersionValue(Application.ExeName, FILE_VER_FILEDESCRIPTION);  //date
   lblFileVersion.Caption        := FileVersionValue(Application.ExeName, FILE_VER_FILEVERSION);
   lblInternalName.Caption       := FileVersionValue(Application.ExeName, FILE_VER_INTERNALNAME);
   lblLegalCopyright.Text        := FileVersionValue(Application.ExeName, FILE_VER_LEGALCOPYRIGHT);

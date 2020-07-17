@@ -12,7 +12,7 @@ type
     pnlBottom: TPanel;
     btnOK: TButton;
     btnCancel: TButton;
-    lblAddby: TLabel;
+    lblAddBy: TLabel;
     lblPatientsAdd: TLabel;
     lblPersonalPatientList: TLabel;
     lblPersonalLists: TLabel;
@@ -59,7 +59,6 @@ type
     procedure grpVisibilityClick(Sender: TObject);
     procedure lstAddByChange(Sender: TObject);
   private
-    { Private declarations }
     FLastList: integer;
     FChanging: boolean;
     procedure AddIfUnique(entry: string; aList: TORListBox);
@@ -149,40 +148,47 @@ begin
            ListItemsOnly := false;
            LongList := true;
            InitLongList('');
-           lblAddby.Caption := 'Patient:';
+           lblAddBy.Caption := 'Patient:';
          end;
       1: begin
            ListItemsOnly := false;
            LongList := false;
            ListWardAll(lstAddBy.Items);
-           lblAddby.Caption := 'Ward:';
+           lblAddBy.Caption := 'Ward:';
          end;
       2: begin
            ListItemsOnly := true;
            LongList := true;
            InitLongList('');
-           lblAddby.Caption := 'Clinic:';
+           lblAddBy.Caption := 'Clinic:';
          end;
       3: begin
            ListItemsOnly := true;
            LongList := true;
            InitLongList('');
-           lblAddby.Caption := 'Provider:';
+           lblAddBy.Caption := 'Provider:';
          end;
       4: begin
            ListItemsOnly := false;
            LongList := false;
            ListSpecialtyAll(lstAddBy.Items);
-           lblAddby.Caption := 'Specialty:';
+           lblAddBy.Caption := 'Specialty:';
          end;
       5: begin
            ListItemsOnly := false;
            LongList := false;
            ListTeamAll(lstAddBy.Items);
-           lblAddby.Caption := 'List:';
+           lblAddBy.Caption := 'List:';
          end;
+      6: begin
+           ListItemsOnly := false;
+           LongList := false;
+           ListPcmmAll(lstAddBy.Items);
+           lblAddBy.Caption := 'PCMM Team:';
+         end;
+
     end;
-    lstAddby.Caption := lblAddby.Caption;
+    lstAddBy.Caption := lblAddBy.Caption;
     ItemIndex := -1;
     Text := '';
   end;
@@ -303,7 +309,7 @@ begin
     begin
       PtRec := GetPtIDInfo(ien);
       lblAddBy.Caption := 'Patient:   SSN: ' + PtRec.SSN;
-      lstAddby.Caption := lblAddby.Caption;
+      lstAddBy.Caption := lblAddBy.Caption;
       AddIfUnique(lstAddBy.Items[lstAddBy.ItemIndex], lstListPats);
     end;
     1:
@@ -334,6 +340,11 @@ begin
     begin
       ListPtByTeam(lstListPats.Items, strtointdef(ien,0));
     end;
+    6:
+    begin
+      ListPtByPCMMTeam(lstListPats.Items, strtointdef(ien,0));
+    end;
+
   end;
   if lstListPats.Items.Count = 1 then         // avoid selecting '^No patients found.' msg
     if Piece(lstListPats.Items[0], '^', 1) = '' then

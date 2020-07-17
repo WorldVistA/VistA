@@ -83,6 +83,7 @@ type
     procedure calClinicallyIndicatedExit(Sender: TObject);
     procedure calLatestExit(Sender: TObject);
     procedure memCommentExit(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     FLastProcID: string;
     FChanged: boolean;
@@ -109,7 +110,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rConsults, uCore, rCore, fConsults, rODBase, fRptBox, fPCELex, rPCE, ORClasses, clipbrd ;
+  rConsults, uCore, rCore, fConsults, rODBase, fRptBox, fPCELex, rPCE, ORClasses, clipbrd, VAUtils;
 
 var
   OldRec, NewRec: TEditResubmitRec;
@@ -459,6 +460,15 @@ begin
   if FChanged then
     if InfoBox(TX_ACCEPT, TX_ACCEPT_CAP, MB_YESNO) = ID_YES then
       if not ValidSave then Action := caNone;
+end;
+
+procedure TfrmEditProc.FormResize(Sender: TObject);
+const
+  LEFT_MARGIN = 4;
+begin
+  inherited;
+  LimitEditWidth(memReason, MAX_PROGRESSNOTE_WIDTH-7); //puts memReason at 74 characters
+  Self.Constraints.MinWidth := TextWidthByFont(memReason.Font.Handle, StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 10) + ScrollBarWidth;
 end;
 
 function TfrmEditProc.ValidSave: Boolean;

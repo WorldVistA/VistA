@@ -54,7 +54,7 @@ procedure DialogOptionsHSDefault(topvalue, leftvalue, fontsize: integer; var act
 
 implementation
 
-uses rOptions, uOptions, fReports, uCore;
+uses rOptions, uOptions, fReports, uCore, VAUtils;
 {$R *.DFM}
 
 procedure DialogOptionsHSDefault(topvalue, leftvalue, fontsize: integer; var actiontype: Integer);

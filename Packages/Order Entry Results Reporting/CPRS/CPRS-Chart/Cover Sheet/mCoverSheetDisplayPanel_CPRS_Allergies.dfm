@@ -1,0 +1,2 @@
+inherited fraCoverSheetDisplayPanel_CPRS_Allergies: TfraCoverSheetDisplayPanel_CPRS_Allergies
+end

@@ -8,9 +8,6 @@ uses
   VA508AccessibilityManager, VA508ImageListLabeler;
 
 type
-  tSortDir = (DIR_FRWRD, DIR_BKWRD);
-  tSortArray = Array of Integer;
-
   TfrmHFSearch = class(TfrmAutoSz)
     cbxSearch: TORComboBox;
     tvSearch: TORTreeView;
@@ -28,7 +25,7 @@ type
     procedure cbxSearchChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
-    FCode: string;
+    FCode:   string;
     FChanging: boolean;
     fParentList: TStringList;
     fFullList: TStringList;
@@ -46,75 +43,10 @@ implementation
 
 uses rPCE, dShared, fEncounterFrame;
 
-
-Var
-  // Used for the sort by peice
-  SortADelim: Char;
-  SortPieceNum: Integer;
-  SortDir: tSortDir;
-  SortPieces: tSortArray;
-
 {$R *.DFM}
 
 const
   CatTxt = 'Category: ';
-
-
-
-function SortByPiece2(List: TStringList; Index1, Index2: Integer): Integer;
-var
-  Str1, Str2: string;
-begin
-  // get the strings to compare
-  Str1 := Piece(List[Index1], SortADelim, SortPieceNum);
-  Str2 := Piece(List[Index2], SortADelim, SortPieceNum);
-  if SortDir = DIR_FRWRD then
-    Result := AnsiCompareText(Str1, Str2)
-  else
-    Result := AnsiCompareText(Str2, Str1)
-end;
-
-procedure SortByPiece(AList: TStringList; ADelim: Char; PieceNum: Integer;
-  aSortDir: tSortDir = DIR_FRWRD);
-begin
-  SortADelim := ADelim;
-  SortPieceNum := PieceNum;
-  SortDir := aSortDir;
-  AList.CustomSort(SortByPiece2);
-end;
-
-function SortByPiecesCustom(List: TStringList; Index1, Index2: Integer)
-  : Integer;
-var
-  Str1, Str2: string;
-  SrtNum: Integer;
-begin
-  Result := 0;
-  for SrtNum in SortPieces do
-  begin
-    Str1 := Piece(List[Index1], SortADelim, SrtNum);
-    Str2 := Piece(List[Index2], SortADelim, SrtNum);
-
-    if SortDir = DIR_FRWRD then
-      Result := AnsiCompareText(Str1, Str2)
-    else
-      Result := AnsiCompareText(Str2, Str1);
-
-    if Result <> 0 then
-      break;
-  end;
-
-end;
-
-procedure SortByPieces(AList: TStringList; ADelim: Char; PieceNums: tSortArray;
-  aSortDir: tSortDir = DIR_FRWRD);
-begin
-  SortADelim := ADelim;
-  SortPieces := PieceNums;
-  SortDir := aSortDir;
-  AList.CustomSort(SortByPiecesCustom)
-end;
-
 
 procedure HFLookup(var Code: string);
 var
@@ -218,8 +150,7 @@ end;
 procedure TfrmHFSearch.btnOKClick(Sender: TObject);
 begin
   inherited;
-  if cbxSearch.ItemIndex = -1 then
-    exit;
+  if cbxSearch.ItemIndex = -1 then Exit;
   FCode := cbxSearch.Items[cbxSearch.ItemIndex];
   ModalResult := mrOK;
 end;
@@ -230,12 +161,13 @@ begin
   btnOKClick(Sender);
 end;
 
-procedure TfrmHFSearch.tvSearchGetImageIndex(Sender: TObject; Node: TTreeNode);
+procedure TfrmHFSearch.tvSearchGetImageIndex(Sender: TObject;
+  Node: TTreeNode);
 begin
   inherited;
-  if (Piece(TOrTreeNode(Node).StringData, U, 3) = 'C') then
+  if(piece(TORTreeNode(Node).StringData,U,3)= 'C') then
   begin
-    if (Node.Expanded) then
+    if(Node.Expanded) then
       Node.ImageIndex := 3
     else
       Node.ImageIndex := 2;
@@ -243,24 +175,24 @@ begin
   else
     Node.ImageIndex := -1;
   Node.SelectedIndex := Node.ImageIndex;
-  // tvSearch.Invalidate;
+//  tvSearch.Invalidate;
 end;
 
 procedure TfrmHFSearch.tvSearchChange(Sender: TObject; Node: TTreeNode);
 begin
   inherited;
-  if (not FChanging) then
+  if(not FChanging) then
   begin
     FChanging := TRUE;
     try
-      if (assigned(Node)) then
-        cbxSearch.SelectByID(Piece(TOrTreeNode(Node).StringData, U, 1))
+      if(assigned(Node)) then
+        cbxSearch.SelectByID(Piece(TORTreeNode(Node).StringData,U,1))
       else
         cbxSearch.ItemIndex := -1;
       btnOK.Enabled := (cbxSearch.ItemIndex >= 0);
       UpdateCat;
     finally
-      FChanging := false;
+      FChanging := FALSE;
     end;
   end;
 end;
@@ -268,10 +200,10 @@ end;
 procedure TfrmHFSearch.UpdateCat;
 var
   NodeCat: TTreeNode;
-
+  
 begin
   NodeCat := tvSearch.Selected;
-  if (assigned(NodeCat)) then
+  if(assigned(NodeCat)) then
   begin
     while (assigned(NodeCat.Parent)) do
       NodeCat := NodeCat.Parent;

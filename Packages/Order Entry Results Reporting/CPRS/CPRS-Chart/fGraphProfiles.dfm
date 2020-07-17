@@ -2,15 +2,16 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   Left = 721
   Top = 528
   BorderIcons = [biSystemMenu, biHelp]
+  BorderStyle = bsDialog
   Caption = 'Select Items and Define Views'
-  ClientHeight = 390
+  ClientHeight = 379
   ClientWidth = 477
   Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitWidth = 493
-  ExplicitHeight = 425
+  ExplicitWidth = 483
+  ExplicitHeight = 407
   PixelsPerInch = 96
   TextHeight = 13
   object lblSelection: TLabel [0]
@@ -82,10 +83,8 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Width = 36
     Height = 13
     Caption = 'Person:'
-    Enabled = False
     ParentShowHint = False
     ShowHint = False
-    Visible = False
     WordWrap = True
   end
   object btnClear: TButton [8]
@@ -97,7 +96,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 13
+    TabOrder = 12
     OnClick = btnClearClick
   end
   object btnSave: TButton [9]
@@ -109,7 +108,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 16
+    TabOrder = 15
     OnClick = btnSaveClick
   end
   object btnDelete: TButton [10]
@@ -121,7 +120,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 14
+    TabOrder = 13
     OnClick = btnDeleteClick
   end
   object btnRemoveOne: TButton [11]
@@ -133,7 +132,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 9
+    TabOrder = 8
     OnClick = btnRemoveOneClick
   end
   object btnRemoveAll: TButton [12]
@@ -145,7 +144,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 10
+    TabOrder = 9
     OnClick = btnRemoveAllClick
   end
   object lstItemsDisplayed: TORListBox [13]
@@ -157,7 +156,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     ParentShowHint = False
     ShowHint = False
     Sorted = True
-    TabOrder = 8
+    TabOrder = 7
     OnDblClick = lstItemsDisplayedDblClick
     Caption = ''
     ItemTipColor = clWindow
@@ -206,7 +205,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     ParentShowHint = False
     ShowHint = False
     Sorted = True
-    TabOrder = 5
+    TabOrder = 19
     Visible = False
     OnDblClick = cboAllItemsClick
     Caption = ''
@@ -223,7 +222,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     BevelOuter = bvNone
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 18
+    TabOrder = 17
     object lblApply: TLabel
       Left = 8
       Top = 2
@@ -288,7 +287,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 7
+    TabOrder = 6
     OnClick = cboAllItemsClick
   end
   object btnAddAll: TButton [18]
@@ -300,7 +299,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 6
+    TabOrder = 5
     OnClick = cboAllItemsClick
   end
   object btnRename: TButton [19]
@@ -312,7 +311,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 15
+    TabOrder = 14
     OnClick = btnRenameClick
   end
   object btnSavePublic: TButton [20]
@@ -324,7 +323,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Enabled = False
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 17
+    TabOrder = 16
     OnClick = btnSaveClick
   end
   object cboAllItems: TORComboBox [21]
@@ -365,7 +364,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Caption = 'Close'
     ParentShowHint = False
     ShowHint = False
-    TabOrder = 19
+    TabOrder = 18
     OnClick = btnCloseClick
   end
   object pnlAllSources: TPanel [23]
@@ -636,7 +635,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Alignment = taLeftJustify
     Caption = 'Items for Graphing can be saved as Views.'
     Enabled = False
-    TabOrder = 11
+    TabOrder = 10
     Visible = False
     ShowAccelChar = True
   end
@@ -649,7 +648,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Alignment = taLeftJustify
     Caption = 'Edit Views by saving to the same name.'
     Enabled = False
-    TabOrder = 12
+    TabOrder = 11
     Visible = False
     ShowAccelChar = True
   end

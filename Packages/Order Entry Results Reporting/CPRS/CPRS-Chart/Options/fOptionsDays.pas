@@ -72,7 +72,7 @@ procedure DialogOptionsDays(topvalue, leftvalue, fontsize: integer; var actionty
 
 implementation
 
-uses rOptions, uOptions;
+uses rOptions, uOptions, VAUtils;
 
 {$R *.DFM}
 

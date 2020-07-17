@@ -132,8 +132,8 @@ var
 implementation
 
 uses rCore, rODMeds, rODBase, rOrders, fRptBox, fODMedOIFA,
-  ORNet, fProbs, fOrdersSign, UBAConst,
-  UBAMessages, fReview, uSignItems, fODConsult, fFrame, VAUtils;
+  ORNet, fProbs, UBAConst,
+  UBAMessages, uSignItems, fODConsult, fFrame, VAUtils;
 
 var
   uProblems    : TStringList;
@@ -192,7 +192,7 @@ begin
     uProblems := TStringList.Create;
     lblPatientName.Caption := Patient.Name + ' Selected Orders';
     DeselectGridItems;
-    
+
     if whoCalled = F_CONSULTS then
        ListConsultDX(uBAGlobals.BAConsultDxList)
     else
@@ -243,66 +243,31 @@ begin
 end;
 
 procedure TfrmBALocalDiagnoses.AssocDxToOrders;
+{
 var
-  tmpFlagList: TStringList;
-  i: integer;
+  i: Integer;
   thisOrderID: string;
   tempDxRec: TBADxRecord;
+}
 begin
-   //** Initialize
+  // ** Initialize
   if Assigned(UBAGlobals.OrderIDList) then
-     UBAGlobals.OrderIDList.Clear;
-  tmpFlagList := TStringList.Create;
+    UBAGlobals.OrderIDList.Clear;
 
-  //** Associate Dx's to Orders
+  // ** Associate Dx's to Orders
   if whoCalled = F_ORDERS_SIGN then
-  begin
-  for i := 0 to fOrdersSign.frmSignOrders.clstOrders.Items.Count-1 do
-  begin
-      if (frmSignOrders.clstOrders.Selected[i]) then
-      begin
-         thisOrderID := TOrder(fOrdersSign.frmSignOrders.clstOrders.Items.Objects[i]).ID;
-         if Not UBACore.IsOrderBillable(thisOrderID) then Continue; //BAPHII 1.4.16
-            LoadTempRec(tempDxRec, thisOrderID);
-         if ((UBAGlobals.tempDxList <> nil) and (not UBAGlobals.tempDxNodeExists(thisOrderID))) then
-            UBAGlobals.tempDxList.Add(TBADxRecord(tempDxRec))
-         else
-         begin
-          //** Order already exists in Dx list, so modifiy existing Dx record
-            SetBADxListForOrder(tempDxRec, thisOrderID);
-         end;
-            //** Add it to OrderID string list
-         if Assigned(UBAGlobals.OrderIDList) then
-            UBAGlobals.OrderIDList.Add(thisOrderID);
-      end; //** if
-   end; //** for
-   end
-   else
-      if whoCalled = F_REVIEW then
-         begin
-         DeselectGridItems;
-         for i := 0 to fReview.frmReview.lstReview.Items.Count-1 do
-         begin
-            if (frmReview.lstReview.Selected[i]) then
-            begin
-               thisOrderID := TOrder(fReview.frmReview.lstReview.Items.Objects[i]).ID;
-               if Not UBACore.IsOrderBillable(thisOrderID) then Continue; //BAPHII 1.4.16
-               LoadTempRec(tempDxRec, thisOrderID);
-               if ((UBAGlobals.tempDxList <> nil) and (not UBAGlobals.tempDxNodeExists(thisOrderID))) then
-                  UBAGlobals.tempDxList.Add(TBADxRecord(tempDxRec))
-               else
-               begin
-                      //** Order already exists in Dx list, so modifiy existing Dx record
-                  SetBADxListForOrder(tempDxRec, thisOrderID);
-                  GetUnsignedOrderFlags(thisOrderID,tmpFlagList);
-              end;
-
-                    //** Add it to OrderID string list
-               if Assigned(UBAGlobals.OrderIDList) then
-                  UBAGlobals.OrderIDList.Add(thisOrderID);
-            end;
-         end; //for
-   end;
+    begin
+      {
+        Removed, no longer used with this form
+      }
+    end
+  else
+    if whoCalled = F_REVIEW then
+    begin
+      {
+        Removed, no longer used with this form
+      }
+    end;
 end;
 
 procedure TfrmBALocalDiagnoses.buOKClick(Sender: TObject);
@@ -339,7 +304,7 @@ begin
   // ** add problems to the top of diagnoses.
     uTempList := TstringList.Create;
     BADiagnosis.clear;
-    tCallV(uTempList,'ORWPCE DIAG',  [uLastLocation, EncDt]);
+    CallVistA('ORWPCE DIAG',  [uLastLocation, EncDt], uTempList);
     BADiagnosis.add(utemplist.strings[0]);
     AddProbsToDiagnosis;
 
@@ -366,7 +331,7 @@ begin
    // ** Get problem list
    EncDt := Trunc(FMToday);
    uLastDFN := Patient.DFN;
-   tCallV(UProblems, 'ORWPCE ACTPROB', [Patient.DFN, EncDT]);
+   CallVistA('ORWPCE ACTPROB', [Patient.DFN, EncDT], UProblems);
 
    if uProblems.Count > 0 then
    begin
@@ -505,37 +470,37 @@ procedure TfrmBALocalDiagnoses.btnOtherClick(Sender: TObject);
 var
   Match: string;
   selectedDx: string;
-  i: integer;
+  //i: integer;
   lexIEN: string;
 begin
   lvDxGrid.ClearSelection;
-  ProvDx.Code := ''; //** init
+  //ProvDx.Code := ''; //** init
   lexIEN := '';
   BAPersonalDX := True; //** returns LexIEN in piece 3
   //** Execute LEXICON
   LexiconLookup(Match, LX_ICD);
   if Match = '' then Exit;
-  fOrdersSign.ProvDx.Code := Piece(Match, U, 1);
-  fOrdersSign.ProvDx.Text := Piece(Match, U, 2);
+  //fOrdersSign.ProvDx.Code := Piece(Match, U, 1);
+  //fOrdersSign.ProvDx.Text := Piece(Match, U, 2);
   lexIEN := Piece(Match, U, 3);
-  i := Pos(' (ICD', fOrdersSign.ProvDx.Text);
-  if i = 0 then i := Length(ProvDx.Text) + 1;
-  if fOrdersSign.ProvDx.Text[i-1] = '*' then i := i - 2;
-  fOrdersSign.ProvDx.Text := Copy(fOrdersSign.ProvDx.Text, 1, i - 1);
-  fOrdersSign.ProvDx.Text := StringReplace(fOrdersSign.ProvDx.Text,':',' ',[rfReplaceAll]);
-  fOrdersSign.ProvDx.Code := StringReplace(fOrdersSign.ProvDx.Code,':',' ',[rfReplaceAll]);
+  //i := Pos(' (ICD', fOrdersSign.ProvDx.Text);
+  //if i = 0 then i := Length(ProvDx.Text) + 1;
+  //if fOrdersSign.ProvDx.Text[i-1] = '*' then i := i - 2;
+  //fOrdersSign.ProvDx.Text := Copy(fOrdersSign.ProvDx.Text, 1, i - 1);
+  //fOrdersSign.ProvDx.Text := StringReplace(fOrdersSign.ProvDx.Text,':',' ',[rfReplaceAll]);
+  //fOrdersSign.ProvDx.Code := StringReplace(fOrdersSign.ProvDx.Code,':',' ',[rfReplaceAll]);
 
-  selectedDx := (fOrdersSign.ProvDx.Text + ':' + fOrdersSign.ProvDx.Code);
-   if strLen(PChar(lexIEN) ) > 0 then
-      lexIENHoldList.Add(fOrdersSign.ProvDx.Code + U + lexIEN);
+  //selectedDx := (fOrdersSign.ProvDx.Text + ':' + fOrdersSign.ProvDx.Code);
+  // if strLen(PChar(lexIEN) ) > 0 then
+  //    lexIENHoldList.Add(fOrdersSign.ProvDx.Code + U + lexIEN);
 
   //** Begin CQ4819
   if not IsDxAlreadySelected(selectedDx) then
   begin
-     if UBACore.IsICD9CodeActive(fOrdersSign.ProvDx.Code,'ICD',0) then
-        DiagnosisSelection(selectedDx)
-     else
-        InfoBox(BA_INACTIVE_ICD9_CODE_1 + fOrdersSign.ProvDx.Code + BA_INACTIVE_ICD9_CODE_2 , BA_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+     //if UBACore.IsICD9CodeActive(fOrdersSign.ProvDx.Code,'ICD',0) then
+     //   DiagnosisSelection(selectedDx)
+     //else
+     //   InfoBox(BA_INACTIVE_ICD9_CODE_1 + fOrdersSign.ProvDx.Code + BA_INACTIVE_ICD9_CODE_2 , BA_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
   end;
   //** End CQ4819
   BAPersonalDX := False;
@@ -816,10 +781,11 @@ begin
              // ** passCode consists of Dx Code '^' Dx Desc /////
              passCode := Piece(tempCode,':',2) + U + Piece(tempCode,':',1);
              if Piece(passCode,U,1) <> TX799 then
-             begin
-                NewList := BAPLRec.BuildProblemListDxEntry(passCode);
-                CallV('ORQQPL ADD SAVE',[PatientInfo, ProviderID,  BAPLPt.PtVAMC, NewList]);
-                NewList.Free;
+             try
+               NewList := BAPLRec.BuildProblemListDxEntry(passCode);
+               CallVistA('ORQQPL ADD SAVE',[PatientInfo, ProviderID,  BAPLPt.PtVAMC, NewList]);
+             finally
+               FreeAndNil(NewList);
              end;
           end;
        end;
@@ -1097,7 +1063,7 @@ end;
 procedure TfrmBALocalDiagnoses.FormShow(Sender: TObject);
 begin
   lbSections.Selected[0] := false;
-  
+
    if lbSections.Count > 0 then
       ListDiagnosisCodes(lbSections.Items[0]);
 end;
@@ -1219,7 +1185,7 @@ end;
 function  TfrmBALocalDiagnoses.AddToWhatList(IsPLChecked:boolean; IsPDLChecked:boolean):string;
 begin
   Result := '';
-  
+
   if IsPLChecked and IsPDLChecked then
      Result := 'PL/PD'
   else
@@ -1558,4 +1524,3 @@ Initialization
   lexIENHoldList.Clear;
 
 end.
-

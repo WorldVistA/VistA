@@ -102,7 +102,7 @@ implementation
 {$R *.DFM}
 
 uses UCore, rCore, rPCE, fPCELex, fPCEOther, fVitals,fVisit, fFrame, fEncnt,
-     fEncounterFrame, uInit, VA508AccessibilityRouter, System.UITypes;
+     fEncounterFrame, uInit, VA508AccessibilityRouter, System.UITypes, rMisc;
 
 const
   TX_VDATE_REQ1 = 'Entered vitals information can not be saved without a Date.' + CRLF +
@@ -422,15 +422,18 @@ end;
 
 
 procedure TfrmEncVitals.FormShow(Sender: TObject);
+var
+ tmpRtnRec: TDllRtnRec;
 begin
   inherited;
   //Begin Vitals Lite
   {Visit is Assumed to Be selected when Opening Encounter Dialog}
-  LoadVitalsDLL;
-  if VitalsDLLHandle = 0 then // No Handle found
-    MessageDLG('Can''t find library '+VitalsDLLName+'.',mtError,[mbok],0)
-  else
-    LoadVitalsList;
+  tmpRtnRec := LoadVitalsDLL;
+  case tmpRtnRec.Return_Type of
+    DLL_Success: LoadVitalsList;
+    DLL_Missing: TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,mtError,[mbok],0);
+    DLL_VersionErr: TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,mtError,[mbok],0);
+  end;
   //End Vitals Lite
 //  frmEncVitals.caption := 'Vital entry for - '+ patient.name; {RAB 6/15/98}
   FormActivate(Sender);

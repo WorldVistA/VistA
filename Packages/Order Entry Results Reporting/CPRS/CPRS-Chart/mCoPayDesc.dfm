@@ -406,7 +406,7 @@ object fraCoPayDesc: TfraCoPayDesc
           end
           object lblCL2: TVA508StaticText
             Name = 'lblCL2'
-            Left = 48
+            Left = 50
             Top = 0
             Width = 70
             Height = 15

@@ -44,9 +44,9 @@ var
 begin
   if(NotUpdating) and (cboPatUnderstanding.Text <> '') then
   begin
-     for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCEPat(lstRenameMe.Objects[i]).Level := cboPatUnderstanding.ItemID;
+     for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
+        TPCEPat(lstCaptionList.Objects[i]).Level := cboPatUnderstanding.ItemID;
 
     GridChanged;
   end;
@@ -81,7 +81,7 @@ begin
   begin
     BeginUpdate;
     try
-      ok := (lstRenameMe.SelCount > 0);
+      ok := (lstCaptionList.SelCount > 0);
       lblUnderstanding.Enabled := ok;
       cboPatUnderstanding.Enabled := ok;
       if(ok) then
@@ -90,11 +90,11 @@ begin
         SameLOU := TRUE;
         LOU := NoPCEValue;
 
-       for i := 0 to lstRenameMe.Items.Count-1 do
+       for i := 0 to lstCaptionList.Items.Count-1 do
         begin
-          if lstRenameMe.Items[i].Selected then
+          if lstCaptionList.Items[i].Selected then
           begin
-            Obj := TPCEPat(lstRenameMe.Objects[i]);
+            Obj := TPCEPat(lstCaptionList.Objects[i]);
             if(First) then
             begin
               First := FALSE;

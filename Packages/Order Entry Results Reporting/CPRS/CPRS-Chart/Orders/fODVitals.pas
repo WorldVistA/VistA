@@ -55,7 +55,7 @@ implementation
 
 {$R *.DFM}
 
-uses uConst, ORFn, rODBase, fFrame;
+uses uConst, ORFn, rODBase, fFrame, VAUtils;
 
 const
   TX_NO_MEASUREMENT = 'A measurement must be selected.';

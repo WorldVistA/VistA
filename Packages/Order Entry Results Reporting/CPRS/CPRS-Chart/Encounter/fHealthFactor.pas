@@ -38,9 +38,9 @@ var
 begin
   if(NotUpdating) and (cboHealthLevel.Text <> '') then
   begin
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCEPat(lstRenameMe.Objects[i]).Level := cboHealthLevel.ItemID;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
+        TPCEPat(lstCaptionList.Objects[i]).Level := cboHealthLevel.ItemID;
     GridChanged;
   end;
 end;
@@ -74,7 +74,7 @@ begin
   begin
     BeginUpdate;
     try
-      ok := (lstRenameMe.SelCount > 0);
+      ok := (lstCaptionList.SelCount > 0);
       lblHealthLevel.Enabled := ok;
       cboHealthLevel.Enabled := ok;
       if(ok) then
@@ -83,11 +83,11 @@ begin
         SameHL := TRUE;
         HL := NoPCEValue;
 
-        for i := 0 to lstRenameMe.Items.Count-1 do
+        for i := 0 to lstCaptionList.Items.Count-1 do
         begin
-          if lstRenameMe.Items[i].Selected then
+          if lstCaptionList.Items[i].Selected then
           begin
-            Obj := TPCEHealth(lstRenameMe.Objects[i]);
+            Obj := TPCEHealth(lstCaptionList.Objects[i]);
             if(First) then
             begin
               First := FALSE;

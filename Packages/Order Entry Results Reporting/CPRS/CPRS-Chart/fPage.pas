@@ -45,7 +45,7 @@ var
 
 implementation
 
-uses ORFn, fFrame, uInit, VA508AccessibilityRouter;
+uses ORFn, fFrame, uInit, VA508AccessibilityRouter, VAUtils;
 
 {$R *.DFM}
 

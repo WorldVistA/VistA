@@ -80,12 +80,14 @@ begin
           cboService.Items.Add(SvcList.Strings[i]);
       BuildServiceTree(treService, SvcList, '0', nil) ;
       with treService do
-        begin
+      begin
         for i := 0 to Items.Count-1 do
+          begin
             if Items[i].Level > 0 then Items[i].Expanded := False else Items[i].Expanded := True;
+          end ;
         TopItem := Items[0] ;
         Selected := Items[0] ;
-        end;
+      end;
       FAscending := CurrentContext.Ascending;
       radSort.ItemIndex := Ord(not FAscending);
       CurrentService := CurrentContext.Service;

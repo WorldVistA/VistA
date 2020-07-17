@@ -36,10 +36,10 @@ type
     procedure lbxSectionExit(Sender: TObject);
     procedure lbModsExit(Sender: TObject);
     procedure btnOtherExit(Sender: TObject);
-    procedure lstRenameMeClick(Sender: TObject);
-    procedure lstRenameMeChange(Sender: TObject; Item: TListItem;
+    procedure lstCaptionListClick(Sender: TObject);
+    procedure lstCaptionListChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
-    procedure lstRenameMeInsert(Sender: TObject; Item: TListItem);
+    procedure lstCaptionListInsert(Sender: TObject; Item: TListItem);
   private
     FCheckingCode: boolean;
     FCheckingMods: boolean;
@@ -66,7 +66,7 @@ implementation
 {$R *.DFM}
 
 uses
-  fEncounterFrame, uConst, rCore, VA508AccessibilityRouter;
+  fEncounterFrame, uConst, rCore, VA508AccessibilityRouter, VAUtils;
 
 const
   TX_PROC_PROV = 'Each procedure requires selection of a Provider before it can be saved.';
@@ -79,9 +79,9 @@ var
 begin
   if(NotUpdating) then
   begin
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCEProc(lstRenameMe.Objects[i]).Quantity := spnProcQty.Position;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
+        TPCEProc(lstCaptionList.Objects[i]).Quantity := spnProcQty.Position;
     GridChanged;
   end;
 end;
@@ -93,9 +93,9 @@ begin
   inherited;
   if(NotUpdating) then
   begin
-    for i := 0 to lstRenameMe.Items.Count-1 do
-      if(lstRenameMe.Items[i].Selected) then
-        TPCEProc(lstRenameMe.Objects[i]).Provider := cboProvider.ItemIEN;
+    for i := 0 to lstCaptionList.Items.Count-1 do
+      if(lstCaptionList.Items[i].Selected) then
+        TPCEProc(lstCaptionList.Objects[i]).Provider := cboProvider.ItemIEN;
     FProviderChanging := TRUE; // CQ 11707
     try
       GridChanged;
@@ -140,7 +140,7 @@ begin
   begin
     BeginUpdate;
     try
-      ok := (lstRenameMe.SelCount > 0);
+      ok := (lstCaptionList.SelCount > 0);
       lblProcQty.Enabled := ok;
       txtProcQty.Enabled := ok;
       spnProcQty.Enabled := ok;
@@ -153,11 +153,11 @@ begin
         SameProv := TRUE;
         Prov := 0;
         Qty := 1;
-        for i := 0 to lstRenameMe.Items.Count-1 do
+        for i := 0 to lstCaptionList.Items.Count-1 do
         begin
-          if lstRenameMe.Items[i].Selected then
+          if lstCaptionList.Items[i].Selected then
           begin
-            Obj := TPCEProc(lstRenameMe.Objects[i]);
+            Obj := TPCEProc(lstCaptionList.Objects[i]);
             if(First) then
             begin
               First := FALSE;
@@ -270,11 +270,11 @@ begin
   ProcName := '';
   Hint := '';
 //  Needed := '';
-  for i := 0 to lstRenameMe.Items.Count-1 do
+  for i := 0 to lstCaptionList.Items.Count-1 do
   begin
-    if(lstRenameMe.Items[i].Selected) then
+    if(lstCaptionList.Items[i].Selected) then
     begin
-      Proc := TPCEProc(lstRenameMe.Objects[i]);
+      Proc := TPCEProc(lstCaptionList.Objects[i]);
       Codes := Codes + Proc.Code + U;
       if(ProcName = '') then
         ProcName := Proc.Narrative
@@ -326,12 +326,12 @@ begin
   try
     cnt := 0;
     Mods := ';';
-    for i := 0 to lstRenameMe.Items.Count-1 do
+    for i := 0 to lstCaptionList.Items.Count-1 do
     begin
-      if(lstRenameMe.Items[i].Selected) then
+      if(lstCaptionList.Items[i].Selected) then
       begin
         inc(cnt);
-        Mods := Mods + TPCEProc(lstRenameMe.Objects[i]).Modifiers;
+        Mods := Mods + TPCEProc(lstCaptionList.Objects[i]).Modifiers;
         FModsReadOnly := FALSE;
       end;
     end;
@@ -396,11 +396,11 @@ begin
       DoChk := FALSE;
       Add := (lbMods.Checked[Index]);
       ModIEN := piece(lbMods.Items[Index],U,1) + ';';
-      for i := 0 to lstRenameMe.Items.Count-1 do
+      for i := 0 to lstCaptionList.Items.Count-1 do
       begin
-        if(lstRenameMe.Items[i].Selected) then
+        if(lstCaptionList.Items[i].Selected) then
         begin
-          PCEObj := TPCEProc(lstRenameMe.Objects[i]);
+          PCEObj := TPCEProc(lstCaptionList.Objects[i]);
           idx := pos(';' + ModIEN, ';' + PCEObj.Modifiers);
           if(idx > 0) then
           begin
@@ -458,10 +458,10 @@ begin
     begin
       UpdateModifierList(lbxSection.Items, Index); // CQ#16439
       lbxSection.Checked[Index] := TRUE;    
-      for i := 0 to lstRenameMe.Items.Count-1 do
+      for i := 0 to lstCaptionList.Items.Count-1 do
       begin
-        if(lstRenameMe.Items[i].Selected) then
-        with TPCEProc(lstRenameMe.Objects[i]) do
+        if(lstCaptionList.Items[i].Selected) then
+        with TPCEProc(lstCaptionList.Objects[i]) do
         begin
           if(Category = GetCat) and
             (Pieces(lbxSection.Items[Index], U, 1, 2) = Code + U + Narrative) then
@@ -497,7 +497,7 @@ begin
       lbSection.SetFocus;
 end;
 
-procedure TfrmProcedures.lstRenameMeChange(Sender: TObject; Item: TListItem;
+procedure TfrmProcedures.lstCaptionListChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
   inherited;
@@ -505,14 +505,14 @@ begin
   ShowModifiers;
 end;
 
-procedure TfrmProcedures.lstRenameMeClick(Sender: TObject);
+procedure TfrmProcedures.lstCaptionListClick(Sender: TObject);
 begin
   inherited;
     Sync2Grid;
   ShowModifiers;
 end;
 
-procedure TfrmProcedures.lstRenameMeInsert(Sender: TObject; Item: TListItem);
+procedure TfrmProcedures.lstCaptionListInsert(Sender: TObject; Item: TListItem);
 begin
   inherited;
   Sync2Grid;
@@ -529,8 +529,8 @@ end;
 procedure TfrmProcedures.btnOtherExit(Sender: TObject);
 begin
   if TabIsPressed then begin
-    if lstRenameMe.CanFocus then
-      lstRenameMe.SetFocus;
+    if lstCaptionList.CanFocus then
+      lstCaptionList.SetFocus;
   end
   else if ShiftTabIsPressed then
     if lbMods.CanFocus then
@@ -578,15 +578,15 @@ begin
   { Comment out the block below (and the "var" block above) }
   {  to allow but not require entry of a provider with each new CPT entered}
 //------------------------------------------------
-  for i := 0 to lstRenameMe.Items.Count - 1 do
+  for i := 0 to lstCaptionList.Items.Count - 1 do
   begin
-    AProc := TPCEProc(lstRenameMe.Objects[i]);
+    AProc := TPCEProc(lstCaptionList.Objects[i]);
     if AProc.fIsOldProcedure then continue;
     if (AProc.Provider = 0) then
     begin
       Result := True;
-      lstRenameMe.ItemIndex := i;
-      lstRenameMe.Items[i].Selected := true;
+      lstCaptionList.ItemIndex := i;
+      lstCaptionList.Items[i].Selected := true;
       exit;
     end;
   end;
@@ -598,8 +598,8 @@ var
   i: integer;
 begin
   inherited;
-  for i := 0 to lstRenameMe.Items.Count - 1 do
-    TPCEProc(lstRenameMe.Objects[i]).fIsOldProcedure := True;
+  for i := 0 to lstCaptionList.Items.Count - 1 do
+    TPCEProc(lstCaptionList.Objects[i]).fIsOldProcedure := True;
 end;
 
 initialization

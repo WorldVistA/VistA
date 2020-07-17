@@ -27,6 +27,9 @@ implementation
 
 {$R *.DFM}
 
+uses
+  VAUtils;
+
 const
   TX_INVAL_MSG = 'Not a valid electronic signature code.  Enter a valid code or press Cancel.';
   TX_INVAL_CAP = 'Unrecognized Signature Code';

@@ -9,82 +9,54 @@ uses
 
 type
   TfrmODMedIV = class(TfrmODBase)
-    Label1: TLabel;
-    lblAdminTime: TVA508StaticText;
-    lblFirstDose: TVA508StaticText;
-    lbl508Required: TVA508StaticText;
     VA508CompOrderSig: TVA508ComponentAccessibility;
     VA508CompRoute: TVA508ComponentAccessibility;
     VA508CompType: TVA508ComponentAccessibility;
     VA508CompSchedule: TVA508ComponentAccessibility;
     VA508CompGrdSelected: TVA508ComponentAccessibility;
     pnlTop: TGridPanel;
-    pnlTopRight: TGridPanel;
     pnlTopRightTop: TPanel;
     pnlTopRightLbls: TPanel;
-    pnlCombo: TPanel;
-    cboAdditive: TORComboBox;
-    tabFluid: TTabControl;
-    cboSolution: TORComboBox;
     lblAmount: TLabel;
     lblComponent: TLabel;
     lblAddFreq: TLabel;
     lblPrevAddFreq: TLabel;
-    Panel2: TPanel;
-    lblComments: TLabel;
-    memComments: TCaptionMemo;
     grdSelected: TCaptionStringGrid;
     txtSelected: TCaptionEdit;
     cboSelected: TCaptionComboBox;
     cboAddFreq: TCaptionComboBox;
+    pgctrlSolutionsAndAdditives: TPageControl;
+    tbshtSolutions: TTabSheet;
+    tbshtAdditives: TTabSheet;
+    cboAdditive: TORComboBox;
+    cboSolution: TORComboBox;
     cmdRemove: TButton;
-    pnlMiddle: TGridPanel;
-    pnlMiddleSub1: TGridPanel;
-    pnlMiddleSub2: TGridPanel;
-    pnlMiddleSub3: TGridPanel;
-    pnlMiddleSub4: TGridPanel;
-    pnlMS11: TPanel;
-    pnlMS12: TPanel;
-    pnlMS21: TPanel;
-    pnlMS22: TPanel;
-    pnlMS31: TPanel;
-    pnlMS41: TPanel;
-    Panel8: TPanel;
-    Panel9: TPanel;
-    Panel10: TPanel;
-    lblPriority: TLabel;
-    cboPriority: TORComboBox;
-    txtAllIVRoutes: TLabel;
+    pnlComments: TPanel;
+    lblComments: TLabel;
+    memComments: TCaptionMemo;
     lblRoute: TLabel;
-    cboRoute: TORComboBox;
+    txtAllIVRoutes: TLabel;
     lblType: TLabel;
     lblTypeHelp: TLabel;
-    cboType: TComboBox;
     lblSchedule: TLabel;
     txtNSS: TLabel;
+    lblInfusionRate: TLabel;
+    cboRoute: TORComboBox;
+    cboType: TComboBox;
     cboSchedule: TORComboBox;
     chkPRN: TCheckBox;
-    lblLimit: TLabel;
-    lblInfusionRate: TLabel;
-    pnlXDuration: TPanel;
-    pnlDur: TGridPanel;
-    pnlTxtDur: TPanel;
-    txtXDuration: TCaptionEdit;
-    pnlCbDur: TPanel;
-    cboDuration: TComboBox;
-    GridPanel1: TGridPanel;
-    Panel1: TPanel;
     txtRate: TCaptionEdit;
-    Panel3: TPanel;
     cboInfusionTime: TComboBox;
+    lblPriority: TLabel;
+    lblLimit: TLabel;
+    cboPriority: TORComboBox;
+    txtXDuration: TCaptionEdit;
+    cboDuration: TComboBox;
+    lblFirstDose: TVA508StaticText;
+    lblAdminTime: TVA508StaticText;
     chkDoseNow: TCheckBox;
-    pnlBottom: TPanel;
-    pnlButtons: TPanel;
-    pnlMemOrder: TPanel;
-    Panel6: TPanel;
-    ScrollBox1: TScrollBox;
-    pnlForm: TPanel;
-    pnlB1: TPanel;
+    lbl508Required: TVA508StaticText;
+    Label1: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure tabFluidChange(Sender: TObject);
     procedure  cboAdditiveNeedData(Sender: TObject; const StartFrom: string; Direction,
@@ -162,8 +134,6 @@ type
       var Text: string);
     procedure ScrollBox1Resize(Sender: TObject);
   private
-    MinFormHeight: Integer; //Determines when the scrollbars appear
-    MinFormWidth: Integer;
     FInpatient: Boolean;
     FNSSAdminTime: string;
     FNSSScheduleType: string;
@@ -191,7 +161,6 @@ type
     function UpdateAddFreq(OI: integer): string;
     function IsAltCtrl_L_Pressed(Shift : TShiftState; Key : Word) : Boolean;
     procedure SetCtrlAlt_L_LabelAccessText(var Text: string; theLabel : TLabel);
-    procedure SetScrollBarHeight(FontSize: Integer);
   public
     OrdAction: integer;
     procedure InitDialog; override;
@@ -296,7 +265,6 @@ procedure TfrmODMedIV.FormCreate(Sender: TObject);
 
 var
   Restriction: string;
-  I: Integer;
 begin
   frmFrame.pnlVisit.Enabled := false;
   AutoSizeDisabled := true;
@@ -321,22 +289,34 @@ begin
   CtrlInits.LoadDefaults(ODForIVFluids);         // ODForIVFluids returns TStrings with defaults
   InitDialog;
 
+  // Set special font colors and sizes
+  txtAllIVRoutes.Font.Color := clBlue;
+  txtAllIVRoutes.Font.Size := txtAllIVRoutes.Font.Size - 2;
+  lblTypeHelp.Font.Color := clBlue;
+  lblTypeHelp.Font.Size := lblTypeHelp.Font.Size - 2;
+  txtNSS.Font.Color := clBlue;
+  txtNSS.Font.Size := txtNSS.Font.Size - 2;
 
-  //Set the parent
-  memOrder.Parent := pnlMemOrder;
-  memOrder.Align := alClient;
-  cmdAccept.Parent := pnlButtons;
-  cmdQuit.Parent := pnlButtons;
-  cmdAccept.Align := alTop;
-  cmdQuit.Align := alBottom;
+  // Move inherited controls onto the TGridPanel
+  pnlTop.ControlCollection.BeginUpdate;
+  try
+    pnlTop.ControlCollection.AddControl(memOrder, 0, 14);
+    pnlTop.ControlCollection.ControlItems[0, 14].ColumnSpan := 8;
+    pnlTop.ControlCollection.ControlItems[0, 14].RowSpan := 3;
+    memOrder.Parent := pnlTop;
+    memOrder.Align := alClient;
 
-  SetScrollBarHeight(cmdQuit.Font.Size);
+    pnlTop.ControlCollection.AddControl(cmdAccept, 8, 15);
+    cmdAccept.Parent := pnlTop;
+    cmdAccept.Align := alBottom;
 
-  for i := ComponentCount - 1 downto 0 do
-  begin
-    ReplicatePreferences(Components[i]);
+    pnlTop.ControlCollection.AddControl(cmdQuit, 8, 16);
+    cmdQuit.Parent := pnlTop;
+    cmdQuit.Align := alBottom;
+  finally
+    pnlTop.ControlCollection.EndUpdate;
   end;
-
+  pnlTop.Align := alClient;
 end;
 
 procedure TfrmODMedIV.FormDestroy(Sender: TObject);
@@ -351,6 +331,7 @@ end;
 procedure TfrmODMedIV.FormResize(Sender: TObject);
 var
 isNewOrder: boolean;
+addFreqLeft : integer;
 begin
   inherited;
   if OrdAction in [ORDER_COPY, ORDER_EDIT] then isNewOrder := false
@@ -374,6 +355,9 @@ begin
   end;
   lblAmount.Left := grdSelected.Left + grdSelected.ColWidths[0];
   lblAddFreq.Left := grdSelected.Left +  grdSelected.ColWidths[0] +  grdSelected.ColWidths[1] + grdSelected.ColWidths[2];
+  addFreqLeft := lblAmount.Left + Canvas.TextWidth(lblAmount.Caption + '  ');
+  if addFreqLeft > lblAddFreq.Left then lblAddFreq.Left := addFreqLeft;
+
   if isNewOrder = false then
     begin
       lblPrevAddFreq.Visible := True;
@@ -456,8 +440,9 @@ begin
         cboAddFreq.Items.Add('See Comments');
       end;
   end;
-  tabFluid.TabIndex := 0;
-  tabFluidChange(Self);            // this makes cboSolution visible
+  pgctrlSolutionsAndAdditives.ActivePage := tbshtSolutions;
+//  tabFluid.TabIndex := 0;
+//  tabFluidChange(Self);            // this makes cboSolution visible
   cboSolution.InitLongList('');
   cboAdditive.InitLongList('');
   JAWSON := true;
@@ -490,66 +475,66 @@ end;
 
 procedure TfrmODMedIV.ScrollBox1Resize(Sender: TObject);
 begin
-  inherited;
-  ScrollBox1.OnResize := nil;
-  //At least minimum
-   if (pnlForm.Width < MinFormWidth) or (pnlForm.Height < MinFormHeight) then
-   pnlForm.Align := alNone;
-   pnlForm.AutoSize := false;
-   if (pnlForm.Width < MinFormWidth) then pnlForm.Width := MinFormWidth;
-   if pnlForm.Height < MinFormHeight then pnlForm.Height := MinFormHeight;
-
-
-  if (ScrollBox1.Width >= MinFormWidth) then
-  begin
-   if (ScrollBox1.Height >= (MinFormHeight)) then
-   begin
-       pnlForm.Align := alClient;
-   end else begin
-     pnlForm.Align := alTop;
-     pnlForm.AutoSize := true;
-   end;
-  end else begin
-   if (ScrollBox1.Height >= (MinFormHeight)) then
-   begin
-    pnlForm.Align := alNone;
-    pnlForm.Top := 0;
-    pnlForm.Left := 0;
-    pnlForm.AutoSize := false;
-    pnlForm.Width := MinFormWidth;
-    pnlForm.height :=  ScrollBox1.Height;
-   end else begin
-    pnlForm.Align := alNone;
-    pnlForm.Top := 0;
-    pnlForm.Left := 0;
-    pnlForm.AutoSize := true;
-   end;
-  end;
-
- {
- if ScrollBox1.Height >= (MinFormHeight + 5) then
-  begin
-      pnlForm.Align := alClient;
-      end else
-  if (ScrollBox1.Width < MinFormWidth)  then
-  begin
-
-   pnlForm.Align := alNone;
-   pnlForm.Top := 0;
-   pnlForm.Left := 0;
-   pnlForm.autosize := false;
-   if pnlForm.Width < MinFormWidth then
-    pnlForm.Width := MinFormWidth;
-
-   if pnlForm.height < MinFormHeight then
-    pnlForm.height :=  MinFormHeight
-  end else
-  begin
-    pnlForm.Align := alTop;
-    pnlForm.AutoSize := true;
-  end;
-  Caption := IntToStr(ScrollBox1.Width); }
-  ScrollBox1.OnResize := ScrollBox1Resize;
+//  inherited;
+//  ScrollBox1.OnResize := nil;
+//  //At least minimum
+//   if (pnlForm.Width < MinFormWidth) or (pnlForm.Height < MinFormHeight) then
+//   pnlForm.Align := alNone;
+//   pnlForm.AutoSize := false;
+//   if (pnlForm.Width < MinFormWidth) then pnlForm.Width := MinFormWidth;
+//   if pnlForm.Height < MinFormHeight then pnlForm.Height := MinFormHeight;
+//
+//
+//  if (ScrollBox1.Width >= MinFormWidth) then
+//  begin
+//   if (ScrollBox1.Height >= (MinFormHeight)) then
+//   begin
+//       pnlForm.Align := alClient;
+//   end else begin
+//     pnlForm.Align := alTop;
+//     pnlForm.AutoSize := true;
+//   end;
+//  end else begin
+//   if (ScrollBox1.Height >= (MinFormHeight)) then
+//   begin
+//    pnlForm.Align := alNone;
+//    pnlForm.Top := 0;
+//    pnlForm.Left := 0;
+//    pnlForm.AutoSize := false;
+//    pnlForm.Width := MinFormWidth;
+//    pnlForm.height :=  ScrollBox1.Height;
+//   end else begin
+//    pnlForm.Align := alNone;
+//    pnlForm.Top := 0;
+//    pnlForm.Left := 0;
+//    pnlForm.AutoSize := true;
+//   end;
+//  end;
+//
+// {
+// if ScrollBox1.Height >= (MinFormHeight + 5) then
+//  begin
+//      pnlForm.Align := alClient;
+//      end else
+//  if (ScrollBox1.Width < MinFormWidth)  then
+//  begin
+//
+//   pnlForm.Align := alNone;
+//   pnlForm.Top := 0;
+//   pnlForm.Left := 0;
+//   pnlForm.autosize := false;
+//   if pnlForm.Width < MinFormWidth then
+//    pnlForm.Width := MinFormWidth;
+//
+//   if pnlForm.height < MinFormHeight then
+//    pnlForm.height :=  MinFormHeight
+//  end else
+//  begin
+//    pnlForm.Align := alTop;
+//    pnlForm.AutoSize := true;
+//  end;
+//  Caption := IntToStr(ScrollBox1.Width); }
+//  ScrollBox1.OnResize := ScrollBox1Resize;
 end;
 
 procedure TfrmODMedIV.SetCtrlAlt_L_LabelAccessText(var Text: string; theLabel : TLabel);
@@ -786,7 +771,7 @@ begin
                   begin
                     SetError(Tx_BAG_NO_COMMENTS + cells[0,i] + Tx_BAG_NO_COMMENTS1);
                   end;
-                    
+
              end;
         end;
   end;
@@ -903,7 +888,7 @@ begin
          SetError('Duration with a unit of "doses" must be greater then 0 and less then 2000000');
      end;
   //if AnErrMsg = '' then self.FInitialOrderID := True;
-  
+
 end;
 
 function TFrmODMedIV.ValidateInfusionRate(Rate: string): string;
@@ -1153,7 +1138,7 @@ begin
       AnInstance := NextInstance('ADDITIVE', AnInstance);
     end; {while AnInstance - ADDITIVE}
     SetControl(cboType, 'TYPE', 1);
-    if self.grdSelected.RowCount > 0 then self.txtAllIVRoutes.Visible := True;    
+    if self.grdSelected.RowCount > 0 then self.txtAllIVRoutes.Visible := True;
     updateRoute;
     AResponse := FindResponseByName('ROUTE', 1);
     if AResponse <> nil then
@@ -1201,7 +1186,7 @@ begin
          lblSchedule.Enabled := True;
          cboschedule.Enabled := True;
          //if popDuration.Items.IndexOf(popDoses) = -1 then popDuration.Items.Add(popDoses);
-         if cboDuration.Items.IndexOf('doses') = -1 then cboDuration.Items.Add('doses');         
+         if cboDuration.Items.IndexOf('doses') = -1 then cboDuration.Items.Add('doses');
          txtNss.Visible := true;
          chkDoseNow.Visible := true;
          chkPRN.Enabled := True;
@@ -1326,20 +1311,24 @@ end;
 
 procedure TfrmODMedIV.tabFluidChange(Sender: TObject);
 begin
-  inherited;
-  case TabFluid.TabIndex of
-  0: begin
-       cboSolution.Visible := True;
-       cboAdditive.Visible := False;
-     end;
-  1: begin
-       cboAdditive.Visible := True;
-       cboSolution.Visible := False;
-     end;
-  end;
-  if cboSolution.Visible then
-    ActiveControl := cboSolution;
-  if cboAdditive.Visible then
+//  inherited;
+//  case TabFluid.TabIndex of
+//  0: begin
+//       cboSolution.Visible := True;
+//       cboAdditive.Visible := False;
+//     end;
+//  1: begin
+//       cboAdditive.Visible := True;
+//       cboSolution.Visible := False;
+//     end;
+//  end;
+//  if cboSolution.Visible then
+//    ActiveControl := cboSolution;
+//  if cboAdditive.Visible then
+//    ActiveControl := cboAdditive;
+  if pgctrlSolutionsAndAdditives.ActivePage = tbshtSolutions then
+    ActiveControl := cboSolution
+  else
     ActiveControl := cboAdditive;
 end;
 
@@ -1436,7 +1425,7 @@ Const
   T1 = 'By checking the "Give additional dose now" box, you have actually entered two orders for the same medication.';
   T2 = #13#13'The first order''s administrative schedule is "';
   T3 = #13'The second order''s administrative schedule is "';
-  T4 = #13#13'Do you want to continue?';    
+  T4 = #13#13'Do you want to continue?';
   T5 = '" and a priority of "';
   T1A = 'By checking the "Give additional dose now" box, you have actually entered a new order with the schedule "NOW"';
   T2A = ' in addition to the one you are placing for the same medication.';
@@ -1746,7 +1735,7 @@ begin
   inherited;
   oidx := cboRoute.Items.IndexOf('OTHER');
   if oidx = -1 then exit;
-  
+
   if cboRoute.ItemIndex = oidx then
     begin
       otherRoute := CreateOtherRoute;
@@ -1796,7 +1785,7 @@ procedure TfrmODMedIV.cboRouteKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   inherited;
-  if (Key = VK_BACK) and (cboRoute.Text = '') then cboRoute.ItemIndex := -1;  
+  if (Key = VK_BACK) and (cboRoute.Text = '') then cboRoute.ItemIndex := -1;
 end;
 
 procedure TfrmODMedIV.cboAdditiveMouseClick(Sender: TObject);
@@ -2110,7 +2099,7 @@ procedure TfrmODMedIV.cboScheduleKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   inherited;
-  if (Key = VK_BACK) and (cboSchedule.Text = '') then cboSchedule.ItemIndex := -1;  
+  if (Key = VK_BACK) and (cboSchedule.Text = '') then cboSchedule.ItemIndex := -1;
 end;
 
 procedure TfrmODMedIV.cboSelectedCloseUp(Sender: TObject);
@@ -2366,7 +2355,7 @@ end;
 
 procedure TfrmODMedIV.SetFontSize( FontSize: integer);
 begin
-  inherited SetFontSize( FontSize );
+//  inherited SetFontSize( FontSize );
   DoSetFontSize( FontSize );
 end;
 
@@ -2383,24 +2372,23 @@ end;
 
 procedure TfrmODMedIV.DoSetFontSize( FontSize: integer);
 begin
-  tabFluid.TabHeight := Abs(Font.Height) + 4;
-  grdSelected.DefaultRowHeight := Abs(Font.Height) + 8;
-
-  SetScrollBarHeight(FontSize);
-
+//  tabFluid.TabHeight := Abs(Font.Height) + 4;
+//  grdSelected.DefaultRowHeight := Abs(Font.Height) + 8;
+//
+//  SetScrollBarHeight(FontSize);
+  Self.Font.Assign(Screen.IconFont);
 end;
 
-procedure TfrmODMedIV.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TfrmODMedIV.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   inherited;
-  if (Key = VK_TAB) and (ssCtrl in Shift) then
-  begin
-    //Back-tab works the same as forward-tab because there are only two tabs.
-    tabFluid.TabIndex := (tabFluid.TabIndex + 1) mod tabFluid.Tabs.Count;
-    Key := 0;
-    tabFluidChange(tabFluid);
-  end;
+//  if (Key = VK_Tab) and (ssCtrl in Shift) then
+//    begin
+//      // Back-tab works the same as forward-tab because there are only two tabs.
+//      tabFluid.TabIndex := (tabFluid.TabIndex + 1) mod tabFluid.Tabs.Count;
+//      Key := 0;
+//      tabFluidChange(tabFluid);
+//    end;
 end;
 
 procedure TfrmODMedIV.FormKeyPress(Sender: TObject; var Key: Char);
@@ -2721,39 +2709,6 @@ begin
   inherited;
   if Changing then Exit;
   ControlChange(Sender);
-end;
-
-procedure TfrmODMedIV.SetScrollBarHeight(FontSize: Integer);
-begin
-
-  txtXDuration.Constraints.MaxHeight := cboDuration.Height;
-  txtXDuration.Height :=  cboDuration.Height;
-  txtRate.Constraints.MaxHeight := cboInfusionTime.Height;
-  txtRate.Height := cboInfusionTime.Height;
-
-  //Add constriant for remove button
-  cmdRemove.Constraints.MaxHeight := TextHeightByFont(cmdRemove.Font.Handle, 'Z') + 12;
-
-  //Dynamic formheight
-  MinFormHeight := pnlTopRightLbls.Height +
-  (TextHeightByFont(grdSelected.Font.Handle, 'Z') * 6) + (cmdRemove.Height + 5)
-  + (TextHeightByFont(lblComponent.Font.Handle, 'Z') + 4) +
-  (TextHeightByFont(memComments.Font.Handle, 'Z') * 6) + pnlB1.Height;
-
-
-  //formwidth based on fontsize
-
-  case FontSize of
-   8: MinFormWidth := 600;
-   10: MinFormWidth := 600;
-   12: MinFormWidth := 700;
-   14: MinFormWidth := 800;
-   18: MinFormWidth := 1000;
-  end;
-
-
-  Self.Realign;
-
 end;
 
 end.

@@ -89,6 +89,9 @@ implementation
 
 {$R *.dfm}
 
+uses
+	VAUtils;
+
 var
 
   LastDFN      : string;

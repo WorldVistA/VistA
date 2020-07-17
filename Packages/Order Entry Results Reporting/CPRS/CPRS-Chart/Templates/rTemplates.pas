@@ -2,40 +2,48 @@ unit rTemplates;
 
 interface
 
-uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, uConst, TRPCB, uTIU;
+uses
+  SysUtils,
+  Classes,
+  ORNet,
+  ORFn,
+  rCore,
+  uCore,
+  uConst,
+  TRPCB,
+  uTIU;
 
 { Templates }
-procedure GetTemplateRoots;
-function IsUserTemplateEditor(TemplateID: string; UserID :Int64): boolean;
-procedure GetTemplateChildren(ID: string);
-procedure GetTemplateBoilerplate(ID: string);
+procedure GetTemplateRoots(aLst: TStrings);
+function IsUserTemplateEditor(TemplateID: string; UserID: Int64): boolean;
+procedure GetTemplateChildren(ID: string; aLst: TStrings);
+procedure GetTemplateBoilerplate(ID: string; aLst: TStrings);
 procedure GetTemplateText(BoilerPlate: TStrings);
 function IsTemplateEditor(ID: string): boolean;
-//function SubSetOfTemplateOwners(const StartFrom: string; Direction: Integer): TStrings;
 function UpdateTemplate(ID: string; Fields: TStrings): string;
 procedure UpdateChildren(ID: string; Children: TStrings);
 procedure DeleteTemplates(DelList: TStrings);
-procedure GetObjectList;
-procedure GetAllowedPersonalObjects;
+procedure GetObjectList(aLst: TStrings);
+procedure GetAllowedPersonalObjects(aLst: TStrings);
 procedure TestBoilerplate(BoilerPlate: TStrings);
 function GetTemplateAccess(ID: string): integer;
-function SubSetOfBoilerplatedTitles(const StartFrom: string; Direction: Integer): TStrings;
+function SubSetOfBoilerplatedTitles(const StartFrom: string; Direction: integer; aLst: TStrings): boolean;
 function GetTitleBoilerplate(TitleIEN: string): string;
 function GetUserTemplateDefaults(LoadFromServer: boolean = FALSE): string;
 procedure SetUserTemplateDefaults(Value: string; PieceNum: integer);
 procedure SaveUserTemplateDefaults;
-procedure LoadTemplateDescription(TemplateIEN: string);
-function GetTemplateAllowedReminderDialogs: TStrings;
+procedure LoadTemplateDescription(TemplateIEN: string; aLst: TStrings);
+function GetTemplateAllowedReminderDialogs(aLst: TStrings): boolean;
 function IsRemDlgAllowed(RemDlgIEN: string): integer;
 function LockTemplate(const ID: string): boolean; // returns true if successful
 procedure UnlockTemplate(const ID: string);
 function GetLinkedTemplateData(const Link: string): string;
-function SubSetOfAllTitles(const StartFrom: string; Direction: Integer): TStrings;
+function SubSetOfAllTitles(const StartFrom: string; Direction: integer; aLst: TStrings): boolean;
 
 { Template Fields }
-function SubSetOfTemplateFields(const StartFrom: string; Direction: Integer): TStrings;
-function LoadTemplateField(const DlgFld: string): TStrings;
-function LoadTemplateFieldByIEN(const DlgFld: string): TStrings;
+function SubSetOfTemplateFields(const StartFrom: string; Direction: integer; aLst: TStrings): boolean;
+function LoadTemplateField(const DlgFld: string; aLst: TStrings): boolean;
+function LoadTemplateFieldByIEN(const DlgFld: string; aLst: TStrings): boolean;
 function CanEditTemplateFields: boolean;
 function UpdateTemplateField(const ID: string; Fields: TStrings): string;
 function LockTemplateField(const ID: string): boolean;
@@ -50,40 +58,46 @@ function BuildTemplateFields(XMLString: TStrings): boolean;
 function ImportLoadedFields(ResultSet: TStrings): boolean;
 
 implementation
+
 var
   uUserTemplateDefaults: string = '';
   uCanEditDlgFldChecked: boolean = FALSE;
   uCanEditDlgFlds: boolean;
 
-{ Template RPCs -------------------------------------------------------------- }
+  { Template RPCs -------------------------------------------------------------- }
 
-procedure GetTemplateRoots;
+procedure GetTemplateRoots(aLst: TStrings);
 begin
-  CallV('TIU TEMPLATE GETROOTS', [User.DUZ]);
+  CallVistA('TIU TEMPLATE GETROOTS', [User.DUZ], aLst);
 end;
 
-function IsUserTemplateEditor(TemplateID: string; UserID :Int64): boolean;
+function IsUserTemplateEditor(TemplateID: string; UserID: Int64): boolean;
+var
+  aStr: string;
 begin
-  if StrToIntDef(TemplateID,0) > 0 then
-    Result := (Piece(sCallV('TIU TEMPLATE ISEDITOR', [TemplateID, UserID]),U,1) = '1')
+  if StrToIntDef(TemplateID, 0) > 0 then
+    begin
+      CallVistA('TIU TEMPLATE ISEDITOR', [TemplateID, UserID], aStr);
+      Result := (Piece(aStr, U, 1) = '1')
+    end
   else
     Result := FALSE;
 end;
 
-procedure GetTemplateChildren(ID: string);
+procedure GetTemplateChildren(ID: string; aLst: TStrings);
 begin
-  if(ID = '') or (ID = '0') then
-    RPCBrokerV.Results.Clear
+  if (ID = '') or (ID = '0') then
+    aLst.Clear
   else
-    CallV('TIU TEMPLATE GETITEMS', [ID]);
+    CallVistA('TIU TEMPLATE GETITEMS', [ID], aLst);
 end;
 
-procedure GetTemplateBoilerplate(ID: string);
+procedure GetTemplateBoilerplate(ID: string; aLst: TStrings);
 begin
-  if(ID = '') or (ID = '0') then
-    RPCBrokerV.Results.Clear
+  if (ID = '') or (ID = '0') then
+    aLst.Clear
   else
-    CallV('TIU TEMPLATE GETBOIL', [ID]);
+    CallVistA('TIU TEMPLATE GETBOIL', [ID], aLst);
 end;
 
 procedure GetTemplateText(BoilerPlate: TStrings);
@@ -91,56 +105,62 @@ var
   i: integer;
 
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU TEMPLATE GETTEXT';
-    Param[0].PType := literal;
-    Param[0].Value := Patient.DFN;
-    Param[1].PType := literal;
-    Param[1].Value := Encounter.VisitStr;
-    Param[2].PType := list;
-    for i := 0 to BoilerPlate.Count-1 do
-      Param[2].Mult[IntToStr(i+1)+',0'] := BoilerPlate[i];
-    CallBroker;
-    RPCBrokerV.Results.Delete(0);
-    FastAssign(RPCBrokerV.Results, BoilerPlate);
-    RPCBrokerV.Results.Clear;
+  LockBroker;
+  try
+    with RPCBrokerV do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'TIU TEMPLATE GETTEXT';
+      Param[0].PType := literal;
+      Param[0].Value := Patient.DFN;
+      Param[1].PType := literal;
+      Param[1].Value := Encounter.VisitStr;
+      Param[2].PType := list;
+      for i := 0 to BoilerPlate.Count - 1 do
+        Param[2].Mult[IntToStr(i + 1) + ',0'] := BoilerPlate[i];
+      CallBroker;
+      RPCBrokerV.Results.Delete(0);
+      FastAssign(RPCBrokerV.Results, BoilerPlate);
+      RPCBrokerV.Results.Clear;
+    end;
+  finally
+    UnlockBroker;
   end;
 end;
 
 function IsTemplateEditor(ID: string): boolean;
+var
+  aStr: string;
 begin
-  Result := (sCallV('TIU TEMPLATE ISEDITOR', [ID, User.DUZ]) = '1');
+  CallVistA('TIU TEMPLATE ISEDITOR', [ID, User.DUZ], aStr);
+  Result := (aStr = '1');
 end;
-
-//function SubSetOfTemplateOwners(const StartFrom: string; Direction: Integer): TStrings;
-//begin
-//  CallV('TIU TEMPLATE LISTOWNR', [StartFrom, Direction]);
-//  MixedCaseList(RPCBrokerV.Results);
-//  Result := RPCBrokerV.Results;
-//end;
 
 function UpdateTIURec(RPC, ID: string; Fields: TStrings): string;
 var
   i, j: integer;
 
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := RPC;
-    Param[0].PType := literal;
-    Param[0].Value := ID;
-    Param[1].PType := list;
-    for i := 0 to Fields.Count-1 do
+  LockBroker;
+  try
+    with RPCBrokerV do
     begin
-      j := pos('=',Fields[i]);
-      if(j > 0) then
-        Param[1].Mult[Fields.Names[i]] := copy(Fields[i],j+1,MaxInt);
+      ClearParameters := True;
+      RemoteProcedure := RPC;
+      Param[0].PType := literal;
+      Param[0].Value := ID;
+      Param[1].PType := list;
+      for i := 0 to Fields.Count - 1 do
+        begin
+          j := pos('=', Fields[i]);
+          if (j > 0) then
+            Param[1].Mult[Fields.Names[i]] := copy(Fields[i], j + 1, MaxInt);
+        end;
+      CallBroker;
+      Result := RPCBrokerV.Results[0];
     end;
-    CallBroker;
-    Result := RPCBrokerV.Results[0];
+  finally
+    UnlockBroker;
   end;
 end;
 
@@ -154,16 +174,21 @@ var
   i: integer;
 
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU TEMPLATE SET ITEMS';
-    Param[0].PType := literal;
-    Param[0].Value := ID;
-    Param[1].PType := list;
-    for i := 0 to Children.Count-1 do
-      Param[1].Mult[IntToStr(i+1)] := Children[i];
-    CallBroker;
+  LockBroker;
+  try
+    with RPCBrokerV do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'TIU TEMPLATE SET ITEMS';
+      Param[0].PType := literal;
+      Param[0].Value := ID;
+      Param[1].PType := list;
+      for i := 0 to Children.Count - 1 do
+        Param[1].Mult[IntToStr(i + 1)] := Children[i];
+      CallBroker;
+    end;
+  finally
+    UnlockBroker;
   end;
 end;
 
@@ -172,28 +197,33 @@ var
   i: integer;
 
 begin
-  if(DelList.Count > 0) then
-  begin
-    with RPCBrokerV do
+  if (DelList.Count > 0) then
     begin
-      ClearParameters := True;
-      RemoteProcedure := 'TIU TEMPLATE DELETE';
-      Param[0].PType := list;
-      for i := 0 to DelList.Count-1 do
-        Param[0].Mult[IntToStr(i+1)] := DelList[i];
-      CallBroker;
+      LockBroker;
+      try
+        with RPCBrokerV do
+        begin
+          ClearParameters := True;
+          RemoteProcedure := 'TIU TEMPLATE DELETE';
+          Param[0].PType := list;
+          for i := 0 to DelList.Count - 1 do
+            Param[0].Mult[IntToStr(i + 1)] := DelList[i];
+          CallBroker;
+        end;
+      finally
+        UnlockBroker;
+      end;
     end;
-  end;
 end;
 
-procedure GetObjectList;
+procedure GetObjectList(aLst: TStrings);
 begin
-  CallV('TIU GET LIST OF OBJECTS', []);
+  CallVistA('TIU GET LIST OF OBJECTS', [], aLst);
 end;
 
-procedure GetAllowedPersonalObjects;
+procedure GetAllowedPersonalObjects(aLst: TStrings);
 begin
-  CallV('TIU TEMPLATE PERSONAL OBJECTS', []);
+  CallVistA('TIU TEMPLATE PERSONAL OBJECTS', [], aLst);
 end;
 
 procedure TestBoilerplate(BoilerPlate: TStrings);
@@ -201,38 +231,52 @@ var
   i: integer;
 
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU TEMPLATE CHECK BOILERPLATE';
-    Param[0].PType := list;
-    for i := 0 to BoilerPlate.Count-1 do
-      Param[0].Mult['2,'+IntToStr(i+1)+',0'] := BoilerPlate[i];
-    CallBroker;
+  LockBroker;
+  try
+    with RPCBrokerV do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'TIU TEMPLATE CHECK BOILERPLATE';
+      Param[0].PType := list;
+      for i := 0 to BoilerPlate.Count - 1 do
+        Param[0].Mult['2,' + IntToStr(i + 1) + ',0'] := BoilerPlate[i];
+      CallBroker;
+    end;
+  finally
+    UnlockBroker;
   end;
 end;
 
 function GetTemplateAccess(ID: string): integer;
+var
+  aStr: string;
 begin
-  Result := StrToIntDef(sCallV('TIU TEMPLATE ACCESS LEVEL', [ID, User.DUZ, Encounter.Location]), 0);
+  CallVistA('TIU TEMPLATE ACCESS LEVEL', [ID, User.DUZ, Encounter.Location], aStr);
+  Result := StrToIntDef(aStr, 0);
 end;
 
-function SubSetOfBoilerplatedTitles(const StartFrom: string; Direction: Integer): TStrings;
+function SubSetOfBoilerplatedTitles(const StartFrom: string; Direction: integer; aLst: TStrings): boolean;
 begin
-  CallV('TIU LONG LIST BOILERPLATED', [StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
+  Result := CallVistA('TIU LONG LIST BOILERPLATED', [StartFrom, Direction], aLst);
 end;
 
 function GetTitleBoilerplate(TitleIEN: string): string;
+var
+  aLst: TStringList;
 begin
-  CallV('TIU GET BOILERPLATE', [TitleIEN]);
-  Result := RPCBrokerV.Results.Text;
+  aLst := TStringList.Create;
+  try
+    CallVistA('TIU GET BOILERPLATE', [TitleIEN], aLst);
+    Result := aLst.Text;
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 function GetUserTemplateDefaults(LoadFromServer: boolean = FALSE): string;
 begin
-  if(LoadFromServer) then
-  uUserTemplateDefaults := sCallV('TIU TEMPLATE GET DEFAULTS', []);
+  if LoadFromServer then
+    CallVistA('TIU TEMPLATE GET DEFAULTS', [], uUserTemplateDefaults);
   Result := uUserTemplateDefaults;
 end;
 
@@ -243,86 +287,101 @@ end;
 
 procedure SaveUserTemplateDefaults;
 begin
-  CallV('TIU TEMPLATE SET DEFAULTS', [uUserTemplateDefaults]);
+  CallVistA('TIU TEMPLATE SET DEFAULTS', [uUserTemplateDefaults]);
 end;
 
-procedure LoadTemplateDescription(TemplateIEN: string);
+procedure LoadTemplateDescription(TemplateIEN: string; aLst: TStrings);
 begin
-  CallV('TIU TEMPLATE GET DESCRIPTION', [TemplateIEN]);
+  CallVistA('TIU TEMPLATE GET DESCRIPTION', [TemplateIEN], aLst);
 end;
 
-function GetTemplateAllowedReminderDialogs: TStrings;
+function GetTemplateAllowedReminderDialogs(aLst: TStrings): boolean;
 var
-  TmpList: TStringList;
-
+  aTmpLst: TStringList;
 begin
-  CallV('TIU REMINDER DIALOGS', []);
-  TmpList := TStringList.Create;
+  aTmpLst := TStringList.Create;
   try
+    Result := CallVistA('TIU REMINDER DIALOGS', [], aTmpLst);
+    SortByPiece(aTmpLst, U, 2);
+    MixedCaseList(aTmpLst);
+    aLst.Text := aTmpLst.Text;
+  finally
+    FreeAndNil(aTmpLst);
+  end;
+  {
+    CallV('TIU REMINDER DIALOGS', []);
+    TmpList := TStringList.Create;
+    try
     FastAssign(RPCBrokerV.Results, TmpList);
     SortByPiece(TmpList, U, 2);
     MixedCaseList(TmpList);
     FastAssign(TmpList, RPCBrokerV.Results);
-  finally
+    finally
     TmpList.Free;
-  end;
-  Result := RPCBrokerV.Results;
+    end;
+    Result := RPCBrokerV.Results;
+  }
 end;
 
 function IsRemDlgAllowed(RemDlgIEN: string): integer;
 // -1 = inactive or deleted, 0 = not in Param, 1 = allowed
+var
+  aStr: string;
 begin
-  Result := StrToIntDef(sCallV('TIU REM DLG OK AS TEMPLATE', [RemDlgIEN]),-1);
+  CallVistA('TIU REM DLG OK AS TEMPLATE', [RemDlgIEN], aStr);
+  Result := StrToIntDef(aStr, -1);
 end;
 
 function LockTemplate(const ID: string): boolean; // returns true if successful
+var
+  aStr: string;
 begin
-  Result := (sCallV('TIU TEMPLATE LOCK', [ID]) = '1')
+  CallVistA('TIU TEMPLATE LOCK', [ID], aStr);
+  Result := (aStr = '1')
 end;
 
 procedure UnlockTemplate(const ID: string);
 begin
-  CallV('TIU TEMPLATE UNLOCK', [ID]);
+  CallVistA('TIU TEMPLATE UNLOCK', [ID]);
 end;
 
 function GetLinkedTemplateData(const Link: string): string;
 begin
-  Result := sCallV('TIU TEMPLATE GETLINK', [Link]);
+  CallVistA('TIU TEMPLATE GETLINK', [Link], Result);
 end;
 
-function SubSetOfAllTitles(const StartFrom: string; Direction: Integer): TStrings;
+function SubSetOfAllTitles(const StartFrom: string; Direction: integer; aLst: TStrings): boolean;
 begin
-  CallV('TIU TEMPLATE ALL TITLES', [StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
+  Result := CallVistA('TIU TEMPLATE ALL TITLES', [StartFrom, Direction], aLst);
 end;
 
 { Template Fields }
 
-function SubSetOfTemplateFields(const StartFrom: string; Direction: Integer): TStrings;
+function SubSetOfTemplateFields(const StartFrom: string; Direction: integer; aLst: TStrings): boolean;
 begin
-  CallV('TIU FIELD LIST', [StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
+  Result := CallVistA('TIU FIELD LIST', [StartFrom, Direction], aLst);
 end;
 
-function LoadTemplateField(const DlgFld: string): TStrings;
+function LoadTemplateField(const DlgFld: string; aLst: TStrings): boolean;
 begin
-  CallV('TIU FIELD LOAD', [DlgFld]);
-  Result := RPCBrokerV.Results;
+  Result := CallVistA('TIU FIELD LOAD', [DlgFld], aLst);
 end;
 
-function LoadTemplateFieldByIEN(const DlgFld: string): TStrings;
+function LoadTemplateFieldByIEN(const DlgFld: string; aLst: TStrings): boolean;
 begin
-  CallV('TIU FIELD LOAD BY IEN', [DlgFld]);
-  Result := RPCBrokerV.Results;
+  Result := CallVistA('TIU FIELD LOAD BY IEN', [DlgFld], aLst);
 end;
 
 function CanEditTemplateFields: boolean;
+var
+  aStr: string;
 begin
-  if(not uCanEditDlgFldChecked) then
-  begin
-    uCanEditDlgFldChecked := TRUE;
-    uCanEditDlgFlds := sCallV('TIU FIELD CAN EDIT', []) = '1';
-  end;
+  if (not uCanEditDlgFldChecked) then
+    begin
+      uCanEditDlgFldChecked := True;
+      CallVistA('TIU FIELD CAN EDIT', [], aStr);
+      uCanEditDlgFlds := (aStr = '1');
+    end;
   Result := uCanEditDlgFlds;
 end;
 
@@ -332,18 +391,21 @@ begin
 end;
 
 function LockTemplateField(const ID: string): boolean; // returns true if successful
+var
+  aStr: string;
 begin
-  Result := (sCallV('TIU FIELD LOCK', [ID]) = '1')
+  CallVistA('TIU FIELD LOCK', [ID], aStr);
+  Result := (aStr = '1');
 end;
 
 procedure UnlockTemplateField(const ID: string);
 begin
-  CallV('TIU FIELD UNLOCK', [ID]);
+  CallVistA('TIU FIELD UNLOCK', [ID]);
 end;
 
 procedure DeleteTemplateField(const ID: string);
 begin
-  CallV('TIU FIELD DELETE', [ID]);
+  CallVistA('TIU FIELD DELETE', [ID]);
 end;
 
 function CallImportExportTemplateFields(FldList: TStrings; RPCName: string): TStrings;
@@ -351,15 +413,16 @@ var
   i: integer;
 
 begin
+// LockBroker in calling code, since result is RPCBrokerV.Results;
   with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := RPCName;
-    Param[0].PType := list;
-    for i := 0 to FldList.Count-1 do
-      Param[0].Mult[IntToStr(i+1)] := FldList[i];
-    CallBroker;
-  end;
+    begin
+      ClearParameters := True;
+      RemoteProcedure := RPCName;
+      Param[0].PType := list;
+      for i := 0 to FldList.Count - 1 do
+        Param[0].Mult[IntToStr(i + 1)] := FldList[i];
+      CallBroker;
+    end;
   Result := RPCBrokerV.Results;
 end;
 
@@ -375,82 +438,97 @@ end;
 
 procedure CheckTemplateFields(ResultString: TStrings);
 begin
-  CallV('TIU FIELD CHECK',[nil]);
-  FastAssign(RPCBrokerV.Results, ResultString);
+  CallVistA('TIU FIELD CHECK', [nil], ResultString);
 end;
 
 function IsTemplateFieldNameUnique(const FldName, IEN: string): boolean;
+var
+  aStr: string;
 begin
-  Result := sCallV('TIU FIELD NAME IS UNIQUE', [FldName, IEN]) = '1';
+  CallVistA('TIU FIELD NAME IS UNIQUE', [FldName, IEN], aStr);
+  Result := (aStr = '1');
 end;
 
 procedure Convert2LMText(Text: TStringList);
 var
   i: integer;
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'TIU FIELD DOLMTEXT';
-    Param[0].PType := list;
-    for i := 0 to Text.Count-1 do
-      Param[0].Mult[IntToStr(i+1)+',0'] := Text[i];
-    CallBroker;
+  LockBroker;
+  try
+    with RPCBrokerV do
+    begin
+      ClearParameters := True;
+      RemoteProcedure := 'TIU FIELD DOLMTEXT';
+      Param[0].PType := list;
+      for i := 0 to Text.Count - 1 do
+        Param[0].Mult[IntToStr(i + 1) + ',0'] := Text[i];
+      CallBroker;
+    end;
+    FastAssign(RPCBrokerV.Results, Text);
+  finally
+    UnlockBroker;
   end;
-  FastAssign(RPCBrokerV.Results, Text);
 end;
 
-function BuildTemplateFields(XMLString: TStrings): boolean;   //Simply builds XML fields on the server
-var                                                           //in chunks.
-  i,j,p1: integer;
+function BuildTemplateFields(XMLString: TStrings): boolean; // Simply builds XML fields on the server
+var // in chunks.
+  i, j, p1: integer;
   ok: boolean;
 
   procedure reset_broker;
   begin
-    with RPCBrokerV do begin
-      ClearParameters := True;
-      RemoteProcedure := 'TIU FIELD LIST ADD';
-      Param[0].PType := list;
-    end;
+    with RPCBrokerV do
+      begin
+        ClearParameters := True;
+        RemoteProcedure := 'TIU FIELD LIST ADD';
+        Param[0].PType := list;
+      end;
   end;
 
 begin
-  ok := TRUE;
-  with RPCBrokerV do
-  begin
-    reset_broker;
-    j := 1;
-    for i := 0 to XMLString.Count-1 do begin
-      p1 := pos('<FIELD NAME="',XMLString[i]);
-      if (p1 > 0) and (pos('">',copy(XMLString[i],p1+13,maxint)) > 0) then begin
-        j := j + 1;
-        if (j > 50) then begin
-          j := 1;
+  ok := True;
+  LockBroker;
+  try
+    with RPCBrokerV do
+    begin
+      reset_broker;
+      j := 1;
+      for i := 0 to XMLString.Count - 1 do
+        begin
+          p1 := pos('<FIELD NAME="', XMLString[i]);
+          if (p1 > 0) and (pos('">', copy(XMLString[i], p1 + 13, MaxInt)) > 0) then
+            begin
+              j := j + 1;
+              if (j > 50) then
+                begin
+                  j := 1;
+                  CallBroker;
+                  if pos('1', Results[0]) = 0 then
+                    begin
+                      ok := FALSE;
+                      break;
+                    end; // if
+                  reset_broker;
+                end; // if
+            end; // if
+          Param[0].Mult[IntToStr(i + 1)] := XMLString[i];
+        end; // for
+      if ok then
+        begin
           CallBroker;
-          if pos('1',Results[0]) = 0 then begin
-            ok := FALSE;
-            break;
-          end;//if
-          reset_broker;
-        end;//if
-      end;//if
-      Param[0].Mult[IntToStr(i+1)] := XMLString[i];
-    end;//for
-    if ok then begin
-      CallBroker;
-      if pos('1',Results[0]) = 0 then ok := FALSE;
-    end;//if
+          if pos('1', Results[0]) = 0 then ok := FALSE;
+        end; // if
+    end;
+  finally
+    UnlockBroker;
   end;
   Result := ok;
 end;
 
 function ImportLoadedFields(ResultSet: TStrings): boolean;
 begin
-  Result := TRUE;
-  CallV('TIU FIELD LIST IMPORT',[nil]);
-  FastAssign(RPCBrokerV.Results, ResultSet);
-  if ResultSet.Count < 1 then
-    Result := FALSE;
+  CallVistA('TIU FIELD LIST IMPORT', [nil], ResultSet);
+  Result := (ResultSet.Count > 0);
 end;
 
 end.

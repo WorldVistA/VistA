@@ -574,7 +574,6 @@ var
 begin
   inherited;
   // do validation for vitals & anything else here
-
   //process vitals
   if FormListContains(CT_VitNm) then
   begin
@@ -719,19 +718,19 @@ begin
     end;
     //ZZZZZZBELLC
     if FormListContains(CT_DiagNm) then
-      SetDiagnoses(frmDiagnoses.lstRenameMe.ItemsStrings);
+      SetDiagnoses(frmDiagnoses.lstCaptionList.ItemsStrings);
     if FormListContains(CT_ProcNm) then
-     SetProcedures(frmProcedures.lstRenameMe.ItemsStrings);
+     SetProcedures(frmProcedures.lstCaptionList.ItemsStrings);
     if FormListContains(CT_ImmNm) then
-       SetImmunizations(frmImmunizations.lstRenameMe.ItemsStrings);
+       SetImmunizations(frmImmunizations.lstCaptionList.ItemsStrings);
     if FormListContains(CT_SkinNm) then
-       SetSkinTests(frmSkinTests.lstRenameMe.ItemsStrings);
+       SetSkinTests(frmSkinTests.lstCaptionList.ItemsStrings);
     if FormListContains(CT_PedNm) then
-      SetPatientEds(frmPatientEd.lstRenameMe.ItemsStrings);
+      SetPatientEds(frmPatientEd.lstCaptionList.ItemsStrings);
     if FormListContains(CT_HlthNm) then
-      SetHealthFactors(frmHealthFactors.lstRenameMe.ItemsStrings);
+      SetHealthFactors(frmHealthFactors.lstCaptionList.ItemsStrings);
     if FormListContains(CT_XamNm) then
-      SetExams(frmExams.lstRenameMe.ItemsStrings);
+      SetExams(frmExams.lstCaptionList.ItemsStrings);
   end;
 end;
 

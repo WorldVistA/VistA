@@ -5,73 +5,75 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Patient Selection Defaults'
-  ClientHeight = 413
+  ClientHeight = 427
   ClientWidth = 414
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   OnCreate = FormCreate
   OnShow = FormShow
+  ExplicitWidth = 420
+  ExplicitHeight = 455
   PixelsPerInch = 96
   TextHeight = 13
   object lblClinicDays: TLabel [0]
     Left = 179
-    Top = 162
+    Top = 188
     Width = 101
     Height = 13
     Caption = 'Clinic for day of week'
   end
   object lblMonday: TLabel [1]
     Left = 179
-    Top = 184
+    Top = 207
     Width = 41
     Height = 13
     Caption = 'Monday:'
   end
   object lblTuesday: TLabel [2]
     Left = 179
-    Top = 213
+    Top = 234
     Width = 44
     Height = 13
     Caption = 'Tuesday:'
   end
   object lblWednesday: TLabel [3]
     Left = 179
-    Top = 241
+    Top = 261
     Width = 60
     Height = 13
     Caption = 'Wednesday:'
   end
   object lblThursday: TLabel [4]
     Left = 179
-    Top = 270
+    Top = 288
     Width = 47
     Height = 13
     Caption = 'Thursday:'
   end
   object lblFriday: TLabel [5]
     Left = 179
-    Top = 298
+    Top = 315
     Width = 31
     Height = 13
     Caption = 'Friday:'
   end
   object lblSaturday: TLabel [6]
     Left = 179
-    Top = 327
+    Top = 342
     Width = 45
     Height = 13
     Caption = 'Saturday:'
   end
   object lblSunday: TLabel [7]
     Left = 179
-    Top = 355
+    Top = 369
     Width = 39
     Height = 13
     Caption = 'Sunday:'
   end
   object lblVisitStart: TLabel [8]
     Left = 20
-    Top = 321
+    Top = 336
     Width = 25
     Height = 13
     Alignment = taRightJustify
@@ -79,7 +81,7 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
   end
   object lblVisitStop: TLabel [9]
     Left = 20
-    Top = 352
+    Top = 367
     Width = 25
     Height = 13
     Alignment = taRightJustify
@@ -87,14 +89,14 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
   end
   object lbWard: TLabel [10]
     Left = 179
-    Top = 136
+    Top = 131
     Width = 29
     Height = 13
     Caption = 'Ward:'
   end
   object lblTeam: TLabel [11]
     Left = 179
-    Top = 107
+    Top = 104
     Width = 51
     Height = 13
     Caption = 'Team/List:'
@@ -113,11 +115,18 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Height = 13
     Caption = 'Primary Provider:'
   end
-  object lblVisitDateRange: TMemo [14]
+  object lblPcmm: TLabel [14]
+    Left = 179
+    Top = 158
+    Width = 65
+    Height = 13
+    Caption = 'PCMM Team:'
+  end
+  object lblVisitDateRange: TMemo [15]
     Left = 20
-    Top = 255
+    Top = 280
     Width = 133
-    Height = 61
+    Height = 54
     TabStop = False
     BorderStyle = bsNone
     Color = clBtnFace
@@ -126,9 +135,9 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
       'clinic appointments within '
       'this date range.')
     ReadOnly = True
-    TabOrder = 18
+    TabOrder = 19
   end
-  object lblInfo: TMemo [15]
+  object lblInfo: TMemo [16]
     Left = 8
     Top = 6
     Width = 393
@@ -150,18 +159,18 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
         'rce Combinations.')
     ParentFont = False
     ReadOnly = True
-    TabOrder = 19
+    TabOrder = 20
   end
-  object pnlBottom: TPanel [16]
+  object pnlBottom: TPanel [17]
     Left = 0
-    Top = 380
+    Top = 394
     Width = 414
     Height = 33
     HelpContext = 9060
     Align = alBottom
     BevelOuter = bvNone
     ParentColor = True
-    TabOrder = 17
+    TabOrder = 18
     object bvlBottom: TBevel
       Left = 0
       Top = 0
@@ -192,7 +201,7 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
       TabOrder = 1
     end
   end
-  object cboProvider: TORComboBox [17]
+  object cboProvider: TORComboBox [18]
     Left = 285
     Top = 48
     Width = 121
@@ -214,12 +223,13 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Sorted = True
     SynonymChars = '<>'
     TabOrder = 6
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     OnNeedData = cboProviderNeedData
     CharsNeedMatch = 1
   end
-  object cboTreating: TORComboBox [18]
+  object cboTreating: TORComboBox [19]
     Left = 285
     Top = 75
     Width = 121
@@ -241,13 +251,14 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Sorted = True
     SynonymChars = '<>'
     TabOrder = 7
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     CharsNeedMatch = 1
   end
-  object cboTeam: TORComboBox [19]
+  object cboTeam: TORComboBox [20]
     Left = 285
-    Top = 104
+    Top = 102
     Width = 121
     Height = 21
     HelpContext = 9065
@@ -267,13 +278,14 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Sorted = True
     SynonymChars = '<>'
     TabOrder = 8
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     CharsNeedMatch = 1
   end
-  object cboWard: TORComboBox [20]
+  object cboWard: TORComboBox [21]
     Left = 285
-    Top = 132
+    Top = 129
     Width = 121
     Height = 21
     HelpContext = 9066
@@ -293,13 +305,14 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Sorted = True
     SynonymChars = '<>'
     TabOrder = 9
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     CharsNeedMatch = 1
   end
-  object cboMonday: TORComboBox [21]
+  object cboMonday: TORComboBox [22]
     Left = 285
-    Top = 181
+    Top = 205
     Width = 121
     Height = 21
     HelpContext = 9067
@@ -318,15 +331,16 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Pieces = '2'
     Sorted = True
     SynonymChars = '<>'
-    TabOrder = 10
+    TabOrder = 11
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     OnNeedData = cboMondayNeedData
     CharsNeedMatch = 1
   end
-  object cboTuesday: TORComboBox [22]
+  object cboTuesday: TORComboBox [23]
     Left = 285
-    Top = 210
+    Top = 232
     Width = 121
     Height = 21
     HelpContext = 9067
@@ -345,15 +359,16 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Pieces = '2'
     Sorted = True
     SynonymChars = '<>'
-    TabOrder = 11
+    TabOrder = 12
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     OnNeedData = cboTuesdayNeedData
     CharsNeedMatch = 1
   end
-  object cboWednesday: TORComboBox [23]
+  object cboWednesday: TORComboBox [24]
     Left = 285
-    Top = 238
+    Top = 259
     Width = 121
     Height = 21
     HelpContext = 9067
@@ -372,15 +387,16 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Pieces = '2'
     Sorted = True
     SynonymChars = '<>'
-    TabOrder = 12
+    TabOrder = 13
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     OnNeedData = cboWednesdayNeedData
     CharsNeedMatch = 1
   end
-  object cboThursday: TORComboBox [24]
+  object cboThursday: TORComboBox [25]
     Left = 285
-    Top = 267
+    Top = 286
     Width = 121
     Height = 21
     HelpContext = 9067
@@ -399,15 +415,16 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Pieces = '2'
     Sorted = True
     SynonymChars = '<>'
-    TabOrder = 13
+    TabOrder = 14
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     OnNeedData = cboThursdayNeedData
     CharsNeedMatch = 1
   end
-  object cboFriday: TORComboBox [25]
+  object cboFriday: TORComboBox [26]
     Left = 285
-    Top = 295
+    Top = 313
     Width = 121
     Height = 21
     HelpContext = 9067
@@ -426,15 +443,16 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Pieces = '2'
     Sorted = True
     SynonymChars = '<>'
-    TabOrder = 14
+    TabOrder = 15
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     OnNeedData = cboFridayNeedData
     CharsNeedMatch = 1
   end
-  object cboSaturday: TORComboBox [26]
+  object cboSaturday: TORComboBox [27]
     Left = 285
-    Top = 324
+    Top = 340
     Width = 121
     Height = 21
     HelpContext = 9067
@@ -453,15 +471,16 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Pieces = '2'
     Sorted = True
     SynonymChars = '<>'
-    TabOrder = 15
+    TabOrder = 16
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     OnNeedData = cboSaturdayNeedData
     CharsNeedMatch = 1
   end
-  object cboSunday: TORComboBox [27]
+  object cboSunday: TORComboBox [28]
     Left = 285
-    Top = 352
+    Top = 367
     Width = 121
     Height = 21
     HelpContext = 9067
@@ -480,16 +499,17 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Pieces = '2'
     Sorted = True
     SynonymChars = '<>'
-    TabOrder = 16
+    TabOrder = 17
+    Text = ''
     OnExit = cboProviderExit
     OnKeyUp = cboProviderKeyUp
     OnNeedData = cboSundayNeedData
     CharsNeedMatch = 1
   end
-  object txtVisitStart: TCaptionEdit [28]
+  object txtVisitStart: TCaptionEdit [29]
     Tag = -180
     Left = 49
-    Top = 319
+    Top = 334
     Width = 79
     Height = 21
     HelpContext = 9068
@@ -500,10 +520,10 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     OnKeyUp = txtVisitStartKeyUp
     Caption = 'Start'
   end
-  object txtVisitStop: TCaptionEdit [29]
+  object txtVisitStop: TCaptionEdit [30]
     Tag = 30
     Left = 48
-    Top = 348
+    Top = 363
     Width = 79
     Height = 21
     HelpContext = 9069
@@ -514,10 +534,10 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     OnKeyUp = txtVisitStopKeyUp
     Caption = 'Stop'
   end
-  object spnVisitStart: TUpDown [30]
+  object spnVisitStart: TUpDown [31]
     Tag = -180
     Left = 128
-    Top = 319
+    Top = 334
     Width = 16
     Height = 21
     HelpContext = 9068
@@ -528,10 +548,10 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Thousands = False
     OnClick = spnVisitStartClick
   end
-  object spnVisitStop: TUpDown [31]
+  object spnVisitStop: TUpDown [32]
     Tag = 30
     Left = 127
-    Top = 348
+    Top = 363
     Width = 16
     Height = 21
     HelpContext = 9069
@@ -542,11 +562,11 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     Thousands = False
     OnClick = spnVisitStopClick
   end
-  object radListSource: TRadioGroup [32]
+  object radListSource: TRadioGroup [33]
     Left = 16
     Top = 38
     Width = 145
-    Height = 105
+    Height = 130
     HelpContext = 9061
     Caption = 'List Source '
     ItemIndex = 0
@@ -556,13 +576,14 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
       'Team/&List'
       '&Ward'
       '&Clinic'
+      'PC&MM Team'
       'C&ombination')
     TabOrder = 0
     OnClick = radListSourceClick
   end
-  object grpSortOrder: TGroupBox [33]
+  object grpSortOrder: TGroupBox [34]
     Left = 16
-    Top = 152
+    Top = 177
     Width = 145
     Height = 94
     HelpContext = 9062
@@ -570,7 +591,7 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     TabOrder = 1
     object radAlphabetical: TRadioButton
       Left = 8
-      Top = 16
+      Top = 15
       Width = 113
       Height = 17
       HelpContext = 9062
@@ -579,7 +600,7 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     end
     object radRoomBed: TRadioButton
       Left = 8
-      Top = 31
+      Top = 30
       Width = 113
       Height = 17
       HelpContext = 9062
@@ -588,7 +609,7 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
     end
     object radAppointmentDate: TRadioButton
       Left = 8
-      Top = 46
+      Top = 45
       Width = 113
       Height = 17
       HelpContext = 9062
@@ -613,6 +634,33 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
       Caption = 'So&urce'
       TabOrder = 4
     end
+  end
+  object cboPCMM: TORComboBox [35]
+    Left = 285
+    Top = 156
+    Width = 121
+    Height = 21
+    HelpContext = 9065
+    Style = orcsDropDown
+    AutoSelect = True
+    Caption = 'PCMM Team'
+    Color = clWindow
+    DropDownCount = 8
+    ItemHeight = 13
+    ItemTipColor = clWindow
+    ItemTipEnable = True
+    ListItemsOnly = False
+    LongList = False
+    LookupPiece = 0
+    MaxLength = 0
+    Pieces = '2'
+    Sorted = True
+    SynonymChars = '<>'
+    TabOrder = 10
+    Text = ''
+    OnExit = cboProviderExit
+    OnKeyUp = cboProviderKeyUp
+    CharsNeedMatch = 1
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -699,6 +747,9 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
         'Status = stsDefault')
       (
         'Component = frmOptionsPatientSelection'
+        'Status = stsDefault')
+      (
+        'Component = cboPCMM'
         'Status = stsDefault'))
   end
 end

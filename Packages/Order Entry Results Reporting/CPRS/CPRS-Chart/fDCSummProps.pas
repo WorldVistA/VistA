@@ -159,7 +159,7 @@ begin
       cboAuthor.InitLongList(ASumm.DictatorName);
       if ASumm.Dictator > 0 then
         cboAuthor.SelectByIEN(ASumm.Dictator);
-      FastAssign(LoadDCUrgencies, cboUrgency.Items);
+      LoadDCUrgencies(cboUrgency.Items);
       cboUrgency.SelectByID('R');
       if ASumm.Attending = 0 then
       begin
@@ -339,11 +339,17 @@ end;
 
 { cboNewTitle events }
 
-procedure TfrmDCSummProperties.cboNewTitleNeedData(Sender: TObject;
-  const StartFrom: string; Direction, InsertAt: Integer);
+procedure TfrmDCSummProperties.cboNewTitleNeedData(Sender: TObject; const StartFrom: string; Direction, InsertAt: Integer);
+var
+  aLst: TStringList;
 begin
-  cboNewTitle.ForDataUse(SubSetOfDCSummTitles(StartFrom, Direction,
-    FIDNoteTitlesOnly));
+  aLst := TStringList.Create;
+  try
+    SubSetOfDCSummTitles(StartFrom, Direction, FIDNoteTitlesOnly, aLst);
+    cboNewTitle.ForDataUse(aLst);
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 procedure TfrmDCSummProperties.cboNewTitleEnter(Sender: TObject);
@@ -591,7 +597,7 @@ begin
                 cboAuthor.InitLongList(AnEditSumm.DictatorName);
                 if AnEditSumm.Dictator > 0 then
                   cboAuthor.SelectByIEN(AnEditSumm.Dictator);
-                FastAssign(LoadDCUrgencies, cboUrgency.Items);
+                LoadDCUrgencies(cboUrgency.Items);
                 cboUrgency.SelectByID('R');
                 cboAttending.InitLongList(AnEditSumm.AttendingName);
                 if AnEditSumm.Attending > 0 then

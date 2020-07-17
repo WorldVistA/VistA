@@ -998,7 +998,8 @@ var
   thisOwner: TComponent;
   RPCBContextor: TContextorControl;
   thisParent: TForm;
-  BrokerDir, Str1, Str2, Str3 :string;
+//  BrokerDir,
+  Str1, Str2, Str3 :string;
   PseudoPort: Integer;
   PseudoServer, PseudoPortStr: String;
 begin

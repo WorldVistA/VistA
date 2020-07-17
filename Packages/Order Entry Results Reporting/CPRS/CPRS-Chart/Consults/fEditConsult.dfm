@@ -182,7 +182,7 @@ inherited frmEditCslt: TfrmEditCslt
     end
     object memReason: TRichEdit
       Left = 4
-      Top = 240
+      Top = 243
       Width = 559
       Height = 161
       Anchors = [akLeft, akTop, akRight, akBottom]

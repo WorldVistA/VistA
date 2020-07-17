@@ -41,7 +41,7 @@ implementation
 {$R *.DFM}
 
 uses
-  ORFn, VA508AccessibilityRouter;
+  ORFn, VA508AccessibilityRouter, VAUtils;
 
 procedure TfraTemplateFieldButton.pnlBtnMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);

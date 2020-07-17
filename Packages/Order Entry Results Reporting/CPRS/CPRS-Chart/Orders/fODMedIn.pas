@@ -55,7 +55,7 @@ implementation
 
 {$R *.DFM}
 
-uses rOrders, rODBase, fODMedFA;
+uses rOrders, rODBase, fODMedFA, VAUtils;
 
 const
   TX_NO_MED    = 'Medication must be entered.';

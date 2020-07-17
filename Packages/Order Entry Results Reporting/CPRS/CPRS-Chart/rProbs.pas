@@ -5,100 +5,100 @@ interface
 uses SysUtils, Classes, ORNet, ORFn, uCore;
 
 function AddSave(PatientInfo: string; ProviderID: int64; ptVAMC: string;
-           ProbFile: TStringList; SearchString: String): TStrings ;
-function AuditHistory(ProblemIFN: string): TStrings ;
-function ClinicFilterList(LocList: TStringList): TStrings ;
-function ClinicSearch(DummyArg:string): TStrings ;
-function ProblemDelete(ProblemIFN: string; ProviderID: int64; ptVAMC, Comment: string): TStrings ;
+           ProbFile: TStringList; SearchString: String; aReturn: TStrings): integer;
+function AuditHistory(ProblemIFN: string; aReturn: TStrings): integer;
+function ClinicFilterList(LocList: TStringList; aReturn: TStrings): integer;
+function ClinicSearch(DummyArg: string; aReturn: TStrings): integer;
+function ProblemDelete(ProblemIFN: string; ProviderID: int64; ptVAMC, Comment: string; aReturn: TStrings): integer;
 {function ProblemDetail}
-function EditLoad(ProblemIFN: string): TStrings ;
+function EditLoad(ProblemIFN: string; aReturn: TStrings): integer;
 function EditSave(ProblemIFN: string; ProviderID: int64; ptVAMC, PrimUser: string;
-           ProbFile: TStringList; SearchString: String): TStrings ;
-function InitPt(const PatientDFN: string): TStrings ;  //*DFN*
-function InitUser(ProviderID: int64): TStrings ;
-function PatientProviders(const PatientDFN: string): TStrings ;  //*DFN*
-function ProblemList(const PatientDFN: string; Status:string; ADate: TFMDateTime): TStrings ;  //*DFN*
-function ProblemLexiconSearch(SearchFor: string; ADate: TFMDateTime = 0; Extend: Boolean = False): TStrings ;
+           ProbFile: TStringList; SearchString: String; aReturn: TStrings): integer;
+function InitPt(const PatientDFN: string; aReturn: TStrings): integer;  //*DFN*
+function InitUser(ProviderID: int64; aReturn: TStrings): integer;
+function PatientProviders(const PatientDFN: string; aReturn: TStrings): integer;  //*DFN*
+function ProblemList(const PatientDFN: string; Status:string; ADate: TFMDateTime; aReturn: TStrings): integer;  //*DFN*
+function ProblemLexiconSearch(aReturn: TStrings; SearchFor: string; ADate: TFMDateTime = 0; Extend: Boolean = False): integer;
 function ProblemNTRTBulletin(term: String; ProviderID: String; PatientID: String; comment: String): String;
-function ProviderFilterList(ProvList: TStringList): TStrings ;
-function ProviderList(Flag:string; Number:integer; From,Part: string): TStrings ;
-function ProblemReplace(ProblemIFN: string): TStrings ;
-function ServiceFilterList(LocList: TStringList): TStrings ;
-function ServiceSearch(const StartFrom: string; Direction: Integer; All: boolean = FALSE): TStrings;
-function ProblemUpdate(AltProbFile: TStringList): TStrings ;
-function UserProblemCategories(Provider: int64; Location: integer): TStrings ;
-function UserProblemList(CategoryIEN: string): TStrings ;
-function ProblemVerify(ProblemIFN: string): TStrings ;
-function GetProblemComments(ProblemIFN: string): TStrings;
+function ProviderFilterList(ProvList: TStringList; aReturn: TStrings): integer;
+function ProviderList(Flag: string; Number: integer; From: string; Part: string; aReturn: TStrings): integer;
+function ProblemReplace(ProblemIFN: string; aReturn: TStrings): integer;
+function ServiceFilterList(LocList: TStringList; aReturn: TStrings): integer;
+function ServiceSearch(aReturn: TStrings; const StartFrom: string; Direction: Integer; All: boolean = FALSE): integer;
+function ProblemUpdate(AltProbFile: TStringList; aReturn: TStrings): integer;
+function UserProblemCategories(Provider: int64; Location: integer; aReturn: TStrings): integer;
+function UserProblemList(CategoryIEN: string; aReturn: TStrings): integer;
+function ProblemVerify(ProblemIFN: string; aReturn: TStrings): integer;
+function GetProblemComments(ProblemIFN: string; aReturn: TStrings): integer;
 procedure SaveViewPreferences(ViewPref: string);
 function CheckForDuplicateProblem(TermIEN, TermText: string): string;
 
 implementation
 
 function AddSave(PatientInfo: string; ProviderID: int64; ptVAMC: string;
-           ProbFile: TStringList; SearchString: String): TStrings ;
+           ProbFile: TStringList; SearchString: String; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL ADD SAVE',[PatientInfo, ProviderID, ptVAMC, ProbFile, SearchString]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL ADD SAVE',[PatientInfo, ProviderID, ptVAMC, ProbFile, SearchString], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function AuditHistory(ProblemIFN: string): TStrings ;
+function AuditHistory(ProblemIFN: string; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL AUDIT HIST',[ProblemIFN]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL AUDIT HIST', [ProblemIFN], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function ClinicFilterList(LocList: TStringList): TStrings ;
+function ClinicFilterList(LocList: TStringList; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL CLIN FILTER LIST',[LocList]);
-   MixedCaseList(RPCBrokerV.Results) ;
-   Result := RPCBrokerV.Results;
-end ;
+  CallVistA('ORQQPL CLIN FILTER LIST', [LocList], aReturn);
+  MixedCaseList(aReturn);
+  Result := aReturn.Count;
+end;
 
-function ClinicSearch(DummyArg:string): TStrings ;
+function ClinicSearch(DummyArg: string; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL CLIN SRCH',[DummyArg]);
-   Result := RPCBrokerV.Results ;
-end ;
+   CallVistA('ORQQPL CLIN SRCH', [DummyArg], aReturn);
+   Result := aReturn.Count;
+end;
 
-function ProblemDelete(ProblemIFN: string; ProviderID: int64; ptVAMC, Comment: string): TStrings ;
+function ProblemDelete(ProblemIFN: string; ProviderID: int64; ptVAMC, Comment: string; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL DELETE',[ProblemIFN, ProviderID, ptVAMC, Comment]);
-   Result := RPCBrokerV.Results ;
-end ;
+  CallVistA('ORQQPL DELETE',[ProblemIFN, ProviderID, ptVAMC, Comment], aReturn);
+  Result := aReturn.Count;
+end;
 
-function EditLoad(ProblemIFN: string): TStrings ;
+function EditLoad(ProblemIFN: string; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL EDIT LOAD',[ProblemIFN]);
-   Result := RPCBrokerV.Results ;
-end ;
+  CallVistA('ORQQPL EDIT LOAD', [ProblemIFN], aReturn);
+  Result := aReturn.Count;
+end;
 
 function EditSave(ProblemIFN: string; ProviderID: int64; ptVAMC, PrimUser: string;
-           ProbFile: TStringList; SearchString: String): TStrings ;
+           ProbFile: TStringList; SearchString: String; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL EDIT SAVE',[ProblemIFN, ProviderID, ptVAMC, PrimUser, ProbFile, SearchString]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL EDIT SAVE',[ProblemIFN, ProviderID, ptVAMC, PrimUser, ProbFile, SearchString], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function InitPt(const PatientDFN: string): TStrings ;  //*DFN*
+function InitPt(const PatientDFN: string; aReturn: TStrings): integer;  //*DFN*
 begin
-   CallV('ORQQPL INIT PT',[PatientDFN]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL INIT PT', [PatientDFN], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function InitUser(ProviderID: int64): TStrings ;
+function InitUser(ProviderID: int64; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL INIT USER',[ProviderID]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL INIT USER', [ProviderID], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function PatientProviders(const PatientDFN: string): TStrings ;  //*DFN*
+function PatientProviders(const PatientDFN: string; aReturn: TStrings): integer;  //*DFN*
 begin
-   CallV('ORQPT PATIENT TEAM PROVIDERS',[PatientDFN]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQPT PATIENT TEAM PROVIDERS', [PatientDFN], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function ProblemLexiconSearch(SearchFor: string; ADate: TFMDateTime = 0; Extend: Boolean = False): TStrings ;
+function ProblemLexiconSearch(aReturn: TStrings; SearchFor: string; ADate: TFMDateTime = 0; Extend: Boolean = False): integer;
 var
   View: String;
 begin
@@ -106,93 +106,91 @@ begin
     View := 'CLF'
   else
     View := 'PLS';
-  CallV('ORQQPL4 LEX',[SearchFor, VIEW, ADate, True]);
-  Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL4 LEX', [SearchFor, VIEW, ADate, True], aReturn);
+  Result := aReturn.Count;
 end ;
 
 function ProblemNTRTBulletin(term: String; ProviderID: String; PatientID: String; comment: String): String;
 begin
-  CallV('ORQQPL PROBLEM NTRT BULLETIN', [term, ProviderID, PatientID, comment]);
-  result := RPCBrokerV.Results[0];
+  CallVistA('ORQQPL PROBLEM NTRT BULLETIN', [term, ProviderID, PatientID, comment], Result);
 end ;
 
-function ProblemList(const PatientDFN: string; Status:string; ADate: TFMDateTime): TStrings ;  //*DFN*
+function ProblemList(const PatientDFN: string; Status:string; ADate: TFMDateTime; aReturn: TStrings): integer;  //*DFN*
 begin
-   CallV('ORQQPL PROBLEM LIST',[PatientDFN, Status, ADate]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL PROBLEM LIST', [PatientDFN, Status, ADate], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function ProviderFilterList(ProvList: TStringList): TStrings ;
+function ProviderFilterList(ProvList: TStringList; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL PROV FILTER LIST',[ProvList]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL PROV FILTER LIST', [ProvList], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function ProviderList(Flag:string; Number:integer; From,Part: string): TStrings ;
+function ProviderList(Flag: string; Number: integer; From: string; Part: string; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL PROVIDER LIST',[Flag,Number,From,Part]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL PROVIDER LIST', [Flag,Number,From,Part], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function ProblemReplace(ProblemIFN: string): TStrings ;
+function ProblemReplace(ProblemIFN: string; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL REPLACE',[ProblemIFN]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL REPLACE', [ProblemIFN], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function ServiceFilterList(LocList: TStringList): TStrings ;
+function ServiceFilterList(LocList: TStringList; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL SERV FILTER LIST',[LocList]);
-   MixedCaseList(RPCBrokerV.Results) ;
-   Result := RPCBrokerV.Results;
+  CallVistA('ORQQPL SERV FILTER LIST', [LocList], aReturn);
+  MixedCaseList(aReturn);
+  Result := aReturn.Count;
 end ;
 
-function ServiceSearch(const StartFrom: string; Direction: Integer; All: boolean = FALSE): TStrings;
+function ServiceSearch(aReturn: TStrings; const StartFrom: string; Direction: Integer; All: boolean = FALSE): integer;
 begin
-   CallV('ORQQPL SRVC SRCH',[StartFrom, Direction, BoolChar[All]]);
-   MixedCaseList(RPCBrokerV.Results) ;
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL SRVC SRCH',[StartFrom, Direction, BoolChar[All]], aReturn);
+  MixedCaseList(aReturn);
+  Result := aReturn.Count;
 end ;
 
-function ProblemUpdate(AltProbFile: TStringList): TStrings ;
+function ProblemUpdate(AltProbFile: TStringList; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL UPDATE',[AltProbFile]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL UPDATE', [AltProbFile], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function ProblemVerify(ProblemIFN: string): TStrings ;
+function ProblemVerify(ProblemIFN: string; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL VERIFY',[ProblemIFN]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL VERIFY', [ProblemIFN], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function UserProblemCategories(Provider: int64; Location: integer): TStrings ;
+function UserProblemCategories(Provider: int64; Location: integer; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL USER PROB CATS',[Provider, Location]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL USER PROB CATS', [Provider, Location], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function UserProblemList(CategoryIEN: string): TStrings ;
+function UserProblemList(CategoryIEN: string; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL USER PROB LIST',[CategoryIEN]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL USER PROB LIST', [CategoryIEN], aReturn);
+  Result := aReturn.Count;
 end ;
 
-function GetProblemComments(ProblemIFN: string): TStrings;
+function GetProblemComments(ProblemIFN: string; aReturn: TStrings): integer;
 begin
-   CallV('ORQQPL PROB COMMENTS',[ProblemIFN]);
-   Result := RPCBrokerV.Results ;
+  CallVistA('ORQQPL PROB COMMENTS', [ProblemIFN], aReturn);
+  Result := aReturn.Count;
 end;
 
 procedure SaveViewPreferences(ViewPref: string);
 begin
-  CallV('ORQQPL SAVEVIEW',[ViewPref]);
+  CallVistA('ORQQPL SAVEVIEW',[ViewPref]);
 end;
 
 function CheckForDuplicateProblem(TermIEN, TermText: string): string;
 begin
-  CallV('ORQQPL CHECK DUP',[Patient.DFN, TermIEN, TermText]);
-  Result := RPCBrokerV.Results[0];
+  CallVistA('ORQQPL CHECK DUP',[Patient.DFN, TermIEN, TermText], Result);
 end;
 
 end.

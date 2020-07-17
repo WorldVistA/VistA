@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, ComCtrls, ExtCtrls, StdCtrls, Grids, ORCtrls, ORDtTm, ORFn, uConst,
-  VA508AccessibilityManager, StrUtils;
+  VA508AccessibilityManager, StrUtils, uInfoBoxWithBtnControls;
 
 type
 
@@ -26,18 +26,16 @@ type
     lblDietSelect: TLabel;
     lblComment: TLabel;
     lblStart: TLabel;
-    lblStop: TLabel;
     lblDelivery: TLabel;
     cboDietAvail: TORComboBox;
     lstDietSelect: TORListBox;
     cmdRemove: TButton;
     txtDietComment: TCaptionEdit;
     calDietStart: TORDateBox;
-    calDietStop: TORDateBox;
     cboDelivery: TORComboBox;
-    pgeTubefeeding: TTabSheet;                                                        
+    pgeTubefeeding: TTabSheet;
     lblTFProductList: TLabel;
-    lblTFComment: TLabel;                                                             
+    lblTFComment: TLabel;
     lblTFStrength: TLabel;
     lblTFQuantity: TLabel;
     lblTFProduct: TLabel;
@@ -49,7 +47,6 @@ type
     pgeIsolations: TTabSheet;
     pgeAdditional: TTabSheet;
     chkCancelTubefeeding: TCheckBox;
-    chkCancelTrays: TCheckBox;
     txtQuantity: TCaptionEdit;
     cboStrength: TCaptionComboBox;
     lblTFAmount: TLabel;
@@ -84,6 +81,7 @@ type
     lblIPCurrent: TLabel;
     txtIPCurrent: TCaptionEdit;
     pgeOutPt: TTabSheet;
+    lblOPStop: TLabel;
     grpOPMeal: TKeyClickRadioGroup;
     grpOPDoW: TGroupBox;
     chkOPMonday: TCheckBox;
@@ -95,7 +93,6 @@ type
     chkOPSunday: TCheckBox;
     lblOPStart: TLabel;
     calOPStart: TORDateBox;
-    lblOPStop: TLabel;
     calOPStop: TORDateBox;
     lblOPDietAvail: TLabel;
     cboOPDietAvail: TORComboBox;
@@ -172,13 +169,15 @@ type
   private
     FNextCol: Integer;
     FNextRow: Integer;
-    FChangeStop: Boolean;
+//    FChangeStop: Boolean;
     FIsolationID: string;
     FTabChanging: Boolean;
     FGiveMultiTabMessage: boolean;
     lbGrid508Manager : TlbGrid508Manager;
+    doNotShowMess: boolean;
     procedure DietCheckForNPO;
     procedure DietCheckForTF;
+//    procedure DietCheckforTFWithNPO;
     function GetMealTime: string;
     function GetDaysOfWeek: string;
     function IsEarlyTray: Boolean;
@@ -215,6 +214,7 @@ type
     procedure Validate(var AnErrMsg: string); override;
   public
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
+    procedure setTabToDiet; override;
   end;
 
 var
@@ -229,7 +229,7 @@ implementation
 {$R *.DFM}
 
 uses uCore, rODBase, rODDiet, rCore, rOrders, fODDietLT, DateUtils,
-  fOrders, uODBase, VA508AccessibilityRouter;
+  fOrders, uODBase, VA508AccessibilityRouter, VAUtils;
 
 const
   TX_DIET_REG = 'A regular diet may not be combined with other diets.';
@@ -254,14 +254,14 @@ const
   // CQ #15833 - Removed references of 'c' and 'cc', changed 100CC example to 100ML - JCS
   TX_HLPQTY = CRLF + 'Valid entries for quantity:' + CRLF + CRLF +
               'Units             K for Kcals;  M for ml;  O for oz.; PKG' + CRLF +
-              'Frequency     DAY  HOUR  QH  BID  TID  QID  Q2H  Q3H  Q4H  Q6H' + CRLF + CRLF +
+              'Frequency     DAILY  HOUR  QH  BID  TID  QID  Q2H  Q3H  Q4H  Q6H' + CRLF + CRLF +
               'Or   100 ml/HR X 16  for 16 hours' + CRLF + CRLF +
               'IF powder form product, Then' + CRLF +
               '          (# GRAMS or # Unit or PKG) / FREQUENCY' + CRLF + CRLF +
               'Examples:' + CRLF +
               '          20 GRAMS/Day' + CRLF +
               '          1 PKG/TID' + CRLF +
-              '          6 Units/DAY' + CRLF +
+              '          6 Units/DAILY' + CRLF +
               '          1 Units/Q3H' + CRLF +
               '          50ml/TID' + CRLF +
               '          100 ML/HR' + CRLF + CRLF +
@@ -435,6 +435,8 @@ begin
   inherited;
   // handle all initialization at the tab level
   // if FTabChanging, then nbkDietChange is about to be called anyway
+  if (not doNotSHowMess) then doNotShowMess := false;
+
   if not FTabChanging then nbkDietChange(Self);
 end;
 
@@ -455,7 +457,7 @@ begin
          pgeOutPt.TabVisible := False;
          nbkDiet.ActivePage := pgeDiet;
          nbkDietChange(Self);
-         if OrderAction <> ORDER_NEW then SetValuesFromResponsesDO;
+         if (not AbortOrder) and (OrderAction <> ORDER_NEW) then SetValuesFromResponsesDO;
        end;
   'N': begin
          if not OrderForInpatient then
@@ -466,7 +468,7 @@ begin
            end;
          nbkDiet.ActivePage := pgeDiet;
          nbkDietChange(Self);
-         if OrderAction <> ORDER_NEW then SetValuesFromResponsesDO;
+         if (not AbortOrder) and (OrderAction <> ORDER_NEW) then SetValuesFromResponsesDO;
        end;
   'T': begin
          if (not OrderForInpatient) and (not PatientHasRecurringMeals(uRecurringMealList)) then
@@ -476,7 +478,7 @@ begin
          end;
          nbkDiet.ActivePage := pgeTubefeeding;
          nbkDietChange(Self);
-         if OrderAction <> ORDER_NEW then SetValuesFromResponsesTF;
+         if (not AbortOrder) and (OrderAction <> ORDER_NEW) then SetValuesFromResponsesTF;
        end;
   'E': begin
          if (not OrderForInpatient) and (not PatientHasRecurringMeals(uRecurringMealList)) then
@@ -486,12 +488,12 @@ begin
          end;
          nbkDiet.ActivePage := pgeEarlyLate;
          nbkDietChange(Self);
-         if OrderAction <> ORDER_NEW then SetValuesFromResponsesEL;
+         if (not AbortOrder) and (OrderAction <> ORDER_NEW) then SetValuesFromResponsesEL;
        end;
   'P': begin
          nbkDiet.ActivePage := pgeIsolations;
          nbkDietChange(Self);
-         if OrderAction <> ORDER_NEW then SetValuesFromResponsesIP;
+         if (not AbortOrder) and (OrderAction <> ORDER_NEW) then SetValuesFromResponsesIP;
        end;
   'A': begin
          if (not OrderForInpatient) and (not PatientHasRecurringMeals(uRecurringMealList)) then
@@ -501,7 +503,7 @@ begin
          end;
          nbkDiet.ActivePage := pgeAdditional;
          nbkDietChange(Self);
-         if OrderAction <> ORDER_NEW then SetValuesFromResponsesAO;
+         if (not AbortOrder) and (OrderAction <> ORDER_NEW) then SetValuesFromResponsesAO;
        end;
   'M': begin
          if OrderForInpatient then
@@ -515,7 +517,7 @@ begin
          pgeOutPt.TabVisible := True;
          nbkDiet.ActivePage := pgeOutPt;
          nbkDietChange(Self);
-         if OrderAction <> ORDER_NEW then SetValuesFromResponsesOP;
+         if (not AbortOrder) and (OrderAction <> ORDER_NEW) then SetValuesFromResponsesOP;
        end
   else
       begin
@@ -529,11 +531,14 @@ begin
         pgeOutPt.TabVisible := False;
         nbkDiet.ActivePage := pgeDiet;
         nbkDietChange(Self);
-        if OrderAction <> ORDER_NEW then SetValuesFromResponsesDO;
-        ActiveControl := cboOPDietAvail;
+        if not AbortOrder then
+        begin
+          if OrderAction <> ORDER_NEW then SetValuesFromResponsesDO;
+          ActiveControl := cboOPDietAvail;
+        end;
       end;
   end;
-  if OrderAction = ORDER_NEW then SetFocusedControl(nbkDiet);
+  if (not AbortOrder) and (OrderAction = ORDER_NEW) then SetFocusedControl(nbkDiet);
 end;
 
 procedure TfrmODDiet.Validate(var AnErrMsg: string);
@@ -584,13 +589,13 @@ begin
   begin
     if lstDietSelect.Items.Count < 1 then SetError(TX_NO_DIET);
     if not calDietStart.IsValid      then SetError(TX_BAD_START);
-    with calDietStop do
-    begin
-      Validate(ErrMsg);
-      if Length(ErrMsg) > 0          then SetError(TX_BAD_STOP);
-      if (Length(Text) > 0) and (FMDateTime <= calDietStart.FMDateTime)
-                                     then SetError(TX_STOPSTART);
-    end; {with calDietStop}
+//    with calDietStop do
+//    begin
+//      Validate(ErrMsg);
+//      if Length(ErrMsg) > 0          then SetError(TX_BAD_STOP);
+//      if (Length(Text) > 0) and (FMDateTime <= calDietStart.FMDateTime)
+//                                     then SetError(TX_STOPSTART);
+//    end; {with calDietStop}
   end; {pgeDiet}
   if nbkDiet.ActivePage = pgeTubeFeeding then
   begin
@@ -648,6 +653,7 @@ begin
       if not calOPStart.IsValid          then SetError(TX_OP_BAD_START);
       with calOPStop do
       begin
+        if not IsValid          then SetError(TX_OP_BAD_STOP);
         Validate(ErrMsg);
         if Length(ErrMsg) > 0            then SetError(TX_OP_BAD_STOP);
         if (Length(Text) > 0) and (FMDateTime < calOPStart.FMDateTime)
@@ -753,7 +759,7 @@ begin
         AStringList.Free;
       end;
     end;
-  end 
+  end
   else if Sender is TButton then     // delayed orders code here - on accept only
   begin
     //AResponse := Responses.FindResponseByName('STOP', 1);
@@ -775,7 +781,7 @@ begin
       begin
         x := '';
         RetrieveOrderFields(AList, 0, 0);
-        CancelText := TX_CX_DELAYED1 + CRLF + CRLF + 'Release event: ' + PtEvtName; 
+        CancelText := TX_CX_DELAYED1 + CRLF + CRLF + 'Release event: ' + PtEvtName;
         for i := 0 to AList.Count - 1 do
           with TOrder(AList.Items[i]) do
           begin
@@ -799,6 +805,7 @@ procedure TfrmODDiet.nbkDietChange(Sender: TObject);
 var
   x: string ;
   CxMsg, DLMsg: string;
+  aLst: TStringList;
 begin
   inherited;
   // much of the logic here can be eliminated if ClearDialogControls starts clearing containers
@@ -810,22 +817,26 @@ begin
   StatusText('Loading Dialog Definition');
   if Sender <> Self then Responses.Clear;
   Changing := True;                                        // Changing set!
-  if nbkDiet.ActivePage = pgeDiet then
+  if (nbkDiet.ActivePage = pgeDiet) then
   begin
     AllowQuickOrder := True;
     x := CurrentDietText;
-    CheckForAutoDCDietOrders(Self.EvtID, Self.DisplayGroup, x, CxMsg, nbkDiet);
-    If Self.EvtID = 0 then CheckForDelayedDietOrders(DLMsg, frmOrders.TheCurrentView, Self.DisplayGroup);
-    if CxMsg <> '' then
-    begin
-      if InfoBox(CxMsg + DLMsg + CRLF +
-                'Are you sure?', 'Confirm', MB_ICONWARNING or MB_YESNO) = ID_NO then
+    if (doNotShowMess = false) then
       begin
-        AbortOrder := True;
-        cmdQuitClick(Self);
-        exit;
+        CheckForAutoDCDietOrders(Self.EvtID, Self.DisplayGroup, x, CxMsg, nbkDiet);
+        If Self.EvtID = 0 then CheckForDelayedDietOrders(DLMsg, frmOrders.TheCurrentView, Self.DisplayGroup);
+        if CxMsg <> '' then
+          begin
+            if InfoBox(CxMsg + DLMsg + CRLF +
+                'Are you sure?', 'Confirm', MB_ICONWARNING or MB_YESNO) = ID_NO then
+            begin
+              AbortOrder := True;
+              cmdQuitClick(Self);
+              exit;
+            end;
+          end;
       end;
-    end;
+    doNotShowMess := false;
     OrderMessage(x);
     Responses.Dialog := 'FHW1';                            // Diet Order
     DisplayGroup := DisplayGroupForDialog('FHW1');
@@ -957,7 +968,13 @@ begin
       begin
        AllowQuickOrder := False;
        ResetControlsOP;
-       FastAddStrings(SubsetOfOPDiets, cboOPDietAvail.Items);
+       aLst := TStringList.Create;
+       try
+         SubSetOfOPDiets(aLst);
+         FastAddStrings(aLst, cboOPDietAvail.Items);
+        finally
+          FreeAndNil(aLst);
+       end;
        { TODO -oRich V. -cOutpatient Meals : Need to DC Tubefeeding order for OP meals? }
        chkOPCancelTubefeeding.State := cbGrayed;
        chkOPCancelTubefeeding.Visible := False;
@@ -976,7 +993,13 @@ begin
        ResetControlsOP;
        LoadDietQuickList(cboOPDietAvail.Items, 'MEAL');              // use D.G. short name here
        cboOPDietAvail.InsertSeparator;
-       FastAddStrings(SubsetOfOPDiets, cboOPDietAvail.Items);
+       aLst := TStringList.Create;
+       try
+         SubSetOfOPDiets(aLst);
+         FastAddStrings(aLst, cboOPDietAvail.Items);
+       finally
+         FreeAndNil(aLst);
+       end;
        cboOPDietAvail.SelectByIEN(uDietParams.OPDefaultDiet);
        { TODO -oRich V. -cOutpatient Meals : Need to DC Tubefeeding order for OP meals? }
        chkOPCancelTubefeeding.State := cbGrayed;
@@ -1017,28 +1040,62 @@ end;
 procedure TfrmODDiet.DietCheckForTF;
 var
   x: string;
+  list: TStringList;
+  value: integer;
+//  btns: Array[mbYes, mbOK, mbCancel] of TMsgDlgButtons;
 begin
   with lstDietSelect do
   begin
-    if (Items.Count = 1) and (Piece(Items[0], U, 2) <> 'NPO')
-      and (Length(uDietParams.CurTF) > 0) then
+//    if (Items.Count = 1) and (Piece(Items[0], U, 2) <> 'NPO')
+//      and (Length(uDietParams.CurTF) > 0) then
+    if (Items.Count > 0) and (Length(uDietParams.CurTF) > 0) then
     begin
       x := TextForOrder(uDietParams.CurTF);
-      if InfoBox(TX_CANCEL_TF + x, TC_CANCEL_TF, MB_YESNO) = IDYES then
+      list := TStringList.Create;
+      list.Add('Continue TubeFeeding Order^false');
+      list.Add('Cancel TubeFeeding Order^false');
+//      value := fInfoBoxWithBtnControl.processMessage(TC_CANCEL_TF, TX_CANCEL_TF + x, list);
+      value := uInfoBoxWithBtnControls.DefMessageDlg(TX_CANCEL_TF + x, mtConfirmation, list, TC_CANCEL_TF, true);
+      //if InfoBox(TX_CANCEL_TF + x, TC_CANCEL_TF, MB_YESNO) = IDYES then
+      if value = 1 then
       begin
         chkCancelTubeFeeding.State := cbChecked;
         chkCancelTubeFeeding.Visible := True;
       end
-      else chkCancelTubeFeeding.State := cbUnchecked;
+      else if value = 0 then chkCancelTubeFeeding.State := cbUnchecked;
     end; {if (Items...}
   end; {with lstDietSelect}
 end;
+
+//procedure TfrmODDiet.DietCheckforTFWithNPO;
+//var
+//  i: integer;
+//  resolved: boolean;
+//  x: string;
+//begin
+//  resolved := false;
+//  for i := 0 to lstDietSelect.items.count -1 do
+//    begin
+//       if (Piece(lstDietSelect.Items[i], U, 2) = 'NPO')
+//        and (Length(uDietParams.CurTF) > 0) then
+//        begin
+//          x := TextForOrder(uDietParams.CurTF);
+//          if InfoBox(TX_CANCEL_TF + x, TC_CANCEL_TF, MB_YESNO) = IDYES then
+//            begin
+//              chkCancelTubeFeeding.State := cbChecked;
+//              chkCancelTubeFeeding.Visible := True;
+//            end
+//          else chkCancelTubeFeeding.State := cbUnchecked;
+//          Exit;
+//        end;
+//    end;
+//end;
 
 procedure TfrmODDiet.ResetControlsDO;
 begin
   lstDietSelect.Clear;
   calDietStart.Text := 'Now';
-  calDietStop.Text  := '';
+//  calDietStop.Text  := '';
   lblDelivery.Visible := True;
   cboDelivery.Visible := True;
   txtDietComment.Text := '';             // <-- suppress except for NPO
@@ -1075,21 +1132,29 @@ begin
       AnInstance := NextInstance('ORDERABLE', AnInstance);
     end; {while AnInstance - ORDERABLE}
     SetControl(calDietStart,   'START',    1);
-    SetControl(calDietStop,    'STOP',     1);
+//    SetControl(calDietStop,    'STOP',     1);
     SetControl(cboDelivery,    'DELIVERY', 1);
     SetControl(txtDietComment, 'COMMENT',  1);
   end;
   DietCheckForNPO;
   DietCheckForTF;
+//  DietCheckForTFWithNPO;
   Changing := False;                                       // Changing reset
   DietChange(Self);
 end;
 
-procedure TfrmODDiet.cboDietAvailNeedData(Sender: TObject; const StartFrom: string;
-  Direction, InsertAt: Integer);
+procedure TfrmODDiet.cboDietAvailNeedData(Sender: TObject; const StartFrom: String; Direction, InsertAt: Integer);
+var
+  aLst: TStringList;
 begin
   inherited;
-  cboDietAvail.ForDataUse(SubSetOfDiets(StartFrom, Direction));
+  aLst := TStringList.Create;
+  try
+    SubSetOfDiets(aLst, StartFrom, Direction);
+    cboDietAvail.ForDataUse(aLst);
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 procedure TfrmODDiet.cboDietAvailMouseClick(Sender: TObject);
@@ -1111,6 +1176,8 @@ begin
     Responses.QuickOrder := ExtractInteger(cboDietAvail.ItemID);
     SetValuesFromResponsesDO;
     cboDietAvail.ItemIndex := -1;
+//    DietCheckForTF;
+//    DietCheckforTFWithNPO;
     Exit;
   end;
   if cboDietAvail.ItemIEN > 0 then with lstDietSelect do
@@ -1142,6 +1209,7 @@ begin
       lstDietSelect.Items.Add(NewDiet);
       DietCheckForNPO;
       DietCheckForTF;
+//      DietCheckforTFWithNPO;
       OrderMessage(OIMessage(StrToIntDef(Piece(NewDiet, U, 1), 0)));
       DietChange(Sender);
     end; {else of if Length}
@@ -1178,7 +1246,7 @@ begin
   if Changing then Exit;
   if Sender <> Self then Responses.Clear;       // Sender=Self when called from SetupDialog
   with calDietStart   do {if Length(Text) > 0 then} Responses.Update('START',     1, Text,   Text);
-  with calDietStop    do {if Length(Text) > 0 then} Responses.Update('STOP',      1, Text,   Text);
+//  with calDietStop    do {if Length(Text) > 0 then} Responses.Update('STOP',      1, Text,   Text);
   with lstDietSelect  do for i := 0 to Items.Count - 1 do
     Responses.Update('ORDERABLE', i+1, Piece(Items[i], U, 1), Piece(Items[i], U, 2));
   with txtDietComment do {if Length(Text) > 0 then} Responses.Update('COMMENT',   1, Text,   Text);
@@ -1200,7 +1268,6 @@ end;
 procedure TfrmODDiet.ResetControlsTF;
 begin
   TFClearGrid;
-  chkCancelTrays.Checked := False;
   calOPTFStart.Text := '';
   txtTFComment.Text := '';
 end;
@@ -1210,6 +1277,7 @@ var
   AnInstance: Integer;
   AResponse: TResponse;
   AProduct: TTFProduct;
+  ADiet : String; //*SMT
 begin
   Changing := True;                                        // Changing set!!
   ResetControlsTF;
@@ -1219,6 +1287,17 @@ begin
     while AnInstance > 0 do
     begin
       AResponse := FindResponseByName('ORDERABLE', AnInstance);
+
+      //*SMT Check Orderable Item. Close Dialog if Inactive
+      ADiet := DietAttributes(StrToIntDef(AResponse.IValue,0));
+      if Piece(ADiet,'^',1)='0' then
+      begin
+        InfoBox(Piece(ADiet,'^',2), TC_DIET_ERR, MB_OK);
+        Responses.Clear;
+        AbortOrder := True;
+        Exit;
+      end;
+
       if AResponse <> nil then
       begin
         AProduct := TTFProduct.Create;
@@ -1238,8 +1317,6 @@ begin
       end;
       AnInstance := NextInstance('ORDERABLE', AnInstance);
     end; {while AnInstance - ORDERABLE}
-    AResponse := FindResponseByName('CANCEL', 1);
-    if AResponse <> nil then chkCancelTrays.Checked := AResponse.IValue = '1';
     if not OrderForInpatient then
     begin
       SetControl(cboOPTFRecurringMeals, 'DATETIME', 1);
@@ -1370,6 +1447,13 @@ procedure TfrmODDiet.SetNextCell(ACol, ARow: Integer);
 begin
   FNextCol := ACol;
   FNextRow := ARow;
+end;
+
+
+procedure TfrmODDiet.setTabToDiet;
+begin
+  self.nbkDiet.ActivePage := self.pgeDiet;
+  doNotShowMess := true;
 end;
 
 procedure TfrmODDiet.TFMoveToNextCell;
@@ -1556,9 +1640,6 @@ begin
   end; {with grdSelected}
   with txtTFComment do if Text <> ''
     then Responses.Update('COMMENT', 1, Text, Text);
-  with chkCancelTrays do if Checked
-    then Responses.Update('CANCEL', 1, '1', 'Yes')
-    else Responses.Update('CANCEL', 1, '0', 'No');
   if not OrderForInpatient then
   begin
     calOPTFStart.FMDateTime := StrToFloatDef(cboOPTFRecurringMeals.ItemID, 0);
@@ -1771,15 +1852,15 @@ end;
 procedure TfrmODDiet.calELStartEnter(Sender: TObject);
 begin
   inherited;
-  FChangeStop := Length(calELStop.Text) = 0;
+//  FChangeStop := Length(calELStop.Text) = 0;
 end;
 
 procedure TfrmODDiet.calELStartChange(Sender: TObject);
 begin
   inherited;
-  if FChangeStop then
-    calELStop.Text := calELStart.Text
-  else
+//  if FChangeStop then
+//    calELStop.Text := calELStart.Text
+//  else
     ELChange(Sender);
 end;
 
@@ -1934,7 +2015,7 @@ begin
     NewDiet := DietAttributes(cboOPDietAvail.ItemIEN);
     if Piece(NewDiet,'^',1)='0' then
     begin
-      InfoBox(Piece(NewDiet,'^',2),TC_OP_DIET_ERR, MB_OK);     
+      InfoBox(Piece(NewDiet,'^',2),TC_OP_DIET_ERR, MB_OK);
       cboOPDietAvail.ItemIndex := -1;
       Exit;
     end;
@@ -1977,21 +2058,21 @@ begin
   if uDialogName = 'FHW OP MEAL' then
     begin
       calOPStart.Text      := '';
-      calOPStop.Text       := '';
+//      calOPStop.Text       := '';
       calOPStart.Enabled := True;
-      calOPStop.Enabled := True;
-      lblOPStart.Enabled := True;
-      lblOPStop.Enabled := True;
+//      calOPStop.Enabled := True;
+//      lblOPStart.Enabled := True;
+//      lblOPStop.Enabled := True;
       grpOPDOW.Visible := True;
     end
   else if uDialogName = 'FHW SPECIAL MEAL' then
     begin
       calOPStart.Text := 'TODAY';
-      calOPStop.Text  := 'TODAY';
+//      calOPStop.Text  := 'TODAY';
       calOPStart.Enabled := False;
-      calOPStop.Enabled := False;
-      lblOPStart.Enabled := False;
-      lblOPStop.Enabled := False;
+//      calOPStop.Enabled := False;
+//      lblOPStart.Enabled := False;
+//      lblOPStop.Enabled := False;
       grpOPDOW.Visible := False;
     end;
 end;
@@ -2052,17 +2133,22 @@ end;
 procedure TfrmODDiet.calOPStartEnter(Sender: TObject);
 begin
   inherited;
-  FChangeStop := Length(calOPStop.Text) = 0;
+//  FChangeStop := Length(calOPStop.Text) = 0;
 end;
 
 procedure TfrmODDiet.calOPStartChange(Sender: TObject);
+var
+Days: string;
+
 begin
   inherited;
   if Changing then exit;
-  if FChangeStop then
-    calOPStop.Text := calOPStart.Text
-  else
-    OPChange(Sender);
+  if (calOPStart.FMDateTime > 0) then
+  begin
+    Days := FMDays(calOPStart.FMDateTime,FMDateTimeOffsetBy(calOPStart.FMDateTime,7));
+    SetEnableOPDOW(True, -1, Days);
+  end;
+  OPChange(Sender);
 end;
 
 function TfrmODDiet.FMDOW(AnFMDate: TFMDateTime): integer;
@@ -2098,14 +2184,18 @@ begin
   inherited;
   if not (calOPStart.FMDateTime > 0) then
   begin
-    SetEnableOPDOW(False, -1);
+    Days := FMDays(calOPStart.FMDateTime,FMDateTimeOffsetBy(calOPStart.FMDateTime,7));
+    SetEnableOPDOW(True, -1, Days);
+//    SetEnableOPDOW(False, -1);
     Exit ;
   end;
   if (Length(calOPStop.Text) > 0) and (calOPStop.Text = calOPStart.Text) then
     SetEnableOPDOW(False, FMDOW(calOPStart.FMDateTime))
   else
   begin
-    Days := FMDays(calOPStart.FMDateTime, calOPStop.FMDateTime);
+//
+    Days := FMDays(calOPStart.FMDateTime, calOPStart.FMDateTime);
+//    Days := FMDays(calOPStart.FMDateTime,FMDateTimeOffsetBy(calOPStart.FMDateTime,7));
     SetEnableOPDOW(True, -1, Days);
   end;
 end;
@@ -2126,6 +2216,7 @@ begin
   else
   begin
     Days := FMDays(calOPStart.FMDateTime, calOPStop.FMDateTime);
+//    Days := FMDays(calOPStart.FMDateTime,FMDateTimeOffsetBy(calOPStart.FMDateTime,7));
     SetEnableOPDOW(True, -1, Days);
   end;
   OPChange(Sender);
@@ -2240,13 +2331,13 @@ begin
   begin
     lblOPDelivery.Visible := False;
     cboOPDelivery.Visible := False;
-    lblOPComment.Visible := True;          
+    lblOPComment.Visible := True;
     txtOPDietComment.Visible := True;
-  end else                                 
-  begin                                    
-    lblOPComment.Visible := False;         
-    txtOPDietComment.Visible := False;     
-    txtOPDietComment.Text := '';           
+  end else
+  begin
+    lblOPComment.Visible := False;
+    txtOPDietComment.Visible := False;
+    txtOPDietComment.Text := '';
   end;
 end;
 
@@ -2321,6 +2412,8 @@ begin
   end;
   inherited;
   with LateTrayFields do if LateMeal <> #0 then LateTrayOrder(LateTrayFields, OrderForInpatient);
+
+
 end;
 
 procedure TfrmODDiet.FormKeyDown(Sender: TObject; var Key: Word;
@@ -2395,4 +2488,3 @@ end;
 
 
 end.
-

@@ -36,6 +36,9 @@ implementation
 
 {$R *.DFM}
 
+uses
+  VAUtils;
+
 var
  MaxRefills: Integer;
 

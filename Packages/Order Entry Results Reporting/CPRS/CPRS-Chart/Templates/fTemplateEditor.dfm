@@ -5,8 +5,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   ActiveControl = tvPersonal
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Template Editor'
-  ClientHeight = 562
-  ClientWidth = 740
+  ClientHeight = 623
+  ClientWidth = 959
   Position = poScreenCenter
   Scaled = False
   OnClose = FormClose
@@ -14,14 +14,14 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 756
-  ExplicitHeight = 597
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 977
+  ExplicitHeight = 668
+  PixelsPerInch = 120
+  TextHeight = 16
   object splMain: TSplitter [0]
     Left = 0
-    Top = 239
-    Width = 740
+    Top = 300
+    Width = 959
     Height = 3
     Cursor = crVSplit
     Align = alTop
@@ -30,59 +30,70 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     MinSize = 40
     OnCanResize = splMainCanResize
     OnMoved = splMainMoved
+    ExplicitTop = 239
+    ExplicitWidth = 740
   end
   object pnlTop: TPanel [1]
     Left = 0
     Top = 0
-    Width = 740
-    Height = 239
+    Width = 959
+    Height = 300
     Align = alTop
     BevelOuter = bvNone
     Constraints.MinHeight = 223
     TabOrder = 0
+    ExplicitWidth = 951
     object splMiddle: TSplitter
-      Left = 297
+      Left = 356
       Top = 24
-      Height = 215
+      Height = 276
       Align = alRight
       AutoSnap = False
       Beveled = True
+      ExplicitLeft = 297
+      ExplicitHeight = 215
     end
     object Bevel1: TBevel
       Left = 0
       Top = 22
-      Width = 740
+      Width = 959
       Height = 2
       Align = alTop
       Shape = bsSpacer
+      ExplicitWidth = 740
     end
     object pnlRightTop: TPanel
-      Left = 300
+      Left = 359
       Top = 24
-      Width = 440
-      Height = 215
+      Width = 600
+      Height = 276
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 2
       object splProperties: TSplitter
-        Left = 216
+        Left = 322
         Top = 0
-        Height = 215
+        Height = 276
         Align = alRight
         AutoSnap = False
         Beveled = True
+        ExplicitLeft = 216
+        ExplicitHeight = 215
       end
       object pnlCopyBtns: TPanel
         Left = 0
         Top = 0
         Width = 27
-        Height = 215
+        Height = 276
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitLeft = 3
+        ExplicitTop = -3
+        ExplicitHeight = 217
         DesignSize = (
           27
-          215)
+          276)
         object lblCopy: TLabel
           Left = -3
           Top = 82
@@ -158,30 +169,31 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       object pnlPersonal: TPanel
         Left = 27
         Top = 0
-        Width = 189
-        Height = 215
+        Width = 295
+        Height = 276
         Align = alClient
         BevelOuter = bvNone
         Constraints.MinWidth = 100
         TabOrder = 1
+        ExplicitWidth = 320
         object lblPersonal: TLabel
           Tag = 1
           Left = 0
           Top = 0
-          Width = 189
-          Height = 13
+          Width = 295
+          Height = 16
           Align = alTop
           Caption = '&Personal Templates'
           FocusControl = tvPersonal
           PopupMenu = popTemplates
-          ExplicitWidth = 93
+          ExplicitWidth = 122
         end
         object tvPersonal: TORTreeView
           Tag = 1
           Left = 0
-          Top = 53
-          Width = 189
-          Height = 138
+          Top = 56
+          Width = 295
+          Height = 196
           Align = alClient
           DragMode = dmAutomatic
           Images = dmodShared.imgTemplates
@@ -203,21 +215,26 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Caption = 'Personal Templates'
           NodePiece = 0
           OnDragging = tvTreeDragging
+          ExplicitLeft = -21
+          ExplicitTop = 54
+          ExplicitWidth = 270
         end
         object pnlPersonalBottom: TPanel
           Left = 0
-          Top = 191
-          Width = 189
+          Top = 252
+          Width = 295
           Height = 24
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 4
+          ExplicitTop = 193
+          ExplicitWidth = 189
           DesignSize = (
-            189
+            295
             24)
           object sbPerUp: TBitBtn
             Tag = 1
-            Left = 86
+            Left = 192
             Top = 2
             Width = 21
             Height = 21
@@ -242,10 +259,11 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             ShowHint = True
             TabOrder = 0
             OnClick = sbMoveUpClick
+            ExplicitLeft = 86
           end
           object sbPerDown: TBitBtn
             Tag = 1
-            Left = 109
+            Left = 215
             Top = 2
             Width = 21
             Height = 21
@@ -270,10 +288,11 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             ShowHint = True
             TabOrder = 1
             OnClick = sbMoveDownClick
+            ExplicitLeft = 109
           end
           object sbPerDelete: TBitBtn
             Tag = 1
-            Left = 132
+            Left = 238
             Top = 2
             Width = 56
             Height = 21
@@ -300,11 +319,12 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             ShowHint = True
             TabOrder = 2
             OnClick = sbDeleteClick
+            ExplicitLeft = 132
           end
           object cbPerHide: TCheckBox
             Left = 0
             Top = 4
-            Width = 83
+            Width = 189
             Height = 17
             Hint = 'Hide Inactive Personal Templates'
             Anchors = [akLeft, akTop, akRight]
@@ -313,34 +333,37 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             ShowHint = True
             TabOrder = 3
             OnClick = cbPerHideClick
+            ExplicitWidth = 83
           end
         end
         object pnlPersonalGap: TPanel
           Tag = 1
           Left = 0
-          Top = 13
-          Width = 189
+          Top = 16
+          Width = 295
           Height = 2
           Align = alTop
           BevelOuter = bvNone
           PopupMenu = popTemplates
           TabOrder = 0
+          ExplicitWidth = 189
         end
         object pnlPerSearch: TPanel
           Left = 0
-          Top = 15
-          Width = 189
+          Top = 18
+          Width = 295
           Height = 38
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 1
           OnResize = pnlPerSearchResize
+          ExplicitWidth = 189
           DesignSize = (
-            189
+            295
             38)
           object btnPerFind: TORAlignButton
             Tag = 1
-            Left = 134
+            Left = 240
             Top = 0
             Width = 55
             Height = 21
@@ -352,25 +375,27 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             ShowHint = True
             TabOrder = 2
             OnClick = btnFindClick
+            ExplicitLeft = 134
           end
           object edtPerSearch: TCaptionEdit
             Tag = 1
             Left = 0
             Top = 0
-            Width = 134
-            Height = 21
+            Width = 240
+            Height = 24
             Anchors = [akLeft, akTop, akRight]
             TabOrder = 0
             OnChange = edtSearchChange
             OnEnter = edtPerSearchEnter
             OnExit = edtPerSearchExit
             Caption = 'Personal Templates'
+            ExplicitWidth = 134
           end
           object cbPerMatchCase: TCheckBox
             Tag = 1
             Left = 0
             Top = 21
-            Width = 80
+            Width = 99
             Height = 17
             Caption = 'Match Case'
             TabOrder = 3
@@ -378,9 +403,9 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           end
           object cbPerWholeWords: TCheckBox
             Tag = 1
-            Left = 80
+            Left = 105
             Top = 21
-            Width = 109
+            Width = 137
             Height = 17
             Caption = 'Whole Words Only'
             TabOrder = 4
@@ -389,10 +414,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         end
       end
       object pnlProperties: TPanel
-        Left = 219
+        Left = 325
         Top = 0
-        Width = 221
-        Height = 215
+        Width = 275
+        Height = 276
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 2
@@ -400,32 +425,33 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         object gbProperties: TGroupBox
           Left = 0
           Top = 0
-          Width = 221
-          Height = 215
+          Width = 275
+          Height = 276
           Align = alClient
           Caption = ' Template Properties '
           Constraints.MinWidth = 100
           TabOrder = 0
+          ExplicitWidth = 250
           DesignSize = (
-            221
-            215)
+            275
+            276)
           object lblName: TLabel
             Left = 5
-            Top = 18
-            Width = 31
-            Height = 13
+            Top = 20
+            Width = 40
+            Height = 16
             Caption = 'Na&me:'
             FocusControl = edtName
           end
           object lblLines: TLabel
-            Left = 43
-            Top = 186
-            Width = 110
-            Height = 27
+            Left = 46
+            Top = 226
+            Width = 153
+            Height = 36
             Hint = 
               'Indicates the number of blank lines to insert, in the group boil' +
               'erplate, between each item'#39's boilerplate.'
-            Anchors = [akLeft, akTop, akRight, akBottom]
+            Anchors = [akLeft, akTop, akRight]
             AutoSize = False
             Caption = 'Number of Blank &Lines to insert between items'
             FocusControl = edtGap
@@ -435,27 +461,25 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           end
           object lblType: TLabel
             Left = 5
-            Top = 44
-            Width = 74
-            Height = 13
+            Top = 50
+            Width = 96
+            Height = 16
             Caption = 'Template T&ype:'
             FocusControl = cbxType
           end
           object lblRemDlg: TLabel
             Left = 5
-            Top = 60
-            Width = 48
-            Height = 26
-            Alignment = taCenter
+            Top = 74
+            Width = 105
+            Height = 16
             Caption = 'Reminder &Dialog:'
             FocusControl = cbxRemDlgs
-            WordWrap = True
           end
           object cbExclude: TORCheckBox
             Left = 5
-            Top = 143
-            Width = 73
-            Height = 42
+            Top = 169
+            Width = 101
+            Height = 56
             Hint = 
               'Removes this template'#39's boilerplate from the group'#39's boilerplate' +
               '.'
@@ -469,7 +493,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           end
           object cbActive: TCheckBox
             Left = 5
-            Top = 86
+            Top = 95
             Width = 61
             Height = 17
             Hint = 'Makes a template or folder active or inactive.'
@@ -483,9 +507,9 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           end
           object edtGap: TCaptionEdit
             Left = 5
-            Top = 190
+            Top = 230
             Width = 20
-            Height = 21
+            Height = 24
             Hint = 
               'Indicates the number of blank lines to insert, in the group boil' +
               'erplate, between each item'#39's boilerplate.'
@@ -500,9 +524,9 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           end
           object udGap: TUpDown
             Left = 25
-            Top = 190
+            Top = 229
             Width = 15
-            Height = 21
+            Height = 24
             Hint = 
               'Indicates the number of blank lines to insert, in the group boil' +
               'erplate, between each item'#39's boilerplate.'
@@ -513,10 +537,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             TabOrder = 11
           end
           object edtName: TCaptionEdit
-            Left = 38
-            Top = 15
-            Width = 177
-            Height = 21
+            Left = 64
+            Top = 17
+            Width = 205
+            Height = 24
             Anchors = [akLeft, akTop, akRight]
             MaxLength = 60
             TabOrder = 0
@@ -525,10 +549,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Caption = 'Name'
           end
           object gbDialogProps: TGroupBox
-            Left = 89
-            Top = 87
-            Width = 126
-            Height = 95
+            Left = 136
+            Top = 115
+            Width = 133
+            Height = 98
             Anchors = [akLeft, akTop, akRight]
             Caption = 'Dialog Properties'
             Font.Charset = DEFAULT_CHARSET
@@ -607,9 +631,9 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           end
           object cbHideItems: TORCheckBox
             Left = 5
-            Top = 102
-            Width = 79
-            Height = 42
+            Top = 115
+            Width = 101
+            Height = 54
             Hint = 'Hide child items from template drawer view'
             Caption = 'Hide Items in Templates Dra&wer'
             ParentShowHint = False
@@ -620,9 +644,9 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             AutoSize = True
           end
           object cbxType: TCaptionComboBox
-            Left = 82
-            Top = 38
-            Width = 133
+            Left = 120
+            Top = 44
+            Width = 149
             Height = 24
             Style = csOwnerDrawFixed
             Anchors = [akLeft, akTop, akRight]
@@ -635,17 +659,17 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             Caption = 'Template Type'
           end
           object cbxRemDlgs: TORComboBox
-            Left = 54
-            Top = 64
-            Width = 161
-            Height = 21
+            Left = 118
+            Top = 71
+            Width = 152
+            Height = 24
             Anchors = [akLeft, akTop, akRight]
             Style = orcsDropDown
             AutoSelect = True
             Caption = 'Reminder Dialog'
             Color = clWindow
             DropDownCount = 12
-            ItemHeight = 13
+            ItemHeight = 16
             ItemTipColor = clWindow
             ItemTipEnable = True
             ListItemsOnly = True
@@ -661,8 +685,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             CharsNeedMatch = 1
           end
           object cbLock: TORCheckBox
-            Left = 168
-            Top = 191
+            Left = 212
+            Top = 234
             Width = 47
             Height = 16
             Caption = 'Lock'
@@ -675,27 +699,29 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     object pnlShared: TPanel
       Left = 0
       Top = 24
-      Width = 297
-      Height = 215
+      Width = 356
+      Height = 276
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitWidth = 513
+      ExplicitHeight = 217
       object lblShared: TLabel
         Left = 0
         Top = 0
-        Width = 297
-        Height = 13
+        Width = 356
+        Height = 16
         Align = alTop
         Caption = '&Shared Templates'
         FocusControl = tvShared
         PopupMenu = popTemplates
-        ExplicitWidth = 86
+        ExplicitWidth = 112
       end
       object tvShared: TORTreeView
         Left = 0
-        Top = 53
-        Width = 297
-        Height = 138
+        Top = 56
+        Width = 356
+        Height = 196
         Align = alClient
         DragMode = dmAutomatic
         Images = dmodShared.imgTemplates
@@ -717,20 +743,24 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Caption = 'Shared Templates'
         NodePiece = 0
         OnDragging = tvTreeDragging
+        ExplicitWidth = 297
+        ExplicitHeight = 137
       end
       object pnlSharedBottom: TPanel
         Left = 0
-        Top = 191
-        Width = 297
+        Top = 252
+        Width = 356
         Height = 24
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 4
+        ExplicitTop = 193
+        ExplicitWidth = 297
         DesignSize = (
-          297
+          356
           24)
         object sbShUp: TBitBtn
-          Left = 194
+          Left = 253
           Top = 2
           Width = 21
           Height = 21
@@ -755,9 +785,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ShowHint = True
           TabOrder = 0
           OnClick = sbMoveUpClick
+          ExplicitLeft = 194
         end
         object sbShDown: TBitBtn
-          Left = 217
+          Left = 276
           Top = 2
           Width = 21
           Height = 21
@@ -782,9 +813,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ShowHint = True
           TabOrder = 1
           OnClick = sbMoveDownClick
+          ExplicitLeft = 217
         end
         object sbShDelete: TBitBtn
-          Left = 240
+          Left = 299
           Top = 2
           Width = 56
           Height = 21
@@ -811,11 +843,12 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ShowHint = True
           TabOrder = 2
           OnClick = sbDeleteClick
+          ExplicitLeft = 240
         end
         object cbShHide: TCheckBox
           Left = 0
           Top = 4
-          Width = 191
+          Width = 220
           Height = 17
           Hint = 'Hide Inactive Shared Templates'
           Anchors = [akLeft, akTop, akRight]
@@ -824,32 +857,35 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ShowHint = True
           TabOrder = 3
           OnClick = cbShHideClick
+          ExplicitWidth = 161
         end
       end
       object pnlSharedGap: TPanel
         Left = 0
-        Top = 13
-        Width = 297
+        Top = 16
+        Width = 356
         Height = 2
         Align = alTop
         BevelOuter = bvNone
         PopupMenu = popTemplates
         TabOrder = 0
+        ExplicitWidth = 297
       end
       object pnlShSearch: TPanel
         Left = 0
-        Top = 15
-        Width = 297
+        Top = 18
+        Width = 356
         Height = 38
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 1
         OnResize = pnlShSearchResize
+        ExplicitWidth = 297
         DesignSize = (
-          297
+          356
           38)
         object btnShFind: TORAlignButton
-          Left = 242
+          Left = 301
           Top = 0
           Width = 55
           Height = 21
@@ -861,32 +897,34 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ShowHint = True
           TabOrder = 2
           OnClick = btnFindClick
+          ExplicitLeft = 242
         end
         object edtShSearch: TCaptionEdit
           Left = 0
           Top = 0
-          Width = 242
-          Height = 21
+          Width = 301
+          Height = 24
           Anchors = [akLeft, akTop, akRight]
           TabOrder = 0
           OnChange = edtSearchChange
           OnEnter = edtShSearchEnter
           OnExit = edtShSearchExit
           Caption = 'Shared Templates'
+          ExplicitWidth = 242
         end
         object cbShMatchCase: TCheckBox
           Left = 0
           Top = 21
-          Width = 80
+          Width = 99
           Height = 17
           Caption = 'Match Case'
           TabOrder = 3
           OnClick = cbShFindOptionClick
         end
         object cbShWholeWords: TCheckBox
-          Left = 80
+          Left = 111
           Top = 21
-          Width = 109
+          Width = 143
           Height = 17
           Caption = 'Whole Words Only'
           TabOrder = 4
@@ -897,16 +935,17 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     object pnlMenuBar: TPanel
       Left = 0
       Top = 0
-      Width = 740
+      Width = 959
       Height = 22
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitWidth = 740
       object lblPerOwner: TLabel
         Left = 138
         Top = 4
-        Width = 75
-        Height = 13
+        Width = 95
+        Height = 16
         Caption = 'Personal &Owner'
         FocusControl = cboOwner
       end
@@ -914,13 +953,13 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Left = 219
         Top = 0
         Width = 190
-        Height = 21
+        Height = 24
         Style = orcsDropDown
         AutoSelect = True
         Caption = 'Personal Owner'
         Color = clWindow
         DropDownCount = 8
-        ItemHeight = 13
+        ItemHeight = 16
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = True
@@ -939,7 +978,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         CharsNeedMatch = 1
       end
       object btnNew: TORAlignButton
-        Left = 558
+        Left = 777
         Top = 0
         Width = 182
         Height = 22
@@ -947,6 +986,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Caption = '&New Template'
         TabOrder = 2
         OnClick = btnNewClick
+        ExplicitLeft = 558
       end
       object pnlMenu: TPanel
         Left = 0
@@ -961,12 +1001,12 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         object mbMain: TMenuBar
           Left = 1
           Top = 1
-          Width = 107
+          Width = 128
           Height = 20
           Align = alLeft
           AutoSize = True
-          ButtonHeight = 0
-          ButtonWidth = 0
+          ButtonHeight = 24
+          ButtonWidth = 44
           Caption = 'mbMain'
           Menu = mnuMain
           ShowCaptions = True
@@ -978,55 +1018,60 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   end
   object pnlCOM: TPanel [2]
     Left = 0
-    Top = 263
-    Width = 740
+    Top = 345
+    Width = 959
     Height = 21
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
     Visible = False
+    ExplicitTop = 286
+    ExplicitWidth = 740
     object lblCOMParam: TLabel
-      Left = 283
+      Left = 297
       Top = 0
-      Width = 77
+      Width = 97
       Height = 21
       Align = alLeft
       Caption = '  Passed Value: '
       Layout = tlCenter
-      ExplicitHeight = 13
+      ExplicitLeft = 283
+      ExplicitHeight = 16
     end
     object lblCOMObj: TLabel
       Left = 0
       Top = 0
-      Width = 67
+      Width = 81
       Height = 21
       Align = alLeft
       Caption = ' COM Object: '
       Layout = tlCenter
-      ExplicitHeight = 13
+      ExplicitHeight = 16
     end
     object edtCOMParam: TCaptionEdit
-      Left = 360
+      Left = 394
       Top = 0
-      Width = 380
+      Width = 565
       Height = 21
       Align = alClient
       TabOrder = 2
       OnChange = edtCOMParamChange
       Caption = 'Passed Value'
+      ExplicitWidth = 346
+      ExplicitHeight = 24
     end
     object cbxCOMObj: TORComboBox
-      Left = 67
+      Left = 81
       Top = 0
       Width = 216
-      Height = 21
+      Height = 24
       Style = orcsDropDown
       Align = alLeft
       AutoSelect = True
       Caption = 'COM Object'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = True
@@ -1044,35 +1089,37 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   end
   object pnlLink: TPanel [3]
     Left = 0
-    Top = 242
-    Width = 740
+    Top = 303
+    Width = 959
     Height = 21
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
     Visible = False
+    ExplicitTop = 244
+    ExplicitWidth = 740
     object lblLink: TLabel
       Left = 0
       Top = 0
-      Width = 138
+      Width = 173
       Height = 21
       Align = alLeft
       Caption = ' Associated Consult Service: '
       Layout = tlCenter
-      ExplicitHeight = 13
+      ExplicitHeight = 16
     end
     object cbxLink: TORComboBox
-      Left = 138
+      Left = 173
       Top = 0
-      Width = 602
-      Height = 21
+      Width = 786
+      Height = 24
       Style = orcsDropDown
       Align = alClient
       AutoSelect = True
       Caption = ' Associated Consult Service'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = False
       ListItemsOnly = True
@@ -1087,32 +1134,40 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       TabOrder = 0
       TabStop = True
       Text = ''
+      OnChange = cbxLinkChange
+      OnEnter = cbxLinkEnter
       OnExit = cbxLinkExit
       OnNeedData = cbxLinkNeedData
       CharsNeedMatch = 1
+      ExplicitWidth = 567
     end
   end
   object Panel1: TPanel [4]
     Left = 0
-    Top = 284
-    Width = 740
-    Height = 251
+    Top = 366
+    Width = 959
+    Height = 230
     Align = alClient
     TabOrder = 3
+    ExplicitTop = 307
+    ExplicitWidth = 740
+    ExplicitHeight = 269
     object pnlBoilerplate: TPanel
       Left = 1
       Top = 1
-      Width = 738
-      Height = 249
+      Width = 957
+      Height = 228
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       OnCanResize = pnlBoilerplateCanResize
       OnResize = pnlBoilerplateResize
+      ExplicitWidth = 738
+      ExplicitHeight = 267
       object splBoil: TSplitter
         Left = 0
-        Top = 14
-        Width = 738
+        Top = 21
+        Width = 957
         Height = 3
         Cursor = crVSplit
         Align = alTop
@@ -1125,8 +1180,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       end
       object splNotes: TSplitter
         Left = 0
-        Top = 203
-        Width = 738
+        Top = 182
+        Width = 957
         Height = 3
         Cursor = crVSplit
         Align = alBottom
@@ -1139,9 +1194,9 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       end
       object reBoil: TRichEdit
         Left = 0
-        Top = 17
-        Width = 738
-        Height = 140
+        Top = 24
+        Width = 957
+        Height = 112
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -1155,51 +1210,57 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         ScrollBars = ssVertical
         TabOrder = 1
         WantTabs = True
+        Zoom = 100
         OnChange = reBoilChange
         OnKeyDown = reBoilKeyDown
         OnKeyPress = reBoilKeyPress
         OnKeyUp = reBoilKeyUp
         OnResizeRequest = reResizeRequest
         OnSelectionChange = reBoilSelectionChange
+        ExplicitTop = 17
+        ExplicitWidth = 738
+        ExplicitHeight = 158
       end
       object pnlGroupBP: TPanel
         Left = 0
-        Top = 157
-        Width = 738
+        Top = 136
+        Width = 957
         Height = 46
         Align = alBottom
         BevelOuter = bvNone
         Constraints.MinHeight = 30
         TabOrder = 2
         Visible = False
+        ExplicitTop = 175
+        ExplicitWidth = 738
         object lblGroupBP: TLabel
           Left = 0
           Top = 0
-          Width = 738
-          Height = 13
+          Width = 957
+          Height = 16
           Align = alTop
           Caption = 'Group Boilerplate'
-          ExplicitWidth = 81
+          ExplicitWidth = 105
         end
         object lblGroupRow: TLabel
           Left = 264
           Top = 0
-          Width = 23
-          Height = 13
+          Width = 28
+          Height = 16
           Caption = 'Line:'
         end
         object lblGroupCol: TLabel
           Left = 336
           Top = 0
-          Width = 38
-          Height = 13
+          Width = 48
+          Height = 16
           Caption = 'Column:'
         end
         object reGroupBP: TRichEdit
           Left = 0
-          Top = 16
-          Width = 738
-          Height = 30
+          Top = 19
+          Width = 957
+          Height = 27
           Align = alClient
           Color = clCream
           Font.Charset = ANSI_CHARSET
@@ -1207,7 +1268,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = []
-          Constraints.MinHeight = 30
+          Constraints.MinHeight = 27
           ParentFont = False
           PlainText = True
           PopupMenu = popGroup
@@ -1215,54 +1276,57 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ScrollBars = ssBoth
           TabOrder = 1
           WantReturns = False
+          Zoom = 100
           OnSelectionChange = reGroupBPSelectionChange
+          ExplicitWidth = 738
         end
         object pnlGroupBPGap: TPanel
           Left = 0
-          Top = 13
-          Width = 738
+          Top = 16
+          Width = 957
           Height = 3
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 0
+          ExplicitWidth = 738
         end
       end
       object pnlBP: TPanel
         Left = 0
         Top = 0
-        Width = 738
-        Height = 14
+        Width = 957
+        Height = 21
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         object lblBoilerplate: TLabel
           Left = 0
-          Top = 0
-          Width = 96
-          Height = 13
+          Top = 1
+          Width = 147
+          Height = 16
           Caption = 'Template &Boilerplate'
           FocusControl = reBoil
         end
         object lblBoilRow: TLabel
-          Left = 264
-          Top = 0
-          Width = 23
-          Height = 13
+          Left = 296
+          Top = 2
+          Width = 28
+          Height = 16
           Caption = 'Line:'
         end
         object lblBoilCol: TLabel
-          Left = 336
-          Top = 0
-          Width = 38
-          Height = 13
+          Left = 360
+          Top = 2
+          Width = 48
+          Height = 16
           Caption = 'Column:'
           Color = clBtnFace
           ParentColor = False
         end
         object cbLongLines: TCheckBox
-          Left = 120
-          Top = -2
-          Width = 105
+          Left = 153
+          Top = 1
+          Width = 137
           Height = 17
           Caption = 'Allow Lon&g Lines'
           TabOrder = 0
@@ -1271,62 +1335,69 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       end
       object pnlNotes: TPanel
         Left = 0
-        Top = 206
-        Width = 738
+        Top = 185
+        Width = 957
         Height = 43
         Align = alBottom
         BevelOuter = bvNone
         Constraints.MinHeight = 30
         TabOrder = 3
         Visible = False
+        ExplicitTop = 224
+        ExplicitWidth = 738
         object lblNotes: TLabel
           Left = 0
           Top = 0
-          Width = 78
-          Height = 13
+          Width = 957
+          Height = 16
           Align = alTop
           Caption = 'Template Notes:'
+          ExplicitWidth = 100
         end
         object reNotes: TRichEdit
           Left = 0
-          Top = 13
-          Width = 738
-          Height = 30
+          Top = 16
+          Width = 957
+          Height = 27
           Align = alClient
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Courier New'
           Font.Style = []
-          Constraints.MinHeight = 30
+          Constraints.MinHeight = 27
           ParentFont = False
           PlainText = True
           PopupMenu = popNotes
           ScrollBars = ssVertical
           TabOrder = 0
           WantTabs = True
+          Zoom = 100
           OnChange = reNotesChange
           OnKeyDown = reBoilKeyDown
           OnKeyPress = reBoilKeyPress
           OnKeyUp = reBoilKeyUp
           OnResizeRequest = reResizeRequest
+          ExplicitWidth = 738
         end
       end
     end
   end
   object pnlBottom: TPanel [5]
     Left = 0
-    Top = 535
-    Width = 740
+    Top = 596
+    Width = 959
     Height = 27
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
+    ExplicitTop = 576
+    ExplicitWidth = 740
     DesignSize = (
-      740
+      959
       27)
     object btnApply: TButton
-      Left = 664
+      Left = 884
       Top = 4
       Width = 75
       Height = 22
@@ -1336,9 +1407,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       ShowHint = False
       TabOrder = 2
       OnClick = btnApplyClick
+      ExplicitLeft = 665
     end
     object btnCancel: TButton
-      Left = 584
+      Left = 803
       Top = 4
       Width = 75
       Height = 22
@@ -1350,9 +1422,10 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       ShowHint = False
       TabOrder = 1
       OnClick = btnCancelClick
+      ExplicitLeft = 584
     end
     object btnOK: TButton
-      Left = 504
+      Left = 723
       Top = 4
       Width = 75
       Height = 22
@@ -1362,6 +1435,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       ShowHint = False
       TabOrder = 0
       OnClick = btnOKClick
+      ExplicitLeft = 504
     end
     object cbEditShared: TCheckBox
       Left = 0
@@ -1395,6 +1469,28 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       TabOrder = 4
       Visible = False
       OnClick = cbEditSharedClick
+    end
+  end
+  object pnlComCare: TPanel [6]
+    Left = 0
+    Top = 324
+    Width = 959
+    Height = 21
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 5
+    Visible = False
+    ExplicitTop = 265
+    ExplicitWidth = 740
+    object lblComCare: TLabel
+      Left = 0
+      Top = 0
+      Width = 959
+      Height = 21
+      Align = alClient
+      Caption = 'This template has been locked and may not be edited.'
+      ExplicitWidth = 323
+      ExplicitHeight = 16
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -1630,6 +1726,9 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsDefault')
       (
         'Component = reNotes'
+        'Status = stsDefault')
+      (
+        'Component = pnlComCare'
         'Status = stsDefault'))
   end
   object popTemplates: TPopupMenu
@@ -1677,8 +1776,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   end
   object popBoilerplate: TPopupMenu
     OnPopup = popBoilerplatePopup
-    Left = 88
-    Top = 332
+    Left = 120
+    Top = 212
     object mnuBPUndo: TMenuItem
       Caption = '&Undo'
       ShortCut = 16474
@@ -1753,8 +1852,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   end
   object popGroup: TPopupMenu
     OnPopup = popGroupPopup
-    Left = 8
-    Top = 325
+    Left = 56
+    Top = 213
     object mnuGroupBPCopy: TMenuItem
       Caption = '&Copy'
       ShortCut = 16451
@@ -1942,8 +2041,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   end
   object popNotes: TPopupMenu
     OnPopup = popNotesPopup
-    Left = 8
-    Top = 387
+    Left = 192
+    Top = 187
     object mnuNotesUndo: TMenuItem
       Caption = '&Undo'
       ShortCut = 16474

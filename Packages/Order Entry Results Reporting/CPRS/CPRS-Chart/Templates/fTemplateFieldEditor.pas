@@ -99,6 +99,7 @@ type
     lblCol: TLabel;
     N14: TMenuItem;
     mnuInsertTemplateField: TMenuItem;
+    lblCommCareLock: TLabel;
     procedure cbxObjsNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure FormCreate(Sender: TObject);
@@ -174,6 +175,7 @@ type
     procedure SetFld(const Value: TTemplateField);
     procedure SetHideSynonyms(const Value: boolean);
     function GetPopupControl: TCustomEdit;
+    function IsCommunityCare: boolean;
   public
     { Public declarations }
   end;
@@ -441,6 +443,15 @@ begin
           reItems.Lines.Text := FFld.Items
         else
           reItems.Clear;
+
+      if ok then
+      begin
+        if FFld.CommunityCare then
+          lblCommCareLock.Visible := True
+        else
+          lblCommCareLock.Visible := False;
+        end
+
       finally
         pnlSwap.EnableAlign;
       end;
@@ -499,26 +510,24 @@ begin
   end;
 end;
 
-procedure TfrmTemplateFieldEditor.cbxObjsNeedData(Sender: TObject;
-  const StartFrom: String; Direction, InsertAt: Integer);
+procedure TfrmTemplateFieldEditor.cbxObjsNeedData(Sender: TObject; const StartFrom: String; Direction, InsertAt: Integer);
 var
   tmp: TORStringList;
-  i, idx: integer;
-
+  i, idx: Integer;
 begin
   tmp := TORStringList.Create;
   try
-    FastAssign(SubSetOfTemplateFields(StartFrom, Direction), tmp);
-    for i := 0 to FDeleted.Count-1 do
-    begin
-      idx := tmp.IndexOfPiece(Piece(FDeleted[i],U,1), U, 1);
-      if(idx >= 0) then
-        tmp.delete(idx);
-    end;
+    SubSetOfTemplateFields(StartFrom, Direction, tmp);
+    for i := 0 to FDeleted.Count - 1 do
+      begin
+        idx := tmp.IndexOfPiece(Piece(FDeleted[i], U, 1), U, 1);
+        if (idx >= 0) then
+          tmp.delete(idx);
+      end;
     ConvertCodes2Text(tmp, FALSE);
     cbxObjs.ForDataUse(tmp);
   finally
-    tmp.Free;
+    FreeAndNil(tmp);
   end;
 end;
 
@@ -559,6 +568,7 @@ begin
   else
     SetFld(nil);
   UpdateControls;
+  IsCommunityCare;
 end;
 
 procedure TfrmTemplateFieldEditor.edtNameChange(Sender: TObject);
@@ -941,9 +951,41 @@ begin
   end;
 end;
 
+function TfrmTemplateFieldEditor.IsCommunityCare: boolean;
+
+ procedure ApplyCommunityCareLock(AllowEdit: Boolean; aCtrl: TWinControl);
+ var
+  I:integer;
+
+ begin
+  for i := 0 to aCtrl.ControlCount - 1 do
+  begin
+   if aCtrl.Controls[i] is TWinControl then
+   begin
+    if TWinControl(aCtrl.Controls[i]).ControlCount > 0 then
+     ApplyCommunityCareLock(AllowEdit, TWinControl(aCtrl.Controls[i]));
+
+     TWinControl(aCtrl.Controls[i]).Enabled := AllowEdit;
+   end;
+  end;
+ end;
+
+var
+ HasAccess: Boolean;
+begin
+  if assigned(FFld) then
+    HasAccess := FFld.CommunityCare
+  else
+    HasAccess := False;
+  Result := not HasAccess;
+  ApplyCommunityCareLock(not HasAccess, pnlRight);
+  btnOK.Enabled := not HasAccess;
+  btnApply.Enabled := not HasAccess;
+end;
+
 procedure TfrmTemplateFieldEditor.EnableButtons;
 begin
-  btnCopy.Enabled := assigned(FFld);
+  btnCopy.Enabled := assigned(FFld) and not FFld.CommunityCare;
   mnuCopy.Enabled := btnCopy.Enabled;
   btnDelete.Enabled := btnCopy.Enabled; // (assigned(FFld) and FFld.NewField);
   mnuDelete.Enabled := btnDelete.Enabled;
@@ -1075,7 +1117,7 @@ end;
 procedure TfrmTemplateFieldEditor.mnuBPCutClick(Sender: TObject);
 var
   ce: TCustomEdit;
-  
+
 begin
   ce := GetPopupControl;
   if assigned(ce) then
@@ -1085,7 +1127,7 @@ end;
 procedure TfrmTemplateFieldEditor.mnuBPCopyClick(Sender: TObject);
 var
   ce: TCustomEdit;
-  
+
 begin
   ce := GetPopupControl;
   if assigned(ce) then
@@ -1095,7 +1137,7 @@ end;
 procedure TfrmTemplateFieldEditor.mnuBPPasteClick(Sender: TObject);
 var
   ce: TCustomEdit;
-  
+
 begin
   ce := GetPopupControl;
   if assigned(ce) then

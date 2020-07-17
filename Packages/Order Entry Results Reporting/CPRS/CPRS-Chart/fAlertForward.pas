@@ -44,7 +44,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, uCore, VA508AccessibilityRouter;
+uses rCore, uCore, VA508AccessibilityRouter, VAUtils;
 
 const
     TX_DUP_RECIP = 'You have already selected that recipient.';

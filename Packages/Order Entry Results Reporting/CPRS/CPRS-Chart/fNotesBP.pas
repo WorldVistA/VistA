@@ -37,7 +37,7 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn, fRptBox;
+uses ORFn, fRptBox, VAUtils;
 
 function QueryBoilerPlate(BPText: TStrings): Integer;
 var

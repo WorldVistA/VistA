@@ -2,7 +2,7 @@ unit rReminders;
 
 interface
 uses
-  Windows,Classes, SysUtils, TRPCB, ORNet, ORFn, fMHTest, StrUtils;
+  Windows,Classes, SysUtils, TRPCB, ORNet, ORFn, fMHTest, StrUtils, ORNetINTF, Dialogs, UITypes;
 
 type
   TMHdllFound = record
@@ -10,46 +10,48 @@ type
   DllFound: boolean;
 end;
 
-procedure GetCurrentReminders;
+procedure GetCurrentReminders(var aReturn: TStrings);
 procedure GetOtherReminders(Dest: TStrings);
-procedure EvaluateReminders(RemList: TStringList);
+procedure EvaluateReminders(RemList: TStringList; var aReturn: TStrings);
 function EvaluateReminder(IEN: string): string;
-procedure GetEducationTopicsForReminder(ReminderID: integer);
-procedure GetEducationSubtopics(TopicID: integer);
-procedure GetReminderWebPages(ReminderID: string);
-function DetailReminder(IEN: Integer): TStrings;
-function ReminderInquiry(IEN: Integer): TStrings;
-function EducationTopicDetail(IEN: Integer): TStrings;
-function GetDialogInfo(IEN: string; RemIEN: boolean): TStrings;
-function GetDialogPrompts(IEN: string; Historical: boolean; FindingType: string): TStrings;
+procedure GetEducationTopicsForReminder(ReminderID: integer; var AReturn: TStrings);
+procedure GetEducationSubtopics(TopicID: integer; var AReturn: TStrings);
+procedure GetReminderWebPages(ReminderID: string; var AReturn: TStrings);
+function DetailReminder(IEN: Integer; aReturn: TStrings): integer;
+function ReminderInquiry(IEN: Integer; aReturn: TStrings): integer;
+function EducationTopicDetail(IEN: Integer; aReturn: TStrings): integer;
+function GetDialogInfo(IEN: string; RemIEN: boolean; aReturn: TStrings): integer;
+function GetDialogPrompts(IEN: string; Historical: boolean; FindingType, remIEN: string; aReturn: TStrings; newDataOnly: String): integer;
 procedure GetDialogStatus(AList: TStringList);
 function GetRemindersActive: boolean;
 function GetProgressNoteHeader: string;
-function LoadMentalHealthTest(TestName: string): TStrings;
-procedure MentalHealthTestResults(var AText: string; const DlgIEN: string; const TestName:
-                                  string; const AProvider: Int64; const Answers: string);
-procedure SaveMentalHealthTest(const TestName: string; ADate: TFMDateTime;
-                               const AProvider: Int64; const Answers: string);
 procedure SaveWomenHealthData(var WHData: TStringlist);
 function CheckGECValue(const RemIEN: string; NoteIEN: integer): String;
 procedure SaveMSTDataFromReminder(VDate, Sts, Prov, FType, FIEN, Res: string);
 
 function GetReminderFolders: string;
 procedure SetReminderFolders(const Value: string);
-function GetDefLocations: TStrings;
+function GetDefLocations(aReturn: TStrings): integer;
 function InsertRemTextAtCursor: boolean;
 
 function NewRemCoverSheetListActive: boolean;
 function CanEditAllRemCoverSheetLists: boolean;
-function GetCoverSheetLevelData(ALevel, AClass: string): TStrings;
+function GetCoverSheetLevelData(ALevel, AClass: string; aReturn: TStrings): integer;
 procedure SetCoverSheetLevelData(ALevel, AClass: string; Data: TStrings);
-function GetCategoryItems(CatIEN: integer): TStrings;
-function GetAllRemindersAndCategories: TStrings;
+function GetCategoryItems(CatIEN: integer; aReturn: TStrings): integer;
+function GetAllRemindersAndCategories(aReturn: TStrings): integer;
 function VerifyMentalHealthTestComplete(TestName, Answers: string): String;
 function MHDLLFound: boolean;
 function UsedMHDllRPC: boolean;
 procedure PopulateMHdll;
-procedure GetMHResultText(var AText: string; ResultsGroups, Scores: TStringList);
+procedure GetMHResultText(var AText: string; ResultsGroups, Scores: TStringList; DIEN:String; var linkList: TStringList);
+procedure SaveGenFindingData(GenFindingList: TStringList; DFN: String; Visit: String; Identifier: String; noteIEN, user, encProv: String);
+procedure FormatGenFindingData(var aList: iORNetMult; GenFindingList: TStringList; DFN: String; Visit: String; Identifier: String; noteIEN, user, encProv: String);
+procedure clearGlobals;
+function ValidateGenFindingData(GenFindingList: TStringList; DFN: String; Visit: String; Identifier: String; noteIEN, user, encProv: String): boolean;
+function getLinkPromptValue(value, itemId, orgValue, dfn: string): String;
+procedure getGeneralFindingText(var list: TStrings; var canprint: boolean; var header: String; dfn, ien, value: string);
+procedure getLinkSeqList(var list: TStrings; ien: string);
 
 
 implementation
@@ -65,225 +67,294 @@ var
   uCanEditAllCoverSheetLists: integer = -1;
   MHDLL: TMHDllFound;
 
-procedure GetCurrentReminders;
+procedure GetCurrentReminders(var aReturn: TStrings);
 begin
-  CallV('ORQQPXRM REMINDERS UNEVALUATED', [Patient.DFN, Encounter.Location]);
+  CallVistA('ORQQPXRM REMINDERS UNEVALUATED', [Patient.DFN, Encounter.Location], AReturn);
 end;
 
 procedure GetOtherReminders(Dest: TStrings);
 begin
-  CallV('ORQQPXRM REMINDER CATEGORIES', [Patient.DFN, Encounter.Location]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQQPXRM REMINDER CATEGORIES', [Patient.DFN, Encounter.Location], Dest);
 end;
 
-procedure EvaluateReminders(RemList: TStringList);
+procedure EvaluateReminders(RemList: TStringList; var aReturn: TStrings);
 var
   i: integer;
-
+  aList: iORNetMult;
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'ORQQPXRM REMINDER EVALUATION';
-    Param[0].PType := literal;
-    Param[0].Value := Patient.DFN;
-    Param[1].PType := list;
+    neworNetMult(aList);
     for i := 0 to RemList.Count-1 do
-      Param[1].Mult[IntToStr(i+1)] := Piece(RemList[i],U,1);
-    CallBroker;
-  end;
+      aList.AddSubscript(i+1, Piece(RemList[i],U,1));
+      CallVistA('ORQQPXRM REMINDER EVALUATION', [patient.DFN, aList], aReturn);
 end;
 
 function EvaluateReminder(IEN: string): string;
 var
   TmpSL: TStringList;
-
+  aList: TStrings;
 begin
   TmpSL := TStringList.Create;
+  aList := TStringList.Create;
   try
     TmpSL.Add(IEN);
-    EvaluateReminders(TmpSL);
-    if(RPCBrokerV.Results.Count > 0) then
-      Result := RPCBrokerV.Results[0]
+    EvaluateReminders(TmpSL, aList);
+    if(aList.Count > 0) then
+      Result := aList[0]
     else
       Result := IEN;
   finally
-    TmpSL.Free;
+    FreeAndNil(tmpSL);
+    FreeAndNil(aList);
   end;
 end;
 
-procedure GetEducationTopicsForReminder(ReminderID: integer);
+procedure GetEducationTopicsForReminder(ReminderID: integer; var AReturn: TStrings);
 begin
-  CallV('ORQQPXRM EDUCATION SUMMARY', [ReminderID]);
+  CallVistA('ORQQPXRM EDUCATION SUMMARY', [ReminderID], AReturn);
 end;
 
-procedure GetEducationSubtopics(TopicID: integer);
+procedure GetEducationSubtopics(TopicID: integer; var AReturn: TStrings);
 begin
-  CallV('ORQQPXRM EDUCATION SUBTOPICS', [TopicID]);
+  CallVistA('ORQQPXRM EDUCATION SUBTOPICS', [TopicID], aReturn);
 end;
 
-procedure GetReminderWebPages(ReminderID: string);
+procedure GetReminderWebPages(ReminderID: string; var AReturn: TStrings);
 begin
-  if(User.WebAccess) then
-    CallV('ORQQPXRM REMINDER WEB', [ReminderID])
-  else
-    RPCBrokerV.ClearParameters := True;
+  CallVistA('ORQQPXRM REMINDER WEB', [ReminderID], AReturn);
 end;
 
-function DetailReminder(IEN: Integer): TStrings; // Clinical Maintenance
+function DetailReminder(IEN: integer; aReturn: TStrings): integer; // Clinical Maintenance
 begin
   if InteractiveRemindersActive then
-    CallV('ORQQPXRM REMINDER DETAIL', [Patient.DFN, IEN])
+    CallVistA('ORQQPXRM REMINDER DETAIL', [Patient.DFN, IEN], aReturn)
   else
-    CallV('ORQQPX REMINDER DETAIL', [Patient.DFN, IEN]);
-  Result := RPCBrokerV.Results;
+    CallVistA('ORQQPX REMINDER DETAIL', [Patient.DFN, IEN], aReturn);
+  result := aReturn.Count;
 end;
 
-function ReminderInquiry(IEN: Integer): TStrings;
+function ReminderInquiry(IEN: Integer; aReturn: TStrings): integer;
 begin
-  CallV('ORQQPXRM REMINDER INQUIRY', [IEN]);
-  Result := RPCBrokerV.Results;
+  CallVista('ORQQPXRM REMINDER INQUIRY', [IEN], aReturn);
+  Result := AReturn.Count;
 end;
 
-function EducationTopicDetail(IEN: Integer): TStrings;
+function EducationTopicDetail(IEN: Integer; aReturn: TStrings): integer;
 begin
-  CallV('ORQQPXRM EDUCATION TOPIC', [IEN]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQPXRM EDUCATION TOPIC', [IEN], aReturn);
+  result := aReturn.Count;
 end;
 
-function GetDialogInfo(IEN: string; RemIEN: boolean): TStrings;
+function GetDialogInfo(IEN: string; RemIEN: boolean; aReturn: TStrings): integer;
 begin
      if RemIEN then
-        CallV('ORQQPXRM REMINDER DIALOG', [IEN, Patient.DFN])
+      CallVistA('ORQQPXRM REMINDER DIALOG', [IEN, Patient.DFN], aReturn)
      else
-        CallV('PXRM REMINDER DIALOG (TIU)', [IEN, Patient.DFN]);
-     Result := RPCBrokerV.Results;
+      CallVistA('PXRM REMINDER DIALOG (TIU)', [IEN, Patient.DFN], aReturn);
+  Result := aReturn.Count;
 end;
 
-function GetDialogPrompts(IEN: string; Historical: boolean; FindingType: string): TStrings;
+function GetDialogPrompts(IEN: string; Historical: boolean; FindingType, remIEN: string; aReturn: TStrings; newDataOnly: string): integer;
+
 begin
-  CallV('ORQQPXRM DIALOG PROMPTS', [IEN, Historical, FindingType]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQPXRM DIALOG PROMPTS', [IEN, Historical, FindingType, remIEN, newDataOnly], aReturn);
+  result := aReturn.Count;
 end;
 
 procedure GetDialogStatus(AList: TStringList);
 var
   i: integer;
-
+  list: iORNetMult;
 begin
+  neworNetMult(list);
   if(Alist.Count = 0) then exit;
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'ORQQPXRM DIALOG ACTIVE';
-    Param[0].PType := list;
     for i := 0 to AList.Count-1 do
-      Param[0].Mult[AList[i]] := '';
-    CallBroker;
-    FastAssign(Results, AList);
-  end;
+      list.AddSubscript(Alist[i], '');
+    CallVistA('ORQQPXRM DIALOG ACTIVE', [list], aList);
 end;
 
 function GetRemindersActive: boolean;
+var
+aReturn: string;
 begin
-  CallV('ORQQPX NEW REMINDERS ACTIVE', []);
-  Result := ((RPCBrokerV.Results.Count = 1) and (RPCBrokerV.Results[0] = '1'));
+  CallVistA('ORQQPX NEW REMINDERS ACTIVE',[], aReturn);
+  result := aReturn = '1';
 end;
 
 function GetProgressNoteHeader: string;
 begin
-  Result := sCallV('ORQQPXRM PROGRESS NOTE HEADER', [Encounter.Location]);
-end;
-
-function LoadMentalHealthTest(TestName: string): TStrings;
-begin
-  CallV('ORQQPXRM MENTAL HEALTH', [TestName]);
-  Result := RPCBrokerV.Results;
-end;
-
-procedure MentalHealthTestResults(var AText: string; const DlgIEN: string; const TestName:
-                                  string; const AProvider: Int64; const Answers: string);
-var
-  i, R: integer;
-  Ans, tmp: string;
-
-begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'ORQQPXRM MENTAL HEALTH RESULTS';
-    Param[0].PType := literal;
-    Param[0].Value := DlgIEN;
-    Param[1].PType := list;
-    Param[1].Mult['"DFN"'] := Patient.DFN;
-    Param[1].Mult['"CODE"'] := TestName;
-    Param[1].Mult['"ADATE"'] := 'T';
-    Param[1].Mult['"STAFF"'] := IntToStr(AProvider);
-    R := 0;
-    tmp := '';
-    Ans := Answers;
-    repeat
-      tmp := copy(Ans,1,200);
-      delete(Ans,1,200);
-      inc(R);
-      Param[1].Mult['"R' + IntToStr(R) + '"'] := tmp;
-    until(Ans = '');
-    CallBroker;
-    AText := '';
-    for i := 0 to Results.Count-1 do
-    begin
-      tmp := Results[i];
-      if(Piece(tmp,U,1) = '7') then
-      begin
-        if(AText <> '') then
-        begin
-          if(copy(AText, length(AText), 1) = '.') then
-            AText := AText + ' ';
-          AText := AText + ' ';
-        end;
-        AText := AText + Trim(Piece(tmp, U, 2));
-      end;
-    end;
-  end;
-end;
-
-procedure SaveMentalHealthTest(const TestName: string; ADate: TFMDateTime;
-                               const AProvider: Int64; const Answers: string);
-var
-  R: integer;
-  Ans, tmp: string;
-
-begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'ORQQPXRM MENTAL HEALTH SAVE';
-    Param[0].PType := list;
-    Param[0].Mult['"DFN"'] := Patient.DFN;
-    Param[0].Mult['"CODE"'] := TestName;
-    Param[0].Mult['"ADATE"'] := FloatToStr(ADate);
-    Param[0].Mult['"STAFF"'] := IntToStr(AProvider);
-    R := 0;
-    tmp := '';
-    Ans := Answers;
-    repeat
-      tmp := copy(Ans,1,200);
-      delete(Ans,1,200);
-      inc(R);
-      Param[0].Mult['"R' + IntToStr(R) + '"'] := tmp;
-    until(Ans = '');
-    CallBroker;
-  end;
+  CallVistA('ORQQPXRM PROGRESS NOTE HEADER', [Encounter.Location], result);
 end;
 
 procedure SaveWomenHealthData(var WHData: TStringlist);
 begin
   if assigned(WHData) then
   begin
-  CallV('ORQQPXRM WOMEN HEALTH SAVE', [WHData]);
-//  if RPCBrokerV.Results<>nil then
-//  infoBox(RPCBrokerV.Results.Text,'Error in Saving WH Data',MB_OK);
+  CallVistA('ORQQPXRM WOMEN HEALTH SAVE', [WHData]);
   end;
+end;
+
+procedure clearGlobals;
+begin
+  CallVistA('PXRMRPCG CANCEL', []);
+end;
+
+procedure SaveGenFindingData(GenFindingList: TStringList; DFN: String; Visit: String; Identifier: String; noteIEN, user, encProv: String);
+var
+  aList: iORNetMult;
+  aReturn: TStringList;
+  c: integer;
+  text: string;
+begin
+  neworNetMult(aList);
+  FormatGenFindingData(aList, GenFindingList, DFN, Visit, Identifier, noteIEN, user, encProv);
+    aReturn := TStringList.Create;
+    text := '';
+    try
+    CallVistA('PXRMRPCG GENFUPD', [aList], aReturn);
+    if aReturn.Count > 0 then
+    begin
+      if Piece(aReturn.Strings[0], U, 1) = '-1' then
+      begin
+        for c := 1 to aReturn.Count -1 do
+            begin
+              text := text + aReturn.Strings[c] + CRLF
+            end;
+         TaskMessageDlg('General Findings Error', 'Your data was not saved.' + CRLF + text, mtError, [mbOk], 0);
+      end;
+
+    end;
+    finally
+      FreeAndNil(aReturn);
+    end;
+end;
+
+procedure FormatGenFindingData(var aList: iORNetMult; GenFindingList: TStringList; DFN: String; Visit: String; Identifier: String; noteIEN, user, encProv: String);
+var
+  c, i, index: integer;
+  allGroup, group, dien,node,temp: string;
+//  newData: boolean;
+  begin
+    c := 1;
+    i := 1;
+    temp := '';
+    allGroup := '0';
+    aList.AddSubscript('0', DFN + U + Visit + U + NoteIen + U + user + U + encProv);
+    for index := 0 to GenFindingList.Count-1 do
+      begin
+        dien := Piece(GenFindingList[index],U,1);
+        node := Pieces(GenFindingList[index],U,2,30);
+//        if Piece(node, U, 16) = '1' then newData := true
+//        else newData := false;
+        group := Piece(node, U, 17);
+        if Piece(node,U,14) <> '' then
+        begin
+          temp := Piece(node,U,2) + U + Piece(node,U,14);
+          if group = '' then aList.AddSubscript([dien, '0', 'ID', i], temp)
+          else aList.AddSubscript([dien, group, 'ID', i], temp);
+          inc(i);
+        end;
+        if group = '' then alist.AddSubscript([dien,'0',c], node)
+        else alist.AddSubscript([dien, group, c], node);
+        c := c + 1;
+      end;
+  end;
+
+function ValidateGenFindingData(GenFindingList: TStringList; DFN: String; Visit: String; Identifier: String; noteIEN, user, encProv: String): boolean;
+var
+  aList: iORNetMult;
+  aReturn: TStringList;
+  c: integer;
+  text: string;
+begin
+    result := true;
+    neworNetMult(aList);
+    FormatGenFindingData(aList, GenFindingList, DFN, Visit, Identifier, noteIEN, user, encProv);
+    aReturn := TStringList.Create;
+    try
+    CallVistA('PXRMRPCG GENFVALD', [aList], aReturn);
+    if aReturn.Count > 0 then
+    begin
+      if Piece(aReturn.Strings[0], U, 1) = '-1' then
+        begin
+          for c := 1 to aReturn.Count -1 do
+            begin
+              text := text + aReturn.Strings[c] + CRLF
+            end;
+          TaskMessageDlg('General Findings Validation Failure', 'Validation Error.' + CRLF + text, mtWarning, [mbOk], 0);
+          result := false;
+        end;
+    end
+    else
+    begin
+      result := false;
+    end;
+    finally
+      FreeAndNil(aReturn);
+    end;
+end;
+
+function getLinkPromptValue(value, itemId, orgValue, dfn: string): String;
+ begin
+  CallVistA('PXRMRPCC PROMPTVL',[value, itemId, orgValue, dfn], result);
+ end;
+
+procedure getGeneralFindingText(var list: TStrings; var canprint: boolean; var header: String; dfn, ien, value: string);
+var
+alist: TStrings;
+i: integer;
+tmp: string;
+begin
+  aList := TStringList.create;
+  try
+    CallVistA('PXRMRPCG VIEW', [dfn, ien, value], alist);
+    tmp := aList[0];
+    if Piece(tmp, U, 1) = '1' then canPrint := true
+    else canPrint := false;
+    header := Piece(tmp, U, 2);
+    for i := 1 to aList.count - 1 do list.add(aList[i]);
+  finally
+    FreeAndNil(aList);
+
+  end;
+end;
+
+procedure getLinkSeqList(var list: TStrings; ien: string);
+var
+aReturn: TStrings;
+node,temp: string;
+cnt,i: integer;
+begin
+  aReturn := TStringList.Create;
+  try
+    cnt := 0;
+    temp := '';
+    CallVistA('ORQQPXRM REMINDER LINK SEQ',[ien],aReturn);
+    for i := 1 to aReturn.Count - 1 do
+      begin
+        node := aReturn.Strings[i];
+        if pos('~', node) > 0 then
+          begin
+            temp := '';
+            cnt := 0;
+          end
+        else
+          begin
+            if cnt = 2 then
+              begin
+                cnt := 0;
+                temp := '';
+              end;
+            inc(cnt);
+            SetPiece(temp, u, cnt, node);
+            if cnt = 2 then list.Add(ien + U + temp);
+          end;
+      end;
+//    if aReturn.Strings[0] = '0' then exit;
+//    FastAssign(aReturn, list);
+  finally
+  FreeAndNil(aReturn);
+  end;
+
 end;
 
 function CheckGECValue(const RemIEN: string; NoteIEN: integer): String;
@@ -293,7 +364,7 @@ fin: boolean;
 i,cnt: integer;
 
 begin
-  Result := sCallV('ORQQPXRM GEC DIALOG', [RemIEN, Patient.DFN, Encounter.VisitStr, NoteIEN]);
+  CallVistA('ORQQPXRM GEC DIALOG', [RemIEN, Patient.DFN, Encounter.VisitStr, NoteIEN], result);
   if Piece(Result,U,1) <> '0' then
   begin
     if Piece(Result,U,5)='1' then
@@ -314,7 +385,7 @@ begin
         fin := (InfoBox(str,title, MB_YESNO)=IDYES);
         if fin = true then ans := '1';
         if fin = false then ans := '0';
-        CallV('ORQQPXRM GEC FINISHED?',[Patient.DFN,ans]);
+        CallVistA('ORQQPXRM GEC FINISHED?',[Patient.DFN,ans]);
         end;
    Result := Piece(Result, U,2);
    end
@@ -323,36 +394,40 @@ end;
 
 procedure SaveMSTDataFromReminder(VDate, Sts, Prov, FType, FIEN, Res: string);
 begin
-  CallV('ORQQPXRM MST UPDATE', [Patient.DFN, VDate, Sts, Prov, FType, FIEN, Res]);
+  CallVistA('ORQQPXRM MST UPDATE', [Patient.DFN, VDate, Sts, Prov, FType, FIEN, Res]);
 end;
 
 function GetReminderFolders: string;
 begin
-  Result := sCallV('ORQQPX GET FOLDERS', []);
+  CallVistA('ORQQPX GET FOLDERS', [], result);
 end;
 
 procedure SetReminderFolders(const Value: string);
 begin
-  CallV('ORQQPX SET FOLDERS', [Value]);
+  CallVistA('ORQQPX SET FOLDERS', [Value]);
 end;
 
-function GetDefLocations: TStrings;
+function GetDefLocations(aReturn: TStrings): integer;
 begin
   if (User.DUZ <> uLastDefLocUser) then
   begin
     if(not assigned(uDefLocs)) then
       uDefLocs := TStringList.Create;
-    tCallV(uDefLocs, 'ORQQPX GET DEF LOCATIONS', []);
+    CallVistA('ORQQPX GET DEF LOCATIONS', [], uDefLocs);
     uLastDefLocUser := User.DUZ;
   end;
-  Result := uDefLocs;
+  aReturn.Assign(uDefLocs);
+  Result := areturn.Count;
 end;
 
 function InsertRemTextAtCursor: boolean;
+var
+returnValue: string;
 begin
   if uRemInsertAtCursor < 0 then
   begin
-    Result := (sCallV('ORQQPX REM INSERT AT CURSOR', []) = '1');
+    CallVistA('ORQQPX REM INSERT AT CURSOR', [], returnValue);
+    result := returnValue = '1';
     uRemInsertAtCursor := ord(Result);
   end
   else
@@ -360,10 +435,13 @@ begin
 end;
 
 function NewRemCoverSheetListActive: boolean;
+var
+returnValue: string;
 begin
   if uNewCoverSheetListActive < 0 then
   begin
-    Result := (sCallV('ORQQPX NEW COVER SHEET ACTIVE', []) = '1');
+    CallVistA('ORQQPX NEW COVER SHEET ACTIVE', [], returnValue);
+    result := returnValue = '1';
     uNewCoverSheetListActive := ord(Result);
   end
   else
@@ -381,63 +459,63 @@ begin
     Result := Boolean(uCanEditAllCoverSheetLists);
 end;
 
-function GetCoverSheetLevelData(ALevel, AClass: string): TStrings;
+function GetCoverSheetLevelData(ALevel, AClass: string; aReturn: TStrings): integer;
 begin
-  CallV('ORQQPX LVREMLST', [ALevel, AClass]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQPX LVREMLST', [ALevel, AClass], aReturn);
+  Result := aReturn.Count;
 end;
 
 procedure SetCoverSheetLevelData(ALevel, AClass: string; Data: TStrings);
 var
   i: integer;
-
+  aList: iORNetMult;
 begin
-  with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'ORQQPX SAVELVL';
-    Param[0].PType := literal;
-    Param[0].Value := ALevel;
-    Param[1].PType := literal;
-    Param[1].Value := AClass;
-    Param[2].PType := list;
+  neworNetMult(aList);
     for i := 0 to Data.Count-1 do
-      Param[2].Mult[IntToStr(i+1)] := Data[i];
-    CallBroker;
-  end;
+      aList.AddSubscript(i + 1, data[i]);
+    CallVistA('ORQQPX SAVELVL', [aLevel, aClass, aList]);
 end;
 
-function GetCategoryItems(CatIEN: integer): TStrings;
+function GetCategoryItems(CatIEN: integer; aReturn: TStrings): integer;
 begin
-  CallV('PXRM REMINDER CATEGORY', [CatIEN]);
-  Result := RPCBrokerV.Results;
+  CallVistA('PXRM REMINDER CATEGORY', [CatIEN], aReturn);
+  result := aReturn.Count;
 end;
 
-function GetAllRemindersAndCategories: TStrings;
+function GetAllRemindersAndCategories(aReturn: TStrings): integer;
 begin
-  CallV('PXRM REMINDERS AND CATEGORIES', []);
-  Result := RPCBrokerV.Results;
+  CallVistA('PXRM REMINDERS AND CATEGORIES', [], aReturn);
+  result := aReturn.Count;
 end;
 
 function VerifyMentalHealthTestComplete(TestName, Answers: string): String;
-
+var
+aReturn: TStrings;
+returnValue: string;
 begin
-    CallV('ORQQPXRM MHV', [Patient.DFN, TestName, Answers]);
-    if RPCBrokerV.Results[0]='2' then
+  aReturn := TStringList.Create;
+  try
+    CallVistA('ORQQPXRM MHV', [Patient.DFN, TestName, Answers], aReturn);
+    returnValue := aReturn[0];
+    if returnValue='2' then
       begin
         Result := '2'+ U;
         EXIT;
       end;
-    if RPCBrokerV.Results[0] = '1' then
+    if returnValue = '1' then
       begin
         Result := '1' + U;
         EXIT;
       end;
-    if RPCBrokerV.Results[0] = '0' then
+    if returnValue = '0' then
       begin
-        Result := '0' + U + RPCBrokerV.Results[1];
+        Result := '0' + U + aReturn.Strings[1];
         EXIT;
       end;
+  finally
+     FreeAndNil(aReturn);
+  end;
+
 end;
 
 function MHDLLFound: boolean;
@@ -451,8 +529,11 @@ begin
 end;
 
 function UsedMHDllRPC: boolean;
+var
+returnValue: string;
 begin
-  Result := sCallV('ORQQPXRM MHDLLDMS',[]) = '1';
+  CallVistA('ORQQPXRM MHDLLDMS',[], returnValue);
+  result := returnValue = '1';
 end;
 
 procedure PopulateMHdll;
@@ -464,46 +545,42 @@ begin
     end;
 end;
 
-procedure GetMHResultText(var AText: string; ResultsGroups, Scores: TStringList);
+procedure GetMHResultText(var AText: string; ResultsGroups, Scores: TStringList;
+      dien: String; var linkList: TStringList);
 var
 i, j: integer;
 tmp, info: string;
 tempInfo: TStringList;
+aList: iORNetMult;
+aReturn: TStringList;
 begin
- //AGP for some reason in some account passing two arrays in the RPC was
- //not working had to convert back to the old method for the RPC for now
- with RPCBrokerV do
-  begin
-    ClearParameters := True;
-    RemoteProcedure := 'ORQQPXRM MHDLL';
-    Param[0].PType := literal;
-    Param[0].Value := PATIENT.DFN;  //*DFN*
-    Param[1].PType := list;
+    neworNetMult(aList);
     j := 0;
     for i := 0 to ResultsGroups.Count-1 do
       begin
         j := j + 1;
-        Param[1].Mult['"RESULTS",'+ InttoStr(j)]:=ResultsGroups.Strings[i];
+        aList.AddSubscript(['RESULTS' , IntToStr(j)], ResultsGroups.Strings[i]);
       end;
     j := 0;
     for i := 0 to Scores.Count-1 do
       begin
         j := j + 1;
-        Param[1].Mult['"SCORES",'+ InttoStr(j)]:=Scores.Strings[i];
+        aList.AddSubscript(['SCORES' , IntToStr(j)], Scores.Strings[i]);
       end;
-  end;
-  CallBroker;
-  //CallV('ORQQPXRM MHDLL',[ResultsGroups, Scores, Patient.DFN]);
+  aReturn := TStringList.Create;
+  try
+  CallVistA('ORQQPXRM MHDLL', [patient.DFN, aList, dien], aReturn);
   AText := '';
   info := '';
-  for i := 0 to RPCBrokerV.Results.Count - 1 do
+  for i := 0 to aReturn.Count - 1 do
     begin
-      tmp := RPCBrokerV.Results[i];
+      tmp := aReturn.Strings[i];
       if pos('[INFOTEXT]',tmp)>0 then
         begin
            if info <> '' then info := info + ' ' + Copy(tmp,11,(Length(tmp)-1))
            else info := Copy(tmp,11,(Length(tmp)-1));
         end
+      else if pos('[LINK]',tmp)>0 then linkList.Add(Pieces(tmp, U, 2,5))
       else
       begin
         if(AText <> '') then
@@ -530,6 +607,10 @@ begin
         end;
       InfoBox(info,'Attention Needed',MB_OK);
     end;
+  finally
+    FreeAndNil(aReturn);
+  end;
+
 end;
 initialization
 

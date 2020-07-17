@@ -112,7 +112,7 @@ type
 
 implementation
 
-uses Math;
+uses Math, VAUtils;
 
 {$R *.dfm}
 

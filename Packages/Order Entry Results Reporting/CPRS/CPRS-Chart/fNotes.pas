@@ -1,14 +1,14 @@
-unit fNotes;
+﻿unit fNotes;
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fPage, StdCtrls, ExtCtrls, Menus, ComCtrls, ORCtrls, ORFn, uConst, ORDtTm,
+  fFrame, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  dShared, fPage, StdCtrls, ExtCtrls, Menus, ComCtrls, ORCtrls, ORFn, uConst, ORDtTm,
   uPCE, ORClasses, ImgList, rTIU, uTIU, uDocTree, fRptBox, fPrintList,
   rMisc, fNoteST, ORNet, fNoteSTStop, fBase508Form, VA508AccessibilityManager,
   uTemplates, VA508ImageListLabeler, RichEdit, mDrawers, ORSplitter, System.Actions,
-  Vcl.ActnList, ORextensions;
+  Vcl.ActnList, ORextensions, U_CPTPasteDetails;
 
 type
   TfrmNotes = class(TfrmPage)
@@ -21,23 +21,12 @@ type
     pnlReminder: TPanel;
     stNotes: TVA508StaticText;
     pnlWrite: TPanel;
-    memNewNote: TRichEdit;
-    pnlFields: TPanel;
-    bvlNewTitle: TBevel;
-    stRefDate: TStaticText;
-    stAuthor: TStaticText;
-    lblVisit: TStaticText;
-    stCosigner: TStaticText;
-    lblSubject: TStaticText;
-    lblNewTitle: TStaticText;
-    cmdChange: TButton;
-    txtSubject: TCaptionEdit;
+    memNewNote: ORextensions.TRichEdit;
     stTitle: TVA508StaticText;
     tvNotes: TORTreeView;
     cmdNewNote: TORAlignButton;
     cmdPCE: TORAlignButton;
     lvNotes: TCaptionListView;
-    memPCEShow: TRichEdit;
     lstNotes: TORListBox;
     mnuNotes: TMainMenu;
     mnuView: TMenuItem;
@@ -194,14 +183,31 @@ type
     pnlDrawers: TPanel;
     frmDrawers: TfraDrawers;
     pnlNote: TPanel;
-    memNote: TRichEdit;
+    memNote: ORextensions.TRichEdit;
     acChange: TAction;
     pnlLeftTop: TPanel;
     splDrawers: TSplitter;
     PnlRight: TPanel;
     splList: TSplitter;
-    splVert: TSplitter;
     splHorz: TSplitter;
+    CPMemNote: TCopyPasteDetails;
+    spDetails: TSplitter;
+    CPMemNewNote: TCopyPasteDetails;
+    spEditDetails: TSplitter;
+    memPCERead: TRichEdit;
+    splmemPCRead: TSplitter;
+    memPCEWrite: TRichEdit;
+    splmemPCEWrite: TSplitter;
+    grdPnl: TGridPanel;
+    lblNewTitle: TStaticText;
+    stAuthor: TStaticText;
+    lblVisit: TStaticText;
+    stRefDate: TStaticText;
+    stCosigner: TStaticText;
+    cmdChange: TButton;
+    lblSubject: TStaticText;
+    txtSubject: TCaptionEdit;
+    acTemplateHook: TAction;
     procedure FormShow(Sender: TObject);
     procedure fldAccessRemindersInstructionsQuery(Sender: TObject; var Text: string);
     procedure fldAccessRemindersStateQuery(Sender: TObject; var Text: string);
@@ -215,7 +221,6 @@ type
     procedure tvNotesChange(Sender: TObject; Node: TTreeNode);
     procedure acNewNoteExecute(Sender: TObject);
     procedure memNewNoteChange(Sender: TObject);
-//    procedure pnlFieldsResize(Sender: TObject);
     procedure timAutoSaveTimer(Sender: TObject);
     procedure lvNotesSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
     procedure tvNotesCollapsed(Sender: TObject; Node: TTreeNode);
@@ -298,6 +303,24 @@ type
     procedure pnlWriteResize(Sender: TObject);
     procedure splHorzCanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
     procedure splDrawersCanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
+    procedure LoadPastedText(Sender: TObject; LoadList: TStrings; var ProcessLoad, PreLoaded: Boolean);
+    procedure PasteToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+    procedure SaveTheMonitor(Sender: TObject; SaveList: TStringList; var ReturnList: TStringList);
+    procedure CPShow(Sender: TObject);
+    procedure CPHide(Sender: TObject);
+    procedure tvNotesExit(Sender: TObject);
+    procedure pnlNoteExit(Sender: TObject);
+    procedure cmdNewNoteExit(Sender: TObject);
+    procedure frmFramePnlPatientExit(Sender: TObject);
+    procedure FormHide(Sender: TObject);
+    procedure memPCEWriteExit(Sender: TObject);
+    procedure memPCEReadExit(Sender: TObject);
+    procedure cmdChangeExit(Sender: TObject);
+    procedure cmdPCEExit(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure splmemPCEMoved(Sender: TObject);
+    procedure grdPnlResize(Sender: TObject);
+    procedure PnlRightResize(Sender: TObject);
   private
     fExpandedDrawerHeight: integer;
     FEmptyNodeCount: Integer;
@@ -324,30 +347,34 @@ type
     GlobalSearch: Boolean;
     GlobalSearchTerm: string;
     FormResizing: boolean;
-    fPCEShowing: boolean;
     PatientToggled: boolean;
     DrawerConfiguration: TDrawerConfiguration;
+    FOldFramePnlPatientExit: TNotifyEvent;
+    FOldDrawerPnlTemplatesButtonExit: TNotifyEvent;
+    FOldDrawerPnlEncounterButtonExit: TNotifyEvent;
+    FOldDrawerEdtSearchExit: TNotifyEvent;
     procedure DrawerButtonClicked(Sender: TObject);
     procedure ClearEditControls;
     procedure DoAutoSave(Suppress: Integer = 1);
     function GetTitleText(AnIndex: Integer): string;
-    procedure InsertAddendum;
-    procedure InsertNewNote(IsIDChild: Boolean; AnIDParent: Integer);
+    procedure InsertAddendum(aParentIEN: integer = -1; aParentTitle: string = ''; isSmart: Boolean =false);
+    procedure InsertNewNote(IsIDChild: Boolean; AnIDParent: Integer; aNoteIEN: integer = -1; aNoteTitle: string = '');
     function LacksRequiredForCreate: Boolean;
     procedure LoadForEdit;
     function LockConsultRequest(AConsult: Integer): Boolean;
     function LockConsultRequestAndNote(AnIEN: Int64): Boolean;
     procedure RemovePCEFromChanges(IEN: Int64; AVisitStr: string = '');
     procedure SaveEditedNote(var Saved: Boolean);
-    procedure SetSubjectVisible(ShouldShow: Boolean);
-    procedure ShowPCEControls(ShouldShow: Boolean);
+    procedure SetSubjectVisible(aShow: Boolean);
+    function ShowPCEControls(ShouldShow: Boolean): TRichEdit;
     function StartNewEdit(NewNoteType: Integer): Boolean;
     procedure UnlockConsultRequest(ANote: Int64; AConsult: Integer = 0);
     procedure ProcessNotifications;
     procedure SetViewContext(AContext: TTIUContext);
     function CanFinishReminder: Boolean;
     procedure DisplayPCE;
-    procedure SetPCEParent();
+    procedure ClearPCE;
+  //  procedure SetPCEParent();
     function VerifyNoteTitle: Boolean;
     // added for treeview
     procedure LoadNotes;
@@ -369,9 +396,15 @@ type
     procedure SetWriteShowing(const Value: boolean);
     procedure SetExpandedDrawerHeight(const Value: integer);
     function GetDrawers: TfraDrawers;
+    procedure frmDrawerEdtSearchExit(Sender: TObject);
+    procedure frmDrawerPnlTemplatesButtonExit(Sender: TObject);
+    procedure frmDrawerPnlEncounterButtonExit(Sender: TObject);
+    Procedure UpdateConstraints;
   protected
     property WriteShowing: boolean read GetWriteShowing write SetWriteShowing;
   public
+    procedure SaveUserSplitterSettings(var posA, posB, posC, posD: integer);
+    procedure LoadUserSplitterSettings(posA, posB, posC, posD: integer);
     procedure EncounterLocationChanged(Sender: TObject);
     function ActiveEditOf(AnIEN: Int64; ARequest: Integer): Boolean;
     function AllowContextChange(var WhyNot: string): Boolean; override;
@@ -379,13 +412,14 @@ type
     procedure DisplayPage; override;
     procedure RequestPrint; override;
     procedure RequestMultiplePrint(AForm: TfrmPrintList);
-    procedure SetFontSize(NewFontSize: Integer); override;
+    procedure SetFontSize(aNewFontSize: Integer); override;
     procedure SaveSignItem(const ItemID, ESCode: string);
     procedure AssignRemForm;
     property OrderID: string read FOrderID;
     procedure LstNotesToPrint;
     procedure SaveCurrentNote(var Saved: Boolean);
     procedure SetEditingIndex(const Value: Integer);
+    procedure LimitEditableNote;
     property EditingIndex: Integer read FEditingIndex write SetEditingIndex;
     property ReadVisible: boolean read GetReadVisible write SetReadVisible;
     property ReminderToggled: boolean read GetReminderToggled write SetReminderToggled;
@@ -405,14 +439,15 @@ implementation
 
 
 uses
-  fFrame, fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem,
+  fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem,
   fEncounterFrame, rPCE, Clipbrd, fNoteCslt, fNotePrt, rVitals, fAddlSigners,
   fNoteDR, fConsults, uSpell, fTIUView, fTemplateEditor, uReminders,
   fReminderDialog, uOrders, rConsults, fReminderTree, fNoteProps, fNotesBP,
-  fTemplateFieldEditor, dShared, rTemplates, FIconLegend, fPCEEdit,
+  fTemplateFieldEditor, rTemplates, FIconLegend, fPCEEdit,
   fNoteIDParents, rSurgery, uSurgery, fTemplateDialog, DateUtils, uInit,
   uVA508CPRSCompatibility, VA508AccessibilityRouter, VAUtils, fFocusedControls,
-  System.Types, rECS, TRPCB, uGlobalVar, System.UITypes;
+  System.Types, rECS, TRPCB, uGlobalVar, System.UITypes, fNotificationProcessor,
+  System.IniFiles, ORNetIntf, U_CPTEditMonitor;
 
 const
   FormSpace = 3;
@@ -504,7 +539,7 @@ var
   uChanging: Boolean;
   uIDNotesActive: boolean;
   NoteTotal: string;
-  NewNoteRunning: boolean;
+  NewNoteRunning: Boolean;
 
 {$R *.dfm}
 
@@ -527,13 +562,14 @@ begin
   fReminderToggled := Value;
   pnlReminder.Visible := Value;
   stTitle.Visible := not Value;
-  splVert.Visible := not Value;
 //  pnlNote.Visible := not Value;
   ReadVisible := not Value;
   WriteShowing := not Value;
 //  pnlWrite.Visible := not Value;
 //  splList.Visible := not Value;
-  memPCEShow.Visible := not Value;
+  ShowPCEControls(not value) ;
+ // splVert.Visible := not Value;
+//  memPCEShow.Visible := not Value;
 end;
 
 function TfrmNotes.GetReadVisible;
@@ -779,6 +815,8 @@ end;
 procedure TfrmNotes.FormCreate(Sender: TObject);
 begin
   inherited;
+  acNewNote.Enabled := false;
+
   NewNoteRunning := False;
   FormResizing := False;
 
@@ -795,6 +833,7 @@ begin
   FDocList := TStringList.Create;
   splDrawers.Enabled := false;
   Drawers.SaveDrawerConfiguration(DrawerConfiguration);
+  Drawers.CopyMonitor := CPMemNewNote;
 
   // Make sure the screen reader stops and reads these controls
   stTitle.TabStop := ScreenReaderActive;
@@ -804,7 +843,13 @@ begin
   Drawers.OnUpdateVisualsEvent := DrawerButtonClicked;
   fExpandedDrawerHeight := 171; // gotten from largest default template drawer and 4x22 space buttons.
   Encounter.Notifier.NotifyWhenChanged(EncounterLocationChanged);
-  fPCEShowing := False;
+
+  mnuIconLegend.Visible := not ScreenReaderActive;
+  N6.Visible :=  not ScreenReaderActive;
+
+  //safteynet
+  CPMemNote.CopyMonitor := frmFrame.CPAppMon;
+  CPMemNewNote.CopyMonitor := frmFrame.CPAppMon;
 end;
 
 procedure TfrmNotes.FormShow(Sender: TObject);
@@ -813,6 +858,41 @@ begin
     Drawers.LoadDrawerConfiguration(DrawerConfiguration);
     PatientToggled := False;
   end;
+  FOldFramePnlPatientExit := frmFrame.pnlPatient.OnExit;
+  frmFrame.pnlPatient.OnExit := frmFramePnlPatientExit;
+  FOldDrawerPnlTemplatesButtonExit := frmDrawers.btnTemplate.OnExit;
+  frmDrawers.btnTemplate.OnExit := frmDrawerPnlTemplatesButtonExit;
+  FOldDrawerPnlEncounterButtonExit := frmDrawers.btnEncounter.OnExit;
+  frmDrawers.btnEncounter.OnExit := frmDrawerPnlEncounterButtonExit;
+  FOldDrawerEdtSearchExit := frmDrawers.edtSearch.OnExit;
+  frmDrawers.edtSearch.OnExit := frmDrawerEdtSearchExit;
+  acNewNote.Enabled := true;
+end;
+
+procedure TfrmNotes.frmDrawerEdtSearchExit(Sender: TObject);
+begin
+  if assigned(FOldDrawerEdtSearchExit) then
+    FOldDrawerEdtSearchExit(Sender);
+  cmdNewNoteExit(Sender);
+end;
+
+procedure TfrmNotes.frmDrawerPnlTemplatesButtonExit(Sender: TObject);
+begin
+
+    If Assigned(FOldDrawerPnlTemplatesButtonExit) then
+   FOldDrawerPnlTemplatesButtonExit(Sender);
+  if Boolean(Hi(GetKeyState(VK_TAB))) and  (memNewNote.CanFocus) and
+     Boolean(Hi(GetKeyState(VK_SHIFT))) then
+    memNewNote.SetFocus
+  else
+    cmdNewNoteExit(Sender);
+end;
+
+procedure TfrmNotes.frmDrawerPnlEncounterButtonExit(Sender: TObject);
+begin
+  if assigned(FOldDrawerPnlEncounterButtonExit) then
+  FOldDrawerPnlEncounterButtonExit(Sender);
+  cmdNewNoteExit(Sender);
 end;
 
 
@@ -1006,8 +1086,9 @@ begin
     exit;
   // suppress prompt for deletion when called from SaveEditedNote (Sender = Self)
   if (Sender <> Self) and
-    (InfoBox(MakeNoteDisplayText(lstNotes.Items[lstNotes.ItemIndex]) +
-    TX_DEL_OK, TX_DEL_CNF, MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) <>
+    (InfoBox(MakeNoteDisplayText(lstNotes.Items[lstNotes.ItemIndex])
+    + AncillaryPackageMessages(lstNotes.ItemIEN, 'DELETE')
+    + TX_DEL_OK, TX_DEL_CNF, MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) <>
     IDYES) then
     exit;
   // do the appropriate locking
@@ -1034,7 +1115,10 @@ begin
   AVisitStr := VisitStrForNote(SavedDocIEN);
   RemovePCEFromChanges(SavedDocIEN, AVisitStr);
   if (SavedDocIEN > 0) and (lstNotes.ItemIEN = SavedDocIEN) then
-    DeleteDocument(DeleteSts, SavedDocIEN, ReasonForDelete);
+    begin
+      DeleteDocument(DeleteSts, SavedDocIEN, ReasonForDelete);
+      if DeleteSts.Success then SendMessage(Application.MainForm.Handle, UM_REMINDERS, 1, 1);
+    end;
   if not Changes.Exist(CH_DOC, SavedDocID) then
     UnlockDocument(SavedDocIEN);
   Changes.Remove(CH_DOC, SavedDocID);
@@ -1230,6 +1314,17 @@ begin
   if not NewNoteRunning then begin
     NewNoteRunning := True;
     try
+      {
+        BLJ 10 April 2018: The below SHOULD be
+
+        if not (frmFrame.tabPage.TabIndex = CT_NOTES) then
+
+        but somehow the tab order got out of sync with uConst.pas, and we don't have
+        time to track down all the places those constants are used to ensure that,
+        by fixing the naming, we're not breaking 4 bajillion other things.
+      }
+      if not (frmFrame.tabPage.TabIndex = CT_ORDERS) then
+        exit;
       if StartNewEdit(NT_ACT_NEW_NOTE) then begin
         // make sure a visit (time & location) is available before creating the note
         if Encounter.NeedVisit then
@@ -1386,8 +1481,10 @@ var
 
   procedure AssignBoilerText;
   begin
-    ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo);
+    ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
     memNewNote.Text := BoilerText.Text;
+    //RTC 1175879 - Removing to ensure that an initial template is placed before boilerplate.
+    //memNewNote.SelStart := Length(memNewNote.Lines.Text); //CQ: 16461
     SpeakStrings(BoilerText);
     UpdateNoteAuthor(DocInfo);
     FChanged := False;
@@ -1409,7 +1506,7 @@ begin
         case QueryBoilerPlate(BoilerText) of
         0:  { do nothing } ;                         // ignore
         1: begin
-             ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo);
+             ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
              memNewNote.Lines.AddStrings(BoilerText);
              SpeakStrings(BoilerText);
              UpdateNoteAuthor(DocInfo);
@@ -1475,6 +1572,7 @@ begin
   SavedDocID := lstNotes.ItemID; // v22.12 - RV
   FLastNoteID := SavedDocID; // v22.12 - RV
   if lstNotes.ItemIndex = EditingIndex then  begin // v22.12 - RV
+    FDeleted := False;      // incase we delete the not in SaveCurrentNote
     SaveCurrentNote(Saved); // v22.12 - RV
     if (not Saved) or FDeleted then
       exit; // v22.12 - RV
@@ -1556,10 +1654,9 @@ begin
   if tvNotes.Selected <> nil then
     tvNotesChange(Self, tvNotes.Selected)
   else
-    tvNotes.Selected := tvNotes.Items[0]; // first Node in treeview
+    If tvNotes.Items.Count > 0 then
+      tvNotes.Selected := tvNotes.Items[0]; // first Node in treeview
 end;
-
-
 
 procedure TfrmNotes.AddTemplateNode(const tmpl: TTemplate; const Owner: TTreeNode);
 begin
@@ -1687,13 +1784,16 @@ begin
   uChanging := False;
   lstNotes.Clear;
   memNote.Clear;
-  memPCEShow.Clear;
+  ClearPCE;
+ // memPCEShow.Clear;
   uPCEShow.Clear;
   uPCEEdit.Clear;
   Drawers.SaveDrawerConfiguration(DrawerConfiguration);
   PatientToggled := True;
   Drawers.ResetTemplates;
-  NoteTotal := sCallV('ORCNOTE GET TOTAL', [Patient.DFN]);
+  CallVistA('ORCNOTE GET TOTAL', [Patient.DFN], NoteTotal);
+    CPMemNote.EditMonitor.ItemIEN := -1;
+  CPMemNewNote.EditMonitor.ItemIEN := -1;
 end;
 
 procedure TfrmNotes.DisplayPage;
@@ -1784,13 +1884,52 @@ begin
   end; { with }
 end;
 
-procedure TfrmNotes.SetFontSize(NewFontSize: Integer);
+procedure TfrmNotes.SetFontSize(aNewFontSize: Integer);
 { adjusts the font size of any controls that don't have ParentFont = True }
 begin
-  inherited SetFontSize(NewFontSize);
+  //inherited SetFontSize(NewFontSize);
+  Self.Font.Assign(Screen.IconFont);
+  Self.Font.Size := aNewFontSize;
+  SetSubjectVisible(txtSubject.Visible);
+
   SetEqualTabStops(memNewNote);
-  memNote.Font.Size := NewFontSize;
-  cmdChange.Font.Size := NewFontSize;
+  memNote.Font.Size := aNewFontSize;
+  memNewNote.Font.Size := aNewFontSize;
+  memPCEWrite.Font.Size := aNewFontSize;
+  memPCERead.Font.Size := aNewFontSize;
+  cmdChange.Font.Size := aNewFontSize;
+  //Update the constraints based on the font
+  UpdateConstraints;
+end;
+
+Procedure TfrmNotes.UpdateConstraints;
+const
+  LEFT_MARGIN = 4;
+var
+ MinWdth: Integer;
+ SrcRich: TRichEdit;
+begin
+
+  //Maybe dot need this since the fonts should be the same
+  if ReadVisible then
+    SrcRich := memNote
+  else
+    SrcRich := memNewNote;
+
+  //What is the min width these notes should be
+  MinWdth := TextWidthByFont(SrcRich.Font.Handle, StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 2) + ScrollBarWidth;
+
+  //Set the minimum size
+  PnlRight.Constraints.MinWidth := MinWdth;
+
+  //Set the edit width based on the update
+  LimitEditableNote;
+end;
+
+procedure TfrmNotes.LimitEditableNote;
+begin
+  //Adjust the editable rectange
+  LimitEditWidth(memNewNote, MAX_PROGRESSNOTE_WIDTH - 1);
 end;
 
 { General procedures ----------------------------------------------------------------------- }
@@ -1834,23 +1973,61 @@ begin
   // set the tracking variables to initial state
   EditingIndex := -1;
   FChanged := False;
+  CPMemNewNote.EditMonitor.ItemIEN := -1;
 end;
 
-procedure TfrmNotes.ShowPCEControls(ShouldShow: Boolean);
+function TfrmNotes.ShowPCEControls(ShouldShow: Boolean): TRichEdit;
 begin
-  fPCEShowing := ShouldShow;
+ if pnlWrite.Visible then
+ begin
+  Result := memPCEWrite;
+  splmemPCEWrite.Visible := ShouldShow;
+  memPCEWrite.Visible := ShouldShow;
+
+  //stuff at the bottom
+  memPCEWrite.Top := pnlWrite.Top+pnlWrite.height;
+  splmemPCEWrite.Top := memPCEWrite.Top - 1;
+  pnlWrite.Realign;
+ end else begin
+  Result := memPCERead;
+  splmemPCRead.Visible := ShouldShow;
+  memPCERead.Visible := ShouldShow;
+
+  //stuff at the bottom
+  memPCERead.Top := pnlNote.Top+pnlNote.height;
+  splmemPCRead.Top := memPCERead.Top - 1;
+  pnlNote.Realign;
+ end;
 end;
 
 procedure TfrmNotes.splHorzCanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
 begin
-  if pnlWrite.Visible then
-     if NewSize > frmNotes.ClientWidth - memNewNote.Constraints.MinWidth - splHorz.Width then
-     begin
-        NewSize := frmNotes.ClientWidth - memNewNote.Constraints.MinWidth - splHorz.Width - 1;
-        accept := false;
-     end;
+  if NewSize > frmNotes.ClientWidth - PnlRight.Constraints.MinWidth - splHorz.Width then
+  begin
+    NewSize := frmNotes.ClientWidth - PnlRight.Constraints.MinWidth - splHorz.Width - 1;
+    accept := false;
+  end;
   inherited;
 end;
+
+procedure TfrmNotes.splmemPCEMoved(Sender: TObject);
+var
+ ReturnEvt: TNotifyEvent;
+begin
+  inherited;
+  ReturnEvt := TSplitter(Sender).OnMoved;
+  TSplitter(Sender).OnMoved := nil;
+  try
+    if Sender = splmemPCEWrite then
+     memPCERead.Height := memPCEWrite.Height
+    else if Sender = splmemPCRead then
+     memPCEWrite.Height := memPCERead.Height;
+  finally
+    TSplitter(Sender).OnMoved := ReturnEvt;
+  end;
+end;
+
+
 
 procedure TfrmNotes.splDrawersCanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
 var
@@ -1864,7 +2041,7 @@ begin
  end;
   inherited;
 end;
-
+{
 procedure  TfrmNotes.SetPCEParent();
 begin
  memPCEShow.Visible := fPCEShowing;
@@ -1873,12 +2050,34 @@ begin
  begin
   memPCEShow.Parent := pnlNote;
   SplVert.Parent := pnlNote;
-  SplVert.Top := memPCEShow.Top - 1;
+  if CPMemNote.Visible then
+  begin
+    SplVert.Top := CPMemNote.Top + CPMemNote.height + 1;  //Under the copy/paste panel
+    memPCEShow.Top := SplVert.Top  + SplVert.Height + 1;  //under the splitter
+  end else begin
+    SplVert.Top := memNote.Top + memNote.Height + 1;
+    memPCEShow.Top := SplVert.Height + SplVert.Top + 1;
+  end;
  end else begin
   memPCEShow.Parent := pnlWrite;
   SplVert.Parent := pnlWrite;
-  SplVert.Top := memPCEShow.Top - 1;
+  if CPMemNewNote.Visible then
+  begin
+    SplVert.Top := CPMemNote.Top + CPMemNote.height + 1;
+    memPCEShow.Top := SplVert.Height + SplVert.top + 1;
+  end else begin
+    SplVert.Top := memNewNote.Top + memNewNote.Height + 1;
+    memPCEShow.Top := SplVert.Height + SplVert.Top + 1;
+  end;
+
  end;
+end;
+}
+procedure TfrmNotes.ClearPCE;
+begin
+  //
+  memPCERead.Clear;
+  memPCEWrite.Clear;
 end;
 
 procedure TfrmNotes.DisplayPCE;
@@ -1889,25 +2088,34 @@ var
   NoPCE:      boolean;
   ActionSts: TActionRec;
   AnIEN: integer;
+  PCE2Use: TRichEdit;
+  PCEList: TStringList;
 begin
-  memPCEShow.Clear;
+  ClearPCE;
+  PCEList := TStringList.Create;
+  try
+  PCEList.Clear;
   with lstNotes do
     if ItemIndex = EditingIndex then begin
       with uPCEEdit do begin
-        AddStrData(memPCEShow.Lines);
-        NoPCE := (memPCEShow.Lines.Count = 0);
+        AddStrData(PCEList);
+        NoPCE := (PCEList.Count = 0);
         VitalStr := TStringList.create;
         try
           GetVitalsFromDate(VitalStr, uPCEEdit);
-          AddVitalData(VitalStr, memPCEShow.Lines);
+          AddVitalData(VitalStr, PCEList);
         finally
           VitalStr.free;
         end;
         ShowPCEButtons(True);
-        ShowPCEControls(cmdPCE.Enabled or (memPCEShow.Lines.Count > 0));
-        if (NoPCE and memPCEShow.Visible) then
-          memPCEShow.Lines.Insert(0, TX_NOPCE);
-        memPCEShow.SelStart := 0;
+        PCE2Use := ShowPCEControls(cmdPCE.Enabled or (PCEList.Count > 0));
+
+        if PCEList.Count > 0 then
+         PCE2Use.Lines.AddStrings(PCEList);
+
+        if (NoPCE and PCE2Use.Visible) then
+          PCE2Use.Lines.Insert(0, TX_NOPCE);
+        PCE2Use.SelStart := 0;
 
         if (InteractiveRemindersActive) then begin
           if (GetReminderStatus = rsNone) then
@@ -1936,26 +2144,33 @@ begin
           NoteDateTime := MakeFMDateTime
             (Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
           PCEForNote(AnIEN, uPCEEdit);
-          AddStrData(memPCEShow.Lines);
-          NoPCE := (memPCEShow.Lines.Count = 0);
+          AddStrData(PCEList);
+          NoPCE := (PCEList.Count = 0);
           VitalStr := TStringList.create;
           try
             GetVitalsFromNote(VitalStr, uPCEShow, AnIEN);
-            AddVitalData(VitalStr, memPCEShow.Lines);
+            AddVitalData(VitalStr, PCEList);
           finally
             VitalStr.free;
           end;
-          ShowPCEControls(memPCEShow.Lines.Count > 0);
-          if (NoPCE and memPCEShow.Visible) then
-            memPCEShow.Lines.Insert(0, TX_NOPCE);
-          memPCEShow.SelStart := 0;
+          PCE2Use := ShowPCEControls(PCEList.Count > 0);
+
+          if PCEList.Count > 0 then
+            PCE2Use.Lines.AddStrings(PCEList);
+
+          if (NoPCE and PCE2Use.Visible) then
+            PCE2Use.Lines.Insert(0, TX_NOPCE);
+          PCE2Use.SelStart := 0;
         end;
         StatusText('');
       end else
         ShowPCEControls(FALSE);
     end; { if ItemIndex }
   mnuEncounter.Enabled := cmdPCE.Visible;
-  SetPCEParent;
+ // SetPCEParent;
+  finally
+    PCEList.free;
+  end;
 end;
 
 { supporting calls for writing notes }
@@ -1976,6 +2191,12 @@ end;
 function TfrmNotes.GetWriteShowing: boolean;
 begin
   Result := pnlWrite.Visible;
+end;
+
+procedure TfrmNotes.grdPnlResize(Sender: TObject);
+begin
+  inherited;
+  SetSubjectVisible(txtSubject.Visible);
 end;
 
 function TfrmNotes.LacksRequiredForCreate: Boolean;
@@ -2036,20 +2257,64 @@ begin
   Result := FVerifyNoteTitle = VNT_YES;
 end;
 
-procedure TfrmNotes.SetSubjectVisible(ShouldShow: Boolean);
-{ hide/show subject & resize panel accordingly - leave 6 pixel margin above memNewNote }
+procedure TfrmNotes.SetSubjectVisible(aShow: Boolean);
+var
+  r1, r2, r3, a1Row, a2Rows, aTextHeight: integer;
+
+  function RowHeight(lbl: array of TStaticText): integer;
+  var
+    i: integer;
+
+  begin
+    Result := a1Row;
+    for i := Low(lbl) to High(lbl) do
+    begin
+      if Canvas.TextWidth(lbl[i].Caption) > lbl[i].Width then
+      begin
+        Result := a2Rows;
+        exit;
+      end;
+    end;
+  end;
+
 begin
-  if ShouldShow then
-  begin
-    lblSubject.Visible := True;
-    txtSubject.Visible := True;
-    pnlFields.Height := txtSubject.Top + txtSubject.Height + 6;
-  end
+  lblSubject.Visible := aShow;
+  txtSubject.Visible := aShow;
+  aTextHeight := Self.Canvas.TextHeight('|');
+  a1Row := Trunc(aTextHeight * 1.4);
+  a2Rows := a1Row + aTextHeight;
+  inc(a1Row, 6);
+  r1 := RowHeight([lblNewTitle, stAuthor]);
+  r2 := RowHeight([lblVisit, stRefDate, stCosigner]);
+  if aShow then
+    r3 := a1Row
   else
-  begin
-    lblSubject.Visible := FALSE;
-    txtSubject.Visible := FALSE;
-    pnlFields.Height := lblVisit.Top + lblVisit.Height + 6;
+    r3 := 0;
+
+  grdpnl.ColumnCollection.BeginUpdate;
+  try
+    if aShow then
+    begin
+      grdpnl.ColumnCollection[0].SizeStyle := ssAbsolute;
+      grdpnl.ColumnCollection[0].Value := Trunc(Self.Canvas.TextWidth(lblSubject.Caption) * 1.1);
+    end;
+    grdpnl.ColumnCollection[4].SizeStyle := ssAbsolute;
+    grdpnl.ColumnCollection[4].Value := Trunc(Self.Canvas.TextWidth(cmdChange.Caption) * 1.4);
+  finally
+    grdpnl.ColumnCollection.EndUpdate;
+  end;
+
+  grdpnl.RowCollection.BeginUpdate;
+  try
+    grdpnl.RowCollection[0].SizeStyle := ssAbsolute;
+    grdpnl.RowCollection[0].Value := r1;
+    grdpnl.RowCollection[1].SizeStyle := ssAbsolute;
+    grdpnl.RowCollection[1].Value := r2;
+    grdpnl.RowCollection[2].SizeStyle := ssAbsolute;
+    grdpnl.RowCollection[2].Value := r3;
+    grdpnl.Height := r1 + r2 + r3;
+  finally
+    grdpnl.RowCollection.EndUpdate;
   end;
 end;
 
@@ -2345,6 +2610,7 @@ begin
     Screen.Cursor := crHourGlass;
     LoadDetailText(memNote.Lines, lstNotes.ItemIEN);
     // Find selected Text
+    CPMemNote.LoadPasteText();
     Screen.Cursor := crDefault;
     StatusText('');
     memNote.SelStart := 0;
@@ -2367,7 +2633,7 @@ end;
 
 { create, edit & save notes }
 
-procedure TfrmNotes.InsertNewNote(IsIDChild: Boolean; AnIDParent: Integer);
+procedure TfrmNotes.InsertNewNote(IsIDChild: Boolean; AnIDParent: Integer; aNoteIEN: integer = -1; aNoteTitle: string = '');
 { creates the editing context for a new progress note & inserts stub into top of view list }
 var
   EnableAutosave, HaveRequired: Boolean;
@@ -2375,10 +2641,10 @@ var
   TmpBoilerPlate: TStringList;
   tmpNode: TTreeNode;
   X, WhyNot, DocInfo: string;
+  aStr: string;
 begin
   if frmFrame.TimedOut then
     exit;
-
   FNewIDChild := IsIDChild;
   EnableAutosave := FALSE;
   TmpBoilerPlate := nil;
@@ -2386,11 +2652,20 @@ begin
     ClearEditControls;
     FillChar(FEditNote, SizeOf(FEditNote), 0); // v15.7
     with FEditNote do
-    begin
-      DocType      := TYP_PROGRESS_NOTE;
-      IsNewNote    := True;
-      Title        := DfltNoteTitle;
-      TitleName    := DfltNoteTitleName;
+      begin
+        DocType := TYP_PROGRESS_NOTE;
+        IsNewNote := true;
+        If aNoteIEN > -1 then
+          begin
+            Title := aNoteIEN;
+            TitleName := aNoteTitle
+          end
+        else
+          begin
+            Title := DfltNoteTitle;
+            TitleName := DfltNoteTitleName;
+          end;
+
       if IsIDChild and (not CanTitleBeIDChild(Title, WhyNot)) then
       begin
         Title := 0;
@@ -2416,12 +2691,13 @@ begin
     end;
     // check to see if interaction necessary to get required fields
     GetUnresolvedConsultsInfo;
-    if LacksRequiredForCreate or VerifyNoteTitle or uUnresolvedConsults.UnresolvedConsultsExist
-    then
-      HaveRequired := ExecuteNoteProperties(FEditNote, CT_NOTES, IsIDChild,
-        FNewIDChild, '', 0)
+
+    // if aNoteIEN was passed in, VerifyNoteTitle is overridden
+    If LacksRequiredForCreate or (VerifyNoteTitle and (aNoteIEN < 0)) or uUnresolvedConsults.UnresolvedConsultsExist then
+      HaveRequired := ExecuteNoteProperties(FEditNote, CT_NOTES, IsIDChild, FNewIDChild, '', 0)
     else
-      HaveRequired := True;
+      HaveRequired := true;
+
     // lock the consult request if there is a consult
     with FEditNote do
       if (PkgIEN > 0) and (PkgPtr = PKG_CONSULTS) then
@@ -2444,17 +2720,19 @@ begin
         // x := $$RESOLVE^TIUSRVLO formatted string
         // 7348^Note Title^3000913^NERD, YOURA  (N0165)^1329;Rich Vertigan;VERTIGAN,RICH^8E REHAB MED^complete^Adm: 11/05/98;2981105.095547^        ;^^0^^^2
         with FEditNote do
-        begin
-          X := IntToStr(CreatedNote.IEN) + U + TitleName + U +
-            FloatToStr(FEditNote.DateTime) + U + Patient.Name + U +
-            IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' +
-            U + U + U + U + U + U + U + U;
-          // Link Note to PRF Action
-          if PRF_IEN <> 0 then
-            if sCallV('TIU LINK TO FLAG', [CreatedNote.IEN, PRF_IEN, ActionIEN,
-              Patient.DFN]) = '0' then
-              ShowMsg('TIU LINK TO FLAG: FAILED');
-        end;
+          begin
+            X := IntToStr(CreatedNote.IEN) + U + TitleName + U +
+              FloatToStr(FEditNote.DateTime) + U + Patient.Name + U +
+              IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' +
+              U + U + U + U + U + U + U + U;
+            // Link Note to PRF Action
+            if PRF_IEN <> 0 then
+              begin
+                CallVistA('TIU LINK TO FLAG', [CreatedNote.IEN, PRF_IEN, ActionIEN, Patient.DFN], aStr);
+                if aStr = '0' then
+                  ShowMsg('TIU LINK TO FLAG: FAILED');
+              end;
+          end;
 
         lstNotes.Items.Insert(0, X);
         uChanging := True;
@@ -2500,8 +2778,8 @@ begin
           EnableAutosave := True;
         if txtSubject.Visible then
           txtSubject.SetFocus
-        else
-          memNewNote.SetFocus;
+        else if memNewNote.Visible then
+               memNewNote.SetFocus;
       end else begin
         // if note creation failed or failed to get note lock (both unlikely), unlock consult
         with FEditNote do
@@ -2521,8 +2799,10 @@ begin
     begin
       DocInfo := MakeXMLParamTIU(IntToStr(CreatedNote.IEN), FEditNote);
       ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditNote.Title, ltTitle,
-        Self, 'Title: ' + FEditNote.TitleName, DocInfo);
+        Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
       memNewNote.Text := TmpBoilerPlate.Text;
+      // RTC 1175879 - Removing to ensure that an initial template is placed before boilerplate.
+      //memNewNote.SelStart := Length(memNewNote.Lines.Text); //CQ: 16461
       SpeakStrings(memNewNote);
       UpdateNoteAuthor(DocInfo);
       TmpBoilerPlate.Free;
@@ -2532,7 +2812,7 @@ begin
   end;
 end;
 
-procedure TfrmNotes.InsertAddendum;
+procedure TfrmNotes.InsertAddendum(aParentIEN: integer = -1; aParentTitle: string = '';isSmart: Boolean =false);
 { sets up fields of pnlWrite to write an addendum for the selected note }
 const
   AS_ADDENDUM = True;
@@ -2541,9 +2821,54 @@ var
   HaveRequired: Boolean;
   CreatedNote: TCreatedDoc;
   tmpNode: TTreeNode;
-  X: string;
+  X, DocInfo: string;
+  TmpBoilerPlate: TStringList;
 begin
   ClearEditControls;
+  TmpBoilerPlate := nil;
+  try
+  with FEditNote do
+    begin
+      DocType := TYP_ADDENDUM;
+      IsNewNote := False;
+      DateTime := FMNow;
+      Author := User.DUZ;
+      AuthorName := User.Name;
+
+      If aParentIEN = -1 then // Called directly from UI
+        begin
+          Title := TitleForNote(lstNotes.ItemIEN);
+          TitleName := Piece(lstNotes.Items[lstNotes.ItemIndex], U, 2);
+          If Copy(TitleName, 1, 1) = '+' then
+            TitleName := Copy(TitleName, 3, 199);
+
+          X := GetPackageRefForNote(lstNotes.ItemIEN);
+          If Piece(X, U, 1) <> '-1' then
+            begin
+              PkgRef := GetPackageRefForNote(lstNotes.ItemIEN);
+              PkgIEN := StrToIntDef(Piece(PkgRef, ';', 1), 0);
+              PkgPtr := Piece(PkgRef, ';', 2);
+            end;
+          Addend := lstNotes.ItemIEN;
+        end
+      else // Called external to the UI aParentIEN is the IEN of the Note to addend
+        begin
+          Title := TitleForNote(aParentIEN);
+          TitleName := aParentTitle;
+          If Copy(TitleName, 1, 1) = '+' then
+            TitleName := Copy(TitleName, 3, 199);
+
+          X := GetPackageRefForNote(aParentIEN);
+          If Piece(X, U, 1) <> '-1' then
+            begin
+              PkgRef := GetPackageRefForNote(aParentIEN);
+              PkgIEN := StrToIntDef(Piece(PkgRef, ';', 1), 0);
+              PkgPtr := Piece(PkgRef, ';', 2);
+            end;
+          Addend := aParentIEN;
+        end;
+    end;
+  {  ** Remove later ;-)
   with FEditNote do
   begin
     DocType := TYP_ADDENDUM;
@@ -2567,6 +2892,7 @@ begin
     // Cosigner, if needed, will be set by fNoteProps
     // Location info will be set after the encounter is loaded
   end;
+  }
   // check to see if interaction necessary to get required fields
   if LacksRequiredForCreate
     then HaveRequired := ExecuteNoteProperties(FEditNote, CT_NOTES, IS_ID_CHILD, False, '', 0)
@@ -2584,6 +2910,10 @@ begin
     FEditNote.LocationName := ExternalName(uPCEEdit.Location, 44);
     FEditNote.VisitDate := uPCEEdit.DateTime;
     PutAddendum(CreatedNote, FEditNote, FEditNote.Addend);
+
+    // Save copied text here
+    if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
+      CPMemNewNote.SaveTheMonitor(CreatedNote.IEN);
 
     uPCEEdit.NoteIEN := CreatedNote.IEN;
     if CreatedNote.IEN > 0 then
@@ -2622,8 +2952,12 @@ begin
       SetSubjectVisible(AskSubjectForNotes);
       cmdChangeClick(Self); // will set captions, sign state for Changes
       lstNotesClick(Self); // will make pnlWrite visible
-      if timAutoSave.Interval <> 0 then
-        timAutoSave.Enabled := True;
+      if isSMART then
+        begin
+          if not assigned(TmpBoilerPlate) then
+            TmpBoilerPlate := TStringList.Create;
+          LoadBoilerPlate(TmpBoilerPlate, FEditNote.Title);
+        end;
       memNewNote.SetFocus;
     end else begin
       // if note creation failed or failed to get note lock (both unlikely), unlock consult
@@ -2636,6 +2970,22 @@ begin
   end; { if HaveRequired }
   if not HaveRequired then
     ClearEditControls;
+  finally
+    if assigned(TmpBoilerPlate) then
+    begin
+      DocInfo := MakeXMLParamTIU(IntToStr(CreatedNote.IEN), FEditNote);
+      ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
+      memNewNote.Text := TmpBoilerPlate.Text;
+      // RTC 1175879 - Removing to ensure that an initial template is placed before boilerplate.
+      //memNewNote.SelStart := Length(memNewNote.Lines.Text); //CQ: 16461
+      SpeakStrings(memNewNote);
+      UpdateNoteAuthor(DocInfo);
+      TmpBoilerPlate.Free;
+    end;
+  if timAutoSave.Interval <> 0 then
+        timAutoSave.Enabled := True;
+  end;
+
 end;
 
 procedure TfrmNotes.LoadForEdit;
@@ -2646,6 +2996,7 @@ var
 begin
   ClearEditControls;
   Drawers.RichEditControl := memNewNote; // added to fix problem with focused control when editing.  dlp 15Oct12
+  Drawers.CopyMonitor := CPMemNewNote;
   if not LockConsultRequestAndNote(lstNotes.ItemIEN) then Exit;
   EditingIndex := lstNotes.ItemIndex;
   Changes.Add(CH_DOC, lstNotes.ItemID, GetTitleText(EditingIndex), '', CH_SIGN_YES);
@@ -2736,6 +3087,11 @@ begin
   timAutoSave.Enabled := FALSE;
   try
     PutEditedNote(UpdatedNote, FEditNote, lstNotes.GetIEN(EditingIndex));
+
+    // Save copied text here
+    if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
+      CPMemNewNote.SaveTheMonitor(UpdatedNote.IEN);
+
   finally
     timAutoSave.Enabled := True;
   end;
@@ -2786,6 +3142,7 @@ begin
       mnuActLoadBoiler.Enabled := True;
 //      stTitle.Caption := '';
       UpdateReminderFinish;
+      CPMemNewNote.LoadPasteText();
     end
     else
     begin
@@ -2799,6 +3156,7 @@ begin
         ', ' + Piece(Piece(Items[ItemIndex], U, 5), ';', 2) + '  (' +
         FormatFMDateTime('mmm dd,yy@hh:nn',
         MakeFMDateTime(Piece(Items[ItemIndex], U, 3))) + ')';
+
       LoadDocumentText(memNote.Lines, ItemIEN);
       memNote.SelStart := 0;
       mnuViewDetail.Enabled := True;
@@ -2812,12 +3170,15 @@ begin
        dlgFindText.Options := [];
        dmodShared.FindRichEditTextAll(Memnote, dlgFindText, clHighlight, [fsItalic, fsBold]);
       end;
+      CPMemNote.LoadPasteText();
     end;
   if (Assigned(frmReminderTree)) then
     frmReminderTree.EnableActions;
   DisplayPCE;
   memNewNote.Repaint;
   memNote.Repaint;
+  if not ReadVisible then
+    LimitEditableNote;
   X := 'TIU^' + lstNotes.ItemID;
   SetPiece(X, U, 10, Piece(lstNotes.Items[lstNotes.ItemIndex], U, 11));
   NotifyOtherApps(NAE_REPORT, X);
@@ -2831,6 +3192,7 @@ var
   OKPressed, IsIDChild: Boolean;
   X: string;
   DisAssoText: string;
+  aStr: String;
 begin
   inherited;
   IsIDChild := uIDNotesActive and (FEditNote.IDParent > 0);
@@ -2861,8 +3223,6 @@ begin
   lblNewTitle.Caption := ' ' + FEditNote.TitleName + ' ';
   if (FEditNote.Addend > 0) and (CompareText(Copy(lblNewTitle.Caption, 2, 8), 'Addendum') <> 0) then
     lblNewTitle.Caption := ' Addendum to:' + lblNewTitle.Caption;
-  with lblNewTitle do
-    bvlNewTitle.SetBounds(Left - 1, Top - 1, Width + 2, Height + 2);
   stRefDate.Caption := FormatFMDateTime('mmm dd,yyyy@hh:nn', FEditNote.DateTime);
   stAuthor.Caption := FEditNote.AuthorName;
   if uPCEEdit.Inpatient then
@@ -2915,13 +3275,238 @@ begin
     end;
     // Link Note to PRF Action
     if PRF_IEN <> 0 then
-      if sCallV('TIU LINK TO FLAG', [lstNotes.ItemIEN, PRF_IEN, ActionIEN,
-        Patient.DFN]) = '0' then
-        ShowMsg('TIU LINK TO FLAG: FAILED');
+      begin
+        CallVistA('TIU LINK TO FLAG', [lstNotes.ItemIEN, PRF_IEN, ActionIEN, Patient.DFN], aStr);
+        if aStr = '0' then
+          ShowMsg('TIU LINK TO FLAG: FAILED');
+      end;
   end;
 
   if LastTitle <> FEditNote.Title then
     self.acReloadBoilerExecute(Self);
+end;
+
+procedure TfrmNotes.cmdChangeExit(Sender: TObject);
+begin
+  inherited;
+  //Fix the Tab Order  Make Drawers Buttons Accessible
+  if Boolean(Hi(GetKeyState(VK_TAB))) and
+     Boolean(Hi(GetKeyState(VK_SHIFT))) then
+    tvNotes.SetFocus;
+end;
+
+procedure TfrmNotes.cmdNewNoteExit(Sender: TObject);
+begin
+  inherited;
+  if TabIsPressed or ShiftTabIsPressed then
+  begin
+    if (Screen.ActiveControl = lvNotes) or
+        (Screen.ActiveControl = memNote) then
+      frmFrame.pnlPatient.SetFocus
+    else
+    if (Screen.ActiveControl = tvNotes) then
+      FindNextControl( frmFrame.pnlPatient, False, True, False).SetFocus;
+  end;
+end;
+
+procedure TfrmNotes.cmdPCEExit(Sender: TObject);
+begin
+  inherited;
+  //Fix the Tab Order  Make Drawers Buttons Accessible
+  if TabIsPressed then
+    if frmFrame.pnlPatient.CanFocus then
+      frmFrame.pnlPatient.SetFocus;
+end;
+
+procedure TfrmNotes.CPHide(Sender: TObject);
+begin
+  inherited;
+  if Sender  is TCopyPasteDetails then
+  begin
+   if TCopyPasteDetails(Sender).Name = 'CPMemNote' then
+    spDetails.Visible := false
+   else
+    spEditDetails.Visible := False;
+  end;
+end;
+
+
+
+procedure TfrmNotes.CPShow(Sender: TObject);
+begin
+  inherited;
+  if Sender  is TCopyPasteDetails then
+  begin
+   TCopyPasteDetails(Sender).Top := TCopyPasteDetails(Sender).VisualEdit.Top + 1;
+
+   if TCopyPasteDetails(Sender).Name = 'CPMemNote' then
+   begin
+    spDetails.Visible := true;
+    spDetails.Top := CPMemNote.Top - 1;
+    pnlNote.Realign;
+   end else begin
+    spEditDetails.Visible := true;
+    spEditDetails.Top := CPMemNewNote.Top - 1;
+    pnlWrite.Realign;
+   end;
+  end;
+end;
+
+procedure TfrmNotes.SaveTheMonitor(Sender: TObject; SaveList: TStringList;
+  var ReturnList: TStringList);
+var
+  i, X, z, Total, LineCnt, SubCnt: Integer;
+  DivisionID, aName, aValue: string;
+   LookUpLst: THashedStringList;
+   aList: iORNetMult;
+begin
+  inherited;
+  Total := StrToIntDef(SaveList.values['TotalToSave'], -1);
+  DivisionID := Piece(RPCBrokerV.User.Division, '^', 1);
+  If Trim(DivisionID) = '' then
+    DivisionID := GetDivisionID;
+  if Total > 0 then
+  begin
+      LookUpLst := THashedStringList.Create;
+    try
+      LookUpLst.BeginUpdate;
+      LookUpLst.Assign(SaveList);
+      LookUpLst.EndUpdate;
+      neworNetMult(aList);
+      for i := 1 to Total do
+      begin
+        aList.AddSubscript([i,0],LookupLst.values[IntToStr(i) + ',0']);
+        LineCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',-1'], -1);
+        for X := 0 to LineCnt  do
+        begin
+         aName := IntToStr(i) + ',' + IntToStr(X);
+         aValue := FilteredString(LookupLst.values[aName]);
+         aList.AddSubscript([i,X], aValue);
+        end;
+
+        // Send in the original if needed
+        LineCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',Copy,-1'], -1);
+        for X := 1 to LineCnt do
+        begin
+         aName := IntToStr(i) + ',Copy,' + IntToStr(X);
+         aValue := FilteredString(LookupLst.values[aName]);
+         aList.AddSubscript([i,0,x], aValue);
+        end;
+
+        // Send in the "Paste"
+        if StrToIntDef(Piece(LookupLst.values[IntToStr(i) + ',Paste,-1'], '^', 2), 0) >
+        (TCopyEditMonitor(Sender).CopyMonitor.SaveCutOff * 1000) then
+        begin
+          LineCnt := StrToIntDef(Piece(LookupLst.values[IntToStr(i) + ',Paste,-1'], '^', 1), -1);
+          for X := 1 to LineCnt do
+          begin
+           SubCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',Paste,' + IntToStr(X) + ',-1'], -1);
+           for Z := 1 to SubCnt do
+           begin
+            aName := IntToStr(i) + ',Paste,' + IntToStr(X) +','+ IntToStr(z);
+            aValue := FilteredString(LookupLst.values[aName]);
+            aList.AddSubscript([i,'Paste',x,z], aValue);
+           end;
+          end;
+        end;
+
+      end;
+
+      CallVistA('ORWTIU SVPASTE', [aList, DivisionID], ReturnList);
+
+    Finally
+     LookUpLst.Free;
+    End;
+  end;
+end;
+
+procedure TfrmNotes.PasteToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+begin
+  inherited;
+  CPMemNewNote.EditMonitor.ItemIEN := lstNotes.ItemIEN;
+  AllowMonitor := CPMemNewNote.CopyMonitor.ExcludedList.IndexOf(IntToStr(FEditNote.Title)) = -1;
+  ScrubTheClipboard;
+end;
+
+procedure TfrmNotes.LoadPastedText(Sender: TObject; LoadList: TStrings;
+  var ProcessLoad, PreLoaded: Boolean);
+var
+  DivId, ParamStr, tmpRtn: string;
+  AddlSigners: TStrings;
+  i: Integer;
+  IsCoSigner: Boolean;
+begin
+  DivID := Piece(RPCBrokerV.User.Division, '^', 1);
+  If Trim(DivID) = '' then
+    DivID := GetDivisionID;
+  CallVistA('ORWTIU VIEWCOPY', [User.DUZ, lstNotes.ItemIEN, DivId], tmpRtn);
+  ProcessLoad := Not(Trim(tmpRtn) = '0');
+  IsCoSigner := False;
+  With TCopyPasteDetails(Sender) do
+  begin
+
+    // check for preload
+    if ProcessLoad then
+    begin
+
+      AddlSigners := GetCurrentSigners(lstNotes.ItemIEN);
+      for i := 0 to AddlSigners.Count - 1 do
+      begin
+        if Piece(AddlSigners.Strings[i], U, 3) = 'Expected Cosigner' then
+        begin
+          IsCoSigner := (Piece(AddlSigners.Strings[i], U, 1)
+            = IntToStr(User.DUZ));
+          break;
+        end;
+      end;
+
+      if IsCoSigner and (not EditMonitor.CopyMonitor.DisplayPaste) then
+      begin
+        // Setup default indication
+        EditMonitor.CopyMonitor.MatchStyle := [fsBold];
+        EditMonitor.CopyMonitor.MatchHighlight := true;
+        EditMonitor.CopyMonitor.HighlightColor := clYellow;
+      end
+      else if not EditMonitor.CopyMonitor.DisplayPaste then
+      begin
+        EditMonitor.CopyMonitor.MatchStyle := [];
+        EditMonitor.CopyMonitor.MatchHighlight := False;
+        ProcessLoad := False;
+      end;
+
+    end;
+
+    if ProcessLoad then
+    begin
+      PreLoaded := False;
+      // Pre load off but make sure we need to actually reload
+
+      if not EditMonitor.ReadyForLoadTransfer then
+        PreLoaded := EditMonitor.ItemIEN = lstNotes.ItemIEN;
+
+      EditMonitor.ItemIEN := lstNotes.ItemIEN;
+      // If user is cosigner then show all paste actions
+      ShowAllPaste := IsCoSigner;
+
+      if not PreLoaded then
+      begin
+        ParamStr := IntToStr(EditMonitor.ItemIEN) + ';' +
+          EditMonitor.RelatedPackage;
+        LoadList.BeginUpdate;
+        CallVistA('ORWTIU GETPASTE', [ParamStr, DivId], LoadList);
+        LoadList.EndUpdate;
+      end;
+    end;
+
+    // Load has happened so no more transfers
+    CPMemNewNote.DefaultSelectAll := IsCoSigner;
+    CPMemNote.DefaultSelectAll := IsCoSigner;
+    EditMonitor.ItemIEN := lstNotes.ItemIEN;
+    CPMemNewNote.EditMonitor.ReadyForLoadTransfer := False;
+    CPMemNote.EditMonitor.ReadyForLoadTransfer := False;
+  end;
+
+  inherited;
 end;
 
 procedure TfrmNotes.memNewNoteChange(Sender: TObject);
@@ -2930,28 +3515,6 @@ begin
   FChanged := True;
 end;
 
-(*procedure TfrmNotes.pnlFieldsResize(Sender: TObject);
-{ center the reference date on the panel }
-var
-  ileft, iwidth, iright, ioffset, halfref: Integer;  // rpk 5/21/2013
-begin
-  inherited;
-  lblRefDate.Left := (pnlFields.Width - lblRefDate.Width) div 2;
-  // if lblRefDate.Left < (lblNewTitle.Left + lblNewTitle.Width + 6)
-  // then lblRefDate.Left := (lblNewTitle.Left + lblNewTitle.Width);
-
-  ileft := lblNewTitle.Left + lblNewTitle.Width + 6; // rpk 5/21/2013
-  iright := lblAuthor.Left - 6; // rpk 5/21/2013
-  halfref := lblRefDate.Width div 2; // rpk 5/21/2013
-  iwidth := iright - ileft; // rpk 5/21/2013
-  if iwidth > lblRefDate.Width then begin // rpk 5/21/2013
-    ioffset := (iwidth div 2) - halfref; // rpk 5/21/2013
-    if ioffset > 0 then // rpk 5/21/2013
-      lblRefDate.Left := (ileft + ioffset); // rpk 5/21/2013
-  end; // rpk 5/21/2013
- // UpdateFormForInput;
-end;
-  *)
 procedure TfrmNotes.DoAutoSave(Suppress: Integer = 1);
 var
   ErrMsg: string;
@@ -2965,6 +3528,11 @@ begin
     timAutoSave.Enabled := False;
     try
       SetText(ErrMsg, memNewNote.Lines, lstNotes.GetIEN(EditingIndex), Suppress);
+
+      //Save copied text here
+      if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
+        CPMemNewNote.SaveTheMonitor(lstNotes.GetIEN(EditingIndex));
+
     finally
       timAutoSave.Enabled := True;
     end;
@@ -3016,6 +3584,11 @@ procedure TfrmNotes.timAutoSaveTimer(Sender: TObject);
 begin
   inherited;
   DoAutoSave;
+end;
+
+procedure TfrmNotes.Timer1Timer(Sender: TObject);
+begin
+
 end;
 
 { Action menu events ----------------------------------------------------------------------- }
@@ -3246,8 +3819,8 @@ begin
     FEditCtrl := nil;
   if FEditCtrl <> nil then
   begin
-    popNoteMemoCut.Enabled := FEditCtrl.SelLength > 0;
-    popNoteMemoCopy.Enabled := popNoteMemoCut.Enabled;
+    popNoteMemoCut.Enabled := (FEditCtrl.SelLength > 0) and (not TORExposedCustomEdit(FEditCtrl).ReadOnly);
+    popNoteMemoCopy.Enabled := FEditCtrl.SelLength > 0;
     popNoteMemoPaste.Enabled := (not TORExposedCustomEdit(FEditCtrl).ReadOnly)
       and Clipboard.HasFormat(CF_TEXT);
     popNoteMemoTemplate.Enabled := Drawers.CanEditTemplates and
@@ -3307,7 +3880,8 @@ end;
 procedure TfrmNotes.popNoteMemoPasteClick(Sender: TObject);
 begin
   inherited;
-  ScrubTheClipboard;
+  if not CPMemNewNote.EditMonitor.CopyMonitor.Enabled then
+   ScrubTheClipboard;
   FEditCtrl.PasteFromClipboard; // use AsText to prevent formatting
 end;
 
@@ -3465,6 +4039,7 @@ begin
         if ErrMsg = '' then
         begin
           DeleteDocument(DeleteSts, IEN, '');
+          if DeleteSts.Success then SendMessage(Application.MainForm.Handle, UM_REMINDERS, 1, 1);
           UnlockDocument(IEN);
         end; { if ErrMsg }
       end; { if not LastSaveClean }
@@ -3478,6 +4053,7 @@ var
   Saved: Boolean;
   tmpNode: TTreeNode;
   AnObject: PDocTreeObject;
+  aSmartParams: TStringList;
 begin
   if EditingIndex <> -1 then
   begin
@@ -3492,7 +4068,60 @@ begin
   ReadToFront;
   // show ALL unsigned/uncosigned for a patient, not just the alerted one
   // what about cosignature?  How to get correct list?  ORB FOLLOWUP TYPE = OR alerts only
-  X := Notifications.AlertData;
+
+  // Handle SMART Alerts
+  try
+    aSmartParams := TStringList.Create();
+    if assigned(Notifications.Data) then
+      aSmartParams.Assign(Notifications.Data);
+//    CallVistA('ORB3UTL GET NOTIFICATION', [Piece(Notifications.RecordID, '^', 2)], aSmartParams);
+    If (aSmartParams.values['PROCESS AS SMART NOTIFICATION'] = '1') then
+    begin
+      if (aSmartParams.values['MAKE ADDENDUM'] = '0') then
+      begin
+        If Encounter.NeedVisit then
+        begin
+          UpdateVisit(Font.Size, DfltTIULocation);
+          frmFrame.DisplayEncounterText;
+        end;
+
+        If Encounter.NeedVisit then
+        begin
+          CallVistA('ORBSMART OUSMALRT', ['']);
+          InfoBox(TX_NEED_VISIT, TX_NO_VISIT, MB_OK or MB_ICONWARNING);
+          ShowPCEButtons(False);
+          exit;
+        end;
+        InsertNewNote(False, 0, StrToInt(aSmartParams.values['NOTE TITLE IEN']),
+          aSmartParams.values['NOTE TITLE']);
+        // aSmartNoteIEN, aSmartNoteTitle);
+      end
+      else if (aSmartParams.values['MAKE ADDENDUM'] = '1') then
+      begin
+//        If Encounter.NeedVisit then
+//        begin
+//          UpdateVisit(Font.Size, DfltTIULocation);
+//          frmFrame.DisplayEncounterText;
+//        end;
+//
+//        If Encounter.NeedVisit then
+//        begin
+//          InfoBox(TX_NEED_VISIT, TX_NO_VISIT, MB_OK or MB_ICONWARNING);
+//          ShowPCEButtons(False);
+//          exit;
+//        end;
+        InsertAddendum(StrToIntDef(aSmartParams.values['ADDEND NOTE IEN'], -1),
+          aSmartParams.values['ADDEND NOTE TITLE'], true);
+      end;
+
+        exit;
+      end
+    else
+      X := Notifications.AlertData;
+  finally
+    FreeAndNil(aSmartParams);
+  end;
+
   if StrToIntDef(Piece(X, U, 1), 0) = 0 then
   begin
     InfoBox(TX_NO_ALERT, TX_CAP_NO_ALERT, MB_OK);
@@ -3519,14 +4148,17 @@ begin
   tvNotes.Items.EndUpdate;
   uChanging := FALSE;
   tvNotesChange(Self, tvNotes.Selected);
-  case Notifications.Followup of
-    NF_NOTES_UNSIGNED_NOTE:
-      ; // Automatically deleted by sig action!!!
+  if Notifications.Processing then
+  begin
+    case Notifications.Followup of
+      NF_NOTES_UNSIGNED_NOTE:
+        ; // Automatically deleted by sig action!!!
+    end;
+    if Copy(Piece(Notifications.RecordID, U, 2), 1, 6) = 'TIUADD' then
+      Notifications.Delete;
+    if Copy(Piece(Notifications.RecordID, U, 2), 1, 5) = 'TIUID' then
+      Notifications.Delete;
   end;
-  if Copy(Piece(Notifications.RecordID, U, 2), 1, 6) = 'TIUADD' then
-    Notifications.Delete;
-  if Copy(Piece(Notifications.RecordID, U, 2), 1, 5) = 'TIUID' then
-    Notifications.Delete;
 end;
 
 procedure TfrmNotes.SetViewContext(AContext: TTIUContext);
@@ -3612,20 +4244,59 @@ begin
   Drawers.BaseHeight := pnlDrawers.Height;
 end;
 
-procedure TfrmNotes.pnlWriteResize(Sender: TObject);
-const
-  LEFT_MARGIN = 4;
+procedure TfrmNotes.pnlNoteExit(Sender: TObject);
 begin
   inherited;
-  LimitEditWidth(memNewNote, MAX_PROGRESSNOTE_WIDTH - 1);
+  if TabIsPressed or ShiftTabIsPressed then
+  begin
+    if (Screen.ActiveControl = frmFrame.pnlPatient) then
+      FindNextControl( tvNotes, True, True, False).SetFocus
+    else
+    if (Screen.ActiveControl = frmDrawers.btnTemplate) or
+        (Screen.ActiveControl = frmDrawers.btnEncounter) or
+        (Screen.ActiveControl = cmdNewNote) or
+        (Screen.ActiveControl = cmdPCE) then
+      FindNextControl( frmDrawers.btnTemplate, False, True, False).SetFocus;
+  end;
+end;
+
+procedure TfrmNotes.PnlRightResize(Sender: TObject);
+var
+ AdjustBy: Integer;
+ Rect: TRect;
+begin
+  inherited;
 
   //CQ7012 Added test for nil
-  if memNewNote <> nil then
-     memNewNote.Constraints.MinWidth := TextWidthByFont(memNewNote.Font.Handle, StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 2) + ScrollBarWidth;
-  //CQ7012 Added test for nil
-   if (Self <> nil) and (pnlLeft <> nil) and (pnlWrite <> nil) and (splHorz <> nil) then
-    if memNewNote.Width =  memNewNote.Constraints.MinWidth then
-     pnlLeft.Width := self.ClientWidth - pnlWrite.Width - splHorz.Width;
+  if Assigned(Self) and Assigned(pnlLeft) and Assigned(pnlWrite) and Assigned(splHorz) then
+  begin
+    if PnlRight.Width =  PnlRight.Constraints.MinWidth then
+    begin
+      //Grab the current bounds
+      Rect := BoundsRect;
+      //What should they be?
+      ForceInsideWorkArea(Rect);
+      //if we our outside of our bounds then take away from the left
+      if BoundsRect.Right > Rect.Right then
+      begin
+        AdjustBy := BoundsRect.Right - Rect.Right;
+        pnlLeft.Width :=  pnlLeft.Width - splHorz.Width - AdjustBy;
+
+        //Ensure that the form will fit on the work area
+        if WindowState <> wsMaximized then
+        begin
+          frmFrame.Width := frmFrame.Width - splHorz.Width - AdjustBy;
+        end;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmNotes.pnlWriteResize(Sender: TObject);
+begin
+  inherited;
+  //Update the edit area
+  LimitEditableNote;
 end;
 
 procedure TfrmNotes.popNoteListCollapseAllClick(Sender: TObject);
@@ -3692,6 +4363,16 @@ begin
   inherited;
 end;
 
+procedure TfrmNotes.FormHide(Sender: TObject);
+begin
+  inherited;
+  frmFrame.pnlPatient.OnExit := FOldFramePnlPatientExit;
+  frmDrawers.btnTemplate.OnExit := FOldDrawerPnlTemplatesButtonExit;
+  frmDrawers.btnEncounter.OnExit := FOldDrawerPnlEncounterButtonExit;
+  frmDrawers.edtSearch.OnExit := FOldDrawerEdtSearchExit;
+  acNewNote.Enabled := false;
+end;
+
 procedure TfrmNotes.AssignRemForm;
 begin
   RemForm.Form := Self;
@@ -3715,7 +4396,7 @@ var
   tmpList: TStringList;
   ANode: TORTreeNode;
   X, xx, noteId: Integer; // Text Search CQ: HDS00002856
-  Dest: TStrings; // Text Search CQ: HDS00002856
+  Dest: TStringList;
   KeepFlag: Boolean; // Text Search CQ: HDS00002856
   NoteCount, NoteMatches: Integer; // Text Search CQ: HDS00002856
 begin
@@ -3770,7 +4451,6 @@ begin
       if FCurrentContext.SearchString <> '' then // Text Search CQ: HDS00002856
       begin
         NoteMatches := 0;
-        Dest := TStringList.create;
         NoteCount := FDocList.Count - 1;
         if FDocList.Count > 0 then
           for X := FDocList.Count - 1 downto 1 do
@@ -3794,17 +4474,18 @@ begin
               noteId := StrToIntDef(Piece(FDocList.Strings[X], '^', 1), -1);
               if (noteId = INVALID_ID) or (noteId = INFO_ID) then
                 Continue;
-              Callv('TIU GET RECORD TEXT',
-                [Piece(FDocList.Strings[X], '^', 1)]);
-              Dest.Text := RPCBrokerV.Results.Text;
-              If Dest.Count > 0 then
-                for xx := 0 to Dest.Count - 1 do
-                begin
-                  // Dest.Strings[xx] := StringReplace(Dest.Strings[xx],'#13',' ',[rfReplaceAll, rfIgnoreCase]);
-                  if Pos(Uppercase(FCurrentContext.SearchString),
-                    Uppercase(Dest.Strings[xx])) > 0 then
-                    KeepFlag := True;
-                end;
+              Dest := TStringList.Create;
+              try
+                CallVistA('TIU GET RECORD TEXT', [Piece(FDocList.Strings[X], '^', 1)], Dest);
+                if Dest.Count > 0 then
+                  for xx := 0 to Dest.Count - 1 do
+                    begin
+                      if Pos(Uppercase(FCurrentContext.SearchString), Uppercase(Dest[xx])) > 0 then
+                        KeepFlag := True;
+                    end;
+              finally
+                FreeAndNil(Dest);
+              end;
               If KeepFlag = FALSE then
               begin;
                 if FDocList.Count >= X then
@@ -3816,7 +4497,6 @@ begin
                 Inc(NoteMatches);
             end;
           end;
-        Dest.free;
       end
       else
         // Reset the caption
@@ -4037,7 +4717,9 @@ begin
           begin
             Selected := nil;
             lstNotes.ItemIndex := -1;
-            memPCEShow.Clear;
+            CPMemNote.EditMonitor.ItemIEN := lstNotes.ItemIEN;
+            ClearPCE;
+           // memPCEShow.Clear;
             ShowPCEControls(FALSE);
           end;
         end;
@@ -4059,8 +4741,10 @@ begin
       end;
 
       //display orphaned warning
-      if PDocTreeObject(Selected.Data)^.Orphaned then
-       MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
+//      if PDocTreeObject(Selected.Data)^.Orphaned then -- 1211117
+      if assigned(Selected) and assigned(Selected.Data) and
+        PDocTreeObject(Selected.Data)^.Orphaned then
+        MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
 
       SendMessage(tvNotes.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
       finally
@@ -4083,6 +4767,19 @@ begin
     if (SelectedIndex in [IMG_GROUP_OPEN, IMG_IDNOTE_OPEN,
       IMG_IDPAR_ADDENDA_OPEN]) then
       SelectedIndex := SelectedIndex - 1;
+  end;
+end;
+
+procedure TfrmNotes.tvNotesExit(Sender: TObject);
+begin
+ inherited;
+ if TabIsPressed or ShiftTabIsPressed then
+  begin
+    if (Screen.ActiveControl = frmDrawers.btnTemplate) or
+        (Screen.ActiveControl = frmDrawers.btnEncounter) or
+        (Screen.ActiveControl = cmdNewNote) or
+        (Screen.ActiveControl = cmdPCE) then
+      FindNextControl( cmdPCE, True, True, False).SetFocus;
   end;
 end;
 
@@ -4506,6 +5203,24 @@ begin
   end;
 end;
 
+procedure TfrmNotes.memPCEReadExit(Sender: TObject);
+begin
+  inherited;
+  //Fix the Tab Order  Make Drawers Buttons Accessible
+  if TabIsPressed then
+    if frmDrawers.btnTemplate.CanFocus then
+      frmDrawers.btnTemplate.SetFocus
+end;
+
+procedure TfrmNotes.memPCEWriteExit(Sender: TObject);
+begin
+  inherited;
+  //Fix the Tab Order  Make Drawers Buttons Accessible
+  if TabIsPressed then
+    if frmDrawers.btnTemplate.CanFocus then
+      frmDrawers.btnTemplate.SetFocus
+end;
+
 procedure TfrmNotes.UpdateNoteAuthor(DocInfo: string);
 const
   TX_INVALID_AUTHOR1 = 'The author returned by the template (';
@@ -4650,6 +5365,47 @@ begin
   inherited;
   if Drawers.DrawerIsOpen then
    Drawers.LastOpenSize := pnlDrawers.Height;
+end;
+
+procedure TfrmNotes.frmFramePnlPatientExit(Sender: TObject);
+begin
+  if Assigned(FOldFramePnlPatientExit) then
+    FOldFramePnlPatientExit(Sender);
+  if TabIsPressed or ShiftTabIsPressed then
+  begin
+    if (Screen.ActiveControl = lvNotes) or
+        (Screen.ActiveControl = memNote) then
+      FindNextControl( lvNotes, False, True, False).SetFocus;
+    if (Screen.ActiveControl = memPCERead) or (Screen.ActiveControl = memPCEWrite) then
+      if cmdPCE.CanFocus then
+        cmdPCE.SetFocus
+      else if cmdNewNote.CanFocus then
+        cmdNewNote.SetFocus;
+  end;
+end;
+
+procedure TfrmNotes.SaveUserSplitterSettings(var posA, posB, posC, posD: integer);
+begin
+  posA := memPCERead.Height; //memPCEWrite.Height
+  posB := CPMemNote.Height; //cpmemNewNote.height
+  posC := lvNotes.Height;
+  posD := 0;
+end;
+
+procedure TfrmNotes.LoadUserSplitterSettings(posA, posB, posC, posD: integer);
+begin
+  if posA > 0 then
+  begin
+    memPCERead.Height := posA;
+    memPCEWrite.Height := posA;
+  end;
+  if posB > 0 then
+  begin
+    CPMemNote.Height := posB;
+    cpmemNewNote.Height := posB;
+  end;
+  if posC > 0 then
+    lvNotes.Height := posC;
 end;
 
 initialization

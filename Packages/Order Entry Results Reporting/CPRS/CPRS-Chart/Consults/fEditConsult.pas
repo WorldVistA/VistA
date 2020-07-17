@@ -78,6 +78,7 @@ type
     procedure calClinicallyIndicatedExit(Sender: TObject);
     procedure calLatestExit(Sender: TObject);
     procedure memCommentExit(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     FLastServiceID: string;
     FChanged: boolean;
@@ -106,7 +107,7 @@ implementation
 
 uses
     rODBase, rConsults, uCore, rCore, fConsults, fRptBox, fPCELex, rPCE,
-    ORClasses, clipbrd, UBAGlobals, rOrders ;
+    ORClasses, clipbrd, UBAGlobals, rOrders, VAUtils;
 
 var
   SvcList: TStrings ;
@@ -196,10 +197,10 @@ begin
       if Patient.Inpatient then
         radInpatient.Checked  := True
       else
-        radOutpatient.Checked := True;  
+        radOutpatient.Checked := True;
     end;
   StatusText('Initializing Long List');
-  FastAssign(LoadServiceList(CN_SVC_LIST_ORD), SvcList)   ;
+  FastAssign(LoadServiceList(CN_SVC_LIST_DISP), SvcList)   ;
   with cboService do
     begin
       for i := 0 to SvcList.Count - 1 do
@@ -449,6 +450,15 @@ begin
   if FChanged then
     if InfoBox(TX_ACCEPT, TX_ACCEPT_CAP, MB_YESNO) = ID_YES then
       if not ValidSave then Action := caNone;
+end;
+
+procedure TfrmEditCslt.FormResize(Sender: TObject);
+const
+  LEFT_MARGIN = 4;
+begin
+  inherited;
+  LimitEditWidth(memReason, MAX_PROGRESSNOTE_WIDTH-7); //puts memReason at 74 characters
+  Self.Constraints.MinWidth := TextWidthByFont(memReason.Font.Handle, StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 10) + ScrollBarWidth;
 end;
 
 procedure TfrmEditCslt.calClinicallyIndicatedExit(Sender: TObject);

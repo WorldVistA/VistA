@@ -35,13 +35,17 @@ implementation
 {$R *.DFM}
 
 uses
-  uConst;
+  uConst, uOwnerWrapper;
 
 procedure TfrmOMAction.FormDestroy(Sender: TObject);
+var
+  o: TComponent;
+
 begin
   if Assigned(FCallOnExit) then FCallOnExit;
-  if (Owner <> nil) and (Owner is TWinControl)
-    then SendMessage(TWinControl(Owner).Handle, UM_DESTROY, FRefNum, 0);
+  o := UnwrappedOwner(Self);
+  if (o <> nil) and (o is TWinControl) and (TWinControl(o).HandleAllocated) then
+    SendMessage(TWinControl(o).Handle, UM_DESTROY, FRefNum, 0);
   inherited;
 end;
 

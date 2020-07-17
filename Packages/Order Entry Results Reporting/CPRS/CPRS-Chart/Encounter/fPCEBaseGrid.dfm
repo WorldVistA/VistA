@@ -16,7 +16,7 @@ inherited frmPCEBaseGrid: TfrmPCEBaseGrid
     Height = 87
     BevelOuter = bvNone
     TabOrder = 1
-    object lstRenameMe: TCaptionListView
+    object lstCaptionList: TCaptionListView
       Left = 0
       Top = 0
       Width = 451
@@ -44,6 +44,7 @@ inherited frmPCEBaseGrid: TfrmPCEBaseGrid
       ShowHint = True
       TabOrder = 0
       ViewStyle = vsReport
+      AutoSize = False
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -61,7 +62,7 @@ inherited frmPCEBaseGrid: TfrmPCEBaseGrid
         'Component = frmPCEBaseGrid'
         'Status = stsDefault')
       (
-        'Component = lstRenameMe'
+        'Component = lstCaptionList'
         'Status = stsDefault'))
   end
 end

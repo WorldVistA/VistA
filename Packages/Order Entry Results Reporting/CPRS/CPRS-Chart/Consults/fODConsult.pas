@@ -145,7 +145,7 @@ implementation
 uses
     rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, fPreReq,
     ORClasses, clipbrd, uTemplates, fFrame, uODBase, uVA508CPRSCompatibility,
-    VA508AccessibilityRouter;
+    VA508AccessibilityRouter, VAUtils;
 
 var
   SvcList, QuickList, Defaults: TStrings ;
@@ -1624,9 +1624,13 @@ begin
 end;
 
 procedure TfrmODCslt.FormResize(Sender: TObject);
+const
+  LEFT_MARGIN = 4;
 begin
   inherited;
   AdjustMemReasonSize();
+  LimitEditWidth(memReason, MAX_PROGRESSNOTE_WIDTH-7); //puts memReason at 74 characters
+  Self.Constraints.MinWidth := TextWidthByFont(memReason.Font.Handle, StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 10) + ScrollBarWidth;
 end;
 
 procedure TfrmODCslt.AdjustMemReasonSize;

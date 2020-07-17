@@ -38,8 +38,8 @@ type
     cboImType: TORComboBox;
     calPreOp: TORDateBox;
     lblPreOp: TLabel;
-    pnlLeft: TORAutoPanel;
-    pnlRight: TORAutoPanel;
+    pnlLeft: TPanel;
+    pnlRight: TPanel;
     pnlHandR: TPanel;
     grpPregnant: TGroupBox;
     radPregnant: TRadioButton;
@@ -47,7 +47,7 @@ type
     radPregnantUnknown: TRadioButton;
     lblReason: TLabel;
     txtReason: TCaptionEdit;
-    pnlRightBase: TORAutoPanel;
+    pnlRightBase: TPanel;
     Submitlbl508: TVA508StaticText;
     VA508ComponentAccessibility1: TVA508ComponentAccessibility;
     VA508ComponentAccessibility2: TVA508ComponentAccessibility;
@@ -78,6 +78,7 @@ type
       var Text: string);
     procedure pnlMessageMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure txtReasonKeyPress(Sender: TObject; var Key: Char);
   private
     FLastRadID: string;
     FEditCopy: boolean;
@@ -95,6 +96,7 @@ type
     procedure Validate(var AnErrMsg: string); override;
     procedure SetDefaultPregant;
   public
+    procedure SetFontSize(FontSize: integer); override;
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
   end;
 
@@ -103,15 +105,18 @@ implementation
 {$R *.DFM}
 
 uses rODBase, rODRad, rOrders, uCore, rCore, fODRadApproval, fODRadConShRes, fLkUpLocation, fFrame,
-  uFormMonitor, System.UITypes;
+  uFormMonitor, System.UITypes, VAUtils;
 
 const
-  TX_NO_PROC          = 'An Imaging Procedure must be specified.'    ;
+  TX_NO_PROC          = 'An Imaging Procedure must be specified.';
+  TX_NO_URG           = 'The Urgency must be specified.';
   TX_NO_MODE          = 'A mode of transport must be selected.';
-  TX_NO_REASON        = 'A Reason for Study must be entered.'  ;
+  TX_INVALID_REASON   = 'You cannot enter control characters in the Reason for Study field.';
+  TX_BAD_REASON       = 'You cannot enter a ^ in the Reason for Study field.';
+  TX_NO_REASON        = 'A Valid Reason for Study must be entered.';
   TX_BAD_HISTORY      = 'An incomplete or invalid Clinical History has been entered.' + CRLF +
                         'Please correct or clear.';
-  TX_NO_DATE          = 'A "Date Desired" must be specified.' ;
+  TX_NO_DATE          = 'A "Date Desired" must be specified.';
   TX_BAD_DATE         = 'The "Date Desired" you have entered is invalid.';
   TX_PAST_DATE        = '"Date Desired" must not be in the past.';
   TX_APPROVAL_REQUIRED= 'This procedure requires Radiologist approval.' ;
@@ -129,11 +134,12 @@ var
   Radiologist, Contract, Research: string ;
   AName, IsPregnant: string;
   ALocation, AType: integer;
-  
+
 { TfrmODBase common methods }
 
 procedure TfrmODRad.SetupDialog(OrderAction: Integer; const ID: string);
 var
+  sl: TStrings;
   tmpResp: TResponse;
   i: integer;
 begin
@@ -157,7 +163,10 @@ begin
      end;
     if Self.EvtID>0 then
       FEvtDelayDiv := GetEventDiv1(IntToStr(Self.EvtID));
-    CtrlInits.LoadDefaults(ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup));   // ODForRad returns TStrings with defaults
+//    CtrlInits.LoadDefaults(ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup));   // ODForRad returns TStrings with defaults
+    sl := ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup);
+    CtrlInits.LoadDefaults(sl);   // ODForRad returns TStrings with defaults
+    sl.Free; // RTC 272867
     InitDialog;
     SetControl(cboProcedure,       'ORDERABLE', 1);
     Changing := True;
@@ -166,7 +175,7 @@ begin
     SetControl(cboTransport,       'MODE', 1);
     SetControl(cboSubmit,          'IMLOC', 1);
     SetControl(cboCategory,        'CLASS', 1);
-    SetControl(txtReason,           'REASON', 1);
+    SetControl(txtReason,          'REASON', 1);
     SetControl(memHistory,         'COMMENT', 1);
     SetControl(chkIsolation,       'YN', 1);
     SetControl(radPregnant,        'PREGNANT', 1);
@@ -225,11 +234,30 @@ begin
   end;
 end;
 
+procedure TfrmODRad.txtReasonKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if Key = U then
+    key := #0;
+end;
+
 procedure TfrmODRad.InitDialog;
 var
-   i: integer;
-   tmplst: TStringList;
-   cboSubmitText: String;
+  i: integer;
+  tmplst: TStringList;
+  cboSubmitText: String;
+
+  procedure InsertSeperator;
+  begin
+    if cboProcedure.LongList then
+      cboProcedure.InsertSeparator
+    else
+    begin
+      cboProcedure.Items.Add(LLS_LINE);
+      cboProcedure.Items.Add(LLS_SPACE);
+    end;
+  end;
+
 begin
   if not FEditCopy then
   begin
@@ -248,14 +276,16 @@ begin
   FEvtDelayDiv := '';
   if (Self.EvtID > 0 ) and (FEvtDelayDiv = '') then
     FEvtDelayDiv := GetEventDiv1(IntToStr(Self.EvtID));
+  cboProcedure.Clear;
+  cboProcedure.LongList := IsRadProcsLongList(DisplayGroup); // RTC 777234
   with CtrlInits do
    begin
     SetControl(cboProcedure, 'ShortList');
-    if cboProcedure.Items.Count > 0 then cboProcedure.InsertSeparator;
+    if cboProcedure.Items.Count > 0 then InsertSeperator;
     SetControl(FRadCommonCombo, 'Common Procedures');
     for i := 0 to FRadCommonCombo.Items.Count-1 do
       cboProcedure.Items.Add(FRadCommonCombo.Items[i]);
-    if FRadCommonCombo.Items.Count>0 then cboProcedure.InsertSeparator;
+    if FRadCommonCombo.Items.Count>0 then InsertSeperator;
 
     //calRequestDate.Text := 'TODAY';     default removed per E3R #19834 - v27.10 - RV
     SetControl(cboAvailMod, 'Modifiers');
@@ -333,8 +363,17 @@ begin
    end;
   lstSelectMod.Clear;
   ControlChange(Self);
+
   StatusText('Initializing Long List');
-  cboProcedure.InitLongList('') ;
+  if cboProcedure.LongList then
+    cboProcedure.InitLongList('')
+  else
+  begin
+    tmplst := SubsetOfRadProcs(DisplayGroup, '', 1);
+    cboProcedure.Items.AddStrings(tmplst);
+    tmplst.Free;
+  end;
+
   StatusText('');
 end;
 
@@ -362,8 +401,8 @@ begin
   with radPregnantUnknown do if Checked      then Responses.Update('PREGNANT',  1, 'U'   , 'Unknown');
   with chkIsolation do if Checked            then Responses.Update('YN',        1, '1'   , 'Yes')
                                              else Responses.Update('YN',        1, '0'   , 'No');
-  with calPreOp do if Length(Text) > 0       then Responses.Update('PREOP',     1, FPreOpDate, Text);
-  with txtReason  do if GetTextLen        > 0 then Responses.Update('REASON',    1, Text, Text);
+  with calPreOp do if Length(Text)       > 0 then Responses.Update('PREOP',     1, FPreOpDate, Text);
+  with txtReason  do if GetTextLen       > 0 then Responses.Update('REASON',    1, Text, Text);
   with memHistory do if GetTextLen       > 0 then Responses.Update('COMMENT',   1, TX_WPTYPE, Text);
   with lstSelectMod do for i := 0 to Items.Count - 1 do
                                                   Responses.Update('MODIFIER',i+1, Piece(Items[i],U,1), Piece(Items[i],U,2));
@@ -387,6 +426,7 @@ procedure TfrmODRad.Validate(var AnErrMsg: string);
 var
   i, j: integer;
   AskLoc: boolean;
+  ch: Char;
 
   procedure SetError(const x: string);
   begin
@@ -427,19 +467,32 @@ begin
         end ;
     end;
 
+  with cboUrgency do
+    begin
+      if ((Length(Text) = 0) or (ItemIEN <= 0)) then SetError(TX_NO_URG)
+    end;
+
   if Length(txtReason.Text) < 3 then
     SetError(TX_NO_REASON)
+  else if pos(U, txtReason.Text) > 0 then
+    SetError(TX_BAD_REASON)
   else
+  begin
+    j := 0;
+    for i := 1 to Length(txtReason.Text) do
     begin
-      j := 0;
-      for i := 1 to Length(txtReason.Text) do
-        begin
-          if CharInSet(txtReason.Text[i], ['A'..'Z','a'..'z','0'..'9']) then j := j + 1;
-          if not CharInSet(txtReason.Text[i], ['A'..'Z','a'..'z','0'..'9']) and (j > 0) then j := 0;
-          if j = 2 then break;
-        end;
-      if j < 2 then SetError(TX_NO_REASON);
+      ch := txtReason.Text[i];
+      if CharInSet(ch, ['A'..'Z','a'..'z','0'..'9']) then j := j + 1;
+      if not CharInSet(ch, ['A'..'Z','a'..'z','0'..'9']) and (j > 0) then j := 0;
+      if ord(ch) < 32 then // Control Character
+      begin
+        SetError(TX_INVALID_REASON);
+        j := 2;
+      end;
+      if j = 2 then break;
     end;
+    if j < 2 then SetError(TX_NO_REASON);
+  end;
 
   if Length(memHistory.Text) > 0 then
   begin
@@ -491,11 +544,18 @@ end;
 
 procedure TfrmODRad.cboProcedureNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
-
+var
+  sl: TStrings;
 begin
-  inherited ;
-  cboProcedure.ForDataUse(SubSetOfRadProcs(DisplayGroup, StartFrom, Direction));
- end;
+  inherited;
+  // cboProcedure.ForDataUse(SubSetOfRadProcs(DisplayGroup, StartFrom, Direction));
+  sl := SubSetOfRadProcs(DisplayGroup, StartFrom, Direction);
+  try
+    cboProcedure.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
+end;
 
 procedure TfrmODRad.cboAvailModMouseClick(Sender: TObject);
 var
@@ -579,7 +639,7 @@ begin
     SetControl(cboSubmit,          'IMLOC', 1);
     SetControl(cboTransport,       'MODE', 1);
     SetControl(cboCategory,        'CLASS', 1);
-    SetControl(txtReason,           'REASON', 1);
+    SetControl(txtReason,          'REASON', 1);
     SetControl(memHistory,         'COMMENT', 1);
     SetControl(chkIsolation,       'YN', 1);
     SetControl(radPregnant,        'PREGNANT', 1);
@@ -609,7 +669,7 @@ begin
     begin
       lstSelectMod.Items.Add(tmpResp.IValue + '^' + tmpResp.EValue);
       if tmpResp.EValue = 'PORTABLE EXAM' then
-        with cboTransport do SelectByID('P'); 
+        with cboTransport do SelectByID('P');
       Inc(i);
       tmpResp := Responses.FindResponseByName('MODIFIER',i);
     end ;
@@ -735,12 +795,20 @@ begin
   end;
 end;
 
+procedure TfrmODRad.SetFontSize(FontSize: integer);
+begin
+  Self.Font.Size := FontSize;
+  Width := pnlLeft.ClientWidth + pnlRightBase.ClientWidth + 20;
+  Height := pnlRightBase.ClientHeight + memOrder.ClientHeight + 50;
+end;
+
 procedure TfrmODRad.cmdAcceptClick(Sender: TObject);
 const
   Txt1 = 'This order can not be saved for the following reason(s):';
   Txt2 = #13+#13+'A response for the pregnant field must be selected.';
 var
   NeedCheckPregnant: boolean;
+
 begin
   if Patient.Sex = 'F' then
   begin
@@ -856,6 +924,8 @@ begin
 end;
 
 procedure TfrmODRad.ImageTypeChange;
+var
+  sl: TStrings;
 begin
   if not ImageTypeChanged then Exit;
   ImageTypeChanged := false;
@@ -864,7 +934,11 @@ begin
   if Changing or (cboImtype.ItemIndex = -1) then exit;
   with cboImType do DisplayGroup := StrToIntDef(Piece(Items[ItemIndex], U, 4), 0) ;
   if DisplayGroup = 0 then exit;
-  CtrlInits.LoadDefaults(ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup));   // ODForRad returns TStrings with defaults
+// ODForRad returns TStrings with defaults
+//  CtrlInits.LoadDefaults(ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup));
+  sl := ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup);
+  CtrlInits.LoadDefaults(sl);   // ODForRad returns TStrings with defaults
+  sl.Free; // RTC 272867
   FPredefineOrder := False;
   InitDialog;
 end;
@@ -883,4 +957,3 @@ begin
 end;
 
 end.
-

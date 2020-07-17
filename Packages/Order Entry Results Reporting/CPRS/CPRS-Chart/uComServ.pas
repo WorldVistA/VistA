@@ -89,10 +89,10 @@ uses ComConst;
 
 function GetModuleFileName: string;
 var
-  Buffer: array[0..261] of Char;
+  Buffer: array[0..MAX_PATH] of Char;
 begin
   SetString(Result, Buffer, Windows.GetModuleFileName(HInstance,
-    Buffer, SizeOf(Buffer)));
+    Buffer, MAX_PATH));
 end;
 
 function GetModuleName: string;

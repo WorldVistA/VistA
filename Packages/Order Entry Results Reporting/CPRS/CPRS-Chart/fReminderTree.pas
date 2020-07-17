@@ -108,7 +108,7 @@ const
 implementation
 
 uses uReminders, dShared, uConst, fReminderDialog, fNotes, rMisc,
-     rReminders, fRemCoverSheet, VA2006Utils, VA508AccessibilityRouter;
+     rReminders, fRemCoverSheet, VA2006Utils, VA508AccessibilityRouter, VAUtils;
 
 {$R *.DFM}
 

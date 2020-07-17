@@ -423,11 +423,16 @@ begin
 //     if (CIDC is ON) and (PatientInsured is True) then
 //        return SC/TF for OutPatient Meds, Labs, Prosthetics, Imaging.
 //     else
-//       return SC/TF for Outpatient Meds only. 
-   RPCBrokerV.Param[0].PType := literal;
-   RPCBrokerV.Param[0].Value := Patient.DFN;
-   RPCBrokerV.RemoteProcedure := 'ORWDBA1 SCLST';
-   CallBroker;
+//       return SC/TF for Outpatient Meds only.
+  LockBroker;
+  try
+    RPCBrokerV.Param[0].PType := literal;
+    RPCBrokerV.Param[0].Value := Patient.DFN;
+    RPCBrokerV.RemoteProcedure := 'ORWDBA1 SCLST';
+    CallBroker;
+  finally
+    UnlockBroker;
+  end;
 end;
 
 procedure rpcGetProviderPatientDaysDx(ProviderIEN: string;PatientIEN: string);

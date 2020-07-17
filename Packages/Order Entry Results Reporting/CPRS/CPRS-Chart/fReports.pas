@@ -2,11 +2,11 @@ unit fReports;
 
 interface
 
-uses                                           
+uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fHSplit, StdCtrls, ExtCtrls, ORCtrls, ComCtrls, Menus, uConst, ORDtTmRng,
   OleCtrls, SHDocVw, Buttons, ClipBrd, rECS, Variants, StrUtils, fBase508Form,
-  VA508AccessibilityManager, VA508ImageListLabeler;
+  VA508AccessibilityManager, VA508ImageListLabeler, U_CPTEditMonitor;
 
 type
   TfrmReports = class(TfrmHSplit)
@@ -72,6 +72,7 @@ type
     btnAppearRt: TButton;
     btnAppearLt: TButton;
     sptHorzRightTop: TSplitter;
+    CPReports: TCopyEditMonitor;
     procedure lstQualifierClick(Sender: TObject);
     procedure GotoTop1Click(Sender: TObject);
     procedure GotoBottom1Click(Sender: TObject);
@@ -86,8 +87,6 @@ type
     procedure GoRemote(Dest: TStringList; AItem: string; AQualifier, ARpc: string; AHSTag: string; AHDR: string; aFHIE: string);
     procedure lstHeadersClick(Sender: TObject);
     procedure Splitter1CanResize(Sender: TObject; var NewSize: Integer;
-      var Accept: Boolean);
-    procedure sptHorzRightCanResize(Sender: TObject; var NewSize: Integer;
       var Accept: Boolean);
     procedure lstQualifierDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
@@ -116,11 +115,11 @@ type
       Shift: TShiftState);
     procedure Memo1KeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure LoadProceduresTreeView(x: string; var CurrentParentNode: TTreeNode;       
+    procedure LoadProceduresTreeView(x: string; var CurrentParentNode: TTreeNode;
       var CurrentNode: TTreeNode);
     procedure tvProceduresCollapsing(Sender: TObject; Node: TTreeNode;
-      var AllowCollapse: Boolean);                                                      
-    procedure tvProceduresExpanding(Sender: TObject; Node: TTreeNode;                   
+      var AllowCollapse: Boolean);
+    procedure tvProceduresExpanding(Sender: TObject; Node: TTreeNode;
       var AllowExpansion: Boolean);
     procedure tvProceduresClick(Sender: TObject);
     procedure tvProceduresChange(Sender: TObject; Node: TTreeNode);
@@ -145,6 +144,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure WebBrowserDocumentComplete(ASender: TObject;
       const pDisp: IDispatch; const URL: OleVariant);
+    procedure CopyToMonitor(Sender: TObject; var AllowMonitor: Boolean);
   private
     SortIdx1, SortIdx2, SortIdx3: Integer;
     procedure ProcessNotifications;
@@ -154,7 +154,13 @@ type
     procedure GraphPanel(active: boolean);
     procedure RightTopHeader(MidSize: Integer);
     procedure RDOChange(rdoIndex: integer);
+    procedure AlignFormParts;
     procedure BlankWeb;
+
+    procedure setRangeRadioVisible(b: Boolean);
+    procedure setRangeListVisible(b: Boolean);
+//    procedure setRangeVisible(b: Boolean);
+
   public
     procedure ClearPtData; override;
     function AllowContextChange(var WhyNot: string): Boolean; override;
@@ -281,7 +287,7 @@ begin
     begin
       pnlLeftBottom.Visible := false;
       splitter1.Visible := false;
-      RightTopHeader(70);
+      RightTopHeader(64);
       pnlRightTopHeaderMid.Visible := true;
       pnlRightTopHeaderMidUpper.Visible := true;
       lblDateRange.Visible := false;
@@ -291,9 +297,10 @@ begin
     end
   else
     begin
-      RightTopHeader(34);
+      RightTopHeader(0);
       pnlRightTopHeaderMid.Visible := false;
     end;
+
   if GraphForm = nil then
   begin
     GraphForm := TfrmGraphs.Create(self);
@@ -414,7 +421,6 @@ begin
       GraphForm.DateDefaults;
       lstDateRange.ItemIndex := GraphForm.cboDateRange.ItemIndex;
       lstQualifier.ItemIndex := GraphForm.cboDateRange.ItemIndex;
-
       rdoToday.Checked := false;
       rdo1Week.Checked := false;
       rdo1Month.Checked := false;
@@ -521,12 +527,88 @@ begin
     PrintReports(uRptID, piece(uRemoteType,'^',4));
 end;
 
+
+procedure TfrmReports.setRangeRadioVisible(b: Boolean);
+begin
+  pnlRightTopHeaderMid.Visible := b;
+  pnlRightTopHeaderMidUpper.Visible := b;
+end;
+
+procedure TfrmReports.setRangeListVisible(b: Boolean);
+begin
+  pnlLeftBottom.Visible := b;
+  Splitter1.Visible := b;
+  lblDateRange.Visible := b;
+  lblQualifier.Visible := b;
+  lstQualifier.Visible := b;
+  lstDateRange.Visible := b;
+
+  Splitter1.Top := pnlLefTop.Top + pnlLefTop.Height - 1;
+end;
+{
+procedure TfrmReports.setRangeVisible(b: Boolean);
+begin
+  if b then
+    begin
+      setRangeRadioVisible(uUseRadioButton);
+      setRangeListVisible(not uUseRadioButton);
+    end
+  else
+    begin
+      setRangeRadioVisible(False);
+      setRangeListVisible(False);
+    end;
+end;
+}
 procedure TfrmReports.DisplayPage;
-var
-  i{, OrigSelection}: integer;
+//var
+//  i{, OrigSelection}: integer;
   {OrigDateIEN: Int64;
   OrigDateItemID: Variant;
   OrigReportCat, OrigProcedure: TTreeNode; }
+
+    procedure Clear(bInit: Boolean);
+    var
+      i: Integer;
+    begin
+      uColChange := '';
+      lstQualifier.Clear;
+      tvProcedures.Items.Clear;
+      lblProcTypeMsg.Visible := False;
+      lvReports.SmallImages := uEmptyImageList;
+      imgLblImages.ComponentImageListChanged;
+      lvReports.Items.Clear;
+
+      if bInit then
+      begin
+        // RTC 1244299 (both selectors - list and Radio)
+        setRangeRadioVisible(False);
+        setRangeListVisible(False);
+
+        lvReports.Columns.Clear;
+        lblTitle.Caption := '';
+        lvReports.Caption := '';
+
+        memText.Parent := pnlRightBottom;
+        memText.Align := alClient;
+        memText.Clear;
+        uReportInstruction := '';
+        uLocalReportData.Clear;
+        for i := 0 to RemoteSites.SiteList.Count - 1 do
+          TRemoteSite(RemoteSites.SiteList.Items[i]).ReportClear;
+        pnlRightTop.Height := lblTitle.Height + lblProcTypeMsg.Height +
+          TabControl1.Height;
+        StatusText('');
+
+        with tvReports do
+          if Items.Count > 0 then
+          begin
+            tvReports.Selected := tvReports.Items.GetFirstNode;
+            tvReportsClick(self);
+          end;
+      end;
+    end;
+
 begin
   inherited DisplayPage;
   frmFrame.mnuFilePrint.Tag := CT_REPORTS;
@@ -545,16 +627,41 @@ begin
                   + '</TR></TABLE></DIV><HR>');
                   //the preferred method would be to use headers and footers
                   //so this is just an interim solution.
+   uUseRadioButton := UseRadioButtons;
+
   {if not GraphFormActive then
     pnlLeftBottom.Visible := False;  } //This was keeping Date Range selection box from appearing when leaving and coming back to this Tab
+{ Fixing RTC 1244299:
+// returning to the Report page sets radio buttons visibility based on
+// VistA parameter regardless of the selected report
+
   uUseRadioButton := UseRadioButtons;
   if uUseRadioButton then
     begin
+      pnlLeftBottom.Visible := false;
+      splitter1.Visible := false;
+      if not (uReportType = 'M') then
+        RightTopHeader(64)
+      else
+        RightTopHeader(0);
+      pnlRightTopHeaderMid.Visible := true;
+      pnlRightTopHeaderMidUpper.Visible := true;
       lblDateRange.Visible := false;
       lblQualifier.Visible := false;
       lstQualifier.Visible := false;
       lstDateRange.Visible := false;
-    end;
+    end
+    else
+      begin
+        RightTopHeader(32);
+        splitter1.Visible := true;
+        pnlLeftBottom.Visible := true;
+        pnlRightTopHeaderMid.Visible := false;
+        lblQualifier.Visible := true;
+        lstQualifier.Visible := true;
+        lstDateRange.Visible := true;
+      end;
+}
   if InitPage then
     begin
       Splitter1.Visible := false;
@@ -564,6 +671,19 @@ begin
       LoadTreeView;
     end;
 
+// 1244299 - Replacing duplicate code with procedure Clear
+  if InitPatient and not(CallingContext = CC_NOTIFICATION) then
+    Clear(InitPatient);
+  case CallingContext of
+    CC_INIT_PATIENT:
+      if not InitPatient then
+        Clear(InitPatient);
+    CC_NOTIFICATION:
+      ProcessNotifications;
+  end;
+
+(*
+// 1244299 - commenting out. Duplicate code replaced with procedure Clear
   if InitPatient and not (CallingContext = CC_NOTIFICATION) then
     begin
       uColChange := '';
@@ -574,10 +694,16 @@ begin
       imgLblImages.ComponentImageListChanged;
       lvReports.Items.Clear;
       lvReports.Columns.Clear;
+
       lblTitle.Caption := '';
       lvReports.Caption := '';
       Splitter1.Visible := false;
       pnlLeftBottom.Visible := false;
+
+      lvReports.Columns.Clear;
+      lblTitle.Caption := '';
+      lvReports.Caption := '';
+
       memText.Parent := pnlRightBottom;
       memText.Align := alClient;
       memText.Clear;
@@ -587,6 +713,7 @@ begin
         TRemoteSite(RemoteSites.SiteList.Items[i]).ReportClear;
       pnlRightTop.Height := lblTitle.Height + lblProcTypeMsg.Height + TabControl1.Height;
       StatusText('');
+
       with tvReports do
         if Items.Count > 0 then
           begin
@@ -594,6 +721,7 @@ begin
             tvReportsClick(self);
           end;
     end;
+
   case CallingContext of
     CC_INIT_PATIENT:  if not InitPatient then
       begin
@@ -606,12 +734,13 @@ begin
         lvReports.Items.Clear;
         Splitter1.Visible := false;
         pnlLeftBottom.Visible := false;
+
         with tvReports do
           if Items.Count > 0 then
             begin
               tvReports.Selected := tvReports.Items.GetFirstNode;
               tvReportsClick(self);
-            end;   
+            end;
       end;
     CC_NOTIFICATION:  ProcessNotifications;
 
@@ -665,11 +794,12 @@ begin
         end;
       end;  }
   end;
+*)
 end;
 
 procedure TfrmReports.RDOChange(rdoIndex: integer);
 var
-  aID, aCategory, aQualifier, aHDR, x, x1, x2, MoreID: string;
+  aID, aCategory, aQualifier, aHDR, MoreID: string;
   aIndex: integer;
 begin
   inherited;
@@ -725,41 +855,6 @@ begin
       begin      //      = ?
 
       end;
-    end;
-  MoreID := '';
-  x := Piece(aQualifier, ';', 3);
-  if (CharAt(lstQualifier.ItemID,1) = 'd')
-    and (length(x)>0)
-    and (StrToInt(x)<101) then
-      MoreID := ';101';
-  if lstQualifier.ItemIndex > -1 then
-    begin
-    if not (aHDR = '1') then
-      if (aCategory <> '0') and (not WebBrowser.Visible) then
-          begin
-            if (lstQualifier.ItemID = '') and (GraphForm <> nil) then
-              DisplayHeading(piece(lstQualifier.Items[lstQualifier.ItemIndex],'^',5) + MoreID)
-            else
-              DisplayHeading(lstQualifier.ItemID + MoreID) ;
-          end
-      else
-        DisplayHeading('');
-    end
-  else
-    begin
-      if not (aHDR = '1') and (lstDateRange.ItemIndex > -1) then
-        if (aCategory <> '0') and (not WebBrowser.Visible) then
-          begin
-            x := lstDateRange.DisplayText[lstDateRange.ItemIndex];
-            x1 := piece(x,' ',1);
-            x2 := piece(x,' ',3);
-            if (Uppercase(Copy(x1,1,1)) = 'T') and (Uppercase(Copy(x2,1,1)) = 'T') then
-              DisplayHeading(piece(x,' ',1) + ';' + piece(x,' ',2) + MoreID)
-            else
-              DisplayHeading('d' + lstDateRange.ItemID + ';' + MoreID);
-          end
-        else
-          DisplayHeading('');
     end;
   uRDOChanging := false;
 end;
@@ -944,12 +1039,13 @@ var
   i,j,k,aErr: integer;
   aTmpAray: TStringList;
   aColCtr, aCurCol, aCurRow, aColID: integer;
-  x,y,z,c,aSite: string;
+  x,y,z,c,aSite,RptIDAbr: string;
   ListItem: TListItem;
 begin
   aSite := '';
   aErr := 0;
   ListItem := nil;
+  RptIDAbr := Piece(uRptID,':',1);
   case uQualifierType of
     QT_HSCOMPONENT:
       begin      //      = 5
@@ -1143,6 +1239,17 @@ begin
               else
                 Items[i].SubItemImages[2] := IMG_NO_IMAGES;
           end
+        else
+        if (RptIDAbr = 'OR_APR') or (RptIDAbr = 'OR_CY') or (RptIDAbr = 'OR_EM') or (RptIDAbr = 'OR_SP') then with lvReports do  //set image indicator for "Anatomic Pathology" reports
+          begin
+            SmallImages := dmodShared.imgImages;
+            imgLblImages.ComponentImageListChanged;
+            for i := 0 to Items.Count - 1 do
+              if (Items[i].SubItems.Count > 6) and (StrToInt(Items[i].SubItems[6]) > 0) then
+                Items[i].SubItemImages[1] := IMG_1_IMAGE
+              else
+                Items[i].SubItemImages[1] := IMG_NO_IMAGES;
+          end
         else begin
           lvReports.SmallImages := uEmptyImageList;
           imgLblImages.ComponentImageListChanged;
@@ -1152,6 +1259,7 @@ begin
   if aErr = 1 then
     if User.HasKey('XUPROGMODE') then
       ShowMsg('Programmer message: One or more Column ID''s in file 101.24 do not match ID''s coded in extract routine');
+  if lvReports.Items.Count>0 then lvReports.Items[0].Selected := True;
 end;
 
 procedure TfrmReports.lstQualifierClick(Sender: TObject);
@@ -1169,6 +1277,10 @@ begin
       memo1.TabStop := False;
     end;
   ulstQualifierChanging := true;
+  // DRM - I17427419FY18/647268 - try-finally block to make sure ulstQualifierChanging
+  // is properly set back to false.
+  try
+  // DRM ---
   aQualifier  :=  PReportTreeObject(tvReports.Selected.Data)^.Qualifier;
   aStartTime  :=  Piece(aQualifier,';',1);
   aStopTime   :=  Piece(aQualifier,';',2);
@@ -1222,7 +1334,9 @@ begin
        if Not (Execute) then
          begin
            lstQualifier.ItemIndex := -1;
-           ulstQualifierChanging := false;
+           // DRM - I17427419FY18/647268 - try-finally block takes care of this.
+           //ulstQualifierChanging := false;
+           // DRM ---
            Exit;
          end
        else if (Length(TextOfStart) > 0) and (Length(TextOfStop) > 0) then
@@ -1365,6 +1479,7 @@ begin
           lvReports.Items.Clear;
           RowObjects.Clear;
           memText.Lines.Clear;
+          MoreID := ''; // Removes Max/site for this type of report
           if ((aRemote = '1') or (aRemote = '2'))  then
             begin
               Screen.Cursor := crDefault;
@@ -1399,7 +1514,7 @@ begin
           if ((aRemote = '1') or (aRemote = '2')) then
             GoRemote(uRemoteReportData, uRptID, lstQualifier.ItemID + MoreID, uReportRPC, uHState, aHDR, aFHIE)
           else
-            if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;  
+            if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
           if Pos('ECS',Piece(uRptID,':',1))>0 then
           begin
             if Pos('OR_ECS1',uRptID)>0 then
@@ -1467,7 +1582,12 @@ begin
   else
     DisplayHeading(lstQualifier.ItemID + MoreID);
   StatusText('');
-  ulstQualifierChanging := false;
+  // DRM - I17427419FY18/647268 - try-finally block to make sure ulstQualifierChanging
+  // is properly set back to false.
+  //ulstQualifierChanging := false;
+  finally
+    ulstQualifierChanging := false;
+  end;
 end;
 
 procedure TfrmReports.GotoTop1Click(Sender: TObject);
@@ -1704,20 +1824,23 @@ begin
     else with tvReports do if Items.Count > 0 then Selected := Items[0];
   end;
   if tvReports.Selected <> nil then
+  begin
+    tvReportsClick(Self);
+    Application.ProcessMessages;
+    //Clear the selection so we can reset
+    if lvReports.Selected <> nil then lvReports.Selected := nil;
+    for j := 0 to lvReports.Items.Count - 1 do
     begin
-      tvReportsClick(Self);
-      Application.ProcessMessages;
-      for j := 0 to lvReports.Items.Count - 1 do
+     ListItem := lvReports.Items[j];
+     if ListItem.Subitems[IDColumn] = SelectID then
        begin
-         ListItem := lvReports.Items[j];
-         if ListItem.Subitems[IDColumn] = SelectID then
-           begin
-             lvReports.Selected := lvReports.Items[j];
-             break;
-           end;
+         lvReports.Selected := lvReports.Items[j];
+         break;
        end;
-      Notifications.Delete;
     end;
+    if Notifications.Processing then
+      Notifications.Delete;
+  end;
 end;
 
 procedure TfrmReports.rdo1MonthClick(Sender: TObject);
@@ -2036,7 +2159,7 @@ begin
   Omega := 0;
   Seq := '';
   aVistaWebLabel := GetVistaWeb_JLV_LabelName;
-  if aVistaWebLabel = '' then aVistaWebLabel := 'VistaWeb';
+  if aVistaWebLabel = '' then aVistaWebLabel := 'VistAWeb';
   if AHDR = '1' then
     begin
       if HDRActive = '0' then
@@ -2272,14 +2395,6 @@ procedure TfrmReports.Splitter1CanResize(Sender: TObject;
   var NewSize: Integer; var Accept: Boolean);
 begin
   inherited;
-  if NewSize < 50 then
-    Newsize := 50;
-end;
-
-procedure TfrmReports.sptHorzRightCanResize(Sender: TObject;
-  var NewSize: Integer; var Accept: Boolean);
-begin
-  inherited;
     if NewSize < 50 then
     Newsize := 50;
 end;
@@ -2358,6 +2473,7 @@ begin
   aRptCode    :=  Piece(aQualifier,';',4);
   aQualifierID:= '';
   uTVReportSet:= true;
+  uUseRadioButton := UseRadioButtons;
   if chkMaxFreq.checked = true then
     begin
       aMax := '';
@@ -2486,6 +2602,10 @@ begin
                   uNewColumn.Width := 0;
               end;
             Columns.EndUpdate;
+            ResetTinyColumns;
+            for i := 0 to Columns.Count -1 do
+              if Columns[i].Width > TINY_COLS_MAX_WIDTH then
+                Columns[i].MinWidth := 12;
           end;
         pnlRightTop.Visible := true;
         sptHorzRightTop.Visible := true;
@@ -2506,7 +2626,7 @@ begin
         sptHorzRight.Visible := false;
         WebBrowser.Visible := false;
         WebBrowser.TabStop := false;
-        RightTopHeader(34);
+        RightTopHeader(0);
         pnlRightTop.Visible := true;
         sptHorzRightTop.Visible := true;
       end;
@@ -2626,7 +2746,7 @@ begin
               end
             else
               begin
-                RightTopHeader(34);
+                RightTopHeader(32);
                 pnlLeftBottom.Visible := false;
                 splitter1.Visible := false;
                 StatusText('Retrieving ' + tvReports.Selected.Text + '...');
@@ -2657,7 +2777,8 @@ begin
           begin      //      = 1
             pnlLeftBottom.Visible := false;
             splitter1.Visible := false;
-            RightTopHeader(0);
+            pnlRightTopHeaderMid.Visible := false;
+            RightTopHeader(32);
           end;
         QT_DATERANGE:
           begin      //      = 2
@@ -2702,9 +2823,9 @@ begin
                 pnlLeftBottom.Visible := false;
                 splitter1.Visible := false;
                 if not (uReportType = 'M') then
-                  RightTopHeader(70)
+                  RightTopHeader(64)
                 else
-                  RightTopHeader(45);
+                  RightTopHeader(0);
                 pnlRightTopHeaderMid.Visible := true;
                 pnlRightTopHeaderMidUpper.Visible := true;
                 lblDateRange.Visible := false;
@@ -2714,8 +2835,11 @@ begin
               end
             else
               begin
-                RightTopHeader(34);
+                RightTopHeader(32);
                 pnlRightTopHeaderMid.Visible := false;
+                lblQualifier.Visible := true;
+                lstQualifier.Visible := true;
+                lstDateRange.Visible := true;
               end;
           end;
         QT_IMAGING:
@@ -2773,7 +2897,6 @@ begin
                 if tvProcedures.Items.Count > 0 then
                    tvProcedures.Selected := tvProcedures.Items.GetFirstNode;
                 lblProcTypeMsg.Visible := TRUE;
-                pnlRightTop.Height := lblTitle.Height + lblProcTypeMsg.Height;
                 pnlLeftBottom.Visible := FALSE;
                 pnlProcedures.Visible := TRUE;
                 Splitter1.Visible := True;
@@ -2781,6 +2904,9 @@ begin
                 Items.EndUpdate;
                 tvProcedures.TopItem := tvProcedures.Selected;
               end;
+            pnlRightTop.Height := lblProcTypeMsg.Height + lblTitle.Height;
+            pnlRightTopHeaderMid.Visible := false;
+            AlignFormParts;
             if TabControl1.TabIndex > 0 then TabControl1.TabIndex := 0;
             if uLocalReportData.Count > 0
               then x := #13#10 + 'Select an imaging exam...'
@@ -2915,13 +3041,13 @@ begin
                     if uUseRadioButton then
                       begin
                         if not (uReportType = 'M') then
-                          RightTopHeader(70)
+                          RightTopHeader(64)
                         else
-                          RightTopHeader(45);
+                          RightTopHeader(0);
                         pnlLeftBottom.Visible := false;
                         splitter1.Visible := false;
                       end
-                    else RightTopHeader(0);
+                    else RightTopHeader(32);
                   end
                 else
                   begin
@@ -3002,9 +3128,9 @@ begin
                         pnlLeftBottom.Visible := false;
                         splitter1.Visible := false;
                         if not (uReportType = 'M') then
-                          RightTopHeader(70)
+                          RightTopHeader(64)
                         else
-                          RightTopHeader(45);
+                          RightTopHeader(0);
                         pnlRightTopHeaderMid.Visible := true;
                         pnlRightTopHeaderMidUpper.Visible := true;
                         lblDateRange.Visible := false;
@@ -3014,8 +3140,11 @@ begin
                       end
                     else
                       begin
-                        RightTopHeader(34);
+                        RightTopHeader(32);
                         pnlRightTopHeaderMid.Visible := false;
+                        lblQualifier.Visible := true;
+                        lstQualifier.Visible := true;
+                        lstDateRange.Visible := true;
                       end;
                   end
                 else
@@ -3044,7 +3173,7 @@ begin
             splitter1.Visible := false;
             StatusText('Retrieving ' + tvReports.Selected.Text + '...');
             uReportInstruction := #13#10 + 'Retrieving data...';
-            RightTopHeader(34);
+            RightTopHeader(0);
             TabControl1.OnChange(nil);
             RowObjects.Clear;
             memText.Lines.Clear;
@@ -3105,9 +3234,9 @@ begin
                         pnlLeftBottom.Visible := false;
                         splitter1.Visible := false;
                         if not (uReportType = 'M') then
-                          RightTopHeader(70)
+                          RightTopHeader(64)
                         else
-                          RightTopHeader(45);
+                          RightTopHeader(0);
                         pnlRightTopHeaderMid.Visible := true;
                         pnlRightTopHeaderMidUpper.Visible := true;
                         lblDateRange.Visible := false;
@@ -3117,8 +3246,11 @@ begin
                       end
                     else
                       begin
-                        RightTopHeader(34);
+                        RightTopHeader(32);
                         pnlRightTopHeaderMid.Visible := false;
+                        lblQualifier.Visible := true;
+                        lstQualifier.Visible := true;
+                        lstDateRange.Visible := true;
                       end;
                   end
                 else
@@ -3132,7 +3264,7 @@ begin
                         LoadReportText(uLocalReportData, aID, aQualifierID, aRPC, uHState);
                         LoadListView(uLocalReportData);
                       end;
-                    RightTopHeader(34);
+                    RightTopHeader(32);
                     pnlRightTop.Height := lblProcTypeMsg.Height + lblTitle.Height;
                   end;
               end
@@ -3184,13 +3316,13 @@ begin
                     if uUseRadioButton then
                       begin
                         if not (uReportType = 'M') then
-                          RightTopHeader(70)
+                          RightTopHeader(64)
                         else
-                          RightTopHeader(45);
+                          RightTopHeader(0);
                         pnlLeftBottom.Visible := false;
                         splitter1.Visible := false;
                       end
-                    else RightTopHeader(0);
+                    else RightTopHeader(32);
                   end
                 else
                   begin
@@ -3198,10 +3330,11 @@ begin
                   end;
               end;
             StatusText('');
+            AlignFormParts;
           end;
         QT_PROCEDURES:
           begin      //      = 19
-            RightTopHeader(34);
+            RightTopHeader(32);
             pnlLeftBottom.Visible := false;
             splitter1.Visible := false;
             ListProcedures(uLocalReportData);
@@ -3247,10 +3380,11 @@ begin
               uHTMLDoc := HTML_PRE + uReportInstruction + HTML_POST;
               BlankWeb;
             end;
+          AlignFormParts;
           end;
         QT_SURGERY:
           begin      //      = 28
-            RightTopHeader(34);
+            RightTopHeader(32);
             pnlLeftBottom.Visible := false;
             splitter1.Visible := false;
             ListSurgeryReports(uLocalReportData);
@@ -3295,6 +3429,7 @@ begin
             memText.Lines.Add(uReportInstruction);
             uHTMLDoc := HTML_PRE + uReportInstruction + HTML_POST;
             if WebBrowser.Visible then BlankWeb;
+            AlignFormParts;
           end;
         else
           begin      //      = ?
@@ -3571,7 +3706,7 @@ var
   i,j,k: integer;
   aBasket: TStringList;
   aWPFlag: Boolean;
-  x, HasImages: string;
+  x, HasImages, RptIDAbr: string;
 
 begin
   inherited;
@@ -3579,6 +3714,7 @@ begin
   aBasket := TStringList.Create;
   uLocalReportData.Clear;
   aWPFlag := false;
+  RptIDAbr := Piece(uRptID,':',1);
   with lvReports do
     begin
       aID := Item.SubItems[0];
@@ -3660,7 +3796,7 @@ begin
               end;
             QT_HSWPCOMPONENT:
               begin      //      = 6
-                if lvReports.SelCount < 3 then
+                if lvReports.SelCount < 2 then
                   begin
                     memText.Lines.Clear;
                     ulvSelectOn := false;
@@ -3736,6 +3872,14 @@ begin
                     begin
                       if StrToIntDef(Item.SubItems[7], 0) > 0 then HasImages := '1' else HasImages := '0';
                       x := 'PN^' + Item.SubItems[7] + U + Item.SubItems[1] + U + Item.Caption;
+                      SetPiece(x, U, 10, HasImages);
+                      NotifyOtherApps(NAE_REPORT, x);
+                    end;
+                if (RptIDAbr = 'OR_APR') or (RptIDAbr = 'OR_CY') or (RptIDAbr = 'OR_EM') or (RptIDAbr = 'OR_SP') then
+                  if (Item.SubItems.Count > 7) then
+                    begin
+                      if StrToIntDef(Item.SubItems[6], 0) > 0 then HasImages := '1' else HasImages := '0';
+                      x := 'TIU^' + Item.SubItems[7];
                       SetPiece(x, U, 10, HasImages);
                       NotifyOtherApps(NAE_REPORT, x);
                     end;
@@ -3833,6 +3977,14 @@ begin
   memText.CopyToClipboard;
 end;
 
+procedure TfrmReports.CopyToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+begin
+  inherited;
+  CPReports.ItemIEN := -1;
+  CPReports.RelatedPackage := piece(uRemoteType, '^', 4)+';'+ Patient.Name;
+  AllowMonitor := true;
+end;
+
 procedure TfrmReports.Print2Click(Sender: TObject);
 begin
   inherited;
@@ -3864,7 +4016,7 @@ begin
   memText.SelectAll;
 end;
 
-   
+
 procedure TfrmReports.tvReportsKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -3884,7 +4036,7 @@ begin
     begin
       TabControl1.Visible := true;
       TabControl1.TabStop := true;
-      if uUseRadioButton = true then RightTopHeader(70)
+      if uUseRadioButton = true then RightTopHeader(64)
       else RightTopHeader(0);
     end;
 end;
@@ -3895,9 +4047,9 @@ begin
   TabControl1.TabStop := false;
   if uUseRadioButton = true then
     if not (uReportType = 'M') then
-      RightTopHeader(70)
+      RightTopHeader(64)
     else
-      RightTopHeader(45)
+      RightTopHeader(0)
   else RightTopHeader(0);
 end;
 
@@ -4091,6 +4243,31 @@ begin
   tvReportsClick(self);
 end;
 
+procedure TfrmReports.AlignFormParts;
+begin
+  pnlRightBottom.Visible := false;
+  pnlRightBottom.Align := alNone;
+  sptHorzRight.Visible := false;
+  sptHorzRight.Align := alNone;
+  pnlRightMiddle.Visible := false;
+  pnlRightMiddle.Align := alNone;
+  sptHorzRightTop.Visible := false;
+  sptHorzRightTop.Align := alNone;
+  pnlRightTop.Visible := false;
+  pnlRightTop.Visible := true;
+  pnlRightTop.Align := alTop;
+  sptHorzRightTop.Visible := true;
+  sptHorzRightTop.Align := alTop;
+  pnlRightMiddle.Visible := true;
+  pnlRightMiddle.Align := alTop;
+  sptHorzRightTop.Top := pnlRightMiddle.Top;
+  sptHorzRight.Visible := true;
+  sptHorzRight.Align := alTop;
+  pnlRightBottom.Visible := true;
+  pnlRightBottom.Align := alClient;
+  sptHorzRight.Top := pnlRightBottom.Top;
+end;
+
 procedure TfrmReports.BlankWeb;
 begin
   try
@@ -4138,16 +4315,23 @@ end;
 
 procedure TfrmReports.RightTopHeader(MidSize: Integer);
 begin
-  if (pnlRightTopHeaderMid.Height > MidSize) and not (MidSize = 0) then MidSize := 42;
+  if pnlRightTopHeaderMid.Visible = true then
+    if (pnlRightTopHeaderMid.Height > MidSize) and not (MidSize = 0) then MidSize := 42;
   if font.size > 10 then MidSize := MidSize + (font.Size div 2) * 3;
   if font.Size > 14 then MidSize := MidSize + 10;
 
   if (TabControl1.Tabs.Count > 1) and (TabControl1.Visible) then
     begin
-      pnlRightTop.Height := lblProcTypeMsg.Height + MidSize + TabControl1.Height;
+      if lblProcTypeMsg.Visible = true then
+        pnlRightTop.Height := lblProcTypeMsg.Height + MidSize + TabControl1.Height
+      else
+        pnlRightTop.Height := MidSize + TabControl1.Height;
     end
   else
-    pnlRightTop.Height := lblProcTypeMsg.Height + MidSize;
+    if lblProcTypeMsg.Visible = true then
+        pnlRightTop.Height := lblProcTypeMsg.Height + MidSize
+      else
+        pnlRightTop.Height := MidSize;
 end;
 
 procedure TfrmReports.lstDateRangeClick(Sender: TObject);

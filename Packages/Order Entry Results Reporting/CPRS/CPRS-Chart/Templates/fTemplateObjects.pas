@@ -35,6 +35,9 @@ implementation
 
 {$R *.DFM}
 
+uses
+  VAUtils;
+
 procedure TfrmTemplateObjects.FormShow(Sender: TObject);
 begin
   ResizeAnchoredFormToFont(self);

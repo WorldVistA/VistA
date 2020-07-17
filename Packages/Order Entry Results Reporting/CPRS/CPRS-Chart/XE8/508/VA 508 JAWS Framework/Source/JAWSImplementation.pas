@@ -37,6 +37,7 @@
   doesn't use this value - get data from Windows API call - ZZZZZZBELLC:
   This is no longer an issue since we do not call this function. }
 
+{ DONE -oBrian Juergensmeyer -c508 : Removed call to check to see if JAWS was running.  It won't work under Win10. }
 { DONE -oChris Bell -c508 : Add log ability }
 { DONE -oChris Bell -c508 : Merge dispatcher into DLL to circumvent the UAC warning with windows 7 }
 { DONE -oChris Bell -c508 : Correct issue with UIPI since Jaws runs at a higher priority as CPRS. This limits API calls. }
@@ -287,12 +288,15 @@ type
     property ScriptFilesChanged: Boolean read fScriptFilesChanged;
   end;
 
-function MessageBoxTimeOutW(HWND: HWND; lpText: PWideChar; lpCaption: PWideChar;
+{$IFDEF UNICODE}
+function MessageBoxTimeOut(HWND: HWND; lpText: PWideChar; lpCaption: PWideChar;
   uType: UINT; wLanguageId: Word; dwMilliseconds: DWORD): Integer; stdcall;
   external user32 name 'MessageBoxTimeoutW';
-function MessageBoxTimeOutA(HWND: HWND; lpText: PChar; lpCaption: PChar;
+{$ELSE}
+function MessageBoxTimeOut(HWND: HWND; lpText: PChar; lpCaption: PChar;
   uType: UINT; wLanguageId: Word; dwMilliseconds: DWORD): Integer; stdcall;
   external user32 name 'MessageBoxTimeoutA';
+{$ENDIF}
 
 var
   // ******************************************************************
@@ -306,6 +310,17 @@ var
   JAWSHandle: HWND = 0;
   UserSplash: tSplashTaskDialog;
 
+const
+  FJAWSHandleSearchPerformed: Boolean = false; // blj 17 Dec 2018
+                                         // Many of the APIs used to interact with
+                                         // 64 bit executables (like JAWS) are not working
+                                         // (by design) with 32 bit executables like CPRS.
+                                         // Because of this, we're doing multiple searches and
+                                         // harassing the user with multiple error
+                                         // dialogs.
+
+  //
+
 {$REGION 'Add export methods to this region'}
 
   // ******************************************************************
@@ -314,7 +329,12 @@ var
 procedure EnsureManager;
 begin
   if not assigned(JAWSManager) then
+  begin
+    // This should only happen ONCE.  If it happens more than once, then we have an
+    // issue.
+    LogInterface.LogText('INITIALIZATION', 'In Ensure Manager.  JAWSManager is nil');
     JAWSManager := TJAWSManager.Create;
+  end;
 end;
 
 // ******************************************************************
@@ -329,6 +349,10 @@ end;
 function FindJaws(): BOOL; stdcall;
 begin
   EnsureManager; // need to preload the directories
+  if FJAWSHandleSearchPerformed then
+    exit;
+  FJAWSHandleSearchPerformed := true;
+  LogInterface.LogText('INITIALIZATION','In Exported FindJAWS method');
   JAWSHandle := TJAWSManager.FindJaws;
   Result := (JAWSHandle <> 0);
 end;
@@ -633,9 +657,21 @@ begin
   SetLength(JawsRecord, 0);
   LoadJawsDirectories;
   if Length(JawsRecord) > 0 then
+// RTC Defect 609561
+// Original code ----------------------------------------------------- begin
+{
     FindJAWSRequiredFiles;
   if not FRequiredFilesFound then
-    ShowError(JAWS_ERROR_FILE_IO, ['Required files missing'])
+    ShowError(JAWS_ERROR_FILE_IO, ['Required files missing']);
+}
+// Original code ------------------------------------------------------- end
+// Modified code ----------------------------------------------------- begin
+    begin  //: Looking for JAWSRequired Files only if the registry entries were found
+      FindJAWSRequiredFiles;
+      if not FRequiredFilesFound then
+        ShowError(JAWS_ERROR_FILE_IO, ['Required files missing']);
+    end;
+// Modified code ------------------------------------------------------- end
 end;
 
 // ******************************************************************
@@ -948,8 +984,16 @@ var
   reg: TRegistry;
   CanContinue: Boolean;
 begin
+  if FJAWSHandleSearchPerformed then
+  begin
+    LogInterface.LogText('INITIALIZATION', 'JAWS handle search already performed.  No need to do it again.');
+    exit;
+  end;
+
   // assume its not running
   Result := 0;
+
+  LogInterface.LogText('INITIALIZATION', 'In TJAWSManager.FindJAWS');
 
   // Allow to turn off jaws if not wanted
   FindCommandSwitch('SCREADER', JawsParam);
@@ -995,40 +1039,24 @@ begin
           ErrMsg := Format(JAWS_NOT_RUNNING,
             [ExtractFileName(Application.ExeName), JawsParam,
             ExtractFileName(Application.ExeName)]);
-{$IFDEF VER180}
-          MessageBoxTimeOutA(Application.Handle, PChar(ErrMsg),
+          MessageBoxTimeOut(Application.Handle, PWideChar(ErrMsg),
             'JAWS Accessibility Detection Error', MB_OK or MB_ICONERROR or
             MB_TASKMODAL or MB_TOPMOST, 0, 30000);
-{$ELSE}
-          MessageBoxTimeOutW(Application.Handle, PChar(ErrMsg),
-            'JAWS Accessibility Detection Error', MB_OK or MB_ICONERROR or
-            MB_TASKMODAL or MB_TOPMOST, 0, 30000);
-{$ENDIF}
           LogInterface.LogText('Jaws Run  ',
             'Instance Name: !! No running instances of JAWSfound !!');
-
         end
         else
           LogInterface.LogText('Jaws Run  ', 'Instance Name: ' + JawsParam);
       end
       else
       begin
-        // no parameter and expected exe is not running
-{$IFDEF VER180}
+      // no parameter and expected exe is not running
         ErrMsg := Format(JAWS_AUTO_NOT_RUNNING,
           [ExtractFileName(Application.ExeName),
           ExtractFileName(Application.ExeName)]);
-        MessageBoxTimeOutA(Application.Handle, PChar(ErrMsg),
+        MessageBoxTimeOut(Application.Handle, PWideChar(ErrMsg),
           'JAWS Accessibility Detection Error', MB_OK or MB_ICONERROR or
           MB_TASKMODAL or MB_TOPMOST, 0, 30000);
-{$ELSE}
-        ErrMsg := Format(JAWS_AUTO_NOT_RUNNING,
-          [ExtractFileName(Application.ExeName),
-          ExtractFileName(Application.ExeName)]);
-        MessageBoxTimeOutW(Application.Handle, PChar(ErrMsg),
-          'JAWS Accessibility Detection Error', MB_OK or MB_ICONERROR or
-          MB_TASKMODAL or MB_TOPMOST, 0, 30000);
-{$ENDIF}
       end;
 
       // set the global and return
@@ -1039,6 +1067,7 @@ begin
       LogInterface.LogText('Jaws Run  ', 'Instance Name: ' + ORIGNIAL_JAWS_EXE);
 
   end;
+  FJAWSHandleSearchPerformed := true;
 end;
 
 // ******************************************************************
@@ -2047,23 +2076,35 @@ var
   function UserProblemExists: Boolean;
   var
     JAWSWindow: HWND;
-    pPid: DWORD;
+    JAWSPid: DWORD;
+    CPRSPid: DWORD;
   begin
     JAWSWindow := GetJAWSWindow;
-    pPid := INVALID_HANDLE_VALUE;
-    GetWindowThreadProcessID(JAWSWindow, @pPid);
-    CurrentUserPath := GetProcessDomainAndUser(GetCurrentProcessID);
-    WhatJAWSThinks := GetProcessDomainAndUser(pPid);
-    Result := (LowerCase(CurrentUserPath) <> LowerCase(WhatJAWSThinks));
+    JAWSPid := INVALID_HANDLE_VALUE;
+    GetWindowThreadProcessID(JAWSWindow, @JAWSPid);
+    CPRSPid := GetCurrentProcessID;
+    LogInterface.LogText('JAWS CHECK', 'Current PID: ' + IntToStr(CPRSPid));
+    LogInterface.LogText('JAWS CHECK', '   JAWS PID: ' + IntToStr(JAWSPid));
+    CurrentUserPath := GetProcessDomainAndUser(CPRSPid);
+    LogInterface.LogText('JAWS CHECK', 'User Problem Exists 2072 CurrentUserPath: ' + CurrentUserPath);
+    WhatJAWSThinks := GetProcessDomainAndUser(JAWSPid);
+    LogInterface.LogText('JAWS CHECK', 'User Problem Exists 2074  WhatJAWSThinks: ' + WhatJawsThinks);
+    Result := StrIComp(PWideChar(CurrentUserPath), PWideChar(WhatJAWSThinks)) <> 0;
   end;
 
 begin
+  // blj 4 Dec 2018 - attempting to find the JAWS window and query it is no longer possible effectively
+  // from CPRS due to permissions problems.  According to Microsoft, the APIs being used to query
+  // will not, by design, work when querying a 64 bit process from 32 bit code.  After repeated testing,
+  // it was found that JAWS was connecting to CPRS anyway, making this check superfluous.
+  {
   if UserProblemExists then
   begin
     ShowError(JAWS_ERROR_USER_PROBLEM);
     Result := FALSE;
   end
   else
+  }
     Result := TRUE;
 end;
 
@@ -2664,10 +2705,10 @@ Function FindCommandSwitch(SwitchName: string; var ReturnValue: string)
   : Boolean;
 begin
 {$IFDEF VER180}
-  Result := D2006FindCmdLineSwitch('SwitchName', ReturnValue, TRUE,
+  Result := D2006FindCmdLineSwitch(SwitchName, ReturnValue, TRUE,
     [clstD2006ValueAppended]);
 {$ELSE}
-  Result := FindCmdLineSwitch('SwitchName', ReturnValue, TRUE,
+  Result := FindCmdLineSwitch(SwitchName, ReturnValue, TRUE,
     [clstValueAppended]);
 {$ENDIF}
 end;

@@ -26,8 +26,10 @@ type
     cboSubscribe: TORComboBox;
     mnuPopPatient: TPopupMenu;
     mnuPatientID: TMenuItem;
+    chkPcmm: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure chkPersonalClick(Sender: TObject);
+    procedure chkPcmmClick(Sender: TObject);
     procedure lstTeamsClick(Sender: TObject);
     procedure chkRestrictClick(Sender: TObject);
     procedure cboSubscribeClick(Sender: TObject);
@@ -41,8 +43,10 @@ type
   private
     FKeyBoarding: boolean;
     { Private declarations }
+    procedure FillTeams;
     procedure FillATeams;
     procedure FillList(alist: TORListBox; members: TStrings);
+    procedure AddPcmmTeams(alist: TStrings; pcmm: TStringList);
     procedure MergeList(alist: TORListBox; members: TStrings);
     function ItemNotAMember(alist: TStrings; listnum: string): boolean;
     function MemberNotOnList(alist: TStrings; listnum: string): boolean;
@@ -119,6 +123,40 @@ begin
     alist.Items.Add(members[i]);
 end;
 
+procedure TfrmOptionsTeams.FillTeams;
+{ TDP - Added 5/23/2014 to work with PCMM team retrieval
+  basic code taken from the chkPersonalClick, then modified
+  to allow pcmm teams to be added as well }
+var
+  lstPTeams: TStringList;
+begin
+  lstTeams.Items.Clear;
+  lstPTeams := TStringList.Create;
+  if chkPersonal.Checked then
+    rpcGetAllTeams(lstTeams.Items)
+  else
+    rpcGetTeams(lstTeams.Items);
+  if chkPcmm.Checked then
+  begin
+    rpcGetPcmmTeams(lstPTeams);
+    if Piece(lstPTeams[0], '^', 1) <> ''  then
+      AddPcmmTeams(lstTeams.Items, lstPTeams)
+  end;
+  lstTeams.ItemIndex := -1;
+  lstTeamsClick(self);
+  lstPTeams.Free
+end;
+
+procedure TfrmOptionsTeams.AddPcmmTeams(alist:TStrings; pcmm: TStringList);
+// TDP - Added 5/23/2014 to work with PCMM team retrieval
+// Adds the pcmm list to the passed in alist
+var
+  i: integer;
+begin
+  for i := 0 to pcmm.Count - 1 do
+    alist.Add(pcmm[i]);
+end;
+
 procedure TfrmOptionsTeams.MergeList(alist: TORListBox; members: TStrings);
 var
   i: integer;
@@ -156,20 +194,29 @@ begin
 end;
 
 procedure TfrmOptionsTeams.chkPersonalClick(Sender: TObject);
+// TDP - Modified 5/23/2014 to work with PCMM team retrieval
 begin
-  lstTeams.Items.Clear;
+  FillTeams;
+  {lstTeams.Items.Clear;
   if chkPersonal.Checked then
     rpcGetAllTeams(lstTeams.Items)
   else
     rpcGetTeams(lstTeams.Items);
   lstTeams.ItemIndex := -1;
-  lstTeamsClick(self);
+  lstTeamsClick(self);  }
+end;
+
+procedure TfrmOptionsTeams.chkPcmmClick(Sender: TObject);
+// TDP - Added 5/23/2014
+begin
+  FillTeams;
 end;
 
 procedure TfrmOptionsTeams.lstTeamsClick(Sender: TObject);
 var
   i, teamid, cnt: integer;
   astrings: TStringList;
+  teamtype: string;
 begin
   lstPatients.Items.Clear;
   lstUsers.Items.Clear;
@@ -183,29 +230,57 @@ begin
     begin
       inc(cnt);
       teamid := strtointdef(Piece(Items[i], '^', 1), 0);
+      teamtype := Piece(Items[i], '^', 3);
       if (cnt > 1) and chkRestrict.Checked then
       begin
-        ListPtByTeam(astrings, teamid);
-        MergeList(lstPatients, astrings);
-        rpcListUsersByTeam(astrings, teamid);
-        MergeList(lstUsers, astrings);
+        if teamtype <> 'E' then   // TDP - 5/23/2014  If not PCMM team
+        begin
+          ListPtByTeam(astrings, teamid);
+          MergeList(lstPatients, astrings);
+          rpcListUsersByTeam(astrings, teamid);
+          MergeList(lstPatients, astrings);
+        end
+        else begin   // TDP - 5/23/2014  PCMM team
+          ListPtByPcmmTeam(astrings, teamid);
+          MergeList(lstUsers, astrings);
+          rpcListUsersByPcmmTeam(astrings, teamid);
+          MergeList(lstUsers, astrings);
+        end;
       end
       else
       begin
-        ListPtByTeam(astrings, teamid);
-        if astrings.Count = 1 then         // don't fill the '^No patients found.' msg
+        if teamtype <> 'E' then   // TDP - 5/23/2014  If not PCMM team
         begin
-          if Piece(astrings[0], '^', 1) <> '' then
+          ListPtByTeam(astrings, teamid);
+          if astrings.Count = 1 then         // don't fill the '^No patients found.' msg
+          begin
+            if Piece(astrings[0], '^', 1) <> '' then
+              FillList(lstPatients, astrings);
+          end
+          else
             FillList(lstPatients, astrings);
+          rpcListUsersByTeam(astrings, teamid);
+          FillList(lstUsers, astrings)
         end
-        else
-          FillList(lstPatients, astrings);
-        rpcListUsersByTeam(astrings, teamid);
-        FillList(lstUsers, astrings);
+        else begin   // TDP - 5/23/2014  PCMM team
+          ListPtByPcmmTeam(astrings, teamid);
+          if astrings.Count = 1 then         // don't fill the '^No patients found.' msg
+          begin
+            if Piece(astrings[0], '^', 1) <> '' then
+              FillList(lstPatients, astrings)
+          end
+          else
+            FillList(lstPatients, astrings);
+          rpcListUsersByPcmmTeam(astrings, teamid);
+          FillList(lstUsers, astrings);
+        end;
       end;
     end;
+    // TDP - 5/23/2014  Added code to prevent Remove Button enabling
+    // when PCMM team.
     btnRemove.Enabled := (SelCount = 1)
-                          and (Piece(Items[ItemIndex], '^', 3) <> 'P')
+                          and (teamtype <> 'P')
+                          and (teamtype <> 'E')
                           and (Piece(Items[ItemIndex], '^', 7) = 'Y');
     if SelCount > 0 then
     begin

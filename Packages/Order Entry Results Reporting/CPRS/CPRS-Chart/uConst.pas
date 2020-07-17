@@ -35,6 +35,9 @@ const
   UM_NSSOTHER     = (WM_USER + 9250);  // used by NSS for auto-display schedule builder
   UM_MISC         = (WM_USER + 9251);  // used for misc stuff across forms
   UM_508          = (WM_USER + 9508);  // used for 508 messages at 508 base form level
+  UM_REMINDERS    = (WM_USER + 9252);  // in fReminderDialog
+  UM_OBJDESTROY   = (WM_USER + 9253);  // used in uOwnerWrapper & fFrame
+  UM_NOTELIMIT    = (WM_USER + 9254);  // used to redraw the richedit's editable rect
 
   { Tab Indexes, moved from fFrame }
   CT_NOPAGE   = -1;                             // chart tab - none selected
@@ -238,6 +241,7 @@ const
   NF_DEA_CERT_REVOKED              = 75;
   NF_RX_RENEWAL_REQUEST            = 73;
   NF_LAPSED_ORDER                  = 78;
+  NF_HIRISK_ORDER                  = 79;
   NF_RTC_CANCEL_ORDERS             = 91;
   NF_DCSUMM_UNSIGNED_NOTE          = 901;
   NF_CONSULT_UNSIGNED_NOTE         = 902;
@@ -281,9 +285,9 @@ const
 
   { Surgery View Contexts }
   SR_RECENT     = 0;
-  SR_ALL        = 1;
-  SR_BY_DATE    = 5;                             
-  SR_CUSTOM     = 6;
+  SR_ALL        = -1;
+  SR_BY_DATE    = -5;
+  SR_CUSTOM     = -6;
 
   { Surgery TreeView Icons }
   IMG_SURG_BLANK     = 0;
@@ -382,6 +386,7 @@ const
 
   MAX_ENTRY_WIDTH = 80;   //Change in 23.9 for D/S, Consult, and Surgery Notes AGP
   MAX_PROGRESSNOTE_WIDTH = 80;
+  MAX_CONSULT_WIDTH = 74; //Added in v31.b for template wrapping in consult orders
 
   //Group Name
    NONVAMEDGROUP = 'Non-VA Meds';
@@ -440,10 +445,8 @@ implementation
 
 uses
   Windows;
-  
+
 initialization
   ScrollBarWidth := GetSystemMetrics(SM_CXVSCROLL);
 
 end.
-
-

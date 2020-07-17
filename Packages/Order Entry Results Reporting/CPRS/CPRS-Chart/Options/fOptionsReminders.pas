@@ -47,7 +47,7 @@ procedure DialogOptionsReminders(topvalue, leftvalue, fontsize: integer; var act
 
 implementation
 
-uses rOptions, fRemCoverSheet, rReminders;
+uses rOptions, fRemCoverSheet, rReminders, VAUtils;
 
 {$R *.DFM}
 

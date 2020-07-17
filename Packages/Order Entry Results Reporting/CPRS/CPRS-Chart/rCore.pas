@@ -2,7 +2,7 @@ unit rCore;
 
 interface
 
-uses SysUtils, Classes, Forms, ORNet, ORFn, ORClasses;
+uses SysUtils, Classes, Forms, ORNet, ORFn, ORClasses, system.JSON;
 
 { record types used to return data from the RPC's.  Generally, the delimited strings returned
   by the RPC are mapped into the records defined below. }
@@ -32,6 +32,7 @@ type
     AutoSave: Integer;
     InitialTab: Integer;
     UseLastTab: Boolean;
+    EnableActOneStep: Boolean;
     WebAccess: Boolean;
     IsRPL: string;
     RPLList: string;
@@ -43,6 +44,8 @@ type
     GECStatusCheck: Boolean;
     StationNumber: string;
     IsProductionAccount: boolean;
+    JobNumber: string;
+    EvaluateRemCoverSheetOnDialogFinish: BOOLEAN;
   end;
 
   TPtIDInfo = record                              // record for ORWPT IDINFO
@@ -98,6 +101,7 @@ function MakeRelativeDateTime(FMDateTime: TFMDateTime): string;
 function StrToFMDateTime(const AString: string): TFMDateTime;
 function ValidDateTimeStr(const AString, Flags: string): TFMDateTime;
 procedure ListDateRangeClinic(Dest: TStrings);
+function IsDateMoreRecent(Date1: TDateTime; Date2: TDateTime): Boolean;
 
 { General calls }
 
@@ -109,6 +113,7 @@ function SubsetOfDevices(const StartFrom: string; Direction: Integer): TStrings;
 function SubSetOfPersons(const StartFrom: string; Direction: Integer): TStrings;
 function SubSetOfActiveAndInactivePersons(const StartFrom: string; Direction: Integer): TStrings;
 function GetDefaultPrinter(DUZ: Int64; Location: integer): string;
+procedure getSysUserParameters(DUZ: Int64);
 
 { User specific calls }
 
@@ -118,13 +123,16 @@ procedure GetUserListParam(Dest: TStrings; const AParamName: string);
 function HasSecurityKey(const KeyName: string): Boolean;
 function HasMenuOptionAccess(const OptionName: string): Boolean;
 function ValidESCode(const ACode: string): Boolean;
+//function otherInformationPanelControls: string;
 
 { Notifications calls }
 
 procedure LoadNotifications(Dest: TStrings);
+function LoadNotificationLongText(AlertID: string): string;
+function IsSmartAlert(notIEN: integer): boolean;
 procedure DeleteAlert(XQAID: string);
 procedure DeleteAlertForUser(XQAID: string);
-function  GetXQAData(XQAID: string): string;
+function  GetXQAData(XQAID: string; pFlag: string = ''): string;
 function  GetTIUAlertInfo(XQAID: string): string;
 procedure UpdateUnsignedOrderAlerts(PatientDFN: string);
 function UnsignedOrderAlertFollowup(XQAID: string): string;
@@ -144,9 +152,11 @@ procedure UpdateIndOrderAlerts();
 
 function DfltPtList: string;
 function DfltPtListSrc: Char;
+function DefltPtListSrc: string;
 procedure SavePtListDflt(const x: string);
 procedure ListSpecialtyAll(Dest: TStrings);
 procedure ListTeamAll(Dest: TStrings);
+procedure ListPcmmAll(Dest: TStrings);
 procedure ListWardAll(Dest: TStrings);
 procedure ListProviderTop(Dest: TStrings);
 function SubSetOfProviders(const StartFrom: string; Direction: Integer): TStrings;
@@ -159,6 +169,7 @@ procedure ResetDfltSort;
 procedure ListPtByDflt(Dest: TStrings);
 procedure ListPtByProvider(Dest: TStrings; ProviderIEN: Int64);
 procedure ListPtByTeam(Dest: TStrings; TeamIEN: Integer);
+procedure ListPtByPcmmTeam(Dest: TStrings; TeamIEN: Integer);
 procedure ListPtBySpecialty(Dest: TStrings; SpecialtyIEN: Integer);
 procedure ListPtByClinic(Dest: TStrings; ClinicIEN: Integer; FirstDt, LastDt: string);
 procedure ListPtByWard(Dest: TStrings; WardIEN: Integer);
@@ -189,6 +200,10 @@ function RestrictedPtRec(const DFN: string): Boolean;
 procedure SelectPatient(const DFN: string; var PtSelect: TPtSelect);
 function SimilarRecordsFound(const DFN: string; var AMsg: string): Boolean;
 function GetDFNFromICN(AnICN: string): string;
+function GetVAAData(const DFN: string; aList: TStrings): Boolean;
+function GetMHVData(const DFN: string; aList: TStrings): Boolean;
+function otherInformationPanel(const DFN: string): string;
+procedure otherInformationPanelDetails(const DFN: string; valueType: string; var details: TStrings);
 
 { Encounter specific calls }
 
@@ -305,6 +320,13 @@ begin
   FastAssign(RPCBrokerV.Results, Dest);
 end;
 
+function IsDateMoreRecent(Date1: TDateTime; Date2: TDateTime): Boolean;
+{ is Date1 more recent than Date2}
+begin
+  if Date1 > Date2 then Result := True
+  else Result := False;
+end;
+
 function DfltDateRangeClinic;
 { returns current default date range settings for displaying clinic appointments in patient lookup }
 begin
@@ -375,6 +397,7 @@ begin
     DTIME := StrToIntDef(Piece(x, U, 8), 300);
     CountDown := StrToIntDef(Piece(x, U, 9), 10);
     EnableVerify := Piece(x, U, 10) = '1';
+    EnableActOneStep := Piece(x, U, 27) = '0';
     NotifyAppsWM := Piece(x, U, 11) = '1';
     PtMsgHang := StrToIntDef(Piece(x, U, 12), 5);
     Domain := Piece(x, U, 13);
@@ -406,6 +429,7 @@ begin
      //    x := GetUserParam('ORWT TOOLS RPT SETTINGS OFF');
      //    if x = '1' then
     //      ToolsRptEdit := false;
+    JobNumber := Piece(x, U, 28);
   end;
 end;
 
@@ -448,6 +472,11 @@ begin
   Result := sCallV('ORWU VALIDSIG', [Encrypt(ACode)]) = '1';
 end;
 
+//function otherInformationPanelControls: string;
+//begin
+//  Result := sCallV('ORWOTHER SHWOTHER', [USER.DUZ]);
+//end;
+
 { Notifications Calls }
 
 procedure LoadNotifications(Dest: TStrings);
@@ -462,6 +491,28 @@ begin
   finally
     tmplst.Free;
   end;
+end;
+
+function LoadNotificationLongText(AlertID: string): string;
+var
+  temp: TStringList;
+  i: Integer;
+begin
+  temp := TStringList.Create();
+  CallVistA('ORWORB GETLTXT', [AlertID], temp);
+  Result := '';       //CRLF
+  for i := 0 to temp.Count - 1 do
+  begin
+    Result := Result + temp[i] + CRLF
+  end;
+end;
+
+function IsSmartAlert(notIEN: integer):boolean;
+var
+  temp: string;
+begin
+  temp := sCallV('ORBSMART ISSMNOT',[notIEN]);
+  Result := temp = '1';
 end;
 
 procedure UpdateUnsignedOrderAlerts(PatientDFN: string);
@@ -544,10 +595,10 @@ begin
    CallV('ORWORB SETSORT', [Sort, Direction]);
 end;
 
-function GetXQAData(XQAID: string): string;
+function GetXQAData(XQAID: string; pFlag: string = ''): string;
 // Returns data associated with an alert
 begin
-  Result := sCallV('ORWORB GETDATA',[XQAID]);
+  Result := sCallV('ORWORB GETDATA',[XQAID, pFlag]);
 end;
 
 function  GetTIUAlertInfo(XQAID: string): string;
@@ -578,6 +629,13 @@ begin
   Result := CharAt(sCallV('ORWPT DFLTSRC', [nil]), 1);
 end;
 
+function DefltPtListSrc: string;
+{ returns the default pastient list source as string}
+// TDP - ADDED 5/28/2014 to handle new possible "E" default list source
+begin
+  Result := sCallV('ORWPT DFLTSRC', [nil]);
+end;
+
 procedure SavePtListDflt(const x: string);
 begin
   CallV('ORWPT SAVDFLT', [x]);
@@ -595,6 +653,15 @@ procedure ListTeamAll(Dest: TStrings);
 { lists all patient care teams: IEN^Team Name }
 begin
   CallV('ORQPT TEAMS', [nil]);
+  MixedCaseList(RPCBrokerV.Results);
+  FastAssign(RPCBrokerV.Results, Dest);
+end;
+
+procedure ListPcmmAll(Dest: TStrings);
+{ lists all patient care teams: IEN^Team Name }
+// TDP - Added 5/27/2014 as part of PCMMR mods
+begin
+  CallV('ORQPT PTEAMPR', [nil]);
   MixedCaseList(RPCBrokerV.Results);
   FastAssign(RPCBrokerV.Results, Dest);
 end;
@@ -754,6 +821,16 @@ procedure ListPtByTeam(Dest: TStrings; TeamIEN: Integer);
 { lists all patients associated with a given team: DFN^Patient Name }
 begin
   CallV('ORQPT TEAM PATIENTS', [TeamIEN]);
+  SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
+  MixedCaseList(RPCBrokerV.Results);
+  FastAssign(RPCBrokerV.Results, Dest);
+end;
+
+procedure ListPtByPcmmTeam(Dest: TStrings; TeamIEN: Integer);
+{ lists all patients associated with a given PCMM team: DFN^Patient Name }
+// TDP - Added 5/23/2014
+begin
+  CallV('ORQPT PTEAM PATIENTS', [TeamIEN]);
   SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
   MixedCaseList(RPCBrokerV.Results);
   FastAssign(RPCBrokerV.Results, Dest);
@@ -1102,7 +1179,7 @@ procedure SelectPatient(const DFN: string; var PtSelect: TPtSelect);   //*DFN*
 var
   x: string;
 begin
-  x := sCallV('ORWPT SELECT', [DFN]);
+  CallVista('ORWPT SELECT', [DFN], x);
   with PtSelect do
   begin
     Name := Piece(x, U, 1);
@@ -1123,7 +1200,7 @@ begin
     ServiceConnected := Piece(x, U, 12) = '1';
     SCPercent := StrToIntDef(Piece(x, U, 13), 0);
   end;
-  x := sCallV('ORWPT1 PRCARE', [DFN]);
+  CallVistA('ORWPT1 PRCARE', [DFN], x);
   with PtSelect do
   begin
     PrimaryTeam     := Piece(x, U, 1);
@@ -1134,10 +1211,22 @@ begin
       begin
         Attending := Piece(x, U, 3);
         InProvider := Piece(x, U, 6);
-        x := sCallV('ORWPT INPLOC', [DFN]);
+        CallVistA('ORWPT INPLOC', [DFN], x);
         WardService := Piece(x, U, 3);
       end;
   end;
+end;
+
+function GetVAAData(const DFN: string; aList: TStrings): Boolean;
+begin
+  aList.Clear;
+  Result := CallVistA('ORVAA VAA', [DFN], aList);
+end;
+
+function GetMHVData(const DFN: string; aList: TStrings): Boolean;
+begin
+  aList.Clear;
+  Result := CallVistA('ORWMHV MHV', [DFN], aList);
 end;
 
 function SimilarRecordsFound(const DFN: string; var AMsg: string): Boolean;
@@ -1171,6 +1260,17 @@ begin
   Result := Piece(sCallV('VAFCTFU CONVERT ICN TO DFN', [AnICN]), U, 1);
 end;
 
+function otherInformationPanel(const DFN: string): string;
+begin
+//  result := sCallV('ORWPT2 COVID', [DFN]);
+  CallVistA('ORWPT2 COVID', [DFN], result);
+end;
+
+procedure otherInformationPanelDetails(const DFN: string; valueType: string; var details: TStrings);
+begin
+  CallVistA('ORWOTHER DETAIL', [dfn, valueType], details);
+//  FastAssign(RPCBrokerV.Results, details);
+end;
 { Encounter specific calls }
 
 function GetEncounterText(const DFN: string; Location: integer; Provider: Int64): TEncounterText;  //*DFN*
@@ -1184,7 +1284,7 @@ begin
     LocationName := Piece(x, U, 1);
     LocationAbbr := Piece(x, U, 2);
     RoomBed      := Piece(x, U, 3);
-    ProviderName := Piece(x, U, 4);    
+    ProviderName := Piece(x, U, 4);
 //    ProviderName := sCallV('ORWU1 NAMECVT', [Provider]);
  end;
 end;
@@ -1202,7 +1302,7 @@ begin
   if impDt <> '' then
     Result := StrToFMDateTime(impDt)
   else
-    Result := 0;
+    Result := 3141001;  //Default to 10/01/2014
 end;
 
 procedure ListApptAll(Dest: TStrings; const DFN: string; From: TFMDateTime = 0;
@@ -1323,6 +1423,19 @@ end;
 function GetDefaultPrinter(DUZ: Int64; Location: integer): string;
 begin
   Result := sCallV('ORWRP GET DEFAULT PRINTER', [DUZ, Location]) ;
+end;
+
+procedure getSysUserParameters(DUZ: Int64);
+var
+aReturn: string;
+begin
+  systemParameters := TsystemParameters.Create;
+  try
+  CallVistA('ORWU SYSPARAM', [DUZ], aReturn);
+  systemParameters.dataValues := TJSONObject.ParseJSONValue(aReturn);
+  finally
+  end;
+
 end;
 
 end.

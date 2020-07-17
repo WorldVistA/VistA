@@ -101,7 +101,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, rConsults, uConsults, fConsults, fConsultAlertTo, rOrders;
+uses rCore, rConsults, uConsults, fConsults, fConsultAlertTo, rOrders, VAUtils;
 
 var
   RecipientList: TRecipientList ;
@@ -197,12 +197,15 @@ try                                                                             
        begin
          BuildServiceTree(treService, SvcList, '0', nil) ;
          with treService do
-           begin
-            for i:=0 to Items.Count-1 do
-             if Items[i].Level > 0 then Items[i].Expanded := False else Items[i].Expanded := True;
+         begin
+           for i:=0 to Items.Count-1 do
+             begin
+               if Items[i].Level > 0 then Items[i].Expanded := False
+                 else Items[i].Expanded := True;
+             end ;
            TopItem := Items[0] ;
            Selected := Items[0] ;
-           end ;
+         end;
        end;
      pnlForward.Visible := True ;
    end ;

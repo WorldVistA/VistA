@@ -186,7 +186,7 @@ begin
     0:  {out patient view} begin
                              GetClinicList;
                              GetListForOP(Alist, frmProblems.wgProbData);
-                             FastAssign(ClinicFilterList(Alist), cboSource.Items);
+                             ClinicFilterList(Alist, cboSource.Items);
                              cboSource.InsertSeparator;
                              cboSource.InitLongList('') ;
                              for i := 0 to PLFilters.ClinicList.Count - 1 do
@@ -198,7 +198,7 @@ begin
     1:  {in-patient View}  begin
                              GetServiceList;
                              GetListForIP(Alist, frmProblems.wgProbData);
-                             FastAssign(ServiceFilterList(Alist), cboSource.Items);
+                             ServiceFilterList(Alist, cboSource.Items);
                              cboSource.InsertSeparator;
                              cboSource.InitLongList('') ;
                              for i := 0 to PLFilters.ServiceList.Count - 1 do
@@ -392,12 +392,29 @@ end;
 
 procedure TfrmPlVuFilt.cboSourceNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  aLst: TStringList;
 begin
- case rgVu.itemindex of
-  0:  {out patient view} cboSource.ForDataUse(SubsetOfClinics(StartFrom,Direction));
-  1:  {in-patient View}  cboSource.ForDataUse(ServiceSearch(StartFrom,Direction));
- else {unfiltered view}  GetLocationList;
- end;
+  aLst := TStringList.create;
+  try
+    case rgVu.itemindex of
+      0: { out patient view }
+        begin
+          cboSource.ForDataUse(SubsetOfClinics(StartFrom, Direction));
+        end;
+      1: { in-patient View }
+        begin
+          ServiceSearch(aLst, StartFrom, Direction);
+          cboSource.ForDataUse(aLst);
+        end;
+    else { unfiltered view }
+      begin
+        GetLocationList;
+      end;
+    end;
+  finally
+    FreeAndNil(aLst);
+  end;
 end;
 
 function TfrmPlVuFilt.CreateContextString: string;

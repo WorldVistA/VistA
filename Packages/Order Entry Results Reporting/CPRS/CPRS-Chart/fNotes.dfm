@@ -1,102 +1,98 @@
 inherited frmNotes: TfrmNotes
   Left = 0
   Caption = 'frmNotes'
-  ClientHeight = 673
-  ClientWidth = 1085
+  ClientHeight = 568
+  ClientWidth = 889
   DockSite = True
   Menu = mnuNotes
   Position = poDesigned
   OnDestroy = FormDestroy
+  OnHide = FormHide
   OnShow = FormShow
-  ExplicitTop = -18
-  ExplicitWidth = 1101
-  ExplicitHeight = 731
+  ExplicitWidth = 905
+  ExplicitHeight = 627
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
-    Top = 668
-    Width = 1085
+    Top = 563
+    Width = 889
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    ExplicitTop = 668
-    ExplicitWidth = 1085
+    ExplicitTop = 563
+    ExplicitWidth = 889
   end
   object splHorz: TSplitter [1]
     Left = 161
     Top = 0
-    Height = 668
+    Height = 563
     Color = clBtnFace
     ParentColor = False
     OnCanResize = splHorzCanResize
-    ExplicitLeft = 185
-    ExplicitTop = -7
-    ExplicitHeight = 663
   end
   object pnlLeft: TPanel [2]
     Left = 0
     Top = 0
     Width = 161
-    Height = 668
+    Height = 563
     Align = alLeft
     BevelOuter = bvNone
+    Constraints.MinWidth = 30
     DoubleBuffered = True
     ParentDoubleBuffered = False
-    TabOrder = 1
+    TabOrder = 0
     object cmdNewNote: TORAlignButton
       Left = 0
-      Top = 647
+      Top = 542
       Width = 161
       Height = 21
       Action = acNewNote
       Align = alBottom
       Caption = 'New Note'
-      TabOrder = 2
-      ExplicitLeft = -3
-      ExplicitTop = 653
+      TabOrder = 1
+      OnExit = cmdNewNoteExit
     end
     object cmdPCE: TORAlignButton
       Left = 0
-      Top = 626
+      Top = 522
       Width = 161
-      Height = 21
+      Height = 20
       Action = acPCE
       Align = alBottom
       Caption = 'Encounter'
-      TabOrder = 3
-      ExplicitTop = 647
+      TabOrder = 2
+      OnExit = cmdPCEExit
     end
     object pnlLeftTop: TPanel
       Left = 0
       Top = 15
       Width = 161
-      Height = 611
+      Height = 507
       Align = alClient
       BevelOuter = bvNone
       Color = clWindow
       DoubleBuffered = True
       ParentBackground = False
       ParentDoubleBuffered = False
-      TabOrder = 1
+      TabOrder = 0
       object splDrawers: TSplitter
         Left = 0
-        Top = 585
+        Top = 482
         Width = 161
-        Height = 3
+        Height = 1
         Cursor = crVSplit
         Align = alBottom
         Color = clBtnFace
         ParentColor = False
         OnCanResize = splDrawersCanResize
-        ExplicitTop = 598
-        ExplicitWidth = 335
+        ExplicitTop = 485
       end
       object tvNotes: TORTreeView
         Left = 0
         Top = 0
         Width = 161
-        Height = 585
+        Height = 482
         Align = alClient
         Constraints.MinHeight = 50
         Constraints.MinWidth = 30
@@ -106,11 +102,12 @@ inherited frmNotes: TfrmNotes
         PopupMenu = popNoteList
         ReadOnly = True
         StateImages = dmodShared.imgImages
-        TabOrder = 0
+        TabOrder = 1
         OnChange = tvNotesChange
         OnCollapsed = tvNotesCollapsed
         OnDragDrop = tvNotesDragDrop
         OnDragOver = tvNotesDragOver
+        OnExit = tvNotesExit
         OnExpanded = tvNotesExpanded
         OnStartDrag = tvNotesStartDrag
         Caption = ''
@@ -119,20 +116,20 @@ inherited frmNotes: TfrmNotes
       end
       object pnlDrawers: TPanel
         Left = 0
-        Top = 588
+        Top = 483
         Width = 161
-        Height = 23
+        Height = 24
         Align = alBottom
         BevelOuter = bvNone
         ParentBackground = False
-        TabOrder = 1
+        TabOrder = 2
         Visible = False
         OnResize = pnlDrawersResize
         inline frmDrawers: TfraDrawers
           Left = 0
           Top = 0
           Width = 161
-          Height = 23
+          Height = 24
           Align = alClient
           Constraints.MinWidth = 150
           Color = clBtnFace
@@ -142,7 +139,7 @@ inherited frmNotes: TfrmNotes
           TabStop = True
           OnResize = frmDrawersResize
           ExplicitWidth = 161
-          ExplicitHeight = 23
+          ExplicitHeight = 24
           inherited pnlTemplate: TPanel
             Width = 161
             ExplicitWidth = 161
@@ -254,7 +251,7 @@ inherited frmNotes: TfrmNotes
         ParentShowHint = False
         PopupMenu = popNoteList
         ShowHint = True
-        TabOrder = 2
+        TabOrder = 0
         Visible = False
         OnClick = lstNotesClick
         Caption = ''
@@ -274,7 +271,7 @@ inherited frmNotes: TfrmNotes
       Alignment = taLeftJustify
       AutoSize = True
       Caption = 'Last 100 Notes'
-      TabOrder = 0
+      TabOrder = 3
       VerticalAlignment = taAlignBottom
       ShowAccelChar = True
     end
@@ -285,244 +282,67 @@ inherited frmNotes: TfrmNotes
     Width = 27
     Height = 38
     BevelOuter = bvNone
-    TabOrder = 0
+    TabOrder = 2
     Visible = False
   end
   object PnlRight: TPanel [4]
     Left = 164
     Top = 0
-    Width = 921
-    Height = 668
+    Width = 725
+    Height = 563
     Align = alClient
     BevelOuter = bvNone
-    TabOrder = 2
-    object splVert: TSplitter
-      Left = 0
-      Top = 557
-      Width = 921
-      Height = 3
-      Cursor = crVSplit
-      Align = alBottom
-      Color = clBtnFace
-      ParentColor = False
-      ExplicitTop = 0
-      ExplicitWidth = 924
-    end
-    object memPCEShow: TRichEdit
-      Left = 0
-      Top = 560
-      Width = 921
-      Height = 108
-      Align = alBottom
-      Color = clCream
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      Lines.Strings = (
-        '<No encounter information entered>')
-      ParentFont = False
-      PlainText = True
-      ReadOnly = True
-      ScrollBars = ssVertical
-      TabOrder = 2
-    end
-    object pnlWrite: TPanel
-      Left = 0
-      Top = 0
-      Width = 921
-      Height = 557
-      Align = alClient
-      BevelOuter = bvNone
-      TabOrder = 1
-      Visible = False
-      OnResize = pnlWriteResize
-      object memNewNote: TRichEdit
-        Left = 0
-        Top = 67
-        Width = 921
-        Height = 490
-        Align = alClient
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Courier New'
-        Font.Style = []
-        MaxLength = 2147483645
-        ParentFont = False
-        PlainText = True
-        PopupMenu = popNoteMemo
-        ScrollBars = ssVertical
-        TabOrder = 1
-        WantTabs = True
-        OnKeyDown = memNewNoteKeyDown
-        OnKeyPress = memNewNoteKeyPress
-        OnKeyUp = memNewNoteKeyUp
-      end
-      object pnlFields: TPanel
-        Left = 0
-        Top = 0
-        Width = 921
-        Height = 67
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 0
-        DesignSize = (
-          921
-          67)
-        object bvlNewTitle: TBevel
-          AlignWithMargins = True
-          Left = 6
-          Top = -2
-          Width = 117
-          Height = 17
-        end
-        object lblNewTitle: TStaticText
-          AlignWithMargins = True
-          Left = 6
-          Top = -2
-          Width = 119
-          Height = 17
-          Hint = 'Press "Change..." to select a different title.'
-          Caption = ' General Medicine Note '
-          Color = clCream
-          ParentColor = False
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-          TabOrder = 1
-          Transparent = False
-        end
-        object stRefDate: TStaticText
-          AlignWithMargins = True
-          Left = 0
-          Top = 21
-          Width = 919
-          Height = 17
-          Hint = 'Press "Change..." to change date/time of note.'
-          Alignment = taCenter
-          Anchors = [akLeft, akTop, akRight]
-          AutoSize = False
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-          TabOrder = 2
-        end
-        object stAuthor: TStaticText
-          AlignWithMargins = True
-          Left = 675
-          Top = 6
-          Width = 169
-          Height = 17
-          Hint = 'Press "Change..." to select a different author.'
-          Alignment = taRightJustify
-          Anchors = [akTop, akRight]
-          AutoSize = False
-          Caption = 'Winchester,Charles Emerson III'
-          Color = clBtnFace
-          ParentColor = False
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-          TabOrder = 0
-          Transparent = False
-        end
-        object lblVisit: TStaticText
-          AlignWithMargins = True
-          Left = 6
-          Top = 21
-          Width = 204
-          Height = 17
-          Caption = 'Vst: 10/20/99 Pulmonary Clinic, Dr. Welby'
-          Color = clBtnFace
-          ParentColor = False
-          ShowAccelChar = False
-          TabOrder = 4
-          Transparent = False
-        end
-        object stCosigner: TStaticText
-          AlignWithMargins = True
-          Left = 568
-          Top = 22
-          Width = 276
-          Height = 16
-          Hint = 'Press "Change..." to select a different cosigner.'
-          Alignment = taRightJustify
-          Anchors = [akTop, akRight]
-          AutoSize = False
-          Caption = 'Expected Cosigner: Winchester,Charles Emerson III'
-          Color = clBtnFace
-          ParentColor = False
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-          TabOrder = 5
-          Transparent = False
-        end
-        object lblSubject: TStaticText
-          Left = 6
-          Top = 43
-          Width = 43
-          Height = 17
-          Caption = 'Subject:'
-          TabOrder = 8
-        end
-        object cmdChange: TButton
-          AlignWithMargins = True
-          Left = 855
-          Top = 8
-          Width = 58
-          Height = 27
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Action = acChange
-          Anchors = [akTop, akRight]
-          Constraints.MaxHeight = 57
-          TabOrder = 3
-        end
-        object txtSubject: TCaptionEdit
-          Left = 48
-          Top = 40
-          Width = 1306
-          Height = 21
-          Hint = 'Subject is limited to a maximum of 80 characters.'
-          Anchors = [akLeft, akTop, akRight]
-          MaxLength = 80
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 6
-          Text = 'txtSubject'
-          Caption = 'Subject'
-        end
-      end
-    end
+    TabOrder = 1
+    OnResize = PnlRightResize
     object pnlNote: TPanel
       Left = 0
       Top = 0
-      Width = 921
-      Height = 557
+      Width = 725
+      Height = 563
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
+      OnExit = pnlNoteExit
       object splList: TSplitter
         Left = 0
-        Top = 118
-        Width = 921
-        Height = 3
+        Top = 117
+        Width = 725
+        Height = 4
         Cursor = crVSplit
         Align = alTop
         Color = clBtnFace
         ParentColor = False
-        ExplicitWidth = 924
+        ExplicitTop = 114
+      end
+      object spDetails: TSplitter
+        Left = 0
+        Top = 347
+        Width = 725
+        Height = 4
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        Color = clBtnFace
+        ParentColor = False
+        Visible = False
+      end
+      object splmemPCRead: TSplitter
+        Left = 0
+        Top = 451
+        Width = 725
+        Height = 4
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        Color = clBtnFace
+        ParentColor = False
+        OnMoved = splmemPCEMoved
       end
       object memNote: TRichEdit
         Left = 0
         Top = 121
-        Width = 921
-        Height = 436
+        Width = 725
+        Height = 226
         Align = alClient
         Color = clCream
         Ctl3D = True
@@ -531,6 +351,7 @@ inherited frmNotes: TfrmNotes
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
+        Constraints.MinHeight = 30
         Lines.Strings = (
           
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRUSTVWXYZabcdefghijkl' +
@@ -543,12 +364,13 @@ inherited frmNotes: TfrmNotes
         ScrollBars = ssBoth
         TabOrder = 2
         WordWrap = False
+        Zoom = 100
       end
       object stTitle: TVA508StaticText
         Name = 'stTitle'
         Left = 0
         Top = 0
-        Width = 921
+        Width = 725
         Height = 15
         Align = alTop
         Alignment = taLeftJustify
@@ -560,8 +382,8 @@ inherited frmNotes: TfrmNotes
       object lvNotes: TCaptionListView
         Left = 0
         Top = 15
-        Width = 921
-        Height = 103
+        Width = 725
+        Height = 102
         Align = alTop
         Columns = <
           item
@@ -583,6 +405,7 @@ inherited frmNotes: TfrmNotes
           item
             AutoSize = True
             Caption = 'Location'
+            MinWidth = 12
           end
           item
             Caption = 'fmdate'
@@ -606,6 +429,492 @@ inherited frmNotes: TfrmNotes
         OnSelectItem = lvNotesSelectItem
         AutoSize = False
         Caption = 'No Progress Notes Found'
+        HideTinyColumns = True
+      end
+      object CPMemNote: TCopyPasteDetails
+        Left = 0
+        Top = 351
+        Width = 725
+        Height = 100
+        Align = alBottom
+        BevelInner = bvRaised
+        BorderStyle = bsSingle
+        Caption = 'CPMemNote'
+        Constraints.MinHeight = 32
+        ShowCaption = False
+        TabOrder = 3
+        Visible = False
+        CopyMonitor = frmFrame.CPAppMon
+        CollapseBtn.Left = 701
+        CollapseBtn.Top = 0
+        CollapseBtn.Width = 16
+        CollapseBtn.Height = 20
+        CollapseBtn.Align = alRight
+        CollapseBtn.Caption = #218
+        CollapseBtn.Font.Charset = DEFAULT_CHARSET
+        CollapseBtn.Font.Color = clWindowText
+        CollapseBtn.Font.Height = -11
+        CollapseBtn.Font.Name = 'Wingdings'
+        CollapseBtn.Font.Style = []
+        CollapseBtn.ParentFont = False
+        CollapseBtn.TabOrder = 0
+        CollapseBtn.TabStop = False
+        EditMonitor.CopyMonitor = frmFrame.CPAppMon
+        EditMonitor.OnLoadPastedText = LoadPastedText
+        EditMonitor.RelatedPackage = '8925'
+        EditMonitor.TrackOnlyEdits = <>
+        InfoMessage.AlignWithMargins = True
+        InfoMessage.Left = 3
+        InfoMessage.Top = 3
+        InfoMessage.Width = 586
+        InfoMessage.Height = 49
+        InfoMessage.Align = alClient
+        InfoMessage.Font.Charset = ANSI_CHARSET
+        InfoMessage.Font.Color = clWindowText
+        InfoMessage.Font.Height = -11
+        InfoMessage.Font.Name = 'MS Sans Serif'
+        InfoMessage.Font.Style = []
+        InfoMessage.Lines.Strings = (
+          '<-- Please select the desired paste date')
+        InfoMessage.ParentFont = False
+        InfoMessage.ReadOnly = True
+        InfoMessage.ScrollBars = ssBoth
+        InfoMessage.TabOrder = 0
+        InfoMessage.WantReturns = False
+        InfoMessage.WordWrap = False
+        InfoMessage.Zoom = 100
+        InfoSelector.AlignWithMargins = True
+        InfoSelector.Left = 3
+        InfoSelector.Top = 3
+        InfoSelector.Width = 111
+        InfoSelector.Height = 49
+        InfoSelector.Style = lbOwnerDrawFixed
+        InfoSelector.Align = alClient
+        InfoSelector.ItemHeight = 13
+        InfoSelector.TabOrder = 0
+        OnHide = CPHide
+        OnShow = CPShow
+        SyncSizes = True
+        VisualEdit = memNote
+        SaveFindAfter = 0
+      end
+      object memPCERead: TRichEdit
+        Left = 0
+        Top = 455
+        Width = 725
+        Height = 108
+        Align = alBottom
+        Color = clCream
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Constraints.MinHeight = 20
+        Lines.Strings = (
+          '<No encounter information entered>')
+        ParentFont = False
+        PlainText = True
+        ReadOnly = True
+        ScrollBars = ssVertical
+        TabOrder = 4
+        Zoom = 100
+        OnExit = memPCEReadExit
+      end
+    end
+    object pnlWrite: TPanel
+      Left = 0
+      Top = 0
+      Width = 725
+      Height = 563
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 1
+      Visible = False
+      OnResize = pnlWriteResize
+      object spEditDetails: TSplitter
+        Left = 0
+        Top = 347
+        Width = 725
+        Height = 4
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        Color = clBtnFace
+        ParentColor = False
+        Visible = False
+        OnMoved = splmemPCEMoved
+      end
+      object splmemPCEWrite: TSplitter
+        Left = 0
+        Top = 451
+        Width = 725
+        Height = 4
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        Color = clBtnFace
+        ParentColor = False
+      end
+      object memNewNote: TRichEdit
+        Left = 0
+        Top = 97
+        Width = 725
+        Height = 250
+        Align = alClient
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Courier New'
+        Font.Style = []
+        Constraints.MinHeight = 30
+        MaxLength = 2147483645
+        ParentFont = False
+        PlainText = True
+        PopupMenu = popNoteMemo
+        ScrollBars = ssVertical
+        TabOrder = 0
+        WantTabs = True
+        Zoom = 100
+        OnChange = memNewNoteChange
+        OnKeyDown = memNewNoteKeyDown
+        OnKeyPress = memNewNoteKeyPress
+        OnKeyUp = memNewNoteKeyUp
+      end
+      object CPMemNewNote: TCopyPasteDetails
+        Left = 0
+        Top = 351
+        Width = 725
+        Height = 100
+        Align = alBottom
+        BevelInner = bvRaised
+        BorderStyle = bsSingle
+        Constraints.MinHeight = 32
+        ParentShowHint = False
+        ShowCaption = False
+        ShowHint = True
+        TabOrder = 1
+        Visible = False
+        CopyMonitor = frmFrame.CPAppMon
+        CollapseBtn.Left = 701
+        CollapseBtn.Top = 0
+        CollapseBtn.Width = 16
+        CollapseBtn.Height = 20
+        CollapseBtn.Align = alRight
+        CollapseBtn.Caption = #218
+        CollapseBtn.Font.Charset = DEFAULT_CHARSET
+        CollapseBtn.Font.Color = clWindowText
+        CollapseBtn.Font.Height = -11
+        CollapseBtn.Font.Name = 'Wingdings'
+        CollapseBtn.Font.Style = []
+        CollapseBtn.ParentFont = False
+        CollapseBtn.TabOrder = 0
+        CollapseBtn.TabStop = False
+        EditMonitor.CopyMonitor = frmFrame.CPAppMon
+        EditMonitor.OnLoadPastedText = LoadPastedText
+        EditMonitor.OnPasteToMonitor = PasteToMonitor
+        EditMonitor.OnSaveTheMonitor = SaveTheMonitor
+        EditMonitor.RelatedPackage = '8925'
+        EditMonitor.TrackOnlyEdits = <>
+        InfoMessage.AlignWithMargins = True
+        InfoMessage.Left = 3
+        InfoMessage.Top = 3
+        InfoMessage.Width = 586
+        InfoMessage.Height = 49
+        InfoMessage.Align = alClient
+        InfoMessage.Font.Charset = ANSI_CHARSET
+        InfoMessage.Font.Color = clWindowText
+        InfoMessage.Font.Height = -11
+        InfoMessage.Font.Name = 'MS Sans Serif'
+        InfoMessage.Font.Style = []
+        InfoMessage.Lines.Strings = (
+          '<-- Please select the desired paste date')
+        InfoMessage.ParentFont = False
+        InfoMessage.ReadOnly = True
+        InfoMessage.ScrollBars = ssBoth
+        InfoMessage.TabOrder = 0
+        InfoMessage.WantReturns = False
+        InfoMessage.WordWrap = False
+        InfoMessage.Zoom = 100
+        InfoSelector.AlignWithMargins = True
+        InfoSelector.Left = 3
+        InfoSelector.Top = 3
+        InfoSelector.Width = 111
+        InfoSelector.Height = 49
+        InfoSelector.Style = lbOwnerDrawFixed
+        InfoSelector.Align = alClient
+        InfoSelector.ItemHeight = 13
+        InfoSelector.TabOrder = 0
+        OnHide = CPHide
+        OnShow = CPShow
+        SyncSizes = True
+        VisualEdit = memNewNote
+        SaveFindAfter = 0
+      end
+      object memPCEWrite: TRichEdit
+        Left = 0
+        Top = 455
+        Width = 725
+        Height = 108
+        Align = alBottom
+        Color = clCream
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Constraints.MinHeight = 20
+        Lines.Strings = (
+          '<No encounter information entered>')
+        ParentFont = False
+        PlainText = True
+        ReadOnly = True
+        ScrollBars = ssVertical
+        TabOrder = 2
+        Zoom = 100
+        OnExit = memPCEWriteExit
+      end
+      object grdPnl: TGridPanel
+        Left = 0
+        Top = 0
+        Width = 725
+        Height = 97
+        Margins.Left = 2
+        Margins.Top = 2
+        Margins.Right = 2
+        Margins.Bottom = 2
+        Align = alTop
+        BevelOuter = bvNone
+        ColumnCollection = <
+          item
+            SizeStyle = ssAbsolute
+            Value = 60.000000000000000000
+          end
+          item
+            Value = 40.000000000000000000
+          end
+          item
+            Value = 25.000000000000000000
+          end
+          item
+            Value = 35.000000000000000000
+          end
+          item
+            SizeStyle = ssAbsolute
+            Value = 100.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            ColumnSpan = 3
+            Control = lblNewTitle
+            Row = 0
+          end
+          item
+            Column = 3
+            Control = stAuthor
+            Row = 0
+          end
+          item
+            Column = 0
+            ColumnSpan = 2
+            Control = lblVisit
+            Row = 1
+          end
+          item
+            Column = 2
+            Control = stRefDate
+            Row = 1
+          end
+          item
+            Column = 3
+            Control = stCosigner
+            Row = 1
+          end
+          item
+            Column = 4
+            Control = cmdChange
+            Row = 1
+          end
+          item
+            Column = 0
+            Control = lblSubject
+            Row = 2
+          end
+          item
+            Column = 1
+            ColumnSpan = 4
+            Control = txtSubject
+            Row = 2
+          end>
+        DoubleBuffered = True
+        ParentDoubleBuffered = False
+        RowCollection = <
+          item
+            Value = 33.504898391225250000
+          end
+          item
+            Value = 33.329632444888350000
+          end
+          item
+            Value = 33.165469163886410000
+          end>
+        TabOrder = 3
+        OnResize = grdPnlResize
+        object lblNewTitle: TStaticText
+          AlignWithMargins = True
+          Left = 2
+          Top = 2
+          Width = 423
+          Height = 28
+          Hint = 'Press "Change..." to select a different title.'
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Align = alClient
+          Caption = ' General Medicine Note '
+          Color = clCream
+          ParentColor = False
+          ParentShowHint = False
+          ShowAccelChar = False
+          ShowHint = True
+          TabOrder = 0
+          Transparent = False
+        end
+        object stAuthor: TStaticText
+          AlignWithMargins = True
+          Left = 429
+          Top = 2
+          Width = 193
+          Height = 28
+          Hint = 'Press "Change..." to select a different author.'
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Align = alClient
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Winchester,Charles Emerson III'
+          Color = clBtnFace
+          ParentColor = False
+          ParentShowHint = False
+          ShowAccelChar = False
+          ShowHint = True
+          TabOrder = 1
+          Transparent = False
+        end
+        object lblVisit: TStaticText
+          AlignWithMargins = True
+          Left = 2
+          Top = 34
+          Width = 282
+          Height = 28
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Align = alClient
+          Caption = 'Vst: 10/20/99 Pulmonary Clinic, Dr. Welby'
+          Color = clBtnFace
+          ParentColor = False
+          ShowAccelChar = False
+          TabOrder = 2
+          Transparent = False
+        end
+        object stRefDate: TStaticText
+          AlignWithMargins = True
+          Left = 288
+          Top = 34
+          Width = 137
+          Height = 28
+          Hint = 'Press "Change..." to change date/time of note.'
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Align = alClient
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'stRefDate'
+          ParentShowHint = False
+          ShowAccelChar = False
+          ShowHint = True
+          TabOrder = 3
+        end
+        object stCosigner: TStaticText
+          AlignWithMargins = True
+          Left = 429
+          Top = 34
+          Width = 193
+          Height = 28
+          Hint = 'Press "Change..." to select a different cosigner.'
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Align = alClient
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Expected Cosigner: Winchester,Charles Emerson III'
+          Color = clBtnFace
+          ParentColor = False
+          ParentShowHint = False
+          ShowAccelChar = False
+          ShowHint = True
+          TabOrder = 4
+          Transparent = False
+        end
+        object cmdChange: TButton
+          AlignWithMargins = True
+          Left = 626
+          Top = 34
+          Width = 96
+          Height = 28
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Action = acChange
+          Align = alClient
+          Caption = 'Change ...'
+          Constraints.MaxHeight = 57
+          TabOrder = 5
+          OnExit = cmdChangeExit
+        end
+        object lblSubject: TStaticText
+          Left = 0
+          Top = 64
+          Width = 60
+          Height = 17
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Align = alTop
+          Caption = 'Subject:'
+          TabOrder = 6
+        end
+        object txtSubject: TCaptionEdit
+          AlignWithMargins = True
+          Left = 62
+          Top = 66
+          Width = 660
+          Height = 21
+          Hint = 'Subject is limited to a maximum of 80 characters.'
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Align = alTop
+          MaxLength = 80
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 7
+          Text = 'txtSubject'
+          Caption = #1
+        end
       end
     end
   end
@@ -629,33 +938,6 @@ inherited frmNotes: TfrmNotes
         'Component = memNewNote'
         'Status = stsDefault')
       (
-        'Component = pnlFields'
-        'Status = stsDefault')
-      (
-        'Component = stRefDate'
-        'Status = stsDefault')
-      (
-        'Component = stAuthor'
-        'Status = stsDefault')
-      (
-        'Component = lblVisit'
-        'Status = stsDefault')
-      (
-        'Component = stCosigner'
-        'Status = stsDefault')
-      (
-        'Component = lblSubject'
-        'Status = stsDefault')
-      (
-        'Component = lblNewTitle'
-        'Status = stsDefault')
-      (
-        'Component = cmdChange'
-        'Status = stsDefault')
-      (
-        'Component = txtSubject'
-        'Status = stsDefault')
-      (
         'Component = stTitle'
         'Status = stsDefault')
       (
@@ -669,9 +951,6 @@ inherited frmNotes: TfrmNotes
         'Status = stsDefault')
       (
         'Component = lvNotes'
-        'Status = stsDefault')
-      (
-        'Component = memPCEShow'
         'Status = stsDefault')
       (
         'Component = lstNotes'
@@ -759,59 +1038,108 @@ inherited frmNotes: TfrmNotes
         'Status = stsDefault')
       (
         'Component = PnlRight'
+        'Status = stsDefault')
+      (
+        'Component = CPMemNote'
+        'Status = stsDefault')
+      (
+        'Component = CPMemNewNote'
+        'Status = stsDefault')
+      (
+        'Component = memPCERead'
+        'Status = stsDefault')
+      (
+        'Component = memPCEWrite'
+        'Status = stsDefault')
+      (
+        'Component = grdPnl'
+        'Status = stsDefault')
+      (
+        'Component = lblNewTitle'
+        'Status = stsDefault')
+      (
+        'Component = stAuthor'
+        'Status = stsDefault')
+      (
+        'Component = lblVisit'
+        'Status = stsDefault')
+      (
+        'Component = stRefDate'
+        'Status = stsDefault')
+      (
+        'Component = stCosigner'
+        'Status = stsDefault')
+      (
+        'Component = cmdChange'
+        'Status = stsDefault')
+      (
+        'Component = lblSubject'
+        'Status = stsDefault')
+      (
+        'Component = txtSubject'
         'Status = stsDefault'))
   end
   object fldAccessReminders: TVA508ComponentAccessibility
-    Component = frmDrawers.btnTemplate
+    Component = frmDrawers.btnReminder
+    OnStateQuery = fldAccessRemindersStateQuery
+    OnInstructionsQuery = fldAccessRemindersInstructionsQuery
     ComponentName = 'Drawer'
-    Left = 72
+    Left = 24
     Top = 64
   end
   object imgLblReminders: TVA508ImageListLabeler
     Components = <
       item
+        Component = frmDrawers.tvReminders
       end>
     Labels = <>
     RemoteLabeler = dmodShared.imgLblReminders
-    Left = 104
+    Left = 112
     Top = 64
   end
   object imgLblTemplates: TVA508ImageListLabeler
     Components = <
       item
+        Component = frmDrawers.tvTemplates
       end>
     Labels = <>
     RemoteLabeler = dmodShared.imgLblHealthFactorLabels
-    Left = 104
-    Top = 96
+    Left = 112
+    Top = 128
   end
   object fldAccessTemplates: TVA508ComponentAccessibility
-    Component = cmdPCE
+    Component = frmDrawers.btnTemplate
+    OnStateQuery = fldAccessTemplatesStateQuery
+    OnInstructionsQuery = fldAccessTemplatesInstructionsQuery
     ComponentName = 'Drawer'
-    Left = 72
-    Top = 96
+    Left = 24
+    Top = 120
   end
   object imgLblNotes: TVA508ImageListLabeler
     Components = <
       item
+        Component = lvNotes
       end
       item
+        Component = tvNotes
       end>
     Labels = <>
     RemoteLabeler = dmodShared.imgLblNotes
-    Left = 104
-    Top = 139
+    Left = 24
+    Top = 251
   end
   object imgLblImages: TVA508ImageListLabeler
     Components = <
       item
+        Component = lvNotes
       end
       item
+        Component = tvNotes
       end>
     Labels = <>
     RemoteLabeler = dmodShared.imgLblImages
-    Left = 104
-    Top = 163
+    Left = 24
+    Top = 323
   end
   object mnuNotes: TMainMenu
     Left = 465
@@ -1260,6 +1588,7 @@ inherited frmNotes: TfrmNotes
     object acNewNote: TAction
       Category = 'Buttons'
       Caption = '&New Progress Note...'
+      Enabled = False
       Hint = 'Creates a new progress note'
       ShortCut = 24654
       OnExecute = acNewNoteExecute
@@ -1481,6 +1810,7 @@ inherited frmNotes: TfrmNotes
       Category = 'Options'
       Caption = '&Create New Shared Template...'
       OnExecute = acNewSharedExecute
+      OnUpdate = acNewSharedUpdate
     end
     object acEditDialogFields: TAction
       Category = 'Options'

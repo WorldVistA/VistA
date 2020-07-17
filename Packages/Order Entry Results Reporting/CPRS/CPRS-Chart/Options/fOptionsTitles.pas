@@ -64,7 +64,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rOptions, uOptions, rCore, rTIU, rConsults, rDCSumm;
+  rOptions, uOptions, rCore, rTIU, rConsults, rDCSumm, VAUtils;
 
 procedure DialogOptionsTitles(topvalue, leftvalue, fontsize: integer; var actiontype: Integer);
 // create the form and make it modal, return an action
@@ -84,7 +84,7 @@ begin
         Top := topvalue;
         Left := leftvalue;
       end;
-      ResizeAnchoredFormToFont(frmOptionsTitles);
+      //ResizeAnchoredFormToFont(frmOptionsTitles);
       ShowModal;
       actiontype := btnOK.Tag;
     end;
@@ -100,7 +100,7 @@ begin
   FLastClass := -1;
   with cboDocumentClass do
   begin
-    FastAssign(rpcGetClasses, cboDocumentClass.Items);
+    rpcGetClasses(cboDocumentClass.Items);
     Items.Add(IntToStr(IdentifyConsultsClass) + U + 'Consults');
     for i := 0 to Items.Count - 1 do
       if Piece(Items[i], '^', 2) = 'Progress Notes' then
@@ -124,51 +124,62 @@ end;
 procedure TfrmOptionsTitles.cboDocumentClassClick(Sender: TObject);
 var
   aList: TStringList;
-  defaultIEN: integer;
+  defaultIEN: Integer;
 begin
   if btnSaveChanges.Enabled then
-  begin
-    if InfoBox('Do you want to save changes to your '
-        + Piece(cboDocumentClass.Items[FLastClass], '^', 2) + ' defaults?',
-        'Confirmation', MB_YESNO or MB_ICONQUESTION) = IDYES then
-      btnSaveChangesClick(self);
-  end;
+    begin
+      if InfoBox('Do you want to save changes to your '
+      + Piece(cboDocumentClass.Items[FLastClass], '^', 2) + ' defaults?',
+      'Confirmation', MB_YESNO or MB_ICONQUESTION) = IDYES then
+        btnSaveChangesClick(self);
+    end;
   cboDocumentTitles.Text := '';
   cboDocumentTitles.InitLongList('');
   aList := TStringList.Create;
-  with lstYourTitles do
-  begin
-    FastAssign(rpcGetTitlesForUser(cboDocumentClass.ItemIEN), aList);
-    SortByPiece(aList, '^', 3);
-    FastAssign(aList, lstYourTitles.Items);
-    defaultIEN := rpcGetTitleDefault(cboDocumentClass.ItemIEN);
-    if defaultIEN > 0 then SelectByIEN(defaultIEN)
-    else ItemIndex := -1;
-    if (ItemIndex > -1) and (defaultIEN > 0) then
-    begin
-      lblDefault.Caption := DisplayText[ItemIndex];
-      lblDefault.Tag := ItemIEN;
-    end
-    else
-    begin
-      lblDefault.Caption := '<no default specified>';
-      lblDefault.Tag := 0;
-    end;
+  try
+    with lstYourTitles do
+      begin
+        rpcGetTitlesForUser(cboDocumentClass.ItemIEN, aList);
+        SortByPiece(aList, '^', 3);
+        FastAssign(aList, lstYourTitles.Items);
+        defaultIEN := rpcGetTitleDefault(cboDocumentClass.ItemIEN);
+        if defaultIEN > 0 then SelectByIEN(defaultIEN)
+        else ItemIndex := -1;
+        if (ItemIndex > -1) and (defaultIEN > 0) then
+          begin
+            lblDefault.Caption := DisplayText[ItemIndex];
+            lblDefault.Tag := ItemIEN;
+          end
+        else
+          begin
+            lblDefault.Caption := '<no default specified>';
+            lblDefault.Tag := 0;
+          end;
+      end;
+    lstYourTitlesChange(self);
+    btnSaveChanges.Enabled := false;
+    FLastClass := cboDocumentClass.ItemIndex;
+    CheckEnable;
+  finally
+    FreeAndNil(aList);
   end;
-  lstYourTitlesChange(self);
-  btnSaveChanges.Enabled := false;
-  FLastClass := cboDocumentClass.ItemIndex;
-  aList.Free;
-  CheckEnable;
 end;
 
 procedure TfrmOptionsTitles.cboDocumentTitlesNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  aResults: TStringList;
 begin
   with cboDocumentTitles do
     begin
-      HideSynonyms := (cboDocumentClass.ItemIEN <> CLS_PROGRESS_NOTES);
-      ForDataUse(rpcGetTitlesForClass(cboDocumentClass.ItemIEN, StartFrom, Direction));
+      aResults := TStringList.Create;
+      try
+        HideSynonyms := (cboDocumentClass.ItemIEN <> CLS_PROGRESS_NOTES);
+        rpcGetTitlesForClass(cboDocumentClass.ItemIEN, StartFrom, Direction, aResults);
+        ForDataUse(aResults);
+      finally
+        FreeAndNil(aResults);
+      end;
     end;
 end;
 

@@ -126,4 +126,11 @@ inherited frmTemplateDialog: TfrmTemplateDialog
         'Component = frmTemplateDialog'
         'Status = stsDefault'))
   end
+  object CPTemp: TCopyEditMonitor
+    CopyMonitor = frmFrame.CPAppMon
+    RelatedPackage = 'Template'
+    TrackOnlyEdits = <>
+    Left = 8
+    Top = 48
+  end
 end

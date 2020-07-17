@@ -10,7 +10,7 @@ inherited frmConsults: TfrmConsults
   OnHide = FormHide
   OnShow = FormShow
   ExplicitWidth = 731
-  ExplicitHeight = 479
+  ExplicitHeight = 480
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
@@ -44,6 +44,7 @@ inherited frmConsults: TfrmConsults
       Height = 4
       Cursor = crVSplit
       Align = alBottom
+      AutoSnap = False
     end
     object memPCEShow: TRichEdit
       Left = 0
@@ -60,6 +61,7 @@ inherited frmConsults: TfrmConsults
       ParentFont = False
       TabOrder = 2
       WantReturns = False
+      Zoom = 100
     end
     object pnlResults: TPanel
       Left = 0
@@ -70,11 +72,23 @@ inherited frmConsults: TfrmConsults
       BevelOuter = bvNone
       TabOrder = 0
       OnResize = pnlResultsResize
+      object spEditDetails: TSplitter
+        Left = 0
+        Top = 246
+        Width = 630
+        Height = 4
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        Visible = False
+        ExplicitLeft = 4
+        ExplicitTop = 217
+      end
       object memResults: TRichEdit
         Left = 0
         Top = 67
         Width = 630
-        Height = 283
+        Height = 179
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -86,6 +100,7 @@ inherited frmConsults: TfrmConsults
         ScrollBars = ssVertical
         TabOrder = 1
         WantTabs = True
+        Zoom = 100
         OnChange = memResultChange
         OnKeyDown = memResultsKeyDown
       end
@@ -211,6 +226,74 @@ inherited frmConsults: TfrmConsults
           Caption = 'Subject'
         end
       end
+      object CPMemResults: TCopyPasteDetails
+        Left = 0
+        Top = 250
+        Width = 630
+        Height = 100
+        Align = alBottom
+        BevelInner = bvRaised
+        BorderStyle = bsSingle
+        Constraints.MinHeight = 32
+        ShowCaption = False
+        TabOrder = 2
+        Visible = False
+        CopyMonitor = frmFrame.CPAppMon
+        CollapseBtn.Left = 605
+        CollapseBtn.Top = 0
+        CollapseBtn.Width = 17
+        CollapseBtn.Height = 20
+        CollapseBtn.Align = alRight
+        CollapseBtn.Caption = #218
+        CollapseBtn.Font.Charset = DEFAULT_CHARSET
+        CollapseBtn.Font.Color = clWindowText
+        CollapseBtn.Font.Height = -11
+        CollapseBtn.Font.Name = 'Wingdings'
+        CollapseBtn.Font.Style = []
+        CollapseBtn.ParentFont = False
+        CollapseBtn.TabOrder = 0
+        CollapseBtn.TabStop = False
+        EditMonitor.CopyMonitor = frmFrame.CPAppMon
+        EditMonitor.OnLoadPastedText = LoadPastedText
+        EditMonitor.OnPasteToMonitor = PasteToMonitor
+        EditMonitor.OnSaveTheMonitor = SaveTheMonitor
+        EditMonitor.RelatedPackage = '8925'
+        EditMonitor.TrackOnlyEdits = <>
+        InfoMessage.AlignWithMargins = True
+        InfoMessage.Left = 3
+        InfoMessage.Top = 3
+        InfoMessage.Width = 491
+        InfoMessage.Height = 49
+        InfoMessage.Align = alClient
+        InfoMessage.Font.Charset = ANSI_CHARSET
+        InfoMessage.Font.Color = clWindowText
+        InfoMessage.Font.Height = -11
+        InfoMessage.Font.Name = 'MS Sans Serif'
+        InfoMessage.Font.Style = []
+        InfoMessage.Lines.Strings = (
+          '<-- Please select the desired paste date')
+        InfoMessage.ParentFont = False
+        InfoMessage.ReadOnly = True
+        InfoMessage.ScrollBars = ssBoth
+        InfoMessage.TabOrder = 0
+        InfoMessage.WantReturns = False
+        InfoMessage.WordWrap = False
+        InfoMessage.Zoom = 100
+        InfoSelector.AlignWithMargins = True
+        InfoSelector.Left = 3
+        InfoSelector.Top = 3
+        InfoSelector.Width = 111
+        InfoSelector.Height = 49
+        InfoSelector.Style = lbOwnerDrawFixed
+        InfoSelector.Align = alClient
+        InfoSelector.ItemHeight = 13
+        InfoSelector.TabOrder = 0
+        OnHide = CPHide
+        OnShow = CPShow
+        SyncSizes = True
+        VisualEdit = memResults
+        SaveFindAfter = 0
+      end
     end
     object pnlRead: TPanel
       Left = 0
@@ -240,11 +323,23 @@ inherited frmConsults: TfrmConsults
         VertOffset = 6
         WordWrap = False
       end
+      object spReadDetails: TSplitter
+        Left = 0
+        Top = 246
+        Width = 630
+        Height = 4
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        Visible = False
+        ExplicitLeft = 4
+        ExplicitTop = 240
+      end
       object memConsult: TRichEdit
         Left = 0
         Top = 19
         Width = 630
-        Height = 331
+        Height = 227
         Align = alClient
         Color = clCream
         Ctl3D = True
@@ -266,6 +361,76 @@ inherited frmConsults: TfrmConsults
         TabOrder = 0
         WantReturns = False
         WordWrap = False
+        Zoom = 100
+      end
+      object CPMemConsult: TCopyPasteDetails
+        Left = 0
+        Top = 250
+        Width = 630
+        Height = 100
+        Align = alBottom
+        BevelInner = bvRaised
+        BorderStyle = bsSingle
+        Caption = 'CPMemConsult'
+        Constraints.MinHeight = 32
+        ShowCaption = False
+        TabOrder = 1
+        Visible = False
+        CopyMonitor = frmFrame.CPAppMon
+        CollapseBtn.Left = 605
+        CollapseBtn.Top = 0
+        CollapseBtn.Width = 17
+        CollapseBtn.Height = 20
+        CollapseBtn.Align = alRight
+        CollapseBtn.Caption = #218
+        CollapseBtn.Font.Charset = DEFAULT_CHARSET
+        CollapseBtn.Font.Color = clWindowText
+        CollapseBtn.Font.Height = -11
+        CollapseBtn.Font.Name = 'Wingdings'
+        CollapseBtn.Font.Style = []
+        CollapseBtn.ParentFont = False
+        CollapseBtn.TabOrder = 0
+        CollapseBtn.TabStop = False
+        EditMonitor.CopyMonitor = frmFrame.CPAppMon
+        EditMonitor.OnCopyToMonitor = CopyToMonitor
+        EditMonitor.OnLoadPastedText = LoadPastedText
+        EditMonitor.OnSaveTheMonitor = SaveTheMonitor
+        EditMonitor.RelatedPackage = '8925'
+        EditMonitor.TrackOnlyEdits = <>
+        InfoMessage.AlignWithMargins = True
+        InfoMessage.Left = 3
+        InfoMessage.Top = 3
+        InfoMessage.Width = 491
+        InfoMessage.Height = 49
+        InfoMessage.Align = alClient
+        InfoMessage.Font.Charset = ANSI_CHARSET
+        InfoMessage.Font.Color = clWindowText
+        InfoMessage.Font.Height = -11
+        InfoMessage.Font.Name = 'MS Sans Serif'
+        InfoMessage.Font.Style = []
+        InfoMessage.Lines.Strings = (
+          '<-- Please select the desired paste date')
+        InfoMessage.ParentFont = False
+        InfoMessage.ReadOnly = True
+        InfoMessage.ScrollBars = ssBoth
+        InfoMessage.TabOrder = 0
+        InfoMessage.WantReturns = False
+        InfoMessage.WordWrap = False
+        InfoMessage.Zoom = 100
+        InfoSelector.AlignWithMargins = True
+        InfoSelector.Left = 3
+        InfoSelector.Top = 3
+        InfoSelector.Width = 111
+        InfoSelector.Height = 49
+        InfoSelector.Style = lbOwnerDrawFixed
+        InfoSelector.Align = alClient
+        InfoSelector.ItemHeight = 13
+        InfoSelector.TabOrder = 0
+        OnHide = CPHide
+        OnShow = CPShow
+        SyncSizes = True
+        VisualEdit = memConsult
+        SaveFindAfter = 0
       end
     end
   end
@@ -545,6 +710,12 @@ inherited frmConsults: TfrmConsults
         'Status = stsDefault')
       (
         'Component = frmConsults'
+        'Status = stsDefault')
+      (
+        'Component = CPMemConsult'
+        'Status = stsDefault')
+      (
+        'Component = CPMemResults'
         'Status = stsDefault'))
   end
   object popNoteMemo: TPopupMenu

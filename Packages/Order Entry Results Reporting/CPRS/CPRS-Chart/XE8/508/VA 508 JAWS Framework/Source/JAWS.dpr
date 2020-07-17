@@ -25,7 +25,8 @@ uses
   FSAPILib_TLB in 'FSAPILib_TLB.pas',
   U_LogObject in 'U_LogObject.pas',
   U_Splash in 'U_Splash.pas',
-  U_SplashScreen in 'U_SplashScreen.pas' {SplashScrn};
+  U_SplashScreen in 'U_SplashScreen.pas' {SplashScrn},
+  ORProcessUtilities in 'ORProcessUtilities.pas';
 
 {$Ifdef VER180}
  {$E SR}

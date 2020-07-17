@@ -69,7 +69,7 @@ implementation
 {$R *.DFM}
 
 uses
-  fEncounterFrame, VA508AccessibilityRouter;
+  fEncounterFrame, VA508AccessibilityRouter, VAUtils;
 
 
 {///////////////////////////////////////////////////////////////////////////////

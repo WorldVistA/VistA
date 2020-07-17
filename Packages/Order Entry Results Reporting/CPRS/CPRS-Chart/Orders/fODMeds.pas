@@ -452,7 +452,7 @@ const
   TX_OUTPT_IV   = 'This patient has not been admitted.  Only IV orders may be entered.';
   TX_QTY_NV     = 'Unable to validate quantity.';
   TX_QTY_MAIL   = 'Quantity for mailed items must be a whole number.';
-  TX_SUPPLY_LIM = 'Days Supply may not be greater than 90.';
+  TX_SUPPLY_LIM = 'Days Supply may not be greater than ';
   TX_SUPPLY_LIM1 = 'Days Supply may not be less than 1.';
   TX_SUPPLY_NINT= 'Days Supply is an invalid number.';
   TC_RESTRICT   = 'Ordering Restrictions';
@@ -528,7 +528,7 @@ begin
     //cboXSchedule.ListItemsOnly := True;
   end;
   with grdDoses do
-  begin                                          
+  begin
     ColWidths[0] := 8;  // select
     ColWidths[1] := 160; // dosage
     ColWidths[2] := 82;  // route
@@ -862,7 +862,7 @@ end;
 
 procedure TfrmODMeds.Validate(var AnErrMsg: string);
 var
-  i,ie,code, curSupply, tempRefills: Integer;
+  i,ie,code, curSupply, tempRefills, maxDS: Integer;
   curDispDrug, tmpError, temp, x: string;
 
   procedure SetError(const x: string);
@@ -965,8 +965,15 @@ begin
            end
          else
            begin
-              SetError(TX_DOSE_LEN);
-              cboDosage.SetFocus;  //CQ: 7467
+               if self.tabDose.TabIndex = TI_COMPLEX then
+               begin
+                  SetError('Dosage: ' + Responses.IValueFor('INSTR', i) + CRLF + TX_DOSE_LEN);
+               end
+               else
+               begin
+                  SetError(TX_DOSE_LEN);
+                  cboDosage.SetFocus;  //CQ: 7467
+               end;
            end;
       end;
     end;
@@ -1051,7 +1058,8 @@ begin
         SetError(TX_SUPPLY_NINT);
         Exit;
       end;
-      if (StrToIntDef(Responses.IValueFor('SUPPLY', 1), 0) > 90) then SetError(TX_SUPPLY_LIM);
+      maxDS := GetMaxDS(Responses.IValueFor('ORDERABLE', 1),Responses.IValueFor('DRUG', 1));
+      if (StrToIntDef(Responses.IValueFor('SUPPLY', 1), 0) > maxDS) then SetError(TX_SUPPLY_LIM + IntToStr(maxDS));
       if (StrToIntDef(Responses.IValueFor('SUPPLY', 1), 0) < 1)  then SetError(TX_SUPPLY_LIM1);
       //Supply := ValidateDaySupplyandQuantityErrorMsg(strtoInt(Responses.IValueFor('SUPPLY',1)));
       //if Supply <> '' then  SetError(Supply);
@@ -1068,9 +1076,17 @@ begin
 end;
 
 procedure TfrmODMeds.SetControlsInpatient;
+var
+  aLst: TStringList;
 begin
   FillerID := 'PSI';
-  CtrlInits.LoadDefaults(ODForMedsIn);
+  aLst := TStringList.Create;
+  try
+    ODForMedsIn(aLst);
+    CtrlInits.LoadDefaults(aLst);
+  finally
+    FreeAndNil(aLst);
+  end;
   lblPriority.Top := pnlFields.Height - cboPriority.Height - lblPriority.Height - 1;
   cboPriority.Top := pnlFields.Height - cboPriority.Height;
   lblDays.Visible := False;
@@ -1094,9 +1110,17 @@ begin
 end;
 
 procedure TfrmODMeds.SetControlsOutpatient;
+var
+  aLst: TStringList;
 begin
   FillerID := 'PSO';
-  CtrlInits.LoadDefaults(ODForMedsOut);
+  aLst := TStringList.Create;
+  try
+    ODForMedsOut(aLst);
+    CtrlInits.LoadDefaults(aLst);
+  finally
+    FreeAndNil(aLst);
+  end;
   lblPriority.Top := lblQuantity.Top;
   cboPriority.Top := txtQuantity.Top;
   lblDays.Visible := True;
@@ -1116,8 +1140,9 @@ begin
   chkDoseNow.Visible := False;
   lblAdminTime.Visible := False;
   lblAdminSch.Visible := False;
-  if cboXSequence.Items.IndexOf('except') = -1 then cboXSequence.Items.Add('except');
-  
+  if cboXSequence.Items.IndexOf('except') > -1 then cboXSequence.Items.Delete(cboXSequence.Items.IndexOf('except'));
+
+
 end;
 
 { Navigate medication selection lists ------------------------------------------------------- }
@@ -1656,7 +1681,7 @@ begin
   else ShowMedSelect;                             // show the selection fields
   FNoZERO   := False;
   if FQOInitial = True then FQOInitial := False;
-  
+
 end;
 
 procedure TfrmODMeds.ResetOnMedChange;
@@ -1746,6 +1771,7 @@ var
   QOPiUnChk: boolean;
   PKIEnviron: boolean;
   AResponse: TResponse;
+  aLst: TStringList;
 begin
   // clear controls?
   cboDosage.Tag := -1;
@@ -1758,7 +1784,13 @@ begin
   with CtrlInits do
   begin
     // set up CtrlInits for orderable item
-    LoadOrderItem(OIForMed(txtMed.Tag, FInptDlg, IncludeOIPI, PKIEnviron));
+      aLst := TStringList.Create;
+      try
+        OIForMed(aLst, txtMed.Tag, FInptDlg, IncludeOIPI, PKIEnviron);
+        LoadOrderItem(aLst);
+      finally
+        FreeAndNil(aLst);
+      end;
     // set up lists & initial values based on orderable item
     SetControl(txtMed,       'Medication');
         if (self.MedName <> '') then
@@ -2080,6 +2112,7 @@ begin
     x := ValueOfResponse(FLD_SCHEDULE, 1);
     if Length(x) > 0 then UpdateStartExpires(x);
   end;
+  SetLength(InstanceNames, 0);
 end;
 
 procedure TfrmODMeds.ShowMedSelect;
@@ -2418,7 +2451,7 @@ begin
       (ValFor(COL_SEQUENCE, 1)<>''))  then
       begin
         text := 'By switching to the Dosage Tab, ' ;
-         if (InfoBox(text +'you will lose all data on this screen. Click “OK” to continue or “Cancel”','Warning',MB_OKCANCEL)=IDCANCEL) then
+         if (InfoBox(text +'you will lose all data on this screen. Click "OK" to continue or "Cancel"','Warning',MB_OKCANCEL)=IDCANCEL) then
             begin
              if tabDose.TabIndex = 1 then tabDose.TabIndex := 0
              else tabDose.TabIndex := 1;
@@ -2453,7 +2486,7 @@ begin
                   begin
                     tmpAdmin := FAdminTimeText;
                     if FAdminTimeText <> 'Not defined for Clinic Locations' then self.lblAdminSch.Visible := False;
-                  end;               
+                  end;
                 ShowControlsComplex;
                 ResetOnTabChange;
                 txtNss.Left := grdDoses.Left + grdDoses.ColWidths[0] + grdDoses.ColWidths[1] + grdDoses.ColWidths[2] + 3;
@@ -3548,7 +3581,7 @@ begin
   COL_ROUTE:    with cboXRoute    do if Items.Count > 0 then DroppedDown := True;
   COL_SCHEDULE: with cboXSchedule do if Items.Count > 0 then DroppedDown := True;
   COL_SEQUENCE: with cboXSequence do if Items.Count > 0 then DroppedDown := True;
-                                     
+
   end;
   FDropColumn := -1;
 end;
@@ -3874,7 +3907,7 @@ begin
   begin
     cboXRoute.ItemIndex := -1;
     Exit;
-  end;  
+  end;
   cboXRouteClick(Self);
   cboXRoute.Tag := -1;
   cboXRoute.Hide;
@@ -3999,7 +4032,7 @@ Str: string;
 begin
   inherited;
   if not FInptDlg then Exit;
-  
+
   str := 'The Administration Times for this dose are: ' + CRLF + CRLF + VALFOR(VAL_ADMINTIME,grddoses.Row);
   str := str + CRLF + CRLF + AdminTimeHelpText;
   infoBox(str,'Administration Time Information',MB_OK);
@@ -4021,11 +4054,12 @@ end;
 
 procedure TfrmODMeds.txtXDurationChange(Sender: TObject);
 var
-  I, Code: Integer;
+  FLG, J, I, Code: Integer;
   OrgValue: string;
 begin
   inherited;
   if Changing then Exit;
+  txtQuantity.Tag := 0; //*SMT Reset on duration change.
   if (txtXDuration.Text <> '0') and (txtXDuration.Text <> '') then
   begin
     Val(txtXDuration.Text, I, Code);
@@ -4076,6 +4110,12 @@ begin
                end
              else grdDoses.Cells[COL_DURATION, pnlXDuration.Tag] := txtXDuration.Text;
        end;
+  //*SMT Reset if duration changed and duration has an open ended segment.
+  FLG := 0;
+  for J := 0 to grdDoses.Cols[COL_DURATION].Count - 1 do
+    if (grdDoses.Cells[COL_DOSAGE,J] <> '') AND (grdDoses.Cells[COL_DURATION,J] = '') then FLG := 1;
+  If (FLG = 0) then txtSupply.Tag := 0;
+
    // end;
   ControlChange(Self);
   UpdateRelated;
@@ -4158,7 +4198,7 @@ var
   // the following functions were created to get rid of a compile warning saying the
   // return value may be undefined - too much branching logic in the case statements
   // for the compiler to handle
-  
+
   function GetSingleDoseSchedule: string;
   begin
     Result := UpperCase(Trim(cboSchedule.Text));
@@ -4259,7 +4299,7 @@ var
       end;
     end;
   end;
-  
+
 begin
   Result := '';
   if ARow < 0 then                                // use single dose controls
@@ -4293,7 +4333,7 @@ begin
                      if ItemIndex > -1  then Result := Piece(Items[ItemIndex], U, 3);
     FLD_ROUTE_EX  : with cboRoute do
                      if ItemIndex > -1  then Result := Piece(Items[ItemIndex], U, 4);
-    FLD_SCHEDULE  : begin      
+    FLD_SCHEDULE  : begin
                       Result := GetSingleDoseSchedule;
                     end;
     FLD_SCHED_EX  : begin
@@ -4517,6 +4557,8 @@ begin
     if txtQuantity.Tag = 0    then UpdateControl := UPD_QUANTITY
     else if txtSupply.Tag = 0 then UpdateControl := UPD_SUPPLY;
   end;
+  if  (CurDuration <> FLastDuration) then UpdateControl := UPD_BOTH; //*SMT if Duration changed, update both.
+
   ADrug := Piece(CurDispDrug, U, 1);  // just use the first dispense drug (for clozapine chk)
   case UpdateControl of
   UPD_QUANTITY : begin
@@ -4640,7 +4682,7 @@ begin
                              //else Aschedule := ';' + CompSch;
                            end;
                        end;
-                     
+
                    end;
                end;
           end;
@@ -4727,7 +4769,7 @@ begin
         begin
           Admin := Self.grdDoses.Cells[COL_ADMINTIME, 1];
           if (Admin <> '') and (not CharInSet(Admin[1], ['0'..'9'])) then Admin := '';
-        end;           
+        end;
       LoadAdminInfo(ASchedule, txtMed.Tag, ShowText, AdminTime, Duration, Admin);
      end;
   if AdminTime > 0 then
@@ -4938,7 +4980,7 @@ begin
       else ClearMaxData;
     end;   *)
   //if (Not FInptDlg) and (ValidateMaxQuantity(strtoInt(txtQuantity.Text)) = false) then Exit;
-  
+
 
   //timCheckChangesTimer(Self);
   DropLastSequence;
@@ -4964,7 +5006,7 @@ const
   T2 = #13#13'The "Give additional dose now" order has an administration schedule of "';
   T3 = #13'The "Ongoing" order has an administration schedule of "';
   T4 = #13#13'Do you want to continue?';
-  T5 = '" and a priority of "';            
+  T5 = '" and a priority of "';
   T1A = 'By checking the "Give additional dose now" box, you have actually entered a new order with the schedule "NOW"';
   T2A = ' in addition to the one you are placing for the same medication "';
 var
@@ -5445,7 +5487,7 @@ begin
                        ((lstQuick.ItemIndex > -1) and
                        (Assigned(lstQuick.Items[lstQuick.ItemIndex].Data)) and
                        (Integer(lstQuick.Selected.Data) > 0)) ;
-  if (btnSelect.Enabled) and (FOrderAction = ORDER_EDIT) then btnSelect.Enabled := false;  
+  if (btnSelect.Enabled) and (FOrderAction = ORDER_EDIT) then btnSelect.Enabled := false;
   if (btnSelect.Enabled) and (FRemoveText) then
     txtMed.Text := '';
 end;
@@ -5459,7 +5501,7 @@ begin
       if (self.chkDoseNow.Visible = true) and (self.chkDoseNow.Checked = true) then self.chkDoseNow.Checked := false;
       self.chkDoseNow.Visible := false;
     end;
-  if status = true then self.chkDoseNow.Visible := true;  
+  if status = true then self.chkDoseNow.Visible := true;
 end;
 
 procedure TfrmODMeds.DispOrderMessage(const AMessage: string);

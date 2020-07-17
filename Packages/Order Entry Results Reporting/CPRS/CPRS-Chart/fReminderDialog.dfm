@@ -22,7 +22,7 @@ inherited frmRemDlg: TfrmRemDlg
   TextHeight = 13
   object splTxtData: TSplitter [0]
     Left = 0
-    Top = 210
+    Top = 206
     Width = 529
     Height = 3
     Cursor = crVSplit
@@ -34,13 +34,13 @@ inherited frmRemDlg: TfrmRemDlg
     Left = 0
     Top = 0
     Width = 529
-    Height = 210
+    Height = 206
     HorzScrollBar.Tracking = True
     VertScrollBar.Tracking = True
     Align = alClient
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Courier New'
     Font.Style = []
     ParentFont = False
@@ -52,13 +52,13 @@ inherited frmRemDlg: TfrmRemDlg
     Left = 0
     Top = 0
     Width = 529
-    Height = 210
+    Height = 206
     HorzScrollBar.Tracking = True
     VertScrollBar.Tracking = True
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'Courier New'
     Font.Style = []
     ParentFont = False
@@ -67,7 +67,7 @@ inherited frmRemDlg: TfrmRemDlg
   end
   object pnlFrmBottom: TPanel [3]
     Left = 0
-    Top = 213
+    Top = 209
     Width = 529
     Height = 159
     Align = alBottom
@@ -108,7 +108,7 @@ inherited frmRemDlg: TfrmRemDlg
         Color = clCream
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         Constraints.MinHeight = 30
@@ -117,6 +117,7 @@ inherited frmRemDlg: TfrmRemDlg
         ScrollBars = ssVertical
         TabOrder = 1
         WantReturns = False
+        Zoom = 100
       end
       object reText: TRichEdit
         Left = 1
@@ -137,6 +138,7 @@ inherited frmRemDlg: TfrmRemDlg
         TabOrder = 0
         WantReturns = False
         WordWrap = False
+        Zoom = 100
       end
       object gpButtons: TGridPanel
         Left = 1

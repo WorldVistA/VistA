@@ -3,29 +3,24 @@ inherited frmOMSet: TfrmOMSet
   Top = 191
   BorderIcons = []
   Caption = 'Selected Orders'
-  ClientHeight = 249
-  ClientWidth = 140
+  ClientHeight = 202
+  ClientWidth = 116
   FormStyle = fsStayOnTop
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ExplicitWidth = 113
-  ExplicitHeight = 229
+  ExplicitWidth = 132
   DesignSize = (
-    140
-    249)
-  PixelsPerInch = 120
-  TextHeight = 16
+    116
+    202)
+  PixelsPerInch = 96
+  TextHeight = 13
   object lstSet: TCheckListBox [0]
     Left = 0
     Top = 0
-    Width = 128
-    Height = 203
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 104
+    Height = 165
     Anchors = [akLeft, akTop, akRight, akBottom]
     Color = clBtnFace
     Enabled = False
@@ -33,14 +28,10 @@ inherited frmOMSet: TfrmOMSet
     TabOrder = 0
   end
   object cmdInterupt: TButton [1]
-    Left = 5
-    Top = 212
-    Width = 118
-    Height = 32
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 4
+    Top = 172
+    Width = 96
+    Height = 26
     Anchors = [akLeft, akRight, akBottom]
     Caption = 'Stop Order Set'
     TabOrder = 1
