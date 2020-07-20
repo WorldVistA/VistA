@@ -362,7 +362,9 @@ uses
   oCoverSheetGrid in 'Cover Sheet\oCoverSheetGrid.pas',
   rODRTC in 'Orders\rODRTC.pas',
   uVersionCheck in 'Utils\uVersionCheck.pas',
-  uOwnerWrapper in 'Utils\uOwnerWrapper.pas';
+  uOwnerWrapper in 'Utils\uOwnerWrapper.pas',
+  fGN_RPCLog in 'Tools\fGN_RPCLog.pas' {frmRPCLog},
+  uGN_RPCLog in 'Tools\uGN_RPCLog.pas';
 
 {$R *.TLB}
 
@@ -386,6 +388,7 @@ begin
   Application.CreateForm(TfrmFrame, frmFrame);
   Application.CreateForm(TfrmSearchStop, frmSearchStop);
   Application.CreateForm(TfrmProbFreetext, frmProbFreetext);
+  Application.CreateForm(TfrmRPCLog, frmRPCLog);
   if assigned(frmSplash) then
     frmSplash.Free;                               // close & free splash screen
 
