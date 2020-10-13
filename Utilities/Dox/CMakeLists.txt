@@ -191,14 +191,15 @@ if(GENERATE_VIVIAN)
 
   # 10. Run Requirements parser to generate the data needed for the BFF & Requirements page
   # to json and html (ViViaN)
-  set(DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}")
-  set(DOCUMENT_VISTA_REQUIREMENTS_INPUT CACHE FILEPATH "")
-  mark_as_advanced(DOCUMENT_VISTA_REQUIREMENTS_INPUT)
-  set(DOCUMENT_VISTA_REQUIREMENTS_PASTDATA CACHE FILEPATH "")
-  mark_as_advanced(DOCUMENT_VISTA_REQUIREMENTS_PASTDATA)
-  file(MAKE_DIRECTORY "${DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR}/requirements")
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/RequirementsParser.cmake.in ${SCRIPT_OUTPUT_DIR}/RequirementsParser.cmake @ONLY)
-  add_test(RequirementsParser ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/RequirementsParser.cmake)
+  # 10/13/2020 - Comment out as files lost after OSEHRA's demise
+  #set(DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR "${DOCUMENT_VISTA_FILES_OUTPUT_DIR}")
+  #set(DOCUMENT_VISTA_REQUIREMENTS_INPUT CACHE FILEPATH "")
+  #mark_as_advanced(DOCUMENT_VISTA_REQUIREMENTS_INPUT)
+  #set(DOCUMENT_VISTA_REQUIREMENTS_PASTDATA CACHE FILEPATH "")
+  #mark_as_advanced(DOCUMENT_VISTA_REQUIREMENTS_PASTDATA)
+  #file(MAKE_DIRECTORY "${DOCUMENT_VISTA_REQUIREMENTS_OUTPUT_DIR}/requirements")
+  #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/RequirementsParser.cmake.in ${SCRIPT_OUTPUT_DIR}/RequirementsParser.cmake @ONLY)
+  #add_test(RequirementsParser ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/RequirementsParser.cmake)
 
 # 11. Run a task to generate the DataTables display of the name and numberspace information
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/NameNumberspaceGen.cmake.in ${SCRIPT_OUTPUT_DIR}/NameNumberspaceGen.cmake @ONLY)
