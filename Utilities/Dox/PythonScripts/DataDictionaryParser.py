@@ -4,6 +4,7 @@
 # the FileMan Schema and dependencies among packages.
 #---------------------------------------------------------------------------
 # Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2021 Sam Habiel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -155,6 +156,7 @@ class FileManFieldSectionParser(IDDSectionParser):
         self._curFile = None
         self._field = None
         self._isSubFile = False
+        self._isInvalid = False
 
     def onSectionStart(self, line, section, Global, CrossReference):
         self._lines = []
@@ -165,7 +167,10 @@ class FileManFieldSectionParser(IDDSectionParser):
         self._isSubFile = float(fileNo) != float(Global.getFileNo())
         if self._isSubFile:
             self._curFile = Global.getSubFileByFileNo(fileNo)
-            assert self._curFile, "Could not find subFile [%s] in file [%s] line [%s]" % (fileNo, Global.getFileNo(), line)
+            if not self._curFile:
+                logger.error("Invalid subfile [%s] in file [%s] in line [%s]" % (fileNo, Global.getFileNo(), line))
+                self._isInvalid = True
+                return
         else:
             self._curFile = Global
         restOfLineStart = line.find("," + fieldNo) + len(fieldNo)
@@ -219,7 +224,10 @@ class FileManFieldSectionParser(IDDSectionParser):
             self.__parseFieldAttributes__(fType)
 
     def onSectionEnd(self, line, section, Global, CrossReference):
-        if not self._lines:
+        if self._isInvalid:
+            self.__resetVar__()
+            pass
+        elif not self._lines:
             pass
         #elif self._isSubFilePointer and self._pointedToSubFile:
         #    self.__parsingSubFileDescription__()
@@ -394,7 +402,9 @@ class FileManFieldSectionParser(IDDSectionParser):
               if fLocation:
                   fLocation = line[line.find(fLocation):self.MAXIMIUM_TYPE_START_INDEX]
               self.__createFieldByType__(fieldNo, fType, fName, fLocation, line, Global, CrossReference)
-        assert self._field, "Could not find the right type for %s, %s, %s, %s, %s" % (fType, fLocation, fieldNo, line, self._curFile.getFileNo())
+        if not self._field:
+              logger.error("Could not find the right type for %s, %s, %s, %s, %s" % (fType, fLocation, fieldNo, line, self._curFile.getFileNo()))
+              self._field = FileManFieldFactory.createField(fieldNo, fName, FileManField.FIELD_TYPE_NONE, fLocation)
 
     def __stripFieldAttributes__(self, fType):
         outType = fType
@@ -416,6 +426,7 @@ class FileManFieldSectionParser(IDDSectionParser):
         self._isSubFile = False
         self._curFile = None
         self._field = None
+        self._isInvalid = False
 
 #===============================================================================
 # A class to parse Pointed T By section in Data Dictionary schema log file output
@@ -572,7 +583,7 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
         dataDictionaryLogFiles = os.path.join(dirName, pattern)
         allFiles = glob.glob(dataDictionaryLogFiles)
         for logFileName in allFiles:
-            logger.info("Start parsing log file [%s]" % logFileName)
+            logger.progress("Parsing log file [%s]" % logFileName)
             self.__parseDataDictionaryLogFile__(logFileName)
 
     def __parseDataDictionaryLogFile__(self, logFileName):
@@ -592,6 +603,8 @@ class DataDictionaryListFileLogParser(IDataDictionaryListFileLogParser):
             if not line: # ignore the empty line
                 continue
             section = self.__isSectionHeader__(line)
+            #if fileNo == "4.2" or fileNo == "162":
+            #    logger.progress(line)
             if section:
                 if self._curSect and self._curParser:
                     self._curParser.onSectionEnd(line, self._curSect, self._curGlobal, self._crossRef)
