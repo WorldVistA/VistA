@@ -192,23 +192,9 @@ class VistATaskmanUtil(object):
   def startTaskman(self, vistAClient, waitToCurrent=True):
     self.verifyTaskmanSiteParameter(vistAClient)
     connection = vistAClient.getConnection()
-    menuUtil = VistAMenuUtil(duz=1)
-    menuUtil.gotoTaskmanMgrUtilMenu(vistAClient)
-    connection.send("Restart Task Manager\r")
-    index = connection.expect(["ARE YOU SURE YOU WANT TO RESTART ANOTHER TASKMAN\?",
-                               "ARE YOU SURE YOU WANT TO RESTART TASKMAN\?"])
-    if index == 0:
-      connection.send("NO\r")
-    elif index == 1:
-      connection.send("YES\r")
-      connection.expect("Restarting...TaskMan restarted\!")
-    menuUtil.exitTaskmanMgrUtilMenu(vistAClient)
-    curStatus = self.getTaskmanStatus(vistAClient)
-    if self.isTaskmanInWaitState(curStatus):
-      self.removeTaskmanFromWait(vistAClient)
-    if waitToCurrent:
-      if not self.isTaskmanRunningCurrent(curStatus):
-        self.waitTaskmanToCurrent(vistAClient)
+    connection.send("D START^ZTMB\n")
+    vistAClient.waitForPrompt()
+    time.sleep(1)
 
   """
     Internal Implementation
