@@ -6,7 +6,7 @@ unit fFrame;
 {$WARN SYMBOL_PLATFORM OFF}
 {$DEFINE CCOWBROKER}
 
-{$undef debug}
+{ $ undef debug}  // -- Bad idea
 
 interface
 
@@ -15,7 +15,8 @@ uses
   ExtCtrls, Menus, StdCtrls, Buttons, ORFn, fPage, uConst, ORCtrls, Trpcb, Contnrs,
   OleCtrls, VERGENCECONTEXTORLib_TLB, ComObj, AppEvnts, fBase508Form, oPKIEncryption,
   VA508AccessibilityManager, RichEdit, fDebugReport, StrUtils, vcl.ActnList,
-  System.SyncObjs, U_CPTAppMonitor, ORNetIntf, system.JSON;
+  System.SyncObjs, U_CPTAppMonitor, ORNetIntf, system.JSON, Vcl.ExtDlgs, System.Actions,
+  fPDMPMgr, uPDMP;
 
 type
   TfrmFrame = class(TfrmBase508Form)
@@ -146,8 +147,20 @@ type
     CPAppMon: TCopyApplicationMonitor;
     pnlOTHD: TKeyClickPanel;
     lblOTHDDtl: TStaticText;  // rpk 11/28/2017
-    lblOTHDTitle: TStaticText;  // rpk 11/28/2017
-	  pnlOtherInfo: TKeyClickPanel;
+    lblOTHDTitle: TStaticText;
+    alPdmp: TActionList;
+    N1: TMenuItem;
+    acPDMPRequest: TAction;
+    acPDMPReview: TAction;
+    acPDMPCancel: TAction;
+    RequestPDMPData1: TMenuItem;
+    CancelPDMPRequest1: TMenuItem;
+    ReviewPDMPData1: TMenuItem;
+    PDMP1: TMenuItem;
+    acPDMPOptions: TAction;
+    acResetParams: TAction;
+    ResetParams1: TMenuItem;  // rpk 11/28/2017
+    pnlOtherInfo: TKeyClickPanel;
     procedure tabPageChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -270,13 +283,15 @@ type
     procedure StopPollBuff(Sender: TObject; var Error: Boolean);
     procedure pnlOTHDEnter(Sender: TObject); // rpk 1/5/2018
     procedure pnlOTHDExit(Sender: TObject);  // rpk 1/5/2018
-    procedure pnlOTHDClick(Sender: TObject);  // rpk 1/5/2018
-    procedure lblOTHDDtlClick(Sender: TObject);   // rpk 1/5/2018
-    procedure lblOTHDTitleClick(Sender: TObject);
+    procedure pnlOTHDClick(Sender: TObject);
     procedure pnlOTHDMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure pnlOTHDMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure acPDMPRequestExecute(Sender: TObject);
+    procedure acPDMPReviewExecute(Sender: TObject);
+    procedure acPDMPCancelExecute(Sender: TObject);
+    procedure acResetParamsExecute(Sender: TObject);
     procedure pnlOtherInfoClick(Sender: TObject);
     procedure pnlOtherInfoMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -321,6 +336,9 @@ type
     FOrderPrintForm: boolean;
     FReviewclick: boolean;
     FCtrlTabUsed: boolean;
+
+    fPDMPMgr: TfrmPDMP;
+
     fotherPanelUseColor: boolean;
     fotherPanelType: string;
     fotherPanelShowReportBox: boolean;
@@ -332,7 +350,7 @@ type
     procedure AfterAppException(Sender: TObject; E: Exception);
     function checkOtherForms(var Reason: String): boolean;
     function AllowContextChangeAll(var Reason: string):  Boolean;
-    procedure ClearPatient;
+    procedure ClearPatient(Fully: boolean = False);
     procedure ChangeFont(NewFontSize: Integer);
     procedure CreateTab(ATabID: integer; ALabel: string);
     procedure DetermineNextTab;
@@ -361,6 +379,17 @@ type
     procedure WMSetFocus(var Message: TMessage);   message WM_SETFOCUS;
     procedure WMSysCommand(var Message: TMessage); message WM_SYSCOMMAND;
     procedure UMNOTELIMIT(var Message: TMessage);  message UM_NOTELIMIT;
+
+    procedure UMPdmpLoading(var Message: TMessage); message UM_PDMP_Loading;
+    procedure UMPdmpDone(var Message: TMessage); message UM_PDMP_Done;
+    procedure UMPdmpReady(var Message: TMessage); message UM_PDMP_Ready;
+    procedure UMPdmpError(var Message: TMessage); message UM_PDMP_Error;
+    procedure UMPdmpNoteID(var Message: TMessage); message UM_PDMP_NOTE_ID;
+    procedure UMPdmpAbort(var Message: TMessage); message UM_PDMP_ABORT;
+    procedure UMPdmpReviewed(var Message: TMessage); message UM_PDMP_Reviewed;
+    procedure pdmpSetup(aPatientDFN:String = '');
+    procedure pdmpAlign;
+
     procedure UpdateECSParameter(var CmdParameter: string);
     function  ValidECSUser: boolean;
     procedure StartCCOWContextor;
@@ -381,6 +410,11 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure ModalEnd(Sender: TObject);
     Procedure GetExcludedFromMixed();
+
+    procedure setOTHD(aTitle,aDetails:String);
+    procedure ClearOTHD;
+    procedure updateOTHD;
+
   public
     EnduringPtSelSplitterPos, frmFrameHeight, pnlPatientSelectedHeight: integer;
     EnduringPtSelColumns: string;
@@ -409,6 +443,9 @@ type
     procedure SetUpCIRN;
     property DoNotChangeEncWindow: boolean read FDoNotChangeEncWindow write FDoNotChangeEncWindow;
     property OrderPrintForm: boolean read FOrderPrintForm write FOrderPrintForm;
+
+    function EditInProgress: String;
+    function SaveEditInProgress(var ShowMessage: Boolean): Boolean;
   end;
 
   TRpcRecord = record
@@ -446,8 +483,9 @@ implementation
 
 uses
   ORNet, rCore, fPtSelMsg, fPtSel, fCoverSheet, fProbs, fMeds, fOrders, rOrders, fNotes, fConsults, fDCSumm,
-  rMisc, Clipbrd, fLabs, fReports, rReports, fPtDemo, fEncnt, fPtCWAD, uCore, fAbout, fReview, {fxBroker,}
-  fxLists, fxServer, ORSystem, fRptBox, fSplash, rODAllergy, uInit, fLabTests, fLabInfo, uGlobalVar,
+  rMisc, Clipbrd, fLabs, fReports, rReports, fPtDemo, fEncnt, fPtCWAD, uCore, fAbout, fReview,
+  uGN_RPCLog,// replaces  fxBroker,fxServer,
+  fxLists, ORSystem, fRptBox, fSplash, rODAllergy, uInit, fLabTests, fLabInfo, uGlobalVar,
   uReminders, fReminderTree, ORClasses, fDeviceSelect, fDrawers, fReminderDialog, ShellAPI, rVitals,
   fOptions, fGraphs, fGraphData, rTemplates, fSurgery, rSurgery, uEventHooks, uSignItems,
   fDefaultEvent, rECS, fIconLegend, uOrders, fPtSelOptns, DateUtils, uSpell, uOrPtf, fPatientFlagMulti,
@@ -458,11 +496,14 @@ uses
   , VA508AccessibilityRouter, fOtherSchedule, VAUtils, uVA508CPRSCompatibility, fIVRoutes,
   fPrintLocation, fTemplateEditor, fTemplateDialog, fCombatVet, fFocusedControls,
   fViewNotifications, iCoverSheetIntf, AVCatcher, System.IniFiles, Wsockc, rOTH,
-  uVersionCheck, uGN_RPCLog;
+  uVersionCheck, uFormUtils
+  , oPDMPData, rPDMP
+  , uInfoBoxWithBtnControls;
 
 var
   IsRunExecuted: Boolean = FALSE;
   GraphFloat: TfrmGraphs;
+
   OTHDTitleCaptionStr, // OTHDTitle caption string
   OTHDTitleHintStr, // OTHDTitle hint string
   OTHDDtlCaptionStr,  // OTHD detail caption string
@@ -632,7 +673,7 @@ function TfrmFrame.AllowContextChangeAll(var Reason: string): Boolean;
 var
   Silent: Boolean;
 begin
-  if pnlNoPatientSelected.Visible then
+  if (Patient.DFN = '') or pnlNoPatientSelected.Visible then
   begin
     Result := True;
     exit;
@@ -644,7 +685,6 @@ begin
       Reason := 'COM_OBJECT_ACTIVE';
       Result:= False;
     end;
-
 
   if Result then Result := checkOtherForms(Reason);
   // frmCoverSheet will always AllowContextChange
@@ -691,7 +731,7 @@ begin
   pnlPostings.Caption := lblPtPostings.Caption + ' ' + lblPtCWAD.Caption;
 end;
 
-procedure TfrmFrame.ClearPatient;
+procedure TfrmFrame.ClearPatient(Fully: boolean = False);
 { call all pages to make sure patient related information is cleared (when switching patients) }
 var
   aCPRSTab: ICPRSTab;
@@ -702,25 +742,8 @@ begin
   lblPtAge.Caption      := '';
   pnlPatient.Caption    := '';
   lblPtCWAD.Caption     := '';
-  lblOTHDTitle.Caption  := '';  // rpk 3/27/2019
-  lblOTHDDtl.Caption       := '';  // rpk 12/5/2017
-  pnlOTHD.Hide;                 // rpk 12/6/2017
-  pnlOTHD.Enabled       := False; // rpk 12/6/2017
-  pnlOTHD.Color         := clBtnFace;  // rpk 4/12/2018
-  lblOTHDDtl.Enabled       := False; // rpk 4/6/2018
-  lblOTHDDtl.Color         := clBtnFace;  // rpk 4/12/2018
-  lblOTHDDtl.Font.Color    := clWindowText; // rpk 4/12/2018
-  lblOTHDDtl.Transparent   := True; // rpk 4/13/2018
-  lblOTHDTitle.Enabled  := False; // rpk 12/6/2017
-  lblOTHDTitle.Color    := clBtnFace; // rpk 4/13/2018
-  lblOTHDTitle.Font.Color    := clInfoText;  // rpk 4/12/2018
-  lblOTHDTitle.Transparent   := True; // rpk 4/13/2018
-  OTHDTitleCaptionStr          := '';  // rpk 3/27/2019
-  OTHDTitleHintStr          := '';  // rpk 3/27/2019
-  OTHDDtlCaptionStr          := '';  // rpk 1/5/2018
-  OTHDDtlHintStr          := '';  // rpk 1/5/2018
-  if Assigned(OTHDDspList) then
-    OTHDDspList.Clear;  // rpk 4/2/2019
+
+  clearOTHD;
 
   if DoNotChangeEncWindow = false then
      begin
@@ -768,6 +791,13 @@ begin
             + 'To prevent patient safety issues, CPRS is shutting down. Shutting down and then restarting CPRS will correct the problem, and you may continue working in CPRS.'
              + CRLF + CRLF + 'Please report all occurrences of this problem by contacting your CPRS Help Desk.', 'CPRS Error', MB_OK);
     frmFrame.Close;
+  end;
+  if Fully then
+  begin
+    Patient.DFN := '';
+    lblPtName.Caption := 'No Patient Selected';
+    Encounter.Clear;
+    HideEverything;
   end;
 end;
 
@@ -863,6 +893,9 @@ var
   end;
 
 begin
+{$IFDEF DEBUG}
+  setRetainedRPCMax(500); // default 100 is now too small
+{$ENDIF}
   FJustEnteredApp := false;
   SizeHolder := TSizeHolder.Create;
   FOldActiveFormChange := Screen.OnActiveFormChange;
@@ -951,65 +984,20 @@ begin
   // make sure we're using the matching server version
   FCreateProgress := FCP_CHKVER;
 
-(*
-  ClientVer := ClientVersion(Application.ExeName);
-  ServerVer := ServerVersion(TX_OPTION, ClientVer);
-  if (ServerVer = '0.0.0.0') then
-  begin
-    InfoBox('Unable to determine current version of server.', TX_OPTION, MB_OK);
-    Close;
-    Exit;
-  end;
-  ServerReq := Piece(FileVersionValue(Application.ExeName, FILE_VER_INTERNALNAME), ' ', 1);
-  if (ClientVer <> ServerReq) then
-  begin
-    InfoBox('Client "version" does not match client "required" server.', TC_CLIERR, MB_OK);
-    Close;
-    Exit;
-  end;
-  SAN := sCallV('XUS PKI GET UPN', []);
-  if SAN='' then DigitalSigningSetup1.Visible := True
-  else DigitalSigningSetup1.Visible := False;
-  if (CompareVersion(ServerVer, ServerReq) <> 0) then
-  begin
-    if (sCallV('ORWU DEFAULT DIVISION', [nil]) = '1') then
-    begin
-      if (InfoBox('Proceed with mismatched Client and Server versions?', TC_CLIERR, MB_YESNO) = ID_NO) then
+  if not IsCorrectVersion(TX_OPTION) then
+{$IFDEF DEBUG}
+    if InfoBox('Version mismatch or error' + CRLF + CRLF +
+      'Do you want to continue?', 'DEBUG',MB_YESNO) = mrNo  then
       begin
         Close;
-        Exit;
+        exit;
       end;
-    end
-    else
+{$ELSE}
     begin
-      if (CompareVersion(ServerVer, ServerReq) > 0) then // Server newer than Required
-      begin
-        // NEXT LINE COMMENTED OUT - CHANGED FOR VERSION 19.16, PATCH OR*3*155:
-        //      if GetUserParam('ORWOR REQUIRE CURRENT CLIENT') = '1' then
-        if (true) then // "True" statement guarantees "required" current version client.
-        begin
-          InfoBox(TX_VER1 + ClientVer + TX_VER2 + CRLF + ServerReq + TX_VER_REQ + TX_VER3 + ServerVer + '.' + TX_VER_OLD2, TC_VER, MB_OK);
-          Close;
-          Exit;
-        end;
-      end
-      else InfoBox(TX_VER1 + ClientVer + TX_VER2 + CRLF + ServerReq + TX_VER_REQ + TX_VER3 + ServerVer + '.' + TX_VER_OLD, TC_VER, MB_OK);
-    end;
-    if (CompareVersion(ServerVer, ServerReq) < 0) then // Server older then Required
-    begin
-      InfoBox(TX_VER1 + ClientVer + TX_VER2 + CRLF + ServerReq + TX_VER_REQ + TX_VER3 + ServerVer + '.' + TX_VER_NEW, TC_VER, MB_OK);
       Close;
       Exit;
     end;
-  end;
-*)
-  if not IsCorrectVersion(TX_OPTION) then
-    begin
-      CLose;
-      Exit;
-    end;
-
-
+{$ENDIF}
   User := TUser.Create;
   getSysUserParameters(user.DUZ);
   LoadExceptionLogger;
@@ -1071,6 +1059,7 @@ begin
   FlaggedPTList := TStringList.Create;
   HasFlag  := False;
   FlagList := TStringList.Create;
+
   OTHDDspList := TStringList.Create;  // rpk 4/2/2019
 
   //Set the mix case exclusion event
@@ -1124,6 +1113,17 @@ begin
   if User.IsReportsOnly then // Reports Only tab.
     ReportsOnlyDisplay; // Calls procedure to hide all components/menus not needed.
   InitialOrderVariables;
+
+ //PDMP Setup
+  pdmpGetParams;
+{$IFDEF DEBUG}
+  ResetParams1.Visible := True;
+{$ENDIF}
+  if assigned(PDMP1) then
+    begin
+      PDMP1.Visible := PDMP_ENABLED;
+      N1.Visible := PDMP_ENABLED;
+    end;
 
   PostMessage(Handle, UM_INITIATE, 0, 0);    // select patient after main form is created
   SetFormMonitoring(true);
@@ -1461,6 +1461,9 @@ begin
     frmGraphData.Close;  //frmGraphData.Release;
 
   end;
+
+  RPCLogClose;
+
   // if < FCP_FINISH we came here from inside FormCreate, so need to call terminate
   if FCreateProgress < FCP_FINISH then Application.Terminate;
 end;
@@ -1475,6 +1478,9 @@ begin
   mnuHelpSymbols.Visible  := IsProgrammer;
   mnuFocusChanges.Visible := IsProgrammer;  {added 10 May 2012  dlp see fFocusControls }
   Z6.Visible              := IsProgrammer;
+{$IFDEF DEBUG}
+  RPCLog_SaveAvailable := isProgrammer;
+{$ENDIF}
 end;
 
 procedure TfrmFrame.setOtherInfoPanel;
@@ -1539,7 +1545,6 @@ procedure TfrmFrame.UMReminders(var Message: TMessage);
 begin
   if systemParameters.getJsonValue('reEvaluateReminders').ToString = '1' then
     CoverSheet.onRefreshPanel(Self, CV_CPRS_RMND);
-
 
   CoverSheet.OnRefreshPanel(Self, CV_CPRS_WVHT);
   CoverSheet.OnRefreshPanel(Self, CV_CPRS_POST);
@@ -1709,13 +1714,10 @@ end;
 
 { File Menu Events ------------------------------------------------------------------------- }
 
+
 procedure TfrmFrame.SetupPatient(AFlaggedList : TStringList);
 var
   AMsg, SelectMsg: string;
-  TitleCaptionStr,
-  TitleHintStr,
-  DtlCaptionStr,
-  DtlHintStr: String;
 begin
   with Patient do
   begin
@@ -1729,39 +1731,7 @@ begin
     lblPtAge.Caption := FormatFMDateTime('mmm dd,yyyy', DOB) + ' (' + IntToStr(Age) + ')';
     pnlPatient.Caption := lblPtName.Caption + ' ' + lblPtSSN.Caption + ' ' + lblPtAge.Caption;
 
-{ removing comments to roll back changes introduced by v31.261 begin}
-    //blj 20 June 2019: RTC task 1062900
-    // OTH was commented out as it was not ready for prime time before the release
-    // of 31B version 261.  We will need to re-enable at some point.
-
-
-    if getOTHD(Patient.DFN, Patient.Name,
-      TitleCaptionStr, TitleHintStr,
-      DtlCaptionStr, DtlHintStr,
-      OTHDDspList) then begin  // rpk 1/2/2018
-      pnlOTHD.Show; // rpk 12/6/2017
-      pnlOTHD.Enabled := True; // rpk 12/6/2017
-      pnlOTHD.TabStop := True; // rpk 1/18/2018
-      pnlOTHD.Hint := TitleHintStr + CRLF + DtlHintStr;
-      lblOTHDDtl.Enabled := True; // rpk 1/2/2018
-      lblOTHDTitle.Enabled := True;  // rpk 12/6/2017
-
-      OTHDTitleCaptionStr := TitleCaptionStr;  // rpk 3/27/2019
-      OTHDTitleHintStr := TitleHintStr;  // rpk 3/27/2019
-      OTHDDtlCaptionStr := DtlCaptionStr;
-      OTHDDtlHintStr := DtlHintStr;
-      if ScreenReaderActive then begin  // rpk 1/2/2018
-        lblOTHDTitle.Caption := TitleHintStr;
-        lblOTHDDtl.Caption := DtlHintStr;
-      end
-      else begin
-        lblOTHDTitle.Caption := TitleCaptionStr;  // rpk 3/27/2019
-        lblOTHDTitle.Hint := TitleHintStr;  // rpk 4/2/2019
-        lblOTHDDtl.Caption := DtlCaptionStr; // rpk 12/6/2017
-        lblOTHDDtl.Hint := DtlHintStr;  // rpk 4/3/2019
-      end;
-    end; // rpk 1/2/2018
-{ removing comments to roll back changes introduced by v31.261 end}
+    updateOTHD;
 
     if Length(CWAD) > 0
       then lblPtPostings.Caption := 'Postings'
@@ -1810,20 +1780,28 @@ begin
     // ensure that buttons maintain alRight align
     pnlCVnFlag.Left    	:= pnlRemoteData.Left - pnlCVnFlag.Width;  // rpk 5/9/2019
     paVAA.Left          := pnlCVnFlag.Left - paVAA.Width;  // rpk 5/9/2019
+
     pnlOTHD.Left 		:= paVAA.Left - pnlOTHD.Width;  // reset OTH to left of VAA, rpk 8/3/2018
 
     ProcessPatientChangeEventHook;
     if Length(SelectMsg) > 0 then ShowPatientSelectMessages(SelectMsg);
+
+    pdmpSetup(Patient.DFN);
+    pdmpAlign;
+
   end;
 end;  // SetupPatient
 
 procedure TfrmFrame.mnuFileNextClick(Sender: TObject);
 var
   SaveDFN, NewDFN: string; // *DFN*
-  NextIndex: Integer;
+  NextIndex, CurrentTab: Integer;
   Reason: string;
   CCOWResponse: UserResponse;
   AccessStatus: integer;
+  LongTextBtns: TStringList;
+  LongTextResult: integer;
+  Next, Quit: boolean;
 
     procedure UpdatePatientInfoForAlert;
     begin
@@ -1848,8 +1826,14 @@ begin
   if Notifications.Active then
   begin
     NewDFN := Notifications.DFN;
-    if SaveDFN <> NewDFN then
+    if NewDFN = '' then
+      ClearPatient(True)
+    else if SaveDFN <> NewDFN then
     begin
+
+      if assigned(fPDMPMgr) then  // canceling PDMP request (if any)
+        fPDMPMgr.acCancel.Execute;
+
       // newdfn does not have new patient.co information for CCOW call
       if ((Sender = mnuFileOpen) or (AllowContextChangeAll(Reason)))
           and AllowAccessToSensitivePatient(NewDFN, AccessStatus) then
@@ -1922,7 +1906,11 @@ begin
       end;
     end;
     stsArea.Panels.Items[1].Text := Notifications.Text;
-    FChangeSource := CC_NOTIFICATION;
+    if Notifications.FollowUp = NF_LONG_TEXT_ALERT then
+      FChangeSource := CC_CLICK
+    else
+      FChangeSource := CC_NOTIFICATION;
+    CurrentTab := tabPage.TabIndex;
     NextIndex := PageIDToTab(CT_COVER);
     tabPage.TabIndex := CT_NOPAGE;
     tabPageChange(tabPage);
@@ -1935,6 +1923,18 @@ begin
                                                              NF_FLAGGED_OI_EXP_INPT,
                                                              NF_FLAGGED_OI_EXP_OUTPT];
     case Notifications.FollowUp of
+      NF_LONG_TEXT_ALERT:
+        if NewDFN = '' then
+          NextIndex := CT_NOPAGE
+        else if User.UseLastTab then
+        begin
+          if (CurrentTab < 0) then
+            NextIndex := PageIDToTab(User.InitialTab)
+          else
+            NextIndex := CurrentTab;
+        end
+        else
+          NextIndex := PageIDToTab(User.InitialTab);
       NF_LAB_RESULTS                   : NextIndex := PageIDToTab(CT_LABS);
       NF_FLAGGED_ORDERS                : NextIndex := PageIDToTab(CT_ORDERS);
       NF_ORDER_REQUIRES_ELEC_SIGNATURE : NextIndex := PageIDToTab(CT_ORDERS);
@@ -2008,11 +2008,49 @@ begin
     end;
     end; //case
 
-    tabPage.TabIndex := NextIndex;
-    tabPageChange(tabPage);
+    if NextIndex <> CT_NOPAGE then
+    begin
+      tabPage.TabIndex := NextIndex;
+      tabPageChange(tabPage);
+    end;
 
+    if Notifications.FollowUp = NF_LONG_TEXT_ALERT then
+    begin
+      LongTextBtns := TStringList.Create();
+      LongTextBtns.Add('Copy to Clipboard');
+      LongTextBtns.Add('Dismiss Alert');
+      LongTextBtns.Add('Keep Alert^true');
+
+      LongTextResult := 0;
+      while (LongTextResult=0) do
+      begin
+        LongTextResult := uInfoBoxWithBtnControls.DefMessageDlg(Notifications.Data.Text,
+            mtConfirmation, LongTextBtns, Notifications.HighLightSection, false);
+        if (LongTextResult = 0) then
+          ClipBoard.astext := Notifications.Data.Text
+      end;
+      if (LongTextResult = 1) then
+        DeleteAlert(Piece(Notifications.RecordID, U, 2));
+      if NewDFN = '' then
+      begin
+        Quit := False;
+        repeat
+          Next := Notifications.IsLast;
+          if not Next then Next := (ShowMsg('Process Next Alert?',
+            'No Patient Selected', smiQuestion, smbYesNo) = smrYes);
+          if not Next then
+            Quit := (infoBox(TX_NOTIF_STOP, TC_NOTIF_STOP, MB_YESNO) = ID_YES);
+        until Next or Quit;
+        if Quit then
+          Notifications.Clear;
+        ShowEverything;
+        mnuFileNextClick(Sender);
+      end;
+    end;
   end
   else mnuFileOpenClick(mnuFileNext); //case else
+  if Patient.DFN = '' then
+    Close;
 end;
 
 procedure TfrmFrame.SetBADxList;
@@ -2052,6 +2090,7 @@ var
   CCOWResponse: UserResponse;
   ThisSessionChanges: TChanges;
   i: Integer;
+  sl: TStrings;
 begin
   pnlPatient.Enabled := FALSE;
   if (Sender = mnuFileOpen) or (FRefreshing) then
@@ -2311,6 +2350,19 @@ begin
       SetOtherInfoPanel;
     end;
     FFirstLoad := FALSE;
+
+    // canceling PDMP request (if any)
+    if assigned(fPDMPMgr) and (Patient.DFN <> SaveDFN) then
+    begin
+      // Cancel if there is no cached data
+      sl := TStringList.Create;
+      try
+        if not fPDMPMgr.CachedData then
+          fPDMPMgr.doCancel(False); // Don't kill the background VistA task
+      finally
+        sl.Free;
+      end;
+    end;
   end;
   { Begin BillingAware }
   if BILLING_AWARE then
@@ -2412,12 +2464,12 @@ begin
   except
      on EAccessViolation do
         begin
-        {$ifdef debug}Show508Message('Access Violation in procedure TfrmFrame.mnuFileExitClick()');{$endif}
+        {$ifdef debug}ShowMessage('Access Violation in procedure TfrmFrame.mnuFileExitClick()');{$endif}
         raise;
         end;
      on E: Exception do
         begin
-        {$ifdef debug}Show508Message('Unhandled exception in procedure TfrmFrame.mnuFileExitClick()');{$endif}
+        {$ifdef debug}ShowMessage('Unhandled exception in procedure TfrmFrame.mnuFileExitClick()');{$endif}
         raise;
         end;
   end;
@@ -2607,14 +2659,18 @@ end;
 procedure TfrmFrame.mnuHelpBrokerClick(Sender: TObject);
 { used for debugging - shows last n broker calls }
 begin
-  ShowBroker;
+uGN_RPCLog.ShowBroker;
 end;
 
 procedure TfrmFrame.mnuHelpListsClick(Sender: TObject);
 { used for debugging - shows internal contents of TORListBox }
 begin
   if Screen.ActiveControl is TListBox
+{$IFDEF DEBUG}
+    then uGN_RPCLog.DebugListItems(TListBox(Screen.ActiveControl))
+{$ELSE}
     then DebugListItems(TListBox(Screen.ActiveControl))
+{$ENDIF}
     else InfoBox('Focus control is not a listbox', 'ListBox Data', MB_OK);
 end;
 
@@ -2980,8 +3036,10 @@ begin
       with lblPtName     do Font.Size := NewFontSize;   // must change BOLDED labels by hand
       with lblPtSSN      do Font.Size := NewFontSize;
       with lblPtAge      do Font.Size := NewFontSize;
+
       with lblOTHDTitle  do Font.Size := NewFontSize;  // rpk 11/28/2017
       with lblOTHDDtl    do Font.Size := NewFontSize;  // rpk 11/28/2017
+
       with lblPtLocation do Font.Size := NewFontSize;
       with lblPtProvider do Font.Size := NewFontSize;
       with lblPtPostings do Font.Size := NewFontSize;
@@ -3046,6 +3104,11 @@ begin
   //if (TfrmRemDlg.GetInstance <> nil) then TfrmRemDlg.GetInstance.SetFontSize;
   if Assigned(frmReminderTree) then frmReminderTree.SetFontSize(NewFontSize);
   if GraphFloat <> nil then ResizeAnchoredFormToFont(GraphFloat);
+
+  if assigned(fPDMPMgr) then
+    fPDMPMgr.updateFont;
+  RPCLogSetFontSize(NewFontSize);
+
 end;
 
 procedure TfrmFrame.FitToolBar;
@@ -3089,7 +3152,7 @@ begin
   lblPtSSN.Top       := M_HORIZ + lblPtName.Height + M_MIDDLE;
   lblPtAge.Top       := lblPtSSN.Top;
   lblPtAge.Left      := pnlPatient.Width - lblPtAge.Width - M_WVERT;
-
+////////////////////////////////////////////////////////////////////////////////
   lblOTHDDtl.Top        := lblPtSSN.Top; // rpk 12/6/2017
   pnlOTHD.Width      := HigherOf( (lblOTHDTitle.Width + (M_WVERT * 2)),
                           (lblOTHDDtl.Width + (M_WVERT * 2)) );  // rpk 12/6/2017
@@ -3097,6 +3160,7 @@ begin
   // center OTH title and data text fields in pnlOTHD
   lblOTHDTitle.Left := (pnlOTHD.Width div 2) - (lblOTHDTitle.Width div 2);
   lblOTHDDtl.Left := (pnlOTHD.Width div 2) - (lblOTHDDtl.Width div 2);
+////////////////////////////////////////////////////////////////////////////////
 
   pnlVisit.Width     := HigherOf(LowerOf(VISIT_WIDTH * MainFontWidth,
                                          HigherOf(lblPtProvider.Width + (M_WVERT * 2),
@@ -3226,7 +3290,11 @@ end;
 
 procedure TfrmFrame.mnuEditPasteClick(Sender: TObject);
 begin
-  FEditCtrl.PasteFromClipboard;  // use AsText to prevent formatting from being pasted
+  //Seltext does not add to the undo buffer
+  if (assigned(CPAppMon)) and (CPAppMon.Enabled) and CPAppMon.TrackedByCP(FEditCtrl)  then
+    FEditCtrl.PasteFromClipboard
+  else
+    FEditCtrl.Perform(EM_REPLACESEL, WParam(True), LongInt(PChar(Clipboard.AsText)));
 end;
 
 procedure TfrmFrame.mnuFilePrintClick(Sender: TObject);
@@ -3845,6 +3913,7 @@ Var
 begin
   inherited;
   //Load the buffer
+ CPAppMon.UserDuz := User.DUZ; //Current User's DUZ
  IPAddr := DottedIPStr;
  CallVistA('ORWTIU POLL', [User.DUZ, IPAddr, IntToHex(frmFrame.Handle, 8)], LoadList);
  if Piece(LoadList.Values['(0,0)'], '^', 1) = '-1' then
@@ -4351,11 +4420,132 @@ begin
   ViewInfo(mnuViewPostings);
 end;
 
+//=========================== PDMP =============================================
+procedure TfrmFrame.pdmpAlign;
+var
+  iLeft: Integer;
+begin
+  if not assigned(fPDMPMgr) then
+    exit;
+
+  if not fPDMPMgr.Visible then
+    exit;
+
+  if pnlOTHD.Visible then
+    iLeft := pnlOTHD.Left
+  else
+    iLeft := paVAA.Left;
+
+  fPDMPMgr.Left := iLeft - fPDMPMgr.Width;
+
+  Application.ProcessMessages;
+end;
+
+procedure TfrmFrame.pdmpSetup(aPatientDFN:String = '');
+var
+  sl: TStrings;
+begin
+  pdmpGetParams;
+  if not PDMP_ENABLED then
+    exit;
+  if not assigned(PDMP1) then
+    exit; // no PDMP for R/O CPRS user
+
+  if not assigned(fPDMPMgr) then
+  begin
+    Application.CreateForm(TfrmPDMP, fPDMPMgr);
+    setFormParented(fPDMPMgr, pnlToolbar, alRight, PDMP_ShowButton = 'ALWAYS');
+    fPDMPMgr.Status := 0;
+    fPDMPMgr.updateFont;
+  end;
+
+  if assigned(fPDMPMgr.PDMPData)
+    and (fPDMPMgr.PDMPData.PatIEN <> aPatientDFN)
+  then
+    fPDMPMgr.PDMPData.pdmpClearData; // No clearing on Pt refresh
+
+  if (aPatientDFN <> '') then
+  begin
+    sl := TStringList.Create;
+    try
+      fPDMPMgr.CachedData := pdmpGetCache(Patient.DFN, IntToStr(User.DUZ), sl);
+      if fPDMPMgr.CachedData then
+        fPDMPMgr.doCache(Patient.DFN, sl)
+      else
+      if (fPDMPMgr.PDMPData.PatIEN <> aPatientDFN) then
+        fPDMPMgr.getLastReviewDate(Patient.DFN);
+    finally
+      sl.Free;
+    end;
+  end
+  else
+    fPDMPMgr.getLastReviewDate('');
+
+  fPDMPMgr.Visible := PDMP_ShowButton = 'ALWAYS';
+
+  Application.ProcessMessages;
+end;
+
+procedure TfrmFrame.acPDMPCancelExecute(Sender: TObject);
+begin
+  inherited;
+  if assigned(fPDMPMgr) then
+    fPDMPMgr.acCancel.Execute;
+
+  if assigned(fPDMPMgr) then
+    begin
+      acPDMPRequest.Enabled := fPDMPMgr.Status = UM_PDMP_Done;
+      acPDMPReview.Enabled := fPDMPMgr.Status = UM_PDMP_Ready;
+      acPDMPCancel.Enabled := fPDMPMgr.Status = UM_PDMP_Loading;
+    end;
+  pdmpAlign;
+end;
+
+procedure TfrmFrame.acPDMPRequestExecute(Sender: TObject);
+begin
+  inherited;
+  if not assigned(fPDMPMgr) then
+  begin
+    Application.CreateForm(TfrmPDMP, fPDMPMgr);
+    setFormParented(fPDMPMgr, pnlToolbar, alRight);
+  end;
+  fPDMPMgr.Status := 0;
+  fPDMPMgr.updateFont;
+
+  acPDMPRequest.Enabled := False;
+  fPDMPMgr.acPDMPRequest.Execute;
+  if assigned(fPDMPMgr) then
+    acPDMPRequest.Enabled := fPDMPMgr.Status = UM_PDMP_Done;
+
+  pdmpAlign;
+end;
+
+procedure TfrmFrame.acPDMPReviewExecute(Sender: TObject);
+begin
+  inherited;
+  if assigned(fPDMPMgr) then
+  begin
+    fPDMPMgr.UseDefaultBrowser := PDMP_UseDefaultBrowser;
+    acPDMPReview.Enabled := False;
+    fPDMPMgr.acResults.Execute;
+
+    acPDMPReview.Enabled := fPDMPMgr.Status = UM_PDMP_Ready;
+  end;
+  pnlPrimaryCare.Invalidate; // redraw panel
+  pdmpAlign;
+end;
+
+procedure TfrmFrame.acResetParamsExecute(Sender: TObject);
+begin
+  inherited;
+  getSysUserParameters(user.DUZ);
+end;
+
 //=========================== CCOW main changes ========================
 
 procedure TfrmFrame.HandleCCOWError(AMessage: string);
 begin
-  {$ifdef DEBUG}
+  {$ifdef DEBUGCCOW}
     Show508Message(AMessage);
   {$endif}
   InfoBox(TX_CCOW_ERROR, TC_CCOW_ERROR, MB_ICONERROR or MB_OK);
@@ -4930,7 +5120,6 @@ begin
 //  setOtherInfoPanel;
 end;
 
-
 procedure TfrmFrame.pnlFlagMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
@@ -4941,6 +5130,83 @@ procedure TfrmFrame.pnlFlagMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   pnlFlag.BevelOuter := bvRaised;
+end;
+
+////////////////////////////////////////////////////////////////////////////////
+// OTHD
+////////////////////////////////////////////////////////////////////////////////
+
+procedure TfrmFrame.ClearOTHD;
+begin
+  lblOTHDTitle.Caption  := '';  // rpk 3/27/2019
+  lblOTHDDtl.Caption       := '';  // rpk 12/5/2017
+  pnlOTHD.Hide;                 // rpk 12/6/2017
+  pnlOTHD.Enabled       := False; // rpk 12/6/2017
+  pnlOTHD.Color         := clBtnFace;  // rpk 4/12/2018
+  lblOTHDDtl.Enabled       := False; // rpk 4/6/2018
+  lblOTHDDtl.Color         := clBtnFace;  // rpk 4/12/2018
+  lblOTHDDtl.Font.Color    := clWindowText; // rpk 4/12/2018
+  lblOTHDDtl.Transparent   := True; // rpk 4/13/2018
+  lblOTHDTitle.Enabled  := False; // rpk 12/6/2017
+  lblOTHDTitle.Color    := clBtnFace; // rpk 4/13/2018
+  lblOTHDTitle.Font.Color    := clInfoText;  // rpk 4/12/2018
+  lblOTHDTitle.Transparent   := True; // rpk 4/13/2018
+  OTHDTitleCaptionStr          := '';  // rpk 3/27/2019
+  OTHDTitleHintStr          := '';  // rpk 3/27/2019
+  OTHDDtlCaptionStr          := '';  // rpk 1/5/2018
+  OTHDDtlHintStr          := '';  // rpk 1/5/2018
+  if Assigned(OTHDDspList) then
+    OTHDDspList.Clear;  // rpk 4/2/2019
+end;
+
+procedure TfrmFrame.updateOTHD;
+var
+  TitleCaptionStr,
+  TitleHintStr,
+  DtlCaptionStr,
+  DtlHintStr: String;
+
+const
+  noOTHD = 'not available';
+
+begin
+{ removing comments to roll back changes introduced by v31.261 begin}
+    //blj 20 June 2019: RTC task 1062900
+    // OTH was commented out as it was not ready for prime time before the release
+    // of 31B version 261.  We will need to re-enable at some point.
+
+    pnlOTHD.Hide; //
+
+    if getOTHD(Patient.DFN, Patient.Name, TitleCaptionStr, TitleHintStr,
+      DtlCaptionStr, DtlHintStr, OTHDDspList)
+      and (pos(noOTHD,TitleHintStr) = 0)
+    then
+    begin // rpk 1/2/2018
+      pnlOTHD.Show; // rpk 12/6/2017
+      pnlOTHD.Enabled := True; // rpk 12/6/2017
+      pnlOTHD.TabStop := True; // rpk 1/18/2018
+      pnlOTHD.Hint := TitleHintStr + CRLF + DtlHintStr;
+      lblOTHDDtl.Enabled := True; // rpk 1/2/2018
+      lblOTHDTitle.Enabled := True; // rpk 12/6/2017
+
+      OTHDTitleCaptionStr := TitleCaptionStr; // rpk 3/27/2019
+      OTHDTitleHintStr := TitleHintStr; // rpk 3/27/2019
+      OTHDDtlCaptionStr := DtlCaptionStr;
+      OTHDDtlHintStr := DtlHintStr;
+      if ScreenReaderActive then
+      begin // rpk 1/2/2018
+        lblOTHDTitle.Caption := TitleHintStr;
+        lblOTHDDtl.Caption := DtlHintStr;
+      end
+      else
+      begin
+        lblOTHDTitle.Caption := TitleCaptionStr; // rpk 3/27/2019
+        lblOTHDTitle.Hint := TitleHintStr; // rpk 4/2/2019
+        lblOTHDDtl.Caption := DtlCaptionStr; // rpk 12/6/2017
+        lblOTHDDtl.Hint := DtlHintStr; // rpk 4/3/2019
+      end;
+    end; // rpk 1/2/2018
+{ removing comments to roll back changes introduced by v31.261 end}
 end;
 
 procedure TfrmFrame.pnlOTHDClick(Sender: TObject); // rpk 1/5/2018
@@ -4955,18 +5221,18 @@ begin
       tmpstr := OTHDDspList[0];
       for I := 1 to icnt - 1 do
         tmpstr := tmpstr + CRLF + OTHDDspList[i];
-      ShowMsg(tmpstr);  // rpk 2/28/2018
+      InfoBox(tmpstr,'OTHD',MB_OK+MB_ICONINFORMATION);  // rpk 2/28/2018
     end;
   end;
 end;
 
-procedure TfrmFrame.pnlOTHDEnter(Sender: TObject);  // rpk 1/5/2018
 const
-  M_WVERT       = 6;
+  M_WVERT = 6;
+
+procedure TfrmFrame.setOTHD(aTitle,aDetails:String);
 begin
-  inherited;
-  lblOTHDTitle.Caption := OTHDTitleHintStr;
-  lblOTHDDtl.Caption := OTHDDtlHintStr;
+  lblOTHDTitle.Caption := aTitle;
+  lblOTHDDtl.Caption := aDetails;
 
   pnlOTHD.Width     := HigherOf( (lblOTHDTitle.Width + (M_WVERT * 2)),
                           (lblOTHDDtl.Width + (M_WVERT * 2)) );  // rpk 12/6/2017
@@ -4978,30 +5244,23 @@ begin
   pnlCVnFlag.Left   := pnlRemoteData.Left - pnlCVnFlag.Width;  // rpk 5/9/2019
   paVAA.Left        := pnlCVnFlag.Left - paVAA.Width;  // rpk 5/9/2019
   pnlOTHD.Left      := paVAA.Left - pnlOTHD.Width; // rpk 1/4/2018
+end;
 
+procedure TfrmFrame.pnlOTHDEnter(Sender: TObject);  // rpk 1/5/2018
+begin
+  inherited;
+
+  setOTHD(OTHDTitleHintStr,OTHDDtlHintStr);
   with Sender as TPanel do
     BevelInner := bvRaised;
 end;
 
 procedure TfrmFrame.pnlOTHDExit(Sender: TObject);  // rpk 1/5/2018
-const
-  M_WVERT       = 6;
 begin
   inherited;
   with Sender as TPanel do
     BevelInner := bvNone;
-  lblOTHDTitle.Caption := OTHDTitleCaptionStr;  // rpk 3/27/2019
-  lblOTHDDtl.Caption := OTHDDtlCaptionStr;
-  pnlOTHD.Width   := HigherOf( (lblOTHDTitle.Width + (M_WVERT * 2)),
-                          (lblOTHDDtl.Width + (M_WVERT * 2)) );  // rpk 12/6/2017
-  // center OTH title and data text fields in pnlOTHD
-  lblOTHDTitle.Left := (pnlOTHD.Width div 2) - (lblOTHDTitle.Width div 2);
-  lblOTHDDtl.Left := (pnlOTHD.Width div 2) - (lblOTHDDtl.Width div 2);
-
-  // ensure that buttons maintain alRight align
-  pnlCVnFlag.Left := pnlRemoteData.Left - pnlCVnFlag.Width;  // rpk 5/9/2019
-  paVAA.Left      := pnlCVnFlag.Left - paVAA.Width;  // rpk 5/9/2019
-  pnlOTHD.Left    := paVAA.Left - pnlOTHD.Width; // rpk 1/4/2018
+  setOTHD(OTHDTitleCaptionStr,OTHDDtlCaptionStr);
 
   lblPtCare.Refresh;
   lblPtAttending.Refresh;
@@ -5028,6 +5287,8 @@ begin
   with lblOTHDTitle do SetBounds(Left-2, Top-2, Width, Height);
   with lblOTHDDtl  do SetBounds(Left-2, Top-2, Width, Height);
 end;
+
+//////////////////////////////////////////////////////////////////////////////
 
 procedure TfrmFrame.pnlOtherInfoClick(Sender: TObject);
 var
@@ -5338,18 +5599,6 @@ begin
   ViewInfo(mnuInsurance);
 end;
 
-procedure TfrmFrame.lblOTHDDtlClick(Sender: TObject); // rpk 1/5/2018
-begin
-  inherited;
-  pnlOTHDClick(Sender);
-end;
-
-procedure TfrmFrame.lblOTHDTitleClick(Sender: TObject);  // rpk 1/5/2018
-begin
-  inherited;
-  pnlOTHDClick(Sender);
-end;
-
 procedure TfrmFrame.ViewInfo(Sender: TObject);
 var
   SelectNew: Boolean;
@@ -5517,10 +5766,179 @@ begin
  end;
 end;
 
+// PDMP Messages processing ====================================================
+/// <summary> updating PDMP actions availability after PDMP Request was sent </summary>
+procedure TfrmFrame.UMPdmpLoading(var Message: TMessage);
+begin
+  acPDMPRequest.Enabled := False;
+  acPDMPCancel.Enabled := True;
+  acPDMPReview.Enabled := False;
+end;
+
+/// <summary> updating PDMP actions availability after PDMP Request results were reviewed </summary>
+procedure TfrmFrame.UMPdmpDone(var Message: TMessage);
+begin
+  acPDMPRequest.Enabled := True;
+  acPDMPCancel.Enabled := False;
+  acPDMPReview.Enabled := False;
+  if assigned(fPDMPMgr) then
+    fPDMPMgr.Visible := (PDMP_ShowButton = 'ALWAYS');
+end;
+
+/// <summary> updating PDMP actions availability. Request results are ready for review </summary>
+procedure TfrmFrame.UMPdmpReady(var Message: TMessage);
+begin
+  acPDMPRequest.Enabled := False;
+  acPDMPCancel.Enabled := False;
+  acPDMPReview.Enabled := True;
+  if assigned(fPDMPMgr) then
+    fPDMPMgr.Visible := (PDMP_ShowButton = 'ALWAYS') or
+      (PDMP_ShowButton = 'RESULTS ONLY');
+end;
+
+/// <summary> updating PDMP actions availability. Request results are NOT ready for review </summary>
+procedure TfrmFrame.UMPdmpError(var Message: TMessage);
+begin
+  if assigned(fPDMPMgr) then
+    begin
+      fPDMPMgr.Visible := PDMP_ShowButton = 'ALWAYS';
+      if Message.LParam = 1 then // error on first call to get data
+        begin
+          ShowMessage(fPDMPMgr.PDMPData.LongMessage);
+          fPDMPMgr.Status := 0;
+          acPDMPRequest.Enabled := True;
+          acPDMPCancel.Enabled := False;
+          acPDMPReview.Enabled := False;
+        end
+      else
+        begin // error on data polling - no error messages
+          fPDMPMgr.Visible := fPDMPMgr.Visible or
+            (PDMP_ShowButton = 'RESULTS ONLY');
+          acPDMPRequest.Enabled := False;
+          acPDMPCancel.Enabled := False;
+          acPDMPReview.Enabled := True;
+        end;
+    end;
+end;
+
+/// <summary> Cancelation of the PDMP Request </summary>
+procedure TfrmFrame.UMPdmpAbort(var Message: TMessage);
+begin
+  acPDMPRequest.Enabled := True;
+  acPDMPCancel.Enabled := False;
+  acPDMPReview.Enabled := False;
+  fPDMPMgr.Visible := PDMP_ShowButton = 'ALWAYS';
+end;
+
+/// <summary> Results review ended in OK press </summary>
+procedure TfrmFrame.UMPdmpReviewed(var Message: TMessage);
+begin
+  acPDMPRequest.Enabled := True;
+  acPDMPCancel.Enabled := False;
+  acPDMPReview.Enabled := False;
+  fPDMPMgr.Visible := PDMP_ShowButton = 'ALWAYS';
+end;
+
+function TfrmFrame.EditInProgress: String;
+begin
+  Result := '';
+  if assigned(frmNotes) and (frmNotes.EditingIndex > -1) then
+    Result := Result + frmNotes.EditedNoteInfo + CRLF;
+(*
+  if assigned(frmConsults) and (frmConsults.EditingIndex > -1) then
+    Result := Result + 'Consult ' +
+      frmConsults.GetTitleText(frmConsults.EditingIndex) + CRLF;
+
+  if assigned(frmDCSumm) and (frmDCSumm.EditingIndex > -1) then
+    Result := Result + frmDCSumm.EditedNoteInfo + CRLF;
+
+  if assigned(frmSurgery) and (frmSurgery.EditingIndex > -1) then
+    Result := Result + 'Surgery ' +
+      frmSurgery.GetTitleText(frmSurgery.EditingIndex) + CRLF;
+*)
+end;
+
+function TfrmFrame.SaveEditInProgress(var ShowMessage: Boolean): Boolean;
+var
+  b: Boolean;
+begin
+  Result := True;
+  ShowMessage := False;
+  if assigned(frmNotes) and (frmNotes.EditingIndex > -1) then
+  begin
+    frmNotes.SaveCurrentNote(b);
+    Result := Result and b;
+    if Result then
+      frmNotes.LoadNotes;
+
+    if not b and frmNotes.Silent  then
+      ShowMessage := True;
+  end;
+(*
+  if assigned(frmConsults) and (frmConsults.EditingIndex > -1) then
+  begin
+    frmConsults.SaveCurrentNote(b);
+    Result := Result and b;
+    if not b and frmConsults.Silent  then
+      ShowMessage := True;
+  end;
+
+  if assigned(frmDCSumm) and (frmDCSumm.EditingIndex > -1) then
+  begin
+    frmDCSumm.SaveCurrentSumm(b);
+    Result := Result and b;
+    if not b and frmDCSumm.Silent  then
+      ShowMessage := True;
+  end;
+
+  if assigned(frmSurgery) and (frmSurgery.EditingIndex > -1) then
+  begin
+    frmSurgery.SaveCurrentNote(b);
+    Result := Result and b;
+    if not b and frmSurgery.Silent  then
+      ShowMessage := True;
+  end;
+*)
+end;
+
+/// <summary> Selection of the PDMP Review Registration note </summary>
+procedure TfrmFrame.UMPdmpNoteID(var Message: TMessage);
+var
+  Saved, bShowMessage: Boolean;
+  s: String;
+begin
+  bShowMessage := False;
+  s := EditInProgress;
+  if s <> '' then
+    begin
+      if InfoBox('You are currently editing:' + CRLF+CRLF + s + CRLF +
+        'Do you wish to save this note and review PDMP report?','PDMP Warning',
+         MB_YESNO or MB_ICONQUESTION) <> IDYES then
+       exit
+       else
+         Saved := SaveEditInProgress(bShowMessage);
+    end
+  else
+    Saved := true;
+
+  if not Saved then
+    begin
+      if bShowMessage then
+        InfoBox('Failed to save currently edited note', 'PDMP',MB_OK);
+    end
+  else  if assigned(frmNotes) then
+    with frmNotes do
+    begin
+      s := IntToStr(Message.WParam);
+      LoadNotes;
+      tvNotes.Selected := tvNotes.FindPieceNode(s, u,
+        tvNotes.Items.GetFirstNode);
+    end;
+end;
+
 initialization
   SpecifyFormIsNotADialog(TfrmFrame);
 
 finalization
-
 
 end.

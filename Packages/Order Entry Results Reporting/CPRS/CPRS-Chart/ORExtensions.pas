@@ -173,125 +173,85 @@ var
 
 // Scrub clipboard but keep all formats
   procedure AddToClipBoard(aValue: AnsiString);
-  var
-    gMem: HGLOBAL;
-    lp: Pointer;
-    WS: String;
-    ErrorCode: integer;
-    ErrorMessage: String;
+
+   procedure UpdateClip(FormatType: Cardinal; ClipText: AnsiString);
+    var
+      gMem: HGLOBAL;
+      lp: Pointer;
+      IsMemoryLocked: Boolean;
+      StrLen, ErrorCode: integer;
+      WS: string;
+    begin
+      {$WARN SYMBOL_PLATFORM OFF}
+      if ClipText = '' then Exit;
+
+      //Set the length based on the format type (either text or unitext)
+      case FormatType of
+        CF_TEXT: StrLen := (Length(ClipText) + 1) * SizeOf(ClipText[1]);
+        CF_UNICODETEXT:
+          begin
+            WS := UnicodeString(ClipText);
+            StrLen := ((Length(WS) + 1) * SizeOf(WS[1]));
+          end;
+      else Exit;
+      end;
+
+      //allocate the memory
+      gMem := GlobalAlloc(GHND, StrLen);
+      try
+        //ensure we were able to allocate
+        if gMem = 0 then RaiseLastOSError;
+
+        //Lock the memory
+        lp := GlobalLock(gMem);
+        try
+          if not assigned(lp) then RaiseLastOSError;
+          //Move the text into the allocated space
+          case FormatType of
+            CF_TEXT: Move(PAnsiChar(ClipText)^, lp^, StrLen);
+            CF_UNICODETEXT: Move(PChar(WS)^, lp^, StrLen);
+          else raise Exception.Create('Unknown format type. This error should never occur!');
+          end;
+        finally
+          //Try to unlock the memory
+          // Note: Per https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-globalunlock
+          // The result of GlobalUnlock() does not mean success or failure. It
+          // is the LockCount (as a BOOL, but that's the Windows API being
+          // weird) To know if the operation succeeded, the result of
+          // GlobalUnlock needs to be false, AND the Last Error needs to be
+          // NO_ERROR
+          IsMemoryLocked := GlobalUnlock(gMem);
+        end;
+
+        //Ensure we were able to unlock
+        if IsMemoryLocked then RaiseLastOSError
+        else
+        begin
+          ErrorCode := GetLastError;
+          case ErrorCode of
+            NO_ERROR, ERROR_NOT_LOCKED:; // ERROR_NOT_LOCKED should not happen, but if it does we don't worry
+          else RaiseLastOSError;
+          end;
+        end;
+
+        //Set the clipboard text
+        SetClipboardData(FormatType, gMem);
+      except
+        if gMem <> 0 then GlobalFree(gMem);
+      end;
+      {$WARN SYMBOL_PLATFORM ON}
+    end;
+
   begin
-{$WARN SYMBOL_PLATFORM OFF}
     Clipboard.Open;
     try
       if Clipboard.HasFormat(CF_TEXT) then
-      begin
-
-        // now add the text to the clipboard
-        gMem := GlobalAlloc(GHND, (Length(aValue) + 1));
-        // Combines GMEM_MOVEABLE and GMEM_ZEROINIT - GMEM_DDESHARE is obsolete and ignored
-        try
-          if gMem = 0 then
-          begin
-            ErrorCode := GetLastError;
-            ErrorMessage := SysErrorMessage(ErrorCode);
-            raise Exception.Create(ErrorMessage);
-          end;
-
-          lp := GlobalLock(gMem);
-          if not assigned(lp) then
-          begin
-            ErrorCode := GetLastError;
-            ErrorMessage := SysErrorMessage(ErrorCode);
-            raise Exception.Create(ErrorMessage);
-          end;
-
-          CopyMemory(lp, Pointer(PAnsiChar(@aValue[1])), (Length(aValue) + 1));
-          // We should look at changing this to memcpy_s
-
-          {
-            Note: The Delphi import of GlobalUnlock() is incorrect in Winapi.Windows.
-            Per https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-globalunlock
-
-            If the memory object is still locked after decrementing the lock count,
-            the return value is a nonzero value. If the memory object is unlocked
-            after decrementing the lock count, the function returns zero and GetLastError
-            returns NO_ERROR.
-
-            Since a non-zero is interpreted as true and zero is interpreted as false, the
-            result of the API call is actually inverted.
-          }
-          if GlobalUnlock(gMem) then
-          begin
-            ErrorCode := GetLastError;
-            ErrorMessage := SysErrorMessage(ErrorCode);
-            raise Exception.Create(ErrorMessage);
-          end;
-
-          SetClipboardData(CF_TEXT, gMem);
-
-        except
-          on E: Exception do
-          begin
-            GlobalFree(gMem)
-          end;
-        end;
-      end;
-
+        UpdateClip(CF_TEXT, aValue);
       if Clipboard.HasFormat(CF_UNICODETEXT) then
-      begin
-        WS := UnicodeString(aValue);
-
-        gMem := GlobalAlloc(GMEM_DDESHARE + GMEM_MOVEABLE, ((Length(WS) + 1) * 2));
-        try
-          if gMem = 0 then
-          begin
-            ErrorCode := GetLastError;
-            ErrorMessage := SysErrorMessage(ErrorCode);
-            raise Exception.Create(ErrorMessage);
-          end;
-
-          lp := GlobalLock(gMem);
-          if not assigned(lp) then
-          begin
-            ErrorCode := GetLastError;
-            ErrorMessage := SysErrorMessage(ErrorCode);
-            raise Exception.Create(ErrorMessage);
-          end;
-
-          CopyMemory(lp, Pointer(PChar(@WS[1])), ((Length(WS) + 1) * 2));
-
-          {
-            Note: The Delphi import of GlobalUnlock() is incorrect in Winapi.Windows.
-            Per https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-globalunlock
-
-            If the memory object is still locked after decrementing the lock count,
-            the return value is a nonzero value. If the memory object is unlocked
-            after decrementing the lock count, the function returns zero and GetLastError
-            returns NO_ERROR.
-
-            Since a non-zero is interpreted as true and zero is interpreted as false, the
-            result of the API call is actually inverted.
-          }
-          if GlobalUnlock(gMem) then
-          begin
-            ErrorCode := GetLastError;
-            ErrorMessage := SysErrorMessage(ErrorCode);
-            raise Exception.Create(ErrorMessage);
-          end;
-
-          SetClipboardData(CF_UNICODETEXT, gMem);
-
-        except
-          on E: Exception do
-          begin
-            GlobalFree(gMem);
-          end;
-        end;
-      end;
+        UpdateClip(CF_UNICODETEXT, aValue);
     finally
       Clipboard.Close;
     end;
-{$WARN SYMBOL_PLATFORM ON}
   end;
 
 begin

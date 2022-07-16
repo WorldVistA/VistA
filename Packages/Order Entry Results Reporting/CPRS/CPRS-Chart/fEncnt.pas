@@ -90,7 +90,9 @@ type
     { Public declarations }
   end;
 
-procedure UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0; TIULocation: integer = 0; DelayedOrder: Boolean = False);
+// RTC 1208437 - Need to know if the Encounter update was canceled
+//procedure UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0; TIULocation: integer = 0; DelayedOrder: Boolean = False);
+function UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0; TIULocation: integer = 0; DelayedOrder: Boolean = False): Boolean;
 procedure UpdateVisit(FontSize: Integer); overload;
 procedure UpdateVisit(FontSize: Integer; TIULocation: integer); overload;
 
@@ -124,7 +126,8 @@ begin
   UpdateEncounter(NPF_SUPPRESS, 0, TIULocation);
 end;
 
-procedure UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0;  TIULocation: integer = 0; DelayedOrder: Boolean = False);
+//procedure UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0;  TIULocation: integer = 0; DelayedOrder: Boolean = False);
+function UpdateEncounter(PersonFilter: Int64; ADate: TFMDateTime = 0;  TIULocation: integer = 0; DelayedOrder: Boolean = False): Boolean;
 const
   UP_SHIFT = 85;
 var
@@ -132,6 +135,7 @@ var
   CanChange: Boolean;
   TimedOut: Boolean;
 begin
+  Result := False;
   uTIULocation := TIULocation;
   if uTIULocation <> 0 then uTIULocationName := ExternalName(uTIULocation, FN_HOSPITAL_LOCATION);
   frmEncounter := TfrmEncounter.Create(Application);
@@ -176,6 +180,8 @@ begin
           Encounter.DateTime      := FDateTime;
           Encounter.VisitCategory := FVisitCategory;
           Encounter.StandAlone    := FStandAlone;
+
+          Result := True;
         end;
       end;
       if DelayReviewChanges then DelayReviewChanges := False;

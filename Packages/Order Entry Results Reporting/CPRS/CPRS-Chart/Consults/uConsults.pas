@@ -38,8 +38,9 @@ type
     ProvDiagnosis: string ;                 {  30}       { * }
     ProvDxCode: string;                     {  30.1}
     RequestProcessingActivity: TStringList; {  40}
-    ClinicallyIndicatedDate: TFMDateTime;
-    //LatestDate: TFMDateTime; //dropped requirement WAT
+    ClinicallyIndicatedDate: TFMDateTime;   {  17}
+    NoLaterThanDate: TFMDateTime;           {  18}
+    DstID: string;                          {  85}
   end ;
 
   TEditResubmitRec = record
@@ -54,7 +55,7 @@ type
     Urgency: integer;
     UrgencyName: string;
     ClinicallyIndicatedDate: TFMDateTime;
-    //LatestDate: TFMDateTime; //dropped requirement WAT
+    NoLaterThanDate: TFMDateTime;
     Place: string;
     PlaceName: string;
     Attention: int64;
@@ -67,6 +68,7 @@ type
     DenyComments: TStringList;
     OtherComments: TStringList;
     NewComments: TStringList;
+    DstId: string;
   end;
 
   TSelectContext = record

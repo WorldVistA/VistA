@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="generator" content="Adobe RoboHelp 2019" />
+<title>Keeping Diagnostic and Procedure Codes Current</title>
+<link rel="StyleSheet" href="CPRS.css" type="text/css" />
+ <link rel="StyleSheet" href="CPRS.css" type="text/css" />
+
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute;
+left:0px;
+top:0px;
+z-index:4;
+visibility:hidden; }
+p.WebHelpNavBar { text-align:right; }
+-->
+</style>
+<script type="text/javascript" language="javascript1.2" src="whmsg.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" src="whver.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.gbWhTopic)
+{
+	var strUrl = decodeURI(document.location.href);
+	var bc = 0;
+	var n = strUrl.toLowerCase().indexOf("bc-");
+	if(n != -1)
+	{
+		document.location.replace(strUrl.substring(0, n));
+		bc = strUrl.substring(n+3);
+	}
+
+	addTocInfo("Using CPRS\nCSV: Keeping Diagnostic and Procedure Codes Current");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"whd_show0.gif","whd_show2.gif","whd_show1.gif");
+addButton("hide",BTN_TEXT,"Hide","","","","",0,0,"whd_hide0.gif","whd_hide2.gif","whd_hide1.gif");
+addButton("prev",BTN_TEXT,"<<","","","","",0,0,"whd_prev0.gif","whd_prev2.gif","whd_prev1.gif");
+addButton("next",BTN_TEXT,">>","","","","",0,0,"whd_next0.gif","whd_next2.gif","whd_next1.gif");
+
+
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("CPRS.htm", "", ">", "Home", "CPRS_Help_Introduction.htm");
+document.write("<a href=\"Signing_In_to_CPRS.htm\">Using CPRS<\/a> > CSV: Keeping Diagnostic and Procedure Codes Current<\/p>");
+
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+    
+onLoadHandler = function()
+{
+	if (window.setRelStartPage)
+	{
+    setTimeout("setRelStartPage('CPRS.htm');", 1)
+
+    setTimeout("UpdateBreadCrumbsMarker();", 1);
+    }
+} 
+
+if (window.addEventListener){  
+	window.addEventListener('load', onLoadHandler, false);   
+} else if (window.attachEvent){  
+	window.attachEvent('onload', onLoadHandler);  
+}
+
+function onSetStartPage()
+{
+	autoSync(0);
+	sendSyncInfo();
+	sendAveInfoOut();
+}
+//-->
+//]]></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(4);
+//-->
+//]]></script>
+<script type="text/javascript" src="./ehlpdhtm.js" language="JavaScript1.2"></script>
+
+<h1><font style="font-size: 14pt;" color="#3366FF" size="4">Keeping Diagnostic and Procedure Codes Current</font></h1>
+<p style="margin-bottom: 6.00pt;"><font color="#010100">T</font>his section discusses use of the I<a name="ICD10_overview" id="ICD10_overview" title="ICD10_overview"></a>nternational Classification of Diseases, Tenth Revision Clinical Modification (ICD-10-CM) coding system in CPRS and how to identify inactive codes in CPRS.</p>
+<p style="font-weight: bold; font-size: 12pt; font-style: normal;">Using ICD-10-CM Codes</p>
+<p class="CPRSH2BodyChar">As of October 1, 2014, CPRS will use ICD-10-CM codes to store diagnosis codes in several locations in CPRS. The ICD-10-CM codes will not replace diagnosis codes already entered as ICD-9-CM codes, but all new diagnosis codes in Clinical Reminders, Consults, and the encounter form, will be ICD-10-CM codes. There will be no requirement to update existing entries because the diagnosis codes will reflect the coding system that existed when the diagnosis was entered.</p>
+<p class="CPRSH2BodyChar">Diagnosis codes on the Problem List will primarily be SNOMED-CT codes, but will show ICD-10 or ICD-9 codes also, if they apply.</p>
+<p class="CPRSH2BodyChar">&#160;</p>
+<p class="CPRSH2BodyChar" style="font-weight: bold;">Identifying Which Coding System Is Displaying</p>
+<p class="CPRSH3Body">Because there will be the possibility of several types of codes being visible in CPRS, each code will be followed by text stating what coding system is being displayed:</p>
+<ul style="list-style: disc; font-size: 10pt;">
+<li style="font-size: 10pt;"><b style="mso-bidi-font-weight: normal;">SNOMED-CT</b> or Systematized Nomenclature of Medicine concept terms: Codes in the SNOMED-CT display with the Short Description (Coding system code). For example, Keratinous cyst (SCT 419603000)</li>
+<li style="font-size: 10pt;"><b style="mso-bidi-font-weight: normal;">ICD-9-CM</b>or International Classification of Diseases, Ninth Revision Clinical Modification: The text format will be something like the following: Short Description (coding system code). For example, ILIAC (ICD-9-CM 451.81).</li>
+<li style="font-size: 10pt;"><b style="mso-bidi-font-weight: normal;">ICD-10-CM</b> or International Classification of Diseases, Tenth Revision Clinical Modification: The text format will be something like the following: Short Description (coding system code). For example, Amyotrophic lateral sclerosis (ICD-10-CM G12.21).</li>
+</ul>
+<p class="CPRSH3Body">&#160;</p>
+<table class="MsoNormalTable" style="margin-left: .5in; border: none; mso-border-alt: solid windowtext .5pt; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 5.4pt 0in 5.4pt; mso-border-insideh: .5pt solid windowtext; mso-border-insidev: .5pt solid windowtext; border-collapse: separate;" cellspacing="0">
+<tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; mso-border-alt: solid windowtext .5pt; mso-shading: windowtext; mso-pattern: gray-20 auto; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295" bgcolor="#CCCCCC">
+<p class="CPRSH3Body" style="margin-left: 0in; text-align: center;"><b style="mso-bidi-font-weight: normal;">ICD-9-CM</b></p>
+</td>
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-left: none; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; mso-shading: windowtext; mso-pattern: gray-20 auto; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295" bgcolor="#CCCCCC">
+<p class="CPRSH3Body" style="margin-left: 0in; text-align: center;"><b style="mso-bidi-font-weight: normal;">ICD-10-CM</b></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 1;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295">
+<p class="CPRSH3Body" style="margin-left: 0in;">3-5 characters in length</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295">
+<p class="CPRSH3Body" style="margin-left: 0in;">3-7 characters in length</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 2;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295">
+<p class="CPRSH3Body" style="margin-left: 0in;">1<sup>st</sup> character is numeric (chapters 1-17) or alphabetic (E or V for supplemental chapters)</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295">
+<p class="CPRSH3Body" style="margin-left: 0in;">1<sup>St</sup> character is alphabetic; 2<sup>nd</sup> character is numeric</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 3;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295">
+<p class="CPRSH3Body" style="margin-left: 0in;">2<sup>nd</sup>, 3<sup>rd</sup>, 4<sup>th</sup>, and 5<sup>th</sup> characters are numeric</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295">
+<p class="CPRSH3Body" style="margin-left: 0in;">Characters 3-7 are alphabetic or numeric (alphabetic characters are not case sensitive)</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 4; mso-yfti-lastrow: yes;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295">
+<p class="CPRSH3Body" style="margin-left: 0in;">Decimal after first three characters</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; mso-border-top-alt: solid windowtext .5pt; mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="295">
+<p class="CPRSH3Body" style="margin-left: 0in;">Decimal after 3<sup>rd</sup> character</p>
+</td>
+</tr>
+</table>
+<p class="CPRSH3Body">&#160;</p>
+<p class="CPRSH3Body">Users will see changes in the areas where ICD-9-CM codes were used previously:</p>
+<ul style="list-style: disc;">
+<li style="font-size: 10pt;"><b style="mso-bidi-font-weight: normal;">Cover Sheet</b>– Under the Active Problems pane, users will see problems with SNOMED and ICD-9-CM codes. ICD-10-CM codes do not appear on the Problem List, except in the detailed view of a problem.</li>
+<li style="font-size: 10pt;"><b style="mso-bidi-font-weight: normal;">Problem List</b>– On the Problem List tab’s list and detailed views</li>
+<li style="font-size: 10pt;"><b>On the Encounter form’s Diagnosis tab</b> – On the Diagnosis tab of the Encounter form, users now select diagnosis codes from the ICD-10-CM code set.</li>
+<li style="font-size: 10pt;"><b style="mso-bidi-font-weight: normal;">Consults tab</b>– When selecting a provisional diagnosis, the user will use ICD-10-CM.</li>
+<li style="font-size: 10pt;"><b style="mso-bidi-font-weight: normal;">Reminder dialogs</b>– When dialog are constructed to include the addition of codes, those codes will now use ICD-10-CM codes.</li>
+</ul>
+<p>&#160;</p>
+<p>&#160;</p>
+<p style="font-weight: bold; font-size: 12pt; font-style: normal;">Identifying Inactive Codes in CPRS</p>
+<p style="margin-bottom: 6.00pt;"><font color="#010100">Code set versioning (CSV) modifies VistA to comply with the Health Insurance Portability and Accessibility Act (HIPAA) stipulations that diagnostic and procedure codes used for billing purposes must be the codes that were applicable at the time the service</font> <font color="#010100">was provided. Because the codes change, CPRS currently checks ICD and CPT code validity as of a specified date when codes are entered, when a new code set is implemented, and whenever Clinical Application Coordinators (CACs) or IRM personnel choose to run</font> <font color="#010100">the option.</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">CPRS GUI users will see indicators for inactive codes on the Cover Sheet, Problems tab, Encounter form, and in Clinical Reminders (although the Clinical Reminders changes may be less apparent).</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">In these GUI locations, any diagnosis or procedu</font><font style="font-size: 10pt;" color="#010100" size="2">re codes that are inactive or will become inactive by a specified date because a new code set has been installed display with the "#" symbol in front of them as shown in the following examples.</font></p>
+<p style="margin-top: 12.00pt; margin-bottom: 0.00pt;"><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">Cover Sheet Displays</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">On the Cover Sheet, the active problems display. Users can quickly see if the patient has any inactive codes for the active problems. The</font> "<font style="font-size: 10pt;" color="#010100" size="2">#"</font> <font style="font-size: 10pt;" color="#010100" size="2">symbol shows the user that this active problem has an inactive code.</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">If the user tries to get a detailed display of the problem, the user first gets a warn</font><font style="font-size: 10pt;" color="#010100" size="2">ing about the inactive code.</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">The warning message instructs the user to correct the inactive code from the Problems tab. When the user closes the warning dialog, the detailed display then comes up. The "#" symbol in the detailed display also shows that the</font> <font style="font-size: 10pt;" color="#010100" size="2">code is inactive.</font></p>
+<p style="margin-top: 12.00pt; margin-bottom: 0.00pt;"><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">Problems Tab Display</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">On the Problems tab, users are alerted to inactive codes in two ways. The first time the user goes to the Problems tab if there are problems with inactive codes, a dialog displays that tells how many problems wi</font><font style="font-size: 10pt;" color="#010100" size="2">th inactive codes have been found.</font></p>
+<p style="margin-left: 54.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;"><font style="font-size: 9pt; font-weight: bold;" color="#010100" size="2">Note:</font><font style="font-size: 9pt;" color="#010100" size="2">&#160;</font><font color="#010100">&#160;&#160;&#160;&#160;&#160;</font><font style="font-size: 9pt;" color="#010100" size="2">This dialog appears only the first time the user goes to the problems tab for that patient in a session. When the user closes the dialog, the Problems tab display. Problems with inactive codes have the "#" symbol in</font> <font style="font-size: 9pt;" color="#010100" size="2">the status column.</font></p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<p style="margin-top: 4.00pt; margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">The detailed display of a problem also indicates that the current code is inactive. Users should use the Change feature to associate the problem with an active code.</font></p>
+<p style="margin-top: 12.00pt; margin-bottom: 0.00pt;"><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">Encounter Form Display</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">The Diagnoses tab of the Encounter dialog disp</font><font style="font-size: 10pt;" color="#010100" size="2">lays a "#" next to the code if the code is inactive.</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">If the user tries to select that diagnosis the following warning displays that tells users about</font> <a href="Adding_to_Existing_Progress_Notes_(addendum).htm" title="Adding_to_Existing_Progress_Notes_(addendum).htm"><img src="image/btn_inactive.gif" alt="inactive button" width="51" height="19" border="0" /></a> <font style="font-size: 10pt;" color="#010100" size="2">codes that need to be updated through the Problems tab.</font></p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<p style="margin-top: 12.00pt; margin-bottom: 0.00pt;"><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">Consults Tab Displ</font><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">ay</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">For Consults and Procedures, only active codes will be allowed for the following functions:</font></p>
+<ul style="list-style: disc;">
+<li style="color: #010100;">
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">Lexicon look up for provisional diagnosis as of the ordering date</p>
+</li>
+<li>
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;"><font color="#010100">Copying or changing existing orders (the consult or procedure will not be accepted until a</font> <font color="#010100">valid code is selected)</font></p>
+</li>
+<li style="color: #010100;">
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">Edit/Resubmit, the original code will be checked to see if it is active, if it is inactive an active code will need to be entered before CPRS will accept it</p>
+</li>
+</ul>
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">&#160;</p>
+<p style="margin-top: 12.00pt; margin-bottom: 0.00pt;"><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">Clinical Reminders</font></p>
+<p style="margin-bottom: 6.00pt; color: #010100;">CPRS GUI will only display codes that were active in the reminder date range.</p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+
+highlightSearch();
+//-->
+//]]></script>
+</body>
+</html>

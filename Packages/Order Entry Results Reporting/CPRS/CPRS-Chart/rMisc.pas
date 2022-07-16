@@ -69,9 +69,9 @@ function LoadDll(DllName: string): TDllRtnRec;
 function DllVersionCheck(DllName: string; DLLVersion: string): string;
 function GetMOBDLLName(): string;
 
-procedure SaveUserBounds(AControl: TControl);
+procedure SaveUserBounds(AControl: TControl; ID: string = '');
 procedure SaveUserSizes(SizingList: TStringList);
-procedure SetFormPosition(AForm: TForm);
+procedure SetFormPosition(AForm: TForm; FormID: string = '');
 procedure SetUserBounds(var AControl: TControl);
 procedure SetUserBounds2(AName: string; var v1, v2, v3, v4: integer);
 //procedure SetUserBoundsArray(AName: string; var SettingArray: SettingSizeArray);
@@ -451,7 +451,7 @@ begin
   Str := uColumns.Values[StrName];
 end;
 
-procedure SaveUserBounds(AControl: TControl);
+procedure SaveUserBounds(AControl: TControl; ID: string = '');
 var
   x, n: string;
   NewHeight: integer;
@@ -459,6 +459,7 @@ begin
   n := GetControlName(AControl);
   if n = '' then
     exit;
+  n := n + ID;
   if (AControl is TForm) and (TForm(AControl).WindowState = wsMaximized) then
     x := '0,0,0,0'
   else
@@ -483,13 +484,12 @@ begin
   CallV('ORWCH SAVFONT', [IntToStr(FontSize)]);
 end;
 
-procedure SetFormPosition(AForm: TForm);
+procedure SetFormPosition(AForm: TForm; FormID: string = '');
 var
   x: string;
   Rect: TRect;
 begin
-//  x := sCallV('ORWCH LOADSIZ', [AForm.Name]);
-  x := SizeHolder.GetSize(AForm.Name);
+  x := SizeHolder.GetSize(AForm.Name + FormID);
   if x = '' then Exit; // allow default bounds to be passed in, else screen center?
   if (x = '0,0,0,0') then
     AForm.WindowState := wsMaximized

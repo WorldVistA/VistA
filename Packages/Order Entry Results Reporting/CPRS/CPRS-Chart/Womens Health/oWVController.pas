@@ -134,6 +134,7 @@ begin
     with NewPLUpdateForm(aDFN) do
       try
           EDD := calcEDD;
+          fLastError := '';
 
         if Execute then
           begin
@@ -306,6 +307,7 @@ end;
 function TWVController.OpenExternalWebsite(aWebsite: IWVWebSite): boolean;
 begin
   try
+    fLastError := '';
     ShellExecute(0, 'open', PWideChar(aWebsite.URL), nil, nil, SW_SHOWNORMAL);
     Result := True;
   except

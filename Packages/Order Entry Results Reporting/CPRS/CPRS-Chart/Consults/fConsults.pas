@@ -298,6 +298,7 @@ type
     procedure CPHide(Sender: TObject);
     procedure CPShow(Sender: TObject);
     procedure PasteToMonitor(Sender: TObject; var AllowMonitor: Boolean);   //wat cq 17586
+    procedure mnuActLaunchDSTClick(Sender: TObject);
   private
     FocusToRightPanel : Boolean;
     FEditingIndex: Integer;      // TIU index of document being currently edited
@@ -416,7 +417,9 @@ uses fVisit, rCore, uCore, rConsults, fConsultBS, fConsultBD, fSignItem,
      fReminderDialog, uReminders, fConsMedRslt, fTemplateFieldEditor, System.Types,
      dShared, rTemplates, fIconLegend, fNoteIDParents, fNoteCPFields, rECS, ORNet, trpcb,
      uTemplates, fTemplateDialog, DateUtils, uVA508CPRSCompatibility, VA508AccessibilityRouter,
-     System.UITypes, System.IniFiles, ORNetIntf, U_CPTEditMonitor, VAUtils;
+     System.UITypes, System.IniFiles, ORNetIntf, U_CPTEditMonitor, VAUtils
+     , oDst
+     ;
 
 const
   CT_ORDERS =   4;                               // ID for orders tab used by frmFrame
@@ -1607,6 +1610,9 @@ begin
        lblTitle.Caption := lstConsults.DisplayText[lstConsults.ItemIndex] ;
        lblTitle.Hint := lblTitle.Caption;
        LoadConsultDetail(memConsult.Lines, lstConsults.ItemIEN) ;
+       if not Assigned(ConsultRec.RequestProcessingActivity) then
+        ConsultRec.RequestProcessingActivity := TStringList.Create;
+       ConsultRec.RequestProcessingActivity.Assign(memConsult.Lines);
        FDocList.Clear;
        lstNotes.Items.Clear;
        uChanging := True;
@@ -2514,6 +2520,8 @@ var
   Saved, IsProcedure: boolean;
   SavedCsltID, x: string;
   tmpNode: TORTreeNode;
+  serviceName, urgencyName, textLine: string;
+  i: integer;
 begin
   inherited;
   if lstConsults.ItemIEN = 0  then exit;
@@ -2536,8 +2544,23 @@ begin
     IsProcedure := CharInSet(x[1], ['P', 'M'])
   else
     IsProcedure := (Piece(lstConsults.Items[lstConsults.ItemIndex], U, 9) = 'Procedure');
+  // tony testing
+  serviceName := lstConsults.Items[lstConsults.ItemIndex];
+  serviceName := Piece(serviceName, '^', 10);
+  for i := 0 to memConsult.Lines.Count - 1 do
+  begin
+    textLine := memConsult.Lines[i];
+    if Piece(textLine, ':', 1) = 'Urgency' then
+    begin
+      urgencyName := Piece(textLine, ':', 2);
+      urgencyName := TrimLeft(urgencyName);
+      break;
+    end;
+  end;
+  // end tony testing
   //if SetActionContext(Font.Size,FActionType, IsProcedure, ConsultRec.ConsultProcedure) then
-   if SetActionContext(Font.Size,FActionType, IsProcedure, ConsultRec.ConsultProcedure, MenuAccessRec.UserLevel) then
+   if SetActionContext(Font.Size,FActionType, IsProcedure, ConsultRec.ConsultProcedure,
+    MenuAccessRec.UserLevel,serviceName, urgencyName) then
     begin
       if Notifications.Active then
         with tvConsults do
@@ -2699,6 +2722,11 @@ begin
                                                        and (status<>ST_CANCELLED));
 
          mnuActAddComment.Enabled     :=  True;
+
+{         if (not isDstEnabled) or (status = ST_CANCELLED) or (status = ST_DISCONTINUED) or
+                (ConsultRec.ConsultProcedure <> '') or (ConsultRec.InOut = 'I') or (IsProstheticsService(ConsultRec.ToService)) then mnuActLaunchDST.Enabled := False
+         else mnuActLaunchDST.Enabled := True;  }
+
          mnuActDisplayDetails.Enabled :=  True;
          mnuActDisplayResults.Enabled :=  True;
          mnuActDisplaySF513.Enabled   :=  True;
@@ -3091,10 +3119,16 @@ end;
 procedure TfrmConsults.popNoteMemoPasteClick(Sender: TObject);
 begin
   inherited;
- // FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
- if not CPMemResults.EditMonitor.CopyMonitor.Enabled then
-   ScrubTheClipboard;
-  FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
+    if (FEditCtrl = memResults) and (assigned(CPMemResults.EditMonitor)) and
+    (assigned(CPMemResults.EditMonitor.CopyMonitor)) and
+    (CPMemResults.EditMonitor.CopyMonitor.Enabled) then
+  begin
+    ScrubTheClipboard;
+    FEditCtrl.PasteFromClipboard;
+  end
+  else
+    FEditCtrl.Perform(EM_REPLACESEL, WParam(true),
+      Longint(PChar(Clipboard.AsText)));
 end;
 
 procedure TfrmConsults.popNoteMemoReformatClick(Sender: TObject);
@@ -3887,6 +3921,7 @@ begin
   FCsltList.Free;
   FImageFlag.Free;
   KillDocTreeObjects(tvCsltNotes);
+  FreeAndNil(ConsultRec.RequestProcessingActivity);
   inherited;
 end;
 
@@ -4360,6 +4395,130 @@ begin
   inherited;
   if (FEditingIndex < 0) or (lstNotes.ItemIndex <> FEditingIndex) then Exit;
   cmdChangeClick(Sender);
+end;
+
+procedure TfrmConsults.mnuActLaunchDSTClick(Sender: TObject);
+{
+WAT - 5/29/2020 Launch DST button removed from Consult Tracking menu.
+Temporarily leaving this code intact.
+It will migrate to consult actions in a future DST/CTB change set
+}
+var
+  Saved: Boolean;
+  consUrgency, ServiceName, tmpstr, SavedCsltID, X: string;
+  I: Integer;
+  aList, ADecision: TStringList;
+  tmpNode: TORTreeNode;
+  DstDecision: string;
+  cur: TCursor;
+begin
+  inherited;
+  if lstConsults.ItemIEN = 0 then
+    Exit;
+  SavedCsltID := lstConsults.ItemID;
+  if EditingIndex <> -1 then
+  begin
+    SaveCurrentNote(Saved);
+    if not Saved then
+      Exit;
+  end;
+  lstNotes.ItemIndex := -1;
+  FOrderID := Piece(lstConsults.Items[lstConsults.ItemIndex], U, 6);
+  if not LockConsultRequest(lstConsults.ItemIEN) then
+    Exit;
+  FActionType := TMenuItem(Sender).Tag;
+  ClearEditControls;
+  lstNotes.Enabled := False;
+  pnlConsultList.Enabled := False;
+  aList := TStringList.Create;
+  ADecision := TStringList.Create;
+  cur := Screen.Cursor;
+  Screen.Cursor := crHourGlass;
+  try
+    with lstConsults do
+      if ItemIEN > 0 then
+      begin
+        ServiceName := lstConsults.Items[lstConsults.ItemIndex];
+        ServiceName := Piece(ServiceName, '^', 10);
+        for I := 0 to memConsult.Lines.Count - 1 do
+        begin
+          tmpstr := memConsult.Lines[I];
+          if Piece(tmpstr, ':', 1) = 'Urgency' then
+          begin
+            consUrgency := Piece(tmpstr, ':', 2);
+            consUrgency := TrimLeft(consUrgency);
+            break;
+          end;
+        end;
+        if (ServiceName <> '') and (consUrgency <> '') then
+        begin
+          InitDst;
+          DstDecision := DstPro.getDstReply(ServiceName,consUrgency,'CPRS_SIGNED');
+          if DstDecision <> '' then
+          begin
+            // if decision isn't null, assume new info saved in DST, so add comment
+            ADecision.Text := DstDecision;
+            AddComment(aList, ConsultRec.IEN, ADecision, FMNow, 1, '');
+            if aList.Count > 0 then
+            begin
+              if StrToInt(Piece(aList[0], U, 1)) > 0 then
+              begin
+                InfoBox(Piece(aList[0], U, 2),
+                  'Unable to ' + ActionType[FActionType],
+                  MB_OK or MB_ICONWARNING);
+                FChanged := False;
+              end
+              else
+                FChanged := True;
+            end
+            else
+              FChanged := True;
+          end;
+          if FChanged = True then
+          begin
+            if Notifications.Active then
+              with tvConsults do
+              begin
+                uChanging := True;
+                Selected := FindPieceNode(SavedCsltID, 1, U,
+                  Items.GetFirstNode);
+                if Selected <> nil then
+                  Selected.Delete;
+                X := FindConsult(StrToIntDef(SavedCsltID, 0));
+                tmpNode := TORTreeNode(Items.AddChildFirst(Items.GetFirstNode,
+                  MakeConsultListDisplayText(X)));
+                tmpNode.StringData := X;
+                SetNodeImage(tmpNode, FCurrentContext);
+                uChanging := False;
+                Selected := tmpNode;
+                tvConsultsClick(Self);
+              end
+            else
+            begin
+              UpdateList; { update consult list after success }
+              with tvConsults do
+                Selected := FindPieceNode(SavedCsltID, U, Items.GetFirstNode);
+              tvConsultsClick(Self);
+            end;
+          end;
+        end
+        else
+          ShowMessage('Error launching DST. Try again later.');
+      end
+      else
+      begin
+        if ItemIEN = 0 then
+          InfoBox(TX_NOCONSULT, TX_NOCSLT_CAP, MB_OK);
+      end;
+  finally
+    aList.Free;
+    ADecision.Free;
+    Screen.Cursor := cur;
+  end;
+  UnlockConsultRequest(lstNotes.ItemIEN, StrToIntDef(SavedCsltID, 0));
+  lstNotes.Enabled := True;
+  pnlConsultList.Enabled := True;
+  SetResultMenus;
 end;
 
 procedure TfrmConsults.mnuActLoadBoilerClick(Sender: TObject);

@@ -81,6 +81,7 @@ type
   private
     FDFN:        string;                         // Internal Entry Number in Patient file  //*DFN*
     FICN:        string;                         // Integration Control Number from MPI
+    FFullICN:    string;                         // Integration Contorl Number including checksum from MPI
     FName:       string;                         // Patient Name (mixed case)
     FSSN:        string;                         // Patient Identifier (generally SSN)
     FDOB:        TFMDateTime;                    // Date of Birth in Fileman format
@@ -124,6 +125,7 @@ type
 
     property DFN:              string      read FDFN write SetDFN;  //*DFN*
     property ICN:              string      read FICN;
+    property FullICN:          string      read FFullICN;
     property Name:             string      read FName;
     property SSN:              string      read FSSN;
     property DOB:              TFMDateTime read FDOB;
@@ -309,6 +311,7 @@ type
     procedure Prior;
     procedure Delete;
     procedure DeleteForCurrentUser;
+    function IsLast: boolean;
     property Active:   Boolean read FActive;
     property DFN:      string  read GetDFN;  //*DFN*
     property FollowUp: Integer read GetFollowUp;
@@ -908,12 +911,15 @@ procedure TPatient.SetDFN(const Value: string);  //*DFN*
 var
   PtSelect: TPtSelect;
 begin
-  if (Value = '') or (Value = FDFN) then Exit;  //*DFN*
+  if (Value = FDFN) then Exit;  //*DFN*
   Clear;
+  if Value = '' then
+    exit;
   SelectPatient(Value, PtSelect);
   FDFN        := Value;
   FName       := PtSelect.Name;
   FICN        := PtSelect.ICN;
+  FFullICN    := PtSelect.FullICN;
   FSSN        := PtSelect.SSN;
   FDOB        := PtSelect.DOB;
   FAge        := PtSelect.Age;
@@ -1635,6 +1641,11 @@ begin
   if FNotifyItem <> nil
     then Result := Piece(Piece(FNotifyItem.RecordID, U, 1 ), ':', 2)
     else Result := '';
+end;
+
+function TNotifications.IsLast: boolean;
+begin
+  Result := (FCurrentIndex = FList.Count - 1);
 end;
 
 function TNotifications.GetData: TStringList;

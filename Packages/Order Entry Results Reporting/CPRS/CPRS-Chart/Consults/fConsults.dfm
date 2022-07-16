@@ -6,9 +6,6 @@ inherited frmConsults: TfrmConsults
   ClientHeight = 421
   ClientWidth = 715
   Menu = mnuConsults
-  OnDestroy = FormDestroy
-  OnHide = FormHide
-  OnShow = FormShow
   ExplicitWidth = 731
   ExplicitHeight = 480
   PixelsPerInch = 96

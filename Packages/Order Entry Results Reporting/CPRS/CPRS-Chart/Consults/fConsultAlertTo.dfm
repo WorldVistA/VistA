@@ -74,6 +74,7 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 0
+      Text = ''
       OnKeyDown = cboSrcListKeyDown
       OnMouseClick = cboSrcListMouseClick
       OnNeedData = cboSrcListNeedData

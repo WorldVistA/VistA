@@ -377,7 +377,7 @@ type
   //  procedure SetPCEParent();
     function VerifyNoteTitle: Boolean;
     // added for treeview
-    procedure LoadNotes;
+//    procedure LoadNotes;
     procedure UpdateTreeView(DocList: TStringList; Tree: TORTreeView);
     procedure EnableDisableIDNotes;
     procedure ShowPCEButtons(Editing: Boolean);
@@ -424,6 +424,9 @@ type
     property ReadVisible: boolean read GetReadVisible write SetReadVisible;
     property ReminderToggled: boolean read GetReminderToggled write SetReminderToggled;
     property ExpandedDrawerHeight: integer read fExpandedDrawerHeight write SetExpandedDrawerHeight;
+    procedure LoadNotes; // PDMP update
+    function EditedNoteInfo:String;
+    property Silent: Boolean read FSilent;
   published
     property Drawers: TfraDrawers read GetDrawers; // Keep Drawers published
   end;
@@ -3880,9 +3883,17 @@ end;
 procedure TfrmNotes.popNoteMemoPasteClick(Sender: TObject);
 begin
   inherited;
-  if not CPMemNewNote.EditMonitor.CopyMonitor.Enabled then
-   ScrubTheClipboard;
-  FEditCtrl.PasteFromClipboard; // use AsText to prevent formatting
+  // Seltext does not add to the undo buffer
+  if (FEditCtrl = memNewNote) and (assigned(CPMemNewNote.EditMonitor)) and
+    (assigned(CPMemNewNote.EditMonitor.CopyMonitor)) and
+    (CPMemNewNote.EditMonitor.CopyMonitor.Enabled) then
+  begin
+    ScrubTheClipboard;
+    FEditCtrl.PasteFromClipboard;
+  end
+  else
+    FEditCtrl.Perform(EM_REPLACESEL, WParam(true),
+      Longint(PChar(Clipboard.AsText)));
 end;
 
 procedure TfrmNotes.popNoteMemoReformatClick(Sender: TObject);
@@ -4049,11 +4060,14 @@ end;
 
 procedure TfrmNotes.ProcessNotifications;
 var
-  X: string;
+  X, AlertDesc: string;
+  i, idx: integer;
   Saved: Boolean;
   tmpNode: TTreeNode;
   AnObject: PDocTreeObject;
   aSmartParams: TStringList;
+  aSMARTAction: TNotificationAction;
+
 begin
   if EditingIndex <> -1 then
   begin
@@ -4077,6 +4091,24 @@ begin
 //    CallVistA('ORB3UTL GET NOTIFICATION', [Piece(Notifications.RecordID, '^', 2)], aSmartParams);
     If (aSmartParams.values['PROCESS AS SMART NOTIFICATION'] = '1') then
     begin
+      idx := aSmartParams.IndexOf(SMART_ALERT_INFO);
+      if idx > 0 then
+      begin
+        AlertDesc := '';
+        for i := idx + 1 to aSmartParams.Count - 1 do
+          AlertDesc := AlertDesc + aSmartParams[i] + CRLF;
+        for i := aSmartParams.Count - 1 downto idx do
+          aSmartParams.Delete(i);
+
+        aSMARTAction := TfrmNotificationProcessor.Execute(aSmartParams,
+          AlertDesc, True);
+
+        if aSMARTAction = naNewNote then
+          aSmartParams.Add('MAKE ADDENDUM=0')
+        else if aSMARTAction = naAddendum then
+          aSmartParams.Add('MAKE ADDENDUM=1');
+      end;
+
       if (aSmartParams.values['MAKE ADDENDUM'] = '0') then
       begin
         If Encounter.NeedVisit then
@@ -4098,24 +4130,11 @@ begin
       end
       else if (aSmartParams.values['MAKE ADDENDUM'] = '1') then
       begin
-//        If Encounter.NeedVisit then
-//        begin
-//          UpdateVisit(Font.Size, DfltTIULocation);
-//          frmFrame.DisplayEncounterText;
-//        end;
-//
-//        If Encounter.NeedVisit then
-//        begin
-//          InfoBox(TX_NEED_VISIT, TX_NO_VISIT, MB_OK or MB_ICONWARNING);
-//          ShowPCEButtons(False);
-//          exit;
-//        end;
         InsertAddendum(StrToIntDef(aSmartParams.values['ADDEND NOTE IEN'], -1),
           aSmartParams.values['ADDEND NOTE TITLE'], true);
       end;
-
-        exit;
-      end
+      exit;
+    end
     else
       X := Notifications.AlertData;
   finally
@@ -5406,6 +5425,14 @@ begin
   end;
   if posC > 0 then
     lvNotes.Height := posC;
+end;
+
+function TfrmNotes.EditedNoteInfo: String;
+begin
+  Result := '';
+  if EditingIndex > -1 then
+    Result := 'Progress note ' + MakeNoteDisplayText
+      (lstNotes.Items[EditingIndex]);
 end;
 
 initialization

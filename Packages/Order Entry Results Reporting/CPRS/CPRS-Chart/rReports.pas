@@ -587,11 +587,12 @@ begin
               LineHeight := Printer.Canvas.TextHeight(TX_FONT_NAME);
               y := LineHeight * 5;            // 5 lines = .83" top margin   v15.9 (RV)
 
-//              try
-//              Printer.Copies := Printer.Copies; // RTC 1223892
+              try
+              Printer.Refresh; // := Printer.Copies; // RTC 1223892
 
               Printer.BeginDoc;
-
+              if Printer.Printing then
+                begin
               //Do we need to add the header?
               IF IncludeHeader then begin
                for j := 0 to aHeader.Count - 1 do
@@ -623,10 +624,11 @@ begin
                     end;
                 end;
               Printer.EndDoc;
-//              except
-//                on E: Exception do
-//                  InfoBox(E.Message, 'Printing error',MB_OK);
-//              end;
+                end;
+              except
+                on E: Exception do
+                  InfoBox(E.Message, 'Printer error',MB_OK);
+              end;
 
 (*            end
           else                               // removed in v15.9 (RV)  TRichEdit.Print no longer used.

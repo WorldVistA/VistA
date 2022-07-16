@@ -58,6 +58,13 @@ type
   class function rpcIsClinicOrder(IEN: string): string;
   end;
 
+var
+  frmPrintLocation: TfrmPrintLocation;
+  // ClinicIEN, WardIen: integer;
+  // ASvc, ClinicLocation, WardLocation: string;
+  ClinicArr: TStringList;
+  WardArr: TStringList;
+
 implementation
 
 {$R *.dfm}
@@ -76,12 +83,7 @@ TAB           = #9;
   LOCATION_CHANGE_3  = 'What Location are these orders associated with?';
   LOCATION_CHANGE_4  = 'The patient has now been admitted to ward: ';
 
-var
-  frmPrintLocation: TfrmPrintLocation;
-//  ClinicIEN, WardIen: integer;
-//  ASvc, ClinicLocation, WardLocation: string;
-  ClinicArr: TStringList;
-  WardArr: TStringList;
+
 
 { TfrmPrintLocation }
 

@@ -2,25 +2,23 @@ inherited frmEditCslt: TfrmEditCslt
   Tag = 110
   Left = 461
   Top = 191
-  Width = 576
-  Height = 479
+  Width = 720
+  Height = 530
   HorzScrollBar.Range = 561
   VertScrollBar.Range = 340
+  Anchors = [akLeft, akTop, akBottom]
   Caption = 'Edit/Resubmit a Cancelled Consult'
   Constraints.MinHeight = 467
   Constraints.MinWidth = 576
   Position = poScreenCenter
-  ExplicitWidth = 576
-  ExplicitHeight = 479
-  DesignSize = (
-    560
-    441)
+  ExplicitWidth = 720
+  ExplicitHeight = 530
   PixelsPerInch = 96
   TextHeight = 13
   object pnlCombatVet: TPanel [0]
     Left = 0
     Top = 0
-    Width = 561
+    Width = 704
     Height = 25
     Align = alTop
     BevelOuter = bvLowered
@@ -35,7 +33,7 @@ inherited frmEditCslt: TfrmEditCslt
       Name = 'txtCombatVet'
       Left = 1
       Top = 1
-      Width = 559
+      Width = 702
       Height = 23
       Align = alClient
       Alignment = taCenter
@@ -47,27 +45,30 @@ inherited frmEditCslt: TfrmEditCslt
     end
   end
   object pnlMessage: TPanel [1]
-    Left = 21
-    Top = 404
-    Width = 388
-    Height = 44
-    Anchors = [akLeft, akRight, akBottom]
-    BevelInner = bvRaised
-    BorderStyle = bsSingle
+    Left = 0
+    Top = 377
+    Width = 704
+    Height = 79
+    Align = alBottom
     Caption = 'pnlMessage'
-    TabOrder = 4
+    ShowCaption = False
+    TabOrder = 2
     Visible = False
     object imgMessage: TImage
+      AlignWithMargins = True
       Left = 4
       Top = 4
       Width = 32
-      Height = 32
+      Height = 71
+      Align = alLeft
+      ExplicitHeight = 32
     end
     object memMessage: TRichEdit
-      Left = 37
-      Top = 4
-      Width = 332
-      Height = 32
+      Left = 39
+      Top = 1
+      Width = 664
+      Height = 77
+      Align = alClient
       Color = clInfoBk
       Font.Charset = ANSI_CHARSET
       Font.Color = clInfoText
@@ -78,60 +79,28 @@ inherited frmEditCslt: TfrmEditCslt
       ScrollBars = ssVertical
       TabOrder = 0
       WantReturns = False
+      Zoom = 100
     end
   end
-  object cmdAccept: TButton [2]
-    Left = 414
-    Top = 425
-    Width = 72
-    Height = 21
-    Anchors = [akRight, akBottom]
-    Caption = 'Resubmit'
-    TabOrder = 2
-    OnClick = cmdAcceptClick
-  end
-  object cmdQuit: TButton [3]
-    Left = 491
-    Top = 425
-    Width = 72
-    Height = 21
-    Anchors = [akRight, akBottom]
-    Cancel = True
-    Caption = 'Cancel'
-    TabOrder = 3
-    OnClick = cmdQuitClick
-  end
-  object pnlMain: TPanel [4]
+  object pnlMain: TPanel [2]
     Left = 0
-    Top = 0
-    Width = 569
-    Height = 402
-    Anchors = [akLeft, akTop, akRight, akBottom]
+    Top = 25
+    Width = 704
+    Height = 175
+    Align = alTop
     BevelOuter = bvNone
+    Ctl3D = False
+    ParentCtl3D = False
     TabOrder = 1
     DesignSize = (
-      569
-      402)
+      704
+      175)
     object lblService: TLabel
       Left = 4
       Top = 4
       Width = 134
       Height = 13
       Caption = 'Consult to Service/Specialty'
-    end
-    object lblReason: TLabel
-      Left = 4
-      Top = 227
-      Width = 95
-      Height = 13
-      Caption = 'Reason for Request'
-    end
-    object lblComment: TLabel
-      Left = 4
-      Top = 169
-      Width = 77
-      Height = 13
-      Caption = 'New Comments:'
     end
     object lblComments: TLabel
       Left = 8
@@ -146,15 +115,7 @@ inherited frmEditCslt: TfrmEditCslt
       Width = 44
       Height = 17
       Caption = 'Urgency'
-      TabOrder = 14
-    end
-    object lblPlace: TStaticText
-      Left = 376
-      Top = 93
-      Width = 104
-      Height = 17
-      Caption = 'Place of Consultation'
-      TabOrder = 15
+      TabOrder = 12
     end
     object lblAttn: TStaticText
       Left = 376
@@ -162,7 +123,7 @@ inherited frmEditCslt: TfrmEditCslt
       Width = 46
       Height = 17
       Caption = 'Attention'
-      TabOrder = 16
+      TabOrder = 13
     end
     object lblProvDiag: TStaticText
       Left = 195
@@ -170,7 +131,7 @@ inherited frmEditCslt: TfrmEditCslt
       Width = 104
       Height = 17
       Caption = 'Provisional Diagnosis'
-      TabOrder = 17
+      TabOrder = 14
     end
     object lblInpOutp: TStaticText
       Left = 197
@@ -178,29 +139,7 @@ inherited frmEditCslt: TfrmEditCslt
       Width = 127
       Height = 17
       Caption = 'Patient will be seen as an:'
-      TabOrder = 18
-    end
-    object memReason: TRichEdit
-      Left = 4
-      Top = 243
-      Width = 559
-      Height = 161
-      Anchors = [akLeft, akTop, akRight, akBottom]
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Courier New'
-      Font.Style = []
-      ParentFont = False
-      PopupMenu = popReason
-      ScrollBars = ssVertical
-      TabOrder = 12
-      WantTabs = True
-      OnChange = ControlChange
-      OnExit = memReasonExit
-      OnKeyDown = memCommentKeyDown
-      OnKeyPress = memCommentKeyPress
-      OnKeyUp = memCommentKeyUp
+      TabOrder = 15
     end
     object cboService: TORComboBox
       Left = 4
@@ -279,7 +218,7 @@ inherited frmEditCslt: TfrmEditCslt
     object cboPlace: TORComboBox
       Left = 376
       Top = 106
-      Width = 188
+      Width = 323
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       Style = orcsDropDown
@@ -305,8 +244,8 @@ inherited frmEditCslt: TfrmEditCslt
     object txtProvDiag: TCaptionEdit
       Left = 195
       Top = 147
-      Width = 316
-      Height = 21
+      Width = 451
+      Height = 19
       Anchors = [akLeft, akTop, akRight]
       MaxLength = 180
       ParentShowHint = False
@@ -319,7 +258,7 @@ inherited frmEditCslt: TfrmEditCslt
     object txtAttn: TORComboBox
       Left = 376
       Top = 19
-      Width = 188
+      Width = 323
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       Style = orcsDropDown
@@ -344,10 +283,11 @@ inherited frmEditCslt: TfrmEditCslt
       CharsNeedMatch = 1
     end
     object cboCategory: TORComboBox
-      Left = 559
-      Top = 103
-      Width = 10
+      Left = 543
+      Top = 106
+      Width = 157
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       Style = orcsDropDown
       AutoSelect = True
       Caption = ''
@@ -362,31 +302,10 @@ inherited frmEditCslt: TfrmEditCslt
       MaxLength = 0
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 13
+      TabOrder = 11
       Text = ''
       Visible = False
       CharsNeedMatch = 1
-    end
-    object memComment: TRichEdit
-      Left = 4
-      Top = 185
-      Width = 557
-      Height = 41
-      Anchors = [akLeft, akTop, akRight]
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      PopupMenu = popReason
-      TabOrder = 11
-      WantTabs = True
-      OnChange = ControlChange
-      OnExit = memCommentExit
-      OnKeyDown = memCommentKeyDown
-      OnKeyPress = memCommentKeyPress
-      OnKeyUp = memCommentKeyUp
     end
     object btnCmtCancel: TButton
       Left = 8
@@ -407,7 +326,7 @@ inherited frmEditCslt: TfrmEditCslt
       OnClick = btnCmtOtherClick
     end
     object cmdLexSearch: TButton
-      Left = 515
+      Left = 650
       Top = 147
       Width = 46
       Height = 21
@@ -422,14 +341,15 @@ inherited frmEditCslt: TfrmEditCslt
       Width = 117
       Height = 17
       Caption = 'Clinically indicated date:'
-      TabOrder = 19
+      TabOrder = 16
     end
     object calClinicallyIndicated: TORDateBox
       Left = 197
       Top = 62
       Width = 164
-      Height = 21
+      Height = 19
       TabOrder = 3
+      OnChange = ControlChange
       OnExit = calClinicallyIndicatedExit
       DateOnly = True
       RequireTime = False
@@ -438,24 +358,203 @@ inherited frmEditCslt: TfrmEditCslt
     object lblLatest: TStaticText
       Left = 376
       Top = 46
-      Width = 116
+      Width = 92
       Height = 17
-      Caption = 'Latest appropriate date:'
-      TabOrder = 21
+      Caption = 'No later than date:'
+      Enabled = False
+      TabOrder = 18
       Visible = False
     end
     object calLatest: TORDateBox
       Left = 378
       Top = 62
-      Width = 188
-      Height = 21
+      Width = 323
+      Height = 19
       Anchors = [akLeft, akTop, akRight]
-      TabOrder = 22
+      Enabled = False
+      TabOrder = 19
       Visible = False
+      OnChange = ControlChange
       OnExit = calLatestExit
       DateOnly = True
       RequireTime = False
       Caption = ''
+    end
+    object lblPlace: TStaticText
+      Left = 376
+      Top = 89
+      Width = 104
+      Height = 17
+      Caption = 'Place of Consultation'
+      TabOrder = 22
+    end
+  end
+  object pnlButtons: TPanel [3]
+    Left = 0
+    Top = 456
+    Width = 704
+    Height = 35
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = 'pnlButtons'
+    ShowCaption = False
+    TabOrder = 3
+    inline DstMgr: TfrDSTMgr
+      Left = 0
+      Top = 0
+      Width = 121
+      Height = 35
+      Align = alLeft
+      Color = clBtnFace
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 0
+      ExplicitWidth = 121
+      ExplicitHeight = 35
+      inherited btnLaunchToolbox: TButton
+        Width = 115
+        Height = 29
+        ExplicitWidth = 115
+        ExplicitHeight = 29
+      end
+      inherited alDST: TActionList
+        inherited acDST: TAction
+          OnExecute = DstMgracDSTExecute
+        end
+      end
+    end
+    object cmdQuit: TButton
+      AlignWithMargins = True
+      Left = 629
+      Top = 3
+      Width = 72
+      Height = 29
+      Align = alRight
+      Cancel = True
+      Caption = 'Cancel'
+      TabOrder = 1
+      OnClick = cmdQuitClick
+    end
+    object cmdAccept: TButton
+      AlignWithMargins = True
+      Left = 551
+      Top = 3
+      Width = 72
+      Height = 29
+      Align = alRight
+      Caption = 'Resubmit'
+      TabOrder = 2
+      OnClick = cmdAcceptClick
+    end
+  end
+  object pnlDetails: TPanel [4]
+    Left = 0
+    Top = 200
+    Width = 704
+    Height = 177
+    Align = alClient
+    BevelOuter = bvNone
+    Caption = 'pnlDetails'
+    ShowCaption = False
+    TabOrder = 4
+    object splDetails: TSplitter
+      Left = 0
+      Top = 81
+      Width = 704
+      Height = 3
+      Cursor = crVSplit
+      Align = alTop
+      Beveled = True
+      ExplicitLeft = -1
+      ExplicitTop = 71
+      ExplicitWidth = 728
+    end
+    object pnlComments: TPanel
+      Left = 0
+      Top = 0
+      Width = 704
+      Height = 81
+      Align = alTop
+      BevelOuter = bvNone
+      Caption = 'pnlComments'
+      ShowCaption = False
+      TabOrder = 0
+      object lblComment: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 698
+        Height = 13
+        Align = alTop
+        Caption = 'New Comments:'
+        ExplicitWidth = 77
+      end
+      object memComment: TRichEdit
+        AlignWithMargins = True
+        Left = 3
+        Top = 22
+        Width = 698
+        Height = 56
+        Align = alClient
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        PopupMenu = popReason
+        ScrollBars = ssVertical
+        TabOrder = 0
+        WantTabs = True
+        Zoom = 100
+        OnChange = ControlChange
+        OnExit = memCommentExit
+        OnKeyDown = memCommentKeyDown
+        OnKeyUp = memCommentKeyUp
+      end
+    end
+    object pnlReason: TPanel
+      Left = 0
+      Top = 84
+      Width = 704
+      Height = 93
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'pnlComments'
+      ShowCaption = False
+      TabOrder = 1
+      object lblReason: TLabel
+        Left = 0
+        Top = 0
+        Width = 704
+        Height = 13
+        Align = alTop
+        Caption = 'Reason for Request'
+        ExplicitWidth = 95
+      end
+      object memReason: TRichEdit
+        AlignWithMargins = True
+        Left = 3
+        Top = 16
+        Width = 698
+        Height = 74
+        Align = alClient
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Courier New'
+        Font.Style = []
+        ParentFont = False
+        PopupMenu = popReason
+        ScrollBars = ssVertical
+        TabOrder = 0
+        WantTabs = True
+        Zoom = 100
+        OnChange = ControlChange
+        OnExit = memReasonExit
+        OnKeyDown = memCommentKeyDown
+        OnKeyUp = memCommentKeyUp
+      end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -480,9 +579,6 @@ inherited frmEditCslt: TfrmEditCslt
         'Status = stsDefault')
       (
         'Component = lblUrgency'
-        'Status = stsDefault')
-      (
-        'Component = lblPlace'
         'Status = stsDefault')
       (
         'Component = lblAttn'
@@ -555,11 +651,32 @@ inherited frmEditCslt: TfrmEditCslt
         'Status = stsDefault')
       (
         'Component = txtCombatVet'
+        'Status = stsDefault')
+      (
+        'Component = lblPlace'
+        'Status = stsDefault')
+      (
+        'Component = DstMgr'
+        'Status = stsDefault')
+      (
+        'Component = DstMgr.btnLaunchToolbox'
+        'Status = stsDefault')
+      (
+        'Component = pnlDetails'
+        'Status = stsDefault')
+      (
+        'Component = pnlButtons'
+        'Status = stsDefault')
+      (
+        'Component = pnlComments'
+        'Status = stsDefault')
+      (
+        'Component = pnlReason'
         'Status = stsDefault'))
   end
   object mnuPopProvDx: TPopupMenu
-    Left = 353
-    Top = 129
+    Left = 449
+    Top = 137
     object mnuPopProvDxDelete: TMenuItem
       Caption = 'Delete diagnosis'
       OnClick = mnuPopProvDxDeleteClick
@@ -567,8 +684,8 @@ inherited frmEditCslt: TfrmEditCslt
   end
   object popReason: TPopupMenu
     OnPopup = popReasonPopup
-    Left = 523
-    Top = 369
+    Left = 491
+    Top = 265
     object popReasonCut: TMenuItem
       Caption = 'Cu&t'
       ShortCut = 16472

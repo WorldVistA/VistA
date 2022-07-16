@@ -2163,10 +2163,16 @@ end;
 procedure TfrmDCSumm.popSummMemoPasteClick(Sender: TObject);
 begin
   inherited;
-  //FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
-  if not CPMemNewSumm.EditMonitor.CopyMonitor.Enabled then
-   ScrubTheClipboard;
-  FEditCtrl.PasteFromClipboard;        // use AsText to prevent formatting
+  if (FEditCtrl = memNewSumm) and (assigned(CPMemNewSumm.EditMonitor)) and
+    (assigned(CPMemNewSumm.EditMonitor.CopyMonitor)) and
+    (CPMemNewSumm.EditMonitor.CopyMonitor.Enabled) then
+  begin
+    ScrubTheClipboard;
+    FEditCtrl.PasteFromClipboard;
+  end
+  else
+    FEditCtrl.Perform(EM_REPLACESEL, WParam(true),
+      Longint(PChar(Clipboard.AsText)));
 end;
 
 procedure TfrmDCSumm.popSummMemoReformatClick(Sender: TObject);

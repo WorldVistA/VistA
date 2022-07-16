@@ -9,11 +9,11 @@ inherited frmPrintLocation: TfrmPrintLocation
   OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
-  ExplicitWidth = 542
+  ExplicitWidth = 443
   ExplicitHeight = 472
   DesignSize = (
     427
-    434)
+    433)
   PixelsPerInch = 96
   TextHeight = 13
   object lblEncounter: TLabel [0]
@@ -107,7 +107,7 @@ inherited frmPrintLocation: TfrmPrintLocation
       Caption = ''
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 16
+      ItemHeight = 13
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False

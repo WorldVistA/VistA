@@ -144,6 +144,9 @@ begin
   fColumns := TStringList.Create;
   fLastItemIndex := -1;
   fAllowDetailDisplay := True;
+{$IFDEF DEBUG_AA}
+  AlignWithMargins := False;
+{$ENDIF}
 
   tmr.Interval := UPDATING_WAIT_TIME;
   tmr.Enabled := false;
@@ -283,21 +286,25 @@ begin
     lvData.Columns.Clear;
     if fColumns.Count = 0 then
       with lvData.Columns.Add do
-        begin
-          Caption := '';
-          AutoSize := True;
-          Width := lvData.ClientWidth;
-          lvData.ShowColumnHeaders := false;
-        end
+      begin
+        Caption := '';
+        AutoSize := True;
+        Width := lvData.ClientWidth;
+        lvData.ShowColumnHeaders := false;
+      end
     else
+    begin
       for aStr in fColumns do
         with lvData.Columns.Add do
-          begin
-            Caption := aStr;
-            AutoSize := True;
-            Width := lvData.ClientWidth div fColumns.Count;
-            lvData.ShowColumnHeaders := True;
-          end;
+        begin
+          Caption := aStr;
+          // AutoSize := True;
+          // Width := lvData.ClientWidth div fColumns.Count;
+          Width := -2; // lvData.ClientWidth div fColumns.Count;
+          // lvData.ShowColumnHeaders := True;
+        end;
+      lvData.ShowColumnHeaders := True;
+    end;
 
   finally
     lvData.Columns.EndUpdate;
@@ -389,6 +396,7 @@ procedure TfraCoverSheetDisplayPanel_CPRS.DisplayItemDetail(Sender: TObject; aIt
 var
   aDetail: TStringList;
   aParam: ICoverSheetParam_CPRS;
+  aTitle: string;
 begin
   if aItem <> nil then
     begin
@@ -400,11 +408,14 @@ begin
             aDetail := TStringList.Create;
             OnGetDetail(TDelimitedString(aItem.Data), aDetail);
 
+            // Get the title
+            aTitle := getTitle + ' Item Detail: ' + aItem.Caption;
+
             // Check to see if it's printable
             if getParam.QueryInterface(ICoverSheetParam_CPRS, aParam) = 0 then
-              OnShowDetail(aDetail, '', aParam.AllowDetailPrint)
+              OnShowDetail(aDetail, aTitle, aParam.AllowDetailPrint)
             else
-              OnShowDetail(aDetail);
+              OnShowDetail(aDetail, aTitle);
           finally
             FreeAndNil(aDetail);
           end;
@@ -517,6 +528,7 @@ procedure TfraCoverSheetDisplayPanel_CPRS.OnSetFontSize(Sender: TObject; aNewSiz
 begin
   inherited;
   lvData.Font.Size := aNewSize;
+  onRefreshDisplay(self);
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS.SetListViewColumn(aIndex: integer; aCaption: string; aAutoSize: boolean; aWidth: integer);

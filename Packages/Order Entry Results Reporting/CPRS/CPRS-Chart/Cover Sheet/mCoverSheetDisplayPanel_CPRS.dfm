@@ -1,5 +1,11 @@
 inherited fraCoverSheetDisplayPanel_CPRS: TfraCoverSheetDisplayPanel_CPRS
   inherited pnlMain: TPanel
+    inherited pnlHeader: TPanel
+      inherited lblTitle: TLabel
+        Width = 443
+        Height = 19
+      end
+    end
     inherited pnlWorkspace: TPanel
       object lvData: TListView
         AlignWithMargins = True
@@ -29,10 +35,13 @@ inherited fraCoverSheetDisplayPanel_CPRS: TfraCoverSheetDisplayPanel_CPRS
       end
     end
   end
+  inherited pmn: TPopupMenu
+    Left = 120
+  end
   object tmr: TTimer
     Enabled = False
     OnTimer = tmrTimer
-    Left = 144
-    Top = 8
+    Left = 72
+    Top = 56
   end
 end

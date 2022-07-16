@@ -718,6 +718,7 @@ begin
               item := lstvAlerts.Selected;
               FAlertData.Delete(item.Index);
               item.Selected := False;
+              lstvAlerts.Items.Count := FAlertData.Count;
               lstvAlerts.Invalidate;
             end
           else
@@ -737,8 +738,8 @@ var
   ADFN, X, RecordID, XQAID, LongText, AlertMsg: string; // *DFN*
   LongTextBtns: TStringList;
   aSmartParams, aEmptyParams: TStringList;
-  aSMARTAction: TNotificationAction;
   lastUpdate: TDateTime;
+  ProcessLongTextAlerts: boolean;
 
   procedure IncProgressBar;
   begin
@@ -762,13 +763,23 @@ begin
 
     // Count information-only selections for gauge
     infocount := 0;
+    ProcessLongTextAlerts := True;
     for i := 0 to Items.Count - 1 do
+    begin
       if Items[i].Selected then
       begin
-        X := Items[i].Caption;
-        if (X = 'I') or (X = 'L') then
-          Inc(infocount);
+        if Items[i].Caption = 'I' then
+          Inc(infocount)
+        else if ProcessLongTextAlerts then
+        begin
+          XQAID := Items[i].SubItems[6];
+          if Copy(XQAID, 1, 6) = 'TIUERR' then
+            continue;
+          if (Copy(XQAID, 1, 3) = 'TIU') or (Piece(XQAID, ',', 1) = 'OR') then
+            ProcessLongTextAlerts := False;
+        end
       end;
+    end;
 
     if infocount > 0 then
     begin
@@ -807,37 +818,39 @@ begin
         end
         else if Items[i].Caption = 'L' then
           begin
-            IncProgressBar;
-            LongText := LoadNotificationLongText(XQAID);
-            LongTextBtns := TStringList.Create();
-            LongTextBtns.Add('Copy to Clipboard');
-            LongTextBtns.Add('Dismiss Alert');
-            LongTextBtns.Add('Keep Alert^true');
-
             if Piece(XQAID, ',', 1) = 'OR' then
+              ADFN := Piece(XQAID, ',', 2) // *DFN*
+            else
+              ADFN := '';
+            LongText := LoadNotificationLongText(XQAID);
+            if ProcessLongTextAlerts and (ADFN = '') then
             begin
-              LongTextBtns.Add('Open Patient Chart');
-            end;
+              LongTextBtns := TStringList.Create();
+              LongTextBtns.Add('Copy to Clipboard');
+              LongTextBtns.Add('Dismiss Alert');
+              LongTextBtns.Add('Keep Alert^true');
 
-            LongTextResult := 0;
-            while (LongTextResult=0) do
+              LongTextResult := 0;
+              while (LongTextResult=0) do
+              begin
+                LongTextResult := uInfoBoxWithBtnControls.DefMessageDlg(LongText,
+                    mtConfirmation, LongTextBtns, Alertmsg, false);
+                if (LongTextResult = 0) then ClipBoard.astext := LongText
+              end;
+              if (LongTextResult = 1) then DeleteAlert(XQAID)
+            end
+            else
             begin
-              LongTextResult := uInfoBoxWithBtnControls.DefMessageDlg(LongText,
-                  mtConfirmation, LongTextBtns, Alertmsg, false);
-              if (LongTextResult = 0) then ClipBoard.astext := LongText
+              aSmartParams := TStringList.Create;
+              try
+                aSmartParams.Text := LongText;
+                Notifications.Add(ADFN, NF_LONG_TEXT_ALERT, RecordID, AlertMsg,
+                  aSmartParams, False);
+                enableClose := True;
+              finally
+                FreeAndNil(aSmartParams);
+              end;
             end;
-            if (LongTextResult = 1) then DeleteAlert(XQAID)
-            else if (LongTextResult = 3) then
-            begin
-              DeleteAlert(XQAID);
-              ADFN := Piece(XQAID, ',', 2); // *DFN*
-              cboPatient.Items.Add(ADFN+'^');
-              cboPatient.SelectByID(ADFN);
-              cmdOKClick(self);
-              enableClose := True;
-              break;
-            end;
-
           end
         else if Piece(XQAID, ',', 1) = 'OR' then
         // OR,16,50;1311;2980626.100756
@@ -849,40 +862,14 @@ begin
               aSmartParams);
             If (aSmartParams.Values['PROCESS AS SMART NOTIFICATION'] = '1') then
             begin
-{ removing code to roll back changes introduced by v31.261 - begin}
-//              if aSmartParams.Values['CAN_PROCESS'] <> 'D' then
-//              begin
-{ removing code to roll back changes introduced by v31.261 - end}
-                aSMARTAction := TfrmNotificationProcessor.Execute(aSmartParams,
-                                    lstvAlerts.Selected.SubItems.Text);
-
-                if aSMARTAction = naNewNote then
-                begin
-                  aSmartParams.Add('MAKE ADDENDUM=0');
-                  ADFN := Piece(XQAID, ',', 2); // *DFN*
-                  AFollowUp := StrToIntDef(Piece(Piece(XQAID, ';', 1),
-                    ',', 3), 0);
-                  Notifications.Add(ADFN, AFollowUp, RecordID,
-                    Items[i].SubItems[3], aSmartParams);
-                  enableclose := True;
-                end
-                else if aSMARTAction = naAddendum then
-                begin
-                  aSmartParams.Add('MAKE ADDENDUM=1');
-                  ADFN := Piece(XQAID, ',', 2); // *DFN*
-                  AFollowUp := StrToIntDef(Piece(Piece(XQAID, ';', 1),
-                    ',', 3), 0);
-                  Notifications.Add(ADFN, AFollowUp, RecordID,
-                    Items[i].SubItems[3], aSmartParams);
-                  enableclose := True;
-                end;
-{ removing code to roll back changes introduced by v31.261 - begin}
-//              end
-//              else
-//              begin
-//                InfoBox('Processing of this type of alert is currently disabled.', 'Unable to Process Alert', MB_OK);
-//              end;
-{ removing code to roll back changes introduced by v31.261 - end}
+              aSmartParams.Add(SMART_ALERT_INFO);
+              aSmartParams.AddStrings(lstvAlerts.Items[i].SubItems);
+              ADFN := Piece(XQAID, ',', 2); // *DFN*
+              AFollowUp := StrToIntDef(Piece(Piece(XQAID, ';', 1),
+                ',', 3), 0);
+              Notifications.Add(ADFN, AFollowUp, RecordID,
+                Items[i].SubItems[3], aSmartParams);
+              enableclose := True;
             end
             else
             begin
@@ -890,7 +877,6 @@ begin
               AFollowUp := StrToIntDef(Piece(Piece(XQAID, ';', 1), ',', 3), 0);
               Notifications.Add(ADFN, AFollowUp, RecordID, Items[i].SubItems[3],
                 aSmartParams);
-              // CB
               enableclose := True;
             end;
           finally

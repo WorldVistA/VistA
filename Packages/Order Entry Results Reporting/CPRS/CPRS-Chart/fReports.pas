@@ -1832,7 +1832,8 @@ begin
     for j := 0 to lvReports.Items.Count - 1 do
     begin
      ListItem := lvReports.Items[j];
-     if ListItem.Subitems[IDColumn] = SelectID then
+     if (ListItem.Subitems.Count > IDColumn) and
+        (ListItem.Subitems[IDColumn] = SelectID) then
        begin
          lvReports.Selected := lvReports.Items[j];
          break;

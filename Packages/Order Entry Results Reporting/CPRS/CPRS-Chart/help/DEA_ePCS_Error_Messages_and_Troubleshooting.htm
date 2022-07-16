@@ -1,0 +1,542 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="generator" content="Adobe RoboHelp 2019" />
+<title>DEA ePCS Error Messages and Troubleshooting</title>
+
+<style type="text/css">
+<!--
+p.CPRS_numbered_list { list-style:rh-list;
+x-list-class:rl-p-CPRS_numbered_list;
+x-list-level:1;
+margin-left:18pt; }
+rh-list.rl-p-CPRS_numbered_list { x-level-count:1;
+x-lvl-1-format:<x>.;
+x-lvl-1-type:decimal; }
+li.cprs_bullet_2 { list-style:circle;
+margin-left:36px; }
+-->
+</style>
+ <link rel="StyleSheet" href="CPRS.css" type="text/css" />
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute;
+left:0px;
+top:0px;
+z-index:4;
+visibility:hidden; }
+p.WebHelpNavBar { text-align:right; }
+-->
+</style>
+<script type="text/javascript" language="javascript1.2" src="whmsg.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" src="whver.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.gbWhTopic)
+{
+	var strUrl = decodeURI(document.location.href);
+	var bc = 0;
+	var n = strUrl.toLowerCase().indexOf("bc-");
+	if(n != -1)
+	{
+		document.location.replace(strUrl.substring(0, n));
+		bc = strUrl.substring(n+3);
+	}
+
+	addTocInfo("Troubleshooting\nDEA ePCS Error Messages and Troubleshooting");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"whd_show0.gif","whd_show2.gif","whd_show1.gif");
+addButton("hide",BTN_TEXT,"Hide","","","","",0,0,"whd_hide0.gif","whd_hide2.gif","whd_hide1.gif");
+addButton("prev",BTN_TEXT,"<<","","","","",0,0,"whd_prev0.gif","whd_prev2.gif","whd_prev1.gif");
+addButton("next",BTN_TEXT,">>","","","","",0,0,"whd_next0.gif","whd_next2.gif","whd_next1.gif");
+
+
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("CPRS.htm", "", ">", "Home", "CPRS_Help_Introduction.htm");
+document.write("<a href=\"DEA_ePCS_Error_Messages_and_Troubleshooting.htm\">Troubleshooting<\/a> > DEA ePCS Error Messages and Troubleshooting<\/p>");
+
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+    
+onLoadHandler = function()
+{
+	if (window.setRelStartPage)
+	{
+    setTimeout("setRelStartPage('CPRS.htm');", 1)
+
+    setTimeout("UpdateBreadCrumbsMarker();", 1);
+    }
+} 
+
+if (window.addEventListener){  
+	window.addEventListener('load', onLoadHandler, false);   
+} else if (window.attachEvent){  
+	window.attachEvent('onload', onLoadHandler);  
+}
+
+function onSetStartPage()
+{
+	autoSync(0);
+	sendSyncInfo();
+	sendAveInfoOut();
+}
+//-->
+//]]></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(4);
+//-->
+//]]></script>
+<script type="text/javascript" src="./ehlpdhtm.js" language="JavaScript1.2"></script>
+
+<h1 style="font-family: Arial, sans-serif; font-size: 14pt; color: #0080ff;">DEA ePCS Error Messages and Troubleshooting</h1>
+<p class="CPRSH3Body">This section includes general information regarding signing outpatient controlled substance orders for the Electronic <a name="DEA_troubleshooting" id="DEA_troubleshooting" title="DEA_troubleshooting"></a>Prescribing of Controlled Substance features (ePCS), errors the user might see, and some possible causes.</p>
+
+<p class="CPRS_numbered_list">1.<span style='word-spacing:normal; font:6.0pt "Times New Roman"'><font size="1" style="font-size:6pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></span>Possible hardware problems:</p>
+
+<ul style="list-style: circle;">
+<li class="cprs_bullet_2"><b style="font-weight: bold;">The card reader is not working.</b> To check, try the user’s card in another workstation’s card reader.</li>
+<li class="cprs_bullet_2"><b style="font-weight: bold;">The card is damaged or broken.</b> To check, insert the card into a reader that you know works.</li>
+</ul>
+<p class="cprsbulletssubbulletsbody">&#160;</p>
+
+<p class="CPRS_numbered_list">2.<span style='word-spacing:normal; font:6.0pt "Times New Roman"'><font size="1" style="font-size:6pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></span>What does a user need to be able to digitally sign outpatient controlled substances prescriptions?</p>
+
+<p class="CPRSnumlistothertext" style="margin-left: 48px;">Providers must have the following to be able to prescribe outpatient controlled substance medication orders:</p>
+<ul style="list-style: circle;">
+<li class="cprs_bullet_2">
+<p class="CPRSBulletsSubBullets" style="mso-list: l1 level2 lfo1; margin-left: 0px;">Must be an active user</p>
+</li>
+<li class="cprs_bullet_2">
+<p class="CPRSBulletsSubBullets" style="mso-list: l1 level2 lfo1; margin-left: 0px;">Must have the provider key</p>
+</li>
+<li class="cprs_bullet_2">
+<p class="CPRSBulletsSubBullets" style="mso-list: l1 level2 lfo1; margin-left: 0px;">Must be authorized to write medications&#160;&#160;in File 200</p>
+</li>
+<li class="cprs_bullet_2">
+<p class="CPRSBulletsSubBullets" style="mso-list: l1 level2 lfo1; margin-left: 0px;">Must have the ORES key</p>
+</li>
+<li class="cprs_bullet_2">
+<p class="CPRSBulletsSubBullets" style="mso-list: l1 level2 lfo1; margin-left: 0px;">DEA# (that has not expired, but a date must be entered), VA#, or Maint/Detox#</p>
+</li>
+<li class="cprs_bullet_2">
+<p class="CPRSBulletsSubBullets" style="mso-list: l1 level2 lfo1; margin-left: 0px;">Assigned Pharmacy schedules for which the provider can prescribe (some combination of schedules 2-5, or all schedules 2-5)</p>
+</li>
+<li class="cprs_bullet_2">
+<p class="CPRSBulletsSubBullets" style="mso-list: l1 level2 lfo1; margin-left: 0px;">The ePCS USER ENABLE/DISABLE option enabled</p>
+</li>
+<li class="cprs_bullet_2">
+<p class="CPRSBulletsSubBullets" style="mso-list: l1 level2 lfo1; margin-left: 0px;">PIV or smart card and PIN</p>
+</li>
+<li class="cprs_bullet_2">
+<p class="CPRSBulletsSubBullets" style="mso-list: l1 level2 lfo1; margin-left: 0px;">Subject Alternative Name (SAN), usually the user’s Outlook email address, which&#160;&#160;must be linked from the PIV or smart card to the user’s VistA account</p>
+</li>
+</ul>
+<p class="CPRSH2BodyChar">&#160;</p>
+
+<p class="CPRS_numbered_list" style="margin-left: 48px; text-indent: -24px;">3.<span style='word-spacing:normal; font:6.0pt "Times New Roman"'><font size="1" style="font-size:6pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></span>Is the user prescribing from a remote location?</p>
+
+<p style="margin-left: 48px;">The ActivClient software must be installed on the remote workstation or ePCS will not work.</p>
+<p style="margin-left: 48px;">&#160;</p>
+
+<p class="CPRS_numbered_list">4.<span style='word-spacing:normal; font:6.0pt "Times New Roman"'><font size="1" style="font-size:6pt;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></span>What do the error messages that the user might see during the signing process mean?</p>
+
+<table class="MsoNormalTable" style="border-collapse: collapse; mso-yfti-tbllook: 1184; mso-padding-alt: 0in 0in 0in 0in;" cellspacing="0">
+<tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">&#160;</p>
+</td>
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-left: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal"><b style="font-weight: bold;">Error Message</b></p>
+</td>
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-left: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal"><b style="font-weight: bold;">Cause</b></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 1;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">1.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Order for controlled substance could not be completed. Provider does not have a current, valid DEA# on record and is ineligible to sign the order.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">There is no DEA Number in file200 for this provider. Contact your CAC or support person who can check on this for you.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 2;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">2.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal" style="text-indent: .9pt;">Order for controlled substance could not be completed.</p>
+<p class="MsoNormal" style="text-indent: .9pt;">Provider is not authorized to prescribe medications in Federal Schedule X [X is one of 2, 2N, 3, 3N, 4, or 5].</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">In the provider’s set up, they have not been assigned permission to write for the specified schedule. Your CAC should know who is responsible for assigning the schedules.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 3;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">3.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Order for controlled substance could not be completed.</p>
+<p class="MsoNormal">Provider does not have a valid Detoxification/Maintenance ID number on record and is ineligible to sign the order.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The provider does not have a Detoxification/Maintenance number entered in file 200 or there is a problem with it. Contact your ADPAC or CAC to find out who enters credentialing information through the Data Entry for ePrescribing Controlled Substances application to get this corrected.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 4;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">4.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Order for controlled substance could not be completed.</p>
+<p class="MsoNormal">Provider’s DEA# expired on DATE [ex:JAN 01, 2012] and no VA# is assigned. Provider is ineligible to sign the order.</p>
+<p class="MsoNormal">&#160;</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The text is clear. The provider’s DEA number has expired and the provider does not have a VA number. Contact your ADPAC or CAC to find out who enters credentialing information through the Data Entry for ePrescribing Controlled Substances application to get this corrected.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 5;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">5.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Order for controlled substance could not be completed.</p>
+<p class="MsoNormal">Provider’s Detoxification/Maintenance ID number expired due to an expired DEA# on DATE [ex: JAN 01, 2012]. Provider is ineligible to sign the order.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">Again, the error text gives a good explanation. The provider has a valid Detoxifcation/Maintenance number, but because the user’s DEA number has expired, the Detox/Maintenance number cannot be used. Contact your ADPAC or CAC to find out who enters credentialing information through the Data Entry for ePrescribing Controlled Substances application to get this corrected.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 6;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">6.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Digital Signing of Controlled Substances is currently disabled for your site.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The prescriber tries to sign and the PKI switch (OR EPCS SITE PARAMETER) is disabled for the site.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 7;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">7.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">You are not currently permitted to digitally sign Controlled Substances.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The prescriber tries to sign and the PKI switch (OR EPCS USERS PARAMETER) is disabled for the signer.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 8;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">8.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Problem getting PIN. Cannot Digitally Sign.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">There are issues reading the smart or PIV card/retrieving the PIN. Contact your CAC or ADPAC for help.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 9;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">9.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Card has been locked. Cannot Digitally Sign.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The card is locked in CPRS after 3 failed attempts at PIN entry. This error occurs when the user tries to sign while the card is locked. It will be automatically unlocked after 15 minutes.</p>
+<p class="MsoNormal"><span style="font-weight: bold;">Warning:</span> Be careful! 5 consecutive PIN entry attempts will lock the card and you will have to go to your PIV office to resolve the situation.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 10;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">10.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Digital Signing has been cancelled.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The digital signature process has been cancelled by CPRS. This error usually shows after another problem has occurred.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 11;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">11.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Could not digitally sign. An error has occurred: Hash generation failed.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The system has issues creating the hash. The hash is created using the data from the order and a specific value. This process is repeated in Pharmacy during finishing and the hash values are compared to see if anything has been changed.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 12;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">12.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoListParagraph" style="margin-top: 0in; margin-right: 0in; margin-left: -.25pt; margin-bottom: .0001pt; mso-add-space: auto; line-height: normal;">Please verify that you are logged on to the CPRS system and that your PIV card is inserted.&#160;&#160;There is a possible mismatch between your VistA last name and the last name of the certificate on your card.&#160;&#160;&#160;If it matches and you are still experiencing issues, please contact your card issuer for assistance.</p>
+<p class="MsoNormalCxSpFirst" style="margin-left: -.25pt; mso-add-space: auto;">&#160;</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">When a user tries to link his/her PIV card to another VistA user logged into CPRS, a series of error messages will appear after PIN entry</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 13;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">13.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">CPRS was not able to link your VistA account to a PIV card.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">When a user tries to link his/her PIV card to another VistA user logged into CPRS, a series of error messages will appear after PIN entry</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 14;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">14.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">89802006^Smart Card Reader not found</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">As stated, the card reader was not found. Contact your local IRM shop.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 15;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">15.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Problems with verifying certificate chain of authority</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<ul style="list-style: disc;">
+<li>
+<p class="MsoListParagraphCxSpFirst" style="margin-bottom: .0001pt; mso-add-space: auto; text-indent: -.25in; line-height: normal; mso-list: l2 level1 lfo4;">&#160;&#160;&#160;&#160;&#160;&#160;Network problems connecting to the verifying servers</p>
+</li>
+<li>
+<p class="MsoListParagraphCxSpLast" style="margin-bottom: .0001pt; mso-add-space: auto; text-indent: -.25in; line-height: normal; mso-list: l2 level1 lfo4;">&#160;&#160;&#160;&#160;&#160;&#160;Tumbleweed may not be installed on the PKI Verify Server or workstation or is not installed correctly.</p>
+</li>
+</ul>
+<p class="MsoListParagraphCxSpLast" style="margin-bottom: .0001pt; mso-add-space: auto; text-indent: -.25in; line-height: normal; mso-list: l2 level1 lfo4; margin-left: 24px;">Contact you CAC or ADPAC for assistance.</p>
+<p class="MsoListParagraphCxSpLast" style="margin-bottom: .0001pt; mso-add-space: auto; text-indent: -.25in; line-height: normal; mso-list: l2 level1 lfo4;">&#160;</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 16;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">16.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Valid Certificate not found</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">No valid certificate to use was found on the card. <span style="mso-add-space: auto; line-height: normal; mso-list: l2 level1 lfo4;">Contact you CAC or ADPAC for assistance.</span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 17;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">17.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Returned from CertSignData with failure</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">Obtained a valid certificate, but failed to sign data correctly. <span style="mso-add-space: auto; line-height: normal; mso-list: l2 level1 lfo4;">Contact you CAC or ADPAC for assistance.</span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 18;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">18.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Certificate not valid: 89802019^Before Cert effective date.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The current date when the user is signing is before the certificate’s effective date. <span style="mso-add-space: auto; line-height: normal; mso-list: l2 level1 lfo4;">Contact you CAC or ADPAC for assistance.</span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 19;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">19.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Certificate not valid: 89802020^Certificate expired.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The certificate on the card has expired. Contact your PIV office.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 20;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">20.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Could not acquire context Last Error value was “specific message for the error”</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">Often means that the ActivClient on that machine needs to be reinstalled.&#160;&#160;First, the user should try to digitally sign from another workstation, and if that works, then it is probably ActivClient or the card reader hardware.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 21;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">21.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Invalid PIN entry - You only have ## attempts left before it is locked.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">This error message displays when the user enters and incorrect PIN one or two times. The message tells the user how many times another incorrect PIN can be entered before CPRS locks ordering for the card. The order will be left unsigned.</p>
+<p class="MsoNormal"><span style="font-weight: bold;">Warning:</span> Be careful! 5 consecutive PIN entry attempts will lock the card and you will have to go to your PIV office to reinstate or create a new card!</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 22;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">22.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">That was three (3) unsuccessful tries, the Card Reader is Locked</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The user entered an incorrect PIN three consecutive times. CPRS locks access to the card. The order will be left unsigned.</p>
+<p class="MsoNormal"><span style="font-weight: bold;">Warning:</span> Be careful! 5 consecutive PIN entry attempts will lock the card and you will have to go to your PIV office to reinstate or create a new card!</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 23;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">23.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Pin Entry was cancelled</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The user cancelled PIN entry and stopped the digital signature process. The order will be left unsigned.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 24;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">24.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Unable to read the information from your card.&#160;&#160;Possible mismatch between your VistA last name and the last name of the certificate on your card.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">No matching certificate found when trying to get the SAN from the PIV card to link.</p>
+<p class="MsoNormal">Contact your CAC or ADPAC for help.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 25;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">25.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Revocation failed - error: “specific text for the error”</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">The revocation server that checks to see if a certificate has been revoked or expired couldn’t be reached over the network.</p>
+<p class="MsoNormal">Contact your CAC or ADPAC or assistance.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 26;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">26.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Could not open the Cert Store</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">This appears to be a problem with ActivClient. Please check ActivClient and reinstall if necessary.</p>
+<p class="MsoNormal">Contact your CAC or ADPAC or assistance.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 27;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">27.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Did not find a Cert</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">This error comes from other programs outside of CPRS. The cause may not be as easily determined as other errors.</p>
+<p class="MsoNormal">Contact your CAC or ADPAC or assistance.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 28;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">28.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">89802010^Signature Error – “specific text for the error”</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">This error comes from other programs outside of CPRS. The cause may not be as easily determined as other errors.</p>
+<p class="MsoNormal">Contact your CAC or ADPAC or assistance.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 29;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">29.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">89802009^Signature Check failed</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">This error comes from other programs outside of CPRS. The cause may not be as easily determined as other errors.</p>
+<p class="MsoNormal">Contact your CAC or ADPAC or assistance.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 30;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">30.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Digital signature verification failed: “specific text for the error”</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">This error comes from other programs outside of CPRS. The cause may not be as easily determined as other errors.</p>
+<p class="MsoNormal">Contact your CAC or ADPAC or assistance.</p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 31; mso-yfti-lastrow: yes;">
+<td style="vertical-align: top; border: solid #000000 1.0pt; border-top: none; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="36">
+<p class="MsoNormal">31.</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="262">
+<p class="MsoNormal">Keyset error</p>
+</td>
+<td style="vertical-align: top; border-top: none; border-left: none; border-bottom: solid #000000 1.0pt; border-right: solid #000000 1.0pt; padding: 0in 5.4pt 0in 5.4pt; padding-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px;" width="292">
+<p class="MsoNormal">This error appears to be related to a bad SAN being stored for the user.</p>
+<p class="MsoNormal">Contact your CAC or ADPAC or assistance.</p>
+</td>
+</tr>
+</table>
+<p class="CPRS-NumberedList" style="mso-list: l0 level1 lfo2;">&#160;</p>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+
+highlightSearch();
+//-->
+//]]></script>
+</body>
+</html>

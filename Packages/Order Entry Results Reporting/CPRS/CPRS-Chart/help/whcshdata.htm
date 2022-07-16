@@ -1,0 +1,527 @@
+﻿<html>
+<head>
+<title>CPRS Online Help</title>
+
+<meta name="generator" content="Adobe RoboHelp 9" />
+<meta name="description" content="WebHelp 5.50" />
+</head>
+<body>
+<script language="javascript1.2" src="whver.js"></script>
+<script language="javascript1.2" src="whutils.js"></script>
+<script language="JavaScript">
+<!--
+var gaCsh=new Array();
+
+var gaWindow=new Array();
+
+var gaRmtProj=new Array();
+
+var gsProjPath=_getPath(document.location.href);
+
+function CshEntityItem(strAliasId,nTopicNum,strUrl)
+{
+	this.strAliasId=strAliasId;
+	this.nTopicNum=nTopicNum;
+	this.strUrl=strUrl;
+}
+
+function CshWindow(sWName,bBUseDefault,nWBOptions,sWBLeft,sWBTop,sWBWidth,sWBHeight,sWCaption,nWPanes,nWPOptions,sWPButtons,sWPDefBtn)
+{
+	this.sName=sWName;
+	this.bUseDefault=bBUseDefault;
+	if(!this.bUseDefault)
+	{
+		this.nBOptions=nWBOptions;
+		this.sBLeft=sWBLeft;
+		this.sBTop=sWBTop;
+		this.sBWidth=sWBWidth;
+		this.sBHeight=sWBHeight;
+	}
+	this.sCaption=sWCaption;
+	this.nPanes=nWPanes;
+	if(this.nPanes==2)
+	{
+		this.nPOptions=nWPOptions;
+		this.sPButtons=sWPButtons;
+		this.sPDefBtn=sWPDefBtn;
+	}
+}
+
+function addRemoteProject(sPath)
+{
+	if(sPath.length!=0)
+	{
+		if(sPath.lastIndexOf("/")!=sPath.length-1)
+			sPath+="/";
+		gaRmtProj[gaRmtProj.length]=sPath;	
+	}
+}
+
+//Set Context-sensitive help entity...
+function SetCsh(n,strAliasId,nTopicNum,strUrl)
+{
+	gaCsh[n]=new CshEntityItem(strAliasId,nTopicNum,strUrl);
+}
+
+function addWindow(sWName,bBUseDefault,nWBOptions,sWBLeft,sWBTop,sWBWidth,sWBHeight,sWCaption,nWPanes,nWPOptions,sWPButtons,sWPDefBtn)
+{
+	gaWindow[gaWindow.length]=new CshWindow(sWName,bBUseDefault,nWBOptions,sWBLeft,sWBTop,sWBWidth,sWBHeight,sWCaption,nWPanes,nWPOptions,sWPButtons,sWPDefBtn);
+}
+
+SetCsh(0,"CPRS_Conventions",17,"CPRS_Conventions.htm");
+SetCsh(1,"Monday_Sunday",9067,"Monday-Sunday.htm");
+SetCsh(2,"Order_Check_list",9041,"Order_Check_list.htm");
+SetCsh(3,"New_Procedure_from_the_Consults_Tab",139,"New_Procedure_from_the_Consults_Tab.htm");
+SetCsh(4,"Ordering_Outpatient_Medications_(Complex_Dose)",288,"Ordering_Outpatient_Medications_(Complex_Dose).htm");
+SetCsh(5,"Vitals_Lite",6,"Vitals_Lite.htm");
+SetCsh(6,"Remove_a_Comment",93,"Remove_a_Comment.htm");
+SetCsh(7,"Writing_Event-Delayed_Orders",284,"Writing_Event-Delayed_Orders.htm");
+SetCsh(8,"New_Features_and_Components_of_CPRS",64,"New_Features_and_Components_of_CPRS.htm");
+SetCsh(9,"Selected_Tests_by_Date",98,"Selected_Tests_by_Date.htm");
+SetCsh(10,"Changing_Views_on_the_Meds_tab",210,"Changing_Views_on_the_Meds_tab.htm");
+SetCsh(11,"Copying_Document_Templates",156,"Copying_Document_Templates.htm");
+SetCsh(12,"Blood_Bank",16,"Blood_Bank.htm");
+SetCsh(13,"Graphing_Displayed_Details_for_Graphed_Items",344,"Graphing_Displayed_Details_for_Graphed_Items.htm");
+SetCsh(14,"Delete_List_button",9082,"Delete_List_button.htm");
+SetCsh(15,"Down_arrow",9022,"Down_arrow.htm");
+SetCsh(16,"What's_the_Difference_between_OE/RR_and_CPRS?",126,"What_s_the_Difference_between_OE_RR_and_CPRS_.htm");
+SetCsh(17,"Doing_a_Chart_Review_for_Orders",181,"Doing_a_Chart_Review_for_Orders.htm");
+SetCsh(18,"Sign_Document_Now",170,"Sign_Document_Now.htm");
+SetCsh(19,"Personal_Lists",9052,"Personal_Lists.htm");
+SetCsh(20,"Document_Templates_(overview)",149,"Document_Templates_(overview).htm");
+SetCsh(21,"Ordering_Outpatient_Recurring_Meals",322,"Ordering_Outpatient_Recurring_Meals.htm");
+SetCsh(22,"Encounter_Information_(overview)",25,"Encounter_Information_(overview).htm");
+SetCsh(23,"Anatomic_Pathology",14,"Anatomic_Pathology.htm");
+SetCsh(24,"Patient_Record_Flags:_Overview",303,"Patient_Record_Flags__Overview.htm");
+SetCsh(25,"ALX6BIH",51,"ALX6BIH.htm");
+SetCsh(26,"Ordering_Lab_Tests",80,"Ordering_Lab_Tests.htm");
+SetCsh(27,"Hold_Medication_Order",52,"Hold_Medication_Order.htm");
+SetCsh(28,"Notifications_Tab_Tools_Options_",9030,"Notifications_Tab_(Tools___Options).htm");
+SetCsh(29,"Removing_a_Problem",94,"Removing_a_Problem.htm");
+SetCsh(30,"Graphing:_Exporting_Data",347,"Graphing__Exporting_Data.htm");
+SetCsh(31,"Viewing_All_Signed_Notes_by_a_Specific_Author",271,"Viewing_All_Signed_Notes_by_a_Specific_Author.htm");
+SetCsh(32,"procedures",130,"procedures.htm");
+SetCsh(33,"Transfer_Outpatient_Medications_to_Inpatient",168,"Transfer_Outpatient_Medications_to_Inpatient.htm");
+SetCsh(34,"What's_New_in_CPRS_GUI_v.24_(OR*3.0*190)",312,"What_s_New_in_CPRS_GUI_v_24_(OR_3_0_190).htm");
+SetCsh(35,"Manually_Evaluating_Reminders",189,"Manually_Evaluating_Reminders.htm");
+SetCsh(36,"How_to_Write_Orders",55,"How_to_Write_Orders.htm");
+SetCsh(37,"Ordering_Inpatient_Medications_for_Outpatient_(Orders_tab)",309,"Ordering_Inpatient_Medications_for_Outpatient_(Orders_tab).htm");
+SetCsh(38,"Graphing_Creating_Views",335,"Graphing_Creating_Views.htm");
+SetCsh(39,"Navigating_a_Patient_Chart",63,"Navigating_a_Patient_Chart.htm");
+SetCsh(40,"Locating_an_Item_in_a_List",58,"Locating_an_Item_in_a_List.htm");
+SetCsh(41,"Printing_from_CPRS",88,"Printing_from_CPRS.htm");
+SetCsh(42,"Generating_a_Template_from_a_TIU_Object_or_Note_Title",208,"Generating_a_Template_from_a_TIU_Object_or_Note_Title.htm");
+SetCsh(43,"How_to_Use_Windows",54,"How_to_Use_Windows.htm");
+SetCsh(44,"Creating_and_Modifying_Shared_and_Personal_Templates",219,"Creating_and_Modifying_Shared_and_Personal_Templates.htm");
+SetCsh(45,"Ordering_Inpatient_Medications_for_Outpatients_(Overview)",307,"Ordering_Inpatient_Medications_for_Outpatients_(Overview).htm");
+SetCsh(46,"Problems_Customizing_the_Problems_List",209,"Problems_Customizing_the_Problems_List.htm");
+SetCsh(47,"Ordering_Early/Late_Trays",76,"Ordering_Early_Late_Trays.htm");
+SetCsh(48,"Spell_checking",148,"Spell_checking.htm");
+SetCsh(49,"Accessibility_Changing_the_Font_Sizes",292,"Accessibility_Changing_the_Font_Sizes.htm");
+SetCsh(50,"Hide_Dialog_Items",226,"Hide_Dialog_Items.htm");
+SetCsh(51,"Using_the_Template_Field_Editor",239,"Using_the_Template_Field_Editor.htm");
+SetCsh(52,"Add_to_Signature_List",172,"Add_to_Signature_List.htm");
+SetCsh(53,"Flagging_an_Order",177,"Flagging_an_Order.htm");
+SetCsh(54,"Review_/_Sign_Changes_Dialog",37,"Review___Sign_Changes_Dialog.htm");
+SetCsh(55,"Graphing_Choosing_Display_Items_on_the_Select_Items_and_Define_Views_Dialog",340,"Graphing_Choosing_Display_Items_on_the_Select_Items_and_Define_Views_Dialog.htm");
+SetCsh(56,"Remove_All_button_Personal_Lists_",9079,"Remove_All_button_(Personal_Lists).htm");
+SetCsh(57,"Processing_Notifications",121,"Processing_Notifications.htm");
+SetCsh(58,"Ordering_Outpatient_Meal_Tubefeeding",324,"Ordering_Outpatient_Meal_Tubefeeding.htm");
+SetCsh(59,"Reminder_Evaluation_for_a_Patient",186,"Reminder_Evaluation_for_a_Patient.htm");
+SetCsh(60,"The_Main_Reminders_Processing_Dialog",11100,"The_Main_Reminders_Processing_Dialog.htm");
+SetCsh(61,"Initial_tab_when_CPRS_starts",9111,"Initial_tab_when_CPRS_starts.htm");
+SetCsh(62,"Lists/Teams_Tab_(Tools_|_Options)",234,"Lists_Teams_Tab_(Tools___Options).htm");
+SetCsh(63,"What's_New_in_CPRS_GUI_v.21_(OR*3.0*149)",291,"What_s_New_in_CPRS_GUI_v_21_(OR_3_0_149).htm");
+SetCsh(64,"Notifications_list",9035,"Notifications_list.htm");
+SetCsh(65,"Most_Recent",62,"Most_Recent.htm");
+SetCsh(66,"Ask_subject",9215,"Ask_subject.htm");
+SetCsh(67,"Ward_Source_Combinations_",9122,"Ward_(Source_Combinations).htm");
+SetCsh(68,"Save_Changes_Document_Titles_",9235,"Save_Changes_(Document_Titles).htm");
+SetCsh(69,"Using_Mental_Health_Assessments_in_CPRS",362,"Using_Mental_Health_Assessments_in_CPRS.htm");
+SetCsh(70,"Graphing_Starting_CPRS_Graphing",331,"Graphing_Starting_CPRS_Graphing.htm");
+SetCsh(71,"Importing_Document_Templates",252,"Importing_Document_Templates.htm");
+SetCsh(72,"Graphing_Adjusting_the_Display",342,"Graphing_Adjusting_the_Display.htm");
+SetCsh(73,"One_Item_Only",225,"One_Item_Only.htm");
+SetCsh(74,"Complete_a_Consult_from_the_Consults_Tab",135,"Complete_a_Consult_from_the_Consults_Tab.htm");
+SetCsh(75,"Remove_button_Source_Combinations_",9125,"Remove_button_(Source_Combinations).htm");
+SetCsh(76,"Deleting_Document_Templates",160,"Deleting_Document_Templates.htm");
+SetCsh(77,"Refilling_a_Medication",354,"Refilling_a_Medication.htm");
+SetCsh(78,"Signing_In_to_CPRS",101,"Signing_In_to_CPRS.htm");
+SetCsh(79,"Graphing_Predefined_Views",334,"Graphing_Predefined_Views.htm");
+SetCsh(80,"Close_button",9998,"Close_button.htm");
+SetCsh(81,"Remove_button_Personal_Lists_",9078,"Remove_button_(Personal_Lists).htm");
+SetCsh(82,"Apply_button",9009,"Apply_button.htm");
+SetCsh(83,"Entering_Dates_and_Times_into_CPRS",350,"Entering_Dates_and_Times_into_CPRS.htm");
+SetCsh(84,"Include_personal_lists",9096,"Include_personal_lists.htm");
+SetCsh(85,"What_s_New_in_CPRS_GUI_v_29_OR_3_306_",364,"What_s_New_in_CPRS_GUI_v_29_OR_3_306_.htm");
+SetCsh(86,"Viewing_Consults",113,"Viewing_Consults.htm");
+SetCsh(87,"Non-VA_Medications_(Overview)",310,"Non-VA_Medications_(Overview).htm");
+SetCsh(88,"Viewing_Postings",118,"Viewing_Postings.htm");
+SetCsh(89,"Orders_Infusion_Copying_Changing_or_Renewing_Continuous_Infusion_Orders",358,"Orders_Infusion_Copying_Changing_or_Renewing_Continuous_Infusion_Orders.htm");
+SetCsh(90,"Searching_for_Text_Within_Current_View",329,"Searching_for_Text_Within_Current_View.htm");
+SetCsh(91,"Cancel_button",9008,"Cancel_button.htm");
+SetCsh(92,"Order_Checking_Remote",70,"Order_Checking_Remote.htm");
+SetCsh(93,"Unsigned_orders",110,"Unsigned_orders.htm");
+SetCsh(94,"Digital_Signature_(PKI)_Overview",294,"Digital_Signature_(PKI)_Overview.htm");
+SetCsh(95,"Keyboard_Shortcuts_for_Common_CPRS_Commands",290,"Keyboard_Shortcuts_for_Common_CPRS_Commands.htm");
+SetCsh(96,"Add_a_Comment_to_a_Problem",8,"Add_a_Comment_to_a_Problem.htm");
+SetCsh(97,"Surrogate",9100,"Surrogate.htm");
+SetCsh(98,"CF1CZT7",164,"CF1CZT7.htm");
+SetCsh(99,"Postings",87,"Postings.htm");
+SetCsh(100,"Consults",6000,"Consults.htm");
+SetCsh(101,"Entering_Allergies_from_the_Cover_Sheet_Tab",143,"Entering_Allergies_from_the_Cover_Sheet_Tab.htm");
+SetCsh(102,"Electronic_Signature_(overview)",174,"Electronic_Signature_(overview).htm");
+SetCsh(103,"Return_to_Default_Order_View",202,"Return_to_Default_Order_View.htm");
+SetCsh(104,"About_CPRS",321,"About_CPRS.htm");
+SetCsh(105,"Team_Personal",9065,"Team_Personal.htm");
+SetCsh(106,"Tubefeeding_Diet_Order",259,"Tubefeeding_Diet_Order.htm");
+SetCsh(107,"Viewing_all_Signed_Notes_for_a_Date_Range",272,"Viewing_all_Signed_Notes_for_a_Date_Range.htm");
+SetCsh(108,"Remove_button_Document_Titles_",9234,"Remove_button_(Document_Titles).htm");
+SetCsh(109,"Select_Combination_source_by",9121,"Select_Combination_source_by.htm");
+SetCsh(110,"Personal_Lists_Personal_Lists_",9074,"Personal_Lists_(Personal_Lists).htm");
+SetCsh(111,"What_s_New_in_CPRS_GUI_v_27n_OR_3_0_296_",2,"What_s_New_in_CPRS_GUI_v_27n_OR_3_0_296_.htm");
+SetCsh(112,"Graphing_Graphing_Items_from_the_Main_Window",341,"Graphing_Graphing_Items_from_the_Main_Window.htm");
+SetCsh(113,"Template_Fields",238,"Template_Fields.htm");
+SetCsh(114,"Reminder_Dialog",228,"Reminder_Dialog.htm");
+SetCsh(115,"Ordering_Blood_Components_and_Diagnostic_Tests",356,"Ordering_Blood_Components_and_Diagnostic_Tests.htm");
+SetCsh(116,"Ordering_Outpatient_Meal_Early_Late_Trays",325,"Ordering_Outpatient_Meal_Early_Late_Trays.htm");
+SetCsh(117,"Sorting_the_Medications_View",352,"Sorting_the_Medications_View.htm");
+SetCsh(118,"Signing_Orders_before_Selecting_a_New_Patient_or_Exiting_CPRS",38,"Signing_Orders_before_Selecting_a_New_Patient_or_Exiting_CPRS.htm");
+SetCsh(119,"Event_Delayed_Orders",283,"Event_Delayed_Orders.htm");
+SetCsh(120,"Graphing_Renaming_Predefined_Views",338,"Graphing_Renaming_Predefined_Views.htm");
+SetCsh(121,"Removing_Notifications",300,"Removing_Notifications.htm");
+SetCsh(122,"Insert_Patient_Data_Object",229,"Insert_Patient_Data_Object.htm");
+SetCsh(123,"Creating_Shared_Document_Templates",154,"Creating_Shared_Document_Templates.htm");
+SetCsh(124,"CPRS_Guiding_Principles",19,"CPRS_Guiding_Principles.htm");
+SetCsh(125,"Entering_Current_Activities_Encounter",42,"Entering_Current_Activities_Encounter.htm");
+SetCsh(126,"Order_Checking_Local",69,"Order_Checking_Local.htm");
+SetCsh(127,"Surrogate_Date_Range",9103,"Surrogate_Date_Range.htm");
+SetCsh(128,"Should_I_Evaluate_Reminders",196,"Should_I_Evaluate_Reminders.htm");
+SetCsh(129,"Associating_a_Template",248,"Associating_a_Template.htm");
+SetCsh(130,"Changing_a_Document's_Author__Title__Reference__etc.",204,"Changing_a_Document_s_Author__Title__Reference__etc_.htm");
+SetCsh(131,"Reminders_Overview",197,"Reminders_Overview.htm");
+SetCsh(132,"General_tab_(Tools_|_Options)",231,"General_tab_(Tools___Options).htm");
+SetCsh(133,"Viewing_Unsigned_Notes_or_Discharge_Summaries",255,"Viewing_Unsigned_Notes_or_Discharge_Summaries.htm");
+SetCsh(134,"Show_List_Box_Data",100,"Show_List_Box_Data.htm");
+SetCsh(135,"IV_Fluids",56,"IV_Fluids.htm");
+SetCsh(136,"Use_last_selected_tab",9112,"Use_last_selected_tab.htm");
+SetCsh(137,"You_are_on_these_teams",9093,"You_are_on_these_teams.htm");
+SetCsh(138,"Replace_Specific_Text_in_an_Unsigned_Document",361,"Replace_Specific_Text_in_an_Unsigned_Document.htm");
+SetCsh(139,"Finding_specific_text_in_a_Document",277,"Finding_specific_text_in_a_Document.htm");
+SetCsh(140,"Other_Health_Factors",217,"Other_Health_Factors.htm");
+SetCsh(141,"Graphing_Configuring_Settings",332,"Graphing_Configuring_Settings.htm");
+SetCsh(142,"HI8L5F",28,"HI8L5F.htm");
+SetCsh(143,"Reminders_Icons",184,"Reminders_Icons.htm");
+SetCsh(144,"Hide_Items_in_Dialogs",227,"Hide_Items_in_Dialogs.htm");
+SetCsh(145,"Patient_Lists",85,"Patient_Lists.htm");
+SetCsh(146,"Additional_Patient_Information",11,"Additional_Patient_Information.htm");
+SetCsh(147,"Ordering_Inpatient_Medications_for_Outpatients_(Meds_tab)",308,"Ordering_Inpatient_Medications_for_Outpatients_(Meds_tab).htm");
+SetCsh(148,"File_menu",46,"File_menu.htm");
+SetCsh(149,"Site_Defined_Clinical_Reminder_Order_Checks",68,"Site_Defined_Clinical_Reminder_Order_Checks.htm");
+SetCsh(150,"Other_Medication_Actions",351,"Other_Medication_Actions.htm");
+SetCsh(151,"Document_class",9231,"Document_class.htm");
+SetCsh(152,"Cumulative",30,"Cumulative.htm");
+SetCsh(153,"Ordering_Inpatient_Medications_Complex_Dose_",317,"Ordering_Inpatient_Medications_Complex_Dose_.htm");
+SetCsh(154,"CL081ZS",159,"CL081ZS.htm");
+SetCsh(155,"JCQJ0ML",152,"JCQJ0ML.htm");
+SetCsh(156,"Ordering_Outpatient_Special_Meals",323,"Ordering_Outpatient_Special_Meals.htm");
+SetCsh(157,"Order_Checks_Tab_(Tools_|_Options)",233,"Order_Checks_Tab_(Tools___Options).htm");
+SetCsh(158,"Sort_Order",9062,"Sort_Order.htm");
+SetCsh(159,"Ordering_Outpatient_Meal_Additional_Orders",327,"Ordering_Outpatient_Meal_Additional_Orders.htm");
+SetCsh(160,"CPRS_Time_Out",100010,"CPRS_Time_Out.htm");
+SetCsh(161,"What_Happens_When_I_Process_a_Reminder?",185,"What_Happens_When_I_Process_a_Reminder_.htm");
+SetCsh(162,"Selecting_a_Patient",66,"Selecting_a_Patient.htm");
+SetCsh(163,"Sign_Selected_Orders",173,"Sign_Selected_Orders.htm");
+SetCsh(164,"Sorting_Notifications_and_Viewing_Comments_of_Forwarded_Alerts",299,"Sorting_Notifications_and_Viewing_Comments_of_Forwarded_Alerts.htm");
+SetCsh(165,"Symbol_Table",102,"Symbol_Table.htm");
+SetCsh(166,"Entering_Allergies_from_the_Orders_Tab",142,"Entering_Allergies_from_the_Orders_Tab.htm");
+SetCsh(167,"What_s_New_in_CPRS_GUI_v_25_OR_3_0_195_",313,"What_s_New_in_CPRS_GUI_v_25_OR_3_0_195_.htm");
+SetCsh(168,"Notifications__Notifications_and_Alerts",65,"Notifications__Notifications_and_Alerts.htm");
+SetCsh(169,"R4OMK",29,"R4OMK.htm");
+SetCsh(170,"Cover_Sheet_Date_Range_Defaults",9001,"Cover_Sheet_Date_Range_Defaults.htm");
+SetCsh(171,"What_is_CPRS?",125,"What_is_CPRS_.htm");
+SetCsh(172,"Printing_a_Report",247,"Printing_a_Report.htm");
+SetCsh(173,"Discharge_Orders",34,"Discharge_Orders.htm");
+SetCsh(174,"Document_Titles_button",9202,"Document_Titles_button.htm");
+SetCsh(175,"Restrict_Team_List_View",9097,"Restrict_Team_List_View.htm");
+SetCsh(176,"Viewing_orders",4000,"Viewing_orders.htm");
+SetCsh(177,"Group_Notes",320,"Group_Notes.htm");
+SetCsh(178,"Glossary",47,"Glossary.htm");
+SetCsh(179,"Health_summaries",49,"Health_summaries.htm");
+SetCsh(180,"Creating_Personal_Document_Templates",150,"Creating_Personal_Document_Templates.htm");
+SetCsh(181,"Entering_Allergies",141,"Entering_Allergies.htm");
+SetCsh(182,"Changing_the_Release_Event_/_Assigning_a_Release_Event_to_an_Unreleased_Order",285,"Changing_the_Release_Event___Assigning_a_Release_Event_to_an_Unreleased_Order.htm");
+SetCsh(183,"Remove_yourself_from_this_team",9094,"Remove_yourself_from_this_team.htm");
+SetCsh(184,"Viewing_Discharge_Summaries",163,"Viewing_Discharge_Summaries.htm");
+SetCsh(185,"CPRS_Features",18,"CPRS_Features.htm");
+SetCsh(186,"Patients_on_selected_teams",9091,"Patients_on_selected_teams.htm");
+SetCsh(187,"Electronic_and_Digital_Signatures_(Overview)",175,"Electronic_and_Digital_Signatures_(Overview).htm");
+SetCsh(188,"A2W4FPX",176,"A2W4FPX.htm");
+SetCsh(189,"Changing_a_Problem",23,"Changing_a_Problem.htm");
+SetCsh(190,"Team_members",9092,"Team_members.htm");
+SetCsh(191,"Moving_to_Another_Reminder",190,"Moving_to_Another_Reminder.htm");
+SetCsh(192,"Customizing_CPRS_(general)",31,"Customizing_CPRS_(general).htm");
+SetCsh(193,"Release_Hold_Order",53,"Release_Hold_Order.htm");
+SetCsh(194,"YD5PR0",146,"YD5PR0.htm");
+SetCsh(195,"Tools",230,"Tools.htm");
+SetCsh(196,"YZXS6Q",129,"YZXS6Q.htm");
+SetCsh(197,"Set_Default_Note_button",9236,"Set_Default_Note_button.htm");
+SetCsh(198,"Context_Management_(CCOW)_in_CPRS",296,"Context_Management_(CCOW)_in_CPRS.htm");
+SetCsh(199,"Isolations_/_Precautions_Order",261,"Isolations___Precautions_Order.htm");
+SetCsh(200,"Viewing_all_the_Progress_Notes_Under_a_Particular_Heading",269,"Viewing_all_the_Progress_Notes_Under_a_Particular_Heading.htm");
+SetCsh(201,"Verify_note_title",9214,"Verify_note_title.htm");
+SetCsh(202,"Viewing_Imaging/Radiology_Orders",115,"Viewing_Imaging_Radiology_Orders.htm");
+SetCsh(203,"Patient_Data_Objects",243,"Patient_Data_Objects.htm");
+SetCsh(204,"Changing_an_Order",24,"Changing_an_Order.htm");
+SetCsh(205,"Entering_Non-VA_Medication_Information",311,"Entering_Non-VA_Medication_Information.htm");
+SetCsh(206,"Saving_a_Default_Order_View",201,"Saving_a_Default_Order_View.htm");
+SetCsh(207,"Previewing_a_Template",267,"Previewing_a_Template.htm");
+SetCsh(208,"A08AMNF",203,"A08AMNF.htm");
+SetCsh(209,"A2CYUMM",162,"A2CYUMM.htm");
+SetCsh(210,"Discharge_Summaries",7000,"Discharge_Summaries.htm");
+SetCsh(211,"Accesibility_Changing_the_Window_Color",293,"Accesibility_Changing_the_Window_Color.htm");
+SetCsh(212,"Transfer_Inpatient_Medications_to_Outpatient",167,"Transfer_Inpatient_Medications_to_Outpatient.htm");
+SetCsh(213,"Write_a_New_Progress_Note",128,"Write_a_New_Progress_Note.htm");
+SetCsh(214,"Tips",107,"Tips.htm");
+SetCsh(215,"Ordering_Diet_Isolation/Precautions",74,"Ordering_Diet_Isolation_Precautions.htm");
+SetCsh(216,"Joining_Context",297,"Joining_Context.htm");
+SetCsh(217,"Viewing_the_Results_of_an_Order",289,"Viewing_the_Results_of_an_Order.htm");
+SetCsh(218,"GAF_Score_(overview)",205,"GAF_Score_(overview).htm");
+SetCsh(219,"What_s_New_in_CPRS_v_26_OR_3_0_215_",4,"What_s_New_in_CPRS_v_26_OR_3_0_215_.htm");
+SetCsh(220,"Creating_a_Non-Standard_(Custom)_Schedule",318,"Creating_a_Non-Standard_(Custom)_Schedule.htm");
+SetCsh(221,"Ordering_Outpatient_Medications_(Simple_Dose)",81,"Ordering_Outpatient_Medications_(Simple_Dose).htm");
+SetCsh(222,"Searching_for_Document_Templates",157,"Searching_for_Document_Templates.htm");
+SetCsh(223,"Indent_Dialog_Items",224,"Indent_Dialog_Items.htm");
+SetCsh(224,"Examples_and_Demos",44,"Examples_and_Demos.htm");
+SetCsh(225,"Graphing_Copy_and_Paste_or_Print_Graphs",346,"Graphing_Copy_and_Paste_or_Print_Graphs.htm");
+SetCsh(226,"Patient_Selection_Defaults",9051,"Patient_Selection_Defaults.htm");
+SetCsh(227,"Graphing_Setting_Display_Options_with_the_Graph_Settings_Dialog",339,"Graphing_Setting_Display_Options_with_the_Graph_Settings_Dialog.htm");
+SetCsh(228,"Viewing_Remote_Data",199,"Viewing_Remote_Data.htm");
+SetCsh(229,"Inserting_Template_Fields_into_a_Template",240,"Inserting_Template_Fields_into_a_Template.htm");
+SetCsh(230,"Treating_Specialty",9064,"Treating_Specialty.htm");
+SetCsh(231,"Viewing_a_Health_Summary",249,"Viewing_a_Health_Summary.htm");
+SetCsh(232,"All_Tests_by_(specified)_Date",13,"All_Tests_by_(specified)_Date.htm");
+SetCsh(233,"Ordering_Outpatient_Meal_Isolations_Precautions",326,"Ordering_Outpatient_Meal_Isolations_Precautions.htm");
+SetCsh(234,"Tracking_Consults_Requests",114,"Tracking_Consults_Requests.htm");
+SetCsh(235,"View_Template_Notes",273,"View_Template_Notes.htm");
+SetCsh(236,"Visits",123,"Visits.htm");
+SetCsh(237,"Entering_No_Known_Allergies",179,"Entering_No_Known_Allergies.htm");
+SetCsh(238,"Copying_Data_from_a_Report",250,"Copying_Data_from_a_Report.htm");
+SetCsh(239,"What's_New_in_CPRS_GUI_v.23_(OR*3.0*187)",305,"What_s_New_in_CPRS_GUI_v_23_(OR_3_0_187).htm");
+SetCsh(240,"Graphing_Lab_Results",48,"Graphing_Lab_Results.htm");
+SetCsh(241,"Verifying_a_Problem",111,"Verifying_a_Problem.htm");
+SetCsh(242,"Remove_Surrogate",9101,"Remove_Surrogate.htm");
+SetCsh(243,"What's_New_in_CPRS_GUI_v.20_(OR*3.0*141)",275,"What_s_New_in_CPRS_GUI_v_20_(OR_3_0_141).htm");
+SetCsh(244,"What_s_New_in_CPRS_GUI_v_28_OR_3_0_280_",1,"What_s_New_in_CPRS_GUI_v_28_OR_3_0_280_.htm");
+SetCsh(245,"Other_Parameters",9003,"Other_Parameters.htm");
+SetCsh(246,"Placing_Additional_Diet_Orders",72,"Placing_Additional_Diet_Orders.htm");
+SetCsh(247,"Remote_Data",198,"Remote_Data.htm");
+SetCsh(248,"Blood_Products_Overview_",355,"Blood_Products_Overview_.htm");
+SetCsh(249,"Breaking_Context",298,"Breaking_Context.htm");
+SetCsh(250,"Text_Orders",105,"Text_Orders.htm");
+SetCsh(251,"Provider_Selection_Critieria_for_Similar_Names",306,"Provider_Selection_Critieria_for_Similar_Names.htm");
+SetCsh(252,"Graphing_Graphing_Items_from_the_Select_Items_and_Define_Views_Dialog_Box",343,"Graphing_Graphing_Items_from_the_Select_Items_and_Define_Views_Dialog_Box.htm");
+SetCsh(253,"Ordering_a_Diet_(Diet_Tab)",84,"Ordering_a_Diet_(Diet_Tab).htm");
+SetCsh(254,"New_Consult_from_the_Consults_Tab",138,"New_Consult_from_the_Consults_Tab.htm");
+SetCsh(255,"Progress_Notes",90,"Progress_Notes.htm");
+SetCsh(256,"References",92,"References.htm");
+SetCsh(257,"Patient",9072,"Patient.htm");
+SetCsh(258,"Adding_to_Existing_Progress_Notes_(addendum)",9,"Adding_to_Existing_Progress_Notes_(addendum).htm");
+SetCsh(259,"Entering_a_GAF_Score",206,"Entering_a_GAF_Score.htm");
+SetCsh(260,"Ordering_Imaging/Radiology",78,"Ordering_Imaging_Radiology.htm");
+SetCsh(261,"Lab_Test_Information",256,"Lab_Test_Information.htm");
+SetCsh(262,"Notes_button",9201,"Notes_button.htm");
+SetCsh(263,"Go_to_the_Default_Template",221,"Go_to_the_Default_Template.htm");
+SetCsh(264,"popup:_Inpatient_Medications_Selection_dialog",236,"popup__Inpatient_Medications_Selection_dialog.htm");
+SetCsh(265,"Outpatient_Days",9014,"Outpatient_Days.htm");
+SetCsh(266,"Your_list_of_titles",9237,"Writing_Event-Delayed_Orders.htm");
+SetCsh(267,"New_Procedure_from_the_Orders_Tab",140,"New_Procedure_from_the_Orders_Tab.htm");
+SetCsh(268,"Copying_Template_Text",274,"Copying_Template_Text.htm");
+SetCsh(269,"Viewing_Vitals",120,"Viewing_Vitals.htm");
+SetCsh(270,"The_Reminders_Button_Tree_View",11200,"The_Reminders_Button_Tree_View.htm");
+SetCsh(271,"Up_arrow",9021,"Up_arrow.htm");
+SetCsh(272,"Changing_CPRS_Windows_Size",21,"Changing_CPRS_Windows_Size.htm");
+SetCsh(273,"Viewing_Medications",3000,"Viewing_Medications.htm");
+SetCsh(274,"Clinical_Reminders",9020,"Clinical_Reminders.htm");
+SetCsh(275,"Only_Show_First_Line",223,"Only_Show_First_Line.htm");
+SetCsh(276,"Notifications_Tab_(Tools_|_Options)",232,"Notifications_Tab_(Tools___Options).htm");
+SetCsh(277,"Results",97,"Results.htm");
+SetCsh(278,"Changing_Views_on_the_Discharge_Summaries_tab",214,"Changing_Views_on_the_Discharge_Summaries_tab.htm");
+SetCsh(279,"Surrogate_Settings",9033,"Surrogate_Settings.htm");
+SetCsh(280,"Viewing_Progress_Notes",5000,"Viewing_Progress_Notes.htm");
+SetCsh(281,"Keeping_Diagnostic_and_Procedure_Codes_Current",302,"Keeping_Diagnostic_and_Procedure_Codes_Current.htm");
+SetCsh(282,"Discontinuing_Orders",36,"Discontinuing_Orders.htm");
+SetCsh(283,"Ordering_Procedures",82,"Ordering_Procedures.htm");
+SetCsh(284,"About_This_Help_File",147,"About_This_Help_File.htm");
+SetCsh(285,"Closing_a_Patient_Record",26,"Closing_a_Patient_Record.htm");
+SetCsh(286,"What's_New_in_CPRS_GUI_v.22_(OR*3.0*173)",295,"What_s_New_in_CPRS_GUI_v_22_(OR_3_0_173).htm");
+SetCsh(287,"Ordering_Diets_and_Outpatient_Meals(overview)",75,"Ordering_Diets_and_Outpatient_Meals(overview).htm");
+SetCsh(288,"Ordering_Consults",73,"Ordering_Consults.htm");
+SetCsh(289,"Entering_Encounter_Form_Data_-_Procedures",216,"Entering_Encounter_Form_Data_-_Procedures.htm");
+SetCsh(290,"Initial_tab_when_CPRS_starts1",35,"Initial_tab_when_CPRS_starts.htm");
+SetCsh(291,"Ordering_Vitals",83,"Ordering_Vitals.htm");
+SetCsh(292,"Marking_a_Template_as_the_Default_Template",264,"Marking_a_Template_as_the_Default_Template.htm");
+SetCsh(293,"Renew_Medication",95,"Renew_Medication.htm");
+SetCsh(294,"Document_titles",9232,"Document_titles.htm");
+SetCsh(295,"Ordering_Inpatient_Medications",79,"Ordering_Inpatient_Medications.htm");
+SetCsh(296,"Graphing_Using_the_Zoom_Feature",345,"Graphing_Using_the_Zoom_Feature.htm");
+SetCsh(297,"TIU_Definition",104,"TIU_Definition.htm");
+SetCsh(298,"Menus_and_Menu_Commands",60,"Menus_and_Menu_Commands.htm");
+SetCsh(299,"Changing_Views_on_the_Labs_tab",215,"Changing_Views_on_the_Labs_tab.htm");
+SetCsh(300,"Editing_Document_Templates",155,"Editing_Document_Templates.htm");
+SetCsh(301,"Graphs_Tab_Tools_Options_",245,"Graphs_Tab_Tools_Options_.htm");
+SetCsh(302,"Medication_Administration_History",251,"Medication_Administration_History.htm");
+SetCsh(303,"Changing_or_Copying_IMO_Orders",353,"Changing_or_Copying_IMO_Orders.htm");
+SetCsh(304,"Time_Delay",106,"Time_Delay.htm");
+SetCsh(305,"Writing_Discharge_Summaries",165,"Writing_Discharge_Summaries.htm");
+SetCsh(306,"Changing_Views_on_the_Orders_tab",211,"Changing_Views_on_the_Orders_tab.htm");
+SetCsh(307,"Exit",45,"Exit.htm");
+SetCsh(308,"Delete",32,"Delete.htm");
+SetCsh(309,"tube_feeding_quantity",131,"tube_feeding_quantity.htm");
+SetCsh(310,"Primary_Provider",9063,"Primary_Provider.htm");
+SetCsh(311,"Patients_on_personal_list",9075,"Patients_on_personal_list.htm");
+SetCsh(312,"UQ1KVK",124,"UQ1KVK.htm");
+SetCsh(313,"Graphing_popup_Access_the_Define_Views_or_Select_Items_and_Define_Views_Dialog_Box",348,"Graphing_popup_Access_the_Define_Views_or_Select_Items_and_Define_Views_Dialog_Box.htm");
+SetCsh(314,"Source_Combinations",9054,"Source_Combinations.htm");
+SetCsh(315,"Adding_a_Template_to_a_Document",266,"Adding_a_Template_to_a_Document.htm");
+SetCsh(316,"New_Consult_from_the_Orders_Tab",137,"New_Consult_from_the_Orders_Tab.htm");
+SetCsh(317,"Sample_Dialog_from_Dialog_Template",207,"Sample_Dialog_from_Dialog_Template.htm");
+SetCsh(318,"Causative_Agent_Not_On_File",144,"Causative_Agent_Not_On_File.htm");
+SetCsh(319,"Viewing_a_Report",9000,"Cover_Sheet_Date_Range_Defaults.htm");
+SetCsh(320,"Viewing_Allergies_Adverse_Reactions",319,"Viewing_Allergies_Adverse_Reactions.htm");
+SetCsh(321,"Adverse_reactions_popup",12,"Adverse_reactions_popup.htm");
+SetCsh(322,"Placing_Continuous_Infusion_Orders",357,"Placing_Continuous_Infusion_Orders.htm");
+SetCsh(323,"Placing_a_Quick_Order",86,"Placing_a_Quick_Order.htm");
+SetCsh(324,"Send_MailMan_bulletin",9102,"Send_MailMan_bulletin.htm");
+SetCsh(325,"Manually_Releasing_an_Event-Delayed_Order",286,"Manually_Releasing_an_Event-Delayed_Order.htm");
+SetCsh(326,"Clearing_a_Single_Reminder",193,"Clearing_a_Single_Reminder.htm");
+SetCsh(327,"Marking_Allergies_as_Entered_in_Error",145,"Marking_Allergies_as_Entered_in_Error.htm");
+SetCsh(328,"Display_Only",222,"Display_Only.htm");
+SetCsh(329,"Last_Broker_Call",57,"Last_Broker_Call.htm");
+SetCsh(330,"Teams_Information",9053,"Teams_Information.htm");
+SetCsh(331,"Overview__What_is_the_Cover_Sheet_",1000,"Overview__What_is_the_Cover_Sheet_.htm");
+SetCsh(332,"CPRS_Help_Introduction",365,"CPRS_Help_Introduction.htm");
+SetCsh(333,"find_or_search_options_for_notes",158,"find_or_search_options_for_notes.htm");
+SetCsh(334,"popup_lab_worksheet_results",127,"popup_lab_worksheet_results.htm");
+SetCsh(335,"OK_button",9996,"OK_button.htm");
+SetCsh(336,"Active_Orders_(includes_pending_and_recent_activity)",200,"Active_Orders_(includes_pending_and_recent_activity).htm");
+SetCsh(337,"Creating_and_Maintaining_a_Personal_Diagnosis_List",315,"Creating_and_Maintaining_a_Personal_Diagnosis_List.htm");
+SetCsh(338,"Changing_Views_on_the_Notes_tab",212,"Changing_Views_on_the_Notes_tab.htm");
+SetCsh(339,"List_Source",9061,"List_Source.htm");
+SetCsh(340,"Help_Menu",50,"Help_Menu.htm");
+SetCsh(341,"Viewing_an_Event-Delayed_Order_After_it_is_Released",287,"Viewing_an_Event-Delayed_Order_After_it_is_Released.htm");
+SetCsh(342,"Inpatient_Days",9013,"Inpatient_Days.htm");
+SetCsh(343,"View_menu",112,"View_menu.htm");
+SetCsh(344,"Notes_tab",218,"Notes_tab.htm");
+SetCsh(345,"Processing_a_Reminder",188,"Processing_a_Reminder.htm");
+SetCsh(346,"Finishing_Reminder_Processing",191,"Finishing_Reminder_Processing.htm");
+SetCsh(347,"Complete_a_Consult_from_the_Notes_Tab",136,"Complete_a_Consult_from_the_Notes_Tab.htm");
+SetCsh(348,"Ward",9066,"Ward.htm");
+SetCsh(349,"Hiding_Child_Templates",265,"Hiding_Child_Templates.htm");
+SetCsh(350,"Combinations",9123,"Combinations.htm");
+SetCsh(351,"Signing_a_Surgery_Report",280,"Signing_a_Surgery_Report.htm");
+SetCsh(352,"Forwarding_a_Notification_to_Another_User",301,"Forwarding_a_Notification_to_Another_User.htm");
+SetCsh(353,"Placing_Intermittent_Infusion_Orders",359,"Placing_Intermittent_Infusion_Orders.htm");
+SetCsh(354,"Graphing_Main_Window_Display_Options",333,"Graphing_Main_Window_Display_Options.htm");
+SetCsh(355,"Document_Templates_overview_",10000,"Document_Templates_(overview).htm");
+SetCsh(356,"Icon_Legend",242,"Icon_Legend.htm");
+SetCsh(357,"Personal_Preferences_(Tools_|_Options)",257,"Personal_Preferences_(Tools___Options).htm");
+SetCsh(358,"Order_Sets",71,"Order_Sets.htm");
+SetCsh(359,"View_all_Surgery_Cases",279,"View_all_Surgery_Cases.htm");
+SetCsh(360,"New_List_button",9081,"New_List_button.htm");
+SetCsh(361,"How_Do_I_Know_a_Patient_Has_Reminders",183,"How_Do_I_Know_a_Patient_Has_Reminders.htm");
+SetCsh(362,"Refresh_Patient_Information",241,"Refresh_Patient_Information.htm");
+SetCsh(363,"Viewing_Patient_Record_Flags",304,"Viewing_Patient_Record_Flags.htm");
+SetCsh(364,"Canceling_Out_of_the_Processing_Dialog",192,"Canceling_Out_of_the_Processing_Dialog.htm");
+SetCsh(365,"Microbiology",61,"Microbiology.htm");
+SetCsh(366,"Reports_Tab_(Tools_|_Options)",244,"Reports_Tab_(Tools___Options).htm");
+SetCsh(367,"Graphing_Overview",330,"Graphing_Overview.htm");
+SetCsh(368,"Automatically_Add_Diagnoses_to_the_Problem_List",182,"Automatically_Add_Diagnoses_to_the_Problem_List.htm");
+SetCsh(369,"Ordering_Early_/_Late_Tray_Diet_Order",260,"Ordering_Early___Late_Tray_Diet_Order.htm");
+SetCsh(370,"Entering_Vitals",41,"Entering_Vitals.htm");
+SetCsh(371,"Changing_Medication_Orders",22,"Changing_Medication_Orders.htm");
+SetCsh(372,"Cancel_button_2",9997,"Cancel_button_2.htm");
+SetCsh(373,"Subscribe_to_a_team",9095,"Subscribe_to_a_team.htm");
+SetCsh(374,"Unit_Dose",109,"Unit_Dose.htm");
+SetCsh(375,"Verifying_Orders",180,"Verifying_Orders.htm");
+SetCsh(376,"Surgery_tab",276,"Surgery_tab.htm");
+SetCsh(377,"About_CPRS_Read_Only",282,"About_CPRS_Read_Only.htm");
+SetCsh(378,"Tools_Menu",108,"Tools_Menu.htm");
+SetCsh(379,"Encounter",39,"Encounter.htm");
+SetCsh(380,"Default_cosigner",9216,"Default_cosigner.htm");
+SetCsh(381,"Exporting_Document_Templates",253,"Exporting_Document_Templates.htm");
+SetCsh(382,"Annotating_a_Problem",15,"Annotating_a_Problem.htm");
+SetCsh(383,"Editing_a_Progress_Note",360,"Editing_a_Progress_Note.htm");
+SetCsh(384,"Viewing_Laboratory_Test_Results",8000,"Viewing_Laboratory_Test_Results.htm");
+SetCsh(385,"Ordering_Infusions",77,"Ordering_Infusions.htm");
+SetCsh(386,"Graphing_Edting_Predefined_Views",336,"Graphing_Edting_Predefined_Views.htm");
+SetCsh(387,"B6DUOGR",151,"B6DUOGR.htm");
+SetCsh(388,"AWLJN4O",153,"AWLJN4O.htm");
+SetCsh(389,"popup:_inpatient_meds_dialog_with_NSS_link",237,"popup__inpatient_meds_dialog_with_NSS_link.htm");
+SetCsh(390,"Entering_Diagnosis_Codes_for_Specific_Orders_(CIDC_Overview)",314,"Entering_Diagnosis_Codes_for_Specific_Orders_(CIDC_Overview).htm");
+SetCsh(391,"Order_Checking",67,"Order_Checking.htm");
+SetCsh(392,"Add_button_Document_Titles_",9233,"Add_button_(Document_Titles).htm");
+SetCsh(393,"Creating_an_Addendum_to_a_Surgery_Report",281,"Creating_an_Addendum_to_a_Surgery_Report.htm");
+SetCsh(394,"Adding_a_Problem",2010,"Adding_a_Problem.htm");
+SetCsh(395,"Notes_Tab_(Tools_|_Options)",235,"Notes_Tab_(Tools___Options).htm");
+SetCsh(396,"Entering_Primary_and_Secondary_providers_popup",166,"Entering_Primary_and_Secondary_providers_popup.htm");
+SetCsh(397,"Making_a_Problem_Inactive",59,"Making_a_Problem_Inactive.htm");
+SetCsh(398,"The_Reminders_Drawer",11300,"The_Reminders_Drawer.htm");
+SetCsh(399,"Available_Reports_on_the_Reports_Tab",263,"Available_Reports_on_the_Reports_Tab.htm");
+SetCsh(400,"Patient_Insurance_and_My_HealtheVet_Information",328,"Patient_Insurance_and_My_HealtheVet_Information.htm");
+SetCsh(401,"Save_Changes_button_Personal_Lists_",9080,"Save_Changes_button_(Personal_Lists).htm");
+SetCsh(402,"Start_Stop",9015,"Start-Stop.htm");
+SetCsh(403,"Choosing_RDV_or_VistaWeb_to_View_Remote_Data",7,"Choosing_RDV_or_VistaWeb_to_View_Remote_Data.htm");
+SetCsh(404,"Ordering_Regular_Diet_Orders",258,"Ordering_Regular_Diet_Orders.htm");
+SetCsh(405,"Select_Patients_by",9071,"Select_Patients_by.htm");
+SetCsh(406,"Entering_Encounter_Form_Data",40,"Entering_Encounter_Form_Data.htm");
+SetCsh(407,"Outpatient_Meals",5,"Outpatient_Meals.htm");
+SetCsh(408,"BZO04GQ",161,"BZO04GQ.htm");
+SetCsh(409,"Viewing_all_Signed_Notes__all_Unsigned_Notes__or_All_Uncosigned_Notes",270,"Viewing_all_Signed_Notes__all_Unsigned_Notes__or_All_Uncosigned_Notes.htm");
+SetCsh(410,"Quick_Orders",91,"Quick_Orders.htm");
+SetCsh(411,"Identify_Additional_Signers",171,"Identify_Additional_Signers.htm");
+SetCsh(412,"Additional_Diet_Order",262,"Additional_Diet_Order.htm");
+SetCsh(413,"Cover_Sheet_Detail",27,"Cover_Sheet_Detail.htm");
+SetCsh(414,"What_s_New_in_CPRS_GUI_v_27_(OR*3.0*243)",3,"What_s_New_in_CPRS_GUI_v_27_(OR_3_0_243).htm");
+SetCsh(415,"Copy_Existing_Orders",169,"Copy_Existing_Orders.htm");
+SetCsh(416,"Interval_for_autosave",9213,"Interval_for_autosave.htm");
+SetCsh(417,"Start_Stop_Patient_Selection_",9068,"Start-Stop_(Patient_Selection).htm");
+SetCsh(418,"Patients_to_add",9073,"Patients_to_add.htm");
+SetCsh(419,"Remove_Pending_Notifications",9031,"Remove_Pending_Notifications.htm");
+SetCsh(420,"Alerting_a_user_when_order_results_are_avaialble",268,"Alerting_a_user_when_order_results_are_avaialble.htm");
+SetCsh(421,"Unflagging_an_Order",178,"Unflagging_an_Order.htm");
+SetCsh(422,"Postings_Creating_New_Postings",254,"Postings_Creating_New_Postings.htm");
+SetCsh(423,"Graphing_Deleting_Predefined_Views",337,"Graphing_Deleting_Predefined_Views.htm");
+SetCsh(424,"Customizing_the_Surgery_Tab",278,"Customizing_the_Surgery_Tab.htm");
+SetCsh(425,"Features_Available_from_Any_Tab",349,"Features_Available_from_Any_Tab.htm");
+SetCsh(426,"Setting_a_Default_Patient_List",99,"Setting_a_Default_Patient_List.htm");
+SetCsh(427,"Sorting_a_Report_(Table_View)",246,"Sorting_a_Report_(Table_View).htm");
+SetCsh(428,"Primary_Care_Button",363,"Primary_Care_Button.htm");
+SetCsh(429,"Example:_Reviewing_a_Health_Summary",43,"Example__Reviewing_a_Health_Summary.htm");
+SetCsh(430,"CPRS_tabs",103,"CPRS_tabs.htm");
+SetCsh(431,"Using_CPRS",133,"Using_CPRS.htm");
+SetCsh(432,"Changing_Views_on_the_Consults_tab",213,"Changing_Views_on_the_Consults_tab.htm");
+SetCsh(433,"Add_All_button_Personal_Lists_",9077,"Add_All_button_(Personal_Lists).htm");
+SetCsh(434,"Add_button_Source_Combinations_",9124,"Add_button_(Source_Combinations).htm");
+SetCsh(435,"DOW0SGR",33,"DOW0SGR.htm");
+SetCsh(436,"Opening_a_Template",220,"Opening_a_Template.htm");
+SetCsh(437,"Understanding_Service_Connection_and_Treatment_Factors",316,"Understanding_Service_Connection_and_Treatment_Factors.htm");
+SetCsh(438,"Add_button_Personal_Lists_",9076,"Add_button_(Personal_Lists).htm");
+
+addWindow("NewWindow",true,0,"","","","","CPRS Online Help",2,0,"toc|ndx|nls|gls|toc|ndx|nls|gls","");
+
+
+
+window.onload=window_OnLoad;
+
+function window_OnLoad()
+{
+	if(parent&&parent!=this&&parent.putCshData)
+	{
+		parent.putCshData(gsProjPath,gaCsh,gaWindow,gaRmtProj);
+	}
+}
+//-->
+</script>
+</body>
+</html>

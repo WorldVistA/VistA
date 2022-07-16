@@ -48,6 +48,7 @@ type
     procedure accEventsGrdMenuValueQuery(Sender: TObject;
       var Text: string);
   private
+    FMainFormID: string;
     FOrderingMenu: Integer;
     FLastCol: Integer;
     FLastRow: Integer;
@@ -83,6 +84,7 @@ type
     procedure SetNewMenu(MenuIEN: Integer; AnOwner: TComponent; ARefNum: Integer);
     procedure ResizeFont;
     property RefNum: Integer read FRefNum write FRefNum;
+    property MainFormID: string read FMainFormID write FMainFormID;
   end;
 
 var
@@ -373,7 +375,7 @@ begin
     MenuPath.Free;
     with FStack do Delete(Count - 1);
   end;
-  SaveUserBounds(Self);
+  SaveUserBounds(Self, MainFormID);
   NoFresh := False;
   Action := caFree;
 end;

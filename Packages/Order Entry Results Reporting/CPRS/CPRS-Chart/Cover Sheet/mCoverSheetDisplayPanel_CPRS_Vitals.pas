@@ -189,7 +189,7 @@ end;
 procedure TfraCoverSheetDisplayPanel_CPRS_Vitals.OnAddItems(aList: TStrings);
 var
   aRec: TDelimitedString;
-  aStr: string;
+  aData, aQual, aStr: string;
 begin
   if aList.Count = 0 then
     aList.Add('^No Vitals Found.');
@@ -202,9 +202,10 @@ begin
 
         if lvData.Items.Count = 0 then
           if aRec.GetPieceIsNull(1) and (aList.Count = 1) then
-            CollapseColumns
-          else
-            ExpandColumns;
+            begin
+              CollapseColumns;
+              exit;
+            end;
 
         with lvData.Items.Add do
           begin
@@ -212,10 +213,19 @@ begin
             SubItems.Add(aRec.GetPiece(5));
             SubItems.Add(FormatDateTime(DT_FORMAT, aRec.GetPieceAsTDateTime(4)));
             SubItems.Add(aRec.GetPiece(6));
-            SubItems.Add(aRec.GetPiece(7));
+
+//            SubItems.Add(aRec.GetPiece(7));
+            aData := aRec.GetPiece(7);
+            aQual := aRec.GetPiece(8); // e.g. for POX details are in piece 8
+            if Trim(aQual) <> '' then
+              aData := aData + ' ' + aQual;
+            SubItems.Add(aData);
+
             Data := aRec;
           end;
       end;
+    ExpandColumns;
+
   finally
     lvData.Items.EndUpdate;
   end;

@@ -67,6 +67,10 @@ begin
     FILE_VER_FILEVERSION);
   lblSplash.Invalidate;
 //  TCRCThread.Create(Self);
+{$IFDEF PERFORMANCE}
+  pnlMain.Color := clCream;
+{$ENDIF}
+
 end;
 
 procedure TfrmSplash.FormDestroy(Sender: TObject);

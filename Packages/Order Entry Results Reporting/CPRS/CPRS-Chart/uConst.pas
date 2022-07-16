@@ -39,6 +39,24 @@ const
   UM_OBJDESTROY   = (WM_USER + 9253);  // used in uOwnerWrapper & fFrame
   UM_NOTELIMIT    = (WM_USER + 9254);  // used to redraw the richedit's editable rect
 
+//  PDMP Messages are kept in uPDMP unit
+//  PDMP Messages occupying range WM_USER + 9300..9400
+//  UM_PDMP_BASE    = (WM_USER + 9300);
+//  UM_PDMP         = (UM_PDMP_BASE + 60);  // used by PDMP when results are loaded
+//  UM_PDMP_Done    = (UM_PDMP_BASE + 60);  // used by PDMP when results are loaded
+//  UM_PDMP_Start   = (UM_PDMP_BASE + 62);  // used by PDMP when process started
+//  UM_PDMP_Loading = (UM_PDMP_BASE + 64);  // used by PDMP when data is pulled
+//  UM_PDMP_Show    = (UM_PDMP_BASE + 66);  // used by PDMP to show results
+//  UM_PDMP_Ready   = (UM_PDMP_BASE + 68);  // used by PDMP to indicate results are ready
+//  UM_PDMP_Init    = (UM_PDMP_BASE + 70);  // used by PDMP to init window
+//  UM_PDMP_NOTE_ID = (UM_PDMP_BASE + 72);  // Note ID created by PDMP
+//  UM_PDMP_ABORT   = (UM_PDMP_BASE + 74);  // Aborting PDMP request processing
+//  UM_PDMP_CANCEL  = (UM_PDMP_BASE + 76);  // Canceling PDMP request processing
+//  UM_PDMP_Error   = (UM_PDMP_BASE + 78);  // PDMP Data Object Error
+//  UM_PDMP_Options = (UM_PDMP_BASE + 80);  // PDMP Options updated
+//  UM_PDMP_WebError= (UM_PDMP_BASE + 82);  // PDMP Web page failed to load
+//  UM_PDMP_Refresh = (UM_PDMP_BASE + 84);  // PDMP Review updated
+
   { Tab Indexes, moved from fFrame }
   CT_NOPAGE   = -1;                             // chart tab - none selected
   CT_UNKNOWN  =  0;                             // chart tab - unknown (shouldn't happen)
@@ -201,7 +219,10 @@ const
   CC_REFRESH      = 3;
   CC_RESUME       = 4;
 
+  SMART_ALERT_INFO = '<--- SMART ALERT INFO --->';
+
   { Notification Types }
+  NF_LONG_TEXT_ALERT               = -101;
   NF_LAB_RESULTS                   = 3;
   NF_FLAGGED_ORDERS                = 6;
   NF_ORDER_REQUIRES_ELEC_SIGNATURE = 12;

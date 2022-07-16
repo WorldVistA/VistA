@@ -2,27 +2,23 @@ inherited frmFrame: TfrmFrame
   Left = 219
   Top = 102
   Caption = ']='
-  ClientHeight = 763
-  ClientWidth = 984
+  ClientHeight = 586
+  ClientWidth = 1129
   FormStyle = fsMDIForm
   Menu = mnuFrame
   OldCreateOrder = True
   Visible = True
-  OnActivate = FormActivate
-  OnClose = FormClose
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnResize = FormResize
-  ExplicitWidth = 1000
-  ExplicitHeight = 822
+  ExplicitWidth = 1145
+  ExplicitHeight = 645
   PixelsPerInch = 96
   TextHeight = 13
   object pnlNoPatientSelected: TPanel [0]
     Left = 0
     Top = 0
-    Width = 984
-    Height = 763
+    Width = 1129
+    Height = 586
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -41,8 +37,8 @@ inherited frmFrame: TfrmFrame
   object pnlPatientSelected: TPanel [1]
     Left = 0
     Top = 0
-    Width = 984
-    Height = 763
+    Width = 1129
+    Height = 586
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -52,20 +48,20 @@ inherited frmFrame: TfrmFrame
     object bvlPageTop: TBevel
       Left = 1
       Top = 103
-      Width = 982
+      Width = 1127
       Height = 2
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
       Align = alTop
-      ExplicitTop = 200
-      ExplicitWidth = 801
+      ExplicitTop = 62
+      ExplicitWidth = 982
     end
     object pnlToolbar: TPanel
       Left = 1
       Top = 1
-      Width = 982
+      Width = 1127
       Height = 61
       Margins.Left = 5
       Margins.Top = 5
@@ -77,7 +73,7 @@ inherited frmFrame: TfrmFrame
       object bvlToolTop: TBevel
         Left = 0
         Top = 0
-        Width = 982
+        Width = 1127
         Height = 1
         Margins.Left = 5
         Margins.Top = 5
@@ -85,6 +81,7 @@ inherited frmFrame: TfrmFrame
         Margins.Bottom = 5
         Align = alTop
         Style = bsRaised
+        ExplicitWidth = 982
       end
       object pnlCCOW: TPanel
         Left = 0
@@ -318,7 +315,7 @@ inherited frmFrame: TfrmFrame
       object pnlPrimaryCare: TKeyClickPanel
         Left = 523
         Top = 1
-        Width = 177
+        Width = 75
         Height = 60
         Hint = 'Primary Care Team / Primary Care Provider'
         Margins.Left = 5
@@ -408,16 +405,15 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlReminders: TKeyClickPanel
-        Left = 822
+        Left = 989
         Top = 1
-        Width = 52
+        Width = 30
         Height = 60
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
         Margins.Bottom = 5
         Align = alRight
-        BevelWidth = 2
         Caption = 'Reminders'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
@@ -435,10 +431,10 @@ inherited frmFrame: TfrmFrame
         OnMouseDown = pnlRemindersMouseDown
         OnMouseUp = pnlRemindersMouseUp
         object imgReminder: TImage
-          Left = 2
-          Top = 2
-          Width = 48
-          Height = 56
+          Left = 1
+          Top = 1
+          Width = 28
+          Height = 58
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -447,13 +443,16 @@ inherited frmFrame: TfrmFrame
           Center = True
           OnMouseDown = pnlRemindersMouseDown
           OnMouseUp = pnlRemindersMouseUp
+          ExplicitLeft = 2
+          ExplicitTop = 2
+          ExplicitWidth = 48
           ExplicitHeight = 57
         end
         object anmtRemSearch: TAnimate
-          Left = 2
-          Top = 2
-          Width = 48
-          Height = 56
+          Left = 1
+          Top = 1
+          Width = 28
+          Height = 58
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -463,7 +462,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlPostings: TKeyClickPanel
-        Left = 874
+        Left = 1019
         Top = 1
         Width = 108
         Height = 60
@@ -541,7 +540,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlOTHD: TKeyClickPanel
-        Left = 431
+        Left = 598
         Top = 1
         Width = 52
         Height = 60
@@ -555,15 +554,14 @@ inherited frmFrame: TfrmFrame
         ShowHint = True
         TabOrder = 4
         TabStop = True
-        Visible = False
         OnClick = pnlOTHDClick
         OnEnter = pnlOTHDEnter
         OnExit = pnlOTHDExit
         OnMouseDown = pnlOTHDMouseDown
         OnMouseUp = pnlOTHDMouseUp
         object lblOTHDTitle: TStaticText
-          Left = 7
-          Top = 2
+          Left = 2
+          Top = -2
           Width = 40
           Height = 24
           Hint = 'Other than Honorable'
@@ -581,7 +579,7 @@ inherited frmFrame: TfrmFrame
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
-          OnClick = lblOTHDTitleClick
+          OnClick = pnlOTHDClick
           OnMouseDown = pnlOTHDMouseDown
           OnMouseUp = pnlOTHDMouseUp
         end
@@ -597,13 +595,13 @@ inherited frmFrame: TfrmFrame
           Alignment = taCenter
           Caption = '##D,P#'
           TabOrder = 1
-          OnClick = lblOTHDDtlClick
+          OnClick = pnlOTHDClick
           OnMouseDown = pnlOTHDMouseDown
           OnMouseUp = pnlOTHDMouseUp
         end
       end
       object paVAA: TKeyClickPanel
-        Left = 483
+        Left = 650
         Top = 1
         Width = 90
         Height = 60
@@ -612,7 +610,6 @@ inherited frmFrame: TfrmFrame
         Margins.Right = 5
         Margins.Bottom = 5
         Align = alRight
-        BevelOuter = bvNone
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
         Font.Height = -19
@@ -624,20 +621,17 @@ inherited frmFrame: TfrmFrame
         TabOrder = 5
         Visible = False
         OnResize = paVAAResize
-        DesignSize = (
-          90
-          60)
         object laVAA2: TButton
-          Left = 0
-          Top = 28
-          Width = 90
-          Height = 28
+          Left = 1
+          Top = 33
+          Width = 88
+          Height = 26
           Hint = 'Click to display patient insurance data'
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
-          Anchors = [akLeft, akTop, akRight, akBottom]
+          Align = alClient
           Caption = 'Pt Insur'
           ParentShowHint = False
           ShowHint = True
@@ -645,16 +639,16 @@ inherited frmFrame: TfrmFrame
           OnClick = laVAA2Click
         end
         object laMHV: TButton
-          Left = 0
-          Top = 0
-          Width = 90
-          Height = 24
+          Left = 1
+          Top = 1
+          Width = 88
+          Height = 32
           Hint = 'Click to display MHV data'
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
-          Anchors = [akLeft, akTop, akRight, akBottom]
+          Align = alTop
           Caption = 'MHV'
           ParentShowHint = False
           ShowHint = True
@@ -663,7 +657,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlCVnFlag: TPanel
-        Left = 573
+        Left = 740
         Top = 1
         Width = 138
         Height = 60
@@ -692,9 +686,9 @@ inherited frmFrame: TfrmFrame
         end
         object pnlFlag: TKeyClickPanel
           Left = 1
-          Top = 1
+          Top = 16
           Width = 136
-          Height = 31
+          Height = 16
           Hint = 'Click to display patient record flags.'
           Margins.Left = 5
           Margins.Top = 5
@@ -714,8 +708,8 @@ inherited frmFrame: TfrmFrame
           object lblFlag: TLabel
             Left = 2
             Top = 2
-            Width = 132
-            Height = 27
+            Width = 25
+            Height = 13
             Margins.Left = 4
             Margins.Top = 4
             Margins.Right = 4
@@ -735,21 +729,20 @@ inherited frmFrame: TfrmFrame
             OnClick = pnlFlagClick
             OnMouseDown = pnlFlagMouseDown
             OnMouseUp = pnlFlagMouseUp
-            ExplicitWidth = 25
-            ExplicitHeight = 13
           end
         end
         object txtCmdFlags: TVA508StaticText
           Name = 'txtCmdFlags'
-          Left = 0
-          Top = 0
+          Left = 1
+          Top = 1
           Width = 105
           Height = 15
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
           Margins.Bottom = 4
-          Alignment = taLeftJustify
+          Align = alTop
+          Alignment = taCenter
           Caption = 'Flags Button Disabled'
           TabOrder = 2
           Visible = False
@@ -757,7 +750,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlRemoteData: TKeyClickPanel
-        Left = 711
+        Left = 878
         Top = 1
         Width = 111
         Height = 60
@@ -766,6 +759,7 @@ inherited frmFrame: TfrmFrame
         Margins.Right = 5
         Margins.Bottom = 5
         Align = alRight
+        BevelOuter = bvNone
         BevelWidth = 2
         Caption = 'Remote Data'
         Font.Charset = DEFAULT_CHARSET
@@ -784,9 +778,9 @@ inherited frmFrame: TfrmFrame
         OnMouseDown = pnlCIRNMouseDown
         OnMouseUp = pnlCIRNMouseUp
         object pnlVistaWeb: TKeyClickPanel
-          Left = 2
-          Top = 2
-          Width = 107
+          Left = 0
+          Top = 0
+          Width = 111
           Height = 28
           Hint = 'Click for any external patient data'
           Margins.Left = 5
@@ -813,8 +807,8 @@ inherited frmFrame: TfrmFrame
           object lblVistaWeb: TLabel
             Left = 2
             Top = 2
-            Width = 103
-            Height = 24
+            Width = 3
+            Height = 16
             Margins.Left = 4
             Margins.Top = 4
             Margins.Right = 4
@@ -831,15 +825,13 @@ inherited frmFrame: TfrmFrame
             OnClick = pnlVistaWebClick
             OnMouseDown = pnlVistaWebMouseDown
             OnMouseUp = pnlVistaWebMouseUp
-            ExplicitWidth = 3
-            ExplicitHeight = 16
           end
         end
         object pnlCIRN: TKeyClickPanel
-          Left = 2
-          Top = 30
-          Width = 107
-          Height = 28
+          Left = 0
+          Top = 28
+          Width = 111
+          Height = 32
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -865,8 +857,8 @@ inherited frmFrame: TfrmFrame
           object lblCIRN: TLabel
             Left = 2
             Top = 2
-            Width = 103
-            Height = 24
+            Width = 80
+            Height = 16
             Margins.Left = 4
             Margins.Top = 4
             Margins.Right = 4
@@ -883,16 +875,14 @@ inherited frmFrame: TfrmFrame
             ParentFont = False
             Layout = tlCenter
             OnClick = pnlCIRNClick
-            ExplicitWidth = 80
-            ExplicitHeight = 16
           end
         end
       end
     end
     object stsArea: TStatusBar
       Left = 1
-      Top = 741
-      Width = 982
+      Top = 564
+      Width = 1127
       Height = 21
       Margins.Left = 5
       Margins.Top = 5
@@ -923,8 +913,8 @@ inherited frmFrame: TfrmFrame
     end
     object tabPage: TTabControl
       Left = 1
-      Top = 714
-      Width = 982
+      Top = 537
+      Width = 1127
       Height = 27
       Margins.Left = 4
       Margins.Top = 4
@@ -946,8 +936,12 @@ inherited frmFrame: TfrmFrame
     object pnlPage: TPanel
       Left = 1
       Top = 105
-      Width = 982
-      Height = 609
+      Width = 1127
+      Height = 432
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       Font.Charset = DEFAULT_CHARSET
@@ -995,7 +989,7 @@ inherited frmFrame: TfrmFrame
     object pnlOtherInfo: TKeyClickPanel
       Left = 1
       Top = 62
-      Width = 982
+      Width = 1127
       Height = 41
       Align = alTop
       Color = clYellow
@@ -1403,6 +1397,21 @@ inherited frmFrame: TfrmFrame
         Caption = 'Digital Signing Setup...'
         OnClick = DigitalSigningSetup1Click
       end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object PDMP1: TMenuItem
+        Caption = 'PDMP'
+        object RequestPDMPData1: TMenuItem
+          Action = acPDMPRequest
+        end
+        object CancelPDMPRequest1: TMenuItem
+          Action = acPDMPCancel
+        end
+        object ReviewPDMPData1: TMenuItem
+          Action = acPDMPReview
+        end
+      end
     end
     object mnuHelp: TMenuItem
       Caption = '&Help'
@@ -1420,6 +1429,10 @@ inherited frmFrame: TfrmFrame
       object mnuDebugReport: TMenuItem
         Caption = 'Debug Report'
         OnClick = mnuDebugReportClick
+      end
+      object ResetParams1: TMenuItem
+        Action = acResetParams
+        Visible = False
       end
       object Z5: TMenuItem
         Caption = '-'
@@ -1530,5 +1543,30 @@ inherited frmFrame: TfrmFrame
     Enabled = True
     Left = 16
     Top = 96
+  end
+  object alPdmp: TActionList
+    Left = 528
+    Top = 224
+    object acPDMPRequest: TAction
+      Caption = 'Request PDMP Data'
+      OnExecute = acPDMPRequestExecute
+    end
+    object acPDMPReview: TAction
+      Caption = 'Review PDMP Data'
+      Enabled = False
+      OnExecute = acPDMPReviewExecute
+    end
+    object acPDMPCancel: TAction
+      Caption = 'Cancel PDMP Request'
+      Enabled = False
+      OnExecute = acPDMPCancelExecute
+    end
+    object acPDMPOptions: TAction
+      Caption = 'PDMP Options'
+    end
+    object acResetParams: TAction
+      Caption = 'Reset Params'
+      OnExecute = acResetParamsExecute
+    end
   end
 end

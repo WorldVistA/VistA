@@ -2280,10 +2280,16 @@ end;
 procedure TfrmSurgery.popNoteMemoPasteClick(Sender: TObject);
 begin
   inherited;
-  // FEditCtrl.SelText := Clipboard.AsText; {*KCM*}
-  if not CPMemNewNote.EditMonitor.CopyMonitor.Enabled then
-   ScrubTheClipboard;
-  FEditCtrl.PasteFromClipboard; // use AsText to prevent formatting
+  if (FEditCtrl = memNewNote) and (assigned(CPMemNewNote.EditMonitor)) and
+    (assigned(CPMemNewNote.EditMonitor.CopyMonitor)) and
+    (CPMemNewNote.EditMonitor.CopyMonitor.Enabled) then
+  begin
+    ScrubTheClipboard;
+    FEditCtrl.PasteFromClipboard;
+  end
+  else
+    FEditCtrl.Perform(EM_REPLACESEL, WParam(true),
+      Longint(PChar(Clipboard.AsText)));
 end;
 
 procedure TfrmSurgery.popNoteMemoReformatClick(Sender: TObject);

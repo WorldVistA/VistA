@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ORCtrls, StdCtrls, ExtCtrls, ComCtrls, ImgList, mImgText, Buttons, ORClasses, fBase508Form,
-  VA508AccessibilityManager, VA508ImageListLabeler;
+  VA508AccessibilityManager, VA508ImageListLabeler, System.ImageList;
 
 type
   TRemCoverDataLevel = (dlPackage, dlSystem, dlDivision, dlService, dlLocation, dlUserClass, dlUser);
@@ -141,7 +141,7 @@ type
     FUser: Int64;
     FUserMode: boolean;
     FInitialized: boolean;
-    FCurDiv: Integer;
+    FCurDiv: double;
     FCurSer:Integer;
     FCurLoc: Integer;
     FCurClass: Integer;
@@ -155,7 +155,7 @@ type
     FUpdatePending: TORCheckBox;
     FCatInfo: TORStringList;
     FEditingLevel: TRemCoverDataLevel;
-    FEditingIEN: Int64;
+    FEditingIEN: double;
     FUpdating: boolean;
     FTopSortTag: integer;
     FTopSortUp: boolean;
@@ -170,13 +170,13 @@ type
     procedure ActiveControlChanged(Sender: TObject);
     procedure SetButtonHints;
     procedure GetUserInfo(AUser: Int64);
-    function GetCurrent(IEN: Int64; Level: TRemCoverDataLevel; Show: boolean;
+    function GetCurrent(IEN: double; Level: TRemCoverDataLevel; Show: boolean;
                         Add: boolean = FALSE): TORStringList;
     procedure UpdateView;
     procedure SetupItem(Item: TListItem; const Data: string); overload;
     procedure SetupItem(Item: TListItem; const Data: string;
-                        Level: TRemCoverDataLevel; IEN: Int64); overload;
-    function GetExternalName(Level: TRemCoverDataLevel; IEN: Int64): string;
+                        Level: TRemCoverDataLevel; IEN: double); overload;
+    function GetExternalName(Level: TRemCoverDataLevel; IEN: double): string;
     procedure UpdateMasterListView;
     procedure UpdateButtons;
     function GetCatInfo(CatIEN: string): TORStringList;
@@ -377,7 +377,8 @@ begin
     LocCombo := cbxLocation;
     //cbxDivision.Items.Assign(FDivisions);
     FastAssign(Fdivisions, cbxDivision.Items);
-    cbxDivision.SelectByIEN(FCurDiv);
+    cbxDivision.SelectByID(FloatToStr(FCurDiv));
+//    cbxDivision.SelectByIEN(FCurDiv);
     cbxService.InitLongList(GetExternalName(dlService, FCurSer));
     cbxService.SelectByIEN(FCurSer);
     cbxClass.InitLongList('');
@@ -485,7 +486,7 @@ begin
   end;
 end;
 
-function TfrmRemCoverSheet.GetCurrent(IEN: Int64; Level: TRemCoverDataLevel;
+function TfrmRemCoverSheet.GetCurrent(IEN: double; Level: TRemCoverDataLevel;
                            Show: boolean; Add: boolean = FALSE): TORStringList;
 var
   lvl, cls, sIEN: string;
@@ -493,7 +494,7 @@ var
   i, idx: integer;
 
 begin
-  idx := FData.IndexOfPiece(String(DataCode[Level]) + IntToStr(IEN));
+  idx := FData.IndexOfPiece(String(DataCode[Level]) + floatToStr(IEN));
   if idx < 0 then
   begin
     if (IEN = 0) and (not (Level in [dlPackage, dlSystem])) then
@@ -502,7 +503,7 @@ begin
       exit;
     end;
     cls := '';
-    sIEN := IntToStr(IEN);
+    sIEN := floatToStr(IEN);
     lvl := InternalName[Level];
     case Level of
       dlDivision, dlService, dlLocation, dlUser:
@@ -518,7 +519,7 @@ begin
         FastAssign(GetCoverSheetLvlData(lvl, cls),  tmpSL);
         if (not Add) and (tmpSL.Count = 0) then
           FreeAndNil(tmpSL);
-        idx := FData.AddObject(String(DataCode[Level]) + IntToStr(IEN), tmpSL);
+        idx := FData.AddObject(String(DataCode[Level]) + floatToStr(IEN), tmpSL);
       except
         tmpSL.Free;
         raise;
@@ -543,6 +544,7 @@ begin
   end;
   Result := tmpSL;
 end;
+
 
 procedure TfrmRemCoverSheet.UpdateView;
 var
@@ -626,25 +628,25 @@ begin
 end;
 
 procedure TfrmRemCoverSheet.SetupItem(Item: TListItem; const Data: string;
-                         Level: TRemCoverDataLevel; IEN: Int64);
+                         Level: TRemCoverDataLevel; IEN: double);
 begin
   SetupItem(Item, Data);
   Item.SubItems[IdxLvl]  := DataName[Level];
   Item.SubItems[IdxType] := GetExternalName(Level, IEN);
-  Item.SubItems[IdxTIEN] := IntToStr(IEN);
+  Item.SubItems[IdxTIEN] := FloatToStr(IEN);
   Item.SubItems[IdxLvl2] := IntToStr(ord(Level));
 end;
 
-function TfrmRemCoverSheet.GetExternalName(Level: TRemCoverDataLevel; IEN: Int64): string;
+function TfrmRemCoverSheet.GetExternalName(Level: TRemCoverDataLevel; IEN: double): string;
 
-  function GetNameFromList(List: TORStringList; IEN: Int64; FileNum: Double): string;
+  function GetNameFromList(List: TORStringList; IEN, FileNum: Double): string;
   var
     idx: integer;
 
   begin
-    idx := List.IndexOfPiece(IntToStr(IEN));
+    idx := List.IndexOfPiece(FloatToStr(IEN));
     if idx < 0 then
-      idx := List.Add(IntToStr(IEN) + U + ExternalName(IEN, FileNum));
+      idx := List.Add(floatToStr(IEN) + U + ExternalName(FloatToStr(IEN), FileNum));
       Result := piece(List[idx],U,2);
   end;
 
@@ -660,8 +662,13 @@ begin
 end;
 
 procedure TfrmRemCoverSheet.cbxDivisionChange(Sender: TObject);
+var
+tmp: string;
 begin
-  FCurDiv := cbxDivision.ItemIEN;
+ if cbxDivision.itemindex < 0 then
+  exit;
+  tmp := Piece(cbxDivision.items.Strings[cbxDivision.itemindex], u, 1);
+  FCurDiv := StrToFloatDef(tmp,0);
   If FCurDiv < 1  then   //No value in Division combobox
   begin
     sbCopyLeft.Enabled := false;
@@ -1084,7 +1091,7 @@ var
   idx: integer;
 
 begin
-  idx := FData.IndexOfPiece(String(DataCode[FEditingLevel]) + IntToStr(FEditingIEN));
+  idx := FData.IndexOfPiece(String(DataCode[FEditingLevel]) + FloatToStr(FEditingIEN));
   if idx >= 0 then
   begin
     tmp := FData[idx];

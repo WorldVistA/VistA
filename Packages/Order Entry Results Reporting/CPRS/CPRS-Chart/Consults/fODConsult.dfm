@@ -2,22 +2,22 @@ inherited frmODCslt: TfrmODCslt
   Tag = 110
   Left = 430
   Top = 203
-  Width = 606
-  Height = 455
+  Width = 668
+  Height = 509
   HorzScrollBar.Range = 590
   VertScrollBar.Range = 340
   Caption = 'Order a Consult'
-  Constraints.MinHeight = 442
+  Constraints.MinHeight = 480
   Constraints.MinWidth = 590
   Font.Charset = ANSI_CHARSET
-  ExplicitWidth = 606
-  ExplicitHeight = 455
+  ExplicitWidth = 668
+  ExplicitHeight = 509
   PixelsPerInch = 96
   TextHeight = 13
   object pnlCombatVet: TPanel [0]
     Left = 0
     Top = 0
-    Width = 590
+    Width = 652
     Height = 25
     Align = alTop
     BevelOuter = bvLowered
@@ -27,12 +27,12 @@ inherited frmODCslt: TfrmODCslt
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 2
     object txtCombatVet: TVA508StaticText
       Name = 'txtCombatVet'
       Left = 1
       Top = 1
-      Width = 588
+      Width = 650
       Height = 23
       Align = alClient
       Alignment = taCenter
@@ -43,34 +43,18 @@ inherited frmODCslt: TfrmODCslt
       ShowAccelChar = True
     end
   end
-  inherited memOrder: TCaptionMemo
-    Left = 3
-    Top = 384
-    Width = 417
-    Height = 41
-    Anchors = [akLeft, akBottom]
-    Lines.Strings = (
-      'The order text...'
-      '----------------------------------------------'
-      '--------------------------------'
-      'An order message may be displayed here.')
-    TabOrder = 3
-    ExplicitLeft = 3
-    ExplicitTop = 384
-    ExplicitWidth = 417
-    ExplicitHeight = 41
-  end
-  object pnlMain: TPanel [2]
+  object pnlMain: TPanel [1]
     Left = 0
-    Top = 0
-    Width = 598
-    Height = 380
-    Anchors = [akLeft, akTop, akRight, akBottom]
+    Top = 107
+    Width = 652
+    Height = 177
+    Align = alTop
     BevelOuter = bvNone
+    ParentBackground = False
     TabOrder = 0
     DesignSize = (
-      598
-      380)
+      652
+      177)
     object lblService: TLabel
       Left = 1
       Top = 2
@@ -79,49 +63,54 @@ inherited frmODCslt: TfrmODCslt
       Caption = 'Consult to Service/Specialty'
     end
     object lblProvDiag: TLabel
-      Left = 312
+      Left = 366
       Top = 138
       Width = 100
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Provisional Diagnosis'
+      ExplicitLeft = 370
     end
     object lblUrgency: TLabel
-      Left = 309
+      Left = 363
       Top = 2
       Width = 40
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Urgency'
+      ExplicitLeft = 367
     end
     object lblPlace: TLabel
-      Left = 457
+      Left = 511
       Top = 100
       Width = 100
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Place of Consultation'
+      ExplicitLeft = 515
     end
     object lblAttn: TLabel
-      Left = 454
+      Left = 508
       Top = 2
       Width = 42
       Height = 13
       Anchors = [akTop, akRight]
       Caption = 'Attention'
+      ExplicitLeft = 512
     end
     object lblLatest: TStaticText
-      Left = 454
+      Left = 511
       Top = 43
-      Width = 116
+      Width = 92
       Height = 17
       Anchors = [akTop, akRight]
-      Caption = 'Latest appropriate date:'
+      Caption = 'No later than date:'
+      Enabled = False
       TabOrder = 8
       Visible = False
     end
     object lblClinicallyIndicated: TStaticText
-      Left = 309
+      Left = 363
       Top = 43
       Width = 117
       Height = 17
@@ -129,53 +118,11 @@ inherited frmODCslt: TfrmODCslt
       Caption = 'Clinically indicated date:'
       TabOrder = 7
     end
-    object pnlReason: TPanel
-      Left = 3
-      Top = 176
-      Width = 587
-      Height = 179
-      Anchors = [akLeft, akTop, akRight]
-      BevelOuter = bvNone
-      Constraints.MinHeight = 53
-      TabOrder = 20
-      object lblReason: TLabel
-        Left = 0
-        Top = 0
-        Width = 587
-        Height = 13
-        Align = alTop
-        Caption = 'Reason for Request'
-        Constraints.MinHeight = 13
-        ExplicitWidth = 95
-      end
-      object memReason: TRichEdit
-        Left = 0
-        Top = 13
-        Width = 587
-        Height = 166
-        Align = alClient
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Courier New'
-        Font.Style = []
-        Constraints.MinHeight = 40
-        MaxLength = 2147483645
-        ParentFont = False
-        PopupMenu = popReason
-        ScrollBars = ssVertical
-        TabOrder = 0
-        WantTabs = True
-        OnChange = ControlChange
-        OnKeyDown = memReasonKeyDown
-        OnKeyPress = memReasonKeyPress
-        OnKeyUp = memReasonKeyUp
-      end
-    end
     object cboService: TORComboBox
-      Left = 0
+      AlignWithMargins = True
+      Left = 3
       Top = 16
-      Width = 274
+      Width = 322
       Height = 154
       Anchors = [akLeft, akTop, akRight]
       Style = orcsSimple
@@ -203,7 +150,7 @@ inherited frmODCslt: TfrmODCslt
       CharsNeedMatch = 1
     end
     object cboUrgency: TORComboBox
-      Left = 309
+      Left = 363
       Top = 16
       Width = 133
       Height = 21
@@ -230,7 +177,7 @@ inherited frmODCslt: TfrmODCslt
       CharsNeedMatch = 1
     end
     object cboPlace: TORComboBox
-      Left = 457
+      Left = 511
       Top = 113
       Width = 136
       Height = 21
@@ -256,7 +203,7 @@ inherited frmODCslt: TfrmODCslt
       CharsNeedMatch = 1
     end
     object txtProvDiag: TCaptionEdit
-      Left = 312
+      Left = 366
       Top = 151
       Width = 223
       Height = 21
@@ -270,7 +217,7 @@ inherited frmODCslt: TfrmODCslt
       Caption = 'Provisional Diagnosis'
     end
     object txtAttn: TORComboBox
-      Left = 454
+      Left = 511
       Top = 16
       Width = 136
       Height = 21
@@ -297,10 +244,10 @@ inherited frmODCslt: TfrmODCslt
       CharsNeedMatch = 1
     end
     object treService: TORTreeView
-      Left = 0
-      Top = 38
-      Width = 298
-      Height = 220
+      Left = 3
+      Top = 39
+      Width = 352
+      Height = 133
       Anchors = [akLeft, akTop, akRight, akBottom]
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -348,7 +295,7 @@ inherited frmODCslt: TfrmODCslt
       CharsNeedMatch = 1
     end
     object pnlServiceTreeButton: TKeyClickPanel
-      Left = 274
+      Left = 328
       Top = 14
       Width = 26
       Height = 26
@@ -421,7 +368,7 @@ inherited frmODCslt: TfrmODCslt
       end
     end
     object gbInptOpt: TGroupBox
-      Left = 309
+      Left = 363
       Top = 92
       Width = 140
       Height = 45
@@ -448,7 +395,7 @@ inherited frmODCslt: TfrmODCslt
       end
     end
     object btnDiagnosis: TButton
-      Left = 541
+      Left = 595
       Top = 151
       Width = 49
       Height = 21
@@ -458,8 +405,8 @@ inherited frmODCslt: TfrmODCslt
       OnClick = btnDiagnosisClick
     end
     object cmdLexSearch: TButton
-      Left = 541
-      Top = 151
+      Left = 595
+      Top = 150
       Width = 49
       Height = 21
       Anchors = [akTop, akRight]
@@ -468,23 +415,25 @@ inherited frmODCslt: TfrmODCslt
       OnClick = cmdLexSearchClick
     end
     object calClinicallyIndicated: TORDateBox
-      Left = 309
+      Left = 363
       Top = 57
       Width = 133
       Height = 21
       Anchors = [akTop, akRight]
       TabOrder = 9
       OnChange = ControlChange
+      OnExit = calClinicallyIndicatedExit
       DateOnly = True
       RequireTime = False
       Caption = ''
     end
     object calLatest: TORDateBox
-      Left = 454
+      Left = 511
       Top = 57
       Width = 136
       Height = 21
       Anchors = [akTop, akRight]
+      Enabled = False
       TabOrder = 10
       Visible = False
       OnChange = ControlChange
@@ -506,57 +455,280 @@ inherited frmODCslt: TfrmODCslt
       ShowAccelChar = True
     end
   end
-  inherited cmdAccept: TButton
-    Left = 427
-    Top = 394
-    Anchors = [akLeft, akBottom]
+  inherited memOrder: TCaptionMemo
+    Left = 1
+    Top = 1
+    Width = 386
+    Height = 65
+    Lines.Strings = (
+      'The order text...'
+      '----------------------------------------------'
+      '--------------------------------'
+      'An order message may be displayed here.')
+    TabOrder = 3
+    ExplicitLeft = 1
+    ExplicitTop = 1
+    ExplicitWidth = 386
+    ExplicitHeight = 65
+  end
+  inherited pnlMessage: TPanel [3]
+    Left = 1
+    Top = 1
+    Width = 386
+    Height = 65
     TabOrder = 4
-    ExplicitLeft = 427
-    ExplicitTop = 394
-  end
-  inherited cmdQuit: TButton
-    Left = 531
-    Top = 394
-    Width = 61
-    Anchors = [akLeft, akBottom]
-    TabOrder = 6
-    ExplicitLeft = 531
-    ExplicitTop = 394
-    ExplicitWidth = 61
-  end
-  inherited pnlMessage: TPanel
-    Left = 13
-    Top = 374
-    Width = 377
-    Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 2
-    ExplicitLeft = 13
-    ExplicitTop = 374
-    ExplicitWidth = 377
+    ExplicitLeft = 1
+    ExplicitTop = 1
+    ExplicitWidth = 386
+    ExplicitHeight = 65
+    inherited imgMessage: TImage
+      Left = 2
+      Top = 2
+      Height = 57
+      Align = alLeft
+      ExplicitLeft = 2
+      ExplicitTop = 2
+      ExplicitHeight = 57
+    end
     inherited memMessage: TRichEdit
-      Width = 292
-      ExplicitWidth = 292
+      Left = 34
+      Top = 2
+      Width = 346
+      Height = 57
+      Align = alClient
+      ExplicitLeft = 34
+      ExplicitTop = 2
+      ExplicitWidth = 346
+      ExplicitHeight = 57
+    end
+  end
+  inherited cmdAccept: TButton [4]
+    AlignWithMargins = True
+    Left = 3
+    Top = 66
+    Width = 646
+    Height = 38
+    Margins.Top = 0
+    Align = alTop
+    TabOrder = 5
+    ExplicitLeft = 3
+    ExplicitTop = 66
+    ExplicitWidth = 646
+    ExplicitHeight = 38
+  end
+  inherited cmdQuit: TButton [5]
+    AlignWithMargins = True
+    Left = 3
+    Top = 25
+    Width = 646
+    Height = 38
+    Margins.Top = 0
+    Align = alTop
+    TabOrder = 7
+    ExplicitLeft = 3
+    ExplicitTop = 25
+    ExplicitWidth = 646
+    ExplicitHeight = 38
+  end
+  object grdDstControls: TGridPanel [6]
+    AlignWithMargins = True
+    Left = 3
+    Top = 386
+    Width = 646
+    Height = 81
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = 'grdDstControls'
+    ColumnCollection = <
+      item
+        Value = 100.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 120.000000000000000000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        Control = lblDstStatus
+        Row = 0
+      end
+      item
+        Column = 0
+        Control = pnlBaseMessage
+        Row = 1
+        RowSpan = 2
+      end
+      item
+        Column = 1
+        Control = pnlBaseAccept
+        Row = 1
+      end
+      item
+        Column = 1
+        Control = pnlBaseCancel
+        Row = 2
+      end
+      item
+        Column = 1
+        Control = pnlDST
+        Row = 0
+      end>
+    ParentBackground = False
+    ParentColor = True
+    RowCollection = <
+      item
+        SizeStyle = ssAbsolute
+        Value = 33.000000000000000000
+      end
+      item
+        Value = 100.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 33.000000000000000000
+      end>
+    ShowCaption = False
+    TabOrder = 8
+    object lblDstStatus: TVA508StaticText
+      Name = 'lblDstStatus'
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 520
+      Height = 27
+      Align = alClient
+      Alignment = taLeftJustify
+      Caption = 'This is the DST status message label.'
+      TabOrder = 0
+      ShowAccelChar = True
+    end
+    object pnlBaseMessage: TPanel
+      Left = 0
+      Top = 33
+      Width = 526
+      Height = 48
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'pnlBaseMessage'
+      ParentBackground = False
+      ParentColor = True
+      ShowCaption = False
+      TabOrder = 1
+    end
+    object pnlBaseAccept: TPanel
+      Left = 526
+      Top = 33
+      Width = 120
+      Height = 15
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'Panel1'
+      ShowCaption = False
+      TabOrder = 2
+    end
+    object pnlBaseCancel: TPanel
+      Left = 526
+      Top = 48
+      Width = 120
+      Height = 33
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'Panel1'
+      ShowCaption = False
+      TabOrder = 3
+    end
+    object pnlDST: TPanel
+      Left = 526
+      Top = 0
+      Width = 120
+      Height = 33
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'pnlDST'
+      ShowCaption = False
+      TabOrder = 4
+      inline DstMgr: TfrDSTMgr
+        Left = 0
+        Top = 0
+        Width = 120
+        Height = 33
+        Align = alClient
+        Color = clBtnFace
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        ExplicitWidth = 120
+        ExplicitHeight = 33
+        inherited btnLaunchToolbox: TButton
+          Width = 114
+          Height = 27
+          Action = nil
+          OnClick = DstMgrbtnLaunchToolboxClick
+          ExplicitWidth = 114
+          ExplicitHeight = 27
+        end
+        inherited alDST: TActionList
+          Left = 8
+          Top = 16
+        end
+      end
+    end
+  end
+  object pnlReason: TPanel [7]
+    Left = 0
+    Top = 284
+    Width = 652
+    Height = 99
+    Align = alClient
+    BevelOuter = bvNone
+    Constraints.MinHeight = 80
+    ParentBackground = False
+    TabOrder = 1
+    object lblReason: TLabel
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 646
+      Height = 13
+      Align = alTop
+      Caption = 'Reason for Request'
+      Constraints.MinHeight = 13
+      ExplicitWidth = 95
+    end
+    object memReason: TRichEdit
+      AlignWithMargins = True
+      Left = 3
+      Top = 22
+      Width = 646
+      Height = 74
+      Align = alClient
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Courier New'
+      Font.Style = []
+      Constraints.MinHeight = 40
+      MaxLength = 2147483645
+      ParentFont = False
+      PopupMenu = popReason
+      ScrollBars = ssVertical
+      TabOrder = 0
+      WantTabs = True
+      Zoom = 100
+      OnChange = ControlChange
+      OnKeyDown = memReasonKeyDown
+      OnKeyPress = memReasonKeyPress
+      OnKeyUp = memReasonKeyUp
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
       (
-        'Component = memOrder'
+        'Component = pnlCombatVet'
         'Status = stsDefault')
       (
-        'Component = cmdAccept'
-        'Status = stsDefault')
-      (
-        'Component = cmdQuit'
-        'Status = stsDefault')
-      (
-        'Component = pnlMessage'
-        'Status = stsDefault')
-      (
-        'Component = memMessage'
-        'Status = stsDefault')
-      (
-        'Component = frmODCslt'
+        'Component = txtCombatVet'
         'Status = stsDefault')
       (
         'Component = pnlMain'
@@ -566,12 +738,6 @@ inherited frmODCslt: TfrmODCslt
         'Status = stsDefault')
       (
         'Component = lblClinicallyIndicated'
-        'Status = stsDefault')
-      (
-        'Component = pnlReason'
-        'Status = stsDefault')
-      (
-        'Component = memReason'
         'Status = stsDefault')
       (
         'Component = cboService'
@@ -614,24 +780,60 @@ inherited frmODCslt: TfrmODCslt
         'Status = stsDefault')
       (
         'Component = calClinicallyIndicated'
-        
-          'Text = Earliest appropriate Date/Time. Press the enter key to ac' +
-          'cess.'
-        'Status = stsOK')
-      (
-        'Component = calLatest'
-        
-          'Text = Latest appropriate Date/Time. Press the enter key to acce' +
-          'ss.'
-        'Status = stsOK')
-      (
-        'Component = pnlCombatVet'
         'Status = stsDefault')
       (
-        'Component = txtCombatVet'
+        'Component = calLatest'
         'Status = stsDefault')
       (
         'Component = servicelbl508'
+        'Status = stsDefault')
+      (
+        'Component = grdDstControls'
+        'Status = stsDefault')
+      (
+        'Component = lblDstStatus'
+        'Status = stsDefault')
+      (
+        'Component = pnlBaseMessage'
+        'Status = stsDefault')
+      (
+        'Component = pnlBaseAccept'
+        'Status = stsDefault')
+      (
+        'Component = pnlBaseCancel'
+        'Status = stsDefault')
+      (
+        'Component = pnlReason'
+        'Status = stsDefault')
+      (
+        'Component = memReason'
+        'Status = stsDefault')
+      (
+        'Component = memOrder'
+        'Status = stsDefault')
+      (
+        'Component = cmdAccept'
+        'Status = stsDefault')
+      (
+        'Component = cmdQuit'
+        'Status = stsDefault')
+      (
+        'Component = pnlMessage'
+        'Status = stsDefault')
+      (
+        'Component = memMessage'
+        'Status = stsDefault')
+      (
+        'Component = frmODCslt'
+        'Status = stsDefault')
+      (
+        'Component = pnlDST'
+        'Status = stsDefault')
+      (
+        'Component = DstMgr'
+        'Status = stsDefault')
+      (
+        'Component = DstMgr.btnLaunchToolbox'
         'Status = stsDefault'))
   end
   object mnuPopProvDx: TPopupMenu
@@ -645,7 +847,7 @@ inherited frmODCslt: TfrmODCslt
   object popReason: TPopupMenu
     OnPopup = popReasonPopup
     Left = 547
-    Top = 316
+    Top = 292
     object popReasonCut: TMenuItem
       Caption = 'Cu&t'
       ShortCut = 16472

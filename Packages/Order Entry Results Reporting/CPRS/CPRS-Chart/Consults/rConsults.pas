@@ -96,7 +96,7 @@ function GetProcedureIEN(ORIEN: string): string;
 function GetConsultOrderIEN(ConsultIEN: integer): string;
 function GetServicePrerequisites(Service: string): TStrings;
 procedure GetProvDxMode(var ProvDx: TProvisionalDiagnosis; SvcIEN: string);
-function IsProstheticsService(SvcIen: int64) : string;
+function IsProstheticsService(SvcIen: int64) : Boolean;
 function GetServiceUserLevel(ServiceIEN, UserDUZ: integer): String ;
 
 { Clinical Procedures Specific}
@@ -344,7 +344,9 @@ begin
       InOut                 := Piece(x, U, 18)  ;
       Findings              := Piece(x, U, 19)  ;
       TIUResultNarrative    := StrToIntDef(Piece(x, U, 20),0);
-      ClinicallyIndicatedDate          := StrToFloatDef(Piece(x, U, 98), 0);
+      ClinicallyIndicatedDate          := StrToFloatDef(Piece(x, U, 24), 0);
+      NoLaterThanDate       := StrToFloatDef(Piece(x, U, 25), 0);
+      DstId                 := Piece(x, U, 26);
       //ProvDiagnosis         := Piece(x, U, 23);  NO!!!!! Up to 180 Characters!!!!
       alist.delete(0) ;
       TIUDocuments := TStringList.Create ;
@@ -674,6 +676,7 @@ begin
          Urgency         := StrToIntDef(Piece(ExtractDefault(Dest, 'URGENCY'), U, 3), 0);
          UrgencyName     := Piece(ExtractDefault(Dest, 'URGENCY'), U, 2);
          ClinicallyIndicatedDate    := StrToFloatDef(Piece(ExtractDefault(Dest, 'CLINICALLY'), U, 2), 0);
+         NoLaterThanDate            := StrToFloatDef(Piece(ExtractDefault(Dest, 'NLTD'), U, 2), 0);
          Place           := Piece(ExtractDefault(Dest, 'PLACE'), U, 1);
          PlaceName       := Piece(ExtractDefault(Dest, 'PLACE'), U, 2);
          Attention       := StrToInt64Def(Piece(ExtractDefault(Dest, 'ATTENTION'), U, 1), 0);
@@ -690,6 +693,7 @@ begin
          OtherComments   := TStringList.Create;
          ExtractText(OtherComments, Dest, 'ADDED COMMENT');
          NewComments     := TStringList.Create;
+         EditRec.DstId           := Piece(ExtractDefault(Dest, 'DSTID'), U, 2);
       end;
     Result := EditRec;
   finally
@@ -743,7 +747,11 @@ begin
                 Mult['10,' + IntToStr(i+1)] := NewComments.Strings[i];
             end;
           if ClinicallyIndicatedDate > 0 then
-             Mult['11']  := 'GMRCERDT^'  + FloatToStr(ClinicallyIndicatedDate);  //wat renamed v28
+             Mult['11']  := 'GMRCERDT^'  + FloatToStr(ClinicallyIndicatedDate);
+          if NoLaterThanDate > 0 then
+             Mult['12']  := 'GMRCNLTD^'  + FloatToStr(NoLaterThanDate);
+          if DstId <> '' then
+             Mult['13'] := 'GMRCDSID^' + DstId
         end;
       CallBroker;
       Result := '0';
@@ -849,10 +857,10 @@ begin
   Result := AnEditRec;
 end;
 
-function IsProstheticsService(SvcIen : int64) : string;  //wat v28
- begin
-   Result := sCallV('ORQQCN ISPROSVC', [SvcIen]);
- end;
+function IsProstheticsService(SvcIen : int64) : Boolean;  //wat v28
+begin
+  Result := sCallV('ORQQCN ISPROSVC', [SvcIEN]) = '1';
+end;
 
 function GetServiceUserLevel(ServiceIEN, UserDUZ: integer): String ;
 // Param 1 = IEN of service

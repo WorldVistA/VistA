@@ -217,8 +217,10 @@ begin
             self.cboRTCClinic.SelectByIEN(StrToIntDef(int,0));
           end;
         if cboRTCClinic.ItemIndex > -1 then
-          loadAdditionalComments(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
-          loadPreReq(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+          begin
+            loadAdditionalComments(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+            loadPreReq(cboRTCClinic.Items.Strings[cboRTCClinic.ItemIndex]);
+          end;
       end;
 
     //provider

@@ -2,7 +2,7 @@ unit fConsultAlertTo;
 
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
+uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ORCtrls, ORfn, ExtCtrls, fBase508Form, VA508AccessibilityManager;
 
 type
@@ -41,7 +41,13 @@ implementation
 
 {$R *.DFM}
 
-uses rConsults, rCore, uCore, uConsults, fConsults;
+{$IFDEF CPRS_TEST}
+uses rCore.User;
+//rConsults, rCore, uCore, uConsults, fConsults;
+{$ELSE}
+uses
+  rCore;
+{$ENDIF}
 
 const
   TX_RCPT_TEXT = 'Select recipients or press Cancel.';
@@ -79,8 +85,21 @@ end;
 
 procedure TfrmConsultAlertsTo.cboSrcListNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+{$IFDEF CPRS_TEST}
+var
+  sl: TStrings;
+begin
+  sl := TStringList.Create;
+  try
+    setSubsetOfPersons(sl, StartFrom, Direction);
+    (Sender as TORComboBox).ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
+{$ELSE}
 begin
   (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+{$ENDIF}
 end;
 
 procedure TfrmConsultAlertsTo.cmdCancelClick(Sender: TObject);

@@ -1585,6 +1585,8 @@ function ActivateOrderMenu(const AnID: string; AnEvent: TOrderDelayEvent;
 var
   MenuIEN: Integer;
   x: string;
+  keep: TRect;
+
 begin
   Result := False;
   MenuIEN := StrToIntDef(AnID, 0);
@@ -1596,13 +1598,24 @@ begin
     with uOrderMenu do
     begin
       SetBounds(frmFrame.Left + 112, frmFrame.Top + frmFrame.Height - Height, Width, Height);
-      SetFormPosition(uOrderMenu);
+      SetFormPosition(uOrderMenu, AnID);
+      MainFormID := AnID;
+      keep := BoundsRect;
       FormStyle := fsStayOnTop;
       SetEventDelay(AnEvent);
     end;
-  end;
+  end
+  else
+    keep.Width := 0;
   uOrderMenu.SetNewMenu(MenuIEN, AnOwner, ARefNum);
-  if not uOrderMenu.Showing then uOrderMenu.Show else uOrderMenu.BringToFront;
+  if not uOrderMenu.Showing then
+  begin
+    uOrderMenu.Show;
+    if keep.Width > 0 then
+      uOrderMenu.BoundsRect := keep;
+  end
+  else
+    uOrderMenu.BringToFront;
   Result := True;
 end;
 

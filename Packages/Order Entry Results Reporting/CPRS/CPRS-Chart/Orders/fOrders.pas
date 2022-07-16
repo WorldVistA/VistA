@@ -2163,6 +2163,12 @@ begin
       SynchListToOrders;
     end;
     UpdateExpiringMedAlerts(Patient.DFN);
+    if not uInit.TimedOut then
+    begin
+      SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
+      if lstSheets.ItemIndex < 0 then
+        lstSheets.ItemIndex := 0;
+    end;
   finally
     SelectedList.Free;
     UnlockIfAble;

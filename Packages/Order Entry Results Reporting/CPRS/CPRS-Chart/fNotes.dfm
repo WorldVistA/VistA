@@ -1,20 +1,17 @@
 inherited frmNotes: TfrmNotes
   Left = 0
   Caption = 'frmNotes'
-  ClientHeight = 568
+  ClientHeight = 571
   ClientWidth = 889
   DockSite = True
   Menu = mnuNotes
   Position = poDesigned
-  OnDestroy = FormDestroy
-  OnHide = FormHide
-  OnShow = FormShow
   ExplicitWidth = 905
-  ExplicitHeight = 627
+  ExplicitHeight = 630
   PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
-    Top = 563
+    Top = 566
     Width = 889
     Margins.Left = 4
     Margins.Top = 4
@@ -26,16 +23,17 @@ inherited frmNotes: TfrmNotes
   object splHorz: TSplitter [1]
     Left = 161
     Top = 0
-    Height = 563
+    Height = 566
     Color = clBtnFace
     ParentColor = False
     OnCanResize = splHorzCanResize
+    ExplicitHeight = 563
   end
   object pnlLeft: TPanel [2]
     Left = 0
     Top = 0
     Width = 161
-    Height = 563
+    Height = 566
     Align = alLeft
     BevelOuter = bvNone
     Constraints.MinWidth = 30
@@ -44,7 +42,7 @@ inherited frmNotes: TfrmNotes
     TabOrder = 0
     object cmdNewNote: TORAlignButton
       Left = 0
-      Top = 542
+      Top = 545
       Width = 161
       Height = 21
       Action = acNewNote
@@ -52,10 +50,11 @@ inherited frmNotes: TfrmNotes
       Caption = 'New Note'
       TabOrder = 1
       OnExit = cmdNewNoteExit
+      ExplicitTop = 708
     end
     object cmdPCE: TORAlignButton
       Left = 0
-      Top = 522
+      Top = 525
       Width = 161
       Height = 20
       Action = acPCE
@@ -63,12 +62,13 @@ inherited frmNotes: TfrmNotes
       Caption = 'Encounter'
       TabOrder = 2
       OnExit = cmdPCEExit
+      ExplicitTop = 688
     end
     object pnlLeftTop: TPanel
       Left = 0
       Top = 15
       Width = 161
-      Height = 507
+      Height = 510
       Align = alClient
       BevelOuter = bvNone
       Color = clWindow
@@ -78,7 +78,7 @@ inherited frmNotes: TfrmNotes
       TabOrder = 0
       object splDrawers: TSplitter
         Left = 0
-        Top = 482
+        Top = 485
         Width = 161
         Height = 1
         Cursor = crVSplit
@@ -86,13 +86,12 @@ inherited frmNotes: TfrmNotes
         Color = clBtnFace
         ParentColor = False
         OnCanResize = splDrawersCanResize
-        ExplicitTop = 485
       end
       object tvNotes: TORTreeView
         Left = 0
         Top = 0
         Width = 161
-        Height = 482
+        Height = 485
         Align = alClient
         Constraints.MinHeight = 50
         Constraints.MinWidth = 30
@@ -116,7 +115,7 @@ inherited frmNotes: TfrmNotes
       end
       object pnlDrawers: TPanel
         Left = 0
-        Top = 483
+        Top = 486
         Width = 161
         Height = 24
         Align = alBottom
@@ -274,6 +273,7 @@ inherited frmNotes: TfrmNotes
       TabOrder = 3
       VerticalAlignment = taAlignBottom
       ShowAccelChar = True
+      ExplicitWidth = 74
     end
   end
   object pnlReminder: TPanel [3]
@@ -289,20 +289,22 @@ inherited frmNotes: TfrmNotes
     Left = 164
     Top = 0
     Width = 725
-    Height = 563
+    Height = 566
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
     OnResize = PnlRightResize
+    ExplicitHeight = 729
     object pnlNote: TPanel
       Left = 0
       Top = 0
       Width = 725
-      Height = 563
+      Height = 566
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       OnExit = pnlNoteExit
+      ExplicitHeight = 729
       object splList: TSplitter
         Left = 0
         Top = 117
@@ -316,7 +318,7 @@ inherited frmNotes: TfrmNotes
       end
       object spDetails: TSplitter
         Left = 0
-        Top = 347
+        Top = 350
         Width = 725
         Height = 4
         Cursor = crVSplit
@@ -325,10 +327,11 @@ inherited frmNotes: TfrmNotes
         Color = clBtnFace
         ParentColor = False
         Visible = False
+        ExplicitTop = 347
       end
       object splmemPCRead: TSplitter
         Left = 0
-        Top = 451
+        Top = 454
         Width = 725
         Height = 4
         Cursor = crVSplit
@@ -337,12 +340,13 @@ inherited frmNotes: TfrmNotes
         Color = clBtnFace
         ParentColor = False
         OnMoved = splmemPCEMoved
+        ExplicitTop = 451
       end
       object memNote: TRichEdit
         Left = 0
         Top = 121
         Width = 725
-        Height = 226
+        Height = 229
         Align = alClient
         Color = clCream
         Ctl3D = True
@@ -378,6 +382,7 @@ inherited frmNotes: TfrmNotes
         TabOrder = 0
         VerticalAlignment = taAlignBottom
         ShowAccelChar = True
+        ExplicitWidth = 124
       end
       object lvNotes: TCaptionListView
         Left = 0
@@ -433,7 +438,7 @@ inherited frmNotes: TfrmNotes
       end
       object CPMemNote: TCopyPasteDetails
         Left = 0
-        Top = 351
+        Top = 354
         Width = 725
         Height = 100
         Align = alBottom
@@ -500,7 +505,7 @@ inherited frmNotes: TfrmNotes
       end
       object memPCERead: TRichEdit
         Left = 0
-        Top = 455
+        Top = 458
         Width = 725
         Height = 108
         Align = alBottom
@@ -526,15 +531,16 @@ inherited frmNotes: TfrmNotes
       Left = 0
       Top = 0
       Width = 725
-      Height = 563
+      Height = 566
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
       Visible = False
       OnResize = pnlWriteResize
+      ExplicitHeight = 729
       object spEditDetails: TSplitter
         Left = 0
-        Top = 347
+        Top = 350
         Width = 725
         Height = 4
         Cursor = crVSplit
@@ -544,10 +550,11 @@ inherited frmNotes: TfrmNotes
         ParentColor = False
         Visible = False
         OnMoved = splmemPCEMoved
+        ExplicitTop = 347
       end
       object splmemPCEWrite: TSplitter
         Left = 0
-        Top = 451
+        Top = 454
         Width = 725
         Height = 4
         Cursor = crVSplit
@@ -555,12 +562,13 @@ inherited frmNotes: TfrmNotes
         AutoSnap = False
         Color = clBtnFace
         ParentColor = False
+        ExplicitTop = 451
       end
       object memNewNote: TRichEdit
         Left = 0
         Top = 97
         Width = 725
-        Height = 250
+        Height = 253
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -583,7 +591,7 @@ inherited frmNotes: TfrmNotes
       end
       object CPMemNewNote: TCopyPasteDetails
         Left = 0
-        Top = 351
+        Top = 354
         Width = 725
         Height = 100
         Align = alBottom
@@ -653,7 +661,7 @@ inherited frmNotes: TfrmNotes
       end
       object memPCEWrite: TRichEdit
         Left = 0
-        Top = 455
+        Top = 458
         Width = 725
         Height = 108
         Align = alBottom
@@ -765,8 +773,8 @@ inherited frmNotes: TfrmNotes
           AlignWithMargins = True
           Left = 2
           Top = 2
-          Width = 423
-          Height = 28
+          Width = 119
+          Height = 17
           Hint = 'Press "Change..." to select a different title.'
           Margins.Left = 2
           Margins.Top = 2
@@ -809,8 +817,8 @@ inherited frmNotes: TfrmNotes
           AlignWithMargins = True
           Left = 2
           Top = 34
-          Width = 282
-          Height = 28
+          Width = 204
+          Height = 17
           Margins.Left = 2
           Margins.Top = 2
           Margins.Right = 2
@@ -886,7 +894,7 @@ inherited frmNotes: TfrmNotes
         object lblSubject: TStaticText
           Left = 0
           Top = 64
-          Width = 60
+          Width = 43
           Height = 17
           Margins.Left = 2
           Margins.Top = 2
@@ -1142,8 +1150,8 @@ inherited frmNotes: TfrmNotes
     Top = 323
   end
   object mnuNotes: TMainMenu
-    Left = 465
-    Top = 624
+    Left = 441
+    Top = 128
     object mnuView: TMenuItem
       Caption = '&View'
       GroupIndex = 3
@@ -1397,19 +1405,19 @@ inherited frmNotes: TfrmNotes
   object dlgReplaceText: TReplaceDialog
     OnFind = dlgReplaceTextFind
     OnReplace = dlgReplaceTextReplace
-    Left = 229
-    Top = 624
+    Left = 221
+    Top = 208
   end
   object dlgFindText: TFindDialog
     Options = [frDown, frHideUpDown]
     OnFind = dlgFindTextFind
-    Left = 308
-    Top = 624
+    Left = 324
+    Top = 216
   end
   object popNoteList: TPopupMenu
     OnPopup = popNoteListPopup
-    Left = 540
-    Top = 625
+    Left = 508
+    Top = 217
     object popNoteListAll: TMenuItem
       Tag = 1
       Action = acSignedAll
@@ -1472,8 +1480,8 @@ inherited frmNotes: TfrmNotes
   end
   object popNoteMemo: TPopupMenu
     OnPopup = popNoteMemoPopup
-    Left = 620
-    Top = 624
+    Left = 604
+    Top = 208
     object popNoteMemoCut: TMenuItem
       Caption = 'Cu&t'
       ShortCut = 16472
@@ -1583,8 +1591,8 @@ inherited frmNotes: TfrmNotes
     end
   end
   object ActionList: TActionList
-    Left = 816
-    Top = 624
+    Left = 608
+    Top = 128
     object acNewNote: TAction
       Category = 'Buttons'
       Caption = '&New Progress Note...'

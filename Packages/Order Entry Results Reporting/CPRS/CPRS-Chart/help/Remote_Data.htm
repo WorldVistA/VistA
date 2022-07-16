@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="generator" content="Adobe RoboHelp 2019" />
+<title>Remote Data</title>
+<link rel="StyleSheet" href="CPRS.css" type="text/css" />
+ <link rel="StyleSheet" href="CPRS.css" type="text/css" />
+
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute;
+left:0px;
+top:0px;
+z-index:4;
+visibility:hidden; }
+p.WebHelpNavBar { text-align:right; }
+-->
+</style>
+<script type="text/javascript" language="javascript1.2" src="whmsg.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" src="whver.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.gbWhTopic)
+{
+	var strUrl = decodeURI(document.location.href);
+	var bc = 0;
+	var n = strUrl.toLowerCase().indexOf("bc-");
+	if(n != -1)
+	{
+		document.location.replace(strUrl.substring(0, n));
+		bc = strUrl.substring(n+3);
+	}
+
+	addTocInfo("Using CPRS\nRemote Patient Data\nRemote Patient Data Overview");
+addTocInfo("CPRS Read-Only\nRemote Data");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"whd_show0.gif","whd_show2.gif","whd_show1.gif");
+addButton("hide",BTN_TEXT,"Hide","","","","",0,0,"whd_hide0.gif","whd_hide2.gif","whd_hide1.gif");
+addButton("prev",BTN_TEXT,"<<","","","","",0,0,"whd_prev0.gif","whd_prev2.gif","whd_prev1.gif");
+addButton("next",BTN_TEXT,">>","","","","",0,0,"whd_next0.gif","whd_next2.gif","whd_next1.gif");
+
+
+	if(bc == 1)
+{
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("CPRS.htm", "", ">", "Home", "CPRS_Help_Introduction.htm");
+document.write("<a href=\"About_CPRS_Read_Only.htm\">CPRS Read-Only<\/a> > Remote Data<\/p>");
+}
+else{
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("CPRS.htm", "", ">", "Home", "CPRS_Help_Introduction.htm");
+document.write("<a href=\"Signing_In_to_CPRS.htm\">Using CPRS<\/a> > <a href=\"Remote_Data.htm\">Remote Patient Data<\/a> > Remote Patient Data Overview<\/p>");
+}
+
+
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+    
+onLoadHandler = function()
+{
+	if (window.setRelStartPage)
+	{
+    setTimeout("setRelStartPage('CPRS.htm');", 1)
+
+    setTimeout("UpdateBreadCrumbsMarker();", 1);
+    }
+} 
+
+if (window.addEventListener){  
+	window.addEventListener('load', onLoadHandler, false);   
+} else if (window.attachEvent){  
+	window.attachEvent('onload', onLoadHandler);  
+}
+
+function onSetStartPage()
+{
+	autoSync(0);
+	sendSyncInfo();
+	sendAveInfoOut();
+}
+//-->
+//]]></script>
+</head>
+<body><a name="bc-1"></a><script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(4);
+//-->
+//]]></script>
+<script type="text/javascript" src="./ehlpdhtm.js" language="JavaScript1.2"></script>
+
+<h1><font style="font-size: 14pt;" color="#3366FF" size="4">Remote Data</font></h1>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">You can view remote patient data with CPRS if Master Patient Index/Patient Demographics (MPI/PD) and several other patches have been installed at your site. If these patches have been installed and the proper parameters have been set, you can access remot</font><font style="font-size: 10pt;" color="#010100" size="2">e</font> <font style="font-size: 10pt;" color="#010100" size="2">data generated at other VA and Department of Defense (DOD) facilities.</font></p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<p style="margin-bottom: 6.00pt;"><img src="image/CPRS0053.gif" alt="the top of the CPRS window with the remote data/visaweb button outline in red" width="672" height="71" border="0" /></p>
+<p style="margin-bottom: 6.00pt;"><font color="#010100">Text on the Remote Data and VistaWeb buttons</font></p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<p style="margin-bottom: 6.00pt; color: #010100;">The CPRS user now has two choices for viewing remote data. One is the traditional Remote Data View (which has been streamlined), the other is VistAWeb. Each system has its advantages.</p>
+<p style="margin-bottom: 6.00pt; margin-left: 96px; text-indent: -48px; background-color: Transparent;"><b style="mso-bidi-font-weight: normal;"><font color="#010100">N</font>ote:</b><span style="mso-tab-count: 1;">&#160;&#160;&#160;&#160;&#160;&#160;</span>&#160;The Joint Legacy Viewer (JLV) is a new way to view remote data and will eventually replace VistaWeb. JLV is available now. Some sites may not switch to JLV until VistAWeb is decommissioned, while others may choose to transition sooner. This transition should be made in collaboration with local Informatics staff and the JLV team. When the change occurs, the existing VistaWeb button can be renamed and redirected to take the user to the JLV.</p>
+<p style="margin-bottom: 6.00pt;"><font color="#010100">The rest of this section follows Remote Data Views. If you want to use VistAWeb, documentation is available on the VistAWeb VA intranet page at <a href="http://domaindomain.ext/vistaweb" title="http://domaindomain.ext/vistaweb">http://domaindomain.ext/vistaweb</a></font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">If the pat</font><font style="font-size: 10pt;" color="#010100" size="2">ient has remote data, the VistaWeb button text changes color to blue. If the user selects the VistaWeb button, the button changes appearance to look as if it is depressed. It will keep that appearance until the user selects a new patient.</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">When VistaWeb is</font> <font style="font-size: 10pt;" color="#010100" size="2">launched by CPRS Context Management is maintained. This means that VistAWeb will change patients whenever the user selects a new patient in CPRS.</font></p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<p style="margin-top: 6.00pt; margin-bottom: 0.00pt;"><font style="font-size: 10pt; font-weight: bold;" color="#010100" size="2">How Do I Know a Patient Has Remote Medical Data?</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">As part of opening a patient record, CPRS checks in the Treating Specialty file to see if the selected patient visited other facilities. If the patient has remote data, the words on the Remote Data button turn blue. If there is no remote data for the sele</font><font style="font-size: 10pt;" color="#010100" size="2">c</font><font style="font-size: 10pt;" color="#010100" size="2">ted patient, the letters are gray and the button unavailable.</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">If the user selects the Remote Data button with the blue text indicating that there is remote data, CPRS displays a list of sites that tells the user where and when the patient has been seen.</font></p>
+<p style="margin-top: 12.00pt; margin-bottom: 0.00pt;"><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">W</font><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">hat Does the List of Sites Represent?</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">If you select on the Remote Data button, a drop-down list appears with the name(s) of sites where the patient has been seen. This list is based on either:</font></p>
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·&#160;&#160;&#160;&#160;&#160;&#160;Sites that have been specifically designated for your facility to access. These sites are assigned in a parameter that your Clinical Applications Coordinator (CAC) can set up.</p>
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·&#160;&#160;&#160;&#160;&#160;&#160;All VA sites where the patient has been seen and any Department of Defense remote data if it is available.</p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<p style="margin-top: 12.00pt; margin-bottom: 0.00pt;"><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">What Kind of Data Can I View?</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">C</font><font style="font-size: 10pt;" color="#010100" size="2">urrently with CPRS, you can view some lab and health summary components. There are limitations to what you can view.</font></p>
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·&#160;&#160;&#160;&#160;&#160;&#160;You can view any lab results that do not require input other than a date range.</p>
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·&#160;&#160;&#160;&#160;&#160;&#160;All reports listed on the Reports tab unless they are labeled "local only"</p>
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;"><font color="#010100">·&#160;&#160;&#160;&#160;&#160;&#160;You can view health summary components that have the same name on both the local and the remote site. You can therefore exchange national Health Summaries, but locally defined components may not be available unless the other site also</font> <font color="#010100">has a component with the same name.</font></p>
+<p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·&#160;&#160;&#160;&#160;&#160;&#160;If it is available, CPRS can also show some Department of Defense remote data.</p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<p style="margin-top: 12.00pt; margin-bottom: 0.00pt;"><font style="font-size: 11pt; font-weight: bold; font-style: italic;" color="#000000" size="2">How Will the Remote Data Be Viewed?</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">Viewing remote data is a two-step process. First, you select which remote sites you want to see data</font> <font style="font-size: 10pt;" color="#010100" size="2">from, and then you select the specific information you want to view, such as lab tests or Health Summary components.</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">On the Reports tab, each site you select will have a separate tab for its data. As an example, you would might see five tabs on the Report</font><font style="font-size: 10pt;" color="#010100" size="2">s tab: Local, Department of Defense, Devcur, Loma Linda, Ca., and Office of Information.</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">You would then select</font> <font style="font-size: 10pt;" color="#010100" size="2">the reports you want to view and a date range (if necessary). After this, CPRS will attempt to retrieve those reports if they are available on the remote sites. You would then click on each Treatment Facility's tab to see the report from that site. While CPRS is attempting to retrieve the data, the message "Transmission in Progress:" is displayed until the data is retrieved.</font></p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<p style="
+margin-top:6.00pt;
+margin-bottom:0.00pt;
+border-bottom:0.75pt solid #000000;
+border-width:4px;"><font style="font-size: 10pt; font-weight: bold;" color="#010100" size="2">Related topics</font></p>
+<p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Viewing_Remote_Data.htm" title="Viewing_Remote_Data.htm"><font style="font-size: 10pt;" size="2">Viewing Remote Data</font></a></p>
+<p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Choosing_RDV_or_VistaWeb_to_View_Remote_Data.htm" title="Choosing_RDV_or_VistaWeb_to_View_Remote_Data.htm">Choosing RDV or VistaWeb to View Remote Data</a></p>
+<p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;">&#160;</p>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+
+highlightSearch();
+//-->
+//]]></script>
+</body>
+</html>

@@ -24,7 +24,6 @@ uses
   fVisit in 'fVisit.pas' {frmVisit},
   fPtDemo in 'fPtDemo.pas' {frmPtDemo},
   rTIU in 'rTIU.pas',
-  fxBroker in 'fxBroker.pas' {frmBroker},
   fNoteBA in 'fNoteBA.pas' {frmNotesByAuthor},
   fNoteBD in 'fNoteBD.pas' {frmNotesByDate},
   fLabTest in 'fLabTest.pas' {frmLabTest},
@@ -36,11 +35,9 @@ uses
   fRptBox in 'fRptBox.pas' {frmReportBox},
   rReports in 'rReports.pas',
   fAbout in 'fAbout.pas' {frmAbout},
-  fxLists in 'fxLists.pas' {frmDbgList},
   fProbs in 'fProbs.pas' {frmProblems},
   fAutoSz in 'fAutoSz.pas' {frmAutoSz},
   rMisc in 'rMisc.pas',
-  fxServer in 'fxServer.pas' {frmDbgServer},
   fPtCWAD in 'fPtCWAD.pas' {frmPtCWAD},
   rMeds in 'rMeds.pas',
   fVitals in 'fVitals.pas' {frmVitals},
@@ -363,8 +360,25 @@ uses
   rODRTC in 'Orders\rODRTC.pas',
   uVersionCheck in 'Utils\uVersionCheck.pas',
   uOwnerWrapper in 'Utils\uOwnerWrapper.pas',
+  oPDMPData in 'Extras\PDMP\oPDMPData.pas',
+  fPDMPView in 'Extras\PDMP\fPDMPView.pas' {pdmpView},
+  fPDMPUser in 'Extras\PDMP\fPDMPUser.pas' {pdmpUserForm},
+  rPDMP in 'Extras\PDMP\rPDMP.pas',
+  uSizing in 'Utils\uSizing.pas',
+  uFormUtils in 'Utils\uFormUtils.pas',
   fGN_RPCLog in 'Tools\fGN_RPCLog.pas' {frmRPCLog},
-  uGN_RPCLog in 'Tools\uGN_RPCLog.pas';
+  fxLists in 'Tools\fxLists.pas' {frmDbgList},
+  uGN_RPCLog in 'Tools\uGN_RPCLog.pas',
+  fPDMPMgr in 'Extras\PDMP\fPDMPMgr.pas' {frmPDMP},
+  mPDMPReviewItem in 'Extras\PDMP\mPDMPReviewItem.pas' {frPDMPReviewItem: TFrame},
+  mPDMPReviewOptions in 'Extras\PDMP\mPDMPReviewOptions.pas' {frPDMPReviewOptions: TFrame},
+  uPDMP in 'Extras\PDMP\uPDMP.pas',
+  fPDMPCosigner in 'Extras\PDMP\fPDMPCosigner.pas' {pdmpCosigner},
+  fDSTView in 'Extras\DST\fDSTView.pas' {frmDSTView},
+  mDSTMgr in 'Extras\DST\mDSTMgr.pas' {frDSTMgr: TFrame},
+  oDST in 'Extras\DST\oDST.pas',
+  uDstConst in 'Extras\DST\uDstConst.pas',
+  uUserInfo in 'Utils\uUserInfo.pas';
 
 {$R *.TLB}
 
@@ -372,7 +386,10 @@ uses
 
 begin
   if not BorlandDLLVersionOK then exit;         // Exit immediately if old or missing BORLNDMM.DLL
+{$IFDEF DEBUG}
+{$ELSE}
   RegisterCPRSTypeLibrary;                      // will halt program if /regserver or /unregserver param
+{$ENDIF}
   Application.Initialize;
 
   frmSplash := nil;
@@ -388,7 +405,6 @@ begin
   Application.CreateForm(TfrmFrame, frmFrame);
   Application.CreateForm(TfrmSearchStop, frmSearchStop);
   Application.CreateForm(TfrmProbFreetext, frmProbFreetext);
-  Application.CreateForm(TfrmRPCLog, frmRPCLog);
   if assigned(frmSplash) then
     frmSplash.Free;                               // close & free splash screen
 

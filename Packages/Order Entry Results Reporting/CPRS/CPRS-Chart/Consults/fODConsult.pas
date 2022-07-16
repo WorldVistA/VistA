@@ -7,8 +7,11 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, Buttons,
-  Menus, UBAGlobals, rOrders, fBALocalDiagnoses, UBAConst, UBACore, ORNet,
-  ORDtTm, VA508AccessibilityManager ;
+  Menus,
+  UBAGlobals, rOrders,
+  fBALocalDiagnoses, UBAConst, UBACore,
+  ORNet,
+  ORDtTm, VA508AccessibilityManager, System.Actions, Vcl.ActnList, mDSTMgr ;
 
 type
   TfrmODCslt = class(TfrmODBase)
@@ -50,6 +53,13 @@ type
     pnlCombatVet: TPanel;
     txtCombatVet: TVA508StaticText;
     servicelbl508: TVA508StaticText;
+    grdDstControls: TGridPanel;
+    lblDstStatus: TVA508StaticText;
+    pnlBaseMessage: TPanel;
+    pnlBaseAccept: TPanel;
+    pnlBaseCancel: TPanel;
+    pnlDST: TPanel;
+    DstMgr: TfrDSTMgr;
     procedure FormCreate(Sender: TObject);
     procedure txtAttnNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -96,6 +106,10 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure treServiceEnter(Sender: TObject);
+//    procedure cboUrgencyExit(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure DstMgrbtnLaunchToolboxClick(Sender: TObject);
+    procedure calClinicallyIndicatedExit(Sender: TObject);
 
   private
     FcboServiceKeyDownStopClick : boolean;
@@ -110,31 +124,38 @@ type
     procedure SetupReasonForRequest(OrderAction: integer);
     procedure GetProvDxandValidateCode(AResponses: TResponses);
     function ShowPrerequisites: boolean;
-    procedure DoSetFontSize(FontSize: integer);
+    procedure DoSetFontSize(FontSize: integer = -1);
     procedure SetUpQuickOrderDX;
     procedure SaveConsultDxForNurse(pDiagnosis: string);  // save the dx entered by nurese if Master BA switch is ON
     procedure SetUpCopyConsultDiagnoses(pOrderID:string);
-    procedure AdjustMemReasonSize;
     function NotinIndex(AList: TStringList; i: integer): boolean;
     function GetItemIndex(Service: String; Index: integer): integer;
     procedure SetUpCombatVet;
     procedure SetUpClinicallyIndicatedDate; //wat v28
+    procedure clearDstData;
+//    procedure prostheticsUrgency;
     procedure setup508Label(lbl: TVA508StaticText; ctrl: TORComboBox);
+    procedure setDstStatus(aStatus: String);
   protected
     procedure InitDialog; override;
     procedure Validate(var AnErrMsg: string); override;
+    procedure ValidateDst(var AnErrMsg: string);
     function DefaultReasonForRequest(Service: string; Resolve: Boolean): TStrings;
-    
+
   public
+    function getMinHeight:Integer;
+    function getCombatVetHeight:Integer;
+    function getReasonHeight: Integer;
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
     procedure SetFontSize(FontSize: integer); override;
+    procedure DstStatusUpdate;
   end;
 
 var
   LastNode: integer ;
   displayDXCode: string;
   consultQuickOrder: boolean;
-
+  isProsSvc: boolean;
 
 function CanFreeConsultDialog(dialog : TfrmODBase) : boolean;
 
@@ -145,7 +166,8 @@ implementation
 uses
     rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, fPreReq,
     ORClasses, clipbrd, uTemplates, fFrame, uODBase, uVA508CPRSCompatibility,
-    VA508AccessibilityRouter, VAUtils;
+    VA508AccessibilityRouter, VAUtils,
+    uSizing, uDstConst, oDst;
 
 var
   SvcList, QuickList, Defaults: TStrings ;
@@ -154,8 +176,7 @@ var
   BADxUpdated: boolean;
   quickCode: string;
   AreGlobalsFree: boolean;
-
-
+//  siUrgency: string;
 
 const
   TX_NOTTHISSVC_TEXT = 'Consults cannot be ordered from this service' ;
@@ -173,11 +194,19 @@ const
   TX_INACTIVE_CODE_REQD     = 'Another code must be selected before the order can be saved.';
   TX_INACTIVE_CODE_OPTIONAL = 'If another code is not selected, no code will be saved.';
   TX_PAST_DATE       = 'Clinically indicated date must be today or later.';
+  TX_NLTD_GREATER    = 'No later than date must be greater than or equal to the' + #13#10;
+  TX_NLTD_GREATER1   = 'clinically indicated date';
 
   TX_SVC_HRCHY = 'services/specialties hierarchy';
   TX_VIEW_SVC_HRCHY = 'View services/specialties hierarchically';
   TX_CLOSE_SVC_HRCHY = 'Close services/specialties hierarchy tree view';
 
+  TX_DST_UNAVAIL = 'Decision Support Tool is not available.' + #13#10 + 'Try again later.';
+//  TX_NLTD_SI_URG = 'No later than date is required when using the Special Instructions urgency.';
+
+const
+  PIXEL_SPACE = 3;
+  LEFT_MARGIN = 4;
 
 {************** Static Unit Methods ***************}
 
@@ -208,55 +237,123 @@ begin
   Result := true;
 end;
 
+function getRectHeight(aRectWidth: Integer; aText: String): Integer;
+var
+  r: TRect;
+begin
+  r := Rect(0, 0, aRectWidth, aRectWidth);
+  DrawText(Application.MainForm.Canvas.Handle, PChar(aText), Length(aText), r,
+    DT_LEFT or DT_WORDBREAK or DT_CALCRECT);
+  Result := r.Bottom - r.Top + 6; // Default margings
+end;
+
 {*************** TfrmODCslt Methods ***********}
 
 procedure TfrmODCslt.FormCreate(Sender: TObject);
 begin
+  InitDst;
+  DstMgr.DstInit(DST_CASE_CONSULT_OD);
+{$IFDEF DEBUG}
+  DstMgr.Color := clCream;
+{$ENDIF}
   frmFrame.pnlVisit.Enabled := false;
-  AutoSizeDisabled := True;
+  AutoSizeDisabled := true;
   inherited;
   if BILLING_AWARE then
   begin
-     btnDiagnosis.Visible := True;
-     cmdLexSearch.Visible := False;
+    btnDiagnosis.Visible := true;
+    cmdLexSearch.Visible := false;
   end
   else
   begin
-     btnDiagnosis.Visible := False;
-     cmdLexSearch.Visible := True;
+    btnDiagnosis.Visible := false;
+    cmdLexSearch.Visible := true;
   end;
   InitializeGlobalLists;
-  AllowQuickOrder := True;
+  AllowQuickOrder := true;
   LastNode := 0;
-  FLastServiceID := '' ;
+  FLastServiceID := '';
   GMRCREAF := '';
   FillChar(ProvDx, SizeOf(ProvDx), 0);
-  FillerID := 'GMRC';                     // does 'on Display' order check **KCM**
+  FillerID := 'GMRC'; // does 'on Display' order check **KCM**
   StatusText('Loading Dialog Definition');
-  Responses.Dialog := 'GMRCOR CONSULT';   // loads formatting info
+  Responses.dialog := 'GMRCOR CONSULT'; // loads formatting info
   StatusText('Loading Default Values');
-  FastAssign(ODForConsults, Defaults);  // ODForConsults returns TStrings with defaults
+  FastAssign(ODForConsults, Defaults);
+  // ODForConsults returns TStrings with defaults
   CtrlInits.LoadDefaults(Defaults);
-  txtAttn.InitLongList('') ;
+  txtAttn.InitLongList('');
   PreserveControl(txtAttn);
   PreserveControl(calClinicallyIndicated);
-    if (patient.CombatVet.IsEligible = True) then
-   begin
-     SetUpCombatVet;
-   end
-   else
-    begin
-      txtCombatVet.Enabled := False;
-      pnlCombatVet.SendToBack;
-    end;
+  // wat todo PreserveContorl(calLatest);
+
+  SetUpCombatVet;
+
   InitDialog;
-  //Calling virtual SetFontSize in constructor is a bad idea!
-  DoSetFontSize( MainFontSize);
+
+  cmdQuit.Parent := pnlBaseCancel;
+//  cmdQuit.Align := alBottom;
+  cmdQuit.Align := alClient;
+
+  cmdAccept.Parent := pnlBaseAccept;
+//  cmdAccept.Align := alTop;
+  cmdAccept.Align := alClient;
+
+  memOrder.Parent := pnlBaseMessage;
+  memOrder.Align := alClient;
+
+  pnlMessage.Parent := pnlBaseMessage;
+  pnlMessage.Align := alClient; // check which one visible or not
+
+  // Calling virtual SetFontSize in constructor is a bad idea!
+  DoSetFontSize(MainFontSize);
+  DstStatusUpdate;
+
   FcboServiceKeyDownStopClick := false;
   consultQuickOrder := false;
 end;
 
+procedure TfrmODCslt.SetUpCombatVet;
+begin
+  pnlCombatVet.Visible := patient.CombatVet.IsEligible;
+  if pnlCombatVet.Visible then
+  begin
+    pnlCombatVet.Height := getCombatVetHeight;
+    txtCombatVet.Enabled := true;
+    txtCombatVet.Caption := 'Combat Veteran Eligibility Expires on ' +
+      patient.CombatVet.ExpirationDate;
+    treService.Anchors := [akLeft, akTop, akRight];
+    self.Height := self.Height + pnlCombatVet.Height;
+    treService.Anchors := [akLeft, akTop, akRight, akBottom];
+  end;
+end;
+
+function TfrmODCslt.getReasonHeight:Integer;
+begin
+  Result := getMainFormTextHeight * 4 + 16; // reserved for pnlReason
+  pnlReason.Constraints.MinHeight := Result;
+end;
+
+function TfrmODCslt.getCombatVetHeight:Integer;
+begin
+  Result := 0;
+  if patient.CombatVet.IsEligible then
+    Result := getMainFormTextHeight + 8;
+end;
+
+function TfrmODCslt.getMinHeight: Integer;
+begin
+  Result := pnlMain.Height;
+  Result := Result + grdDstControls.Height;
+  if pnlCombatVet.Visible then
+    Result := Result + getCombatVetHeight;
+  Result := Result + getReasonHeight; // pnlReason aligned to Client
+  Result := Result + 36; // adjusting to include window caption
+end;
+
 procedure TfrmODCslt.InitDialog;
+//var
+//  i : integer;
 begin
   inherited;
   Changing := True;
@@ -281,9 +378,19 @@ begin
       cboCategory.Items.Clear;
       cboCategory.Items.Add('O^Outpatient');
       cboCategory.SelectById('O');
+      lblLatest.Enabled := False;
+      lblLatest.Visible := False;
+      calLatest.Enabled := False;
+      calLatest.Text := '';
+      calLatest.Visible := False;
       SetControl(cboPlace, 'Outpt Place');
       SetControl(cboUrgency, 'Outpt Urgencies');      //S.GMRCO
       SetControl(calClinicallyIndicated, 'Clin Ind Date');
+{      for i := 0 to cboUrgency.Items.Count-1 do
+        begin
+          if cboUrgency.DisplayText[i]='SPECIAL INSTRUCTIONS' then siUrgency := cboUrgency.Items.Strings[i];
+        end;
+}        
     end ;
   end ;
   StatusText('Initializing Long List');
@@ -293,12 +400,17 @@ begin
   setup508Label(servicelbl508, cboService);
   cboService.Font.Color := clWindowText;
   cboService.Height := 25 + (11 * cboService.ItemHeight);
+  cboService.Height := 15 + (11 * cboService.ItemHeight);        //WAT TESTING
   btnServiceTree.Enabled := True;
   pnlServiceTreeButton.Enabled := True;
   SetProvDiagPromptingMode;
   ActiveControl := cboService;
   Changing := False;
   StatusText('');
+  isProsSvc := False;
+  lblDstStatus.Caption := '';
+  //call status update to reset button state for subsequent orders
+  DstStatusUpdate;
 end;
 
 procedure TfrmODCslt.SetupDialog(OrderAction: Integer; const ID: string);
@@ -386,10 +498,47 @@ begin
         radInpatient.Checked := True
       else
         radOutpatient.Checked := True ;
+      //If ORDER_COPY then don't associate existing DSTID with new order, otherwise get ID for display in order dialog
+      if OrderAction = ORDER_COPY then
+        begin
+          Update('DSTID',1,'','');
+          Remove('DSTDECSN',1);
+        end
+      else
+        begin
+          tmpResp := TResponse(FindResponseByName('DSTID',1));
+          if assigned(tmpResp) then
+             begin
+              if tmpResp.IValue <> '' then
+                begin
+//                  frmConsults.DSTUUID := tmpResp.IValue;
+                  tmpResp := TResponse(FindResponseByName('DSTDECSN',1));
+                  if tmpResp <> nil then
+                    begin
+                      lblDstStatus.Caption := tmpResp.EValue;
+                    end;
+                end;
+             end;
+        end;
       SetControl(cboUrgency,    'URGENCY',   1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
       SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
+
+      if DstMgr.DSTMode <> DST_OTH then
+      begin
+        SetControl(calLatest, 'NLTD', 1);
+        tmpResp := TResponse(FindResponseByName('NLTD',1));
+        if tmpResp <> nil then
+        begin
+          lblLatest.Enabled := True;
+          lblLatest.Visible := True;
+          calLatest.Enabled := True;
+          calLatest.Visible := True;
+        end;
+      end;
+      DstMgr.DSTMode := DstMgr.DSTMode;
+      DoSetFontSize;
       SetUpClinicallyIndicatedDate;   //wat v28
       cboService.Enabled := False;
       setup508Label(servicelbl508, cboService);
@@ -408,7 +557,7 @@ begin
       if WasTemplateDialogCanceled then
       begin
         AbortOrder := True;
-		SetTemplateDialogCanceled(FALSE);
+        SetTemplateDialogCanceled(FALSE);
         Close;
         Exit;
       end;
@@ -479,6 +628,9 @@ begin
         end;
       PreserveControl(treService);
       PreserveControl(cboService);
+
+      DstMgr.DSTMode := DstMgr.DSTMode;
+      DoSetFontSize;
     end;
   finally
     AList.Free;
@@ -515,6 +667,22 @@ begin
         SetError(TX_SELECT_DIAG);
     end;
   if (lblClinicallyIndicated.Enabled) and (calClinicallyIndicated.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
+  if (calLatest.Enabled) and (calLatest.FMDateTime < calClinicallyIndicated.FMDateTime) then SetError(TX_NLTD_GREATER + TX_NLTD_GREATER1);
+//  if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and (calLatest.FMDateTime = 0) then SetError(TX_NLTD_SI_URG);
+
+end;
+
+procedure TfrmODCslt.ValidateDst(var AnErrMsg: string);
+
+  procedure SetError(const x: string);
+  begin
+    if Length(AnErrMsg) > 0 then AnErrMsg := AnErrMsg + CRLF;
+    AnErrMsg := AnErrMsg + x;
+  end;
+
+begin
+   if (lblClinicallyIndicated.Enabled) and (calClinicallyIndicated.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
+//   if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and (calLatest.FMDateTime = 0) then SetError(TX_NLTD_SI_URG);
 end;
 
 procedure TfrmODCslt.txtAttnNeedData(Sender: TObject;
@@ -534,6 +702,7 @@ begin
     cboCategory.Items.Clear;
     cboCategory.Items.Add('I^Inpatient') ;
     cboCategory.SelectById('I');
+    clearDstData;
   end ;
   ControlChange(Self);
 end;
@@ -548,6 +717,7 @@ begin
     cboCategory.Items.Clear;
     cboCategory.Items.Add('O^Outpatient');
     cboCategory.SelectById('O');
+//    prostheticsUrgency;
   end ;
   ControlChange(Self);
 end;
@@ -629,7 +799,7 @@ begin
     if CharAt(ItemID, 1) = 'Q' then
       begin
         Changing := True;
-        consultQuickOrder := True;   
+        consultQuickOrder := True;
         Responses.QuickOrder := ExtractInteger(ItemID);
         tmpSvc := TResponse(Responses.FindResponseByName('ORDERABLE',1)).IValue;
         with treService do for i := 0 to Items.Count-1 do
@@ -734,40 +904,64 @@ end;
 
 procedure TfrmODCslt.ControlChange(Sender: TObject);
 var
-  x: string;
-  i: integer;
+  X: string;
+  i: Integer;
 begin
   inherited;
-  if Changing or (cboService.ItemIEN = 0) then Exit;
-  with cboService    do
+  if Changing then
+    Exit;
+
+  DstStatusUpdate;
+
+  if cboService.ItemIEN <= 0 then
+    memOrder.Clear
+  else
+  begin
+    with cboService do
     begin
       if (ItemIEN > 0) and (Piece(Items[ItemIndex], U, 5) <> '1') then
+      begin
+        i := Pos('<', Text);
+        if i > 0 then
         begin
-          i := Pos('<', Text);
-          if i > 0 then
-            begin
-              x := Piece(Copy(Text, i + 1, 99), '>', 1);
-              x := UpperCase(Copy(x, 1, 1)) + Copy(x, 2, 99);
-            end
-          else
-            x := Text;
-          Responses.Update('ORDERABLE', 1, Piece(Items[ItemIndex], U, 6), x);
+          X := Piece(Copy(Text, i + 1, 99), '>', 1);
+          X := UpperCase(Copy(X, 1, 1)) + Copy(X, 2, 99);
         end
-      else Responses.Update('ORDERABLE', 1, '', '');
+        else
+          X := Text;
+        Responses.Update('ORDERABLE', 1, Piece(Items[ItemIndex], U, 6), X);
+      end
+      else
+        Responses.Update('ORDERABLE', 1, '', '');
     end;
-  with memReason     do  Responses.Update('COMMENT',   1, TX_WPTYPE, Text);
-  with cboCategory   do  Responses.Update('CLASS',     1, ItemID, Text);
-  with cboUrgency    do  Responses.Update('URGENCY',   1, ItemID, Text);
-  with cboPlace      do  Responses.Update('PLACE',     1, ItemID, Text);
-  with txtAttn       do  Responses.Update('PROVIDER',  1, ItemID, Text);
-  with calClinicallyIndicated   do if Length(Text) > 0 then Responses.Update('CLINICALLY',  1, Text,   Text);
-  //with txtProvDiag   do if Length(Text) > 0 then Responses.Update('MISC',      1, Text,   Text);
-  if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
-   else Responses.Update('MISC',      1, '',   '');
-  if Length(ProvDx.Code)                > 0 then Responses.Update('CODE',      1, ProvDx.Code,   ProvDx.Code)
-   else Responses.Update('CODE',      1, '',   '');
+    with memReason do
+      Responses.Update('COMMENT', 1, TX_WPTYPE, Text);
+    with cboCategory do
+      Responses.Update('CLASS', 1, ItemID, Text);
+    with cboUrgency do
+      Responses.Update('URGENCY', 1, ItemID, Text);
+    with cboPlace do
+      Responses.Update('PLACE', 1, ItemID, Text);
+    with txtAttn do
+      Responses.Update('PROVIDER', 1, ItemID, Text);
+    with calClinicallyIndicated do
+      if Length(Text) > 0 then
+        Responses.Update('CLINICALLY', 1, Text, Text);
+    with calLatest do
+      if Length(Text) > 0 then
+        Responses.Update('NLTD', 1, Text, Text);
+    // with txtProvDiag   do if Length(Text) > 0 then Responses.Update('MISC',      1, Text,   Text);
+    if Length(ProvDx.Text) > 0 then
+      Responses.Update('MISC', 1, ProvDx.Text, ProvDx.Text)
+    else
+      Responses.Update('MISC', 1, '', '');
+    if Length(ProvDx.Code) > 0 then
+      Responses.Update('CODE', 1, ProvDx.Code, ProvDx.Code)
+    else
+      Responses.Update('CODE', 1, '', '');
 
-  memOrder.Text := Responses.OrderText;
+    memOrder.Text := Responses.OrderText;
+  end;
 end;
 
 procedure TfrmODCslt.treServiceEnter(Sender: TObject);
@@ -800,7 +994,6 @@ begin
       uBAGlobals.BAConsultDxList.Clear;
       uBAGlobals.BAConsultDxList.Add(UBAConst.PRIMARY_DX + U + ProvDx.Text + ':' +  quickCode);
    end;
-
 end;
 
 procedure TfrmODCslt.cmdAcceptClick(Sender: TObject);
@@ -866,6 +1059,7 @@ begin
     FcboServiceKeyDownStopClick := false;
   end;
   memReason.Clear;
+  isProsSvc := False;
   with cboService do
     begin
       setup508Label(servicelbl508, cboService);
@@ -977,9 +1171,38 @@ begin
   OrderMessage(ConsultMessage(StrToIntDef(tmpSvc, 0)));
   //OrderMessage(ConsultMessage(cboService.ItemIEN));
   ControlChange(Self) ;
+  isProsSvc := IsProstheticsService(cboService.ItemIEN);
   SetUpClinicallyIndicatedDate;    //wat v28
+//  prostheticsUrgency;
   setup508Label(servicelbl508, cboService);
 end;
+
+{
+procedure TfrmODCslt.cboUrgencyExit(Sender: TObject);
+begin
+  inherited;
+  with cboUrgency do
+  if (Text = 'SPECIAL INSTRUCTIONS') and (isProsSvc = False) then
+    begin
+       calLatest.Enabled := True;
+       calLatest.Visible := True;
+       lblLatest.Enabled := True;
+       lblLatest.Visible := True;
+    end
+  else
+    begin
+      calLatest.Enabled := False;
+      calLatest.FMDateTime := 0;
+      calLatest.Text := '';
+      calLatest.Visible := False;
+      lblLatest.Enabled := False;
+      lblLatest.Visible := False;
+      Responses.Update('NLTD',  1, '', '');
+    end;
+
+  DstStatusUpdate;
+end;
+}
 
 procedure TfrmODCslt.FormDestroy(Sender: TObject);
 begin
@@ -1142,7 +1365,6 @@ begin
     ControlChange(Self);
   end;
 
-
   if ProvDx.Reqd = 'R' then
   begin
     lblProvDiag.Caption := TX_PROVDX_REQD;
@@ -1285,6 +1507,12 @@ begin
   end;
 end;
 
+procedure TfrmODCslt.calClinicallyIndicatedExit(Sender: TObject);
+begin
+  inherited;
+  DstStatusUpdate;
+end;
+
 procedure TfrmODCslt.cboServiceExit(Sender: TObject);
 begin
   inherited;
@@ -1296,6 +1524,7 @@ begin
   // CQ #9610 and 10074 - uncommented and "if" added v26.54 (RV)
   if cboService.Enabled then cboService.SetFocus;
   PostMessage(Handle, WM_NEXTDLGCTL, 0, 0);
+  DstStatusUpdate;
 end;
 
 procedure TfrmODCslt.popReasonPopup(Sender: TObject);
@@ -1406,7 +1635,7 @@ begin
     begin
       key := 0;
       btnServiceTreeClick(Self);
-    end    
+    end
   else
     FKeyBoarding := True;
   end;
@@ -1419,10 +1648,124 @@ begin
   FKeyBoarding := False;
 end;
 
-procedure TfrmODCslt.DoSetFontSize(FontSize: integer);
+procedure TfrmODCslt.setDstStatus(aStatus: String);
 begin
+  lblDstStatus.Caption := aStatus;
+  doSetFontSize;
+end;
+
+procedure TfrmODCslt.DoSetFontSize(FontSize: Integer = -1);
+var
+  iButtonHeight, iButtonWidth, iWidth,
+  iTextHeight, iTextWidth: Integer;
+
+begin
+  if FontSize = -1 then
+    FontSize := Application.MainForm.Font.Size;
+
+  adjustBtn(cmdQuit);
+  adjustBtn(cmdAccept);
+
+  iButtonHeight := getMainFormTextHeight + GAP;
+  iButtonWidth := GetMainFormTextWidth(cmdAccept.Caption) + GAP * 2;
+  iWidth := GetMainFormTextWidth(DstMgr.btnLaunchToolbox.Caption) + GAP * 2;
+  if iWidth > iButtonWidth then
+    iButtonWidth := iWidth;
+  grdDstControls.ColumnCollection[1].Value := iButtonWidth;
+
+  iTextWidth := grdDstControls.Width - iButtonWidth;
+  iTextHeight := getRectHeight(iTextWidth, lblDstStatus.Caption);
+  if iTextHeight < iButtonHeight then
+    iTextHeight := iButtonHeight;
+
+  grdDstControls.RowCollection[0].Value := iTextHeight + GAP;
+
+  grdDstControls.Height := iTextHeight + GAP + 2 * (iButtonHeight + GAP);
+  grdDstControls.RowCollection[2].Value := iButtonHeight + GAP;
+
+  DstMgr.Align := alTop;
+  DstMgr.Height := iButtonHeight + GAP;
+
   memReason.DefAttributes.Size := FontSize;
   treService.Font.Size := FontSize * 7 div 8;
+
+  Constraints.MinHeight := getMinHeight;
+end;
+
+procedure TfrmODCslt.DstMgrbtnLaunchToolboxClick(Sender: TObject);
+var
+  sDecision: String;
+  tmpResp: TResponse;
+  oldDecision: String;
+begin
+  // can be called for a new order or change to existing unsigned order
+  // therefore need to try getting existing values
+  with Responses do
+  begin
+    tmpResp := Responses.FindResponseByName('DSTID', 1);
+    if tmpResp <> nil then
+      DstMgr.DSTId := tmpResp.IValue;
+    tmpResp := FindResponseByName('ORDERABLE', 1);
+    if tmpResp <> nil then
+      DstMgr.DSTService := tmpResp.EValue;
+    tmpResp := FindResponseByName('URGENCY', 1);
+    if tmpResp <> nil then
+      DstMgr.DSTUrgency := tmpResp.EValue;
+    tmpResp := FindResponseByName('CLINICALLY', 1);
+    if tmpResp <> nil then
+      //need double value here, so use FMDateTime instead of tmpResp
+      DstMgr.DSTCid := calClinicallyIndicated.FMDateTime;
+    tmpResp := FindResponseByName('NLTD', 1);
+    if tmpResp <> nil then
+      DstMgr.DSTNltd := calLatest.FMDateTime;
+    tmpResp := Responses.FindResponseByName('CLASS', 1);
+    if tmpResp <> nil then
+    begin
+      if tmpResp.IValue = 'O' then
+        DstMgr.DSTOutpatient := 'True'
+      else
+        DstMgr.DSTOutpatient := 'False';
+    end
+    else
+      DstMgr.DSTOutpatient := 'False';
+  end;
+  oldDecision := lblDstStatus.Caption;
+  DstMgr.doDst; // DST_CASE_CONSULT_OD
+  //what if DSTResult is an error message back from dst server?????????????
+  if DstMgr.DSTResult = 'CANCEL' then
+    begin
+      sDecision := ''; // 'User cancel DST review';
+    end
+  else if pos('error', DstMgr.DSTResult) = 1 then
+    begin
+       sDecision := DST_UNAVAIL + #10#13 + DST_TRY_LATER;
+       setDstStatus(sDecision);
+    end
+  else if DstMgr.DSTResult <> '' then
+  begin
+    Responses.Update('DSTID', 1, DstMgr.DSTId, DstMgr.DSTId);
+    Responses.Update('DSTDECSN', 1, TX_WPTYPE, DstMgr.DSTResult);
+    sDecision := DstMgr.DSTResult;
+    setDstStatus(sDecision);
+  end
+  else
+    begin
+    if sDecision = '' then
+       if oldDecision <> DST_UNAVAIL + #10#13 + DST_TRY_LATER then
+       sDecision := oldDecision;
+    setDstStatus(sDecision);
+    end;
+//    sDecision := DST_UNAVAIL + #10#13 + DST_TRY_LATER;
+{$IFDEF DEBUG}
+//  if sDecision <> '' then
+//    begin
+//      sDecision := 'Debug: Eligibility information is linked' + #10#13 +
+//        'Debug: Auto Forward to ' + cboService.Text;
+//        setDstStatus(sDecision);
+//    end;
+{$ELSE}
+//  setDstStatus(sDecision);
+{$ENDIF}
 end;
 
 procedure TfrmODCslt.SetFontSize(FontSize: integer);
@@ -1482,9 +1825,7 @@ begin
          if BILLING_AWARE  then
            if (sourceOrderID <> '') and (ProvDx.Code <> '') then  // if sourceid exists then user is copying an order.
              SetUpCopyConsultDiagnoses(sourceOrderID);
-
-      end;
-
+       end;
    end;
 end;
 
@@ -1526,7 +1867,6 @@ begin
   FcboServiceKeyDownStopClick := false;
 end;
 
-
 procedure TfrmODCslt.btnDiagnosisClick(Sender: TObject);
 var
   leftParan, rightParan: string;
@@ -1549,7 +1889,6 @@ begin
        uBAGlobals.BAConsultDxList.Clear;
        uBAGlobals.BAConsultDxList.Add(UBAConst.PRIMARY_DX + U + Piece(txtProvDiag.text,'(',1) + ':' +  quickCode);
      end;
-
   end;
   frmBALocalDiagnoses.Enter(UBAConst.F_CONSULTS, nil);
   if displayDxCode = '' then txtProvDiag.Text := ''
@@ -1624,22 +1963,20 @@ begin
 end;
 
 procedure TfrmODCslt.FormResize(Sender: TObject);
-const
-  LEFT_MARGIN = 4;
 begin
   inherited;
-  AdjustMemReasonSize();
   LimitEditWidth(memReason, MAX_PROGRESSNOTE_WIDTH-7); //puts memReason at 74 characters
-  Self.Constraints.MinWidth := TextWidthByFont(memReason.Font.Handle, StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 10) + ScrollBarWidth;
+  self.Constraints.MinWidth := TextWidthByFont(memReason.Font.Handle,
+    StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 10) +
+    ScrollBarWidth;
+
+  self.Constraints.MinHeight := getMinHeight;
 end;
 
-procedure TfrmODCslt.AdjustMemReasonSize;
-const
-  PIXEL_SPACE = 3;
+procedure TfrmODCslt.FormShow(Sender: TObject);
 begin
-  pnlReason.Top := cboService.Top + cboService.Height + PIXEL_SPACE;
-  pnlReason.Height := memOrder.Top - pnlReason.Top - PIXEL_SPACE;
-  if patient.CombatVet.IsEligible then pnlReason.Height := pnlReason.Height - PIXEL_SPACE*20;
+  inherited;
+  self.Constraints.MinHeight := getMinHeight;
 end;
 
 function TfrmODCslt.NotinIndex(AList: TStringList; i: integer): Boolean;   {TP - HDS00015782:}
@@ -1662,7 +1999,6 @@ begin
       Result := True;
     cboService.Items.Insert(x,y);
   end;
-
 end;
 
 function TfrmODCslt.GetItemIndex(Service: String; Index: integer): integer;     {TP - HDS00015782:}
@@ -1670,7 +2006,6 @@ function TfrmODCslt.GetItemIndex(Service: String; Index: integer): integer;     
 has the exact same name}
 var
   y: String;
-
 begin
   y := cboService.Items[Index];
   cboService.Items.Delete(Index);
@@ -1678,22 +2013,9 @@ begin
   cboService.Items.Insert(Index,y);
 end;
 
-procedure TfrmODCslt.SetUpCombatVet;
-begin
-     pnlCombatVet.BringToFront;
-     txtCombatVet.Enabled := True;
-     txtCombatVet.Caption := 'Combat Veteran Eligibility Expires on ' + patient.CombatVet.ExpirationDate;
-     pnlMain.Top := pnlMain.Top + pnlCombatVet.Height;
-     pnlMain.Anchors := [akLeft,akTop,akRight];
-     treService.Anchors := [akLeft,akTop,akRight];
-     self.Height := self.Height + pnlCombatVet.Height;
-     treService.Anchors := [akLeft,akTop,akRight,akBottom];
-     pnlMain.Anchors := [akLeft,akTop,akRight,akBottom];
-end;
-
 procedure TfrmODCslt.SetUpClinicallyIndicatedDate;  //wat v28
 begin
-  if IsProstheticsService(cboService.ItemIEN) = '1' then
+  if isProsSvc then
     begin
       lblClinicallyIndicated.Enabled := False;
       calClinicallyIndicated.Enabled := False;
@@ -1708,6 +2030,90 @@ begin
     end;
 end;
 
+
+procedure TfrmODCslt.DstStatusUpdate;
+var
+  b: Boolean;
+begin
+  { ******Business Logic for enabling DST/CTB buttons
+    DST mode must be D or C
+    Consult Service, Urgency, CID cannot be null
+    Service cannot be prosthetics service
+    DST mode C and radInpatient are allowed. DST mode D and radInpatient is not.
+  }
+  b := (cboService.ItemIEN > 0) and (not isProsSvc) and (cboUrgency.ItemIEN > 0)
+    and (Length(calClinicallyIndicated.Text) > 0) and
+    DstMgr.DstProvider.DstParameters.FOrderConsult;
+
+{  if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and
+    not(Length(calLatest.Text) > 0) then
+    b := false;
+}
+
+  if (DstMgr.DSTMode = DST_DST) and (radInpatient.Checked) then
+    b := false;
+
+  if DstMgr.DSTMode = DST_OTH then
+    b := false;
+
+  if (b) or (lblDstStatus.Caption <> '') then
+    DoSetFontSize;
+
+  DstMgr.btnLaunchToolbox.Enabled := b;
+end;
+
+procedure TfrmODCslt.clearDstData;
+begin
+  // DST info n/a for some scenarios like changing from OP to IP
+  if DstMgr.DSTMode = 'D' then
+  begin
+{    calLatest.Enabled := false;
+    calLatest.Visible := false;
+    calLatest.FMDateTime := 0;
+    calLatest.Text := '';
+    lblLatest.Enabled := false;
+    lblLatest.Visible := false;
+}
+    lblDstStatus.Caption := '';
+    with Responses do
+    begin
+//      Update('NLTD', 1, '', '');
+      Remove('DSTDECSN', 1);
+      Update('DSTID', 1, '', '');
+    end;
+  end;
+end;
+
+{
+procedure TfrmODCslt.prostheticsUrgency;
+var
+  i, j: Integer;
+begin
+  // if ((isProsSvc) or (not isDstEnabled)) and
+  if ((isProsSvc) or (DstMgr.DSTMode = DST_OTH)) and
+    (cboUrgency.Items.IndexOf('SPECIAL INSTRUCTIONS') <> -1) then
+  begin
+    cboUrgency.Items.BeginUpdate;
+    for i := cboUrgency.Items.Count - 1 downto 0 do
+      if cboUrgency.DisplayText[i] = 'SPECIAL INSTRUCTIONS' then
+        cboUrgency.Items.Delete(i);
+    cboUrgency.Items.EndUpdate;
+  end
+  else if (cboUrgency.Items.IndexOf('SPECIAL INSTRUCTIONS') = -1) and
+  // (isDstEnabled) and (siUrgency <> '') and (not radInpatient.Checked) then
+    (DstMgr.DSTMode <> DST_OTH)
+    and (siUrgency <> '') and
+    (not radInpatient.Checked) then
+  begin
+    j := cboUrgency.Items.IndexOf('STAT');
+    if j > -1 then
+    begin
+      cboUrgency.Items.BeginUpdate;
+      cboUrgency.Items.Insert(j, siUrgency);
+      cboUrgency.Items.EndUpdate;
+    end;
+  end;
+end;
+}
+
 end.
-
-

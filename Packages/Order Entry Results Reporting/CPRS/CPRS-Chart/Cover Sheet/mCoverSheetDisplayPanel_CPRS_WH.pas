@@ -102,33 +102,46 @@ var
   aRec: TDelimitedString;
   aStr: string;
 begin
-  { This is special because I have to delete [0] before loading }
   if aList.Count > 0 then
     begin
-      fValidData := StrToIntDef(Copy(aList[0], 1, 1), 0) > 0;
-      aList.Delete(0);
-    end;
-
-  { Now load piece 1 and 2 as the Caption }
-  if aList.Count = 0 then
-    with lvData.Items.Add do
+      fValidData := StrToIntDef(Piece(aList[0], '^', 1), 0) > -1;
+      if fValidData then
       begin
-        Caption := 'Not Applicable.';
-        Data := TDelimitedString.Create('^Not Applicable');
-      end
-  else
-    for aStr in aList do
-      with lvData.Items.Add do
-        begin
-          aRec := TDelimitedString.Create(aStr);
-          Caption := Format('%s %s', [aRec.GetPiece(2), aRec.GetPiece(3)]);
-          Data := aRec;
-        end;
+        aList.Delete(0);
+        if aList.Count = 0 then
+          with lvData.Items.Add do
+            begin
+              Caption := 'Not Applicable.';
+              Data := TDelimitedString.Create('^Not Applicable');
+            end
+        else
+          for aStr in aList do
+            with lvData.Items.Add do
+              begin
+                aRec := TDelimitedString.Create(aStr);
+                Caption := Format('%s %s', [aRec.GetPiece(2), aRec.GetPiece(3)]);
+                Data := aRec;
+              end;
+        end
+        else
+          with lvData.Items.Add do
+          begin
+            Caption := 'Error';
+            Data := TDelimitedString.Create(aList[0]);
+          end;
+    end;
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_WH.OnGetDetail(aRec: TDelimitedString; aResult: TStrings);
 begin
-  CallVistA(CPRSParams.DetailRPC, [aRec.GetPiece(1)], aResult);
+  if fValidData then
+    begin
+      CallVistA(CPRSParams.DetailRPC, [aRec.GetPiece(1)], aResult);
+    end
+  else
+    begin
+      aResult.Append(aRec.GetPiece(2));
+    end;
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_WH.OnEndUpdate(Sender: TObject);
@@ -222,7 +235,7 @@ begin
   if aWebSite = nil then
     MessageDlg('Unable to get WebSite information', mtError, [mbOk], 0)
   else if not WomensHealth.OpenExternalWebsite(aWebSite) then
-    MessageDlg(Format('Error: ', [WomensHealth.GetLastError]), mtError, [mbOk], 0);
+    MessageDlg(Format('Error: %s', [WomensHealth.GetLastError]), mtError, [mbOk], 0);
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_WH.OnEnteredInError(Sender: TObject);
@@ -247,6 +260,10 @@ begin
       CoverSheet.OnRefreshPanel(Self, CV_CPRS_POST);
       CoverSheet.OnRefreshPanel(Self, CV_CPRS_RMND);
       CoverSheet.OnRefreshCWAD(Self);
+    end
+  else if WomensHealth.GetLastError <> '' then
+    begin
+      MessageDlg(Format('Error: %s', [WomensHealth.GetLastError]), mtError, [mbOk], 0);
     end;
 end;
 

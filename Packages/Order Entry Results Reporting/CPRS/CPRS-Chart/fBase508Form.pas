@@ -59,7 +59,7 @@ procedure UnfocusableControlEnter(Self, Sender: TObject);
 implementation
 
 uses ORSystem, ShellAPI, ORFn, VA508AccessibilityRouter, VAUtils, uHelpManager
-, uGN_RPCLog;
+, uGN_RPCLog, uCore, ORNet;
 
 {$R *.dfm}
 
@@ -322,7 +322,8 @@ begin
   else if (Key = VK_F2) and (ssCtrl in Shift) then
   begin
     Key := 0;
-    ShowBroker;
+    if User.HasKey('XUPROGMODE') or (ShowRPCList = True) then
+      ShowBroker;
   end
   else if (Key = VK_F3) and (ssCtrl in Shift) then
   begin

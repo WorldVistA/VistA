@@ -63,6 +63,7 @@ type
   TPtSelect = record                              // record for ORWPT SELECT
     Name: string;
     ICN: string;
+    FullICN: string;                              //added via ORWPT GET FULL ICN
     SSN: string;
     DOB: TFMDateTime;
     Age: Integer;
@@ -105,7 +106,8 @@ function IsDateMoreRecent(Date1: TDateTime; Date2: TDateTime): Boolean;
 
 { General calls }
 
-function ExternalName(IEN: Int64; FileNumber: Double): string;
+function ExternalName(IEN: Int64; FileNumber: Double): string; overload;
+function ExternalName(IEN: string; FileNumber: Double): string; overload;
 function PersonHasKey(APerson: Int64; const AKey: string): Boolean;
 function GlobalRefForFile(const FileID: string): string;
 function SubsetOfGeneric(const StartFrom: string; Direction: Integer; const GlobalRef: string): TStrings;
@@ -341,6 +343,12 @@ begin
   Result := sCallV('ORWU EXTNAME', [IEN, FileNumber]);
 end;
 
+function ExternalName(IEN: String; FileNumber: Double): string;
+{ returns the external name of the IEN within a file }
+begin
+  Result := sCallV('ORWU EXTNAME', [IEN, FileNumber]);
+end;
+
 function PersonHasKey(APerson: Int64; const AKey: string): Boolean;
 begin
   Result := sCallV('ORWU NPHASKEY', [APerson, AKey]) = '1';
@@ -497,13 +505,16 @@ function LoadNotificationLongText(AlertID: string): string;
 var
   temp: TStringList;
   i: Integer;
+
 begin
   temp := TStringList.Create();
-  CallVistA('ORWORB GETLTXT', [AlertID], temp);
-  Result := '';       //CRLF
-  for i := 0 to temp.Count - 1 do
-  begin
-    Result := Result + temp[i] + CRLF
+  try
+    CallVistA('ORWORB GETLTXT', [AlertID], temp);
+    Result := ''; // CRLF
+    for i := 0 to temp.Count - 1 do
+      Result := Result + temp[i] + CRLF;
+  finally
+    temp.Free;
   end;
 end;
 
@@ -1214,6 +1225,16 @@ begin
         CallVistA('ORWPT INPLOC', [DFN], x);
         WardService := Piece(x, U, 3);
       end;
+  end;
+  with PtSelect do
+  begin
+    if CallVistA('ORWPT GET FULL ICN', [DFN], FullICN) then
+    begin
+      if Piece(FullICN, U, 1) = '-1' then
+        FullICN := '';
+    end
+    else
+      FullICN := '';
   end;
 end;
 

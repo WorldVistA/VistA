@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta name="generator" content="Adobe RoboHelp 2019" />
+<title>Refresh Patient Information</title>
+<link rel="StyleSheet" href="CPRS.css" type="text/css" />
+ <link rel="StyleSheet" href="CPRS.css" type="text/css" />
+
+<style type="text/css">
+<!--
+div.WebHelpPopupMenu { position:absolute;
+left:0px;
+top:0px;
+z-index:4;
+visibility:hidden; }
+p.WebHelpNavBar { text-align:right; }
+-->
+</style>
+<script type="text/javascript" language="javascript1.2" src="whmsg.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript" src="whver.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whutils.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whproxy.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whlang.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2" src="whtopic.js" charset="utf-8"></script>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.gbWhTopic)
+{
+	var strUrl = decodeURI(document.location.href);
+	var bc = 0;
+	var n = strUrl.toLowerCase().indexOf("bc-");
+	if(n != -1)
+	{
+		document.location.replace(strUrl.substring(0, n));
+		bc = strUrl.substring(n+3);
+	}
+
+	addTocInfo("Using CPRS\nRefresh Patient Information");
+addButton("show",BTN_TEXT,"Show","","","","",0,0,"whd_show0.gif","whd_show2.gif","whd_show1.gif");
+addButton("hide",BTN_TEXT,"Hide","","","","",0,0,"whd_hide0.gif","whd_hide2.gif","whd_hide1.gif");
+addButton("prev",BTN_TEXT,"<<","","","","",0,0,"whd_prev0.gif","whd_prev2.gif","whd_prev1.gif");
+addButton("next",BTN_TEXT,">>","","","","",0,0,"whd_next0.gif","whd_next2.gif","whd_next1.gif");
+
+
+	document.write("<p style=\"text-align:right\"> ");
+AddMasterBreadcrumbs("CPRS.htm", "", ">", "Home", "CPRS_Help_Introduction.htm");
+document.write("<a href=\"Signing_In_to_CPRS.htm\">Using CPRS<\/a> > Refresh Patient Information<\/p>");
+
+}
+else
+	if (window.gbIE4)
+		document.location.reload();
+    
+onLoadHandler = function()
+{
+	if (window.setRelStartPage)
+	{
+    setTimeout("setRelStartPage('CPRS.htm');", 1)
+
+    setTimeout("UpdateBreadCrumbsMarker();", 1);
+    }
+} 
+
+if (window.addEventListener){  
+	window.addEventListener('load', onLoadHandler, false);   
+} else if (window.attachEvent){  
+	window.attachEvent('onload', onLoadHandler);  
+}
+
+function onSetStartPage()
+{
+	autoSync(0);
+	sendSyncInfo();
+	sendAveInfoOut();
+}
+//-->
+//]]></script>
+</head>
+<body><script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(4);
+//-->
+//]]></script>
+<script type="text/javascript" src="./ehlpdhtm.js" language="JavaScript1.2"></script>
+
+<h1><font style="font-size: 14pt;" color="#3366FF" size="4">Refresh Patient Information</font></h1>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">You can refresh a patient's information so that recent changes will be reflected. To refresh a patient's records,</font> <font style="font-size: 10pt; font-weight: bold;" color="#010100" size="2">select</font> <font style="font-size: 10pt;" color="#010100" size="2">File | Refresh Patient Information. This option will refresh the information of the currently selected patient in the same manner that changing patients looks for the latest information. Refreshing a patient's information will result in notes in progress being saved, and the review/sign changes screen will appear if changes are pending.</font></p>
+<p style="margin-bottom: 6.00pt;"><font style="font-size: 10pt;" color="#010100" size="2">If the user has opened the chart and changed the patient's location (from an</font> <font style="font-size: 10pt;" color="#010100" size="2">inpatient location to an outpatient location or vice versa), but has not written any orders, the following dialog will appear when the user selects File | Refresh Patient Information to enable the user to select where orders should be processed that are written later:</font></p>
+<p style="margin-bottom: 6.00pt;"><img src="image/CPRS0060_wmf.gif" alt="The Refresh Encounter Location Form" width="360" height="153" border="0" /></p>
+<p style="margin-bottom: 6.00pt;"><font color="#010100">This dialog appears after a refresh when the patient's location has been changed, but no orders have been written yet. The reason for this is that sometimes it can be difficult to make sure the patient's</font> <font color="#010100">location is correct when the location has changed.</font></p>
+<p style="margin-bottom: 6.00pt;">&#160;</p>
+<script type="text/javascript" language="javascript1.2">//<![CDATA[
+<!--
+if (window.writeIntopicBar)
+	writeIntopicBar(0);
+
+highlightSearch();
+//-->
+//]]></script>
+</body>
+</html>

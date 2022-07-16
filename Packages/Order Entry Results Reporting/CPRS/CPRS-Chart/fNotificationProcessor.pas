@@ -60,7 +60,8 @@ type
 
     procedure Setup;
   public
-    class function Execute(aParams: TStringList; aDescription: string): TNotificationAction;
+    class function Execute(aParams: TStringList; aDescription: string;
+      CancelButton: boolean = False): TNotificationAction;
   end;
 
 var
@@ -72,6 +73,7 @@ uses
   mFunStr,
   uCore,
   ORNet,
+  ORFn,
   fFrame,
   fDeferDialog;
 
@@ -100,6 +102,7 @@ begin
       Description := StringReplace(fAlertDescription,fAlert,'', [rfReplaceAll]);
       if Execute then
         try
+          Self.ModalResult := mrCancel;
           aResult := sCallV('ORB3UTL DEFER', [User.DUZ, fAlert, DeferUntilFM]);
           if aResult <> '1' then
             raise Exception.Create(Copy(aResult, Pos(aResult, '^') + 1, Length(aResult)))
@@ -136,10 +139,16 @@ begin
     fNotificationAction := naCancel;
 end;
 
-class function TfrmNotificationProcessor.Execute(aParams: TStringList; aDescription: string)
-  : TNotificationAction;
+class function TfrmNotificationProcessor.Execute(aParams: TStringList;
+  aDescription: string; CancelButton: boolean = False): TNotificationAction;
 var
   notProcFrm: TfrmNotificationProcessor;
+
+  procedure Adjust(btn: TButton);
+  begin
+    btn.Width := TextWidthByFont(notProcFrm.Font.Handle, btn.Caption) + 20;
+  end;
+
 begin
   notProcFrm := TfrmNotificationProcessor.Create(Application);
   notProcFrm.fAlertDescription := aDescription;
@@ -149,6 +158,17 @@ begin
       fParams := aParams;
 
       Setup;
+
+      if CancelButton then
+      begin
+        btnCancel.Caption := 'Cancel';
+        btnDefer.ModalResult := mrNone;
+      end;
+
+      Adjust(btnDefer);
+      Adjust(btnCancel);
+      btnCancel.Left := ClientWidth - btnCancel.Width - 10;
+      btnOK.Left := btnCancel.Left - btnOK.Width - 10;
 
       case ShowModal of
         mrOk:

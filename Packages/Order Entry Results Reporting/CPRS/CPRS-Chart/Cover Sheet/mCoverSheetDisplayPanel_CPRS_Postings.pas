@@ -61,12 +61,13 @@ uses
   uConst,
   uCore,
   ORFn,
-  ORNet;
+  ORNet, iCoverSheetIntf;
 
 constructor TfraCoverSheetDisplayPanel_CPRS_Postings.Create(aOwner: TComponent);
 begin
   inherited;
   AddColumn(0, 'Posting');
+  AddColumn(1, 'Date');
   CollapseColumns;
 end;
 
@@ -76,14 +77,27 @@ var
 begin
   inherited;
   { Update the ALLERGIES item to have an identifier of 'A' if it exists }
-  for aListItem in lvData.Items do
-    if aListItem.Data <> nil then
-      if TDelimitedString(aListItem.Data).GetPieceEquals(2, 'ALLERGIES') then
-        TDelimitedString(aListItem.Data).SetPiece(1, 'A');
+  try
+    lvData.Items.BeginUpdate;
+    for aListItem in lvData.Items do
+    begin
+      if aListItem.Data <> nil then
+        if TDelimitedString(aListItem.Data).GetPieceEquals(2, 'ALLERGIES') then
+          TDelimitedString(aListItem.Data).SetPiece(1, 'A')
+        else if (TDelimitedString(aListItem.Data).GetPiece(3) <> '') and
+          (TDelimitedString(aListItem.Data).GetPieceAsDouble(3,0.0) > 0.0) then
+          aListItem.SubItems.Add(FormatDateTime(DT_FORMAT,
+              TDelimitedString(aListItem.Data).GetPieceAsTDateTime(3)));
+    end;
+    ExpandColumns;
+  finally
+    lvData.Items.EndUpdate;
+  end;
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_Postings.OnGetDetail(aRec: TDelimitedString; aResult: TStrings);
 begin
+
   if aRec.GetPieceEquals(1, 'A') then
     CallVistA('ORQQAL LIST REPORT', [Patient.DFN], aResult)
   else if aRec.GetPieceEquals(1, 'WH') then
