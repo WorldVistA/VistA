@@ -33,6 +33,7 @@ function MedAdminHistory(OrderID: string; aReturn: TStrings): integer;
 function MedStatusGroup(const s: string): Integer;
 procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer; var DateRange: string; var DateRangeIp: string; var DateRangeOp: string);
 function GetNewDialog: string;
+function GetNewNonVADialog: string;
 function PickUpDefault: string;
 procedure Refill(AnOrderID, PickUpAt: string);
 function IsFirstDoseNowOrder(OrderID: string): boolean;
@@ -295,6 +296,11 @@ function GetNewDialog: string;
 { get dialog for new medications depending on patient being inpatient or outpatient }
 begin
   CallVistA('ORWPS1 NEWDLG', [Patient.Inpatient], Result);
+end;
+
+function GetNewNonVADialog: string;
+begin
+  CallVista('ORWPS1 NVADLG',[], Result);
 end;
 
 function PickUpDefault: string;

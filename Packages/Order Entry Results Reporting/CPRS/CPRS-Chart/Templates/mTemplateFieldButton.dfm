@@ -24,9 +24,37 @@ object fraTemplateFieldButton: TfraTemplateFieldButton
     OnExit = FrameExit
     OnMouseDown = pnlBtnMouseDown
     OnMouseUp = pnlBtnMouseUp
+    ExplicitLeft = 14
+    ExplicitWidth = 122
     DesignSize = (
       136
       14)
+    object spRequired: TShape
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 128
+      Height = 6
+      Align = alClient
+      Brush.Color = clRed
+      Pen.Color = clRed
+      Shape = stRoundRect
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 14
+      ExplicitHeight = 14
+    end
+    object pbFocus: TPaintBox
+      Left = 1
+      Top = 1
+      Width = 134
+      Height = 12
+      Align = alClient
+      OnMouseDown = pnlBtnMouseDown
+      OnMouseUp = pnlBtnMouseUp
+      OnPaint = pbFocusPaint
+      ExplicitWidth = 107
+    end
     object lblText: TLabel
       Left = 2
       Top = -1
@@ -40,17 +68,6 @@ object fraTemplateFieldButton: TfraTemplateFieldButton
       OnMouseDown = pnlBtnMouseDown
       OnMouseUp = pnlBtnMouseUp
       ExplicitWidth = 105
-    end
-    object pbFocus: TPaintBox
-      Left = 1
-      Top = 1
-      Width = 134
-      Height = 12
-      Align = alClient
-      OnMouseDown = pnlBtnMouseDown
-      OnMouseUp = pnlBtnMouseUp
-      OnPaint = pbFocusPaint
-      ExplicitWidth = 107
     end
   end
 end

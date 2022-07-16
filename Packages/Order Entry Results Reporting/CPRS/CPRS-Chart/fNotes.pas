@@ -3,12 +3,15 @@
 interface
 
 uses
-  fFrame, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  dShared, fPage, StdCtrls, ExtCtrls, Menus, ComCtrls, ORCtrls, ORFn, uConst, ORDtTm,
+  fFrame, Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Dialogs,
+  dShared, fPage, StdCtrls, ExtCtrls, Menus, ComCtrls, ORCtrls, ORFn, uConst,
+  ORDtTm,
   uPCE, ORClasses, ImgList, rTIU, uTIU, uDocTree, fRptBox, fPrintList,
   rMisc, fNoteST, ORNet, fNoteSTStop, fBase508Form, VA508AccessibilityManager,
-  uTemplates, VA508ImageListLabeler, RichEdit, mDrawers, ORSplitter, System.Actions,
-  Vcl.ActnList, ORextensions, U_CPTPasteDetails;
+  uTemplates, VA508ImageListLabeler, RichEdit, mDrawers, ORSplitter,
+  System.Actions,
+  Vcl.ActnList, ORextensions, U_CPTPasteDetails, Vcl.Grids, Vcl.ValEdit;
 
 type
   TfrmNotes = class(TfrmPage)
@@ -207,14 +210,15 @@ type
     cmdChange: TButton;
     lblSubject: TStaticText;
     txtSubject: TCaptionEdit;
-    acTemplateHook: TAction;
     procedure FormShow(Sender: TObject);
-    procedure fldAccessRemindersInstructionsQuery(Sender: TObject; var Text: string);
+    procedure fldAccessRemindersInstructionsQuery(Sender: TObject;
+      var Text: string);
     procedure fldAccessRemindersStateQuery(Sender: TObject; var Text: string);
-    procedure fldAccessTemplatesInstructionsQuery(Sender: TObject; var Text: string);
+    procedure fldAccessTemplatesInstructionsQuery(Sender: TObject;
+      var Text: string);
     procedure fldAccessTemplatesStateQuery(Sender: TObject; var Text: string);
     procedure mnuChartTabClick(Sender: TObject);
-    procedure mnuViewClick(Sender: TObject);
+//    procedure mnuViewClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cmdChangeClick(Sender: TObject);
     procedure lstNotesClick(Sender: TObject);
@@ -222,15 +226,19 @@ type
     procedure acNewNoteExecute(Sender: TObject);
     procedure memNewNoteChange(Sender: TObject);
     procedure timAutoSaveTimer(Sender: TObject);
-    procedure lvNotesSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+    procedure lvNotesSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
     procedure tvNotesCollapsed(Sender: TObject; Node: TTreeNode);
     procedure tvNotesExpanded(Sender: TObject; Node: TTreeNode);
-    procedure tvNotesDragOver(Sender, Source: TObject; X, Y: Integer; State: TDragState; var Accept: Boolean);
+    procedure tvNotesDragOver(Sender, Source: TObject; X, Y: Integer;
+      State: TDragState; var Accept: Boolean);
     procedure tvNotesDragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure tvNotesStartDrag(Sender: TObject; var DragObject: TDragObject);
     procedure lvNotesColumnClick(Sender: TObject; Column: TListColumn);
-    procedure lvNotesCompare(Sender: TObject; Item1, Item2: TListItem; Data: Integer; var Compare: Integer);
-    procedure memNewNoteKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure lvNotesCompare(Sender: TObject; Item1, Item2: TListItem;
+      Data: Integer; var Compare: Integer);
+    procedure memNewNoteKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure dlgFindTextFind(Sender: TObject);
     procedure popNoteMemoPopup(Sender: TObject);
     procedure popNoteMemoPreviewClick(Sender: TObject);
@@ -293,7 +301,8 @@ type
     procedure acEditDialogFieldsUpdate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
-    procedure memNewNoteKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure memNewNoteKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure memNewNoteKeyPress(Sender: TObject; var Key: Char);
     procedure acNewNoteUpdate(Sender: TObject);
     procedure pnlDrawersResize(Sender: TObject);
@@ -301,28 +310,47 @@ type
     procedure acChangeUpdate(Sender: TObject);
     procedure frmDrawersResize(Sender: TObject);
     procedure pnlWriteResize(Sender: TObject);
-    procedure splHorzCanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
-    procedure splDrawersCanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
-    procedure LoadPastedText(Sender: TObject; LoadList: TStrings; var ProcessLoad, PreLoaded: Boolean);
+    procedure splHorzCanResize(Sender: TObject; var NewSize: Integer;
+      var Accept: Boolean);
+    procedure splDrawersCanResize(Sender: TObject; var NewSize: Integer;
+      var Accept: Boolean);
+    procedure LoadPastedText(Sender: TObject; LoadList: TStrings;
+      var ProcessLoad, PreLoaded: Boolean);
     procedure PasteToMonitor(Sender: TObject; var AllowMonitor: Boolean);
-    procedure SaveTheMonitor(Sender: TObject; SaveList: TStringList; var ReturnList: TStringList);
+    procedure SaveTheMonitor(Sender: TObject; SaveList: TStringList;
+      var ReturnList: TStringList);
     procedure CPShow(Sender: TObject);
     procedure CPHide(Sender: TObject);
     procedure tvNotesExit(Sender: TObject);
     procedure pnlNoteExit(Sender: TObject);
     procedure cmdNewNoteExit(Sender: TObject);
-    procedure frmFramePnlPatientExit(Sender: TObject);
+    procedure frmFramePnlToolbarExit(Sender: TObject);
     procedure FormHide(Sender: TObject);
     procedure memPCEWriteExit(Sender: TObject);
     procedure memPCEReadExit(Sender: TObject);
     procedure cmdChangeExit(Sender: TObject);
     procedure cmdPCEExit(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure lvNotesClick(Sender: TObject);
+    procedure lvNotesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure tvNotesHint(Sender: TObject; const Node: TTreeNode;
+      var Hint: string);
+    procedure tvNotesDblClick(Sender: TObject);
+    procedure tvNotesCompare(Sender: TObject; Node1, Node2: TTreeNode;
+      Data: Integer; var Compare: Integer);
+    procedure tvNotesKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure lvNotesDblClick(Sender: TObject);
     procedure splmemPCEMoved(Sender: TObject);
     procedure grdPnlResize(Sender: TObject);
-    procedure PnlRightResize(Sender: TObject);
+    procedure PnlRightExit(Sender: TObject);
+    procedure frmDrawersExit(Sender: TObject);
+    procedure pnlDrawersExit(Sender: TObject);
+    procedure pnlLeftExit(Sender: TObject);
   private
-    fExpandedDrawerHeight: integer;
+    FPreviousControl: TWinControl; // used in ExitToNextControl;
+    fExpandedDrawerHeight: Integer;
     FEmptyNodeCount: Integer;
     FNavigatingTab: Boolean; // Currently using tab to navigate
     FEditingIndex: Integer; // index of note being currently edited
@@ -349,10 +377,21 @@ type
     FormResizing: boolean;
     PatientToggled: boolean;
     DrawerConfiguration: TDrawerConfiguration;
-    FOldFramePnlPatientExit: TNotifyEvent;
+    FOldFramePnlToolbarExit: TNotifyEvent;
     FOldDrawerPnlTemplatesButtonExit: TNotifyEvent;
     FOldDrawerPnlEncounterButtonExit: TNotifyEvent;
     FOldDrawerEdtSearchExit: TNotifyEvent;
+    fLastDocumentID: String;
+
+    fAllSignedNotes: TStringList; // "All signed notes" cache
+    fAllUnSignedNotes: TStringList; // "All unsigned notes" cache
+    fAllUnCoSignedNotes: TStringList; // "All uncosigned notes" cache
+    LastID: String; // Last selected node prior to "Show More" (fix 336188)
+    slExpandStatus: TStringList; // Expand Status of lvNotes (fix 336188)
+    FEditNoteIEN: Integer;  // Note IEN for note currently being edited
+
+    FUpdateUnsigned: boolean; // used when clicking Show More when editing a new note
+
     procedure DrawerButtonClicked(Sender: TObject);
     procedure ClearEditControls;
     procedure DoAutoSave(Suppress: Integer = 1);
@@ -374,10 +413,8 @@ type
     function CanFinishReminder: Boolean;
     procedure DisplayPCE;
     procedure ClearPCE;
-  //  procedure SetPCEParent();
+    // procedure SetPCEParent();
     function VerifyNoteTitle: Boolean;
-    // added for treeview
-//    procedure LoadNotes;
     procedure UpdateTreeView(DocList: TStringList; Tree: TORTreeView);
     procedure EnableDisableIDNotes;
     procedure ShowPCEButtons(Editing: Boolean);
@@ -385,26 +422,40 @@ type
     function SetNoteTreeLabel(AContext: TTIUContext): string;
     procedure UpdateNoteAuthor(DocInfo: string);
     procedure UpdatePersonalTemplates;
-    procedure AddTemplateNode(const tmpl: TTemplate; const Owner: TTreeNode = nil);
-    procedure UpdateActMenu(DocID: String; ListComponent: TComponent );
-    function GetReadVisible: boolean;
-    procedure SetReadVisible(Value: boolean);
+    procedure AddTemplateNode(const tmpl: TTemplate;
+      const Owner: TTreeNode = nil);
+    procedure UpdateActMenu(DocID: String; ListComponent: TComponent);
+    function GetReadVisible: Boolean;
+    procedure SetReadVisible(Value: Boolean);
     procedure ReadToFront;
-    function GetReminderToggled: boolean;
-    procedure SetReminderToggled(const Value: boolean);
-    function GetWriteShowing: boolean;
-    procedure SetWriteShowing(const Value: boolean);
-    procedure SetExpandedDrawerHeight(const Value: integer);
+    function GetReminderToggled: Boolean;
+    procedure SetReminderToggled(const Value: Boolean);
+    function GetWriteShowing: Boolean;
+    procedure SetWriteShowing(const Value: Boolean);
+    procedure SetExpandedDrawerHeight(const Value: Integer);
     function GetDrawers: TfraDrawers;
     procedure frmDrawerEdtSearchExit(Sender: TObject);
     procedure frmDrawerPnlTemplatesButtonExit(Sender: TObject);
     procedure frmDrawerPnlEncounterButtonExit(Sender: TObject);
+
+    // procedure SelectNode(aNode:TTreeNode=nil);                   // NSR 20070817
+    procedure DoSelect; // NSR 20070817
+    procedure GetMoreDocuments(Sender: TObject = nil); // NSR 20070817
+    procedure SetLvNotesVisible(aValue: Boolean); // NSR 20070817
+    procedure SaveTreePosition; // (fix 336188)
+    procedure SaveExpandStatus; // (fix 336188)
+    procedure RestoreTreePosition(bStepForward: Boolean = False);
+    // (fix 336188)
+    procedure RestoreExpandStatus; // (fix 336188)
+    function getNodeLocation(aNode: TTreeNode): String; // NSR 20070817
     Procedure UpdateConstraints;
   protected
-    property WriteShowing: boolean read GetWriteShowing write SetWriteShowing;
+    property WriteShowing: Boolean read GetWriteShowing write SetWriteShowing;
+    procedure ExitToNextControl(Sender: TObject);
   public
-    procedure SaveUserSplitterSettings(var posA, posB, posC, posD: integer);
-    procedure LoadUserSplitterSettings(posA, posB, posC, posD: integer);
+    procedure UpdateNotesCaption(ReloadTotal: boolean = false); // NSR 20070817
+    procedure SaveUserSplitterSettings(var posA, posB, posC, posD: Integer);
+    procedure LoadUserSplitterSettings(posA, posB, posC, posD: Integer);
     procedure EncounterLocationChanged(Sender: TObject);
     function ActiveEditOf(AnIEN: Int64; ARequest: Integer): Boolean;
     function AllowContextChange(var WhyNot: string): Boolean; override;
@@ -422,9 +473,11 @@ type
     procedure LimitEditableNote;
     property EditingIndex: Integer read FEditingIndex write SetEditingIndex;
     property ReadVisible: boolean read GetReadVisible write SetReadVisible;
-    property ReminderToggled: boolean read GetReminderToggled write SetReminderToggled;
-    property ExpandedDrawerHeight: integer read fExpandedDrawerHeight write SetExpandedDrawerHeight;
-    procedure LoadNotes; // PDMP update
+    property ReminderToggled: boolean read GetReminderToggled
+	  write SetReminderToggled;
+    property ExpandedDrawerHeight: integer read fExpandedDrawerHeight
+	  write SetExpandedDrawerHeight;
+    procedure LoadNotes(SignedOnly: Boolean = False);
     function EditedNoteInfo:String;
     property Silent: Boolean read FSilent;
   published
@@ -440,7 +493,6 @@ var
 
 implementation
 
-
 uses
   fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem,
   fEncounterFrame, rPCE, Clipbrd, fNoteCslt, fNotePrt, rVitals, fAddlSigners,
@@ -450,7 +502,7 @@ uses
   fNoteIDParents, rSurgery, uSurgery, fTemplateDialog, DateUtils, uInit,
   uVA508CPRSCompatibility, VA508AccessibilityRouter, VAUtils, fFocusedControls,
   System.Types, rECS, TRPCB, uGlobalVar, System.UITypes, fNotificationProcessor,
-  System.IniFiles, ORNetIntf, U_CPTEditMonitor;
+  System.IniFiles, ORNetIntf, U_CPTEditMonitor, StrUtils;
 
 const
   FormSpace = 3;
@@ -533,14 +585,17 @@ const
   MIN_DRAWER_WIDTH = 150;
   MIN_PCE_HEIGHT = 70;
 
+  targetAllSignedNotes = 'All signed notes'; // NSR 20070817
+  targetSignedByDateRange = 'Signed notes by date range'; // NSR 20070817
+
 var
   uPCEShow, uPCEEdit: TPCEData;
   ViewContext: Integer;
   uTIUContext: TTIUContext;
   ColumnToSort: Integer;
-  ColumnSortForward: boolean;
+  ColumnSortForward: Boolean;
   uChanging: Boolean;
-  uIDNotesActive: boolean;
+  uIDNotesActive: Boolean;
   NoteTotal: string;
   NewNoteRunning: Boolean;
 
@@ -553,26 +608,26 @@ begin
   Result := frmDrawers;
 end;
 
-procedure TfrmNotes.SetReadVisible(Value: boolean);
+procedure TfrmNotes.SetReadVisible(Value: Boolean);
 begin
   pnlNote.Visible := Value;
- // splList.Visible := Value;
+  // splList.Visible := Value;
   WriteShowing := not Value;
 end;
 
-procedure TfrmNotes.SetReminderToggled(const Value: boolean);
+procedure TfrmNotes.SetReminderToggled(const Value: Boolean);
 begin
   fReminderToggled := Value;
   pnlReminder.Visible := Value;
   stTitle.Visible := not Value;
-//  pnlNote.Visible := not Value;
+  // pnlNote.Visible := not Value;
   ReadVisible := not Value;
   WriteShowing := not Value;
-//  pnlWrite.Visible := not Value;
-//  splList.Visible := not Value;
-  ShowPCEControls(not value) ;
- // splVert.Visible := not Value;
-//  memPCEShow.Visible := not Value;
+  // pnlWrite.Visible := not Value;
+  // splList.Visible := not Value;
+  ShowPCEControls(not Value);
+  // splVert.Visible := not Value;
+  // memPCEShow.Visible := not Value;
 end;
 
 function TfrmNotes.GetReadVisible;
@@ -580,13 +635,13 @@ begin
   Result := pnlNote.Visible;
 end;
 
-function TfrmNotes.GetReminderToggled: boolean;
+function TfrmNotes.GetReminderToggled: Boolean;
 begin
   Result := fReminderToggled;
 end;
 
 { View menu events ------------------------------------------------------------------------- }
-
+(* --- code is not used - replaced with action - commenting out ---- AA 20160906
 procedure TfrmNotes.mnuViewClick(Sender: TObject);
 { changes the list of notes available for viewing }
 var
@@ -598,17 +653,18 @@ var
   Format: CHARFORMAT2;
 begin
   inherited;
-  //clear the global search
-  if GlobalSearch then begin
-    memnote.SelStart := 0;
-    memnote.SelLength := Length(TRichEdit(popNoteMemo.PopupComponent).Text);
+  // clear the global search
+  if GlobalSearch then
+  begin
+    memNote.SelStart := 0;
+    memNote.SelLength := Length(TRichEdit(popNoteMemo.PopupComponent).Text);
     Format.cbSize := SizeOf(Format);
     Format.dwMask := CFM_BACKCOLOR;
-    Format.crBackColor := Memnote.Color;
-    memnote.Perform(EM_SETCHARFORMAT, SCF_SELECTION, Longint(@Format));
-    memnote.SelAttributes.Color := clWindowText;
+    Format.crBackColor := memNote.Color;
+    memNote.Perform(EM_SETCHARFORMAT, SCF_SELECTION, Longint(@Format));
+    memNote.SelAttributes.Color := clWindowText;
     Style := [];
-    memnote.SelAttributes.Style := Style;
+    memNote.SelAttributes.Style := Style;
   end;
   GlobalSearch := False;
   GlobalSearchTerm := '';
@@ -629,116 +685,136 @@ begin
   else
     ViewContext := NC_RECENT;
   case ViewContext of
-  NC_RECENT:     begin
-                   FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                   stNotes.Caption := 'Last ' + IntToStr(ReturnMaxNotes) + ' Notes';
-                   FCurrentContext.Status := IntToStr(ViewContext);
-                   FCurrentContext.MaxDocs := ReturnMaxNotes;
-                   LoadNotes;
-                 end;
-  NC_ALL:        begin
-                   FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                   stNotes.Caption := 'All Signed Notes';
-                   FCurrentContext.Status := IntToStr(ViewContext);
-                   LoadNotes;
-                 end;
-  NC_UNSIGNED:   begin
-                   FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                   stNotes.Caption := 'Unsigned Notes';
-                   FCurrentContext.Status := IntToStr(ViewContext);
-                   LoadNotes;
-                 end;
-  // Text Search CQ: HDS00002856 --------------------
-  NC_SEARCHTEXT: begin;
-                   SearchTextStopFlag := False;
-                   if (Sender is TMenuItem) then begin
-                     SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt, StringReplace(TMenuItem(Sender).Caption, '&', '', [rfReplaceAll]) );
-                   end else if (Sender is TAction) then begin
-                     SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt, StringReplace(TAction(Sender).Caption, '&', '', [rfReplaceAll]) );
-                   end;
-                   with SearchCtxt do if Changed then
-                   begin
-                     //FCurrentContext.Status := IntToStr(ViewContext);
-                     frmSearchStop.Show;
-                     stNotes.Caption := 'Search: '+ SearchString;
-                     frmSearchStop.lblSearchStatus.Caption := stNotes.Caption;
-                     FCurrentContext.SearchString := SearchString;
-                     LoadNotes;
-                     GlobalSearch := true;
-                     GlobalSearchTerm := SearchString;
-                     dlgFindText.FindText := GlobalSearchTerm;
-                     dlgFindText.Options := [];
-                     dmodShared.FindRichEditTextAll(Memnote, dlgFindText, clHighlight, [fsItalic, fsBold]);
-                   end;
-                   // Only do LoadNotes if something changed
-                 end;
-  // Text Search CQ: HDS00002856 --------------------
-  NC_UNCOSIGNED: begin
-                   FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                   stNotes.Caption := 'Uncosigned Notes';
-                   FCurrentContext.Status := IntToStr(ViewContext);
-                   LoadNotes;
-                 end;
-  NC_BY_AUTHOR:  begin
-                   SelectAuthor(Font.Size, FCurrentContext, AuthCtxt);
-                   with AuthCtxt do if Changed then
-                   begin
-                     FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                     stNotes.Caption := AuthorName + ': Signed Notes';
-                     FCurrentContext.Status := IntToStr(NC_BY_AUTHOR);
-                     FCurrentContext.Author := Author;
-                     FCurrentContext.TreeAscending := Ascending;
-                     LoadNotes;
-                   end;
-                 end;
-  NC_BY_DATE:    begin
-                   SelectNoteDateRange(Font.Size, FCurrentContext, DateRange);
-                   with DateRange do if Changed then
-                   begin
-                     FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                     stNotes.Caption := FormatFMDateTime('mmm dd,yy', FMBeginDate) + ' to ' +
-                                         FormatFMDateTime('mmm dd,yy', FMEndDate) + ': Signed Notes';
-                     FCurrentContext.BeginDate     := BeginDate;
-                     FCurrentContext.EndDate       := EndDate;
-                     FCurrentContext.FMBeginDate   := FMBeginDate;
-                     FCurrentContext.FMEndDate     := FMEndDate;
-                     FCurrentContext.TreeAscending := Ascending;
-                     FCurrentContext.Status        := IntToStr(NC_BY_DATE);
-                     LoadNotes;
-                   end;
-                 end;
-  NC_CUSTOM:     begin
-                   if (Sender is TMenuItem) or (Sender is TAction) then
-                     SelectTIUView(Font.Size, True, FCurrentContext, uTIUContext);
-                   with uTIUContext do if Changed then
-                   begin
-                     //if MaxDocs = 0 then MaxDocs   := ReturnMaxNotes;
-                     FCurrentContext.BeginDate     := BeginDate;
-                     FCurrentContext.EndDate       := EndDate;
-                     FCurrentContext.FMBeginDate   := FMBeginDate;
-                     FCurrentContext.FMEndDate     := FMEndDate;
-                     FCurrentContext.Status        := Status;
-                     FCurrentContext.Author        := Author;
-                     FCurrentContext.MaxDocs       := MaxDocs;
-                     FCurrentContext.ShowSubject   := ShowSubject;
-                     // NEW PREFERENCES:
-                     FCurrentContext.SortBy        := SortBy;
-                     FCurrentContext.ListAscending := ListAscending;
-                     FCurrentContext.GroupBy       := GroupBy;
-                     FCurrentContext.TreeAscending := TreeAscending;
-                     FCurrentContext.SearchField   := SearchField;
-                     FCurrentContext.Keyword       := Keyword;
-                     FCurrentContext.Filtered      := Filtered;
-                     LoadNotes;
-                   end;
-                 end;
-  end; {case}
+    NC_RECENT:
+      begin
+        FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+        stNotes.Caption := 'Last ' + IntToStr(ReturnMaxNotes) + ' Notes';
+        FCurrentContext.Status := IntToStr(ViewContext);
+        FCurrentContext.MaxDocs := ReturnMaxNotes;
+        LoadNotes;
+      end;
+    NC_ALL:
+      begin
+        FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+        stNotes.Caption := 'All Signed Notes';
+        FCurrentContext.Status := IntToStr(ViewContext);
+        LoadNotes;
+      end;
+    NC_UNSIGNED:
+      begin
+        FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+        stNotes.Caption := 'Unsigned Notes';
+        FCurrentContext.Status := IntToStr(ViewContext);
+        LoadNotes;
+      end;
+    // Text Search CQ: HDS00002856 --------------------
+    NC_SEARCHTEXT:
+      begin;
+        SearchTextStopFlag := False;
+        if (Sender is TMenuItem) then
+        begin
+          SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt,
+            StringReplace(TMenuItem(Sender).Caption, '&', '', [rfReplaceAll]));
+        end
+        else if (Sender is TAction) then
+        begin
+          SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt,
+            StringReplace(TAction(Sender).Caption, '&', '', [rfReplaceAll]));
+        end;
+        with SearchCtxt do
+          if Changed then
+          begin
+            // FCurrentContext.Status := IntToStr(ViewContext);
+            frmSearchStop.Show;
+            stNotes.Caption := 'Search: ' + SearchString;
+            frmSearchStop.lblSearchStatus.Caption := stNotes.Caption;
+            FCurrentContext.SearchString := SearchString;
+            LoadNotes;
+            GlobalSearch := true;
+            GlobalSearchTerm := SearchString;
+            dlgFindText.FindText := GlobalSearchTerm;
+            dlgFindText.Options := [];
+            dmodShared.FindRichEditTextAll(memNote, dlgFindText, clHighlight,
+              [fsItalic, fsBold]);
+          end;
+        // Only do LoadNotes if something changed
+      end;
+    // Text Search CQ: HDS00002856 --------------------
+    NC_UNCOSIGNED:
+      begin
+        FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+        stNotes.Caption := 'Uncosigned Notes';
+        FCurrentContext.Status := IntToStr(ViewContext);
+        LoadNotes;
+      end;
+    NC_BY_AUTHOR:
+      begin
+        SelectAuthor(Font.Size, FCurrentContext, AuthCtxt);
+        with AuthCtxt do
+          if Changed then
+          begin
+            FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+            stNotes.Caption := AuthorName + ': Signed Notes';
+            FCurrentContext.Status := IntToStr(NC_BY_AUTHOR);
+            FCurrentContext.Author := Author;
+            FCurrentContext.TreeAscending := Ascending;
+            LoadNotes;
+          end;
+      end;
+    NC_BY_DATE:
+      begin
+        SelectNoteDateRange(Font.Size, FCurrentContext, DateRange);
+        with DateRange do
+          if Changed then
+          begin
+            FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+            stNotes.Caption := FormatFMDateTime('mmm dd,yy', FMBeginDate) +
+              ' to ' + FormatFMDateTime('mmm dd,yy', FMEndDate) +
+              ': Signed Notes';
+            FCurrentContext.BeginDate := BeginDate;
+            FCurrentContext.EndDate := EndDate;
+            FCurrentContext.FMBeginDate := FMBeginDate;
+            FCurrentContext.FMEndDate := FMEndDate;
+            FCurrentContext.TreeAscending := Ascending;
+            FCurrentContext.Status := IntToStr(NC_BY_DATE);
+            LoadNotes;
+          end;
+      end;
+    NC_CUSTOM:
+      begin
+        if (Sender is TMenuItem) or (Sender is TAction) then
+          SelectTIUView(Font.Size, true, FCurrentContext, uTIUContext);
+        with uTIUContext do
+          if Changed then
+          begin
+            // if MaxDocs = 0 then MaxDocs   := ReturnMaxNotes;
+            FCurrentContext.BeginDate := BeginDate;
+            FCurrentContext.EndDate := EndDate;
+            FCurrentContext.FMBeginDate := FMBeginDate;
+            FCurrentContext.FMEndDate := FMEndDate;
+            FCurrentContext.Status := Status;
+            FCurrentContext.Author := Author;
+            FCurrentContext.MaxDocs := MaxDocs;
+            FCurrentContext.ShowSubject := ShowSubject;
+            // NEW PREFERENCES:
+            FCurrentContext.SortBy := SortBy;
+            FCurrentContext.ListAscending := ListAscending;
+            FCurrentContext.GroupBy := GroupBy;
+            FCurrentContext.TreeAscending := TreeAscending;
+            FCurrentContext.SearchField := SearchField;
+            FCurrentContext.Keyword := Keyword;
+            FCurrentContext.Filtered := Filtered;
+            LoadNotes;
+          end;
+      end;
+  end; { case }
   stNotes.Caption := SetNoteTreeLabel(FCurrentContext);
   // Text Search CQ: HDS00002856 --------------------
   If FCurrentContext.SearchString <> '' then
     stNotes.Caption := stNotes.Caption + ', containing "' +
       FCurrentContext.SearchString + '"';
-  If SearchTextStopFlag then begin
+  If SearchTextStopFlag then
+  begin
     stNotes.Caption := 'Search for "' + FCurrentContext.SearchString +
       '" was stopped!';
   end;
@@ -751,8 +827,10 @@ begin
   // tvNotes.Caption := lblNotes.Caption;
   StatusText('');
 end;
+--- code is not used - replaced with action - commenting out ---- AA 20160906 *)
 
-procedure TfrmNotes.fldAccessRemindersInstructionsQuery(Sender: TObject; var Text: string);
+procedure TfrmNotes.fldAccessRemindersInstructionsQuery(Sender: TObject;
+  var Text: string);
 begin
   inherited;
   if Drawers.ActiveDrawer = odReminders then
@@ -762,7 +840,8 @@ begin
   Text := Text + ' drawer press space bar';
 end;
 
-procedure TfrmNotes.fldAccessRemindersStateQuery(Sender: TObject; var Text: string);
+procedure TfrmNotes.fldAccessRemindersStateQuery(Sender: TObject;
+  var Text: string);
 begin
   inherited;
   if Drawers.ActiveDrawer = odReminders then
@@ -771,7 +850,8 @@ begin
     Text := ', Drawer Closed';
 end;
 
-procedure TfrmNotes.fldAccessTemplatesInstructionsQuery(Sender: TObject; var Text: string);
+procedure TfrmNotes.fldAccessTemplatesInstructionsQuery(Sender: TObject;
+  var Text: string);
 begin
   inherited;
   if Drawers.ActiveDrawer = odTemplates then
@@ -781,7 +861,8 @@ begin
   Text := Text + ' drawer press space bar';
 end;
 
-procedure TfrmNotes.fldAccessTemplatesStateQuery(Sender: TObject; var Text: string);
+procedure TfrmNotes.fldAccessTemplatesStateQuery(Sender: TObject;
+  var Text: string);
 begin
   inherited;
   if Drawers.ActiveDrawer = odTemplates then
@@ -818,6 +899,7 @@ end;
 procedure TfrmNotes.FormCreate(Sender: TObject);
 begin
   inherited;
+  FUpdateUnsigned := False;
   acNewNote.Enabled := false;
 
   NewNoteRunning := False;
@@ -834,7 +916,7 @@ begin
   Drawers.RichEditControl := memNewNote;
   FImageFlag := TBitmap.Create;
   FDocList := TStringList.Create;
-  splDrawers.Enabled := false;
+  splDrawers.Enabled := False;
   Drawers.SaveDrawerConfiguration(DrawerConfiguration);
   Drawers.CopyMonitor := CPMemNewNote;
 
@@ -853,16 +935,23 @@ begin
   //safteynet
   CPMemNote.CopyMonitor := frmFrame.CPAppMon;
   CPMemNewNote.CopyMonitor := frmFrame.CPAppMon;
+  // NSR#20070817 (CPRS Progress Notes Display Misleading)
+  fLastDocumentID := '';
+  fAllSignedNotes := TStringList.Create;
+  fAllUnSignedNotes := TStringList.Create;
+  fAllUnCoSignedNotes := TStringList.Create;
 end;
 
 procedure TfrmNotes.FormShow(Sender: TObject);
 begin
-  if PatientToggled then begin
+  if PatientToggled then
+  begin
     Drawers.LoadDrawerConfiguration(DrawerConfiguration);
     PatientToggled := False;
   end;
-  FOldFramePnlPatientExit := frmFrame.pnlPatient.OnExit;
-  frmFrame.pnlPatient.OnExit := frmFramePnlPatientExit;
+
+  FOldFramePnlToolbarExit := frmFrame.pnlToolbar.OnExit;
+  frmFrame.pnlToolbar.OnExit := frmFramePnlToolbarExit;
   FOldDrawerPnlTemplatesButtonExit := frmDrawers.btnTemplate.OnExit;
   frmDrawers.btnTemplate.OnExit := frmDrawerPnlTemplatesButtonExit;
   FOldDrawerPnlEncounterButtonExit := frmDrawers.btnEncounter.OnExit;
@@ -876,26 +965,21 @@ procedure TfrmNotes.frmDrawerEdtSearchExit(Sender: TObject);
 begin
   if assigned(FOldDrawerEdtSearchExit) then
     FOldDrawerEdtSearchExit(Sender);
-  cmdNewNoteExit(Sender);
+  ExitToNextControl(Sender);
 end;
 
 procedure TfrmNotes.frmDrawerPnlTemplatesButtonExit(Sender: TObject);
 begin
-
-    If Assigned(FOldDrawerPnlTemplatesButtonExit) then
-   FOldDrawerPnlTemplatesButtonExit(Sender);
-  if Boolean(Hi(GetKeyState(VK_TAB))) and  (memNewNote.CanFocus) and
-     Boolean(Hi(GetKeyState(VK_SHIFT))) then
-    memNewNote.SetFocus
-  else
-    cmdNewNoteExit(Sender);
+  If Assigned(FOldDrawerPnlTemplatesButtonExit) then
+    FOldDrawerPnlTemplatesButtonExit(Sender);
+  ExitToNextControl(Sender);
 end;
 
 procedure TfrmNotes.frmDrawerPnlEncounterButtonExit(Sender: TObject);
 begin
   if assigned(FOldDrawerPnlEncounterButtonExit) then
-  FOldDrawerPnlEncounterButtonExit(Sender);
-  cmdNewNoteExit(Sender);
+    FOldDrawerPnlEncounterButtonExit(Sender);
+  ExitToNextControl(Sender);
 end;
 
 
@@ -943,7 +1027,7 @@ end;
 
 procedure TfrmNotes.acAddNewEntryIDNExecute(Sender: TObject);
 const
-  IS_ID_CHILD = True;
+  IS_ID_CHILD = true;
 var
   AnIDParent: Integer;
   { switches to current new note or creates a new note if none is being edited already }
@@ -1078,7 +1162,7 @@ begin
   if assigned(frmRemDlg) then
   begin
     frmRemDlg.btnCancelClick(Self);
-    if Assigned(frmRemDlg) then
+    if assigned(frmRemDlg) then
       exit;
   end;
   ActOnDocument(ActionSts, lstNotes.ItemIEN, 'DELETE RECORD');
@@ -1110,9 +1194,9 @@ begin
       exit;
   end;
   EditingIndex := -1;
-  FConfirmed := FALSE;
+  FConfirmed := False;
   // remove the note
-  DeleteSts.Success := True;
+  DeleteSts.Success := true;
   X := GetPackageRefForNote(SavedDocIEN);
   SaveConsult := StrToIntDef(Piece(X, ';', 1), 0);
   AVisitStr := VisitStrForNote(SavedDocIEN);
@@ -1129,18 +1213,21 @@ begin
   UnlockConsultRequest(0, SaveConsult);
   // note has been deleted, so 1st param = 0
   // reset the display now that the note is gone
-  if DeleteSts.Success then begin
+  if DeleteSts.Success then
+  begin
     DeletePCE(AVisitStr);
     // removes PCE data if this was the only note pointing to it
     ClearEditControls;
     LoadNotes;
-//    pnlWrite.Visible := FALSE;
-    ReadVisible := True;
+    // pnlWrite.Visible := FALSE;
+    ReadVisible := true;
     UpdateReminderFinish;
-    ShowPCEControls(FALSE);
-    Drawers.DisplayDrawers(True, Drawers.ActiveDrawer, [odTemplates], [odTemplates]);
-    ShowPCEButtons(FALSE);
-  end else { if DeleteSts }
+    ShowPCEControls(False);
+    Drawers.DisplayDrawers(true, Drawers.ActiveDrawer, [odTemplates],
+      [odTemplates]);
+    ShowPCEButtons(False);
+  end
+  else { if DeleteSts }
     InfoBox(DeleteSts.Reason, TX_DEL_ERR, MB_OK or MB_ICONWARNING);
 end;
 
@@ -1153,31 +1240,39 @@ begin
   if lstNotes.ItemIEN = 0 then
     exit;
   SavedDocID := lstNotes.ItemID;
-  if EditingIndex <> -1 then begin
+  if EditingIndex <> -1 then
+  begin
     SaveCurrentNote(Saved);
     if not Saved then
       exit;
     LoadNotes;
-    tvNotes.Selected := tvNotes.FindPieceNode(SavedDocID, U, tvNotes.Items.GetFirstNode);
+    tvNotes.Selected := tvNotes.FindPieceNode(SavedDocID, U,
+      tvNotes.Items.GetFirstNode);
   end;
-  if not CanBeAttached(PDocTreeObject(tvNotes.Selected.Data)^.DocID, WhyNot) then begin
+  if not CanBeAttached(PDocTreeObject(tvNotes.Selected.Data)^.DocID, WhyNot)
+  then
+  begin
     WhyNot := StringReplace(WhyNot, 'ATTACH', 'DETACH', [rfIgnoreCase]);
     WhyNot := StringReplace(WhyNot, 'to an ID', 'from an ID', [rfIgnoreCase]);
     InfoBox(WhyNot, TX_DETACH_FAILURE, MB_OK);
     exit;
   end;
   if (InfoBox('DETACH:   ' + tvNotes.Selected.Text + CRLF + CRLF + '  FROM:   '
-      + tvNotes.Selected.Parent.Text + CRLF + CRLF + 'Are you sure?',
-      TX_DETACH_CNF, MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) <> IDYES) then
+    + tvNotes.Selected.Parent.Text + CRLF + CRLF + 'Are you sure?',
+    TX_DETACH_CNF, MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) <> IDYES) then
     exit;
   DocID := PDocTreeObject(tvNotes.Selected.Data)^.DocID;
   SavedDocID := PDocTreeObject(tvNotes.Selected.Parent.Data)^.DocID;
-  if DetachEntryFromParent(DocID, WhyNot) then begin
+  if DetachEntryFromParent(DocID, WhyNot) then
+  begin
     LoadNotes;
-    tvNotes.Selected := tvNotes.FindPieceNode(SavedDocID, U, tvNotes.Items.GetFirstNode);
+    tvNotes.Selected := tvNotes.FindPieceNode(SavedDocID, U,
+      tvNotes.Items.GetFirstNode);
     if tvNotes.Selected <> nil then
-      tvNotes.Selected.Expand(FALSE);
-  end else begin
+      tvNotes.Selected.Expand(False);
+  end
+  else
+  begin
     WhyNot := StringReplace(WhyNot, 'ATTACH', 'DETACH', [rfIgnoreCase]);
     WhyNot := StringReplace(WhyNot, 'to an ID', 'from an ID', [rfIgnoreCase]);
     InfoBox(WhyNot, TX_DETACH_FAILURE, MB_OK);
@@ -1204,13 +1299,15 @@ begin
   if lstNotes.ItemIndex = EditingIndex then
     exit;
   ANoteID := lstNotes.ItemID;
+  FEditNoteIEN := lstNotes.ItemID;
   if not StartNewEdit(NT_ACT_EDIT_NOTE) then
     exit;
   // LoadNotes;
   with tvNotes do
     Selected := FindPieceNode(ANoteID, 1, U, Items.GetFirstNode);
   ActOnDocument(ActionSts, lstNotes.ItemIEN, 'EDIT RECORD');
-  if not ActionSts.Success then begin
+  if not ActionSts.Success then
+  begin
     InfoBox(ActionSts.Reason, TX_IN_AUTH, MB_OK);
     exit;
   end;
@@ -1219,7 +1316,7 @@ end;
 
 procedure TfrmNotes.acEditSharedExecute(Sender: TObject);
 begin
-  EditTemplates(Self, FALSE, '', True);
+  EditTemplates(Self, False, '', true);
 end;
 
 procedure TfrmNotes.acEditSharedUpdate(Sender: TObject);
@@ -1256,41 +1353,53 @@ begin
   if lstNotes.ItemIEN = 0 then
     exit;
   SavedDocID := lstNotes.ItemID;
-  if lstNotes.ItemIndex = EditingIndex then begin
+  if lstNotes.ItemIndex = EditingIndex then
+  begin
     SaveCurrentNote(Saved);
     if not Saved then
       exit;
     LoadNotes;
-    tvNotes.Selected := tvNotes.FindPieceNode(SavedDocID, U, tvNotes.Items.GetFirstNode);
+    tvNotes.Selected := tvNotes.FindPieceNode(SavedDocID, U,
+      tvNotes.Items.GetFirstNode);
   end;
   CanChgCos := CanChangeCosigner(lstNotes.ItemIEN);
   ActOnDocument(ActionSts, lstNotes.ItemIEN, 'IDENTIFY SIGNERS');
   ActSucc := ActionSts.Success;
-  if CanChgCos and (not ActSucc) then begin
+  if CanChgCos and (not ActSucc) then
+  begin
     if InfoBox(ActionSts.Reason + CRLF + CRLF +
       'Would you like to change the cosigner?', TX_IN_AUTH,
       MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) = ID_YES then
       SigAction := SG_COSIGNER
     else
       exit;
-  end else if ActSucc and (not CanChgCos) then
+  end
+  else if ActSucc and (not CanChgCos) then
     SigAction := SG_ADDITIONAL
   else if CanChgCos and ActSucc then
     SigAction := SG_BOTH
-  else begin
+  else
+  begin
     InfoBox(ActionSts.Reason, TX_IN_AUTH, MB_OK);
     exit;
   end;
 
   if not LockConsultRequestAndNote(lstNotes.ItemIEN) then
     exit;
-  Exclusions := GetCurrentSigners(lstNotes.ItemIEN);
-  ARefDate := StrToFloat(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
-  SelectAdditionalSigners(Font.Size, lstNotes.ItemIEN, SigAction, Exclusions,
-    SignerList, CT_NOTES, ARefDate);
+  Exclusions := TStringList.Create;
+  try
+    SetCurrentSigners(Exclusions, lstNotes.ItemIEN);
+
+    ARefDate := StrToFloat(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
+    SelectAdditionalSigners(Font.Size, lstNotes.ItemIEN, SigAction, Exclusions,
+      SignerList, CT_NOTES, ARefDate);
+  finally
+    Exclusions.Free;
+  end;
   case SigAction of
     SG_ADDITIONAL:
-      if SignerList.Changed and (SignerList.Signers <> nil) and (SignerList.Signers.Count > 0) then
+      if SignerList.Changed and (SignerList.Signers <> nil) and
+        (SignerList.Signers.Count > 0) then
         UpdateAdditionalSigners(lstNotes.ItemIEN, SignerList.Signers);
     SG_COSIGNER:
       if SignerList.Changed then
@@ -1310,12 +1419,13 @@ end;
 
 procedure TfrmNotes.acNewNoteExecute(Sender: TObject);
 const
-  IS_ID_CHILD = FALSE;
+  IS_ID_CHILD = False;
   { switches to current new note or creates a new note if none is being edited already }
 begin
   inherited;
-  if not NewNoteRunning then begin
-    NewNoteRunning := True;
+  if not NewNoteRunning then
+  begin
+    NewNoteRunning := true;
     try
       {
         BLJ 10 April 2018: The below SHOULD be
@@ -1328,7 +1438,8 @@ begin
       }
       if not (frmFrame.tabPage.TabIndex = CT_ORDERS) then
         exit;
-      if StartNewEdit(NT_ACT_NEW_NOTE) then begin
+      if StartNewEdit(NT_ACT_NEW_NOTE) then
+      begin
         // make sure a visit (time & location) is available before creating the note
         if Encounter.NeedVisit then
         begin
@@ -1338,8 +1449,10 @@ begin
         if Encounter.NeedVisit then
         begin
           InfoBox(TX_NEED_VISIT, TX_NO_VISIT, MB_OK or MB_ICONWARNING);
-          ShowPCEButtons(FALSE);
-        end else begin
+          ShowPCEButtons(False);
+        end
+        else
+        begin
           InsertNewNote(IS_ID_CHILD, 0);
         end;
       end;
@@ -1351,7 +1464,8 @@ end;
 
 procedure TfrmNotes.acNewNoteUpdate(Sender: TObject);
 begin
-  acNewNote.Enabled := (not pnlWrite.Visible) and (frmConsults.EditingIndex < 0);
+  acNewNote.Enabled := (not pnlWrite.Visible) and
+    (frmConsults.EditingIndex < 0);
 end;
 
 procedure TfrmNotes.acNewSharedExecute(Sender: TObject);
@@ -1404,7 +1518,8 @@ var
 
 begin
   inherited;
-  cmdPCE.Enabled := FALSE;
+  if cmdPCE = nil then exit;
+  cmdPCE.Enabled := False;
   try
     if lstNotes.ItemIndex <> EditingIndex then
     // save uPCEEdit for note being edited, before updating current note's encounter, then restore  (RV - TAM-0801-31056)
@@ -1464,7 +1579,8 @@ begin
   if FCurrentContext.MaxDocs = 0 then
     if InfoBox(TX_NO_MAX, 'Warning', MB_YESNO or MB_ICONWARNING) = IDNO then
     begin
-      mnuViewClick(mnuViewCustom);
+//      mnuViewClick(mnuViewCustom);
+      acSignedExecute(mnuViewCustom); // replacing mnu event handler with action
       exit;
     end;
   if InfoBox(TX_REPLACE, 'Confirmation', MB_YESNO or MB_ICONQUESTION) = IDYES
@@ -1484,10 +1600,10 @@ var
 
   procedure AssignBoilerText;
   begin
-    ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
+    ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self,
+      'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
     memNewNote.Text := BoilerText.Text;
-    //RTC 1175879 - Removing to ensure that an initial template is placed before boilerplate.
-    //memNewNote.SelStart := Length(memNewNote.Lines.Text); //CQ: 16461
+    memNewNote.SelStart := Length(memNewNote.Lines.Text); // CQ: 16461
     SpeakStrings(BoilerText);
     UpdateNoteAuthor(DocInfo);
     FChanged := False;
@@ -1495,32 +1611,42 @@ var
 
 begin
   inherited;
-  if (EditingIndex < 0) or (lstNotes.ItemIndex <> EditingIndex) then Exit;
+  if (EditingIndex < 0) or (lstNotes.ItemIndex <> EditingIndex) then
+    exit;
   BoilerText := TStringList.Create;
   try
     NoteEmpty := memNewNote.Text = '';
     LoadBoilerPlate(BoilerText, FEditNote.Title);
     if (BoilerText.Text <> '') or
-       assigned(GetLinkedTemplate(IntToStr(FEditNote.Title), ltTitle)) then begin
+      assigned(GetLinkedTemplate(IntToStr(FEditNote.Title), ltTitle)) then
+    begin
       DocInfo := MakeXMLParamTIU(IntToStr(lstNotes.ItemIEN), FEditNote);
       if NoteEmpty then
         AssignBoilerText
-      else begin
+      else
+      begin
         case QueryBoilerPlate(BoilerText) of
-        0:  { do nothing } ;                         // ignore
-        1: begin
-             ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
-             memNewNote.Lines.AddStrings(BoilerText);
-             SpeakStrings(BoilerText);
-             UpdateNoteAuthor(DocInfo);
-           end;
-        2: AssignBoilerText;                         // replace
+          0: { do nothing }
+            ; // ignore
+          1:
+            begin
+              ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle,
+                Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
+              memNewNote.Lines.AddStrings(BoilerText);
+              SpeakStrings(BoilerText);
+              UpdateNoteAuthor(DocInfo);
+            end;
+          2:
+            AssignBoilerText; // replace
         end;
       end;
-    end else begin
+    end
+    else
+    begin
       if Sender = mnuActLoadBoiler then
         InfoBox(TX_NO_BOIL, TC_NO_BOIL, MB_OK)
-      else begin
+      else
+      begin
         if not NoteEmpty then
           // if not FChanged and (InfoBox(TX_BLR_CLEAR, TC_BLR_CLEAR, MB_YESNO) = ID_YES)
           if (InfoBox(TX_BLR_CLEAR, TC_BLR_CLEAR, MB_ICONQUESTION or MB_YESNO or
@@ -1574,26 +1700,34 @@ begin
   inherited;
   SavedDocID := lstNotes.ItemID; // v22.12 - RV
   FLastNoteID := SavedDocID; // v22.12 - RV
-  if lstNotes.ItemIndex = EditingIndex then  begin // v22.12 - RV
+  if lstNotes.ItemIndex = EditingIndex then
+  begin // v22.12 - RV
     FDeleted := False;      // incase we delete the not in SaveCurrentNote
     SaveCurrentNote(Saved); // v22.12 - RV
     if (not Saved) or FDeleted then
       exit; // v22.12 - RV
-  end else if EditingIndex > -1 then begin // v22.12 - RV
+  end
+  else if EditingIndex > -1 then
+  begin // v22.12 - RV
     tmpItem := lstNotes.Items[EditingIndex]; // v22.12 - RV
     EditingID := Piece(tmpItem, U, 1); // v22.12 - RV
   end; // v22.12 - RV
-  if not NoteHasText(lstNotes.ItemIEN) then begin
+  if not NoteHasText(lstNotes.ItemIEN) then
+  begin
     InfoBox(TX_EMPTY_NOTE1, TC_EMPTY_NOTE, MB_OK or MB_ICONERROR);
     exit;
   end;
   if not LastSaveClean(lstNotes.ItemIEN) and
-     (InfoBox(TX_ABSAVE, TC_ABSAVE, MB_YESNO or MB_DEFBUTTON2 or MB_ICONWARNING) <> IDYES) then
+    (InfoBox(TX_ABSAVE, TC_ABSAVE, MB_YESNO or MB_DEFBUTTON2 or MB_ICONWARNING)
+    <> IDYES) then
     exit;
-  if CosignDocument(lstNotes.ItemIEN) then begin
+  if CosignDocument(lstNotes.ItemIEN) then
+  begin
     SignTitle := TX_COSIGN;
     ActionType := SIG_COSIGN;
-  end else begin
+  end
+  else
+  begin
     SignTitle := TX_SIGN;
     ActionType := SIG_SIGN;
   end;
@@ -1639,7 +1773,8 @@ begin
     UnlockDocument(lstNotes.ItemIEN);
   UnlockConsultRequest(lstNotes.ItemIEN);
   LoadNotes; // v22.12 - RV
-  if (EditingID <> '') then begin
+  if (EditingID <> '') then
+  begin
     lstNotes.Items.Insert(0, tmpItem);
     tmpNode := tvNotes.Items.AddObjectFirst(tvNotes.Items.GetFirstNode,
       'Note being edited',
@@ -1653,17 +1788,21 @@ begin
       CT_NOTES);
     EditingIndex := lstNotes.SelectByID(EditingID); // v22.12 - RV
   end;
-  tvNotes.Selected := tvNotes.FindPieceNode(FLastNoteID, U, tvNotes.Items.GetFirstNode);
+  tvNotes.Selected := tvNotes.FindPieceNode(FLastNoteID, U,
+    tvNotes.Items.GetFirstNode);
   if tvNotes.Selected <> nil then
     tvNotesChange(Self, tvNotes.Selected)
   else
     If tvNotes.Items.Count > 0 then
       tvNotes.Selected := tvNotes.Items[0]; // first Node in treeview
+  updateNotesCaption(True);
 end;
 
-procedure TfrmNotes.AddTemplateNode(const tmpl: TTemplate; const Owner: TTreeNode);
+procedure TfrmNotes.AddTemplateNode(const tmpl: TTemplate;
+  const Owner: TTreeNode);
 begin
-  dmodShared.AddTemplateNode(Drawers.tvTemplates, FEmptyNodeCount, tmpl, FALSE, Owner);
+  dmodShared.AddTemplateNode(Drawers.tvTemplates, FEmptyNodeCount, tmpl,
+    False, Owner);
 end;
 
 { TPage common methods --------------------------------------------------------------------- }
@@ -1671,79 +1810,95 @@ function TfrmNotes.AllowContextChange(var WhyNot: string): Boolean;
 begin
   dlgFindText.CloseDialog;
   Result := inherited AllowContextChange(WhyNot); // sets result = true
-  if Assigned(frmTemplateDialog) then begin
-    if Screen.ActiveForm = frmTemplateDialog then begin
+  if assigned(frmTemplateDialog) then
+  begin
+    if Screen.ActiveForm = frmTemplateDialog then
+    begin
       // if (fsModal in frmTemplateDialog.FormState) then
       case BOOLCHAR[frmFrame.CCOWContextChanging] of
-        '1': begin
-               WhyNot := 'A template in progress will be aborted.  ';
-               Result := FALSE;
-             end;
-        '0': begin
-               if WhyNot = 'COMMIT' then begin
-                 FSilent := True;
-                 frmTemplateDialog.Silent := True;
-                 frmTemplateDialog.ModalResult := mrCancel;
-               end;
-             end;
+        '1':
+          begin
+            WhyNot := 'A template in progress will be aborted.  ';
+            Result := False;
+          end;
+        '0':
+          begin
+            if WhyNot = 'COMMIT' then
+            begin
+              FSilent := true;
+              frmTemplateDialog.Silent := true;
+              frmTemplateDialog.ModalResult := mrCancel;
+            end;
+          end;
       end;
     end;
   end;
-  if Assigned(frmRemDlg) then
+  if assigned(frmRemDlg) then
     case BOOLCHAR[frmFrame.CCOWContextChanging] of
-      '1': begin
-             WhyNot := 'All current reminder processing information will be discarded.  ';
-             Result := False;
-           end;
-      '0': begin
-             if WhyNot = 'COMMIT' then
-               begin
-                 FSilent := True;
-                 frmRemDlg.Silent := True;
-                 frmRemDlg.btnCancelClick(Self);
-               end;
-             //agp fix for a problem with reminders not clearing out when switching patients
-             if WhyNot = '' then
-                begin
-                 frmRemDlg.btnCancelClick(Self);
-                 if assigned(frmRemDlg) then
-                   begin
-                     result := false;
-                     exit;
-                   end;
-                end;
-           end;
+      '1':
+        begin
+          WhyNot := 'All current reminder processing information will be discarded.  ';
+          Result := False;
+        end;
+      '0':
+        begin
+          if WhyNot = 'COMMIT' then
+          begin
+            FSilent := true;
+            frmRemDlg.Silent := true;
+            frmRemDlg.btnCancelClick(Self);
+          end;
+          // agp fix for a problem with reminders not clearing out when switching patients
+          if WhyNot = '' then
+          begin
+            frmRemDlg.btnCancelClick(Self);
+            if assigned(frmRemDlg) then
+            begin
+              Result := False;
+              exit;
+            end;
+          end;
+        end;
     end;
-  if EditingIndex <> -1 then begin
+  if EditingIndex <> -1 then
+  begin
     case BOOLCHAR[frmFrame.CCOWContextChanging] of
-      '1': begin
-             if memNewNote.GetTextLen > 0 then
-               WhyNot := WhyNot + 'A note in progress will be saved as unsigned.  '
-             else
-               WhyNot := WhyNot + 'An empty note in progress will be deleted.  ';
-             Result := False;
-           end;
-      '0': begin
-             if WhyNot = 'COMMIT' then FSilent := True;
-             SaveCurrentNote(Result);
-           end;
+      '1':
+        begin
+          if memNewNote.GetTextLen > 0 then
+            WhyNot := WhyNot + 'A note in progress will be saved as unsigned.  '
+          else
+            WhyNot := WhyNot + 'An empty note in progress will be deleted.  ';
+          Result := False;
+        end;
+      '0':
+        begin
+          if WhyNot = 'COMMIT' then
+            FSilent := true;
+          SaveCurrentNote(Result);
+        end;
     end;
   end;
-  if assigned(frmEncounterFrame) then begin
-    if Screen.ActiveForm = frmEncounterFrame then begin
+  if assigned(frmEncounterFrame) then
+  begin
+    if Screen.ActiveForm = frmEncounterFrame then
+    begin
       case BOOLCHAR[frmFrame.CCOWContextChanging] of
-        '1': begin
-               WhyNot := WhyNot + 'Encounter information being edited will not be saved';
-               Result := False;
-             end;
-        '0': begin
-               if WhyNot = 'COMMIT' then
-                 begin
-                   FSilent := True;
-                   frmEncounterFrame.Abort := False;
-                   frmEncounterFrame.Cancel := True;
-                 end;
-             end;
+        '1':
+          begin
+            WhyNot := WhyNot +
+              'Encounter information being edited will not be saved';
+            Result := False;
+          end;
+        '0':
+          begin
+            if WhyNot = 'COMMIT' then
+            begin
+              FSilent := true;
+              frmEncounterFrame.Abort := False;
+              frmEncounterFrame.Cancel := true;
+            end;
+          end;
       end;
     end;
   end;
@@ -1753,24 +1908,30 @@ procedure TfrmNotes.LstNotesToPrint;
 var
   AParentID: string;
   SavedDocID: string;
-  Saved: boolean;
+  Saved: Boolean;
 begin
   inherited;
-  if not uIDNotesActive then exit;
-  if lstNotes.ItemIEN = 0 then exit;
+  if not uIDNotesActive then
+    exit;
+  if lstNotes.ItemIEN = 0 then
+    exit;
   SavedDocID := lstNotes.ItemID;
   if EditingIndex <> -1 then
   begin
     SaveCurrentNote(Saved);
-    if not Saved then Exit;
+    if not Saved then
+      exit;
     LoadNotes;
     with tvNotes do
       Selected := FindPieceNode(SavedDocID, U, Items.GetFirstNode);
   end;
-  if tvNotes.Selected = nil then exit;
-  AParentID := frmPrintList.SelectParentFromList(tvNotes,CT_NOTES);
-  if AParentID = '' then exit;
-  with tvNotes do Selected := FindPieceNode(AParentID, 1, U, Items.GetFirstNode);
+  if tvNotes.Selected = nil then
+    exit;
+  AParentID := frmPrintList.SelectParentFromList(tvNotes, CT_NOTES);
+  if AParentID = '' then
+    exit;
+  with tvNotes do
+    Selected := FindPieceNode(AParentID, 1, U, Items.GetFirstNode);
 end;
 
 procedure TfrmNotes.ClearPtData;
@@ -1778,7 +1939,7 @@ procedure TfrmNotes.ClearPtData;
 begin
   inherited ClearPtData;
   ClearEditControls;
-  uChanging := True;
+  uChanging := true;
   tvNotes.Items.BeginUpdate;
   KillDocTreeObjects(tvNotes);
   tvNotes.Items.Clear;
@@ -1795,41 +1956,50 @@ begin
   PatientToggled := True;
   Drawers.ResetTemplates;
   CallVistA('ORCNOTE GET TOTAL', [Patient.DFN], NoteTotal);
-    CPMemNote.EditMonitor.ItemIEN := -1;
+  CPMemNote.EditMonitor.ItemIEN := -1;
   CPMemNewNote.EditMonitor.ItemIEN := -1;
+  fAllSignedNotes.Clear;
+  fAllUnSignedNotes.Clear;
+  fAllUnCoSignedNotes.Clear;
 end;
 
 procedure TfrmNotes.DisplayPage;
 { causes page to be visible and conditionally executes initialization code }
 begin
- SendMessage(frmNotes.Handle, WM_SETREDRAW, 0, 0);
+  SendMessage(frmNotes.Handle, WM_SETREDRAW, 0, 0);
   try
-  inherited DisplayPage;
-  frmFrame.ShowHideChartTabMenus(mnuViewChart);
-  frmFrame.mnuFilePrint.Tag := CT_NOTES;
-  frmFrame.mnuFilePrint.Enabled := True;
-  frmFrame.mnuFilePrintSetup.Enabled := True;
-  frmFrame.mnuFilePrintSelectedItems.Enabled := True;
-  if InitPage then begin
-    EnableDisableIDNotes;
-    FDefaultContext := GetCurrentTIUContext;
-    FCurrentContext := FDefaultContext;
-    popNoteMemoSpell.Visible   := SpellCheckAvailable;
-    popNoteMemoGrammar.Visible := popNoteMemoSpell.Visible;
-    Z11.Visible                := popNoteMemoSpell.Visible;
-    timAutoSave.Interval := User.AutoSave * 1000;  // convert seconds to milliseconds
-    SetEqualTabStops(memNewNote);
-  end;
-  // to indent the right margin need to set Paragraph.RightIndent for each paragraph?
-  if InitPatient and not(CallingContext = CC_NOTIFICATION) then begin
-    SetViewContext(FDefaultContext);
-  end;
-  case CallingContext of
-    CC_INIT_PATIENT: if not InitPatient then begin
-                       SetViewContext(FDefaultContext);
-                     end;
-    CC_NOTIFICATION: ProcessNotifications;
-  end;
+    inherited DisplayPage;
+    frmFrame.ShowHideChartTabMenus(mnuViewChart);
+    frmFrame.mnuFilePrint.Tag := CT_NOTES;
+    frmFrame.mnuFilePrint.Enabled := true;
+    frmFrame.mnuFilePrintSetup.Enabled := true;
+    frmFrame.mnuFilePrintSelectedItems.Enabled := true;
+    if InitPage then
+    begin
+      EnableDisableIDNotes;
+      FDefaultContext := GetCurrentTIUContext;
+      FCurrentContext := FDefaultContext;
+      popNoteMemoSpell.Visible := SpellCheckAvailable;
+      popNoteMemoGrammar.Visible := popNoteMemoSpell.Visible;
+      Z11.Visible := popNoteMemoSpell.Visible;
+      timAutoSave.Interval := User.AutoSave * 1000;
+      // convert seconds to milliseconds
+      SetEqualTabStops(memNewNote);
+    end;
+    // to indent the right margin need to set Paragraph.RightIndent for each paragraph?
+    if InitPatient and not(CallingContext = CC_NOTIFICATION) then
+    begin
+      SetViewContext(FDefaultContext);
+    end;
+    case CallingContext of
+      CC_INIT_PATIENT:
+        if not InitPatient then
+        begin
+          SetViewContext(FDefaultContext);
+        end;
+      CC_NOTIFICATION:
+        ProcessNotifications;
+    end;
   finally
     SendMessage(frmNotes.Handle, WM_SETREDRAW, 1, 0);
     RedrawWindow(frmNotes.Handle, nil, 0, RDW_ERASE or RDW_FRAME or
@@ -1847,13 +2017,17 @@ begin
     // if ItemIEN < 0 then
     begin
       SaveCurrentNote(Saved);
-      if not Saved then Exit;
+      if not Saved then
+        exit;
     end;
     if ItemIEN > 0 then
       PrintNote(ItemIEN, MakeNoteDisplayText(Items[ItemIndex]))
-    else begin
-      if ItemIEN = 0 then InfoBox(TX_NONOTE, TX_NONOTE_CAP, MB_OK);
-      if ItemIEN < 0 then InfoBox(TX_NOPRT_NEW, TX_NOPRT_NEW_CAP, MB_OK);
+    else
+    begin
+      if ItemIEN = 0 then
+        InfoBox(TX_NONOTE, TX_NONOTE_CAP, MB_OK);
+      if ItemIEN < 0 then
+        InfoBox(TX_NOPRT_NEW, TX_NOPRT_NEW_CAP, MB_OK);
     end;
   end;
 end;
@@ -1861,8 +2035,8 @@ end;
 { for printing multiple notes }
 procedure TfrmNotes.RequestMultiplePrint(AForm: TfrmPrintList);
 var
-  NoteIEN: int64;
-  i: integer;
+  NoteIEN: Int64;
+  i: Integer;
 begin
   with AForm.lbIDParents do
   begin
@@ -1874,7 +2048,7 @@ begin
         NoteIEN := ItemIEN;
         // StrToInt64def(Piece(TStringList(Items.Objects[i])[0],U,1),0);
         if NoteIEN > 0 then
-          PrintNote(NoteIEN, DisplayText[i], True)
+          PrintNote(NoteIEN, DisplayText[i], true)
         else
         begin
           if NoteIEN = 0 then
@@ -1891,7 +2065,7 @@ procedure TfrmNotes.SetFontSize(aNewFontSize: Integer);
 { adjusts the font size of any controls that don't have ParentFont = True }
 begin
   //inherited SetFontSize(NewFontSize);
-  Self.Font.Assign(Screen.IconFont);
+//  Self.Font.Assign(Screen.IconFont);
   Self.Font.Size := aNewFontSize;
   SetSubjectVisible(txtSubject.Visible);
 
@@ -1901,6 +2075,7 @@ begin
   memPCEWrite.Font.Size := aNewFontSize;
   memPCERead.Font.Size := aNewFontSize;
   cmdChange.Font.Size := aNewFontSize;
+  AutoSizeColumns(lvNotes, [0]);
   //Update the constraints based on the font
   UpdateConstraints;
 end;
@@ -1981,99 +2156,111 @@ end;
 
 function TfrmNotes.ShowPCEControls(ShouldShow: Boolean): TRichEdit;
 begin
- if pnlWrite.Visible then
- begin
-  Result := memPCEWrite;
-  splmemPCEWrite.Visible := ShouldShow;
-  memPCEWrite.Visible := ShouldShow;
+  if pnlWrite.Visible then
+  begin
+    Result := memPCEWrite;
+    splmemPCEWrite.Visible := ShouldShow;
+    memPCEWrite.Visible := ShouldShow;
 
-  //stuff at the bottom
-  memPCEWrite.Top := pnlWrite.Top+pnlWrite.height;
-  splmemPCEWrite.Top := memPCEWrite.Top - 1;
-  pnlWrite.Realign;
- end else begin
-  Result := memPCERead;
-  splmemPCRead.Visible := ShouldShow;
-  memPCERead.Visible := ShouldShow;
+    // stuff at the bottom
+    memPCEWrite.Top := pnlWrite.Top + pnlWrite.height;
+    splmemPCEWrite.Top := memPCEWrite.Top - 1;
+    pnlWrite.Realign;
+  end
+  else
+  begin
+    Result := memPCERead;
+    splmemPCRead.Visible := ShouldShow;
+    memPCERead.Visible := ShouldShow;
 
-  //stuff at the bottom
-  memPCERead.Top := pnlNote.Top+pnlNote.height;
-  splmemPCRead.Top := memPCERead.Top - 1;
-  pnlNote.Realign;
- end;
+    // stuff at the bottom
+    memPCERead.Top := pnlNote.Top + pnlNote.height;
+    splmemPCRead.Top := memPCERead.Top - 1;
+    pnlNote.Realign;
+  end;
 end;
 
-procedure TfrmNotes.splHorzCanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
+procedure TfrmNotes.splHorzCanResize(Sender: TObject; var NewSize: Integer;
+  var Accept: Boolean);
 begin
   if NewSize > frmNotes.ClientWidth - PnlRight.Constraints.MinWidth - splHorz.Width then
   begin
     NewSize := frmNotes.ClientWidth - PnlRight.Constraints.MinWidth - splHorz.Width - 1;
     accept := false;
   end;
+
   inherited;
 end;
 
 procedure TfrmNotes.splmemPCEMoved(Sender: TObject);
 var
- ReturnEvt: TNotifyEvent;
+  ReturnEvt: TNotifyEvent;
 begin
   inherited;
   ReturnEvt := TSplitter(Sender).OnMoved;
   TSplitter(Sender).OnMoved := nil;
   try
     if Sender = splmemPCEWrite then
-     memPCERead.Height := memPCEWrite.Height
+      memPCERead.height := memPCEWrite.height
     else if Sender = splmemPCRead then
-     memPCEWrite.Height := memPCERead.Height;
+      memPCEWrite.height := memPCERead.height;
   finally
     TSplitter(Sender).OnMoved := ReturnEvt;
   end;
 end;
 
-
-
-procedure TfrmNotes.splDrawersCanResize(Sender: TObject; var NewSize: Integer; var Accept: Boolean);
+procedure TfrmNotes.splDrawersCanResize(Sender: TObject; var NewSize: Integer;
+  var Accept: Boolean);
 var
- Min_NoteList_Height: integer;
+  Min_NoteList_Height: Integer;
 begin
-  Min_NoteList_Height := tvNotes.Constraints.MinHeight + splDrawers.Height + 3;
-  if pnlLeftTop.Height - NewSize < Min_NoteList_Height then
+  Min_NoteList_Height := tvNotes.Constraints.MinHeight + splDrawers.height + 3;
+  if pnlLeftTop.height - NewSize < Min_NoteList_Height then
   begin
-    pnlDrawers.Height := pnlDrawers.Height - (Min_NoteList_Height - tvNotes.Height);
-    accept := false;
- end;
+    pnlDrawers.height := pnlDrawers.height -
+      (Min_NoteList_Height - tvNotes.height);
+    Accept := False;
+  end;
   inherited;
 end;
-{
-procedure  TfrmNotes.SetPCEParent();
-begin
- memPCEShow.Visible := fPCEShowing;
- SplVert.Visible :=  fPCEShowing;
- if pnlNote.Visible then
- begin
-  memPCEShow.Parent := pnlNote;
-  SplVert.Parent := pnlNote;
-  if CPMemNote.Visible then
-  begin
-    SplVert.Top := CPMemNote.Top + CPMemNote.height + 1;  //Under the copy/paste panel
-    memPCEShow.Top := SplVert.Top  + SplVert.Height + 1;  //under the splitter
-  end else begin
-    SplVert.Top := memNote.Top + memNote.Height + 1;
-    memPCEShow.Top := SplVert.Height + SplVert.Top + 1;
-  end;
- end else begin
-  memPCEShow.Parent := pnlWrite;
-  SplVert.Parent := pnlWrite;
-  if CPMemNewNote.Visible then
-  begin
-    SplVert.Top := CPMemNote.Top + CPMemNote.height + 1;
-    memPCEShow.Top := SplVert.Height + SplVert.top + 1;
-  end else begin
-    SplVert.Top := memNewNote.Top + memNewNote.Height + 1;
-    memPCEShow.Top := SplVert.Height + SplVert.Top + 1;
-  end;
 
- end;
+{
+procedure TfrmNotes.SetPCEParent();
+begin
+  memPCEShow.Visible := fPCEShowing;
+  SplVert.Visible := fPCEShowing;
+  if pnlNote.Visible then
+  begin
+    memPCEShow.Parent := pnlNote;
+    SplVert.Parent := pnlNote;
+    if CPMemNote.Visible then
+    begin
+      SplVert.Top := CPMemNote.Top + CPMemNote.height + 1;
+      // Under the copy/paste panel
+      memPCEShow.Top := SplVert.Top + SplVert.height + 1; // under the splitter
+    end
+    else
+    begin
+      SplVert.Top := memNote.Top + memNote.height + 1;
+      memPCEShow.Top := SplVert.height + SplVert.Top + 1;
+    end;
+  end
+  else
+  begin
+    memPCEShow.Parent := pnlWrite;
+    SplVert.Parent := pnlWrite;
+    if CPMemNewNote.Visible then
+    begin
+      SplVert.Top := CPMemNote.Top + CPMemNote.height + 1;
+      memPCEShow.Top := SplVert.height + SplVert.Top + 1;
+    end
+    else
+    begin
+      SplVert.Top := memNewNote.Top + memNewNote.height + 1;
+      memPCEShow.Top := SplVert.height + SplVert.Top + 1;
+    end;
+
+  end;
 end;
 }
 procedure TfrmNotes.ClearPCE;
@@ -2181,12 +2368,16 @@ end;
 function TfrmNotes.GetTitleText(AnIndex: Integer): string;
 { returns non-tabbed text for the title of a note given the ItemIndex in lstNotes }
 begin
-  if (lstNotes.Items.Count > AnIndex) then begin
+  if (lstNotes.Items.Count > AnIndex) then
+  begin
     Result := FormatFMDateTime('mmm dd,yy',
       MakeFMDateTime(Piece(lstNotes.Items[AnIndex], U, 3))) + '  ' +
-      Piece(lstNotes.Items[AnIndex], U, 2) + ', ' + Piece(lstNotes.Items[AnIndex], U, 6) + ', ' +
+      Piece(lstNotes.Items[AnIndex], U, 2) + ', ' +
+      Piece(lstNotes.Items[AnIndex], U, 6) + ', ' +
       Piece(Piece(lstNotes.Items[AnIndex], U, 5), ';', 2);
-  end else begin
+  end
+  else
+  begin
     Result := '';
   end;
 end;
@@ -2207,26 +2398,26 @@ function TfrmNotes.LacksRequiredForCreate: Boolean;
 var
   CurTitle: Integer;
 begin
-  Result := FALSE;
+  Result := False;
   with FEditNote do
   begin
     if Title <= 0 then
-      Result := True;
+      Result := true;
     if Author <= 0 then
-      Result := True;
+      Result := true;
     if DateTime <= 0 then
-      Result := True;
+      Result := true;
     if IsConsultTitle(Title) and (PkgIEN = 0) then
-      Result := True;
+      Result := true;
     if IsSurgeryTitle(Title) and (PkgIEN = 0) then
-      Result := True;
+      Result := true;
     if IsPRFTitle(Title) and (PRF_IEN = 0) and (not DocType = TYP_ADDENDUM) then
-      Result := True;
+      Result := true;
     if (DocType = TYP_ADDENDUM) then
     begin
       if AskCosignerForDocument(Addend, Author, DateTime) and (Cosigner <= 0)
       then
-        Result := True;
+        Result := true;
     end
     else
     begin
@@ -2236,7 +2427,7 @@ begin
         CurTitle := DocType;
       if AskCosignerForTitle(CurTitle, Author, DateTime) and (Cosigner <= 0)
       then
-        Result := True;
+        Result := true;
     end;
   end;
 end;
@@ -2333,12 +2524,12 @@ begin
   if (FOrderID <> '') and (FOrderID = frmConsults.OrderID) then
   begin
     InfoBox(TX_ORDER_LOCKED, TC_ORDER_LOCKED, MB_OK);
-    Result := FALSE;
+    Result := False;
     exit;
   end;
   if (FOrderID <> '') then
     if not OrderCanBeLocked(FOrderID) then
-      Result := FALSE;
+      Result := False;
   if not Result then
     FOrderID := '';
 end;
@@ -2349,12 +2540,12 @@ var
   AConsult: Integer;
   LockMsg, X: string;
 begin
-  Result := True;
+  Result := true;
   AConsult := 0;
   if frmConsults.ActiveEditOf(AnIEN) then
   begin
     InfoBox(TX_ORDER_LOCKED, TC_ORDER_LOCKED, MB_OK);
-    Result := FALSE;
+    Result := False;
     exit;
   end;
   if Changes.Exist(CH_DOC, IntToStr(AnIEN)) then
@@ -2386,26 +2577,29 @@ end;
 
 procedure TfrmNotes.UnlockConsultRequest(ANote: Int64; AConsult: Integer = 0);
 begin
-  if AConsult = 0 then AConsult := GetConsultIENForNote(ANote);
-  if AConsult > 0 then begin
+  if AConsult = 0 then
+    AConsult := GetConsultIENForNote(ANote);
+  if AConsult > 0 then
+  begin
     FOrderID := GetConsultOrderIEN(AConsult);
     UnlockOrderIfAble(FOrderID);
     FOrderID := '';
   end;
 end;
 
-function TfrmNotes.ActiveEditOf(AnIEN: Int64; ARequest: integer): Boolean;
+function TfrmNotes.ActiveEditOf(AnIEN: Int64; ARequest: Integer): Boolean;
 begin
   Result := False;
-  if EditingIndex < 0 then Exit;
+  if EditingIndex < 0 then
+    exit;
   if lstNotes.GetIEN(EditingIndex) = AnIEN then
   begin
-    Result := True;
+    Result := true;
     exit;
   end;
   with FEditNote do
     if (PkgIEN = ARequest) and (PkgPtr = PKG_CONSULTS) then
-      Result := True;
+      Result := true;
 end;
 
 procedure TfrmNotes.acViewInfoExecute(Sender: TObject);
@@ -2423,7 +2617,8 @@ begin
   acViewVisits.Enabled := frmFrame.pnlVisit.Enabled;
 end;
 
-procedure TfrmNotes.acSignedExecute(Sender: TObject);             
+procedure TfrmNotes.acSignedExecute(Sender: TObject);
+
 { changes the list of notes available for viewing }
 var
   AuthCtxt: TAuthorContext;
@@ -2434,17 +2629,18 @@ var
   Format: CHARFORMAT2;
 begin
   inherited;
-  //clear the global search
-  If GlobalSearch then begin
-    memnote.SelStart := 0;
-    memnote.SelLength := Length(TRichEdit(popNoteMemo.PopupComponent).Text);
+  // clear the global search
+  If GlobalSearch then
+  begin
+    memNote.SelStart := 0;
+    memNote.SelLength := Length(TRichEdit(popNoteMemo.PopupComponent).Text);
     Format.cbSize := SizeOf(Format);
     Format.dwMask := CFM_BACKCOLOR;
-    Format.crBackColor := Memnote.Color;
-    memnote.Perform(EM_SETCHARFORMAT, SCF_SELECTION, Longint(@Format));
-    memnote.SelAttributes.Color := clWindowText;
+    Format.crBackColor := memNote.Color;
+    memNote.Perform(EM_SETCHARFORMAT, SCF_SELECTION, Longint(@Format));
+    memNote.SelAttributes.Color := clWindowText;
     Style := [];
-    memnote.SelAttributes.Style := Style;
+    memNote.SelAttributes.Style := Style;
   end;
   GlobalSearch := False;
   GlobalSearchTerm := '';
@@ -2459,130 +2655,157 @@ begin
   mnuViewDetail.Checked := False;
   StatusText('Retrieving progress note list...');
 
-  if (Sender is TAction) then begin
+  if (Sender is TAction) then
+  begin
     ViewContext := TAction(Sender).Tag;
-  end else if (Sender is TMenuItem) then begin
+  end
+  else if (Sender is TMenuItem) then
+  begin
     ViewContext := TMenuItem(Sender).Tag;
-  end else if FCurrentContext.Status <> '' then begin
+  end
+  else if FCurrentContext.Status <> '' then
+  begin
     ViewContext := NC_CUSTOM;
-  end else begin
+  end
+  else
+  begin
     ViewContext := NC_RECENT;
   end;
 
   case ViewContext of
-  NC_RECENT:     begin
-                   FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                   stNotes.Caption := 'Last ' + IntToStr(ReturnMaxNotes) + ' Notes';
-                   FCurrentContext.Status := IntToStr(ViewContext);
-                   FCurrentContext.MaxDocs := ReturnMaxNotes;
-                   LoadNotes;
-                 end;
-  NC_ALL:        begin
-                   FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                   stNotes.Caption := 'All Signed Notes';
-                   FCurrentContext.Status := IntToStr(ViewContext);
-                   LoadNotes;
-                 end;
-  NC_UNSIGNED:   begin
-                   FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                   stNotes.Caption := 'Unsigned Notes';
-                   FCurrentContext.Status := IntToStr(ViewContext);
-                   LoadNotes;
-                 end;
-  // Text Search CQ: HDS00002856 --------------------
-  NC_SEARCHTEXT: begin;
-                   SearchTextStopFlag := False;
-                   if (Sender is TMenuItem) then begin
-                     SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt, StringReplace(TMenuItem(Sender).Caption, '&', '', [rfReplaceAll]) );
-                   end else if (Sender is TAction) then begin
-                     SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt, StringReplace(TAction(Sender).Caption, '&', '', [rfReplaceAll]) );
-                   end;
-                   with SearchCtxt do if Changed then
-                   begin
-                     //FCurrentContext.Status := IntToStr(ViewContext);
-                     frmSearchStop.Show;
-                     stNotes.Caption := 'Search: '+ SearchString;
-                     frmSearchStop.lblSearchStatus.Caption := stNotes.Caption;
-                     FCurrentContext.SearchString := SearchString;
-                     LoadNotes;
-                     GlobalSearch := true;
-                     GlobalSearchTerm := SearchString;
-                     dlgFindText.FindText := GlobalSearchTerm;
-                     dlgFindText.Options := [];
-                     dmodShared.FindRichEditTextAll(Memnote, dlgFindText, clHighlight, [fsItalic, fsBold]);
-                   end;
-                   // Only do LoadNotes if something changed
-                 end;
-  // Text Search CQ: HDS00002856 --------------------
-  NC_UNCOSIGNED: begin
-                   FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                   stNotes.Caption := 'Uncosigned Notes';
-                   FCurrentContext.Status := IntToStr(ViewContext);
-                   LoadNotes;
-                 end;
-  NC_BY_AUTHOR:  begin
-                   SelectAuthor(Font.Size, FCurrentContext, AuthCtxt);
-                   with AuthCtxt do if Changed then
-                   begin
-                     FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                     stNotes.Caption := AuthorName + ': Signed Notes';
-                     FCurrentContext.Status := IntToStr(NC_BY_AUTHOR);
-                     FCurrentContext.Author := Author;
-                     FCurrentContext.TreeAscending := Ascending;
-                     LoadNotes;
-                   end;
-                 end;
-  NC_BY_DATE:    begin
-                   SelectNoteDateRange(Font.Size, FCurrentContext, DateRange);
-                   with DateRange do if Changed then
-                   begin
-                     FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
-                     stNotes.Caption := FormatFMDateTime('mmm dd,yy', FMBeginDate) + ' to ' +
-                                         FormatFMDateTime('mmm dd,yy', FMEndDate) + ': Signed Notes';
-                     FCurrentContext.BeginDate     := BeginDate;
-                     FCurrentContext.EndDate       := EndDate;
-                     FCurrentContext.FMBeginDate   := FMBeginDate;
-                     FCurrentContext.FMEndDate     := FMEndDate;
-                     FCurrentContext.TreeAscending := Ascending;
-                     FCurrentContext.Status        := IntToStr(NC_BY_DATE);
-                     LoadNotes;
-                   end;
-                 end;
-  NC_CUSTOM:     begin
-                   if (Sender is TMenuItem) or (Sender is TAction) then
-                     begin
-                       SelectTIUView(Font.Size, True, FCurrentContext, uTIUContext);
-                       //lblNotes.Caption := 'Custom List';
-                     end;
-                   with uTIUContext do if Changed then
-                   begin
-                     //if MaxDocs = 0 then MaxDocs   := ReturnMaxNotes;
-                     FCurrentContext.BeginDate     := BeginDate;
-                     FCurrentContext.EndDate       := EndDate;
-                     FCurrentContext.FMBeginDate   := FMBeginDate;
-                     FCurrentContext.FMEndDate     := FMEndDate;
-                     FCurrentContext.Status        := Status;
-                     FCurrentContext.Author        := Author;
-                     FCurrentContext.MaxDocs       := MaxDocs;
-                     FCurrentContext.ShowSubject   := ShowSubject;
-                     // NEW PREFERENCES:
-                     FCurrentContext.SortBy        := SortBy;
-                     FCurrentContext.ListAscending := ListAscending;
-                     FCurrentContext.GroupBy       := GroupBy;
-                     FCurrentContext.TreeAscending := TreeAscending;
-                     FCurrentContext.SearchField   := SearchField;
-                     FCurrentContext.Keyword       := Keyword;
-                     FCurrentContext.Filtered      := Filtered;
-                     LoadNotes;
-                   end;
-                 end;
-  end; {case}
+    NC_RECENT:
+      begin
+        FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+        stNotes.Caption := 'Last ' + IntToStr(ReturnMaxNotes) + ' Notes';
+        FCurrentContext.Status := IntToStr(ViewContext);
+        FCurrentContext.MaxDocs := ReturnMaxNotes;
+        LoadNotes;
+      end;
+    NC_ALL:
+      begin
+        FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+        stNotes.Caption := 'All Signed Notes';
+        FCurrentContext.Status := IntToStr(ViewContext);
+        LoadNotes;
+      end;
+    NC_UNSIGNED:
+      begin
+        FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+        stNotes.Caption := 'Unsigned Notes';
+        FCurrentContext.Status := IntToStr(ViewContext);
+        LoadNotes;
+      end;
+    // Text Search CQ: HDS00002856 --------------------
+    NC_SEARCHTEXT:
+      begin;
+        SearchTextStopFlag := False;
+        if (Sender is TMenuItem) then
+        begin
+          SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt,
+            StringReplace(TMenuItem(Sender).Caption, '&', '', [rfReplaceAll]));
+        end
+        else if (Sender is TAction) then
+        begin
+          SelectSearchText(Font.Size, FCurrentContext.SearchString, SearchCtxt,
+            StringReplace(TAction(Sender).Caption, '&', '', [rfReplaceAll]));
+        end;
+        with SearchCtxt do
+          if Changed then
+          begin
+            // FCurrentContext.Status := IntToStr(ViewContext);
+            frmSearchStop.Show;
+            stNotes.Caption := 'Search: ' + SearchString;
+            frmSearchStop.lblSearchStatus.Caption := stNotes.Caption;
+            FCurrentContext.SearchString := SearchString;
+            LoadNotes;
+            GlobalSearch := true;
+            GlobalSearchTerm := SearchString;
+            dlgFindText.FindText := GlobalSearchTerm;
+            dlgFindText.Options := [];
+            dmodShared.FindRichEditTextAll(memNote, dlgFindText, clHighlight,
+              [fsItalic, fsBold]);
+          end;
+        // Only do LoadNotes if something changed
+      end;
+    // Text Search CQ: HDS00002856 --------------------
+    NC_UNCOSIGNED:
+      begin
+        FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+        stNotes.Caption := 'Uncosigned Notes';
+        FCurrentContext.Status := IntToStr(ViewContext);
+        LoadNotes;
+      end;
+    NC_BY_AUTHOR:
+      begin
+        SelectAuthor(Font.Size, FCurrentContext, AuthCtxt);
+        with AuthCtxt do
+          if Changed then
+          begin
+            FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+            stNotes.Caption := AuthorName + ': Signed Notes';
+            FCurrentContext.Status := IntToStr(NC_BY_AUTHOR);
+            FCurrentContext.Author := Author;
+            FCurrentContext.TreeAscending := Ascending;
+            LoadNotes;
+          end;
+      end;
+    NC_BY_DATE:
+      begin
+        SelectNoteDateRange(Font.Size, FCurrentContext, DateRange);
+        with DateRange do
+          if Changed then
+          begin
+            FillChar(FCurrentContext, SizeOf(FCurrentContext), 0);
+            stNotes.Caption := FormatFMDateTime('mmm dd,yy', FMBeginDate) +
+              ' to ' + FormatFMDateTime('mmm dd,yy', FMEndDate) +
+              ': Signed Notes';
+            FCurrentContext.BeginDate := BeginDate;
+            FCurrentContext.EndDate := EndDate;
+            FCurrentContext.FMBeginDate := FMBeginDate;
+            FCurrentContext.FMEndDate := FMEndDate;
+            FCurrentContext.TreeAscending := Ascending;
+            FCurrentContext.Status := IntToStr(NC_BY_DATE);
+            LoadNotes;
+          end;
+      end;
+    NC_CUSTOM:
+      begin
+        if (Sender is TMenuItem) or (Sender is TAction) then
+        begin
+          SelectTIUView(Font.Size, true, FCurrentContext, uTIUContext);
+          // lblNotes.Caption := 'Custom List';
+        end;
+        with uTIUContext do
+          if Changed then
+          begin
+            // if MaxDocs = 0 then MaxDocs   := ReturnMaxNotes;
+            FCurrentContext.BeginDate := BeginDate;
+            FCurrentContext.EndDate := EndDate;
+            FCurrentContext.FMBeginDate := FMBeginDate;
+            FCurrentContext.FMEndDate := FMEndDate;
+            FCurrentContext.Status := Status;
+            FCurrentContext.Author := Author;
+            FCurrentContext.MaxDocs := MaxDocs;
+            FCurrentContext.ShowSubject := ShowSubject;
+            // NEW PREFERENCES:
+            FCurrentContext.SortBy := SortBy;
+            FCurrentContext.ListAscending := ListAscending;
+            FCurrentContext.GroupBy := GroupBy;
+            FCurrentContext.TreeAscending := TreeAscending;
+            FCurrentContext.SearchField := SearchField;
+            FCurrentContext.Keyword := Keyword;
+            FCurrentContext.Filtered := Filtered;
+            LoadNotes;
+          end;
+      end;
+  end; { case }
   stNotes.Caption := SetNoteTreeLabel(FCurrentContext);
   // Text Search CQ: HDS00002856 --------------------
   If FCurrentContext.SearchString <> '' then
     stNotes.Caption := stNotes.Caption + ', containing "' +
       FCurrentContext.SearchString + '"';
-  If SearchTextStopFlag then begin
+  If SearchTextStopFlag then
+  begin
     stNotes.Caption := 'Search for "' + FCurrentContext.SearchString +
       '" was stopped!';
   end;
@@ -2636,7 +2859,8 @@ end;
 
 { create, edit & save notes }
 
-procedure TfrmNotes.InsertNewNote(IsIDChild: Boolean; AnIDParent: Integer; aNoteIEN: integer = -1; aNoteTitle: string = '');
+procedure TfrmNotes.InsertNewNote(IsIDChild: Boolean; AnIDParent: Integer;
+  aNoteIEN: Integer = -1; aNoteTitle: string = '');
 { creates the editing context for a new progress note & inserts stub into top of view list }
 var
   EnableAutosave, HaveRequired: Boolean;
@@ -2649,25 +2873,25 @@ begin
   if frmFrame.TimedOut then
     exit;
   FNewIDChild := IsIDChild;
-  EnableAutosave := FALSE;
+  EnableAutosave := False;
   TmpBoilerPlate := nil;
   try
     ClearEditControls;
     FillChar(FEditNote, SizeOf(FEditNote), 0); // v15.7
     with FEditNote do
+    begin
+      DocType := TYP_PROGRESS_NOTE;
+      IsNewNote := true;
+      If aNoteIEN > -1 then
       begin
-        DocType := TYP_PROGRESS_NOTE;
-        IsNewNote := true;
-        If aNoteIEN > -1 then
-          begin
-            Title := aNoteIEN;
-            TitleName := aNoteTitle
-          end
-        else
-          begin
-            Title := DfltNoteTitle;
-            TitleName := DfltNoteTitleName;
-          end;
+        Title := aNoteIEN;
+        TitleName := aNoteTitle
+      end
+      else
+      begin
+        Title := DfltNoteTitle;
+        TitleName := DfltNoteTitleName;
+      end;
 
       if IsIDChild and (not CanTitleBeIDChild(Title, WhyNot)) then
       begin
@@ -2696,8 +2920,10 @@ begin
     GetUnresolvedConsultsInfo;
 
     // if aNoteIEN was passed in, VerifyNoteTitle is overridden
-    If LacksRequiredForCreate or (VerifyNoteTitle and (aNoteIEN < 0)) or uUnresolvedConsults.UnresolvedConsultsExist then
-      HaveRequired := ExecuteNoteProperties(FEditNote, CT_NOTES, IsIDChild, FNewIDChild, '', 0)
+    If LacksRequiredForCreate or (VerifyNoteTitle and (aNoteIEN < 0)) or
+      uUnresolvedConsults.UnresolvedConsultsExist then
+      HaveRequired := ExecuteNoteProperties(FEditNote, CT_NOTES, IsIDChild,
+        FNewIDChild, '', 0)
     else
       HaveRequired := true;
 
@@ -2715,6 +2941,7 @@ begin
       // create the note
       PutNewNote(CreatedNote, FEditNote);
 
+      FEditNoteIEN := CreatedNote.IEN;
       uPCEEdit.NoteIEN := CreatedNote.IEN;
       if CreatedNote.IEN > 0 then
         LockDocument(CreatedNote.IEN, CreatedNote.ErrorText);
@@ -2723,22 +2950,23 @@ begin
         // x := $$RESOLVE^TIUSRVLO formatted string
         // 7348^Note Title^3000913^NERD, YOURA  (N0165)^1329;Rich Vertigan;VERTIGAN,RICH^8E REHAB MED^complete^Adm: 11/05/98;2981105.095547^        ;^^0^^^2
         with FEditNote do
+        begin
+          X := IntToStr(CreatedNote.IEN) + U + TitleName + U +
+            FloatToStr(FEditNote.DateTime) + U + Patient.Name + U +
+            IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' +
+            U + U + U + U + U + U + U + U;
+          // Link Note to PRF Action
+          if PRF_IEN <> 0 then
           begin
-            X := IntToStr(CreatedNote.IEN) + U + TitleName + U +
-              FloatToStr(FEditNote.DateTime) + U + Patient.Name + U +
-              IntToStr(Author) + ';' + AuthorName + U + LocationName + U + 'new' +
-              U + U + U + U + U + U + U + U;
-            // Link Note to PRF Action
-            if PRF_IEN <> 0 then
-              begin
-                CallVistA('TIU LINK TO FLAG', [CreatedNote.IEN, PRF_IEN, ActionIEN, Patient.DFN], aStr);
-                if aStr = '0' then
-                  ShowMsg('TIU LINK TO FLAG: FAILED');
-              end;
+            CallVistA('TIU LINK TO FLAG', [CreatedNote.IEN, PRF_IEN, ActionIEN,
+              Patient.DFN], aStr);
+            if aStr = '0' then
+              ShowMsg('TIU LINK TO FLAG: FAILED');
           end;
+        end;
 
         lstNotes.Items.Insert(0, X);
-        uChanging := True;
+        uChanging := true;
         tvNotes.Items.BeginUpdate;
         if IsIDChild then
         begin
@@ -2750,7 +2978,9 @@ begin
             MakeNoteDisplayText(X), MakeNoteTreeObject(X));
           tmpNode.ImageIndex := IMG_ID_CHILD;
           tmpNode.SelectedIndex := IMG_ID_CHILD;
-        end else begin
+        end
+        else
+        begin
           tmpNode := tvNotes.Items.AddObjectFirst(tvNotes.Items.GetFirstNode,
             'New Note in Progress',
             MakeNoteTreeObject('NEW^New Note in Progress^^^^^^^^^^^%^0'));
@@ -2766,36 +2996,39 @@ begin
         TORTreeNode(tmpNode).StringData := X;
         tvNotes.Selected := tmpNode;
         tvNotes.Items.EndUpdate;
-        uChanging := FALSE;
-        Changes.Add(CH_DOC, IntToStr(CreatedNote.IEN), GetTitleText(0), '', CH_SIGN_YES);
+        uChanging := False;
+        Changes.Add(CH_DOC, IntToStr(CreatedNote.IEN), GetTitleText(0), '',
+          CH_SIGN_YES);
         lstNotes.ItemIndex := 0;
         EditingIndex := 0;
         SetSubjectVisible(AskSubjectForNotes);
         if not assigned(TmpBoilerPlate) then
           TmpBoilerPlate := TStringList.Create;
         LoadBoilerPlate(TmpBoilerPlate, FEditNote.Title);
-        FChanged := FALSE;
+        FChanged := False;
         cmdChangeClick(Self); // will set captions, sign state for Changes
         lstNotesClick(Self); // will make pnlWrite visible
         if timAutoSave.Interval <> 0 then
-          EnableAutosave := True;
+          EnableAutosave := true;
         if txtSubject.Visible then
           txtSubject.SetFocus
         else if memNewNote.Visible then
                memNewNote.SetFocus;
-      end else begin
+      end
+      else
+      begin
         // if note creation failed or failed to get note lock (both unlikely), unlock consult
         with FEditNote do
           if (PkgIEN > 0) and (PkgPtr = PKG_CONSULTS) then
             UnlockConsultRequest(0, PkgIEN);
         InfoBox(CreatedNote.ErrorText, TX_CREATE_ERR, MB_OK);
-        HaveRequired := FALSE;
+        HaveRequired := False;
       end; { if CreatedNote.IEN }
     end; { if HaveRequired }
     if not HaveRequired then
     begin
       ClearEditControls;
-      ShowPCEButtons(FALSE);
+      ShowPCEButtons(False);
     end;
   finally
     if assigned(TmpBoilerPlate) then
@@ -2815,10 +3048,11 @@ begin
   end;
 end;
 
-procedure TfrmNotes.InsertAddendum(aParentIEN: integer = -1; aParentTitle: string = '';isSmart: Boolean =false);
+procedure TfrmNotes.InsertAddendum(aParentIEN: integer = -1;
+  aParentTitle: string = '';isSmart: Boolean =false);
 { sets up fields of pnlWrite to write an addendum for the selected note }
 const
-  AS_ADDENDUM = True;
+  AS_ADDENDUM = true;
   IS_ID_CHILD = False;
 var
   HaveRequired: Boolean;
@@ -2831,47 +3065,47 @@ begin
   TmpBoilerPlate := nil;
   try
   with FEditNote do
+  begin
+    DocType := TYP_ADDENDUM;
+    IsNewNote := False;
+    DateTime := FMNow;
+    Author := User.DUZ;
+    AuthorName := User.Name;
+
+    If aParentIEN = -1 then // Called directly from UI
     begin
-      DocType := TYP_ADDENDUM;
-      IsNewNote := False;
-      DateTime := FMNow;
-      Author := User.DUZ;
-      AuthorName := User.Name;
+      Title := TitleForNote(lstNotes.ItemIEN);
+      TitleName := Piece(lstNotes.Items[lstNotes.ItemIndex], U, 2);
+      If Copy(TitleName, 1, 1) = '+' then
+        TitleName := Copy(TitleName, 3, 199);
 
-      If aParentIEN = -1 then // Called directly from UI
-        begin
-          Title := TitleForNote(lstNotes.ItemIEN);
-          TitleName := Piece(lstNotes.Items[lstNotes.ItemIndex], U, 2);
-          If Copy(TitleName, 1, 1) = '+' then
-            TitleName := Copy(TitleName, 3, 199);
+      X := GetPackageRefForNote(lstNotes.ItemIEN);
+      If Piece(X, U, 1) <> '-1' then
+      begin
+        PkgRef := GetPackageRefForNote(lstNotes.ItemIEN);
+        PkgIEN := StrToIntDef(Piece(PkgRef, ';', 1), 0);
+        PkgPtr := Piece(PkgRef, ';', 2);
+      end;
+      Addend := lstNotes.ItemIEN;
+    end
+    else // Called external to the UI aParentIEN is the IEN of the Note to addend
+    begin
+      Title := TitleForNote(aParentIEN);
+      TitleName := aParentTitle;
+      If Copy(TitleName, 1, 1) = '+' then
+        TitleName := Copy(TitleName, 3, 199);
 
-          X := GetPackageRefForNote(lstNotes.ItemIEN);
-          If Piece(X, U, 1) <> '-1' then
-            begin
-              PkgRef := GetPackageRefForNote(lstNotes.ItemIEN);
-              PkgIEN := StrToIntDef(Piece(PkgRef, ';', 1), 0);
-              PkgPtr := Piece(PkgRef, ';', 2);
-            end;
-          Addend := lstNotes.ItemIEN;
-        end
-      else // Called external to the UI aParentIEN is the IEN of the Note to addend
-        begin
-          Title := TitleForNote(aParentIEN);
-          TitleName := aParentTitle;
-          If Copy(TitleName, 1, 1) = '+' then
-            TitleName := Copy(TitleName, 3, 199);
-
-          X := GetPackageRefForNote(aParentIEN);
-          If Piece(X, U, 1) <> '-1' then
-            begin
-              PkgRef := GetPackageRefForNote(aParentIEN);
-              PkgIEN := StrToIntDef(Piece(PkgRef, ';', 1), 0);
-              PkgPtr := Piece(PkgRef, ';', 2);
-            end;
-          Addend := aParentIEN;
-        end;
+      X := GetPackageRefForNote(aParentIEN);
+      If Piece(X, U, 1) <> '-1' then
+      begin
+        PkgRef := GetPackageRefForNote(aParentIEN);
+        PkgIEN := StrToIntDef(Piece(PkgRef, ';', 1), 0);
+        PkgPtr := Piece(PkgRef, ';', 2);
+      end;
+      Addend := aParentIEN;
     end;
-  {  ** Remove later ;-)
+  end;
+  { ** Remove later ;-)
   with FEditNote do
   begin
     DocType := TYP_ADDENDUM;
@@ -2897,9 +3131,11 @@ begin
   end;
   }
   // check to see if interaction necessary to get required fields
-  if LacksRequiredForCreate
-    then HaveRequired := ExecuteNoteProperties(FEditNote, CT_NOTES, IS_ID_CHILD, False, '', 0)
-    else HaveRequired := True;
+  if LacksRequiredForCreate then
+    HaveRequired := ExecuteNoteProperties(FEditNote, CT_NOTES, IS_ID_CHILD,
+      False, '', 0)
+  else
+    HaveRequired := true;
   // lock the consult request if there is a consult
   if HaveRequired then
     with FEditNote do
@@ -2917,7 +3153,7 @@ begin
     // Save copied text here
     if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
       CPMemNewNote.SaveTheMonitor(CreatedNote.IEN);
-
+    FEditNoteIEN := CreatedNote.IEN;
     uPCEEdit.NoteIEN := CreatedNote.IEN;
     if CreatedNote.IEN > 0 then
       LockDocument(CreatedNote.IEN, CreatedNote.ErrorText);
@@ -2932,7 +3168,7 @@ begin
       end;
 
       lstNotes.Items.Insert(0, X);
-      uChanging := True;
+      uChanging := true;
       tvNotes.Items.BeginUpdate;
       tmpNode := tvNotes.Items.AddObjectFirst(tvNotes.Items.GetFirstNode,
         'New Addendum in Progress',
@@ -2949,12 +3185,15 @@ begin
       tvNotes.Selected := tmpNode;
       tvNotes.Items.EndUpdate;
       uChanging := False;
-      Changes.Add(CH_DOC, IntToStr(CreatedNote.IEN), GetTitleText(0), '', CH_SIGN_YES);
+      Changes.Add(CH_DOC, IntToStr(CreatedNote.IEN), GetTitleText(0), '',
+        CH_SIGN_YES);
       lstNotes.ItemIndex := 0;
       EditingIndex := 0;
       SetSubjectVisible(AskSubjectForNotes);
       cmdChangeClick(Self); // will set captions, sign state for Changes
       lstNotesClick(Self); // will make pnlWrite visible
+      if timAutoSave.Interval <> 0 then
+        timAutoSave.Enabled := true;
       if isSMART then
         begin
           if not assigned(TmpBoilerPlate) then
@@ -2962,13 +3201,15 @@ begin
           LoadBoilerPlate(TmpBoilerPlate, FEditNote.Title);
         end;
       memNewNote.SetFocus;
-    end else begin
+    end
+    else
+    begin
       // if note creation failed or failed to get note lock (both unlikely), unlock consult
       with FEditNote do
         if (PkgIEN > 0) and (PkgPtr = PKG_CONSULTS) then
           UnlockConsultRequest(0, PkgIEN);
       InfoBox(CreatedNote.ErrorText, TX_CREATE_ERR, MB_OK);
-      HaveRequired := FALSE;
+      HaveRequired := False;
     end; { if CreatedNote.IEN }
   end; { if HaveRequired }
   if not HaveRequired then
@@ -2976,17 +3217,20 @@ begin
   finally
     if assigned(TmpBoilerPlate) then
     begin
-      DocInfo := MakeXMLParamTIU(IntToStr(CreatedNote.IEN), FEditNote);
-      ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
-      memNewNote.Text := TmpBoilerPlate.Text;
-      // RTC 1175879 - Removing to ensure that an initial template is placed before boilerplate.
-      //memNewNote.SelStart := Length(memNewNote.Lines.Text); //CQ: 16461
-      SpeakStrings(memNewNote);
-      UpdateNoteAuthor(DocInfo);
-      TmpBoilerPlate.Free;
+      try
+        DocInfo := MakeXMLParamTIU(IntToStr(CreatedNote.IEN), FEditNote);
+        ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
+        memNewNote.Text := TmpBoilerPlate.Text;
+        // RTC 1175879 - Removing to ensure that an initial template is placed before boilerplate.
+        //memNewNote.SelStart := Length(memNewNote.Lines.Text); //CQ: 16461
+        SpeakStrings(memNewNote);
+        UpdateNoteAuthor(DocInfo);
+      finally
+        TmpBoilerPlate.Free;
+      end;
     end;
   if timAutoSave.Interval <> 0 then
-        timAutoSave.Enabled := True;
+    timAutoSave.Enabled := True;
   end;
 
 end;
@@ -2998,11 +3242,14 @@ var
   X: string;
 begin
   ClearEditControls;
-  Drawers.RichEditControl := memNewNote; // added to fix problem with focused control when editing.  dlp 15Oct12
+  Drawers.RichEditControl := memNewNote;
+  // added to fix problem with focused control when editing.  dlp 15Oct12
   Drawers.CopyMonitor := CPMemNewNote;
-  if not LockConsultRequestAndNote(lstNotes.ItemIEN) then Exit;
+  if not LockConsultRequestAndNote(lstNotes.ItemIEN) then
+    exit;
   EditingIndex := lstNotes.ItemIndex;
-  Changes.Add(CH_DOC, lstNotes.ItemID, GetTitleText(EditingIndex), '', CH_SIGN_YES);
+  Changes.Add(CH_DOC, lstNotes.ItemID, GetTitleText(EditingIndex), '',
+    CH_SIGN_YES);
   GetNoteForEdit(FEditNote, lstNotes.ItemIEN);
   memNewNote.Lines.Assign(FEditNote.Lines);
 
@@ -3017,22 +3264,24 @@ begin
       FEditNote.TitleName := FEditNote.TitleName + 'Addendum to ';
   end;
 
-  uChanging := True;
+  uChanging := true;
   tvNotes.Items.BeginUpdate;
 
   tmpNode := tvNotes.FindPieceNode('EDIT', 1, U, nil);
   if tmpNode = nil then
-    begin
-      tmpNode := tvNotes.Items.AddObjectFirst(tvNotes.Items.GetFirstNode, 'Note being edited',
-                                              MakeNoteTreeObject('EDIT^Note being edited^^^^^^^^^^^%^0'));
-      TORTreeNode(tmpNode).StringData := 'EDIT^Note being edited^^^^^^^^^^^%^0';
-    end
+  begin
+    tmpNode := tvNotes.Items.AddObjectFirst(tvNotes.Items.GetFirstNode,
+      'Note being edited',
+      MakeNoteTreeObject('EDIT^Note being edited^^^^^^^^^^^%^0'));
+    TORTreeNode(tmpNode).StringData := 'EDIT^Note being edited^^^^^^^^^^^%^0';
+  end
   else
     tmpNode.DeleteChildren;
   X := lstNotes.Items[lstNotes.ItemIndex];
   tmpNode.ImageIndex := IMG_TOP_LEVEL;
-  tmpNode := tvNotes.Items.AddChildObjectFirst(tmpNode, MakeNoteDisplayText(x), MakeNoteTreeObject(x));
-  TORTreeNode(tmpNode).StringData := x;
+  tmpNode := tvNotes.Items.AddChildObjectFirst(tmpNode, MakeNoteDisplayText(X),
+    MakeNoteTreeObject(X));
+  TORTreeNode(tmpNode).StringData := X;
   if CompareText(Copy(FEditNote.TitleName, 1, 8), 'Addendum') <> 0 then
     tmpNode.ImageIndex := IMG_SINGLE
   else
@@ -3062,41 +3311,51 @@ var
   X: string;
 begin
   Saved := False;
-  if (memNewNote.GetTextLen = 0) or (not ContainsVisibleChar(memNewNote.Text)) then begin
+  if (memNewNote.GetTextLen = 0) or (not ContainsVisibleChar(memNewNote.Text))
+  then
+  begin
     lstNotes.ItemIndex := EditingIndex;
     X := lstNotes.ItemID;
-    uChanging := True;
-    tvNotes.Selected := tvNotes.FindPieceNode(x, 1, U, tvNotes.Items.GetFirstNode);
+    uChanging := true;
+    tvNotes.Selected := tvNotes.FindPieceNode(X, 1, U,
+      tvNotes.Items.GetFirstNode);
     uChanging := False;
     tvNotesChange(Self, tvNotes.Selected);
     if FSilent or ((not FSilent) and
       (InfoBox(GetTitleText(EditingIndex) + TX_EMPTY_NOTE, TC_EMPTY_NOTE,
       MB_YESNO) = IDYES)) then
     begin
-      FConfirmed := True;
+      FConfirmed := true;
       acDeleteNoteExecute(Self);
-      Saved := True;
-      FDeleted := True;
+      Saved := true;
+      FDeleted := true;
     end
     else
       FConfirmed := False;
-    Exit;
+    exit;
   end;
   // ExpandTabsFilter(memNewNote.Lines, TAB_STOP_CHARS);
   FEditNote.Lines := memNewNote.Lines;
   // FEditNote.Lines:= SetLinesTo74ForSave(memNewNote.Lines, Self);
   FEditNote.Subject := txtSubject.Text;
   FEditNote.NeedCPT := uPCEEdit.CPTRequired;
-  timAutoSave.Enabled := FALSE;
+  timAutoSave.Enabled := False;
   try
     PutEditedNote(UpdatedNote, FEditNote, lstNotes.GetIEN(EditingIndex));
 
+    memNewNote.Clear;
+    // Update the richedit for the copy paste (Formatting may have changed)
+    // GetNoteForEdit(FEditNote, lstNotes.GetIEN(EditingIndex));
+    // memNewNote.Lines.Assign(FEditNote.Lines);
+    LoadDocumentText(memNewNote.Lines, lstNotes.GetIEN(EditingIndex));
+
     // Save copied text here
+    // CPMemNewNote.SaveTheMonitor(lstNotes.GetIEN(EditingIndex));
     if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
       CPMemNewNote.SaveTheMonitor(UpdatedNote.IEN);
 
   finally
-    timAutoSave.Enabled := True;
+    timAutoSave.Enabled := true;
   end;
   // there's no unlocking here since the note is still in Changes after a save
   if UpdatedNote.IEN > 0 then
@@ -3106,11 +3365,13 @@ begin
       EditingIndex := -1;
       lstNotesClick(Self);
     end;
-    EditingIndex := -1; // make sure EditingIndex reset even if not viewing edited note
-    Saved := True;
+    EditingIndex := -1;
+    // make sure EditingIndex reset even if not viewing edited note
+    Saved := true;
     FNewIDChild := False;
     FChanged := False;
-  end else
+  end
+  else
   begin
     if not FSilent then
       InfoBox(TX_SAVE_ERROR1 + UpdatedNote.ErrorText + TX_SAVE_ERROR2,
@@ -3138,12 +3399,13 @@ begin
       exit
     else if ItemIndex = EditingIndex then
     begin
-//      pnlWrite.Visible := True;
+      // pnlWrite.Visible := True;
       ReadVisible := False;
       mnuViewDetail.Enabled := False;
-      mnuActChange.Enabled := not ((FEditNote.IDParent <> 0) and (not FNewIDChild));
-      mnuActLoadBoiler.Enabled := True;
-//      stTitle.Caption := '';
+      mnuActChange.Enabled := not((FEditNote.IDParent <> 0) and
+        (not FNewIDChild));
+      mnuActLoadBoiler.Enabled := true;
+      // stTitle.Caption := '';
       UpdateReminderFinish;
       CPMemNewNote.LoadPasteText();
     end
@@ -3151,8 +3413,8 @@ begin
     begin
       StatusText('Retrieving selected progress note...');
       Screen.Cursor := crHourGlass;
-      ReadVisible := True;
-//      pnlWrite.Visible := FALSE;
+      ReadVisible := true;
+      // pnlWrite.Visible := FALSE;
       UpdateReminderFinish;
       stTitle.Caption := Piece(Piece(Items[ItemIndex], U, 8), ';', 1) + #9 +
         Piece(Items[ItemIndex], U, 2) + ', ' + Piece(Items[ItemIndex], U, 6) +
@@ -3162,21 +3424,24 @@ begin
 
       LoadDocumentText(memNote.Lines, ItemIEN);
       memNote.SelStart := 0;
-      mnuViewDetail.Enabled := True;
-      mnuViewDetail.Checked := FALSE;
-      mnuActChange.Enabled := FALSE;
-      mnuActLoadBoiler.Enabled := FALSE;
+      mnuViewDetail.Enabled := true;
+      mnuViewDetail.Checked := False;
+      mnuActChange.Enabled := False;
+      mnuActLoadBoiler.Enabled := False;
       Screen.Cursor := crDefault;
       StatusText('');
-      If GlobalSearch then begin
-       dlgFindText.FindText := GlobalSearchTerm;
-       dlgFindText.Options := [];
-       dmodShared.FindRichEditTextAll(Memnote, dlgFindText, clHighlight, [fsItalic, fsBold]);
+      If GlobalSearch then
+      begin
+        dlgFindText.FindText := GlobalSearchTerm;
+        dlgFindText.Options := [];
+        dmodShared.FindRichEditTextAll(memNote, dlgFindText, clHighlight,
+          [fsItalic, fsBold]);
       end;
       CPMemNote.LoadPasteText();
     end;
-  if (Assigned(frmReminderTree)) then
+  if (assigned(frmReminderTree)) then
     frmReminderTree.EnableActions;
+
   DisplayPCE;
   memNewNote.Repaint;
   memNote.Repaint;
@@ -3219,12 +3484,13 @@ begin
     OKPressed := ExecuteNoteProperties(FEditNote, CT_NOTES, IsIDChild,
       FNewIDChild, '', 0)
   else
-    OKPressed := True;
+    OKPressed := true;
   if not OKPressed then
     exit;
   // update display fields & uPCEEdit
   lblNewTitle.Caption := ' ' + FEditNote.TitleName + ' ';
-  if (FEditNote.Addend > 0) and (CompareText(Copy(lblNewTitle.Caption, 2, 8), 'Addendum') <> 0) then
+  if (FEditNote.Addend > 0) and (CompareText(Copy(lblNewTitle.Caption, 2, 8),
+    'Addendum') <> 0) then
     lblNewTitle.Caption := ' Addendum to:' + lblNewTitle.Caption;
   stRefDate.Caption := FormatFMDateTime('mmm dd,yyyy@hh:nn', FEditNote.DateTime);
   stAuthor.Caption := FEditNote.AuthorName;
@@ -3232,7 +3498,8 @@ begin
     X := 'Adm: '
   else
     X := 'Vst: ';
-  X := X + FormatFMDateTime('mm/dd/yy', FEditNote.VisitDate) + '  ' + FEditNote.LocationName;
+  X := X + FormatFMDateTime('mm/dd/yy', FEditNote.VisitDate) + '  ' +
+    FEditNote.LocationName;
   lblVisit.Caption := X;
   if Length(FEditNote.CosignerName) > 0 then
     stCosigner.Caption := 'Expected Cosigner: ' + FEditNote.CosignerName
@@ -3241,7 +3508,8 @@ begin
 
   stAuthor.Width := TextWidthByFont(stAuthor.Font.Handle, stAuthor.Caption);
   stAuthor.Left := cmdChange.Left - stAuthor.Width - 4;
-  stCosigner.Width := TextWidthByFont(stCosigner.Font.Handle, stCosigner.Caption);
+  stCosigner.Width := TextWidthByFont(stCosigner.Font.Handle,
+    stCosigner.Caption);
   stCosigner.Left := cmdChange.Left - stCosigner.Width - 4;
 
   uPCEEdit.NoteTitle := FEditNote.Title;
@@ -3278,80 +3546,67 @@ begin
     end;
     // Link Note to PRF Action
     if PRF_IEN <> 0 then
-      begin
-        CallVistA('TIU LINK TO FLAG', [lstNotes.ItemIEN, PRF_IEN, ActionIEN, Patient.DFN], aStr);
-        if aStr = '0' then
-          ShowMsg('TIU LINK TO FLAG: FAILED');
-      end;
+    begin
+      CallVistA('TIU LINK TO FLAG', [lstNotes.ItemIEN, PRF_IEN, ActionIEN,
+        Patient.DFN], aStr);
+      if aStr = '0' then
+        ShowMsg('TIU LINK TO FLAG: FAILED');
+    end;
   end;
 
   if LastTitle <> FEditNote.Title then
-    self.acReloadBoilerExecute(Self);
+    Self.acReloadBoilerExecute(Self);
 end;
 
 procedure TfrmNotes.cmdChangeExit(Sender: TObject);
 begin
   inherited;
-  //Fix the Tab Order  Make Drawers Buttons Accessible
-  if Boolean(Hi(GetKeyState(VK_TAB))) and
-     Boolean(Hi(GetKeyState(VK_SHIFT))) then
-    tvNotes.SetFocus;
+  // Fix the Tab Order  Make Drawers Buttons Accessible
+  ExitToNextControl(Sender);
 end;
 
 procedure TfrmNotes.cmdNewNoteExit(Sender: TObject);
 begin
-  inherited;
-  if TabIsPressed or ShiftTabIsPressed then
-  begin
-    if (Screen.ActiveControl = lvNotes) or
-        (Screen.ActiveControl = memNote) then
-      frmFrame.pnlPatient.SetFocus
-    else
-    if (Screen.ActiveControl = tvNotes) then
-      FindNextControl( frmFrame.pnlPatient, False, True, False).SetFocus;
-  end;
+  ExitToNextControl(Sender);
 end;
 
 procedure TfrmNotes.cmdPCEExit(Sender: TObject);
 begin
-  inherited;
-  //Fix the Tab Order  Make Drawers Buttons Accessible
-  if TabIsPressed then
-    if frmFrame.pnlPatient.CanFocus then
-      frmFrame.pnlPatient.SetFocus;
+  ExitToNextControl(Sender);
 end;
 
 procedure TfrmNotes.CPHide(Sender: TObject);
 begin
   inherited;
-  if Sender  is TCopyPasteDetails then
+  if Sender is TCopyPasteDetails then
   begin
-   if TCopyPasteDetails(Sender).Name = 'CPMemNote' then
-    spDetails.Visible := false
-   else
-    spEditDetails.Visible := False;
+    if TCopyPasteDetails(Sender).Name = 'CPMemNote' then
+      spDetails.Visible := False
+    else
+      spEditDetails.Visible := False;
   end;
 end;
-
-
 
 procedure TfrmNotes.CPShow(Sender: TObject);
 begin
   inherited;
-  if Sender  is TCopyPasteDetails then
+  if Sender is TCopyPasteDetails then
   begin
-   TCopyPasteDetails(Sender).Top := TCopyPasteDetails(Sender).VisualEdit.Top + 1;
+    TCopyPasteDetails(Sender).Top := TCopyPasteDetails(Sender)
+      .VisualEdit.Top + 1;
 
-   if TCopyPasteDetails(Sender).Name = 'CPMemNote' then
-   begin
-    spDetails.Visible := true;
-    spDetails.Top := CPMemNote.Top - 1;
-    pnlNote.Realign;
-   end else begin
-    spEditDetails.Visible := true;
-    spEditDetails.Top := CPMemNewNote.Top - 1;
-    pnlWrite.Realign;
-   end;
+    if TCopyPasteDetails(Sender).Name = 'CPMemNote' then
+    begin
+      spDetails.Visible := true;
+      spDetails.Top := CPMemNote.Top - 1;
+      pnlNote.Realign;
+    end
+    else
+    begin
+      spEditDetails.Visible := true;
+      spEditDetails.Top := CPMemNewNote.Top - 1;
+      pnlWrite.Realign;
+    end;
   end;
 end;
 
@@ -3360,8 +3615,8 @@ procedure TfrmNotes.SaveTheMonitor(Sender: TObject; SaveList: TStringList;
 var
   i, X, z, Total, LineCnt, SubCnt: Integer;
   DivisionID, aName, aValue: string;
-   LookUpLst: THashedStringList;
-   aList: iORNetMult;
+  LookUpLst: THashedStringList;
+  aList: iORNetMult;
 begin
   inherited;
   Total := StrToIntDef(SaveList.values['TotalToSave'], -1);
@@ -3370,7 +3625,7 @@ begin
     DivisionID := GetDivisionID;
   if Total > 0 then
   begin
-      LookUpLst := THashedStringList.Create;
+    LookUpLst := THashedStringList.Create;
     try
       LookUpLst.BeginUpdate;
       LookUpLst.Assign(SaveList);
@@ -3378,38 +3633,41 @@ begin
       neworNetMult(aList);
       for i := 1 to Total do
       begin
-        aList.AddSubscript([i,0],LookupLst.values[IntToStr(i) + ',0']);
-        LineCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',-1'], -1);
-        for X := 0 to LineCnt  do
+        aList.AddSubscript([i, 0], LookUpLst.values[IntToStr(i) + ',0']);
+        LineCnt := StrToIntDef(LookUpLst.values[IntToStr(i) + ',-1'], -1);
+        for X := 0 to LineCnt do
         begin
-         aName := IntToStr(i) + ',' + IntToStr(X);
-         aValue := FilteredString(LookupLst.values[aName]);
-         aList.AddSubscript([i,X], aValue);
+          aName := IntToStr(i) + ',' + IntToStr(X);
+          aValue := FilteredString(LookUpLst.values[aName]);
+          aList.AddSubscript([i, X], aValue);
         end;
 
         // Send in the original if needed
-        LineCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',Copy,-1'], -1);
+        LineCnt := StrToIntDef(LookUpLst.values[IntToStr(i) + ',Copy,-1'], -1);
         for X := 1 to LineCnt do
         begin
-         aName := IntToStr(i) + ',Copy,' + IntToStr(X);
-         aValue := FilteredString(LookupLst.values[aName]);
-         aList.AddSubscript([i,0,x], aValue);
+          aName := IntToStr(i) + ',Copy,' + IntToStr(X);
+          aValue := FilteredString(LookUpLst.values[aName]);
+          aList.AddSubscript([i, 0, X], aValue);
         end;
 
         // Send in the "Paste"
-        if StrToIntDef(Piece(LookupLst.values[IntToStr(i) + ',Paste,-1'], '^', 2), 0) >
-        (TCopyEditMonitor(Sender).CopyMonitor.SaveCutOff * 1000) then
+        if StrToIntDef(Piece(LookUpLst.values[IntToStr(i) + ',Paste,-1'], '^',
+          2), 0) > (TCopyEditMonitor(Sender).CopyMonitor.SaveCutOff * 1000) then
         begin
-          LineCnt := StrToIntDef(Piece(LookupLst.values[IntToStr(i) + ',Paste,-1'], '^', 1), -1);
+          LineCnt := StrToIntDef
+            (Piece(LookUpLst.values[IntToStr(i) + ',Paste,-1'], '^', 1), -1);
           for X := 1 to LineCnt do
           begin
-           SubCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',Paste,' + IntToStr(X) + ',-1'], -1);
-           for Z := 1 to SubCnt do
-           begin
-            aName := IntToStr(i) + ',Paste,' + IntToStr(X) +','+ IntToStr(z);
-            aValue := FilteredString(LookupLst.values[aName]);
-            aList.AddSubscript([i,'Paste',x,z], aValue);
-           end;
+            SubCnt := StrToIntDef(LookUpLst.values[IntToStr(i) + ',Paste,' +
+              IntToStr(X) + ',-1'], -1);
+            for z := 1 to SubCnt do
+            begin
+              aName := IntToStr(i) + ',Paste,' + IntToStr(X) + ',' +
+                IntToStr(z);
+              aValue := FilteredString(LookUpLst.values[aName]);
+              aList.AddSubscript([i, 'Paste', X, z], aValue);
+            end;
           end;
         end;
 
@@ -3418,7 +3676,7 @@ begin
       CallVistA('ORWTIU SVPASTE', [aList, DivisionID], ReturnList);
 
     Finally
-     LookUpLst.Free;
+      LookUpLst.Free;
     End;
   end;
 end;
@@ -3435,8 +3693,6 @@ procedure TfrmNotes.LoadPastedText(Sender: TObject; LoadList: TStrings;
   var ProcessLoad, PreLoaded: Boolean);
 var
   DivId, ParamStr, tmpRtn: string;
-  AddlSigners: TStrings;
-  i: Integer;
   IsCoSigner: Boolean;
 begin
   DivID := Piece(RPCBrokerV.User.Division, '^', 1);
@@ -3451,18 +3707,7 @@ begin
     // check for preload
     if ProcessLoad then
     begin
-
-      AddlSigners := GetCurrentSigners(lstNotes.ItemIEN);
-      for i := 0 to AddlSigners.Count - 1 do
-      begin
-        if Piece(AddlSigners.Strings[i], U, 3) = 'Expected Cosigner' then
-        begin
-          IsCoSigner := (Piece(AddlSigners.Strings[i], U, 1)
-            = IntToStr(User.DUZ));
-          break;
-        end;
-      end;
-
+      IsCoSigner := UserIsCosigner(lstNotes.ItemIEN,IntToStr(User.DUZ));
       if IsCoSigner and (not EditMonitor.CopyMonitor.DisplayPaste) then
       begin
         // Setup default indication
@@ -3515,7 +3760,7 @@ end;
 procedure TfrmNotes.memNewNoteChange(Sender: TObject);
 begin
   inherited;
-  FChanged := True;
+  FChanged := true;
 end;
 
 procedure TfrmNotes.DoAutoSave(Suppress: Integer = 1);
@@ -3530,6 +3775,7 @@ begin
     // PutTextOnly(ErrMsg, memNewNote.Lines, lstNotes.GetIEN(EditingIndex));
     timAutoSave.Enabled := False;
     try
+
       SetText(ErrMsg, memNewNote.Lines, lstNotes.GetIEN(EditingIndex), Suppress);
 
       //Save copied text here
@@ -3550,24 +3796,24 @@ end;
 
 procedure TfrmNotes.DrawerButtonClicked;
 begin
-  SendMessage(PnlLeft.Handle, WM_SETREDRAW, 0, 0);
+  SendMessage(pnlLeft.Handle, WM_SETREDRAW, 0, 0);
   try
     if Drawers.DrawerButtonsVisible then
     begin
       pnlDrawers.Visible := true;
-      pnlDrawers.Top := splDrawers.Top +1;
+      pnlDrawers.Top := splDrawers.Top + 1;
       splDrawers.Enabled := Drawers.DrawerIsOpen;
       if Drawers.DrawerIsOpen then
       begin
         if Drawers.LastOpenSize > Drawers.TotalButtonHeight then
           ExpandedDrawerHeight := Drawers.LastOpenSize;
-        Drawers.Parent.Height := ExpandedDrawerHeight;
+        Drawers.Parent.height := ExpandedDrawerHeight;
         Drawers.Parent.Constraints.MinHeight := 150;
       end
       else
       begin
         Drawers.Parent.Constraints.MinHeight := 0;
-        Drawers.Parent.Height := Drawers.TotalButtonHeight;
+        Drawers.Parent.height := Drawers.TotalButtonHeight;
         Drawers.Parent.Constraints.MinHeight := Drawers.TotalButtonHeight;
       end;
     end
@@ -3577,8 +3823,8 @@ begin
       splDrawers.Enabled := False;
     end;
   finally
-    SendMessage(PnlLeft.Handle, WM_SETREDRAW, 1, 0);
-    RedrawWindow(PnlLeft.Handle, nil, 0, RDW_ERASE or RDW_FRAME or
+    SendMessage(pnlLeft.Handle, WM_SETREDRAW, 1, 0);
+    RedrawWindow(pnlLeft.Handle, nil, 0, RDW_ERASE or RDW_FRAME or
       RDW_INVALIDATE or RDW_ALLCHILDREN);
   end;
 end;
@@ -3596,89 +3842,112 @@ end;
 
 { Action menu events ----------------------------------------------------------------------- }
 
-function TfrmNotes.StartNewEdit(NewNoteType: integer): Boolean;
+function TfrmNotes.StartNewEdit(NewNoteType: Integer): Boolean;
 { if currently editing a note, returns TRUE if the user wants to start a new one }
 var
   Saved: Boolean;
   Msg, CapMsg: string;
 begin
   FStarting := False;
-  Result := True;
-//  cmdNewNote.Enabled := False;
+  Result := true;
+  // cmdNewNote.Enabled := False;
   if EditingIndex > -1 then
   begin
     FStarting := True;
     case NewNoteType of
-      NT_ACT_ADDENDUM:  begin
-                          Msg := TX_NEW_SAVE1 + MakeNoteDisplayText(lstNotes.Items[EditingIndex]) + TX_NEW_SAVE3;
-                          CapMsg := TC_NEW_SAVE3;
-                        end;
-      NT_ACT_EDIT_NOTE: begin
-                          Msg := TX_NEW_SAVE1 + MakeNoteDisplayText(lstNotes.Items[EditingIndex]) + TX_NEW_SAVE4;
-                          CapMsg := TC_NEW_SAVE4;
-                        end;
-      NT_ACT_ID_ENTRY:  begin
-                          Msg := TX_NEW_SAVE1 + MakeNoteDisplayText(lstNotes.Items[EditingIndex]) + TX_NEW_SAVE5;
-                          CapMsg := TC_NEW_SAVE5;
-                        end;
+      NT_ACT_ADDENDUM:
+        begin
+          Msg := TX_NEW_SAVE1 + MakeNoteDisplayText(lstNotes.Items[EditingIndex]
+            ) + TX_NEW_SAVE3;
+          CapMsg := TC_NEW_SAVE3;
+        end;
+      NT_ACT_EDIT_NOTE:
+        begin
+          Msg := TX_NEW_SAVE1 + MakeNoteDisplayText(lstNotes.Items[EditingIndex]
+            ) + TX_NEW_SAVE4;
+          CapMsg := TC_NEW_SAVE4;
+        end;
+      NT_ACT_ID_ENTRY:
+        begin
+          Msg := TX_NEW_SAVE1 + MakeNoteDisplayText(lstNotes.Items[EditingIndex]
+            ) + TX_NEW_SAVE5;
+          CapMsg := TC_NEW_SAVE5;
+        end;
     else
       begin
-        Msg := TX_NEW_SAVE1 + MakeNoteDisplayText(lstNotes.Items[EditingIndex]) + TX_NEW_SAVE2;
+        Msg := TX_NEW_SAVE1 + MakeNoteDisplayText(lstNotes.Items[EditingIndex])
+          + TX_NEW_SAVE2;
         CapMsg := TC_NEW_SAVE2;
       end;
     end;
-    if InfoBox(Msg, CapMsg, MB_YESNO) = IDNO then begin
+    if InfoBox(Msg, CapMsg, MB_YESNO) = IDNO then
+    begin
       Result := False;
       FStarting := False;
-    end else begin
+    end
+    else
+    begin
       SaveCurrentNote(Saved);
       if not Saved then
-        Result := FALSE
+        Result := False
       else
         LoadNotes;
-      FStarting := FALSE;
+      FStarting := False;
     end;
-  end else begin
-    //Consults section
-    if frmConsults.EditingIndex > -1 then begin
-      FStarting := True;
+  end
+  else
+  begin
+    // Consults section
+    if frmConsults.EditingIndex > -1 then
+    begin
+      FStarting := true;
       case NewNoteType of
-        NT_ACT_ADDENDUM: begin
-            Msg := TX_NEW_SAVE1 +
-                  MakeNoteDisplayText(frmConsults.lstNotes.Items[frmConsults.EditingIndex]) +
-                  TX_NEW_SAVE3;
+        NT_ACT_ADDENDUM:
+          begin
+            Msg := TX_NEW_SAVE1 + MakeNoteDisplayText
+              (frmConsults.lstNotes.Items[frmConsults.EditingIndex]) +
+              TX_NEW_SAVE3;
             CapMsg := TC_NEW_SAVE3;
           end;
-        NT_ACT_EDIT_NOTE: begin
-            Msg := TX_NEW_SAVE1 +
-                   MakeNoteDisplayText(frmConsults.lstNotes.Items[frmConsults.EditingIndex]) +
-          			   TX_NEW_SAVE4;
+        NT_ACT_EDIT_NOTE:
+          begin
+            Msg := TX_NEW_SAVE1 + MakeNoteDisplayText
+              (frmConsults.lstNotes.Items[frmConsults.EditingIndex]) +
+              TX_NEW_SAVE4;
             CapMsg := TC_NEW_SAVE4;
           end;
-        NT_ACT_ID_ENTRY: begin
-            Msg := TX_NEW_SAVE1 +
-                   MakeNoteDisplayText(frmConsults.lstNotes.Items[frmConsults.EditingIndex]) +
-                   TX_NEW_SAVE5;
+        NT_ACT_ID_ENTRY:
+          begin
+            Msg := TX_NEW_SAVE1 + MakeNoteDisplayText
+              (frmConsults.lstNotes.Items[frmConsults.EditingIndex]) +
+              TX_NEW_SAVE5;
             CapMsg := TC_NEW_SAVE5;
           end;
-      else begin
-          Msg := TX_NEW_SAVE1 +
-                 MakeNoteDisplayText(frmConsults.lstNotes.Items[frmConsults.EditingIndex]) +
-                 TX_NEW_SAVE2;
-         CapMsg := TC_NEW_SAVE2;
+      else
+        begin
+          Msg := TX_NEW_SAVE1 + MakeNoteDisplayText
+            (frmConsults.lstNotes.Items[frmConsults.EditingIndex]) +
+            TX_NEW_SAVE2;
+          CapMsg := TC_NEW_SAVE2;
         end;
       end;
-      if InfoBox(Msg, CapMsg, MB_YESNO) = IDNO then begin
+      if InfoBox(Msg, CapMsg, MB_YESNO) = IDNO then
+      begin
         Result := False;
         FStarting := False;
-      end else begin
+      end
+      else
+      begin
         frmConsults.SaveCurrentNote(Saved);
-        if not Saved then Result := False else LoadNotes;
+        if not Saved then
+          Result := False
+        else
+          LoadNotes;
         FStarting := False;
       end;
     end;
   end;
-  //cmdNewNote.Enabled := (Result = FALSE) and (FStarting = FALSE);
+  // cmdNewNote.Enabled := (Result = FALSE) and (FStarting = FALSE);
   acNewNoteUpdate(nil);
 end;
 
@@ -3725,7 +3994,7 @@ begin
   if IEN = 0 then
     exit;
   if frmFrame.TimedOut and (EditingIndex <> -1) then
-    FSilent := True;
+    FSilent := true;
   with lstNotes do
     for i := 0 to Items.Count - 1 do
       if lstNotes.GetIEN(i) = IEN then
@@ -3740,7 +4009,7 @@ begin
       exit;
     if FDeleted then
     begin
-      FDeleted := FALSE;
+      FDeleted := False;
       exit;
     end;
     AnIndex := lstNotes.SelectByIEN(IEN);
@@ -3762,19 +4031,19 @@ begin
     if not ActionSts.Success then
     begin
       InfoBox(ActionSts.Reason, TX_IN_AUTH, MB_OK);
-      ContinueSign := FALSE;
+      ContinueSign := False;
     end
     else if not NoteHasText(IEN) then
     begin
       InfoBox(TX_EMPTY_NOTE1, TC_EMPTY_NOTE, MB_OK or MB_ICONERROR);
-      ContinueSign := FALSE;
+      ContinueSign := False;
     end
     else if not LastSaveClean(IEN) and
       (InfoBox(TX_ABSAVE, TC_ABSAVE, MB_YESNO or MB_DEFBUTTON2 or
       MB_ICONWARNING) <> IDYES) then
-      ContinueSign := FALSE
+      ContinueSign := False
     else
-      ContinueSign := True;
+      ContinueSign := true;
     if ContinueSign then
     begin
       if (AnIndex >= 0) and (AnIndex = lstNotes.ItemIndex) then
@@ -3832,33 +4101,33 @@ begin
   end
   else
   begin
-    popNoteMemoCut.Enabled := FALSE;
-    popNoteMemoCopy.Enabled := FALSE;
-    popNoteMemoPaste.Enabled := FALSE;
-    popNoteMemoTemplate.Enabled := FALSE;
+    popNoteMemoCut.Enabled := False;
+    popNoteMemoCopy.Enabled := False;
+    popNoteMemoPaste.Enabled := False;
+    popNoteMemoTemplate.Enabled := False;
   end;
   if pnlWrite.Visible then
   begin
-    popNoteMemoSpell.Enabled := True;
-    popNoteMemoGrammar.Enabled := True;
-    popNoteMemoReformat.Enabled := True;
+    popNoteMemoSpell.Enabled := true;
+    popNoteMemoGrammar.Enabled := true;
+    popNoteMemoReformat.Enabled := true;
     popNoteMemoReplace.Enabled := (FEditCtrl.GetTextLen > 0);
     popNoteMemoPreview.Enabled := (Drawers.ActiveDrawer = odTemplates) and
-      Assigned(Drawers.tvTemplates.Selected);
+      assigned(Drawers.tvTemplates.Selected);
     popNoteMemoInsTemplate.Enabled := (Drawers.ActiveDrawer = odTemplates) and
-      Assigned(Drawers.tvTemplates.Selected);
+      assigned(Drawers.tvTemplates.Selected);
     popNoteMemoViewCslt.Enabled := (FEditNote.PkgPtr = PKG_CONSULTS);
     // if editing consult title
   end
   else
   begin
-    popNoteMemoSpell.Enabled := FALSE;
-    popNoteMemoGrammar.Enabled := FALSE;
-    popNoteMemoReformat.Enabled := FALSE;
-    popNoteMemoReplace.Enabled := FALSE;
-    popNoteMemoPreview.Enabled := FALSE;
-    popNoteMemoInsTemplate.Enabled := FALSE;
-    popNoteMemoViewCslt.Enabled := FALSE;
+    popNoteMemoSpell.Enabled := False;
+    popNoteMemoGrammar.Enabled := False;
+    popNoteMemoReformat.Enabled := False;
+    popNoteMemoReplace.Enabled := False;
+    popNoteMemoPreview.Enabled := False;
+    popNoteMemoInsTemplate.Enabled := False;
+    popNoteMemoViewCslt.Enabled := False;
   end;
 end;
 
@@ -3917,10 +4186,12 @@ procedure TfrmNotes.popNoteMemoFindClick(Sender: TObject);
 // pData: ^ClipboardData; //CQ8300
 begin
   inherited;
-  SendMessage(TRichEdit(popNoteMemo.PopupComponent).Handle, WM_VSCROLL, SB_TOP, 0);
+  SendMessage(TRichEdit(popNoteMemo.PopupComponent).Handle, WM_VSCROLL,
+    SB_TOP, 0);
   with dlgFindText do
   begin
-    Position := Point(Application.MainForm.Left + splHorz.Left + splHorz.Width, Application.MainForm.Top);
+    Position := Point(Application.MainForm.Left + splHorz.Left + splHorz.Width,
+      Application.MainForm.Top);
     FindText := '';
     Options := [frDown, frHideUpDown];
     {
@@ -3950,7 +4221,8 @@ begin
     SB_TOP, 0);
   with dlgReplaceText do
   begin
-    Position := Point(Application.MainForm.Left + splHorz.Left + splHorz.Width, Application.MainForm.Top);
+    Position := Point(Application.MainForm.Left + splHorz.Left + splHorz.Width,
+      Application.MainForm.Top);
     FindText := '';
     ReplaceText := '';
     Options := [frDown, frHideUpDown];
@@ -3976,13 +4248,13 @@ procedure TfrmNotes.popNoteMemoSpellClick(Sender: TObject);
 begin
   inherited;
   DoAutoSave(0);
-  timAutoSave.Enabled := FALSE;
+  timAutoSave.Enabled := False;
   try
     SpellCheckForControl(memNewNote);
   finally
-    FChanged := True;
+    FChanged := true;
     DoAutoSave(0);
-    timAutoSave.Enabled := True;
+    timAutoSave.Enabled := true;
   end;
 end;
 
@@ -3990,13 +4262,13 @@ procedure TfrmNotes.popNoteMemoGrammarClick(Sender: TObject);
 begin
   inherited;
   DoAutoSave(0);
-  timAutoSave.Enabled := FALSE;
+  timAutoSave.Enabled := False;
   try
     GrammarCheckForControl(memNewNote);
   finally
-    FChanged := True;
+    FChanged := true;
     DoAutoSave(0);
-    timAutoSave.Enabled := True;
+    timAutoSave.Enabled := true;
   end;
 end;
 
@@ -4018,13 +4290,13 @@ begin
     exit;
   CsltIEN := FEditNote.PkgIEN;
   X := FindConsult(CsltIEN);
-  ConsultDetail := TStringList.create;
+  ConsultDetail := TStringList.Create;
   try
     LoadConsultDetail(ConsultDetail, CsltIEN);
     ReportBox(ConsultDetail, 'Consult Details: #' + IntToStr(CsltIEN) + ' - ' +
-      Piece(X, U, 4), True);
+      Piece(X, U, 4), true);
   finally
-    ConsultDetail.free;
+    ConsultDetail.Free;
   end;
 end;
 
@@ -4038,7 +4310,7 @@ begin
   inherited;
   if frmFrame.TimedOut and (EditingIndex <> -1) then
   begin
-    FSilent := True;
+    FSilent := true;
     if memNewNote.GetTextLen > 0 then
       SaveCurrentNote(Saved)
     else
@@ -4192,7 +4464,7 @@ begin
   end;
   FCurrentContext := AContext;
   EditingIndex := -1;
-  tvNotes.Enabled := True;
+  tvNotes.Enabled := true;
   ReadToFront;
   if FCurrentContext.Status <> '' then
     with uTIUContext do
@@ -4212,24 +4484,28 @@ begin
       Keyword := FCurrentContext.Keyword;
       SearchField := FCurrentContext.SearchField;
       Filtered := FCurrentContext.Filtered;
-      Changed := True;
-      mnuViewClick(Self);
+      Changed := true;
+//      mnuViewClick(Self); -- replacing mnu event handler with action
+      acSignedExecute(Self);
     end
   else
   begin
     ViewContext := NC_RECENT;
-    mnuViewClick(Self);
+//    mnuViewClick(Self); -- replacing mnu event handler with action
+    acSignedExecute(Self);
   end;
 end;
 
-procedure TfrmNotes.SetWriteShowing(const Value: boolean);
+procedure TfrmNotes.SetWriteShowing(const Value: Boolean);
 begin
-  if Value <> pnlWrite.Visible then begin
-    if not value then begin
+  if Value <> pnlWrite.Visible then
+  begin
+    if not Value then
+    begin
       pnlWrite.Left := 0;
-  //    pnlWrite.Width := 0;
+      // pnlWrite.Width := 0;
       pnlWrite.Top := 0;
-      pnlWrite.Height := 0;
+      pnlWrite.height := 0;
     end;
     pnlWrite.Visible := Value;
   end;
@@ -4238,7 +4514,7 @@ end;
 procedure TfrmNotes.popNoteMemoTemplateClick(Sender: TObject);
 begin
   inherited;
-  EditTemplates(Self, True, FEditCtrl.SelText);
+  EditTemplates(Self, true, FEditCtrl.SelText);
 end;
 
 procedure TfrmNotes.popNoteListPopup(Sender: TObject);
@@ -4257,65 +4533,49 @@ begin
   tvNotes.FullExpand;
 end;
 
+procedure TfrmNotes.pnlDrawersExit(Sender: TObject);
+begin
+  ExitToNextControl(Sender);
+end;
+
 procedure TfrmNotes.pnlDrawersResize(Sender: TObject);
 begin
   inherited;
   Drawers.BaseHeight := pnlDrawers.Height;
 end;
 
-procedure TfrmNotes.pnlNoteExit(Sender: TObject);
+procedure TfrmNotes.pnlLeftExit(Sender: TObject);
 begin
-  inherited;
-  if TabIsPressed or ShiftTabIsPressed then
-  begin
-    if (Screen.ActiveControl = frmFrame.pnlPatient) then
-      FindNextControl( tvNotes, True, True, False).SetFocus
-    else
-    if (Screen.ActiveControl = frmDrawers.btnTemplate) or
-        (Screen.ActiveControl = frmDrawers.btnEncounter) or
-        (Screen.ActiveControl = cmdNewNote) or
-        (Screen.ActiveControl = cmdPCE) then
-      FindNextControl( frmDrawers.btnTemplate, False, True, False).SetFocus;
-  end;
+  ExitToNextControl(Sender);
 end;
 
-procedure TfrmNotes.PnlRightResize(Sender: TObject);
-var
- AdjustBy: Integer;
- Rect: TRect;
+procedure TfrmNotes.pnlNoteExit(Sender: TObject);
 begin
-  inherited;
+  ExitToNextControl(Sender);
+end;
 
-  //CQ7012 Added test for nil
-  if Assigned(Self) and Assigned(pnlLeft) and Assigned(pnlWrite) and Assigned(splHorz) then
-  begin
-    if PnlRight.Width =  PnlRight.Constraints.MinWidth then
-    begin
-      //Grab the current bounds
-      Rect := BoundsRect;
-      //What should they be?
-      ForceInsideWorkArea(Rect);
-      //if we our outside of our bounds then take away from the left
-      if BoundsRect.Right > Rect.Right then
-      begin
-        AdjustBy := BoundsRect.Right - Rect.Right;
-        pnlLeft.Width :=  pnlLeft.Width - splHorz.Width - AdjustBy;
-
-        //Ensure that the form will fit on the work area
-        if WindowState <> wsMaximized then
-        begin
-          frmFrame.Width := frmFrame.Width - splHorz.Width - AdjustBy;
-        end;
-      end;
-    end;
-  end;
+procedure TfrmNotes.PnlRightExit(Sender: TObject);
+begin
+  ExitToNextControl(Sender);
 end;
 
 procedure TfrmNotes.pnlWriteResize(Sender: TObject);
+const
+  LEFT_MARGIN = 4;
 begin
   inherited;
-  //Update the edit area
-  LimitEditableNote;
+  LimitEditWidth(memNewNote, MAX_PROGRESSNOTE_WIDTH - 1);
+
+  // CQ7012 Added test for nil
+  if memNewNote <> nil then
+    memNewNote.Constraints.MinWidth := TextWidthByFont(memNewNote.Font.Handle,
+      StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 2) +
+      ScrollBarWidth;
+  // CQ7012 Added test for nil
+  if (Self <> nil) and (pnlLeft <> nil) and (pnlWrite <> nil) and
+    (splHorz <> nil) then
+    if memNewNote.Width = memNewNote.Constraints.MinWidth then
+      pnlLeft.Width := Self.ClientWidth - pnlWrite.Width - splHorz.Width;
 end;
 
 procedure TfrmNotes.popNoteListCollapseAllClick(Sender: TObject);
@@ -4335,7 +4595,7 @@ begin
     exit;
   with tvNotes.Selected do
     if HasChildren then
-      Expand(True);
+      Expand(true);
 end;
 
 procedure TfrmNotes.popNoteListCollapseSelectedClick(Sender: TObject);
@@ -4345,7 +4605,7 @@ begin
     exit;
   with tvNotes.Selected do
     if HasChildren then
-      Collapse(True);
+      Collapse(true);
 end;
 
 procedure TfrmNotes.SetEditingIndex(const Value: Integer);
@@ -4353,13 +4613,14 @@ begin
   FEditingIndex := Value;
   if (FEditingIndex < 0) then
     KillReminderDialog(Self);
-  if (Assigned(frmReminderTree)) then
+  if (assigned(frmReminderTree)) then
     frmReminderTree.EnableActions;
 end;
 
-procedure TfrmNotes.SetExpandedDrawerHeight(const Value: integer);
+procedure TfrmNotes.SetExpandedDrawerHeight(const Value: Integer);
 begin
-  if (Value <> fExpandedDrawerHeight) then begin
+  if (Value <> fExpandedDrawerHeight) then
+  begin
     fExpandedDrawerHeight := Value;
   end;
 end;
@@ -4367,15 +4628,20 @@ end;
 function TfrmNotes.CanFinishReminder: Boolean;
 begin
   if (EditingIndex < 0) then
-    Result := FALSE
+    Result := False
   else
     Result := (lstNotes.ItemIndex = EditingIndex);
 end;
 
 procedure TfrmNotes.FormDestroy(Sender: TObject);
 begin
-  FDocList.free;
-  FImageFlag.free;
+  // Free the objects created in the create
+  fAllUnCoSignedNotes.Free;
+  fAllUnSignedNotes.Free;
+  fAllSignedNotes.Free;
+  FDocList.Free;
+  FImageFlag.Free;
+
   if assigned(Encounter) and assigned(Encounter.Notifier) then
     Encounter.Notifier.RemoveNotify(EncounterLocationChanged);
   KillDocTreeObjects(tvNotes);
@@ -4385,11 +4651,13 @@ end;
 procedure TfrmNotes.FormHide(Sender: TObject);
 begin
   inherited;
-  frmFrame.pnlPatient.OnExit := FOldFramePnlPatientExit;
-  frmDrawers.btnTemplate.OnExit := FOldDrawerPnlTemplatesButtonExit;
-  frmDrawers.btnEncounter.OnExit := FOldDrawerPnlEncounterButtonExit;
-  frmDrawers.edtSearch.OnExit := FOldDrawerEdtSearchExit;
   acNewNote.Enabled := false;
+
+  // Unwinding the bindings set up in the Show
+  frmDrawers.edtSearch.OnExit := FOldDrawerEdtSearchExit;
+  frmDrawers.btnEncounter.OnExit := FOldDrawerPnlEncounterButtonExit;
+  frmDrawers.btnTemplate.OnExit := FOldDrawerPnlTemplatesButtonExit;
+  frmFrame.pnlToolbar.OnExit := FOldFramePnlToolbarExit;
 end;
 
 procedure TfrmNotes.AssignRemForm;
@@ -4403,224 +4671,39 @@ begin
   RemForm.NoteList := lstNotes;
   RemForm.DrawerReminderTV := Drawers.tvReminders;
   RemForm.DrawerReminderTreeChange := Drawers.NotifyWhenRemTreeChanges;
-  RemForm.DrawerRemoveReminderTreeChange := Drawers.RemoveNotifyWhenRemTreeChanges;
+  RemForm.DrawerRemoveReminderTreeChange :=
+    Drawers.RemoveNotifyWhenRemTreeChanges;
 end;
 
-// ===================  Added for sort/search enhancements ======================
-procedure TfrmNotes.LoadNotes;
-const
-  INVALID_ID = -1;
-  INFO_ID = 1;
-var
-  tmpList: TStringList;
-  ANode: TORTreeNode;
-  X, xx, noteId: Integer; // Text Search CQ: HDS00002856
-  Dest: TStringList;
-  KeepFlag: Boolean; // Text Search CQ: HDS00002856
-  NoteCount, NoteMatches: Integer; // Text Search CQ: HDS00002856
-begin
-  tmpList := TStringList.create;
-  try
-    FDocList.Clear;
-    uChanging := True;
-    RedrawSuspend(memNote.Handle);
-    RedrawSuspend(lvNotes.Handle);
-    try
-    tvNotes.Items.BeginUpdate;
-    lstNotes.Items.Clear;
-    KillDocTreeObjects(tvNotes);
-    tvNotes.Items.Clear;
-    tvNotes.Items.EndUpdate;
-    lvNotes.Items.Clear;
-    memNote.Clear;
-    memNote.Invalidate;
-    stTitle.Caption := '';
-    with FCurrentContext do
-    begin
-      if Status <> IntToStr(NC_UNSIGNED) then
-      begin
-        ListNotesForTree(tmpList, NC_UNSIGNED, 0, 0, 0, 0, TreeAscending);
-        if tmpList.Count > 0 then
-        begin
-          CreateListItemsforDocumentTree(FDocList, tmpList, NC_UNSIGNED,
-            GroupBy, TreeAscending, CT_NOTES);
-          UpdateTreeView(FDocList, tvNotes);
-        end;
-        tmpList.Clear;
-        FDocList.Clear;
-      end;
-      if Status <> IntToStr(NC_UNCOSIGNED) then
-      begin
-        ListNotesForTree(tmpList, NC_UNCOSIGNED, 0, 0, 0, 0, TreeAscending);
-        if tmpList.Count > 0 then
-        begin
-          CreateListItemsforDocumentTree(FDocList, tmpList, NC_UNCOSIGNED,
-            GroupBy, TreeAscending, CT_NOTES);
-          UpdateTreeView(FDocList, tvNotes);
-        end;
-        tmpList.Clear;
-        FDocList.Clear;
-      end;
-      ListNotesForTree(tmpList, StrToIntDef(Status, 0), FMBeginDate, FMEndDate,
-        Author, MaxDocs, TreeAscending);
-      CreateListItemsforDocumentTree(FDocList, tmpList, StrToIntDef(Status, 0),
-        GroupBy, TreeAscending, CT_NOTES);
-
-      // Text Search CQ: HDS00002856 ---------------------------------------
-      if FCurrentContext.SearchString <> '' then // Text Search CQ: HDS00002856
-      begin
-        NoteMatches := 0;
-        NoteCount := FDocList.Count - 1;
-        if FDocList.Count > 0 then
-          for X := FDocList.Count - 1 downto 1 do
-          begin; // Don't do 0, because it's informational
-            KeepFlag := FALSE;
-            stNotes.Caption := 'Scanning ' + IntToStr(NoteCount - X + 1) +
-              ' of ' + IntToStr(NoteCount) + ', ' + IntToStr(NoteMatches);
-            If NoteMatches = 1 then
-              stNotes.Caption := stNotes.Caption + ' match'
-            else
-              stNotes.Caption := stNotes.Caption + ' matches';
-            frmSearchStop.lblSearchStatus.Caption := stNotes.Caption;
-            frmSearchStop.lblSearchStatus.Repaint;
-            stNotes.Repaint;
-            // Free up some ticks so they can click the "Stop" button
-            Application.processmessages;
-            Application.processmessages;
-            Application.processmessages;
-            If SearchTextStopFlag = FALSE then
-            begin
-              noteId := StrToIntDef(Piece(FDocList.Strings[X], '^', 1), -1);
-              if (noteId = INVALID_ID) or (noteId = INFO_ID) then
-                Continue;
-              Dest := TStringList.Create;
-              try
-                CallVistA('TIU GET RECORD TEXT', [Piece(FDocList.Strings[X], '^', 1)], Dest);
-                if Dest.Count > 0 then
-                  for xx := 0 to Dest.Count - 1 do
-                    begin
-                      if Pos(Uppercase(FCurrentContext.SearchString), Uppercase(Dest[xx])) > 0 then
-                        KeepFlag := True;
-                    end;
-              finally
-                FreeAndNil(Dest);
-              end;
-              If KeepFlag = FALSE then
-              begin;
-                if FDocList.Count >= X then
-                  FDocList.Delete(X);
-                if (tmpList.Count >= X) and (X > 0) then
-                  tmpList.Delete(X - 1);
-              end
-              else
-                Inc(NoteMatches);
-            end;
-          end;
-      end
-      else
-        // Reset the caption
-        stNotes.Caption := SetNoteTreeLabel(FCurrentContext);
-
-      // Text Search CQ: HDS00002856 ---------------------------------------
-
-      UpdateTreeView(FDocList, tvNotes);
-    end;
-    with tvNotes do
-    begin
-      uChanging := True;
-      tvNotes.Items.BeginUpdate;
-      RemoveParentsWithNoChildren(tvNotes, FCurrentContext);
-      // moved here in v15.9 (RV)
-      if FLastNoteID <> '' then
-        Selected := FindPieceNode(FLastNoteID, 1, U, nil);
-      if Selected = nil then
-      begin
-        if (FCurrentContext.GroupBy <> '') or (FCurrentContext.Filtered) then
-        begin
-          ANode := TORTreeNode(Items.GetFirstNode);
-          while ANode <> nil do
-          begin
-            ANode.Expand(FALSE);
-            Selected := ANode;
-            ANode := TORTreeNode(ANode.GetNextSibling);
-          end;
-        end
-        else
-        begin
-          ANode := tvNotes.FindPieceNode(FCurrentContext.Status, 1, U, nil);
-          if ANode <> nil then
-            ANode.Expand(FALSE);
-          ANode := tvNotes.FindPieceNode(IntToStr(NC_UNSIGNED), 1, U, nil);
-          if ANode = nil then
-            ANode := tvNotes.FindPieceNode(IntToStr(NC_UNCOSIGNED), 1, U, nil);
-          if ANode = nil then
-            ANode := tvNotes.FindPieceNode(FCurrentContext.Status, 1, U, nil);
-          if ANode <> nil then
-          begin
-            if ANode.getFirstChild <> nil then
-              Selected := ANode.getFirstChild
-            else
-              Selected := ANode;
-          end;
-        end;
-      end;
-      memNote.Clear;
-      with lvNotes do
-      begin
-        Selected := nil;
-        if FCurrentContext.SortBy <> '' then
-          ColumnToSort := Pos(FCurrentContext.SortBy, 'RDSAL') - 1;
-        if not FCurrentContext.ShowSubject then
-        begin
-          Columns[1].Width := 2 * (Width div 5);
-          Columns[2].Width := 0;
-        end
-        else
-        begin
-          Columns[1].Width := Width div 5;
-          Columns[2].Width := Columns[1].Width;
-        end;
-      end;
-      // RemoveParentsWithNoChildren(tvNotes, FCurrentContext);  // moved FROM here in v15.9 (RV)
-      tvNotes.Items.EndUpdate;
-      uChanging := FALSE;
-      SendMessage(tvNotes.Handle, WM_VSCROLL, SB_TOP, 0);
-      if Selected <> nil then
-        tvNotesChange(Self, Selected);
-    end;
-  finally
-    RedrawActivate(memNote.Handle);
-    RedrawActivate(lvNotes.Handle);
-  end;
-  finally
-   tmpList.free;
-  end;
-end;
 
 procedure TfrmNotes.UpdateTreeView(DocList: TStringList; Tree: TORTreeView);
 var
   ReturnCursor: Integer;
   CurrentActive: TDrawer;
 begin
+  if not Assigned(Tree) then
+    raise Exception.Create('Tree not assigned');
   Screen.Cursor := crHourGlass;
   try
     CurrentActive := Drawers.ActiveDrawer;
     Drawers.ActiveDrawer := odNone;
-    with Tree do begin
-      uChanging := True;
+    with Tree do
+    begin
+      uChanging := true;
       Items.BeginUpdate;
       lstNotes.Items.AddStrings(DocList);
       ReturnCursor := Screen.Cursor;
       Screen.Cursor := crHourGlass;
       try
-        BuildDocumentTree2(DocList, Tree, FCurrentContext, CT_NOTES);
+        BuildDocumentTree(DocList, Tree, FCurrentContext, CT_NOTES);
       finally
         Screen.Cursor := ReturnCursor;
       end;
       Items.EndUpdate;
-      uChanging := FALSE;
+      uChanging := False;
     end;
-    if CurrentActive = odTemplates then begin
+    if CurrentActive = odTemplates then
+    begin
       Drawers.ActiveDrawer := odTemplates;
     end;
   finally
@@ -4630,149 +4713,37 @@ end;
 
 procedure TfrmNotes.tvNotesChange(Sender: TObject; Node: TTreeNode);
 var
-  X, MySearch, MyNodeID: string;
-  i, ReturnCursor: Integer;
-
-  procedure SetLvNotesVisible(aValue: Boolean);
-  begin
-   lvNotes.Visible := aValue;
-   splList.Visible := aValue;
-   splList.Top := lvNotes.Top + 1;
-  end;
+  txt: string;
 
 begin
-  ReturnCursor := Screen.Cursor;
-  Screen.Cursor := crHourGlass;
-  try
-    if uChanging then
-      exit;
-    // This gives the change a chance to occur when keyboarding, so that WindowEyes doesn't use the old value.
-    Application.ProcessMessages;
-    with tvNotes do begin
-      memNote.Clear;
-      if Selected = nil then
-        exit;
+  if assigned(Node) and (not ShowMoreNode(Node.Text)) then
+    SaveTreePosition; // saving position only if it is the TX_MORE node
 
-      UpdateActMenu(PDocTreeObject(Selected.Data)^.DocID, tvNotes);
-      RedrawSuspend(lvNotes.Handle);
-      RedrawSuspend(memNote.Handle);
-      try
-      popNoteListExpandSelected.Enabled := Selected.HasChildren;
-      popNoteListCollapseSelected.Enabled := Selected.HasChildren;
-      X := TORTreeNode(Selected).StringData;
-      if (Selected.ImageIndex in [IMG_TOP_LEVEL, IMG_GROUP_OPEN, IMG_GROUP_SHUT]) then begin
-        SetLvNotesVisible(True);
-       // lvNotes.Visible := True;
-        lvNotes.Items.Clear;
-        lvNotes.Height := (2 * lvNotes.Parent.Height) div 5;
-
-
-  (*          with stTitle do
-              begin
-                Caption := Trim(Selected.Text);
-                if (FCurrentContext.SearchField <> '') and (FCurrentContext.Filtered) then
-                  begin
-                    case FCurrentContext.SearchField[1] of
-                      'T': MySearch := 'TITLE';
-                      'S': MySearch := 'SUBJECT';
-                      'B': MySearch := 'TITLE or SUBJECT';
-                    end;
-                    Caption := Caption + ' where ' + MySearch + ' contains "' + UpperCase(FCurrentContext.Keyword) + '"';
-                  end;
-                lvNotes.Caption := Caption;
-              end;
-    *)
-        stTitle.Caption := Trim(Selected.Text);
-        if (FCurrentContext.SearchField <> '') and (FCurrentContext.Filtered) then
-        begin
-          case FCurrentContext.SearchField[1] of
-            'T':
-              MySearch := 'TITLE';
-            'S':
-              MySearch := 'SUBJECT';
-            'B':
-              MySearch := 'TITLE or SUBJECT';
-          end;
-          stTitle.Caption := stTitle.Caption + ' where ' + MySearch +
-            ' contains "' + Uppercase(FCurrentContext.Keyword) + '"';
-          lvNotes.Caption := stTitle.Caption;
-        end;
-
-        if Selected.ImageIndex = IMG_TOP_LEVEL then
-          MyNodeID := Piece(TORTreeNode(Selected).StringData, U, 1)
-        else if Selected.Parent.ImageIndex = IMG_TOP_LEVEL then
-          MyNodeID := Piece(TORTreeNode(Selected.Parent).StringData, U, 1)
-        else if Selected.Parent.Parent.ImageIndex = IMG_TOP_LEVEL then
-          MyNodeID := Piece(TORTreeNode(Selected.Parent.Parent).StringData, U, 1);
-
-        uChanging := True;
-
-        TraverseTree(tvNotes, lvNotes, Selected.getFirstChild, MyNodeID, FCurrentContext);
-
-        with lvNotes do begin
-          for i := 0 to Columns.Count - 1 do
-            Columns[i].ImageIndex := IMG_NONE;
-          ColumnSortForward := FCurrentContext.ListAscending;
-          if ColumnToSort = 5 then
-            ColumnToSort := 0;
-          if ColumnSortForward then
-            Columns[ColumnToSort].ImageIndex := IMG_ASCENDING
-          else
-            Columns[ColumnToSort].ImageIndex := IMG_DESCENDING;
-          if ColumnToSort = 0 then
-            ColumnToSort := 5;
-          AlphaSort;
-          Columns[5].Width := 0;
-          Columns[6].Width := 0;
-        end;
-        uChanging := FALSE;
-        with lvNotes do begin
-          if Items.Count > 0 then
-          begin
-            Selected := Items[0];
-            lvNotesSelectItem(Self, Selected, True);
-          end
-          else
-          begin
-            Selected := nil;
-            lstNotes.ItemIndex := -1;
-            CPMemNote.EditMonitor.ItemIEN := lstNotes.ItemIEN;
-            ClearPCE;
-           // memPCEShow.Clear;
-            ShowPCEControls(FALSE);
-          end;
-        end;
-  //      pnlWrite.Visible := FALSE;
-        ReadVisible := True;
-        UpdateReminderFinish;
-        ShowPCEControls(FALSE);
-        Drawers.DisplayDrawers(True, Drawers.ActiveDrawer, [odTemplates], [odTemplates]); // FALSE);
-        ShowPCEButtons(FALSE);
-      end
-      else if StrToIntDef(Piece(X, U, 1), 0) > 0 then
-      begin
-        memNote.Clear;
-        SetLvNotesVisible(False);
-        //lvNotes.Visible := FALSE;
-        lstNotes.SelectByID(Piece(X, U, 1));
-        lstNotesClick(Self);
-        SendMessage(memNote.Handle, WM_VSCROLL, SB_TOP, 0);
-      end;
-
-      //display orphaned warning
-//      if PDocTreeObject(Selected.Data)^.Orphaned then -- 1211117
-      if assigned(Selected) and assigned(Selected.Data) and
-        PDocTreeObject(Selected.Data)^.Orphaned then
-        MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
-
-      SendMessage(tvNotes.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
-      finally
-       RedrawActivate(lvNotes.Handle);
-       RedrawActivate(memNote.Handle);
-      end;
-    end;
-  finally
-    Screen.Cursor := ReturnCursor;
+  if (tvNotes.Selected <> nil) and (not ShowMoreNode(tvNotes.Selected.Text)) then
+  begin
+    DoSelect;
+    SendMessage(tvNotes.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
+  end
+  else
+  begin
+    SetLvNotesVisible(False);
+    // stTitle.Caption := 'Select another document or double click the node "'+TX_MORE +'"';
+    // memNote.Clear;
+    stTitle.Caption := '';
+    if (tvNotes.Selected <> nil) and
+      (pos(TX_OLDER_NOTES_WITH_ADDENDA, tvNotes.Selected.Text) > 0) then
+    begin
+      if FCurrentContext.TreeAscending then
+        txt := 'above'
+      else
+        txt := 'below';
+      txt := 'The signed documents shown ' + txt +
+        ' are outside the selected range of notes,' + CRLF +
+        'but contain one or more addenda that falls within the selected range.';
+    end
+    else
+      txt := 'Select another document or double click the node "' + TX_MORE + '"';
+    memNote.Lines.Text := txt;
   end;
 end;
 
@@ -4789,76 +4760,217 @@ begin
   end;
 end;
 
-procedure TfrmNotes.tvNotesExit(Sender: TObject);
+function SortByDate(Node1, Node2: TTreeNode; Data: Longint): Integer; stdcall;
 begin
- inherited;
- if TabIsPressed or ShiftTabIsPressed then
+  { Within an ID parent node, sorts in ascending order by document date
+    BUT - addenda to parent document are always at the top of the sort, in date order }
+  if (Copy(PDocTreeObject(Node1.Data)^.DocTitle, 1, 8) = 'Addendum') and
+    (Copy(PDocTreeObject(Node2.Data)^.DocTitle, 1, 8) = 'Addendum') then
   begin
-    if (Screen.ActiveControl = frmDrawers.btnTemplate) or
-        (Screen.ActiveControl = frmDrawers.btnEncounter) or
-        (Screen.ActiveControl = cmdNewNote) or
-        (Screen.ActiveControl = cmdPCE) then
-      FindNextControl( cmdPCE, True, True, False).SetFocus;
+    Result := AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocFMDate),
+      PChar(PDocTreeObject(Node2.Data)^.DocFMDate));
+  end
+  else if Copy(PDocTreeObject(Node1.Data)^.DocTitle, 1, 8) = 'Addendum' then
+    Result := -1
+  else if Copy(PDocTreeObject(Node2.Data)^.DocTitle, 1, 8) = 'Addendum' then
+    Result := 1
+  else
+  begin
+    if Data = 0 then
+      Result := AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocFMDate),
+        PChar(PDocTreeObject(Node2.Data)^.DocFMDate))
+    else
+      Result := -AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocFMDate),
+        PChar(PDocTreeObject(Node2.Data)^.DocFMDate));
   end;
 end;
 
-procedure TfrmNotes.tvNotesExpanded(Sender: TObject; Node: TTreeNode);
+procedure TfrmNotes.tvNotesCompare(Sender: TObject; Node1, Node2: TTreeNode;
+  Data: Integer; var Compare: Integer);
+var
+  flip: boolean;
 
-  function SortByTitle(Node1, Node2: TTreeNode; Data: Longint): Integer; stdcall;
+  procedure NormalCompare;
   begin
-    { Within an ID parent node, sorts in ascending order by title
-      BUT - addenda to parent document are always at the top of the sort, in date order }
-    if (Copy(PDocTreeObject(Node1.Data)^.DocTitle, 1, 8) = 'Addendum') and
-      (Copy(PDocTreeObject(Node2.Data)^.DocTitle, 1, 8) = 'Addendum') then
-    begin
-      Result := AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocFMDate),
-        PChar(PDocTreeObject(Node2.Data)^.DocFMDate));
-    end
-    else if Copy(PDocTreeObject(Node1.Data)^.DocTitle, 1, 8) = 'Addendum' then
-      Result := -1
-    else if Copy(PDocTreeObject(Node2.Data)^.DocTitle, 1, 8) = 'Addendum' then
-      Result := 1
+    if assigned(Node1.Data) and assigned(Node2.Data) then
+      Compare := SortByDate(Node1, Node2, Data)
     else
     begin
-      if Data = 0 then
-        Result := AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocTitle),
-          PChar(PDocTreeObject(Node2.Data)^.DocTitle))
+      if Node1.Level = Node2.Level then
+        Compare := 0
+      else if Node1.Level < Node2.Level then
+        Compare := -1
       else
-        Result := -AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocTitle),
-          PChar(PDocTreeObject(Node2.Data)^.DocTitle));
-    end
-  end;
-
-  function SortByDate(Node1, Node2: TTreeNode; Data: Longint): Integer; stdcall;
-  begin
-    { Within an ID parent node, sorts in ascending order by document date
-      BUT - addenda to parent document are always at the top of the sort, in date order }
-    if (Copy(PDocTreeObject(Node1.Data)^.DocTitle, 1, 8) = 'Addendum') and
-      (Copy(PDocTreeObject(Node2.Data)^.DocTitle, 1, 8) = 'Addendum') then
+        Compare := 1;
+    end;
+    if (Compare = 0) and (not ShowMoreNode(Node1.Text)) and
+      (not ShowMoreNode(Node2.Text)) and (FCurrentContext.GroupBy <> '') then
     begin
-      Result := AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocFMDate),
-        PChar(PDocTreeObject(Node2.Data)^.DocFMDate));
-    end
-    else if Copy(PDocTreeObject(Node1.Data)^.DocTitle, 1, 8) = 'Addendum' then
-      Result := -1
-    else if Copy(PDocTreeObject(Node2.Data)^.DocTitle, 1, 8) = 'Addendum' then
-      Result := 1
-    else
-    begin
-      if Data = 0 then
-        Result := AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocFMDate),
-          PChar(PDocTreeObject(Node2.Data)^.DocFMDate))
+      flip := False;
+      if FCurrentContext.GroupBy = 'D' then
+      begin
+        if assigned(Node1.Data) and assigned(Node2.Data) then
+          Compare := -AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocID),
+            PChar(PDocTreeObject(Node2.Data)^.DocID));
+      end
       else
-        Result := -AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocFMDate),
-          PChar(PDocTreeObject(Node2.Data)^.DocFMDate));
+        Compare := AnsiCompareText(Node1.Text, Node2.Text);
     end;
   end;
 
 begin
+  inherited;
+  if (Node1.Level = 0) and (Node2.Level = 0) then
+  begin
+    Compare := -AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocID),
+        PChar(PDocTreeObject(Node2.Data)^.DocID));
+    exit;
+  end;
+
+  flip := True;
+  if FCurrentContext.GroupBy <> '' then
+  begin
+    if (pos(TX_MORE, upperCase(Node1.Text)) > 0) then
+      Compare := 1
+    else if (pos(TX_MORE, upperCase(Node2.Text)) > 0) then
+      Compare := -1
+    else
+    begin
+      NormalCompare;
+      if flip and (not FCurrentContext.TreeAscending) then
+        Compare := -Compare;
+    end;
+  end
+  else
+  begin
+    NormalCompare;
+    if Compare = 0 then
+    begin
+      if (pos(TX_MORE, upperCase(Node1.Text)) > 0) then
+      begin
+        if pos(TX_OLDER_NOTES_WITH_ADDENDA, Node2.Text) > 0 then
+          Compare := 1
+        else
+          Compare := -1;
+      end
+      else if (pos(TX_MORE, upperCase(Node2.Text)) > 0) then
+      begin
+        if pos(TX_OLDER_NOTES_WITH_ADDENDA, Node1.Text) > 0 then
+          Compare := -1
+        else
+          Compare := 1;
+      end
+      else if pos(TX_OLDER_NOTES_WITH_ADDENDA, Node1.Text) > 0 then
+        Compare := -1
+      else if pos(TX_OLDER_NOTES_WITH_ADDENDA, Node2.Text) > 0 then
+        Compare := 1;
+    end;
+    if flip and (not FCurrentContext.TreeAscending) then
+      Compare := -Compare;
+  end;
+end;
+
+procedure TfrmNotes.ExitToNextControl(Sender: TObject);
+// The tab order on this form is special. This is where it's all determined
+// Tab order:
+//   all of frmFrame.pnlToolBar,
+//   pnlLeft up to tvNotes,
+//   then go to first on pnlRight, and do all of pnlRight (special code needed)
+//   then return to pnlLeft, first control after tvNotes (special code needed)
+//   after pnlRight return to frmFrame.pnlToolBar (special code needed)
+// Reverse tab order, as above in reverse, with one exception:
+//   frmDrawers.btnTemplate previous is memNewNote, if it can focus.
+//   (This code was preexisting)
+// For all other tab order, the form relies on regular tab order
+var
+  CurControl, NextControl: TWinControl; // used in ExitToNextControl
+  GoForward, GoBack: Boolean;
+begin
+  GoForward := TabIsPressed;
+  GoBack := ShiftTabIsPressed;
+  if (GoForward or GoBack) and (Sender is TWinControl) then
+  begin
+    CurControl := TWinControl(Sender);
+    try
+      NextControl := nil;
+
+      // Frame.pnlToolbar previous
+      if (CurControl = frmFrame.pnlToolbar) and (not GoForward) then begin
+        NextControl := FindNextControl(frmFrame.pnlToolbar, GoForward, true, false);
+        while (NextControl <> CurControl) and (NextControl.Parent <> pnlLeft) do
+          NextControl := FindNextControl(NextControl, GoForward, true, false);
+        if NextControl = CurControl then
+          NextControl := FindNextControl(frmFrame.pnlToolbar, GoForward, true, false);
+      end
+
+      // tvNotes Next
+      else if (CurControl = tvNotes) and GoForward then
+      begin
+        NextControl := FindNextControl(PnlRight, GoForward, true, false);
+      end
+
+      // pnlRight next and previous
+      else if CurControl = PnlRight then
+      begin
+        if GoForward then NextControl := FindNextControl(tvNotes, GoForward, true, false)
+        else NextControl := FindNextControl(pnlDrawers, GoForward, true, false);
+      end
+
+      // frmDrawers.btnTemplate previous, an exception
+      else if (CurControl = frmDrawers.btnTemplate) and not GoForward then
+      begin
+        if memNewNote.CanFocus then NextControl := memNewNote;
+      end
+
+      // pnlLeft next
+      else if CurControl = pnlLeft then
+      begin
+        if GoForward and (FPreviousControl <> tvNotes) then
+          NextControl := frmFrame.FindNextControl(frmFrame.pnlToolBar, GoForward, true, false);
+      end;
+    finally
+      FPreviousControl := CurControl; // To check multiple OnExits
+    end;
+    if assigned(NextControl) then NextControl.SetFocus;
+  end;
+end;
+
+procedure TfrmNotes.tvNotesExit(Sender: TObject);
+begin
+  ExitToNextControl(Sender);
+end;
+
+function SortByTitle(Node1, Node2: TTreeNode; Data: Longint): Integer; stdcall;
+begin
+  { Within an ID parent node, sorts in ascending order by title
+    BUT - addenda to parent document are always at the top of the sort, in date order }
+  if (Copy(PDocTreeObject(Node1.Data)^.DocTitle, 1, 8) = 'Addendum') and
+    (Copy(PDocTreeObject(Node2.Data)^.DocTitle, 1, 8) = 'Addendum') then
+  begin
+    Result := AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocFMDate),
+      PChar(PDocTreeObject(Node2.Data)^.DocFMDate));
+  end
+  else if Copy(PDocTreeObject(Node1.Data)^.DocTitle, 1, 8) = 'Addendum' then
+    Result := -1
+  else if Copy(PDocTreeObject(Node2.Data)^.DocTitle, 1, 8) = 'Addendum' then
+    Result := 1
+  else
+  begin
+    if Data = 0 then
+      Result := AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocTitle),
+        PChar(PDocTreeObject(Node2.Data)^.DocTitle))
+    else
+      Result := -AnsiStrIComp(PChar(PDocTreeObject(Node1.Data)^.DocTitle),
+        PChar(PDocTreeObject(Node2.Data)^.DocTitle));
+  end
+end;
+
+procedure TfrmNotes.tvNotesExpanded(Sender: TObject; Node: TTreeNode);
+begin
   with Node do
   begin
-    if Assigned(Data) then
-      if (Pos('<', PDocTreeObject(Data)^.DocHasChildren) > 0) then
+    if assigned(Data) then
+      if (pos('<', PDocTreeObject(Data)^.DocHasChildren) > 0) then
       begin
         if (PDocTreeObject(Node.Data)^.OrderByTitle) then
           CustomSort(@SortByTitle, 0)
@@ -4874,11 +4986,29 @@ begin
   end;
 end;
 
-procedure TfrmNotes.tvNotesDragOver(Sender, Source: TObject; X, Y: Integer; State: TDragState; var Accept: Boolean);
+procedure TfrmNotes.tvNotesHint(Sender: TObject; const Node: TTreeNode;
+  var Hint: string);
+begin
+  inherited;
+  if AnsiPos(TX_MORE, Node.Text) > 0 then
+    Hint := 'Double Click to get more documents';
+end;
+
+procedure TfrmNotes.tvNotesKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_RETURN) and (tvNotes.Selected <> nil) and
+    (AnsiPos(TX_MORE, tvNotes.Selected.Text) > 0) then
+    GetMoreDocuments;
+end;
+
+procedure TfrmNotes.tvNotesDragOver(Sender, Source: TObject; X, Y: Integer;
+  State: TDragState; var Accept: Boolean);
 var
   AnItem: TORTreeNode;
 begin
-  Accept := FALSE;
+  Accept := False;
   if not uIDNotesActive then
     exit;
   AnItem := TORTreeNode(tvNotes.GetNodeAt(X, Y));
@@ -4896,7 +5026,15 @@ begin
         IMG_TOP_LEVEL])
     else if (ImageIndex in [IMG_ADDENDUM, IMG_GROUP_OPEN, IMG_GROUP_SHUT,
       IMG_TOP_LEVEL]) then
-      Accept := FALSE;
+      Accept := False;
+end;
+
+procedure TfrmNotes.tvNotesDblClick(Sender: TObject);
+begin
+  inherited;
+  if (tvNotes.Selected <> nil) and (AnsiPos(TX_MORE, tvNotes.Selected.Text) > 0)
+  then
+    GetMoreDocuments;
 end;
 
 procedure TfrmNotes.tvNotesDragDrop(Sender, Source: TObject; X, Y: Integer);
@@ -4923,7 +5061,8 @@ begin
   DoAttachIDChild(TORTreeNode(tvNotes.Selected), ADestNode);
 end;
 
-procedure TfrmNotes.tvNotesStartDrag(Sender: TObject; var DragObject: TDragObject);
+procedure TfrmNotes.tvNotesStartDrag(Sender: TObject;
+  var DragObject: TDragObject);
 const
   TX_CAP_NO_DRAG = 'Item cannot be moved';
   TX_NO_EDIT_DRAG = 'Items can not be dragged while a note is being edited.';
@@ -4952,6 +5091,41 @@ begin
 end;
 
 // =====================  Listview events  =================================
+
+procedure TfrmNotes.lvNotesClick(Sender: TObject);
+var
+  tn: TTreeNode;
+begin
+  exit;
+  // inherited;
+  if lvNotes.Selected = nil then
+    exit;
+  if lvNotes.Selected.SubItems.Count < 0 then
+    exit;
+
+  if pos(TX_MORE, lvNotes.Selected.SubItems[0]) = 1 then
+  begin
+    tn := getNodeByName(targetAllSignedNotes, 0, tvNotes);
+    if not assigned(tn) then
+      tn := getNodeByName(targetSignedByDateRange, 0, tvNotes);
+
+    if assigned(tn) then
+    begin
+      tn := tn.getFirstChild;
+      while assigned(tn) do
+      begin
+        if pos(TX_MORE, tn.Text) > 0 then
+          break
+        else
+          tn := tn.getNextSibling;
+      end;
+      if assigned(tn) then
+        tvNotes.Selected := tn; // selecting TX_MORE node of the tree
+      // will force to load more notes
+    end;
+  end;
+  inherited;
+end;
 
 procedure TfrmNotes.lvNotesColumnClick(Sender: TObject; Column: TListColumn);
 var
@@ -4990,33 +5164,80 @@ begin
   (Sender as TCustomListView).AlphaSort;
 end;
 
-procedure TfrmNotes.lvNotesCompare(Sender: TObject; Item1, Item2: TListItem; Data: Integer; var Compare: Integer);
+procedure TfrmNotes.lvNotesCompare(Sender: TObject; Item1, Item2: TListItem;
+  Data: Integer; var Compare: Integer);
 var
   ix: Integer;
 begin
-  if ColumnToSort = 0 then
-    Compare := CompareText(Item1.Caption, Item2.Caption)
+  if (pos(TX_MORE, upperCase(Item1.SubItems[0])) > 0) then
+    Compare := 1
+  else if (pos(TX_MORE, upperCase(Item2.SubItems[0])) > 0) then
+    Compare := -1
   else
   begin
-    ix := ColumnToSort - 1;
-    Compare := CompareText(Item1.SubItems[ix], Item2.SubItems[ix]);
+    if ColumnToSort = 0 then
+      Compare := CompareText(Item1.Caption, Item2.Caption)
+    else
+    begin
+      ix := ColumnToSort - 1;
+      Compare := CompareText(Item1.SubItems[ix], Item2.SubItems[ix]);
+    end;
+    if not ColumnSortForward then
+      Compare := -Compare;
   end;
-  if not ColumnSortForward then
-    Compare := -Compare;
 end;
 
-procedure TfrmNotes.lvNotesSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+procedure TfrmNotes.lvNotesDblClick(Sender: TObject);
+begin
+  inherited;
+  if uChanging or (lvNotes.Selected = nil) then
+    exit;
+  if AnsiPos(TX_MORE, lvNotes.Selected.SubItems[0]) > 0 then
+    GetMoreDocuments(lvNotes);
+end;
+
+procedure TfrmNotes.lvNotesKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if Key = VK_RETURN then
+  begin
+    if lvNotes.Selected = nil then
+      exit;
+    if lvNotes.Selected.SubItems.Count < 1 then
+      exit;
+
+    if pos(TX_MORE, lvNotes.Selected.SubItems[0]) = 1 then
+      GetMoreDocuments(lvNotes);
+  end;
+end;
+
+procedure TfrmNotes.lvNotesSelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
 begin
   if uChanging or (not Selected) then
     exit;
+
+  uChanging := true;
   with lvNotes do
-  begin
-    StatusText('Retrieving selected progress note...');
-    lstNotes.SelectByID(Item.SubItems[5]);
-    UpdateActMenu(IntToStr(lstNotes.ItemIEN), lvNotes);
-    lstNotesClick(Self);
-    SendMessage(memNote.Handle, WM_VSCROLL, SB_TOP, 0);
-  end;
+    if AnsiPos(TX_MORE, Item.SubItems[0]) > 0 then
+    begin
+      // stTitle.Caption := 'Select another document or double click the node "'+TX_MORE +'"';
+      // memNote.Clear;
+      memNote.Lines.Text := 'Select another document or double click the line "'
+        + TX_MORE + '"';
+      stTitle.Caption := '';
+      memPCERead.Clear;
+    end
+    else
+    begin
+      StatusText('Retrieving selected progress note...');
+      lstNotes.SelectByID(Item.SubItems[5]);
+      UpdateActMenu(IntToStr(lstNotes.ItemIEN), lvNotes);
+      lstNotesClick(Self);
+      SendMessage(memNote.Handle, WM_VSCROLL, SB_TOP, 0);
+    end;
+  uChanging := False;
 end;
 
 procedure TfrmNotes.EnableDisableIDNotes;
@@ -5101,7 +5322,7 @@ begin
         with tvNotes do
           Selected := FindPieceNode(SavedDocID, U, Items.GetFirstNode);
         if tvNotes.Selected <> nil then
-          tvNotes.Selected.Expand(FALSE);
+          tvNotes.Selected.Expand(False);
       end
       else
         InfoBox(WhyNot, TX_ATTACH_FAILURE, MB_OK);
@@ -5123,7 +5344,7 @@ begin
       with tvNotes do
         Selected := FindPieceNode(SavedDocID, U, Items.GetFirstNode);
       if tvNotes.Selected <> nil then
-        tvNotes.Selected.Expand(FALSE);
+        tvNotes.Selected.Expand(False);
     end
     else
       InfoBox(WhyNot, TX_ATTACH_FAILURE, MB_OK);
@@ -5141,9 +5362,9 @@ var
     with AContext do
       if BeginDate <> '' then
       begin
-        x1 := ' from ' + Uppercase(BeginDate);
+        x1 := ' from ' + upperCase(BeginDate);
         if EndDate <> '' then
-          x1 := x1 + ' to ' + Uppercase(EndDate)
+          x1 := x1 + ' to ' + upperCase(EndDate)
         else
           x1 := x1 + ' to TODAY';
       end;
@@ -5190,7 +5411,8 @@ begin
   Result := X;
 end;
 
-procedure TfrmNotes.memNewNoteKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TfrmNotes.memNewNoteKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
   inherited;
   FNavigatingTab := (Key = VK_TAB) and ([ssShift, ssCtrl] * Shift <> []);
@@ -5202,42 +5424,39 @@ procedure TfrmNotes.memNewNoteKeyPress(Sender: TObject; var Key: Char);
 begin
   inherited;
   if FNavigatingTab then
-    Key := #0;  //Disable shift-tab processinend;
+    Key := #0; // Disable shift-tab processinend;
 end;
 
-procedure TfrmNotes.memNewNoteKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TfrmNotes.memNewNoteKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
   inherited;
   if FNavigatingTab then
   begin
     if ssShift in Shift then
-      FindNextControl(Sender as TWinControl, False, True, False).SetFocus //previous control
-    else if ssCtrl	in Shift then
-      FindNextControl(Sender as TWinControl, True, True, False).SetFocus; //next control
+      FindNextControl(Sender as TWinControl, False, true, False).SetFocus
+      // previous control
+    else if ssCtrl in Shift then
+      FindNextControl(Sender as TWinControl, true, true, False).SetFocus;
+    // next control
     FNavigatingTab := False;
   end;
-  if (key = VK_ESCAPE) then begin
-    FindNextControl(Sender as TWinControl, False, True, False).SetFocus; //previous control
-    key := 0;
+  if (Key = VK_ESCAPE) then
+  begin
+    FindNextControl(Sender as TWinControl, False, true, False).SetFocus;
+    // previous control
+    Key := 0;
   end;
 end;
 
 procedure TfrmNotes.memPCEReadExit(Sender: TObject);
 begin
-  inherited;
-  //Fix the Tab Order  Make Drawers Buttons Accessible
-  if TabIsPressed then
-    if frmDrawers.btnTemplate.CanFocus then
-      frmDrawers.btnTemplate.SetFocus
+  ExitToNextControl(Sender);
 end;
 
 procedure TfrmNotes.memPCEWriteExit(Sender: TObject);
 begin
-  inherited;
-  //Fix the Tab Order  Make Drawers Buttons Accessible
-  if TabIsPressed then
-    if frmDrawers.btnTemplate.CanFocus then
-      frmDrawers.btnTemplate.SetFocus
+  ExitToNextControl(Sender);
 end;
 
 procedure TfrmNotes.UpdateNoteAuthor(DocInfo: string);
@@ -5261,8 +5480,8 @@ begin
   if AuthNameCheck = '' then
   begin
     NewAuthName := GetXMLParamReturnValueTIU(DocInfo, 'AUTHOR_NAME');
-    InfoBox(TX_INVALID_AUTHOR1 + Uppercase(NewAuthName) + TX_INVALID_AUTHOR2 +
-      Uppercase(FEditNote.AuthorName), TC_INVALID_AUTHOR,
+    InfoBox(TX_INVALID_AUTHOR1 + upperCase(NewAuthName) + TX_INVALID_AUTHOR2 +
+      upperCase(FEditNote.AuthorName), TC_INVALID_AUTHOR,
       MB_OK and MB_ICONERROR);
     exit;
   end;
@@ -5276,10 +5495,10 @@ begin
       lstNotes.Items[EditingIndex] := X;
       if AskCosignerForTitle(Title, Author, DateTime) then
       begin
-        InfoBox(Uppercase(AuthNameCheck) + TX_COSIGNER_REQD,
+        InfoBox(upperCase(AuthNameCheck) + TX_COSIGNER_REQD,
           TC_COSIGNER_REQD, MB_OK);
         // Cosigner := 0;   CosignerName := '';  // not sure about this yet
-        ADummySender := TObject.create;
+        ADummySender := TObject.Create;
         try
           cmdChangeClick(ADummySender);
         finally
@@ -5299,11 +5518,11 @@ var
   function FindNode: TTreeNode;
   begin
     Result := Drawers.tvTemplates.Items.GetFirstNode;
-    while Assigned(Result) do
+    while assigned(Result) do
     begin
       if (Result.Data = MyTemplate) then
         exit;
-      Result := Result.GetNextSibling;
+      Result := Result.getNextSibling;
     end;
   end;
 
@@ -5313,28 +5532,28 @@ begin
   begin
     if (NeedPersonal) then
     begin
-      if (Assigned(MyTemplate)) and (MyTemplate.Children in [tcActive, tcBoth])
+      if (assigned(MyTemplate)) and (MyTemplate.Children in [tcActive, tcBoth])
       then
       begin
         AddTemplateNode(MyTemplate);
-        FHasPersonalTemplates := True;
-        if (Assigned(MyTemplate)) then
+        FHasPersonalTemplates := true;
+        if (assigned(MyTemplate)) then
         begin
           Node := FindNode;
-          if (Assigned(Node)) then
+          if (assigned(Node)) then
             Node.MoveTo(nil, naAddFirst);
         end;
       end;
     end
     else
     begin
-      if (Assigned(MyTemplate)) then
+      if (assigned(MyTemplate)) then
       begin
         Node := FindNode;
-        if (Assigned(Node)) then
+        if (assigned(Node)) then
           Node.Delete;
       end;
-      FHasPersonalTemplates := FALSE;
+      FHasPersonalTemplates := False;
     end;
   end;
 end;
@@ -5344,87 +5563,857 @@ begin
   UpdatePersonalTemplates;
 end;
 
-procedure TfrmNotes.UpdateActMenu(DocID: String; ListComponent: TComponent );
+procedure TfrmNotes.UpdateActMenu(DocID: String; ListComponent: TComponent);
 Var
   WhyNot: string;
   SelectedImageIndex: System.UITypes.TImageIndex;
 begin
-   Application.ProcessMessages;
+  Application.ProcessMessages;
 
-   If ListComponent is TORTreeView then begin
-    if TORTreeView(ListComponent).Selected = nil then exit;
+  If ListComponent is TORTreeView then
+  begin
+    if TORTreeView(ListComponent).Selected = nil then
+      exit;
     SelectedImageIndex := TORTreeView(ListComponent).Selected.ImageIndex;
-   end else begin
-    if TCaptionListView(ListComponent).Selected = nil then exit;
+  end
+  else
+  begin
+    if TCaptionListView(ListComponent).Selected = nil then
+      exit;
     SelectedImageIndex := TCaptionListView(ListComponent).Selected.ImageIndex;
-   end;
+  end;
 
-   if uIDNotesActive then
-    begin
-     mnuActDetachFromIDParent.Enabled := (SelectedImageIndex in [IMG_ID_CHILD, IMG_ID_CHILD_ADD]);
-     popNoteListDetachFromIDParent.Enabled := mnuActDetachFromIDParent.Enabled;
-     if (SelectedImageIndex in [IMG_SINGLE, IMG_PARENT, IMG_ID_CHILD, IMG_ID_CHILD_ADD]) then
+  if uIDNotesActive then
+  begin
+    mnuActDetachFromIDParent.Enabled :=
+      (SelectedImageIndex in [IMG_ID_CHILD, IMG_ID_CHILD_ADD]);
+    popNoteListDetachFromIDParent.Enabled := mnuActDetachFromIDParent.Enabled;
+    if (SelectedImageIndex in [IMG_SINGLE, IMG_PARENT, IMG_ID_CHILD,
+      IMG_ID_CHILD_ADD]) then
       mnuActAttachtoIDParent.Enabled := CanBeAttached(DocID, WhyNot)
-     else
+    else
       mnuActAttachtoIDParent.Enabled := False;
-     popNoteListAttachtoIDParent.Enabled := mnuActAttachtoIDParent.Enabled;
-     if (SelectedImageIndex in [IMG_SINGLE, IMG_PARENT,
-                        IMG_IDNOTE_OPEN, IMG_IDNOTE_SHUT,
-                        IMG_IDPAR_ADDENDA_OPEN, IMG_IDPAR_ADDENDA_SHUT]) then
+    popNoteListAttachtoIDParent.Enabled := mnuActAttachtoIDParent.Enabled;
+    if (SelectedImageIndex in [IMG_SINGLE, IMG_PARENT, IMG_IDNOTE_OPEN,
+      IMG_IDNOTE_SHUT, IMG_IDPAR_ADDENDA_OPEN, IMG_IDPAR_ADDENDA_SHUT]) then
       mnuActAddIDEntry.Enabled := CanReceiveAttachment(DocID, WhyNot)
-     else
+    else
       mnuActAddIDEntry.Enabled := False;
-     popNoteListAddIDEntry.Enabled := mnuActAddIDEntry.Enabled
-    end;
+    popNoteListAddIDEntry.Enabled := mnuActAddIDEntry.Enabled
+  end;
 end;
 
+procedure TfrmNotes.frmDrawersExit(Sender: TObject);
+begin
+  ExitToNextControl(Sender);
+end;
 
 procedure TfrmNotes.frmDrawersResize(Sender: TObject);
 begin
   inherited;
   if Drawers.DrawerIsOpen then
-   Drawers.LastOpenSize := pnlDrawers.Height;
+    Drawers.LastOpenSize := pnlDrawers.height;
 end;
 
-procedure TfrmNotes.frmFramePnlPatientExit(Sender: TObject);
+procedure TfrmNotes.frmFramePnlToolbarExit(Sender: TObject);
 begin
-  if Assigned(FOldFramePnlPatientExit) then
-    FOldFramePnlPatientExit(Sender);
-  if TabIsPressed or ShiftTabIsPressed then
-  begin
-    if (Screen.ActiveControl = lvNotes) or
-        (Screen.ActiveControl = memNote) then
-      FindNextControl( lvNotes, False, True, False).SetFocus;
-    if (Screen.ActiveControl = memPCERead) or (Screen.ActiveControl = memPCEWrite) then
-      if cmdPCE.CanFocus then
-        cmdPCE.SetFocus
-      else if cmdNewNote.CanFocus then
-        cmdNewNote.SetFocus;
-  end;
+  if assigned(FOldFramePnlToolbarExit) then
+    FOldFramePnlToolbarExit(Sender);
+  ExitToNextControl(Sender);
 end;
 
-procedure TfrmNotes.SaveUserSplitterSettings(var posA, posB, posC, posD: integer);
+procedure TfrmNotes.SaveUserSplitterSettings(var posA, posB, posC,
+  posD: Integer);
 begin
-  posA := memPCERead.Height; //memPCEWrite.Height
-  posB := CPMemNote.Height; //cpmemNewNote.height
-  posC := lvNotes.Height;
+  posA := memPCERead.height; // memPCEWrite.Height
+  posB := CPMemNote.height; // cpmemNewNote.height
+  posC := lvNotes.height;
   posD := 0;
 end;
 
-procedure TfrmNotes.LoadUserSplitterSettings(posA, posB, posC, posD: integer);
+function BoolToInt(aBool:Boolean):Integer;
+begin
+  if aBool then
+    Result := 0
+  else
+    Result := 1;
+end;
+
+procedure TfrmNotes.LoadNotes(SignedOnly: Boolean = False);
+const
+  INVALID_ID = -1;
+  INFO_ID = 1;
+  lastSM = 1; //
+var
+  bChanging, HasUpdateBegun: Boolean;
+  tmpList: TStringList;
+  aChildNode: TTreeNode;
+  aNode: TORTreeNode;
+  lastNode: TTreeNode;
+  X, xx, noteId: Integer; // Text Search CQ: HDS00002856
+  Dest: TStrings; // Text Search CQ: HDS00002856
+  KeepFlag: Boolean; // Text Search CQ: HDS00002856
+  NoteCount, NoteMatches: Integer; // Text Search CQ: HDS00002856
+  sLastID: String;
+  RefreshUnsigned: boolean;
+
+begin
+  RefreshUnsigned := FUpdateUnsigned;
+  FUpdateUnsigned := False;
+  if not Assigned(Self) then
+    raise Exception.Create('LoadNotes, but frmNotes does not exist.');
+
+  bChanging := uChanging;
+  uChanging := true;
+  sLastID := '';
+  tmpList := TStringList.Create;
+  try
+    FDocList.Clear;
+
+    RedrawSuspend(memNote.Handle);
+    RedrawSuspend(lvNotes.Handle);
+    try
+      HasUpdateBegun := not SignedOnly;
+      if HasUpdateBegun then
+        tvNotes.Items.BeginUpdate;
+      try
+        lstNotes.Items.Clear;
+        KillDocTreeObjects(tvNotes);
+        tvNotes.Items.Clear;
+        // tvNotes.Items.EndUpdate;
+        lvNotes.Items.Clear;
+        memNote.Clear;
+        memNote.Invalidate;
+        stTitle.Caption := '';
+
+        if FCurrentContext.MaxDocs <> 0 then
+          sLastID := fLastDocumentID;
+
+        if FCurrentContext.Status <> IntToStr(NC_UNSIGNED) then
+        begin
+          if RefreshUnsigned or (Not SignedOnly) then
+          begin
+            sLastID := ListNotesForTree(tmpList, NC_UNSIGNED, 0, 0, 0, 0,
+              FCurrentContext.TreeAscending, lastSM, '' { sLastID } );
+            // no starting ID for UNSIGNED notes
+            if tmpList.Count > 0 then
+            begin
+              CreateListItemsforDocumentTree(FDocList, tmpList, NC_UNSIGNED,
+                FCurrentContext.GroupBy, FCurrentContext.TreeAscending,
+                CT_NOTES);
+              fAllUnSignedNotes.Assign(FDocList);
+              UpdateTreeView(FDocList, tvNotes);
+            end;
+            tmpList.Clear;
+          end
+          else
+          begin
+            FDocList.Assign(fAllUnSignedNotes);
+            UpdateTreeView(FDocList, tvNotes);
+          end;
+          // tmpList.Clear;
+          FDocList.Clear;
+        end;
+
+        if (FCurrentContext.Status <> IntToStr(NC_UNCOSIGNED)) then
+        begin
+          if Not SignedOnly then
+          begin
+            sLastID := ListNotesForTree(tmpList, NC_UNCOSIGNED, 0, 0, 0, 0,
+              FCurrentContext.TreeAscending, lastSM, '' { sLastID } );
+            // no starting ID for UNCOSIGNED
+            if tmpList.Count > 0 then
+            begin
+              CreateListItemsforDocumentTree(FDocList, tmpList, NC_UNCOSIGNED,
+                FCurrentContext.GroupBy, FCurrentContext.TreeAscending,
+                CT_NOTES);
+              fAllUnCoSignedNotes.Assign(FDocList);
+              UpdateTreeView(FDocList, tvNotes);
+            end;
+            tmpList.Clear;
+          end
+          else
+          begin
+            FDocList.Assign(fAllUnCoSignedNotes);
+            UpdateTreeView(FDocList, tvNotes);
+          end;
+          tmpList.Clear;
+          FDocList.Clear;
+        end;
+
+        if (FCurrentContext.MaxDocs <> 0) and RefreshUnsigned then
+          sLastID := fLastDocumentID;
+
+        sLastID := ListNotesForTree(tmpList,
+          StrToIntDef(FCurrentContext.Status, 0),
+          FCurrentContext.FMBeginDate, FCurrentContext.FMEndDate,
+          FCurrentContext.Author, FCurrentContext.MaxDocs,
+          FCurrentContext.TreeAscending,
+          lastSM, sLastID);
+        CreateListItemsforDocumentTree(FDocList, tmpList,
+          StrToIntDef(FCurrentContext.Status, 0), FCurrentContext.GroupBy,
+          FCurrentContext.TreeAscending, CT_NOTES);
+        if FCurrentContext.MaxDocs <> 0 then
+          fLastDocumentID := sLastID; // save Last signed document ID
+
+        // Text Search CQ: HDS00002856 ---------------------------------------
+        if FCurrentContext.SearchString <> '' then
+        // Text Search CQ: HDS00002856
+        begin
+          NoteMatches := 0;
+          NoteCount := FDocList.Count - 1;
+          if FDocList.Count > 0 then
+            for X := FDocList.Count - 1 downto 1 do
+            begin // Don't do 0, because it's informational
+              KeepFlag := False;
+              stNotes.Caption := 'Scanning ' + IntToStr(NoteCount - X + 1) +
+                ' of ' + IntToStr(NoteCount) + ', ' + IntToStr(NoteMatches);
+              if NoteMatches = 1 then
+                stNotes.Caption := stNotes.Caption + ' match'
+              else
+                stNotes.Caption := stNotes.Caption + ' matches';
+              frmSearchStop.lblSearchStatus.Caption := stNotes.Caption;
+              frmSearchStop.lblSearchStatus.Repaint;
+              stNotes.Repaint;
+              // Free up some ticks so they can click the "Stop" button
+              Application.ProcessMessages;
+              Application.ProcessMessages;
+              Application.ProcessMessages;
+              if SearchTextStopFlag = False then
+              begin
+                noteId := StrToIntDef(Piece(FDocList.Strings[X], '^', 1), -1);
+                if (noteId = INVALID_ID) or (noteId = INFO_ID) then
+                  Continue;
+                Dest := TStringList.Create;
+                try
+                  CallVistA('TIU GET RECORD TEXT',
+                    [Piece(FDocList.Strings[X], '^', 1)], Dest);
+                  if Dest.Count > 0 then
+                    for xx := 0 to Dest.Count - 1 do
+                    begin
+                      if pos(upperCase(FCurrentContext.SearchString),
+                        upperCase(Dest[xx])) > 0 then
+                        KeepFlag := true;
+                    end;
+                finally
+                  FreeAndNil(Dest);
+                end;
+                if KeepFlag = False then
+                begin;
+                  if FDocList.Count >= X then
+                    FDocList.Delete(X);
+                  if (tmpList.Count >= X) and (X > 0) then
+                    tmpList.Delete(X - 1);
+                end
+                else
+                  Inc(NoteMatches);
+              end;
+            end;
+        end
+        else
+          // Reset the caption
+          stNotes.Caption := SetNoteTreeLabel(FCurrentContext);
+
+        // Text Search CQ: HDS00002856 ---------------------------------------
+        if SignedOnly then
+        begin
+          fAllSignedNotes.AddStrings(FDocList);
+          FDocList.Assign(fAllSignedNotes);
+        end
+        else
+        begin
+          fAllSignedNotes.Assign(FDocList);
+        end;
+
+        RemoveDuplicates(FDocList);
+
+        FDocList.Sorted := False;
+        AdjustOrder(FDocList, FCurrentContext);
+
+        UpdateTreeView(FDocList, tvNotes);
+
+        if FCurrentContext.GroupBy = '' then
+          xx := 0
+        else
+          xx := 1;
+        for X := fAllSignedNotes.Count - 1 downto 0 do
+        begin
+          if ShowMoreNode(fAllSignedNotes.Strings[X]) then
+          begin
+            fAllSignedNotes.Delete(X);
+            inc(xx);
+            if xx > 1 then
+              break;
+          end;
+        end;
+
+        uChanging := true;
+        // tvNotes.Items.BeginUpdate;
+        RemoveParentsWithNoChildren(tvNotes, FCurrentContext);
+        // moved here in v15.9 (RV)
+
+        if RefreshUnsigned or (not SignedOnly) then
+        begin
+          if FLastNoteID <> '' then
+            tvNotes.Selected := tvNotes.FindPieceNode(FLastNoteID, 1, U, nil);
+          if not SignedOnly then
+          begin
+            if tvNotes.Selected = nil then
+            begin
+              if (FCurrentContext.GroupBy <> '') or (FCurrentContext.Filtered) then
+              begin
+                aNode := TORTreeNode(tvNotes.Items.GetFirstNode);
+                while aNode <> nil do
+                begin
+                  aNode.Expand(False);
+                  tvNotes.Selected := aNode;
+                  aNode := TORTreeNode(aNode.getNextSibling);
+                end;
+              end
+              else if not SignedOnly then
+              // Signed notes expand status restored separately
+              begin
+                aNode := tvNotes.FindPieceNode(FCurrentContext.Status, 1, U, nil);
+                if aNode <> nil then
+                  aNode.Expand(False);
+                aNode := tvNotes.FindPieceNode(IntToStr(NC_UNSIGNED), 1, U, nil);
+                if aNode = nil then
+                  aNode := tvNotes.FindPieceNode(IntToStr(NC_UNCOSIGNED),
+                    1, U, nil);
+                if aNode = nil then
+                  aNode := tvNotes.FindPieceNode(FCurrentContext.Status, 1, U, nil);
+                if aNode <> nil then
+                begin
+    //RTC 852914              uChanging := False;
+                  aChildNode := aNode.getFirstChild;
+                  if Assigned(aChildNode) then
+                    tvNotes.Selected := aChildNode
+                  else
+                    tvNotes.Selected := aNode;
+                  uChanging := False; // RTC852914 moving here to avoid invocation of
+                                      // tvNoteChange on assigning Selected item
+                end;
+              end;
+            end;
+          end;
+        end;
+
+        with lvNotes do
+        begin
+          Selected := nil;
+          if FCurrentContext.SortBy <> '' then
+            ColumnToSort := pos(FCurrentContext.SortBy, 'RDSAL') - 1;
+          if not FCurrentContext.ShowSubject then
+          begin
+            Columns[1].Width := 2 * (Width div 5);
+            Columns[2].Width := 0;
+          end
+          else
+          begin
+            Columns[1].Width := Width div 5;
+            Columns[2].Width := Columns[1].Width;
+          end;
+        end;
+
+      // RemoveParentsWithNoChildren(tvNotes, FCurrentContext);  // moved FROM here in v15.9 (RV)
+      finally
+        if HasUpdateBegun then
+          tvNotes.Items.EndUpdate;
+      end;
+
+      if not SignedOnly then
+        SendMessage(tvNotes.Handle, WM_VSCROLL, SB_TOP, 0);
+
+      RemapNode(tvNotes, TX_MORE, upperCase('All signed notes'));
+      // patching position of the node
+      tvNotes.AlphaSort; // let's sort it after load
+
+      lastNode := getNodeByName(targetAllSignedNotes, 0, tvNotes);
+      if not assigned(lastNode) then
+        LastNode := getNodeByName(targetSignedByDateRange, 0, tvNotes);
+      if assigned(lastNode) then
+      begin
+        if FCurrentContext.TreeAscending then
+          lastNode := lastNode.getFirstChild
+        else
+          lastNode := lastNode.GetLastChild;
+        if assigned(lastNode) and
+          (pos(TX_OLDER_NOTES_WITH_ADDENDA, lastNode.Text) > 0) then
+          tvNotes.items.Delete(lastNode);
+      end;
+
+      if tvNotes.Selected <> nil then
+        tvNotesChange(Self, tvNotes.Selected);
+
+    finally
+      RedrawActivate(memNote.Handle);
+      RedrawActivate(lvNotes.Handle);
+    end;
+  finally
+    FreeAndNil(tmpList);
+  end;
+
+  uChanging := bChanging; // restoring the original status;
+  SendMessage(tvNotes.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
+end;
+
+{
+procedure TfrmNotes.SelectNode(aNode: TTreeNode = nil);
+var
+  X: String;
+  tn: TTreeNode;
+begin
+  tn := aNode;
+  if tn = nil then
+    tn := tvNotes.Selected;
+
+  if tn <> nil then
+  begin
+    X := TORTreeNode(tn).StringData;
+    if (StrToIntDef(Piece(X, U, 1), 0) > 0)
+    // including cases of "or (pos(TX_MORE,UpperCase(X))>0)"
+    then
+    begin
+      SetLvNotesVisible(False);
+      lstNotes.SelectByID(Piece(X, U, 1));
+      // selects lstNotes Item corresponding to selected node of the tree.
+      // In case of "SHOW MPRE" the tree node points
+      lstNotesClick(Self);
+      SendMessage(memNote.Handle, WM_VSCROLL, SB_TOP, 0)
+    end;
+  end;
+end;
+
+}
+procedure TfrmNotes.DoSelect;
+{
+  procedure UpdateLastIcon;
+  begin
+    if lvNotes.Items.Count > 0 then
+    begin
+      if lvNotes.Items[lvNotes.Items.Count - 1].SubItems.Count > 0 then
+        if pos(TX_MORE, lvNotes.Items[lvNotes.Items.Count - 1].SubItems[0]) > 0
+        then
+          lvNotes.Items[lvNotes.Items.Count - 1].ImageIndex := IMG_NONE;
+    end;
+  end;
+}
+  function getMyNodeID: String;
+  begin
+    Result := '';
+    with tvNotes do
+      if Selected.ImageIndex = IMG_TOP_LEVEL then
+        Result := Piece(TORTreeNode(Selected).StringData, U, 1)
+      else if Selected.Parent.ImageIndex = IMG_TOP_LEVEL then
+        Result := Piece(TORTreeNode(Selected.Parent).StringData, U, 1)
+      else if Selected.Parent.Parent.ImageIndex = IMG_TOP_LEVEL then
+        Result := Piece(TORTreeNode(Selected.Parent.Parent).StringData, U, 1);
+  end;
+
+  procedure lvNotesInitView(aText: String);
+  var
+    s: string;
+  begin
+    lvNotes.Items.BeginUpdate;
+    SetLvNotesVisible(true);
+    lvNotes.Items.Clear;
+    lvNotes.height := (2 * lvNotes.Parent.height) div 5;
+    lvNotes.Items.BeginUpdate; // ? EndUpdate ?
+
+    stTitle.Caption := Trim(aText);
+    if (FCurrentContext.SearchField <> '') and (FCurrentContext.Filtered) then
+    begin
+      case FCurrentContext.SearchField[1] of
+        'T':
+          s := 'TITLE';
+        'S':
+          s := 'SUBJECT';
+        'B':
+          s := 'TITLE or SUBJECT';
+      end;
+      stTitle.Caption := stTitle.Caption + ' where ' + s + ' contains "' +
+        upperCase(FCurrentContext.Keyword) + '"';
+      lvNotes.Caption := stTitle.Caption;
+    end;
+  end;
+
+  procedure lvNotesUpdateView;
+  var
+    i: Integer;
+
+  begin
+    with lvNotes do
+    begin
+      for i := 0 to Columns.Count - 1 do
+        Columns[i].ImageIndex := IMG_NONE;
+      ColumnSortForward := FCurrentContext.ListAscending;
+      if ColumnToSort = 5 then
+        ColumnToSort := 0;
+      if ColumnSortForward then
+        Columns[ColumnToSort].ImageIndex := IMG_ASCENDING
+      else
+        Columns[ColumnToSort].ImageIndex := IMG_DESCENDING;
+      if ColumnToSort = 0 then
+        ColumnToSort := 5;
+      AlphaSort;
+      Columns[5].Width := 0;
+      Columns[6].Width := 0;
+    end;
+    AutoSizeColumns(lvNotes, [0]);
+    // UpdateLastIcon;  //KCH 8/27/2015 for NSR 20070817 removing icon for "SHOW MORE" line
+  end;
+
+var
+  X: String;
+  MyNodeID: string;
+  ReturnCursor: Integer;
+begin
+  if tvNotes.Selected = nil then
+    exit;
+  ReturnCursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass;
+  try
+    // This gives the change a chance to occur when keyboarding, so that WindowEyes doesn't use the old value.
+    Application.ProcessMessages;
+    with tvNotes do
+    begin
+      if assigned(Selected.Data) then
+        UpdateActMenu(PDocTreeObject(Selected.Data)^.DocID, tvNotes);
+      RedrawSuspend(tvNotes.Handle);
+      RedrawSuspend(lvNotes.Handle);
+      RedrawSuspend(memNote.Handle);
+      try
+        popNoteListExpandSelected.Enabled := Selected.HasChildren;
+        popNoteListCollapseSelected.Enabled := Selected.HasChildren;
+        X := TORTreeNode(Selected).StringData;
+
+        if (Selected.ImageIndex in [IMG_TOP_LEVEL, IMG_GROUP_OPEN,
+          IMG_GROUP_SHUT]) then
+        begin
+          lvNotesInitView(Selected.Text);
+          MyNodeID := getMyNodeID;
+
+          uChanging := true;
+          TraverseTree(tvNotes, lvNotes, Selected.getFirstChild, MyNodeID,
+            FCurrentContext);
+          lvNotesUpdateView;
+          // uChanging := FALSE;  <-- moved down to avoid duplicate server calls
+          with lvNotes do
+          begin
+            if Items.Count > 0 then
+            begin
+              Selected := Items[0];
+              uChanging := False;
+              lvNotesSelectItem(Self, Selected, true);
+            end
+            else
+            begin
+              Selected := nil;
+              lstNotes.ItemIndex := -1;
+              CPMemNote.EditMonitor.ItemIEN := lstNotes.ItemIEN;
+              ClearPCE;
+              ShowPCEControls(False);
+            end;
+          end;
+          uChanging := False; // <-- new position
+
+          ReadVisible := true;
+          UpdateReminderFinish;
+          ShowPCEControls(False);
+          Drawers.DisplayDrawers(true, Drawers.ActiveDrawer, [odTemplates],
+            [odTemplates]); // FALSE);
+          ShowPCEButtons(False);
+        end
+        else
+          // SelectNode;
+          if StrToIntDef(Piece(X, U, 1), 0) > 0 then
+          begin
+            memNote.Clear;
+            SetLvNotesVisible(False);
+            // lvNotes.Visible := FALSE;
+            lstNotes.SelectByID(Piece(X, U, 1));
+            lstNotesClick(Self);
+            SendMessage(memNote.Handle, WM_VSCROLL, SB_TOP, 0);
+          end;
+
+        // display orphaned warning
+//        if assigned(Selected.Data) and PDocTreeObject(Selected.Data)^.Orphaned then
+//          MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
+        if assigned(Selected) and assigned(Selected.Data) and
+          PDocTreeObject(Selected.Data)^.Orphaned then
+          MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
+
+
+      finally
+        RedrawActivate(tvNotes.Handle);
+        RedrawActivate(lvNotes.Handle);
+        RedrawActivate(memNote.Handle);
+      end;
+    end;
+  finally
+    Screen.Cursor := ReturnCursor;
+  end;
+end;
+
+procedure TfrmNotes.GetMoreDocuments(Sender: TObject = nil);
+var
+  tn: TTreeNode;
+  i: Integer;
+  TiuID: String;
+  saved: boolean;
+  SavedDocID: string;
+  ChangeNode: boolean;
+
+const
+  posTiuID = 5;
+
+  procedure savePosition;
+  begin
+    TiuID := '';
+    if lvNotes.ItemIndex - 1 < 0 then
+      exit;
+    if lvNotes.Items[lvNotes.ItemIndex - 1].SubItems.Count < posTiuID then
+      exit;
+    TiuID := lvNotes.Items[lvNotes.ItemIndex - 1].SubItems[posTiuID];
+  end;
+
+  procedure restorePosition;
+  var
+    i: Integer;
+  begin
+    if TiuID = '' then
+      lvNotes.ItemIndex := lvNotes.Items.Count - 1
+    else
+      for i := lvNotes.Items.Count - 1 downto 0 do
+        if TiuID = lvNotes.Items[i].SubItems[posTiuID] then
+        begin
+          lvNotes.ItemIndex := i;
+          lvNotes.Items[i].MakeVisible(False);
+          break;
+        end;
+  end;
+
+begin
+  ChangeNode := True;
+  if EditingIndex >= 0 then
+  begin
+    SavedDocID := Piece(lstNotes.Items[EditingIndex], U, 1);
+    saved := True;
+    SaveCurrentNote(saved);
+    if not saved then
+      exit;
+    FLastNoteID := SavedDocID;
+    FUpdateUnsigned := True;
+    ChangeNode := False;
+  end;
+  if Sender = nil then
+  begin
+    SaveExpandStatus;
+    tvNotes.Items.BeginUpdate;
+    LoadNotes(true); // load only signed notes
+    updateNotesCaption;
+    DoSelect;
+    tvNotes.Items.EndUpdate;
+
+    RestoreExpandStatus;
+    tvNotes.SortType := stData; // sort tree nodes after re-load
+    tvNotes.AlphaSort;
+    SendMessage(tvNotes.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
+    // tvNotes.ScrollBy(0,0); // < - commented out to avoid horizontal scroll
+    if ChangeNode then
+      RestoreTreePosition; // < - saved @ OnChanging
+    // SelectNode;
+  end
+  else if Sender = lvNotes then
+  begin
+    // savePosition;
+    SaveExpandStatus;
+    RedrawSuspend(lvNotes.Handle);
+    LoadNotes(true); // load only signed notes
+    RestoreExpandStatus;
+    updateNotesCaption;
+    tn := getNodeByName(targetAllSignedNotes, 0, tvNotes);
+    tvNotes.Selected := tn;
+
+    if lvNotes.Items.Count > 0 then
+    begin
+      // i := lvNotes.Items.Count - FCurrentContext.MaxDocs;
+      i := lvNotes.Items.Count - 2;
+      // 2016-07-15 always one line prior to "SHOW MORE"
+      if i < 0 then
+        i := 0;
+      lvNotes.ItemIndex := i;
+      lvNotes.Items[i].MakeVisible(False);
+      // RestorePosition;
+    end;
+    RedrawActivate(lvNotes.Handle);
+  end;
+end;
+
+procedure TfrmNotes.SetLvNotesVisible(aValue: Boolean);
+begin
+  lvNotes.Visible := aValue;
+  splList.Visible := aValue;
+  splList.Top := lvNotes.Top + 1;
+end;
+
+procedure TfrmNotes.UpdateNotesCaption(ReloadTotal: boolean = false);
+var
+  i, lvl: Integer;
+  lvl1notes: Integer;
+  tmpstr: String;
+  CntNodes: Boolean;
+begin
+  if ReloadTotal then
+    CallVistA('ORCNOTE GET TOTAL', [Patient.DFN], NoteTotal);
+  lvl1notes := 0;
+  CntNodes := False;
+  if FCurrentContext.GroupBy = 'D' then
+    lvl := 3
+  else if FCurrentContext.GroupBy = '' then
+    lvl := 1
+  else
+    lvl := 2;
+  for i := 0 to tvNotes.Items.Count - 1 do
+  begin
+    if (AnsiContainsText('All signed notes', tvNotes.Items[i].Text)) OR
+      (AnsiContainsText('Signed notes by date range', tvNotes.Items[i].Text))
+    then
+      // ADD CODE HERE TO SAVE INDEX
+      CntNodes := true;
+    if (CntNodes) and (tvNotes.Items.Item[i].Level = lvl) and
+      (not ShowMoreNode(tvNotes.Items.Item[i].Text)) then
+      Inc(lvl1notes);
+  end;
+
+  stNotes.Caption := SetNoteTreeLabel(FCurrentContext);
+  tmpstr := ' ' + IntToStr(FCurrentContext.MaxDocs) + ' ';
+  if AnsiContainsStr(stNotes.Caption, tmpstr) then
+    stNotes.Caption := StringReplace(stNotes.Caption,
+      IntToStr(FCurrentContext.MaxDocs), IntToStr(lvl1notes),
+      [rfReplaceAll, rfIgnoreCase]);
+
+  if Not AnsiContainsStr(stNotes.Caption, 'Total:') then
+    stNotes.Caption := StringReplace(stNotes.Caption, 'Signed Notes',
+      'Signed Notes' + ' (Total: ' + NoteTotal + ')',
+      [rfReplaceAll, rfIgnoreCase]);
+  stNotes.Hint := stNotes.Caption;
+end;
+
+procedure TfrmNotes.SaveTreePosition; // (fix 336188)
+begin
+  if uChanging then // ignore if change is in progress
+    exit;
+  // saving the document ID along with the parent node caption
+  // as the same document may fall in different categories
+  LastID := '';
+  if assigned(tvNotes.Selected) then
+  begin
+    LastID := getNodeLocation(tvNotes.Selected) + U;
+    if assigned(tvNotes.Selected.Data) then
+      LastID := LastID + PDocTreeObject(tvNotes.Selected.Data)^.DocID
+    else
+      LastID := LastID + tvNotes.Selected.Text;
+  end;
+end;
+
+procedure TfrmNotes.SaveExpandStatus; // (fix 336188)
+begin
+  if assigned(slExpandStatus) and (slExpandStatus <> nil) then
+    slExpandStatus.Free;
+  slExpandStatus := getExpandStatus(tvNotes);
+end;
+
+procedure TfrmNotes.RestoreTreePosition(bStepForward: Boolean = False);
+// (fix 336188)
+
+  function findLastTreeID(anID: String): TTreeNode;
+  var
+    i: Integer;
+    sID: String;
+    b: Boolean;
+
+  begin
+    // searching for the the node containing the document with given ID
+    // and having the same parent node
+    b := uChanging;
+    uChanging := true;
+    Result := nil;
+    for i := 0 to tvNotes.Items.Count - 1 do
+    begin
+      Result := tvNotes.Items[i];
+      sID := getNodeLocation(Result) + U;
+      if assigned(Result.Data) then
+        sID := sID + PDocTreeObject(Result.Data)^.DocID;
+      if sID = LastID then
+        break;
+    end;
+    uChanging := b;
+  end;
+
+var
+  tn: TTreeNode;
+  // b:boolean;
+begin
+  tn := findLastTreeID(LastID);
+  if assigned(tn) then
+  begin
+    // b := uChanging;
+    // uChanging := true;
+    if not bStepForward then
+    begin
+      tvNotes.Selected := nil; // keep this line
+      tvNotes.Selected := tn;
+    end
+    else if tn.getNextSibling <> nil then
+      tvNotes.Selected := tn.getNextSibling
+    else
+      tvNotes.Selected := tn;
+
+    // uChanging := b;
+  end;
+end;
+
+procedure TfrmNotes.RestoreExpandStatus; // (fix 336188)
+begin
+  if assigned(slExpandStatus) then
+  begin
+    setExpandStatus(tvNotes.Items, slExpandStatus);
+    FreeAndNil(slExpandStatus);
+  end;
+end;
+
+function TfrmNotes.getNodeLocation(aNode: TTreeNode): String;
+begin
+  Result := '';
+  if not assigned(aNode) then
+    exit;
+  case aNode.Level of
+    0:
+      Result := aNode.Text;
+    1:
+      Result := aNode.Parent.Text;
+    2:
+      Result := aNode.Parent.Parent.Text;
+  end;
+end;
+
+
+
+procedure TfrmNotes.LoadUserSplitterSettings(posA, posB, posC, posD: Integer);
 begin
   if posA > 0 then
   begin
-    memPCERead.Height := posA;
-    memPCEWrite.Height := posA;
+    memPCERead.height := posA;
+    memPCEWrite.height := posA;
   end;
   if posB > 0 then
   begin
-    CPMemNote.Height := posB;
-    cpmemNewNote.Height := posB;
+    CPMemNote.height := posB;
+    CPMemNewNote.height := posB;
   end;
   if posC > 0 then
-    lvNotes.Height := posC;
+    lvNotes.height := posC;
 end;
 
 function TfrmNotes.EditedNoteInfo: String;

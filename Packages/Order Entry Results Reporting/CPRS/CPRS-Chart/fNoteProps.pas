@@ -133,7 +133,8 @@ implementation
 
 {$R *.DFM}
 
-uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter, VAUtils;
+uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter, VAUtils,
+  uSimilarNames;
 
 { Initial values in ANote
 
@@ -278,6 +279,7 @@ begin
           cboAuthor.InitLongList(ANote.AuthorName);
           if ANote.Author > 0 then cboAuthor.SelectByIEN(ANote.Author);
         end;
+      TSimilarNames.RegORComboBox(cboAuthor);
       ShowClinProcFields(FIsClinProcNote);
       FStarting := True;
       if ANote.Title > 0 then cboNewTitle.SelectByIEN(ANote.Title);
@@ -497,6 +499,7 @@ begin
         cboCosigner.ItemIndex := -1;
       end;
     end;
+  TSimilarNames.RegORComboBox(cboCosigner);
 end;
 
 procedure TfrmNoteProperties.ShowRequestList(ShouldShow: Boolean);
@@ -632,6 +635,7 @@ procedure TfrmNoteProperties.cboCosignerExit(Sender: TObject);
 { make sure FCosign fields stay up to date in case SetCosigner gets called again }
 //var x: string;
 begin
+  inherited;
   with cboCosigner do if ((Text = '') or (ItemIEN = 0)) then
   begin
     ItemIndex := -1;
@@ -647,7 +651,7 @@ end;
 
 procedure TfrmNoteProperties.cmdOKClick(Sender: TObject);
 var
-  ErrMsg, WhyNot, AlertMsg: string;
+  ErrMsg, spErrMsg, WhyNot, AlertMsg: string;
 begin
   cmdOK.SetFocus;                                // make sure cbo exit events fire
   Application.ProcessMessages;
@@ -711,19 +715,44 @@ begin
           end;
         end;
     end;
-  if cboAuthor.ItemIEN = 0   then ErrMsg := ErrMsg + TX_REQ_AUTHOR;
-  if not calNote.IsValid     then ErrMsg := ErrMsg + TX_REQ_REFDATE;
-  if calNote.IsValid and (calNote.FMDateTime > FMNow)    then ErrMsg := ErrMsg + TX_NO_FUTURE;
-  if cboCosigner.Visible then
+  if cboAuthor.ItemIEN = 0 then
+    ErrMsg := ErrMsg + TX_REQ_AUTHOR
+  else begin
+    if not CheckForSimilarName(cboAuthor, spErrMsg, ltPerson, sPr) then
     begin
-       if (cboCosigner.ItemIEN = 0)     then ErrMsg := ErrMsg + TX_REQ_COSIGNER;
-      //if (cboCosigner.ItemIEN = User.DUZ) then ErrMsg := TX_COS_SELF;  // (CanCosign will do this check)
-      if (cboCosigner.ItemIEN > 0) and not CanCosign(cboNewTitle.ItemIEN, FDocType, cboCosigner.ItemIEN, calNote.FMDateTime)
-        then ErrMsg := cboCosigner.Text + TX_COS_AUTH;
-        //code added 02/2003  check if User is Inactive   GRE
-        if UserInactive(IntToStr(cboCosigner.ItemIEN)) then
-        if (InfoBox(fNoteProps.TX_USER_INACTIVE, TC_INACTIVE_USER, MB_OKCANCEL)= IDCANCEL) then exit;
+      if trim(spErrMsg) = '' then
+        spErrMsg := TX_REQ_AUTHOR
+      else
+        spErrMsg := CRLF + spErrMsg;
+      ErrMsg := ErrMsg + CRLF + spErrMsg;
     end;
+  end;
+
+  if not calNote.IsValid then ErrMsg := ErrMsg + TX_REQ_REFDATE;
+  if calNote.IsValid and (calNote.FMDateTime > FMNow)    then ErrMsg := ErrMsg + TX_NO_FUTURE;
+
+  if cboCosigner.Visible then
+  begin
+    if (cboCosigner.ItemIEN = 0) then
+      ErrMsg := ErrMsg + TX_REQ_COSIGNER
+    else begin
+      if not CheckForSimilarName(cboCosigner, spErrMsg, ltPerson, sPr, FToday) then
+      begin
+        if trim(spErrMsg) = '' then
+          spErrMsg := TX_REQ_COSIGNER
+        else
+          spErrMsg := CRLF + spErrMsg;
+        ErrMsg := ErrMsg + CRLF + spErrMsg;
+      end;
+    end;
+    //if (cboCosigner.ItemIEN = User.DUZ) then ErrMsg := TX_COS_SELF;  // (CanCosign will do this check)
+    if (cboCosigner.ItemIEN > 0) and not CanCosign(cboNewTitle.ItemIEN, FDocType, cboCosigner.ItemIEN, calNote.FMDateTime)
+      then ErrMsg := cboCosigner.Text + TX_COS_AUTH;
+      //code added 02/2003  check if User is Inactive   GRE
+      if UserInactive(IntToStr(cboCosigner.ItemIEN)) then
+      if (InfoBox(fNoteProps.TX_USER_INACTIVE, TC_INACTIVE_USER, MB_OKCANCEL)= IDCANCEL) then exit;
+  end;
+
   if FIsClinProcNote then
     begin
       if (FCPStatusFlag = CP_INSTR_INCOMPLETE) then

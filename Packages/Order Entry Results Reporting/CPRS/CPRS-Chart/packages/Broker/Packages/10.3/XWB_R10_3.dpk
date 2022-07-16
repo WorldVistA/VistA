@@ -1,0 +1,80 @@
+package XWB_R10_3;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'RPC Broker Runtime Package - 10.3'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  xmlrtl,
+  vcl,
+  dbrtl,
+  soaprtl,
+  inet,
+  vcldb,
+  vclie,
+  vclimg,
+  dsnap,
+  soapmidas;
+
+contains
+  AddServer in '..\..\Source\AddServer.pas' {frmAddServer},
+  CCOW_const in '..\..\Source\CCOW_const.pas',
+  CCOWRPCBroker in '..\..\Source\CCOWRPCBroker.pas',
+  fDebugInfo in '..\..\Source\fDebugInfo.pas' {frmDebugInfo},
+  fPlinkpw in '..\..\Source\fPlinkpw.pas' {fPlinkPassword},
+  frmSignonMessage in '..\..\Source\frmSignonMessage.pas' {frmSignonMsg},
+  fRPCBErrMsg in '..\..\Source\fRPCBErrMsg.pas' {frmErrMsg},
+  fSgnonDlg in '..\..\Source\fSgnonDlg.pas' {frmSignonDialog},
+  fSSHUsername in '..\..\Source\fSSHUsername.pas' {SSHUsername},
+  Loginfrm in '..\..\Source\Loginfrm.pas' {frmSignon},
+  MFunStr in '..\..\Source\MFunStr.pas',
+  RequestSecurityTokenSVC in '..\..\Source\RequestSecurityTokenSVC.pas',
+  RpcbErr in '..\..\Source\RpcbErr.pas' {frmRpcbError},
+  Rpcconf1 in '..\..\Source\Rpcconf1.pas' {rpcConfig},
+  Rpcnet in '..\..\Source\Rpcnet.pas' {RPCFRM1},
+  RpcSLogin in '..\..\Source\RpcSLogin.pas',
+  SelDiv in '..\..\Source\SelDiv.pas' {SelDivForm},
+  SgnonCnf in '..\..\Source\SgnonCnf.pas' {frmSignonConfig},
+  Splvista in '..\..\Source\Splvista.pas' {frmVistaSplash},
+  Trpcb in '..\..\Source\Trpcb.pas',
+  VCEdit in '..\..\Source\VCEdit.pas' {frmVCEdit},
+  VERGENCECONTEXTORLib_TLB in '..\..\Source\VERGENCECONTEXTORLib_TLB.pas',
+  Wsockc in '..\..\Source\Wsockc.pas',
+  XlfSid in '..\..\Source\XlfSid.pas',
+  XWBHash in '..\..\Source\XWBHash.pas',
+  XWBRich20 in '..\..\Source\XWBRich20.pas',
+  XWBSSOi in '..\..\Source\XWBSSOi.pas' {XWBSSOiFrm},
+  XWBut1 in '..\..\Source\XWBut1.pas',
+  IAMConstants in '..\..\Source\IAMConstants.pas',
+  XWBLoginForm in '..\..\Source\XWBLoginForm.pas' {XWBLoginForm},
+  wcrypt2 in '..\..\Source\wcrypt2.pas',
+  uLockBroker in '..\..\Source\uLockBroker.pas';
+
+end.
+

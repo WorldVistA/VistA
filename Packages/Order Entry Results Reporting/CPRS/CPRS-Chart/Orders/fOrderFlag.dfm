@@ -82,6 +82,7 @@ inherited frmFlagOrder: TfrmFlagOrder
     OnExit = cboOnExit
     OnNeedData = cboAlertRecipientNeedData
     CharsNeedMatch = 1
+    UniqueAutoComplete = True
   end
   object cboFlagReason: TORComboBox [6]
     Left = 8

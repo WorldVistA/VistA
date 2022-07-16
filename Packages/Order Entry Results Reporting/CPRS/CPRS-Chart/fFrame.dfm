@@ -708,8 +708,8 @@ inherited frmFrame: TfrmFrame
           object lblFlag: TLabel
             Left = 2
             Top = 2
-            Width = 25
-            Height = 13
+            Width = 132
+            Height = 12
             Margins.Left = 4
             Margins.Top = 4
             Margins.Right = 4
@@ -729,13 +729,15 @@ inherited frmFrame: TfrmFrame
             OnClick = pnlFlagClick
             OnMouseDown = pnlFlagMouseDown
             OnMouseUp = pnlFlagMouseUp
+            ExplicitWidth = 25
+            ExplicitHeight = 13
           end
         end
         object txtCmdFlags: TVA508StaticText
           Name = 'txtCmdFlags'
           Left = 1
           Top = 1
-          Width = 105
+          Width = 136
           Height = 15
           Margins.Left = 4
           Margins.Top = 4
@@ -807,8 +809,8 @@ inherited frmFrame: TfrmFrame
           object lblVistaWeb: TLabel
             Left = 2
             Top = 2
-            Width = 3
-            Height = 16
+            Width = 107
+            Height = 24
             Margins.Left = 4
             Margins.Top = 4
             Margins.Right = 4
@@ -825,6 +827,8 @@ inherited frmFrame: TfrmFrame
             OnClick = pnlVistaWebClick
             OnMouseDown = pnlVistaWebMouseDown
             OnMouseUp = pnlVistaWebMouseUp
+            ExplicitWidth = 3
+            ExplicitHeight = 16
           end
         end
         object pnlCIRN: TKeyClickPanel
@@ -857,8 +861,8 @@ inherited frmFrame: TfrmFrame
           object lblCIRN: TLabel
             Left = 2
             Top = 2
-            Width = 80
-            Height = 16
+            Width = 107
+            Height = 28
             Margins.Left = 4
             Margins.Top = 4
             Margins.Right = 4
@@ -875,6 +879,8 @@ inherited frmFrame: TfrmFrame
             ParentFont = False
             Layout = tlCenter
             OnClick = pnlCIRNClick
+            ExplicitWidth = 80
+            ExplicitHeight = 16
           end
         end
       end
@@ -951,6 +957,8 @@ inherited frmFrame: TfrmFrame
       Font.Style = []
       ParentFont = False
       TabOrder = 2
+      ExplicitLeft = 2
+      ExplicitTop = 110
       object lstCIRNLocations: TORListBox
         Left = 642
         Top = 0
@@ -1401,7 +1409,8 @@ inherited frmFrame: TfrmFrame
         Caption = '-'
       end
       object PDMP1: TMenuItem
-        Caption = 'PDMP'
+        AutoHotkeys = maManual
+        Caption = '&PDMP'
         object RequestPDMPData1: TMenuItem
           Action = acPDMPRequest
         end
@@ -1418,7 +1427,7 @@ inherited frmFrame: TfrmFrame
       GroupIndex = 9
       object mnuHelpContents: TMenuItem
         Caption = '&Contents'
-        Hint = 'help\cprs.htm'
+        Hint = 'help\cprs.chm'
         OnClick = ToolClick
       end
       object mnuHelpTutor: TMenuItem
@@ -1548,24 +1557,29 @@ inherited frmFrame: TfrmFrame
     Left = 528
     Top = 224
     object acPDMPRequest: TAction
-      Caption = 'Request PDMP Data'
+      Caption = '&Request PDMP Data'
+      Hint = 'Request PDMP report for current patient'
       OnExecute = acPDMPRequestExecute
     end
     object acPDMPReview: TAction
-      Caption = 'Review PDMP Data'
+      Caption = 'Re&view PDMP Data'
       Enabled = False
+      Hint = 'Review PDMP report for current patient'
       OnExecute = acPDMPReviewExecute
     end
     object acPDMPCancel: TAction
-      Caption = 'Cancel PDMP Request'
+      Caption = '&Cancel PDMP Request'
       Enabled = False
+      Hint = 'Cancel request for PDMP report'
       OnExecute = acPDMPCancelExecute
     end
     object acPDMPOptions: TAction
-      Caption = 'PDMP Options'
+      Caption = 'PDMP &Options'
+      Hint = 'Review/modify PDMP options'
     end
     object acResetParams: TAction
-      Caption = 'Reset Params'
+      Caption = 'Reset P&arams'
+      Hint = 'Reset PDMP parameters to default values'
       OnExecute = acResetParamsExecute
     end
   end

@@ -58,9 +58,15 @@ type
     procedure lstAddByKeyPress(Sender: TObject; var Key: Char);
     procedure grpVisibilityClick(Sender: TObject);
     procedure lstAddByChange(Sender: TObject);
+    procedure lstAddByEnter(Sender: TObject);
+    procedure lstAddByExit(Sender: TObject);
+    procedure lstAddByKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure lstAddByMouseClick(Sender: TObject);
   private
     FLastList: integer;
     FChanging: boolean;
+    FProviderChanging: Boolean;
     procedure AddIfUnique(entry: string; aList: TORListBox);
   public
     { Public declarations }
@@ -73,7 +79,7 @@ procedure DialogOptionsLists(topvalue, leftvalue, fontsize: integer; var actiont
 
 implementation
 
-uses fOptionsNewList, rOptions, uOptions, rCore, fPtSelOptns, VAUtils;
+uses fOptionsNewList, rOptions, uOptions, rCore, fPtSelOptns, VAUtils, uSimilarNames;
 
 {$R *.DFM}
 
@@ -263,6 +269,9 @@ begin
 end;
 
 procedure TfrmOptionsLists.lstAddByChange(Sender: TObject);
+var
+  aErrMsg: String;
+
   procedure ShowMatchingPatients;
   begin
     with lstAddBy do begin
@@ -279,6 +288,9 @@ procedure TfrmOptionsLists.lstAddByChange(Sender: TObject);
 
 begin
   inherited;
+  if FProviderChanging and ((radAddByType.ItemIndex = 0) or (radAddByType.ItemIndex = 3)) then
+    exit;
+
   if radAddByType.ItemIndex = 0 {patient} then begin
     with lstAddBy do
     if frmPtSelOptns.IsLast5(Text) then begin
@@ -290,8 +302,18 @@ begin
         ShowMatchingPatients;
     end;
   end;
-end;
 
+  if radAddByType.ItemIndex = 3 then
+  begin
+    if not CheckForSimilarName(lstAddBy, aErrMsg, ltProvider, sPr, '', lstPersonalLists.Items) then
+    begin
+      ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Invalid Provider');
+      lstAddBy.SetFocus;
+    end;
+  end;
+
+  lstAddByClick(sender);
+end;
 
 procedure TfrmOptionsLists.lstAddByClick(Sender: TObject);
 var
@@ -355,6 +377,21 @@ begin
     end;
   btnListAddAll.Enabled := (lstListPats.Items.Count > 0) and (lstPersonalLists.ItemIndex > -1);
   btnListAdd.Enabled := (lstListPats.SelCount > 0) and (lstPersonalLists.ItemIndex > -1);
+end;
+
+procedure TfrmOptionsLists.lstAddByEnter(Sender: TObject);
+begin
+  inherited;
+  FProviderChanging := true;
+end;
+
+procedure TfrmOptionsLists.lstAddByExit(Sender: TObject);
+begin
+  if FProviderChanging then
+  begin
+    FProviderChanging := False;
+    lstAddByChange(sender);
+  end;
 end;
 
 procedure TfrmOptionsLists.btnDeleteListClick(Sender: TObject);
@@ -587,6 +624,22 @@ begin
   mnuPopPatient.Tag := LIST_PERSONAL;
 end;
 
+procedure TfrmOptionsLists.lstAddByKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+
+  FProviderChanging := True;
+
+  if Key = VK_LEFT then
+    Key := VK_UP;
+  if Key = VK_RIGHT then
+    Key := VK_DOWN;
+  if Key = VK_RETURN then
+    FProviderChanging := False;
+
+end;
+
 procedure TfrmOptionsLists.lstAddByKeyPress(Sender: TObject;
   var Key: Char);
 
@@ -627,6 +680,16 @@ begin
           ShowMatchingPatients;
         end;
     end;
+  end;
+end;
+
+procedure TfrmOptionsLists.lstAddByMouseClick(Sender: TObject);
+begin
+  inherited;
+  if FProviderChanging then
+  begin
+    FProviderChanging := False;
+    lstAddByChange(sender);
   end;
 end;
 

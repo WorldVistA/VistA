@@ -7,14 +7,12 @@ inherited frmOrders: TfrmOrders
   ClientWidth = 958
   HelpFile = 'overvw'
   Menu = mnuOrders
-  OnDestroy = FormDestroy
-  OnShow = FormShow
-  ExplicitWidth = 976
-  ExplicitHeight = 809
+  ExplicitWidth = 974
+  ExplicitHeight = 798
   PixelsPerInch = 120
-  TextHeight = 16
+  TextHeight = 13
   inherited shpPageBottom: TShape
-    Top = 733
+    Top = 734
     Width = 958
     Margins.Left = 6
     Margins.Top = 6
@@ -25,7 +23,7 @@ inherited frmOrders: TfrmOrders
   end
   inherited sptHorz: TSplitter
     Left = 146
-    Height = 733
+    Height = 734
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -36,14 +34,14 @@ inherited frmOrders: TfrmOrders
   end
   inherited pnlLeft: TPanel
     Width = 146
-    Height = 733
+    Height = 734
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
     Constraints.MinWidth = 46
     ExplicitWidth = 146
-    ExplicitHeight = 733
+    ExplicitHeight = 734
     object OROffsetLabel1: TOROffsetLabel
       Left = 0
       Top = 0
@@ -101,6 +99,7 @@ inherited frmOrders: TfrmOrders
       Margins.Bottom = 4
       Align = alTop
       Constraints.MinHeight = 38
+      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
@@ -114,12 +113,13 @@ inherited frmOrders: TfrmOrders
       Left = 0
       Top = 145
       Width = 146
-      Height = 588
+      Height = 589
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alClient
+      ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
@@ -146,9 +146,9 @@ inherited frmOrders: TfrmOrders
     end
   end
   inherited pnlRight: TPanel
-    Left = 151
-    Width = 807
-    Height = 733
+    Left = 150
+    Width = 808
+    Height = 734
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -158,13 +158,13 @@ inherited frmOrders: TfrmOrders
     ParentCtl3D = False
     ParentFont = False
     OnResize = pnlRightResize
-    ExplicitLeft = 151
-    ExplicitWidth = 807
-    ExplicitHeight = 733
+    ExplicitLeft = 150
+    ExplicitWidth = 808
+    ExplicitHeight = 734
     object lblOrders: TOROffsetLabel
       Left = 0
       Top = 0
-      Width = 807
+      Width = 808
       Height = 24
       Margins.Left = 4
       Margins.Top = 4
@@ -206,7 +206,7 @@ inherited frmOrders: TfrmOrders
     object hdrOrders: THeaderControl
       Left = 0
       Top = 24
-      Width = 807
+      Width = 808
       Height = 21
       Margins.Left = 4
       Margins.Top = 4
@@ -270,6 +270,11 @@ inherited frmOrders: TfrmOrders
           MinWidth = 25
           Text = 'Location'
           Width = 40
+        end
+        item
+          ImageIndex = -1
+          Text = 'Reviewed'
+          Width = 0
         end>
       OnSectionClick = hdrOrdersSectionClick
       OnSectionResize = hdrOrdersSectionResize
@@ -279,8 +284,8 @@ inherited frmOrders: TfrmOrders
     object lstOrders: TCaptionListBox
       Left = 0
       Top = 45
-      Width = 807
-      Height = 688
+      Width = 808
+      Height = 689
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -507,6 +512,14 @@ inherited frmOrders: TfrmOrders
         Caption = 'Results History...'
         OnClick = mnuViewResultsHistoryClick
       end
+      object mnuViewUAP: TMenuItem
+        Caption = 'Unified Action Profile (UAP)'
+        OnClick = mnuViewUAPClick
+      end
+      object mnuViewDM: TMenuItem
+        Caption = 'Discharge Meds'
+        OnClick = mnuViewDMClick
+      end
     end
     object mnuAct: TMenuItem
       Caption = '&Action'
@@ -559,6 +572,10 @@ inherited frmOrders: TfrmOrders
       object mnuActFlag: TMenuItem
         Caption = '&Flag...'
         OnClick = mnuActFlagClick
+      end
+      object mnuActFlagComment: TMenuItem
+        Caption = 'Flag Comments'
+        OnClick = mnuActFlagCommentClick
       end
       object mnuActUnflag: TMenuItem
         Caption = '&Unflag...'
@@ -679,6 +696,65 @@ inherited frmOrders: TfrmOrders
       Caption = 'Adjust Column Size'
       Visible = False
       OnClick = mnuOptimizeFieldsClick
+    end
+    object N2: TMenuItem
+      Caption = '-'
+    end
+    object F1: TMenuItem
+      Caption = 'Flag...'
+      OnClick = mnuActFlagClick
+    end
+    object F2: TMenuItem
+      Caption = 'Flag Comment...'
+      OnClick = mnuActFlagCommentClick
+    end
+    object U1: TMenuItem
+      Caption = 'Unflag...'
+      OnClick = mnuActUnflagClick
+    end
+    object AllowMutlipleassignment1: TMenuItem
+      Caption = 'Allow Mutliple Assignment'
+      Hint = 'Allow to assign the same flag comment to several order flags'
+      OnClick = AllowMutlipleassignment1Click
+    end
+  end
+  object PopUAPOrder: TPopupMenu
+    OnPopup = PopUAPOrderPopup
+    Left = 216
+    Top = 176
+    object MnuDetailsUAP: TMenuItem
+      Caption = 'Detai&ls...'
+      OnClick = mnuViewDetailClick
+    end
+    object MnuDashUAP: TMenuItem
+      Caption = '-'
+    end
+    object MnuContinueUAP: TMenuItem
+      Caption = 'Continue...'
+      OnClick = MnuContinueUAPClick
+    end
+    object MnuChangeUAP: TMenuItem
+      Tag = 1
+      Caption = '&Change...'
+      OnClick = MnuChangeUAPClick
+    end
+    object MnuRenewUAP: TMenuItem
+      Tag = 1
+      Caption = 'Rene&w...'
+      OnClick = MnuRenewUAPClick
+    end
+    object MnuDiscontinueUAP: TMenuItem
+      Tag = 1
+      Caption = '&Discontinue...'
+      OnClick = MnuDiscontinueUAPClick
+    end
+    object MnuDash2UAP: TMenuItem
+      Caption = '-'
+    end
+    object MnuSignUAP: TMenuItem
+      Tag = 1
+      Caption = '&Sign...'
+      OnClick = mnuActSignClick
     end
   end
 end

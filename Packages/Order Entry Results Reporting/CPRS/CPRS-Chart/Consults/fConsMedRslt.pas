@@ -4,7 +4,7 @@ interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
   Buttons, ORCtrls, ORfn, ExtCtrls, fAutoSz, ORDtTm, fConsultAlertTo, fRptBox,
-  VA508AccessibilityManager, Vcl.ComCtrls, Vcl.ImgList;
+  VA508AccessibilityManager, Vcl.ComCtrls, Vcl.ImgList, System.ImageList;
 
 type
   TMedResultRec = record
@@ -57,7 +57,7 @@ implementation
 
 {$R *.DFM}
 
-uses rConsults, rCore, uCore, uConst;
+uses rConsults, rCore, uCore, uConst, uSimilarNames;
 
 const
   TX_MEDRSLT_TEXT = 'Select medicine result or press Cancel.';
@@ -187,7 +187,6 @@ begin
   cmdDetails.Enabled := (not assigned(FShowDetails));
   lstMedResults.Enabled := (not assigned(FShowDetails));
 end;
-
 
 procedure TfrmConsMedRslt.ckAlertClick(Sender: TObject);
 begin

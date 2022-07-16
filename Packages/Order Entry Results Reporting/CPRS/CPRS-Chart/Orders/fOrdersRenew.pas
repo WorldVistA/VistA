@@ -36,13 +36,19 @@ type
   end;
 
 function ExecuteRenewOrders(var SelectedList: TList): Boolean;
+function ShouldCancelRenewOrder: boolean; //rtw
 
 implementation
+
 
 {$R *.DFM}
 
 uses rOrders, fDateRange, fRenewOutMed, uCore, rCore, rMisc, UBAGlobals, 
   VA2006Utils, fFrame;
+
+
+var // rtw
+  RenewOrderCancel: boolean; // rtw
 
 const
   TEXT_COLUMN = 0;
@@ -72,6 +78,11 @@ const
   TX_INSTRUCT   = CRLF + CRLF + 'Click RETRY to select another provider.' + CRLF + 'Click CANCEL to cancel the current renewal.';
   TC_DEAFAIL    = 'Order not renewed';
   TC_ORDERCHECKS = 'Order Checks';
+
+function ShouldCancelRenewOrder: boolean; //rtw
+ begin
+  result := RenewOrderCancel;
+ end; //rtw
 
 function PickupText(const x: string): string;
 begin

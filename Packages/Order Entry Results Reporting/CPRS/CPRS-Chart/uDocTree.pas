@@ -2,8 +2,7 @@ unit uDocTree;
 
 interface
 
-uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, uConst, ORCtrls, ComCtrls, uTIU;
-
+uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, uConst, ORCtrls, ComCtrls, uTIU, Dialogs;
 
 type
   PDocTreeObject = ^TDocTreeObject;
@@ -27,14 +26,10 @@ type
     Orphaned       : boolean;                 //True if the parent no longer exist in the system
   end;
 
-
-
 // Procedures for document treeviews/listviews
 procedure CreateListItemsForDocumentTree(Dest, Source: TStrings; Context: integer; GroupBy: string;
           Ascending: boolean; TabIndex: integer);
-procedure BuildDocumentTree(DocList: TStrings; const Parent: string; Tree: TORTreeView; Node: TORTreeNode;
-          TIUContext: TTIUContext; TabIndex: integer);
-procedure BuildDocumentTree2(DocList: TStrings; Tree:
+procedure BuildDocumentTree(DocList: TStrings; Tree:
           TORTreeView; TIUContext: TTIUContext; TabIndex: integer) ;
 procedure SetTreeNodeImagesAndFormatting(Node: TORTreeNode; CurrentContext: TTIUContext; TabIndex: integer);
 procedure ResetDocTreeObjectStrings(AnObject: PDocTreeObject);
@@ -49,6 +44,18 @@ procedure AddListViewItem(ANode: TTreeNode; AListView: TListView);
 function  MakeNoteTreeObject(x: string): PDocTreeObject;
 function  MakeDCSummTreeObject(x: string): PDocTreeObject;
 function  MakeConsultsNoteTreeObject(x: string): PDocTreeObject;
+
+
+function getChildCount(aNode:TTreeNode): Integer;
+function getNodeByName(aName:String;aLevel: Integer; tv: TTreeView):TTreeNode;
+function getExpandStatus(aTree:TTreeView):TStringList;
+procedure setExpandStatus(aNodes:TTreeNodes;aStatus:TStringList);
+procedure RemoveDuplicates(const aList: TStringList);
+procedure adjustOrder(aList: TStringList; Context: TTIUContext);
+function FindTreeNodeByName(aTree:TORTreeView;aName:String):TORTreeNode;
+procedure remapNode(aTree:TORTreeView;aName,aParentName:String);
+procedure AutoSizeColumns(lv: TListView; cols: array of integer);
+function ShowMoreNode(s: String): boolean;
 
 implementation
 
@@ -74,6 +81,7 @@ the following string '^' pieces:
       13 - Has children
       14 - Parent document
       15 - Order children of ID Note by title rather than date
+      16 - Orphaned
 ===============================================================}
 
 procedure CreateListItemsForDocumentTree(Dest, Source: TStrings; Context: integer; GroupBy: string;
@@ -82,221 +90,189 @@ const
   NO_MATCHES = '^No Matching Documents Found^^^^^^^^^^^%^0';
 var
   i: Integer;
-  x, x1, x2, x3, MyParent, MyTitle, MyLocation, MySubject: string;
+  x, x1, x2, x3, MyParent, MyTitle, MyLocation{, MySubject}: string;
   AList, SrcList: TStringList;
+  NotShowMore: boolean;
+
 begin
+  if not assigned(Dest) then
+    ShowMessage('No destination list provided to CreateListItemsForDocumentTree!');
+
+  if not assigned(Source) or (Source.Count<1) then
+    Dest.Insert(0, IntToStr(Context) + '^' + NC_TV_TEXT[TabIndex, Context] + ' - No Matching Documents Found^^^^^^^^^^^%^0')
+  else
+ begin
   AList := TStringList.Create;
   SrcList := TStringList.Create;
   try
     FastAssign(Source, SrcList);
     with SrcList do
       begin
-        if (Count = 0) then
-          begin
-            Dest.Insert(0, IntToStr(Context) + NO_MATCHES);
-            Exit;
-          end;
         for i := 0 to Count - 1 do
           begin
             x := Strings[i];
+            if trim(x) = '' then
+              continue;
+
             MyParent   := Piece(x, U, 14);
             MyTitle    := Piece(x, U, 2);
+            NotShowMore := not ShowMoreNode(MyTitle);
+
             if Length(Trim(MyTitle)) = 0 then
               begin
                 MyTitle := '** No Title **';
                 SetPiece(x, U, 2, MyTitle);
               end;
             MyLocation := Piece(x, U, 6);
-            if Length(Trim(MyLocation)) = 0 then
+            if (Length(Trim(MyLocation)) = 0) and NotShowMore then
               begin
                 MyLocation := '** No Location **';
                 SetPiece(x, U, 6, MyLocation);
               end;
-            MySubject  := Piece(x, U, 12);
-(*            case TIUContext.SearchField[1] of
-              'T': if ((TextFound(MyTitle)) then continue;
-              'S': if (not TextFound(MySubject)) then continue;
-              'B': if not ((TextFound(MyTitle)) or (TextFound(MySubject))) then continue;
-            end;*)
-            if GroupBy <> '' then case GroupBy[1] of
-              'D':  begin
-                      x1 := Piece(Piece(x, U, 8), ';', 1);                    // Visit date
-                      x2 := Piece(Piece(Piece(x, U, 8), ';', 2), '.', 1);     // Visit date (FM)   no time - v15.4
-                      if x2 = '' then
-                        begin
-                          x2 := 'No Visit';
-                          x1 := Piece(x1, ':', 1) + ':  No Visit';
-                        end;
-                      (*else
-                        x1 := Piece(x1, ':', 1) + ':  ' + FormatFMDateTimeStr('mmm dd,yy@hh:nn',x2)*) //removed v15.4
-                      if MyParent = IntToStr(Context) then
-                        SetPiece(x, U, 14, MyParent + x2 + Copy(x1, 1, 3));    // '2980324Adm'
-                      x3 := x2 + Copy(x1, 1, 3) + U + MixedCase(x1) + U + IntToStr(Context) + MixedCase(Copy(x1, 1, 3));
-                      if (Copy(MyTitle, 1, 8) <> 'Addendum') and (AList.IndexOf(x3) = -1) then
-                        AList.Add(x3);   // '2980324Adm^Mar 24,98'
-                    end;
-              'L':  begin
-                      if MyParent = IntToStr(Context) then                  // keep ID notes together, or
-                        SetPiece(x, U, 14, MyParent + MyLocation);
-(*                        if (Copy(MyTitle, 1, 8) <> 'Addendum') then       // split ID Notes by location?
-                        SetPiece(x, U, 14, IntToStr(Context) + MyLocation);*)
-                      x3 := MyLocation + U + MixedCase(MyLocation) + U + IntToStr(Context);
-                      if (Copy(MyTitle, 1, 8) <> 'Addendum') and (AList.IndexOf(x3) = -1) then
-                        AList.Add(x3);
-                    end;
-              'T':  begin
-                      if MyParent = IntToStr(Context) then                  // keep ID notes together, or
-                        SetPiece(x, U, 14, MyParent + MyTitle);
-(*                        if (Copy(MyTitle, 1, 8) <> 'Addendum') then       // split ID Notes by title?
-                        SetPiece(x, U, 14, IntToStr(Context) + MyTitle);*)
-                      x3 := MyTitle + U + MixedCase(MyTitle) + U + IntToStr(Context);
-                      if (Copy(MyTitle, 1, 8) <> 'Addendum') and (AList.IndexOf(x3) = -1) then
-                        AList.Add(x3);
-                    end;
-              'A':  begin
-                      x1 := Piece(Piece(x, U, 5), ';', 3);
-                      if x1 = '' then x1 := '** No Author **';
-                      if MyParent = IntToStr(Context) then                  // keep ID notes together, or
-                        SetPiece(x, U, 14, MyParent + x1);
-                      //if (Copy(MyTitle, 1, 8) <> 'Addendum') then         // split ID Notes by author?
-                      //  SetPiece(x, U, 14, IntToStr(Context) + x1);
-                      x3 := x1 + U + MixedCase(x1) + U + IntToStr(Context);
-                      if (Copy(MyTitle, 1, 8) <> 'Addendum') and(AList.IndexOf(x3) = -1) then
-                        AList.Add(x3);
-                    end;
-(*              'A':  begin                                                 // Makes note appear both places in tree,
-                      x1 := Piece(Piece(x, U, 5), ';', 3);                  // but also appears TWICE in lstNotes.
-                      if x1 = '' then x1 := '** No Author **';              // IS THIS REALLY A PROBLEM??
-                      if MyParent = IntToStr(Context) then                  // Impact on EditingIndex?
-                        SetPiece(x, U, 14, MyParent + x1);                  // Careful when deleting note being edited!!!
-                      Dest.Add(x);                                          // Need to find and delete ALL occurrences!
-                      SetPiece(x, U, 14, IntToStr(Context) + x1);
-                      x3 := x1 + U + MixedCase(x1) + U + IntToStr(Context);
-                      if (AList.IndexOf(x3) = -1) then AList.Add(x3);
-                    end;*)
-            end;
+
+            if GroupBy <> '' then
+              case GroupBy[1] of
+                'D':  begin
+                        x1 := Piece(Piece(x, U, 8), ';', 1);                    // Visit date
+                        x2 := Piece(Piece(Piece(x, U, 8), ';', 2), '.', 1);     // Visit date (FM)   no time - v15.4
+                        if (x2 = '') and NotShowMore then
+                          begin
+                            x2 := 'No Visit';
+                            x1 := Piece(x1, ':', 1) + ':  No Visit';
+                          end;
+                        (*else
+                          x1 := Piece(x1, ':', 1) + ':  ' + FormatFMDateTimeStr('mmm dd,yy@hh:nn',x2)*) //removed v15.4
+                        if MyParent = IntToStr(Context) then
+                          SetPiece(x, U, 14, MyParent + x2 + Copy(x1, 1, 3));    // '2980324Adm'
+                        x3 := x2 + Copy(x1, 1, 3) + U + MixedCase(x1) + U + IntToStr(Context) + MixedCase(Copy(x1, 1, 3));
+                      end;
+                'L':  begin
+                        if MyParent = IntToStr(Context) then                  // keep ID notes together, or
+                          SetPiece(x, U, 14, MyParent + MyLocation);          // split ID Notes by location
+                        x3 := MyLocation + U + MixedCase(MyLocation) + U + IntToStr(Context);
+                      end;
+                'T':  begin
+                        if (MyParent = IntToStr(Context)) and NotShowMore then                  // keep ID notes together, or
+                          SetPiece(x, U, 14, MyParent + MyTitle);             // split ID Notes by title?
+                        x3 := MyTitle + U + MixedCase(MyTitle) + U + IntToStr(Context);
+                      end;
+                'A':  begin
+                        x1 := Piece(Piece(x, U, 5), ';', 3);
+                        if (x1 = '') and NotShowMore then
+                          x1 := '** No Author **';
+                        if MyParent = IntToStr(Context) then
+                          SetPiece(x, U, 14, MyParent + x1);
+                        x3 := x1 + U + MixedCase(x1) + U + IntToStr(Context);
+                      end;
+                  end;
+
+            if (GroupBy <> '') and (pos(copy(GroupBy,1,1),'DLTA')>0 )
+              and (Copy(MyTitle, 1, 8) <> 'Addendum')
+              and (AList.IndexOf(x3) = -1) // <-- check if the list may include duplicates?
+            then
+              AList.Add(x3);
+
             Dest.Add(x);
           end; {for}
-        SortByPiece(TStringList(Dest), U, 3);
-        if not Ascending then InvertStringList(TStringList(Dest));
-        if GroupBy <> '' then if GroupBy[1] ='D' then
+
+        SortByPiece(Dest, U, 3);
+        if not Ascending then
+          InvertStringList(TStringList(Dest));
+
+        if GroupBy <> '' then
+          if GroupBy[1] ='D' then
           begin
             AList.Add('Adm^Inpatient Notes' + U + IntToStr(Context));
             AList.Add('Vis^Outpatient Notes' + U + IntToStr(Context));
           end;
         Dest.Insert(0, IntToStr(Context) + '^' + NC_TV_TEXT[TabIndex, Context] + '^^^^^^^^^^^%^0');
-        Alist.Sort;
-        InvertStringList(AList);
-        if GroupBy <> '' then if GroupBy[1] ='D' then
-          if (not Ascending) then InvertStringList(AList);
-        for i := 0 to AList.Count-1 do
+
+        Alist.Sort; // additional sort is performed by tree component
+
+        if GroupBy <> '' then
+          if (GroupBy[1] ='D') and (not Ascending) then
+            InvertStringList(AList);
+
+        for i := AList.Count-1 downto 0 do
           Dest.Insert(0, IntToStr(Context) + Piece(AList[i], U, 1) + '^' + Piece(AList[i], U, 2) + '^^^^^^^^^^^%^' + Piece(AList[i], U, 3));
       end;
   finally
     AList.Free;
     SrcList.Free;
   end;
+ end;
 end;
 
-procedure BuildDocumentTree(DocList: TStrings; const Parent: string; Tree: TORTreeView; Node: TORTreeNode;
-          TIUContext: TTIUContext; TabIndex: integer);
-var
-  MyID, MyParent, Name: string;
-  i: Integer;
-  ChildNode, tmpNode: TORTreeNode;
-  DocHasChildren: Boolean;
-  AnObject: PDocTreeObject;
-begin
-  with DocList do for i := 0 to Count - 1 do
-    begin
-      tmpNode := nil;
-      MyParent := Piece(Strings[i], U, 14);
-      if (MyParent = Parent) then
-        begin
-          MyID := Piece(Strings[i], U, 1);
-          if Piece(Strings[i], U, 13) <> '%' then
-            case TabIndex of
-                CT_NOTES:    Name := MakeNoteDisplayText(Strings[i]);
-                CT_CONSULTS: Name := MakeConsultNoteDisplayText(Strings[i]);
-                CT_DCSUMM:   Name := MakeDCSummDisplayText(Strings[i]);
-            end
-          else
-            Name := Piece(Strings[i], U, 2);
-          DocHasChildren := (Piece(Strings[i], U, 13) <> '');
-          if Node <> nil then if Node.HasChildren then
-            tmpNode := Tree.FindPieceNode(MyID, 1, U, Node);
-          if (tmpNode <> nil) and tmpNode.HasAsParent(Node) then
-            Continue
-          else
-            begin
-              case TabIndex of
-                CT_NOTES:    AnObject := MakeNoteTreeObject(Strings[i]);
-                CT_CONSULTS: AnObject := MakeConsultsNoteTreeObject(Strings[i]);
-                CT_DCSUMM:   AnObject := MakeDCSummTreeObject(Strings[i]);
-              else
-                AnObject := nil;
-              end;
-              ChildNode := TORTreeNode(Tree.Items.AddChildObject(TORTreeNode(Node), Name, AnObject));
-              ChildNode.StringData := Strings[i];
-              SetTreeNodeImagesAndFormatting(ChildNode, TIUContext, TabIndex);
-              if DocHasChildren then BuildDocumentTree(DocList, MyID, Tree, ChildNode, TIUContext, TabIndex);
-            end;
-        end;
-    end;
-end;
-
-procedure BuildDocumentTree2(DocList: TStrings; Tree:
+procedure BuildDocumentTree(DocList: TStrings; Tree:
   TORTreeView; TIUContext: TTIUContext; TabIndex: integer);
 
-type
-  TBuildDocTree = record
-   Name: string;
-   ParentNode: TORTreeNode;
-   MyNode: TORTreeNode;
-   AnObject: PDocTreeObject;
-  end;
+  type
+    TBuildDocTree = record
+      Name: string;
+      ParentNode: TORTreeNode;
+      MyNode: TORTreeNode;
+      AnObject: PDocTreeObject;
+    end;
 
  var
-  OurDocTree: array of TBuildDocTree;
-  ListOfParents: TStringList;
-  LastRecCnt: Integer;
-  FirstParent: TObject;
+   OurDocTree: array of TBuildDocTree;
+   ListOfParents: TStringList;
+   LastRecCnt: Integer;
+   newItems: TSTringList;
+
+  function getParentByID(aName:String):TORTreeNode;
+  var
+    z: Integer;
+  begin
+    Result := nil;
+      for z := Low(OurDocTree) to High(OurDocTree) do
+      begin
+        if (aName = UpperCase(Piece(OurDocTree[z].MyNode.StringData, U, 1))) and
+          (not ShowMoreNode(OurDocTree[z].MyNode.StringData)) then
+        begin
+          Result := OurDocTree[z].MyNode;
+          break;
+        end;
+      end;
+  end;
 
   procedure MapTheParent(var ItemsToAdd, ParentList: TStringList);
   var
-   i, j, Z: Integer;
-   ParentNode: TORTreeNode;
-   NextParentList: TStringList;
+    i, j: Integer;
+    ParentNode: TORTreeNode;
+    NextParentList: TStringList;
+    DocInfo,DocName,
+    CurrentParentID,
+    DocParentID, newParent:String;
   begin
     NextParentList := TStringList.Create;
     try
     //If we have no parents (first time) then add 0
-    if ListOfParents.count < 1 then ListOfParents.add('0');
+    if ListOfParents.count < 1 then
+      ListOfParents.add('0');
 
     //Loop though the parent list and find any nodes that need to be added
-    for j := 0 to ListOfParents.Count - 1 do begin
-       //Find this parent node (if exist). to be used when adding these individual nodes.
-       ParentNode := nil;
-       for z := Low(OurDocTree) to High(OurDocTree) do
-       begin
-        if UpperCase(Piece(ListOfParents.Strings[j], U, 1)) = UpperCase(Piece(OurDocTree[z].MyNode.StringData, U, 1) ) then
-        begin
-         ParentNode := OurDocTree[z].MyNode;
-         break;
-        end;
-       end;
-      //Find any items from our remaining items list that is a child of this parent
-      for i := 0 to DocList.count - 1 do begin
-        if UpperCase(Piece(DocList.Strings[i], U, 14)) = UpperCase(Piece(ListOfParents.Strings[j], U, 1))
-          then begin
-            //Add to the virtual tree
-            ItemsToAdd.AddObject(DocList.Strings[i], ParentNode);
-            if not Assigned(FirstParent) then
-             FirstParent := ParentNode;
+    for j := 0 to ListOfParents.Count - 1 do
+    begin
+      CurrentParentID := UpperCase(Piece(ListOfParents.Strings[j], U, 1));
+      ParentNode := getParentByID(CurrentParentID);
 
-            //If this item is also a parent then we need to add it to our parent list for the next run through
-            if (Piece(DocList.Strings[i], U, 13) <> '') then
-             NextParentList.Add(DocList.Strings[i]);
+      //Find any items from our remaining items list that is a child of this parent
+      for i := 0 to DocList.count - 1 do
+      begin
+        DocInfo := DocList.Strings[i];
+        DocParentID := UpperCase(Piece(DocInfo, U, 14));
+        DocName := UpperCase(Piece(DocInfo, U, 2));
+        if DocParentID = CurrentParentID then
+        begin
+          //Add to the virtual tree.
+          //(ItemsToAdd contains documents with parents from the ParentList only.)
+          ItemsToAdd.AddObject(DocInfo, ParentNode);
+
+          //If this item is also a parent then we need to add it to our parent list for the next run through
+          newParent := Piece(DocInfo, U, 13);
+          if (newParent <> '') and (NextParentList.IndexOf(newParent)<0) then
+            NextParentList.Add(DocInfo);
         end;
       end;
     end;
@@ -305,23 +281,14 @@ type
     finally
       NextParentList.Free;
     end;
-
   end;
 
-  procedure AddItemsToTree(ListOfParents: TStringList; Orphaned: Boolean);
+  procedure AddItemsToTree(ItemsToAdd:TStringList); //(ListOfParents: TStringList; Orphaned: Boolean);
   Var
    I, J: Integer;
-   ItemsToAdd: TStringList;
+
   begin
-   ItemsToAdd := TStringList.Create;
    try
-   //Map out the parent objects and return the future parents
-   If not Orphaned then
-    MapTheParent(ItemsToAdd, ListOfParents)
-   else
-    ItemsToAdd.Assign(ListOfParents);
-
-
    //Now loop through all items that need to be added this go-around
    for i := 0 to ItemsToAdd.count - 1 do begin
     SetLength(OurDocTree, Length(OurDocTree) + 1);
@@ -339,7 +306,7 @@ type
 
       //Set up the actual node
       case TabIndex of
-        CT_NOTES: OurDocTree[High(OurDocTree)].AnObject := MakeNoteTreeObject(ItemsToAdd.Strings[i]);
+        CT_NOTES:  OurDocTree[High(OurDocTree)].AnObject := MakeNoteTreeObject(ItemsToAdd.Strings[i]);
         CT_CONSULTS: OurDocTree[High(OurDocTree)].AnObject := MakeConsultsNoteTreeObject(ItemsToAdd.Strings
             [i]);
         CT_DCSUMM: OurDocTree[High(OurDocTree)].AnObject := MakeDCSummTreeObject(ItemsToAdd.Strings[i]);
@@ -364,41 +331,40 @@ type
       end;
     end;
    finally
-     ItemsToAdd.free;
    end;
-
   end;
 
 begin
   ListOfParents := TStringList.Create();
+  newItems := TStringList.Create();
   try
    //Clear the array
-   SetLength(OurDocTree, 0);
-
+  SetLength(OurDocTree, 0);
    //Build the virtual tree array
-   LastRecCnt := -1;
-   FirstParent := nil;
-
-   while (DocList.Count > 0) and (LastRecCnt <> DocList.Count) do
-   begin
+  LastRecCnt := -1;
+  while (DocList.Count > 0) and (LastRecCnt <> DocList.Count) do
+  begin
     LastRecCnt := DocList.Count;
-    AddItemsToTree(ListOfParents, false);
+    //Map out the parent objects and return the future parents
+    MapTheParent(newItems,ListOfParents);
+    AddItemsToTree(newItems);
+    newItems.Clear;
    end;
 
-   //Handle any orphaned records (backp)
+   //Handle any orphaned records (backup)
    if DocList.Count > 0 then
    begin
-    AddItemsToTree(TStringList(DocList), True);
+    newItems.Assign(DocList);
+    AddItemsToTree(newItems);
    end;
-
 
    //Clear the list
    SetLength(OurDocTree, 0);
 
   finally
    ListOfParents.Free;
+   newItems.Free;
   end;
-
 end;
 
 procedure SetTreeNodeImagesAndFormatting(Node: TORTreeNode; CurrentContext: TTIUContext; TabIndex: integer);
@@ -438,6 +404,10 @@ begin
       if i > 0 then i := i + 1 else i := 0;
       if Orphaned then
         ImageIndex := IMG_ORPHANED
+      else if pos(TX_MORE, DocTitle) > 0 then
+        ImageIndex := IMG_SHOWMORE
+      else if pos(TX_OLDER_NOTES_WITH_ADDENDA, DocTitle) > 0 then
+        ImageIndex := IMG_NONE
       else if (Copy(DocTitle, i + 1, 8) = 'Addendum') then
         ImageIndex := IMG_ADDENDUM
       else if (DocHasChildren = '') then
@@ -516,7 +486,7 @@ begin
       if Node.Parent <> nil then
         if not CurrentContext.Filtered then
           //don't bother to BOLD every entry
-        else 
+        else
           begin
             if (*ContextMatch(Node) then
               if (CurrentContext.KeyWord = '') or *)TextFound(Node, CurrentContext) then MakeBold(Node);
@@ -528,6 +498,7 @@ procedure TraverseTree(ATree: TTreeView; AListView: TListView; ANode: TTreeNode;
 var
   IncludeIt: Boolean;
   x: string;
+
 begin
  while ANode <> nil do
   begin
@@ -537,7 +508,9 @@ begin
     begin
       with PDocTreeObject(ANode.Data)^ do
       begin
-        if (AContext.GroupBy <> '') and
+        if pos(TX_MORE, DocTitle) > 0 then
+          IncludeIt := True
+        else if (AContext.GroupBy <> '') and
           (ATree.Selected.ImageIndex in [IMG_GROUP_OPEN, IMG_GROUP_SHUT]) then
         begin
           case AContext.GroupBy[1] of
@@ -592,7 +565,8 @@ begin
   if not Assigned(ANode.Data) then Exit;
   Status := PDocTreeObject(ANode.Data)^.Status;
 
-  if (AContext.Status <> AParentID[1]) or (AContext.Author = 0) then
+  if (AParentID = '') or (AContext.Status <> AParentID[1]) or
+    (AContext.Author = 0) then
     Author := User.DUZ
   else
     Author := AContext.Author;
@@ -623,7 +597,7 @@ begin
     '4':  Result := (Piece(PDocTreeObject(ANode.Data)^.Author, ';', 1) = IntToStr(Author));
     '5':  if PDocTreeObject(ANode.Data)^.DocHasChildren = '%' then Result := False
           else Result := (StrToFloat(PDocTreeObject(ANode.Data)^.DocFMDate) >= AContext.FMBeginDate) and
-                         (Trunc(StrToFloat(PDocTreeObject(ANode.Data)^.DocFMDate)) <= AContext.FMEndDate); 
+                         (Trunc(StrToFloat(PDocTreeObject(ANode.Data)^.DocFMDate)) <= AContext.FMEndDate);
     'N':  Result := True;     // NEW NOTE
     'E':  Result := True;     // EDITING NOTE
     'A':  Result := True;     // NEW ADDENDUM or processing alert
@@ -670,28 +644,70 @@ end;
 procedure KillDocTreeObjects(TreeView: TORTreeView);
 var
   i: integer;
+  ce: TTVCompareEvent;
+
 begin
   with TreeView do
-    for i := 0 to Items.Count-1 do
+  begin
+    // disable sorting of entire tree with each Data := nil
+    if assigned(OnCompare) and (SortType in [stData, stBoth]) then
     begin
-      if(Assigned(Items[i].Data)) then
+      // changing OnCompare better than changing SortType - restoring SortType resorts tree
+      ce := OnCompare;
+      OnCompare := nil;
+    end
+    else
+      ce := nil;
+    try
+      for i := 0 to Items.Count-1 do
+      begin
+        if(Assigned(Items[i].Data)) then
         begin
           ResetDocTreeObjectStrings(PDocTreeObject(Items[i].Data));
           Dispose(PDocTreeObject(Items[i].Data));
           Items[i].Data := nil;
         end;
+      end;
+    finally
+      if assigned(ce) then
+        OnCompare := ce;
     end;
+  end;
 end;
 
 procedure KillDocTreeNode(ANode: TTreeNode);
+var
+  ce: TTVCompareEvent;
+  tree: TTreeView;
+
 begin
-  if(Assigned(ANode.Data)) then
+  if assigned(ANode) and assigned(ANode.Data) and assigned(ANode.TreeView) and
+    assigned(TTreeView(ANode.TreeView).OnCompare) and
+    (TTreeView(ANode.TreeView).SortType in [stData, stBoth]) then
+  begin
+    // disable sorting of entire tree when setting Data := nil
+    tree := TTreeView(ANode.TreeView);
+    // changing OnCompare better than changing SortType - restoring SortType resorts tree
+    ce := tree.OnCompare;
+    tree.OnCompare := nil;
+  end
+  else
+  begin
+    tree := nil;
+    ce := nil;
+  end;
+  try
+    if(Assigned(ANode.Data)) then
     begin
       ResetDocTreeObjectStrings(PDocTreeObject(ANode.Data));
       Dispose(PDocTreeObject(ANode.Data));
       ANode.Data := nil;
     end;
-  ANode.Owner.Delete(ANode);
+    ANode.Owner.Delete(ANode);
+  finally
+    if assigned(tree) then
+      tree.OnCompare := ce;
+  end;
 end;
 
 procedure RemoveParentsWithNoChildren(Tree: TTreeView; Context: TTIUContext);
@@ -712,15 +728,20 @@ end;
 procedure AddListViewItem(ANode: TTreeNode; AListView: TListView);
 var
   ListItem: TListItem;
+
 begin
   if not Assigned(ANode.Data) then Exit;
   with Anode, PDocTreeObject(ANode.Data)^, AListView do
     begin
-(*      if (FCurrentContext.Status = '1') and
-           (Copy(DocTitle, 1 , 8) = 'Addendum') then Exit;*)
-      if ANode.ImageIndex in [IMG_TOP_LEVEL, IMG_GROUP_OPEN, IMG_GROUP_SHUT] then Exit;
+      if ANode.ImageIndex in [IMG_TOP_LEVEL, IMG_GROUP_OPEN, IMG_GROUP_SHUT] then
+        Exit;
+      if pos(TX_OLDER_NOTES_WITH_ADDENDA, ANode.Text) > 0 then
+        exit;
       ListItem := Items.Add;
-      ListItem.Caption := DocDate;                     // date
+      if pos(TX_MORE, DocTitle) > 0 then
+        ListItem.Caption := ''
+      else
+        ListItem.Caption := DocDate;                   // date
       ListItem.StateIndex := ANode.StateIndex;
       ListItem.ImageIndex := ANode.ImageIndex;
       with ListItem.SubItems do
@@ -824,5 +845,273 @@ begin
   Result := AnObject;
 end;
 
+////////////////////////////////////////////////////////////////////////////////
+
+function getChildCount(aNode:TTreeNode): Integer;
+var
+  Node: TTreeNode;
+begin
+  Result := 0;
+  if aNode = nil then
+    exit;
+  Node := aNode.GetFirstChild;
+  while Node <> nil do
+  begin
+    Inc(Result);
+    Result := Result + getChildCount(Node);
+    Node := Node.GetNextChild(Node);
+  end;
+end;
+
+function getNodeByName(aName:String;aLevel: Integer; tv: TTreeView):TTreeNode;
+var
+  tn: TTreeNode;
+begin
+  tn := tv.Items.GetFirstNode;
+  while tn <> nil do
+    begin
+      if tn.Level = aLevel then
+        begin
+          if pos(aName,tn.Text)=1 then
+            break;
+          tn := tn.getNextSibling;
+        end
+      else if tn = nil then
+          break
+      else if tn.Level < aLevel then
+          tn := tn.getFirstChild
+      else
+          tn := tn.parent;
+    end;
+    Result := tn;
+end;
+
+function getExpandStatus(aTree:TTreeView):TStringList;
+var
+  i: integer;
+  SL: TSTringList;
+  n: TTreeNode;
+begin
+  SL := TStringList.Create;
+  if assigned(aTree) then
+    for i := 0 to aTree.Items.Count - 1 do
+      begin
+        n := aTree.Items[i];
+        if n.Expanded then   // register only expanded nodes
+          begin
+            if n.Data = nil then
+              SL.Add(n.Text+'=1')
+            else
+              SL.Add(PDocTreeObject(n.Data)^.DocID+'=1')
+          end;
+      end;
+  Result := SL;
+end;
+
+procedure setExpandStatus(aNodes:TTreeNodes;aStatus:TStringList);
+var
+  sName:String;
+  i,iPos: integer;
+begin
+  if not assigned(aStatus) then
+    exit;
+  for i := 0 to aNodes.Count-1 do
+    begin
+      if assigned(aNodes[i].Data) then
+        sName := PDocTreeObject(aNodes[i].Data)^.DocID
+      else
+        sName := aNodes[i].Text;
+
+      iPos := aStatus.IndexOfName(sName);
+      if iPos > -1 then
+        aNodes[i].Expanded := aStatus.Values[sName] = '1'
+      else if aNodes[i].HasChildren then
+        aNodes[i].Expanded := false;
+    end;
+end;
+
+procedure RemoveDuplicates(const aList: TStringList);
+var
+  tmpList:TStringList;
+  i, LastCount: integer;
+//  s: String;
+begin
+  tmpList := TStringList.Create;
+  tmpList.BeginUpdate;
+  try
+    tmpList.Sorted := True;
+    tmpList.Duplicates := dupIgnore;
+
+//   this code messes up existing sort order of aList
+//    for s in aList do
+//      tmpList.Add(s);
+//    aList.Assign(tmpList);
+
+    for i := aList.Count-1 downto 0 do
+    begin
+      LastCount := tmpList.Count;
+      tmpList.Add(aList[i]);
+      if tmpList.Count = LastCount then
+        aList.Delete(i);
+    end;
+  finally
+     tmpList.EndUpdate;
+     tmpList.Free;
+  end;
+end;
+
+procedure adjustOrder(aList: TStringList; Context: TTIUContext);
+var
+  iPos,
+  i,j: integer;
+  s,ss: string;
+begin
+  if not assigned(aList) then
+    exit;
+  iPos := -1;
+  for i := 0 to aList.Count - 1 do
+    begin
+      s := aList[i];
+      if pos(TX_MORE,s)>0 then
+        begin
+          ss := piece(s,U,1);
+          j := strToIntDef(ss,-1);
+          if j>0 then
+            begin
+              iPos := i;
+              break;
+            end;
+        end;
+    end;
+  if iPos >0 then
+    begin
+      aList.Delete(iPos);
+      aList.Add(s);
+      if Context.GroupBy = '' then
+      begin
+        SetPiece(s, U, 2, TX_OLDER_NOTES_WITH_ADDENDA);
+        aList.Add(s);
+      end;
+    end
+    else if (Context.Status = '5') and (Context.FMBeginDate > 0) then
+    begin
+      s := U + TX_OLDER_NOTES_WITH_ADDENDA + U +
+        FloatToStr(Context.FMBeginDate) + '^^^^^^^^^^^' + Context.Status;
+      aList.Add(s);
+    end;
+end;
+
+function FindTreeNodeByName(aTree:TORTreeView;aName:String):TORTreeNode;
+var
+  i: integer;
+  sName:String;
+begin
+  Result := nil;
+  if not assigned(aTree) then
+    exit;
+  if aTree.Items.Count <1 then
+    exit;
+  i := 0;
+  while (i < aTree.Items.Count) do
+    begin
+      Result := TORTreeNode(aTree.Items[i]);
+      sName := UpperCase(piece(Result.StringData,U,2));
+      if pos(aName,sName)=1 then
+        break
+      else
+        begin
+          Result := nil;
+          inc(i);
+        end;
+    end;
+end;
+
+/// re-assigning node parent
+procedure remapNode(aTree:TORTreeView;aName,aParentName:String);
+var
+  nn,nd,ndParent:TORTreeNode;
+begin
+  nd := findTreeNodeByName(aTree,aName);
+  if nd = nil then
+    exit;
+  ndParent := findTreeNodeByName(aTree,aParentName);
+  if ndParent = nil then
+    exit;
+  if nd.Parent = ndParent then
+    exit;
+  nn := TORTreeNode(aTree.Items.AddChildObject(ndParent,nd.Text,nd.Data));
+  nn.Data := nd.Data;
+  nn.StringData := nd.StringData;
+  nn.StateIndex := nd.StateIndex;
+  aTree.Items.Delete(nd);
+  nn.ImageIndex := IMG_SHOWMORE;
+  nn.SelectedIndex := IMG_SHOWMORE;
+  nn.StateIndex := IMG_NONE;
+end;
+
+procedure AutoSizeColumns(lv: TListView; cols: array of integer);
+var
+  c, i, w, icon, iconW, state, stateW, max: integer;
+  x: string;
+  Looking: boolean;
+
+begin
+  if lv.Items.Count = 0 then
+    exit;
+  Looking := assigned(lv.SmallImages);
+  if Looking then
+    iconW := lv.SmallImages.Width + 2
+  else
+    iconW := 0;
+  if not Looking then
+    Looking := assigned(lv.StateImages);
+  if Looking and assigned(lv.StateImages) then
+    stateW := lv.StateImages.Width + 6
+  else
+    stateW := 0;
+  for c := Low(cols) to High(cols) do
+  begin
+    if cols[c] < lv.Columns.Count then
+    begin
+      if lv.Columns[cols[c]].ImageIndex > 0 then
+        state := stateW
+      else
+        state := 0;
+      max := TextWidthByFont(MainFont.Handle, lv.Columns[cols[c]].Caption) + state + 4;
+      for i := 0 to lv.Items.Count - 1 do
+      begin
+        if cols[c] = 0 then
+        begin
+          x := lv.Items[i].Caption;
+          if Looking and (lv.Items[i].ImageIndex >= 0) then
+            icon := iconW
+          else
+            icon := 0;
+        end
+        else
+        begin
+          x := lv.Items[i].SubItems[cols[c] - 1];
+          if Looking and (lv.Items[i].SubItemImages[cols[c]-1] >= 0) then
+            icon := iconW
+          else
+            icon := 0;
+        end;
+        if lv.Items[i].StateIndex >= 0 then
+          state := stateW
+        else
+          state := 0;
+        w := TextWidthByFont(MainFont.Handle, x) + icon + state + 8;
+        if max < w then
+          max := w;
+      end;
+      lv.Columns[cols[c]].Width := max + 8;
+    end;
+  end;
+end;
+
+function ShowMoreNode(s: String): boolean;
+begin
+  Result := (pos(TX_MORE, s) > 0) or (Pos(TX_OLDER_NOTES_WITH_ADDENDA, s) > 0);
+end;
 
 end.

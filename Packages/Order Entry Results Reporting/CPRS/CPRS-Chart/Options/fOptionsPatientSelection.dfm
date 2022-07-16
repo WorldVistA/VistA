@@ -9,10 +9,8 @@ inherited frmOptionsPatientSelection: TfrmOptionsPatientSelection
   ClientWidth = 414
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
-  OnCreate = FormCreate
-  OnShow = FormShow
   ExplicitWidth = 420
-  ExplicitHeight = 455
+  ExplicitHeight = 456
   PixelsPerInch = 96
   TextHeight = 13
   object lblClinicDays: TLabel [0]

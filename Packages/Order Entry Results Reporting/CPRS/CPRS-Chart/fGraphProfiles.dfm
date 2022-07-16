@@ -469,7 +469,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           ItemTipEnable = True
           ListItemsOnly = False
           LongList = True
-          LookupPiece = 0
+          LookupPiece = 2
           MaxLength = 0
           Pieces = '2'
           Sorted = False
@@ -477,9 +477,15 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           TabOrder = 1
           TabStop = True
           Text = ''
-          OnClick = cboUserClick
+          OnChange = cboUserChange
+          OnEnter = cboUserEnter
+          OnExit = cboUserExit
+          OnKeyDown = cboUserKeyDown
+          OnMouseClick = cboUserMouseClick
           OnNeedData = cboUserNeedData
           CharsNeedMatch = 1
+          ExplicitLeft = 3
+          ExplicitTop = 31
         end
         object lbl508SelectOthers: TVA508StaticText
           Name = 'lbl508SelectOthers'
@@ -773,7 +779,8 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         'Status = stsDefault')
       (
         'Component = cboUser'
-        'Status = stsDefault')
+        'Text = To select a user use the arrow keys, then press enter'
+        'Status = stsOK')
       (
         'Component = pnlOtherSourcesBottom'
         'Status = stsDefault')

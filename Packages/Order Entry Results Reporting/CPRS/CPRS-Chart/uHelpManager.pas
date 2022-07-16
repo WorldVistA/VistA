@@ -8,16 +8,18 @@ type
   THelpManager = class(TObject)
   private
     InProgress: boolean;
+    FHelpHWND: HWND;
     constructor Create;
   public
     HelpHandle: hWnd;
+    destructor Destroy; override;
     class function GetInstance: THelpManager;
     function ExecHelp(Command: Word; Data: NativeInt; var CallHelp: Boolean): Boolean;
   end;
 
 implementation
 
-uses ORSystem, SysUtils, Dialogs, ShellAPI, Forms;
+uses ORSystem, SysUtils, Dialogs, ShellAPI, Forms, uHelpNetworkMGR, system.UiTypes;
 
 var
   HelpManager: THelpManager;
@@ -398,14 +400,29 @@ const
 {===========================================}
 function THelpManager.ExecHelp(Command: word; Data: NativeInt; var CallHelp: boolean): boolean;
 var
-  hc: THelpContexts; // loop variable
-  errorcode: integer;
-  FilePath, FileName: string;
+//  hc: THelpContexts; // loop variable
+//  errorcode: integer;
+//  FilePath, FileName: string;
+  CrRtn: Integer;
 begin
   CallHelp := False; // don't run the win help system
   if not InProgress then begin
     InProgress := True;
-    hc := hcNone;
+
+    CrRtn := Screen.Cursor;
+    Screen.Cursor := crHourGlass;
+    try
+    LoadHelpFile(Application.HelpFile);
+    finally
+      Screen.Cursor := CrRtn;
+    end;
+
+    if Data > 0 then
+      FHelpHWND := HtmlHelp(Application.Handle, PChar(Application.HelpFile), HH_HELP_CONTEXT, Data)
+    else
+      FHelpHWND := HtmlHelp(Application.Handle, PChar(Application.HelpFile), HH_DISPLAY_TOC, Data);
+
+    {hc := hcNone;
     while (hc <> hcUnknown) and (CONTEXT_VALUES[hc] <> Data) do inc(hc); // loop through and find a context
     Filepath := FullToPathPart(Application.ExeName) + 'Help\';
     Filename := Filepath + CONTEXT_FILES[hc];
@@ -426,7 +443,8 @@ begin
       SE_ERR_OOM:             ShowMessage('Help system: There was not enough memory to complete the operation.');
       SE_ERR_SHARE:           ShowMessage('Help system: A sharing violation occurred.');
     end;
-    Result := (errorcode >= 32);
+    Result := (errorcode >= 32);   }
+    Result := True;
     InProgress := False;
   end else begin
     Result := True;
@@ -441,6 +459,15 @@ begin
   inherited;
   HelpHandle := Application.Handle;
   InProgress := False;
+end;
+
+destructor THelpManager.Destroy;
+begin
+if (FHelpHWND <> 0) and IsWindow(FHelpHWND) then
+  begin
+    HtmlHelp(Application.Handle, nil, HH_CLOSE_ALL, 0);
+    Sleep(0);
+  end;
 end;
 
 class function THelpManager.GetInstance: THelpManager;

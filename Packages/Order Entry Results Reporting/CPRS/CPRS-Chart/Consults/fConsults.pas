@@ -297,8 +297,7 @@ type
       var ReturnList: TStringList);
     procedure CPHide(Sender: TObject);
     procedure CPShow(Sender: TObject);
-    procedure PasteToMonitor(Sender: TObject; var AllowMonitor: Boolean);   //wat cq 17586
-    procedure mnuActLaunchDSTClick(Sender: TObject);
+    procedure PasteToMonitor(Sender: TObject; var AllowMonitor: Boolean);
   private
     FocusToRightPanel : Boolean;
     FEditingIndex: Integer;      // TIU index of document being currently edited
@@ -321,6 +320,7 @@ type
     FcmdChangeOKPressed: boolean;
     FNotifPending: boolean;
     FOldFramePnlPatientExit: TNotifyEvent;
+    FEditNoteIEN: Integer;  // Note IEN for note currently being edited
     //FMousing: TDateTime;
     procedure DoLeftPanelCustomShiftTab;
     procedure frmFramePnlPatientExit(Sender: TObject);
@@ -417,9 +417,8 @@ uses fVisit, rCore, uCore, rConsults, fConsultBS, fConsultBD, fSignItem,
      fReminderDialog, uReminders, fConsMedRslt, fTemplateFieldEditor, System.Types,
      dShared, rTemplates, fIconLegend, fNoteIDParents, fNoteCPFields, rECS, ORNet, trpcb,
      uTemplates, fTemplateDialog, DateUtils, uVA508CPRSCompatibility, VA508AccessibilityRouter,
-     System.UITypes, System.IniFiles, ORNetIntf, U_CPTEditMonitor, VAUtils
-     , oDst
-     ;
+     oDST,
+     System.UITypes, System.IniFiles, ORNetIntf, U_CPTEditMonitor, VAUtils;
 
 const
   CT_ORDERS =   4;                               // ID for orders tab used by frmFrame
@@ -442,23 +441,23 @@ const
   NT_ACT_ADDENDUM  = 3;
   NT_ACT_EDIT_NOTE = 4;
   NT_ACT_ID_ENTRY  = 5;
-
-  ST_DISCONTINUED    = 1  ;
-  ST_COMPLETE        = 2  ;
-  ST_HOLD            = 3  ;
-  ST_FLAGGED         = 4  ;
-  ST_PENDING         = 5  ;
-  ST_ACTIVE          = 6  ;
-  ST_EXPIRED         = 7  ;
-  ST_SCHEDULED       = 8  ;
-  ST_PARTIAL_RESULTS = 9  ;
-  ST_DELAYED         = 10 ;
-  ST_UNRELEASED      = 11 ;
-  ST_CHANGED         = 12 ;
-  ST_CANCELLED       = 13 ;
-  ST_LAPSED          = 14 ;
-  ST_RENEWED         = 15 ;
-  ST_NO_STATUS       = 99 ;
+                                { Order Status }
+  ST_DISCONTINUED    = 1  ;     OS_DISCONTINUED = 1;
+  ST_COMPLETE        = 2  ;     OS_COMPLETE     = 2;
+  ST_HOLD            = 3  ;     OS_HOLD         = 3;
+  ST_FLAGGED         = 4  ;     OS_FLAGGED      = 4;
+  ST_PENDING         = 5  ;     OS_PENDING      = 5;
+  ST_ACTIVE          = 6  ;     OS_ACTIVE       = 6;
+  ST_EXPIRED         = 7  ;     OS_EXPIRED      = 7;
+  ST_SCHEDULED       = 8  ;     OS_SCHEDULED    = 8;
+  ST_PARTIAL_RESULTS = 9  ;     OS_PARTIAL      = 9;
+  ST_DELAYED         = 10 ;     OS_DELAYED      = 10;
+  ST_UNRELEASED      = 11 ;     OS_UNRELEASED   = 11;
+  ST_CHANGED         = 12 ;     OS_DCEDIT       = 12;
+  ST_CANCELLED       = 13 ;     OS_CANCELLED    = 13;
+  ST_LAPSED          = 14 ;     OS_LAPSED       = 14;
+  ST_RENEWED         = 15 ;     OS_RENEWED      = 15;
+  ST_NO_STATUS       = 99 ;     OS_NEW          = 98;
 
   TYP_PROGRESS_NOTE = 3;
   TYP_ADDENDUM      = 81;
@@ -985,8 +984,7 @@ procedure TfrmConsults.LoadPastedText(Sender: TObject; LoadList: TStrings;
   var ProcessLoad, PreLoaded: Boolean);
 var
   DivId, ParamStr, TmpRtn: string;
-  IENToUse, I: Integer;
-  AddlSigners: TStrings;
+  IENToUse: Integer;
   IsCoSigner: Boolean;
 begin
   if lstNotes.ItemIndex > -1 then
@@ -1015,18 +1013,7 @@ begin
       else
         EditMonitor.RelatedPackage := '123';
 
-
-      AddlSigners := GetCurrentSigners(IENToUse);
-      for I := 0 to AddlSigners.Count - 1 do
-      begin
-        if Piece(AddlSigners.Strings[I], U, 3) = 'Expected Cosigner' then
-        begin
-          IsCoSigner := (Piece(AddlSigners.Strings[I], U, 1)
-            = IntToStr(User.DUZ));
-          break;
-        end;
-      end;
-
+      IsCoSigner := UserIsCoSigner(IENToUse,IntToStr(User.DUZ));
       if IsCoSigner and (not EditMonitor.CopyMonitor.DisplayPaste) then
       begin
         // Setup default indication
@@ -1054,7 +1041,7 @@ begin
 
       EditMonitor.ItemIEN := IENToUse;
       // If user is cosigner then show all paste actions
-      ShowAllPaste := IsCoSigner;
+      ShowAllPaste := isCoSigner;
 
       if not PreLoaded then
       begin
@@ -2178,6 +2165,7 @@ begin
     InfoBox(ActionSts.Reason, TX_IN_AUTH, MB_OK);
     Exit;
   end;
+  FEditNoteIEN := lstNotes.ItemID;
   LoadForEdit;
 end;
 
@@ -2544,7 +2532,6 @@ begin
     IsProcedure := CharInSet(x[1], ['P', 'M'])
   else
     IsProcedure := (Piece(lstConsults.Items[lstConsults.ItemIndex], U, 9) = 'Procedure');
-  // tony testing
   serviceName := lstConsults.Items[lstConsults.ItemIndex];
   serviceName := Piece(serviceName, '^', 10);
   for i := 0 to memConsult.Lines.Count - 1 do
@@ -2557,7 +2544,6 @@ begin
       break;
     end;
   end;
-  // end tony testing
   //if SetActionContext(Font.Size,FActionType, IsProcedure, ConsultRec.ConsultProcedure) then
    if SetActionContext(Font.Size,FActionType, IsProcedure, ConsultRec.ConsultProcedure,
     MenuAccessRec.UserLevel,serviceName, urgencyName) then
@@ -2722,11 +2708,6 @@ begin
                                                        and (status<>ST_CANCELLED));
 
          mnuActAddComment.Enabled     :=  True;
-
-{         if (not isDstEnabled) or (status = ST_CANCELLED) or (status = ST_DISCONTINUED) or
-                (ConsultRec.ConsultProcedure <> '') or (ConsultRec.InOut = 'I') or (IsProstheticsService(ConsultRec.ToService)) then mnuActLaunchDST.Enabled := False
-         else mnuActLaunchDST.Enabled := True;  }
-
          mnuActDisplayDetails.Enabled :=  True;
          mnuActDisplayResults.Enabled :=  True;
          mnuActDisplaySF513.Enabled   :=  True;
@@ -3466,9 +3447,14 @@ begin
   with lstNotes do
     begin
       if not LockConsultRequestAndNote(ItemIEN) then Exit;
-      Exclusions := GetCurrentSigners(ItemIEN);
-      ARefDate := StrToFloat(Piece(Items[ItemIndex], U, 3));
-      SelectAdditionalSigners(Font.Size, ItemIEN, SigAction, Exclusions, SignerList, CT_CONSULTS, ARefDate);
+      Exclusions := TSTringList.Create;
+      try
+        setCurrentSigners(Exclusions, ItemIEN);
+        ARefDate := StrToFloat(Piece(Items[ItemIndex], U, 3));
+        SelectAdditionalSigners(Font.Size, ItemIEN, SigAction, Exclusions, SignerList, CT_CONSULTS, ARefDate);
+      finally
+        Exclusions.Free;
+      end;
     end;
   with SignerList do
     begin
@@ -3650,6 +3636,7 @@ begin
       NF_STAT_RESULTS                 :  Notifications.Delete;
       NF_CONSULT_REQUEST_CANCEL_HOLD  :  Notifications.Delete;
       NF_CONSULT_REQUEST_UPDATED      :  Notifications.Delete;
+      NF_PROSTHETICS_REQUEST_UPDATED  :  Notifications.Delete;
       NF_CONSULT_UNSIGNED_NOTE        :  {Will be automatically deleted by TIU sig action!!!} ;
       NF_CONSULT_PROC_INTERPRETATION  :  Notifications.Delete;      // not sure we want to do this yet,
                                                                     // but if not now, then when?
@@ -4397,130 +4384,6 @@ begin
   cmdChangeClick(Sender);
 end;
 
-procedure TfrmConsults.mnuActLaunchDSTClick(Sender: TObject);
-{
-WAT - 5/29/2020 Launch DST button removed from Consult Tracking menu.
-Temporarily leaving this code intact.
-It will migrate to consult actions in a future DST/CTB change set
-}
-var
-  Saved: Boolean;
-  consUrgency, ServiceName, tmpstr, SavedCsltID, X: string;
-  I: Integer;
-  aList, ADecision: TStringList;
-  tmpNode: TORTreeNode;
-  DstDecision: string;
-  cur: TCursor;
-begin
-  inherited;
-  if lstConsults.ItemIEN = 0 then
-    Exit;
-  SavedCsltID := lstConsults.ItemID;
-  if EditingIndex <> -1 then
-  begin
-    SaveCurrentNote(Saved);
-    if not Saved then
-      Exit;
-  end;
-  lstNotes.ItemIndex := -1;
-  FOrderID := Piece(lstConsults.Items[lstConsults.ItemIndex], U, 6);
-  if not LockConsultRequest(lstConsults.ItemIEN) then
-    Exit;
-  FActionType := TMenuItem(Sender).Tag;
-  ClearEditControls;
-  lstNotes.Enabled := False;
-  pnlConsultList.Enabled := False;
-  aList := TStringList.Create;
-  ADecision := TStringList.Create;
-  cur := Screen.Cursor;
-  Screen.Cursor := crHourGlass;
-  try
-    with lstConsults do
-      if ItemIEN > 0 then
-      begin
-        ServiceName := lstConsults.Items[lstConsults.ItemIndex];
-        ServiceName := Piece(ServiceName, '^', 10);
-        for I := 0 to memConsult.Lines.Count - 1 do
-        begin
-          tmpstr := memConsult.Lines[I];
-          if Piece(tmpstr, ':', 1) = 'Urgency' then
-          begin
-            consUrgency := Piece(tmpstr, ':', 2);
-            consUrgency := TrimLeft(consUrgency);
-            break;
-          end;
-        end;
-        if (ServiceName <> '') and (consUrgency <> '') then
-        begin
-          InitDst;
-          DstDecision := DstPro.getDstReply(ServiceName,consUrgency,'CPRS_SIGNED');
-          if DstDecision <> '' then
-          begin
-            // if decision isn't null, assume new info saved in DST, so add comment
-            ADecision.Text := DstDecision;
-            AddComment(aList, ConsultRec.IEN, ADecision, FMNow, 1, '');
-            if aList.Count > 0 then
-            begin
-              if StrToInt(Piece(aList[0], U, 1)) > 0 then
-              begin
-                InfoBox(Piece(aList[0], U, 2),
-                  'Unable to ' + ActionType[FActionType],
-                  MB_OK or MB_ICONWARNING);
-                FChanged := False;
-              end
-              else
-                FChanged := True;
-            end
-            else
-              FChanged := True;
-          end;
-          if FChanged = True then
-          begin
-            if Notifications.Active then
-              with tvConsults do
-              begin
-                uChanging := True;
-                Selected := FindPieceNode(SavedCsltID, 1, U,
-                  Items.GetFirstNode);
-                if Selected <> nil then
-                  Selected.Delete;
-                X := FindConsult(StrToIntDef(SavedCsltID, 0));
-                tmpNode := TORTreeNode(Items.AddChildFirst(Items.GetFirstNode,
-                  MakeConsultListDisplayText(X)));
-                tmpNode.StringData := X;
-                SetNodeImage(tmpNode, FCurrentContext);
-                uChanging := False;
-                Selected := tmpNode;
-                tvConsultsClick(Self);
-              end
-            else
-            begin
-              UpdateList; { update consult list after success }
-              with tvConsults do
-                Selected := FindPieceNode(SavedCsltID, U, Items.GetFirstNode);
-              tvConsultsClick(Self);
-            end;
-          end;
-        end
-        else
-          ShowMessage('Error launching DST. Try again later.');
-      end
-      else
-      begin
-        if ItemIEN = 0 then
-          InfoBox(TX_NOCONSULT, TX_NOCSLT_CAP, MB_OK);
-      end;
-  finally
-    aList.Free;
-    ADecision.Free;
-    Screen.Cursor := cur;
-  end;
-  UnlockConsultRequest(lstNotes.ItemIEN, StrToIntDef(SavedCsltID, 0));
-  lstNotes.Enabled := True;
-  pnlConsultList.Enabled := True;
-  SetResultMenus;
-end;
-
 procedure TfrmConsults.mnuActLoadBoilerClick(Sender: TObject);
 var
   NoteEmpty: Boolean;
@@ -4676,7 +4539,7 @@ begin
           lstNotes.Items.Add(DocList[i]);
         end;
       FCurrentNoteContext.Status := IntToStr(AContext);
-      BuildDocumentTree2(DocList, Tree, FCurrentNoteContext, CT_CONSULTS);
+      BuildDocumentTree(DocList, Tree, FCurrentNoteContext, CT_CONSULTS);
       Items.EndUpdate;
       uChanging := False;
     end;
@@ -5260,7 +5123,7 @@ begin
   if NoteIEN <= 0 then exit;
   Signers := TStringList.Create;
   try
-    FastAssign(GetCurrentSigners(NoteIEN), Signers);
+    setCurrentSigners(Signers,NoteIEN);
     for i := 0 to Signers.Count - 1 do
       if Piece(Signers[i], U, 1) = IntToStr(User.DUZ) then
         begin

@@ -46,8 +46,9 @@ const
   DST_CONSULT_USERID = 'user_id';          // 20200902
   DST_DATE_TIME_FORMAT = 'yyyy-mm-dd';
   // error messages
-  DST_UNAVAIL = 'DST unavailable at this time.';
+  DST_UNAVAIL = 'The Consult Toolbox is not available.';
   DST_TRY_LATER = 'Please try again later.';
+  DST_PERSIST = 'If the problem continues, follow local help desk policy.';
 
 implementation
 

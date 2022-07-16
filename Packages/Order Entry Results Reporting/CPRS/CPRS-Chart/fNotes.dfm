@@ -1,74 +1,96 @@
 inherited frmNotes: TfrmNotes
   Left = 0
   Caption = 'frmNotes'
-  ClientHeight = 571
-  ClientWidth = 889
+  ClientHeight = 710
+  ClientWidth = 1111
   DockSite = True
   Menu = mnuNotes
   Position = poDesigned
-  ExplicitWidth = 905
-  ExplicitHeight = 630
-  PixelsPerInch = 96
+  ExplicitWidth = 1127
+  ExplicitHeight = 769
+  PixelsPerInch = 120
   TextHeight = 13
   inherited shpPageBottom: TShape
-    Top = 566
-    Width = 889
+    Top = 705
+    Width = 1111
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    ExplicitTop = 704
+    ExplicitWidth = 1111
+  end
+  object splHorz: TSplitter [1]
+    Left = 201
+    Top = 0
+    Width = 4
+    Height = 705
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
-    ExplicitTop = 563
-    ExplicitWidth = 889
-  end
-  object splHorz: TSplitter [1]
-    Left = 161
-    Top = 0
-    Height = 566
     Color = clBtnFace
     ParentColor = False
     OnCanResize = splHorzCanResize
-    ExplicitHeight = 563
+    ExplicitHeight = 704
   end
   object pnlLeft: TPanel [2]
     Left = 0
     Top = 0
-    Width = 161
-    Height = 566
+    Width = 201
+    Height = 705
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alLeft
     BevelOuter = bvNone
-    Constraints.MinWidth = 30
     DoubleBuffered = True
     ParentDoubleBuffered = False
     TabOrder = 0
+    OnExit = pnlLeftExit
+    ExplicitHeight = 704
     object cmdNewNote: TORAlignButton
       Left = 0
-      Top = 545
-      Width = 161
-      Height = 21
+      Top = 679
+      Width = 201
+      Height = 26
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acNewNote
       Align = alBottom
       Caption = 'New Note'
       TabOrder = 1
       OnExit = cmdNewNoteExit
-      ExplicitTop = 708
+      ExplicitTop = 678
     end
     object cmdPCE: TORAlignButton
       Left = 0
-      Top = 525
-      Width = 161
-      Height = 20
+      Top = 651
+      Width = 201
+      Height = 28
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Action = acPCE
       Align = alBottom
       Caption = 'Encounter'
       TabOrder = 2
       OnExit = cmdPCEExit
-      ExplicitTop = 688
+      ExplicitTop = 653
     end
     object pnlLeftTop: TPanel
       Left = 0
-      Top = 15
-      Width = 161
-      Height = 510
+      Top = 23
+      Width = 201
+      Height = 628
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       Color = clWindow
@@ -76,25 +98,36 @@ inherited frmNotes: TfrmNotes
       ParentBackground = False
       ParentDoubleBuffered = False
       TabOrder = 0
+      ExplicitTop = 18
+      ExplicitHeight = 632
       object splDrawers: TSplitter
         Left = 0
-        Top = 485
-        Width = 161
-        Height = 1
+        Top = 596
+        Width = 201
+        Height = 2
         Cursor = crVSplit
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         Color = clBtnFace
         ParentColor = False
         OnCanResize = splDrawersCanResize
+        ExplicitTop = 598
       end
       object tvNotes: TORTreeView
         Left = 0
         Top = 0
-        Width = 161
-        Height = 485
+        Width = 201
+        Height = 596
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
-        Constraints.MinHeight = 50
-        Constraints.MinWidth = 30
+        Constraints.MinHeight = 63
+        Constraints.MinWidth = 38
         HideSelection = False
         Images = dmodShared.imgNotes
         Indent = 19
@@ -104,145 +137,313 @@ inherited frmNotes: TfrmNotes
         TabOrder = 1
         OnChange = tvNotesChange
         OnCollapsed = tvNotesCollapsed
+        OnCompare = tvNotesCompare
+        OnDblClick = tvNotesDblClick
         OnDragDrop = tvNotesDragDrop
         OnDragOver = tvNotesDragOver
         OnExit = tvNotesExit
         OnExpanded = tvNotesExpanded
+        OnKeyDown = tvNotesKeyDown
         OnStartDrag = tvNotesStartDrag
         Caption = ''
         NodePiece = 0
         ShortNodeCaptions = True
+        ExplicitHeight = 600
       end
       object pnlDrawers: TPanel
         Left = 0
-        Top = 486
-        Width = 161
-        Height = 24
+        Top = 598
+        Width = 201
+        Height = 30
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         BevelOuter = bvNone
         ParentBackground = False
         TabOrder = 2
         Visible = False
         OnResize = pnlDrawersResize
+        ExplicitTop = 89
         inline frmDrawers: TfraDrawers
           Left = 0
           Top = 0
-          Width = 161
-          Height = 24
+          Width = 201
+          Height = 30
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
-          Constraints.MinWidth = 150
+          Constraints.MinWidth = 188
           Color = clBtnFace
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
           TabStop = True
+          OnExit = frmDrawersExit
           OnResize = frmDrawersResize
-          ExplicitWidth = 161
-          ExplicitHeight = 24
+          ExplicitWidth = 201
+          ExplicitHeight = 30
           inherited pnlTemplate: TPanel
-            Width = 161
-            ExplicitWidth = 161
+            Width = 201
+            Height = 131
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            ExplicitWidth = 201
+            ExplicitHeight = 131
             inherited pnlTemplates: TPanel
-              Width = 161
+              Top = 28
+              Width = 201
+              Height = 103
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               TabOrder = 1
-              ExplicitWidth = 161
+              ExplicitTop = 28
+              ExplicitWidth = 201
+              ExplicitHeight = 103
               inherited tvTemplates: TORTreeView
-                Width = 161
-                ExplicitWidth = 161
+                Top = 51
+                Width = 201
+                Height = 52
+                Margins.Left = 4
+                Margins.Top = 4
+                Margins.Right = 4
+                Margins.Bottom = 4
+                ExplicitTop = 51
+                ExplicitWidth = 201
+                ExplicitHeight = 52
               end
               inherited pnlTemplateSearch: TPanel
-                Width = 161
-                ExplicitWidth = 161
+                Width = 201
+                Height = 51
+                Margins.Left = 4
+                Margins.Top = 4
+                Margins.Right = 4
+                Margins.Bottom = 4
+                ExplicitWidth = 201
+                ExplicitHeight = 51
                 DesignSize = (
-                  161
-                  41)
+                  201
+                  51)
                 inherited edtSearch: TCaptionEdit
-                  Width = 106
+                  Width = 133
+                  Height = 24
+                  Margins.Left = 4
+                  Margins.Top = 4
+                  Margins.Right = 4
+                  Margins.Bottom = 4
                   TabOrder = 1
-                  ExplicitWidth = 106
+                  ExplicitWidth = 133
+                  ExplicitHeight = 24
                 end
                 inherited btnFind: TORAlignButton
-                  Left = 106
-                  ExplicitLeft = 106
+                  Left = 133
+                  Width = 68
+                  Height = 27
+                  Margins.Left = 4
+                  Margins.Top = 4
+                  Margins.Right = 4
+                  Margins.Bottom = 4
+                  ExplicitLeft = 133
+                  ExplicitWidth = 68
+                  ExplicitHeight = 27
                 end
                 inherited cbWholeWords: TCheckBox
-                  Left = 90
-                  Top = 24
+                  Left = 113
+                  Top = 30
+                  Width = 136
+                  Height = 21
+                  Margins.Left = 4
+                  Margins.Top = 4
+                  Margins.Right = 4
+                  Margins.Bottom = 4
                   TabOrder = 4
-                  ExplicitLeft = 90
-                  ExplicitTop = 24
+                  ExplicitLeft = 113
+                  ExplicitTop = 30
+                  ExplicitWidth = 136
+                  ExplicitHeight = 21
                 end
                 inherited cbMatchCase: TCheckBox
-                  Top = 24
+                  Left = 5
+                  Top = 30
+                  Width = 100
+                  Height = 21
+                  Margins.Left = 4
+                  Margins.Top = 4
+                  Margins.Right = 4
+                  Margins.Bottom = 4
                   TabOrder = 3
-                  ExplicitTop = 24
+                  ExplicitLeft = 5
+                  ExplicitTop = 30
+                  ExplicitWidth = 100
+                  ExplicitHeight = 21
                 end
               end
             end
             inherited btnTemplate: TBitBtn
               Top = 0
-              Width = 161
+              Width = 201
+              Height = 28
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               TabOrder = 0
               ExplicitTop = 0
-              ExplicitWidth = 161
+              ExplicitWidth = 201
+              ExplicitHeight = 28
             end
           end
           inherited pnlEncounter: TPanel
-            Width = 161
-            ExplicitWidth = 161
+            Top = 131
+            Width = 201
+            Height = 102
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            ExplicitTop = 131
+            ExplicitWidth = 201
+            ExplicitHeight = 102
             inherited btnEncounter: TBitBtn
-              Width = 161
-              ExplicitWidth = 161
+              Width = 201
+              Height = 28
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
+              ExplicitWidth = 201
+              ExplicitHeight = 28
             end
             inherited pnlEncounters: TPanel
-              Width = 161
-              ExplicitWidth = 161
+              Top = 31
+              Width = 201
+              Height = 71
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
+              ExplicitTop = 31
+              ExplicitWidth = 201
+              ExplicitHeight = 71
               inherited lbEncounter: TORListBox
-                Width = 161
-                ExplicitWidth = 161
+                Width = 201
+                Height = 71
+                Margins.Left = 4
+                Margins.Top = 4
+                Margins.Right = 4
+                Margins.Bottom = 4
+                ExplicitWidth = 201
+                ExplicitHeight = 71
               end
             end
           end
           inherited pnlReminder: TPanel
-            Width = 161
-            ExplicitWidth = 161
+            Top = 233
+            Width = 201
+            Height = 101
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            ExplicitTop = 233
+            ExplicitWidth = 201
+            ExplicitHeight = 101
             inherited btnReminder: TBitBtn
-              Width = 161
-              ExplicitWidth = 161
+              Width = 201
+              Height = 28
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
+              ExplicitWidth = 201
+              ExplicitHeight = 28
             end
             inherited pnlReminders: TPanel
-              Width = 161
-              ExplicitWidth = 161
+              Top = 30
+              Width = 201
+              Height = 71
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
+              ExplicitTop = 30
+              ExplicitWidth = 201
+              ExplicitHeight = 71
               inherited tvReminders: TORTreeView
-                Width = 161
+                Width = 201
+                Height = 71
+                Margins.Left = 4
+                Margins.Top = 4
+                Margins.Right = 4
+                Margins.Bottom = 4
                 TabOrder = 1
-                ExplicitWidth = 161
+                ExplicitWidth = 201
+                ExplicitHeight = 71
               end
             end
           end
           inherited pnlOrder: TPanel
-            Width = 161
-            ExplicitWidth = 161
+            Top = 334
+            Width = 201
+            Height = 114
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
+            ExplicitTop = 334
+            ExplicitWidth = 201
+            ExplicitHeight = 114
             inherited btnOrder: TBitBtn
-              Width = 161
-              ExplicitWidth = 161
+              Width = 201
+              Height = 28
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
+              ExplicitWidth = 201
+              ExplicitHeight = 28
             end
             inherited pnlOrders: TPanel
-              Width = 161
-              ExplicitWidth = 161
+              Top = 30
+              Width = 201
+              Height = 84
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
+              ExplicitTop = 30
+              ExplicitWidth = 201
+              ExplicitHeight = 84
               inherited lbOrders: TORListBox
-                Width = 161
-                ExplicitWidth = 161
+                Width = 201
+                Height = 84
+                Margins.Left = 4
+                Margins.Top = 4
+                Margins.Right = 4
+                Margins.Bottom = 4
+                ExplicitWidth = 201
+                ExplicitHeight = 84
               end
             end
           end
         end
       end
       object lstNotes: TORListBox
-        Left = 20
-        Top = 6
-        Width = 64
-        Height = 18
+        Left = 25
+        Top = 8
+        Width = 80
+        Height = 22
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabStop = False
         Ctl3D = True
         ItemHeight = 13
@@ -262,100 +463,138 @@ inherited frmNotes: TfrmNotes
     end
     object stNotes: TVA508StaticText
       Name = 'stNotes'
-      Left = 0
-      Top = 0
-      Width = 161
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 193
       Height = 15
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       Alignment = taLeftJustify
       AutoSize = True
+      BevelOuter = bvNone
       Caption = 'Last 100 Notes'
+      Ctl3D = True
+      ParentCtl3D = False
       TabOrder = 3
       VerticalAlignment = taAlignBottom
       ShowAccelChar = True
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 74
     end
   end
   object pnlReminder: TPanel [3]
-    Left = 1053
-    Top = 236
-    Width = 27
-    Height = 38
+    Left = 1316
+    Top = 295
+    Width = 34
+    Height = 48
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     BevelOuter = bvNone
     TabOrder = 2
     Visible = False
   end
   object PnlRight: TPanel [4]
-    Left = 164
+    Left = 205
     Top = 0
-    Width = 725
-    Height = 566
+    Width = 906
+    Height = 705
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    OnResize = PnlRightResize
-    ExplicitHeight = 729
+    OnExit = PnlRightExit
+    ExplicitHeight = 704
     object pnlNote: TPanel
       Left = 0
       Top = 0
-      Width = 725
-      Height = 566
+      Width = 906
+      Height = 705
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       OnExit = pnlNoteExit
-      ExplicitHeight = 729
+      ExplicitHeight = 704
       object splList: TSplitter
         Left = 0
-        Top = 117
-        Width = 725
-        Height = 4
+        Top = 142
+        Width = 906
+        Height = 5
         Cursor = crVSplit
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         Color = clBtnFace
         ParentColor = False
-        ExplicitTop = 114
+        ExplicitTop = 150
       end
       object spDetails: TSplitter
         Left = 0
-        Top = 350
-        Width = 725
-        Height = 4
+        Top = 435
+        Width = 906
+        Height = 5
         Cursor = crVSplit
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         AutoSnap = False
         Color = clBtnFace
         ParentColor = False
         Visible = False
-        ExplicitTop = 347
+        ExplicitTop = 434
       end
       object splmemPCRead: TSplitter
         Left = 0
-        Top = 454
-        Width = 725
-        Height = 4
+        Top = 565
+        Width = 906
+        Height = 5
         Cursor = crVSplit
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         AutoSnap = False
         Color = clBtnFace
         ParentColor = False
         OnMoved = splmemPCEMoved
-        ExplicitTop = 451
+        ExplicitTop = 564
       end
       object memNote: TRichEdit
         Left = 0
-        Top = 121
-        Width = 725
-        Height = 229
+        Top = 147
+        Width = 906
+        Height = 288
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         Color = clCream
         Ctl3D = True
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -14
         Font.Name = 'Courier New'
         Font.Style = []
-        Constraints.MinHeight = 30
+        Constraints.MinHeight = 38
         Lines.Strings = (
           
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRUSTVWXYZabcdefghijkl' +
@@ -374,8 +613,12 @@ inherited frmNotes: TfrmNotes
         Name = 'stTitle'
         Left = 0
         Top = 0
-        Width = 725
+        Width = 906
         Height = 15
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         Alignment = taLeftJustify
         Caption = 'No Progress Notes Found'
@@ -387,13 +630,17 @@ inherited frmNotes: TfrmNotes
       object lvNotes: TCaptionListView
         Left = 0
         Top = 15
-        Width = 725
-        Height = 102
+        Width = 906
+        Height = 127
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         Columns = <
           item
             Caption = 'Date'
-            Width = 100
+            Width = 125
           end
           item
             AutoSize = True
@@ -420,7 +667,7 @@ inherited frmNotes: TfrmNotes
             Caption = 'TIUDA'
             Width = 0
           end>
-        Constraints.MinHeight = 50
+        Constraints.MinHeight = 63
         HideSelection = False
         ReadOnly = True
         RowSelect = True
@@ -431,6 +678,8 @@ inherited frmNotes: TfrmNotes
         Visible = False
         OnColumnClick = lvNotesColumnClick
         OnCompare = lvNotesCompare
+        OnDblClick = lvNotesDblClick
+        OnKeyDown = lvNotesKeyDown
         OnSelectItem = lvNotesSelectItem
         AutoSize = False
         Caption = 'No Progress Notes Found'
@@ -438,9 +687,13 @@ inherited frmNotes: TfrmNotes
       end
       object CPMemNote: TCopyPasteDetails
         Left = 0
-        Top = 354
-        Width = 725
-        Height = 100
+        Top = 440
+        Width = 906
+        Height = 125
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         BevelInner = bvRaised
         BorderStyle = bsSingle
@@ -450,15 +703,19 @@ inherited frmNotes: TfrmNotes
         TabOrder = 3
         Visible = False
         CopyMonitor = frmFrame.CPAppMon
-        CollapseBtn.Left = 701
+        CollapseBtn.Left = 878
         CollapseBtn.Top = 0
-        CollapseBtn.Width = 16
+        CollapseBtn.Width = 20
         CollapseBtn.Height = 20
+        CollapseBtn.Margins.Left = 4
+        CollapseBtn.Margins.Top = 4
+        CollapseBtn.Margins.Right = 4
+        CollapseBtn.Margins.Bottom = 4
         CollapseBtn.Align = alRight
         CollapseBtn.Caption = #218
         CollapseBtn.Font.Charset = DEFAULT_CHARSET
         CollapseBtn.Font.Color = clWindowText
-        CollapseBtn.Font.Height = -11
+        CollapseBtn.Font.Height = -14
         CollapseBtn.Font.Name = 'Wingdings'
         CollapseBtn.Font.Style = []
         CollapseBtn.ParentFont = False
@@ -469,14 +726,18 @@ inherited frmNotes: TfrmNotes
         EditMonitor.RelatedPackage = '8925'
         EditMonitor.TrackOnlyEdits = <>
         InfoMessage.AlignWithMargins = True
-        InfoMessage.Left = 3
-        InfoMessage.Top = 3
-        InfoMessage.Width = 586
-        InfoMessage.Height = 49
+        InfoMessage.Left = 4
+        InfoMessage.Top = 4
+        InfoMessage.Width = 765
+        InfoMessage.Height = 72
+        InfoMessage.Margins.Left = 4
+        InfoMessage.Margins.Top = 4
+        InfoMessage.Margins.Right = 4
+        InfoMessage.Margins.Bottom = 4
         InfoMessage.Align = alClient
         InfoMessage.Font.Charset = ANSI_CHARSET
         InfoMessage.Font.Color = clWindowText
-        InfoMessage.Font.Height = -11
+        InfoMessage.Font.Height = -14
         InfoMessage.Font.Name = 'MS Sans Serif'
         InfoMessage.Font.Style = []
         InfoMessage.Lines.Strings = (
@@ -488,11 +749,16 @@ inherited frmNotes: TfrmNotes
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
+        InfoMessage.ExplicitHeight = 68
         InfoSelector.AlignWithMargins = True
-        InfoSelector.Left = 3
-        InfoSelector.Top = 3
-        InfoSelector.Width = 111
-        InfoSelector.Height = 49
+        InfoSelector.Left = 4
+        InfoSelector.Top = 4
+        InfoSelector.Width = 109
+        InfoSelector.Height = 68
+        InfoSelector.Margins.Left = 4
+        InfoSelector.Margins.Top = 4
+        InfoSelector.Margins.Right = 4
+        InfoSelector.Margins.Bottom = 4
         InfoSelector.Style = lbOwnerDrawFixed
         InfoSelector.Align = alClient
         InfoSelector.ItemHeight = 13
@@ -502,20 +768,25 @@ inherited frmNotes: TfrmNotes
         SyncSizes = True
         VisualEdit = memNote
         SaveFindAfter = 0
+        ExplicitTop = 439
       end
       object memPCERead: TRichEdit
         Left = 0
-        Top = 458
-        Width = 725
-        Height = 108
+        Top = 570
+        Width = 906
+        Height = 135
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         Color = clCream
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -14
         Font.Name = 'MS Sans Serif'
         Font.Style = []
-        Constraints.MinHeight = 20
+        Constraints.MinHeight = 25
         Lines.Strings = (
           '<No encounter information entered>')
         ParentFont = False
@@ -530,52 +801,68 @@ inherited frmNotes: TfrmNotes
     object pnlWrite: TPanel
       Left = 0
       Top = 0
-      Width = 725
-      Height = 566
+      Width = 906
+      Height = 705
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
       Visible = False
       OnResize = pnlWriteResize
-      ExplicitHeight = 729
+      ExplicitHeight = 704
       object spEditDetails: TSplitter
         Left = 0
-        Top = 350
-        Width = 725
-        Height = 4
+        Top = 435
+        Width = 906
+        Height = 5
         Cursor = crVSplit
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         AutoSnap = False
         Color = clBtnFace
         ParentColor = False
         Visible = False
         OnMoved = splmemPCEMoved
-        ExplicitTop = 347
+        ExplicitTop = 434
       end
       object splmemPCEWrite: TSplitter
         Left = 0
-        Top = 454
-        Width = 725
-        Height = 4
+        Top = 565
+        Width = 906
+        Height = 5
         Cursor = crVSplit
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         AutoSnap = False
         Color = clBtnFace
         ParentColor = False
-        ExplicitTop = 451
+        ExplicitTop = 564
       end
       object memNewNote: TRichEdit
         Left = 0
-        Top = 97
-        Width = 725
-        Height = 253
+        Top = 121
+        Width = 906
+        Height = 314
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -14
         Font.Name = 'Courier New'
         Font.Style = []
-        Constraints.MinHeight = 30
+        Constraints.MinHeight = 38
         MaxLength = 2147483645
         ParentFont = False
         PlainText = True
@@ -591,9 +878,13 @@ inherited frmNotes: TfrmNotes
       end
       object CPMemNewNote: TCopyPasteDetails
         Left = 0
-        Top = 354
-        Width = 725
-        Height = 100
+        Top = 440
+        Width = 906
+        Height = 125
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         BevelInner = bvRaised
         BorderStyle = bsSingle
@@ -604,15 +895,19 @@ inherited frmNotes: TfrmNotes
         TabOrder = 1
         Visible = False
         CopyMonitor = frmFrame.CPAppMon
-        CollapseBtn.Left = 701
+        CollapseBtn.Left = 878
         CollapseBtn.Top = 0
-        CollapseBtn.Width = 16
+        CollapseBtn.Width = 20
         CollapseBtn.Height = 20
+        CollapseBtn.Margins.Left = 4
+        CollapseBtn.Margins.Top = 4
+        CollapseBtn.Margins.Right = 4
+        CollapseBtn.Margins.Bottom = 4
         CollapseBtn.Align = alRight
         CollapseBtn.Caption = #218
         CollapseBtn.Font.Charset = DEFAULT_CHARSET
         CollapseBtn.Font.Color = clWindowText
-        CollapseBtn.Font.Height = -11
+        CollapseBtn.Font.Height = -14
         CollapseBtn.Font.Name = 'Wingdings'
         CollapseBtn.Font.Style = []
         CollapseBtn.ParentFont = False
@@ -625,14 +920,18 @@ inherited frmNotes: TfrmNotes
         EditMonitor.RelatedPackage = '8925'
         EditMonitor.TrackOnlyEdits = <>
         InfoMessage.AlignWithMargins = True
-        InfoMessage.Left = 3
-        InfoMessage.Top = 3
-        InfoMessage.Width = 586
-        InfoMessage.Height = 49
+        InfoMessage.Left = 4
+        InfoMessage.Top = 4
+        InfoMessage.Width = 765
+        InfoMessage.Height = 72
+        InfoMessage.Margins.Left = 4
+        InfoMessage.Margins.Top = 4
+        InfoMessage.Margins.Right = 4
+        InfoMessage.Margins.Bottom = 4
         InfoMessage.Align = alClient
         InfoMessage.Font.Charset = ANSI_CHARSET
         InfoMessage.Font.Color = clWindowText
-        InfoMessage.Font.Height = -11
+        InfoMessage.Font.Height = -14
         InfoMessage.Font.Name = 'MS Sans Serif'
         InfoMessage.Font.Style = []
         InfoMessage.Lines.Strings = (
@@ -644,11 +943,16 @@ inherited frmNotes: TfrmNotes
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
+        InfoMessage.ExplicitHeight = 68
         InfoSelector.AlignWithMargins = True
-        InfoSelector.Left = 3
-        InfoSelector.Top = 3
-        InfoSelector.Width = 111
-        InfoSelector.Height = 49
+        InfoSelector.Left = 4
+        InfoSelector.Top = 4
+        InfoSelector.Width = 109
+        InfoSelector.Height = 68
+        InfoSelector.Margins.Left = 4
+        InfoSelector.Margins.Top = 4
+        InfoSelector.Margins.Right = 4
+        InfoSelector.Margins.Bottom = 4
         InfoSelector.Style = lbOwnerDrawFixed
         InfoSelector.Align = alClient
         InfoSelector.ItemHeight = 13
@@ -658,20 +962,25 @@ inherited frmNotes: TfrmNotes
         SyncSizes = True
         VisualEdit = memNewNote
         SaveFindAfter = 0
+        ExplicitTop = 439
       end
       object memPCEWrite: TRichEdit
         Left = 0
-        Top = 458
-        Width = 725
-        Height = 108
+        Top = 570
+        Width = 906
+        Height = 135
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alBottom
         Color = clCream
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -14
         Font.Name = 'MS Sans Serif'
         Font.Style = []
-        Constraints.MinHeight = 20
+        Constraints.MinHeight = 25
         Lines.Strings = (
           '<No encounter information entered>')
         ParentFont = False
@@ -685,12 +994,8 @@ inherited frmNotes: TfrmNotes
       object grdPnl: TGridPanel
         Left = 0
         Top = 0
-        Width = 725
-        Height = 97
-        Margins.Left = 2
-        Margins.Top = 2
-        Margins.Right = 2
-        Margins.Bottom = 2
+        Width = 906
+        Height = 121
         Align = alTop
         BevelOuter = bvNone
         ColumnCollection = <
@@ -771,15 +1076,11 @@ inherited frmNotes: TfrmNotes
         OnResize = grdPnlResize
         object lblNewTitle: TStaticText
           AlignWithMargins = True
-          Left = 2
-          Top = 2
+          Left = 3
+          Top = 3
           Width = 119
           Height = 17
           Hint = 'Press "Change..." to select a different title.'
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
           Align = alClient
           Caption = ' General Medicine Note '
           Color = clCream
@@ -792,15 +1093,11 @@ inherited frmNotes: TfrmNotes
         end
         object stAuthor: TStaticText
           AlignWithMargins = True
-          Left = 429
-          Top = 2
-          Width = 193
-          Height = 28
+          Left = 547
+          Top = 3
+          Width = 255
+          Height = 34
           Hint = 'Press "Change..." to select a different author.'
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
           Align = alClient
           Alignment = taRightJustify
           AutoSize = False
@@ -812,17 +1109,15 @@ inherited frmNotes: TfrmNotes
           ShowHint = True
           TabOrder = 1
           Transparent = False
+          ExplicitLeft = 544
+          ExplicitWidth = 258
         end
         object lblVisit: TStaticText
           AlignWithMargins = True
-          Left = 2
-          Top = 34
+          Left = 3
+          Top = 43
           Width = 204
           Height = 17
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
           Align = alClient
           Caption = 'Vst: 10/20/99 Pulmonary Clinic, Dr. Welby'
           Color = clBtnFace
@@ -833,15 +1128,11 @@ inherited frmNotes: TfrmNotes
         end
         object stRefDate: TStaticText
           AlignWithMargins = True
-          Left = 288
-          Top = 34
-          Width = 137
-          Height = 28
+          Left = 361
+          Top = 43
+          Width = 180
+          Height = 34
           Hint = 'Press "Change..." to change date/time of note.'
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
           Align = alClient
           Alignment = taCenter
           AutoSize = False
@@ -850,18 +1141,16 @@ inherited frmNotes: TfrmNotes
           ShowAccelChar = False
           ShowHint = True
           TabOrder = 3
+          ExplicitLeft = 355
+          ExplicitWidth = 183
         end
         object stCosigner: TStaticText
           AlignWithMargins = True
-          Left = 429
-          Top = 34
-          Width = 193
-          Height = 28
+          Left = 547
+          Top = 43
+          Width = 255
+          Height = 34
           Hint = 'Press "Change..." to select a different cosigner.'
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
           Align = alClient
           Alignment = taRightJustify
           AutoSize = False
@@ -873,48 +1162,38 @@ inherited frmNotes: TfrmNotes
           ShowHint = True
           TabOrder = 4
           Transparent = False
+          ExplicitLeft = 544
+          ExplicitWidth = 258
         end
         object cmdChange: TButton
           AlignWithMargins = True
-          Left = 626
-          Top = 34
-          Width = 96
-          Height = 28
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
+          Left = 808
+          Top = 43
+          Width = 94
+          Height = 34
           Action = acChange
           Align = alClient
           Caption = 'Change ...'
-          Constraints.MaxHeight = 57
+          Constraints.MaxHeight = 71
           TabOrder = 5
           OnExit = cmdChangeExit
         end
         object lblSubject: TStaticText
           Left = 0
-          Top = 64
+          Top = 80
           Width = 43
           Height = 17
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
           Align = alTop
           Caption = 'Subject:'
           TabOrder = 6
         end
         object txtSubject: TCaptionEdit
           AlignWithMargins = True
-          Left = 62
-          Top = 66
-          Width = 660
-          Height = 21
+          Left = 63
+          Top = 83
+          Width = 839
+          Height = 24
           Hint = 'Subject is limited to a maximum of 80 characters.'
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
           Align = alTop
           MaxLength = 80
           ParentShowHint = False
@@ -922,6 +1201,8 @@ inherited frmNotes: TfrmNotes
           TabOrder = 7
           Text = 'txtSubject'
           Caption = #1
+          ExplicitLeft = 53
+          ExplicitWidth = 849
         end
       end
     end
@@ -1150,8 +1431,8 @@ inherited frmNotes: TfrmNotes
     Top = 323
   end
   object mnuNotes: TMainMenu
-    Left = 441
-    Top = 128
+    Left = 465
+    Top = 624
     object mnuView: TMenuItem
       Caption = '&View'
       GroupIndex = 3
@@ -1405,19 +1686,19 @@ inherited frmNotes: TfrmNotes
   object dlgReplaceText: TReplaceDialog
     OnFind = dlgReplaceTextFind
     OnReplace = dlgReplaceTextReplace
-    Left = 221
-    Top = 208
+    Left = 229
+    Top = 624
   end
   object dlgFindText: TFindDialog
     Options = [frDown, frHideUpDown]
     OnFind = dlgFindTextFind
-    Left = 324
-    Top = 216
+    Left = 308
+    Top = 624
   end
   object popNoteList: TPopupMenu
     OnPopup = popNoteListPopup
-    Left = 508
-    Top = 217
+    Left = 540
+    Top = 625
     object popNoteListAll: TMenuItem
       Tag = 1
       Action = acSignedAll
@@ -1480,8 +1761,8 @@ inherited frmNotes: TfrmNotes
   end
   object popNoteMemo: TPopupMenu
     OnPopup = popNoteMemoPopup
-    Left = 604
-    Top = 208
+    Left = 620
+    Top = 624
     object popNoteMemoCut: TMenuItem
       Caption = 'Cu&t'
       ShortCut = 16472
@@ -1591,8 +1872,8 @@ inherited frmNotes: TfrmNotes
     end
   end
   object ActionList: TActionList
-    Left = 608
-    Top = 128
+    Left = 816
+    Top = 624
     object acNewNote: TAction
       Category = 'Buttons'
       Caption = '&New Progress Note...'
@@ -1831,10 +2112,6 @@ inherited frmNotes: TfrmNotes
       Caption = 'Change...'
       OnExecute = acChangeExecute
       OnUpdate = acChangeUpdate
-    end
-    object acTemplateHook: TAction
-      Category = 'Buttons'
-      Caption = 'Templates'
     end
   end
 end

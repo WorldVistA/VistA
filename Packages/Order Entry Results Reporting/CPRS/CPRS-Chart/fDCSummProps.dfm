@@ -8,6 +8,7 @@ inherited frmDCSummProperties: TfrmDCSummProperties
   Position = poScreenCenter
   OnClose = FormClose
   OnShow = FormShow
+  OnCloseQuery = FormCloseQuery
   ExplicitWidth = 541
   ExplicitHeight = 531
   PixelsPerInch = 96
@@ -129,8 +130,8 @@ inherited frmDCSummProperties: TfrmDCSummProperties
     Height = 21
     Caption = 'OK'
     Default = True
+    ModalResult = 1
     TabOrder = 6
-    OnClick = cmdOKClick
   end
   object cmdCancel: TButton [9]
     Left = 411
@@ -139,6 +140,7 @@ inherited frmDCSummProperties: TfrmDCSummProperties
     Height = 21
     Cancel = True
     Caption = 'Cancel'
+    ModalResult = 2
     TabOrder = 7
     OnClick = cmdCancelClick
   end

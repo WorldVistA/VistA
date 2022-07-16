@@ -981,7 +981,7 @@ begin
           begin
             if length(piece(aRanges,';',2)) > 0 then
               begin
-                x2 := '  Max/site:' + piece(aRanges,';',2);
+                x2 := CRLF + 'A maximum of ' + piece(aRanges,';',2) + ' per site will be displayed regardless of the number available within the specified date range.';
                 aRanges := piece(aRanges,';',1);
               end;
             DaysBack := Copy(aRanges, 2, Length(aRanges));
@@ -1004,7 +1004,9 @@ begin
             x1 := ' [From: ' + y + ' to ' + z + ']';
           end;
         if length(piece(aRanges,';',3)) > 0 then
-          x2 := '  Max/site:' + piece(aRanges,';',3);
+          begin
+            x2 := CRLF + 'A maximum of ' + piece(aRanges,';',3) + ' per site will be displayed regardless of the number available within the specified date range.';
+          end;
         case uQualifierType of
           QT_DATERANGE:
               x := x + x1;

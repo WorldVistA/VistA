@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, uConsults, Buttons,
-  Menus, fAutoSz, ORDtTm, VA508AccessibilityManager, fBase508Form, mDSTMgr;
+  Menus, fAutoSz, ORDtTm, VA508AccessibilityManager, fBase508Form, oDST;
 
 type
   TfrmEditCslt = class(TfrmAutoSz)
@@ -51,12 +51,14 @@ type
     pnlCombatVet: TPanel;
     txtCombatVet: TVA508StaticText;
     lblPlace: TStaticText;
-    DstMgr: TfrDSTMgr;
+    //DstMgr: TfrDSTMgr;
+
     splDetails: TSplitter;
     pnlDetails: TPanel;
     pnlButtons: TPanel;
     pnlComments: TPanel;
     pnlReason: TPanel;
+    btnLaunchToolbox: TButton;
     procedure txtAttnNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure radInpatientClick(Sender: TObject);
@@ -89,6 +91,7 @@ type
     function EnableDst: Boolean;
     procedure FormCreate(Sender: TObject);
     procedure DstMgracDSTExecute(Sender: TObject);
+    procedure btnLaunchToolboxClick(Sender: TObject);
   private
     FLastServiceID: string;
     FChanged: boolean;
@@ -105,7 +108,8 @@ type
 
   protected
     procedure InitDialog;
-    procedure Validate(var AnErrMsg: string);
+    function Validate(var AnErrMsg: string): boolean;
+    procedure ValidateDst(var AnErrMsg: string);
     function  ValidSave: Boolean;
 //    procedure configUrgency;
   end;
@@ -121,7 +125,8 @@ implementation
 
 uses
     rODBase, rConsults, uCore, rCore, fConsults, fRptBox, fPCELex, rPCE,
-    ORClasses, clipbrd, UBAGlobals, rOrders, VAUtils, uSizing;
+    ORClasses, clipbrd, UBAGlobals, rOrders, VAUtils, uSizing, uSimilarNames,
+    uDstConst;
 
 var
   SvcList: TStrings ;
@@ -267,15 +272,17 @@ begin
 
   SetUpCombatVet;
 
-  DstMgr.DstMode := DstMgr.DstMode; // reset caption if needed
+  btnLaunchToolbox.Caption := GetDstMgr.DSTCaption; // reset caption if needed
+  btnLaunchToolbox.Visible := (GetDstMgr.DSTBtnVisible and DstPro.DstParameters.FEditRes);
   DoSetFontSize;
 
   FChanging := False;
   ControlChange(Self);    //CQ20913
   StatusText('');
+  TSimilarNames.RegORComboBox(txtAttn);
 end;
 
-procedure TfrmEditCslt.Validate(var AnErrMsg: string);
+function TfrmEditCslt.Validate(var AnErrMsg: string): boolean;
 
   procedure SetError(const x: string);
   begin
@@ -284,8 +291,11 @@ procedure TfrmEditCslt.Validate(var AnErrMsg: string);
     AnErrMsg := AnErrMsg + x;
   end;
 
+var
+ rtnErrMsg: string;
 begin
   inherited;
+  Result := True;
   if cboService.ItemIEN = 0 then
     SetError(TX_NO_SVC);
   if cboUrgency.ItemIEN = 0 then
@@ -312,15 +322,34 @@ begin
   end;
   if OldRec.ProvDxCodeInactive and ProvDx.CodeInactive then
     SetError(TX_INACTIVE_CODE);
-  if Not isProsSvc then
+  if not isProsSvc then
   begin
     if calClinicallyIndicated.FMDateTime < FMToday then
       SetError(TX_PAST_DATE);
-{    if (isDstEnabled) and (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') then
-      if calLatest.FMDateTime < calClinicallyIndicated.FMDateTime then
-        SetError(TX_NLTD_GREATER + TX_NLTD_GREATER1);
-}
   end;
+
+  if not CheckForSimilarName(txtAttn, rtnErrMsg, ltPerson, sPr) then
+  begin
+    if rtnErrMsg <> '' then
+      SetError(rtnErrMsg);
+  end;
+
+  AnErrMsg := Trim(AnErrMsg);
+  if Result then
+    Result := AnErrMsg = '';
+end;
+
+procedure TfrmEditCslt.ValidateDst(var AnErrMsg: string);
+
+  procedure SetError(const x: string);
+  begin
+    if Length(AnErrMsg) > 0 then AnErrMsg := AnErrMsg + CRLF;
+    AnErrMsg := AnErrMsg + x;
+  end;
+
+begin
+   if (lblClinicallyIndicated.Enabled) and (calClinicallyIndicated.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
+//   if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and (calLatest.FMDateTime = 0) then SetError(TX_NLTD_SI_URG);
 end;
 
 procedure TfrmEditCslt.txtAttnNeedData(Sender: TObject;
@@ -362,7 +391,8 @@ end;
 
 procedure TfrmEditCslt.ControlChange(Sender: TObject);
 begin
-  if FChanging then exit;
+  if FChanging then Exit;
+
   with NewRec do
     begin
       with cboService do if ItemIEN > 0 then
@@ -490,12 +520,13 @@ begin
           NewComments.Clear;
     end;
 
-   DstMgr.btnLaunchToolbox.Enabled := EnableDst;
+   btnLaunchToolbox.Enabled := EnableDst;
 end;
 
 procedure TfrmEditCslt.DstMgracDSTExecute(Sender: TObject);
-
-  procedure setMgrDataByEditRec(aMgr: TfrDSTMgr; aRec: TEditResubmitRec);
+var
+  ErrMsg, HelpText: String;
+  procedure setMgrDataByEditRec(aMgr: TDSTMgr; aRec: TEditResubmitRec);
   begin
     if aRec.ToServiceName <> '' then
       aMgr.DSTService := aRec.ToServiceName;
@@ -514,18 +545,39 @@ procedure TfrmEditCslt.DstMgracDSTExecute(Sender: TObject);
   end;
 
 begin
-  DstMgr.DSTId := OldRec.DSTId;
-  DstMgr.DSTOutpatient := '';
-  setMgrDataByEditRec(DstMgr,OldRec);
-  setMgrDataByEditRec(DstMgr,NewRec);
-  DstMgr.doDst;
-  if DstMgr.DSTResult = 'CANCEL' then
-    exit
-  else if DstMgr.DSTResult <> '' then
+  ValidateDst(ErrMsg);
+  if Length(ErrMsg) <= 0 then
   begin
-    if DstMgr.DSTId <> OldRec.DSTId then
-      NewRec.DSTId := DstMgr.DSTId;
-    memComment.Lines.Text := memComment.Lines.Text + #13#10 + DstMgr.DSTResult;
+    GetDstMgr.DSTId := OldRec.DSTId;
+    GetDstMgr.DSTOutpatient := '';
+    setMgrDataByEditRec(GetDstMgr, OldRec);
+    setMgrDataByEditRec(GetDstMgr, NewRec);
+    GetDstMgr.doDst;
+    if (GetDstMgr.DSTResult <> '') and (Pos('Error', GetDstMgr.DSTResult) <> 1)
+    then
+    begin
+      if GetDstMgr.DSTId <> OldRec.DSTId then
+        NewRec.DSTId := GetDstMgr.DSTId;
+      memComment.Lines.Text := memComment.Lines.Text + #13#10 +
+        GetDstMgr.DSTResult;
+    end
+    else if Pos('Error', GetDstMgr.DSTResult) = 1 then
+    begin
+      HelpText := GetUserParam('OR CPRS HELP DESK TEXT');
+      if HelpText <> '' then
+        InfoBox(DST_UNAVAIL + CRLF + DST_TRY_LATER + CRLF + CRLF + HelpText,
+          'Communication Error', MB_OK or MB_ICONERROR)
+      else
+        InfoBox(DST_UNAVAIL + CRLF + DST_TRY_LATER + CRLF + CRLF + DST_PERSIST,
+          'Communication Error', MB_OK or MB_ICONERROR);
+    end
+
+  end
+  else
+  begin
+    InfoBox(ErrMsg + CRLF + 'You entered: ' + calClinicallyIndicated.Text,
+      'Invalid Date Entered', MB_OK);
+    calClinicallyIndicated.SetFocus;
   end;
 end;
 
@@ -535,15 +587,15 @@ begin
   Result := False;
   if (cboUrgency.Text <> '') and (Length(calClinicallyIndicated.Text) > 0) and
     (not isProsSvc)
-    and (DstMgr.DSTMode <> DST_OTH)
+    and (getDstMgr.DSTMode <> DST_OTH)
     and (not radInpatient.Checked)
-    and (DstMgr.DstProvider.DstParameters.FEditRes)
+    and (getDstMgr.DstProvider.DstParameters.FEditRes)
   then
     Result := True;
 {  if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and
     not(Length(calLatest.Text) > 0) then
     Result := False;
-}    
+}
 end;
 
 procedure TfrmEditCslt.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -554,16 +606,16 @@ begin
   if FChanged then
     if InfoBox(TX_ACCEPT, TX_ACCEPT_CAP, MB_YESNO) = ID_YES then
       if not ValidSave then Action := caNone;
-  DstMgr.DSTFree;
+  FreeDSTMgr;
 end;
 
 procedure TfrmEditCslt.FormCreate(Sender: TObject);
 begin
   inherited;
 {$IFDEF DEBUG}
-  DstMgr.Color := clCream;
+  pnlButtons.Color := clCream;
 {$ENDIF}
-  DstMgr.DSTInit(DST_CASE_CONSULT_EDIT);
+  getDSTMgr(DST_CASE_CONSULT_EDIT);
 end;
 
 procedure TfrmEditCslt.FormResize(Sender: TObject);
@@ -693,13 +745,8 @@ const
 var
   ErrMsg: string;
 begin
-  Result := True;
-  Validate(ErrMsg);
-  if Length(ErrMsg) > 0 then
-  begin
-    InfoBox(TX_NO_SAVE + ErrMsg, TX_NO_SAVE_CAP, MB_OK);
-    Result := False;
-  end;
+  Result := Validate(ErrMsg);
+  ShowMsgOn(Length(ErrMsg) > 0, TX_NO_SAVE + ErrMsg, TX_NO_SAVE_CAP);
   if (ProvDx.Reqd = 'R') and (Length(txtProvDiag.Text) = 0) and (ProvDx.PromptMode = 'L') then
     cmdLexSearchClick(Self);
 end;
@@ -741,6 +788,13 @@ end;
 procedure TfrmEditCslt.btnCmtOtherClick(Sender: TObject);
 begin
   ReportBox(OldRec.OtherComments, 'Added Comments', False);
+end;
+
+procedure TfrmEditCslt.btnLaunchToolboxClick(Sender: TObject);
+begin
+  inherited;
+  //GetDSTMgr.doDst;
+  DstMgracDSTExecute(Sender);
 end;
 
 procedure TfrmEditCslt.cmdLexSearchClick(Sender: TObject);
@@ -998,8 +1052,8 @@ begin
 
   adjustToolPanel(pnlButtons);
 
-  iButtonWidth := GetMainFormTextWidth(DstMgr.btnLaunchToolbox.Caption) + GAP * 2;
-  DstMgr.Width := iButtonWidth;
+  iButtonWidth := GetMainFormTextWidth(btnLaunchToolbox.Caption) + GAP * 2;
+  btnLaunchToolbox.Width := iButtonWidth;
 
   memReason.DefAttributes.Size := FontSize;
   memComment.DefAttributes.Size := FontSize;

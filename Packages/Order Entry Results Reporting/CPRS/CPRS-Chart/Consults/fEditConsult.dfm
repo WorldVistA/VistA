@@ -2,8 +2,8 @@ inherited frmEditCslt: TfrmEditCslt
   Tag = 110
   Left = 461
   Top = 191
-  Width = 720
-  Height = 530
+  Width = 576
+  Height = 467
   HorzScrollBar.Range = 561
   VertScrollBar.Range = 340
   Anchors = [akLeft, akTop, akBottom]
@@ -11,14 +11,14 @@ inherited frmEditCslt: TfrmEditCslt
   Constraints.MinHeight = 467
   Constraints.MinWidth = 576
   Position = poScreenCenter
-  ExplicitWidth = 720
-  ExplicitHeight = 530
+  ExplicitWidth = 576
+  ExplicitHeight = 467
   PixelsPerInch = 96
   TextHeight = 13
   object pnlCombatVet: TPanel [0]
     Left = 0
     Top = 0
-    Width = 704
+    Width = 561
     Height = 25
     Align = alTop
     BevelOuter = bvLowered
@@ -33,7 +33,7 @@ inherited frmEditCslt: TfrmEditCslt
       Name = 'txtCombatVet'
       Left = 1
       Top = 1
-      Width = 702
+      Width = 559
       Height = 23
       Align = alClient
       Alignment = taCenter
@@ -46,8 +46,8 @@ inherited frmEditCslt: TfrmEditCslt
   end
   object pnlMessage: TPanel [1]
     Left = 0
-    Top = 377
-    Width = 704
+    Top = 314
+    Width = 561
     Height = 79
     Align = alBottom
     Caption = 'pnlMessage'
@@ -66,7 +66,7 @@ inherited frmEditCslt: TfrmEditCslt
     object memMessage: TRichEdit
       Left = 39
       Top = 1
-      Width = 664
+      Width = 521
       Height = 77
       Align = alClient
       Color = clInfoBk
@@ -85,7 +85,7 @@ inherited frmEditCslt: TfrmEditCslt
   object pnlMain: TPanel [2]
     Left = 0
     Top = 25
-    Width = 704
+    Width = 561
     Height = 175
     Align = alTop
     BevelOuter = bvNone
@@ -93,7 +93,7 @@ inherited frmEditCslt: TfrmEditCslt
     ParentCtl3D = False
     TabOrder = 1
     DesignSize = (
-      704
+      561
       175)
     object lblService: TLabel
       Left = 4
@@ -391,67 +391,52 @@ inherited frmEditCslt: TfrmEditCslt
   end
   object pnlButtons: TPanel [3]
     Left = 0
-    Top = 456
-    Width = 704
+    Top = 393
+    Width = 561
     Height = 35
     Align = alBottom
     BevelOuter = bvNone
     Caption = 'pnlButtons'
     ShowCaption = False
     TabOrder = 3
-    inline DstMgr: TfrDSTMgr
-      Left = 0
-      Top = 0
-      Width = 121
-      Height = 35
-      Align = alLeft
-      Color = clBtnFace
-      ParentBackground = False
-      ParentColor = False
-      TabOrder = 0
-      ExplicitWidth = 121
-      ExplicitHeight = 35
-      inherited btnLaunchToolbox: TButton
-        Width = 115
-        Height = 29
-        ExplicitWidth = 115
-        ExplicitHeight = 29
-      end
-      inherited alDST: TActionList
-        inherited acDST: TAction
-          OnExecute = DstMgracDSTExecute
-        end
-      end
-    end
     object cmdQuit: TButton
       AlignWithMargins = True
-      Left = 629
+      Left = 486
       Top = 3
       Width = 72
       Height = 29
       Align = alRight
       Cancel = True
       Caption = 'Cancel'
-      TabOrder = 1
+      TabOrder = 2
       OnClick = cmdQuitClick
     end
     object cmdAccept: TButton
       AlignWithMargins = True
-      Left = 551
+      Left = 408
       Top = 3
       Width = 72
       Height = 29
       Align = alRight
       Caption = 'Resubmit'
-      TabOrder = 2
+      TabOrder = 1
       OnClick = cmdAcceptClick
+    end
+    object btnLaunchToolbox: TButton
+      Left = 4
+      Top = 6
+      Width = 125
+      Height = 25
+      Caption = 'Open Consult Toolbox'
+      TabOrder = 0
+      OnClick = btnLaunchToolboxClick
     end
   end
   object pnlDetails: TPanel [4]
     Left = 0
     Top = 200
-    Width = 704
-    Height = 177
+    Width = 561
+    Height = 114
     Align = alClient
     BevelOuter = bvNone
     Caption = 'pnlDetails'
@@ -460,7 +445,7 @@ inherited frmEditCslt: TfrmEditCslt
     object splDetails: TSplitter
       Left = 0
       Top = 81
-      Width = 704
+      Width = 561
       Height = 3
       Cursor = crVSplit
       Align = alTop
@@ -472,7 +457,7 @@ inherited frmEditCslt: TfrmEditCslt
     object pnlComments: TPanel
       Left = 0
       Top = 0
-      Width = 704
+      Width = 561
       Height = 81
       Align = alTop
       BevelOuter = bvNone
@@ -483,7 +468,7 @@ inherited frmEditCslt: TfrmEditCslt
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 698
+        Width = 555
         Height = 13
         Align = alTop
         Caption = 'New Comments:'
@@ -493,7 +478,7 @@ inherited frmEditCslt: TfrmEditCslt
         AlignWithMargins = True
         Left = 3
         Top = 22
-        Width = 698
+        Width = 555
         Height = 56
         Align = alClient
         Font.Charset = ANSI_CHARSET
@@ -516,8 +501,8 @@ inherited frmEditCslt: TfrmEditCslt
     object pnlReason: TPanel
       Left = 0
       Top = 84
-      Width = 704
-      Height = 93
+      Width = 561
+      Height = 30
       Align = alClient
       BevelOuter = bvNone
       Caption = 'pnlComments'
@@ -526,7 +511,7 @@ inherited frmEditCslt: TfrmEditCslt
       object lblReason: TLabel
         Left = 0
         Top = 0
-        Width = 704
+        Width = 561
         Height = 13
         Align = alTop
         Caption = 'Reason for Request'
@@ -536,8 +521,8 @@ inherited frmEditCslt: TfrmEditCslt
         AlignWithMargins = True
         Left = 3
         Top = 16
-        Width = 698
-        Height = 74
+        Width = 555
+        Height = 11
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -656,12 +641,6 @@ inherited frmEditCslt: TfrmEditCslt
         'Component = lblPlace'
         'Status = stsDefault')
       (
-        'Component = DstMgr'
-        'Status = stsDefault')
-      (
-        'Component = DstMgr.btnLaunchToolbox'
-        'Status = stsDefault')
-      (
         'Component = pnlDetails'
         'Status = stsDefault')
       (
@@ -672,6 +651,9 @@ inherited frmEditCslt: TfrmEditCslt
         'Status = stsDefault')
       (
         'Component = pnlReason'
+        'Status = stsDefault')
+      (
+        'Component = btnLaunchToolbox'
         'Status = stsDefault'))
   end
   object mnuPopProvDx: TPopupMenu

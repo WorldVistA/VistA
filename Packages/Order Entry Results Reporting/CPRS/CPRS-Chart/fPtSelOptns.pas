@@ -31,21 +31,29 @@ type
     procedure radShowSrcClick(Sender: TObject);
     procedure radLongSrcClick(Sender: TObject);
     procedure cboListExit(Sender: TObject);
-    procedure cboListKeyPause(Sender: TObject);
     procedure cboListMouseClick(Sender: TObject);
     procedure cboListNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboDateRangeExit(Sender: TObject);
     procedure cboDateRangeMouseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure cboDateRangeChange(Sender: TObject);
+    procedure cboListEnter(Sender: TObject);
+    procedure cboListKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboListChange(Sender: TObject);
+    procedure cboListKeyPause(Sender: TObject);
   private
     FLastTopList: string;
     FLastDateIndex: Integer;
+    FDateRangeChanged: boolean;
     FSrcType: Integer;
     FSetCaptionTop: TSetCaptionTopProc;
     FSetPtListTop: TSetPtListTopProc;
+    FChanging: Boolean;
     procedure HideDateRange;
     procedure ShowDateRange;
+    procedure UpdatePtSelection;
   public
     function IsLast5(x: string): Boolean;
     function IsFullSSN(x: string): Boolean;
@@ -79,7 +87,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rCore, fPtSelOptSave, fPtSel, VA508AccessibilityRouter, VAUtils;
+  rCore, fPtSelOptSave, fPtSel, VA508AccessibilityRouter, VAUtils, uSimilarNames;
 
 const
   TX_LS_DFLT = 'This is already saved as your default patient list settings.';
@@ -207,19 +215,57 @@ begin
   cboList.Caption := TRadioButton(Sender).Caption;
 end;
 
+procedure TfrmPtSelOptns.cboListChange(Sender: TObject);
+begin
+  inherited;
+  UpdatePtSelection;
+end;
+
+procedure TfrmPtSelOptns.cboListEnter(Sender: TObject);
+begin
+  inherited;
+  if radProviders.Checked then
+    FChanging := true;
+end;
+
 procedure TfrmPtSelOptns.cboListExit(Sender: TObject);
 begin
-  with cboList do if ItemIEN > 0 then FSetPtListTop(ItemIEN);
+  if FChanging and radProviders.Checked then
+  begin
+    FChanging := False;
+    cboListChange(sender);
+  end;
+end;
+
+procedure TfrmPtSelOptns.cboListKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if radProviders.Checked then
+  begin
+    FChanging := True;
+
+    if Key = VK_LEFT then
+      Key := VK_UP;
+    if Key = VK_RIGHT then
+      Key := VK_DOWN;
+    if Key = VK_RETURN then
+      FChanging := False;
+  end;
 end;
 
 procedure TfrmPtSelOptns.cboListKeyPause(Sender: TObject);
 begin
-  with cboList do if ItemIEN > 0 then FSetPtListTop(ItemIEN);
+  UpdatePtSelection;
 end;
 
 procedure TfrmPtSelOptns.cboListMouseClick(Sender: TObject);
 begin
-  with cboList do if ItemIEN > 0 then FSetPtListTop(ItemIEN);
+  if FChanging and radProviders.Checked then
+  begin
+    FChanging := False;
+    UpdatePtSelection
+  end;
 end;
 
 procedure TfrmPtSelOptns.cboListNeedData(Sender: TObject; const StartFrom: String; Direction, InsertAt: Integer);
@@ -297,6 +343,12 @@ begin
   cboDateRange.Show;
 end;
 
+procedure TfrmPtSelOptns.cboDateRangeChange(Sender: TObject);
+begin
+  inherited;
+  if cboDateRange.ItemIndex <> FLastDateIndex then cboDateRangeMouseClick(Self);
+end;
+
 procedure TfrmPtSelOptns.cboDateRangeExit(Sender: TObject);
 begin
   if cboDateRange.ItemIndex <> FLastDateIndex then cboDateRangeMouseClick(Self);
@@ -312,7 +364,8 @@ begin
       else cboDateRange.ItemIndex := -1;
   end;
   FLastDateIndex := cboDateRange.ItemIndex;
-  if cboList.ItemIEN > 0 then FSetPtListTop(cboList.ItemIEN);
+  FDateRangeChanged := True;
+  UpdatePtSelection;
 end;
 
 procedure TfrmPtSelOptns.cmdSaveListClick(Sender: TObject);
@@ -383,6 +436,7 @@ end;
 procedure TfrmPtSelOptns.FormCreate(Sender: TObject);
 begin
   FLastDateIndex := -1;
+  FChanging := false;
 end;
 
 procedure TfrmPtSelOptns.SetDefaultPtList(Dflt: string);
@@ -415,6 +469,33 @@ begin
   if (IsRPL = '1') then // Deal with restricted patient list users.
     fPtSel.FDfltSrc := '';
   SetDefaultPtList(fPtSel.FDfltSrc);
+end;
+
+procedure TfrmPtSelOptns.UpdatePtSelection;
+var
+  aErrMsg: String;
+begin
+  if FChanging then
+    Exit;
+
+  if cboList.ItemIEN > 0 then
+  begin
+    if (not FDateRangeChanged) and
+      (cboList.ItemIEN =  StrToIntDef(Piece(FLastTopList, U, 2), -1)) then
+        exit;
+    FDateRangeChanged := False;
+    if FSrcType = TAG_SRC_PROV then
+    begin
+      if not CheckForSimilarName(cboList, aErrMsg, ltProvider, sPr) then
+        ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection')
+      else
+        FSetPtListTop(cboList.ItemIEN);
+    end else
+    begin
+      cboList.SelectByIEN(cboList.ItemIEN);
+      FSetPtListTop(cboList.ItemIEN);
+    end;
+  end;
 end;
 
 initialization

@@ -1,0 +1,52 @@
+package PKI_R10_3;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'PKI Runtime Library - 10.3'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  IndyCore,
+  IndySystem,
+  VAShared_R10_3,
+  XWB_R10_3;
+
+contains
+  fPKIPINPrompt in '..\..\Source\fPKIPINPrompt.pas' {frmPKIPINPrompt},
+  oPKIEncryption in '..\..\Source\oPKIEncryption.pas',
+  oPKIEncryptionCertificate in '..\..\Source\oPKIEncryptionCertificate.pas',
+  oPKIEncryptionData in '..\..\Source\oPKIEncryptionData.pas',
+  oPKIEncryptionDataDEAOrder in '..\..\Source\oPKIEncryptionDataDEAOrder.pas',
+  oPKIEncryptionEngine in '..\..\Source\oPKIEncryptionEngine.pas',
+  oPKIEncryptionEx in '..\..\Source\oPKIEncryptionEx.pas',
+  oPKIEncryptionSignature in '..\..\Source\oPKIEncryptionSignature.pas',
+  oPKIServiceEngine in '..\..\Source\oPKIServiceEngine.pas',
+  winSCard in '..\..\Source\winSCard.pas',
+  XlfMime in '..\..\Source\XlfMime.pas';
+
+end.

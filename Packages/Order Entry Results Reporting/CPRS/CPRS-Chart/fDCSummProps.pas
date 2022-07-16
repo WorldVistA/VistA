@@ -54,6 +54,7 @@ type
     procedure cboNewTitleChange(Sender: TObject);
     procedure lstAdmissionsSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     FCosignIEN: Int64; // store cosigner that was passed in
     FCosignName: string; // store cosigner that was passed in
@@ -75,8 +76,7 @@ type
     procedure SetCosignerRequired;
     procedure ShowAdmissionList;
     procedure UMDelayEvent(var Message: TMessage); message UM_DELAYEVENT;
-  public
-    { Public declarations }
+    function isValidInput: Boolean;
   end;
 
 function ExecuteDCSummProperties(var ASumm: TEditDCSummRec;
@@ -90,7 +90,7 @@ implementation
 {$R *.DFM}
 
 uses
-  VAUtils, ORFn, uCore, rCore, uPCE, rPCE, rMisc;
+  VAUtils, ORFn, uCore, rCore, uPCE, rPCE, rMisc, uSimilarNames;
 
 { Initial values in ASumm
 
@@ -176,7 +176,10 @@ begin
       FEditIEN := 0;
       cboAttending.InitLongList(ASumm.AttendingName);
       if ASumm.Attending > 0 then
+      begin
         cboAttending.SelectByIEN(ASumm.Attending);
+        TSimilarNames.RegORComboBox(cboAttending);
+      end;
       // restrict edit of title if addendum
       if FDocType = TYP_ADDENDUM then
       begin
@@ -431,6 +434,108 @@ begin
   FLastAuthor := cboAuthor.ItemIEN;
 end;
 
+function TfrmDCSummProperties.isValidInput: Boolean;
+var
+  ErrMsg, ItemText, WhyNot, spErrMsg: string;
+  aTitleIEN: Integer;
+begin
+  SetCosignerRequired;
+  ErrMsg := '';
+  if cboNewTitle.ItemIEN = 0 then
+    ErrMsg := ErrMsg + TX_REQ_TITLE
+  else if FIDNoteTitlesOnly and
+    (not CanTitleBeIDChild(cboNewTitle.ItemIEN, WhyNot)) then
+    ErrMsg := ErrMsg + CRLF + WhyNot;
+
+  if cboAuthor.ItemIEN = 0 then
+    ErrMsg := ErrMsg + TX_REQ_AUTHOR
+  else begin
+    if not CheckForSimilarName(cboAuthor, spErrMsg, ltPerson, sPr) then
+    begin
+      if trim(spErrMsg) = '' then
+        spErrMsg := TX_REQ_AUTHOR
+      else
+        spErrMsg := CRLF + spErrMsg;
+      ErrMsg := ErrMsg + CRLF + spErrMsg;
+     // cboAuthor .itemIndex := -1;
+    end;
+  end;
+
+  if not calSumm.IsValid then
+    ErrMsg := ErrMsg + TX_REQ_REFDATE;
+  if calSumm.IsValid and (calSumm.FMDateTime > FMNow) then
+    ErrMsg := ErrMsg + TX_NO_FUTURE;
+  if cboAttending.Visible then begin
+    if (cboAttending.ItemIEN = 0) then
+      ErrMsg := ErrMsg + TX_REQ_COSIGNER
+    else begin
+      aTitleIEN := cboNewTitle.ItemIEN;
+      if aTitleIEN = 0 then
+        aTitleIEN := FDocType;
+      if not CheckForSimilarName(cboAttending, spErrMsg, ltCosign, sPr, FloatToStr(FMToday), nil, aTitleIEN) then
+      begin
+        if trim(spErrMsg) = '' then
+          spErrMsg := TX_REQ_COSIGNER
+        else
+          spErrMsg := CRLF + spErrMsg;
+        ErrMsg := ErrMsg + CRLF + spErrMsg;
+      end;
+    end;
+  end;
+
+  // if cboAttending.ItemIEN = User.DUZ                      then ErrMsg := TX_COS_SELF;
+
+  // --------------------------------- REPLACED THIS BLOCK IN V27.37-----------------------------------------------
+  /// if (cboAttending.ItemIEN > 0) and not IsUserAProvider(cboAttending.ItemIEN, FMNow) then
+  // //if (cboAttending.ItemIEN > 0) and not CanCosign(cboNewTitle.ItemIEN, FDocType, cboAttending.ItemIEN) then
+  // ErrMsg := cboAttending.Text + TX_COS_AUTH;
+  // ------------------------------------ NEW CODE FOLLOWS --------------------------------------------------------
+  if (cboAttending.ItemIEN > 0) then
+    begin
+      if ((not IsUserAUSRProvider(cboAttending.ItemIEN, FMNow)) or
+        (not CanCosign(cboNewTitle.ItemIEN, FDocType, cboAttending.ItemIEN,
+        calSumm.FMDateTime)))
+      then
+        ErrMsg := ErrMsg + CRLF + cboAttending.Text + TX_COS_AUTH;
+    end;
+  // -----------------------------------END OF NEW REPLACEMENT CODE -----------------------------------------------
+
+  if pnlAdmission.Visible then
+    with lstAdmissions do
+    begin
+      if not Assigned(Selected) then
+        ErrMsg := ErrMsg + CRLF + TX_NO_ADMISSION
+      else
+      begin
+        ItemText:= Strings[Selected.Index];
+        if (Piece(ItemText, U, 7) = '1') then
+        begin
+          FVisitStr := Piece(ItemText, U, 2) + ';' +
+            Piece(ItemText, U, 1) + ';H';
+          if (OneNotePerVisit(cboNewTitle.ItemIEN, Patient.DFN, FVisitStr))
+          then
+          begin
+            FEditIEN := 0;
+            InfoBox(TX_NO_MORE_SUMMS, TC_NO_EDIT, MB_OK);
+            Selected := nil;
+          end;
+        end
+        else
+        begin
+          FAdmitDateTime := Piece(ItemText, U, 1);
+          FLocation := StrToIntDef(Piece(ItemText, U, 2), 0);
+          if (MakeFMDateTime(FAdmitDateTime) = -1) or (FLocation = 0) then
+            ErrMsg := ErrMsg + CRLF + TX_BAD_ADMISSION
+          else
+            FLocationName := ExternalName(FLocation, 44);
+        end;
+      end;
+    end;
+
+  Result := Length(ErrMsg) = 0;
+  ShowMsgOn(not Result, Trim(ErrMsg), TC_REQ_FIELDS);
+end;
+
 procedure TfrmDCSummProperties.cboAuthorExit(Sender: TObject);
 begin
   if cboAuthor.ItemIEN <> FLastAuthor then
@@ -601,7 +706,10 @@ begin
                 cboUrgency.SelectByID('R');
                 cboAttending.InitLongList(AnEditSumm.AttendingName);
                 if AnEditSumm.Attending > 0 then
+                begin
                   cboAttending.SelectByIEN(AnEditSumm.Attending);
+                  TSimilarNames.RegORComboBox(cboAttending);
+                end;
                 calSumm.FMDateTime := AnEditSumm.DictDateTime;
               end
               else // if user answers NO to edit existing document, can new one be created?
@@ -673,7 +781,10 @@ begin
   end;
   cboAttending.InitLongList(name);
   if index >= 0 then
+  begin
     cboAttending.SelectByIEN(IEN);
+    TSimilarNames.RegORComboBox(cboAttending);
+  end;
 end;
 
 procedure TfrmDCSummProperties.cboNewTitleDblClick(Sender: TObject);
@@ -687,5 +798,12 @@ begin
   SaveUserBounds(Self);
 end;
 
+procedure TfrmDCSummProperties.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+begin
+  inherited;
+  if ModalResult = mrOK then
+    CanClose := isValidInput;
+end;
 
 end.

@@ -58,7 +58,7 @@ procedure DialogOptionsCombinations(topvalue, leftvalue, fontsize: integer; var 
 
 implementation
 
-uses rOptions, rCore;
+uses rOptions, rCore, uSimilarNames;
 
 {$R *.DFM}
 
@@ -185,8 +185,17 @@ procedure TfrmOptionsCombinations.btnAddClick(Sender: TObject);
 var
   aListItem: TListItem;
   aCombination: TCombination;
-  valueien, valuename, valuesource: string;
+  valueien, valuename, valuesource, aErrMsg: string;
 begin
+  if radAddByType.ItemIndex = 2 then
+  begin
+    if not CheckForSimilarName(lstAddBy, aErrMsg, ltProvider, sPr, '') then
+    begin
+      ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Invalid Provider');
+      Exit;
+    end;
+  end;
+
   valuesource := radAddByType.Items[radAddByType.ItemIndex];
   if copy(valuesource, 1, 1) = '&' then
     valuesource := copy(valuesource, 2, length(valuesource) - 1);

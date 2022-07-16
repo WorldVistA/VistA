@@ -85,7 +85,7 @@ inherited frmAddlSigners: TfrmAddlSigners
         ItemHeight = 13
         ItemTipColor = clWindow
         ItemTipEnable = True
-        ListItemsOnly = True
+        ListItemsOnly = False
         LongList = True
         LookupPiece = 2
         MaxLength = 0
@@ -95,10 +95,11 @@ inherited frmAddlSigners: TfrmAddlSigners
         TabOrder = 0
         TabStop = True
         OnChange = cboSrcListChange
+        OnDblClick = btnAddSignersClick
         OnKeyDown = cboSrcListKeyDown
-        OnMouseClick = btnAddSignersClick
         OnNeedData = NewPersonNeedData
         CharsNeedMatch = 1
+        UniqueAutoComplete = True
       end
       object DstList: TORListBox
         Left = 266

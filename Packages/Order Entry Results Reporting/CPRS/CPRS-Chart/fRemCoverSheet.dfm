@@ -970,7 +970,10 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       Text = ''
       OnChange = cbxUserChange
       OnDropDownClose = cbxDropDownClose
+      OnEnter = cbxUserEnter
+      OnExit = cbxUserExit
       OnKeyDown = cbxDivisionKeyDown
+      OnMouseClick = cbxUserMouseClick
       OnNeedData = cbxUserNeedData
       CharsNeedMatch = 1
     end
@@ -1197,7 +1200,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         'Status = stsDefault')
       (
         'Component = cbxUser'
-        'Text = User:'
+        'Text = To select a user use the arrow keys, then press enter'
         'Status = stsOK')
       (
         'Component = cbxClass'

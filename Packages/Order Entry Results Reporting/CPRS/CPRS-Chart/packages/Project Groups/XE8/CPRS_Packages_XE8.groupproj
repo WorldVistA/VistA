@@ -1,0 +1,144 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{4B5EF8DE-93DC-49F2-9719-BB61D1E1495B}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\..\VA\Packages\XE8\VAShared_RXE8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Broker\Packages\XE8\XWB_RXE8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\PKI\Packages\XE8\PKI_RXE8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\ExceptionLogger\Packages\XE8\ExceptionLogger_RXE8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Borland\Packages\XE8\Borland_DXE8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Broker\Packages\XE8\XWB_DXE8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\508\Packages\XE8\VA508Access_DXE8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\OR\Packages\XE8\ORCtrls_DXE8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\CopyPaste\Packages\XE8\CopyPaste_DXE8.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\FilemanComponents\Packages\XE8\FMDC_DXE8.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="VAShared_RXE8">
+        <MSBuild Projects="..\..\VA\Packages\XE8\VAShared_RXE8.dproj"/>
+    </Target>
+    <Target Name="VAShared_RXE8:Clean">
+        <MSBuild Projects="..\..\VA\Packages\XE8\VAShared_RXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VAShared_RXE8:Make">
+        <MSBuild Projects="..\..\VA\Packages\XE8\VAShared_RXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="XWB_RXE8">
+        <MSBuild Projects="..\..\Broker\Packages\XE8\XWB_RXE8.dproj"/>
+    </Target>
+    <Target Name="XWB_RXE8:Clean">
+        <MSBuild Projects="..\..\Broker\Packages\XE8\XWB_RXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="XWB_RXE8:Make">
+        <MSBuild Projects="..\..\Broker\Packages\XE8\XWB_RXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PKI_RXE8">
+        <MSBuild Projects="..\..\PKI\Packages\XE8\PKI_RXE8.dproj"/>
+    </Target>
+    <Target Name="PKI_RXE8:Clean">
+        <MSBuild Projects="..\..\PKI\Packages\XE8\PKI_RXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PKI_RXE8:Make">
+        <MSBuild Projects="..\..\PKI\Packages\XE8\PKI_RXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExceptionLogger_RXE8">
+        <MSBuild Projects="..\..\ExceptionLogger\Packages\XE8\ExceptionLogger_RXE8.dproj"/>
+    </Target>
+    <Target Name="ExceptionLogger_RXE8:Clean">
+        <MSBuild Projects="..\..\ExceptionLogger\Packages\XE8\ExceptionLogger_RXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExceptionLogger_RXE8:Make">
+        <MSBuild Projects="..\..\ExceptionLogger\Packages\XE8\ExceptionLogger_RXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Borland_DXE8">
+        <MSBuild Projects="..\..\Borland\Packages\XE8\Borland_DXE8.dproj"/>
+    </Target>
+    <Target Name="Borland_DXE8:Clean">
+        <MSBuild Projects="..\..\Borland\Packages\XE8\Borland_DXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Borland_DXE8:Make">
+        <MSBuild Projects="..\..\Borland\Packages\XE8\Borland_DXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="XWB_DXE8">
+        <MSBuild Projects="..\..\Broker\Packages\XE8\XWB_DXE8.dproj"/>
+    </Target>
+    <Target Name="XWB_DXE8:Clean">
+        <MSBuild Projects="..\..\Broker\Packages\XE8\XWB_DXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="XWB_DXE8:Make">
+        <MSBuild Projects="..\..\Broker\Packages\XE8\XWB_DXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VA508Access_DXE8">
+        <MSBuild Projects="..\..\508\Packages\XE8\VA508Access_DXE8.dproj"/>
+    </Target>
+    <Target Name="VA508Access_DXE8:Clean">
+        <MSBuild Projects="..\..\508\Packages\XE8\VA508Access_DXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VA508Access_DXE8:Make">
+        <MSBuild Projects="..\..\508\Packages\XE8\VA508Access_DXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORCtrls_DXE8">
+        <MSBuild Projects="..\..\OR\Packages\XE8\ORCtrls_DXE8.dproj"/>
+    </Target>
+    <Target Name="ORCtrls_DXE8:Clean">
+        <MSBuild Projects="..\..\OR\Packages\XE8\ORCtrls_DXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORCtrls_DXE8:Make">
+        <MSBuild Projects="..\..\OR\Packages\XE8\ORCtrls_DXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CopyPaste_DXE8">
+        <MSBuild Projects="..\..\CopyPaste\Packages\XE8\CopyPaste_DXE8.dproj"/>
+    </Target>
+    <Target Name="CopyPaste_DXE8:Clean">
+        <MSBuild Projects="..\..\CopyPaste\Packages\XE8\CopyPaste_DXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CopyPaste_DXE8:Make">
+        <MSBuild Projects="..\..\CopyPaste\Packages\XE8\CopyPaste_DXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FMDC_DXE8">
+        <MSBuild Projects="..\..\FilemanComponents\Packages\XE8\FMDC_DXE8.dproj"/>
+    </Target>
+    <Target Name="FMDC_DXE8:Clean">
+        <MSBuild Projects="..\..\FilemanComponents\Packages\XE8\FMDC_DXE8.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FMDC_DXE8:Make">
+        <MSBuild Projects="..\..\FilemanComponents\Packages\XE8\FMDC_DXE8.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="VAShared_RXE8;XWB_RXE8;PKI_RXE8;ExceptionLogger_RXE8;Borland_DXE8;XWB_DXE8;VA508Access_DXE8;ORCtrls_DXE8;CopyPaste_DXE8;FMDC_DXE8"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="VAShared_RXE8:Clean;XWB_RXE8:Clean;PKI_RXE8:Clean;ExceptionLogger_RXE8:Clean;Borland_DXE8:Clean;XWB_DXE8:Clean;VA508Access_DXE8:Clean;ORCtrls_DXE8:Clean;CopyPaste_DXE8:Clean;FMDC_DXE8:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="VAShared_RXE8:Make;XWB_RXE8:Make;PKI_RXE8:Make;ExceptionLogger_RXE8:Make;Borland_DXE8:Make;XWB_DXE8:Make;VA508Access_DXE8:Make;ORCtrls_DXE8:Make;CopyPaste_DXE8:Make;FMDC_DXE8:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

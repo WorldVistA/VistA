@@ -52,7 +52,6 @@ uses ORFn, fFrame, uInit, VA508AccessibilityRouter, VAUtils;
 procedure TfrmPage.FormCreate(Sender: TObject);
 { set counters to 0 }
 begin
-  HelpFile := Application.HelpFile + '>' + HelpFile;
   FDisplayCount := 0;
   FPatientCount := 0;
   FOldEnter := OnEnter;

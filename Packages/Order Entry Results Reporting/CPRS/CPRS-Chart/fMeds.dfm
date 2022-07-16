@@ -820,6 +820,9 @@ inherited frmMeds: TfrmMeds
         Caption = 'R&efill...'
         OnClick = mnuActRefillClick
       end
+      object DocumentNonVAMeds1: TMenuItem
+        Action = actDocumentNonVAMeds
+      end
       object Z5: TMenuItem
         Caption = '-'
       end
@@ -860,6 +863,9 @@ inherited frmMeds: TfrmMeds
       Caption = 'Rene&w...'
       OnClick = mnuActRenewClick
     end
+    object DocumentNonVAMeds2: TMenuItem
+      Action = actDocumentNonVAMeds
+    end
     object N2: TMenuItem
       Caption = '-'
     end
@@ -871,6 +877,14 @@ inherited frmMeds: TfrmMeds
       Caption = 'Adjust Field Size'
       Visible = False
       OnClick = mnuOptimizeFieldsClick
+    end
+  end
+  object actlstMed: TActionList
+    Left = 248
+    Top = 146
+    object actDocumentNonVAMeds: TAction
+      Caption = 'Document Non-VA Meds'
+      OnExecute = actDocumentNonVAMedsExecute
     end
   end
 end

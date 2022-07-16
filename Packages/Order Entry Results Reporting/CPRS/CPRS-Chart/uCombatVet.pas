@@ -67,7 +67,7 @@ begin
   aLst := TStringList.Create;
   try
     CallVista('OR GET COMBAT VET', [FDFN], aLst);
-    FIsEligible := (aLst[0] <> 'NOTCV');
+    FIsEligible := (aLst.Count > 4) and (aLst[0] <> 'NOTCV');
     ClearProperties;
     if FIsEligible then
       begin

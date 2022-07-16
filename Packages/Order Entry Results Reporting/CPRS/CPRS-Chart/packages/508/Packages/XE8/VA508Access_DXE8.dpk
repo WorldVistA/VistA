@@ -1,0 +1,63 @@
+package VA508Access_DXE8;
+
+{$R *.res}
+{$R '..\..\Source\VA508AccessibilityManager.dcr'}
+{$R '..\..\Source\VA508ImageListLabeler.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$DEFINE DEBUG_ACCESSIBILITY_MANAGER}
+{$DEFINE DEBUG_ACCESSIBILITY_MANAGER}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'VA Section 508 Accessibility - XE8'}
+{$DESIGNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  designide,
+  vcldb,
+  VclSmp,
+  rtl,
+  VAShared_RXE8;
+
+contains
+  VA508AccessibilityCompiler in '..\..\Source\VA508AccessibilityCompiler.pas',
+  VA508AccessibilityPE in '..\..\Source\VA508AccessibilityPE.pas',
+  VA508AccessibilityCompileInfo in '..\..\Source\VA508AccessibilityCompileInfo.pas' {frmProgress},
+  VA508Classes in '..\..\Source\VA508Classes.pas',
+  VA508AccessibilityManager in '..\..\Source\VA508AccessibilityManager.pas',
+  VA508ScreenReaderDLLLinker in '..\..\Source\VA508ScreenReaderDLLLinker.pas',
+  VA508DelphiCompatibility in '..\..\Source\VA508DelphiCompatibility.pas',
+  VA508ImageListLabelerPE in '..\..\Source\VA508ImageListLabelerPE.pas' {frmImageListEditor},
+  VA508ImageListLabeler in '..\..\Source\VA508ImageListLabeler.pas',
+  VA508AccessibilityConst in '..\..\Source\VA508AccessibilityConst.pas',
+  VA508MSAASupport in '..\..\Source\VA508MSAASupport.pas',
+  MSAAConstants in '..\..\Source\MSAAConstants.pas',
+  oleacc2 in '..\..\Source\oleacc2.pas',
+  VA508AccessibilityRouter in '..\..\Source\VA508AccessibilityRouter.pas',
+  VA508AccessibilityManagerEditor in '..\..\Source\VA508AccessibilityManagerEditor.pas' {va508CollectionEditor};
+
+//  ToolWnds in 'C:\Program Files\Borland\Delphi 2006\..\..\Source\ToolsAPI\ToolWnds.pas';
+
+end.

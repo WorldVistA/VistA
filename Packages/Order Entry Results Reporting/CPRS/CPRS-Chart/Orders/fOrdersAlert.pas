@@ -19,7 +19,7 @@ type
     procedure cmdCancelClick(Sender: TObject);
     procedure cboAlertRecipientNeedData(Sender: TObject; const StartFrom: String; Direction, InsertAt: Integer);
     procedure cboOnExit(Sender: TObject);
-
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
     OKPressed: Boolean;
   end;
@@ -30,7 +30,7 @@ implementation
 
 {$R *.DFM}
 
-uses rOrders, uCore, rCore, VAUtils;
+uses rOrders, uCore, rCore, VAUtils, uSimilarNames;
 
 var
     AlertRecip: Int64;
@@ -73,6 +73,25 @@ begin
   OKPressed := False;
   cboAlertRecipient.InitLongList(Provider);
   cboAlertRecipient.SelectByIEN(AlertRecip);
+  TSimilarNames.RegORComboBox(cboAlertRecipient);
+end;
+
+procedure TfrmAlertOrders.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+var
+  ErrMsg: String;
+begin
+  inherited;
+  // if ModalResult = mrCancel then exit; // ModaResult isn't set n this form
+  if OKPressed then
+  begin
+    if not CheckForSimilarName(cboAlertRecipient, ErrMsg, ltPerson, sPr) then
+    begin
+      ShowMsgOn(ErrMsg <> '', ErrMsg, 'Validation Error');
+      CanClose := False;
+      OKPressed := False;
+    end;
+  end;
 end;
 
 procedure TfrmAlertOrders.cmdOKClick(Sender: TObject);

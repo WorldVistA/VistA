@@ -4,7 +4,8 @@ interface
 
 uses
   Forms, SysUtils, Classes, Dialogs, StdCtrls, ExtCtrls, Controls, Contnrs,
-  Graphics, ORClasses, ComCtrls, ORDtTm, uDlgComponents, TypInfo, ORFn, StrUtils, uConst;
+  Graphics, ORClasses, ComCtrls, ORDtTm, uDlgComponents, TypInfo, ORFn, StrUtils,
+  rOptions, uConst;
 
 type
   TTemplateFieldType = (dftUnknown, dftEditBox, dftComboBox, dftButton, dftCheckBoxes,
@@ -56,6 +57,7 @@ type
                             var FoundEntry: boolean; AutoWrap: boolean;
                             emField: string = ''; CrntLnTxt: String = '';  AutoWrapIndent:Integer = 0;
                             NoFormat: Boolean = false): string;
+    function GetControl(CtrlID: integer): TControl; // NSR20100706 AA 2015/10/09
     procedure SetControlText(CtrlID: integer; AText: string);
   public
     constructor Create(AParent: TWinControl; AID, Text: string);
@@ -126,6 +128,7 @@ type
     function Width: integer;
     function GetRequired: boolean;
     procedure SetDateType(const Value: TTmplFldDateType);
+    function GetTIUParam: Integer;
   public
     constructor Create(AData: TStrings);
     destructor Destroy; override;
@@ -155,6 +158,7 @@ type
     property Notes: string read FNotes write SetNotes;
     property TemplateFieldDefault: string read GetTemplateFieldDefault;
     property CommunityCare: boolean read FCommunityCare;
+    property TIUParam: Integer read GetTIUParam; // 20100706 - VISTAOR-24208 FH 2021/02/12
   end;
 
   TIntStruc = class(TObject)
@@ -183,6 +187,7 @@ function StripEmbedded(iItems: string): string;
 procedure StripScreenReaderCodes(var Text: string); overload;
 procedure StripScreenReaderCodes(SL: TStrings); overload;
 function HasScreenReaderBreakCodes(SL: TStrings): boolean;
+function getUTmplFlds: TList;// NSR20100706 AA 2010/10/09
 
 Function RightTrimChars(Str: String; TrimChars: TSysCharSet): String;
 function SafeWrapText(const Line, BreakStr: string;
@@ -288,9 +293,8 @@ implementation
 
 uses
   rTemplates, ORCtrls, mTemplateFieldButton, dShared, uCore, rCore, Windows,
-  VAUtils, VA508AccessibilityManager, VA508AccessibilityRouter, System.UITypes, System.Types, system.Math,
-  uTemplates;
-
+  VAUtils, VA508AccessibilityManager, VA508AccessibilityRouter, System.UITypes, System.Types,
+  fTemplateDialog, dRequiredFields, system.Math, uTemplates;
 
 const
   NewTemplateField = 'NEW TEMPLATE FIELD';
@@ -312,6 +316,11 @@ const
   FieldIDDelim = '`';
   FieldIDLen = 6;
   NewLine = 'NL';
+
+function getUTmplFlds:TList;   // - access to template fields NSR20100706 AA 2015/10/07
+begin
+  Result := uTmplFlds;
+end;
 
 function GetNewFieldID: string;
 begin
@@ -627,7 +636,7 @@ begin
           begin
             NewTxt := Entry.GetControlText(CtrlID, TRUE, FoundEntry, FALSE);
             if FoundEntry and (NewTxt = '') then{(Trim(NewTxt) = '') then //CODE ADDED BACK IN - ZZZZZZBELLC}
-              Result := TRUE;
+              Result := True;
           end;
           if FoundEntry then break;
         end;
@@ -1101,6 +1110,11 @@ begin
     end;
 end;
 
+function TTemplateField.GetTIUParam: Integer;
+begin
+  result := StrToIntDef(systemParameters.StringValue['tmRequiredFldsOff'], 1);
+end;
+
 procedure TTemplateField.CreateDialogControls(Entry: TTemplateDialogEntry;
                                      var Index: Integer; CtrlID: integer);
 
@@ -1255,6 +1269,10 @@ begin
               UpdateColorsFor508Compliance(cb);
               inc(Index);
               Entry.FControls.InsertObject(Index, '', cb);
+
+              if TIUParam = 0 then // 20100706 - VISTAOR-24208 FH 2021/02/12
+                dmRF.AddFieldControl(self,cb,IntToStr(ctrlID)); // NSR20100706 AA 2015/10/09. Adding Fld.FID to track Fld by control
+
               if (i=0) or FSepLines then
                 UpdateIndents(cb);
             end;
@@ -1391,6 +1409,10 @@ begin
     begin
       inc(Index);
       Entry.FControls.InsertObject(Index, '', ctrl);
+
+      if TIUParam = 0 then // 20100706 - VISTAOR-24208 FH 2021/02/12
+        dmRF.addFieldControl(self,TWinControl(ctrl),IntToStr(ctrlID)); // NSR20100706  AA 2015/10/09 adding Fld.FID to track Fld by control
+
       UpdateIndents(ctrl);
     end;
   end;
@@ -2679,6 +2701,25 @@ begin
   end;
   Result := FALSE;
 end;
+
+// NSR20100706 AA 20150706 ----------------------------------------------- begin
+function TTemplateDialogEntry.GetControl(CtrlID: integer): TControl;
+Var
+ I: Integer;
+ Ctrl: TControl;
+begin
+ Result := nil;
+ for i := 0 to FControls.Count-1 do
+  begin
+    Ctrl := TControl(FControls.Objects[i]);
+    if(assigned(Ctrl)) and (Ctrl.Tag = CtrlID) then
+    begin
+      Result := Ctrl;
+      break;
+    end;
+  end;
+end;
+// NSR20100706 AA 20150706 ------------------------------------------------- end
 
 Function RightTrimChars(Str: String; TrimChars: TSysCharSet): String;
 var

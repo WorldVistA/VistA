@@ -5,9 +5,8 @@ inherited frmDCOrders: TfrmDCOrders
   ClientHeight = 289
   ClientWidth = 425
   Position = poScreenCenter
-  OnCreate = FormCreate
-  ExplicitWidth = 539
-  ExplicitHeight = 394
+  ExplicitWidth = 441
+  ExplicitHeight = 328
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]

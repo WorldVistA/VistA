@@ -7,12 +7,11 @@ inherited frmODMeds: TfrmODMeds
   Caption = 'Medication Order'
   Constraints.MinHeight = 325
   Constraints.MinWidth = 500
-  OnShow = FormShow
   ExplicitWidth = 535
   ExplicitHeight = 687
   DesignSize = (
     519
-    649)
+    648)
   PixelsPerInch = 96
   TextHeight = 13
   object pnlMeds: TPanel [0]
@@ -23,8 +22,6 @@ inherited frmODMeds: TfrmODMeds
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     TabOrder = 6
-    ExplicitWidth = 506
-    ExplicitHeight = 623
     object sptSelect: TSplitter
       Left = 0
       Top = 133
@@ -66,7 +63,7 @@ inherited frmODMeds: TfrmODMeds
       OnResize = ListViewResize
       AutoSize = False
       Caption = 'Quick Orders'
-      ExplicitWidth = 506
+      HideTinyColumns = False
     end
     object lstAll: TCaptionListView
       Left = 0
@@ -100,22 +97,17 @@ inherited frmODMeds: TfrmODMeds
       OnResize = ListViewResize
       AutoSize = False
       Caption = 'All Medication orders'
-      ExplicitWidth = 506
-      ExplicitHeight = 486
+      HideTinyColumns = False
     end
   end
   inherited memOrder: TCaptionMemo
     Tag = 13
     Top = 659
     Width = 450
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 3
-    ExplicitTop = 657
-    ExplicitWidth = 427
+    ExplicitTop = 659
+    ExplicitWidth = 450
   end
   object txtMed: TEdit [2]
     Left = 1
@@ -130,7 +122,6 @@ inherited frmODMeds: TfrmODMeds
     OnExit = txtMedExit
     OnKeyDown = txtMedKeyDown
     OnKeyUp = txtMedKeyUp
-    ExplicitWidth = 506
   end
   object btnSelect: TButton [3]
     Left = 463
@@ -143,8 +134,6 @@ inherited frmODMeds: TfrmODMeds
     Enabled = False
     TabOrder = 5
     OnClick = btnSelectClick
-    ExplicitLeft = 440
-    ExplicitTop = 657
   end
   object pnlFields: TPanel [4]
     Left = 1
@@ -158,8 +147,6 @@ inherited frmODMeds: TfrmODMeds
     TabOrder = 2
     Visible = False
     OnResize = pnlFieldsResize
-    ExplicitWidth = 510
-    ExplicitHeight = 605
     object pnlTop: TPanel
       Left = 0
       Top = 0
@@ -169,8 +156,6 @@ inherited frmODMeds: TfrmODMeds
       Constraints.MinHeight = 80
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 510
-      ExplicitHeight = 350
       DesignSize = (
         533
         334)
@@ -233,8 +218,6 @@ inherited frmODMeds: TfrmODMeds
         OnMouseUp = grdDosesMouseUp
         Caption = 'Complex Dosage'
         JustToTab = True
-        ExplicitWidth = 509
-        ExplicitHeight = 299
         ColWidths = (
           76
           76
@@ -309,8 +292,6 @@ inherited frmODMeds: TfrmODMeds
         OnKeyUp = cboDosageKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
-        ExplicitWidth = 208
-        ExplicitHeight = 310
       end
       object cboRoute: TORComboBox
         Left = 232
@@ -343,8 +324,6 @@ inherited frmODMeds: TfrmODMeds
         OnKeyUp = cboRouteKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
-        ExplicitLeft = 209
-        ExplicitHeight = 310
       end
       object cboSchedule: TORComboBox
         Left = 347
@@ -376,8 +355,6 @@ inherited frmODMeds: TfrmODMeds
         OnKeyUp = cboScheduleKeyUp
         CharsNeedMatch = 1
         UniqueAutoComplete = True
-        ExplicitLeft = 324
-        ExplicitHeight = 310
       end
       object chkPRN: TCheckBox
         Left = 482
@@ -390,7 +367,6 @@ inherited frmODMeds: TfrmODMeds
         ParentColor = False
         TabOrder = 8
         OnClick = chkPRNClick
-        ExplicitLeft = 459
       end
       object btnXInsert: TButton
         Left = 352
@@ -403,7 +379,6 @@ inherited frmODMeds: TfrmODMeds
         ShowHint = True
         TabOrder = 1
         OnClick = btnXInsertClick
-        ExplicitLeft = 329
       end
       object btnXRemove: TButton
         Left = 437
@@ -416,7 +391,6 @@ inherited frmODMeds: TfrmODMeds
         ShowHint = True
         TabOrder = 2
         OnClick = btnXRemoveClick
-        ExplicitLeft = 414
       end
       object pnlXAdminTime: TPanel
         Left = 432
@@ -626,8 +600,6 @@ inherited frmODMeds: TfrmODMeds
       Align = alBottom
       ParentBackground = False
       TabOrder = 6
-      ExplicitTop = 325
-      ExplicitWidth = 510
       DesignSize = (
         533
         273)
@@ -700,7 +672,6 @@ inherited frmODMeds: TfrmODMeds
         OnChange = ControlChange
         OnClick = memCommentClick
         Caption = 'Comments'
-        ExplicitWidth = 442
       end
       object lblQtyMsg: TStaticText
         Left = 4
@@ -834,7 +805,6 @@ inherited frmODMeds: TfrmODMeds
         OnChange = ControlChange
         OnKeyUp = cboPriorityKeyUp
         CharsNeedMatch = 1
-        ExplicitLeft = 432
       end
       object stcPI: TStaticText
         Left = 2
@@ -881,7 +851,6 @@ inherited frmODMeds: TfrmODMeds
         Visible = False
         OnClick = memPIClick
         OnKeyDown = memPIKeyDown
-        ExplicitWidth = 476
       end
       object memDrugMsg: TMemo
         Left = 37
@@ -894,8 +863,6 @@ inherited frmODMeds: TfrmODMeds
         ScrollBars = ssVertical
         TabOrder = 20
         Visible = False
-        ExplicitTop = 202
-        ExplicitWidth = 462
       end
       object lblAdminSch: TMemo
         Left = 344
@@ -910,7 +877,6 @@ inherited frmODMeds: TfrmODMeds
         ShowHint = True
         TabOrder = 16
         Visible = False
-        ExplicitWidth = 0
       end
       object lblAdminTime: TVA508StaticText
         Name = 'lblAdminTime'
@@ -961,55 +927,35 @@ inherited frmODMeds: TfrmODMeds
   inherited cmdAccept: TButton
     Left = 462
     Top = 659
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     TabOrder = 4
     TabStop = False
     Visible = False
-    ExplicitLeft = 439
-    ExplicitTop = 657
+    ExplicitLeft = 462
+    ExplicitTop = 659
   end
   inherited cmdQuit: TButton
     Left = 462
     Top = 685
     Width = 51
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Anchors = [akRight, akBottom]
     TabOrder = 8
-    ExplicitLeft = 439
-    ExplicitTop = 683
+    ExplicitLeft = 462
+    ExplicitTop = 685
     ExplicitWidth = 51
   end
   inherited pnlMessage: TPanel
     Left = 31
     Top = 200
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     TabOrder = 1
     OnEnter = pnlMessageEnter
     ExplicitLeft = 31
     ExplicitTop = 200
     inherited imgMessage: TImage
       Left = 2
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       ExplicitLeft = 2
     end
     inherited memMessage: TRichEdit
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       OnKeyDown = memMessageKeyDown
     end
   end

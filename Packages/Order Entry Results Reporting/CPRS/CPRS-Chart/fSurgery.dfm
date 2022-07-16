@@ -7,7 +7,6 @@ inherited frmSurgery: TfrmSurgery
   ClientWidth = 832
   HelpFile = 'overvw'
   Menu = mnuNotes
-  OnDestroy = FormDestroy
   ExplicitWidth = 848
   ExplicitHeight = 551
   PixelsPerInch = 96

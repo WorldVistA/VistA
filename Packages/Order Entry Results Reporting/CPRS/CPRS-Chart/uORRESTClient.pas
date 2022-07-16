@@ -23,6 +23,7 @@ type
   public
     function Post(AURI: string; APayload: string): string; overload;
     function Post(APayload: string): string; overload;
+    function Get(anID: String): string;
     constructor Create;
     destructor Destroy; override;
 
@@ -60,6 +61,38 @@ begin
   FreeAndNil(FRequest);
   FreeAndNil(FClient);
   inherited;
+end;
+
+function TORRESTClient.Get(anID: string): string;
+var
+  ClientStream: TStringStream;
+  AResponse: IHTTPResponse;
+  StatusText: string;
+begin
+  ClientStream := TStringStream.Create();
+  try
+    try
+
+      AResponse := FRequest.Get(FServer + FPath + anID, ClientStream,
+        [FHeader, FAPIKey]);
+
+    except
+      on E: Exception do
+        raise TORRESTException.Create(E.Message);
+    end;
+
+    result := AResponse.ContentAsString();
+
+    StatusText := AResponse.StatusText;
+    if AResponse.StatusCode > 399 then
+      raise TORRESTException.Create('Status Code: ' +
+        IntToStr(AResponse.StatusCode) + #13#10 + AResponse.StatusText + #13#10
+        + result);
+  finally
+    addLogLine(anID + #13#10 + result, '--DST GET--');
+    FreeAndNil(ClientStream);
+
+  end;
 end;
 
 function TORRESTClient.Post(APayload: string): string;

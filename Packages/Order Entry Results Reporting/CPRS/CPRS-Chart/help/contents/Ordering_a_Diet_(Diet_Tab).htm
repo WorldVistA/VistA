@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="Adobe RoboHelp 2020" />
+  <title>Ordering a Diet (Diet Tab)</title>
+  <link rel="StyleSheet" href="assets/css/CPRS.css" type="text/css" />
+  <meta name="rh-index-keywords" content="Additional:diet order,Diets,Early/late trays,isolations/precautions,Orders,Orders:diet,Tools | Options:order checks inactivating non-mandatory,tubefeeding" />
+</head>
+<body>
+  <h1>
+    <font color="#3366FF" size="4" style="font-size: 14pt;">Ordering a Diet</font>
+  </h1>
+  <p style="font-size: 12pt;">You can place several different types of diet orders from the Orders tab, including regular diet orders, tubefeeding orders, early/late tray orders, isolations/precautions orders, and additional orders.</p>
+  <h3>Prevent Previous Active Diet Replacing NPO Order Upon Expire, Discontinue, or Cancel</h3>
+  <p class="MsoBodyText" style="font-size: 12pt;">The dietetics ordering functionality has been modified in order to prevent previous active diet orders replacing Nothing Permitted Orally (NPO) orders upon expiration, DC, or cancellation. The following changes have been made:</p>
+  <p class="MsoBodyText" style="font-size: 12pt;"> </p>
+  <p class="MsoBodyText" style="font-size: 12pt; margin-left: 24px;">and the NPO diet remains intact.</p>
+  <p class="MsoBodyText" style="font-size: 12pt;"> </p>
+  <ol style="list-style: decimal;">
+    <li style="font-family: &#39;Times New Roman&#39;, serif; font-size: 12pt;">
+      <p class="BodyTextLettered2" style="mso-list: l1 level1 lfo1; font-size: 12pt;">The NPO orderable item will be added to the Auto-DC Rules with the CPRS v31b installation. With this change, the auto-DC rules will prevent the discontinuation of the NPO diet orders for the following event types:</p>
+      <ul style="list-style: disc;">
+        <li>
+          <p class="BodyTextBullet1" style="mso-list: l2 level2 lfo2; 
+				 tab-stops: list 1.0in; font-size: 12pt; margin-left: 0px;">Specialty transfer (S)</p>
+        </li>
+        <li>
+          <p class="BodyTextBullet1" style="mso-list: l2 level2 lfo2; 
+				 tab-stops: list 1.0in; font-size: 12pt; margin-left: 0px;">OR (O)</p>
+        </li>
+        <li>
+          <p class="BodyTextBullet1" style="mso-list: l2 level2 lfo2; 
+				 tab-stops: list 1.0in; font-size: 12pt; margin-left: 0px;">Transfer (T)</p>
+        </li>
+      </ul>
+    </li>
+    <li style="font-family: &#39;Times New Roman&#39;, serif; font-size: 12pt;">
+      <p class="BodyTextLettered2" style="mso-list: l1 level1 lfo1; font-size: 12pt;">When NPO diet orders are attempted to be manually discontinued,CPRS prevents that action from being taken and displays the dialog box to the user with text “NPO Diet cannot be discontinued”.</p>
+    </li>
+    <li style="font-family: &#39;Times New Roman&#39;, serif; font-size: 12pt;">
+      <p class="BodyTextLettered2" style="mso-list: l1 level1 lfo1; font-size: 12pt;">CPRS disallows all diet orders to have an Expiration Date/Time when ordered and prevent automatic reinstatement of a previous diet. If a new diet order is desired, a new diet must be ordered to replace the active diet order.</p>
+    </li>
+    <li style="font-family: &#39;Times New Roman&#39;, serif; font-size: 12pt;">
+      <p class="BodyTextLettered2" style="mso-list: l1 level1 lfo1; font-size: 12pt;">When ordering NPO, if a patient is currently on tube-feeding, the provider is displayed the dialog box “The patient<span style="mso-spacerun: yes;"> </span> currently has an active tubefeeding order &lt;display the current tube-feeding order here&gt;“.</p>
+    </li>
+    <li style="font-family: &#39;Times New Roman&#39;, serif; font-size: 12pt;">
+      <p class="BodyTextLettered2" style="mso-list: l1 level1 lfo1; font-size: 12pt;">The Cancel Future Order Prompt from the tubefeeding order dialog has been removed. A conversion routine has been created to remove the prompt from any Quick Order. Additionally, Quick Orders will no longer allow the features of Auto Accept or Verify.</p>
+    </li>
+    <li style="font-family: &#39;Times New Roman&#39;, serif; font-size: 12pt;">
+      <p class="BodyTextLettered2" style="mso-list: l1 level1 lfo1; font-size: 12pt;">Accepting a tubefeeding order will prompt one of two different messages depending on the current diet status of the patient. If there is no existing order, the user will be prompted to enter a new diet order. If an existing diet order is present, the user will be prompted to keep the current diet or enter a new diet order.</p>
+    </li>
+  </ol>
+  <h3 style="margin-left: 0px;"><span style="mso-bookmark: _Hlk3371617;">How Discharge Affects Diet Orders</span></h3>
+  <p style="mso-bookmark: _Hlk3371617; font-size: 12pt;">The Nutrition and Food Service (N&amp;FS) VistA package manages all diet-related order processing. The auto-discontinue process cannot discontinue active diet orders.</p>
+  <p style="mso-bookmark: _Hlk3371617; font-size: 12pt;">If the diet is to be replaced, then a new diet should be ordered.<span style="mso-spacerun: yes;"> </span></p>
+  <p style="font-size: 12pt;">Also, the rules for auto-discontinuing (auto-dc) orders can be affected by how different VistA packages handle discontinuing and how the package communicates with CPRS. Depending on the set up and parameters, the results may be different that a user might expect.</p>
+  <p class="CPRSH3Note" style="mso-bookmark: _Hlk3371617; font-size: 11pt; 
+	 margin-left: 96px; text-indent: -60px;"><span style="mso-spacerun: yes;"> </span><b>Note:</b><span style="mso-tab-count: 1;">    </span> If discharging/readmitting patients the Nutrition &amp; Food Service package will auto-dc diet orders upon discharge. Plan to print diet lists pre-discharge so that patient’s current diet and standing orders can be manually re-entered/re-ordered upon admission.</p>
+  <p style="margin-bottom: 6.00pt; color: #010100;"> </p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-top: 6.00pt; margin-bottom: 0.00pt; border-bottom: 0.75pt solid #000000;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">Related Topics</font>
+  </p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Ordering_Regular_Diet_Orders.htm">
+      <font size="2" style="font-size: 10pt;">Regular Diet Orders</font>
+    </a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Tubefeeding_Diet_Order.htm">
+      <font size="2" style="font-size: 10pt;">Tubefeeding Diet Order</font>
+    </a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Ordering_Early___Late_Tray_Diet_Order.htm">
+      <font size="2" style="font-size: 10pt;">Early / Late Tray Orders</font>
+    </a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Isolations___Precautions_Order.htm">
+      <font size="2" style="font-size: 10pt;">Isolations / Precautions Order</font>
+    </a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Additional_Diet_Order.htm">
+      <font size="2" style="font-size: 10pt;">Additional Diet Order</font>
+    </a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="How_to_Write_Orders.htm">
+      <font size="2" style="font-size: 10pt;">Writing Orders (o</font>
+      <font size="2" style="font-size: 10pt;">verview)</font>
+    </a></p>
+</body>
+</html>

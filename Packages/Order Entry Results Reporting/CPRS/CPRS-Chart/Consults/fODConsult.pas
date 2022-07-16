@@ -11,7 +11,7 @@ uses
   UBAGlobals, rOrders,
   fBALocalDiagnoses, UBAConst, UBACore,
   ORNet,
-  ORDtTm, VA508AccessibilityManager, System.Actions, Vcl.ActnList, mDSTMgr ;
+  ORDtTm, VA508AccessibilityManager, System.Actions, Vcl.ActnList, oDST;
 
 type
   TfrmODCslt = class(TfrmODBase)
@@ -54,12 +54,13 @@ type
     txtCombatVet: TVA508StaticText;
     servicelbl508: TVA508StaticText;
     grdDstControls: TGridPanel;
-    lblDstStatus: TVA508StaticText;
     pnlBaseMessage: TPanel;
     pnlBaseAccept: TPanel;
     pnlBaseCancel: TPanel;
+    pnlDSTStatus: TPanel;
     pnlDST: TPanel;
-    DstMgr: TfrDSTMgr;
+    btnLaunchToolbox: TButton;
+    stOpenConsultToolboxDisabled: TStaticText;
     procedure FormCreate(Sender: TObject);
     procedure txtAttnNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -110,6 +111,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure DstMgrbtnLaunchToolboxClick(Sender: TObject);
     procedure calClinicallyIndicatedExit(Sender: TObject);
+    procedure btnLaunchToolboxClick(Sender: TObject);
 
   private
     FcboServiceKeyDownStopClick : boolean;
@@ -141,6 +143,7 @@ type
     procedure Validate(var AnErrMsg: string); override;
     procedure ValidateDst(var AnErrMsg: string);
     function DefaultReasonForRequest(Service: string; Resolve: Boolean): TStrings;
+    procedure SetDSTAction(anAction: Integer);
 
   public
     function getMinHeight:Integer;
@@ -167,7 +170,7 @@ uses
     rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, fPreReq,
     ORClasses, clipbrd, uTemplates, fFrame, uODBase, uVA508CPRSCompatibility,
     VA508AccessibilityRouter, VAUtils,
-    uSizing, uDstConst, oDst;
+    uSizing, uDstConst, uSimilarNames;
 
 var
   SvcList, QuickList, Defaults: TStrings ;
@@ -201,7 +204,8 @@ const
   TX_VIEW_SVC_HRCHY = 'View services/specialties hierarchically';
   TX_CLOSE_SVC_HRCHY = 'Close services/specialties hierarchy tree view';
 
-  TX_DST_UNAVAIL = 'Decision Support Tool is not available.' + #13#10 + 'Try again later.';
+//  TX_DST_UNAVAIL = 'Decision Support Tool is not available.' + #13#10 + 'Try again later.';
+//  TX_DST_UNAVAIL = 'Consult Toolbox is not available.' + #13#10 + 'Try again later.';
 //  TX_NLTD_SI_URG = 'No later than date is required when using the Special Instructions urgency.';
 
 const
@@ -251,10 +255,9 @@ end;
 
 procedure TfrmODCslt.FormCreate(Sender: TObject);
 begin
-  InitDst;
-  DstMgr.DstInit(DST_CASE_CONSULT_OD);
+  GetDstMgr(DST_CASE_CONSULT_OD);
 {$IFDEF DEBUG}
-  DstMgr.Color := clCream;
+  pnlDst.Color := clCream;
 {$ENDIF}
   frmFrame.pnlVisit.Enabled := false;
   AutoSizeDisabled := true;
@@ -356,6 +359,8 @@ procedure TfrmODCslt.InitDialog;
 //  i : integer;
 begin
   inherited;
+  GetDstMgr(DST_CASE_CONSULT_OD); //obj is destroyed in cmdAcceptClick
+  //instantiate again here b/c cons order dlg can persist for subsequent orders
   Changing := True;
   FLastServiceID := '';
   QuickList.Clear;
@@ -390,7 +395,7 @@ begin
         begin
           if cboUrgency.DisplayText[i]='SPECIAL INSTRUCTIONS' then siUrgency := cboUrgency.Items.Strings[i];
         end;
-}        
+}
     end ;
   end ;
   StatusText('Initializing Long List');
@@ -408,7 +413,7 @@ begin
   Changing := False;
   StatusText('');
   isProsSvc := False;
-  lblDstStatus.Caption := '';
+  pnlDstStatus.Caption := '';
   //call status update to reset button state for subsequent orders
   DstStatusUpdate;
 end;
@@ -515,7 +520,7 @@ begin
                   tmpResp := TResponse(FindResponseByName('DSTDECSN',1));
                   if tmpResp <> nil then
                     begin
-                      lblDstStatus.Caption := tmpResp.EValue;
+                      pnlDstStatus.Caption := tmpResp.EValue;
                     end;
                 end;
              end;
@@ -523,9 +528,9 @@ begin
       SetControl(cboUrgency,    'URGENCY',   1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
+      TSimilarNames.RegORComboBox(txtAttn);
       SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
-
-      if DstMgr.DSTMode <> DST_OTH then
+      if getDstMgr.DSTMode <> DST_OTH then
       begin
         SetControl(calLatest, 'NLTD', 1);
         tmpResp := TResponse(FindResponseByName('NLTD',1));
@@ -537,8 +542,13 @@ begin
           calLatest.Visible := True;
         end;
       end;
-      DstMgr.DSTMode := DstMgr.DSTMode;
+      btnLaunchToolbox.Caption := getDstMgr.DSTCaption;
+      btnLaunchToolbox.Visible := (getDstMgr.DSTBtnVisible and DstPro.DstParameters.FOrderConsult);
       DoSetFontSize;
+      if cboService.ItemIEN > 0 then
+        isProsSvc := IsProstheticsService(cboService.ItemIEN)
+      else
+        isProsSvc := False;
       SetUpClinicallyIndicatedDate;   //wat v28
       cboService.Enabled := False;
       setup508Label(servicelbl508, cboService);
@@ -629,7 +639,8 @@ begin
       PreserveControl(treService);
       PreserveControl(cboService);
 
-      DstMgr.DSTMode := DstMgr.DSTMode;
+      btnLaunchToolbox.Caption := GetDstMgr.DSTCaption;
+      btnLaunchToolbox.Visible := (GetDstMgr.DSTBtnVisible and DstPro.DstParameters.FOrderConsult);
       DoSetFontSize;
     end;
   finally
@@ -645,6 +656,8 @@ procedure TfrmODCslt.Validate(var AnErrMsg: string);
     AnErrMsg := AnErrMsg + x;
   end;
 
+var
+  ErrMsg: String;
 begin
   inherited;
   if (not ContainsVisibleChar(memReason.Text)) then SetError(TX_NO_REASON);
@@ -667,9 +680,16 @@ begin
         SetError(TX_SELECT_DIAG);
     end;
   if (lblClinicallyIndicated.Enabled) and (calClinicallyIndicated.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
-  if (calLatest.Enabled) and (calLatest.FMDateTime < calClinicallyIndicated.FMDateTime) then SetError(TX_NLTD_GREATER + TX_NLTD_GREATER1);
+//  if (calLatest.Enabled) and (calLatest.FMDateTime < calClinicallyIndicated.FMDateTime) then SetError(TX_NLTD_GREATER + TX_NLTD_GREATER1);
 //  if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and (calLatest.FMDateTime = 0) then SetError(TX_NLTD_SI_URG);
 
+  if not CheckForSimilarName(txtAttn, ErrMsg, ltPerson, sPr) then
+  begin
+    if ErrMsg <> '' then
+      SetError(ErrMsg);
+  end;
+
+  AnErrMsg := Trim(AnErrMsg);
 end;
 
 procedure TfrmODCslt.ValidateDst(var AnErrMsg: string);
@@ -864,6 +884,7 @@ begin
       SetControl(cboUrgency,    'URGENCY',     1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
+      TSimilarNames.RegORComboBox(txtAttn);
       SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
       SetTemplateDialogCanceled(FALSE);
       SetControl(memReason,     'COMMENT',   1);
@@ -894,6 +915,10 @@ begin
         end;
     end;
   SetProvDiagPromptingMode;
+  if cboService.ItemIEN > 0 then
+    isProsSvc := IsProstheticsService(cboService.ItemIEN)
+  else
+    isProsSvc := False;
   SetUpClinicallyIndicatedDate; //wat v28
   tmpSvc := Piece(cboService.Items[cboService.ItemIndex], U, 6);
   pnlMessage.TabOrder := treService.TabOrder + 1;
@@ -908,6 +933,7 @@ var
   i: Integer;
 begin
   inherited;
+
   if Changing then
     Exit;
 
@@ -1000,6 +1026,8 @@ procedure TfrmODCslt.cmdAcceptClick(Sender: TObject);
 var
   BADiagnosis: string;
  begin
+ FreeDstMgr; //dialog can persist for multiple orders; need to ensure
+             //CTB data is fresh for each order. Obj is recreated in InitDialog
  inherited;
  if treService.Selected <> nil then
     LastNode := treService.Selected.AbsoluteIndex;
@@ -1119,6 +1147,7 @@ begin
               SetControl(cboUrgency,    'URGENCY',     1);
               SetControl(cboPlace,      'PLACE',     1);
               SetControl(txtAttn,       'PROVIDER',  1);
+              TSimilarNames.RegORComboBox(txtAttn);
               SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
               SetTemplateDialogCanceled(FALSE);
               SetControl(memReason,     'COMMENT',   1);
@@ -1171,7 +1200,10 @@ begin
   OrderMessage(ConsultMessage(StrToIntDef(tmpSvc, 0)));
   //OrderMessage(ConsultMessage(cboService.ItemIEN));
   ControlChange(Self) ;
-  isProsSvc := IsProstheticsService(cboService.ItemIEN);
+  if cboService.ItemIEN > 0 then
+    isProsSvc := IsProstheticsService(cboService.ItemIEN)
+  else
+    isProsSvc := False;
   SetUpClinicallyIndicatedDate;    //wat v28
 //  prostheticsUrgency;
   setup508Label(servicelbl508, cboService);
@@ -1209,6 +1241,90 @@ begin
   if not FreeGlobalLists then
     Exit;
   inherited;
+end;
+
+procedure TfrmODCslt.btnLaunchToolboxClick(Sender: TObject);
+var
+  sDecision, ErrMsg, HelpText: String;
+  tmpResp: TResponse;
+  oldDecision: String;
+begin
+  inherited;
+  // can be called for a new order or change to existing unsigned order
+  // therefore need to try getting existing values
+  ValidateDst(ErrMsg);
+  if Length(ErrMsg) <= 0 then
+  begin
+    with Responses do
+    begin
+      tmpResp := Responses.FindResponseByName('DSTID', 1);
+      if tmpResp <> nil then
+        getDstMgr.DSTId := tmpResp.IValue;
+      tmpResp := FindResponseByName('ORDERABLE', 1);
+      if tmpResp <> nil then
+        getDstMgr.DSTService := tmpResp.EValue;
+      tmpResp := FindResponseByName('URGENCY', 1);
+      if tmpResp <> nil then
+        getDstMgr.DSTUrgency := tmpResp.EValue;
+      tmpResp := FindResponseByName('CLINICALLY', 1);
+      if tmpResp <> nil then
+        // need double value here, so use FMDateTime instead of tmpResp
+        getDstMgr.DSTCid := calClinicallyIndicated.FMDateTime;
+      tmpResp := FindResponseByName('NLTD', 1);
+      if tmpResp <> nil then
+        getDstMgr.DSTNltd := calLatest.FMDateTime;
+      tmpResp := Responses.FindResponseByName('CLASS', 1);
+      if tmpResp <> nil then
+      begin
+        if tmpResp.IValue = 'O' then
+          getDstMgr.DSTOutpatient := 'True'
+        else
+          getDstMgr.DSTOutpatient := 'False';
+      end
+      else
+        getDstMgr.DSTOutpatient := 'False';
+    end;
+    oldDecision := pnlDstStatus.Caption;
+    getDstMgr.doDst; // DST_CASE_CONSULT_OD
+    if getDstMgr.DSTResult = '' then
+    begin
+      sDecision := ''; // 'User cancel DST review';
+    end
+    else if Pos('Error', getDstMgr.DSTResult) = 1 then
+    begin
+      sDecision := DST_UNAVAIL + CRLF + DST_TRY_LATER;
+      setDstStatus(sDecision);
+        HelpText := GetUserParam('OR CPRS HELP DESK TEXT');
+        if HelpText <> '' then
+          InfoBox(DST_UNAVAIL + CRLF + DST_TRY_LATER + CRLF + CRLF +
+            HelpText + CRLF + GetDSTMgr.DSTResult,'Communication Error',MB_OK or MB_ICONERROR)
+        else
+          InfoBox(DST_UNAVAIL + CRLF + DST_TRY_LATER + CRLF + CRLF +
+            DST_PERSIST + CRLF + GetDSTMgr.DSTResult,'Communication Error',MB_OK or MB_ICONERROR);
+    end
+    else if getDstMgr.DSTResult <> '' then
+    begin
+      Responses.Update('DSTID', 1, getDstMgr.DSTId, getDstMgr.DSTId);
+      Responses.Update('DSTDECSN', 1, TX_WPTYPE, getDstMgr.DSTResult);
+      sDecision := getDstMgr.DSTResult;
+      setDstStatus(sDecision);
+    end
+    else
+    begin
+      if sDecision = '' then
+        if oldDecision <> DST_UNAVAIL + #10#13 + DST_TRY_LATER then
+          sDecision := oldDecision;
+      setDstStatus(sDecision);
+    end;
+  end
+  else
+  begin
+    InfoBox(ErrMsg + CRLF + 'You entered: ' + calClinicallyIndicated.Text,
+      'Invalid Date Entered', MB_OK);
+    calClinicallyIndicated.SetFocus;
+  end;
+  if assigned(pnlDSTStatus) then
+    pnlDSTStatus.TabStop := (pnlDSTStatus.Caption <> '');
 end;
 
 procedure TfrmODCslt.btnServiceTreeClick(Sender: TObject);
@@ -1650,7 +1766,7 @@ end;
 
 procedure TfrmODCslt.setDstStatus(aStatus: String);
 begin
-  lblDstStatus.Caption := aStatus;
+  pnlDstStatus.Caption := aStatus;
   doSetFontSize;
 end;
 
@@ -1665,16 +1781,18 @@ begin
 
   adjustBtn(cmdQuit);
   adjustBtn(cmdAccept);
+  adjustBtn(btnLaunchToolbox);
 
   iButtonHeight := getMainFormTextHeight + GAP;
   iButtonWidth := GetMainFormTextWidth(cmdAccept.Caption) + GAP * 2;
-  iWidth := GetMainFormTextWidth(DstMgr.btnLaunchToolbox.Caption) + GAP * 2;
+  iWidth := GetMainFormTextWidth(btnLaunchToolbox.Caption) + GAP * 2;
+
   if iWidth > iButtonWidth then
     iButtonWidth := iWidth;
   grdDstControls.ColumnCollection[1].Value := iButtonWidth;
 
   iTextWidth := grdDstControls.Width - iButtonWidth;
-  iTextHeight := getRectHeight(iTextWidth, lblDstStatus.Caption);
+  iTextHeight := getRectHeight(iTextWidth, pnlDstStatus.Caption);
   if iTextHeight < iButtonHeight then
     iTextHeight := iButtonHeight;
 
@@ -1683,8 +1801,7 @@ begin
   grdDstControls.Height := iTextHeight + GAP + 2 * (iButtonHeight + GAP);
   grdDstControls.RowCollection[2].Value := iButtonHeight + GAP;
 
-  DstMgr.Align := alTop;
-  DstMgr.Height := iButtonHeight + GAP;
+
 
   memReason.DefAttributes.Size := FontSize;
   treService.Font.Size := FontSize * 7 div 8;
@@ -1693,78 +1810,89 @@ begin
 end;
 
 procedure TfrmODCslt.DstMgrbtnLaunchToolboxClick(Sender: TObject);
+//not called - see btnLaunchToolboxClick
 var
-  sDecision: String;
+  sDecision, ErrMsg: String;
   tmpResp: TResponse;
   oldDecision: String;
 begin
   // can be called for a new order or change to existing unsigned order
   // therefore need to try getting existing values
-  with Responses do
+  ValidateDst(ErrMsg);
+  if Length(ErrMsg) <= 0 then
   begin
-    tmpResp := Responses.FindResponseByName('DSTID', 1);
-    if tmpResp <> nil then
-      DstMgr.DSTId := tmpResp.IValue;
-    tmpResp := FindResponseByName('ORDERABLE', 1);
-    if tmpResp <> nil then
-      DstMgr.DSTService := tmpResp.EValue;
-    tmpResp := FindResponseByName('URGENCY', 1);
-    if tmpResp <> nil then
-      DstMgr.DSTUrgency := tmpResp.EValue;
-    tmpResp := FindResponseByName('CLINICALLY', 1);
-    if tmpResp <> nil then
-      //need double value here, so use FMDateTime instead of tmpResp
-      DstMgr.DSTCid := calClinicallyIndicated.FMDateTime;
-    tmpResp := FindResponseByName('NLTD', 1);
-    if tmpResp <> nil then
-      DstMgr.DSTNltd := calLatest.FMDateTime;
-    tmpResp := Responses.FindResponseByName('CLASS', 1);
-    if tmpResp <> nil then
+    with Responses do
     begin
-      if tmpResp.IValue = 'O' then
-        DstMgr.DSTOutpatient := 'True'
+      tmpResp := Responses.FindResponseByName('DSTID', 1);
+      if tmpResp <> nil then
+        getDstMgr.DSTId := tmpResp.IValue;
+      tmpResp := FindResponseByName('ORDERABLE', 1);
+      if tmpResp <> nil then
+        getDstMgr.DSTService := tmpResp.EValue;
+      tmpResp := FindResponseByName('URGENCY', 1);
+      if tmpResp <> nil then
+        getDstMgr.DSTUrgency := tmpResp.EValue;
+      tmpResp := FindResponseByName('CLINICALLY', 1);
+      if tmpResp <> nil then
+        // need double value here, so use FMDateTime instead of tmpResp
+        getDstMgr.DSTCid := calClinicallyIndicated.FMDateTime;
+      tmpResp := FindResponseByName('NLTD', 1);
+      if tmpResp <> nil then
+        getDstMgr.DSTNltd := calLatest.FMDateTime;
+      tmpResp := Responses.FindResponseByName('CLASS', 1);
+      if tmpResp <> nil then
+      begin
+        if tmpResp.IValue = 'O' then
+          getDstMgr.DSTOutpatient := 'True'
+        else
+          getDstMgr.DSTOutpatient := 'False';
+      end
       else
-        DstMgr.DSTOutpatient := 'False';
-    end
-    else
-      DstMgr.DSTOutpatient := 'False';
-  end;
-  oldDecision := lblDstStatus.Caption;
-  DstMgr.doDst; // DST_CASE_CONSULT_OD
-  //what if DSTResult is an error message back from dst server?????????????
-  if DstMgr.DSTResult = 'CANCEL' then
+        getDstMgr.DSTOutpatient := 'False';
+    end;
+    oldDecision := pnlDstStatus.Caption;
+    getDstMgr.doDst; // DST_CASE_CONSULT_OD
+    if getDstMgr.DSTResult = '' then
     begin
       sDecision := ''; // 'User cancel DST review';
     end
-  else if pos('error', DstMgr.DSTResult) = 1 then
+    else if Pos('Error', getDstMgr.DSTResult) = 1 then
     begin
-       sDecision := DST_UNAVAIL + #10#13 + DST_TRY_LATER;
-       setDstStatus(sDecision);
+      sDecision := DST_UNAVAIL + #10#13 + DST_TRY_LATER;
+      setDstStatus(sDecision);
     end
-  else if DstMgr.DSTResult <> '' then
-  begin
-    Responses.Update('DSTID', 1, DstMgr.DSTId, DstMgr.DSTId);
-    Responses.Update('DSTDECSN', 1, TX_WPTYPE, DstMgr.DSTResult);
-    sDecision := DstMgr.DSTResult;
-    setDstStatus(sDecision);
+    else if getDstMgr.DSTResult <> '' then
+    begin
+      Responses.Update('DSTID', 1, getDstMgr.DSTId, getDstMgr.DSTId);
+      Responses.Update('DSTDECSN', 1, TX_WPTYPE, getDstMgr.DSTResult);
+      sDecision := getDstMgr.DSTResult;
+      setDstStatus(sDecision);
+    end
+    else
+    begin
+      if sDecision = '' then
+        if oldDecision <> DST_UNAVAIL + #10#13 + DST_TRY_LATER then
+          sDecision := oldDecision;
+      setDstStatus(sDecision);
+    end;
   end
   else
-    begin
-    if sDecision = '' then
-       if oldDecision <> DST_UNAVAIL + #10#13 + DST_TRY_LATER then
-       sDecision := oldDecision;
-    setDstStatus(sDecision);
-    end;
-//    sDecision := DST_UNAVAIL + #10#13 + DST_TRY_LATER;
+  begin
+    InfoBox(ErrMsg + CRLF + 'You entered: ' + calClinicallyIndicated.Text,
+      'Invalid Date Entered', MB_OK);
+    calClinicallyIndicated.SetFocus;
+  end;
+
+  // sDecision := DST_UNAVAIL + #10#13 + DST_TRY_LATER;
 {$IFDEF DEBUG}
-//  if sDecision <> '' then
-//    begin
-//      sDecision := 'Debug: Eligibility information is linked' + #10#13 +
-//        'Debug: Auto Forward to ' + cboService.Text;
-//        setDstStatus(sDecision);
-//    end;
+  // if sDecision <> '' then
+  // begin
+  // sDecision := 'Debug: Eligibility information is linked' + #10#13 +
+  // 'Debug: Auto Forward to ' + cboService.Text;
+  // setDstStatus(sDecision);
+  // end;
 {$ELSE}
-//  setDstStatus(sDecision);
+  // setDstStatus(sDecision);
 {$ENDIF}
 end;
 
@@ -1925,6 +2053,17 @@ begin
    BANurseConsultOrders.Add(uBAGlobals.BAOrderID + '1' + tmpTFactors + U + ProvDX.Code);
 end;
 
+procedure TfrmODCslt.SetDSTAction(anAction: Integer);
+begin
+  btnLaunchToolbox.Visible := False;
+  GetDSTMgr.DSTAction := anAction;
+  btnLaunchToolbox.Visible := GetDSTMgr.DSTBtnVisible;
+  btnLaunchToolbox.Enabled := btnLaunchToolbox.Visible;
+  stOpenConsultToolboxDisabled.Visible := ScreenReaderSystemActive and not(btnLaunchToolBox.Enabled);
+  if stOpenConsultToolboxDisabled.Visible then
+    stOpenConsultToolboxDisabled.BringToFront;
+end;
+
 procedure TfrmODCslt.SetUpCopyConsultDiagnoses(pOrderID:string);
 var
   sourceOrderID, primaryText,primaryCode: string;
@@ -1958,6 +2097,7 @@ end;
 
 procedure TfrmODCslt.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  FreeDSTMgr;
   inherited;
   frmFrame.pnlVisit.Enabled := true;
 end;
@@ -2043,29 +2183,32 @@ begin
   }
   b := (cboService.ItemIEN > 0) and (not isProsSvc) and (cboUrgency.ItemIEN > 0)
     and (Length(calClinicallyIndicated.Text) > 0) and
-    DstMgr.DstProvider.DstParameters.FOrderConsult;
+    getDstMgr.DstProvider.DstParameters.FOrderConsult;
 
 {  if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and
     not(Length(calLatest.Text) > 0) then
     b := false;
 }
 
-  if (DstMgr.DSTMode = DST_DST) and (radInpatient.Checked) then
+  if (getDstMgr.DSTMode = DST_DST) and (radInpatient.Checked) then
     b := false;
 
-  if DstMgr.DSTMode = DST_OTH then
+  if getDstMgr.DSTMode = DST_OTH then
     b := false;
 
-  if (b) or (lblDstStatus.Caption <> '') then
+  if (b) or (pnlDstStatus.Caption <> '') then
     DoSetFontSize;
 
-  DstMgr.btnLaunchToolbox.Enabled := b;
+  btnLaunchToolbox.Enabled := b;
+  stOpenConsultToolboxDisabled.Visible := ScreenReaderSystemActive and not(btnLaunchToolBox.Enabled);
+  if stOpenConsultToolboxDisabled.Visible then
+    stOpenConsultToolboxDisabled.BringToFront;
 end;
 
 procedure TfrmODCslt.clearDstData;
 begin
   // DST info n/a for some scenarios like changing from OP to IP
-  if DstMgr.DSTMode = 'D' then
+  if getDstMgr.DSTMode = DST_DST then
   begin
 {    calLatest.Enabled := false;
     calLatest.Visible := false;
@@ -2074,7 +2217,7 @@ begin
     lblLatest.Enabled := false;
     lblLatest.Visible := false;
 }
-    lblDstStatus.Caption := '';
+    pnlDstStatus.Caption := '';
     with Responses do
     begin
 //      Update('NLTD', 1, '', '');

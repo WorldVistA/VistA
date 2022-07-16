@@ -1,0 +1,83 @@
+package XWB_RXE8;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'VistA RPC Broker Runtime Package - XE8'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  vcl,
+  rtl,
+  xmlrtl,
+  dbrtl,
+  inet,
+  vcldb,
+  vclie,
+  vclimg,
+  soaprtl;
+
+contains
+  XlfSid in '..\..\Source\XlfSid.pas',
+  Loginfrm in '..\..\Source\Loginfrm.pas' {in 'Loginfrm.pas'},
+  RpcbErr in '..\..\Source\RpcbErr.pas' {in 'Rpcberr.pas'},
+  Rpcnet in '..\..\Source\Rpcnet.pas' {in 'Rpcnet.pas'},
+  SelDiv in '..\..\Source\SelDiv.pas' {in 'SelDiv.pas'},
+  SgnonCnf in '..\..\Source\SgnonCnf.pas' {in 'Sgnoncnf.pas'},
+  Splvista in '..\..\Source\Splvista.pas' {in 'Splvista.pas'},
+  VCEdit in '..\..\Source\VCEdit.pas' {in 'Vcedit.pas'},
+  frmSignonMessage in '..\..\Source\frmSignonMessage.pas' {in 'frmSignonMessage.pas'},
+  AddServer in '..\..\Source\AddServer.pas' {frmAddServer},
+  fRPCBErrMsg in '..\..\Source\fRPCBErrMsg.pas' {frmErrMsg},
+  fSgnonDlg in '..\..\Source\fSgnonDlg.pas' {frmSignonDialog},
+  CCOWRPCBroker in '..\..\Source\CCOWRPCBroker.pas',
+  CCOW_const in '..\..\Source\CCOW_const.pas',
+  VERGENCECONTEXTORLib_TLB in '..\..\Source\VERGENCECONTEXTORLib_TLB.pas',
+  Trpcb in '..\..\Source\Trpcb.pas',
+  fPlinkpw in '..\..\Source\fPlinkpw.pas' {fPlinkPassword},
+  fSSHUsername in '..\..\Source\fSSHUsername.pas' {SSHUsername},
+  fDebugInfo in '..\..\Source\fDebugInfo.pas' {frmDebugInfo},
+  Rpcconf1 in '..\..\Source\Rpcconf1.pas' {rpcConfig},
+  XWBRich20 in '..\..\Source\XWBRich20.pas',
+  XWBSSOi in '..\..\Source\XWBSSOi.pas' {XWBSSOiFrm},
+  XWBut1 in '..\..\Source\XWBut1.pas',
+  MFunStr in '..\..\Source\MFunStr.pas',
+  RpcSLogin in '..\..\Source\RpcSLogin.pas',
+  XWBHash in '..\..\Source\XWBHash.pas',
+  Wsockc in '..\..\Source\Wsockc.pas',
+  uLockBroker in '..\..\Source\uLockBroker.pas',
+  XWBLoginForm in '..\..\Source\XWBLoginForm.pas',
+  RequestSecurityTokenSVC in '..\..\Source\RequestSecurityTokenSVC.pas',
+  IAMConstants in '..\..\Source\IAMConstants.pas',
+  wcrypt2 in '..\..\Source\wcrypt2.pas';
+
+end.
+
+
+
+
+
+

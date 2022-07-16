@@ -3,11 +3,19 @@ unit fPDMPUser;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages,
-  System.SysUtils, System.Variants, System.Classes,
-  Vcl.Graphics, Vcl.ExtCtrls, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.ExtCtrls,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
   Vcl.StdCtrls,
-  ORCtrls, fBase508Form;
+  ORCtrls,
+  fBase508Form;
 
 type
   TpdmpUserForm = class(TfrmBase508Form)
@@ -27,7 +35,6 @@ type
     procedure cboProviderDEADblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
-    { Private declarations }
     fHasDEA, fCosignerRequired: Boolean;
     fEncounterProvider: string;
     fCosignerIEN: String;
@@ -36,7 +43,6 @@ type
     procedure setCosigner(bRequired: Boolean = false);
     procedure setAuthorizedUser(bRequired: Boolean = false);
   public
-    { Public declarations }
     procedure SetFontSize(aSize: Integer);
 
     property HasDEA: Boolean read fHasDEA write setAuthorizedUser;
@@ -52,11 +58,18 @@ implementation
 
 uses
 {$IFDEF PDMPTEST}
-  rCore.DateTimeUtils, uCore.TIU,
+  rCore.DateTimeUtils,
+  uCore.TIU,
 {$ELSE}
-  rCore, rTIU,
+  rCore,
+  rTIU,
 {$ENDIF}
-  rPDMP, ORFn, uSizing, oPDMPData, uPDMP;
+  rPDMP,
+  uSimilarNames,
+  ORFn,
+  uSizing,
+  oPDMPData,
+  uPDMP;
 
 {$R *.dfm}
 
@@ -136,19 +149,26 @@ var
   ErrMsg: String;
 begin
   inherited;
+  if ModalResult = mrCancel then
+    exit;
+
   ErrMsg := '';
-
-  if (ModalResult <> mrCancel) and (cboProviderDEA.ItemIndex < 0) then
-    ErrMsg := PDMP_MSG_NO_COSIGNER_SELECTED;
-
-  CanClose := (ModalResult = mrCancel) or (cboProviderDEA.ItemIndex >= 0);
-
-  if CanClose and CosignerRequired then
+  if not CheckForSimilarName(cboProviderDEA, ErrMsg, ltPDMPAuthorizedUser, sPr) then
   begin
-    CanClose := (ModalResult = mrCancel) or CanCosign(PDMP_NoteTitleID, 0,
-      cboProviderDEA.ItemIEN, FMNow);
-    if not CanClose then
-      ErrMsg := cboProviderDEA.Text + TX_COS_AUTH;
+    CanClose := False;
+  end else begin
+    if (ModalResult <> mrCancel) and (cboProviderDEA.ItemIndex < 0) then
+      ErrMsg := PDMP_MSG_NO_COSIGNER_SELECTED;
+
+    CanClose := (ModalResult = mrCancel) or (cboProviderDEA.ItemIndex >= 0);
+
+    if CanClose and CosignerRequired then
+    begin
+      CanClose := (ModalResult = mrCancel) or CanCosign(PDMP_NoteTitleID, 0,
+        cboProviderDEA.ItemIEN, FMNow);
+      if not CanClose then
+        ErrMsg := cboProviderDEA.Text + TX_COS_AUTH;
+    end;
   end;
 
   if ErrMsg <> '' then
@@ -186,7 +206,10 @@ begin
   cboProviderDEA.InitLongList(fEncounterProvider);
   idx := cboProviderDEA.Items.IndexOf(fEncounterProvider);
   if idx > -1 then
+  begin
     cboProviderDEA.ItemIndex := idx;
+    TSimilarNames.RegORComboBox(cboProviderDEA);
+  end;
 end;
 
 procedure TpdmpUserForm.SetFontSize(aSize: Integer);

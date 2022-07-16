@@ -695,7 +695,7 @@ inherited frmVisitType: TfrmVisitType
         ItemHeight = 16
         ItemTipColor = clWindow
         ItemTipEnable = True
-        ListItemsOnly = True
+        ListItemsOnly = False
         LongList = True
         LookupPiece = 2
         MaxLength = 0
@@ -709,6 +709,7 @@ inherited frmVisitType: TfrmVisitType
         OnDblClick = cboPtProviderDblClick
         OnNeedData = cboPtProviderNeedData
         CharsNeedMatch = 1
+        UniqueAutoComplete = True
       end
     end
     object pnlBottomRight: TPanel

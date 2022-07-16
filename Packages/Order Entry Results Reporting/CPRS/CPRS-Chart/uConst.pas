@@ -39,6 +39,12 @@ const
   UM_OBJDESTROY   = (WM_USER + 9253);  // used in uOwnerWrapper & fFrame
   UM_NOTELIMIT    = (WM_USER + 9254);  // used to redraw the richedit's editable rect
 
+  UM_ORDFLAGSTATUS= (WM_USER + 9710);  // request to update Processed list in case of flag status change (NSR#20110719)
+  UM_ORDFLAGACTION= (WM_USER + 9711);  // request to update Processed list. (NSR#20110719)
+  UM_ORDDESELECT  = (WM_USER + 9720);  // request to drop selection (NSR#20110719)
+
+  UM_SELECT       = (WM_USER + 9800);  // test
+
 //  PDMP Messages are kept in uPDMP unit
 //  PDMP Messages occupying range WM_USER + 9300..9400
 //  UM_PDMP_BASE    = (WM_USER + 9300);
@@ -56,6 +62,8 @@ const
 //  UM_PDMP_Options = (UM_PDMP_BASE + 80);  // PDMP Options updated
 //  UM_PDMP_WebError= (UM_PDMP_BASE + 82);  // PDMP Web page failed to load
 //  UM_PDMP_Refresh = (UM_PDMP_BASE + 84);  // PDMP Review updated
+
+  UM_UpdateRFN    = (WM_USER + 9900);  // resetting Required Fields Navigator (Template dialog)
 
   { Tab Indexes, moved from fFrame }
   CT_NOPAGE   = -1;                             // chart tab - none selected
@@ -119,6 +127,7 @@ const
   OA_DC       = 'DC';
   OA_UNHOLD   = 'RL';
   OA_FLAG     = 'FL';
+  OA_FLAGCOMMENT = 'FC';
   OA_UNFLAG   = 'UF';
   OA_COMPLETE = 'CP';
   OA_ALERT    = 'AL';
@@ -141,6 +150,7 @@ const
   OD_DIET_TXT  = 115;
   OD_DIET      = 117;
   OD_LAB       = 120;
+  OD_AP        = 121;
   OD_BB        = 125;
   OD_MEDINPT   = 130;
   OD_MEDS      = 135;
@@ -225,6 +235,7 @@ const
   NF_LONG_TEXT_ALERT               = -101;
   NF_LAB_RESULTS                   = 3;
   NF_FLAGGED_ORDERS                = 6;
+  NF_FLAGGED_ORDERS_COMMENTS       = 8; // NSR#20110719
   NF_ORDER_REQUIRES_ELEC_SIGNATURE = 12;
   NF_ABNORMAL_LAB_RESULTS          = 14;
   NF_IMAGING_RESULTS               = 22;
@@ -263,6 +274,8 @@ const
   NF_RX_RENEWAL_REQUEST            = 73;
   NF_LAPSED_ORDER                  = 78;
   NF_HIRISK_ORDER                  = 79;
+  NF_NEW_ALLERGY_CONFLICT_ORDER    = 88;
+  NF_PROSTHETICS_REQUEST_UPDATED   = 89;
   NF_RTC_CANCEL_ORDERS             = 91;
   NF_DCSUMM_UNSIGNED_NOTE          = 901;
   NF_CONSULT_UNSIGNED_NOTE         = 902;
@@ -366,12 +379,19 @@ const
   IMG_ASCENDING  =  12;
   IMG_DESCENDING =  13;
   IMG_BLANK      =  14;
+  IMG_SHOWMORE   =  16;
 
   { TIU TreeView context strings}
   NC_TV_TEXT: array[CT_NOTES..CT_DCSUMM] of array[NC_RECENT..NC_BY_DATE] of string =
-    (('Recent Signed Notes','All signed notes','All unsigned notes','All uncosigned notes','Signed notes by author','Signed notes by date range'),
-     ('','Related Documents','Medicine Results',' ',' ',' '),
-     ('Recent Signed Summaries','All signed summaries','All unsigned summaries','All uncosigned summaries','Signed summaries by author','Signed summaries by date range'));
+    (('Recent Signed Notes', 'All signed notes', 'All unsigned notes',
+      'All uncosigned notes', 'Signed notes by author',
+      'Signed notes by date range'),
+     ('', 'Related Documents', 'Medicine Results', ' ', ' ', ' '),
+     ('Recent Signed Summaries', 'All signed summaries',
+      'All unsigned summaries', 'All uncosigned summaries',
+      'Signed summaries by author', 'Signed summaries by date range'));
+  TX_MORE = 'SHOW MORE';
+  TX_OLDER_NOTES_WITH_ADDENDA = '--- Older signed notes with recent addenda ---';
 
   CC_ALL        = 1;                             // Consult context - all Consults
   CC_BY_STATUS  = 2;                             // Consult context - Consults by Status

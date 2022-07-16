@@ -4,15 +4,13 @@ inherited frmReleaseOrders: TfrmReleaseOrders
   Caption = 'Release Orders to Service(s)'
   ClientHeight = 422
   Position = poScreenCenter
-  OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 377
+  ExplicitHeight = 461
   PixelsPerInch = 120
-  TextHeight = 16
+  TextHeight = 13
   object Panel1: TPanel [0]
     Left = 0
     Top = 0
-    Width = 526
+    Width = 427
     Height = 364
     Margins.Left = 4
     Margins.Top = 4
@@ -25,20 +23,20 @@ inherited frmReleaseOrders: TfrmReleaseOrders
     TabOrder = 0
     OnResize = Panel1Resize
     DesignSize = (
-      526
+      427
       364)
     object Label1: TLabel
       Left = 0
       Top = 0
-      Width = 526
-      Height = 16
+      Width = 427
+      Height = 13
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alTop
       Caption = 'The following orders will be released -'
-      ExplicitWidth = 225
+      ExplicitWidth = 176
     end
     object lstOrders: TCaptionListBox
       Left = 1
@@ -62,7 +60,7 @@ inherited frmReleaseOrders: TfrmReleaseOrders
   object Panel2: TPanel [1]
     Left = 0
     Top = 364
-    Width = 526
+    Width = 427
     Height = 58
     Margins.Left = 4
     Margins.Top = 4
@@ -91,9 +89,7 @@ inherited frmReleaseOrders: TfrmReleaseOrders
         Margins.Right = 4
         Margins.Bottom = 4
         Caption = '&Verbal'
-        Checked = True
         TabOrder = 0
-        TabStop = True
       end
       object radPhone: TRadioButton
         Left = 98

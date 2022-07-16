@@ -104,8 +104,7 @@ implementation
 uses
     rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, ORClasses,
     clipbrd, fPreReq, uTemplates, fFrame, uODBase, VA508AccessibilityRouter,
-    uVA508CPRSCompatibility, VAUtils;
-
+    uVA508CPRSCompatibility, VAUtils, uSimilarNames;
 
 var
   ProvDx:  TProvisionalDiagnosis;
@@ -201,6 +200,7 @@ begin
     end ;
   end ;
   txtAttn.ItemIndex := -1;
+  TSimilarNames.RegORComboBox(txtAttn);
   memOrder.Clear ;
   memReason.Clear;
   cboProc.Enabled := True;
@@ -240,6 +240,7 @@ begin
     SetControl(cboUrgency,    'URGENCY',     1);
     SetControl(cboPlace,      'PLACE',     1);
     SetControl(txtAttn,       'PROVIDER',  1);
+    TSimilarNames.RegORComboBox(txtAttn);
     SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
     cboProc.Enabled := False;
     cboProc.Font.Color := clGrayText;
@@ -302,6 +303,8 @@ procedure TfrmODProc.Validate(var AnErrMsg: string);
     AnErrMsg := AnErrMsg + x;
   end;
 
+var
+  ErrMsg: String;
 begin
   inherited;
   if cboProc.ItemIEN = 0                  then SetError(TX_NO_PROC);
@@ -318,6 +321,14 @@ begin
         SetError(TX_SELECT_DIAG);
     end;
   if calClinicallyIndicated.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
+
+  if not CheckForSimilarName(txtAttn, ErrMsg, ltPerson, sPr) then
+  begin
+    if ErrMsg <> '' then
+      SetError(ErrMsg);
+  end;
+
+  AnErrMsg := Trim(AnErrMsg);
 end;
 
 procedure TfrmODProc.txtAttnNeedData(Sender: TObject;
@@ -363,11 +374,13 @@ begin
 end;
 
 procedure TfrmODProc.ControlChange(Sender: TObject);
+// Similar to cboAttnChange in 32.
 var
   x: string;
   i: integer;
 begin
   inherited;
+
   if Changing or (cboProc.ItemIEN = 0) then Exit;
   with cboProc do
     begin
@@ -461,6 +474,7 @@ begin
       SetControl(cboUrgency,    'URGENCY',     1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
+      TSimilarNames.RegORComboBox(txtAttn);
       SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
       SetTemplateDialogCanceled(FALSE);
       SetControl(memReason,     'COMMENT',   1);

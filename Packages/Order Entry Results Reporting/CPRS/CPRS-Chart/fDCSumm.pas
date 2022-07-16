@@ -1367,8 +1367,7 @@ procedure TfrmDCSumm.LoadPastedText(Sender: TObject; LoadList: TStrings;
   var ProcessLoad, PreLoaded: Boolean);
 var
   DivId, ParamStr, tmpRtn: string;
-  AddlSigners: TStrings;
-  i: Integer;
+//  i: Integer;
   IsCoSigner: Boolean;
 begin
   DivID := Piece(RPCBrokerV.User.Division, '^', 1);
@@ -1383,18 +1382,7 @@ begin
     // check for preload
     if ProcessLoad then
     begin
-
-
-      AddlSigners := GetCurrentSigners(lstSumms.ItemIEN);
-      for i := 0 to AddlSigners.Count - 1 do
-      begin
-        if Piece(AddlSigners.Strings[i], U, 3) = 'Expected Cosigner' then
-        begin
-          IsCoSigner := (Piece(AddlSigners.Strings[i], U, 1)
-            = IntToStr(User.DUZ));
-          break;
-        end;
-      end;
+      IsCoSigner := UserIsCosigner(lstSumms.ItemIEN, IntToStr(User.DUZ));
 
       if IsCoSigner and (not EditMonitor.CopyMonitor.DisplayPaste) then
       begin
@@ -2372,12 +2360,18 @@ begin
       InfoBox(ActionSts.Reason, TX_IN_AUTH, MB_OK);
       Exit;
     end;  }
-
-  Exclusions := GetCurrentSigners(lstSumms.ItemIEN);
-  ARefDate := ExtractFloat(Piece(Piece(lstSumms.Items[lstSumms.ItemIndex], U, 9), ';', 2));
-  if ARefDate = 0 then        //no discharge date, so use note date
-    ARefDate := StrToFloat(Piece(lstSumms.Items[lstSumms.ItemIndex], U, 3));
-  SelectAdditionalSigners(Font.Size, lstSumms.ItemIEN, SigAction, Exclusions, SignerList, CT_DCSUMM, ARefDate);
+  Exclusions := TStringList.create;
+  try
+    setCurrentSigners(Exclusions, lstSumms.ItemIEN);
+    ARefDate := ExtractFloat(Piece(Piece(lstSumms.Items[lstSumms.ItemIndex], U,
+      9), ';', 2));
+    if ARefDate = 0 then // no discharge date, so use note date
+      ARefDate := StrToFloat(Piece(lstSumms.Items[lstSumms.ItemIndex], U, 3));
+    SelectAdditionalSigners(Font.Size, lstSumms.ItemIEN, SigAction, Exclusions,
+      SignerList, CT_DCSUMM, ARefDate);
+  finally
+    Exclusions.free;
+  end;
   with SignerList do
     begin
       case SigAction of
@@ -2986,7 +2980,7 @@ begin
       ReturnCursor := Screen.Cursor;
       Screen.Cursor := crHourGlass;
       try
-        BuildDocumentTree2(DocList, Tree, FCurrentContext, CT_DCSUMM);
+        BuildDocumentTree(DocList, Tree, FCurrentContext, CT_DCSUMM);
       finally
        Screen.Cursor := ReturnCursor;
       end;

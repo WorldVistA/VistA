@@ -5,6 +5,7 @@ interface
 uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, TRPCB, dialogs ;
 
      { Laboratory Ordering Calls }
+function getODForLab(aDest: TStrings; Location, Division: integer): Integer;
 function  ODForLab(aReturn: TStrings; Location: integer; Division: integer = 0): integer;
 procedure LoadLabTestData(LoadData: TStringList; LabTestIEN: string) ;
 procedure LoadSamples(LoadList: TStringList) ;
@@ -145,6 +146,12 @@ begin
    finally
      FreeAndNil(aLst);
    end;
+end;
+
+function getODForLab(aDest: TStrings; Location, Division: integer): Integer;
+begin
+  CallVistA('ORWDLR32 DEF', [Location,Division],aDest);
+  Result := aDest.Count;
 end;
 
 function  ODForLab(aReturn: TStrings; Location: integer; Division: integer = 0): integer;

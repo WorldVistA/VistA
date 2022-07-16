@@ -34,12 +34,21 @@ type
   end;
 
 function ExecuteDCOrders(SelectedList: TList; var DelEvt: boolean): Boolean;
+function ShouldcancelDCorder: Boolean; // rtw
 
 implementation
 
 {$R *.DFM}
 
 uses rOrders, uCore, uConst, fOrders;
+
+var // rtw
+  dcordercancel: Boolean; //rtw
+
+function ShouldcancelDCorder: Boolean; // rtw
+begin
+  result := dcordercancel;
+end; // rtw
 
 function ExecuteDCOrders(SelectedList: TList; var DelEvt: boolean): Boolean;
 const

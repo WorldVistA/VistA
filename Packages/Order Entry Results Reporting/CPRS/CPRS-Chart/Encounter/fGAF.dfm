@@ -3,7 +3,6 @@ inherited frmGAF: TfrmGAF
   Top = 178
   ActiveControl = edtScore
   Caption = 'frmGAF'
-  OnActivate = FormActivate
   PixelsPerInch = 96
   TextHeight = 13
   object lblScore: TLabel [0]
@@ -159,7 +158,7 @@ inherited frmGAF: TfrmGAF
     ItemHeight = 13
     ItemTipColor = clWindow
     ItemTipEnable = True
-    ListItemsOnly = True
+    ListItemsOnly = False
     LongList = True
     LookupPiece = 2
     MaxLength = 0
@@ -171,6 +170,7 @@ inherited frmGAF: TfrmGAF
     OnExit = cboGAFProviderExit
     OnNeedData = cboGAFProviderNeedData
     CharsNeedMatch = 1
+    UniqueAutoComplete = True
   end
   object btnURL: TButton [14]
     Left = 3

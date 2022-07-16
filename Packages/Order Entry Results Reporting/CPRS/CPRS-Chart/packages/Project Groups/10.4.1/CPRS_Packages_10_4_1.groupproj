@@ -1,0 +1,144 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{4B5EF8DE-93DC-49F2-9719-BB61D1E1495B}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\..\VA\Packages\10.4.1\VAShared_R10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Broker\Packages\10.4.1\XWB_R10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\PKI\Packages\10.4.1\PKI_R10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\ExceptionLogger\Packages\10.4.1\ExceptionLogger_R10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Broker\Packages\10.4.1\XWB_D10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Borland\Packages\10.4.1\Borland_D10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\508\Packages\10.4.1\VA508Access_D10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\OR\Packages\10.4.1\ORCtrls_D10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\CopyPaste\Packages\10.4.1\CopyPaste_D10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\FilemanComponents\Packages\10.4.1\FMDC_D10_4_1.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="VAShared_R10_4_1">
+        <MSBuild Projects="..\..\VA\Packages\10.4.1\VAShared_R10_4_1.dproj"/>
+    </Target>
+    <Target Name="VAShared_R10_4_1:Clean">
+        <MSBuild Projects="..\..\VA\Packages\10.4.1\VAShared_R10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VAShared_R10_4_1:Make">
+        <MSBuild Projects="..\..\VA\Packages\10.4.1\VAShared_R10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="XWB_R10_4_1">
+        <MSBuild Projects="..\..\Broker\Packages\10.4.1\XWB_R10_4_1.dproj"/>
+    </Target>
+    <Target Name="XWB_R10_4_1:Clean">
+        <MSBuild Projects="..\..\Broker\Packages\10.4.1\XWB_R10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="XWB_R10_4_1:Make">
+        <MSBuild Projects="..\..\Broker\Packages\10.4.1\XWB_R10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PKI_R10_4_1">
+        <MSBuild Projects="..\..\PKI\Packages\10.4.1\PKI_R10_4_1.dproj"/>
+    </Target>
+    <Target Name="PKI_R10_4_1:Clean">
+        <MSBuild Projects="..\..\PKI\Packages\10.4.1\PKI_R10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PKI_R10_4_1:Make">
+        <MSBuild Projects="..\..\PKI\Packages\10.4.1\PKI_R10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExceptionLogger_R10_4_1">
+        <MSBuild Projects="..\..\ExceptionLogger\Packages\10.4.1\ExceptionLogger_R10_4_1.dproj"/>
+    </Target>
+    <Target Name="ExceptionLogger_R10_4_1:Clean">
+        <MSBuild Projects="..\..\ExceptionLogger\Packages\10.4.1\ExceptionLogger_R10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExceptionLogger_R10_4_1:Make">
+        <MSBuild Projects="..\..\ExceptionLogger\Packages\10.4.1\ExceptionLogger_R10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="XWB_D10_4_1">
+        <MSBuild Projects="..\..\Broker\Packages\10.4.1\XWB_D10_4_1.dproj"/>
+    </Target>
+    <Target Name="XWB_D10_4_1:Clean">
+        <MSBuild Projects="..\..\Broker\Packages\10.4.1\XWB_D10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="XWB_D10_4_1:Make">
+        <MSBuild Projects="..\..\Broker\Packages\10.4.1\XWB_D10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Borland_D10_4_1">
+        <MSBuild Projects="..\..\Borland\Packages\10.4.1\Borland_D10_4_1.dproj"/>
+    </Target>
+    <Target Name="Borland_D10_4_1:Clean">
+        <MSBuild Projects="..\..\Borland\Packages\10.4.1\Borland_D10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Borland_D10_4_1:Make">
+        <MSBuild Projects="..\..\Borland\Packages\10.4.1\Borland_D10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VA508Access_D10_4_1">
+        <MSBuild Projects="..\..\508\Packages\10.4.1\VA508Access_D10_4_1.dproj"/>
+    </Target>
+    <Target Name="VA508Access_D10_4_1:Clean">
+        <MSBuild Projects="..\..\508\Packages\10.4.1\VA508Access_D10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VA508Access_D10_4_1:Make">
+        <MSBuild Projects="..\..\508\Packages\10.4.1\VA508Access_D10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORCtrls_D10_4_1">
+        <MSBuild Projects="..\..\OR\Packages\10.4.1\ORCtrls_D10_4_1.dproj"/>
+    </Target>
+    <Target Name="ORCtrls_D10_4_1:Clean">
+        <MSBuild Projects="..\..\OR\Packages\10.4.1\ORCtrls_D10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORCtrls_D10_4_1:Make">
+        <MSBuild Projects="..\..\OR\Packages\10.4.1\ORCtrls_D10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CopyPaste_D10_4_1">
+        <MSBuild Projects="..\..\CopyPaste\Packages\10.4.1\CopyPaste_D10_4_1.dproj"/>
+    </Target>
+    <Target Name="CopyPaste_D10_4_1:Clean">
+        <MSBuild Projects="..\..\CopyPaste\Packages\10.4.1\CopyPaste_D10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CopyPaste_D10_4_1:Make">
+        <MSBuild Projects="..\..\CopyPaste\Packages\10.4.1\CopyPaste_D10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FMDC_D10_4_1">
+        <MSBuild Projects="..\..\FilemanComponents\Packages\10.4.1\FMDC_D10_4_1.dproj"/>
+    </Target>
+    <Target Name="FMDC_D10_4_1:Clean">
+        <MSBuild Projects="..\..\FilemanComponents\Packages\10.4.1\FMDC_D10_4_1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FMDC_D10_4_1:Make">
+        <MSBuild Projects="..\..\FilemanComponents\Packages\10.4.1\FMDC_D10_4_1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="VAShared_R10_4_1;XWB_R10_4_1;PKI_R10_4_1;ExceptionLogger_R10_4_1;XWB_D10_4_1;Borland_D10_4_1;VA508Access_D10_4_1;ORCtrls_D10_4_1;CopyPaste_D10_4_1;FMDC_D10_4_1"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="VAShared_R10_4_1:Clean;XWB_R10_4_1:Clean;PKI_R10_4_1:Clean;ExceptionLogger_R10_4_1:Clean;XWB_D10_4_1:Clean;Borland_D10_4_1:Clean;VA508Access_D10_4_1:Clean;ORCtrls_D10_4_1:Clean;CopyPaste_D10_4_1:Clean;FMDC_D10_4_1:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="VAShared_R10_4_1:Make;XWB_R10_4_1:Make;PKI_R10_4_1:Make;ExceptionLogger_R10_4_1:Make;XWB_D10_4_1:Make;Borland_D10_4_1:Make;VA508Access_D10_4_1:Make;ORCtrls_D10_4_1:Make;CopyPaste_D10_4_1:Make;FMDC_D10_4_1:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -80,7 +80,6 @@ type
     procedure cboAllItemsChange(Sender: TObject);
     procedure cboAllItemsNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
-    procedure cboUserClick(Sender: TObject);
     procedure cboUserNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure lstItemsDisplayedChange(Sender: TObject);
@@ -108,9 +107,17 @@ type
     procedure FillSource(aList: TORListBox);
     function ProfileExists(aName, aType: string): boolean;
     procedure lstOtherSourcesChange(Sender: TObject);
+    procedure cboUserChange(Sender: TObject);
+    procedure cboUserEnter(Sender: TObject);
+    procedure cboUserExit(Sender: TObject);
+    procedure cboUserKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboUserMouseClick(Sender: TObject);
+    procedure cboUserClick(Sender: TObject);
   private
     FHintPauseTime: integer;
     FPublicEditor: boolean;
+    FChanging: Boolean;
     procedure CheckToClear;
     procedure QualifierDelete(line: string);
     procedure wmNCLButtonDown(var Msg: TWMNCLButtonDown); message WM_NCLBUTTONDOWN;
@@ -139,7 +146,7 @@ implementation
 {$R *.DFM}
 
 uses
-  UITypes, rGraphs, fGraphData, fGraphOthers, fRptBox, VAUtils;
+  UITypes, rGraphs, fGraphData, fGraphOthers, fRptBox, VAUtils, uSimilarNames;
 
 procedure DialogOptionsGraphProfiles(var actiontype: boolean);
 // create the form and make it modal, return an action
@@ -451,8 +458,74 @@ begin
   lstOtherSources.Tag := 0;
 end;
 
+procedure TfrmGraphProfiles.cboUserChange(Sender: TObject);
+var
+  ErrMsg: String;
+begin
+  inherited;
+  if FChanging then
+    exit;
+
+  if not CheckForSimilarName(cboUser, ErrMsg, ltPerson, sPr) then
+  begin
+    ShowMsgOn(Trim(ErrMsg) <> '' , ErrMsg, 'Similiar Name Selection');
+    Exit;
+  end;
+
+  cboUserClick(Sender);
+end;
+
 procedure TfrmGraphProfiles.cboUserClick(Sender: TObject);
 begin
+  inherited;
+
+  FillSource(lstOtherSources);
+  if cboUser.ItemIndex <> -1 then
+    lblOtherViews.Caption := cboUser.DisplayText[cboUser.ItemIndex] + ' Views:'
+  else
+    lblOtherViews.Caption := 'Other Views:'
+end;
+
+procedure TfrmGraphProfiles.cboUserEnter(Sender: TObject);
+begin
+  inherited;
+  FChanging := true;
+end;
+
+procedure TfrmGraphProfiles.cboUserExit(Sender: TObject);
+begin
+  inherited;
+  if FChanging then
+  begin
+    FChanging := False;
+    cboUserChange(sender);
+  end;
+end;
+
+procedure TfrmGraphProfiles.cboUserKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  FChanging := True;
+
+  if Key = VK_LEFT then
+    Key := VK_UP;
+  if Key = VK_RIGHT then
+    Key := VK_DOWN;
+  if Key = VK_RETURN then
+    FChanging := False;
+end;
+
+procedure TfrmGraphProfiles.cboUserMouseClick(Sender: TObject);
+begin
+  inherited;
+
+  if FChanging then
+  begin
+    FChanging := False;
+    cboUserChange(sender);
+  end;
+
   FillSource(lstOtherSources);
   if cboUser.ItemIndex <> -1 then
     lblOtherViews.Caption := cboUser.DisplayText[cboUser.ItemIndex] + ' Views:'

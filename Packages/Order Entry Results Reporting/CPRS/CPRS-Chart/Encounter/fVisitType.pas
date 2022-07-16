@@ -54,6 +54,7 @@ type
     procedure lbxVisitsClick(Sender: TObject);
     procedure memSCDisplayEnter(Sender: TObject);
   protected
+    FCboPTProviderVistaParams: TArray<string>;
     FSplitterMove: boolean;
     procedure ShowModifiers;
     procedure CheckModifiers;
@@ -76,13 +77,14 @@ var
 
 const
   LBCheckWidthSpace = 18;
+  TX_NO_PROVIDER_CAP = 'Invalid Provider';
 
 implementation
 
 {$R *.DFM}
 
 uses
-  fEncounterFrame, uCore, uConst, VA508AccessibilityRouter, VAUtils;
+  fEncounterFrame, uCore, uConst, VA508AccessibilityRouter, VAUtils, uSimilarNames;
 
 const
   FN_NEW_PERSON = 200;
@@ -205,6 +207,7 @@ begin
   RefreshProviders;
   FLastMods := uEncPCEData.VisitType.Modifiers;
   fraVisitRelated.TabStop := FALSE;
+  TSimilarNames.RegORComboBox(cboPTProvider);
 end;
 
 (*procedure TfrmVisitType.SynchEncounterProvider;
@@ -257,11 +260,25 @@ begin
 end;
 
 procedure TfrmVisitType.btnAddClick(Sender: TObject);
+var
+  aErrMsg: String;
+  aSimRtn: Boolean;
 begin
   inherited;
-  uProviders.AddProvider(IntToStr(cboPTProvider.ItemIEN), cboPTProvider.Text, FALSE);
-  RefreshProviders;
-  lbProviders.SelectByIEN(cboPTProvider.ItemIEN);
+
+  if (uEncPCEData.VisitCategory = 'E') then
+    aSimRtn := CheckForSimilarName(cboPTProvider, aErrMsg, ltPerson, FCboPTProviderVistaParams, sPr, '', lbProviders.Items)
+  else
+    aSimRtn := CheckForSimilarName(cboPTProvider, aErrMsg, ltPerson, FCboPTProviderVistaParams, sPr, FloatToStr(uEncPCEData.PersonClassDate), lbProviders.Items);
+
+  if aSimRtn then
+  begin
+    uProviders.AddProvider(IntToStr(cboPTProvider.ItemIEN), cboPTProvider.Text, FALSE);
+    RefreshProviders;
+    lbProviders.SelectByIEN(cboPTProvider.ItemIEN);
+  end else begin
+    ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
+  end;
 end;
 
 procedure TfrmVisitType.btnDeleteClick(Sender: TObject);
@@ -311,10 +328,10 @@ procedure TfrmVisitType.cboPtProviderNeedData(Sender: TObject;
 begin
   inherited;
   if(uEncPCEData.VisitCategory = 'E') then
-    cboPtProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction))
+    cboPtProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboPTProviderVistaParams))
   else
     cboPtProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction,
-                                     FloatToStr(uEncPCEData.PersonClassDate)));
+      FloatToStr(uEncPCEData.PersonClassDate), FCboPTProviderVistaParams));
 end;
 
 procedure TfrmVisitType.lbProvidersChange(Sender: TObject);
@@ -331,11 +348,18 @@ end;
 
 procedure TfrmVisitType.FormResize(Sender: TObject);
 var
-  v, i: integer;
+  v, i, gap: integer;
   s: string;
   padding, size: integer;
   btnOffset: integer;
+
+  function GetTopPanelSize: integer;
+  begin
+    Result := ClientHeight - btnOK.Height - pnlMiddle.Height - pnlBottom.Height - (gap * 2);
+  end;
+
 begin
+  gap := MainFont.Size - 4;
   if FSplitterMove then
     FSplitterMove := FALSE
   else
@@ -366,12 +390,21 @@ begin
   btnAdd.Left := size + btnOffset;
   btnDelete.Left := size + btnOffset;
   btnPrimary.Left := size + btnOffset;
-  btnOK.top := ClientHeight - btnOK.Height - 4;
+  btnOK.top := ClientHeight - btnOK.Height - gap;
   btnCancel.top := btnOK.Top;
-  btnCancel.Left := ClientWidth - btnCancel.Width - 4;
-  btnOK.Left := btnCancel.Left - btnOK.Width - 4;
-  size := ClientHeight - btnOK.Height - pnlMiddle.Height - pnlBottom.Height - 8;
+  btnCancel.Left := ClientWidth - btnCancel.Width - gap;
+  btnOK.Left := btnCancel.Left - btnOK.Width - gap;
+  size := GetTopPanelSize;
+  if size < 60 then
+  begin
+    pnlBottom.Height := btnAdd.Height + btnDelete.Height + btnPrimary.Height + (gap * 4);
+    btnAdd.Top := gap;
+    btnDelete.Top := btnAdd.Top + btnAdd.Height + gap;
+    btnPrimary.Top := btnDelete.Top + btnDelete.Height + gap;
+    size := GetTopPanelSize;
+  end;
   pnlTop.Height := size;
+  pnlTop.Top := 0;
 end;
 
 procedure TfrmVisitType.lbxVisitsClickCheck(Sender: TObject;

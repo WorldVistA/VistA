@@ -34,6 +34,7 @@ type
     procedure fraEvntDelayListmlstEventsChange(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure fraEvntDelayListedtSearchChange(Sender: TObject); //rtw
   private
     OKPressed: Boolean;
     procedure AdjustFormSize;
@@ -42,7 +43,7 @@ type
   
 function SetViewForCopy(var IsNewEvent: boolean; var DoesDestEvtOccur: boolean;
   var DestPtEvtID: integer; var DestPtEvtName: string): Boolean;
-
+  function ShouldCancelCopyOrder: boolean; //rtw
 var
   frmCopyOrders: TfrmCopyOrders;
 
@@ -50,6 +51,13 @@ implementation
 {$R *.DFM}
 
 uses fOrders, fOrdersTS, ORFn, rOrders;
+var //rtw
+ copyordercancel: boolean;  //rtw
+
+Function ShouldCancelCopyorder: boolean; //rtw
+begin
+  result := copyordercancel;
+end; //rtw
 
 function SetViewForCopy(var IsNewEvent: boolean; var DoesDestEvtOccur: boolean;
   var DestPtEvtID: integer; var DestPtEvtName: string): Boolean;
@@ -231,7 +239,14 @@ end;
 procedure TfrmCopyOrders.FormCreate(Sender: TObject);
 begin
   inherited;
-  radRelease.Checked := True;
+  if rOrders.UAPViewCalling then  //rtw to next rtw
+  begin
+    radRelease.Checked := False;
+    radEvtDelay.Checked := True;
+    radRelease.Visible := False;
+  end
+  else //rtw
+    radRelease.Checked := True;
   OKPressed := False;
   if not Patient.Inpatient then
   begin
@@ -262,6 +277,7 @@ procedure TfrmCopyOrders.AdjustFormSize;
 var
   y: integer;
 begin
+  copyordercancel := FALSE;    //rtw
   y := lblPtInfo.Height + 8; // allow for font changes
   if pnlInfo.Visible then
   begin
@@ -281,20 +297,31 @@ end;
 
 procedure TfrmCopyOrders.cmdCancelClick(Sender: TObject);
 begin
-  inherited;
+copyordercancel := TRUE;   //rtw
+inherited;
   Close;
 end;
 
 procedure TfrmCopyOrders.radEvtDelayClick(Sender: TObject);
+var i: integer;
 begin
   inherited;
   if radRelease.Checked then
     radRelease.Checked  := False;
   radEvtDelay.Checked := True;
   fraEvntDelayList.Visible := True;
-  frmCopyOrders.fraEvntDelayList.UserDefaultEvent := StrToIntDef(GetDefaultEvt(IntToStr(User.DUZ)),0);
+  //hide Release Immediately for UAP //rtw
+  if not rOrders.UAPViewCalling then //rtw
+     frmCopyOrders.fraEvntDelayList.UserDefaultEvent := StrToIntDef(GetDefaultEvt(IntToStr(User.DUZ)),0);
   fraEvntDelayList.DisplayEvntDelayList;
-  AdjustFormSize;
+  for i:= 0 to fraEvntDelayList.mlstEvents.Items.Count -1 do  //rtw to next rtw
+  begin
+     //for UAP default to DISCHARGE selection
+    if (Piece(fraEvntDelayList.mlstEvents.Items[i],'^',2)='DISCHARGE') then
+      fraEvntDelayList.mlstEvents.ItemIndex := i ;
+  end;
+  //end UAP enhancement   //rtw
+AdjustFormSize;
 end;
 
 procedure TfrmCopyOrders.radReleaseClick(Sender: TObject);
@@ -315,6 +342,12 @@ begin
   fraEvntDelayList.mlstEventsChange(Sender);
   if fraEvntDelayList.MatchedCancel then Close
 end;
+
+procedure TfrmCopyOrders.fraEvntDelayListedtSearchChange(Sender: TObject); //rtw to next rtw
+begin
+  inherited;
+  fraEvntDelayList.edtSearchChange(Sender);
+end; //rtw
 
 procedure TfrmCopyOrders.UMStillDelay(var message: TMessage);
 begin

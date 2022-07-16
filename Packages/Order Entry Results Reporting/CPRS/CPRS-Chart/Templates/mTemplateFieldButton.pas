@@ -11,6 +11,7 @@ type
     pnlBtn: TPanel;
     lblText: TLabel;
     pbFocus: TPaintBox;
+    spRequired: TShape;
     procedure pnlBtnMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure pnlBtnMouseUp(Sender: TObject; Button: TMouseButton;

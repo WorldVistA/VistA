@@ -122,68 +122,28 @@ end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_Vitals.OnUpdateVitals(Sender: TObject);
 var
-  aFunctionAddr: TGMV_VitalsViewForm;
-  aFunctionName: AnsiString;
-  aRtnRec: TDllRtnRec;
-  aStartDate: string;
   aVitalsAbbv: string;
+  aChangesMade: Boolean;
 begin
-  { Availble Forms:
-    GMV_FName :='GMV_VitalsEnterDLG';
-    GMV_FName :='GMV_VitalsEnterForm';
-    GMV_FName :='GMV_VitalsViewForm';
-    GMV_FName :='GMV_VitalsViewDLG';
-  }
-  lvData.Enabled := false;
+ lvData.Enabled := false;
   try
-    try
-      aFunctionName := 'GMV_VitalsViewDLG';
-      aRtnRec := LoadVitalsDLL;
+  if lvData.Selected <> nil then
+    aVitalsAbbv := lvData.Selected.Caption
+  else
+    aVitalsAbbv := '';
 
-      case aRtnRec.Return_Type of
-        DLL_Success:
-          try
-            @aFunctionAddr := GetProcAddress(VitalsDLLHandle, PAnsiChar(aFunctionName));
-            if Assigned(aFunctionAddr) then
-              begin
-                if Patient.Inpatient then
-                  aStartDate := FormatDateTime('mm/dd/yy', Now - 7)
-                else
-                  aStartDate := FormatDateTime('mm/dd/yy', IncMonth(Now, -6));
+  ViewPatientVitals(RPCBrokerV, Patient, Encounter, aVitalsAbbv, aChangesMade);
 
-                if lvData.Selected <> nil then
-                  aVitalsAbbv := lvData.Selected.Caption
-                else
-                  aVitalsAbbv := '';
-
-                aFunctionAddr(RPCBrokerV, Patient.DFN, IntToStr(Encounter.Location), aStartDate, FormatDateTime('mm/dd/yy', Now), GMV_APP_SIGNATURE, GMV_CONTEXT, GMV_CONTEXT, Patient.Name, Format('%s    %d', [Patient.SSN, Patient.Age]),
-                  Encounter.LocationName + U + aVitalsAbbv);
-              end
-            else
-              MessageDLG('Can''t find function "GMV_VitalsViewDLG".', mtError, [mbok], 0);
-          except
-            on E: Exception do
-              MessageDLG('Error running Vitals Lite: ' + E.Message, mtError, [mbok], 0);
-          end;
-        DLL_Missing:
-          begin
-            TaskMessageDlg('File Missing or Invalid', aRtnRec.Return_Message, mtError, [mbok], 0);
-          end;
-        DLL_VersionErr:
-          begin
-            TaskMessageDlg('Incorrect Version Found', aRtnRec.Return_Message, mtError, [mbok], 0);
-          end;
-      end;
-    finally
-      @aFunctionAddr := nil;
-      UnloadVitalsDLL;
-    end;
-
+  if aChangesMade then
+  begin
     CoverSheet.OnRefreshPanel(Self, CV_CPRS_VITL);
     CoverSheet.OnRefreshPanel(Self, CV_CPRS_RMND);
+  end;
+
   finally
     lvData.Enabled := True;
   end;
+
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_Vitals.OnAddItems(aList: TStrings);

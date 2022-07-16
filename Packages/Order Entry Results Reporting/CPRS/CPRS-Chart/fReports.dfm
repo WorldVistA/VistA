@@ -476,8 +476,14 @@ inherited frmReports: TfrmReports
           Margins.Bottom = 4
           Align = alClient
           Color = clCream
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
           HorzOffset = 3
           ParentColor = False
+          ParentFont = False
           Transparent = False
           VertOffset = 2
           WordWrap = False

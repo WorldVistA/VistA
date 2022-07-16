@@ -633,7 +633,15 @@ var
 begin
   CanClose := True;
   if(FAbort) then
+  begin
+  // TfrmProcedures, CheckSimilarNameOK is called by cboProvider.OnExit.
+  // Because OnExit can be called during the InfoBox command below, in order to
+  // check for a cancel condition in CheckSimilarNameOK we set FCancel to true
+  // here, then reset it to the result of the InfoBox call.  If Cancel is then
+  // set to false we call CheckSimilarNameOK below
+    FCancel := True;
     FCancel := (InfoBox(TXT_SAVECHANGES, TXT_SAVECHANGES, MB_YESNO) = ID_NO);
+  end;
   if FCancel then Exit;  //*KCM*
 
   if(uProviders.PrimaryIdx >= 0) then
@@ -671,6 +679,12 @@ begin
           TabControl.TabIndex := FormList.IndexOf(CT_ProcNm);
         end;
     end;
+
+  if TabControl.TabIndex = FormList.IndexOf(CT_GAFNm) then
+    CanClose := frmGAF.CheckSimilarNameOK;
+
+  if TabControl.TabIndex = FormList.IndexOf(CT_ProcNm) then
+    CanClose := frmProcedures.CheckSimilarNameOK;
 
   if CanClose then SendData;  //*KCM*
 

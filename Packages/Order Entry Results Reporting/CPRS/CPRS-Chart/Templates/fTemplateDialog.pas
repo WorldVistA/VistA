@@ -5,22 +5,50 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ORCtrls, ORFn, AppEvnts, uTemplates, fBase508Form, uConst,
-  VA508AccessibilityManager, U_CPTEditMonitor, U_CPTPasteDetails;
+  VA508AccessibilityManager
+  , mRequiredFieldsNavigator, Vcl.ComCtrls,
+  Vcl.Menus, U_CPTEditMonitor, U_CPTPasteDetails,
+  Data.DB, Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient, System.Variants,
+  Vcl.DBCtrls, uCore;
 
 type
   TfrmTemplateDialog = class(TfrmBase508Form)
     sbMain: TScrollBox;
-    pnlBottom: TScrollBox;
-    btnCancel: TButton;
-    btnOK: TButton;
-    btnAll: TButton;
-    btnNone: TButton;
-    lblFootnote: TStaticText;
-    btnPreview: TButton;
+    splFields: TSplitter;
+    grdpnlBottom: TGridPanel;
+    btnAllGrid: TButton;
+    btnNoneGrid: TButton;
+    btnPreviewGrid: TButton;
+    btnOKGrid: TButton;
+    btnCancelGrid: TButton;
+    pnlDebug: TPanel;
+    reText: TRichEdit;
+    PopupMenu1: TPopupMenu;
+    S1: TMenuItem;
+    T1: TMenuItem;
+    N1: TMenuItem;
+    S4: TMenuItem;
+    pnlBottomGrid: TPanel;
+    pnlBottomLeft: TPanel;
+    pnlBottomRight: TPanel;
+    pnlBtnTop: TPanel;
+    pnlBtnBottom: TPanel;
     CPTemp: TCopyEditMonitor;
+    Panel1: TPanel;
+    StaticText1: TStaticText;
+    btnDebug: TButton;
+    btnFields: TButton;
+    PopupMenu2: TPopupMenu;
+    Highlight1: TMenuItem;
+    splDebug: TSplitter;
+    cbCdsFieldsRequired: TCheckBox;
+    dbgControls: TDBGrid;
+    pnlTables: TPanel;
+    pnlText: TPanel;
+    edTarget: TEdit;
+    cbText: TCheckBox;
     procedure btnAllClick(Sender: TObject);
     procedure btnNoneClick(Sender: TObject);
-    procedure FormPaint(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -30,15 +58,29 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure S1Click(Sender: TObject);
+    procedure T1Click(Sender: TObject);
+    procedure S4Click(Sender: TObject);
+    procedure btnDebugClick(Sender: TObject);
+    procedure edTargetKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure btnFieldsClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
+    procedure Highlight1Click(Sender: TObject);
+    procedure cbCdsFieldsRequiredClick(Sender: TObject);
+    procedure cbTextClick(Sender: TObject);
   private
+    frRequiredFields: TRequiredFieldsFrame; // NSR20100706 AA 2015/09/29
     FFirstBuild: boolean;
+    FTIUParam: Integer; // 20100706 - VISTAOR-24208 FH 2021/02/12
     SL: TStrings;
     BuildIdx: TStringList;
     Entries: TStringList;
     NoTextID: TStringList;
     Index: string;
     OneOnly: boolean;
-    Count: integer;
+    Count: integer;  // number of dialog controls
     RepaintBuild: boolean;
     FirstIndent: integer;
     FBuilding: boolean;
@@ -47,7 +89,6 @@ type
     FTabPos: integer;
     FCheck4Required: boolean;
     FSilent: boolean;
-    procedure SizeFormToCancelBtn();
     procedure ChkAll(Chk: boolean);
     procedure BuildCB(CBidx: integer; var Y: integer; FirstTime: boolean);
     procedure ItemChecked(Sender: TObject);
@@ -63,8 +104,28 @@ type
     procedure ParentCBExit(Sender: TObject);
     procedure UMScreenReaderInit(var Message: TMessage); message UM_MISC;
     procedure InitScreenReaderSetup;
+
+    procedure FieldValueChanged(Sender: TObject);  // NSR20100706 AA 2015/09/29
+    procedure CMFocusChanged(var Message: TCMFocusChanged); Message CM_FocusChanged; // NSR20100706 AA 2015/09/29
+    procedure UpdateControlHighlighting(ctrl:TWinControl); //NSR20100706 AA 2015/09/29
+{$IFDEF DEBUG}
+    procedure SetDebugInfo(aControl:TWinControl=nil); //NSR20100706 AA 2015/09/29
+{$ENDIF}
   public
     property Silent: boolean read FSilent write FSilent ;
+
+    procedure setReqHighlightAlign(aPos:Integer); // NSR20100706 AA 2015/09/29
+    procedure setReqHighlightColor; // NSR20100706 AA 2015/09/29
+    procedure AdjustFormToFontSize(aSize:Integer); // NSR20100706 AA 2015/09/29
+
+    procedure UM_UpdateRequiredFieldsCount(var Message: TMessage); message UM_UpdateRFN;
+    procedure setDebugLayout;
+    procedure updateTemplate;
+
+{$IFDEF DEBUG}
+    procedure DebugHighlight(aControl: TWinControl);
+{$ENDIF}
+
   published
   end;
 
@@ -72,7 +133,7 @@ type
 function DoTemplateDialog(SL: TStrings; const CaptionText: string; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil): boolean;
 procedure CheckBoilerplate4Fields(SL: TStrings; const CaptionText: string = ''; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil); overload;
 procedure CheckBoilerplate4Fields(var AText: string; const CaptionText: string = ''; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil); overload;
-procedure ShutdownTemplateDialog;
+//procedure ShutdownTemplateDialog;  - AA: commenting out
 
 var
   frmTemplateDialog: TfrmTemplateDialog;
@@ -80,7 +141,11 @@ var
 implementation
 
 uses dShared, uTemplateFields, fRptBox, uInit, rMisc, uDlgComponents,
-  VA508AccessibilityRouter, VAUtils, fFrame;
+  VA508AccessibilityRouter, VAUtils, fFrame
+  , ORNet
+  , fOptionsTIUTemplates
+  , WinAPI.RichEdit
+  , dRequiredFields;
 
 {$R *.DFM}
 
@@ -90,7 +155,7 @@ var
 const
   Gap = 4;
   IndentGap = 18;
-
+  ss = ' -----------------------------------------------------------------------';
 
 procedure GetText(SL: TStrings; IncludeEmbeddedFields: Boolean);
 var
@@ -144,7 +209,6 @@ var
   CancelDlg: Boolean;
   CancelMsg: String;
 
-
   procedure IncDlgID(var id: string); //Appends an item count in the form of id.0, id.1, id.2, etc
   var                                 //based on what is in the StringList for id.
     k: integer;
@@ -153,19 +217,18 @@ var
     k := DlgIDCounts.IndexOf(id);
 
     if (k >= 0) then
-      begin
+    begin
       DlgInt := TIntStruc(DlgIDCounts.Objects[k]);
       DlgInt.x := DlgInt.x + 1;
-      id := id + '.' + InttoStr(DlgInt.x);
-      end
+      id := id + '.' + IntToStr(DlgInt.x);
+    end
     else
-      begin
+    begin
       DlgInt := TIntStruc.Create;
       DlgInt.x := 0;
       DlgIDCounts.AddObject(id, DlgInt);
       id := id + '.0';
-      end;
-
+    end;
   end;
 
   procedure CountDlgProps(var DlgID: string);  //Updates the item and parent item id's with the count
@@ -184,8 +247,8 @@ var
 
     if (x >= 0) then
       begin
-      DlgInt := TIntStruc(DlgIDCounts.Objects[x]);
-      pid := pid + '.' + InttoStr(DlgInt.x);
+        DlgInt := TIntStruc(DlgIDCounts.Objects[x]);
+        pid := pid + '.' + InttoStr(DlgInt.x);
       end;
 
     if length(id) > 0 then
@@ -199,14 +262,18 @@ begin
   Result := FALSE;
   CancelDlg := FALSE;
   SetTemplateDialogCanceled(FALSE);
+
+  dmRF.ClearRequired;
+
   frmTemplateDialog := TfrmTemplateDialog.Create(Application);
+
   try
     DlgIDCounts := TStringList.Create;
     DlgIDCounts.Sorted := TRUE;
     DlgIDCounts.Duplicates := dupError;
     frmTemplateDialog.Caption := CaptionText;
-    AssignFieldIDs(SL);
-    frmTemplateDialog.SL := SL;
+    AssignFieldIDs(SL);         // assigning IDs for every template field
+    frmTemplateDialog.SL := SL; // Fields IDS
     frmTemplateDialog.Index := '';
     Txt := SL.Text;
     frmTemplateDialog.OneOnly := (DelimCount(Txt, ObjMarker) = 1);
@@ -214,19 +281,19 @@ begin
     idx := 1;
     frmTemplateDialog.FirstIndent := 99999;
     repeat
-      i := pos(ObjMarker, Txt);
+      i := pos(ObjMarker, Txt); // processing  ^@@^ items
       if(i > 1) then
       begin
         j := pos(DlgPropMarker, Txt);
         if(j > 0) then
           begin
-          DlgProps := copy(Txt, j + DlgPropMarkerLen, (i - j - DlgPropMarkerLen));
-          CountDlgProps(DlgProps);
+            DlgProps := copy(Txt, j + DlgPropMarkerLen, (i - j - DlgPropMarkerLen));
+            CountDlgProps(DlgProps);
           end
         else
           begin
-          DlgProps := '';
-          j := i;
+            DlgProps := '';
+            j := i;
           end;
         inc(frmTemplateDialog.Count);
         frmTemplateDialog.Index := frmTemplateDialog.Index +
@@ -239,14 +306,18 @@ begin
       if(i > 0) then
         delete(txt, 1, i + ObjMarkerLen - 1);
     until (i = 0);
+
     if(frmTemplateDialog.Count > 0) then
     begin
-      if(frmTemplateDialog.OneOnly) then
-      begin
-        frmTemplateDialog.btnNone.Visible := FALSE;
-        frmTemplateDialog.btnAll.Visible := FALSE;
-      end;
-      frmTemplateDialog.BuildAllControls;
+      // NSR20100706 AA 2015/09/29
+      { hiding frRequiredFields might be confusing as some of the fields could be disabled at opening of the dialog
+      frmTemplateDialog.frRequiredFields.Visible :=
+        getNumberOfMissingFields(frmTemplateDialog.sbMain)>0; left 'as is' to keep the current appearance}
+      frmTemplateDialog.btnNoneGrid.Visible := not frmTemplateDialog.OneOnly;
+      frmTemplateDialog.btnAllGrid.Visible := not frmTemplateDialog.OneOnly;
+      frmTemplateDialog.BuildAllControls;  // build dialog controls
+      frmTemplateDialog.btnOKGrid.Enabled :=
+        dmRF.getNumberOfMissingFields(frmTemplateDialog.sbMain) < 1;
       frmTemplateDialog.CPTemp.RelatedPackage := 'Template: ' + CaptionText;
       repeat
          frmTemplateDialog.ShowModal;
@@ -279,11 +350,12 @@ begin
     //frmTemplateDialog.Free;    v22.11e RV
     if (Sl.Count > 0) and Assigned(ExtCPMon) then
       frmTemplateDialog.CPTemp.TransferData(ExtCPMon.EditMonitor);
-
     frmTemplateDialog.Release;
-    //frmTemplateDialog := nil;  access violation source?  removed 7/28/03 RV
-    Application.ProcessMessages;
+    frmTemplateDialog := nil;  // cleaning pointer after Release
 
+// Very Important - frees up uEntries before nesting templates can create new entries.
+//                  without this call the old entries are found when nesting templates.
+    Application.ProcessMessages;
     for i := 0 to DlgIDCounts.Count-1 do begin
       DlgIDCounts.Objects[i].Free;
     end;
@@ -297,9 +369,8 @@ begin
     SetTemplateDialogCanceled(FALSE);
     CheckBoilerplate4Fields(SL, CaptionText, PreviewMode, ExtCPMon);
   end;
-
 end;
-
+{
 procedure ShutdownTemplateDialog;
 begin
   if uTemplateDialogRunning and assigned(frmTemplateDialog) then
@@ -308,7 +379,7 @@ begin
     frmTemplateDialog.ModalResult := mrCancel;
   end;
 end;
-
+}
 procedure CheckBoilerplate4Fields(SL: TStrings; const CaptionText: string = ''; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil);
 var
   i: integer;
@@ -351,6 +422,8 @@ begin
   end;
 end;
 
+
+
 procedure TfrmTemplateDialog.ChkAll(Chk: boolean);
 var
   i: integer;
@@ -360,7 +433,13 @@ begin
   begin
     if(sbMain.Controls[i] is TORCheckBox) then
       TORCheckBox(sbMain.Controls[i]).Checked := Chk;
+
   end;
+  if assigned(frRequiredFields) then
+    begin
+      if assigned(frRequiredFields.FocusedControl) then
+        frRequiredFields.FocusedControl.SetFocus;
+    end;
 end;
 
 procedure TfrmTemplateDialog.btnAllClick(Sender: TObject);
@@ -456,20 +535,20 @@ begin
     result := IsAncestor(OldID, GetParentID(FindObjectByID(NewID)));
 end;
 
-procedure TfrmTemplateDialog.BuildCB(CBidx: integer; var Y: integer; FirstTime: boolean);
+procedure TfrmTemplateDialog.BuildCB(CBidx: Integer; var Y: Integer; FirstTime: Boolean);
 var
   bGap, Indent, i, idx, p1, p2: integer;
   EID, ID, PID, DlgProps, tmp, txt, tmpID: string;
   pctrl, ctrl: TControl;
   pnl: TPanel;
-  KillCtrl, doHint, dsp, noTextParent: boolean;
+  KillCtrl, doHint, dsp, noTextParent: Boolean;
   Entry: TTemplateDialogEntry;
-//  StringIn, StringOut: string;
+  // StringIn, StringOut: string;
   cb: TCPRSDialogParentCheckBox;
 
   procedure NextTabCtrl(ACtrl: TControl);
   begin
-    if(ACtrl is TWinControl) then
+    if (ACtrl is TWinControl) then
     begin
       inc(FTabPos);
       TWinControl(ACtrl).TabOrder := FTabPos;
@@ -477,58 +556,74 @@ var
   end;
 
 begin
-  tmp := Piece(Index, U, CBidx);
-  p1 := StrToInt(Piece(tmp,'~',1));
-  p2 := StrToInt(Piece(tmp,'~',2));
-  DlgProps := Piece(tmp,'~',3);
-  ID := Piece(DlgProps, ';', 3);
+  tmp := Piece(Index, U, CBidx);      // Index:     tmp^tmp^tmp
+                                      // tmp:       p1~p2~DlgProps
+  p1 := StrToInt(Piece(tmp,'~',1));   //            p1 - position
+  p2 := StrToInt(Piece(tmp,'~',2));   //            p2 - length
+  DlgProps := Piece(tmp,'~',3);       // set of flags
+                                      //            1 - visibility
+                                      //            2 - Group Index (radio button?)
+                                      //            3 - ?
+                                      //            4 - ?
+                                      //            5 - gap in CRLFs
+  ID := Piece(DlgProps, ';', 3);      // DlgProps:  ...;...;ID;PID
+                                      // ID links that CB with one of the sbMain Controls
   PID := Piece(DlgProps, ';', 4);
 
   ctrl := nil;
   pctrl := nil;
-  if(PID <> '') then
+  if(PID <> '') then             // NoTextID - list of items without checkboxed parents ?
     noTextParent := (NoTextID.IndexOf(PID) < 0)
   else
-    noTextParent := TRUE;
-  if not FirstTime then
-    ctrl := FindObjectByID(ID);
-  if noTextParent and (PID <> '') then
-    pctrl := FindObjectByID(PID);
-  if(PID = '') then
-    KillCtrl := FALSE
+    noTextParent := TRUE;        // noTextParent - no Text Parent
+  if not FirstTime then          // FirstTime there are no controls - ctrl is nil
+    ctrl := FindObjectByID(ID);  // find Control on sbMain by ID
+                                 // - for every control on sbMain with (tag<>0)
+                                 //   get the control ID from BuildIdx or from Index
+                                 // - if ID is found then compare it with the original one
+
+  if noTextParent and (pid <> '') then
+    pctrl := FindObjectByID(pid);// find parent control by ID
+
+  if (pid = '') then
+    KillCtrl := FALSE            // Don't kill if no parent
   else
   begin
-    if(assigned(pctrl)) then
+    if (Assigned(pctrl)) then
     begin
-      if(not (pctrl is TORCheckBox)) or
-        (copy(DlgProps,3,1) = BOOLCHAR[TRUE]) then // show if parent is unchecked
+      if (not(pctrl is TORCheckBox)) or (copy(DlgProps, 3, 1) = BOOLCHAR[TRUE])
+      then                       // show if parent is unchecked
         KillCtrl := FALSE
-      else
+      else                       // Kill only if unchecked if parent is Checkbox
         KillCtrl := (not TORCheckBox(pctrl).Checked);
     end
     else
-      KillCtrl := noTextParent;
+      KillCtrl := noTextParent;  // if no pctrl defined or no pctrl found in NoTextID list
+                                 // use noTextParent flag
   end;
-  if KillCtrl then
+
+  if KillCtrl then  // Kill the ctrl with no TextParent (exclude from BuildIdx, free if exists)
   begin
-    if(assigned(ctrl)) then
+    if (Assigned(ctrl)) then     // Hide Associate (the control linked to TORCheckBox)
     begin
-      if(ctrl is TORCheckBox) and (assigned(TORCheckBox(ctrl).Associate)) then
+      if (ctrl is TORCheckBox) and (Assigned(TORCheckBox(ctrl).Associate)) then
         TORCheckBox(ctrl).Associate.Hide;
-      idx := BuildIdx.IndexOfObject(TObject(ctrl.Tag));
+      idx := BuildIdx.IndexOfObject(TObject(ctrl.Tag)); // remove ctrl from BuildIdx
       if idx >= 0 then
         BuildIdx.delete(idx);
-      ctrl.Free;
+      ctrl.Free;                                        // free ctrl
     end;
-    exit;
+    exit;                       // EXIT if ctrl is killed
   end;
+
   tmp := copy(SL.Text, p1, p2);
-  if(copy(tmp, length(tmp)-1, 2) = CRLF) then
-    delete(tmp, length(tmp)-1, 2);
-  bGap := StrToIntDef(copy(DlgProps,5,1),0);
+  if (copy(tmp, length(tmp) - 1, 2) = CRLF) then // remove trailing CRLFs
+    delete(tmp, length(tmp) - 1, 2);
+
+  bGap := StrToIntDef(copy(DlgProps, 5, 1), 0); // remove header CRLFs
   while bGap > 0 do
   begin
-    if(copy(tmp, 1, 2) = CRLF) then
+    if (copy(tmp, 1, 2) = CRLF) then
     begin
       delete(tmp, 1, 2);
       dec(bGap);
@@ -536,31 +631,34 @@ begin
     else
       bGap := 0;
   end;
-  if(tmp = NoTextMarker) then
+
+  if (tmp = NoTextMarker) then // '<@>'
   begin
-    if(NoTextID.IndexOf(ID) < 0) then
-      NoTextID.Add(ID);
-    exit;
+    if (NoTextID.IndexOf(id) < 0) then
+      NoTextID.Add(id); // add CB (dialog?)  ID to NoTextID list
+    exit; // EXIT if the template is NoText
   end;
-  if(not assigned(ctrl)) then
+
+  if (not Assigned(ctrl)) then
   begin
-    dsp := (copy(DlgProps,1,1)=BOOLCHAR[TRUE]);
-    EID := 'DLG' + IntToStr(CBIdx);
-    idx := Entries.IndexOf(EID);
+    dsp := (copy(DlgProps, 1, 1) = BOOLCHAR[TRUE]); // template visibility
+    EID := 'DLG' + IntToStr(CBidx);
+    idx := Entries.IndexOf(EID);  // Entries - List of TTemplateDialogEntries - visible DLGnnn
     doHint := FALSE;
-    txt := tmp;
-    if(idx < 0) then
+    Txt := tmp; // tmp holds template text without Index
+    if (idx < 0) then // DLG is not found in Entries list
     begin
-      if(copy(DlgProps,2,1)=BOOLCHAR[TRUE]) then // First Line Only
+      if (copy(DlgProps, 2, 1) = BOOLCHAR[TRUE]) then  // GroupIndex (chop first 70 chars only?)
       begin
         i := pos(CRLF, tmp);
-        if(i > 0) then
+        if (i > 0) then
         begin
           dec(i);
           if i > 70 then
           begin
             i := 71;
-            while (i > 0) and (tmp[i] <> ' ') do dec(i);
+            while (i > 0) and (tmp[i] <> ' ') do
+              dec(i);
             if i = 0 then
               i := 70
             else
@@ -570,81 +668,110 @@ begin
           tmp := copy(tmp, 1, i) + ' ...';
         end;
       end;
-      Entry := GetDialogEntry(sbMain, EID, tmp);
-      Entry.AutoDestroyOnPanelFree := TRUE;
+      Entry := GetDialogEntry(sbMain, EID, tmp); // Creates TTemplateDialogEntry
+      Entry.AutoDestroyOnPanelFree := TRUE;      // top level of the template
       Entry.OnDestroy := EntryDestroyed;
       Entries.AddObject(EID, Entry);
 
-      //Populate the Copy/Paste control
+      // Populate the Copy/Paste control
     end
     else
       Entry := TTemplateDialogEntry(Entries.Objects[idx]);
 
-    if(dsp or OneOnly) then
-      cb := nil
-    else
-      cb := TCPRSDialogParentCheckBox.Create(Self);
+    if (dsp or OneOnly) then // if VISIBLE or only 1 ObjMarket found in Template
+      cb := nil              // then no need in TCheckBox
+    else                     // else create Parent Check Box
+      begin
+        cb := TCPRSDialogParentCheckBox.Create(Self);
+{$IFDEF DEBUG1022950}
+        cb.Color := clLime;                 //1022950
+{$ENDIF}
+      end;
 
-    pnl := Entry.GetPanel(FMaxPnlWidth, sbMain, cb);
+    pnl := Entry.GetPanel(FMaxPnlWidth, sbMain, cb); // TDlgFieldPanel
+{$IFDEF DEBUG1022950}
+    pnl.BorderStyle := bsSingle;              //1022950
+    pnl.ShowCaption := True;                  //1022950
+    pnl.Alignment := taRightJustify;          //1022950
+    pnl.Name := 'pnl'+IntToStr(Integer(pnl)); //1022950
+    pnl.Width := pnl.Width + 150;             //1022950
+{$ENDIF}
     pnl.Show;
-    if(doHint and (not pnl.ShowHint)) then
+    if (doHint and (not pnl.ShowHint)) then
     begin
       pnl.ShowHint := TRUE;
       Entry.Obj := pnl;
-      Entry.Text := txt;
+      Entry.Text := Txt;
       pnl.hint := Entry.GetText;
-      Entry.OnChange := FieldChanged;
-    end;
-    if not assigned(cb) then
+      Entry.OnChange := FieldChanged; // tracking control changes for NSR20100706
+    end
+// NSR20100706 AA 2015/09/29 --------------------------------------------- begin
+    else // notification on changes to the Field
+      Entry.OnChange := FieldValueChanged;
+// NSR20100706 AA 2015/09/29 ----------------------------------------------- end
+
+    if not Assigned(cb) then
       ctrl := pnl
     else
     begin
+// 20190702     AddParentCheckbox(Entry, cb); // NSA20100706 AA 2015/09/29
       ctrl := cb;
       ctrl.Parent := sbMain;
 
-      TORCheckbox(ctrl).OnEnter := frmTemplateDialog.ParentCBEnter;
-      TORCheckbox(ctrl).OnExit := frmTemplateDialog.ParentCBExit;
+      TORCheckBox(ctrl).OnEnter := frmTemplateDialog.ParentCBEnter;
+      TORCheckBox(ctrl).OnExit := frmTemplateDialog.ParentCBExit;
 
       TORCheckBox(ctrl).Height := TORCheckBox(ctrl).Height + 5;
       TORCheckBox(ctrl).Width := 17;
 
-    {Insert next line when focus fixed}
-    //  ctrl.Width := IndentGap;
-    {Remove next line when focus fixed}
-      TORCheckBox(ctrl).AutoSize := false;
+      { Insert next line when focus fixed }
+      // ctrl.Width := IndentGap;
+      { Remove next line when focus fixed }
+      TORCheckBox(ctrl).AutoSize := FALSE;
       TORCheckBox(ctrl).Associate := pnl;
-      pnl.Tag := Integer(ctrl);
-      tmpID := copy(ID, 1, (pos('.', ID) - 1)); {copy the ID without the decimal place}
-//      if Templates.IndexOf(tmpID) > -1 then
-//        StringIn := 'Sub-Template: ' + TTemplate(Templates.Objects[Templates.IndexOf(tmpID)]).PrintName
-//      else
-//        StringIn := 'Sub-Template:';
-//      StringOut := StringReplace(StringIn, '&', '&&', [rfReplaceAll]);
-//      TORCheckBox(ctrl).Caption := StringOut;
+      pnl.Tag := Integer(ctrl); // panel Tag assigned to the ctlr (pointer)
+      tmpID := copy(ID, 1, (pos('.', ID) - 1)); 
+      { copy the ID without the decimal place }
+      // if Templates.IndexOf(tmpID) > -1 then
+      // StringIn := 'Sub-Template: ' + TTemplate(Templates.Objects[Templates.IndexOf(tmpID)]).PrintName
+      // else
+      // StringIn := 'Sub-Template:';
+      // StringOut := StringReplace(StringIn, '&', '&&', [rfReplaceAll]);
+      // TORCheckBox(ctrl).Caption := StringOut;
       UpdateColorsFor508Compliance(ctrl);
 
     end;
-    ctrl.Tag := CBIdx;
+    ctrl.Tag := CBIdx;  // ctrl is TDlgFieldPanel
+                        // or
+                        // Template Entry parent TORCheckBox
 
-    Indent := StrToIntDef(Piece(DlgProps, ';', 5),0) - FirstIndent;
-    if dsp then inc(Indent);
+    // adjust position for visible control
+    Indent := StrToIntDef(Piece(DlgProps, ';', 5), 0) - FirstIndent;
+    if dsp then
+      inc(Indent);
     ctrl.Left := Gap + (Indent * IndentGap);
-    //ctrl.Width := sbMain.ClientWidth - Gap - ctrl.Left - ScrollBarWidth;
-    if(ctrl is TORCheckBox) then
+    // ctrl.Width := sbMain.ClientWidth - Gap - ctrl.Left - ScrollBarWidth;
+    if (ctrl is TORCheckBox) then
       pnl.Left := ctrl.Left + IndentGap;
 
-    if(ctrl is TORCheckBox) then with TORCheckBox(ctrl) do
-    begin
-      GroupIndex := StrToIntDef(Piece(DlgProps, ';', 2),0);
-      if(GroupIndex <> 0) then
-        RadioStyle := TRUE;
-      OnClick := ItemChecked;
-      StringData := DlgProps;
-    end;
+    if (ctrl is TORCheckBox) then
+      with TORCheckBox(ctrl) do
+      begin
+        GroupIndex := StrToIntDef(Piece(DlgProps, ';', 2), 0);
+        if (GroupIndex <> 0) then
+          RadioStyle := TRUE; // RadioStyle for "groupped" ctrl
+        OnClick := ItemChecked;
+        StringData := DlgProps;
+      end;
+
+    // registration in BuildIdx list - all controls of sbMain are included
     if BuildIdx.IndexOfObject(TObject(CBIdx)) < 0 then
       BuildIdx.AddObject(Piece(Piece(Piece(Index, U, CBIdx),'~',3), ';', 3), TObject(CBIdx));
   end;
+
+  // adjustnment of the ctrl Y position
   ctrl.Top := Y;
+  // adjustmnt of the available Y position
   NextTabCtrl(ctrl);
   if(ctrl is TORCheckBox) then
   begin
@@ -664,7 +791,6 @@ end;
 procedure TfrmTemplateDialog.ParentCBExit(Sender: TObject);
 begin
   (Sender as TORCheckbox).FocusOnBox := false;
-
 end;
 
 procedure TfrmTemplateDialog.ItemChecked(Sender: TObject);
@@ -674,6 +800,7 @@ begin
     RepaintBuild := TRUE;
     Invalidate;
   end;
+  UpdateControlHighlighting(TCheckBox(Sender)); // NSR20100706
 end;
 
 procedure TfrmTemplateDialog.BuildAllControls;
@@ -689,8 +816,9 @@ begin
     FirstTime := (sbMain.ControlCount = 0);
     NoTextID.Clear;
     Y := Gap - sbMain.VertScrollBar.Position;
-    for i := 1 to Count do
-      BuildCB(i, Y, FirstTime);
+
+    for i := 1 to Count do // all @@
+      BuildCB(i, Y, FirstTime); // BUild CB
     if ScreenReaderSystemActive then
     begin
       amgrMain.RefreshComponents;
@@ -700,15 +828,31 @@ begin
   finally
     FBuilding := FALSE;
   end;
+
+  dmRF.RefreshCdsControls(sbMain);
+  dmRF.FindFocusedControl(ActiveControl);
+  if Assigned(frRequiredFields) then
+  begin
+    frRequiredFields.RequiredTotal := dmRF.getNumberOfMissingFields(sbMain);
+  end;
 end;
 
 procedure TfrmTemplateDialog.FormPaint(Sender: TObject);
 begin
   if RepaintBuild then
   begin
+    try
     RepaintBuild := FALSE;
     BuildAllControls;
+      WinApi.Windows.PostMessage(Handle, UM_UpdateRFN, 0, 0); // reset navigator status
     InitScreenReaderSetup;
+{$IFDEF DEBUG}
+      SetDebugInfo(nil);
+{$ENDIF}
+    except
+      on E: Exception do
+        ShowMessage(E.Message);
+    end;
   end;
 end;
 
@@ -720,9 +864,35 @@ begin
     FFirstBuild := FALSE;
     InitScreenReaderSetup;
   end;
+  if Assigned(frRequiredFields) then
+  begin
+    frRequiredFields.setAlign(ReqHighlightAlign);  // NSR20100706 AA 2015/09/29
+    dmRF.HighlightControls(ReqHighlight);         // NSR20100706 AA 2015/09/29
+  end;
 end;
 
 procedure TfrmTemplateDialog.FormCreate(Sender: TObject);
+
+  procedure setupRequiredFields;                 // NSR20100706 AA 2015/09/29
+  begin
+    restoreHighlightOptions;
+
+    frRequiredFields := TRequiredFieldsFrame.Create(Self);
+    frRequiredFields.Parent := Self;
+    frRequiredFields.adjustButtonSize(Application.MainForm.Font.Size);
+    AdjustFormToFontSize(Application.MainForm.Font.Size);
+
+    S1.Checked := ReqHighlight;
+
+    dbgControls.DataSource := dmRF.dsControls;
+ {$IFDEF DEBUG}
+    N1.Visible := True;
+    T1.Visible := True;
+    btnFields.Visible := True;
+    btnDebug.Visible := True;
+{$ENDIF}
+  end;
+
 var
  DteStr: String;
 begin
@@ -733,13 +903,25 @@ begin
   NoTextID := TStringList.Create;
   FOldHintEvent := Application.OnShowHint;
   Application.OnShowHint := AppShowHint;
-  //ResizeAnchoredFormToFont(Self);
   FMaxPnlWidth := FontWidthPixel(sbMain.Font.Handle) * MAX_WRAP_WIDTH;
   SetFormPosition(Self);
   ResizeAnchoredFormToFont(Self);
-  SizeFormToCancelBtn();
+  FTIUParam := StrToIntDef(systemParameters.StringValue['tmRequiredFldsOff'], 1);
+//// 20100706 - VISTAOR-24208 FH 2021/02/12 -------------------------------- Begin
+  if (FTIUParam = 0) then
+  begin
+    setUpRequiredFields; // NSR20100706 AA 2015/09/29
+    sbMain.PopupMenu := PopupMenu1; // VISTAOR-24695
+  end else begin
+    sbMain.PopupMenu := nil; // VISTAOR-24695
+  end;
+
+//// 20100706 - VISTAOR-24208 FH 2021/02/12 ---------------------------------- end
   DteStr := FormatDateTime('mmddyyhhmmss', Now);
   CPTemp.ItemIEN := StrToInt64Def(DteStr, 3) * -1;
+{$IFDEF DEBUG}
+  pnlDebug.Width := width div 2;
+{$ENDIF}
 end;
 
 procedure TfrmTemplateDialog.AppShowHint(var HintStr: string; var CanShow: Boolean; var HintInfo: Controls.THintInfo);
@@ -776,44 +958,73 @@ end;
 procedure TfrmTemplateDialog.FieldChanged(Sender: TObject);
 begin
   with TTemplateDialogEntry(Sender) do
-    TPanel(Obj).hint := GetText;
+      TPanel(Obj).hint := GetText;
+  fieldValueChanged(Sender); // notifying dialog the value have changed NSR20100706 AA 2015/09/29
 end;
 
-procedure TfrmTemplateDialog.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+procedure TfrmTemplateDialog.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
 var
   Txt, tmp: string;
-  i, p1, p2: integer;
-  Save: boolean;
+  i, p1, p2: Integer;
+  Save: Boolean;
 
 begin
   CanClose := TRUE;
   if FCheck4Required then
   begin
+    // NSR2010706 enables OK button only if all the required fields are populated.
+    // Since FCheck4Required is set TRUE by OK button this code won't be called.
+    // Leaving "as is" in case it is needed for reminder dialogs processing
+
     FCheck4Required := FALSE;
     Txt := SL.Text;
-    for i := 0 to sbMain.ControlCount-1 do
+    for i := 0 to sbMain.ControlCount - 1 do
     begin
       Save := FALSE;
-      if(sbMain.Controls[i] is TORCheckBox) and
+      if (sbMain.Controls[i] is TORCheckBox) and
         (TORCheckBox(sbMain.Controls[i]).Checked) then
         Save := TRUE
-      else
-      if(OneOnly and (sbMain.Controls[i] is TPanel)) then
+      else if (OneOnly and (sbMain.Controls[i] is TPanel)) then
         Save := TRUE;
-      if(Save) then
+      if (Save) then
       begin
-        tmp := Piece(Index,U,sbMain.Controls[i].Tag);
-        p1 := StrToInt(Piece(tmp,'~',1));
-        p2 := StrToInt(Piece(tmp,'~',2));
-        if AreTemplateFieldsRequired(Copy(Txt,p1,p2)) then
+        tmp := Piece(index, U, sbMain.Controls[i].Tag);
+        p1 := StrToInt(Piece(tmp, '~', 1));
+        p2 := StrToInt(Piece(tmp, '~', 2));
+        if AreTemplateFieldsRequired(copy(Txt, p1, p2)) then
           CanClose := FALSE;
       end;
-      if not CanClose then
-      begin
-        ShowMsg(MissingFieldsTxt);
-        break;
-      end;
     end;
+    if not CanClose then
+    begin
+      if (FTIUParam = 1) then // 20100706 - VISTAOR-24208 FH 2021/02/12
+      begin
+        // To Show the original message.
+        ShowMsg(MissingFieldsTxt);
+        Abort;
+      end else begin
+        // NSR20100706 AA -------------------------------------------- begin
+          i := dmRF.getNumberOfMissingFields(sbMain);
+          case i of
+            0:
+              Txt := '';
+            1:
+              Txt := 'One required is not populated' + CRLF;
+          else
+            Txt := 'Several required fields are not populated' + CRLF;
+          end;
+          if i > 0 then
+          begin
+            ReqHighlight := TRUE;
+            frRequiredFields.Visible := TRUE;
+            dmRF.HighlightControls(ReqHighlight);
+
+            frRequiredFields.acFirst.Execute; // scroll to the first blank field
+            ShowMsg(Txt);
+          end;
+      end;
+    end; // NSR20100706 AA ---------------------------------------------- end
   end;
 end;
 
@@ -853,17 +1064,10 @@ procedure TfrmTemplateDialog.FormClose(Sender: TObject;
 begin
   Application.OnShowHint := FOldHintEvent;
   SaveUserBounds(Self);
-end;
 
-procedure TfrmTemplateDialog.SizeFormToCancelBtn;
-const
-  RIGHT_MARGIN = 12;
-var
-  minWidth : integer;
-begin
-  minWidth := btnCancel.Left + btnCancel.Width + RIGHT_MARGIN;
-  if minWidth > Self.Width then
-    Self.Width := minWidth;
+  // Prevent to save if is cancel
+  if ModalResult = mrOk then
+    saveHighlightOptions; // NSR20100706 AA 2015/09/29
 end;
 
 procedure TfrmTemplateDialog.UMScreenReaderInit(var Message: TMessage);
@@ -881,6 +1085,309 @@ begin
       item.free;
     amgrMain.AccessData.EnsureItemExists(ctrl);
   end;
+end;
+
+// NSR20100706 AA 2015/09/29 --------------------------------------------- begin
+procedure TfrmTemplateDialog.FieldValueChanged(Sender: TObject);
+begin
+  UpdateControlHighlighting(ActiveControl);
+end;
+
+procedure TfrmTemplateDialog.S1Click(Sender: TObject);
+begin
+  inherited;
+  S1.Checked := not S1.Checked;
+  ReqHighlight := S1.Checked;
+  SaveHighlightOptions;  // Correlation between session and server
+  dmRF.HighlightControls(ReqHighlight);
+end;
+
+procedure TfrmTemplateDialog.S4Click(Sender: TObject);
+begin
+  inherited;
+  UpdateRequiredFieldsPreferences(false, CurrentPosition); // don't reload values from server
+  frRequiredFields.setAlign(ReqHighlightAlign);
+  setReqHighlightColor;
+  S1.Checked := ReqHighlight;  // Correlation between session and server
+end;
+
+
+
+procedure TfrmTemplateDialog.CMFocusChanged(var Message: TCMFocusChanged);
+begin
+// to address TORComboEdit
+  if Assigned(frRequiredFields) then
+  begin
+    if ActiveControl is TORComboEdit then
+      frRequiredFields.FocusedControl := ActiveControl.Parent
+    else
+      frRequiredFields.FocusedControl := ActiveControl;
+  end;
+
+{$IFDEF DEBUG}
+  Caption := TWinControl(message.Sender).Name + ' ' +
+    TWinControl(message.Sender).ClassName +
+    ' @'+IntToStr(Integer(message.Sender));
+  DebugHighlight(TWinControl(message.Sender));
+{$ENDIF}
+  dmRF.cdsControls.Locate('CTRL_OBJ', VarArrayOf([Integer(message.Sender)]), []);
+end;
+
+function IsTemplateControl(aCtrl, aCtrlMain: TObject): boolean;
+begin
+  Result := False;
+  if aCtrl = nil then
+    Exit;
+  if TWinControl(aCtrl).Parent = aCtrlMain then
+    Result := True
+  else
+    Result := (TWinControl(aCtrl).Parent <> nil) and
+      IsTemplateControl(TWinControl(aCtrl).Parent, aCtrlMain);
+end;
+
+procedure TfrmTemplateDialog.UpdateControlHighlighting(ctrl:TWinControl);
+begin
+  if IsTemplateControl(ctrl,sbMain) then
+    begin
+      dmRF.HighlightControls(ReqHighlight);
+      PostMessage(handle,UM_UpdateRFN,0,0); // RTC 1022950
+    end;
+end;
+
+procedure TfrmTemplateDialog.setReqHighlightColor;
+begin
+  try
+    dmRF.HighlightControls(ReqHighlight);
+  except
+    on E: Exception do
+      ShowMessage(E.Message);
+  end;
+end;
+
+procedure TfrmTemplateDialog.setReqHighlightAlign(aPos:Integer);
+begin
+  try
+    frRequiredFields.setAlign(aPos);
+  except
+    on E: Exception do
+      ShowMessage(E.Message);
+  end;
+end;
+
+procedure TfrmTemplateDialog.AdjustFormToFontSize(aSize:Integer);
+var
+  W: Integer;
+
+  procedure adjustWidthToFont(aSize:Integer; var X:Integer);
+  begin
+    case aSize of
+    8,9:
+        X := 800;
+    10,11:
+        X := 800;
+    12,13:
+        X := 840;
+    14,15,16,17:
+        X := 1020;
+    18:
+        X := 1200;
+    else
+        X := 1280;
+    end;
+  end;
+
+begin
+  adjustWidthToFont(aSize,w);
+  Width := w;
+  Constraints.MinWidth := w;
+
+  pnlBottomGrid.Height := frRequiredFields.szButtonY +
+      pnlBtnTop.Height + pnlBtnBottom.Height;
+
+  grdpnlBottom.ColumnCollection[0].Value := frRequiredFields.szButtonX;
+  grdpnlBottom.ColumnCollection[1].Value := frRequiredFields.szButtonX;
+  grdpnlBottom.ColumnCollection[3].Value := frRequiredFields.szButtonX;
+  grdpnlBottom.ColumnCollection[5].Value := frRequiredFields.szButtonX;
+  grdpnlBottom.ColumnCollection[6].Value := frRequiredFields.szButtonX;
+
+  pnlBottomRight.Width := frRequiredFields.pnlRMargin.Width;
+  pnlBottomLeft.Width := frRequiredFields.pnlLMargin.Width;
+end;
+
+procedure TfrmTemplateDialog.T1Click(Sender: TObject);
+begin
+  inherited;
+{$IFDEF DEBUG}
+  T1.Checked := not T1.Checked;
+  SetDebugInfo(ActiveControl);
+{$ENDIF}
+end;
+
+{$IFDEF DEBUG}
+procedure TfrmTemplateDialog.SetDebugInfo(aControl: TWinControl = nil);
+begin
+  reText.Lines.Clear;
+  setDebugLayout;
+  if pnlDebug.Visible then
+  begin
+    reText.Lines.Text := reText.Lines.Text + CRLF + 'RFN.Focused Control: ' +
+      IntToStr(Integer(frRequiredFields.FocusedControl)) + ' -- ' +
+      frRequiredFields.FocusedControl.ClassName;
+
+    reText.Lines.Text := reText.Lines.Text + CRLF + dmRF.RequiredFields2Str;
+
+    reText.SelStart := 0;
+    reText.Perform(EM_SCROLLCARET, 0, 0);
+
+    DebugHighlight(frRequiredFields.FocusedControl);
+  end;
+end;
+{$ENDIF}
+// NSR20100706 AA 2015/09/29 ----------------------------------------------- end
+
+procedure TfrmTemplateDialog.UM_UpdateRequiredFieldsCount(var Message: TMessage);
+begin
+  if (FTIUParam = 0) then // 20100706 - VISTAOR-24208 FH 2021/02/12
+  begin
+    frRequiredFields.RequiredTotal := dmRF.getNumberOfMissingFields(sbMain);
+    btnOKGrid.Enabled := frRequiredFields.RequiredTotal < 1;
+  end;
+{$IFDEF DEBUG}
+  SetDebugInfo(nil);
+{$ENDIF}
+  dmRF.RefreshCdsControls(sbMain);
+
+  if assigned(ActiveControl) then
+    dmRF.cdsControls.Locate('CTRL_OBJ', VarArrayOf([Integer(ActiveControl)]), []);
+
+end;
+
+procedure TfrmTemplateDialog.edTargetKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  CharPos, CharPos2: Integer;
+
+  procedure HighlightRichEdit(re: TRichEdit; StartChar, EndChar: Integer;
+    HighLightColor: TColor; Flag: Integer = SCF_SELECTION);
+  var
+    Format: CHARFORMAT2;
+  begin
+    re.SelStart := StartChar;
+    re.SelLength := EndChar;
+    // Set the background color
+    FillChar(Format, SizeOf(Format), 0);
+    Format.cbSize := SizeOf(Format);
+    Format.dwMask := CFM_BACKCOLOR;
+    Format.crBackColor := HighLightColor;
+    re.Perform(EM_SETCHARFORMAT, Flag, Longint(@Format));
+  end;
+
+begin
+  inherited;
+  if (Key = VK_RETURN) then
+  begin
+    HighlightRichEdit(reText, 0, length(reText.Text), reText.Color);
+    CharPos := 0;
+    repeat
+      // find the text and save the position
+      CharPos2 := reText.FindText(edTarget.Text, CharPos,
+        length(reText.Text), []);
+      CharPos := CharPos2 + 1;
+      if CharPos = 0 then
+        break;
+
+      HighlightRichEdit(reText, CharPos2, length(edTarget.Text), clYellow);
+
+    until CharPos = 0;
+    Key := 0;
+  end;
+end;
+
+procedure TfrmTemplateDialog.btnDebugClick(Sender: TObject);
+begin
+  inherited;
+{$IFDEF DEBUG}
+  SetDebugInfo(ActiveControl);
+{$ENDIF}
+end;
+
+procedure TfrmTemplateDialog.btnFieldsClick(Sender: TObject);
+begin
+  inherited;
+  Windows.PostMessage(Self.Handle,UM_UpdateRFN,0,0);
+end;
+
+procedure TfrmTemplateDialog.updateTemplate;
+begin
+  if RepaintBuild then
+  begin
+    RepaintBuild := FALSE;
+    BuildAllControls;
+    Windows.PostMessage(Handle, UM_UpdateRFN, 0, 0); // reset navigator status RTC 1022950
+    InitScreenReaderSetup;
+  end;
+end;
+
+procedure TfrmTemplateDialog.FormResize(Sender: TObject);
+begin
+  inherited;
+{$IFDEF DEBUG}
+  pnlDebug.Width := width div 2;
+{$ENDIF}
+end;
+
+procedure TfrmTemplateDialog.setDebugLayout;
+var
+  fDebug: Boolean;
+
+begin
+  fDebug := T1.Checked;
+  pnlDebug.Visible := fDebug;
+  if not fDebug then
+    begin
+      splFields.Align := alTop;
+      splFields.Visible := False;
+    end
+  else
+    begin
+      splFields.Visible := True;
+      splFields.Align := alRight;
+      splFields.Left := Width - pnlDebug.Width - splFields.Width;
+    end;
+end;
+
+{$IFDEF DEBUG}
+procedure TfrmTemplateDialog.DebugHighlight(aControl: TWinControl);
+var
+  K: Word;
+begin
+  edTarget.Text := IntToStr(Integer(aControl));
+  K := VK_RETURN;
+  edTargetKeyDown(edTarget,K,[]);
+end;
+{$ENDIF}
+
+procedure TfrmTemplateDialog.Highlight1Click(Sender: TObject);
+var
+  K: Word;
+begin
+  inherited;
+  edTarget.Text := reText.SelText;
+  K := VK_RETURN;
+  edTargetKeyDown(edTarget,K,[]);
+end;
+
+procedure TfrmTemplateDialog.cbCdsFieldsRequiredClick(Sender: TObject);
+begin
+  inherited;
+  dmRF.setFilterFieldsRequired(cbCdsFieldsRequired.Checked);
+end;
+
+procedure TfrmTemplateDialog.cbTextClick(Sender: TObject);
+begin
+  inherited;
+  pnlText.Visible := cbText.Checked;
+  splDebug.Top := Height - pnlText.Height - 1;
 end;
 
 end.

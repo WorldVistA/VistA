@@ -389,7 +389,7 @@ inherited frmConsultAction: TfrmConsultAction
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 4
+          Width = 348
           Height = 4
           Align = alTop
           TabOrder = 1
@@ -442,28 +442,14 @@ inherited frmConsultAction: TfrmConsultAction
       TabOrder = 1
       OnClick = cmdOKClick
     end
-    inline DstMgr: TfrDSTMgr
-      Left = 0
-      Top = 0
-      Width = 123
-      Height = 30
-      Align = alLeft
-      Color = clBtnFace
-      ParentBackground = False
-      ParentColor = False
+    object btnLaunchToolbox: TButton
+      Left = 3
+      Top = 4
+      Width = 130
+      Height = 25
+      Caption = 'Open Consult Tool'
       TabOrder = 2
-      ExplicitWidth = 123
-      ExplicitHeight = 30
-      inherited btnLaunchToolbox: TButton
-        Width = 117
-        Height = 24
-        OnClick = DstMgrbtnLaunchToolboxClick
-        ExplicitWidth = 118
-        ExplicitHeight = 24
-      end
-      inherited alDST: TActionList
-        Left = 120
-      end
+      OnClick = btnLaunchToolboxClick
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -542,10 +528,7 @@ inherited frmConsultAction: TfrmConsultAction
         'Component = pnlActionBy'
         'Status = stsDefault')
       (
-        'Component = DstMgr'
-        'Status = stsDefault')
-      (
-        'Component = DstMgr.btnLaunchToolbox'
+        'Component = btnLaunchToolbox'
         'Status = stsDefault'))
   end
 end

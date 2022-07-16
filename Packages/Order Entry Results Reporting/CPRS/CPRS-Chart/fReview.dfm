@@ -9,14 +9,10 @@ inherited frmReview: TfrmReview
   Constraints.MinWidth = 695
   OldCreateOrder = True
   Position = poScreenCenter
-  OnClose = FormClose
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnHelp = nil
   OnKeyUp = FormKeyUp
   OnMouseDown = FormMouseDown
   OnMouseMove = FormMouseMove
-  OnShow = FormShow
   ExplicitWidth = 729
   ExplicitHeight = 568
   PixelsPerInch = 96
@@ -194,8 +190,8 @@ inherited frmReview: TfrmReview
       AlignWithMargins = True
       Left = 3
       Top = 0
-      Width = 707
-      Height = 40
+      Width = 1574
+      Height = 17
       Margins.Top = 0
       Margins.Bottom = 0
       Align = alClient
@@ -218,6 +214,7 @@ inherited frmReview: TfrmReview
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitWidth = 304
     DesignSize = (
       713
       149)
@@ -264,9 +261,9 @@ inherited frmReview: TfrmReview
           ExplicitHeight = 133
           inherited pnlMain: TPanel
             Width = 245
-            Height = 171
+            Height = 168
             ExplicitWidth = 245
-            ExplicitHeight = 171
+            ExplicitHeight = 168
             inherited spacer1: TLabel
               Top = 20
               Width = 245
@@ -280,7 +277,7 @@ inherited frmReview: TfrmReview
               Top = 150
               Width = 245
               Height = 18
-              ExplicitTop = 153
+              ExplicitTop = 150
               ExplicitWidth = 245
               ExplicitHeight = 18
               inherited lblHNC2: TVA508StaticText
@@ -304,7 +301,7 @@ inherited frmReview: TfrmReview
               Top = 114
               Width = 245
               Height = 18
-              ExplicitTop = 116
+              ExplicitTop = 114
               ExplicitWidth = 245
               ExplicitHeight = 18
               inherited lblMST2: TVA508StaticText
@@ -324,7 +321,7 @@ inherited frmReview: TfrmReview
               Top = 78
               Width = 245
               Height = 18
-              ExplicitTop = 79
+              ExplicitTop = 78
               ExplicitWidth = 245
               ExplicitHeight = 18
               inherited lblSWAC2: TVA508StaticText
@@ -344,7 +341,7 @@ inherited frmReview: TfrmReview
               Top = 60
               Width = 245
               Height = 18
-              ExplicitTop = 61
+              ExplicitTop = 60
               ExplicitWidth = 245
               ExplicitHeight = 18
               inherited lblIR2: TVA508StaticText
@@ -592,6 +589,7 @@ inherited frmReview: TfrmReview
         Caption = 'All Orders Except Controlled Substance EPCS Orders'
         TabOrder = 2
         TabStop = True
+        ExplicitWidth = 254
       end
     end
     object pnlCSReview: TPanel
@@ -606,11 +604,10 @@ inherited frmReview: TfrmReview
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 705
+        Width = 166
         Height = 13
         Align = alTop
         Caption = 'Controlled Substance EPCS Orders'
-        ExplicitWidth = 166
       end
       object lstCSReview: TCaptionCheckListBox
         Left = 0

@@ -13,6 +13,7 @@ inherited frmEncounter: TfrmEncounter
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnCloseQuery = FormCloseQuery
   OnResize = FormResize
   OnShow = FormShow
   ExplicitWidth = 478
@@ -65,7 +66,7 @@ inherited frmEncounter: TfrmEncounter
     ItemHeight = 13
     ItemTipColor = clWindow
     ItemTipEnable = True
-    ListItemsOnly = True
+    ListItemsOnly = False
     LongList = True
     LookupPiece = 2
     MaxLength = 0
@@ -74,9 +75,10 @@ inherited frmEncounter: TfrmEncounter
     SynonymChars = '<>'
     TabOrder = 0
     Text = ''
-    OnDblClick = cmdOKClick
+    OnDblClick = cboPtProviderDblClick
     OnNeedData = cboPtProviderNeedData
     CharsNeedMatch = 1
+    UniqueAutoComplete = True
   end
   object cmdDateRange: TButton [4]
     Tag = 9
@@ -116,6 +118,7 @@ inherited frmEncounter: TfrmEncounter
     Caption = 'Cancel'
     Constraints.MinHeight = 21
     Constraints.MinWidth = 21
+    ModalResult = 2
     TabOrder = 4
     OnClick = cmdCancelClick
   end
@@ -129,8 +132,8 @@ inherited frmEncounter: TfrmEncounter
     Constraints.MinHeight = 21
     Constraints.MinWidth = 21
     Default = True
+    ModalResult = 1
     TabOrder = 3
-    OnClick = cmdOKClick
   end
   object Panel1: TPanel [8]
     Left = 0
@@ -169,7 +172,7 @@ inherited frmEncounter: TfrmEncounter
           ScrollWidth = 353
           ShowHint = True
           TabOrder = 0
-          OnDblClick = cmdOKClick
+          OnDblClick = lstClinicDblClick
           Caption = 'Clinic Appointments / Visits (T-30 thru T+1)'
           ItemTipColor = clWindow
           LongList = False
@@ -212,7 +215,7 @@ inherited frmEncounter: TfrmEncounter
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
-          OnDblClick = cmdOKClick
+          OnDblClick = lstAdmitDblClick
           Caption = 'Hospital Admissions'
           ItemTipColor = clWindow
           LongList = False
@@ -306,7 +309,7 @@ inherited frmEncounter: TfrmEncounter
           TabOrder = 0
           Text = ''
           OnChange = cboNewVisitChange
-          OnDblClick = cmdOKClick
+          OnDblClick = cboNewVisitDblClick
           OnNeedData = cboNewVisitNeedData
           CharsNeedMatch = 1
         end

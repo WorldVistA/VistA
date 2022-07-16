@@ -103,7 +103,7 @@ procedure DialogOptionsPatientSelection(topvalue, leftvalue, fontsize: integer; 
 
 implementation
 
-uses rOptions, uOptions, rCore, VAUtils;
+uses rOptions, uOptions, rCore, VAUtils, uSimilarNames;
 
 {$R *.DFM}
 
@@ -242,6 +242,7 @@ begin
 
   rpcGetListSourceDefaults(defprovider, deftreating, deflist, defward, defpcmm);
   cboProvider.SelectByIEN(defprovider);
+  TSimilarNames.RegORComboBox(cboProvider);
   cboTreating.SelectByIEN(deftreating);
   cboTeam.SelectByIEN(deflist);
   cboWard.SelectByIEN(defward);
@@ -330,9 +331,16 @@ procedure TfrmOptionsPatientSelection.btnOKClick(Sender: TObject);
 var
   StartDays, StopDays, mon, tues, wed, thurs, fri, sat, sun: integer;
   PLSort: Char;
-  PLSource: string;
+  PLSource, aErrMsg: string;
   pcmm, prov, spec, team, ward: integer;
 begin
+
+  if not CheckForSimilarName(cboProvider, aErrMsg, ltProvider, sPr) then
+  begin
+    ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Invalid Provider');
+    Exit;
+  end;
+
   StartDays := txtVisitStart.Tag;
   StopDays := txtVisitStop.Tag;
   mon := cboMonday.ItemIEN;
@@ -408,11 +416,14 @@ end;
 
 procedure TfrmOptionsPatientSelection.cboProviderExit(Sender: TObject);
 begin
-  with (Sender as TORComboBox) do
+  if Sender is TORComboBox then
   begin
-    if Text = '' then ItemIndex := -1; // TDP (7/23/2014) - Added to clear combo box defaults during save consistently
-    if ItemIndex < 0 then
-      Text := '';
+    with (Sender as TORComboBox) do
+    begin
+      if Text = '' then ItemIndex := -1; // TDP (7/23/2014) - Added to clear combo box defaults during save consistently
+      if ItemIndex < 0 then
+        Text := '';
+    end;
   end;
 end;
 

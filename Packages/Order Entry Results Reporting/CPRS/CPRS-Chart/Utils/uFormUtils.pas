@@ -14,6 +14,7 @@ procedure ListViewClearSortIndicator(aHandle: HWND; aColumn: Integer);
 procedure AlignForm(aForm: TForm; AlignStyle: TAlign);
 
 procedure MenuItemMoveRight(aMenu: hMenu; aCommand: Cardinal);
+function CombineHeights(ctrl: array of TControl): integer;
 
 implementation
 
@@ -130,6 +131,25 @@ begin
       Application.MainForm.Width := Application.MainForm.Width - 1;
       Application.ProcessMessages;
     end;
+end;
+
+function CombineHeights(ctrl: array of TControl): integer;
+var
+  i: integer;
+begin
+  Result := 0;
+  for i := Low(ctrl) to High(ctrl) do
+  begin
+    if ctrl[i].Visible then
+    begin
+      if ctrl[i].Align = alClient then
+        inc(Result, ctrl[i].Constraints.MinHeight)
+      else
+        inc(Result, ctrl[i].Height);
+      if ctrl[i].AlignWithMargins then
+        inc(Result, ctrl[i].Margins.Top + ctrl[i].Margins.Bottom);
+    end;
+  end;
 end;
 
 end.

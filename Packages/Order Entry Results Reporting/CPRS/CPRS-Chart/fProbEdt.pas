@@ -160,7 +160,7 @@ implementation
 {$R *.DFM}
 
 uses ORFn, uProbs, fProbs, rProbs, rCover, rCore, rOrders, fProbCmt, fProbLex, rPCE, uInit  ,
-     VA508AccessibilityRouter, VAUtils, rMisc, uGlobalVar;
+     VA508AccessibilityRouter, VAUtils, rMisc, uGlobalVar, uSimilarNames;
 
 type
   TDialogItem = class { for loading edits & quick orders }
@@ -634,7 +634,7 @@ begin
         cbProv.SelectByIEN(Encounter.Provider);
       end
     else cbProv.InitLongList('');
-
+    TSimilarNames.RegORComboBox(cbProv);
 
     if UpperCase(Reason) = 'A' then
       begin
@@ -783,7 +783,7 @@ const
   TC_INACTIVE_SCODE   = 'Inactive SNOMED CT Code';
 var
   AList: TstringList;
-  remcom, vu, ut, PtID: string;
+  remcom, vu, ut, PtID, aErrMsg: string;
   NTRTCallResult: String;
   DateOfInterest: TFMDateTime;
   SvcCat: Char;
@@ -794,6 +794,13 @@ begin
   else
     DateOfInterest := Encounter.DateTime;
   frmProblems.wgProbData.TabStop := True;  //CQ #15531 part (c) [CPRS v28.1] {TC}.
+
+  if not CheckForSimilarName(cbProv, aErrMsg, ltProvider, sPr) then
+  begin
+    ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
+    exit;
+  end;
+
   if (Reason <> 'R') and (Reason <> 'r') then
     if (rgStatus.itemindex=-1) or (cbProv.itemindex=-1) then
     begin
@@ -1159,7 +1166,7 @@ end;
 
 procedure TfrmdlgProb.ControlChange(Sender: TObject);
 begin
-  fChanged:=true;
+  fChanged := True;
 end;
 
 destructor TfrmdlgProb.Destroy;

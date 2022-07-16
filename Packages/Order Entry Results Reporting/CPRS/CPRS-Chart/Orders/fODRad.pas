@@ -142,6 +142,8 @@ var
   sl: TStrings;
   tmpResp: TResponse;
   i: integer;
+  oldCE: TNotifyEvent;
+
 begin
   inherited;
   if OrderAction in [ORDER_COPY, ORDER_EDIT, ORDER_QUICK] then with Responses do
@@ -152,9 +154,15 @@ begin
     Changing := True;
     with cboImType do
       begin
-        FastAssign(SubsetOfImagingTypes, cboImType.Items);
-        for i := 0 to Items.Count-1 do
-          if StrToIntDef(Piece(Items[i],U,4), 0) = DisplayGroup then ItemIndex := i;
+        oldCE := OnChange;
+        OnChange := nil;
+        try
+          FastAssign(SubsetOfImagingTypes, cboImType.Items);
+          for i := 0 to Items.Count-1 do
+            if StrToIntDef(Piece(Items[i],U,4), 0) = DisplayGroup then ItemIndex := i;
+        finally
+          OnChange := oldCE;
+        end;
         if OrderAction = ORDER_EDIT then
         begin
           Enabled := False;

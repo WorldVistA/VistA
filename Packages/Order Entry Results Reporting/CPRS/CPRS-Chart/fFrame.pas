@@ -429,6 +429,8 @@ type
     function  TabExists(ATabID: integer): boolean;
     procedure DisplayEncounterText;
     function DLLActive: boolean;
+    function FindNextControl(CurControl: TWinControl;
+      GoForward, CheckTabStop, CheckParent: Boolean): TWinControl; reintroduce;
     property ChangeSource:    Integer read FChangeSource;
     property CCOWContextChanging: Boolean read FCCOWContextChanging;
     property CCOWDrivedChange: Boolean  read FCCOWDrivedChange;
@@ -498,7 +500,7 @@ uses
   fViewNotifications, iCoverSheetIntf, AVCatcher, System.IniFiles, Wsockc, rOTH,
   uVersionCheck, uFormUtils
   , oPDMPData, rPDMP
-  , uInfoBoxWithBtnControls;
+  , uInfoBoxWithBtnControls, uHelpManager, uSimilarNames;
 
 var
   IsRunExecuted: Boolean = FALSE;
@@ -1130,6 +1132,8 @@ begin
   //Will load the copy/paste buffer
   CPAppMon.LoadTheProperties;
   CPAppMon.LoadTheBuffer;
+
+  SimilarNameEnabled := Uppercase(Getuserparam('OR SIMILAR NAMES ENABLED')) = '1';
 end;
 
 procedure TfrmFrame.StartCCOWContextor;
@@ -1945,6 +1949,7 @@ begin
       NF_IMAGING_REQUEST_CANCEL_HELD   : NextIndex := PageIDToTab(CT_ORDERS);
       NF_NEW_SERVICE_CONSULT_REQUEST   : NextIndex := PageIDToTab(CT_CONSULTS);
       NF_CONSULT_REQUEST_CANCEL_HOLD   : NextIndex := PageIDToTab(CT_CONSULTS);
+      NF_PROSTHETICS_REQUEST_UPDATED   : NextIndex := PageIDToTab(CT_CONSULTS);
       NF_SITE_FLAGGED_RESULTS          : NextIndex := PageIDToTab(CT_ORDERS);
       NF_ORDERER_FLAGGED_RESULTS       : NextIndex := PageIDToTab(CT_ORDERS);
       NF_ORDER_REQUIRES_COSIGNATURE    : NextIndex := PageIDToTab(CT_ORDERS);
@@ -1969,6 +1974,7 @@ begin
           NextIndex := PageIDToTab(CT_ORDERS);
         end;
       NF_LAPSED_ORDER                  : NextIndex := PageIDToTab(CT_ORDERS);
+      NF_NEW_ALLERGY_CONFLICT_ORDER    : NextIndex := PageIDToTab(CT_ORDERS); // NJC
       NF_HIRISK_ORDER                  : NextIndex := PageIDToTab(CT_ORDERS);
       NF_NEW_ORDER                     : NextIndex := PageIDToTab(CT_ORDERS);
       NF_IMAGING_RESULTS_AMENDED       : NextIndex := PageIDToTab(CT_REPORTS);
@@ -1976,6 +1982,7 @@ begin
       NF_UNVERIFIED_ORDER              : NextIndex := PageIDToTab(CT_ORDERS);
       NF_FLAGGED_OI_RESULTS            : NextIndex := PageIDToTab(CT_ORDERS);
       NF_FLAGGED_OI_ORDER              : NextIndex := PageIDToTab(CT_ORDERS);
+      NF_FLAGGED_ORDERS_COMMENTS       : NextIndex := PageIDToTab(CT_ORDERS); // NSR#20110719
       NF_DC_ORDER                      : NextIndex := PageIDToTab(CT_ORDERS);
       NF_DEA_AUTO_DC_CS_MED_ORDER      : NextIndex := PageIDToTab(CT_ORDERS);
       NF_DEA_CERT_REVOKED              : NextIndex := PageIDToTab(CT_ORDERS);
@@ -2516,7 +2523,7 @@ const
   TC_ECS_NOTFOUND = 'Application Not Found';
 var
   x, AFile, Param, MenuCommand, ECSAppend, CapNm, curPath : string;
-  IsECSInterface: boolean;
+  IsECSInterface, CallHelp: boolean;
 
   function TakeOutAmps(AString: string): string;
   var
@@ -2650,7 +2657,10 @@ begin
       ExcuteEC(AFile,Param);
   end else
   begin
-    ShellExecute(Handle, 'open', PChar(AFile), PChar(Param), '', SW_NORMAL);
+    if ExtractFileExt(AFile) = '.chm' then
+      THelpManager.GetInstance.ExecHelp(1, 0, CallHelp)
+    else
+      ShellExecute(Handle, 'open', PChar(AFile), PChar(Param), '', SW_NORMAL);
   end;
 end;
 
@@ -4279,6 +4289,7 @@ begin
     FPrevInPatient := True;
   end;
   DisplayEncounterText;
+  frmNotes.UpdateNotesCaption(True);
   setOtherInfoPanel;
 end;
 
@@ -4855,6 +4866,14 @@ begin
   Result := tempDFN;
   data := nil;
   anItem := nil;
+end;
+
+function TfrmFrame.FindNextControl(CurControl: TWinControl; GoForward,
+  CheckTabStop, CheckParent: Boolean): TWinControl;
+// Changing the visibility of this to public for frmFrame
+begin
+  Result := inherited FindNextControl(CurControl, GoForward,  CheckTabStop,
+    CheckParent);
 end;
 
 procedure TfrmFrame.UpdateCCOWContext;

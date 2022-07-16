@@ -45,7 +45,7 @@ inherited frmODCslt: TfrmODCslt
   end
   object pnlMain: TPanel [1]
     Left = 0
-    Top = 107
+    Top = 109
     Width = 652
     Height = 177
     Align = alTop
@@ -491,43 +491,43 @@ inherited frmODCslt: TfrmODCslt
       ExplicitHeight = 57
     end
     inherited memMessage: TRichEdit
-      Left = 34
+      Left = 42
       Top = 2
-      Width = 346
+      Width = 338
       Height = 57
       Align = alClient
-      ExplicitLeft = 34
+      ExplicitLeft = 42
       ExplicitTop = 2
-      ExplicitWidth = 346
+      ExplicitWidth = 338
       ExplicitHeight = 57
     end
   end
   inherited cmdAccept: TButton [4]
     AlignWithMargins = True
-    Left = 3
-    Top = 66
-    Width = 646
+    Left = 4
+    Top = 67
+    Width = 644
     Height = 38
     Margins.Top = 0
     Align = alTop
     TabOrder = 5
-    ExplicitLeft = 3
-    ExplicitTop = 66
-    ExplicitWidth = 646
+    ExplicitLeft = 4
+    ExplicitTop = 67
+    ExplicitWidth = 644
     ExplicitHeight = 38
   end
   inherited cmdQuit: TButton [5]
     AlignWithMargins = True
-    Left = 3
+    Left = 4
     Top = 25
-    Width = 646
+    Width = 644
     Height = 38
     Margins.Top = 0
     Align = alTop
     TabOrder = 7
-    ExplicitLeft = 3
+    ExplicitLeft = 4
     ExplicitTop = 25
-    ExplicitWidth = 646
+    ExplicitWidth = 644
     ExplicitHeight = 38
   end
   object grdDstControls: TGridPanel [6]
@@ -550,7 +550,7 @@ inherited frmODCslt: TfrmODCslt
     ControlCollection = <
       item
         Column = 0
-        Control = lblDstStatus
+        Control = pnlDSTStatus
         Row = 0
       end
       item
@@ -587,21 +587,23 @@ inherited frmODCslt: TfrmODCslt
       item
         SizeStyle = ssAbsolute
         Value = 33.000000000000000000
+      end
+      item
+        SizeStyle = ssAuto
       end>
     ShowCaption = False
     TabOrder = 8
-    object lblDstStatus: TVA508StaticText
-      Name = 'lblDstStatus'
-      AlignWithMargins = True
-      Left = 3
-      Top = 3
-      Width = 520
-      Height = 27
+    object pnlDSTStatus: TPanel
+      Left = 0
+      Top = 0
+      Width = 526
+      Height = 33
       Align = alClient
       Alignment = taLeftJustify
-      Caption = 'This is the DST status message label.'
+      BevelOuter = bvNone
+      BorderWidth = 5
+      Caption = 'pnlDSTStatus'
       TabOrder = 0
-      ShowAccelChar = True
     end
     object pnlBaseMessage: TPanel
       Left = 0
@@ -625,7 +627,7 @@ inherited frmODCslt: TfrmODCslt
       BevelOuter = bvNone
       Caption = 'Panel1'
       ShowCaption = False
-      TabOrder = 2
+      TabOrder = 3
     end
     object pnlBaseCancel: TPanel
       Left = 526
@@ -636,7 +638,7 @@ inherited frmODCslt: TfrmODCslt
       BevelOuter = bvNone
       Caption = 'Panel1'
       ShowCaption = False
-      TabOrder = 3
+      TabOrder = 4
     end
     object pnlDST: TPanel
       Left = 526
@@ -645,41 +647,42 @@ inherited frmODCslt: TfrmODCslt
       Height = 33
       Align = alClient
       BevelOuter = bvNone
-      Caption = 'pnlDST'
+      ParentShowHint = False
       ShowCaption = False
-      TabOrder = 4
-      inline DstMgr: TfrDSTMgr
-        Left = 0
+      ShowHint = False
+      TabOrder = 2
+      object btnLaunchToolbox: TButton
+        AlignWithMargins = True
+        Left = 4
         Top = 0
-        Width = 120
-        Height = 33
-        Align = alClient
-        Color = clBtnFace
-        ParentBackground = False
-        ParentColor = False
+        Width = 112
+        Height = 25
+        Margins.Left = 4
+        Margins.Top = 0
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Align = alTop
+        Caption = 'Open Consult Toolbox'
         TabOrder = 0
-        ExplicitWidth = 120
-        ExplicitHeight = 33
-        inherited btnLaunchToolbox: TButton
-          Width = 114
-          Height = 27
-          Action = nil
-          OnClick = DstMgrbtnLaunchToolboxClick
-          ExplicitWidth = 114
-          ExplicitHeight = 27
-        end
-        inherited alDST: TActionList
-          Left = 8
-          Top = 16
-        end
+        OnClick = btnLaunchToolboxClick
+      end
+      object stOpenConsultToolboxDisabled: TStaticText
+        Left = 6
+        Top = 20
+        Width = 184
+        Height = 17
+        Caption = 'Open Consult Toolbox button disabled'
+        TabOrder = 1
+        TabStop = True
+        Visible = False
       end
     end
   end
   object pnlReason: TPanel [7]
     Left = 0
-    Top = 284
+    Top = 286
     Width = 652
-    Height = 99
+    Height = 97
     Align = alClient
     BevelOuter = bvNone
     Constraints.MinHeight = 80
@@ -701,7 +704,7 @@ inherited frmODCslt: TfrmODCslt
       Left = 3
       Top = 22
       Width = 646
-      Height = 74
+      Height = 72
       Align = alClient
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -791,9 +794,6 @@ inherited frmODCslt: TfrmODCslt
         'Component = grdDstControls'
         'Status = stsDefault')
       (
-        'Component = lblDstStatus'
-        'Status = stsDefault')
-      (
         'Component = pnlBaseMessage'
         'Status = stsDefault')
       (
@@ -827,13 +827,16 @@ inherited frmODCslt: TfrmODCslt
         'Component = frmODCslt'
         'Status = stsDefault')
       (
+        'Component = pnlDSTStatus'
+        'Status = stsDefault')
+      (
         'Component = pnlDST'
         'Status = stsDefault')
       (
-        'Component = DstMgr'
+        'Component = btnLaunchToolbox'
         'Status = stsDefault')
       (
-        'Component = DstMgr.btnLaunchToolbox'
+        'Component = stOpenConsultToolboxDisabled'
         'Status = stsDefault'))
   end
   object mnuPopProvDx: TPopupMenu

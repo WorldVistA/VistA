@@ -319,6 +319,14 @@ begin
   Parent := AParent;
   Align := alClient;
   Show;
+// Do NOT remove this Hide statement - it compensates for bugs in the VCL
+// where adding multiple client-aligned forms to the same parent shrank each
+// form, cascading to the point where forms became very tiny - which caused
+// exceptions in some of the FormResize events.  While you would think this
+// was normal behavior it didn't happen in Delphi XE8, and when it started
+// happening in Delphi 10.3 it couldn't be turned off with DisableAlign on the
+// parent form.  Hiding each form after creation was the only work-around.
+  Hide;
 end;
 
 function TfrmPCEBase.ActiveCtrl: TWinControl;

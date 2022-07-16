@@ -81,7 +81,7 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     ItemTipEnable = True
     ListItemsOnly = False
     LongList = False
-    LookupPiece = 0
+    LookupPiece = 2
     MaxLength = 0
     Pieces = '2'
     Sorted = True
@@ -95,6 +95,7 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     OnKeyUp = lstAddByKeyUp
     OnNeedData = lstAddByNeedData
     CharsNeedMatch = 1
+    UniqueAutoComplete = True
   end
   object btnAdd: TButton [5]
     Left = 166

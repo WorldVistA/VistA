@@ -1,8 +1,12 @@
 unit rOptions;
+{------------------------------------------------------------------------------
+Update History
+    2015/11/30: NSR#20071216 (Update Surrogate Management Functionality within CPRS GUI )
+-------------------------------------------------------------------------------}
 
 interface
 
-uses SysUtils, Classes, ORNet, ORFn, uCore, rCore, rTIU, rConsults;
+uses SysUtils, Classes, ORNet, ORFn, uCore, rCore, rTIU, rConsults, System.JSON;
 
 procedure rpcGetNotifications(aResults: TStrings);
 procedure rpcGetOrderChecks(aResults: TStrings);
@@ -82,6 +86,53 @@ procedure rpcPutRangeForMedsOp(TheVal: string);
 procedure rpcGetRangeForEncs(var StartDays, StopDays: integer; DefaultParams: Boolean);
 procedure rpcPutRangeForEncs(StartDays, StopDays: string);
 procedure rpcGetEncFutureDays(var FutureDays: string);
+
+/// <summary>Provides surrogates info for current user.
+/// </summary>
+/// <remarks>
+///  First line is returned as:
+///    <c>RC^Message</c> - Positive RC indicates # of returent records.
+///  The rest of the list includes surrogates descriptors as:
+///    <c>DFN^Name^FromDate^UntilDate</c>
+///
+///  NOTE: Dates are returned in FileMan format
+
+/// <summary>Loads/Saves Required fields processing preferences
+/// <para>Supported actions:</para><para><c>LDPREF</c> - loading preferences from server</para>
+/// <para><c>SVPREF</c> - saving preferences to server</para>
+/// </summary>
+///  <returns><c>RC^Message</c> - Positive RC indicates successful execution.
+///  Error Message is returned for negative RC only.</returns>
+/// <remarks>
+/// Use blank value of <c>aData</c> with <c>LDPREF</c> action
+/// </remarks>
+procedure rpcGetSurrogateInfoList(const aResult:TStrings);
+/// <summary>Provides number of days prior to purge the processed alert
+function rpcGetSetRequiredFieldsPreferences(anAction,aData:String):String; // NSR20100706 AA 2015/10/08
+
+/// </summary>
+/// <remarks>
+///  No parameters needed. The default value returned is 30 (days)
+/// </remarks>
+function rpcGetDaysBeforeAlertPurge:Integer;
+
+/// <summary>Provides Surrogate Editor parameters
+/// </summary>
+/// <remarks>
+///  Format: X^YY
+///     X - if "1" use Surrogate editor populates Star and Stop fields with values
+///     YY - default period for a surrogate (7 days)
+/// </remarks>
+function rpcGetSurrogateParams(var aValue:String):Boolean;
+/// <summary>Saves Surrogate Editor parameters on server
+/// </summary>
+/// <remarks>
+///  Format: X^YY
+///     X - if "1" use Surrogate editor populates Star and Stop fields with values
+///     YY - default period for a surrogate (7 days)
+/// </remarks>
+function rpcSetSurrogateParams(aValue:String):Boolean;
+
 
 implementation
 
@@ -659,4 +710,59 @@ begin
   CallVistA('ORWTPD1 GETEAFL', [nil], FutureDays);
 end;
 
+// NSR20100706 AA 2015/10/08 --------------------------------------------- begin
+function rpcGetSetRequiredFieldsPreferences(anAction,aData:String):String;
+const
+  rpcName = 'ORWTIU TEMPLATE PREFERENCES';
+begin
+  try
+    if anAction = 'LDPREF' then
+      CallVistA(rpcName, [anAction],Result)
+    else if anAction = 'SVPREF' then
+      CallVistA(rpcName, [anAction,aData], Result)
+    else
+      Result := '-2^Unsupported Acton "'+anAction+'"';
+  except
+    on E: Exception do
+      Result := '-3^Error executing RPC "'+E.Message+'"';
+  end;
+end;
+// NSR20100706 AA 2015/10/08 ----------------------------------------------- end
+// NSR20071216 AA 2015/11/30 ----------------------------------------------- begin
+//NSR20071216 mnj- RPC 'ORWTPP GETSURRS' addded to return multiple Surrogates.
+//                 Ty created new RCP from RPC 'ORWTPP GETSURR'
+procedure rpcGetSurrogateInfoList(const aResult:TStrings);
+begin
+  if not assigned(aResult) then
+    exit;
+  try
+    CallVistA('ORWTPP GETSURRS', [nil],aResult);
+    MixedCaseList(aResult);
+  except
+    on E: Exception do
+      aResult.Clear;
+  end;
+end;
+// NSR20071216 AA 2015/11/30 ----------------------------------------------- end
+const
+  RPC_SURROGATE_DEFAULTS = 'ORWTPP SURRDFLT';
+// NSR20071216 AA 2017/11/15 --------------------------------------------- begin
+function rpcGetSurrogateParams(var aValue:String):Boolean;
+begin
+  Result := CallVistA(RPC_SURROGATE_DEFAULTS, ['GET',{IntToStr(User.DUZ)}''],aValue);
+end;
+
+function rpcSetSurrogateParams(aValue:String):Boolean;
+begin
+  Result := CallVistA(RPC_SURROGATE_DEFAULTS, ['SAVE',{IntToStr(User.DUZ)+'^'+}aValue]);
+end;
+// NSR20071216 AA 2017/11/15 ----------------------------------------------- end
+
+function rpcGetDaysBeforeAlertPurge:Integer;
+var
+ sResult:String;
+begin
+  CallVistA('ORWTPR GETARCHP',[],sResult);
+  Result := StrToIntDef(sResult, 30);
+end;
 end.

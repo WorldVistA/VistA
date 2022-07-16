@@ -20,7 +20,9 @@ type
     procedure cboPrimaryChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnSelectClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
+    FCboPrimaryVistaParams: TArray<string>;
     FPCEData: TPCEData;
     FUseDefault: boolean;
     FIEN: array[boolean] of Int64;
@@ -33,7 +35,7 @@ function NoPrimaryPCEProvider(AProviders: TPCEProviderList; PCEData: TPCEData): 
 
 implementation
 
-uses rCore, uCore, rTIU, rPCE;
+uses rCore, uCore, rTIU, rPCE, uSimilarNames;
 
 {$R *.DFM}
 
@@ -114,16 +116,15 @@ procedure TfrmPCEProvider.cboPrimaryNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
   if(FPCEData.VisitCategory = 'E') then
-    cboPrimary.ForDataUse(SubSetOfPersons(StartFrom, Direction))
+    cboPrimary.ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboPrimaryVistaParams))
   else
     cboPrimary.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction,
-                                                 FloatToStr(FPCEData.PersonClassDate)));
+      FloatToStr(FPCEData.PersonClassDate), FCboPrimaryVistaParams));
 end;
 
 procedure TfrmPCEProvider.cboPrimaryChange(Sender: TObject);
 var
   txt: string;
-
 begin
   if(cboPrimary.ItemIEN <> 0) and (FPCEData.VisitCategory <> 'E') then
   begin
@@ -134,6 +135,25 @@ begin
       cboPrimary.ItemIndex := -1;
     end;
   end;
+end;
+
+procedure TfrmPCEProvider.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+var
+  ErrMsg: string;
+begin
+  inherited;
+  CanClose := (not (ModalResult in [mrOK, mrYes, mrYesToAll])) or
+    (Length(FCboPrimaryVistaParams) <= 0);
+  if not CanClose then
+  begin
+    if (FPCEData.VisitCategory = 'E') then
+      CanClose := CheckForSimilarName(cboPrimary, ErrMsg, ltPerson, FCboPrimaryVistaParams, sPr)
+    else
+      CanClose := CheckForSimilarName(cboPrimary, ErrMsg, ltPerson, FCboPrimaryVistaParams, sPr, FloatToStr(FPCEData.PersonClassDate));
+  end;
+  if not CanClose then
+    ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');
 end;
 
 procedure TfrmPCEProvider.FormCreate(Sender: TObject);

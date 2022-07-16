@@ -3,30 +3,33 @@ inherited frmARTAllergy: TfrmARTAllergy
   Left = 274
   Top = 150
   Caption = 'Enter Allergy or Adverse Reaction'
-  ClientHeight = 438
-  ClientWidth = 553
+  ClientHeight = 436
+  ClientWidth = 519
+  Constraints.MinHeight = 475
+  Constraints.MinWidth = 535
   FormStyle = fsStayOnTop
   Position = poDesigned
-  OnClose = FormClose
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
-  ExplicitWidth = 569
-  ExplicitHeight = 476
+  ExplicitWidth = 535
+  ExplicitHeight = 475
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
     Left = 0
     Top = 0
-    Width = 553
-    Height = 438
+    Width = 519
+    Height = 436
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    DesignSize = (
+      519
+      436)
     object lblAllergyType: TOROffsetLabel
       Left = 38
-      Top = 403
+      Top = 391
       Width = 63
-      Height = 15
+      Height = 22
       Caption = 'Allergy Type:'
       HorzOffset = 2
       Transparent = False
@@ -35,38 +38,38 @@ inherited frmARTAllergy: TfrmARTAllergy
       WordWrap = False
     end
     object cmdOK: TButton
-      Left = 380
-      Top = 403
+      Left = 346
+      Top = 401
       Width = 72
       Height = 21
+      Anchors = [akRight, akBottom]
       Caption = '&OK'
       TabOrder = 1
       OnClick = cmdOKClick
     end
     object cmdCancel: TButton
-      Left = 459
-      Top = 403
+      Left = 425
+      Top = 401
       Width = 72
       Height = 21
+      Anchors = [akRight, akBottom]
       Cancel = True
       Caption = '&Cancel'
       TabOrder = 2
       OnClick = cmdCancelClick
     end
     object pgAllergy: TPageControl
-      Left = 4
-      Top = 17
-      Width = 529
-      Height = 371
+      Left = 0
+      Top = 0
+      Width = 519
+      Height = 383
       ActivePage = tabGeneral
-      MultiLine = True
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      OwnerDraw = True
       TabOrder = 0
+      OnDrawTab = pgAllergyDrawTab
       object tabGeneral: TTabSheet
         Caption = 'General'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lblAgent: TOROffsetLabel
           Left = 7
           Top = 44
@@ -280,22 +283,13 @@ inherited frmARTAllergy: TfrmARTAllergy
           Caption = '&Marked On Chart'
           Checked = True
           State = cbChecked
-          TabOrder = 22
+          TabOrder = 25
           Visible = False
           OnClick = ControlChange
         end
-        object ckIDBand: TCheckBox
-          Left = 122
-          Top = 313
-          Width = 97
-          Height = 22
-          Caption = '&ID Band Marked'
-          TabOrder = 21
-          OnClick = ControlChange
-        end
         object cboSymptoms: TORComboBox
-          Left = 7
-          Top = 141
+          Left = 6
+          Top = 148
           Width = 135
           Height = 152
           Style = orcsSimple
@@ -343,7 +337,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Height = 21
           Caption = '&Remove'
           Enabled = False
-          TabOrder = 18
+          TabOrder = 19
           TabStop = False
           OnClick = btnRemoveClick
         end
@@ -363,6 +357,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           TabOrder = 11
           TabStop = True
           OnClick = grpObsHistClick
+          OnEnter = grpObsHistEnter
         end
         object cboSeverity: TORComboBox
           Left = 362
@@ -424,7 +419,8 @@ inherited frmARTAllergy: TfrmARTAllergy
           Font.Style = []
           ParentFont = False
           ScrollBars = ssVertical
-          TabOrder = 19
+          TabOrder = 23
+          Zoom = 100
           OnExit = memCommentsExit
         end
         object cmdPrevCmts: TButton
@@ -433,7 +429,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Width = 157
           Height = 21
           Caption = '&View Previous Comments'
-          TabOrder = 20
+          TabOrder = 24
           OnClick = cmdPrevCmtsClick
         end
         object cboNatureOfReaction: TORComboBox
@@ -481,7 +477,7 @@ inherited frmARTAllergy: TfrmARTAllergy
         end
         object origlbl508: TVA508StaticText
           Name = 'origlbl508'
-          Left = 294
+          Left = 295
           Top = -5
           Width = 47
           Height = 15
@@ -505,12 +501,12 @@ inherited frmARTAllergy: TfrmARTAllergy
         end
         object SymptomDateBox: TORDateBox
           Left = 148
-          Top = 265
+          Top = 264
           Width = 135
           Height = 21
           Hint = 'Enter date/time for selected symptom '
           Enabled = False
-          TabOrder = 17
+          TabOrder = 18
           Text = 'NOW'
           OnExit = SymptomDateBoxExit
           DateOnly = False
@@ -546,14 +542,51 @@ inherited frmARTAllergy: TfrmARTAllergy
           Visible = False
           ShowAccelChar = True
         end
+        object stSyntomDate: TVA508StaticText
+          Name = 'stSyntomDate'
+          Left = 286
+          Top = 268
+          Width = 19
+          Height = 15
+          Hint = 'Symptom Date/Time Disabled'
+          Alignment = taLeftJustify
+          Caption = ''
+          TabOrder = 17
+          ShowAccelChar = True
+        end
+        object stRemoveBtn: TVA508StaticText
+          Name = 'stRemoveBtn'
+          Left = 286
+          Top = 292
+          Width = 30
+          Height = 15
+          Hint = 'Remove Button Disable'
+          Alignment = taLeftJustify
+          Caption = ''
+          TabOrder = 20
+          ShowAccelChar = True
+        end
+        object ckIDBand: TCheckBox
+          Left = 120
+          Top = 316
+          Width = 97
+          Height = 22
+          Caption = '&ID Band Marked'
+          TabOrder = 21
+          OnClick = ControlChange
+        end
+        object stIDBrandMarked: TStaticText
+          Left = 322
+          Top = 297
+          Width = 46
+          Height = 9
+          TabOrder = 22
+          TabStop = True
+        end
       end
       object tabVerify: TTabSheet
         Caption = 'Verify'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lblVerifier: TOROffsetLabel
           Left = 99
           Top = 51
@@ -626,10 +659,6 @@ inherited frmARTAllergy: TfrmARTAllergy
       object tabEnteredInError: TTabSheet
         Caption = 'Entered In Error'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lblErrCmts: TLabel
           Left = 7
           Top = 12
@@ -639,8 +668,8 @@ inherited frmARTAllergy: TfrmARTAllergy
         end
         object lblEnteredInError: TLabel
           Left = 0
-          Top = 330
-          Width = 83
+          Top = 342
+          Width = 511
           Height = 13
           Align = alBottom
           Alignment = taCenter
@@ -651,6 +680,7 @@ inherited frmARTAllergy: TfrmARTAllergy
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitWidth = 83
         end
         object ckEnteredInError: TCheckBox
           Left = 286
@@ -675,13 +705,14 @@ inherited frmARTAllergy: TfrmARTAllergy
           ParentFont = False
           ScrollBars = ssVertical
           TabOrder = 1
+          Zoom = 100
           OnExit = memErrCmtsExit
         end
       end
     end
     object cboAllergyType: TORComboBox
       Left = 38
-      Top = 418
+      Top = 408
       Width = 190
       Height = 21
       Style = orcsDropDown
@@ -745,9 +776,6 @@ inherited frmARTAllergy: TfrmARTAllergy
         'Status = stsOK')
       (
         'Component = ckChartMarked'
-        'Status = stsDefault')
-      (
-        'Component = ckIDBand'
         'Status = stsDefault')
       (
         'Component = cboSymptoms'
@@ -835,13 +863,28 @@ inherited frmARTAllergy: TfrmARTAllergy
       (
         'Component = NoAllergylbl508'
         'Text = No Known Allergies checkbox disabled'
+        'Status = stsOK')
+      (
+        'Component = stSyntomDate'
+        'Text = Symptom Date/Time Disabled'
+        'Status = stsOK')
+      (
+        'Component = stRemoveBtn'
+        'Text = Remove Button Disable'
+        'Status = stsOK')
+      (
+        'Component = ckIDBand'
+        'Status = stsDefault')
+      (
+        'Component = stIDBrandMarked'
+        'Text = ID Brand Marked Disabled'
         'Status = stsOK'))
   end
   object VA508ComponentAccessibility1: TVA508ComponentAccessibility
     Component = memComments
     OnStateQuery = VA508ComponentAccessibility1StateQuery
-    Left = 408
-    Top = 216
+    Left = 472
+    Top = 280
   end
   object VA508ComponentAccessibility2: TVA508ComponentAccessibility
     Component = lstAllergy
@@ -852,13 +895,13 @@ inherited frmARTAllergy: TfrmARTAllergy
     OnInstructionsQuery = VA508ComponentAccessibility2InstructionsQuery
     OnItemInstructionsQuery = VA508ComponentAccessibility2ItemInstructionsQuery
     OnItemQuery = VA508ComponentAccessibility2ItemQuery
-    Left = 104
-    Top = 104
+    Left = 472
+    Top = 328
   end
   object VA508ComponentAccessibility3: TVA508ComponentAccessibility
     Component = memErrCmts
     OnStateQuery = VA508ComponentAccessibility3StateQuery
-    Left = 264
-    Top = 216
+    Left = 472
+    Top = 240
   end
 end

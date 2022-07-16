@@ -1,8 +1,9 @@
 inherited frmDSTView: TfrmDSTView
   BorderIcons = [biMinimize, biMaximize]
-  Caption = 'Decision Support Tool'
+  Caption = 'Consult Toolbox'
   ClientHeight = 497
   ClientWidth = 868
+  OnKeyPress = FormKeyPress
   ExplicitWidth = 884
   ExplicitHeight = 536
   PixelsPerInch = 96
@@ -14,7 +15,7 @@ inherited frmDSTView: TfrmDSTView
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 0
+    TabOrder = 1
     object btnOK: TButton
       AlignWithMargins = True
       Left = 790
@@ -39,17 +40,16 @@ inherited frmDSTView: TfrmDSTView
       TabOrder = 1
       Visible = False
     end
-    object Button1: TButton
+    object btnCloseCTB: TButton
       AlignWithMargins = True
-      Left = 628
+      Left = 584
       Top = 3
-      Width = 75
+      Width = 119
       Height = 27
       Align = alRight
-      Caption = 'Close'
+      Caption = 'Close Consult Toolbox'
       TabOrder = 2
-      OnClick = Button1Click
-      ExplicitTop = 6
+      OnClick = btnCloseCTBClick
     end
   end
   object wbInternetExplorer: TWebBrowser [1]
@@ -58,7 +58,7 @@ inherited frmDSTView: TfrmDSTView
     Width = 868
     Height = 464
     Align = alClient
-    TabOrder = 1
+    TabOrder = 0
     OnNavigateError = wbInternetExplorerNavigateError
     ExplicitWidth = 694
     ExplicitHeight = 477
@@ -87,7 +87,7 @@ inherited frmDSTView: TfrmDSTView
         'Component = btnCancel'
         'Status = stsDefault')
       (
-        'Component = Button1'
+        'Component = btnCloseCTB'
         'Status = stsDefault'))
   end
 end

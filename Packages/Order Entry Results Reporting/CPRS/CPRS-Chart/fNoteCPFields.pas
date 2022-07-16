@@ -27,7 +27,7 @@ type
     FProcDateTime: TFMDateTime;
     FCPStatusFlag: integer;
     FOKPressed: Boolean;
-    procedure ValidateFields(var ErrMsg: string);
+    function ValidateFields(var ErrMsg: string): boolean;
   end;
 
 const
@@ -47,7 +47,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, uConst, uConsults, uCore;
+uses rCore, uConst, uConsults, uCore, uSimilarNames;
 
 procedure EnterClinProcFields(ACPStatusFlag: integer; ErrMsg: string; var AProcSummCode: integer; var AProcDate: TFMDateTime; var AnAuthor: int64);
 var
@@ -87,18 +87,22 @@ var
   ErrMsg: string;
 begin
   inherited;
-  ValidateFields(ErrMsg);
-  if ShowMsgOn(Length(ErrMsg) > 0, ErrMsg, TC_REQ_FIELDS)
-    then Exit
-    else
-      begin
-        FOKPressed := True;
-        ModalResult := mrOK;
-      end;
+  If not ValidateFields(ErrMsg) then
+  begin
+    ShowMsgOn(Length(ErrMsg) > 0, ErrMsg, TC_REQ_FIELDS);
+    Exit;
+  end else
+  begin
+    FOKPressed := True;
+    ModalResult := mrOK;
+  end;
 end;
 
-procedure TfrmNoteCPFields.ValidateFields(var ErrMsg: string);
+function TfrmNoteCPFields.ValidateFields(var ErrMsg: string): boolean;
+var
+  rtnErrMsg: String;
 begin
+  Result := True;
   if cboAuthor.ItemIEN = 0   then ErrMsg := ErrMsg + TX_REQ_AUTHOR else FAuthor := cboAuthor.ItemIEN;
   if (FCPStatusFlag = CP_INSTR_INCOMPLETE) then
     begin
@@ -118,6 +122,17 @@ begin
            else FProcDateTime := calProcDateTime.FMDateTime;
         end;
     end;
+
+  if not CheckForSimilarName(cboAuthor, rtnErrMsg, ltPerson, sPr) then
+  begin
+    if Trim(rtnErrMsg) <> '' then
+      ErrMsg := ErrMsg + rtnErrMsg;
+  end;
+
+  ErrMsg := Trim(ErrMsg);
+
+  if Result then
+    Result := ErrMsg = '';
 end;
 
 procedure TfrmNoteCPFields.cmdCancelClick(Sender: TObject);
@@ -125,9 +140,11 @@ var
   ErrMsg: string;
 begin
   inherited;
-  ValidateFields(ErrMsg);
-  if ErrMsg <> '' then
-    InfoBox(TX_REQ_CANCEL, TC_REQ_FIELDS, MB_OK or MB_ICONWARNING);
+  If not ValidateFields(ErrMsg) then
+  begin
+    ShowMsgOn(Length(ErrMsg) > 0, TX_REQ_CANCEL + CRLF + ErrMsg, TC_REQ_FIELDS);
+    exit;
+  end;
   FOKPressed := False;
   Close;
 end;

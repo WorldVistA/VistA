@@ -236,6 +236,7 @@ type
     FLastNoteID: string;
     FEditingNotePCEObj: Boolean;
     FDeleted: Boolean;
+//    FEditNoteIEN: Integer;  // Note IEN for note currently being edited
     procedure ClearEditControls;
     procedure DoAutoSave(Suppress: Integer = 1);
     function GetTitleText(AnIndex: Integer): string;
@@ -293,7 +294,8 @@ uses fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem,
   fNoteProps, fNotesBP, fTemplateFieldEditor, uTemplates, dShared, rTemplates,
   FIconLegend, fPCEEdit, rTIU, fRptBox, fTemplateDialog,
   VA508AccessibilityRouter,
-  System.Types, rECS, ORNet, trpcb, System.IniFiles, ORNetIntf, U_CPTEditMonitor, VAUtils;
+  System.Types, rECS, ORNet, trpcb, System.IniFiles, ORNetIntf,
+  U_CPTEditMonitor, VAUtils;
 
 const
   CT_SURGERY = 11; // chart tab - surgery
@@ -1453,8 +1455,8 @@ procedure TfrmSurgery.LoadPastedText(Sender: TObject; LoadList: TStrings;
   var ProcessLoad, PreLoaded: Boolean);
 var
   DivId, ParamStr, TmpRst: string;
-  i: Integer;
-  AddlSigners: TStrings;
+//  i: Integer;
+//  AddlSigners: TStrings;
   IsCoSigner: Boolean;
 begin
   DivID := Piece(RPCBrokerV.User.Division, '^', 1);
@@ -1468,17 +1470,7 @@ begin
     // check for preload
     if ProcessLoad then
     begin
-      AddlSigners := GetCurrentSigners(lstNotes.ItemIEN);
-      for i := 0 to AddlSigners.Count - 1 do
-      begin
-        if Piece(AddlSigners.Strings[i], U, 3) = 'Expected Cosigner' then
-        begin
-          IsCoSigner := (Piece(AddlSigners.Strings[i], U, 1)
-            = IntToStr(User.DUZ));
-          break;
-        end;
-      end;
-
+      IsCoSigner := UserIsCosigner(lstNotes.ItemIEN,IntToStr(User.DUZ));
       if IsCoSigner and (not EditMonitor.CopyMonitor.DisplayPaste) then
       begin
         // Setup default indication
@@ -2474,10 +2466,16 @@ begin
     Exit;
   end;
 
-  Exclusions := GetCurrentSigners(lstNotes.ItemIEN);
-  ARefDate := StrToFloat(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
-  SelectAdditionalSigners(Font.Size, lstNotes.ItemIEN, SigAction, Exclusions,
-    SignerList, CT_NOTES, ARefDate);
+  Exclusions := TStringList.Create;
+  try
+    setCurrentSigners(Exclusions, lstNotes.ItemIEN);
+    ARefDate := StrToFloat(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
+    SelectAdditionalSigners(Font.Size, lstNotes.ItemIEN, SigAction, Exclusions,
+      SignerList, CT_NOTES, ARefDate);
+  finally
+    Exclusions.Free;
+  end;
+
   with SignerList do
   begin
     case SigAction of

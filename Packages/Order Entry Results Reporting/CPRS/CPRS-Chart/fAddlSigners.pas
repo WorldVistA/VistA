@@ -43,6 +43,8 @@ type
     procedure btnRemoveAllSignersClick(Sender: TObject);
     procedure cboSrcListChange(Sender: TObject);
   private
+    FCboSrcListVistaParams: TArray<string>;
+    FCboCosignerVistaParams: TArray<string>;
     FSigners: TStringList ;
     FCosigner: int64;
     FExclusions: TStringList;
@@ -53,7 +55,7 @@ type
     FToday: string;
     FTabID: integer;
     function CosignerOK: Boolean;
-    
+    function DoSimilar: Boolean;
   end;
 
 TSignerList = record
@@ -75,7 +77,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rCore, uCore, rTIU, uConst, rPCE, fDCSumm;
+  rCore, uCore, rTIU, uConst, rPCE, fDCSumm, uSimilarNames;
 
 const
   TX_SIGNER_CAP = 'Error adding signers';
@@ -84,6 +86,7 @@ const
   TX_DUP_SIGNER = 'You have already selected that additional signer';
   TX_NO_COSIGNER = ' is not authorized to cosign this document.';
   TX_NO_COSIGNER_CAP = 'Invalid Cosigner';
+  TX_NO_SIGNER_CAP = 'Invalid Signer';
   TX_NO_DELETE = 'A cosigner is required';
   TX_NO_DELETE_CAP = 'No cosigner selected';
 
@@ -142,6 +145,8 @@ begin
       if (SigAction = SG_ADDITIONAL) or (SigAction = SG_BOTH) then
         cboSrcList.InitLongList('');
       FChanged := False;
+      TSimilarNames.RegORComboBox(cboSrcList);
+      TSimilarNames.RegORComboBox(cboCosigner);
       ShowModal;
       with SignerList do
         begin
@@ -159,7 +164,10 @@ end;
 procedure TfrmAddlSigners.NewPersonNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  TORComboBox(Sender).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  if Sender = cboSrcList then
+    TORComboBox(Sender).ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboSrcListVistaParams, True))
+  else
+    (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
 end;
 
 procedure TfrmAddlSigners.cmdCancelClick(Sender: TObject);
@@ -178,6 +186,7 @@ begin
     Exit;
   end;
   if not CosignerOK then Exit;
+  if not DoSimilar then Exit;
   FChanged := True;
   FCosigner := cboCosigner.ItemIEN;
   for i := 0 to DstList.Items.Count-1 do
@@ -215,7 +224,16 @@ end;
 procedure TfrmAddlSigners.btnAddSignersClick(Sender: TObject);
 var
   i: integer;
+  aErrMsg: String;
 begin
+  if not CheckForSimilarName(cboSrcList, aErrMsg, ltPerson, FCboSrcListVistaParams, sPr, '', DstList.Items) then
+  begin
+    ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, TX_NO_SIGNER_CAP);
+    // cboSrcList.ItemIndex := -1; // This doesn't happen in 32b
+    // cboSrcList.SetFocus; // This doesn't happen in 32b
+    exit;
+  end;
+
   if cboSrcList.ItemIndex = -1 then
     exit;
   if UserInactive(cboSrcList.ItemID) then
@@ -321,17 +339,31 @@ begin
   Result := True;
 end;
 
+function TfrmAddlSigners.DoSimilar: Boolean;
+var
+  sError: String;
+begin
+  Result := false;
+
+  Case FTabID of
+    CT_NOTES, CT_CONSULTS: Result := CheckForSimilarName(cboCosigner, sError, ltPerson, FCboCosignerVistaParams, sCo, FToday);
+    CT_DCSUMM: Result := CheckForSimilarName(cboCosigner, sError, ltCosign, FCboCosignerVistaParams, sCo, FToday, nil, frmDCSumm.lstSumms.ItemIEN);
+  end;
+
+  if not Result then
+  begin
+    ShowMsgOn(Trim(sError) <> '' , sError, TX_NO_COSIGNER_CAP);
+    exit;
+  end;
+end;
+
 procedure TfrmAddlSigners.cboCosignerNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
   case FTabID of
-    CT_NOTES:     TORComboBox(Sender).ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FToday));
-    CT_CONSULTS:  TORComboBox(Sender).ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FToday));
-
-    //CQ #17218 - Updated to properly filter co-signers - JCS
-    //CT_DCSUMM:    TORComboBox(Sender).ForDataUse(SubSetOfProviders(StartFrom, Direction));
-    CT_DCSUMM: (Sender as TORComboBox).ForDataUse(SubSetOfCosigners(StartFrom, Direction,
-        FMToday, frmDCSumm.lstSumms.ItemIEN, 0));
+    CT_NOTES: (Sender as TORComboBox).ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FToday, FCboCosignerVistaParams));
+    CT_CONSULTS: (Sender as TORComboBox).ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FToday, FCboCosignerVistaParams));
+    CT_DCSUMM: (Sender as TORComboBox).ForDataUse(SubSetOfCosigners(StartFrom, Direction, FMToday, frmDCSumm.lstSumms.ItemIEN, 0, FCboCosignerVistaParams));
   end;
 end;
 

@@ -37,6 +37,7 @@ type
   public
     procedure AllowTabChange(var AllowChange: boolean); override;
     procedure GetGAFScore(var Score: integer; var Date: TFMDateTime; var Staff: Int64);
+    function CheckSimilarNameOK: Boolean;
   end;
 
 function ValidGAFData(Score: integer; Date: TFMDateTime; Staff: Int64): boolean;
@@ -46,7 +47,8 @@ var
 
 implementation
 
-uses rPCE, rCore, uCore, uPCE, fEncounterFrame, VA508AccessibilityRouter;
+uses rPCE, rCore, uCore, uPCE, fEncounterFrame, VA508AccessibilityRouter,
+  uSimilarNames;
 
 {$R *.DFM}
 
@@ -108,12 +110,8 @@ begin
     begin
       PName := uProviders.PCEProviderName;
       msg := msg + '  Determined By changed to ' + PName + '.';
-      cboGAFProvider.SelectByIEN(UIEN);
-      if(cboGAFProvider.ItemID = '') then
-      begin
-        cboGAFProvider.InitLongList(PName);
-        cboGAFProvider.SelectByIEN(UIEN);
-      end;
+      cboGAFProvider.SetExactByIEN(UIEN, PName);
+      TSimilarNames.RegORComboBox(cboGAFProvider);
     end;
   end;
 
@@ -155,6 +153,8 @@ end;
 procedure TfrmGAF.AllowTabChange(var AllowChange: boolean);
 begin
   AllowChange := (not BadData(TRUE));
+  if AllowChange then
+    AllowChange := CheckSimilarNameOK;
 end;
 
 procedure TfrmGAF.GetGAFScore(var Score: integer; var Date: TFMDateTime; var Staff: Int64);
@@ -171,6 +171,21 @@ begin
   end;
 end;
 
+function TfrmGAF.CheckSimilarNameOK: Boolean;
+var
+ aErrMsg: String;
+begin
+  Result := true;
+  if (udScore.Position > 0) and
+    (not CheckForSimilarName(cboGAFProvider, aErrMsg, ltPerson, sPr)) then
+  begin
+    if Trim(aErrMsg) = '' then
+      aErrMsg := 'A determining party is required to enter a GAF score.';
+    ShowMessage(aErrMsg);
+    Result := false;
+  end;
+end;
+
 procedure TfrmGAF.FormActivate(Sender: TObject);
 begin
   inherited;
@@ -178,7 +193,13 @@ begin
   begin
     FDataLoaded := TRUE;
     LoadScores;
-    cboGAFProvider.InitLongList(Encounter.ProviderName);
+    if Encounter.Provider > 0 then
+    begin
+      cboGAFProvider.SetExactByIEN(Encounter.Provider, Encounter.ProviderName);
+      TSimilarNames.RegORComboBox(cboGAFProvider);
+    end
+    else
+      cboGAFProvider.InitLongList('');
     BadData(FALSE);
   end;
 end;

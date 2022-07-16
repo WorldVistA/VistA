@@ -160,7 +160,7 @@ type
     procedure setRangeRadioVisible(b: Boolean);
     procedure setRangeListVisible(b: Boolean);
 //    procedure setRangeVisible(b: Boolean);
-
+    procedure AdjustPnlRightTop;
   public
     procedure ClearPtData; override;
     function AllowContextChange(var WhyNot: string): Boolean; override;
@@ -1902,7 +1902,7 @@ begin
           begin
             if length(piece(aRanges,';',2)) > 0 then
               begin
-                x2 := '  Max/site:' + piece(aRanges,';',2);
+                x2 := CRLF + 'A maximum of ' + piece(aRanges,';',2) + ' per site will be displayed regardless of the number available within the specified date range.';
                 aRanges := piece(aRanges,';',1);
               end;
             DaysBack := Copy(aRanges, 2, Length(aRanges));
@@ -1925,7 +1925,9 @@ begin
               end;
           end;
         if (length(piece(aRanges,';',3)) > 0) and (length(x1) > 0) then
-          x2 := '  Max/site:' + piece(aRanges,';',3);
+          begin
+            x2 := CRLF + 'A maximum of ' + piece(aRanges,';',3) + ' per site will be displayed regardless of the number available within the specified date range.';
+          end;
         case uQualifierType of
           QT_DATERANGE:
               x := x + x1;
@@ -2435,6 +2437,23 @@ begin
   finally
     AnImage.Free;
   end;
+end;
+
+procedure TfrmReports.AdjustPnlRightTop;
+var
+  i, ii: Integer;
+begin
+  i := lblTitle.Height;
+  if lblProcTypeMsg.Visible then
+    i := i + lblProcTypeMsg.Height;
+  if TabControl1.Visible then
+    i := i + TabControl1.Height;
+  if pnlRightTopHeaderMid.Visible then
+    begin
+      ii := self.Canvas.TextHeight('W');
+      i := i + ii * 3;
+    end;
+ pnlRightTop.Height := i;
 end;
 
 procedure TfrmReports.tvReportsClick(Sender: TObject);
@@ -3537,6 +3556,8 @@ begin
   lvReports.Columns.BeginUpdate;
   lvReports.Columns.EndUpdate;
   Screen.Cursor := crDefault;
+
+  AdjustPnlRightTop;
 end;
 
 procedure TfrmReports.lvReportsColumnClick(Sender: TObject;
@@ -4319,7 +4340,7 @@ begin
   if pnlRightTopHeaderMid.Visible = true then
     if (pnlRightTopHeaderMid.Height > MidSize) and not (MidSize = 0) then MidSize := 42;
   if font.size > 10 then MidSize := MidSize + (font.Size div 2) * 3;
-  if font.Size > 14 then MidSize := MidSize + 10;
+  if font.Size > 14 then MidSize := MidSize + 24;
 
   if (TabControl1.Tabs.Count > 1) and (TabControl1.Visible) then
     begin

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="Adobe RoboHelp 2020" />
+  <title>Non-VA Medications (Overview)</title>
+  <link rel="StyleSheet" href="assets/css/CPRS.css" type="text/css" />
+  <meta name="rh-index-keywords" content="herbal supplements,Medications,Medications:Non-VA,Medications:over the counter or OTC,Medications:herbal medications,Medications:non-prescription,non-prescription medications,Non-VA meds,OREMAS key,OTC,supplements herbal" />
+</head>
+<body>
+  <h1>
+    <font color="#3366FF" size="4" style="font-size: 14pt;">Non-VA Medications (Overview)</font>
+  </h1>
+  <p style="margin-top:3.00pt; margin-bottom:3.00pt">
+    <font color="#000000" size="2" style="font-size: 12pt;">The Joint Commission on Accreditation of Healthcare Organizations (JCAHO) has indicated that all medications, including herbal supplements, over-the-counter (OTC) non-prescription medications, and medications prescribed by providers outside the VA (collectively known as &quot;Non-VA medications&quot;) should be entered in the medical record. CPRS, Outpatient Pharmacy, and Inpatient Medications developers have made changes that enable users to enter this information into the medical record so that providers have a better picture of the medications the patient is taking and that order checks against these medications can occur.</font>
+  </p>
+  <p style="margin-top:3.00pt; margin-bottom:3.00pt"> </p>
+  <h2 style="margin-top: 3pt; margin-bottom: 3pt;">
+    <font color="#010100" size="2" style="font-size: 12pt; font-weight: bold;">Making Non-VA Meds Available for Entry</font>
+  </h2>
+  <p>For users to be able to enter these medications through CPRS, they must be in the CPRS Orderable Items file so that they appear when the user chooses the new order sheet. The Pharmacy patch (PSS*1.0*68) enables sites to mark items as Non-VA Medications. Initially, all Pharmacy orderable items that are marked as &quot;outpatient&quot; and are not supply items will be automatically made Non-VA medications. Subsequently, Pharmacy coordinators can use the Pharmacy option Drug Enter/Edit [PSS DRUG ENTER/EDIT] to identify items as Non-VA Meds or remove the designation.</p>
+  <p style="margin-left: 54.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;">
+    <font color="#010100" size="2" style="font-size: 12pt; font-weight: bold;">Note:</font>
+    <font color="#010100" size="2" style="font-size: 12pt;">  For more information about how to get Non-VA Medications added to the appropriate file, please see &quot;Section 5.1: Communicating New Non-VA Meds Entries to the Pharmacist&quot; in the</font>
+    <font color="#010100" size="2" style="font-size: 12pt; font-style: italic;">Herbal/OTC/Non-VA Meds Documentation Release Notes</font>
+    <font color="#010100" size="2" style="font-size: 9pt;">that will be located on the VA Documentation Library at</font>
+    <font color="#0000FF" size="2" style="font-size: 12pt; text-decoration: underline;">http://www.domain/vdl</font>
+    <font color="#010100" size="2" style="font-size: 12pt;">under the Outpatient Pharmacy listings.</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <h2 style="margin-top: 4pt; margin-bottom: 6pt;">
+    <font color="#000000" style="font-weight: bold;">Different from Ordering Medications</font>
+  </h2>
+  <p style="margin-bottom: 6pt;">
+    <font color="#010100" size="2" style="font-size: 12pt;">Remember that entering Non-VA Medications is not the same as placing orders. Users simply enter information to provide a more complete view of what the patient is taking. However, once the items are available in the CPRS Orderable Items file, the process for entering Non-VA Medications is similar to entering other orders, but there are a few differences:</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 12pt;">·     Almost any CPRS user can enter Non-VA medication information. However, sites can restrict access for those holding the OREMAS key by using the OR OREMAS NON-VA MEDS parameter. For more information about this parameter, please see the</font>
+    <font color="#010100" size="2" style="font-size: 12pt; font-style: italic;">CPRS Technical Manual: GUI Version</font>
+    <font color="#010100" size="2" style="font-size: 12pt;">.</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·     Users can enter Non-VA medication even if they only have partial information. The only required information is the non-VA or herbal medication name. The Medication name must be one that can be selected from the list. The Dosage, Route, and Schedule fields are optional and will accept free-text entries.</p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·     Non-VA medications are listed separately on the orders tab and the designation &quot;Non-VA Medication (Documentation)&quot; is displayed at the beginning of the entry.</p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·     Users need to pick a reason why the patient is taking the Non-VA medication.</p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 12pt;">For the reason/statement that users should enter, developers sent out four reasons or statements at the package level of the parameter GUI Non-VA Med Statements/Reasons that were agreed upon by a workgroup:</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·      Non-VA medication not recommended by VA provider.</p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·      Non-VA medication recommended by VA provider.</p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·      Patient wants to buy from Non-VA pharmacy.</p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt; color: #010100;">·      Medication prescribed by Non-VA provider.</p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 12pt;">Authorized users can enter their</font>
+    <font color="#010100" size="2" style="font-size: 12pt;">own reasons/statements in the parameter by entering new statements at the System or Division level for this parameter. For more information about changing this parameter, see the</font>
+    <font color="#010100" size="2" style="font-size: 12pt; font-style: italic;">CPRS Technical Manual: List Manager</font>
+    <font color="#010100" size="2" style="font-size: 12pt;">.</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-top: 6.00pt; margin-bottom: 0.00pt; border-bottom: 0.75pt solid #000000;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">Related topics</font>
+  </p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;">
+    <font size="2" style="font-size: 10pt;"><a href="Documenting_Non-VA_Medication_Information.htm">Documenting Non-VA Medication Information</a></font>
+  </p>
+</body>
+</html>

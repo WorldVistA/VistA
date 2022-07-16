@@ -106,7 +106,7 @@ type
     procedure sbDownClick(Sender: TObject);
     procedure sbCopyRightClick(Sender: TObject);
     procedure udSeqChangingEx(Sender: TObject; var AllowChange: Boolean;
-      NewValue: Smallint; Direction: TUpDownDirection);
+      NewValue: integer; Direction: TUpDownDirection);
     procedure sbCopyLeftClick(Sender: TObject);
     procedure tvAllDblClick(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
@@ -135,6 +135,9 @@ type
     procedure btnOKExit(Sender: TObject);
     procedure caMoveDownCaptionQuery(Sender: TObject; var Text: string);
     procedure caMoveUPCaptionQuery(Sender: TObject; var Text: string);
+    procedure cbxUserEnter(Sender: TObject);
+    procedure cbxUserExit(Sender: TObject);
+    procedure cbxUserMouseClick(Sender: TObject);
   private
     FData: TORStringList;     // DataCode IEN ^ Modified Flag  Object=TStringList
     FUserInfo: TORStringList; // C^User Class, D^Division
@@ -167,6 +170,7 @@ type
     FSavePause: integer;
     FSelection: boolean;
     fOldFocusChanged: TNotifyEvent;
+    FChanging: Boolean;
     procedure ActiveControlChanged(Sender: TObject);
     procedure SetButtonHints;
     procedure GetUserInfo(AUser: Int64);
@@ -198,7 +202,7 @@ procedure EditCoverSheetReminderList(AsUser: boolean);
 implementation
 
 uses rCore, uCore, uPCE, rProbs, rTIU, ORFn, rReminders, uReminders,
-  fRemCoverPreview, VAUtils, VA508AccessibilityRouter;
+  fRemCoverPreview, VAUtils, VA508AccessibilityRouter, uSimilarNames;
 
 {$R *.DFM}
 {$R sremcvr}
@@ -733,8 +737,17 @@ end;
 procedure TfrmRemCoverSheet.cbxUserChange(Sender: TObject);
 var
   NewVal, idx: integer;
-
+  ErrMsg: String;
 begin
+  if FChanging then
+    Exit;
+
+  if not CheckForSimilarName(cbxUser, ErrMsg, ltPerson, sPr) then
+  begin
+    ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');
+    exit;
+  end;
+
   FCurUser := cbxUser.ItemIEN;
   If FCurUser < 1  then   //No value in User combobox
   begin
@@ -774,6 +787,22 @@ begin
     cbxDropDownClose(nil);
 end;
 
+procedure TfrmRemCoverSheet.cbxUserEnter(Sender: TObject);
+begin
+  inherited;
+  FChanging := true;
+end;
+
+procedure TfrmRemCoverSheet.cbxUserExit(Sender: TObject);
+begin
+  inherited;
+  if FChanging then
+  begin
+    FChanging := False;
+    cbxUserChange(sender);
+  end;
+end;
+
 procedure TfrmRemCoverSheet.cbxUserLocExit(Sender: TObject);
 begin
   inherited;
@@ -782,6 +811,16 @@ begin
   begin
     if ScreenReaderSystemActive then lblCAC.SetFocus
     else btnView.SetFocus;
+  end;
+end;
+
+procedure TfrmRemCoverSheet.cbxUserMouseClick(Sender: TObject);
+begin
+  inherited;
+  if FChanging then
+  begin
+    FChanging := False;
+    cbxUserChange(sender);
   end;
 end;
 
@@ -1508,7 +1547,7 @@ begin
 end;
 
 procedure TfrmRemCoverSheet.udSeqChangingEx(Sender: TObject;
-  var AllowChange: Boolean; NewValue: Smallint;
+  var AllowChange: Boolean; NewValue: integer;
   Direction: TUpDownDirection);
 begin
   if FUpdating or (not FInitialized) then exit;
@@ -1919,8 +1958,19 @@ end;
 procedure TfrmRemCoverSheet.cbxDivisionKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
-  if (Key = VK_RETURN) and TORComboBox(Sender).DroppedDown then
-    TORComboBox(Sender).DroppedDown := FALSE;
+
+  FChanging := True;
+
+  if Key = VK_LEFT then
+    Key := VK_UP;
+  if Key = VK_RIGHT then
+    Key := VK_DOWN;
+  if Key = VK_RETURN then
+  begin
+    FChanging := False;
+    if TORComboBox(Sender).DroppedDown then
+      TORComboBox(Sender).DroppedDown := FALSE;
+  end;
 end;
 
 function TfrmRemCoverSheet.GetCoverSheetLvlData(ALevel,

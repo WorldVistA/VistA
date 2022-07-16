@@ -6,7 +6,8 @@ unit uCore;
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses, uCombatVet, system.json;
+uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses, uCombatVet,
+  system.json, System.Generics.Collections;
 
 type
   TUser = class(TObject)

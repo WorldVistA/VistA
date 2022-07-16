@@ -51,15 +51,13 @@ type
     cboCollType: TORComboBox;
     lblCollTime: TLabel;
     cboCollTime: TORComboBox;
-    calWantTime: TORDateBox;
-    lblWanted: TLabel;
-    calCollTime: TORDateBox;
     txtImmedColl: TCaptionEdit;
-    pnlCollTimeButton: TKeyClickPanel;
     lblTNS: TLabel;
     lblNoBloodReq: TLabel;
-    cmdImmedColl: TSpeedButton;
     Splitter1: TSplitter;
+    lblWanted: TLabel;
+    calWantTime: TORDateBox;
+    calCollectTime: TORDateBox;
     procedure FormCreate(Sender: TObject);
     procedure cboAvailTestSelect(Sender: TObject);
     procedure cboAvailCompSelect(Sender: TObject);
@@ -74,7 +72,6 @@ type
       const StartFrom: String; Direction, InsertAt: Integer);
     procedure cboAvailCompNeedData(Sender: TObject;
       const StartFrom: String; Direction, InsertAt: Integer);
-    procedure cmdImmedCollClick(Sender: TObject);
     procedure pgeProductChange(Sender: TObject);
     procedure cboCollTypeChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -85,7 +82,6 @@ type
     procedure chkConsentClick(Sender: TObject);
     procedure cboUrgencyChange(Sender: TObject);
     procedure cboSurgeryChange(Sender: TObject);
-    procedure calCollTimeChange(Sender: TObject);
     procedure cboQuickClick(Sender: TObject);
     procedure tQuantityEnter(Sender: TObject);
     procedure btnUpdateCommentsClick(Sender: TObject);
@@ -111,12 +107,14 @@ type
     procedure cboAvailTestEnter(Sender: TObject);
     procedure cboCollTypeEnter(Sender: TObject);
     procedure txtImmedCollEnter(Sender: TObject);
-    procedure calCollTimeEnter(Sender: TObject);
     procedure cboCollTimeEnter(Sender: TObject);
     procedure cboModifiersEnter(Sender: TObject);
     procedure calWantTimeEnter(Sender: TObject);
     procedure cboAvailCompEnter(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure calCollectTimeChange(Sender: TObject);
+    procedure calCollectTimeEnter(Sender: TObject);
+    procedure calCollectTimeClick(Sender: TObject);
   protected
     FCmtTypes: TStringList ;
     procedure InitDialog; override;
@@ -1119,7 +1117,7 @@ begin
                                         FLastCollTime := '';
                                         FLastLabCollTime := '';
                                         txtImmedColl.Text := '';
-                                        calCollTime.text := '';
+                                        calCollectTime.Text := '';
                                         exit;
                                       end;
                                   end;
@@ -1210,7 +1208,7 @@ begin
                         LRORDERMODE := TORDER_MODE_DIAG;
                         aTestYes := '1';
                         SetControl(cboAvailTest,       'ORDERABLE', AnInstance);
-                        //DetermineCollectionDefaults(Responses); //cboCollType = COLLECT , calCollTime = START
+                        //DetermineCollectionDefaults(Responses); //cboCollType = COLLECT , calCollectTime = START
                         i := 1 ;
                         AResponse := Responses.FindResponseByName('COMMENT',i);
                         while AResponse <> nil do
@@ -2056,13 +2054,12 @@ begin
                 begin
                   if cboCollType.ItemID = 'I' then
                     begin
-                      calCollTime.Text := txtImmedColl.Text;
-                      x := ValidImmCollTime(calCollTime.FMDateTime);
+                      calCollectTime.Text := txtImmedColl.Text;
+                      x := ValidImmCollTime(calCollectTime.FMDateTime);
                       if (Piece(x, U, 1) <> '1') then
                         SetError(Piece(x, U, 2));
                     end;
-
-                  with calColltime do
+                  with calCollecttime do
                     begin
                       if FMDateTime = 0 then SetError(TX_BAD_TIME + ' (' + test + ')')
                       else
@@ -2203,7 +2200,7 @@ begin
   havetest := false;
   for j := uSelectedItems.Count - 1 downto 0 do
     begin
-      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') and ((length(calCollTime.Text) > 0) or (length(cboCollTime.Text) > 0)) then
+      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') and ((length(calCollectTime.Text) > 0) or (length(cboCollTime.Text) > 0)) then
         begin
           havetest := true;
           Break;
@@ -2217,84 +2214,78 @@ begin
     begin
       cboColltime.Visible    := False;
       txtImmedColl.Visible   := False;
-      pnlCollTimeButton.Visible   := False;
-      pnlCollTimeButton.TabStop := False;
-      calCollTime.Visible    := True;
-      calCollTime.Enabled    := True;
-      if FLastCollTime <> '' then
+      calCollectTime.Visible    := True;
+      calCollectTime.Enabled    := True;
+    if FLastCollTime <> '' then
         begin
-          calCollTime.Text := ValidCollTime(FLastColltime);
-          if IsFMDateTime(calCollTime.Text) then
+          calCollectTime.Text := ValidCollTime(FLastColltime);
+          if IsFMDateTime(calCollectTime.Text) then
             begin
-              calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
-              calCollTime.FMDateTime := StrToFMDateTime(FLastCollTime);
+              calCollectTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calCollectTime.Text));
+              calCollectTime.FMDateTime := StrToFMDateTime(FLastCollTime);
             end;
         end
       else if tmpORECALLTime <> '' then
         begin
-          calCollTime.Text := ValidCollTime(tmpORECALLTime);
-          if IsFMDateTime(calCollTime.Text) then
+          calCollectTime.Text := ValidCollTime(tmpORECALLTime);
+          if IsFMDateTime(calCollectTime.Text) then
             begin
-              calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
-              calCollTime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
+              calCollectTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calCollectTime.Text));
+              calCollectTime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
             end;
         end
       else if LRFDATE <> '' then
-        calCollTime.Text     := LRFDATE
+        calCollectTime.Text     := LRFDATE
       else if not(FOrderAction in [ORDER_EDIT]) then
-        calCollTime.Text     := 'TODAY'
+        calCollectTime.Text     := 'TODAY'
       else if (havetest = false) then
-        calCollTime.Text     := 'TODAY';
+        calCollectTime.Text     := 'TODAY';
      if (havetest = false) and (RemoveCollTimeDefault = True) then
         begin
-          calCollTime.Text := '';
-          calCollTime.FMDateTime := 0;
+          calCollectTime.Text := '';
+          calCollectTime.FMDateTime := 0;
         end;
     end
   else if CollType = 'WC' then
     begin
       cboColltime.Visible    := False;
       txtImmedColl.Visible   := False;
-      pnlCollTimeButton.Visible   := False;
-      pnlCollTimeButton.TabStop := False;
-      calCollTime.Visible    := True;
-      calColltime.Enabled    := True;
+      calCollectTime.Visible    := True;
+      calCollectTime.Enabled    := True;
       if FLastCollTime <> '' then
         begin
-          calCollTime.Text := ValidColltime(FLastColltime);
-          if IsFMDateTime(calCollTime.Text) then
+          calCollectTime.Text := ValidColltime(FLastColltime);
+          if IsFMDateTime(calCollectTime.Text) then
             begin
-              calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
-              calCollTime.FMDateTime := StrToFMDateTime(FLastCollTime);
+              calCollectTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calCollectTime.Text));
+              calCollectTime.FMDateTime := StrToFMDateTime(FLastCollTime);
             end;
         end
       else if tmpORECALLTime <> '' then
         begin
-          calCollTime.Text := ValidColltime(tmpORECALLTime);
-          if IsFMDateTime(calCollTime.Text) then
+          calCollectTime.Text := ValidColltime(tmpORECALLTime);
+          if IsFMDateTime(calCollectTime.Text) then
             begin
-              calCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calColltime.Text));
-              calCollTime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
+              calCollectTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(calCollectTime.Text));
+              calCollectTime.FMDateTime := StrToFMDateTime(tmpORECALLTime);
             end;
         end
       else if LRFDATE <> '' then
-        calCollTime.Text     := LRFDATE
+        calCollectTime.Text     := LRFDATE
       else if not(FOrderAction in [ORDER_EDIT]) then
-        calCollTime.Text     := 'NOW';
+        calCollectTime.Text     := 'NOW';
       if (havetest = false) and (RemoveCollTimeDefault = True) then
         begin
-          calCollTime.Text := '';
-          calCollTime.FMDateTime := 0;
+          calCollectTime.Text := '';
+          calCollectTime.FMDateTime := 0;
         end;
     end
   else if CollType = 'LC' then
     begin
       cboColltime.Visible    := True;
-      calCollTime.Visible    := False;
-      calColltime.Enabled    := False;
+      calCollectTime.Visible    := False;
+      calCollectTime.Enabled    := False;
       txtImmedColl.Visible   := False;
-      pnlCollTimeButton.Visible   := False;
-      pnlCollTimeButton.TabStop := False;
       with CtrlInits do SetControl(cboCollTime, 'Lab Collection Times');
       if Pos(U, FLastLabCollTime) > 0 then
         cboColltime.SelectByID(Piece(FLastLabCollTime, U, 1))
@@ -2314,11 +2305,9 @@ begin
   else if CollType = 'I' then
     begin
       cboColltime.Visible    := False;
-      calCollTime.Visible    := False;
-      calCollTime.Enabled    := False;
+      calCollectTime.Visible    := False;
+      calCollectTime.Enabled    := False;
       txtImmedColl.Visible   := True;
-      pnlCollTimeButton.Visible   := True;
-      pnlCollTimeButton.TabStop := True;
       tmpImmTime := GetDefaultImmCollTime;
       tmpTime := 0;
       if (FLastColltime <> '') then
@@ -2329,18 +2318,18 @@ begin
         tmpTime := StrToFMDateTime(LRFDATE);
       if tmpTime > tmpImmTime then
         begin
-          calCollTime.FMDateTime := tmpTime;
+          calCollectTime.FMDateTime := tmpTime;
           txtImmedColl.Text      := FormatFMDateTime('mmm dd,yy@hh:nn', tmpTime);
         end
       else
         begin
-          calCollTime.FMDateTime := GetDefaultImmCollTime;
-          txtImmedColl.Text      := FormatFMDateTime('mmm dd,yy@hh:nn', calCollTime.FMDateTime);
+          calCollectTime.FMDateTime := GetDefaultImmCollTime;
+          txtImmedColl.Text      := FormatFMDateTime('mmm dd,yy@hh:nn', calCollectTime.FMDateTime);
         end;
       if (havetest = false) and (RemoveCollTimeDefault = True) then
         begin
-          calCollTime.Text := '';
-          calCollTime.FMDateTime := 0;
+          calCollectTime.Text := '';
+          calCollectTime.FMDateTime := 0;
           txtImmedColl.Text := '';
         end;
     end;
@@ -2586,7 +2575,18 @@ begin
           end
         else
           begin
-            with calCollTime do
+            with calCollectTime do
+              if FMDateTime > 0 then
+                begin
+                  Responses.Update('START', 1, ValidCollTime(Text), Text);
+                  FLastColltime := ValidCollTime(Text);
+                end
+              else
+                begin
+                  Responses.Update('START', 1, '', '') ;
+                  FLastCollTime := '';
+                end;
+              with calCollectTime do
               if FMDateTime > 0 then
                 begin
                   Responses.Update('START', 1, ValidCollTime(Text), Text);
@@ -2930,7 +2930,7 @@ begin
   lblModifiers.Enabled := false;
   cboModifiers.Enabled := false;
   lblQuantity.Caption := 'Quantity';
-  lblWanted.Caption := 'Date/Time Wanted';
+  lblWanted.Caption := 'For All Components -- Date/Time Wanted';
   lblReason.Caption := 'Reason for Request';
   cboAvailComp.ItemIndex := -1;
   for j := uSelectedItems.Count - 1 downto 0 do
@@ -2938,7 +2938,7 @@ begin
       if piece(uSelectedItems[j],'^',1) = '0' then
         begin
           lblReason.Caption := 'Reason for Request*';
-          lblWanted.Caption := 'Date/Time Wanted*';
+          lblWanted.Caption := 'For All Components -- Date/Time Wanted*';
           Break;
         end;
     end;
@@ -2951,7 +2951,7 @@ begin
   lblModifiers.Enabled := true;
   cboModifiers.Enabled := true;
   lblQuantity.Caption := 'Quantity*';
-  lblWanted.Caption := 'Date/Time Wanted*';
+  lblWanted.Caption := 'For All Components -- Date/Time Wanted*';
   lblReason.Caption := 'Reason for Request*';
   if not(changing) then
     if not(uSelUrgency = 'PRE-OP') then
@@ -3002,11 +3002,10 @@ begin
   if diagflg = false then
     begin
       lblCollTime.Enabled := false;
-      calCollTime.Enabled := false;
+      calCollectTime.Enabled := false;
       cboCollTime.Enabled := false;
       lblCollType.Enabled := false;
       cboCollType.Enabled := false;
-      cmdImmedColl.Enabled := false;
     end;
   lblCollTime.Caption := 'Collection Date/Time';
   lblCollType.Caption := 'Collection Type';
@@ -3025,11 +3024,10 @@ end;
 procedure TfrmODBBank.EnableDiagTestControls;
 begin
   lblCollTime.Enabled := true;
-  calCollTime.Enabled := true;
+  calCollectTime.Enabled := true;
   cboCollTime.Enabled := true;
   lblCollType.Enabled := true;
   cboCollType.Enabled := true;
-  cmdImmedColl.Enabled := true;
   lblCollTime.Caption := 'Collection Date/Time*';
   lblCollType.Caption := 'Collection Type*';
   if not(changing) then
@@ -3050,7 +3048,7 @@ var
   RespCollect, RespStart: TResponse;
 begin
   if ALabTest = nil then exit;
-  calCollTime.Enabled := True;
+  calCollectTime.Enabled := True;
   lblCollTime.Enabled := True;
   cboColltime.Enabled := True;
   with Responses, ALabTest do
@@ -3086,9 +3084,13 @@ begin
               if RespStart <> nil then
                 begin
                   if ContainsAlpha(RespStart.IValue) then
-                    calColltime.Text := RespStart.IValue
+                    begin
+                    calCollecttime.Text := RespStart.IValue;
+                    end
                   else
-                    calColltime.FMDateTime := StrToFMDateTime(RespStart.IValue);
+                    begin
+                    calCollecttime.FMDateTime := StrToFMDateTime(RespStart.IValue);
+                    end;
                 end;
             end ;
           if IValue = 'I' then
@@ -3099,11 +3101,9 @@ begin
               end
             else
               begin
-                calCollTime.Enabled := False;
+                calCollectTime.Enabled := False;
                 cboCollType.SelectByID('I');
                 SetupCollTimes('I');
-                //cboCollTypeClick(self);
-                //txtImmedColl.Enabled := True;
                 if RespStart <> nil then
                   begin
                     txtImmedColl.Text := RespStart.EValue;
@@ -3187,24 +3187,6 @@ procedure TfrmODBBank.cboAvailCompNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
   cboAvailComp.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, FVbecLookup, Responses.QuickOrder));
-end;
-
-procedure TfrmODBBank.cmdImmedCollClick(Sender: TObject);
-var
-  ImmedCollTime: string;
-begin
-  inherited;
-  ImmedCollTime := SelectImmediateCollectTime(Font.Size, txtImmedColl.Text);
-  if ImmedCollTime <> '-1' then
-    begin
-      txtImmedColl.Text := ImmedCollTime;
-      calCollTime.FMDateTime := StrToFMDateTime(ImmedCollTime);
-    end
-  else
-    begin
-      txtImmedColl.Clear;
-      calCollTime.Clear;
-    end;
 end;
 
 procedure TfrmODBBank.pgeProductChange(Sender: TObject);
@@ -3347,11 +3329,11 @@ begin
   begin
     cboCollTime.ItemIndex := -1;
     cboCollTime.Text := 'NOW';
-    calCollTime.Text := 'NOW';
+    calCollectTime.Text := 'NOW';
   end;
   SetupCollTimes(cboCollType.ItemID);
   if Length(cboCollType.Text) > 0 then Responses.Update('COLLECT',1,cboCollType.ItemID,cboCollType.ItemID);
-  calCollTimeChange(self);
+  calCollectTimeChange(self);
 end;
 
 procedure TfrmODBBank.cboCollTypeClick(Sender: TObject);
@@ -3496,14 +3478,20 @@ begin
       if (FLastLabCollTime <> '') and (length(cboCollTime.Text) < 1) then
         cboCollTime.SelectByID(piece(FLastLabCollTime,'^',1));
     end
-  else if length(calcollTime.Text) < 1 then
+  else if length(calCollectTime.Text) < 1 then
     begin
       if FLastCollTime = 'TODAY' then
-        calCollTime.Text := FLastCollTime
+      begin
+        calCollectTime.Text := FLastCollTime;
+      end
       else if FLastCollTime = 'NOW' then
-        calCollTime.Text := FLastCollTime
+      begin
+        calCollectTime.Text := FLastCollTime;
+      end
       else if FLastCollTime <> '' then
-        calCollTime.Text := FormatFMDateTime('mmm dd,yyyy@hh:nn',StrToFMDateTime(FLastCollTime));
+      begin
+        calCollectTime.Text := FormatFMDateTime('mmm dd,yyyy@hh:nn',StrToFMDateTime(FLastCollTime));
+      end;
     end;
   if (FLastCollType <> '') and (length(cboCollType.Text) < 1) then
     cboCollType.SelectByID(FLastCollType);
@@ -3663,7 +3651,7 @@ begin
     lblCollTime.Caption := 'Collection Date/Time';
     lblCollType.Caption := 'Collection Type';
     lblQuantity.Caption := 'Quantity';
-    lblWanted.Caption := 'Date/Time Wanted';
+    lblWanted.Caption := 'For All Components -- Date/Time Wanted';
     lblReason.Caption := 'Reason for Request';
     if lvSelectionList.Items.Count < 1 then
       begin
@@ -3687,7 +3675,7 @@ begin
         FLastCollTime := '';
         FLastLabCollTime := '';
         txtImmedColl.Text := '';
-        calCollTime.text := '';
+        calCollectTime.text := '';
         lblNoBloodReq.Visible := false;
       end;
     for i := 0 to uSelectedItems.Count - 1 do
@@ -3711,7 +3699,7 @@ begin
             cboAvailComp.ItemIndex := -1;
             tQuantity.Text := '';
             lblQuantity.Caption := 'Quantity*';
-            lblWanted.Caption := 'Date/Time Wanted*';
+            lblWanted.Caption := 'For All Components -- Date/Time Wanted*';
             lblReason.Caption := 'Reason for Request*';
             //aSelComp := true;
           end;
@@ -3721,7 +3709,7 @@ begin
       begin
         cboCollType.ItemIndex := -1;
         cboCollTime.ItemIndex := -1;
-        calCollTime.Text := '';
+        calCollectTime.Text := '';
       end;
     {if aSelcomp = false then
       lblNoBloodReq.Visible := false
@@ -3744,7 +3732,7 @@ begin
       end
     else
       begin
-        with calCollTime do
+        with calCollectTime do
           if FMDateTime > 0 then
             begin
               Responses.Update('START', 1, ValidCollTime(Text), Text);
@@ -3843,13 +3831,13 @@ begin
   FLastCollTime := '';
   FLastLabCollTime := '';
   txtImmedColl.Text := '';
-  calCollTime.text := '';
+  calCollectTime.text := '';
   lblNoBloodReq.Visible := false;
   pnlDiagnosticTests.Caption := 'Diagnostic Tests';
   lblCollTime.Caption := 'Collection Date/Time';
   lblCollType.Caption := 'Collection Type';
   lblQuantity.Caption := 'Quantity';
-  lblWanted.Caption := 'Date/Time Wanted';
+  lblWanted.Caption := 'For All Components -- Date/Time Wanted';
   lblReason.Caption := 'Reason for Request';
 end;
 
@@ -4361,7 +4349,7 @@ begin
     end;
 end;
 
-procedure TfrmODBBank.calCollTimeChange(Sender: TObject);
+procedure TfrmODBBank.calCollectTimeChange(Sender: TObject);
 begin
   inherited;
   if uSelectedItems.Count > 0 then
@@ -4382,7 +4370,7 @@ begin
         end
       else
         begin
-          with calCollTime do
+          with calCollectTime do
             if FMDateTime > 0 then
               begin
                 Responses.Update('START', 1, ValidCollTime(Text), Text);
@@ -4393,26 +4381,45 @@ begin
                 Responses.Update('START', 1, '', '') ;
                 FLastCollTime := '';
               end;
+
         end;
       memOrder.Text := Responses.OrderText;
     end;
 end;
 
-procedure TfrmODBBank.calCollTimeEnter(Sender: TObject);
+procedure TfrmODBBank.calCollectTimeClick(Sender: TObject);
+var
+  ImmedCollTime: string;
+begin
+  inherited;
+  ImmedCollTime := SelectImmediateCollectTime(Font.Size, txtImmedColl.Text);
+  if ImmedCollTime <> '-1' then
+    begin
+      txtImmedColl.Text := ImmedCollTime;
+      calCollectTime.FMDateTime := StrToFMDateTime(ImmedCollTime);
+    end
+  else
+    begin
+      txtImmedColl.Clear;
+      calCollectTime.Clear;
+    end;
+end;
+
+procedure TfrmODBBank.calCollectTimeEnter(Sender: TObject);
 var
   j: integer;
 begin
   inherited;
   if Length(cboAvailTest.Text) > 0 then Exit;
-  for j := uSelectedItems.Count - 1 downto 0 do
-    begin
-      if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') then
-        begin
-          lvSelectionList.Items[j].Selected := true;
-          lvSelectionListClick(self);
-          Break;
-        end;
-    end;
+    for j := uSelectedItems.Count - 1 downto 0 do
+      begin
+        if not(lvSelectionList.Items[j] = nil) and (piece(uSelectedItems[j],'^',1) = '1') then
+          begin
+            lvSelectionList.Items[j].Selected := true;
+            lvSelectionListClick(self);
+            Break;
+          end;
+      end;
 end;
 
 end.

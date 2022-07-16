@@ -35,7 +35,7 @@ var
   i: integer;
 
 begin
-  if(NotUpdating) and (cboExamResults.Text <> '') then
+  if(NotUpdating) and (cboExamResults.Text <> '') and (Assigned(lstCaptionList.Selected)) then
   begin
     TPCEExams(lstCaptionList.Objects[lstCaptionList.Selected.Index]).Results := cboExamResults.ItemID;
 

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="Adobe RoboHelp 2020" />
+  <title>Writing Event-Delayed Orders</title>
+  <link rel="StyleSheet" href="assets/css/CPRS.css" type="text/css" />
+  <meta name="rh-index-keywords" content="Event-Delayed Orders,Event-Delayed Orders:writing an event-delayed order,Writing,Writing:Event-Delayed Orders" />
+</head>
+<body>
+  <h1>
+    <font color="#3366FF" size="4" style="font-size: 14pt;">Writing an Event-Delayed Order</font>
+  </h1>
+  <p style="margin-top: 4.00pt; margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">To write an event-delayed order, follow these steps</font>
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">:</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -17.50pt;">
+    <font color="#010100">1.     Select the</font>
+    <font color="#010100" style="font-weight: bold;">Orders</font>
+    <font color="#010100">tab.</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -17.50pt;">
+    <font color="#010100">2.     Select the</font>
+    <font color="#010100" style="font-weight: bold;">Write Delayed Orders</font>
+    <font color="#010100">button located below the View Orders box.</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">The</font>
+    <font color="#010100" size="2" style="font-size: 10pt; font-style: italic;">Release Orders</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">dialog box appears. The available release events will appear in a list. Your list may contain a highlighted default release event and a common release event list. Your CAC defines the default release event and the common release event list. (For more information about defining a def</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">a</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">ult release event and a common release event list, please see the Event-Delayed Orders topic in the</font>
+    <font color="#010100" size="2" style="font-size: 10pt; font-style: italic;">CPRS GUI Technical Manual</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">or Appendix F in the</font>
+    <font color="#010100" size="2" style="font-size: 10pt; font-style: italic;">CPRS List Manager Technical Manual</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">).</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt;"> </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -17.50pt; color: #010100;">3.     Select the &quot;Delay release of new order(s) until&quot; option.</p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">The available release events will appear.</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -17.50pt; color: #010100;">4.     Select the appropriate release event.</p>
+  <p style="margin-left: 72.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;">
+    <font color="#010100" size="2" style="font-size: 9pt; font-weight: bold;">Note:</font>
+    <font color="#010100" size="2" style="font-size: 9pt;"> </font>
+    <font color="#010100">     </font>
+    <font color="#010100" size="2" style="font-size: 9pt;">If the patient&#39;s location has a treating specialty of &quot;observation&quot; and the user tried to write delayed orders, the &quot;transfer&quot; event</font>
+    <font color="#010100" size="2" style="font-size: 9pt;">should not appear in the selection list. The reason is that orders are discontinued on transfer. The result would be if a patient were in an observation location, and delayed orders were written when the patient was moved out of observation, the orders would be cancelled.</font>
+  </p>
+  <p style="margin-left: 72.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;"> </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -17.50pt;">
+    <font color="#010100">5.     Select</font>
+    <font color="#010100" style="font-weight: bold;">OK</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">If the</font>
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold; font-style: italic;">Copy active orders for selected event</font>
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">dialog appears, skip to step 6</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">.</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">Otherwise, the</font>
+    <font color="#010100" size="2" style="font-size: 10pt; font-style: italic;">Release Orders</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">dialog will close and the name of the release event will now appear below the Write Delayed Orders button. Enter the</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">order as you normally would.</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt;"> </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -17.50pt;">
+    <font color="#010100">6.     Check the active orders that you would like to delay in the</font>
+    <font color="#010100" style="font-style: italic;">Copy active orders for selected release event</font>
+    <font color="#010100">dialog. These orders will be delayed until the release event specified at the top of the dialog occurs.</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -17.50pt;">
+    <font color="#010100">7.     Select</font>
+    <font color="#010100" style="font-weight: bold;">OK</font>
+    <font color="#010100">.</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">The</font>
+    <font color="#010100" size="2" style="font-size: 10pt; font-style: italic;">Ordering Information</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">dialog will appear. This dialog will contain the release event that you have selected. Check to be sure that you selected the correct release event.</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt;"> </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -17.50pt;">
+    <font color="#010100">8.     Select</font>
+    <font color="#010100" style="font-weight: bold;">OK</font>
+    <font color="#010100">.</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -17.50pt; color: #010100;">9.     Enter the order as you normally would.</p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-top: 6.00pt; margin-bottom: 0.00pt; border-bottom: 0.75pt solid #000000;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">Related Topics</font>
+  </p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Changing_the_Release_Event___Assigning_a_Release_Event_to_an_Unreleased_Order.htm">
+      <font size="2" style="font-size: 10pt;">Assigning/Changing the Release Event</font>
+    </a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Event_Delayed_Orders.htm">
+      <font size="2" style="font-size: 10pt;">Event-Delayed Orders</font>
+    </a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Manually_Releasing_an_Event-Delayed_Order.htm">
+      <font size="2" style="font-size: 10pt;">Manually Releasing an Event-Delayed Order</font>
+    </a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Viewing_an_Event-Delayed_Order_After_it_is_Released.htm">Viewing an Event-Delayed Order After it is Released</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"> </p>
+</body>
+</html>

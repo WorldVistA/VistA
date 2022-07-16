@@ -1,0 +1,53 @@
+package CopyPaste_D10_4_1;
+{$R *.res}
+{$R '..\..\Source\CopyMonitor.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Copy Paste Monitor - 10.4.1'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vclx,
+  vcl,
+  dbrtl,
+  VclSmp,
+  vcldb,
+  VA508Access_D10_4_1,
+  VAShared_R10_4_1,
+  IndySystem,
+  IndyProtocols,
+  IndyCore;
+
+contains
+  U_CPTPasteDetails in '..\..\Source\U_CPTPasteDetails.pas',
+  U_CPTCommon in '..\..\Source\U_CPTCommon.pas',
+  U_CPTUtils in '..\..\Source\U_CPTUtils.pas',
+  U_CPTAppMonitor in '..\..\Source\U_CPTAppMonitor.pas',
+  U_CPTEditMonitor in '..\..\Source\U_CPTEditMonitor.pas',
+  U_CPTExtended in '..\..\Source\U_CPTExtended.pas',
+  tom_TLB in '..\..\Source\tom_TLB.pas';
+
+end.

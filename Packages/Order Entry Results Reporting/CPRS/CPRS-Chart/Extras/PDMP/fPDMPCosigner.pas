@@ -3,12 +3,20 @@ unit fPDMPCosigner;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ORCtrls,
-  fBase508Form, Vcl.ExtCtrls,
-  ORFn
-  ;
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.StdCtrls,
+  ORCtrls,
+  fBase508Form,
+  Vcl.ExtCtrls,
+  ORFn;
 
 type
   TpdmpCosigner = class(TfrmBase508Form)
@@ -29,15 +37,14 @@ type
       Direction, InsertAt: Integer);
     procedure cboCosignerExit(Sender: TObject);
   private
+    FCboCosignerVistaParams: TArray<string>;
     fEncounterProvider: string;
     fDateTime: TFMDateTime;
     fDocType: Integer;
     fCosignerIEN: String;
     fCosignerName: String;
     procedure initLookup;
-    { Private declarations }
   public
-    { Public declarations }
     property CosignerIEN: String read fCosignerIEN write fCosignerIEN;
     property CosignerName: String read fCosignerName write fCosignerName;
     procedure SetFontSize(aSize: Integer);
@@ -50,11 +57,19 @@ implementation
 
 uses
 {$IFDEF PDMPTEST}
-  rCore.User, rCore.DateTimeUtils, rCore.TIU, uCore.TIU,
+  rCore.User,
+  rCore.DateTimeUtils,
+  rCore.TIU,
+  uCore.TIU,
 {$ELSE}
-  rCore,  rPDMP, rTIU,
+  rCore,
+  rPDMP,
+  rTIU,
 {$ENDIF}
-    uSizing, oPDMPData, uPDMP;
+  uSimilarNames,
+  uSizing,
+  oPDMPData,
+  uPDMP;
 
 {$R *.dfm}
 
@@ -113,7 +128,7 @@ procedure TpdmpCosigner.cboCosignerNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
   (Sender as TORComboBox).ForDataUse(SubSetOfUsersWithClass(StartFrom,
-    Direction, FloatToStr(FMToday)));
+    Direction, FloatToStr(FMToday), FCboCosignerVistaParams));
 end;
 
 procedure TpdmpCosigner.cboCosignerDblClick(Sender: TObject);
@@ -124,27 +139,29 @@ end;
 
 procedure TpdmpCosigner.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 var
-  b: Boolean;
   ErrMsg: String;
-
 begin
   inherited;
-
-  if cboCosigner.ItemIndex >= 0 then
+  if ModalResult = mrCancel then
   begin
-    b := CanCosign(PDMP_NoteTitleID, FDocType, cboCosigner.ItemIEN, fDateTime);
-    if not b then
-      ErrMsg := cboCosigner.Text + TX_COS_AUTH;
-  end
-  else
+    CanClose := True;
+  end else begin
+    if not CheckForSimilarName(cboCosigner, ErrMsg, ltCosign, FCboCosignerVistaParams, sCo) then
     begin
-      ErrMsg := PDMP_MSG_NO_COSIGNER_SELECTED;
-      b := false;
+      CanClose := False;
+    end else begin
+      if cboCosigner.ItemIndex >= 0 then
+      begin
+        CanClose := CanCosign(PDMP_NoteTitleID, FDocType, cboCosigner.ItemIEN, fDateTime);
+        if CanClose then ErrMsg := ''
+        else ErrMsg := cboCosigner.Text + TX_COS_AUTH;
+      end else begin
+        ErrMsg := PDMP_MSG_NO_COSIGNER_SELECTED;
+        CanClose := False;
+      end;
+      if not CanClose then InfoBox(ErrMsg, PDMP_MSG_TITLE, MB_OK + MB_ICONWARNING);
     end;
-
-  CanClose := (ModalResult = mrCancel) or b;
-  if not CanClose then
-    InfoBox(ErrMsg, PDMP_MSG_TITLE,  MB_OK + MB_ICONWARNING);
+  end;
 end;
 
 procedure TpdmpCosigner.FormCreate(Sender: TObject);
@@ -178,7 +195,10 @@ begin
   cboCosigner.InitLongList(fEncounterProvider);
   idx := cboCosigner.Items.IndexOf(fEncounterProvider);
   if idx > -1 then
+  begin
     cboCosigner.ItemIndex := idx;
+    TSimilarNames.RegORComboBox(cboCosigner);
+  end;
 end;
 
 procedure TpdmpCosigner.SetFontSize(aSize: Integer);

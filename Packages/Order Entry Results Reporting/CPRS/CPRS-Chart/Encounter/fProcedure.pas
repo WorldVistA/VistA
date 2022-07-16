@@ -40,7 +40,10 @@ type
     procedure lstCaptionListChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure lstCaptionListInsert(Sender: TObject; Item: TListItem);
+    procedure cboProviderExit(Sender: TObject);
   private
+    FCheckingSimilarNames: boolean;
+    FCboProviderVistaParams: TArray<string>;
     FCheckingCode: boolean;
     FCheckingMods: boolean;
     FLastCPTCodes: string;
@@ -56,6 +59,8 @@ type
   public
     function OK2SaveProcedures: boolean;
     procedure InitTab(ACopyProc: TCopyItemsMethod; AListProc: TListSectionsProc);
+    procedure AllowTabChange(var AllowChange: boolean); override;
+    function CheckSimilarNameOK: Boolean;
   end;
 
 var
@@ -66,7 +71,7 @@ implementation
 {$R *.DFM}
 
 uses
-  fEncounterFrame, uConst, rCore, VA508AccessibilityRouter, VAUtils;
+  fEncounterFrame, uConst, rCore, VA508AccessibilityRouter, VAUtils, uSimilarNames;
 
 const
   TX_PROC_PROV = 'Each procedure requires selection of a Provider before it can be saved.';
@@ -105,7 +110,18 @@ begin
   end;
 end;
 
+procedure TfrmProcedures.cboProviderExit(Sender: TObject);
+begin
+  inherited;
+  cboProvider.DroppedDown := False;
+  CheckSimilarNameOK;
+end;
+
 procedure TfrmProcedures.FormCreate(Sender: TObject);
+var
+  i, count: integer;
+  child: TControl;
+
 begin
   inherited;
   FTabName := CT_ProcNm;
@@ -116,6 +132,26 @@ begin
   FSectionTabCount := 1;
   FormResize(Self);
   lbMods.HideSelection := TRUE;
+
+  count := 0;
+  for i := 0 to cboProvider.ControlCount - 1 do
+  begin
+    child := cboProvider.Controls[i];
+    if child is TORListBox then
+    begin
+      TORListBox(child).OnExit := cboProviderExit;
+      inc(count);
+      if count > 1 then
+        break;
+    end;
+    if child is TORComboEdit then
+    begin
+      TORComboEdit(child).OnExit := cboProviderExit;
+      inc(count);
+      if count > 1 then
+        break;
+    end;
+  end;
 end;
 
 procedure TfrmProcedures.UpdateNewItemStr(var x: string);
@@ -191,6 +227,7 @@ begin
           else
             cboProvider.SetExactByIEN(uProviders.PCEProvider, uProviders.PCEProviderName);
             //cboProvider.ItemIndex := -1;     v22.8 - RV
+          TSimilarNames.RegORComboBox(cboProvider);
         end;
       end
       else
@@ -549,10 +586,10 @@ procedure TfrmProcedures.cboProviderNeedData(Sender: TObject;
 begin
   inherited;
   if(uEncPCEData.VisitCategory = 'E') then
-    cboProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction))
+    cboProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboProviderVistaParams))
   else
     cboProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction,
-                                     FloatToStr(uEncPCEData.PersonClassDate)));
+      FloatToStr(uEncPCEData.PersonClassDate), FCboProviderVistaParams));
 end;
 
 function TfrmProcedures.OK2SaveProcedures: boolean;
@@ -563,9 +600,11 @@ begin
     InfoBox(TX_PROC_PROV, TC_PROC_PROV, MB_OK or MB_ICONWARNING);
     Result := False;
   end;
+  if Result then
+    Result := CheckSimilarNameOK;
 end;
 
-function TfrmProcedures.MissingProvider: boolean;    
+function TfrmProcedures.MissingProvider: boolean;
 var
   i: integer;
   AProc: TPCEProc;
@@ -593,6 +632,44 @@ begin
 //-------------------------------------------------
 end;
 
+type
+  TMyWinControl = class(TWinControl);
+
+function TfrmProcedures.CheckSimilarNameOK: Boolean;
+var
+  ErrMsg: String;
+  ctrl: TWinControl;
+
+begin
+  if FCheckingSimilarNames or frmEncounterFrame.Cancel then
+  begin
+    Result := True;
+    exit;
+  end;
+  ctrl := Screen.ActiveControl;
+  if assigned(ctrl) and (ctrl = btnCancel) then
+  begin
+    Result := True;
+    exit;
+  end;
+  FCheckingSimilarNames := True;
+  try
+    if (uEncPCEData.VisitCategory = 'E') then
+      Result := CheckForSimilarName(cboProvider, ErrMsg, ltPerson, FCboProviderVistaParams, sPr)
+    else
+      Result := CheckForSimilarName(cboProvider, ErrMsg, ltPerson, FCboProviderVistaParams, sPr, FloatToStr(uEncPCEData.PersonClassDate));
+    if not Result then
+      ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');
+    // Displaying the dialog to pick from similar names can stop on click events
+    // from firing for buttone
+    if TSimilarNames.WasWindowShown and assigned(ctrl) and
+      ((ctrl is TButton) or (ctrl is TBitBtn)) then
+      TMyWinControl(ctrl).Click;
+  finally
+    FCheckingSimilarNames := False;
+  end;
+end;
+
 procedure TfrmProcedures.InitTab(ACopyProc: TCopyItemsMethod; AListProc: TListSectionsProc);
 var
   i: integer;
@@ -600,6 +677,11 @@ begin
   inherited;
   for i := 0 to lstCaptionList.Items.Count - 1 do
     TPCEProc(lstCaptionList.Objects[i]).fIsOldProcedure := True;
+end;
+
+procedure TfrmProcedures.AllowTabChange(var AllowChange: boolean);
+begin
+  AllowChange := CheckSimilarNameOK;
 end;
 
 initialization

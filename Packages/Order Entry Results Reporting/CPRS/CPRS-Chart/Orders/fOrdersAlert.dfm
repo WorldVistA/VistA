@@ -7,6 +7,7 @@ inherited frmAlertOrders: TfrmAlertOrders
   OnCreate = FormCreate
   ExplicitWidth = 320
   ExplicitHeight = 278
+  OnCloseQuery = FormCloseQuery
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]

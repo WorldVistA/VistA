@@ -1076,8 +1076,14 @@ inherited frmLabs: TfrmLabs
           Margins.Bottom = 5
           Align = alClient
           Color = clCream
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
           HorzOffset = 2
           ParentColor = False
+          ParentFont = False
           Transparent = False
           VertOffset = 6
           WordWrap = False

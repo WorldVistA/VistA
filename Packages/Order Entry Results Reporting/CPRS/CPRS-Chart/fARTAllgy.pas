@@ -3,12 +3,21 @@ unit fARTAllgy;
 interface
 
 uses
-  SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
+  Windows, SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, ORCtrls, ORfn, ExtCtrls, ComCtrls, uConst,
   Menus, ORDtTm, Buttons, fODBase, fAutoSz, fOMAction, rODAllergy, uOrders,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, ORNet;
 
 type
+
+  TTabSheet = class(ComCtrls.TTabSheet)
+  private
+    FColor: TColor;
+    procedure WMEraseBkGnd(var Msg: TWMEraseBkGnd); message WM_ERASEBKGND;
+  public
+    constructor Create(aOwner: TComponent); override;
+  end;
+
   TfrmARTAllergy = class(TfrmOMAction)
     pnlBase: TORAutoPanel;
     cmdOK: TButton;
@@ -26,7 +35,6 @@ type
     lblOriginateDate: TOROffsetLabel;
     calOriginated: TORDateBox;
     ckChartMarked: TCheckBox;
-    ckIDBand: TCheckBox;
     lblVerifier: TOROffsetLabel;
     ckVerified: TCheckBox;
     cboVerifier: TORComboBox;
@@ -65,6 +73,10 @@ type
     btnAgent: TButton;
     VA508ComponentAccessibility3: TVA508ComponentAccessibility;
     NoAllergylbl508: TVA508StaticText;
+    stSyntomDate: TVA508StaticText;
+    stRemoveBtn: TVA508StaticText;
+    ckIDBand: TCheckBox;
+    stIDBrandMarked: TStaticText;
     procedure btnAgent1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cboOriginatorNeedData(Sender: TObject; const StartFrom: String;
@@ -116,6 +128,9 @@ type
     procedure VA508ComponentAccessibility3StateQuery(Sender: TObject;
       var Text: string);
     procedure memErrCmtsExit(Sender: TObject);
+    procedure grpObsHistEnter(Sender: TObject);
+    procedure pgAllergyDrawTab(Control: TCustomTabControl; TabIndex: Integer;
+      const Rect: TRect; Active: Boolean);
   private
     FLastAllergyID: string;
     FEditAllergyIEN: integer;
@@ -123,6 +138,7 @@ type
     FChanged: Boolean;
     FOldHintPause : integer;
     procedure SetDate;
+    procedure CheckAllergyScan;
   protected
     procedure EnableDisableControls(EnabledStatus: boolean);
     procedure InitDialog; override;
@@ -155,7 +171,8 @@ implementation
 {$R *.DFM}
 
 uses
-  rODBase, uCore, rCore, rCover, iCoversheetIntf, {fCover,} fAllgyFind, fPtCWAD, fRptBox, VA508AccessibilityRouter, VAUtils;
+  rODBase, uCore, rCore, rCover, iCoversheetIntf, {fCover,} fAllgyFind, fPtCWAD, fRptBox, VA508AccessibilityRouter, VAUtils,
+  fNewAllergyCheck;
 
 const
   TX_NO_ALLERGY       = 'A causative agent must be specified.'    ;
@@ -727,25 +744,49 @@ begin
   inherited;
   Changing := True;
   cboSeverity.ItemIndex := -1; //*SMT
-  case grpObsHist.ItemIndex of
-    0:  begin
-          cboSeverity.Visible := True;
-          lblSeverity.Visible := True;
-          btnSevHelp.Visible := True;
-          calObservedDate.Visible := True;
-          lblObservedDate.Visible := True;
-          calObservedDate.FMDateTime := FMToday;
-        end;
-    1:  begin
-          cboSeverity.Visible := False;
-          lblSeverity.Visible := False;
-          btnSevHelp.Visible := False;
-          calObservedDate.Visible := False;
-          lblObservedDate.Visible := False;
-        end;
-  end;
+  cboSeverity.Visible := True;
+  lblSeverity.Visible := True;
+  btnSevHelp.Visible := True;
+  cboSeverity.Enabled := true;
+  cboSeverity.ItemIndex := -1; // *SMT
+  // case grpObsHist.ItemIndex of                    // N.Costanzo 06/19/15 NSR (20120404)
+  // 0:  begin                                     // N.Costanzo 06/19/15 NSR (20120404)
+  cboSeverity.Enabled := True;
+  lblSeverity.Enabled := True;
+  btnSevHelp.Enabled := True;
+  calObservedDate.Visible := True;
+  lblObservedDate.Visible := True;
+  calObservedDate.Enabled := True;
+  lblObservedDate.Enabled := True;
+  if grpObsHist.ItemIndex = 1 then
+    calObservedDate.Clear
+  else
+  calObservedDate.FMDateTime := FMToday;
+  // end;                                    // N.Costanzo 06/19/15 NSR (20120404)
+  // 1:  begin                               // N.Costanzo 06/19/15 NSR (20120404)
+  // cboSeverity.Visible := False;           // N.Costanzo 06/19/15 NSR (20120404)
+  // lblSeverity.Visible := False;           // N.Costanzo 06/19/15 NSR (20120404)
+  // btnSevHelp.Visible := False;            // N.Costanzo 06/19/15 NSR (20120404)
+  // calObservedDate.Visible := False;       // N.Costanzo 06/19/15 NSR (20120404)
+  // lblObservedDate.Visible := False;       // N.Costanzo 06/19/15 NSR (20120404)
+  // end;                                    // N.Costanzo 06/19/15 NSR (20120404)
+  // end;                                    // N.Costanzo 06/19/15 NSR (20120404)
   Changing := False;
   ControlChange(Self);
+end;
+
+procedure TfrmARTAllergy.grpObsHistEnter(Sender: TObject);
+begin
+  inherited;
+  if TabIsPressed then
+  begin
+    if grpObsHist.ItemIndex <> 1 then
+      grpObsHist.Buttons[0].SetFocus
+    else
+      grpObsHist.Buttons[1].SetFocus;
+  end;
+  if ShiftTabIsPressed and (grpObsHist.Focused = true) then cboNatureOfReaction.SetFocus;
+
 end;
 
 procedure TfrmARTAllergy.ControlChange(Sender: TObject);
@@ -756,6 +797,7 @@ var
 begin
   inherited;
   if Changing then Exit;
+
   MyFMNow := FMNow;
   with NewRec do
     begin
@@ -903,6 +945,25 @@ begin
   end;
 end;
 
+procedure TfrmARTAllergy.pgAllergyDrawTab(Control: TCustomTabControl;
+  TabIndex: Integer; const Rect: TRect; Active: Boolean);
+var
+  AText: string;
+  APoint: TPoint;
+begin
+  with (Control as TPageControl).Canvas do
+  begin
+    FillRect(Rect);
+    AText := TPageControl(Control).Pages[TabIndex].Caption;
+    with Control.Canvas do
+    begin
+      APoint.x := (Rect.Right - Rect.Left) div 2 - TextWidth(AText) div 2;
+      APoint.y := (Rect.Bottom - Rect.Top) div 2 - TextHeight(AText) div 2;
+      TextRect(Rect, Rect.Left + APoint.x, Rect.Top + APoint.y, AText);
+    end;
+  end;
+end;
+
 procedure TfrmARTAllergy.SymptomDateBoxDateDialogClosed(Sender: TObject);
 begin
   inherited;
@@ -1002,7 +1063,8 @@ begin
    //InitDialog;
    with pgAllergy do
      begin
-       tabVerify.TabVisible         := FALSE;    //EnabledStatus;    per Dave, leave out for now.
+       tabVerify.TabVisible := False;
+       // EnabledStatus;    per Dave, leave out for now.
        tabEnteredInError.TabVisible := uEnteredInError;
        tabGeneral.TabVisible        := not uEnteredInError;
      end;
@@ -1024,16 +1086,34 @@ begin
    btnSevHelp.Enabled              := EnabledStatus;
    lstAllergy.Enabled              := EnabledStatus;
    cboSymptoms.Enabled             := EnabledStatus;
-   SymptomDateBox.Enabled          := EnabledStatus;
+   SymptomDateBox.Enabled := ((EnabledStatus) and (lstSelectedSymptoms.Count > 0));
 end;
 
 procedure TfrmARTAllergy.cmdOKClick(Sender: TObject);
 const
   TX_ENTERED_IN_ERROR = 'Mark this entry as ''Entered in Error''?';
   TC_ENTERED_IN_ERROR = 'Are you sure?';
+  TX_HIST_NOSELECT = 'You must enter at least one sign/symptom or enter' + CRLF
+    + // N.Costanzo 06/19/15 NSR (20120404)
+    'a comment of at least 4 characters when documenting' + CRLF +
+  // N.Costanzo 06/19/15 NSR (20120404)
+    'an historical allergy/adverse drug reaction.';
+  // N.Costanzo 06/19/15 NSR (20120404)
 var
   Saved: string;
 begin
+  { if in History Mode and lstSelectedSymptoms has items and it's UNKNOWN, then exit }
+  // N.Costanzo 06/19/15 NSR (20120404)
+  if grpObsHist.ItemIndex = 1 then { If historical selected }
+    // N.Costanzo 06/19/15 NSR (20120404)
+    if (lstSelectedSymptoms.Count = 0) and // N.Costanzo 05/07/15 NSR (20120404)
+      (Length(StringReplace(memComments.Text, #13#10, '', [])) < 4) then
+    // N.Costanzo 05/07/15 NSR (20120404)
+    begin // N.Costanzo 05/07/15 NSR (20120404)
+      InfoBox(TX_HIST_NOSELECT, 'Must Select a Sign/Symptom or Enter Comment',
+        MB_OK); // N.Costanzo 05/01/15 NSR (20120404)
+      Exit; // N.Costanzo 05/07/15 NSR (20120404)
+    end;
   if ValidSave then
     begin
       if uEnteredInError then
@@ -1045,6 +1125,7 @@ begin
             Exit;
           end;
       Saved := SaveAllergy(NewRec);
+    CheckAllergyScan; // NSR#20070203   #14
       FChanged := (Piece(Saved, U, 1) = '0');
       if not FChanged then
         InfoBox(TX_NO_SAVE + Piece(Saved, U, 2), TX_NO_SAVE_CAP, MB_OK)
@@ -1328,6 +1409,38 @@ const
 begin
   inherited;
   InfoBox(TX_SEV_DEFINITION, TC_SEV_CAPTION, MB_ICONINFORMATION or MB_OK);
+end;
+
+
+procedure TfrmARTAllergy.CheckAllergyScan; // 20070203 Entire procedure  #14
+var
+  MatchingDrugs: TStringList;
+  NewAllergy: String;
+begin
+  lstAllergy.ItemIndex := 0;
+  NewAllergy := Piece(lstAllergy.Items[0], '^', 2);
+  MatchingDrugs := TStringList.Create;
+  try
+    CallVistA('ORWDAL32 CHKMEDS', [Patient.DFN, NewAllergy],MatchingDrugs);
+    if MatchingDrugs.Count > 0 then
+      ExecuteNewAllergyCheck(MatchingDrugs, NewAllergy);
+  finally
+    MatchingDrugs.Free;
+  end;
+end;
+{ TTabSheet }
+
+constructor TTabSheet.Create(aOwner: TComponent);
+begin
+  inherited;
+  FColor := clBtnFace;
+end;
+
+procedure TTabSheet.WMEraseBkGnd(var Msg: TWMEraseBkGnd);
+begin
+  Brush.Color := FColor;
+  Windows.FillRect(Msg.dc, ClientRect, Brush.Handle);
+  Msg.Result := 1;
 end;
 
 end.

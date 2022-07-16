@@ -98,7 +98,6 @@ inherited frmTemplateFields: TfrmTemplateFields
     TabPositions = '50,60,70,80,90'
     TabOrder = 0
     TabStop = True
-    Text = ''
     OnChange = cboObjectsChange
     OnDblClick = cboObjectsDblClick
     OnNeedData = cboObjectsNeedData
@@ -117,7 +116,7 @@ inherited frmTemplateFields: TfrmTemplateFields
       AlignWithMargins = True
       Left = 24
       Top = 45
-      Width = 351
+      Width = 423
       Height = 15
       Margins.Left = 24
       Margins.Top = 0
@@ -135,7 +134,7 @@ inherited frmTemplateFields: TfrmTemplateFields
       AlignWithMargins = True
       Left = 10
       Top = 30
-      Width = 369
+      Width = 437
       Height = 15
       Margins.Left = 10
       Margins.Top = 0
@@ -153,7 +152,7 @@ inherited frmTemplateFields: TfrmTemplateFields
       AlignWithMargins = True
       Left = 10
       Top = 15
-      Width = 223
+      Width = 437
       Height = 15
       Margins.Left = 10
       Margins.Top = 0
@@ -198,7 +197,7 @@ inherited frmTemplateFields: TfrmTemplateFields
         Name = 'lblSRIntro2'
         Left = 140
         Top = 0
-        Width = 286
+        Width = 310
         Height = 15
         Align = alClient
         Alignment = taLeftJustify

@@ -7,7 +7,8 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fPage, StdCtrls, Menus, ORCtrls, ORFn, ExtCtrls, ComCtrls, rOrders, uConst,
-  rMeds, ORNet, fBase508Form, VA508AccessibilityManager;
+  rMeds, ORNet, fBase508Form, VA508AccessibilityManager, System.Actions,
+  Vcl.ActnList;
 
 type
   TChildOD = class
@@ -93,6 +94,10 @@ type
     txtDateRangeIp: TVA508StaticText;
     hdrMedsIn: THeaderControl;
     lstMedsIn: TCaptionListBox;
+    actlstMed: TActionList;
+    actDocumentNonVAMeds: TAction;
+    DocumentNonVAMeds1: TMenuItem;
+    DocumentNonVAMeds2: TMenuItem;
     procedure mnuChartTabClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -163,6 +168,7 @@ type
       Sender: TObject);
     procedure mnuActUnholdClick(Sender: TObject);
     procedure mnuActOneStepClick(Sender: TObject);
+    procedure actDocumentNonVAMedsExecute(Sender: TObject);
   private
     FIterating: Boolean;
     FActionOnMedsTab: Boolean;
@@ -1595,6 +1601,42 @@ begin
   'O':      ActivateOrderSet(   Piece(DialogInfo, ';', 1), DelayEvent, Self, 0);
   else InfoBox('Unsupported dialog type', 'Error', MB_OK);
   end; {case}
+end;
+
+procedure TfrmMeds.actDocumentNonVAMedsExecute(Sender: TObject);
+// This follows the exact logic from mnuActNewClick
+var
+  DialogInfo: string;
+  DelayEvent: TOrderDelayEvent;
+begin
+  inherited;
+  DelayEvent.EventType := 'C';         // temporary, so can pass to CopyOrders
+  DelayEvent.Specialty := 0;
+  DelayEvent.EventIFN  := 0;
+  DelayEvent.Effective := 0;
+  frmOrders.DontCheck := True;
+  frmOrders.lstSheets.ItemIndex := 0;
+  frmOrders.lstSheetsClick(Self);
+  frmOrders.DontCheck := False;
+  if not ReadyForNewOrder(DelayEvent) then Exit;
+  frmOrders.DontCheck := True;
+  frmOrders.lstSheets.ItemIndex := 0;
+  frmOrders.lstSheetsClick(Self);
+  frmOrders.DontCheck := False;
+  { get appropriate form, create the dialog form and show it }
+  DialogInfo := GetNewNonVADialog;   // DialogInfo = DlgIEN;FormID;DGroup
+
+  if Copy(DialogInfo, 1, 11) = '-1^PSH OERR' then // code from v32b
+    InfoBox('Non VA Medications (Documentation)) dialog does not exist',
+      'Error', MB_OK)
+  else
+    case CharAt(Piece(DialogInfo, ';', 4), 1) of
+    'A':      ActivateAction(     Piece(DialogInfo, ';', 1),             Self, 0);
+    'D', 'Q': ActivateOrderDialog(Piece(DialogInfo, ';', 1), DelayEvent, Self, 0);
+    'M':      ActivateOrderMenu(  Piece(DialogInfo, ';', 1), DelayEvent, Self, 0);
+    'O':      ActivateOrderSet(   Piece(DialogInfo, ';', 1), DelayEvent, Self, 0);
+    else InfoBox('Unsupported dialog type', 'Error', MB_OK);
+    end;
 end;
 
 procedure TfrmMeds.mnuActOneStepClick(Sender: TObject);

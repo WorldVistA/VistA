@@ -354,7 +354,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, uCore, ORFn, rODMeds, rODBase, rOrders, fRptBox, fODMedOIFA,
+uses rCore, uCore, ORFn, ORNet, rODMeds, rODBase, rOrders, fRptBox, fODMedOIFA,
   uOrders, fOtherSchedule, StrUtils, fFrame, VA508AccessibilityRouter, System.Types,
   System.UITypes;
 
@@ -2069,9 +2069,10 @@ begin
     SetControl(cboPriority,  'URGENCY',  1);
     if FInptDlg then
     begin
+      // blj 7 December 2020 - prevent warning dialog from being displayed multiple times.
       SetControl(chkDoseNow, 'NOW', 1);
-      chkDoseNowClick(Self);
-    end else
+    end
+    else
     begin
       SetControl(txtSupply,   'SUPPLY',  1);
       txtSupply.Text := Trim(txtSupply.Text);
@@ -3617,11 +3618,19 @@ var
   procedure SynchCombo(ACombo: TORComboBox; const ItemText, EditText: string);
   var
     i: Integer;
+    evnt: TNotifyEvent;
+
   begin
-    ACombo.ItemIndex := -1;
-    for i := 0 to Pred(ACombo.Items.Count) do
-      if ACombo.Items[i] = ItemText then ACombo.ItemIndex := i;
-    if ACombo.ItemIndex < 0 then ACombo.Text := EditText;
+    evnt := ACombo.OnChange;
+    ACombo.OnChange := nil;
+    try
+      ACombo.ItemIndex := -1;
+      for i := 0 to Pred(ACombo.Items.Count) do
+        if ACombo.Items[i] = ItemText then ACombo.ItemIndex := i;
+      if ACombo.ItemIndex < 0 then ACombo.Text := EditText;
+    finally
+      ACombo.OnChange := evnt;
+    end;
   end;
 
 begin
@@ -3960,7 +3969,10 @@ begin
     with cboXSchedule do if ItemIndex > -1
       then x := Text + TAB + Items[ItemIndex]
       else x := Text;
-    grdDoses.Cells[COL_SCHEDULE, pnlXSchedule.Tag] := x;
+//    grdDoses.Cells[COL_SCHEDULE, pnlXSchedule.Tag] := x; [#VISTAOR-24439]
+    if pnlXSchedule.Tag > 0 then   // avoid erasing grid caption row
+      grdDoses.Cells[COL_SCHEDULE, pnlXSchedule.Tag] := x;
+
     self.cboSchedule.Text := x;
      //AGP Start Expired uncommented out the line
     if FInptDlg then UpdateStartExpires(Piece(x, tab, 1));
@@ -5001,49 +5013,94 @@ end;
 
 procedure TfrmODMeds.chkDoseNowClick(Sender: TObject);
 const
-  T  = '"';
-  T1 = 'By checking the "Give additional dose now" box, you have actually entered two orders for the same medication "';
-  T2 = #13#13'The "Give additional dose now" order has an administration schedule of "';
-  T3 = #13'The "Ongoing" order has an administration schedule of "';
-  T4 = #13#13'Do you want to continue?';
-  T5 = '" and a priority of "';
-  T1A = 'By checking the "Give additional dose now" box, you have actually entered a new order with the schedule "NOW"';
-  T2A = ' in addition to the one you are placing for the same medication "';
+  CRLF = #13#10;
+  GIVE_ADDITIONAL_DOSE1 =
+    'By checking the "Give additional dose now" box, you have actually ' +
+    'entered two orders for the same medication "%s"' + CRLF + CRLF +
+    'The "Give additional dose now" order has an administration schedule of ' +
+    '"%s" and a priority of "%s"' + CRLF +
+    'The "Ongoing" order has an administration schedule of "%s" and a ' +
+    'priority of "ROUTINE"' + CRLF + CRLF + 'Do you want to continue?';
+  GIVE_ADDITIONAL_DOSE2 =
+    'By checking the "Give additional dose now" box, you have actually ' +
+    'entered a new order with the schedule "NOW" in addition to the one ' +
+    'you are placing for the same medication "%s"' + CRLF + CRLF +
+    'Do you want to continue?';
 var
   medNm: string;
   theSch: string;
   ordPriority: string;
+  nowPriority: string;
+  UserPriority: Integer;
+  FnowID: Integer;
+  UserPriorityID: Integer;
 begin
   inherited;
+  UserPriorityID := cboPriority.ItemIndex;
+  UserPriority := cboPriority.GetIEN(UserPriorityID);
   if (chkDoseNow.Checked) and (tabDose.TabIndex <> TI_COMPLEX) then
   begin
     medNm := txtMed.Text;
     theSch := cboSchedule.Text;
     ordPriority := cboPriority.SelText;
-    if length(theSch)>0 then
+    if ((ordPriority) = '') then // RTW
+      cboPriority.SelText := 'ROUTINE'; // RTW
+    CallVistA('ORWDPS1 GETPRIOR', [], nowPriority);
+    if not((ordPriority) = '') then
+      if not((ordPriority) = 'ROUTINE') then
+      begin
+        if (InfoBox
+          ('You checked Give Additional Dose Now and your original priority selection will be overwritten for the ongoing order.',
+          'Give Additional Dose Now Warning', MB_OKCANCEL or MB_ICONWARNING)
+          = IDCANCEL) then
+        begin
+          chkDoseNow.Checked := false;
+          Exit;
+        end;
+      end;
+    if Length(theSch) > 0 then
     begin
-      //if ( (ValueOf(FLD_SCHED_TYP) <> 'O') and (InfoBox(T1+medNm+T+T2+theSch+T+T3+'NOW"'+T4, 'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL) )then
-      //if InfoBox(T1+medNm+T+T2+theSch+T+T3+'NOW"'+T4, 'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL then
-      if InfoBox(T1+medNm+T+T2+'NOW'+T5+ordPriority+T+T3+theSch+T5+ordPriority+T+T4, 'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL then
+      if InfoBox(Format(GIVE_ADDITIONAL_DOSE1, [medNm, 'NOW', nowPriority,
+        theSch, ordPriority]), 'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL
+      then
       begin
         chkDoseNow.Checked := False;
         Exit;
       end;
-    end else
+    end
+    else
     begin
-      if InfoBox(T1A+T2A+medNm+T+T4, 'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL then
+      if InfoBox(Format(GIVE_ADDITIONAL_DOSE2, [medNm]), 'Warning',
+        MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL then
       begin
-        chkDoseNow.Checked := False;
-        Exit;
+        begin
+          chkDoseNow.Checked := FALSE;
+          Exit;
+        end;
       end;
     end;
+    if chkDoseNow.Checked then
+    begin
+      CallVistA('ORWDPS1 GETPRIEN', [], FnowID);
+      cboPriority.SelectByIEN(FnowID);
+    end
+    else
+    begin
+      cboPriority.SelectByIEN(UserPriority);
+    end;
+    ControlChange(Self);
   end;
   lblAdminTime.Visible := not chkDoseNow.Checked;
-  if (tabDose.TabIndex = TI_COMPLEX) and chkDoseNow.Checked  then
-  begin
-    if (InfoBox('Give Additional Dose Now is in addition to those listed in the table.' + CRLF +
-                 'Please adjust the duration of the first row, if necessary.',
-                 'Give Additional Dose Now for Complex Order', MB_OKCANCEL or MB_ICONWARNING) = IDCANCEL) then
+  if (tabDose.TabIndex = TI_COMPLEX) and chkDoseNow.Checked then
+  begin // rtw
+    CallVistA('ORWDPS1 GETPRIEN', [], FnowID);
+    cboPriority.SelectByIEN(FnowID);
+    Responses.Update('NOW', 1, '1', 'NOW'); // rtw  for complex quick orders
+    if (InfoBox
+      ('Give first dose off of standard administration schedule is in addition to those listed in the table.'
+      + ' Please adjust the duration of the first row, if necessary.',
+      'Give Additional Dose Now for Complex Order', MB_OKCANCEL or
+      MB_ICONWARNING) = IDCANCEL) then
     begin
       chkDoseNow.Checked := False;
       Exit;

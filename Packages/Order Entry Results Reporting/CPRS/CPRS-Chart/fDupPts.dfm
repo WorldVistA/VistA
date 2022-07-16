@@ -3,119 +3,143 @@ inherited frmDupPts: TfrmDupPts
   Top = 190
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
+  BorderIcons = [biSystemMenu]
   Caption = 'Similar Patients'
-  ClientHeight = 187
-  ClientWidth = 463
+  ClientHeight = 247
+  ClientWidth = 452
+  Constraints.MinHeight = 240
+  Constraints.MinWidth = 320
   Position = poScreenCenter
-  OnCreate = FormCreate
+  OnCloseQuery = FormCloseQuery
+  ExplicitWidth = 460
+  ExplicitHeight = 274
   PixelsPerInch = 96
   TextHeight = 13
   object pnlDupPts: TPanel [0]
     Left = 0
     Top = 0
-    Width = 463
-    Height = 187
+    Width = 452
+    Height = 203
     Align = alClient
+    BevelOuter = bvNone
     TabOrder = 0
-    DesignSize = (
-      463
-      187)
+    ExplicitWidth = 508
+    ExplicitHeight = 212
     object lblSelDupPts: TLabel
       Left = 1
       Top = 1
-      Width = 461
+      Width = 155
       Height = 13
-      Align = alTop
       Caption = 'Please select the correct patient:'
-      ExplicitWidth = 155
+      Visible = False
     end
-    object pnlSelDupPt: TPanel
-      Left = 2
-      Top = 19
-      Width = 461
-      Height = 120
-      Anchors = [akLeft, akTop, akRight, akBottom]
-      TabOrder = 0
-      object lboSelPt: TCaptionListView
-        Left = 1
-        Top = 1
-        Width = 459
-        Height = 118
-        Margins.Left = 8
-        Margins.Right = 8
-        Align = alClient
-        Columns = <
-          item
-            Caption = 'Name'
-            Width = 180
-          end
-          item
-            Caption = 'DOB'
-            Tag = 1
-            Width = 100
-          end
-          item
-            Caption = 'SSN'
-            Tag = 2
-            Width = 160
-          end>
-        HideSelection = False
-        HoverTime = 0
-        IconOptions.WrapText = False
-        ReadOnly = True
-        RowSelect = True
-        ParentShowHint = False
-        ShowWorkAreas = True
-        ShowHint = True
-        TabOrder = 0
-        ViewStyle = vsReport
-        OnDblClick = lboSelPtDblClick
-        Caption = 'Please select the correct patient'
-        Pieces = '2,3,4'
-        ExplicitLeft = 0
-        ExplicitTop = 47
-        ExplicitWidth = 461
-        ExplicitHeight = 73
-      end
-    end
-    object Panel1: TPanel
+  end
+  object pnlSelDupPt: TPanel [1]
+    Left = 0
+    Top = 0
+    Width = 452
+    Height = 203
+    Align = alClient
+    TabOrder = 1
+    ExplicitWidth = 508
+    ExplicitHeight = 212
+    object lboSelPt: TCaptionListView
       Left = 1
-      Top = 137
-      Width = 461
-      Height = 49
-      Align = alBottom
+      Top = 39
+      Width = 450
+      Height = 163
+      Margins.Left = 8
+      Margins.Right = 8
+      Align = alClient
+      BevelOuter = bvNone
+      Columns = <
+        item
+          Caption = 'Name'
+          Width = 180
+        end
+        item
+          Caption = 'DOB'
+          Tag = 1
+          Width = 100
+        end
+        item
+          Caption = 'SSN'
+          Tag = 2
+          Width = 160
+        end>
+      HideSelection = False
+      HoverTime = 0
+      IconOptions.WrapText = False
+      ReadOnly = True
+      RowSelect = True
+      ParentShowHint = False
+      ShowWorkAreas = True
+      ShowHint = True
+      TabOrder = 0
+      ViewStyle = vsReport
+      OnCustomDrawItem = lboSelPtCustomDrawItem
+      OnDblClick = lboSelPtDblClick
+      AutoSize = False
+      Caption = 'Please select the correct patient'
+      Pieces = '2,3,4'
+      ExplicitWidth = 506
+      ExplicitHeight = 172
+    end
+    object pnlHeader: TPanel
+      Left = 1
+      Top = 1
+      Width = 450
+      Height = 38
+      Align = alTop
+      Alignment = taLeftJustify
       BevelOuter = bvNone
       TabOrder = 1
-      DesignSize = (
-        461
-        49)
+      ExplicitWidth = 506
+    end
+  end
+  object Panel1: TPanel [2]
+    Left = 0
+    Top = 203
+    Width = 452
+    Height = 44
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 2
+    ExplicitTop = 212
+    ExplicitWidth = 508
+    object Panel2: TPanel
+      Left = 283
+      Top = 0
+      Width = 169
+      Height = 44
+      Align = alRight
+      BevelOuter = bvNone
+      TabOrder = 0
+      ExplicitLeft = 0
       object btnOK: TButton
-        Left = 288
-        Top = 16
+        Left = 3
+        Top = 13
         Width = 75
         Height = 25
-        Anchors = [akRight, akBottom]
         Caption = '&OK'
         Default = True
+        ModalResult = 1
         TabOrder = 0
-        OnClick = btnOKClick
-        ExplicitLeft = 290
       end
       object btnCancel: TButton
-        Left = 373
-        Top = 16
+        Left = 84
+        Top = 13
         Width = 75
         Height = 25
-        Anchors = [akRight, akBottom]
         Caption = '&Cancel'
         ModalResult = 2
         TabOrder = 1
-        OnClick = btnCancelClick
-        ExplicitLeft = 375
       end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 32
+    Top = 96
     Data = (
       (
         'Component = pnlDupPts'
@@ -137,6 +161,12 @@ inherited frmDupPts: TfrmDupPts
         'Status = stsDefault')
       (
         'Component = lboSelPt'
+        'Status = stsDefault')
+      (
+        'Component = pnlHeader'
+        'Status = stsDefault')
+      (
+        'Component = Panel2'
         'Status = stsDefault'))
   end
 end

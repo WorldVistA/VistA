@@ -4,9 +4,31 @@ interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ComCtrls, ExtCtrls, ORCtrls, OrFn, Dialogs, ORDtTmRng, fBAOptionsDiagnoses,
-  uBAGlobals, fBase508Form, VA508AccessibilityManager, fAutoSz, Vcl.CheckLst, Messages;
+  uBAGlobals, fBase508Form, VA508AccessibilityManager, fAutoSz, Vcl.CheckLst, Messages
+  ,uConst, // NSR20071216 2016-01-14 AA
+  fOptionsSurrogate;
 
 type
+  TButton = class(Vcl.StdCtrls.TButton)
+  private
+    fMgr: TVA508AccessibilityManager;
+    f508Label: TVA508StaticText;
+    fScreenReaderActive: Boolean;
+    procedure CMEnabledChanged(var Msg: TMessage); message CM_ENABLEDCHANGED;
+    procedure WMSize(var Msg: TMessage); message WM_SIZE;
+    procedure RegisterWithMGR;
+  public
+    constructor Create(AControl: TComponent); override;
+  end;
+
+  Tlv508Manager = class(TVA508ComponentManager)
+  private
+    Function GetText(ListItem: TListItem; ListView: TListView): String;
+  public
+    constructor Create; override;
+    function GetValue(Component: TWinControl): string; override;
+    function GetItem(Component: TWinControl): TObject; override;
+  end;
 
   TTabSheet = class(ComCtrls.TTabSheet)
   private
@@ -23,7 +45,6 @@ type
   End;
 
   TfrmOptions = class(TfrmAutoSz)
-    pnlMain: TPanel;
     pnlBottom: TPanel;
     pagOptions: TPageControl;
     tsCoverSheet: TTabSheet;
@@ -67,9 +88,6 @@ type
     chkNotificationsFlagged: TCheckBox;
     lvwOrderChecks: TCaptionListView;
     lblOrderChecksView: TLabel;
-    btnSurrogate: TButton;
-    lblNotificationsSurrogate: TStaticText;
-    lblNotificationsSurrogateText: TStaticText;
     btnCombinations: TButton;
     bvlOtherParameters: TBevel;
     lblOtherParameters: TStaticText;
@@ -79,49 +97,47 @@ type
     tsNotes: TTabSheet;
     lblNotesNotesDesc: TMemo;
     lblNotesNotes: TStaticText;
-    bvlNotesNotes: TBevel;
     btnNotesNotes: TButton;
     lblNotesTitles: TStaticText;
-    bvlNotesTitles: TBevel;
     lblNotesTitlesDesc: TMemo;
     btnNotesTitles: TButton;
+    btnRequiredFields: TButton;
     imgNotesNotes: TImage;
     imgNotes: TImage;
     imgTeams: TImage;
     tsCprsReports: TTabSheet;
     lblReports: TStaticText;
-    bvlReports: TBevel;
     memReports: TMemo;
     imgReports: TImage;
     btnReports: TButton;
     lblReport1: TStaticText;
     memReport1: TMemo;
     btnReport1: TButton;
-    bvlReport1: TBevel;
     btnDiagnoses: TButton;
     tsGraphs: TTabSheet;
     lblGraphSettings: TStaticText;
-    bvlGraphSettings: TBevel;
     imgGraphSettings: TImage;
     btnGraphSettings: TButton;
-    bvlGraphViews: TBevel;
     lblGraphViews: TStaticText;
     imgGraphViews: TImage;
     btnGraphViews: TButton;
     memGraphSettings: TMemo;
     memGraphViews: TMemo;
-    bvlReport2: TBevel;
     lblReport2: TStaticText;
     memReport2: TMemo;
     imgReport1: TImage;
     imgReport2: TImage;
-    PnlNoteTop: TPanel;
-    PnlNoteCl: TPanel;
+    pnlNoteTop: TPanel;
+    tsSurrogates: TTabSheet;
+    pnlSurrogatesTop: TPanel;
+    StaticText2: TStaticText;
+    Bevel2: TBevel;
+    txtSurrogatesManagement: TStaticText;
+    imgSurrogates: TImage;
+    Panel2: TPanel;
+    pnlSurrogates: TPanel;
     tsCopyPaste: TTabSheet;
-    PnlNoteBtm: TPanel;
-    bvlCopyPasteTitle: TBevel;
     ImgCopyPaste: TImage;
-    lblCopyPaste: TStaticText;
     GroupBox1: TGroupBox;
     pnlCPMain: TPanel;
     Panel1: TPanel;
@@ -140,6 +156,100 @@ type
     CPLcsLimitText: TStaticText;
     lblTextColor: TStaticText;
     pnlCPOptions: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Bevel3: TBevel;
+    Panel9: TPanel;
+    Panel10: TPanel;
+    Panel11: TPanel;
+    Panel12: TPanel;
+    Bevel4: TBevel;
+    Panel13: TPanel;
+    Panel14: TPanel;
+    Panel15: TPanel;
+    Panel16: TPanel;
+    Panel22: TPanel;
+    Panel23: TPanel;
+    Bevel6: TBevel;
+    Panel24: TPanel;
+    Panel25: TPanel;
+    Panel26: TPanel;
+    Panel27: TPanel;
+    Panel28: TPanel;
+    Bevel7: TBevel;
+    Panel29: TPanel;
+    Panel30: TPanel;
+    Panel31: TPanel;
+    Panel32: TPanel;
+    Panel33: TPanel;
+    Bevel8: TBevel;
+    Panel34: TPanel;
+    Panel35: TPanel;
+    Panel36: TPanel;
+    pnlTIU: TPanel;
+    Panel38: TPanel;
+    Bevel9: TBevel;
+    Panel39: TPanel;
+    imgRequiredFields: TImage;
+    Panel40: TPanel;
+    Panel41: TPanel;
+    Panel43: TPanel;
+    Bevel10: TBevel;
+    Panel44: TPanel;
+    Panel45: TPanel;
+    Panel46: TPanel;
+    Panel47: TPanel;
+    Panel48: TPanel;
+    Bevel1: TBevel;
+    StaticText5: TStaticText;
+    Panel49: TPanel;
+    Panel50: TPanel;
+    Memo3: TMemo;
+    Panel51: TPanel;
+    Panel42: TPanel;
+    Panel52: TPanel;
+    Panel53: TPanel;
+    Panel54: TPanel;
+    Panel55: TPanel;
+    Panel56: TPanel;
+    Panel57: TPanel;
+    Panel58: TPanel;
+    Panel59: TPanel;
+    Panel60: TPanel;
+    Panel61: TPanel;
+    Panel62: TPanel;
+    Panel63: TPanel;
+    Panel64: TPanel;
+    Panel65: TPanel;
+    Panel66: TPanel;
+    Panel67: TPanel;
+    Panel68: TPanel;
+    Panel69: TPanel;
+    Panel70: TPanel;
+    Panel71: TPanel;
+    Panel72: TPanel;
+    Panel73: TPanel;
+    Panel74: TPanel;
+    Panel75: TPanel;
+    Panel76: TPanel;
+    Panel77: TPanel;
+    Panel78: TPanel;
+    Panel79: TPanel;
+    Panel80: TPanel;
+    pnlNotifications: TPanel;
+    Panel82: TPanel;
+    Panel83: TPanel;
+    Panel84: TPanel;
+    Panel85: TPanel;
+    Panel17: TPanel;
+    pnlCPTop: TPanel;
+    pnlCPTopLeft: TPanel;
+    pnlCPTopTop: TPanel;
+    bvlCopyPasteTitle: TBevel;
+    lblCopyPaste: TStaticText;
+    pnlCPTopClient: TPanel;
     cbkCopyPaste: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -159,7 +269,6 @@ type
     procedure lvwNotificationsCompare(Sender: TObject; Item1,
       Item2: TListItem; Data: Integer; var Compare: Integer);
     procedure lvwNotificationsDblClick(Sender: TObject);
-    procedure btnSurrogateClick(Sender: TObject);
     procedure btnCombinationsClick(Sender: TObject);
     procedure btnNotesNotesClick(Sender: TObject);
     procedure btnNotesTitlesClick(Sender: TObject);
@@ -174,6 +283,8 @@ type
     procedure pagOptionsEnter(Sender: TObject);
     procedure pagOptionsDrawTab(Control: TCustomTabControl; TabIndex: Integer;
       const Rect: TRect; Active: Boolean);
+    procedure btnRequiredFieldsClick(Sender: TObject);
+    procedure pagOptionsChange(Sender: TObject);
     procedure cbkCopyPasteClick(Sender: TObject);
     procedure CPOptionsClickCheck(Sender: TObject);
     procedure CPOptionsDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; aState: TOwnerDrawState);
@@ -183,6 +294,7 @@ type
     procedure CPLCSCOLORChange(Sender: TObject);
     procedure CPLCSIDENTClickCheck(Sender: TObject);
     procedure CPLCSLimitChange(Sender: TObject);
+    procedure pagOptionsChanging(Sender: TObject; var AllowChange: Boolean);
   private
     { Private declarations }
     FdirtyNotifications: boolean;  // used to determine edit changes to Notifications
@@ -195,6 +307,8 @@ type
     FGiveMultiTabMessage: boolean;
     CopyPasteColor: TColor;  //Color used for copy paste
     LCSIdentColor: TColor;  //Color used for copy paste LCS
+    FfrmOptionsSurrogate: TfrmOptionsSurrogate; // Use InitSurrogatesTab to set
+    fLV508Manager: Tlv508Manager;
     procedure Offset(var topnum: integer; topoffset: integer; var leftnum: integer; leftoffset: integer);
     procedure LoadNotifications;
     procedure LoadOrderChecks;
@@ -205,30 +319,44 @@ type
     procedure CheckApply;
     procedure LoadListView(aListView: TListView; aList: TStrings);
     procedure ChangeOnOff(aListView: TListView; aListItem: TListItem);
-    function  CopyPasteChanged(): Boolean;
+    procedure SurrogateUpdated(Sender: TObject);
+    function  CopyPasteChanged: Boolean;
     procedure LoadCopyPaste();
     function VerifySaveCondition(Sender: TObject): Integer;
-  public
-    { Public declarations }
+    function VerifyIfTabCanChange: Boolean;
+    procedure InitSurrogatesTab;
+    procedure Init508;
   end;
 
 var
   frmOptions: TfrmOptions;
 
 procedure DialogOptions(var actiontype: Integer);
+procedure setFormParented(aForm:TForm; aParent:TWinControl;anAlign: TAlign = alClient);
 
 implementation
 
-uses fOptionsDays, fOptionsReminders, fOptionsSurrogate,
+uses fOptionsDays, fOptionsReminders,
      fOptionsPatientSelection, fOptionsLists, fOptionsTeams, fOptionsCombinations,
      fOptionsOther, fOptionsNotes, fOptionsTitles, fOptionsReportsCustom, fOptionsReportsDefault,
      fGraphs, fGraphSettings, fGraphProfiles, rGraphs, uGraphs,
-     rOptions, rCore, uCore, uOptions, UBACore, fFrame, UITypes, VA508AccessibilityRouter;
-     //fTestDialog;
+     rOptions, rCore, uCore, uOptions, UBACore, fFrame, UITypes, VA508AccessibilityRouter,
+     fOptionsTIUTemplates, vaUtils;
 
 // This needs to be changed in the 32 branch
 
 {$R *.DFM}
+procedure setFormParented(aForm:TForm; aParent:TWinControl;anAlign: TAlign = alClient);
+begin
+  if aForm.Parent <> aParent then
+    begin
+      aForm.BorderStyle := bsNone;
+      aForm.Parent := aParent;
+      aForm.Align := anAlign;
+      aForm.Menu := nil;
+      aForm.Show;
+    end;
+end;
 
 type
   TRule = class
@@ -320,29 +448,47 @@ begin
   end;
 end;
 
+procedure TfrmOptions.Init508;
+begin
+  txtSurrogatesManagement.TabStop := ScreenReaderActive;
+end;
+
+procedure TfrmOptions.InitSurrogatesTab;
+// NSR20071216 AA 2016-01-23 ------------------------------------------- begin
+begin
+  if not Assigned(FfrmOptionsSurrogate) then begin
+    Application.CreateForm(TfrmOptionsSurrogate, FfrmOptionsSurrogate);
+    setFormParented(FfrmOptionsSurrogate, pnlSurrogates);
+    FFrmOptionsSurrogate.OnChange := SurrogateUpdated;
+  end;
+end;
+
+
+// NSR20071216 AA 2016-01-23 --------------------------------------------- end
+
 procedure TfrmOptions.FormCreate(Sender: TObject);
 // initialize form
 Var
- I:integer;
+  FTIUParam: Integer;
 begin
+  AutoSizeDisabled := True;
   LoadNotifications;
   LoadOrderChecks;
   FdirtyNotifications := false;
   FdirtyOrderChecks := false;
   FdirtyOtherStuff := false;
+
   //Retrieve the Copy Paste options
   if frmFrame.CPAppMon.Enabled then
    LoadCopyPaste;
 
-  for i := 0 to pagOptions.PageCount -1 do
+  if not frmFrame.CPAppMon.Enabled then
   begin
-    if pagOptions.Pages[i].Name = 'tsCopyPaste' then
-    begin
-    pagOptions.Pages[i].TabVisible := frmFrame.CPAppMon.Enabled;
-    break;
-    end;
+    // Only hide this when the copy and paste module is disabled.
+    // If not this will cause a weird tab order issue
+    tsCopyPaste.TabVisible := false;
+    tsCopyPaste.Visible := false;
   end;
-  tsCopyPaste.Visible := frmFrame.CPAppMon.Enabled;
 
   CheckApply;
 
@@ -350,6 +496,19 @@ begin
       btnDiagnoses.Enabled := False;
   FGiveMultiTabMessage := ScreenReaderSystemActive;
 
+  if PagOptions.ActivePage = tsSurrogates then InitSurrogatesTab; // NSR20071216 AA 2016-01-23
+
+  memReport2.TabStop := ScreenReaderActive;
+  if ScreenReaderActive then
+  begin
+    fLV508Manager := Tlv508Manager.Create;
+    amgrMain.ComponentManager[lvwNotifications] := fLV508Manager;
+    amgrMain.ComponentManager[lvwOrderChecks] := fLV508Manager;
+  end;
+
+  FTIUParam := StrToIntDef(systemParameters.StringValue['tmRequiredFldsOff'], 1);
+  pnlTIU.Visible := (FTIUParam = 0);
+  Init508;
 end;
 
 procedure TfrmOptions.FormDestroy(Sender: TObject);
@@ -357,10 +516,18 @@ procedure TfrmOptions.FormDestroy(Sender: TObject);
 var
   i: integer;
 begin
+  FreeAndNil(FfrmOptionsSurrogate);
   for i := 0 to lvwOrderChecks.Items.Count - 1 do
     lvwOrderChecks.Items.Item[i].SubItems.Objects[2].free;
   for i := 0 to lvwNotifications.Items.Count - 1 do
     lvwNotifications.Items.Item[i].SubItems.Objects[2].free;
+
+  if assigned(fLV508Manager) then
+  begin
+    amgrMain.ComponentManager[lvwNotifications] := nil;
+    amgrMain.ComponentManager[lvwOrderChecks] := nil;
+    FreeAndNil(fLV508Manager);
+  end;
 end;
 
 procedure TfrmOptions.btnCoverDaysClick(Sender: TObject);
@@ -456,6 +623,11 @@ begin
   end;
 end;
 
+procedure TfrmOptions.SurrogateUpdated(Sender: TObject);
+begin
+  CheckApply;
+end;
+
 procedure TfrmOptions.btnApplyClick(Sender: TObject);
 // save actions without exiting
 Var
@@ -474,17 +646,25 @@ begin
     else if Verified = mrOk then
       exit;
   end;
-  CheckApply;
-  if Sender = btnOK then begin
-    ModalResult := mrOk;
-    Close;
+  if Assigned(FfrmOptionsSurrogate) then
+  begin
+    if FfrmOptionsSurrogate.ApplyChanges then // NSR20071216 2016-01-14 AA -- begin
+    begin
+      if Sender = btnOK then begin
+        ModalResult := mrOk;
+        Close;
+      end;
+    end
+    else // switch to the "Surrogates" tab that has issues
+      pagOptions.ActivePage := tsSurrogates; // NSR20071216 2016-01-14 AA ---------- end
   end;
+  CheckApply;
 end;
 
 procedure TfrmOptions.LoadNotifications;
 // load Notification tab
 var
-  notifydefaults, surrogateinfo, flag, enableerase: string;
+  notifydefaults, flag, enableerase: string;
   aResults: TStringList;
 begin
   aResults := TStringList.Create;
@@ -500,9 +680,6 @@ begin
   enableerase := Piece(notifydefaults, '^', 3);
   chkNotificationsFlagged.Checked := flag = '1';
   btnNotificationsRemove.Enabled := enableerase = '1';
-  surrogateinfo := rpcGetSurrogateInfo;
-  btnSurrogate.Hint := surrogateinfo;
-  LabelSurrogate(surrogateinfo, lblNotificationsSurrogateText);
 end;
 
 procedure TfrmOptions.LoadOrderChecks;
@@ -595,9 +772,13 @@ end;
 procedure TfrmOptions.CheckApply;
 // determine if Apply button is enabled
 begin
-  btnApply.Enabled :=  FdirtyOrderChecks or FdirtyNotifications or FdirtyOtherStuff or CopyPasteChanged;
+  btnApply.Enabled :=
+    FdirtyOrderChecks or
+    FdirtyNotifications or
+    FdirtyOtherStuff or
+    CopyPasteChanged or
+    (Assigned(FfrmOptionsSurrogate) and FfrmOptionsSurrogate.SurrogateUpdated); // NSR20071216 AA 2015-12-09
 end;
-
 
 procedure TfrmOptions.cbkCopyPasteClick(Sender: TObject);
 begin
@@ -749,18 +930,18 @@ begin
   CheckApply;
 end;
 
-procedure TfrmOptions.btnSurrogateClick(Sender: TObject);
-// display Surrogate Options
-var
-  topsize, leftsize: integer;
-  surrogateinfo: string;
-begin
-  surrogateinfo := btnSurrogate.Hint;
-  Offset(topsize, -30, leftsize, -30);
-  DialogOptionsSurrogate(topsize, leftsize, Font.Size, surrogateinfo);
-  LabelSurrogate(surrogateinfo, lblNotificationsSurrogateText);
-  btnSurrogate.Hint := surrogateinfo;
-end;
+//procedure TfrmOptions.btnSurrogateClick(Sender: TObject);
+//// display Surrogate Options
+//var
+//  topsize, leftsize: integer;
+//  surrogateinfo: string;
+//begin
+//  surrogateinfo := btnSurrogate.Hint;
+//  Offset(topsize, -30, leftsize, -30);
+//  DialogOptionsSurrogate(topsize, leftsize, Font.Size, surrogateinfo);
+//  LabelSurrogate(surrogateinfo, lblNotificationsSurrogateText);
+//  btnSurrogate.Hint := surrogateinfo;
+//end;
 
 procedure TfrmOptions.btnCombinationsClick(Sender: TObject);
 // display Combination List Options
@@ -858,6 +1039,28 @@ begin
   // if changes were made then view listing should be updated ***********
 end;
 
+procedure TfrmOptions.pagOptionsChange(Sender: TObject);
+begin
+  inherited;
+  if pagOptions.ActivePage = tsSurrogates then InitSurrogatesTab;
+
+  if ScreenReaderSystemActive then
+    GetScreenReader.Speak(pagOptions.Pages[pagOptions.TabIndex].Hint);
+
+  if pagOptions.TabIndex < 0 then
+    Exit;
+end;
+
+procedure TfrmOptions.pagOptionsChanging(Sender: TObject;
+  var AllowChange: Boolean);
+begin
+  inherited;
+  if pagOptions.Pages[pagOptions.TabIndex] = tsSurrogates then
+  begin
+    AllowChange := VerifyIfTabCanChange;
+  end;
+end;
+
 procedure TfrmOptions.pagOptionsDrawTab(Control: TCustomTabControl;
   TabIndex: Integer; const Rect: TRect; Active: Boolean);
 var
@@ -907,10 +1110,10 @@ begin
     // Discard the key
     Key := #0;
   end;
-
+  CheckApply;
 end;
 
-function TfrmOptions.CopyPasteChanged(): Boolean;
+function TfrmOptions.CopyPasteChanged: Boolean;
 // Determines if the user changed any options
 // Bold^Italics^Underline^Highlight^Highlight Color
 //var
@@ -918,77 +1121,115 @@ function TfrmOptions.CopyPasteChanged(): Boolean;
 // OptionList: TStringList;
 // OurFlag: Boolean;
 begin
- Result := false;
- if not frmFrame.CPAppMon.Enabled then
-  exit;
- With frmFrame.CPAppMon do begin
-   if not result then
-    result := (DisplayPaste <> cbkCopyPaste.Checked);
-  if not result then
-   result := (CopyPasteOptions.Checked[0] <> (fsBold in MatchStyle));
-  if not result then
-   result := (CopyPasteOptions.Checked[1] <> (fsItalic in MatchStyle));
-  if not result then
-   result := (CopyPasteOptions.Checked[2] <> (fsUnderline in MatchStyle));
-  if not result then
-   result := (CopyPasteOptions.Checked[3] <> MatchHighlight);
-  //When off color is set to background color
-  if (not Result) and (CopyPasteColor <> CopyPasteOptions.Color) then
-   Result := HighlightColor <> CopyPasteColor;
+  Result := False;
+  if frmFrame.CPAppMon.Enabled then
+  begin
+    Result := Result or (frmFrame.CPAppMon.DisplayPaste <> cbkCopyPaste.Checked);
+    if cbkCopyPaste.Checked then begin
+      // if copypaste isn't enabled, none of these settings are considered changed
+      Result := Result or (
+        (CopyPasteOptions.Items.Count > 0) and
+        (CopyPasteOptions.Checked[0] <> (fsBold in frmFrame.CPAppMon.MatchStyle))
+        );
+      Result := Result or (
+        (CopyPasteOptions.Items.Count > 1) and
+        (CopyPasteOptions.Checked[1] <> (fsItalic in frmFrame.CPAppMon.MatchStyle))
+        );
+      Result := Result or (
+        (CopyPasteOptions.Items.Count > 2) and
+        (CopyPasteOptions.Checked[2] <> (fsUnderline in frmFrame.CPAppMon.MatchStyle))
+        );
+      Result := Result or (
+        (CopyPasteOptions.Items.Count > 3) and
+        (CopyPasteOptions.Checked[3] <> frmFrame.CPAppMon.MatchHighlight)
+        );
+      //When off color is set to background color
+      if (not Result) and
+        (CopyPasteOptions.Items.Count > 3) and CopyPasteOptions.Checked[3] and
+        (CopyPasteColor <> CopyPasteOptions.Color) then
+        Result := frmFrame.CPAppMon.HighlightColor <> CopyPasteColor;
+      //LCS Change
+      Result := Result or (CPLCSToggle.Checked <> frmFrame.CPAppMon.LCSToggle);
+      if CPLCSToggle.Checked then begin
+        // if CPLCSToggle isn't checked, none of these settings are considered changed
+        Result := Result or (
+          (CPLCSIDENT.Items.Count > 0) and
+          (CPLCSIDENT.Checked[0] <> (fsBold in frmFrame.CPAppMon.LCSTextStyle))
+          );
+        Result := Result or (
+          (CPLCSIDENT.Items.Count > 1) and
+          (CPLCSIDENT.Checked[1] <> (fsItalic in frmFrame.CPAppMon.LCSTextStyle))
+          );
+        Result := Result or (
+          (CPLCSIDENT.Items.Count > 2) and
+          (CPLCSIDENT.Checked[2] <> (fsUnderline in frmFrame.CPAppMon.LCSTextStyle))
+          );
+        Result := Result or (
+          (CPLCSIDENT.Items.Count > 3) and
+          (CPLCSIDENT.Checked[3] <> frmFrame.CPAppMon.LCSUseColor)
+          );
 
-  //LCS Change
-  if not result then
-   Result := (CPLCSToggle.Checked <> LCSToggle);
-  if not result then
-    result := (CPLCSIDENT.Checked[0] <> (fsBold in LCSTextStyle));
-  if not result then
-    result := (CPLCSIDENT.Checked[1] <> (fsItalic in LCSTextStyle));
-  if not result then
-    result := (CPLCSIDENT.Checked[2] <> (fsUnderline in LCSTextStyle));
-  if not result then
-   result := (CPLCSIDENT.Checked[3] <> LCSUseColor);
-  //When off color is set to background color
-  if (not Result) and (LCSIdentColor <> CPLCSIDENT.color) then
-   Result := LCSTextColor <> LCSIdentColor;
-  if not result then
-   result := StrToIntDef(CPLCSLimit.Text, 0) <> LCSCharLimit;
- end;
+        //When off color is set to background color
+        if (not Result) and
+          (CPLCSIDENT.Items.Count > 3) and CPLCSIDENT.Checked[3] and
+          (LCSIdentColor <> CPLCSIDENT.color) then
+          Result := frmFrame.CPAppMon.LCSTextColor <> LCSIdentColor;
 
+        Result := Result or (StrToIntDef(CPLCSLimit.Text, 0) <> frmFrame.CPAppMon.LCSCharLimit);
+      end;
+    end;
+  end;
 end;
 
 procedure TfrmOptions.CPLCSIDENTClickCheck(Sender: TObject);
+const
+  TextColorIndex: integer = 3;
+var
+  ACheckListBox: TCheckListBox;
 begin
   inherited;
-  if (Sender as TCheckListBox).ItemIndex = 3 then begin
-   if (Sender as TCheckListBox).Checked[(Sender as TCheckListBox).ItemIndex] then begin
+  ACheckListBox := Sender as TCheckListBox;
+  if ACheckListBox.ItemIndex = TextColorIndex then
+  begin
+    if (ACheckListBox.Items.Count > TextColorIndex) and
+      (ACheckListBox.Checked[TextColorIndex]) then
+    begin
       CPLCSCOLOR.Selected := LCSIdentColor;
-      lblTextColor.Visible := true;
-      CPLCSCOLOR.Visible := true;
+      lblTextColor.Visible := True;
+      CPLCSCOLOR.Visible := True;
       if ScreenReaderSystemActive then
-       GetScreenReader.Speak('Text color selection box now available.');
-   end else begin
-     lblTextColor.Visible := false;
-     CPLCSCOLOR.Visible := false;
-   end;
+        GetScreenReader.Speak('Text color selection box now available.');
+    end else begin
+      lblTextColor.Visible := False;
+      CPLCSCOLOR.Visible := False;
+    end;
   end;
   CheckApply;
 end;
 
 procedure TfrmOptions.CPOptionsClickCheck(Sender: TObject);
 //Display the color selection if highlight checked
+const
+  HighlightIndex: integer = 3;
+var
+  ACheckListBox: TCheckListBox;
 begin
   inherited;
-  if (Sender as TCheckListBox).ItemIndex = 3 then begin
-   if (Sender as TCheckListBox).Checked[(Sender as TCheckListBox).ItemIndex] then begin
+  ACheckListBox := (Sender as TCheckListBox);
+  if ACheckListBox.ItemIndex = HighlightIndex then
+  begin
+    if (ACheckListBox.Items.Count > HighlightIndex) and
+      (ACheckListBox.Checked[HighlightIndex]) then
+    begin
       cpHLColor.Selected := CopyPasteColor;
-      lbCPhighLight.Visible := true;
-      cpHLColor.Visible := true;
+      lbCPhighLight.Visible := True;
+      cpHLColor.Visible := True;
       if ScreenReaderSystemActive then
-       GetScreenReader.Speak('Highlight color selection box now available.');
-   end else begin
-     lbCPhighLight.Visible := false;
-     cpHLColor.Visible := false;
-   end;
+        GetScreenReader.Speak('Highlight color selection box now available.');
+    end else begin
+      lbCPhighLight.Visible := False;
+      cpHLColor.Visible := False;
+    end;
   end;
   CheckApply;
 end;
@@ -1113,19 +1354,7 @@ procedure TfrmOptions.CPLCSToggleClick(Sender: TObject);
 begin
   inherited;
   pnlCPLCsSub.Visible := CPLCSToggle.Checked;
- { CPLcsMemo.Visible := CPLCSToggle.Enabled;
-  CPLcsLimitText.Visible := CPLCSToggle.Enabled;
-  CPLCSLimit.Visible := CPLCSToggle.Enabled;
-  CPLCSIDENT.Visible := CPLCSToggle.Enabled;
-  if CPLCSIDENT.Checked[3]then begin
-      lblTextColor.Visible := true;
-      CPLCSCOLOR.Visible := true;
-      if ScreenReaderSystemActive then
-       GetScreenReader.Speak('Text color selection box now available.');
-   end else begin
-     lblTextColor.Visible := false;
-     CPLCSCOLOR.Visible := false;
-   end;   }
+  CheckApply;
 end;
 
 procedure TfrmOptions.LoadCopyPaste();
@@ -1267,7 +1496,6 @@ begin
 
 end;
 
-
 //----------------- TTabSheet -----------------//
 constructor TTabSheet.Create(aOwner: TComponent);
 begin
@@ -1277,10 +1505,18 @@ end;
 
 procedure TTabSheet.WMEraseBkGnd(var Msg: TWMEraseBkGnd);
 begin
-    Brush.Color := FColor;
-    Windows.FillRect(Msg.dc, ClientRect, Brush.Handle);
-    Msg.Result := 1;
+  inherited;
+  Brush.Color := FColor;
+  Windows.FillRect(Msg.dc, ClientRect, Brush.Handle);
+  Msg.Result := 1;
 end;
+
+// NSR20100706 AA 2015/10/10 - Management of Highlighting preferences ---- begin
+procedure TfrmOptions.btnRequiredFieldsClick(Sender: TObject);
+begin
+  UpdateRequiredFieldsPreferences;
+end;
+// NSR20100706 AA 2015/10/10 - Management of Highlighting preferences ------ end
 
 //----------------- TColorBox -----------------//
 procedure TColorBox.CMFontChanged(var Message: TMessage);
@@ -1304,11 +1540,181 @@ begin
 //  cboBtnY := 5;
 
   ItemHeight := HigherOf(FontHeight + cboYMargin, ItemHeight); // must be at least as high as text
-  self.SetBounds(0, 0, Width, FontHeight + cboYMargin);
+  self.SetBounds(Left, Top, Width, FontHeight + cboYMargin);
 
   //ItemHeight := FontHeight + cboYMargin; // DropDown can only be text height
 
 end;
 
+function TfrmOptions.VerifyIfTabCanChange: Boolean;
+begin
+  Result := True;
+  if (pagOptions.Pages[pagOptions.TabIndex] = tsSurrogates) and
+    Assigned(FfrmOptionsSurrogate) then
+  begin
+    // Using the flag if there are changes
+    if FfrmOptionsSurrogate.SurrogateUpdated then
+      Result := FfrmOptionsSurrogate.CanChangeTabs
+    else
+      FfrmOptionsSurrogate.UpdateWithServerData;
+  end;
+end;
+
+
+{$REGION '508Button'}
+
+constructor TButton.Create(AControl: TComponent);
+begin
+  inherited Create(AControl);
+  fScreenReaderActive := ScreenReaderActive;
+  fMgr := nil;
+end;
+
+procedure TButton.RegisterWithMGR;
+var
+  aFrm: TCustomForm;
+  I: Integer;
+begin
+  if not Assigned(fMgr) then
+  begin
+    aFrm := GetParentForm(Self);
+    for I := 0 to aFrm.ComponentCount - 1 do
+    begin
+      if aFrm.Components[I] is TVA508AccessibilityManager then
+      begin
+        fMgr := TVA508AccessibilityManager(aFrm.Components[I]);
+        break;
+      end;
+    end;
+  end;
+
+  if Assigned(fMgr) then
+    fMgr.AccessData.EnsureItemExists(f508Label);
+end;
+
+procedure TButton.CMEnabledChanged(var Msg: TMessage);
+begin
+  inherited;
+  if not fScreenReaderActive then
+    exit;
+
+  if not Self.Enabled then
+  begin
+    if Assigned(f508Label) then
+      f508Label.Visible := true
+    else begin
+      f508Label := TVA508StaticText.Create(Self);
+      f508Label.Parent := Self.Parent;
+      f508Label.SendToBack;
+      // self.SendToBack;
+      f508Label.TabStop := true;
+      f508Label.TabOrder := Self.TabOrder;
+      f508Label.caption := ' ' + Self.caption + ' button disabled';
+      f508Label.Top := Self.Top - 2;
+      f508Label.Left := Self.Left - 2;
+      f508Label.Width := Self.Width + 5;
+      f508Label.Height := Self.Height + 5;
+      RegisterWithMGR;
+    end;
+  end
+  else
+  begin
+   if Assigned(f508Label) then
+      f508Label.Visible := false;
+   // PostMessage(Self.Handle, WM_FREE508LBL, 0, 0);
+   //Might need to call UnregisterComponent
+  end;
+end;
+
+procedure TButton.WMSize(var Msg: TMessage);
+begin
+  inherited;
+  if not fScreenReaderActive then
+    exit;
+
+  if Assigned(f508Label) then
+  begin
+    f508Label.Top := Self.Top - 2;
+    f508Label.Left := Self.Left - 2;
+    f508Label.Width := Self.Width + 5;
+    f508Label.Height := Self.Height + 5;
+  end;
+end;
+
+{$ENDREGION}
+{$REGION 'ListView508Manager'}
+
+constructor Tlv508Manager.Create;
+begin
+  inherited Create([mtValue, mtItemChange]);
+end;
+
+function Tlv508Manager.GetItem(Component: TWinControl): TObject;
+var
+  lv: TListView;
+begin
+  Result := nil;
+  if Component is TListView then
+  begin
+    lv := TListView(Component);
+    if Assigned(lv) then
+      Result := lv.Selected;
+  end;
+end;
+
+function Tlv508Manager.GetValue(Component: TWinControl): string;
+var
+  lv: TListView;
+  lvItm: TListItem;
+begin
+  Result := '';
+  if Assigned(Component) and (Component is TListView) then
+  begin
+    lv := TListView(Component);
+    lvItm := lv.Selected;
+    Result := GetText(lvItm, lv);
+  end;
+end;
+
+function Tlv508Manager.GetText(ListItem: TListItem;
+  ListView: TListView): String;
+var
+  I: Integer;
+  AddTxt: String;
+begin
+  Result := '';
+
+  if Assigned(ListItem) and Assigned(ListView) then
+  begin
+    AddTxt := '';
+    for I := 0 to ListView.Columns.Count - 1 do
+    begin
+      if Trim(ListView.Columns[I].caption) = '' then
+        AddTxt := 'Blank'
+      else
+        AddTxt := ListView.Columns[I].caption;
+
+      if I = 0 then
+      begin
+        if trim(ListItem.caption) = '' then
+          AddTxt := AddTxt + ' ' + 'Blank'
+        else
+          AddTxt := AddTxt + ' ' + ListItem.caption;
+      end
+      else
+      begin
+        if trim(ListItem.SubItems[I - 1]) = '' then
+          AddTxt := AddTxt + ' ' + 'Blank'
+        else
+          AddTxt := AddTxt + ' ' + ListItem.SubItems[I - 1];
+      end;
+
+      Result := Result + ' ' + AddTxt + ',';
+    end;
+  end;
+
+end;
+
+{$ENDREGION}
 
 end.

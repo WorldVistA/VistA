@@ -110,7 +110,8 @@ implementation
 {$R *.DFM}
 
 uses
-  rConsults, uCore, rCore, fConsults, rODBase, fRptBox, fPCELex, rPCE, ORClasses, clipbrd, VAUtils;
+  rConsults, uCore, rCore, fConsults, rODBase, fRptBox, fPCELex, rPCE, ORClasses, clipbrd, VAUtils,
+  uSimilarNames;
 
 var
   OldRec, NewRec: TEditResubmitRec;
@@ -239,6 +240,7 @@ begin
   FChanging := False;
   ControlChange(Self);    //CQ20913
   StatusText('');
+  TSimilarNames.RegORComboBox(txtAttn);
 end;
 
 procedure TfrmEditProc.Validate(var AnErrMsg: string);
@@ -249,6 +251,8 @@ procedure TfrmEditProc.Validate(var AnErrMsg: string);
     AnErrMsg := AnErrMsg + x;
   end;
 
+var
+  ErrMsg: string;
 begin
   if cboProc.ItemIEN = 0                  then SetError(TX_NO_PROC);
   if memReason.Lines.Count = 0            then SetError(TX_NO_REASON);
@@ -264,7 +268,14 @@ begin
     end;
   if OldRec.ProvDxCodeInactive and ProvDx.CodeInactive then
     SetError(TX_INACTIVE_CODE);
-  if calClinicallyIndicated.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
+  if calClinicallyIndicated.FMDateTime < FMToday then SetError(TX_PAST_DATE);
+
+  if not CheckForSimilarName(txtAttn, ErrMsg, ltPerson, sPr) then
+  begin
+    if ErrMsg <> '' then
+      SetError(ErrMsg);
+  end;
+
 end;
 
 procedure TfrmEditProc.txtAttnNeedData(Sender: TObject;
@@ -321,135 +332,137 @@ procedure TfrmEditProc.ControlChange(Sender: TObject);
 begin
   if FChanging then exit;
   with NewRec do
+  begin
+    with cboProc do if ItemIEN > 0 then
+      if Piece(Items[ItemIndex], U, 4) <> OldRec.ConsultProc then
+      begin
+        ConsultProc     := Piece(Items[ItemIndex], U, 4);
+        ConsultProcName := Text;
+      end
+      else
+      begin
+        ConsultProc     := '';
+        ConsultProcName := '';
+      end;
+
+    with cboService do if ItemIEN > 0 then
+      if ItemIEN <> OldRec.ToService then
+      begin
+        ToService     := ItemIEN;
+        ToServiceName := Text;
+      end
+      else
+      begin
+        ToService     := 0;
+        ToServiceName := '';
+      end;
+
+    with cboCategory do if Length(ItemID) > 0 then
+      if ItemID <> OldRec.InpOutP then
+        InpOutP := ItemID
+      else
+        InpOutP := '';
+
+    with cboUrgency do if ItemIEN > 0 then
+      if StrToIntDef(Piece(Items[ItemIndex], U, 3), 0) <> OldRec.Urgency then
+      begin
+        Urgency     := StrToIntDef(Piece(Items[ItemIndex], U, 3), 0);
+        UrgencyName := Text;
+      end
+      else
+      begin
+        Urgency     := 0;
+        UrgencyName := '';
+      end;
+
+    if FClinicallyIndicatedDate > 0 then
     begin
-      with cboProc do if ItemIEN > 0 then
-        if Piece(Items[ItemIndex], U, 4) <> OldRec.ConsultProc then
-          begin
-            ConsultProc     := Piece(Items[ItemIndex], U, 4);
-            ConsultProcName := Text;
-          end
-        else
-          begin
-            ConsultProc     := '';
-            ConsultProcName := '';
-          end;
-
-      with cboService do if ItemIEN > 0 then
-        if ItemIEN <> OldRec.ToService then
-          begin
-            ToService     := ItemIEN;
-            ToServiceName := Text;
-          end
-        else
-          begin
-            ToService     := 0;
-            ToServiceName := '';
-          end;
-
-     with cboCategory do if Length(ItemID) > 0 then
-       if ItemID <> OldRec.InpOutP then
-         InpOutP := ItemID
-       else
-         InpOutP := '';
-
-     with cboUrgency do if ItemIEN > 0 then
-       if StrToIntDef(Piece(Items[ItemIndex], U, 3), 0) <> OldRec.Urgency then
-         begin
-           Urgency     := StrToIntDef(Piece(Items[ItemIndex], U, 3), 0);
-           UrgencyName := Text;
-         end
-       else
-         begin
-           Urgency     := 0;
-           UrgencyName := '';
-         end;
-
-     if FClinicallyIndicatedDate > 0 then
-     begin
-       if FClinicallyIndicatedDate <> OldRec.ClinicallyIndicatedDate then
-         ClinicallyIndicatedDate := FClinicallyIndicatedDate
-       else
-         ClinicallyIndicatedDate := 0;
-     end;
-
-     with cboPlace do if Length(ItemID) > 0 then
-       if ItemID <> OldRec.Place then
-         begin
-           Place     := ItemID;
-           PlaceName := Text;
-         end
-       else
-         begin
-           Place     := '';
-           PlaceName := '';
-         end;
-
-     with txtAttn do
-       if ItemIEN > 0 then
-         begin
-           if ItemIEN <> OldRec.Attention then
-             begin
-               Attention := ItemIEN;
-               AttnName  := Text;
-             end
-           else
-             begin
-               Attention := 0;
-               AttnName  := '';
-             end;
-         end
-       else  // blank
-         begin
-           if OldRec.Attention > 0 then
-             begin
-               Attention := -1;
-               AttnName  := '';
-             end
-           else
-             begin
-               Attention := 0;
-               AttnName  := '';
-             end;
-         end;
-
-     with txtProvDiag do
-       if Length(Text) > 0 then
-         begin
-           if Text <> OldRec.ProvDiagnosis then
-             ProvDiagnosis := Text
-           else
-             ProvDiagnosis := '';
-
-           if ProvDx.Code <> OldRec.ProvDxCode then
-             ProvDxCode := ProvDx.Code
-           else
-             ProvDxCode := '';
-
-           if OldRec.ProvDxCodeInactive then
-             ProvDx.CodeInactive := (ProvDx.Code = OldRec.ProvDxCode);
-         end
-       else  //blank
-         begin
-           ProvDx.Code := '';
-           ProvDx.CodeInactive := False;
-           if OldRec.ProvDiagnosis <> '' then
-             ProvDiagnosis := '@'
-           else
-             ProvDiagnosis := '';
-         end;
-
-     with memReason do if Lines.Count > 0 then
-        if Lines.Equals(OldRec.RequestReason) then
-          RequestReason.Clear
-        else
-          QuickCopy(memReason, RequestReason);
-
-      with memComment do
-        if GetTextLen > 0 then
-          QuickCopy(memComment, NewComments)
-        else
-          NewComments.Clear;
+      if FClinicallyIndicatedDate <> OldRec.ClinicallyIndicatedDate then
+        ClinicallyIndicatedDate := FClinicallyIndicatedDate
+      else
+        ClinicallyIndicatedDate := 0;
     end;
+
+    with cboPlace do if Length(ItemID) > 0 then
+      if ItemID <> OldRec.Place then
+      begin
+        Place     := ItemID;
+        PlaceName := Text;
+      end
+      else
+      begin
+        Place     := '';
+        PlaceName := '';
+      end;
+
+    with txtAttn do
+    begin
+      if ItemIEN > 0 then
+      begin
+        if ItemIEN <> OldRec.Attention then
+        begin
+          Attention := ItemIEN;
+          AttnName  := Text;
+        end
+        else
+        begin
+          Attention := 0;
+          AttnName  := '';
+        end;
+      end
+      else  // blank
+      begin
+        if OldRec.Attention > 0 then
+        begin
+          Attention := -1;
+          AttnName  := '';
+        end
+        else
+        begin
+          Attention := 0;
+          AttnName  := '';
+        end;
+      end;
+    end;
+
+    with txtProvDiag do
+      if Length(Text) > 0 then
+      begin
+        if Text <> OldRec.ProvDiagnosis then
+          ProvDiagnosis := Text
+        else
+          ProvDiagnosis := '';
+
+        if ProvDx.Code <> OldRec.ProvDxCode then
+          ProvDxCode := ProvDx.Code
+        else
+          ProvDxCode := '';
+
+        if OldRec.ProvDxCodeInactive then
+          ProvDx.CodeInactive := (ProvDx.Code = OldRec.ProvDxCode);
+      end
+      else  //blank
+      begin
+        ProvDx.Code := '';
+        ProvDx.CodeInactive := False;
+        if OldRec.ProvDiagnosis <> '' then
+          ProvDiagnosis := '@'
+        else
+          ProvDiagnosis := '';
+      end;
+
+    with memReason do if Lines.Count > 0 then
+      if Lines.Equals(OldRec.RequestReason) then
+        RequestReason.Clear
+      else
+        QuickCopy(memReason, RequestReason);
+
+    with memComment do
+      if GetTextLen > 0 then
+        QuickCopy(memComment, NewComments)
+      else
+        NewComments.Clear;
+  end;
 end;
 
 procedure TfrmEditProc.FormClose(Sender: TObject; var Action: TCloseAction);

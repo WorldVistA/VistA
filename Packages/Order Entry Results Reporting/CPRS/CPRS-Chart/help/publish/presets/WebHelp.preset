@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preset>
+  <chatbotWelcomeText>Welcome! How may I help you?</chatbotWelcomeText>
+  <chatbotDefaultText>Sorry, I do not have an answer for that.</chatbotDefaultText>
+  <retryMsg>Hold on a minute...</retryMsg>
+  <placeholderText>Type your message here.</placeholderText>
+  <errorMsg>There seems to be a problem, please contact the administrator.</errorMsg>
+  <title>CPRS Online Help</title>
+  <content>
+    <toc>
+      <name>CPRS</name>
+      <path>../../toc/CPRS.toc</path>
+    </toc>
+    <index type="boolean">true</index>
+    <glossary>
+      <name>CPRS</name>
+      <path>../../glossary/CPRS.glo</path>
+    </glossary>
+    <brs type="array">
+      <brsitem>
+        <name>G</name>
+        <path>../browsesequence/G.brs</path>
+      </brsitem>
+    </brs>
+    <mapFiles type="array">
+      <mapFilesitem>
+        <name>BSSCDefault</name>
+        <path>../mapfiles/BSSCDefault.ali</path>
+      </mapFilesitem>
+      <mapFilesitem>
+        <name>CPRS</name>
+        <path>../mapfiles/CPRS.ali</path>
+      </mapFilesitem>
+    </mapFiles>
+    <includeExpandingText type="boolean">true</includeExpandingText>
+    <includeDropdownText type="boolean">true</includeDropdownText>
+  </content>
+  <type>html5</type>
+  <glosstermEffect type="number">0</glosstermEffect>
+  <outputPath>C:/Users/ZZZZZZROBINT/Documents/HELP EXPERIMENT/</outputPath>
+  <name>WebHelp</name>
+  <starterPage>CPRS_Help_Introduction.htm</starterPage>
+  <defaultTopic>
+    <name>CPRS_Help_Introduction</name>
+    <path>../../contents/CPRS_Help_Introduction.htm</path>
+  </defaultTopic>
+  <lowercasenames type="number">0</lowercasenames>
+  <chatbot>
+    <displayName>Google Dialogflow</displayName>
+    <name>dialogflow</name>
+  </chatbot>
+  <mobileapp>
+    <android type="boolean">true</android>
+    <iOS type="boolean">false</iOS>
+  </mobileapp>
+  <search>
+    <suggestion type="boolean">true</suggestion>
+    <context type="boolean">false</context>
+    <contextLimit type="number">100</contextLimit>
+    <maxSearchresults type="number">20</maxSearchresults>
+    <glossary type="boolean">true</glossary>
+    <searchsubstrings type="boolean">true</searchsubstrings>
+    <showSpeclChars type="boolean">false</showSpeclChars>
+    <speclChars>0;1;2;3;4;5;6;7;8;9</speclChars>
+    <fuzzy type="boolean">true</fuzzy>
+  </search>
+  <sitemap>
+    <use type="boolean">false</use>
+    <changeFrequency></changeFrequency>
+  </sitemap>
+  <createThumbNails type="boolean">false</createThumbNails>
+  <patchHomepage type="boolean">true</patchHomepage>
+  <gdprCompliance type="boolean">true</gdprCompliance>
+</preset>

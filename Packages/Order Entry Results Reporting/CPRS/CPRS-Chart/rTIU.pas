@@ -44,10 +44,11 @@ procedure ActOnDocument(var AuthSts: TActionRec; IEN: Integer; const ActionName:
 function AuthorSignedDocument(IEN: Integer): boolean;
 function CosignDocument(IEN: Integer): Boolean;
 //function CPTRequiredForNote(IEN: Integer): Boolean;
-procedure ListNotes(Dest: TStrings; Context: Integer; Early, Late: TFMDateTime;
-  Person: int64; OccLim: Integer; SortAscending: Boolean);
-procedure ListNotesForTree(Dest: TStrings; Context: Integer; Early, Late: TFMDateTime;
-  Person: int64; OccLim: Integer; SortAscending: Boolean);
+//procedure ListNotes(Dest: TStrings; Context: Integer; Early, Late: TFMDateTime;
+//  Person: int64; OccLim: Integer; SortAscending: Boolean);
+function ListNotesForTree(Dest: TStrings; Context: Integer;
+  Early, Late: TFMDateTime; Person: Int64; OccLim: Integer;
+  SortAscending: boolean; MRFlag: Integer; IEN: String): String;
 procedure ListConsultRequests(Dest: TStrings);
 procedure ListDCSumm(Dest: TStrings);
 procedure LoadDetailText(Dest: TStrings; IEN: Integer);    //**KCM**
@@ -55,7 +56,7 @@ procedure LoadDocumentText(Dest: TStrings; IEN: Integer);
 procedure GetNoteForEdit(var EditRec: TEditNoteRec; IEN: Integer);
 procedure GetNoteEditTextOnly(ResultList: TStrings; IEN: Integer);
 function VisitStrForNote(IEN: Integer): string;
-function GetCurrentSigners(IEN: integer): TStrings;
+function setCurrentSigners(aDest:TStrings;IEN: Integer): Integer;
 function TitleForNote(IEN: Int64): Integer;
 function GetConsultIENforNote(NoteIEN: integer): Integer;
 function GetPackageRefForNote(NoteIEN: integer): string;
@@ -381,6 +382,7 @@ begin
   FastAssign(RPCBrokerV.Results, Dest);
 end;
 
+(*
 procedure ListNotes(Dest: TStrings; Context: Integer; Early, Late: TFMDateTime;
   Person: int64; OccLim: Integer; SortAscending: Boolean);
 { retrieves existing progress notes for a patient according to the parameters passed in
@@ -407,25 +409,47 @@ begin
     end; {for}
     FastAssign(RPCBrokerV.Results, Dest);
   end; {with}
-end;
-
-procedure ListNotesForTree(Dest: TStrings; Context: Integer; Early, Late: TFMDateTime;
-  Person: int64; OccLim: Integer; SortAscending: Boolean);
+  end;
+*)
+function ListNotesForTree(Dest: TStrings; Context: Integer;
+  Early, Late: TFMDateTime; Person: Int64; OccLim: Integer;
+  SortAscending: boolean; MRFlag: Integer; IEN: String): String;
 { retrieves existing progress notes for a patient according to the parameters passed in
   Pieces: IEN^Title^FMDateOfNote^Patient^Author^Location^Status^Visit
   Return: IEN^ExDateOfNote^Title, Location, Author^ImageCount^Visit }
 var
   SortSeq: Char;
+  i: Integer;
 const
   SHOW_ADDENDA = True;
 begin
-  if SortAscending then SortSeq := 'A' else SortSeq := 'D';
+  Result := '';
+  if SortAscending then
+    SortSeq := 'A'
+  else
+    SortSeq := 'D';
   if Context > 0 then
+  begin
+    CallVistA('TIU DOCUMENTS BY CONTEXT', [3, Context, Patient.DFN, Early, Late,
+      Person, OccLim, SortSeq, SHOW_ADDENDA, 0, MRFlag, String(IEN)], Dest);
+    if Dest.Count > 0 then // NSR 20070817
     begin
-      CallV('TIU DOCUMENTS BY CONTEXT', [3, Context, Patient.DFN, Early, Late, Person, OccLim, SortSeq, SHOW_ADDENDA]);
-      FastAssign(RPCBrokerV.Results, Dest);
+      i := 0;
+      while i < Dest.Count do
+      begin
+        if trim(Dest[i]) = '' then
+          Dest.Delete(i)
+        else
+        begin
+          if AnsiPos(TX_MORE, Dest[i]) > 0 then
+            Result := Piece(Dest[i], U, 1);
+          inc(i);
+        end;
+      end;
     end;
+  end;
 end;
+
 
 
 procedure ListDCSumm(Dest: TStrings);
@@ -791,8 +815,16 @@ begin
       Param[7].PType := literal;
       Param[7].Value := '1';  // suppress commit logic
       CallBroker;
-      CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
-      CreatedDoc.ErrorText := Piece(Results[0], U, 2);
+      if Results.Count > 0 then
+      begin
+        CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
+        CreatedDoc.ErrorText := Piece(Results[0], U, 2);
+      end
+      else
+      begin
+        CreatedDoc.IEN := 0;
+        CreatedDoc.ErrorText := 'An error occured saving the document.  Please refresh patient data.';
+      end;
     end;
   finally
     UnlockBroker;
@@ -837,8 +869,16 @@ begin
       Param[2].PType := literal;
       Param[2].Value := '1';  // suppress commit logic
       CallBroker;
-      CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
-      CreatedDoc.ErrorText := Piece(Results[0], U, 2);
+      if Results.Count > 0 then
+      begin
+        CreatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
+        CreatedDoc.ErrorText := Piece(Results[0], U, 2);
+      end
+      else
+      begin
+        CreatedDoc.IEN := 0;
+        CreatedDoc.ErrorText := 'An error occured saving the addendum.  Please refresh patient date.';
+      end;
     end;
   finally
     UnlockBroker;
@@ -890,8 +930,16 @@ begin
           Mult['"TEXT",' + IntToStr(i+1) + ',0'] := FilteredString(NoteRec.Lines[i]);*)
       end;
       CallBroker;
-      UpdatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
-      UpdatedDoc.ErrorText := Piece(Results[0], U, 2);
+      if Results.Count > 0 then
+      begin
+        UpdatedDoc.IEN := StrToIntDef(Piece(Results[0], U, 1), 0);
+        UpdatedDoc.ErrorText := Piece(Results[0], U, 2);
+      end
+      else
+      begin
+        UpdatedDoc.IEN := NoteIEN;
+        UpdatedDoc.ErrorText := '';
+      end;
     end;
   finally
     UnlockBroker;
@@ -931,7 +979,15 @@ begin
       Param[2].PType := literal;
       Param[2].Value :='1';  // suppress commit code
       CallBroker;
-      if Piece(Results[0], U, 1) = '0' then ErrMsg := Piece(Results[0], U, 2) else ErrMsg := '';
+      if Results.Count > 0 then
+      begin
+        if Piece(Results[0], U, 1) = '0' then
+          ErrMsg := Piece(Results[0], U, 2)
+        else
+          ErrMsg := '';
+      end
+      else
+        ErrMsg := '';
     end;
   finally
     UnlockBroker;
@@ -1037,12 +1093,13 @@ begin
   Result := RPCBrokerV.Results;
 end;
 
-function GetCurrentSigners(IEN: integer): TStrings;
+function setCurrentSigners(aDest:TStrings;IEN: Integer): Integer;
 begin
-  CallV('TIU GET ADDITIONAL SIGNERS', [IEN]);
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results ;
+  CallVistA('TIU GET ADDITIONAL SIGNERS', [IEN], aDest);
+  MixedCaseList(aDest);
+  Result := aDest.Count;
 end;
+
 
 procedure UpdateAdditionalSigners(IEN: integer; Signers: TStrings);
 begin

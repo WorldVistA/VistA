@@ -184,18 +184,27 @@ begin
 end;
 
 procedure TfrmReleaseOrders.FormCreate(Sender: TObject);
+var
+  AParam: string;
 begin
   inherited;
   OKPressed := False;
   ESCode := '';
-  if Encounter.Provider = User.DUZ then
+  AParam := GetUserParam('OR NATURE DEFAULT');
+
+
+  if AParam = 'P' then
   begin
     FNature := NO_POLICY;
     radPolicy.Checked := True;
-  end else
+  end else if AParam = 'V' then
   begin
     FNature := NO_VERBAL;
     radVerbal.Checked := True;
+  end else if AParam = 'T' then
+  begin
+    FNature := NO_PHONE;
+    radPhone.Checked := True;
   end;
   FSigSts := SS_UNSIGNED;
 end;
@@ -216,6 +225,14 @@ begin
   begin
     FNature := NO_PROVIDER;
     FSigSts := SS_NOTREQD;
+  end else
+  begin
+     if not (radPhone.Checked or radPolicy.Checked or radVerbal.Checked) then
+     begin
+       StatusText('');
+       InfoBox('An option for the Nature of Orders prompt must be selected', 'Missing Value', MB_OK);
+       Exit;
+     end;
   end;
   if FNature = NO_POLICY then FSigSts := SS_ESIGNED;
   // validate release of the orders with this nature of order

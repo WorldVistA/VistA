@@ -112,10 +112,24 @@ function PersonHasKey(APerson: Int64; const AKey: string): Boolean;
 function GlobalRefForFile(const FileID: string): string;
 function SubsetOfGeneric(const StartFrom: string; Direction: Integer; const GlobalRef: string): TStrings;
 function SubsetOfDevices(const StartFrom: string; Direction: Integer): TStrings;
-function SubSetOfPersons(const StartFrom: string; Direction: Integer): TStrings;
+function SubSetOfPersons(const StartFrom: string; Direction: Integer): TStrings; overload;
+function SubSetOfPersons(const StartFrom: string; Direction: Integer;
+  out VistaParams: TArray<string>; ExcludeClass: boolean = False): TStrings; overload;
+function setSubSetOfPersons(var aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+
 function SubSetOfActiveAndInactivePersons(const StartFrom: string; Direction: Integer): TStrings;
+
+function SubSetOfActiveAndInactivePersonsWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
+function setSubSetOfProvidersWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
+function SubsetOfCosignersWithSimilarNames(aDUZ: Int64; CSPDate: TFMDateTime;
+  TITLEIEN: Integer): TStrings;
+function setSubSetOfPDMPAuthorizedUsersWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
+
+function SubsetOfPatientsWithSimilarSSNs(aDest:TStrings; aDFN: Int64): Integer;
 function GetDefaultPrinter(DUZ: Int64; Location: integer): string;
 procedure getSysUserParameters(DUZ: Int64);
+
 
 { User specific calls }
 
@@ -161,11 +175,23 @@ procedure ListTeamAll(Dest: TStrings);
 procedure ListPcmmAll(Dest: TStrings);
 procedure ListWardAll(Dest: TStrings);
 procedure ListProviderTop(Dest: TStrings);
+
+function setSubSetOfProviders(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+
 function SubSetOfProviders(const StartFrom: string; Direction: Integer): TStrings;
-function SubSetOfCosigners(const StartFrom: string; Direction: Integer; Date: TFMDateTime;
-  ATitle: integer; ADocType: integer): TStrings;
+
+function SubSetOfCosigners(const StartFrom: string; Direction: Integer;
+  Date: TFMDateTime; ATitle: integer; ADocType: integer): TStrings; overload;
+function SubSetOfCosigners(const StartFrom: string; Direction: Integer;
+  Date: TFMDateTime; ATitle: integer; ADocType: integer; out VistaParams: TArray<string>): TStrings; overload;
+
 procedure ListClinicTop(Dest: TStrings);
 function SubSetOfClinics(const StartFrom: string; Direction: Integer): TStrings;
+
+function setSubSetOfClinics(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+
 function GetDfltSort: string;
 procedure ResetDfltSort;
 procedure ListPtByDflt(Dest: TStrings);
@@ -180,6 +206,10 @@ procedure ListPtByRPLLast5(Dest: TStrings; const Last5: string);
 procedure ListPtByFullSSN(Dest: TStrings; const FullSSN: string);
 procedure ListPtByRPLFullSSN(Dest: TStrings; const FullSSN: string);
 procedure ListPtTop(Dest: TStrings);
+
+function setSubSetOfPatients(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+
 function SubSetOfPatients(const StartFrom: string; Direction: Integer): TStrings;
 function DfltDateRangeClinic: string;
 function MakeRPLPtList(RPLList: string): string;
@@ -219,7 +249,8 @@ function SubSetOfLocations(const StartFrom: string; Direction: Integer): TString
 function SubSetOfNewLocs(const StartFrom: string; Direction: Integer): TStrings;
 function SubSetOfInpatientLocations(const StartFrom: string; Direction: Integer): TStrings;
 function SubSetOfProvWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings;
-function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings;
+function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings; overload;
+function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer; DateTime: string; out VistaParams: TArray<string>): TStrings; overload;
 
 { Remote Data Access calls }
 function HasRemoteData(const DFN: string; var ALocations: TStringList): Boolean;
@@ -376,10 +407,43 @@ end;
 function SubSetOfPersons(const StartFrom: string; Direction: Integer): TStrings;
 { returns a pointer to a list of persons (for use in a long list box) -  The return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
+var
+  VistaParams: TArray<string>;
 begin
-  CallV('ORWU NEWPERS', [StartFrom, Direction]);
+  Result := SubSetOfPersons(StartFrom, Direction, VistaParams);
+end;
+
+function SubSetOfPersons(const StartFrom: string; Direction: Integer;
+  out VistaParams: TArray<string>; ExcludeClass: boolean = False): TStrings;
+{ returns a pointer to a list of persons (for use in a long list box) -  The return value is
+  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
+const
+  BoolChar: array [boolean] of char = ('0', '1');
+begin
+  CallV('ORWU NEWPERS', [StartFrom, Direction,'','','','','','',ExcludeClass]);
 //  MixedCaseList(RPCBrokerV.Results);
   Result := RPCBrokerV.Results;
+
+  SetLength(VistaParams, 10);
+  VistaParams[0] := 'ORWU NEWPERS';
+  VistaParams[1] := StartFrom;
+  VistaParams[2] := IntToStr(Direction);
+  VistaParams[3] := '';
+  VistaParams[4] := '';
+  VistaParams[5] := '';
+  VistaParams[6] := '';
+  VistaParams[7] := '';
+  VistaParams[8] := '';
+  VistaParams[9] := BoolChar[ExcludeClass];
+end;
+
+function setSubSetOfPersons(var aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+{ returns a pointer to a list of persons (for use in a long list box) -  The return value is
+  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
+begin
+  CallVistA('ORWU NEWPERS', [StartFrom, Direction], aDest);
+  Result := aDest.Count;
 end;
 
 { User specific calls }
@@ -690,6 +754,15 @@ procedure ListProviderTop(Dest: TStrings);
 begin
 end;
 
+function setSubSetOfProviders(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+{ returns a pointer to a list of providers (for use in a long list box) -  The return value is
+  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
+begin
+  CallVistA('ORWU NEWPERS', [StartFrom, Direction, 'PROVIDER'], aDest);
+  Result := aDest.Count;
+end;
+
 function SubSetOfProviders(const StartFrom: string; Direction: Integer): TStrings;
 { returns a pointer to a list of providers (for use in a long list box) -  The return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
@@ -701,6 +774,14 @@ end;
 
 function SubSetOfCosigners(const StartFrom: string; Direction: Integer; Date: TFMDateTime;
   ATitle: integer; ADocType: integer): TStrings;
+var
+  VistaParams: TArray<string>;
+begin
+  Result := SubSetOfCosigners(StartFrom, Direction, Date, ATitle, ADocType, VistaParams);
+end;
+
+function SubSetOfCosigners(const StartFrom: string; Direction: Integer; Date: TFMDateTime;
+  ATitle: integer; ADocType: integer; out VistaParams: TArray<string>): TStrings;
 { returns a pointer to a list of cosigners (for use in a long list box) -  The return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
 begin
@@ -708,9 +789,16 @@ begin
   // CQ #17218 - Correcting order of parameters for this call - jcs
   //CallV('ORWU2 COSIGNER', [StartFrom, Direction, Date, ATitle, ADocType]);
   CallV('ORWU2 COSIGNER', [StartFrom, Direction, Date, ADocType, ATitle]);
-
   //  MixedCaseList(RPCBrokerV.Results);
   Result := RPCBrokerV.Results;
+
+  SetLength(VistaParams, 6);
+  VistaParams[0] := 'ORWU2 COSIGNER';
+  VistaParams[1] := StartFrom;
+  VistaParams[2] := IntToStr(Direction);
+  VistaParams[3] := FloatToStr(Date);
+  VistaParams[4] := IntToStr(ADocType);
+  VistaParams[5] := IntToStr(ATitle);
 end;
 
 function SubSetOfProvWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings;
@@ -722,13 +810,27 @@ begin
   Result := RPCBrokerV.Results;
 end;
 
-function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings;
+function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer;
+  DateTime: string; out VistaParams: TArray<string>): TStrings;
 { returns a pointer to a list of users (for use in a long list box) -  The return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
 begin
   CallV('ORWU NEWPERS', [StartFrom, Direction, '', DateTime]);
   MixedCaseList(RPCBrokerV.Results);
   Result := RPCBrokerV.Results;
+  SetLength(VistaParams, 5);
+  VistaParams[0] := 'ORWU NEWPERS';
+  VistaParams[1] := StartFrom;
+  VistaParams[2] := IntToStr(Direction);
+  VistaParams[3] := '';
+  VistaParams[4] := DateTime;
+end;
+
+function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings;
+var
+  VistaParams: TArray<string>;
+begin
+  Result := SubSetOfUsersWithClass(StartFrom, Direction, DateTime, VistaParams);
 end;
 
 function SubSetOfActiveAndInactivePersons(const StartFrom: string; Direction: Integer): TStrings;
@@ -740,6 +842,45 @@ begin
   Result := RPCBrokerV.Results;
 end;
 
+function SubSetOfActiveAndInactivePersonsWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
+{ returns a pointer to a list of users holding key aKey and names similar to the one
+  with provided DUZ }
+begin
+  Result := TStringList.Create;
+  CallVistA('ORWU NEWPERS', [aDUZ, 1, '', DateTime, '', '', '', True], Result); // RDD: fixed for 7th param = null
+  // TRUE - to indicate this is NSR 20110606
+end;
+
+function setSubSetOfProvidersWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
+{ returns a pointer to a list of users holding key aKey and names similar to the one
+  with provided DUZ }
+begin
+  Result := TStringList.Create;
+  CallVistA('ORWU NEWPERS', [aDUZ, 1, 'PROVIDER', DateTime, '', '', '', True], Result); // RDD: fixed for 7th param = null
+end;
+
+function setSubSetOfPDMPAuthorizedUsersWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
+begin
+  Result := TStringList.Create;
+  CallVistA('ORWU NEWPERS', [aDUZ, 1, 'PROVIDER', DateTime, '', '', '1', True], Result);
+end;
+
+function SubsetOfCosignersWithSimilarNames(aDUZ: Int64; CSPDate: TFMDateTime;
+  TITLEIEN: Integer): TStrings;
+{ returns a pointer to a list of users that can sign document with TITLEIEN and names similar to the one
+  with provided DUZ }
+begin
+  Result := TStringList.Create;
+  CallVistA('ORWU2 COSIGNER', [aDUZ, 1, CSPDate, 0, TITLEIEN, True], Result);
+end;
+
+//function SubsetOfPatientsWithSimilarSSNs(aDFN: Int64): TStrings;
+function SubsetOfPatientsWithSimilarSSNs(aDest: TStrings;aDFN: Int64): Integer;
+{ returns a pointer to a list of patients that has similar SSNs }
+begin
+  CallVistA('DG CHK BS5 XREF ARRAY', [aDFN], aDest);
+  Result := aDest.Count;
+end;
 
 procedure ListClinicTop(Dest: TStrings);
 { checks parameters for list of commonly selected clinics }
@@ -753,6 +894,16 @@ begin
   CallV('ORWU CLINLOC', [StartFrom, Direction]);
   MixedCaseList(RPCBrokerV.Results);
   Result := RPCBrokerV.Results;
+end;
+
+function setSubSetOfClinics(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+{ returns a pointer to a list of clinics (for use in a long list box) -  The return value is
+  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
+begin
+  CallVistA('ORWU CLINLOC', [StartFrom, Direction], aDest);
+  MixedCaseList(aDest);
+  Result := aDest.Count;
 end;
 
 function GetDfltSort: string;
@@ -1008,6 +1159,16 @@ begin
   CallV('ORWPT TOP', [nil]);
   MixedCaseList(RPCBrokerV.Results);
   FastAssign(RPCBrokerV.Results, Dest);
+end;
+
+function setSubSetOfPatients(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+{ returns a pointer to a list of patients (for use in a long list box) -  The return value is
+  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
+begin
+  CallVistA('ORWPT LIST ALL', [StartFrom, Direction], aDest);
+  MixedCaseList(aDest);
+  Result := aDest.Count;
 end;
 
 function SubSetOfPatients(const StartFrom: string; Direction: Integer): TStrings;

@@ -36,13 +36,17 @@ type
     OrderLocIEN:  string; //imo
     OrderLocName: string; //imo
     ParentID    : string;
+    ParkedStatus: String; // PaPI NSR#20090509 AA 2015/09/29 // RDD: copied for NSR 20110719 port to 32A, but always '' right now!
     LinkObject:   TObject;
     EnteredInError:     Integer; //AGP Changes 26.12 PSI-04-053
+    ORUAPreviewresult:      string;
     DCOriginalOrder: boolean;
     IsOrderPendDC: boolean;
     IsDelayOrder: boolean;
     IsControlledSubstance: boolean;
     IsDetox       : boolean;
+    FlagText: string;
+    IsFlagTextLoaded: boolean;
     procedure Assign(Source: TOrder);
     procedure Clear;
   end;
@@ -175,7 +179,8 @@ procedure LoadUnsignedOrders(IDList, HaveList: TStrings);
 procedure SaveOrderViewDefault(AView: TOrderView);
 procedure RetrieveOrderFields(OrderList: TList; ATextView: Integer; ACtxtTime: TFMDateTime);
 procedure SetOrderFields(AnOrder: TOrder; const x, y, z: string);
-procedure SetOrderFromResults(AnOrder: TOrder);
+procedure SetOrderFromResults(AnOrder: TOrder); overload;
+procedure SetOrderFromResults(AnOrder: TOrder; Results: TStrings); overload;
 procedure SortOrders(AList: TList; ByGroup, InvChron: Boolean);
 procedure ConvertOrders(Dest: TList; AView: TOrderView);
 
@@ -233,9 +238,21 @@ function GetREQReason: Integer;
 procedure DCOrder(AnOrder: TOrder; AReason: Integer; NewOrder: boolean; var DCType: Integer);
 procedure ReleaseOrderHold(AnOrder: TOrder);
 procedure AlertOrder(AnOrder: TOrder; AlertRecip: Int64);
-procedure FlagOrder(AnOrder: TOrder; const FlagReason: string; AlertRecip: Int64);
-procedure UnflagOrder(AnOrder: TOrder; const AComment: string);
+
+// NSR #20110719  -- begin
+function UnflagOrder(AnOrder: TOrder; const AComment: String; var ErrMsg:String):TStrings;
+function FlagOrder(AnOrder: TOrder; const FlagReason,ExpireDate: String;
+  AlertRecip: TStrings):TStrings;
+
+  // PutFlagComment Added by Kim Hovorka 06/10/2015 for NSR #20110719
+//procedure PutFlagComment(Src: TStrings; const ID: string; var ErrMsg: string);
+procedure getFlagComponents(Dest: TStrings; const anID,aType: string);
+function setFlagComments(const anID: String;aComments,aRecipients: TStrings): TStrings;
+// NSR #20110719 -- end
+
 procedure LoadFlagReason(Dest: TStrings; const ID: string);
+procedure LoadFlagReasons(AOrderList: TList);
+
 procedure LoadWardComments(Dest: TStrings; const ID: string);
 procedure PutWardComments(Src: TStrings; const ID: string; var ErrMsg: string);
 procedure CompleteOrder(AnOrder: TOrder; const ESCode: string);
@@ -357,9 +374,11 @@ function IsValidSchStr(ASchStr: string): boolean;
 
 function IsPendingHold(OrderID: string): boolean;
 
+var
+  UAPViewCalling: Boolean;
 implementation
 
-uses Windows, rCore, uConst, TRPCB, ORCtrls, UBAGlobals, UBACore, VAUtils;
+uses Windows, rCore, uConst, TRPCB, ORCtrls, UBAGlobals, UBACore, VAUtils, ORNetIntf;
 
 var
   uDGroupMap: TStringList;          // each string is DGroupIEN=Sequence^TopName^Name
@@ -422,6 +441,7 @@ begin
   LinkObject   := Source.LinkObject;
   IsControlledSubstance   := Source.IsControlledSubstance;
   IsDetox   := Source.IsDetox;
+  ORUAPreviewresult   := Source.ORUAPreviewresult;
 end;
 
 procedure TOrder.Clear;
@@ -455,6 +475,9 @@ begin
   LinkObject   := nil;
   IsControlledSubstance := False;
   IsDetox := False;
+  ORUAPreviewresult      := '';
+  FlagText := '';
+  IsFlagTextLoaded := False;
 end;
 
 { Order List functions }
@@ -598,6 +621,12 @@ begin
   AList.Clear;
 end;
 
+function SetOrderRevwCol(AnOrder: TOrder):String;
+begin
+  CallVistA('ORTO GETRVW', [AnOrder.ID],Result);
+  AnOrder.ORUAPreviewresult := Result;
+end;
+
 procedure SetOrderFields(AnOrder: TOrder; const x, y, z: string);
 {           1   2    3     4      5     6   7   8   9    10    11    12    13    14     15     16  17    18    19     20         21          22              23               24
 { Pieces: ~IFN^Grp^ActTm^StrtTm^StopTm^Sts^Sig^Nrs^Clk^PrvID^PrvNam^ActDA^Flag^DCType^ChrtRev^DEA#^VA#^DigSig^IMO^DCOrigOrder^ISDCOrder^IsDelayOrder^IsControlledSubstance^IsDetox}
@@ -633,6 +662,8 @@ begin
     if (pos('Entered in error',Text)>0) then AnOrder.EnteredInError := 1
     else AnOrder.EnteredInError := 0;
     //if DGroupName = 'Non-VA Meds' then Text := 'Non-VA  ' + Text;
+    if UAPViewCalling then
+      SetOrderRevwCol(AnOrder);
     if Piece(x,U,20) = '1' then DCOriginalOrder := True
     else DCOriginalOrder := False;
     if Piece(X,u,21) = '1' then  IsOrderPendDC := True
@@ -643,6 +674,8 @@ begin
     else IsControlledSubstance := False;
     if Piece(x,u,24) = '1' then IsDetox := True
     else IsDetox := False;
+    FlagText := '';
+    IsFlagTextLoaded := False;
   end;
 end;
 
@@ -873,6 +906,77 @@ begin
   end;
 end;
 
+procedure LoadFlagReasons(AOrderList: TList);
+
+  function FindOrder(const AOrderID: string): TOrder;
+  var
+    P: Pointer;
+  begin
+    for P in AOrderList do begin
+      if Piece(TOrder(P).ID, ';', 1) = AOrderID then begin
+        Result := TOrder(P);
+        Exit;
+      end;
+    end;
+    Result := nil;
+  end;
+
+  procedure AddFlagTextToOrder(S: string);
+  var
+    AOrder: TOrder;
+  begin
+    if S <> '' then
+    begin
+      if Copy(S, 1, 1) = '~' then S := Copy(S, 2, Length(S));
+      AOrder := FindOrder(Piece(S, U, 1));
+      if Assigned(AOrder) then begin
+        AOrder.IsFlagTextLoaded := True;
+        AOrder.FlagText := Piece(S, U, 2);
+      end;
+    end;
+  end;
+
+var
+  I: Integer;
+  S, AResult: string;
+  AOrder: TOrder;
+  AIDList, AResults: TStringList;
+//  OrderNum: integer;
+begin
+  AResults := TStringList.Create;
+  try
+    AIDList := TStringList.Create;
+    try
+      for I := 0 to AOrderList.Count - 1 do
+      begin
+        AOrder := TOrder(AOrderList.Items[I]);
+        if AOrder.Flagged and (not AOrder.IsFlagTextLoaded) then //
+          AIDList.Add(AOrder.ID);
+      end;
+      CallVistA('ORWDXA1 FLAGTXTS', [AIDList], AResults);
+    finally
+      FreeAndNil(AIDList);
+    end;
+
+    AResult := '';
+    for S in AResults do begin
+      if Copy(S, 1, 1) = '~' then begin
+        // Reached a new record. We need to process the pevious record
+        AddFlagTextToOrder(AResult);
+        AResult := '';
+      end;
+      if AResult = '' then begin
+        AResult := S
+      end else begin
+        AResult := Format('%s'#13#10'%s', [AResult, S]);
+      end;
+    end;
+    AddFlagTextToOrder(AResult);
+  finally
+    FreeAndNil(AResults);
+  end;
+end;
+
 procedure RetrieveOrderFields(OrderList: TList; ATextView: Integer; ACtxtTime: TFMDateTime);
 var
   i, OrderIndex: Integer;
@@ -920,6 +1024,7 @@ begin
       end;
     SetOrderFields(AnOrder, x, y, z);
   end;
+  if Notifications.Active then LoadFlagReasons(OrderList);
 end;
 
 procedure SaveOrderViewDefault(AView: TOrderView);
@@ -1449,31 +1554,40 @@ begin
 end;
 
 procedure SetOrderFromResults(AnOrder: TOrder);
+begin
+  SetOrderFromResults(AnOrder, RPCBrokerV.Results);
+end;
+
+procedure SetOrderFromResults(AnOrder: TOrder; Results: TStrings);
 var
   x, y, z: string;
 begin
-  with RPCBrokerV do while Results.Count > 0 do
+  { with RPCBrokerV do } while Results.Count > 0 do
   begin
     x := Results[0];
     Results.Delete(0);
-    if CharAt(x, 1) <> '~' then Continue;        // only happens if out of synch
+    if CharAt(x, 1) <> '~' then
+      Continue; // only happens if out of synch
     y := '';
-    while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
+    while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+      (CharAt(Results[0], 1) <> '|') do
     begin
       y := y + Copy(Results[0], 2, Length(Results[0])) + CRLF;
       Results.Delete(0);
     end;
-    if Length(y) > 0 then y := Copy(y, 1, Length(y) - 2);  // take off last CRLF
+    if Length(y) > 0 then
+      y := Copy(y, 1, Length(y) - 2); // take off last CRLF
     z := '';
     if (Results.Count > 0) and (Results[0] = '|') then
+    begin
+      Results.Delete(0);
+      while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+        (CharAt(Results[0], 1) <> '|') do
       begin
+        z := z + Copy(Results[0], 2, Length(Results[0])); // PKI Change
         Results.Delete(0);
-        while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
-          begin
-            z := z + Copy(Results[0], 2, Length(Results[0])); //PKI Change
-            Results.Delete(0);
-          end;
       end;
+    end;
     SetOrderFields(AnOrder, x, y, z);
   end;
 end;
@@ -1634,10 +1748,13 @@ begin
   // don't worry about results
 end;
 
-procedure FlagOrder(AnOrder: TOrder; const FlagReason: string; AlertRecip: Int64);
+// NSR #20110719 - adding Recipients list
+function FlagOrder(AnOrder: TOrder; const FlagReason, ExpireDate: String;
+  AlertRecip: TStrings): TStrings;
 begin
-  CallV('ORWDXA FLAG', [AnOrder.ID, FlagReason, AlertRecip]);
-  SetOrderFromResults(AnOrder);
+  Result := TStringList.Create;
+  CallVistA('ORWDXA FLAG', [AnOrder.ID, FlagReason, '',
+    ExpireDate, AlertRecip], Result);
 end;
 
 procedure LoadFlagReason(Dest: TStrings; const ID: string);
@@ -1646,10 +1763,48 @@ begin
   FastAssign(RPCBrokerV.Results, Dest);
 end;
 
-procedure UnflagOrder(AnOrder: TOrder; const AComment: string);
+function UnflagOrder(AnOrder: TOrder; const AComment: String;var ErrMsg:String):TStrings;
 begin
-  CallV('ORWDXA UNFLAG', [AnOrder.ID, AComment]);
-  SetOrderFromResults(AnOrder);
+  Result := TSTringList.Create;
+  ErrMsg := '';
+  if not CallVistA('ORWDXA UNFLAG', [AnOrder.ID, AComment],Result) then
+    ErrMsg := 'Error unflagging Order :'+anOrder.ID;
+end;
+
+// getGlagComments NSR #20110719
+procedure getFlagComponents(Dest: TStrings; const anID,aType: string);
+begin
+  try
+    CallVistA('ORWDXA1 FLAGACT', [anID,aType], Dest);
+  except
+    on E: Exception do
+      Showmessage(E.Message);
+  end;
+end;
+
+// getGlagComments NSR #20110719
+function setFlagComments(const anID: String;aComments,aRecipients: TStrings):TStrings;
+var
+  i: integer;
+  aListComments: iORNetMult;
+  aListRecipients: iORNetMult;
+begin
+  Result := nil;
+
+  neworNetMult(aListComments);
+  neworNetMult(aListRecipients);
+
+  for i := 0 to aComments.Count - 1 do
+    aListComments.AddSubscript(i+1,aComments[i]);
+  for i := 0 to aRecipients.Count - 1 do
+    aListRecipients.AddSubscript(i+1,Piece(aRecipients[i],U,1));
+  try
+    Result := TStringList.Create;
+    CallVistA('ORWDXA1 FLAGCOM', [anID,aListComments,aListRecipients],Result);
+  except
+    on E: Exception do
+      Showmessage(E.Message);
+  end;
 end;
 
 procedure LoadWardComments(Dest: TStrings; const ID: string);

@@ -115,7 +115,7 @@ PassDrugTstCall: boolean;
 implementation
 
 uses fODDiet, fODMisc, fODGen, fODMedIn, fODMedOut, fODText, fODConsult, fODProc, fODRad,
-     fODLab, fodBBank, fODMeds, fODMedIV, fODVitals, fODAuto, (*fODAllgy,*) fOMNavA, rCore, uCore, fFrame,
+     fODLab, fODAnatPath, fodBBank, fODMeds, fODMedIV, fODVitals, fODAuto, (*fODAllgy,*) fOMNavA, rCore, uCore, fFrame,
      fEncnt, fEffectDate, fOMVerify, fOrderSaveQuick, fOMSet, uODBase, rODMeds,
      fLkUpLocation, fOrdersPrint, fOMAction, fARTAllgy, fOMHTML, fOrders, rODBase,
      fODChild, fMeds, rMeds, rPCE, frptBox, fODMedNVA, fODChangeUnreleasedRenew, rODAllergy,
@@ -237,6 +237,7 @@ begin
   OD_IMAGING:   DialogClass := TfrmODRad;
   OD_DIET:      DialogClass := TfrmODDiet;
   OD_LAB:       DialogClass := TfrmODLab;
+  OD_AP:        DialogClass := TfrmODAnatPath;
   OD_BB:        DialogClass := TfrmODBBank;
   OD_CONSULT:   DialogClass := TfrmODCslt;
   OD_PROCEDURE: DialogClass := TfrmODProc;
@@ -876,6 +877,7 @@ var
   temp,tempDur,tempQuantity, tempRefills: string;
   i, ODItem, tempOI, ALTOI, rLevel, tmpDialogIEN, tmpDisplayGroup: integer;
   DrugCheck, InptDlg, IsAnIMOOrder, DrugTestDlgType, ShowClinOrdMsg: boolean;
+  IsRadiology, // VISTAOR-23041
   IsPsoSupply,IsDischargeOrPass,IsPharmacyOrder,IsConsultOrder,ForIMO, IsNewOrder: boolean;
   isRTCOrder: Boolean;
   tmpResp: TResponse;
@@ -1162,8 +1164,12 @@ begin
           MedsDisp,IVDisp, NonVADisp, ClinDisp];*)   //v25.27 range check error - RV
     IsConsultOrder := ResolvedDialog.DisplayGroup in [CsltDisp,ProcDisp];
     IsRTCOrder := (ResolvedDialog.DisplayGroup = ClinSchDisp) and (ResolvedDialog.FormID = OD_RTC);
+    // VISTAOR-23041
+    IsRadiology := (ResolvedDialog.DisplayGroup = ImgDisp) and (ResolvedDialog.FormID = OD_IMAGING);
     if (uAutoAC) and (not (ResolvedDialog.QuickLevel in [QL_REJECT,QL_CANCEL]))
-      and (not IsPharmacyOrder) and (not IsConsultOrder) and (not IsRTCOrder) then
+      and (not IsPharmacyOrder) and (not IsConsultOrder) and (not IsRTCOrder)
+      and (not IsRadiology) // VISTAOR-23041
+      then
       ResolvedDialog.QuickLevel := QL_AUTO;
     if (ResolvedDialog.DialogType = 'Q')
       and (ResolvedDialog.DisplayGroup = InptDisp) then

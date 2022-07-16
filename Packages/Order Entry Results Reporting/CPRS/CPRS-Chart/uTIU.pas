@@ -93,6 +93,7 @@ type
 function MakeNoteDisplayText(RawText: string): string;
 function MakeConsultDisplayText(RawText:string): string;
 function SetLinesTo74ForSave(AStrings: TStrings; AParent: TWinControl): TStrings;
+function UserIsCosigner(anIEN: Integer; aUser: String): boolean;
 
 const
   TX_SAVE_ERROR1 = 'An error was encountered while trying to save the note you are editing.' + CRLF + CRLF + '    Error:  ';
@@ -103,6 +104,9 @@ const
   TC_SAVE_ERROR =  'Error saving note text';
 
 implementation
+
+uses
+  rTIU, uDocTree;
 
 function MakeConsultDisplayText(RawText:string): string;
 var
@@ -117,16 +121,27 @@ end;
 function MakeNoteDisplayText(RawText: string): string;
 var
   x: string;
+
+  function GetText: string;
+  begin
+    if ShowMoreNode(Piece(x, U, 2)) then
+      Result := Piece(x, U, 2)
+    else
+    begin
+      Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ';
+      Result := Result + Piece(x, U, 2) + ', ' + Piece(x, U, 6) + ', ' +
+        Piece(Piece(x, U, 5), ';', 2)
+    end;
+  end;
+
 begin
   x := RawText;
   if Piece(x, U, 1) = '' then
-    Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ' +
-        Piece(x, U, 2) + ', ' + Piece(x, U, 6) + ', ' + Piece(Piece(x, U, 5), ';', 2)
+    Result := GetText
   else if CharInSet(Piece(x, U, 1)[1], ['A', 'N', 'E']) then
     Result := Piece(x, U, 2)
   else
-    Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ' +
-              Piece(x, U, 2) + ', ' + Piece(x, U, 6) + ', ' + Piece(Piece(x, U, 5), ';', 2);
+    Result := GetText;
 end;
 
 
@@ -159,6 +174,28 @@ begin
     //QuickCopy(ARichEdit74, Result);
   finally
     ARichEdit74.Free;
+  end;
+end;
+
+function UserIsCosigner(anIEN: Integer; aUser: String): boolean;
+var
+  i: Integer;
+  sl: TStrings;
+begin
+  Result := False;
+  sl := TStringList.Create;
+  try
+    setCurrentSigners(sl, anIEN);
+    for i := 0 to sl.Count - 1 do
+    begin
+      if Piece(sl.Strings[i], U, 3) = 'Expected Cosigner' then
+      begin
+        Result := Piece(sl.Strings[i], U, 1) = aUser; // IntToStr(User.DUZ));
+        break;
+      end;
+    end;
+  finally
+    sl.Free;
   end;
 end;
 

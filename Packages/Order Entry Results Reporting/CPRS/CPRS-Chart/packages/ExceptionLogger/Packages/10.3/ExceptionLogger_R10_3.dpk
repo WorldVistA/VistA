@@ -1,0 +1,48 @@
+package ExceptionLogger_R10_3;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS OFF}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST ON}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Exception Logger - 10.3'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vclimg,
+  vcl,
+  dbrtl,
+  bindengine,
+  bindcomp,
+  bindcompvcl;
+
+contains
+  AVCatcher in '..\..\Source\AVCatcher.pas' {AppExcept},
+  uMapParser in '..\..\Source\uMapParser.pas',
+  UStopWatch in '..\..\Source\UStopWatch.pas',
+  UThreadPool in '..\..\Source\UThreadPool.pas',
+  UExceptHook in '..\..\Source\UExceptHook.pas';
+
+end.

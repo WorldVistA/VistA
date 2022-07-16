@@ -89,7 +89,7 @@ type
     procedure cboPatientKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure lstvAlertsColumnClick(Sender: TObject; Column: TListColumn);
-    function DupLastSSN(const DFN: string): Boolean;
+    function DupLastSSN(var DFN: Int64): Boolean;
     procedure lstFlagsClick(Sender: TObject);
     procedure lstFlagsKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -113,6 +113,7 @@ type
     procedure lstvAlertsDataStateChange(Sender: TObject; StartIndex,
       EndIndex: Integer; OldState, NewState: TItemStates);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure lstvAlertsChange(Sender: TObject; Item: TListItem; Change: TItemChange);
   private
     FsortCol: Integer;
     FsortAscending: Boolean;
@@ -176,7 +177,9 @@ uses
   VAUtils,
   System.Types,
   fDeferDialog,
-  fNotificationProcessor;
+  fNotificationProcessor,
+  uFormUtils,
+  uSimilarNames;
 
 const
   LAST_DISPLAYED_PIECE = 11;
@@ -186,6 +189,10 @@ const
 const
   AliasString = ' -- ALIAS';
   SortDirection: array[boolean] of tSortDir = (DIR_BKWRD, DIR_FRWRD);
+  ONC = 'Order(s) needing clarification';
+  iCodePosition = 6;        // NSR#20110719
+  sCodeClarification = '6'; // NSR#20110719
+  sCodeFlagComment = '8';   // NSR#20110719
 
 procedure SelectPatient(ShowNotif: Boolean; FontSize: Integer; var UserCancelled: Boolean);
 { displays patient selection dialog (with optional notifications), updates Patient object }
@@ -583,6 +590,7 @@ procedure TfrmPtSel.cmdOKClick(Sender: TObject);
 const
   DLG_CANCEL = False;
 var
+  DFN: Int64;
   NewDFN: string; // *DFN*
   DateDied: TFMDateTime;
   AccessStatus: Integer;
@@ -599,11 +607,12 @@ begin
       FLastPt := cboPatient.ItemID;
     end;
 
-  if DupLastSSN(NewDFN) then // Check for, deal with duplicate patient data.
-    if (DupDFN = 'Cancel') then
+  DFN := cboPatient.ItemID; // *DFN*
+  if DupLastSSN(DFN) then // Check for, deal with duplicate patient data.
+    if (DFN < 1) then
       Exit
     else
-      NewDFN := DupDFN;
+      NewDFN := IntToStr(DFN);
   if not AllowAccessToSensitivePatient(NewDFN, AccessStatus) then
     Exit;
   DateDied := DateOfDeath(NewDFN);
@@ -1010,7 +1019,7 @@ end;
 procedure TfrmPtSel.cmdForwardClick(Sender: TObject);
 var
   i: Integer;
-  Alert: string;
+  s, Alert: string;
 begin
   if FAlertsNotReady then
     Exit;
@@ -1023,9 +1032,21 @@ begin
           if Items[i].Selected then
           begin
             try
-              Alert := Items[i].SubItems[6] + '^' + Items[i].SubItems[0] + ': ' +
-                Items[i].SubItems[4];
-              ForwardAlertTo(Alert);
+// NSR#20110719 ----------------------------------------------------------- begin
+              s := trim(piece(piece(Items[i].SubItems[iCodePosition],';',1),',',3));
+              if (pos(ONC,Items[i].SubItems[4]) = 1) or
+               (s = sCodeClarification) or (s = sCodeFlagComment) then
+              begin
+                ShowMessage('Forward alert is not allowable' + CRLF+CRLF +
+                  Items[i].SubItems[4]);
+              end
+              else
+// NSR#20110719 ----------------------------------------------------------- end
+              begin
+                Alert := Items[i].SubItems[6] + '^' + Items[i].SubItems[0] + ': ' +
+                  Items[i].SubItems[4];
+                ForwardAlertTo(Alert);
+              end;
             finally
               Items[i].Selected := False;
             end;
@@ -1186,7 +1207,12 @@ end;
 procedure TfrmPtSel.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if (IsRPL = '1') then // Deal with restricted patient list users.
+  try
     KillRPLPtList(RPLJob); // Kills server global data each time.
+  except
+    on E: Exception do
+      ShowMessage('Closing Patient Selector Dialog:'+CRLF + E.Message);
+  end;
   // (Global created by MakeRPLPtList in rCore.)
 end;
 
@@ -1359,6 +1385,24 @@ begin
     end;
 end;
 
+procedure TfrmPtSel.lstvAlertsChange(Sender: TObject; Item: TListItem; Change: TItemChange);
+var
+  s: string;
+begin
+  inherited;
+  // looking for keyphrase in the message
+  if Change = ctState then
+  begin
+    //    cmdForward.Enabled := pos(ONC,Item.SubItems[4])<>1;
+    s := trim(Piece(Piece(Item.SubItems[iCodePosition], ';', 1), ',', 3)); // NSR#20110719
+    cmdForward.Enabled :=
+      (pos(ONC, Item.SubItems[4]) <> 1) and
+      (s <> sCodeClarification) and (s <> sCodeFlagComment);
+    mnuForward.Enabled := cmdForward.Enabled;
+    // NSR 20110719 - disabled for Codes 8, 6  see
+  end;
+end;
+
 procedure TfrmPtSel.lstvAlertsColumnClick(Sender: TObject; Column: TListColumn);
 const
   Mask = LVIS_FOCUSED or LVIS_SELECTED;
@@ -1443,43 +1487,91 @@ begin
   end;
 end;
 
-function TfrmPtSel.DupLastSSN(const DFN: string): Boolean;
+function TfrmPtSel.DupLastSSN(var DFN: Int64): Boolean;
+// Lifted from 32b
 var
   i: Integer;
-  frmPtDupSel: tForm;
+  SL: TStrings;
+const
+  fmtResultError = 'SubsetOfPatientsWithSimilarSSNs returns incorrect data.' +
+    CRLF + CRLF + 'Search for DFN %d returns' + CRLF + ' %s';
 begin
   Result := False;
-
-  // Check data on server for duplicates:
-  CallV('DG CHK BS5 XREF ARRAY', [DFN]);
-  if (RPCBrokerV.Results[0] <> '1') then // No duplicates found.
-    Exit;
-  Result := True;
-  PtStrs := TStringList.Create;
-  with RPCBrokerV do
-    if Results.Count > 0 then
-      begin
-        for i := 1 to Results.Count - 1 do
-          begin
-            if Piece(Results[i], U, 1) = '1' then
-              PtStrs.Add(Piece(Results[i], U, 2) + U + Piece(Results[i], U, 3) + U +
-                FormatFMDateTimeStr('mmm dd,yyyy', Piece(Results[i], U, 4)) + U +
-                Piece(Results[i], U, 5));
-          end;
-      end;
-
-  // Call form to get user's selection from expanded duplicate pt. list (resets DupDFN variable if applicable):
-  DupDFN := DFN;
-  frmPtDupSel := TfrmDupPts.Create(Application);
-  with frmPtDupSel do
+  SL := TStringList.Create;
+  try
+    SubsetOfPatientsWithSimilarSSNs(SL, DFN);
+    if SL.Count > 0 then
     begin
-      try
-        ShowModal;
-      finally
-        frmPtDupSel.Release;
+      if SL[0] = '1' then
+      begin
+        Result := True;
+        SL.Delete(0);
+        i := 0;
+        while i < SL.Count do
+          if Piece(SL[i], U, 1) = '1' then
+          begin
+            SL[i] := (Piece(SL[i], U, 2) + U + Piece(SL[i], U, 3) + U +
+              FormatFMDateTimeStr('mmm dd,yyyy', Piece(SL[i], U, 4)) + U +
+              Piece(SL[i], U, 5));
+            Inc(i)
+          end
+          else
+            SL.Delete(i);
+
+        case SL.Count of
+          0:
+            ;
+          1:
+            if Piece(SL[0], U, 1) <> IntToStr(DFN) then
+              MessageDlg(Format(fmtResultError, [DFN, SL[0]]), mtError,
+                [mbOk], 0);
+        else // Call form to get user's selection from expanded duplicate pt. list
+          DFN := getItemIDFromList(SL);
+        end;
       end;
     end;
+  finally
+    SL.Free;
+  end;
 end;
+
+//function TfrmPtSel.DupLastSSN(const DFN: string): Boolean;
+//var
+//  i: Integer;
+//  frmPtDupSel: tForm;
+//begin
+//  Result := False;
+//
+//  // Check data on server for duplicates:
+//  CallV('DG CHK BS5 XREF ARRAY', [DFN]);
+//  if (RPCBrokerV.Results[0] <> '1') then // No duplicates found.
+//    Exit;
+//  Result := True;
+//  PtStrs := TStringList.Create;
+//  with RPCBrokerV do
+//    if Results.Count > 0 then
+//      begin
+//        for i := 1 to Results.Count - 1 do
+//          begin
+//            if Piece(Results[i], U, 1) = '1' then
+//              PtStrs.Add(Piece(Results[i], U, 2) + U + Piece(Results[i], U, 3) + U +
+//                FormatFMDateTimeStr('mmm dd,yyyy', Piece(Results[i], U, 4)) + U +
+//                Piece(Results[i], U, 5));
+//          end;
+//      end;
+//
+//  // Call form to get user's selection from expanded duplicate pt. list (resets DupDFN variable if applicable):
+//  DupDFN := DFN;
+//  frmPtDupSel := TfrmDupPts.Create(Application);
+//  with frmPtDupSel do
+//    begin
+//      try
+//        ShowModal;
+//      finally
+//        frmPtDupSel.Release;
+//      end;
+//    end;
+//end;
 
 procedure TfrmPtSel.ShowFlagInfo;
 begin
@@ -1523,10 +1615,20 @@ begin
 end;
 
 procedure TfrmPtSel.ShowButts(ShowButts: Boolean);
+var
+  s: string; // NSR#2010719
 begin
   cmdProcess.Enabled := ShowButts;
   cmdRemove.Enabled := ShowButts;
-  cmdForward.Enabled := ShowButts;
+  s := '';
+  if ShowButts and (lstvAlerts.SelCount = 1) then
+    s := trim(Piece(Piece(lstvAlerts.Selected.SubItems[iCodePosition], ';', 1), ',', 3));
+  cmdForward.Enabled := ShowButts and // NSR 20110719 - Do not forward flagged alerts
+    (lstvAlerts.SelCount = 1) and
+    (pos(ONC, lstvAlerts.Selected.SubItems[4]) <> 1) and
+    (s <> sCodeClarification) and (s <> sCodeFlagComment) // NSR#2010719
+    ; // ONC: 'Order(s) needing Clarification'
+  mnuForward.Enabled := cmdForward.Enabled;
   cmdComments.Enabled := ShowButts and (lstvAlerts.SelCount = 1) and (lstvAlerts.Selected.SubItems[8] <> '');
   cmdDefer.Enabled := ShowButts and (lstvAlerts.SelCount = 1);
   ShowDisabledButtonTexts;

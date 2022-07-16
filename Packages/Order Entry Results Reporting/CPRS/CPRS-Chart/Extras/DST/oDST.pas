@@ -48,19 +48,103 @@ type
       : String; overload;
   end;
 
-  var
+  TDSTMgr = class(TObject)
+  private
+    { Private declarations }
+    fDstBtnVisible: boolean;
+    fDstProvider: TdstProvider;
+    fDstID: String;
+    fDstResult: String;
+    fDSTCase: String;
+    fDSTMode: String;
+    fDSTService: String;
+    fDSTUrgency: String;
+    fDSTCid: Double;
+    fDSTNltd: Double;
+    fDSTOutpatient: String;
+    fDSTAction: Integer;
+    fDSTCaption: String;
+    procedure setDSTMode(aMode: String);
+    procedure setDSTAction(anAction: Integer);
+  public
+    { Public declarations }
+    property DstProvider: TdstProvider read fDstProvider write fDstProvider;
+    property DSTId: String read fDstID write fDstID;
+    property DSTService: String read fDSTService write fDSTService;
+    property DSTUrgency: String read fDSTUrgency write fDSTUrgency;
+    property DSTCid: Double read fDSTCid write fDSTCid;
+    property DSTNltd: Double read fDSTNltd write fDSTNltd;
+    property DSTOutpatient: String read fDSTOutpatient write fDSTOutpatient;
+    property DSTCase: String read fDSTCase write fDSTCase;
+    property DSTMode: String read fDSTMode write setDSTMode;
+    property DSTAction: Integer read fDSTAction write setDSTAction;
+    property DSTResult: String read fDstResult write fDstResult;
+    property DSTBtnVisible: boolean read fDstBtnVisible write fDstBtnVisible;
+    property DSTCaption: String read fDSTCaption;
+
+    procedure doDst;
+    procedure doDSTConsultAct;
+    procedure doDSTConsult(aWorkflow: String = 'ORDER');
+
+    constructor Create;
+    destructor Destroy; override;
+  end;
+
+const
+  DST_DST = 'D';
+  DST_CTB = 'C';
+  DST_OTH = 'O';
+
+  DST_CASE_CONSULT_ACT = 'CONSULT_ACT';
+  DST_CASE_CONSULT_EDIT = 'CONSULT_EDIT';
+  DST_CASE_CONSULTS = 'CONSULTS';
+  DST_CASE_CONSULT_OD = 'CONSULT_OD';
+
+var
   DSTPro: TDstProvider;
 
 procedure initDst;
+function GetDSTMgr(aCase: string = ''): TDSTMgr;  // factory for singleton
+procedure FreeDSTMgr;
+
+function isDstEnabled: Boolean;
+function isCtbEnabled: Boolean;
 
 implementation
 
 uses
   System.Net.HttpClientComponent, System.Net.URLClient, System.Net.HttpClient,
   SysUtils, System.JSON, ORFn, uGN_RPCLog, uCore, uConsults, uORRESTClient,
-  uDSTConst, fDSTView, System.UITypes
+  uDSTConst, fDSTView, System.UITypes, fConsults
   , uUserInfo
   ;
+
+var
+  ADSTMgr: TDSTMgr;
+
+function GetDSTMgr(aCase: string=''): TDSTMgr;
+begin
+  if not assigned(ADSTMgr) then
+    ADSTMgr := TDSTMgr.Create;
+  if aCase <> '' then
+    ADSTMgr.dstCase := aCase;
+  result := ADSTMgr;
+end;
+
+procedure FreeDSTMgr;
+begin
+  FreeAndNil(ADSTMgr);
+end;
+
+function isDstEnabled: Boolean;
+begin
+  Result := SystemParameters.StringValue[DST_CTB_SWITCH] <> '0';
+end;
+
+function isCtbEnabled: Boolean;
+begin
+  Result := SystemParameters.StringValue[CTB_ENABLED] <> '0';
+end;
 
 procedure initDst;
 begin
@@ -108,7 +192,6 @@ begin
     PTData.AddPair(DST_CONSULT_PTFIRSTNAME, FName);
     PTData.AddPair(DST_CONSULT_PTLASTNAME, LName);
     PTData.AddPair(DST_CONSULT_PTMIDNAME, MName);
-    PTData.AddPair(DST_CONSULT_PTSSN, Patient.SSN);
     PTData.AddPair(DST_CONSULT_PTDOB, DOB);
     PTData.AddPair(DST_CONSULT_PTICN, Patient.FullICN);
     PTData.AddPair(DST_CONSULT_PTCLASS, outpatient);
@@ -138,7 +221,8 @@ begin
     else
       PTData.AddPair(DST_CONSULT_PROVIDERKEY, 'false');
 
-    Result := PTData.ToString;
+    //ToJSON always returns UTF8 expected by CTB 2.0
+    Result := PTData.ToJSON;
   finally
     PTData.Free;
   end;
@@ -160,6 +244,30 @@ begin
       on E: TORRESTException do
       begin
         addLogLine(E.Message, 'REST POST ERROR');
+        Result := 'Error' + CRLF + E.Message;
+      end;
+    end;
+  finally
+    RESTClient.Free;
+  end;
+end;
+
+function getNetReply(aServer, aPath, anId: String): String;
+var
+  RESTClient: TORRESTClient;
+begin
+  Result := '';
+  RESTClient := TORRESTClient.Create;
+  try
+    RESTClient.Server := aServer; //s/b passed based on prod or test
+    RESTClient.Path := aPath;   //s/b dst decision path
+    try
+      Result := RESTClient.Get(anID)
+     except
+      on E: TORRESTException do
+      begin
+        addLogLine(E.Message, 'REST GET ERROR');
+        Result := 'Error' + CRLF + E.Message;
       end;
     end;
   finally
@@ -168,6 +276,7 @@ begin
 end;
 
 function getNetJsonReply(aUrl: String): String;
+//this function is not used - candidate for cleanup
 var
   i: Integer;
   jHeader: TNameValuePair;
@@ -189,7 +298,7 @@ begin
     iResponse := nRequest.Get(aUrl, nil, [jHeader]);
     i := iResponse.StatusCode;
     if i <> 200 then
-      Result := 'error ' + IntToStr(i) + ' (' + iResponse.StatusText + ')'
+      Result := 'Error ' + IntToStr(i) + ' (' + iResponse.StatusText + ')'
     else
       Result := iResponse.ContentAsString();
 
@@ -326,15 +435,12 @@ begin
 
   try
     Result := getRestReply(sRequest, sServer, sPath);
-
-    if Result <> '' then
+    if (Pos('Error', Result) <> 1) and (Result <> '') then
     begin
       JSonValue := TJSONObject.ParseJSONValue(Result);
       Result := JSonValue.GetValue<string>('dst_id', '');
       JSonValue.Free;
     end
-    else
-      Result := '';
   finally
     addLogLine('Server: ' + sServer + #13#10 + 'Path: ' + sPath + #13#10 +
       'Request: ' + #13#10 + sRequest + #13#10 + 'Result:' + #13#10 + Result,
@@ -344,34 +450,44 @@ end;
 
 function TDstProvider.getDstReply(dstID: string; workflowID: string): String;
 var
-  sNode, sURL: String;
+  sNode, sURL, sApi: String;
   JSonValue: TJsonValue;
 begin
-  Result := '';
-  if Production then
-    sURL := DstParameters.FProdUrl + DstParameters.FDstConsDecApi + dstID
-  else
-    sURL := DstParameters.FTestUrl + DstParameters.FDstConsDecApi + dstID;
-  try
-    Result := getNetJsonReply(sURL);
-  finally
-    addLogLine('URL: ' + sURL + #13#10 + 'Result:' + #13#10 + Result,
-      '--GET DST REPLY--');
-  end;
-
-  if pos('error', Result) <> 1 then
+  result := '';
+  if assigned(ADSTMgr) then
   begin
-    if workflowID = 'ORDER' then
-      sNode := 'dst_status_message'
+    if Production then
+    begin
+      sURL := DstParameters.FProdUrl;
+      sApi := DstParameters.FDstConsDecApi;
+    end
     else
-      sNode := 'decision_info';
-    JSonValue := TJSONObject.ParseJSONValue(Result);
-    try
-      if Assigned(JSonValue) then
-        Result := JSonValue.GetValue<string>(sNode, '');
-    finally
-      JSonValue.Free;
+    begin
+      sURL := DstParameters.FTestUrl;
+      sApi := DstParameters.FDstConsDecApi;
     end;
+    try
+      result := getNetReply(sURL, sApi, dstID);
+    finally
+      addLogLine('URL: ' + sURL + #13#10 + 'API: ' + sApi + #13#10 + 'DST ID: '
+        + dstID + #13#10 + 'Result:' + #13#10 + result,
+        '--GET DST DECISION REPLY--');
+    end;
+
+    if pos('Error', result) <> 1 then
+    begin
+      if workflowID = 'ORDER' then
+        sNode := 'dst_status_message'
+      else
+        sNode := 'decision_info';
+      JSonValue := TJSONObject.ParseJSONValue(result);
+      try
+        if assigned(JSonValue) then
+          result := JSonValue.GetValue<string>(sNode, '');
+      finally
+        JSonValue.Free;
+      end;
+    end
   end;
 end;
 
@@ -387,10 +503,10 @@ begin
       sURL := DstParameters.FTestUrl + DstParameters.FUiPath +
         '?dstID=' + dstID;
 
-    Result := dstReviewResult(sURL);
+    Result := dstReviewResult(sURL, DSTMode);
   finally
     addLogLine('URL: ' + sURL + #13#10 + 'Result:' + #13#10 + IntToStr(Result),
-      'GET DST REPLY(2)');
+      'DST BROWSER CLOSE');
   end;
 end;
 
@@ -400,14 +516,152 @@ function TDstProvider.getDstReply(aService, aUrgency,
 var
   sID: String;
 begin
-//  sID := getDstUuid(aService, aUrgency, ConsultRec.ClinicallyIndicatedDate,
-//    ConsultRec.NoLaterThanDate, 'CPRS_SIGNED');
-
-//  if getDstReply(sID) = mrOK then
     Result := getDstReply(sID, aWorkflow)
-//  else
-//    Result := '';
 end;
+
+{ TDSTMgr }
+
+constructor TDSTMgr.Create;
+begin
+  // if not assigned(fDstProvider) then
+  // fDstProvider := TdstProvider.Create;
+  // fDstProvider.ReloadParameters;
+  InitDST; // one provider for all dialogs
+  fDstProvider := DSTPro;
+  SetDSTMode(DSTPro.DstParameters.fSwitch); // DST_DST;
+  //fDSTCase := aCase;   // Set in factory[
+end;
+
+destructor TDSTMgr.Destroy;
+begin
+  // if assigned(fDstProvider) then
+  // fDstProvider := nil; // single DstPro is used for all dialogs/windows
+end;
+
+procedure TDSTMgr.doDst;
+begin
+{  if not assigned(DstProvider) then
+    ShowMessage('DST Provider is not defined')
+  else if DSTCase = '' then
+    ShowMessage('DST execution case is not defined!')
+  else if DSTCase = DST_CASE_CONSULT_ACT then
+    doDSTConsultAct
+  else if DSTCase = DST_CASE_CONSULT_EDIT then
+    doDSTConsult('EDIT-RESUBMIT')
+  else if DSTCase = DST_CASE_CONSULT_OD then
+    doDSTConsult('ORDER');
+}
+  if (assigned(DstProvider)) and (DSTCase <> '') then
+  begin
+    if DSTCase = DST_CASE_CONSULT_ACT then
+      doDSTConsultAct
+    else if DSTCase = DST_CASE_CONSULT_EDIT then
+      doDSTConsult('EDIT-RESUBMIT')
+    else if DSTCase = DST_CASE_CONSULT_OD then
+      doDSTConsult('ORDER');
+  end
+  else
+    GetDstMgr.DSTResult := 'Error';
+end;
+
+procedure TDSTMgr.doDSTConsult(aWorkflow: String);
+begin
+  DSTId := DstProvider.getDstUuid(DSTId, DSTService, DSTUrgency, DSTCid,
+    DSTNltd, aWorkflow, DSTOutpatient);
+
+  if (Pos('Error',DSTId) <> 1) and (DSTId <> '') then
+  begin
+     DstProvider.getDSTReply(DSTId);
+     DstResult := DstProvider.getDstReply(DSTId, aWorkflow);
+  end
+  else if Pos('Error',DSTId) = 1 then
+       DstResult := DSTId;
+end;
+
+procedure TDSTMgr.doDSTConsultAct;
+
+  function getActionName: String;
+  begin
+    case fDSTAction of
+      CN_ACT_FORWARD:
+        Result := 'FORWARD';
+      CN_ACT_ADD_CMT:
+        Result := 'COMMENT';
+      CN_ACT_ADMIN_COMPLETE:
+        Result := 'ADMINISTRATIVE COMPLETE';
+      CN_ACT_SIGFIND:
+        Result := 'SIGNIFICANT FINDING';
+      CN_ACT_RECEIVE:
+        Result := 'RECEIVE';
+      CN_ACT_SCHEDULE:
+        Result := 'SCHEDULE';
+      CN_ACT_DENY:
+        Result := 'CANCEL-DENY';
+      CN_ACT_DISCONTINUE:
+        Result := 'DISCONTINUE';
+    else
+      Result := '';
+    end;
+  end;
+
+begin
+  DSTId := DstProvider.getDstUuid(DSTId, DSTService, DSTUrgency,
+    ConsultRec.ClinicallyIndicatedDate, ConsultRec.NoLaterThanDate,
+    getActionName, DSTOutpatient);
+
+  if (Pos('Error',DSTId) <> 1) and (DSTId <> '') then
+  begin
+     DstProvider.getDSTReply(DSTId);
+     DstResult := DstProvider.getDstReply(DSTId, getActionName());
+  end
+  else if Pos('Error',DSTId) = 1 then
+       DstResult := DSTId;
+end;
+
+
+procedure TDSTMgr.setDSTAction(anAction: Integer);
+begin
+  fDSTAction := anAction;
+  fDstBtnVisible := False;
+  // add comment always has a button unless Switch = 'O'
+  if anAction = CN_ACT_ADD_CMT then
+    fDstBtnVisible := DstProvider.DstParameters.fComment
+  else if DstProvider.DstParameters.fSwitch = 'C' then
+    case anAction of
+      CN_ACT_FORWARD:
+        fDstBtnVisible := DstProvider.DstParameters.fForward;
+      CN_ACT_ADMIN_COMPLETE:
+        fDstBtnVisible := DstProvider.DstParameters.fAdminComp;
+      CN_ACT_SIGFIND:
+        fDstBtnVisible := DstProvider.DstParameters.fSigFind;
+      CN_ACT_RECEIVE:
+        fDstBtnVisible := DstProvider.DstParameters.fReceive;
+      CN_ACT_SCHEDULE:
+        fDstBtnVisible := DstProvider.DstParameters.fSchedule;
+      CN_ACT_DENY:
+        fDstBtnVisible := DstProvider.DstParameters.fCancel;
+      CN_ACT_DISCONTINUE:
+        fDstBtnVisible := DstProvider.DstParameters.FDiscontinue;
+    end;
+  //btnLaunchToolbox.Enabled := fDstBtnVisible;   must be set in forms.
+end;
+
+procedure TDSTMgr.setDSTMode(aMode: String);
+begin
+  //fDSTCaption := 'Disabled';
+  DstProvider.DSTMode := aMode;
+  fDstBtnVisible := True;
+  if aMode = DST_DST then
+    fDSTCaption := 'Launch DST'
+  else if aMode = DST_CTB then
+    fDSTCaption := 'Open Consult Toolbox'
+  else if aMode = DST_OTH then
+    fDstBtnVisible := False
+  else if aMode = '' then
+    fDstBtnVisible := False;
+  // btnLaunchToolbox.Caption := s; must be set in forms.
+end;
+
 
 initialization
 

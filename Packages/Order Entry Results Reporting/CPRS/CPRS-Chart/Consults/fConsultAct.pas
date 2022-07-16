@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, System.Actions, Vcl.ActnList, ComCtrls,
-  ORFN, ORCtrls, ORDtTm, fBase508Form, VA508AccessibilityManager, mDSTMgr;
+  ORFN, ORCtrls, ORDtTm, fBase508Form, VA508AccessibilityManager, oDST;
 
 type
   TfrmConsultAction = class(TfrmBase508Form)
@@ -38,7 +38,7 @@ type
     pnlButtons: TPanel;
     pnlActionDate: TPanel;
     pnlActionBy: TPanel;
-    DstMgr: TfrDSTMgr;
+    btnLaunchToolbox: TButton;
     procedure cmdCancelClick(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
     procedure NewPersonNeedData(Sender: TObject; const StartFrom: string;
@@ -53,6 +53,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure DstMgrbtnLaunchToolboxClick(Sender: TObject); { **REV** }
     procedure ControlChange(Sender: TObject);
+    procedure btnLaunchToolboxClick(Sender: TObject);
   private
     FActionType: Integer;
     FChanged: boolean;
@@ -123,14 +124,27 @@ implementation
 {$R *.DFM}
 
 uses
-  VAUtils, fConsultAlertTo
+  VAUtils,
+  fConsultAlertTo,
+  uSimilarNames,
 {$IFDEF CPRS_TEST}
-    , uCore.Consults, rCore.Utils, rCore.User, uCore.User, rCore.DateTimeUtils,
-  rCore.Consults, uModel, rCore.Orders
+  uCore.Consults,
+  rCore.Utils,
+  rCore.User,
+  uCore.User,
+  rCore.DateTimeUtils,
+  rCore.Consults,
+  uModel,
+  rCore.Orders;
 {$ELSE}
-    , rCore, rConsults, uConsults, fConsults, rOrders, uCore
+  rCore,
+  rConsults,
+  uConsults,
+  fConsults,
+  rOrders,
+  uCore,
+  uDstConst;
 {$ENDIF}
-    ;
 
 var
   uChanging: boolean;
@@ -164,7 +178,6 @@ begin
       // FUserIsRequester := (User.DUZ = ConsultRec.SendingProvider);
       RecipientList.Recipients := '';
       RecipientList.Changed := False;
-      // WAT 31.306 - Set here for now, move to individual actions if necessary
 
       case FActionType of
         CN_ACT_FORWARD:
@@ -183,11 +196,11 @@ begin
       else
         SetupOther(ActionCode);
       end;
-      DSTMgr.DSTMode := DSTMgr.DstProvider.DstMode;
-      DSTMgr.DSTService := ConsService;
-      DSTMgr.DSTUrgency := ConsultUrgency;
-      DSTMgr.DSTAction := FActionType;
-      DSTMgr.setFontSize(Application.MainForm.Font.Size);
+      GetDSTMgr.DSTMode := GetDSTMgr.DstProvider.DstMode;
+      GetDSTMgr.DSTService := ConsService;
+      GetDSTMgr.DSTUrgency := ConsultUrgency;
+      GetDSTMgr.DSTAction := FActionType;
+      GetDSTMgr.DSTId := ConsultRec.DstID;
 
       ShowModal;
       Result := FChanged;
@@ -199,7 +212,9 @@ end;
 
 procedure TFrmConsultAction.SetDstButton(action: integer);
 begin
-  DstMgr.DstAction := action;
+  GetDstMgr.DstAction := action;
+  btnLaunchToolbox.Visible := GetDstMgr.DSTBtnVisible;
+  btnLaunchToolbox.Caption := GetDstMgr.DSTCaption;
 end;
 // =================== Setup form for different actions ===========================
 
@@ -283,6 +298,7 @@ begin
     attention := ExternalName(FAttentionOf, 200);
     cboAttentionOf.InitLongList(attention);
     cboAttentionOf.SelectByIEN(FAttentionOf);
+    TSimilarNames.RegORComboBox(cboAttentionOf);
     // end cq 15561
     with cboUrgency do
     begin
@@ -452,6 +468,8 @@ begin
 end;
 
 function TfrmConsultAction.ValidInput: boolean;
+var
+  aErrMsg: string;
 begin
   Result := False;
   if (cboPerson.ItemIEN = 0) and (FActionType <> CN_ACT_ADD_CMT) and
@@ -459,6 +477,24 @@ begin
   begin
     InfoBox(TX_PERSON_TEXT, TX_PERSON_CAP, MB_OK or MB_ICONWARNING);
     exit;
+  end else begin
+    if not CheckForSimilarName(cboPerson, aErrMsg, ltPerson, sPr) then
+    begin
+      if Trim(aErrMsg) = '' then
+        InfoBox(TX_PERSON_TEXT, TX_PERSON_CAP, MB_OK or MB_ICONWARNING)
+      else
+        InfoBox(aErrMsg, 'Similiar Name Selection', MB_OK or MB_ICONWARNING);
+      Exit;
+    end;
+  end;
+
+  if (cboAttentionOf.ItemIEN <> 0) then
+  begin
+    if not CheckForSimilarName(cboAttentionOf, aErrMsg, ltPerson, sPr) then
+    begin
+      ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
+      Exit;
+    end;
   end;
 
   if ((FActionType = CN_ACT_SIGFIND) or (FActionType = CN_ACT_ADMIN_COMPLETE))
@@ -529,15 +565,18 @@ end;
 procedure TfrmConsultAction.cmdOKClick(Sender: TObject);
 begin
   FChanged := False;
+
   if ValidInput then
+  begin
     FChanged := Submit;
-  Close;
+    Close;
+  end;
 end;
 
 procedure TfrmConsultAction.ControlChange(Sender: TObject);
 begin
-  if DstMgr.DSTMode <> 'O' then
-    DstMgr.btnLaunchToolbox.Enabled := (memComments.GetTextLen = 0) or
+  if GetDstMgr.DSTMode <> DST_OTH then
+    btnLaunchToolbox.Enabled := (memComments.GetTextLen = 0) or
       (not ContainsVisibleChar(memComments.Text));
 end;
 
@@ -545,12 +584,12 @@ procedure TfrmConsultAction.DstMgrbtnLaunchToolboxClick(Sender: TObject);
 {User either enters manual comments during the action, or uses the DST/CTB
 tool; not both.}
 begin
-  if DstMgr.DSTMode <> 'O' then
+  if GetDstMgr.DSTMode <> DST_OTH then
   begin
-    DstMgr.doDst; // DST_CASE_CONSULT_ACT
-    if DstMgr.DSTResult <> '' then
+    GetDstMgr.doDst; // DST_CASE_CONSULT_ACT
+    if GetDstMgr.DSTResult <> '' then
     begin
-      memComments.Lines.Add(DstMgr.DSTResult);
+      memComments.Lines.Add(GetDstMgr.DSTResult);
       memComments.ReadOnly := True;
     end
   end;
@@ -560,15 +599,15 @@ procedure TfrmConsultAction.FormCreate(Sender: TObject);
 begin
   inherited;
 {$IFDEF DEBUG}
-  DstMgr.Color := clCream;
+  pnlButtons.Color := clCream;
 {$ENDIF}
-  DstMgr.DSTInit(DST_CASE_CONSULT_ACT); // init DST manager with the case name
+  GetDstMgr(DST_CASE_CONSULT_ACT); // init DST manager with the case name
 end;
 
 procedure TfrmConsultAction.FormDestroy(Sender: TObject);
 begin
   inherited;
-  DSTMgr.DSTFree;
+  FreeDSTMgr;
 end;
 
 function TfrmConsultAction.Submit: boolean;
@@ -742,6 +781,35 @@ begin
   ActiveControl := cboService; { RV }
 end;
 
+procedure TfrmConsultAction.btnLaunchToolboxClick(Sender: TObject);
+var
+  HelpText: String;
+begin
+  inherited;
+  if GetDSTMgr.DSTMode <> DST_OTH then
+  begin
+    GetDSTMgr.doDst; // DST_CASE_CONSULT_ACT
+    if (GetDSTMgr.DSTResult <> '') and (Pos('Error', GetDSTMgr.DSTResult) <> 1)
+    then
+    begin
+      memComments.Lines.Add(GetDSTMgr.DSTResult);
+      memComments.ReadOnly := True;
+    end
+    else if Pos('Error', GetDSTMgr.DSTResult) = 1 then
+    begin
+      HelpText := GetUserParam('OR CPRS HELP DESK TEXT');
+      if HelpText <> '' then
+        InfoBox(DST_UNAVAIL + CRLF + DST_TRY_LATER + CRLF + CRLF + HelpText +
+          CRLF + GetDSTMgr.DSTResult, 'Communication Error',
+          MB_OK or MB_ICONERROR)
+      else
+        InfoBox(DST_UNAVAIL + CRLF + DST_TRY_LATER + CRLF + CRLF + DST_PERSIST +
+          CRLF + GetDSTMgr.DSTResult, 'Communication Error',
+          MB_OK or MB_ICONERROR);
+    end;
+  end;
+end;
+
 procedure TfrmConsultAction.cboServiceSelect(Sender: TObject);
 var
   i: Integer;
@@ -884,6 +952,7 @@ begin
     cboPerson.OnNeedData := NewPersonNeedData; //
     cboPerson.InitLongList(User.Name);
     cboPerson.SelectByIEN(User.DUZ);
+    TSimilarNames.RegORComboBox(cboPerson);
   end;
 end;
 

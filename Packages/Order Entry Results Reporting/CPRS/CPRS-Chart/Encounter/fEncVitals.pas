@@ -573,52 +573,31 @@ end;
 
 procedure TfrmEncVitals.btnEnterVitalsClick(Sender: TObject);
 var
-  VLPtVitals : TGMV_VitalsEnterDLG;
-  //GMV_FName : String;
-  GMV_Fname: AnsiString;
+  Info: String;
 begin
   inherited;
-  if VitalsDLLHandle = 0 then Exit;//The DLL was initialized on Create, but just in case....
-  GMV_FName := 'GMV_VitalsEnterDLG';
-  @VLPtVitals := GetProcAddress(VitalsDLLHandle,PAnsiChar(GMV_FName));
-  if assigned(VLPtVitals) then
-  begin
-    VLPtVitals(
-      RPCBrokerV,
-      Patient.DFN,
-      IntToStr(uEncPCEData.Location),
-      GMV_DEFAULT_TEMPLATE,
-      GMV_APP_SIGNATURE,
-      FMDateTimeToDateTime(uEncPCEData.DateTime),
-      Patient.Name,
-      frmFrame.lblPtSSN.Caption + '    ' + frmFrame.lblPtAge.Caption
-    );
-  end
-  else
-    MessageDLG('Unable to find function "'+string(GMV_FName)+'".',mtError,[mbok],0);
-  @VLPtVitals := nil;
-  LoadVitalsList;
+
+  Info := frmFrame.lblPtSSN.Caption + '    ' + frmFrame.lblPtAge.Caption;
+
+  if EnterPatientVitals(RPCBrokerV, Patient, uEncPCEData, Info) then
+    LoadVitalsList;
 end;
 
 procedure TfrmEncVitals.LoadVitalsList;
 var
   VitalsList : TStringList;
-  VLPtVitals : TGMV_LatestVitalsList;
-  //GMV_FName : String;
-  GMV_FName: AnsiString;
 begin
-  if VitalsDLLHandle = 0 then Exit;//The DLL was initialized on Create, but just in case....
-  GMV_FName := 'GMV_LatestVitalsList';
-  @VLPtVitals := GetProcAddress(VitalsDLLHandle,PAnsiChar(GMV_FName));
-  if assigned(VLPtVitals) then
-  begin
-    VitalsList := VLPtVitals(RPCBrokerV,Patient.DFN,U,false);
-    if assigned(VitalsList) then
-      LoadVitalView(VitalsList);
-  end
-  else
-    MessageDLG('Can''t find function "'+string(GMV_FName)+'".',mtError,[mbok],0);
-  @VLPtVitals := nil;
+  VitalsList := TStringList.Create;
+  try
+    if LatestVitalsList(RPCBrokerV, Patient, U, false, VitalsList) then
+    begin
+      if VitalsList.Count > 0 then
+        LoadVitalView(VitalsList);
+    end;
+  finally
+    VitalsList.Free;
+  end;
+
 end;
 //End Vitals Lite
 

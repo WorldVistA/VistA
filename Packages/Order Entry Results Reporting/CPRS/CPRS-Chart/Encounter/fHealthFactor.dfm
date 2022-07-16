@@ -2,47 +2,54 @@ inherited frmHealthFactors: TfrmHealthFactors
   Left = 374
   Top = 205
   Caption = 'Health Factor page'
+  ClientWidth = 657
+  ExplicitWidth = 673
   PixelsPerInch = 120
-  TextHeight = 16
-  object lblHealthLevel: TLabel [0]
-    Left = 613
-    Top = 330
-    Width = 88
-    Height = 16
+  TextHeight = 13
+  inherited bvlMain: TBevel [0]
+    Width = 647
+    Height = 133
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    ExplicitWidth = 647
+    ExplicitHeight = 133
+  end
+  object lblHealthLevel: TLabel [1]
+    Left = 491
+    Top = 266
+    Width = 69
+    Height = 13
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     Caption = 'Level/Severity'
   end
-  inherited lblSection: TLabel
-    Width = 128
+  inherited lblSection: TLabel [2]
+    Width = 103
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
     Caption = 'Health Factor Section'
-    ExplicitWidth = 128
+    ExplicitWidth = 103
   end
-  inherited lblList: TLabel
+  inherited lblList: TLabel [3]
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
   end
-  inherited lblComment: TLabel
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-  end
-  inherited bvlMain: TBevel
+  inherited lblComment: TLabel [4]
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
   end
   inherited btnOK: TBitBtn
+    Left = 497
     Margins.Left = 8
     Margins.Top = 8
     Margins.Right = 8
@@ -50,6 +57,7 @@ inherited frmHealthFactors: TfrmHealthFactors
     TabOrder = 6
   end
   inherited btnCancel: TBitBtn
+    Left = 577
     Margins.Left = 8
     Margins.Top = 8
     Margins.Right = 8
@@ -91,10 +99,10 @@ inherited frmHealthFactors: TfrmHealthFactors
   end
   object cboHealthLevel: TORComboBox [9]
     Tag = 50
-    Left = 613
-    Top = 350
+    Left = 491
+    Top = 286
     Width = 151
-    Height = 24
+    Height = 21
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -105,7 +113,7 @@ inherited frmHealthFactors: TfrmHealthFactors
     Color = clWindow
     DropDownCount = 8
     Enabled = False
-    ItemHeight = 16
+    ItemHeight = 13
     ItemTipColor = clWindow
     ItemTipEnable = True
     ListItemsOnly = False
@@ -136,6 +144,7 @@ inherited frmHealthFactors: TfrmHealthFactors
     TabStop = True
   end
   inherited pnlMain: TPanel
+    Width = 645
     Margins.Left = 5
     Margins.Top = 5
     Margins.Right = 5
@@ -149,12 +158,11 @@ inherited frmHealthFactors: TfrmHealthFactors
     end
     inherited lbxSection: TORListBox
       Tag = 70
+      Width = 438
       Margins.Left = 5
       Margins.Top = 5
       Margins.Right = 5
       Margins.Bottom = 5
-      ExplicitLeft = 265
-      ExplicitTop = -2
     end
     inherited pnlLeft: TPanel
       Margins.Left = 5

@@ -87,7 +87,8 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, fHSplit, StdCtrls,
   ExtCtrls, Menus, ORCtrls, ComCtrls, ORFn, rOrders, fODBase, uConst, uCore, uOrders,UBACore,
-  UBAGlobals, VA508AccessibilityManager, fBase508Form, fOrdersPickEvent;
+  UBAGlobals, VA508AccessibilityManager, fBase508Form, fOrdersPickEvent,
+  uOrderFlag;
 
 type
   TfrmOrders = class(TfrmHSplit)
@@ -181,6 +182,23 @@ type
     mnuOptimizeFields: TMenuItem;
     Z7: TMenuItem;
     mnuActOneStep: TMenuItem;
+    mnuViewUAP: TMenuItem;
+    mnuViewDM: TMenuItem;
+    PopUAPOrder: TPopupMenu;
+    MnuDetailsUAP: TMenuItem;
+    MnuDashUAP: TMenuItem;
+    MnuContinueUAP: TMenuItem;
+    MnuChangeUAP: TMenuItem;
+    MnuRenewUAP: TMenuItem;
+    MnuDiscontinueUAP: TMenuItem;
+    MnuDash2UAP: TMenuItem;
+    MnuSignUAP: TMenuItem;
+    N2: TMenuItem;
+    F1: TMenuItem;
+    F2: TMenuItem;
+    U1: TMenuItem;
+    AllowMutlipleassignment1: TMenuItem;
+    mnuActFlagComment: TMenuItem;
     procedure mnuChartTabClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -203,6 +221,7 @@ type
     procedure mnuActDCClick(Sender: TObject);
     procedure mnuActAlertClick(Sender: TObject);
     procedure mnuActFlagClick(Sender: TObject);
+    procedure mnuActFlagCommentClick(Sender: TObject);
     procedure mnuActUnflagClick(Sender: TObject);
     procedure mnuActSignClick(Sender: TObject);
     procedure mnuActReleaseClick(Sender: TObject);
@@ -247,6 +266,17 @@ type
     procedure sptHorzMoved(Sender: TObject);
     procedure sptVertMoved(Sender: TObject);
     procedure mnuActOneStepClick(Sender: TObject);
+    function GetIndexOfOID(AnOrderListBox: TCaptionListBox;
+      AnOrderID: string): Integer;
+    procedure mnuViewUAPClick(Sender: TObject);
+    procedure mnuViewDMClick(Sender: TObject);
+    procedure MnuContinueUAPClick(Sender: TObject);
+    procedure MnuDiscontinueUAPClick(Sender: TObject);
+    procedure MnuChangeUAPClick(Sender: TObject);
+    procedure PopUAPOrderPopup(Sender: TObject);
+    procedure MnuRenewUAPClick(Sender: TObject);
+    procedure SetOrderRevwCol(AnOrderList: TList);
+    procedure AllowMutlipleassignment1Click(Sender: TObject);
   private
     { Private declarations }
     OrderListClickProcessing : Boolean;
@@ -270,6 +300,8 @@ type
     FDontCheck: boolean;
     FParentComplexOrderID: string;
     FHighContrast2Mode: boolean;
+    UAPContinue: Boolean; // rtw
+    FRenewcancel2: Boolean; // rtw
     function CanChangeOrderView: Boolean;
     function GetEvtIFN(AnIndex: integer): string;
     function DisplayDefaultDlgList(ADest: TORListBox; ADlgList: TStringList): boolean;
@@ -306,6 +338,9 @@ type
     procedure UMEventOccur(var Message: TMessage); message UM_EVENTOCCUR;
     function CheckOrderStatus: boolean;
     procedure RightClickMessageHandler(var Msg: TMessage; var Handled: Boolean);
+    // function SelCount: integer;
+    procedure UMDeselectOrder(var Message: TMessage); message UM_ORDDESELECT;
+    procedure FlagAction(AnAction: TActionMode);
   public
     procedure setSectionWidths; //CQ6170
     function getTotalSectionsWidth : integer; //CQ6170
@@ -339,10 +374,13 @@ type
     property EvtColWidth: integer       read FEvtColWidth        write FEvtColWidth;
     property DontCheck: boolean         read FDontCheck          write FDontCheck;
     property ParentComplexOrderID: string       read FParentComplexOrderID        write FParentComplexOrderID;
+    property Renewcancel2: Boolean read FRenewcancel2 write FRenewcancel2;
+    // rtw
   end;
 
 type
-  arOrigSecWidths = array[0..9] of integer; //CQ6170
+
+  arOrigSecWidths = array[0..10]of integer; //CQ6170
 
 var
   frmOrders: TfrmOrders;
@@ -351,8 +389,10 @@ var
 
 implementation
 
-uses fFrame, fEncnt, fOrderVw, fRptBox, fLkUpLocation, fOrdersDC, fOrdersCV, fOrdersHold, fOrdersUnhold,
-     fOrdersAlert, fOrderFlag, fOrderUnflag, fOrdersSign, fOrdersRelease, fOrdersOnChart, fOrdersEvntRelease,
+uses ORNet, fFrame, fEncnt, fOrderVw, fRptBox, fLkUpLocation, fOrdersDC, fOrdersCV, fOrdersHold, fOrdersUnhold,
+     fOrdersAlert, fOrderFlagEditor, fOrderListManager,
+     // fOrderFlag, fOrderUnflag,
+     fOrdersSign, fOrdersRelease, fOrdersOnChart, fOrdersEvntRelease,
      fOrdersComplete, fOrdersVerify, fOrderComment, fOrderSaveQuick, fOrdersRenew,fODReleaseEvent,
      fOMNavA, rCore, fOCSession, fOrdersPrint, fOrdersTS, fEffectDate, fODActive, fODChild,
      fOrdersCopy, fOMVerify, fODAuto, rODBase, uODBase, rMeds,fODValidateAction, fMeds, uInit, fBALocalDiagnoses,
@@ -399,6 +439,8 @@ const
   TC_NO_FLAG    = 'Unable to Flag Order';
   TX_NO_UNFLAG  = CRLF + CRLF + '- cannot be unflagged.' + CRLF + CRLF + 'Reason: ';
   TC_NO_UNFLAG  = 'Unable to Unflag Order';
+  TX_NO_FLAGCOMMENT = CRLF + CRLF + '- flag cannot be commented.' + CRLF + CRLF +
+    'Reason: ';
   TX_NO_SIGN    = CRLF + CRLF + '- cannot be signed.' + CRLF + CRLF + 'Reason: ';
   TC_NO_SIGN    = 'Unable to Sign Order';
   TX_NO_REL     = CRLF + 'Cannot be released to the service(s).' + CRLF + CRLF + 'Reason: ';
@@ -466,6 +508,7 @@ const
 var
   uOrderList: TList;
   uEvtDCList, uEvtRLList: TList;
+//  ColIdx: Integer; // RDD: removed to clean up a hint (not used)
 
 { TPage common methods --------------------------------------------------------------------- }
 
@@ -480,6 +523,12 @@ begin
            end;
     '0': Result := CloseOrdering;  // call in uOrders, should move to fFrame
   end;
+end;
+
+procedure TfrmOrders.AllowMutlipleassignment1Click(Sender: TObject);
+begin
+  inherited;
+  AllowMutlipleassignment1.Checked := not AllowMutlipleassignment1.Checked;
 end;
 
 procedure TfrmOrders.ClearPtData;
@@ -699,6 +748,8 @@ end;
 { Form events ------------------------------------------------------------------------------ }
 
 procedure TfrmOrders.FormCreate(Sender: TObject);
+var
+  ORUAPOFF: Integer;
 begin
   inherited;
   OrderListClickProcessing := false;
@@ -723,9 +774,16 @@ begin
   FEvtColWidth := 0;
   FDontCheck := False;
   FParentComplexOrderID := '';
-  // 508 black color scheme that causes problems 
+  mnuViewUAP.Visible := False; // rtw
+  mnuViewDM.Visible := False; // rtw
+  UAPContinue := False; // rtw
+  // 508 black color scheme that causes problems
   FHighContrast2Mode := BlackColorScheme and (ColorToRGB(clInfoBk) <> ColorToRGB(clBlack));
   AddMessageHandler(lstOrders, RightClickMessageHandler);
+  //-- Add UAP and Discharge Meds to menu.
+  Callvista('ORTO UAPOFF', [], ORUAPOFF);
+  mnuViewUAP.Visible := ORUAPOFF = 1;
+  mnuViewDM.Visible := ORUAPOFF = 1;
 end;
 
 procedure TfrmOrders.FormDestroy(Sender: TObject);
@@ -754,6 +812,39 @@ begin
 end;
 
 { View menu events ------------------------------------------------------------------------- }
+
+procedure TfrmOrders.PopUAPOrderPopup(Sender: TObject);  //modified for portland rtwstart
+ begin
+  inherited;
+  if User.NoOrdering then
+  begin
+    MnuContinueUAP.Enabled := False;
+    MnuChangeUAP.Enabled := False;
+    MnuRenewUAP.Enabled := False;
+    MnuDiscontinueUAP.Enabled := False;
+    MnuSignUAP.Enabled := False;
+    exit;
+  end;
+  if (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).DGroupName = 'Inpt. Meds') then
+  begin
+    MnuContinueUAP.Enabled := True;
+    MnuChangeUAP.Enabled := True;
+    MnuRenewUAP.Enabled := False;
+  end
+  else if (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).DGroupName = 'Infusion') then
+  begin
+    MnuContinueUAP.Enabled := False;
+    MnuChangeUAP.Enabled := False;
+    MnuRenewUAP.Enabled := False;
+  end
+  else
+  begin
+    // else make sure it is available
+    MnuRenewUAP.Enabled := True;
+    MnuContinueUAP.Enabled := True;
+    MnuChangeUAP.Enabled := True;
+  end;
+end;  //rtw stop
 
 procedure TfrmOrders.PositionTopOrder(DGroup: Integer);
 const
@@ -820,6 +911,7 @@ end;
 procedure TfrmOrders.RefreshOrderList(FromServer: Boolean; APtEvtID: string);
 var
   i: Integer;
+  DGroupName: string;
 begin
   with FCurrentView do
   begin
@@ -863,8 +955,15 @@ begin
       begin
         SortOrders(uOrderList,False,True);
         FRightAfterWriteOrderBox := False;
-      end else
-        SortOrders(uOrderList, ByService, InvChrono);
+      end;
+      // Changes for VISTAOR-11348/23333 ignored, as current file version represents a later moment in time
+      Callvista('ORTO DGROUP', [DGroup], DGroupName);  //rtw
+      if ((DGroupName = 'PHARMACY UAP') or (DGroupName = 'DISCHARGE MEDS')) then
+      begin
+        SetOrderRevwCol(uOrderList) ;
+      end
+      else
+          SortOrders(uOrderList, ByService, InvChrono);
       AddToListBox(uOrderList);
     end;
     if FFromDCRelease then
@@ -879,7 +978,7 @@ begin
       begin
         SortOrders(uEvtDCList,True,True);
         for i := 0 to uEvtDCList.Count - 1 do
-          uOrderList.Add(TOrder(uEvtDCList[i]));   
+          uOrderList.Add(TOrder(uEvtDCList[i]));
       end;
       AddToListBox(uOrderList);
     end;
@@ -929,6 +1028,22 @@ begin
   end;
 end;
 
+procedure TfrmOrders.SetOrderRevwCol(AnOrderList: TList);
+var
+  idx: Integer;
+  AnOrder: TOrder;
+  ORTemp: String;
+begin
+  with AnOrderList do
+    for idx := 0 to Count - 1 do
+    begin
+      AnOrder := TOrder(Items[idx]);
+      Callvista('ORTO GETRVW', [AnOrder.ID], ORTemp);
+      AnOrder.ORUAPreviewresult := ORTemp;
+    end;
+end;
+
+
 procedure TfrmOrders.SetOrderView(AFilter, ADGroup: Integer; const AViewName: string;
   NotifSort: Boolean; aDaysOverride: integer = 0);
 begin
@@ -936,6 +1051,18 @@ begin
   SetCannedView(AFilter, ADGroup, AViewName, NotifSort, aDaysOverride);
   RefreshOrderList(FROM_SERVER);
 end;
+
+// UAP mode us not multiselect - when not multiselect selcount is -1
+// RDD: Removed as a result of a hint on compiling, and absence in baseline 320
+//  function TfrmOrders.SelCount: integer;
+//  begin
+//    if lstOrders.MultiSelect then
+//      Result := lstOrders.SelCount
+//    else if lstOrders.ItemIndex < 0 then
+//      Result := 0
+//    else
+//      Result := 1;
+//  end;
 
 procedure TfrmOrders.SetCannedView(AFilter, ADGroup: Integer; const AViewName: string;
   NotifSort: Boolean; aDaysOverride: integer = 0);
@@ -995,12 +1122,29 @@ begin
     EventDelay.EventType := 'C';
     EventDelay.Specialty := 0;
     EventDelay.Effective := 0;
+    if AViewName = 'Unified Action Profile' Then
+    begin
+      lstOrders.PopupMenu := PopUAPOrder;
+      lstOrders.MultiSelect := False;
+      frmOrders.mnuAct.Enabled := False;
+      Callvista('ORTO SET UAP FLAG', ['1']);
+      UAPViewCalling := True;
+    end
+    else
+    begin
+      lstOrders.PopupMenu := popOrder;
+      lstOrders.MultiSelect := True;
+      frmOrders.mnuAct.Enabled := True;
+      Callvista('ORTO SET UAP FLAG', ['0']);
+      UAPViewCalling := False;
+    end;
   end;
 end;
 
 procedure TfrmOrders.mnuViewActiveClick(Sender: TObject);
 begin
   inherited;
+  hdrOrders.Sections[10].Width := 0; // UAP
   OrderViewReset;
   SetOrderView(STS_ACTIVE, DGroupAll, 'Active Orders (includes Pending & Recent Activity) - ALL SERVICES', False);
 end;
@@ -1008,6 +1152,7 @@ end;
 procedure TfrmOrders.mnuViewCurrentClick(Sender: TObject);
 begin
   inherited;
+  hdrOrders.Sections[10].Width := 0; // UAP
   OrderViewReset;
   SetOrderView(STS_CURRENT, DGroupAll, 'Current Orders (Active & Pending Status Only) - ALL SERVICES', False);
 end;
@@ -1015,6 +1160,7 @@ end;
 procedure TfrmOrders.mnuViewExpiringClick(Sender: TObject);
 begin
   inherited;
+  hdrOrders.Sections[10].Width := 0; // UAP
   OrderViewReset;
   SetOrderView(STS_EXPIRING, DGroupAll, 'Expiring Orders - ALL SERVICES', False);
 end;
@@ -1022,6 +1168,7 @@ end;
 procedure TfrmOrders.mnuViewExpiredClick(Sender: TObject);
 begin
   inherited;
+  hdrOrders.Sections[10].Width := 0; // UAP
   OrderViewReset;
   SetOrderView(STS_EXPIRED, DGroupAll, 'Recently Expired Orders - ALL SERVICES', False);
 end;
@@ -1098,6 +1245,9 @@ var
   eventIndex: integer;
 begin
   inherited;
+  // Changes for VISTAOR-11348/23333 ignored, as current file version represents a later moment in time
+  hdrOrders.Sections[10].Text := ''; // rtw
+  hdrOrders.Sections[10].Width := 0;
   if not CanChangeOrderView then Exit;
   OrderViewReset;
   if HighlightFromMedsTab > 0 then
@@ -1112,6 +1262,11 @@ begin
      pickEvent(lstSheets.Items, eventIndex);
      lstSheets.ItemIndex := eventIndex;
   end;
+  lstOrders.PopupMenu := popOrder;
+  lstOrders.MultiSelect := True;
+  frmOrders.mnuAct.Enabled := True;
+  Callvista('ORTO SET UAP FLAG', ['0']);
+  UAPViewCalling := False;
   if lstSheets.ItemIndex > 0 then
     lstSheetsClick(Application)
   else
@@ -1120,9 +1275,25 @@ begin
     HighlightFromMedsTab := 0;
 end;
 
+procedure TfrmOrders.mnuViewDMClick(Sender: TObject);
+// Changes for VISTAOR-11348/23333 ignored, as current file version represents a later moment in time
+begin
+  inherited;
+  hdrOrders.Sections[10].Text := ''; // rtw
+  hdrOrders.Sections[10].Width := 0;
+//  SetOrderView(DGroupIEN('DISCHARGE MEDS'), DGroupIEN('DISCHARGE MEDS'),
+  SetOrderView(STS_CURRENT, DGroupIEN('DISCHARGE MEDS'),
+    'Discharge Meds Review - Active, Pending, Expired, & D/C''d <90 days',
+    False);
+end;
+
 procedure TfrmOrders.pickEvent(itemList: TStrings; var aReturn: integer);
 begin
+{$IFDEF DEBUG_AA}
+  aReturn := 0;
+{$ELSE}
   aReturn := OrdersPickED(itemList);
+{$ENDIF}
 end;
 
 procedure TfrmOrders.mnuViewDfltSaveClick(Sender: TObject);
@@ -1459,7 +1630,7 @@ begin
     FirstColumnDisplayed := 0
   else
     FirstColumnDisplayed := 1;
-  for i:= FirstColumnDisplayed to 9 do begin
+  for i:= FirstColumnDisplayed to 10 do begin
     x := GetOrderText(AnOrder, index, i);
     if x <> '' then
       result := result + hdrOrders.Sections[i].Text + ': ' + x + CRLF;
@@ -1521,9 +1692,6 @@ begin
 end;
 
 function TfrmOrders.GetOrderText(AnOrder: TOrder; Index: integer; Column: integer): string;
-var
-  AReason:  TStringlist;
-  i: integer;
 begin
   if AnOrder <> nil then with AnOrder do
   begin
@@ -1537,27 +1705,24 @@ begin
       begin
         result := DGroupName;
         if (Index > 0) and (result = TOrder(lstOrders.Items.Objects[Index - 1]).DGroupName) then result := '';
+        if lstSheets.Items[0] = 'C;0^Unified Action Profile' then Result := DGroupName;
       end;
       2:
       begin
         result := Text;
-        if Flagged then
+
+        if AnOrder.Flagged then
         begin
-          if Notifications.Active then
+          if Notifications.Active and (not AnOrder.IsFlagTextLoaded) then
+            LoadFlagReasons(uOrderList);
+          if Trim(AnOrder.FlagText) <> '' then
           begin
-            AReason := TStringList.Create;
-            try
-              result := result + crlf;
-              LoadFlagReason(AReason, ID);
-              for i := 0 to AReason.Count - 1 do
-                result :=  result + AReason[i] + CRLF;
-            finally
-              AReason.Free;
-            end;
-          end
-          else
-            result := result + '  *Flagged*';
+            Result := Format('%s'#13#10'%s', [Result, AnOrder.FlagText]);
+          end else begin
+            Result := Result + '  *Flagged*';
+          end;
         end;
+
       end;
       3: result := GetStartStopText( StartTime, StopTime);
       4:
@@ -1576,6 +1741,7 @@ begin
         //result := MixedCase(Anorder.OrderLocName);
         //if (Index > 0) and (result = TOrder(lstOrders.Items.Objects[Index - 1]).OrderLocName) then result := '';
       //end;
+      10: result := Anorder.ORUAPreviewresult;
     end;
   end;
 end;
@@ -1589,6 +1755,7 @@ var
   ARect: TRect;
   AnOrder: TOrder;
   SaveColor: TColor;
+  ColCount: Integer;
 begin
   inherited;
   with lstOrders do
@@ -1605,7 +1772,13 @@ begin
     Canvas.LineTo(ARect.Right, ARect.Bottom - 1);
     RightSide := -2;
 
-    for i := 0 to 9 do
+    // Changes for VISTAOR-11348/23333 ignored, as current file version represents a later moment in time
+    if UAPViewCalling then
+      ColCount := 10
+    else
+      ColCount := 9;
+
+    for i := 0 to ColCount do
     begin
       RightSide := RightSide + hdrOrders.Sections[i].Width;
       Canvas.MoveTo(RightSide, ARect.Bottom - 1);
@@ -1619,14 +1792,18 @@ begin
         FirstColumnDisplayed := 0
       else
         FirstColumnDisplayed := 1;
-      if AnOrder <> nil then with AnOrder do for i := FirstColumnDisplayed to 9 do
+      if AnOrder <> nil then with AnOrder do for i := FirstColumnDisplayed to ColCount do
       begin
         if i > FirstColumnDisplayed then
           ARect.Left := ARect.Right + 2
         else
           ARect.Left := 2;
         ARect.Right := ARect.Left + hdrOrders.Sections[i].Width - 6;
-        x := GetOrderText(AnOrder, Index, i);
+
+        X := GetOrderText(AnOrder, Index, i);
+        if X = 'Non-VA Meds (Documentation)' then
+          X := 'Non-VA Meds ' + #13#10 + '(Documentation)';
+
         SaveColor := Canvas.Brush.Color;
         if i = FirstColumnDisplayed then
         begin
@@ -1801,6 +1978,13 @@ begin
     with lstOrders do for i := 0 to Items.Count - 1 do if Selected[i] then
     begin
       AnOrder := TOrder(Items.Objects[i]);
+
+      if (AnAction = 'RN') and (AnOrder.DGroupName = 'Non-VA Meds (Documentation)') then  // NJC PSPO 934 1026/2016
+      begin                                                                               // NJC PSPO 934 1026/2016
+        Selected[i] := false;                                                             // NJC PSPO 934 1026/2016
+        MessageDlg('Unable to renew documented NON-VA medication', mtWarning, [mbOK], 0); // NJC PSPO 934 1026/2016
+        Continue;                                                                         // NJC PSPO 934 1026/2016
+      end;
 
       if (AnAction = 'RN') and (PassDrugTest(StrtoINT(Piece(AnOrder.ID, ';',1)), 'E', True, True)=True) then
         begin
@@ -2193,50 +2377,223 @@ begin
   end;
 end;
 
-procedure TfrmOrders.mnuActFlagClick(Sender: TObject);
+
+// 20110719 -------------------------------------------------------------- begin
+procedure TfrmOrders.FlagAction(AnAction: TActionMode);
 var
   i: Integer;
   AnOrder: TOrder;
-  ErrMsg: string;
+  ErrInfoMsg,
+  ActionName, ErrMsg, ValidationAction, ValidationErrorMsg, ErrMsgLog: String;
+  SLItem, // Order to process individually
+  SL: TStringlist; // order list to process together
+
+  // NSR 20090416 (#2) --------------------------------------------------- begin
+  (*
+    const
+    rpcName = 'RPC TO RETURN RESULT of Validation';
+
+    function NurseValidationCheck(AnOrderID: String): Boolean;
+    var
+    code, rpcResult: String;
+    begin
+    Result := False;
+    ORNet.CallVistA(rpcName, [], rpcResult);
+    code := Piece(rpcResult, U, 1);
+    Result := code = '1';
+    if not Result then
+    ErrMsg := ErrMsg + CRLF + Piece(rpcResult, U, 2);
+    end;
+  *)
+  // NSR 20090416 (#2) ----------------------------------------------------- end
+
+  procedure setObjectSelection(anObject:TObject;aSelected:Boolean=False);
+  var
+    i: integer;
+  begin
+    for i := 0 to lstOrders.Items.Count - 1 do
+      if lstOrders.Items.Objects[i] = anObject then
+        begin
+          lstOrders.Selected[i] := aSelected;
+          break;
+        end;
+  end;
+
+{  NSR 20110719.
+   Authorization is check by ValidateOrderAction
+  function IsUserAuthorized(anOrderID,anAction:String):String;
+  var
+    SL: TStrings;
+    s: String;
+  begin
+    Result := '';
+    if anAction = OA_UNFLAG then
+      begin
+        SL := TStringList.Create;
+        getFlagComponents(SL,anOrderID,'UFAVAIL');
+        if (SL.Count < 1 ) or (SL[0] <> '1') then
+          Result := 'User is not authorized...';
+        SL.Free;
+      end;
+  end;
+}
+
+var
+  WereMultipleOrdersSelected: boolean;
+  DialogButtons: TMsgDlgButtons;
+  GenericError: string;
 begin
   inherited;
-  if NoneSelected(TX_NOSEL) then Exit;
-  if not AuthorizedUser then Exit;
-  if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
+  if NoneSelected(TX_NOSEL) then
     Exit;
-  with lstOrders do for i := 0 to Items.Count - 1 do if Selected[i] then
-  begin
-    AnOrder := TOrder(Items.Objects[i]);
-    ValidateOrderAction(AnOrder.ID, OA_FLAG, ErrMsg);
-    if Length(ErrMsg) > 0
-      then InfoBox(AnOrder.Text + TX_NO_FLAG + ErrMsg, TC_NO_FLAG, MB_OK)
-      else ExecuteFlagOrder(AnOrder);
-    Selected[i] := False;
+  if not AuthorizedUser then
+    Exit;
+
+  case AnAction of
+    amUnknown:
+      begin
+        ShowMessage('Unknown Action!');
+        Exit;
+      end;
+    amAdd:
+      begin
+        if (FCurrentView.EventDelay.PtEventIFN > 0) and
+          (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN,
+          FCurrentView.EventDelay.EventName)) then
+          Exit;
+        ValidationAction := OA_FLAG;
+        ValidationErrorMsg := TX_NO_FLAG;
+        ActionName := 'Flag Order';
+      end;
+    amRemove:
+      begin
+        ValidationAction := OA_UNFLAG;
+        ValidationErrorMsg := TX_NO_UNFLAG;
+        ActionName := 'Unflag Order';
+      end;
+    amEdit:
+      begin
+        ValidationAction := OA_FLAGCOMMENT;
+        ValidationErrorMsg := TX_NO_FLAGCOMMENT;
+        ActionName := 'Flag Comment';
+      end;
   end;
+
+  GenericError := '';
+  SL := TStringlist.Create;
+  try
+    WereMultipleOrdersSelected := lstOrders.SelCount > 1;
+    with lstOrders do
+    begin
+      ErrMsgLog := '';
+      Items.BeginUpdate;
+      try
+        for i := 0 to Items.Count - 1 do
+          if Selected[i] then
+          begin
+            AnOrder := TOrder(Items.Objects[i]);
+            ValidateOrderAction(AnOrder.ID, ValidationAction, ErrMsg);
+    //        ErrMsg := ErrMsg + IsUserAuthorized(AnOrder.ID,ValidationAction);
+            if (Length(ErrMsg) > 0) then
+            begin
+              // AA: Need confirmation the NurseValidationCheck is not applicable
+              // or not NurseValidationCheck(AnOrder.ID)
+              if GenericError = '' then GenericError := Trim(Piece(ErrMsg, U, 2));
+              ErrMsgLog :=
+                Trim(Format('%0:s'+ CRLF + CRLF +'%1:-40s' + CRLF +
+                Char(VK_TAB) + ' -- %2:s',
+                [ErrMsgLog, AnOrder.Text, Piece(ErrMsg, U, 1)]));
+              Selected[i] := False;
+            end
+            else
+              SL.AddObject(IntToStr(i), AnOrder);
+          end;
+      finally
+        Items.EndUpdate;
+      end;
+      if GenericError <> '' then ErrMsgLog := GenericError + CRLF + CRLF + ErrMsgLog;
+    end;
+
+    if not WereMultipleOrdersSelected then
+    begin
+      ErrInfoMsg := 'The selected order is not eligible for the action "' +
+          ActionName + '".' +
+          CRLF + CRLF + ErrMsgLog + CRLF + CRLF +
+          'Click "OK" to continue';
+      DialogButtons := [mbOK];
+    end else begin
+      ErrInfoMsg := 'Some or all of the selected orders are not eligible for the action "' +
+          ActionName + '". They will be removed from selection.' +
+          CRLF + CRLF + ErrMsgLog + CRLF + CRLF +
+          'Click "OK" to continue, or "Cancel" to abort "' + ActionName + '".';
+      DialogButtons := mbOKCancel;
+    end;
+
+    if (ErrMsgLog = '') or
+      (MessageDlg(ErrInfoMsg, mtWarning, DialogButtons, 0) = mrOK) then
+      // (InfoBox(ErrInfoMsg, 'Confirmation', MB_ICONWARNING or MB_OKCANCEL) = mrOK) then
+    begin
+      if not AllowMutlipleassignment1.Checked then
+      // add an option to let user select the processing mode
+      begin // processing one by one
+        SLItem := TStringlist.Create;
+        try
+          SLItem.Add('');
+          for i := 0 to SL.Count - 1 do
+          begin
+            SLItem[0] := SL[i];
+            SLItem.Objects[0] := SL.Objects[i];
+            ProcessOrderList(SLItem, ActionName, // window caption
+              'Provide the Order Flag details to ' + ActionName, // comments
+              AnAction, // actioin mode
+              Self); // parent window
+            setObjectSelection(SL.Objects[i]);
+          end;
+        finally
+          FreeAndNil(SLItem);
+        end;
+      end
+      else // Processing the list
+        begin
+          ProcessOrderList(SL, ActionName, // window caption
+            'Provide the Order Flag details to ' + ActionName, // comments
+            AnAction, // actioin mode
+            Self); // parent window
+          for i := 0 to SL.Count - 1 do
+            SetObjectSelection(SL.Objects[i]);
+        end;
+    end;
+  finally
+    FreeAndNil(SL);
+  end;
+  lstOrders.Ctl3D := True;  // AA: forcing to fire the MeasureItem call
   lstOrders.Invalidate;
+  lstOrders.Ctl3D := False;
+  if AnAction = amAdd then
+    Exit; //
+  if Notifications.Active then
+    AutoUnflagAlertedOrders(Patient.DFN, Piece(Notifications.RecordID, U, 2));
+end;
+
+
+procedure TfrmOrders.mnuActFlagClick(Sender: TObject);
+begin
+  inherited;
+  FlagAction(amAdd);
+end;
+
+procedure TfrmOrders.mnuActFlagCommentClick(Sender: TObject);
+begin
+  inherited;
+  FlagAction(amEdit);
 end;
 
 procedure TfrmOrders.mnuActUnflagClick(Sender: TObject);
-var
-  i: Integer;
-  AnOrder: TOrder;
-  ErrMsg: string;
 begin
   inherited;
-  if NoneSelected(TX_NOSEL) then Exit;
-  if not AuthorizedUser then Exit;
-  with lstOrders do for i := 0 to Items.Count - 1 do if Selected[i] then
-  begin
-    AnOrder := TOrder(Items.Objects[i]);
-    ValidateOrderAction(AnOrder.ID, OA_UNFLAG, ErrMsg);
-    if Length(ErrMsg) > 0
-      then InfoBox(AnOrder.Text + TX_NO_UNFLAG + ErrMsg, TC_NO_UNFLAG, MB_OK)
-      else ExecuteUnflagOrder(AnOrder);
-    Selected[i] := False;
-  end;
-  lstOrders.Invalidate;
-  if Notifications.Active then AutoUnflagAlertedOrders(Patient.DFN, Piece(Notifications.RecordID, U, 2));
+  FlagAction(amRemove);
 end;
+// 20110719 ---------------------------------------------------------------- end
 
 procedure TfrmOrders.mnuActCompleteClick(Sender: TObject);
 { complete generic orders, no signature required - no new orders created }
@@ -2617,6 +2974,13 @@ begin
           if Notifications.Processing then
             AutoUnflagAlertedOrders(Patient.DFN, Piece(Notifications.RecordID, U, 2));
         end;
+      NF_FLAGGED_ORDERS_COMMENTS:  // AA  NSR#20110719  Order Flag Recommendations
+        begin
+          ViewAlertedOrders(OrderIEN, STS_FLAGGED, '', False, True,
+            'All Services, Flagged-Commented');
+  //        mnuViewDetailClick(Self);    // Show Details of the Order
+          Notifications.Delete;        // Delete Alert Notification
+        end;
       NF_ORDER_REQUIRES_ELEC_SIGNATURE :
         begin
           ViewAlertedOrders('', STS_UNSIGNED, '', False, True, 'All Services, Unsigned');
@@ -2800,6 +3164,16 @@ begin
           else
             Notifications.IndOrderDisplay := False;
         end;
+      NF_NEW_ALLERGY_CONFLICT_ORDER:
+        begin
+          Notifications.IndOrderDisplay := True;
+          ViewAlertedOrders('', STS_FIXED, '', False, True,
+            'New Allergy Conflict');
+          if Notifications.Processing then
+              UpdateIndOrderAlerts()
+          else
+            Notifications.IndOrderDisplay := True;
+        end;
       NF_RTC_CANCEL_ORDERS:
         begin
           ViewAlertedOrders('', STS_DISCONTINUED, 'CLINIC SCHEDULING', False, True, 'Cancel Appointment Request orders');
@@ -2924,6 +3298,7 @@ var
   IsRealeaseNow:   boolean;
 begin
   inherited;
+  mnuViewUAP.Enabled := True;
   if not EncounterPresentEDO then Exit;
   AnEvent.EventType := #0;
   AnEvent.TheParent := TParentEvent.Create;
@@ -3221,6 +3596,18 @@ begin
   end;
 end;
 
+function TfrmOrders.GetIndexOfOID(AnOrderListBox: TCaptionListBox;
+  AnOrderID: string): Integer;
+var
+  idx: Integer;
+begin
+  Result := 0;
+  with AnOrderListBox do
+    for idx := 0 to Count - 1 do
+      if TOrder(AnOrderListBox.Items.Objects[idx]).ID = AnOrderID then
+        Result := idx;
+end;
+
 function TfrmOrders.PlaceOrderForDefaultDialog(ADlgInfo: string; IsDefaultDialog: boolean; AEvent: TOrderDelayEvent): boolean;
 { ADlgInfo = DlgIEN;FormID;DGroup;DlgType }
 var
@@ -3233,12 +3620,12 @@ begin
   Result := False;
 
   if FCurrentView = nil then
-  begin                                                  
-    FCurrentView := TOrderView.Create;                   
-    with FCurrentView do                                 
-    begin                                                
-      InvChrono := True;                                 
-      ByService := True;                                 
+  begin
+    FCurrentView := TOrderView.Create;
+    with FCurrentView do
+    begin
+      InvChrono := True;
+      ByService := True;
     end;
   end;
 
@@ -3462,7 +3849,7 @@ end;
 procedure TfrmOrders.mnuOptClick(Sender: TObject);
 begin
   inherited;
-  //if PatientStatusChanged then exit;  
+  //if PatientStatusChanged then exit;
   //frmFrame.UpdatePtInfoOnRefresh;
 end;
 
@@ -3560,7 +3947,7 @@ var
   i: integer;
 begin
   //CQ6170
-  for i := 0 to 9 do
+  for i := 0 to 10 do
      origWidths[i] := hdrOrders.Sections[i].Width;
   //end CQ6170
 end;
@@ -3589,6 +3976,7 @@ var
   i: integer;
   totalSectionsWidth, originalwidth: integer;
 begin
+exit;  // Resizing of the Header issue   RTC 679309
   inherited;
   //CQ6170
   totalSectionsWidth := getTotalSectionsWidth;
@@ -3744,7 +4132,236 @@ begin
   inherited;
   if self.sptVert.Top < self.lstSheets.Constraints.MinHeight then
      self.sptVert.Top := self.lstSheets.Constraints.MinHeight + 1;
-  
+end;
+
+procedure TfrmOrders.mnuViewUAPClick(Sender: TObject);
+begin
+  inherited;
+  hdrOrders.Sections[10].Text := 'Reviewed'; // rtw
+  hdrOrders.Sections[10].WIDTH := 100;    //rtw
+  SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+    'Unified Action Profile', False);
+end;
+
+procedure TfrmOrders.MnuContinueUAPClick(Sender: TObject);
+// Continue choice
+var
+  ORTopIndex: Integer;
+  ORTOID: string;
+begin
+  inherited;
+  Callvista('ORTO SETRVW',
+    ['C', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID,
+    ';', 1)]);
+  ORTOID := TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID;
+  ORTopIndex := lstOrders.TopIndex;
+  UAPContinue := True; // rtw
+  if (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+    .DGroupName = 'Inpt. Meds') OR
+    (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+    .DGroupName = 'Infusion') then
+  begin
+    // continue Inpatient and IV Fluids done via CopyAnOrder
+    mnuActCopyClick(Self);
+  end
+  else
+  begin
+    // continue Outpatient requires no action
+  end;
+  // this call allows the code to display the delayed orders view then return to the UAP view
+  SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+    'Unified Action Profile', False);
+  lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+  lstOrders.TopIndex := ORTopIndex;
+  if ShouldCancelCopyorder and
+    (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+    .DGroupName = 'Inpt. Meds') then // rtw
+  begin
+    Callvista('ORTO SETRVW',
+      ['0', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID, ';',
+      1)]); // rtw
+    // this call is in the event the user cancels in mid process it sets the reviewed column to null
+    SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+      'Unified Action Profile', False);
+    lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+    lstOrders.TopIndex := ORTopIndex;
+  end;
+  if Shouldcancelchangeorder then
+  begin
+    if (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+      .DGroupName = 'Inpt. Meds') and UAPContinue OR // rtw
+      (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+      .DGroupName = 'Out. Meds') and not UAPContinue then // rtw
+    begin
+      Callvista('ORTO SETRVW',
+        ['0', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID,
+        ';', 1)]); // rtw
+      // this call is in the event the user cancels in mid process it sets the reviewed column to null
+      SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+        'Unified Action Profile', False);
+      lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+      lstOrders.TopIndex := ORTopIndex;
+    end;
+  end;
+end; // Continue choice
+
+procedure TfrmOrders.MnuChangeUAPClick(Sender: TObject);
+// Change choice
+var
+  ORTopIndex: Integer;
+  ORTOID: string;
+begin
+  inherited;
+  Callvista('ORTO SETRVW',
+    ['G', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID,
+    ';', 1)]);
+  ORTOID := TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID;
+  ORTopIndex := lstOrders.TopIndex;
+  //
+  if (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+    .DGroupName = 'Inpt. Meds') then
+  begin
+    // change Inpatient and IV Fluids done via CopyAnOrder
+    mnuActCopyClick(Self);
+  end
+  else
+  begin
+    // change Outpatient done via same old Change... option
+    mnuActChangeClick(Self);
+  end;
+  // this call allows the code to display the delayed orders view then return to the UAP view
+  SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+    'Unified Action Profile', False);
+  lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+  lstOrders.TopIndex := ORTopIndex;
+  if ShouldCancelCopyorder then // rtw
+  begin
+    Callvista('ORTO SETRVW',
+      ['0', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID, ';',
+      1)]); // rtw
+    // this call is in the event the user cancels in mid process it sets the reviewed column to null
+    SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+      'Unified Action Profile', False);
+    lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+    lstOrders.TopIndex := ORTopIndex;
+  end;
+  if Shouldcancelchangeorder then // rtw
+    // showmessage('randys 1'); RDD: this is code from the change set (baseline 319 to 320), but I doubt that this is right, so I am commenting it out
+  begin
+    if (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+      .DGroupName = 'Inpt. Meds') OR
+      (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+      .DGroupName = 'Out. Meds') OR
+      (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+      .DGroupName = 'Non-VA Meds (Documentation)') then
+    begin
+      Callvista('ORTO SETRVW',
+        ['0', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID,
+        ';', 1)]);
+      // this call is in the event the user cancels in mid process it sets the reviewed column to null
+      SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+        'Unified Action Profile', False);
+      lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+      lstOrders.TopIndex := ORTopIndex;
+    end;
+  end; // rtw
+end;
+
+procedure TfrmOrders.MnuDiscontinueUAPClick(Sender: TObject);
+// Discontinue choice
+var
+  ORTopIndex: Integer;
+  ORTOID: string;
+begin
+  inherited;
+  Callvista('ORTO SETRVW',
+    ['D', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID,
+    ';', 1)]);
+  ORTOID := TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID;
+  ORTopIndex := lstOrders.TopIndex;
+  //
+  if (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+    .DGroupName = 'Inpt. Meds') OR
+    (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+    .DGroupName = 'Infusion') then
+  begin
+    // discontinue Inpatient or IV Fluids requires no action
+  end
+  else
+  begin
+    // discontinue Outpatient done via same old Discontinue... option
+    mnuActDCClick(Self);
+  end;
+  SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+    'Unified Action Profile', False);
+  lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+  lstOrders.TopIndex := ORTopIndex;
+  if ShouldcancelDCOrder and
+    not(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+    .DGroupName = 'Inpt. Meds') then
+  begin // rtw
+    Callvista('ORTO SETRVW',
+      ['0', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID, ';',
+      1)]); // rtw
+    // this call is in the event the user cancels in mid process it sets the reviewed column to null
+    SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+      'Unified Action Profile', False);
+    lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+    lstOrders.TopIndex := ORTopIndex;
+  end; // rtw
+end; // Discontinue choice
+
+procedure TfrmOrders.MnuRenewUAPClick(Sender: TObject);
+// Renew choice
+var
+  ORTopIndex: Integer;
+  ORTOID: string;
+begin
+  inherited;
+  Callvista('ORTO SETRVW',
+    ['R', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID,
+    ';', 1)]);
+  ORTOID := TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID;
+  ORTopIndex := lstOrders.TopIndex;
+  if (TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex])
+    .DGroupName = 'Inpt. Meds') then
+
+  begin
+    // renew Inpatient or IV FLuids is invalid so do nothing
+    // shouldn't even get here since option should
+    // be grayed out on PopUAPOrder menu
+    // if rt-clicking inpatient orders
+  end
+  else
+  begin
+    // renew Outpatient done via same old Renew... option
+    mnuActRenewClick(Self);
+  end;
+  SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+    'Unified Action Profile', False);
+  lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+  lstOrders.TopIndex := ORTopIndex;
+  if Shouldcancelreneworder OR // rtw
+    Renewcancel2 then
+  begin // rtw
+    Callvista('ORTO SETRVW',
+      ['0', Piece(TOrder(lstOrders.Items.Objects[lstOrders.ItemIndex]).ID, ';',
+      1)]); // rtw
+    // this call is in the event the user cancels in mid process it sets the reviewed column to null
+    SetOrderView(STS_CURRENT, DGroupIEN('PHARMACY UAP'),
+      'Unified Action Profile', False);
+    lstOrders.ItemIndex := GetIndexOfOID(lstOrders, ORTOID);
+    lstOrders.TopIndex := ORTopIndex;
+  end // rtw
+end; // Renew choice
+
+procedure TfrmOrders.UMDeselectOrder(var Message: TMessage);
+var
+  i: Integer;
+begin
+  i := Message.LParam;
+  if (i > -1) and (i < lstOrders.Count - 1) then
+    lstOrders.Selected[i] := False;
 end;
 
 initialization

@@ -126,6 +126,8 @@ begin
   begin
     Add('W^at Window');
     Add('M^by Mail');
+    if not rOrders.UAPViewCalling then //rtw
+      Add('C^in Clinic');
     Add('C^in Clinic');
   end;
 end;

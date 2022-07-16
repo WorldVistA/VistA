@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="Adobe RoboHelp 2020" />
+  <title>Context Management (CCOW) in CPRS</title>
+  <link rel="StyleSheet" href="assets/css/CPRS.css" type="text/css" />
+  <meta name="rh-index-keywords" content="Context" />
+</head>
+<body>
+  <h1>
+    <font color="#3366FF" size="4" style="font-size: 14pt;">Context Management (CCOW) in CPRS</font>
+  </h1>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">Clinical Context Management (sometimes referred to as &quot;CCOW&quot;) is a way for graphical</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">user interface (GUI) applications to synchronize their clinical context based on the Health Level 7 CCOW standard. In simple terms, this means that if CCOW-compliant applications are sharing context and one of the applications changes to a different patient, the other applications will change to that patient as well.</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">The VA purchased Sentillion&#39;s Vergence context management software to work with VistA.</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">To use the CCOW standard, VistA set up must include these two components:</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     a context vault, which is a</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">server on the VA LAN that tracks context for each clinical workstation</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     desktop components installed on each workstation that will use CCOW</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">To allow VistA GUI applications to use context management, the developers must make the necessary changes to HL7 messages for each application to allow synchronization. Current plans call for the following applications to be CCOW-compliant:</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     CPRS *</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     Health</font>
+    <font color="#010100" size="2" style="font-size: 10pt; font-style: italic;">e</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">Vet Desktop (Care Management) *</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     Imaging *</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     Clinical Procedures</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     BCMA (Bar Code Medication Administration)</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     Vitals</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     FIM (Functional Independence Measure)</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt; text-indent: -17.50pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">·     Scheduling</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">* These applications will be made CCOW compliant first.</font>
+  </p>
+  <p style="margin-left: 36.00pt; margin-bottom: 3.00pt;"> </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">CPRS has been made CCOW-compliant and can now synchronize with other VistA CCOW-compliant applications. The first three applications that will be CCOW-compliant are CPRS, Care Management, and Imaging. Care Management provides one example of applications synchronization. If you were in Care Management, which is also CCOW-compliant, and clicked the CPRS Chart link, the CPRS GUI chart would be launched and would bring up the same patient that had focus in Care Management. You can also have two CPRS sessions synchronized. And, of course, you can bring up two different CPRS sessions and not synchronize them, thus allowing you to view two patients&#39;</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">charts at the same time.</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">The CCOW icon shows whether the current application is linked with others on the desktop.</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"><img alt="This screen capture shows the CPRS window with the CCOW icon highlighted in red." border="0" height="71" src="image/CPRS0063.gif" width="672" /></p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100">The above graphic shows the CCOW icon in outlined in red at the far left of the chart.</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">CPRS enables users to join or break context with other applications. The icon displays whether CPRS is joined in context or not. The following three i</font>
+    <font color="#010100" size="2" style="font-size: 10pt;">cons will display based on the CCOW state:</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"><img alt="This image shows the linked icon that shows a person with a two linked chain links." border="0" height="62" src="image/CPRS0064.gif" width="62" />
+    <font color="#010100" size="2" style="font-size: 11pt;">Linked</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-bottom: 6.00pt;"><img alt="This screen capture shows the broken icon that shows two figures and chain links that are separate from each other." border="0" height="62" src="image/CPRS0065.gif" width="62" />
+    <font color="#010100" size="2" style="font-size: 11pt;">Broken</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-bottom: 6.00pt;"><img alt="This screen capture shows the changing icon with the figure of one person, a chain link, and a question mark showing that the context is changing." border="0" height="62" src="image/CPRS0066.gif" width="62" />
+    <font color="#010100" size="2" style="font-size: 11pt;">Changing</font>
+  </p>
+  <p style="margin-left: 54.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;">
+    <font color="#010100" size="2" style="font-size: 9pt; font-weight: bold;">Note:</font>
+    <font color="#010100" size="2" style="font-size: 9pt;">      There are a few cases when you cannot change context, such as when a print dialog is open or when you are trying to open an application from the Tools menu. If you try to change context with unsigned orders or notes, the Problem Changing Clinical Data dialog display and tell the</font>
+    <font color="#010100" size="2" style="font-size: 9pt;">user if there are items that will not be signed. Another dialog display if there is a contextor problem.</font>
+  </p>
+  <p style="margin-bottom: 6.00pt;"> </p>
+  <p style="margin-top: 6.00pt; margin-bottom: 0.00pt; border-bottom: 0.75pt solid #000000;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">Related Topics</font>
+  </p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Joining_Context.htm">
+      <font size="2" style="font-size: 10pt;">Joining Context</font>
+    </a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Breaking_Context.htm">
+      <font size="2" style="font-size: 10pt;">Breaking Context</font>
+    </a></p>
+</body>
+</html>

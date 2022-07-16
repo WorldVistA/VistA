@@ -149,9 +149,8 @@ begin
 end;
 
 procedure TfrDSTMgr.doDSTConsultAct;
-var
-  i: Integer;
-
+//var
+//i: Integer;
   function getActionName: String;
   begin
     case fDSTAction of
@@ -182,7 +181,6 @@ begin
     getActionName, DSTOutpatient);
   if DSTId <> '' then
   begin
-    i := DstProvider.getDSTReply(DSTId);
 { 310.1
     if i <> mrOK then
     begin
@@ -190,6 +188,7 @@ begin
     end
     else
 }
+    DstProvider.getDSTReply(DSTId);
     begin
       // process successful review
       DstResult := DstProvider.getDstReply(DSTId, getActionName());

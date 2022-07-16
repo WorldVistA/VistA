@@ -469,8 +469,8 @@ begin
         begin
           // RPC call doesn't like fractional part (the time part)
           CIDC := Trunc(CIDC);
-          // Convert NOW to T
-          if 'NOW'.StartsWith(str.ToUpper) then
+          // Convert NOW or TODAY or various substrings (N, t) to T
+          if 'NOW'.StartsWith(str.ToUpper) or 'TODAY'.StartsWith(str.ToUpper) then
             str := 'T';
           // strip any @ times
           pp := Pos('@', str);

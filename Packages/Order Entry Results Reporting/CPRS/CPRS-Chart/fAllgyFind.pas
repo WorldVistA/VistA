@@ -1,5 +1,10 @@
 unit fAllgyFind;
+{------------------------------------------------------------------------------
+Update History
 
+    2016-09-20: NSR#20101203 (Critical/Hight Order Check Display)
+    2017-04-06: NSR#20060710 (Real-Time Notification of Potentially Missed Order Checks)
+-------------------------------------------------------------------------------}
 interface
 
 uses
@@ -11,8 +16,6 @@ type
   TfrmAllgyFind = class(TfrmAutoSz)
     txtSearch: TCaptionEdit;
     cmdSearch: TButton;
-    cmdOK: TButton;
-    cmdCancel: TButton;
     lblSearch: TLabel;
     lblSelect: TLabel;
     stsFound: TStatusBar;
@@ -23,6 +26,15 @@ type
     lblSearchCaption: TLabel;
     imgLblAllgyFindTree: TVA508ImageListLabeler;
     NoAllergylbl508: TVA508StaticText;
+    pnlBottom: TPanel;
+    Panel1: TPanel;
+    ckbWarning: TCheckBox;    // NJC NSR 20060710 10/15
+    cmdOK: TButton;
+    cmdCancel: TButton;
+    pnlSearch: TPanel;
+    pnlSearchResults: TPanel;
+    pnlSearchResultsTitle: TPanel;
+    pnlButtons: TPanel;
     procedure cmdSearchClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -30,6 +42,8 @@ type
     procedure txtSearchChange(Sender: TObject);
     procedure BuildAgentTree(AgentList: TStrings; const Parent: string; Node: TORTreeNode);
     procedure ckNoKnownAllergiesClick(Sender: TObject);
+    procedure ckbWarningClick(Sender: TObject);
+    procedure tvAgentChange(Sender: TObject; Node: TTreeNode);
     procedure tvAgentDblClick(Sender: TObject);
   private
     FAllergy: string   ;
@@ -42,7 +56,7 @@ implementation
 
 {$R *.DFM}
 
-uses rODAllergy, fARTFreeTextMsg, VA508AccessibilityRouter, VAUtils;
+uses rODAllergy, fARTFreeTextMsg, VA508AccessibilityRouter;
 
 const
   IMG_MATCHES_FOUND = 1;
@@ -85,9 +99,15 @@ const
   TC_BULLETIN_ERROR = 'Unable to Send Bulletin';
   TX_BULLETIN_ERROR = 'Free text entries are no longer allowed.' + #13#10 +
                       'Please contact your allergy coordinator if you need assistance.';
+  TX_ckbWarning = 'If this is a reaction only to the ingredient selected (`' +   // NJC CWG Mods 031417
+                  '), check the box to continue. ' +                             // NJC CWG Mods 031417
+                  ' If it may be a reaction to other drugs in the same class, ' +// NJC CWG Mods 031417
+                  'please select an item higher on the list.';
 var
   uFileCount: integer;
   ScreenReader: boolean;
+  DrugIngrCount, DrugIngrCountChildren: integer;        // NJC NSR 20060710 10/15
+  tmpNode1: TORTreeNode;                                // NJC NSR 20060710 10/15
 
 procedure AllergyLookup(var Allergy: string; NKAEnabled: boolean);
 var
@@ -125,6 +145,7 @@ begin
 end;
 
 procedure TfrmAllgyFind.FormCreate(Sender: TObject);
+// 2017-04-06: NSR#20060710 Programmer Note: Be aware txtSearch is activeControl in .dfm file and will get focus
 begin
   inherited;
   FAllergy := '';
@@ -137,6 +158,8 @@ begin
     amgrMain.AccessText[tvAgent] := 'No Search Items to Display';
     ScreenReader := True;
   end;
+  ckbWarning.Checked := false;             // NJC NSR 20060710 10/15
+  ckbWarning.Visible := false;             // NJC NSR 20060710 10/15
 end;
 
 procedure TfrmAllgyFind.txtSearchChange(Sender: TObject);
@@ -150,7 +173,6 @@ end;
 procedure TfrmAllgyFind.cmdSearchClick(Sender: TObject);
 var
   AList: TStringlist;
-  tmpNode1: TORTreeNode;
   i: integer;
 begin
   inherited;
@@ -159,6 +181,9 @@ begin
       InfoBox(TX_3_CHAR, 'Information', MB_OK or MB_ICONINFORMATION);
       Exit;
     end;
+  DrugIngrCount := 0;
+  DrugIngrCountChildren := 0;
+  ckbWarning.Visible := false;
   StatusText(ST_SEARCHING);
   FExpanded := False;
   AList := TStringList.Create;
@@ -185,7 +210,6 @@ begin
       cmdOKClick(Self);
     end else
     begin
-      //if tvAgent.Items <> nil then tvAgent.Items.Clear;
       AList.Insert(0, 'TOP^' + IntToStr(Alist.Count - uFileCount) + ' matches found.^^^0^+');
       AList.Add('FREETEXT^Add new free-text allergy^^^TOP^+');
       AList.Add('^' + UpperCase(txtSearch.Text) + '^^^FREETEXT^');
@@ -212,16 +236,21 @@ begin
            if tmpNode1 <> nil then
              if tmpNode1.HasChildren then
                begin
-                 tmpNode1.Text := tmpNode1.Text + '  (' + IntToStr(tmpNode1.Count) + ')';
-                 tmpNode1.StateIndex := IMG_MATCHES_FOUND;
-                 if not FExpanded then
-                   begin
-                     tmpNode1.Bold := True;
-                     tmpNode1.Expand(True);
-                     FExpanded := True;
-                   end;
-               end
-            else
+                  if Trim(tmpNode1.Text) = 'Drug Ingredients File' then     // NJC NSR 20060710 10/15
+                  begin                                                     // NJC NSR 20060710 10/15
+                    DrugIngrCount := tmpNode1.Count;                        // NJC NSR 20060710 10/15  2017-04-06: NSR#20060710 SDS TP
+                    DrugIngrCountChildren := tmpnode1.absoluteindex;        // NJC NSR 20060710 10/15
+                  end;                                                      // NJC NSR 20060710 10/15
+                  tmpNode1.Text := tmpNode1.Text + '  (' + IntToStr(tmpNode1.Count) + ')';
+                  tmpNode1.StateIndex := IMG_MATCHES_FOUND;
+                  if not FExpanded then
+                    begin
+                      tmpNode1.Bold := True;
+                      tmpNode1.Expand(True);
+                      FExpanded := True;
+                    end;
+                end
+              else
               begin
                 tmpNode1.StateIndex := IMG_NO_MATCHES;
                 tmpNode1.Text := tmpNode1.Text + '  (no matches)';
@@ -236,7 +265,7 @@ begin
 
       tvAgent.SetFocus;
       cmdSearch.Default := False;
-      cmdOK.Enabled := True;
+      cmdOK.Enabled := false;                  // 2017-04-06: NSR#20060710 SDS TP
       stsFound.SimpleText := ST_FOUND;
     end;
   finally
@@ -319,7 +348,6 @@ begin
       x := Piece(FAllergy, U, 2);
       AGlobal := Piece(FAllergy, U, 3);
       if ((Pos('GMRD', AGlobal) > 0) or (Pos('PSDRUG', AGlobal) > 0)) and (Pos('<', x) > 0) then
-        //x := Trim(Piece(x, '<', 1));
         x := Copy(x, 1, Length(Piece(x, '<', 1)) - 1);
       SetPiece(FAllergy, U, 2, x);
       Close;
@@ -333,24 +361,23 @@ begin
   Close;
 end;
 
+procedure TfrmAllgyFind.ckbWarningClick(Sender: TObject);
+begin
+  inherited;
+  cmdOK.Enabled := ckbWarning.Checked or ckNoKnownAllergies.checked; // NJC NSR 20060710 10/15; SDS 3/7/17
+end;
+
 procedure TfrmAllgyFind.ckNoKnownAllergiesClick(Sender: TObject);
 begin
   inherited;
-  with ckNoKnownAllergies do
-    begin
-      txtSearch.Enabled := not Checked;
-      cmdSearch.Enabled := not Checked;
-      lblSearch.Enabled := not Checked;
-      lblSelect.Enabled := not Checked;
-      tvAgent.Enabled   := not Checked;
-
-      // CQ #15770 - Allow OK button again if unchecked and items exist - JCS
-      //cmdOK.Enabled := Checked;
-      if Checked then
-        cmdOK.Enabled := True
-      else
-        cmdOK.Enabled := (tvAgent.Items.Count > 0);
-    end;
+  // 2017-04-06: NSR#20060710 SDS : Removed "with" clause for clarity
+  txtSearch.Enabled := not ckNoKnownAllergies.Checked;
+  cmdSearch.Enabled := not ckNoKnownAllergies.Checked;
+  lblSearch.Enabled := not ckNoKnownAllergies.Checked;
+  lblSelect.Enabled := not ckNoKnownAllergies.Checked;
+  tvAgent.Enabled   := not ckNoKnownAllergies.Checked;
+  CkbWarning.Visible:= not ckNoKnownAllergies.Checked;
+  tvAgentChange(nil, nil); // SDS 2017-04-06: NSR#20060710 : Let tvAgent event determine if cmdOK is enabled
 end;
 
 procedure TfrmAllgyFind.BuildAgentTree(AgentList: TStrings; const Parent: string; Node: TORTreeNode);
@@ -361,42 +388,83 @@ var
   HasChildren, Found: Boolean;
 begin
   tvAgent.Items.BeginUpdate;
-  with AgentList do for i := 0 to Count - 1 do
-    begin
-      Found := False;
-      MyParent := Piece(Strings[i], U, 5);
-      if (MyParent = Parent) then
-        begin
-          MyID := Piece(Strings[i], U, 1);
-          Name := Piece(Strings[i], U, 2);
-          HasChildren := Piece(Strings[i], U, 6) = '+';
-          if Node <> nil then
-            begin
-              if Node.HasChildren then
-                begin
-                  tmpNode := TORTreeNode(Node.GetFirstChild);
-                  while tmpNode <> nil do
-                    begin
-                      if tmpNode.Text = Piece(Strings[i], U, 2) then Found := True;
-                      tmpNode := TORTreeNode(Node.GetNextChild(tmpNode));
-                    end;
-                end
-              else
-                Node.StateIndex := 0;
-            end;
-          if Found then
-            Continue
-          else
-            begin
-              ChildNode := TORTreeNode(tvAgent.Items.AddChild(Node, Name));
-              ChildNode.StringData := AgentList[i];
-              if HasChildren then BuildAgentTree(AgentList, MyID, ChildNode);
-            end;
-        end;
-    end;
-  tvAgent.Items.EndUpdate;
+  try // 2017-04-06: NSR#20060710 - missing try..finally
+    with AgentList do for i := 0 to Count - 1 do
+      begin
+        Found := False;
+        MyParent := Piece(Strings[i], U, 5);
+        if (MyParent = Parent) then
+          begin
+            MyID := Piece(Strings[i], U, 1);
+            Name := Piece(Strings[i], U, 2);
+            // start NJC CWG Mods 031417  NSR#20060710
+            if Copy(Name,1,38) = 'National Drug File - Generic Drug Name' then
+              Name := Name + ' (Incl. Drug Class & Ingredient)'
+            else
+            if Copy(Name,1,31) = 'National Drug file - Trade Name' then
+              Name := Name + ' (Incl. Drug Class & Ingredient)';
+            // end NJC CWG Mods 031417  NSR#20060710
+            HasChildren := Piece(Strings[i], U, 6) = '+';
+            if Node <> nil then
+              begin
+                if Node.HasChildren then
+                  begin
+                    tmpNode := TORTreeNode(Node.GetFirstChild);
+                    while tmpNode <> nil do
+                      begin
+                        if tmpNode.Text = Piece(Strings[i], U, 2) then Found := True;
+                        tmpNode := TORTreeNode(Node.GetNextChild(tmpNode));
+                      end;
+                  end
+                else
+                  Node.StateIndex := 0;
+              end;
+            if Found then
+              Continue
+            else
+              begin
+                ChildNode := TORTreeNode(tvAgent.Items.AddChild(Node, Name));
+                ChildNode.StringData := AgentList[i];
+                if HasChildren then BuildAgentTree(AgentList, MyID, ChildNode);
+              end;
+          end;
+      end;
+  finally
+    tvAgent.Items.EndUpdate;  // 2017-04-06: NSR#20060710
+  end;
 end;
- 
+
+procedure TfrmAllgyFind.tvAgentChange(Sender: TObject; Node: TTreeNode);
+var
+  s:string;
+begin
+  inherited;
+  // 2017-04-06: NSR#20060710 : SDS Begin mods to handle if called from NKA check prior to search
+  if tvAgent.Selected = nil then
+  begin
+    // this can happen with no allergy assessment, if the No Known Allergies is checked before a search
+    ckbWarning.Visible:= false;
+    cmdOK.Enabled:= CkNoKnownAllergies.checked;
+  end
+  // 2017-04-06: NSR#20060710 : SDS End mods to handle if called from NKA check prior to search
+  else if (tvAgent.Selected.AbsoluteIndex > DrugIngrCountChildren) and                  // NJC NSR 20060710
+     (tvAgent.Selected.AbsoluteIndex <= DrugIngrCountChildren + DrugIngrCount) then // NJC NSR 20060710 10/15
+  begin
+    s := Piece(TORTreeNode(tvAgent.Selected).StringData, U, 2);
+    cmdOK.Enabled := ckNoKnownAllergies.checked;                   // NJC NSR 20060710 10/15  SDS 4/6/17
+    ckbWarning.Caption := TX_ckbWarning;
+    if Length(s) > 0 then ckbWarning.Caption := StringReplace(TX_ckbWarning,'`',s,[]);
+    ckbWarning.Checked := false;
+    ckbWarning.Visible:= not ckNoKnownAllergies.checked;               // NJC NSR 20060710 10/15 SDS 4/6/2017
+  end                                           // NJC NSR 20060710 10/15
+  else
+  begin                                         // NJC NSR 20060710 10/15
+    ckbWarning.Visible := false;                // NJC NSR 20060710 10/15
+    // SDS 2017-04-06: NSR#20060710 (Programmer Note): be aware below that not x.hasChildren is not enough - the tree can have a single root node with no results
+    cmdOK.Enabled := (tvAgent.Selected.Level > 1) or CkNoKnownAllergies.checked; // 2017-04-06: NSR#20060710 : SDS
+  end;
+end;
+
 procedure TfrmAllgyFind.tvAgentDblClick(Sender: TObject);
 begin
   inherited;
@@ -404,3 +472,5 @@ begin
 end;
 
 end.
+
+

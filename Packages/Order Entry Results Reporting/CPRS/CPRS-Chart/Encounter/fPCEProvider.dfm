@@ -8,6 +8,7 @@ inherited frmPCEProvider: TfrmPCEProvider
   ClientWidth = 317
   Position = poScreenCenter
   OnCreate = FormCreate
+  OnCloseQuery = FormCloseQuery
   PixelsPerInch = 96
   TextHeight = 13
   object Spacer1: TLabel [0]
@@ -52,7 +53,7 @@ inherited frmPCEProvider: TfrmPCEProvider
     ItemHeight = 13
     ItemTipColor = clWindow
     ItemTipEnable = True
-    ListItemsOnly = True
+    ListItemsOnly = False
     LongList = True
     LookupPiece = 2
     MaxLength = 0
@@ -65,6 +66,7 @@ inherited frmPCEProvider: TfrmPCEProvider
     OnChange = cboPrimaryChange
     OnNeedData = cboPrimaryNeedData
     CharsNeedMatch = 1
+    UniqueAutoComplete = True
   end
   object btnYes: TButton [3]
     Left = 158

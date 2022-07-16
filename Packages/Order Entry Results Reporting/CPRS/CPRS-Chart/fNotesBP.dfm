@@ -7,9 +7,8 @@ inherited frmNotesBP: TfrmNotesBP
   ClientWidth = 310
   Position = poScreenCenter
   OnKeyUp = FormKeyUp
-  OnShow = FormShow
-  ExplicitWidth = 318
-  ExplicitHeight = 189
+  ExplicitWidth = 326
+  ExplicitHeight = 194
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TStaticText [0]

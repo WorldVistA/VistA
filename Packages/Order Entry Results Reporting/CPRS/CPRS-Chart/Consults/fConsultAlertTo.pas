@@ -41,13 +41,14 @@ implementation
 
 {$R *.DFM}
 
-{$IFDEF CPRS_TEST}
-uses rCore.User;
-//rConsults, rCore, uCore, uConsults, fConsults;
-{$ELSE}
 uses
-  rCore;
+{$IFDEF CPRS_TEST}
+  rCore.User,
+  // rConsults, rCore, uCore, uConsults, fConsults,
+{$ELSE}
+  rCore,
 {$ENDIF}
+  uSimilarNames;
 
 const
   TX_RCPT_TEXT = 'Select recipients or press Cancel.';
@@ -149,10 +150,17 @@ begin
 end;
 
 procedure TfrmConsultAlertsTo.cboSrcListMouseClick(Sender: TObject);
+var
+  ErrMsg: string;
 begin
-     if cboSrcList.ItemIndex = -1 then exit ;
-     if DstList.SelectByID(cboSrcList.ItemID) = -1 then
-       DstList.Items.Add(cboSrcList.Items[cboSrcList.Itemindex]) ;
+  if not CheckForSimilarName(cboSrcList, ErrMsg, ltPerson, sPr, '', DstList.Items) then
+  begin
+    ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');
+    Exit;
+  end;
+  if cboSrcList.ItemIndex = -1 then exit ;
+  if DstList.SelectByID(cboSrcList.ItemID) = -1 then
+    DstList.Items.Add(cboSrcList.Items[cboSrcList.Itemindex]) ;
 end;
 
 end.

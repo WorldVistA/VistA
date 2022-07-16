@@ -1,0 +1,70 @@
+package ORCtrls_DXE8;
+
+{$R *.res}
+{$R '..\..\Source\ORCtrlsDsgn.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS OFF}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'CPRS Custom Controls - XE8'}
+{$DESIGNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  vcl,
+  vclx,
+  designide,
+  rtl,
+  Tee,
+  dbrtl,
+  VclSmp,
+  vcldb,
+  VA508Access_DXE8,
+  VAShared_RXE8,
+  XWB_RXE8;
+
+contains
+  ORCtrls in '..\..\Source\ORCtrls.pas',
+  ORCtrlsDsgn in '..\..\Source\ORCtrlsDsgn.pas',
+  ORStaticText in '..\..\Source\ORStaticText.pas',
+  ORSystem in '..\..\Source\ORSystem.pas',
+  ORFn in '..\..\Source\ORFn.pas',
+  ORClasses in '..\..\Source\ORClasses.pas',
+  ORNet in '..\..\Source\ORNet.pas',
+  ORCtrlsVA508Compatibility in '..\..\Source\ORCtrlsVA508Compatibility.pas',
+  OR2006Compatibility in '..\..\Source\OR2006Compatibility.pas' {frm2006Compatibility},
+  ORDtTmRng in '..\..\Source\ORDtTmRng.pas' {ORfrmDateRange},
+  ORDtTmCal in '..\..\Source\ORDtTmCal.pas',
+  ORDtTm in '..\..\Source\ORDtTm.pas' {ORfrmDtTm},
+  ORRadioCheck in '..\..\Source\ORRadioCheck.pas',
+  ORSplitter in '..\..\Source\ORSplitter.pas',
+  ORNetIntf in '..\..\Source\ORNetIntf.pas',
+  ORNetMult in '..\..\Source\ORNetMult.pas',
+  Vawrgrid in '..\..\Source\Vawrgrid.pas',
+  XMLUtils in '..\..\Source\XMLUtils.pas',
+  MSXML_TLB in '..\..\Source\MSXML_TLB.pas',
+  ORDtTmListBox in '..\..\Source\ORDtTmListBox.pas',
+  ORUnitTesting in '..\..\Source\ORUnitTesting.pas';
+end.
+
+

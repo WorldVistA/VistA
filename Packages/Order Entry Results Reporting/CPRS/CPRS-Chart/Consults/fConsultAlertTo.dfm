@@ -66,7 +66,7 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
       ItemHeight = 13
       ItemTipColor = clWindow
       ItemTipEnable = True
-      ListItemsOnly = True
+      ListItemsOnly = False
       LongList = True
       LookupPiece = 2
       MaxLength = 0
@@ -79,6 +79,7 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
       OnMouseClick = cboSrcListMouseClick
       OnNeedData = cboSrcListNeedData
       CharsNeedMatch = 1
+      UniqueAutoComplete = True
     end
     object DstList: TORListBox
       Left = 217

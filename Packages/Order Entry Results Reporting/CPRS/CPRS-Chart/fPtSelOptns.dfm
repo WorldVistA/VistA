@@ -7,7 +7,6 @@ inherited frmPtSelOptns: TfrmPtSelOptns
   ClientWidth = 190
   DefaultMonitor = dmDesktop
   Position = poDesigned
-  OnCreate = FormCreate
   ExplicitWidth = 190
   ExplicitHeight = 279
   PixelsPerInch = 96
@@ -148,11 +147,15 @@ inherited frmPtSelOptns: TfrmPtSelOptns
       SynonymChars = '<>'
       TabOrder = 1
       Text = ''
+      OnChange = cboListChange
+      OnEnter = cboListEnter
       OnExit = cboListExit
+      OnKeyDown = cboListKeyDown
       OnKeyPause = cboListKeyPause
       OnMouseClick = cboListMouseClick
       OnNeedData = cboListNeedData
       CharsNeedMatch = 1
+      UniqueAutoComplete = True
     end
     object cboDateRange: TORComboBox
       Left = 4
@@ -176,6 +179,7 @@ inherited frmPtSelOptns: TfrmPtSelOptns
       SynonymChars = '<>'
       TabOrder = 2
       Text = ''
+      OnChange = cboDateRangeChange
       OnExit = cboDateRangeExit
       OnMouseClick = cboDateRangeMouseClick
       CharsNeedMatch = 1
@@ -221,7 +225,8 @@ inherited frmPtSelOptns: TfrmPtSelOptns
         'Status = stsOK')
       (
         'Component = cboList'
-        'Status = stsDefault')
+        'Text = To select a provider use the arrow keys, then press enter'
+        'Status = stsOK')
       (
         'Component = cboDateRange'
         'Status = stsDefault')

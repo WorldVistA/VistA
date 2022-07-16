@@ -88,6 +88,8 @@ function ConsultCanBeResubmitted(ConsultIEN: integer): string;
 function LoadConsultForEdit(ConsultIEN: integer): TEditResubmitRec;
 function ResubmitConsult(EditResubmitRec: TEditResubmitRec): string;
 function SubSetOfProcedures(const StartFrom: string; Direction: Integer): TStrings;
+function setSubSetOfProcedures(aDest: TStrings;const StartFrom: string; Direction: Integer): Integer;
+
 function GetDefaultReasonForRequest(Service: string; Resolve: Boolean): TStrings;
 function ReasonForRequestEditable(Service: string): string;
 function GetNewDialog(OrderType: string): string;
@@ -521,10 +523,14 @@ end;
 
 function SubSetOfProcedures(const StartFrom: string; Direction: Integer): TStrings;
 begin
-begin
   CallV('ORWDCN32 PROCEDURES', [StartFrom, Direction]);
   Result := RPCBrokerV.Results;
 end;
+
+function setSubSetOfProcedures(aDest: TStrings;const StartFrom: string; Direction: Integer): Integer;
+begin
+  CallVistA('ORWDCN32 PROCEDURES', [StartFrom, Direction], aDest);
+  Result := aDest.Count;
 end;
 
 function LoadServiceList(Purpose: integer): TStrings ;

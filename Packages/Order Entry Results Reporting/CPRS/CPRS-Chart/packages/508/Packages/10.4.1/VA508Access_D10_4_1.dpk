@@ -1,0 +1,59 @@
+package VA508Access_D10_4_1;
+
+{$R *.res}
+{$R '..\..\Source\VA508AccessibilityManager.dcr'}
+{$R '..\..\Source\VA508ImageListLabeler.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'VA Section 508 Accessibility - 10.4.1'}
+{$DESIGNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  vcl,
+  designide,
+  vcldb,
+  VclSmp,
+  rtl,
+  VAShared_R10_4_1;
+
+contains
+  MSAAConstants in '..\..\Source\MSAAConstants.pas',
+  oleacc2 in '..\..\Source\oleacc2.pas',
+  VA508AccessibilityCompileInfo in '..\..\Source\VA508AccessibilityCompileInfo.pas',
+  VA508AccessibilityCompiler in '..\..\Source\VA508AccessibilityCompiler.pas',
+  VA508AccessibilityConst in '..\..\Source\VA508AccessibilityConst.pas',
+  VA508AccessibilityManager in '..\..\Source\VA508AccessibilityManager.pas',
+  VA508AccessibilityManagerEditor in '..\..\Source\VA508AccessibilityManagerEditor.pas',
+  VA508AccessibilityPE in '..\..\Source\VA508AccessibilityPE.pas',
+  VA508AccessibilityRouter in '..\..\Source\VA508AccessibilityRouter.pas',
+  VA508Classes in '..\..\Source\VA508Classes.pas',
+  VA508DelphiCompatibility in '..\..\Source\VA508DelphiCompatibility.pas',
+  VA508ImageListLabeler in '..\..\Source\VA508ImageListLabeler.pas',
+  VA508ImageListLabelerPE in '..\..\Source\VA508ImageListLabelerPE.pas',
+  VA508MSAASupport in '..\..\Source\VA508MSAASupport.pas',
+  VA508ScreenReaderDLLLinker in '..\..\Source\VA508ScreenReaderDLLLinker.pas';
+
+end.

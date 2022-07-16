@@ -34,6 +34,7 @@ type
     procedure DstListChange(Sender: TObject);
     procedure btnRemoveAllAlertFwrdClick(Sender: TObject);
   private
+    FCboSrcListVistaParams: TArray<string>;
     RemovingAll: boolean;
   end;
 
@@ -44,7 +45,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, uCore, VA508AccessibilityRouter, VAUtils;
+uses rCore, uCore, VA508AccessibilityRouter, VAUtils, uSimilarNames;
 
 const
     TX_DUP_RECIP = 'You have already selected that recipient.';
@@ -82,7 +83,7 @@ end;
 procedure TfrmAlertForward.cboSrcListNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboSrcListVistaParams));
 end;
 
 procedure TfrmAlertForward.cmdCancelClick(Sender: TObject);
@@ -180,19 +181,28 @@ begin
 end;
 
 procedure TfrmAlertForward.cboSrcListMouseClick(Sender: TObject);
+var
+  aErrMsg: String;
 begin
-  if cboSrcList.ItemIndex = -1 then exit;
-  if (DstList.SelectByID(cboSrcList.ItemID) <> -1) then
+  if cboSrcList.Itemindex >= 0 then begin
+    if CheckForSimilarName(cboSrcList, aErrMsg, ltPerson,
+      FCboSrcListVistaParams, sPr, '', DstList.Items) then
     begin
-      InfoBox(TX_DUP_RECIP, TX_RECIP_CAP, MB_OK or MB_ICONWARNING);
-      Exit;
+      if (DstList.SelectByID(cboSrcList.ItemID) <> -1) then
+        InfoBox(TX_DUP_RECIP, TX_RECIP_CAP, MB_OK or MB_ICONWARNING)
+      else begin
+        DstList.Items.Add(cboSrcList.Items[cboSrcList.Itemindex]);
+        if ScreenReaderSystemActive then
+        GetScreenReader.Speak(Piece(cboSrcList.Items[cboSrcList.Itemindex],U,2) +
+          ' Added to ' + DstLabel.Caption);
+      end;
+    end else begin
+      ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
     end;
-  DstList.Items.Add(cboSrcList.Items[cboSrcList.Itemindex]);
-  if ScreenReaderSystemActive then
-    GetScreenReader.Speak(Piece(cboSrcList.Items[cboSrcList.Itemindex],U,2) +
-      ' Added to ' + DstLabel.Caption);
-  btnRemoveAlertFwrd.Enabled := DstList.SelCount > 0;
-  btnRemoveAllAlertFwrd.Enabled := DstList.Items.Count > 0;
+
+    btnRemoveAlertFwrd.Enabled := DstList.SelCount > 0;
+    btnRemoveAllAlertFwrd.Enabled := DstList.Items.Count > 0;
+  end;
 end;
 
 end.

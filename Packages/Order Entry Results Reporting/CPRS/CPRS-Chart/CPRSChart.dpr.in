@@ -4,6 +4,7 @@ program CPRSChart;
 
 uses
   ShareMem,
+  MidasLib,
   Forms,
   Windows,
   WinHelpViewer,
@@ -187,7 +188,6 @@ uses
   fOMSet in 'Orders\fOMSet.pas' {frmOMSet},
   fOMVerify in 'Orders\fOMVerify.pas' {frmOMVerify},
   fOrderComment in 'Orders\fOrderComment.pas' {frmWardComments},
-  fOrderFlag in 'Orders\fOrderFlag.pas' {frmFlagOrder},
   fOrders in 'Orders\fOrders.pas' {frmOrders},
   fOrdersAlert in 'Orders\fOrdersAlert.pas' {frmAlertOrders},
   fOrderSaveQuick in 'Orders\fOrderSaveQuick.pas' {frmSaveQuickOrder},
@@ -204,7 +204,6 @@ uses
   fOrdersTS in 'Orders\fOrdersTS.pas' {frmOrdersTS},
   fOrdersUnhold in 'Orders\fOrdersUnhold.pas' {frmUnholdOrders},
   fOrdersVerify in 'Orders\fOrdersVerify.pas' {frmVerifyOrders},
-  fOrderUnflag in 'Orders\fOrderUnflag.pas' {frmUnflagOrder},
   fOrderVw in 'Orders\fOrderVw.pas' {frmOrderView},
   rODAllergy in 'Orders\rODAllergy.pas',
   rODBase in 'Orders\rODBase.pas',
@@ -310,6 +309,8 @@ uses
   fNotificationProcessor in 'fNotificationProcessor.pas' {frmNotificationProcessor},
   uInfoBoxWithBtnControls in 'uInfoBoxWithBtnControls.pas',
   fODRTC in 'Orders\fODRTC.pas' {frmODRTC},
+  mRequiredFieldsNavigator in 'Templates\mRequiredFieldsNavigator.pas' {RequiredFieldsFrame: TFrame},
+  fOptionsTIUTemplates in 'Options\fOptionsTIUTemplates.pas' {frmTIUTemplates},
   fWVEIEReasonsDlg in 'Womens Health\fWVEIEReasonsDlg.pas' {frmWVEIEReasonsDlg},
   fWVPregLacStatusUpdate in 'Womens Health\fWVPregLacStatusUpdate.pas' {frmWVPregLacStatusUpdate},
   iWVInterface in 'Womens Health\iWVInterface.pas',
@@ -356,6 +357,7 @@ uses
   oDelimitedString in 'Cover Sheet\oDelimitedString.pas',
   fOrdersPickEvent in 'Orders\fOrdersPickEvent.pas' {frmOrdersPickEvent},
   oWVWebSite in 'Womens Health\oWVWebSite.pas',
+  fSurrogateEdit in 'Options\fSurrogateEdit.pas' {frmSurrogateEdit},
   oCoverSheetGrid in 'Cover Sheet\oCoverSheetGrid.pas',
   rODRTC in 'Orders\rODRTC.pas',
   uVersionCheck in 'Utils\uVersionCheck.pas',
@@ -378,7 +380,25 @@ uses
   mDSTMgr in 'Extras\DST\mDSTMgr.pas' {frDSTMgr: TFrame},
   oDST in 'Extras\DST\oDST.pas',
   uDstConst in 'Extras\DST\uDstConst.pas',
-  uUserInfo in 'Utils\uUserInfo.pas';
+  dRequiredFields in 'Templates\dRequiredFields.pas' {dmRF: TDataModule},
+  uUserInfo in 'Utils\uUserInfo.pas',
+  rODAnatPath in 'Orders\rODAnatPath.pas',
+  fODAnatPath in 'Orders\fODAnatPath.pas' {frmODAnatPath},
+  fODAnatPathPreview in 'Orders\fODAnatPathPreview.pas' {frmAnatPathPreview},
+  mODAnatPathBuilder in 'Orders\mODAnatPathBuilder.pas' {fraAnatPathBuilder},
+  mODAnatPathSpecimen in 'Orders\mODAnatPathSpecimen.pas' {fraAnatPathSpecimen},
+  oODAnatPath in 'Orders\oODAnatPath.pas',
+  uORLists in 'Tools\uORLists.pas',
+  uSimilarNames in 'uSimilarNames.pas',
+  uOrderFlag in 'Orders\uOrderFlag.pas',
+  iOrderFlagPropertiesEditorIntf in 'Orders\iOrderFlagPropertiesEditorIntf.pas',
+  fOrderFlagEditor in 'Orders\fOrderFlagEditor.pas' {frmOrderFlag},
+  fOrderFlagNotificationRecipients in 'Orders\fOrderFlagNotificationRecipients.pas' {frmOrderFlagRecipients},
+  fOrderListManager in 'Orders\fOrderListManager.pas' {frmListManager},
+  fNewAllergyCheck in 'fNewAllergyCheck.pas' {frmNewAllergyCheck},
+  UCaptionListView508Manager in 'Tools\UCaptionListView508Manager.pas',
+  uHelpNetworkMGR in 'uHelpNetworkMGR.pas',
+  u508Extensions in 'Tools\u508Extensions.pas';
 
 {$R *.TLB}
 
@@ -400,7 +420,7 @@ begin
     frmSplash.Refresh;                            //         "
   end;
   Application.Title := 'CPRS - Patient Chart';
-  Application.HelpFile := 'help\cprs.htm';
+  Application.HelpFile := 'help\cprs.chm';
   Application.CreateForm(TdmodShared, dmodShared);
   Application.CreateForm(TfrmFrame, frmFrame);
   Application.CreateForm(TfrmSearchStop, frmSearchStop);

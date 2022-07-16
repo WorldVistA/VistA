@@ -190,7 +190,7 @@ type
     procedure Validate(var AnErrMsg: string); virtual;
     procedure updateSig; virtual;
     function ValidSave: Boolean;
-    procedure ShowOrderMessage(Show: boolean);
+    procedure ShowOrderMessage(Show: boolean); virtual;
     procedure DoShow; override;
   public
     function OrderForInpatient: Boolean;
@@ -250,6 +250,7 @@ var
 
 procedure ClearControl(AControl: TControl);
 procedure ResetControl(AControl: TControl);
+Function Shouldcancelchangeorder: boolean; //rtw
 
 implementation
 
@@ -260,10 +261,18 @@ uses fOCAccept, uODBase, rCore, rMisc, fODMessage,
   fFrame, uTemplateFields, fClinicWardMeds, fODDietLT, rODDiet, VAUtils, fODDiet,
   System.Types, uOwnerWrapper;
 
+var //rtw
+ UAPCanceled: boolean; //rtw
+
 const
   TX_ACCEPT = 'Accept the following order?' + CRLF + CRLF;
   TX_ACCEPT_CAP = 'Unsaved Order';
   TC_ORDERCHECKS = 'Order Checks';
+
+Function Shouldcancelchangeorder: boolean; //rtw
+begin
+ result := UAPCanceled;
+end; //rtw
 
 { Procedures shared with descendent forms }
 
@@ -977,18 +986,27 @@ procedure TResponses.Update(const APromptID: string; AnInstance: Integer;
 { for a given Prompt,Instance update or create the associated response object }
 var
   AResponse: TResponse;
+  ien: integer;
+
 begin
   AResponse := FindResponseByName(APromptID, AnInstance);
   if AResponse = nil then
   begin
-    AResponse := TResponse.Create;
-    AResponse.PromptID := APromptID;
-    AResponse.PromptIEN := IENForPrompt(APromptID);
-    AResponse.Instance := AnInstance;
-    FResponseList.Add(AResponse);
+    ien := IENForPrompt(APromptID);
+    if ien > 0 then
+    begin
+      AResponse := TResponse.Create;
+      AResponse.PromptID := APromptID;
+      AResponse.PromptIEN := ien;
+      AResponse.Instance := AnInstance;
+      FResponseList.Add(AResponse);
+    end;
   end;
-  AResponse.IValue := AnIValue;
-  AResponse.EValue := AnEValue;
+  if assigned(AResponse) then
+  begin
+    AResponse.IValue := AnIValue;
+    AResponse.EValue := AnEValue;
+  end;
 end;
 
 function TResponses.OrderCRC: string;
@@ -1469,6 +1487,7 @@ begin
   FPreserve   := TList.Create;
   FIsIMO      := False;          //imo
   FIsSupply   := False;
+  UAPCanceled := False; //rtw
   {This next bit is mostly for the font size.  It also sets the default size of
   order forms if it is not in the database.  This is handy if a new user wants
   to have large fonts.  However, in the general case, this will be resized
@@ -1656,6 +1675,7 @@ begin
     alreadyClosed := False;
     Self.Responses.Cancel := False;
     keepOpen := False;
+    UAPCanceled := False; // rtw
     if frmOrders <> nil then
     begin
       if (frmOrders.TheCurrentView <> nil) and
@@ -1825,6 +1845,7 @@ procedure TfrmODBase.cmdQuitClick(Sender: TObject);
 begin
   inherited;
   FFromQuit := True;
+  UAPCanceled := True;  //rtw
   Close;
 end;
 

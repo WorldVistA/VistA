@@ -7,7 +7,6 @@ inherited frmDCSumm: TfrmDCSumm
   ClientWidth = 679
   HelpFile = 'overvw'
   Menu = mnuSumms
-  OnDestroy = FormDestroy
   ExplicitWidth = 695
   ExplicitHeight = 441
   PixelsPerInch = 96
@@ -388,8 +387,8 @@ inherited frmDCSumm: TfrmDCSumm
         InfoMessage.AlignWithMargins = True
         InfoMessage.Left = 3
         InfoMessage.Top = 3
-        InfoMessage.Width = 498
-        InfoMessage.Height = 56
+        InfoMessage.Width = 473
+        InfoMessage.Height = 49
         InfoMessage.Align = alClient
         InfoMessage.Font.Charset = ANSI_CHARSET
         InfoMessage.Font.Color = clWindowText
@@ -405,6 +404,8 @@ inherited frmDCSumm: TfrmDCSumm
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
+        InfoMessage.ExplicitWidth = 498
+        InfoMessage.ExplicitHeight = 56
         InfoSelector.AlignWithMargins = True
         InfoSelector.Left = 3
         InfoSelector.Top = 3
@@ -588,8 +589,8 @@ inherited frmDCSumm: TfrmDCSumm
         InfoMessage.AlignWithMargins = True
         InfoMessage.Left = 3
         InfoMessage.Top = 3
-        InfoMessage.Width = 498
-        InfoMessage.Height = 56
+        InfoMessage.Width = 473
+        InfoMessage.Height = 49
         InfoMessage.Align = alClient
         InfoMessage.Font.Charset = ANSI_CHARSET
         InfoMessage.Font.Color = clWindowText
@@ -605,6 +606,8 @@ inherited frmDCSumm: TfrmDCSumm
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
+        InfoMessage.ExplicitWidth = 498
+        InfoMessage.ExplicitHeight = 56
         InfoSelector.AlignWithMargins = True
         InfoSelector.Left = 3
         InfoSelector.Top = 3

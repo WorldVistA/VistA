@@ -716,32 +716,34 @@ begin
 end;
 
 procedure TfrmReview.radReleaseClick(Sender: TObject);
+var
+  AParam: string;
 begin
-  if not grpRelease.Visible then
+  if not radRelease.Visible then
     Exit;
-  if radHoldSign.Checked then
-    lblHoldSign.Visible := True
-  else
-    lblHoldSign.Visible := False;
+  AParam := GetUserParam('OR NATURE DEFAULT');
+  lblHoldSign.Visible := radHoldSign.Checked;
   if radRelease.Checked then
-    begin
-      radVerbal.Enabled := True;
-      radPhone.Enabled := True;
-      radPolicy.Enabled := True;
-      if Encounter.Provider = User.DUZ then
-        radPolicy.Checked := True
-      else
-        radVerbal.Checked := True;
-    end
+  begin
+    radVerbal.Enabled := True;
+    radPhone.Enabled := True;
+    radPolicy.Enabled := True;
+    if AParam = 'P' then
+      radPolicy.Checked := True
+    else if AParam = 'V' then
+      radVerbal.Checked := True
+    else if AParam = 'T' then
+      radPhone.Checked := True;
+  end
   else
-    begin
-      radVerbal.Enabled := False;
-      radPhone.Enabled := False;
-      radPolicy.Enabled := False;
-      radVerbal.Checked := False;
-      radPhone.Checked := False;
-      radPolicy.Checked := False;
-    end;
+  begin
+    radVerbal.Enabled := False;
+    radPhone.Enabled := False;
+    radPolicy.Enabled := False;
+    radVerbal.Checked := False;
+    radPhone.Checked := False;
+    radPolicy.Checked := False;
+  end;
 end;
 
 procedure TfrmReview.txtESCodeChange(Sender: TObject);
@@ -900,6 +902,12 @@ begin
               Nature := NO_WRITTEN;
               if User.OrderRole in [OR_CLERK, OR_NURSE] then
                 begin
+                  if radRelease.Checked and not (radPhone.Checked or radPolicy.Checked or radVerbal.Checked) then
+                    begin
+                      StatusText('');
+                      InfoBox('An option for the Nature of Orders prompt must be selected', 'Missing Value', MB_OK);
+                      Exit;
+                    end;
                   if radSignChart.Checked then
                     SigSts := SS_ONCHART
                   else

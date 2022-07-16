@@ -81,7 +81,6 @@ inherited frmOptionsLists: TfrmOptionsLists
       Height = 22
       HelpContext = 9996
       Caption = 'OK'
-      Default = True
       ModalResult = 1
       TabOrder = 0
       OnClick = btnOKClick
@@ -114,7 +113,7 @@ inherited frmOptionsLists: TfrmOptionsLists
     ItemTipEnable = True
     ListItemsOnly = False
     LongList = True
-    LookupPiece = 0
+    LookupPiece = 2
     MaxLength = 0
     Pieces = '2'
     Sorted = False
@@ -122,9 +121,13 @@ inherited frmOptionsLists: TfrmOptionsLists
     TabOrder = 1
     Text = ''
     OnChange = lstAddByChange
-    OnClick = lstAddByClick
+    OnEnter = lstAddByEnter
+    OnExit = lstAddByExit
+    OnKeyDown = lstAddByKeyDown
+    OnMouseClick = lstAddByMouseClick
     OnNeedData = lstAddByNeedData
     CharsNeedMatch = 1
+    UniqueAutoComplete = True
   end
   object btnPersonalPatientRA: TButton [7]
     Left = 167
@@ -357,7 +360,8 @@ inherited frmOptionsLists: TfrmOptionsLists
         'Status = stsDefault')
       (
         'Component = lstAddBy'
-        'Status = stsDefault')
+        'Text = To select a provider use the arrow keys, then press enter'
+        'Status = stsOK')
       (
         'Component = btnPersonalPatientRA'
         'Status = stsDefault')

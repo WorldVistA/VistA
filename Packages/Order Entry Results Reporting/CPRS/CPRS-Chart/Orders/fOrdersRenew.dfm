@@ -9,10 +9,8 @@ inherited frmRenewOrders: TfrmRenewOrders
   ClientWidth = 592
   Position = poScreenCenter
   Scaled = False
-  OnClose = FormClose
-  OnCreate = FormCreate
-  ExplicitWidth = 600
-  ExplicitHeight = 443
+  ExplicitWidth = 608
+  ExplicitHeight = 455
   PixelsPerInch = 96
   TextHeight = 13
   object hdrOrders: THeaderControl [0]
@@ -109,8 +107,8 @@ inherited frmRenewOrders: TfrmRenewOrders
     OnClick = lstOrdersClick
     OnDrawItem = lstOrdersDrawItem
     OnMeasureItem = lstOrdersMeasureItem
+    Caption = ''
     HintOnItem = True
-    ExplicitTop = 12
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
