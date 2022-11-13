@@ -63,7 +63,6 @@ object frmNotificationProcessor: TfrmNotificationProcessor
     Align = alTop
     Caption = 'stxtNotificationName'
     TabOrder = 0
-    ExplicitWidth = 104
   end
   object rbtnNewNote: TRadioButton
     AlignWithMargins = True
@@ -76,7 +75,6 @@ object frmNotificationProcessor: TfrmNotificationProcessor
     Caption = 'Create New Note'
     TabOrder = 2
     OnClick = NewOrAddendClick
-    ExplicitWidth = 539
   end
   object rbtnAddendOneOfTheFollowing: TRadioButton
     AlignWithMargins = True
@@ -89,7 +87,6 @@ object frmNotificationProcessor: TfrmNotificationProcessor
     Caption = 'Addend one of the following notes'
     TabOrder = 3
     OnClick = NewOrAddendClick
-    ExplicitWidth = 539
   end
   object lbxCurrentNotesAvailable: TListBox
     AlignWithMargins = True
@@ -104,18 +101,17 @@ object frmNotificationProcessor: TfrmNotificationProcessor
     OnClick = NewOrAddendClick
   end
   object btnCancel: TButton
-    Left = 465
+    Left = 450
     Top = 329
-    Width = 123
+    Width = 138
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = '&Return to Notifications'
     ModalResult = 2
     TabOrder = 5
-    ExplicitLeft = 414
   end
   object btnOK: TButton
-    Left = 384
+    Left = 369
     Top = 329
     Width = 75
     Height = 25
@@ -124,7 +120,6 @@ object frmNotificationProcessor: TfrmNotificationProcessor
     ModalResult = 1
     TabOrder = 6
     OnClick = btnOKClick
-    ExplicitLeft = 333
   end
   object btnDefer: TButton
     Left = 8

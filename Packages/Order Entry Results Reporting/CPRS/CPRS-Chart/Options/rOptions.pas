@@ -2,11 +2,12 @@ unit rOptions;
 {------------------------------------------------------------------------------
 Update History
     2015/11/30: NSR#20071216 (Update Surrogate Management Functionality within CPRS GUI )
+    2016/02/15: NSR#20081008 (CPRS Notification Alert Processing Improvement)
 -------------------------------------------------------------------------------}
 
 interface
 
-uses SysUtils, Classes, ORNet, ORFn, uCore, rCore, rTIU, rConsults, System.JSON;
+uses SysUtils, Classes, ORNet, ORFn, uCore, rCore, rTIU, rConsults, ORCtrls;
 
 procedure rpcGetNotifications(aResults: TStrings);
 procedure rpcGetOrderChecks(aResults: TStrings);
@@ -24,7 +25,8 @@ function rpcGetCopyPaste: String;
 procedure rpcGetOtherTabs(aResults: TStrings);
 function rpcGetOther: String;
 procedure rpcSetOther(info: String);
-procedure rpcGetCosigners(const StartFrom: string; Direction: Integer; aResults: TStrings);
+procedure rpcGetCosigners(AORComboBox: TORComboBox; const StartFrom: string;
+  Direction: Integer; aResults: TStrings);
 function rpcGetDefaultCosigner: String;
 procedure rpcSetDefaultCosigner(value: Int64);
 function rpcGetSubject: boolean;
@@ -87,15 +89,6 @@ procedure rpcGetRangeForEncs(var StartDays, StopDays: integer; DefaultParams: Bo
 procedure rpcPutRangeForEncs(StartDays, StopDays: string);
 procedure rpcGetEncFutureDays(var FutureDays: string);
 
-/// <summary>Provides surrogates info for current user.
-/// </summary>
-/// <remarks>
-///  First line is returned as:
-///    <c>RC^Message</c> - Positive RC indicates # of returent records.
-///  The rest of the list includes surrogates descriptors as:
-///    <c>DFN^Name^FromDate^UntilDate</c>
-///
-///  NOTE: Dates are returned in FileMan format
 
 /// <summary>Loads/Saves Required fields processing preferences
 /// <para>Supported actions:</para><para><c>LDPREF</c> - loading preferences from server</para>
@@ -106,10 +99,21 @@ procedure rpcGetEncFutureDays(var FutureDays: string);
 /// <remarks>
 /// Use blank value of <c>aData</c> with <c>LDPREF</c> action
 /// </remarks>
-procedure rpcGetSurrogateInfoList(const aResult:TStrings);
-/// <summary>Provides number of days prior to purge the processed alert
 function rpcGetSetRequiredFieldsPreferences(anAction,aData:String):String; // NSR20100706 AA 2015/10/08
 
+/// <summary>Provides surrogates info for current user.
+/// </summary>
+/// <remarks>
+///  First line is returned as:
+///    <c>RC^Message</c> - Positive RC indicates # of returent records.
+///  The rest of the list includes surrogates descriptors as:
+///    <c>DFN^Name^FromDate^UntilDate</c>
+///
+///  NOTE: Dates are returned in FileMan format
+/// </remarks>
+procedure rpcGetSurrogateInfoList(const aResult:TStrings);
+
+/// <summary>Provides number of days prior to purge the processed alert
 /// </summary>
 /// <remarks>
 ///  No parameters needed. The default value returned is 30 (days)
@@ -138,6 +142,8 @@ implementation
 
 //..............................................................................
 
+
+uses uSimilarNames;
 procedure rpcGetNotifications(aResults: TStrings);
 begin
   CallVistA('ORWTPP GETNOT', [nil], aResults);
@@ -169,11 +175,6 @@ begin
   ok := Piece(value, '^', 1) = '1';
   msg := Piece(value, '^', 2);
 end;
-
-(*procedure rpcSetSurrogateInfo(aString: String);
-begin
-  CallV('ORWTPP SAVESURR', [aString]);
-end;*)
 
 procedure rpcSetSurrogateInfo(aString: String; var ok: boolean; var msg: string);
 var
@@ -232,9 +233,10 @@ begin
   CallVistA('ORWTPP SETOTHER', [info]);
 end;
 
-procedure rpcGetCosigners(const StartFrom: string; Direction: Integer; aResults: TStrings);
+procedure rpcGetCosigners(AORComboBox: TORComboBox; const StartFrom: string;
+  Direction: Integer; aResults: TStrings);
 begin
-  CallVistA('ORWTPP GETCOS', [StartFrom, Direction], aResults);
+  SNCallVistA(AORComboBox, SN_ORWTPP_GETCOS, [StartFrom, Direction], aResults);
   MixedCaseList(aResults);
 end;
 
@@ -728,6 +730,7 @@ begin
   end;
 end;
 // NSR20100706 AA 2015/10/08 ----------------------------------------------- end
+
 // NSR20071216 AA 2015/11/30 ----------------------------------------------- begin
 //NSR20071216 mnj- RPC 'ORWTPP GETSURRS' addded to return multiple Surrogates.
 //                 Ty created new RCP from RPC 'ORWTPP GETSURR'
@@ -765,4 +768,5 @@ begin
   CallVistA('ORWTPR GETARCHP',[],sResult);
   Result := StrToIntDef(sResult, 30);
 end;
+
 end.

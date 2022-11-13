@@ -26,6 +26,7 @@ object frmDebugReport: TfrmDebugReport
     Align = alLeft
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitHeight = 300
     object img1: TImage
       Left = 0
       Top = 0
@@ -2267,6 +2268,7 @@ object frmDebugReport: TfrmDebugReport
     BevelOuter = bvNone
     Color = 2796324
     TabOrder = 1
+    ExplicitHeight = 300
     object splUser: TSplitter
       Left = 0
       Top = 121
@@ -2299,6 +2301,7 @@ object frmDebugReport: TfrmDebugReport
       Padding.Right = 5
       Padding.Bottom = 5
       TabOrder = 1
+      ExplicitHeight = 131
       object lbl2: TLabel
         AlignWithMargins = True
         Left = 9
@@ -2329,6 +2332,7 @@ object frmDebugReport: TfrmDebugReport
         ScrollBars = ssVertical
         TabOrder = 0
         OnChange = ActionMemoChange
+        ExplicitHeight = 97
       end
     end
     object pnl1: TPanel
@@ -2376,9 +2380,7 @@ object frmDebugReport: TfrmDebugReport
         Font.Style = []
         Lines.Strings = (
           'Provide a brief description below of why you are creating this '
-          
-            'debug report. Once the report is finished a mail man message wil' +
-            'l'
+          'debug report. Once the report is finished a mail man message will'
           'be delivered to your CAC group (G.OR CACS) informing them on'
           'how to retrieve this information.')
         ParentFont = False
@@ -2396,6 +2398,7 @@ object frmDebugReport: TfrmDebugReport
       BevelOuter = bvNone
       Color = 2796324
       TabOrder = 2
+      ExplicitTop = 259
       DesignSize = (
         420
         41)
@@ -2508,6 +2511,7 @@ object frmDebugReport: TfrmDebugReport
       Height = 19
       Align = alBottom
       TabOrder = 0
+      ExplicitTop = 22
     end
   end
 end

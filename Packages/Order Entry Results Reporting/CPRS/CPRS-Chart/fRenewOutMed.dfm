@@ -2,21 +2,19 @@ inherited frmRenewOutMed: TfrmRenewOutMed
   Left = 334
   Top = 436
   Caption = 'Change Refills for Outpatient Medication'
-  ClientHeight = 200
-  ClientWidth = 356
+  ClientHeight = 205
+  ClientWidth = 463
   OldCreateOrder = True
   Position = poScreenCenter
-  OnCreate = FormCreate
-  OnShow = FormShow
-  ExplicitWidth = 364
-  ExplicitHeight = 227
+  ExplicitWidth = 481
+  ExplicitHeight = 250
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object memOrder: TCaptionMemo [0]
     Left = 0
     Top = 0
-    Width = 356
-    Height = 95
+    Width = 463
+    Height = 100
     TabStop = False
     Align = alClient
     Color = clBtnFace
@@ -27,18 +25,17 @@ inherited frmRenewOutMed: TfrmRenewOutMed
   end
   object pnlButtons: TPanel [1]
     Left = 0
-    Top = 159
-    Width = 356
+    Top = 164
+    Width = 463
     Height = 41
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitTop = 165
     DesignSize = (
-      356
+      463
       41)
     object cmdOK: TButton
-      Left = 170
+      Left = 277
       Top = 7
       Width = 72
       Height = 27
@@ -49,7 +46,7 @@ inherited frmRenewOutMed: TfrmRenewOutMed
       OnClick = cmdOKClick
     end
     object cmdCancel: TButton
-      Left = 248
+      Left = 355
       Top = 7
       Width = 103
       Height = 27
@@ -62,37 +59,53 @@ inherited frmRenewOutMed: TfrmRenewOutMed
   end
   object pnlMiddle: TPanel [2]
     Left = 0
-    Top = 95
-    Width = 356
+    Top = 100
+    Width = 463
     Height = 64
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
     object lblPickup: TLabel
-      Left = 100
-      Top = 7
-      Width = 38
-      Height = 13
+      Left = 272
+      Top = 12
+      Width = 47
+      Height = 16
       Caption = 'Pick Up'
     end
     object lblRefills: TLabel
-      Left = 8
-      Top = 7
-      Width = 28
-      Height = 13
+      Left = 184
+      Top = 10
+      Width = 37
+      Height = 16
       Caption = 'Refills'
     end
+    object lblDays: TLabel
+      Left = 16
+      Top = 10
+      Width = 77
+      Height = 16
+      Caption = 'Days Supply'
+    end
+    object lblQuantity: TLabel
+      Left = 112
+      Top = 10
+      Width = 48
+      Height = 16
+      Caption = 'Quantity'
+      ParentShowHint = False
+      ShowHint = True
+    end
     object cboPickup: TORComboBox
-      Left = 100
-      Top = 31
+      Left = 272
+      Top = 34
       Width = 125
-      Height = 21
+      Height = 24
       Style = orcsDropDown
       AutoSelect = True
       Caption = 'Pick Up'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = True
@@ -102,17 +115,71 @@ inherited frmRenewOutMed: TfrmRenewOutMed
       Pieces = '2'
       Sorted = False
       SynonymChars = '<>'
-      TabOrder = 2
+      TabOrder = 9
       Text = ''
       CharsNeedMatch = 1
     end
     object txtRefills: TCaptionEdit
-      Left = 8
-      Top = 31
+      Left = 184
+      Top = 32
       Width = 49
-      Height = 21
-      TabOrder = 1
+      Height = 24
+      TabOrder = 4
+      Text = '0'
+      OnChange = txtRefillsChange
+      OnClick = txtRefillsClick
       Caption = 'Refills'
+    end
+    object txtSupply: TCaptionEdit
+      Left = 16
+      Top = 32
+      Width = 60
+      Height = 24
+      AutoSize = False
+      TabOrder = 0
+      Text = '0'
+      OnChange = txtSupplyChange
+      OnClick = txtSupplyClick
+      Caption = 'Days Supply'
+    end
+    object spnQuantity: TUpDown
+      Left = 152
+      Top = 32
+      Width = 16
+      Height = 24
+      Associate = txtQuantity
+      Max = 32766
+      TabOrder = 3
+    end
+    object spnSupply: TUpDown
+      Left = 76
+      Top = 32
+      Width = 20
+      Height = 24
+      Associate = txtSupply
+      Max = 32766
+      TabOrder = 1
+    end
+    object txtQuantity: TCaptionEdit
+      Left = 112
+      Top = 32
+      Width = 40
+      Height = 24
+      AutoSize = False
+      TabOrder = 2
+      Text = '0'
+      OnChange = txtQuantityChange
+      OnClick = txtQuantityClick
+      Caption = 'Quantity'
+    end
+    object spnRefills: TUpDown
+      Left = 233
+      Top = 32
+      Width = 20
+      Height = 24
+      Associate = txtRefills
+      Max = 11
+      TabOrder = 5
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -140,12 +207,26 @@ inherited frmRenewOutMed: TfrmRenewOutMed
         'Status = stsDefault')
       (
         'Component = frmRenewOutMed'
+        'Status = stsDefault')
+      (
+        'Component = txtSupply'
+        'Status = stsDefault')
+      (
+        'Component = spnQuantity'
+        'Status = stsDefault')
+      (
+        'Component = spnSupply'
+        'Status = stsDefault')
+      (
+        'Component = txtQuantity'
+        'Status = stsDefault')
+      (
+        'Component = spnRefills'
         'Status = stsDefault'))
   end
   object VA508ComponentAccessibility1: TVA508ComponentAccessibility
     Component = memOrder
     OnStateQuery = VA508ComponentAccessibility1StateQuery
-    Left = 296
-    Top = 8
+    Left = 40
   end
 end

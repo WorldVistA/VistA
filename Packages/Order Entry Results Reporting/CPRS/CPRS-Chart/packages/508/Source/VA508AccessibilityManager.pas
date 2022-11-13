@@ -369,6 +369,10 @@ Function GetComponentManager(Component: TWinControl): TVA508AccessibilityManager
 
 function StrToPChar(const AString: String):PChar;
 
+{Registers a subcontrol with a 508 manager for the main control}
+procedure RegisterDynamicSubControl(aControl, aSubControl: TWinControl);
+
+
 const
   ComponentManagerSilentText = ' '; // '' does not silence the screen reader
 
@@ -1085,7 +1089,10 @@ begin
   while assigned(comp.Owner) and (comp.Owner <> Owner) do
   begin
     comp := comp.Owner;
-    Result := comp.Name + NAME_DELIM + Result;
+    if Trim(Result) = '' then
+      Result := comp.Name + NAME_DELIM + AComponent.ClassName
+    else
+      Result := comp.Name + NAME_DELIM + Result;
   end;
   if not assigned(comp.Owner) then error;
 end;
@@ -1585,7 +1592,7 @@ var
   var
     i: integer;
   begin
-    if (not assigned(Component.Parent)) or (csAcceptsControls in Component.Parent.ControlStyle) then
+    if (not assigned(Component.Parent)) or (csAcceptsControls in Component.Parent.ControlStyle) and (Trim(Component.name) <> '') then
       list.add(Component);
     for I := 0 to Component.ControlCount - 1 do
     begin
@@ -4188,6 +4195,29 @@ destructor TDFMData.Destroy;
 begin
  SetLength(Columns, 0);
  inherited;
+end;
+
+
+procedure RegisterDynamicSubControl(aControl, aSubControl: TWinControl);
+var
+  aFrm: TCustomForm;
+  fMgr: TVA508AccessibilityManager;
+  i: integer;
+begin
+  fMgr := nil;
+  aFrm := GetParentForm(aControl);
+  if not assigned(aFrm) then
+   exit;
+  for i := 0 to aFrm.ComponentCount - 1 do
+  begin
+    if aFrm.Components[i] is TVA508AccessibilityManager then
+    begin
+      fMgr := TVA508AccessibilityManager(aFrm.Components[i]);
+      break;
+    end;
+  end;
+  if assigned(fMgr) then
+    fMgr.AccessData.EnsureItemExists(aSubControl);
 end;
 
 initialization

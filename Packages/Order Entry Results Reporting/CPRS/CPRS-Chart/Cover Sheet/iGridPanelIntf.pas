@@ -3,7 +3,7 @@ unit iGridPanelIntf;
   ================================================================================
   *
   *       Application:  CPRS - Utiliies
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-04
   *
@@ -202,5 +202,9 @@ end;
 initialization
 
 TGridPanelFunctions.Create.GetInterface(IGridPanelFunctions, fGridPanelFunctions);
+
+finalization
+
+fGridPanelFunctions := nil;
 
 end.

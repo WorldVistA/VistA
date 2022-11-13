@@ -436,8 +436,8 @@ begin
             end;
           WM_KEYDOWN:
             begin
-           //   if (FObject is TRichEdit) then
-            //  begin
+              if (FObject is TRichEdit) then
+              begin
                 ShiftState := KeyDataToShiftState(Message.WParam);
                 if (ssCtrl in ShiftState) then
                 begin
@@ -475,7 +475,7 @@ begin
                       .FOwner), FObject);
                   end;
                 end;
-              //end;
+              end;
             end;
         end;
       end;

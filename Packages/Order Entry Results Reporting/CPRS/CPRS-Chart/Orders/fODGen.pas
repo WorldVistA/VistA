@@ -24,11 +24,17 @@ type
     sbxMain: TScrollBox;
     lblOrderSig: TLabel;
     VA508CompMemOrder: TVA508ComponentAccessibility;
+    gpMain: TGridPanel;
+    pnlButtons: TPanel;
+    pnlGridMessage: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cmdAcceptClick(Sender: TObject);
     procedure VA508CompMemOrderStateQuery(Sender: TObject; var Text: string);
+    procedure FormResize(Sender: TObject);
+    procedure lblOrderSigClick(Sender: TObject);
   private
+    fShowMessage: Boolean;
     FilterOut: boolean;
     TsID: string; //treating specialty id
     TSDomain: string;
@@ -49,6 +55,7 @@ type
     procedure PlaceLabel(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
     procedure TrimAllMemos;
     procedure SetComponentName(Editor: TWinControl; Index: Integer; DialogCtrl: TDialogCtrl);
+    procedure setupControls;
   protected
     FFormCloseCalled : Boolean;
     FCharHt: Integer;
@@ -63,7 +70,9 @@ type
     procedure SetDialogIEN(Value: Integer); override;
     procedure Validate(var AnErrMsg: string); override;
     procedure UpdateAccessibilityActions(var Actions: TAccessibilityActions); override;
+    procedure ShowOrderMessage(Show: boolean); override;
   public
+    procedure SetFontSize(FontSize: integer); override;
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
   end;
 
@@ -74,7 +83,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, rOrders, uConst, VAUtils;
+uses rCore, rOrders, uConst, VAUtils, uSizing, uOwnerWrapper;
 
 const
   HT_FRAME  = 8;
@@ -88,7 +97,7 @@ var
   TheEvtType: string;
   IDs,TSstr, AttendStr: string;
 begin
-  FFormCloseCalled := false;   
+  FFormCloseCalled := false;
   inherited;
   FilterOut := True;
   if Self.EvtID < 1 then
@@ -109,6 +118,17 @@ begin
   AttendID := Piece(AttendStr,'^',2);
   FDialogItemList := TList.Create;
   FDialogCtrlList := TList.Create;
+
+  AutoSizeDisabled := true;
+  setupControls;
+  fShowMessage := False;
+  ShowOrderMessage(fShowMessage);
+end;
+
+procedure TfrmODGen.FormResize(Sender: TObject);
+begin
+  inherited;
+  lblOrderSig.Top := Height - gpMain.Height - lblOrderSig.Height;
 end;
 
 procedure TfrmODGen.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -244,6 +264,15 @@ begin
       else ClearControl(Editor);
     end;
   if FFirstCtrl <> nil then ActiveControl := FFirstCtrl;
+end;
+
+procedure TfrmODGen.lblOrderSigClick(Sender: TObject);
+begin
+  inherited;
+{$IFDEF DEBUG}
+//  fShowMessage := not fShowMessage;
+//  ShowOrderMessage(fShowMessage);
+{$ENDIF}
 end;
 
 procedure TfrmODGen.VA508CompMemOrderStateQuery(Sender: TObject;
@@ -394,6 +423,7 @@ begin
     Editor.SetBounds(FEditorLeft, FEditorTop,
                      sbxMain.Width - FEditorLeft - WD_MARGIN - GetSystemMetrics(SM_CXVSCROLL),
                      HT_FRAME * FCharHt);
+    Editor.Anchors := Editor.Anchors + [akRight];
     TEdit(Editor).MaxLength := StrToIntDef(Piece(DialogItem.Domain, ':', 2), 0);
     SetComponentName(Editor, CurrentItemNumber, DialogCtrl);
   //  TCaptionEdit(Editor).Name := DialogCtrl.ID + IntToStr(CurrentItemNumber);
@@ -567,14 +597,23 @@ end;
 procedure TfrmODGen.LookupNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
 var
+  sl: TStrings;
   XRef, GblRef, ScreenRef: string;
 begin
   inherited;
   XRef := Piece(TORComboBox(Sender).RpcCall, '|', 2);
-  GblRef    := Piece(XRef, #9, 2);
+  GblRef := Piece(XRef, #9, 2);
   ScreenRef := Piece(XRef, #9, 3);
-  XRef      := Piece(XRef, #9, 1);
-  TORComboBox(Sender).ForDataUse(SubsetOfEntries(StartFrom, Direction, XRef, GblRef, ScreenRef));
+  XRef := Piece(XRef, #9, 1);
+
+  // TORComboBox(Sender).ForDataUse(SubsetOfEntries(StartFrom, Direction, XRef, GblRef, ScreenRef));
+  sl := TStringList.Create;
+  try
+    setSubsetOfEntries(sl, StartFrom, Direction, XRef, GblRef, ScreenRef);
+    TORComboBox(Sender).ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODGen.PlaceMemo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
@@ -646,14 +685,19 @@ var
   Msg: TMsg;
 
 begin
-  inherited;
-  ReleasePending := PeekMessage(Msg, Handle, CM_RELEASE, CM_RELEASE, PM_REMOVE);
+  LockOwnerWrapper(Self);
+  try
+    inherited;
+    ReleasePending := PeekMessage(Msg, Handle, CM_RELEASE, CM_RELEASE, PM_REMOVE);
 
-  TrimAllMemos;
-  Application.ProcessMessages;
+    TrimAllMemos;
+    Application.ProcessMessages;
 
-  if ReleasePending then
-    Release;
+    if ReleasePending then
+      Release;
+  finally
+    UnlockOwnerWrepper(Self);
+  end;
 end;
 
 procedure TfrmODGen.ControlChange(Sender: TObject);
@@ -707,5 +751,100 @@ begin
  end;
 end;
 
-end.
+procedure TfrmODGen.ShowOrderMessage(Show: boolean);
+begin
+  fShowMessage := Show;
 
+  pnlGridMessage.Visible := Show;
+  memMessage.TabStop := Show;
+  if Show then
+    pnlGridMessage.Top := Height - pnlGridMessage.Height;
+
+  lblOrderSig.Top := gpMain.Top - lblOrderSig.Height;
+
+  pnlMessage.BringToFront;
+  pnlMessage.Visible := True;
+
+  Invalidate;
+end;
+
+procedure TfrmODGen.SetupControls;
+//var
+// i: Integer;
+begin
+  // Move inherited controls onto the TGridPanel
+  gpMain.ControlCollection.BeginUpdate;
+  try
+    gpMain.ControlCollection.AddControl(memOrder, 0, 0);
+    memOrder.Parent := gpMain;
+    memOrder.Align := alClient;
+    memOrder.AlignWithMargins := True;
+
+    gpMain.ControlCollection.AddControl(pnlButtons, 1, 0);
+    pnlButtons.Parent := gpMain;
+    pnlButtons.Align := alClient;
+
+    cmdAccept.Parent := pnlButtons;
+    cmdAccept.Align := alTop;
+    cmdAccept.AlignWithMargins := True;
+    cmdQuit.Parent := pnlButtons;
+    cmdQuit.Align := alTop;
+    cmdQuit.AlignWithMargins := True;
+  finally
+    gpMain.ControlCollection.EndUpdate;
+  end;
+{
+  i := (getMainFormTextHeight + 10) * 4 + 8;
+  if gpMain.RowCollection[0].Value < i then
+    begin
+      gpMain.Height := i;
+      gpMain.RowCollection[0].Value := i;
+    end;
+  constraints.MinHeight := i * 4;
+
+  pnlGridMessage.Height := gpMain.Height;
+
+  i := getMainFormTextWidth('Accept Order') + 24;
+  if gpMain.ColumnCollection[1].Value < i then
+    gpMain.ColumnCollection[1].Value := i;
+
+  constraints.MinWidth := i * 8;
+}
+  setFontSize(0);
+
+  pnlGridMessage.Margins.Right := round(gpMain.ColumnCollection[1].Value);
+
+  pnlMessage.Parent := pnlGridMessage;
+  pnlMessage.Align := alClient;
+  pnlMessage.AlignWithMargins := True;
+
+end;
+
+procedure TfrmODGen.SetFontSize(FontSize: integer);
+var
+ i: Integer;
+begin
+  Font.Size := FontSize;
+  memMessage.DefAttributes.Size := FontSize;
+
+  gpMain.ControlCollection.BeginUpdate;
+  i := (getMainFormTextHeight + 10) * 4 + 8;
+  if gpMain.RowCollection[0].Value < i then
+    begin
+      gpMain.Height := i;
+      gpMain.RowCollection[0].Value := i;
+    end;
+  constraints.MinHeight := i * 4;
+
+  pnlGridMessage.Height := gpMain.Height;
+
+  i := getMainFormTextWidth('Accept Order') + 24;
+  if gpMain.ColumnCollection[1].Value < i then
+    gpMain.ColumnCollection[1].Value := i;
+
+  constraints.MinWidth := i * 8;
+  gpMain.ControlCollection.EndUpdate;
+
+end;
+
+end.

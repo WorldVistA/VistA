@@ -1,11 +1,16 @@
 unit fNoteProps;
+{------------------------------------------------------------------------------
+Update History
 
+    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
+-------------------------------------------------------------------------------}
 interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORDtTm, ORCtrls, ExtCtrls, rTIU, uConst, uTIU, ORFn, ORNet,
-  ComCtrls, Buttons, fBase508Form, VA508AccessibilityManager;
+  ComCtrls, Buttons, fBase508Form, VA508AccessibilityManager
+  ,u508Extensions;
 
 type
   {This object holds a List of Actions as Returned VIA the RPCBroker}
@@ -16,7 +21,7 @@ type
     //procedure to show the Action in a ListView, requires a listview parameter
     procedure ShowActionsOnList(DisplayList : TCaptionListView);
     //procedure to load the actions, this will call the RPC
-    procedure Load(TitleIEN : Int64; DFN : String);
+    function Load(aDest: TStrings; TitleIEN : Int64; DFN : String): Integer;
     //returns true if the Action at the Index passed is associated with a note
     function SelActionHasNote(lstIndex : integer) : boolean;
     //return the Action IEN at the Index passed
@@ -36,8 +41,8 @@ type
     cboAuthor: TORComboBox;
     lblCosigner: TLabel;
     cboCosigner: TORComboBox;
-    cmdOK: TButton;
-    cmdCancel: TButton;
+    cmdOK: u508Extensions.TButton;
+    cmdCancel: u508Extensions.TButton;
     pnlConsults: TPanel;
     bvlConsult: TBevel;
     cboProcSummCode: TORComboBox;
@@ -54,13 +59,13 @@ type
     lblSurgery2: TStaticText;
     lstSurgery: TCaptionListView;
     pnlCTop: TPanel;
-    pnlCButtons: TPanel;
     pnlCText: TPanel;
     lblConsult1: TLabel;
     lblConsult2: TLabel;
-    btnShowList: TButton;
-    btnDetails: TButton;
+    btnShowList: u508Extensions.TButton;
+    btnDetails: u508Extensions.TButton;
     lstRequests: TCaptionListView;
+    gpMain: TGridPanel;
     procedure cboNewTitleNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure NewPersonNeedData(Sender: TObject; const StartFrom: String;
@@ -78,12 +83,16 @@ type
     procedure cboCosignerNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure btnShowListClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
     procedure calNoteEnter(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnDetailsClick(Sender: TObject);
     procedure CaptionListView1Change(Sender: TObject; Item: TListItem;
       Change: TItemChange);
+    procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
+    FCheckDefault: boolean;
     FIsNewNote : Boolean;     // Is set at the begining of the function: ExecuteNoteProperties
     FCosignIEN: Int64;      // store cosigner that was passed in
     FCosignName: string;    // store cosigner that was passed in
@@ -104,16 +113,23 @@ type
     FCPStatusFlag: integer;
     FPRFActions : TPRFActions;
     FStarting: boolean;
+    FFirstCosignerAssign: boolean;
     procedure SetCosignerRequired(DoSetup: boolean);
     procedure FormatRequestList;
     procedure ShowRequestList(ShouldShow: Boolean);
     procedure ShowSurgCaseList(ShouldShow: Boolean);
     procedure ShowPRFList(ShouldShow: Boolean);
     procedure ShowClinProcFields(YesNo: boolean);
-    procedure SetGenericFormSize;
+    function getGenericFormSize: Integer;
     procedure SelectNoteTitle;
+    procedure Init508;
+    procedure UMCheckDefault(var Message: TMessage); message UM_MISC;
+    procedure SetPanelVisible(Panel: TPanel; IsVisible: boolean);
+    procedure UpdateConsultsPanel;
   public
     { Public declarations }
+  protected
+    procedure SetFontSize(NewFontSize:Integer);// override;
   end;
 
 
@@ -133,8 +149,8 @@ implementation
 
 {$R *.DFM}
 
-uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter, VAUtils,
-  uSimilarNames;
+uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter,
+  uORLists, uSimilarNames, VAUtils, uSizing, UCaptionListView508Manager;
 
 { Initial values in ANote
 
@@ -203,15 +219,40 @@ function ExecuteNoteProperties(var ANote: TEditNoteRec; CallingTab: integer; IDN
           IsNewIDEntry: boolean; AClassName: string; CPStatusFlag: integer): Boolean;
 var
   frmNoteProperties: TfrmNoteProperties;
+  MarginW,MarginH: Integer;
+
 begin
   frmNoteProperties := TfrmNoteProperties.Create(Application);
-  frmNoteProperties.Font.Assign(Screen.IconFont);
+  // GN_ResizeAnchoredFormToFont(frmNoteProperties);
+  frmNoteProperties.Font.Assign(Application.MainForm.Font);
+// [#VISTAOR-25966] ------------------------------------------------------ begin
+// Fixing issues with redrawing TORComboBox components for font.size 8.
+// Changed font has size different from the one of the main form.
+// Later call to ResizeAnchoredFormToFont will update font size,
+// reposition and correctly redraw components.
+// Remove this fix after TORComponent drawing is corrected;
+  frmNoteProperties.Font.Size := 6;
+// [#VISTAOR-25966] -------------------------------------------------------- end
   frmNoteProperties.FIsNewNote := ANote.IsNewNote;
   uConsultsList := TStringList.Create;
+
+  with frmNoteProperties.gpMain do
+    begin
+      MarginW := 2 * 6; //uGN_Utils._MarginW;
+      MarginH := 2 * 3; //uGN_Utils._MarginH;
+      ColumnCollection[0].Value := getMainFormTextWidth(frmNoteProperties.lblNewTitle.Caption) + MarginW ;
+      ColumnCollection[3].Value := getMainFormTextWidth(frmNoteProperties.btnDetails.Caption) + MarginW;
+
+      RowCollection[0].Value := getMainFormTextHeight + MarginH;
+      RowCollection[2].Value := RowCollection[0].Value;
+      RowCollection[3].Value := RowCollection[0].Value;
+      RowCollection[4].Value := RowCollection[0].Value;
+    end;
   try
     ResizeAnchoredFormToFont(frmNoteProperties);
     with frmNoteProperties do
     begin
+      setFontSize(Application.MainForm.Font.Size);
       // setup common fields (title, reference date, author)
       FToday := FloatToStr(FMToday);
       FCallingTab := CallingTab;
@@ -294,9 +335,10 @@ begin
       FDocType          := ANote.DocType;
      // FLastCosigner     := ANote.LastCosigner;
      // FLastCosignerName := ANote.LastCosignerName;
+      FFirstCosignerAssign := True;
       SetCosignerRequired(True);
       // setup package fields
-      SetGenericFormSize;
+      ClientHeight := getGenericFormSize;
       case FCallingTab of
         CT_CONSULTS:  begin
                         ShowRequestList(False);
@@ -456,7 +498,8 @@ begin
             MB_ICONWARNING or MB_YESNO or MB_DEFBUTTON2) = IDNO);
         if WantsToCompleteConsult and (not ConsultTitle) then
           cboNewTitle.ItemIndex := -1;
-        SetGenericFormSize;
+//        SetGenericFormSize;               // v31b264
+//        ClientHeight := getGenericFormSize; // T11
         ShowRequestList(WantsToCompleteConsult or ConsultTitle);
         ShowSurgCaseList(IsSurgeryTitle(cboNewTitle.ItemIEN));
         ShowPRFList(IsPRFTitle(cboNewTitle.ItemIEN));
@@ -488,9 +531,18 @@ begin
           FCosignIEN  := FLastCosigner;
           FCosignName := FLastCosignerName;
         end; }
-        if FCosignIEN = 0 then DefaultCosigner(FCosignIEN, FCosignName);
+        if FCosignIEN = 0 then
+        begin
+          DefaultCosigner(FCosignIEN, FCosignName);
+          FFirstCosignerAssign := True;
+        end;
         cboCosigner.InitLongList(FCosignName);
         if FCosignIEN > 0 then cboCosigner.SelectByIEN(FCosignIEN);
+        if FFirstCosignerAssign then
+        begin
+          TSimilarNames.RegORComboBox(cboCosigner);
+          FFirstCosignerAssign := False;
+        end;
       end
       else   // if lblCosigner not visible, clear values  {v19.10 - RV}
       begin
@@ -499,7 +551,6 @@ begin
         cboCosigner.ItemIndex := -1;
       end;
     end;
-  TSimilarNames.RegORComboBox(cboCosigner);
 end;
 
 procedure TfrmNoteProperties.ShowRequestList(ShouldShow: Boolean);
@@ -514,11 +565,14 @@ var
 begin
   ShouldShow := ShouldShow and (FCallingTab = CT_NOTES);
   if FDocType = TYP_ADDENDUM then ShouldShow := False;
-  pnlConsults.Visible := ShouldShow;
+{$IFDEF GROUPNOTES}
+  ShouldShow := False;
+{$ENDIF}
+  SetPanelVisible(pnlConsults, ShouldShow);
   if ShouldShow then
   begin
     SavedIEN := lstRequests.ItemIEN;
-    ClientHeight := cboCosigner.Top + cboCosigner.Height + PIXEL_SPACE + pnlConsults.Height;
+//    ClientHeight := cboCosigner.Top + cboCosigner.Height + PIXEL_SPACE + pnlConsults.Height;
     lstRequests.Items.Clear;
     if uConsultsList.Count = 0 then ListConsultRequests(uConsultsList);
     if uShowUnresolvedOnly then
@@ -534,6 +588,7 @@ begin
       FastAssign(uConsultsList, lstRequests.ItemsStrings);
     end;
     lblConsult1.Visible := (cboNewTitle.ItemIndex > -1);
+    UpdateConsultsPanel;
     lstRequests.SelectByIEN(SavedIEN);
     btnDetails.Enabled := Assigned(lstRequests.Selected);
     //update 508
@@ -550,16 +605,34 @@ procedure TfrmNoteProperties.ShowSurgCaseList(ShouldShow: Boolean);
 var
  item: TVA508AccessibilityItem;
 begin
-  pnlSurgery.Visible := ShouldShow;
   if FDocType = TYP_ADDENDUM then ShouldShow := False;
+  SetPanelVisible(pnlSurgery, ShouldShow);
   if ShouldShow then
   begin
-    ClientHeight := cboCosigner.Top + cboCosigner.Height + PIXEL_SPACE + pnlSurgery.Height;
+//    ClientHeight := getGenericFormSize + pnlSurgery.Height;
     if lstSurgery.Items.Count = 0 then ListSurgeryCases(lstSurgery.ItemsStrings);
     item := amgrMain.AccessData.FindItem(lstSurgery, False);
     amgrMain.AccessData[item.Index].AccessText := lblSurgery1.Caption + ' ' + lblSurgery2.Caption;
   end;
 
+end;
+
+procedure TfrmNoteProperties.UMCheckDefault(var Message: TMessage);
+begin
+  FLastTitle := -1;
+  SelectNoteTitle;
+end;
+
+procedure TfrmNoteProperties.UpdateConsultsPanel;
+var
+  Needed: Integer;
+
+begin
+  Needed := lblConsult1.Height + lblConsult1.Margins.Top + lblConsult1.Margins.Bottom;
+  if lblConsult1.Visible then
+    Needed := Needed * 2;
+  inc(Needed, 11);
+  pnlCTop.Height := Needed;
 end;
 
 { cboNewTitle events }
@@ -611,8 +684,19 @@ end;
 
 procedure TfrmNoteProperties.NewPersonNeedData(Sender: TObject; const StartFrom: String;
   Direction, InsertAt: Integer);
+var
+  sl: TStrings;
+  cbo: TORComboBox;
+
 begin
-  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    cbo := (Sender as TORComboBox);
+    setSubSetOfPersons(cbo, sl, StartFrom, Direction);
+    cbo.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmNoteProperties.cboAuthorEnter(Sender: TObject);
@@ -628,6 +712,7 @@ end;
 
 procedure TfrmNoteProperties.cboAuthorExit(Sender: TObject);
 begin
+  inherited;
   if cboAuthor.ItemIEN <> FLastAuthor then cboAuthorMouseClick(Self);
 end;
 
@@ -718,7 +803,7 @@ begin
   if cboAuthor.ItemIEN = 0 then
     ErrMsg := ErrMsg + TX_REQ_AUTHOR
   else begin
-    if not CheckForSimilarName(cboAuthor, spErrMsg, ltPerson, sPr) then
+    if not CheckForSimilarName(cboAuthor, spErrMsg, sPr) then
     begin
       if trim(spErrMsg) = '' then
         spErrMsg := TX_REQ_AUTHOR
@@ -728,31 +813,29 @@ begin
     end;
   end;
 
-  if not calNote.IsValid then ErrMsg := ErrMsg + TX_REQ_REFDATE;
+  if not calNote.IsValid     then ErrMsg := ErrMsg + TX_REQ_REFDATE;
   if calNote.IsValid and (calNote.FMDateTime > FMNow)    then ErrMsg := ErrMsg + TX_NO_FUTURE;
-
   if cboCosigner.Visible then
-  begin
-    if (cboCosigner.ItemIEN = 0) then
-      ErrMsg := ErrMsg + TX_REQ_COSIGNER
-    else begin
-      if not CheckForSimilarName(cboCosigner, spErrMsg, ltPerson, sPr, FToday) then
-      begin
-        if trim(spErrMsg) = '' then
-          spErrMsg := TX_REQ_COSIGNER
-        else
-          spErrMsg := CRLF + spErrMsg;
-        ErrMsg := ErrMsg + CRLF + spErrMsg;
-      end;
+    begin
+       if (cboCosigner.ItemIEN = 0) then
+        ErrMsg := ErrMsg + TX_REQ_COSIGNER
+       else begin
+        if not CheckForSimilarName(cboCosigner, spErrMsg, sPr) then
+        begin
+          if trim(spErrMsg) = '' then
+            spErrMsg := TX_REQ_COSIGNER
+          else
+            spErrMsg := CRLF + spErrMsg;
+          ErrMsg := ErrMsg + CRLF + spErrMsg;
+        end;
+       end;
+      //if (cboCosigner.ItemIEN = User.DUZ) then ErrMsg := TX_COS_SELF;  // (CanCosign will do this check)
+      if (cboCosigner.ItemIEN > 0) and not CanCosign(cboNewTitle.ItemIEN, FDocType, cboCosigner.ItemIEN, calNote.FMDateTime)
+        then ErrMsg := cboCosigner.Text + TX_COS_AUTH;
+        //code added 02/2003  check if User is Inactive   GRE
+        if UserInactive(IntToStr(cboCosigner.ItemIEN)) then
+        if (InfoBox({fNoteProps.}TX_USER_INACTIVE, TC_INACTIVE_USER, MB_OKCANCEL)= IDCANCEL) then exit;
     end;
-    //if (cboCosigner.ItemIEN = User.DUZ) then ErrMsg := TX_COS_SELF;  // (CanCosign will do this check)
-    if (cboCosigner.ItemIEN > 0) and not CanCosign(cboNewTitle.ItemIEN, FDocType, cboCosigner.ItemIEN, calNote.FMDateTime)
-      then ErrMsg := cboCosigner.Text + TX_COS_AUTH;
-      //code added 02/2003  check if User is Inactive   GRE
-      if UserInactive(IntToStr(cboCosigner.ItemIEN)) then
-      if (InfoBox(fNoteProps.TX_USER_INACTIVE, TC_INACTIVE_USER, MB_OKCANCEL)= IDCANCEL) then exit;
-  end;
-
   if FIsClinProcNote then
     begin
       if (FCPStatusFlag = CP_INSTR_INCOMPLETE) then
@@ -774,6 +857,9 @@ begin
             end;
         end;
     end;
+
+  AlertMsg := Trim(AlertMsg);
+
   if ShowMsgOn(Length(ErrMsg) > 0, ErrMsg, TC_REQ_FIELDS)
     then Exit
     else ModalResult := mrOK;
@@ -791,16 +877,35 @@ end;
 
 procedure TfrmNoteProperties.cboCosignerNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
+  cbo: TORComboBox;
+
 begin
-  (Sender as TORComboBox).ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FToday));
+  sl := TStringList.Create;
+  try
+    cbo := (Sender as TORComboBox);
+    setSubSetOfUsersWithClass(cbo, sl, StartFrom, Direction, FToday);
+    cbo.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmNoteProperties.ShowClinProcFields(YesNo: boolean);
+var
+  i: Double;
 begin
   lblProcSummCode.Visible := YesNo;
   cboProcSummCode.Visible := YesNo;
   lblProcDateTime.Visible := YesNo;
   calProcDateTime.Visible := YesNo;
+
+  i := 0.0;
+  if YesNo then
+    i := 50.0;
+  gpMain.ColumnCollection[2].Value := i;
+
 end;
 
 procedure TfrmNoteProperties.btnShowListClick(Sender: TObject);
@@ -819,9 +924,18 @@ begin
       Caption := SHOW_ALL
     else
       Caption := SHOW_UNRESOLVED;
-  with uUnresolvedConsults do if (UnresolvedConsultsExist and ShowNagScreen) then pnlConsults.Visible := TRUE;  //v26.27 (RV)
-  ShowRequestList(pnlConsults.Visible);      //v26.5 (RV)
-  //ShowRequestList(True);                   //v26.5 (RV)
+  with uUnresolvedConsults do if (UnresolvedConsultsExist and ShowNagScreen) then
+    SetPanelVisible(pnlConsults, True);
+  ShowRequestList(pnlConsults.Visible);      // v26.5 (RV)
+  // ShowRequestList(True);                  // v26.5 (RV)
+end;
+
+
+procedure TfrmNoteProperties.FormCreate(Sender: TObject);
+begin
+  inherited;
+  FCheckDefault := True;
+  Init508;
 end;
 
 procedure TfrmNoteProperties.calNoteEnter(Sender: TObject);
@@ -839,18 +953,27 @@ end;
 procedure TfrmNoteProperties.ShowPRFList(ShouldShow: Boolean);
 var
  item: TVA508AccessibilityItem;
+  sl: TStrings;
 begin
-  pnlPRF.Visible := ShouldShow and not (FDocType = TYP_ADDENDUM);
+  SetPanelVisible(pnlPRF, ShouldShow and not(FDocType = TYP_ADDENDUM));
   if pnlPRF.Visible then
   begin
-    ClientHeight := cboCosigner.Top + cboCosigner.Height + PIXEL_SPACE + pnlPRF.Height;
+//    ClientHeight := cboCosigner.Top + cboCosigner.Height + PIXEL_SPACE +
+//      pnlPRF.Height;
     if FPRFActions = nil then
       FPRFActions := TPRFActions.Create;
-    FPRFActions.Load(cboNewTitle.ItemIEN,Patient.DFN);
-    if RPCBrokerV.Results.Count <> 0 then
+    sl := TStringList.Create;
+    try
+      FPRFActions.Load(sl, cboNewTitle.ItemIEN, Patient.DFN);
+//      if RPCBrokerV.Results.Count <> 0 then
+      if sl.Count <> 0 then
       lblPRF.Caption := PRF_LABEL
     else
       lblPRF.Caption := 'No Linkable Actions for this Patient and/or Title.';
+
+    finally
+      sl.Free;
+    end;
     FPRFActions.ShowActionsOnList(lvPRF);
     //Fix for CQ: 6926
     lvPRF.Columns.BeginUpdate;
@@ -862,9 +985,20 @@ begin
   end
 end;
 
-procedure TfrmNoteProperties.SetGenericFormSize;
+function TfrmNoteProperties.getGenericFormSize: Integer;
 begin
-  ClientHeight := cboCosigner.Top + cboCosigner.Height + PIXEL_SPACE;
+  result :=
+    gpMain.Height + gpMain.Margins.Top + gpMain.Margins.Bottom;
+end;
+
+procedure TfrmNoteProperties.Init508;
+begin
+  if ScreenReaderActive then
+    begin
+      TCaptionListView508Manager.Create(amgrMain, lstSurgery);
+      TCaptionListView508Manager.Create(amgrMain, lstRequests);
+      TCaptionListView508Manager.Create(amgrMain, lvPRF);
+    end;
 end;
 
 { TPRFActions }
@@ -891,9 +1025,11 @@ begin
   Result := StrToInt(Piece(FPRFActionList[lstIndex],U,PRF_IEN));
 end;
 
-procedure TPRFActions.Load(TitleIEN : Int64; DFN : String);
+function TPRFActions.Load(aDest:TStrings; TitleIEN : Int64; DFN : String): Integer;
 begin
-  CallVistA('TIU GET PRF ACTIONS', [TitleIEN,DFN], FPRFActionList);
+  CallVistA('TIU GET PRF ACTIONS', [TitleIEN,DFN], aDest{FPRFActionList});
+  FPRFActionList.Assign(aDest);
+  Result := aDest.Count;
 end;
 
 function TPRFActions.SelActionHasNote(lstIndex: integer): boolean;
@@ -941,6 +1077,81 @@ begin
                Piece(lstRequests.Strings[lstRequests.Selected.Index], U, 3), TRUE);
   finally
     ConsultDetail.Free;
+  end;
+end;
+
+procedure TfrmNoteProperties.setFontSize(NewFontSize: Integer);
+begin
+  inherited;
+  btnShowList.Width := getMainFormTextWidth(btnShowList.Caption) + GAP;
+  btnDetails.Width := getMainFormTextWidth(btnDetails.Caption) + GAP;
+
+  adjustBtn(cmdCancel);
+  gpMain.RowCollection[0].Value := cmdCancel.Height;
+
+  Constraints.MinWidth :=
+    btnShowList.Width + btnDetails.Width +
+    getMainFormTextWidth(lblConsult1.Caption) + GAP + GAP;
+end;
+
+procedure TfrmNoteProperties.SetPanelVisible(Panel: TPanel; IsVisible: boolean);
+var
+  iHeight: integer;
+
+begin
+  if Panel.Visible <> IsVisible then
+  begin
+    iHeight := getGenericFormSize;
+    DisableAlign;
+    try
+      Panel.Visible := IsVisible;
+      if pnlConsults.Visible  then
+      begin
+        UpdateConsultsPanel;
+        inc(iHeight,pnlConsults.Height);
+      end;
+      if pnlPRF.Visible  then
+        inc(iHeight,pnlPRF.Height);
+      if pnlSurgery.Visible  then
+        inc(iHeight,pnlSurgery.Height);
+      ClientHeight := iHeight;
+      ForceInsideWorkArea(Self);
+    finally
+      EnableAlign;
+    end;
+  end;
+end;
+
+procedure TfrmNoteProperties.FormResize(Sender: TObject);
+const
+  SPACE: integer = 10;
+begin
+  cboNewTitle.Width := Self.ClientWidth - cboNewTitle.Left - cmdOK.Width - SPACE * 2;
+  cmdOK.Left := Self.ClientWidth - cmdOK.Width - SPACE;
+  cmdCancel.Left := Self.ClientWidth - cmdCancel.Width - SPACE;
+  if (cboAuthor.Width + cboAuthor.Left) > Self.ClientWidth then
+    cboAuthor.Width := Self.ClientWidth - cboAuthor.Left - SPACE;
+end;
+
+procedure TfrmNoteProperties.FormShow(Sender: TObject);
+var
+  iHeight: Integer;
+begin
+  inherited;
+
+  iHeight := 400;
+  if pnlConsults.Visible  then
+    inc(iHeight,pnlConsults.Height);
+  if pnlPRF.Visible  then
+    inc(iHeight,pnlPRF.Height);
+  if pnlSurgery.Visible  then
+    inc(iHeight,pnlSurgery.Height);
+  ClientHeight := iHeight;
+  if FCheckDefault then
+  begin
+    if cboNewTitle.ItemIndex >= 0 then
+      PostMessage(Handle, UM_MISC, 0, 0);
+    FCheckDefault := False;
   end;
 end;
 

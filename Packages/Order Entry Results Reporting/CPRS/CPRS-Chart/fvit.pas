@@ -173,9 +173,11 @@ procedure TfrmVit.FormKeyPress(Sender: TObject; var Key: Char);
 {capture return key press if on the vital screen}
 begin
   inherited;
-  if (ActiveControl.tag IN ([TAG_VITTEMP,TAG_VITPULSE,TAG_VITRESP,
-    TAG_VITBP,TAG_VITHEIGHT,TAG_VITWEIGHT,TAG_VITTEMPUNIT,TAG_VITHTUNIT,TAG_VITWTUNIT,TAG_VITPAIN,TAG_VITDATE]))then
-    begin
+  if Assigned(Screen.ActiveControl) and
+    (ActiveControl.tag IN ([TAG_VITTEMP, TAG_VITPULSE, TAG_VITRESP, TAG_VITBP,
+    TAG_VITHEIGHT, TAG_VITWEIGHT, TAG_VITTEMPUNIT, TAG_VITHTUNIT, TAG_VITWTUNIT,
+    TAG_VITPAIN, TAG_VITDATE])) then
+  begin
     if Key = #13 then
     begin
       Key := #0;
@@ -508,9 +510,10 @@ end;
 
 procedure TfrmVit.SetVitPointer(Sender: TObject);
 begin
-  if ActiveControl.tag in ([TAG_VITTEMP, TAG_VITPULSE, TAG_VITRESP, TAG_VITBP, TAG_VITHEIGHT,
-    TAG_VITWEIGHT]) then
-    begin
+  if Assigned(Screen.ActiveControl) and
+    (ActiveControl.tag in ([TAG_VITTEMP, TAG_VITPULSE, TAG_VITRESP, TAG_VITBP,
+    TAG_VITHEIGHT, TAG_VITWEIGHT])) then
+  begin
       // move pointer to some height and five pixels to right of edit box.
       lblVitPointer.Top := ActiveControl.Top+((ActiveControl.height ) div
       (lblVitPointer.height ));

@@ -2,7 +2,7 @@ unit fConsultAlertTo;
 
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
+uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
   Buttons, ORCtrls, ORfn, ExtCtrls, fBase508Form, VA508AccessibilityManager;
 
 type
@@ -16,6 +16,7 @@ type
     pnlBase: TORAutoPanel;
     btnAdd: TButton;
     btnRemove: TButton;
+    pnlButtons: TPanel;
     procedure cboSrcListNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cmdOKClick(Sender: TObject);
@@ -41,14 +42,7 @@ implementation
 
 {$R *.DFM}
 
-uses
-{$IFDEF CPRS_TEST}
-  rCore.User,
-  // rConsults, rCore, uCore, uConsults, fConsults,
-{$ELSE}
-  rCore,
-{$ENDIF}
-  uSimilarNames;
+uses rConsults, rCore, uCore, uConsults, fConsults, uORLists, uSimilarNames;
 
 const
   TX_RCPT_TEXT = 'Select recipients or press Cancel.';
@@ -86,21 +80,8 @@ end;
 
 procedure TfrmConsultAlertsTo.cboSrcListNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
-{$IFDEF CPRS_TEST}
-var
-  sl: TStrings;
 begin
-  sl := TStringList.Create;
-  try
-    setSubsetOfPersons(sl, StartFrom, Direction);
-    (Sender as TORComboBox).ForDataUse(sl);
-  finally
-    sl.Free;
-  end;
-{$ELSE}
-begin
-  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
-{$ENDIF}
+  setPersonList(cboSrcList, StartFrom, Direction);
 end;
 
 procedure TfrmConsultAlertsTo.cmdCancelClick(Sender: TObject);
@@ -151,12 +132,12 @@ end;
 
 procedure TfrmConsultAlertsTo.cboSrcListMouseClick(Sender: TObject);
 var
-  ErrMsg: string;
+ ErrMsg: String;
 begin
-  if not CheckForSimilarName(cboSrcList, ErrMsg, ltPerson, sPr, '', DstList.Items) then
+  if not CheckForSimilarName(cboSrcList, ErrMsg, sPr, DstList.Items) then
   begin
     ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');
-    Exit;
+    exit;
   end;
   if cboSrcList.ItemIndex = -1 then exit ;
   if DstList.SelectByID(cboSrcList.ItemID) = -1 then

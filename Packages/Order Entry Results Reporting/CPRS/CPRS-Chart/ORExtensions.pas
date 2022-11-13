@@ -14,7 +14,8 @@ uses
   TLHelp32,
   System.SysUtils,
   Vcl.Dialogs,
-  System.UITypes;
+  System.UITypes,
+  SHDocVw;
 
 type
   TEdit = class(Vcl.StdCtrls.TEdit)
@@ -43,11 +44,19 @@ type
     procedure WMPaste(var Message: TMessage); message WM_PASTE;
   end;
 
-procedure ScrubTheClipboard;
+procedure ClipboardFilemanSafe;
+
+procedure SetUserDataFolder(ABrowser: TWebBrowser);
 
 implementation
 
-procedure ScrubTheClipboard;
+uses
+  orfn, VCL.Edge, System.IOUtils;
+
+type
+  TORBrowser = class(TWebBrowser);
+
+procedure ClipboardFilemanSafe;
 Type
   tClipInfo = record
     AppName: string;
@@ -171,10 +180,10 @@ var
     end;
   end;
 
-// Scrub clipboard but keep all formats
+  // Scrub clipboard but keep all formats
   procedure AddToClipBoard(aValue: AnsiString);
 
-   procedure UpdateClip(FormatType: Cardinal; ClipText: AnsiString);
+    procedure UpdateClip(FormatType: Cardinal; ClipText: AnsiString);
     var
       gMem: HGLOBAL;
       lp: Pointer;
@@ -309,20 +318,22 @@ begin
               TmpStrLst.strings[i] := TmpStr;
 
             end;
-            // Set the anisting to the full filtered results
+            // Set the ansistring to the full filtered results
             aAnsiString := '';
             for X := 0 to TmpStrLst.Count - 1 do
             begin
-              if X > 0 then
-                aAnsiString := aAnsiString + #13#10;
               aAnsiString := aAnsiString + AnsiString(TmpStrLst[X]);
+              // Each line gets a CRLF added except the last line (unless the user specifically copied one)
+              if x < (TmpStrLst.Count - 1) then
+                aAnsiString := aAnsiString + CRLF
+              else if copy(Clipboard.AsText, Length(Clipboard.AsText) - 1, 2) = CRLF then
+                aAnsiString := aAnsiString + CRLF;
             end;
 
           finally
             TmpStrLst.Free;
           end;
 
-          // Clipboard.AsText := String(aAnsiString);
           AddToClipBoard(aAnsiString);
         end;
         TryPst := false;
@@ -360,7 +371,7 @@ end;
 
 procedure TEdit.WMPaste(var Message: TMessage);
 begin
-  ScrubTheClipboard;
+  ClipboardFilemanSafe;
   inherited;
 end;
 
@@ -368,7 +379,7 @@ end;
 
 procedure TMemo.WMPaste(var Message: TMessage);
 begin
-  ScrubTheClipboard;
+  ClipboardFilemanSafe;
   inherited;
 end;
 
@@ -380,15 +391,15 @@ var
 begin
   aShiftState := KeyDataToShiftState(message.WParam);
   if (ssCtrl in aShiftState) and (message.WParam = Ord('V')) then
-    ScrubTheClipboard;
+    ClipboardFilemanSafe;
   if (ssShift in aShiftState) and (message.WParam = VK_INSERT) then
-    ScrubTheClipboard;
+    ClipboardFilemanSafe;
   inherited;
 end;
 
 procedure TRichEdit.WMPaste(var Message: TMessage);
 begin
-  ScrubTheClipboard;
+  ClipboardFilemanSafe;
   inherited;
 end;
 
@@ -396,7 +407,7 @@ end;
 
 procedure TCaptionEdit.WMPaste(var Message: TMessage);
 begin
-  ScrubTheClipboard;
+  ClipboardFilemanSafe;
   inherited;
 end;
 
@@ -404,8 +415,50 @@ end;
 
 procedure TCaptionMemo.WMPaste(var Message: TMessage);
 begin
-  ScrubTheClipboard;
+  ClipboardFilemanSafe;
   inherited;
 end;
+
+procedure SetUserDataFolder(ABrowser: TWebBrowser);
+var
+  AppData: string;
+const
+  CPRSCacheDir: string = 'CPRSChart.exe\WebView2';
+begin
+  {
+  blj 31 August 2021 - JIRA https://vajira.max.gov/browse/VISTAOR-26730
+  On TEdgeBrowser, there is a property .UserDataFolder: String; that is used
+  by WebView2 applications to cache data/cookies/other data from websites visited.
+  For some unknown reason, Embarcadero chose NOT to publish that property on their
+  updated TWebBrowser control.  This means that one of two things will happen:
+    1: If CPRSChart.exe can write to the directory from which it was run, it will
+       create a new "CPRSChart.exe.WebView2" subdirectory there.  This is bad.
+    2: If CPRSChart.exe CANNOT write to the directory from which it was run
+       (as will be the case the vast majority of the time in the field), the
+       attempt to instantiate the MSEdge version of TWebBrowser will fail silently,
+       and TWebBrowser will fall back to instantiating IE instead.
+
+  Fortunately, an ugly hack was found in the Delphi Praxis forum, which we include
+  below.
+
+  Note: This function must be called with EVERY instance of TWebBrowser in the
+  application.  Otherwise you'll either get an ugly directory or IE (an ugly web
+  browser).
+  }
+  if ABrowser.ActiveEngine = IE then
+    exit; //We don't need to be here right now.
+
+  AppData := GetEnvironmentVariable('APPDATA');
+  if AppData = '' then
+    raise Exception.Create('Unable to find %APPDATA% in user account in ORExtensions.pas');
+
+  AppData := IncludeTrailingPathDelimiter(AppData) + CPRSCacheDir;
+
+  if not (DirectoryExists(AppData)) then
+    TDirectory.CreateDirectory(AppData);
+
+  TORBrowser(ABrowser).GetEdgeInterface.UserDataFolder := AppData;
+end;
+
 
 end.

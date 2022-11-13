@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ORCtrls, ORFn, ExtCtrls, rOrders, ORDtTm, mEvntDelay,uConst,
-  VA508AccessibilityManager, ORNet, Vcl.ComCtrls, Vcl.OleCtrls, SHDocVw, rCore, ShellApi;
+  VA508AccessibilityManager;
 
 type
   TfrmOrdersTS = class(TfrmAutoSz)
@@ -13,16 +13,16 @@ type
     pnlTop: TPanel;
     lblPtInfo: TVA508StaticText;
     grpChoice: TGroupBox;
+    radReleaseNow: TRadioButton;
     radDelayed: TRadioButton;
     pnldif: TPanel;
     Image1: TImage;
     cmdOK: TButton;
     cmdCancel: TButton;
+    lblUseAdmit: TVA508StaticText;
+    lblUseTransfer: TVA508StaticText;
     pnlBottom: TPanel;
     fraEvntDelayList: TfraEvntDelayList;
-    radReleaseNow: TRadioButton;
-    memHelp: TRichEdit;
-    btnHelp: TButton;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -36,11 +36,9 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormResize(Sender: TObject);
-    procedure btnHelpClick(Sender: TObject);
   private
     OKPressed: Boolean;
     FResult  : Boolean;
-    helpString: string;
     FImmediatelyRelease: boolean;
     FCurrSpecialty: string;
     F1stClick: Boolean;
@@ -130,7 +128,7 @@ begin
       EvtInfo := frmOrdersTS.fraEvntDelayList.mlstEvents.Items[frmOrdersTS.fraEvntDelayList.mlstEvents.ItemIndex];
       AnEvent.EventType := CharAt(Piece(EvtInfo,'^',3),1);
       AnEvent.EventIFN  := StrToInt64Def(Piece(EvtInfo,'^',1),0);
-      AnEvent.TheParent := TParentEvent.Create;
+      AnEvent.TheParent := TParentEvent.Create(0);
       if StrToInt64Def(Piece(EvtInfo,'^',13),0) > 0 then
       begin
         AnEvent.TheParent.Assign(Piece(EvtInfo,'^',13));
@@ -161,9 +159,6 @@ begin
 end;
 
 procedure TfrmOrdersTS.FormCreate(Sender: TObject);
-var
-  msgData: TStringList;
-  msgStr: string;
 begin
   inherited;
   if not Patient.Inpatient then
@@ -174,23 +169,6 @@ begin
   F1stClick           := True;
   FCurrSpecialty      := '';
   AutoSizeDisabled := true;
-
-  msgData := TStringList.Create;
-  CallVistA('ORDDPAPI RLSMSG',[],msgData);
-    for msgStr in msgData do
-      begin
-      memHelp.Lines.Add(msgStr);
-      end;
-
-  FreeAndNil(msgData);
-  helpString := GetUserParam('OR RELEASE FORM HELP');
-  btnHelp.Visible := false;
-  memHelp.Width := memHelp.Width + btnHelp.Width;
-  if (helpString <> '') then
-  begin
-    btnHelp.Visible := true;
-    memHelp.Width := memHelp.Width - btnHelp.Width;
-  end;
 end;
 
 
@@ -246,13 +224,6 @@ begin
   OKPressed := True;
   FResult   := True;
   Close;
-end;
-
-procedure TfrmOrdersTS.btnHelpClick(Sender: TObject);
-begin
-  inherited;
-//  InfoBox(helpString,'Info', MB_OK);
-    ShellExecute(0, 'OPEN', PChar(helpString), '', '', SW_SHOWNORMAL);
 end;
 
 procedure TfrmOrdersTS.cmdCancelClick(Sender: TObject);

@@ -2,32 +2,34 @@ inherited frmOptions: TfrmOptions
   Left = 315
   Top = 110
   Width = 670
-  Height = 520
+  Height = 599
   HelpContext = 9999
   VertScrollBar.Range = 360
   BorderIcons = [biSystemMenu, biHelp]
+  BorderStyle = bsDialog
   Caption = 'Options'
-  Constraints.MinHeight = 560
+  Constraints.MinHeight = 520
   Constraints.MinWidth = 670
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   ExplicitWidth = 670
-  ExplicitHeight = 520
+  ExplicitHeight = 599
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBottom: TPanel [0]
     Left = 0
-    Top = 449
-    Width = 654
+    Top = 538
+    Width = 664
     Height = 32
     HelpContext = 9999
     Align = alBottom
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
+    ExplicitTop = 459
     object btnOK: TButton
       AlignWithMargins = True
-      Left = 399
+      Left = 409
       Top = 3
       Width = 76
       Height = 26
@@ -41,7 +43,7 @@ inherited frmOptions: TfrmOptions
     end
     object btnCancel: TButton
       AlignWithMargins = True
-      Left = 481
+      Left = 491
       Top = 3
       Width = 76
       Height = 26
@@ -54,7 +56,7 @@ inherited frmOptions: TfrmOptions
     end
     object btnApply: TButton
       AlignWithMargins = True
-      Left = 576
+      Left = 586
       Top = 3
       Width = 75
       Height = 26
@@ -70,10 +72,10 @@ inherited frmOptions: TfrmOptions
   object pagOptions: TPageControl [1]
     Left = 0
     Top = 0
-    Width = 654
-    Height = 449
+    Width = 664
+    Height = 538
     HelpContext = 9999
-    ActivePage = tsCoverSheet
+    ActivePage = tsCopyPaste
     Align = alClient
     OwnerDraw = True
     TabOrder = 0
@@ -81,16 +83,15 @@ inherited frmOptions: TfrmOptions
     OnChanging = pagOptionsChanging
     OnDrawTab = pagOptionsDrawTab
     OnEnter = pagOptionsEnter
+    ExplicitHeight = 459
     object tsCoverSheet: TTabSheet
-      Hint = 
-        'General tab, Adjust date range defaults, clinical reminders and ' +
-        'other paramaters'
       HelpContext = 9700
       Caption = 'General'
+      ExplicitHeight = 431
       object Panel56: TPanel
         Left = 0
         Top = 0
-        Width = 646
+        Width = 656
         Height = 81
         Align = alTop
         BevelOuter = bvNone
@@ -99,17 +100,18 @@ inherited frmOptions: TfrmOptions
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 640
+          Width = 650
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object bvlCoverDays: TBevel
             AlignWithMargins = True
             Left = 111
             Top = 12
-            Width = 526
+            Width = 536
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -143,6 +145,7 @@ inherited frmOptions: TfrmOptions
           Height = 49
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgCoverDays: TImage
@@ -196,19 +199,21 @@ inherited frmOptions: TfrmOptions
         object Panel59: TPanel
           Left = 96
           Top = 32
-          Width = 550
+          Width = 560
           Height = 49
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Panel60: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 49
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
             object btnCoverDays: TButton
@@ -234,7 +239,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 359
+            Width = 369
             Height = 43
             TabStop = False
             Align = alClient
@@ -251,7 +256,7 @@ inherited frmOptions: TfrmOptions
       object Panel61: TPanel
         Left = 0
         Top = 81
-        Width = 646
+        Width = 656
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -259,17 +264,18 @@ inherited frmOptions: TfrmOptions
         object Panel62: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object bvlCoverReminders: TBevel
             AlignWithMargins = True
             Left = 99
             Top = 12
-            Width = 544
+            Width = 554
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -303,6 +309,7 @@ inherited frmOptions: TfrmOptions
           Height = 63
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgCoverReminders: TImage
@@ -356,19 +363,21 @@ inherited frmOptions: TfrmOptions
         object Panel64: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 63
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Panel65: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 63
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
             object btnCoverReminders: TButton
@@ -394,7 +403,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 359
+            Width = 369
             Height = 57
             TabStop = False
             Align = alClient
@@ -411,7 +420,7 @@ inherited frmOptions: TfrmOptions
       object Panel66: TPanel
         Left = 0
         Top = 170
-        Width = 646
+        Width = 656
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -419,17 +428,18 @@ inherited frmOptions: TfrmOptions
         object Panel67: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object bvlOtherParameters: TBevel
             AlignWithMargins = True
             Left = 95
             Top = 12
-            Width = 548
+            Width = 558
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -463,6 +473,7 @@ inherited frmOptions: TfrmOptions
           Height = 63
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgOtherParameters: TImage
@@ -516,19 +527,21 @@ inherited frmOptions: TfrmOptions
         object Panel69: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 63
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Panel70: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 63
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
             object btnOtherParameters: TButton
@@ -554,7 +567,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 359
+            Width = 369
             Height = 57
             TabStop = False
             Align = alClient
@@ -571,23 +584,24 @@ inherited frmOptions: TfrmOptions
       end
     end
     object tsNotifications: TTabSheet
-      Hint = 'Notifications tab, Change your notifications options'
       HelpContext = 9030
       BorderWidth = 2
       Caption = 'Notifications'
       object pnlNotificationsList: TPanel
         Left = 0
         Top = 95
-        Width = 642
-        Height = 322
+        Width = 652
+        Height = 332
         Align = alClient
         BevelOuter = bvNone
-        TabOrder = 1
+        TabOrder = 0
+        ExplicitTop = 120
+        ExplicitHeight = 307
         object lvwNotifications: TCaptionListView
           Left = 0
           Top = 54
-          Width = 642
-          Height = 268
+          Width = 652
+          Height = 278
           HelpContext = 9035
           Align = alClient
           Checkboxes = True
@@ -618,11 +632,12 @@ inherited frmOptions: TfrmOptions
             'You can turn on or off these notifications except those that are' +
             ' mandatory.'
           HideTinyColumns = False
+          ExplicitHeight = 253
         end
         object Panel2: TPanel
           Left = 0
           Top = 29
-          Width = 642
+          Width = 652
           Height = 25
           Align = alTop
           BevelOuter = bvNone
@@ -649,7 +664,7 @@ inherited frmOptions: TfrmOptions
         object pnlNotificationTools: TPanel
           Left = 0
           Top = 0
-          Width = 642
+          Width = 652
           Height = 29
           Align = alTop
           BevelOuter = bvNone
@@ -657,7 +672,7 @@ inherited frmOptions: TfrmOptions
           Visible = False
           object Button1: TButton
             AlignWithMargins = True
-            Left = 426
+            Left = 216
             Top = 3
             Width = 213
             Height = 23
@@ -674,31 +689,50 @@ inherited frmOptions: TfrmOptions
             TabOrder = 0
             OnClick = btnNotificationsRemoveClick
           end
+          object Button2: TButton
+            AlignWithMargins = True
+            Left = 435
+            Top = 3
+            Width = 214
+            Height = 23
+            HelpContext = 9033
+            Align = alRight
+            Caption = 'Processed Alerts Settings...'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 1
+            OnClick = btnProcessedAlertsSettingsClick
+          end
         end
       end
       object pnlNotifications: TPanel
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 636
+        Width = 646
         Height = 89
         Align = alTop
         BevelOuter = bvNone
-        TabOrder = 0
+        TabOrder = 2
         object Panel82: TPanel
           Left = 0
           Top = 0
-          Width = 636
+          Width = 646
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
-          TabOrder = 1
+          TabOrder = 0
           object bvlNotifications: TBevel
             AlignWithMargins = True
             Left = 71
             Top = 12
-            Width = 562
+            Width = 572
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -732,8 +766,9 @@ inherited frmOptions: TfrmOptions
           Height = 63
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
-          TabOrder = 2
+          TabOrder = 1
           object imgNotifications: TImage
             AlignWithMargins = True
             Left = 20
@@ -785,21 +820,23 @@ inherited frmOptions: TfrmOptions
         object Panel84: TPanel
           Left = 96
           Top = 26
-          Width = 540
+          Width = 550
           Height = 63
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
-          TabOrder = 0
+          TabOrder = 2
           object Panel85: TPanel
-            Left = 320
+            Left = 330
             Top = 0
             Width = 220
             Height = 63
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
-            TabOrder = 1
+            TabOrder = 0
             object btnNotificationsRemove: TButton
               AlignWithMargins = True
               Left = 3
@@ -819,6 +856,24 @@ inherited frmOptions: TfrmOptions
               TabOrder = 0
               OnClick = btnNotificationsRemoveClick
             end
+            object btnProcessedAlertsSettings: TButton
+              AlignWithMargins = True
+              Left = 3
+              Top = 35
+              Width = 214
+              Height = 26
+              HelpContext = 9033
+              Align = alTop
+              Caption = 'Processed Alerts Settings...'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 1
+              OnClick = btnProcessedAlertsSettingsClick
+            end
           end
           object lblNotificationsOptions: TStaticText
             Left = 3
@@ -826,7 +881,7 @@ inherited frmOptions: TfrmOptions
             Width = 158
             Height = 17
             Caption = 'Change your notification options.'
-            TabOrder = 2
+            TabOrder = 1
           end
           object chkNotificationsFlagged: TCheckBox
             Left = 3
@@ -835,22 +890,22 @@ inherited frmOptions: TfrmOptions
             Height = 16
             HelpContext = 9032
             Caption = 'Send me a MailMan bulletin for flagged orders'
-            TabOrder = 0
+            TabOrder = 2
             OnClick = chkNotificationsFlaggedClick
           end
         end
       end
     end
     object tsOrderChecks: TTabSheet
-      Hint = 'Order Checks tab, Enable or disable order checks'
       HelpContext = 9040
       Caption = 'Order Checks'
       ImageIndex = 3
+      ExplicitHeight = 431
       object lblOrderChecksView: TLabel
         AlignWithMargins = True
         Left = 3
         Top = 92
-        Width = 640
+        Width = 650
         Height = 13
         Align = alTop
         Caption = 
@@ -862,13 +917,14 @@ inherited frmOptions: TfrmOptions
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
+        ExplicitWidth = 349
       end
       object lvwOrderChecks: TCaptionListView
         AlignWithMargins = True
         Left = 3
         Top = 111
-        Width = 640
-        Height = 307
+        Width = 650
+        Height = 396
         HelpContext = 9041
         Align = alClient
         Checkboxes = True
@@ -899,11 +955,12 @@ inherited frmOptions: TfrmOptions
           'You can turn on or off these notifications except those that are' +
           ' mandatory.'
         HideTinyColumns = False
+        ExplicitHeight = 317
       end
       object Panel42: TPanel
         Left = 0
         Top = 0
-        Width = 646
+        Width = 656
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -912,17 +969,18 @@ inherited frmOptions: TfrmOptions
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 640
+          Width = 650
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object bvlOrderChecks: TBevel
             AlignWithMargins = True
             Left = 78
             Top = 12
-            Width = 559
+            Width = 569
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -956,6 +1014,7 @@ inherited frmOptions: TfrmOptions
           Height = 57
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgOrderChecks: TImage
@@ -1008,17 +1067,18 @@ inherited frmOptions: TfrmOptions
         object Panel54: TPanel
           Left = 96
           Top = 32
-          Width = 550
+          Width = 560
           Height = 57
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object lblOrderChecksDesc: TLabel
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 544
+            Width = 554
             Height = 30
             Align = alTop
             AutoSize = False
@@ -1029,12 +1089,13 @@ inherited frmOptions: TfrmOptions
             ExplicitWidth = 275
           end
           object Panel55: TPanel
-            Left = 365
+            Left = 375
             Top = 36
             Width = 185
             Height = 21
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
           end
@@ -1042,16 +1103,14 @@ inherited frmOptions: TfrmOptions
       end
     end
     object tsListsTeams: TTabSheet
-      Hint = 
-        'List / Teams tab, Patient selection defaults and Personal list a' +
-        'nd teams'
       HelpContext = 9050
       Caption = 'Lists/Teams'
       ImageIndex = 4
+      ExplicitHeight = 431
       object Panel71: TPanel
         Left = 0
         Top = 0
-        Width = 646
+        Width = 656
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -1059,17 +1118,18 @@ inherited frmOptions: TfrmOptions
         object Panel72: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
-          TabOrder = 1
+          TabOrder = 0
           object bvlPatientSelection: TBevel
             AlignWithMargins = True
             Left = 133
             Top = 12
-            Width = 510
+            Width = 520
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -1103,8 +1163,9 @@ inherited frmOptions: TfrmOptions
           Height = 63
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
-          TabOrder = 2
+          TabOrder = 1
           object imgPatientSelection: TImage
             AlignWithMargins = True
             Left = 20
@@ -1156,21 +1217,23 @@ inherited frmOptions: TfrmOptions
         object Panel74: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 63
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
-          TabOrder = 0
+          TabOrder = 2
           object Panel75: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 63
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
-            TabOrder = 1
+            TabOrder = 0
             object btnPatientSelection: TButton
               AlignWithMargins = True
               Left = 3
@@ -1212,7 +1275,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 359
+            Width = 369
             Height = 57
             TabStop = False
             Align = alClient
@@ -1223,14 +1286,14 @@ inherited frmOptions: TfrmOptions
               'Source is Combination, the criteria is defined using '
               'Source Combinations.')
             ReadOnly = True
-            TabOrder = 0
+            TabOrder = 1
           end
         end
       end
       object Panel76: TPanel
         Left = 0
         Top = 89
-        Width = 646
+        Width = 656
         Height = 135
         Align = alTop
         BevelOuter = bvNone
@@ -1238,17 +1301,18 @@ inherited frmOptions: TfrmOptions
         object Panel77: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object bvlTeams: TBevel
             AlignWithMargins = True
             Left = 134
             Top = 12
-            Width = 509
+            Width = 519
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -1282,6 +1346,7 @@ inherited frmOptions: TfrmOptions
           Height = 109
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgTeams: TImage
@@ -1335,19 +1400,21 @@ inherited frmOptions: TfrmOptions
         object Panel79: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 109
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Panel80: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 109
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
             object btnPersonalLists: TButton
@@ -1402,7 +1469,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 359
+            Width = 369
             Height = 103
             TabStop = False
             Align = alClient
@@ -1419,14 +1486,14 @@ inherited frmOptions: TfrmOptions
       end
     end
     object tsNotes: TTabSheet
-      Hint = 'Notes tab, Document Titles and Required Fields of TIU Templates'
       HelpContext = 9200
       Caption = 'Notes'
       ImageIndex = 4
+      ExplicitHeight = 431
       object pnlTIU: TPanel
         Left = 0
         Top = 170
-        Width = 646
+        Width = 656
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -1434,17 +1501,18 @@ inherited frmOptions: TfrmOptions
         object Panel38: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object Bevel9: TBevel
             AlignWithMargins = True
-            Left = 171
+            Left = 165
             Top = 12
-            Width = 472
+            Width = 488
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -1458,7 +1526,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 162
+            Width = 156
             Height = 20
             Align = alLeft
             Caption = 'Required Fields of TIU Templates'
@@ -1478,6 +1546,7 @@ inherited frmOptions: TfrmOptions
           Height = 63
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgRequiredFields: TImage
@@ -1565,19 +1634,21 @@ inherited frmOptions: TfrmOptions
         object Panel40: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 63
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Panel41: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 63
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
             object btnRequiredFields: TButton
@@ -1602,7 +1673,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 0
-            Width = 359
+            Width = 369
             Height = 60
             Margins.Top = 0
             TabStop = False
@@ -1620,7 +1691,7 @@ inherited frmOptions: TfrmOptions
       object pnlNoteTop: TPanel
         Left = 0
         Top = 0
-        Width = 646
+        Width = 656
         Height = 81
         Align = alTop
         BevelOuter = bvNone
@@ -1628,17 +1699,18 @@ inherited frmOptions: TfrmOptions
         object Panel43: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object Bevel10: TBevel
             AlignWithMargins = True
             Left = 41
             Top = 12
-            Width = 602
+            Width = 612
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -1672,6 +1744,7 @@ inherited frmOptions: TfrmOptions
           Height = 55
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgNotesNotes: TImage
@@ -1725,19 +1798,21 @@ inherited frmOptions: TfrmOptions
         object Panel45: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 55
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Panel46: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 55
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
             object btnNotesNotes: TButton
@@ -1763,7 +1838,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 0
-            Width = 359
+            Width = 369
             Height = 52
             Margins.Top = 0
             TabStop = False
@@ -1781,7 +1856,7 @@ inherited frmOptions: TfrmOptions
       object Panel47: TPanel
         Left = 0
         Top = 81
-        Width = 646
+        Width = 656
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -1789,17 +1864,18 @@ inherited frmOptions: TfrmOptions
         object Panel48: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object Bevel1: TBevel
             AlignWithMargins = True
             Left = 90
             Top = 12
-            Width = 553
+            Width = 563
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -1827,6 +1903,7 @@ inherited frmOptions: TfrmOptions
           Height = 63
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgNotes: TImage
@@ -1880,17 +1957,18 @@ inherited frmOptions: TfrmOptions
         object Panel50: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 63
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Memo3: TMemo
             AlignWithMargins = True
             Left = 3
             Top = 0
-            Width = 359
+            Width = 369
             Height = 60
             Margins.Top = 0
             TabStop = False
@@ -1903,12 +1981,13 @@ inherited frmOptions: TfrmOptions
             TabOrder = 0
           end
           object Panel51: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 63
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 1
             object btnNotesTitles: TButton
@@ -1935,15 +2014,13 @@ inherited frmOptions: TfrmOptions
       end
     end
     object tsCprsReports: TTabSheet
-      Hint = 
-        'Reports Tab, All Reports, Individual Reports and Remote data too' +
-        'ls'
       Caption = 'Reports'
       ImageIndex = 5
+      ExplicitHeight = 431
       object Panel22: TPanel
         Left = 0
         Top = 170
-        Width = 646
+        Width = 656
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -1951,17 +2028,18 @@ inherited frmOptions: TfrmOptions
         object Panel23: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object Bevel6: TBevel
             AlignWithMargins = True
             Left = 100
             Top = 12
-            Width = 543
+            Width = 553
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -1989,6 +2067,7 @@ inherited frmOptions: TfrmOptions
           Height = 63
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgReport2: TImage
@@ -2080,19 +2159,21 @@ inherited frmOptions: TfrmOptions
         object Panel25: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 63
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Panel26: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 63
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
           end
@@ -2100,7 +2181,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 0
-            Width = 359
+            Width = 369
             Height = 60
             Margins.Top = 0
             TabStop = False
@@ -2119,7 +2200,7 @@ inherited frmOptions: TfrmOptions
       object Panel27: TPanel
         Left = 0
         Top = 81
-        Width = 646
+        Width = 656
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -2127,17 +2208,18 @@ inherited frmOptions: TfrmOptions
         object Panel28: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object Bevel7: TBevel
             AlignWithMargins = True
             Left = 98
             Top = 12
-            Width = 545
+            Width = 555
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -2165,6 +2247,7 @@ inherited frmOptions: TfrmOptions
           Height = 63
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgReport1: TImage
@@ -2219,19 +2302,21 @@ inherited frmOptions: TfrmOptions
         object Panel30: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 63
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Panel31: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 63
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
             object btnReport1: TButton
@@ -2250,7 +2335,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 0
-            Width = 359
+            Width = 369
             Height = 60
             Margins.Top = 0
             TabStop = False
@@ -2269,7 +2354,7 @@ inherited frmOptions: TfrmOptions
       object Panel32: TPanel
         Left = 0
         Top = 0
-        Width = 646
+        Width = 656
         Height = 81
         Align = alTop
         BevelOuter = bvNone
@@ -2277,17 +2362,18 @@ inherited frmOptions: TfrmOptions
         object Panel33: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object Bevel8: TBevel
             AlignWithMargins = True
             Left = 64
             Top = 12
-            Width = 579
+            Width = 589
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -2315,6 +2401,7 @@ inherited frmOptions: TfrmOptions
           Height = 55
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgReports: TImage
@@ -2359,19 +2446,21 @@ inherited frmOptions: TfrmOptions
         object Panel35: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 55
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object Panel36: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 55
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 0
             object btnReports: TButton
@@ -2390,7 +2479,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 0
-            Width = 359
+            Width = 369
             Height = 52
             Margins.Top = 0
             TabStop = False
@@ -2408,13 +2497,13 @@ inherited frmOptions: TfrmOptions
       end
     end
     object tsGraphs: TTabSheet
-      Hint = 'Graphs tab, View Definitions and Default Settings'
       Caption = 'Graphs'
       ImageIndex = 6
+      ExplicitHeight = 431
       object Panel7: TPanel
         Left = 0
         Top = 0
-        Width = 646
+        Width = 656
         Height = 81
         Align = alTop
         BevelOuter = bvNone
@@ -2422,17 +2511,18 @@ inherited frmOptions: TfrmOptions
         object Panel8: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object Bevel3: TBevel
             AlignWithMargins = True
             Left = 88
             Top = 12
-            Width = 555
+            Width = 565
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -2460,6 +2550,7 @@ inherited frmOptions: TfrmOptions
           Height = 55
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgGraphViews: TImage
@@ -2505,17 +2596,18 @@ inherited frmOptions: TfrmOptions
         object Panel10: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 55
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object memGraphViews: TMemo
             AlignWithMargins = True
             Left = 3
             Top = 0
-            Width = 359
+            Width = 369
             Height = 52
             Margins.Top = 0
             TabStop = False
@@ -2529,12 +2621,13 @@ inherited frmOptions: TfrmOptions
             TabOrder = 0
           end
           object Panel15: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 55
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel15'
             ShowCaption = False
             TabOrder = 1
             object btnGraphViews: TButton
@@ -2555,7 +2648,7 @@ inherited frmOptions: TfrmOptions
       object Panel11: TPanel
         Left = 0
         Top = 81
-        Width = 646
+        Width = 656
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -2563,17 +2656,18 @@ inherited frmOptions: TfrmOptions
         object Panel12: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object Bevel4: TBevel
             AlignWithMargins = True
             Left = 88
             Top = 12
-            Width = 555
+            Width = 565
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -2601,6 +2695,7 @@ inherited frmOptions: TfrmOptions
           Height = 63
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgGraphSettings: TImage
@@ -2646,17 +2741,18 @@ inherited frmOptions: TfrmOptions
         object Panel14: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 63
           Align = alClient
           BevelOuter = bvNone
+          Caption = 'Panel10'
           ShowCaption = False
           TabOrder = 2
           object memGraphSettings: TMemo
             AlignWithMargins = True
             Left = 3
             Top = 0
-            Width = 359
+            Width = 369
             Height = 60
             Margins.Top = 0
             TabStop = False
@@ -2671,12 +2767,13 @@ inherited frmOptions: TfrmOptions
             TabOrder = 0
           end
           object Panel16: TPanel
-            Left = 365
+            Left = 375
             Top = 0
             Width = 185
             Height = 63
             Align = alRight
             BevelOuter = bvNone
+            Caption = 'Panel16'
             ShowCaption = False
             TabOrder = 1
             object btnGraphSettings: TButton
@@ -2698,10 +2795,11 @@ inherited frmOptions: TfrmOptions
     object tsSurrogates: TTabSheet
       Caption = 'Surrogates'
       ImageIndex = 7
+      ExplicitHeight = 431
       object pnlSurrogatesTop: TPanel
         Left = 0
         Top = 0
-        Width = 646
+        Width = 656
         Height = 65
         Align = alTop
         BevelOuter = bvNone
@@ -2709,17 +2807,18 @@ inherited frmOptions: TfrmOptions
         object Panel4: TPanel
           Left = 0
           Top = 0
-          Width = 646
+          Width = 656
           Height = 26
           Align = alTop
           BevelOuter = bvNone
+          Caption = 'Panel4'
           ShowCaption = False
           TabOrder = 0
           object Bevel2: TBevel
             AlignWithMargins = True
             Left = 129
             Top = 12
-            Width = 514
+            Width = 524
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -2753,6 +2852,7 @@ inherited frmOptions: TfrmOptions
           Height = 39
           Align = alLeft
           BevelOuter = bvNone
+          Caption = 'Panel5'
           ShowCaption = False
           TabOrder = 1
           object imgSurrogates: TImage
@@ -2806,7 +2906,7 @@ inherited frmOptions: TfrmOptions
         object Panel17: TPanel
           Left = 96
           Top = 26
-          Width = 550
+          Width = 560
           Height = 39
           Align = alClient
           BevelOuter = bvNone
@@ -2816,7 +2916,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 0
-            Width = 544
+            Width = 554
             Height = 17
             Margins.Top = 0
             Align = alTop
@@ -2828,34 +2928,316 @@ inherited frmOptions: TfrmOptions
       object pnlSurrogates: TPanel
         Left = 0
         Top = 65
-        Width = 646
-        Height = 356
+        Width = 656
+        Height = 445
         Align = alClient
         BevelOuter = bvNone
         Caption = '"Canvas" for TfrmOptionsSurrogate'
         Color = clSilver
         ParentBackground = False
         TabOrder = 1
+        ExplicitHeight = 366
       end
     end
     object tsCopyPaste: TTabSheet
-      Hint = 'Copy / Paste tab'
       Caption = 'Copy/Paste'
       ImageIndex = 7
+      ExplicitHeight = 431
+      object bvlCopyPasteTitle: TBevel
+        AlignWithMargins = True
+        Left = 100
+        Top = 26
+        Width = 532
+        Height = 2
+        Margins.Left = 100
+        Margins.Right = 24
+        Align = alTop
+        Shape = bsTopLine
+        ExplicitLeft = 3
+        ExplicitTop = 35
+        ExplicitWidth = 650
+      end
+      object ImgCopyPaste: TImage
+        Left = 16
+        Top = 32
+        Width = 41
+        Height = 41
+        Margins.Left = 20
+        Picture.Data = {
+          07544269746D6170361B0000424D361B00000000000036000000280000003000
+          0000300000000100180000000000001B00000000000000000000000000000000
+          0000FF00FFD9D9D9DCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD9D9D9
+          D8D8D8D9D9D9DCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD9D9D9D8D8
+          D8D9D9D9DCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD9D9D9D8D8D8D9
+          D9D9DCDCDCFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6D6D60101010202020000000000
+          0000000000000000000000000000000002020203030302020200000000000000
+          0000000000000000000000000000020202030303020202000000000000000000
+          000000000000000000000000020202030303020202FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFD6D6D6010101141414424242434343434343434343434343434343434343
+          4343434242424242424242424343434343434343434343434343434343434343
+          4342424242424242424243434343434343434343434343434343434343434310
+          1111040404DDDDDDFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737050505D6D6D6FF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+          3737000000C8C9C9D9D9D9DADCDCFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFDADCDCDCDCDCFF00FFFF00FFFF00FFD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF3737370000001515150606060708080606
+          06000000000000000000000000000000000000000000050505040404020202BE
+          BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+          37370000003E3E3E323232323434333333323434323232323232323232323232
+          323232323232323232141414030303BCBCBCD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F020202BB
+          BBBBD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+          3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5F5F5F000000BCBCBCD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+          BEBED6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
+          3838000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6010101474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF383838060606FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+          BEBED6D6D6010101464646FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
+          3838070808D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737060606D1D2D2FF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+          BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+          3737000000D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5D5D5D000000BEBEBED6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5C5E5E020202BE
+          BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+          3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5D5D5D030303BCBCBCD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F020202BB
+          BBBBD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+          3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5F5F5F000000BCBCBCD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+          BEBED6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
+          3838000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6010101474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF383838060606FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+          BEBED6D6D6010101464646FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
+          3838070808D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737060606D1D2D2FF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+          BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+          3737000000D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5D5D5D000000BEBEBED6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5C5E5E020202BE
+          BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+          3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5D5D5D030303BCBCBCD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F020202BB
+          BBBBD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
+          3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5F5F5F000000BCBCBCD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+          BEBED6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8283
+          8360606065656565656565656565656565656565656565656560606060606019
+          1919000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6010101474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FF3F3F3F070808060606000000000000000000
+          0000000000000000000000000606060708085D5F5FFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+          BEBED6D6D6010101464646FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
+          3F0606065D5D5D8081818686868787878787878787874A4A4A0000000000005C
+          5E5EFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000AAABABFF00FFFF00FFFF00FF
+          FF00FFC3C3C30C0C0C000000555555FF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
+          BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
+          3F000000B5B5B5FF00FFFF00FFFF00FFC1C1C10C0C0C000000545454FF00FFFF
+          00FFFF00FFFF00FFA0A0A06F6F6F767676767676767676767676767676767676
+          7676766F6F6F7070702D2D2D000000BEBEBED6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000B7B7B7FF00FFFF00FFB3B4B4
+          101111000000545454FF00FFFF00FFFF00FFFF00FFFF00FF6363630708080606
+          060000000000000000000000000000000000000000000505050404043D3D3DFF
+          00FFD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
+          3F000000B7B7B7FF00FFC0C0C0101111070808525252FF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FF6767670606064A4A4A808181868686878787878787878787
+          5F5F5F000000000000383838FF00FFFF00FFD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000B7B7B7C1C1C10B0B0B000000
+          525252E3E4E4FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6767670000008687
+          87FF00FFFF00FFFF00FFFF00FFFF00FF1F1F1F0000002F2F2FFF00FFFF00FFFF
+          00FFD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
+          3F0000006F6F6F0707070000005F5F5FFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FF6767670000008E8E8EFF00FFFF00FFFF00FFDEDEDE202020
+          000000303030FF00FFFF00FFFF00FFFF00FFD6D6D6000000474747FF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000000000000000545454FF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6767670000008F8F
+          8FFF00FFFF00FFCDCDCD232323000000303030FF00FFFF00FFFF00FFFF00FFFF
+          00FFD6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3E3F
+          3F060606000000545454FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FF6767670000008F8F8FFF00FFDFDFDF232323070808313333
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6D6D60101011C1C1C6565656565
+          6565656565656565656565656565656560606060606060606065656565656565
+          65656565656565656565656565651C1C1C0708085A5C5CFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6767670000008F8F
+          8FFF00FF202020000000313333D8D8D8FF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFD6D6D6010101030303030404000000000000000000000000000000000000
+          0000000606060708080606060000000000000000000000000000000000000000
+          00515151E3E4E4FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FF676767000000727272212121000000313131FF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFBABABAB5B5B5B1B2B2AFB0
+          B0B9B9B9BABABABABABABABABABABABABABABAB9B9B9AFB0B0AEAEAEAFB0B031
+          3131424242BABABABABABABABABABCBCBCFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6363630000000000
+          000000003C3C3CFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF0304041F1F1FFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FF636363030404000000323232FF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF03
+          03030D0D0D656565656565656565656565656565656565656565636363626464
+          636363656565656565656565656565656565656565656565282A2A0303033D3D
+          3DFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FF0101010101010101010000000000000000
+          0000000000000000000000000001010101010101010100000000000000000000
+          0000000000000000000000373737FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+          FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFBA
+          BABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABA
+          BABABABABABABABABABABABABABABABABABABABABABABABABABABAFF00FFFF00
+          FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+          00FF}
+        Proportional = True
+        Transparent = True
+      end
+      object lblCopyPaste: TStaticText
+        AlignWithMargins = True
+        Left = 6
+        Top = 3
+        Width = 647
+        Height = 17
+        Margins.Left = 6
+        Align = alTop
+        Caption = 'Copy / Paste'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        ExplicitLeft = 3
+        ExplicitWidth = 650
+      end
+      object cbkCopyPaste: TCheckBox
+        AlignWithMargins = True
+        Left = 100
+        Top = 33
+        Width = 553
+        Height = 17
+        Margins.Left = 100
+        Margins.Top = 2
+        Margins.Bottom = 6
+        Align = alTop
+        Caption = 'Copy/Paste viewing is currently disabled. '
+        TabOrder = 1
+        OnClick = cbkCopyPasteClick
+        ExplicitLeft = 3
+        ExplicitTop = 48
+        ExplicitWidth = 637
+      end
       object pnlCPOptions: TPanel
         Left = 0
-        Top = 73
-        Width = 646
-        Height = 348
+        Top = 56
+        Width = 656
+        Height = 454
         Align = alClient
         BevelOuter = bvNone
-        TabOrder = 0
+        TabOrder = 2
         Visible = False
+        ExplicitTop = 0
+        ExplicitHeight = 429
         object GroupBox1: TGroupBox
           AlignWithMargins = True
           Left = 100
           Top = 3
-          Width = 522
+          Width = 532
           Height = 122
           Margins.Left = 100
           Margins.Right = 24
@@ -2863,34 +3245,40 @@ inherited frmOptions: TfrmOptions
           Align = alTop
           Caption = 'How text is identifed on the note'
           TabOrder = 0
+          ExplicitLeft = 16
+          ExplicitWidth = 624
           object pnlCPMain: TPanel
             AlignWithMargins = True
             Left = 5
             Top = 18
-            Width = 512
+            Width = 522
             Height = 99
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitWidth = 614
             object Panel1: TPanel
               Left = 0
               Top = 0
-              Width = 512
+              Width = 522
               Height = 99
               Align = alClient
               BevelOuter = bvNone
+              Caption = 'Panel1'
               ShowCaption = False
               TabOrder = 0
+              ExplicitWidth = 614
               object lblCP: TStaticText
                 AlignWithMargins = True
                 Left = 3
                 Top = 3
-                Width = 506
+                Width = 516
                 Height = 17
                 Align = alTop
                 Caption = 'Configure visual element(s) for copy / paste'
                 TabOrder = 0
                 TabStop = True
+                ExplicitWidth = 608
               end
               object CopyPasteOptions: TCheckListBox
                 AlignWithMargins = True
@@ -2945,7 +3333,7 @@ inherited frmOptions: TfrmOptions
           AlignWithMargins = True
           Left = 100
           Top = 127
-          Width = 522
+          Width = 532
           Height = 250
           Margins.Left = 100
           Margins.Top = 1
@@ -2956,16 +3344,18 @@ inherited frmOptions: TfrmOptions
           object pblCPLCS: TPanel
             Left = 2
             Top = 15
-            Width = 518
+            Width = 528
             Height = 233
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitWidth = 620
+            ExplicitHeight = 277
             object CPLCSToggle: TCheckBox
               AlignWithMargins = True
               Left = 8
               Top = 0
-              Width = 510
+              Width = 520
               Height = 50
               Margins.Left = 8
               Margins.Top = 0
@@ -2979,12 +3369,13 @@ inherited frmOptions: TfrmOptions
               TabOrder = 0
               WordWrap = True
               OnClick = CPLCSToggleClick
+              ExplicitWidth = 612
             end
             object pnlCPLCsSub: TPanel
               AlignWithMargins = True
               Left = 3
               Top = 50
-              Width = 515
+              Width = 525
               Height = 183
               Margins.Top = 0
               Margins.Right = 0
@@ -2993,11 +3384,13 @@ inherited frmOptions: TfrmOptions
               BevelOuter = bvNone
               TabOrder = 1
               Visible = False
+              ExplicitWidth = 617
+              ExplicitHeight = 227
               object CPLcsMemo: TMemo
                 AlignWithMargins = True
                 Left = 8
                 Top = 105
-                Width = 504
+                Width = 514
                 Height = 48
                 Margins.Left = 8
                 Align = alBottom
@@ -3015,6 +3408,8 @@ inherited frmOptions: TfrmOptions
                     'ces.')
                 ReadOnly = True
                 TabOrder = 0
+                ExplicitTop = 149
+                ExplicitWidth = 606
               end
               object CPLCSCOLOR: TColorBox
                 AlignWithMargins = True
@@ -3048,28 +3443,33 @@ inherited frmOptions: TfrmOptions
                 Style = lbOwnerDrawFixed
                 TabOrder = 2
                 OnDrawItem = CPOptionsDrawItem
+                ExplicitHeight = 117
               end
               object CPLCSLimit: TEdit
                 AlignWithMargins = True
                 Left = 3
                 Top = 159
-                Width = 509
+                Width = 519
                 Height = 21
                 Align = alBottom
                 TabOrder = 3
                 Text = '5000'
                 OnKeyPress = CPLCSLimitKeyPress
+                ExplicitTop = 203
+                ExplicitWidth = 611
               end
               object CPLcsLimitText: TStaticText
                 AlignWithMargins = True
                 Left = 3
                 Top = 82
-                Width = 509
+                Width = 519
                 Height = 17
                 Align = alBottom
                 Caption = 'Character Limit:'
                 TabOrder = 4
                 TabStop = True
+                ExplicitTop = 126
+                ExplicitWidth = 611
               end
               object lblTextColor: TStaticText
                 AlignWithMargins = True
@@ -3081,322 +3481,9 @@ inherited frmOptions: TfrmOptions
                 Caption = 'Text Color'
                 TabOrder = 5
                 Visible = False
+                ExplicitHeight = 118
               end
             end
-          end
-        end
-      end
-      object pnlCPTop: TPanel
-        Left = 0
-        Top = 0
-        Width = 646
-        Height = 73
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 1
-        object pnlCPTopLeft: TPanel
-          Left = 0
-          Top = 26
-          Width = 105
-          Height = 47
-          Align = alLeft
-          BevelOuter = bvNone
-          TabOrder = 0
-          object ImgCopyPaste: TImage
-            AlignWithMargins = True
-            Left = 20
-            Top = 3
-            Width = 82
-            Height = 41
-            Margins.Left = 20
-            Align = alTop
-            Picture.Data = {
-              07544269746D6170361B0000424D361B00000000000036000000280000003000
-              0000300000000100180000000000001B00000000000000000000000000000000
-              0000FF00FFD9D9D9DCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD9D9D9
-              D8D8D8D9D9D9DCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD9D9D9D8D8
-              D8D9D9D9DCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCDCD9D9D9D8D8D8D9
-              D9D9DCDCDCFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6D6D60101010202020000000000
-              0000000000000000000000000000000002020203030302020200000000000000
-              0000000000000000000000000000020202030303020202000000000000000000
-              000000000000000000000000020202030303020202FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFD6D6D6010101141414424242434343434343434343434343434343434343
-              4343434242424242424242424343434343434343434343434343434343434343
-              4342424242424242424243434343434343434343434343434343434343434310
-              1111040404DDDDDDFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737050505D6D6D6FF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
-              3737000000C8C9C9D9D9D9DADCDCFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFDADCDCDCDCDCFF00FFFF00FFFF00FFD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF3737370000001515150606060708080606
-              06000000000000000000000000000000000000000000050505040404020202BE
-              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
-              37370000003E3E3E323232323434333333323434323232323232323232323232
-              323232323232323232141414030303BCBCBCD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F020202BB
-              BBBBD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
-              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5F5F5F000000BCBCBCD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
-              BEBED6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
-              3838000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6010101474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF383838060606FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
-              BEBED6D6D6010101464646FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
-              3838070808D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737060606D1D2D2FF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
-              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
-              3737000000D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5D5D5D000000BEBEBED6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5C5E5E020202BE
-              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
-              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5D5D5D030303BCBCBCD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F020202BB
-              BBBBD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
-              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5F5F5F000000BCBCBCD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
-              BEBED6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
-              3838000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6010101474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF383838060606FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
-              BEBED6D6D6010101464646FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF38
-              3838070808D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737060606D1D2D2FF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
-              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
-              3737000000D5D5D5FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5D5D5D000000BEBEBED6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5C5E5E020202BE
-              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
-              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5D5D5D030303BCBCBCD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F020202BB
-              BBBBD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF37
-              3737000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5F5F5F000000BCBCBCD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF373737000000FF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
-              BEBED6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF8283
-              8360606065656565656565656565656565656565656565656560606060606019
-              1919000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6010101474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F070808060606000000000000000000
-              0000000000000000000000000606060708085D5F5FFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
-              BEBED6D6D6010101464646FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
-              3F0606065D5D5D8081818686868787878787878787874A4A4A0000000000005C
-              5E5EFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FF5F5F5F000000BEBEBED6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000AAABABFF00FFFF00FFFF00FF
-              FF00FFC3C3C30C0C0C000000555555FF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF5F5F5F000000BE
-              BEBED6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
-              3F000000B5B5B5FF00FFFF00FFFF00FFC1C1C10C0C0C000000545454FF00FFFF
-              00FFFF00FFFF00FFA0A0A06F6F6F767676767676767676767676767676767676
-              7676766F6F6F7070702D2D2D000000BEBEBED6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000B7B7B7FF00FFFF00FFB3B4B4
-              101111000000545454FF00FFFF00FFFF00FFFF00FFFF00FF6363630708080606
-              060000000000000000000000000000000000000000000505050404043D3D3DFF
-              00FFD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
-              3F000000B7B7B7FF00FFC0C0C0101111070808525252FF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FF6767670606064A4A4A808181868686878787878787878787
-              5F5F5F000000000000383838FF00FFFF00FFD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000B7B7B7C1C1C10B0B0B000000
-              525252E3E4E4FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6767670000008687
-              87FF00FFFF00FFFF00FFFF00FFFF00FF1F1F1F0000002F2F2FFF00FFFF00FFFF
-              00FFD6D6D6000000474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3F3F
-              3F0000006F6F6F0707070000005F5F5FFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FF6767670000008E8E8EFF00FFFF00FFFF00FFDEDEDE202020
-              000000303030FF00FFFF00FFFF00FFFF00FFD6D6D6000000474747FF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FF3F3F3F000000000000000000545454FF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6767670000008F8F
-              8FFF00FFFF00FFCDCDCD232323000000303030FF00FFFF00FFFF00FFFF00FFFF
-              00FFD6D6D6010101474747FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF3E3F
-              3F060606000000545454FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FF6767670000008F8F8FFF00FFDFDFDF232323070808313333
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFD6D6D60101011C1C1C6565656565
-              6565656565656565656565656565656560606060606060606065656565656565
-              65656565656565656565656565651C1C1C0708085A5C5CFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6767670000008F8F
-              8FFF00FF202020000000313333D8D8D8FF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFD6D6D6010101030303030404000000000000000000000000000000000000
-              0000000606060708080606060000000000000000000000000000000000000000
-              00515151E3E4E4FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FF676767000000727272212121000000313131FF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFBABABAB5B5B5B1B2B2AFB0
-              B0B9B9B9BABABABABABABABABABABABABABABAB9B9B9AFB0B0AEAEAEAFB0B031
-              3131424242BABABABABABABABABABCBCBCFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF6363630000000000
-              000000003C3C3CFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF0304041F1F1FFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FF636363030404000000323232FF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF03
-              03030D0D0D656565656565656565656565656565656565656565636363626464
-              636363656565656565656565656565656565656565656565282A2A0303033D3D
-              3DFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FF0101010101010101010000000000000000
-              0000000000000000000000000001010101010101010100000000000000000000
-              0000000000000000000000373737FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
-              FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFBA
-              BABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABA
-              BABABABABABABABABABABABABABABABABABABABABABABABABABABAFF00FFFF00
-              FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
-              00FF}
-            Proportional = True
-            Transparent = True
-            ExplicitLeft = 16
-            ExplicitTop = -26
-            ExplicitWidth = 41
-          end
-        end
-        object pnlCPTopClient: TPanel
-          Left = 105
-          Top = 26
-          Width = 541
-          Height = 47
-          Align = alClient
-          BevelOuter = bvNone
-          TabOrder = 1
-          object cbkCopyPaste: TCheckBox
-            Left = 0
-            Top = 0
-            Width = 541
-            Height = 47
-            Margins.Left = 100
-            Margins.Top = 2
-            Margins.Bottom = 6
-            Align = alClient
-            Caption = 'Copy/Paste viewing is currently disabled. '
-            TabOrder = 0
-            OnClick = cbkCopyPasteClick
-          end
-        end
-        object pnlCPTopTop: TPanel
-          Left = 0
-          Top = 0
-          Width = 646
-          Height = 26
-          Align = alTop
-          BevelOuter = bvNone
-          ShowCaption = False
-          TabOrder = 2
-          object bvlCopyPasteTitle: TBevel
-            AlignWithMargins = True
-            Left = 75
-            Top = 12
-            Width = 568
-            Height = 11
-            Margins.Top = 12
-            Align = alClient
-            Shape = bsTopLine
-            ExplicitLeft = 96
-            ExplicitTop = 16
-            ExplicitWidth = 312
-            ExplicitHeight = 2
-          end
-          object lblCopyPaste: TStaticText
-            AlignWithMargins = True
-            Left = 3
-            Top = 3
-            Width = 66
-            Height = 20
-            Align = alLeft
-            Caption = 'Copy / Paste'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'MS Sans Serif'
-            Font.Style = []
-            ParentFont = False
-            TabOrder = 0
           end
         end
       end
@@ -3444,32 +3531,19 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = btnCoverDays'
-        
-          'Text = Adjust date range settings. Change the default date range' +
-          's for displaying patient information on your cover sheet.'#13#10
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = btnCoverReminders'
-        
-          'Text = Clinical reminders, Configure and arrange which clinical ' +
-          'reminders are displayed on your cover sheet.'#13#10
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = btnOtherParameters'
-        
-          'Text = Other Parameter, Configure chart tab setting. Change disp' +
-          'lay date range on Meds tab. Change Encounter Appointments date r' +
-          'ange.'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = tsNotifications'
         'Status = stsDefault')
       (
         'Component = lvwNotifications'
-        
-          'Text = List of available notifications. You can turn on or off t' +
-          'hese notifications except those that are mandatory.'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = tsOrderChecks'
         'Status = stsDefault')
@@ -3478,10 +3552,7 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = lvwOrderChecks'
-        
-          'Text = List of available order checks. You can turn on or off th' +
-          'ese notifications except those that are mandatory.'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = tsListsTeams'
         'Status = stsDefault')
@@ -3499,32 +3570,19 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = btnPatientSelection'
-        
-          'Text = Patient Selection Defaults, Change the defaults for selec' +
-          'ting patients'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = btnPersonalLists'
-        'Text = Personal List, Edit your personal lists of patients.'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = btnTeams'
-        
-          'Text = Team Information, View the teams you are on and the patie' +
-          'nts associated with those teams.'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = btnCombinations'
-        
-          'Text = Source Combinations, view / edit the criteria if your Lis' +
-          't '#13#10'Source is Combination'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = btnDiagnoses'
-        
-          'Text = Personal Diagnosis List, Edit your personal lists of diag' +
-          'noses.'#13#10
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = tsNotes'
         'Status = stsDefault')
@@ -3542,14 +3600,11 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = btnNotesNotes'
-        'Text = Notes, Configure defaults for editing and saving notes.'
+        'Text = Configure defaults for editing and saving notes.'
         'Status = stsOK')
       (
         'Component = btnRequiredFields'
-        
-          'Text = Required Fields, Configure appearance of the Required fie' +
-          'lds without values in TIU Templates'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = tsCprsReports'
         'Status = stsDefault')
@@ -3567,18 +3622,10 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = btnReports'
-        
-          'Text = All Reports, Change the default date range and occurrence' +
-          ' limits for all reports on the CPRS Reports tab (excluding healt' +
-          'h summary reports) .'#13#10
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = btnReport1'
-        
-          'Text = Individual Reports, Change the individual date range and ' +
-          'occurrence limits for each report on the CPRS Reports tab (exclu' +
-          'ding health summary reports) .'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = lblReport2'
         'Status = stsDefault')
@@ -3593,21 +3640,13 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = btnGraphSettings'
-        
-          'Text = Default Graph Settings, Configure default settings for gr' +
-          'aphs. Changes can be made to the types of data displayed and the' +
-          ' styles of presentation. These settings are saved as your defaul' +
-          't.'#13#10
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = lblGraphViews'
         'Status = stsDefault')
       (
         'Component = btnGraphViews'
-        
-          'Text = View Definitions, Define collections of data as views. Vi' +
-          'ews are used for '#13#10'common selections of multiple items.'#13#10
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = memGraphSettings'
         'Status = stsDefault')
@@ -3648,6 +3687,9 @@ inherited frmOptions: TfrmOptions
         'Component = chkNotificationsFlagged'
         'Status = stsDefault')
       (
+        'Component = btnProcessedAlertsSettings'
+        'Status = stsDefault')
+      (
         'Component = pnlSurrogates'
         'Status = stsDefault')
       (
@@ -3655,6 +3697,9 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = Button1'
+        'Status = stsDefault')
+      (
+        'Component = Button2'
         'Status = stsDefault')
       (
         'Component = btnNotificationsRemove'
@@ -3715,6 +3760,12 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = pnlCPOptions'
+        'Status = stsDefault')
+      (
+        'Component = lblCopyPaste'
+        'Status = stsDefault')
+      (
+        'Component = cbkCopyPaste'
         'Status = stsDefault')
       (
         'Component = Panel4'
@@ -3958,25 +4009,6 @@ inherited frmOptions: TfrmOptions
         'Status = stsDefault')
       (
         'Component = btnNotesTitles'
-        'Text = Document Titles, Configure document list preferences.'
-        'Status = stsOK')
-      (
-        'Component = pnlCPTop'
-        'Status = stsDefault')
-      (
-        'Component = pnlCPTopLeft'
-        'Status = stsDefault')
-      (
-        'Component = pnlCPTopClient'
-        'Status = stsDefault')
-      (
-        'Component = pnlCPTopTop'
-        'Status = stsDefault')
-      (
-        'Component = lblCopyPaste'
-        'Status = stsDefault')
-      (
-        'Component = cbkCopyPaste'
         'Status = stsDefault'))
   end
 end

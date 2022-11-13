@@ -4,39 +4,8 @@ inherited frmSkinTests: TfrmSkinTests
   Caption = 'Encounter Skin Test form'
   ClientWidth = 657
   ExplicitWidth = 673
-  ExplicitHeight = 438
   PixelsPerInch = 96
   TextHeight = 13
-  object lblSkinResults: TLabel [0]
-    Left = 490
-    Top = 244
-    Width = 35
-    Height = 13
-    Caption = 'Results'
-  end
-  object lblDTRead: TLabel [1]
-    Left = 46
-    Top = 380
-    Width = 52
-    Height = 13
-    Caption = 'Date Read'
-    Visible = False
-  end
-  object lblReading: TLabel [2]
-    Left = 490
-    Top = 290
-    Width = 40
-    Height = 13
-    Caption = 'Reading'
-  end
-  object lblDTGiven: TLabel [3]
-    Left = 216
-    Top = 380
-    Width = 54
-    Height = 13
-    Caption = 'Date Given'
-    Visible = False
-  end
   inherited lblSection: TLabel
     Width = 84
     Caption = 'Skin Test Section'
@@ -44,12 +13,12 @@ inherited frmSkinTests: TfrmSkinTests
   end
   inherited btnOK: TBitBtn
     Left = 497
-    TabOrder = 8
+    TabOrder = 5
     ExplicitLeft = 497
   end
   inherited btnCancel: TBitBtn
     Left = 577
-    TabOrder = 9
+    TabOrder = 6
     ExplicitLeft = 577
   end
   inherited pnlGrid: TPanel
@@ -77,120 +46,18 @@ inherited frmSkinTests: TfrmSkinTests
   inherited edtComment: TCaptionEdit
     TabOrder = 3
   end
-  object edtDtRead: TCaptionEdit [12]
-    Left = 104
-    Top = 376
-    Width = 97
-    Height = 21
-    TabOrder = 6
-    Text = 'edtDtRead'
-    Visible = False
-    Caption = 'Date Read'
-  end
-  object edtDTGiven: TCaptionEdit [13]
-    Left = 280
-    Top = 376
-    Width = 81
-    Height = 21
-    TabOrder = 7
-    Text = 'edtDTGiven'
-    Visible = False
-    Caption = 'Date Given'
-  end
-  object cboSkinResults: TORComboBox [14]
-    Tag = 30
-    Left = 490
-    Top = 260
-    Width = 121
-    Height = 21
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Results'
-    Color = clWindow
-    DropDownCount = 8
-    Enabled = False
-    ItemHeight = 13
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = False
-    LookupPiece = 0
-    MaxLength = 0
-    Pieces = '2'
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 4
-    Text = ''
-    OnChange = cboSkinResultsChange
-    CharsNeedMatch = 1
-  end
-  inherited btnRemove: TButton
-    TabOrder = 5
+  object btnSkinEdit: TButton [8]
+    Left = 484
+    Top = 272
+    Width = 131
+    Height = 25
+    Caption = 'Add/Edit/Delete Record'
+    TabOrder = 8
+    OnClick = btnSkinEditClick
   end
   inherited btnSelectAll: TButton
     TabOrder = 2
     TabStop = True
-  end
-  object cboReading: TComboBox [17]
-    Left = 492
-    Top = 309
-    Width = 119
-    Height = 21
-    TabOrder = 13
-    OnChange = cboReadingChange
-    Items.Strings = (
-      ''
-      '0'
-      '1'
-      '2'
-      '3'
-      '4'
-      '5'
-      '6'
-      '7'
-      '8'
-      '9'
-      '10'
-      '11'
-      '12'
-      '13'
-      '14'
-      '15'
-      '16'
-      '17'
-      '18'
-      '19'
-      '20'
-      '21'
-      '22'
-      '23'
-      '24'
-      '25'
-      '26'
-      '27'
-      '28'
-      '29'
-      '30'
-      '31'
-      '32'
-      '33'
-      '34'
-      '35'
-      '36'
-      '37'
-      '38'
-      '39'
-      '40'
-      '41'
-      '42'
-      '43'
-      '44'
-      '45'
-      '46'
-      '47'
-      '48'
-      '49'
-      '50')
   end
   inherited pnlMain: TPanel
     Width = 645
@@ -216,18 +83,6 @@ inherited frmSkinTests: TfrmSkinTests
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
-      (
-        'Component = edtDtRead'
-        'Label = lblDTRead'
-        'Status = stsOK')
-      (
-        'Component = edtDTGiven'
-        'Label = lblDTGiven'
-        'Status = stsOK')
-      (
-        'Component = cboSkinResults'
-        'Label = lblSkinResults'
-        'Status = stsOK')
       (
         'Component = edtComment'
         'Label = lblComment'
@@ -268,7 +123,7 @@ inherited frmSkinTests: TfrmSkinTests
         'Component = frmSkinTests'
         'Status = stsDefault')
       (
-        'Component = cboReading'
+        'Component = btnSkinEdit'
         'Status = stsDefault'))
   end
 end

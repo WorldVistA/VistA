@@ -116,10 +116,10 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Width = 77
       Height = 22
       Caption = 'OK'
-      NumGlyphs = 2
-      Spacing = -1
       TabOrder = 9
       OnClick = cmdOKClick
+      NumGlyphs = 2
+      Spacing = -1
       IsControl = True
     end
     object cmdCancel: TBitBtn
@@ -129,11 +129,11 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Height = 22
       Cancel = True
       Caption = 'Cancel'
+      TabOrder = 10
+      OnClick = cmdCancelClick
       Layout = blGlyphTop
       NumGlyphs = 2
       Spacing = -1
-      TabOrder = 10
-      OnClick = cmdCancelClick
       IsControl = True
     end
     object lstDest: TORListBox
@@ -187,7 +187,6 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 8
-      Text = ''
       OnNeedData = cboProviderNeedData
       CharsNeedMatch = 1
     end
@@ -197,10 +196,10 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Width = 128
       Height = 22
       Caption = 'Return to Default View'
-      NumGlyphs = 2
       TabOrder = 11
       Visible = False
       OnClick = cmdDefaultViewClick
+      NumGlyphs = 2
     end
     object cboSource: TORComboBox
       Left = 9
@@ -223,7 +222,6 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 2
-      Text = ''
       OnChange = cboSourceChange
       OnDblClick = cmdAddClick
       OnEnter = cboSourceEnter
@@ -270,7 +268,6 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 1
-      Text = ''
       CharsNeedMatch = 1
     end
   end

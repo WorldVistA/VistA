@@ -1153,10 +1153,7 @@ inherited frmODAnatPath: TfrmODAnatPath
         'Status = stsDefault')
       (
         'Component = lvwSpecimen'
-        'Status = stsDefault'
-        'Columns'
-        (
-          '0 = True'))
+        'Status = stsDefault')
       (
         'Component = pnlAddSingleSpecimen'
         'Status = stsDefault')
@@ -1235,6 +1232,7 @@ inherited frmODAnatPath: TfrmODAnatPath
     Tag = 4
     Component = edtSubmittedBy
     OnCaptionQuery = VA508CaptionQuery
+    Caption = 'Specimen Submitted By'
     Left = 622
     Top = 9
   end
@@ -1256,6 +1254,7 @@ inherited frmODAnatPath: TfrmODAnatPath
     Tag = 7
     Component = edtDays
     OnCaptionQuery = VA508CaptionQuery
+    Caption = 'How Long'
     Left = 596
     Top = 62
   end
@@ -1279,6 +1278,7 @@ inherited frmODAnatPath: TfrmODAnatPath
     Tag = 9
     Component = edtOrderComment
     OnCaptionQuery = VA508CaptionQuery
+    Caption = 'Order Comment'
     Left = 746
     Top = 157
   end
@@ -1321,7 +1321,7 @@ inherited frmODAnatPath: TfrmODAnatPath
     Component = pgctrlText
     OnCaptionQuery = VA508GenericCaptionQuery
     OnInstructionsQuery = VA508PageControlInstructionsQuery
-    Instructions = 'Use the left anf right arrow keys to change tabs'
+    Instructions = 'Use the left and right arrow keys to change tabs'
     Left = 32
     Top = 440
   end

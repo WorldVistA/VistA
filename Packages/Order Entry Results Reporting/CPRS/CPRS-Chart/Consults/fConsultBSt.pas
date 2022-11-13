@@ -15,6 +15,7 @@ type
     lstStatus: TORListBox;
     cmdOK: TButton;
     cmdCancel: TButton;
+    Panel1: TPanel;
     procedure cmdCancelClick(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
   private
@@ -62,7 +63,7 @@ begin
       ClientHeight := H; pnlBase.Height := H;
       FChanged := False;
       with radSort do {if SortConsultsAscending then ItemIndex := 0 else} ItemIndex := 1;
-      FastAssign(SubSetOfStatus, lstStatus.Items);
+      setSubSetOfStatus(lstStatus.Items);
       CurrentStatus := CurrentContext.Status;
       if CurrentStatus <> '' then with lstStatus do
         begin

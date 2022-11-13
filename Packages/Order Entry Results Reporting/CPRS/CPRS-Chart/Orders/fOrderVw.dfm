@@ -5,10 +5,9 @@ inherited frmOrderView: TfrmOrderView
   ClientHeight = 413
   ClientWidth = 421
   Position = poScreenCenter
-  OnCreate = FormCreate
   OnKeyUp = FormKeyUp
   ExplicitWidth = 437
-  ExplicitHeight = 451
+  ExplicitHeight = 452
   PixelsPerInch = 96
   TextHeight = 13
   object pnlView: TPanel [0]
@@ -93,6 +92,7 @@ inherited frmOrderView: TfrmOrderView
         Align = alClient
         HideSelection = False
         Indent = 19
+        ReadOnly = True
         TabOrder = 0
         OnChange = trFiltersChange
         OnClick = trFiltersClick
@@ -126,6 +126,7 @@ inherited frmOrderView: TfrmOrderView
         Align = alClient
         HideSelection = False
         Indent = 19
+        ReadOnly = True
         TabOrder = 0
         OnChange = treServiceChange
         OnClick = treServiceClick

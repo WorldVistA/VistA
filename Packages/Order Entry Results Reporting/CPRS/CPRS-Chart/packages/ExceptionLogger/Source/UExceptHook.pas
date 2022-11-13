@@ -1,4 +1,4 @@
-﻿/// /////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////////
 ///
 /// EXCEPTION HOOK UNIT
 ///
@@ -19,46 +19,17 @@
 unit UExceptHook;
 
 interface
-
-uses Classes, SysUtils, Windows;
+uses
+  System.Generics.Collections,
+  Winapi.Windows;
 
 type
-  PEXCEPTION_POINTERS = ^EXCEPTION_POINTERS;
-
-  tExceptionHook = class(tobject)
-  private
-    fStackInfo: TStringList;
-    fMBI: TMemoryBasicInformation;
-    fProcessingAV: Boolean;
-    fLastStack: TStringList;
-    fInfoContext: _EXCEPTION_POINTERS;
-    procedure BeginMonitoring;
-    procedure EndMonitoring;
-    function GetTopOfStack: Pointer;
-    function IsValidAddr(const Addr: Pointer): Boolean;
-    function IsValidCodeAddr(const Addr: Pointer): Boolean;
-    function GetProcessingAV: Boolean;
-    procedure GrabTheAddresses(out TheList: TStringList;
-      const aEIP, aEBP: Pointer);
-  public
-    constructor Create();
-    destructor Destroy; override;
-    function SetupStack(Context: PContext): TStringList; overload;
-    function SetupStack(const EIP, EBP: Pointer): TStringList; overload;
-    function SetupNoTraceStack(Context: PContext): TStringList; overload;
-    function SetupNoTraceStack(const EIP, EBP: Pointer): TStringList; overload;
-    property ProcessingAV: Boolean read GetProcessingAV;
-    Property LastStack: TStringList read fLastStack write fLastStack;
-  end;
-
-procedure CleanUpStackInfoProc(Info: Pointer);
-function GetStackInfoStringProc(Info: Pointer): String;
-function GetExceptionStackInfoProc(P: system.PExceptionRecord): Pointer;
+  TStack = TList<Pointer>;
 
 procedure StartExceptionStackMonitoring;
 procedure StopExceptionStackMonitoring;
-function ExceptionHook: tExceptionHook;
 
+// Headers for Windows api calls
 function AddVectoredExceptionHandler(FirstHandler: DWORD;
   VectoredHandler: Pointer): Pointer; stdcall;
   external 'kernel32.dll' name 'AddVectoredExceptionHandler';
@@ -66,21 +37,42 @@ function RemoveVectoredExceptionHandler(VectoredHandlerHandle: Pointer): ULONG;
   stdcall; external 'kernel32.dll' name 'RemoveVectoredExceptionHandler';
 
 implementation
+uses
+  System.SysUtils,
+  System.Classes;
+
+type
+  PEXCEPTION_POINTERS = ^EXCEPTION_POINTERS;
+
+  tExceptionHook = class(TObject)
+  strict private
+    FExceptionHandler: Pointer;
+    fOrigGetExceptionStackInfoProc:
+      function (P: System.SysUtils.PExceptionRecord): Pointer;
+    FLastStack: TStack;
+    FIsHandlingExceptionCount: integer;
+    function GetFramePointer: Pointer;
+    function GetTopOfStack: Pointer;
+    function IsValidAddr(const Addr: Pointer): Boolean;
+    function IsValidCodeAddr(const Addr: Pointer): Boolean;
+    function GetCurrentAddress: Pointer;
+    procedure GrabTheStack(aEIP, aEBP: Pointer);
+    function GetIsHandlingException: boolean;
+    property IsHandlingException: boolean read GetIsHandlingException;
+    property LastStack: TStack read FLastStack;
+  private
+    function NewGetExceptionStackInfoProc(P: System.SysUtils.PExceptionRecord): Pointer;
+    function NewExceptionHandler(Info: PEXCEPTION_POINTERS): LongInt;
+  public
+    constructor Create;
+    destructor Destroy; override;
+  end;
 
 var
-  fExceptionHook: tExceptionHook;
-  ExceptionHandle: Pointer;
-  fOrigGetExceptionStackInfoProc: function (P: System.SysUtils.PExceptionRecord): Pointer;
-  fOrigGetStackInfoStringProc: function (Info: Pointer): string;
-  fOrigCleanUpStackInfoProc: procedure (Info: Pointer);
+  ExceptionHook: tExceptionHook;
 
 const
-  AddressFormat = '[%s]';
-
-  // Stack Depth
-  MAX_STACK_LENGTH = 10;
-
-  EXCEPTION_CONTINUE_EXECUTION = -1;
+//  EXCEPTION_CONTINUE_EXECUTION = -1; // Not used, but leave around as these three consts belong together
   EXCEPTION_CONTINUE_SEARCH = 0;
   EXCEPTION_EXECUTE_HANDLER = 1;
 
@@ -98,105 +90,61 @@ type
     StackLimit: DWORD;
     SubSystemTib: DWORD;
     case Integer of
-      0:
-        (FiberData: DWORD; ArbitraryUserPointer: DWORD; Self: DWORD;);
-      1:
-        (Version: DWORD;);
+      0: (FiberData: DWORD; ArbitraryUserPointer: DWORD; Self: DWORD;);
+      1: (Version: DWORD;);
   end;
+
+function IsMainThread: boolean;
+begin
+  Result := GetCurrentThreadID = MainThreadID;
+end;
 
 procedure StartExceptionStackMonitoring;
 begin
-  fExceptionHook := tExceptionHook.Create;
+  if not Assigned(ExceptionHook) then begin
+    if not IsMainThread then
+      raise Exception.Create('Exception stack monitoring needs to be started from the main thread');
+    ExceptionHook := TExceptionHook.Create; // Make 100% certain there's only ever one!
+  end;
 end;
 
 procedure StopExceptionStackMonitoring;
 begin
-  if Assigned(fExceptionHook) then
-    FreeAndNil(fExceptionHook);
+  FreeAndNil(ExceptionHook);
 end;
 
-function ExceptionHook: tExceptionHook;
-begin
-  result := fExceptionHook;
-end;
+// ==============================================================================
+// The two entrypoints for exception handling
+// ==============================================================================
 
-procedure CleanUpStackInfoProc(Info: Pointer);
-{
-  CleanUpStackInfoProc cleans up the stack information.
-
-  Assign a method to CleanUpStackInfoProc to clean up the opaque data structure
-  that contains stack information. The function pointed to by
-  CleanUpStackInfoProc is called when the exception is being destroyed.
-}
-begin
-  if Assigned(Info) then
-    TStringList(Info).free;
-end;
-
-function GetStackInfoStringProc(Info: Pointer): String;
-{
-  GetStackInfoStringProc generates a formatted string with the stack trace.
-
-  Assign a method to GetStackInfoStringProc to generate a formatted string
-  containing the stack trace. The function pointed to by GetStackInfoStringProc
-  is called by the GetStackTrace method.
-}
-var
-  StackInfo: TStringList;
+function GetExceptionStackInfoProc(P: System.SysUtils.PExceptionRecord): Pointer;
 begin
 {$R+}
   try
-    result := '';
-    if Assigned(Info) then
-    begin
-      StackInfo := TStringList(Info);
-      result := Trim(StackInfo.Text);
-    end;
+    if Assigned(Exceptionhook) then
+      Result := ExceptionHook.NewGetExceptionStackInfoProc(P)
+    else
+      Result := nil;
   except
-    result := '';
+    // No errors in exception handling!
+    Result := nil;
   end;
 {$R-}
 end;
 
 function ExceptionHandler(Info: PEXCEPTION_POINTERS): LongInt; stdcall;
-{
- The Vector Exception Handling (VEH) function to collect the Context record
- of the exception
-}
+// The Vector Exception Handling (VEH) function to collect the Context record
+// of the exception
 begin
 {$R+}
-  ExceptionHook.fInfoContext.ExceptionRecord := nil;
-  ExceptionHook.fInfoContext.ContextRecord := nil;
-  ExceptionHook.fInfoContext := Info^;
-  result := EXCEPTION_CONTINUE_SEARCH;
-{$R-}
-end;
-
-function GetExceptionStackInfoProc(P: system.PExceptionRecord): Pointer;
-{
- GetExceptionStackInfoProc generates stack information from an exception record.
-
- Assign a method to GetExceptionStackInfoProc to return an opaque data
- structure that contains stack information for the given exception information
- record. The function pointed to by GetExceptionStackInfoProc is called when
- the exception is about to be raised.
-}
-begin
-{$R+}
-  result := nil;
   try
-    if Assigned(ExceptionHook.fInfoContext.ContextRecord) then
-    begin
-      // Setup the stack info as a tStringList
-      if ExceptionHook.ProcessingAV then
-        result := ExceptionHook.SetupNoTraceStack
-          (ExceptionHook.fInfoContext.ContextRecord)
-      else
-        result := ExceptionHook.SetupStack
-          (ExceptionHook.fInfoContext.ContextRecord);
-      end;
+    if Assigned(Exceptionhook) then
+      Result := ExceptionHook.NewExceptionHandler(Info)
+    else
+      Result := EXCEPTION_CONTINUE_SEARCH; // Mark exception as unhandled
   except
-    result := nil;
+    // No errors in exception handling!
+    Result := EXCEPTION_CONTINUE_SEARCH; // Mark exception as unhandled
   end;
 {$R-}
 end;
@@ -205,239 +153,170 @@ end;
 // tExceptionHook
 // ==============================================================================
 
-procedure tExceptionHook.BeginMonitoring;
-{
- Set the exception functions so that we can lookup and return information
- about the exception
-}
-begin
-{$R+}
-  if assigned(Exception.GetExceptionStackInfoProc) then
-    fOrigGetExceptionStackInfoProc := Exception.GetExceptionStackInfoProc;
-  Exception.GetExceptionStackInfoProc := GetExceptionStackInfoProc;
-
-  if assigned(Exception.GetStackInfoStringProc) then
-    fOrigGetStackInfoStringProc := Exception.GetStackInfoStringProc;
-  Exception.GetStackInfoStringProc := GetStackInfoStringProc;
-
-  if assigned(Exception.CleanUpStackInfoProc) then
-    fOrigCleanUpStackInfoProc := Exception.CleanUpStackInfoProc;
-  Exception.CleanUpStackInfoProc := CleanUpStackInfoProc;
-
-  ExceptionHandle := AddVectoredExceptionHandler(1, @ExceptionHandler);
-  if not Assigned(ExceptionHandle) then
-    RaiseLastOSError;
-{$R-}
-end;
-
-procedure tExceptionHook.EndMonitoring;
-{
- Clear our exception monitoring and return them to what they were before we
- started monitoring.
-}
-begin
-{$R+}
-  RemoveVectoredExceptionHandler(ExceptionHandle);
-
-  if Assigned(fOrigCleanUpStackInfoProc) then
-     Exception.CleanUpStackInfoProc := fOrigCleanUpStackInfoProc
-  else
-    Exception.CleanUpStackInfoProc := nil;
-
-  if Assigned(fOrigGetStackInfoStringProc) then
-   Exception.GetStackInfoStringProc := fOrigGetStackInfoStringProc
-  else
-    Exception.GetStackInfoStringProc := nil;
-
-  if Assigned(fOrigGetExceptionStackInfoProc) then
-    Exception.GetExceptionStackInfoProc := fOrigGetExceptionStackInfoProc
-  else
-    Exception.GetExceptionStackInfoProc := nil;
-{$R-}
-end;
-
-constructor tExceptionHook.Create();
+constructor tExceptionHook.Create;
 begin
   inherited;
-  fProcessingAV := false;
-  BeginMonitoring;
+  // Set the exception functions so that we can lookup and return information
+  // about the exception
+{$R+}
+  fOrigGetExceptionStackInfoProc := Exception.GetExceptionStackInfoProc;
+  Exception.GetExceptionStackInfoProc := GetExceptionStackInfoProc;
+
+  FExceptionHandler := AddVectoredExceptionHandler(1, @ExceptionHandler);
+  if not Assigned(FExceptionHandler) then RaiseLastOSError;
+
+  FLastStack := TStack.Create;
+{$R-}
 end;
 
 destructor tExceptionHook.Destroy;
 begin
-  EndMonitoring;
-  if Assigned(fLastStack) then
-    FreeAndNil(fLastStack);
-  inherited;
+{$R+}
+  FreeAndNil(FLastStack);
+// Clear our exception monitoring and return them to what they were before we
+// started monitoring.
+  RemoveVectoredExceptionHandler(FExceptionHandler);
+  Exception.GetExceptionStackInfoProc := fOrigGetExceptionStackInfoProc;
+{$R-}
+  inherited Destroy;
 end;
 
 function tExceptionHook.GetTopOfStack: Pointer; assembler;
-asm MOV EAX, FS:[0].NT_TIB32.StackBase
+asm
+  MOV EAX, FS:[0].NT_TIB32.StackBase
 end;
 
-procedure tExceptionHook.GrabTheAddresses(out TheList: TStringList;
-  const aEIP, aEBP: Pointer);
-var
-  TopOfStack: Pointer;
-  BaseOfStack: Pointer;
-  StackFrame: PStackFrame;
-  CurentLevel: Integer;
-begin
-  TheList.Clear;
-
-  CurentLevel := 0;
-  TheList.Add(Format('%p', [aEIP]));
-
-  // Grab the current stacked frame
-  StackFrame := aEBP;
-  // Set our starting point
-  BaseOfStack := Pointer(Cardinal(StackFrame) - 1);
-  // Set the end point
-  TopOfStack := GetTopOfStack;
-  // While we are less than our max stack depth, frame is between the top and bottom, frame is not the same as the previous,
-  // and the location is valid and has the right access authority
-  while (CurentLevel < MAX_STACK_LENGTH) and
-    ((Cardinal(BaseOfStack) < Cardinal(StackFrame)) and
-    (Cardinal(StackFrame) < Cardinal(TopOfStack)) and
-    (StackFrame <> StackFrame^.CallerFrame) and IsValidAddr(StackFrame) and
-    IsValidCodeAddr(StackFrame^.CallerAddr)) do
-  begin
-    if CurentLevel >= 0 then
-      TheList.Add(Format('%p',
-        [Pointer(Cardinal(StackFrame^.CallerAddr) - 1)]));
-    StackFrame := PStackFrame(StackFrame^.CallerFrame);
-    Inc(CurentLevel);
-  end;
+function tExceptionHook.GetFramePointer: Pointer;
+asm
+  MOV EAX, EBP
 end;
 
-function tExceptionHook.SetupStack(const EIP, EBP: Pointer): TStringList;
-
-  procedure AddStackDetails(const P: Pointer);
-  begin
-    fStackInfo.Add(Format(AddressFormat, [Format('%p', [P])]));
-  end;
-
-var
-  TopOfStack: Pointer;
-  BaseOfStack: Pointer;
-  StackFrame: PStackFrame;
-  CurentLevel: Integer;
+function tExceptionHook.GetIsHandlingException: boolean;
 begin
-  fProcessingAV := true;
+  Result := FIsHandlingExceptionCount > 0;
+end;
+
+function TExceptionHook.GetCurrentAddress: Pointer;
+// Trying to keep this SUPER simple, as it's used when an error occurs during
+// exception handling
+var
+  StackFrame: PStackFrame;
+begin
+  StackFrame := GetFramePointer;
+  Result := Pointer(PByte(StackFrame^.CallerAddr) - 1);
+end;
+
+procedure TExceptionHook.GrabTheStack(aEIP, aEBP: Pointer);
+const
+  MAX_STACK_LENGTH = 100; // Maximum Recorded Stack Depth, to avoid endless loop
+var
+  TopOfStack: PByte; // explains why to use PByte: http://docwiki.embarcadero.com/RADStudio/Sydney/en/Converting_32-bit_Delphi_Applications_to_64-bit_Windows
+  BaseOfStack: PByte;
+  StackFrame: PStackFrame;
+  CurrentLevel: Integer;
+  AStack: TStack;
+begin
+  if not Assigned(FLastStack) then Exit;
+  AStack := FLastStack;
   try
-    fStackInfo := TStringList.Create;
-    if not Assigned(fLastStack) then
-      fLastStack := TStringList.Create;
-
-    // Grab this raw stack stack
-    GrabTheAddresses(fLastStack, EIP, EBP);
-
-    CurentLevel := 0;
-    AddStackDetails(EIP);
+    AStack.Clear;
+    CurrentLevel := 0;
+    if IsValidAddr(aEIP) then AStack.Add(aEIP); // I have not seen this being helpful
     // Grab the current stacked frame
-    StackFrame := EBP;
-
+    StackFrame := aEBP;
+    // StackFrame := GetFramePointer; // This works!
     // Set our starting point
-    BaseOfStack := Pointer(Cardinal(StackFrame) - 1);
+    BaseOfStack := PByte(StackFrame);
     // Set the end point
-    TopOfStack := GetTopOfStack;
+    TopOfStack := PByte(GetTopOfStack);
     // While we are less than our max stack depth, frame is between the top and bottom, frame is not the same as the previous,
     // and the location is valid and has the right access authority
-    while (CurentLevel < MAX_STACK_LENGTH) and
-      ((Cardinal(BaseOfStack) < Cardinal(StackFrame)) and
-      (Cardinal(StackFrame) < Cardinal(TopOfStack)) and
-      (StackFrame <> StackFrame^.CallerFrame) and IsValidAddr(StackFrame) and
-      IsValidCodeAddr(StackFrame^.CallerAddr)) do
+    while (CurrentLevel < MAX_STACK_LENGTH) and
+      (PByte(BaseOfStack) <= PByte(StackFrame)) and
+      (PByte(StackFrame) < PByte(TopOfStack)) and
+      IsValidAddr(StackFrame) and
+      IsValidCodeAddr(StackFrame^.CallerAddr) and
+      (StackFrame <> StackFrame^.CallerFrame) do
     begin
-      if CurentLevel >= 0 then
-        AddStackDetails(Pointer(Cardinal(StackFrame^.CallerAddr) - 1));
+      if CurrentLevel >= 0 then
+        AStack.Add(Pointer(PByte(StackFrame^.CallerAddr) - 1));
       StackFrame := PStackFrame(StackFrame^.CallerFrame);
-      Inc(CurentLevel);
+      Inc(CurrentLevel);
     end;
-  finally
-    fProcessingAV := false;
-  end;
-  result := fStackInfo;
-end;
-
-function tExceptionHook.SetupStack(Context: PContext): TStringList;
-begin
-  result := SetupStack(Pointer(Context^.EIP), Pointer(Context^.EBP));
-end;
-
-function tExceptionHook.SetupNoTraceStack(const EIP, EBP: Pointer): TStringList;
-{
- This runs when we have an exception during our lookup process. We want to keep
- the old stack as well as the new stack
-}
-var
-  aList: TStringList;
-begin
-  fProcessingAV := false;
-  result := TStringList.Create;
-  try
-
-    aList := TStringList.Create;
-    try
-      result.Add
-        ('An error ouccured while trying to lookup the access violation. Please see the information below');
-      result.Add('');
-      result.Add('');
-      result.Add('Original Lookup Stack');
-      if Assigned(LastStack) then
-        result.AddStrings(LastStack);
-      result.AddStrings(aList);
-      result.Add('');
-      GrabTheAddresses(aList, EIP, EBP);
-      if aList.Count > 0 then
-      begin
-        result.Add('Lookup Error Stack');
-        result.AddStrings(aList);
-      end;
-
-    finally
-      aList.Free;
-    end;
-
   except
-
+    AStack.Insert(0, GetCurrentAddress);
+    raise;
   end;
-
-end;
-
-function tExceptionHook.SetupNoTraceStack(Context: PContext): TStringList;
-begin
-  result := SetupNoTraceStack(Pointer(Context^.EIP), Pointer(Context^.EBP));
 end;
 
 function tExceptionHook.IsValidCodeAddr(const Addr: Pointer): Boolean;
 const
   aPAGE_CODE: Cardinal = (PAGE_EXECUTE or PAGE_EXECUTE_READ or
     PAGE_EXECUTE_READWRITE or PAGE_EXECUTE_WRITECOPY);
-Begin
+var
+  AMBI: TMemoryBasicInformation;
+begin
   // Can we find this in the virtual address space of the calling process and
   // the page has the right access
-  result := (VirtualQuery(Addr, fMBI, SizeOf(TMemoryBasicInformation)) <> 0) and
-    ((fMBI.Protect and aPAGE_CODE) <> 0);
+  ZeroMemory(@AMBI, SizeOf(AMBI));
+  Result :=
+    Assigned(Addr) and
+    (VirtualQuery(Addr, AMBI, SizeOf(AMBI)) <> 0) and
+    ((AMBI.Protect and aPAGE_CODE) <> 0);
 end;
 
 function tExceptionHook.IsValidAddr(const Addr: Pointer): Boolean;
+var
+  AMBI: TMemoryBasicInformation;
 Begin
   // Can we find this in the virtual address space of the calling process
-  result := (VirtualQuery(Addr, fMBI, SizeOf(TMemoryBasicInformation)) <> 0);
+  Result := Assigned(Addr) and
+    (VirtualQuery(Addr, AMBI, SizeOf(TMemoryBasicInformation)) <> 0);
 end;
 
-function tExceptionHook.GetProcessingAV: Boolean;
+function tExceptionHook.NewGetExceptionStackInfoProc(
+  P: System.SysUtils.PExceptionRecord): Pointer;
+// This returns a TStack object as a Pointer.
+// The stack will not contain the correct information until the
+// ExceptionHandler function has been called (which will happen after this),
+// but that doesn't matter because the Exception won't be handled until after
+// both have ran.
 begin
-  result := fProcessingAV;
+{$R+}
+  try
+    Result := LastStack;
+  except
+    // No errors in exception handling!
+    Result := nil;
+  end;
+{$R-}
+end;
+
+function tExceptionHook.NewExceptionHandler(Info: PEXCEPTION_POINTERS): LongInt;
+// The Vector Exception Handling (VEH) function to collect the Context record
+// of the exception
+begin
+{$R+}
+  try
+    if not IsHandlingException then
+    begin
+      Inc(FIsHandlingExceptionCount);
+      try
+        GrabTheStack(Pointer(Info^.ContextRecord^.Eip), Pointer(Info^.ContextRecord^.Ebp));
+      finally
+        Dec(FIsHandlingExceptionCount);
+      end;
+    end;
+    Result := EXCEPTION_EXECUTE_HANDLER; // Mark exception as handled
+  except
+    // No errors in exception handling!
+    Result := EXCEPTION_EXECUTE_HANDLER; // Mark exception as handled
+  end;
+{$R-}
 end;
 
 initialization
 
 finalization
-
-// ensure we dont leak
-if Assigned(fExceptionHook) then
-  FreeAndNil(fExceptionHook);
-
+  StopExceptionStackMonitoring;
 end.

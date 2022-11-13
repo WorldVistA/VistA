@@ -7,10 +7,10 @@ inherited frmSurgery: TfrmSurgery
   ClientWidth = 832
   HelpFile = 'overvw'
   Menu = mnuNotes
-  ExplicitWidth = 848
-  ExplicitHeight = 551
+  ExplicitWidth = 850
+  ExplicitHeight = 562
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   inherited shpPageBottom: TShape
     Top = 487
     Width = 832
@@ -111,7 +111,6 @@ inherited frmSurgery: TfrmSurgery
         Top = 289
         Width = 121
         Height = 97
-        ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
         TabOrder = 3
@@ -256,8 +255,8 @@ inherited frmSurgery: TfrmSurgery
         object lblRefDate: TLabel
           Left = 237
           Top = 6
-          Width = 97
-          Height = 13
+          Width = 113
+          Height = 16
           Hint = 'Press "Change..." to change date/time of note.'
           Alignment = taCenter
           Caption = 'Oct 20,1999@15:30'
@@ -266,10 +265,10 @@ inherited frmSurgery: TfrmSurgery
           ShowHint = True
         end
         object lblAuthor: TLabel
-          Left = 545
+          Left = 508
           Top = 6
-          Width = 148
-          Height = 13
+          Width = 185
+          Height = 16
           Hint = 'Press "Change..." to select a different author.'
           Alignment = taRightJustify
           Anchors = [akTop, akRight]
@@ -277,13 +276,12 @@ inherited frmSurgery: TfrmSurgery
           ParentShowHint = False
           ShowAccelChar = False
           ShowHint = True
-          ExplicitLeft = 425
         end
         object lblVisit: TLabel
           Left = 6
           Top = 21
-          Width = 200
-          Height = 13
+          Width = 246
+          Height = 16
           Caption = 'Vst: 10/20/99 Pulmonary Clinic, Dr. Welby'
           ShowAccelChar = False
         end
@@ -305,15 +303,15 @@ inherited frmSurgery: TfrmSurgery
         object lblSubject: TLabel
           Left = 6
           Top = 43
-          Width = 39
-          Height = 13
+          Width = 48
+          Height = 16
           Caption = 'Subject:'
         end
         object lblNewTitle: TLabel
           Left = 6
           Top = 6
-          Width = 115
-          Height = 13
+          Width = 144
+          Height = 16
           Hint = 'Press "Change..." to select a different title.'
           Caption = ' General Medicine Note '
           Color = clCream
@@ -342,7 +340,7 @@ inherited frmSurgery: TfrmSurgery
           Left = 48
           Top = 40
           Width = 709
-          Height = 21
+          Height = 24
           Hint = 'Subject is limited to a maximum of 80 characters.'
           Anchors = [akLeft, akTop, akRight]
           MaxLength = 80
@@ -391,7 +389,7 @@ inherited frmSurgery: TfrmSurgery
         InfoMessage.Left = 3
         InfoMessage.Top = 3
         InfoMessage.Width = 625
-        InfoMessage.Height = 49
+        InfoMessage.Height = 45
         InfoMessage.Align = alClient
         InfoMessage.Font.Charset = ANSI_CHARSET
         InfoMessage.Font.Color = clWindowText
@@ -411,7 +409,7 @@ inherited frmSurgery: TfrmSurgery
         InfoSelector.Left = 3
         InfoSelector.Top = 3
         InfoSelector.Width = 111
-        InfoSelector.Height = 49
+        InfoSelector.Height = 45
         InfoSelector.Style = lbOwnerDrawFixed
         InfoSelector.Align = alClient
         InfoSelector.ItemHeight = 13
@@ -528,7 +526,7 @@ inherited frmSurgery: TfrmSurgery
         InfoMessage.Left = 3
         InfoMessage.Top = 3
         InfoMessage.Width = 625
-        InfoMessage.Height = 49
+        InfoMessage.Height = 45
         InfoMessage.Align = alClient
         InfoMessage.Font.Charset = ANSI_CHARSET
         InfoMessage.Font.Color = clWindowText
@@ -548,7 +546,7 @@ inherited frmSurgery: TfrmSurgery
         InfoSelector.Left = 3
         InfoSelector.Top = 3
         InfoSelector.Width = 111
-        InfoSelector.Height = 49
+        InfoSelector.Height = 45
         InfoSelector.Style = lbOwnerDrawFixed
         InfoSelector.Align = alClient
         InfoSelector.ItemHeight = 13

@@ -31,13 +31,14 @@ type
   end;
 
 
-function dstReviewResult(aURL: String;aViewMode:String = ''): Integer;
+
+function dstReviewResult(aURL: String; aViewMode: String = ''): Integer;
 
 implementation
 
 {$R *.dfm}
 
-uses uGN_RPCLog, oDST;
+uses uGN_RPCLog, oDST, ORExtensions;
 
 const
   URL_OK = 200;
@@ -56,7 +57,7 @@ var
 begin
   Application.CreateForm(TfrmDSTView, frm);
   try
-    frm.ViewMode := aViewMode;
+    frm.fViewMode := aViewMode;
     frm.wbInternetExplorer.Navigate(aURL);
     Result := frm.ShowModal;
   finally
@@ -93,6 +94,7 @@ end;
 procedure TfrmDSTView.FormCreate(Sender: TObject);
 begin
   inherited;
+  SetUserDataFolder(wbInternetExplorer);
   Font.Size := Application.MainForm.Font.Size;
   adjustbtn(btnOK, True);
   adjustbtn(btnCancel, True);

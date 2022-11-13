@@ -40,7 +40,7 @@ type
     procedure AdjustFormSize;
   public
   end;
-  
+
 function SetViewForCopy(var IsNewEvent: boolean; var DoesDestEvtOccur: boolean;
   var DestPtEvtID: integer; var DestPtEvtName: string): Boolean;
   function ShouldCancelCopyOrder: boolean; //rtw
@@ -119,7 +119,7 @@ begin
   AnEvent.Specialty := 0;
   AnEvent.Effective := 0;
   AnEvent.PtEventIFN := 0;
-  AnEvent.TheParent := TParentEvent.Create;
+  AnEvent.TheParent := TParentEvent.Create(0);
   AnEvent.IsNewEvent := False;
 
   frmCopyOrders := TfrmCopyOrders.Create(Application);
@@ -232,7 +232,7 @@ begin
     end;
   finally
     frmCopyOrders.fraEvntDelayList.ResetProperty;
-    frmCopyOrders.Release;
+    frmCopyOrders.Free;
   end;
 end;
 

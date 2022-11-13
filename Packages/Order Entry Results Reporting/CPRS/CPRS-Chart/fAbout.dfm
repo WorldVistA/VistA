@@ -4,16 +4,15 @@ inherited frmAbout: TfrmAbout
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'About CPRS'
-  ClientHeight = 376
+  ClientHeight = 386
   ClientWidth = 665
-  OnCreate = FormCreate
   ExplicitWidth = 671
-  ExplicitHeight = 405
+  ExplicitHeight = 415
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBottom: TPanel [0]
     Left = 0
-    Top = 189
+    Top = 199
     Width = 665
     Height = 187
     Margins.Left = 2
@@ -24,28 +23,24 @@ inherited frmAbout: TfrmAbout
     BevelEdges = []
     BevelOuter = bvNone
     Locked = True
-    TabOrder = 0
+    TabOrder = 1
     object pnlButton: TPanel
-      Left = 0
-      Top = 152
-      Width = 665
+      AlignWithMargins = True
+      Left = 3
+      Top = 149
+      Width = 659
       Height = 35
-      Margins.Left = 2
-      Margins.Top = 0
-      Margins.Right = 2
-      Margins.Bottom = 2
       Align = alBottom
       BevelOuter = bvNone
       Locked = True
-      TabOrder = 0
+      TabOrder = 2
       object cmdOK: TButton
         AlignWithMargins = True
-        Left = 570
-        Top = 0
+        Left = 564
+        Top = 3
         Width = 71
-        Height = 27
+        Height = 24
         Margins.Left = 2
-        Margins.Top = 0
         Margins.Right = 24
         Margins.Bottom = 8
         Align = alRight
@@ -68,7 +63,7 @@ inherited frmAbout: TfrmAbout
       Margins.Bottom = 0
       Align = alTop
       BevelOuter = bvLowered
-      TabOrder = 1
+      TabOrder = 0
       object lblLegalCopyright: TMemo
         AlignWithMargins = True
         Left = 4
@@ -91,21 +86,21 @@ inherited frmAbout: TfrmAbout
       Left = 24
       Top = 41
       Width = 617
-      Height = 95
+      Height = 97
       Margins.Left = 24
       Margins.Top = 0
       Margins.Right = 24
-      Margins.Bottom = 16
+      Margins.Bottom = 8
       Align = alClient
       BevelOuter = bvLowered
       Locked = True
-      TabOrder = 2
+      TabOrder = 1
       object lbl508Notice: TMemo
         AlignWithMargins = True
         Left = 4
         Top = 4
         Width = 609
-        Height = 87
+        Height = 89
         Align = alClient
         BorderStyle = bsNone
         Color = clBtnFace
@@ -125,22 +120,22 @@ inherited frmAbout: TfrmAbout
       end
     end
   end
-  object Panel3: TPanel [1]
+  object pnlTop: TPanel [1]
     Left = 0
     Top = 0
     Width = 665
-    Height = 189
+    Height = 199
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'Panel3'
+    Caption = 'pnlTop'
     ShowCaption = False
-    TabOrder = 1
+    TabOrder = 0
     object pnlLogo: TPanel
       AlignWithMargins = True
       Left = 24
       Top = 24
       Width = 289
-      Height = 141
+      Height = 151
       Margins.Left = 24
       Margins.Top = 24
       Margins.Right = 0
@@ -154,7 +149,7 @@ inherited frmAbout: TfrmAbout
         Left = 3
         Top = 3
         Width = 283
-        Height = 135
+        Height = 145
         Margins.Left = 2
         Margins.Top = 2
         Margins.Right = 2
@@ -1695,29 +1690,17 @@ inherited frmAbout: TfrmAbout
         ExplicitHeight = 161
       end
     end
-    object Panel4: TPanel
-      Left = 313
-      Top = 0
-      Width = 352
-      Height = 189
-      Align = alClient
-      BevelOuter = bvNone
-      Caption = 'Panel4'
-      ShowCaption = False
-      TabOrder = 1
-    end
-    object Panel2: TPanel
+    object pnlInfo: TPanel
       AlignWithMargins = True
       Left = 316
       Top = 24
       Width = 346
-      Height = 162
+      Height = 172
       Margins.Top = 24
       Align = alClient
       BevelOuter = bvNone
-      Caption = 'Panel2'
       ShowCaption = False
-      TabOrder = 2
+      TabOrder = 1
       object lblFileVersion: TStaticText
         AlignWithMargins = True
         Left = 2
@@ -1731,7 +1714,7 @@ inherited frmAbout: TfrmAbout
         Align = alTop
         Alignment = taRightJustify
         Caption = 'lblFileVersion'
-        TabOrder = 0
+        TabOrder = 1
         TabStop = True
         Visible = False
       end
@@ -1748,7 +1731,7 @@ inherited frmAbout: TfrmAbout
         Align = alTop
         Alignment = taRightJustify
         Caption = 'lblComments'
-        TabOrder = 1
+        TabOrder = 2
         TabStop = True
       end
       object lblInternalName: TStaticText
@@ -1764,7 +1747,7 @@ inherited frmAbout: TfrmAbout
         Align = alTop
         Alignment = taRightJustify
         Caption = 'lblInternalName'
-        TabOrder = 2
+        TabOrder = 3
         TabStop = True
       end
       object lblProductName: TStaticText
@@ -1786,7 +1769,7 @@ inherited frmAbout: TfrmAbout
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 0
         TabStop = True
       end
       object lblCompanyName: TStaticText
@@ -1840,6 +1823,8 @@ inherited frmAbout: TfrmAbout
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 48
+    Top = 32
     Data = (
       (
         'Component = lblProductName'
@@ -1890,13 +1875,10 @@ inherited frmAbout: TfrmAbout
         'Component = lbl508Notice'
         'Status = stsDefault')
       (
-        'Component = Panel2'
+        'Component = pnlInfo'
         'Status = stsDefault')
       (
-        'Component = Panel3'
-        'Status = stsDefault')
-      (
-        'Component = Panel4'
+        'Component = pnlTop'
         'Status = stsDefault'))
   end
 end

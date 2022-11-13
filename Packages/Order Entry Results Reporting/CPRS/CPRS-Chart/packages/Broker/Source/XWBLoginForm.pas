@@ -1,3 +1,25 @@
+{ **************************************************************
+  Package: XWB - Kernel RPCBroker
+  Date Created: Sept 18, 1997 (Version 1.1)
+  Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
+  Developers: Roy Gaber
+  Description: Contains the XWBLoginForm form.
+  Unit: XWBLoginForm contains a selection form which is
+  presented to users who have logged in using their Active
+  Directory credentials, it allows for Active Directory login,
+  PIV Card login, or Access/Verify Codes login, if the user logged
+  in with PIV card then this form is never presented.
+  Current Release: Version 1.1 Patch 72
+  *************************************************************** }
+
+{ **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
+  Changes in v1.1.71 (RGG 10/18/2018) XWB*1.1*71
+  1. Created this unit
+  ************************************************** }
+
 unit XWBLoginForm;
 
 interface

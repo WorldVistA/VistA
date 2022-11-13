@@ -52,7 +52,7 @@ object SSHUsername: TSSHUsername
     Left = 17
     Top = 36
     Width = 159
-    Height = 24
+    Height = 21
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2

@@ -304,7 +304,7 @@ begin
   // ** add problems to the top of diagnoses.
     uTempList := TstringList.Create;
     BADiagnosis.clear;
-    CallVistA('ORWPCE DIAG',  [uLastLocation, EncDt], uTempList);
+    CallVistA('ORWPCE DIAG',  [uLastLocation, EncDt],uTempList);
     BADiagnosis.add(utemplist.strings[0]);
     AddProbsToDiagnosis;
 
@@ -331,7 +331,7 @@ begin
    // ** Get problem list
    EncDt := Trunc(FMToday);
    uLastDFN := Patient.DFN;
-   CallVistA('ORWPCE ACTPROB', [Patient.DFN, EncDT], UProblems);
+   CallVistA('ORWPCE ACTPROB', [Patient.DFN, EncDT],UProblems);
 
    if uProblems.Count > 0 then
    begin
@@ -754,42 +754,45 @@ begin
        rpcAddToPersonalDxList(User.DUZ,AddToPDList);
 end;
 
-
 procedure TfrmBALocalDiagnoses.AddToProblemList;
 var
-   i: integer;
-   tempCode, passCode: string;
-   NewList: TStringList;
-   PatientInfo:string;
-   ProviderID:string;
-   ptVAMC:string;
+  i: Integer;
+  tempcode, passCode: string;
+  NewList: TStringList;
+  PatientInfo: string;
+  ProviderID: string;
+  ptVAMC: string;
 
 begin
-    PatientInfo := Patient.DFN + U + Patient.Name + U;
-    ProviderID := IntToStr(Encounter.Provider);
-    ptVAMC := '';
-    NewList := TStringList.Create;
-    NewList.Clear;
-    // ** Add Diagnosis to Problem List if flagged with 'Add' in First Col.
-    with frmBALocalDiagnoses.lvDxGrid do
+  PatientInfo := Patient.DFN + U + Patient.Name + U;
+  ProviderID := IntToStr(Encounter.Provider);
+  ptVAMC := '';
+  NewList := TStringList.Create;
+  NewList.Clear;
+  // ** Add Diagnosis to Problem List if flagged with 'Add' in First Col.
+  with frmBALocalDiagnoses.lvDxGrid do
+  begin
+    for i := 0 to Items.Count - 1 do
     begin
-       for i := 0 to Items.Count-1 do
-       begin
-          if StrPos(PChar(LvDxGrid.Items[i].Caption),PChar(ADD_TO_PROBLEM_LIST)) <> nil then
-          begin
-             tempCode := lvDxGrid.Items[i].Subitems[1];
-             // ** passCode consists of Dx Code '^' Dx Desc /////
-             passCode := Piece(tempCode,':',2) + U + Piece(tempCode,':',1);
-             if Piece(passCode,U,1) <> TX799 then
-             try
-               NewList := BAPLRec.BuildProblemListDxEntry(passCode);
-               CallVistA('ORQQPL ADD SAVE',[PatientInfo, ProviderID,  BAPLPt.PtVAMC, NewList]);
-             finally
-               FreeAndNil(NewList);
-             end;
+      if StrPos(PChar(lvDxGrid.Items[i].Caption), PChar(ADD_TO_PROBLEM_LIST)) <> nil
+      then
+      begin
+        tempcode := lvDxGrid.Items[i].SubItems[1];
+        // ** passCode consists of Dx Code '^' Dx Desc /////
+        passCode := Piece(tempcode, ':', 2) + U + Piece(tempcode, ':', 1);
+        if Piece(passCode, U, 1) <> TX799 then
+        begin
+          NewList := BAPLRec.BuildProblemListDxEntry(passCode);
+          try
+            CallVistA('ORQQPL ADD SAVE', [PatientInfo, ProviderID,
+              BAPLPt.ptVAMC, NewList]);
+          finally
+            NewList.Free;
           end;
-       end;
+        end;
+      end;
     end;
+  end;
 end;
 
 procedure TfrmBALocalDiagnoses.BuildConsultDxList(pDxList: TStringList); // ** adds grid items to BAConsultDxList - uConsults
@@ -1081,7 +1084,7 @@ begin
    except
       on EListError do
          begin
-//         {$ifdef debug}Show508Message('EListError in frmBALocalDiagnoses.ListSelectedOrders()');{$endif}
+//         Show508Message('EListError in frmBALocalDiagnoses.ListSelectedOrders()');
          raise;
          end;
     end; //try
@@ -1108,7 +1111,7 @@ begin
    except
       on EListError do
          begin
-//         {$ifdef debug}Show508Message('EListError in frmBALocalDiagnoses.AddDiagnosisToPersonalDiagnosesListClick()');{$endif}
+//         Show508Message('EListError in frmBALocalDiagnoses.AddDiagnosisToPersonalDiagnosesListClick()');
          raise;
          end;
     end; //try
@@ -1522,5 +1525,12 @@ Initialization
   PersonalDxHoldList.Clear;
   ProblemDxHoldList.Clear;
   lexIENHoldList.Clear;
+
+finalization
+  FreeAndNil(BADiagnosis);
+  FreeAndNil(currentOrderIDList);
+  FreeAndNil(ProblemDxHoldList);
+  FreeAndNil(PersonalDxHoldList);
+  FreeAndNil(lexIENHoldList);
 
 end.

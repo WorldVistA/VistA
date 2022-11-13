@@ -7,12 +7,12 @@ inherited frmPCEEdit: TfrmPCEEdit
   ClientWidth = 543
   Position = poScreenCenter
   ExplicitWidth = 549
-  ExplicitHeight = 156
+  ExplicitHeight = 161
   DesignSize = (
     543
     128)
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Label1: TStaticText [0]
     Left = 0
     Top = 0

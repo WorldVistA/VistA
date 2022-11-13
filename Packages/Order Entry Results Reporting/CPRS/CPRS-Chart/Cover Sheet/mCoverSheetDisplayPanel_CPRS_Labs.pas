@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_CPRS_Labs;
   ================================================================================
   *
   *       Application:  Demo
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-21
   *
@@ -94,34 +94,40 @@ var
   aRec: TDelimitedString;
   aStr: string;
 begin
+  lvData.Items.BeginUpdate;
   try
-    lvData.Items.BeginUpdate;
     for aStr in aList do
-      begin
-        aRec := TDelimitedString.Create(aStr);
-
+    begin
+      aRec := TDelimitedString.Create(aStr);
+      try
         if lvData.Items.Count = 0 then { Executes before any item is added }
           if aRec.GetPieceEquals(1, 0) and (aList.Count = 1) then
-            begin
-              CollapseColumns;
-              lvData.Items.Add.Caption := aRec.GetPiece(2);
-              Break;
-            end
+          begin
+            CollapseColumns;
+            lvData.Items.Add.Caption := aRec.GetPiece(2);
+            Break;
+          end
           else if aRec.GetPieceIsNull(1) and (aList.Count = 1) then
             CollapseColumns
           else
             ExpandColumns;
 
         with lvData.Items.Add do
+        begin
+          Caption := MixedCase(aRec.GetPiece(2));
+          if aRec.GetPieceIsNotNull(1) then
           begin
-            Caption := MixedCase(aRec.GetPiece(2));
-            if aRec.GetPieceIsNotNull(1) then
-              begin
-                SubItems.Add(FormatDateTime(DT_FORMAT, aRec.GetPieceAsTDateTime(3)));
-                Data := aRec;
-              end;
+            SubItems.Add(FormatDateTime(DT_FORMAT,
+              aRec.GetPieceAsTDateTime(3)));
+            Data := aRec;
+            aRec := nil;
           end;
+        end;
+      finally
+        if assigned(aRec) then
+          aRec.Free;
       end;
+    end;
   finally
     lvData.Items.EndUpdate;
   end;

@@ -107,7 +107,7 @@ begin
   AnEvent.Specialty := 0;
   AnEvent.Effective := 0;
   AnEvent.PtEventIFN := 0;
-  AnEvent.TheParent := TParentEvent.Create;
+  AnEvent.TheParent := TParentEvent.Create(0);
   AnEvent.IsNewEvent := False;
 
   if SelectedList.Count = 0 then Exit;

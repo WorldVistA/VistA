@@ -1,119 +1,315 @@
 unit fOCSession;
 
+{ ------------------------------------------------------------------------------
+  Update History
+
+  2016-09-20: NSR#20101203 (Critical/Hight Order Check Display)
+  ------------------------------------------------------------------------------- }
 interface
 
 uses
-  Windows,
-  Messages,
-  SysUtils,
-  Classes,
-  Graphics,
-  Controls,
-  Forms,
-  Dialogs,
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fOCMonograph,
-  fBase508Form,
-  System.UITypes,
-  StdCtrls,
-  ORFn,
-  uConst,
-  ORCtrls,
-  ExtCtrls,
-  VA508AccessibilityManager,
-  Grids,
-  strUtils,
-  uDlgComponents,
-  VAUtils,
-  VA508AccessibilityRouter;
+  fAutoSz, StdCtrls, ORFn, uConst, ORCtrls, ExtCtrls, VA508AccessibilityManager,
+  Grids, strUtils, uDlgComponents, VAUtils, VA508AccessibilityRouter,
+  Vcl.ComCtrls, Winapi.RichEdit, ShellAPI, ORNet, rOCSession, Data.Bind.EngExt,
+  Vcl.Bind.DBEngExt, Vcl.ImgList, fOMAction, VA508ImageListLabeler, Vcl.Menus,
+  System.Actions, Vcl.ActnList, System.ImageList, u508Button;
 
 type
-  TfrmOCSession = class(TfrmBase508Form)
-    pnlBottom: TPanel;
-    lblJustify: TLabel;
-    txtJustify: TCaptionEdit;
-    cmdCancelOrder: TButton;
-    cmdContinue: TButton;
-    btnReturn: TButton;
-    memNote: TMemo;
-    cmdMonograph: TButton;
-    grdchecks: TCaptionStringGrid;
-    pnlTop: TORAutoPanel;
-    lblHover: TLabel;
+  tStringListArray = array of TStringList;
+
+  TfrmOCSession = class(TfrmAutoSz)
+    PnlCtr: TPanel;
+    PnlCtrBtm: TPanel;
+    LblOverrideNum: TLabel;
+    lblOverrideChecks: TVA508StaticText;
+    PnlCtrLft: TPanel;
+    pnlCtrRght: TPanel;
+    lvOrders: TListView;
+    Splitter: TSplitter;
+    rchOrdChk: rOCSession.TRichEdit;
+    pnlReason: TPanel;
+    lblReason: tLabel;
+    pnlComment: TPanel;
+    memRmtCmt: TMemo;
+    Panel1: TPanel;
+    Splitter2: TSplitter;
+    ImageList1: TImageList;
+    ImageList2: TImageList;
+    lblNote: tLabel;
     pnlInstr: TPanel;
-    procedure cmdCancelOrderClick(Sender: TObject);
-    procedure cmdContinueClick(Sender: TObject);
+    pnlLegend: TPanel;
+    lvLegend: TListView;
+    VA508StatusImgLst: TVA508ImageListLabeler;
+    VA508CheckBoxImgLst: TVA508ImageListLabeler;
+    pnlList: TPanel;
+    pnlOrderChecks: TPanel;
+    ActionList1: TActionList;
+    acAllergyAssessment: TAction;
+    acViewMonograph: TAction;
+    grdPnlButtom: TGridPanel;
+    cmbOverReason: TORComboBox;
+    pnlPAA: TPanel;
+    btnAllergy: u508Button.TButton;
+    pnlVM: TPanel;
+    btnMonograph: u508Button.TButton;
+    pnlCCO: TPanel;
+    cmdCancelOrder: u508Button.TButton;
+    pnlAccept: TPanel;
+    cmdContinue: u508Button.TButton;
+    pnlRTO: TPanel;
+    btnReturn: u508Button.TButton;
+    lblInstr: TStaticText;
+    lblComment: tLabel;
+    procedure cmdAcceptOrdersClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
-    procedure FormResize(Sender: TObject);
-    procedure txtJustifyKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure btnReturnClick(Sender: TObject);
-    procedure memNoteEnter(Sender: TObject);
+    procedure txtJustifyKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cmdMonographClick(Sender: TObject);
-    procedure grdchecksDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
-    function CheckBoxRect(poRect: TRect): TRect;
-    function GetCheckState(grid: TStringGrid; ACol, ARow: Integer): boolean;
-    function InCheckBox(grid: TStringGrid; X, Y, ACol, ARow: Integer): boolean;
-    procedure SetCheckState(grid: TStringGrid; ACol, ARow: Integer; State: boolean);
-    procedure grdchecksMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-    procedure grdchecksSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: boolean);
-    procedure GridDeleteRow(RowNumber: Integer; grid: TStringGrid);
-    procedure grdchecksEnter(Sender: TObject);
+    procedure lvOrdersSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
+    procedure memRmtCmtChange(Sender: TObject);
+    procedure cmbOverReasonChange(Sender: TObject);
+    procedure lvOrdersClick(Sender: TObject);
+    procedure acViewMonographExecute(Sender: TObject);
+    procedure acAllergyAssessmentExecute(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure pnlOrderChecksResize(Sender: TObject);
+    procedure cmdCancelOrderClick(Sender: TObject);
+    procedure lvOrdersEnter(Sender: TObject);
+    procedure lvOrdersKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure memRmtCmtEnter(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure grdchecksKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure grdchecksMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure FormDestroy(Sender: TObject);
+    // procedure memNoteSetText(str: string);
+  protected
+    procedure ExecuteOrderCheckCallBack(Sender: TObject);
   private
-    { Private declarations }
-    FCritical: boolean;
-    FCancelSignProcess: boolean;
-    FCheckList: TStringList;
-    FOrderList: TStringList;
-    procedure SetReqJustify;
-    procedure SetReturn(const Value: boolean);
+    FOrderList: tStringListArray;
+    overrideRecord: TOrderRec;
+    fCurrentOrderChecks: TStringList;
+    procedure EnableAllgyBtn;
+    procedure UpdateStatusIcons();
+    procedure SetupOrderChecksDisplay(aOrderLists: tStringListArray; aOrderCheckList: TStringList); overload;
+    procedure SetupOrderChecksDisplay(aOrderCheckList: TStringList); overload;
+    function ResizeLabels(aLabelObject: TObject): TRect;
+    function ParseOrderCheckText(const inStr: String): String;
   public
-    { Public declarations }
-    property CancelSignProcess: boolean read FCancelSignProcess write SetReturn default false;
+    Property CurrentOrderChecks: TStringList read fCurrentOrderChecks write fCurrentOrderChecks;
   end;
 
+procedure ExecuteOrderChecks;
+
 procedure ExecuteReleaseOrderChecks(SelectList: TList);
-function ExecuteSessionOrderChecks(OrderList: TStringList): boolean;
+procedure ExecuteReleaseOrderChecksSL(SelectList: TStringList);
+
+function ExecuteSessionOrderChecks(OrderLists: tStringListArray): Boolean;
+Procedure LookupOrderChecks(aOrderLists: tStringListArray;
+  aReturnList: TStringList);
+
+const
+  // Status Images
+  Status_UnChk = 0;
+  Status_Chk = 1;
+
+  // State Images
+  State_Alert = 0;
+  State_Chk = 1;
+  State_Cancel = 2;
+
+  NonOrders: array [0 .. 1] of string = ('ALLGY', 'MONO');
+  NO_REMOTE_COMMENTS = 'No Remote Comments found';
+  REASON_REQUIRED_FOR_OVERRIDE =
+    'Checks marked with *** require reason for override';
 
 implementation
 
 {$R *.DFM}
 
-uses
-  rOrders,
-  uCore,
-  rMisc,
-  fFrame;
-
-type
-  TOCRec = class
-  public
-    OrderID: string;
-    OrderText: string;
-    Checks: TStringList;
-    constructor Create(const AnID: string);
-    destructor Destroy; override;
-  end;
+uses rOrders, uCore, rMisc, fFrame, fAllgyAR, System.UITypes, uOrders;
 
 var
-  uCheckedOrders: TList;
-  FOldHintHidePause: Integer;
+  frmOCSession: TfrmOCSession;
 
-constructor TOCRec.Create(const AnID: string);
+Procedure LookupOrderChecks(aOrderLists: tStringListArray;
+  aReturnList: TStringList);
+var
+  LoadList: TStringList;
+  j: Integer;
 begin
-  OrderID := AnID;
-  Checks := TStringList.Create;
-  FOldHintHidePause := Application.HintHidePause;
+  if not assigned(aReturnList) then
+    exit;
+
+  LoadList := TStringList.Create;
+  try
+    // set up our "LoadList" which is used to gather the data
+    for j := Low(aOrderLists) to High(aOrderLists) do
+      LoadList.AddStrings(aOrderLists[j]);
+
+    if LoadList.Count > 0 then
+      OrderChecksForSession(aReturnList, LoadList);
+  finally
+    LoadList.Free;
+  end;
 end;
 
-destructor TOCRec.Destroy;
+{ TODO -oChris Bell : test non critical order checks }
+{ Returns True if the Signature process should proceed.
+  Clears OrderList If False. }
+function ExecuteSessionOrderChecks(OrderLists: tStringListArray): Boolean;
+var
+  j, n: Integer;
+  CheckList: TStringList;
+  LstItem: TListItem;
+
 begin
-  Application.HintHidePause := FOldHintHidePause;
-  Checks.Free;
-  inherited Destroy;
+  Screen.Cursor := crHourGlass;
+  Try
+    Result := true; //was "false". RTC#412125
+    CheckList := TStringList.Create;
+    try
+      StatusText('Order Checking...');
+
+      //Look up the order checks
+      LookupOrderChecks(OrderLists, CheckList);
+
+      StatusText('');
+
+      if CheckList.Count > 0 then
+      begin
+
+        frmOCSession := TfrmOCSession.Create(Application);
+        try
+
+          frmOCSession.SetupOrderChecksDisplay(OrderLists, CheckList);
+          frmOCSession.ShowModal;
+
+          Result := frmOCSession.ModalResult <> mrCancel;
+          if not Result then
+          begin
+            for j := Low(OrderLists) to High(OrderLists) do
+            begin
+              for n := 0 to OrderLists[j].Count - 1 do
+                UnlockOrder(Piece(OrderLists[j].Strings[n], U, 1));
+              OrderLists[j].Clear;
+            end;
+
+            if Assigned(frmFrame) then
+              frmFrame.SetActiveTab(CT_ORDERS);
+          end;
+
+          // clean up objects
+          for LstItem in frmOCSession.lvOrders.Items do
+            TOrderRec(LstItem.Data).Free;
+
+          SetLength(frmOCSession.FOrderList, 0);
+        finally
+          FreeAndNil(frmOCSession);
+        end; { try }
+      end; { if CheckList }
+    finally
+      CheckList.Free;
+    end;
+  finally
+    Screen.Cursor := crDefault;
+  end;
+end;
+
+procedure ExecuteOrderChecks;
+var
+  CheckList: TStringList;
+begin
+  //After allergy assesment is performed we need to re-run the order checks for all orders
+  if Assigned(frmOCSession) then
+  begin
+    CheckList := TStringList.Create;
+    try
+      //Look up the order checks
+      LookupOrderChecks(frmOCSession.FOrderList, CheckList);
+
+      if CheckList.Count > 0 then
+      begin
+        frmOCSession.SetupOrderChecksDisplay(CheckList);
+
+        // Disable the button after refresh is done.
+        frmOCSession.btnAllergy.Enabled := False;
+      end else
+      begin
+        frmOCSession.ModalResult := mrOk;
+    //    frmOCSession.close;
+      end;
+    finally
+      CheckList.Free;
+    end;
+  end;
+
+
+    {
+    if Assigned(frmOCSession) then
+      begin
+        if Assigned(frmOCSession.lvOrders.Selected) then
+          if Assigned(frmOCSession.lvOrders.Selected.Data) then
+          begin
+            TheOrderRec := TOrderRec(frmOCSession.lvOrders.Selected.Data);
+            OrderList := nil;
+            LoadList := nil;
+            try
+              OrderList := TStringList.Create;
+              LoadList := TStringList.Create;
+              OrderList.Add(TheOrderRec.OrderID + '^^1');
+              OrderChecksForSession(LoadList, OrderList);
+
+              // Sort the list by ID
+              SortByPiece(LoadList, U, 1);
+              DisplayTxt := TStringList.Create;
+              try
+                // Format each string in the RPC return and add to our output string
+                for S in LoadList do
+                  DisplayTxt.Add(frmOCSession.ParseOrderCheckText(s));
+
+                TheOrderRec.SetOrderCheckText(DisplayTxt);
+                // Needs to be reset
+                TheOrderRec.IsComplete := False;
+              finally
+                DisplayTxt.Free;
+              end;
+              // select the first order in the list
+              frmOCSession.lvOrders.Selected.Selected := true;
+              //frmOCSession.lvOrders.Items[frmOCSession.lvOrders.ItemIndex].Selected := true;
+              // Update Status of the Form
+              frmOCSession.UpdateStatusIcons();
+
+              frmOCSession.EnableAllgyBtn;
+            finally
+              LoadList.Free;
+              OrderList.Free;
+            end;
+
+          end;
+      end;
+  }
+end;
+
+function ParceOrderCheckText(const instr: string): String;
+begin
+  Result := '';
+  // Add check type. 1=high 2=moderate 3=low
+  SetPiece(Result, U, 1, trim(Piece(instr, U, 3)));
+  // Add display text
+  SetPiece(Result, U, 2, Piece(instr, U, 4));
+  if (Piece(instr, U, 2) = '3') and (Piece(instr, U, 5) = '1')
+  then
+  begin
+    // Add collection for comment flag
+    SetPiece(Result, U, 3, Piece(instr, U, 5));
+    // Add previous comment
+    SetPiece(Result, U, 4, Piece(instr, U, 7));
+    // Add Override Reason //TDP - Added Override Reason
+    SetPiece(Result, U, 5, Piece(instr, U, 8));
+  end;
 end;
 
 procedure ExecuteReleaseOrderChecks(SelectList: TList);
@@ -121,30 +317,32 @@ var
   i: Integer;
   AnOrder: TOrder;
   OrderIDList: TStringList;
+  OrderListArray: TstringListArray;
 begin
   OrderIDList := TStringList.Create;
   try
     for i := 0 to SelectList.Count - 1 do
+    begin
+      AnOrder := TOrder(SelectList.Items[i]);
+      OrderIDList.Add(AnOrder.ID + '^^1'); // 3rd pce = 1 means releasing order
+    end;
+
+    OrderListArray := [OrderIDList];
+    if ExecuteSessionOrderChecks([OrderIDList]) then
+    begin
+      If OrderIDList.Count > 0 then
       begin
-        AnOrder := TOrder(SelectList.Items[i]);
-        OrderIDList.Add(AnOrder.ID + '^^1'); // 3rd pce = 1 means releasing order
-      end;
-    while OrderIDList.Count > 0 do
-      begin
-        if ExecuteSessionOrderChecks(OrderIDList) then
+        for i := SelectList.Count - 1 downto 0 do
+        begin
+          AnOrder := TOrder(SelectList.Items[i]);
+          if OrderIDList.IndexOf(AnOrder.ID + '^^1') < 0 then
           begin
-            for i := SelectList.Count - 1 downto 0 do
-              begin
-                AnOrder := TOrder(SelectList.Items[i]);
-                if OrderIDList.IndexOf(AnOrder.ID + '^^1') < 0 then
-                  begin
-                    Changes.Remove(CH_ORD, AnOrder.ID);
-                    SelectList.Delete(i);
-                  end;
-              end;
-            Break;
+            Changes.Remove(CH_ORD, AnOrder.ID);
+            SelectList.Delete(i);
           end;
+        end;
       end;
+    end;
     if OrderIDList.Count < 1 then
       SelectList.Clear;
   finally
@@ -152,285 +350,243 @@ begin
   end;
 end;
 
-{ Returns True if the Signature process should proceed.
-  Clears OrderList If False. }
-function ExecuteSessionOrderChecks(OrderList: TStringList): boolean;
+procedure ExecuteReleaseOrderChecksSL(SelectList: TStringList);
 var
-  i, j, k, l, m, n, rowcnt: Integer;
-  LastID, NewID, gridtext: string;
-  CheckList, remOC: TStringList;
-  OCRec: TOCRec;
-  frmOCSession: TfrmOCSession;
-  X, substring: string;
+  sID: String;
+  i: Integer;
+  OrderIDList: TStringList;
 begin
-  Result := True;
-  CheckList := TStringList.Create;
+  OrderIDList := TStringList.Create;
   try
-    StatusText('Order Checking...');
-    OrderChecksForSession(CheckList, OrderList);
-    StatusText('');
-    if CheckList.Count > 0 then
+    for i := 0 to SelectList.Count - 1 do
+    begin
+      sID := SelectList[i] + '^^1';
+      OrderIDList.Add(sID); // 3rd pce = 1 means releasing order
+    end;
+    if ExecuteSessionOrderChecks([OrderIDList]) then
+    begin
+      If OrderIDList.Count > 0 then
       begin
-        frmOCSession := TfrmOCSession.Create(Application);
-        rowcnt := 1;
-        frmOCSession.grdchecks.canvas.Font.Name := 'Courier New';
-        frmOCSession.grdchecks.canvas.Font.Size := MainFontSize;
-        frmOCSession.cmdMonograph.Enabled := false;
-        if IsMonograph then
-          frmOCSession.cmdMonograph.Enabled := True;
-        try
-          uCheckedOrders := TList.Create;
-          LastID := '';
-          for i := 0 to CheckList.Count - 1 do
-            begin
-              NewID := Piece(CheckList[i], U, 1);
-              if NewID <> LastID then
-                begin
-                  OCRec := TOCRec.Create(NewID);
-                  uCheckedOrders.Add(OCRec);
-                  LastID := NewID;
-                end; { if NewID }
-            end; { for i }
-          with uCheckedOrders do
-            for i := 0 to Count - 1 do
-              begin
-                OCRec := TOCRec(Items[i]);
-                X := TextForOrder(OCRec.OrderID);
-                OCRec.OrderText := X;
-                frmOCSession.grdchecks.Cells[2, rowcnt] := OCRec.OrderID + '^O^0^';
-                frmOCSession.grdchecks.Cells[1, rowcnt] := OCRec.OrderText;
-                rowcnt := rowcnt + 1;
-                if rowcnt > frmOCSession.grdchecks.RowCount then
-                  frmOCSession.grdchecks.RowCount := rowcnt;
-                l := 0;
-                m := 0;
-                for j := 0 to CheckList.Count - 1 do
-                  if Piece(CheckList[j], U, 1) = OCRec.OrderID then
-                    m := m + 1;
-
-                for j := 0 to CheckList.Count - 1 do
-                  if Piece(CheckList[j], U, 1) = OCRec.OrderID then
-                    begin
-                      l := l + 1;
-                      gridtext := '';
-                      substring := Copy(Piece(CheckList[j], U, 4), 0, 2);
-                      if substring = '||' then
-                        begin
-                          remOC := TStringList.Create;
-                          substring := Copy(Piece(CheckList[j], U, 4), 3, Length(Piece(CheckList[j], U, 4)));
-                          GetXtraTxt(remOC, Piece(substring, '&', 1), Piece(substring, '&', 2));
-                          for k := 0 to remOC.Count - 1 do
-                            begin
-                              // add each line to x and OCRec.Checks
-                              if k = remOC.Count - 1 then
-                                begin
-                                  OCRec.Checks.Add(Pieces(CheckList[j], U, 2, 3) + '^' + '      ' + remOC[k]);
-                                  X := X + CRLF + remOC[k];
-                                  if gridtext = '' then
-                                    gridtext := remOC[k]
-                                  else
-                                    gridtext := gridtext + CRLF + '      ' + remOC[k];
-                                end
-                              else if k = 0 then
-                                begin
-                                  OCRec.Checks.Add(Pieces(CheckList[j], U, 2, 3) + '^' + remOC[k]);
-                                  X := X + CRLF + '(' + inttostr(l) + ' of ' + inttostr(m) + ')  ' + remOC[k];
-                                  if gridtext = '' then
-                                    gridtext := '(' + inttostr(l) + ' of ' + inttostr(m) + ')  ' + remOC[k]
-                                  else
-                                    gridtext := gridtext + CRLF + remOC[k];
-                                end
-                              else
-                                begin
-                                  OCRec.Checks.Add(Pieces(CheckList[j], U, 2, 3) + '^' + '      ' + remOC[k]);
-                                  X := X + CRLF + remOC[k];
-                                  if gridtext = '' then
-                                    gridtext := remOC[k]
-                                  else
-                                    gridtext := gridtext + CRLF + '      ' + remOC[k];
-                                end;
-                            end;
-                          X := X + CRLF + '        ';
-                          if gridtext = '' then
-                            gridtext := '      '
-                          else
-                            gridtext := gridtext + CRLF + '      ';
-                          remOC.Free;
-                        end
-                      else
-                        begin
-                          OCRec.Checks.Add(Pieces(CheckList[j], U, 2, 4));
-                          X := X + CRLF + '(' + inttostr(l) + ' of ' + inttostr(m) + ')  ' + Piece(CheckList[j], U, 4);
-                          gridtext := '(' + inttostr(l) + ' of ' + inttostr(m) + ')  ' + Piece(CheckList[j], U, 4);
-                        end;
-                      if (Piece(CheckList[j], U, 3) = '1') then
-                        frmOCSession.grdchecks.Cells[1, rowcnt] := '*Order Check requires Reason for Override' + CRLF + gridtext
-                      else
-                        frmOCSession.grdchecks.Cells[1, rowcnt] := gridtext;
-                      frmOCSession.grdchecks.Cells[2, rowcnt] := OCRec.OrderID + '^I^' + Piece(CheckList[j], U, 3);
-                      // frmOCSession.grdchecks.Objects[2, rowcnt] := OCRec;
-                      rowcnt := rowcnt + 1;
-                      if rowcnt > frmOCSession.grdchecks.RowCount then
-                        frmOCSession.grdchecks.RowCount := rowcnt;
-                    end;
-              end; { with...for i }
-          frmOCSession.FOrderList := OrderList;
-          frmOCSession.FCheckList := CheckList;
-          frmOCSession.SetReqJustify;
-          MessageBeep(MB_ICONASTERISK);
-          if frmOCSession.Visible then
-            frmOCSession.SetFocus;
-          frmOCSession.ShowModal;
-          Result := not frmOCSession.CancelSignProcess;
-          if frmOCSession.CancelSignProcess then
-            begin
-              for n := 0 to OrderList.Count - 1 do
-                UnlockOrder(Piece(OrderList[n], U, 1));
-              OrderList.Clear;
-              if Assigned(frmFrame) then
-                frmFrame.SetActiveTab(CT_ORDERS);
-            end
-          else if frmOCSession.modalresult = mrRetry then
-            Result := false;
-
-          if ScreenReaderActive = True then
-            begin
-              frmOCSession.pnlInstr.TabStop := True;
-              frmOCSession.memNote.TabStop := True;
-              frmOCSession.memNote.TabOrder := 2;
-            end
-          else
-            begin
-              frmOCSession.pnlInstr.TabStop := false;
-              frmOCSession.memNote.TabStop := false;
-            end;
-        finally
-          with uCheckedOrders do
-            for i := 0 to Count - 1 do
-              TOCRec(Items[i]).Free;
-          frmOCSession.Free;
-        end; { try }
-      end; { if CheckList }
+        for i := SelectList.Count - 1 downto 0 do
+        begin
+          sID := SelectList[i];
+          if OrderIDList.IndexOf(sID+ '^^1') < 0 then
+          begin
+            Changes.Remove(CH_ORD, sID);
+            SelectList.Delete(i);
+          end;
+        end;
+      end;
+    end;
+    if OrderIDList.Count < 1 then
+      SelectList.Clear;
   finally
-    CheckList.Free;
+    OrderIDList.Free;
+  end;
+end;
+////////////////////////////////////////////////////////////////////////////////
+
+procedure TfrmOCSession.EnableAllgyBtn;
+//var
+//  s: string;
+begin
+  acAllergyAssessment.Enabled :=
+//  CallVistA('ORQQAL LIST', [Patient.DFN],s) and (s = '^No Allergy Assessment'); // Todo: This code needs to go back into 32c!
+    False;
+end;
+
+procedure TfrmOCSession.cmdAcceptOrdersClick(Sender: TObject);
+
+  procedure ProcessChks();
+  var
+    AnOrderID, CommentStr, ReasonStr: String;
+    CList, RList: TStringList;
+    lstItm: TListItem;
+    TheRec: TOrderRec;
+  begin
+    RList := nil;
+    CList := nil;
+    try
+      RList := TStringList.Create;
+      CList := TStringList.Create;
+
+      for lstItm in lvOrders.Items do
+      begin
+        if Assigned(lstItm.Data) then
+        begin
+          TheRec := TOrderRec(lstItm.Data);
+
+          if IndexText(TheRec.OrderID, NonOrders) > -1 then
+            continue;
+
+          if not TheRec.Canceled then
+          begin
+            if TheRec.IsCritical then
+              ReasonStr := trim(TheRec.OverRideSel);
+
+            CommentStr := trim(TheRec.CommentTxt.text);
+            AnOrderID := TheRec.OrderID;
+
+            RList.Add(AnOrderID + '^' + ReasonStr);
+            CList.Add(AnOrderID + '^' + CommentStr);
+          end;
+        end;
+      end;
+
+      StatusText('Saving Order Check...');
+      if fCurrentOrderChecks.Count > 0 then
+        SaveMultiOrderChecksForSession(fCurrentOrderChecks, RList, CList);
+      StatusText('');
+    finally
+      CList.Free;
+      RList.Free;
+    end;
+  end;
+
+var
+  lstItm: TListItem;
+  ChangeLst: TStringList;
+  TheRec: TOrderRec;
+  ChangeStr: WideString;
+  StrItm: String;
+  OldCursor: TCursor;
+begin
+  inherited;
+  OldCursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass;
+  try
+    ChangeLst := TStringList.Create;
+    try
+      for lstItm in lvOrders.Items do
+      begin
+        if Assigned(lstItm.Data) then
+        begin
+          TheRec := TOrderRec(lstItm.Data);
+          if IndexText(TheRec.OrderID, NonOrders) > -1 then
+            continue;
+
+          ChangeLst.Add(MixedCase(TheRec.OrderName))
+        end;
+      end;
+      ChangeStr := '';
+
+      if trim(ChangeStr) <> '' then
+        ChangeStr := ChangeStr + #13#10;
+
+      if ChangeLst.Count > 0 then
+        ChangeStr := ChangeStr +
+          'The following item(s) will be accepted:' + #13#10;
+      for StrItm in ChangeLst do
+        ChangeStr := ChangeStr + StrItm + #13#10;
+
+      if trim(ChangeStr) <> '' then
+        ChangeStr := ChangeStr + #13#10;
+        // build the save
+        if ChangeLst.Count > 0 then
+          ProcessChks;
+
+        ModalResult := mrOk;
+    finally
+      ChangeLst.Free;
+    end;
+  finally
+    Screen.Cursor := OldCursor;
   end;
 end;
 
-procedure TfrmOCSession.SetCheckState(grid: TStringGrid; ACol, ARow: Integer; State: boolean);
-var
-  temp: string;
-begin
-  temp := grid.Cells[2, ARow];
-  if State = True then
-    SetPiece(temp, U, 3, '1')
-  else
-    SetPiece(temp, U, 3, '0');
-  grid.Cells[2, ARow] := temp;
-  grid.Repaint;
-end;
-
-procedure TfrmOCSession.SetReqJustify;
-var
-  i, j: Integer;
-  OCRec: TOCRec;
-begin
-  FCritical := false;
-  with uCheckedOrders do
-    for i := 0 to Count - 1 do
-      begin
-        OCRec := TOCRec(Items[i]);
-        for j := 0 to OCRec.Checks.Count - 1 do
-          if Piece(OCRec.Checks[j], U, 2) = '1' then
-            FCritical := True;
-      end;
-  lblJustify.Visible := FCritical;
-  txtJustify.Visible := FCritical;
-  memNote.Visible := FCritical;
-end;
-
-function TfrmOCSession.CheckBoxRect(poRect: TRect): TRect;
-const
-  ciCheckBoxDim = 20;
-begin
-  with poRect do
-    begin
-      Result.Top := Top + FontHeightPixel(Font.Handle);
-      Result.Left := Left - (ciCheckBoxDim div 2) + (Right - Left) div 2;
-      Result.Right := Result.Left + ciCheckBoxDim;
-      Result.Bottom := Result.Top + ciCheckBoxDim;
-    end
-end;
-
 procedure TfrmOCSession.cmdCancelOrderClick(Sender: TObject);
-var
-  i, j, already: Integer;
-  AnOrderID: string;
-  DeleteOrderList: TStringList;
-begin
-  inherited;
-  DeleteOrderList := TStringList.Create;
-  for i := 0 to grdchecks.RowCount do
-    if (Piece(grdchecks.Cells[2, i], U, 3) = '1') and (Piece(grdchecks.Cells[2, i], U, 2) = 'O') then
+
+  procedure RemoveCanceled();
+  var
+    I, X, y: Integer;
+    lstItm: TListItem;
+    TheRec: TOrderRec;
+  begin
+    for I := lvOrders.Items.Count-1 downto 0 do
+    begin
+      lstItm := lvOrders.Items[I];
+      if Assigned(lstItm.Data) then
       begin
-        AnOrderID := Piece(grdchecks.Cells[2, i], U, 1);
-        already := DeleteOrderList.IndexOf(AnOrderID);
-        if (already >= 0) or (DeleteCheckedOrder(AnOrderID)) then
+        TheRec := TOrderRec(lstItm.Data);
+
+        if IndexText(TheRec.OrderID, NonOrders) > -1 then
+          continue;
+
+        if TheRec.Canceled then
+        begin
+          if DeleteCheckedOrder(TheRec.OrderID) then
           begin
-            for j := FCheckList.Count - 1 downto 0 do
-              if Piece(FCheckList[j], U, 1) = AnOrderID then
-                FCheckList.Delete(j);
-            DeleteOrderList.Add(AnOrderID);
-            Changes.Remove(CH_ORD, AnOrderID);
-            for j := FOrderList.Count - 1 downto 0 do
-              if Piece(FOrderList[j], U, 1) = AnOrderID then
-                FOrderList.Delete(j);
-            for j := uCheckedOrders.Count - 1 downto 0 do
-              if TOCRec(uCheckedOrders.Items[j]).OrderID = AnOrderID then
-
+            Changes.Remove(CH_ORD, TheRec.OrderID);
+            lstItm.Delete;
+            try
+              for X := Low(FOrderList) to High(FOrderList) do
+              begin
+                for y := FOrderList[X].Count - 1 downto 0 do
+                  if Piece(FOrderList[X].Strings[y], U, 1) = TheRec.OrderID then
+                  begin
+                    FOrderList[X].Delete(y);
+                 end;
+              end;
+            finally
+              FreeAndNil(TheRec);
+            end;
           end;
+        end;
       end;
-  if DeleteOrderList.Count = 0 then
-    begin
-      infoBox('No orders are marked to cancel. Check the Cancel box by the orders to cancel. ', 'Error', MB_OK);
     end;
-end;
+  end;
 
-procedure TfrmOCSession.cmdContinueClick(Sender: TObject);
 var
-  i: Integer;
-  Cancel: boolean;
+  lstItm: TListItem;
+  CancelLst: TStringList;
+  TheRec: TOrderRec;
+  ChangeStr: WideString;
+  StrItm: String;
+  OldCursor: TCursor;
 begin
-  inherited;
-  Cancel := false;
-  if FCritical and ((Length(txtJustify.Text) < 2) or not ContainsVisibleChar(txtJustify.Text)) then
-    begin
-      infoBox('A justification for overriding critical order checks is required.', 'Justification Required', MB_OK);
-      Exit;
-    end;
-
-  if FCritical and (ContainsUpCarretChar(txtJustify.Text)) then
-    begin
-      infoBox('The justification may not contain the ^ character.', 'Justification Required', MB_OK);
-      Exit;
-    end;
-
-  for i := 0 to grdchecks.RowCount do
-    if (Piece(grdchecks.Cells[2, i], U, 3) = '1') and (Piece(grdchecks.Cells[2, i], U, 2) = 'O') then
+  OldCursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass;
+  try
+    inherited;
+    CancelLst := TStringList.Create;
+    try
+      for lstItm in lvOrders.Items do
       begin
-        Cancel := True;
-        Break;
-      end;
-  if Cancel = True then
-    begin
-      infoBox('One or more orders have been marked to cancel!' + CRLF + CRLF + 'To cancel these orders, click the "Cancel Checked Order(s)" button.' + CRLF + CRLF + 'To place these orders, uncheck the Cancel box beside the order you wish to keep and then click the "Accept Order(s)" button again.',
-        'Error', MB_OK);
-      Exit;
-    end;
+        if Assigned(lstItm.Data) then
+        begin
+          TheRec := TOrderRec(lstItm.Data);
+          if IndexText(TheRec.OrderID, NonOrders) > -1 then
+            continue;
 
-  StatusText('Saving Order Checks...');
-  SaveOrderChecksForSession(txtJustify.Text, FCheckList);
-  StatusText('');
-  Close;
+          if TheRec.Canceled then
+            CancelLst.Add(MixedCase(TheRec.OrderName))
+        end;
+      end;
+
+      if CancelLst.Count > 0 then
+        ChangeStr := 'The following item(s) will be canceled:' + #13#10;
+
+      for StrItm in CancelLst do
+        ChangeStr := ChangeStr + StrItm + #13#10;
+
+      if trim(ChangeStr) <> '' then
+        ChangeStr := ChangeStr + #13#10;
+
+      // Cancel process
+      if CancelLst.Count > 0 then
+        RemoveCanceled;
+
+      //check for remaining orders
+      if lvOrders.Items.Count = 0 then
+        ModalResult := mrCancel;
+
+    finally
+      CancelLst.Free;
+    end;
+  finally
+    Screen.Cursor := OldCursor;
+  end;
+  UpdateStatusIcons;
 end;
 
 procedure TfrmOCSession.cmdMonographClick(Sender: TObject);
@@ -439,473 +595,587 @@ var
 begin
   inherited;
   monoList := TStringList.Create;
-  GetMonographList(monoList);
-  ShowMonographs(monoList);
-  monoList.Free;
+  try
+    GetMonographList(monoList);
+    ShowMonographs(monoList);
+  finally
+    monoList.Free;
+  end;
+end;
+
+procedure TfrmOCSession.ExecuteOrderCheckCallBack(Sender: TObject);
+begin
+  ExecuteOrderChecks;
+end;
+
+procedure TfrmOCSession.cmbOverReasonChange(Sender: TObject);
+begin
+  inherited;
+  if Assigned(overrideRecord) then
+  begin
+    overrideRecord.OverRideSel := cmbOverReason.text;
+    overrideRecord.IsComplete := IsValidOverrideReason(overrideRecord.OverRideSel);
+    UpdateStatusIcons;
+  end;
 end;
 
 procedure TfrmOCSession.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
+  SaveUserBounds(self); // Save Position & Size of Form
   DeleteMonograph;
 end;
 
 procedure TfrmOCSession.FormCreate(Sender: TObject);
-const
-  GAP = 6;
-
-  procedure FixButtons(btns: array of TButton);
-  var
-    i, x: integer;
-    s: TSize;
-
-  begin
-    x := ClientWidth;
-    for i := High(btns) downto Low(btns) do
-    begin
-      s := Self.Canvas.TextExtent(btns[i].Caption);
-      btns[i].Width := trunc(s.cx * 1.2);
-      btns[i].Height := trunc(s.cy * 1.8);
-      if i > 0 then
-      begin
-        dec(x, btns[i].Width + GAP);
-        btns[i].Left := x;
-        btns[i].Top := pnlBottom.Height - btns[i].Height - GAP;
-      end;
-    end;
-  end;
-
-  function CombinedHeight(ctrls: array of TControl): integer;
-  var
-    i: integer;
-
-  begin
-    Result := GAP;
-    for i := Low(ctrls) to High(ctrls) do
-      inc(Result, ctrls[i].Height);
-  end;
-
 begin
   inherited;
-  grdchecks.Cells[0, 0] := 'Cancel';
-  grdchecks.Cells[1, 0] := 'Order/Order Check Text';
-  Font.Size := MainFontSize;
-  lblJustify.Font.Style := lblJustify.Font.Style + [fsBold];
-  pnlInstr.Font.Style := pnlInstr.Font.Style + [fsBold];
-  pnlInstr.Font.Size := pnlInstr.Font.Size + 1;
-  txtJustify.Height := trunc(canvas.TextHeight('|Zgy') * 1.6);
-  ClientWidth := lblJustify.canvas.TextWidth(pnlInstr.Caption) +
-    lblJustify.Margins.Left + lblJustify.Margins.Right + 12 + Font.Size;
-  FixButtons([cmdCancelOrder, cmdContinue, btnReturn, cmdMonograph]);
-  memNote.Height := trunc(Self.Canvas.TextHeight(memNote.Text) * 2.5);
-  pnlBottom.Height := CombinedHeight([cmdCancelOrder, memNote, lblJustify, txtJustify, cmdContinue]);
-  Realign;
+  fCurrentOrderChecks := TStringList.Create;
+end;
+
+procedure TfrmOCSession.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(fCurrentOrderChecks);
+  inherited;
 end;
 
 procedure TfrmOCSession.FormShow(Sender: TObject);
 begin
-  FCancelSignProcess := false;
-  pnlInstr.TabStop := ScreenReaderActive;
+  inherited;
+  SetFormPosition(self); // Get Saved Position & Size of Form
+  // 508 Code here
   if ScreenReaderActive = True then
-    pnlInstr.SetFocus
-  else
-    grdchecks.SetFocus;
+  begin
+    pnlInstr.TabStop := True;
+    lblOverrideChecks.TabStop := True;
+    lvLegend.TabStop := True;
+    pnlInstr.SetFocus;
+  end;
+
+  PnlCtrLft.Width := (ClientWidth div 2);
+
+  rchOrdChk.AutoDetect := true;
+
+  UpdateStatusIcons;
 end;
 
-procedure TfrmOCSession.grdchecksDrawCell(Sender: TObject; ACol, ARow: Integer; Rect: TRect; State: TGridDrawState);
+procedure TfrmOCSession.lvOrdersClick(Sender: TObject);
 var
-  Wrap: boolean;
-  format, str, cdl, temp, colorText: string;
-  IsBelowOrder, isSelected: boolean;
-  chkRect, DrawRect, colorRect: TRect;
-  ChkState: Cardinal;
+  htst: THitTests;
+  lvCurPos: TPoint;
+  lstItm: TListItem;
 begin
   inherited;
-  temp := grdchecks.Cells[2, ARow];
-  format := Piece(grdchecks.Cells[2, ARow], U, 2);
-  cdl := Piece(grdchecks.Cells[2, ARow], U, 3);
-  colorText := '*Order Check requires Reason for Override';
-  grdchecks.canvas.Brush.Color := Get508CompliantColor(clWhite);
-  grdchecks.canvas.Font.Color := Get508CompliantColor(clBlack);
-  grdchecks.canvas.Font.Style := [];
-  isSelected := false;
+  lvCurPos := lvOrders.ScreenToClient(Mouse.CursorPos);
+  htst := lvOrders.GetHitTestInfoAt(lvCurPos.X, lvCurPos.y);
 
-  if ARow = 0 then
+  if htOnStateIcon in htst then
+  begin
+    lstItm := lvOrders.GetItemAt(lvCurPos.X, lvCurPos.y);
+    if Assigned(lstItm) then
     begin
-      grdchecks.canvas.Brush.Color := Get508CompliantColor(clbtnFace);
-      grdchecks.canvas.Font.Style := [fsBold];
-    end;
-
-  // change commented out code to handle different font color this code may not be needed anymore
-  if (format = '') and (ARow > 0) then
-    grdchecks.canvas.Font.Color := Get508CompliantColor(clBlue)
-  else
-    grdchecks.canvas.Font.Color := Get508CompliantColor(clBlack);
-  if cdl = '1' then
-    grdchecks.canvas.Font.Color := Get508CompliantColor(clBlue);
-
-  // controls highlighting cell when focused in on the cell
-  if State = [gdSelected .. gdFocused] then
-    begin
-      isSelected := True; // use to control colors for high order checks
-      grdchecks.canvas.Font.Color := Get508CompliantColor(clWhite);
-      grdchecks.canvas.Brush.Color := clHighlight;
-      grdchecks.canvas.Font.Color := clHighlightText;
-      grdchecks.canvas.Font.Style := [fsBold];
-      grdchecks.canvas.MoveTo(Rect.Left, Rect.Top);
-    end
-    // if not an order than blanked out lines seperating the order check
-  else if (format = 'I') then
-    begin
-      if (ARow < grdchecks.RowCount) and (Piece(grdchecks.Cells[2, ARow + 1], U, 2) = 'O') then
-        IsBelowOrder := True
-      else
-        IsBelowOrder := false;
-      grdchecks.canvas.MoveTo(Rect.Left, Rect.Bottom);
-      grdchecks.canvas.Pen.Color := Get508CompliantColor(clWhite);
-      grdchecks.canvas.LineTo(Rect.Left, Rect.Top);
-      grdchecks.canvas.LineTo(Rect.Right, Rect.Top);
-      grdchecks.canvas.LineTo(Rect.Right, Rect.Bottom);
-      if (IsBelowOrder = false) or (ARow = (grdchecks.RowCount - 1)) then
-        grdchecks.canvas.LineTo(Rect.Left, Rect.Bottom);
-    end;
-  str := grdchecks.Cells[ACol, ARow];
-  // determine if the cell needs to wrap
-  if ACol = 1 then
-    Wrap := True
-  else
-    Wrap := false;
-  // Blank out existing Cell to prevent overlap after resize
-  grdchecks.canvas.FillRect(Rect);
-  // get existing cell
-  DrawRect := Rect;
-  if (ACol = 0) and (format = 'O') and (ARow > 0) then
-    begin
-      if Piece(grdchecks.Cells[2, ARow], U, 4) = '' then
+      if Assigned(lstItm.Data) then
+      begin
+        if IndexText(TOrderRec(lstItm.Data).OrderID, NonOrders) = -1 then
         begin
-          DrawRect.Bottom := DrawRect.Bottom + FontHeightPixel(Font.Handle) + 5;
-          SetPiece(temp, U, 4, 'R');
-          grdchecks.Cells[2, ARow] := temp;
-        end;
-      if GetCheckState(grdchecks, ACol, ARow) = True then
-        ChkState := DFCS_CHECKED
-      else
-        ChkState := DFCS_BUTTONCHECK;
-      chkRect := CheckBoxRect(DrawRect);
-      DrawFrameControl(grdchecks.canvas.Handle, chkRect, DFC_BUTTON, ChkState);
-      DrawText(grdchecks.canvas.Handle, PChar('Cancel?'), Length('Cancel?'), DrawRect, DT_SINGLELINE or DT_Top or DT_Center);
-      if ((DrawRect.Bottom - DrawRect.Top) > grdchecks.RowHeights[ARow]) or ((DrawRect.Bottom - DrawRect.Top) < grdchecks.RowHeights[ARow]) then
-        begin
-          grdchecks.RowHeights[ARow] := (DrawRect.Bottom - DrawRect.Top);
-        end;
-    end;
-  // If order check than indent the order check text
-  if (ACol = 1) and (format = 'I') then
-    DrawRect.Left := DrawRect.Left + 10;
-  // colorRect use to create Rect for Order Check Label
-  colorRect := DrawRect;
-  if Wrap then
-    begin
-      if (cdl = '1') and (format = 'I') then
-        begin
-          if isSelected = false then
-            begin
-              grdchecks.canvas.Font.Color := Get508CompliantColor(clRed);
-              grdchecks.canvas.Font.Style := [fsBold];
-            end;
-          // determine rect size for order check label
-          DrawText(grdchecks.canvas.Handle, PChar(colorText), Length(colorText), colorRect, dt_calcrect or dt_wordbreak);
-          DrawRect.Top := colorRect.Bottom;
-          // determine rect size for order check text
-          DrawText(grdchecks.canvas.Handle, PChar(str), Length(str), DrawRect, dt_calcrect or dt_wordbreak);
-          str := Copy(str, Length(colorText + CRLF) + 1, Length(str));
-          if isSelected = false then
-            begin
-              grdchecks.canvas.Font.Color := Get508CompliantColor(clBlue);
-              grdchecks.canvas.Font.Style := [];
-            end;
-        end
-        // determine size for non-high order check text
-      else
-        DrawText(grdchecks.canvas.Handle, PChar(str), Length(str), DrawRect, dt_calcrect or dt_wordbreak);
-      DrawRect.Bottom := DrawRect.Bottom + 2;
-      // Resize the Cell height if the height does not match the Rect Height
-      if ((DrawRect.Bottom - DrawRect.Top) > grdchecks.RowHeights[ARow]) then
-        begin
-          grdchecks.RowHeights[ARow] := (DrawRect.Bottom - DrawRect.Top);
-        end
-      else
-        begin
-          // if cell doesn't need to grow reset the cell
-          DrawRect.Right := Rect.Right;
-          if (cdl = '1') and (format = 'I') then
-            begin
-              // DrawRect.Top := ColorRect.Bottom;
-              if isSelected = false then
-                begin
-                  grdchecks.canvas.Font.Color := Get508CompliantColor(clRed);
-                  grdchecks.canvas.Font.Style := [fsBold];
-                end;
-              DrawText(grdchecks.canvas.Handle, PChar(colorText), Length(colorText), colorRect, dt_wordbreak);
-              if isSelected = false then
-                begin
-                  grdchecks.canvas.Font.Color := Get508CompliantColor(clBlue);
-                  grdchecks.canvas.Font.Style := [];
-                end;
-            end;
-          DrawText(grdchecks.canvas.Handle, PChar(str), Length(str), DrawRect, dt_wordbreak);
-          // reset height
-          if format = 'I' then
-            grdchecks.RowHeights[ARow] := (DrawRect.Bottom - DrawRect.Top);
-        end;
-    end
-  else
-    // if not wrap than grow just draw the cell
-    DrawText(grdchecks.canvas.Handle, PChar(str), Length(str), DrawRect, dt_wordbreak);
-end;
-
-procedure TfrmOCSession.grdchecksEnter(Sender: TObject);
-begin
-  inherited;
-  if ScreenReaderActive then
-    begin
-      grdchecks.Row := 1;
-      grdchecks.Col := 0;
-      GetScreenReader.Speak('Navigate through the grid to reviews the orders and the order checks');
-      if GetCheckState(grdchecks, 0, 1) = True then
-        GetScreenReader.Speak('Cancel checkbox is checked press spacebar to uncheck it')
-      else
-        GetScreenReader.Speak('Cancel checkbox Not Checked press spacebar to check it to cancel the ' + grdchecks.Cells[1, 1] + ' Order');
-    end;
-  grdchecks.Row := 1;
-  grdchecks.Col := 0;
-end;
-
-procedure TfrmOCSession.grdchecksKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  inherited;
-  if Key = VK_TAB then
-    begin
-      if ssCtrl in Shift then
-        begin
-          if txtJustify.Visible = True then
-            ActiveControl := txtJustify
-          else
-            ActiveControl := cmdContinue;
-          Key := 0;
-          Exit;
-        end;
-    end;
-  if grdchecks.Col = 0 then
-    begin
-      Case Key of
-        VK_TAB:
-          begin
-            if (ssShift in Shift) and (grdchecks.Row > 1) then
+          Case lstItm.StateIndex of
+            - 1:
+              exit;
+            Status_UnChk:
               begin
-                grdchecks.Col := 1;
-                grdchecks.Row := grdchecks.Row - 1;
+                lstItm.StateIndex := Status_Chk;
+                lstItm.Checked := true;
+                TOrderRec(lstItm.Data).Canceled := true;
               end;
-          end;
-        VK_Space:
-          begin
-            if Piece(grdchecks.Cells[2, grdchecks.Row], U, 2) = 'O' then
+            Status_Chk:
               begin
-                if GetCheckState(grdchecks, 2, grdchecks.Row) = True then
-                  SetCheckState(grdchecks, 2, grdchecks.Row, false)
-                else
-                  SetCheckState(grdchecks, 2, grdchecks.Row, True);
-                if ScreenReaderActive then
-                  begin
-                    if GetCheckState(grdchecks, 0, grdchecks.Row) = True then
-                      GetScreenReader.Speak('Cancel checkbox checked')
-                    else
-                      GetScreenReader.Speak('Cancel checkbox unChecked');
-                  end;
+                lstItm.StateIndex := Status_UnChk;
+                lstItm.Checked := false;
+                TOrderRec(lstItm.Data).Canceled := false;
               end;
-          end;
+          End;
+        end;
       end;
     end;
-  if grdchecks.Col = 1 then
-    begin
-      // needed to add control for tab key to handle the blank cells that should not have focus.
-      if Key = VK_TAB then
-        begin
-          if ssShift in Shift then
-            begin
-              if Piece(grdchecks.Cells[2, grdchecks.Row], U, 2) = 'O' then
-                grdchecks.Col := 0
-              else if grdchecks.Row > 1 then
-                begin
-                  grdchecks.Col := 1;
-                  grdchecks.Row := grdchecks.Row - 1;
-                end;
-            end
-          else
-            begin
-              if grdchecks.Row = (grdchecks.RowCount - 1) then
-                begin
-                  if ScreenReaderActive = True then
-                    ActiveControl := memNote
-                  else if txtJustify.Visible = True then
-                    ActiveControl := txtJustify
-                  else
-                    ActiveControl := cmdContinue;
-                  Key := 0;
-                end
-              else
-                begin
-                  grdchecks.Row := grdchecks.Row + 1;
-                  if Piece(grdchecks.Cells[2, grdchecks.Row], U, 2) = 'O' then
-                    grdchecks.Col := 0
-                  else
-                    grdchecks.Col := 2;
-                end;
-            end;
-          Key := 0;
-        end;
-    end;
+  end;
+  UpdateStatusIcons;
 end;
 
-procedure TfrmOCSession.grdchecksMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-var
-  Row, Col: Integer;
-begin
-  grdchecks.MouseToCell(X, Y, Col, Row);
-  if Col <> 0 then
-    Exit;
-  if Piece(grdchecks.Cells[2, Row], U, 2) <> 'O' then
-    Exit;
-  if InCheckBox(grdchecks, X, Y, Col, Row) = false then
-    Exit;
-  if GetCheckState(grdchecks, Col, Row) = True then
-    SetCheckState(grdchecks, Col, Row, false)
-  else
-    SetCheckState(grdchecks, Col, Row, True);
-end;
-
-procedure TfrmOCSession.grdchecksMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
-var
-  ACol, ARow: Integer;
-begin
-  grdchecks.MouseToCell(X, Y, ACol, ARow);
-  // check to see if hint should show
-  if ARow > grdchecks.RowCount then
-    Exit;
-
-  if ACol <> 1 then
-    Exit;
-
-  if grdchecks.RowHeights[ARow] < grdchecks.Height then
-    Exit;
-
-  grdchecks.Hint := grdchecks.Cells[ACol, ARow];
-  Application.HintHidePause := 20000; // 20 Sec
-  if grdchecks.Hint <> '' then
-    grdchecks.ShowHint := True;
-end;
-
-procedure TfrmOCSession.grdchecksSelectCell(Sender: TObject; ACol, ARow: Integer; var CanSelect: boolean);
+procedure TfrmOCSession.lvOrdersEnter(Sender: TObject);
 begin
   inherited;
-  CanSelect := True;
-  if ARow = 0 then
-    CanSelect := false
-  else if (ACol = 2) then
-    CanSelect := false
-  else if (ACol = 1) and (grdchecks.Cells[ACol, ARow] = '') then
-    CanSelect := false;
-
-  if (CanSelect = True) and (ACol = 0) and (Piece(grdchecks.Cells[2, ARow], U, 2) = 'O') and (ScreenReaderActive) then
-    begin
-      if GetCheckState(grdchecks, ACol, ARow) = True then
-        GetScreenReader.Speak('Cancel checkbox is checked press spacebar to uncheck it')
-      else
-        GetScreenReader.Speak('Cancel checkbox Not Checked press spacebar to check it to cancel the ' + grdchecks.Cells[1, ARow] + ' Order');
-    end;
+  if lvOrders.Items.Count > 0 then
+  begin
+    lvOrders.Items.Item[0].Focused := True;
+    lvOrders.Items.Item[0].Selected := True; //lvOrders.Items[0];
+  end;
 end;
 
-procedure TfrmOCSession.GridDeleteRow(RowNumber: Integer; grid: TStringGrid);
+procedure TfrmOCSession.lvOrdersKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+  lstItm: TListItem;
+begin
+  inherited;
+
+  if Key = vkSpace then
+  begin
+    lstItm := lvOrders.Selected;
+    if Assigned(lstItm) then
+    begin
+      if Assigned(lstItm.Data) then
+      begin
+        if IndexText(TOrderRec(lstItm.Data).OrderID, NonOrders) = -1 then
+        begin
+          Case lstItm.StateIndex of
+            - 1:
+              exit;
+            Status_UnChk:
+              begin
+                lstItm.StateIndex := Status_Chk;
+                lstItm.Checked := true;
+                TOrderRec(lstItm.Data).Canceled := true;
+              end;
+            Status_Chk:
+              begin
+                lstItm.StateIndex := Status_UnChk;
+                lstItm.Checked := false;
+                TOrderRec(lstItm.Data).Canceled := false;
+              end;
+          End;
+        end;
+      end;
+    end;
+    UpdateStatusIcons;
+  end;
+end;
+
+procedure TfrmOCSession.UpdateStatusIcons();
+var
+  lstItm: TListItem;
+  AnyIncomplete: Boolean;
+  ItemsRemaining: Integer;
+begin
+  AnyIncomplete := false;
+  lvOrders.Items.BeginUpdate;
+  try
+    ItemsRemaining := 0;
+    cmdCancelOrder.Enabled := False;
+    for lstItm in lvOrders.Items do
+    begin
+      if lstItm.Checked then begin
+        lstItm.SubItemImages[0] := State_Cancel;
+        cmdCancelOrder.Enabled := True;
+        AnyIncomplete := True;
+      end
+      else
+      begin
+        if Assigned(lstItm.Data) then
+        begin
+          if IndexText(TOrderRec(lstItm.Data).OrderID, NonOrders) = -1 then
+          begin
+            if TOrderRec(lstItm.Data).IsComplete then
+              lstItm.SubItemImages[0] := State_Chk
+            else
+            begin
+              if TOrderRec(lstItm.Data).IsCritical then
+                lstItm.SubItemImages[0] := State_Alert
+              else
+                lstItm.SubItemImages[0] := -1;
+              AnyIncomplete := true;
+              if TOrderRec(lstItm.Data).IsCritical then
+                Inc(ItemsRemaining);
+            end;
+          end;
+        end;
+      end;
+    end;
+  finally
+    lvOrders.Items.EndUpdate;
+  end;
+  cmdContinue.Enabled := not AnyIncomplete;
+  // Update remaining count
+  LblOverrideNum.Caption := IntToStr(ItemsRemaining);
+end;
+
+procedure TfrmOCSession.lvOrdersSelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
 var
   i: Integer;
-begin
-  grid.Row := RowNumber;
-  if (grid.Row = grid.RowCount - 1) then
-    { On the last row }
-    grid.RowCount := grid.RowCount - 1
-  else
-    begin
-      { Not the last row }
-      for i := RowNumber to grid.RowCount - 1 do
-        grid.Rows[i] := grid.Rows[i + 1];
-      grid.RowCount := grid.RowCount - 1;
-    end;
-end;
-
-function TfrmOCSession.InCheckBox(grid: TStringGrid; X, Y, ACol, ARow: Integer): boolean;
+  cmbchange: boolean;
+const
+  fmtOrderTitle = 'Order Checks for: %s';
 var
-  Rect: TRect;
+  ChangeEVT: TNotifyEvent;
+  chkLvl: string;
 begin
-  Result := false;
-  Rect := CheckBoxRect(grid.CellRect(ACol, ARow));
-  if Y < Rect.Top then
-    Exit;
-  if Y > Rect.Bottom then
-    Exit;
-  if X < Rect.Left then
-    Exit;
-  if X > Rect.Right then
-    Exit;
-  Result := True;
-end;
+  // Load the info
+  if (not Assigned(Item)) or (not Assigned(Item.Data)) or
+    (not Item.Selected) then
+    exit;
 
-function TfrmOCSession.GetCheckState(grid: TStringGrid; ACol, ARow: Integer): boolean;
-begin
-  if Piece(grid.Cells[2, ARow], U, 3) = '1' then
-    Result := True
+  overrideRecord := TOrderRec(Item.Data);
+
+  Panel1.BringToFront;
+  // Populate the data
+  rchOrdChk.Clear;
+  rchOrdChk.Clear;
+  memRmtCmt.Clear;
+
+  // Add the critical header if needed
+  ChangeEVT := cmbOverReason.OnChange;
+  cmbOverReason.OnChange := nil;
+  try
+
+    cmbOverReason.ItemIndex := -1;
+    if overrideRecord.IsCritical then
+    begin
+      pnlReason.TabStop := false;
+      cmbOverReason.Enabled := true;
+      cmbOverReason.Text := '';
+
+      rchOrdChk.Lines.Add(Format(fmtOrderTitle, [overrideRecord.OrderName]));
+      rchOrdChk.Lines.Add('');
+
+      rchOrdChk.SelAttributes.Color := Get508CompliantColor(clRed);
+      rchOrdChk.Lines.Add(REASON_REQUIRED_FOR_OVERRIDE);
+      // '*Order Check Requires Reason for Override'});
+    end
+    else
+    begin
+      cmbOverReason.Enabled := false;
+      pnlReason.TabStop := ScreenReaderActive;
+      //TDP - If not Critical change status indicator to Check/Complete
+      //TOrderRec(lvOrders.Items.Item[lvOrders.ItemIndex].Data).IsComplete := true;//.SubItemImages[0] := State_Chk;
+      TOrderRec(Item.Data).IsComplete := true;
+      UpdateStatusIcons;
+    end;
+
+    chkLvl := '';
+
+    for i := 0 to overrideRecord.OrderCheckTxt.Count - 1 do
+    begin
+      rchOrdChk.SelAttributes.Color := Get508CompliantColor(clBlack);
+      rchOrdChk.SelAttributes.Style := [fsBold];
+      rchOrdChk.Lines.Add('(' + IntToStr(i + 1) + ' of ' +
+        IntToStr(overrideRecord.OrderCheckTxt.Count) + ')  ');
+      rchOrdChk.SelAttributes.Style := [];
+
+      if Piece(overrideRecord.OrderCheckTxt.Strings[i], U, 1) = '1' then
+      begin
+        // High
+        rchOrdChk.SelAttributes.Color := Get508CompliantColor(clBlue);
+        chkLvl := '{Check Level: High} ';
+      end else if Piece(overrideRecord.OrderCheckTxt.Strings[i], U, 1) = '2' then
+      begin
+        // Moderate
+        rchOrdChk.SelAttributes.Color := Get508CompliantColor(clGreen);
+        chkLvl := '{Check Level: Moderate} ';
+      end else begin
+        // Low
+        rchOrdChk.SelAttributes.Color := Get508CompliantColor(clBlack);
+        chkLvl := '{Check Level: Low} ';
+      end;
+
+      rchOrdChk.Lines.Add(chkLvl+Piece(Trim(overrideRecord.OrderCheckTxt.Strings[i]), U, 2));
+      if not (I = overrideRecord.OrderCheckTxt.Count - 1) then
+        rchOrdChk.Lines.Add('');
+    end;
+
+    cmbOverReason.Items := overrideRecord.OverRideReasons;
+    cmbOverReason.ItemIndex := -1;
+
+    cmbchange := false;
+
+    if overrideRecord.OverRideSel <> '' then
+    begin
+      for i := 0 to cmbOverReason.Items.Count - 1 do
+        if cmbOverReason.Items.Strings[i] = overrideRecord.OverRideSel then
+        begin
+          cmbOverReason.ItemIndex := i;
+          cmbchange := true;
+          break;
+        end;
+
+      if cmbOverReason.ItemIndex = -1 then
+      begin
+        cmbOverReason.text := overrideRecord.OverRideSel;
+        cmbchange := true;
+      end;
+
+      if cmbchange then cmbOverReasonChange(cmbOverReason);
+
+    end;
+  finally
+    cmbOverReason.OnChange := ChangeEVT;
+  end;
+
+  cmbOverReason.Enabled := overrideRecord.IsCritical;
+  memRmtCmt.Lines := overrideRecord.CommentTxt;
+
+  // AA: disabling changes color of the memRmtCmt. ReadOnly is enough
+  // memRmtCmt.Enabled := overrideRecord.HaveComment;
+  memRmtCmt.ReadOnly := not overrideRecord.HaveComment;
+  if not overrideRecord.HaveComment then
+  begin
+    memRmtCmt.text := NO_REMOTE_COMMENTS;
+    memRmtCmt.Color := clBtnFace;
+  end
   else
-    Result := false;
+    memRmtCmt.Color := clWindow;
+
+  if not overrideRecord.IsCritical then
+    overrideRecord.IsComplete := true;
 end;
 
-procedure TfrmOCSession.FormResize(Sender: TObject);
+procedure TfrmOCSession.memRmtCmtChange(Sender: TObject);
 begin
-  grdchecks.ColWidths[0] := round(grdchecks.Width * 0.08);
-  grdchecks.ColWidths[1] := round(grdchecks.Width * 0.88); // Order Text
-  grdchecks.ColWidths[2] := 0; // OrderID^Format^IsCheck
-  grdchecks.tabStops[2] := false;
-  if grdchecks.RowCount > 1 then
-    grdchecks.Refresh;
+  inherited;
+  if memRmtCmt.text = NO_REMOTE_COMMENTS then
+    exit;
+  if Assigned(overrideRecord) then
+    overrideRecord.CommentTxt.Assign(memRmtCmt.Lines);
 end;
 
-procedure TfrmOCSession.txtJustifyKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TfrmOCSession.memRmtCmtEnter(Sender: TObject);
+var
+  SpeakString: String;
+begin
+  // Due to readonly the lable is not read via the 508 manager
+  if memRmtCmt.ReadOnly then
+  begin
+    SpeakString := StringReplace(lblComment.Caption, '&', '', [rfReplaceAll]);
+    SpeakString := StringReplace(SpeakString, '(', ',', [rfReplaceAll]);
+    SpeakString := StringReplace(SpeakString, ')', ',', [rfReplaceAll]);
+    GetScreenReader.Speak(SpeakString);
+  end;
+  inherited;
+end;
+
+procedure TfrmOCSession.pnlOrderChecksResize(Sender: TObject);
+var
+  aRect: TRect;
+begin
+  inherited;
+  aRect := ResizeLabels(lblNote);
+  lblNote.Width := aRect.Width;
+  lblNote.Height := aRect.Height + 8;
+end;
+
+procedure TfrmOCSession.txtJustifyKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
   inherited;
   // GE CQ9540  activate Return key, behave as "Continue" buttom clicked.
   if Key = VK_RETURN then
-    cmdContinueClick(self);
+    cmdAcceptOrdersClick(self);
 end;
 
-procedure TfrmOCSession.btnReturnClick(Sender: TObject);
+function TfrmOCSession.ParseOrderCheckText(const inStr: String): String;
 begin
-  FCancelSignProcess := True;
-  Close;
+  result := '';
+  // Add check type. 1=high 2=moderate 3=low
+  SetPiece(result, U, 1, trim(Piece(inStr, U, 3)));
+  // Add display text
+  SetPiece(result, U, 2, Piece(inStr, U, 4));
+  if (Piece(inStr, U, 2) = '3') and (Piece(inStr, U, 5) = '1')
+  then
+  begin
+    // Add collection for comment flag
+    SetPiece(result, U, 3, Piece(inStr, U, 5));
+    // Add previous comment
+    SetPiece(result, U, 4, Piece(inStr, U, 7));
+    // Add Override Reason //TDP - Added Override Reason
+    SetPiece(result, U, 5, Piece(inStr, U, 8));
+  end;
 end;
 
-procedure TfrmOCSession.SetReturn(const Value: boolean);
+procedure TfrmOCSession.acAllergyAssessmentExecute(Sender: TObject);
 begin
-  FCancelSignProcess := Value;
+  inherited;
+  fAllgyAR.EnterEditAllergy(0, true, false, nil, -1, True, ExecuteOrderCheckCallBack);
 end;
 
-procedure TfrmOCSession.memNoteEnter(Sender: TObject);
+procedure TfrmOCSession.acViewMonographExecute(Sender: TObject);
+var
+  monoList: TStringList;
 begin
-  memNote.SelStart := 0;
+  inherited;
+  monoList := TStringList.Create;
+  try
+    GetMonographList(monoList);
+    ShowMonographs(monoList);
+  finally
+    monoList.Free;
+  end;
 end;
 
-procedure TfrmOCSession.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TfrmOCSession.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
   inherited;
   if (Key = VK_F4) and (ssAlt in Shift) then
     Key := 0;
+end;
+
+function TfrmOCSession.ResizeLabels(aLabelObject: TObject) : TRect;
+var
+  aDummyLbl: TLabel;
+  lText: String;
+begin
+  aDummyLbl := TLabel.Create(self);
+  try
+    if aLabelObject is TStaticText then
+    begin
+      aDummyLbl.Parent := TStaticText(aLabelObject).Parent;
+      aDummyLbl.Align := alClient;
+      aDummyLbl.Caption := TStaticText(aLabelObject).Caption;
+      aDummyLbl.WordWrap := True;
+    end else if aLabelObject is TLabel then
+    begin
+      aDummyLbl.Parent := TLabel(aLabelObject).Parent;
+      aDummyLbl.Align := alClient;
+      aDummyLbl.Caption := TLabel(aLabelObject).Caption;
+      aDummyLbl.WordWrap := True;
+    end else raise Exception.Create('aLabelObject is not TStaticText or Tlabel');
+
+    lText := aDummyLbl.Caption;
+    Result.Left := 0;
+    Result.Right := aDummyLbl.Width;
+    Result.Top := 0;
+    Result.Bottom := 0;
+    aDummyLbl.Canvas.TextRect(Result, lText, [tfCalcRect, tfWordBreak]);
+  Finally
+    aDummyLbl.Free;
+  End;
+end;
+
+procedure TfrmOCSession.FormResize(Sender: TObject);
+var
+  ARect: TRect;
+begin
+  aRect := ResizeLabels(lblInstr);
+  lblInstr.Width := aRect.Width;
+  lblInstr.Height := aRect.Height;
+
+  if Self.Font.Size > 10 then
+    grdPnlButtom.Height := 50
+  else
+    grdPnlButtom.Height := 34;
+  inherited;
+end;
+
+procedure TfrmOCSession.SetupOrderChecksDisplay(aOrderCheckList: TStringList);
+begin
+  SetupOrderChecksDisplay(nil, aOrderCheckList);
+end;
+
+procedure TfrmOCSession.SetupOrderChecksDisplay(aOrderLists: tStringListArray; aOrderCheckList: TStringList);
+
+  function getNextOne(aList: TStringList; aCurrent: Integer): String;
+  begin
+    Result := '';
+    if aCurrent < aList.Count - 1 then
+      Result := aList[aCurrent + 1];
+  end;
+
+var
+  RtnCursor, nn: Integer;
+  NxtID, TmpStr, NewID, LstStr, OrderName: String;
+  DisplayTxt: TStringList;
+  LstEnum: TStringsEnumerator;
+  LstItem: TListItem;
+  TheOrderRec: TOrderRec;
+begin
+  RtnCursor := Screen.Cursor;
+  Screen.Cursor := crHourGlass;
+  try
+    frmOCSession.lvOrders.Clear;
+
+    CurrentOrderChecks.Assign(aOrderCheckList);
+
+    AutoSizeDisabled := true;
+
+    ResizeFormToFont(self);
+
+    NxtID := '';
+
+    // Sort the list by ID
+    SortByPiece(aOrderCheckList, U, 1);
+
+    DisplayTxt := TStringList.Create;
+    try
+      // loop and build out the needed data
+      nn := 0;
+      LstEnum := aOrderCheckList.GetEnumerator;
+      while LstEnum.MoveNext do
+      begin
+        TmpStr := '';
+        LstStr := LstEnum.Current;
+        // Grab the data
+        NewID := Piece(LstStr, U, 1);
+
+        // Look at the next ID to see if its a new record
+        NxtID := getNextOne(aOrderCheckList, nn);
+        NxtID := Piece(NxtID, U, 1);
+        Inc(nn);
+
+        TmpStr := frmOCSession.ParseOrderCheckText(LstStr);
+
+        // add the out put to our stringlist
+        DisplayTxt.Add(TmpStr);
+        // If order changes then lets build the panel
+        if NewID <> NxtID then
+        begin
+          OrderName := StringReplace(trim(TextForOrder(NewID)), #$D#$A, ' -- ',
+            [rfReplaceAll, rfIgnoreCase]);
+          LstItem := frmOCSession.lvOrders.Items.Add;
+          TheOrderRec := TOrderRec.Create(NewID, OrderName, DisplayTxt);
+          LstItem.Data := TheOrderRec;
+          LstItem.Caption := '';
+          LstItem.ImageIndex := -1;
+          LstItem.SubItems.Add('');
+          LstItem.StateIndex := 0;
+          if TheOrderRec.IsCritical then
+          begin
+            LstItem.SubItemImages[0] := State_Alert;
+            LstItem.SubItems.Add( { '*' + } OrderName);
+          end
+          else
+          begin
+            LstItem.SubItemImages[0] := -1;
+            LstItem.SubItems.Add(OrderName);
+          end;
+          DisplayTxt.Clear;
+        end;
+      end;
+
+    finally
+      DisplayTxt.Free;
+    end;
+
+    // set up frmOCSession.FOrderList which is used to keep track of what was removed
+    if aOrderLists <> nil then
+    begin
+      SetLength(FOrderList, 0);
+      FOrderList := copy(aOrderLists, 0, Length(aOrderLists));
+    end;
+
+    MessageBeep(MB_ICONASTERISK);
+    if Visible then
+      SetFocus;
+
+    // Make the call to set the allergry assesment up
+    EnableAllgyBtn;
+
+    // Add the Monograph
+    acViewMonograph.Enabled := IsMonograph;
+    // select the first order in the list
+    if lvOrders.Items.Count > 0 then
+      lvOrders.Items[0].Selected := true;
+
+  finally
+    Screen.Cursor := RtnCursor;
+  end;
 end;
 
 end.

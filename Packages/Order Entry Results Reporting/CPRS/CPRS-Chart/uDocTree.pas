@@ -1,5 +1,8 @@
 unit uDocTree;
-
+{------------------------------------------------------------------------------
+Update History
+    2016-06-28: NSR#20070817 (CPRS Progress Notes Display Misleading)
+-------------------------------------------------------------------------------}
 interface
 
 uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, uConst, ORCtrls, ComCtrls, uTIU, Dialogs;
@@ -60,7 +63,7 @@ function ShowMoreNode(s: String): boolean;
 implementation
 
 uses
-  rConsults, uDCSumm, uConsults;
+  rConsults, uDCSumm, uConsults, uMisc;
 
 {==============================================================
 RPC [TIU DOCUMENTS BY CONTEXT] returns
@@ -104,6 +107,7 @@ begin
  begin
   AList := TStringList.Create;
   SrcList := TStringList.Create;
+
   try
     FastAssign(Source, SrcList);
     with SrcList do
@@ -123,6 +127,7 @@ begin
                 MyTitle := '** No Title **';
                 SetPiece(x, U, 2, MyTitle);
               end;
+
             MyLocation := Piece(x, U, 6);
             if (Length(Trim(MyLocation)) = 0) and NotShowMore then
               begin
@@ -185,6 +190,7 @@ begin
             AList.Add('Adm^Inpatient Notes' + U + IntToStr(Context));
             AList.Add('Vis^Outpatient Notes' + U + IntToStr(Context));
           end;
+
         Dest.Insert(0, IntToStr(Context) + '^' + NC_TV_TEXT[TabIndex, Context] + '^^^^^^^^^^^%^0');
 
         Alist.Sort; // additional sort is performed by tree component
@@ -398,6 +404,8 @@ var
   end;
 
 begin
+  if not AssignedAndHasData(Node) then
+    Exit;
   with Node, PDocTreeObject(Node.Data)^ do
     begin
       i := Pos('*', DocTitle);
@@ -421,7 +429,6 @@ begin
       else if DocParent = '0' then
         begin
           ImageIndex    := IMG_TOP_LEVEL;
-          SelectedIndex := IMG_TOP_LEVEL;
           StateIndex := -1;
           with CurrentContext, Node do
             begin
@@ -455,9 +462,9 @@ begin
           '%': begin
                  StateIndex := -1;
                  ImageIndex    := IMG_GROUP_SHUT;
-                 SelectedIndex := IMG_GROUP_OPEN;
                end;
         end;
+
       SelectedIndex := ImageIndex;
       if (ImageIndex in [IMG_TOP_LEVEL, IMG_GROUP_OPEN, IMG_GROUP_SHUT]) then
         StateIndex := IMG_NONE
@@ -503,14 +510,15 @@ begin
  while ANode <> nil do
   begin
     IncludeIt := False;
-    if (ContextMatch(TORTreeNode(ANode), MyNodeID, AContext) and
-      TextFound(TORTreeNode(ANode), AContext)) then
+    if Assigned(ANode.Data) and
+      (ContextMatch(TORTreeNode(ANode), MyNodeID, AContext) and
+      TextFound(TORTreeNode(ANode), AContext))  then
     begin
       with PDocTreeObject(ANode.Data)^ do
       begin
         if pos(TX_MORE, DocTitle) > 0 then
           IncludeIt := True
-        else if (AContext.GroupBy <> '') and
+        else if (AContext.GroupBy <> '') and AssignedAndHasData(ATree.Selected) and
           (ATree.Selected.ImageIndex in [IMG_GROUP_OPEN, IMG_GROUP_SHUT]) then
         begin
           case AContext.GroupBy[1] of
@@ -562,7 +570,8 @@ var
   Author: int64;
 begin
   Result := True;
-  if not Assigned(ANode.Data) then Exit;
+  if not AssignedAndHasData(ANode) then
+    Exit;
   Status := PDocTreeObject(ANode.Data)^.Status;
 
   if (AParentID = '') or (AContext.Status <> AParentID[1]) or
@@ -571,6 +580,7 @@ begin
   else
     Author := AContext.Author;
 
+  if Length(AParentID)  = 0 then exit;
   if Length(Trim(Status)) = 0 then exit;
   (*if PDocTreeObject(ANode.Data)^.DocHasChildren = '%' then Result := False else Result := True;
   Result := False;*)
@@ -609,7 +619,8 @@ var
   MySearch: string;
 begin
   Result := False;
-  if not Assigned(ANode.Data) then Exit;
+  if not AssignedAndHasData(ANode) then
+    Exit;
   if CurrentContext.SearchField <> '' then
     case CurrentContext.SearchField[1] of
       'T': MySearch := PDocTreeObject(ANode.Data)^.DocTitle;
@@ -730,7 +741,8 @@ var
   ListItem: TListItem;
 
 begin
-  if not Assigned(ANode.Data) then Exit;
+  if not AssignedAndHasData(ANode) then
+    Exit;
   with Anode, PDocTreeObject(ANode.Data)^, AListView do
     begin
       if ANode.ImageIndex in [IMG_TOP_LEVEL, IMG_GROUP_OPEN, IMG_GROUP_SHUT] then
@@ -966,7 +978,7 @@ var
   i,j: integer;
   s,ss: string;
 begin
-  if not assigned(aList) then
+  if (not assigned(aList)) or Context.TreeAscending then
     exit;
   iPos := -1;
   for i := 0 to aList.Count - 1 do

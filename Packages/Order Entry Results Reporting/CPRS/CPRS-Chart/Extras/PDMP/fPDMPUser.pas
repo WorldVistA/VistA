@@ -44,7 +44,6 @@ type
     procedure setAuthorizedUser(bRequired: Boolean = false);
   public
     procedure SetFontSize(aSize: Integer);
-
     property HasDEA: Boolean read fHasDEA write setAuthorizedUser;
     property CosignerRequired: Boolean read fCosignerRequired write setCosigner;
     property CosignerIEN: String read fCosignerIEN write fCosignerIEN;
@@ -57,13 +56,8 @@ function pdmpSelectUser(encounterProvider: string;
 implementation
 
 uses
-{$IFDEF PDMPTEST}
-  rCore.DateTimeUtils,
-  uCore.TIU,
-{$ELSE}
   rCore,
   rTIU,
-{$ENDIF}
   rPDMP,
   uSimilarNames,
   ORFn,
@@ -135,9 +129,8 @@ var
 begin
   if True then
     dest := TStringList.Create;
-
   try
-    pdmpSetSubSetOfAuthorizedUsers(dest, StartFrom, Direction);
+    pdmpSetSubSetOfAuthorizedUsers(cboProviderDEA, dest, StartFrom, Direction);
     cboProviderDEA.ForDataUse(dest);
   finally
     FreeAndNil(dest);
@@ -153,19 +146,18 @@ begin
     exit;
 
   ErrMsg := '';
-  if not CheckForSimilarName(cboProviderDEA, ErrMsg, ltPDMPAuthorizedUser, sPr) then
+
+  if not CheckForSimilarName(cboProviderDEA, ErrMsg, sPr) then
   begin
     CanClose := False;
   end else begin
     if (ModalResult <> mrCancel) and (cboProviderDEA.ItemIndex < 0) then
       ErrMsg := PDMP_MSG_NO_COSIGNER_SELECTED;
-
     CanClose := (ModalResult = mrCancel) or (cboProviderDEA.ItemIndex >= 0);
-
     if CanClose and CosignerRequired then
     begin
-      CanClose := (ModalResult = mrCancel) or CanCosign(PDMP_NoteTitleID, 0,
-        cboProviderDEA.ItemIEN, FMNow);
+      CanClose := (ModalResult = mrCancel) or
+        CanCosign(PDMP_NoteTitleID, 0, cboProviderDEA.ItemIEN, FMNow);
       if not CanClose then
         ErrMsg := cboProviderDEA.Text + TX_COS_AUTH;
     end;

@@ -17,7 +17,8 @@ uses
   ORDtTm,
   ORNet,
   ORFn,
-  ComCtrls;
+  ComCtrls,
+  UITypes;
 
 type
   TfrmAlertNoteSelector = class(TForm)
@@ -138,7 +139,7 @@ end;
 
 procedure TfrmAlertNoteSelector.DisplayTARAlertValues();
 var
-  i: integer;
+//  i: integer;
   slParamArray: TStringList;
   thisIEN: string;
 begin
@@ -227,9 +228,9 @@ function TfrmAlertNoteSelector.GetTIUNotesByDate(thisPatientDFN: string;
   thisSortDirection: integer = 1;
   thisIncludeAddenda: boolean = false;
   thisIncludeUntranscribed: boolean = false): TStringList;
-var
-  i: integer;
-  slTIUDocumentsByContext: TStringList;
+//var
+//  i: integer;
+//  slTIUDocumentsByContext: TStringList;
 begin
   try
     { TODO -oDan P -cSMART : Upgrade to redesinged SMART Notes

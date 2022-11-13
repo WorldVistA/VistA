@@ -13,9 +13,8 @@ type
     btnCancel: TButton;
     txtNewList: TCaptionEdit;
     lblEnter: TLabel;
-    lblNew: TLabel;
-    Label1: TLabel;
     grpVisibility: TRadioGroup;
+    Panel1: TPanel;
     procedure btnOKClick(Sender: TObject);
     procedure txtNewListKeyPress(Sender: TObject; var Key: Char);
     procedure txtNewListChange(Sender: TObject);

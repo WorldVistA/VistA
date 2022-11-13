@@ -7,8 +7,9 @@ inherited frmPCEProvider: TfrmPCEProvider
   ClientHeight = 254
   ClientWidth = 317
   Position = poScreenCenter
-  OnCreate = FormCreate
   OnCloseQuery = FormCloseQuery
+  ExplicitWidth = 323
+  ExplicitHeight = 283
   PixelsPerInch = 96
   TextHeight = 13
   object Spacer1: TLabel [0]
@@ -62,6 +63,7 @@ inherited frmPCEProvider: TfrmPCEProvider
     SynonymChars = '<>'
     TabOrder = 0
     TabStop = True
+    Text = ''
     Visible = False
     OnChange = cboPrimaryChange
     OnNeedData = cboPrimaryNeedData

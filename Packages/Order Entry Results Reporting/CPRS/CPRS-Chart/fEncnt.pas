@@ -6,7 +6,11 @@ unit fEncnt;
 //Description of Mod:
 //  Moved asignment of historical visit category from the cboNewVisitChange event
 //   to the ckbHistoricalClick event.
+{------------------------------------------------------------------------------
+Update History
 
+    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
+-------------------------------------------------------------------------------}
 
 interface
 
@@ -58,15 +62,14 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure lstAdmitChange(Sender: TObject);
     procedure lstClinicChange(Sender: TObject);
-    procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure pgeVisitMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure cboPtProviderDblClick(Sender: TObject);
     procedure lstClinicDblClick(Sender: TObject);
     procedure lstAdmitDblClick(Sender: TObject);
     procedure cboNewVisitDblClick(Sender: TObject);
+    procedure cboPtProviderDblClick(Sender: TObject);
   private
     CLINIC_TXT : String;
     FFilter: Int64;
@@ -88,6 +91,7 @@ type
                           var HintInfo: Vcl.Controls.THintInfo);
     procedure SetVisitCat;
     function AllowAutoFocusChange: Boolean;
+//    procedure SetLayout;
   public
     { Public declarations }
   end;
@@ -103,7 +107,7 @@ implementation
 {$R *.DFM}
 
 uses rCore, uCore, uConst, fReview, uPCE, rPCE, VA508AccessibilityRouter,
-  VAUtils, uSimilarNames;
+  VAUtils, uORLists, uSimilarNames;
 
 const
   TC_MISSING = 'Incomplete Encounter Information';
@@ -164,21 +168,29 @@ begin
         cboPtProvider.InitLongList(Encounter.ProviderName);
         cboPtProvider.SelectByIEN(FProvider);
       end;
-//      ShowModal;
-//      if DEAContext and ((Assigned(Changes.Orders)) and (Changes.Count > 0)) and (Encounter.Provider <> FProvider) then DelayReviewChanges := True;
-//      if OKPressed then
-//      begin
-//        CanChange := True;
-//       // if (fframe.frmFrame.DoNotChangeEncWindow = true) and (encounter.Location <> frmEncounter.FLocation) then
-//       //    fframe.frmFrame.DoNotChangeEncWindow := false;
-//        if (PersonFilter <> NPF_SUPPRESS) and (not DelayReviewChanges) and
-//           (((Encounter.Provider =  User.DUZ) and (FProvider <> User.DUZ)) or
-//            ((Encounter.Provider <> User.DUZ) and (FProvider =  User.DUZ)))
-//           then CanChange := ReviewChanges(TimedOut);
-//        if CanChange then
+(* -- CODE prior to NSR#20110606 commented out ---------------------------------
+      ShowModal;
+      if DEAContext and ((Assigned(Changes.Orders)) and (Changes.Count > 0)) and (Encounter.Provider <> FProvider) then DelayReviewChanges := True;
+      if OKPressed then
+      begin
+        CanChange := True;
+       // if (fframe.frmFrame.DoNotChangeEncWindow = true) and (encounter.Location <> frmEncounter.FLocation) then
+       //    fframe.frmFrame.DoNotChangeEncWindow := false;
+        if (PersonFilter <> NPF_SUPPRESS) and (not DelayReviewChanges) and
+           (((Encounter.Provider =  User.DUZ) and (FProvider <> User.DUZ)) or
+            ((Encounter.Provider <> User.DUZ) and (FProvider =  User.DUZ)))
+           then CanChange := ReviewChanges(TimedOut);
+        if CanChange then
+------------------------------------------------------------------------------*)
       TSimilarNames.RegORComboBox(cboPtProvider);
+//--- NSR#20110606 ------------------------------------------------------- begin
       if ShowModal = mrOK then
       begin
+        // we don't know the original value of DelayReviewChanges but the code was updating it only in some cases
+        DelayReviewChanges := DelayReviewChanges or
+          (DEAContext and  // can't identify cases DEAContext is TRUE when UpdateEncounter is called :(
+          ((Assigned(Changes.Orders)) and (Changes.Count > 0)) and (Encounter.Provider <> FProvider));
+
         CanChange := True;
         if (PersonFilter <> NPF_SUPPRESS) and  // NPF_SUPPRESS hides provider selector component
            (not DelayReviewChanges) and        // and no requests for delay of review
@@ -187,21 +199,33 @@ begin
         then
           CanChange := ReviewChanges(TimedOut);// check if the changes are valid
         if CanChange then                      // Re-assign Encounter properties if needed
+
+(*-- same as above but without use of CanChange --------------------------------
+        if (PersonFilter = NPF_Suppress)
+          or DelayReviewChanges
+          or (Encounter.Provider = FProvider)
+          or ReviewChanges(TimedOut)
+        then
+----------------------------------------------------------------------------- *)
+//--- NSR#20110606 --------------------------------------------------------- end
         begin
-          if PersonFilter <> NPF_SUPPRESS then Encounter.Provider := FProvider;
+          if PersonFilter <> NPF_SUPPRESS then // only change provider if it was requested
+            Encounter.Provider := FProvider;
           Encounter.Location      := FLocation;
           Encounter.DateTime      := FDateTime;
           Encounter.VisitCategory := FVisitCategory;
           Encounter.StandAlone    := FStandAlone;
-          Result := True;
 
+          Result := True;
         end;
       end;
       DelayReviewChanges := False;
       DEAContext := False;
     end;
   finally
-    frmEncounter.Release;
+//    frmEncounter.Release; - Defect 563608
+//    frmEncounter := nil;  - Defect 563608
+    frmEncounter.Free;
   end;
 end;
 
@@ -241,6 +265,7 @@ begin
       Text := Text + FormatFMDateTime('mmm dd,yy hh:nn', FDateTime);
   end
   else Text := '< Select a location from the tabs below.... >';
+//  OKPressed := False;
   pgeVisit.ActivePage := tabClinic;
   pgeVisitChange(Self);
   if lstClinic.Items.Count = 0 then
@@ -264,6 +289,8 @@ end;
 procedure TfrmEncounter.cboPtProviderDblClick(Sender: TObject);
 begin
   inherited;
+  // Not sure why, but this SetFocus call fixed a bug VISTAOR-25914
+  cmdOK.SetFocus;
   ModalResult := mrOK;
 end;
 
@@ -272,9 +299,9 @@ procedure TfrmEncounter.cboPtProviderNeedData(Sender: TObject; const StartFrom: 
 begin
   inherited;
   case FFilter of
-    NPF_PROVIDER:  cboPtProvider.ForDataUse(SubSetOfProviders(StartFrom, Direction));
+    NPF_PROVIDER:  setProviderList(cboPtProvider, StartFrom, Direction);
 //    NPF_ENCOUNTER: cboPtProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FloatToStr(FPCDate)));
-    else cboPtProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction));
+    else setPersonList(cboPtProvider, StartFrom, Direction);
   end;
 end;
 
@@ -342,11 +369,19 @@ begin
       cboNewVisit.SetFocus;
 end;
 
-procedure TfrmEncounter.cboNewVisitNeedData(Sender: TObject; const StartFrom: string;
-  Direction, InsertAt: Integer);
+procedure TfrmEncounter.cboNewVisitNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
   inherited;
-  cboNewVisit.ForDataUse(SubSetOfNewLocs(StartFrom, Direction));
+  sl := TSTringList.Create;
+  try
+    setSubSetOfNewLocs(sl, StartFrom, Direction);
+    cboNewVisit.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmEncounter.cmdDateRangeClick(Sender: TObject);
@@ -510,55 +545,35 @@ begin
   inherited;
   if ModalResult = mrCancel then
     exit;
-  if cboPtProvider.Visible and (cboPtProvider.ItemID = '') then
+  if (not DoNotNeedLocation) or (DoNotNeedLocation and (FLocation > 0)) then
     begin
-      InfoBox('Provider is not selected', TC_MISSING, MB_OK);
-      CanClose := False;
-    end
-  else
-  begin
-    if (not DoNotNeedLocation) or (DoNotNeedLocation and (FLocation > 0)) then
-      begin
-        msg := '';
-        if FLocation = 0 then msg := TX_NO_LOC;
-        if FDateTime <= 0 then msg := msg + CRLF + TX_NO_DATE
-        else if(pos('.',FloatToStr(FDateTime)) = 0) then msg := msg + CRLF + TX_NO_TIME;
-        if(msg <> '') then
-          begin
-            InfoBox(msg, TC_MISSING, MB_OK);
-            CanClose := False; //Exit;
-          end
-        else
-          begin
-            ADate := FMDateTimeToDateTime(Trunc(FDateTime));
-            AMaxDate := FMDateTimeToDateTime(FMToday) + StrToIntDef(FEncFutureLimit, 0);
-            if ADate > AMaxDate then
-              if InfoBox(TX_FUTURE_WARNING, TC_FUTURE_WARNING, MB_YESNO or MB_ICONQUESTION) = MRNO then
-                CanClose := False; //exit;
-          end;
-      end;
-    case FFilter of
-      NPF_PROVIDER:
+      msg := '';
+      if FLocation = 0 then msg := TX_NO_LOC;
+      if FDateTime <= 0 then msg := msg + CRLF + TX_NO_DATE
+      else if(pos('.',FloatToStr(FDateTime)) = 0) then msg := msg + CRLF + TX_NO_TIME;
+      if(msg <> '') then
         begin
-          if not CheckForSimilarName(cboPtProvider, aErrMsg, ltProvider, sPr) then
-          begin
-            ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
-            CanClose := False;
-          end;
-        end;
+          InfoBox(msg, TC_MISSING, MB_OK);
+          CanClose := False; //Exit;
+        end
       else
         begin
-          if not CheckForSimilarName(cboPtProvider, aErrMsg, ltPerson, sPr) then
-          begin
-            ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
-            CanClose := False;
-          end;
+          ADate := FMDateTimeToDateTime(Trunc(FDateTime));
+          AMaxDate := FMDateTimeToDateTime(FMToday) + StrToIntDef(FEncFutureLimit, 0);
+          if ADate > AMaxDate then
+            if InfoBox(TX_FUTURE_WARNING, TC_FUTURE_WARNING, MB_YESNO or MB_ICONQUESTION) = MRNO then
+              CanClose := False; //exit;
         end;
     end;
 
-    if CanClose and (FFilter <> NPF_SUPPRESS) then
-      FProvider := cboPtProvider.ItemIEN;
+  if not CheckForSimilarName(cboPtProvider, aErrMsg, sPr) then
+  begin
+    ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
+    CanClose := False;
   end;
+
+  if CanClose and (FFilter <> NPF_SUPPRESS) then
+    FProvider := cboPtProvider.ItemIEN;
 end;
 
 procedure TfrmEncounter.lstAdmitChange(Sender: TObject);
@@ -618,14 +633,14 @@ begin
             Text := '< Select a location from the tabs below.... >';
       end
 end;
-
 procedure TfrmEncounter.lstClinicDblClick(Sender: TObject);
 begin
   inherited;
   ModalResult := mrOK;
 end;
 
-procedure TfrmEncounter.FormResize(Sender: TObject);
+(*
+procedure TfrmEncounter.setLayout;
 begin
   //CQ7118
   if cboPtProvider.Visible then
@@ -643,28 +658,13 @@ begin
   cmdOK.Top := cmdCancel.Top - cmdOK.Height - 1;
 
   cmdCancel.Top := cmdOK.Top + cmdOK.Height + 1;
-  cmdCancel.Width := cmdOK.Width;
+//  cmdCancel.Width := cmdOK.Width;
   //end CQ7118
 end;
-
+*)
 procedure TfrmEncounter.FormShow(Sender: TObject);
 begin
-  //CQ7118
-  if cboPtProvider.Visible then
-     begin
-     cmdOK.Left := cboPtProvider.Left + cboPtProvider.Width + 1;
-     cmdCancel.Left := cboPtProvider.Left + cboPtProvider.Width + 1;
-     end
-  else
-     begin
-     cmdOK.Left := cmdDateRange.Left;
-     cmdCancel.Left := cmdDateRange.Left;
-     end;
-
-  cmdCancel.Top := cmdDateRange.Top - cmdCancel.Height - 10;
-  cmdOK.Top := cmdCancel.Top - cmdOK.Height - 1;
-  cmdCancel.Top := cmdOK.Top + cmdOK.Height + 1;
-  //end CQ7118
+//setLayout; // AA
   if Not User.IsProvider then
     if cboPtProvider.CanFocus then
       cboPtProvider.SetFocus;

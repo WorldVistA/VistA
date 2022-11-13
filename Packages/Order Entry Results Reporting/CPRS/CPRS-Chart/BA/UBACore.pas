@@ -1,11 +1,11 @@
 unit UBACore;
 
-{$undef debug}
-
 interface
 uses
   Classes, ORNet, uConst, ORFn, Sysutils, Dialogs, Windows,Messages, UBAGlobals,Trpcb,
-  fFrame;
+  fFrame
+  , ORNetIntf
+  ;
 
 function  rpcAddToPersonalDxList(UserDUZ:int64; DxCodes:TStringList):boolean;
 function  rpcGetPersonalDxList(UserDUZ:int64):TStringList;
@@ -15,13 +15,14 @@ function  rpcNonBillableOrders(pOrderList: TStringList): TStringList;
 function  rpcOrderRequiresDx(pList: TStringList):boolean;
 procedure rpcSetBillingAwareSwitch(encProvider: int64; pPatientDFN: string);
 procedure rpcGetProviderPatientDaysDx(ProviderIEN: string;PatientIEN: string);
-procedure rpcGetSC4Orders;    // returns Eligible Treatment Factors for a given patient
+procedure rpcGetSC4Orders(aDest: TSTrings;aDFN:String; aList: iORNetMult);
 
 function  rpcTreatmentFactorsActive(pOrderID: string):boolean;
 procedure rpcBuildSCIEList(pOrderList: TList);
 function  rpcGetUnsignedOrdersBillingData(pOrderList: TStringList):TStringList;
 function  rpcRetrieveSelectedOrderInfo(pOrderIDList: TStringList):TStringList;
 function  rpcGetTFHintData:TStringList;
+
 procedure rpcSaveNurseConsultOrder(pOrderRec:TStringList);
 function  rpcGetBAMasterSwStatus:boolean;
 procedure rpcSaveCIDCData(pCIDCList: TStringList);
@@ -35,7 +36,7 @@ procedure AttachPLTFactorsToDx(var Dest:String;ProblemRec:string);
 procedure BALoadStsFlagsAsIs(StsFlagsIN: string);
 function  BADxEntered:boolean;  //  main logic to determine if dx has been entered for order that requires dx
 function  StripTFactors(FactorsIN: string): string;
-function  AddProviderPatientDaysDx(Dest: TStringList; ProviderIEN: string;PatientIEN: string) : TStringList;
+//function  AddProviderPatientDaysDx(Dest: TStringList; ProviderIEN: string;PatientIEN: string) : TStringList;
 function  IsOrderBillable(pOrderID: string):boolean;
 
 function  OrderRequiresSCEI(pOrderID :String): boolean;
@@ -74,6 +75,13 @@ implementation
 uses fBALocalDiagnoses, fOrdersSign, fReview, rOrders, uCore, rCore, rPCE,uPCE,
      UBAConst, UBAMessages, USignItems;
 
+
+procedure Show508Message(aMessage:String);
+begin
+{$IFDEF DEBUG}
+  ShowMessage(aMessage);
+{$ENDIF}
+end;
 
 // -----------------  MAIN CIDC DX HAS BEEN ENTERED LOGIC  ---------------------------
 function BADxEntered:boolean;
@@ -167,7 +175,7 @@ var x: string;
        FastAssign(pList, updatedList);
 
     // call returns boolean, orders is billable=1 or nonbillable=0 or discontinued = 0
-    tCallV(returnList,'ORWDBA1 ORPKGTYP',[updatedList]);
+    CallVistA('ORWDBA1 ORPKGTYP',[updatedList],returnList);
 
      //Remove NON LRMP orders from the mix(when checking for dx entry);
      // BAOrderList and pList are in sync - order id....
@@ -212,7 +220,7 @@ begin
   except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in UBACore.IsOrderBillable()');{$endif}
+        ShowMessage('EListError in UBACore.IsOrderBillable()');
         raise;
         end;
   end;
@@ -246,7 +254,7 @@ var x: string;
       pList.Add(pOrderID);
       Result := FALSE;
      // call returns boolean, orders is billable=1 or nonbillable=0 or discontinued = 0
-      tCallV(rList,'ORWDBA1 ORPKGTYP',[pList]);
+      CallVistA('ORWDBA1 ORPKGTYP',[pList],rList);
      //returns boolean value by OrderID - True = billable
      for i := 0 to rList.Count-1 do
      begin
@@ -298,46 +306,48 @@ begin
 end;
 
 function  rpcAddToPersonalDxList(UserDUZ:int64; DxCodes:TStringList):boolean;
+var
+  x: String;
 //input example ien^code(s) = 12345^306.70^431.22
 begin
-   Result := (sCallV('ORWDBA2 ADDPDL', [UserDUZ,DxCodes])= '1');
+   Result := CallVistA('ORWDBA2 ADDPDL', [UserDUZ,DxCodes], x) and (x = '1');
 end;
 
 function rpcGetPersonalDxList(UserDUZ:int64):TStringList;
-var
-tmplst: TStringList;
 begin
-    tmplst := TStringList.Create;
-    tmplst.clear;
-    tCallV(tmplst, 'ORWDBA2 GETPDL', [UserDUZ]);
-    Result := tmplst;
+  Result := TSTringList.Create;
+    CallVistA('ORWDBA2 GETPDL', [UserDUZ],Result);
 end;
 
-function  rpcDeleteFromPersonalDxList(UserDUZ:int64; Dest:TStringList):integer;
+function rpcDeleteFromPersonalDxList(UserDUZ: int64; Dest: TStringList)
+  : integer;
 begin
-    uDeleteFromPDL := StrToIntDef(sCallV('ORWDBA2 DELPDL', [UserDUZ,Dest]), 0);
-    Result := uDeleteFromPDL;
+  CallVistA('ORWDBA2 DELPDL', [UserDUZ, Dest], uDeleteFromPDL);
+  Result := uDeleteFromPDL;
 end;
 
 // returns value used to bypass Billing Aware if needed.
-//  turns off visual and functionality
-procedure rpcSetBillingAwareSwitch(encProvider:int64; pPatientDFN: string);
+// turns off visual and functionality
+procedure rpcSetBillingAwareSwitch(encProvider: int64; pPatientDFN: string);
+var
+  s: String;
 begin
-// Is Provider -> Is Master Sw -> Is CIDC SW -> Is Patient Insured
-   BILLING_AWARE := FALSE;
-   // verify user is a provider
-   if (encProvider <> 0) and PersonHasKey(encProvider, 'PROVIDER') then
-    //  Master switch is set "ON"
-      if  (sCallV('ORWDBA1 BASTATUS', [nil]) = '1') then
-         // User is CIDC Enabled
-        if  (sCallV('ORWDBA4 GETBAUSR', [encProvider]) = '1') then
-        begin
-           // Verify Patient is Insured
-           // OR Switch = 2 ask questions for all patients.
-           if  rpcIsPatientInsured(pPatientDFN)  then
-              BILLING_AWARE := TRUE;
-        end;
-       {$ifdef debug}BILLING_AWARE := TRUE;{$endif}
+  // Is Provider -> Is Master Sw -> Is CIDC SW -> Is Patient Insured
+  BILLING_AWARE := FALSE;
+  // verify user is a provider
+  if (encProvider <> 0) and PersonHasKey(encProvider, 'PROVIDER') then
+  // Master switch is set "ON"
+  begin
+    if CallVistA('ORWDBA1 BASTATUS', [nil], s) and (s = '1') then
+      // User is CIDC Enabled
+      if CallVistA('ORWDBA4 GETBAUSR', [encProvider], s) and (s = '1') then
+      begin
+        // Verify Patient is Insured
+        // OR Switch = 2 ask questions for all patients.
+        if rpcIsPatientInsured(pPatientDFN) then
+          BILLING_AWARE := TRUE;
+      end;
+  end;
 end;
 
 //  verify CIDC Master Switch and Provider is CIDC Enabled.
@@ -350,179 +360,188 @@ begin
           Result := True;
 end;
 
-
 function rpcGetBAMasterSwStatus:boolean;
+var
+  s: String;
 begin
-   Result :=  (sCallV('ORWDBA1 BASTATUS', [nil]) = '1');    //  Master switch is set "ON"
+  Result := CallVistA('ORWDBA1 BASTATUS', [nil],s) and (s = '1');    //  Master switch is set "ON"
 end;
-
 
 procedure rpcSaveNurseConsultOrder(pOrderRec:TStringList);
 begin
-    rpcSaveCIDCData(pOrderRec);
+  rpcSaveCIDCData(pOrderRec);
 end;
 
-
-procedure rpcSaveBillingDxEntered;  // if not mandatory and user enters dx.
+procedure rpcSaveBillingDxEntered; // if not mandatory and user enters dx.
 var
- ordersWithDx,i: integer;
- newBillingList: TStringList;
- baseDxRec, tempDxRec: TBADxRecord;
- currentOrderID, thisOrderID: string;
- currentOrderString, thisRec: string;
+  ordersWithDx, i: integer;
+  newBillingList: TStringList;
+  baseDxRec, tempDxRec: TBADxRecord;
+  currentOrderID, thisOrderID: string;
+  currentOrderString, thisRec: string;
 begin
-// verify Dx has been entered for orders checked for signature..
-     ordersWithDx := 0;
-     tempDxRec := TBADxRecord.Create;
-     UBAGlobals.InitializeNewDxRec(tempDxRec);
-     for i := 0 to BAOrderList.Count-1 do
-     begin
-        thisRec := BAOrderList.Strings[i];
-        thisOrderID := piece(thisRec,';',1) + ';1';  //rebuild orderID pass to M.
-        if tempDxNodeExists(thisOrderID) then
-           inc(ordersWithDx);
-     end;
-
-     // if orders have dx enteries - save billing data.
-     if ordersWithDx > 0 then
-     begin
-        newBillingList:= TStringList.Create;
-        newBillingList.Clear;
-        baseDxRec := nil;
-        baseDxRec := TBADxRecord.Create;
-        InitializeNewDxRec(baseDxRec);
-
-       try
-       for i := 0 to BAOrderList.Count-1 do
-       begin
-          currentOrderString := BAOrderList.Strings[i];
-          currentOrderID := piece(BAOrderList.Strings[i],';',1)+ ';1';
-          GetBADxListForOrder(baseDxRec, currentOrderID);
-          if baseDxRec.FBADxCode <> '' then
-          begin
-             NewBillingList.Add(currentOrderString +'^'+ baseDxRec.FBADxCode +'^'+ baseDxRec.FBASecDx1+
-                                '^'+ baseDxRec.FBASecDx2+'^'+ baseDxRec.FBASecDx3);
-          end;
-       end;
-       except
-       on EListError do
-       begin
-         {$ifdef debug}Show508Message('EListError in UBACore.rpcSaveBillingDxEntered()');{$endif}
-         raise;
-     end;
+  // verify Dx has been entered for orders checked for signature..
+  ordersWithDx := 0;
+  tempDxRec := TBADxRecord.Create;
+  UBAGlobals.InitializeNewDxRec(tempDxRec);
+  for i := 0 to BAOrderList.Count - 1 do
+  begin
+    thisRec := BAOrderList.Strings[i];
+    thisOrderID := piece(thisRec, ';', 1) + ';1'; // rebuild orderID pass to M.
+    if tempDxNodeExists(thisOrderID) then
+      inc(ordersWithDx);
   end;
 
-   rpcSaveCIDCData(NewBillingList);
-   if Assigned(NewBillingList) then FreeAndNil(NewBillingList);
+  // if orders have dx enteries - save billing data.
+  if ordersWithDx > 0 then
+  begin
+    newBillingList := TStringList.Create;
+    newBillingList.Clear;
+    baseDxRec := nil;
+    baseDxRec := TBADxRecord.Create;
+    InitializeNewDxRec(baseDxRec);
+
+    try
+      for i := 0 to BAOrderList.Count - 1 do
+      begin
+        currentOrderString := BAOrderList.Strings[i];
+        currentOrderID := piece(BAOrderList.Strings[i], ';', 1) + ';1';
+        GetBADxListForOrder(baseDxRec, currentOrderID);
+        if baseDxRec.FBADxCode <> '' then
+        begin
+          newBillingList.Add(currentOrderString + '^' + baseDxRec.FBADxCode +
+            '^' + baseDxRec.FBASecDx1 + '^' + baseDxRec.FBASecDx2 + '^' +
+            baseDxRec.FBASecDx3);
+        end;
+      end;
+    except
+      on EListError do
+      begin
+Show508Message('EListError in UBACore.rpcSaveBillingDxEntered()');
+        raise;
+      end;
+    end;
+
+    rpcSaveCIDCData(newBillingList);
+    if Assigned(newBillingList) then
+      FreeAndNil(newBillingList);
   end;
 end;
 
-procedure rpcGetSC4Orders;
+procedure rpcGetSC4Orders(aDest: TSTrings;aDFN:String;aList: iORNetMult);
 begin
 //  ****** RPC Logic returning SC/TF codes for COPAY  ********
 //     if (CIDC is ON) and (PatientInsured is True) then
 //        return SC/TF for OutPatient Meds, Labs, Prosthetics, Imaging.
 //     else
 //       return SC/TF for Outpatient Meds only.
-  LockBroker;
-  try
-    RPCBrokerV.Param[0].PType := literal;
-    RPCBrokerV.Param[0].Value := Patient.DFN;
-    RPCBrokerV.RemoteProcedure := 'ORWDBA1 SCLST';
-    CallBroker;
-  finally
-    UnlockBroker;
-  end;
+  CallVistA('ORWDBA1 SCLST',[aDFN, aList],aDest);
 end;
 
-procedure rpcGetProviderPatientDaysDx(ProviderIEN: string;PatientIEN: string);
+procedure rpcGetProviderPatientDaysDx(ProviderIEN: string; PatientIEN: string);
 var
-    tmplst: TStringList;
+  tmplst: TStringList;
 begin
-    tmplst := TStringList.Create;
-    uDxLst := TStringList.Create;
-    tmplst.clear;
-    uDxLst.Clear;
-    tCallV(tmplst, 'ORWDBA2 GETDUDC', [ProviderIEN, PatientIEN]);
-    FastAssign(tmplst, UBACore.UDxLst);
-    tmplst.clear;
+  tmplst := TStringList.Create;
+  uDxLst := TStringList.Create;
+  tmplst.Clear;
+  uDxLst.Clear;
+  try
+    CallVistA('ORWDBA2 GETDUDC', [ProviderIEN, PatientIEN], tmplst);
+    FastAssign(tmplst, UBACore.uDxLst);
+  finally
+    tmplst.Free;
+  end;
 end;
 
 
 function rpcGetTFHintData:TStringList;
 begin
-  tCallv(BATFHints,'ORWDBA3 HINTS', [nil]);
+  CallVistA('ORWDBA3 HINTS', [nil],BATFHints);
   Result := BATFHints;
 end;
 
 //  call made to determine if order type is billable
 //  if order type NOT billable, flagged with "NA".
-function rpcNonBillableOrders(pOrderList: TStringList):TStringList;
-var x: string;
-    i: integer;
-    rList: TStringList;
-  begin
-    rList := TStringList.Create;
-    rList.Clear;
-    NonBillableOrderList.Clear;
-    // call returns boolean, orders is billable=1 or nonbillable=0 or discontinued = 0
-    tCallV(rList,'ORWDBA1 ORPKGTYP',[pOrderList]);
-    for i := 0 to rList.Count-1 do
+function rpcNonBillableOrders(pOrderList: TStringList): TStringList;
+var
+  x: string;
+  i: integer;
+  rList: TStringList;
+begin
+  rList := TStringList.Create;
+  rList.Clear;
+  NonBillableOrderList.Clear;
+  // call returns boolean, orders is billable=1 or nonbillable=0 or discontinued = 0
+  try
+    CallVistA('ORWDBA1 ORPKGTYP', [pOrderList], rList);
+    for i := 0 to rList.Count - 1 do
     begin
-       x := rList[i];
-       if rList[i] <> BILLABLE_ORDER then
-          NonBillableOrderList.Add(pOrderList[i] + U + 'NA');
+      x := rList[i];
+      if rList[i] <> BILLABLE_ORDER then
+        NonBillableOrderList.Add(pOrderList[i] + U + 'NA');
     end;
     Result := NonBillableOrderList;
+  finally
+    rList.Free;
+  end;
 end;
 
 
 procedure rpcBuildSCIEList(pOrderList: TList);
-var AnOrder: TOrder;
-    OrderIDList: TStringList;
-    rList: TStringList;
-    i: integer;
-   begin
-      OrderIDList := TStringList.Create;
-      rList := TStringList.Create;
-      if Assigned(OrderListSCEI) then OrderListSCEI.Clear;
-      OrderIDList.Clear;
-      rList.Clear;
-      for i := 0 to pOrderList.Count -1 do
-      begin
-         AnOrder := TOrder(pOrderList.Items[i]);
-         OrderIDList.Add(AnOrder.ID);
-      end;
-      // call returns boolean, orders is billable=1 or nonbillable=0 or discontinued = 0
-      tCallV(rList,'ORWDBA1 ORPKGTYP',[OrderIDList]);
+var
+  AnOrder: TOrder;
+  OrderIDList: TStringList;
+  rList: TStringList;
+  i: integer;
+begin
+  OrderIDList := TStringList.Create;
+  rList := TStringList.Create;
+  if Assigned(OrderListSCEI) then
+    OrderListSCEI.Clear;
+  OrderIDList.Clear;
+  rList.Clear;
+  for i := 0 to pOrderList.Count - 1 do
+  begin
+    AnOrder := TOrder(pOrderList.Items[i]);
+    OrderIDList.Add(AnOrder.ID);
+  end;
+  // call returns boolean, orders is billable=1 or nonbillable=0 or discontinued = 0
+  try
+    CallVistA('ORWDBA1 ORPKGTYP', [OrderIDList], rList);
 
-     for i := 0 to rList.Count-1 do
-     begin
-        if rList.Strings[i] = BILLABLE_ORDER then
-           OrderListSCEI.Add(OrderIDList.Strings[i]);
-   end;
+    for i := 0 to rList.Count - 1 do
+    begin
+      if rList.Strings[i] = BILLABLE_ORDER then
+        OrderListSCEI.Add(OrderIDList.Strings[i]);
+    end;
+  finally
+    rList.Free;
+  end;
 end;
 
 procedure rpcSaveCIDCData(pCIDCList: TStringList);
 var
- CIDCList :TStringList;
+  CIDCList: TStringList;
 begin
-    CIDCList := TStringList.create;
-    CIDCList.Clear;
-    // insure record contain valid orderid
-    if pCIDCList.Count > 0 then
-    begin
-       CIDCList := VerifyOrderIdExists(pCIDCList);
-       if CIDCList.Count > 0 then
-          CallV('ORWDBA1 RCVORCI',[CIDCList]);
-    end;
-    if Assigned(CIDCList) then FreeAndNil(CIDCList);
+  CIDCList := TStringList.Create;
+  CIDCList.Clear;
+  // insure record contain valid orderid
+  if pCIDCList.Count > 0 then
+  begin
+    CIDCList := VerifyOrderIdExists(pCIDCList);
+    if CIDCList.Count > 0 then
+      CallVistA('ORWDBA1 RCVORCI', [CIDCList]);
+  end;
+  if Assigned(CIDCList) then
+    FreeAndNil(CIDCList);
 end;
 
-function  rpcIsPatientInsured(pPatientDFN: string):boolean;
+function rpcIsPatientInsured(pPatientDFN: string): boolean;
+var
+  s: String;
 begin
-   Result := (sCallV('ORWDBA7 ISWITCH',[pPatientDFN]) > '0');
-     
+  Result := CallVistA('ORWDBA7 ISWITCH', [pPatientDFN], s) and (s > '0');
 end;
 
 
@@ -562,7 +581,7 @@ begin
   except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in UBACore.OrdersHaveDx()');{$endif}
+        Show508Message('EListError in UBACore.OrdersHaveDx()');
         raise;
         end;
   end;
@@ -719,7 +738,6 @@ begin
      end;
   end;
 
-
 function StripTFactors(FactorsIN: string):string;
 var strDxCode,strDxName:string;
 begin
@@ -728,30 +746,30 @@ begin
    strDxName := Piece(FactorsIN,'(',1);
    Result := (strDxName + U + strDxCode);
 end;
-
-function AddProviderPatientDaysDx(Dest: TStringList; ProviderIEN: string;PatientIEN: string) : TStringList;
-var i:integer;
-    x: string;
-    tmplst: TStringList;
+(*
+function AddProviderPatientDaysDx(Dest: TStringList; ProviderIEN: string;
+  PatientIEN: string): TStringList;
+var
+  i: integer;
+  x: string;
+  tmplst: TStringList;
 begin
-    tmplst := TStringList.Create;
-    tmplst.clear;
-    tCallV(tmplst, 'ORWDBA2 GETDUDC', [ProviderIEN, PatientIEN]);
-
+  tmplst := TStringList.Create;
+  CallVistA('ORWDBA2 GETDUDC', [ProviderIEN, PatientIEN], tmplst);
   try
-    for i := 0 to tmplst.count-1 do
-       x := tmplst.Strings[i];
+    for i := 0 to tmplst.Count - 1 do
+      x := tmplst.Strings[i];
   except
-     on EListError do
-        begin
-        {$ifdef debug}Show508Message('EListError in UBACore.AddProviderPatientDaysDx()');{$endif}
-        raise;
-        end;
+    on EListError do
+    begin
+Show508Message('EListError in UBACore.AddProviderPatientDaysDx()');
+      raise;
+    end;
   end;
 
-    Result := tmplst;
+  Result := tmplst;
 end;
-
+*)
 
 function  OrderRequiresSCEI(pOrderID: string):boolean;
 var i:integer;
@@ -771,7 +789,7 @@ begin
   except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in UBACore.OrderRequiresSCEI()');{$endif}
+        Show508Message('EListError in UBACore.OrderRequiresSCEI()');
         raise;
         end;
   end;
@@ -787,61 +805,64 @@ begin
 
 end;
 
-function rpcRetrieveSelectedOrderInfo(pOrderIDList: TStringList):TStringList;
+function rpcRetrieveSelectedOrderInfo(pOrderIDList: TStringList): TStringList;
 var
-  rList : TStringList;
-  newList:TStringList;
+  newList: TStringList;
   i: integer;
   x: string;
 begin
-   rList := TStringList.Create;
-   newList := TStringList.Create;
-   if Assigned(rList) then rList.Clear;
-   if Assigned(newList) then newList.Clear;
-
-   for i := 0 to pOrderIDList.Count-1 do
-   begin
-      newList.Add(Piece(pOrderIDList.Strings[i],';',1));
-      x := newlist.strings[i];
-   end;
-   if newList.Count > 0 then
-      tCallV(rList,'ORWDBA4 GETTFCI',[newList]);
-   Result := rList;
-
-
+  Result := TStringList.Create;
+  newList := TStringList.Create;
+  try
+    for i := 0 to pOrderIDList.Count - 1 do
+    begin
+      newList.Add(piece(pOrderIDList.Strings[i], ';', 1));
+      x := newList.Strings[i];
+    end;
+    if newList.Count > 0 then
+      CallVistA('ORWDBA4 GETTFCI', [newList], Result);
+  finally
+    newList.Free;
+  end;
 end;
 
 procedure BuildSaveUnsignedList(pOrderList: TStringList);
 var
-   thisList: TStringList;
-   rList: TStringList;
+  thisList: TStringList;
+  rList: TStringList;
 begin
 
   thisList := TStringList.Create;
   rList := TStringList.Create;
-  if Assigned(rList) then rList.Clear;
-  if Assigned(thisList)then thisList.Clear;
-  SaveBillingData(pOrderList);  //  save unsigned info to be displayed when recalled at later time
+  if Assigned(rList) then
+    rList.Clear;
+  if Assigned(thisList) then
+    thisList.Clear;
+  SaveBillingData(pOrderList);
+  // save unsigned info to be displayed when recalled at later time
 end;
 
-function  rpcGetUnsignedOrdersBillingData(pOrderList: TStringList):TStringList;
+function rpcGetUnsignedOrdersBillingData(pOrderList: TStringList): TStringList;
 var
- i:integer;
- newList:TStringList;
- rList:TStringList;
+  i: integer;
+  newList: TStringList;
+  rList: TStringList;
 begin
   newList := TStringList.Create;
   rList := TStringList.Create;
-  if Assigned(newList) then newList.Clear;
-  if Assigned(rList) then rList.Clear;
+  if Assigned(newList) then
+    newList.Clear;
+  if Assigned(rList) then
+    rList.Clear;
   Result := rList;
 
-  if pOrderList.Count = 0 then Exit;
-  for i := 0 to pOrderList.Count-1 do
+  if pOrderList.Count = 0 then
+    Exit;
+  for i := 0 to pOrderList.Count - 1 do
   begin
-     newList.Add(Piece(pOrderList.Strings[i],';',1));
+    newList.Add(piece(pOrderList.Strings[i], ';', 1));
   end;
-   tCallV(rList,'ORWDBA4 GETTFCI',[newList]);
+  CallVistA('ORWDBA4 GETTFCI', [newList], rList);
   Result := rList;
 end;
 
@@ -895,7 +916,7 @@ begin
      except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in UBACore.CompleteUnsignedBillingInfo()');{$endif}
+        Show508Message('EListError in UBACore.CompleteUnsignedBillingInfo()');
         raise;
         end;
   end;
@@ -918,7 +939,7 @@ begin
   except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in UBACore.GetUnsignedOrderFlags()');{$endif}
+        Show508Message('EListError in UBACore.GetUnsignedOrderFlags()');
         raise;
         end;
   end;
@@ -926,123 +947,166 @@ begin
 end;
 
 // BuildTFHintRec is meant to run once, first user of the session
-//  contains the information to be displayed while mouse-over in fOrdersSign and fReview.
+// contains the information to be displayed while mouse-over in fOrdersSign and fReview.
 procedure BuildTFHintRec;
 var
-hintList :TStringList;
-i: integer;
-x: string;
+  hintList: TStringList;
+  i: integer;
+  x, x1, x2, x3: string;
+
+  procedure setValue(var anItem:String; anX,anY:String);
+  begin
+    if anX = '1' then
+      anItem := anY
+    else
+      anItem := anItem + CRLF + anY;
+  end;
+
 begin
-   hintList := TStringList.Create;
-   if Assigned(hintList) then hintList.Clear;
-   hintList := rpcGetTFHintData;
-   if hintList.Count > 0 then  UBAGlobals.BAFactorsRec.FBAFactorActive := TRUE;
+  // hintList := TStringList.Create;
+  // if Assigned(hintList) then hintList.Clear;
+
+  hintList := rpcGetTFHintData; // function returns reference on BATFHints
+
+  if hintList.Count > 0 then
+    UBAGlobals.BAFactorsRec.FBAFactorActive := TRUE;
 
   try
-      for i := 0 to hintList.Count -1 do
-         begin
-            x := hintList.Strings[i];
-            if piece(x,U,1) = SERVICE_CONNECTED then
-            begin
-               if piece(x,U,2) = '1' then
-                  UBAGlobals.BAFactorsRec.FBAFactorSC := Piece(x,U,3)
-               else
-                  UBAGlobals.BAFactorsRec.FBAFactorSC := ( UBAGlobals.BAFactorsRec.FBAFactorSC + CRLF + Piece(x,U,3) );
-            end
-            else
-               if piece(x,U,1) = AGENT_ORANGE then
-               begin
-                  if piece(x,U,2) = '1' then
-                     UBAGlobals.BAFactorsRec.FBAFactorAO := Piece(x,U,3)
-                  else
-                     UBAGlobals.BAFactorsRec.FBAFactorAO := (UBAGlobals.BAFactorsRec.FBAFactorAO + CRLF + Piece(x,U,3) );
-               end
-               else
-                if piece(x,U,1) = IONIZING_RADIATION then
-                begin
-                  if piece(x,U,2) = '1' then
-                     UBAGlobals.BAFactorsRec.FBAFactorIR := Piece(x,U,3)
-                  else
-                     UBAGlobals.BAFactorsRec.FBAFactorIR := (UBAGlobals.BAFactorsRec.FBAFactorIR + CRLF + Piece(x,U,3) );
-               end
-               else
-                 if piece(x,U,1) = ENVIRONMENTAL_CONTAM then
-                 begin
-                  if piece(x,U,2) = '1' then
-                     UBAGlobals.BAFactorsRec.FBAFactorEC := Piece(x,U,3)
-                  else
-                     UBAGlobals.BAFactorsRec.FBAFactorEC := (UBAGlobals.BAFactorsRec.FBAFactorEC + CRLF + Piece(x,U,3) );
-               end
-               else
-                 if piece(x,U,1) = HEAD_NECK_CANCER then
-                 begin
-                  if piece(x,U,2) = '1' then
-                     UBAGlobals.BAFactorsRec.FBAFactorHNC := Piece(x,U,3)
-                  else
-                     UBAGlobals.BAFactorsRec.FBAFactorHNC := (UBAGlobals.BAFactorsRec.FBAFactorHNC + CRLF + Piece(x,U,3) );
-               end
-               else
-                 if piece(x,U,1) = MILITARY_SEXUAL_TRAUMA then
-                 begin
-                  if piece(x,U,2) = '1' then
-                     UBAGlobals.BAFactorsRec.FBAFactorMST := Piece(x,U,3)
-                  else
-                     UBAGlobals.BAFactorsRec.FBAFactorMST := (UBAGlobals.BAFactorsRec.FBAFactorMST + CRLF + Piece(x,U,3) );
-               end
-               else
-                 if piece(x,U,1) = COMBAT_VETERAN then
-                 begin
-                   if piece(x,U,2) = '1' then
-                      UBAGlobals.BAFactorsRec.FBAFactorCV := Piece(x,U,3)
-                   else
-                      UBAGlobals.BAFactorsRec.FBAFactorCV := (UBAGlobals.BAFactorsRec.FBAFactorCV + CRLF + Piece(x,U,3) );
-                 end
-                 else
-                    if piece(x,U,1) = SHIPBOARD_HAZARD_DEFENSE then
-                    begin
-                       if piece(x,U,2) = '1' then
-                          UBAGlobals.BAFactorsRec.FBAFactorSHAD := Piece(x,U,3)
-                      else
-                         UBAGlobals.BAFactorsRec.FBAFactorSHAD := (UBAGlobals.BAFactorsRec.FBAFactorSHAD + CRLF + Piece(x,U,3) );
-                   end else
-                    if piece(x,U,1) = CAMP_LEJEUNE then
-                    begin
-                       if piece(x,U,2) = '1' then
-                          UBAGlobals.BAFactorsRec.FBAFactorCL := Piece(x,U,3)
-                      else
-                         UBAGlobals.BAFactorsRec.FBAFactorCL := (UBAGlobals.BAFactorsRec.FBAFactorCL + CRLF + Piece(x,U,3) );
+    for i := 0 to hintList.Count - 1 do
+    begin
+      x := hintList.Strings[i];
+      x1 := piece(x, U, 1);
+      x2 := piece(x, U, 2);
+      x3 := piece(x, U, 3);
 
-                  end;
-            end;
+      if x1 = SERVICE_CONNECTED then
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorSC,x2,x3)
+      else if x1 = AGENT_ORANGE then
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorAO,x2,x3)
+      else if x1 = IONIZING_RADIATION then
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorIR,x2,x3)
+      else if x1 = ENVIRONMENTAL_CONTAM then
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorEC,x2,x3)
+      else if x1 = HEAD_NECK_CANCER then
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorHNC,x2,x3)
+      else if x1 = MILITARY_SEXUAL_TRAUMA then
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorMST,x2,x3)
+      else if x1 = COMBAT_VETERAN then
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorMST,x2,x3)
+      else if x1 = SHIPBOARD_HAZARD_DEFENSE then
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorSHAD,x2,x3)
+      else if x1 = CAMP_LEJEUNE then
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorCL,x2,x3);
+(*
+      if piece(x, U, 1) = SERVICE_CONNECTED then
+      begin
+        if piece(x, U, 2) = '1' then
+          UBAGlobals.BAFactorsRec.FBAFactorSC := piece(x, U, 3)
+        else
+          UBAGlobals.BAFactorsRec.FBAFactorSC :=
+            (UBAGlobals.BAFactorsRec.FBAFactorSC + CRLF + piece(x, U, 3));
+      end
+      else if piece(x, U, 1) = AGENT_ORANGE then
+      begin
+        if piece(x, U, 2) = '1' then
+          UBAGlobals.BAFactorsRec.FBAFactorAO := piece(x, U, 3)
+        else
+          UBAGlobals.BAFactorsRec.FBAFactorAO :=
+            (UBAGlobals.BAFactorsRec.FBAFactorAO + CRLF + piece(x, U, 3));
+      end
+      else if piece(x, U, 1) = IONIZING_RADIATION then
+      begin
+        if piece(x, U, 2) = '1' then
+          UBAGlobals.BAFactorsRec.FBAFactorIR := piece(x, U, 3)
+        else
+          UBAGlobals.BAFactorsRec.FBAFactorIR :=
+            (UBAGlobals.BAFactorsRec.FBAFactorIR + CRLF + piece(x, U, 3));
+      end
+      else if piece(x, U, 1) = ENVIRONMENTAL_CONTAM then
+      begin
+        if piece(x, U, 2) = '1' then
+          UBAGlobals.BAFactorsRec.FBAFactorEC := piece(x, U, 3)
+        else
+          UBAGlobals.BAFactorsRec.FBAFactorEC :=
+            (UBAGlobals.BAFactorsRec.FBAFactorEC + CRLF + piece(x, U, 3));
+      end
+      else if piece(x, U, 1) = HEAD_NECK_CANCER then
+      begin
+        if piece(x, U, 2) = '1' then
+          UBAGlobals.BAFactorsRec.FBAFactorHNC := piece(x, U, 3)
+        else
+          UBAGlobals.BAFactorsRec.FBAFactorHNC :=
+            (UBAGlobals.BAFactorsRec.FBAFactorHNC + CRLF + piece(x, U, 3));
+      end
+      else if piece(x, U, 1) = MILITARY_SEXUAL_TRAUMA then
+      begin
+        if piece(x, U, 2) = '1' then
+          UBAGlobals.BAFactorsRec.FBAFactorMST := piece(x, U, 3)
+        else
+          UBAGlobals.BAFactorsRec.FBAFactorMST :=
+            (UBAGlobals.BAFactorsRec.FBAFactorMST + CRLF + piece(x, U, 3));
+      end
+      else if piece(x, U, 1) = COMBAT_VETERAN then
+      begin
+        if piece(x, U, 2) = '1' then
+          UBAGlobals.BAFactorsRec.FBAFactorCV := piece(x, U, 3)
+        else
+          UBAGlobals.BAFactorsRec.FBAFactorCV :=
+            (UBAGlobals.BAFactorsRec.FBAFactorCV + CRLF + piece(x, U, 3));
+      end
+      else if piece(x, U, 1) = SHIPBOARD_HAZARD_DEFENSE then
+      begin
+        if piece(x, U, 2) = '1' then
+          UBAGlobals.BAFactorsRec.FBAFactorSHAD := piece(x, U, 3)
+        else
+          UBAGlobals.BAFactorsRec.FBAFactorSHAD :=
+            (UBAGlobals.BAFactorsRec.FBAFactorSHAD + CRLF + piece(x, U, 3));
+      end
+      else if piece(x, U, 1) = CAMP_LEJEUNE then
+      begin
+        if piece(x, U, 2) = '1' then
+          UBAGlobals.BAFactorsRec.FBAFactorCL := piece(x, U, 3)
+        else
+          UBAGlobals.BAFactorsRec.FBAFactorCL :=
+            (UBAGlobals.BAFactorsRec.FBAFactorCL + CRLF + piece(x, U, 3));
+      end;
+*)
+    end;
   except
-     on EListError do
-        begin
-        {$ifdef debug}Show508Message('EListError in UBACore.BuileTFHintRec()');{$endif}
-        raise;
-        end;
+    on EListError do
+    begin
+Show508Message('EListError in UBACore.BuileTFHintRec()');
+
+      raise;
+    end;
   end;
 end;
 
 
-function  IsAllOrdersNA(pOrderList:TStringList):boolean;
+function IsAllOrdersNA(pOrderList: TStringList): boolean;
 var
-  i:integer;
+  i: integer;
   rList: TStringList;
 begin
   rList := TStringList.Create;
-  if Assigned(rList) then rList.Clear;
-  Result := True;// disables dx button
- 
-  // call returns boolean, orders is billable=1 or nonbillable=0 or discontinued = 0
-  tCallV(rList,'ORWDBA1 ORPKGTYP',[pOrderList]);
+  if Assigned(rList) then
+    rList.Clear;
+  Result := TRUE; // disables dx button
 
-  for i := 0 to rList.Count-1 do
-  begin
-     if rList.Strings[i] =  BILLABLE_ORDER then
-     begin
-        Result := False;
+  // call returns boolean, orders is billable=1 or nonbillable=0 or discontinued = 0
+  try
+    CallVistA('ORWDBA1 ORPKGTYP', [pOrderList], rList);
+
+    for i := 0 to rList.Count - 1 do
+    begin
+      if rList.Strings[i] = BILLABLE_ORDER then
+      begin
+        Result := FALSE;
         Break;
-     end;
+      end;
+    end;
+  finally
+    rList.Free;
   end;
 end;
 
@@ -1083,7 +1147,7 @@ begin
   except
      on EListError do
         begin
-           {$ifdef debug}Show508Message('EListError in UBACore.ClearSelectedORdersDiagnoses()');{$endif}
+           Show508Message('EListError in UBACore.ClearSelectedORdersDiagnoses()');
            raise;
         end;
   end;
@@ -1169,7 +1233,7 @@ begin
   except
      on EListError do
         begin
-        {$ifdef debug}Show508Message('EListError in UBACore.LoadConsultOrderRec()');{$endif}
+        Show508Message('EListError in UBACore.LoadConsultOrderRec()');
         raise;
         end;
   end;
@@ -1351,12 +1415,13 @@ end;
 
 function IsICD9CodeActive(ACode: string; LexApp: string; ADate: TFMDateTime = 0): boolean;
 var
+  s,
   inactiveChar : string;
 begin
     inactiveChar := '#';
     if StrPos(PChar(ACode),PChar(inactiveChar) ) <> nil then
        ACode := Piece(ACode,'#',1);  //  remove the '#' added for inactive code.
-   Result := (sCallV('ORWPCE ACTIVE CODE',[ACode, LexApp, ADate]) = '1');
+   Result := CallVistA('ORWPCE ACTIVE CODE',[ACode, LexApp, ADate], s) and (s = '1');
 end;
 
 function  BuildConsultDxRec(ConsultRec: TBAConsultOrderRec): string;
@@ -1522,6 +1587,3 @@ begin
 end;
 
 end.
-
-
-

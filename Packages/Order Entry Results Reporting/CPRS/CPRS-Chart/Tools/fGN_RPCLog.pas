@@ -4,10 +4,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, DateUtils, ORNet, ORFn, System.UITypes, ComCtrls, Buttons, ExtCtrls,
+  StdCtrls, DateUtils, ORNet, ORFn, System.UITypes
+{$IFDEF STANDALONE} // RPC log viewer application
+{$ELSE}
+    , rMisc, fBase508Form
+{$ENDIF}
+    , ComCtrls, Buttons, ExtCtrls,
+  ORCtrls, ORSystem, VA508AccessibilityManager, VAUtils,
   Winapi.RichEdit, Vcl.Menus, Vcl.ImgList, Vcl.ToolWin, System.ImageList,
-  System.Actions, Vcl.ActnList, Vcl.StdActns, Vcl.Tabs, Vcl.DockTabSet,
-  ORCtrls, ORSystem, VA508AccessibilityManager, VAUtils;
+  System.Actions, Vcl.ActnList, Vcl.StdActns, Vcl.Tabs, Vcl.DockTabSet;
 
 const
   UM_REFRESH_RPC = WM_APP + 1;
@@ -15,9 +20,9 @@ const
 type
   TRPCResult = class(TObject)
   public
-    RPCName: String;
-    RPCResults: TStringList;
-    constructor newRPCResult(aName: String; aResult: TStrings);
+    RPCName:String;
+    RPCResults:TStringList;
+    constructor newRPCResult(aName:String;aResult:TStrings);
     destructor Destroy; override;
   end;
 
@@ -41,7 +46,8 @@ type
     acOneNext: TAction;
     acOnePrev: TAction;
     EditCopy1: TEditCopy;
-    pnlRPC: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
     ToolBar5: TToolBar;
     ToolButton3: TToolButton;
     ToolBar6: TToolBar;
@@ -97,11 +103,6 @@ type
     acClearLog: TAction;
     Clear1: TMenuItem;
     ToolButton8: TToolButton;
-    ts: TDockTabSet;
-    lvWatch: TListView;
-    pnlWatch: TPanel;
-    lvWatchNames: TListView;
-    Splitter1: TSplitter;
     acAddWatch: TAction;
     ToolButton9: TToolButton;
     acToTheLeft: TAction;
@@ -120,9 +121,6 @@ type
     acWordWrap: TAction;
     N3: TMenuItem;
     WordWrap1: TMenuItem;
-    acMainForm: TAction;
-    SwitchtoMainForm1: TMenuItem;
-    N4: TMenuItem;
     procedure cmdPrevClick(Sender: TObject);
     procedure cmdNextClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -165,9 +163,6 @@ type
     procedure FileSaveAs2Accept(Sender: TObject);
     procedure acTrackFormsExecute(Sender: TObject);
     procedure acClearLogExecute(Sender: TObject);
-    procedure tsChange(Sender: TObject; NewTab: Integer;
-      var AllowChange: Boolean);
-    procedure acAddWatchExecute(Sender: TObject);
     procedure acToTheLeftExecute(Sender: TObject);
     procedure acNoAlignExecute(Sender: TObject);
     procedure acToTheRightExecute(Sender: TObject);
@@ -175,21 +170,15 @@ type
     procedure lvRPCLogColumnClick(Sender: TObject; Column: TListColumn);
     procedure lvRPCLogCompare(Sender: TObject; Item1, Item2: TListItem;
       Data: Integer; var Compare: Integer);
-    procedure acMainFormExecute(Sender: TObject);
   private
     { Private declarations }
-    _Reviewed: Boolean;
     _Ignore: Boolean;
     _LogSize: Integer;
-{$IFDEF WATCHLIST}
-    _WatchList: TList;
-    _WatchNames: TStringList;
-{$ENDIF}
     ColumnToSort: Integer;
-    SortDirection: Integer;
+    SortDirection:Integer;
     procedure HighlightRichEdit(StartChar, EndChar: Integer;
       HighLightColor: TColor; Flag: Integer = SCF_SELECTION);
-
+    procedure OnRefreshRPCRequest();
     procedure RealTime;
     procedure doSearch;
     procedure LoadRPCResults(anItem: Integer);
@@ -198,29 +187,23 @@ type
     procedure setLogLength(aCount: Integer);
     procedure setActionStatus;
     procedure doSaveAs(aFileName: String; CurrentOnly: Boolean = true);
-    procedure doLoadFromFile(aFileName: String);
-    procedure AddFlag(aFlag: String; aComment: String = '');
-    procedure SearchTarget(aTarget: String);
+    procedure doLoadFromFile(aFileName:String);
+    procedure AddFlag(aFlag:String;aComment:String = '');
+    procedure SearchTarget(aTarget:String);
     procedure PositionReport;
-    procedure addToLog(aLV: TListView; aName, aSecondName: string;
-      aValue: TStrings);
+    procedure addToLog(aLV:TListView;aName, aSecondName: string; aValue: TStrings);
     procedure AlignBroker(AlignStyle: TAlign);
 
   public
     { Public declarations }
-
-    property Reviewed: Boolean read _Reviewed;
-
-    procedure OnRefreshRPCRequest();
     procedure addLogItem(aName, aSecondName: string; aValue: TStrings);
     procedure addWatchItem(aName, aSecondName: string; aValue: TStrings);
     procedure doPrev;
     procedure doNext;
     procedure SaveAll;
     procedure ClearLog;
-    procedure ClearWatchList;
-    procedure enforceLimit(aLimit: Integer);
-    procedure setFontSize(aSize: Integer);
+    procedure enforceLimit(aLimit:Integer);
+    procedure setFontSize(aSize:Integer);
   end;
 
 var
@@ -232,9 +215,10 @@ uses
   Clipbrd,
   uGN_RPCLog;
 {$R *.DFM}
-/// /////////////////////////////////////////////////////////////////////////////
 
-constructor TRPCResult.newRPCResult(aName: String; aResult: TStrings);
+////////////////////////////////////////////////////////////////////////////////
+
+constructor TRPCResult.newRPCResult(aName:String;aResult:TSTrings);
 begin
   RPCResults := TStringList.Create;
   RPCResults.Assign(aResult);
@@ -252,15 +236,6 @@ begin
   doPrev;
 end;
 
-procedure TfrmRPCLog.tsChange(Sender: TObject; NewTab: Integer;
-  var AllowChange: Boolean);
-begin
-  lvRPCLog.Visible := NewTab = 0;
-  pnlWatch.Visible := NewTab = 1;
-  if pnlWatch.Visible then
-    memData.Clear;
-end;
-
 procedure TfrmRPCLog.doNext;
 begin
   if lvRPCLog.ItemIndex > 0 then
@@ -275,7 +250,7 @@ procedure TfrmRPCLog.cmbMaxCallsSelect(Sender: TObject);
 begin
   inherited;
   setLogLength(StrToIntDef(cmbMaxCalls.Text, _LogSize));
-  PositionReport;
+  positionReport;
 end;
 
 procedure TfrmRPCLog.cmdNextClick(Sender: TObject);
@@ -302,7 +277,7 @@ end;
 
 procedure TfrmRPCLog.FileOpen1Accept(Sender: TObject);
 begin
-  AddFlag(RPCLog_Import, FileOpen1.Dialog.FileName);
+  addFlag(RPCLog_Import,FileOpen1.Dialog.FileName);
   doLoadFromFile(FileOpen1.Dialog.FileName);
 end;
 
@@ -321,7 +296,7 @@ end;
 
 procedure TfrmRPCLog.FileSaveAs2Accept(Sender: TObject);
 begin
-  doSaveAs(FileSaveAs2.Dialog.FileName, False);
+  doSaveAs(FileSaveAs2.Dialog.Filename,False);
 end;
 
 procedure TfrmRPCLog.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -339,21 +314,12 @@ begin
   inherited;
   lvRPCLog.SetFocus;
   setFontSize(Application.MainForm.Font.Size);
-  _Reviewed := true;
 end;
 
 procedure TfrmRPCLog.setFontSize(aSize: Integer);
 begin
   Font.Size := aSize;
   memData.Font.Size := aSize;
-  Application.ProcessMessages;
-  cmbMaxCalls.Width := Application.MainForm.Canvas.TextWidth
-    (cmbMaxCalls.Text) + 24;
-  ckbWrap.Width := Application.MainForm.Canvas.TextWidth(ckbWrap.Caption) + 8;
-//    cmbMaxCalls.Width;
-  Panel1.Height := Application.MainForm.Canvas.TextHeight('W') * 2;
-  Panel2.Height := Panel1.Height;
-  sb.Height := Application.MainForm.Canvas.TextHeight('W') + 8;
 end;
 
 procedure TfrmRPCLog.FormStartDock(Sender: TObject;
@@ -376,40 +342,23 @@ begin
     inc(i);
   end;
   _LogSize := ORNet.GetRPCMax;
-{$IFDEF DEBUG}
   if _LogSize < 500 then
     _LogSize := 500;
-{$ENDIF}
   cmbMaxCalls.Text := IntToStr(_LogSize);
   setAfterRPCEvent(OnRefreshRPCRequest);
   _Ignore := False;
 
   cmbMaxCalls.SelStart := 0;
   cmbMaxCalls.SelLength := 0;
-{$IFDEF DEBUG}
-  FileSaveAs1.Visible := true;
-  FileSaveAs2.Visible := true;
-  N1.Visible := true;
-  Options1.Visible := true;
-  FileOpen1.Visible := true;
-  acSaveOnExit.Visible := False;
-{$ELSE}
-  acSaveOnExit.Visible := False;
 
   FileSaveAs1.Visible := RPCLog_SaveAvailable;
-  N1.Visible := RPCLog_SaveAvailable;
-  FileSaveAs2.Visible := RPCLog_SaveAvailable;
-  Options1.Visible := RPCLog_SaveAvailable;
+  SaveLogOnExit1.Visible := RPCLog_SaveAvailable;
   FileOpen1.Visible := RPCLog_SaveAvailable;
-{$ENDIF}
+
 {$IFDEF STANDALONE}
-  FileOpen1.Visible := true;
+  FileOpen1.Visible := True;
   acTestTime.Visible := False;
   acSymbolTable.Visible := False;
-{$ENDIF}
-{$IFDEF WATCHLIST}
-  _WatchNames := TStringList.Create;
-  _WatchList := TList.Create;
 {$ENDIF}
   Constraints.MinWidth := Screen.Width div 3;
   acTrackForms.Checked := RPCLog_TrackForms;
@@ -430,29 +379,10 @@ begin
   _Ignore := False;
 end;
 
-procedure TfrmRPCLog.ClearWatchList;
-begin
-{$IFDEF WATCHLIST}
-  while _WatchList.Count > 0 do
-  begin
-    if Assigned(_WatchList[0]) then
-    begin
-      TRPCResult(_WatchList[0]).Free;
-      _WatchList.Delete(0);
-    end;
-  end;
-{$ENDIF}
-end;
-
 procedure TfrmRPCLog.FormDestroy(Sender: TObject);
 begin
   ClearLog;
   setAfterRPCEvent(nil);
-  ClearWatchList;
-{$IFDEF WATCHLIST}
-  _WatchNames.Free;
-  _WatchList.Free;
-{$ENDIF}
 end;
 
 procedure TfrmRPCLog.FormKeyUp(Sender: TObject; var Key: Word;
@@ -464,10 +394,10 @@ begin
     Close;
   end
   else if (Key = VK_F1) and (ssCtrl in Shift) then
-  begin
-    Key := 0;
-    Application.MainForm.SetFocus;
-  end;
+    begin
+      Key := 0;
+      Application.MainForm.SetFocus;
+    end;
 end;
 
 procedure TfrmRPCLog.HighlightRichEdit(StartChar, EndChar: Integer;
@@ -490,22 +420,24 @@ procedure TfrmRPCLog.LiveListAdvancedCustomDrawItem(Sender: TCustomListView;
   var DefaultDraw: Boolean);
 begin
   Sender.Canvas.Font.Color := clWindowText;
-  Sender.Canvas.Brush.Color := clCream;
+  Sender.Canvas.Brush.Color := clCream; // clWindow;
   Sender.Canvas.Font.Style := [];
 
-  if (pos(RPCLog_OnActivate, Item.SubItems[0]) = 1) or
-    (pos(RPCLog_OnDeActivate, Item.SubItems[0]) = 1) or
-    (pos(RPCLog_OnClose, Item.SubItems[0]) = 1) or
-    (pos(RPCLog_OnHide, Item.SubItems[0]) = 1) or
-    (pos(RPCLog_OnCreate, Item.SubItems[0]) = 1) or
-    (pos(RPCLog_OnDestroy, Item.SubItems[0]) = 1) then
+  if (pos(RPCLog_OnActivate,Item.SubItems[0])=1) or
+    (pos(RPCLog_OnDeActivate,Item.SubItems[0])=1) or
+    (pos(RPCLog_OnClose,Item.SubItems[0])=1) or
+    (pos(RPCLog_OnHide,Item.SubItems[0])=1) or
+    (pos(RPCLog_OnCreate,Item.SubItems[0])=1) or
+    (pos(RPCLog_OnDestroy,Item.SubItems[0])=1)
+  then
   begin
     Sender.Canvas.Font.Color := RPCLog_clFlag;
     Sender.Canvas.Brush.Color := RPCLog_bgclFlag;
     Sender.Canvas.Font.Style := [];
   end;
 
-  if pos(RPCLog_Flag, Item.SubItems[0]) > 0 then
+  if Pos(RPCLog_Flag, Item.SubItems[0]) > 0
+  then
   begin
     Sender.Canvas.Font.Color := RPCLog_clFlag;
     Sender.Canvas.Brush.Color := RPCLog_bgclFlag;
@@ -519,8 +451,10 @@ begin
     Sender.Canvas.Font.Style := [fsbold];
   end;
 
-  if (pos(UpperCase(edTarget.Text), UpperCase(TStringList(Item.Data).Text)) > 0)
-    or (pos(UpperCase(edTarget.Text), UpperCase(Item.SubItems[0])) > 0) then
+  if (Pos(UpperCase(edTarget.Text), UpperCase(TStringList(Item.Data).Text)) > 0)
+    or
+    (Pos(UpperCase(edTarget.Text), UpperCase(Item.SubItems[0])) > 0)
+  then
   begin
     Sender.Canvas.Font.Color := RPCLog_clTarget;
     Sender.Canvas.Brush.Color := RPCLog_bgclTarget;
@@ -541,12 +475,12 @@ end;
 procedure TfrmRPCLog.lvRPCLogColumnClick(Sender: TObject; Column: TListColumn);
 begin
   if ColumnToSort = Column.Index then
-    SortDirection := -SortDirection
+    SortDirection := - SortDirection
   else
     SortDirection := 1;
 
   ColumnToSort := Column.Index;
-  (Sender as TCustomListView).AlphaSort;
+  (sender as TCustomListView).AlphaSort;
 end;
 
 procedure TfrmRPCLog.lvRPCLogCompare(Sender: TObject; Item1, Item2: TListItem;
@@ -555,21 +489,20 @@ var
   ix: Integer;
 begin
   if ColumnToSort = 0 then
-    Compare := CompareText(Item1.Caption, Item2.Caption)
-  else
-  begin
-    ix := ColumnToSort - 1;
-    Compare := CompareText(Item1.SubItems[ix], Item2.SubItems[ix]);
+    Compare := CompareText(Item1.Caption,Item2.Caption)
+  else begin
+   ix := ColumnToSort - 1;
+   Compare := CompareText(Item1.SubItems[ix],Item2.SubItems[ix]);
   end;
   if SortDirection < 0 then
-    Compare := -Compare;
+    COmpare := - Compare;
 end;
 
 procedure TfrmRPCLog.PositionReport;
 begin
   if Assigned(lvRPCLog) then
     sb.SimpleText := Format('Total records: %d  Current record: %d',
-      [lvRPCLog.Items.Count, lvRPCLog.ItemIndex + 1]);
+      [lvRPCLog.Items.Count, lvRPCLog.ItemIndex]);
 end;
 
 procedure TfrmRPCLog.lvRPCLogDblClick(Sender: TObject);
@@ -586,18 +519,16 @@ procedure TfrmRPCLog.lvRPCLogResize(Sender: TObject);
 var
   lv: TListView;
 const
-  _ScrollBar = 26; // should be calculated by metrix
+  _ScrollBar = 26;
 begin
   inherited;
   lv := TListView(Sender);
   case lv.Columns.Count of
-    0:
-      Exit;
-    1:
-      lv.Columns.Items[0].Width := lv.Width - _ScrollBar;
-    2:
-      lv.Columns.Items[1].Width := lv.Width - _ScrollBar;
+    0: exit;
+    1: lv.Columns.Items[0].Width := lv.Width - _ScrollBar;
+    2: lv.Columns.Items[1].Width := lv.Width - _ScrollBar;
   end;
+  // should be calculated by metrix
 end;
 
 procedure TfrmRPCLog.lvRPCLogSelectItem(Sender: TObject; Item: TListItem;
@@ -608,7 +539,7 @@ begin
   inherited;
   lv := TListView(Sender);
   if not lv.Visible then
-    Exit;
+    exit;
 
   if Assigned(Item.Data) then
   begin
@@ -616,7 +547,7 @@ begin
     if edTarget.Text <> '' then
       PaintEditByTarget(edTarget.Text);
   end;
-  // the last RPC call # might be incorrect as not only RPC are included
+  // the last RPC call # might be incorrect as not only RPC are inluded
 
   if lv.ItemIndex < 0 then
     lblCallID.Visible := False
@@ -631,49 +562,19 @@ begin
   setActionStatus;
 end;
 
-procedure TfrmRPCLog.acAddWatchExecute(Sender: TObject);
-var
-  i, j: Integer;
-  s: String;
-  li: TListItem;
-begin
-  if lvRPCLog.ItemIndex > -1 then
-  begin
-    j := -1;
-    s := lvRPCLog.Items[lvRPCLog.ItemIndex].SubItems[0];
-    for i := 0 to lvWatchNames.Items.Count - 1 do
-      if s = lvWatchNames.Items[i].Caption then
-      begin
-        j := i;
-        break;
-      end;
-    if j < 0 then
-    begin
-      li := lvWatchNames.Items.Add;
-      li.Caption := lvRPCLog.Items[lvRPCLog.ItemIndex].SubItems[0];
-      li.SubItems.Add(lvRPCLog.Items[lvRPCLog.ItemIndex].SubItems[0]);
-    end;
-  end;
-end;
-
 procedure TfrmRPCLog.acClearLogExecute(Sender: TObject);
 begin
-  if MessageDlg('Erase Log?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  begin
-    ClearLog;
-    AddFlag('Log Erased by User Request');
-  end;
+  if MessageDlg('Erase Log?', mtConfirmation,[mbYes, mbNo],0)= mrYes then
+    begin
+      ClearLog;
+      AddFlag('Log Erased by User Request');
+    end;
 end;
 
 procedure TfrmRPCLog.acCloseExecute(Sender: TObject);
 begin
   inherited;
   Close
-end;
-
-procedure TfrmRPCLog.acMainFormExecute(Sender: TObject);
-begin
-  Application.MainForm.SetFocus;
 end;
 
 procedure TfrmRPCLog.acOneNextExecute(Sender: TObject);
@@ -718,27 +619,6 @@ begin
 {$ELSE}
 var
   sl: TStringList;
-
-  procedure ListSymbolTable(Dest: TStrings);
-  var
-    i: Integer;
-    x: string;
-  begin
-    Dest.Clear;
-    CallV('ORWUX SYMTAB', [nil]);
-    i := 0;
-    with RPCBrokerV.Results do
-      while i < Count do
-      begin
-        x := Strings[i] + '=';
-        inc(i);
-        if i < Count then
-          x := x + Strings[i];
-        Dest.Add(x);
-        inc(i);
-      end;
-  end;
-
 begin
   inherited;
   sl := TStringList.Create;
@@ -802,17 +682,11 @@ var
 const
   TX_OPTION = 'OR CPRS GUI CHART';
   disclaimer = 'NOTE: Strictly relative indicator';
-
-  function ServerVersion(const Option, VerClient: string): string;
-  begin
-    Result := sCallV('ORWU VERSRV', [Option, VerClient]);
-  end;
-
 begin
   clientVer := clientVersion(Application.ExeName); // Obtain before starting.
   // Check time lapse between a standard RPC call:
   startTime := Now;
-  serverVer := ServerVersion(TX_OPTION, clientVer);
+  serverVer := serverVersion(TX_OPTION, clientVer);
   endTime := Now;
   theDiff := milliSecondsBetween(endTime, startTime);
   diffDisplay := IntToStr(theDiff);
@@ -855,10 +729,10 @@ procedure TfrmRPCLog.SearchTermKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Key = VK_RETURN) then
-  begin
-    SearchTarget(edTarget.Text);
-    Key := 0;
-  end;
+    begin
+      SearchTarget(edTarget.Text);
+      Key := 0;
+    end;
 end;
 
 procedure TfrmRPCLog.SearchTarget(aTarget: string);
@@ -882,10 +756,11 @@ begin
   AddFlag(RPCLog_Flag);
 end;
 
-procedure TfrmRPCLog.AddFlag(aFlag: String; aComment: String = '');
+procedure TfrmRPCLog.AddFlag(aFlag:String;aComment:String = '');
 var
   sl: TStringList;
 begin
+  // flag by date
   sl := TStringList.Create;
   sl.Add(FormatDateTime('yyyy/mm/dd hh:nn:ss.zzz', Now));
   sl.Add(aComment);
@@ -895,11 +770,11 @@ end;
 procedure TfrmRPCLog.OnRefreshRPCRequest();
 begin
   if Assigned(frmRPCLog) then
-  // expecting the latest record of uCallList to contain description of the last call
-  begin
-    LoadRPCResults(RetainedRPCCount - 1);
-    enforceLimit(_LogSize);
-  end;
+    // at this time the latest record in the uCallList should contain the description of the last call
+    begin
+      LoadRPCResults(RetainedRPCCount - 1);
+      enforceLimit(_LogSize);
+    end;
 end;
 
 procedure TfrmRPCLog.LoadRPCResults(anItem: Integer);
@@ -916,7 +791,7 @@ begin
 
   addLogItem(sName, sName, sl);
 
-  addWatchItem(sName, sName, sl);
+  addWatchItem(sName,sName,sl);
 end;
 
 procedure TfrmRPCLog.PaintEditByTarget(aSearchTarget: String;
@@ -944,8 +819,7 @@ begin
   HighlightRichEdit(1, Length(memData.Text), clWhite);
 end;
 
-procedure TfrmRPCLog.addToLog(aLV: TListView; aName, aSecondName: string;
-  aValue: TStrings);
+procedure TfrmRPCLog.addToLog(aLV:TListView;aName, aSecondName: string; aValue: TStrings);
 
   function getValue(aTarget: String): String;
   var
@@ -954,24 +828,27 @@ procedure TfrmRPCLog.addToLog(aLV: TListView; aName, aSecondName: string;
   begin
     Result := '';
     sl := TStringList.Create;
-    sl.Text := aValue.Text;
-    for s in sl do
-    begin
-      if pos(aTarget, s) = 1 then
+    try
+      sl.Text := aValue.Text;
+      for s in sl do // for s in aValue do
       begin
-        Result := copy(s, Length(aTarget) + 1, Length(s));
-        break;
+        if pos(aTarget, s) = 1 then
+        begin
+          Result := copy(s, Length(aTarget) + 1, Length(s));
+          break;
+        end;
       end;
-    end;
 
-    if (Result = '') and (aTarget = 'Ran at:') then
-      Result := FormatDateTime('hh:nn:ss.zzz a/p', Now); // Log uses W/S time
-    sl.Free;
+//      if (Result = '') and (aTarget = 'Ran at:') then
+//        Result := FormatDateTime('hh:nn:ss.zzz a/p', Now); // Log uses W/S time
+    finally
+      sl.Free;
+    end;
   end;
 
 begin
-  if not Assigned(aLV) then
-    Exit;
+  if not assigned(aLV) then
+    exit;
   with aLV.Items.Insert(0) do
   begin
     Caption := aName;
@@ -979,38 +856,23 @@ begin
     SubItems.Add(aSecondName);
     SubItems.Add(getValue('Run time:'));
     SubItems.Add(getValue('Ran at:'));
+    SubItems.Add(FormatDateTime('hh:nn:ss.zzz a/p', Now));
   end;
   aLV.ItemIndex := 0;
-  lvRPCLog.Repaint;
-//  Application.ProcessMessages;
 end;
+
 
 procedure TfrmRPCLog.addLogItem(aName, aSecondName: string; aValue: TStrings);
 begin
-  addToLog(lvRPCLog, aName, aSecondName, aValue);
+  addToLog(lvRPCLog,aName,aSecondName,aValue);
 end;
 
 procedure TfrmRPCLog.addWatchItem(aName, aSecondName: string; aValue: TStrings);
-var
-  i: Integer;
-  sl: TStringList;
 begin
-  if not Assigned(lvWatchNames) then
-    Exit;
-  for i := 0 to lvWatchNames.Items.Count - 1 do
-    if lvWatchNames.Items[i].Caption = aName then
-    begin
-      sl := TStringList.Create;
-      sl.Assign(aValue);
-      addToLog(lvWatch, aName, aName, aValue);
-      break;
-    end;
 end;
 
 procedure TfrmRPCLog.enforceLimit(aLimit: Integer);
 begin
-  if not Assigned(lvRPCLog) then
-    Exit;
   while lvRPCLog.Items.Count > aLimit do
   begin
     TStringList(lvRPCLog.Items[lvRPCLog.Items.Count - 1].Data).Free;
@@ -1019,15 +881,22 @@ begin
 end;
 
 procedure TfrmRPCLog.setLogLength(aCount: Integer);
+var
+  iCurrent: Integer;
 begin
-  if (aCount < lvRPCLog.Items.Count) and
-    (infoBox('The new size is less than the current number of records in the Log'
-    + CRLF + 'Extra records will be discarded' + CRLF + CRLF +
+  iCurrent := _LogSize;
+  if aCount < lvRPCLog.Items.Count then
+    if infoBox('The new size is less than the current number of records in the Log' + CRLF +
+      'Extra records will be discarded' + CRLF + CRLF +
       'Press "OK" to continue or "Cancel" to keep the current size',
-      'Confirmation required', MB_OKCANCEL) <> IDOK) then
-    Exit;
+      'Confirmation required', MB_OKCANCEL) <> IDOK then
+      Exit
+    else
+    begin
       enforceLimit(aCount);
-  _LogSize := aCount;
+      iCurrent := aCount;
+    end;
+  _LogSize := iCurrent;
   SetRetainedRPCMax(_LogSize);
   setActionStatus;
 end;
@@ -1057,17 +926,19 @@ begin
   end
   else
     for i := lvRPCLog.Items.Count - 1 downto 0 do
-      txt := txt + CRLF + RPCLog_ItemBegin + RPCLog_ItemExport + lvRPCLog.Items
-        [i].SubItems[0] + RPCLog_ItemEnd + CRLF +
-        TStringList(lvRPCLog.Items[i].Data).Text;
+      txt := txt + CRLF +
+//        RPCLog_ItemBegin + RPCLog_ItemExport + lvRPCLog.Items[i].Caption + RPCLog_ItemEnd +
+        RPCLog_ItemBegin + RPCLog_ItemExport + lvRPCLog.Items[i].SubItems[0] + RPCLog_ItemEnd +
+        CRLF + TStringList(lvRPCLog.Items[i].Data).Text;
 
   if trim(txt) <> '' then
     with TStringList.Create do
     begin
-      Text := RPCLog_ItemBegin + RPCLog_Title + RPCLog_ItemEnd +
-        FormatDateTime('YYYY-MM-DD HH:NN:SS', Now) + CRLF + Application.ExeName
-        + ' (' + FileVersionValue(Application.ExeName, FILE_VER_FILEVERSION) +
-        ')' + CRLF + txt;
+      Text :=
+        RPCLog_ItemBegin + RPCLog_Title + RPCLog_ItemEnd +
+        FormatDateTime('YYYY-MM-DD HH:NN:SS', Now) + CRLF +
+        Application.ExeName + ' (' + FileVersionValue(Application.ExeName,
+        FILE_VER_FILEVERSION) + ')' + CRLF + txt;
       try
         SaveToFile(aFileName);
       except
@@ -1084,13 +955,15 @@ begin
     doSaveAs(RPCLogDefaultFileName, False);
 end;
 
-procedure TfrmRPCLog.doLoadFromFile(aFileName: String);
+procedure TfrmRPCLog.doLoadFromFile(aFileName:String);
 var
-  sCaption, sName, s: String;
+  sCaption,
+  sName,
+  s: String;
   sl, ItemSL: TStringList;
   li: TListItem;
 
-  procedure AddItem(bChrono: Boolean = False);
+  procedure AddItem(bChrono:Boolean = false);
   begin
     if bChrono then
       li := lvRPCLog.Items.Add
@@ -1104,49 +977,104 @@ var
 begin
   sName := ''; // li.SubItems[0]
   sCaption := ''; // li caption
-  sl := TStringList.Create;
-  try
-    sl.Sorted := False;
-    sl.LoadFromFile(aFileName);
-    if sl.Count > 0 then
+  SL := TStringList.Create;
+  SL.Sorted := False;
+  SL.LoadFromFile(aFileName);
+  if SL.Count > 0  then
     begin
       ItemSL := TStringList.Create;
       ItemSL.Sorted := False;
-      for s in sl do
-      begin
-        if pos(RPCLog_ItemBegin, s) = 1 then
+      for s in SL do
         begin
-          if sName <> '' then
-            AddItem;
-          sName := copy(s, 1 + Length(RPCLog_ItemBegin), Length(s));
-          sName := copy(sName, 1, pos(RPCLog_ItemEnd, sName) - 1);
-          ItemSL := TStringList.Create;
-        end
-        else
-          ItemSL.Add(s)
-      end;
+          if pos(RPCLog_ItemBegin,s)=1 then
+            begin
+              if sName <> ''  then
+                AddItem;
+              sName := copy(s,1+ Length(RPCLog_ItemBegin),Length(s));
+              sName := copy(sName,1,pos(RPCLog_ItemEnd,sName)-1);
+              ItemSL := TSTringList.Create;
+            end
+          else
+            ItemSL.Add(s)
+        end;
       AddItem;
     end;
-  finally
-    sl.Free;
-  end;
+  SL.Free;
+
 end;
 
+(*
 procedure TfrmRPCLog.AlignBroker(AlignStyle: TAlign);
 var
-  frm: TForm;
-  Monitor: TMonitor;
-  iLog: Integer;
-  R: TRect;
-const
-  RpcLogPart = 3;
+  frm:TForm;
+
+  procedure adjustWidth;
+  begin
+    if Width > Application.MainForm.Width div 3 then
+      Width := Application.MainForm.Width div 3;
+  end;
 
 begin
   frm := Application.MainForm;
+  Self.Align := AlignStyle;
+  if AlignStyle <> alNone then
+  begin
+    AdjustWidth;
+    Self.Parent := frm;
+    Self.Align := AlignStyle;
+    // create the splitter
+    if not assigned(splLive) then
+    begin
+      splLive := TSplitter.Create(frm);
+      splLive.Parent := frm;
+      splLive.Width := 3;
+      splLive.Color := clMedGray;
+    end;
+    splLive.Align := AlignStyle;
+    Self.BorderStyle := bsNone;
+  end
+  else
+  begin
+    Self.Parent := nil;
+    FreeAndNil(splLive);
+    pnlMain.Align := alClient;
+    Self.BorderStyle := bsSizeable;
+  end;
 
-  Monitor := Screen.MonitorFromPoint(Mouse.CursorPos);
-  R := Monitor.WorkareaRect;
-  iLog := R.Width div RpcLogPart;
+  if AlignStyle = alLeft then
+  begin
+    Self.Left := frm.Left;
+    splLive.Left := Self.Width;
+    pnlMain.Align := alClient;
+  end
+  else if AlignStyle = alRight then
+  begin
+    Self.Left := frm.Width;
+    splLive.Left := Self.Left;
+    pnlMain.Align := alClient;
+  end;
+
+  Self.Repaint;
+
+  acToTheLeft.Enabled := AlignStyle <> alLeft;
+  acToTheRight.Enabled := AlignStyle <> alRight;
+  acNoAlign.Enabled := AlignStyle <> alNone;
+end;
+*)
+procedure TfrmRPCLog.AlignBroker(AlignStyle: TAlign);
+var
+  frm:TForm;
+  iLog:Integer;
+  R: TRect;
+
+const
+  RpcLogPart = 3;
+
+
+begin
+  frm := Application.MainForm;
+  R := WorkArea;
+  iLog := R.Width div RPCLogPart;
   frm.Top := R.Top;
   frm.Height := R.Bottom - R.Top;
   Top := R.Top;
@@ -1160,13 +1088,10 @@ begin
         frm.Width := R.Width;
         Left := R.Left + R.Width - iLog;
       end;
-    alTop:
-      ;
-    alBottom:
-      ;
-    alLeft:
-      begin
-        frm.Left := R.Left + iLog;
+    alTop: ;
+    alBottom: ;
+    alLeft: begin
+        frm.Left := iLog;
         frm.Width := R.Width - iLog;
         Left := R.Left;
       end;
@@ -1174,12 +1099,10 @@ begin
       begin
         frm.Left := R.Left;
         frm.Width := R.Width - iLog;
-        Left := R.Left + frm.Width;
+        Left := R.Width - iLog;
       end;
-    alClient:
-      ;
-    alCustom:
-      ;
+    alClient: ;
+    alCustom: ;
   end;
 end;
 

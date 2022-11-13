@@ -1,6 +1,6 @@
 unit uTemplates;
 
-{$O-}
+{$O-} // Optimization OFF
 
 interface
 uses
@@ -300,12 +300,7 @@ implementation
 uses
   Windows, rTemplates, uCore, dShared, fTemplateDialog, ActiveX, ComObj, uTemplateFields,
   XMLUtils, fTemplateImport, uSpell, rCore, ORCtrls, uEventHooks,
-  fReminderDialog, rODBase
-  {$IFDEF VER140}
-  , Word97;
-  {$ELSE}
-  , WordXP, VAUtils;
-  {$ENDIF}
+  fReminderDialog, rODBase, WordXP, VAUtils, uReminders, uPCE;
 
 const
   MaxSeq = 999999;
@@ -469,42 +464,42 @@ var
   i: integer;
   aLst: TStringList;
 begin
-  if (TemplateAccessLevelChecked and
-  (LastTemplateLocation = Encounter.Location)) then
+  if(TemplateAccessLevelChecked and
+    (LastTemplateLocation = Encounter.Location)) then
     Result := TemplateAccessLevelValue
   else
+  begin
+    TemplateAccessLevelChecked := FALSE;
+    LastTemplateLocation := 0;
+    if(not assigned(RootTemplate)) then
     begin
-      TemplateAccessLevelChecked := FALSE;
-      LastTemplateLocation := 0;
-      if (not assigned(RootTemplate)) then
-        begin
-          Result := taAll;
+      Result := taAll;
           aLst := TStringList.Create;
           try
             GetTemplateRoots(aLst);
             for i := 0 to aLst.Count - 1 do
-              begin
-                if (Piece(aLst[i], U, 2) = TemplateTypeCodes[ttRoot]) then
-                  begin
-                    Result := TTemplateAccess(GetTemplateAccess(Piece(aLst[i], U, 1)));
-                    LastTemplateLocation := Encounter.Location;
-                    TemplateAccessLevelChecked := TRUE;
-                    TemplateAccessLevelValue := Result;
-                    Break;
-                  end;
-              end;
-          finally
-            FreeAndNil(aLst);
-          end;
-        end
-      else
+      begin
+        if (Piece(aLst[i], U, 2) = TemplateTypeCodes[ttRoot]) then
         begin
-          Result := TTemplateAccess(GetTemplateAccess(RootTemplate.ID));
+          Result := TTemplateAccess(GetTemplateAccess(Piece(aLst[i], U, 1)));
           LastTemplateLocation := Encounter.Location;
           TemplateAccessLevelChecked := TRUE;
           TemplateAccessLevelValue := Result;
+          Break;
         end;
+      end;
+          finally
+            FreeAndNil(aLst);
+          end;
+    end
+    else
+    begin
+      Result := TTemplateAccess(GetTemplateAccess(RootTemplate.ID));
+      LastTemplateLocation := Encounter.Location;
+      TemplateAccessLevelChecked := TRUE;
+      TemplateAccessLevelValue := Result;
     end;
+  end;
 end;
 
 function AddTemplate(DataString: string; Owner: TTemplate = nil): TTemplate;
@@ -552,22 +547,22 @@ var
   i: integer;
   TmpSL: TStringList;
 begin
-  if (not uTemplateDataLoaded) then
-    begin
-      StatusText(sLoading);
-      if (not assigned(Templates)) then
+  if(not uTemplateDataLoaded) then
+  begin
+    StatusText(sLoading);
+      if(not assigned(Templates)) then
         Templates := TStringList.Create;
       TmpSL := TStringList.Create;
       try
         GetTemplateRoots(TmpSL);
-        for i := 0 to TmpSL.Count - 1 do
+        for i := 0 to TmpSL.Count-1 do
           AddTemplate(TmpSL[i]);
         uTemplateDataLoaded := TRUE;
       finally
-        StatusText('');
+      StatusText('');
         FreeAndNil(TmpSL);
-      end;
     end;
+  end;
 end;
 
 procedure ExpandTemplate(tmpl: TTemplate);
@@ -576,28 +571,28 @@ var
   TmpSL: TStringList;
 
 begin
-  if (not tmpl.Expanded) then
+  if(not tmpl.Expanded) then
+  begin
+    if(tmpl.Children <> tcNone) then
     begin
-      if (tmpl.Children <> tcNone) then
-        begin
-          StatusText(sLoading);
-          TmpSL := TStringList.Create;
-          try
+      StatusText(sLoading);
+        TmpSL := TStringList.Create;
+        try
             GetTemplateChildren(tmpl.FID, TmpSL);
-            for i := 0 to TmpSL.Count - 1 do
-              AddTemplate(TmpSL[i], tmpl);
-          finally
+          for i := 0 to TmpSL.Count-1 do
+            AddTemplate(TmpSL[i], tmpl);
+        finally
             FreeAndNil(TmpSL);
-            StatusText('');
-          end;
-        end;
-      tmpl.Expanded := TRUE;
-      with tmpl, tmpl.FBkup do
-        begin
-          BItemIENs := ItemIENs;
-          SavedItemIENs := TRUE;
-        end;
+        StatusText('');
+      end;
     end;
+    tmpl.Expanded := TRUE;
+    with tmpl,tmpl.FBkup do
+    begin
+      BItemIENs := ItemIENs;
+      SavedItemIENs := TRUE;
+    end;
+  end;
 end;
 
 procedure ReleaseTemplates;
@@ -944,55 +939,64 @@ var
   New: TTemplate;
   Errors: TStringList;
   First, ChildErr: boolean;
-
+  SL: TStrings;
 begin
   Errors := TStringList.Create;
   try
-    if(assigned(Templates)) then
+    if (assigned(Templates)) then
     begin
-      if(not assigned(TempSL)) then
+      if (not assigned(TempSL)) then
         TempSL := TStringList.Create;
-      for i := 0 to Templates.Count-1 do
+      for i := 0 to Templates.Count - 1 do
         SaveTemplate(TTemplate(Templates.Objects[i]), i, Errors);
       First := TRUE;
-      if(Errors.Count > 0) then
-        Errors.Insert(0,'Errors Encountered Saving Templates:');
-      for i := 0 to Templates.Count-1 do
+      if (Errors.Count > 0) then
+        Errors.insert(0, 'Errors Encountered Saving Templates:');
+      for i := 0 to Templates.Count - 1 do
       begin
         New := TTemplate(Templates.Objects[i]);
         with New.FBkup do
-        if(SavedItemIENs and (BItemIENs <> New.ItemIENs)) then
-        begin
-          TempSL.Clear;
-          for k := 0 to New.Items.Count-1 do
-            TempSL.Add(TTemplate(New.Items[k]).FID);
-          UpdateChildren(New.ID, TempSL);
-          ChildErr := FALSE;
-          for k := 0 to RPCBrokerV.Results.Count-1 do
+          if (SavedItemIENs and (BItemIENs <> New.ItemIENs)) then
           begin
-            if(RPCBrokerV.Results[k] <> IntToStr(k+1)) then
-            begin
-              if(First) then
+            TempSL.Clear;
+            for k := 0 to New.Items.Count - 1 do
+              TempSL.Add(TTemplate(New.Items[k]).FID);
+
+            SL := TStringList.Create;
+            try
+              UpdateChildren(SL, New.ID, TempSL);
+              ChildErr := FALSE;
+              // for k := 0 to RPCBrokerV.Results.Count-1 do
+              for k := 0 to SL.Count - 1 do
               begin
-                Errors.Add('Errors Encountered Saving Children:');
-                First := FALSE;
+                // if(RPCBrokerV.Results[k] <> IntToStr(k+1)) then
+                if ( {RPCBrokerV.Results} SL[k] <> IntToStr(k + 1)) then
+                begin
+                  if (First) then
+                  begin
+                    Errors.Add('Errors Encountered Saving Children:');
+                    First := FALSE;
+                  end;
+                  Errors.Add(New.ID + ' Item #' + IntToStr(k + 1) + '(' +
+                    TTemplate(New.Items[k]).FID + ')' + '=' +
+                    {RPCBrokerV.Results} SL[k]);
+                  ChildErr := TRUE;
+                end;
               end;
-              Errors.Add(New.ID+' Item #'+IntToStr(k+1)+'('+
-                     TTemplate(New.Items[k]).FID+')'+'='+RPCBrokerV.Results[k]);
-              ChildErr := TRUE;
+            finally
+              SL.Free;
             end;
+            if (not ChildErr) then
+              BItemIENs := New.ItemIENs;
           end;
-          if(not ChildErr) then
-            BItemIENs := New.ItemIENs;
-        end;
         New.Unlock;
       end;
-      if(assigned(Deleted)) and (Deleted.Count > 0) then
+      if (assigned(Deleted)) and (Deleted.Count > 0) then
       begin
         DeleteTemplates(Deleted);
         Deleted.Clear;
       end;
-      if(Errors.Count > 0) then
+      if (Errors.Count > 0) then
         DisplayErrors(Errors);
     end;
   finally
@@ -1089,7 +1093,7 @@ begin
       TmpSL.Free;
     end;
     if assigned(Fields) then
-      ListTemplateFields(Txt, Fields);
+      ListTemplateFields(Txt, nil, Fields);
   end;
 end;
 
@@ -1203,11 +1207,7 @@ begin
             try
               WApp.Connect;
               TmpVar := AFileName;
-              {$IFDEF VER140}
-              WDoc.ConnectTo(WApp.Documents.Add(TmpVar, EmptyParam));
-              {$ELSE}
               WDoc.ConnectTo(WApp.Documents.Add(TmpVar, EmptyParam, EmptyParam, EmptyParam));
-              {$ENDIF}
               ffTotal := WDoc.FormFields.Count;
 
               if ffTotal > 3 then
@@ -1814,23 +1814,23 @@ var
 begin
   Result := '';
   if FIsReminderDialog or FIsCOMObject then exit;
-  if (RealType in [ttDoc, ttGroup]) then
+  if(RealType in [ttDoc, ttGroup]) then
+  begin
+    if(not FBoilerPlateLoaded) then
     begin
-      if (not FBoilerPlateLoaded) then
-        begin
-          StatusText('Loading Template Boilerplate...');
+      StatusText('Loading Template Boilerplate...');
           aLst := TStringList.Create;
-          try
+      try
             GetTemplateBoilerplate(FID, aLst);
             FBoilerplate := aLst.Text;
-            FBoilerPlateLoaded := TRUE;
-          finally
-            StatusText('');
+        FBoilerPlateLoaded := TRUE;
+      finally
+        StatusText('');
             FreeAndNil(aLst);
-          end;
-        end;
-      Result := FBoilerplate;
+      end;
     end;
+    Result := FBoilerplate;
+  end;
 end;
 
 { Returns the cumulative boilerplate of a groups items }
@@ -1909,6 +1909,7 @@ function TTemplate.GetText: string;
 var
   OldGettingDialogText: boolean;
   TmpSL: TStringList;
+  vstr: string;
 
 begin
   Result := '';
@@ -1932,7 +1933,15 @@ begin
         if(IsDialog) then
           GettingDialogText := OldGettingDialogText;
       end;
-      GetTemplateText(TmpSL);
+      if assigned(RemForm.Form) and assigned(Remform.PCEObj) then
+        vstr := Remform.PCEObj.VisitString
+      else if assigned(CurrentTabPCEObject) then
+        vstr := CurrentTabPCEObject.VisitString
+      else
+        vstr := EMPTY_VISIT_STRING;
+      if vstr = EMPTY_VISIT_STRING then
+        vstr := Encounter.VisitStr;
+      GetTemplateText(TmpSL, vstr);
       if(IsDialog) then
         FDialogAborted := DoTemplateDialog(TmpSL, 'Template: ' + FPrintName, TemplatePreviewMode, FExtCPMon);
       Result := TmpSL.Text;
@@ -2287,19 +2296,19 @@ function TTemplate.GetDescription: string;
 var
   aLst: TStringList;
 begin
-  if (not FDescriptionLoaded) then
-    begin
-      StatusText('Loading Template Boilerplate...');
+  if(not FDescriptionLoaded) then
+  begin
+    StatusText('Loading Template Boilerplate...');
       aLst := TStringList.Create;
-      try
+    try
         LoadTemplateDescription(FID, aLst);
         FDescription := aLst.Text;
-      finally
-        StatusText('');
+    finally
+      StatusText('');
         FreeAndNil(aLst);
-      end;
-      FDescriptionLoaded := TRUE;
     end;
+    FDescriptionLoaded := TRUE;
+  end;
   Result := FDescription;
 end;
 
@@ -2934,13 +2943,13 @@ var
   i: integer;
 begin
   if not assigned(uPersonalObjects) then
-    begin
-      uPersonalObjects := TStringList.Create;
+  begin
+    uPersonalObjects := TStringList.Create;
       GetAllowedPersonalObjects(uPersonalObjects);
       for i := 0 to uPersonalObjects.Count - 1 do
         uPersonalObjects[i] := Piece(uPersonalObjects[i], U, 1);
-      uPersonalObjects.Sorted := TRUE;
-    end;
+    uPersonalObjects.Sorted := TRUE;
+  end;
 end;
 
 procedure SetTemplateDialogCanceled(value: Boolean);

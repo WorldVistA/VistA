@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, ORCtrls, StdCtrls, Mask, ORNet, ORFn, ComCtrls,
-  VA508AccessibilityManager, uReports;
+  VA508AccessibilityManager, uReports, Vcl.ExtCtrls, uPrinting;
 
 type
   Tfrm513Print = class(TfrmAutoSz)
@@ -22,8 +22,12 @@ type
     lblConsultTitle: TMemo;
     cboDevice: TORComboBox;
     lblPrintTo: TLabel;
-    dlgWinPrinter: TPrintDialog;
+    dlgWinPrinter: uPrinting.TPrintDialog;
     chkDefault: TCheckBox;
+    pnlBUttons: TPanel;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
     procedure cboDeviceNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboDeviceChange(Sender: TObject);
@@ -108,9 +112,17 @@ end;
 
 procedure Tfrm513Print.cboDeviceNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
+var
+  sl: TSTrings;
 begin
   inherited;
-  cboDevice.ForDataUse(SubsetOfDevices(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setSubsetOfDevices(sl,StartFrom, Direction);
+    cboDevice.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure Tfrm513Print.cboDeviceChange(Sender: TObject);
@@ -140,8 +152,9 @@ procedure Tfrm513Print.cmdOKClick(Sender: TObject);
 var
   ADevice, ErrMsg: string;
   ChartCopy: string;
-  RemoteSiteID: string;    //for Remote site printing
-  RemoteQuery: string;    //for Remote site printing
+  RemoteSiteID: string; // for Remote site printing
+  RemoteQuery: string; // for Remote site printing
+  sl: TSTrings;
 begin
   inherited;
   FReportText := CreateReportTextComponent(Self);
@@ -152,24 +165,38 @@ begin
     InfoBox(TX_NODEVICE, TX_NODEVICE_CAP, MB_OK);
     Exit;
   end;
-  if radChartCopy.Checked then ChartCopy := 'C' else ChartCopy := 'W';
-  if Piece(cboDevice.ItemID, ';', 1) = 'WIN' then
-    begin
-      if dlgWinPrinter.Execute then with FReportText do
-        begin
-          QuickCopy(GetFormattedSF513(FConsult, ChartCopy), FReportText);
-          PrintWindowsReport(FReportText, PAGE_BREAK, Self.Caption, ErrMsg);
-          if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
-        end;
-    end
+  if radChartCopy.Checked then
+    ChartCopy := 'C'
   else
-    begin
-      ADevice := Piece(cboDevice.ItemID, ';', 2);
-      PrintSF513ToDevice(FConsult, ADevice, ChartCopy, ErrMsg);
+    ChartCopy := 'W';
+  if Piece(cboDevice.ItemID, ';', 1) = 'WIN' then
+  begin
+    if dlgWinPrinter.Execute then
+      with FReportText do
+      begin
+        sl := TStringList.Create;
+        try
+          setFormattedSF513(sl, FConsult, ChartCopy);
+          QuickCopy(sl, FReportText);
+          PrintWindowsReport(FReportText, PAGE_BREAK, Self.Caption, ErrMsg);
+          if Length(ErrMsg) > 0 then
+            InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
+        finally
+          sl.Free;
+        end;
+      end;
+  end
+  else
+  begin
+    ADevice := Piece(cboDevice.ItemID, ';', 2);
+    PrintSF513ToDevice(FConsult, ADevice, ChartCopy, ErrMsg);
+    if FReportText.Lines.Count > 0 then
       ErrMsg := Piece(FReportText.Lines[0], U, 2);
-      if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
-    end;
-  if chkDefault.Checked then SaveDefaultPrinter(Piece(cboDevice.ItemID, ';', 1));
+    if Length(ErrMsg) > 0 then
+      InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
+  end;
+  if chkDefault.Checked then
+    SaveDefaultPrinter(Piece(cboDevice.ItemID, ';', 1));
   User.CurrentPrinter := cboDevice.ItemID;
   FReportText.Free;
   Close;

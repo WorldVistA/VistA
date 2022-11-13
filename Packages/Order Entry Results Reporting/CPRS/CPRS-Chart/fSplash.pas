@@ -54,10 +54,7 @@ var
 procedure TfrmSplash.aeIdle(Sender: TObject; var Done: Boolean);
 begin
   inherited;
-{$IFDEF DEBUG}
-{$ELSE}
   HideCaret(mm.Handle);
-{$ENDIF}
 end;
 
 procedure TfrmSplash.FormCreate(Sender: TObject);
@@ -67,10 +64,6 @@ begin
     FILE_VER_FILEVERSION);
   lblSplash.Invalidate;
 //  TCRCThread.Create(Self);
-{$IFDEF PERFORMANCE}
-  pnlMain.Color := clCream;
-{$ENDIF}
-
 end;
 
 procedure TfrmSplash.FormDestroy(Sender: TObject);

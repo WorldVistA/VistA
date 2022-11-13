@@ -6,10 +6,13 @@
   Description: Contains TRPCBroker and related components.
   Unit: fRPCBErrMsg Error Display to permit application control
   over bringing it to the front.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in XWB*1.1*71 (RGG 10/18/2018) XWB*1.1*71
   1. Updated RPC Version to version 71.
   2. Corrected issue where error dialog was being

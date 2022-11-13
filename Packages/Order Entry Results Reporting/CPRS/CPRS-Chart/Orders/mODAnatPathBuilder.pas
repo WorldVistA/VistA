@@ -219,7 +219,7 @@ procedure TfraAnatPathBuilder.mnuNoteMemoPasteClick(Sender: TObject);
 begin
   inherited;
 
-  ScrubTheClipboard;
+  ClipboardFilemanSafe;
   memNote.PasteFromClipboard;
   pnl4Resize(pnl4);
 end;

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ORCtrls, ORNet, Mask, ComCtrls, fBase508Form,
+  StdCtrls, ORCtrls, ORNet, Mask, ComCtrls, fBase508Form, uPrinting,
   VA508AccessibilityManager;
 
 type
@@ -19,7 +19,7 @@ type
     cboDevice: TORComboBox;
     cmdOK: TButton;
     cmdCancel: TButton;
-    dlgWinPrinter: TPrintDialog;
+    dlgWinPrinter: uPrinting.TPrintDialog;
     chkDefault: TCheckBox;
     procedure cboDeviceChange(Sender: TObject);
     procedure cboDeviceNeedData(Sender: TObject; const StartFrom: String;
@@ -127,9 +127,21 @@ end;
 
 procedure TfrmLabPrint.cboDeviceNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+//begin
+//inherited;
+//  cboDevice.ForDataUse(SubsetOfDevices(StartFrom, Direction));
+//end;
+var
+  sl: TSTrings;
 begin
-inherited;
-  cboDevice.ForDataUse(SubsetOfDevices(StartFrom, Direction));
+  inherited;
+  sl := TStringList.Create;
+  try
+    setSubsetOfDevices(sl,StartFrom, Direction);
+    cboDevice.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 function StringPad(aString: string; aStringCount, aPadCount: integer): String;
@@ -211,8 +223,10 @@ begin
                           ListItem := frmLabs.lvReports.Items[i];
                           aQualifier := ListItem.SubItems[0];
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
-                          QuickCopy(GetFormattedReport(FReports, aQualifier,
-                            Patient.DFN, nil , RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                          QuickCopy(GetFormattedReport(FReports, aQualifier,
+//                            Patient.DFN, nil , RemoteSiteID, RemoteQuery, uHState), FReportText);
+                          GetFormattedReport(FReportText.Lines, FReports, aQualifier,
+                            Patient.DFN, nil , RemoteSiteID, RemoteQuery, uHState);
                           aCaption := piece(uLabRemoteType,'^',4);    //nil used to be uHSComponents
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -226,8 +240,10 @@ begin
                           ListItem := frmLabs.lvReports.Items[i];
                           aQualifier := ListItem.SubItems[0];
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
-                          QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
-                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                          QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
+//                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                          GetFormattedReport(FReportText.Lines, FReports, aQualifier + MoreID,
+                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState);
                           aCaption := piece(uLabRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -248,8 +264,10 @@ begin
                       end
                     else
                       begin
-                        QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
-                          Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                        QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
+//                          Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                        GetFormattedReport(FReportText.Lines, FReports, aQualifier + MoreID,
+                          Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState);
                         aCaption := piece(uLabRemoteType,'^',4);
                         PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                         if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -270,8 +288,10 @@ begin
                       end
                     else
                       begin
-                        QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
-                           Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                        QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
+//                           Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                        GetFormattedReport(FReportText.Lines, FReports, aQualifier + MoreID,
+                           Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState);
                         aCaption := piece(uLabRemoteType,'^',4);
                         PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                         if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -285,8 +305,10 @@ begin
                           ListItem := frmLabs.lvReports.Items[i];
                           aQualifier := ListItem.SubItems[0];
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
-                          QuickCopy(GetFormattedReport(FReports, aQualifier,
-                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                          QuickCopy(GetFormattedReport(FReports, aQualifier,
+//                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                          GetFormattedReport(FReportText.Lines, FReports, aQualifier,
+                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState);
                           aCaption := piece(uLabRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -300,8 +322,10 @@ begin
                           ListItem := frmLabs.lvReports.Items[i];
                           aQualifier := ListItem.SubItems[0];
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
-                          QuickCopy(GetFormattedReport(FReports, aQualifier,
-                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                          QuickCopy(GetFormattedReport(FReports, aQualifier,
+//                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                          GetFormattedReport(FReportText.Lines, FReports, aQualifier,
+                            Patient.DFN, nil, RemoteSiteID, RemoteQuery, uHState);
                           aCaption := piece(uLabRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -311,8 +335,10 @@ begin
             end
           else
             begin
-              QuickCopy(GetFormattedLabReport(FReports, FDaysBack, Patient.DFN,
-              frmLabs.lstTests.Items, date1, date2, RemoteSiteID, RemoteQuery), FReportText);
+//              QuickCopy(GetFormattedLabReport(FReports, FDaysBack, Patient.DFN,
+//              frmLabs.lstTests.Items, date1, date2, RemoteSiteID, RemoteQuery), FReportText);
+              setFormattedLabReport(fReportText.Lines, FReports, FDaysBack, Patient.DFN,
+              frmLabs.lstTests.Items, date1, date2, RemoteSiteID, RemoteQuery);
               PrintWindowsReport(FReportText, PAGE_BREAK, Self.Caption, ErrMsg);
               if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
             end;

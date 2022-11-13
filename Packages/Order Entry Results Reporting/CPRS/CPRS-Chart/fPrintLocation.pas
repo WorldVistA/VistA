@@ -348,6 +348,8 @@ begin
   count := 0;
   frmPrintLocation.DisplayOrders := true;
   frmPrintLocation.CloseOK := false;
+  KillObj(@ClinicArr);
+  KillObj(@WardArr);
   ClinicArr := TStringList.Create;
   WardArr := TStringList.Create;
   CurrentLocationForPatient(Patient.DFN, WardIEN, WardLocation, ASvc);
@@ -422,7 +424,7 @@ begin
        OrderArr.Add(ClinicList.Strings[i] + U + InttoStr(ClinicIen));
      end;
    rpcChangeOrderLocation(OrderArr, ContainsIMO);
-   WardArr.Free;
+   KillObj(@WardArr);
 end;
 
 
@@ -549,5 +551,11 @@ begin
     COL_LOCATION    : Result := Piece(Cells[COL_LOCATION,      ARow], TAB, 1);
     end;
 end;
+
+initialization
+
+finalization
+  KillObj(@ClinicArr);
+  KillObj(@WardArr);
 
 end.

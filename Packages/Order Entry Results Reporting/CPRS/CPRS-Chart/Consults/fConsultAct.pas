@@ -124,27 +124,8 @@ implementation
 {$R *.DFM}
 
 uses
-  VAUtils,
-  fConsultAlertTo,
-  uSimilarNames,
-{$IFDEF CPRS_TEST}
-  uCore.Consults,
-  rCore.Utils,
-  rCore.User,
-  uCore.User,
-  rCore.DateTimeUtils,
-  rCore.Consults,
-  uModel,
-  rCore.Orders;
-{$ELSE}
-  rCore,
-  rConsults,
-  uConsults,
-  fConsults,
-  rOrders,
-  uCore,
-  uDstConst;
-{$ENDIF}
+  VAUtils, fConsultAlertTo, rCore, rConsults, uConsults, fConsults, rOrders,
+  uCore, uORLists, uSimilarNames, uDstConst;
 
 var
   uChanging: boolean;
@@ -200,7 +181,7 @@ begin
       GetDSTMgr.DSTService := ConsService;
       GetDSTMgr.DSTUrgency := ConsultUrgency;
       GetDSTMgr.DSTAction := FActionType;
-      GetDSTMgr.DSTId := ConsultRec.DstID;
+      GetDstMgr.DSTId := ConsultRec.DstID;
 
       ShowModal;
       Result := FChanged;
@@ -214,7 +195,6 @@ procedure TFrmConsultAction.SetDstButton(action: integer);
 begin
   GetDstMgr.DstAction := action;
   btnLaunchToolbox.Visible := GetDstMgr.DSTBtnVisible;
-  btnLaunchToolbox.Caption := GetDstMgr.DSTCaption;
 end;
 // =================== Setup form for different actions ===========================
 
@@ -233,8 +213,10 @@ begin
     if IsProcedure then
     begin
       OrdItmIEN := GetOrderableIEN(IntToStr(ConsultRec.ORFileNumber));
-      FastAssign(GetProcedureServices(OrdItmIEN), SvcList);
+
+//      FastAssign(GetProcedureServices(OrdItmIEN), SvcList);
       // FastAssign(GetProcedureServices(ProcIEN), SvcList);   RPC expects pointer to 101.43, NOT 123.3  (RV)
+      setProcedureServices(SvcList, OrdItmIEN);
       i := SvcList.IndexOf(IntToStr(ConsultRec.ToService) + U +
         Trim(ExternalName(ConsultRec.ToService, 123.5)));
       if i > -1 then
@@ -242,8 +224,9 @@ begin
       treService.Visible := False;
     end
     else
-      FastAssign(LoadServiceListWithSynonyms(CN_SVC_LIST_FWD, ConsultRec.IEN),
-        SvcList); { RV }
+//      FastAssign(LoadServiceListWithSynonyms(CN_SVC_LIST_FWD, ConsultRec.IEN),
+//        SvcList); { RV }
+      setServiceListWithSynonyms(SvcList,CN_SVC_LIST_FWD, ConsultRec.IEN);
 
     if (IsProcedure and (SvcList.Count <= 0)) then
     begin
@@ -252,8 +235,8 @@ begin
       Result := False;
       exit;
     end
-    else if ((not IsProcedure) and (Piece(SvcList.Strings[0], U, 1) = '-1'))
-    then
+    else if ((not IsProcedure) and
+      ((SvcList.Count <= 0) or (Piece(SvcList.Strings[0], U, 1) = '-1'))) then
     begin
       InfoBox(TX_FWD_NO_CSLT_SVCS_TEXT, TX_NOFORWARD_CAP,
         MB_OK or MB_ICONWARNING);
@@ -282,8 +265,11 @@ begin
             else
               Items[i].Expanded := True;
           end;
-          TopItem := Items[0];
-          Selected := Items[0];
+          if Items.Count > 0 then
+          begin
+            TopItem := Items[0];
+            Selected := Items[0];
+          end;
         end;
       end;
       pnlForward.Visible := True;
@@ -302,7 +288,8 @@ begin
     // end cq 15561
     with cboUrgency do
     begin
-      FastAssign(SubsetofUrgencies(ConsultRec.IEN), cboUrgency.Items);
+//      FastAssign(SubsetofUrgencies(ConsultRec.IEN), cboUrgency.Items);
+      setSubsetofUrgencies(cboUrgency.Items, ConsultRec.IEN);
       MixedCaseList(Items);
       SelectByIEN(ConsultRec.Urgency);
       if ItemIndex = -1 then
@@ -344,7 +331,7 @@ begin
   setForward(False);
   setSigFindings(False); // pnlSigFind.Visible := False;
   setAutoAlerts(True);
-  setActions(False);
+  setActions(True);
   setComments;
   // btnLaunchToolbox.Enabled := isCtbEnabled;
   //add comment always gets a DST or CTB button, unless Switch is Off
@@ -381,7 +368,7 @@ begin
   setForward(False);
   setSigFindings(True);
   setAutoAlerts(True);
-  setActions(False);
+  setActions(True);
   setComments;
   SetDstButton(CN_ACT_SIGFIND);
   ActiveControl := memComments;
@@ -419,46 +406,38 @@ end;
 
 procedure TfrmConsultAction.NewPersonNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
-{$IFDEF CPRS_TEST}
 var
   sl: TStrings;
-{$ENDIF}
+  cbo: TORComboBox;
+
 begin
   inherited;
-{$IFDEF CPRS_TEST}
   sl := TStringList.Create;
   try
-    setSubSetOfPersons(sl, StartFrom, Direction);
-    (Sender as TORComboBox).ForDataUse(sl);
+    cbo := (Sender as TORComboBox);
+    setSubSetOfPersons(cbo, sl, StartFrom, Direction);
+    cbo.ForDataUse(sl);
   finally
     sl.Free;
   end;
-{$ELSE}
-  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
-{$ENDIF}
 end;
 
 procedure TfrmConsultAction.ProviderNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
-{$IFDEF CPRS_TEST}
 var
   sl: TStrings;
+  cbo: TORComboBox;
+
 begin
   inherited;
-
   sl := TStringList.Create;
   try
-    setSubSetOfProviders(sl, StartFrom, Direction);
-    (Sender as TORComboBox).ForDataUse(sl);
+    cbo := (Sender as TORComboBox);
+    setSubSetOfProviders(cbo, sl, StartFrom, Direction);
+    cbo.ForDataUse(sl);
   finally
     sl.Free;
   end;
-{$ELSE}
-
-begin
-  inherited;
-  (Sender as TORComboBox).ForDataUse(SubSetOfProviders(StartFrom, Direction));
-{$ENDIF}
 end;
 
 procedure TfrmConsultAction.cmdCancelClick(Sender: TObject);
@@ -469,16 +448,16 @@ end;
 
 function TfrmConsultAction.ValidInput: boolean;
 var
-  aErrMsg: string;
+  aErrMsg: String;
 begin
   Result := False;
   if (cboPerson.ItemIEN = 0) and (FActionType <> CN_ACT_ADD_CMT) and
     (FActionType <> CN_ACT_SIGFIND) then
   begin
     InfoBox(TX_PERSON_TEXT, TX_PERSON_CAP, MB_OK or MB_ICONWARNING);
-    exit;
+    Exit;
   end else begin
-    if not CheckForSimilarName(cboPerson, aErrMsg, ltPerson, sPr) then
+    if not CheckForSimilarName(cboPerson, aErrMsg, sPr) then
     begin
       if Trim(aErrMsg) = '' then
         InfoBox(TX_PERSON_TEXT, TX_PERSON_CAP, MB_OK or MB_ICONWARNING)
@@ -490,12 +469,13 @@ begin
 
   if (cboAttentionOf.ItemIEN <> 0) then
   begin
-    if not CheckForSimilarName(cboAttentionOf, aErrMsg, ltPerson, sPr) then
+    if not CheckForSimilarName(cboAttentionOf, aErrMsg, sPr) then
     begin
-      ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
+      ShowMsgOn(Trim(aErrMsg) <> '', aErrMsg, 'Similiar Name Selection');
       Exit;
     end;
   end;
+  //////////////////////////////////////////////////////
 
   if ((FActionType = CN_ACT_SIGFIND) or (FActionType = CN_ACT_ADMIN_COMPLETE))
     and (grpSigFindings.ItemIndex < 0) then
@@ -565,7 +545,6 @@ end;
 procedure TfrmConsultAction.cmdOKClick(Sender: TObject);
 begin
   FChanged := False;
-
   if ValidInput then
   begin
     FChanged := Submit;
@@ -598,9 +577,6 @@ end;
 procedure TfrmConsultAction.FormCreate(Sender: TObject);
 begin
   inherited;
-{$IFDEF DEBUG}
-  pnlButtons.Color := clCream;
-{$ENDIF}
   GetDstMgr(DST_CASE_CONSULT_ACT); // init DST manager with the case name
 end;
 
@@ -621,76 +597,6 @@ var
 begin
   AList := TStringList.Create;
   try
-    (*
-      if (cboPerson.ItemIEN = 0) and (FActionType <> CN_ACT_ADD_CMT) and
-      (FActionType <> CN_ACT_SIGFIND) then
-      begin
-      InfoBox(TX_PERSON_TEXT, TX_PERSON_CAP, MB_OK or MB_ICONWARNING);
-      exit;
-      end;
-
-      if ((FActionType = CN_ACT_SIGFIND) or (FActionType = CN_ACT_ADMIN_COMPLETE))
-      and (grpSigFindings.ItemIndex < 0) then
-      begin
-      InfoBox(TX_SIGFIND_TEXT, TX_SIGFIND_CAP, MB_OK or MB_ICONWARNING);
-      exit;
-      end;
-
-      if ((FActionType = CN_ACT_DENY) or (FActionType = CN_ACT_DISCONTINUE) or
-      (FActionType = CN_ACT_ADD_CMT) or (FActionType = CN_ACT_ADMIN_COMPLETE))
-      and (memComments.Lines.Count = 0) then
-      begin
-      InfoBox(TX_COMMENTS_TEXT, TX_COMMENTS_CAP, MB_OK or MB_ICONWARNING);
-      exit;
-      end;
-
-      if (FActionType = CN_ACT_FORWARD) then
-      begin
-      if (FIsProcedure and (cboService.ItemIndex = -1) and (FToService = 0)) or
-      ((not FIsProcedure) and (treService.Selected = nil) and (FToService = 0))
-      then
-      begin
-      InfoBox(TX_NOFORWARD_TEXT, TX_NOFORWARD_CAP, MB_OK or MB_ICONWARNING);
-      exit;
-      end;
-      if (not FIsProcedure) and (cboService.ItemIEN = ConsultRec.ToService) then
-      begin
-      InfoBox(TX_NOFORWARD_SELF, TX_NOFORWARD_CAP, MB_OK or MB_ICONWARNING);
-      exit;
-      end;
-      if cboUrgency.ItemIEN = 0 then
-      begin
-      InfoBox(TX_NOURGENCY_TEXT, TX_NOFORWARD_CAP, MB_OK or MB_ICONWARNING);
-      exit;
-      end;
-      if (FIsProcedure and (Piece(cboService.Items[cboService.ItemIndex], U,
-      5) = '1')) or ((not FIsProcedure) and
-      (Piece(TORTreeNode(treService.Selected).StringData, U, 5) = '1')) then
-      begin
-      InfoBox(TX_NOTTHISSVC_TEXT, TX_NOFORWARD_CAP, MB_OK or MB_ICONWARNING);
-      exit;
-      end;
-      end;
-
-      if calDateofAction.Text <> '' then
-      begin
-      FActionDate := StrToFMDateTime(calDateofAction.Text);
-      if FActionDate = -1 then
-      begin
-      InfoBox(TX_DATE_TEXT, TX_DATE_CAP, MB_OK or MB_ICONWARNING);
-      calDateofAction.SetFocus;
-      exit;
-      end
-      else if FActionDate > FMNow then
-      begin
-      InfoBox(TX_FUTDATE_TEXT, TX_DATE_CAP, MB_OK or MB_ICONWARNING);
-      calDateofAction.SetFocus;
-      exit;
-      end;
-      end
-      else
-      FActionDate := FMNow;
-    *)
     FActionBy := cboPerson.ItemIEN;
     FAttentionOf := cboAttentionOf.ItemIEN;
     FUrgency := cboUrgency.ItemIEN;
@@ -771,6 +677,12 @@ procedure TfrmConsultAction.treServiceChange(Sender: TObject; Node: TTreeNode);
 begin
   if uChanging or FIsProcedure then
     exit;
+  if not assigned(treService.Selected) then
+  begin
+    FToService := 0;
+    cboService.ItemIndex := -1;
+    exit;
+  end;
   FToService := StrToIntDef(Piece(TORTreeNode(treService.Selected).StringData,
     U, 1), 0);
   (* if (treService.Selected.Data <> nil) and (Piece(string(treService.Selected.Data), U, 5) <> '1') then
@@ -788,9 +700,13 @@ begin
   inherited;
   if GetDSTMgr.DSTMode <> DST_OTH then
   begin
+    if ConsultRec.InOut = 'O' then
+      GetDSTMgr.DSTOutpatient := 'True'
+    else
+      GetDSTMgr.DSTOutpatient := 'False';
     GetDSTMgr.doDst; // DST_CASE_CONSULT_ACT
-    if (GetDSTMgr.DSTResult <> '') and (Pos('Error', GetDSTMgr.DSTResult) <> 1)
-    then
+    if (GetDSTMgr.DSTResult <> '') and
+      (Pos('Error', GetDSTMgr.DSTResult) <> 1) then
     begin
       memComments.Lines.Add(GetDSTMgr.DSTResult);
       memComments.ReadOnly := True;
@@ -817,6 +733,7 @@ begin
   if not FIsProcedure then
   begin
     uChanging := True; // BeginUpdate?
+    treService.Selected := nil;
     with treService do
       for i := 0 to Items.Count - 1 do
       begin
@@ -829,8 +746,11 @@ begin
         end;
       end;
     uChanging := False; // EndUpdate?
-    FToService := StrToIntDef(Piece(TORTreeNode(treService.Selected).StringData,
-      U, 1), 0);
+    if assigned(treService.Selected) then
+      FToService := StrToIntDef(Piece(TORTreeNode(treService.Selected).StringData,
+        U, 1), 0)
+    else
+      FToService := 0;
   end
   else
     FToService := cboService.ItemIEN;
@@ -900,48 +820,6 @@ end;
 
 procedure TfrmConsultAction.setActions(bVisible: boolean; aTitle: String = '');
 begin
-  { SetupForward:
-    lblActionBy.Caption := 'Responsible Person';       //
-    cboPerson.Caption := lblActionBy.Caption;
-    cboPerson.OnNeedData := NewPersonNeedData;         //
-    cboPerson.InitLongList(User.Name)  ;
-    cboPerson.SelectByIEN(User.DUZ); }
-
-  { SetupSchedule
-    lblActionBy.Caption := 'Responsible Person';
-    lblActionBy.Visible         := True ;
-
-    cboPerson.Visible           := True ;
-    cboPerson.Caption := lblActionBy.Caption;
-    cboPerson.OnNeedData := NewPersonNeedData;
-    cboPerson.InitLongList(User.Name)  ;
-    cboPerson.SelectByIEN(User.DUZ); }
-
-  { SetupAddComment, SetupSIgFindings
-    lblActionBy.Visible         := False ;
-    cboPerson.Visible           := False ; }
-
-  { SetupAdminComplete
-
-    lblActionBy.Caption := 'Responsible Person';
-    cboPerson.Caption := lblActionBy.Caption;
-    cboPerson.OnNeedData := NewPersonNeedData;
-    cboPerson.InitLongList(User.Name)  ;
-    cboPerson.SelectByIEN(User.DUZ); }
-
-  { SetupReceive     -- uses default label "Action By"
-    cboPerson.OnNeedData := NewPersonNeedData;
-    cboPerson.InitLongList(User.Name)  ;
-    cboPerson.SelectByIEN(User.DUZ);] }
-
-  { SetupOther
-    lblActionBy.Caption := 'Action by';
-
-    cboPerson.Caption := lblActionBy.Caption;
-    cboPerson.OnNeedData := NewPersonNeedData;
-    cboPerson.InitLongList(User.Name)  ;
-    cboPerson.SelectByIEN(User.DUZ); }
-
   pnlAllActions.Visible := bVisible;
   if bVisible then
   begin
@@ -953,6 +831,8 @@ begin
     cboPerson.InitLongList(User.Name);
     cboPerson.SelectByIEN(User.DUZ);
     TSimilarNames.RegORComboBox(cboPerson);
+    if FActionType in [CN_ACT_ADD_CMT, CN_ACT_SIGFIND] then
+      pnlActionBy.Visible := False;
   end;
 end;
 

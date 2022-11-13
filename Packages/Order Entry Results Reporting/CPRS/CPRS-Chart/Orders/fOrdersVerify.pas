@@ -35,7 +35,8 @@ implementation
 
 {$R *.DFM}
 
-uses XWBHash, rCore, rOrders, System.UITypes, VAUtils;
+uses
+  XWBHash, rCore, rOrders, System.UITypes, VAUtils;
 
 const
   TX_CHART_REVIEW = 'The following orders will be marked as reviewed -';
@@ -110,8 +111,6 @@ begin
   inherited;
   Close;
 end;
-
-
 
 procedure TfrmVerifyOrders.lstOrdersMeasureItem(Control: TWinControl;
   Index: Integer; var AHeight: Integer);

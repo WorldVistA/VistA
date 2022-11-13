@@ -1,17 +1,18 @@
 inherited frmODMedIV: TfrmODMedIV
   Left = 246
   Top = 256
-  Width = 849
+  Width = 1024
   Height = 876
   Caption = 'Infusion Order'
   Color = clWindow
-  Constraints.MinHeight = 500
-  Constraints.MinWidth = 500
+  Constraints.MinHeight = 768
+  Constraints.MinWidth = 1024
   DoubleBuffered = True
-  ExplicitWidth = 849
+  Font.Height = -19
+  ExplicitWidth = 1024
   ExplicitHeight = 876
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 24
   inherited pnlMessage: TPanel [0]
     Left = 25
     Top = 754
@@ -199,7 +200,7 @@ inherited frmODMedIV: TfrmODMedIV
       end
       item
         Column = 2
-        ColumnSpan = 7
+        ColumnSpan = 3
         Control = lblLimit
         Row = 6
       end
@@ -221,19 +222,19 @@ inherited frmODMedIV: TfrmODMedIV
       end
       item
         Column = 0
-        ColumnSpan = 5
+        ColumnSpan = 4
         Control = lblFirstDose
         Row = 9
       end
       item
         Column = 0
-        ColumnSpan = 5
+        ColumnSpan = 4
         Control = lblAdminTime
         Row = 10
       end
       item
         Column = 0
-        ColumnSpan = 5
+        ColumnSpan = 4
         Control = chkDoseNow
         Row = 8
       end
@@ -247,6 +248,17 @@ inherited frmODMedIV: TfrmODMedIV
         Column = 0
         Control = Label1
         Row = 13
+      end
+      item
+        Column = 5
+        ColumnSpan = 3
+        Control = cboIndication
+        Row = 7
+      end
+      item
+        Column = 5
+        Control = lblIndications
+        Row = 6
       end>
     RowCollection = <
       item
@@ -320,27 +332,27 @@ inherited frmODMedIV: TfrmODMedIV
       Left = 3
       Top = 3
       Width = 343
-      Height = 282
-      ActivePage = tbshtSolutions
+      Height = 292
+      ActivePage = tbshtAdditives
       Align = alClient
       TabOrder = 0
-      ExplicitHeight = 116
       object tbshtSolutions: TTabSheet
         AlignWithMargins = True
         Caption = 'Solutions'
-        ExplicitHeight = 79
+        ExplicitTop = 27
+        ExplicitHeight = 258
         object cboSolution: TORComboBox
           Left = 0
           Top = 0
           Width = 329
-          Height = 245
+          Height = 247
           Style = orcsSimple
           Align = alClient
           AutoSelect = True
           Caption = 'Solutions'
           Color = clWindow
           DropDownCount = 11
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -357,26 +369,27 @@ inherited frmODMedIV: TfrmODMedIV
           OnMouseClick = cboSolutionMouseClick
           OnNeedData = cboSolutionNeedData
           CharsNeedMatch = 1
-          ExplicitHeight = 79
+          ExplicitHeight = 258
         end
       end
       object tbshtAdditives: TTabSheet
         AlignWithMargins = True
         Caption = 'Additives'
         ImageIndex = 1
-        ExplicitHeight = 79
+        ExplicitTop = 27
+        ExplicitHeight = 258
         object cboAdditive: TORComboBox
           Left = 0
           Top = 0
           Width = 329
-          Height = 245
+          Height = 247
           Style = orcsSimple
           Align = alClient
           AutoSelect = True
           Caption = 'Additives'
           Color = clWindow
           DropDownCount = 11
-          ItemHeight = 16
+          ItemHeight = 24
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -393,7 +406,7 @@ inherited frmODMedIV: TfrmODMedIV
           OnMouseClick = cboAdditiveMouseClick
           OnNeedData = cboAdditiveNeedData
           CharsNeedMatch = 1
-          ExplicitHeight = 79
+          ExplicitHeight = 258
         end
       end
     end
@@ -402,12 +415,11 @@ inherited frmODMedIV: TfrmODMedIV
       Left = 352
       Top = 3
       Width = 418
-      Height = 168
+      Height = 175
       Align = alClient
       Anchors = []
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitHeight = 54
       object pnlTopRightLbls: TPanel
         Left = 0
         Top = 0
@@ -423,8 +435,8 @@ inherited frmODMedIV: TfrmODMedIV
         object lblAmount: TLabel
           Left = 134
           Top = 6
-          Width = 104
-          Height = 16
+          Width = 148
+          Height = 24
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
@@ -435,8 +447,8 @@ inherited frmODMedIV: TfrmODMedIV
         object lblComponent: TLabel
           Left = 5
           Top = 6
-          Width = 106
-          Height = 16
+          Width = 147
+          Height = 24
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
@@ -446,8 +458,8 @@ inherited frmODMedIV: TfrmODMedIV
         object lblAddFreq: TLabel
           Left = 256
           Top = 6
-          Width = 121
-          Height = 16
+          Width = 171
+          Height = 24
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
@@ -457,8 +469,8 @@ inherited frmODMedIV: TfrmODMedIV
         object lblPrevAddFreq: TLabel
           Left = 383
           Top = 6
-          Width = 96
-          Height = 16
+          Width = 138
+          Height = 24
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
@@ -470,12 +482,13 @@ inherited frmODMedIV: TfrmODMedIV
         Left = 0
         Top = 30
         Width = 418
-        Height = 138
+        Height = 145
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alClient
+        Color = clMoneyGreen
         DefaultColWidth = 100
         DefaultRowHeight = 19
         DefaultDrawing = False
@@ -489,14 +502,13 @@ inherited frmODMedIV: TfrmODMedIV
         OnKeyPress = grdSelectedKeyPress
         OnMouseDown = grdSelectedMouseDown
         Caption = ''
-        ExplicitHeight = 24
       end
       object txtSelected: TCaptionEdit
         Tag = -1
         Left = 28
         Top = 81
         Width = 56
-        Height = 22
+        Height = 30
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -516,7 +528,7 @@ inherited frmODMedIV: TfrmODMedIV
         Left = 91
         Top = 81
         Width = 67
-        Height = 24
+        Height = 32
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -534,7 +546,7 @@ inherited frmODMedIV: TfrmODMedIV
         Left = 165
         Top = 81
         Width = 181
-        Height = 24
+        Height = 32
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -549,44 +561,41 @@ inherited frmODMedIV: TfrmODMedIV
     object cmdRemove: TButton
       AlignWithMargins = True
       Left = 676
-      Top = 177
+      Top = 184
       Width = 94
       Height = 29
-      Align = alBottom
+      Align = alClient
       Caption = 'Remove'
       TabOrder = 2
       OnClick = cmdRemoveClick
-      ExplicitTop = 63
     end
     object pnlComments: TPanel
       AlignWithMargins = True
       Left = 352
-      Top = 212
+      Top = 219
       Width = 418
-      Height = 73
+      Height = 76
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
-      ExplicitTop = 98
-      ExplicitHeight = 21
       object lblComments: TLabel
         Left = 0
         Top = 0
         Width = 418
-        Height = 16
+        Height = 24
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alTop
         Caption = 'Comments'
-        ExplicitWidth = 64
+        ExplicitWidth = 91
       end
       object memComments: TCaptionMemo
         Left = 0
-        Top = 16
+        Top = 24
         Width = 418
-        Height = 57
+        Height = 52
         Align = alClient
         Lines.Strings = (
           'm'
@@ -604,13 +613,14 @@ inherited frmODMedIV: TfrmODMedIV
         TabOrder = 0
         OnChange = ControlChange
         Caption = 'Comments'
-        ExplicitHeight = 5
+        ExplicitTop = 13
+        ExplicitHeight = 63
       end
     end
     object lblRoute: TLabel
       AlignWithMargins = True
       Left = 6
-      Top = 288
+      Top = 298
       Width = 69
       Height = 30
       Margins.Left = 6
@@ -620,14 +630,13 @@ inherited frmODMedIV: TfrmODMedIV
       Align = alClient
       Caption = 'Route*'
       Layout = tlBottom
-      ExplicitTop = 122
-      ExplicitWidth = 41
-      ExplicitHeight = 16
+      ExplicitWidth = 57
+      ExplicitHeight = 24
     end
     object txtAllIVRoutes: TLabel
       AlignWithMargins = True
       Left = 78
-      Top = 291
+      Top = 301
       Width = 116
       Height = 24
       Align = alClient
@@ -647,7 +656,7 @@ inherited frmODMedIV: TfrmODMedIV
     object lblType: TLabel
       AlignWithMargins = True
       Left = 200
-      Top = 291
+      Top = 301
       Width = 64
       Height = 24
       Align = alClient
@@ -655,14 +664,12 @@ inherited frmODMedIV: TfrmODMedIV
       ParentShowHint = False
       ShowHint = True
       Layout = tlBottom
-      ExplicitTop = 125
-      ExplicitWidth = 37
-      ExplicitHeight = 16
+      ExplicitWidth = 50
     end
     object lblTypeHelp: TLabel
       AlignWithMargins = True
       Left = 270
-      Top = 291
+      Top = 301
       Width = 76
       Height = 24
       Align = alClient
@@ -682,49 +689,43 @@ inherited frmODMedIV: TfrmODMedIV
     object lblSchedule: TLabel
       AlignWithMargins = True
       Left = 352
-      Top = 291
+      Top = 301
       Width = 75
       Height = 24
       Align = alClient
       Caption = 'Schedule *'
       Layout = tlBottom
-      ExplicitTop = 125
-      ExplicitWidth = 65
-      ExplicitHeight = 16
+      ExplicitWidth = 93
     end
     object txtNSS: TLabel
       AlignWithMargins = True
       Left = 433
-      Top = 291
+      Top = 301
       Width = 156
       Height = 24
       Align = alClient
       Caption = '(Day-of-Week)'
       Layout = tlBottom
       OnClick = txtNSSClick
-      ExplicitTop = 125
-      ExplicitWidth = 88
-      ExplicitHeight = 16
+      ExplicitWidth = 120
     end
     object lblInfusionRate: TLabel
       AlignWithMargins = True
       Left = 595
-      Top = 291
+      Top = 301
       Width = 175
       Height = 24
       Align = alClient
       Caption = 'Infusion Rate (ml/hr)*'
       Layout = tlBottom
-      ExplicitTop = 125
-      ExplicitWidth = 122
-      ExplicitHeight = 16
+      ExplicitWidth = 174
     end
     object cboRoute: TORComboBox
       AlignWithMargins = True
       Left = 4
-      Top = 322
+      Top = 332
       Width = 189
-      Height = 24
+      Height = 32
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -735,7 +736,7 @@ inherited frmODMedIV: TfrmODMedIV
       Caption = ''
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 16
+      ItemHeight = 24
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -754,35 +755,33 @@ inherited frmODMedIV: TfrmODMedIV
       OnKeyUp = cboRouteKeyUp
       CharsNeedMatch = 1
       UniqueAutoComplete = True
-      ExplicitTop = 156
     end
     object cboType: TComboBox
       AlignWithMargins = True
       Left = 200
-      Top = 321
+      Top = 331
       Width = 146
-      Height = 24
+      Height = 32
       Align = alClient
       ParentShowHint = False
       ShowHint = True
       TabOrder = 5
       OnChange = cboTypeChange
       OnKeyDown = cboTypeKeyDown
-      ExplicitTop = 155
     end
     object cboSchedule: TORComboBox
       AlignWithMargins = True
       Left = 352
-      Top = 321
+      Top = 331
       Width = 156
-      Height = 24
+      Height = 32
       Style = orcsDropDown
       Align = alClient
       AutoSelect = True
       Caption = ''
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 16
+      ItemHeight = 24
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -801,25 +800,22 @@ inherited frmODMedIV: TfrmODMedIV
       OnKeyUp = cboScheduleKeyUp
       CharsNeedMatch = 1
       UniqueAutoComplete = True
-      ExplicitTop = 155
     end
     object chkPRN: TCheckBox
       AlignWithMargins = True
       Left = 514
-      Top = 321
+      Top = 331
       Width = 75
       Height = 29
       Align = alClient
       Caption = 'PRN'
       TabOrder = 7
       OnClick = chkPRNClick
-      ExplicitTop = 155
-      ExplicitHeight = 24
     end
     object txtRate: TCaptionEdit
       AlignWithMargins = True
       Left = 595
-      Top = 321
+      Top = 331
       Width = 75
       Height = 26
       Align = alClient
@@ -828,17 +824,13 @@ inherited frmODMedIV: TfrmODMedIV
       TabOrder = 8
       OnChange = txtRateChange
       Caption = 'Infusion Rate'
-      ExplicitLeft = 598
-      ExplicitTop = 156
-      ExplicitWidth = 71
-      ExplicitHeight = 24
     end
     object cboInfusionTime: TComboBox
       AlignWithMargins = True
       Left = 679
-      Top = 322
+      Top = 332
       Width = 90
-      Height = 24
+      Height = 32
       Margins.Left = 6
       Margins.Top = 4
       Margins.Right = 4
@@ -847,12 +839,11 @@ inherited frmODMedIV: TfrmODMedIV
       TabOrder = 13
       OnChange = cboInfusionTimeChange
       OnEnter = cboInfusionTimeEnter
-      ExplicitTop = 156
     end
     object lblPriority: TLabel
       AlignWithMargins = True
       Left = 6
-      Top = 357
+      Top = 367
       Width = 187
       Height = 22
       Margins.Left = 6
@@ -862,37 +853,33 @@ inherited frmODMedIV: TfrmODMedIV
       Align = alClient
       Caption = 'Priority*'
       Layout = tlBottom
-      ExplicitTop = 186
-      ExplicitWidth = 46
-      ExplicitHeight = 16
+      ExplicitWidth = 63
+      ExplicitHeight = 24
     end
     object lblLimit: TLabel
       AlignWithMargins = True
       Left = 200
-      Top = 356
-      Width = 570
+      Top = 366
+      Width = 227
       Height = 24
       Align = alClient
       Caption = 'Duration or Total Volume (Optional)'
       Layout = tlBottom
-      WordWrap = True
-      ExplicitTop = 185
-      ExplicitWidth = 209
-      ExplicitHeight = 16
+      ExplicitWidth = 296
     end
     object cboPriority: TORComboBox
       AlignWithMargins = True
       Left = 3
-      Top = 386
+      Top = 396
       Width = 191
-      Height = 24
+      Height = 32
       Style = orcsDropDown
       Align = alClient
       AutoSelect = True
       Caption = 'Priority'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 16
+      ItemHeight = 24
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -908,42 +895,39 @@ inherited frmODMedIV: TfrmODMedIV
       OnExit = cboPriorityExit
       OnKeyUp = cboPriorityKeyUp
       CharsNeedMatch = 1
-      ExplicitTop = 215
     end
     object txtXDuration: TCaptionEdit
       AlignWithMargins = True
       Left = 200
-      Top = 386
+      Top = 396
       Width = 64
-      Height = 24
+      Height = 26
       Align = alTop
       Constraints.MaxHeight = 26
       TabOrder = 11
       OnChange = txtXDurationChange
       OnExit = txtXDurationExit
       Caption = #54084#20483#8279
-      ExplicitTop = 215
     end
     object cboDuration: TComboBox
       AlignWithMargins = True
       Left = 270
-      Top = 386
+      Top = 396
       Width = 76
-      Height = 24
+      Height = 32
       Align = alClient
       AutoComplete = False
       TabOrder = 12
       OnChange = cboDurationChange
       OnEnter = cboDurationEnter
-      ExplicitTop = 215
     end
     object lblFirstDose: TVA508StaticText
       Name = 'lblFirstDose'
       AlignWithMargins = True
       Left = 3
-      Top = 451
-      Width = 424
-      Height = 18
+      Top = 450
+      Width = 343
+      Height = 26
       Align = alBottom
       Alignment = taLeftJustify
       Caption = 'First Dose'
@@ -951,16 +935,15 @@ inherited frmODMedIV: TfrmODMedIV
       TabStop = True
       Visible = False
       ShowAccelChar = True
-      ExplicitTop = 245
-      ExplicitWidth = 191
+      ExplicitWidth = 86
     end
     object lblAdminTime: TVA508StaticText
       Name = 'lblAdminTime'
       AlignWithMargins = True
       Left = 3
-      Top = 475
-      Width = 424
-      Height = 18
+      Top = 471
+      Width = 343
+      Height = 26
       Align = alBottom
       Alignment = taLeftJustify
       Caption = 'Admin Time'
@@ -970,29 +953,26 @@ inherited frmODMedIV: TfrmODMedIV
       TabStop = True
       Visible = False
       ShowAccelChar = True
-      ExplicitTop = 269
-      ExplicitWidth = 191
+      ExplicitWidth = 105
     end
     object chkDoseNow: TCheckBox
       AlignWithMargins = True
       Left = 3
-      Top = 421
-      Width = 424
+      Top = 431
+      Width = 343
       Height = 24
       Align = alBottom
       Caption = 'Give Additional Dose Now'
       TabOrder = 17
       OnClick = chkDoseNowClick
-      ExplicitTop = 293
-      ExplicitWidth = 505
     end
     object lbl508Required: TVA508StaticText
       Name = 'lbl508Required'
       AlignWithMargins = True
       Left = 6
-      Top = 500
+      Top = 493
       Width = 501
-      Height = 18
+      Height = 26
       Margins.Left = 6
       Margins.Top = 4
       Margins.Right = 4
@@ -1003,19 +983,63 @@ inherited frmODMedIV: TfrmODMedIV
       Caption = ' * Indicates a Required Field'
       TabOrder = 18
       ShowAccelChar = True
-      ExplicitTop = 324
+      ExplicitWidth = 238
     end
     object Label1: TLabel
       AlignWithMargins = True
       Left = 3
-      Top = 538
+      Top = 531
       Width = 69
-      Height = 16
+      Height = 24
       Align = alBottom
       Caption = 'Order Sig.'
       Layout = tlCenter
-      ExplicitTop = 349
-      ExplicitWidth = 60
+      ExplicitTop = 542
+      ExplicitWidth = 86
+    end
+    object cboIndication: TORComboBox
+      AlignWithMargins = True
+      Left = 434
+      Top = 397
+      Width = 235
+      Height = 32
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Style = orcsDropDown
+      Align = alClient
+      AutoSelect = True
+      Caption = ''
+      Color = clWindow
+      DropDownCount = 8
+      ItemHeight = 24
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = False
+      LongList = False
+      LookupPiece = 0
+      MaxLength = 40
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 14
+      Text = ''
+      OnChange = cboIndicationChange
+      OnExit = cboIndicationExit
+      OnKeyUp = cboIndicationKeyUp
+      CharsNeedMatch = 1
+      UniqueAutoComplete = True
+    end
+    object lblIndications: TLabel
+      AlignWithMargins = True
+      Left = 433
+      Top = 366
+      Width = 75
+      Height = 24
+      Align = alClient
+      Caption = 'Indication*'
+      Layout = tlBottom
+      ExplicitWidth = 87
     end
   end
   inherited cmdAccept: TButton [3]
@@ -1024,10 +1048,6 @@ inherited frmODMedIV: TfrmODMedIV
     Top = 680
     Width = 104
     Height = 29
-    Margins.Left = 3
-    Margins.Top = 3
-    Margins.Right = 3
-    Margins.Bottom = 3
     TabOrder = 4
     ExplicitLeft = 686
     ExplicitTop = 680
@@ -1036,17 +1056,13 @@ inherited frmODMedIV: TfrmODMedIV
   end
   inherited cmdQuit: TButton [4]
     AlignWithMargins = True
-    Left = 686
-    Top = 715
+    Left = 687
+    Top = 717
     Width = 104
     Height = 29
-    Margins.Left = 3
-    Margins.Top = 3
-    Margins.Right = 3
-    Margins.Bottom = 3
     TabOrder = 3
-    ExplicitLeft = 686
-    ExplicitTop = 715
+    ExplicitLeft = 687
+    ExplicitTop = 717
     ExplicitWidth = 104
     ExplicitHeight = 29
   end
@@ -1155,7 +1171,13 @@ inherited frmODMedIV: TfrmODMedIV
         'Status = stsDefault')
       (
         'Component = lbl508Required'
-        'Status = stsDefault'))
+        'Status = stsDefault')
+      (
+        'Component = cboIndication'
+        
+          'Text = Indications for use. Indication must be entered and shoul' +
+          'd be between 3 to 40 characters.'
+        'Status = stsOK'))
   end
   object VA508CompOrderSig: TVA508ComponentAccessibility
     Component = memOrder

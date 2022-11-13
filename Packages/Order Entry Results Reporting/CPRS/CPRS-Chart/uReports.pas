@@ -77,6 +77,7 @@ type
     HDR        : String;         //HDR is data source if = 1
     FHIE       : String;         //FHIE is data source if = 1
     FHIEONLY   : String;         //FHIEONLY if data is to only include FHIE
+    procedure Clear;
 end;
 
 type
@@ -175,7 +176,7 @@ end;
 
 destructor TRowObject.Destroy;
 begin
-  //Clear;
+  Clear;
   FColumnList.Free;
   inherited Destroy;
 end;
@@ -196,7 +197,8 @@ var
 begin
   with FColumnList do
     for i := 0 to Count - 1 do
-      with TCellObject(Items[i]) do Free;
+      if assigned(Items[i]) then
+        TCellObject(Items[i]).Free;
   FColumnList.Clear;
   FCount := 0;
 end;
@@ -209,7 +211,7 @@ end;
 
 destructor TLabRowObject.Destroy;
 begin
-  //Clear;
+  Clear;
   FColumnList.Free;
   inherited Destroy;
 end;
@@ -230,7 +232,8 @@ var
 begin
   with FColumnList do
     for i := 0 to Count - 1 do
-      with TCellObject(Items[i]) do Free;
+      if assigned(Items[i]) then
+        TCellObject(Items[i]).Free;
   FColumnList.Clear;
   FCount := 0;
 end;
@@ -369,6 +372,28 @@ begin
     m.Data := ParentForm;
     Font.OnChange := TNotifyEvent(m);
   end;
+end;
+
+{ TReportTreeObject }
+
+procedure TReportTreeObject.Clear;
+begin
+  ID := '';
+  Heading := '';
+  Qualifier := '';
+  Remote := '';
+  RptType := '';
+  Category := '';
+  RPCName := '';
+  IFN := '';
+  HSTAG := '';
+  SortOrder := '';
+  MaxDaysBack := '';
+  Direct := '';
+  HDR := '';
+  FHIE := '';
+  FHIEONLY := '';
+  inherited;
 end;
 
 end.

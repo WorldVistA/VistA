@@ -2,21 +2,24 @@ inherited frmRefillOrders: TfrmRefillOrders
   Left = 181
   Top = 267
   Caption = 'Refill Orders'
-  ClientHeight = 284
+  ClientHeight = 289
+  Position = poDesigned
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitHeight = 311
+  ExplicitWidth = 443
+  ExplicitHeight = 327
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBottom: TPanel [0]
     Left = 0
-    Top = 200
+    Top = 221
     Width = 427
-    Height = 84
+    Height = 68
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitTop = 205
     object cmdOK: TButton
       Left = 234
       Top = 40
@@ -41,7 +44,7 @@ inherited frmRefillOrders: TfrmRefillOrders
       Left = 42
       Top = 5
       Width = 136
-      Height = 75
+      Height = 60
       Caption = ' Pick Up '
       TabOrder = 2
       object radWindow: TRadioButton
@@ -62,41 +65,39 @@ inherited frmRefillOrders: TfrmRefillOrders
         Caption = 'by &Mail'
         TabOrder = 1
       end
-      object radClinic: TRadioButton
-        Left = 12
-        Top = 55
-        Width = 113
-        Height = 17
-        Caption = 'in &Clinic'
-        TabOrder = 2
-      end
     end
   end
   object pnlClient: TPanel [1]
     Left = 0
     Top = 0
     Width = 427
-    Height = 200
+    Height = 221
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitHeight = 200
     object lblOrders: TLabel
       Left = 0
       Top = 0
-      Width = 181
+      Width = 427
       Height = 13
       Align = alTop
       Caption = 'Request refills for the following orders -'
+      ExplicitWidth = 181
     end
     object lstOrders: TCaptionListBox
       Left = 0
-      Top = 17
+      Top = 13
       Width = 427
-      Height = 183
+      Height = 208
+      Style = lbOwnerDrawVariable
       Align = alClient
       ItemHeight = 13
       TabOrder = 0
+      OnDrawItem = lstOrdersDrawItem
+      OnMeasureItem = lstOrdersMeasureItem
       Caption = 'Request refills for the following orders '
+      ExplicitHeight = 187
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -118,9 +119,6 @@ inherited frmRefillOrders: TfrmRefillOrders
         'Status = stsDefault')
       (
         'Component = radMail'
-        'Status = stsDefault')
-      (
-        'Component = radClinic'
         'Status = stsDefault')
       (
         'Component = pnlClient'

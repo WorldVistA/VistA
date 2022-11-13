@@ -32,7 +32,19 @@ type
     lblLabValue: TMemo;
     btnLabDefaults: TButton;
     btnVisitDefaults: TButton;
-    bvlBottom: TBevel;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Panel9: TPanel;
+    Panel10: TPanel;
+    Panel11: TPanel;
+    Panel12: TPanel;
+    Panel13: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure spnVisitStartClick(Sender: TObject; Button: TUDBtnType);
@@ -86,6 +98,7 @@ begin
   try
     with frmOptionsDays do
     begin
+{
       if (topvalue < 0) or (leftvalue < 0) then
         Position := poScreenCenter
       else
@@ -94,7 +107,8 @@ begin
         Top := topvalue;
         Left := leftvalue;
       end;
-      ResizeAnchoredFormToFont(frmOptionsDays);
+}
+//      ResizeAnchoredFormToFont(frmOptionsDays);
       ShowModal;
       actiontype := btnOK.Tag;
     end;

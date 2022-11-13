@@ -71,19 +71,23 @@ AnOrder: TOrder;
 begin
   //called from order tab
   tmpArr := TORStringList.Create;
-  GetOriginalOrders(OrderID,tmpArr);
-      with forders.frmOrders.lstOrders do for i := 0 to items.Count-1 do if Selected[i] then
-        begin
-          AnOrder := TOrder(Items.Objects[i]);
-          Pos := tmpArr.IndexOfPiece(AnOrder.ID,U,1);
-          if Pos > -1 then
-            begin
-              ActDeact := PromptForm(AnOrder.Text);
-              if ActDeact = 'D' then AnOrder.DCOriginalOrder := True;
-              if ActDeact = 'A' then AnOrder.DCOriginalOrder := False;
-              if ActDeact = 'C' then Selected[i] := False;
-            end;
-        end;
+  try
+    GetOriginalOrders(OrderID, tmpArr);
+    with fOrders.frmOrders.lstOrders do for i := 0 to items.Count-1 do if Selected[i] then
+      begin
+        AnOrder := TOrder(Items.Objects[i]);
+        Pos := tmpArr.IndexOfPiece(AnOrder.ID,U,1);
+        if Pos > -1 then
+          begin
+            ActDeact := PromptForm(AnOrder.Text);
+            if ActDeact = 'D' then AnOrder.DCOriginalOrder := True;
+            if ActDeact = 'A' then AnOrder.DCOriginalOrder := False;
+            if ActDeact = 'C' then Selected[i] := False;
+          end;
+      end;
+  finally
+    tmpArr.Free;
+  end;
 end;
 
 procedure TfrmActivateDeactive.fActivateDeactive(OrderID: TStringList; AList: TListBox);
@@ -95,10 +99,12 @@ AMed: TMedListRec;
 AnOrder: TOrder;
 begin
   //called from Med tab
+  AnOrder := nil;
   tmpArr := TORStringList.Create;
-  GetOriginalOrders(OrderID,tmpArr);
-  AnOrder := TOrder.Create;
-     with AList do for i := 0 to items.Count-1 do if Selected[i] then
+  try
+    GetOriginalOrders(OrderID,tmpArr);
+    AnOrder := TOrder.Create;
+      with AList do for i := 0 to items.Count-1 do if Selected[i] then
         begin
           AMed := TMedListRec(Items.Objects[i]);
           if AMed = nil then Continue;
@@ -108,6 +114,7 @@ begin
               ActDeact := PromptForm(Alist.Items.Strings[i]);
               if ActDeact = 'D' then
                 begin
+                  AnOrder.free;
                   AnOrder := GetOrderByIFN(Piece(tmpArr.Strings[Pos],U,1));
                   DCOriginalOrder(AnOrder.ID);
                   //AnOrder.DCOriginalOrder := True;
@@ -116,11 +123,15 @@ begin
               if ActDeact = 'C' then Selected[i] := False;
             end;
         end;
+  finally
+    if assigned(AnOrder) then AnOrder.free;
+    tmpArr.Free;
+  end;
 end;
 
 procedure TfrmActivateDeactive.GetOriginalOrders(OrderID: TStringList; var OriginalOrder: TORStringList);
 var
-  i: integer;
+i: integer;
   aTmpList: TStringList;
 begin
   aTmpList := TStringList.Create;

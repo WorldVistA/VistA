@@ -8,8 +8,6 @@ inherited frmSplash: TfrmSplash
   ClientWidth = 371
   OldCreateOrder = True
   Position = poMainFormCenter
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   ExplicitWidth = 371
   ExplicitHeight = 520
   PixelsPerInch = 96
@@ -48,6 +46,7 @@ inherited frmSplash: TfrmSplash
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      ExplicitWidth = 63
     end
     object lblCopyright: TStaticText
       AlignWithMargins = True
@@ -65,6 +64,7 @@ inherited frmSplash: TfrmSplash
       Font.Style = []
       ParentFont = False
       TabOrder = 1
+      ExplicitWidth = 148
     end
     object pnlImage: TPanel
       AlignWithMargins = True
@@ -85,8 +85,8 @@ inherited frmSplash: TfrmSplash
       object Image1: TImage
         Left = 3
         Top = 3
-        Width = 311
-        Height = 165
+        Width = 300
+        Height = 159
         Margins.Left = 2
         Margins.Top = 2
         Margins.Right = 2
@@ -1622,7 +1622,7 @@ inherited frmSplash: TfrmSplash
           929293939393D4CF86CFD49392D1858A7C7B7B7B7B7B}
         Proportional = True
         Stretch = True
-        ExplicitHeight = 159
+        ExplicitWidth = 311
       end
     end
     object pnl508Disclaimer: TPanel
@@ -1694,6 +1694,7 @@ inherited frmSplash: TfrmSplash
       ParentFont = False
       TabOrder = 4
       TabStop = True
+      ExplicitWidth = 261
     end
     object lblCRC: TStaticText
       AlignWithMargins = True
@@ -1705,6 +1706,7 @@ inherited frmSplash: TfrmSplash
       Align = alBottom
       Alignment = taCenter
       TabOrder = 5
+      ExplicitWidth = 4
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

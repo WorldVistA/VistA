@@ -21,8 +21,8 @@ function sCallV(const RPCName: string; const aParam: array of const): string; de
 procedure tCallV(ReturnData: TStrings; const RPCName: string; const aParam: array of const); deprecated 'use CallVistA';
 function UpdateContext(NewContext: string): boolean;
 function IsBaseContext: boolean;
-procedure CallBrokerInContext(aReturn: TStrings = nil);
-procedure CallBroker(aReturn: TStrings = nil);
+function CallBrokerInContext(aReturn: TStrings = nil; RequireResults: boolean = False): Boolean;
+function CallBroker(aReturn: TStrings = nil; RequireResults: boolean = False): Boolean;
 function RetainedRPCCount: Integer;
 procedure SetRetainedRPCMax(Value: Integer);
 function GetRPCMax: Integer;
@@ -39,11 +39,28 @@ procedure SetRPCFlaged(Value: string);
 function GetRPCFlaged: string;
 // ================================================//
 
-function CallVistA(const aRPCName: string; const aParam: array of const): boolean; overload;
-function CallVistA(const aRPCName: string; const aParam: array of const; aReturn: TStrings): boolean; overload;
-function CallVistA(const aRPCName: string; const aParam: array of const; var aReturn: string; aDefault: string = ''): boolean; overload;
-function CallVistA(const aRPCName: string; const aParam: array of const; var aReturn: Double; aDefault: Double = 0.0): boolean; overload;
-function CallVistA(const aRPCName: string; const aParam: array of const; var aReturn: Integer; aDefault: Integer = 0): boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  RequireResults: boolean = False): boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: Integer; RequireResults: boolean = False; aDefault: Integer = 0)
+  : boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: Integer; aDefault: Integer; RequireResults: boolean = False)
+  : boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: Double; RequireResults: boolean = False; aDefault: Double = 0.0)
+  : boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: Double; aDefault: Double; RequireResults: boolean = False)
+  : boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: string; RequireResults: boolean = False; aDefault: string = '')
+  : boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: string; aDefault: string; RequireResults: boolean = False)
+  : boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  aReturn: TStrings; RequireResults: boolean = False): boolean; overload;
 
 function GetFMNow: TFMDateTime;
 function GetFMDT(const aString: string; const aParams: string = ''): TFMDateTime;
@@ -57,8 +74,10 @@ type
   TAfterRPCEvent = procedure() of object;
 
   tPulseObject = class
-    Private
-      procedure PulseError(RPCBroker: TRPCBroker; ErrorText: String);
+  private
+    FInPulseErrorCount: integer;
+    FInPulseError: boolean;
+    procedure PulseError(RPCBroker: TRPCBroker; ErrorText: String);
   end;
 
 var
@@ -79,6 +98,10 @@ const
   XWB_M_REJECT = 20000 + 2; // M error
   XWB_BadSignOn = 20000 + 4; // SignOn 'Error' (happens when cancel pressed)
   RPCBROKER_MUTEX_NAME = 'RPCBroker Mutex';
+  PARAM_RETRY_TEST = 'RPCRETRYTEST';
+  PARAM_RETRY_FAIL = 'RPCRETRYFAIL';
+  PARAM_SHOW_CERTS = 'SHOWCERTS';
+  MAX_RPC_TRIES = 3;
 
 var
   uCallList: TList;
@@ -86,6 +109,8 @@ var
   uShowRPCs: boolean;
   uBaseContext: string = '';
   AfterRPCEvent: TAfterRPCEvent;
+  RPCTestRetry: boolean = False;
+  RPCTestFail: boolean = False;
 
   // =========== Backward Compatiable Code ===========//
   fRPCFlaged: string;
@@ -103,6 +128,20 @@ begin
   uLockBroker.UnlockBroker;
 end;
 
+type
+  TRPCBrokerNotifier = class(TComponent)
+  protected
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+  end;
+
+procedure TRPCBrokerNotifier.Notification(AComponent: TComponent;
+  Operation: TOperation);
+begin
+  inherited;
+  if (AComponent = RPCBrokerV) and (Operation = opRemove) then
+    RPCBrokerV := nil;
+end;
+
 procedure EnsureBroker;
 { ensures that a broker object has been created - creates & initializes it if necessary }
 begin
@@ -111,6 +150,7 @@ begin
       RPCBrokerV := TRPCBroker.Create(Application);
       with RPCBrokerV do
         begin
+          FreeNotification(TRPCBrokerNotifier.Create(RPCBrokerV));
           KernelLogIn := True;
           Login.Mode := lmAppHandle;
           ClearParameters := True;
@@ -134,7 +174,7 @@ begin
       i := 1;
       for aStr in AStringList do
         begin
-          Mult[IntToStr(i)] := aStr;
+          Mult[IntToStr(i)] := NullStrippedString(aStr);
           inc(i);
         end;
     end;
@@ -148,6 +188,7 @@ var
   i: Integer;
   TmpExt: Extended;
   aORNetParam: IORNetParam;
+
 begin
   RPCLastCall := RPCName + ' (SetParam begin)';
   if Length(RPCName) = 0 then raise Exception.Create('No RPC Name');
@@ -175,7 +216,7 @@ begin
                 end;
               vtString: with Param[i] do
                   begin
-                    Value := string(VString^);
+                    Value := NullStrippedString(string(VString^));
                     if (Length(Value) > 0) and (Value[1] = #1) then
                       begin
                         Value := Copy(Value, 2, Length(Value));
@@ -191,7 +232,7 @@ begin
                 end
                 else
                   raise Exception.Create('Pointer type must be nil.');
-              vtPChar: Param[i].Value := string(AnsiChar(VPChar));
+              vtPChar: Param[i].Value := NullStrippedString(string(AnsiChar(VPChar)));
 
               vtInterface:
                 if IInterface(VInterface).QueryInterface(IORNetParam, aORNetParam) = 0 then
@@ -211,7 +252,7 @@ begin
                   Param[i].Value := string(VWideChar);
               vtAnsiString: with Param[i] do
                   begin
-                    Value := string(VAnsiString);
+                    Value := NullStrippedString(string(VAnsiString));
                     if (Length(Value) > 0) and (Value[1] = #1) then
                       begin
                         Value := Copy(Value, 2, Length(Value));
@@ -221,7 +262,7 @@ begin
               vtInt64: Param[i].Value := IntToStr(VInt64^);
               vtUnicodeString: with Param[i] do
                   begin
-                    Value := string(VUnicodeString);
+                    Value := NullStrippedString(string(VUnicodeString));
                     if (Length(Value) > 0) and (Value[1] = #1) then
                       begin
                         Value := Copy(Value, 2, Length(Value));
@@ -236,81 +277,124 @@ begin
   RPCLastCall := RPCName + ' (SetParam end)';
 end;
 
+function AbortRPCCall: boolean;
+begin
+  Result := Application.Terminated or ((not UnitTestingActive) and
+     ((not assigned(RPCBrokerV)) or (not RPCBrokerV.Connected)));
+end;
+
 { public procedures and functions ----------------------------------------------------------- }
 
-function CallVistA(const aRPCName: string; const aParam: array of const): boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  RequireResults: boolean = False): boolean; overload;
 { Call Broker, no results. i.e. POST }
 var
   aLst: TStringList;
+
 begin
   aLst := TStringList.Create;
   try
-    Result := CallVistA(aRPCName, aParam, aLst);
+    Result := CallVistA(aRPCName, aParam, aLst, RequireResults);
   finally
     FreeAndNil(aLst);
   end;
 end;
 
-function CallVistA(const aRPCName: string; const aParam: array of const; var aReturn: Integer; aDefault: Integer = 0): boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: Integer; RequireResults: boolean = False; aDefault: Integer = 0)
+  : boolean; overload;
 { Call Broker, Result[0] in aReturn as integer }
 var
   aStr: string;
+
 begin
-  if CallVistA(aRPCName, aParam, aStr) then
-    begin
-      aReturn := StrToIntDef(aStr, aDefault);
-      Result := True;
-    end
+  if CallVistA(aRPCName, aParam, aStr, RequireResults) then
+  begin
+    aReturn := StrToIntDef(aStr, aDefault);
+    Result := True;
+  end
   else
     Result := False;
 end;
 
-function CallVistA(const aRPCName: string; const aParam: array of const; var aReturn: Double; aDefault: Double = 0.0): boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: Integer; aDefault: Integer; RequireResults: boolean = False)
+  : boolean; overload;
+begin
+  Result := CallVistA(aRPCName, aParam, aReturn, RequireResults, aDefault);
+end;
+
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: Double; RequireResults: boolean = False; aDefault: Double = 0.0)
+  : boolean; overload;
 { Call Broker, Result[0] in aReturn as Double }
 var
   aStr: string;
+
 begin
-  if CallVistA(aRPCName, aParam, aStr) then
-    begin
-      aReturn := StrToFloatDef(aStr, aDefault);
-      Result := True;
-    end
+  if CallVistA(aRPCName, aParam, aStr, RequireResults) then
+  begin
+    aReturn := StrToFloatDef(aStr, aDefault);
+    Result := True;
+  end
   else
     Result := False;
 end;
 
-function CallVistA(const aRPCName: string; const aParam: array of const; var aReturn: string; aDefault: string = ''): boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: Double; aDefault: Double; RequireResults: boolean = False)
+  : boolean; overload;
+begin
+  Result := CallVistA(aRPCName, aParam, aReturn, RequireResults, aDefault);
+end;
+
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: string; RequireResults: boolean = False; aDefault: string = '')
+  : boolean; overload;
 { Call Broker, Result[0] in aReturn as string }
 var
   aLst: TStringList;
+
 begin
   aLst := TStringList.Create;
   try
-    Result := CallVistA(aRPCName, aParam, aLst);
+    Result := CallVistA(aRPCName, aParam, aLst, RequireResults);
     if aLst.Count > 0 then
       aReturn := aLst[0]
     else
       aReturn := '';
+    if aReturn = '' then
+      aReturn := aDefault;
   finally
     FreeAndNil(aLst);
   end;
 end;
 
-function CallVistA(const aRPCName: string; const aParam: array of const; aReturn: TStrings): boolean; overload;
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  var aReturn: string; aDefault: string; RequireResults: boolean = False)
+  : boolean; overload;
+begin
+  Result := CallVistA(aRPCName, aParam, aReturn, RequireResults, aDefault);
+end;
+
+function CallVistA(const aRPCName: string; const aParam: array of const;
+  aReturn: TStrings; RequireResults: boolean = False): boolean; overload;
 { Call Broker, full results in aReturn }
 begin
+  if AbortRPCCall then
+  begin
+    aReturn.Clear;
+    Result := False;
+    Exit;
+  end;
   LockBroker;
   try
-    try
-      SetParams(aRPCName, aParam);
-      aReturn.Clear;
-      CallBroker(aReturn);
-      Result := True;
-    finally
-      RPCBrokerV.Results.Clear;
-      RPCBrokerV.Param.Clear;
-    end;
+    SetParams(aRPCName, aParam);
+    aReturn.Clear;
+    Result := CallBroker(aReturn, RequireResults);   
   finally
+    RPCBrokerV.Results.Clear;
+    RPCBrokerV.Param.Clear;
     UnlockBroker;
   end;
 end;
@@ -369,19 +453,27 @@ begin
   Result := ((RPCBrokerV.CurrentContext = uBaseContext) or (RPCBrokerV.CurrentContext = ''));
 end;
 
-procedure CallBrokerInContext(aReturn: TStrings = nil);
+function CallBrokerInContext(aReturn: TStrings = nil; RequireResults: boolean = False): Boolean;
 var
   AStringList: TStringList;
-  i, j: Integer;
+  i, j, attempt, RunLine: Integer;
   x, y, RunString: string;
   RPCStart, RPCStop, fFrequency: TLargeInteger;
   dt: TDateTime;
   mRPC: TMockRPC;
   msg: string;
+  ReturnList: TStrings;
+  Retry, ClrParams: boolean;
 
 begin
+  Result := True;
   LockBroker;
   try
+    if Assigned(aReturn) then
+      ReturnList := aReturn
+    else
+      ReturnList := RPCBrokerV.Results;
+    ReturnList.Clear;
     if UnitTestingActive then
     begin
       mRPC := FindMockRPC(RPCBrokerV.RemoteProcedure, RPCBrokerV.Param);
@@ -391,116 +483,171 @@ begin
           '" RPC with parameters:' + ParamToStr(RPCBrokerV.Param, True);
         raise EUnitTestException.Create(Msg);
       end;
-      if assigned(aReturn) then
-        aReturn.Assign(mRPC.Results)
-      else
-        RPCBrokerV.Results.Assign(mRPC.Results);
+      ReturnList.Assign(mRPC.Results);
       mRPC.CallCount := mRPC.CallCount + 1;
       exit;
     end;
-    RPCLastCall := string(RPCBrokerV.RemoteProcedure) + ' (CallBroker begin)';
-    if uShowRPCs then StatusText(string(RPCBrokerV.RemoteProcedure));
-    with RPCBrokerV do
-      if not Connected then // happens if broker connection is lost
-        begin
-          ClearResults := True;
-          Exit;
-        end;
-    while uCallList.Count >= uMaxCalls do
-      begin
-        AStringList := uCallList.Items[0];
-        AStringList.Free;
-        uCallList.Delete(0);
-      end;
-    AStringList := TStringList.Create;
-    AStringList.Add(string(RPCBrokerV.RemoteProcedure));
-    AStringList.Add(''); // add to the second line
-    if RPCBrokerV.CurrentContext <> uBaseContext then
-      AStringList.Add('Context: ' + RPCBrokerV.CurrentContext);
-    AStringList.Add(' ');
-    AStringList.Add('Params ------------------------------------------------------------------');
-    with RPCBrokerV do
-      for i := 0 to Param.Count - 1 do
-        begin
-          case Param[i].PType of
-            // global:    x := 'global';
-            list: x := 'list';
-            literal: x := 'literal';
-            // null:      x := 'null';
-            reference: x := 'reference';
-            undefined: x := 'undefined';
-            // wordproc:  x := 'wordproc';
-          end;
-          AStringList.Add(x + #9 + Param[i].Value);
-          if Param[i].PType = list then
-            begin
-              for j := 0 to Param[i].Mult.Count - 1 do
-                begin
-                  x := Param[i].Mult.Subscript(j);
-                  y := Param[i].Mult[x];
-                  AStringList.Add(#9 + '(' + x + ')=' + y);
-                end;
-            end;
-        end; { with...for }
-    // RPCBrokerV.Call;
 
-    try
-      QueryPerformanceCounter(RPCStart);
-      if aReturn <> nil then
-        RPCBrokerV.lstCall(aReturn)
-      else
-        RPCBrokerV.Call;
-      QueryPerformanceCounter(RPCStop);
-    except
-      on E: EBrokerError do
-        begin
-          //Add to log
-          AStringList.Add('Ran at:' + FormatDateTime('hh:nn:ss.z a/p', now));
-          AStringList.Add(' ');
-          AStringList.Add('BROKER ERROR ------------------------------------------------------------');
-          AStringList.Add(e.Message);
-          uCallList.Add(AStringList);
-
-          if not RPCBrokerV.Connected then
-            begin
-              Application.MessageBox('Application must shutdown due to lost VistA Connection.', 'Server Error', MB_OK);
-              Application.Terminate;
-            end
-          else
-            raise; // Still have connectivity, let the app try and sort it out :-)
-        end;
-      else
-        raise;
-    end;
-
-    RunString := 'Ran at:' + FormatDateTime('hh:nn:ss.z a/p', now);
-    QueryPerformanceFrequency(fFrequency);
-    dt := ((MSecsPerSec * (RPCStop - RPCStart)) div fFrequency) / MSecsPerSec / SecsPerDay;
-    RunString := RunString + #13#10 + 'Run time:' + FormatDateTime('hh:nn:ss.z', dt);
-    AStringList[1] := RunString;
-    AStringList.Add(' ');
-    AStringList.Add('Results -----------------------------------------------------------------');
-    if Assigned(aReturn) then
-      FastAddStrings(aReturn, AStringList)
+    attempt := 1;
+    if RequireResults then
+    begin
+      ClrParams := RPCBrokerV.ClearParameters;
+      if ClrParams then
+        RPCBrokerV.ClearParameters := False;
+    end
     else
-      FastAddStrings(RPCBrokerV.Results, AStringList);
-    uCallList.Add(AStringList);
-    if uShowRPCs then StatusText('');
-    RPCLastCall := string(RPCBrokerV.RemoteProcedure) + ' (completed)';
+      ClrParams := False;
+    try
+      repeat
+        RunLine := 1;
+        RPCLastCall := string(RPCBrokerV.RemoteProcedure) + ' (CallBroker begin)';
+        if uShowRPCs then StatusText(string(RPCBrokerV.RemoteProcedure));
+        with RPCBrokerV do
+          if not Connected then // happens if broker connection is lost
+            begin
+              ClearResults := True;
+              Exit;
+            end;
+        while uCallList.Count >= uMaxCalls do
+          begin
+            AStringList := uCallList.Items[0];
+            AStringList.Free;
+            uCallList.Delete(0);
+          end;
+        AStringList := TStringList.Create;
+        try
+          AStringList.Add(string(RPCBrokerV.RemoteProcedure));
+          if RequireResults and (attempt > 1) then
+          begin
+            x := '  (Return Data Required, attempt #' + IntToStr(attempt);
+            if RPCTestRetry or RPCTestFail then
+            begin
+              x := x + ' *** Testing RPC Retry';
+              if RPCTestFail then
+                x := x + ' Until Fail';
+              x := x + ' ***';
+            end;
+            x := x + ')';
+            AStringList.Add(x);
+            inc(RunLine);
+          end;
+          AStringList.Add(''); // add to the second line
+          if RPCBrokerV.CurrentContext <> uBaseContext then
+            AStringList.Add('Context: ' + RPCBrokerV.CurrentContext);
+          AStringList.Add(' ');
+          AStringList.Add('Params ------------------------------------------------------------------');
+          with RPCBrokerV do
+            for i := 0 to Param.Count - 1 do
+              begin
+                case Param[i].PType of
+                  list:      x := 'list';
+                  literal:   x := 'literal';
+                  reference: x := 'reference';
+                  undefined: x := 'undefined';
+                  global:    x := 'global';
+                  empty:     x := 'empty';
+                  stream:    x := 'stream';
+                  else       x := 'unknown';
+                end;
+                AStringList.Add(x + #9 + Param[i].Value);
+                if Param[i].PType = list then
+                  begin
+                    for j := 0 to Param[i].Mult.Count - 1 do
+                      begin
+                        x := Param[i].Mult.Subscript(j);
+                        y := Param[i].Mult[x];
+                        AStringList.Add(#9 + '(' + x + ')=' + y);
+                      end;
+                  end;
+              end; { with...for }
+          // RPCBrokerV.Call;
 
-    if Assigned(AfterRPCEvent) then
-      AfterRPCEvent();
+          try
+            QueryPerformanceCounter(RPCStart);
+            if aReturn <> nil then
+              RPCBrokerV.lstCall(aReturn)
+            else
+              RPCBrokerV.Call;
+            QueryPerformanceCounter(RPCStop);
+          except
+            on E: EBrokerError do
+              begin
+                //Add to log
+                AStringList[RunLine] := 'Ran at:' + FormatDateTime('hh:nn:ss.z a/p', now);
+                AStringList.Add(' ');
+                AStringList.Add('BROKER ERROR ------------------------------------------------------------');
+                AStringList.Add(e.Message);
+
+                if not RPCBrokerV.Connected then
+                  begin
+                    Application.MessageBox('Application must shutdown due to lost VistA Connection.', 'Server Error', MB_OK);
+                    Application.Terminate; // This just posts WM_QUIT
+                    Application.ProcessMessages; // This will see the WM_QUIT and set Application.Terminated to TRUE;
+                    Exit;
+                  end
+                else
+                  raise; // Still have connectivity, let the app try and sort it out :-)
+              end;
+            else
+              raise;
+          end;
+
+          RunString := 'Ran at:' + FormatDateTime('hh:nn:ss.z a/p', now);
+          QueryPerformanceFrequency(fFrequency);
+          dt := ((MSecsPerSec * (RPCStop - RPCStart)) div fFrequency) / MSecsPerSec / SecsPerDay;
+          RunString := RunString + #13#10 + 'Run time:' + FormatDateTime('hh:nn:ss.z', dt);
+          AStringList[RunLine] := RunString;
+          AStringList.Add(' ');
+          AStringList.Add('Results -----------------------------------------------------------------');
+          FastAddStrings(ReturnList, AStringList)
+        finally
+          uCallList.Add(AStringList);
+          if Assigned(AfterRPCEvent) then
+            AfterRPCEvent();
+        end;
+        if uShowRPCs then StatusText('');
+        RPCLastCall := string(RPCBrokerV.RemoteProcedure) + ' (completed)';
+
+        if RequireResults then
+        begin
+          if RPCTestRetry or RPCTestFail then
+            Retry := True
+          else
+            Retry := (ReturnList.Count = 0);
+          if Retry then
+          begin
+            inc(attempt);
+            if RPCTestRetry and (attempt > 2) and (ReturnList.Count > 0) then
+              Retry := False
+            else
+            begin
+              ReturnList.Clear;
+              if (attempt > MAX_RPC_TRIES) then
+              begin
+                Retry := False;
+                Result := False;
+              end;
+            end;
+          end;
+        end
+        else
+          Retry := False;
+      until (not Retry);
+    finally
+      if ClrParams then
+        RPCBrokerV.ClearParameters := True;
+    end;
   finally
     UnlockBroker;
   end;
 end;
 
-procedure CallBroker(aReturn: TStrings = nil);
+function CallBroker(aReturn: TStrings = nil; RequireResults: boolean = False): Boolean;
 begin
   LockBroker;
   try
     UpdateContext(uBaseContext);
-    CallBrokerInContext(aReturn);
+    Result := CallBrokerInContext(aReturn, RequireResults);
   finally
     UnlockBroker;
   end;
@@ -535,19 +682,27 @@ function ConnectToServer(const OptionName: string): boolean;
 { establish initial connection to server using optional command line parameters and check that
   this application (option) is allowed for this user }
 var
-  WantDebug: boolean;
-  AServer, APort, x: string;
+  WantDebug, ShowCerts: boolean;
+  AServer, APort, x, pStr: string;
   i, ModalResult: Integer;
+
 begin
   Result := False;
+  RPCTestRetry := False;
+  RPCTestFail := False;
   WantDebug := False;
+  ShowCerts := False;
   AServer := '';
   APort := '';
   for i := 1 to ParamCount do // params may be: S[ERVER]=hostname P[ORT]=port DEBUG
     begin
-      if UpperCase(ParamStr(i)) = 'DEBUG' then WantDebug := True;
-      if UpperCase(ParamStr(i)) = 'SHOWRPCS' then uShowRPCs := True;
-      x := UpperCase(Piece(ParamStr(i), '=', 1));
+      pStr := UpperCase(ParamStr(i));
+      if pStr = PARAM_RETRY_TEST then RPCTestRetry := True;
+      if pStr = PARAM_RETRY_FAIL then RPCTestFail := True;
+      if pStr = 'DEBUG' then WantDebug := True;
+      if pStr = 'SHOWRPCS' then uShowRPCs := True;
+      if pStr = PARAM_SHOW_CERTS then ShowCerts := true;
+      x := Piece(pStr, '=', 1);
       if (x = 'S') or (x = 'SERVER') then AServer := Piece(ParamStr(i), '=', 2);
       if (x = 'P') or (x = 'PORT') then APort := Piece(ParamStr(i), '=', 2);
     end;
@@ -558,6 +713,8 @@ begin
     end;
   // use try..except to work around errors in the Broker SignOn screen
   try
+    EnsureBroker;
+    RPCBrokerV.ShowCertDialog := ShowCerts;
     SetBrokerServer(AServer, StrToIntDef(APort, 9200), WantDebug);
     Result := AuthorizedOption(OptionName);
     if Result then Result := RPCBrokerV.Connected;
@@ -565,8 +722,12 @@ begin
   except
     on E: EBrokerError do
       begin
-        if E.Code <> XWB_BadSignOn then InfoBox(E.Message, 'Error', MB_OK or MB_ICONERROR);
         Result := False;
+        if Pos('does not hold the key', E.Message) > 0 then
+          begin
+            Raise;
+          end else
+        if E.Code <> XWB_BadSignOn then InfoBox(E.Message, 'Error', MB_OK or MB_ICONERROR);
       end;
   end;
 end;
@@ -595,6 +756,8 @@ procedure CallV(const RPCName: string; const aParam: array of const);
 var
   SavedCursor: TCursor;
 begin
+  if AbortRPCCall then
+    exit;
   SavedCursor := Screen.Cursor;
   Screen.Cursor := GetRPCCursor;
   LockBroker;
@@ -612,14 +775,16 @@ function sCallV(const RPCName: string; const aParam: array of const): string;
 var
   SavedCursor: TCursor;
 begin
+  Result := '';
+  if AbortRPCCall then
+    exit;
   SavedCursor := Screen.Cursor;
   Screen.Cursor := GetRPCCursor;
   LockBroker;
   try
     SetParams(RPCName, aParam);
     CallBroker; // RPCBrokerV.Call;
-    if RPCBrokerV.Results.Count > 0 then Result := RPCBrokerV.Results[0]
-    else Result := '';
+    if RPCBrokerV.Results.Count > 0 then Result := RPCBrokerV.Results[0];
   finally
     UnlockBroker;
   end;
@@ -632,11 +797,17 @@ var
   SavedCursor: TCursor;
 begin
   if ReturnData = nil then raise Exception.Create('TString not created');
+  if AbortRPCCall then
+  begin
+    ReturnData.Clear;
+    exit;
+  end;
   SavedCursor := Screen.Cursor;
   Screen.Cursor := GetRPCCursor;
   LockBroker;
   try
     SetParams(RPCName, aParam);
+    ReturnData.Clear;
     CallBroker; // RPCBrokerV.Call;
     FastAssign(RPCBrokerV.Results, ReturnData);
   finally
@@ -795,22 +966,18 @@ var
 
 function GetFMDT(const aString: string; const aParams: string = ''): TFMDateTime;
 var
-  str, param: string;
+  str, tstr, param: string;
   dt, dts: TDateTime;
   hour, min, sec, msec: word;
   idx: integer;
   sync: boolean;
 
   function GetServerDT: TFMDateTime;
-  var
-    aStr: string;
-
   begin
     if aParams = '' then
-      CallVistA('ORWU DT', [param], aStr) // do not pass '' as 2nd param
+      CallVistA('ORWU DT', [param], Result) // do not pass '' as 2nd param
     else
-      CallVistA('ORWU DT', [param, aParams], aStr);
-    Result := StrToFloatDef(aStr, 0.0);
+      CallVistA('ORWU DT', [param, aParams], Result);
   end;
 
 begin
@@ -821,8 +988,9 @@ begin
   end
   else if ((RPCBrokerV <> nil) and RPCBrokerV.Connected) then
   begin
-    str := UpperCase(Trim(aString));
-    if str = '' then
+    str := UpperCase(aString);
+    tstr := Trim(str);
+    if (tstr = '') or (tstr <> str) then
     begin
       Result := -1;
       exit;
@@ -846,17 +1014,17 @@ begin
       uLastDTS := dts;
       DecodeTime(dts, uLastHour, min, sec, msec);
       uDTList.Clear;  // cached values such as T-7 will change when the day changes.
-      if (str = 'NOW') or (str = 'N') then
+      if IsNow(str) then
         exit;
     end;
-    if (str = 'NOW') or (str = 'N') then
+    if IsNow(str) then
       Result := DateTimeToFMDateTime(dts)
     else if (str = 'T') or (str = 'TODAY') then
       Result := Trunc(DateTimeToFMDateTime(dts))
     else
     begin
-      param := aString;
-      if (pos('NOW', str) > 0) or (pos('N+', str) > 0) or (pos('N-', str) > 0) then
+      param := str;
+      if str.StartsWith('NOW') or str.StartsWith('N+') or str.StartsWith('N-') then
         Result := GetServerDT
       else
       begin
@@ -869,7 +1037,7 @@ begin
           {$IF CompilerVersion > 29.0}
           uDTList.AddPair(str, FloatToStr(Result));
           {$ELSE}
-            uDTList.Add(str + uDTList.NameValueSeparator + FloatToStr(Result));
+          uDTList.Add(str + uDTList.NameValueSeparator + FloatToStr(Result));
           {$ENDIF}
         end
         else
@@ -881,11 +1049,50 @@ begin
     Result := 0.0;
 end;
 
+type
+  TMyRPCBroker = class(Trpcb.TRPCBroker);
 
 procedure tPulseObject.PulseError(RPCBroker: TRPCBroker; ErrorText: String);
+var
+  DoError: boolean;
+
 begin
-  Application.MessageBox('Application must shutdown due to lost VistA Connection.', 'Server Error', MB_OK);
-  Application.Terminate;
+  if Application.Terminated then
+    Exit;
+  if RPCBroker.Connected then
+  begin
+    DoError := False;
+    if FInPulseError then
+    begin
+      inc(FInPulseErrorCount);
+      if FInPulseErrorCount > MAX_RPC_TRIES then
+      begin
+        DoError := True;
+        RPCBroker.Connected := False;
+      end
+      else
+        TMyRPCBroker(RPCBroker).DoPulseOnTimer(RPCBroker);
+    end
+    else
+    begin
+      FInPulseError := True;
+      FInPulseErrorCount := 1;
+      try
+        TMyRPCBroker(RPCBroker).DoPulseOnTimer(RPCBroker);
+      finally
+        FInPulseError := False;
+      end;
+    end;
+  end
+  else
+    DoError := True;
+
+  if DoError Then
+  begin
+    Application.MessageBox('Application must shutdown due to lost VistA Connection.', 'Server Error', MB_OK);
+    Application.Terminate;       // This just posts WM_QUIT
+    Application.ProcessMessages; // This will see the WM_QUIT and set Application.Terminated to TRUE;
+  end;
 end;
 
 initialization

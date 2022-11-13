@@ -72,12 +72,12 @@ uses
 
 function isDstEnabled: Boolean;
 begin
-  Result := SystemParameters.StringValue[DST_CTB_SWITCH] <> '0';
+  Result := SystemParameters.AsType<string>(DST_CTB_SWITCH) <> '0';
 end;
 
 function isCtbEnabled: Boolean;
 begin
-  Result := SystemParameters.StringValue[CTB_ENABLED] <> '0';
+  Result := SystemParameters.AsType<string>(CTB_ENABLED) <> '0';
 end;
 
 {$R *.dfm}
@@ -128,9 +128,6 @@ end;
 
 procedure TfrDSTMgr.DSTInit(aCase: String = '');
 begin
-  // if not assigned(fDstProvider) then
-  // fDstProvider := TdstProvider.Create;
-  // fDstProvider.ReloadParameters;
   InitDST; // one provider for all dialogs
   fDstProvider := DSTPro;
   fDSTMode := DSTPro.DstParameters.fSwitch; // DST_DST;
@@ -149,8 +146,7 @@ begin
 end;
 
 procedure TfrDSTMgr.doDSTConsultAct;
-//var
-//i: Integer;
+
   function getActionName: String;
   begin
     case fDSTAction of
@@ -181,6 +177,7 @@ begin
     getActionName, DSTOutpatient);
   if DSTId <> '' then
   begin
+    DstProvider.getDSTReply(DSTId);
 { 310.1
     if i <> mrOK then
     begin
@@ -188,7 +185,6 @@ begin
     end
     else
 }
-    DstProvider.getDSTReply(DSTId);
     begin
       // process successful review
       DstResult := DstProvider.getDstReply(DSTId, getActionName());
@@ -208,15 +204,8 @@ begin
 
   if DSTId <> '' then
   begin
-//    if DstProvider.getDSTReply(DSTId) = mrOK then
-// 310.1
       DstProvider.getDSTReply(DSTId);
       DSTResult := DstProvider.getDSTReply(DSTId, aWorkflow);
-//    else
-//    begin
-////       process cancelation of review
-//      DSTResult := 'CANCEL';
-//    end;
   end
   else
     DSTResult := '';
@@ -230,8 +219,6 @@ begin
     ShowMessage('DST execution case is not defined!')
   else if DSTCase = DST_CASE_CONSULT_ACT then
     doDSTConsultAct
-    // else if DSTCase = DST_CASE_CONSULTS then  -- probably not needed
-    // doDSTConsults                           -- keeping until cleanup
   else if DSTCase = DST_CASE_CONSULT_EDIT then
     doDSTConsult('EDIT-RESUBMIT')
   else if DSTCase = DST_CASE_CONSULT_OD then

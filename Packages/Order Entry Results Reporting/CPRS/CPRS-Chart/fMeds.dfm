@@ -9,10 +9,8 @@ inherited frmMeds: TfrmMeds
   HelpFile = 'qnoback'
   Menu = mnuMeds
   Visible = True
-  OnDestroy = FormDestroy
   OnMouseUp = FormMouseUp
   OnResize = FormResize
-  OnShow = FormShow
   ExplicitWidth = 717
   ExplicitHeight = 727
   PixelsPerInch = 96
@@ -32,10 +30,14 @@ inherited frmMeds: TfrmMeds
   end
   object splitTop: TSplitter [1]
     Left = 0
-    Top = 222
+    Top = 227
     Width = 701
     Height = 4
     Cursor = crVSplit
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     AutoSnap = False
     Color = clBtnFace
@@ -45,6 +47,7 @@ inherited frmMeds: TfrmMeds
     ParentColor = False
     ResizeStyle = rsUpdate
     OnMoved = splitTopMoved
+    ExplicitTop = 460
   end
   object splitBottom: TSplitter [2]
     Left = 0
@@ -52,6 +55,10 @@ inherited frmMeds: TfrmMeds
     Width = 701
     Height = 4
     Cursor = crVSplit
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     AutoSnap = False
     Color = clBtnFace
@@ -61,12 +68,18 @@ inherited frmMeds: TfrmMeds
     ParentColor = False
     ResizeStyle = rsUpdate
     OnMoved = splitBottomMoved
+    ExplicitLeft = -2
+    ExplicitTop = 414
   end
   object gdpSort: TGridPanel [3]
     Left = 0
     Top = 0
     Width = 701
-    Height = 18
+    Height = 23
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     ColumnCollection = <
       item
@@ -97,7 +110,11 @@ inherited frmMeds: TfrmMeds
       Left = 1
       Top = 1
       Width = 699
-      Height = 16
+      Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       Alignment = taLeftJustify
       Caption = 'txtView'
@@ -107,9 +124,13 @@ inherited frmMeds: TfrmMeds
   end
   object gdpOut: TGridPanel [4]
     Left = 0
-    Top = 18
+    Top = 23
     Width = 701
     Height = 204
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BiDiMode = bdLeftToRight
     BorderStyle = bsSingle
@@ -121,7 +142,7 @@ inherited frmMeds: TfrmMeds
         Value = 26.002793129303330000
       end
       item
-        Value = 24.909029174263860000
+        Value = 24.909029174263870000
       end
       item
         Value = 23.085384567129470000
@@ -172,6 +193,10 @@ inherited frmMeds: TfrmMeds
       Top = 1
       Width = 695
       Height = 15
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       Alignment = taLeftJustify
       BorderWidth = 1
@@ -191,6 +216,10 @@ inherited frmMeds: TfrmMeds
       Top = 21
       Width = 695
       Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = []
       BiDiMode = bdLeftToRight
       Constraints.MinHeight = 16
@@ -244,8 +273,13 @@ inherited frmMeds: TfrmMeds
       Top = 41
       Width = 695
       Height = 158
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = lbOwnerDrawVariable
       Align = alClient
+      BorderStyle = bsNone
       Color = clCream
       Constraints.MinHeight = 40
       Ctl3D = False
@@ -254,7 +288,9 @@ inherited frmMeds: TfrmMeds
       MultiSelect = True
       ParentCtl3D = False
       ParentDoubleBuffered = False
+      ParentShowHint = False
       PopupMenu = popMed
+      ShowHint = True
       TabOrder = 2
       OnClick = lstMedsOutClick
       OnDblClick = lstMedsDblClick
@@ -262,13 +298,18 @@ inherited frmMeds: TfrmMeds
       OnExit = lstMedsExit
       OnMeasureItem = lstMedsMeasureItem
       Caption = 'Outpatient Medications'
+      OnHintShow = lstMedsOutHintShow
     end
   end
   object gdpNon: TGridPanel [5]
     Left = 0
-    Top = 226
+    Top = 231
     Width = 701
-    Height = 137
+    Height = 132
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     BorderWidth = 1
     BorderStyle = bsSingle
@@ -283,7 +324,7 @@ inherited frmMeds: TfrmMeds
         Value = 24.791542078059250000
       end
       item
-        Value = 24.999990458706940000
+        Value = 24.999990458706920000
       end>
     ControlCollection = <
       item
@@ -328,6 +369,10 @@ inherited frmMeds: TfrmMeds
       Top = 2
       Width = 693
       Height = 15
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       Alignment = taLeftJustify
       Caption = 'txtDateRangeNon'
@@ -345,6 +390,10 @@ inherited frmMeds: TfrmMeds
       Top = 22
       Width = 693
       Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = []
       BiDiMode = bdLeftToRight
       Constraints.MinHeight = 16
@@ -385,9 +434,14 @@ inherited frmMeds: TfrmMeds
       Left = 2
       Top = 42
       Width = 693
-      Height = 89
+      Height = 84
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = lbOwnerDrawVariable
       Align = alClient
+      BorderStyle = bsNone
       Color = clCream
       Constraints.MinHeight = 40
       Ctl3D = False
@@ -396,7 +450,9 @@ inherited frmMeds: TfrmMeds
       MultiSelect = True
       ParentCtl3D = False
       ParentDoubleBuffered = False
+      ParentShowHint = False
       PopupMenu = popMed
+      ShowHint = True
       TabOrder = 2
       OnClick = lstMedsNonVAClick
       OnDblClick = lstMedsDblClick
@@ -411,6 +467,10 @@ inherited frmMeds: TfrmMeds
     Top = 367
     Width = 701
     Height = 301
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     BorderStyle = bsSingle
     ColumnCollection = <
@@ -469,6 +529,10 @@ inherited frmMeds: TfrmMeds
       Top = 1
       Width = 695
       Height = 15
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alTop
       Alignment = taLeftJustify
       Caption = 'txtDateRangeIp'
@@ -486,6 +550,10 @@ inherited frmMeds: TfrmMeds
       Top = 21
       Width = 695
       Height = 16
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = []
       BiDiMode = bdLeftToRight
       Constraints.MinHeight = 16
@@ -533,8 +601,13 @@ inherited frmMeds: TfrmMeds
       Top = 41
       Width = 695
       Height = 255
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Style = lbOwnerDrawVariable
       Align = alClient
+      BorderStyle = bsNone
       Color = clCream
       Constraints.MinHeight = 59
       Ctl3D = False
@@ -543,7 +616,9 @@ inherited frmMeds: TfrmMeds
       MultiSelect = True
       ParentCtl3D = False
       ParentDoubleBuffered = False
+      ParentShowHint = False
       PopupMenu = popMed
+      ShowHint = True
       TabOrder = 2
       OnClick = lstMedsInClick
       OnDblClick = lstMedsDblClick
@@ -604,8 +679,8 @@ inherited frmMeds: TfrmMeds
         'Status = stsDefault'))
   end
   object mnuMeds: TMainMenu
-    Left = 56
-    Top = 154
+    Left = 64
+    Top = 122
     object mnuView: TMenuItem
       Caption = '&View'
       GroupIndex = 3
@@ -821,7 +896,8 @@ inherited frmMeds: TfrmMeds
         OnClick = mnuActRefillClick
       end
       object DocumentNonVAMeds1: TMenuItem
-        Action = actDocumentNonVAMeds
+        Caption = 'Document Non-VA Meds'
+        OnClick = DocumentNonVAMeds1Click
       end
       object Z5: TMenuItem
         Caption = '-'
@@ -829,6 +905,15 @@ inherited frmMeds: TfrmMeds
       object mnuActOneStep: TMenuItem
         Caption = 'One Step Clinic Admin'
         OnClick = mnuActOneStepClick
+      end
+      object Z6: TMenuItem
+        Caption = '-'
+      end
+      object mnuActPark: TMenuItem
+        Action = actPark
+      end
+      object mnuActUnpark: TMenuItem
+        Action = actUnpark
       end
     end
   end
@@ -864,7 +949,8 @@ inherited frmMeds: TfrmMeds
       OnClick = mnuActRenewClick
     end
     object DocumentNonVAMeds2: TMenuItem
-      Action = actDocumentNonVAMeds
+      Caption = 'Document Non-VA Meds'
+      OnClick = DocumentNonVAMeds1Click
     end
     object N2: TMenuItem
       Caption = '-'
@@ -878,13 +964,26 @@ inherited frmMeds: TfrmMeds
       Visible = False
       OnClick = mnuOptimizeFieldsClick
     end
+    object popDivPark: TMenuItem
+      Caption = '-'
+    end
+    object popPark: TMenuItem
+      Action = actPark
+    end
+    object popUnpark: TMenuItem
+      Action = actUnpark
+    end
   end
-  object actlstMed: TActionList
-    Left = 248
-    Top = 146
-    object actDocumentNonVAMeds: TAction
-      Caption = 'Document Non-VA Meds'
-      OnExecute = actDocumentNonVAMedsExecute
+  object ActionList1: TActionList
+    Left = 168
+    Top = 127
+    object actPark: TAction
+      Caption = 'Park'
+      OnExecute = actParkExecute
+    end
+    object actUnpark: TAction
+      Caption = 'Unpark - Generates a request to Fill/Refill'
+      OnExecute = actUnparkExecute
     end
   end
 end

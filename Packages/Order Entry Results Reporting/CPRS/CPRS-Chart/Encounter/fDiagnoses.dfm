@@ -3,34 +3,14 @@ inherited frmDiagnoses: TfrmDiagnoses
   Top = 169
   AutoScroll = True
   Caption = 'Encounter Diagnoses'
+  ExplicitWidth = 640
+  ExplicitHeight = 438
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   inherited lblSection: TLabel
-    Width = 89
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 114
     Caption = 'Diagnoses Section'
-    ExplicitWidth = 89
-  end
-  inherited lblList: TLabel
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-  end
-  inherited lblComment: TLabel
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-  end
-  inherited bvlMain: TBevel
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    ExplicitWidth = 114
   end
   inherited btnOK: TBitBtn
     Margins.Left = 6
@@ -40,11 +20,13 @@ inherited frmDiagnoses: TfrmDiagnoses
     TabOrder = 7
   end
   inherited btnCancel: TBitBtn
+    Left = 539
     Margins.Left = 6
     Margins.Top = 6
     Margins.Right = 6
     Margins.Bottom = 6
     TabOrder = 8
+    ExplicitLeft = 539
   end
   inherited pnlGrid: TPanel
     Width = 523
@@ -74,14 +56,14 @@ inherited frmDiagnoses: TfrmDiagnoses
     end
   end
   inherited edtComment: TCaptionEdit
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 345
+    Height = 24
     TabOrder = 3
+    ExplicitTop = 345
+    ExplicitHeight = 24
   end
   object cmdDiagPrimary: TButton [8]
-    Left = 536
+    Left = 541
     Top = 306
     Width = 75
     Height = 21
@@ -91,21 +73,25 @@ inherited frmDiagnoses: TfrmDiagnoses
     OnClick = cmdDiagPrimaryClick
   end
   object ckbDiagProb: TCheckBox [9]
-    Left = 535
-    Top = 258
+    Left = 537
+    Top = 238
     Width = 76
-    Height = 38
+    Height = 62
     Caption = 'Add to Problem list'
     TabOrder = 4
     WordWrap = True
     OnClick = ckbDiagProbClicked
   end
   inherited btnRemove: TButton
+    Left = 540
+    Top = 345
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     TabOrder = 6
+    ExplicitLeft = 540
+    ExplicitTop = 345
   end
   inherited btnSelectAll: TButton
     Left = 454
@@ -132,10 +118,6 @@ inherited frmDiagnoses: TfrmDiagnoses
     inherited lbxSection: TORListBox
       Tag = 20
       Height = 196
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       IntegralHeight = True
       OnDrawItem = lbxSectionDrawItem
       Pieces = '2,3'
@@ -148,10 +130,6 @@ inherited frmDiagnoses: TfrmDiagnoses
       Margins.Bottom = 4
       inherited lbSection: TORListBox
         Tag = 20
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         TabOrder = 0
       end
       inherited btnOther: TButton

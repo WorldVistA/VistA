@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_CPRS_ActiveMeds;
   ================================================================================
   *
   *       Application:  CPRS
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-04
   *
@@ -81,7 +81,8 @@ var
 begin
   lvData.Items.BeginUpdate;
   try
-    lvData.Items.Clear;
+    ClearListView(lvData);
+ //   lvData.Items.Clear;
 
     aActiveMeds := TStringList.Create;
     try

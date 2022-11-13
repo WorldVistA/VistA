@@ -182,7 +182,8 @@ begin
   CallVistA('ORWSR LIST', [Patient.DFN, date1, date2, Context, Max], Dest);
   if Dest.Count > 0 then
     begin
-      SortByPiece(TStringList(Dest), U, 2);
+//      SortByPiece(TStringList(Dest), U, 2);
+      SortByPiece(Dest, U, 2);
       InvertStringList(TStringList(Dest));
     end
   else
@@ -196,9 +197,11 @@ begin
   CallVistA('ORWSR CASELIST', [Patient.DFN], Dest);
   if Dest.Count > 0 then
     begin
-      SortByPiece(TStringList(Dest), U, 3);
+//      SortByPiece(TStringList(Dest), U, 3);
+      SortByPiece(Dest, U, 3);
       InvertStringList(TStringList(Dest));
-      SetListFMDateTime('mmm dd,yy hh:nn', TStringList(Dest), U, 3);
+//      SetListFMDateTime('mmm dd,yy hh:nn', TStringList(Dest), U, 3);
+      SetListFMDateTime('mmm dd,yy hh:nn', Dest, U, 3);
     end
   else
     Dest.Add('-1^No Cases Found');

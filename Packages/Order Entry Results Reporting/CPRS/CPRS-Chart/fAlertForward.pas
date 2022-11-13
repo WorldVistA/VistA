@@ -1,4 +1,9 @@
 unit fAlertForward;
+{------------------------------------------------------------------------------
+Update History
+
+    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
+-------------------------------------------------------------------------------}
 
 interface
 
@@ -34,7 +39,6 @@ type
     procedure DstListChange(Sender: TObject);
     procedure btnRemoveAllAlertFwrdClick(Sender: TObject);
   private
-    FCboSrcListVistaParams: TArray<string>;
     RemovingAll: boolean;
   end;
 
@@ -45,7 +49,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, uCore, VA508AccessibilityRouter, VAUtils, uSimilarNames;
+uses rCore, uCore, VA508AccessibilityRouter, uSimilarNames, VAUtils;
 
 const
     TX_DUP_RECIP = 'You have already selected that recipient.';
@@ -77,13 +81,25 @@ begin
   inherited;
   if ScreenReaderSystemActive then
     memAlert.TabStop := TRUE;
-  cboSrcList.InitLongList('');  
+  cboSrcList.InitLongList('');
 end;
 
 procedure TfrmAlertForward.cboSrcListNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
+  cbo: TORComboBox;
+
 begin
-  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboSrcListVistaParams));
+  // (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    cbo := (Sender as TORComboBox);
+    setSubSetOfPersons(cbo, sl, StartFrom, Direction);
+    cbo.ForDataUse(sl); // RTC Defect 732085
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmAlertForward.cmdCancelClick(Sender: TObject);
@@ -124,7 +140,7 @@ begin
   btnRemoveAlertFwrd.Enabled := DstList.SelCount > 0;
   btnRemoveAllAlertFwrd.Enabled := DstList.Items.Count > 0;
   if HasFocus and (DstList.SelCount = 0) then
-    btnAddAlert.SetFocus; 
+    btnAddAlert.SetFocus;
 end;
 
 procedure TfrmAlertForward.btnAddAlertClick(Sender: TObject);
@@ -185,21 +201,19 @@ var
   aErrMsg: String;
 begin
   if cboSrcList.Itemindex >= 0 then begin
-    if CheckForSimilarName(cboSrcList, aErrMsg, ltPerson,
-      FCboSrcListVistaParams, sPr, '', DstList.Items) then
+    if CheckForSimilarName(cboSrcList, aErrMsg, sPr, DstList.Items) then
     begin
       if (DstList.SelectByID(cboSrcList.ItemID) <> -1) then
         InfoBox(TX_DUP_RECIP, TX_RECIP_CAP, MB_OK or MB_ICONWARNING)
       else begin
         DstList.Items.Add(cboSrcList.Items[cboSrcList.Itemindex]);
         if ScreenReaderSystemActive then
-        GetScreenReader.Speak(Piece(cboSrcList.Items[cboSrcList.Itemindex],U,2) +
-          ' Added to ' + DstLabel.Caption);
+        GetScreenReader.Speak(Piece(cboSrcList.Items[cboSrcList.Itemindex],
+          U, 2) + ' Added to ' + DstLabel.Caption);
       end;
     end else begin
       ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
     end;
-
     btnRemoveAlertFwrd.Enabled := DstList.SelCount > 0;
     btnRemoveAllAlertFwrd.Enabled := DstList.Items.Count > 0;
   end;

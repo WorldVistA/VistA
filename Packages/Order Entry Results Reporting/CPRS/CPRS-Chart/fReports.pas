@@ -160,7 +160,9 @@ type
     procedure setRangeRadioVisible(b: Boolean);
     procedure setRangeListVisible(b: Boolean);
 //    procedure setRangeVisible(b: Boolean);
-    procedure AdjustPnlRightTop;
+    procedure tvReportsClear;
+  protected
+    procedure DestroyWindowHandle; override;
   public
     procedure ClearPtData; override;
     function AllowContextChange(var WhyNot: string): Boolean; override;
@@ -213,7 +215,7 @@ implementation
 
 uses ORFn, rCore, rReports, fFrame, uCore, uReports, fReportsPrint,
      fReportsAdhocComponent1, activex, mshtml, dShared, fGraphs, fGraphData, rGraphs, rLabs,
-     VA508AccessibilityRouter, VAUtils;
+     VA508AccessibilityRouter, VAUtils, ORExtensions, uMisc;
 
 const
   BlankWebPage = 'about:blank';
@@ -300,7 +302,6 @@ begin
       RightTopHeader(0);
       pnlRightTopHeaderMid.Visible := false;
     end;
-
   if GraphForm = nil then
   begin
     GraphForm := TfrmGraphs.Create(self);
@@ -385,6 +386,8 @@ var
 begin
   if active then
   begin
+    if not AssignedAndHasData(tvReports.Selected) then
+      exit;
     aRptCode := Piece(PReportTreeObject(tvReports.Selected.Data)^.Qualifier, ';',4);
     uQualifierType := StrToIntDef(aRptCode,0);
     pnlLeftBottom.Height := pnlLeft.Height div 2;
@@ -804,6 +807,8 @@ var
 begin
   inherited;
   if uTVReportSet then Exit;
+  if not AssignedAndHasData(tvReports.Selected) then
+    exit;
   aID := uRptID;
   aCategory   :=  PReportTreeObject(tvReports.Selected.Data)^.Category;
   aHDR        :=  PReportTreeObject(tvReports.Selected.Data)^.HDR;
@@ -918,7 +923,8 @@ var
   x: string;
   addchild, addgrandchild, addgtgrandchild: boolean;
 begin
-  tvReports.Items.Clear;
+  tvReportsClear;
+//  tvReports.Items.Clear;
   memText.Clear;
   uHTMLDoc := '';
   BlankWeb;
@@ -1004,7 +1010,8 @@ begin
           end;
     end;
   for i := 0 to tvReports.Items.Count - 1 do
-    if Piece(PReportTreeObject(tvReports.Items[i].Data)^.Qualifier,';',4) = '1' then
+    if assigned(tvReports.Items[i].Data) and
+      (Piece(PReportTreeObject(tvReports.Items[i].Data)^.Qualifier,';',4) = '1') then
       begin
         HealthSummaryCheck(uHSAll,'1');
         for j := 0 to uHSAll.Count - 1 do
@@ -1281,6 +1288,8 @@ begin
   // is properly set back to false.
   try
   // DRM ---
+  if not AssignedAndHasData(tvReports.Selected) then
+    exit;
   aQualifier  :=  PReportTreeObject(tvReports.Selected.Data)^.Qualifier;
   aStartTime  :=  Piece(aQualifier,';',1);
   aStopTime   :=  Piece(aQualifier,';',2);
@@ -1479,7 +1488,21 @@ begin
           lvReports.Items.Clear;
           RowObjects.Clear;
           memText.Lines.Clear;
-          MoreID := ''; // Removes Max/site for this type of report
+
+// [#VISTAOR-22246] Begin
+// Max/site is not displaying anymore for HSWPComponent type ports
+// AA 20210514: commenting out the next line to address 22246
+//          MoreID := ''; // Removes Max/site for this type of report
+
+// Some reports accept requests to limit result set to specific # of records
+// Others does not honor requests and use instead max value defined by parameter
+// For the latest MoreID information won't be correct
+// Cleaning MoreID for all reports might result in false impression that report returns
+// all data while in reality the limited # of records are returned.
+// Until there is no way to identify how report treats the limit requests
+// it is better to keep showing MoreID (even if it might be incorrect)
+// [#VISTAOR-22246] end.
+
           if ((aRemote = '1') or (aRemote = '2'))  then
             begin
               Screen.Cursor := crDefault;
@@ -1640,7 +1663,7 @@ end;
 procedure TfrmReports.PopupMenu1Popup(Sender: TObject);
 begin
   inherited;
-  If Screen.ActiveControl.Name <> memText.Name then
+  If (not Assigned(Screen.ActiveControl)) or (Screen.ActiveControl.Name <> memText.Name) then
    begin
      memText.SetFocus;
      memText.SelStart := 0;
@@ -1656,6 +1679,7 @@ end;
 procedure TfrmReports.FormCreate(Sender: TObject);
 begin
   inherited;
+  SetUserDataFolder(WebBrowser);
   PageID := CT_REPORTS;
   uFrozen := False;
   uHSComponents := TStringList.Create;
@@ -1698,11 +1722,13 @@ var
     with tvReports do
       begin
         for i := 0 to Items.Count -1 do
-          if StrToIntDef(Piece(PReportTreeObject(tvReports.Items[i].Data)^.Qualifier,';',4),0) = QualType then
-            begin
-              Found := True;
-              break;
-            end;
+          if assigned(tvReports.Items[i].Data) and
+            (StrToIntDef(Piece(PReportTreeObject(tvReports.Items[i].Data)
+            ^.Qualifier, ';', 4), 0) = QualType) then
+          begin
+            Found := True;
+            break;
+          end;
       end;
     Result := Found ;
     AnIndex := i;
@@ -1717,11 +1743,13 @@ var
     with tvReports do
       begin
         for i := 0 to Items.Count -1 do
-          if Piece(PReportTreeObject(tvReports.Items[i].Data)^.ID, ':', 1) = ReportID then
-            begin
-              Found := True;
-              break;
-            end;
+          if Assigned(tvReports.Items[i].Data) and
+            (Piece(PReportTreeObject(tvReports.Items[i].Data)^.ID, ':', 1)
+            = ReportID) then
+          begin
+            Found := True;
+            break;
+          end;
       end;
     Result := Found ;
     AnIndex := i;
@@ -1878,6 +1906,12 @@ procedure TfrmReports.rdoAllResultsClick(Sender: TObject);
 begin
   inherited;
   rdoChange(rdoAllResults.Tag);
+end;
+
+procedure TfrmReports.DestroyWindowHandle;
+begin
+  tvReportsClear;
+  inherited;
 end;
 
 procedure TfrmReports.DisplayHeading(aRanges: string);
@@ -2082,7 +2116,8 @@ begin
           aSite := TRemoteSite(Tabs.Objects[TabIndex]).SiteName;
           if aStatus = '1^Done' then
             begin
-              if Piece(TRemoteSite(Tabs.Objects[TabIndex]).Data[0],'^',1) = '[HIDDEN TEXT]' then
+              if (TRemoteSite(Tabs.Objects[TabIndex]).Data.Count < 1) or
+                (Piece(TRemoteSite(Tabs.Objects[TabIndex]).Data[0],'^',1) = '[HIDDEN TEXT]') then
                 begin
                   lstHeaders.Clear;
                   hook := false;
@@ -2128,7 +2163,8 @@ begin
                   end;
             end
               else
-                if tvReports.Selected.Text = 'Imaging (local only)' then
+                if Assigned(tvReports.Selected) and
+                  (tvReports.Selected.Text = 'Imaging (local only)') then
                    memText.Lines.clear
                 else
                    QuickCopy(uLocalReportData,memText);
@@ -2298,7 +2334,7 @@ begin
                 TRemoteSite(Items[i]).QueryStatus := '1^Direct Call';
                 UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID, 'Direct Call');
                 DirectQuery(Dest, AItem, HSType, Daysback, ExamID, Alpha, Omega, TRemoteSite(Items[i]).SiteID, ARpc, AHSTag);
-                if Copy(Dest[0],1,2) = '-1' then
+                if (Dest.Count < 1) or (Copy(Dest[0],1,2) = '-1') then
                   begin
                     TRemoteSite(Items[i]).QueryStatus := '-1^Communication error';
                     UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID,'Communication error');
@@ -2325,7 +2361,7 @@ begin
             else
               begin
                 RemoteQuery(Dest, AItem, HSType, Daysback, ExamID, Alpha, Omega, TRemoteSite(Items[i]).SiteID, ARpc, AHSTag);
-                if Dest[0] = '' then
+                if (Dest.Count < 1) or (Dest[0] = '') then
                   begin
                     TRemoteSite(Items[i]).QueryStatus := '-1^Communication error';
                     UpdateRemoteStatus(TRemoteSite(Items[i]).SiteID,'Communication error');
@@ -2439,21 +2475,19 @@ begin
   end;
 end;
 
-procedure TfrmReports.AdjustPnlRightTop;
+procedure TfrmReports.tvReportsClear;
 var
-  i, ii: Integer;
+  i: integer;
+
 begin
-  i := lblTitle.Height;
-  if lblProcTypeMsg.Visible then
-    i := i + lblProcTypeMsg.Height;
-  if TabControl1.Visible then
-    i := i + TabControl1.Height;
-  if pnlRightTopHeaderMid.Visible then
+  for i := 0 to tvReports.Items.Count - 1 do
+    if assigned(tvReports.Items[i].Data) then
     begin
-      ii := self.Canvas.TextHeight('W');
-      i := i + ii * 3;
+      TReportTreeObject(tvReports.Items[i].Data^).Clear;
+      Dispose(tvReports.Items[i].Data);
+      tvReports.Items[i].Data := nil;
     end;
- pnlRightTop.Height := i;
+  tvReports.Items.Clear;
 end;
 
 procedure TfrmReports.tvReportsClick(Sender: TObject);
@@ -2467,6 +2501,8 @@ var
   aQualMatch: boolean;
 begin
   inherited;
+  if not AssignedAndHasData(tvReports.Selected) then
+    exit;
   lvReports.Hint := 'To sort, click on column headers|';
   tvReports.TopItem := tvReports.Selected;
   uRemoteCount := 0;
@@ -3556,8 +3592,6 @@ begin
   lvReports.Columns.BeginUpdate;
   lvReports.Columns.EndUpdate;
   Screen.Cursor := crDefault;
-
-  AdjustPnlRightTop;
 end;
 
 procedure TfrmReports.lvReportsColumnClick(Sender: TObject;
@@ -3762,7 +3796,8 @@ begin
                       begin
                       UpdatingLvReports := TRUE;
                       for i := 0 to (tvProcedures.Items.Count - 1) do
-                        if PProcTreeObj(tvProcedures.Items[i].Data)^.ExamDtTm = Item.SubItems[0] then
+                        if AssignedAndHasData(tvProcedures.Items[i]) and
+                          (PProcTreeObj(tvProcedures.Items[i].Data)^.ExamDtTm = Item.SubItems[0]) then
                            if PProcTreeObj(tvProcedures.Items[i].Data)^.ProcedureName = Item.SubItems[2] then
                               begin
                                 if tvProcedures.Items[i].Parent <> nil then
@@ -4104,19 +4139,19 @@ var
 
 begin
   PTO := MakeProcedureTreeObject(x);
-  PTO2 := MakeProcedureTreeObject(x);
-  PTO2.ProcedureName := '';
   if PTO^.ParentName = '' then
      begin // New stand-alone
        CurrentParentNode := tvProcedures.Items.AddObject(CurrentParentNode,PTO^.ProcedureName,PTO);
        CurrentNode := CurrentParentNode;
      end
   else
-    if (CurrentParentNode <> nil) and (PTO^.ParentName = PProcTreeObj(CurrentParentNode.Data)^.ParentName) then
+    if AssignedAndHasData(CurrentParentNode) and (PTO^.ParentName = PProcTreeObj(CurrentParentNode.Data)^.ParentName) then
           // another child for same parent
        CurrentNode := tvProcedures.Items.AddChildObject(CurrentParentNode,PTO^.ProcedureName,PTO)
     else
        begin //New child and parent
+         PTO2 := MakeProcedureTreeObject(x);
+         PTO2.ProcedureName := '';
          CurrentParentNode := tvProcedures.Items.AddObject(CurrentParentNode,PTO2^.ParentName,PTO2);
          CurrentNode := tvProcedures.Items.AddChildObjectFirst(CurrentParentNode,PTO^.ProcedureName,PTO);
         end;
@@ -4143,7 +4178,7 @@ var
 begin
   inherited;
   SelNode := TTreeView(Sender).Selected;
-  if not assigned(SelNode) then Exit;
+  if not AssignedAndHasData(SelNode) then Exit;
   Associate := PProcTreeObj(SelNode.Data)^.Associate;
   lvReports.Selected := nil;
   if PProcTreeObj(SelNode.Data)^.ProcedureName <> '' then  //if it is a descendent or a stand-alone
@@ -4175,7 +4210,7 @@ var
   x, HasImages: string;
 begin
   inherited;
-  if UpdatingLvReports or not assigned(Node) then Exit;
+  if UpdatingLvReports or (not AssignedAndHasData(Node)) then Exit;
     UpdatingTVProcedures := TRUE;
     Associate := PProcTreeObj(Node.Data)^.Associate;
     lvReports.Selected := nil;
@@ -4200,6 +4235,8 @@ begin
           begin
             lblProcTypeMsg.Caption := 'Descendent Procedures with shared report';
             FirstChild := Node.GetFirstChild;
+            if not AssignedAndHasData(FirstChild) then
+              Exit;
             Associate := PProcTreeObj(FirstChild.Data)^.Associate;
             aID := lvReports.Items[Associate].SubItems[0];
             aMoreID := '#' + lvReports.Items[Associate].SubItems[5];

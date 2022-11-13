@@ -6,8 +6,6 @@ unit fFrame;
 {$WARN SYMBOL_PLATFORM OFF}
 {$DEFINE CCOWBROKER}
 
-{ $ undef debug}  // -- Bad idea
-
 interface
 
 uses
@@ -16,7 +14,7 @@ uses
   OleCtrls, VERGENCECONTEXTORLib_TLB, ComObj, AppEvnts, fBase508Form, oPKIEncryption,
   VA508AccessibilityManager, RichEdit, fDebugReport, StrUtils, vcl.ActnList,
   System.SyncObjs, U_CPTAppMonitor, ORNetIntf, system.JSON, Vcl.ExtDlgs, System.Actions,
-  fPDMPMgr, uPDMP;
+  fPDMPMgr, uPDMP, uHelpManager;
 
 type
   TfrmFrame = class(TfrmBase508Form)
@@ -283,7 +281,7 @@ type
     procedure StopPollBuff(Sender: TObject; var Error: Boolean);
     procedure pnlOTHDEnter(Sender: TObject); // rpk 1/5/2018
     procedure pnlOTHDExit(Sender: TObject);  // rpk 1/5/2018
-    procedure pnlOTHDClick(Sender: TObject);
+    procedure pnlOTHDClick(Sender: TObject);  // rpk 1/5/2018
     procedure pnlOTHDMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure pnlOTHDMouseUp(Sender: TObject; Button: TMouseButton;
@@ -297,6 +295,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure pnlOtherInfoMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure AppEventsIdle(Sender: TObject; var Done: Boolean);
   private
     FProccessingNextClick : boolean;
     FJustEnteredApp : boolean;
@@ -328,7 +327,6 @@ type
     FFixedStatusWidth: integer;
     FPrevInPatient: Boolean;
     FFirstLoad:    Boolean;
-    FFlagList: TStringList;
     FPrevPtID: string;
     FGraphFloatActive: boolean;
     FGraphContext: string;
@@ -336,12 +334,14 @@ type
     FOrderPrintForm: boolean;
     FReviewclick: boolean;
     FCtrlTabUsed: boolean;
-
+    FFixingMaximizeBug: boolean;
     fPDMPMgr: TfrmPDMP;
-
     fotherPanelUseColor: boolean;
     fotherPanelType: string;
     fotherPanelShowReportBox: boolean;
+    FCPRSClosing: boolean;
+    FInitCPRSClose: boolean;
+    FForceCloseTimer: TTimer;
     procedure RefreshFixedStatusWidth;
     procedure FocusApplicationTopForm;
     procedure AppActivated(Sender: TObject);
@@ -368,7 +368,6 @@ type
     procedure SetUserTools;
     procedure SetDebugMenu;
     procedure SetupPatient(AFlaggedList : TStringList = nil);
-    procedure RemindersChanged(Sender: TObject);
     procedure ReportsOnlyDisplay;
     procedure setOtherInfoPanel;
     procedure UMInitiate(var Message: TMessage);   message UM_INITIATE;
@@ -378,7 +377,11 @@ type
     procedure UMShowPage(var Message: TMessage);   message UM_SHOWPAGE;
     procedure WMSetFocus(var Message: TMessage);   message WM_SETFOCUS;
     procedure WMSysCommand(var Message: TMessage); message WM_SYSCOMMAND;
+    procedure UMPAPI(var Message: TMessage); message UM_PAPI; // PaPI Test
+    procedure UMMAXIMIZEBUG(var Message: TMessage); message UM_MAXIMIZEBUG;
+    procedure WMSize(var Msg: TMessage); message WM_SIZE;
     procedure UMNOTELIMIT(var Message: TMessage);  message UM_NOTELIMIT;
+    procedure UMEnableNext(var Message: TMessage);   message UM_ENABLENEXT;
 
     procedure UMPdmpLoading(var Message: TMessage); message UM_PDMP_Loading;
     procedure UMPdmpDone(var Message: TMessage); message UM_PDMP_Done;
@@ -387,6 +390,9 @@ type
     procedure UMPdmpNoteID(var Message: TMessage); message UM_PDMP_NOTE_ID;
     procedure UMPdmpAbort(var Message: TMessage); message UM_PDMP_ABORT;
     procedure UMPdmpReviewed(var Message: TMessage); message UM_PDMP_Reviewed;
+    procedure UMPdmpDisable(var Message: TMessage); message UM_PDMP_Disable;
+    procedure UMPdmpEnable(var Message: TMessage); message UM_PDMP_Enable;
+    procedure UMTimeout(var Message: TMessage); message UM_TIMEOUT;
     procedure pdmpSetup(aPatientDFN:String = '');
     procedure pdmpAlign;
 
@@ -408,21 +414,20 @@ type
     procedure NextButtonClick(Sender: TObject);
     procedure NextButtonMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure ModalEnd(Sender: TObject);
     Procedure GetExcludedFromMixed();
 
     procedure setOTHD(aTitle,aDetails:String);
     procedure ClearOTHD;
     procedure updateOTHD;
-
+    procedure ForceCloseTimer(Sender: TObject);
   public
     EnduringPtSelSplitterPos, frmFrameHeight, pnlPatientSelectedHeight: integer;
     EnduringPtSelColumns: string;
     procedure SetBADxList;
     procedure SetActiveTab(PageID: Integer);
     procedure RefreshCWAD(Sender: TObject); // TDrugs Patch OR*3*377 and WV*1*24 - DanP@SLC 11-20-2015
+    procedure RemindersChanged(Sender: TObject);
     procedure UpdateVAAMHVButtons(Sender: TObject); // TDrugs Patch OR*3*377 and WV*1*24 - DanP@SLC 01-02-2016
-
     function PageIDToTab(PageID: Integer): Integer;
     procedure ShowHideChartTabMenus(AMenuItem: TMenuItem);
     procedure UpdatePtInfoOnRefresh;
@@ -445,6 +450,11 @@ type
     procedure SetUpCIRN;
     property DoNotChangeEncWindow: boolean read FDoNotChangeEncWindow write FDoNotChangeEncWindow;
     property OrderPrintForm: boolean read FOrderPrintForm write FOrderPrintForm;
+
+    property PDMPMgr: TfrmPDMP read fPDMPMgr;
+    procedure pdmpRun(anAlign: TAlign);
+    procedure pdmpCloseReport;
+
 
     function EditInProgress: String;
     function SaveEditInProgress(var ShowMessage: Boolean): Boolean;
@@ -497,20 +507,28 @@ uses
   {$ENDIF}
   , VA508AccessibilityRouter, fOtherSchedule, VAUtils, uVA508CPRSCompatibility, fIVRoutes,
   fPrintLocation, fTemplateEditor, fTemplateDialog, fCombatVet, fFocusedControls,
-  fViewNotifications, iCoverSheetIntf, AVCatcher, System.IniFiles, Wsockc, rOTH,
+  fViewNotifications, uPaPI, iCoverSheetIntf, AVCatcher, System.IniFiles, Wsockc, rOTH,
   uVersionCheck, uFormUtils
-  , oPDMPData, rPDMP
-  , uInfoBoxWithBtnControls, uHelpManager, uSimilarNames;
+  , oPDMPData, rPDMP, fPDMPView
+  , uInfoBoxWithBtnControls, uSimilarNames, fODBase, UExceptHook, ORExtensions,
+  UResponsiveGUI;
+
+//PaPI =========================================================================
+procedure SwitchToThisWindow(h1: hWnd; x: bool); stdcall;
+  external user32 Name 'SwitchToThisWindow';
+         {x = false: Size unchanged, x = true: normal size}
+//PaPI =========================================================================
 
 var
   IsRunExecuted: Boolean = FALSE;
   GraphFloat: TfrmGraphs;
-
   OTHDTitleCaptionStr, // OTHDTitle caption string
   OTHDTitleHintStr, // OTHDTitle hint string
   OTHDDtlCaptionStr,  // OTHD detail caption string
   OTHDDtlHintStr: String; // OTHD detail hint string
   OTHDDspList: TStringList; // rpk 4/2/2019
+  inConstructor: boolean; // blj 21 July 2021 VISTAOR-21519
+
 
 const
   FCP_UPDATE  = 10;                             // form create about to check auto-update
@@ -570,7 +588,49 @@ end;
 
 procedure TfrmFrame.TimeOutAction;
 var
-  ClosingCPRS: boolean;
+  ClosingCPRS, DllWindowsFound: boolean;
+
+  procedure CloseDLLWindows;
+  var
+    i: Integer;
+    WinList: TList;
+
+    function FindThreadWindow(Window: HWND; var list: TList): BOOL; stdcall;
+    const
+      GCLP_HMODULE = -16;
+
+    var
+      module: HMODULE;
+
+    begin
+      module := GetClassLongPtr(window, GCLP_HMODULE);
+      if (module <> MainInstance) and IsWindowVisible(window) then
+        list.Add(Pointer(Window));
+      Result := true;
+    end;
+
+  begin
+    WinList := TList.Create;
+    try
+      EnumThreadWindows(GetCurrentThreadID, @FindThreadWindow, Integer(@WinList));
+      for i := 0 to WinList.Count - 1 do
+        PostMessage(HWND(WinList[i]), WM_CLOSE, 0, 0);
+      DllWindowsFound := (WinList.Count > 0);
+      if DllWindowsFound then
+      begin
+        Application.ProcessMessages;
+        FForceCloseTimer := TTimer.Create(Self);
+        with FForceCloseTimer do
+        begin
+          interval := 15000; // 15 seconds
+          OnTimer := ForceCloseTimer;
+          Enabled := True;
+        end;
+      end;
+    finally
+      FreeAndNil(WinList);
+    end;
+  end;
 
   procedure CloseCPRS;
   begin
@@ -578,7 +638,11 @@ var
       halt;
     try
       ClosingCPRS := TRUE;
-      Close;
+      Enabled := False;
+      if DllWindowsFound then
+        PostMessage(Handle, UM_TIMEOUT, 0, 0)
+      else
+        Close;
     except
       halt;
     end;
@@ -589,12 +653,7 @@ begin
   try
     if assigned(frmOtherSchedule) then frmOtherSchedule.Close;
     if assigned (frmIVRoutes) then frmIVRoutes.Close;
-    if frmFrame.DLLActive then
-    begin
-       ShutdownVitals;
-       CloseVitalsDLL();
-       CloseMHDLL();
-    end;
+    CloseDLLWindows;
     CloseCPRS;
   except
     CloseCPRS;
@@ -675,7 +734,16 @@ function TfrmFrame.AllowContextChangeAll(var Reason: string): Boolean;
 var
   Silent: Boolean;
 begin
-  if (Patient.DFN = '') or pnlNoPatientSelected.Visible then
+  // blj 21 July 2021 VISTAOR-21519
+  // If inConstructor boolean flag still set, we need to bail - the system is
+  // not yet at a state where we can support a context change.
+  if inConstructor then
+  begin
+    Result := false;
+    exit;
+  end;
+
+  if FTerminate or FClosing or (Patient.DFN = '') or pnlNoPatientSelected.Visible then
   begin
     Result := True;
     exit;
@@ -738,6 +806,11 @@ procedure TfrmFrame.ClearPatient(Fully: boolean = False);
 var
   aCPRSTab: ICPRSTab;
 begin
+  if FTerminate or FClosing then Exit;
+
+  //Release any rogue locks
+  UnlockAllLocks;
+
   //if frmFrame.Timedout then Exit; // added to correct Access Violation when "Refresh Patient Information" selected
   lblPtName.Caption     := '';
   lblPtSSN.Caption      := '';
@@ -869,21 +942,23 @@ procedure TfrmFrame.FormCreate(Sender: TObject);
 { connect to server, create tab pages, select a patient, & initialize core objects }
 var
   SAN: string;
-  otherPanelControls: TJsonValue;
+  bConnect: Boolean;
+
   Procedure LoadExceptionLogger;
   var
     aTmpLst: TStringList;
     TmpStr: String;
   begin
-    ExceptionLog.DaysToPurge :=
-      StrToIntDef(systemParameters.StringValue['orCPRSExceptionPurge'], 60);
-    ExceptionLog.Enabled :=
-      StrToBoolDef(systemParameters.StringValue
-      ['orCPRSExceptionLogger'], False);
+    ExceptionLog.DaysToPurge := SystemParameters.AsTypeDef<Integer>('orCPRSExceptionPurge', 60);
+    {$IFDEF FASTMM}
+      ExceptionLog.Enabled := FALSE;
+    {$ELSE}
+      ExceptionLog.Enabled := SystemParameters.AsTypeDef<Boolean>('orCPRSExceptionLogger', False);
+    {$ENDIF}
 
     aTmpLst := TStringList.Create;
     try
-      aTmpLst := systemParameters.StringValues['orCPRSExceptionEmail'];
+      aTmpLst.Text := SystemParameters.AsTypeDef<string>('orCPRSExceptionEmail','');
       for TmpStr in aTmpLst do
         ExceptionLog.EmailTo.Add(Piece(TmpStr, '=', 2));
     finally
@@ -895,245 +970,265 @@ var
   end;
 
 begin
-{$IFDEF DEBUG}
-  setRetainedRPCMax(500); // default 100 is now too small
-{$ENDIF}
-  FJustEnteredApp := false;
-  SizeHolder := TSizeHolder.Create;
-  FOldActiveFormChange := Screen.OnActiveFormChange;
-  Screen.OnActiveFormChange := ScreenActiveFormChange;
-//  FCCOWJustJoined := False;
-  if not (ParamSearch('CCOW')='DISABLE') then
-    try
-      StartCCOWContextor;
-//      FCCOWJustJoined := True;
-    except
-      IsRunExecuted := False;
-      FCCOWInstalled := False;
-      pnlCCOW.Visible := False;
-      mnuFileResumeContext.Visible := False;
-      mnuFileBreakContext.Visible := False;
-    end
-  else
-    begin
-      IsRunExecuted := False;
-      FCCOWInstalled := False;
-      pnlCCOW.Visible := False;
-      mnuFileResumeContext.Visible := False;
-      mnuFileBreakContext.Visible := False;
-    end;
+  //blj 21 July 2021 - VISTAOR-21519
+  //Adding a flag to disable CCOW context changes if we're still in the main form
+  // constructor.
+  inConstructor := true;
+  try
 
-  RefreshFixedStatusWidth;
-  FTerminate := False;
-
-  FFlagList := TStringList.Create;
-
-  // setup initial timeout here so can timeout logon
-  FCreateProgress := FCP_SETHOOK;
-  InitTimeOut(TimeoutCondition, TimeOutAction);
-
-  // connect to the server and create an option context
-  FCreateProgress := FCP_SERVER;
-
-{$IFDEF CCOWBROKER}
-  EnsureBroker;
-  if ctxContextor <> nil then
-  begin
-    if ParamSearch('CCOW') = 'PATIENTONLY' then
-      RPCBrokerV.Contextor := nil
-    else
-      RPCBrokerV.Contextor := ctxContextor;
-  end
-  else
-    RPCBrokerV.Contextor := nil;
-{$ENDIF}
-
-  if not ConnectToServer(TX_OPTION) then
-  begin
-    if Assigned(RPCBrokerV) then
-      InfoBox(RPCBrokerV.RPCBError, 'Error', MB_OK or MB_ICONERROR);
-    Close;
-    Exit;
-  end;
-
-  if ctxContextor <> nil then
-  begin
-    if not (ParamSearch('CCOW') = 'PATIENTONLY') then
-      ctxContextor.NotificationFilter := ctxContextor.NotificationFilter + ';User';
-  end;
-
-  FECSAuthUser := ValidECSUser;
-  uECSReport := TECSReport.Create;
-  uECSReport.ECSPermit := FECSAuthUser;
-  RPCBrokerV.CreateContext(TX_OPTION);
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
-  // Temp fix for LPack error. This is expected to be dealt with
-  // in the next broker patch and should be removed
-  // { TODO : Remove when new broker patch is created }
-  TXWBWinsock(RPCBrokerV.XWBWinsock).CountWidth := 4;
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
- // Application.OnException := AppException;
-
-  FOldActivate := Application.OnActivate;
-  Application.OnActivate := AppActivated;
-  Application.OnDeActivate := AppDeActivated;
-
-  // create initial core objects
-  FCreateProgress := FCP_OBJECTS;
-//  User := TUser.Create;
-//  getSysUserParameters(user.DUZ);
-//  LoadExceptionLogger;
-  // make sure we're using the matching server version
-  FCreateProgress := FCP_CHKVER;
-
-  if not IsCorrectVersion(TX_OPTION) then
-{$IFDEF DEBUG}
-    if InfoBox('Version mismatch or error' + CRLF + CRLF +
-      'Do you want to continue?', 'DEBUG',MB_YESNO) = mrNo  then
-      begin
-        Close;
-        exit;
-      end;
-{$ELSE}
-    begin
-      Close;
-      Exit;
-    end;
-{$ENDIF}
-  User := TUser.Create;
-  getSysUserParameters(user.DUZ);
-  LoadExceptionLogger;
-
-  SAN := sCallV('XUS PKI GET UPN', []);
-  if SAN='' then DigitalSigningSetup1.Visible := True
-  else DigitalSigningSetup1.Visible := False;
-
-  // Add future tabs here as they are created/implemented:
-  if (
-     (not User.HasCorTabs) and
-     (not User.HasRptTab)
-     )
-  then
-  begin
-    InfoBox('No valid tabs assigned', 'Tab Access Problem', MB_OK);
-    Close;
-    Exit;
-  end;
-//  otherPanelControls := otherInformationPanelControls;
-  otherPanelControls := systemParameters.getJsonValue('otherInfromationPanel');
-  if TJSONObject(otherPanelControls).Values['turnedOn'].ToString = '0' then
-    begin
-      pnlOtherInfo.Enabled := false;
-      pnlOtherInfo.Visible := false;
-    end
-  else
-    begin
-      fotherPanelUseColor := TJSONObject(otherPanelControls).Values['useColor'].ToString = '1';
-      if fotherPanelUseColor then
-        begin
-          self.pnlOtherInfo.ParentBackground := false;
-          self.pnlOtherInfo.ParentColor := false;
+    {$IFDEF DEBUG}
+      setRetainedRPCMax(500); // default 100 is now too small
+    {$ENDIF}
+      FJustEnteredApp := false;
+      SizeHolder := TSizeHolder.Create;
+      FOldActiveFormChange := Screen.OnActiveFormChange;
+      Screen.OnActiveFormChange := ScreenActiveFormChange;
+    //  FCCOWJustJoined := False;
+      if not (ParamSearch('CCOW')='DISABLE') then
+        try
+          StartCCOWContextor;
+    //      FCCOWJustJoined := True;
+        except
+          IsRunExecuted := False;
+          FCCOWInstalled := False;
+          pnlCCOW.Visible := False;
+          mnuFileResumeContext.Visible := False;
+          mnuFileBreakContext.Visible := False;
         end
       else
         begin
-          pnlOtherInfo.Color := get508CompliantColor(clYellow);
-          self.pnlOtherInfo.ParentBackground := true;
-          self.pnlOtherInfo.ParentColor := true;
-          self.pnlOtherInfo.Color := clBtnFace;
-          self.pnlOtherInfo.Repaint;
+          IsRunExecuted := False;
+          FCCOWInstalled := False;
+          pnlCCOW.Visible := False;
+          mnuFileResumeContext.Visible := False;
+          mnuFileBreakContext.Visible := False;
         end;
-      fotherPanelShowReportBox := TJSONObject(otherPanelControls).Values['reportBoxOn'].ToString = '1';
-      pnlOtherInfo.tabstop := screenReaderActive;
-    end;
 
-  // Global flags set by server
-  IsLeJeuneActive := ServerHasPatch(CampLejeunePatch);
-  SpansIntlDateLine := SiteSpansIntlDateLine;
+      RefreshFixedStatusWidth;
+      FTerminate := False;
 
-  // create creating core objects
-  Patient := TPatient.Create;
-  Encounter := TEncounter.Create;
-  Changes := TChanges.Create;
-  Notifications := TNotifications.Create;
-  RemoteSites := TRemoteSiteList.Create;
-  RemoteReports := TRemoteReportList.Create;
-  uTabList := TStringList.Create;
-  FlaggedPTList := TStringList.Create;
-  HasFlag  := False;
-  FlagList := TStringList.Create;
+      // setup initial timeout here so can timeout logon
+      FCreateProgress := FCP_SETHOOK;
+      InitTimeOut(TimeoutCondition, TimeOutAction);
 
-  OTHDDspList := TStringList.Create;  // rpk 4/2/2019
+      // connect to the server and create an option context
+      FCreateProgress := FCP_SERVER;
 
-  //Set the mix case exclusion event
-  GetExcludedFromMixed;
+    {$IFDEF CCOWBROKER}
+      EnsureBroker;
+      if ctxContextor <> nil then
+      begin
+        if ParamSearch('CCOW') = 'PATIENTONLY' then
+          RPCBrokerV.Contextor := nil
+        else
+          RPCBrokerV.Contextor := ctxContextor;
+      end
+      else
+        RPCBrokerV.Contextor := nil;
+    {$ENDIF}
+      try
+        bConnect := ConnectToServer(TX_OPTION);
+      except
+        on E: Exception do
+        begin
+          bConnect := False;
+          RPCBrokerV.RPCBError := E.Message;
+          if assigned(RPCBrokerV) then
+          begin
+            SAN := RPCBrokerV.RPCBError;
+            if pos('Option locked, ', SAN) > 0 then
+              SAN := // SAN + CRLF + CRLF + // replacing original error message
+                'CPRS GUI is currently unavailable due to a planned upgrade.' + CRLF
+                + 'Please try again later';
+            infoBox(SAN, 'Error', MB_OK or MB_ICONWARNING);
+          end
+          else
+          begin
+            SAN := 'RPC Broker is unavailable';
+            infoBox(SAN, 'Error', MB_OK or MB_ICONERROR);
+          end;
+        end;
+      end;
 
-  // set up structures specific to the user
-  Caption := TX_IN_USE + MixedCase(User.Name) + '  (' + String(RPCBrokerV.Server) + ')';
-  SetDebugMenu;
-  if InteractiveRemindersActive then
-    NotifyWhenRemindersChange(RemindersChanged);
-  // load all the tab pages
-  FCreateProgress := FCP_FORMS;
-  //CreateTab(TObject(frmProblems), TfrmProblems, CT_PROBLEMS, 'Problems');
-  CreateTab(CT_PROBLEMS, 'Problems');
-  CreateTab(CT_MEDS,     'Meds');
-  CreateTab(CT_ORDERS,   'Orders');
-  CreateTab(CT_NOTES,    'Notes');
-  CreateTab(CT_CONSULTS, 'Consults');
-  if ShowSurgeryTab then CreateTab(CT_SURGERY,  'Surgery');
-  CreateTab(CT_DCSUMM,   'D/C Summ');
-  CreateTab(CT_LABS,     'Labs');
-  CreateTab(CT_REPORTS,  'Reports');
-  CreateTab(CT_COVER,    'Cover Sheet');
-  ShowHideChartTabMenus(mnuViewChart);
-  //  We defer calling LoadUserPreferences to UMInitiate, so that the font sizing
-  // routines recognize this as the application's main form (this hasn't been
-  // set yet).
-  FNextButtonBitmap := TBitmap.Create;
-  FNextButtonBitmap.LoadFromResourceName(hInstance, 'BMP_HANDRIGHT');
-  // set the timeout to DTIME now that there is a connection
-  UpdateTimeOutInterval(User.DTIME * 1000);  // DTIME * 1000 mSec
-  // get a patient
-  HandleNeeded;                              // make sure handle is there for ORWPT SHARE call
-  FCreateProgress := FCP_PTSEL;
-  Enabled := False;
-  FFirstLoad := True;                       // First time to initialize the fFrame
-  FCreateProgress := FCP_FINISH;
-  pnlReminders.Visible := InteractiveRemindersActive;
-  GraphFloatActive := false;
-  GraphContext := '';
-  frmGraphData := TfrmGraphData.Create(self);        // form is only visible for testing
-  GraphDataOnUser;
-  uRemoteType := '';
-  uLabRemoteType := '';
-  uReportID := '';
-  uLabRepID := '';
-  FPrevPtID := '';
-  SetUserTools;
-  EnduringPtSelSplitterPos := 0;
-  EnduringPtSelColumns := '';
-  if User.IsReportsOnly then // Reports Only tab.
-    ReportsOnlyDisplay; // Calls procedure to hide all components/menus not needed.
-  InitialOrderVariables;
+      if not bConnect then
+        begin
+          Close;
+          exit;
+        end;
 
- //PDMP Setup
-  pdmpGetParams;
-{$IFDEF DEBUG}
-  ResetParams1.Visible := True;
-{$ENDIF}
-  if assigned(PDMP1) then
-    begin
-      PDMP1.Visible := PDMP_ENABLED;
-      N1.Visible := PDMP_ENABLED;
-    end;
+      if ctxContextor <> nil then
+      begin
+        if not (ParamSearch('CCOW') = 'PATIENTONLY') then
+          ctxContextor.NotificationFilter := ctxContextor.NotificationFilter + ';User';
+      end;
 
-  PostMessage(Handle, UM_INITIATE, 0, 0);    // select patient after main form is created
-  SetFormMonitoring(true);
-  //Will load the copy/paste buffer
-  CPAppMon.LoadTheProperties;
-  CPAppMon.LoadTheBuffer;
+      FECSAuthUser := ValidECSUser;
+      uECSReport := TECSReport.Create;
+      uECSReport.ECSPermit := FECSAuthUser;
+      RPCBrokerV.CreateContext(TX_OPTION);
 
-  SimilarNameEnabled := Uppercase(Getuserparam('OR SIMILAR NAMES ENABLED')) = '1';
+      FOldActivate := Application.OnActivate;
+      Application.OnActivate := AppActivated;
+      Application.OnDeActivate := AppDeActivated;
+
+      // create initial core objects
+      FCreateProgress := FCP_OBJECTS;
+
+      // make sure we're using the matching server version
+      FCreateProgress := FCP_CHKVER;
+
+      if not IsCorrectVersion(TX_OPTION) then
+    {$IFDEF DEBUG}
+        if InfoBox('Version mismatch or error' + CRLF + CRLF +
+          'Do you want to continue?', 'DEBUG',MB_YESNO) = mrNo  then
+          begin
+            Close;
+            exit;
+          end;
+    {$ELSE}
+        begin
+          Close;
+          Exit;
+        end;
+    {$ENDIF}
+      User := TUser.Create;
+      getSysUserParameters(user.DUZ);
+      LoadExceptionLogger;
+      TResponsiveGUI.Enabled := SystemParameters.AsTypeDef<boolean>('OverlayOn', True);
+      CallVistA('XUS PKI GET UPN', [], SAN);
+      if SAN='' then DigitalSigningSetup1.Visible := True
+      else DigitalSigningSetup1.Visible := False;
+
+      // Add future tabs here as they are created/implemented:
+      if (
+         (not User.HasCorTabs) and
+         (not User.HasRptTab)
+         )
+      then
+      begin
+        InfoBox('No valid tabs assigned', 'Tab Access Problem', MB_OK);
+        Close;
+        Exit;
+      end;
+
+      if not SystemParameters.AsType<Boolean>('otherInfromationPanel.turnedOn') then
+        begin
+          pnlOtherInfo.Enabled := false;
+          pnlOtherInfo.Visible := false;
+        end
+      else
+        begin
+          fotherPanelUseColor := SystemParameters.AsType<Boolean>('otherInfromationPanel.useColor');
+          if fotherPanelUseColor then
+            begin
+              self.pnlOtherInfo.ParentBackground := false;
+              self.pnlOtherInfo.ParentColor := false;
+            end
+          else
+            begin
+              pnlOtherInfo.Color := get508CompliantColor(clYellow);
+              self.pnlOtherInfo.ParentBackground := true;
+              self.pnlOtherInfo.ParentColor := true;
+              self.pnlOtherInfo.Color := clBtnFace;
+              self.pnlOtherInfo.Repaint;
+            end;
+          fotherPanelShowReportBox := SystemParameters.AsType<Boolean>('otherInfromationPanel.reportBoxOn');
+          pnlOtherInfo.tabstop := screenReaderActive;
+        end;
+
+      // Global flags set by server
+      IsLeJeuneActive := ServerHasPatch(CampLejeunePatch);
+      SpansIntlDateLine := SiteSpansIntlDateLine;
+
+      // create creating core objects
+      Patient := TPatient.Create;
+      Encounter := TEncounter.Create;
+      Changes := TChanges.Create;
+      Notifications := TNotifications.Create;
+      RemoteSites := TRemoteSiteList.Create;
+      RemoteReports := TRemoteReportList.Create;
+      uTabList := TStringList.Create;
+      FlaggedPTList := TStringList.Create;
+      HasFlag  := False;
+      FlagList := TStringList.Create;
+      OTHDDspList := TStringList.Create;  // rpk 4/2/2019
+
+      //Set the mix case exclusion event
+      GetExcludedFromMixed;
+
+      // set up structures specific to the user
+
+      Caption := TX_IN_USE + MixedCase(User.Name) + '  (' + String(RPCBrokerV.Server) + ')'
+    //    + '  ' + FileVersionValue(Application.ExeName, FILE_VER_DEBUG);
+      ;
+      SetDebugMenu;
+      if InteractiveRemindersActive then
+        NotifyWhenRemindersChange(RemindersChanged);
+      // load all the tab pages
+      FCreateProgress := FCP_FORMS;
+      //CreateTab(TObject(frmProblems), TfrmProblems, CT_PROBLEMS, 'Problems');
+      CreateTab(CT_PROBLEMS, 'Problems');
+      CreateTab(CT_MEDS,     'Meds');
+      CreateTab(CT_ORDERS,   'Orders');
+      CreateTab(CT_NOTES,    'Notes');
+      CreateTab(CT_CONSULTS, 'Consults');
+      if ShowSurgeryTab then CreateTab(CT_SURGERY,  'Surgery');
+      CreateTab(CT_DCSUMM,   'D/C Summ');
+      CreateTab(CT_LABS,     'Labs');
+      CreateTab(CT_REPORTS,  'Reports');
+      CreateTab(CT_COVER,    'Cover Sheet');
+      ShowHideChartTabMenus(mnuViewChart);
+      //  We defer calling LoadUserPreferences to UMInitiate, so that the font sizing
+      // routines recognize this as the application's main form (this hasn't been
+      // set yet).
+      FNextButtonBitmap := TBitmap.Create;
+      FNextButtonBitmap.LoadFromResourceName(hInstance, 'BMP_HANDRIGHT');
+      // set the timeout to DTIME now that there is a connection
+      UpdateTimeOutInterval(User.DTIME * 1000);  // DTIME * 1000 mSec
+      // get a patient
+      HandleNeeded;                              // make sure handle is there for ORWPT SHARE call
+      FCreateProgress := FCP_PTSEL;
+      Enabled := False;
+      FFirstLoad := True;                       // First time to initialize the fFrame
+      FCreateProgress := FCP_FINISH;
+      pnlReminders.Visible := InteractiveRemindersActive;
+      GraphFloatActive := false;
+      GraphContext := '';
+      frmGraphData := TfrmGraphData.Create(self);        // form is only visible for testing
+      GraphDataOnUser;
+      uRemoteType := '';
+      uLabRemoteType := '';
+      uReportID := '';
+      uLabRepID := '';
+      FPrevPtID := '';
+      SetUserTools;
+      EnduringPtSelSplitterPos := 0;
+      EnduringPtSelColumns := '';
+      if User.IsReportsOnly then // Reports Only tab.
+        ReportsOnlyDisplay; // Calls procedure to hide all components/menus not needed.
+      InitialOrderVariables;
+
+      pdmpGetParams; //PDMP Setup
+    {$IFDEF DEBUG}
+      ResetParams1.Visible := True;
+    {$ENDIF}
+      if assigned(PDMP1) then
+        begin
+          PDMP1.Visible := PDMP_ENABLED;
+          N1.Visible := PDMP_ENABLED;
+        end;
+
+
+      PostMessage(Handle, UM_INITIATE, 0, 0);    // select patient after main form is created
+      SetFormMonitoring(true);
+      //Will load the copy/paste buffer
+      CPAppMon.LoadTheProperties;
+      CPAppMon.LoadTheBuffer;
+
+      TSimilarNames.Enabled := Uppercase(Getuserparam('OR SIMILAR NAMES ENABLED')) = '1';
+  finally
+    inConstructor := false;
+  end;
 end;
 
 procedure TfrmFrame.StartCCOWContextor;
@@ -1199,10 +1294,12 @@ begin
   NotifyOtherApps(NAE_OPEN, IntToStr(User.DUZ));
   LoadUserPreferences;
   GetBAStatus(User.DUZ,Patient.DFN);
+  Enabled := True; // PaPI. Moved before mnuFileOpenClick to enable main window
   mnuFileOpenClick(Self);
-  Enabled := True;
+  //Enabled := True;
   // If TimedOut, Close has already been called.
-  if not TimedOut and (Patient.DFN = '') then Close;
+  if not TimedOut and (Patient.DFN = '') then
+    Close;
 end;
 
 procedure TfrmFrame.FormDestroy(Sender: TObject);
@@ -1228,15 +1325,11 @@ begin
   ctxContextor.Free;
   frmDebugReport.Free;
   FreeAndNil(OTHDDspList);
+  FreeAndNil(FlagList);
 
   for I := high(WatchArray) downto low(WatchArray) do
     WatchArray[I].RPCText.Free;
   SetLength(WatchArray, 0);
-end;
-
-procedure TfrmFrame.ModalEnd(Sender: TObject);
-begin
-  Halt;
 end;
 
 procedure TfrmFrame.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -1244,24 +1337,22 @@ procedure TfrmFrame.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 var
   Reason: string;
   I: integer;
-  SystemModal: Boolean;
-begin
- //check for modal windows and close any that may exist
- if Application.ModalLevel > 0 then
- begin
-  SystemModal := true;
-  // Screen.ActiveForm.Close();
-  for i := Screen.FormCount - 1 downto 1 do begin
-   if (fsModal in Screen.Forms[i].FormState) and (Screen.Forms[i] <> Application.MainForm) then
-   begin
-     Screen.Forms[i].Close();
-     SystemModal := False;
-   end;
-  end;
 
-  if SystemModal then
-   Application.OnModalEnd := ModalEnd;
- end;
+begin
+  if assigned(FForceCloseTimer) then
+    FForceCloseTimer.OnTimer := FForceCloseTimer.OnTimer; // reset timer
+  if FCPRSClosing then
+    exit;
+ //check for modal windows and close any that may exist
+  if Application.ModalLevel > 0 then
+  begin
+    for i := Screen.FormCount - 1 downto 0 do
+    begin
+      if (fsModal in Screen.Forms[i].FormState) and
+        (Screen.Forms[i] <> Application.MainForm) then
+        Screen.Forms[i].Close();
+    end;
+  end;
 
   if (FCreateProgress < FCP_FINISH) then Exit;
   if User.IsReportsOnly then // Reports Only tab.
@@ -1269,9 +1360,20 @@ begin
   if TimedOut then
     begin
       if Changes.RequireReview then ReviewChanges(TimedOut);
-      Exit;
+      CanClose := True;
+      FCPRSClosing := False;
+//      Exit;
     end;
-  if not AllowContextChangeAll(Reason) then CanClose := False;
+  if (not TimedOut) and (not AllowContextChangeAll(Reason)) then
+    CanClose := False;
+  if CanClose and (not FCPRSClosing) then
+  begin
+    CanClose := False;
+    FCPRSClosing := True;
+    FInitCPRSClose := True;
+    Screen.Cursor := crHourGlass;
+    Enabled := False;
+  end;
 end;
 
 procedure TfrmFrame.SetUserTools;
@@ -1420,12 +1522,65 @@ begin
 end;
 
 procedure TfrmFrame.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+  Done: boolean;
+
+  // Remove pending messages to prevent messages from trying to recreate
+  // window handles after the form is destroyed. NOTE: WM_PAINT messages don't
+  // get removed from the message queue and can cause an infinite loop trying
+  // to remove them - which is why we filter them out and added a 500 count
+  // (just in case there are any other messages that don't get removed).
+  procedure ClearMessages(ctrl: TWinControl);
+  const
+   // all message types except QS_PAINT
+    PM_QS_FILTER = (((QS_ALLINPUT or QS_ALLPOSTMESSAGE) and (not QS_PAINT)) shl 16) or PM_REMOVE;
+
+  var
+    i, count: Integer;
+    Msg: TMsg;
+
+  begin
+    for i := 0 to ctrl.ControlCount - 1 do
+      if ctrl.Controls[i] is TWinControl then
+        ClearMessages(TWinControl(ctrl.Controls[i]));
+    if ctrl.HandleAllocated then
+    begin
+      count := 0;
+      while PeekMessage(Msg, ctrl.Handle, 0, 0, PM_QS_FILTER) do
+      begin
+        inc(count);
+        if count > 500 then
+          break;
+      end;
+    end;
+  end;
+
+  procedure SafeClose(var aForm: TForm);
+  begin
+    if assigned(aForm) then
+    begin
+      if FLastPage = aForm then
+        FLastPage := nil;
+      aForm.ActiveControl := nil;
+      ClearMessages(aForm);
+      aForm.Close;
+      aForm := nil;
+    end;
+  end;
+
 begin
   FClosing := TRUE;
+  FInitCPRSClose := False;
+  if assigned(FForceCloseTimer) then
+    FForceCloseTimer.Enabled := False;
   SetFormMonitoring(false);
-  If Assigned(Patient) then
+  If Assigned(Patient)
+    and assigned(RPCBrokerV) and RPCBrokerV.Connected // AA
+  then
    CPAppMon.SaveTheBuffer; //save the buffer
 
+  //Release any rogue locks
+  UnlockAllLocks;
 
   if FCreateProgress < FCP_FINISH then FTerminate := True;
 
@@ -1451,25 +1606,39 @@ begin
   // call close for each page in case there is any special processing
   if FCreateProgress > FCP_FORMS then
   begin
+    StopExceptionStackMonitoring;
     mnuFrame.Merge(nil);
-    frmCoverSheet.Close;
-    frmProblems.Close;   //frmProblems.Release;
-    frmMeds.Close;       //frmMeds.Release;
-    frmOrders.Close;     //frmOrders.Release;
-    frmNotes.Close;      //frmNotes.Release;
-    frmConsults.Close;   //frmConsults.Release;
-    frmDCSumm.Close;     //frmDCSumm.Release;
-    if Assigned(frmSurgery) then frmSurgery.Close;    //frmSurgery.Release;
-    frmLabs.Close;       //frmLabs.Release;
-    frmReports.Close;    //frmReports.Release;
-    frmGraphData.Close;  //frmGraphData.Release;
-
+    Self.ActiveControl := nil;
+    ClearMessages(Self);
+    safeClose(TForm(frmCoverSheet));
+    safeClose(TForm(frmProblems));   //frmProblems.Release;
+    safeClose(TForm(frmMeds));       //frmMeds.Release;
+    safeClose(TForm(frmOrders));     //frmOrders.Release;
+    safeClose(TForm(frmNotes));      //frmNotes.Release;
+    safeClose(TForm(frmConsults));   //frmConsults.Release;
+    safeClose(TForm(frmDCSumm));     //frmDCSumm.Release;
+    safeClose(TForm(frmSurgery));    //frmSurgery.Release;
+    safeClose(TForm(frmLabs));       //frmLabs.Release;
+    safeClose(TForm(frmReports));    //frmReports.Release;
+    safeClose(TForm(frmGraphData));  //frmGraphData.Release;
+    repeat
+      Done := True;
+      try
+        Application.ProcessMessages;
+      except
+        Done := False;
+      end;
+    until Done;
   end;
 
   RPCLogClose;
 
   // if < FCP_FINISH we came here from inside FormCreate, so need to call terminate
-  if FCreateProgress < FCP_FINISH then Application.Terminate;
+  if FCreateProgress < FCP_FINISH then
+    begin
+      Application.Terminate;
+      Application.ProcessMessages;
+    end;
 end;
 
 procedure TfrmFrame.SetDebugMenu;
@@ -1477,11 +1646,9 @@ var
   IsProgrammer: Boolean;
 begin
   IsProgrammer := User.HasKey('XUPROGMODE') or (ShowRPCList = True);
-  mnuHelpBroker.Visible   := IsProgrammer;
   mnuHelpLists.Visible    := IsProgrammer;
   mnuHelpSymbols.Visible  := IsProgrammer;
   mnuFocusChanges.Visible := IsProgrammer;  {added 10 May 2012  dlp see fFocusControls }
-  Z6.Visible              := IsProgrammer;
 {$IFDEF DEBUG}
   RPCLog_SaveAvailable := isProgrammer;
 {$ENDIF}
@@ -1513,6 +1680,7 @@ procedure TfrmFrame.UMNewOrder(var Message: TMessage);
 var
   OrderAct: string;
 begin
+  if FTerminate or FClosing then Exit;
   with Message do
   begin
     CoverSheet.OnRefreshPanel(Self, CV_CPRS_ALLG);
@@ -1547,7 +1715,7 @@ end;
 
 procedure TfrmFrame.UMReminders(var Message: TMessage);
 begin
-  if systemParameters.getJsonValue('reEvaluateReminders').ToString = '1' then
+  if SystemParameters.AsType<string>('reEvaluateReminders') = '1' then
     CoverSheet.onRefreshPanel(Self, CV_CPRS_RMND);
 
   CoverSheet.OnRefreshPanel(Self, CV_CPRS_WVHT);
@@ -1564,6 +1732,7 @@ end;
 
 procedure TfrmFrame.UMNOTELIMIT(var Message: TMessage);
 begin
+  if FTerminate or FClosing then Exit;
  //If active tab is notes then call the note's limit function
  if tabPage.TabIndex = frmFrame.PageIDToTab(CT_NOTES) then
     frmNotes.LimitEditableNote
@@ -1573,6 +1742,14 @@ begin
     frmDCSumm.LimitEditableNote
  else if tabPage.TabIndex = frmFrame.PageIDToTab(CT_CONSULTS) then
     frmConsults.LimitEditableNote;
+end;
+
+procedure TfrmFrame.UMEnableNext(var Message: TMessage); // VISTAOR-31343
+begin
+  if assigned(FNextButton) then
+    FNextButton.Enabled := True;
+
+  mnuFileNext.Enabled := True;
 end;
 
 { Tab Selection (navigate between pages) --------------------------------------------------- }
@@ -1589,11 +1766,57 @@ begin
        aCPRS508.OnFocusFirstControl(Self);
 end;
 
+procedure TfrmFrame.UMMAXIMIZEBUG(var Message: TMessage);
+var
+  r: TRect;
+
+begin
+  if not FFixingMaximizeBug then
+  begin
+    FFixingMaximizeBug := True;
+    try
+      r := Screen.MonitorFromWindow(Self.Handle).WorkareaRect;
+      if WindowState = wsMaximized then
+      begin
+        WindowState := wsNormal;
+        left := r.Left;
+        width := r.Width;
+      end;
+      top := r.Top;
+      Height := r.Height;
+      if Height > r.Height then
+      begin
+        RecreateWnd;
+        Height := r.Height;
+        Invalidate;
+        TResponsiveGUI.ProcessMessages;
+      end;
+    finally
+      FFixingMaximizeBug := False;
+    end;
+  end;
+end;
+
+procedure TfrmFrame.WMSize(var Msg: TMessage);
+var
+  r: TRect;
+
+begin
+  inherited;
+  if HandleAllocated and Showing then
+  begin
+    r := Screen.MonitorFromWindow(Self.Handle).WorkareaRect;
+    if HiWord(Msg.LParam) > r.Height then
+      PostMessage(Handle, UM_MAXIMIZEBUG, 0, 0);
+  end;
+end;
+
 procedure TfrmFrame.UMShowPage(var Message: TMessage);
 { shows a page when the UM_SHOWPAGE message is received }
 var
   aCPRSTab: ICPRSTab;
 begin
+  if FTerminate or FClosing then Exit;
   if FCCOWDrivedChange then FCCOWDrivedChange := False;
 
   if FLastPage <> nil then
@@ -1605,11 +1828,14 @@ begin
   FChangeSource := CC_CLICK;  // reset to click so we're only dealing with exceptions to click
   if assigned(FTabChanged) then
     FTabChanged(Self);
+
+  PostMessage(Handle, UM_ENABLENEXT, 0, 0);  // VISTAOR-31343
 end;
 
 procedure TfrmFrame.SwitchToPage(NewForm: TForm);
 { unmerge/merge menus, bring page to top of z-order, call form-specific OnDisplay code }
 begin
+  if FTerminate or FClosing then Exit;
   if FLastPage = NewForm then
     begin
       if Notifications.Active and Assigned(NewForm) then PostMessage(Handle, UM_SHOWPAGE, 0, 0);
@@ -1646,7 +1872,7 @@ begin
       if NewForm.Name = frmSurgery.Name then frmSurgery.Align := alclient
         else frmSurgery.Align := alNone;
     NewForm.BringToFront;                    // to cause tab switch to happen immediately
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     PostMessage(Handle, UM_SHOWPAGE, 0, 0);  // this calls DisplayPage for the form
   end;
 end;
@@ -1690,9 +1916,14 @@ begin
       CT_LABS:     SwitchToPage(frmLabs);
       CT_REPORTS:  SwitchToPage(frmReports);
     end; {case}
+    if PageID <> CT_NOPAGE then
+      NextTab := PageID;
   end
   else // Reports Only tab.
+  begin
     SwitchToPage(frmReports);
+    NextTab := CT_REPORTS;
+  end;
   if ScreenReaderSystemActive and FCtrlTabUsed then
     SpeakPatient;
   ChangingTab := PageID;
@@ -1718,7 +1949,6 @@ end;
 
 { File Menu Events ------------------------------------------------------------------------- }
 
-
 procedure TfrmFrame.SetupPatient(AFlaggedList : TStringList);
 var
   AMsg, SelectMsg: string;
@@ -1729,7 +1959,7 @@ begin
     btnCombatVet.Caption := 'CV '+ CombatVet.ExpirationDate;
     btnCombatVet.Visible := Patient.CombatVet.IsEligible;
     Visible := True;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     lblPtName.Caption := Name + Status; //CQ #17491: Allow for the display of the patient status indicator in header bar.
     lblPtSSN.Caption := SSN;
     lblPtAge.Caption := FormatFMDateTime('mmm dd,yyyy', DOB) + ' (' + IntToStr(Age) + ')';
@@ -1742,7 +1972,8 @@ begin
       else lblPtPostings.Caption := 'No Postings';
     lblPtCWAD.Caption := CWAD;
     pnlPostings.Caption := lblPtPostings.Caption + ' ' + lblPtCWAD.Caption;
-    if (Length(PrimaryTeam) > 0) or (Length(PrimaryProvider) > 0) then begin
+    if (Length(PrimaryTeam) > 0) or (Length(PrimaryProvider) > 0) then
+    begin
       lblPtCare.Caption := PrimaryTeam;
       if PrimaryProvider <> '' then lblPtCare.Caption := lblPtCare.Caption + ' / ' + MixedCase(PrimaryProvider);
       if Length(Associate)>0 then lblPtCare.Caption :=  lblPtCare.Caption + ' / ' + MixedCase(Associate);
@@ -1821,10 +2052,26 @@ var
         FlaggedPTList.Add(Patient.DFN);
     end;
 
+    procedure reportNotificationFollowUpText;
+    var
+      sl: TStrings;
+    begin
+      sl := TStringList.Create;
+      try
+        setNotificationFollowUpText(sl, Patient.DFN, Notifications.FollowUp,
+          Notifications.AlertData);
+        ReportBox(sl, Pieces(Piece(Notifications.RecordID, U, 1), ':', 2,
+          3), True);
+      finally
+        sl.Free;
+      end;
+    end;
+
 begin
   DoNotChangeEncWindow := False;
   OrderPrintForm := False;
   mnuFile.Tag := 0;
+  AccessStatus := -1;
   SaveDFN := Patient.DFN;
   Notifications.Next;
   if Notifications.Active then
@@ -1834,7 +2081,6 @@ begin
       ClearPatient(True)
     else if SaveDFN <> NewDFN then
     begin
-
       if assigned(fPDMPMgr) then  // canceling PDMP request (if any)
         fPDMPMgr.acCancel.Execute;
 
@@ -1994,9 +2240,10 @@ begin
       NF_FLAGGED_OI_EXP_OUTPT          : NextIndex := PageIDToTab(CT_ORDERS);
       NF_CONSULT_PROC_INTERPRETATION   : NextIndex := PageIDToTab(CT_CONSULTS);
       NF_RTC_CANCEL_ORDERS             : NextIndex := PageIDToTab(CT_ORDERS);
+      NF_NO_FLAG_ACTION_ORDER          : NextIndex := PageIDToTab(CT_ORDERS);
       NF_IMAGING_REQUEST_CHANGED       :
         begin
-          ReportBox(GetNotificationFollowUpText(Patient.DFN, Notifications.FollowUp, Notifications.AlertData), Pieces(Piece(Notifications.RecordID, U, 1), ':', 2, 3), True);
+          ReportNotificationFollowUpText;
           Notifications.Delete;
         end;
       NF_LAB_THRESHOLD_EXCEEDED        : NextIndex := PageIDToTab(CT_LABS);
@@ -2657,7 +2904,7 @@ begin
       ExcuteEC(AFile,Param);
   end else
   begin
-    if ExtractFileExt(AFile) = '.chm' then
+     if ExtractFileExt(AFile) = '.chm' then
       THelpManager.GetInstance.ExecHelp(1, 0, CallHelp)
     else
       ShellExecute(Handle, 'open', PChar(AFile), PChar(Param), '', SW_NORMAL);
@@ -2669,7 +2916,7 @@ end;
 procedure TfrmFrame.mnuHelpBrokerClick(Sender: TObject);
 { used for debugging - shows last n broker calls }
 begin
-uGN_RPCLog.ShowBroker;
+  uGN_RPCLog.ShowBroker;
 end;
 
 procedure TfrmFrame.mnuHelpListsClick(Sender: TObject);
@@ -2677,7 +2924,7 @@ procedure TfrmFrame.mnuHelpListsClick(Sender: TObject);
 begin
   if Screen.ActiveControl is TListBox
 {$IFDEF DEBUG}
-    then uGN_RPCLog.DebugListItems(TListBox(Screen.ActiveControl))
+    then {uGN_RPCLog.}DebugListItems(TListBox(Screen.ActiveControl))
 {$ELSE}
     then DebugListItems(TListBox(Screen.ActiveControl))
 {$ENDIF}
@@ -2703,6 +2950,11 @@ procedure TfrmFrame.UMStatusText(var Message: TMessage);
 begin
   stsArea.Panels.Items[0].Text := StrPas(PChar(Message.LParam));
   stsArea.Refresh;
+end;
+
+procedure TfrmFrame.UMTimeout(var Message: TMessage);
+begin
+  Close;
 end;
 
 { Toolbar Methods (make panels act like buttons) ------------------------------------------- }
@@ -2842,6 +3094,7 @@ begin
   CoverSheet.OnSetFontSize(Self, UserFontSize);
   CoverSheet.OnSetScreenReaderStatus(Self, ScreenReaderSystemActive);
   SetUserBounds(TControl(frmFrame));
+
   SetUserWidths(TControl(frmProblems.pnlLeft));
   SetUserWidths(TControl(frmOrders.pnlLeft));
   RestoreWidth := frmNotes.pnlLeft.Width;
@@ -2926,16 +3179,24 @@ begin
       Add(StrUserBounds2(RemDlgName, RemDlgLeft, RemDlgTop, RemDlgWidth, RemDlgHeight));
       Add(StrUserBounds2(RemDlgSplitters, RemDlgSpltr1, RemDlgSpltr2, 0 ,0));
 
-      //v26.47 - RV - access violation if Surgery Tab not enabled.  Set to designer height as default.
-      if Assigned(frmSurgery) then SurgTempHt := frmSurgery.Drawers.pnlTemplates.Height else SurgTempHt := 85;
-      Add(StrUserBounds2(DrawerSplitters, frmNotes.Drawers.LastOpenSize,
-                                             frmConsults.Drawers.LastOpenSize,
-                                             frmDCSumm.Drawers.LastOpenSize,
-                                             SurgTempHt)); // last parameter = CQ7315
-      Add(StrUserBounds2(DrawerSplitters, frmNotes.Drawers.LastOpenSize,
-                                             frmConsults.Drawers.LastOpenSize,
-                                             frmDCSumm.Drawers.LastOpenSize,
-                                             SurgTempHt));
+      // v26.47 - RV - access violation if Surgery Tab not enabled.  Set to designer height as default.
+      if assigned(frmSurgery) and assigned(frmSurgery.Drawers) and
+        assigned(frmSurgery.Drawers.pnlTemplates) then
+        SurgTempHt := frmSurgery.Drawers.pnlTemplates.Height
+      else
+        SurgTempHt := 85;
+
+      if assigned(frmNotes) and assigned(frmConsults) and assigned(frmDCSumm)
+        and assigned(frmNotes.Drawers) and assigned(frmConsults.Drawers) and
+        assigned(frmDCSumm.Drawers) then
+      begin
+        Add(StrUserBounds2(DrawerSplitters, frmNotes.Drawers.LastOpenSize,
+          frmConsults.Drawers.LastOpenSize, frmDCSumm.Drawers.LastOpenSize,
+          SurgTempHt)); // last parameter = CQ7315
+        Add(StrUserBounds2(DrawerSplitters, frmNotes.Drawers.LastOpenSize,
+          frmConsults.Drawers.LastOpenSize, frmDCSumm.Drawers.LastOpenSize,
+          SurgTempHt));
+      end;
 
       frmNotes.SaveUserSplitterSettings(s1, s2, s3, s4);
       Add(StrUserBounds2(NoteSplitters, s1, s2, s3, s4));
@@ -3022,7 +3283,7 @@ begin
       top := r.Bottom-height;
     if (top < r.Top) then top := r.Top;
   end;
-
+  stsArea.Invalidate;
   Self.Repaint;
 end;
 
@@ -3034,7 +3295,10 @@ const
   TAB_VOFFSET = 7;
 var
   OldFont: TFont;
+  OrdDlg: TfrmODBase;
+
 begin
+  if FTerminate or FClosing then Exit;
 // Ho ho!  ResizeAnchoredFormToFont(self) doesn't work here because the
 // Form size is aliased with MainFormSize.
   OldFont := TFont.Create;
@@ -3046,10 +3310,8 @@ begin
       with lblPtName     do Font.Size := NewFontSize;   // must change BOLDED labels by hand
       with lblPtSSN      do Font.Size := NewFontSize;
       with lblPtAge      do Font.Size := NewFontSize;
-
       with lblOTHDTitle  do Font.Size := NewFontSize;  // rpk 11/28/2017
       with lblOTHDDtl    do Font.Size := NewFontSize;  // rpk 11/28/2017
-
       with lblPtLocation do Font.Size := NewFontSize;
       with lblPtProvider do Font.Size := NewFontSize;
       with lblPtPostings do Font.Size := NewFontSize;
@@ -3080,6 +3342,9 @@ begin
       pnlOtherInfo.Font.Size := NewFontSize;
       RefreshFixedStatusWidth;
       FormResize( self );
+
+//      RPCLogSetFontSize(NewFontSize);
+
     finally
       EnableAlign;
     end;
@@ -3094,6 +3359,11 @@ begin
   14: mnu14pt1.Checked := true;
   //18: mnu18pt1.Checked := true;
   end;
+
+  if assigned(fPDMPMgr) then
+    fPDMPMgr.updateFont;
+
+  RPCLogSetFontSize(NewFontSize);
 
   //Now that the form elements are resized, the pages will know what size to take.
 
@@ -3115,10 +3385,14 @@ begin
   if Assigned(frmReminderTree) then frmReminderTree.SetFontSize(NewFontSize);
   if GraphFloat <> nil then ResizeAnchoredFormToFont(GraphFloat);
 
-  if assigned(fPDMPMgr) then
-    fPDMPMgr.updateFont;
-  RPCLogSetFontSize(NewFontSize);
+  OrdDlg := CurrentDialog;
+  if assigned(OrdDlg) then
+    OrdDlg.setFontSize(NewFontSize);
 
+//  if assigned(fPDMPMgr) then
+//    fPDMPMgr.updateFont;
+//
+//  RPCLogSetFontSize(NewFontSize);
 end;
 
 procedure TfrmFrame.FitToolBar;
@@ -3258,9 +3532,9 @@ begin
   FEditCtrl := nil;
   if Screen.ActiveControl is TCustomEdit then FEditCtrl := TCustomEdit(Screen.ActiveControl);
   if FEditCtrl <> nil then begin
-    if      FEditCtrl is TMemo     then IsReadOnly := TMemo(FEditCtrl).ReadOnly
-    else if FEditCtrl is TEdit     then IsReadOnly := TEdit(FEditCtrl).ReadOnly
-    else if FEditCtrl is TRichEdit then IsReadOnly := TRichEdit(FEditCtrl).ReadOnly
+    if      FEditCtrl is StdCtrls.TMemo     then IsReadOnly := StdCtrls.TMemo(FEditCtrl).ReadOnly
+    else if FEditCtrl is StdCtrls.TEdit     then IsReadOnly := StdCtrls.TEdit(FEditCtrl).ReadOnly
+    else if FEditCtrl is ComCtrls.TRichEdit then IsReadOnly := ComCtrls.TRichEdit(FEditCtrl).ReadOnly
     else IsReadOnly := True;
 
     mnuEditRedo.Enabled := FEditCtrl.Perform(EM_CANREDO, 0, 0) <> 0;
@@ -3300,15 +3574,27 @@ end;
 
 procedure TfrmFrame.mnuEditPasteClick(Sender: TObject);
 begin
-  //Seltext does not add to the undo buffer
   if (assigned(CPAppMon)) and (CPAppMon.Enabled) and CPAppMon.TrackedByCP(FEditCtrl)  then
     FEditCtrl.PasteFromClipboard
-  else
-    FEditCtrl.Perform(EM_REPLACESEL, WParam(True), LongInt(PChar(Clipboard.AsText)));
+  else begin
+    //Ensure that we do not have any non fileman safe characters
+    ClipboardFilemanSafe;
+
+    If (FEditCtrl is TCustomRichEdit) then
+      // We can not allow WM_Paste to be called on a richedit because RTF tags
+      // should not be allowed into the control.
+      // We also can not just use SelText since this does not add to the
+      // undo buffer
+      FEditCtrl.Perform(EM_REPLACESEL, WParam(True), LongInt(PChar(Clipboard.AsText)))
+    else
+      //Let WM_Paste take over
+      FEditCtrl.PasteFromClipboard;
+  end;
 end;
 
 procedure TfrmFrame.mnuFilePrintClick(Sender: TObject);
 begin
+  if FTerminate or FClosing then Exit;
   case mnuFilePrint.Tag of
   CT_NOTES:    frmNotes.RequestPrint;
   CT_CONSULTS: frmConsults.RequestPrint;
@@ -3325,8 +3611,10 @@ procedure TfrmFrame.WMSysCommand(var Message: TMessage);
 begin
   case TabToPageID(tabPage.TabIndex) of
     CT_NOTES:
-        if Assigned(Screen.ActiveControl.Parent) and (Screen.ActiveControl.Parent.Name = 'cboCosigner') then
-          with Message do
+      if assigned(Screen.ActiveControl) and
+        assigned(Screen.ActiveControl.parent) and
+        (Screen.ActiveControl.parent.Name = 'cboCosigner') then
+        with Message do
             begin
               SendMessage(frmNotes.Handle, Msg, WParam, LParam);
               Result := 0;
@@ -3334,8 +3622,10 @@ begin
         else
           inherited;
     CT_DCSUMM:
-        if Assigned(Screen.ActiveControl.Parent) and (Screen.ActiveControl.Parent.Name = 'cboAttending') then
-          with Message do
+      if assigned(Screen.ActiveControl) and
+        assigned(Screen.ActiveControl.parent) and
+        (Screen.ActiveControl.parent.Name = 'cboAttending') then
+        with Message do
             begin
               SendMessage(frmDCSumm.Handle, Msg, WParam, lParam);
               Result := 0;
@@ -3343,8 +3633,10 @@ begin
         else
           inherited;
     CT_CONSULTS:
-        if Assigned(Screen.ActiveControl.Parent) and (Screen.ActiveControl.Parent.Name = 'cboCosigner') then
-          with Message do
+      if assigned(Screen.ActiveControl) and
+        assigned(Screen.ActiveControl.parent) and
+        (Screen.ActiveControl.parent.Name = 'cboCosigner') then
+        with Message do
             begin
               SendMessage(frmConsults.Handle, Msg, WParam, lParam);
               Result := 0;
@@ -3560,6 +3852,8 @@ begin
   iAll := 1;
   AccessStatus := 0;
   iIndex := lstCIRNLocations.ItemIndex;
+  if iIndex < 0 then
+    exit;
   if not CheckHL7TCPLink then
     begin
       InfoBox('Local HL7 TCP Link is down.' + CRLF + 'Unable to retrieve remote data.', TC_DGSR_ERR, MB_OK);
@@ -3774,17 +4068,23 @@ end;
 procedure TfrmFrame.popCIRNSelectAllClick(Sender: TObject);
 
 begin
-  lstCIRNLocations.ItemIndex := 0;
-  lstCIRNLocations.Checked[0] := true;
-  lstCIRNLocations.OnClick(Self);
+  if lstCIRNLocations.Count > 0 then
+  begin
+    lstCIRNLocations.ItemIndex := 0;
+    lstCIRNLocations.Checked[0] := true;
+    lstCIRNLocations.OnClick(Self);
+  end;
 end;
 
 procedure TfrmFrame.popCIRNSelectNoneClick(Sender: TObject);
 
 begin
-  lstCIRNLocations.ItemIndex := 0;
-  lstCIRNLocations.Checked[0] := false;
-  lstCIRNLocations.OnClick(Self);
+  if lstCIRNLocations.Count > 0 then
+  begin
+    lstCIRNLocations.ItemIndex := 0;
+    lstCIRNLocations.Checked[0] := false;
+    lstCIRNLocations.OnClick(Self);
+  end;
 end;
 
 procedure TfrmFrame.mnuFilePrintSetupClick(Sender: TObject);
@@ -3949,28 +4249,26 @@ begin
 
    CPAppMon.UserDuz := User.DUZ; //Current User's DUZ
 
-   NumberOfWordsToBegin := StrToFloatDef(systemParameters.StringValue['cpWordCopy'], 0);
-   PercentToVerify := (StrToFloatDef(systemParameters.StringValue['cpPercentCopy'], 0) * 100);
-   SuperUser := systemParameters.StringValue['cpWordCopy'] = '2';
-   SavedStyles := systemParameters.StringValue['cpIdentifiers'];
-   BufferEnabled := not StrToBoolDef(systemParameters.StringValue['cpCopyBufferDisable'], true);
+   NumberOfWordsToBegin := SystemParameters.AsTypeDef<Double>('cpWordCopy', 0);
+   PercentToVerify := SystemParameters.AsTypeDef<Double>('cpPercentCopy', 0) * 100;
+   SuperUser := SystemParameters.AsType<string>('cpWordCopy') = '2';
+   SavedStyles := SystemParameters.AsType<string>('cpIdentifiers');
+   BufferEnabled := not SystemParameters.AsTypeDef<boolean>('cpCopyBufferDisable', True);
 
    aTmpLst := TStringList.Create;
    try
-    aTmpLst := systemParameters.StringValues['cpExcludeApps'];
+    aTmpLst.Text := SystemParameters.AsTypeDef<string>('cpExcludeApps','');
     for Tmp in aTmpLst do
       ExcludeApps.Add(Piece(Tmp, '=', 2));
 
     aTmpLst.Clear;
-    aTmpLst := systemParameters.StringValues['cpExcludeNotes'];
+    aTmpLst.Text := SystemParameters.AsType<string>('cpExcludeNotes');
     for Tmp in aTmpLst do
       ExcludedList.Add(Piece(Tmp, '=', 2));
 
    finally
     aTmpLst.Free;
    end;
-
-
 
    DisplayPaste := Trim(SavedStyles) <> '-1;Visual Disable Override';
    CPAppMon.Enabled := Trim(SavedStyles) <> '-2';
@@ -4353,6 +4651,43 @@ begin
   end;
 end;
 
+type
+  TMyApplication = class(TApplication);
+
+procedure TfrmFrame.ForceCloseTimer(Sender: TObject);
+const
+  MAX_TRIES = 50;
+
+var
+  Msg: TMsg;
+  i: integer;
+  done: boolean;
+
+begin
+  FForceCloseTimer.Enabled := False;
+  ForceCloseAllDLLs;
+  Close;
+  // Finish up any message processing before calling Idle
+  i := 0;
+  repeat
+    Done := True;
+    Application.ProcessMessages;
+    if PeekMessage(Msg, 0, 0, 0, PM_NOREMOVE) then
+    begin
+      inc(i);
+      if i < MAX_TRIES then
+        done := False;
+    end;
+  until done;
+  TMyApplication(Application).Idle(Msg);
+  // Note that the halt here is REQUIRED because if this timer is called it will
+  // most likely have been called by a DLL processing messages, not CPRS.
+  // Because ForceCloseAllDLLs will terminate the DLL, returning from this
+  // message will send the CPU into code that has been unloaded, resulting in
+  // a runtime error.
+  halt;
+end;
+
 procedure TfrmFrame.FormActivate(Sender: TObject);
 var
   aCPRS508: ICPRS508;
@@ -4452,9 +4787,19 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TfrmFrame.pdmpSetup(aPatientDFN:String = '');
+procedure TfrmFrame.pdmpCloseReport;
+begin
+  if assigned(pdmpNonModal) and pdmpNonModal.Visible then
+  begin
+    pdmpNonModal.Close;
+    FreeAndNil(pdmpNonModal);
+  end;
+end;
+
+procedure TfrmFrame.pdmpSetup(aPatientDFN: String = '');
 var
   sl: TStrings;
+
 begin
   pdmpGetParams;
   if not PDMP_ENABLED then
@@ -4470,20 +4815,24 @@ begin
     fPDMPMgr.updateFont;
   end;
 
-  if assigned(fPDMPMgr.PDMPData)
-    and (fPDMPMgr.PDMPData.PatIEN <> aPatientDFN)
+  if assigned(fPDMPMgr.PDMPData) and (fPDMPMgr.PDMPData.PatIEN <> aPatientDFN)
   then
+  begin
     fPDMPMgr.PDMPData.pdmpClearData; // No clearing on Pt refresh
+    pdmpCloseReport; // closing Window with PDMP report
+  end;
 
   if (aPatientDFN <> '') then
   begin
     sl := TStringList.Create;
     try
       fPDMPMgr.CachedData := pdmpGetCache(Patient.DFN, IntToStr(User.DUZ), sl);
+      acPDMPReview.Enabled := fPDMPMgr.CachedData;
+      acPDMPRequest.Enabled := not fPDMPMgr.CachedData;
+      acPDMPCancel.Enabled := False; // not expecting to run the request
       if fPDMPMgr.CachedData then
         fPDMPMgr.doCache(Patient.DFN, sl)
-      else
-      if (fPDMPMgr.PDMPData.PatIEN <> aPatientDFN) then
+      else if (fPDMPMgr.PDMPData.PatIEN <> aPatientDFN) then
         fPDMPMgr.getLastReviewDate(Patient.DFN);
     finally
       sl.Free;
@@ -4520,8 +4869,10 @@ begin
     Application.CreateForm(TfrmPDMP, fPDMPMgr);
     setFormParented(fPDMPMgr, pnlToolbar, alRight);
   end;
+
   fPDMPMgr.Status := 0;
   fPDMPMgr.updateFont;
+  fPDMPMgr.Requester := self;
 
   acPDMPRequest.Enabled := False;
   fPDMPMgr.acPDMPRequest.Execute;
@@ -4539,12 +4890,43 @@ begin
     fPDMPMgr.UseDefaultBrowser := PDMP_UseDefaultBrowser;
     acPDMPReview.Enabled := False;
     fPDMPMgr.acResults.Execute;
+    fPDMPMgr.Requester := self;
 
     acPDMPReview.Enabled := fPDMPMgr.Status = UM_PDMP_Ready;
   end;
   pnlPrimaryCare.Invalidate; // redraw panel
   pdmpAlign;
 end;
+
+procedure TfrmFrame.pdmpRun(anAlign: TAlign);
+begin
+  if not assigned(fPDMPMgr) then
+  begin
+    Application.CreateForm(TfrmPDMP, fPDMPMgr);
+    setFormParented(fPDMPMgr, pnlToolbar, alRight);
+
+    fPDMPMgr.AlignView := anAlign;
+    fPDMPMgr.ShowNow := True;
+  end
+  else
+  begin
+  end;
+  case fPDMPMgr.Status of
+    0, UM_PDMP_Done:
+      fPDMPMgr.acPDMPRequestExecute(nil);
+    UM_PDMP_Ready:
+      fPDMPMgr.acResultsExecute(nil);
+  else
+    begin
+      fPDMPMgr.ShowNow := False;
+      fPDMPMgr.Requester := nil;
+      infoBox('Wait for PDMP to finish the request', 'PDMP',
+        MB_ICONINFORMATION or MB_OK);
+    end;
+  end;
+end;
+
+//======================================================================
 
 procedure TfrmFrame.acResetParamsExecute(Sender: TObject);
 begin
@@ -4704,7 +5086,9 @@ end;
 procedure TfrmFrame.ctxContextorCanceled(Sender: TObject);
 begin
   // Application should maintain its state as the current (existing) context.
-  imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
+  // Icon will rest if there is something to reset to
+  If Trim(FCCOWIconName) <> '' then
+    imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
 end;
 
 procedure TfrmFrame.ctxContextorPending(Sender: TObject;
@@ -5048,7 +5432,7 @@ var
   PtSubject: string;
 begin
   data := IContextItemCollection(aContextItemCollection) ;
-  anItem := data.Present('[hds_med_domain]request.id.name');
+  anItem := data.Present('[hds_med_va.gov]request.id.name');
   // Retrieve the ContextItem name and value as strings
   if anItem <> nil then
     begin
@@ -5077,6 +5461,13 @@ begin
        (screen.Forms[i].Showing) then
         begin
           Reason := 'Pregnancy and Lactation Status Update in progress, documentation will be discarded.';
+          result := false;
+          exit;
+        end;
+      if (screen.Forms[i].Name = 'vimmMainForm') and
+       (screen.Forms[i].Showing) then
+        begin
+          Reason := 'Immunization/Skin Test Update in progress, documentation will be discarded.';
           result := false;
           exit;
         end;
@@ -5138,6 +5529,7 @@ begin
   if FNextButtonActive then FNextButton.Visible := True;
 //  setOtherInfoPanel;
 end;
+
 
 procedure TfrmFrame.pnlFlagMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
@@ -5230,8 +5622,8 @@ end;
 
 procedure TfrmFrame.pnlOTHDClick(Sender: TObject); // rpk 1/5/2018
 var
-  tmpstr: String;
-  i, icnt: Integer;
+  TmpStr: String;
+  I, icnt: Integer;
 begin
   inherited;
   if Assigned(OTHDDspList) then begin
@@ -5253,16 +5645,16 @@ begin
   lblOTHDTitle.Caption := aTitle;
   lblOTHDDtl.Caption := aDetails;
 
-  pnlOTHD.Width     := HigherOf( (lblOTHDTitle.Width + (M_WVERT * 2)),
-                          (lblOTHDDtl.Width + (M_WVERT * 2)) );  // rpk 12/6/2017
+  pnlOTHD.Width := HigherOf((lblOTHDTitle.Width + (M_WVERT * 2)),
+    (lblOTHDDtl.Width + (M_WVERT * 2))); // rpk 12/6/2017
   // center OTH title and data text fields in pnlOTHD
-  lblOTHDTitle.Left := (pnlOTHD.Width div 2) - (lblOTHDTitle.Width div 2);
-  lblOTHDDtl.Left := (pnlOTHD.Width div 2) - (lblOTHDDtl.Width div 2);
+  lblOTHDTitle.left := (pnlOTHD.Width div 2) - (lblOTHDTitle.Width div 2);
+  lblOTHDDtl.left := (pnlOTHD.Width div 2) - (lblOTHDDtl.Width div 2);
 
   // ensure that buttons maintain alRight align
-  pnlCVnFlag.Left   := pnlRemoteData.Left - pnlCVnFlag.Width;  // rpk 5/9/2019
-  paVAA.Left        := pnlCVnFlag.Left - paVAA.Width;  // rpk 5/9/2019
-  pnlOTHD.Left      := paVAA.Left - pnlOTHD.Width; // rpk 1/4/2018
+  pnlCVnFlag.left := pnlRemoteData.left - pnlCVnFlag.Width; // rpk 5/9/2019
+  paVAA.left := pnlCVnFlag.left - paVAA.Width; // rpk 5/9/2019
+  pnlOTHD.left := paVAA.left - pnlOTHD.Width; // rpk 1/4/2018
 end;
 
 procedure TfrmFrame.pnlOTHDEnter(Sender: TObject);  // rpk 1/5/2018
@@ -5383,8 +5775,9 @@ cnt,i: integer;
 fin: boolean;
 
 begin
-  Result := sCallV('ORQQPXRM GEC STATUS PROMPT', [Patient.DFN]);
-  if Piece(Result,U,1) <> '0' then
+//  Result := sCallV('ORQQPXRM GEC STATUS PROMPT', [Patient.DFN]);
+  if CallVistA('ORQQPXRM GEC STATUS PROMPT', [Patient.DFN],Result) and
+    (Piece(Result,U,1) <> '0') then
     begin
       title := Piece(Result,U,2);
         if pos('~',Piece(Result,U,1))>0 then
@@ -5404,7 +5797,8 @@ begin
              fin := (InfoBox(str,title, MB_YESNO or MB_DEFBUTTON2)=IDYES);
              if fin = true then ans := '1';
              if fin = false then ans := '0';
-             CallV('ORQQPXRM GEC FINISHED?',[Patient.DFN,ans]);
+//             CallV('ORQQPXRM GEC FINISHED?',[Patient.DFN,ans]);
+             CallVistA('ORQQPXRM GEC FINISHED?',[Patient.DFN,ans]);
           end
         else
         InfoBox(str,title, MB_OK);
@@ -5454,17 +5848,27 @@ begin
   FJustEnteredApp := True;
 end;
 
+procedure TfrmFrame.AppEventsIdle(Sender: TObject; var Done: Boolean);
+begin
+  inherited;
+  if FCPRSClosing and FInitCPRSClose then
+  begin
+    FInitCPRSClose := False;
+    Close;
+  end;
+end;
+
 procedure TfrmFrame.AppEventsMessage(var Msg: tagMSG; var Handled: Boolean);
 var
   Control: TComponent;
 begin
-  Handled := False;
+  Handled := false;
   if (Msg.Message = WM_MOUSEWHEEL) and (GetKeyState(VK_LBUTTON) < 0) then
   begin
-    Control := FindControl(Msg.hwnd);
+    Control := FindControl(Msg.hWnd);
     if not assigned(Control) then
       Handled := True
-    else if (Control is TRichEdit) then
+    else if (Control is ComCtrls.TRichEdit) then
     begin
       Handled := True;
       SendMessage(Self.Handle, EM_SETZOOM, 0, 0);
@@ -5477,6 +5881,8 @@ begin
       TComponent(Msg.WParam).Free;
     Handled := True;
   end;
+  if FCPRSClosing and (Screen.Cursor <> crHourGlass) then
+    Screen.Cursor := crHourGlass;
 end;
 
 procedure TfrmFrame.ScreenActiveFormChange(Sender: TObject);
@@ -5618,6 +6024,8 @@ begin
   ViewInfo(mnuInsurance);
 end;
 
+
+
 procedure TfrmFrame.ViewInfo(Sender: TObject);
 var
   SelectNew: Boolean;
@@ -5627,6 +6035,7 @@ var
   aAddress: string;
   ID: integer;
   aCPRS508: ICPRS508;
+  sl: TStrings;
 begin
   if Sender is TMenuItem then begin
     ID := TMenuItem(Sender).Tag;
@@ -5652,11 +6061,17 @@ begin
           mnuFileEncounterClick(Self);
       end;
     3:begin
-        ReportBox(DetailPrimaryCare(Patient.DFN), 'Primary Care', True);
+        sl := TSTringList.Create;
+        try
+          setDetailPrimaryCare(sl,Patient.DFN);
+          ReportBox(sl, 'Primary Care', True);
+        finally
+          sl.Free;
+        end;
       end;
     4:begin
         if Patient.PtIsMHV then
-          ShellExecute(laMHV.Handle, 'open', PChar('http://www.myhealth.domain/'), '', '', SW_NORMAL);
+          ShellExecute(laMHV.Handle, 'open', PChar('http://www.myhealth.va.gov/'), '', '', SW_NORMAL);
       end;
     5:begin
        if Patient.PtIsVAA then
@@ -5730,11 +6145,16 @@ end;
 procedure TfrmFrame.NextButtonClick(Sender: TObject);
 begin
   if FProccessingNextClick then Exit;
+
   FProccessingNextClick := true;
   popAlerts.AutoPopup := TRUE;
-  mnuFileNext.Enabled := True;
+//  mnuFileNext.Enabled := True;
+  mnuFileNext.Enabled := False;   // VISTAOR-31343
+  if assigned(FNextButton) then   // VISTAOR-31343
+    FNextButton.Enabled := False; // VISTAOR-31343
   mnuFileNextClick(Self);
   FProccessingNextClick := false;
+  mnuFileNext.Enabled := True;
 end;
 
 procedure TfrmFrame.NextButtonMouseDown(Sender: TObject; Button: TMouseButton;
@@ -5744,26 +6164,32 @@ begin
 end;
 
 procedure TfrmFrame.SetUpNextButton;
- begin
-   if FNextButton <> nil then
-   begin
-      FNextButton.free;
-      FNextButton := nil;
-   end;
-   FNextButton := TBitBtn.Create(self);
-   FNextButton.Parent:= frmFrame;
-   FNextButton.Glyph := FNextButtonBitmap;
-   FNextButton.OnMouseDown := NextButtonMouseDown;
-   FNextButton.OnClick := NextButtonClick;
-   FNextButton.Caption := '&Next';
-   FNextButton.PopupMenu := popAlerts;
-   FNextButton.Top := stsArea.Top;
-   FNextButton.Left := FNextButtonL;
-   FNextButton.Height := stsArea.Height;
-   FNextButton.Width := stsArea.Panels[2].Width;
-   FNextButton.TabStop := True;
-   FNextButton.TabOrder := 1;
-   FNextButton.show;
+var
+  bEnabled: Boolean;
+begin
+  bEnabled := False;
+  if FNextButton <> nil then
+  begin
+    bEnabled := FNextButton.Enabled; // VISTAOR-31343
+    FNextButton.Free;
+    FNextButton := nil;
+  end;
+  FNextButton := TBitBtn.Create(Self);
+  FNextButton.parent := frmFrame;
+  FNextButton.Glyph := FNextButtonBitmap;
+  FNextButton.OnMouseDown := NextButtonMouseDown;
+  FNextButton.OnClick := NextButtonClick;
+  FNextButton.Caption := '&Next';
+  FNextButton.PopupMenu := popAlerts;
+
+  FNextButton.top := stsArea.top;
+  FNextButton.left := FNextButtonL;
+  FNextButton.Height := stsArea.Height;
+  FNextButton.Width := stsArea.Panels[2].Width;
+  FNextButton.tabstop := True;
+  FNextButton.TabOrder := 1;
+  FNextButton.Enabled := bEnabled; // VISTAOR-31343
+  FNextButton.Show;
 end;
 
 Procedure TfrmFrame.GetExcludedFromMixed();
@@ -5801,7 +6227,10 @@ begin
   acPDMPCancel.Enabled := False;
   acPDMPReview.Enabled := False;
   if assigned(fPDMPMgr) then
-    fPDMPMgr.Visible := (PDMP_ShowButton = 'ALWAYS');
+    begin
+      fPDMPMgr.Visible := (PDMP_ShowButton = 'ALWAYS');
+//      fPDMPMgr.ShowOptions := True; // resetting
+    end;
 end;
 
 /// <summary> updating PDMP actions availability. Request results are ready for review </summary>
@@ -5855,7 +6284,37 @@ begin
   acPDMPRequest.Enabled := True;
   acPDMPCancel.Enabled := False;
   acPDMPReview.Enabled := False;
-  fPDMPMgr.Visible := PDMP_ShowButton = 'ALWAYS';
+  if assigned(fPDMPMgr) then
+    fPDMPMgr.Visible := PDMP_ShowButton = 'ALWAYS';
+end;
+
+/// <summary> Results review ended in OK press </summary>
+procedure TfrmFrame.UMPdmpDisable(var Message: TMessage);
+begin
+  PDMP1.Enabled := False;
+  if assigned(fPDMPMgr) then
+    begin
+      fPDMPMgr.Enabled := False;
+      fPDMPMgr.bbCancel.Visible := False;
+      fPDMPMgr.bbStart.Visible := False;
+      fPDMPMgr.bbResults.Visible := False;
+      fPDMPMgr.pnlPdmp.Caption := 'PDMP';
+      fPDMPMgr.pnlPdmp.ShowCaption := true;
+    end;
+end;
+
+/// <summary> Results review ended in OK press </summary>
+procedure TfrmFrame.UMPdmpEnable(var Message: TMessage);
+begin
+  PDMP1.Enabled := True;
+  if assigned(fPDMPMgr) then
+    begin
+      fPDMPMgr.Enabled := True;
+      fPDMPMgr.bbCancel.Visible := True;
+      fPDMPMgr.bbStart.Visible := True;
+      fPDMPMgr.bbResults.Visible := True;
+      fPDMPMgr.pnlPdmp.ShowCaption := False;
+    end;
 end;
 
 function TfrmFrame.EditInProgress: String;
@@ -5953,6 +6412,19 @@ begin
       tvNotes.Selected := tvNotes.FindPieceNode(s, u,
         tvNotes.Items.GetFirstNode);
     end;
+end;
+
+// PaPI ========================================================================
+procedure TfrmFrame.UMPAPI(var Message: TMessage);
+
+begin
+  try
+    tabPage.TabIndex := Message.WParam;
+    tabPageChange(tabPage);
+  except
+    on E: Exception do
+      ShowMessage(E.Message);
+  end;
 end;
 
 initialization

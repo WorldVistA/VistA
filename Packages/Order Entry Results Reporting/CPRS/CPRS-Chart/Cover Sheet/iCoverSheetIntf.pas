@@ -4,7 +4,7 @@ unit iCoverSheetIntf;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-04
   *
@@ -294,5 +294,9 @@ end;
 initialization
 
 TCoverSheet.Create.GetInterface(ICoverSheet, fCoverSheet);
+
+finalization
+
+fCoverSheet := nil;
 
 end.

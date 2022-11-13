@@ -3,7 +3,7 @@ unit fCoverSheetDetailDisplay;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         ####-##-##
   *

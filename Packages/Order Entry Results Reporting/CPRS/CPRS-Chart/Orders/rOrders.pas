@@ -1,101 +1,110 @@
 unit rOrders;
+{ ------------------------------------------------------------------------------
+  Update History
+
+  2016-09-23: NSR#20101203 (Critical/High Order Checks)
+  2018-07-27: RTC 272867 (Replacing old server calls with CallVistA)
+  ---------------------------------------------------------------------------- }
 {$OPTIMIZATION OFF}
+
 interface
 
 uses SysUtils, Classes, ORFn, ORNet, uCore, Dialogs, Controls;
 
 type
   TOrder = class
+  private
+    FPackage: string;
   public
-    ICD9Code:      string;
-    ID:           string;
-    DGroup:       Integer;
-    OrderTime:    TFMDateTime;
-    StartTime:    string;
-    StopTime:     string;
-    Status:       Integer;
-    Signature:    Integer;
-    VerNurse:     string;
-    VerClerk:     string;
-    ChartRev:     string;
-    Provider:     Int64;
+    ICD9Code: string;
+    ID: string;
+    DGroup: Integer;
+    OrderTime: TFMDateTime;
+    StartTime: string;
+    StopTime: string;
+    Status: Integer;
+    Signature: Integer;
+    VerNurse: string;
+    VerClerk: string;
+    ChartRev: string;
+    Provider: Int64;
     ProviderName: string;
-    ProviderDEA:  string;
-    ProviderVa:   string;
-    DigSigReq:    string;
-    XMLText:      string;
-    Text:         string;
-    DGroupSeq:    Integer;
-    DGroupName:   string;
-    Flagged:      Boolean;
-    Retrieved:    Boolean;
-    EditOf:       string;
-    ActionOn:     string;
-    EventPtr:     string; //ptr to #100.2
-    EventName:    string; //Event name in #100.5
-    OrderLocIEN:  string; //imo
-    OrderLocName: string; //imo
-    ParentID    : string;
-    ParkedStatus: String; // PaPI NSR#20090509 AA 2015/09/29 // RDD: copied for NSR 20110719 port to 32A, but always '' right now!
-    LinkObject:   TObject;
-    EnteredInError:     Integer; //AGP Changes 26.12 PSI-04-053
+    ProviderDEA: string;
+    ProviderVa: string;
+    DigSigReq: string;
+    XMLText: string;
+    Text: string;
+    DGroupSeq: Integer;
+    DGroupName: string;
+    Flagged: Boolean;
+    Retrieved: Boolean;
+    EditOf: string;
+    ActionOn: string;
+    EventPtr: string; // ptr to #100.2
+    EventName: string; // Event name in #100.5
+    OrderLocIEN: string; // imo
+    OrderLocName: string; // imo
+    ParentID: string;
+    ParkedStatus: String; // PaPI NSR#20090509 AA 2015/09/29
+    LinkObject: TObject;
+    EnteredInError: Integer; // AGP Changes 26.12 PSI-04-053
     ORUAPreviewresult:      string;
-    DCOriginalOrder: boolean;
-    IsOrderPendDC: boolean;
-    IsDelayOrder: boolean;
-    IsControlledSubstance: boolean;
-    IsDetox       : boolean;
+    DCOriginalOrder: Boolean;
+    IsOrderPendDC: Boolean;
+    IsDelayOrder: Boolean;
+    IsControlledSubstance: Boolean;
+    IsDetox: Boolean;
     FlagText: string;
     IsFlagTextLoaded: boolean;
     procedure Assign(Source: TOrder);
+    function GetPackage: string;
     procedure Clear;
   end;
 
-  TParentEvent = class
+  TParentEvent = record //class
   public
-    ParentIFN:  integer;
+    ParentIFN: Integer;
     ParentName: string;
     ParentType: Char;
-    ParentDlg:  string;
-    constructor Create;
+    ParentDlg: string;
+    constructor Create(Nothing: integer);
     procedure Assign(AnEvtID: string);
   end;
 
   TOrderDelayEvent = record
-    EventType: Char;             // A=admit, T=transfer, D=discharge, C=current
-    TheParent: TParentEvent;     // Parent Event
-    EventIFN : Integer;          // Pointer to OE/RR EVENTS file (#100.5)
-    EventName: String;           // Event name from OR/RR EVENTS file (#100.5)
-    PtEventIFN: Integer;         // Patient event IFN ptr to #100.2
-    Specialty: Integer;          // pointer to facility treating specialty file
-    Effective: TFMDateTime;      // effective date/time (estimated start time)
-    IsNewEvent: Boolean;         // is new event for an patient
+    EventType: Char; // A=admit, T=transfer, D=discharge, C=current
+    TheParent: TParentEvent; // Parent Event
+    EventIFN: Integer; // Pointer to OE/RR EVENTS file (#100.5)
+    EventName: String; // Event name from OR/RR EVENTS file (#100.5)
+    PtEventIFN: Integer; // Patient event IFN ptr to #100.2
+    Specialty: Integer; // pointer to facility treating specialty file
+    Effective: TFMDateTime; // effective date/time (estimated start time)
+    IsNewEvent: Boolean; // is new event for an patient
   end;
 
   TOrderDialogResolved = record
-    InputID: string;             // can be dialog IEN or '#ORIFN'
-    QuickLevel: Integer;         // 0=dialog,1=auto,2=verify,8=reject,9=cancel
-    ResponseID: string;          // DialogID + ';' + $H
-    DialogIEN: Integer;          // pointer to 101.41 for dialog (may be quick order IEN)
-    DialogType: Char;            // type of dialog (Q or D)
-    FormID: Integer;             // windows form to display
-    DisplayGroup: Integer;       // pointer to 100.98, display group for dialog
-    ShowText: string;            // text to show for verify or rejection
-    QOKeyVars: string;           // from entry action of quick order
+    InputID: string; // can be dialog IEN or '#ORIFN'
+    QuickLevel: Integer; // 0=dialog,1=auto,2=verify,8=reject,9=cancel
+    ResponseID: string; // DialogID + ';' + $H
+    DialogIEN: Integer; // pointer to 101.41 for dialog (may be quick order IEN)
+    DialogType: Char; // type of dialog (Q or D)
+    FormID: Integer; // windows form to display
+    DisplayGroup: Integer; // pointer to 100.98, display group for dialog
+    ShowText: string; // text to show for verify or rejection
+    QOKeyVars: string; // from entry action of quick order
   end;
 
   TNextMoveRec = record
-    NextStep:     Integer;
-    LastIndex:    Integer;
+    NextStep: Integer;
+    LastIndex: Integer;
   end;
 
   TOrderMenu = class
-  public
     IEN: Integer;
     NumCols: Integer;
     Title: string;
     KeyVars: string;
-    MenuItems: TList; {of TOrderMenuItem}
+    MenuItems: TList; { of TOrderMenuItem }
   end;
 
   TOrderMenuItem = class
@@ -120,69 +129,76 @@ type
 
   TOrderRenewFields = class
   public
-    BaseType:  Integer;
+    BaseType: Integer;
     StartTime: string;
-    StopTime:  string;
-    Refills:   Integer;
-    Pickup:    string;
-    Comments:  string;
-    NewText:   string;
+    StopTime: string;
+    Refills: Integer;
+    Pickup: string;
+    DaysSupply: Integer;
+    Quantity: string;
+    DispUnit: string;
+    Comments: string;
+    NewText: string;
+    TitrationMsg: string;
   end;
 
   TPrintParams = record
-    PromptForChartCopy    :  char;
-    ChartCopyDevice       :  string;
-    PromptForLabels       :  char;
-    LabelDevice           :  string;
-    PromptForRequisitions :  char;
-    RequisitionDevice     :  string;
-    PromptForWorkCopy     :  char;
-    WorkCopyDevice        :  string;
-    AnyPrompts            :  boolean;
-//    OrdersToPrint         :  TStringList; {*KCM*}
+    PromptForChartCopy: Char;
+    ChartCopyDevice: string;
+    PromptForLabels: Char;
+    LabelDevice: string;
+    PromptForRequisitions: Char;
+    RequisitionDevice: string;
+    PromptForWorkCopy: Char;
+    WorkCopyDevice: string;
+    AnyPrompts: Boolean;
+    // OrdersToPrint         :  TStringList; {*KCM*}
   end;
 
   TOrderView = class
   public
-    Changed:    Boolean;                         // true when view has been modified
-    DGroup:     Integer;                         // display group (pointer value)
-    Filter:     Integer;                         // FLGS parameter passed to ORQ
-    InvChrono:  Boolean;                         // true for inverse chronological order
-    ByService:  Boolean;                         // true for grouping orders by service
-    TimeFrom:   TFMDateTime;                     // beginning time for orders in list
-    TimeThru:   TFMDateTime;                     // ending time for orders in list
-    CtxtTime:   TFMDateTime;                     // set by server, context hours begin time
-    TextView:   Integer;                         // set by server, 0 if mult views of same order
-    ViewName:   string;                          // display name for the view
-    EventDelay: TOrderDelayEvent;                // fields for event delay view
+    Changed: Boolean; // true when view has been modified
+    DGroup: Integer; // display group (pointer value)
+    Filter: Integer; // FLGS parameter passed to ORQ
+    InvChrono: Boolean; // true for inverse chronological order
+    ByService: Boolean; // true for grouping orders by service
+    TimeFrom: TFMDateTime; // beginning time for orders in list
+    TimeThru: TFMDateTime; // ending time for orders in list
+    CtxtTime: TFMDateTime; // set by server, context hours begin time
+    TextView: Integer; // set by server, 0 if mult views of same order
+    ViewName: string; // display name for the view
+    EventDelay: TOrderDelayEvent; // fields for event delay view
   public
     procedure Assign(Src: TOrderView);
 
   end;
 
-{ Order List functions }
-function DetailOrder(const ID: string): TStrings;
-function ResultOrder(const ID: string): TStrings;
-function ResultOrderHistory(const ID: string): TStrings;
+  { Order List functions }
+function getDetailOrder(const ID: string;aList: TStrings):Boolean;
+function ResultOrder(const ID: string;aList: TStrings):Boolean;
+function getResultOrderHistory(const ID: string;aList: TStrings):Boolean;
 function NameOfStatus(IEN: Integer): string;
-function GetOrderStatus(AnOrderId: string): integer;
+function GetOrderStatus(AnOrderId: string): Integer;
 function ExpiredOrdersStartDT: TFMDateTime;
 procedure ClearOrders(AList: TList);
 procedure LoadOrders(Dest: TList; Filter, Groups: Integer);
-procedure LoadOrdersAbbr(Dest: TList; AView: TOrderView; APtEvtID: string); overload;
-procedure LoadOrdersAbbr(DestDC,DestRL: TList; AView: TOrderView; APtEvtID: string); overload;
-procedure LoadOrdersAbbr(Dest:Tlist; AView: TOrderView; AptEvtID: string; AlertID: string); overload;
+procedure LoadOrdersAbbr(Dest: TList; AView: TOrderView;
+  APtEvtID: string); overload;
+procedure LoadOrdersAbbr(DestDC, DestRL: TList; AView: TOrderView;
+  APtEvtID: string); overload;
+procedure LoadOrdersAbbr(Dest: TList; AView: TOrderView; APtEvtID: string;
+  AlertID: string); overload;
 procedure LoadOrderSheets(Dest: TStrings);
 procedure LoadOrderSheetsED(Dest: TStrings);
 procedure LoadOrderViewDefault(AView: TOrderView);
 procedure LoadUnsignedOrders(IDList, HaveList: TStrings);
 procedure SaveOrderViewDefault(AView: TOrderView);
-procedure RetrieveOrderFields(OrderList: TList; ATextView: Integer; ACtxtTime: TFMDateTime);
+procedure RetrieveOrderFields(OrderList: TList; ATextView: Integer;
+  ACtxtTime: TFMDateTime);
 procedure SetOrderFields(AnOrder: TOrder; const x, y, z: string);
-procedure SetOrderFromResults(AnOrder: TOrder); overload;
 procedure SetOrderFromResults(AnOrder: TOrder; Results: TStrings); overload;
 procedure SortOrders(AList: TList; ByGroup, InvChron: Boolean);
-procedure ConvertOrders(Dest: TList; AView: TOrderView);
+//procedure ConvertOrders(Dest: TList; AView: TOrderView);
 
 { Display Group & List functions }
 function DGroupAll: Integer;
@@ -195,59 +211,70 @@ procedure ListOrderFiltersAll(Dest: TStrings);
 function NameOfDGroup(IEN: Integer): string;
 function ShortNameOfDGroup(IEN: Integer): string;
 function SeqOfDGroup(IEN: Integer): Integer;
-function CheckOrderGroup(AOrderID: string): integer;
-function CheckQOGroup(AQOId:string): Boolean;
+function CheckOrderGroup(AOrderID: string): Integer;
+function CheckQOGroup(AQOId: string): Boolean;
 
 { Write Orders }
-procedure BuildResponses(var ResolvedDialog: TOrderDialogResolved; const KeyVars: string;
-  AnEvent: TOrderDelayEvent; ForIMO: boolean = False);
+procedure BuildResponses(var ResolvedDialog: TOrderDialogResolved;
+  const KeyVars: string; AnEvent: TOrderDelayEvent; ForIMO: Boolean = False);
 procedure ClearOrderRecall;
 function CommonLocationForOrders(OrderList: TStringList): Integer;
 function FormIDForDialog(IEN: Integer): Integer;
 function DlgIENForName(DlgName: string): Integer;
 procedure LoadOrderMenu(AnOrderMenu: TOrderMenu; AMenuIEN: Integer);
-procedure LoadOrderSet(SetItems: TStrings; AnIEN: Integer; var KeyVars, ACaption: string);
+procedure LoadOrderSet(SetItems: TStrings; AnIEN: Integer;
+  var KeyVars, ACaption: string);
 procedure LoadWriteOrders(Dest: TStrings);
 procedure LoadWriteOrdersED(Dest: TStrings; EvtID: string);
 function OrderDisabledMessage(DlgIEN: Integer): string;
 procedure SendOrders(OrderList: TStringList; const ESCode: string);
 procedure SendReleaseOrders(OrderList: TStringList);
-procedure SendAndPrintOrders(OrderList, ErrList: TStrings; const ESCode: string; const DeviceInfo: string);
-procedure ExecutePrintOrders(SelectedList: TStringList; const DeviceInfo: string);
-procedure PrintOrdersOnReview(OrderList: TStringList; const DeviceInfo: string; PrintLoc: Integer = 0);  {*KCM*}
-procedure PrintServiceCopies(OrderList: TStringList; PrintLoc: Integer = 0);  {*REV*}
-procedure OrderPrintDeviceInfo(OrderList: TStringList; var PrintParams: TPrintParams; Nature: Char; PrintLoc: Integer = 0); {*KCM*}
+procedure SendAndPrintOrders(OrderList, ErrList: TStrings; const ESCode: string;
+  const DeviceInfo: string);
+procedure ExecutePrintOrders(SelectedList: TStringList;
+  const DeviceInfo: string);
+procedure PrintOrdersOnReview(OrderList: TStringList; const DeviceInfo: string;
+  PrintLoc: Integer = 0); { *KCM* }
+procedure PrintServiceCopies(OrderList: TStringList;
+  PrintLoc: Integer = 0); { *REV* }
+procedure OrderPrintDeviceInfo(OrderList: TStringList;
+  var PrintParams: TPrintParams; Nature: Char; PrintLoc: Integer = 0); { *KCM* }
 function UseNewMedDialogs: Boolean;
 
 { Order Actions }
 function DialogForOrder(const ID: string): Integer;
 procedure LockPatient(var ErrMsg: string);
 procedure UnlockPatient;
-procedure LockOrder(OrderID: string; var ErrMsg: string);
+procedure LockOrder(OrderID: string; var ErrMsg: string; const AnAction: string = '');
 procedure UnlockOrder(OrderID: string);
+procedure UnlockAllOrders();
+procedure UnlockAllOrdersByAction(AnAction: string);
+procedure UnlockAllLocks();
+procedure UnlockAllPatientLocks();
 function FormIDForOrder(const ID: string): Integer;
+procedure WarningOrderAction(const ID, Action: string; var ErrMsg: string);
 procedure ValidateOrderAction(const ID, Action: string; var ErrMsg: string);
-procedure ValidateOrderActionNature(const ID, Action, Nature: string; var ErrMsg: string);
+procedure ValidateOrderActionNature(const ID, Action, Nature: string;
+  var ErrMsg: string);
 procedure IsLatestAction(const ID: string; var ErrList: TStringList);
-procedure ChangeOrder(AnOrder: TOrder; ResponseList: TList);
-procedure RenewOrder(AnOrder: TOrder; RenewFields: TOrderRenewFields; IsComplex: integer;
-  AnIMOOrderAppt: double; OCList: TStringList);
+//procedure ChangeOrder(AnOrder: TOrder; ResponseList: TList);
+procedure RenewOrder(AnOrder: TOrder; RenewFields: TOrderRenewFields;
+  IsComplex: Integer; AnIMOOrderAppt: double; OCList: TStringList);
 procedure HoldOrder(AnOrder: TOrder);
 procedure ListDCReasons(Dest: TStrings; var DefaultIEN: Integer);
 function GetREQReason: Integer;
-procedure DCOrder(AnOrder: TOrder; AReason: Integer; NewOrder: boolean; var DCType: Integer);
+procedure DCOrder(AnOrder: TOrder; AReason: Integer; NewOrder: Boolean;
+  var DCType: Integer);
 procedure ReleaseOrderHold(AnOrder: TOrder);
 procedure AlertOrder(AnOrder: TOrder; AlertRecip: Int64);
 
 // NSR #20110719  -- begin
 function UnflagOrder(AnOrder: TOrder; const AComment: String; var ErrMsg:String):TStrings;
-function FlagOrder(AnOrder: TOrder; const FlagReason,ExpireDate: String;
-  AlertRecip: TStrings):TStrings;
+function getFlagOrderResults(AnOrder: TOrder; const FlagReason,ExpireDate: String;
+  AlertRecip: TStrings; Results:TStrings):Boolean;
 
-  // PutFlagComment Added by Kim Hovorka 06/10/2015 for NSR #20110719
-//procedure PutFlagComment(Src: TStrings; const ID: string; var ErrMsg: string);
 procedure getFlagComponents(Dest: TStrings; const anID,aType: string);
-function setFlagComments(const anID: String;aComments,aRecipients: TStrings): TStrings;
+function setFlagComments(const anID: String;aComments,aRecipients: TStrings;Results: TStrings):Boolean;
 // NSR #20110719 -- end
 
 procedure LoadFlagReason(Dest: TStrings; const ID: string);
@@ -258,22 +285,28 @@ procedure PutWardComments(Src: TStrings; const ID: string; var ErrMsg: string);
 procedure CompleteOrder(AnOrder: TOrder; const ESCode: string);
 procedure VerifyOrder(AnOrder: TOrder; const ESCode: string);
 procedure VerifyOrderChartReview(AnOrder: TOrder; const ESCode: string);
-function GetOrderableIen(AnOrderId:string): integer;
-procedure StoreDigitalSig(AID, AHash: string; AProvider: Int64; ASig, ACrlUrl, DFN: string; var AError: string);
+function GetOrderableIen(AnOrderId: string): Integer;
+procedure StoreDigitalSig(AID, AHash: string; AProvider: Int64;
+  ASig, ACrlUrl, DFN: string; var AError: string);
 procedure UpdateOrderDGIfNeeded(AnID: string);
-function CanEditSuchRenewedOrder(AnID: string; IsTxtOrder: integer): boolean;
-function IsPSOSupplyDlg(DlgID, QODlg: integer): boolean;
-procedure SaveChangesOnRenewOrder(var AnOrder: TOrder; AnID, TheRefills, ThePickup: string; IsTxtOrder: integer);
-function DoesOrderStatusMatch(OrderArray: TStringList): boolean;
-//function GetPromptandDeviceParameters(Location: integer; OrderList: TStringList; Nature: string): TPrintParams;
+function CanEditSuchRenewedOrder(AnID: string; IsTxtOrder: Integer): Boolean;
+function IsPSOSupplyDlg(DlgID: string; QODlg: Integer): Boolean;
+procedure SaveChangesOnRenewOrder(var AnOrder: TOrder;
+  AnID, TheRefills, ThePickup: string; IsTxtOrder: Integer;
+        DaysSupply, Quantity: string);
+function DoesOrderStatusMatch(OrderArray: TStringList): Boolean;
+// function GetPromptandDeviceParameters(Location: integer; OrderList: TStringList; Nature: string): TPrintParams;
 
 { Order Information }
 procedure LoadRenewFields(RenewFields: TOrderRenewFields; const ID: string);
-procedure GetChildrenOfComplexOrder(AnParentID,CurrAct: string; var ChildList: TStringList); //PSI-COMPLEX
-procedure LESValidationForChangedLabOrder(var RejectedReason: TStringList; AnOrderInfo: string);
-procedure ValidateComplexOrderAct(AnOrderID: string; var ErrMsg: string); //PSI-COMPLEX
-function IsRenewableComplexOrder(AnParentID: string): boolean; //PSI-COMPLEX
-function IsComplexOrder(AnOrderID: string): boolean; //PSI-COMPLEX
+procedure GetChildrenOfComplexOrder(AnParentID, CurrAct: string;
+  var ChildList: TStringList); // PSI-COMPLEX
+procedure LESValidationForChangedLabOrder(var RejectedReason: TStringList;
+  AnOrderInfo: string);
+procedure ValidateComplexOrderAct(AnOrderId: string; var ErrMsg: string);
+// PSI-COMPLEX
+function IsRenewableComplexOrder(AnParentID: string): Boolean; // PSI-COMPLEX
+function IsComplexOrder(AnOrderId: string): Boolean; // PSI-COMPLEX
 function GetDlgData(ADlgID: string): string;
 function OrderIsReleased(const ID: string): Boolean;
 function TextForOrder(const ID: string): string;
@@ -283,26 +316,29 @@ function GetPackageByOrderID(const OrderID: string): string;
 function AnyOrdersRequireSignature(OrderList: TStringList): Boolean;
 function OrderRequiresSignature(const ID: string): Boolean;
 function OrderRequiresDigitalSignature(const ID: string): Boolean;
-function GetDrugSchedule(const ID: string): string;
-function GetExternalText(const ID: string): string;
-function SetExternalText(const ID: string; ADrugSch: string; AUser: Int64): string;
+function GetDrugSchedule(const ID: string;Default:String = ''): string;
+//function GetExternalText(const ID: string;Default:String = ''): string;
+//function SetExternalText(const ID: string; ADrugSch: string;
+//  AUser: Int64): string;
 function GetDEA(const ID: string): string;
 function GetDigitalSignature(const ID: string): string;
 function GetPKIUse: Boolean;
 function GetPKISite: Boolean;
-function DoesOIPIInSigForQO(AnQOID: integer): integer;
+function DoesOIPIInSigForQO(AnQOID: Integer): Integer;
 function GetDispGroupForLES: string;
-function GetOrderPtEvtID(AnOrderID: string): string;
-function VerbTelPolicyOrder(AnOrderID: string): boolean;
-function ForIVandUD(AnOrderID: string): boolean;
+function GetOrderPtEvtID(AnOrderId: string): string;
+function VerbTelPolicyOrder(AnOrderId: string): Boolean;
+function ForIVandUD(AnOrderId: string): Boolean;
 
-{Event Delay Enhancement}
-function DeleteEmptyEvt(APtEvntID: string; var APtEvntName: string; Ask: boolean = True): boolean;
-function DispOrdersForEvent(AEvtId: string): boolean;
+{ Event Delay Enhancement }
+function DeleteEmptyEvt(APtEvntID: string; var APtEvntName: string;
+  Ask: Boolean = True): Boolean;
+function DispOrdersForEvent(AEvtId: string): Boolean;
 function EventInfo(APtEvtID: string): string; // ptr to #100.2
 function EventInfo1(AnEvtID: string): string; // ptr to #100.5
-function EventExist(APtDFN:string; AEvt: integer): integer;
-function CompleteEvt(APtEvntID: string; APtEvntName: string; Ask: boolean = True): boolean;
+function EventExist(APtDFN: string; AEvt: Integer): Integer;
+function CompleteEvt(APtEvntID: string; APtEvntName: string;
+  Ask: Boolean = True): Boolean;
 function PtEvtEmpty(APtEvtID: string): Boolean;
 function GetEventIFN(const AEvntID: string): string;
 function GetEventName(const AEvntID: string): string;
@@ -312,29 +348,31 @@ function GetEventDiv(const APtEvntID: string): string;
 function GetEventDiv1(const AnEvntID: string): string;
 function GetCurrentSpec(const APtIFN: string): string;
 function GetDefaultEvt(const AProviderIFN: string): string;
-function isExistedEvent(const APtDFN: string; const AEvtID: string; var APtEvtID: string): Boolean;
-function TypeOfExistedEvent(APtDFN: string; AEvtID: Integer): Integer;
-function isMatchedEvent(const APtDFN: string; const AEvtID: string; var ATs: string): Boolean;
-function isDCedOrder(const AnOrderID: string): Boolean;
-function isOnholdMedOrder(AnOrderID: string): Boolean;
+function isExistedEvent(const APtDFN: string; const AEvtId: string;
+  var APtEvtID: string): Boolean;
+function TypeOfExistedEvent(APtDFN: string; AEvtId: Integer): Integer;
+function isMatchedEvent(const APtDFN: string; const AEvtId: string;
+  var ATs: string): Boolean;
+function isDCedOrder(const AnOrderId: string): Boolean;
+function isOnholdMedOrder(AnOrderId: string): Boolean;
 function SetDefaultEvent(var AErrMsg: string; EvtID: string): Boolean;
-function GetEventPromptID: integer;
-function GetDefaultTSForEvt(AnEvtID: integer): string;
+function GetEventPromptID: Integer;
+function GetDefaultTSForEvt(AnEvtID: Integer): string;
 function GetPromptIDs: string;
-function GetEventDefaultDlg(AEvtID: integer): string;
-function CanManualRelease: boolean;
+function GetEventDefaultDlg(AEvtId: Integer): string;
+function CanManualRelease: Boolean;
 function TheParentPtEvt(APtEvt: string): string;
-function IsCompletedPtEvt(APtEvtID: integer): boolean;
-function IsPassEvt(APtEvtID: integer; APtEvtType: char): boolean;
-function IsPassEvt1(AnEvtID: integer; AnEvtType: char): boolean;
+function IsCompletedPtEvt(APtEvtID: Integer): Boolean;
+function IsPassEvt(APtEvtID: Integer; APtEvtType: Char): Boolean;
+function IsPassEvt1(AnEvtID: Integer; AnEvtType: Char): Boolean;
 procedure DeleteDefaultEvt;
-procedure TerminatePtEvt(APtEvtID: integer);
-procedure ChangeEvent(AnOrderList: TStringList; APtEvtId: string);
+procedure TerminatePtEvt(APtEvtID: Integer);
+procedure ChangeEvent(AnOrderList: TStringList; APtEvtID: string);
 procedure DeletePtEvent(APtEvtID: string);
-procedure SaveEvtForOrder(APtDFN: string; AEvt: integer; AnOrderID: string);
-procedure SetPtEvtList(Dest: TStrings; APtDFN: string; var ATotal: integer);
-procedure GetTSListForEvt(Dest: TStrings; AnEvtID:integer);
-procedure GetChildEvent(var AChildList: TStringList; APtEvtID: string);
+procedure SaveEvtForOrder(APtDFN: string; AEvt: Integer; AnOrderId: string);
+procedure SetPtEvtList(Dest: TStrings; APtDFN: string; var ATotal: Integer);
+procedure GetTSListForEvt(Dest: TStrings; AnEvtID: Integer);
+//procedure GetChildEvent(var AChildList: TStringList; APtEvtID: string);
 
 { Order Checking }
 function IsMonograph(): Boolean;
@@ -345,159 +383,208 @@ procedure GetXtraTxt(OCText: TStringList; x: String; y: String);
 function FillerIDForDialog(IEN: Integer): string;
 function OrderChecksEnabled: Boolean;
 function OrderChecksOnDisplay(const FillerID: string): string;
-procedure OrderChecksOnAccept(ListOfChecks: TStringList; const FillerID, StartDtTm: string;
-  OIList: TStringList; DupORIFN: string; Renewal: string);
-procedure OrderChecksOnDelay(ListOfChecks: TStringList; const FillerID, StartDtTm: string;
-  OIList: TStringList);
+procedure OrderChecksOnAccept(ListOfChecks: TStringList;
+  const FillerID, StartDtTm: string; OIList: TStringList; DupORIFN: string;
+  Renewal: string; Fields: string; IncludeAllergyChecks: boolean = False);
+procedure GetAllergyReasonList(aList: TStrings; Item1: Integer; AFlag: String);
+procedure OrderChecksOnMedicationSelect(ListOfChecks: TStringList;
+  const FillerID: String; Item1: Integer; OrderNum: string = '');
+procedure ClearAllergyOrderCheckCache;
+procedure OrderChecksOnDelay(ListOfChecks: TStringList;
+  const FillerID, StartDtTm: string; OIList: TStringList);
 procedure OrderChecksForSession(ListOfChecks, OrderList: TStringList);
-procedure SaveOrderChecksForSession(const AReason: string; ListOfChecks: TStringList);
+procedure SaveOrderChecksForSession(const AReason: string;
+  ListOfChecks: TStringList);
+procedure SaveMultiOrderChecksForSession(ListOfChecks, ListOfReasons, ListOfComments: TStringList);
 function DeleteCheckedOrder(const OrderID: string): Boolean;
 function DataForOrderCheck(const OrderID: string): string;
+function IsValidOverrideReason(const Reason: string): boolean;
 
 { Copay }
-procedure GetCoPay4Orders;
 procedure SaveCoPayStatus(AList: TStrings);
 
-{IMO: inpatient medication for outpatient}
-function LocationType(Location: integer): string;
-function IsValidIMOLoc(LocID: integer; PatientID: string): boolean;   //IMO
-function IsValidIMOLocOrderCom(LocID: integer; PatientID: string): boolean;   //IMO
-function IsIMOOrder(OrderID: string): boolean;
-function IsInptQO(DlgID: integer): boolean;
-function IsIVQO(DlgID: integer): boolean;
-function IsClinicLoc(ALoc: integer): boolean;
+{ IMO: inpatient medication for outpatient }
+function LocationType(Location: Integer): string;
+function IsValidIMOLoc(LocID: Integer; PatientID: string): Boolean; // IMO
+function IsValidIMOLocOrderCom(LocID: Integer; PatientID: string): Boolean;
+// IMO
+function IsIMOOrder(OrderID: string): Boolean;
+function IsInptQO(DlgID: Integer): Boolean;
+function IsIVQO(DlgID: Integer): Boolean;
+function IsClinicLoc(ALoc: Integer): Boolean;
 
-{None-standard Schedule} //nss
-function IsValidSchedule(AnOrderID: string): boolean; //NSS
-function IsValidQOSch(QOID: string): string; //NSS
-function IsValidSchStr(ASchStr: string): boolean;
+{ None-standard Schedule } // nss
+function IsValidSchedule(AnOrderId: string): Boolean; // NSS
+function IsValidQOSch(QOID: string): string; // NSS
+function IsValidSchStr(ASchStr: string): Boolean;
 
-function IsPendingHold(OrderID: string): boolean;
+function IsPendingHold(OrderID: string): Boolean;
+
+//procedure SetOrderRevwCol(AnOrder: TOrder);
+function SetOrderRevwCol(AnOrder: TOrder):String;
+
+function SafeEventType(CurrentEventType: Char): Char;
 
 var
   UAPViewCalling: Boolean;
+
 implementation
 
-uses Windows, rCore, uConst, TRPCB, ORCtrls, UBAGlobals, UBACore, VAUtils, ORNetIntf;
+uses Windows, rCore, uConst, TRPCB, ORCtrls, UBAGlobals, UBACore, VAUtils
+  , ORNetIntf // NSR#20101203
+  , System.Generics.Collections;
+
+type
+  TLockType = (ltPatient, ltOrder);
+
+  TLock = class
+  private
+    FID: String;
+    FAction: string;
+    FLockType: TLockType;
+  public
+    property ID: string read FID write FID;
+    property Action: string read FAction write FAction;
+    property LockType: TLockType read FLockType write FLockType;
+  end;
+
+  TLockList = Class(TObjectList<TLock>)
+  public
+    destructor Destroy; override;
+    procedure AddLock(AID, AAction: string; ALockType: TLockType);
+    procedure DeleteLock(AID: string; ALockType: TLockType);
+    procedure ClearAllLocks;
+    procedure ClearLockByID(AID: string; ALockType: TLockType);
+    procedure ClearLocksByAction(AnAction: string);
+    procedure ClearLocksByType(ALockType: TLockType);
+  end;
 
 var
-  uDGroupMap: TStringList;          // each string is DGroupIEN=Sequence^TopName^Name
+  uDGroupMap: TStringList; // each string is DGroupIEN=Sequence^TopName^Name
   uDGroupAll: Integer;
   uOrderChecksOn: Char;
+  LockList: TLockList;
 
-{ TOrderView methods }
+  { TOrderView methods }
 
 procedure TOrderView.Assign(Src: TOrderView);
 begin
-  Self.Changed   := Src.Changed;
-  Self.DGroup    := Src.DGroup;
-  Self.Filter    := Src.Filter;
+  Self.Changed := Src.Changed;
+  Self.DGroup := Src.DGroup;
+  Self.Filter := Src.Filter;
   Self.InvChrono := Src.InvChrono;
   Self.ByService := Src.ByService;
-  Self.TimeFrom  := Src.TimeFrom;
-  Self.TimeThru  := Src.TimeThru;
-  Self.CtxtTime  := Src.CtxtTime;
-  Self.TextView  := Src.TextView;
-  Self.ViewName  := Src.ViewName;
-  Self.EventDelay.EventIFN   := Src.EventDelay.EventIFN;
-  Self.EventDelay.EventName  := Src.EventDelay.EventName;
-  Self.EventDelay.EventType  := Src.EventDelay.EventType;
-  Self.EventDelay.Specialty  := Src.EventDelay.Specialty;
-  Self.EventDelay.Effective  := Src.EventDelay.Effective;
+  Self.TimeFrom := Src.TimeFrom;
+  Self.TimeThru := Src.TimeThru;
+  Self.CtxtTime := Src.CtxtTime;
+  Self.TextView := Src.TextView;
+  Self.ViewName := Src.ViewName;
+  Self.EventDelay.EventIFN := Src.EventDelay.EventIFN;
+  Self.EventDelay.EventName := Src.EventDelay.EventName;
+  Self.EventDelay.EventType := Src.EventDelay.EventType;
+  Self.EventDelay.Specialty := Src.EventDelay.Specialty;
+  Self.EventDelay.Effective := Src.EventDelay.Effective;
 end;
 
 { TOrder methods }
 
 procedure TOrder.Assign(Source: TOrder);
 begin
-  ID           := Source.ID;
-  DGroup       := Source.DGroup;
-  OrderTime    := Source.OrderTime;
-  StartTime    := Source.StartTime;
-  StopTime     := Source.StopTime;
-  Status       := Source.Status;
-  Signature    := Source.Signature;
-  VerNurse     := Source.VerNurse;
-  VerClerk     := Source.VerClerk;
-  ChartRev     := Source.ChartRev;
-  Provider     := Source.Provider;
+  ID := Source.ID;
+  DGroup := Source.DGroup;
+  OrderTime := Source.OrderTime;
+  StartTime := Source.StartTime;
+  StopTime := Source.StopTime;
+  Status := Source.Status;
+  Signature := Source.Signature;
+  VerNurse := Source.VerNurse;
+  VerClerk := Source.VerClerk;
+  ChartRev := Source.ChartRev;
+  Provider := Source.Provider;
   ProviderName := Source.ProviderName;
-  ProviderDEA  := Source.ProviderDEA;
-  ProviderVA   := Source.ProviderVA;
-  DigSigReq    := Source.DigSigReq;
-  XMLText      := Source.XMLText;
-  Text         := Source.Text;
-  DGroupSeq    := Source.DGroupSeq;
-  DGroupName   := Source.DGroupName;
-  Flagged      := Source.Flagged;
-  Retrieved    := Source.Retrieved;
-  EditOf       := Source.EditOf;
-  ActionOn     := Source.ActionOn;
-  EventPtr     := Source.EventPtr;
-  EventName    := Source.EventName;
-  OrderLocIEN  := Source.OrderLocIEN;
+  ProviderDEA := Source.ProviderDEA;
+  ProviderVa := Source.ProviderVa;
+  DigSigReq := Source.DigSigReq;
+  XMLText := Source.XMLText;
+  Text := Source.Text;
+  DGroupSeq := Source.DGroupSeq;
+  DGroupName := Source.DGroupName;
+  Flagged := Source.Flagged;
+  Retrieved := Source.Retrieved;
+  EditOf := Source.EditOf;
+  ActionOn := Source.ActionOn;
+  EventPtr := Source.EventPtr;
+  EventName := Source.EventName;
+  OrderLocIEN := Source.OrderLocIEN;
   OrderLocName := Source.OrderLocName;
-  ParentID     := Source.ParentID;
-  LinkObject   := Source.LinkObject;
-  IsControlledSubstance   := Source.IsControlledSubstance;
-  IsDetox   := Source.IsDetox;
+  ParentID := Source.ParentID;
+  LinkObject := Source.LinkObject;
+  ParkedStatus := Source.ParkedStatus; // PaPI NSR#20090509 AA 2015/09/29
+  IsControlledSubstance := Source.IsControlledSubstance;
+  IsDetox := Source.IsDetox;
+  FPackage := Source.FPackage;
   ORUAPreviewresult   := Source.ORUAPreviewresult;
 end;
 
 procedure TOrder.Clear;
 begin
-  ID           := '';
-  DGroup       := 0;
-  OrderTime    := 0;
-  StartTime    := '';
-  StopTime     := '';
-  Status       := 0;
-  Signature    := 0;
-  VerNurse     := '';
-  VerClerk     := '';
-  ChartRev     := '';
-  Provider     := 0;
+  ID := '';
+  DGroup := 0;
+  OrderTime := 0;
+  StartTime := '';
+  StopTime := '';
+  Status := 0;
+  Signature := 0;
+  VerNurse := '';
+  VerClerk := '';
+  ChartRev := '';
+  Provider := 0;
   ProviderName := '';
-  ProviderDEA  := '';
-  ProviderVA   :='';
-  DigSigReq    :='';
-  XMLText      := '';
-  Text         := '';
-  DGroupSeq    := 0;
-  DGroupName   := '';
-  Flagged      := False;
-  Retrieved    := False;
-  EditOf       := '';
-  ActionOn     := '';
-  OrderLocIEN  := '';         //imo
-  OrderLocName := '';         //imo
-  ParentID     := '';
-  LinkObject   := nil;
+  ProviderDEA := '';
+  ProviderVa := '';
+  DigSigReq := '';
+  XMLText := '';
+  Text := '';
+  DGroupSeq := 0;
+  DGroupName := '';
+  Flagged := False;
+  Retrieved := False;
+  EditOf := '';
+  ActionOn := '';
+  OrderLocIEN := ''; // imo
+  OrderLocName := ''; // imo
+  ParentID := '';
+  LinkObject := nil;
   IsControlledSubstance := False;
   IsDetox := False;
   ORUAPreviewresult      := '';
+  FPackage := '';
   FlagText := '';
   IsFlagTextLoaded := False;
 end;
 
+function TOrder.GetPackage: string;
+begin
+  if FPackage = '' then
+    FPackage := GetPackageByOrderID(ID);
+  Result := FPackage;
+end;
+
 { Order List functions }
 
-function DetailOrder(const ID: string): TStrings;
+function getDetailOrder(const ID: string;aList: TStrings):Boolean;
 begin
-  CallV('ORQOR DETAIL', [ID, Patient.DFN]);
-  Result := RPCBrokerV.Results;
+  Result := CallVistA('ORQOR DETAIL', [ID, Patient.DFN],aList);
 end;
 
-function ResultOrder(const ID: string): TStrings;
+function ResultOrder(const ID: string;aList: TStrings):Boolean;
 begin
-  CallV('ORWOR RESULT', [Patient.DFN,ID,ID]);
-  Result := RPCBrokerV.Results;
+  Result := CallVistA('ORWOR RESULT', [Patient.DFN, ID, ID],aList);
 end;
 
-function ResultOrderHistory(const ID: string): TStrings;
+function getResultOrderHistory(const ID: string;aList: TStrings):Boolean;
 begin
- CallV('ORWOR RESULT HISTORY', [Patient.DFN,ID,ID]);
- Result := RPCBrokerV.Results;
+  Result := CallVistA('ORWOR RESULT HISTORY', [Patient.DFN, ID, ID],aList);
 end;
 
 procedure LoadDGroupMap;
@@ -505,76 +592,101 @@ begin
   if uDGroupMap = nil then
   begin
     uDGroupMap := TStringList.Create;
-    tCallV(uDGroupMap, 'ORWORDG MAPSEQ', [nil]);
+    CallVistA('ORWORDG MAPSEQ', [nil],uDGroupMap);
   end;
 end;
 
 function NameOfStatus(IEN: Integer): string;
 begin
   case IEN of
-     0: Result := 'error';
-     1: Result := 'discontinued';
-     2: Result := 'complete';
-     3: Result := 'hold';
-     4: Result := 'flagged';
-     5: Result := 'pending';
-     6: Result := 'active';
-     7: Result := 'expired';
-     8: Result := 'scheduled';
-     9: Result := 'partial results';
-    10: Result := 'delayed';
-    11: Result := 'unreleased';
-    12: Result := 'dc/edit';
-    13: Result := 'cancelled';
-    14: Result := 'lapsed';
-    15: Result := 'renewed';
-    97: Result := '';                  { null status, used for 'No Orders Found.' }
-    98: Result := 'new';
-    99: Result := 'no status';
+    0:
+      Result := 'error';
+    1:
+      Result := 'discontinued';
+    2:
+      Result := 'complete';
+    3:
+      Result := 'hold';
+    4:
+      Result := 'flagged';
+    5:
+      Result := 'pending';
+    6:
+      Result := 'active';
+    7:
+      Result := 'expired';
+    8:
+      Result := 'scheduled';
+    9:
+      Result := 'partial results';
+    10:
+      Result := 'delayed';
+    11:
+      Result := 'unreleased';
+    12:
+      Result := 'dc/edit';
+    13:
+      Result := 'cancelled';
+    14:
+      Result := 'lapsed';
+    15:
+      Result := 'renewed';
+    97:
+      Result := ''; { null status, used for 'No Orders Found.' }
+    98:
+      Result := 'new';
+    99:
+      Result := 'no status';
   end;
 end;
 
-function GetOrderStatus(AnOrderId: string): integer;
+function GetOrderStatus(AnOrderId: string): Integer;
 begin
-  Result := StrToIntDef(SCallV('OREVNTX1 GETSTS',[AnOrderId]),0);
+  if not CallVistA('OREVNTX1 GETSTS', [AnOrderId],Result) then
+    Result := 0;
 end;
 
 function ExpiredOrdersStartDT: TFMDateTime;
-//Return FM date/time to begin search for expired orders
+//  Returns FM date/time to begin search for expired orders
+var
+  s: String;
 begin
-  Result := MakeFMDateTime(sCallV('ORWOR EXPIRED', [nil]));
+  if CallVistA('ORWOR EXPIRED', [nil],s) then
+    Result := MakeFMDateTime(s)
+  else
+    Result := -1;
 end;
 
-function DispOrdersForEvent(AEvtId: string): boolean;
+function DispOrdersForEvent(AEvtId: string): Boolean;
 var
-  theResult: integer;
+  s: String;
 begin
-  Result := False;
-  theResult := StrToIntDef(SCallV('OREVNTX1 CPACT',[AEvtId]),0);
-  if theResult > 0 then
-    Result := True;
+  Result := CallVistA('OREVNTX1 CPACT', [AEvtId], s) and
+      (StrToIntDef(s, -1) > 0);
 end;
 
 function EventInfo(APtEvtID: string): string;
 begin
-  Result := SCallV('OREVNTX1 GTEVT', [APtEvtID]);
+  CallVistA('OREVNTX1 GTEVT', [APtEvtID],Result)
 end;
 
 function EventInfo1(AnEvtID: string): string;
 begin
-  Result := SCallV('OREVNTX1 GTEVT1', [AnEvtID]);
+  CallVistA('OREVNTX1 GTEVT1', [AnEvtID],Result);
 end;
 
 function NameOfDGroup(IEN: Integer): string;
 begin
-  if uDGroupMap = nil then LoadDGroupMap;
+  if uDGroupMap = nil then
+    LoadDGroupMap;
   Result := uDGroupMap.Values[IntToStr(IEN)];
   Result := Piece(Result, U, 3);
 end;
 
 function ShortNameOfDGroup(IEN: Integer): string;
 begin
-  if uDGroupMap = nil then LoadDGroupMap;
+  if uDGroupMap = nil then
+    LoadDGroupMap;
   Result := uDGroupMap.Values[IntToStr(IEN)];
   Result := Piece(Result, U, 4);
 end;
@@ -583,32 +695,33 @@ function SeqOfDGroup(IEN: Integer): Integer;
 var
   x: string;
 begin
-  if uDGroupMap = nil then LoadDGroupMap;
+  if uDGroupMap = nil then
+    LoadDGroupMap;
   x := uDGroupMap.Values[IntToStr(IEN)];
   Result := StrToIntDef(Piece(x, U, 1), 0);
 end;
 
-function CheckOrderGroup(AOrderID: string): integer;
+function CheckOrderGroup(AOrderID: string): Integer;
 begin
   // Result = 1     Inpatient Medication Display Group;
   // Result = 2     OutPatient Medication Display Group;
   // Result = 0     None of In or Out patient display group;
-  Result := StrToInt(SCallV('ORWDPS2 CHKGRP',[AOrderID]));
+
+  if not CallVistA('ORWDPS2 CHKGRP', [AOrderID],Result) then
+      Result := -1;
 end;
 
-function CheckQOGroup(AQOId:string): Boolean;
+function CheckQOGroup(AQOId: string): Boolean;
 var
-  rst: integer;
+  rst: Integer;
 begin
-  rst := StrToInt(SCallV('ORWDPS2 QOGRP',[AQOId]));
-  Result := False;
-  if rst > 0 then
-    Result := True;
+  Result := CallVistA('ORWDPS2 QOGRP', [AQOId],rst) and (rst>0);
 end;
 
 function TopNameOfDGroup(IEN: Integer): string;
 begin
-  if uDGroupMap = nil then LoadDGroupMap;
+  if uDGroupMap = nil then
+    LoadDGroupMap;
   Result := uDGroupMap.Values[IntToStr(IEN)];
   Result := Piece(Result, U, 2);
 end;
@@ -617,7 +730,10 @@ procedure ClearOrders(AList: TList);
 var
   i: Integer;
 begin
-  with AList do for i := 0 to Count - 1 do with TOrder(Items[i]) do Free;
+  with AList do
+    for i := 0 to Count - 1 do
+      with TOrder(Items[i]) do
+        Free;
   AList.Clear;
 end;
 
@@ -628,8 +744,8 @@ begin
 end;
 
 procedure SetOrderFields(AnOrder: TOrder; const x, y, z: string);
-{           1   2    3     4      5     6   7   8   9    10    11    12    13    14     15     16  17    18    19     20         21          22              23               24
-{ Pieces: ~IFN^Grp^ActTm^StrtTm^StopTm^Sts^Sig^Nrs^Clk^PrvID^PrvNam^ActDA^Flag^DCType^ChrtRev^DEA#^VA#^DigSig^IMO^DCOrigOrder^ISDCOrder^IsDelayOrder^IsControlledSubstance^IsDetox}
+{ 1   2    3     4      5     6   7   8   9    10    11    12    13    14     15     16  17    18    19     20         21          22              23               24
+  { Pieces: ~IFN^Grp^ActTm^StrtTm^StopTm^Sts^Sig^Nrs^Clk^PrvID^PrvNam^ActDA^Flag^DCType^ChrtRev^DEA#^VA#^DigSig^IMO^DCOrigOrder^ISDCOrder^IsDelayOrder^IsControlledSubstance^IsDetox }
 begin
   with AnOrder do
   begin
@@ -638,42 +754,58 @@ begin
     DGroup := StrToIntDef(Piece(x, U, 2), 0);
     OrderTime := MakeFMDateTime(Piece(x, U, 3));
     StartTime := Piece(x, U, 4);
-    StopTime  := Piece(x, U, 5);
-    Status    := StrToIntDef(Piece(x, U, 6), 0);
+    StopTime := Piece(x, U, 5);
+    Status := StrToIntDef(Piece(x, U, 6), 0);
     Signature := StrToIntDef(Piece(x, U, 7), 0);
-    VerNurse  := Piece(x, U, 8);
-    VerClerk  := Piece(x, U, 9);
-    ChartRev  := Piece(x, U, 15);
-    Provider  := StrToInt64Def(Piece(x, U, 10), 0);
+    VerNurse := Piece(x, U, 8);
+    VerClerk := Piece(x, U, 9);
+    ChartRev := Piece(x, U, 15);
+    Provider := StrToInt64Def(Piece(x, U, 10), 0);
     ProviderName := Piece(x, U, 11);
-    ProviderDEA  := Piece(x, U, 16);
-    ProviderVA   := Piece(x, U, 17);
-    DigSigReq    := Piece(x, U, 18);
-    Flagged   := Piece(x, U, 13) = '1';
+    ProviderDEA := Piece(x, U, 16);
+    ProviderVa := Piece(x, U, 17);
+    DigSigReq := Piece(x, U, 18);
+    Flagged := Piece(x, U, 13) = '1';
     Retrieved := True;
-    OrderLocIEN  := Piece(Piece(x,U,19),':',2);   //imo
-    if Piece(Piece(x,U,19),':',1) = '0;SC(' then OrderLocName := 'Unknown'
-    else OrderLocName := Piece(Piece(x,U,19),':',1);   //imo
+    OrderLocIEN := Piece(Piece(x, U, 19), ':', 2); // imo
+    if Piece(Piece(x, U, 19), ':', 1) = '0;SC(' then
+      OrderLocName := 'Unknown'
+    else
+      OrderLocName := Piece(Piece(x, U, 19), ':', 1); // imo
     Text := y;
     XMLText := z;
-    DGroupSeq  := SeqOfDGroup(DGroup);
+    DGroupSeq := SeqOfDGroup(DGroup);
     DGroupName := TopNameOfDGroup(DGroup);
-    //AGP Changes 26.15 PSI-04-063
-    if (pos('Entered in error',Text)>0) then AnOrder.EnteredInError := 1
-    else AnOrder.EnteredInError := 0;
-    //if DGroupName = 'Non-VA Meds' then Text := 'Non-VA  ' + Text;
+    // AGP Changes 26.15 PSI-04-063
+    if (pos('Entered in error', Text) > 0) then
+      AnOrder.EnteredInError := 1
+    else
+      AnOrder.EnteredInError := 0;
+    // if DGroupName = 'Non-VA Meds' then Text := 'Non-VA  ' + Text;
     if UAPViewCalling then
       SetOrderRevwCol(AnOrder);
-    if Piece(x,U,20) = '1' then DCOriginalOrder := True
-    else DCOriginalOrder := False;
-    if Piece(X,u,21) = '1' then  IsOrderPendDC := True
-    else IsOrderPendDC := False;
-    if Piece(x,u,22) = '1' then IsDelayOrder := True
-    else IsDelayOrder := False;
-    if Piece(x,u,23) = '1' then IsControlledSubstance := True
-    else IsControlledSubstance := False;
-    if Piece(x,u,24) = '1' then IsDetox := True
-    else IsDetox := False;
+    if Piece(x, U, 20) = '1' then
+      DCOriginalOrder := True
+    else
+      DCOriginalOrder := False;
+    if Piece(x, U, 21) = '1' then
+      IsOrderPendDC := True
+    else
+      IsOrderPendDC := False;
+    if Piece(x, U, 22) = '1' then
+      IsDelayOrder := True
+    else
+      IsDelayOrder := False;
+    if Piece(x, U, 23) = '1' then
+      IsControlledSubstance := True
+    else
+      IsControlledSubstance := False;
+    if Piece(x, U, 24) = '1' then
+      IsDetox := True
+    else
+      IsDetox := False;
+    ParkedStatus := Piece(x, U, 25); // PaPI NSR#20090509 AA 2015/09/29
+    FPackage := Piece(x, U, 26);
     FlagText := '';
     IsFlagTextLoaded := False;
   end;
@@ -681,182 +813,241 @@ end;
 
 procedure LoadOrders(Dest: TList; Filter, Groups: Integer);
 var
+  Results: TStringList;
   x, y, z: string;
   AnOrder: TOrder;
 begin
   ClearOrders(Dest);
-  if uDGroupMap = nil then LoadDGroupMap;  // to make sure broker not called while looping thru Results
-  CallV('ORWORR GET', [Patient.DFN, Filter, Groups]);
-  with RPCBrokerV do while Results.Count > 0 do
-  begin
-    x := Results[0];
-    Results.Delete(0);
-    if CharAt(x, 1) <> '~' then Continue;        // only happens if out of synch
-    y := '';
-    while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
+  if uDGroupMap = nil then
+    LoadDGroupMap; // to make sure broker not called while looping thru Results
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWORR GET', [Patient.DFN, Filter, Groups], Results) then
     begin
-      y := y + Copy(Results[0], 2, Length(Results[0])) + CRLF;
-      Results.Delete(0);
+      // Add error processing if needed //      Results.Clear;
     end;
-    if Length(y) > 0 then y := Copy(y, 1, Length(y) - 2);  // take off last CRLF
-    z := '';
-    if (Results.Count > 0) and (Results[0] = '|') then
+    while Results.Count > 0 do
+    begin
+      x := Results[0];
+      Results.Delete(0);
+      if CharAt(x, 1) <> '~' then
+        Continue; // only happens if out of synch
+      y := '';
+      while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+        (CharAt(Results[0], 1) <> '|') do
+      begin
+        y := y + Copy(Results[0], 2, Length(Results[0])) + CRLF;
+        Results.Delete(0);
+      end;
+      if Length(y) > 0 then
+        y := Copy(y, 1, Length(y) - 2); // take off last CRLF
+      z := '';
+      if (Results.Count > 0) and (Results[0] = '|') then
       begin
         Results.Delete(0);
-        while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
-          begin
-            z := z + Copy(Results[0], 2, Length(Results[0]));
-            Results.Delete(0);
-          end;
+        while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+          (CharAt(Results[0], 1) <> '|') do
+        begin
+          z := z + Copy(Results[0], 2, Length(Results[0]));
+          Results.Delete(0);
+        end;
       end;
-    AnOrder := TOrder.Create;
-    SetOrderFields(AnOrder, x, y, z);
-    Dest.Add(AnOrder);
+      AnOrder := TOrder.Create;
+      SetOrderFields(AnOrder, x, y, z);
+      Dest.Add(AnOrder);
+    end;
+  finally
+    Results.Free;
   end;
 end;
+
+procedure ConvertOrders(Dest: TList; AView: TOrderView; Results:TStrings);
+var
+  i: Integer;
+  AnOrder: TOrder;
+begin
+  if Results.Count < 1 then
+    exit;
+  AView.TextView := StrToIntDef(Piece(Results[0], U, 2), 0);
+  AView.CtxtTime := MakeFMDateTime(Piece(Results[0], U, 3));
+    for i := 1 to Results.Count - 1 do // if orders found (skip 0 element)
+    begin
+      if (Piece(Results[i], U, 1) = '0') or
+        (Piece(Results[i], U, 1) = '') then
+        Continue;
+      if (DelimCount(Results[i], U) = 2) then
+        Continue;
+      AnOrder := TOrder.Create;
+      with AnOrder do
+      begin
+        ID := Piece(Results[i], U, 1);
+        DGroup := StrToIntDef(Piece(Results[i], U, 2), 0);
+        OrderTime := MakeFMDateTime(Piece(Results[i], U, 3));
+        EventPtr := Piece(Results[i], U, 4);
+        EventName := Piece(Results[i], U, 5);
+        DGroupSeq := SeqOfDGroup(DGroup);
+      end;
+      Dest.Add(AnOrder);
+    end;
+end;
+
 
 procedure LoadOrdersAbbr(Dest: TList; AView: TOrderView; APtEvtID: string);
-//Filter, Specialty, Groups: Integer; var TextView: Integer;
-//  var CtxtTime: TFMDateTime);
+// Filter, Specialty, Groups: Integer; var TextView: Integer;
+// var CtxtTime: TFMDateTime);
 var
+  FMD: TFMDateTime;
+  sl: TStrings;
   FilterTS: string;
-  AlertedUserOnly: boolean;
+  AlertedUserOnly: Boolean;
 begin
   ClearOrders(Dest);
-  if uDGroupMap = nil then LoadDGroupMap;  // to make sure broker not called while looping thru Results
+  if uDGroupMap = nil then
+    LoadDGroupMap; // to make sure broker not called while looping thru Results
   FilterTS := IntToStr(AView.Filter) + U + IntToStr(AView.EventDelay.Specialty);
   AlertedUserOnly := (Notifications.Active and (AView.Filter = 12));
-  CallV('ORWORR AGET', [Patient.DFN, FilterTS, AView.DGroup, AView.TimeFrom, AView.TimeThru, APtEvtID, AlertedUserOnly]);
-  if ((Piece(RPCBrokerV.Results[0], U, 1) = '0') or (Piece(RPCBrokerV.Results[0], U, 1) = '')) and (AView.Filter = 5) then      // if no expiring orders found display expired orders)
-  begin
-    CallV('ORWORR AGET', [Patient.DFN, '27^0', AView.DGroup, ExpiredOrdersStartDT, FMNow, APtEvtID]);
-    AView.ViewName := 'Recently Expired Orders (No Expiring Orders Found) -' + Piece(AView.ViewName, '-', 2);
-  end;
-  {if (Piece(RPCBrokerV.Results[0], U, 1) = '0') or (Piece(RPCBrokerV.Results[0], U, 1) = '') then      // if no orders found (0 element is count)
-  begin
-    AnOrder := TOrder.Create;
-    with AnOrder do
+
+  sl := TStringList.Create;
+  try
+    if not CallVistA('ORWORR AGET', [Patient.DFN, FilterTS, AView.DGroup,
+      AView.TimeFrom, AView.TimeThru, APtEvtID, AlertedUserOnly], sl) then
+      ; // add error processing here // sl.Clear;
+    if (sl.Count > 0) then
     begin
-      ID := '0';
-      DGroup := 0;
-      OrderTime := FMNow;
-      Status := 97;
-      Text := 'No orders found.';
-      Retrieved := True;
+      if ((Piece(sl[0], U, 1) = '0') or (Piece(sl[0], U, 1) = '')) and
+        (AView.Filter = 5) then
+
+      begin // if no expiring orders found display expired orders)
+        sl.Clear;
+        FMD := ExpiredOrdersStartDT;
+        if FMD < 0 then
+          ShowMessage
+            ('ERROR searching for FM date/time to begin search for expired orders')
+        else if not CallVistA('ORWORR AGET', [Patient.DFN, '27^0', AView.DGroup,
+          FMD, FMNow, APtEvtID], sl) then
+          sl.Clear;
+        AView.ViewName := 'Recently Expired Orders (No Expiring Orders Found) -'
+          + Piece(AView.ViewName, '-', 2);
+      end;
+      ConvertOrders(Dest, AView, sl);
     end;
-    Dest.Add(AnOrder);
-    Exit;
-  end;}
-  ConvertOrders(Dest, AView);
+  finally
+    sl.Free;
+  end;
 end;
 
-procedure LoadOrdersAbbr(Dest: TList; AView: TOrderView; AptEvtID: string; AlertID: string);
+procedure LoadOrdersAbbr(Dest: TList; AView: TOrderView; APtEvtID: string;
+  AlertID: string);
+var
+  sl: TStrings;
 begin
   ClearOrders(Dest);
-  if uDGroupMap = nil then LoadDGroupMap;  // to make sure broker not called while looping thru Results
-  CallV('ORB FOLLOW-UP ARRAY', [AlertID]);
-  ConvertOrders(Dest, AView);
-end;
-
-procedure ConvertOrders(Dest: TList; AView: TOrderView);
-var
-  i: Integer;
-  AnOrder: TOrder;
-begin
-  AView.TextView := StrToIntDef(Piece(RPCBrokerV.Results[0], U, 2), 0);
-  AView.CtxtTime := MakeFMDateTime(Piece(RPCBrokerV.Results[0], U, 3));
-  with RPCBrokerV do for i := 1 to Results.Count - 1 do   // if orders found (skip 0 element)
-  begin
-    if (Piece(RPCBrokerV.Results[i], U, 1) = '0') or (Piece(RPCBrokerV.Results[i], U, 1) = '') then Continue;
-    if (DelimCount(Results[i],U) = 2) then Continue;
-    AnOrder := TOrder.Create;
-    with AnOrder do
-    begin
-      ID := Piece(Results[i], U, 1);
-      DGroup := StrToIntDef(Piece(Results[i], U, 2), 0);
-      OrderTime := MakeFMDateTime(Piece(Results[i], U, 3));
-      EventPtr  := Piece(Results[i],U,4);
-      EventName := Piece(Results[i],U,5);
-      DGroupSeq  := SeqOfDGroup(DGroup);
-    end;
-    Dest.Add(AnOrder);
+  if uDGroupMap = nil then
+    LoadDGroupMap; // to make sure broker not called while looping thru Results
+  sl := TStringList.Create;
+  try
+    if not CallVistA('ORB FOLLOW-UP ARRAY', [AlertID], sl) then;
+    // add error processing here // sl.Clear;
+    ConvertOrders(Dest, AView, sl);
+  finally
+    sl.Free;
   end;
 end;
 
-procedure LoadOrdersAbbr(DestDC,DestRL: TList; AView: TOrderView; APtEvtID: string);
+procedure LoadOrdersAbbr(DestDC, DestRL: TList; AView: TOrderView;
+  APtEvtID: string);
 var
   i: Integer;
   AnOrder: TOrder;
   FilterTS: string;
-  DCStart: boolean;
+  DCStart: Boolean;
+  sl: TStringList;
 begin
   DCStart := False;
-  if uDGroupMap = nil then LoadDGroupMap;
+  if uDGroupMap = nil then
+    LoadDGroupMap;
   FilterTS := IntToStr(AView.Filter) + U + IntToStr(AView.EventDelay.Specialty);
-  CallV('ORWORR RGET', [Patient.DFN, FilterTS, AView.DGroup, AView.TimeFrom, AView.TimeThru, APtEvtID]);
-  if RPCBrokerV.Results[0] = '0' then   // if no orders found (0 element is count)
-  begin
-    AnOrder := TOrder.Create;
-    with AnOrder do
+
+  sl := TStringList.Create;
+  try
+    if not CallVistA('ORWORR RGET', [Patient.DFN, FilterTS, AView.DGroup,
+      AView.TimeFrom, AView.TimeThru, APtEvtID], sl) then;
+    // add error processing here //sl.Clear;
+    if (sl.Count < 1) or (sl[0] = '0') then // if no orders found (0 element is count)
     begin
-      ID := '0';
-      DGroup := 0;
-      OrderTime := FMNow;
-      Status := 97;
-      Text := 'No orders found.';
-      Retrieved := True;
-    end;
-    DestDC.Add(AnOrder);
-    Exit;
-  end;
-  AView.TextView := StrToIntDef(Piece(RPCBrokerV.Results[0], U, 2), 0);
-  AView.CtxtTime := MakeFMDateTime(Piece(RPCBrokerV.Results[0], U, 3));
-  with RPCBrokerV do for i := 1 to Results.Count - 1 do   // if orders found (skip 0 element)
-  begin
-    if AnsiCompareText('DC START', Results[i]) = 0 then
-    begin
-      DCStart := True;
-      Continue;
-    end;
-    AnOrder := TOrder.Create;
-    with AnOrder do
-    begin
-      ID := Piece(Results[i], U, 1);
-      DGroup := StrToIntDef(Piece(Results[i], U, 2), 0);
-      OrderTime := MakeFMDateTime(Piece(Results[i], U, 3));
-      EventPtr  := Piece(Results[i],U,4);
-      EventName := Piece(Results[i],U,5);
-      DGroupSeq  := SeqOfDGroup(DGroup);
-    end;
-    if DCStart then
-      DestDC.Add(AnOrder)
+      AnOrder := TOrder.Create;
+      with AnOrder do
+      begin
+        ID := '0';
+        DGroup := 0;
+        OrderTime := FMNow;
+        Status := 97;
+        Text := 'No orders found.';
+        Retrieved := True;
+      end;
+      DestDC.Add(AnOrder);
+      // Exit; -- replaced with "else" block
+    end
     else
-      DestRL.Add(AnOrder);
+    begin
+      AView.TextView := StrToIntDef(Piece(sl[0], U, 2), 0);
+      AView.CtxtTime := MakeFMDateTime(Piece(sl[0], U, 3));
+      for i := 1 to sl.Count - 1 do // if orders found (skip 0 element)
+      begin
+        if AnsiCompareText('DC START', sl[i]) = 0 then
+        begin
+          DCStart := True;
+          Continue;
+        end;
+        AnOrder := TOrder.Create;
+        with AnOrder do
+        begin
+          ID := Piece(sl[i], U, 1);
+          DGroup := StrToIntDef(Piece(sl[i], U, 2), 0);
+          OrderTime := MakeFMDateTime(Piece(sl[i], U, 3));
+          EventPtr := Piece(sl[i], U, 4);
+          EventName := Piece(sl[i], U, 5);
+          DGroupSeq := SeqOfDGroup(DGroup);
+        end;
+        if DCStart then
+          DestDC.Add(AnOrder)
+        else
+          DestRL.Add(AnOrder);
+      end;
+    end;
+  finally
+    sl.Free;
   end;
 end;
 
 procedure LoadOrderSheets(Dest: TStrings);
 begin
-  CallV('ORWOR SHEETS', [Patient.DFN]);
-  MixedCaseByPiece(RPCBrokerV.Results, U, 2);
-  FastAssign(RPCBrokerV.Results, Dest);
- end;
+  if CallVistA('ORWOR SHEETS', [Patient.DFN],Dest) then
+    MixedCaseByPiece(Dest, U, 2)
+  else
+  ; // add error processing if needed //  Dest.Clear;
+end;
 
 procedure LoadOrderSheetsED(Dest: TStrings);
 var
-  aReturn: TStrings;
-  i: integer;
+  i: Integer;
+  sl: TStringList;
 begin
-  aReturn := TStringList.Create;
-  CallVistA('OREVNTX PAT', [Patient.DFN], aReturn);
-  MixedCaseByPiece(aReturn, U, 2);
-  Dest.Add('C;O^Current View');
-  if aReturn.Count > 1 then
-  begin
-    aReturn.Delete(0);
-    for i := 0 to aReturn.Count - 1 do
-      aReturn[i] := aReturn[i] + ' Orders';
-    Dest.AddStrings(aReturn);
+  sl := TStringList.Create;
+  try
+    if not CallVistA('OREVNTX PAT', [Patient.DFN], sl) then
+      ; // add error processing if needed // sl.Clear;
+    MixedCaseByPiece(sl, U, 2);
+    Dest.Add('C;O^Current View');
+    if sl.Count > 1 then
+    begin
+      sl.Delete(0);
+      for i := 0 to sl.Count - 1 do
+        sl[i] := sl[i] + ' Orders';
+      Dest.AddStrings(sl);
+    end;
+  finally
+    sl.Free;
   end;
 end;
 
@@ -864,19 +1055,20 @@ procedure LoadOrderViewDefault(AView: TOrderView);
 var
   x: string;
 begin
-  x := sCallV('ORWOR VWGET', [nil]);
+  if not CallVistA('ORWOR VWGET', [nil],x) then
+    x := '';
   with AView do
   begin
-    Changed   := False;
-    DGroup    := StrToIntDef(Piece(x, ';', 4), 0);
-    Filter    := StrToIntDef(Piece(x, ';', 3), 0);
+    Changed := False;
+    DGroup := StrToIntDef(Piece(x, ';', 4), 0);
+    Filter := StrToIntDef(Piece(x, ';', 3), 0);
     InvChrono := Piece(x, ';', 6) = 'R';
     ByService := Piece(x, ';', 7) = '1';
-    TimeFrom  := StrToFloat(Piece(x, ';', 1));
-    TimeThru  := StrToFloat(Piece(x, ';', 2));
-    CtxtTime  := 0;
-    TextView  := 0;
-    ViewName  := Piece(x, ';', 8);
+    TimeFrom := StrToFloat(Piece(x, ';', 1));
+    TimeThru := StrToFloat(Piece(x, ';', 2));
+    CtxtTime := 0;
+    TextView := 0;
+    ViewName := Piece(x, ';', 8);
     EventDelay.EventType := 'C';
     EventDelay.Specialty := 0;
     EventDelay.Effective := 0;
@@ -886,24 +1078,13 @@ end;
 procedure LoadUnsignedOrders(IDList, HaveList: TStrings);
 var
   i: Integer;
+  aList: iORNetMult;
 begin
-  LockBroker;
-  try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORWOR UNSIGN';
-      Param[0].PType := literal;
-      Param[0].Value := Patient.DFN;
-      Param[1].PType := list;
-      Param[1].Mult['0'] := '';  // (to prevent broker from hanging if empty list)
-      for i := 0 to Pred(HaveList.Count) do Param[1].Mult['"' + HaveList[i] + '"'] := '';
-      CallBroker;
-      FastAssign(RPCBrokerV.Results,IDList);
-    end;
-  finally
-    UnlockBroker;
-  end;
+  newOrNetMult(aList);
+  aList.AddSubscript(['0'],''); // (to prevent broker from hanging if empty list)
+    for i := 0 to Pred(HaveList.Count) do
+      aList.AddSubscript([HaveList[i]], '');
+  CallVistA('ORWOR UNSIGN',[Patient.DFN,aList], IDList);
 end;
 
 procedure LoadFlagReasons(AOrderList: TList);
@@ -941,7 +1122,6 @@ var
   S, AResult: string;
   AOrder: TOrder;
   AIDList, AResults: TStringList;
-//  OrderNum: integer;
 begin
   AResults := TStringList.Create;
   try
@@ -977,54 +1157,69 @@ begin
   end;
 end;
 
-procedure RetrieveOrderFields(OrderList: TList; ATextView: Integer; ACtxtTime: TFMDateTime);
+procedure RetrieveOrderFields(OrderList: TList; ATextView: Integer;
+  ACtxtTime: TFMDateTime);
 var
   i, OrderIndex: Integer;
   x, y, z: string;
   AnOrder: TOrder;
+  Results: TStrings;
   IDList: TStringList;
 begin
-  IDList := TStringList.Create;
+  Results := TStringList.Create;
   try
-    with OrderList do for i := 0 to Count - 1 do IDList.Add(TOrder(Items[i]).ID);
-    CallV('ORWORR GET4LST', [ATextView, ACtxtTime, IDList]);
-  finally
-    IDList.Free;
-  end;
-  OrderIndex := -1;
-  with RPCBrokerV do while Results.Count > 0 do
-  begin
-    Inc(OrderIndex);
-    if (OrderIndex >= OrderList.Count) then
-    begin
-      Results.Delete(0);
-      Continue;
+    IDList := TStringList.Create;
+    try
+      with OrderList do
+        for i := 0 to Count - 1 do
+          IDList.Add(TOrder(Items[i]).ID);
+      if not CallVistA('ORWORR GET4LST', [ATextView, ACtxtTime, IDList], Results) then
+        Results.Clear;
+    finally
+      IDList.Free;
     end;
-    AnOrder := TOrder(OrderList.Items[OrderIndex]);
-    x := Results[0];
-    Results.Delete(0);
-    if CharAt(x, 1) <> '~' then Continue;                  // only happens if out of synch
-    if Piece(x, U, 1) <> '~' + AnOrder.ID then Continue;   // only happens if out of synch
-    y := '';
-    while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
+    OrderIndex := -1;
+    while Results.Count > 0 do
     begin
-      y := y + Copy(Results[0], 2, Length(Results[0])) + CRLF;
-      Results.Delete(0);
-    end;
-    if Length(y) > 0 then y := Copy(y, 1, Length(y) - 2);  // take off last CRLF
-    z := '';
-    if (Results.Count > 0) and (Results[0] = '|') then
+      Inc(OrderIndex);
+      if (OrderIndex >= OrderList.Count) then
       begin
         Results.Delete(0);
-        while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
-          begin
-            z := z + Copy(Results[0], 2, Length(Results[0]));
-            Results.Delete(0);
-          end;
+        Continue;
       end;
-    SetOrderFields(AnOrder, x, y, z);
+      AnOrder := TOrder(OrderList.Items[OrderIndex]);
+      x := Results[0];
+      Results.Delete(0);
+      if CharAt(x, 1) <> '~' then
+        Continue; // only happens if out of synch
+      if Piece(x, U, 1) <> '~' + AnOrder.ID then
+        Continue; // only happens if out of synch
+      y := '';
+      while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+        (CharAt(Results[0], 1) <> '|') do
+      begin
+        y := y + Copy(Results[0], 2, Length(Results[0])) + CRLF;
+        Results.Delete(0);
+      end;
+      if Length(y) > 0 then
+        y := Copy(y, 1, Length(y) - 2); // take off last CRLF
+      z := '';
+      if (Results.Count > 0) and (Results[0] = '|') then
+      begin
+        Results.Delete(0);
+        while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+          (CharAt(Results[0], 1) <> '|') do
+        begin
+          z := z + Copy(Results[0], 2, Length(Results[0]));
+          Results.Delete(0);
+        end;
+      end;
+      SetOrderFields(AnOrder, x, y, z);
+    end;
+    if Notifications.Active then LoadFlagReasons(OrderList);
+  finally
+    Results.Free;
   end;
-  if Notifications.Active then LoadFlagReasons(OrderList);
 end;
 
 procedure SaveOrderViewDefault(AView: TOrderView);
@@ -1033,13 +1228,19 @@ var
 begin
   with AView do
   begin
-    x := MakeRelativeDateTime(TimeFrom) + ';' +            // 1
-         MakeRelativeDateTime(TimeThru) + ';' +            // 2
-         IntToStr(Filter)               + ';' +            // 3
-         IntToStr(DGroup)               + ';;';            // 4, skip 5
-    if InvChrono then x := x + 'R;' else x := x + 'F;';    // 6
-    if ByService then x := x + '1'  else x := x + '0';     // 7
-    CallV('ORWOR VWSET', [x]);
+    x := MakeRelativeDateTime(TimeFrom) + ';' + // 1
+      MakeRelativeDateTime(TimeThru) + ';' + // 2
+      IntToStr(Filter) + ';' + // 3
+      IntToStr(DGroup) + ';;'; // 4, skip 5
+    if InvChrono then
+      x := x + 'R;'
+    else
+      x := x + 'F;'; // 6
+    if ByService then
+      x := x + '1'
+    else
+      x := x + '0'; // 7
+    CallVistA('ORWOR VWSET', [x]);
   end;
 end;
 
@@ -1053,29 +1254,38 @@ var
 begin
   Order1 := TOrder(Item1);
   Order2 := TOrder(Item2);
-  if ( (Piece(Order1.ID, ';', 2) = '1') and (Changes.Exist(CH_ORD, Order1.ID)) )
-    and ( StrToIntDef(Order1.EventPtr,0) = 0 ) then
-      DSeq1 := 0
-    else DSeq1 := Order1.DGroupSeq;
+  if ((Piece(Order1.ID, ';', 2) = '1') and (Changes.Exist(CH_ORD, Order1.ID)))
+    and (StrToIntDef(Order1.EventPtr, 0) = 0) then
+    DSeq1 := 0
+  else
+    DSeq1 := Order1.DGroupSeq;
   if ((Piece(Order2.ID, ';', 2) = '1') and (Changes.Exist(CH_ORD, Order2.ID)))
-    and ( StrToIntDef(Order1.EventPtr,0) = 0 ) then
-      DSeq2 := 0
-    else DSeq2 := Order2.DGroupSeq;
+    and (StrToIntDef(Order1.EventPtr, 0) = 0) then
+    DSeq2 := 0
+  else
+    DSeq2 := Order2.DGroupSeq;
   if DSeq1 = DSeq2 then
   begin
-    if Order1.OrderTime > Order2.OrderTime then Result := -1
-    else if Order1.OrderTime < Order2.OrderTime then Result := 1
-    else Result := 0;
+    if Order1.OrderTime > Order2.OrderTime then
+      Result := -1
+    else if Order1.OrderTime < Order2.OrderTime then
+      Result := 1
+    else
+      Result := 0;
     if Result = 0 then
     begin
       IFN1 := StrToIntDef(Piece(Order1.ID, ';', 1), 0);
       IFN2 := StrToIntDef(Piece(Order2.ID, ';', 1), 0);
-      if IFN1 < IFN2 then Result := -1;
-      if IFN1 > IFN2 then Result := 1;
+      if IFN1 < IFN2 then
+        Result := -1;
+      if IFN1 > IFN2 then
+        Result := 1;
     end;
   end
-  else if DSeq1 < DSeq2 then Result := -1
-  else Result := 1;
+  else if DSeq1 < DSeq2 then
+    Result := -1
+  else
+    Result := 1;
 end;
 
 function ForwardByGroup(Item1, Item2: Pointer): Integer;
@@ -1086,26 +1296,37 @@ begin
   Order1 := TOrder(Item1);
   Order2 := TOrder(Item2);
   if (Piece(Order1.ID, ';', 2) = '1') and (Changes.Exist(CH_ORD, Order1.ID))
-    then DSeq1 := 0
-    else DSeq1 := Order1.DGroupSeq;
+  then
+    DSeq1 := 0
+  else
+    DSeq1 := Order1.DGroupSeq;
   if (Piece(Order2.ID, ';', 2) = '1') and (Changes.Exist(CH_ORD, Order2.ID))
-    then DSeq2 := 0
-    else DSeq2 := Order2.DGroupSeq;
+  then
+    DSeq2 := 0
+  else
+    DSeq2 := Order2.DGroupSeq;
   if DSeq1 = DSeq2 then
   begin
-    if Order1.OrderTime < Order2.OrderTime then Result := -1
-    else if Order1.OrderTime > Order2.OrderTime then Result := 1
-    else Result := 0;
+    if Order1.OrderTime < Order2.OrderTime then
+      Result := -1
+    else if Order1.OrderTime > Order2.OrderTime then
+      Result := 1
+    else
+      Result := 0;
     if Result = 0 then
     begin
       IFN1 := StrToIntDef(Piece(Order1.ID, ';', 1), 0);
       IFN2 := StrToIntDef(Piece(Order2.ID, ';', 1), 0);
-      if IFN1 < IFN2 then Result := -1;
-      if IFN1 > IFN2 then Result := 1;
+      if IFN1 < IFN2 then
+        Result := -1;
+      if IFN1 > IFN2 then
+        Result := 1;
     end;
   end
-  else if DSeq1 < DSeq2 then Result := -1
-  else Result := 1;
+  else if DSeq1 < DSeq2 then
+    Result := -1
+  else
+    Result := 1;
 end;
 
 function InverseChrono(Item1, Item2: Pointer): Integer;
@@ -1115,15 +1336,20 @@ var
 begin
   Order1 := TOrder(Item1);
   Order2 := TOrder(Item2);
-  if Order1.OrderTime > Order2.OrderTime then Result := -1
-  else if Order1.OrderTime < Order2.OrderTime then Result := 1
-  else Result := 0;
+  if Order1.OrderTime > Order2.OrderTime then
+    Result := -1
+  else if Order1.OrderTime < Order2.OrderTime then
+    Result := 1
+  else
+    Result := 0;
   if Result = 0 then
   begin
     IFN1 := StrToIntDef(Piece(Order1.ID, ';', 1), 0);
     IFN2 := StrToIntDef(Piece(Order2.ID, ';', 1), 0);
-    if IFN1 < IFN2 then Result := -1;
-    if IFN1 > IFN2 then Result := 1;
+    if IFN1 < IFN2 then
+      Result := -1;
+    if IFN1 > IFN2 then
+      Result := 1;
   end;
 end;
 
@@ -1134,15 +1360,20 @@ var
 begin
   Order1 := TOrder(Item1);
   Order2 := TOrder(Item2);
-  if Order1.OrderTime < Order2.OrderTime then Result := -1
-  else if Order1.OrderTime > Order2.OrderTime then Result := 1
-  else Result := 0;
+  if Order1.OrderTime < Order2.OrderTime then
+    Result := -1
+  else if Order1.OrderTime > Order2.OrderTime then
+    Result := 1
+  else
+    Result := 0;
   if Result = 0 then
   begin
     IFN1 := StrToIntDef(Piece(Order1.ID, ';', 1), 0);
     IFN2 := StrToIntDef(Piece(Order2.ID, ';', 1), 0);
-    if IFN1 < IFN2 then Result := -1;
-    if IFN1 > IFN2 then Result := 1;
+    if IFN1 < IFN2 then
+      Result := -1;
+    if IFN1 > IFN2 then
+      Result := 1;
   end;
 end;
 
@@ -1150,10 +1381,17 @@ procedure SortOrders(AList: TList; ByGroup, InvChron: Boolean);
 begin
   if ByGroup then
   begin
-    if InvChron then AList.Sort(InverseByGroup) else AList.Sort(ForwardByGroup);
-  end else
+    if InvChron then
+      AList.Sort(InverseByGroup)
+    else
+      AList.Sort(ForwardByGroup);
+  end
+  else
   begin
-    if InvChron then AList.Sort(InverseChrono)  else AList.Sort(ForwardChrono);
+    if InvChron then
+      AList.Sort(InverseChrono)
+    else
+      AList.Sort(ForwardChrono);
   end;
 end;
 
@@ -1163,7 +1401,8 @@ var
 begin
   if uDGroupAll = 0 then
   begin
-    x := sCallV('ORWORDG IEN', ['ALL']);
+    if not CallVistA('ORWORDG IEN', ['ALL'],x) then
+      x := '';
     uDGroupAll := StrToIntDef(x, 1);
   end;
   Result := uDGroupAll;
@@ -1171,30 +1410,41 @@ end;
 
 function DGroupIEN(AName: string): Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWORDG IEN', [AName]), 0);
+  if not CallVistA('ORWORDG IEN', [AName],Result) then
+    Result := 0;
 end;
 
 procedure ListDGroupAll(Dest: TStrings);
 begin
-  CallV('ORWORDG ALLTREE', [nil]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWORDG ALLTREE', [nil],Dest);
 end;
 
+
 procedure ListSpecialties(Dest: TStrings);
+var
+  sl: TStrings;
 begin
-  CallV('ORWOR TSALL', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  sl := TStringList.Create;
+  try
+    if not CallVistA('ORWOR TSALL', [nil], sl) then
+      sl.Clear;
+    MixedCaseList(sl);
+    FastAssign(sl, Dest);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure ListSpecialtiesED(AType: Char; Dest: TStrings);
 var
-  i :integer;
-  Currloc: integer;
+  i: Integer;
+  Currloc: Integer;
   admitEvts: TStringList;
   otherEvts: TStringList;
   commonList: TStringList;
-  IsObservation: boolean;
+  IsObservation: Boolean;
+  Results: TSTrings;
+  sParam:String;
 begin
   if Encounter <> nil then
     Currloc := Encounter.Location
@@ -1202,59 +1452,67 @@ begin
     Currloc := 0;
   IsObservation := (Piece(GetCurrentSpec(Patient.DFN), U, 3) = '1');
   commonList := TStringList.Create;
-  CallV('OREVNTX1 CMEVTS',[Currloc]);
-  //MixedCaseList(RPCBrokerV.Results);
-  if RPCBrokerV.Results.Count > 0 then with RPCBrokerV do for i := 0 to Results.Count - 1 do
-  begin
-    if AType = 'D' then
+  Results := TStringList.Create;
+  if not CallVistA('OREVNTX1 CMEVTS', [Currloc],Results) then
+    Results.Clear;
+
+  if Results.Count > 0 then
+    for i := 0 to Results.Count - 1 do
     begin
-      if AType = Piece(Results[i],'^',3) then
+      if AType = 'D' then
+      begin
+        if AType = Piece(Results[i], '^', 3) then
+          commonList.Add(Results[i]);
+      end
+      else if AType = 'A' then
+      begin
+        if (Piece(Results[i], '^', 3) = 'T') or
+          (Piece(Results[i], '^', 3) = 'D') then
+          Continue;
         commonList.Add(Results[i]);
-    end
-    else if AType = 'A' then
-    begin
-      if (Piece(Results[i],'^',3) = 'T') or (Piece(Results[i],'^',3) = 'D') then
-        Continue;
-      commonList.Add(Results[i]);
-    end
-    else if IsObservation then
-    begin
-      if (Piece(Results[i],'^',3) = 'T') then
-        Continue;
-      commonList.Add(Results[i]);
-    end
-    else
-    begin
-     if Length(Results[i])> 0 then
-      commonList.Add(Results[i]);
+      end
+      else if IsObservation then
+      begin
+        if (Piece(Results[i], '^', 3) = 'T') then
+          Continue;
+        commonList.Add(Results[i]);
+      end
+      else
+      begin
+        if Length(Results[i]) > 0 then
+          commonList.Add(Results[i]);
+      end;
     end;
-  end;
+
   if commonList.Count > 0 then
   begin
     Dest.AddStrings(commonList);
     Dest.Add('^^^^^^^^___________________________________________________________________________________________');
     Dest.Add(LLS_SPACE);
   end;
+
   if AType = #0 then
   begin
     admitEvts := TStringList.Create;
-    otherEvts := TSTringList.Create;
-    CallV('OREVNTX ACTIVE',['A']);
-    //MixedCaseList(RPCBrokerV.Results);
-    if RPCBrokerV.Results.Count > 0 then
+    otherEvts := TStringList.Create;
+    if not CallVistA('OREVNTX ACTIVE', ['A'],Results) then
+      Results.Clear;
+    // MixedCaseList(RPCBrokerV.Results);
+    if Results.Count > 0 then
     begin
-      RPCBrokerV.Results.Delete(0);
-      admitEvts.AddStrings(RPCBrokerV.Results);
+      Results.Delete(0);
+      admitEvts.AddStrings(Results);
     end;
-    if IsObservation then
-      CallV('OREVNTX ACTIVE',['O^M^D'])
-    else
-      CallV('OREVNTX ACTIVE',['T^O^M^D']);
-    //MixedCaseList(RPCBrokerV.Results);
-    if RPCBrokerV.Results.Count > 0 then
+    sParam := 'O^M^D';
+    if not IsObservation then
+      sParam := 'T^' + sParam;
+    if not CallVistA('OREVNTX ACTIVE', [sParam], Results) then
+      Results.Clear;
+    // MixedCaseList(RPCBrokerV.Results);
+    if Results.Count > 0 then
     begin
-      RPCBrokerV.Results.Delete(0);
-      otherEvts.AddStrings(RPCBrokerV.Results);
+      Results.Delete(0);
+      otherEvts.AddStrings(Results);
     end;
     Dest.AddStrings(otherEvts);
     Dest.Add('^^^^^^^^_____________________________________________________________________________________________');
@@ -1265,108 +1523,128 @@ begin
   end
   else if AType = 'A' then
   begin
-    CallV('OREVNTX ACTIVE',['A^O^M']);
-    //MixedCaseList(RPCBrokerV.Results);
-    if RPCBrokerV.Results.Count > 0 then
-      RPCBrokerV.Results.Delete(0);
-    Dest.AddStrings(RPCBrokerV.Results);
+    Results.Clear;
+      if not CallVistA('OREVNTX ACTIVE', ['A^O^M'],Results) then
+        Results.Clear;
+    // MixedCaseList(RPCBrokerV.Results);
+    if Results.Count > 0 then
+      Results.Delete(0);
+    Dest.AddStrings(Results);
   end
   else
   begin
-    CallV('OREVNTX ACTIVE',[AType]);
-    //MixedCaseList(RPCBrokerV.Results);
-    if RPCBrokerV.Results.Count > 0 then
-      RPCBrokerV.Results.Delete(0);
-    Dest.AddStrings(RPCBrokerV.Results);
+    Results.Clear;
+      if not CallVistA('OREVNTX ACTIVE', [AType],Results) then
+        Results.Clear;
+    // MixedCaseList(RPCBrokerV.Results);
+    if Results.Count > 0 then
+      Results.Delete(0);
+    Dest.AddStrings(Results);
   end;
+  Results.Free;
 end;
 
 procedure ListOrderFilters(Dest: TStrings);
 begin
-  CallV('ORWORDG REVSTS', [nil]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWORDG REVSTS', [nil], Dest);
 end;
-
 
 procedure ListOrderFiltersAll(Dest: TStrings);
 begin
-  CallV('ORWORDG REVSTS', [nil]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWORDG REVSTS', [nil], Dest);
 end;
 
 { Write Orders }
 
-procedure BuildResponses(var ResolvedDialog: TOrderDialogResolved; const KeyVars: string;
-  AnEvent: TOrderDelayEvent; ForIMO: boolean);
+procedure BuildResponses(var ResolvedDialog: TOrderDialogResolved;
+  const KeyVars: string; AnEvent: TOrderDelayEvent; ForIMO: Boolean);
 const
-  BoolChars: array[Boolean] of Char = ('0', '1');
+  BoolChars: array [Boolean] of Char = ('0', '1');
   RESERVED_PIECE = '';
 var
   DelayEvent, x, TheOrder: string;
-  Idx, tmpOrderGroup, PickupIdx, ForIMOResponses: integer;
+  Idx, tmpOrderGroup, PickupIdx, ForIMOResponses: Integer;
   IfUDGrp: Boolean;
   IfUDGrpForQO: Boolean;
   temp: string;
+  Results: TStringList;
 begin
   ForIMOResponses := 0;
   tmpOrderGroup := 0;
   temp := '';
-  if ForIMO then ForIMOResponses := 1;
+  if ForIMO then
+    ForIMOResponses := 1;
   PickupIdx := 0;
   IfUDGrp := False;
   TheOrder := ResolvedDialog.InputID;
   IfUDGrpForQO := CheckQOGroup(TheOrder);
-  if CharInSet(CharAt(TheOrder,1), ['C','T']) then
+  if CharInSet(CharAt(TheOrder, 1), ['C', 'T']) then
   begin
-    Delete(TheOrder,1,1);
+    Delete(TheOrder, 1, 1);
     tmpOrderGroup := CheckOrderGroup(TheOrder);
-    if tmpOrderGroup = 1 then IfUDGrp := True else IfUDGrp := False;
+    if tmpOrderGroup = 1 then
+      IfUDGrp := True
+    else
+      IfUDGrp := False;
   end;
-  if (not IfUDGrp) and CharInSet(AnEvent.EventType, ['A','T']) then
+  if (not IfUDGrp) and CharInSet(AnEvent.EventType, ['A', 'T']) then
     IfUDGrp := True;
-  //FLDS=DFN^LOC^ORNP^INPT^SEX^AGE^EVENT^SC%^^^Key Variables
-  if (Patient.Inpatient = true) and (tmpOrderGroup = 2) then temp := '0';
-  if temp <> '0' then temp := BoolChars[Patient.Inpatient];
+  // FLDS=DFN^LOC^ORNP^INPT^SEX^AGE^EVENT^SC%^^^Key Variables
+  if (Patient.Inpatient = True) and (tmpOrderGroup = 2) then
+    temp := '0';
+  if temp <> '0' then
+    temp := BoolChars[Patient.Inpatient];
   with AnEvent do
   begin
-    if isNewEvent then
-      DelayEvent := '0;'+ EventType + ';' + IntToStr(Specialty) + ';' + FloatToStr(Effective)
+    if IsNewEvent then
+      DelayEvent := '0;' + SafeEventType(EventType) + ';' + IntToStr(Specialty) + ';' +
+        FloatToStr(Effective)
     else
-      DelayEvent := IntToStr(AnEvent.PtEventIFN) + ';' + EventType + ';' + IntToStr(Specialty) + ';' + FloatToStr(Effective);
+      DelayEvent := IntToStr(AnEvent.PtEventIFN) + ';' + SafeEventType(EventType) + ';' +
+        IntToStr(Specialty) + ';' + FloatToStr(Effective);
   end;
-  x := Patient.DFN                  + U +   // 1
-       IntToStr(Encounter.Location) + U +   // 2
-       IntToStr(Encounter.Provider) + U +   // 3
-       BoolChars[Patient.Inpatient] + U +   // 4
-       Patient.Sex                  + U +   // 5
-       IntToStr(Patient.Age)        + U +   // 6
-       DelayEvent                   + U +   // 7 (for OREVENT)
-       IntToStr(Patient.SCPercent)  + U +   // 8
-       RESERVED_PIECE               + U +   // 9
-       RESERVED_PIECE               + U +   // 10
-       KeyVars;
-  CallV('ORWDXM1 BLDQRSP', [ResolvedDialog.InputID, x, ForIMOResponses, Encounter.Location]);
-  // LST(0)=QuickLevel^ResponseID(ORIT;$H)^Dialog^Type^FormID^DGrp
-  with RPCBrokerV do
-  begin
-    x := Results[0];
+  x := Patient.DFN + U + // 1
+    IntToStr(Encounter.Location) + U + // 2
+    IntToStr(Encounter.Provider) + U + // 3
+    BoolChars[Patient.Inpatient] + U + // 4
+    Patient.Sex + U + // 5
+    IntToStr(Patient.Age) + U + // 6
+    DelayEvent + U + // 7 (for OREVENT)
+    IntToStr(Patient.SCPercent) + U + // 8
+    RESERVED_PIECE + U + // 9
+    RESERVED_PIECE + U + // 10
+    KeyVars;
+
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXM1 BLDQRSP', [ResolvedDialog.InputID, x,
+      ForIMOResponses, Encounter.Location], Results) then
+      Results.Clear;
+
+    // LST(0)=QuickLevel^ResponseID(ORIT;$H)^Dialog^Type^FormID^DGrp
+    if Results.Count > 0 then
+      x := Results[0]
+    else
+      x := '';
     with ResolvedDialog do
     begin
-      QuickLevel   := StrToIntDef(Piece(x, U, 1), 0);
-      ResponseID   := Piece(x, U, 2);
-      DialogIEN    := StrToIntDef(Piece(x, U, 3), 0);
-      DialogType   := CharAt(Piece(x, U, 4), 1);
-      FormID       := StrToIntDef(Piece(x, U, 5), 0);
+      QuickLevel := StrToIntDef(Piece(x, U, 1), 0);
+      ResponseID := Piece(x, U, 2);
+      DialogIEN := StrToIntDef(Piece(x, U, 3), 0);
+      DialogType := CharAt(Piece(x, U, 4), 1);
+      FormID := StrToIntDef(Piece(x, U, 5), 0);
       DisplayGroup := StrToIntDef(Piece(x, U, 6), 0);
-      QOKeyVars    := Pieces(x, U, 7, 7 + MAX_KEYVARS);
-      Results.Delete(0);
+      QOKeyVars := Pieces(x, U, 7, 7 + MAX_KEYVARS);
+      if Results.Count > 0 then
+        Results.Delete(0);
       if Results.Count > 0 then
       begin
         if (IfUDGrp) or (IfUDGrpForQO) then
         begin
           for Idx := 0 to Results.Count - 1 do
           begin
-            if(Pos('PICK UP',UpperCase(Results[idx])) > 0) or (Pos('PICK-UP',UpperCase(Results[idx])) > 0) then
+            if (pos('PICK UP', UpperCase(Results[Idx])) > 0) or
+              (pos('PICK-UP', UpperCase(Results[Idx])) > 0) then
             begin
               PickupIdx := Idx;
               Break;
@@ -1378,27 +1656,33 @@ begin
         SetString(ShowText, Results.GetText, StrLen(Results.GetText));
       end;
     end;
+
+  finally
+    Results.Free;
   end;
 end;
 
 procedure ClearOrderRecall;
 begin
-  CallV('ORWDXM2 CLRRCL', [nil]);
+  CallVistA('ORWDXM2 CLRRCL', [nil]);
 end;
 
 function CommonLocationForOrders(OrderList: TStringList): Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWD1 COMLOC', [OrderList]), 0);
+  if not CallVistA('ORWD1 COMLOC', [OrderList], Result) then
+    Result := 0;
 end;
 
 function FormIDForDialog(IEN: Integer): Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDXM FORMID', [IEN]), 0);
+  if not CallVistA('ORWDXM FORMID', [IEN], Result) then
+    Result := 0;
 end;
 
 function DlgIENForName(DlgName: string): Integer;
 begin
-  Result := StrToIntDef(sCallV('OREVNTX1 DLGIEN',[DlgName]),0);
+  if not CallVistA('OREVNTX1 DLGIEN', [DlgName], Result) then
+    Result := 0;
 end;
 
 procedure LoadOrderMenu(AnOrderMenu: TOrderMenu; AMenuIEN: Integer);
@@ -1406,18 +1690,23 @@ var
   OrderMenuItem: TOrderMenuItem;
   i: Integer;
   OrderTitle: String;
+  Results: TStrings;
 begin
-  CallV('ORWDXM MENU', [AMenuIEN]);
-  with RPCBrokerV do if Results.Count > 0 then
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXM MENU', [AMenuIEN], Results) then
+      Results.Clear;
+  if Results.Count > 0 then
   begin
     // Results[0] = Name^Cols^PathSwitch^^^LRFZX^LRFSAMP^LRFSPEC^LRFDATE^LRFURG^LRFSCH^PSJNPOC^
-    //              GMRCNOPD^GMRCNOAT^GMRCREAF^^^^^
-   OrderTitle := Piece(Results[0], U, 1);
-   if (Pos('&', OrderTitle) > 0) and
-   (Copy(OrderTitle, Pos('&', OrderTitle) + 1, 1) <> '&') then
-   OrderTitle := Copy(OrderTitle, 1, Pos('&', OrderTitle)) + '&' + Copy(OrderTitle, Pos('&', OrderTitle) + 1, Length(OrderTitle));
+    // GMRCNOPD^GMRCNOAT^GMRCREAF^^^^^
+    OrderTitle := Piece(Results[0], U, 1);
+    if (pos('&', OrderTitle) > 0) and
+      (Copy(OrderTitle, pos('&', OrderTitle) + 1, 1) <> '&') then
+      OrderTitle := Copy(OrderTitle, 1, pos('&', OrderTitle)) + '&' +
+        Copy(OrderTitle, pos('&', OrderTitle) + 1, Length(OrderTitle));
 
-    AnOrderMenu.Title   := OrderTitle;
+    AnOrderMenu.Title := OrderTitle;
     AnOrderMenu.NumCols := StrToIntDef(Piece(Results[0], U, 2), 1);
     AnOrderMenu.KeyVars := Pieces(Results[0], U, 6, 6 + MAX_KEYVARS);
     for i := 1 to Results.Count - 1 do
@@ -1425,71 +1714,114 @@ begin
       OrderMenuItem := TOrderMenuItem.Create;
       with OrderMenuItem do
       begin
-        Col      := StrToIntDef(Piece(Results[i], U, 1), 0) - 1;
-        Row      := StrToIntDef(Piece(Results[i], U, 2), 0) - 1;
-        DlgType  := CharAt(Piece(Results[i], U, 3), 1);
-        IEN      := StrToIntDef(Piece(Results[i], U, 4), 0);
-        FormID   := StrToIntDef(Piece(Results[i], U, 5), 0);
-        AutoAck  := Piece(Results[i], U, 6) = '1';
+        Col := StrToIntDef(Piece(Results[i], U, 1), 0) - 1;
+        Row := StrToIntDef(Piece(Results[i], U, 2), 0) - 1;
+        DlgType := CharAt(Piece(Results[i], U, 3), 1);
+        IEN := StrToIntDef(Piece(Results[i], U, 4), 0);
+        FormID := StrToIntDef(Piece(Results[i], U, 5), 0);
+        AutoAck := Piece(Results[i], U, 6) = '1';
         ItemText := Piece(Results[i], U, 7);
         Mnemonic := Piece(Results[i], U, 8);
-        Display  := StrToIntDef(Piece(Results[i], U, 9), 0);
-      end; {with OrderItem}
+        Display := StrToIntDef(Piece(Results[i], U, 9), 0);
+      end; { with OrderItem }
       AnOrderMenu.MenuItems.Add(OrderMenuItem);
-    end; {for i}
-  end; {with RPCBrokerV}
+    end; { for i }
+  end;
+  finally
+    Results.Free;
+  end;
 end;
 
-procedure LoadOrderSet(SetItems: TStrings; AnIEN: Integer; var KeyVars, ACaption: string);
+procedure LoadOrderSet(SetItems: TStrings; AnIEN: Integer;
+  var KeyVars, ACaption: string);
 var
   x: string;
+  Results: TStrings;
 begin
-  CallV('ORWDXM LOADSET', [AnIEN]);
-  KeyVars := '';
-  ACaption := '';
-  if RPCBrokerV.Results.Count > 0 then
-  begin
-    x := RPCBrokerV.Results[0];
-    ACaption := Piece(x, U, 1);
-    KeyVars  := Copy(x, Pos(U, x) + 1, Length(x));
-    RPCBrokerV.Results.Delete(0);
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXM LOADSET', [AnIEN], Results) then
+      Results.Clear;
+
+    KeyVars := '';
+    ACaption := '';
+    if Results.Count > 0 then
+    begin
+      x := Results[0];
+      ACaption := Piece(x, U, 1);
+      KeyVars := Copy(x, pos(U, x) + 1, Length(x));
+      Results.Delete(0);
+    end;
+    FastAssign(Results, SetItems);
+  finally
+    Results.Free;
   end;
-  FastAssign(RPCBrokerV.Results, SetItems);
 end;
 
 procedure LoadWriteOrders(Dest: TStrings);
 begin
-  CallV('ORWDX WRLST', [Encounter.Location]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  if User.NoOrdering then
+  begin
+    Dest.Clear;
+    exit;
+  end;
+  CallVistA('ORWDX WRLST', [Encounter.Location], Dest);
 end;
 
 procedure LoadWriteOrdersED(Dest: TStrings; EvtID: string);
+var
+  Results: TStrings;
 begin
-  CallV('OREVNTX1 WRLSTED', [Encounter.Location,EvtID]);
-  if RPCBrokerV.Results.count > 0 then
+  if User.NoOrdering then
   begin
     Dest.Clear;
-  FastAssign(RPCBrokerV.Results, Dest);
-  end
+    exit;
+  end;
+  Results := TStringList.Create;
+  try
+    if not CallVistA('OREVNTX1 WRLSTED', [Encounter.Location, EvtID], Results)
+    then
+      Results.Clear;
+
+    if Results.Count > 0 then
+    begin
+      Dest.Clear;
+      FastAssign(Results, Dest);
+    end;
+  finally
+    Results.Free;
+  end;
 end;
 
 function OrderDisabledMessage(DlgIEN: Integer): string;
 begin
-  Result := sCallV('ORWDX DISMSG', [DlgIEN]);
+  if not CallVistA('ORWDX DISMSG', [DlgIEN], Result) then
+    Result := '';
 end;
 
 procedure SendOrders(OrderList: TStringList; const ESCode: string);
 var
   i: Integer;
+  Results: TStrings;
 begin
   { prepending the space to ESCode is temporary way to keep broker from crashing }
-  CallV('ORWDX SEND', [Patient.DFN, Encounter.Provider, Encounter.Location, ' ' + ESCode, OrderList]);
-  { this is a stop gap way to prevent an undesired error message when user chooses not to sign }
-  with RPCBrokerV do for i := 0 to Results.Count - 1 do
-    if Piece(Results[i], U, 4) = 'This order requires a signature.'
-      then Results[i] := Piece(Results[i], U, 1);
-  OrderList.Clear;
-  FastAssign(RPCBrokerV.Results, OrderList);
+  Results := TStringList.Create;
+
+  try
+    if not CallVistA('ORWDX SEND', [Patient.DFN, Encounter.Provider,
+      Encounter.Location, ' ' + ESCode, OrderList], Results) then
+      Results.Clear;
+
+    { this is a stop gap way to prevent an undesired error message when user chooses not to sign }
+    for i := 0 to Results.Count - 1 do
+      if Piece(Results[i], U, 4) = 'This order requires a signature.' then
+        Results[i] := Piece(Results[i], U, 1);
+    OrderList.Clear;
+    FastAssign(Results, OrderList);
+
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure SendReleaseOrders(OrderList: TStringList);
@@ -1497,72 +1829,97 @@ var
   loc: string;
   CurrTS: Integer;
   PtTS: string;
+  Results: TStrings;
 begin
-  PtTS := Piece(GetCurrentSpec(Patient.DFN),'^',2);
-  CurrTS := StrToIntDef(PtTS,0);
-  Loc := IntToStr(Encounter.Location);
-  CallV('ORWDX SENDED',[OrderList,CurrTS,Loc]);
-  OrderList.Clear;
-  FastAssign(RPCBrokerV.Results, OrderList);
+  PtTS := Piece(GetCurrentSpec(Patient.DFN), '^', 2);
+  CurrTS := StrToIntDef(PtTS, 0);
+  loc := IntToStr(Encounter.Location);
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDX SENDED', [OrderList, CurrTS, loc], Results) then
+      Results.Clear;
+    OrderList.Clear;
+    FastAssign(Results, OrderList);
+  finally
+    Results.Free;
+  end;
 end;
 
-procedure SendAndPrintOrders(OrderList, ErrList: TStrings; const ESCode: string; const DeviceInfo: string);
+procedure SendAndPrintOrders(OrderList, ErrList: TStrings; const ESCode: string;
+  const DeviceInfo: string);
 var
   i: Integer;
+  Results: TStrings;
 begin
   { prepending the space to ESCode is temporary way to keep broker from crashing }
-  CallV('ORWDX SENDP', [Patient.DFN, Encounter.Provider, Encounter.Location, ' ' + ESCode, DeviceInfo, OrderList]);
-  { this is a stop gap way to prevent an undesired error message when user chooses not to sign }
-  with RPCBrokerV do for i := 0 to Results.Count - 1 do
-    if Piece(Results[i], U, 3) <> 'This order requires a signature.'
-      then ErrList.Add(Results[i]);
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDX SENDP', [Patient.DFN, Encounter.Provider,
+      Encounter.Location, ' ' + ESCode, DeviceInfo, OrderList], Results) then
+      Results.Clear;
+    { this is a stop gap way to prevent an undesired error message when user chooses not to sign }
+    for i := 0 to Results.Count - 1 do
+      if Piece(Results[i], U, 3) <> 'This order requires a signature.' then
+        ErrList.Add(Results[i]);
+  finally
+    Results.Free;
+  end;
 end;
 
-procedure PrintOrdersOnReview(OrderList: TStringList; const DeviceInfo: string; PrintLoc: Integer = 0);
+procedure PrintOrdersOnReview(OrderList: TStringList; const DeviceInfo: string;
+  PrintLoc: Integer = 0);
 var
-Loc: Integer;
+  loc: Integer;
 begin
-  if (PrintLoc > 0) and (PrintLoc <> Encounter.Location) then Loc := PrintLoc
-  else Loc := Encounter.Location;
-  CallV('ORWD1 RVPRINT',  [Loc, DeviceInfo, OrderList]);
+  if (PrintLoc > 0) and (PrintLoc <> Encounter.Location) then
+    loc := PrintLoc
+  else
+    loc := Encounter.Location;
+  CallVistA('ORWD1 RVPRINT', [loc, DeviceInfo, OrderList]);
 end;
 
-procedure PrintServiceCopies(OrderList: TStringList; PrintLoc: Integer = 0);  {*REV*}
+procedure PrintServiceCopies(OrderList: TStringList;
+  PrintLoc: Integer = 0); { *REV* }
 var
-Loc: Integer;
+  loc: Integer;
 begin
-  if (PrintLoc > 0) and (PrintLoc <> Encounter.Location) then Loc := PrintLoc
-  else Loc := Encounter.Location;
-  CallV('ORWD1 SVONLY',  [Loc, OrderList]);
+  if (PrintLoc > 0) and (PrintLoc <> Encounter.Location) then
+    loc := PrintLoc
+  else
+    loc := Encounter.Location;
+  CallVistA('ORWD1 SVONLY', [loc, OrderList]);
 end;
 
-procedure ExecutePrintOrders(SelectedList: TStringList; const DeviceInfo: string);
+procedure ExecutePrintOrders(SelectedList: TStringList;
+  const DeviceInfo: string);
 begin
-  CallV('ORWD1 PRINTGUI', [Encounter.Location, DeviceInfo, SelectedList]);
+  CallVistA('ORWD1 PRINTGUI', [Encounter.Location, DeviceInfo, SelectedList]);
 end;
 
 { Order Actions }
 
 function DialogForOrder(const ID: string): Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDX DLGID', [ID]), 0);
+  if not CallVistA('ORWDX DLGID', [ID], Result) then;
+    Result := 0;
 end;
 
 function FormIDForOrder(const ID: string): Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDX FORMID', [ID]), 0);
+  if not CallVistA('ORWDX FORMID', [ID], Result) then;
+    Result := 0;
 end;
-
+{
 procedure SetOrderFromResults(AnOrder: TOrder);
 begin
   SetOrderFromResults(AnOrder, RPCBrokerV.Results);
 end;
-
+}
 procedure SetOrderFromResults(AnOrder: TOrder; Results: TStrings);
 var
   x, y, z: string;
 begin
-  { with RPCBrokerV do } while Results.Count > 0 do
+  while Results.Count > 0 do
   begin
     x := Results[0];
     Results.Delete(0);
@@ -1594,173 +1951,247 @@ end;
 
 procedure LockPatient(var ErrMsg: string);
 begin
-  ErrMsg := sCallV('ORWDX LOCK', [Patient.DFN]);
-  if Piece(ErrMsg, U, 1) = '1' then ErrMsg := '' else ErrMsg := Piece(ErrMsg, U, 2);
+  if not CallVistA('ORWDX LOCK', [Patient.DFN], ErrMsg) then
+    ErrMsg := '3^Error caling "ORWDX LOC"';
+  if Piece(ErrMsg, U, 1) = '1' then
+    ErrMsg := ''
+  else
+    ErrMsg := Piece(ErrMsg, U, 2);
+
+  If Length(ErrMsg) = 0 then
+    LockList.AddLock(Patient.DFN, '', ltPatient);
 end;
 
 procedure UnlockPatient;
 begin
-  sCallV('ORWDX UNLOCK', [Patient.DFN]);
+  CallVistA('ORWDX UNLOCK', [Patient.DFN]);
+  LockList.DeleteLock(Patient.DFN, ltPatient);
 end;
 
-procedure LockOrder(OrderID: string; var ErrMsg: string);
+procedure LockOrder(OrderID: string; var ErrMsg: string; const AnAction: string = '');
 begin
-  ErrMsg := sCallV('ORWDX LOCK ORDER', [OrderID]);
-  if Piece(ErrMsg, U, 1) = '1' then ErrMsg := '' else ErrMsg := Piece(ErrMsg, U, 2);
+if not CallVistA('ORWDX LOCK ORDER', [OrderID], ErrMsg) then
+      ErrMsg := '3^Error caling "ORWDX LOCK ORDER"';
+  if Piece(ErrMsg, U, 1) = '1' then
+    ErrMsg := ''
+  else
+    ErrMsg := Piece(ErrMsg, U, 2);
+
+  If Length(ErrMsg) = 0 then
+    LockList.AddLock(OrderID, AnAction, ltOrder);
 end;
 
 procedure UnlockOrder(OrderID: string);
 begin
-  sCallV('ORWDX UNLOCK ORDER', [OrderID]);
+  CallVistA('ORWDX UNLOCK ORDER', [OrderID]);
+  LockList.DeleteLock(OrderID, ltOrder);
+end;
+
+procedure UnlockAllOrders();
+begin
+  LockList.ClearLocksByType(ltOrder);
+end;
+
+procedure UnlockAllOrdersByAction(AnAction: string);
+begin
+  LockList.ClearLocksByAction(AnAction);
+end;
+
+procedure UnlockAllLocks();
+begin
+  LockList.ClearAllLocks;
+end;
+
+procedure UnlockAllPatientLocks();
+begin
+  LockList.ClearLocksByType(ltPatient);
+end;
+
+procedure WarningOrderAction(const ID, Action: string; var ErrMsg: string);
+begin
+  CallVistA('ORWDXR01 WARN', [ID, Action], ErrMsg);
 end;
 
 procedure ValidateOrderAction(const ID, Action: string; var ErrMsg: string);
+var
+  Item: Int64;
 begin
-  if Action = OA_SIGN then ErrMsg := sCallV('ORWDXA VALID', [ID, Action, User.DUZ])
-  else ErrMsg := sCallV('ORWDXA VALID', [ID, Action, Encounter.Provider]);
+  if Action = OA_SIGN then
+    Item := User.DUZ
+  else
+    Item := Encounter.Provider;
+
+  CallVistA('ORWDXA VALID', [ID, Action, Item], ErrMsg);
 end;
 
-procedure ValidateOrderActionNature(const ID, Action, Nature: string; var ErrMsg: string);
+procedure ValidateOrderActionNature(const ID, Action, Nature: string;
+  var ErrMsg: string);
 begin
-  ErrMsg := sCallV('ORWDXA VALID', [ID, Action, Encounter.Provider, Nature]);
+  CallVistA('ORWDXA VALID', [ID, Action, Encounter.Provider, Nature], ErrMsg);
 end;
 
 procedure IsLatestAction(const ID: string; var ErrList: TStringList);
 begin
-  CallV('ORWOR ACTION TEXT',[ID]);
-  if RPCBrokerV.Results.Count > 0 then
-    FastAssign(RPCBrokerV.Results, Errlist);
+  CallVistA('ORWOR ACTION TEXT', [ID], ErrList);
 end;
-
+{
 procedure ChangeOrder(AnOrder: TOrder; ResponseList: TList);
 begin
 end;
-
-procedure RenewOrder(AnOrder: TOrder; RenewFields: TOrderRenewFields; IsComplex: integer; AnIMOOrderAppt: double; OCList: TStringList);
+}
+procedure RenewOrder(AnOrder: TOrder; RenewFields: TOrderRenewFields;
+  IsComplex: Integer; AnIMOOrderAppt: double; OCList: TStringList);
 { put RenewFields into tmplst[0]=BaseType^Start^Stop^Refills^Pickup, tmplst[n]=comments }
 var
   tmplst: TStringList;
-  i: integer;
-  y: string;
+  i: Integer;
+  aList: iORNetMult;
+  sl: TStrings;
 begin
 
   tmplst := TStringList.Create;
 
-  {Begin Billing Aware}
+  { Begin Billing Aware }
   UBAGlobals.SourceOrderID := AnOrder.ID;
-  {End Billing Aware}
+  { End Billing Aware }
 
   try
     with RenewFields do
     begin
       tmplst.SetText(PChar(Comments));
       tmplst.Insert(0, IntToStr(BaseType) + U + StartTime + U + StopTime + U +
-        IntToStr(Refills) + U + Pickup);
+        IntToStr(Refills) + U + Pickup + U + DaysSupply.ToString + U + Quantity);
     end;
-    with RPCBrokerV do
+    newORNetMult(aList);
+    for i := 0 to tmplst.Count - 1 do
+      aList.AddSubscript([IntToStr(i + 1)], tmplst[i]);
+    aList.AddSubscript(['ORCHECK'], OCList.Count);
+    for i := 0 to OCList.Count - 1 do
     begin
-      LockBroker;
-      try
-        ClearParameters := True;
-        RemoteProcedure := 'ORWDXR RENEW';
-        Param[0].PType := literal;
-        Param[0].Value := AnOrder.ID;
-        Param[1].PType := literal;
-        Param[1].Value := Patient.DFN;
-        Param[2].PType := literal;
-        Param[2].Value := IntToStr(Encounter.Provider);
-        Param[3].PType := literal;
-        Param[3].Value := IntToStr(Encounter.Location);
-        Param[4].PType := list;
-        for i := 0 to tmplst.Count - 1 do
-          Param[4].Mult[IntToStr(i + 1)] := tmplst[i];
-        Param[4].Mult['"ORCHECK"'] := IntToStr(OCList.Count);
-        for i := 0 to OCList.Count - 1 do
-        begin
-          // put quotes around everything to prevent broker from choking
-          y := '"ORCHECK","' + Piece(OCList[i], U, 1) + '","' +
-            Piece(OCList[i], U, 3) + '","' + IntToStr(i + 1) + '"';
-          Param[4].Mult[y] := Pieces(OCList[i], U, 2, 4);
-        end;
-        Param[5].PType := literal;
-        Param[5].Value := IntToStr(IsComplex);
-        Param[6].PType := literal;
-        Param[6].Value := FloatToStr(AnIMOOrderAppt);
-        CallBroker;
-        SetOrderFromResults(AnOrder);
-      finally
-        UnlockBroker;
-      end;
-
-      { Begin Billing Aware }
-      UBAGlobals.TargetOrderID := AnOrder.ID; // the ID of the renewed order
-      UBAGlobals.CopyTreatmentFactorsDxsToRenewedOrder;
-      { End Billing Aware }
-
+      aList.AddSubscript(['ORCHECK', Piece(OCList[i], U, 1),Piece(OCList[i], U, 3), i + 1],
+                          Pieces(OCList[i], U, 2, 4));
     end;
+
+    sl := TSTringList.Create;
+    try
+    CallVistA('ORWDXR RENEW',
+      [AnOrder.ID, Patient.DFN, Encounter.Provider, Encounter.Location, aList, IsComplex,AnIMOOrderAppt], sl);
+      SetOrderFromResults(AnOrder,sl);
+    finally
+      sl.Free;
+    end;
+    { Begin Billing Aware }
+    UBAGlobals.TargetOrderID := AnOrder.ID; // the ID of the renewed order
+    UBAGlobals.CopyTreatmentFactorsDxsToRenewedOrder;
+    { End Billing Aware }
+
   finally
     tmplst.Free;
   end;
 end;
 
 procedure HoldOrder(AnOrder: TOrder);
+var
+  Results: TStrings;
 begin
-  CallV('ORWDXA HOLD', [AnOrder.ID, Encounter.Provider]);
-  SetOrderFromResults(AnOrder);
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXA HOLD', [AnOrder.ID, Encounter.Provider], Results)
+    then
+      Results.Clear;
+
+    SetOrderFromResults(AnOrder, Results);
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure ReleaseOrderHold(AnOrder: TOrder);
+var
+  Results: TStrings;
 begin
-  CallV('ORWDXA UNHOLD', [AnOrder.ID, Encounter.Provider]);
-  SetOrderFromResults(AnOrder);
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXA UNHOLD', [AnOrder.ID, Encounter.Provider], Results)
+    then
+      Results.Clear;
+    SetOrderFromResults(AnOrder, Results);
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure ListDCReasons(Dest: TStrings; var DefaultIEN: Integer);
+var
+  Results: TStrings;
 begin
-  CallV('ORWDX2 DCREASON', [nil]);
-  ExtractItems(Dest, RPCBrokerV.Results, 'DCReason');
-  //AGP Change 26.15 for PSI-04-63
-  //DefaultIEN := StrToIntDef(Piece(ExtractDefault(RPCBrokerV.Results, 'DCReason'), U, 1), 0);
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDX2 DCREASON', [nil], Results) then
+      Results.Clear;
+    ExtractItems(Dest, { RPCBrokerV. } Results, 'DCReason');
+  finally
+    Results.Free;
+  end;
+  // AGP Change 26.15 for PSI-04-63
+  // DefaultIEN := StrToIntDef(Piece(ExtractDefault(RPCBrokerV.Results, 'DCReason'), U, 1), 0);
 end;
 
 function GetREQReason: Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDXA DCREQIEN', [nil]), 0);
+  if not CallVistA('ORWDXA DCREQIEN', [nil], Result) then
+    Result := 0;
 end;
 
-procedure DCOrder(AnOrder: TOrder; AReason: Integer; NewOrder: boolean; var DCType: Integer);
+procedure DCOrder(AnOrder: TOrder; AReason: Integer; NewOrder: Boolean;
+  var DCType: Integer);
 var
   AParentID, DCOrigOrder: string;
+  Results: TStrings;
 begin
   AParentID := AnOrder.ParentID;
-  if AnOrder.DCOriginalOrder = true then DCOrigOrder := '1'
-  else DCOrigOrder := '0';
-  CallV('ORWDXA DC', [AnOrder.ID, Encounter.Provider, Encounter.Location, AReason, DCOrigOrder, NewOrder]);
-  UBACore.DeleteDCOrdersFromCopiedList(AnOrder.ID);
-  DCType := StrToIntDef(Piece(RPCBrokerV.Results[0], U, 14), 0);
-  SetOrderFromResults(AnOrder);
-  AnOrder.ParentID := AParentID;
+  if AnOrder.DCOriginalOrder = True then
+    DCOrigOrder := '1'
+  else
+    DCOrigOrder := '0';
+  Results := TStringList.Create;
+  try
+    if not  CallVistA('ORWDXA DC', [AnOrder.ID, Encounter.Provider, Encounter.Location,
+      AReason, DCOrigOrder, NewOrder],Results) then
+        Results.Clear;
+    UBACore.DeleteDCOrdersFromCopiedList(AnOrder.ID);
+    if Results.Count > 0 then
+      DCType := StrToIntDef(Piece({RPCBrokerV.}Results[0], U, 14), 0)
+    else
+      DCType := 0;
+    SetOrderFromResults(AnOrder,Results);
+    AnOrder.ParentID := AParentID;
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure AlertOrder(AnOrder: TOrder; AlertRecip: Int64);
 begin
-  CallV('ORWDXA ALERT', [AnOrder.ID, AlertRecip]);
+  CallVistA('ORWDXA ALERT', [AnOrder.ID, AlertRecip]);
   // don't worry about results
 end;
 
 // NSR #20110719 - adding Recipients list
-function FlagOrder(AnOrder: TOrder; const FlagReason, ExpireDate: String;
-  AlertRecip: TStrings): TStrings;
+function getFlagOrderResults(AnOrder: TOrder;
+  const FlagReason, ExpireDate: String; AlertRecip: TStrings;
+  Results: TStrings): Boolean;
 begin
-  Result := TStringList.Create;
-  CallVistA('ORWDXA FLAG', [AnOrder.ID, FlagReason, '',
-    ExpireDate, AlertRecip], Result);
+  Result := CallVistA('ORWDXA FLAG', [AnOrder.ID, FlagReason, '', ExpireDate,
+    AlertRecip], Results);
+  if not Result then
+    Results.Clear;
 end;
 
 procedure LoadFlagReason(Dest: TStrings; const ID: string);
 begin
-  CallV('ORWDXA FLAGTXT', [ID]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  if not CallVistA('ORWDXA FLAGTXT', [ID], Dest) then
+    Dest.Clear;
 end;
 
 function UnflagOrder(AnOrder: TOrder; const AComment: String;var ErrMsg:String):TStrings;
@@ -1774,23 +2205,16 @@ end;
 // getGlagComments NSR #20110719
 procedure getFlagComponents(Dest: TStrings; const anID,aType: string);
 begin
-  try
-    CallVistA('ORWDXA1 FLAGACT', [anID,aType], Dest);
-  except
-    on E: Exception do
-      Showmessage(E.Message);
-  end;
+  CallVistA('ORWDXA1 FLAGACT', [anID,aType], Dest);
 end;
 
 // getGlagComments NSR #20110719
-function setFlagComments(const anID: String;aComments,aRecipients: TStrings):TStrings;
+function setFlagComments(const anID: String;aComments,aRecipients: TStrings;Results:TStrings):Boolean;
 var
   i: integer;
   aListComments: iORNetMult;
   aListRecipients: iORNetMult;
 begin
-  Result := nil;
-
   neworNetMult(aListComments);
   neworNetMult(aListRecipients);
 
@@ -1798,299 +2222,442 @@ begin
     aListComments.AddSubscript(i+1,aComments[i]);
   for i := 0 to aRecipients.Count - 1 do
     aListRecipients.AddSubscript(i+1,Piece(aRecipients[i],U,1));
-  try
-    Result := TStringList.Create;
-    CallVistA('ORWDXA1 FLAGCOM', [anID,aListComments,aListRecipients],Result);
-  except
-    on E: Exception do
-      Showmessage(E.Message);
-  end;
+
+  Result := CallVistA('ORWDXA1 FLAGCOM', [anID,aListComments,aListRecipients],Results);
+  if not Result then
+    Results.Clear;
+
 end;
 
 procedure LoadWardComments(Dest: TStrings; const ID: string);
 begin
-  CallV('ORWDXA WCGET', [ID]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWDXA WCGET', [ID], Dest);
 end;
 
 procedure PutWardComments(Src: TStrings; const ID: string; var ErrMsg: string);
 begin
-  ErrMsg := sCallV('ORWDXA WCPUT', [ID, Src]);
+  if not CallVistA('ORWDXA WCPUT', [ID, Src], ErrMsg) then
+    ErrMsg := 'Error calling RPC "ORWDXA WCPUT"'
 end;
 
 procedure CompleteOrder(AnOrder: TOrder; const ESCode: string);
+var
+  Results: TStrings;
 begin
-  CallV('ORWDXA COMPLETE', [AnOrder.ID, ESCode]);
-  SetOrderFromResults(AnOrder);
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXA COMPLETE', [AnOrder.ID, ESCode], Results) then
+      Results.Clear;
+    SetOrderFromResults(AnOrder, Results);
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure VerifyOrder(AnOrder: TOrder; const ESCode: string);
+var
+  Results: TStrings;
 begin
-  CallV('ORWDXA VERIFY', [AnOrder.ID, ESCode]);
-  SetOrderFromResults(AnOrder);
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXA VERIFY', [AnOrder.ID, ESCode], Results) then
+      Results.Clear;
+    SetOrderFromResults(AnOrder, Results);
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure VerifyOrderChartReview(AnOrder: TOrder; const ESCode: string);
-begin
-  CallV('ORWDXA VERIFY', [AnOrder.ID, ESCode, 'R']);
-  SetOrderFromResults(AnOrder);
-end;
-
-function GetOrderableIen(AnOrderId:string): integer;
-begin
-  Result := StrToIntDef(sCallV('ORWDXR GTORITM', [AnOrderId]),0);
-end;
-
-procedure StoreDigitalSig(AID, AHash: string; AProvider: Int64; ASig, ACrlUrl, DFN: string; var AError: string);
 var
-  len, ix: integer;
+  Results: TStrings;
+begin
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXA VERIFY', [AnOrder.ID, ESCode, 'R'], Results) then
+      Results.Clear;
+    SetOrderFromResults(AnOrder, Results);
+  finally
+    Results.Free;
+  end;
+end;
+
+function GetOrderableIen(AnOrderId: string): Integer;
+begin
+  if not CallVistA('ORWDXR GTORITM', [AnOrderId], Result) then
+    Result := 0;
+end;
+
+procedure StoreDigitalSig(AID, AHash: string; AProvider: Int64;
+  ASig, ACrlUrl, DFN: string; var AError: string);
+var
+  len, ix: Integer;
   ASigAray: TStringList;
+  Results: TStrings;
+  errLine: string;
 begin
   ASigAray := TStringList.Create;
   ix := 1;
-  len := length(ASig);
+  len := Length(ASig);
   while len >= ix do
-    begin
-        ASigAray.Add(copy(ASig, ix, 240));
-        inc(ix, 240);
-    end;   //while
+  begin
+    ASigAray.Add(Copy(ASig, ix, 240));
+    Inc(ix, 240);
+  end; // while
+  Results := TStringList.Create;
   try
-    CallV('ORWOR1 SIG', [AID, AHash, len, '100', AProvider, ASigAray, ACrlUrl, DFN]);
-    with RPCBrokerV do
-      if piece(Results[0],'^',1) = '-1' then
+    if CallVistA('ORWOR1 SIG', [AID, AHash, len, '100', AProvider, ASigAray,
+      ACrlUrl, DFN], Results) then
+      if (Results.Count < 1) or (piece(Results[0],'^',1) = '-1') then
         begin
-          ShowMsg('Storage of Digital Signature FAILED: ' + piece(Results[0],'^',2) + CRLF + CRLF +
-            'This error will prevent this order from being sent to the service for processing. Please cancel the order and try again.' + CRLF + CRLF +
-            'If this problem persists, then there is a problem in the CPRS PKI interface, and it needs to be reported through the proper channels, to the developer Cary Malmrose.');
-          AError := '1';
-        end;
+          if Results.Count > 0 then
+            errLine := piece(Results[0],'^',2)
+          else
+            errLine := 'No data retrieved from ORWOR1 SIG';
+          ShowMsg('Storage of Digital Signature FAILED: ' + errLine + CRLF + CRLF +
+          'This error will prevent this order from being sent to the service for processing. Please cancel the order and try again.'
+          + CRLF + CRLF +
+          'If this problem persists, then there is a problem in the CPRS PKI interface, and it needs to be reported through the proper channels, to the developer Cary Malmrose.');
+        AError := '1';
+      end;
   finally
     ASigAray.Free;
+    Results.Free;
   end;
 end;
 
 procedure UpdateOrderDGIfNeeded(AnID: string);
 var
-  NeedUpdate: boolean;
+  NeedUpdate: Boolean;
+  sNeedUpdate,
   tmpDFN: string;
 begin
   tmpDFN := Patient.DFN;
   Patient.Clear;
   Patient.DFN := tmpDFN;
-  NeedUpdate := SCallV('ORWDPS4 IPOD4OP', [AnID]) = '1';
-  if Patient.Inpatient and needUpdate then
-    SCallV('ORWDPS4 UPDTDG',[AnID]);
+  NeedUpdate := CallVistA('ORWDPS4 IPOD4OP', [AnID],sNeedUpdate) and
+    (sNeedUpdate = '1');
+
+  if Patient.Inpatient and NeedUpdate then
+    CallVistA('ORWDPS4 UPDTDG', [AnID]);
 end;
 
-function CanEditSuchRenewedOrder(AnID: string; IsTxtOrder: integer): boolean;
+function CanEditSuchRenewedOrder(AnID: string; IsTxtOrder: Integer): Boolean;
+var
+  s: String;
 begin
-  Result := SCallV('ORWDXR01 CANCHG',[AnID,IsTxtOrder]) = '1';
+  Result := CallVistA('ORWDXR01 CANCHG', [AnID, IsTxtOrder],s) and (s = '1');
 end;
 
-function IsPSOSupplyDlg(DlgID, QODlg: integer): boolean;
+function IsPSOSupplyDlg(DlgID: string; QODlg: Integer): Boolean;
+var
+  s: String;
 begin
-  Result := SCallV('ORWDXR01 ISSPLY',[DlgID,QODlg])='1';
+  Result := CallVistA('ORWDXR01 ISSPLY', [DlgID, QODlg],s) and (s = '1');
 end;
 
-procedure SaveChangesOnRenewOrder(var AnOrder: TOrder; AnID, TheRefills, ThePickup: string; IsTxtOrder: integer);
+procedure SaveChangesOnRenewOrder(var AnOrder: TOrder;
+  anID, TheRefills, ThePickup: string; IsTxtOrder: Integer;
+  DaysSupply, Quantity: string);
+var
+  Results: TStrings;
 begin
-  SCallV('ORWDXR01 SAVCHG',[AnID,TheRefills,ThePickup,IsTxtOrder]);
-  SetOrderFromResults(AnOrder);
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXR01 SAVCHG', [anID, TheRefills, ThePickup,
+      IsTxtOrder, DaysSupply, Quantity], Results) then
+      Results.Clear;
+    SetOrderFromResults(AnOrder, Results);
+  finally
+    Results.Free;
+  end;
 end;
 
-function DoesOrderStatusMatch(OrderArray: TStringList): boolean;
+function DoesOrderStatusMatch(OrderArray: TStringList): Boolean;
+var
+  i: Integer;
 begin
- Result := StrtoIntDef(SCallV('ORWDX1 ORDMATCH',[Patient.DFN, OrderArray]),0)=1;
+  Result := CallVistA('ORWDX1 ORDMATCH', [Patient.DFN, OrderArray], i)
+    and (i = 1);
 end;
 
 { Order Information }
 
 function OrderIsReleased(const ID: string): Boolean;
+var
+  i: Integer;
 begin
-  Result := sCallV('ORWDXR ISREL', [ID]) = '1';
+  Result := CallVistA('ORWDXR ISREL', [ID], i) and (i = 1);
 end;
 
 procedure LoadRenewFields(RenewFields: TOrderRenewFields; const ID: string);
 var
   i: Integer;
-begin
-  CallV('ORWDXR RNWFLDS', [ID]);
-  with RPCBrokerV, RenewFields do
+  x, x2: string;
+  IsComment: boolean;
+  Results: TStrings;
+  data: string;
+
+  procedure AddX(var txt: string);
   begin
-    BaseType  := StrToIntDef(Piece(Results[0], U, 1), 0);
-    StartTime := Piece(Results[0], U, 2);
-    StopTime  := Piece(Results[0], U, 3);
-    Refills   := StrToIntDef(Piece(Results[0], U, 4), 0);
-    Pickup    := Piece(Results[0], U, 5);
-    Comments  := '';
-    for i := 1 to Results.Count - 1 do Comments := Comments + CRLF + Results[i];
-    if Copy(Comments, 1, 2) = CRLF then Delete(Comments, 1, 2);
+    if (length(txt) > 0) then
+      txt := txt + CRLF;
+    txt := txt + x;
+  end;
+
+begin
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXR RNWFLDS', [ID], Results) then
+      Results.Clear;
+    with RenewFields do
+    begin
+      if Results.Count > 0 then
+        data := Results[0]
+      else
+        data := '';
+      BaseType  := StrToIntDef(Piece(data, U, 1), 0);
+      StartTime := Piece(data, U, 2);
+      StopTime  := Piece(data, U, 3);
+      Refills   := StrToIntDef(Piece(data, U, 4), 0);
+      Pickup    := Piece(data, U, 5);
+      DaysSupply := StrToIntDef(Piece(data, U, 6), 0);
+      Quantity := Piece(Results[0], U, 7);
+      DispUnit := Piece(data, U, 8);
+      Comments := '';
+      NewText := '';
+      TitrationMsg := '';
+      for i := 1 to Results.Count - 1 do
+      begin
+        IsComment := True;
+        x := Results[i];
+        if ((Length(x) > 0) and (x[1] = '~')) then
+        begin
+          IsComment := False;
+          if (Length(x) > 1) then
+          begin
+            x2 := x[2];
+            x := Copy(x, 3, 999);
+            if (x2 = 't') then
+              AddX(NewText)
+            else if (x2 = 'T') then
+              AddX(TitrationMsg);
+          end;
+        end;
+        if IsComment then
+          AddX(Comments);
+      end;
+    end;
+    finally
+      Results.Free;
+    end;
+  end;
+
+procedure GetChildrenOfComplexOrder(AnParentID, CurrAct: string;
+  var ChildList: TStringList); // PSI-COMPLEX
+var
+  i: Integer;
+  Results: TStrings;
+begin
+  Results := TStringList.Create;
+  try
+    if not CallVistA('ORWDXR ORCPLX', [AnParentID, CurrAct], Results) then
+      Results.Clear;
+    if  Results.Count = 0 then
+      Exit;
+
+    for i := 0 to Results.Count - 1 do
+    begin
+      if (Piece(Results[i], '^', 1) <> 'E') and (Length(Results[i]) > 0) then
+        ChildList.Add(Results[i]);
+    end;
+  finally
+    Results.Free;
   end;
 end;
 
-procedure GetChildrenOfComplexOrder(AnParentID,CurrAct: string; var ChildList: TStringList); //PSI-COMPLEX
-var
-  i: integer;
+procedure LESValidationForChangedLabOrder(var RejectedReason: TStringList;
+  AnOrderInfo: string);
 begin
- CallV('ORWDXR ORCPLX',[AnParentID,CurrAct]);
- if RPCBrokerV.Results.Count = 0 then Exit;
- With RPCBrokerV do
- begin
-   for i := 0 to Results.Count - 1 do
-   begin
-     if (Piece(Results[i],'^',1) <> 'E') and (Length(Results[i])>0) then
-       ChildList.Add(Results[i]);
-   end;
- end;
+  if not CallVistA('ORWDPS5 LESAPI', [AnOrderInfo],RejectedReason) then
+    RejectedReason.Clear;
 end;
 
-procedure LESValidationForChangedLabOrder(var RejectedReason: TStringList; AnOrderInfo: string);
+procedure ChangeEvent(AnOrderList: TStringList; APtEvtID: string);
 begin
-  CallV('ORWDPS5 LESAPI',[AnOrderInfo]);
-  if RPCBrokerV.Results.Count > 0 then
-    FastAssign(RPCBrokerV.Results, RejectedReason);
-end;
-
-procedure ChangeEvent(AnOrderList: TStringList; APtEvtId: string);
-begin
-  SCallV('OREVNTX1 CHGEVT', [APtEvtId,AnOrderList]);
+  CallVistA('OREVNTX1 CHGEVT', [APtEvtID, AnOrderList]);
 end;
 
 procedure DeletePtEvent(APtEvtID: string);
 begin
-  SCallV('OREVNTX1 DELPTEVT',[APtEvtID]);
+  CallVistA('OREVNTX1 DELPTEVT', [APtEvtID]);
 end;
 
-function IsRenewableComplexOrder(AnParentID: string): boolean; //PSI-COMPLEX
+function IsRenewableComplexOrder(AnParentID: string): Boolean; // PSI-COMPLEX
 var
-  rst: integer;
+  rst: Integer;
 begin
-  Result := False;
-  rst := StrToIntDef(SCallV('ORWDXR CANRN',[AnParentID]),0);
-  if rst>0 then
-    Result := True;
+  Result := CallVistA('ORWDXR CANRN', [AnParentID],rst) and (rst > 0);
 end;
 
-function IsComplexOrder(AnOrderID: string): boolean; //PSI-COMPLEX
+function IsComplexOrder(AnOrderId: string): Boolean; // PSI-COMPLEX
 var
-  rst: integer;
+  rst: Integer;
 begin
-  Result := False;
-  rst := StrToIntDef(SCallV('ORWDXR ISCPLX',[AnOrderID]),0);
-  if rst > 0 then
-    Result := True;
+  Result := CallVistA('ORWDXR ISCPLX', [AnOrderId],rst) and (rst > 0);
 end;
 
-procedure ValidateComplexOrderAct(AnOrderID: string; var ErrMsg: string); //PSI-COMPLEX
+procedure ValidateComplexOrderAct(AnOrderId: string; var ErrMsg: string);
+// PSI-COMPLEX
 begin
-  ErrMsg := SCallV('ORWDXA OFCPLX',[AnOrderID]);
+  if not CallVistA('ORWDXA OFCPLX', [AnOrderId],ErrMsg) then
+    ErrMsg := 'ERROR calling "ORWDXA OFCPLX"';
 end;
 
 function GetDlgData(ADlgID: string): string;
 begin
-  Result := SCallV('OREVNTX1 GETDLG',[ADlgID]);
+  if not CallVistA('OREVNTX1 GETDLG', [ADlgID],Result) then
+    Result := 'ERROR calling "OREVNTX1 GETDLG"';
 end;
 
 function PtEvtEmpty(APtEvtID: string): Boolean;
+var
+  i: Integer;
 begin
-  Result := False;
-  if StrToIntDef(SCallV('OREVNTX1 EMPTY',[APtEvtID]),0)>0 then
-    Result := True;
+  Result := CallVistA('OREVNTX1 EMPTY', [APtEvtID],i) and (i > 0);
 end;
 
-
 function TextForOrder(const ID: string): string;
+var
+  sl: TStrings;
 begin
-  CallV('ORWORR GETTXT', [ID]);
-  Result := RPCBrokerV.Results.Text;
+  sl := TStringList.Create;
+  try
+    if CallVistA('ORWORR GETTXT', [ID], sl) then
+      Result := sl.Text;
+  finally
+    sl.Free;
+  end;
 end;
 
 function GetConsultOrderNumber(ConsultIEN: string): string;
 begin
-  Result := sCallv('ORQQCN GET ORDER NUMBER',[ConsultIEN]);
+  if not CallVistA('ORQQCN GET ORDER NUMBER', [ConsultIEN],Result) then
+    Result := '';
 end;
 
 function GetOrderByIFN(const ID: string): TOrder;
 var
   x, y, z: string;
   AnOrder: TOrder;
+  Results: TStrings;
 begin
   AnOrder := TOrder.Create;
-  CallV('ORWORR GETBYIFN', [ID]);
-  with RPCBrokerV do while Results.Count > 0 do
-  begin
-    x := Results[0];
-    Results.Delete(0);
-    if CharAt(x, 1) <> '~' then Continue;        // only happens if out of synch
-    y := '';
-    while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
-    begin
-      y := y + Copy(Results[0], 2, Length(Results[0])) + CRLF;
-      Results.Delete(0);
-    end;
-    if Length(y) > 0 then y := Copy(y, 1, Length(y) - 2);  // take off last CRLF
-    z := '';
-    if (Results.Count > 0) and (Results[0] = '|') then
+  Results := TStringList.Create;
+  try
+    if CallVistA('ORWORR GETBYIFN', [ID], Results) then
+      while Results.Count > 0 do
       begin
+        x := Results[0];
         Results.Delete(0);
-        while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
+        if CharAt(x, 1) <> '~' then
+          Continue; // only happens if out of synch
+        y := '';
+        while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+          (CharAt(Results[0], 1) <> '|') do
+        begin
+          y := y + Copy(Results[0], 2, Length(Results[0])) + CRLF;
+          Results.Delete(0);
+        end;
+        if Length(y) > 0 then
+          y := Copy(y, 1, Length(y) - 2); // take off last CRLF
+        z := '';
+        if (Results.Count > 0) and (Results[0] = '|') then
+        begin
+          Results.Delete(0);
+          while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+            (CharAt(Results[0], 1) <> '|') do
           begin
-            z := z + Copy(Results[0], 2, Length(Results[0])); //PKI Change
+            z := z + Copy(Results[0], 2, Length(Results[0])); // PKI Change
             Results.Delete(0);
           end;
+        end;
+        SetOrderFields(AnOrder, x, y, z);
       end;
-    SetOrderFields(AnOrder, x, y, z);
+  finally
+    Results.Free;
   end;
   Result := AnOrder;
 end;
 
 function GetPackageByOrderID(const OrderID: string): string;
 begin
-  Result := SCallV('ORWDXR GETPKG',[OrderID]);
+  if not CallVistA('ORWDXR GETPKG', [OrderID],Result) then
+    Result := '';
 end;
 
 function AnyOrdersRequireSignature(OrderList: TStringList): Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWD1 SIG4ANY', [OrderList]) = '1';
+  Result := CallVistA('ORWD1 SIG4ANY', [OrderList],s) and (s = '1');
 end;
 
 function OrderRequiresSignature(const ID: string): Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWD1 SIG4ONE', [ID]) = '1';
+  Result := CallVistA('ORWD1 SIG4ONE', [ID],s) and (s = '1');
 end;
 
 function OrderRequiresDigitalSignature(const ID: string): Boolean;
-begin
-  Result := sCallV('ORWOR1 CHKDIG', [ID]) = '1';
-end;
-
-function GetDrugSchedule(const ID: string): string;
-begin
-  Result := sCallV('ORWOR1 GETDSCH', [ID]);
-end;
-
-function GetExternalText(const ID: string): string;
 var
-  x,y: string;
+  s: String;
 begin
-  CallV('ORWOR1 GETDTEXT', [ID]);
-  y := '';
-  with RPCBrokerV do while Results.Count > 0 do
+  Result := CallVistA('ORWOR1 CHKDIG', [ID],s) and (s = '1');
+end;
+
+function GetDrugSchedule(const ID: string;Default:String = ''): string;
+begin
+  if not CallVistA('ORWOR1 GETDSCH', [ID],Result) then
+    Result := Default;
+end;
+{
+function GetExternalText(const ID: string; Default: String = ''): string;
+var
+  x, y: string;
+  sl: TStrings;
+begin
+  // CallV('ORWOR1 GETDTEXT', [ID]);
+  sl := TStringList.Create;
+  try
+    if not CallVistA('ORWOR1 GETDTEXT', [ID], sl) then
+      Result := Default
+    else
     begin
-      x := Results[0];
-      Results.Delete(0);
-      y := y + x;
+      y := '';
+      while sl.Count > 0 do
+      begin
+        x := sl[0];
+        sl.Delete(0);
+        y := y + x;
+      end;
+      Result := y;
     end;
-  Result := y;
+  finally
+    sl.Free;
+  end;
 end;
 
-function SetExternalText(const ID: string; ADrugSch: string; AUser: Int64): string;
+function SetExternalText(const ID: string; ADrugSch: string;
+  AUser: Int64): string;
 var
-  x,y: string;
+  x, y: string;
 begin
   CallV('ORWOR1 SETDTEXT', [ID, ADrugSch, AUser]);
   y := '';
-  with RPCBrokerV do while Results.Count > 0 do
+  with RPCBrokerV do
+    while Results.Count > 0 do
     begin
       x := Results[0];
       Results.Delete(0);
@@ -2098,260 +2665,303 @@ begin
     end;
   Result := y;
 end;
+}
 
 function GetDigitalSignature(const ID: string): string;
+var
+  sl: TStrings;
 begin
-  CallV('ORWORR GETDSIG', [ID]);
-  Result := RPCBrokerV.Results.Text;
+  sl := TStringList.Create;
+  try
+    if not CallVistA('ORWORR GETDSIG', [ID], sl) then
+      Result := ''
+    else
+      Result := sl.Text;
+  finally
+    sl.Free;
+  end;
 end;
 
 function GetDEA(const ID: string): string;
+var
+  sl: TStrings;
 begin
-  CallV('ORWORR GETDEA', [ID]);
-  Result := RPCBrokerV.Results.Text;
+  sl := TStringList.Create;
+  try
+    if not CallVistA('ORWORR GETDEA', [ID], sl) then
+      Result := ''
+    else
+      Result := sl.Text;
+  finally
+    sl.Free;
+  end;
 end;
 
 function GetPKISite: Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWOR PKISITE', [nil]) = '1';
+  Result := CallVistA('ORWOR PKISITE', [nil],s) and (s = '1');
 end;
 
 function GetPKIUse: Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWOR PKIUSE', [nil]) = '1';
+  Result := CallVistA('ORWOR PKIUSE', [nil],s) and (s = '1');
 end;
 
-function DoesOIPIInSigForQO(AnQOID: integer): integer;
+function DoesOIPIInSigForQO(AnQOID: Integer): Integer;
 begin
-  Result := StrToIntDef(SCallV('ORWDPS1 HASOIPI',[AnQOID]),0);
+  if not CallVistA('ORWDPS1 HASOIPI', [AnQOID],Result) then
+    Result := 0;
 end;
 
 function GetDispGroupForLES: string;
 begin
-  Result := SCallV('ORWDPS5 LESGRP',[nil]);
+  if not CallVistA('ORWDPS5 LESGRP', [nil],Result) then
+    Result := '';
 end;
 
-function GetOrderPtEvtID(AnOrderID: string): string;
+function GetOrderPtEvtID(AnOrderId: string): string;
 begin
-  Result := SCallV('OREVNTX1 ODPTEVID',[AnOrderID]);
+  if not CallVistA('OREVNTX1 ODPTEVID', [AnOrderId],Result) then
+    Result := '';
 end;
 
-function VerbTelPolicyOrder(AnOrderID: string): boolean;
+function VerbTelPolicyOrder(AnOrderId: string): Boolean;
+var
+  s: String;
 begin
-  Result := SCallV('ORWDPS5 ISVTP',[AnOrderID]) = '1';
+  Result := CallVistA('ORWDPS5 ISVTP', [AnOrderId],s) and (s = '1');
 end;
 
-function ForIVandUD(AnOrderID: string): boolean;
+function ForIVandUD(AnOrderId: string): Boolean;
+var
+  s: String;
 begin
-  Result := SCallV('ORWDPS4 ISUDIV',[AnOrderID]) = '1';
+  Result := CallVistA('ORWDPS4 ISUDIV', [AnOrderId],s) and (s = '1');
 end;
 
 function GetEventIFN(const AEvntID: string): string;
 begin
-  Result := sCallV('OREVNTX1 EVT',[AEvntID]);
+  if not CallVistA('OREVNTX1 EVT', [AEvntID], Result) then
+    Result := '';
 end;
 
 function GetEventName(const AEvntID: string): string;
 begin
-  Result := sCallV('OREVNTX1 NAME',[AEvntID]);
+  if not CallVistA('OREVNTX1 NAME', [AEvntID],Result) then
+    Result := '';
 end;
 
 function GetEventLoc(const APtEvntID: string): string;
 begin
-  Result := SCallV('OREVNTX1 LOC', [APtEvntID]);
+  if not CallVistA('OREVNTX1 LOC', [APtEvntID],Result)
+    then Result := '';
 end;
 
 function GetEventLoc1(const AnEvntID: string): string;
 begin
-  Result := SCallV('OREVNTX1 LOC1', [AnEvntID]);
+  if not CallVistA('OREVNTX1 LOC1', [AnEvntID],Result)
+    then Result := '';
 end;
 
 function GetEventDiv(const APtEvntID: string): string;
 begin
-  Result := SCallV('OREVNTX1 DIV',[APtEvntID]);
+  if not CallVistA('OREVNTX1 DIV', [APtEvntID],Result) then
+    Result := '';
 end;
 
 function GetEventDiv1(const AnEvntID: string): string;
 begin
-  Result := SCallV('OREVNTX1 DIV1',[AnEvntID]);
+  if not CallVistA('OREVNTX1 DIV1', [AnEvntID],Result) then
+    Result := '';
 end;
 
 function GetCurrentSpec(const APtIFN: string): string;
 begin
-  Result := SCallV('OREVNTX1 CURSPE', [APtIFN]);
+  if not CallVistA('OREVNTX1 CURSPE', [APtIFN],Result) then
+    Result := '';
 end;
 
 function GetDefaultEvt(const AProviderIFN: string): string;
 begin
-  Result := SCallV('OREVNTX1 DFLTEVT',[AProviderIFN]);
+  if not CallVistA('OREVNTX1 DFLTEVT', [AProviderIFN], Result) then
+    Result := '';
 end;
 
 procedure DeleteDefaultEvt;
 begin
-  SCallV('OREVNTX1 DELDFLT',[User.DUZ]);
+  CallVistA('OREVNTX1 DELDFLT', [User.DUZ]);
 end;
 
-function isExistedEvent(const APtDFN: string; const AEvtID: string; var APtEvtID: string): Boolean;
+function isExistedEvent(const APtDFN: string; const AEvtId: string;
+  var APtEvtID: string): Boolean;
 begin
   Result := False;
-  APtEvtID := SCallV('OREVNTX1 EXISTS', [APtDFN,AEvtID]);
-  if StrToIntDef(APtEvtID,0) > 0 then
-   Result := True;
+  if CallVistA('OREVNTX1 EXISTS', [APtDFN, AEvtId],APtEvtID) then
+    Result := StrToIntDef(APtEvtID, 0) > 0;
 end;
 
-function TypeOfExistedEvent(APtDFN: string; AEvtID: Integer): Integer;
+function TypeOfExistedEvent(APtDFN: string; AEvtId: Integer): Integer;
 begin
-  Result := StrToIntDef(SCallV('OREVNTX1 TYPEXT', [APtDFN,AEvtID]),0);
+  if not CallVistA('OREVNTX1 TYPEXT', [APtDFN, AEvtId],Result) then
+    Result := 0;
 end;
 
-function isMatchedEvent(const APtDFN: string; const AEvtID: string; var ATs:string): Boolean;
+function isMatchedEvent(const APtDFN: string; const AEvtId: string;
+  var ATs: string): Boolean;
 var
   rst: string;
 begin
   Result := False;
-  rst := SCallV('OREVNTX1 MATCH',[APtDFN,AEvtID]);
-  if StrToIntDef(Piece(rst,'^',1),0)>0 then
-  begin
-    ATs := Piece(rst,'^',2);
-    Result := True;
-  end;
+  if CallVistA('OREVNTX1 MATCH', [APtDFN, AEvtId], rst) then
+    if StrToIntDef(Piece(rst, '^', 1), 0) > 0 then
+    begin
+      ATs := Piece(rst, '^', 2);
+      Result := True;
+    end;
 end;
 
-function isDCedOrder(const AnOrderID: string): Boolean;
+function isDCedOrder(const AnOrderId: string): Boolean;
 var
-  rst: string;
+  rst: integer;
 begin
-  Result := False;
-  rst := SCAllV('OREVNTX1 ISDCOD',[AnOrderID]);
-  if STrToIntDef(rst,0)>0 then
-    Result := True;
+  Result := CallVistA('OREVNTX1 ISDCOD', [AnOrderId],rst) and
+    (rst > 0);
 end;
 
-function isOnholdMedOrder(AnOrderID: string): Boolean;
+function isOnholdMedOrder(AnOrderId: string): Boolean;
 var
-  rst: string;
+  rst: integer;
 begin
-  Result := False;
-  rst := SCAllV('OREVNTX1 ISHDORD',[AnOrderID]);
-  if StrToIntDef(rst,0)>0 then
-    Result := True;
+  Result := CallVistA('OREVNTX1 ISHDORD', [AnOrderId],rst) and
+    (rst > 0);
 end;
 
 function SetDefaultEvent(var AErrMsg: string; EvtID: string): Boolean;
 begin
-  AErrMsg := SCallV('OREVNTX1 SETDFLT',[EvtID]);
+  CallVistA('OREVNTX1 SETDFLT', [EvtID],AErrMsg);
   Result := True;
 end;
 
-function GetEventPromptID: integer;
-var
-  evtPrompt: string;
+function GetEventPromptID: Integer;
 begin
-  evtPrompt := SCallV('OREVNTX1 PRMPTID',[nil]);
-  Result := StrToIntDef(evtPrompt,0);
+  if not CallVistA('OREVNTX1 PRMPTID', [nil],Result) then
+    Result := 0;
 end;
 
-function GetDefaultTSForEvt(AnEvtID: integer): string;
+function GetDefaultTSForEvt(AnEvtID: Integer): string;
 begin
-  Result := SCallV('OREVNTX1 DEFLTS',[AnEvtID]);
+  if not CallVistA('OREVNTX1 DEFLTS', [AnEvtID],Result) then
+    Result := '';
 end;
 
 function GetPromptIDs: string;
 begin
-  Result := SCallV('OREVNTX1 PROMPT IDS',[nil]);
+  if not CallVistA('OREVNTX1 PROMPT IDS', [nil],Result) then
+    Result := '';
 end;
 
-function GetEventDefaultDlg(AEvtID: integer): string;
+function GetEventDefaultDlg(AEvtId: Integer): string;
 begin
-  Result := SCallV('OREVNTX1 DFLTDLG',[AEvtID]);
+  if not CallVistA('OREVNTX1 DFLTDLG', [AEvtId],Result) then
+    Result := '';
 end;
 
-function CanManualRelease: boolean;
+function CanManualRelease: Boolean;
 var
-  rst: integer;
+  rst: Integer;
 begin
   Result := False;
-  rst := StrToIntDef(SCallV('OREVNTX1 AUTHMREL',[nil]),0);
-  if rst > 0 then
-    Result := True;
+  if CallVistA('OREVNTX1 AUTHMREL', [nil],rst) then
+    Result := rst > 0;
 end;
 
 function TheParentPtEvt(APtEvt: string): string;
 begin
-  Result := SCallV('OREVNTX1 HAVEPRT',[APtEvt]);
+  if not CallVistA('OREVNTX1 HAVEPRT', [APtEvt], Result) then
+    Result := '';
 end;
 
-function IsCompletedPtEvt(APtEvtID: integer): boolean;
+function IsCompletedPtEvt(APtEvtID: Integer): Boolean;
 var
-  rst : integer;
+  rst: Integer;
 begin
-  Result := False;
-  rst := StrToIntDef(SCallV('OREVNTX1 COMP',[APtEvtID]),0);
-  if rst > 0 then
-    Result := True;
+  Result := CallVistA('OREVNTX1 COMP', [APtEvtID], rst) and (rst > 0);
 end;
 
-function IsPassEvt(APtEvtID: integer; APtEvtType: char): boolean;
+function IsPassEvt(APtEvtID: Integer; APtEvtType: Char): Boolean;
 var
-  rst: integer;
+  rst: Integer;
 begin
-  Result := False;
-  rst := StrToIntDef(SCallV('OREVNTX1 ISPASS',[APtEvtID, APtEvtType]),0);
-  if rst = 1 then
-    Result := True;
+  Result := CallVistA('OREVNTX1 ISPASS', [APtEvtID, SafeEventType(APtEvtType)],rst) and (rst = 1);
 end;
 
-function IsPassEvt1(AnEvtID: integer; AnEvtType: char): boolean;
+function IsPassEvt1(AnEvtID: Integer; AnEvtType: Char): Boolean;
 var
-  rst: integer;
+  rst: Integer;
 begin
-  Result := False;
-  rst := StrToIntDef(SCallV('OREVNTX1 ISPASS1',[AnEvtID, AnEvtType]),0);
-  if rst = 1 then
-    Result := True;
+  Result := CallVistA('OREVNTX1 ISPASS1', [AnEvtID, SafeEventType(AnEvtType)],rst) and (rst = 1);
 end;
 
-procedure TerminatePtEvt(APtEvtID: integer);
+procedure TerminatePtEvt(APtEvtID: Integer);
 begin
-  SCallV('OREVNTX1 DONE',[APtEvtID]);
+  CallVistA('OREVNTX1 DONE', [APtEvtID]);
 end;
 
 procedure SetPtEvtList(Dest: TStrings; APtDFN: string; var ATotal: Integer);
+var
+  Results: TStrings;
 begin
-  CallV('OREVNTX LIST',[APtDFN]);
-  if RPCBrokerV.Results.Count > 0 then
-  begin
-    ATotal := StrToIntDef(RPCBrokerV.Results[0],0);
-    if ATotal > 0 then
+  Results := TStringList.Create;
+  try
+    ATotal := 0;
+    Dest.Clear;
+    if CallVistA('OREVNTX LIST', [APtDFN], Results) then
+      if Results.Count > 0 then
+      begin
+        ATotal := StrToIntDef(Results[0], 0);
+        if ATotal > 0 then
+        begin
+          MixedCaseList(Results);
+          Results.Delete(0);
+          FastAssign(Results, Dest);
+        end;
+      end;
+  finally
+    Results.Free;
+  end;
+end;
+
+procedure GetTSListForEvt(Dest: TStrings; AnEvtID: Integer);
+var
+  Results: TStrings;
+begin
+  Results := TStringList.Create;
+  try
+    if CallVistA('OREVNTX1 MULTS', [AnEvtID],Results) and (Results.Count > 0) then
     begin
-      MixedCaseList( RPCBrokerV.Results );
-      RPCBrokerV.Results.Delete(0);
-      FastAssign(RPCBrokerV.Results, Dest);
+      SortByPiece(Results, '^', 2);
+      FastAssign(Results, Dest);
     end;
+  finally
+    Results.Free;
   end;
 end;
 
-procedure GetTSListForEvt(Dest: TStrings; AnEvtID:integer);
-begin
-  CallV('OREVNTX1 MULTS',[AnEvtID]);
-  if RPCBrokerV.Results.Count > 0 then
-  begin
-    SortByPiece(TStringList(RPCBrokerV.Results),'^',2);
-    FastAssign(RPCBrokerV.Results, Dest);
-  end;
-end;
+//procedure GetChildEvent(var AChildList: TStringList; APtEvtID: string);
+//begin
+//end;
 
-procedure GetChildEvent(var AChildList: TStringList; APtEvtID: string);
-begin
-//
-end;
-
-function DeleteEmptyEvt(APtEvntID: string; var APtEvntName: string; Ask: boolean): boolean;
+function DeleteEmptyEvt(APtEvntID: string; var APtEvntName: string;
+  Ask: Boolean): Boolean;
 const
   TX_EVTDEL1 = 'There are no orders tied to ';
   TX_EVTDEL2 = ', Would you like to cancel it?';
 begin
-  Result := false;
+  Result := False;
   if APtEvntID = '0' then
   begin
     Result := True;
@@ -2359,11 +2969,12 @@ begin
   end;
   if PtEvtEmpty(APtEvntID) then
   begin
-    if Length(APtEvntName)=0 then
+    if Length(APtEvntName) = 0 then
       APtEvntName := GetEventName(APtEvntID);
     if Ask then
     begin
-      if InfoBox(TX_EVTDEL1 + APtEvntName + TX_EVTDEL2, 'Confirmation', MB_YESNO or MB_ICONQUESTION) = IDYES then
+      if InfoBox(TX_EVTDEL1 + APtEvntName + TX_EVTDEL2, 'Confirmation',
+        MB_YESNO or MB_ICONQUESTION) = IDYES then
       begin
         DeletePtEvent(APtEvntID);
         Result := True;
@@ -2378,37 +2989,45 @@ begin
   end;
 end;
 
-function CompleteEvt(APtEvntID: string; APtEvntName: string; Ask: boolean): boolean;
+function CompleteEvt(APtEvntID: string; APtEvntName: string;
+  Ask: Boolean): Boolean;
 const
   TX_EVTFIN1 = 'All of the orders tied to ';
-  TX_EVTFIN2 = ' have been released to a service, ' + #13 + 'Would you like to terminate this event?';
+  TX_EVTFIN2 = ' have been released to a service, ' + #13 +
+    'Would you like to terminate this event?';
 var
   ThePtEvtName: string;
 begin
-  Result := false;
+  Result := False;
   if APtEvntID = '0' then
-  begin
-    Result := True;
-    Exit;
-  end;
+    Result := True
+  else
   if PtEvtEmpty(APtEvntID) then
   begin
-    if Length(APtEvntName)=0 then
+    if Length(APtEvntName) = 0 then
       ThePtEvtName := GetEventName(APtEvntID)
     else
       ThePtEvtName := APtEvntName;
+{
     if Ask then
     begin
-      if InfoBox(TX_EVTFIN1 + ThePtEvtName + TX_EVTFIN2, 'Confirmation', MB_OKCANCEL or MB_ICONQUESTION) = IDOK then
+      if InfoBox(TX_EVTFIN1 + ThePtEvtName + TX_EVTFIN2, 'Confirmation',
+        MB_OKCANCEL or MB_ICONQUESTION) = IDOK then
       begin
-        SCallV('OREVNTX1 DONE',[APtEvntID]);
+        SCallV('OREVNTX1 DONE', [APtEvntID]);
         Result := True;
       end;
-    end else
+    end
+    else
     begin
-      SCallV('OREVNTX1 DONE',[APtEvntID]);
+      SCallV('OREVNTX1 DONE', [APtEvntID]);
       Result := True;
     end;
+  end;
+}
+    if not Ask or (InfoBox(TX_EVTFIN1 + ThePtEvtName + TX_EVTFIN2,
+      'Confirmation', MB_OKCANCEL or MB_ICONQUESTION) = IDOK) then
+      Result := CallVistA('OREVNTX1 DONE', [APtEvntID]);
   end;
 end;
 
@@ -2416,238 +3035,479 @@ end;
 
 function FillerIDForDialog(IEN: Integer): string;
 begin
-  Result := sCallV('ORWDXC FILLID', [IEN]);
+  if not CallVistA('ORWDXC FILLID', [IEN],Result) then
+    Result := '';
 end;
+
 function IsMonograph(): Boolean;
-var ret: string;
+var
+  ret: string;
 begin
-  ret := CharAt(sCallV('ORCHECK ISMONO', [nil]), 1);
-  Result := ret = '1';
+  Result := CallVistA('ORCHECK ISMONO', [nil],ret) and
+    (copy(ret,1,1)='1');
 end;
 
 procedure GetMonographList(ListOfMonographs: TStringList);
 begin
-  CallV('ORCHECK GETMONOL', []);
-  FastAssign(RPCBrokerV.Results, ListOfMonographs);
+  CallVistA('ORCHECK GETMONOL', [], ListOfMonographs);
 end;
 
 procedure GetMonograph(Monograph: TStringList; x: Integer);
 begin
-  CallV('ORCHECK GETMONO', [x]);
-  FastAssign(RPCBrokerV.Results, Monograph);
+  CallVistA('ORCHECK GETMONO', [x], Monograph);
 end;
 
 procedure DeleteMonograph();
 begin
-  CallV('ORCHECK DELMONO', []);
+  CallVistA('ORCHECK DELMONO', []);
 end;
 
 procedure GetXtraTxt(OCText: TStringList; x: String; y: String);
 begin
-  CallV('ORCHECK GETXTRA', [x,y]);
-  FastAssign(RPCBrokerV.Results, OCText);
+  if not CallVistA('ORCHECK GETXTRA', [x, y], OCText) then
+    OCText.Clear;
 end;
 
 function OrderChecksEnabled: Boolean;
+var
+  s: String;
 begin
-  if uOrderChecksOn = #0 then uOrderChecksOn := CharAt(sCallV('ORWDXC ON', [nil]), 1);
+  if uOrderChecksOn = #0 then
+    if CallVistA('ORWDXC ON', [nil],s) then
+      uOrderChecksOn := CharAt(s,1);
+
   Result := uOrderChecksOn = 'E';
 end;
 
 function OrderChecksOnDisplay(const FillerID: string): string;
+var
+  sl: TStrings;
 begin
-  CallV('ORWDXC DISPLAY', [Patient.DFN, FillerID]);
-  with RPCBrokerV.Results do SetString(Result, GetText, Length(Text));
+  sl := TStringList.Create;
+  try
+    if CallVistA('ORWDXC DISPLAY', [Patient.DFN, FillerID], sl) then
+      Result := sl.Text
+    else
+      Result := '';
+  finally
+    sl.Free;
+  end;
 end;
 
-procedure OrderChecksOnAccept(ListOfChecks: TStringList; const FillerID, StartDtTm: string;
-  OIList: TStringList; DupORIFN: string; Renewal: string);
+procedure OrderChecksOnAccept(ListOfChecks: TStringList;
+  const FillerID, StartDtTm: string; OIList: TStringList; DupORIFN: string;
+  Renewal: string; Fields: string; IncludeAllergyChecks: boolean = False);
+var
+  Results: TStrings;
 begin
   // don't pass OIList if no items, since broker pauses 5 seconds per order
-  if OIList.Count > 0
-    then CallV('ORWDXC ACCEPT', [Patient.DFN, FillerID, StartDtTm, Encounter.Location, OIList, DupORIFN, Renewal])
-    else CallV('ORWDXC ACCEPT', [Patient.DFN, FillerID, StartDtTm, Encounter.Location]);
-  FastAssign(RPCBrokerV.Results, ListOfChecks);
+  Results := TStringList.Create;
+  try
+    uAllergyCacheCreated := True;
+    if (not IncludeAllergyChecks) and uAllergiesChanged then
+      IncludeAllergyChecks := True;
+    if OIList.Count > 0 then
+    begin
+      if not CallVistA('ORWDXC ACCEPT', [Patient.DFN, FillerID, StartDtTm,
+        Encounter.Location, OIList, DupORIFN, Renewal, Fields,
+        IncludeAllergyChecks], Results) then
+          Results.Clear;
+    end else begin
+      if not CallVistA('ORWDXC ACCEPT', [Patient.DFN, FillerID, StartDtTm,
+        Encounter.Location, nil, '', '', Fields, IncludeAllergyChecks],
+        Results) then
+          Results.Clear;
+    end;
+    FastAssign(Results, ListOfChecks);
+  finally
+    Results.Free;
+  end;
 end;
 
-procedure OrderChecksOnDelay(ListOfChecks: TStringList; const FillerID, StartDtTm: string;
-  OIList: TStringList);
+procedure GetAllergyReasonList(aList: TStrings; Item1: Integer; AFlag: String);
+begin
+  CallVistA('ORWDXC REASON', [AFlag, Patient.DFN, Item1], aList);
+end;
+
+procedure OrderChecksOnMedicationSelect(ListOfChecks: TStringList;
+  const FillerID: String; Item1: Integer; OrderNum: string = '');
+begin
+  uAllergyCacheCreated := True;
+  uAllergiesChanged := False;
+  CallVistA('ORWDXC ALLERGY', [Patient.DFN, FillerID, Item1, OrderNum], ListOfChecks);
+end;
+
+procedure ClearAllergyOrderCheckCache;
+begin
+  if uAllergyCacheCreated then
+  begin
+    CallVistA('ORWDXC CLRALLGY', [Patient.DFN]);
+    uAllergyCacheCreated := False;
+  end;
+end;
+
+procedure OrderChecksOnDelay(ListOfChecks: TStringList;
+  const FillerID, StartDtTm: string; OIList: TStringList);
+var
+  Results: TStrings;
 begin
   // don't pass OIList if no items, since broker pauses 5 seconds per order
-  if OIList.Count > 0
-    then CallV('ORWDXC DELAY', [Patient.DFN, FillerID, StartDtTm, Encounter.Location, OIList])
-    else CallV('ORWDXC DELAY', [Patient.DFN, FillerID, StartDtTm, Encounter.Location]);
-  FastAssign(RPCBrokerV.Results, ListOfChecks);
+  {
+    if OIList.Count > 0 then
+    CallV('ORWDXC DELAY', [Patient.DFN, FillerID, StartDtTm,
+    Encounter.Location, OIList])
+    else
+    CallV('ORWDXC DELAY', [Patient.DFN, FillerID, StartDtTm,
+    Encounter.Location]);
+    FastAssign(RPCBrokerV.Results, ListOfChecks);
+  }
+  Results := TStringList.Create;
+  try
+    if OIList.Count > 0 then
+    begin
+      if not CallVistA('ORWDXC DELAY', [Patient.DFN, FillerID, StartDtTm,
+        Encounter.Location, OIList], Results) then
+        Results.Clear;
+    end
+    else if not CallVistA('ORWDXC DELAY', [Patient.DFN, FillerID, StartDtTm,
+      Encounter.Location], Results) then
+      Results.Clear;
+    FastAssign(Results, ListOfChecks);
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure OrderChecksForSession(ListOfChecks, OrderList: TStringList);
 begin
-  CallV('ORWDXC SESSION', [Patient.DFN, OrderList]);
-  FastAssign(RPCBrokerV.Results, ListOfChecks);
+  CallVistA('ORWDXC SESSION', [Patient.DFN, OrderList], ListOfChecks);
 end;
 
-procedure SaveOrderChecksForSession(const AReason: string; ListOfChecks: TStringList);
+procedure SaveOrderChecksForSession(const AReason: string;
+  ListOfChecks: TStringList);
 var
- i, inc, len, numLoop, remain: integer;
- OCStr, TmpStr: string;
+  i, Inc, len, numLoop, remain: Integer;
+  OCStr, TmpStr: string;
+  aList: iORNetMult;
 begin
-  LockBroker;
-  try
-    //CallV('ORWDXC SAVECHK', [Patient.DFN, AReason, ListOfChecks]);
-    { no result used currently }
-    RPCBrokerV.ClearParameters := True;
+  newORNetMult(aList);
+  aList.AddSubscript(['ORCHECKS'], ListOfChecks.Count);
+  for i := 0 to ListOfChecks.Count - 1 do
+  begin
+    OCStr := ListOfChecks.Strings[i];
+    len := Length(OCStr);
+    if len > 255 then
+    begin
+      numLoop := len div 255;
+      remain := len mod 255;
+      Inc := 0;
+      while Inc <= numLoop do
+      begin
+        TmpStr := Copy(OCStr, 1, 255);
+        OCStr := Copy(OCStr, 256, Length(OCStr));
+        aList.AddSubscript(['ORCHECKS' , i, Inc], TmpStr);
+        Inc := Inc + 1;
+      end;
+      if remain > 0 then
+        aList.AddSubscript(['ORCHECKS' , i,Inc], OCStr);
+    end
+    else
+      aList.AddSubscript(['ORCHECKS',i], OCStr);
+  end;
+
+  CallVistA('ORWDXC SAVECHK',[Patient.DFN, aReason,aList]);
+end;
+
+// NSR 20101203 --------------------------------------------------------------------------begin
+procedure SaveMultiOrderChecksForSession(ListOfChecks, ListOfReasons, ListOfComments: TStringList);
+var
+  i, Inc, len, numLoop, remain: Integer;
+  CStr, OCStr, RStr, TmpStr: string;
+  AList: iORNetMult;
+begin
+  neworNetMult(AList);
+  AList.AddSubscript('ORCHECKS', IntToStr(ListOfChecks.Count));
+  AList.AddSubscript('ORREASONS', IntToStr(ListOfReasons.Count));
+  AList.AddSubscript('ORCOMMENTS', IntToStr(ListOfComments.Count));
+
+  for i := 0 to ListOfChecks.Count - 1 do
+  begin
+    OCStr := ListOfChecks.Strings[i];
+    len := Length(OCStr);
+    if len > 255 then
+    begin
+      numLoop := len div 255;
+      remain := len mod 255;
+      Inc := 0;
+      while Inc <= numLoop do
+      begin
+        TmpStr := Copy(OCStr, 1, 255);
+        OCStr := Copy(OCStr, 256, Length(OCStr));
+        AList.AddSubscript(['ORCHECKS', i, Inc], TmpStr);
+        Inc := Inc + 1;
+      end;
+      if remain > 0 then
+        AList.AddSubscript(['ORCHECKS', i, Inc], OCStr);
+
+    end
+    else
+      AList.AddSubscript(['ORCHECKS', i], OCStr);
+  end;
+
+  for i := 0 to ListOfReasons.Count - 1 do
+  begin
+    RStr := ListOfReasons.Strings[i];
+    {len := Length(OCStr);
+    if len > 255 then
+    begin
+      numLoop := len div 255;
+      remain := len mod 255;
+      Inc := 0;
+      while Inc <= numLoop do
+      begin
+        TmpStr := Copy(OCStr, 1, 255);
+        OCStr := Copy(OCStr, 256, Length(OCStr));
+        AList.AddSubscript(['ORCHECKS', i, Inc], TmpStr);
+        Inc := Inc + 1;
+      end;
+      if remain > 0 then
+        AList.AddSubscript(['ORCHECKS', i, Inc], OCStr);
+
+    end
+    else}
+    AList.AddSubscript(['ORREASONS', i], RStr);
+  end;
+
+  for i := 0 to ListOfComments.Count - 1 do
+  begin
+    CStr := ListOfComments.Strings[i];
+    {len := Length(OCStr);
+    if len > 255 then
+    begin
+      numLoop := len div 255;
+      remain := len mod 255;
+      Inc := 0;
+      while Inc <= numLoop do
+      begin
+        TmpStr := Copy(OCStr, 1, 255);
+        OCStr := Copy(OCStr, 256, Length(OCStr));
+        AList.AddSubscript(['ORCHECKS', i, Inc], TmpStr);
+        Inc := Inc + 1;
+      end;
+      if remain > 0 then
+        AList.AddSubscript(['ORCHECKS', i, Inc], OCStr);
+
+    end
+    else}
+    AList.AddSubscript(['ORCOMMENTS', i], CStr);
+  end;
+
+  CallVistA('ORWDXC SAVEMCHK', [Patient.DFN, AList]);
+
+  { RPCBrokerV.ClearParameters := True;
     RPCBrokerV.RemoteProcedure := 'ORWDXC SAVECHK';
     RPCBrokerV.Param[0].PType := literal;
     RPCBrokerV.Param[0].Value := Patient.DFN;  //*DFN*
-    RPCBrokerV.Param[1].PType := literal;
-    RPCBrokerV.Param[1].Value := AReason;
-    RPCBrokerV.Param[2].PType := list;
-    RPCBrokerV.Param[2].Mult['"ORCHECKS"'] := IntToStr(ListOfChecks.count);
-    for i := 0 to ListOfChecks.Count - 1 do
-      begin
-         OCStr := ListofChecks.Strings[i];
-         len := Length(OCStr);
-         if len > 255 then
-          begin
-            numLoop := len div 255;
-            remain := len mod 255;
-            inc := 0;
-            while inc <= numLoop do
-              begin
-                tmpStr := Copy(OCStr, 1, 255);
-                OCStr := Copy(OCStr, 256, Length(OcStr));
-                RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i) + ',' + InttoStr(inc)] := tmpStr;
-                inc := inc +1;
-              end;
-            if remain > 0 then  RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i) + ',' + inttoStr(inc)] := OCStr;
+    RPCBrokerV.Param[1].PType := list;
+    RPCBrokerV.Param[1].Mult['"ORCHECKS"'] := IntToStr(ListOfChecks.count);
 
-          end
-        else
-         RPCBrokerV.Param[2].Mult['"ORCHECKS",' + InttoStr(i)] := OCStr;
-      end;
-     CallBroker;
-  finally
-    UnlockBroker;
-  end;
+    for i := 0 to ListOfChecks.Count - 1 do
+    begin
+    OCStr := ListofChecks.Strings[i];
+    len := Length(OCStr);
+    if len > 255 then
+    begin
+    numLoop := len div 255;
+    remain := len mod 255;
+    inc := 0;
+    while inc <= numLoop do
+    begin
+    tmpStr := Copy(OCStr, 1, 255);
+    OCStr := Copy(OCStr, 256, Length(OcStr));
+    RPCBrokerV.Param[1].Mult['"ORCHECKS",' + InttoStr(i) + ',' + InttoStr(inc)] := tmpStr;
+    inc := inc +1;
+    end;
+    if remain > 0 then
+    RPCBrokerV.Param[1].Mult['"ORCHECKS",' + InttoStr(i) + ',' + inttoStr(inc)] := OCStr;
+    end
+    else
+    RPCBrokerV.Param[1].Mult['"ORCHECKS",' + InttoStr(i)] := OCStr;
+    end;
+
+    CallBroker; }
 end;
+// NSR 20101203 ----------------------------------------------------------------------------end
 
 function DeleteCheckedOrder(const OrderID: string): Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWDXC DELORD', [OrderID]) = '1';
+  Result := CallVistA('ORWDXC DELORD', [OrderID],s) and (s = '1');
 end;
 
 function DataForOrderCheck(const OrderID: string): string;
 begin
-  Result := sCallV('ORWDXR01 OXDATA',[OrderID]);
+  if not CallVistA('ORWDXR01 OXDATA', [OrderID],Result) then
+    Result := '';
 end;
 
 (*
   TEMPORARILY COMMENTED OUT WHILE TESTING
-function GetPromptandDeviceParameters(Location: integer; OrderList: TStringList; Nature: string): TPrintParams;
-var
+  function GetPromptandDeviceParameters(Location: integer; OrderList: TStringList; Nature: string): TPrintParams;
+  var
   TempParams: TPrintParams;
   x: string;
-begin
+  begin
   tempParams.OrdersToPrint := TStringList.Create;
   try
-    CallV('ORWD1 PARAM', [Location, Nature, OrderList]);
-    x := RPCBrokerV.Results[0];
-    with TempParams do
-      begin
-        PromptForChartCopy    := CharAt(Piece(x, U, 1),1);
-        if Piece(x, U, 5) <> '' then
-          ChartCopyDevice     := Piece(Piece(x, U, 5),';',1) + '^' + Piece(Piece(x, U, 5),';',2);
-        PromptForLabels       := CharAt(Piece(x, U, 2),1);
-        if Piece(x, U, 6) <> '' then
-          LabelDevice         := Piece(Piece(x, U, 6),';',1) + '^' + Piece(Piece(x, U, 6),';',2);
-        PromptForRequisitions := CharAt(Piece(x, U, 3),1);
-        if Piece(x, U, 7) <> '' then
-          RequisitionDevice   := Piece(Piece(x, U, 7),';',1) + '^' + Piece(Piece(x, U, 7),';',2);
-        PromptForWorkCopy     := CharAt(Piece(x, U, 4),1);
-        if Piece(x, U, 8) <> '' then
-          WorkCopyDevice      := Piece(Piece(x, U, 8),';',1) + '^' + Piece(Piece(x, U, 8),';',2);
-        AnyPrompts            := ((PromptForChartCopy    in ['1','2']) or
-                                  (PromptForLabels       in ['1','2']) or
-                                  (PromptForRequisitions in ['1','2']) or
-                                  (PromptForWorkCopy     in ['1','2']));
-        RPCBrokerV.Results.Delete(0);
-        FastAssign(RPCBrokerV.Results, OrdersToPrint);
-      end;
-    Result := TempParams;
-  finally
-    tempParams.OrdersToPrint.Free;
+  CallV('ORWD1 PARAM', [Location, Nature, OrderList]);
+  x := RPCBrokerV.Results[0];
+  with TempParams do
+  begin
+  PromptForChartCopy    := CharAt(Piece(x, U, 1),1);
+  if Piece(x, U, 5) <> '' then
+  ChartCopyDevice     := Piece(Piece(x, U, 5),';',1) + '^' + Piece(Piece(x, U, 5),';',2);
+  PromptForLabels       := CharAt(Piece(x, U, 2),1);
+  if Piece(x, U, 6) <> '' then
+  LabelDevice         := Piece(Piece(x, U, 6),';',1) + '^' + Piece(Piece(x, U, 6),';',2);
+  PromptForRequisitions := CharAt(Piece(x, U, 3),1);
+  if Piece(x, U, 7) <> '' then
+  RequisitionDevice   := Piece(Piece(x, U, 7),';',1) + '^' + Piece(Piece(x, U, 7),';',2);
+  PromptForWorkCopy     := CharAt(Piece(x, U, 4),1);
+  if Piece(x, U, 8) <> '' then
+  WorkCopyDevice      := Piece(Piece(x, U, 8),';',1) + '^' + Piece(Piece(x, U, 8),';',2);
+  AnyPrompts            := ((PromptForChartCopy    in ['1','2']) or
+  (PromptForLabels       in ['1','2']) or
+  (PromptForRequisitions in ['1','2']) or
+  (PromptForWorkCopy     in ['1','2']));
+  RPCBrokerV.Results.Delete(0);
+  FastAssign(RPCBrokerV.Results, OrdersToPrint);
   end;
-end;
+  Result := TempParams;
+  finally
+  tempParams.OrdersToPrint.Free;
+  end;
+  end;
 *)
 
-procedure OrderPrintDeviceInfo(OrderList: TStringList; var PrintParams: TPrintParams; Nature: Char; PrintLoc: Integer = 0);
+function IsValidOverrideReason(const Reason: string): boolean;
+// This checks the minimum length of the override reason, and makes sure that
+// there are no upcarrots
+const
+  MIN_OVERRIDE_LENGTH = 4;
+  NO_REASON = 'NO OVERRIDE REASON GIVEN';
+
+begin
+  Result := (Length(trim(Reason)) >= MIN_OVERRIDE_LENGTH) and
+    not ContainsUpCarretChar(Reason) and (pos(NO_REASON, UpperCase(Reason)) = 0);
+end;
+
+procedure OrderPrintDeviceInfo(OrderList: TStringList;
+  var PrintParams: TPrintParams; Nature: Char; PrintLoc: Integer = 0);
 var
   x: string;
-begin
-  if Nature <> #0 then
-    begin
-       if PrintLoc > 0 then CallV('ORWD2 DEVINFO', [PrintLoc, Nature, OrderList])
-       else CallV('ORWD2 DEVINFO', [Encounter.Location, Nature, OrderList]);
-    end
-  else
-    begin
-      if PrintLoc > 0 then CallV('ORWD2 MANUAL', [PrintLoc, OrderList])
-      else CallV('ORWD2 MANUAL', [Encounter.Location, OrderList]);
-    end;
-  x := RPCBrokerV.Results[0];
-  FillChar(PrintParams, SizeOf(PrintParams), #0);
-  with PrintParams do
+  Results: TStrings;
+
+  function getDevInfo: TStrings;
+  var
+    b: Boolean;
   begin
-    PromptForChartCopy    := CharAt(Piece(x, U, 1),1);
-    if Piece(x, U, 5) <> '' then
-      ChartCopyDevice     := Piece(Piece(x, U, 5),';',1) + '^' + Piece(Piece(x, U, 5),';',2);
-    PromptForLabels       := CharAt(Piece(x, U, 2),1);
-    if Piece(x, U, 6) <> '' then
-      LabelDevice         := Piece(Piece(x, U, 6),';',1) + '^' + Piece(Piece(x, U, 6),';',2);
-    PromptForRequisitions := CharAt(Piece(x, U, 3),1);
-    if Piece(x, U, 7) <> '' then
-      RequisitionDevice   := Piece(Piece(x, U, 7),';',1) + '^' + Piece(Piece(x, U, 7),';',2);
-    PromptForWorkCopy     := CharAt(Piece(x, U, 4),1);
-    if Piece(x, U, 8) <> '' then
-    WorkCopyDevice      := Piece(Piece(x, U, 8),';',1) + '^' + Piece(Piece(x, U, 8),';',2);
-    AnyPrompts            := (CharInSet(PromptForChartCopy,    ['1','2']) or
-                              CharInSet(PromptForLabels,       ['1','2']) or
-                              CharInSet(PromptForRequisitions, ['1','2']) or
-                              CharInSet(PromptForWorkCopy,     ['1','2']));
-  end;
-  if Nature <> #0 then
-    begin
-      RPCBrokerV.Results.Delete(0);
-      OrderList.Clear;
-      FastAssign(RPCBrokerV.Results, OrderList);
+    Result := TStringList.Create;
+    try
+      if Nature <> #0 then
+      begin
+        if PrintLoc > 0 then
+          b := CallVistA('ORWD2 DEVINFO', [PrintLoc, Nature, OrderList], Result)
+        else
+          b := CallVistA('ORWD2 DEVINFO', [Encounter.Location, Nature, OrderList], Result);
+        if not b then
+          raise Exception.Create('Unable to obtain Printer Settings');
+      end
+      else
+      begin
+        if PrintLoc > 0 then
+          b := CallVistA('ORWD2 MANUAL', [PrintLoc, OrderList], Result)
+        else
+          b := CallVistA('ORWD2 MANUAL', [Encounter.Location, OrderList], Result);
+        if not b then
+          raise Exception.Create('Unable to obtain Printer Settings for manual prints');
+      end;
+      if not b then
+        Result.Clear;
+    except
+      FreeAndNil(Result);
+      raise;
     end;
-end;
+  end;
 
-procedure SaveEvtForOrder(APtDFN: string; AEvt: integer; AnOrderID: string);
-var
-  TheEventID: string;
 begin
-  TheEventID :=  SCallV('OREVNTX1 PUTEVNT',[APtDFN,IntToStr(AEvt),AnOrderID]);
+  Results := getDevInfo;
+  try
+    FillChar(PrintParams, SizeOf(PrintParams), #0);
+    if Results.Count <= 0 then begin
+      raise Exception.Create('Unable to obtain Device Info'); // If this ever gets raised, we need to investigate the M side
+    end else begin
+      x := Results[0];
+      with PrintParams do
+      begin
+        PromptForChartCopy := CharAt(Piece(x, U, 1), 1);
+        if Piece(x, U, 5) <> '' then
+          ChartCopyDevice := Piece(Piece(x, U, 5), ';', 1) + '^' +
+            Piece(Piece(x, U, 5), ';', 2);
+        PromptForLabels := CharAt(Piece(x, U, 2), 1);
+        if Piece(x, U, 6) <> '' then
+          LabelDevice := Piece(Piece(x, U, 6), ';', 1) + '^' +
+            Piece(Piece(x, U, 6), ';', 2);
+        PromptForRequisitions := CharAt(Piece(x, U, 3), 1);
+        if Piece(x, U, 7) <> '' then
+          RequisitionDevice := Piece(Piece(x, U, 7), ';', 1) + '^' +
+            Piece(Piece(x, U, 7), ';', 2);
+        PromptForWorkCopy := CharAt(Piece(x, U, 4), 1);
+        if Piece(x, U, 8) <> '' then
+          WorkCopyDevice := Piece(Piece(x, U, 8), ';', 1) + '^' +
+            Piece(Piece(x, U, 8), ';', 2);
+        AnyPrompts := (CharInSet(PromptForChartCopy, ['1', '2']) or
+          CharInSet(PromptForLabels, ['1', '2']) or
+          CharInSet(PromptForRequisitions, ['1', '2']) or
+          CharInSet(PromptForWorkCopy, ['1', '2']));
+      end;
+
+      if Nature <> #0 then
+      begin
+        Results.Delete(0);
+        OrderList.Clear;
+        FastAssign(Results, OrderList);
+      end;
+    end;
+  finally
+    Results.Free;
+  end;
 end;
 
-function EventExist(APtDFN:string; AEvt: integer): integer;
+procedure SaveEvtForOrder(APtDFN: string; AEvt: Integer; AnOrderId: string);
+begin
+  CallVistA('OREVNTX1 PUTEVNT', [APtDFN, IntToStr(AEvt), AnOrderId]);
+end;
+
+function EventExist(APtDFN: string; AEvt: Integer): Integer;
 var
   AOutCome: string;
 begin
-  AOutCome := SCallV('OREVNTX1 EXISTS', [APtDFN,IntToStr(AEvt)]);
-  if AOutCome = '' then
-    Result := 0
-  else
-    Result := StrToInt(AOutCome);
+  Result := 0;
+  if CallVistA('OREVNTX1 EXISTS', [APtDFN, IntToStr(AEvt)],AOutCome) then
+    Result := StrToIntDef(AOutCome,0);
 end;
 
 function UseNewMedDialogs: Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWDPS1 CHK94', [nil]) = '1';
+  Result := CallVistA('ORWDPS1 CHK94', [nil],s) and (s = '1');
 end;
 
 { Copay }
-procedure GetCoPay4Orders;
+(* RTC 272867 ------------------------------------------------------------------
+procedure GetCoPay4Orders; -- not used in the project?
 begin
   LockBroker;
   try
@@ -2659,93 +3519,95 @@ begin
     UnlockBroker;
   end;
 end;
-
+------------------------------------------------------------------------------*)
 procedure SaveCoPayStatus(AList: TStrings);
 var
-  i: integer;
-
+  i: Integer;
+  iList: iORNetMult;
 begin
-  if AList.Count > 0 then
+  if aList.Count > 0 then
   begin
-    LockBroker;
-    try
-      RPCBrokerV.ClearParameters := True;
-      RPCBrokerV.RemoteProcedure := 'ORWDPS4 CPINFO';
-      RPCBrokerV.Param[0].PType := list;
-      for i := 0 to AList.Count-1 do
-        RPCBrokerV.Param[0].Mult[IntToStr(i+1)] := AList[i];
-      CallBroker;
-    finally
-      UnlockBroker;
-    end;
+    newOrNetMult(iList);
+    for i := 0 to aList.Count - 1 do
+      iList.AddSubscript([IntToStr(i + 1)], aList[i]);
+    CallVistA('ORWDPS4 CPINFO', [iList]);
   end;
 end;
 
-function LocationType(Location: integer): string;
+function LocationType(Location: Integer): string;
 begin
-  Result := sCallV('ORWDRA32 LOCTYPE',[Location]);
+  CallVistA('ORWDRA32 LOCTYPE', [Location], Result);
 end;
 
-function IsValidIMOLoc(LocID: integer; PatientID: string): boolean;   //IMO
+function IsValidIMOLoc(LocID: Integer; PatientID: string): Boolean; // IMO
 var
   rst: string;
 begin
-//  Result := IsCliniCloc(LocID);
-  rst := SCallV('ORIMO IMOLOC',[LocID, PatientID]);
-  Result := StrToIntDef(rst,-1) > -1;
+  Result := CallVistA('ORIMO IMOLOC', [LocID, PatientID], rst) and
+    (StrToIntDef(rst, -1) > -1);
 end;
 
-function IsValidIMOLocOrderCom(LocID: integer; PatientID: string): boolean;   //IMO
+function IsValidIMOLocOrderCom(LocID: Integer; PatientID: string): Boolean;
+// IMO
 var
   rst: string;
 begin
-//  Result := IsCliniCloc(LocID);
-  rst := SCallV('ORIMO IMOLOC',[LocID, PatientID, 1]);
-  Result := StrToIntDef(rst,-1) > -1;
+  Result := CallVistA('ORIMO IMOLOC', [LocID, PatientID, 1], rst) and
+    (StrToIntDef(rst, -1) > -1);
 end;
 
-function IsIMOOrder(OrderID: string): boolean;          //IMO
+function IsIMOOrder(OrderID: string): Boolean; // IMO
+var
+  ret: String;
 begin
-  Result := SCallV('ORIMO IMOOD',[OrderId])='1';
+  Result := CallVistA('ORIMO IMOOD', [OrderID], ret) and (ret = '1');
 end;
 
-function IsInptQO(DlgID: integer): boolean;
+function IsInptQO(DlgID: Integer): Boolean;
+var
+  ret: String;
 begin
-  Result := SCallV('ORWDXM3 ISUDQO', [DlgID]) = '1';
+  Result := CallVistA('ORWDXM3 ISUDQO', [DlgID], ret) and (ret = '1');
 end;
 
-function IsIVQO(DlgID: integer): boolean;
+function IsIVQO(DlgID: Integer): Boolean;
+var
+  ret: String;
 begin
-  Result := SCallV('ORIMO ISIVQO', [DlgID]) = '1';
+  Result := CallVistA('ORIMO ISIVQO', [DlgID], ret) and (ret = '1');
 end;
 
-function IsClinicLoc(ALoc: integer): boolean;
+function IsClinicLoc(ALoc: Integer): Boolean;
+var
+  ret: String;
 begin
-  Result := SCallV('ORIMO ISCLOC', [ALoc]) = '1';
+  Result := CallVistA('ORIMO ISCLOC', [ALoc], ret) and (ret = '1');
 end;
 
-function IsValidSchedule(AnOrderID: string): boolean; //nss
+function IsValidSchedule(AnOrderId: string): Boolean; // nss
+var
+  ret: String;
 begin
-  result := SCallV('ORWNSS VALSCH', [AnOrderID]) = '1';
+  Result := CallVistA('ORWNSS VALSCH', [AnOrderId], ret) and (ret = '1');
 end;
 
-function IsValidQOSch(QOID: string): string;  //nss
+function IsValidQOSch(QOID: string): string; // nss
 begin
-  Result := SCallV('ORWNSS QOSCH',[QOID]);
+  CallVistA('ORWNSS QOSCH', [QOID], Result);
 end;
 
-function IsValidSchStr(ASchStr: string): boolean;
+function IsValidSchStr(ASchStr: string): Boolean;
+var
+  ret: String;
 begin
-  Result := SCallV('ORWNSS CHKSCH',[ASchStr]) = '1';
+  Result := CallVistA('ORWNSS CHKSCH', [ASchStr], ret) and (ret = '1');
 end;
 
-function IsPendingHold(OrderID: string): boolean;
+function IsPendingHold(OrderID: string): Boolean;
 var
   ret: string;
 begin
-  ret := sCallV('ORDEA PNDHLD', [OrderID]);
-  if ret = '1' then Result :=  True
-  else Result := False;
+  Result := CallVistA('ORDEA PNDHLD', [OrderID], ret) and (ret = '1');
 end;
 
 { TParentEvent }
@@ -2754,30 +3616,121 @@ procedure TParentEvent.Assign(AnEvtID: string);
 var
   evtInfo: string;
 begin
-// ORY = EVTTYPE_U_EVT_U_EVTNAME_U_EVTDISP_U_EVTDLG
+  // ORY = EVTTYPE_U_EVT_U_EVTNAME_U_EVTDISP_U_EVTDLG
   evtInfo := EventInfo1(AnEvtID);
   ParentIFN := StrToInt(AnEvtID);
-  if Length(Piece(evtInfo,'^',4)) < 1 then
-    ParentName := Piece(evtInfo,'^',3)
+  if Length(Piece(evtInfo, '^', 4)) < 1 then
+    ParentName := Piece(evtInfo, '^', 3)
   else
-    ParentName := Piece(evtInfo,'^',4);
-  ParentType := CharAt(Piece(evtInfo,'^',1),1);
-  ParentDlg := Piece(evtInfo,'^',5);
+    ParentName := Piece(evtInfo, '^', 4);
+  ParentType := CharAt(Piece(evtInfo, '^', 1), 1);
+  ParentDlg := Piece(evtInfo, '^', 5);
 end;
 
-constructor TParentEvent.Create;
+constructor TParentEvent.Create(Nothing: integer);
 begin
-  ParentIFN  := 0;
+  ParentIFN := 0;
   ParentName := '';
   ParentType := #0;
-  ParentDlg  := '0';
+  ParentDlg := '0';
+end;
+
+function SafeEventType(CurrentEventType: Char): Char;
+begin
+  if CurrentEventType = #0 then
+    Result := 'C'
+  else
+    Result := CurrentEventType;
+end;
+
+{ TLockedList }
+
+procedure TLockList.AddLock(AID, AAction: string; ALockType: TLockType);
+var
+  LockObj: TLock;
+begin
+  LockObj := TLock.Create;
+  try
+    LockObj.ID := AID;
+    LockObj.Action := AAction;
+    LockObj.LockType := ALockType;
+    Self.Add(LockObj);
+  except
+    FreeAndNil(LockObj);
+    raise;
+  end;
+end;
+
+procedure TLockList.ClearAllLocks;
+var
+  i: Integer;
+begin
+  For i := Self.Count - 1 downto 0 do
+  begin
+    Self.ClearLockByID(Self[i].ID, Self[i].LockType);
+  end;
+end;
+
+procedure TLockList.ClearLocksByAction(AnAction: string);
+var
+  i: Integer;
+begin
+  For i := Self.Count - 1 downto 0 do
+  begin
+    If (Self[i].Action = AnAction) then
+      Self.ClearLockByID(Self[i].ID, Self[i].LockType);
+  end;
+end;
+
+procedure TLockList.ClearLockByID(AID: String; ALockType: TLockType);
+begin
+  Case ALockType of
+    ltPatient:
+      UnlockPatient;
+    ltOrder:
+      UnlockOrder(AID);
+  End;
+end;
+
+procedure TLockList.ClearLocksByType(ALockType: TLockType);
+var
+  i: Integer;
+begin
+  For i := Self.Count - 1 downto 0 do
+  begin
+    If (Self[i].LockType = ALockType) then
+      Self.ClearLockByID(Self[i].ID, Self[i].LockType);
+  end;
+end;
+
+procedure TLockList.DeleteLock(AID: String; ALockType: TLockType);
+var
+  i: Integer;
+begin
+  for i := 0 to Self.Count - 1 do
+  begin
+    If (Self[i].ID = AID) and (Self[i].LockType = ALockType) then
+    begin
+      Self.Delete(i);
+      Break;
+    end;
+  end;
+end;
+
+destructor TLockList.Destroy;
+begin
+  ClearAllLocks;
+  inherited;
 end;
 
 initialization
   uDGroupAll := 0;
   uOrderChecksOn := #0;
+  LockList := TLockList.Create(True);
 
 finalization
-  if uDGroupMap <> nil then uDGroupMap.Free;
+  if uDGroupMap <> nil then
+    uDGroupMap.Free;
+  FreeAndNil(LockList);
 
 end.

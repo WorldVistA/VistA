@@ -12,9 +12,10 @@ procedure setFormParented(aForm: TForm; aParent: TWinControl;
   anAlign: TAlign = alClient;aVisible: Boolean = True);
 procedure ListViewClearSortIndicator(aHandle: HWND; aColumn: Integer);
 procedure AlignForm(aForm: TForm; AlignStyle: TAlign);
-
 procedure MenuItemMoveRight(aMenu: hMenu; aCommand: Cardinal);
+
 function CombineHeights(ctrl: array of TControl): integer;
+
 
 implementation
 
@@ -70,6 +71,9 @@ const
   end;
 
 begin
+  if AlignStyle = alNone then
+    exit;
+
   frm := Application.MainForm;
   R := WorkArea;
   iLog := R.Width div RpcLogPart;
@@ -136,6 +140,7 @@ end;
 function CombineHeights(ctrl: array of TControl): integer;
 var
   i: integer;
+
 begin
   Result := 0;
   for i := Low(ctrl) to High(ctrl) do
@@ -151,5 +156,4 @@ begin
     end;
   end;
 end;
-
 end.

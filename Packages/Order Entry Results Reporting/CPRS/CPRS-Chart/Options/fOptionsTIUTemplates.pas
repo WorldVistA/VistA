@@ -254,7 +254,9 @@ begin
   inherited;
   ReqHighlightAlign := rgNavigationPos.ItemIndex;
   if assigned(frmTemplateDialog) then
-    frmTemplateDialog.setReqHighlightAlign(rgNavigationPos.ItemIndex);
+    frmTemplateDialog.setReqHighlightAlign(rgNavigationPos.ItemIndex)
+  else
+    CurrentPosition := rgNavigationPos.ItemIndex
 end;
 
 procedure TfrmTIUTemplates.setInfo(aValue:String);
@@ -309,11 +311,7 @@ begin
     Y * 5.5 + V * 5 + gpDetails.Margins.Top + gpDetails.Margins.Bottom +
     gpButtons.Height +
     GetSystemMetrics(SM_CYCAPTION)); // window title bar size
-{$IFDEF AA_DEBUG}
-  caption :=
-    Format('Y: %d  V: %d  btn: %d dt: %D Height: %d',
-      [Y,V,gpButtons.Height, gpDetails.Height, Height]);
-{$ENDIF}
+
 end;
 
 initialization

@@ -45,13 +45,14 @@ var
 
 implementation
 
-uses ORFn, fFrame, uInit, VA508AccessibilityRouter, VAUtils;
+uses ORFn, fFrame, uInit, VA508AccessibilityRouter, VAUtils, uPCE;
 
 {$R *.DFM}
 
 procedure TfrmPage.FormCreate(Sender: TObject);
 { set counters to 0 }
 begin
+ // HelpFile := Application.HelpFile + '>' + HelpFile;
   FDisplayCount := 0;
   FPatientCount := 0;
   FOldEnter := OnEnter;
@@ -84,6 +85,7 @@ end;
 procedure TfrmPage.DisplayPage;
 { cause the page to be displayed and update the display counters }
 begin
+  CurrentTabPCEObject := nil;
   BringToFront;
   if ActiveControl <> nil then
     FocusControl(ActiveControl);

@@ -15,9 +15,8 @@ type
     function IsValidArray(anArray: Array of Integer):Boolean;
     procedure setGUIByObject(anObject:TObject);
     procedure setGUIByMultipleObjects(aList:TObject);
-{$IFDEF DEBUG_AA}
+
     procedure setDebugView(aValue:Boolean);
-{$ENDIF}
   end;
 
 implementation

@@ -2,94 +2,39 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
   Left = 240
   Top = 163
   Caption = 'Change Unreleased Renewed Order'
-  ClientHeight = 171
-  ClientWidth = 529
+  ClientHeight = 214
+  ClientWidth = 517
   OldCreateOrder = False
-  OnCreate = FormCreate
-  ExplicitWidth = 545
-  ExplicitHeight = 209
+  ExplicitWidth = 535
+  ExplicitHeight = 259
   PixelsPerInch = 96
-  TextHeight = 13
-  object Panel2: TPanel [0]
+  TextHeight = 16
+  object Panel3: TPanel [0]
     Left = 0
-    Top = 57
-    Width = 529
-    Height = 82
-    Align = alClient
-    TabOrder = 0
-    object lblRefill: TLabel
-      Left = 9
-      Top = 15
-      Width = 28
-      Height = 13
-      Caption = 'Refills'
-    end
-    object lblPickUp: TLabel
-      Left = 216
-      Top = 15
-      Width = 36
-      Height = 13
-      Caption = 'Pick up'
-    end
-    object edtRefill: TCaptionEdit
-      Left = 8
-      Top = 34
-      Width = 121
-      Height = 21
-      TabOrder = 0
-      Caption = ''
-    end
-    object cboPickup: TORComboBox
-      Left = 216
-      Top = 32
-      Width = 145
-      Height = 21
-      Style = orcsDropDown
-      AutoSelect = True
-      Caption = ''
-      Color = clWindow
-      DropDownCount = 8
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = False
-      LongList = False
-      LookupPiece = 0
-      MaxLength = 0
-      Pieces = '2'
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 1
-      Text = ''
-      CharsNeedMatch = 1
-    end
-  end
-  object Panel3: TPanel [1]
-    Left = 0
-    Top = 57
-    Width = 529
-    Height = 82
+    Top = 105
+    Width = 517
+    Height = 77
     Align = alClient
     TabOrder = 3
     object Label1: TLabel
       Left = 61
       Top = 16
-      Width = 53
-      Height = 13
+      Width = 67
+      Height = 16
       Caption = 'Begin Date'
     end
     object Label2: TLabel
       Left = 274
-      Top = 17
-      Width = 45
-      Height = 13
+      Top = 16
+      Width = 56
+      Height = 16
       Caption = 'End Date'
     end
     object txtStart: TORDateBox
       Left = 61
       Top = 39
       Width = 121
-      Height = 21
+      Height = 24
       TabOrder = 0
       DateOnly = False
       RequireTime = False
@@ -99,18 +44,142 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
       Left = 274
       Top = 39
       Width = 121
-      Height = 21
+      Height = 24
       TabOrder = 1
       DateOnly = False
       RequireTime = False
       Caption = 'End Date'
     end
   end
+  object Panel2: TPanel [1]
+    Left = 0
+    Top = 105
+    Width = 517
+    Height = 77
+    Align = alClient
+    TabOrder = 0
+    object lblDays: TLabel
+      Left = 58
+      Top = 10
+      Width = 77
+      Height = 16
+      Caption = 'Days Supply'
+    end
+    object lblQuantity: TLabel
+      Left = 158
+      Top = 10
+      Width = 48
+      Height = 16
+      Caption = 'Quantity'
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object lblRefills: TLabel
+      Left = 236
+      Top = 10
+      Width = 37
+      Height = 16
+      Caption = 'Refills'
+    end
+    object Label3: TLabel
+      Left = 324
+      Top = 10
+      Width = 47
+      Height = 16
+      Caption = 'Pick Up'
+    end
+    object txtSupply: TCaptionEdit
+      Left = 58
+      Top = 32
+      Width = 60
+      Height = 24
+      AutoSize = False
+      TabOrder = 0
+      Text = '0'
+      OnChange = txtSupplyChange
+      OnClick = txtSupplyClick
+      Caption = 'Days Supply'
+    end
+    object spnSupply: TUpDown
+      Left = 118
+      Top = 32
+      Width = 20
+      Height = 24
+      Associate = txtSupply
+      Max = 32766
+      TabOrder = 2
+    end
+    object txtQuantity: TCaptionEdit
+      Left = 158
+      Top = 32
+      Width = 40
+      Height = 24
+      AutoSize = False
+      TabOrder = 3
+      Text = '0'
+      OnChange = txtQuantityChange
+      OnClick = txtQuantityClick
+      Caption = 'Quantity'
+    end
+    object spnQuantity: TUpDown
+      Left = 198
+      Top = 32
+      Width = 20
+      Height = 24
+      Associate = txtQuantity
+      Max = 32766
+      TabOrder = 5
+    end
+    object txtRefills: TCaptionEdit
+      Left = 230
+      Top = 32
+      Width = 49
+      Height = 24
+      TabOrder = 6
+      Text = '0'
+      OnChange = txtRefillsChange
+      OnClick = txtRefillsClick
+      Caption = 'Refills'
+    end
+    object spnRefills: TUpDown
+      Left = 279
+      Top = 32
+      Width = 20
+      Height = 24
+      Associate = txtRefills
+      Max = 11
+      TabOrder = 8
+    end
+    object cboPickup: TORComboBox
+      Left = 324
+      Top = 32
+      Width = 125
+      Height = 24
+      Style = orcsDropDown
+      AutoSelect = True
+      Caption = 'Pick Up'
+      Color = clWindow
+      DropDownCount = 8
+      ItemHeight = 16
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = True
+      LongList = False
+      LookupPiece = 0
+      MaxLength = 0
+      Pieces = '2'
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 9
+      Text = ''
+      CharsNeedMatch = 1
+    end
+  end
   object memOrder: TCaptionMemo [2]
     Left = 0
     Top = 0
-    Width = 529
-    Height = 57
+    Width = 517
+    Height = 105
     Align = alTop
     BevelInner = bvLowered
     BevelOuter = bvRaised
@@ -124,8 +193,8 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
   end
   object Panel1: TPanel [3]
     Left = 0
-    Top = 139
-    Width = 529
+    Top = 182
+    Width = 517
     Height = 32
     Align = alBottom
     TabOrder = 1
@@ -154,12 +223,6 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
         'Component = Panel2'
         'Status = stsDefault')
       (
-        'Component = edtRefill'
-        'Status = stsDefault')
-      (
-        'Component = cboPickup'
-        'Status = stsDefault')
-      (
         'Component = Panel3'
         'Status = stsDefault')
       (
@@ -184,6 +247,27 @@ inherited frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew
         'Status = stsDefault')
       (
         'Component = frmODChangeUnreleasedRenew'
+        'Status = stsDefault')
+      (
+        'Component = txtSupply'
+        'Status = stsDefault')
+      (
+        'Component = spnSupply'
+        'Status = stsDefault')
+      (
+        'Component = txtQuantity'
+        'Status = stsDefault')
+      (
+        'Component = spnQuantity'
+        'Status = stsDefault')
+      (
+        'Component = txtRefills'
+        'Status = stsDefault')
+      (
+        'Component = spnRefills'
+        'Status = stsDefault')
+      (
+        'Component = cboPickup'
         'Status = stsDefault'))
   end
 end

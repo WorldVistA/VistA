@@ -1,39 +1,160 @@
 :function AutoStartEvent
+:SearchRank 1
+
+:script HotKeyHelp
+:SearchRank 1
+
 :function HandleCustomWindows
 :Returns int True means speaking was handled.
+:SearchRank 1
 :Synopsis process special functions for CPRS
 :Description Can this be in main file and then overriden in site?
 :Param handle/FocusWIndow Focused Window Handle
 
 :script MoveToNewNote
+:SearchRank 1
+
 :function FindNotesWindow
 :Returns handle No Return Description
+:SearchRank 1
 :Synopsis Look for a wwindow with the appropriate propertis of a Note and return the handle.
 :Description Uses a cache (ghLastNotesWindow )  and enumerateChild functions to search for the notes window within the notes tab and returns that window handle.
 :Param handle/hReal The handle of the window to start the search with.
 
 :function MarkNotesEditWindow
 :Returns int No Return Description
+:SearchRank 1
 :Synopsis Check window to see if it meets the properties of a Notes edit text window.
 :Description Returns false if the handle provided is a notes window. This function uses the global ghLastNotesWindow as a cache.
 :Param handle/hwnd No Description
 
 :function MarkNotesLabelWindow
+:SearchRank 1
 :Synopsis Check window to see if it meets the properties of a Notes va508 label window.
+:Description Check window to see if it meets the properties of a Notes va508 label window.
 :Param handle/hwnd No Description
+
+:script MoveToCurrentNote
+:SearchRank 1
 
 :function GetHandleFromAddress
 :Returns handle The handle of the child at that adress; 0 if the address is invalid for the parent.
+:SearchRank 1
 :Synopsis This utility function walks down the windows hierarchy
 :Description The component ID's vary from compile to compile, so constants aren't much help for identifying the components.  Instead, we use the component's hierarchical position as an address to locate it as a descendant of the form.
 :Param handle/Parent The handle of a window we have already identified
 :Param string/Address A space-separated list of numeral integers indicating the relationships from generation to generation.  Each integer indicates which child to choose from its parent, with 1 being the first child.
 
 :function SiteCodeInitialize
+:SearchRank 1
 :Synopsis Placeholder for site customization.
 :Description This code will be run when the USE statement for site specific code is commented out. It is just an empty function call.
 
 :function NewTextEvent
+:SearchRank 1
 :Synopsis This event gets overridden when JAWS starts talking too much
 :Description The edit field of TORComboBoxes uses highlighted text to auto-complete what has been typed in so far.  We only want JAWS to say the selected list item.
 
+:script ShowConsultToolbox
+:SearchRank 1
+:Synopsis Opens the Consult Toolbox.
+:Description Opens the Consult Toolbox that is accessed via clicking the right mouse button.
+
+
+:script OpenDemographics
+:SearchRank 1
+:Synopsis Opens a Patient Demographics dialog window
+:Description Opens a Patient Demographics dialog window regardless of where keyboard focus is.
+
+:script OpenEncounterWindow
+:SearchRank 1
+:Synopsis Opens Encounter Window
+:Description Opens Encounter Window to see current encounter information or choose a new encounter location.
+
+:script ShowActiveConfiguration
+:SearchRank 1
+:Synopsis Shows the current Jaws configuration settings
+:Description Shows the current JAWS configuration settings
+
+:script PressAcceptOrderButton
+:SearchRank 1
+:Synopsis Presses the Accept Order button after writing an order
+:Description Presses the Accept Order button after writing an order
+
+:script WindowMaximize
+:SearchRank 1
+:Synopsis Maximizes the CPRS main window
+:Description Maximizes the CPRS main window
+
+:script SelectNewPatient
+:SearchRank 1
+:Synopsis Initiates the New Patient Selection Process
+:Description Initiates the New Patient Selection Process
+
+
+:function FocusChangedEventEx
+:SearchRank 1
+:Synopsis Contains custom code for specific controls that are not handled properly by JAWS
+:Description Contains custom code for specific controls that are not handled properly by JAWS
+:Param handle/hCurWnd No Description
+:Param int/iWin No Description
+:Param int/iChildNum No Description
+:Param handle/hLastWnd No Description
+:Param int/iLastNum No Description
+:Param int/iLastChild No Description
+:Param int/iDepth No Description
+
+:script OpenListItem
+:SearchRank 1
+:Synopsis On the Cover Sheet, allows the user to see the text behind an item in each of the lists
+:Description On the Cover Sheet, allows the user to see the text behind an item in each of the lists
+
+:script RefreshListView
+:SearchRank 1
+:Synopsis Allows a user to refresh a list on the Cover Sheet
+:Description Allows a user to refresh a list on the Cover Sheet
+
+:script PressAcceptButton
+:SearchRank 1
+:Synopsis Finds and presses the Accept Order Button
+:Description Finds and presses the Accept Order Button
+
+:script PressQuitButton
+:SearchRank 1
+:Synopsis Presses the Quit button
+:Description Presses the Quit button
+
+:script MoveToNotesText
+:SearchRank 1
+:Synopsis On the Notes page, allows a user to jump to the text of a progress note.
+:Description On the Notes page, allows a user to jump to the text of a progress note.
+
+:script ReturnToNotesList
+:SearchRank 1
+:Synopsis On the Notes page, allows a user to jump to the Notes list tree view
+:Description On the Notes page, allows a user to jump to the Notes list tree view
+
+:script MoveToSubjectLine
+:SearchRank 1
+:Synopsis On the Notes page, allows a user to jump to the Subject edit box when visible
+:Description On the Notes page, allows a user to jump to the Subject edit box when visible
+
+:script ShowNoteText
+:SearchRank 1
+:Synopsis On the Notes page, allows a user to view the text of a Progress Note in a Virtual Window
+:Description On the Notes page, allows a user to view the text of a Progress Note in a Virtual Window
+
+:script PressOKButton
+:SearchRank 1
+:Synopsis Allows the user to click the OK button without using the mouse
+:Description Allows the user to click the OK button without using the mouse
+
+:script MoveToOrdersList
+:SearchRank 1
+:Synopsis Jumps focus to the tree view associated with the information type
+:Description Jumps focus to the tree view associated with the information type: List of Notes, List of Orders, List of Consults.
+
+:script OpenPrimaryCareDialog
+:SearchRank 1
+:Synopsis Opens the Primary Care provider information panel
+:Description Opens the Primary Care provider information panel

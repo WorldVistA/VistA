@@ -5,18 +5,19 @@ inherited frmRenewOrders: TfrmRenewOrders
   HorzScrollBar.Visible = True
   VertScrollBar.Tracking = True
   Caption = 'Renew Orders'
-  ClientHeight = 416
-  ClientWidth = 592
+  ClientHeight = 412
+  ClientWidth = 613
   Position = poScreenCenter
   Scaled = False
-  ExplicitWidth = 608
-  ExplicitHeight = 455
-  PixelsPerInch = 96
-  TextHeight = 13
+  OnShow = nil
+  ExplicitWidth = 631
+  ExplicitHeight = 457
+  PixelsPerInch = 120
+  TextHeight = 16
   object hdrOrders: THeaderControl [0]
     Left = 0
     Top = 0
-    Width = 592
+    Width = 613
     Height = 17
     Constraints.MinHeight = 17
     Sections = <
@@ -24,83 +25,72 @@ inherited frmRenewOrders: TfrmRenewOrders
         AutoSize = True
         ImageIndex = -1
         Text = 'Order to be Renewed'
-        Width = 296
+        Width = 307
       end
       item
         AutoSize = True
         ImageIndex = -1
         Text = 'Start/Stop Time'
-        Width = 296
+        Width = 306
       end>
     OnSectionResize = hdrOrdersSectionResize
   end
   object pnlBottom: TPanel [1]
     Left = 0
-    Top = 393
-    Width = 592
-    Height = 23
+    Top = 365
+    Width = 613
+    Height = 47
     Align = alBottom
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    AutoSize = True
     TabOrder = 2
     DesignSize = (
-      592
-      23)
+      613
+      47)
     object cmdCancel: TButton
-      Left = 512
-      Top = 1
+      Left = 529
+      Top = 9
       Width = 72
-      Height = 21
+      Height = 29
       Anchors = [akTop, akRight]
       Cancel = True
       Caption = 'Cancel'
       Constraints.MinHeight = 21
-      TabOrder = 2
+      TabOrder = 0
       OnClick = cmdCancelClick
     end
+    object cmdChange: TButton
+      Left = 9
+      Top = 9
+      Width = 153
+      Height = 29
+      Caption = 'Change...'
+      Constraints.MinHeight = 21
+      Enabled = False
+      TabOrder = 1
+      OnClick = cmdChangeClick
+    end
     object cmdOK: TButton
-      Left = 424
-      Top = 1
+      Left = 438
+      Top = 9
       Width = 72
-      Height = 21
+      Height = 29
       Anchors = [akTop, akRight]
       Caption = 'OK'
       Constraints.MinHeight = 21
       Default = True
-      TabOrder = 1
+      TabOrder = 2
       OnClick = cmdOKClick
-    end
-    object cmdChange: TButton
-      Left = 8
-      Top = 1
-      Width = 145
-      Height = 21
-      Caption = 'Change...'
-      Constraints.MinHeight = 21
-      Enabled = False
-      TabOrder = 0
-      OnClick = cmdChangeClick
     end
   end
   object lstOrders: TCaptionListBox [2]
     Left = 0
     Top = 17
-    Width = 592
-    Height = 376
+    Width = 613
+    Height = 348
     Style = lbOwnerDrawVariable
     Align = alClient
-    Anchors = []
     Color = clCream
     Ctl3D = True
-    ExtendedSelect = False
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ItemHeight = 24
     ParentCtl3D = False
-    ParentFont = False
     ParentShowHint = False
     ShowHint = True
     TabOrder = 1
@@ -108,15 +98,11 @@ inherited frmRenewOrders: TfrmRenewOrders
     OnDrawItem = lstOrdersDrawItem
     OnMeasureItem = lstOrdersMeasureItem
     Caption = ''
-    HintOnItem = True
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
       (
         'Component = hdrOrders'
-        'Status = stsDefault')
-      (
-        'Component = pnlBottom'
         'Status = stsDefault')
       (
         'Component = cmdCancel'
@@ -128,10 +114,13 @@ inherited frmRenewOrders: TfrmRenewOrders
         'Component = cmdChange'
         'Status = stsDefault')
       (
-        'Component = lstOrders'
+        'Component = frmRenewOrders'
         'Status = stsDefault')
       (
-        'Component = frmRenewOrders'
+        'Component = pnlBottom'
+        'Status = stsDefault')
+      (
+        'Component = lstOrders'
         'Status = stsDefault'))
   end
 end

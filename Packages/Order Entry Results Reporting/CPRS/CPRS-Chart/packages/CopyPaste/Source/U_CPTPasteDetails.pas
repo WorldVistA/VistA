@@ -210,6 +210,8 @@ begin
     Exit;
   if not EditMonitor.CopyMonitor.Enabled then
     Exit;
+  if Length(CPVars) < 1 then
+    Exit;
   Try
     case CPmsg of
       Show_Panel:
@@ -246,7 +248,8 @@ begin
             end;
 
             lbSelectorClick(FInfoSelector);
-            FInfoSelector.SetFocus;
+            if FInfoSelector.CanFocus then
+              FInfoSelector.SetFocus;
           end;
         End;
       Hide_Panel:
@@ -283,10 +286,12 @@ begin
             end;
 
             FInfoSelector.SelectorColor := clLtGray;
-            FNewShowing := true;
+            if not fDefaultSelectAll then
+              FNewShowing := true;
             fFromPaste := FromNewPaste;
             lbSelectorClick(FInfoSelector);
-            FInfoSelector.SetFocus;
+            if FInfoSelector.CanFocus then
+              FInfoSelector.SetFocus;
             fFromPaste := false;
           end;
         End;
@@ -496,6 +501,8 @@ begin
   RtnCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   ResetMask := TRichEdit(FMonitorObject).Perform(EM_GETEVENTMASK, 0, 0);
+  RtnLineNum := 0;
+  RtnCurPos := 0;
   TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, 0);
   TRichEdit(FMonitorObject).Perform(WM_SETREDRAW, Ord(False), 0);
   try
@@ -955,6 +962,7 @@ begin
     InvalidateRect(TRichEdit(FMonitorObject).Handle, NIL, true);
     TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, ResetMask);
     Screen.Cursor := RtnCursor;
+    Application.ProcessMessages; // moved from HighLightInfoPanel
   end;
 end;
 
@@ -1185,7 +1193,11 @@ begin
         Format.crBackColor := ColorToRGB(Color);
         TRichEdit(FMonitorObject).Perform(EM_SETCHARFORMAT, SCF_SELECTION,
           Longint(@Format));
-        Application.ProcessMessages;
+// This Application.ProcessMessages was allowing a note change in the middle of
+// lbSelectorClick, which clears out the PasteText, causing access violations
+// because lbSelectorClick was still processing PasteText data.  Fix was to
+// move Application.ProcessMessages to the bottom of lbSelectorClick
+//        Application.ProcessMessages;
       end;
 
     until CharPos = 0;
@@ -2347,6 +2359,8 @@ end;
 
 procedure TCopyPasteDetails.SaveTheMonitor(ItemID: Integer);
 begin
+  if ItemID <= 0 then
+    Exit;
   if not Assigned(EditMonitor.CopyMonitor) then
     Exit;
   if not EditMonitor.CopyMonitor.Enabled then

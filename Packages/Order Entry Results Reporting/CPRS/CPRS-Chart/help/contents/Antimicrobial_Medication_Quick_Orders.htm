@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="Adobe RoboHelp 2020" />
+  <title>Antimicrobial Medication Quick Orders</title>
+  <meta name="topic-status" content="Draft" />
+  <link rel="stylesheet" type="text/css" href="assets/css/CPRS.css" />
+</head>
+<body>
+  <h1>Antimicrobial Medication Quick Orders</h1>
+  <p><br />
+    Tracking the use of antimicrobial drugs can be accomplished by creating antimicrobial medication quick orders that contain “tracking hooks.” There are two hooks: The |OR QUICK ORDER AUDIT| hook tracks clinically preferred antimicrobial drug orders; the |OR QUICK ORDER AUDIT(ALT)| hook tracks orders that prescribe an alternative to a clinically preferred antimicrobial drug.</p>
+  <p style="margin-left: 72.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;">
+    <font color="#010100" size="2" style="font-size: 12pt;"><b>Note:</b>  Sites that do not wish to track antimicrobial prescribing practices using quick orders, or do not use the VISN 23 Antimicrobial Clinical Decision Support System (CDSS), do not need to perform the setup steps for using the antimicrobial hooks and reporting features described in this document.</font>
+  </p>
+  <p>Quick orders configured with either of the tracking hooks, and the CPRS menus that provide access to these quick orders, must be set up by a CAC or Office of Information and Technology (OIT) member. For information on how to set up microbial medication quick orders with tracking hooks, refer to the Computerized Patient Record System (CPRS) Technical Manual: GUI Version.</p>
+  <p>Upon logging into CPRS, a clinician with permission to prescribe antimicrobial drugs must navigate to the menu defined by the CAC responsible for implementing quick order audit capabilities. This menu lists available antimicrobial quick orders configured with a tracking hook. From this menu, the clinician can prescribe the clinically preferred medication, or an alternate drug, by selecting the quick order from the menu of available quick orders.</p>
+  <p style="margin-left: 72.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;"><b>Note:</b>   The menu shown in the following example may be different from the implementation at your site. This menu should be customized for the specific needs of facility clinicians. Check with your CAC for more information.</p>
+  <p>In the following example, the menu is named “ANTIMICROBIAL QUICK ORDERS” and displays when the ANTIMICROBIALS option is selected from the Add New Orders menu. The site CAC may place this option elsewhere or use a different name. This is intended as an example only.</p>
+  <p><strong>To prescribe an antimicrobial drug using a tracking quick order in CPRS:</strong></p>
+  <p> </p>
+  <p> </p>
+  <p> </p>
+  <ol>
+    <li>
+      <font style="font-size: 12pt;">Navigate to the Add New Order menu and then select ANTIMICROBIALS (or the equivalent option defined by your site CAC). The ANTIMICROBIAL QUICK ORDERS menu displays.</font>
+      <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;"> </p>
+      <figure><img alt="This screen capture shows an Order Menu with Antimicrobials outlined in red." src="assets/images/antimicrobial_Add_order_menu_2022_04_21.gif" />
+        <figcaption>
+          <font style="font-size: 12pt;">Antimicrobials menu option on the CPRS Add New Orders menu</font>
+        </figcaption>
+      </figure>
+      <p style="margin-left: 36.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;"><b>Note:</b>    Quick orders listed on the ANTIMICROBIAL QUICK ORDERS menu shown below are example quick orders containing either the Primary (clinically preferred drug) or the Alternative (to a clinically preferred drug) tracking hook.</p>
+      <p>The naming conventions for antimicrobial quick orders are site specific. Your CAC may use an alternative naming schema for the quick orders.</p>
+      <p>The medications order form displays information about the preconfigured quick order.</p>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">Select a preconfigured quick order from the ANTIMICROBIAL QUICK ORDERS menu or the equivalent menu configured for your site. </font>
+      <figure><img alt="Antimicrobial Quick Orders menu listing preconfigured antimicrobial quick orders" src="assets/images/Antimicrobial_orders_dialog_2022_04_21.gif" />
+        <figcaption>
+          <font style="font-size: 12pt;">Antimicrobial Quick Orders menu listing preconfigured antimicrobial quick orders</font>
+        </figcaption>
+      </figure>
+      <p> </p>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">Review the medication details and note the “Pharmacy Confirmation #” displayed in the Comments field. This confirmation number is added automatically whenever an antimicrobial drug quick order is placed. </font>
+      <figure>
+        <figcaption><img alt="Outpatient Medications form with Pharmacy Confirmation Number" src="assets/images/Antimicrobial_outpt_Meds_Pharm_Confirm_2022_04_21.gif" style="font-size: 8pt;" /></figcaption>
+      </figure>
+      <figure>
+        <figcaption>
+          <font style="font-size: 12pt;">Outpatient Medications form with Pharmacy Confirmation Number</font>
+        </figcaption>
+      </figure>
+      <p> </p>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">Select Accept to place the order or Quit to cancel without saving. </font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">Select Done to close the Antimicrobial Quick Orders menu. </font>
+    </li>
+  </ol>
+  <p> </p>
+  <p style="margin-top: 6.00pt; margin-bottom: 0.00pt; border-bottom: 0.75pt solid #000000;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">Related topics</font>
+  </p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Quick_Orders.htm">Quick Orders</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="Placing_a_Quick_Order.htm">Placing a Quick Order</a></p>
+</body>
+</html>

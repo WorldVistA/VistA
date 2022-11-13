@@ -57,6 +57,7 @@ inherited frmOMHTML: TfrmOMHTML
       Height = 253
       Align = alClient
       TabOrder = 0
+      SelectedEngine = EdgeIfAvailable
       OnBeforeNavigate2 = webViewBeforeNavigate2
       OnDocumentComplete = webViewDocumentComplete
       ControlData = {

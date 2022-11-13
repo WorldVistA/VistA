@@ -3,61 +3,44 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
   Top = 206
   BorderStyle = bsDialog
   Caption = 'Send Alert'
-  ClientHeight = 262
-  ClientWidth = 371
+  ClientHeight = 305
+  ClientWidth = 444
   OldCreateOrder = True
   Position = poScreenCenter
+  ExplicitWidth = 450
+  ExplicitHeight = 334
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
     Left = 0
     Top = 0
-    Width = 371
-    Height = 262
+    Width = 444
+    Height = 272
     Align = alClient
-    BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 358
+    DesignSize = (
+      444
+      272)
     object SrcLabel: TLabel
       Left = 12
-      Top = 14
+      Top = 8
       Width = 98
       Height = 13
       Caption = 'Select or enter name'
     end
     object DstLabel: TLabel
-      Left = 217
-      Top = 14
+      Left = 263
+      Top = 8
       Width = 132
       Height = 13
       Caption = 'Currently selected recipients'
     end
-    object cmdOK: TButton
-      Left = 105
-      Top = 226
-      Width = 75
-      Height = 25
-      Caption = 'OK'
-      ModalResult = 1
-      TabOrder = 4
-      OnClick = cmdOKClick
-    end
-    object cmdCancel: TButton
-      Left = 185
-      Top = 226
-      Width = 75
-      Height = 25
-      Cancel = True
-      Caption = 'Cancel'
-      ModalResult = 2
-      TabOrder = 5
-      OnClick = cmdCancelClick
-    end
     object cboSrcList: TORComboBox
-      Left = 12
+      Left = 0
       Top = 30
-      Width = 144
-      Height = 185
+      Width = 178
+      Height = 236
+      Anchors = [akLeft, akTop, akBottom]
       Style = orcsSimple
       AutoSelect = True
       Caption = 'Select or enter name'
@@ -82,15 +65,16 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
       UniqueAutoComplete = True
     end
     object DstList: TORListBox
-      Left = 217
-      Top = 30
-      Width = 144
-      Height = 185
+      Left = 263
+      Top = 35
+      Width = 178
+      Height = 231
+      Anchors = [akLeft, akTop, akBottom]
       ItemHeight = 13
       MultiSelect = True
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 2
+      TabOrder = 3
       OnClick = DstListClick
       Caption = 'Currently selected recipients'
       ItemTipColor = clWindow
@@ -98,25 +82,63 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
       Pieces = '2'
     end
     object btnAdd: TButton
-      Left = 160
-      Top = 109
-      Width = 51
+      Left = 184
+      Top = 32
+      Width = 73
       Height = 25
       Caption = 'Add'
       TabOrder = 1
       OnClick = cboSrcListMouseClick
     end
     object btnRemove: TButton
-      Left = 160
-      Top = 140
-      Width = 51
+      Left = 184
+      Top = 63
+      Width = 73
       Height = 25
       Caption = 'Remove'
-      TabOrder = 3
+      TabOrder = 2
       OnClick = DstListClick
     end
   end
+  object pnlButtons: TPanel [1]
+    Left = 0
+    Top = 272
+    Width = 444
+    Height = 33
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = 'pnlButtons'
+    ShowCaption = False
+    TabOrder = 1
+    object cmdOK: TButton
+      AlignWithMargins = True
+      Left = 285
+      Top = 3
+      Width = 75
+      Height = 27
+      Align = alRight
+      Caption = 'OK'
+      ModalResult = 1
+      TabOrder = 0
+      OnClick = cmdOKClick
+    end
+    object cmdCancel: TButton
+      AlignWithMargins = True
+      Left = 366
+      Top = 3
+      Width = 75
+      Height = 27
+      Align = alRight
+      Cancel = True
+      Caption = 'Cancel'
+      ModalResult = 2
+      TabOrder = 1
+      OnClick = cmdCancelClick
+    end
+  end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 32
+    Top = 88
     Data = (
       (
         'Component = pnlBase'
@@ -141,6 +163,9 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
         'Status = stsDefault')
       (
         'Component = frmConsultAlertsTo'
+        'Status = stsDefault')
+      (
+        'Component = pnlButtons'
         'Status = stsDefault'))
   end
 end

@@ -27,7 +27,7 @@ const
 
 function IsCorrectVersion(anOption: String; bDebug: Boolean = False): Boolean;
 var
-  ClientVer, ServerVer, ServerReq: string;
+  ClientVer, ServerVer, ServerReq, IsDefault: string;
 
 begin
   Result := bDebug;
@@ -48,7 +48,9 @@ begin
 
   if (CompareVersion(ServerVer, ServerReq) <> 0) then
   begin
-    if (sCallV('ORWU DEFAULT DIVISION', [nil]) = '1') then
+//    if (sCallV('ORWU DEFAULT DIVISION', [nil]) = '1') then
+    CallVistA('ORWU DEFAULT DIVISION', [nil], IsDefault);
+    if (IsDefault = '1') then
     begin
       if (InfoBox('Proceed with mismatched Client and Server versions?', TC_CLIERR, MB_YESNO) = ID_NO) then
       begin

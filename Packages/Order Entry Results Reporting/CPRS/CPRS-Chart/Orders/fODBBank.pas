@@ -138,6 +138,8 @@ type
     procedure ExtractOther(OutList:TStrings; AList:TStrings);
     procedure ExtractPatientInfo(OutList:TStrings; AList:TStrings);
     procedure ExtractSpecimen(OutList:TStrings; AList:TStrings);
+    procedure GetSpecimen(var aSpecimen, aSpecimenUID: string);
+    function SpecimenWillBeExpired(const aSpecimenDate: string): boolean;
     function  SpecimenNeeded(OutList:TStrings; AList:TStrings; CompID:integer): Boolean;
     procedure LoadUrgencies(AComboBox:TORComboBox);
     procedure LoadModifiers(AComboBox:TORComboBox);
@@ -356,11 +358,12 @@ begin
       EvtDelayLoc := StrToIntDef(GetEventLoc1(IntToStr(Self.EvtID)),0);
       EvtDivision := StrToIntDef(GetEventDiv1(IntToStr(Self.EvtID)),0);
       if EvtDelayLoc>0 then
-        ODForLab(AList, EvtDelayLoc, EvtDivision)
+        getODForLab(aList,EvtDelayLoc,EvtDivision)
       else
-        ODForLab(AList, Encounter.Location, EvtDivision);
-    end else
-      ODForLab(AList, Encounter.Location);
+        getODForLab(aList,Encounter.Location,EvtDivision);
+    end
+    else
+      getODForLab(aList,Encounter.Location,0); // ODForLab returns TStrings with defaults
     CtrlInits.LoadDefaults(AList);
     InitDialog;
     GroupBox1.Visible := True;
@@ -652,7 +655,9 @@ begin
                   if (uTNSOrders.Count < 1) and (aGotTNS = false) and (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then  //check to see if type and screen is needed CQ 17349
                     begin
                       uGetTnS := 1;
-                    end;
+                    end
+                    else
+                      aGotTNS := True;
                   if aList.Count > 0 then
                     begin
                       aSpecimen := piece(aList[0], '^',1);
@@ -808,7 +813,7 @@ begin
               break;
             end;
         end;
-
+    Responses.Clear('SPECSTS', 1);
     CurAdd := 1;
     for i := 0 to uSelectedItems.Count - 1 do
       begin
@@ -823,7 +828,11 @@ begin
             if Length(piece(x,'^',2)) > 0 then Responses.Update('ORDERABLE', CurAdd, piece(x,'^',2), aName);
             if Length(piece(x,'^',3)) > 0 then Responses.Update('QTY', CurAdd, piece(x,'^',3), piece(x,'^',3));
             if Length(piece(x,'^',4)) > 0 then Responses.Update('MODIFIER', CurAdd, piece(x,'^',4), piece(x,'^',4));
-            if Length(piece(x,'^',5)) > 0 then Responses.Update('SPECSTS', CurAdd, pieces(x,'^',5,7), piece(x,'^',5));
+            if Length(piece(x,'^',5)) > 0 then
+            begin
+              if not SpecimenWillBeExpired(piece(x, '^', 6)) then
+                Responses.Update('SPECSTS', CurAdd, pieces(x,'^',5,7), piece(x,'^',5));
+            end;
             if Length(cboSurgery.Text) > 0 then Responses.Update('MISC',1,cboSurgery.Text,cboSurgery.Text);
             if Length(calWantTime.Text) > 0 then Responses.Update('DATETIME',1,ValidCollTime(calWantTime.Text),calWantTime.Text);
             if Length(cboUrgency.Text) > 0 then Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text)
@@ -903,13 +912,7 @@ begin
     aGotTNS := false;
     ExtractTypeScreen(aList, uVBECList);
     if aList.Count > 0 then aTypeScreen := aList[0];
-    aList.Clear;
-    ExtractSpecimen(aList, uVBECList);
-    if aList.Count > 0 then
-      begin
-        aSpecimen := piece(aList[0], '^',1);
-        aSpecimenUID := piece(aList[0], '^',2);
-      end;
+    GetSpecimen(aSpecimen, aSpecimenUID);
     with Responses, ALabTest do
       begin
         Changing := True;
@@ -1050,12 +1053,7 @@ begin
                     aReason := '';
                     aSurgery := '';
                     aCollTime := '';
-                    ExtractSpecimen(aList, uVBECList);
-                    if aList.Count > 0 then
-                      begin
-                        aSpecimen := piece(aList[0], '^', 1);
-                        aSpecimenUID := piece(aList[0], '^', 2);
-                      end;
+                    GetSpecimen(aSpecimen, aSpecimenUID);
                     if length(cboModifiers.ItemID) > 0 then aModifier := cboModifiers.Items[cboModifiers.ItemIndex];
                     if length(cboReasons.ItemID) > 0 then aReason := cboReasons.Items[cboReasons.ItemIndex];
                     if length(cboSurgery.ItemID) > 0 then aSurgery := cboSurgery.Items[cboSurgery.ItemIndex];
@@ -1166,6 +1164,7 @@ begin
                             end;
                         ListItem.SubItems.Add(piece(cboAvailComp.Items[cboAvailComp.ItemIndex],'^',1));
                       end;
+                    Responses.Clear('SPECSTS', 1);
                     CurAdd := 1;
                     aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimenReq + '^' + aSpecimen + '^' + aSpecimenUID + '^' + IntToStr(aLabTest.ItemID);
                     uSelectedItems.Add(aStr);
@@ -1182,7 +1181,11 @@ begin
                             if Length(piece(x,'^',2)) > 0 then Responses.Update('ORDERABLE', CurAdd, piece(x,'^',2), aName);
                             if Length(piece(x,'^',3)) > 0 then Responses.Update('QTY', CurAdd, piece(x,'^',3), piece(x,'^',3));
                             if Length(piece(x,'^',4)) > 0 then Responses.Update('MODIFIER', CurAdd, piece(x,'^',4), aModifier);
-                            if Length(piece(x,'^',5)) > 0 then Responses.Update('SPECSTS', CurAdd, pieces(x,'^',5,7), piece(x,'^',5));
+                            if Length(piece(x,'^',5)) > 0 then
+                            begin
+                              if not SpecimenWillBeExpired(piece(x, '^', 6)) then
+                                Responses.Update('SPECSTS', CurAdd, pieces(x,'^',5,7), piece(x,'^',5));
+                            end;
                             if Length(cboSurgery.Text) > 0 then Responses.Update('MISC',1,cboSurgery.Text,cboSurgery.Text);
                           end;
                         Inc(CurAdd);
@@ -1857,6 +1860,37 @@ begin
   ExtractItems(OutList, AList, 'MSBOS');
 end;
 
+procedure TfrmODBBank.GetSpecimen(var aSpecimen, aSpecimenUID: string);
+var
+  aList: TStringList;
+begin
+  aSpecimen := '';
+  aSpecimenUID := '';
+  aList := TStringList.Create;
+  try
+    ExtractSpecimen(aList, uVBECList);
+    if aList.Count > 0 then
+    begin
+      aSpecimen := piece(aList[0], '^', 1);
+      aSpecimenUID := piece(aList[0], '^', 2);
+      if SpecimenWillBeExpired(aSpecimen) then
+      begin
+        aSpecimen := '';
+        aSpecimenUID := '';
+      end;
+    end;
+  finally
+    aList.Free;
+  end;
+end;
+
+function TfrmODBBank.SpecimenWillBeExpired(const aSpecimenDate: string): boolean;
+begin
+  Result := False;
+  if (Length(aSpecimenDate) > 0) and (Length(calWantTime.Text) > 0) then
+    Result := StrToFloat(aSpecimenDate) < calWantTime.FMDateTime;
+end;
+
 function TfrmODBBank.SpecimenNeeded(OutList:TStrings; AList:TStrings; CompID:integer): Boolean;
 var
   i:integer;
@@ -1882,15 +1916,9 @@ begin
       result := true;
       exit;
     end;
+  GetSpecimen(aSpecimen, aSpecimenUID);
   OutList.Clear;
-  ExtractSpecimen(OutList, uVBECList);
-  if OutList.Count > 0 then
-    begin
-      aSpecimen := Piece(OutList[0], '^',1);
-      aSpecimenUID := Piece(OutList[0], '^',2);
-    end;
-  OutList.Clear;
-  ExtractItems(OutList,AList,'SPECIMENS');
+  ExtractSpecimens(OutList, AList);
   aWantDateTime := calWantTime.FMDateTime;
   aSpecimenDate := aSpecimen;
   aExpiredSpecimenDate := 0;
@@ -2036,7 +2064,13 @@ begin
                          if DaysofFuturePast = 0 then DaysofFuturePast := 7;
                          if ((d1 - d2) > DaysofFuturePast) then
                            SetError('A lab collection cannot be ordered more than '
-                             + IntToStr(DaysofFuturePast) + ' days in advance');
+                             + IntToStr(DaysofFuturePast) + ' days in advance')
+                         // make sure it's a valid lab collect time
+                         else if (not IsLabCollectTime(StrToFMDateTime(cboCollTime.Text), EvtDelayLoc)) then
+                           SetError(cboCollTime.Text + TX_NOT_LAB_COLL_TIME + ' (' + test + ')')
+                         else
+                           // convert entered text to date/time
+                           cboCollTime.Text := FormatFMDateTime('mmm dd,yy@hh:nn', StrToFMDateTime(cboCollTime.Text));
                        end
                      else if EvtDelayLoc > 0 then
                        begin
@@ -2647,7 +2681,7 @@ end;
 
 procedure TfrmODBBank.cboAvailCompSelect(Sender: TObject);
  var
-  aList,aTests: TStringList;
+  aList,aTests, tmpList: TStringList;
   i,j,k,getTest,TestAdded: integer;
   text : string;
   aMSBOS,aMSBOSContinue,curAdd,AnInstance: integer;
@@ -2659,6 +2693,7 @@ begin
   if cboAvailComp.ItemID = '' then Exit;
   aList := TStringList.Create;
   aTests := TStringList.Create;
+  tmpList := TStringList.Create;
   sub1 := '';
   aChanging := changing;
   try
@@ -2746,13 +2781,7 @@ begin
     aList.Clear;
     ExtractTypeScreen(aList, uVBECList);
     if aList.Count > 0 then aTypeScreen := aList[0];
-    aList.Clear;
-    ExtractSpecimen(aList, uVBECList);
-    if aList.Count > 0 then
-      begin
-        aSpecimen := piece(aList[0], '^', 1);
-        aSpecimenUID := piece(aList[0], '^', 2);
-      end;
+    GetSpecimen(aSpecimen, aSpecimenUID);
     if (cboSurgery.ItemID = '') and (length(cboSurgery.Text) > 0) then
       begin
         for i := 0 to cboSurgery.Items.Count - 1 do
@@ -2830,7 +2859,7 @@ begin
         if (StrToInt(piece(aList[i],'^',1)) = aLabTest.ItemID) then
           begin
             aSpecimenReq := piece(aList[i],'^',2);
-            if (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then
+            if (SpecimenNeeded(tmpList, uVBECList, aLabTest.ItemID)) then
               aSpecimenUID := '';
             break;
           end;
@@ -2855,6 +2884,7 @@ begin
       end;
       aStr := aTestYes + '^' + IntToStr(aLabTest.TestID) + '^' + tQuantity.Text + '^' + aModifier + '^' + aSpecimenReq + '^' + aSpecimen + '^' + aSpecimenUID + '^' + IntToStr(aLabTest.ItemID);
       uSelectedItems.Add(aStr);
+      Responses.Clear('SPECSTS', 1);
       CurAdd := 1;
       for i := 0 to uSelectedItems.Count - 1 do
         begin
@@ -2869,7 +2899,11 @@ begin
               if Length(piece(x,'^',2)) > 0 then Responses.Update('ORDERABLE', CurAdd, piece(x,'^',2), aName);
               if Length(piece(x,'^',3)) > 0 then Responses.Update('QTY', CurAdd, piece(x,'^',3), piece(x,'^',3));
               if Length(piece(x,'^',4)) > 0 then Responses.Update('MODIFIER', CurAdd, piece(x,'^',4), piece(x,'^',4));
-              if Length(piece(x,'^',5)) > 0 then Responses.Update('SPECSTS', CurAdd, pieces(x,'^',5,7), piece(x,'^',5));
+              if Length(piece(x,'^',5)) > 0 then
+              begin
+                if not SpecimenWillBeExpired(piece(x, '^', 6)) then
+                  Responses.Update('SPECSTS', CurAdd, pieces(x,'^',5,7), piece(x,'^',5));
+              end;
               if Length(cboSurgery.Text) > 0 then Responses.Update('MISC',1,cboSurgery.Text,cboSurgery.Text);
               if Length(calWantTime.Text) > 0 then Responses.Update('DATETIME',1,ValidCollTime(calWantTime.Text),calWantTime.Text);
               if Length(cboUrgency.Text) > 0 then Responses.Update('URGENCY',1,cboUrgency.ItemID,cboUrgency.Text)
@@ -2894,6 +2928,7 @@ begin
   finally
     alist.Free;
     aTests.Free;
+    tmpList.Free;
   end;
   aMsg := '';
   LRORDERMODE := TORDER_MODE_INFO;
@@ -3179,14 +3214,32 @@ end;
 
 procedure TfrmODBBank.cboAvailTestNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  cboAvailTest.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, FVbecLookup, Responses.QuickOrder));
+  sl := TStringList.Create;
+  try
+    setSubsetOfOrderItems(sl, StartFrom, Direction, FVbecLookup,
+      Responses.QuickOrder);
+    cboAvailTest.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODBBank.cboAvailCompNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  cboAvailComp.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, FVbecLookup, Responses.QuickOrder));
+  sl := TStringList.Create;
+  try
+    setSubsetOfOrderItems(sl, StartFrom, Direction, FVbecLookup,
+      Responses.QuickOrder);
+    cboAvailComp.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODBBank.pgeProductChange(Sender: TObject);
@@ -3391,6 +3444,8 @@ begin
                   end;
               ListItem.SubItems.Add(piece(cboAvailComp.Items[cboAvailComp.ItemIndex],'^',1));
               Responses.Update('MODIFIER', (i+1), cboModifiers.Text, cboModifiers.Text);
+              SetPiece(x, '^', 4, cboModifiers.Text);
+              uSelectedItems[i] := x;
               Break;
             end;
         end;
@@ -3535,7 +3590,7 @@ begin
   if lvSelectionList.Items.Count < 1 then Exit;
 
   if uSelectedItems = nil then Exit;
-  
+
   if uSelectedItems.Count > 0 then
     Responses.Update('COMMENT',1,memDiagComment.Text,memDiagComment.Text);
   memOrder.Text := Responses.OrderText;
@@ -3678,6 +3733,7 @@ begin
         calCollectTime.text := '';
         lblNoBloodReq.Visible := false;
       end;
+    Responses.Clear('SPECSTS', 1);
     for i := 0 to uSelectedItems.Count - 1 do
       begin
         aName := lvSelectionList.Items[i].Caption;
@@ -3693,8 +3749,12 @@ begin
           begin
             if Length(piece(x,'^',2)) > 0 then Responses.Update('ORDERABLE', CurAdd, piece(x,'^',2), aName);
             if Length(piece(x,'^',3)) > 0 then Responses.Update('QTY', CurAdd, piece(x,'^',3), piece(x,'^',3));
-            if Length(piece(x,'^',4)) > 0 then Responses.Update('MODIFIER', CurAdd, piece(x,'^',4), aModifier);
-            if Length(piece(x,'^',5)) > 0 then Responses.Update('SPECSTS', CurAdd, pieces(x,'^',5,7), piece(x,'^',5));
+            if Length(piece(x,'^',4)) > 0 then Responses.Update('MODIFIER', CurAdd, piece(x,'^',4), piece(x,'^',4));
+            if Length(piece(x,'^',5)) > 0 then
+            begin
+              if not SpecimenWillBeExpired(piece(x, '^', 6)) then
+                Responses.Update('SPECSTS', CurAdd, pieces(x,'^',5,7), piece(x,'^',5));
+            end;
             cboModifiers.ItemIndex := -1;
             cboAvailComp.ItemIndex := -1;
             tQuantity.Text := '';
@@ -3879,6 +3939,7 @@ var
   aList: TStringList;
   aSpecimen, aSpecimenUID, aSpecimenReq: string;
   aChanging: Boolean;
+  aTypeScreen: string;
 begin
   inherited;
   aList := TStringList.Create;
@@ -3887,6 +3948,53 @@ begin
   aSpecimen := '';
   aSpecimenUID := '';
   aSpecimenReq := '';
+  // update T&S notification
+  uGetTnS := 0;
+  if (Length(calWantTime.Text) > 0) and (calWantTime.FMDateTime <> 0) then
+    GetPatientBBInfoByDate(uVBECList, Patient.DFN, Encounter.Location, calWantTime.FMDateTime)
+  else
+    GetPatientBBInfo(uVBECList, Patient.DFN, Encounter.Location);
+  uTNSOrders.Clear;
+  if not(self.EvtID > 0) then
+    ExtractTNSOrders(uTNSOrders, uVBECList);
+  ExtractTypeScreen(aList, uVBECList);
+  if aList.Count > 0 then aTypeScreen := aList[0];
+  if (uTNSOrders.Count < 1)
+    and ((aLabTest <> nil) and SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then  //check to see if type and screen is needed CQ 17349
+    begin
+      uGetTnS := 1;
+      for i := 0 to lvSelectionList.Items.Count - 1 do
+        begin
+          if lvSelectionList.Items[i].SubItems[3] = aTypeScreen then
+            begin
+              uGetTnS := 0;
+              if length(cboUrgency.ItemID) > 0 then
+                uDfltUrgency := cboUrgency.ItemID;
+              lblTNS.Caption := '';
+              lblTNS.Visible := false;
+              memMessage.Text := '';
+              pnlMessage.Visible := false;
+              pnlDiagnosticTests.Caption := 'Diagnostic Tests';
+              break;
+            end;
+        end;
+    end;
+  if uGetTnS = 1 then
+    begin
+      lblTNS.Caption := 'TYPE + SCREEN must be added to order';
+      lblTNS.Visible := true;
+      memMessage.Text := 'TYPE + SCREEN must be added to order';
+      pnlMessage.Visible := true;
+      pnlDiagnosticTests.Caption := 'Diagnostic Tests*';
+    end
+  else
+  begin
+    lblTNS.Caption := '';
+    lblTNS.Visible := false;
+    memMessage.Text := '';
+    pnlMessage.Visible := false;
+    pnlDiagnosticTests.Caption := 'Diagnostic Tests';
+  end;
   if uSelectedItems.Count > 0 then
     begin
       with calWantTime do if not changing then
@@ -3914,13 +4022,7 @@ begin
         end;
       if Length(calWantTime.Text) > 0 then Responses.Update('DATETIME',1,ValidCollTime(calWantTime.Text),calWantTime.Text);
       memOrder.Text := Responses.OrderText;
-      aList.Clear;
-      ExtractSpecimen(aList, uVBECList);
-      if aList.Count > 0 then
-      begin
-        aSpecimen := piece(aList[0], '^', 1);
-        aSpecimenUID := piece(aList[0], '^', 2);
-      end;
+      GetSpecimen(aSpecimen, aSpecimenUID);
       aList.Clear;
       ExtractSpecimens(aList, uVBECList);    //Get specimen values to pass back to Server
       for i := 0 to aList.Count - 1 do
@@ -3929,10 +4031,14 @@ begin
             begin
               aSpecimenReq := piece(aList[i],'^',2);
               if (SpecimenNeeded(aList, uVBECList, aLabTest.ItemID)) then
+              begin
+                aSpecimen := '';
                 aSpecimenUID := '';
+              end;
               break;
             end;
         end;
+      Responses.Clear('SPECSTS');
       Responses.Update('SPECSTS', 1, aSpecimenReq + '^' + aSpecimen + '^' + aSpecimenUID, aSpecimenReq);
     end;
   finally

@@ -1,109 +1,143 @@
 inherited frmCover: TfrmCover
-  Left = 256
-  Top = 280
+  Left = 259
+  Top = 283
   HelpContext = 1000
   BorderIcons = []
   Caption = 'Cover Sheet'
-  ClientHeight = 350
-  ClientWidth = 632
+  ClientHeight = 431
+  ClientWidth = 778
   HelpFile = 'overvw'
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 648
-  ExplicitHeight = 388
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitLeft = 259
+  ExplicitTop = 283
+  ExplicitWidth = 796
+  ExplicitHeight = 476
+  PixelsPerInch = 120
+  TextHeight = 16
   inherited shpPageBottom: TShape
-    Top = 345
-    Width = 632
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    ExplicitTop = 345
-    ExplicitWidth = 632
+    Top = 425
+    Width = 778
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    ExplicitTop = 425
+    ExplicitWidth = 778
   end
   object pnlBase: TPanel [1]
     Left = 0
     Top = 0
-    Width = 632
-    Height = 345
+    Width = 778
+    Height = 425
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     BevelOuter = bvNone
-    Constraints.MinHeight = 10
+    Constraints.MinHeight = 12
     TabOrder = 0
     object sptBottom: TSplitter
       Left = 0
-      Top = 226
-      Width = 632
-      Height = 5
+      Top = 278
+      Width = 778
+      Height = 6
       Cursor = crVSplit
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alBottom
-      Constraints.MinHeight = 5
+      Constraints.MinHeight = 6
       OnCanResize = sptBottomCanResize
-      ExplicitTop = 237
-      ExplicitWidth = 640
     end
     object pnlNotTheBottom: TPanel
       Left = 0
       Top = 0
-      Width = 632
-      Height = 226
+      Width = 778
+      Height = 278
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       object sptTop: TSplitter
         Left = 0
-        Top = 120
-        Width = 632
-        Height = 5
+        Top = 148
+        Width = 778
+        Height = 6
         Cursor = crVSplit
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
-        Constraints.MinHeight = 5
+        Constraints.MinHeight = 6
         OnCanResize = sptTopCanResize
-        ExplicitWidth = 640
       end
       object pnlTop: TPanel
         Left = 0
         Top = 0
-        Width = 632
-        Height = 120
+        Width = 778
+        Height = 148
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         object spt_2: TSplitter
-          Left = 416
+          Left = 512
           Top = 0
-          Width = 5
-          Height = 120
+          Width = 6
+          Height = 148
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alRight
-          Constraints.MinWidth = 5
+          Constraints.MinWidth = 6
           OnCanResize = spt_2CanResize
-          ExplicitLeft = 424
         end
         object pnl_not3: TPanel
           Left = 0
           Top = 0
-          Width = 416
-          Height = 120
+          Width = 512
+          Height = 148
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 0
           object spt_1: TSplitter
-            Left = 211
+            Left = 260
             Top = 0
-            Width = 5
-            Height = 120
+            Width = 6
+            Height = 148
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Color = clBtnFace
-            Constraints.MinWidth = 5
+            Constraints.MinWidth = 6
             ParentColor = False
             OnCanResize = spt_1CanResize
           end
           object pnl_1: TPanel
             Left = 0
             Top = 0
-            Width = 211
-            Height = 120
+            Width = 260
+            Height = 148
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alLeft
             BevelOuter = bvNone
             TabOrder = 0
@@ -111,8 +145,12 @@ inherited frmCover: TfrmCover
             object lbl_1: TOROffsetLabel
               Left = 0
               Top = 0
-              Width = 211
-              Height = 19
+              Width = 260
+              Height = 23
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alTop
               Caption = ' '
               HorzOffset = 2
@@ -123,12 +161,15 @@ inherited frmCover: TfrmCover
             object lst_1: TORListBox
               Tag = 10
               Left = 0
-              Top = 19
-              Width = 211
-              Height = 101
+              Top = 23
+              Width = 260
+              Height = 125
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alClient
               Ctl3D = True
-              ItemHeight = 13
               ParentCtl3D = False
               ParentShowHint = False
               ShowHint = True
@@ -142,10 +183,14 @@ inherited frmCover: TfrmCover
             end
           end
           object pnl_2: TPanel
-            Left = 216
+            Left = 266
             Top = 0
-            Width = 200
-            Height = 120
+            Width = 246
+            Height = 148
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
@@ -153,25 +198,31 @@ inherited frmCover: TfrmCover
             object lbl_2: TOROffsetLabel
               Left = 0
               Top = 0
-              Width = 200
-              Height = 19
+              Width = 246
+              Height = 23
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alTop
               Caption = ' '
               HorzOffset = 2
               Transparent = False
               VertOffset = 6
               WordWrap = False
-              ExplicitWidth = 208
             end
             object lst_2: TORListBox
               Tag = 20
               Left = 0
-              Top = 19
-              Width = 200
-              Height = 101
+              Top = 23
+              Width = 246
+              Height = 125
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alClient
               Ctl3D = True
-              ItemHeight = 13
               ParentCtl3D = False
               ParentShowHint = False
               ShowHint = True
@@ -185,19 +236,27 @@ inherited frmCover: TfrmCover
           end
         end
         object pnl_3: TPanel
-          Left = 421
+          Left = 518
           Top = 0
-          Width = 211
-          Height = 120
+          Width = 260
+          Height = 148
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alRight
           BevelOuter = bvNone
           TabOrder = 1
           Visible = False
           object lbl_3: TOROffsetLabel
             Left = 0
-            Top = 57
-            Width = 211
-            Height = 19
+            Top = 70
+            Width = 260
+            Height = 24
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alTop
             Caption = ' '
             HorzOffset = 2
@@ -207,46 +266,62 @@ inherited frmCover: TfrmCover
           end
           object sptFlag: TSplitter
             Left = 0
-            Top = 52
-            Width = 211
-            Height = 5
+            Top = 64
+            Width = 260
+            Height = 6
             Cursor = crVSplit
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alTop
             Beveled = True
-            Constraints.MinHeight = 5
+            Constraints.MinHeight = 6
           end
           object pnlFlag: TPanel
             Left = 0
             Top = 0
-            Width = 211
-            Height = 52
+            Width = 260
+            Height = 64
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alTop
-            Constraints.MinHeight = 40
+            Constraints.MinHeight = 49
             TabOrder = 0
             object lblFlag: TOROffsetLabel
               Left = 1
               Top = 1
-              Width = 209
-              Height = 15
+              Width = 258
+              Height = 19
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alTop
               Caption = 'Patient Record Flags'
               HorzOffset = 2
               Transparent = False
               VertOffset = 2
               WordWrap = False
+              ExplicitWidth = 257
             end
             object lstFlag: TORListBox
               Left = 1
-              Top = 16
-              Width = 209
-              Height = 35
+              Top = 20
+              Width = 258
+              Height = 43
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
               Align = alClient
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clMaroon
-              Font.Height = -12
+              Font.Height = -15
               Font.Name = 'MS Sans Serif'
               Font.Style = []
-              ItemHeight = 13
               ParentFont = False
               ParentShowHint = False
               ShowHint = True
@@ -257,22 +332,26 @@ inherited frmCover: TfrmCover
               ItemTipColor = clWindow
               LongList = False
               Pieces = '2'
+              ExplicitWidth = 257
             end
           end
           object lst_3: TORListBox
             Tag = 30
             Left = 0
-            Top = 76
-            Width = 211
-            Height = 44
+            Top = 94
+            Width = 260
+            Height = 54
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alClient
             Ctl3D = True
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clMaroon
-            Font.Height = -12
+            Font.Height = -15
             Font.Name = 'MS Sans Serif'
             Font.Style = []
-            ItemHeight = 13
             ParentCtl3D = False
             ParentFont = False
             ParentShowHint = False
@@ -289,26 +368,37 @@ inherited frmCover: TfrmCover
       end
       object pnlMiddle: TPanel
         Left = 0
-        Top = 125
-        Width = 632
-        Height = 101
+        Top = 154
+        Width = 778
+        Height = 124
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
         object spt_3: TSplitter
-          Left = 318
+          Left = 391
           Top = 0
-          Width = 5
-          Height = 101
-          Constraints.MinWidth = 5
+          Width = 7
+          Height = 124
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Constraints.MinWidth = 6
           OnCanResize = spt_3CanResize
-          ExplicitHeight = 112
         end
         object pnl_4: TPanel
           Left = 0
           Top = 0
-          Width = 318
-          Height = 101
+          Width = 391
+          Height = 124
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alLeft
           BevelOuter = bvNone
           TabOrder = 0
@@ -316,8 +406,12 @@ inherited frmCover: TfrmCover
           object lbl_4: TOROffsetLabel
             Left = 0
             Top = 0
-            Width = 318
-            Height = 13
+            Width = 391
+            Height = 16
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alTop
             Caption = ' '
             HorzOffset = 2
@@ -328,12 +422,15 @@ inherited frmCover: TfrmCover
           object lst_4: TORListBox
             Tag = 40
             Left = 0
-            Top = 13
-            Width = 318
-            Height = 88
+            Top = 16
+            Width = 391
+            Height = 108
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alClient
             Ctl3D = True
-            ItemHeight = 13
             ParentCtl3D = False
             ParentShowHint = False
             ShowHint = True
@@ -347,10 +444,14 @@ inherited frmCover: TfrmCover
           end
         end
         object pnl_5: TPanel
-          Left = 323
+          Left = 398
           Top = 0
-          Width = 309
-          Height = 101
+          Width = 380
+          Height = 124
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 1
@@ -358,25 +459,31 @@ inherited frmCover: TfrmCover
           object lbl_5: TOROffsetLabel
             Left = 0
             Top = 0
-            Width = 309
-            Height = 13
+            Width = 380
+            Height = 16
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alTop
             Caption = ' '
             HorzOffset = 2
             Transparent = False
             VertOffset = 0
             WordWrap = False
-            ExplicitWidth = 317
           end
           object lst_5: TORListBox
             Tag = 50
             Left = 0
-            Top = 13
-            Width = 309
-            Height = 88
+            Top = 16
+            Width = 380
+            Height = 108
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alClient
             Ctl3D = True
-            ItemHeight = 13
             ParentCtl3D = False
             ParentShowHint = False
             ShowHint = True
@@ -393,52 +500,79 @@ inherited frmCover: TfrmCover
     end
     object pnlBottom: TPanel
       Left = 0
-      Top = 231
-      Width = 632
-      Height = 114
+      Top = 284
+      Width = 778
+      Height = 141
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 1
       object spt_5: TSplitter
-        Left = 372
+        Left = 458
         Top = 0
-        Width = 5
-        Height = 114
+        Width = 6
+        Height = 141
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
-        Constraints.MinWidth = 5
+        Constraints.MinWidth = 6
         OnCanResize = spt_5CanResize
-        ExplicitLeft = 380
+        ExplicitHeight = 140
       end
       object pnl_not8: TPanel
         Left = 0
         Top = 0
-        Width = 372
-        Height = 114
+        Width = 458
+        Height = 141
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitHeight = 140
         object spt_4: TSplitter
-          Left = 255
+          Left = 314
           Top = 0
-          Width = 5
-          Height = 114
-          Constraints.MinWidth = 5
+          Width = 6
+          Height = 141
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
+          Constraints.MinWidth = 6
           OnCanResize = spt_4CanResize
+          ExplicitHeight = 140
         end
         object pnl_6: TPanel
           Left = 0
           Top = 0
-          Width = 255
-          Height = 114
+          Width = 314
+          Height = 141
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alLeft
           BevelOuter = bvNone
           TabOrder = 0
           Visible = False
+          ExplicitHeight = 140
           object lbl_6: TOROffsetLabel
             Left = 0
             Top = 0
-            Width = 255
-            Height = 13
+            Width = 314
+            Height = 16
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alTop
             Caption = ' '
             HorzOffset = 2
@@ -449,12 +583,15 @@ inherited frmCover: TfrmCover
           object lst_6: TORListBox
             Tag = 60
             Left = 0
-            Top = 13
-            Width = 255
-            Height = 101
+            Top = 16
+            Width = 314
+            Height = 125
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alClient
             Ctl3D = True
-            ItemHeight = 13
             ParentCtl3D = False
             ParentShowHint = False
             ShowHint = True
@@ -465,38 +602,50 @@ inherited frmCover: TfrmCover
             ItemTipColor = clWindow
             LongList = False
             TabPositions = '34'
+            ExplicitHeight = 124
           end
         end
         object pnl_7: TPanel
-          Left = 260
+          Left = 320
           Top = 0
-          Width = 112
-          Height = 114
+          Width = 138
+          Height = 141
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 1
           Visible = False
+          ExplicitHeight = 140
           object lbl_7: TOROffsetLabel
             Left = 0
             Top = 0
-            Width = 112
-            Height = 13
+            Width = 138
+            Height = 16
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alTop
             HorzOffset = 2
             Transparent = False
             VertOffset = 0
             WordWrap = False
-            ExplicitWidth = 120
           end
           object lst_7: TORListBox
             Tag = 70
             Left = 0
-            Top = 13
-            Width = 112
-            Height = 101
+            Top = 16
+            Width = 138
+            Height = 125
+            Margins.Left = 4
+            Margins.Top = 4
+            Margins.Right = 4
+            Margins.Bottom = 4
             Align = alClient
             Ctl3D = True
-            ItemHeight = 13
             ParentCtl3D = False
             ParentShowHint = False
             ShowHint = True
@@ -507,23 +656,33 @@ inherited frmCover: TfrmCover
             ItemTipColor = clWindow
             LongList = False
             TabPositions = '4,13,15,24'
+            ExplicitHeight = 124
           end
         end
       end
       object pnl_8: TPanel
-        Left = 377
+        Left = 464
         Top = 0
-        Width = 255
-        Height = 114
+        Width = 314
+        Height = 141
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alRight
         BevelOuter = bvNone
         TabOrder = 1
         Visible = False
+        ExplicitHeight = 140
         object lbl_8: TOROffsetLabel
           Left = 0
           Top = 0
-          Width = 255
-          Height = 13
+          Width = 314
+          Height = 16
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alTop
           HorzOffset = 2
           Transparent = False
@@ -533,12 +692,15 @@ inherited frmCover: TfrmCover
         object lst_8: TORListBox
           Tag = 80
           Left = 0
-          Top = 13
-          Width = 255
-          Height = 101
+          Top = 16
+          Width = 314
+          Height = 125
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Align = alClient
           Ctl3D = True
-          ItemHeight = 13
           ParentCtl3D = False
           ParentShowHint = False
           ShowHint = True
@@ -549,6 +711,7 @@ inherited frmCover: TfrmCover
           ItemTipColor = clWindow
           LongList = False
           TabPositions = '15,35'
+          ExplicitHeight = 124
         end
       end
     end
@@ -643,8 +806,8 @@ inherited frmCover: TfrmCover
   end
   object popMenuAllergies: TPopupMenu
     OnPopup = popMenuAllergiesPopup
-    Left = 67
-    Top = 30
+    Left = 283
+    Top = 46
     object popNewAllergy: TMenuItem
       Caption = 'Enter new allergy'
       OnClick = popNewAllergyClick
@@ -670,18 +833,5 @@ inherited frmCover: TfrmCover
       'o access more options such as entering a new allergy.'
     Left = 360
     Top = 48
-  end
-  object popMenuWomensHealth: TPopupMenu
-    OnPopup = popMenuWomensHealthPopup
-    Left = 64
-    Top = 72
-    object popWHNewData: TMenuItem
-      Caption = 'Enter New Data ...'
-      OnClick = popWHNewDataClick
-    end
-    object popWHEnteredInError: TMenuItem
-      Caption = 'Mark Selected Data as '#39'Entered In Error'#39' ...'
-      OnClick = popWHEnteredInErrorClick
-    end
   end
 end

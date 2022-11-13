@@ -1,8 +1,6 @@
 unit uVitals;
 { Old class TVital currently not used - commented out at bottom of unit }
 
-{$DEFINE CCOWBROKER}
-
 interface
 
 uses
@@ -34,7 +32,6 @@ function ConvertVitalData(const Value: string; VitalType: TVitalType; UnitType: 
 procedure VitalsFrameCreated(Frame: TFrame);
 function ValidVitalsDate(var ADate: TFMDateTime; SkipFirst: boolean = FALSE; Show: boolean = true): boolean;
 function IsNumericWeight(const x: string): Boolean;
-procedure CloseVitalsDLL;
 
 Procedure ViewPatientVitals(aBroker: TRPCBroker; aPatient: TPatient; aEncounter: TEncounter; aVitalsAbbv: string; out ChangesMade: Boolean);
 function EnterPatientVitals(aBroker: TRPCBroker; aPatient: TPatient; aPCEData: TPCEData; Info: String): Boolean;
@@ -147,7 +144,6 @@ const
 
 Function LoadVitalsDLL(): TDllRtnRec;
 procedure UnloadVitalsDLL;
-procedure ShutdownVitals;
 
 const
   VitalTagSet = [TAG_VITBP..TAG_VITPAIN];
@@ -197,20 +193,19 @@ implementation
 
 uses
   rCore, rVitals, Contnrs, fVitalsDate, VAUtils, System.UITypes;
-  
+
 var
   uVitalFrames: TComponentList = nil;
 
-procedure CloseVitalsDLL;
+procedure CloseVitalsDLL(Handle: THandle);
 var
   VitalsExit : TGMV_VitalsExit;
 begin
-  if VitalsDLLHandle <> 0 then
+  if Handle <> 0 then
   begin
-    @VitalsExit := GetProcAddress(VitalsDLLHandle,PChar('GMV_VitalsExit'));
+    @VitalsExit := GetProcAddress(Handle,PChar('GMV_VitalsExit'));
     if assigned(VitalsExit) then
       VitalsExit();
-    UnloadVitalsDLL;
   end;
 end;
 
@@ -343,6 +338,11 @@ var
   Tag: integer;
   VType: TVitalType;
 
+  procedure TrimControl(Ctrl: TControl);
+  begin
+    TORExposedControl(Ctrl).Text := trim(TORExposedControl(Ctrl).Text);
+  end;
+
 begin
   Tag := -1;
 
@@ -350,6 +350,7 @@ begin
   begin
     if(assigned(VitalControl)) then
     begin
+      TrimControl(VitalControl);
       rte := TORExposedControl(VitalControl).Text;
       Tag := VitalControl.Tag;
     end
@@ -365,6 +366,7 @@ begin
 
   if(assigned(UnitsControl)) then
   begin
+    TrimControl(UnitsControl);
     unt := TORExposedControl(UnitsControl).Text;
     if(Tag < 0) then
       Tag := UnitsControl.Tag;
@@ -645,7 +647,7 @@ function LoadVitalsDLL(): TDllRtnRec;
 begin
   if VitalsDLLHandle = 0 then
   begin
-   Result := LoadDll(VitalsDLLName);
+   Result := LoadDll(VitalsDLLName, CloseVitalsDLL);
    VitalsDLLHandle := Result.DLL_HWND;
   end;
 end;
@@ -659,35 +661,8 @@ begin
   end;
 end;
 
-procedure ShutdownVitals;
-var
-  vHandle: TList;
-  i: Integer;
-
-  function FindThreadWindow(Window: HWND; var vitals: TList): BOOL; stdcall;
-  var
-    clsName: string;
-  begin
-    SetLength(clsName, 256);
-    SetLength(clsName, GetClassName(Window, PChar(clsName), Length(clsName) - 1));
-    if (clsName = 'TfrmVitals') or (clsName = 'TfrmGMV_InputLite') then
-      vitals.Add(Pointer(Window));
-
-    Result := True;
-  end;
-
-begin
-  vHandle := TList.Create;
-  try
-    EnumThreadWindows(GetCurrentThreadID, @FindThreadWindow, Integer(@vHandle));
-    for i := 0 to vHandle.Count - 1 do
-      PostMessage(HWND(vHandle[i]), WM_CLOSE, 0, 0);
-  finally
-    FreeAndNil(vHandle);
-  end;
-end;
-
-Procedure ViewPatientVitals(aBroker: TRPCBroker; aPatient: TPatient; aEncounter: TEncounter; aVitalsAbbv: string; out ChangesMade: Boolean);
+Procedure ViewPatientVitals(aBroker: TRPCBroker; aPatient: TPatient;
+  aEncounter: TEncounter; aVitalsAbbv: string; out ChangesMade: boolean);
 var
   aFunctionAddr: TGMV_ViewPatientVitals;
   aFunctionName: AnsiString;
@@ -696,117 +671,110 @@ var
   aConnectionParams: string;
 begin
   aFunctionName := 'GMV_ViewPatientVitals';
+  ChangesMade := FALSE;
   aRtnRec := LoadVitalsDLL;
   try
-   case aRtnRec.Return_Type of
-        DLL_Success:
-          try
-            @aFunctionAddr := GetProcAddress(VitalsDLLHandle,
-              PAnsiChar(aFunctionName));
-            if Assigned(aFunctionAddr) then
-            begin
-              if Patient.Inpatient then
-                aStartDate := FormatDateTime('mm/dd/yy', Now - 7)
-              else
-                aStartDate := FormatDateTime('mm/dd/yy', IncMonth(Now, -6));
-
-              aConnectionParams := GMV_CONTEXT + '^' + TRPCB.GetAppHandle(aBroker) + '^' +
-                aBroker.Server + '^' + IntToStr(aBroker.ListenerPort) +
-                '^' + aBroker.User.Division;
-
-              ChangesMade := aFunctionAddr(aConnectionParams, aPatient.DFN,
-                IntToStr(aEncounter.Location), aStartDate,
-                FormatDateTime('mm/dd/yy', Now), GMV_APP_SIGNATURE,
-                aPatient.Name, Format('%s    %d', [aPatient.SSN, aPatient.Age]),
-                aEncounter.LocationName + U + aVitalsAbbv);
-
-            end
+    case aRtnRec.Return_Type of
+      DLL_Success:
+        try
+          @aFunctionAddr := GetProcAddress(VitalsDLLHandle,
+            PAnsiChar(aFunctionName));
+          if assigned(aFunctionAddr) then
+          begin
+            if Patient.Inpatient then
+              aStartDate := FormatDateTime('mm/dd/yy', Now - 7)
             else
-              MessageDLG('Can''t find function "GMV_ViewPatientVitals".',
-                mtError, [mbok], 0);
-          except
-            on E: Exception do
-              MessageDLG('Error running Vitals Lite: ' + E.Message, mtError,
-                [mbok], 0);
-          end;
-        DLL_Missing:
-          begin
-            TaskMessageDlg('File Missing or Invalid', aRtnRec.Return_Message,
-              mtError, [mbok], 0);
-          end;
-        DLL_VersionErr:
-          begin
-            TaskMessageDlg('Incorrect Version Found', aRtnRec.Return_Message,
-              mtError, [mbok], 0);
-          end;
-      end;
+              aStartDate := FormatDateTime('mm/dd/yy', IncMonth(Now, -6));
+
+            aConnectionParams := GMV_CONTEXT + '^' + TRPCB.GetAppHandle(aBroker)
+              + '^' + aBroker.Server + '^' + IntToStr(aBroker.ListenerPort) +
+              '^' + Piece(aBroker.User.Division, U, 3);
+
+            ChangesMade := aFunctionAddr(aConnectionParams, aPatient.DFN,
+              IntToStr(aEncounter.Location), aStartDate,
+              FormatDateTime('mm/dd/yy', Now), GMV_APP_SIGNATURE, aPatient.Name,
+              Format('%s    %d', [aPatient.SSN, aPatient.Age]),
+              aEncounter.LocationName + U + aVitalsAbbv);
+
+          end
+          else
+            MessageDLG('Can''t find function "GMV_ViewPatientVitals".', mtError,
+              [mbok], 0);
+        except
+          on E: Exception do
+            MessageDLG('Error running Vitals Lite: ' + E.Message, mtError,
+              [mbok], 0);
+        end;
+      DLL_Missing:
+        begin
+          TaskMessageDlg('File Missing or Invalid', aRtnRec.Return_Message,
+            mtError, [mbok], 0);
+        end;
+      DLL_VersionErr:
+        begin
+          TaskMessageDlg('Incorrect Version Found', aRtnRec.Return_Message,
+            mtError, [mbok], 0);
+        end;
+    end;
   finally
-    @aFunctionAddr := nil;
     UnloadVitalsDLL;
   end;
 end;
 
-function EnterPatientVitals(aBroker: TRPCBroker; aPatient: TPatient; aPCEData: TPCEData; Info: String): boolean;
+function EnterPatientVitals(aBroker: TRPCBroker; aPatient: TPatient;
+  aPCEData: TPCEData; Info: String): boolean;
 var
-  VLPtVitals : TGMV_EnterPatientVitals;
-  aConnectionParams : String;
+  VLPtVitals: TGMV_EnterPatientVitals;
+  aConnectionParams: String;
   GMV_Fname: AnsiString;
 begin
-  result := false;
-  if VitalsDLLHandle = 0 then Exit;//The DLL was initialized on Create, but just in case....
-  GMV_FName := 'GMV_EnterPatientVitals';
-  try
-    @VLPtVitals := GetProcAddress(VitalsDLLHandle,PAnsiChar(GMV_FName));
-    if assigned(VLPtVitals) then
-    begin
+  Result := FALSE;
+  if VitalsDLLHandle = 0 then
+    Exit; // The DLL was initialized on Create, but just in case....
+  GMV_Fname := 'GMV_EnterPatientVitals';
 
-      aConnectionParams := GMV_CONTEXT + '^' + TRPCB.GetAppHandle(aBroker) + '^' +
-                  aBroker.Server + '^' + IntToStr(aBroker.ListenerPort) +
-                  '^' + aBroker.User.Division;
+  @VLPtVitals := GetProcAddress(VitalsDLLHandle, PAnsiChar(GMV_Fname));
+  if assigned(VLPtVitals) then
+  begin
 
-      result := VLPtVitals(
-        aConnectionParams,
-        aPatient.DFN,
-        IntToStr(aPCEData.Location),
-        GMV_DEFAULT_TEMPLATE,
-        GMV_APP_SIGNATURE,
-        FMDateTimeToDateTime(aPCEData.DateTime),
-        aPatient.Name,
-        Info
-      );
-    end
-    else
-      MessageDLG('Unable to find function "'+string(GMV_FName)+'".',mtError,[mbok],0);
-  Finally
-    @VLPtVitals := nil;
-  end;
+    aConnectionParams := GMV_CONTEXT + '^' + TRPCB.GetAppHandle(aBroker) + '^' +
+      aBroker.Server + '^' + IntToStr(aBroker.ListenerPort) + '^' +
+      Piece(aBroker.User.Division, U, 3);
+
+    Result := VLPtVitals(aConnectionParams, aPatient.DFN,
+      IntToStr(aPCEData.Location), GMV_DEFAULT_TEMPLATE, GMV_APP_SIGNATURE,
+      FMDateTimeToDateTime(aPCEData.DateTime), aPatient.Name, Info);
+  end
+  else
+    MessageDLG('Unable to find function "' + string(GMV_Fname) + '".', mtError,
+      [mbok], 0);
 end;
 
-Function LatestVitalsList(aBroker: TRPCBroker; aPatient: TPatient; aDelim: string; bSilent: boolean; var OutList: TStringList): Boolean;
+Function LatestVitalsList(aBroker: TRPCBroker; aPatient: TPatient;
+  aDelim: string; bSilent: boolean; var OutList: TStringList): boolean;
 var
-  VLPtVitals : TGMV_GetLatestVitalsList;
-  aConnectionParams : String;
-  GMV_FName: AnsiString;
+  VLPtVitals: TGMV_GetLatestVitalsList;
+  aConnectionParams: String;
+  GMV_Fname: AnsiString;
 begin
-  result := false;
-  if VitalsDLLHandle = 0 then Exit;//The DLL was initialized on Create, but just in case....
-  GMV_FName := 'GMV_GetLatestVitalsList';
-  try
-    @VLPtVitals := GetProcAddress(VitalsDLLHandle,PAnsiChar(GMV_FName));
-    if assigned(VLPtVitals) then
-    begin
-      aConnectionParams := GMV_CONTEXT + '^' + TRPCB.GetAppHandle(aBroker) + '^' +
-                  aBroker.Server + '^' + IntToStr(aBroker.ListenerPort) +
-                  '^' + aBroker.User.Division + '^';
+  Result := FALSE;
+  if VitalsDLLHandle = 0 then
+    Exit; // The DLL was initialized on Create, but just in case....
+  GMV_Fname := 'GMV_GetLatestVitalsList';
+  @VLPtVitals := GetProcAddress(VitalsDLLHandle, PAnsiChar(GMV_Fname));
+  if assigned(VLPtVitals) then
+  begin
+    aConnectionParams := GMV_CONTEXT + '^' + TRPCB.GetAppHandle(aBroker) + '^' +
+      aBroker.Server + '^' + IntToStr(aBroker.ListenerPort) + '^' +
+      Piece(aBroker.User.Division, U, 3) + '^';
 
-      result := VLPtVitals(aConnectionParams, aPatient.DFN, aDelim, bSilent, OutList);
+    Result := VLPtVitals(aConnectionParams, aPatient.DFN, aDelim,
+      bSilent, OutList);
 
-    end
-    else
-      MessageDLG('Can''t find function "'+string(GMV_FName)+'".',mtError,[mbok],0);
-  Finally
-    @VLPtVitals := nil;
-  end;
+  end
+  else
+    MessageDLG('Can''t find function "' + string(GMV_Fname) + '".', mtError,
+      [mbok], 0);
 end;
 
 (* Old class currently not used

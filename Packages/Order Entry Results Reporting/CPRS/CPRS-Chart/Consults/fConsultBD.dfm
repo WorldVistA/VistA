@@ -3,89 +3,123 @@ inherited frmConsultsByDate: TfrmConsultsByDate
   Top = 217
   BorderIcons = []
   Caption = 'List Consults by Date Range'
-  ClientHeight = 151
-  ClientWidth = 251
+  ClientHeight = 232
+  ClientWidth = 224
   OldCreateOrder = True
   Position = poScreenCenter
-  ExplicitWidth = 267
-  ExplicitHeight = 189
+  ExplicitWidth = 240
+  ExplicitHeight = 270
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlBase: TORAutoPanel [0]
     Left = 0
     Top = 0
-    Width = 251
-    Height = 151
+    Width = 224
+    Height = 199
     Align = alClient
-    BevelOuter = bvNone
     TabOrder = 0
+    ExplicitHeight = 191
     object lblBeginDate: TLabel
-      Left = 8
-      Top = 8
-      Width = 73
-      Height = 13
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 216
+      Height = 16
+      Align = alTop
       Caption = 'Beginning Date'
+      ExplicitWidth = 92
     end
     object lblEndDate: TLabel
-      Left = 8
-      Top = 51
-      Width = 59
-      Height = 13
+      AlignWithMargins = True
+      Left = 4
+      Top = 56
+      Width = 216
+      Height = 16
+      Align = alTop
       Caption = 'Ending Date'
+      ExplicitWidth = 74
     end
     object calBeginDate: TORDateBox
-      Left = 8
-      Top = 22
-      Width = 155
-      Height = 21
+      AlignWithMargins = True
+      Left = 4
+      Top = 26
+      Width = 216
+      Height = 24
+      Align = alTop
       TabOrder = 0
       DateOnly = False
       RequireTime = False
       Caption = 'Beginning Date'
     end
     object calEndDate: TORDateBox
-      Left = 8
-      Top = 65
-      Width = 155
-      Height = 21
+      AlignWithMargins = True
+      Left = 4
+      Top = 78
+      Width = 216
+      Height = 24
+      Align = alTop
       TabOrder = 1
       DateOnly = False
       RequireTime = False
       Caption = 'Ending Date'
     end
     object radSort: TRadioGroup
-      Left = 8
-      Top = 94
-      Width = 155
-      Height = 49
+      AlignWithMargins = True
+      Left = 4
+      Top = 108
+      Width = 216
+      Height = 87
+      Align = alClient
       Caption = 'Sort Order'
       Items.Strings = (
         '&Ascending (oldest first)'
         '&Descending (newest first)')
       TabOrder = 2
+      ExplicitHeight = 79
     end
+  end
+  object Panel1: TPanel [1]
+    Left = 0
+    Top = 199
+    Width = 224
+    Height = 33
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = 'Panel1'
+    ShowCaption = False
+    TabOrder = 1
     object cmdOK: TButton
-      Left = 171
-      Top = 95
+      AlignWithMargins = True
+      Left = 71
+      Top = 3
       Width = 72
-      Height = 21
+      Height = 27
+      Align = alRight
       Caption = 'OK'
       Default = True
-      TabOrder = 3
+      TabOrder = 0
       OnClick = cmdOKClick
+      ExplicitTop = 8
+      ExplicitHeight = 25
     end
     object cmdCancel: TButton
-      Left = 171
-      Top = 122
+      AlignWithMargins = True
+      Left = 149
+      Top = 3
       Width = 72
-      Height = 21
+      Height = 27
+      Align = alRight
       Cancel = True
       Caption = 'Cancel'
-      TabOrder = 4
+      TabOrder = 1
       OnClick = cmdCancelClick
+      ExplicitTop = 8
+      ExplicitHeight = 25
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 8
+    Top = 192
     Data = (
       (
         'Component = pnlBase'
@@ -109,6 +143,9 @@ inherited frmConsultsByDate: TfrmConsultsByDate
         'Status = stsDefault')
       (
         'Component = frmConsultsByDate'
+        'Status = stsDefault')
+      (
+        'Component = Panel1'
         'Status = stsDefault'))
   end
 end

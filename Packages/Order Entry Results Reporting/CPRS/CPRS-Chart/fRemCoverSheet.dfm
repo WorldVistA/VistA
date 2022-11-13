@@ -6,42 +6,43 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
   Caption = 
     'Clinical Reminders and Reminder Categories Displayed on Cover Sh' +
     'eet'
-  ClientHeight = 563
-  ClientWidth = 773
+  ClientHeight = 616
+  ClientWidth = 774
   Constraints.MinWidth = 462
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  ExplicitWidth = 779
-  ExplicitHeight = 591
+  ExplicitWidth = 780
+  ExplicitHeight = 644
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlBottom: TORAutoPanel [0]
     Left = 0
-    Top = 276
-    Width = 773
+    Top = 329
+    Width = 774
     Height = 252
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 3
+    ExplicitTop = 276
+    ExplicitWidth = 773
     DesignSize = (
-      773
+      774
       252)
     object lblSeq: TLabel
-      Left = 694
-      Top = 92
-      Width = 52
-      Height = 26
+      Left = 688
+      Top = 100
+      Width = 68
+      Height = 32
       Anchors = [akLeft, akBottom]
       Caption = 'Sequence Number'
       WordWrap = True
-      ExplicitTop = 96
     end
     object lblEdit: TLabel
       Left = 0
       Top = 0
-      Width = 773
-      Height = 13
+      Width = 774
+      Height = 16
       Align = alTop
       Alignment = taCenter
       Font.Charset = DEFAULT_CHARSET
@@ -54,9 +55,9 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       ExplicitWidth = 5
     end
     object sbUp: TBitBtn
-      Left = 680
-      Top = 29
-      Width = 21
+      Left = 671
+      Top = 40
+      Width = 42
       Height = 21
       Hint = 'Move Reminder Up List'
       Anchors = [akLeft, akBottom]
@@ -80,9 +81,9 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       OnClick = sbUpClick
     end
     object sbDown: TBitBtn
-      Left = 680
-      Top = 56
-      Width = 21
+      Left = 671
+      Top = 67
+      Width = 42
       Height = 21
       Hint = 'Move Reminder Down List'
       Anchors = [akLeft, akBottom]
@@ -106,10 +107,10 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       OnClick = sbDownClick
     end
     object btnAdd: TBitBtn
-      Left = 680
+      Left = 671
       Top = 165
-      Width = 90
-      Height = 23
+      Width = 99
+      Height = 26
       Hint = 
         'Adds a Reminder to the Coversheet at the selected level.  It wil' +
         'l also remove the lock of a Reminder (leaves Reminder on Coversh' +
@@ -132,10 +133,10 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       OnClick = btnAddClick
     end
     object btnRemove: TBitBtn
-      Left = 680
+      Left = 671
       Top = 194
-      Width = 90
-      Height = 23
+      Width = 99
+      Height = 26
       Hint = 
         'Removes Reminders from the Coversheet display.  Will not remove ' +
         'Reminders which are locked at a higher level.'
@@ -157,10 +158,10 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       OnClick = btnRemoveClick
     end
     object btnLock: TBitBtn
-      Left = 680
+      Left = 671
       Top = 223
-      Width = 90
-      Height = 23
+      Width = 99
+      Height = 26
       Hint = 
         'Adds Reminder to the Coversheet display.  It also Locks the Remi' +
         'nder so it can not be removed from the Coversheet display at a l' +
@@ -191,9 +192,9 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     end
     object edtSeq: TCaptionEdit
       Left = 694
-      Top = 122
+      Top = 134
       Width = 38
-      Height = 21
+      Height = 24
       Anchors = [akLeft, akBottom]
       TabOrder = 3
       Text = '1'
@@ -203,9 +204,9 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     end
     object udSeq: TUpDown
       Left = 732
-      Top = 122
+      Top = 134
       Width = 15
-      Height = 21
+      Height = 24
       Anchors = [akLeft, akBottom]
       Associate = edtSeq
       Max = 999
@@ -215,16 +216,16 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     end
     object pnlInfo: TPanel
       Left = 0
-      Top = 13
-      Width = 674
-      Height = 239
+      Top = 16
+      Width = 665
+      Height = 236
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       object splMain: TSplitter
         Left = 332
         Top = 0
-        Height = 239
+        Height = 236
         Beveled = True
         ExplicitLeft = 245
         ExplicitHeight = 165
@@ -233,7 +234,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         Left = 0
         Top = 0
         Width = 332
-        Height = 239
+        Height = 236
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 0
@@ -241,16 +242,16 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
           Left = 0
           Top = 0
           Width = 332
-          Height = 13
+          Height = 16
           Align = alTop
           Caption = '  Available Reminders && Categories'
-          ExplicitWidth = 164
+          ExplicitWidth = 213
         end
         object tvAll: TORTreeView
           Left = 0
-          Top = 13
+          Top = 16
           Width = 332
-          Height = 226
+          Height = 220
           Align = alClient
           HideSelection = False
           Images = imgMain
@@ -271,16 +272,17 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       object pnlCover: TPanel
         Left = 335
         Top = 0
-        Width = 339
-        Height = 239
+        Width = 330
+        Height = 236
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
+        ExplicitWidth = 339
         object lvCover: TCaptionListView
-          Left = 23
+          Left = 49
           Top = 0
-          Width = 316
-          Height = 239
+          Width = 281
+          Height = 236
           Align = alClient
           Columns = <
             item
@@ -312,17 +314,20 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         object pblMoveBtns: TPanel
           Left = 0
           Top = 0
-          Width = 23
-          Height = 239
+          Width = 49
+          Height = 236
           Align = alLeft
           BevelOuter = bvNone
           TabOrder = 0
           object sbCopyRight: TBitBtn
-            Left = 1
-            Top = 42
-            Width = 21
+            AlignWithMargins = True
+            Left = 3
+            Top = 24
+            Width = 43
             Height = 21
             Hint = 'Copy Reminder into Reminder List'
+            Margins.Top = 24
+            Align = alTop
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
               0400000000000001000000000000000000001000000010000000000000000000
@@ -342,14 +347,19 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
             TabOrder = 0
             OnClick = sbCopyRightClick
             OnExit = sbCopyRightExit
+            ExplicitLeft = 1
+            ExplicitTop = 42
+            ExplicitWidth = 21
           end
           object sbCopyLeft: TBitBtn
             Tag = 1
-            Left = 1
-            Top = 100
-            Width = 21
+            AlignWithMargins = True
+            Left = 3
+            Top = 51
+            Width = 43
             Height = 21
             Hint = 'Remove Reminder from Reminder List'
+            Align = alTop
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
               0400000000000001000000000000000000001000000010000000000000000000
@@ -368,6 +378,9 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
             ShowHint = True
             TabOrder = 1
             OnClick = sbCopyLeftClick
+            ExplicitLeft = 1
+            ExplicitTop = 100
+            ExplicitWidth = 21
           end
         end
       end
@@ -375,30 +388,39 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
   end
   object pnlUser: TPanel [1]
     Left = 0
-    Top = 182
-    Width = 773
+    Top = 235
+    Width = 774
     Height = 26
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitTop = 182
+    ExplicitWidth = 773
     object lblRemLoc: TLabel
-      Left = 5
-      Top = 6
-      Width = 163
-      Height = 13
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 200
+      Height = 20
+      Align = alLeft
       Caption = 'Location shown in Cumulative List:'
+      ExplicitLeft = 5
+      ExplicitTop = 6
+      ExplicitHeight = 16
     end
     object cbxUserLoc: TORComboBox
-      Left = 172
-      Top = 2
-      Width = 205
-      Height = 21
+      AlignWithMargins = True
+      Left = 209
+      Top = 3
+      Width = 456
+      Height = 24
       Style = orcsDropDown
+      Align = alLeft
       AutoSelect = True
       Caption = 'Location shown in Cumulative List'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -421,17 +443,38 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
   object pnlMiddle: TPanel [2]
     Left = 0
     Top = 0
-    Width = 773
-    Height = 182
+    Width = 774
+    Height = 235
     Align = alClient
     BevelOuter = bvNone
     Constraints.MinHeight = 124
     TabOrder = 0
+    ExplicitWidth = 773
+    ExplicitHeight = 182
+    object lblView: TLabel
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 768
+      Height = 16
+      Align = alTop
+      Alignment = taCenter
+      Caption = 'Cover Sheet Reminders (Cumulative List)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 283
+    end
     object pnlRight: TPanel
-      Left = 599
-      Top = 0
-      Width = 174
-      Height = 182
+      Left = 664
+      Top = 22
+      Width = 110
+      Height = 189
       Align = alRight
       BevelOuter = bvNone
       Font.Charset = DEFAULT_CHARSET
@@ -443,10 +486,10 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       TabOrder = 1
       object lblLegend: TLabel
         Left = 0
-        Top = 0
-        Width = 174
-        Height = 13
-        Align = alTop
+        Top = 173
+        Width = 110
+        Height = 16
+        Align = alBottom
         Alignment = taCenter
         Caption = 'Icon Legend'
         Font.Charset = DEFAULT_CHARSET
@@ -455,284 +498,65 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 72
-      end
-      inline mlgnCat: TfraImgText
-        Left = 0
-        Top = 13
-        Width = 174
-        Height = 20
-        Align = alTop
-        AutoScroll = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 1
-        TabStop = True
-        ExplicitTop = 13
-        ExplicitWidth = 174
-        inherited img: TImage
-          Top = 0
-          Width = 30
-          Picture.Data = {
-            07544269746D617076010000424D760100000000000076000000280000001E00
-            0000100000000100040000000000000100000000000000000000100000000000
-            0000000000000000800000800000008080008000000080008000808000008080
-            8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
-            FF00DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD00DDDDDDDDDDDDDDDDDDDDDDDDDDDD
-            DD00DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD00D0000000000DDDDD0000000000DD
-            DD000BFBFBFBFB0DDDD00B8B8B8B8B0DDD000FBFBFBFBF0DDDD0F0B8B8B8B8B0
-            DD000BFBFBFBFB0DDDD0BF0B8B8B8B8B0D000FBFBFBFBF0DDDD0FBF000000000
-            0D000BFBFBFBFB0DDDD0BFBFBFBFB0DDDD000FBFBFBFBF0DDDD0FBFBFBFBF0DD
-            DD000000000000DDDDD0BFBFBF000DDDDD00D0FBFB0DDDDDDDDD0BFBF0DDDDDD
-            DD00D700007DDDDDDDDD700007DDDDDDDD00DDDDDDDDDDDDDDDDDDDDDDDDDDDD
-            DD00DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD00DDDDDDDDDDDDDDDDDDDDDDDDDDDD
-            DD00}
-          Transparent = True
-          ExplicitTop = 0
-          ExplicitWidth = 30
-        end
-        inherited lblText: TLabel
-          Left = 40
-          Width = 93
-          Caption = 'Reminder Category'
-          ExplicitLeft = 40
-          ExplicitWidth = 93
-        end
-      end
-      inline mlgnRem: TfraImgText
-        Left = 0
-        Top = 33
-        Width = 174
-        Height = 20
-        Align = alTop
-        AutoScroll = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 2
-        TabStop = True
-        ExplicitTop = 33
-        ExplicitWidth = 174
-        inherited img: TImage
-          Left = 12
-          Picture.Data = {
-            07544269746D6170F6000000424DF60000000000000076000000280000001000
-            0000100000000100040000000000800000000000000000000000100000000000
-            0000000000000000800000800000008080008000000080008000808000008080
-            8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
-            FF0080018000008100888810009090001888880098F0F8900888870980FFF089
-            07888099FFFFFFF990888090F000FF009088B099FFF0FFF990B8070980F0F089
-            0708BB0098F0F8900BB800000999990000080887000000087708088887707888
-            8708B078800B008870B808700BBBBB007808880BB0B0B0BB088880BB08B0B80B
-            B088}
-          ExplicitLeft = 12
-        end
-        inherited lblText: TLabel
-          Left = 40
-          Width = 45
-          Caption = 'Reminder'
-          ExplicitLeft = 40
-          ExplicitWidth = 45
-        end
-      end
-      inline mlgnAdd: TfraImgText
-        Left = 0
-        Top = 53
-        Width = 174
-        Height = 47
-        Align = alTop
-        AutoScroll = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 3
-        TabStop = True
-        ExplicitTop = 53
-        ExplicitWidth = 174
-        ExplicitHeight = 47
-        inherited img: TImage
-          Left = 12
-          Top = 6
-          Picture.Data = {
-            07544269746D6170F6000000424DF60000000000000076000000280000001000
-            0000100000000100040000000000800000000000000000000000100000000000
-            0000000000000000800000800000008080008000000080008000808000008080
-            8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
-            FF00333333333333333333333333333333333333333333333333333333300333
-            3333333333300333333333333330033333333333333003333333333000000000
-            0333333000000000033333333330033333333333333003333333333333300333
-            3333333333300333333333333333333333333333333333333333333333333333
-            3333}
-          Transparent = True
-          ExplicitLeft = 12
-          ExplicitTop = 6
-        end
-        inherited lblText: TLabel
-          Left = 40
-          Width = 82
-          Height = 39
-          Hint = 
-            'Reminder will be displayed on the Coversheet for the level ident' +
-            'ified.'
-          Caption = 'Add to Cover Sheet (Removes Lock)'
-          ParentShowHint = False
-          ShowHint = True
-          WordWrap = True
-          ExplicitLeft = 40
-          ExplicitWidth = 82
-          ExplicitHeight = 39
-        end
-      end
-      inline mlgnRemove: TfraImgText
-        Left = 0
-        Top = 100
-        Width = 174
-        Height = 20
-        Align = alTop
-        AutoScroll = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 4
-        TabStop = True
-        ExplicitTop = 100
-        ExplicitWidth = 174
-        inherited img: TImage
-          Left = 12
-          Top = 1
-          Picture.Data = {
-            07544269746D6170F6000000424DF60000000000000076000000280000001000
-            0000100000000100040000000000800000000000000000000000100000000000
-            0000000000000000800000800000008080008000000080008000808000008080
-            8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
-            FF00333333333333333333333333333333333333333333333333333333333333
-            3333333333333333333333333333333333333333333333333333333000000000
-            0333333000000000033333333333333333333333333333333333333333333333
-            3333333333333333333333333333333333333333333333333333333333333333
-            3333}
-          Transparent = True
-          ExplicitLeft = 12
-          ExplicitTop = 1
-        end
-        inherited lblText: TLabel
-          Left = 40
-          Top = 1
-          Width = 129
-          Hint = 
-            'Reminder will not be displayed on the Coversheet for the level i' +
-            'dentified.'
-          Caption = 'Remove From Cover Sheet'
-          ParentShowHint = False
-          ShowHint = True
-          ExplicitLeft = 40
-          ExplicitTop = 1
-          ExplicitWidth = 129
-        end
-      end
-      inline mlgnLock: TfraImgText
-        Left = 0
-        Top = 120
-        Width = 174
-        Height = 41
-        Align = alTop
-        AutoScroll = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 5
-        TabStop = True
-        ExplicitTop = 120
-        ExplicitWidth = 174
-        ExplicitHeight = 41
-        inherited img: TImage
-          Left = 12
-          Top = 4
-          Picture.Data = {
-            07544269746D6170F6000000424DF60000000000000076000000280000001000
-            0000100000000100040000000000800000000000000000000000100000000000
-            0000000000000000800000800000008080008000000080008000808000008080
-            8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
-            FF00333330000033333333300888880033333307787078770333308888707888
-            8033307778808877703330888800088880333077770007777033308888888888
-            8033330000000000033333308033308033333330803330803333333080333080
-            3333333778000877333333330888880333333333300000333333333333333333
-            3333}
-          Transparent = True
-          ExplicitLeft = 12
-          ExplicitTop = 4
-        end
-        inherited lblText: TLabel
-          Left = 40
-          Top = 0
-          Width = 82
-          Height = 39
-          Caption = 'Lock (can not be removed from lower level)'
-          ParentShowHint = False
-          ShowHint = True
-          WordWrap = True
-          ExplicitLeft = 40
-          ExplicitTop = 0
-          ExplicitWidth = 82
-          ExplicitHeight = 39
-        end
+        Visible = False
+        ExplicitTop = 0
+        ExplicitWidth = 86
       end
       object btnView: TButton
-        Left = 10
-        Top = 163
-        Width = 155
-        Height = 21
-        Caption = 'View Cover Sheet Reminders'
+        AlignWithMargins = True
+        Left = 3
+        Top = 0
+        Width = 104
+        Height = 30
+        Hint = 'View Cover Sheet Reminders'
+        Margins.Top = 0
+        Align = alTop
+        Caption = 'View C/S Rem.'
+        ParentShowHint = False
+        ShowHint = True
         TabOrder = 0
         OnClick = btnViewClick
         OnExit = btnViewExit
+        ExplicitTop = 19
+        ExplicitWidth = 88
+      end
+      object cbLegend: TCheckBox
+        AlignWithMargins = True
+        Left = 8
+        Top = 36
+        Width = 99
+        Height = 17
+        Margins.Left = 8
+        Align = alTop
+        Caption = ' &Legend'
+        TabOrder = 1
+        OnClick = cbLegendClick
+        ExplicitLeft = 0
+        ExplicitTop = 96
+        ExplicitWidth = 97
       end
     end
     object pnlTopLeft: TPanel
       Left = 0
-      Top = 0
-      Width = 599
-      Height = 182
+      Top = 22
+      Width = 664
+      Height = 189
       Align = alClient
       BevelOuter = bvNone
+      BorderStyle = bsSingle
+      Ctl3D = False
+      ParentCtl3D = False
       TabOrder = 0
-      object lblView: TLabel
-        Left = 0
-        Top = 0
-        Width = 599
-        Height = 13
-        Align = alTop
-        Alignment = taCenter
-        Caption = 'Cover Sheet Reminders (Cumulative List)'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-        ExplicitWidth = 232
-      end
+      ExplicitTop = 0
+      ExplicitWidth = 680
+      ExplicitHeight = 211
       object lvView: TCaptionListView
         Left = 0
-        Top = 13
-        Width = 599
-        Height = 154
+        Top = 0
+        Width = 662
+        Height = 112
         Align = alClient
+        BorderStyle = bsNone
         Columns = <
           item
             Caption = 'Reminder'
@@ -767,44 +591,340 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         OnSelectItem = lvViewSelectItem
         AutoSize = False
         Caption = 'Cover Sheet Reminders (Cumulative List)'
+        ExplicitLeft = -3
+        ExplicitTop = 20
+        ExplicitWidth = 678
       end
-      object lblCAC: TVA508StaticText
-        Name = 'lblCAC'
+      object grdPanel: TGridPanel
         Left = 0
-        Top = 167
-        Width = 599
-        Height = 15
+        Top = 112
+        Width = 662
+        Height = 75
         Align = alBottom
-        Alignment = taCenter
-        Caption = 'Select Cover Sheet Parameter Level to Display / Edit'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
+        BevelOuter = bvLowered
+        Color = clCream
+        ColumnCollection = <
+          item
+            Value = 50.000000000000000000
+          end
+          item
+            Value = 50.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            Control = mlgnCat
+            Row = 0
+          end
+          item
+            Column = 1
+            Control = mlgnAdd
+            Row = 0
+          end
+          item
+            Column = 0
+            Control = mlgnRem
+            Row = 1
+          end
+          item
+            Column = 1
+            Control = mlgnRemove
+            Row = 1
+          end
+          item
+            Column = 0
+            Control = mlgnLock
+            Row = 2
+          end>
+        ParentBackground = False
+        RowCollection = <
+          item
+            Value = 33.631618661353820000
+          end
+          item
+            Value = 33.631618661353820000
+          end
+          item
+            Value = 32.736762677292350000
+          end>
+        ShowCaption = False
         TabOrder = 1
-        OnExit = lblCACExit
-        ShowAccelChar = True
+        Visible = False
+        ExplicitTop = 134
+        ExplicitWidth = 678
+        inline mlgnCat: TfraImgText
+          Left = 1
+          Top = 1
+          Width = 330
+          Height = 20
+          Align = alTop
+          Anchors = []
+          AutoScroll = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          TabStop = True
+          ExplicitLeft = 1
+          ExplicitTop = 1
+          ExplicitWidth = 338
+          inherited img: TImage
+            Width = 30
+            Picture.Data = {
+              07544269746D617076010000424D760100000000000076000000280000001E00
+              0000100000000100040000000000000100000000000000000000100000000000
+              0000000000000000800000800000008080008000000080008000808000008080
+              8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
+              FF00DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD00DDDDDDDDDDDDDDDDDDDDDDDDDDDD
+              DD00DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD00D0000000000DDDDD0000000000DD
+              DD000BFBFBFBFB0DDDD00B8B8B8B8B0DDD000FBFBFBFBF0DDDD0F0B8B8B8B8B0
+              DD000BFBFBFBFB0DDDD0BF0B8B8B8B8B0D000FBFBFBFBF0DDDD0FBF000000000
+              0D000BFBFBFBFB0DDDD0BFBFBFBFB0DDDD000FBFBFBFBF0DDDD0FBFBFBFBF0DD
+              DD000000000000DDDDD0BFBFBF000DDDDD00D0FBFB0DDDDDDDDD0BFBF0DDDDDD
+              DD00D700007DDDDDDDDD700007DDDDDDDD00DDDDDDDDDDDDDDDDDDDDDDDDDDDD
+              DD00DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD00DDDDDDDDDDDDDDDDDDDDDDDDDDDD
+              DD00}
+            Transparent = True
+            ExplicitTop = 3
+            ExplicitWidth = 30
+          end
+          inherited lblText: TStaticText
+            Left = 39
+            Width = 288
+            Caption = 'Reminder Category'
+            ExplicitLeft = 34
+            ExplicitWidth = 339
+          end
+        end
+        inline mlgnAdd: TfraImgText
+          Left = 331
+          Top = 1
+          Width = 330
+          Height = 47
+          Align = alTop
+          Anchors = []
+          AutoScroll = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 1
+          TabStop = True
+          ExplicitTop = 42
+          ExplicitWidth = 774
+          ExplicitHeight = 47
+          inherited img: TImage
+            Height = 41
+            Picture.Data = {
+              07544269746D6170F6000000424DF60000000000000076000000280000001000
+              0000100000000100040000000000800000000000000000000000100000000000
+              0000000000000000800000800000008080008000000080008000808000008080
+              8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
+              FF00333333333333333333333333333333333333333333333333333333300333
+              3333333333300333333333333330033333333333333003333333333000000000
+              0333333000000000033333333330033333333333333003333333333333300333
+              3333333333300333333333333333333333333333333333333333333333333333
+              3333}
+            Transparent = True
+            ExplicitLeft = 0
+            ExplicitTop = 0
+          end
+          inherited lblText: TStaticText
+            Width = 302
+            Height = 41
+            Hint = 
+              'Reminder will be displayed on the Coversheet for the level ident' +
+              'ified.'
+            Caption = 'Add to Cover Sheet (Removes Lock)'
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 22
+            ExplicitTop = -1
+            ExplicitWidth = 308
+            ExplicitHeight = 41
+          end
+        end
+        inline mlgnRem: TfraImgText
+          Left = 1
+          Top = 25
+          Width = 330
+          Height = 20
+          Align = alTop
+          Anchors = []
+          AutoScroll = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 2
+          TabStop = True
+          ExplicitTop = 22
+          ExplicitWidth = 774
+          inherited img: TImage
+            Picture.Data = {
+              07544269746D6170F6000000424DF60000000000000076000000280000001000
+              0000100000000100040000000000800000000000000000000000100000000000
+              0000000000000000800000800000008080008000000080008000808000008080
+              8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
+              FF0080018000008100888810009090001888880098F0F8900888870980FFF089
+              07888099FFFFFFF990888090F000FF009088B099FFF0FFF990B8070980F0F089
+              0708BB0098F0F8900BB800000999990000080887000000087708088887707888
+              8708B078800B008870B808700BBBBB007808880BB0B0B0BB088880BB08B0B80B
+              B088}
+            ExplicitLeft = 3
+            ExplicitTop = 3
+          end
+          inherited lblText: TStaticText
+            Width = 302
+            Caption = 'Reminder'
+            ExplicitLeft = 34
+            ExplicitWidth = 322
+          end
+        end
+        inline mlgnRemove: TfraImgText
+          Left = 331
+          Top = 25
+          Width = 330
+          Height = 20
+          Align = alTop
+          Anchors = []
+          AutoScroll = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 3
+          TabStop = True
+          ExplicitTop = 22
+          ExplicitWidth = 774
+          inherited img: TImage
+            Picture.Data = {
+              07544269746D6170F6000000424DF60000000000000076000000280000001000
+              0000100000000100040000000000800000000000000000000000100000000000
+              0000000000000000800000800000008080008000000080008000808000008080
+              8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
+              FF00333333333333333333333333333333333333333333333333333333333333
+              3333333333333333333333333333333333333333333333333333333000000000
+              0333333000000000033333333333333333333333333333333333333333333333
+              3333333333333333333333333333333333333333333333333333333333333333
+              3333}
+            Transparent = True
+            ExplicitLeft = 3
+            ExplicitTop = 3
+          end
+          inherited lblText: TStaticText
+            Width = 302
+            Hint = 
+              'Reminder will not be displayed on the Coversheet for the level i' +
+              'dentified.'
+            Caption = 'Remove From Cover Sheet'
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 25
+            ExplicitTop = 2
+            ExplicitWidth = 302
+            ExplicitHeight = 14
+          end
+        end
+        inline mlgnLock: TfraImgText
+          Left = 1
+          Top = 49
+          Width = 330
+          Height = 25
+          Align = alClient
+          Anchors = []
+          AutoScroll = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 4
+          TabStop = True
+          ExplicitWidth = 662
+          ExplicitHeight = 112
+          inherited img: TImage
+            Height = 19
+            Picture.Data = {
+              07544269746D6170F6000000424DF60000000000000076000000280000001000
+              0000100000000100040000000000800000000000000000000000100000000000
+              0000000000000000800000800000008080008000000080008000808000008080
+              8000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFF
+              FF00333330000033333333300888880033333307787078770333308888707888
+              8033307778808877703330888800088880333077770007777033308888888888
+              8033330000000000033333308033308033333330803330803333333080333080
+              3333333778000877333333330888880333333333300000333333333333333333
+              3333}
+            Transparent = True
+            ExplicitLeft = 3
+            ExplicitTop = 3
+          end
+          inherited lblText: TStaticText
+            Width = 302
+            Height = 19
+            Caption = 'Lock (can not be removed from lower level)'
+            ParentShowHint = False
+            ShowHint = True
+            ExplicitLeft = 40
+            ExplicitTop = -3
+            ExplicitWidth = 282
+            ExplicitHeight = 20
+          end
+        end
       end
+    end
+    object lblCAC: TVA508StaticText
+      Name = 'lblCAC'
+      AlignWithMargins = True
+      Left = 3
+      Top = 214
+      Width = 768
+      Height = 18
+      Align = alBottom
+      Alignment = taCenter
+      Caption = 'Select Cover Sheet Parameter Level to Display / Edit'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 2
+      OnExit = lblCACExit
+      ShowAccelChar = True
+      ExplicitLeft = 0
+      ExplicitTop = 198
+      ExplicitWidth = 370
     end
   end
   object pnlCAC: TORAutoPanel [3]
     Left = 0
-    Top = 208
-    Width = 773
+    Top = 261
+    Width = 774
     Height = 68
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitTop = 208
+    ExplicitWidth = 773
     DesignSize = (
-      773
+      774
       68)
     object cbSystem: TORCheckBox
       Tag = 1
       Left = 8
       Top = 4
-      Width = 53
+      Width = 73
       Height = 16
       Anchors = [akLeft, akBottom]
       Caption = 'System'
@@ -819,7 +939,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       Tag = 2
       Left = 8
       Top = 26
-      Width = 59
+      Width = 82
       Height = 16
       Anchors = [akLeft, akBottom]
       Caption = 'Division:'
@@ -833,7 +953,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       Tag = 3
       Left = 8
       Top = 48
-      Width = 58
+      Width = 82
       Height = 16
       Anchors = [akLeft, akBottom]
       Caption = 'Service:'
@@ -845,17 +965,17 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     end
     object cbxService: TORComboBox
       Tag = 3
-      Left = 72
+      Left = 96
       Top = 46
-      Width = 243
-      Height = 21
+      Width = 233
+      Height = 24
       Anchors = [akLeft, akBottom]
       Style = orcsDropDown
       AutoSelect = True
       Caption = 'Service'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = True
@@ -875,17 +995,17 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     end
     object cbxDivision: TORComboBox
       Tag = 2
-      Left = 72
+      Left = 96
       Top = 24
-      Width = 243
-      Height = 21
+      Width = 233
+      Height = 24
       Anchors = [akLeft, akBottom]
       Style = orcsDropDown
       AutoSelect = True
       Caption = 'Division'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = True
@@ -906,7 +1026,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       Tag = 4
       Left = 353
       Top = 4
-      Width = 63
+      Width = 88
       Height = 16
       Anchors = [akLeft, akBottom]
       Caption = 'Location:'
@@ -920,7 +1040,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       Tag = 5
       Left = 353
       Top = 26
-      Width = 72
+      Width = 97
       Height = 16
       Anchors = [akLeft, akBottom]
       Caption = 'User Class:'
@@ -934,8 +1054,8 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       Tag = 6
       Left = 353
       Top = 48
-      Width = 44
-      Height = 16
+      Width = 88
+      Height = 14
       Anchors = [akLeft, akBottom]
       Caption = 'User:'
       TabOrder = 9
@@ -946,17 +1066,17 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     end
     object cbxUser: TORComboBox
       Tag = 6
-      Left = 431
+      Left = 456
       Top = 46
-      Width = 243
-      Height = 21
+      Width = 209
+      Height = 24
       Anchors = [akLeft, akBottom]
       Style = orcsDropDown
       AutoSelect = True
       Caption = 'User'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = True
@@ -979,17 +1099,17 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     end
     object cbxClass: TORComboBox
       Tag = 5
-      Left = 431
+      Left = 456
       Top = 24
-      Width = 243
-      Height = 21
+      Width = 209
+      Height = 24
       Anchors = [akLeft, akBottom]
       Style = orcsDropDown
       AutoSelect = True
       Caption = 'User Class'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = True
@@ -1009,17 +1129,17 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     end
     object cbxLocation: TORComboBox
       Tag = 4
-      Left = 431
+      Left = 456
       Top = 2
-      Width = 243
-      Height = 21
+      Width = 209
+      Height = 24
       Anchors = [akLeft, akBottom]
       Style = orcsDropDown
       AutoSelect = True
       Caption = 'Location'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = True
@@ -1040,44 +1160,51 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
   end
   object pnlBtns: TPanel [4]
     Left = 0
-    Top = 528
-    Width = 773
+    Top = 581
+    Width = 774
     Height = 35
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
-    DesignSize = (
-      773
-      35)
+    ExplicitTop = 584
     object btnOK: TButton
-      Left = 488
-      Top = 6
+      AlignWithMargins = True
+      Left = 479
+      Top = 3
       Width = 90
-      Height = 23
-      Anchors = [akTop, akRight]
+      Height = 29
+      Align = alRight
       Caption = 'OK'
       ModalResult = 1
       TabOrder = 0
       OnClick = btnOKClick
       OnExit = btnOKExit
+      ExplicitLeft = 488
+      ExplicitTop = 6
+      ExplicitHeight = 23
     end
     object btnCancel: TButton
-      Left = 584
-      Top = 6
+      AlignWithMargins = True
+      Left = 575
+      Top = 3
       Width = 90
-      Height = 23
-      Anchors = [akTop, akRight]
+      Height = 29
+      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
       TabOrder = 1
+      ExplicitLeft = 584
+      ExplicitTop = 6
+      ExplicitHeight = 23
     end
     object btnApply: TButton
-      Left = 680
-      Top = 6
-      Width = 90
-      Height = 23
-      Anchors = [akTop, akRight]
+      AlignWithMargins = True
+      Left = 671
+      Top = 3
+      Width = 100
+      Height = 29
+      Align = alRight
       Caption = 'Apply'
       Enabled = False
       TabOrder = 2
@@ -1233,6 +1360,12 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
         'Status = stsDefault')
       (
         'Component = lblCAC'
+        'Status = stsDefault')
+      (
+        'Component = grdPanel'
+        'Status = stsDefault')
+      (
+        'Component = cbLegend'
         'Status = stsDefault'))
   end
   object imgMain: TImageList
@@ -1241,7 +1374,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     Left = 16
     Top = 56
     Bitmap = {
-      494C010106000900180010001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
+      494C0101060009000C0010001000FFFFFF00FF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       000000000000000000000000000000000000FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
@@ -1558,14 +1691,14 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
   object compAccessCopyRight: TVA508ComponentAccessibility
     Component = sbCopyRight
     OnCaptionQuery = compAccessCopyRightCaptionQuery
-    Left = 368
-    Top = 320
+    Left = 48
+    Top = 368
   end
   object compAccessCopyLeft: TVA508ComponentAccessibility
     Component = sbCopyLeft
     OnCaptionQuery = compAccessCopyLeftCaptionQuery
-    Left = 368
-    Top = 376
+    Left = 48
+    Top = 416
   end
   object VA508ImageListLabeler1: TVA508ImageListLabeler
     Components = <
@@ -1609,13 +1742,13 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
   object caMoveDown: TVA508ComponentAccessibility
     Component = sbDown
     OnCaptionQuery = caMoveDownCaptionQuery
-    Left = 728
-    Top = 328
+    Left = 432
+    Top = 416
   end
   object caMoveUP: TVA508ComponentAccessibility
     Component = sbUp
     OnCaptionQuery = caMoveUPCaptionQuery
-    Left = 720
-    Top = 280
+    Left = 432
+    Top = 360
   end
 end

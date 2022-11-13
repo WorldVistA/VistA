@@ -11,6 +11,8 @@ type
     cmdClose: TButton;
     timClose: TTimer;
     memMessages: TRichEdit;
+    pnlButtons: TPanel;
+    Panel1: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cmdCloseClick(Sender: TObject);
     procedure timCloseTimer(Sender: TObject);
@@ -77,8 +79,9 @@ procedure TfrmPtSelMsg.timCloseTimer(Sender: TObject);
 begin
   Dec(FSeconds);
   if FSeconds > 0
-    then Caption := 'Patient Lookup Messages   (Auto-Close in ' + IntToStr(FSeconds) + ' seconds)'
-    else Close;
+//    then Caption := 'Patient Lookup Messages   (Auto-Close in ' + IntToStr(FSeconds) + ' seconds)'
+    then pnlButtons.Caption := '  Auto-Close in ' + IntToStr(FSeconds) + ' seconds...'
+  else Close;
 end;
 
 procedure TfrmPtSelMsg.cmdCloseClick(Sender: TObject);
@@ -87,8 +90,19 @@ begin
 end;
 
 procedure TfrmPtSelMsg.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+  i: integer;
+
 begin
   Action := caFree;
+  // VISTAOR 26913
+  // Some modal dialogs displayed on top of this dialog are assigned a windows
+  // parent of this dialog.  If these dialogs are not reset to another parent
+  // at the time this dialog closes it can erroneously close the modal dialog,
+  // locking up the application because it's still in the form's ShowModal
+  // loop.  See vcl.Forms procedure TCustomForm.CreateParams
+  for i := PopupChildren.Count - 1 downto 0 do
+    TForm(PopupChildren[i]).PopupMode := pmExplicit;
 end;
 
 procedure TfrmPtSelMsg.FormCreate(Sender: TObject);

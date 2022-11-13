@@ -151,7 +151,7 @@ begin
   //add problems to the top of diagnoses.
   TempList := TstringList.Create;
   DxList.clear;
-  tCallV(TempList,'ORWPCE DIAG',  [LastLocation, EncDt]);
+  CallVistA('ORWPCE DIAG',  [LastLocation, EncDt],TempList);
   DxList.add(templist.strings[0]);
   AddProblemsToDxList;
     for i := 1 to (TempList.Count-1) do
@@ -213,7 +213,7 @@ begin
    //Get problem list
    EncDt := Trunc(FMToday);
    LastDFN := Patient.DFN;
-   tCallV(Problems, 'ORWPCE ACTPROB', [Patient.DFN, EncDT]);
+   CallVistA('ORWPCE ACTPROB', [Patient.DFN, EncDT],Problems);
    if Problems.Count > 0 then
    begin
       DxList.add('^Problem List Items');
@@ -331,7 +331,7 @@ begin
   inherited;
   if delDxLst.Count > 0 then
   begin
-     //  delete selected dx's  
+     //  delete selected dx's
      rpcDeleteFromPersonalDxList(User.DUZ,delDxLst);
      delDxLst.Clear;
   end;
@@ -651,5 +651,14 @@ initialization
   tmplst.Clear;
   newDxLst.Clear;
   delDxLst.Clear;
+
+finalization
+  FreeAndNil(Problems);
+  FreeAndNil(DxList);
+  FreeAndNil(ECFDiagnoses);
+  FreeAndNil(uNewDxList);
+  FreeAndNil(tmplst);
+  FreeAndNil(newDxLst);
+  FreeAndNil(delDxLst);
 
 end.

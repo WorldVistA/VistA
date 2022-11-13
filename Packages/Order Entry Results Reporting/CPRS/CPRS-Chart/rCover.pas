@@ -60,7 +60,8 @@ procedure ListPostings(Dest: TStrings);
 begin
   CallVistA('ORQQPP LIST', [Patient.DFN], Dest);
   MixedCaseList(Dest);
-  SetListFMDateTime('mmm dd,yy', TStringList(Dest), U, 3);
+//  SetListFMDateTime('mmm dd,yy', TStringList(Dest), U, 3);
+  SetListFMDateTime('mmm dd,yy', Dest, U, 3);
 end;
 
 procedure LoadDemographics(Dest: TStrings);

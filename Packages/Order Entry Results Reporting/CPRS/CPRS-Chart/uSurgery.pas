@@ -33,8 +33,8 @@ const
 
 implementation
 
-uses
-  uConst, rSurgery, fRptBox;
+//uses
+//  uConst, rSurgery, fRptBox;
 
 constructor TSurgeryTitles.Create;
 { creates an object to store Surgery titles so only obtained from server once }

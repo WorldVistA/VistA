@@ -1,4 +1,9 @@
 unit fOMHTML;
+{ ------------------------------------------------------------------------------
+  Update History
+
+  2018-09-17: RTC 272867 (Replacing old server calls with CallVistA)
+  ---------------------------------------------------------------------------- }
 
 {$OPTIMIZATION OFF}                              // REMOVE AFTER UNIT IS DEBUGGED
 
@@ -15,16 +20,16 @@ type
     btnCancel: TButton;
     btnBack: TButton;
     pnlWeb: TPanel;
-    webView: TWebBrowser;
     btnShow: TButton;
+    webView: TWebBrowser;
     procedure btnOKClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure webViewDocumentComplete(Sender: TObject;
-      const pDisp: IDispatch; var URL: OleVariant);
-    procedure webViewBeforeNavigate2(Sender: TObject;
-      const pDisp: IDispatch; var URL, Flags, TargetFrameName, PostData,
-      Headers: OleVariant; var Cancel: WordBool);
+    procedure webViewBeforeNavigate2(ASender: TObject; const pDisp: IDispatch;
+      const URL, Flags, TargetFrameName, PostData, Headers: OleVariant;
+      var Cancel: WordBool);
+    procedure webViewDocumentComplete(ASender: TObject; const pDisp: IDispatch;
+      const URL: OleVariant);
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnBackClick(Sender: TObject);
@@ -62,7 +67,7 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn, rCore, uCore, uOrders, ORNet, TRPCB, rMisc;
+uses ORFn, rCore, uCore, uOrders, ORNet, TRPCB, rMisc, ORNetIntf, ORExtensions;
 
 const
   TAB = #9;
@@ -98,20 +103,35 @@ end;
 function GetIENforHtml(const AnID: string): Integer;
 {AnID, O.name or O.ien for 101.41, H.name or H.ien for 101.14}
 begin
-  Result := StrToIntDef(sCallV('ORWDHTM GETIEN', [AnID]), 0);
+//  Result := StrToIntDef(sCallV('ORWDHTM GETIEN', [AnID]), 0);
+  if not CallVistA('ORWDHTM GETIEN', [AnID],Result) then
+    Result := 0;
 end;
 
 function GetHTMLText(AnIEN: Integer): string;
 {return HTML text from 101.14 given IEN}
+var
+  sl: TStrings;
 begin
-  CallV('ORWDHTM HTML', [AnIEN, Patient.DFN]);
-  Result := RPCBrokerV.Results.Text;
+//  CallV('ORWDHTM HTML', [AnIEN, Patient.DFN]);
+//  Result := RPCBrokerV.Results.Text;
+  sl := TSTringList.Create;
+  try
+    if CallVistA('ORWDHTM HTML', [AnIEN, Patient.DFN],sl) then
+      Result := sl.Text;
+  finally
+    sl.Free;
+  end;
 end;
 
 function GetURLforDialog(AnIEN: Integer): string;
 begin
-  Result := sCallV('ORWDHTM URL', [AnIEN]);
-  if Result = '' then Result := 'about:URL not found';
+//  Result := sCallV('ORWDHTM URL', [AnIEN]);
+//  if Result = '' then Result := 'about:URL not found';
+  if not CallVistA('ORWDHTM URL', [AnIEN],Result) then
+    Result := 'Error calling "ORWDHTM URL"'
+  else
+    if Result = '' then Result := 'about:URL not found';
 end;
 
 procedure NameValueToViewList(Src, Dest: TStringList);
@@ -119,22 +139,15 @@ procedure NameValueToViewList(Src, Dest: TStringList);
 var
   i: Integer;
   Subs: string;
+  aList: iORNetMult;
 begin
-  LockBroker;
-  try
-    RPCBrokerV.ClearParameters := True;
-    RPCBrokerV.RemoteProcedure := 'ORWDHTM NV2DNM';
-    RPCBrokerV.Param[0].PType := list;
-    for i := 0 to Pred(Src.Count) do
-    begin
-      Subs := IntToStr(Succ(i));
-      RPCBrokerV.Param[0].Mult[Subs] := Copy(Src[i], 1, 245);
-    end; {for i}
-    CallBroker;
-    FastAssign(RPCBrokerV.Results, Dest);
-  finally
-    UnlockBroker;
-  end;
+  newORNetMult(aList);
+  for i := 0 to Pred(Src.Count) do
+  begin
+    Subs := IntToStr(Succ(i));
+    aList.AddSubscript([Subs],  Copy(Src[i], 1, 245));
+  end; {for i}
+  CallVistA('ORWDHTM NV2DNM',[aList],dest);
 end;
 
 procedure NameValueToOrderSet(Src, Dest: TStringList);
@@ -143,32 +156,27 @@ var
   i, j: Integer;
   Subs: string;
   WPText: TStringList;
+  aList: iORNetMult;
 begin
-  LockBroker;
-  try
-    RPCBrokerV.ClearParameters := True;
-    RPCBrokerV.RemoteProcedure := 'ORWDHTM NV2SET';
-    RPCBrokerV.Param[0].PType := list;
-    WPText := TStringList.Create;
-    for i := 0 to Pred(Src.Count) do
+  WPText := TStringList.Create;
+  newORNetMult(aList);
+  for i := 0 to Pred(Src.Count) do
+  begin
+    WPText.Clear;
+    WPText.Text := Copy(Src[i], Pos(TAB, Src[i]) + 1, Length(Src[i]));
+    Subs := IntToStr(Succ(i)); // "Succ is equivalent in performance to simple addition, or the Inc procedure"
+    if WPText.Count = 1 then
+      aList.AddSubscript([Subs], Src[i])
+    else
     begin
-      WPText.Clear;
-      WPText.Text := Copy(Src[i], Pos(TAB, Src[i]) + 1, Length(Src[i]));
-      Subs := IntToStr(Succ(i));
-      if WPText.Count = 1 then RPCBrokerV.Param[0].Mult[Subs] := Src[i] else
-      begin
-        RPCBrokerV.Param[0].Mult['"WP",' + Subs] :=
-          Piece(Src[i], TAB, 1) + TAB + 'NMVAL("WP",' + Subs + ')';
-        for j := 0 to Pred(WPText.Count) do
-          RPCBrokerV.Param[0].Mult['"WP",' + Subs + ',' + IntToStr(Succ(j)) + ',0'] := WPText[j];
-      end; {if WPText}
-    end; {for i}
-    CallBroker;
-    WPText.Free;
-    FastAssign(RPCBrokerV.Results, Dest);
-  finally
-    UnlockBroker;
-  end;
+      aList.AddSubscript(['WP', Subs], Piece(Src[i], TAB, 1) + TAB + 'NMVAL("WP",' + Subs + ')');
+
+      for j := 0 to Pred(WPText.Count) do
+        aList.AddSubscript(['WP', Subs,Succ(j),0], WPText[j]);
+    end; { if WPText }
+  end; { for i }
+  WPText.Free;
+  CallVistA('ORWDHTM NV2SET',[aList],Dest);
 end;
 
 { general procedures }
@@ -373,6 +381,7 @@ end;
 
 procedure TfrmOMHTML.FormCreate(Sender: TObject);
 begin
+  SetUserDataFolder(webView);
   AutoSizeDisabled := True;
   inherited;
   FPageCache := TList.Create;
@@ -403,8 +412,8 @@ end;
 
 { webBrowser events }
 
-procedure TfrmOMHTML.webViewDocumentComplete(Sender: TObject; const pDisp: IDispatch;
-  var URL: OleVariant);
+procedure TfrmOMHTML.webViewDocumentComplete(ASender: TObject; const pDisp: IDispatch;
+      const URL: OleVariant);
 { This event happens after a navigation.  It is at this point that there is an instantiated
   instance of IHtmlDocument available. }
 begin
@@ -428,8 +437,8 @@ begin
     if Ord(Src[i]) > 31 then Result := Result + Src[i] else break;
 end;
 
-procedure TfrmOMHTML.webViewBeforeNavigate2(Sender: TObject;  const pDisp: IDispatch;
-  var URL, Flags, TargetFrameName, PostData, Headers: OleVariant; var Cancel: WordBool);
+procedure TfrmOMHTML.webViewBeforeNavigate2(ASender: TObject; const pDisp: IDispatch;
+      const URL, Flags, TargetFrameName, PostData, Headers: OleVariant; var Cancel: WordBool);
 begin
   inherited;
   SaveState;
@@ -504,4 +513,9 @@ begin
   tmpList.Free;
 end;
 
+{ was assigned to OnBeforeNavigate:
+
+  SaveState;
+  // activate order dialog here, i.e., 'about:CPRSOrder=FHW1'
+}
 end.

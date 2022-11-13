@@ -75,9 +75,11 @@ type
     procedure UpdateTabPos;
     procedure Sync2Grid;
     procedure Sync2Section;
+    procedure FormatVimmInputs(Grid, isSkinTest: boolean);
   public
     procedure AllowTabChange(var AllowChange: boolean); override;
     procedure InitTab(ACopyProc: TCopyItemsMethod; AListProc: TListSectionsProc);
+    procedure removeAll;
   end;
 
 var
@@ -89,7 +91,7 @@ const
 implementation
 
 uses fPCELex, fPCEOther, fEncounterFrame, fHFSearch, VA508AccessibilityRouter,
-  ORCtrlsVA508Compatibility, fBase508Form, UBAConst, VAUtils;
+  ORCtrlsVA508Compatibility, fBase508Form, UBAConst, rvimm, uCore, VAUtils;
 
 {$R *.DFM}
 
@@ -141,11 +143,22 @@ begin
   try
     SaveGridSelected;
     FastAssign(lstCaptionList.ItemsStrings, tmpList);
-    for i := 0 to lstCaptionList.Items.Count-1 do
+    for i := lstCaptionList.Items.Count - 1 downto 0 do
     begin
-      tmpList[i] := TPCEItem(lstCaptionList.Objects[i]).ItemStr;
-      tmpList.Objects[i] := lstCaptionList.Objects[i];
+      if lstCaptionList.Objects[i] is TPCEItem then
+      begin
+        tmpList[i] := TPCEItem(lstCaptionList.Objects[i]).ItemStr;
+        tmpList.Objects[i] := lstCaptionList.Objects[i];
+      end
+      else
+      begin
+        lstCaptionList.Objects[i].Free;
+        lstCaptionList.Items[i].Delete;
+        tmpList.Delete(i);
+        RemoveGridSelected(i);
+      end;
     end;
+
     lstCaptionList.ItemsStrings.Assign(tmpList);    //cq: 13228
     RestoreGridSelected;
   finally
@@ -208,7 +221,8 @@ begin
   if(FCommentChanged) then
   begin
     FCommentChanged := FALSE;
-    if(FCommentItem >= 0) then
+    if(FCommentItem >= 0) and (FCommentItem < lstCaptionList.Items.Count) and
+      (lstCaptionList.Objects[FCommentItem] is TPCEItem) then
       TPCEItem(lstCaptionList.Objects[FCommentItem]).Comment := edtComment.text;
   end;
 end;
@@ -234,22 +248,25 @@ begin
   inherited;
   FUpdatingGrid := TRUE;
   try
+    CurCategory := GetCat;
     for i := lstCaptionList.Items.Count-1 downto 0 do if(lstCaptionList.Items[i].Selected) then
     begin
-      CurCategory := GetCat;
-      APCEItem := TPCEDiag(lstCaptionList.Objects[i]);
-      if APCEItem.Category = CurCategory then
+      if lstCaptionList.Objects[i] is TPCEItem then
       begin
-        for j := 0 to lbxSection.Items.Count - 1 do
+        APCEItem := TPCEItem(lstCaptionList.Objects[i]);
+        if APCEItem.Category = CurCategory then
         begin
-          SCode := Piece(lbxSection.Items[j], U, 1);
-          SNarr := Piece(lbxSection.Items[j], U, 2);
-          if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
-//          if (Pos(APCEItem.Code, SCode) > 0) then
-            lbxSection.Checked[j] := False;
+          for j := 0 to lbxSection.Items.Count - 1 do
+          begin
+            SCode := Piece(lbxSection.Items[j], U, 1);
+            SNarr := Piece(lbxSection.Items[j], U, 2);
+            if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
+  //          if (Pos(APCEItem.Code, SCode) > 0) then
+              lbxSection.Checked[j] := False;
+          end;
         end;
       end;
-      APCEItem.Free;
+      lstCaptionList.Objects[i].Free;
       lstCaptionList.Items[i].Delete
     end;
 
@@ -274,7 +291,7 @@ begin
       CommentOK := (lstCaptionList.SelCount = 1);
       lblComment.Enabled := CommentOK;
       edtComment.Enabled := CommentOK;
-      if(CommentOK) then
+      if(CommentOK) and (lstCaptionList.Objects[GridIndex] is TPCEItem) then
         edtComment.Text := TPCEItem(lstCaptionList.Objects[GridIndex]).Comment
       else
         edtComment.Text := '';
@@ -290,6 +307,30 @@ begin
 //  with clbList do
 //  if(ItemIndex >= 0) and (not(Checked[ItemIndex])) then
 //    ClearGrid;
+end;
+
+procedure TfrmPCEBaseMain.FormatVimmInputs(Grid, isSkinTest: boolean);
+begin
+    uvimmInputs.noGrid := grid;
+    uvimmInputs.makeNote := false;
+    uvimmInputs.collapseICE := true;
+    uvimmInputs.canSaveData := false;
+    uvimmInputs.patientName := patient.Name;
+    uvimmInputs.patientIEN := patient.DFN;
+    uvimmInputs.userName := user.Name;
+    uvimmInputs.userIEN := user.DUZ;
+    uvimmInputs.isSkinTest := isSkinTest;
+    uVimmInputs.startInEditMode := false;
+    uvimmInputs.encounterProviderName := uEncPCEData.Providers.PCEProviderName;
+    uvimmInputs.encounterProviderIEN := uEncPCEData.Providers.PCEProvider;
+    uvimmInputs.encounterLocation := uEncPCEData.Location;
+    uvimmInputs.encounterCategory := uEncPCEData.VisitCategory;
+    uvimmInputs.dateEncounterDateTime := uEncPCEData.VisitDateTime;
+    uvimmInputs.visitString := uEncPCEData.VisitString;
+    if uEncPCEData.VisitCategory = 'E' then
+      uVimmInputs.selectionType := 'historical'
+    else uVimmInputs.selectionType := 'current';
+    uVimmInputs.immunizationReading := false;
 end;
 
 procedure TfrmPCEBaseMain.FormCreate(Sender: TObject);
@@ -333,6 +374,12 @@ begin
   Result := (FUpdateCount = 0);
 end;
 
+procedure TfrmPCEBaseMain.removeAll;
+begin
+  self.btnSelectAll.Click;
+  self.btnRemove.Click;
+end;
+
 procedure TfrmPCEBaseMain.CheckOffEntries;
 { TODO -oRich V. -cCode Set Versioning : Uncomment these lines to prevent acceptance of existing inactive DX codes. }
 const
@@ -353,6 +400,8 @@ begin
     CurCategory := GetCat;
     for i := lstCaptionList.Items.Count - 1 downto 0 do
     begin
+      if not (lstCaptionList.Objects[i] is TPCEItem) then
+        continue;
       APCEItem := TPCEItem(lstCaptionList.Objects[i]);
       if APCEItem.Category = CurCategory then
       begin
@@ -447,6 +496,8 @@ begin
     Found := FALSE;
     for j := lstCaptionList.Items.Count - 1 downto 0 do
     begin
+      if not (lstCaptionList.Objects[j] is TPCEItem) then
+        continue;
       APCEItem := TPCEItem(lstCaptionList.Objects[j]);
       OK := (SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0);
       if OK then
@@ -468,7 +519,10 @@ begin
     begin
       x := FPCECode + U + CodeCatNarr;
       if FPCEItemClass = TPCEProc then
+      begin
         SetPiece(x, U, pnumProvider, IntToStr(uProviders.PCEProvider));
+        SetPiece(x, U, pnumProcQty, Piece(lbxSection.Items[i], U, 7));
+      end;
       UpdateNewItemStr(x);
       APCEItem := FPCEItemClass.Create;
       APCEItem.SetFromString(x);
@@ -544,7 +598,7 @@ begin
     idx := -1;
     for i := 0 to lstCaptionList.Items.Count - 1 do
     begin
-      if(lstCaptionList.Items[i].Selected) then
+      if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEItem) then
       begin
         if(idx < 0) then idx := i;
         inc(cnt);
@@ -604,6 +658,8 @@ begin
 //      ACode := '~@^~@^@~';
     for i := 0 to lstCaptionList.Items.Count - 1 do
     begin
+      if not (lstCaptionList.Objects[i] is TPCEItem) then
+        continue;
       APCEItem := TPCEItem(lstCaptionList.Objects[i]);
       lstCaptionList.Items[i].Selected := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) >= 0)); //(ACode = (Category + U + Code + U + Narrative));
 //      lbGrid.Selected[i] := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0)) //(ACode = (Category + U + Code + U + Narrative));

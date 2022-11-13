@@ -1,0 +1,48 @@
+package FMDC_D10_4_2;
+
+{$R *.res}
+{$R '..\..\Source\Fmcntrls.dcr'}
+{$R '..\..\Source\Fmcmpnts.dcr'}
+{$R '..\..\Source\Fmlookup.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'VistA Fileman Delphi Components - 10.4.2'}
+{$IMPLICITBUILD ON}
+
+requires
+  vcl,
+  XWB_R10_4_2;
+
+contains
+  Fmcntrls in '..\..\Source\Fmcntrls.pas',
+  DiDataProb in '..\..\Source\DiDataProb.pas' {frmDataProblemList},
+  DiTypLib in '..\..\Source\DiTypLib.pas',
+  Fmcmpnts in '..\..\Source\Fmcmpnts.pas',
+  Diaccess in '..\..\Source\Diaccess.pas',
+  Fmlookup in '..\..\Source\Fmlookup.pas',
+  dierr in '..\..\Source\dierr.pas' {FrmDisplayError},
+  dihlp in '..\..\Source\dihlp.pas' {FrmDisplayHelp};
+
+end.

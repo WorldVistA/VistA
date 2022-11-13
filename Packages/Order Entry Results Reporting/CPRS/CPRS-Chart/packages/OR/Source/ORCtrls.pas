@@ -136,6 +136,16 @@ type
     ItemRecList: TList; //Holds all allocated ItemRecs
     FFromSetFocusIndex: boolean; // used to prevent ScrollTo from calling NeedData when fron SetFocusIndex
     FUseExactSearch: boolean;
+    FLastStartFrom: string;
+    FLastDirection: Integer;
+    FLastInsertAt: Integer;
+    FLastEmptyStartFrom: string;
+    FLastEmptyDirection: Integer;
+    FLastEmptyInsertAt: Integer;
+    FLastEmpty: boolean;
+    FDetectLastEmpty: boolean;
+    FKeepItemID: boolean;
+    FLastItemID: string;
     function SearchMsg: UINT;
     procedure AdjustScrollBar;
     procedure CreateScrollBar;
@@ -150,6 +160,7 @@ type
     procedure NeedData(Direction: Integer; StartFrom: string);
     function PositionThumb: Integer;
     procedure ResetItems;
+    procedure ScrollBarScroll(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: Integer);
     procedure ScrollTo(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: Integer);
     function GetStringIndex(const AString: string): Integer;
     function SelectString(const AString: string): Integer;
@@ -254,7 +265,6 @@ type
     procedure SetBlackColorMode(Value: boolean);
     function SupportsDynamicProperty(PropertyID: integer): boolean;
     function GetDynamicProperty(PropertyID: integer): string;
-    procedure SetHintProperties(Restore: Boolean; MainForm: TComponent);
     property HideSelection: boolean read FHideSelection write FHideSelection;
   published
     property AllowGrayed: boolean read FAllowGrayed write FAllowGrayed default FALSE;
@@ -279,6 +289,7 @@ type
     property OnClickCheck: TORItemNotifyEvent read FOnClickCheck write FOnClickCheck;
     property MultiSelect: boolean read GetMultiSelect write SetMultiSelect default FALSE;
     property Items: TStrings read GetMItems write SetMItems;
+    property OnDrawItem;
   end;
 
   TORDropPanel = class(TPanel)
@@ -354,10 +365,16 @@ type
     FCharsNeedMatch: integer; // how many text need to be matched for auto selection
     FUniqueAutoComplete: Boolean; // If true only perform autocomplete for unique list items.
     FBlackColorMode: boolean;
-    FDisableHints: boolean; // true if hints have been disabled because drop down window was opened
     FDropDownStatusChangedCount: integer; // prevents multiple calls to disabling hint window
     fRpcCall: String;
     FTimerInterval: integer;
+    FData: TObject;
+    FOwnsData: boolean;
+    fOnDrawItem: TDrawItemEvent;
+    FSetItemIndexOnChange: boolean;
+
+    procedure setOnDrawItem(aValue: TDrawItemEvent);
+    procedure EditOnExit(Sender: TObject);
     procedure DropDownStatusChanged(opened: boolean);
     procedure ClearDropDownStatus;
     function EditControl: TWinControl;
@@ -461,6 +478,8 @@ type
     procedure SetLookupPiece(const Value: integer);
     procedure SetUniqueAutoComplete(const Value: Boolean);
     procedure LoadComboBoxImage;
+    function GetTabStop: Boolean;
+    procedure SetTabStop(const Value: Boolean);
   protected
     procedure DropPanelBtnPressed(OKBtn, AutoClose: boolean);
     function GetEditBoxText(Index: Integer): string;
@@ -507,6 +526,8 @@ type
     property TemplateField: boolean read FTemplateField write SetTemplateField;
     property MItems: TStrings read GetMItems;
     property TimerInterval: integer read FTimerInterval write FTimerInterval;
+    property Data: TObject read FData write FData;
+    property OwnsData: boolean read FOwnsData write FOwnsData;
   published
     Property RpcCall :String read fRpcCall write fRpcCall;
     property Anchors;
@@ -543,7 +564,7 @@ type
     property TabPosInPixels: boolean read GetTabPosInPixels write SetTabPosInPixels default False; // MUST be before TabPositions!
     property TabPositions: string read GetTabPositions write SetTabPositions;
     property TabOrder;
-    property TabStop;
+    property TabStop: Boolean read GetTabStop write SetTabStop default False;
     property Text: string read GetText write SetText;
     property Visible;
     property FlatCheckBoxes: boolean read GetFlatCheckBoxes write SetFlatCheckBoxes default TRUE;
@@ -574,6 +595,9 @@ type
  7278 - PTM 36 Meds: Select 40000 UNT/2ML and backspace to 4000 the dose selected remains 40000
  7284 - Inconsistencies of pulling in a dose from the Possible Dose File }
     property UniqueAutoComplete: Boolean read FUniqueAutoComplete write SetUniqueAutoComplete default False;
+    property OnDrawItem: TDrawItemEvent read fOnDrawItem write setOnDrawItem;
+    // set SetItemIndexOnChange to False to stop OnChange events when changing ItemIndex.
+    property SetItemIndexOnChange: boolean read FSetItemIndexOnChange write FSetItemIndexOnChange default True;
   end;
 
   TORAutoPanel = class(TPanel)
@@ -679,6 +703,8 @@ type
   private
     procedure SetCaption(const Value: string);
     function GetCaption: string;
+    procedure TVMDeleteItem(var Message: TMessage); message TVM_DELETEITEM;
+    procedure TVMSelectItem(var Message: TMessage); message TVM_SELECTITEM;
   protected
     FCaptionComponent: TStaticText;
   public
@@ -988,7 +1014,14 @@ type
     property Caption: string read GetCaption write SetCaption;
   end;
 
-  TCaptionEdit = class(TEdit, IVADynamicProperty)
+  TDataEdit = class(TEdit)
+  private
+    FDataObject: TObject;
+  public
+    property DataObject: TObject read FDataObject write FDataObject;
+  end;
+
+  TCaptionEdit = class(TDataEdit, IVADynamicProperty)
   private
     procedure SetCaption(const Value: string);
     function GetCaption: string;
@@ -1046,26 +1079,26 @@ type
 
   TCaptionListView = class(TListView, IVADynamicProperty)
   private
-   FPieces: array[0..MAX_TABS] of Integer;
-   FItemsStrings: TCaptionListStringList;
-   FAutoSize: Boolean;
-   FHideTinyColumns: Boolean;
-   FTinyColumns: string;
-   function GetPieces: string;
-   function Get(Index: Integer): String;
-   function GetObj(Index: Integer): TObject;
-   function GetItemIEN: Int64;
-   function GetIEN(AnIndex: Integer): Int64;
-   function GetItemID: Variant;
-   function GetItemsStrings: TCaptionListStringList;
-   procedure SetPieces(const Value: string);
-   Procedure SetFromStringList(AValue: TCaptionListStringList);
-   procedure Put(Index: Integer; Item: String);
-   procedure PutObj(Index: Integer; ItemObject: TObject);
-   procedure WMSetFocus(var Message: TMessage); message WM_SETFOCUS;
-   procedure WMNotify(var Message: TWMNotify); message WM_NOTIFY;
-   procedure CreateItemClass(Sender: TCustomListView; var ItemClass: TListItemClass);
-   function AddItemToList(aStr: string; aObject: TObject): TCaptionListItem;
+    FPieces: array[0..MAX_TABS] of Integer;
+    FItemsStrings: TCaptionListStringList;
+    FAutoSize: Boolean;
+    FHideTinyColumns: Boolean;
+    FTinyColumns: string;
+    function GetPieces: string;
+    function Get(Index: Integer): String;
+    function GetObj(Index: Integer): TObject;
+    function GetItemIEN: Int64;
+    function GetIEN(AnIndex: Integer): Int64;
+    function GetItemID: Variant;
+    function GetItemsStrings: TCaptionListStringList;
+    procedure SetPieces(const Value: string);
+    Procedure SetFromStringList(AValue: TCaptionListStringList);
+    procedure Put(Index: Integer; Item: String);
+    procedure PutObj(Index: Integer; ItemObject: TObject);
+    procedure WMSetFocus(var Message: TMessage); message WM_SETFOCUS;
+    procedure WMNotify(var Message: TWMNotify); message WM_NOTIFY;
+    procedure CreateItemClass(Sender: TCustomListView; var ItemClass: TListItemClass);
+    function AddItemToList(aStr: string; aObject: TObject): TCaptionListItem;
     procedure SetHideTinyColumns(const Value: Boolean);
   protected
     procedure Loaded; override;
@@ -1089,7 +1122,7 @@ type
   published
     property AutoSize: Boolean read FAutoSize write FAutoSize;
     property Caption;
-    property HideTinyColumns: Boolean read FHideTinyColumns write SetHideTinyColumns;
+    property HideTinyColumns: Boolean read FHideTinyColumns write SetHideTinyColumns default False;
     property Pieces: string read GetPieces write SetPieces;
   end;
 
@@ -1824,6 +1857,9 @@ begin
   FFromSetFocusIndex := False;
   //Holds all ItemRecs for memory cleanup
   ItemRecList := TList.Create;
+  FDetectLastEmpty := False;
+  FKeepItemID := False;
+  FLastItemID := '';
 end;
 
 destructor TORListBox.Destroy;
@@ -2176,6 +2212,9 @@ begin
 
       Dispose(ItemRec);
     end;
+    if (not FKeepItemID) and (FLastItemID <> '') and (Integer(wParam) > -1) and
+      (Integer(wParam) < Items.count) and (FLastItemID = Items[wParam]) then
+      FLastItemID := '';
   end;
   FFromSelf := True; // FFromSelf is set here because, under NT, LBResetContent is called
   inherited; // when deleting the last string from the listbox.  Since ItemRec is
@@ -2462,8 +2501,13 @@ begin
     else
       ScrollCode := scLineDown;
     temp := 50;
-    for idx := 1 to max do
-      ScrollTo(Self, ScrollCode, temp);
+    FDetectLastEmpty := True;
+    try
+      for idx := 1 to max do
+        ScrollTo(Self, ScrollCode, temp);
+    finally
+      FDetectLastEmpty := False;
+    end;
   end
   else
     inherited;
@@ -2493,6 +2537,13 @@ begin
   if ItemIndex <> FLastItemIndex then
   begin
     FLastItemIndex := ItemIndex;
+    if FLongList then
+    begin
+      if (ItemIndex > -1) then
+        FLastItemID := Items[ItemIndex]
+      else if not FKeepItemID then
+        FLastItemID := '';
+    end;
     if (not isPartOfComboBox) and (ItemIndex <> -1) then
       SetFocusIndex(ItemIndex);
     if Assigned(FOnChange) then FOnChange(Self);
@@ -2631,29 +2682,51 @@ begin
   end;
 end;
 
-procedure TORListBox.SetHintProperties(Restore: Boolean; MainForm: TComponent);
+// In Delphi 2006, hint windows will cause the TORComboBox drop down list to
+// move behind a Stay on Top form.  Hints are also problematic with item tips in
+// the drop down list, so we disable them when ever a drop down list is open,
+// on all forms, not just stay on top forms.
+procedure SetHintProperties(Restore: Boolean; MainForm: TComponent);
 var
   i, x: integer;
   Component: TComponent;
+  TmpName: string;
+
+  // component name can be blank on dynamically created components
+  function LookupName(AComponent: TComponent): string;
+  begin
+    Result := AComponent.Name;
+    if Result = '' then
+      Result := IntToHex(Integer(AComponent));
+  end;
+
 begin
+  if not assigned(MainForm) then
+    exit;
+
+  if restore and (Length(HintArray) = 0) then
+    exit;
+
    //Clear the array if we are not restoring it
-  if not restore then SetLength(HintArray, 0);
+  if not restore then
+    SetLength(HintArray, 0);
 
   //Loop through all the components on the form
   for i := 0 to TForm(MainForm).ComponentCount - 1 do begin
     Component := TForm(MainForm).Components[i];
     if (Component is TControl) then begin
+      TmpName := LookupName(Component);
       if not restore then begin
         //Increase our array and set our record
         SetLength(HintArray, Length(HintArray) + 1);
-        HintArray[high(HintArray)].ObjectName := Component.Name;
+        HintArray[high(HintArray)].ObjectName := TmpName;
         HintArray[high(HintArray)].ObjectHint := GetStrProp(Component, 'Hint');
         //Now clear out the component's hint
         SetStrProp(Component, 'Hint', '');
       end else begin
         //Loop through the array and find this component's hint
         for x := Low(HintArray) to High(HintArray) do begin
-          if Component.Name = HintArray[x].ObjectName then begin
+          if TmpName = HintArray[x].ObjectName then begin
             //Once found reset the hint and break out of the loop
             SetStrProp(Component, 'Hint', HintArray[x].ObjectHint);
             break;
@@ -2664,17 +2737,18 @@ begin
   end;
 
   //Now deal with the form itself
+  TmpName := LookupName(MainForm);
   if not restore then begin
     //Increase our array and set our record
     SetLength(HintArray, Length(HintArray) + 1);
-    HintArray[high(HintArray)].ObjectName := TForm(MainForm).Name;
+    HintArray[high(HintArray)].ObjectName := TmpName;
     HintArray[high(HintArray)].ObjectHint := TForm(MainForm).Hint;
     //Now clear out the Forms's hint
     TForm(MainForm).Hint := '';
   end else begin
       //Loop through the array and find this Forms's hint
     for x := Low(HintArray) to High(HintArray) do begin
-      if TForm(MainForm).Name = HintArray[x].ObjectName then begin
+      if TmpName = HintArray[x].ObjectName then begin
         //Once found reset the hint and break out of the loop
         TForm(MainForm).Hint := HintArray[x].ObjectHint;
         break;
@@ -2694,7 +2768,7 @@ var
   TrueOffset: integer;
   TipPos: TPoint;
   ComponentForm: TCustomForm;
- TopFormHandle: HWND;
+  TopFormHandle: HWND;
 
  function GetTopWindow: HWND;
  begin
@@ -2711,7 +2785,7 @@ begin
   if assigned(FParentCombo) then begin
     //agp change
     //if (FParentCombo.FDropPanel.Visible) and (TForm(self.Owner.Owner).Hint <> '') then begin
-    if (FParentCombo.FDropPanel.Visible) and ((GetParentForm(self) <> nil) and (Length(HintArray) = 0)) then begin
+    if (FParentCombo.FDropPanel.Visible) and (Length(HintArray) = 0) then begin
       SetHintProperties(False, GetParentForm(Self));
     end;
   end;
@@ -3046,9 +3120,7 @@ end;
 function TORListBox.GetItemIEN: Int64;
 { return as an integer the first piece of the currently selected item }
 begin
-  if ItemIndex > -1
-    then Result := StrToInt64Def(Piece(Items[ItemIndex], FDelimiter, 1), 0)
-  else Result := 0;
+  Result := StrToInt64Def(GetItemID, 0);
 end;
 
 function TORListBox.SelectByIEN(AnIEN: Int64): Integer;
@@ -3101,8 +3173,17 @@ end;
 
 function TORListBox.GetItemID: Variant;
 { return as a variant the first piece of the currently selected item }
+var
+  TempData: string;
+
 begin
-  if ItemIndex > -1 then Result := Piece(Items[ItemIndex], FDelimiter, 1) else Result := '';
+  if ItemIndex > -1 then
+    TempData := Items[ItemIndex]
+  else if FLongList then
+    TempData := FLastItemID
+  else
+    TempData := '';
+  Result := Piece(TempData, FDelimiter, 1);
 end;
 
 function TORListBox.SearchMsg: UINT;
@@ -3441,10 +3522,11 @@ begin
   FScrollBar.TabStop := False;
   FScrollBar.ControlStyle := FScrollBar.ControlStyle - [csCaptureMouse];
   AdjustScrollBar;
-  FScrollBar.OnScroll := ScrollTo;
+  FScrollBar.OnScroll := ScrollBarScroll;
   if FParentCombo = nil
     then FScrollBar.Parent := Parent
   else FScrollBar.Parent := FParentCombo.FDropPanel;
+  FLastItemID := '';
 end;
 
 procedure TORListBox.FreeScrollBar;
@@ -3462,7 +3544,14 @@ var
   FirstItem, LastItem: string;
   i: Integer;
 begin
-  if Strings.Count = 0 then Exit;
+  FLastEmpty := (Strings.Count = 0);
+  if FLastEmpty then
+  begin
+    FLastEmptyStartFrom := FLastStartFrom;
+    FLastEmptyDirection := FLastDirection;
+    FLastEmptyInsertAt := FLastInsertAt;
+    Exit;
+  end;
   { To prevent the problem where the initial list item(s) are returned repeatedly because the
     DisplayText is longer than the subscript in a cross-reference, compare the last item
     returned with the first item in the long list.   If they are the same, assume the long
@@ -3485,6 +3574,15 @@ begin
     True: case FDirection of
         LL_REVERSE: for i := 0 to Strings.Count - 1 do Items.Insert(FInsertAt, Strings[i]);
         LL_FORWARD: for i := 0 to Strings.Count - 1 do Items.Add(Strings[i]);
+      end;
+  end;
+  if FLongList and (ItemIndex < 0) and (FLastItemID <> '') then
+  begin
+    for i := 0 to Items.Count - 1 do
+      if Items[i] = FLastItemID then
+      begin
+        ItemIndex := i;
+        break;
       end;
   end;
 end;
@@ -3536,6 +3634,8 @@ procedure TORListBox.NeedData(Direction: Integer; StartFrom: string);
 { called whenever the longlist needs more data inserted at a certain point into the listbox }
 var
   CtrlPos, CharPos, index: Integer;
+  DoCall: boolean;
+  StrtFrom: string;
 
   procedure ClearLong;
   { clears a portion or all of the longlist to conserve the memory it occupies }
@@ -3554,47 +3654,66 @@ var
   end;
 
 begin {NeedData}
+  if not FLongList then
+    exit;
   FFromNeedData := True;
-  FFirstLoad := False;
-  FDataAdded := False;
-  FDirection := Direction;
-  SendMessage(Handle, WM_SETREDRAW, NOREDRAW, 0);
-  if Items.Count > 1000 then ClearLong;
-  case FDirection of
-    LL_REVERSE: if FWaterMark < Items.Count then StartFrom := DisplayText[FWaterMark];
-    LL_POSITION: begin
-        ClearLong;
-        if StartFrom = #127#127#127 then
-        begin
-          FDirection := LL_REVERSE;
-          StartFrom := '';
-        end
-        else FDirection := LL_FORWARD;
-      end;
-    LL_FORWARD: if (FWaterMark < Items.Count) and (Items.Count > 0)
-      then StartFrom := DisplayText[Items.Count - 1];
-  end;
-  if LookupPiece <> 0 then
-  begin
-    index := GetStringIndex(StartFrom);
-    if index > -1 then
-      StartFrom := Piece(Items[index], Delimiter, LookUpPiece);
-  end;
-  if CaseChanged then
-    StartFrom := Uppercase(StartFrom);
-  StartFrom := Copy(StartFrom, 1, 128); // limit length to 128 characters
-  CtrlPos := 0; // make sure no ctrl characters
-  for CharPos := 1 to Length(StartFrom) do if CharInSet(StartFrom[CharPos], [#0..#31]) then
-    begin
-      CtrlPos := CharPos;
-      break;
+  FKeepItemID := True;
+  try
+    FFirstLoad := False;
+    FDataAdded := False;
+    FDirection := Direction;
+    SendMessage(Handle, WM_SETREDRAW, NOREDRAW, 0);
+    if Items.Count > 1000 then ClearLong;
+    case FDirection of
+      LL_REVERSE: if FWaterMark < Items.Count then StartFrom := DisplayText[FWaterMark];
+      LL_POSITION: begin
+          ClearLong;
+          if StartFrom = #127#127#127 then
+          begin
+            FDirection := LL_REVERSE;
+            StartFrom := '';
+          end
+          else FDirection := LL_FORWARD;
+        end;
+      LL_FORWARD: if (FWaterMark < Items.Count) and (Items.Count > 0)
+        then StartFrom := DisplayText[Items.Count - 1];
     end;
-  if CtrlPos > 0 then StartFrom := Copy(StartFrom, 1, CtrlPos - 1);
-  if FDirection = LL_FORWARD then FInsertAt := Items.Count else FInsertAt := FWaterMark;
-  if FLongList and Assigned(FOnNeedData) then
-    FOnNeedData(Self, copy(StartFrom, 1, MaxNeedDataLen), FDirection, FInsertAt);
-  SendMessage(Handle, WM_SETREDRAW, DOREDRAW, 0);
-  FFromNeedData := False;
+    if LookupPiece <> 0 then
+    begin
+      index := GetStringIndex(StartFrom);
+      if index > -1 then
+        StartFrom := Piece(Items[index], Delimiter, LookUpPiece);
+    end;
+    if CaseChanged then
+      StartFrom := Uppercase(StartFrom);
+    StartFrom := Copy(StartFrom, 1, 128); // limit length to 128 characters
+    CtrlPos := 0; // make sure no ctrl characters
+    for CharPos := 1 to Length(StartFrom) do if CharInSet(StartFrom[CharPos], [#0..#31]) then
+      begin
+        CtrlPos := CharPos;
+        break;
+      end;
+    if CtrlPos > 0 then StartFrom := Copy(StartFrom, 1, CtrlPos - 1);
+    if FDirection = LL_FORWARD then FInsertAt := Items.Count else FInsertAt := FWaterMark;
+    StrtFrom := copy(StartFrom, 1, MaxNeedDataLen);
+    DoCall := FLongList and Assigned(FOnNeedData);
+    if DoCall and FDetectLastEmpty and FLastEmpty and
+      (FLastEmptyStartFrom = StrtFrom) and (FLastEmptyDirection = FDirection) and
+      (FLastEmptyInsertAt = FInsertAt) then
+      DoCall := False;
+    if DoCall then
+    begin
+      FLastEmpty := False;
+      FLastStartFrom :=  StrtFrom;
+      FLastDirection := FDirection;
+      FLastInsertAt := FInsertAt;
+      FOnNeedData(Self, FLastStartFrom, FLastDirection, FLastInsertAt);
+    end;
+    SendMessage(Handle, WM_SETREDRAW, DOREDRAW, 0);
+  finally
+    FKeepItemID := False;
+    FFromNeedData := False;
+  end;
   Invalidate;
 end;
 
@@ -3611,16 +3730,28 @@ begin
       Inc(Result); // only long list visible
 end;
 
+procedure TORListBox.ScrollBarScroll(Sender: TObject; ScrollCode: TScrollCode;
+  var ScrollPos: Integer);
+begin
+  FDetectLastEmpty := True;
+  try
+    ScrollTo(Sender, ScrollCode, ScrollPos);
+  finally
+    FDetectLastEmpty := False;
+  end;
+end;
+
 procedure TORListBox.ScrollTo(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: Integer);
 { event code for the longlist scrollbar, adjusts TopIndex & calls OnNeedData as necessary }
 var
   Count, Goal, Dir: integer;
   Done: boolean;
-  DropDownPanel: TORListBox;
 
   function CallNeedData(Backward: boolean): boolean;
   begin
-    if Backward then
+    if not FLongList then
+      Result := False
+    else if Backward then
     begin
       if FFromSetFocusIndex then
         Result := ((FCurrentTop - 1) < FWaterMark)
@@ -3637,14 +3768,8 @@ var
   end;
 
 begin
-  If Length(HintArray) > 0 then begin
-   DropDownPanel := TORListBox.Create(nil);
-   try
-    DropDownPanel.SetHintProperties(True, GetParentForm(Self));
-   finally
-    DropDownPanel.Free;
-   end;
-  end;
+  If Length(HintArray) > 0 then
+    SetHintProperties(True, GetParentForm(Self));
   if assigned(uItemTip) then
     uItemTip.Hide;
   // DRM - INC0419622 - Force calculation of FLargeChange
@@ -3653,7 +3778,8 @@ begin
   FCurrentTop := TopIndex;
   if (ScrollCode = scPosition) then
   begin
-    NeedData(LL_POSITION, ALPHA_DISTRIBUTION[ScrollPos]);
+    if FLongList then
+      NeedData(LL_POSITION, ALPHA_DISTRIBUTION[ScrollPos]);
     case ScrollPos of
       0: TopIndex := 0;
       1..99: TopIndex := FWaterMark;
@@ -3969,6 +4095,8 @@ end;
 procedure TORListBox.Clear;
 begin
   Items.Clear;
+  if (not FKeepItemID) then
+    FLastItemID := '';
   inherited;
 end;
 
@@ -3997,33 +4125,6 @@ end;
 function TORListBox.GetCaption: string;
 begin
   result := FCaption.Caption;
-end;
-
-// In Delphi 2006, hint windows will cause the TORComboBox drop down list to
-// move behind a Stay on Top form.  Hints are also problematic with item tips in
-// the drop down list, so we disable them when ever a drop down list is open,
-// on all forms, not just stay on top forms.
-var
-  uDropPanelOpenCount: integer = 0;
-  uOldShowHintsSetting: boolean;
-
-procedure DropDownPanelOpened;
-begin
-  if uDropPanelOpenCount = 0 then
-    uOldShowHintsSetting := Application.ShowHint;
- // Application.ShowHint := FALSE;
-  inc(uDropPanelOpenCount);
-end;
-
-procedure DropDownPanelClosed;
-begin
-  dec(uDropPanelOpenCount);
-  if uDropPanelOpenCount <= 0 then
-  begin
-    uDropPanelOpenCount := 0;
-    if not Application.ShowHint then
-  //    Application.ShowHint := uOldShowHintsSetting
-  end;
 end;
 
 { TORDropPanel ----------------------------------------------------------------------------- }
@@ -4248,9 +4349,12 @@ begin
   FEditBox.OnKeyDown := FwdKeyDown;
   FEditBox.OnKeyPress := FwdKeyPress;
   FEditBox.OnKeyUp := FwdKeyUp;
+  FEditBox.OnExit := EditOnExit;
   FEditBox.Visible := True;
   fCharsNeedMatch := 1;
   TimerInterval := KEY_TIMER_DELAY;
+  FOwnsData := True;
+  FSetItemIndexOnChange := True;
 end;
 
 procedure TORComboBox.WMDestroy(var Message: TWMDestroy);
@@ -4304,7 +4408,7 @@ procedure TORComboBox.AdjustSizeOfSelf;
 { adjusts the components of the combobox to fit within the control boundaries }
 var
   FontHeight: Integer;
-  cboBtnX, cboBtnY: integer;
+//  cboBtnX, cboBtnY: integer;
   cboYMargin: integer;
 
 begin
@@ -4313,24 +4417,26 @@ begin
   if FTemplateField then
   begin
     cboYMargin := 0;
-    cboBtnX := 1;
-    cboBtnY := 1;
+//    cboBtnX := 1;
+//    cboBtnY := 1;
   end
   else
   begin
     cboYMargin := CBO_CYMARGIN;
-    cboBtnX := CBO_CXFRAME;
-    cboBtnY := CBO_CXFRAME;
+//    cboBtnX := CBO_CXFRAME;
+//    cboBtnY := CBO_CXFRAME;
   end;
   Height := HigherOf(FontHeight + cboYMargin, Height); // must be at least as high as text
   EditControl.SetBounds(0, 0, Width, FontHeight + cboYMargin);
   if (assigned(FEditPanel)) then
     FEditBox.SetBounds(2, 3, FEditPanel.Width - 4, FEditPanel.Height - 5);
+
   if FStyle = orcsDropDown then
   begin
     Height := FontHeight + cboYMargin; // DropDown can only be text height
-    FDropBtn.SetBounds(EditControl.Width - CBO_CXBTN - cboBtnX, 0,
-      CBO_CXBTN, EditControl.Height - cboBtnY);
+//    FDropBtn.SetBounds(EditControl.Width - CBO_CXBTN - cboBtnX, 0,
+//      CBO_CXBTN, EditControl.Height - cboBtnY);
+    FDropBtn.Width := FontHeightPixel(Self.Font.Handle) + 6;//same as TORDateBox
   end else
   begin
     FListBox.SetBounds(0, FontHeight + CBO_CYMARGIN,
@@ -4356,48 +4462,15 @@ procedure TORComboBox.DropButtonUp(Sender: TObject; Button: TMouseButton; Shift:
 { shift the focus back to the editbox so the focus rectangle doesn't clutter the button }
 begin
   if FDroppedDown then FListBox.MouseCapture := True; // do here so 1st buttonup not captured
-  FEditBox.SetFocus;
+  if ShouldFocus(FEditBox) then
+    FEditBox.SetFocus;
   If FDroppedDown then fDropPanel.BringToFront;
 end;
 
 procedure TORComboBox.DropDownStatusChanged(opened: boolean);
-var
-  DropDownPanel: TORListBox;
 begin
-  DropDownPanel := TORListBox.Create(nil);
-  try
-    if opened then
-    begin
-      if not FDropPanel.Visible then
-      begin
-        if FDropDownStatusChangedCount = 0 then
-        begin
-          FDisableHints := TRUE;
-          DropDownPanelOpened;
-        end;
-        inc(FDropDownStatusChangedCount);
-      end;
-    end
-    else
-    begin
-      dec(FDropDownStatusChangedCount);
-      if FDropDownStatusChangedCount <= 0 then
-      begin
-        //agp change
-        //if FDisableHints then
-        if (FDisableHints) and (Self.Owner <> nil) then
-        begin
-          DropDownPanelClosed;
-          FDisableHints := FALSE;
-          If (GetParentForm(Self) <> nil) then  
-           DropDownPanel.SetHintProperties(True, GetParentForm(Self));
-        end;
-        FDropDownStatusChangedCount := 0;
-      end;
-    end;
-  finally
-    DropDownPanel.Free;
-  end;
+  if not opened then
+    SetHintProperties(True, GetParentForm(Self));
 end;
 
 procedure TORComboBox.ClearDropDownStatus;
@@ -4409,6 +4482,8 @@ end;
 destructor TORComboBox.Destroy;
 begin
   ClearDropDownStatus;
+  if FOwnsData then
+    FreeAndNil(FData);
   inherited;
 end;
 
@@ -4434,8 +4509,11 @@ end;
 
 procedure TORComboBox.UMGotFocus(var Message: TMessage);
 begin
-  FEditBox.SetFocus;
-  if AutoSelect then FEditBox.SelectAll;
+  if ShouldFocus(FEditBox) then
+  begin
+    FEditBox.SetFocus;
+    if AutoSelect then FEditBox.SelectAll;
+  end;
 end;
 
 procedure TORComboBox.DoExit;
@@ -4571,7 +4649,8 @@ begin
     // reason FEditBox.SelectAll selects successfully then deselects on exiting this procedure
     if (not FListBox.FCheckBoxes) then
       PostMessage(FEditBox.Handle, EM_SETSEL, 0, Length(FEditBox.Text));
-    FEditBox.SetFocus;
+    if ShouldFocus(FEditBox) then
+      FEditBox.SetFocus;
   end;
   if Assigned(FOnClick) then FOnClick(Self);
   if (not FListBox.FCheckBoxes) then
@@ -4764,7 +4843,7 @@ var
   Loc: TRect;
 begin
   SendMessage(FEditBox.Handle, EM_GETRECT, 0, LongInt(@Loc));
-  Loc.Bottom := ClientHeight + 1; // +1 is workaround for windows paint bug
+//  Loc.Bottom := ClientHeight + 1; // +1 is workaround for windows paint bug
   if FStyle = orcsDropDown then
   begin
     Loc.Right := ClientWidth - FDropBtn.Width - CBO_CXFRAME; // edit up to button
@@ -4773,11 +4852,11 @@ begin
   end
   else
     Loc.Right := ClientWidth - CBO_CXFRAME; // edit in full edit box
-  Loc.Top := 0;
+  Loc.Top := 1;//0
   if (FTemplateField) then
-    Loc.Left := 2
+    Loc.Left := 4 //2
   else
-    Loc.Left := 0;
+    Loc.Left := 4; //0;
   SendMessage(FEditBox.Handle, EM_SETRECTNP, 0, LongInt(@Loc));
 end;
 
@@ -4815,7 +4894,8 @@ begin
         SetEditText('');
     end;
   end;
-  if callChange and Assigned(FOnChange) then FOnChange(Self);
+  if callChange and FSetItemIndexOnChange and Assigned(FOnChange) then
+    FOnChange(Self);
 end;
 
 function TORComboBox.SelectByIEN(AnIEN: Int64): Integer;
@@ -4864,6 +4944,8 @@ begin
       if (assigned(FEditPanel) and (csDesigning in ComponentState)) then
         FEditPanel.ControlStyle := FEditPanel.ControlStyle + [csAcceptsControls];
       FDropBtn.Parent := FEditBox;
+      fDropBtn.Align := alRight;
+      fDropBtn.AlignWithMargins := False;
       if (assigned(FEditPanel) and (csDesigning in ComponentState)) then
         FEditPanel.ControlStyle := FEditPanel.ControlStyle - [csAcceptsControls];
       LoadComboBoxImage;
@@ -5112,6 +5194,14 @@ begin
   Result := FListBox.TabPositions;
 end;
 
+function TORComboBox.GetTabStop: Boolean;
+begin
+  if csDesigning in ComponentState then
+    Result := inherited TabStop
+  else
+    Result := False;
+end;
+
 function TORComboBox.GetTabPosInPixels: boolean;
 begin
   Result := FListBox.TabPosInPixels;
@@ -5214,6 +5304,14 @@ begin
   FListBox.TabPositions := Value;
 end;
 
+procedure TORComboBox.SetTabStop(const Value: Boolean);
+begin
+  if csDesigning in ComponentState then
+    inherited TabStop := Value
+  else
+    inherited TabStop := False
+end;
+
 procedure TORComboBox.SetTabPosInPixels(const Value: boolean);
 begin
   FListBox.TabPosInPixels := Value;
@@ -5265,11 +5363,18 @@ begin
         FEditBox.Color := FCheckBoxEditColor;
         FEditBox.Text := GetEditBoxText(-1);
         FEditBox.BorderStyle := bsNone;
+        FEditBox.align := alClient;
+
         FEditPanel := TORComboPanelEdit.Create(Self);
         FEditPanel.Parent := Self;
-        FEditPanel.BevelOuter := bvRaised;
+        FEditPanel.BevelOuter := bvNone;// bvRaised
+        FEditPanel.BevelInner := bvNone;
+        FEditPanel.BorderStyle := bsSingle;
+        FEditPanel.Ctl3d := False;
         FEditPanel.BorderWidth := 1;
+
         FEditBox.Parent := FEditPanel;
+
         if (csDesigning in ComponentState) then
           FEditPanel.ControlStyle := FEditPanel.ControlStyle - [csAcceptsControls];
       end
@@ -5278,6 +5383,7 @@ begin
         FEditBox.Parent := Self;
         FEditBox.Color := FListBox.Color;
         FEditBox.BorderStyle := bsSingle;
+
         FEditPanel.Free;
         FEditPanel := nil;
       end;
@@ -5483,6 +5589,18 @@ end;
 procedure TORComboBox.SetLookupPiece(const Value: integer);
 begin
   FListBox.LookupPiece := Value;
+end;
+
+procedure TORComboBox.setOnDrawItem(aValue: TDrawItemEvent);
+begin
+  fOnDrawItem := aValue;
+  FListBox.Style := lbOwnerDrawFixed;
+  FListBox.OnDrawItem := aValue;
+end;
+
+procedure TORComboBox.EditOnExit(Sender: TObject);
+begin
+  FListBox.Invalidate;
 end;
 
 { TSizeRatio methods }
@@ -6867,7 +6985,12 @@ procedure TORCheckBox.UpdateAssociate;
 
   begin
     if DoCtrl then
-      Ctrl.Enabled := Checked;
+    begin
+      try
+        Ctrl.Enabled := Checked;
+      except
+      end;
+    end;
 
     // added (csAcceptsControls in Ctrl.ControlStyle) below to prevent disabling of
     // child sub controls, like the TBitBtn in the TORComboBox.  If the combo box is
@@ -7074,9 +7197,8 @@ begin
       if ItemIndex = -1 then begin
         ItemIndex := 0;
         Click;
-        if ControlCount > 0 then begin
+        if (ControlCount > 0) and ShouldFocus(TWinControl(Controls[0])) then
           TWinControl(Controls[0]).SetFocus;
-        end;
         Key := 0;
       end;
   end;
@@ -7423,6 +7545,24 @@ begin
   Result := (PropertyID = DynaPropAccesibilityCaption);
 end;
 
+procedure TCaptionTreeView.TVMDeleteItem(var Message: TMessage);
+begin
+  // Users were getting an Access violation in COMCTL32.dll processing this message
+  try
+    inherited;
+  except
+  end;
+end;
+
+procedure TCaptionTreeView.TVMSelectItem(var Message: TMessage);
+begin
+  // Users were getting an Access violation in COMCTL32.dll processing this message
+  try
+    inherited;
+  except
+  end;
+end;
+
 { TCaptionComboBox }
 
 function TCaptionComboBox.GetCaption: string;
@@ -7676,7 +7816,7 @@ Var
 begin
   //only auto size the columns if it is enabled (disabled by default)
   if not(FAutoSize) then exit;
-  
+
  //Look at the header and the last added row
  for Z := 0 to Columns.Count - 1 do
  begin
@@ -7906,4 +8046,3 @@ finalization
 {$WARN UNSAFE_CAST ON}
 {$WARN UNSAFE_CODE ON}
 end.
-

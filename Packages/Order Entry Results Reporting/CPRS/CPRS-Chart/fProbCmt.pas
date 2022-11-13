@@ -14,6 +14,7 @@ type
     lblComment: TOROffsetLabel;
     procedure bbCancelClick(Sender: TObject);
     procedure bbOKClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     fCmtResult: string ;
   end;
@@ -93,6 +94,13 @@ begin
       fCmtResult := '';
       ModalResult := mrNone;
     end;
+end;
+
+procedure TfrmProbCmt.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if fCmtResult = '' then
+    fCmtResult := '0^Cancelled';
 end;
 
 end.

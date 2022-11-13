@@ -179,12 +179,19 @@ begin
   lstVisit.Caption := lblSelect.Caption;
 end;
 
-procedure TfrmVisit.cboLocationNeedData(Sender: TObject; const StartFrom: string;
-  Direction, InsertAt: Integer);
+procedure TfrmVisit.cboLocationNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
 { callback for location combobox to list active locations }
+var
+  sl: TStrings;
 begin
-  //cboLocation.ForDataUse(SubSetOfLocations(StartFrom, Direction));
-  cboLocation.ForDataUse(SubSetOfClinics(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setSubSetOfClinics(sl, StartFrom, Direction);
+    cboLocation.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmVisit.cmdOKClick(Sender: TObject);

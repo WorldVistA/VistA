@@ -21,6 +21,9 @@ type
     { Public declarations }
   end;
 
+  tStringsHelper = class helper for TStrings
+    function OrderExists(aOrderID: String): boolean;
+  end;
 
 procedure CSRemaining(orders: TStrings; csorders: TStrings);
 
@@ -30,11 +33,10 @@ implementation
 procedure CSRemaining(orders: TStrings; csorders: TStrings);
 var
   ShownCurrentUserLabel, ShownOtherUsersLabel: boolean;
-  Display: String;
-  i,j: Integer;
+  Display, OrderID: String;
+  i: Integer;
   frmCSRemaining: TfrmCSRemaining;
   UnsignedOrders,HaveOrders,OthersCSOrders: TStrings;
-  show: boolean;
 begin
     ShownCurrentUserLabel := False;
     ShownOtherUsersLabel := False;
@@ -47,19 +49,12 @@ begin
     for i := 0 to Pred(UnsignedOrders.Count) do
     begin
       //if UnsignedOrders[i] is not in either orders or csorders then continue
-      show := false;
-      for j := 0 to orders.Count - 1 do
-      begin
-        if (not(orders.objects[j]=nil) and (Piece(unsignedOrders[i],u,1)=TChangeItem(orders.objects[j]).ID)) then show := true;
-      end;
-      for j := 0 to csorders.Count - 1 do
-      begin
-        if (not(csorders.objects[j]=nil) and (Piece(unsignedOrders[i],u,1)=TChangeItem(csorders.objects[j]).ID)) then show := true;
-      end;
 
-      if not(show) then continue;
+      OrderID := Piece(unsignedOrders[i],u,1);
+      if (not orders.OrderExists(OrderID)) and (not csorders.OrderExists(OrderID)) then
+        continue;
 
-      Display := TextForOrder(Piece(UnsignedOrders[i],U,1));
+      Display := TextForOrder(OrderID);
       if Piece(UnsignedOrders[i],U,6)='1' then
       begin
         if User.DUZ=StrToInt64Def(Piece(UnsignedOrders[i],U,2),0) then
@@ -103,6 +98,30 @@ end;
 procedure TfrmCSRemaining.cmdOKClick(Sender: TObject);
 begin
   self.Close;
+end;
+
+function tStringsHelper.OrderExists(aOrderID: String): boolean;
+var
+  j: Integer;
+  ObjID: String;
+begin
+  Result := False;
+  for j := 0 to Count - 1 do
+  begin
+    if assigned(objects[j]) then
+    begin
+      if objects[j] is TChangeItem then
+        ObjID := TChangeItem(objects[j]).ID;
+      if objects[j] is TOrder then
+        ObjID := TOrder(objects[j]).ID;
+
+      if aOrderID = ObjID then
+      begin
+        Result := true;
+        break;
+      end;
+    end;
+  end;
 end;
 
 end.

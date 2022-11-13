@@ -280,7 +280,7 @@ inherited frmConsultAction: TfrmConsultAction
         Height = 54
         Align = alBottom
         BevelOuter = bvNone
-        TabOrder = 2
+        TabOrder = 3
         object pnlActionDate: TPanel
           Left = 0
           Top = 0
@@ -384,12 +384,12 @@ inherited frmConsultAction: TfrmConsultAction
         Height = 58
         Align = alBottom
         BevelOuter = bvNone
-        TabOrder = 3
+        TabOrder = 2
         object lblAutoAlerts: TStaticText
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 348
+          Width = 4
           Height = 4
           Align = alTop
           TabOrder = 1
@@ -428,7 +428,7 @@ inherited frmConsultAction: TfrmConsultAction
       Align = alRight
       Cancel = True
       Caption = 'Cancel'
-      TabOrder = 0
+      TabOrder = 2
       OnClick = cmdCancelClick
     end
     object cmdOK: TORAlignButton
@@ -447,8 +447,8 @@ inherited frmConsultAction: TfrmConsultAction
       Top = 4
       Width = 130
       Height = 25
-      Caption = 'Open Consult Tool'
-      TabOrder = 2
+      Caption = 'Open Consult Toolbox'
+      TabOrder = 0
       OnClick = btnLaunchToolboxClick
     end
   end

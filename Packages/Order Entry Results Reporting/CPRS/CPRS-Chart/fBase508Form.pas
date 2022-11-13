@@ -3,7 +3,7 @@ unit fBase508Form;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ORFn,
   Dialogs, StdCtrls, ExtCtrls, VA508AccessibilityManager, OR2006Compatibility, uConst;
 
 type
@@ -12,7 +12,7 @@ type
   TAccessibilityActions = set of TAccessibilityAction;
 
 type
-  TfrmBase508Form = class(TForm)
+  TfrmBase508Form = class(TForm, IORKeepBounds)
     amgrMain: TVA508AccessibilityManager;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     function FormHelp(Command: Word; Data: NativeInt;
@@ -25,6 +25,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
+    FKeepBounds: boolean;
+    FKeptBounds: TRect;
     HelpClicked: boolean;
     OldCursor: TCursor;
     FLoadedCalled: boolean;
@@ -39,6 +41,7 @@ type
     procedure UM508(var Message: TMessage); message UM_508;
     procedure WMNCLBUTTONDOWN(var Msg: TWMNCLButtonDown) ; message WM_NCLBUTTONDOWN;
     procedure WMNCLBUTTONUP(var Msg: TWMNCLButtonUp) ; message WM_NCLBUTTONUP;
+    procedure CMShowingChanged(var Message: TMessage); message CM_SHOWINGCHANGED;
     function DoOnHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
   protected
     procedure Activate; override;
@@ -49,6 +52,9 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     property DefaultButton : TButton read FDefaultButton write SetDefaultButton;
+    function GetKeepBounds: boolean;
+    procedure SetKeepBounds(Value: boolean);
+    property KeepBounds: boolean read GetKeepBounds write SetKeepBounds;
   end;
 
 var
@@ -58,8 +64,8 @@ procedure UnfocusableControlEnter(Self, Sender: TObject);
 
 implementation
 
-uses ORSystem, ShellAPI, ORFn, VA508AccessibilityRouter, VAUtils, uHelpManager
-, uGN_RPCLog, uCore, ORNet;
+uses ORSystem, ShellAPI, VA508AccessibilityRouter, VAUtils, uHelpManager,
+  uGN_RPCLog, uCore, ORNet;
 
 {$R *.dfm}
 
@@ -143,6 +149,11 @@ begin
   end;
 end;
 
+function TfrmBase508Form.GetKeepBounds: boolean;
+begin
+  Result := FKeepBounds;
+end;
+
 procedure TfrmBase508Form.Loaded;
 begin
   inherited Loaded;
@@ -175,6 +186,13 @@ end;
 procedure TfrmBase508Form.SetDefaultButton(const Value: TButton);
 begin
   FDefaultButton := Value;
+end;
+
+procedure TfrmBase508Form.SetKeepBounds(Value: boolean);
+begin
+  FKeepBounds := Value;
+  if Value then
+    FKeptBounds := BoundsRect;
 end;
 
 procedure TfrmBase508Form.SetParent(AParent: TWinControl);
@@ -214,6 +232,19 @@ begin
       TExposedBtn(tempDefaultBtn).Click;
 end;
 
+procedure TfrmBase508Form.CMShowingChanged(var Message: TMessage);
+begin
+  inherited;
+  if WindowState <> wsMaximized then
+  begin
+    if KeepBounds then
+      BoundsRect := FKeptBounds;
+    if not assigned(parent) then
+      ForceInsideWorkArea(Self);
+    KeepBounds := False;
+  end;
+end;
+
 constructor TfrmBase508Form.Create(AOwner: TComponent);
 
   procedure AdjustControls(Control: TWinControl);
@@ -243,9 +274,6 @@ begin
   UpdateAccessibilityActions(FActions);
   if aaColorConversion in FActions then
     UpdateColorsFor508Compliance(Self);
-
-  if aaTitleBarHeightAdjustment in FActions then
-    PostMessage(Handle, UM_508, MSG_508_CODE_TITLE_BAR, 0);
 
   if aaFixTabStopArrowNavigationBug in FActions then
   begin
@@ -339,6 +367,41 @@ begin
   begin
     RPCLogNext;
     Key := 0;
+{$IFDEF DEBUG}// VISTAOR-23966
+  end
+  else if (Key = VK_F6) and (ssCtrl in Shift) then
+  begin
+    Key := 0;
+    ShowMessage('F7 - RPCBrokerV.Connected := not RPCBrokerV.Connected' + #13#10 +
+//      'F8 - CallVistA(''XWB IM HERE'',[])' + #13#10 +
+      'F8 - Close main form' + #13#10 +
+      'F9 - Application.Terminate' + #13#10 +
+      'F10 - Disconnect and Terminate)');
+  end
+  else if (Key = VK_F7) and (ssCtrl in Shift) then
+  begin
+    Key := 0;
+    RPCBrokerV.Connected := not RPCBrokerV.Connected;
+  end
+  else if (Key = VK_F8) and (ssCtrl in Shift) then
+  begin
+    Key := 0;
+//    RPCBrokerV.Param.Clear;
+//    RPCBrokerV.RemoteProcedure := 'XWB IM HERE';
+//    RPCBrokerV.Call;
+    postMessage(Application.MainForm.Handle, WM_CLOSE,0,0);
+  end
+  else if (Key = VK_F9) and (ssCtrl in Shift) then
+  begin
+    Key := 0;
+    Application.Terminate;
+  end
+  else if (Key = VK_F10) and (ssCtrl in Shift) then
+  begin
+    Key := 0;
+    RPCBrokerV.Connected := False;
+    SendMessage(Application.MainForm.Handle,WM_CLOSE,0,0);
+{$ENDIF}
   end;
   // RPCLog modification -------------------------------------------------- end
 end;
@@ -390,6 +453,11 @@ end;
 procedure TfrmBase508Form.FormShow(Sender: TObject);
 begin
   inherited;
+  if aaTitleBarHeightAdjustment in FActions then
+  begin
+    PostMessage(Handle, UM_508, MSG_508_CODE_TITLE_BAR, 0);
+    exclude(FActions, aaTitleBarHeightAdjustment);
+  end;
   if RPCLog_TrackForms then
     AddLogLine('Form Show: '+ self.Name,RPCLog_OnActivate+self.Caption + ' ('+self.Name+')');
 end;

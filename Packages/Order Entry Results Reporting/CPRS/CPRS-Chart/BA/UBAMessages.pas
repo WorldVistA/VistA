@@ -7,10 +7,6 @@ interface
 
 const
 
-  {$ifdef debug}
-  BA_ASSRTF                     = 'Assertion failed' + #13;
-  {$endif}
-
   //CPRS User Messages
   BA_MAX_DX_ALLOWED             = 'Can Not Add Diagnosis' + #13 +
                                    'Reason: Maximum (4) diagnoses have already been applied to this order.' + #13 +

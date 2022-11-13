@@ -53,6 +53,8 @@ implementation
 (*uses
   fRptBox;*)
 
+uses uMisc;
+
 {==============================================================
 RPC [SURGERY CASES BY CONTEXT] returns
 the following string '^' pieces:
@@ -145,7 +147,8 @@ begin
             end;
             Dest.Add(x);
           end; {for}
-        SortByPiece(TStringList(Dest), U, 3);
+//        SortByPiece(TStringList(Dest), U, 3);
+        SortByPiece(Dest, U, 3);
         if not Ascending then InvertStringList(TStringList(Dest));
         Dest.Insert(0, IntToStr(Context) + '^' + SG_TV_TEXT + '^^^^^^^^^^^%^0');
         Alist.Sort;
@@ -218,6 +221,8 @@ var
     IMG_SURG_NON_OR_CASE_OPEN  = 12;
 *)
 begin
+  if not AssignedAndHasData(Node) then
+    Exit;
   with Node, PCaseTreeObject(Node.Data)^ do
     begin
       i := Pos('*', DocTitle);
@@ -271,7 +276,7 @@ begin
       SelectedIndex := ImageIndex;
       SetImageFlag(Node);
       CaseNode := TORTreeView(Node.TreeView).FindPieceNode(CaseID, 1, U, nil);
-      if CaseNode <> nil then
+      if AssignedAndHasData(CaseNode) then
         begin
           PCaseTreeObject(CaseNode.Data)^.ImageCount := PCaseTreeObject(CaseNode.Data)^.ImageCount + ImageCount;
           SetImageFlag(CaseNode);
@@ -281,6 +286,8 @@ end;
 
 procedure SetImageFlag(ANode: TORTreeNode);
 begin
+  if not AssignedAndHasData(ANode) then
+    Exit;
   with ANode, PCaseTreeObject(ANode.Data)^ do
     begin
       if (ImageIndex in [IMG_SURG_TOP_LEVEL, IMG_SURG_GROUP_OPEN, IMG_SURG_GROUP_SHUT]) then

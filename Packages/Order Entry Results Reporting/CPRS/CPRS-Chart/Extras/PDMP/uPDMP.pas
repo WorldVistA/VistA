@@ -22,17 +22,19 @@ const
   UM_PDMP_Options = (UM_PDMP_BASE + 80);  // PDMP Options updated
   UM_PDMP_WebError= (UM_PDMP_BASE + 82);  // PDMP Web page failed to load
   UM_PDMP_Refresh = (UM_PDMP_BASE + 84);  // PDMP Review updated
+  UM_PDMP_Closed  = (UM_PDMP_BASE + 86);  // PDMP Review updated
+
+  UM_PDMP_Disable = (UM_PDMP_BASE + 88);  // Disable PDMP menu
+  UM_PDMP_Enable  = (UM_PDMP_BASE + 90);  // Disable PDMP menu
 
   TX_COS_AUTH = CRLF + ' is not authorized to cosign this document.';
 
-{$IFDEF DEBUG}
-  PDMP_DEBUG_TASK_ID = '111';
-{$ENDIF}
   PDMP_ConstraintsRatio = 4;
   TASK_ID_POS = 2; // ID position in result of 'ORPDMP STRTPDMP' RPC call
 
   PDMP_ERROR_NO_DATA = 'No data available for review';
   PDMP_ERROR_NO_JUSTIFICATION = 'No comments/justification provided';
+
   PDMP_NO_DATA_FOUND = 'No results returned for the patient';
 
   PDMP_MSG_DataRetrievingProblem: String = 'Problem retrieving PDMP results';
@@ -48,10 +50,8 @@ const
 var
   // options loaded as part of the sysPreferences
   PDMP_ENABLED: Boolean = False;
-
   PDMP_UseDefaultBrowser: Boolean = False;
   PDMP_PollingInterval: Integer = 2 * 1000; // seconds between polling attempts
-//  PDMP_KeepButton: Boolean = True;
   PDMP_ShowButton: String = 'ALWAYS';
   PDMP_Days: Integer = 90;
   PDMP_Polling_Timeout: Integer = 120;
@@ -59,14 +59,81 @@ var
   PDMP_COMMENT_LIMIT: Integer = 250;
   PDMP_COMMENT_MIN: Integer = 3;
   PDMP_PASTE_ENABLED: Boolean = False;
-
   PDMP_REVIEW_OPTIONS: String = '';
   PDMP_NoteTitleID: Integer = -1;
 
-{$IFDEF DEBUG}
   PDMP_Debug_MSG_Title: String = 'PDMP DEBUG';
-{$ENDIF}
+
+function CanReview: integer;
 
 implementation
 
+uses
+  fFrame, vcl.Controls, WinApi.Windows;
+
+function CanReview: Integer;
+var
+  s: String;
+  bResult,
+  b: Boolean;
+const
+  cTab: Char = CHAR(VK_TAB);
+
+begin
+  s := frmFrame.EditInProgress;
+  if s <> '' then
+  begin
+    Result := InfoBox('You are currently editing:' + CRLF + CRLF + s + CRLF +
+      CRLF + 'Do you want to Save this note before opening PDMP report?' + CRLF
+      + CRLF + 'Select:' + CRLF + CRLF +
+      '"Yes"' + CHAR(VK_TAB) + ' to save this note and open PDMP report' + CRLF +
+      '"No"' + CHAR(VK_TAB) +
+      'to continue editing note without opening PDMP report', 'PDMP Warning',
+      MB_YESNO or MB_ICONQUESTION);
+
+    Case Result of
+      IDYES:
+        begin
+          bResult := frmFrame.SaveEditInProgress(b);
+          if not bResult and b then
+            begin
+              InfoBox('Failed to save currently edited note', 'PDMP',
+                MB_OK + MB_ICONERROR);
+              Result := IDCANCEL;
+            end
+          else if not bResult then
+            Result := IDCANCEL;
+        end;
+      IDNO:
+        exit;
+    end;
+  end
+  else
+    Result := IDYES;
+end;
+{
+  function CanReview: Boolean;
+  var
+    s: String;
+    b: Boolean;
+  begin
+    s := frmFrame.EditInProgress;
+    Result := False;
+    if s <> '' then
+    begin
+      if InfoBox('You are currently editing:' + CRLF + CRLF + s + CRLF + CRLF +
+        'Do you wish to save this note and review PDMP report?', 'PDMP Warning',
+        MB_YESNO or MB_ICONQUESTION) <> IDYES then
+        exit
+      else
+      begin
+        Result := frmFrame.SaveEditInProgress(b);
+        if not Result and b then
+          InfoBox('Failed to save currently edited note', 'PDMP', MB_OK);
+      end;
+    end
+    else
+      Result := True;
+  end;
+}
 end.

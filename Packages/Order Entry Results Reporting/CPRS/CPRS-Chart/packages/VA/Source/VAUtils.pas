@@ -110,7 +110,7 @@ type
       1: (w: word);
       2: (b1, b2: byte);
   end;
-  
+
 // returns an 8 digit hex number
 function FastIntToHex(Value: LongWord): String;
 
@@ -262,20 +262,7 @@ type
 //Count the number of times a given sub string occurs within a string. Optional max character count
 function CountStringOccurrences(const aSubStr, aStr: String; aCutOff: Integer = -1): integer;
 
-{$IFNDEF DEBUG}
-type
-  TMaskedWinControl = class helper for TWinControl
-  public
-    procedure SetFocus;
-  end;
-
-  TMaskedForm = class helper for TCustomForm
-  public
-    procedure FocusControl(Control: TWinControl);
-    procedure SetFocus;
-    function SetFocusedControl(Control: TWinControl): Boolean;
-  end;
-{$ENDIF}
+function ShouldFocus(Control: TWinControl): boolean;
 
 implementation
 
@@ -317,9 +304,10 @@ end;
 
 type
   TStaticText4ScreenReader = class(TStaticText)
-  private 
+  private
     FTimer: TTimer;
-    FButton: TButton;
+    FDefaultButton, FFirstButton: TButton;
+    FFocusOnDefault: boolean;
     procedure OnLblTimer(Sender: TObject);
     procedure OnLblEnter(Sender: TObject);
     procedure OnLblKeyPress(Sender: TObject; var Key: Char);
@@ -330,6 +318,8 @@ type
 { TStaticText4ScreenReader }
 
 constructor TStaticText4ScreenReader.Create(AOwner: TComponent);
+var
+  cc: integer;
 begin
   inherited Create(AOwner);
   FTimer := TTimer.Create(Self);
@@ -338,15 +328,36 @@ begin
   FTimer.OnTimer := OnLblTimer;
   OnEnter := OnLblEnter;
   OnKeyPress := OnLblKeyPress;
+  FFocusOnDefault := True;
   if (AOwner is TForm) and ((AOwner as TForm).ActiveControl is TButton) then
-    FButton := (AOwner as TForm).ActiveControl as TButton;
+  begin
+    FDefaultButton := (AOwner as TForm).ActiveControl as TButton;
+    FDefaultButton.Default := False;
+    for cc := 0 to FDefaultButton.Parent.ControlCount - 1 do
+      if (FDefaultButton.Parent.Controls[cc] is TButton) then
+      begin
+        FFirstButton := (FDefaultButton.Parent.Controls[cc] as TButton);
+        break;
+      end;
+  end;
 end;
 
 procedure TStaticText4ScreenReader.OnLblTimer(Sender: TObject);
 begin
   FTimer.Enabled := False;
-  if assigned(FButton) then
-    FButton.SetFocus;
+  if FFocusOnDefault then
+  begin
+    if ShouldFocus(FDefaultButton) then
+      FDefaultButton.SetFocus;
+    FFocusOnDefault := False;
+  end
+  else
+  begin
+    if ShouldFocus(FFirstButton) then
+      FFirstButton.SetFocus
+    else if ShouldFocus(FDefaultButton) then
+      FDefaultButton.SetFocus;
+  end;
 end;
 
 procedure TStaticText4ScreenReader.OnLblEnter(Sender: TObject);
@@ -357,8 +368,8 @@ end;
 procedure TStaticText4ScreenReader.OnLblKeyPress(Sender: TObject;
   var Key: Char);
 begin
-  if CharInSet(Key, [#13, ' ']) and assigned(FButton) then
-    FButton.Click;
+  if CharInSet(Key, [#13, ' ']) and Assigned(FDefaultButton) then
+    FDefaultButton.Click;
 end;
 
 function InfoDlgInternal(const Text, Caption: string; DlgType: TMsgDlgType;
@@ -384,8 +395,92 @@ var
   dx, idx, x1, x2: integer;
   ctrl: TControl;
   lbl: TStaticText4ScreenReader;
+  workArea: TRect;
+
+  procedure InfoDlgMouseWheel(Self, Sender: TObject; Shift: TShiftState;
+    WheelDelta: integer; MousePos: TPoint; var Handled: boolean);
+  begin
+    with TScrollBox(Sender).VertScrollBar do
+      Position := Position - WheelDelta;
+    Handled := True;
+  end;
+
+  procedure AddScrollBoxIfNeeded;
+  var
+    idx, btnTop, btnBottom, Gap: integer;
+    boxWidth, neededWidth: integer;
+    messageLabel: TLabel;
+    box: TScrollBox;
+    evnt: TMouseWheelEvent;
+
+  begin
+    if dlg.Height > workArea.Height then
+    begin
+      btnBottom := 0;
+      messageLabel := nil;
+      for idx := 0 to dlg.ControlCount - 1 do
+      begin
+        ctrl := dlg.Controls[idx];
+        if (ctrl is TButton) and ((ctrl.Top + ctrl.Height) > btnBottom) then
+          btnBottom := ctrl.Top + ctrl.Height
+        else if (not assigned(messageLabel)) and (ctrl is TLabel) then
+          messageLabel := TLabel(ctrl);
+      end;
+      if assigned(messageLabel) and (btnBottom > 0) then
+      begin
+        for idx := 0 to dlg.ControlCount - 1 do
+          if (dlg.Controls[idx] is TButton) then
+            dlg.Controls[idx].Anchors := [akLeft, akBottom];
+        Gap := dlg.ClientHeight - btnBottom;
+        dlg.Height := workarea.Height - (Gap * 2);
+        dlg.Top := workarea.Top + Gap;
+        boxWidth := dlg.ClientWidth - Gap - messageLabel.Left;
+        neededWidth := messageLabel.Width + GetSystemMetrics(SM_CXVSCROLL) +
+          dlg.Font.Size;
+        dx := 0;
+        if neededWidth > boxWidth then
+        begin
+          dx := neededWidth - boxWidth;
+          dlg.Width := dlg.Width + dx;
+          Inc(boxWidth, dx);
+          dx := dx div 2;
+          dlg.Left := dlg.Left - dx;
+        end;
+        btnTop := dlg.Height;
+        for idx := 0 to dlg.ControlCount - 1 do
+        begin
+          ctrl := dlg.Controls[idx];
+          if (ctrl is TButton) then
+          begin
+            ctrl.Left := ctrl.Left + dx;
+            if ctrl.Top < btnTop then
+              btnTop := ctrl.Top;
+          end;
+        end;
+        box := TScrollBox.Create(dlg);
+        box.Parent := dlg;
+        box.Left := messageLabel.Left;
+        box.Width := boxWidth;
+        box.Top := Gap;
+        box.Height := btnTop - (Gap * 2);
+        box.VertScrollBar.Tracking := True;
+        box.VertScrollBar.Style := ssHotTrack;
+        box.BorderStyle := bsNone;
+        TMethod(evnt).Code := @InfoDlgMouseWheel;;
+        TMethod(evnt).Data := box;
+        box.OnMouseWheel := evnt;
+        messageLabel.Parent := box;
+        messageLabel.Top := 0;
+        messageLabel.Left := 0;
+      end;
+    end;
+  end;
 
 begin
+  if assigned(Screen.ActiveCustomForm) then
+    workArea := Screen.ActiveCustomForm.Monitor.WorkareaRect
+  else
+    workArea := Screen.WorkAreaRect;
   OldSize := Screen.MessageFont.Size;
   try
     if Assigned(Application.MainForm) then
@@ -395,13 +490,12 @@ begin
     else
       dlg := CreateMessageDialog(Text, DlgType, Buttons, TMsgDlgBtn(DefaultButton));
     try
+      dlg.DefaultMonitor := dmDesktop;
       dlg.Caption := Caption;
-      dx := Screen.Width div 4;
+      dx := workarea.Width div 4;
       if dlg.Width < dx then
       begin
-        dx := (dx - dlg.Width) div 2;
-        dlg.Width := Screen.Width div 4;
-        dlg.Left := dlg.Left - dx;
+        dlg.Width := dx;
         x1 := dlg.ClientWidth;
         x2 := 0;
         for idx := 0 to dlg.ControlCount - 1 do
@@ -428,6 +522,10 @@ begin
         end;
       end;
 
+      dx := (workarea.Width - dlg.Width) div 2;
+      dlg.Left := workarea.Left + dx;
+      AddScrollBoxIfNeeded;
+
       if ScreenReaderActive then
       begin
         dlg.Caption := dlg.Caption + ' Dialog';
@@ -437,6 +535,7 @@ begin
         lbl.Left := 0;
         lbl.Caption := Text;
         lbl.TabStop := True;
+        lbl.TabOrder := 99;  // tab order *after* any buttons
         dlg.SetFocusedControl(lbl);
       end;
 
@@ -790,7 +889,7 @@ end;
 // returns Program Files path on the drive where the currently running application
 // resides, if it is a different drive than the one that contains the current
 // machine's Program Files directory.  This is typically used for networked drives.
-// Note that tnis only works if the mapping to the network is at the root drive 
+// Note that tnis only works if the mapping to the network is at the root drive
 function GetAlternateProgramFilesPath: String;
 var
   Dir, Dir2: string;
@@ -1044,7 +1143,7 @@ var
 begin
   if not uMessageHandlerSystemRunning then exit;
   HexID := FastIntToHex(LongWord(Control));
-  
+
   (*
   idx := uWinProcMessageHandlers.IndexOf(HexID);
 
@@ -1087,7 +1186,7 @@ begin
     Handler := TVAWinProcMessageHandler(uWinProcMessageHandlers.Objects[idx]);
     result := Handler.HandlerCount;
   end;
-*)  
+*)
 
   idx := uEventMessageHandlers.IndexOf(HexID);
   if idx >= 0 then
@@ -1979,46 +2078,29 @@ begin
   Result := Pluralize(Count, Singular, Plural, []);
 end;
 
-{$IFNDEF DEBUG}
+function ShouldFocus(Control: TWinControl): boolean;
+var
+  Form: TCustomForm;
 
-{ TMaskedWinControl }
-
-procedure TMaskedWinControl.SetFocus;
 begin
-  try
-    inherited SetFocus;
-  except
+  Result := False;
+  if assigned(Control) and (not(csDestroying in Control.ComponentState)) then
+  begin
+    Form := GetParentForm(Control);
+    if assigned(Form) then
+    begin
+      // (Form.Active and (not Form.Visible)) can happen when SetForegroundWindow
+      // is called before Show or ShowModal
+      if (fsCreating in Form.FormState) or (csLoading in Form.ComponentState) or
+        (csLoading in Control.ComponentState) or (Form.Active and (not Form.Visible)) or
+        ((not Form.Visible) and Form.ClassNameIs('TMessageForm')) then
+        Result := True
+      else if Form.Enabled and Form.Visible and
+        (not(csDestroying in Form.ComponentState)) then
+        Result := Control.CanFocus;
+    end;
   end;
 end;
-
-{ TMaskedForm }
-
-procedure TMaskedForm.FocusControl(Control: TWinControl);
-begin
-  try
-    inherited FocusControl(Control);
-  except
-  end;
-end;
-
-procedure TMaskedForm.SetFocus;
-begin
-  try
-    inherited SetFocus;
-  except
-  end;
-end;
-
-function TMaskedForm.SetFocusedControl(Control: TWinControl): Boolean;
-begin
-  try
-    Result := inherited SetFocusedControl(Control);
-  except
-    Result := True;
-  end;
-end;
-
-{$ENDIF}
 
 initialization
   ScreenReaderSupportEnabled;
@@ -2030,4 +2112,3 @@ finalization
 {$WARN UNSAFE_CAST ON}
 {$WARN UNSAFE_CODE ON}
 end.
-

@@ -3,7 +3,7 @@ unit oWVController;
   ================================================================================
   *
   *       Application:  TDrugs Patch OR*3*377 and WV*1*24
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *
   *       Description:  Primary controller accessed via the WVController
@@ -115,6 +115,13 @@ begin
     else
     begin
       calcEDD := 0;
+    end;
+
+    if aList.Count < 1 then
+    begin
+      fLastError := 'Unknown error from server';
+      Result := False;
+      Exit;
     end;
 
     if Copy(aList[0], 1, 2) = '1^' then // Get confirmation to result or exit.
@@ -260,7 +267,10 @@ begin
   aList := TStringList.Create;
   try
     CallVistA(RPC_COVER, [aDFN], aList);
-    Result := aList[0] <> '0';
+    if aList.Count > 0 then
+      Result := aList[0] <> '0'
+    else
+      Result := False;
   except
     Result := False;
   end;
@@ -281,7 +291,12 @@ begin
         try
           GetReasons(aList);
           CallVistA(RPC_EIE, [aItemID, aList], aList);
-          with NewDelimitedString(aList[0]) do
+          if aList.Count < 1 then
+          begin
+            fLastError := 'Unknown Error from Server';
+            Result := False;
+          end
+          else with NewDelimitedString(aList[0]) do
             try
               Result := GetPieceAsInteger(1) = 1;
               if not Result then
@@ -323,7 +338,12 @@ function TWVController.SavePregnancyAndLactationData(aList: TStrings): boolean;
 begin
   try
     CallVistA(RPC_SAVEDATA, [aList], aList);
-    with NewDelimitedString(aList[0]) do
+    if aList.Count < 1 then
+    begin
+      fLastError := 'Unknown Error from Server';
+      Result := False;
+    end
+    else with NewDelimitedString(aList[0]) do
       try
         Result := (GetPieceAsInteger(1) = 1);
         if not Result then

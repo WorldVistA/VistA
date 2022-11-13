@@ -44,6 +44,8 @@ type
     lblFrom: TLabel;
     pnlBottom: TPanel;
     btnUpdate: TButton;
+    btnDetails: TButton;
+    acDetails: TAction;
 
     procedure acProcessExecute(Sender: TObject);
     procedure acDeferExecute(Sender: TObject);
@@ -55,6 +57,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnUpdateClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure acDetailsExecute(Sender: TObject);
     procedure ordbFromChange(Sender: TObject);
     procedure ordbToChange(Sender: TObject);
   private
@@ -85,7 +88,7 @@ uses
   uCore,
   rCore,
   fDeferDialog,
-  fNotificationProcessor;
+  fNotificationProcessor, fRptBox;
 
 type
   TSMARTAlert = class(TObject)
@@ -196,6 +199,8 @@ var
   aAlert: TSMARTAlert;
   aResult: string;
 begin
+  if not Assigned(clvNotifications.Selected) then
+    Exit;
   with TfrmDeferDialog.Create(Self) do
     try
       aAlert := TSMARTAlert(clvNotifications.Selected.Data);
@@ -215,6 +220,27 @@ begin
     finally
       Free;
     end;
+end;
+
+procedure TfrmViewNotifications.acDetailsExecute(Sender: TObject);
+var
+  aSmartAlert: TSMARTAlert;
+  idx: integer;
+  data: TStringList;
+
+begin
+  if not Assigned(clvNotifications.Selected) then
+    Exit;
+  data := TStringList.Create;
+  try
+    idx := clvNotifications.Selected.Index;
+    aSmartAlert := TSMARTAlert(clvNotifications.Items[idx].Data);
+    CallVistA('ORB3U2 GETRCPNT',[aSmartAlert.AlertID], data);
+    data.text := aSmartAlert.AsText + CRLF + CRLF + data.Text;
+    ReportBox(data,'Alert Details',true);
+  finally
+    data.Free;
+  end;
 end;
 
 procedure TfrmViewNotifications.acProcessExecute(Sender: TObject);
@@ -418,9 +444,11 @@ begin
         acProcess.Caption := ACP_VIEW;
         acProcess.Enabled := (aAlert.InfoOnly <> 'I');
       end;
+      acDetails.Enabled := True;
     end
   else
     begin
+      acDetails.Enabled := False;
       acProcess.Caption := ACP_PROCESS;
       acDefer.Enabled := false;
       acProcess.Enabled := false;
@@ -473,7 +501,7 @@ var
   x, w: integer;
   col: TListColumn;
 begin
-  clvNotifications.Columns.BeginUpdate;
+//  clvNotifications.Columns.BeginUpdate;  <== messes up column resizing
   aColSpecs := TStringList.Create;
 
   try
@@ -500,7 +528,7 @@ begin
     FreeAndNil(aColSpecs);
   end;
 
-  clvNotifications.Columns.EndUpdate;
+//  clvNotifications.Columns.EndUpdate;
   clvNotifications.OnCompare := columnsCompare;
 end;
 
@@ -760,7 +788,11 @@ begin
   Y := StrToInt(Copy(Value, 7, 4));
   hh := StrToInt(Copy(Value, 12, 2));
   mm := StrToInt(Copy(Value, 15, 2));
-  FAlertDateTime := EncodeDate(Y, M, D) + EncodeTime(hh, mm, 0, 0);
+  try
+    FAlertDateTime := EncodeDate(Y, M, D) + EncodeTime(hh, mm, 0, 0);
+  except
+    FAlertDateTime := FMDateTimeToDateTime(FMNow);
+  end;
 end;
 
 procedure TSMARTAlert.SetAlertMsg(const Value: string);

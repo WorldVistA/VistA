@@ -59,7 +59,15 @@ inherited frmODMedIn: TfrmODMedIn
     Width = 4
     Height = 186
   end
-  object cboDispense: TORComboBox [8]
+  object lblIndications: TLabel [8]
+    Left = 6
+    Top = 192
+    Width = 54
+    Height = 16
+    AutoSize = False
+    Caption = 'Indication'
+  end
+  object cboDispense: TORComboBox [9]
     Left = 6
     Top = 59
     Width = 202
@@ -89,9 +97,9 @@ inherited frmODMedIn: TfrmODMedIn
     OnMouseClick = cboDispenseMouseClick
     CharsNeedMatch = 1
   end
-  object cboMedication: TORComboBox [9]
+  object cboMedication: TORComboBox [10]
     Left = 6
-    Top = 18
+    Top = 21
     Width = 202
     Height = 167
     Style = orcsSimple
@@ -120,7 +128,7 @@ inherited frmODMedIn: TfrmODMedIn
   inherited memOrder: TCaptionMemo
     TabOrder = 10
   end
-  object cboRoute: TORComboBox [11]
+  object cboRoute: TORComboBox [12]
     Left = 364
     Top = 18
     Width = 72
@@ -145,7 +153,7 @@ inherited frmODMedIn: TfrmODMedIn
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
-  object cboSchedule: TORComboBox [12]
+  object cboSchedule: TORComboBox [13]
     Left = 442
     Top = 18
     Width = 72
@@ -169,7 +177,7 @@ inherited frmODMedIn: TfrmODMedIn
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
-  object memComments: TMemo [13]
+  object memComments: TMemo [14]
     Left = 223
     Top = 128
     Width = 212
@@ -178,7 +186,7 @@ inherited frmODMedIn: TfrmODMedIn
     TabOrder = 6
     OnChange = ControlChange
   end
-  object cboPriority: TORComboBox [14]
+  object cboPriority: TORComboBox [15]
     Left = 442
     Top = 128
     Width = 72
@@ -203,7 +211,7 @@ inherited frmODMedIn: TfrmODMedIn
     OnChange = ControlChange
     CharsNeedMatch = 1
   end
-  object txtDosage: TCaptionEdit [15]
+  object txtDosage: TCaptionEdit [16]
     Left = 224
     Top = 18
     Width = 134
@@ -213,13 +221,7 @@ inherited frmODMedIn: TfrmODMedIn
     OnChange = ControlChange
     Caption = 'Dosage'
   end
-  inherited cmdAccept: TButton
-    TabOrder = 8
-  end
-  inherited cmdQuit: TButton
-    TabOrder = 9
-  end
-  object cboMedAlt: TORComboBox [18]
+  object cboMedAlt: TORComboBox [17]
     Left = 6
     Top = 18
     Width = 202
@@ -247,6 +249,43 @@ inherited frmODMedIn: TfrmODMedIn
     OnMouseClick = cboMedicationSelect
     OnNeedData = cboMedicationNeedData
     CharsNeedMatch = 1
+  end
+  object cboIndication: TORComboBox [18]
+    Left = 6
+    Top = 207
+    Width = 212
+    Height = 21
+    Style = orcsDropDown
+    AutoSelect = False
+    Caption = ''
+    Color = clWindow
+    DropDownCount = 8
+    ItemHeight = 13
+    ItemTipColor = clWindow
+    ItemTipEnable = True
+    ListItemsOnly = True
+    LongList = False
+    LookupPiece = 0
+    MaxLength = 0
+    Sorted = False
+    SynonymChars = '<>'
+    TabOrder = 14
+    Text = ''
+    CharsNeedMatch = 1
+  end
+  inherited cmdAccept: TButton
+    Left = 435
+    Top = 250
+    TabOrder = 8
+    ExplicitLeft = 435
+    ExplicitTop = 250
+  end
+  inherited cmdQuit: TButton
+    Left = 435
+    Top = 277
+    TabOrder = 9
+    ExplicitLeft = 435
+    ExplicitTop = 277
   end
   inherited pnlMessage: TPanel
     TabOrder = 11
@@ -294,6 +333,10 @@ inherited frmODMedIn: TfrmODMedIn
         'Status = stsDefault')
       (
         'Component = frmODMedIn'
-        'Status = stsDefault'))
+        'Status = stsDefault')
+      (
+        'Component = cboIndication'
+        'Text = Indications for use'
+        'Status = stsOK'))
   end
 end

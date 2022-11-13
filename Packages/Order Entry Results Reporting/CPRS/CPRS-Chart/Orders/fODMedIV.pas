@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, Grids, StdCtrls, ORCtrls, ComCtrls, ExtCtrls, Buttons, Menus, IdGlobal, strUtils,
-  VA508AccessibilityManager, VAUtils, fIVRoutes;
+  VA508AccessibilityManager, VAUtils, fIVRoutes, uIndications;
 
 type
   TfrmODMedIV = class(TfrmODBase)
@@ -57,6 +57,8 @@ type
     chkDoseNow: TCheckBox;
     lbl508Required: TVA508StaticText;
     Label1: TLabel;
+    cboIndication: TORComboBox;
+    lblIndications: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure tabFluidChange(Sender: TObject);
     procedure  cboAdditiveNeedData(Sender: TObject; const StartFrom: string; Direction,
@@ -133,6 +135,10 @@ type
     procedure VA508CompGrdSelectedCaptionQuery(Sender: TObject;
       var Text: string);
     procedure ScrollBox1Resize(Sender: TObject);
+    procedure cboIndicationChange(Sender: TObject);
+    procedure cboIndicationKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboIndicationExit(Sender: TObject);
   private
     FInpatient: Boolean;
     FNSSAdminTime: string;
@@ -147,6 +153,7 @@ type
     FOriginalDurationType: integer;
     FOriginalInfusionType: integer;
     FIVTypeDefined: boolean;
+    FIndications: TIndications;
     //FInitialOrderID: boolean;
     procedure SetValuesFromResponses;
     procedure DoSetFontSize( FontSize: integer);
@@ -161,6 +168,7 @@ type
     function UpdateAddFreq(OI: integer): string;
     function IsAltCtrl_L_Pressed(Shift : TShiftState; Key : Word) : Boolean;
     procedure SetCtrlAlt_L_LabelAccessText(var Text: string; theLabel : TLabel);
+    procedure ValidateIndication(IndicationCombo: TORComboBox);
   public
     OrdAction: integer;
     procedure InitDialog; override;
@@ -176,14 +184,12 @@ type
 var
   frmODMedIV: TfrmODMedIV;
 
-
-
-
 implementation
 
 {$R *.DFM}
 
-uses ORFn, uConst, rODMeds, rODBase, fFrame, uCore, fOtherSchedule, rCore;
+uses ORFn, uConst, rODMeds, rODBase, fFrame, uCore, fOtherSchedule, rCore,
+  uSizing;
 
 const
   TX_NO_DEA     = 'Provider must have a DEA# or VA# to order this medication';
@@ -218,6 +224,7 @@ const
   TX_BAD_BAG = 'A valid additive frequency must be entered for ';
   Tx_BAG_NO_COMMENTS ='"See Comments" entered for additive ';
   TX_BAG_NO_COMMENTS1 = ' no comments defined for this order.';
+  TX_NO_INDICATION = 'Indication is required.';
 
 (*
   { TIVComponent methods }
@@ -265,28 +272,38 @@ procedure TfrmODMedIV.FormCreate(Sender: TObject);
 
 var
   Restriction: string;
+  sl: TStrings;
 begin
   frmFrame.pnlVisit.Enabled := false;
   AutoSizeDisabled := true;
   inherited;
-  AllowQuickOrder := True;
-  if dlgFormId = OD_CLINICINF then self.Caption := 'Clinic Infusion Orders';
+  AllowQuickOrder := true;
+  if dlgFormId = OD_CLINICINF then
+    self.Caption := 'Clinic Infusion Orders';
 
   CheckAuthForMeds(Restriction);
   if Length(Restriction) > 0 then
   begin
     InfoBox(Restriction, TC_RESTRICT, MB_OK);
     Close;
-    Exit;
+    exit;
   end;
   OrdAction := -1;
   DoSetFontSize(MainFontSize);
-  FillerID := 'PSIV';                            // does 'on Display' order check **KCM**
+  FillerID := 'PSIV'; // does 'on Display' order check **KCM**
   StatusText('Loading Dialog Definition');
-  if dlgFormId = OD_CLINICINF then Responses.Dialog := 'CLINIC OR PAT FLUID OE'
-  else Responses.Dialog := 'PSJI OR PAT FLUID OE';    // loads formatting info
+  if dlgFormId = OD_CLINICINF then
+    Responses.Dialog := 'CLINIC OR PAT FLUID OE'
+  else
+    Responses.Dialog := 'PSJI OR PAT FLUID OE'; // loads formatting info
   StatusText('Loading Default Values');
-  CtrlInits.LoadDefaults(ODForIVFluids);         // ODForIVFluids returns TStrings with defaults
+  sl := TStringList.Create;
+  try
+    setODForIVFluids(sl);
+    CtrlInits.LoadDefaults(sl); // ODForIVFluids returns TStrings with defaults
+  finally
+    sl.Free;
+  end;
   InitDialog;
 
   // Set special font colors and sizes
@@ -308,21 +325,29 @@ begin
 
     pnlTop.ControlCollection.AddControl(cmdAccept, 8, 15);
     cmdAccept.Parent := pnlTop;
-    cmdAccept.Align := alBottom;
+//    cmdAccept.Align := alBottom;
+    cmdAccept.Align := alClient;
 
     pnlTop.ControlCollection.AddControl(cmdQuit, 8, 16);
     cmdQuit.Parent := pnlTop;
-    cmdQuit.Align := alBottom;
+//    cmdQuit.Align := alBottom;
+    cmdQuit.Align := alClient;
+
+    pnlTop.ColumnCollection[8].Value := getMainFormTextWidth(cmdAccept.Caption) + 26;
+
   finally
     pnlTop.ControlCollection.EndUpdate;
   end;
   pnlTop.Align := alClient;
+
+  FIndications := TIndications.Create(nil);
 end;
 
 procedure TfrmODMedIV.FormDestroy(Sender: TObject);
 var
   i: Integer;
 begin
+  FIndications.Free;
   with grdSelected do for i := 0 to RowCount - 1 do TIVComponent(Objects[0, i]).Free;
   inherited;
   frmFrame.pnlVisit.Enabled := True;
@@ -367,6 +392,7 @@ begin
   self.cboType.SelLength := 0;
   self.cboInfusionTime.SelLength := 0;
   self.cboDuration.SelLength := 0;
+  self.cboIndication.SelLength := 0;
 
 end;
 
@@ -377,6 +403,7 @@ const
   NOSELECTION: TGridRect = (Left: -1; Top: -1; Right: -1; Bottom: -1);
 var
   i: Integer;
+  sl: TStringList;
 begin
   inherited;
   //grdSelected.Selection := NOSELECTION;
@@ -406,7 +433,11 @@ begin
     //SetControl(cboRoute, 'Route');
     if (cboRoute.ItemIndex = -1) and (cboRoute.Text <> '') then cboRoute.Text := '';
     //SetControl(cboSchedule, 'Schedules');
-    LoadSchedules(cboSchedule.Items, patient.Inpatient);
+//    LoadSchedules(cboSchedule.Items, patient.Inpatient);
+    sl := TSTringList.Create;             //  RTC 762237
+    LoadSchedules(sl, patient.Inpatient); //  RTC 762237
+    cboSchedule.Items.Assign(sl);         //  RTC 762237
+    sl.Free;                              //  RTC 762237
     //if (Patient.Inpatient) and (cboSchedule.Items.IndexOfName('Other')<0) then
     if cboSchedule.Items.IndexOf('Other') = -1 then cboSchedule.Items.Add('OTHER');
     cboSchedule.Enabled := False;
@@ -462,15 +493,26 @@ begin
   self.txtAllIVRoutes.Visible := false;
   memorder.text := '';
   memOrder.Lines.Clear;
+  cboIndication.Items.Clear;
 end;
 
 function TfrmODMedIV.IVTypeHelpText: string;
 begin
-   result := 'Continuous Type:' + CRLF + '     IV’s that run at a specified “Rate” ( __ml/hr, __mcg/kg/min, etc)' +
-             CRLF + CRLF + 'Intermittent Type:' + CRLF +
-             '     IV’s administered at scheduled intervals (Q4H, QDay) or One-Time only, ' +
-             CRLF + '     “over a specified time period” (e.g. “Infuse over 30 min.”).' + CRLF + CRLF +
-             'Examples:' + CRLF + 'Continuous = Infusion/drip' + CRLF + 'Intermittent = IVP/IVPB';
+  // result := 'Continuous Type:' + CRLF + '     IV's that run at a specified "Rate" ( __ml/hr, __mcg/kg/min, etc)' +
+  // CRLF + CRLF + 'Intermittent Type:' + CRLF +
+  // '     IV's administered at scheduled intervals (Q4H, QDay) or One-Time only, ' +
+  // CRLF + '     "over a specified time period" (e.g. "Infuse over 30 min.").' + CRLF + CRLF +
+  // 'Examples:' + CRLF + 'Continuous = Infusion/drip' + CRLF + 'Intermittent = IVP/IVPB';
+
+  Result := 'Continuous Type:' + CRLF +
+    '     IV''s that run at a specified "Rate" ( __ml/hr, __mcg/kg/min, etc)' + CRLF + CRLF +
+    'Intermittent Type:' + CRLF +
+    '     IV''s administered at scheduled intervals (Q4H, QDay)' + CRLF +
+    '     or One-Time only, "over a specified time period"' + CRLF +
+    '     (e.g. "Infuse over 30 min.").' + CRLF + CRLF +
+    'Examples:' + CRLF +
+    'Continuous = Infusion/drip' + CRLF +
+    'Intermittent = IVP/IVPB';
 end;
 
 procedure TfrmODMedIV.ScrollBox1Resize(Sender: TObject);
@@ -704,15 +746,32 @@ end;
 
 procedure TfrmODMedIV.Validate(var AnErrMsg: string);
 var
-  DispWarning, ItemOK, Result: Boolean;
-  LDec,RDec,x, tempStr, iunit, infError, Bag: string;
+  DispWarning, ItemOK{, Result}: Boolean;
+  {LDec,RDec,}x, tempStr, iunit, infError, Bag: string;
   digits, i, j, k, Len, temp, Value: Integer;
+
+  sErr: String;
 
   procedure SetError(const x: string);
   begin
     if Length(AnErrMsg) > 0 then AnErrMsg := AnErrMsg + CRLF;
     AnErrMsg := AnErrMsg + x;
   end;
+
+// AA 775870 ------------------------------------------------------------- begin
+  function IsValidInfusionRate(var aValue:String;var anError:String):Boolean;
+  var
+   s: String;
+  begin
+   s := aValue;
+   ValidateIVRate(s); // validated by Server
+   Result := piece(s,U,1)='1';
+   if Result then
+     aValue := piece(s,U,2)
+   else
+     anError := 'Invalid Infusion Rate value "'+ aValue + '"';
+  end;
+// AA 775870 --------------------------------------------------------------- end
 
 begin
   inherited;
@@ -787,6 +846,8 @@ begin
       SetError('A valid duration type is required');
   if (self.txtXDuration.Text = '') and (self.cboduration.Items.IndexOf(SELF.cboDuration.Text) > -1) then
      SetError('Cannot have a duration type without a duration value');
+  if Not FIndications.IsSelectedIndicationValid(cboIndication.Text) then
+    SetError(TX_NO_INDICATION);
 
   if self.cboType.ItemIndex = -1 then
     begin
@@ -795,6 +856,10 @@ begin
     end;
   if MixedCase(self.cboType.Items.Strings[self.cboType.ItemIndex]) = 'Continuous' then
      begin
+
+      // AA 775870 ------------------------------------------------------- begin
+      // original code commented out
+(*
       if Length(txtRate.Text) = 0 then SetError(TX_NO_RATE) else
         begin
           x := Trim(txtRate.Text);
@@ -830,8 +895,21 @@ begin
                 end;
             end;
           if (pos('ml/hr', X) = 0) and (Length(x) > 0) and (pos('@', X) = 0) then X := X + ' ml/hr';
+
           if Length(x) = 0 then SetError(TX_BAD_RATE) else Responses.Update('RATE', 1, x, x);
         end;
+*)
+          // modified code -----------------------------------------------------
+          x := txtRate.Text;
+          if IsValidInfusionRate(x,sErr) then
+            Responses.Update('RATE', 1, x, x)
+          else
+            begin
+              SetError(sErr);
+              Exit;
+            end;
+      // AA 775870 --------------------------------------------------------- end
+
       if cboduration.text = 'doses' then SetError('Continuous Orders cannot have "doses" as a duration type');
     end
   else if MixedCase(self.cboType.Items.Strings[self.cboType.ItemIndex]) = 'Intermittent' then
@@ -1284,6 +1362,10 @@ begin
       if AResponse <> nil then
           SetLimitationControl(AResponse.EValue);
     end;
+
+    // Indications
+    SetControl(cboIndication, 'INDICATION', 1);
+
   end; {if...with Responses}
   Changing := False;
   if self.cboSchedule.ItemIndex > -1 then updateDuration(Piece(cboSchedule.Items.Strings[cboSchedule.itemindex],U,3));
@@ -1336,8 +1418,16 @@ end;
 
 procedure TfrmODMedIV.cboSolutionNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  cboSolution.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.IVB RX', Responses.QuickOrder));
+  sl := TStringList.Create;
+  try
+    setSubSetOfOrderItems(sl,StartFrom, Direction, 'S.IVB RX', Responses.QuickOrder);
+    cboSolution.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODMedIV.cbotypeChange(Sender: TObject);
@@ -1590,6 +1680,7 @@ begin
        tabFluidChange(Self);
     end;  *)
   end;
+
   Application.ProcessMessages;         //CQ: 10157
   updateRoute;
   ClickOnGridCell(#0);
@@ -1611,8 +1702,16 @@ end;
 
 procedure TfrmODMedIV.cboAdditiveNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  cboAdditive.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.IVA RX', Responses.QuickOrder));
+  sl := TStringList.Create;
+  try
+    setSubSetOfOrderItems(sl,StartFrom, Direction, 'S.IVA RX', Responses.QuickOrder);
+    cboAdditive.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODMedIV.cboAddFreqCloseUp(Sender: TObject);
@@ -1678,6 +1777,54 @@ begin
   FOriginalDurationType := cboDuration.ItemIndex;
 end;
 
+procedure TfrmODMedIV.cboIndicationChange(Sender: TObject);
+begin
+  inherited;
+  if Changing then
+    Exit;
+  if not Showing then
+    Exit;
+
+  ControlChange(Sender);
+end;
+
+procedure TfrmODMedIV.ValidateIndication(IndicationCombo: TORComboBox);
+begin
+  // Coming across lower-case, change all Indication Text to Upper-Case.
+  if (Length(IndicationCombo.Text) > 0) then
+    IndicationCombo.Text := TrimLeft(UpperCase(IndicationCombo.Text));
+
+  if ((Length(IndicationCombo.Text) <= 2) OR (Length(IndicationCombo.Text) >= 40)) and
+     not (IndicationCombo.Text = '') then
+  begin
+    Application.MessageBox(TX_INDICATION_LIM, 'Incorrect Indication');
+    IndicationCombo.ItemIndex := -1;
+    IndicationCombo.Text := '';
+    if IndicationCombo.CanFocus then
+      IndicationCombo.SetFocus;
+  end;
+end;
+
+procedure TfrmODMedIV.cboIndicationExit(Sender: TObject);
+begin
+  if Trim(cboIndication.Text) = '' then
+    cboIndication.ItemIndex := -1;
+  ValidateIndication(cboIndication);
+  ControlChange(Sender);
+end;
+
+procedure TfrmODMedIV.cboIndicationKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_BACK) and (cboIndication.Text = '') then
+    cboIndication.ItemIndex := -1;
+  // Temporary fix of TORCombobox
+  if (KEY = VK_DELETE)  then
+  begin
+    ControlChange(Sender);
+  end;
+end;
 
 procedure TfrmODMedIV.cboInfusionTimeChange(Sender: TObject);
 begin
@@ -1907,6 +2054,9 @@ begin
   self.txtXDuration.text := '';
   self.cboDuration.ItemIndex := -1;
   self.cboDuration.Text := '';
+  self.cboIndication.ItemIndex := -1;
+  self.cboIndication.Text := '';
+  self.cboIndication.Items.Clear;
   self.txtAllIVRoutes.Visible := false;
   //self.FInitialOrderID := True;
   cbotypeChange(self.cboType);
@@ -2007,8 +2157,6 @@ begin
   end;
   grdSelected.Refresh;
 end;
-
-
 
 procedure TfrmODMedIV.txtSelectedKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
@@ -2134,6 +2282,7 @@ var
   i, stRow, stRowCount: Integer;
 begin
   inherited;
+  cboIndication.Text := '';
   with grdSelected do
   begin
     if Row < 0 then Exit;
@@ -2146,10 +2295,10 @@ begin
   end;
   updateRoute;
   if (stRowCount = 1) and (stRow = 0) then
-    begin
-      //self.cboRoute.ItemIndex := -1;
-      ClearAllFields;
-    end;
+  begin
+    //self.cboRoute.ItemIndex := -1;
+    ClearAllFields;
+  end;
   ControlChange(Sender);
 end;
 
@@ -2285,9 +2434,11 @@ begin
   if (chkDoseNow.Visible = True) and (chkDoseNow.Checked = True) then
     Responses.Update('NOW', 1, '1', 'NOW')
   else Responses.Update('NOW', 1, '', '');
-  memOrder.Text := Responses.OrderText;
+
+  Responses.Update('INDICATION', 1, cboIndication.Text, cboIndication.Text);
   (* (Length(eSch)>0) or (Length(iSch)>0) then
     Responses.Update('SCHEDULE',1,iSch,eSch);  *)
+  memOrder.Text := Responses.OrderText;
 end;
 
 function TfrmODMedIV.CreateOtherRoute: string;
@@ -2355,8 +2506,9 @@ end;
 
 procedure TfrmODMedIV.SetFontSize( FontSize: integer);
 begin
-//  inherited SetFontSize( FontSize );
-  DoSetFontSize( FontSize );
+  inherited SetFontSize( FontSize );
+//  DoSetFontSize( FontSize );
+  pnlTop.ColumnCollection[8].Value := getMainFormTextWidth(cmdAccept.Caption) + 26;
 end;
 
 procedure TfrmODMedIV.DisplayDoseNow(Status: boolean);
@@ -2376,7 +2528,7 @@ begin
 //  grdSelected.DefaultRowHeight := Abs(Font.Height) + 8;
 //
 //  SetScrollBarHeight(FontSize);
-  Self.Font.Assign(Screen.IconFont);
+//  Self.Font.Assign(Screen.IconFont);
 end;
 
 procedure TfrmODMedIV.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -2618,9 +2770,10 @@ end;
 
 procedure TfrmODMedIV.UpdateRoute;
 var
-AnIVComponent: TIVComponent;
-i: integer;
-OrderIds, TempIVRoute: TStringList;
+  AnIVComponent: TIVComponent;
+  i: integer;
+  aTempStr: String;
+  OrderIds, TempIVRoute: TStringList;
 //Default: boolean;
 begin
   if self.grdSelected.RowCount > 0 then self.txtAllIVRoutes.Visible := True;
@@ -2638,11 +2791,14 @@ begin
       AniVComponent := TIVComponent(self.grdSelected.Objects[0, i]);
       if AnIVComponent <> nil then  orderIds.Add(InttoStr(AniVComponent.IEN));
     end;
- if OrderIds.Count > 0 then
+  if OrderIds.Count > 0 then
    begin
      //if (self.FInitialOrderID = True) and (self.grdSelected.RowCount = 1) then Default := True
      //else Default := False;
+
      LoadDosageFormIVRoutes(self.cboRoute.Items, OrderIds);
+     LoadInfusionIndications(self.cboIndication.Items, OrderIds);
+
      //if default = True then
      //  begin
      for I := 0 to cboRoute.items.Count - 1 do
@@ -2653,6 +2809,18 @@ begin
            break;
           end;
        end;
+
+     // remove the first character on all indications.
+     for I := 0 to self.cboIndication.Items.Count - 1 do
+     begin
+       if Length(cboIndication.Items.Strings[I]) > 0 then
+       begin
+         aTempStr := cboIndication.Items.Strings[I];
+         delete(aTempStr,1,1);
+         cboIndication.Items.Strings[I] := Trim(aTempStr);
+       end;
+     end;
+
        //  self.FInitialOrderID := false;
        //end;
      OrderIds.Free;

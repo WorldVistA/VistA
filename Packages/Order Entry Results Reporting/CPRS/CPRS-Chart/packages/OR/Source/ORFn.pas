@@ -40,13 +40,18 @@ type
 { Date/Time functions }
 function DateTimeToFMDateTime(ADateTime: TDateTime): TFMDateTime;
 function FMDateTimeToDateTime(ADateTime: TFMDateTime): TDateTime;
+function TryFMDateTimeToDateTime(AFMDateTime: TFMDateTime; out Value: TDateTime): Boolean;
 function FMDateTimeOffsetBy(ADateTime: TFMDateTime; DaysDiff: Integer): TFMDateTime;
 function FormatFMDateTime(AFormat: string; ADateTime: TFMDateTime): string;
 function FormatFMDateTimeStr(const AFormat, ADateTime: string): string;
 function IsFMDateTime(x: string): Boolean;
 function MakeFMDateTime(const AString: string): TFMDateTime;
+function TryFMDateTimeToVistaStr(AFMDateTime: TFMDateTime; out Value: string):
+  Boolean;
+function FMDateTimeToVistaStr(AFMDateTime: TFMDateTime): string;
 procedure SetListFMDateTime(AFormat: string; AList: TStrings; ADelim: Char;
                             PieceNum: Integer; KeepBad: boolean = FALSE);
+function IsNow(txt: string): boolean;
 
 { Numeric functions }
 function HigherOf(i, j: Integer): Integer;
@@ -100,6 +105,7 @@ procedure SortByPieces(AList: TStringList; ADelim: Char; PieceNums: tSortArray;
 procedure SortByPieces(AList: TStringList; ADelim: Char; PieceNums: tSortArray;
   aSortDirs: tSortDirArray); overload;
 function SortByPiecesCustom(List: tStringList; Index1, Index2: Integer): Integer;
+function NullStrippedString(Input: String): String;
 
 function DelimCount(const Str, Delim: string): integer;
 function Strip(const Str: string; Chr: char = '&'): string;
@@ -198,7 +204,7 @@ implementation  // -------------------------------------------------------------
 
 uses
   ORCtrls, Grids, VCLTee.Chart, CheckLst, VAUtils, VCLTee.TeEngine, VCLTee.TeCanvas,
-  VCLTee.TeeProcs, ORUnitTesting;
+  VCLTee.TeeProcs, ORUnitTesting, DateUtils;
 
 const
   { names of months used by FormatFMDateTime }
@@ -247,6 +253,9 @@ const
     {Properties assigned to BaseFont}
     BaseFontSize = 8;
     BaseFontName = 'MS Sans Serif';
+
+    RichEditStringsClassName = 'TRichEditStrings';
+
 var
     FBaseFont: TFont;
     fExcludeFromMixed: TStringList;
@@ -275,6 +284,33 @@ begin
   Result :=  DatePart + (TimePart / 1000000);
 end;
 
+function TryFMDateTimeToDateTime(AFMDateTime: TFMDateTime; out Value: TDateTime): Boolean;
+// We may want to consider routing FMDateTimeToDateTime through this, but
+// I have omitted it for retest of existing functionality reasons.
+var
+  ADatePart, ATimePart: Integer;
+  AYear, AMonth, ADay, AHour, AMin, ASec: Word;
+begin
+  if AFMDateTime < 0 then Exit(False);
+  ADatePart := Trunc(AFMDateTime);
+  if ADatePart > 9999999 then Exit(False);
+  if ADatePart < 1000000 then Exit(False);
+  ATimePart := Round(Frac(AFMDateTime) * 1000000); // Round! Check with '1231213.120014' to understand why.
+  AYear := ADatePart div 10000 + 1700;
+  AMonth := ADatePart mod 10000 div 100;
+  ADay := ADatePart mod 100;
+  AHour := ATimePart div 10000;
+  AMin := ATimePart mod 10000 div 100;
+  ASec := ATimePart mod 100;
+  if (AHour = 24) and (AMin = 0) and (ASec = 0) then
+  begin
+    AHour := 23;
+    AMin := 59;
+    ASec := 59;
+  end;
+  Result := TryEncodeDateTime(AYear, AMonth, ADay, AHour, AMin, ASec, 0, Value);
+end;
+
 function FMDateTimeToDateTime(ADateTime: TFMDateTime): TDateTime;
 { converts a Fileman date/time (type double) to a Delphi date/time }
 var
@@ -285,13 +321,47 @@ begin
   TimePart := Piece(FloatToStrF(ADateTime, ffFixed, 14, 6), '.', 2) + '000000';
   if Length(DatePart) <> 7 then raise EFMDateTimeError.Create('Invalid Fileman Date');
   if Copy(TimePart, 1, 2) = '24' then TimePart := '23595959';
-  ADate := EncodeDate(StrToInt(Copy(DatePart, 1, 3)) + 1700,
-                      StrToInt(Copy(DatePart, 4, 2)),
-                      StrToInt(Copy(DatePart, 6, 2)));
-  ATime := EncodeTime(StrToInt(Copy(TimePart, 1, 2)),
-                      StrToInt(Copy(TimePart, 3, 2)),
-                      StrToInt(Copy(TimePart, 5, 2)), 0);
-  Result := ADate + ATime;
+  try
+    ADate := EncodeDate(StrToInt(Copy(DatePart, 1, 3)) + 1700,
+                        StrToInt(Copy(DatePart, 4, 2)),
+                        StrToInt(Copy(DatePart, 6, 2)));
+  except
+    ADate := 0;
+  end;
+  try
+    ATime := EncodeTime(StrToInt(Copy(TimePart, 1, 2)),
+                        StrToInt(Copy(TimePart, 3, 2)),
+                        StrToInt(Copy(TimePart, 5, 2)), 0);
+  except
+    ATime := 0;
+  end;
+  Result := ADate + ATime; // This is wrong for dates before 12/30/1899!
+end;
+
+function TryFMDateTimeToVistaStr(AFMDateTime: TFMDateTime; out Value: string):
+  Boolean;
+// This converts a TFMDateTime to its VISTA string representation (so it does
+// the opposite of MakeFMDatetime)
+begin
+  Result := False;
+  try
+    Value := FloatToStr(AFMDateTime);
+    Result := IsFMDateTime(Value);
+  finally
+    if not Result then Value := '';
+  end;
+// RDD: still under review if this is needed
+//  S := Copy(Value, 9, 6);
+//  if (S = '235958') or (S = '235959') then
+//    Value := Copy(Value, 1, 8) + '240000';
+end;
+
+function FMDateTimeToVistaStr(AFMDateTime: TFMDateTime): string;
+// This converts a TFMDateTime to its VISTA string representation (so it does
+// the opposite of MakeFMDatetime)
+begin
+  if not TryFMDateTimeToVistaStr(AFMDateTime, Result) then
+    raise EConvertError.Create('Invalid FMDateTime');
 end;
 
 function FMDateTimeOffsetBy(ADateTime: TFMDateTime; DaysDiff: Integer): TFMDateTime;
@@ -402,8 +472,8 @@ end;
 
 function MakeFMDateTime(const AString: string): TFMDateTime;
 begin
-  Result := -1;
-  if (Length(AString) > 0) and IsFMDateTime(AString) then Result := StrToFloat(AString);
+  if (not IsFMDateTime(AString)) or
+    (not TryStrToFloat(AString, Result)) then Result := -1;
 end;
 
 //procedure SetListFMDateTime(AFormat: string; AList: TStringList; ADelim: Char;
@@ -427,6 +497,15 @@ begin
     SetPiece(s, ADelim, PieceNum, x);
     AList[i] := s;
   end;
+end;
+
+function IsNow(txt: string): boolean;
+var
+  uTxt: string;
+
+begin
+  uTxt := UpperCase(txt); // do NOT TRIM - whitespace causes date to be invalid
+  Result := (uTxt = 'NOW') or (uTXT = 'N');
 end;
 
 { Numeric functions }
@@ -999,6 +1078,17 @@ begin
   AList.CustomSort(SortByPiecesCustom)
 end;
 
+function NullStrippedString(Input: String): String;
+var
+  i: integer;
+
+begin
+  Result := Input;
+  for i := length(Result) downto 1 do
+    if Result[i] = #0 then
+      delete(Result, i, 1);
+end;
+
 function DelimCount(const Str, Delim: string): integer;
 var
   i, dlen, slen: integer;
@@ -1053,7 +1143,7 @@ var
 
   procedure GetStrings(obj: TObject);
   begin
-    if (CompareText(obj.ClassName, 'TRichEditStrings') = 0) then
+    if (CompareText(obj.ClassName, RichEditStringsClassName) = 0) then
       raise QuickCopyError.Create('You must pass the TRichEdit object into QuickCopy, NOT it''s Lines property.');
     if obj is TStrings then
       str[idx] := TStrings(obj)
@@ -1128,7 +1218,7 @@ var
 
   procedure GetStrings(obj: TObject);
   begin
-    if (CompareText(obj.ClassName, 'TRichEditStrings') = 0) then
+    if (CompareText(obj.ClassName, RichEditStringsClassName) = 0) then
       raise QuickCopyError.Create('You must pass the TRichEdit object into QuickAdd, NOT it''s Lines property.');
     if obj is TStrings then
       str[idx] := TStrings(obj)
@@ -1204,7 +1294,7 @@ begin
     if (source is TStringList) and (destination is TStrings) then
       destination.AddStrings(source)
   else
-  if (CompareText(source.ClassName, 'TRichEditStrings') = 0) then
+  if (CompareText(source.ClassName, RichEditStringsClassName) = 0) then
     destination.Assign(source)
   else
   begin
@@ -1224,10 +1314,15 @@ procedure FastAddStrings(source, destination: TStrings);
 var
   ms: TMemoryStream;
 begin
+  if source.Count < 1 then
+    exit;
   if (source is TStringList) and (destination is TStringList) then
     destination.AddStrings(source)
   else
   if (source is TStringList) and (destination is TStrings) then
+    destination.AddStrings(source)
+  else
+  if (CompareText(source.ClassName, RichEditStringsClassName) = 0) then
     destination.AddStrings(source)
   else
   begin
@@ -1518,7 +1613,21 @@ end;
 procedure RedrawActivate(AHandle: HWnd);
 begin
   SendMessage(AHandle, WM_SETREDRAW, 1, 0);
-  InvalidateRect(AHandle, nil, True);
+//  InvalidateRect(AHandle, nil, True);
+  RedrawWindow(AHandle, nil, 0,
+    RDW_ERASE or RDW_FRAME or RDW_INVALIDATE or RDW_ALLCHILDREN);
+  // This webpage:
+  //   https://docs.microsoft.com/en-us/windows/win32/gdi/wm-setredraw
+  // documents why the old code: InvalidateRect(AHandle, nil, True);
+  // is wrong:
+  //   Note
+  //   You should use RedrawWindow with the specified flags, instead of
+  //   InvalidateRect, because the former is necessary for some controls that
+  //   have nonclient area of their own, or have window styles that cause them
+  //   to be given a nonclient area (such as WS_THICKFRAME, WS_BORDER,
+  //   or WS_EX_CLIENTEDGE). If the control does not have a nonclient area,
+  //   then RedrawWindow with these flags will do only as much invalidation as
+  //   InvalidateRect would.
 end;
 
 procedure ResetSelectedForList(AListBox: TListBox);
@@ -1530,12 +1639,16 @@ end;
 
 function ResizeWidth( OldFont: TFont; NewFont: TFont; OldWidth: integer): integer;
 begin
+  if not Assigned(OldFont) then Exit(OldWidth);
+  if not Assigned(NewFont) then Exit(OldWidth);
   result := Trunc( OldWidth *FontWidthSubPixel(NewFont) / FontWidthSubPixel(OldFont)
     +0.5);
 end;
 
 function ResizeHeight( OldFont: TFont; NewFont: TFont; OldHeight: integer): integer;
 begin
+  if not Assigned(OldFont) then Exit(OldHeight);
+  if not Assigned(NewFont) then Exit(OldHeight);
   result := Trunc( OldHeight *Abs(NewFont.Height) / Abs(OldFont.Height)
     +0.5);
 end;
@@ -1597,6 +1710,10 @@ var
   VisibleWidth, TotalWidth: integer;
   VisibleHeight, TotalHeight: integer;
 begin
+  if not Assigned(OldFont) then Exit;
+  if not Assigned(NewFont) then Exit;
+  if not Assigned(AControl) then Exit;
+
 // DRM - I18906933FY18/687893 - This ProcessMessages can cause re-entrance issues
 // in some cases (e.g., CPRS, File menu, Select New Patient... on slow servers).
 //  if AControl.Align <> alNone then
@@ -1707,6 +1824,10 @@ var
   RESelectionStart: integer;
   RESelectionLength: integer;
 begin
+  if not Assigned(OldFont) then Exit;
+  if not Assigned(NewFont) then Exit;
+  if not Assigned(AControl) then Exit;
+
   for i := 0 to AControl.ControlCount -1 do begin
     Child := AControl.Controls[i];
     if Child is TRichEdit then begin
@@ -1790,6 +1911,7 @@ var
   kb: IORKeepBounds;
 
 begin
+  if not Assigned(AForm) then Exit;
   Rect := AForm.BoundsRect;
   InternalForceInsideWorkArea(Rect, AForm);
   AForm.BoundsRect := Rect;
@@ -1916,44 +2038,42 @@ begin
   end;
 end;
 
-procedure ResizeAnchoredFormToFont( AForm: TForm);
+procedure ResizeAnchoredFormToFont(AForm: TForm);
 var
   keep: TRect;
   OldResize: TNotifyEvent;
   kb: IORKeepBounds;
-
 begin
-  with AForm do begin
+  if not Assigned(AForm) then Exit;
   // CQ# 11481 - see ResizeFormToFont
-    OldResize := AForm.OnResize;
-    AForm.OnResize := nil;
-    try
-      keep := BoundsRect;
-      HorzScrollBar.Range := ResizeWidth( Font, MainFont, HorzScrollBar.Range);
-      VertScrollBar.Range := ResizeHeight( Font, MainFont, VertScrollBar.Range);
-      ClientWidth  := ResizeWidth( Font, MainFont, ClientWidth);
-      ClientHeight := ResizeHeight( Font, MainFont, ClientHeight);
-      if not assigned(Parent) then
-        ForceInsideWorkArea(AForm);
-      ResizeDescendants( Font, MainFont, AForm);
-      ResizeFontsInDescendants( Font, MainFont, AForm);
-      //Important: We are using the font to calculate everything, so don't
-      //change font until now.
-      Font.Size := MainFont.Size;
-      if GetInterface(IORKeepBounds, kb) then
-        if assigned(kb) and kb.KeepBounds then
-        begin
-          BoundsRect := keep;
-          kb.KeepBounds := True; // Resets the kept bounds
-          if Showing then
-            kb.KeepBounds := False;
-        end;
-    finally
-      if(Assigned(OldResize)) then
+  OldResize := AForm.OnResize;
+  AForm.OnResize := nil;
+  try
+    keep := AForm.BoundsRect;
+    AForm.HorzScrollBar.Range := ResizeWidth(AForm.Font, MainFont, AForm.HorzScrollBar.Range);
+    AForm.VertScrollBar.Range := ResizeHeight(AForm.Font, MainFont, AForm.VertScrollBar.Range);
+    AForm.ClientWidth := ResizeWidth(AForm.Font, MainFont, AForm.ClientWidth);
+    AForm.ClientHeight := ResizeHeight(AForm.Font, MainFont, AForm.ClientHeight);
+    if not Assigned(AForm.Parent) then
+      ForceInsideWorkArea(AForm);
+    ResizeDescendants(AForm.Font, MainFont, AForm);
+    ResizeFontsInDescendants(AForm.Font, MainFont, AForm);
+    //Important: We are using the font to calculate everything, so don't
+    //change font until now.
+    AForm.Font.Size := MainFont.Size;
+    if AForm.GetInterface(IORKeepBounds, kb) then
+      if Assigned(kb) and kb.KeepBounds then
       begin
-        AForm.OnResize := OldResize;
-        OldResize(AForm);
+        AForm.BoundsRect := keep;
+        kb.KeepBounds := True; // Resets the kept bounds
+        if AForm.Showing then
+          kb.KeepBounds := False;
       end;
+  finally
+    if(Assigned(OldResize)) then
+    begin
+      AForm.OnResize := OldResize;
+      OldResize(AForm);
     end;
   end;
 end;

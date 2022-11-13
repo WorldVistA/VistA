@@ -5,7 +5,9 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, StdCtrls, ComCtrls, ExtCtrls, ORCtrls, Grids, Buttons, uConst, ORDtTm,
-  Menus, XUDIGSIGSC_TLB, rMisc, uOrders, StrUtils, oRFn, contnrs,
+  Menus,
+//  XUDIGSIGSC_TLB,
+  rMisc, uOrders, StrUtils, oRFn, contnrs,
   VA508AccessibilityManager, Vcl.CheckLst, rODRTC;
 
 const
@@ -98,7 +100,7 @@ type
 
 var
   frmODRTC: TfrmODRTC;
-  crypto: IXuDigSigS;
+//  crypto: IXuDigSigS;
 
 implementation
 
@@ -118,7 +120,7 @@ var
 tmp: string;
 begin
   inherited;
-//    ClearAllFields;
+  //  ClearAllFields;
   //FIVTypeDefined := false;
   ClearAllPrompts;
   systemInfo := false;
@@ -178,6 +180,7 @@ end;
 procedure TfrmODRTC.SetupDialog(OrderAction: Integer; const ID: string);
 begin
   inherited;
+  AutoSizeDisabled := True;
   try
     changing := false;
     if OrderAction in [ORDER_COPY, ORDER_EDIT, ORDER_QUICK] then
@@ -469,8 +472,8 @@ begin
         begin
           // RPC call doesn't like fractional part (the time part)
           CIDC := Trunc(CIDC);
-          // Convert NOW or TODAY or various substrings (N, t) to T
-          if 'NOW'.StartsWith(str.ToUpper) or 'TODAY'.StartsWith(str.ToUpper) then
+          // Convert NOW to T
+          if 'NOW'.StartsWith(str.ToUpper) then
             str := 'T';
           // strip any @ times
           pp := Pos('@', str);
@@ -573,9 +576,18 @@ end;
 
 procedure TfrmODRTC.cboRTCClinicNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
   inherited;
-  cboRTCClinic.ForDataUse(SubSetOfNewLocs(StartFrom, Direction));
+//  cboRTCClinic.ForDataUse(SubSetOfNewLocs(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setSubSetOfNewLocs(sl, StartFrom, Direction);
+    cboRTCClinic.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODRTC.chkTimeSensitveClick(Sender: TObject);
@@ -617,12 +629,22 @@ begin
 end;
 
 procedure TfrmODRTC.FormCreate(Sender: TObject);
+var
+  sl: TStrings;
+
 begin
- inherited;
-    AllowQuickOrder := True;
-    Responses.Dialog := 'SD RTC';
-    CtrlInits.LoadDefaults(ODForSD);
-    initDialog;
+  inherited;
+  lstPreReq.IntegralHeight := True; // RTC 1299114
+  AllowQuickOrder := true;
+  Responses.Dialog := 'SD RTC';
+  sl := TSTringList.Create;
+  try
+    setODforSD(sl);
+    CtrlInits.LoadDefaults(sl);
+  finally
+    sl.Free;
+  end;
+  InitDialog;
 end;
 
 procedure TfrmODRTC.lbStatementsClickCheck(Sender: TObject;
@@ -677,4 +699,3 @@ begin
 end;
 
 end.
-

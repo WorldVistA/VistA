@@ -7,8 +7,6 @@ inherited frmPCEBase: TfrmPCEBase
   Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 240
   DesignSize = (
     624
     400)
@@ -22,9 +20,9 @@ inherited frmPCEBase: TfrmPCEBase
     Anchors = [akRight, akBottom]
     Caption = '&OK'
     ModalResult = 1
+    NumGlyphs = 2
     TabOrder = 0
     OnClick = btnOKClick
-    NumGlyphs = 2
   end
   object btnCancel: TBitBtn [1]
     Left = 547
@@ -34,9 +32,10 @@ inherited frmPCEBase: TfrmPCEBase
     Anchors = [akRight, akBottom]
     Caption = '&Cancel'
     ModalResult = 2
+    NumGlyphs = 2
     TabOrder = 1
     OnClick = btnCancelClick
-    NumGlyphs = 2
+    OnMouseDown = btnCancelMouseDown
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (

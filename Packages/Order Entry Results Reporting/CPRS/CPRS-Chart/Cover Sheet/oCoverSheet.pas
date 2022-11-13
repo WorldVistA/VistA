@@ -3,7 +3,7 @@ unit oCoverSheet;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet controller object
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-04
   *
@@ -125,16 +125,17 @@ begin
   fParamList := nil;
   fControls.Clear;
   FreeAndNil(fControls);
+  SetLength(fCoverSheetRows, 0);
   inherited;
 end;
 
 procedure TCoverSheet.OnClearPtData(Sender: TObject);
 var
   aControl: TControl;
-  aCPRSTab: ICPRSTab;
+  aCPRSTab: ICoverSheetDisplayPanel;
 begin
   for aControl in fControls do
-    if Supports(aControl, ICPRSTab, aCPRSTab) then
+    if Supports(aControl, ICoverSheetDisplayPanel, aCPRSTab) then
       aCPRSTab.OnClearPtData(Sender);
 end;
 
@@ -450,7 +451,7 @@ begin
     try
       CallVistA('ORWCV1 COVERSHEET LIST', [], aReturn);
       // Proof of concepts!
-      // aReturn.Insert(0, '1001^My Web Browser^http://www.domain^1');
+      // aReturn.Insert(0, '1001^My Web Browser^http://www.va.gov^1');
       // aReturn.Insert(0, '1001^My Web Page');
       // aReturn.Insert(0, '1000^Clock');
 

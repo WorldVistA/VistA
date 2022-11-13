@@ -79,6 +79,7 @@ type
     procedure pnlMessageMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure txtReasonKeyPress(Sender: TObject; var Key: Char);
+    procedure tmrBringToFrontTimer(Sender: TObject);
   private
     FLastRadID: string;
     FEditCopy: boolean;
@@ -95,6 +96,7 @@ type
     procedure InitDialog; override;
     procedure Validate(var AnErrMsg: string); override;
     procedure SetDefaultPregant;
+    procedure ShowOrderMessage(Show: boolean); override;
   public
     procedure SetFontSize(FontSize: integer); override;
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
@@ -108,8 +110,8 @@ uses rODBase, rODRad, rOrders, uCore, rCore, fODRadApproval, fODRadConShRes, fLk
   uFormMonitor, System.UITypes, VAUtils;
 
 const
-  TX_NO_PROC          = 'An Imaging Procedure must be specified.';
-  TX_NO_URG           = 'The Urgency must be specified.';
+  TX_NO_PROC          = 'An Imaging Procedure must be specified.'    ;
+  TX_NO_URG           = 'The Urgency must be specified.'    ;
   TX_NO_MODE          = 'A mode of transport must be selected.';
   TX_INVALID_REASON   = 'You cannot enter control characters in the Reason for Study field.';
   TX_BAD_REASON       = 'You cannot enter a ^ in the Reason for Study field.';
@@ -134,7 +136,7 @@ var
   Radiologist, Contract, Research: string ;
   AName, IsPregnant: string;
   ALocation, AType: integer;
-
+  
 { TfrmODBase common methods }
 
 procedure TfrmODRad.SetupDialog(OrderAction: Integer; const ID: string);
@@ -157,9 +159,9 @@ begin
         oldCE := OnChange;
         OnChange := nil;
         try
-          FastAssign(SubsetOfImagingTypes, cboImType.Items);
-          for i := 0 to Items.Count-1 do
-            if StrToIntDef(Piece(Items[i],U,4), 0) = DisplayGroup then ItemIndex := i;
+          SubsetOfImagingTypes(cboImType.Items);
+	      for i := 0 to Items.Count-1 do
+    	    if StrToIntDef(Piece(Items[i],U,4), 0) = DisplayGroup then ItemIndex := i;
         finally
           OnChange := oldCE;
         end;
@@ -172,9 +174,13 @@ begin
     if Self.EvtID>0 then
       FEvtDelayDiv := GetEventDiv1(IntToStr(Self.EvtID));
 //    CtrlInits.LoadDefaults(ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup));   // ODForRad returns TStrings with defaults
-    sl := ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup);
-    CtrlInits.LoadDefaults(sl);   // ODForRad returns TStrings with defaults
-    sl.Free; // RTC 272867
+    sl := TStringList.Create;
+    try
+      ODForRad(sl, Patient.DFN, FEvtDelayDiv, DisplayGroup);
+      CtrlInits.LoadDefaults(sl);
+    finally
+      sl.free;
+    end;
     InitDialog;
     SetControl(cboProcedure,       'ORDERABLE', 1);
     Changing := True;
@@ -183,7 +189,7 @@ begin
     SetControl(cboTransport,       'MODE', 1);
     SetControl(cboSubmit,          'IMLOC', 1);
     SetControl(cboCategory,        'CLASS', 1);
-    SetControl(txtReason,          'REASON', 1);
+    SetControl(txtReason,           'REASON', 1);
     SetControl(memHistory,         'COMMENT', 1);
     SetControl(chkIsolation,       'YN', 1);
     SetControl(radPregnant,        'PREGNANT', 1);
@@ -240,6 +246,21 @@ begin
     ControlChange(Self);
     FPredefineOrder := False;
   end;
+end;
+
+procedure TfrmODRad.ShowOrderMessage(Show: boolean);
+begin
+  inherited;
+  pnlRightBase.Height := memOrder.Top - 5;
+  pnlLeft.Height := memOrder.Top - 5;
+end;
+
+procedure TfrmODRad.tmrBringToFrontTimer(Sender: TObject);
+begin
+  if FFormFirstOpened then
+    inherited
+  else
+    tmrBringToFront.Enabled := False;
 end;
 
 procedure TfrmODRad.txtReasonKeyPress(Sender: TObject; var Key: Char);
@@ -725,7 +746,7 @@ begin
   AllowQuickOrder := True;
   Responses.Dialog := 'RA OERR EXAM';              // loads formatting info
   StatusText('Loading Default Values');
-  FastAssign(SubsetOfImagingTypes, cboImType.Items);
+  SubsetOfImagingTypes(cboImType.Items);
   if Self.EvtID>0 then
     FEvtDelayDiv := GetEventDiv1(IntToStr(Self.EvtID));
   PreserveControl(cboImType);
@@ -816,7 +837,6 @@ const
   Txt2 = #13+#13+'A response for the pregnant field must be selected.';
 var
   NeedCheckPregnant: boolean;
-
 begin
   if Patient.Sex = 'F' then
   begin
@@ -877,6 +897,8 @@ end;
 
 procedure TfrmODRad.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  pnlMessage.Visible := False;
+  ClientHeight := memOrder.BoundsRect.Bottom + 11;
   inherited;
   frmFrame.pnlVisit.Enabled := true;
   FormMonitorBringToFrontEvent(Self, nil);
@@ -933,7 +955,7 @@ end;
 
 procedure TfrmODRad.ImageTypeChange;
 var
-  sl: TStrings;
+  sl: TStringList;
 begin
   if not ImageTypeChanged then Exit;
   ImageTypeChanged := false;
@@ -942,11 +964,14 @@ begin
   if Changing or (cboImtype.ItemIndex = -1) then exit;
   with cboImType do DisplayGroup := StrToIntDef(Piece(Items[ItemIndex], U, 4), 0) ;
   if DisplayGroup = 0 then exit;
-// ODForRad returns TStrings with defaults
-//  CtrlInits.LoadDefaults(ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup));
-  sl := ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup);
-  CtrlInits.LoadDefaults(sl);   // ODForRad returns TStrings with defaults
-  sl.Free; // RTC 272867
+//  CtrlInits.LoadDefaults(ODForRad(Patient.DFN, FEvtDelayDiv, DisplayGroup));   // ODForRad returns TStrings with defaults
+  sl := TStringList.Create;
+  try
+    ODForRad(sl, Patient.DFN, FEvtDelayDiv, DisplayGroup);
+    CtrlInits.LoadDefaults(sl);
+  finally
+    sl.Free;
+  end;
   FPredefineOrder := False;
   InitDialog;
 end;
@@ -956,6 +981,7 @@ begin
   if(FFormFirstOpened) then
   begin
     FFormFirstOpened := FALSE;
+    BringToFront;
     with cboImType do
       if not FEditCopy and (ItemIEN = 0) and (DroppedDown = False) and (Application.Active) then
       begin

@@ -7,10 +7,13 @@
   Unit: Rpcconf1 server selection dialog. Reads from registry entries
   HKEY_LOCAL_MACHINE and HKEY_CURRENT_USER, and saves new entries to
   HKEY_CURRENT_USER.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in XWB*1.1*71 (RGG 10/18/2018) XWB*1.1*71
   1. Updated RPC Version to version 71.
 
@@ -141,9 +144,9 @@ begin
   begin
     outcome := PAnsiChar(StrAlloc(256)); // JLI 090804
     host := PAnsiChar(StrAlloc(Length(ServerName) + 1)); // JLI 090804
-    AnsiStrings.StrPCopy(host, ServerName); // p60
+    AnsiStrings.StrPCopy(host, AnsiString(ServerName)); // p60
     LibGetHostIP1(TaskInstance, host, outcome);
-    Result := AnsiStrings.StrPas(outcome); // p60
+    Result := String(outcome); // p60
     AnsiStrings.StrDispose(outcome); // p60
     AnsiStrings.StrDispose(host); // p60
   end
@@ -207,7 +210,7 @@ begin
   // For Windows 7:
   // HKEY_LOCAL_MACHINE\Software\Wow6432Node\Vista\Broker\Servers
   // HKEY_CURRENT_USER\Software\Vista\Broker\Servers
-  // server.site.med.domain,19300 REG_SZ xxxvista
+  // server.site.med.va.gov,19300 REG_SZ xxxvista
   with rpcConfig do
   begin
     tmpServerPairs := TStringList.Create;
@@ -303,7 +306,7 @@ end;
 
 // On Windows 7, btnNewClick writes to:
 // HKEY_CURRENT_USER\Software\Vista\Broker\Servers
-// server.site.med.domain,19300 REG_SZ xxxvista
+// server.site.med.va.gov,19300 REG_SZ xxxvista
 procedure TrpcConfig.btnNewClick(Sender: TObject);
 var
   I: integer;

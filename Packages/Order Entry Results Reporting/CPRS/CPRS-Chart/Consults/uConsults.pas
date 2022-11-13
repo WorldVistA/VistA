@@ -32,8 +32,8 @@ type
     InOut: string ;                         {  14}       { * }
     Findings: string ;                      {  15}
     TIUResultNarrative: integer ;           {  16}
-    TIUDocuments: TStrings ;                {from '50' node of file 123}
-    MedResults:  TStrings;                  {from '50' node of file 123}
+    TIUDocuments: TStringList ;             {from '50' node of file 123}
+    MedResults:  TStringList ;              {from '50' node of file 123}
     RequestReason: TStringList ;            {  20}       { * }
     ProvDiagnosis: string ;                 {  30}       { * }
     ProvDxCode: string;                     {  30.1}
@@ -41,6 +41,7 @@ type
     ClinicallyIndicatedDate: TFMDateTime;   {  17}
     NoLaterThanDate: TFMDateTime;           {  18}
     DstID: string;                          {  85}
+    procedure Clear;
   end ;
 
   TEditResubmitRec = record
@@ -68,7 +69,11 @@ type
     DenyComments: TStringList;
     OtherComments: TStringList;
     NewComments: TStringList;
+
     DstId: string;
+
+    procedure Clear;
+
   end;
 
   TSelectContext = record
@@ -161,7 +166,7 @@ var
 implementation
 
 uses
-  uConst;
+  uConst, uDocTree;
 
 constructor TConsultTitles.Create;
 { creates an object to store Consult titles so only obtained from server once }
@@ -253,12 +258,17 @@ begin
   if CharInSet(Piece(x, U, 1)[1], ['A', 'N', 'E']) then
     x := Piece(x, U, 2)
   else
+  begin
+    if ShowMoreNode(Piece(x, U, 2)) then
+      x := Piece(RawText, U, 2)
+    else
     begin
-      x := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ' + Piece(x, U, 2) +
-           ' (#' + Piece(Piece(x, U, 1), ';', 1) + ')';
+      x := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ';
+      x := x + Piece(RawText, U, 2) +' (#' + Piece(Piece(RawText, U, 1), ';', 1) + ')';
       if not (Copy(Piece(Piece(RawText, U, 1), ';', 2), 1, 4) = 'MCAR') then
         x := x + ', ' + Piece(RawText, U, 6) + ', ' + Piece(Piece(RawText, U, 5), ';', 2);
     end;
+  end;
   Result := x;
 end;
 
@@ -434,7 +444,8 @@ begin
             end;
             Dest.Add(x);
           end; {for}
-        SortByPiece(TStringList(Dest), U, 11);
+//        SortByPiece(TStringList(Dest), U, 11);
+        SortByPiece(Dest, U, 11);
         if not Ascending then InvertStringList(TStringList(Dest));
         Dest.Insert(0, IntToStr(Context) + '^^^' + CC_TV_TEXT[Context] + '^^^+^0^^^^');
         Alist.Sort;
@@ -533,5 +544,49 @@ begin
       StateIndex := IMG_NONE;
     end;
 end;
+
+{ TConsultRequest }
+
+procedure TConsultRequest.Clear;
+begin
+  ConsultProcedure := '';
+  SendingProviderName := '';
+  Result := '';
+  ModeOfEntry := '';
+  InOut := '';
+  Findings := '';
+  KillObj(@TIUDocuments);
+  KillObj(@MedResults);
+  KillObj(@RequestReason);
+  ProvDiagnosis := '';
+  ProvDxCode := '';
+  KillObj(@RequestProcessingActivity);
+end;
+
+{ TEditResubmitRec }
+
+procedure TEditResubmitRec.Clear;
+begin
+  RequestType := '';
+  ToServiceName := '';
+  ConsultProc := '';
+  ConsultProcName := '';
+  UrgencyName := '';
+  Place := '';
+  PlaceName := '';
+  AttnName := '';
+  InpOutp := '';
+  KillObj(@RequestReason);
+  ProvDiagnosis := '';
+  ProvDxCode := '';
+  KillObj(@DenyComments);
+  KillObj(@OtherComments);
+  KillObj(@NewComments);
+end;
+
+initialization
+
+finalization
+  ConsultRec.Clear;
 
 end.

@@ -5,15 +5,15 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ORFn, ComCtrls, uConst, rODMeds, uOrders, fOCAccept,
-  ExtCtrls, uODBase, ORCtrls, VA508AccessibilityManager;
+  ExtCtrls, uODBase, ORCtrls, VA508AccessibilityManager, rOrders;
 
 type
   TfrmRenewOrders = class(TfrmAutoSz)
     hdrOrders: THeaderControl;
-    pnlBottom: TPanel;
     cmdCancel: TButton;
     cmdOK: TButton;
     cmdChange: TButton;
+    pnlBottom: TPanel;
     lstOrders: TCaptionListBox;
     procedure FormCreate(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
@@ -31,8 +31,15 @@ type
   private
     OKPressed: Boolean;
     OrderList: TList;
+    fCallBackOrder: TOrder;
+    fCallBackList: tStringList;
+    procedure RedrawList;
+    procedure GetGridText(RenewFields: TOrderRenewFields; var col1, col2: string);
     function MeasureColumnHeight(TheOrderText: string; Index: Integer; Column: integer):integer;
-    function AcceptOrderCheckOnRenew(const AnOrderID: string; var OCList: TStringList): boolean;
+    function AcceptOrderCheckOnRenew(const AnOrder: TOrder; var OCList: TStringList): boolean;
+    procedure BuildOrderChecks(var aReturnList: TStringList);
+    function OverrideFunction(aReturnList: tStringList; aOverrideType: String;
+      aOverrideReason: String = ''; aOverrideComment: String = ''): Boolean;
   end;
 
 function ExecuteRenewOrders(var SelectedList: TList): Boolean;
@@ -40,15 +47,11 @@ function ShouldCancelRenewOrder: boolean; //rtw
 
 implementation
 
-
 {$R *.DFM}
 
-uses rOrders, fDateRange, fRenewOutMed, uCore, rCore, rMisc, UBAGlobals, 
-  VA2006Utils, fFrame;
-
-
-var // rtw
-  RenewOrderCancel: boolean; // rtw
+uses fDateRange, fRenewOutMed, uCore, rCore, rMisc, UBAGlobals, VA2006Utils, fFrame;
+var //rtw
+  RenewOrderCancel : boolean; //rtw
 
 const
   TEXT_COLUMN = 0;
@@ -78,6 +81,10 @@ const
   TX_INSTRUCT   = CRLF + CRLF + 'Click RETRY to select another provider.' + CRLF + 'Click CANCEL to cancel the current renewal.';
   TC_DEAFAIL    = 'Order not renewed';
   TC_ORDERCHECKS = 'Order Checks';
+  TX_QTY_NV     = 'Unable to validate quantity on ';
+  TX_QTY_NV_1   = 'selected order.';
+  TX_QTY_NV_2   = 'some of these orders.';
+  TX_NO_SAVE_CAP = 'Unable to Renew Order';
 
 function ShouldCancelRenewOrder: boolean; //rtw
  begin
@@ -97,12 +104,13 @@ end;
 function ExecuteRenewOrders(var SelectedList: TList): Boolean;
 const
   TC_IMO_ERROR  = 'Unable to order';
+//  'Inpatient medication order on outpatient authorization required';
 var
   frmRenewOrders: TfrmRenewOrders;
   RenewFields: TOrderRenewFields;
   AnOrder, TheOrder: TOrder;
   OriginalID, RNFillerID,x: string;
-  OrderableItemIen: integer;
+  OrderableItemIen, temp: integer;
   TreatAsIMOOrder, IsAnIMOOrder: boolean;
   PassDeaList: TList;
   InptDlg: boolean;
@@ -118,12 +126,13 @@ var
   begin
     Result := Patient.Inpatient;
   end;
+
 begin
   Result := False;
   IsAnIMOOrder := False;
   RnErrMsg := '';
   InptDlg := False;
-
+  RenewOrderCancel := True;  //rtw
   if SelectedList.Count = 0 then Exit;
 
   PassDeaList := TList.Create;
@@ -138,7 +147,7 @@ begin
     for j := 0 to Count - 1 do
        begin
          TheOrder := TOrder(Items[j]);
-         PkgInfo := GetPackageByOrderID(TheOrder.ID);
+         PkgInfo := TheOrder.GetPackage; //GetPackageByOrderID(TheOrder.ID);
 
          if Pos('PS',PkgInfo)=1 then
             begin
@@ -200,21 +209,27 @@ begin
        begin
          AnOrder := TOrder(Items[i]);
          RenewFields := TOrderRenewFields.Create;
-         LoadRenewFields(RenewFields, AnOrder.ID);
-         RenewFields.NewText := AnOrder.Text + PickupText(RenewFields.Pickup);
+         // PaPI. Passing Location ID
+         if Assigned(Encounter) then
+           LoadRenewFields(RenewFields, AnOrder.ID+';'+IntToStr(Encounter.Location))
+         else
+           LoadRenewFields(RenewFields, AnOrder.ID);
+         if RenewFields.NewText = '' then
+            RenewFields.NewText := AnOrder.Text;
+         RenewFields.NewText := RenewFields.NewText + PickupText(RenewFields.Pickup);
          AnOrder.LinkObject := RenewFields;
          PlainText := '';
 
          if RenewFields.NewText <> '' then
-           PlainText := PlainText + frmRenewOrders.hdrOrders.Sections[TEXT_COLUMN].Text + ': ' + RenewFields.NewText + CRLF;
+           PlainText := PlainText + frmRenewOrders.hdrOrders.Sections[TEXT_COLUMN].Text +
+                             ': ' + RenewFields.NewText + CRLF + RenewFields.TitrationMsg;
 
          if RenewFields.BaseType = OD_TEXTONLY then
            with RenewFields do
-              PlainText := PlainText + 'Start: ' + StartTime + CRLF + 'Stop: ' + StopTime;
+             PlainText := PlainText + 'Start: ' + StartTime + CRLF + 'Stop: ' + StopTime;
 
          frmRenewOrders.lstOrders.Items.AddObject(PlainText, AnOrder);
        end;
-
     if frmRenewOrders.OrderList.Count < 1 then
       frmRenewOrders.Close
     else
@@ -222,6 +237,7 @@ begin
 
     if frmRenewOrders.OKPressed then
        begin
+         RenewOrderCancel := FALSE;    //rtw
          with frmRenewOrders.OrderList do
            for i := Count - 1 downto 0 do
             begin
@@ -233,9 +249,10 @@ begin
              UBAGlobals.SourceOrderID := OriginalID; //BAPHII 1.3.2
              UBAGlobals.CopyTreatmentFactorsDxsToRenewedOrder; //BAPHII 1.3.2
 
-              if CheckOrderGroup(OriginalID) = 1 then
+              temp := CheckOrderGroup(OriginalID);
+              if temp = 1 then
                 RNFillerID := 'PSI'
-              else if CheckOrderGroup(OriginalID) = 2 then
+              else if temp = 2 then
                 RNFillerID := 'PSO';
 
               if AddFillerAppID(RNFillerID) and OrderChecksEnabled then
@@ -248,8 +265,9 @@ begin
 
               TreatAsIMOOrder := False;
 
-              if not frmRenewOrders.AcceptOrderCheckOnRenew(AnOrder.ID,OrchkList) then
+              if not frmRenewOrders.AcceptOrderCheckOnRenew(AnOrder, OrchkList) then
               begin
+                FreeAndNil(TOrder(frmRenewOrders.OrderList[i]).LinkObject);
                 frmRenewOrders.OrderList.Delete(i);
                 Continue;
               end;
@@ -303,10 +321,9 @@ begin
     with frmRenewOrders.OrderList do for i := 0 to Count - 1 do
        begin
          AnOrder := TOrder(Items[i]);
-         RenewFields := TOrderRenewFields(AnOrder.LinkObject);
-         RenewFields.Free;
-         AnOrder.LinkObject := nil;
+         FreeAndNil(AnOrder.LinkObject);
        end;
+    ClearAllergyOrderCheckCache;
     frmRenewOrders.Release;
   end;
 end;
@@ -316,54 +333,58 @@ begin
   inherited;
   FixHeaderControlDelphi2006Bug(hdrOrders);
   OKPressed := False;
-  hdrOrders.Sections[0].Width := Round(self.width * 0.75);
-  hdrOrders.Sections[1].Width := Round(self.width * 0.25);
   ResizeFormToFont(Self);
   SetFormPosition(Self);
+  uAllergiesChanged := False;
 end;
 
 procedure TfrmRenewOrders.FormResize(Sender: TObject);
-var
-i: integer;
-Height: integer;
 begin
   inherited;
-  if lstorders.Count = 0 then exit;
-  for I := 0 to lstOrders.Count - 1 do
-    begin
-       Height := lstOrders.ItemRect(i).Bottom - lstOrders.ItemRect(i).Top;
-       lstOrdersMeasureItem(lstOrders,i,Height);
-       //ListGridDrawCell(lstOrders, hdrOrders, i, TEXT_COLUMN, x, WORD_WRAPPED);
-    end;
+  hdrOrders.Sections[0].Width := Round(hdrOrders.width * 0.7);
+  hdrOrders.Sections[1].Width := Round(hdrOrders.width * 0.3);
+  RedrawList;
+end;
+
+procedure TfrmRenewOrders.GetGridText(RenewFields: TOrderRenewFields; var col1, col2: string);
+begin
+  with RenewFields do
+  begin
+    if BaseType = OD_TEXTONLY then
+      col2 := 'Start: ' + StartTime + CRLF + 'Stop: ' + StopTime
+    else col2 := '';
+    col1 := NewText;
+    if length(TitrationMsg)>0 then
+      col1 := col1 + CRLF + TitrationMsg;
+  end;
 end;
 
 procedure TfrmRenewOrders.lstOrdersMeasureItem(Control: TWinControl;
   Index: Integer; var Height: Integer);
 var
-  x, tmp: string;
-  DateHeight, TextHeight: Integer;
+  x1,x2: string;
+  NewHeight, DateHeight, TextHeight: Integer;
   AnOrder: TOrder;
   RenewFields: TOrderRenewFields;
 begin
   inherited;
-      AnOrder := TOrder(OrderList.Items[Index]);
-      if (AnOrder <> nil) then
-        begin
-          RenewFields := TOrderRenewFields(AnOrder.LinkObject);
-          with RenewFields do x := 'Start: ' + StartTime + CRLF + 'Stop: ' + StopTime;
-          //tmp := RenewFields.NewText;
-          tmp := LstOrders.Items.Strings[index];
-          TextHeight := MeasureColumnHeight(tmp,Index,TEXT_COLUMN);
-          DateHeight := MeasureColumnHeight(x, Index, DATE_COLUMN);
-          Height := HigherOf(TextHeight, DateHeight);
-          if Height > 255 then Height := 255;  //This is maximum allowed by a windows listbox item.
-        end
+  AnOrder := TOrder(OrderList.Items[Index]);
+  if (AnOrder <> nil) then
+  begin
+    RenewFields := TOrderRenewFields(AnOrder.LinkObject);
+    GetGridText(RenewFields, x1, x2);
+    TextHeight := MeasureColumnHeight(x1, Index, TEXT_COLUMN);
+    DateHeight := MeasureColumnHeight(x2, Index, DATE_COLUMN);
+    NewHeight := HigherOf(TextHeight, DateHeight);
+    if NewHeight > 255 then NewHeight := 255;  //This is maximum allowed by a windows listbox item.
+    Height := NewHeight;
+  end;
 end;
 
 procedure TfrmRenewOrders.lstOrdersDrawItem(Control: TWinControl;
   Index: Integer; Rect: TRect; State: TOwnerDrawState);
 var
-  x: string;
+  x1,x2: string;
   AnOrder: TOrder;
   RenewFields: TOrderRenewFields;
 begin
@@ -372,39 +393,42 @@ begin
   if AnOrder <> nil then with AnOrder do
   begin
     RenewFields := TOrderRenewFields(AnOrder.LinkObject);
-    if RenewFields.BaseType = OD_TEXTONLY
-      then with RenewFields do x := 'Start: ' + StartTime + CRLF + 'Stop: ' + StopTime
-      else x := '';
+    GetGridText(RenewFields, x1, x2);
     ListGridDrawLines(lstOrders, hdrOrders, Index, State);
-    ListGridDrawCell(lstOrders, hdrOrders, Index, TEXT_COLUMN, RenewFields.NewText, WORD_WRAPPED);
-    ListGridDrawCell(lstOrders, hdrOrders, Index, DATE_COLUMN, x, WORD_WRAPPED);
+    ListGridDrawCell(lstOrders, hdrOrders, Index, TEXT_COLUMN, x1, WORD_WRAPPED);
+    ListGridDrawCell(lstOrders, hdrOrders, Index, DATE_COLUMN, x2, WORD_WRAPPED);
   end;
 end;
 
 procedure TfrmRenewOrders.lstOrdersClick(Sender: TObject);
 var
   RenewFields: TOrderRenewFields;
+  idx: integer;
 begin
   inherited;
   with lstOrders do
   begin
-    if ItemIndex < 0 then Exit;
-    RenewFields := TOrderRenewFields(TOrder(Items.Objects[ItemIndex]).LinkObject);
-    case RenewFields.BaseType of
-    OD_MEDOUTPT: cmdChange.Caption := 'Change Refills/Pick Up...';
-    OD_TEXTONLY: cmdChange.Caption := 'Change Start/Stop...';
-    else         cmdChange.Caption := 'Change...';
+    if ItemIndex < 0 then
+      idx := -1
+    else
+    begin
+      RenewFields := TOrderRenewFields(TOrder(Items.Objects[ItemIndex]).LinkObject);
+      idx := RenewFields.BaseType;
     end;
-    with RenewFields do if (BaseType = OD_MEDOUTPT) or (BaseType = OD_TEXTONLY)
-      then cmdChange.Enabled := True
-      else cmdChange.Enabled := False;
+    case idx of
+      OD_MEDOUTPT: cmdChange.Caption := 'Change Days Supply/Quantity/Refills/Pick Up...';
+      OD_TEXTONLY: cmdChange.Caption := 'Change Start/Stop...';
+      else         cmdChange.Caption := 'Change...';
+    end;
+    cmdChange.Width := TextWidthByFont(MainFont.Handle, cmdChange.Caption) + 30;
+    cmdChange.Enabled := (idx = OD_MEDOUTPT) or (idx = OD_TEXTONLY);
   end;
 end;
 
 procedure TfrmRenewOrders.cmdChangeClick(Sender: TObject);
 var
   StartPos: Integer;
-  x, NewComment, OldComment, OldRefills, OldPickup: string;
+  x, NewComment, OldQty, OldComment, OldRefills, OldPickup: string;
   AnOrder: TOrder;
   RenewFields: TOrderRenewFields;
 begin
@@ -416,11 +440,13 @@ begin
     RenewFields := TOrderRenewFields(AnOrder.LinkObject);
     case RenewFields.BaseType of
     OD_MEDOUTPT: with RenewFields do begin
-                   OldRefills := IntToStr(Refills) + ' refills';
+                   OldRefills := 'Refills: ' + IntToStr(Refills);
                    { reverse string to make sure getting last matching comment }
                    OldComment := UpperCase(ReverseStr(Comments));
                    OldPickup  := PickupText(Pickup);
-                   ExecuteRenewOutMed(Refills, Comments, Pickup, AnOrder);
+                   OldQty := 'Quantity: ' + Quantity;
+                   if ExecuteRenewOutMed(AnOrder) then
+                      RedrawList;
                    NewComment := UpperCase(ReverseStr(Comments));
                    x := ReverseStr(NewText);
                    StartPos := Pos(OldComment, UpperCase(x));
@@ -430,11 +456,16 @@ begin
                      else x := NewComment + x;
                    NewText := ReverseStr(x);
                    x := NewText;
+                   StartPos := Pos(OldQty, x);
+                   if StartPos > 0
+                     then x := Copy(x, 1, StartPos - 1) + 'Quantity: ' + Quantity +
+                               Copy(x, StartPos + Length(OldQty), Length(x))
+                     else x := x + ' Quantity: ' + Quantity;
                    StartPos := Pos(OldRefills, x);
                    if StartPos > 0
-                     then x := Copy(x, 1, StartPos - 1) + IntToStr(Refills) + ' refills' +
+                     then x := Copy(x, 1, StartPos - 1) + 'Refills: ' + IntToStr(Refills) +
                                Copy(x, StartPos + Length(OldRefills), Length(x))
-                     else x := x + ' ' + IntToStr(Refills) + ' refills';
+                     else x := x + ' Refills: ' + IntToStr(Refills);
                    StartPos := Pos(OldPickup, x);
                    if StartPos > 0
                      then x := Copy(x, 1, StartPos - 1) + PickupText(Pickup) +
@@ -450,15 +481,57 @@ begin
 end;
 
 procedure TfrmRenewOrders.cmdOKClick(Sender: TObject);
+var
+  i: integer;
+  AnOrder: TOrder;
+  RenewFields: TOrderRenewFields;
+  badQtyCount, badidx: integer;
+  s: string;
+
 begin
   inherited;
-  OKPressed := True;
-  Close;
+  badQtyCount := 0;
+  badidx := -1;
+  for i := 0 to lstOrders.Count-1 do
+  begin
+    AnOrder := TOrder(lstOrders.Items.Objects[i]);
+    if AnOrder.DGroup = OutptDisp then
+    begin
+      RenewFields := TOrderRenewFields(AnOrder.LinkObject);
+      if (StrToFloatDef(RenewFields.Quantity, 0.0) < 0.000000001) then
+      begin
+        inc(badQtyCount);
+        if badQtyCount = 1 then
+          badidx := i;
+      end;
+    end;
+  end;
+
+  if BadQtyCount > 0 then
+  begin
+    if BadQtyCount > 1 then
+      s := TX_QTY_NV_2
+    else
+    begin
+      s := TX_QTY_NV_1;
+      lstOrders.Selected[badIdx] := True;
+    end;
+    InfoBox(TX_QTY_NV + s, TX_NO_SAVE_CAP, MB_OK);
+
+  end
+  else
+  begin
+    OKPressed := True;
+    Close;
+  end;
 end;
+
+
 
 procedure TfrmRenewOrders.cmdCancelClick(Sender: TObject);
 begin
   inherited;
+  RenewOrderCancel := TRUE; //rtw
   Close;
 end;
 
@@ -466,48 +539,81 @@ function TfrmRenewOrders.MeasureColumnHeight(TheOrderText: string; Index,
   Column: integer): integer;
 var
   ARect: TRect;
-  cnt: integer;
-  x: string;
 begin
-  cnt := 0;
   ARect.Left := 0;
   ARect.Top := 0;
   ARect.Bottom := 0;
   ARect.Right := hdrOrders.Sections[Column].Width -6;
   Result := WrappedTextHeightByFont(lstOrders.Canvas,lstOrders.Font,TheOrderText,ARect);
-  //AGP 28.0 this fix address the issue of WrappedTextHeightByFont appearing to not take in account CRLF
-  if Pos(CRLF, TheOrderText) > 0 then
-    begin
-      repeat
-        x := Copy(TheOrderText, 1, Pos(CRLF, TheOrderText) - 1);
-        if Length(x) = 0 then x := TheOrderText;
-        Delete(TheOrderText, 1, Length(x) + 2);  {delete text + CRLF}
-        cnt := cnt + 1;
-      until TheOrderText = '';
-      if cnt > 0 then Result := Result + (cnt * Abs(self.Font.Height));
-      if Result > 255 then Result := 255;
-    end;
-  
 end;
 
-function TfrmRenewOrders.AcceptOrderCheckOnRenew(const AnOrderID: string;
+procedure TfrmRenewOrders.RedrawList;
+var
+  i: integer;
+begin
+  lstOrders.Invalidate;
+  // the following code forces new calls to OnMeasureItem
+  for i := 0 to lstOrders.Count-1 do
+    lstOrders.Items[i] := lstOrders.Items[i];
+end;
+
+function TfrmRenewOrders.AcceptOrderCheckOnRenew(const AnOrder: TOrder;
   var OCList: TStringList): boolean;
 var
-  OIInfo,FillerID: string;
+  OIList: TStringList;
+begin
+  fCallBackOrder := AnOrder;
+  fCallBackList := OCList;
+
+  OIList := TStringList.Create;
+  try
+    BuildOrderChecks(OIList);
+    result := AcceptOrderWithChecks(OIList, BuildOrderChecks, OverrideFunction);
+  finally
+    FreeAndNil(OIList);
+  end;
+
+end;
+
+procedure TfrmRenewOrders.BuildOrderChecks(var aReturnList: TStringList);
+var
+  OIInfo,FillerID,x: string;
   AnOIList: TStringList;
   subI: integer;
+  RenewFields: TOrderRenewFields;
 begin
+  if (not assigned(fCallBackList)) or (not assigned(aReturnList)) then
+    exit;
+
+  fCallBackList.Clear;
+
+  RenewFields := TOrderRenewFields(fCallBackOrder.LinkObject);
   AnOIList := TStringList.Create;
-  OIInfo := DataForOrderCheck(AnOrderID);
-  FillerID := Piece(OIInfo,'^',2);
-  subI := 1;
-  while Length(Piece(OIInfo,'|',subI))>1 do
-  begin
-    AnOIList.Add(Piece(OIInfo,'|',subI));
-    subI := subI + 1;
+  try
+    OIInfo := DataForOrderCheck(fCallBackOrder.ID);
+    FillerID := Piece(OIInfo,'^',2);
+    subI := 1;
+    while Length(Piece(OIInfo,'|',subI))>1 do
+    begin
+      AnOIList.Add(Piece(OIInfo,'|',subI));
+      subI := subI + 1;
+    end;
+    with RenewFields do
+      x := Refills.ToString + U + Pickup + U + DaysSupply.ToString + U + Quantity;
+    OrderChecksOnAccept(fCallBackList, FillerID, '', AnOIList, fCallBackOrder.ID,'1',x);
+
+    aReturnList.Assign(fCallBackList);
+  finally
+    FreeandNil(AnOIList);
   end;
-  OrderChecksOnAccept(OCList, FillerID, '', AnOIList, AnOrderID,'1');
-  Result :=  AcceptOrderWithChecks(OCList);
+end;
+
+function TfrmRenewOrders.OverrideFunction(aReturnList: tStringList;
+  aOverrideType: String; aOverrideReason: String = '';
+  aOverrideComment: String = ''): Boolean;
+begin
+  // no auto accept on renewal orders so no need to allow ocAccept the ability to load override reasons.
+  result := False;
 end;
 
 procedure TfrmRenewOrders.FormClose(Sender: TObject;
@@ -520,7 +626,7 @@ end;
 procedure TfrmRenewOrders.hdrOrdersSectionResize(HeaderControl: THeaderControl; Section: THeaderSection);
 begin
   inherited;
-  lstOrders.Repaint; //CQ6367
+  RedrawList;
 end;
 
 

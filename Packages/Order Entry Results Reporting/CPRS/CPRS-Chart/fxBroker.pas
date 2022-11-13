@@ -77,7 +77,6 @@ type
     procedure tlAddWatchClick(Sender: TObject);
     procedure tlDelWatchClick(Sender: TObject);
     procedure tlClrWatchClick(Sender: TObject);
-    procedure ResultListClick(Sender: TObject);
     procedure FormStartDock(Sender: TObject; var DragObject: TDragDockObject);
     procedure FillLiveView(Inital: Boolean = False);
     procedure tlFlagClick(Sender: TObject);
@@ -85,20 +84,21 @@ type
       Stage: TCustomDrawStage; var DefaultDraw: Boolean);
     procedure ToolButton2Click(Sender: TObject);
     procedure AlignClick(Sender: TObject);
+    procedure LiveListSelectItem(Sender: TObject; Item: TListItem;
+      Selected: Boolean);
   private
     { Private declarations }
     FRetained: Integer;
     FCurrent: Integer;
-  //  RPCArray: Array of TRpcRecord;
     LiveArray: Array of TRpcRecord;
     FlagIdent: Integer;
-  //  procedure CloneRPCList();
     procedure InitalizeCloneArray();
     procedure HighlightRichEdit(StartChar, EndChar: Integer;
       HighLightColor: TColor);
-   procedure OnRefreshRPCRequest();
-   procedure AlignBroker(AlignStyle: TAlign);
-   Procedure SyncList(index: Integer);
+    procedure OnRefreshRPCRequest();
+    procedure AlignBroker(AlignStyle: TAlign);
+    procedure SyncList(index: Integer);
+    procedure LoadSelected(LookupArray: Array of TRpcRecord;aList:TListView);
   public
     { Public declarations }
 
@@ -180,7 +180,6 @@ begin
   else begin
    //
   end;
-
 end;
 
 procedure TfrmBroker.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -215,14 +214,9 @@ procedure TfrmBroker.FormDestroy(Sender: TObject);
 Var
   I: Integer;
 begin
- { for I := Low(RPCArray) to High(RPCArray) do
-    RPCArray[I].RPCText.Free;
-  SetLength(RPCArray, 0);
- }
   for I := Low(LiveArray) to High(LiveArray) do
     LiveArray[I].RPCText.Free;
   SetLength(LiveArray, 0);
-
   frmBroker := nil;
 end;
 
@@ -252,8 +246,6 @@ begin
   memData.Perform(EM_SETCHARFORMAT, SCF_SELECTION, Longint(@Format));
 end;
 
-
-
 procedure TfrmBroker.LiveListAdvancedCustomDrawItem(Sender: TCustomListView; Item: TListItem; State: TCustomDrawState;
   Stage: TCustomDrawStage; var DefaultDraw: Boolean);
 begin
@@ -267,13 +259,23 @@ begin
    sender.Canvas.brush.Color :=  clWindow;
    sender.Canvas.Font.Style := [];
   end;
-
 end;
 
-
+procedure TfrmBroker.LiveListSelectItem(Sender: TObject; Item: TListItem;
+  Selected: Boolean);
+begin
+  inherited;
+  if assigned(Item) and Selected then
+    begin
+      if Sender = WatchList then
+        LoadSelected(fFrame.WatchArray,TListView(Sender))
+      else
+        LoadSelected(LiveArray,TListView(Sender));
+    end;
+end;
 
 procedure TfrmBroker.LoadWatchList();
-Var
+var
   I, ReturnCursor: Integer;
   ListItem: TListItem;
   found: Boolean;
@@ -313,76 +315,79 @@ end;
 
 procedure TfrmBroker.AlignBroker(AlignStyle: TAlign);
 begin
-
- Self.Align := AlignStyle;
- if AlignStyle <> alNone then
- begin
-  Self.Parent := frmFrame;
   Self.Align := AlignStyle;
-
-  // create the splitter
-  If not Assigned(splLive) then
+  if AlignStyle <> alNone then
   begin
-    splLive := TSplitter.Create(frmFrame);
-    splLive.parent := frmFrame;
-    splLive.Color := clMedGray;
+    Self.Parent := frmFrame;
+    Self.Align := AlignStyle;
+
+    // create the splitter
+    If not assigned(splLive) then
+    begin
+      splLive := TSplitter.Create(frmFrame);
+      splLive.Parent := frmFrame;
+      splLive.Color := clMedGray;
+    end;
+    splLive.Align := AlignStyle;
+    Self.BorderStyle := bsNone;
+
+  end
+  else
+  begin
+    Self.Parent := nil;
+    FreeAndNil(splLive);
+    PnlDebug.Align := alLeft;
+    SplDebug.Align := alLeft;
+    SplDebug.Left := Self.Width;
+    pnlMain.Align := alClient;
+    Self.BorderStyle := bsSizeable;
   end;
-  splLive.Align := AlignStyle;
-  Self.BorderStyle := bsNone;
 
- end else begin
-   Self.Parent := nil;
-   FreeAndNil(splLive);
-   PnlDebug.Align := alLeft;
-   SplDebug.Align := alLeft;
-   SplDebug.Left := Self.Width;
-   pnlMain.Align := alClient;
-   Self.BorderStyle := bsSizeable;
- end;
+  if AlignStyle = alLeft then
+  begin
+    Self.Left := frmFrame.Left;
+    splLive.Width := 5;
+    splLive.Left := Self.Width;
+    PnlDebug.Align := alTop;
+    SplDebug.Align := alTop;
+    SplDebug.Top := Self.Height;
+    pnlMain.Align := alClient;
 
+  end
+  else if AlignStyle = alRight then
+  begin
+    Self.Left := frmFrame.Width;
+    splLive.Width := 5;
+    splLive.Left := Self.Left;
+    PnlDebug.Align := alTop;
+    SplDebug.Align := alTop;
+    SplDebug.Top := Self.Height;
+    pnlMain.Align := alClient;
 
- if AlignStyle = alLeft then
- begin
-  Self.Left := frmFrame.Left;
-  splLive.Width := 5;
-  splLive.Left := Self.Width;
-  PnlDebug.Align := alTop;
-  SplDebug.Align := alTop;
-  SplDebug.Top := Self.Height;
-  pnlMain.Align := alClient;
+  end
+  else if AlignStyle = alBottom then
+  begin
+    Self.Top := frmFrame.Height;
+    splLive.Height := 5;
+    splLive.Left := Self.Top;
+    PnlDebug.Align := alLeft;
+    SplDebug.Align := alLeft;
+    SplDebug.Left := Self.Width;
+    pnlMain.Align := alClient;
 
- end else if AlignStyle = alRight then
- begin
-  Self.Left := frmFrame.Width;
-  splLive.Width := 5;
-  splLive.Left := Self.left;
-  PnlDebug.Align := alTop;
-  SplDebug.Align := alTop;
-  SplDebug.Top := Self.Height;
-  pnlMain.Align := alClient;
+  end
+  else if AlignStyle = alTop then
+  begin
+    Self.Top := frmFrame.Top;
+    splLive.Height := 5;
+    splLive.Left := Self.Height;
+    PnlDebug.Align := alLeft;
+    SplDebug.Align := alLeft;
+    SplDebug.Left := Self.Width;
+    pnlMain.Align := alClient;
 
- end else if AlignStyle = alBottom then
- begin
-  Self.Top := frmFrame.height;
-  splLive.Height := 5;
-  splLive.Left := Self.top;
-  PnlDebug.Align := alLeft;
-  SplDebug.Align := alLeft;
-  SplDebug.Left := Self.Width;
-  pnlMain.Align := alClient;
-
- end else if AlignStyle = alTop then
- begin
-  Self.Top := frmFrame.top;
-  splLive.Height := 5;
-  splLive.Left := Self.height;
-  PnlDebug.Align := alLeft;
-  SplDebug.Align := alLeft;
-  SplDebug.Left := Self.Width;
-  pnlMain.Align := alClient;
-
- end;
- Self.Repaint;
+  end;
+  Self.Repaint;
 end;
 
 procedure TfrmBroker.FillLiveView(Inital: Boolean = False);
@@ -436,7 +441,10 @@ begin
         RPCText := TStringList.Create;
         try
           LoadRPCData(RPCText, I);
-          RpcName := RPCText[0];
+          if RPCText.Count > 0 then
+            RpcName := RPCText[0]
+          else
+            RpcName := '';
           UCallListIndex := I;
 
           for X := 0 to RPCText.Count - 1 do
@@ -505,7 +513,10 @@ begin
       RPCText := TStringList.Create;
       try
         LoadRPCData(RPCText, RetainedRPCCount - 1);
-        RpcName := RPCText[0];
+        if RPCText.Count > 0 then
+          RpcName := RPCText[0]
+        else
+          RpcName := '';
         UCallListIndex := RetainedRPCCount - 1;
 
         for X := 0 to RPCText.Count - 1 do
@@ -579,7 +590,6 @@ const
   TX_OPTION = 'OR CPRS GUI CHART';
   disclaimer = 'NOTE: Strictly relative indicator:';
 begin
-
   clientVer := clientVersion(Application.ExeName); // Obtain before starting.
 
   // Check time lapse between a standard RPC call:
@@ -592,7 +602,6 @@ begin
   // Show the results:
   infoBox('Lapsed time (milliseconds) = ' + diffDisplay + '.',
     disclaimer, MB_OK);
-
 end;
 
 procedure TfrmBroker.btnSearchClick(Sender: TObject);
@@ -632,7 +641,6 @@ begin
 end;
 
 procedure TfrmBroker.AlignClick(Sender: TObject);
-
 begin
   inherited;
   With (Sender as TMenuItem) do begin
@@ -798,27 +806,24 @@ procedure TfrmBroker.InitalizeCloneArray();
 begin
   if Length(LiveArray) = 0 then
   begin
-   // CloneRPCList;
     ResultList.Column[0].Width := -2;
     WatchList.Column[0].Width := -2;
     LiveList.Column[1].Width := -2;
   end;
 end;
 
-procedure TfrmBroker.ResultListClick(Sender: TObject);
-Var
-  TheLstView: TListView;
-  ReturnCursor: Integer;
-
-  procedure LoadSelected(LookupArray: Array of TRpcRecord);
-  Var
+procedure TfrmBroker.LoadSelected(LookupArray: Array of TRpcRecord;aList:TListView);
+  var
     I, SelCnt: Integer;
     SearchString, tmpStr: string;
     CharPos, CharPos2: Integer;
     OvTm: TTime;
     IHour, IMin, ISec, IMilli: Word;
     LS: TListItem;
+    TheLstView: TListView;
+
   begin
+    TheLstView := aList;
     memData.Clear;
     SelCnt := 0;
     OvTm := EncodeTime(0, 0, 0, 0);
@@ -956,27 +961,6 @@ Var
     memData.Lines.EndUpdate;
     ProgressBar1.Position := 0;
   end;
-
-begin
-  ReturnCursor := Screen.Cursor;
-  Screen.Cursor := crHourGlass;
-  try
-
-    TheLstView := TListView(Sender);
-
-    // Setup the lookup array
-    if TheLstView = ResultList then
-      LoadSelected(LiveArray)
-    else if TheLstView = WatchList then
-      LoadSelected(fFrame.WatchArray)
-    else if TheLstView = LiveList then
-      LoadSelected(LiveArray);
-
-  finally
-    Screen.Cursor := ReturnCursor;
-  end;
-
-end;
 
 procedure TfrmBroker.OnRefreshRPCRequest();
 begin

@@ -5,21 +5,16 @@ inherited frmEncounter: TfrmEncounter
   BorderIcons = [biSystemMenu]
   Caption = 'Provider & Location for Current Activities'
   ClientHeight = 423
-  ClientWidth = 462
+  ClientWidth = 469
   Constraints.MinWidth = 470
   OldCreateOrder = True
   Position = poScreenCenter
   Scaled = False
-  OnClose = FormClose
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnCloseQuery = FormCloseQuery
-  OnResize = FormResize
-  OnShow = FormShow
-  ExplicitWidth = 478
-  ExplicitHeight = 461
+  ExplicitWidth = 485
+  ExplicitHeight = 462
   DesignSize = (
-    462
+    469
     423)
   PixelsPerInch = 96
   TextHeight = 13
@@ -53,10 +48,10 @@ inherited frmEncounter: TfrmEncounter
     Caption = 'Encounter Provider'
   end
   object cboPtProvider: TORComboBox [3]
-    Left = 6
+    Left = 4
     Top = 20
-    Width = 331
-    Height = 117
+    Width = 357
+    Height = 114
     Anchors = [akLeft, akTop, akRight, akBottom]
     Style = orcsSimple
     AutoSelect = True
@@ -82,11 +77,11 @@ inherited frmEncounter: TfrmEncounter
   end
   object cmdDateRange: TButton [4]
     Tag = 9
-    Left = 266
-    Top = 153
+    Left = 367
+    Top = 152
     Width = 100
     Height = 25
-    Anchors = [akLeft, akBottom]
+    Anchors = [akRight, akBottom]
     Caption = 'Date Range...'
     Constraints.MinHeight = 21
     Constraints.MinWidth = 21
@@ -97,9 +92,9 @@ inherited frmEncounter: TfrmEncounter
     Tag = 9
     Left = 6
     Top = 154
-    Width = 258
+    Width = 355
     Height = 21
-    Anchors = [akLeft, akBottom]
+    Anchors = [akLeft, akRight, akBottom]
     AutoSize = False
     Color = clBtnFace
     Constraints.MinHeight = 21
@@ -109,7 +104,7 @@ inherited frmEncounter: TfrmEncounter
     Caption = 'Encounter Location'
   end
   object cmdCancel: TButton [6]
-    Left = 341
+    Left = 367
     Top = 45
     Width = 100
     Height = 23
@@ -123,7 +118,7 @@ inherited frmEncounter: TfrmEncounter
     OnClick = cmdCancelClick
   end
   object cmdOK: TButton [7]
-    Left = 340
+    Left = 367
     Top = 20
     Width = 100
     Height = 23
@@ -136,20 +131,21 @@ inherited frmEncounter: TfrmEncounter
     TabOrder = 3
   end
   object Panel1: TPanel [8]
-    Left = 0
-    Top = 179
-    Width = 460
+    Left = 4
+    Top = 181
+    Width = 467
     Height = 243
     Anchors = [akLeft, akRight, akBottom]
+    BevelOuter = bvNone
     TabOrder = 6
     DesignSize = (
-      460
+      467
       243)
     object pgeVisit: TPageControl
       Tag = 9
       Left = 4
       Top = 5
-      Width = 452
+      Width = 459
       Height = 232
       ActivePage = tabClinic
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -160,10 +156,14 @@ inherited frmEncounter: TfrmEncounter
       OnMouseDown = pgeVisitMouseDown
       object tabClinic: TTabSheet
         Caption = 'Clinic Appointments'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object lstClinic: TORListBox
           Left = 0
           Top = 20
-          Width = 444
+          Width = 451
           Height = 184
           Align = alClient
           Constraints.MinHeight = 21
@@ -183,7 +183,7 @@ inherited frmEncounter: TfrmEncounter
         object Panel2: TPanel
           Left = 0
           Top = 0
-          Width = 444
+          Width = 451
           Height = 20
           Align = alTop
           TabOrder = 2
@@ -205,10 +205,14 @@ inherited frmEncounter: TfrmEncounter
       end
       object tabAdmit: TTabSheet
         Caption = 'Hospital Admissions'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object lstAdmit: TORListBox
           Left = 0
           Top = 17
-          Width = 444
+          Width = 451
           Height = 187
           Align = alClient
           ItemHeight = 13
@@ -226,7 +230,7 @@ inherited frmEncounter: TfrmEncounter
         object Panel3: TPanel
           Left = 0
           Top = 0
-          Width = 444
+          Width = 451
           Height = 17
           Align = alTop
           TabOrder = 2
@@ -241,6 +245,13 @@ inherited frmEncounter: TfrmEncounter
       end
       object tabNewVisit: TTabSheet
         Caption = 'New Visit'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
+        DesignSize = (
+          451
+          204)
         object lblVisitDate: TLabel
           Left = 220
           Top = 4
@@ -258,7 +269,7 @@ inherited frmEncounter: TfrmEncounter
         object calVisitDate: TORDateBox
           Left = 220
           Top = 18
-          Width = 140
+          Width = 138
           Height = 21
           TabOrder = 1
           Text = 'NOW'
@@ -271,8 +282,9 @@ inherited frmEncounter: TfrmEncounter
         object ckbHistorical: TORCheckBox
           Left = 220
           Top = 50
-          Width = 140
-          Height = 81
+          Width = 228
+          Height = 151
+          Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 
             'Historical Visit: a visit that occurred at some time in the past' +
             ' or at some other location (possibly non-VA) but is not used for' +
@@ -289,8 +301,8 @@ inherited frmEncounter: TfrmEncounter
         object cboNewVisit: TORComboBox
           Left = 4
           Top = 18
-          Width = 208
-          Height = 117
+          Width = 210
+          Height = 183
           Style = orcsSimple
           AutoSelect = True
           Caption = 'Visit Location'
@@ -317,6 +329,8 @@ inherited frmEncounter: TfrmEncounter
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 16
+    Top = 56
     Data = (
       (
         'Component = cboPtProvider'
@@ -381,7 +395,7 @@ inherited frmEncounter: TfrmEncounter
     LabelStop = 'Through'
     RequireTime = False
     Format = 'mmm d,yyyy'
-    Left = 264
-    Top = 4
+    Left = 80
+    Top = 52
   end
 end

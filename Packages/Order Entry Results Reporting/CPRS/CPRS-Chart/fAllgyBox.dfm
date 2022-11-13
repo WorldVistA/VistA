@@ -5,9 +5,9 @@ inherited frmAllgyBox: TfrmAllgyBox
   ClientWidth = 449
   Constraints.MinWidth = 457
   Position = poMainFormCenter
-  ExplicitWidth = 465
+  ExplicitWidth = 457
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   inherited memReport: TRichEdit
     Width = 449
     ExplicitWidth = 449
@@ -16,18 +16,22 @@ inherited frmAllgyBox: TfrmAllgyBox
     Width = 449
     ExplicitWidth = 449
     inherited cmdPrint: TButton
-      Left = 293
+      Left = 290
       Anchors = [akTop, akRight]
       Caption = '&Print'
       TabOrder = 3
-      ExplicitLeft = 293
+      ExplicitLeft = 290
+      ExplicitTop = 3
+      ExplicitHeight = 26
     end
     inherited cmdClose: TButton
-      Left = 373
+      Left = 371
       Anchors = [akTop, akRight]
       Caption = '&Close'
       TabOrder = 4
-      ExplicitLeft = 373
+      ExplicitLeft = 371
+      ExplicitTop = 3
+      ExplicitHeight = 26
     end
     object cmdEdit: TButton
       Left = 98
@@ -40,13 +44,18 @@ inherited frmAllgyBox: TfrmAllgyBox
       OnClick = cmdEditClick
     end
     object cmdAdd: TButton
-      Left = 2
-      Top = 0
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
       Width = 90
-      Height = 21
+      Height = 26
+      Align = alLeft
       Caption = '&Add New'
       TabOrder = 0
       OnClick = cmdAddClick
+      ExplicitLeft = 2
+      ExplicitTop = 0
+      ExplicitHeight = 21
     end
     object cmdInError: TButton
       Left = 195

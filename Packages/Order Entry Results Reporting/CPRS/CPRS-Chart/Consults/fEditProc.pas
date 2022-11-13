@@ -53,6 +53,20 @@ type
     popReasonReformat: TMenuItem;
     pnlCombatVet: TPanel;
     txtCombatVet: TVA508StaticText;
+    pnlButtons: TPanel;
+    GridPanel1: TGridPanel;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Panel9: TPanel;
+    Panel10: TPanel;
+    Panel11: TPanel;
+    Panel12: TPanel;
+    Panel13: TPanel;
     procedure txtAttnNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboProcNeedData(Sender: TObject; const StartFrom: String;
@@ -65,7 +79,7 @@ type
     procedure memReasonExit(Sender: TObject);
     procedure cmdAcceptClick(Sender: TObject);
     procedure cmdQuitClick(Sender: TObject);
-    procedure OrderMessage(const AMessage: string);
+//    procedure OrderMessage(const AMessage: string);
     procedure btnCmtCancelClick(Sender: TObject);
     procedure btnCmtOtherClick(Sender: TObject);
     procedure cmdLexSearchClick(Sender: TObject);
@@ -92,7 +106,9 @@ type
     FNavigatingTab: boolean;
     FClinicallyIndicatedDate: TFMDateTime;
     procedure SetProvDiagPromptingMode;
-    procedure SetUpCombatVet;
+//    procedure SetUpCombatVet;
+    procedure SetUpCombatVet(Eligable:Boolean);  // RTC#722078
+    procedure OrderMessage(const AMessage: string);
   protected
     procedure InitDialog;
     procedure Validate(var AnErrMsg: string);
@@ -110,8 +126,8 @@ implementation
 {$R *.DFM}
 
 uses
-  rConsults, uCore, rCore, fConsults, rODBase, fRptBox, fPCELex, rPCE, ORClasses, clipbrd, VAUtils,
-  uSimilarNames;
+  rConsults, uCore, rCore, fConsults, rODBase, fRptBox, fPCELex, rPCE, ORClasses, clipbrd ,
+  uORLists, uSimilarNames, VAUtils, uMisc;
 
 var
   OldRec, NewRec: TEditResubmitRec;
@@ -136,6 +152,8 @@ function EditResubmitProcedure(FontSize: Integer; ConsultIEN: integer): boolean;
 begin
   Result := False;
   if ConsultIEN = 0 then exit;
+  OldRec.Clear;
+  NewRec.Clear;
   FillChar(OldRec, SizeOf(OldRec), 0);
   FillChar(NewRec, SizeOf(NewRec), 0);
   FillChar(ProvDx, SizeOf(ProvDx), 0);
@@ -144,10 +162,10 @@ begin
   NewRec.RequestType := OldRec.RequestType;
   with NewRec do
     begin
-      RequestReason:= TStringList.Create ;
-      DenyComments:= TStringList.Create ;
-      OtherComments:= TStringList.Create ;
-      NewComments:= TStringList.Create ;
+      InitSL(RequestReason);
+      InitSL(DenyComments);
+      InitSL(OtherComments);
+      InitSL(NewComments);
     end;
   StatusText('Loading Procedure for Edit');
   frmEditProc := TfrmEditProc.Create(Application);
@@ -162,14 +180,8 @@ begin
         Result := FChanged ;
       end ;
   finally
-    OldRec.RequestReason.Free;
-    OldRec.DenyComments.Free;
-    OldRec.OtherComments.Free;
-    OldRec.NewComments.Free;
-    NewRec.RequestReason.Free;
-    NewRec.DenyComments.Free;
-    NewRec.OtherComments.Free;
-    NewRec.NewComments.Free;
+    OldRec.Clear;
+    NewRec.Clear;
     Defaults.Free;
     frmEditProc.Release;
   end;
@@ -181,8 +193,8 @@ var
 begin
   if FChanging then exit;
   FChanging := True;
-  Defaults := TStringList.Create;
-  FastAssign(ODForProcedures, Defaults);
+  InitSL(Defaults);
+  setODForProcedures(Defaults);
   FLastProcID := '';
   cboProc.InitLongList(OldRec.ConsultProcName) ;
   cboProc.SelectByIEN(OldRec.OrderableItem);
@@ -228,15 +240,7 @@ begin
   btnCmtOther.Enabled := (OldRec.OtherComments.Count > 0);
   memComment.Clear ;
   SetProvDiagPromptingMode;
-    if (patient.CombatVet.IsEligible = True) then
-   begin
-    SetUpCombatVet;
-   end
-   else
-    begin
-      txtCombatVet.Enabled := False;
-      pnlCombatVet.SendToBack;
-    end;
+  SetUpCombatVet(patient.CombatVet.IsEligible);  // RTC#722078
   FChanging := False;
   ControlChange(Self);    //CQ20913
   StatusText('');
@@ -250,9 +254,8 @@ procedure TfrmEditProc.Validate(var AnErrMsg: string);
     if Length(AnErrMsg) > 0 then AnErrMsg := AnErrMsg + CRLF;
     AnErrMsg := AnErrMsg + x;
   end;
-
 var
-  ErrMsg: string;
+  ErrMsg: String;
 begin
   if cboProc.ItemIEN = 0                  then SetError(TX_NO_PROC);
   if memReason.Lines.Count = 0            then SetError(TX_NO_REASON);
@@ -268,9 +271,9 @@ begin
     end;
   if OldRec.ProvDxCodeInactive and ProvDx.CodeInactive then
     SetError(TX_INACTIVE_CODE);
-  if calClinicallyIndicated.FMDateTime < FMToday then SetError(TX_PAST_DATE);
+  if calClinicallyIndicated.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
 
-  if not CheckForSimilarName(txtAttn, ErrMsg, ltPerson, sPr) then
+  if not CheckForSimilarName(txtAttn, ErrMsg, sPr) then
   begin
     if ErrMsg <> '' then
       SetError(ErrMsg);
@@ -282,7 +285,7 @@ procedure TfrmEditProc.txtAttnNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
   inherited;
-  txtAttn.ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  setPersonList(txtAttn, StartFrom, Direction);
 end;
 
 procedure TfrmEditProc.calClinicallyIndicatedExit(Sender: TObject);
@@ -303,7 +306,7 @@ procedure TfrmEditProc.cboProcNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
   inherited;
-  cboProc.ForDataUse(SubSetOfProcedures(StartFrom, Direction));
+  setProcedureList(cboProc, StartFrom, Direction);
 end;
 
 procedure TfrmEditProc.radInpatientClick(Sender: TObject);
@@ -332,137 +335,137 @@ procedure TfrmEditProc.ControlChange(Sender: TObject);
 begin
   if FChanging then exit;
   with NewRec do
-  begin
-    with cboProc do if ItemIEN > 0 then
-      if Piece(Items[ItemIndex], U, 4) <> OldRec.ConsultProc then
-      begin
-        ConsultProc     := Piece(Items[ItemIndex], U, 4);
-        ConsultProcName := Text;
-      end
-      else
-      begin
-        ConsultProc     := '';
-        ConsultProcName := '';
-      end;
-
-    with cboService do if ItemIEN > 0 then
-      if ItemIEN <> OldRec.ToService then
-      begin
-        ToService     := ItemIEN;
-        ToServiceName := Text;
-      end
-      else
-      begin
-        ToService     := 0;
-        ToServiceName := '';
-      end;
-
-    with cboCategory do if Length(ItemID) > 0 then
-      if ItemID <> OldRec.InpOutP then
-        InpOutP := ItemID
-      else
-        InpOutP := '';
-
-    with cboUrgency do if ItemIEN > 0 then
-      if StrToIntDef(Piece(Items[ItemIndex], U, 3), 0) <> OldRec.Urgency then
-      begin
-        Urgency     := StrToIntDef(Piece(Items[ItemIndex], U, 3), 0);
-        UrgencyName := Text;
-      end
-      else
-      begin
-        Urgency     := 0;
-        UrgencyName := '';
-      end;
-
-    if FClinicallyIndicatedDate > 0 then
     begin
-      if FClinicallyIndicatedDate <> OldRec.ClinicallyIndicatedDate then
-        ClinicallyIndicatedDate := FClinicallyIndicatedDate
-      else
-        ClinicallyIndicatedDate := 0;
+      with cboProc do if ItemIEN > 0 then
+        if Piece(Items[ItemIndex], U, 4) <> OldRec.ConsultProc then
+          begin
+            ConsultProc     := Piece(Items[ItemIndex], U, 4);
+            ConsultProcName := Text;
+          end
+        else
+          begin
+            ConsultProc     := '';
+            ConsultProcName := '';
+          end;
+
+      with cboService do if ItemIEN > 0 then
+        if ItemIEN <> OldRec.ToService then
+          begin
+            ToService     := ItemIEN;
+            ToServiceName := Text;
+          end
+        else
+          begin
+            ToService     := 0;
+            ToServiceName := '';
+          end;
+
+     with cboCategory do if Length(ItemID) > 0 then
+       if ItemID <> OldRec.InpOutP then
+         InpOutP := ItemID
+       else
+         InpOutP := '';
+
+     with cboUrgency do if ItemIEN > 0 then
+       if StrToIntDef(Piece(Items[ItemIndex], U, 3), 0) <> OldRec.Urgency then
+         begin
+           Urgency     := StrToIntDef(Piece(Items[ItemIndex], U, 3), 0);
+           UrgencyName := Text;
+         end
+       else
+         begin
+           Urgency     := 0;
+           UrgencyName := '';
+         end;
+
+     if FClinicallyIndicatedDate > 0 then
+     begin
+       if FClinicallyIndicatedDate <> OldRec.ClinicallyIndicatedDate then
+         ClinicallyIndicatedDate := FClinicallyIndicatedDate
+       else
+         ClinicallyIndicatedDate := 0;
+     end;
+
+     with cboPlace do if Length(ItemID) > 0 then
+       if ItemID <> OldRec.Place then
+         begin
+           Place     := ItemID;
+           PlaceName := Text;
+         end
+       else
+         begin
+           Place     := '';
+           PlaceName := '';
+         end;
+
+     with txtAttn do
+     begin
+       if ItemIEN > 0 then
+         begin
+           if ItemIEN <> OldRec.Attention then
+             begin
+               Attention := ItemIEN;
+               AttnName  := Text;
+             end
+           else
+             begin
+               Attention := 0;
+               AttnName  := '';
+             end;
+         end
+       else  // blank
+         begin
+           if OldRec.Attention > 0 then
+             begin
+               Attention := -1;
+               AttnName  := '';
+             end
+           else
+             begin
+               Attention := 0;
+               AttnName  := '';
+             end;
+         end;
+     end;
+
+     with txtProvDiag do
+       if Length(Text) > 0 then
+         begin
+           if Text <> OldRec.ProvDiagnosis then
+             ProvDiagnosis := Text
+           else
+             ProvDiagnosis := '';
+
+           if ProvDx.Code <> OldRec.ProvDxCode then
+             ProvDxCode := ProvDx.Code
+           else
+             ProvDxCode := '';
+
+           if OldRec.ProvDxCodeInactive then
+             ProvDx.CodeInactive := (ProvDx.Code = OldRec.ProvDxCode);
+         end
+       else  //blank
+         begin
+           ProvDx.Code := '';
+           ProvDx.CodeInactive := False;
+           if OldRec.ProvDiagnosis <> '' then
+             ProvDiagnosis := '@'
+           else
+             ProvDiagnosis := '';
+         end;
+
+     with memReason do if Lines.Count > 0 then
+        if Lines.Equals(OldRec.RequestReason) then
+          RequestReason.Clear
+        else
+          QuickCopy(memReason, RequestReason);
+
+      with memComment do
+        if GetTextLen > 0 then
+          QuickCopy(memComment, NewComments)
+        else
+          NewComments.Clear;
     end;
-
-    with cboPlace do if Length(ItemID) > 0 then
-      if ItemID <> OldRec.Place then
-      begin
-        Place     := ItemID;
-        PlaceName := Text;
-      end
-      else
-      begin
-        Place     := '';
-        PlaceName := '';
-      end;
-
-    with txtAttn do
-    begin
-      if ItemIEN > 0 then
-      begin
-        if ItemIEN <> OldRec.Attention then
-        begin
-          Attention := ItemIEN;
-          AttnName  := Text;
-        end
-        else
-        begin
-          Attention := 0;
-          AttnName  := '';
-        end;
-      end
-      else  // blank
-      begin
-        if OldRec.Attention > 0 then
-        begin
-          Attention := -1;
-          AttnName  := '';
-        end
-        else
-        begin
-          Attention := 0;
-          AttnName  := '';
-        end;
-      end;
-    end;
-
-    with txtProvDiag do
-      if Length(Text) > 0 then
-      begin
-        if Text <> OldRec.ProvDiagnosis then
-          ProvDiagnosis := Text
-        else
-          ProvDiagnosis := '';
-
-        if ProvDx.Code <> OldRec.ProvDxCode then
-          ProvDxCode := ProvDx.Code
-        else
-          ProvDxCode := '';
-
-        if OldRec.ProvDxCodeInactive then
-          ProvDx.CodeInactive := (ProvDx.Code = OldRec.ProvDxCode);
-      end
-      else  //blank
-      begin
-        ProvDx.Code := '';
-        ProvDx.CodeInactive := False;
-        if OldRec.ProvDiagnosis <> '' then
-          ProvDiagnosis := '@'
-        else
-          ProvDiagnosis := '';
-      end;
-
-    with memReason do if Lines.Count > 0 then
-      if Lines.Equals(OldRec.RequestReason) then
-        RequestReason.Clear
-      else
-        QuickCopy(memReason, RequestReason);
-
-    with memComment do
-      if GetTextLen > 0 then
-        QuickCopy(memComment, NewComments)
-      else
-        NewComments.Clear;
-  end;
 end;
 
 procedure TfrmEditProc.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -503,16 +506,15 @@ begin
     cmdLexSearchClick(Self);
 end;
 
-procedure TfrmEditProc.SetUpCombatVet;
+procedure TfrmEditProc.SetUpCombatVet(Eligable:Boolean);  // RTC#722078
 begin
-  pnlCombatVet.BringToFront;
-  txtCombatVet.Enabled := True;
-  txtCombatVet.Caption := 'Combat Veteran Eligibility Expires on ' + patient.CombatVet.ExpirationDate;
-  pnlMain.Top := pnlMain.Top + pnlCombatVet.Height;
-  pnlMain.Anchors := [akLeft, akTop, akRight];
-  self.Height := self.Height + pnlCombatVet.Height;
-  pnlMain.Anchors := [akLeft, akTop, akRight, akBottom];
-  ActiveControl := txtCombatVet;
+  pnlCombatVet.Visible := Eligable;
+  txtCombatVet.Enabled := Eligable;
+  if Eligable then
+    begin
+      txtCombatVet.Caption := 'Combat Veteran Eligibility Expires on ' + patient.CombatVet.ExpirationDate;
+      ActiveControl := txtCombatVet;
+    end;
 end;
 
 procedure TfrmEditProc.cboProcSelect(Sender: TObject);
@@ -525,7 +527,7 @@ begin
     with cboService do
       begin
         Clear;
-        FastAssign(GetProcedureServices(cboProc.ItemIEN), cboService.Items);
+        setProcedureServices(cboService.Items,cboProc.ItemIEN);
         if Items.Count > 0 then
           begin
             ItemIndex := 0 ;

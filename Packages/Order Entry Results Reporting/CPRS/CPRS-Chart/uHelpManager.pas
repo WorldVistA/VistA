@@ -1,4 +1,4 @@
-unit uHelpManager;
+ï»¿unit uHelpManager;
 
 interface
 
@@ -432,7 +432,7 @@ begin
       0:                      ShowMessage('Help system: The operating system is out of memory or resources.');
       ERROR_FILE_NOT_FOUND:   ShowMessage('Help system: ' + CONTEXT_FILES[hc] + ' was not found in ' + FilePath + '.');
       ERROR_PATH_NOT_FOUND:   ShowMessage('Help system: ' + FilePath + ' was not found.');
-      ERROR_BAD_FORMAT:       ShowMessage('Help system: The .exe file is invalid (non-Microsoft Win32® .exe or error in .exe image).');
+      ERROR_BAD_FORMAT:       ShowMessage('Help system: The .exe file is invalid (non-Microsoft Win32ï¿½ .exe or error in .exe image).');
       SE_ERR_ACCESSDENIED:    ShowMessage('Help system: The operating system denied access to ' + Filename + '.');
       SE_ERR_ASSOCINCOMPLETE: ShowMessage('Help system: The file name association is incomplete or invalid. (.htm)');
       SE_ERR_DDEBUSY:         ShowMessage('Help system: The Dynamic Data Exchange (DDE) transaction could not be completed because other DDE transactions were being processed.');
@@ -444,13 +444,12 @@ begin
       SE_ERR_SHARE:           ShowMessage('Help system: A sharing violation occurred.');
     end;
     Result := (errorcode >= 32);   }
-    Result := True;
+    Result := true;
     InProgress := False;
   end else begin
     Result := True;
   end;
 end;
-
 
 { THelpManager }
 

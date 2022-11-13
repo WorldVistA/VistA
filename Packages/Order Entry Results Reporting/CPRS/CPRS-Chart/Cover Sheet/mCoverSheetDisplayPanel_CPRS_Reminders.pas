@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_CPRS_Reminders;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-08
   *
@@ -117,22 +117,22 @@ begin
   try
     lvData.Items.BeginUpdate;
     for aStr in aList do
-      begin
-        aRec := TDelimitedString.Create(aStr);
-
+    begin
+      aRec := TDelimitedString.Create(aStr);
+      try
         if lvData.Items.Count = 0 then
           if aRec.GetPieceIsNull(1) and (aList.Count = 1) then
-            begin
-              CollapseColumns;
-              lvData.Items.Add.Caption := aRec.GetPiece(2);
-              Continue;
-            end
+          begin
+            CollapseColumns;
+            lvData.Items.Add.Caption := aRec.GetPiece(2);
+            Continue;
+          end
           else if aRec.GetPieceEquals(1, '0') then
-            begin
-              CollapseColumns;
-              lvData.Items.Add.Caption := aRec.GetPiece(2);
-              Break;
-            end
+          begin
+            CollapseColumns;
+            lvData.Items.Add.Caption := aRec.GetPiece(2);
+            Break;
+          end
           else
             ExpandColumns;
 
@@ -141,19 +141,25 @@ begin
           Continue;
         // if aRec.GetPieceIsNotNull(3) then
         with lvData.Items.Add do
-          begin
-            Caption := aRec.GetPiece(2);
-            if (temp = '1') and aRec.GetPieceIsDouble(3) then
-              SubItems.Add(FormatDateTime('MMM DD, YYYY', aRec.GetPieceAsTDateTime(3)))
-            else if temp = '3' then
-              SubItems.Add('Error')
-            else if temp = '4' then
-              SubItems.Add('CNBD')
-            else
-              SubItems.Add(aRec.GetPiece(3));
-            Data := aRec;
-          end;
+        begin
+          Caption := aRec.GetPiece(2);
+          if (temp = '1') and aRec.GetPieceIsDouble(3) then
+            SubItems.Add(FormatDateTime('MMM DD, YYYY',
+              aRec.GetPieceAsTDateTime(3)))
+          else if temp = '3' then
+            SubItems.Add('Error')
+          else if temp = '4' then
+            SubItems.Add('CNBD')
+          else
+            SubItems.Add(aRec.GetPiece(3));
+          Data := aRec;
+          aRec := nil;
+        end;
+      finally
+        if assigned(aRec) then
+          FreeAndNil(aRec);
       end;
+    end;
     RemindersEvaluated(TStringList(aList));
     if InteractiveRemindersActive then
       begin

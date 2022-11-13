@@ -5,13 +5,13 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ORCtrls, ORFn, ComCtrls, fBase508Form,
-  VA508AccessibilityManager, uReports, U_CPTEditMonitor;
+  VA508AccessibilityManager, uReports, U_CPTEditMonitor, uPrinting;
 
 type
   TfrmPtDemo = class(TfrmBase508Form)
     lblFontTest: TLabel;
     memPtDemo: TRichEdit;
-    dlgPrintReport: TPrintDialog;
+    dlgPrintReport: uPrinting.TPrintDialog;
     CPPtDemo: TCopyEditMonitor;
     pnlTop: TPanel;
     cmdNewPt: TButton;
@@ -59,7 +59,6 @@ end;
 procedure TfrmPtDemo.FormCreate(Sender: TObject);
 var
   i, MaxWidth, AWidth, AHeight: Integer;
-  Rect: TRect;
 
   // RTC #953958 begin
   procedure AdjustButtonSize(aButton: TButton);
@@ -116,9 +115,7 @@ begin
   Constraints.MinHeight := pnlTop.Height + GetSystemMetrics(SM_CYCAPTION) +
     GetSystemMetrics(SM_CYHSCROLL) + 7;
 
-  Rect := BoundsRect;
-  ForceInsideWorkArea(Rect);
-  BoundsRect := Rect;
+  ForceInsideWorkArea(Self);
 
   // RTC #953958 begin
   AdjustButtonSize(cmdNewPt);

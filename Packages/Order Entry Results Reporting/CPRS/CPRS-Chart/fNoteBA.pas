@@ -39,7 +39,7 @@ implementation
 
 {$R *.DFM}
 
-uses rTIU, rCore, uCore;
+uses rTIU, rCore, uCore, uSimilarNames;
 
 const
   TX_AUTH_TEXT = 'Select a progress note author or press Cancel.';
@@ -75,6 +75,7 @@ begin
             InitLongList(User.Name);
             SelectByIEN(User.DUZ);
           end;
+      TSimilarNames.RegORComboBox(cboAuthor);
       FAscending := CurrentContext.TreeAscending;
       with radSort do if FAscending then ItemIndex := 0 else ItemIndex := 1;
       ShowModal;
@@ -91,10 +92,18 @@ begin
   end;
 end;
 
-procedure TfrmNotesByAuthor.cboAuthorNeedData(Sender: TObject; const StartFrom: string;
-  Direction, InsertAt: Integer);
+procedure TfrmNotesByAuthor.cboAuthorNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  cboAuthor.ForDataUse(SubSetOfActiveAndInactivePersons(StartFrom, Direction));
+  sl := TSTringList.Create;
+  try
+    setSubSetOfActiveAndInactivePersons(cboAuthor, sl, StartFrom, Direction);
+    cboAuthor.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmNotesByAuthor.cmdCancelClick(Sender: TObject);
@@ -103,12 +112,21 @@ begin
 end;
 
 procedure TfrmNotesByAuthor.cmdOKClick(Sender: TObject);
+var
+  ErrMsg: string;
+
 begin
   if cboAuthor.ItemIEN = 0 then
   begin
     InfoBox(TX_AUTH_TEXT, TX_AUTH_CAP, MB_OK or MB_ICONWARNING);
     Exit;
   end;
+  if not CheckForSimilarName(cboAuthor, ErrMsg, sPr) then
+  begin
+    ShowMsgOn(ErrMsg <> '', ErrMsg, 'List Note by Author Error');
+    Exit;
+  end;
+
   FChanged := True;
   FAuthor := cboAuthor.ItemIEN;
   FAuthorName := cboAuthor.DisplayText[cboAuthor.ItemIndex];

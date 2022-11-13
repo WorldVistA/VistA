@@ -37,7 +37,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, TeEngine, Series, TeeProcs, Chart, ExtCtrls, Grids,Buttons,
   ORNet, ORFn, uConst, Menus, ORDtTmRng, fBase508Form, ComCtrls, uVitals, VAUtils,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, VclTee.TeeGDIPlus, uPrinting;
 
 type
   TfrmVitals = class(TfrmBase508Form)
@@ -72,7 +72,7 @@ type
     calVitalsRange: TORDateRangeDlg;
     N3: TMenuItem;
     popPrint: TMenuItem;
-    dlgWinPrint: TPrintDialog;
+    dlgWinPrint: uPrinting.TPrintDialog;
     procedure lstDatesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -122,8 +122,8 @@ var
 
 procedure SelectVital(FontSize:integer; idx: integer);
 procedure SelectVitals(VitalType: String);
-function VitalsGrid(const patient: string; date1, date2: TFMDateTime; restrictdates: integer; tests: TStrings): TStrings;  //*DFN*
-function VitalsMemo(const patient: string; date1, date2: TFMDateTime; tests: TStrings): TStrings;  //*DFN*
+function setVitalsGrid(aDest: TStrings;const patient: string; date1, date2: TFMDateTime; restrictdates: integer; tests: TStrings): Integer;  //*DFN*
+function setVitalsMemo(aDest:TSTrings; const patient: string; date1, date2: TFMDateTime; tests: TStrings): Integer;  //*DFN*
 
 implementation
 
@@ -265,9 +265,18 @@ procedure TfrmVitals.VGrid(griddata: TStrings);
 var
   testcnt, datecnt, datacnt, linecnt, x, y, i: integer;
 begin
-  testcnt := strtoint(Piece(griddata[0], '^', 1));
-  datecnt := strtoint(Piece(griddata[0], '^', 2));
-  datacnt := strtoint(Piece(griddata[0], '^', 3));
+  if griddata.Count > 0 then
+  begin
+    testcnt := strtoint(Piece(griddata[0], '^', 1));
+    datecnt := strtoint(Piece(griddata[0], '^', 2));
+    datacnt := strtoint(Piece(griddata[0], '^', 3));
+  end
+  else
+  begin
+    testcnt := 0;
+    datecnt := 0;
+    datacnt := 0;
+  end;
   linecnt := testcnt + datecnt + datacnt;
   with grdVitals do
   begin
@@ -298,16 +307,16 @@ begin
   end;
 end;
 
-function VitalsGrid(const patient: string; date1, date2: TFMDateTime; restrictdates: integer; tests: TStrings): TStrings;  //*DFN*
+function setVitalsGrid(aDest: TStrings;const patient: string; date1, date2: TFMDateTime; restrictdates: integer; tests: TStrings): Integer;  //*DFN*
 begin
-  CallV('GMV ORQQVI1 GRID', [patient, date1, date2, restrictdates, tests]);
-  Result := RPCBrokerV.Results;
+  CallVistA('GMV ORQQVI1 GRID', [patient, date1, date2, restrictdates, tests],aDest);
+  Result := aDest.Count;
 end;
 
-function VitalsMemo(const patient: string; date1, date2: TFMDateTime; tests: TStrings): TStrings;  //*DFN*
+function setVitalsMemo(aDest:TSTrings; const patient: string; date1, date2: TFMDateTime; tests: TStrings): Integer;  //*DFN*
 begin
-  CallV('GMV ORQQVI1 DETAIL', [patient, date1, date2, 0, tests]);
-  Result := RPCBrokerV.Results;
+  CallVistA('GMV ORQQVI1 DETAIL', [patient, date1, date2, 0, tests],aDest);
+  Result := aDest.Count;
 end;
 
 procedure TfrmVitals.lstDatesClick(Sender: TObject);
@@ -342,7 +351,7 @@ begin
   else
     BeginEndDates(date1,date2,daysback);
   //date1 := date1 + 0.2359;
-  FastAssign(VitalsGrid(Patient.DFN, date1, date2, 0, lstVitals.Items), tmpGrid);
+  setVitalsGrid(tmpGrid, Patient.DFN, date1, date2, 0, lstVitals.Items);
   vindex := lstVitals.ItemIndex;
   VGrid(tmpGrid);
   lstVitals.ItemIndex := vindex;
@@ -436,9 +445,18 @@ begin
   valuecount := 0;
   testnum := Piece(test, '^', 1);
   testname := lstVitals.Items[strtoint(testnum) - 1];
-  numtest := strtoint(Piece(aitems[0], '^', 1));
-  numcol := strtoint(Piece(aitems[0], '^', 2));
-  numvalues := strtoint(Piece(aitems[0], '^', 3));
+  if aitems.Count > 0 then
+  begin
+    numtest := strtoint(Piece(aitems[0], '^', 1));
+    numcol := strtoint(Piece(aitems[0], '^', 2));
+    numvalues := strtoint(Piece(aitems[0], '^', 3));
+  end
+  else
+  begin
+    numtest := 0;
+    numcol := 0;
+    numvalues := 0;
+  end;
   if numvalues = 0 then
     chtChart.Visible := false
   else
@@ -536,10 +554,17 @@ procedure TfrmVitals.GetStartStop(var start, stop: string; aitems: TStrings);
 var
   numtest, numcol: integer;
 begin
-  numtest := strtoint(Piece(aitems[0], '^', 1));
-  numcol := strtoint(Piece(aitems[0], '^', 2));
-  start := Piece(aitems[numtest + 1], '^', 2);
-  stop := Piece(aitems[numtest + numcol], '^', 2);
+  start := '';
+  stop := '';
+  if aitems.Count > 0 then
+  begin
+    numtest := strtoint(Piece(aitems[0], '^', 1));
+    numcol := strtoint(Piece(aitems[0], '^', 2));
+    if aitems.Count > numtest + 1 then
+      start := Piece(aitems[numtest + 1], '^', 2);
+    if aitems.Count > numtest + numcol then
+      stop := Piece(aitems[numtest + numcol], '^', 2);
+  end;
 end;
 
 procedure TfrmVitals.grdVitalsSelectCell(Sender: TObject; Col,
@@ -666,6 +691,7 @@ var
   tmpList: TStringList;
   date1, date2: TFMDateTime;
   strdate1, strdate2: string;
+  sl: TStrings;
 begin
   inherited;
   Screen.Cursor := crHourGlass;
@@ -678,22 +704,31 @@ begin
     date1 := DateTimeToFMDateTime(uDate1 + 1);
     date2 := DateTimeToFMDateTime(uDate2);
     StatusText('Retrieving data for ' + FormatDateTime('dddd, mmmm d, yyyy', uDate2) + '...');
-    ReportBox(VitalsMemo(Patient.DFN, date1, date2, lstVitals.Items), 'Vitals on ' + Patient.Name + ' for ' + FormatDateTime('dddd, mmmm d, yyyy', uDate2), True);
+    sl := TSTringList.Create;
+    try
+      setVitalsMemo(sl,Patient.DFN, date1, date2, lstVitals.Items);
+      ReportBox(sl, 'Vitals on ' + Patient.Name + ' for ' + FormatDateTime('dddd, mmmm d, yyyy', uDate2), True);
+    finally
+      sl.Free;
+    end;
   end
   else
   begin
     date1 := DateTimeToFMDateTime(chtChart.BottomAxis.Maximum);
     date2 := DateTimeToFMDateTime(chtChart.BottomAxis.Minimum);
     tmpList := TStringList.Create;
+    sl := TSTringList.Create;
     try
       tmpList.Add(lstVitals.Items[lstVitals.ItemIndex]);
       if serTest.Title = 'Systolic' then
         StatusText('Retrieving data for Blood Pressure...')
       else
         StatusText('Retrieving data for ' + serTest.Title + '...');
-      ReportBox(VitalsMemo(Patient.DFN, date1, date2, tmpList), serTest.Title + ' results on ' + Patient.Name, True);
+      setVitalsMemo(sl,Patient.DFN, date1, date2, tmpList);
+      ReportBox(sl, serTest.Title + ' results on ' + Patient.Name, True);
     finally
       tmpList.Free;
+      sl.Free;
     end;
   end;
   Screen.Cursor := crDefault;
@@ -799,7 +834,7 @@ begin
   begin
     Key := 0;
     Close;
-  end;  
+  end;
 end;
 
 end.

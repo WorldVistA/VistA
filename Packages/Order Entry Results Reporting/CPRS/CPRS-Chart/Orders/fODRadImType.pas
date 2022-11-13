@@ -49,11 +49,13 @@ begin
       ClientWidth  := W; pnlBase.Width  := W;
       ClientHeight := H; pnlBase.Height := H;
       FChanged := False;
-      FastAssign(SubsetOfImagingTypes, cboImType.Items);
+      SubsetOfImagingTypes(cboImType.Items);
       if cboImType.Items.Count > 1 then
          ShowModal
+      else if cboImType.Items.Count = 1 then
+         FImagingType := cboImType.Items[0]
       else
-         FImagingType := cboImType.Items[0] ;
+         FImagingType := '';
       ImagingType:= FImagingType ;
     end; {with frmODRadImType}
   finally

@@ -14,27 +14,21 @@ uses
 
 type
   TfrmAllgyFind = class(TfrmAutoSz)
-    txtSearch: TCaptionEdit;
-    cmdSearch: TButton;
-    lblSearch: TLabel;
-    lblSelect: TLabel;
-    stsFound: TStatusBar;
-    ckNoKnownAllergies: TCheckBox;
-    tvAgent: TORTreeView;
     imTree: TImageList;
+    imgLblAllgyFindTree: TVA508ImageListLabeler;
+    gpMain: TGridPanel;
+    lblSearch: TLabel;
     lblDetail: TLabel;
     lblSearchCaption: TLabel;
-    imgLblAllgyFindTree: TVA508ImageListLabeler;
-    NoAllergylbl508: TVA508StaticText;
-    pnlBottom: TPanel;
-    Panel1: TPanel;
-    ckbWarning: TCheckBox;    // NJC NSR 20060710 10/15
+    txtSearch: TCaptionEdit;
+    cmdSearch: TButton;
+    lblSelect: TLabel;
+    ckNoKnownAllergies: TCheckBox;
+    tvAgent: TORTreeView;
+    ckbWarning: TCheckBox;
     cmdOK: TButton;
     cmdCancel: TButton;
-    pnlSearch: TPanel;
-    pnlSearchResults: TPanel;
-    pnlSearchResultsTitle: TPanel;
-    pnlButtons: TPanel;
+    stsFound: TStatusBar;
     procedure cmdSearchClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -45,9 +39,11 @@ type
     procedure ckbWarningClick(Sender: TObject);
     procedure tvAgentChange(Sender: TObject; Node: TTreeNode);
     procedure tvAgentDblClick(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     FAllergy: string   ;
     FExpanded : boolean;
+    procedure updateWarningSize;
   end;
 
 procedure AllergyLookup(var Allergy: string; NKAEnabled: boolean);
@@ -56,7 +52,7 @@ implementation
 
 {$R *.DFM}
 
-uses rODAllergy, fARTFreeTextMsg, VA508AccessibilityRouter;
+uses rODAllergy, fARTFreeTextMsg, VA508AccessibilityRouter, VAUtils;
 
 const
   IMG_MATCHES_FOUND = 1;
@@ -116,27 +112,9 @@ begin
   frmAllgyFind := TfrmAllgyFind.Create(Application);
   try
     ResizeFormToFont(TForm(frmAllgyFind));
+    frmAllgyFind.lblSearch.Font.Size := MainFontSize;
     //TDP - CQ#19731 Need adjust 508StaticText label slightly when font 12 or larger
-    case frmAllgyFind.Font.Size of
-      18: frmAllgyFind.NoAllergylbl508.Left := frmAllgyFind.NoAllergylbl508.Left - 10;
-      14: frmAllgyFind.NoAllergylbl508.Left := frmAllgyFind.NoAllergylbl508.Left - 6;
-      12: frmAllgyFind.NoAllergylbl508.Left := frmAllgyFind.NoAllergylbl508.Left - 3;
-    end;
     frmAllgyFind.ckNoKnownAllergies.Enabled := NKAEnabled;
-    //TDP - CQ#19731 make sure NoAllergylbl508 is enabled and visible if
-    //      ckNoKnownAllergies is disabled
-    if (ScreenReaderSystemActive) and (frmAllgyFind.ckNoKnownAllergies.Enabled = False) then
-    begin
-      frmAllgyFind.NoAllergylbl508.Enabled := True;
-      frmAllgyFind.NoAllergylbl508.Visible := True;
-    end;
-    //TDP - CQ#19731 make sure NoAllergylbl508 is not enabled or visible if
-    //      ckNoKnownAllergies is enabled
-    if frmAllgyFind.ckNoKnownAllergies.Enabled = True then
-    begin
-      frmAllgyFind.NoAllergylbl508.Enabled := False;
-      frmAllgyFind.NoAllergylbl508.Visible := False;
-    end;
     frmAllgyFind.ShowModal;
     Allergy := frmAllgyFind.FAllergy;
   finally
@@ -160,6 +138,35 @@ begin
   end;
   ckbWarning.Checked := false;             // NJC NSR 20060710 10/15
   ckbWarning.Visible := false;             // NJC NSR 20060710 10/15
+end;
+
+procedure TfrmAllgyFind.updateWarningSize;
+var
+  x: integer;
+  r: TRect;
+begin
+  gpMain.ControlCollection.BeginUpdate;
+  if ckbWarning.Visible then
+  begin
+    r := ckbWarning.BoundsRect;
+    r.Width := r.Width - 23;  // adjust for check box size and whitespace
+    x := WrappedTextHeightByFont(Self.Canvas, Self.Font, ckbWarning.Caption, r);
+    ckbWarning.Height := x;
+  end
+  else
+    ckbWarning.Height := cmdOK.Height;
+  gpMain.ControlCollection.EndUpdate;
+end;
+
+procedure TfrmAllgyFind.FormResize(Sender: TObject);
+begin
+  inherited;
+  // forces grid row height reset
+  lblDetail.AutoSize := False;
+  lblDetail.AutoSize := True;
+  lblSearch.AutoSize := False;
+  lblSearch.AutoSize := True;
+  updateWarningSize;
 end;
 
 procedure TfrmAllgyFind.txtSearchChange(Sender: TObject);
@@ -189,7 +196,7 @@ begin
   AList := TStringList.Create;
   try
     if tvAgent.Items <> nil then tvAgent.Items.Clear;
-    FastAssign(SearchForAllergies(UpperCase(txtSearch.Text)), AList);
+    setAllergiesByTarget(UpperCase(txtSearch.Text), AList);
     uFileCount := 0;
     for i := 0 to AList.Count - 1 do
       if Piece(AList[i], U, 5) = 'TOP' then uFileCount := uFileCount + 1;
@@ -437,9 +444,12 @@ end;
 procedure TfrmAllgyFind.tvAgentChange(Sender: TObject; Node: TTreeNode);
 var
   s:string;
+  oldVis, force: boolean;
 begin
   inherited;
   // 2017-04-06: NSR#20060710 : SDS Begin mods to handle if called from NKA check prior to search
+  oldVis := ckbWarning.Visible;
+  force := False;
   if tvAgent.Selected = nil then
   begin
     // this can happen with no allergy assessment, if the No Known Allergies is checked before a search
@@ -451,11 +461,13 @@ begin
      (tvAgent.Selected.AbsoluteIndex <= DrugIngrCountChildren + DrugIngrCount) then // NJC NSR 20060710 10/15
   begin
     s := Piece(TORTreeNode(tvAgent.Selected).StringData, U, 2);
+    s := StringReplace(TX_ckbWarning,'`',s,[]);
+    force := (ckbWarning.Caption <> s);
     cmdOK.Enabled := ckNoKnownAllergies.checked;                   // NJC NSR 20060710 10/15  SDS 4/6/17
     ckbWarning.Caption := TX_ckbWarning;
-    if Length(s) > 0 then ckbWarning.Caption := StringReplace(TX_ckbWarning,'`',s,[]);
+    if Length(s) > 0 then ckbWarning.Caption := s;
     ckbWarning.Checked := false;
-    ckbWarning.Visible:= not ckNoKnownAllergies.checked;               // NJC NSR 20060710 10/15 SDS 4/6/2017
+    ckbWarning.Visible:= not ckNoKnownAllergies.checked;
   end                                           // NJC NSR 20060710 10/15
   else
   begin                                         // NJC NSR 20060710 10/15
@@ -463,6 +475,9 @@ begin
     // SDS 2017-04-06: NSR#20060710 (Programmer Note): be aware below that not x.hasChildren is not enough - the tree can have a single root node with no results
     cmdOK.Enabled := (tvAgent.Selected.Level > 1) or CkNoKnownAllergies.checked; // 2017-04-06: NSR#20060710 : SDS
   end;
+  // forces grid row height reset
+  if force or (oldVis <> ckbWarning.Visible) then
+    updateWarningSize;
 end;
 
 procedure TfrmAllgyFind.tvAgentDblClick(Sender: TObject);
@@ -472,5 +487,3 @@ begin
 end;
 
 end.
-
-

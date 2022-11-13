@@ -364,12 +364,8 @@ begin
 end;
 
 procedure TMasterScreenReader.RegisterCustomData;
-// DEV SECTION ONLY.... Add to this list to ignore resource items. handled exception will be thrown if not
 const
-  IgnoreArray: array [1 .. 6] of string = ('DESCRIPTION', 'DVCLAL',
-    'PACKAGEINFO', 'PLATFORMTARGETS', 'TEELCDFONT', 'TEELEDFONT');
-  // Resource to ignore
-  rErrMsg = 'READ ERROR try adding %s to the IgnoreArray constant to bypass this exception';
+  rErrMsg = 'READ ERROR: %s';
 var
   i, Action: integer;
   Before, After, code: string;
@@ -384,7 +380,6 @@ var
     Flags: TFilerFlags;
     clsName: string;
     ok: boolean;
-    FoundIndex: integer;
   begin
     FInternalRegistration := TRUE;
     try
@@ -397,8 +392,7 @@ var
           begin
             stream := TResourceStream.Create(HInstance, list[i], RT_RCDATA);
             try
-              if not TArray.BinarySearch<string>(IgnoreArray, list[i],
-                FoundIndex, TStringComparer.Ordinal) then
+              if TestStreamFormat(stream) = sofBinary then
               begin
                 Reader := TReader.Create(stream, 512);
                 try

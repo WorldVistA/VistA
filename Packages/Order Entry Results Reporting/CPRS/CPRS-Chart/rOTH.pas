@@ -63,7 +63,7 @@ var
   FMdt: TFMDateTime;
   DOS: String;
   tbool: Boolean;
-  aRPC: TStringList;
+  aRPC, Info: TStringList;
 
 begin
   tmpstr := '';
@@ -92,54 +92,57 @@ begin
     exit;
   end;
 
-  CallV(OTHRPC, [DFNStr, DOS]); // rpk 3/27/2018
-  icnt := RPCBrokerV.Results.Count;
-  if (icnt > 0) then
-  begin // rpk 5/5/2018
-    tmpstr := Trim(RPCBrokerV.Results[0]);
+  Info := TStringList.Create;
+  try
+    CallVista(OTHRPC, [DFNStr, DOS], info); // rpk 3/27/2018
+    icnt := info.Count;
+    if (icnt > 0) then
+    begin // rpk 5/5/2018
+      tmpstr := Trim(info[0]);
+      p1 := Piece(tmpstr, U, 1);
+      p2 := Piece(tmpstr, U, 2);
+      rcnt := StrToIntDef(p1, -3);
+      // if rcnt <= 0, treat it as a status code.
+      if rcnt <= 0 then
+      begin
+{$IFDEF DEBUG}
+        if rcnt < 0 then
+          // if p1 is negative, treat as error code, display p1 status and p2 message
+          StatusText('OTH: ' + p1 + ':' + p2);
+{$ENDIF}
+        exit;
+      end;
+      if rcnt <> (icnt - 1) then
+      begin
+        // add loop which displays raw results in message after counts; rpk 5/7/2018
+        rstr := tmpstr;
+        for i := 1 to icnt - 1 do
+          rstr := rstr + CRLF + info[i];
+        ShowMsg('getOTHList: Results.Count=' + IntToStr(icnt) + ', Results[0]=' +
+          IntToStr(rcnt) + ', Results=' + CRLF + rstr);
+      end;
+    end;
+
+    if Length(tmpstr) = 0 then
+      exit;
     p1 := Piece(tmpstr, U, 1);
     p2 := Piece(tmpstr, U, 2);
-    rcnt := StrToIntDef(p1, -3);
-    // if rcnt <= 0, treat it as a status code.
-    if rcnt <= 0 then
+    i := StrToIntDef(p1, -3);
+    if i <= 0 then
     begin
-{$IFDEF DEBUG}
-      if rcnt < 0 then
-        // if p1 is negative, treat as error code, display p1 status and p2 message
-        StatusText('OTH: ' + p1 + ':' + p2);
-{$ENDIF}
+      if i < 0 then
+        StatusText('getOTHList: ' + IntToStr(i) + ', ' + p2);
       exit;
     end;
-    if rcnt <> (icnt - 1) then
-    begin
-      // add loop which displays raw results in message after counts; rpk 5/7/2018
-      rstr := tmpstr;
-      for i := 1 to icnt - 1 do
-        rstr := rstr + CRLF + RPCBrokerV.Results[i];
-      ShowMsg('getOTHList: Results.Count=' + IntToStr(icnt) + ', Results[0]=' +
-        IntToStr(rcnt) + ', Results=' + CRLF + rstr);
-    end;
+
+    rowcnt := i;
+
+    for i := 0 to rowcnt - 1 do
+      MsgList.Add(info[i + 1]);
+  finally
+    info.Free;
   end;
-
-  if Length(tmpstr) = 0 then
-    exit;
-  p1 := Piece(tmpstr, U, 1);
-  p2 := Piece(tmpstr, U, 2);
-  i := StrToIntDef(p1, -3);
-  if i <= 0 then
-  begin
-    if i < 0 then
-      StatusText('getOTHList: ' + IntToStr(i) + ', ' + p2);
-    exit;
-  end;
-
-  rowcnt := i;
-
-  for i := 0 to rowcnt - 1 do
-    MsgList.Add(RPCBrokerV.Results[i + 1]);
-
   Result := True;
-
 end; // getOTHList
 
 ///

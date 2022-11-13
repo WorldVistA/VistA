@@ -1,5 +1,9 @@
 unit fODProc;
+{------------------------------------------------------------------------------
+Update History
 
+    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
+-------------------------------------------------------------------------------}
 interface
 
 uses
@@ -8,6 +12,7 @@ uses
   Menus, ORDtTm, VA508AccessibilityManager;
 
 type
+
   TfrmODProc = class(TfrmODBase)
     pnlMain: TPanel;
     pnlCombatVet: TPanel;
@@ -22,7 +27,7 @@ type
     memReason: TCaptionRichEdit;
     cboUrgency: TORComboBox;
     cboPlace: TORComboBox;
-    txtAttn: TORComboBox;
+    cboAttn: TORComboBox;
     cboProc: TORComboBox;
     cboCategory: TORComboBox;
     cboService: TORComboBox;
@@ -45,8 +50,20 @@ type
     popReasonReformat: TMenuItem;
     txtCombatVet: TVA508StaticText;
     servicelbl508: TVA508StaticText;
+    gpMain: TGridPanel;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Panel9: TPanel;
+    Panel10: TPanel;
     procedure FormCreate(Sender: TObject);
-    procedure txtAttnNeedData(Sender: TObject; const StartFrom: String;
+
+    procedure cboAttnNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboProcNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -72,6 +89,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure cboAttnChange(Sender: TObject);
   private
     FLastProcID: string;
     FEditCtrl: TCustomEdit;
@@ -81,14 +99,17 @@ type
     procedure SetupReasonForRequest(OrderAction: integer);
     procedure GetProvDxandValidateCode(AResponses: TResponses);
     function ShowPrerequisites: boolean;
-    procedure DoSetFontSize( FontSize: integer);
-    procedure SetUpCombatVet;
+    procedure DoSetFontSize( FontSize: integer; FromCreate: boolean = false);
+//    procedure SetUpCombatVet;
+    procedure SetUpCombatVet(Eligable:Boolean);  // RTC#722078
     procedure updateService;
     procedure setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl);
   protected
+    procedure ShowOrderMessage(Show: boolean); override;
     procedure InitDialog; override;
     procedure Validate(var AnErrMsg: string); override;
-    function  DefaultReasonForRequest(Service: string; Resolve: Boolean): TStrings;
+//    function  DefaultReasonForRequest(Service: string; Resolve: Boolean): TStrings;
+    function  DefaultReasonForRequest(aDest: TSTrings;Service: string; Resolve: boolean):Integer;
   public
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
     procedure SetFontSize( FontSize: integer); override;
@@ -104,7 +125,8 @@ implementation
 uses
     rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, ORClasses,
     clipbrd, fPreReq, uTemplates, fFrame, uODBase, VA508AccessibilityRouter,
-    uVA508CPRSCompatibility, VAUtils, uSimilarNames;
+    uVA508CPRSCompatibility, uORLists, uSimilarNames, uFormUtils, VAUtils;
+
 
 var
   ProvDx:  TProvisionalDiagnosis;
@@ -137,36 +159,42 @@ end;
 { ********************* TfrmODProc Methods **************** }
 
 procedure TfrmODProc.FormCreate(Sender: TObject);
+var
+  sl: TStrings;
+
 begin
   frmFrame.pnlVisit.Enabled := false;
-  AutoSizeDisabled := True;
+  AutoSizeDisabled := true;
   inherited;
-  OkToFreeProcDialog := False;
-  DoSetFontSize(MainFontSize);
-  AllowQuickOrder := True;
+  OkToFreeProcDialog := false;
+  DoSetFontSize(MainFontSize, True);
+  AllowQuickOrder := true;
   FillChar(ProvDx, SizeOf(ProvDx), 0);
-  FillerID := 'GMRC';                     // does 'on Display' order check **KCM**
+  FillerID := 'GMRC'; // does 'on Display' order check **KCM**
   StatusText('Loading Dialog Definition');
-  Responses.Dialog := 'GMRCOR REQUEST';   // loads formatting info
+  Responses.dialog := 'GMRCOR REQUEST'; // loads formatting info
   StatusText('Loading Default Values');
-  CtrlInits.LoadDefaults(ODForProcedures);  // ODForProcedures returns TStrings with defaults
+  sl := TStringList.Create;
+  try
+    setODForProcedures(sl);
+    CtrlInits.LoadDefaults(sl);
+    // ODForProcedures returns TStrings with defaults
+  finally
+    sl.Free;
+  end;
   StatusText('Initializing Long List');
   ReadServerVariables;
   cboProc.InitLongList('') ;
-  txtAttn.InitLongList('') ;
+  cboAttn.InitLongList('') ;
   PreserveControl(calClinicallyIndicated);
-  PreserveControl(txtAttn);
+  PreserveControl(cboAttn);
   PreserveControl(cboProc);
-  if (patient.CombatVet.IsEligible = True) then
-   begin
-     SetUpCombatVet;
-   end
-   else
-    begin
-      txtCombatVet.Enabled := False;
-      pnlCombatVet.SendToBack;
-    end;
+
+  SetUpCombatVet(patient.CombatVet.IsEligible);  // RTC#722078
   InitDialog;
+
+  cmdQuit.Top := ClientHeight - cmdQuit.Height - Font.Size + 8;
+  cmdAccept.Top := cmdQuit.Top - cmdAccept.Height - Font.Size + 8;
 end;
 
 procedure TfrmODProc.InitDialog;
@@ -199,8 +227,8 @@ begin
       SetControl(calClinicallyIndicated, 'Clin Ind Date');
     end ;
   end ;
-  txtAttn.ItemIndex := -1;
-  TSimilarNames.RegORComboBox(txtAttn);
+  cboAttn.ItemIndex := -1;
+  TSimilarNames.RegORComboBox(cboAttn);
   memOrder.Clear ;
   memReason.Clear;
   cboProc.Enabled := True;
@@ -229,7 +257,7 @@ begin
   begin
     SetControl(cboProc,       'ORDERABLE', 1);
     if cboProc.ItemIndex < 0 then exit;
-    FastAssign(GetProcedureServices(cboProc.ItemIEN), cboService.Items);
+    setProcedureServices(cboService.Items,cboProc.ItemIEN);
     Changing := True;
     tmpResp := TResponse(FindResponseByName('CLASS',1));
     cboCategory.SelectByID(tmpResp.IValue);
@@ -239,8 +267,8 @@ begin
       radOutpatient.Checked := True ;
     SetControl(cboUrgency,    'URGENCY',     1);
     SetControl(cboPlace,      'PLACE',     1);
-    SetControl(txtAttn,       'PROVIDER',  1);
-    TSimilarNames.RegORComboBox(txtAttn);
+    SetControl(cboAttn,       'PROVIDER',  1);
+    TSimilarNames.RegORComboBox(cboAttn);
     SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
     cboProc.Enabled := False;
     cboProc.Font.Color := clGrayText;
@@ -302,7 +330,6 @@ procedure TfrmODProc.Validate(var AnErrMsg: string);
     if Length(AnErrMsg) > 0 then AnErrMsg := AnErrMsg + CRLF;
     AnErrMsg := AnErrMsg + x;
   end;
-
 var
   ErrMsg: String;
 begin
@@ -315,34 +342,74 @@ begin
   if cboService.ItemIEN = 0               then SetError(TX_NO_SERVICE);
   if (ProvDx.Reqd = 'R') and (Length(txtProvDiag.Text) = 0) then
     begin
-      if ProvDx.PromptMode = 'F'          then
+      if ProvDx.PromptMode = 'F' then
         SetError(TX_NO_DIAG)
       else
         SetError(TX_SELECT_DIAG);
     end;
-  if calClinicallyIndicated.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
+  if calClinicallyIndicated.FMDateTime < FMToday then SetError(TX_PAST_DATE);
 
-  if not CheckForSimilarName(txtAttn, ErrMsg, ltPerson, sPr) then
+
+  if not CheckForSimilarName(cboAttn, ErrMsg, sPr) then
   begin
-    if ErrMsg <> '' then
+     if ErrMsg <> '' then
       SetError(ErrMsg);
   end;
 
   AnErrMsg := Trim(AnErrMsg);
 end;
 
-procedure TfrmODProc.txtAttnNeedData(Sender: TObject;
+procedure TfrmODProc.cboAttnChange(Sender: TObject);
+var
+  x: string;
+  i: integer;
+begin
+  if cboProc.ItemIEN = 0 then Exit;
+
+  with cboProc do
+    begin
+      if ItemIEN > 0 then
+        begin
+          i := Pos('<', Text);
+          if i > 0 then
+            begin
+              x := Piece(Copy(Text, i + 1, 99), '>', 1);
+              x := UpperCase(Copy(x, 1, 1)) + Copy(x, 2, 99);
+            end
+          else
+            x := Text;
+          Responses.Update('ORDERABLE', 1, ItemID, x);
+        end
+      else Responses.Update('ORDERABLE', 1, '', '');
+    end;
+  updateService();
+  with memReason     do if GetTextLen   > 0 then Responses.Update('COMMENT',   1, TX_WPTYPE, Text);
+  with cboCategory   do if ItemID     <> '' then Responses.Update('CLASS',     1, ItemID, Text);
+  with cboUrgency    do if ItemIEN      > 0 then Responses.Update('URGENCY',   1, ItemID, Text);
+  with cboPlace      do if ItemID     <> '' then Responses.Update('PLACE',     1, ItemID, Text);
+  with cboAttn       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
+  with calClinicallyIndicated   do if Length(Text) > 0 then Responses.Update('CLINICALLY',  1, Text, Text);
+  if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
+   else Responses.Update('MISC',      1, '',   '');
+  if Length(ProvDx.Code)                > 0 then Responses.Update('CODE',      1, ProvDx.Code,   ProvDx.Code)
+   else Responses.Update('CODE',      1, '',   '');
+
+  memOrder.Text := Responses.OrderText;
+end;
+
+
+procedure TfrmODProc.cboAttnNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
   inherited;
-  txtAttn.ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  setPersonList(cboAttn, StartFrom, Direction);
 end;
 
 procedure TfrmODProc.cboProcNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
   inherited;
-  cboProc.ForDataUse(SubSetOfProcedures(StartFrom, Direction));
+  setProcedureList(cboProc,StartFrom, Direction);
 end;
 
 procedure TfrmODProc.radInpatientClick(Sender: TObject);
@@ -374,13 +441,11 @@ begin
 end;
 
 procedure TfrmODProc.ControlChange(Sender: TObject);
-// Similar to cboAttnChange in 32.
 var
   x: string;
   i: integer;
 begin
   inherited;
-
   if Changing or (cboProc.ItemIEN = 0) then Exit;
   with cboProc do
     begin
@@ -403,7 +468,7 @@ begin
   with cboCategory   do if ItemID     <> '' then Responses.Update('CLASS',     1, ItemID, Text);
   with cboUrgency    do if ItemIEN      > 0 then Responses.Update('URGENCY',   1, ItemID, Text);
   with cboPlace      do if ItemID     <> '' then Responses.Update('PLACE',     1, ItemID, Text);
-  with txtAttn       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
+  with cboAttn       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
   with calClinicallyIndicated   do if Length(Text) > 0 then Responses.Update('CLINICALLY',  1, Text, Text);
   if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
    else Responses.Update('MISC',      1, '',   '');
@@ -432,7 +497,7 @@ begin
     with cboService do
       begin
         Clear;
-        FastAssign(GetProcedureServices(cboProc.ItemIEN), cboService.Items);
+        setProcedureServices(cboService.Items,cboProc.ItemIEN);
         if Items.Count > 1 then
           ItemIndex := -1
         else if Items.Count = 1 then
@@ -457,7 +522,7 @@ begin
       Changing := True;
       with cboService do
         begin
-          FastAssign(GetProcedureServices(cboProc.ItemIEN), cboService.Items);
+          setProcedureServices(cboService.Items,cboProc.ItemIEN);
           if Items.Count > 1 then
             ItemIndex := -1
           else if Items.Count = 1 then
@@ -473,8 +538,8 @@ begin
       else radOutpatient.Checked := True ;
       SetControl(cboUrgency,    'URGENCY',     1);
       SetControl(cboPlace,      'PLACE',     1);
-      SetControl(txtAttn,       'PROVIDER',  1);
-      TSimilarNames.RegORComboBox(txtAttn);
+      SetControl(cboAttn,       'PROVIDER',  1);
+      TSimilarNames.RegORComboBox(cboAttn);
       SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
       SetTemplateDialogCanceled(FALSE);
       SetControl(memReason,     'COMMENT',   1);
@@ -520,7 +585,7 @@ begin
               Close;
               Exit;
             end;
-          FastAssign(DefaultReasonForRequest(Piece(cboProc.Items[cboProc.ItemIndex], U, 4), True), memReason.Lines);
+          DefaultReasonForRequest(memReason.Lines, Piece(cboProc.Items[cboProc.ItemIndex], U, 4), True);
           SetupReasonForRequest(ORDER_NEW);
         end;
     end;
@@ -549,17 +614,17 @@ procedure  TfrmODProc.ReadServerVariables;
 begin
   if StrToIntDef(KeyVariable['GMRCNOAT'], 0) > 0 then
     begin
-      txtAttn.Enabled    := False;
-      txtAttn.Font.Color := clGrayText;
+      cboAttn.Enabled    := False;
+      cboAttn.Font.Color := clGrayText;
       lblAttn.Enabled    := False;
-      txtAttn.Color      := clBtnFace;
+      cboAttn.Color      := clBtnFace;
     end
   else
     begin
-      txtAttn.Enabled    := True;
-      txtAttn.Font.Color := clWindowText;
+      cboAttn.Enabled    := True;
+      cboAttn.Font.Color := clWindowText;
       lblAttn.Enabled    := True;
-      txtAttn.Color      := clWindow;
+      cboAttn.Color      := clWindow;
     end;
 
   if StrToIntDef(KeyVariable['GMRCNOPD'], 0) > 0 then
@@ -764,7 +829,7 @@ var
 
 begin
   if ((OrderAction = ORDER_QUICK) and (cboProc.ItemID <> '') and (Length(memReason.Text) = 0)) then
-    FastAssign(DefaultReasonForRequest(Piece(cboProc.Items[cboProc.ItemIndex], U, 4), True), memReason.Lines);
+    DefaultReasonForRequest(memReason.Lines, Piece(cboProc.Items[cboProc.ItemIndex], U, 4), True);
   EditReason := GMRCREAF;
   if EditReason = '' then EditReason := ReasonForRequestEditable(Piece(cboProc.Items[cboProc.ItemIndex], U, 4));
   case EditReason[1] of
@@ -777,6 +842,21 @@ begin
   else
     EnableReason;
   end;
+end;
+
+procedure TfrmODProc.ShowOrderMessage(Show: boolean);
+var
+  update: boolean;
+
+begin
+  update := (pnlMessage.Visible <> Show);
+  inherited;
+  if Update then
+  begin
+    pnlMessage.Top := ClientHeight;
+    Realign;
+  end;
+  FormResize(Self);
 end;
 
 function TfrmODProc.ShowPrerequisites: boolean;
@@ -792,7 +872,7 @@ begin
     with cboProc do
       if ItemIEN > 0 then
         begin
-          FastAssign(GetServicePrerequisites(Piece(Items[ItemIndex], U, 4)), Alist);
+          setServicePrerequisites(aList, Piece(Items[ItemIndex], U, 4));
           if AList.Count > 0 then
             begin
               if not DisplayPrerequisites(AList, TC_PREREQUISITES + DisplayText[ItemIndex]) then
@@ -810,40 +890,45 @@ begin
   end;
 end;
 
-function TfrmODProc.DefaultReasonForRequest(Service: string;
-  Resolve: Boolean): TStrings;
+function TfrmODProc.DefaultReasonForRequest(aDest: TSTrings;Service: string; Resolve: boolean)
+  : Integer;
 var
   TmpSL: TStringList;
   DocInfo: string;
   x: string;
   HasObjects: boolean;
 begin
-  Resolve := FALSE ;  // override value passed in - resolve on client - PSI-05-093
+  Resolve := false; // override value passed in - resolve on client - PSI-05-093
   DocInfo := '';
   TmpSL := TStringList.Create;
   try
-    Result := GetDefaultReasonForRequest(Piece(cboProc.Items[cboProc.ItemIndex], U, 4), Resolve);
-    TmpSL.Text := Result.Text;
-    x := TmpSL.Text;
+    setDefaultReasonForRequest(aDest, Piece(cboProc.Items[cboProc.ItemIndex], U, 4), Resolve);
+    TmpSL.text := aDest.text;
+    x := TmpSL.text;
     ExpandOrderObjects(x, HasObjects);
-    TmpSL.Text := x;
+    TmpSL.text := x;
     Responses.OrderContainsObjects := HasObjects;
-    ExecuteTemplateOrBoilerPlate(TmpSL, StrToIntDef(Piece(Piece(cboProc.Items[cboProc.ItemIndex], U, 4), ';', 1), 0),
-                   ltProcedure, nil, 'Reason for Request: ' + cboProc.DisplayText[cboProc.ItemIndex], DocInfo);
+    ExecuteTemplateOrBoilerPlate(TmpSL,
+      StrToIntDef(Piece(Piece(cboProc.Items[cboProc.ItemIndex], U, 4), ';', 1),
+      0), ltProcedure, nil, 'Reason for Request: ' + cboProc.DisplayText
+      [cboProc.ItemIndex], DocInfo);
     AbortOrder := WasTemplateDialogCanceled;
     Responses.OrderContainsObjects := HasObjects or TemplateBPHasObjects;
-    if AbortOrder then begin
-      Result.Text := '';
+    if AbortOrder then
+    begin
+      aDest.text := '';
       Close;
-      Exit;
-    end else begin
-      Result.Text := TmpSL.Text;
-      if Result.Count > 0 then
+    end
+    else
+    begin
+      aDest.text := TmpSL.text;
+      if aDest.Count > 0 then
         SpeakTextInserted;
     end;
   finally
     TmpSL.Free;
   end;
+  Result := aDest.Count;
 end;
 
 procedure TfrmODProc.memReasonKeyUp(Sender: TObject; var Key: Word;
@@ -912,10 +997,41 @@ begin
     end;
 end;
 
-procedure TfrmODProc.DoSetFontSize(FontSize: integer);
+procedure TfrmODProc.DoSetFontSize(FontSize: integer; FromCreate: boolean = false);
+var
+  x, y: integer;
+
 begin
   memReason.Width := pnlReason.ClientWidth;
   memReason.Height := pnlReason.ClientHeight;// - memReason.Height;  MAC-0104-61043 - RV
+  x := (memOrder.Height div 2) - Font.Size + 2;
+  cmdQuit.Height := x;
+  cmdAccept.Height := x;
+  x := memOrder.Height + memOrder.Margins.Top + memOrder.Margins.Bottom;
+  y := ClientHeight - x;
+  x := (x - cmdQuit.Height - cmdAccept.Height) div 3;
+  cmdAccept.Top := y + x;
+  cmdQuit.Top := ClientHeight - memOrder.Margins.Bottom - cmdQuit.Height - x;
+  x := (memOrder.Left + memOrder.Width + 6) - cmdAccept.left;
+  if x > 0 then
+  begin
+//    Width := Width + x;
+    inc(x, memOrder.Margins.Right);
+    memOrder.Margins.Right := x;
+    pnlMessage.Margins.Right := x;
+  end
+  else
+  begin
+    x := -x;
+    if x > (ClientWidth - (cmdAccept.Left + cmdAccept.Width))  then
+    begin
+      Width := Width - x;
+      x := memOrder.Margins.Right - x;
+      memOrder.Margins.Right := x;
+      pnlMessage.Margins.Right := x;
+    end;
+  end;
+  FormResize(Self);
 end;
 
 procedure TfrmODProc.memReasonKeyDown(Sender: TObject; var Key: Word;
@@ -941,17 +1057,11 @@ const
   LEFT_MARGIN = 4;
 begin
   inherited;
-  if Patient.CombatVet.IsEligible then
-  begin
-    memOrder.Top := pnlCombatVet.Height + PnlReason.Top + PnlReason.Height + 7;
-   end
-  else
-   begin
-       memOrder.Top := PnlReason.Top + PnlReason.Height + 7;
-   end;
   LimitEditWidth(memReason, MAX_PROGRESSNOTE_WIDTH-7); //puts memReason at 74 characters
-  Self.Constraints.MinWidth := TextWidthByFont(memReason.Font.Handle, StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 10) + ScrollBarWidth;
-
+  Self.Constraints.MinWidth := TextWidthByFont(memReason.Font.Handle,
+    StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 10) + ScrollBarWidth;
+  Self.Constraints.MinHeight := Height - ClientHeight + CombineHeights([memOrder,
+    pnlMessage, pnlCombatVet, memReason, lblReason, gpMain]);
 end;
 
 procedure TfrmODProc.FormShow(Sender: TObject);
@@ -966,17 +1076,15 @@ begin
   frmFrame.pnlVisit.Enabled := true;
 end;
 
-procedure TfrmODProc.SetUpCombatVet;
-   begin
-     pnlCombatVet.BringToFront;
-     txtCombatVet.Enabled := True;
-     txtCombatVet.Caption := 'Combat Veteran Eligibility Expires on ' + patient.CombatVet.ExpirationDate;
-     pnlMain.Top := pnlMain.Top + pnlCombatVet.Height;
-     pnlMain.Anchors := [akLeft,akTop,akRight];
-     self.Height := self.Height + pnlCombatVet.Height;
-     pnlMain.Anchors := [akLeft,akTop,akRight,akBottom];
-  end;
+procedure TfrmODProc.SetUpCombatVet(Eligable:Boolean);  // RTC#722078
+begin
+  pnlCombatVet.Visible := Eligable;
+  txtCombatVet.Enabled := Eligable;
+  if Eligable then
+    begin
+      txtCombatVet.Caption := 'Combat Veteran Eligibility Expires on ' + patient.CombatVet.ExpirationDate;
+      ActiveControl := txtCombatVet;
+    end;
+end;
 
 end.
-
-

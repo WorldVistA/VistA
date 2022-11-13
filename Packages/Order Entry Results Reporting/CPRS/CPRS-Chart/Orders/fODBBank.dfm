@@ -13,7 +13,7 @@ inherited frmODBBank: TfrmODBBank
   object Splitter1: TSplitter [0]
     Left = 0
     Top = 0
-    Width = 667
+    Width = 684
     Height = 2
     Cursor = crVSplit
     Align = alTop
@@ -70,7 +70,7 @@ inherited frmODBBank: TfrmODBBank
   object pgeProduct: TPageControl [3]
     Left = 0
     Top = 2
-    Width = 667
+    Width = 684
     Height = 536
     ActivePage = TabDiag
     Align = alTop
@@ -82,7 +82,7 @@ inherited frmODBBank: TfrmODBBank
       object edtInfo: TCaptionRichEdit
         Left = 0
         Top = 0
-        Width = 659
+        Width = 676
         Height = 508
         Align = alClient
         BevelInner = bvNone
@@ -117,7 +117,7 @@ inherited frmODBBank: TfrmODBBank
       object pnlFields: TPanel
         Left = 0
         Top = 145
-        Width = 659
+        Width = 676
         Height = 250
         Hint = 'Data entered into these fields apply to the entire order.'
         Align = alTop
@@ -386,7 +386,7 @@ inherited frmODBBank: TfrmODBBank
       object pnlSelect: TPanel
         Left = 0
         Top = 35
-        Width = 659
+        Width = 676
         Height = 110
         Align = alTop
         BevelEdges = []
@@ -395,7 +395,7 @@ inherited frmODBBank: TfrmODBBank
         object pnlDiagnosticTests: TGroupBox
           Left = 270
           Top = 0
-          Width = 385
+          Width = 260
           Height = 110
           Caption = 'Diagnostic Tests'
           Font.Charset = DEFAULT_CHARSET
@@ -557,10 +557,9 @@ inherited frmODBBank: TfrmODBBank
             ParentFont = False
             TabOrder = 5
             OnChange = calCollectTimeChange
-            OnClick = calCollectTimeClick
             OnEnter = calCollectTimeEnter
             DateOnly = False
-            RequireTime = True
+            RequireTime = False
             Caption = ''
           end
         end
@@ -695,7 +694,7 @@ inherited frmODBBank: TfrmODBBank
       object GroupBox1: TGroupBox
         Left = 0
         Top = 0
-        Width = 659
+        Width = 676
         Height = 35
         Align = alTop
         Caption = ' Personal Quick Orders'
@@ -735,7 +734,7 @@ inherited frmODBBank: TfrmODBBank
       object pnlSelectedTests: TGroupBox
         Left = 0
         Top = 395
-        Width = 659
+        Width = 676
         Height = 109
         Align = alTop
         Caption = 'Selected Components and Tests'
@@ -791,7 +790,7 @@ inherited frmODBBank: TfrmODBBank
           OnClick = lvSelectionListClick
           AutoSize = False
           Caption = 'lvSelectionList'
-          HideTinyColumns = False
+          HideTinyColumns = True
         end
         object btnRemove: TButton
           Left = 450
@@ -830,7 +829,7 @@ inherited frmODBBank: TfrmODBBank
       object edtResults: TCaptionRichEdit
         Left = 0
         Top = 0
-        Width = 659
+        Width = 676
         Height = 508
         Align = alClient
         Font.Charset = ANSI_CHARSET
@@ -876,9 +875,11 @@ inherited frmODBBank: TfrmODBBank
     ExplicitHeight = 49
     inherited memMessage: TRichEdit
       Left = 44
+      Top = 5
       Width = 360
       Font.Height = -11
       ExplicitLeft = 44
+      ExplicitTop = 5
       ExplicitWidth = 360
     end
   end

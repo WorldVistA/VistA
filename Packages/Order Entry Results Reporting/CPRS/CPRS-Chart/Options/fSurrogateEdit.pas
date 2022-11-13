@@ -47,7 +47,6 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cboSurrogateChange(Sender: TObject);
-    procedure pnlSurrogateToolsDblClick(Sender: TObject);
     procedure ALMainUpdate(Action: TBasicAction; var Handled: Boolean);
     procedure ActionResetExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -137,7 +136,7 @@ begin
   if FMax > 0 then FStop := Min(FStop, FMax); // Move stop back to max range
 
   ordtbStart.DateRange.MinDate := FMin;
-  if FMax > 0 then ordtbStart.DateRange.MaxDate := FMax;
+  if FMax > 0 then ordtbStart.DateRange.MaxDate := IncMinute(FMax, -1);
   if FStart > 0 then begin
     ordtbStart.DateSelected := FStart;
     ordtbStart.Text := FormatDateTime(fmtListDateTimeControls, FStart);
@@ -303,7 +302,7 @@ begin
   msg := msg + DateTimeErrorReport(ordtbStart);
   msg := msg + DateTimeErrorReport(ordtbStop);
 
-  if not CheckForSimilarName(cboSurrogate, ErrMsg, ltPerson, sPr) then
+  if not CheckForSimilarName(cboSurrogate, ErrMsg, sPr) then
   begin
     if ErrMsg <> '' then
       msg := msg + ErrMsg + CRLF;
@@ -386,18 +385,6 @@ begin
   if dt = 0 then Exit; // RDD: this does nothing????
 //  bug not allowing to go to the future
 //  ordtbStart.DateRange.MaxDate := dt;
-end;
-
-procedure TfrmSurrogateEdit.pnlSurrogateToolsDblClick(Sender: TObject);
-begin
-  inherited;
-{$IFDEF DEBUG}
-  Caption :=
-    FormatDateTime('yyyy-mm-dd',ordtbStart.DateRange.MinDate) + '..' +
-    FormatDateTime('yyyy-mm-dd',ordtbStart.DateRange.MaxDate) + '   ' +
-    FormatDateTime('yyyy-mm-dd',ordtbStop.DateRange.MinDate) + '..' +
-    FormatDateTime('yyyy-mm-dd',ordtbStop.DateRange.MaxDate);
-{$ENDIF}
 end;
 
 procedure TfrmSurrogateEdit.setButtonStatus;

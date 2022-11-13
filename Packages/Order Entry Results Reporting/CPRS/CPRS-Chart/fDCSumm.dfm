@@ -7,10 +7,10 @@ inherited frmDCSumm: TfrmDCSumm
   ClientWidth = 679
   HelpFile = 'overvw'
   Menu = mnuSumms
-  ExplicitWidth = 695
-  ExplicitHeight = 441
+  ExplicitWidth = 697
+  ExplicitHeight = 452
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   inherited shpPageBottom: TShape
     Top = 377
     Width = 679
@@ -18,11 +18,11 @@ inherited frmDCSumm: TfrmDCSumm
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ExplicitTop = 378
+    ExplicitTop = 377
     ExplicitWidth = 679
   end
   inherited sptHorz: TSplitter
-    Left = 64
+    Left = 113
     Width = 3
     Height = 377
     Margins.Left = 4
@@ -32,22 +32,23 @@ inherited frmDCSumm: TfrmDCSumm
     OnCanResize = sptHorzCanResize
     ExplicitLeft = 64
     ExplicitWidth = 3
-    ExplicitHeight = 378
+    ExplicitHeight = 377
   end
   inherited pnlLeft: TPanel
-    Width = 64
+    Width = 113
     Height = 377
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     Constraints.MinWidth = 37
-    ExplicitWidth = 64
+    ExplicitWidth = 113
     ExplicitHeight = 377
     object lblSumms: TOROffsetLabel
-      Left = 0
-      Top = 0
-      Width = 64
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 107
       Height = 19
       Align = alTop
       Caption = 'Last 100 Summaries'
@@ -57,21 +58,24 @@ inherited frmDCSumm: TfrmDCSumm
       Transparent = True
       VertOffset = 6
       WordWrap = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 64
     end
     object lblSpace1: TLabel
       Left = 0
       Top = 353
-      Width = 64
+      Width = 113
       Height = 3
       Align = alBottom
       AutoSize = False
       Caption = ' '
-      ExplicitTop = 354
+      ExplicitWidth = 64
     end
     object cmdNewSumm: TORAlignButton
       Left = 0
       Top = 332
-      Width = 64
+      Width = 113
       Height = 21
       Align = alBottom
       Caption = 'New Summary'
@@ -81,7 +85,7 @@ inherited frmDCSumm: TfrmDCSumm
     object cmdPCE: TORAlignButton
       Left = 0
       Top = 356
-      Width = 64
+      Width = 113
       Height = 21
       Align = alBottom
       Caption = 'Encounter'
@@ -91,20 +95,21 @@ inherited frmDCSumm: TfrmDCSumm
     end
     object pnlDrawers: TPanel
       Left = 0
-      Top = 19
-      Width = 64
-      Height = 313
+      Top = 25
+      Width = 113
+      Height = 307
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       object splDrawers: TSplitter
         Left = 0
-        Top = 310
-        Width = 64
+        Top = 304
+        Width = 113
         Height = 3
         Cursor = crVSplit
         Align = alBottom
         ExplicitTop = 311
+        ExplicitWidth = 64
       end
       object lstSumms: TORListBox
         Left = 0
@@ -113,7 +118,6 @@ inherited frmDCSumm: TfrmDCSumm
         Height = 33
         TabStop = False
         Ctl3D = True
-        ItemHeight = 13
         ParentCtl3D = False
         ParentShowHint = False
         PopupMenu = popSummList
@@ -130,8 +134,8 @@ inherited frmDCSumm: TfrmDCSumm
       object tvSumms: TORTreeView
         Left = 0
         Top = 0
-        Width = 64
-        Height = 310
+        Width = 113
+        Height = 304
         Align = alClient
         Constraints.MinWidth = 30
         HideSelection = False
@@ -155,32 +159,31 @@ inherited frmDCSumm: TfrmDCSumm
     end
   end
   inherited pnlRight: TPanel
-    Left = 67
-    Width = 612
+    Left = 116
+    Width = 563
     Height = 377
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     Constraints.MinWidth = 30
-    OnResize = pnlRightResize
-    ExplicitLeft = 67
-    ExplicitWidth = 612
+    ExplicitLeft = 116
+    ExplicitWidth = 563
     ExplicitHeight = 377
     object sptVert: TSplitter
       Left = 0
       Top = 328
-      Width = 612
+      Width = 563
       Height = 4
       Cursor = crVSplit
       Align = alBottom
       AutoSnap = False
-      ExplicitTop = 329
+      ExplicitWidth = 613
     end
     object memPCEShow: TRichEdit
       Left = 0
       Top = 332
-      Width = 612
+      Width = 563
       Height = 45
       Align = alBottom
       Color = clCream
@@ -203,7 +206,7 @@ inherited frmDCSumm: TfrmDCSumm
     object pnlWrite: TPanel
       Left = 0
       Top = 0
-      Width = 612
+      Width = 563
       Height = 328
       Align = alClient
       BevelOuter = bvNone
@@ -213,18 +216,19 @@ inherited frmDCSumm: TfrmDCSumm
       object SpEditDetails: TSplitter
         Left = 0
         Top = 224
-        Width = 612
+        Width = 563
         Height = 4
         Cursor = crVSplit
         Align = alBottom
         AutoSnap = False
         Visible = False
-        ExplicitTop = 225
+        ExplicitTop = 52
+        ExplicitWidth = 612
       end
       object memNewSumm: TRichEdit
         Left = 0
         Top = 52
-        Width = 612
+        Width = 563
         Height = 172
         Align = alClient
         Font.Charset = ANSI_CHARSET
@@ -246,13 +250,13 @@ inherited frmDCSumm: TfrmDCSumm
       object pnlFields: TORAutoPanel
         Left = 0
         Top = 0
-        Width = 612
+        Width = 563
         Height = 52
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         DesignSize = (
-          612
+          563
           52)
         object bvlNewTitle: TBevel
           Left = 5
@@ -263,8 +267,8 @@ inherited frmDCSumm: TfrmDCSumm
         object lblNewTitle: TStaticText
           Left = 6
           Top = 6
-          Width = 104
-          Height = 17
+          Width = 132
+          Height = 20
           Hint = 'Press "Change..." to select a different title.'
           Caption = ' Discharge Summary '
           Color = clCream
@@ -283,8 +287,8 @@ inherited frmDCSumm: TfrmDCSumm
         object lblVisit: TStaticText
           Left = 6
           Top = 21
-          Width = 123
-          Height = 17
+          Width = 147
+          Height = 20
           Caption = 'Adm: 10/20/99   2BMED'
           ShowAccelChar = False
           TabOrder = 4
@@ -292,8 +296,8 @@ inherited frmDCSumm: TfrmDCSumm
         object lblRefDate: TStaticText
           Left = 237
           Top = 6
-          Width = 101
-          Height = 17
+          Width = 117
+          Height = 20
           Hint = 'Press "Change..." to change date/time of summary.'
           Alignment = taCenter
           Caption = 'Oct 20,1999@15:30'
@@ -303,7 +307,7 @@ inherited frmDCSumm: TfrmDCSumm
           TabOrder = 1
         end
         object lblCosigner: TStaticText
-          Left = 307
+          Left = 258
           Top = 21
           Width = 199
           Height = 13
@@ -318,10 +322,10 @@ inherited frmDCSumm: TfrmDCSumm
           TabOrder = 5
         end
         object lblDictator: TStaticText
-          Left = 402
+          Left = 353
           Top = 6
-          Width = 152
-          Height = 17
+          Width = 189
+          Height = 20
           Hint = 'Press "Change..." to select a different author.'
           Alignment = taRightJustify
           Anchors = [akTop, akRight]
@@ -334,14 +338,14 @@ inherited frmDCSumm: TfrmDCSumm
         object lblDischarge: TStaticText
           Left = 6
           Top = 34
-          Width = 71
-          Height = 17
+          Width = 84
+          Height = 20
           Caption = 'Dis: 03/20/00'
           ShowAccelChar = False
           TabOrder = 6
         end
         object cmdChange: TButton
-          Left = 554
+          Left = 505
           Top = 10
           Width = 58
           Height = 21
@@ -354,20 +358,20 @@ inherited frmDCSumm: TfrmDCSumm
       object CPMemNewSumm: TCopyPasteDetails
         Left = 0
         Top = 228
-        Width = 612
+        Width = 563
         Height = 100
         Align = alBottom
         BevelInner = bvRaised
         BorderStyle = bsSingle
-        Constraints.MinHeight = 28
+        Constraints.MinHeight = 32
         ShowCaption = False
         TabOrder = 2
         Visible = False
         CopyMonitor = frmFrame.CPAppMon
-        CollapseBtn.Left = 587
+        CollapseBtn.Left = 538
         CollapseBtn.Top = 0
         CollapseBtn.Width = 17
-        CollapseBtn.Height = 16
+        CollapseBtn.Height = 20
         CollapseBtn.Align = alRight
         CollapseBtn.Caption = #218
         CollapseBtn.Font.Charset = DEFAULT_CHARSET
@@ -387,8 +391,8 @@ inherited frmDCSumm: TfrmDCSumm
         InfoMessage.AlignWithMargins = True
         InfoMessage.Left = 3
         InfoMessage.Top = 3
-        InfoMessage.Width = 473
-        InfoMessage.Height = 49
+        InfoMessage.Width = 424
+        InfoMessage.Height = 45
         InfoMessage.Align = alClient
         InfoMessage.Font.Charset = ANSI_CHARSET
         InfoMessage.Font.Color = clWindowText
@@ -404,13 +408,11 @@ inherited frmDCSumm: TfrmDCSumm
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
-        InfoMessage.ExplicitWidth = 498
-        InfoMessage.ExplicitHeight = 56
         InfoSelector.AlignWithMargins = True
         InfoSelector.Left = 3
         InfoSelector.Top = 3
-        InfoSelector.Width = 87
-        InfoSelector.Height = 56
+        InfoSelector.Width = 111
+        InfoSelector.Height = 45
         InfoSelector.Style = lbOwnerDrawFixed
         InfoSelector.Align = alClient
         InfoSelector.ItemHeight = 13
@@ -425,15 +427,16 @@ inherited frmDCSumm: TfrmDCSumm
     object pnlRead: TPanel
       Left = 0
       Top = 0
-      Width = 612
+      Width = 563
       Height = 328
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       object lblTitle: TOROffsetLabel
-        Left = 0
-        Top = 0
-        Width = 612
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 557
         Height = 19
         Hint = 'No Discharge Summaries Found'
         Align = alTop
@@ -450,33 +453,37 @@ inherited frmDCSumm: TfrmDCSumm
         Transparent = False
         VertOffset = 6
         WordWrap = False
+        ExplicitLeft = 0
+        ExplicitTop = 0
         ExplicitWidth = 154
       end
       object sptList: TSplitter
         Left = 0
-        Top = 112
-        Width = 612
+        Top = 119
+        Width = 563
         Height = 3
         Cursor = crVSplit
         Align = alTop
-        ExplicitTop = 111
+        ExplicitTop = 112
+        ExplicitWidth = 613
       end
       object spDetails: TSplitter
         Left = 0
         Top = 224
-        Width = 612
+        Width = 563
         Height = 4
         Cursor = crVSplit
         Align = alBottom
         AutoSnap = False
         Visible = False
-        ExplicitTop = 225
+        ExplicitTop = 116
+        ExplicitWidth = 612
       end
       object memSumm: TRichEdit
         Left = 0
-        Top = 115
-        Width = 612
-        Height = 109
+        Top = 122
+        Width = 563
+        Height = 102
         Align = alClient
         Color = clCream
         Ctl3D = True
@@ -502,14 +509,14 @@ inherited frmDCSumm: TfrmDCSumm
       end
       object lvSumms: TCaptionListView
         Left = 0
-        Top = 19
-        Width = 612
-        Height = 93
+        Top = 25
+        Width = 563
+        Height = 94
         Align = alTop
         Columns = <
           item
             Caption = 'Date'
-            Width = 100
+            Width = 125
           end
           item
             AutoSize = True
@@ -536,7 +543,7 @@ inherited frmDCSumm: TfrmDCSumm
             Caption = 'TIUDA'
             Width = 0
           end>
-        Constraints.MinHeight = 50
+        Constraints.MinHeight = 63
         HideSelection = False
         ReadOnly = True
         RowSelect = True
@@ -556,20 +563,20 @@ inherited frmDCSumm: TfrmDCSumm
       object CPMemSumm: TCopyPasteDetails
         Left = 0
         Top = 228
-        Width = 612
+        Width = 563
         Height = 100
         Align = alBottom
         BevelInner = bvRaised
         BorderStyle = bsSingle
-        Constraints.MinHeight = 28
+        Constraints.MinHeight = 32
         ShowCaption = False
         TabOrder = 2
         Visible = False
         CopyMonitor = frmFrame.CPAppMon
-        CollapseBtn.Left = 587
+        CollapseBtn.Left = 538
         CollapseBtn.Top = 0
         CollapseBtn.Width = 17
-        CollapseBtn.Height = 16
+        CollapseBtn.Height = 20
         CollapseBtn.Align = alRight
         CollapseBtn.Caption = #218
         CollapseBtn.Font.Charset = DEFAULT_CHARSET
@@ -589,8 +596,8 @@ inherited frmDCSumm: TfrmDCSumm
         InfoMessage.AlignWithMargins = True
         InfoMessage.Left = 3
         InfoMessage.Top = 3
-        InfoMessage.Width = 473
-        InfoMessage.Height = 49
+        InfoMessage.Width = 424
+        InfoMessage.Height = 45
         InfoMessage.Align = alClient
         InfoMessage.Font.Charset = ANSI_CHARSET
         InfoMessage.Font.Color = clWindowText
@@ -606,13 +613,11 @@ inherited frmDCSumm: TfrmDCSumm
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
-        InfoMessage.ExplicitWidth = 498
-        InfoMessage.ExplicitHeight = 56
         InfoSelector.AlignWithMargins = True
         InfoSelector.Left = 3
         InfoSelector.Top = 3
-        InfoSelector.Width = 87
-        InfoSelector.Height = 56
+        InfoSelector.Width = 111
+        InfoSelector.Height = 45
         InfoSelector.Style = lbOwnerDrawFixed
         InfoSelector.Align = alClient
         InfoSelector.ItemHeight = 13

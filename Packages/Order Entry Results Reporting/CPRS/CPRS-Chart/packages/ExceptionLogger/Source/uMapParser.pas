@@ -20,9 +20,9 @@ unit uMapParser;
 interface
 
 uses
-  System.Classes, Vcl.Forms, System.SysUtils, System.IniFiles, UStopWatch,
-  Vcl.Dialogs, Winapi.Windows, UThreadPool,
-  System.Generics.Defaults, System.Generics.Collections;
+  System.Classes,
+  System.Generics.Collections,
+  UThreadPool;
 
 type
   TMapParser = class;
@@ -130,7 +130,12 @@ type
 implementation
 
 uses
-  System.StrUtils, Vcl.Controls, System.Math;
+  System.StrUtils,
+  System.SysUtils,
+  System.Generics.Defaults,
+  Vcl.Forms,
+  Vcl.Controls,
+  System.Math;
 
 const
   UnitPrefix = ' M=';

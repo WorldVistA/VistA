@@ -33,7 +33,7 @@ procedure CheckForAutoDCDietOrders(EvtID: integer; DispGrp: integer; CurrentText
 implementation
 
 uses
-  dShared, Windows, rTemplates, SysUtils, StdCtrls, fOrders, rOrders;
+  dShared, Windows, rTemplates, SysUtils, StdCtrls, fOrders, rOrders, uCore;
 
 var
   uOrderEventType: Char;
@@ -171,7 +171,7 @@ begin
     if(ObjList.Count > 0) then
     begin
       ContainsObjects := True;
-      GetTemplateText(ObjList);
+      GetTemplateText(ObjList, Encounter.VisitStr);
       i := 0;
       while (i < ObjList.Count) do
       begin
@@ -216,12 +216,12 @@ end;
 procedure CheckForAutoDCDietOrders(EvtID: integer; DispGrp: integer; CurrentText: string;
             var CancelText: string; Sender: TObject; tubefeeding: boolean = false);
 const
-  TX_CX_CUR = 'A new diet order will CANCEL and REPLACE this current diet now unless' + CRLF +
-              'you specify a start date for when the new diet should replace the current' + CRLF +
-              'diet:' + CRLF + CRLF;
+  TX_CX_CUR = 'A new diet order will CANCEL and REPLACE this current diet now unless ' +
+              'you specify a start date for when the new diet should replace the current diet' +
+               CRLF + CRLF;
   TX_CX_FUT = 'A new diet order with no expiration date will CANCEL and REPLACE these diets:' + CRLF + CRLF;
   TX_CX_DELAYED1 =  'There are other delayed diet orders for this release event:';
-  TX_CX_DELAYED2 =  'This new diet order may cancel and replace those other diets' + CRLF +
+  TX_CX_DELAYED2 =  'This new diet order may cancel and replace those other diets ' +
                     'IMMEDIATELY ON RELEASE, unless you either:' + CRLF + CRLF +
 
                     '1. Specify an expiration date/time for this order that will' + CRLF +
@@ -244,6 +244,8 @@ begin
     begin
       AStringList := TStringList.Create;
       try
+        if x = '' then
+          x := ' ';
         AStringList.Text := x;
         if tubefeeding = false then CancelText := TX_CX_CUR + #9 + Piece(AStringList[0], ':', 1) + ':' + CRLF + CRLF
                  + #9 + Copy(AStringList[0], 16, 99) + CRLF

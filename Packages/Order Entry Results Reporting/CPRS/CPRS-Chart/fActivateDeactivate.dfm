@@ -6,13 +6,13 @@ inherited frmActivateDeactive: TfrmActivateDeactive
   ClientHeight = 185
   ClientWidth = 569
   OldCreateOrder = False
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitWidth = 587
+  ExplicitHeight = 230
   DesignSize = (
     569
     185)
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object TActivate: TButton [0]
     Left = 206
     Top = 157

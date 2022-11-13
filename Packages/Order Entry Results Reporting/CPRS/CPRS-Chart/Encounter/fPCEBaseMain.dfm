@@ -3,26 +3,26 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
   Top = 166
   Caption = 'frmPCEBaseMain'
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object lblSection: TLabel [0]
     Left = 6
     Top = 6
-    Width = 46
-    Height = 13
+    Width = 59
+    Height = 16
     Caption = 'lblSection'
   end
   object lblList: TLabel [1]
     Left = 213
     Top = 6
-    Width = 67
-    Height = 13
+    Width = 85
+    Height = 16
     Caption = 'Section Name'
   end
   object lblComment: TLabel [2]
     Left = 6
     Top = 328
-    Width = 49
-    Height = 13
+    Width = 64
+    Height = 16
     Caption = 'Comments'
   end
   object bvlMain: TBevel [3]
@@ -32,9 +32,9 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
     Height = 140
   end
   inherited btnOK: TBitBtn
-    Left = 464
+    Left = 463
     TabOrder = 1
-    ExplicitLeft = 464
+    ExplicitLeft = 463
   end
   inherited btnCancel: TBitBtn
     Left = 544
@@ -64,7 +64,7 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
     Left = 6
     Top = 343
     Width = 523
-    Height = 21
+    Height = 24
     TabOrder = 5
     OnChange = edtCommentChange
     OnExit = edtCommentExit
@@ -144,7 +144,6 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
         Width = 204
         Height = 174
         Align = alTop
-        ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1

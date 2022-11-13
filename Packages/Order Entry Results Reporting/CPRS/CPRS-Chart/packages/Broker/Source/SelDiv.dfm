@@ -173,8 +173,16 @@ object SelDivForm: TSelDivForm
     Font.Name = 'System'
     Font.Style = [fsBold]
     ParentFont = False
-    Sorted = True
     TabOrder = 0
     OnDblClick = btnOKClick
+  end
+  object ListBox1: TListBox
+    Left = 196
+    Top = 89
+    Width = 156
+    Height = 40
+    ItemHeight = 13
+    TabOrder = 4
+    Visible = False
   end
 end

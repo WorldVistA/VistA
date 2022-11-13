@@ -15,6 +15,7 @@ type
     FCodeSys: string;
     FCodeIEN: string;
     FCodeDescription: string;
+    FCodeFullDescription: string;
     FDesignationID: string;
     FTargetCodeSys: string;
     FTargetCode: string;
@@ -29,6 +30,7 @@ type
     property CodeSys: string read FCodeSys write FCodeSys;
     property CodeIEN: string read FCodeIEN write FCodeIEN;
     property CodeDescription: string read FCodeDescription write FCodeDescription;
+    property CodeFullDescription: string read FCodeFullDescription write FCodeFullDescription;
     property DesignationID: string read FDesignationID write FDesignationID;
     property TargetCode: string read FTargetCode write FTargetCode;
     property TargetCodeSys: string read FTargetCodeSys write FTargetCodeSys;
@@ -94,7 +96,7 @@ type
     { Public declarations }
     procedure SetColumnTreeModel(ResultSet: TStrings);
     procedure TreeViewWndProc(var Message: TMessage);
-    function FindNode(AValue:String): TLexTreeNode;
+    function FindNode(AValue:String; ByDesc: boolean = false): TLexTreeNode;
     property SelectedNode: TLexTreeNode read GetSelectedNode write SetSelectedNode;
     property ShowDescription: boolean read GetShowDescription write SetShowDescription;
     property ShowCode: boolean read GetShowCode write SetShowCode;
@@ -197,7 +199,7 @@ begin
   ResizePanels;
 end;
 
-function TTreeGridFrame.FindNode(AValue: string): TLexTreeNode;
+function TTreeGridFrame.FindNode(AValue: String; ByDesc: boolean = false): TLexTreeNode;
 var
   Node: TLexTreeNode; // Current search node
   SearchText: string;    // search text
@@ -208,11 +210,15 @@ begin
   if (tv.Items.Count <> 0) then begin
     Node := TLexTreeNode(tv.Items[0]);
     repeat
-      StarPos := Pos(' *', Node.Text);
-      if (StarPos > 0) then
-        SearchText := UpperCase(Copy(Node.Text, 1, StarPos - 1))
+      if ByDesc then
+        SearchText := Node.CodeDescription
       else
-        SearchText := UpperCase(Node.Text);
+        SearchText := Node.Text;
+      StarPos := Pos(' *', SearchText);
+      if (StarPos > 0) then
+        SearchText := UpperCase(Copy(SearchText, 1, StarPos - 1))
+      else
+        SearchText := UpperCase(SearchText);
 
       if (SearchText = AValue) then begin
         Result := Node;
@@ -296,10 +302,16 @@ begin
 end;
 
 procedure TTreeGridFrame.PopulatePanels;
+var
+  x: string;
 begin
   if assigned(SelectedNode) then begin
-    if mmoDesc.Visible then begin
-      mmoDesc.Lines.Text := SelectedNode.CodeDescription;
+    if mmoDesc.Visible then
+    begin
+      x := trim(SelectedNode.CodeFullDescription);
+      if x = '' then
+        x := SelectedNode.CodeDescription;
+      mmoDesc.Lines.Text := x;
     end;
     if pnlCodeSys.Visible and (SelectedNode.CodeSys <> '') then begin
       CodeTitle := SelectedNode.CodeSys + ':  ';
@@ -393,27 +405,32 @@ procedure TTreeGridFrame.SetColumnTreeModel(ResultSet: TStrings);
 var
   i: integer;
   Node: TLexTreeNode;
-  RecStr: string;
+  RecStr, Desc: string;
 begin
   if not assigned(ResultSet) or (ResultSet.Text = '') then begin
     ClearData;
   end else begin
-    //  1     2        3      4       5       6         7          8     9
-    //VUID^SCT TEXT^ICDCODE^ICDIEN^CODE SYS^CONCEPT^DESIGNATION^ICDVER^PARENT
+    //  1     2        3      4       5       6         7          8     9       10
+    //VUID^SCT TEXT^ICDCODE^ICDIEN^CODE SYS^CONCEPT^DESIGNATION^ICDVER^PARENT^FULL DESCRIPTION
     tv.Items.Clear;
     tv.Refresh;
 
     for i := 0 to ResultSet.Count - 1 do begin
       RecStr := ResultSet[i];
-      if Piece(RecStr, '^', 2) <> '' then begin
+      Desc := Piece(RecStr, '^', 10);
+      if Desc = '' then
+        Desc := Piece(RecStr, '^', 2);
+      if Desc <> '' then begin
         if Piece(RecStr, '^', 9) = '' then
-          Node := TLexTreeNode(tv.Items.Add(nil, Piece(RecStr, '^', 2)))
+          Node := TLexTreeNode(tv.Items.Add(nil, Desc))
         else
-          Node := TLexTreeNode(tv.Items.AddChild(tv.Items[(StrToInt(Piece(RecStr, '^', 9))-1)], Piece(RecStr, '^', 2)));
+          Node := TLexTreeNode(tv.Items.AddChild(tv.Items[(StrToInt(Piece(RecStr, '^', 9))-1)], Desc));
         Node.ResultLine := RecStr;
         Node.VUID := Piece(RecStr, '^', 1);
-        Node.Text := Piece(RecStr, '^', 2);
-        Node.CodeDescription := Node.Text;
+        Node.Text := Desc;
+        Node.CodeDescription := Piece(RecStr, '^', 2);
+        Node.CodeFullDescription := Desc;
+
         Node.CodeIEN := Piece(RecStr, '^', 4);
         Node.CodeSys := Piece(RecStr, '^', 5);
         Node.Code := Piece(RecStr, '^', 6);

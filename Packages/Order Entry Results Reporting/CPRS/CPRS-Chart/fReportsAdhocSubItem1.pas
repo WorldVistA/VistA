@@ -341,8 +341,16 @@ end;
 
 procedure TfrmReportsAdhocSubItem1.ORComboBox2NeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TSTrings;
 begin
-  ORComboBox2.ForDataUse(HSFileLookup(uFile,StartFrom,Direction));
+  sl := TStringList.Create;
+  try
+  HSFileLookup(sl,uFile,StartFrom,Direction);
+  ORComboBox2.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmReportsAdhocSubItem1.pnl7ButtonEnter(Sender: TObject);

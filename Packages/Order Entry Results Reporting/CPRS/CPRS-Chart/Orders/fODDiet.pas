@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, ComCtrls, ExtCtrls, StdCtrls, Grids, ORCtrls, ORDtTm, ORFn, uConst,
-  VA508AccessibilityManager, StrUtils, uInfoBoxWithBtnControls;
+  VA508AccessibilityManager, StrUtils, uInfoBoxWithBtnControls, ORExtensions;
 
 type
 
@@ -30,24 +30,24 @@ type
     cboDietAvail: TORComboBox;
     lstDietSelect: TORListBox;
     cmdRemove: TButton;
-    txtDietComment: TCaptionEdit;
+    txtDietComment: ORExtensions.TCaptionEdit;
     calDietStart: TORDateBox;
     cboDelivery: TORComboBox;
-    pgeTubefeeding: TTabSheet;
+    pgeTubefeeding: TTabSheet;                                                        
     lblTFProductList: TLabel;
-    lblTFComment: TLabel;
+    lblTFComment: TLabel;                                                             
     lblTFStrength: TLabel;
     lblTFQuantity: TLabel;
     lblTFProduct: TLabel;
     cboProduct: TORComboBox;
-    txtTFComment: TCaptionEdit;
+    txtTFComment: ORExtensions.TCaptionEdit;
     grdSelected: TCaptionStringGrid;
     cmdTFRemove: TButton;
     pgeEarlyLate: TTabSheet;
     pgeIsolations: TTabSheet;
     pgeAdditional: TTabSheet;
     chkCancelTubefeeding: TCheckBox;
-    txtQuantity: TCaptionEdit;
+    txtQuantity: ORExtensions.TCaptionEdit;
     cboStrength: TCaptionComboBox;
     lblTFAmount: TLabel;
     grpMeal: TKeyClickRadioGroup;
@@ -72,16 +72,15 @@ type
     radLT2: TRadioButton;
     radLT3: TRadioButton;
     lblNoTimes: TLabel;
-    txtAOComment: TCaptionEdit;
+    txtAOComment: ORExtensions.TCaptionEdit;
     lblAddlOrder: TLabel;
     lstIsolation: TORListBox;
     lblIsolation: TLabel;
     lblIPComment: TLabel;
-    txtIPComment: TCaptionEdit;
+    txtIPComment: ORExtensions.TCaptionEdit;
     lblIPCurrent: TLabel;
-    txtIPCurrent: TCaptionEdit;
+    txtIPCurrent: ORExtensions.TCaptionEdit;
     pgeOutPt: TTabSheet;
-    lblOPStop: TLabel;
     grpOPMeal: TKeyClickRadioGroup;
     grpOPDoW: TGroupBox;
     chkOPMonday: TCheckBox;
@@ -93,11 +92,12 @@ type
     chkOPSunday: TCheckBox;
     lblOPStart: TLabel;
     calOPStart: TORDateBox;
+    lblOPStop: TLabel;
     calOPStop: TORDateBox;
     lblOPDietAvail: TLabel;
     cboOPDietAvail: TORComboBox;
     lblOPComment: TLabel;
-    txtOPDietComment: TCaptionEdit;
+    txtOPDietComment: ORExtensions.TCaptionEdit;
     lblOPDelivery: TLabel;
     cboOPDelivery: TORComboBox;
     lblOPSelect: TLabel;
@@ -229,7 +229,7 @@ implementation
 {$R *.DFM}
 
 uses uCore, rODBase, rODDiet, rCore, rOrders, fODDietLT, DateUtils,
-  fOrders, uODBase, VA508AccessibilityRouter, VAUtils;
+  fOrders, uODBase, VA508AccessibilityRouter, fODAllergyCheck, VAUtils;
 
 const
   TX_DIET_REG = 'A regular diet may not be combined with other diets.';
@@ -250,6 +250,7 @@ const
   TX_TFQTY  = 'A quantity must be entered for ';
   TX_TFAMT  = 'The quantity is invalid for ';
   TX_TF5000 = 'The total quantity ordered may not exceed 5000ml.';
+  TX_BADEFF_DATE = 'Cannot be effective before now.';
 
   // CQ #15833 - Removed references of 'c' and 'cc', changed 100CC example to 100ML - JCS
   TX_HLPQTY = CRLF + 'Valid entries for quantity:' + CRLF + CRLF +
@@ -343,6 +344,7 @@ var
   ALocation: string;   //ptr to #44 hospital location
 begin
   inherited;
+  AutoSizeDisabled := false;
   FOldHintHidePause := Application.HintHidePause;
   FGiveMultiTabMessage := ScreenReaderSystemActive;
   AbortOrder := False;
@@ -589,6 +591,7 @@ begin
   begin
     if lstDietSelect.Items.Count < 1 then SetError(TX_NO_DIET);
     if not calDietStart.IsValid      then SetError(TX_BAD_START);
+    if calDietStart.FMDateTime < FMNow then SetError(TX_BADEFF_DATE);
 //    with calDietStop do
 //    begin
 //      Validate(ErrMsg);
@@ -1023,7 +1026,7 @@ end;
 
 procedure TfrmODDiet.DietCheckForNPO;
 begin
-  if Piece(lstDietSelect.Items[0], U, 2) = 'NPO' then
+  if (lstDietSelect.Count > 0) and (Piece(lstDietSelect.Items[0], U, 2) = 'NPO') then
   begin
     lblDelivery.Visible := False;
     cboDelivery.Visible := False;
@@ -1042,21 +1045,16 @@ var
   x: string;
   list: TStringList;
   value: integer;
-//  btns: Array[mbYes, mbOK, mbCancel] of TMsgDlgButtons;
 begin
   with lstDietSelect do
   begin
-//    if (Items.Count = 1) and (Piece(Items[0], U, 2) <> 'NPO')
-//      and (Length(uDietParams.CurTF) > 0) then
     if (Items.Count > 0) and (Length(uDietParams.CurTF) > 0) then
     begin
       x := TextForOrder(uDietParams.CurTF);
       list := TStringList.Create;
       list.Add('Continue TubeFeeding Order^false');
       list.Add('Cancel TubeFeeding Order^false');
-//      value := fInfoBoxWithBtnControl.processMessage(TC_CANCEL_TF, TX_CANCEL_TF + x, list);
       value := uInfoBoxWithBtnControls.DefMessageDlg(TX_CANCEL_TF + x, mtConfirmation, list, TC_CANCEL_TF, true);
-      //if InfoBox(TX_CANCEL_TF + x, TC_CANCEL_TF, MB_YESNO) = IDYES then
       if value = 1 then
       begin
         chkCancelTubeFeeding.State := cbChecked;
@@ -1247,8 +1245,13 @@ begin
   if Sender <> Self then Responses.Clear;       // Sender=Self when called from SetupDialog
   with calDietStart   do {if Length(Text) > 0 then} Responses.Update('START',     1, Text,   Text);
 //  with calDietStop    do {if Length(Text) > 0 then} Responses.Update('STOP',      1, Text,   Text);
+// DRM - I10010348FY16/525455 - 2017/6/20 - can't assume sequence number in list == instance number
+//  with lstDietSelect  do for i := 0 to Items.Count - 1 do
+//    Responses.Update('ORDERABLE', i+1, Piece(Items[i], U, 1), Piece(Items[i], U, 2));
   with lstDietSelect  do for i := 0 to Items.Count - 1 do
-    Responses.Update('ORDERABLE', i+1, Piece(Items[i], U, 1), Piece(Items[i], U, 2));
+    if not Responses.IValueExists('ORDERABLE', Piece(Items[i], U, 1)) then
+      Responses.Update('ORDERABLE', Responses.InstanceCount('ORDERABLE') + 1, Piece(Items[i], U, 1), Piece(Items[i], U, 2));
+// DRM ---
   with txtDietComment do {if Length(Text) > 0 then} Responses.Update('COMMENT',   1, Text,   Text);
   with cboDelivery    do if Visible            then Responses.Update('DELIVERY',  1, ItemID, Text);
   with chkCancelTubefeeding do case State of
@@ -1343,9 +1346,10 @@ end;
 procedure TfrmODDiet.cboProductMouseClick(Sender: TObject);
 var
   AProduct: TTFProduct;
+
 begin
   inherited;
-  // check quick order
+    // check quick order
   if CharAt(cboProduct.ItemID, 1) = 'Q' then              // setup quick order
   begin
     Responses.QuickOrder := ExtractInteger(cboProduct.ItemID);
@@ -2327,7 +2331,7 @@ end;
 procedure TfrmODDiet.OPDietCheckForNPO;
 begin
 { TODO -oRich V. -cOutpatient Meals : Need NFS input on this section (NPO and special instructions.) }
-  if Piece(lstOPDietSelect.Items[0], U, 2) = 'NPO' then
+  if (lstOPDietSelect.Count > 0) and (Piece(lstOPDietSelect.Items[0], U, 2) = 'NPO') then
   begin
     lblOPDelivery.Visible := False;
     cboOPDelivery.Visible := False;
@@ -2412,8 +2416,6 @@ begin
   end;
   inherited;
   with LateTrayFields do if LateMeal <> #0 then LateTrayOrder(LateTrayFields, OrderForInpatient);
-
-
 end;
 
 procedure TfrmODDiet.FormKeyDown(Sender: TObject; var Key: Word;
@@ -2485,6 +2487,5 @@ begin
   if aString = '' then
   Result := 'blank';
 end;
-
 
 end.

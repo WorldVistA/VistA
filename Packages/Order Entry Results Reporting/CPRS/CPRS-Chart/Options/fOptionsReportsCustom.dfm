@@ -4,75 +4,93 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Individual CPRS Report Settings'
-  ClientHeight = 387
-  ClientWidth = 503
+  ClientHeight = 381
+  ClientWidth = 514
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitWidth = 509
-  ExplicitHeight = 415
+  ExplicitWidth = 520
+  ExplicitHeight = 406
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Bevel3: TBevel [0]
     Left = 0
-    Top = 356
-    Width = 503
+    Top = 347
+    Width = 514
     Height = 2
     Align = alBottom
+    ExplicitTop = 356
+    ExplicitWidth = 503
   end
   object Panel1: TPanel [1]
     Left = 0
-    Top = 358
-    Width = 503
-    Height = 29
+    Top = 349
+    Width = 514
+    Height = 32
     Align = alBottom
+    BevelOuter = bvNone
     TabOrder = 1
+    ExplicitTop = 358
+    ExplicitWidth = 503
     object btnApply: TButton
-      Left = 432
-      Top = 4
-      Width = 50
-      Height = 22
+      AlignWithMargins = True
+      Left = 433
+      Top = 3
+      Width = 78
+      Height = 26
       Hint = 'Click to save new settings'
+      Align = alRight
       Caption = 'Apply'
       Enabled = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
       OnClick = btnApplyClick
+      ExplicitLeft = 432
     end
     object btnCancel: TButton
-      Left = 368
-      Top = 4
-      Width = 50
-      Height = 22
+      AlignWithMargins = True
+      Left = 345
+      Top = 3
+      Width = 82
+      Height = 26
+      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       TabOrder = 1
       OnClick = btnCancelClick
+      ExplicitLeft = 344
     end
     object btnOK: TButton
-      Left = 304
-      Top = 4
-      Width = 51
-      Height = 22
+      AlignWithMargins = True
+      Left = 243
+      Top = 3
+      Width = 96
+      Height = 26
+      Align = alRight
       Caption = 'OK'
       TabOrder = 0
       OnClick = btnOKClick
+      ExplicitLeft = 264
     end
   end
   object Panel2: TPanel [2]
     Left = 0
     Top = 0
-    Width = 503
-    Height = 353
-    Align = alTop
+    Width = 514
+    Height = 347
+    Align = alClient
+    BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 503
+    ExplicitHeight = 353
     object grdReport: TCaptionStringGrid
-      Left = 1
-      Top = 73
-      Width = 501
-      Height = 272
-      Align = alTop
+      AlignWithMargins = True
+      Left = 3
+      Top = 60
+      Width = 508
+      Height = 284
+      Align = alClient
       ColCount = 4
       DefaultRowHeight = 20
       DefaultDrawing = False
@@ -86,6 +104,10 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
       OnKeyPress = grdReportKeyPress
       OnMouseDown = grdReportMouseDown
       Caption = 'Report Grid'
+      ExplicitLeft = 1
+      ExplicitTop = 73
+      ExplicitWidth = 501
+      ExplicitHeight = 272
       ColWidths = (
         219
         97
@@ -108,7 +130,7 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
       Left = 136
       Top = 328
       Width = 113
-      Height = 21
+      Height = 24
       TabOrder = 3
       Visible = False
       OnExit = odbStopExit
@@ -121,7 +143,7 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
       Left = 8
       Top = 328
       Width = 113
-      Height = 21
+      Height = 24
       TabOrder = 2
       Visible = False
       OnExit = odbStartExit
@@ -134,7 +156,7 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
       Left = 360
       Top = 328
       Width = 121
-      Height = 21
+      Height = 24
       TabOrder = 4
       Visible = False
       DateOnly = True
@@ -142,32 +164,46 @@ inherited frmOptionsReportsCustom: TfrmOptionsReportsCustom
       Caption = 'Date'
     end
     object Panel3: TPanel
-      Left = 1
-      Top = 1
-      Width = 501
-      Height = 72
+      Left = 0
+      Top = 0
+      Width = 514
+      Height = 57
       Align = alTop
+      BevelOuter = bvNone
       TabOrder = 0
+      ExplicitWidth = 503
       object Label1: TLabel
-        Left = 16
-        Top = 8
-        Width = 265
-        Height = 13
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 508
+        Height = 16
+        Align = alTop
         Caption = 'Type the first few letters of the report you are looking for:'
+        ExplicitLeft = 16
+        ExplicitTop = 8
+        ExplicitWidth = 327
       end
       object edtSearch: TCaptionEdit
-        Left = 24
-        Top = 32
-        Width = 433
-        Height = 21
+        AlignWithMargins = True
+        Left = 3
+        Top = 25
+        Width = 508
+        Height = 24
+        Align = alTop
         TabOrder = 0
         OnChange = edtSearchChange
         OnKeyPress = edtSearchKeyPress
         Caption = 'Type the first few letters of the report you are looking for:'
+        ExplicitLeft = 24
+        ExplicitTop = 32
+        ExplicitWidth = 433
       end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 48
+    Top = 136
     Data = (
       (
         'Component = Panel1'

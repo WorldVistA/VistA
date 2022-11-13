@@ -7,9 +7,10 @@ interface
 uses SysUtils, Classes, ORNet, ORFn, uPCE, UBACore, ORClasses, windows;
 
 const
-  LX_ICD = 12;
-  LX_CPT = 13;
-  LX_SCT = 14;
+  LX_SC   = 4;  //Standard Codes
+  LX_ICD  = 12;
+  LX_CPT  = 13;
+  LX_SCT  = 14;
 
   LX_Threshold = 15;
 
@@ -50,11 +51,6 @@ type
     CLDflt:   Boolean;        // default if propmpting camp lejeune
   end;
 
-type
-  TPCECodeDescriptions = record
-    codeList : TORStringList;
-    end;
-
   TPCEListCodesProc = procedure(Dest: TStrings; SectionIndex: Integer);
 
   TAskPCE = (apPrimaryNeeded, apPrimaryOutpatient, apPrimaryAlways,
@@ -63,6 +59,10 @@ type
 function GetVisitCat(InitialCat: char; Location: integer; Inpatient: boolean): char;
 function GetDiagnosisText(Narrative: String; Code: String): String;
 function GetFreqOfText(SearchStr: String): integer;
+
+// Used for secondary visit date
+function GetNoteDate(NoteIEN: Integer): TFMDateTime;
+function GetNoteLocation(NoteIEN: Integer): Integer;
 
 {assign and read values from fPCEData}
 //function SetRPCEncouterInfo(PCEData: TPCEData): boolean;
@@ -80,6 +80,8 @@ function ForcePCEEntry(Loc: integer): boolean;
 {"Other" form PCE calls}
 procedure LoadcboOther(Dest: TStrings; Location, fOtherApp: Integer);
 
+procedure RemTaxWCodes(Dest: TStrings);
+procedure TaxCodes(Dest: TStrings; Taxonomy: integer; Date: TFMDateTime);
 { Lexicon Lookup Calls }
 function  LexiconToCode(IEN, LexApp: Integer; ADate: TFMDateTime = 0): string;
 procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0; AExtend: Boolean = False; AI10Active: Boolean = False);
@@ -92,7 +94,7 @@ function  GetICDVersion(ADate: TFMDateTime = 0): String;
 
 { Encounter Form Elements }
 procedure DeletePCE(const AVisitStr: string);
-function EligbleConditions: TSCConditions;
+function EligbleConditions(PCEData: TPCEData): TSCConditions;
 
 procedure ListVisitTypeSections(Dest: TStrings);
 procedure ListVisitTypeCodes(Dest: TStrings; SectionIndex: Integer);
@@ -127,10 +129,13 @@ function UpdateModifierList(Dest: TStrings; Index: integer): string;
 procedure ListSkinSections(Dest: TStrings);
 procedure ListSkinCodes(Dest: TStrings; SectionIndex: Integer);
 
+function ListUCUMCodes(const StartFrom: string; Direction: integer; aLst: TStrings): boolean;
+
 procedure ListSCDisabilities(Dest: TStrings);
 procedure LoadPCEDataForNote(Dest: TStrings; ANoteIEN: Integer; VStr: string);
 function GetVisitIEN(NoteIEN: Integer): string;
-procedure SavePCEData(PCEList: TStringList; ANoteIEN, ALocation: integer);
+//function SavePCEData(PCEList: TStringList; ANoteIEN, ALocation: integer; var VisitID: integer): boolean;
+function SavePCEData(PCEList: TStringList; ANoteIEN, ALocation: integer; var isLock: boolean): boolean;
 
 function DataHasCPTCodes(AList: TStrings): boolean;
 function GetAskPCE(Loc: integer): TAskPCE;
@@ -149,7 +154,7 @@ procedure RefreshPLDiagnoses;
 //GAF
 function GAFOK: boolean;
 function MHClinic(const Location: integer): boolean;
-procedure RecentGAFScores(const Limit: integer);
+procedure RecentGAFScores(aDest: TStrings; const Limit: integer);
 function SaveGAFScore(const Score: integer; GAFDate: TFMDateTime; Staff: Int64): boolean;
 function GAFURL: string;
 function MHTestsOK: boolean;
@@ -168,13 +173,16 @@ function IsUserAProvider(AUser: Int64; ADate: TFMDateTime): boolean;
 function IsUserAUSRProvider(AUser: Int64; ADate: TFMDateTime): boolean;
 function IsCancelOrNoShow(ANote: integer): boolean;
 function IsNonCountClinic(ALocation: integer): boolean;
+function CheckDailyHospitalization(APCEObject: TPCEData): Boolean;
+function GetUCUMInfo(DataType: string; Code: string): TUCUMInfo;
+procedure UpdateUCUMInfo(DataType, Code, Value: string);
 
 // HNC Flag
 //function HNCOK: boolean;
 
 implementation
 
-uses uGlobalVar, TRPCB, rCore, uCore, uConst, fEncounterFrame, UBAGlobals, UBAConst, rMisc, fDiagnoses;
+uses uGlobalVar, TRPCB, rCore, uCore, uConst, fEncounterFrame, UBAGlobals, UBAConst, rMisc, fDiagnoses, ORNetIntf;
 
 var
   uLastLocation:  Integer;
@@ -182,6 +190,7 @@ var
   uLastEncDt:     TFMDateTime;
   uVTypeLastLoc:  Integer;
   uVTypeLastDate: double = 0;
+  uMagData:       TStringList;
   uDiagnoses:     TStringList;
   uExams:         TStringList;
   uHealthFactors: TStringList;
@@ -216,8 +225,48 @@ var
   uLastChkOutLoc: integer = -2;
   uLastIsClinicLoc: integer = 0;
   uLastIsClinic: boolean = FALSE;
-  uPCECodeDescriptions: TPCECodeDescriptions;
+  uDiagnosesTextList: TStringList;
 //  uHNCOK:         integer = -1;
+
+function GetEncounterDateTime: TFMDateTime;
+begin
+  if assigned(uEncPCEData) then
+    Result := uEncPCEData.VisitDateTime
+  else
+    Result := Encounter.DateTime;
+end;
+
+function GetEncounterICDVersion: string;
+begin
+  if assigned(uEncPCEData) then
+    Result := uEncPCEData.GetICDVersion
+  else
+    Result := Encounter.GetICDVersion;
+end;
+
+function GetEncounterVisitCategory: Char;
+begin
+  if assigned(uEncPCEData) then
+    Result := uEncPCEData.VisitCategory
+  else
+    Result := Encounter.VisitCategory;
+end;
+
+function GetEncounterProvider: Int64;
+begin
+  if assigned(uEncPCEData) then
+    Result := uEncPCEData.Providers.PCEProviderForce
+  else
+    Result := Encounter.Provider;
+end;
+
+function GetEncounterVisitString: string;
+begin
+  if assigned(uEncPCEData) then
+    Result := uEncPCEData.VisitString
+  else
+    Result := Encounter.VisitStr;
+end;
 
 function GetVisitCat(InitialCat: char; Location: integer; Inpatient: boolean): char;
 var
@@ -230,7 +279,8 @@ begin
     uVCInitialCat := InitialCat;
     uVCLocation := Location;
     uVCInpatient := Inpatient;
-    tmp := sCallV('ORWPCE GETSVC', [InitialCat, Location, BOOLCHAR[Inpatient]]);
+//    tmp := sCallV('ORWPCE GETSVC', [InitialCat, Location, BOOLCHAR[Inpatient]]);
+    CallVistA('ORWPCE GETSVC', [InitialCat, Location, BOOLCHAR[Inpatient]], tmp);
     if(tmp <> '') then
       uVCResult := tmp[1]
     else
@@ -241,44 +291,37 @@ end;
 
 function GetDiagnosisText(Narrative: String; Code: String): String;
 var
-idx: integer;
-str: string;
+i: integer;
+node: string;
 begin
 //  Result := sCallV('ORWPCE GET DX TEXT', [Narrative, Code]);
-  if uPCECodeDescriptions.codeList <> nil then
-    begin
-       idx := uPCECodeDescriptions.codeList.IndexOfPieces([Code, Narrative], 1);
-       if idx = -1 then
-        begin
-          Result := sCallV('ORWPCE GET DX TEXT', [Narrative, Code]);
-          str := Code + U + Narrative + U + Result;
-          uPCECodeDescriptions.codeList.add(str);
-        end
-        else
-          begin
-            str := uPCECodeDescriptions.codeList[idx];
-            if (Code = Piece(str, U, 1)) and (Narrative = Piece(str, U, 2)) then Result := Piece(str, U, 3)
-            else
-              begin
-                Result := sCallV('ORWPCE GET DX TEXT', [Narrative, Code]);
-                str := Code + U + Narrative + U + Result;
-                uPCECodeDescriptions.codeList.add(str);
-              end;
 
-          end;
-    end
-  else
+  for i := 0 to uDiagnosesTextList.Count - 1 do
     begin
-      uPCECodeDescriptions.codeList := TORStringList.Create;
-      Result := sCallV('ORWPCE GET DX TEXT', [Narrative, Code]);
-      str := Code + U + Narrative + U + Result;
-      uPCECodeDescriptions.codeList.add(str);
+       node := uDiagnosesTextList.Strings[i];
+       if Pieces(node, U, 1, 2) = Code + U + Narrative then
+        result := Piece(node, U, 3);
     end;
+  if result <> '' then exit;
+
+  CallVistA('ORWPCE GET DX TEXT', [Narrative, Code], Result);
+  uDiagnosesTextList.Add(Code + U + Narrative + U + Result);
 end;
 
 function GetFreqOfText(SearchStr: String): integer;
 begin
-  Result := StrToInt(sCallV('ORWLEX GETFREQ', [SearchStr]));
+//  Result := StrToInt(sCallV('ORWLEX GETFREQ', [SearchStr]));
+  CallVistA('ORWLEX GETFREQ', [SearchStr],Result);
+end;
+
+function GetNoteDate(NoteIEN: integer): TFMDateTime;
+begin
+  CallVistA('ORWPCE5 NOTEDATE', [NoteIEN], Result);
+end;
+
+function GetNoteLocation(NoteIEN: Integer): Integer;
+begin
+  CallVistA('ORWPCE5 NOTELOC', [NoteIEN], Result);
 end;
 
 { Lexicon Lookup Calls }
@@ -288,11 +331,14 @@ var
   CodeSys: string;
 begin
   case LexApp of
+  LX_SC:  CodeSys := 'SCT';
   LX_ICD: CodeSys := 'ICD';
   LX_CPT: CodeSys := 'CHP';
   LX_SCT: CodeSys := 'GMPX';
   end;
-  Result := Piece(sCallV('ORWPCE LEXCODE', [IEN, CodeSys, ADate]), U, 1);
+//  Result := Piece(sCallV('ORWPCE LEXCODE', [IEN, CodeSys, ADate]), U, 1);
+  CallVistA('ORWPCE LEXCODE', [IEN, CodeSys, ADate], Result);
+  Result := Piece(Result, U, 1);
 end;
 
 procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0; AExtend: Boolean = False; AI10Active: Boolean = False);
@@ -300,7 +346,9 @@ var
   CodeSys: string;
   ExtInt: integer;
 begin
+
   case LexApp of
+    LX_SC:  CodeSys := 'SCT';
     LX_ICD: CodeSys := 'ICD';
     LX_CPT: CodeSys := 'CHP';
     LX_SCT: CodeSys := 'GMPX';
@@ -310,10 +358,11 @@ begin
   else
     ExtInt := 0;
   if (LexApp = LX_ICD) and AExtend and AI10Active then
-    CallV('ORWLEX GETI10DX', [x, ADate])
+    CallVistA('ORWLEX GETI10DX', [x, ADate], Dest)
+  else if LexApp = LX_SC then
+    CallVistA('ORWPCE4 STDCODES', [x, CodeSys, ADate], Dest)
   else
-    CallV('ORWPCE4 LEX', [x, CodeSys, ADate, ExtInt, True]);
-  FastAssign(RPCBrokerV.Results, Dest);
+    CallVistA('ORWPCE4 LEX', [x, CodeSys, ADate, ExtInt, True], Dest);
 end;
 
 //TODO: Code for I10 mapped alternatives - remove if not reinstated as requirement
@@ -340,26 +389,31 @@ end;
 
 function  IsActiveCode(ACode: string; LexApp: integer; ADate: TFMDateTime = 0): boolean;
 var
+  s,
   CodeSys: string;
 begin
   case LexApp of
+  LX_SC:  CodeSys := 'SCT';
   LX_ICD: CodeSys := 'ICD';
   LX_CPT: CodeSys := 'CHP';
   LX_SCT: CodeSys := 'GMPX';
   end;
-  Result := (sCallV('ORWPCE ACTIVE CODE',[ACode, CodeSys, ADate]) = '1');
+//  Result := (sCallV('ORWPCE ACTIVE CODE',[ACode, CodeSys, ADate]) = '1');
+  Result := CallVistA('ORWPCE ACTIVE CODE',[ACode, CodeSys, ADate], s) and (s = '1');
 end;
 
 function  GetICDVersion(ADate: TFMDateTime = 0): String;
 begin
-  Result := sCallV('ORWPCE ICDVER', [ADate]);
+//  Result := sCallV('ORWPCE ICDVER', [ADate]);
+  CallVistA('ORWPCE ICDVER', [ADate], Result);
 end;
 
 { Encounter Form Elements ------------------------------------------------------------------ }
 
 procedure DeletePCE(const AVisitStr: string);
 begin
-  sCallV('ORWPCE DELETE', [AVisitStr, Patient.DFN]);
+//  sCallV('ORWPCE DELETE', [AVisitStr, Patient.DFN]);
+  CallVistA('ORWPCE DELETE', [AVisitStr, Patient.DFN]);
 end;
 
 procedure LoadEncounterForm;
@@ -370,19 +424,18 @@ var
   EncDt: TFMDateTime;
 begin
   uLastLocation := uEncLocation;
-  EncDt := Trunc(uEncPCEData.VisitDateTime);
-  if uEncPCEData.VisitCategory = 'E' then EncDt := Trunc(FMNow);
+  if GetEncounterVisitCategory <> 'E' then
+    EncDt := Trunc(GetEncounterDateTime)
+  else
+    EncDt := Trunc(FMNow);
   uLastEncDt := EncDt;
   EncLoadDateTime := Now;
 
   //add problems to the top of diagnoses.
   uTempList := TstringList.Create;
 
-
   if UBAGlobals.BILLING_AWARE then //BAPHII 1.3.10
-     begin
-        UBACore.BADxList := TStringList.Create;
-     end;
+    UBACore.BADxList := TStringList.Create;
 
   try
     uDiagnoses.clear;
@@ -393,8 +446,8 @@ begin
      end;
 
     CallVistA('ORWPCE DIAG', [uEncLocation, EncDT, Patient.DFN], uTempList);
-    //tCallV(uTempList,     'ORWPCE DIAG',  [uEncLocation, EncDt]);  //BAPHII 1.3.10
-    uDiagnoses.add(utemplist.strings[0]);  //BAPHII 1.3.10
+    if utemplist.Count > 0 then
+      uDiagnoses.add(utemplist.strings[0]);  //BAPHII 1.3.10
     AddProbsToDiagnoses;  //BAPHII 1.3.10
    // BA 25  AddProviderPatientDaysDx(uDxLst, IntToStr(Encounter.Provider), Patient.DFN);
     for i := 1 to (uTempList.Count-1) do  //BAPHII 1.3.10
@@ -403,32 +456,31 @@ begin
   finally
     uTempList.free;
   end;
-
-  tCallV(uVisitTypes,    'ORWPCE VISIT', [uEncLocation, EncDt]);
-  tCallV(uProcedures,    'ORWPCE PROC',  [uEncLocation, EncDt]);
-  tCallV(uImmunizations, 'ORWPCE IMM',   [uEncLocation]);
-  tCallV(uSkinTests,     'ORWPCE SK',    [uEncLocation]);
-  tCallV(uPatientEds,    'ORWPCE PED',   [uEncLocation]);
-  tCallV(uHealthFactors, 'ORWPCE HF',    [uEncLocation]);
-  tCallV(uExams,         'ORWPCE XAM',   [uEncLocation]);
+  CallVistA('ORWPCE VISIT', [uEncLocation, EncDt],uVisitTypes );
+  CallVistA('ORWPCE PROC',  [uEncLocation, EncDt],uProcedures );
+  CallVistA('ORWPCE IMM',   [uEncLocation],uImmunizations );
+  CallVistA('ORWPCE SK',    [uEncLocation],uSkinTests );
+  CallVistA('ORWPCE PED',   [uEncLocation],uPatientEds );
+  CallVistA('ORWPCE HF',    [uEncLocation],uHealthFactors );
+  CallVistA('ORWPCE XAM',   [uEncLocation],uExams );
 
   if uVisitTypes.Count > 0    then uVisitTypes.Delete(0);             // discard counts
   if uDiagnoses.Count  > 0    then uDiagnoses.Delete(0);
   if uProcedures.Count > 0    then uProcedures.Delete(0);
-  if uImmunizations.Count > 0 then uImmunizations.Delete(0);   
-  if uSkinTests.Count > 0     then uSkinTests.Delete(0);       
-  if uPatientEds.Count > 0    then uPatientEds.Delete(0);      
-  if uHealthFactors.Count > 0 then uHealthFactors.Delete(0);   
-  if uExams.Count > 0         then uExams.Delete(0);           
+  if uImmunizations.Count > 0 then uImmunizations.Delete(0);
+  if uSkinTests.Count > 0     then uSkinTests.Delete(0);
+  if uPatientEds.Count > 0    then uPatientEds.Delete(0);
+  if uHealthFactors.Count > 0 then uHealthFactors.Delete(0);
+  if uExams.Count > 0         then uExams.Delete(0);
 
   if (uVisitTypes.Count > 0) and (CharAt(uVisitTypes[0], 1) <> U) then uVisitTypes.Insert(0, U);
   if (uDiagnoses.Count > 0)  and (CharAt(uDiagnoses[0], 1)  <> U) then uDiagnoses.Insert(0,  U);
   if (uProcedures.Count > 0) and (CharAt(uProcedures[0], 1) <> U) then uProcedures.Insert(0, U);
   if (uImmunizations.Count > 0) and (CharAt(uImmunizations[0], 1) <> U) then uImmunizations.Insert(0, U);
-  if (uSkinTests.Count > 0) and (CharAt(uSkinTests[0], 1) <> U) then uSkinTests.Insert(0, U);            
-  if (uPatientEds.Count > 0) and (CharAt(uPatientEds[0], 1) <> U) then uPatientEds.Insert(0, U);         
+  if (uSkinTests.Count > 0) and (CharAt(uSkinTests[0], 1) <> U) then uSkinTests.Insert(0, U);
+  if (uPatientEds.Count > 0) and (CharAt(uPatientEds[0], 1) <> U) then uPatientEds.Insert(0, U);
   if (uHealthFactors.Count > 0) and (CharAt(uHealthFactors[0], 1) <> U) then uHealthFactors.Insert(0, U);
-  if (uExams.Count > 0) and (CharAt(uExams[0], 1) <> U) then uExams.Insert(0, U);                        
+  if (uExams.Count > 0) and (CharAt(uExams[0], 1) <> U) then uExams.Insert(0, U);
 
 end;
 
@@ -474,25 +526,36 @@ begin {ListVisitTypeCodes}
   end;
 end;
 
-procedure ListVisitTypeByLoc(Dest: TStrings; Location: Integer; ADateTime: TFMDateTime = 0);
+procedure ListVisitTypeByLoc(Dest: TStrings; Location: integer;
+  ADateTime: TFMDateTime = 0);
 var
-  i: Integer;
+  Results: TStrings;
+  i: integer;
   x, SectionName: string;
   EncDt: TFMDateTime;
 begin
   EncDt := Trunc(ADateTime);
   if (uVTypeLastLoc <> Location) or (uVTypeLastDate <> EncDt) then
   begin
-    uVTypeForLoc.Clear;
-    if Location = 0 then Exit;
+    uVTypeForLoc.clear;
+    if Location = 0 then
+      Exit;
     SectionName := '';
-    CallV('ORWPCE VISIT', [Location, EncDt]);
-    with RPCBrokerV do for i := 0 to Results.Count - 1 do
-    begin
-      x := Results[i];
-      if CharAt(x, 1) = U
-        then SectionName := Piece(x, U, 2)
-        else uVTypeForLoc.Add(Piece(x, U, 1) + U + SectionName + U + Piece(x, U, 2));
+    Results := TStringList.Create;
+    try
+      CallVistA('ORWPCE VISIT', [Location, EncDt], Results);
+      // with RPCBrokerV do
+      for i := 0 to Results.Count - 1 do
+      begin
+        x := Results[i];
+        if CharAt(x, 1) = U then
+          SectionName := Piece(x, U, 2)
+        else
+          uVTypeForLoc.add(Piece(x, U, 1) + U + SectionName + U +
+            Piece(x, U, 2));
+      end;
+    finally
+      Results.free;
     end;
     uVTypeLastLoc := Location;
     uVTypeLastDate := EncDt;
@@ -501,10 +564,12 @@ begin
 end;
 
 function AutoSelectVisit(Location: integer): boolean;
+var
+  s: String;
 begin
   if UAutoSelLoc <> Location then
   begin
-    UAutoSelVal := (sCallV('ORWPCE AUTO VISIT TYPE SELECT', [Location]) = '1');
+    UAutoSelVal := CallVistA('ORWPCE AUTO VISIT TYPE SELECT', [Location], s) and (s = '1');
     UAutoSelLoc := Location;
   end;
   Result := UAutoSelVal;
@@ -516,8 +581,9 @@ procedure ListDiagnosisSections(Dest: TStrings);
 var
   i: Integer;
   x: string;
+
 begin
-  if (uLastLocation <> uEncLocation) or (uLastDFN <> patient.DFN) or (uLastEncDt <> Trunc(uEncPCEData.VisitDateTime))
+  if (uLastLocation <> uEncLocation) or (uLastDFN <> patient.DFN) or (uLastEncDt <> Trunc(GetEncounterDateTime))
   or PLUpdated or IsDateMoreRecent(PLUpdateDateTime, EncLoadDateTime) then RefreshPLDiagnoses;
   if PLUpdated then PLUpdated := False;
   for i := 0 to uDiagnoses.Count - 1 do if CharAt(uDiagnoses[i], 1) = U then
@@ -560,10 +626,10 @@ var
   ICDVersion: String;
 begin
   //get problem list
-  EncDT := Trunc(uEncPCEData.VisitDateTime);
+  EncDT := Trunc(GetEncounterDateTime);
   uLastDFN := patient.DFN;
-  ICDVersion := piece(Encounter.GetICDVersion, U, 1);
-  tCallV(uProblems, 'ORWPCE ACTPROB', [Patient.DFN, EncDT]);
+  ICDVersion := piece(GetEncounterICDVersion, U, 1);
+  CallVistA('ORWPCE ACTPROB', [Patient.DFN, EncDT],uProblems);
   if uProblems.count > 0 then
   begin
     //add category to udiagnoses
@@ -585,7 +651,7 @@ begin
         //  Diagnoses  ->  Provider/Patient/24 hrs
         uDiagnoses.add(UBAConst.ENCOUNTER_TODAYS_DX); //BAPHII 1.3.10
         //BADxList := AddProviderPatientDaysDx(UBACore.uDxLst, IntToStr(Encounter.Provider), Patient.DFN); //BAPHII 1.3.10
-        rpcGetProviderPatientDaysDx(IntToStr(Encounter.Provider), Patient.DFN); //BAPHII 1.3.10
+        rpcGetProviderPatientDaysDx(IntToStr(GetEncounterProvider), Patient.DFN); //BAPHII 1.3.10
 
         for i := 0 to (UBACore.uDxLst.Count-1) do //BAPHII 1.3.10
            uDiagnoses.add(UBACore.uDxLst[i]); //BAPHII 1.3.10
@@ -609,15 +675,17 @@ var
   uDiagList: TStringList;
   EncDt: TFMDateTime;
 begin
-  EncDt := Trunc(uEncPCEData.VisitDateTime);
-  if uEncPCEData.VisitCategory = 'E' then EncDt := Trunc(FMNow);
+  EncDt := Trunc(GetEncounterDateTime);
+  if GetEncounterVisitCategory = 'E' then
+    EncDt := Trunc(FMNow);
 
   //add problems to the top of diagnoses.
   uDiagList := TStringList.Create;
   try
     uDiagnoses.clear;
     CallVistA('ORWPCE DIAG', [uEncLocation, EncDT, Patient.DFN], uDiagList);
-    uDiagnoses.add(uDiaglist.Strings[0]);
+    if uDiaglist.Count > 0 then
+      uDiagnoses.add(uDiaglist.Strings[0]);
     AddProbsToDiagnoses;
     for i := 1 to (uDiagList.Count-1) do
       uDiagnoses.add(uDiaglist.Strings[i]);
@@ -639,13 +707,13 @@ end;
 {Immunizations-----------------------------------------------------------------}
 procedure LoadImmReactionItems(Dest: TStrings);
 begin
-  tCallV(Dest,'ORWPCE GET SET OF CODES',['9000010.11','.06','1']);
+  CallVistA('ORWPCE GET SET OF CODES',['9000010.11','.06','1'],Dest);
 end;
 
-procedure LoadImmSeriesItems(Dest: TStrings);  
+procedure LoadImmSeriesItems(Dest: TStrings);
 {loads items into combo box on Immunixation screen}
 begin
-  tCallV(Dest,'ORWPCE GET SET OF CODES',['9000010.11','.04','1']);
+  CallVistA('ORWPCE GET SET OF CODES',['9000010.11','.04','1'],Dest);
 end;
 
 procedure ListImmunizSections(Dest: TStrings);
@@ -707,7 +775,7 @@ begin
   begin
     Dest.Add(Pieces(uProcedures[i], U, 1, 2) + U + Piece(uProcedures[i], U, 1) + U +
              Piece(uProcedures[i], U, 12) + U + Piece(uProcedures[i], U, 13) + U +
-             IntToStr(i));
+             IntToStr(i) + U + Piece(uProcedures[i], U, 3));
     Inc(i);
   end;
 end;
@@ -720,46 +788,50 @@ end;
 
 function ModifierIdx(ModIEN: string): integer;
 var
+  s: String;
   EncDt: TFMDateTime;
 begin
   Result := uModifiers.IndexOfPiece(ModIEN);
   if(Result < 0) then
     begin
-      if Assigned(uEncPCEData) then         // may not exist yet on display of note and PCE data
-        EncDT := Trunc(uEncPCEData.VisitDateTime)
-      else if Encounter.DateTime > 0 then   // really need note date/time next, but can't get to it
-        EncDT := Trunc(Encounter.DateTime)
-      else
+      EncDT := Trunc(GetEncounterDateTime);
+      if EncDT = 0 then
         EncDT := FMToday;
-      Result := uModifiers.Add(MixedCaseModifier(sCallV('ORWPCE GETMOD', [ModIEN, EncDt])));
+      CallVistA('ORWPCE GETMOD', [ModIEN, EncDt], s);
+      Result := uModifiers.Add(MixedCaseModifier(s));
     end;
 end;
 
 function ModifierList(CPTCode: string): string;
 // uModifiers list contains <@>CPTCode;ModCount;^Mod1Index^Mod2Index^...^ModNIndex
 //    or                    MODIEN^MODDescription^ModCode
-
 const
   CPTCodeHeader = '<@>';
-
 var
   i, idx: integer;
   s, ModIEN: string;
   EncDt: TFMDateTime;
+  Results: TStrings;
 begin
-  EncDT := Trunc(uEncPCEData.VisitDateTime);
+  EncDT := Trunc(GetEncounterDateTime);
   idx := uModifiers.IndexOfPiece(CPTCodeHeader + CPTCode, ';', 1);
   if(idx < 0) then
   begin
-    CallV('ORWPCE CPTMODS', [CPTCode, EncDt]);
-    s := CPTCodeHeader + CPTCode + ';' + IntToStr(RPCBrokerV.Results.Count) + ';' + U;
-    for i := 0 to RPCBrokerV.Results.Count - 1 do
-    begin
-      ModIEN := piece(RPCBrokerV.Results[i], U, 1);
-      idx := uModifiers.IndexOfPiece(ModIEN);
-      if(idx < 0) then
-        idx := uModifiers.Add(MixedCaseModifier(RPCBrokerV.Results[i]));
-      s := s + IntToStr(idx) + U;
+    Results := TStringList.Create;
+    try
+      CallVistA('ORWPCE CPTMODS', [CPTCode, EncDt], Results);
+      s := CPTCodeHeader + CPTCode + ';' + IntToStr({RPCBrokerV.}Results.Count)
+        + ';' + U;
+      for i := 0 to Results.Count - 1 do
+      begin
+        ModIEN := Piece(Results[i], U, 1);
+        idx := uModifiers.IndexOfPiece(ModIEN);
+        if (idx < 0) then
+          idx := uModifiers.add(MixedCaseModifier({RPCBrokerV.}Results[i]));
+        s := s + IntToStr(idx) + U;
+      end;
+    finally
+      Results.free;
     end;
     idx := uModifiers.Add(s);
   end;
@@ -773,7 +845,6 @@ var
   TmpSL: TStringList;
   i, j, idx, cnt, found: integer;
   s, Code: string;
-
 begin
   if(not assigned(uModifiers)) then uModifiers := TORStringList.Create;
   if(copy(CPTCodes, length(CPTCodes), 1) <> U) then
@@ -979,12 +1050,12 @@ end;
 
 
 {SkinTests---------------------------------------------------------------------}
-procedure LoadSkResultsItems(Dest: TStrings);  
+procedure LoadSkResultsItems(Dest: TStrings);
 begin
-  tCallV(Dest,'ORWPCE GET SET OF CODES',['9000010.12','.04','1']);
+  CallVistA('ORWPCE GET SET OF CODES',['9000010.12','.04','1'],Dest);
 end;
 
-procedure ListSkinSections(Dest: TStrings);                    
+procedure ListSkinSections(Dest: TStrings);
 { return section names in format: ListIndex^SectionName (sections begin with '^') }
 var
   i: Integer;
@@ -1014,14 +1085,19 @@ begin
   end;
 end;
 
-
-{Patient Education-------------------------------------------------------------}
-procedure LoadPEDLevelItems(Dest: TStrings);  
+{Standared Codes---------------------------------------------------------------}
+function ListUCUMCodes(const StartFrom: string; Direction: integer; aLst: TStrings): boolean;
 begin
-  tCallV(Dest,'ORWPCE GET SET OF CODES',['9000010.16','.06','1']);
+  Result := CallVistA('ORWPCE5 UCUMLIST', [StartFrom, Direction], aLst);
 end;
 
-procedure ListPatientSections(Dest: TStrings);                    
+{Patient Education-------------------------------------------------------------}
+procedure LoadPEDLevelItems(Dest: TStrings);
+begin
+  CallVistA('ORWPCE GET SET OF CODES',['9000010.16','.06','1'],Dest);
+end;
+
+procedure ListPatientSections(Dest: TStrings);
 { return Sections in format: ListIndex^SectionName (sections begin with '^') }
 var
   i: Integer;
@@ -1054,12 +1130,12 @@ end;
 
 
 {HealthFactors-------------------------------------------------------------}
-procedure LoadHFLevelItems(Dest: TStrings);  
+procedure LoadHFLevelItems(Dest: TStrings);
 begin
-  tCallV(Dest,'ORWPCE GET SET OF CODES',['9000010.23','.04','1']);
+  CallVistA('ORWPCE GET SET OF CODES',['9000010.23','.04','1'],Dest);
 end;
 
-procedure ListHealthSections(Dest: TStrings);                    
+procedure ListHealthSections(Dest: TStrings);
 { return Sections in format: ListIndex^SectionName (sections begin with '^') }
 var
   i: Integer;
@@ -1092,9 +1168,9 @@ end;
 
 
 {Exams-------------------------------------------------------------------------}
-procedure LoadXAMResultsItems(Dest: TStrings);  
+procedure LoadXAMResultsItems(Dest: TStrings);
 begin
-  tCallV(Dest,'ORWPCE GET SET OF CODES',['9000010.13','.04','1']);
+  CallVistA('ORWPCE GET SET OF CODES',['9000010.13','.04','1'],Dest);
 end;
 
 procedure LoadHistLocations(Dest: TStrings);
@@ -1103,7 +1179,7 @@ var
   tmp: string;
 
 begin
-  tCallV(Dest,'ORQQPX GET HIST LOCATIONS',[]);
+  CallVistA('ORQQPX GET HIST LOCATIONS',[],Dest);
   for i := 0 to (Dest.Count - 1) do
   begin
     tmp := MixedCase(dest[i]);
@@ -1121,7 +1197,7 @@ begin
   end;
 end;
 
-procedure ListExamsSections(Dest: TStrings);                    
+procedure ListExamsSections(Dest: TStrings);
 { return Sections in format: ListIndex^SectionName (sections begin with '^') }
 var
   i: Integer;
@@ -1151,17 +1227,32 @@ begin
   end;
 end;
 
-
-
-
-
 {------------------------------------------------------------------------------}
-function EligbleConditions: TSCConditions;
+function EligbleConditions(PCEData: TPCEData): TSCConditions;
 { return a record listing the conditions for which a patient is eligible }
 var
   x: string;
+  dt: TFMDateTime;
+  loc, visit: Integer;
+
 begin
-  x := sCallV('ORWPCE SCSEL', [Patient.DFN, Encounter.DateTime, uEncLocation]);
+  dt := Encounter.DateTime;
+  visit := 0;
+  loc := uEncLocation;
+  if assigned(PCEData) then
+  begin
+    visit := PCEData.VisitIEN;
+    if PCEData.Location > 0 then
+      loc := PCEData.Location;
+    if PCEData.VisitCategory = 'E' then
+      dt := FMNow
+    else
+      dt := PCEData.VisitDateTime;
+  end;
+  if visit > 0 then
+    CallVistA('ORWPCE SCSEL', [Patient.DFN, dt, loc, visit], x)
+  else
+    CallVistA('ORWPCE SCSEL', [Patient.DFN, dt, loc], x);
   with Result do
   begin
     SCAllow  := Piece(Piece(x, ';', 1), U, 1) = '1';
@@ -1186,46 +1277,58 @@ begin
      CLAllow := Piece(Piece(x, ';', 9), U, 1) = '1';
      CLDflt  := Piece(Piece(x, ';', 9), U, 2) = '1';
     end;
-
   end;
 end;
 
 procedure ListSCDisabilities(Dest: TStrings);
 { return text listing a patient's rated disabilities and % service connected }
 begin
-  CallV('ORWPCE SCDIS', [Patient.DFN]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWPCE SCDIS', [Patient.DFN], Dest);
 end;
 
 procedure LoadPCEDataForNote(Dest: TStrings; ANoteIEN: Integer; VStr: string);
 begin
   if(ANoteIEN < 1) then
-    CallV('ORWPCE PCE4NOTE', [ANoteIEN, Patient.DFN, VStr])
+    CallVistA('ORWPCE PCE4NOTE', [ANoteIEN, Patient.DFN, VStr], Dest)
   else
-    CallV('ORWPCE PCE4NOTE', [ANoteIEN]);
-  FastAssign(RPCBrokerV.Results, Dest);
+    CallVistA('ORWPCE PCE4NOTE', [ANoteIEN], Dest);
 end;
 
 function GetVisitIEN(NoteIEN: Integer): string;
 begin
   if(NoteIEN < 1) then
-    CallV('ORWPCE GET VISIT', [NoteIEN, Patient.DFN, Encounter.VisitStr])
+    CallVistA('ORWPCE GET VISIT', [NoteIEN, Patient.DFN, GetEncounterVisitString], Result, '0')
   else
-    CallV('ORWPCE GET VISIT', [NoteIEN]);
-  if(RPCBrokerV.Results.Count > 0) then
-    Result := RPCBrokerV.Results[0]
-  else
+    CallVistA('ORWPCE GET VISIT', [NoteIEN], Result, '0');
+  if Result = '' then
     Result := '0';
 end;
 
-procedure SavePCEData(PCEList: TStringList; ANoteIEN, ALocation: integer);
+//function SavePCEData(PCEList: TStringList; ANoteIEN, ALocation: integer; var VisitID: integer): boolean;
+function SavePCEData(PCEList: TStringList; ANoteIEN, ALocation: integer; var isLock: boolean): boolean;
 var
-alist: TStrings;
+  alist: TStrings;
+  i: integer;
+  tmp, warn: string;
 begin
-//  CallV('ORWPCE SAVE', [PCEList, ANoteIEN, ALocation]);
+  result := true;
   aList := TStringList.create;
   try
+    isLock := false;
     CallVistA('ORWPCE SAVE', [PCEList, ANoteIEN, ALocation], alist);
+    if aList.Count <= 0 then Exit;
+    if Piece(alist[0], u, 1) = '1' then exit;
+    if Piece(alist[0], u, 1) = '-4' then
+      begin
+        warn := 'The encounter record is currently locked.';
+        isLock := true;
+      end
+    else warn := 'An error occurred saving encounter data.';
+    result := false;
+    tmp := '';
+    for i := 1 to alist.Count - 1 do
+      tmp := tmp + alist[i] + CRLF;
+    infoBox(warn + CRLF + CRLF + tmp, 'Error saving data', MB_OK);
   finally
     FreeAndNil(aList);
   end;
@@ -1237,7 +1340,8 @@ function DataHasCPTCodes(AList: TStrings): boolean;
 var
   i: integer;
   vl: string;
-
+  sl: TStrings;
+  iList: iORNetMult;
 begin
   if(not assigned(uHasCPT)) then
     uHasCPT := TStringList.Create;
@@ -1259,49 +1363,45 @@ begin
   end;
   if(AList.Count > 0) then
   begin
-    LockBroker;
+    NewORNetMult(iList);
+    for i := 0 to AList.Count-1 do
+      iList.AddSubscript([inttostr(i+1)], AList[i]);
+    sl := TStringList.Create;
     try
-      with RPCBrokerV do
+      CallVistA('ORWPCE HASCPT',[iList],sl);
+      for i := 0 to sl.Count-1 do
       begin
-        ClearParameters := True;
-        RemoteProcedure := 'ORWPCE HASCPT';
-        Param[0].PType := list;
-        with Param[0] do
+        if(Piece(sl[i],'=',2) = '1') then
         begin
-          for i := 0 to AList.Count-1 do
-            Mult[inttostr(i+1)] := AList[i];
+          Result := TRUE;
+          break;
         end;
-        CallBroker;
-        for i := 0 to RPCBrokerV.Results.Count-1 do
-        begin
-          if(Piece(RPCBrokerV.Results[i],'=',2) = '1') then
-          begin
-            Result := TRUE;
-            break;
-          end;
-        end;
-        FastAddStrings(RPCBrokerV.Results, uHasCPT);
       end;
+      FastAddStrings(sl, uHasCPT);
+
     finally
-      UnlockBroker;
+      sl.Free;
     end;
   end;
 end;
 
 function GetAskPCE(Loc: integer): TAskPCE;
+var
+  i: Integer;
 begin
   if(uAPUser <> User.DUZ) or (uAPLoc <> Loc) then
   begin
     uAPUser := User.DUZ;
     uAPLoc := Loc;
-    uAPAsk := TAskPCE(StrToIntDef(sCallV('ORWPCE ASKPCE', [User.DUZ, Loc]), 0));
+    CallVistA('ORWPCE ASKPCE', [User.DUZ, Loc], i);
+    uAPAsk := TAskPCE(i);
   end;
   Result := uAPAsk;
 end;
 
 function HasVisit(const ANoteIEN, ALocation: integer; const AVisitDate: TFMDateTime): Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWPCE HASVISIT', [ANoteIEN, Patient.DFN, ALocation, AVisitDate]), -1);
+  CallVistA('ORWPCE HASVISIT', [ANoteIEN, Patient.DFN, ALocation, AVisitDate], Result, -1);
 end;
 
 {-----------------------------------------------------------------------------}
@@ -1309,78 +1409,120 @@ function CheckActivePerson(provider:String;DateTime:TFMDateTime): boolean;
 var
   RetVal: String;
 begin
-  Callv('ORWPCE ACTIVE PROV',[provider,FloatToStr(DateTime)]);
-  retval := RPCBrokerV.Results[0];
-  if StrToInt(RetVal) = 1 then result := true
-  else result := false;
+  CallVistA('ORWPCE ACTIVE PROV',[provider,FloatToStr(DateTime)], RetVal);
+  Result := RetVal = '1';
 end;
 
 function ForcePCEEntry(Loc: integer): boolean;
+var
+  s: String;
 begin
   if(Loc <> uLastForceLoc) then
   begin
-    uLastForce := (sCallV('ORWPCE FORCE', [User.DUZ, Loc]) = '1');
+    uLastForce := CallVistA('ORWPCE FORCE', [User.DUZ, Loc], s) and (s = '1');
     uLastForceLoc := Loc;
   end;
   Result := uLastForce;
 end;
 
-procedure LoadcboOther(Dest: TStrings; Location, fOtherApp: Integer);
-{loads items into combo box on Immunization screen}
+procedure LoadcboOther(Dest: TStrings; Location, fOtherApp: integer);
+{ loads items into combo box on Immunization screen }
 var
   IEN, RPC: string;
   TmpSL: TORStringList;
   i, j, idx, typ: integer;
-
+  Results: TStrings;
 begin
   TmpSL := TORStringList.Create;
   try
-    Idx := 0;
+    idx := 0;
     case fOtherApp of
-      PCE_IMM: begin typ := 1; RPC := 'ORWPCE GET IMMUNIZATION TYPE';           end;
-      PCE_SK:  begin typ := 2; RPC := 'ORWPCE GET SKIN TEST TYPE';              end;
-      PCE_PED: begin typ := 3; RPC := 'ORWPCE GET EDUCATION TOPICS';            end;
-      PCE_HF:  begin typ := 4; RPC := 'ORWPCE GET HEALTH FACTORS TY'; Idx := 1; end;
-      PCE_XAM: begin typ := 5; RPC := 'ORWPCE GET EXAM TYPE';                   end;
-      else     begin typ := 0; RPC := '';                                       end;
+      PCE_IMM:
+        begin
+          typ := 1;
+          RPC := 'ORWPCE GET IMMUNIZATION TYPE';
+        end;
+      PCE_SK:
+        begin
+          typ := 2;
+          RPC := 'ORWPCE GET SKIN TEST TYPE';
+        end;
+      PCE_PED:
+        begin
+          typ := 3;
+          RPC := 'ORWPCE GET EDUCATION TOPICS';
+        end;
+      PCE_HF:
+        begin
+          typ := 4;
+          RPC := 'ORWPCE GET HEALTH FACTORS TY';
+          idx := 1;
+        end;
+      PCE_XAM:
+        begin
+          typ := 5;
+          RPC := 'ORWPCE GET EXAM TYPE';
+        end;
+    else
+      begin
+        typ := 0;
+        RPC := '';
+      end;
     end;
     if typ > 0 then
     begin
       if idx = 0 then
       begin
         if (typ = 1) or (typ = 2) then
-          tCallV(TmpSL,RPC,[uEncPCEData.VisitDateTime])
+          CallVistA(RPC, [GetEncounterDateTime], TmpSL)
         else
-          tCallV(TmpSL,RPC,[nil]);
+          CallVistA(RPC, [nil], TmpSL);
       end
       else
-        tCallV(TmpSL,RPC,[idx]);
-      CallV('ORWPCE GET EXCLUDED', [Location, Typ]);
-      for i := 0 to RPCBrokerV.Results.Count-1 do
-      begin
-        IEN := piece(RPCBrokerV.Results[i],U,2);
-        idx := TmpSL.IndexOfPiece(IEN);
-        if idx >= 0 then
+        CallVistA(RPC, [idx], TmpSL);
+
+      Results := TStringList.Create;
+      try
+        CallVistA('ORWPCE GET EXCLUDED', [Location, typ], Results);
+        for i := 0 to Results.Count - 1 do
         begin
-          TmpSL.Delete(idx);
-          if fOtherApp = PCE_HF then
+          IEN := Piece(Results[i], U, 2);
+          idx := TmpSL.IndexOfPiece(IEN);
+          if idx >= 0 then
           begin
-            j := 0;
-            while (j < TmpSL.Count) do
+            TmpSL.Delete(idx);
+            if fOtherApp = PCE_HF then
             begin
-              if IEN = Piece(TmpSL[J],U,4) then
-                TmpSL.Delete(j)
-              else
-                inc(j);
+              j := 0;
+              while (j < TmpSL.Count) do
+              begin
+                if IEN = Piece(TmpSL[j], U, 4) then
+                  TmpSL.Delete(j)
+                else
+                  Inc(j);
+              end;
             end;
           end;
         end;
+      finally
+        Results.free;
       end;
+
     end;
     FastAssign(TmpSL, Dest);
   finally
-    TmpSL.Free;
+    TmpSL.free;
   end;
+end;
+
+procedure RemTaxWCodes(Dest: TStrings);
+begin
+  CallVistA('ORWPCE5 REMTAX', [], Dest);
+end;
+
+procedure TaxCodes(Dest: TStrings; Taxonomy: integer; Date: TFMDateTime);
+begin
+  CallVistA('ORWPCE5 TAXCODES', [Taxonomy, Date], Dest);
 end;
 
 {
@@ -1421,11 +1563,13 @@ end;
 }
 
 function GetLocSecondaryVisitCode(Loc: integer): char;
+var
+  s: String;
 begin
   if (Loc <> uLastIsClinicLoc) then
   begin
     uLastIsClinicLoc := Loc;
-    uLastIsClinic := (sCallV('ORWPCE ISCLINIC', [Loc]) = '1');
+    uLastIsClinic := CallVistA('ORWPCE ISCLINIC', [Loc], s) and ( s = '1');
   end;
   if uLastIsClinic then
     Result := 'I'
@@ -1434,73 +1578,59 @@ begin
 end;
 
 function GAFOK: boolean;
+var
+  s: String;
 begin
   if(not uGAFOKCalled) then
   begin
-    uGAFOK := (sCallV('ORWPCE GAFOK', []) = '1');
+    uGAFOK := CallVistA('ORWPCE GAFOK', [], s) and ( s = '1');
     uGAFOKCalled := TRUE;
   end;
   Result := uGAFOK;
 end;
 
 function MHClinic(const Location: integer): boolean;
+var
+  s: String;
 begin
   if GAFOK then
-    Result := (sCallV('ORWPCE MHCLINIC', [Location]) = '1')
+    Result := CallVistA('ORWPCE MHCLINIC', [Location], s) and (s = '1')
   else
     Result := FALSE;
 end;
 
-procedure RecentGAFScores(const Limit: integer);
+procedure RecentGAFScores(aDest: TStrings; const Limit: integer);
+var
+  aList: iORNetMult;
 begin
   if(GAFOK) then
   begin
-    LockBroker;
-    try
-      with RPCBrokerV do
-      begin
-        ClearParameters := True;
-        RemoteProcedure := 'ORWPCE LOADGAF';
-        Param[0].PType := list;
-        with Param[0] do
-        begin
-          Mult['"DFN"'] := Patient.DFN;
-          Mult['"LIMIT"'] := IntToStr(Limit);
-        end;
-        CallBroker;
-      end;
-    finally
-      UnlockBroker;
-    end;
+    newOrNetMult(aList);
+    aList.AddSubscript(['DFN'], Patient.DFN);
+    aList.AddSubscript(['LIMIT'], Limit);
+    CallVistA('ORWPCE LOADGAF',[aList], aDest);
   end;
 end;
 
 function SaveGAFScore(const Score: integer; GAFDate: TFMDateTime; Staff: Int64): boolean;
+var
+  sl:TStrings;
+  aList: IORNetMult;
 begin
   Result := FALSE;
   if(GAFOK) then
   begin
-    LockBroker;
+    NewORNetMult(aList);
+    aList.AddSubscript(['DFN'],Patient.DFN);
+    aList.AddSubscript(['GAF'], Score);
+    aList.AddSubscript(['DATE'], GAFDate);
+    aList.AddSubscript(['STAFF'], Staff);
+    sl := TSTringList.Create;
     try
-      with RPCBrokerV do
-      begin
-        ClearParameters := True;
-        RemoteProcedure := 'ORWPCE SAVEGAF';
-        Param[0].PType := list;
-        with Param[0] do
-        begin
-          Mult['"DFN"'] := Patient.DFN;
-          Mult['"GAF"'] := IntToStr(Score);
-          Mult['"DATE"'] := FloatToStr(GAFDate);
-          Mult['"STAFF"'] := IntToStr(Staff);
-        end;
-        CallBroker;
-      end;
-      if(RPCBrokerV.Results.Count > 0) and
-        (RPCBrokerV.Results[0] = '1') then
-        Result := TRUE;
+      CallVistA('ORWPCE SAVEGAF',[aList],sl);
+      Result := (sl.Count > 0) and (sl[0]='1');
     finally
-      UnlockBroker;
+      sl.Free;
     end;
   end;
 end;
@@ -1509,52 +1639,74 @@ function GAFURL: string;
 begin
   if(not uGAFURLChecked) then
   begin
-    uGAFURL := sCallV('ORWPCE GAFURL', []);
+    CallVistA('ORWPCE GAFURL', [], uGAFURL);
     uGAFURLChecked  := TRUE;
   end;
   Result := uGAFURL;
 end;
 
 function MHTestsOK: boolean;
+var
+  s: String;
 begin
   if(not uMHOKChecked) then
   begin
-    uMHOK := (sCallV('ORWPCE MHTESTOK', []) = '1');
+    uMHOK := CallVistA('ORWPCE MHTESTOK', [], s) and (s = '1');
     uMHOKChecked := TRUE;
   end;
   Result := uMHOK;
 end;
 
 function MHTestAuthorized(Test: string): boolean;
+var
+  s: String;
 begin
-  Result := (sCallV('ORWPCE MH TEST AUTHORIZED', [Test, User.DUZ]) = '1');
+  Result := CallVistA('ORWPCE MH TEST AUTHORIZED', [Test, User.DUZ], s) and (s = '1');
 end;
 
-function AnytimeEncounters: boolean;
+function AnytimeEncounters: Boolean;
+var
+  s: String;
 begin
   if uAnytimeEnc < 0 then
-    uAnytimeEnc := ord(sCallV('ORWPCE ANYTIME', []) = '1');
-  Result := BOOLEAN(uAnytimeEnc);
+  begin
+    CallVistA('ORWPCE ANYTIME', [], s);
+    uAnytimeEnc := ord(s = '1');
+  end;
+  Result := Boolean(uAnytimeEnc);
 end;
 
-function AutoCheckout(Loc: integer): boolean;
+function AutoCheckout(Loc: integer): Boolean;
+var
+  s: String;
 begin
-  if(uLastChkOutLoc <> Loc) then
+  if (uLastChkOutLoc <> Loc) then
   begin
     uLastChkOutLoc := Loc;
-    uLastChkOut := (sCallV('ORWPCE ALWAYS CHECKOUT', [Loc]) = '1');
+    uLastChkOut := CallVistA('ORWPCE ALWAYS CHECKOUT', [Loc], s) and
+      (s = '1');
   end;
   Result := uLastChkOut;
 end;
 
 { encounter capture functions ------------------------------------------------ }
 
-function RequireExposures(ANote, ATitle: Integer): Boolean;   {*RAB 3/22/99*}
+function RequireExposures(ANote, ATitle: integer): Boolean;
+{ *RAB 3/22/99* }
 { returns true if a progress note should require the expossure questions to be answered }
+var
+  s: String;
 begin
-  if ANote <= 0
-    then Result := Piece(sCallV('TIU GET DOCUMENT PARAMETERS', ['0', ATitle]), U, 15) = '1'
-    else Result := Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [ANote]), U, 15) = '1';
+  // if ANote <= 0
+  // then Result := Piece(sCallV('TIU GET DOCUMENT PARAMETERS', ['0', ATitle]), U, 15) = '1'
+  // else Result := Piece(sCallV('TIU GET DOCUMENT PARAMETERS', [ANote]), U, 15) = '1';
+
+  if ANote <= 0 then
+    Result := CallVistA('TIU GET DOCUMENT PARAMETERS', ['0', ATitle], s)
+  else
+    Result := CallVistA('TIU GET DOCUMENT PARAMETERS', [ANote], s);
+
+  Result := Result and (Piece(s, U, 15) = '1');
 end;
 
 function PromptForWorkload(ANote, ATitle: Integer; VisitCat: Char; StandAlone: boolean): Boolean;
@@ -1566,9 +1718,10 @@ begin
   Result := FALSE;
   if (VisitCat <> 'A') and (VisitCat <> 'I') and (VisitCat <> 'T') then exit;
   if ANote <= 0 then
-    X := sCallV('TIU GET DOCUMENT PARAMETERS', ['0', ATitle])
+    CallVistA('TIU GET DOCUMENT PARAMETERS', ['0', ATitle], x)
   else
-    X := sCallV('TIU GET DOCUMENT PARAMETERS', [ANote]);
+    CallVistA('TIU GET DOCUMENT PARAMETERS', [ANote], x);
+
   if(Piece(X, U, 14) = '1') then exit; // Suppress DX/CPT  param is TRUE - don't ask
   if StandAlone then
     Result := TRUE
@@ -1577,29 +1730,128 @@ begin
 end;
 
 function IsCancelOrNoShow(ANote: integer): boolean;
+var
+  s: String;
 begin
-  Result := (sCallV('ORWPCE CXNOSHOW', [ANote]) = '0');
+  Result := CallVistA('ORWPCE CXNOSHOW', [ANote], s) and (s = '0');
 end;
 
 function IsNonCountClinic(ALocation: integer): boolean;
+var
+  s: String;
 begin
-  Result := (sCallV('ORWPCE1 NONCOUNT', [ALocation]) = '1');
+  Result := CallVistA('ORWPCE1 NONCOUNT', [ALocation], s) and (s = '1');
+end;
+
+function CheckDailyHospitalization(APCEObject: TPCEData): Boolean;
+var
+  returnValue, FileCat, FileDate, visitString: string;
+begin
+  Result := True;
+  if APCEObject.IsSecondaryVisit then
+  begin
+    FileCat := GetLocSecondaryVisitCode(APCEObject.Location);
+    FileDate := FloatToStr(APCEObject.NoteDateTime);
+    visitString :=  IntToStr(APCEObject.Location) + ';' + FileDate + ';' + FileCat;
+  end
+  else exit;
+  CallVistA('TIU LINK SECONDARY VISIT',[Patient.DFN, APCEObject.NoteIEN, visitString], returnValue);
+  if Piece(returnValue, U, 1) = '0' then
+  begin
+     Result := False;
+     InfoBox(Piece(returnValue, U, 2), 'Document Linking Error', MB_OK or MB_ICONERROR);
+  end;
 end;
 
 function DefaultProvider(ALocation: integer; AUser: Int64; ADate: TFMDateTime;
                                              ANoteIEN: integer): string;
 begin
-  Result := sCallV('TIU GET DEFAULT PROVIDER', [ALocation, AUser, ADate, ANoteIEN]);
+  CallVistA('TIU GET DEFAULT PROVIDER', [ALocation, AUser, ADate, ANoteIEN], Result);
 end;
 
 function IsUserAProvider(AUser: Int64; ADate: TFMDateTime): boolean;
+var
+  s: String;
 begin
-  Result := (sCallV('TIU IS USER A PROVIDER?', [AUser, ADate]) = '1');
+  Result := CallVistA('TIU IS USER A PROVIDER?', [AUser, ADate], s) and (s = '1');
 end;
 
 function IsUserAUSRProvider(AUser: Int64; ADate: TFMDateTime): boolean;
+var
+  s: String;
 begin
-  Result := (sCallV('TIU IS USER A USR PROVIDER', [AUser, ADate]) = '1');
+  Result := CallVistA('TIU IS USER A USR PROVIDER', [AUser, ADate], s) and (s = '1');
+end;
+
+function GetUCUMInfo(DataType: string; Code: string): TUCUMInfo;
+var
+  key, data: string;
+  idx: integer;
+
+begin
+  if (DataType = '') or (Code = '') then
+    exit(nil);
+  key := DataType + U + Code;
+  idx := uMagData.IndexOfName(key);
+  if idx >= 0 then
+    Result := TUCUMInfo(uMagData.Objects[idx])
+  else
+  begin
+    CallVistA('ORWPCE5 MAGDAT', [DataType, Code], data);
+    if data = '' then
+      Result := nil
+    else
+      Result := TUCUMInfo.Create(data);
+    uMagData.AddPair(key, data, Result);
+  end;
+end;
+
+procedure UpdateUCUMInfo(DataType, Code, Value: string);
+var
+  key, temp: string;
+  idx: integer;
+  info: TUCUMInfo;
+
+begin
+  if (DataType = '') or (Code = '') then
+    exit;
+  key := DataType + U + Code;
+  if Strip(Value, U) = '' then
+    Value := '';
+  idx := uMagData.IndexOfName(key);
+  if idx >= 0 then
+  begin
+    if uMagData.ValueFromIndex[idx] <> Value then
+    begin
+      info := TUCUMInfo(uMagData.Objects[idx]);
+      CallVistA('ORWPCE5 MAGDAT', [DataType, Code], temp);
+      uMagData.ValueFromIndex[idx] := temp;
+      if temp = '' then
+      begin
+        if assigned(info) then
+        begin
+          info.Free;
+          uMagData.Objects[idx] := nil;
+        end;
+      end
+      else if assigned(info) then
+        info.Update(temp)
+      else
+        uMagData.Objects[idx] := TUCUMInfo.Create(Value);
+    end;
+  end
+  else
+    uMagData.AddPair(key, Value, TUCUMInfo.Create(Value));
+end;
+
+procedure UpdateMagUCUMData(DataType, Code, Value: string);
+begin
+
+end;
+
+function GetMagUCUMData(DataType: string; Code: string): string;
+begin
+  Result := '';
 end;
 
 //function HNCOK: boolean;
@@ -1614,6 +1866,7 @@ initialization
   uLastEncDt    := 0;
   uVTypeLastLoc := 0;
   uVTypeLastDate := 0;
+  uMagData       := TStringList.Create;
   uDiagnoses     := TStringList.Create;
   uExams         := TStringList.Create;
   uHealthFactors := TStringList.Create;
@@ -1624,8 +1877,10 @@ initialization
   uVisitTypes    := TStringList.Create;
   uVTypeForLoc   := TStringList.Create;
   uProblems      := TStringList.Create;
+  uDiagnosesTextList := TStringList.Create;
 
 finalization
+  KillObj(@uMagData, True);
   uDiagnoses.Free;
   uExams.Free;
   uHealthFactors.Free;
@@ -1636,7 +1891,7 @@ finalization
   uVisitTypes.Free;
   uVTypeForLoc.Free;
   uProblems.Free;
+  uDiagnosesTextList.Free;
   KillObj(@uModifiers);
   KillObj(@uHasCPT);
-
 end.

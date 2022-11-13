@@ -64,6 +64,8 @@ type
     FViewName: string;
     FCancel: boolean;
     FOrderContainsObjects: boolean;
+    FReason : String; //ADDED for NSR 20071211 by KCH on 09/04/2015
+    FRemComment : String; //ADDED for NSR 20071211 by KCH on 11/23/2015
     function FindResponseByIEN(APromptIEN, AnInstance: Integer): TResponse;
     function GetOrderText: string;
     function IENForPrompt(const APromptID: string): Integer;
@@ -89,6 +91,7 @@ type
     function InstanceCount(const APromptID: string): Integer;
     function IValueFor(const APromptID: string; AnInstance: Integer): string;
     function NextInstance(const APromptID: string; LastInstance: Integer): Integer;
+    function IValueExists(const APromptID, AnIValue: string): boolean; // DRM - I10010348FY16/525455 - 2017/6/20
     function TotalRows: Integer;
     function OrderCRC: string;
     procedure Remove(const APromptID: string; AnInstance: Integer);
@@ -117,6 +120,8 @@ type
     property TheList:      TList       read FResponseList   write FResponseList;
     property Cancel:       boolean     read FCancel         write FCancel;
     property OrderContainsObjects: boolean read FOrderContainsObjects write FOrderContainsObjects;
+    property Reason: String read FReason write FReason;//ADDED for NSR 20071211 by KCH on 09/04/2015
+    property RemComment: String read FRemComment write FRemComment;//ADDED for NSR 20071211 by KCH on 09/04/2015
   end;
 
   TCallOnExit = procedure;
@@ -145,11 +150,11 @@ type
       Y: Integer);
     procedure tmrBringToFrontTimer(Sender: TObject);
   private
+    FMergeOrderChecks: boolean;
     FIsSupply:  Boolean;
     FAllowQO:      Boolean;
     FAutoAccept:   Boolean;
     FClosing:      Boolean;
-    FChanging:     Boolean;
     FDialogIEN:    Integer;
     FDisplayGroup: Integer;
     FFillerID:     string;
@@ -164,7 +169,6 @@ type
     FTestMode:     Boolean;
     FDlgFormID:    Integer;
     FDfltCopay:    String;
-    FEvtForPassDischarge:  Char;
     FEvtID    :    Integer;
     FEvtType  :    Char;
     FEvtName  :    string;
@@ -183,7 +187,12 @@ type
     procedure SetDisplayGroup(Value: Integer);
     procedure SetFillerID(const Value: string);
     procedure DoSetFontSize( FontSize: integer);
+    procedure BuildOrderChecks(var aReturnList: TStringList);
+    function OverrideFunction(aReturnList: TStringList; aOverrideType: String;
+      aOverrideReason: String = ''; aOverrideComment: String = ''): boolean;
   protected
+    FEvtForPassDischarge: Char;
+    FChanging: Boolean;
     function LESValidationCheck: boolean;
     procedure InitDialog; virtual;
     procedure SetDialogIEN(Value: Integer); virtual;
@@ -191,6 +200,7 @@ type
     procedure updateSig; virtual;
     function ValidSave: Boolean;
     procedure ShowOrderMessage(Show: boolean); virtual;
+    property MergeOrderChecks: boolean read FMergeOrderChecks write FMergeOrderChecks;
     procedure DoShow; override;
   public
     function OrderForInpatient: Boolean;
@@ -199,7 +209,7 @@ type
     procedure PreserveControl(AControl: TControl);
     procedure SetupDialog(OrderAction: Integer; const ID: string); virtual;
     procedure setTabToDiet; virtual;
-    procedure SetFontSize( FontSize: integer); virtual;
+    procedure SetFontSize(FontSize: integer); virtual;
     procedure SetKeyVariables(const VarStr: string);
     procedure TabClose(var CanClose: Boolean);
     property AllowQuickOrder: Boolean   read FAllowQO      write FAllowQO;
@@ -259,7 +269,7 @@ implementation
 uses fOCAccept, uODBase, rCore, rMisc, fODMessage,
   fTemplateDialog, uEventHooks, uTemplates, rConsults,fOrders,uOrders,
   fFrame, uTemplateFields, fClinicWardMeds, fODDietLT, rODDiet, VAUtils, fODDiet,
-  System.Types, uOwnerWrapper;
+  System.Types, uOwnerWrapper, fODAuto;
 
 var //rtw
  UAPCanceled: boolean; //rtw
@@ -392,7 +402,6 @@ begin
       with ACtrlInit do
       begin
         Name := Copy(Src[i], 2, Length(Src[i]));
-        List := TStringList.Create;
         Inc(i);
         while (i < Src.Count) and (CharAt(Src[i], 1) <> '~') do
         begin
@@ -414,7 +423,14 @@ end;
 
 procedure TCtrlInits.LoadDefaults(Src: TStrings);
 { loads control initialization information for the dialog }
+var
+  i: integer;
+
 begin
+  with FDfltList do
+    for i := 0 to Count - 1 do
+  	  if assigned(Items[i]) then
+	      TObject(Items[i]).Free;
   FDfltList.Clear;
   ExtractInits(Src, FDfltList);
 end;
@@ -476,6 +492,7 @@ begin
   end
   else if AControl is TCheckListBox then with TCheckListBox(AControl) do
        begin
+         IntegralHeight := True; // RTC 1299114
          for i := 0 to CtrlInit.List.Count - 1 do
            begin
              TCheckListBox(AControl).Items.Add(Piece(CtrlInit.List[i], U, 2));
@@ -567,8 +584,9 @@ begin
   FPrompts := TList.Create;
   FOrderChecks := TStringList.Create;
   FEventType := #0;
-  FParentEvent := TParentEvent.Create;
+  FParentEvent := TParentEvent.Create(0);
   FLogTime := 0;
+  FReason := '';
 end;
 
 destructor TResponses.Destroy;
@@ -787,6 +805,21 @@ begin
   with FResponseList do for i := 0 to Count - 1 do with TResponse(Items[i]) do
     if (PromptID = APromptID) then Inc(Result);
 end;
+
+// DRM - I10010348FY16/525455 - 2017/6/20
+function TResponses.IValueExists(const APromptID, AnIValue: string): boolean; // added by DRM for I10010348FY16 on 2017/6/22
+var
+  ii: integer;
+begin
+  Result := False;
+  with FResponseList do for ii := 0 to Count - 1 do with TResponse(Items[ii]) do
+    if (PromptID = APromptID) and (IValue = AnIValue) then
+    begin
+      Result := True;
+      Break;
+    end;
+end;
+// DRM ---
 
 function TResponses.TotalRows: Integer;
 var
@@ -1113,7 +1146,7 @@ begin
       APtEvtPtr   := IntToStr(EventExist(Patient.DFN, FEventIFN));
       PTEventPtr  := APtEvtPtr;
       //PutNewOrder(AnOrder, ConstructOrder, OrderSource, IMOLoc);
-      PutNewOrder(AnOrder, ConstructOrder, OrderSource);
+      PutNewOrder(AnOrder, ConstructOrder, OrderSource);//Modified for NSR 20071211 by KCH on 11/23/2015
       if not SaveAsCurrent then
       begin
         AnOrder.EventPtr  := PTEventPtr;
@@ -1123,7 +1156,7 @@ begin
     else
     begin
       //PutNewOrder(AnOrder, ConstructOrder, OrderSource, IMOLoc);
-      PutNewOrder(AnOrder, ConstructOrder, OrderSource);
+      PutNewOrder(AnOrder, ConstructOrder, OrderSource);//Modified for NSR 20071211 by KCH on 11/23/2015
       if not SaveAsCurrent then
       begin
         if (FEventIFN > 0) and (FParentEvent.ParentIFN > 0) then
@@ -1282,6 +1315,67 @@ begin
 end;
 
 { Private calls }
+procedure TfrmODBase.BuildOrderChecks(var aReturnList: TStringList);
+var
+  StartDtTm, x: string;
+  OIList, OCTemp: TStringList;
+begin
+  if not assigned(aReturnList) then
+    Exit;
+  OCTemp := nil;
+  try
+    if FMergeOrderChecks and (Responses.OrderChecks.count > 0) then
+    begin
+      OCTemp := TStringList.Create;
+      OCTemp.Assign(Responses.OrderChecks);
+    end;
+    Responses.OrderChecks.Clear;
+    OIList := TStringList.Create;
+    try
+      StatusText('Order Checking...');
+      Responses.BuildOCItems(OIList, StartDtTm, FillerID);
+      x := Responses.IValueFor('REFILLS', i) + U + Responses.IValueFor('PICKUP',
+        i) + U + Responses.IValueFor('SUPPLY', i) + U +
+        Responses.IValueFor('QTY', i);
+      OrderChecksOnAccept(Responses.OrderChecks, FillerID, StartDtTm, OIList,
+        DupORIFN, '0', x, Self is TfrmODAuto);
+      if FMergeOrderChecks and assigned(OCTemp) then
+        Responses.OrderChecks.AddStrings(OCTemp);
+      aReturnList.Assign(Responses.OrderChecks);
+    finally
+      OIList.Free;
+    end;
+  finally
+    FreeAndNil(OCTemp);
+  end;
+end;
+
+function TfrmODBase.OverrideFunction(aReturnList: TStringList;
+  aOverrideType: String; aOverrideReason: String = '';
+  aOverrideComment: String = ''): boolean;
+var
+  OrdableItemIEN: String;
+begin
+  result := False;
+
+  if CompareText(aOverrideType, 'SAVE') = 0 then
+  begin
+    Responses.Reason := aOverrideReason;
+    Responses.RemComment := aOverrideComment;
+  end
+  else
+  begin
+    // only build override section if auto accept order
+    if FAutoAccept then
+    begin
+      // Grab the overrider reasons and comments based on orderable id
+      OrdableItemIEN := Responses.IValueFor('ORDERABLE', 1);
+      GetAllergyReasonList(aReturnList, StrToInt(OrdableItemIEN),
+        aOverrideType);
+      result := True;
+    end;
+  end;
+end;
 
 procedure TfrmODBase.ClearDialogControls;
 var
@@ -1325,6 +1419,8 @@ end;
 procedure TfrmODBase.InitDialog;
 begin
   ClearDialogControls;
+  ClearAllergyOrderCheckCache;
+  uAllergiesChanged := False;
   Responses.Clear;
   AcceptOK := False;
   AbortOrder := False;
@@ -1350,12 +1446,26 @@ begin
 end;
 
 procedure TfrmODBase.ShowOrderMessage(Show: boolean);
+var
+  t, btm: integer;
+
 begin
   if Show then
   begin
     pnlMessage.Visible := True;
     pnlMessage.BringToFront;
     memMessage.TabStop := True;
+    if memOrder.Visible and (pnlMessage.Top < memOrder.BoundsRect.Bottom) then
+    begin
+      btm := memOrder.BoundsRect.Bottom + pnlMessage.Height + 4;
+      if ClientHeight < btm then
+      begin
+        t := memOrder.Top;
+        ClientHeight := btm;
+        memOrder.Top := t; // in case of alignments/anchors moves memOrder
+      end;
+      pnlMessage.Top := memOrder.BoundsRect.Bottom + 2;
+    end;
   end
   else
   begin
@@ -1393,6 +1503,8 @@ begin
   FOrderAction := OrderAction;
   AbortOrder := False;
   SetTemplateDialogCanceled(False);   //wat/jh CQ 20061
+  ClearAllergyOrderCheckCache;
+  uAllergiesChanged := False;
   case OrderAction of
   ORDER_NEW:   {nothing};
   ORDER_EDIT:  Responses.SetEditOrder(ID);
@@ -1472,6 +1584,7 @@ end;
 procedure TfrmODBase.FormCreate(Sender: TObject);
 begin
   inherited;
+  FMergeOrderChecks := False;
   frmODBase   := Self;
   AcceptOK    := False;
   AbortOrder  := False;
@@ -1513,6 +1626,7 @@ var
   o: TComponent;
 
 begin
+  ClearAllergyOrderCheckCache; // in case the dialog was never shown
   frmODBase := nil;
   FCtrlInits.Free;
   FResponses.Free;
@@ -1537,26 +1651,22 @@ begin
 end;
 
 { Accept & Quit Buttons }
-
-function TfrmODBase.AcceptOrderChecks: Boolean;
+function TfrmODBase.AcceptOrderChecks: boolean;
 { returns True if order was accepted with order checks, false if order should be cancelled }
 var
-  StartDtTm: string;
   OIList: TStringList;
 begin
-  Result := True;
-  Responses.OrderChecks.Clear;
-  if not OrderChecksEnabled then Exit;
+  result := True;
+  if not OrderChecksEnabled then
+    Exit;
+  DupORIFN := '';
+  StatusText('');
   OIList := TStringList.Create;
   try
-    StatusText('Order Checking...');
-    Responses.BuildOCItems(OIList, StartDtTm, FillerID);
-    OrderChecksOnAccept(Responses.OrderChecks, FillerID, StartDtTm, OIList, DupORIFN,'0');
-    DupORIFN := '';
-    StatusText('');
-    Result :=  AcceptOrderWithChecks(Responses.OrderChecks);
+    BuildOrderChecks(OIList);
+    result := AcceptOrderWithChecks(OIList, BuildOrderChecks, OverrideFunction);
   finally
-    OIList.Free;
+    FreeAndNil(OIList);
   end;
 end;
 
@@ -1577,7 +1687,8 @@ begin
   Validate(ErrMsg);
   if Length(ErrMsg) > 0 then
   begin
-    InfoBox(TX_NO_SAVE + ErrMsg, TX_NO_SAVE_CAP, MB_OK);
+    if Trim(ErrMsg) <> TX_INVALID_NO_MESSAGE then
+      InfoBox(TX_NO_SAVE + ErrMsg, TX_NO_SAVE_CAP, MB_OK);
     Result := False;
     Exit;
   end;
@@ -1663,13 +1774,13 @@ var
   x, CxMsg: string;
   List: TStringList;
   Value: Integer;
-
 begin
   if FAcceptingOrder then
     Exit;
   FTriedToClose := False;
   FAcceptingOrder := True;
   try
+
     AcceptOK := False;
     CIDCOkToSave := False;
     alreadyClosed := False;
@@ -1687,7 +1798,7 @@ begin
         SaveAsCurrent := True;
       end;
     end;
-    if Responses.Dialog = 'FHW8' then
+    if (Responses.Dialog = 'FHW8') and Patient.Inpatient then
     begin
       List := TStringList.Create;
       try
@@ -1697,8 +1808,6 @@ begin
           if Piece(x, #13, 1) = 'Current Diet:  ' then
           begin
             List.Add('Continue to write diet order^true');
-            // value := fInfoBoxWithBtnControl.processMessage('New Diet Order Required',
-            // 'Active TubeFeeding Order must have an active diet order', list);
             uInfoBoxWithBtnControls.DefMessageDlg
               ('Active TubeFeeding Order must have an active diet order',
               mtConfirmation, List, 'New Diet Order Required', False);
@@ -1709,13 +1818,11 @@ begin
             CheckForAutoDCDietOrders(Self.EvtID, Self.DisplayGroup, x, CxMsg,
               nil, True);
 
-            List.Add('Continue CURRENT Diet Order (shown above)^false');
-            List.Add('Write NEW Diet Order^false');
-            // value := fInfoBoxWithBtnControl.processMessage('Diet Order Required',
-            // '"A tubefeeding order must also have an active diet order' + #9 +  CxMsg, list);
+            List.Add('Continue CURRENT Diet Order^false');
+            List.Add('Write NEW Diet ORder^false');
             Value := uInfoBoxWithBtnControls.DefMessageDlg
-              ('A tubefeeding order must also have an active diet order' + CRLF
-              + CxMsg, mtConfirmation, List, 'Diet Order Required', True);
+              ('"A tubefeeding order must also have an active diet order' + #9 +
+              CxMsg, mtConfirmation, List, 'Diet Order Required', True);
             if Value = 1 then
               keepOpen := True;
           end;
@@ -1771,7 +1878,7 @@ begin
           begin
             if Responses.Dialog = 'FHW8' then
               setTabToDiet;
-            InitDialog;
+            InitDialog
           end
           else
           begin
@@ -1834,6 +1941,7 @@ begin
     end; { if ValidSave }
     if SaveAsCurrent then
       SaveAsCurrent := False;
+
   finally
     FAcceptingOrder := False;
     if FTriedToClose then
@@ -1844,7 +1952,7 @@ end;
 procedure TfrmODBase.cmdQuitClick(Sender: TObject);
 begin
   inherited;
-  FFromQuit := True;
+  FFRomQuit := True;
   UAPCanceled := True;  //rtw
   Close;
 end;
@@ -1855,6 +1963,7 @@ begin
   // unlock an order that is being edited if accept wasn't pressed
   //   this unlock is currently done in ActivateOrderDialog
   //with Responses do if (Length(EditOrder) > 0) and (not FAcceptOK) then UnlockOrder(EditOrder);
+  ClearAllergyOrderCheckCache;
   PopKeyVars;
   SaveUserBounds(Self);
   FClosing := True;

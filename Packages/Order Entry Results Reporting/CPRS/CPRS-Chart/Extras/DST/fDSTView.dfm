@@ -15,7 +15,7 @@ inherited frmDSTView: TfrmDSTView
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 1
+    TabOrder = 0
     object btnOK: TButton
       AlignWithMargins = True
       Left = 790
@@ -58,7 +58,8 @@ inherited frmDSTView: TfrmDSTView
     Width = 868
     Height = 464
     Align = alClient
-    TabOrder = 0
+    TabOrder = 1
+    SelectedEngine = EdgeIfAvailable
     OnNavigateError = wbInternetExplorerNavigateError
     ExplicitWidth = 694
     ExplicitHeight = 477

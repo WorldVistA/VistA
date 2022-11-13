@@ -27,6 +27,10 @@ type
     mnuPopPatient: TPopupMenu;
     mnuPatientID: TMenuItem;
     chkPcmm: TCheckBox;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Bevel1: TBevel;
     procedure FormCreate(Sender: TObject);
     procedure chkPersonalClick(Sender: TObject);
     procedure chkPcmmClick(Sender: TObject);
@@ -139,7 +143,7 @@ begin
   if chkPcmm.Checked then
   begin
     rpcGetPcmmTeams(lstPTeams);
-    if Piece(lstPTeams[0], '^', 1) <> ''  then
+    if (lstPTeams.Count > 0) and (Piece(lstPTeams[0], '^', 1) <> '')  then
       AddPcmmTeams(lstTeams.Items, lstPTeams)
   end;
   lstTeams.ItemIndex := -1;

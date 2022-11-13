@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ORCtrls, StdCtrls, ExtCtrls, Menus, ComCtrls, uTemplateFields, ORFn,
-  ToolWin, MenuBar, ORClasses, ORDtTm, fBase508Form, VA508AccessibilityManager;
+  ToolWin, ORClasses, ORDtTm, fBase508Form, VA508AccessibilityManager,
+  System.Actions, Vcl.ActnList;
 
 type
   TfrmTemplateFieldEditor = class(TfrmBase508Form)
@@ -32,18 +33,11 @@ type
     reNotes: TRichEdit;
     btnApply: TButton;
     btnPreview: TButton;
-    mnuMain: TMainMenu;
-    mnuAction: TMenuItem;
-    mnuNew: TMenuItem;
-    mnuCopy: TMenuItem;
     cbHide: TCheckBox;
     pnlTop: TPanel;
-    MenuBar1: TMenuBar;
     btnNew: TButton;
     btnCopy: TButton;
-    mnuDelete: TMenuItem;
     btnDelete: TButton;
-    mnuPreview: TMenuItem;
     popText: TPopupMenu;
     mnuBPUndo: TMenuItem;
     N8: TMenuItem;
@@ -100,6 +94,28 @@ type
     N14: TMenuItem;
     mnuInsertTemplateField: TMenuItem;
     lblCommCareLock: TLabel;
+    btnErrorCheck: TButton;
+    N1: TMenuItem;
+    mnuErrorCheck2: TMenuItem;
+    alMain: TActionList;
+    acNew: TAction;
+    acCopy: TAction;
+    acDelete: TAction;
+    acCheckForErrors: TAction;
+    acCheckAll: TAction;
+    acPreview: TAction;
+    popMain: TPopupMenu;
+    New1: TMenuItem;
+    Copy1: TMenuItem;
+    Delete1: TMenuItem;
+    N5: TMenuItem;
+    CheckforErrors1: TMenuItem;
+    ErrorCheckAllTemplateFields1: TMenuItem;
+    N6: TMenuItem;
+    Preview1: TMenuItem;
+    ToolBar1: TToolBar;
+    acAction: TAction;
+    tbMnuAction: TToolButton;
     procedure cbxObjsNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure FormCreate(Sender: TObject);
@@ -111,7 +127,6 @@ type
     procedure cbxDefaultChange(Sender: TObject);
     procedure edtLMTextChange(Sender: TObject);
     procedure cbActiveClick(Sender: TObject);
-    procedure mnuNewClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -119,12 +134,7 @@ type
     procedure reItemsChange(Sender: TObject);
     procedure cbHideClick(Sender: TObject);
     procedure edtNameExit(Sender: TObject);
-    procedure mnuCopyClick(Sender: TObject);
-    procedure mnuDeleteClick(Sender: TObject);
-    procedure btnPreviewClick(Sender: TObject);
-    procedure mnuActionClick(Sender: TObject);
     procedure cbRequiredClick(Sender: TObject);
-    procedure pnlObjsResize(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cbxObjsSynonymCheck(Sender: TObject; const Text: String;
       var IsSynonym: Boolean);
@@ -158,6 +168,14 @@ type
     procedure ControlExit(Sender: TObject);
     procedure reNotesKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+//    procedure mnuErrorCheckAllTemplateFieldsClick(Sender: TObject);
+    procedure acNewExecute(Sender: TObject);
+    procedure acCheckAllExecute(Sender: TObject);
+    procedure acPreviewExecute(Sender: TObject);
+    procedure acActionExecute(Sender: TObject);
+    procedure acCopyExecute(Sender: TObject);
+    procedure acDeleteExecute(Sender: TObject);
+    procedure acCheckForErrorsExecute(Sender: TObject);
   private
     CopyFld, FFld: TTemplateField;
     FUpdating: boolean;
@@ -185,7 +203,7 @@ function EditDialogFields: boolean;
 implementation
 
 uses rTemplates, fTemplateDialog, Clipbrd, uSpell, uConst, System.UITypes,
-     fTemplateFields, VAUtils;
+     fTemplateFields, VAUtils, dShared, FTemplateReport;
 
 {$R *.DFM}
 
@@ -559,6 +577,7 @@ begin
         Child.Left := Child.Left - Overage;
     end;
   end;
+  EnableButtons;
 end;
 
 procedure TfrmTemplateFieldEditor.cbxObjsChange(Sender: TObject);
@@ -699,7 +718,7 @@ begin
   end;
 end;
 
-procedure TfrmTemplateFieldEditor.mnuNewClick(Sender: TObject);
+procedure TfrmTemplateFieldEditor.acNewExecute(Sender: TObject);
 begin
   SetFld(TTemplateField.Create(nil));
   if(assigned(FFld)) then
@@ -721,7 +740,6 @@ begin
   else
     UpdateControls;
 end;
-
 procedure TfrmTemplateFieldEditor.btnOKClick(Sender: TObject);
 begin
   SaveChanges;
@@ -835,13 +853,13 @@ begin
   end;
 end;
 
-procedure TfrmTemplateFieldEditor.mnuCopyClick(Sender: TObject);
+procedure TfrmTemplateFieldEditor.acCopyExecute(Sender: TObject);
 begin
   if assigned(FFld) then
   begin
     CopyFld := FFld;
     try
-      mnuNewClick(nil);
+      acNew.Execute;
     finally
       CopyFld := nil;
     end;
@@ -854,7 +872,7 @@ begin
   EnableButtons;
 end;
 
-procedure TfrmTemplateFieldEditor.mnuDeleteClick(Sender: TObject);
+procedure TfrmTemplateFieldEditor.acDeleteExecute(Sender: TObject);
 var
   idx: integer;
   ok: boolean;
@@ -898,7 +916,7 @@ begin
           idx := cbxObjs.ItemIndex;
           cbxObjs.ItemIndex := -1;
           cbxObjs.Items.Delete(idx);
-          if cbxObjs.Items[0] = LLS_LINE then
+          if (cbxObjs.Items.Count > 1) and (cbxObjs.Items[0] = LLS_LINE) then
           begin
             cbxObjs.Items.Delete(1);
             cbxObjs.Items.Delete(0);
@@ -934,7 +952,7 @@ begin
   end;
 end;
 
-procedure TfrmTemplateFieldEditor.btnPreviewClick(Sender: TObject);
+procedure TfrmTemplateFieldEditor.acPreviewExecute(Sender: TObject);
 var
   TmpSL: TStringList;
 
@@ -977,25 +995,38 @@ begin
     HasAccess := FFld.CommunityCare
   else
     HasAccess := False;
-  Result := not HasAccess;
-  ApplyCommunityCareLock(not HasAccess, pnlRight);
-  btnOK.Enabled := not HasAccess;
-  btnApply.Enabled := not HasAccess;
+ Result := not HasAccess;
+ if HasAccess then
+   ApplyCommunityCareLock(not HasAccess, pnlRight);
+ btnOK.Enabled := not HasAccess;
+ btnApply.Enabled := not HasAccess;
 end;
 
 procedure TfrmTemplateFieldEditor.EnableButtons;
 begin
-  btnCopy.Enabled := assigned(FFld) and not FFld.CommunityCare;
-  mnuCopy.Enabled := btnCopy.Enabled;
-  btnDelete.Enabled := btnCopy.Enabled; // (assigned(FFld) and FFld.NewField);
-  mnuDelete.Enabled := btnDelete.Enabled;
-  btnPreview.Enabled := assigned(FFld) and (FFld.FldType <> dftUnknown);
-  mnuPreview.Enabled := btnPreview.Enabled;
+  acCopy.Enabled := assigned(FFld) and not FFld.CommunityCare;
+//  btnCopy.Enabled := assigned(FFld) and not FFld.CommunityCare;
+//  mnuCopy.Enabled := btnCopy.Enabled;
+  acDelete.Enabled := btnCopy.Enabled; // (assigned(FFld) and FFld.NewField);
+//  btnDelete.Enabled := btnCopy.Enabled; // (assigned(FFld) and FFld.NewField);
+//  mnuDelete.Enabled := btnDelete.Enabled;
+  acPreview.Enabled := assigned(FFld) and (FFld.FldType <> dftUnknown);
+//  btnPreview.Enabled := assigned(FFld) and (FFld.FldType <> dftUnknown);
+//  mnuPreview.Enabled := btnPreview.Enabled;
+  acCheckForErrors.Enabled := assigned(FFld) and (FFld.FldType <> dftUnknown);
+//  btnErrorCheck.Enabled := assigned(FFld) and (FFld.FldType <> dftUnknown);
+//  mnuErrorCheck.Enabled := btnErrorCheck.Enabled;
+  mnuErrorCheck2.Enabled := btnErrorCheck.Enabled;
 end;
 
-procedure TfrmTemplateFieldEditor.mnuActionClick(Sender: TObject);
+procedure TfrmTemplateFieldEditor.acActionExecute(Sender: TObject);
+var
+  p: TPoint;
 begin
+  inherited;
   EnableButtons;
+  p := tbMnuAction.ClientToScreen(TPoint.Create(0,0));
+  popMain.Popup(p.X,p.Y + pnlTop.Height);
 end;
 
 procedure TfrmTemplateFieldEditor.cbRequiredClick(Sender: TObject);
@@ -1005,11 +1036,6 @@ begin
     FFld.Required := cbRequired.Checked;
     cbRequired.Checked := FFld.Required;
   end;
-end;
-
-procedure TfrmTemplateFieldEditor.pnlObjsResize(Sender: TObject);
-begin
-  btnPreview.Left := pnlRight.Left;
 end;
 
 procedure TfrmTemplateFieldEditor.FormDestroy(Sender: TObject);
@@ -1117,7 +1143,7 @@ end;
 procedure TfrmTemplateFieldEditor.mnuBPCutClick(Sender: TObject);
 var
   ce: TCustomEdit;
-
+  
 begin
   ce := GetPopupControl;
   if assigned(ce) then
@@ -1127,7 +1153,7 @@ end;
 procedure TfrmTemplateFieldEditor.mnuBPCopyClick(Sender: TObject);
 var
   ce: TCustomEdit;
-
+  
 begin
   ce := GetPopupControl;
   if assigned(ce) then
@@ -1137,7 +1163,7 @@ end;
 procedure TfrmTemplateFieldEditor.mnuBPPasteClick(Sender: TObject);
 var
   ce: TCustomEdit;
-
+  
 begin
   ce := GetPopupControl;
   if assigned(ce) then
@@ -1205,7 +1231,7 @@ procedure TfrmTemplateFieldEditor.cbxObjsKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   if(Key = VK_DELETE) and btnDelete.Enabled then
-    mnuDeleteClick(btnDelete);
+    acDelete.Execute;
 end;
 
 procedure TfrmTemplateFieldEditor.edtTextLenChange(Sender: TObject);
@@ -1393,7 +1419,7 @@ begin
   iCon := GetPopupControl;
   if iCon <> nil then
     begin
-    if iCon.Name <> ActiveControl.Name then
+    if (not Assigned(ActiveControl)) or (iCon.Name <> ActiveControl.Name) then
       begin
       ActiveControl := iCon;
       iCon.SelStart := iCon.SelLength;
@@ -1419,6 +1445,31 @@ begin
     frmTemplateFields.Show;
     end
 
+end;
+
+procedure TfrmTemplateFieldEditor.acCheckAllExecute(Sender: TObject);
+begin
+  inherited;
+  RunTemplateErrorReport(True);
+end;
+
+procedure TfrmTemplateFieldEditor.acCheckForErrorsExecute(Sender: TObject);
+var
+  sl: TStringList;
+begin
+  sl := TStringList.Create;
+  try
+    fFld.ErrorCheckText(sl);
+    if pos('|', sl.Text) > 0 then
+      InfoBox('Patient Data Object Delimiter "|" found.' + CRLF +
+        'Patient Data Objects do not function inside Template Fields.','Error',
+        MB_OK or MB_ICONINFORMATION)
+    else
+      if BoilerplateTemplateFieldsOK(sl.Text, 'OK') then
+        InfoBox('No Errors Found.','Error Check', MB_OK or MB_ICONINFORMATION);
+  finally
+    sl.free;
+  end;
 end;
 
 procedure TfrmTemplateFieldEditor.ControlExit(Sender: TObject);

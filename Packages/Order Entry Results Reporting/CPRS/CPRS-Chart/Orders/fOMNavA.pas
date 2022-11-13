@@ -352,7 +352,8 @@ begin
   FSelectList.Free;
   FQuickBitmap.Free;
   DestroyingOrderMenu;
-  if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
+  if assigned(frmOrders) and (frmOrders.TheCurrentView<>nil)
+    and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
     and (IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN)) then
     SendMessage(frmOrders.handle,UM_EVENTOCCUR,0,0);
 end;
@@ -502,7 +503,7 @@ begin
          begin
            FDelayEvent.EventType := #0;
            FDelayEvent.EventIFN  := 0;
-           FDelayEvent.TheParent := TParentEvent.Create;
+           FDelayEvent.TheParent := TParentEvent.Create(0);
            FDelayEvent.EventName := '';
            FDelayEvent.PtEventIFN := 0;
          end;
@@ -527,7 +528,7 @@ begin
          begin
            FDelayEvent.EventType := #0;
            FDelayEvent.EventIFN  := 0;
-           FDelayEvent.TheParent := TParentEvent.Create;
+           FDelayEvent.TheParent := TParentEvent.Create(0);
            FDelayEvent.EventName := '';
            FDelayEvent.PtEventIFN := 0;
          end;
@@ -578,7 +579,7 @@ begin
       begin
         FDelayEvent.EventType := #0;
         FDelayEvent.EventIFN  := 0;
-        FDelayEvent.TheParent := TParentEvent.Create;
+        FDelayEvent.TheParent := TParentEvent.Create(0);
         FDelayEvent.EventName := '';
         FDelayEvent.PtEventIFN := 0;
       end;
@@ -652,7 +653,7 @@ begin
       begin
         FDelayEvent.EventType := #0;
         FDelayEvent.EventIFN  := 0;
-        FDelayEvent.TheParent := TParentEvent.Create;
+        FDelayEvent.TheParent := TParentEvent.Create(0);
         FDelayEvent.EventName := '';
         FDelayEvent.PtEventIFN := 0;
       end;

@@ -9,7 +9,7 @@ Const
  UPDATE THE SCRIPT VERSION: This will be used to update this file
  Please do not use 1, this is the base version.  
 ***************************************************************/
-	VA508_Script_Version = 1
+	VA508_Script_Version = 15
 ; import DELPHI framework customizations. 
 import "VA508JAWS.jsd" 
 
@@ -22,9 +22,9 @@ as outlined in the VA508ScriptList.ini. Please do not remove
 ; Standar constants 
 include "hjconst.jsh" 
 Globals
-	handle gprevFocus ,
+	handle gprevFocus,
 	string gs_DelphiApplicationName,
-	int gbVA508suppressEcho ,
+	int gbVA508suppressEcho,
 	collection Delphi_AppDefined 
 
 
@@ -47,8 +47,8 @@ Globals
 Void Function SiteCodeInitialize ()
 ; Below is commented out to prevent actual use 
 ;Delphi_AppDefined .CPRSChart__HandleCustomWindows = True  ; We are customizing HandleCustomWindows for CPRSChart.
-
-
+	
+	;SayMessage (OT_JAWS_MESSAGE, "VA508JAWS_SiteCode Site Code Initialize")
 
 EndFunction
 
@@ -59,10 +59,18 @@ EndFunction
 ***************************************************************/
 ;***
 ; Site specific code for CPRSChart
+;
+;***
+; Site specific code for ProviderRoleTool added 2/19/2021
+;
 ;  *** 
 
 
 
 int Function CPRSChart__HandleCustomWindows (handle FocusWindow)
-	SayMessage(OT_JAWS_MESSAGE, "Special handling for " + GetWindowClass(FocusWindow)) 
+	SayMessage (OT_JAWS_MESSAGE, "Special handling for " + GetWindowClass (FocusWindow)) 
+EndFunction
+
+int Function ProviderRoleTool__HandleCustomWindows (handle FocusWindow)
+	SayMessage (OT_JAWS_MESSAGE, "Special handling for " + GetWindowClass (FocusWindow))
 EndFunction

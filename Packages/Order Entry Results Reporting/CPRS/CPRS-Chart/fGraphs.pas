@@ -7,7 +7,7 @@ uses
   ExtCtrls, StdCtrls, ORCtrls, Menus, TeeProcs, TeEngine, Series, Chart, Math,
   ComCtrls, GanttCh, ClipBrd, StrUtils, ORFn, ORDtTmRng, DateUtils, Printers,
   OleServer, Variants, ArrowCha, ORDtTm, uGraphs, fBase508Form, VCLTee.TeCanvas,
-  System.UITypes,WordXP, VA508AccessibilityManager, VclTee.TeeGDIPlus;
+  System.UITypes, WordXP, VA508AccessibilityManager, VCLTee.TeeGDIPlus;
 
 type
   TfrmGraphs = class(TfrmBase508Form)
@@ -170,8 +170,8 @@ type
       Change: TItemChange);
     procedure lvwItemsBottomClick(Sender: TObject);
     procedure lvwItemsBottomColumnClick(Sender: TObject; Column: TListColumn);
-    procedure lvwItemsBottomCompare(Sender: TObject; Item1,
-      Item2: TListItem; Data: Integer; var Compare: Integer);
+    procedure lvwItemsBottomCompare(Sender: TObject; Item1, Item2: TListItem;
+      Data: Integer; var Compare: Integer);
     procedure lvwItemsTopChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure lvwItemsTopClick(Sender: TObject);
@@ -184,15 +184,17 @@ type
     procedure cboDateRangeChange(Sender: TObject);
     procedure cboDateRangeDropDown(Sender: TObject);
 
-    procedure chartBaseClickLegend(Sender: TCustomChart;
-      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure chartBaseClickLegend(Sender: TCustomChart; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
     procedure chartBaseClickSeries(Sender: TCustomChart; Series: TChartSeries;
-      ValueIndex: Integer; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+      ValueIndex: Integer; Button: TMouseButton; Shift: TShiftState;
+      X, Y: Integer);
     procedure chartBaseMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure chartBaseMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    procedure chartBaseMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure chartBaseMouseMove(Sender: TObject; Shift: TShiftState;
+      X, Y: Integer);
     procedure serDatelineTopGetMarkText(Sender: TChartSeries;
       ValueIndex: Integer; var MarkText: String);
 
@@ -201,15 +203,17 @@ type
     procedure DateSteps(dateranges: string);
     procedure DisplayData(aSection: string);
     procedure DisplayDataInfo(aScrollBox: TScrollBox; aMemo: TMemo);
-    procedure GraphSwap(bottomview, topview: integer);
-    procedure GraphSwitch(bottomview, topview: integer);
+    procedure GraphSwap(bottomview, topview: Integer);
+    procedure GraphSwitch(bottomview, topview: Integer);
     procedure FormatHint(var astring: string);
     procedure HideDates(aChart: TChart);
-    procedure LabelClicks(aChart: TChart; aSeries: TChartSeries; lbutton: boolean; tmp: integer);
+    procedure LabelClicks(aChart: TChart; aSeries: TChartSeries;
+      lbutton: boolean; tmp: Integer);
     procedure LabNameResults(astring: string; var labname, labresult: string);
     procedure MouseClicks(aChart: TChart; lbutton: boolean; X, Y: Integer);
     procedure PositionSelections(aListView: TListView);
-    procedure SeriesClicks(aChart: TChart; aSeries: TChartSeries; aIndex: integer; lbutton: boolean);
+    procedure SeriesClicks(aChart: TChart; aSeries: TChartSeries;
+      aIndex: Integer; lbutton: boolean);
     procedure SetupFields(settings: string);
     procedure SourcesDefault;
     procedure StayOnTop;
@@ -223,7 +227,8 @@ type
 
     procedure memBottomEnter(Sender: TObject);
     procedure memBottomExit(Sender: TObject);
-    procedure memBottomKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure memBottomKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
     procedure memTopEnter(Sender: TObject);
     procedure memTopExit(Sender: TObject);
     procedure memTopKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -245,14 +250,15 @@ type
     procedure mnuPopGraphViewDefinitionClick(Sender: TObject);
     procedure splViewsTopMoved(Sender: TObject);
     procedure cboDateRangeExit(Sender: TObject);
+    procedure lvwItemsTopDeletion(Sender: TObject; Item: TListItem);
 
   private
     FBSortAscending: boolean;
-    FBSortCol: integer;
+    FBSortCol: Integer;
     FDate1: Double;
     FDate2: Double;
     FSortAscending: boolean;
-    FSortCol: integer;
+    FSortCol: Integer;
 
     FActiveGraph: TChart;
     FArrowKeys: boolean;
@@ -269,17 +275,17 @@ type
     FGraphSeries: TChartSeries;
     FGraphSetting: TGraphSetting;
     FGraphType: char;
-    FGraphValueIndex: integer;
+    FGraphValueIndex: Integer;
     FItemsSortedTop: boolean;
     FItemsSortedBottom: boolean;
     FMouseDown: boolean;
     FMTimestamp: string;
     FMToday: TFMDateTime;
     FNonNumerics: boolean; // used with pnlItemsTop.Tag & pnlItemsBottom.Tag
-    FOnLegend:  integer;
+    FOnLegend: Integer;
     FOnMark: boolean;
-    FOnSeries: integer;
-    FOnValue: integer;
+    FOnSeries: Integer;
+    FOnValue: Integer;
     FPointClick: boolean;
     FPrevEvent: string;
     FRetainZoom: boolean;
@@ -287,144 +293,183 @@ type
     FSourcesDefault: TStrings;
     FTHighTime, FTLowTime: Double;
     FWarning: boolean;
-    FX, FY: integer;
+    FX, FY: Integer;
     FYMinValue: Double;
     FYMaxValue: Double;
 
     procedure AddOnLabGroups(aListBox: TORListBox; personien: int64);
     procedure AdjustTimeframe;
-    procedure AllTypeDate(aType, aTypeName, firstline, secondline: string; aDate, aDate2: double);
+    procedure AllTypeDate(aType, aTypeName, firstline, secondline: string;
+      aDate, aDate2: Double);
     procedure AllDetails(aDate1, aDate2: TFMDateTime; aTempList: TStrings);
     procedure AssignProfile(aProfile, aSection: string);
     procedure AutoSelect(aListView: TListView);
     procedure BaseResize(aScrollBox: TScrollBox);
-    procedure BorderValue(var bordervalue: double; value: double);
+    procedure BorderValue(var BorderValue: Double; value: Double);
     procedure BottomAxis(aScrollBox: TScrollBox);
-    procedure BPAdd(itemvalue: string; adatetime: TDateTime; var fixeddatevalue: double; serLine, serBPDiastolic, serBPMean: TLineSeries);
-    procedure BPCheck(aChart: TChart; aFileType: string; serLine, serBPDiastolic, serBPMean: TLineSeries);
+    procedure BPAdd(itemvalue: string; adatetime: TDateTime;
+      var fixeddatevalue: Double; serLine, serBPDiastolic,
+      serBPMean: TLineSeries);
+    procedure BPCheck(aChart: TChart; aFileType: string;
+      serLine, serBPDiastolic, serBPMean: TLineSeries);
     procedure ChangeStyle;
     procedure ChartColor(aColor: TColor);
     procedure ChartStyle(aChart: TChart);
     procedure CheckExpandedLabs(aListView: TListView);
     procedure CheckMedNum(var typenum: string; aSeries: TChartSeries);
     procedure CheckProfile(var aProfile: string; var Updated: boolean);
-    procedure CheckToAddData(aListView: TListView; aSection, TypeToCheck: string);
-    procedure CreateExcelPatientHeader(var HeaderList: TStringList; PageTitle, Warning, DateRange: string);
-    procedure CreatePatientHeader(var HeaderList: TStringList; PageTitle, Warning, DateRange: string);
-    procedure DateRangeItems(oldestdate, newestdate: double; filenum: string);
+    procedure CheckToAddData(aListView: TListView;
+      aSection, TypeToCheck: string);
+    procedure CreateExcelPatientHeader(var HeaderList: TStringList;
+      PageTitle, Warning, DateRange: string);
+    procedure CreatePatientHeader(var HeaderList: TStringList;
+      PageTitle, Warning, DateRange: string);
+    procedure DateRangeItems(oldestdate, newestdate: Double; filenum: string);
     procedure DisplayType(itemtype, displayed: string);
     procedure FastLab(aList: TStringList);
     procedure FillViews;
-    procedure FilterListView(oldestdate, newestdate: double);
+    procedure FilterListView(oldestdate, newestdate: Double);
     procedure FixedDates(var adatetime, adatetime1: TDateTime);
-    procedure GetData(aString: string);
+    procedure GetData(astring: string);
     procedure GraphBoundry(singlepoint: boolean);
-    procedure GraphFooter(aChart: TChart; datediff: integer; aDate: TDateTime);
-    procedure HideGraphs(action: boolean);
-    procedure HighLow(fmtime, fmtime1: string; aChart: TChart; var adatetime, adatetime1: TDateTime);
+    procedure GraphFooter(aChart: TChart; datediff: Integer; aDate: TDateTime);
+    procedure HideGraphs(Action: boolean);
+    procedure HighLow(fmtime, fmtime1: string; aChart: TChart;
+      var adatetime, adatetime1: TDateTime);
     procedure InactivateHint;
     procedure InfoMessage(aCaption: string; aColor: TColor; aVisible: boolean);
     procedure ItemCheck(aListView: TListView; aItemName: string;
-      var aNum: integer; var aTypeItem: string);
+      var aNum: Integer; var aTypeItem: string);
     procedure ItemDateRange(Sender: TCustomChart);
     procedure ItemsClick(Sender: TObject; aListView, aOtherListView: TListView;
-      aCheckBox: TCheckBox; aListBox: TORListBox; aList: TStrings; aSection: string);
-    procedure LabAdd(aListView: TListView; filename: string; aIndex, oldlisting: integer; selectlab: boolean);
-    procedure LabCheck(aListView: TListView; aItemType: string; var oldlisting: integer);
-    procedure LabData(aItemType, aItemName, aSection: string; getdata: boolean);
+      aCheckBox: TCheckBox; aListBox: TORListBox; aList: TStrings;
+      aSection: string);
+    procedure LabAdd(aListView: TListView; filename: string;
+      aIndex, oldlisting: Integer; selectlab: boolean);
+    procedure LabCheck(aListView: TListView; aItemType: string;
+      var oldlisting: Integer);
+    procedure LabData(aItemType, aItemName, aSection: string; GetData: boolean);
     procedure LoadDateRange;
-    procedure LoadDisplayCheck(typeofitem: string; var updated: boolean);
+    procedure LoadDisplayCheck(typeofitem: string; var Updated: boolean);
     procedure LoadType(itemtype, displayed: string);
-    procedure NextPointerStyle(aSeries: TChartSeries; aSerCnt: integer);
-    procedure NonNumSave(aChart: TChart; aTitle, aSection: string; adatetime: TDateTime;
-      var noncnt: integer; newcnt, aIndex: integer);
+    procedure NextPointerStyle(aSeries: TChartSeries; aSerCnt: Integer);
+    procedure NonNumSave(aChart: TChart; aTitle, aSection: string;
+      adatetime: TDateTime; var noncnt: Integer; newcnt, aIndex: Integer);
     procedure NotifyApps(aList: TStrings);
-    procedure NumAdd(serLine: TLineSeries; value: double; adatetime: TDateTime;
-      var fixeddatevalue, hi, lo: double; var high, low: string);
+    procedure NumAdd(serLine: TLineSeries; value: Double; adatetime: TDateTime;
+      var fixeddatevalue, hi, lo: Double; var high, low: string);
     procedure OneDayTypeDetails(aTypeItem: string);
-    procedure OtherInfo(aTypeItem, aResult: string; aDateTime: double; var moreinfo: string);
-    procedure PadNonNum(aChart: TChart; aSection: string; var listofseries: string; var bmax, tmax: integer);
+    procedure OtherInfo(aTypeItem, aResult: string; adatetime: Double;
+      var moreinfo: string);
+    procedure PadNonNum(aChart: TChart; aSection: string;
+      var listofseries: string; var bmax, tmax: Integer);
     procedure PainAdd(serBlank: TPointSeries);
     procedure RefUnits(aItem, aSpec: string; var low, high, units: string);
-    procedure ResultValue(var resultstring, seriestitle: string; typenum, typeitem: string;
-      Sender: TCustomChart; aSeries: TChartSeries; ValueIndex, SeriesNum: Integer; var OKToUse: boolean);
+    procedure ResultValue(var resultstring, seriestitle: string;
+      typenum, typeitem: string; Sender: TCustomChart; aSeries: TChartSeries;
+      ValueIndex, SeriesNum: Integer; var OKToUse: boolean);
     procedure SaveTestData(typeitem: string);
     procedure SelCopy(aListView: TListView; aList: TStrings);
     procedure SelReset(aList: TStrings; aListView: TListView);
     procedure SelectItem(aListView: TListView; typeitem: string);
-    procedure SeriesForLabels(aChart: TChart; aID: string; pad: double);
+    procedure SeriesForLabels(aChart: TChart; aID: string; pad: Double);
     procedure SetProfile(aProfile, aName: string; aListView: TListView);
     procedure SetRef(var datax: string);
     procedure SetRefNonNum(var datax: string);
     procedure SizeDates(aChart: TChart; aSmallTime, aBigTime: TDateTime);
-    procedure SizeTogether(onlylines, nolines, anylines: Boolean; aScroll: TScrollBox;
-      aChart: TChart; aPanel, aPanelBase: TPanel; portion: Double);
-    procedure SpecRefCheck(aItemType, aItemName: string; var singlespec: boolean);
+    procedure SizeTogether(onlylines, nolines, anylines: boolean;
+      aScroll: TScrollBox; aChart: TChart; aPanel, aPanelBase: TPanel;
+      portion: Double);
+    procedure SpecRefCheck(aItemType, aItemName: string;
+      var singlespec: boolean);
     procedure SpecRefSet(aItemType, aItemName: string);
     procedure SplitClick;
     procedure SortListView;
-    procedure StackNonNum(astring: string; var offset, bmax, tmax: integer; var blabelon, tlabelon: boolean);
-    procedure TempCheck(typeitem: string; var levelseq: double);
-    procedure TempData(aStringList: TStringList; aType: string; dt1, dt2: double);
-    procedure UpdateView(filename, filenum, itemnum, aString: string; aListView: TListView);
-    procedure ValueDates(aSeries: TChartSeries; ValueIndex: Integer; var resultdate, otherdate: string; var startdate: double);
-    procedure ViewsChange(aListView: TListView; aListBox: TORListBox; aSection: string);
+    procedure StackNonNum(astring: string; var offset, bmax, tmax: Integer;
+      var blabelon, tlabelon: boolean);
+    procedure TempCheck(typeitem: string; var levelseq: Double);
+    procedure TempData(aStringList: TStringList; aType: string;
+      dt1, dt2: Double);
+    procedure UpdateView(filename, filenum, itemnum, astring: string;
+      aListView: TListView);
+    procedure ValueDates(aSeries: TChartSeries; ValueIndex: Integer;
+      var resultdate, otherdate: string; var startdate: Double);
+    procedure ViewsChange(aListView: TListView; aListBox: TORListBox;
+      aSection: string);
 
-    procedure MakeSeparate(aScrollBox: TScrollBox; aListView: TListView; aPadPanel: TPanel; section: string);
-    procedure MakeSeparateItems(aScrollBox: TScrollBox; aListView: TListView; section: string);
-    procedure MakeTogether(aScrollBox: TScrollBox; aListView: TListView; aPadPanel: TPanel; section: string);
-    procedure MakeTogetherMaybe(aScrollBox: TScrollBox; aListView: TListView; aPadPanel: TPanel; section: string);
+    procedure MakeSeparate(aScrollBox: TScrollBox; aListView: TListView;
+      aPadPanel: TPanel; section: string);
+    procedure MakeSeparateItems(aScrollBox: TScrollBox; aListView: TListView;
+      section: string);
+    procedure MakeTogether(aScrollBox: TScrollBox; aListView: TListView;
+      aPadPanel: TPanel; section: string);
+    procedure MakeTogetherMaybe(aScrollBox: TScrollBox; aListView: TListView;
+      aPadPanel: TPanel; section: string);
     procedure MakeTogetherNoLines(aListView: TListView; section: string);
-    procedure MakeTogetherOnlyLines(aListView: TListView; section: string; aChart: TChart);
-    procedure MakeTogetherAnyLines(aListView: TListView; section: string; aChart: TChart);
+    procedure MakeTogetherOnlyLines(aListView: TListView; section: string;
+      aChart: TChart);
+    procedure MakeTogetherAnyLines(aListView: TListView; section: string;
+      aChart: TChart);
 
     procedure MakeChart(aChart: TChart; aScrollBox: TScrollBox);
     procedure MakeComments(aChart: TChart);
-    procedure MakeDateline(section, aTitle, aFileType: string; aChart: TChart; graphtype: integer;
-      var bcnt, pcnt, gcnt, vcnt: integer);
+    procedure MakeDateline(section, aTitle, aFileType: string; aChart: TChart;
+      graphtype: Integer; var bcnt, pcnt, gcnt, vcnt: Integer);
     procedure MakeNonNumerics(aChart: TChart);
-    procedure MakeNonNumSeries(aChart: TChart; padvalue, highestvalue, lowestvalue: double; listofseries, section: string);
+    procedure MakeNonNumSeries(aChart: TChart;
+      padvalue, highestvalue, lowestvalue: Double;
+      listofseries, section: string);
     procedure MakeOtherSeries(aChart: TChart);
-    procedure MakeSeriesInfo(aChart: TChart; aSeries: TChartSeries; aTitle, aFileType: string; aSerCnt: integer);
+    procedure MakeSeriesInfo(aChart: TChart; aSeries: TChartSeries;
+      aTitle, aFileType: string; aSerCnt: Integer);
     procedure MakeSeriesPoint(aChart: TChart; aPointSeries: TPointSeries);
-    procedure MakeSeriesRef(aChart: TChart; aTest, aRef: TLineSeries; aTitle, aValue: string; aDate: double);
-    procedure MakeSeriesBP(aChart: TChart; aTest, aBP: TLineSeries; aFileType: string);
+    procedure MakeSeriesRef(aChart: TChart; aTest, aRef: TLineSeries;
+      aTitle, aValue: string; aDate: Double);
+    procedure MakeSeriesBP(aChart: TChart; aTest, aBP: TLineSeries;
+      aFileType: string);
 
-    procedure MakeBarSeries(aChart: TChart; aTitle, aFileType: string; var aSerCnt: integer);
+    procedure MakeBarSeries(aChart: TChart; aTitle, aFileType: string;
+      var aSerCnt: Integer);
     procedure MakeLineSeries(aChart: TChart; aTitle, aFileType, section: string;
-      var aSerCnt, aNonCnt: integer; multiline: boolean);
-    procedure MakeGanttSeries(aChart: TChart; aTitle, aFileType: string; var aSerCnt: integer);  // good one
-    procedure MakePointSeries(aChart: TChart; aTitle, aFileType: string; var aSerCnt: integer);
-    procedure MakeVisitGanttSeries(aChart: TChart; aTitle, aFileType: string; var aSerCnt: integer);
+      var aSerCnt, aNonCnt: Integer; multiline: boolean);
+    procedure MakeGanttSeries(aChart: TChart; aTitle, aFileType: string;
+      var aSerCnt: Integer); // good one
+    procedure MakePointSeries(aChart: TChart; aTitle, aFileType: string;
+      var aSerCnt: Integer);
+    procedure MakeVisitGanttSeries(aChart: TChart; aTitle, aFileType: string;
+      var aSerCnt: Integer);
 
-    function BPValue(aDateTime: TDateTime): string;
-    function DateRangeMultiItems(aOldDate, aNewDate: double; aMultiItem: string): boolean;
-    function DatesInRange(EarlyDate, RecentDate, Date1, Date2: double): boolean;
+    function BPValue(adatetime: TDateTime): string;
+    function DateRangeMultiItems(aOldDate, aNewDate: Double;
+      aMultiItem: string): boolean;
+    function DatesInRange(EarlyDate, RecentDate, Date1, Date2: Double): boolean;
     function DCName(aDCien: string): string;
     function ExpandTax(profile: string): string;
     function FileNameX(filenum: string): string;
     function FMCorrectedDate(fmtime: string): string;
-    function GraphTypeNum(aType: string): integer;
+    function GraphTypeNum(aType: string): Integer;
     function HSAbbrev(aType: string): boolean;
-    function InvVal(value: double): double;
+    function InvVal(value: Double): Double;
     function ItemName(filenum, itemnum: string): string;
     function MergedLabsSelected: boolean;
-    function NextColor(aCnt: integer): TColor;
-    function NonNumText(listnum, seriesnum, valueindex: integer): string;
-    function PadLeftEvent(aWidth: integer): integer;
-    function PadLeftNonNumeric(aWidth: integer): integer;
-    function PortionSize(lcnt, pcnt, gcnt, vcnt, bcnt: integer): double;
-    function ProfileName(aProfile, aName, aString: string): string;
+    function NextColor(aCnt: Integer): TColor;
+    function NonNumText(listnum, SeriesNum, ValueIndex: Integer): string;
+    function PadLeftEvent(aWidth: Integer): Integer;
+    function PadLeftNonNumeric(aWidth: Integer): Integer;
+    function PortionSize(lcnt, pcnt, gcnt, vcnt, bcnt: Integer): Double;
+    function ProfileName(aProfile, aName, astring: string): string;
     function SelectRef(aRef: string): string;
     function SingleLabTest(aListView: TListView): boolean;
-    function StdDev(value, high, low: double): double;
+    function StdDev(value, high, low: Double): Double;
     function TitleInfo(filetype, typeitem, caption: string): string;
     function TypeIsDisplayed(itemtype: string): boolean;
     function TypeIsLoaded(itemtype: string): boolean;
     function TypeString(filenum: string): string;
-    function ValueText(Sender: TCustomChart; aSeries: TChartSeries; ValueIndex: Integer): string;
+    function ValueText(Sender: TCustomChart; aSeries: TChartSeries;
+      ValueIndex: Integer): string;
   protected
-    procedure UpdateAccessibilityActions(var Actions: TAccessibilityActions); override;
+    procedure UpdateAccessibilityActions(var Actions
+      : TAccessibilityActions); override;
   public
     procedure CheckContext(var usecontext: boolean);
     procedure DateDefaults;
@@ -433,10 +478,10 @@ type
     procedure Initialize;
     procedure InitialRetain;
     procedure LoadListView(aList: TStrings);
-    procedure SetFontSize(FontSize: integer);
+    procedure SetFontSize(FontSize: Integer);
     procedure SourceContext;
     procedure Switch;
-    procedure ViewDefinition(profile: string; amemo: TRichEdit);
+    procedure ViewDefinition(profile: string; aMemo: TRichEdit);
     procedure ViewSelections;
 
     function FMToDateTime(FMDateTime: string): TDateTime;
@@ -447,7 +492,7 @@ var
   FHintWin: THintWindow;
   FHintWinActive: boolean;
   FHintStop: boolean;
-  uDateStart, uDateStop: double;
+  uDateStart, uDateStop: Double;
 
 implementation
 
@@ -461,13 +506,14 @@ type
   TGraphItem = class
   public
     Values: string;
-end;
+  end;
 
 procedure TfrmGraphs.FormCreate(Sender: TObject);
 var
-  i: integer;
+  i: Integer;
   dfntype, listline, settings, settings1: string;
 begin
+  inherited;
   btnClose.Tag := 0;
   settings := GetCurrentSetting;
   if (length(settings) < 1) then
@@ -480,11 +526,12 @@ begin
   end;
   SetupFields(settings);
   settings1 := Piece(settings, '|', 1);
-  pnlInfo.Caption := TXT_INFO;
+  pnlInfo.caption := TXT_INFO;
   for i := 1 to BIG_NUMBER do
   begin
     dfntype := Piece(settings1, ';', i);
-    if length(dfntype) = 0 then break;
+    if length(dfntype) = 0 then
+      break;
     listline := dfntype + '^' + FileNameX(dfntype) + '^1';
     FSources.Add(listline);
     FSourcesDefault.Add(listline);
@@ -496,8 +543,8 @@ begin
   chartDatelineBottom.Gradient.EndColor := clGradientActiveCaption;
   chartDatelineBottom.Gradient.StartColor := clWindow;
   LoadDateRange;
-  //chkItemsTop.Checked := true;
-  //chkItemsBottom.Checked := true;
+  // chkItemsTop.Checked := true;
+  // chkItemsBottom.Checked := true;
   FillViews;
   pcTop.ActivePage := tsTopItems;
   pcBottom.ActivePage := tsBottomItems;
@@ -510,7 +557,7 @@ begin
   FBLowTime := BIG_NUMBER;
   FCreate := true;
   FDisplayFreeText := true;
-  FGraphType := Char(32);
+  FGraphType := char(32);
   FFirstClick := true;
   FFirstSwitch := true;
   FGraphSetting := GraphSettingsInit(settings);
@@ -537,16 +584,17 @@ begin
   FTHighTime := 0;
   FTLowTime := BIG_NUMBER;
   FWarning := false;
-  FX := 0; FY :=0;
+  FX := 0;
+  FY := 0;
   FYMinValue := 0;
   FYMaxValue := 0;
   uDateStart := 0;
-  uDateStop  := 0;
+  uDateStop := 0;
 end;
 
 procedure TfrmGraphs.SourcesDefault;
 var
-  i: integer;
+  i: Integer;
   dfntype, listline, settings, settings1: string;
 begin
   settings := GetCurrentSetting;
@@ -554,15 +602,16 @@ begin
   for i := 1 to BIG_NUMBER do
   begin
     dfntype := Piece(settings1, ';', i);
-    if length(dfntype) = 0 then break;
+    if length(dfntype) = 0 then
+      break;
     listline := dfntype + '^' + FileNameX(dfntype) + '^1';
     FSourcesDefault.Add(listline);
   end;
 end;
 
 procedure TfrmGraphs.Initialize;
-var                                        // from fFrame and fReports
-  i: integer;
+var // from fFrame and fReports
+  i: Integer;
   rptview1, rptview2, rptviews: string;
 begin
   InitialData;
@@ -586,22 +635,22 @@ begin
       if length(rptview1) > 0 then
       begin
         for i := 0 to lstViewsTop.Items.Count - 1 do
-        if Piece(lstViewsTop.Items[i], '^', 2) = rptview1 then
-        begin
-          lstViewsTop.ItemIndex := i;
-          break;
-        end;
+          if Piece(lstViewsTop.Items[i], '^', 2) = rptview1 then
+          begin
+            lstViewsTop.ItemIndex := i;
+            break;
+          end;
       end;
       if length(rptview2) > 0 then
       begin
         chkDualViews.Checked := true;
         chkDualViewsClick(self);
         for i := 0 to lstViewsBottom.Items.Count - 1 do
-        if Piece(lstViewsBottom.Items[i], '^', 2) = rptview2 then
-        begin
-          lstViewsBottom.ItemIndex := i;
-          break;
-        end;
+          if Piece(lstViewsBottom.Items[i], '^', 2) = rptview2 then
+          begin
+            lstViewsBottom.ItemIndex := i;
+            break;
+          end;
       end;
     end;
   end;
@@ -611,8 +660,8 @@ begin
     lvwItemsTopClick(self);
   if lstViewsBottom.ItemIndex > -1 then
   begin
-    //lstViewsBottom.Tag := 0;     // **** reset to allow bottom graphs
-    lstViewsbottomChange(self);
+    // lstViewsBottom.Tag := 0;     // **** reset to allow bottom graphs
+    lstViewsBottomChange(self);
   end
   else
     lvwItemsBottomClick(self);
@@ -625,7 +674,7 @@ begin
     else
       lvwItemsTopClick(self);
     if lstViewsBottom.ItemIndex > -1 then
-      lstViewsbottomChange(self)
+      lstViewsBottomChange(self)
     else
       lvwItemsBottomClick(self);
   end;
@@ -638,7 +687,7 @@ end;
 
 procedure TfrmGraphs.FillViews;
 var
-  i: integer;
+  i: Integer;
   listline: string;
 begin
   lstViewsTop.Tag := BIG_NUMBER;
@@ -648,14 +697,15 @@ begin
   lstViewsTop.Items.Clear;
   lstViewsBottom.Items.Clear;
   GtslViewPersonal.Sorted := true;
-  FastAssign(GetGraphProfiles('1', '0', 0, User.DUZ), GtslViewPersonal);
+  GetGraphProfiles('1', '0', 0, User.DUZ, GtslViewPersonal);
   GtslViewPublic.Sorted := true;
-  FastAssign(GetGraphProfiles('1', '1', 0, 0), GtslViewPublic);
+  GetGraphProfiles('1', '1', 0, 0, GtslViewPublic);
   with lstViewsTop do
   begin
     if GtslViews.Count > 0 then
     begin
-      if not ((GtslViews.Count = 1) and (Piece(GtslViews[0], '^', 1) = VIEW_CURRENT)) then
+      if not((GtslViews.Count = 1) and (Piece(GtslViews[0], '^',
+        1) = VIEW_CURRENT)) then
       begin
         Items.Add(LLS_FRONT + copy('Temporary Views' + LLS_BACK, 0, 60) + '^0');
         for i := 0 to GtslViews.Count - 1 do
@@ -685,23 +735,25 @@ end;
 
 procedure TfrmGraphs.AddOnLabGroups(aListBox: TORListBox; personien: int64);
 var
-  i: integer;
+  i: Integer;
 begin
-  if personien < 1 then personien := User.DUZ;
-  FastAssign(rpcTestGroups(personien), GtslLabGroup);
+  if personien < 1 then
+    personien := User.DUZ;
+  rpcTestGroups(GtslLabGroup, personien);
   GtslLabGroup.Sorted := true;
   if GtslLabGroup.Count > 0 then
   begin
     aListBox.Items.Add(LLS_FRONT + copy('Lab Groups' + LLS_BACK, 0, 60) + '^0');
     for i := 0 to GtslLabGroup.Count - 1 do
-      aListBox.Items.Add(VIEW_LABS + '^' + Piece(GtslLabGroup[i], '^', 2)
-        + '^' + Piece(GtslLabGroup[i], '^', 1) + '^' + inttostr(personien));
+      aListBox.Items.Add(VIEW_LABS + '^' + Piece(GtslLabGroup[i], '^', 2) + '^'
+        + Piece(GtslLabGroup[i], '^', 1) + '^' + inttostr(personien));
   end;
 end;
 
 procedure TfrmGraphs.SourceContext;
 begin
-  if frmFrame.GraphContext = '' then exit;
+  if frmFrame.GraphContext = '' then
+    Exit;
   frmFrame.GraphContext := '';
 end;
 
@@ -713,7 +765,7 @@ begin
   ChangeStyle;
   StayOnTop;
   mnuPopGraphResetClick(self);
-  if pnlFooter.Tag = 1 then  // do not show footer controls on reports tab
+  if pnlFooter.Tag = 1 then // do not show footer controls on reports tab
   begin
     pnlFooter.Visible := false;
     if FCreate then
@@ -734,7 +786,7 @@ begin
       GetSize;
     end;
   end;
-  if length(pnlFooter.Hint) > 1 then      // if context use all results
+  if length(pnlFooter.Hint) > 1 then // if context use all results
     cboDateRange.ItemIndex := 7
   else
     DateDefaults;
@@ -753,8 +805,8 @@ end;
 
 procedure TfrmGraphs.CheckContext(var usecontext: boolean);
 var
-  i, topitem: integer;
-  contextvalue, itemcheck, itemvalue, typecheck, typeitem: string;
+  i, topitem: Integer;
+  contextvalue, ItemCheck, itemvalue, typecheck, typeitem: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
@@ -764,9 +816,9 @@ begin
     lvwItemsBottom.ClearSelection;
     lvwItemsBottomClick(self);
     contextvalue := pnlFooter.Hint;
-    //chkItemsTop.Caption := contextvalue;    // testing
+    // chkItemsTop.Caption := contextvalue;    // testing
     typecheck := Piece(contextvalue, '^', 1);
-    itemcheck := Piece(contextvalue, '^', 2);
+    ItemCheck := Piece(contextvalue, '^', 2);
     lvwItemsTop.ClearSelection;
     topitem := 0;
     for i := 0 to lvwItemsTop.Items.Count - 1 do
@@ -777,7 +829,7 @@ begin
       if Piece(typeitem, '^', 1) = typecheck then
       begin
         itemvalue := Piece(Piece(typeitem, '^', 2), '.', 1);
-        if itemvalue = itemcheck then
+        if itemvalue = ItemCheck then
         begin
           lvwItemsTop.Items[i].Selected := true;
           topitem := i;
@@ -796,9 +848,9 @@ end;
 procedure TfrmGraphs.DateDefaults;
 begin
   if Patient.Inpatient then
-     cboDateRange.SelectByID(FGraphSetting.DateRangeInpatient)
+    cboDateRange.SelectByID(FGraphSetting.DateRangeInpatient)
   else
-     cboDateRange.SelectByID(FGraphSetting.DateRangeOutpatient);
+    cboDateRange.SelectByID(FGraphSetting.DateRangeOutpatient);
   if cboDateRange.ItemIndex < 0 then
     cboDateRange.ItemIndex := cboDateRange.Items.Count - 1;
 end;
@@ -806,7 +858,7 @@ end;
 procedure TfrmGraphs.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if btnClose.Tag = 1 then
-    exit;
+    Exit;
   SetSize;
   timHintPause.Enabled := false;
   InactivateHint;
@@ -815,16 +867,20 @@ end;
 
 procedure TfrmGraphs.GetSize;
 
-  procedure SetWidth(aListView: TListView; v1, v2, v3, v4: integer);
+  procedure SetWidth(aListView: TListView; v1, v2, v3, v4: Integer);
   begin
-    if v1 > 0 then aListView.Column[0].Width := v1;
-    if v2 > 0 then aListView.Column[1].Width := v2;
-    if v3 > 0 then aListView.Column[2].Width := v3;
-    if v4 > 0 then aListView.Column[3].Width := v4;
+    if v1 > 0 then
+      aListView.Column[0].Width := v1;
+    if v2 > 0 then
+      aListView.Column[1].Width := v2;
+    if v3 > 0 then
+      aListView.Column[2].Width := v3;
+    if v4 > 0 then
+      aListView.Column[3].Width := v4;
   end;
 
-  procedure Layout(name, FR: string; v1, v2, v3, v4: integer);
-  begin  // FR indicates Float or Report graph
+  procedure Layout(name, FR: string; v1, v2, v3, v4: Integer);
+  begin // FR indicates Float or Report graph
     if name = (FR + 'WIDTH') then
     begin
       if v1 > 0 then
@@ -848,14 +904,14 @@ procedure TfrmGraphs.GetSize;
       SetWidth(lvwItemsBottom, v1, v2, v3, v4);
   end;
 
-
 var
-  i, v1, v2, v3, v4: integer;
+  i, v1, v2, v3, v4: Integer;
   name, settings, value: string;
   aList: TStrings;
 begin
   aList := TStringList.Create;
-  FastAssign(rpcGetGraphSizing, aList);
+  try
+  rpcGetGraphSizing(aList);
   for i := 0 to aList.Count - 1 do
   begin
     settings := aList[i];
@@ -875,10 +931,14 @@ begin
             WindowState := wsMaximized
           else
           begin
-            if v1 > 0 then Left :=   v1;
-            if v2 > 0 then Top :=    v2;
-            if v3 > 0 then Width :=  v3;
-            if v4 > 0 then Height := v4;
+            if v1 > 0 then
+              Left := v1;
+            if v2 > 0 then
+              Top := v2;
+            if v3 > 0 then
+              Width := v3;
+            if v4 > 0 then
+              Height := v4;
           end;
         end
         else
@@ -888,7 +948,9 @@ begin
         Layout(name, 'R', v1, v2, v3, v4);
     end;
   end;
+  finally
   FreeAndNil(aList);
+end;
 end;
 
 procedure TfrmGraphs.SetSize;
@@ -916,13 +978,13 @@ procedure TfrmGraphs.SetSize;
     aList.Add(FR + 'BCOLUMN^' + v1 + ',' + v2 + ',' + v3 + ',' + v4);
   end;
 
-
 var
   v1, v2, v3, v4: string;
-  //values: array[0..3] of string;
+  // values: array[0..3] of string;
   aList: TStrings;
 begin
   aList := TStringList.Create;
+  try
   if FGraphType = GRAPH_FLOAT then
   begin
     v1 := inttostr(Left);
@@ -938,7 +1000,9 @@ begin
   else
     Layout(aList, 'R', v1, v2, v3, v4);
   rpcSetGraphSizing(aList);
+  finally
   FreeAndNil(aList);
+end;
 end;
 
 procedure TfrmGraphs.btnCloseClick(Sender: TObject);
@@ -949,15 +1013,15 @@ end;
 procedure TfrmGraphs.btnChangeSettingsClick(Sender: TObject);
 var
   needtoupdate, okbutton: boolean;
-  conv, i, preconv: integer;
-  PreMaxGraphs: integer;
-  PreMaxSelect: integer;
-  PreMinGraphHeight: integer;
-  PreSortColumn: integer;
+  conv, i, preconv: Integer;
+  PreMaxGraphs: Integer;
+  PreMaxSelect: Integer;
+  PreMinGraphHeight: Integer;
+  PreSortColumn: Integer;
   PreFixedDateRange: boolean;
   PreMergeLabs: boolean;
   aSettings, filetype, sourcetype: string;
-  PreSources: TStrings;
+  sl, PreSources: TStrings;
 begin
   Application.ProcessMessages;
   okbutton := false;
@@ -974,52 +1038,63 @@ begin
     PreMergeLabs := MergeLabs;
   end;
   PreSources := TStringList.Create;
+  try
   FastAssign(FSources, PreSources);
-  DialogGraphSettings(Font.Size, okbutton, FGraphSetting, FSources, conv, aSettings);
-  if not okbutton then exit;
-  if length(aSettings) > 0 then SetCurrentSetting(aSettings);
+  DialogGraphSettings(Font.Size, okbutton, FGraphSetting, FSources, conv,
+    aSettings);
+  if not okbutton then
+    Exit;
+  if length(aSettings) > 0 then
+    SetCurrentSetting(aSettings);
   btnChangeSettings.Tag := conv;
   pnlInfo.Font.Size := chkItemsTop.Font.Size;
   SetFontSize(chkItemsTop.Font.Size);
   InfoMessage(TXT_WARNING, COLOR_WARNING, (conv > 0));
   if MergedLabsSelected then
-    InfoMessage(pnlInfo.Caption + ' ' + TXT_WARNING_MERGED_LABS, COLOR_WARNING, true);
+    InfoMessage(pnlInfo.caption + ' ' + TXT_WARNING_MERGED_LABS,
+      COLOR_WARNING, true);
   pnlHeader.Visible := pnlInfo.Visible;
   StayOnTop;
   needtoupdate := (conv <> preconv);
-  for i := 0 to FSources.Count - 1 do
-  begin
-    sourcetype := FSources[i];
-    if Copy(sourcetype, 1, 1) = '*' then
+  sl := TStringList.Create;
+  try
+    for i := 0 to FSources.Count - 1 do
     begin
-      FSources[i] := Pieces(sourcetype, '^', 2, 4);
-      if not FFastItems then
+      sourcetype := FSources[i];
+      if copy(sourcetype, 1, 1) = '*' then
       begin
-        filetype := Piece(FSources[i], '^', 1);
-        FastAddStrings(rpcGetItems(filetype, Patient.DFN), GtslItems);
-        needtoupdate := true;
+        FSources[i] := Pieces(sourcetype, '^', 2, 4);
+        if not FFastItems then
+        begin
+          filetype := Piece(FSources[i], '^', 1);
+          rpcGetItems(sl, filetype, Patient.DFN);
+          FastAddStrings(sl, GtslItems);
+          needtoupdate := true;
+        end;
       end;
+      if not needtoupdate then
+        if Piece(PreSources[i], '^', 3) = '0' then
+          needtoupdate := TypeIsDisplayed(Piece(sourcetype, '^', 1))
+        else
+          needtoupdate := not TypeIsDisplayed(Piece(sourcetype, '^', 1));
     end;
-    if not needtoupdate then
-      if Piece(PreSources[i], '^', 3) = '0' then
-        needtoupdate := TypeIsDisplayed(Piece(sourcetype, '^', 1))
-      else
-        needtoupdate := not TypeIsDisplayed(Piece(sourcetype, '^', 1));
+  finally
+    sl.Free;
   end;
   if not needtoupdate then
-  with FGraphSetting do
-    if MaxGraphs <> PreMaxGraphs then
-      needtoupdate := true
-    else if MaxSelect <> PreMaxSelect then
-      needtoupdate := true
-    else if MinGraphHeight <> PreMinGraphHeight then
-      needtoupdate := true
-    else if SortColumn <> PreSortColumn then
-      needtoupdate := true
-    else if MergeLabs <> PreMergeLabs then
-      needtoupdate := true
-    else if FixedDateRange <> PreFixedDateRange then
-      needtoupdate := true;
+    with FGraphSetting do
+      if MaxGraphs <> PreMaxGraphs then
+        needtoupdate := true
+      else if MaxSelect <> PreMaxSelect then
+        needtoupdate := true
+      else if MinGraphHeight <> PreMinGraphHeight then
+        needtoupdate := true
+      else if SortColumn <> PreSortColumn then
+        needtoupdate := true
+      else if MergeLabs <> PreMergeLabs then
+        needtoupdate := true
+      else if FixedDateRange <> PreFixedDateRange then
+        needtoupdate := true;
   if needtoupdate then
   begin
     cboDateRangeChange(self);
@@ -1038,7 +1113,10 @@ begin
   begin
     lstViewsBottom.ItemIndex := -1;
   end;
+  finally
   FreeAndNil(PreSources);
+end;
+
 end;
 
 procedure TfrmGraphs.chkDualViewsClick(Sender: TObject);
@@ -1056,13 +1134,13 @@ begin
   end;
   mnuPopGraphDualViews.Checked := chkDualViews.Checked;
   with pnlMain.Parent do
-    if BorderWidth <> 1 then            // only do on Graph in Reports tab
+    if BorderWidth <> 1 then // only do on Graph in Reports tab
       frmReports.chkDualViews.Checked := chkDualViews.Checked;
 end;
 
 procedure TfrmGraphs.LoadListView(aList: TStrings);
 var
-  i: integer;
+  i: Integer;
   filename, filenum, itemnum: string;
 begin
   lvwItemsTop.Items.Clear;
@@ -1070,15 +1148,16 @@ begin
   lvwItemsTop.Items.BeginUpdate;
   lvwItemsBottom.Items.BeginUpdate;
   lvwItemsTop.SortType := stNone; // if Sorting during load then potential error
-  lvwItemsBottom.SortType := stNone; // if Sorting during load then potential error
+  lvwItemsBottom.SortType := stNone;
+  // if Sorting during load then potential error
   with lvwItemsTop do
-  for i := 0 to aList.Count - 1 do
-  begin
-    filenum := Piece(aList[i], '^', 1);
-    filename := FileNameX(filenum);    // change rpc **********
-    itemnum := Piece(aList[i], '^', 2);
-    UpdateView(filename, filenum, itemnum, aList[i], lvwItemsTop);
-  end;
+    for i := 0 to aList.Count - 1 do
+    begin
+      filenum := Piece(aList[i], '^', 1);
+      filename := FileNameX(filenum); // change rpc **********
+      itemnum := Piece(aList[i], '^', 2);
+      UpdateView(filename, filenum, itemnum, aList[i], lvwItemsTop);
+    end;
   lvwItemsBottom.Items.Assign(lvwItemsTop.Items);
   lvwItemsTop.SortType := stBoth;
   lvwItemsBottom.SortType := stBoth;
@@ -1093,35 +1172,39 @@ begin
     FItemsSortedBottom := true;
   end;
   with FGraphSetting do
-  if SortColumn > 0 then
-  begin
-    lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[SortColumn]);
-    lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[SortColumn]);
-    FItemsSortedTop := false;
-    FItemsSortedBottom := false;
-  end;
+    if SortColumn > 0 then
+    begin
+      lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[SortColumn]);
+      lvwItemsBottomColumnClick(lvwItemsBottom,
+        lvwItemsBottom.Column[SortColumn]);
+      FItemsSortedTop := false;
+      FItemsSortedBottom := false;
+    end;
   lvwItemsTop.Items.EndUpdate;
   lvwItemsBottom.Items.EndUpdate;
 end;
 
-procedure TfrmGraphs.FilterListView(oldestdate, newestdate: double);
+procedure TfrmGraphs.FilterListView(oldestdate, newestdate: Double);
 var
-  i: integer;
-  lastdate: double;
+  i: Integer;
+  lastdate: Double;
   filename, filenum, itemnum: string;
 begin
-  lvwItemsTop.Scroll(-BIG_NUMBER, -BIG_NUMBER);      //faster to set scroll at top
+  lvwItemsTop.Scroll(-BIG_NUMBER, -BIG_NUMBER); // faster to set scroll at top
   lvwItemsBottom.Scroll(-BIG_NUMBER, -BIG_NUMBER);
   lvwItemsTop.Items.Clear;
   lvwItemsBottom.Items.Clear;
   lvwItemsTop.SortType := stNone; // if Sorting during load then potential error
-  lvwItemsBottom.SortType := stNone; // if Sorting during load then potential error
+  lvwItemsBottom.SortType := stNone;
+  // if Sorting during load then potential error
   if (cboDateRange.ItemIndex > 0) and (cboDateRange.ItemIndex < 8) then
   begin
     if TypeIsDisplayed('405') then
-      DateRangeItems(oldestdate, newestdate, '405');  // does not matter for all results ******************
+      DateRangeItems(oldestdate, newestdate, '405');
+    // does not matter for all results ******************
     if TypeIsDisplayed('52') then
-      DateRangeItems(oldestdate, newestdate, '52');  // does not matter for all results ******************
+      DateRangeItems(oldestdate, newestdate, '52');
+    // does not matter for all results ******************
     if TypeIsDisplayed('55') then
       DateRangeItems(oldestdate, newestdate, '55');
     if TypeIsDisplayed('55NVA') then
@@ -1132,24 +1215,26 @@ begin
     begin
       filenum := UpperCase(Piece(GtslItems[i], '^', 1));
       if filenum <> '405' then
-      if filenum <> '52' then
-      if filenum <> '55' then
-      if filenum <> '55NVA' then
-      if filenum <> '9999911' then
-      if TypeIsDisplayed(filenum) then
-      begin
-        lastdate := strtofloatdef(Piece(GtslItems[i], '^', 6), -BIG_NUMBER);
-        if (lastdate > oldestdate) and (lastdate < newestdate) then
-        begin
-          filename := FileNameX(filenum);
-          itemnum := Piece(GtslItems[i], '^', 2);
-          UpdateView(filename, filenum, itemnum, GtslItems[i], lvwItemsTop);
-        end;
-      end;
+        if filenum <> '52' then
+          if filenum <> '55' then
+            if filenum <> '55NVA' then
+              if filenum <> '9999911' then
+                if TypeIsDisplayed(filenum) then
+                begin
+                  lastdate := strtofloatdef(Piece(GtslItems[i], '^', 6),
+                    -BIG_NUMBER);
+                  if (lastdate > oldestdate) and (lastdate < newestdate) then
+                  begin
+                    filename := FileNameX(filenum);
+                    itemnum := Piece(GtslItems[i], '^', 2);
+                    UpdateView(filename, filenum, itemnum, GtslItems[i],
+                      lvwItemsTop);
+                  end;
+                end;
     end;
   end
   else if (cboDateRange.ItemIndex = 0) or (cboDateRange.ItemIndex > 7) then
-  begin     // manual date range selection
+  begin // manual date range selection
     for i := 0 to GtslAllTypes.Count - 1 do
     begin
       filenum := Piece(GtslAllTypes[i], '^', 1);
@@ -1165,7 +1250,7 @@ end;
 
 procedure TfrmGraphs.SortListView;
 var
-  colnum: integer;
+  colnum: Integer;
   aProfile: string;
 begin
   lvwItemsTop.SortType := stBoth;
@@ -1182,84 +1267,91 @@ begin
     FItemsSortedBottom := true;
   end;
   with FGraphSetting do
-  if SortColumn > 0 then
-  begin
-    colnum := SortColumn;
-    lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[SortColumn]);
-    lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[SortColumn]);
-    FItemsSortedTop := false;
-    FItemsSortedBottom := false;
-  end;
-  if lstViewsTop.ItemIndex > 1 then                         // sort by view
+    if SortColumn > 0 then
+    begin
+      colnum := SortColumn;
+      lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[SortColumn]);
+      lvwItemsBottomColumnClick(lvwItemsBottom,
+        lvwItemsBottom.Column[SortColumn]);
+      FItemsSortedTop := false;
+      FItemsSortedBottom := false;
+    end;
+  if lstViewsTop.ItemIndex > 1 then // sort by view
   begin
     aProfile := lstViewsTop.Items[lstViewsTop.ItemIndex];
     AssignProfile(aProfile, 'top');
-    if not FItemsSortedTop then lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[colnum]);
+    if not FItemsSortedTop then
+      lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[colnum]);
     lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[2]);
     lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[2]);
     FItemsSortedTop := false;
   end;
-  if lstViewsBottom.ItemIndex > 1 then                      // sort by view
+  if lstViewsBottom.ItemIndex > 1 then // sort by view
   begin
     aProfile := lstViewsBottom.Items[lstViewsBottom.ItemIndex];
     AssignProfile(aProfile, 'bottom');
-    if not FItemsSortedBottom then lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[colnum]);
+    if not FItemsSortedBottom then
+      lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[colnum]);
     lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[2]);
     lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[2]);
     FItemsSortedBottom := false;
   end;
 end;
 
-procedure TfrmGraphs.DateRangeItems(oldestdate, newestdate: double; filenum: string);
+procedure TfrmGraphs.DateRangeItems(oldestdate, newestdate: Double;
+  filenum: string);
 var
-  i, j: integer;
-  meddate: double;
-  filename, iteminfo, itemnum, oldtempiteminfo, tempiteminfo, tempitemnum: string;
+  i, j: Integer;
+  meddate: Double;
+  filename, iteminfo, itemnum, oldtempiteminfo, tempiteminfo,
+    tempitemnum: string;
 begin
-  FastAssign(rpcDateItem(oldestdate, newestdate, filenum, Patient.DFN), GtslScratchTemp);
+  rpcDateItem(GtslScratchTemp, oldestdate, newestdate, filenum, Patient.DFN);
   filename := FileNameX(filenum);
   lvwItemsTop.Items.BeginUpdate;
   oldtempiteminfo := '';
   with lvwItemsTop do
-  for i := 0 to GtslScratchTemp.Count - 1 do
-  begin
-    tempiteminfo := GtslScratchTemp[i];
-    tempitemnum := UpperCase(Piece(tempiteminfo, '^',2));
-    for j := 0 to GtslItems.Count - 1 do
+    for i := 0 to GtslScratchTemp.Count - 1 do
     begin
-      iteminfo := GtslItems[j];
-      if filenum = UpperCase(Piece(iteminfo, '^', 1)) then
+      tempiteminfo := GtslScratchTemp[i];
+      tempitemnum := UpperCase(Piece(tempiteminfo, '^', 2));
+      for j := 0 to GtslItems.Count - 1 do
       begin
-        if filenum = '690' then  // recheck medicine dates & duplicates
+        iteminfo := GtslItems[j];
+        if filenum = UpperCase(Piece(iteminfo, '^', 1)) then
         begin
-          meddate := strtofloatdef(Piece(iteminfo, '^', 6), -BIG_NUMBER);
-          if tempiteminfo <> oldtempiteminfo then
-            if (meddate <> -BIG_NUMBER) and (meddate > oldestdate) and (meddate < newestdate) then
-              if tempitemnum = UpperCase(Piece(iteminfo, '^', 2)) then
-              begin
-                UpdateView(filename, filenum, tempitemnum, iteminfo, lvwItemsTop);
-                oldtempiteminfo := tempiteminfo;
-              end;
-        end
-        else if tempitemnum = UpperCase(Piece(iteminfo, '^', 2)) then
-          UpdateView(filename, filenum, tempitemnum, iteminfo, lvwItemsTop)
-        else
-          if filenum = '63' then
+          if filenum = '690' then // recheck medicine dates & duplicates
+          begin
+            meddate := strtofloatdef(Piece(iteminfo, '^', 6), -BIG_NUMBER);
+            if tempiteminfo <> oldtempiteminfo then
+              if (meddate <> -BIG_NUMBER) and (meddate > oldestdate) and
+                (meddate < newestdate) then
+                if tempitemnum = UpperCase(Piece(iteminfo, '^', 2)) then
+                begin
+                  UpdateView(filename, filenum, tempitemnum, iteminfo,
+                    lvwItemsTop);
+                  oldtempiteminfo := tempiteminfo;
+                end;
+          end
+          else if tempitemnum = UpperCase(Piece(iteminfo, '^', 2)) then
+            UpdateView(filename, filenum, tempitemnum, iteminfo, lvwItemsTop)
+          else if filenum = '63' then
           begin
             itemnum := UpperCase(Piece(iteminfo, '^', 2));
             if tempitemnum = Piece(itemnum, '.', 1) then
               if DateRangeMultiItems(oldestdate, newestdate, itemnum) then
                 UpdateView(filename, filenum, itemnum, iteminfo, lvwItemsTop);
           end;
+        end;
       end;
     end;
-  end;
   lvwItemsTop.Items.EndUpdate;
 end;
 
-procedure TfrmGraphs.UpdateView(filename, filenum, itemnum, aString: string; aListView: TListView);
+procedure TfrmGraphs.UpdateView(filename, filenum, itemnum, astring: string;
+  aListView: TListView);
 var
-  drugclass, itemname, itemqualifier: string;
+  drugclass, ItemName, itemqualifier: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
@@ -1269,19 +1361,21 @@ begin
     if length(itemqualifier) > 0 then
     begin
       if FGraphSetting.MergeLabs then
-        if itemqualifier  <> '0' then exit;
+        if itemqualifier <> '0' then
+          Exit;
       if not FGraphSetting.MergeLabs then
-        if itemqualifier  = '0' then exit;
+        if itemqualifier = '0' then
+          Exit;
     end;
   end;
-  itemname := Piece(aString, '^', 4);
-  itemqualifier := Pieces(aString, '^', 5, 9);
+  ItemName := Piece(astring, '^', 4);
+  itemqualifier := Pieces(astring, '^', 5, 9);
   itemqualifier := filenum + '^' + itemnum + '^' + itemqualifier;
-  drugclass := Piece(aString, '^', 8);
+  drugclass := Piece(astring, '^', 8);
   aListItem := aListView.Items.Add;
   with aListItem do
   begin
-    Caption := itemname;
+    caption := ItemName;
     SubItems.Add(filename);
     SubItems.Add('');
     SubItems.Add(drugclass);
@@ -1291,10 +1385,11 @@ begin
   end;
 end;
 
-function TfrmGraphs.DateRangeMultiItems(aOldDate, aNewDate: double; aMultiItem: string): boolean;
+function TfrmGraphs.DateRangeMultiItems(aOldDate, aNewDate: Double;
+  aMultiItem: string): boolean;
 var
-  i: integer;
-  checkdate: double;
+  i: Integer;
+  checkdate: Double;
   fileitem: string;
 begin
   Result := false;
@@ -1313,17 +1408,18 @@ begin
     end;
 end;
 
-function TfrmGraphs.DatesInRange(EarlyDate, RecentDate, Date1, Date2: double): boolean;
+function TfrmGraphs.DatesInRange(EarlyDate, RecentDate, Date1,
+  Date2: Double): boolean;
 begin
   Result := true;
-  if Date2 < 0 then   // instance
+  if Date2 < 0 then // instance
   begin
     if Date1 < EarlyDate then
       Result := false
     else if Date1 > RecentDate then
       Result := false;
   end
-  else                // durations
+  else // durations
   begin
     if Date1 > RecentDate then
       Result := false
@@ -1334,14 +1430,14 @@ end;
 
 function TfrmGraphs.FileNameX(filenum: string): string;
 var
-  i: integer;
-  typestring: string;
+  i: Integer;
+  TypeString: string;
 begin
   Result := '';
   for i := 0 to GtslAllTypes.Count - 1 do
   begin
-    typestring := GtslAllTypes[i];
-    if Piece(typestring, '^', 1) = filenum then
+    TypeString := GtslAllTypes[i];
+    if Piece(TypeString, '^', 1) = filenum then
     begin
       Result := Piece(GtslAllTypes[i], '^', 2);
       break;
@@ -1351,8 +1447,8 @@ begin
   begin
     for i := 0 to GtslAllTypes.Count - 1 do
     begin
-      typestring := GtslAllTypes[i];
-      if lowercase(Piece(typestring, '^', 1)) = filenum then
+      TypeString := GtslAllTypes[i];
+      if lowercase(Piece(TypeString, '^', 1)) = filenum then
       begin
         Result := Piece(GtslAllTypes[i], '^', 2);
         break;
@@ -1363,16 +1459,16 @@ end;
 
 function TfrmGraphs.TypeString(filenum: string): string;
 var
-  i: integer;
-  typestring: string;
+  i: Integer;
+  TypeString: string;
 begin
   Result := '';
   for i := 0 to GtslAllTypes.Count - 1 do
   begin
-    typestring := GtslAllTypes[i];
-    if Piece(typestring, '^', 1) = filenum then
+    TypeString := GtslAllTypes[i];
+    if Piece(TypeString, '^', 1) = filenum then
     begin
-      Result := typestring;
+      Result := TypeString;
       break;
     end;
   end;
@@ -1380,10 +1476,10 @@ begin
   begin
     for i := 0 to GtslAllTypes.Count - 1 do
     begin
-      typestring := GtslAllTypes[i];
-      if lowercase(Piece(typestring, '^', 1)) = filenum then
+      TypeString := GtslAllTypes[i];
+      if lowercase(Piece(TypeString, '^', 1)) = filenum then
       begin
-        Result := typestring;
+        Result := TypeString;
         break;
       end;
     end;
@@ -1392,19 +1488,19 @@ end;
 
 function TfrmGraphs.ItemName(filenum, itemnum: string): string;
 var
-  i: integer;
-  typestring: string;
+  i: Integer;
+  TypeString: string;
 begin
   Result := '';
   filenum := UpperCase(filenum);
   itemnum := UpperCase(itemnum);
   for i := 0 to GtslItems.Count - 1 do
   begin
-    typestring := UpperCase(GtslItems[i]);
-    if (Piece(typestring, '^', 1) = filenum) and
-      (Piece(typestring, '^', 2) = itemnum) then
+    TypeString := UpperCase(GtslItems[i]);
+    if (Piece(TypeString, '^', 1) = filenum) and
+      (Piece(TypeString, '^', 2) = itemnum) then
     begin
-      Result := Piece(typestring, '^', 4);
+      Result := Piece(TypeString, '^', 4);
       break;
     end;
   end;
@@ -1415,20 +1511,20 @@ var
   aList: TStringList;
 begin
   if FFastTrack then
-    exit;
+    Exit;
   aList := TStringList.Create;
   if not FFastItems then
   begin
-    rpcFastItems(Patient.DFN, aList, FFastItems);  // ***
+    rpcFastItems(Patient.DFN, aList, FFastItems); // ***
     if FFastItems then
     begin
       FastAssign(aList, GtslItems);
-      rpcFastData(Patient.DFN, aList, FFastData);  // ***
+      rpcFastData(Patient.DFN, aList, FFastData); // ***
       if FFastData then
       begin
         FastAssign(aList, GtslData);
         aList.Clear;
-        rpcFastLabs(Patient.DFN, aList, FFastLabs);  // ***
+        rpcFastLabs(Patient.DFN, aList, FFastLabs); // ***
         if FFastLabs then
           FastLab(aList);
         FastAssign(GtslData, GtslCheck);
@@ -1448,13 +1544,14 @@ end;
 
 procedure TfrmGraphs.InitialData;
 var
-  i: integer;
+  sl: TStrings;
+  i: Integer;
   dfntype, listline: string;
 begin
   Application.ProcessMessages;
   FMTimestamp := floattostr(FMNow);
-  //SourcesDefault;
-  //FastAssign(FSourcesDefault, FSources);
+  // SourcesDefault;
+  // FastAssign(FSourcesDefault, FSources);
   for i := 0 to GtslTypes.Count - 1 do
   begin
     listline := GtslTypes[i];
@@ -1477,7 +1574,7 @@ begin
   splGraphs.Tag := 0;
   lstViewsBottom.ItemIndex := -1;
   lstViewsTop.ItemIndex := -1;
-  frmGraphData.pnlData.Hint := Patient.DFN;      // use to check for patient change
+  frmGraphData.pnlData.Hint := Patient.DFN; // use to check for patient change
   FPrevEvent := '';
   FWarning := false;
   FFirstSwitch := true;
@@ -1488,15 +1585,23 @@ begin
   FFastTrack := false;
   if GraphTurboOn then
     Switch;
-  //if not FFastItems then
-  if GtslItems.Count = 0 then
-  begin
-    for i := 0 to GtslTypes.Count - 1 do
+  // if not FFastItems then
+  sl := TStringList.Create;
+  try
+    if GtslItems.Count = 0 then
     begin
-      dfntype := Piece(GtslTypes[i], '^', 1);
-      if TypeIsLoaded(dfntype) then
-        FastAddStrings(rpcGetItems(dfntype, Patient.DFN), GtslItems);
+      for i := 0 to GtslTypes.Count - 1 do
+      begin
+        dfntype := Piece(GtslTypes[i], '^', 1);
+        if TypeIsLoaded(dfntype) then
+        begin
+          rpcGetItems(sl, dfntype, Patient.DFN);
+          FastAddStrings(sl, GtslItems);
+        end;
+      end;
     end;
+  finally
+    sl.Free;
   end;
 end;
 
@@ -1507,25 +1612,25 @@ begin
   aType := Piece(typeitem, '^', 1);
   aItem := Piece(typeitem, '^', 2);
   aItemName := MixedCase(ItemName(aType, aItem));
-  LabData(typeitem, aItemName, 'top', false);  // already have lab data
+  LabData(typeitem, aItemName, 'top', false); // already have lab data
   GtslScratchLab.Clear;
 end;
 
 procedure TfrmGraphs.FastLab(aList: TStringList);
 var
-  i, lastnum: integer;
+  i, lastnum: Integer;
   newtypeitem, oldtypeitem, listline: string;
 begin
   lastnum := aList.Count - 1;
   if lastnum < 0 then
-    exit;
+    Exit;
   GtslScratchLab.Clear;
   aList.Sort;
   oldtypeitem := Pieces(aList[0], '^', 1, 2);
   for i := 0 to lastnum do
   begin
     listline := aList[i];
-    newtypeitem := Pieces(listline, '^', 1 , 2);
+    newtypeitem := Pieces(listline, '^', 1, 2);
     if lastnum = i then
     begin
       if newtypeitem <> oldtypeitem then
@@ -1549,13 +1654,13 @@ end;
 
 function TfrmGraphs.TypeIsLoaded(itemtype: string): boolean;
 var
-  i: integer;
+  i: Integer;
   filetype: string;
 begin
   if FFastItems then
   begin
     Result := true;
-    exit;
+    Exit;
   end;
   Result := false;
   for i := 0 to FSources.Count - 1 do
@@ -1571,7 +1676,7 @@ end;
 
 function TfrmGraphs.TypeIsDisplayed(itemtype: string): boolean;
 var
-  i: integer;
+  i: Integer;
   displayed, filetype: string;
 begin
   Result := false;
@@ -1581,7 +1686,8 @@ begin
     displayed := Piece(FSources[i], '^', 3);
     if (itemtype = filetype) then
     begin
-      if displayed = '1' then Result := true;
+      if displayed = '1' then
+        Result := true;
       break;
     end;
   end;
@@ -1591,15 +1697,15 @@ procedure TfrmGraphs.LoadDateRange;
 var
   defaults, defaultrange: string;
 begin
-  FastAssign(rpcGetGraphDateRange('OR_GRAPHS'), cboDateRange.Items);
+  rpcGetGraphDateRange(cboDateRange.Items, 'OR_GRAPHS');
   with cboDateRange do
   begin
-    defaults := Items[Items.Count - 1];        // ***** CHANGE TO DEFAULTS
+    defaults := Items[Items.Count - 1]; // ***** CHANGE TO DEFAULTS
     defaultrange := Piece(defaults, '^', 1);
-    //get report views - param 1 and param 2
-    lvwItemsTop.Hint := Piece(defaults,'^', 8);     // top view
-    lvwItemsBottom.Hint := Piece(defaults,'^', 9);  // bottom view
-    //check if default range already exists
+    // get report views - param 1 and param 2
+    lvwItemsTop.Hint := Piece(defaults, '^', 8); // top view
+    lvwItemsBottom.Hint := Piece(defaults, '^', 9); // bottom view
+    // check if default range already exists
     if strtointdef(defaultrange, BIG_NUMBER) = BIG_NUMBER then
       ItemIndex := Items.Count - 1
     else
@@ -1610,10 +1716,12 @@ end;
 procedure TfrmGraphs.LoadType(itemtype, displayed: string);
 var
   needtoadd: boolean;
-  i: integer;
+  i: Integer;
   filename, filetype, zzz: string;
+  sl: TStrings;
 begin
-  if displayed <> '1' then displayed := '';
+  if displayed <> '1' then
+    displayed := '';
   needtoadd := true;
   for i := 0 to FSources.Count - 1 do
   begin
@@ -1625,20 +1733,27 @@ begin
       break;
     end;
   end;
-  if needtoadd then
-  begin
-    filename := FileNameX(itemtype);
-    FSources.Add(itemtype + '^' + filename + '^' + displayed);
-    FastAddStrings(rpcGetItems(itemtype, Patient.DFN), GtslItems);
+  sl := TStringList.Create;
+  try
+    if needtoadd then
+    begin
+      filename := FileNameX(itemtype);
+      FSources.Add(itemtype + '^' + filename + '^' + displayed);
+      rpcGetItems(sl, itemtype, Patient.DFN);
+      FastAddStrings(sl, GtslItems);
+    end;
+  finally
+    sl.Free;
   end;
 end;
 
 procedure TfrmGraphs.DisplayType(itemtype, displayed: string);
 var
-  i: integer;
+  i: Integer;
   filename, filetype: string;
 begin
-  if displayed <> '1' then displayed := '';
+  if displayed <> '1' then
+    displayed := '';
   for i := 0 to FSources.Count - 1 do
   begin
     filetype := Piece(FSources[i], '^', 1);
@@ -1653,7 +1768,7 @@ end;
 
 procedure TfrmGraphs.DisplayData(aSection: string);
 var
-  i: integer;
+  i: Integer;
   astring: string;
   aChart: TChart;
   aCheckBox: TCheckBox;
@@ -1666,25 +1781,34 @@ begin
   SetFontSize(chkItemsTop.Font.Size);
   if aSection = 'top' then
   begin
-    aListView := lvwItemsTop;         aOtherListView := lvwItemsBottom;
-    aDateline := pnlDatelineTop;      aChart := chartDatelineTop;
-    aRightPad := pnlTopRightPad;      aScrollBox := scrlTop;
-    aCheckBox := chkItemsTop;         aMemo := memTop;
+    aListView := lvwItemsTop;
+    aOtherListView := lvwItemsBottom;
+    aDateline := pnlDatelineTop;
+    aChart := chartDatelineTop;
+    aRightPad := pnlTopRightPad;
+    aScrollBox := scrlTop;
+    aCheckBox := chkItemsTop;
+    aMemo := memTop;
   end
   else
   begin
-    aListView := lvwItemsBottom;      aOtherListView := lvwItemsTop;
-    aDateline := pnlDatelineBottom;   aChart := chartDatelineBottom;
-    aRightPad := pnlBottomRightPad;   aScrollBox := scrlBottom;
-    aCheckBox := chkItemsBottom;      aMemo := memBottom;
+    aListView := lvwItemsBottom;
+    aOtherListView := lvwItemsTop;
+    aDateline := pnlDatelineBottom;
+    aChart := chartDatelineBottom;
+    aRightPad := pnlBottomRightPad;
+    aScrollBox := scrlBottom;
+    aCheckBox := chkItemsBottom;
+    aMemo := memBottom;
   end;
   if aListView.SelCount < 1 then
   begin
     if not FFirstClick then
     begin
       FFirstClick := true;
-      while aScrollBox.ControlCount > 0 do aScrollBox.Controls[0].Free;
-      exit;
+      while aScrollBox.ControlCount > 0 do
+        aScrollBox.Controls[0].Free;
+      Exit;
     end;
     FFirstClick := false;
     aDateline.Visible := false;
@@ -1692,15 +1816,18 @@ begin
       aScrollBox.Controls[0].Free;
     if aOtherListView.SelCount > 0 then
       if aOtherListView = lvwItemsTop then
-        ItemsClick(self, lvwItemsTop, lvwItemsBottom, chkItemsTop, lstViewsTop, GtslSelCopyTop, 'top')
+        ItemsClick(self, lvwItemsTop, lvwItemsBottom, chkItemsTop, lstViewsTop,
+          GtslSelCopyTop, 'top')
       else
-        ItemsClick(self, lvwItemsBottom, lvwItemsTop, chkItemsBottom, lstViewsBottom, GtslSelCopyBottom, 'bottom');
-    exit;
+        ItemsClick(self, lvwItemsBottom, lvwItemsTop, chkItemsBottom,
+          lstViewsBottom, GtslSelCopyBottom, 'bottom');
+    Exit;
   end;
   aScrollBox.VertScrollBar.Visible := false;
   aScrollBox.HorzScrollBar.Visible := false;
-  amemo.Visible := false;
-  aChart.RemoveAllSeries;    // this would leave bottom dateline visible on date change
+  aMemo.Visible := false;
+  aChart.RemoveAllSeries;
+  // this would leave bottom dateline visible on date change
   for i := GtslNonNum.Count - 1 downto 0 do
   begin
     astring := GtslNonNum[i];
@@ -1718,8 +1845,9 @@ procedure TfrmGraphs.DisplayDataInfo(aScrollBox: TScrollBox; aMemo: TMemo);
 begin
   ChangeStyle;
   pnlInfo.Font.Size := chkItemsTop.Font.Size;
-  if ((lvwItemsTop.SelCount > MAX_ITEM_DISCLAIMER) and (not chkItemsTop.Checked))
-    or ((lvwItemsBottom.SelCount > MAX_ITEM_DISCLAIMER) and (not chkItemsBottom.Checked)) then
+  if ((lvwItemsTop.SelCount > MAX_ITEM_DISCLAIMER) and (not chkItemsTop.Checked)
+    ) or ((lvwItemsBottom.SelCount > MAX_ITEM_DISCLAIMER) and
+    (not chkItemsBottom.Checked)) then
     InfoMessage(TXT_DISCLAIMER, COLOR_WARNING, true)
   else
     pnlInfo.Visible := false;
@@ -1728,28 +1856,31 @@ begin
   if FWarning then
     pnlInfo.Visible := true;
   if MergedLabsSelected then
-    if (not ansicontainsstr(pnlInfo.Caption, TXT_WARNING_MERGED_LABS)) and pnlInfo.Visible then
-      InfoMessage(pnlInfo.Caption + ' ' + TXT_WARNING_MERGED_LABS, COLOR_WARNING, true)
+    if (not ansicontainsstr(pnlInfo.caption, TXT_WARNING_MERGED_LABS)) and
+      pnlInfo.Visible then
+      InfoMessage(pnlInfo.caption + ' ' + TXT_WARNING_MERGED_LABS,
+        COLOR_WARNING, true)
     else
       InfoMessage(TXT_WARNING_MERGED_LABS, COLOR_WARNING, true);
   pnlHeader.Visible := pnlInfo.Visible;
   aScrollBox.VertScrollBar.Visible := true;
   aScrollBox.HorzScrollBar.Visible := false;
-  if (aScrollBox.ControlCount > FGraphSetting.MaxGraphs)
-  or (aScrollBox.Height < FGraphSetting.MinGraphHeight) then
-    aMemo.Visible:= true;
+  if (aScrollBox.ControlCount > FGraphSetting.MaxGraphs) or
+    (aScrollBox.Height < FGraphSetting.MinGraphHeight) then
+    aMemo.Visible := true;
 end;
 
 function TfrmGraphs.MergedLabsSelected: boolean;
 var
-  i: integer;
+  i: Integer;
   filetype, typeitem: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
   aListView: TListView;
 begin
   Result := false;
-  if not FGraphSetting.MergeLabs then exit;
+  if not FGraphSetting.MergeLabs then
+    Exit;
   for i := 1 to 2 do
   begin
     if i = 1 then
@@ -1767,7 +1898,7 @@ begin
         if Piece(typeitem, '.', 2) = '0' then
         begin
           Result := true;
-          exit;
+          Exit;
         end;
       end;
       aListItem := aListView.GetNextItem(aListItem, sdAll, [isSelected]);
@@ -1779,7 +1910,8 @@ procedure TfrmGraphs.chkItemsTopClick(Sender: TObject);
 begin
   Screen.Cursor := crHourGlass;
   DisplayData('top');
-  if FFirstSwitch then   // this code makes events appear better (on first click was not displaying bar)
+  if FFirstSwitch then
+  // this code makes events appear better (on first click was not displaying bar)
   begin
     chartBaseMouseDown(chartDatelineTop, mbLeft, [], 1, 1);
     DisplayData('top');
@@ -1792,7 +1924,8 @@ procedure TfrmGraphs.chkItemsBottomClick(Sender: TObject);
 begin
   Screen.Cursor := crHourGlass;
   DisplayData('bottom');
-  if FFirstSwitch then   // this code makes events appear better (on first click was not displaying bar)
+  if FFirstSwitch then
+  // this code makes events appear better (on first click was not displaying bar)
   begin
     chartBaseMouseDown(chartDatelineBottom, mbLeft, [], 1, 1);
     DisplayData('bottom');
@@ -1803,7 +1936,7 @@ end;
 
 procedure TfrmGraphs.BottomAxis(aScrollBox: TScrollBox);
 var
-  i: integer;
+  i: Integer;
   ChildControl: TControl;
 begin
   for i := 0 to aScrollBox.ControlCount - 1 do
@@ -1823,17 +1956,19 @@ procedure TfrmGraphs.AdjustTimeframe;
 begin
   with FGraphSetting do
   begin
-    if HighTime = 0 then exit;  // no data to chart clear form ???
-    chartDatelineTop.BottomAxis.Minimum := 0;  // avoid possible error
+    if HighTime = 0 then
+      Exit; // no data to chart clear form ???
+    chartDatelineTop.BottomAxis.Minimum := 0; // avoid possible error
     chartDatelineTop.BottomAxis.Maximum := HighTime;
     if LowTime < HighTime then
       chartDatelineTop.BottomAxis.Minimum := LowTime;
-    chartDatelineBottom.BottomAxis.Minimum := 0;  // avoid possible error
+    chartDatelineBottom.BottomAxis.Minimum := 0; // avoid possible error
     chartDatelineBottom.BottomAxis.Maximum := HighTime;
     if HighTime > FMDateTimeToDateTime(FMStopDate) then
       chartDatelineTop.BottomAxis.Maximum := FMDateTimeToDateTime(FMStopDate);
     if LowTime < FMDateTimeToDateTime(FMStartDate) then
-      chartDatelineTop.BottomAxis.Minimum := FMDateTimeToDateTime(FMStartDate);  // *****
+      chartDatelineTop.BottomAxis.Minimum := FMDateTimeToDateTime(FMStartDate);
+    // *****
   end;
   BottomAxis(scrlTop);
   BottomAxis(scrlBottom);
@@ -1841,28 +1976,31 @@ end;
 
 procedure TfrmGraphs.ChartOnZoom(Sender: TObject);
 var
-  i: integer;
-  padding: double;
+  i: Integer;
+  padding: Double;
   datehx: string;
   BigTime, SmallTime: TDateTime;
   ChildControl: TControl;
   aChart: TChart;
 begin
-  if not (Sender is TChart) then exit;
+  if not(Sender is TChart) then
+    Exit;
   aChart := (Sender as TChart);
-  if Not Assigned(FGraphSetting) then Exit;
+  if Not Assigned(FGraphSetting) then
+    Exit;
 
   if not FGraphSetting.VerticalZoom then
   begin
-    padding := 0; //(FYMaxValue - FYMinValue) * ((100 - ZOOM_PERCENT) * 0.01);
-    aChart.LeftAxis.Maximum := BIG_NUMBER;    // avoid min>max error
+    padding := 0; // (FYMaxValue - FYMinValue) * ((100 - ZOOM_PERCENT) * 0.01);
+    aChart.LeftAxis.Maximum := BIG_NUMBER; // avoid min>max error
     aChart.LeftAxis.Minimum := -BIG_NUMBER;
-    aChart.LeftAxis.Maximum := FYMaxValue + padding;    //padding 0?
-    aChart.LeftAxis.Minimum := FYMinValue - padding;    //padding 0?
+    aChart.LeftAxis.Maximum := FYMaxValue + padding; // padding 0?
+    aChart.LeftAxis.Minimum := FYMinValue - padding; // padding 0?
   end;
   SmallTime := aChart.BottomAxis.Minimum;
   BigTime := aChart.BottomAxis.Maximum;
-  if BigTime < SmallTime then BigTime := SmallTime;   // avoid min>max error
+  if BigTime < SmallTime then
+    BigTime := SmallTime; // avoid min>max error
   for i := 0 to scrlTop.ControlCount - 1 do
   begin
     ChildControl := scrlTop.Controls[i];
@@ -1877,38 +2015,40 @@ begin
   SizeDates(chartDatelineBottom, SmallTime, BigTime);
   if FMouseDown and aChart.Zoomed then
   begin
-    datehx := FloatToStr(SmallTime) + '^' + FloatToStr(BigTime);
+    datehx := floattostr(SmallTime) + '^' + floattostr(BigTime);
     GtslZoomHistoryFloat.Add(datehx);
     mnuPopGraphZoomBack.Enabled := true;
     FMouseDown := false;
-    ZoomUpdateinfo(SmallTime, BigTime);
+    ZoomUpdateInfo(SmallTime, BigTime);
   end;
 end;
 
 procedure TfrmGraphs.ChartOnUndoZoom(Sender: TObject);
 var
-  i: integer;
-  padding: double;
+  i: Integer;
+  padding: Double;
   BigTime, SmallTime: TDateTime;
   ChildControl: TControl;
   aChart: TChart;
 begin
-  if not (Sender is TChart) then exit;
-  aChart:= (Sender as TChart);
+  if not(Sender is TChart) then
+    Exit;
+  aChart := (Sender as TChart);
   FRetainZoom := false;
   mnuPopGraphZoomBack.Enabled := false;
   GtslZoomHistoryFloat.Clear;
   if not FGraphSetting.VerticalZoom then
   begin
-    padding := 0; //(FYMaxValue - FYMinValue) * ((100 - ZOOM_PERCENT) * 0.01);
-    aChart.LeftAxis.Maximum := BIG_NUMBER;    // avoid min>max error
+    padding := 0; // (FYMaxValue - FYMinValue) * ((100 - ZOOM_PERCENT) * 0.01);
+    aChart.LeftAxis.Maximum := BIG_NUMBER; // avoid min>max error
     aChart.LeftAxis.Minimum := -BIG_NUMBER;
-    aChart.LeftAxis.Maximum := FYMaxValue + padding;    //padding 0?
-    aChart.LeftAxis.Minimum := FYMinValue - padding;    //padding 0?
+    aChart.LeftAxis.Maximum := FYMaxValue + padding; // padding 0?
+    aChart.LeftAxis.Minimum := FYMinValue - padding; // padding 0?
   end;
   SmallTime := aChart.BottomAxis.Minimum;
   BigTime := aChart.BottomAxis.Maximum;
-  if BigTime < SmallTime then BigTime := SmallTime;   // avoid min>max error
+  if BigTime < SmallTime then
+    BigTime := SmallTime; // avoid min>max error
   for i := 0 to scrlTop.ControlCount - 1 do
   begin
     ChildControl := scrlTop.Controls[i];
@@ -1925,21 +2065,21 @@ begin
   begin
     FMouseDown := false;
     InfoMessage('', COLOR_INFO, false);
-  if MergedLabsSelected then
-    InfoMessage(TXT_WARNING_MERGED_LABS, COLOR_WARNING, true);
-  pnlHeader.Visible := pnlInfo.Visible;
+    if MergedLabsSelected then
+      InfoMessage(TXT_WARNING_MERGED_LABS, COLOR_WARNING, true);
+    pnlHeader.Visible := pnlInfo.Visible;
   end;
 end;
 
 procedure TfrmGraphs.SizeDates(aChart: TChart; aSmallTime, aBigTime: TDateTime);
 var
-  datediff, yeardiff: integer;
-  pad: double;
+  datediff, yeardiff: Integer;
+  pad: Double;
 begin
   with aChart.BottomAxis do
   begin
     Automatic := false;
-    Maximum := BIG_NUMBER;    // avoid min>max error
+    Maximum := BIG_NUMBER; // avoid min>max error
     Minimum := -BIG_NUMBER;
     Minimum := aSmallTime;
     Maximum := aBigTime;
@@ -1962,14 +2102,15 @@ begin
   pad := (aBigTime - aSmallTime) * 0.07;
   SeriesForLabels(aChart, 'serNonNumBottom', pad);
   SeriesForLabels(aChart, 'serNonNumTop', pad);
-  if length(aChart.Hint) > 0 then SeriesForLabels(aChart, 'serComments', pad);
+  if length(aChart.Hint) > 0 then
+    SeriesForLabels(aChart, 'serComments', pad);
 end;
 
-procedure TfrmGraphs.SeriesForLabels(aChart: TChart; aID: string; pad: double);
+procedure TfrmGraphs.SeriesForLabels(aChart: TChart; aID: string; pad: Double);
 var
-  i: integer;
+  i: Integer;
   aPointSeries: TPointSeries;
-  max, min: double;
+  Max, min: Double;
 begin
   for i := 0 to aChart.SeriesCount - 1 do
   begin
@@ -1981,25 +2122,28 @@ begin
       begin
         min := aChart.LeftAxis.Minimum;
         if min > aChart.MinYValue(aChart.LeftAxis) then
-           min := aChart.MinYValue(aChart.LeftAxis);
-        if min < 0 then min := 0;
-        aPointSeries.AddXY(aChart.BottomAxis.Minimum, min, '', clTeeColor) ;
+          min := aChart.MinYValue(aChart.LeftAxis);
+        if min < 0 then
+          min := 0;
+        aPointSeries.AddXY(aChart.BottomAxis.Minimum, min, '', clTeeColor);
       end
-      else if aID  = 'serNonNumTop' then
+      else if aID = 'serNonNumTop' then
       begin
-        max := aChart.LeftAxis.Maximum;
-        if max < aChart.MaxYValue(aChart.LeftAxis) then
-           max := aChart.MaxYValue(aChart.LeftAxis);
-        aPointSeries.AddXY(aChart.BottomAxis.Minimum, max, '', clTeeColor) ;
+        Max := aChart.LeftAxis.Maximum;
+        if Max < aChart.MaxYValue(aChart.LeftAxis) then
+          Max := aChart.MaxYValue(aChart.LeftAxis);
+        aPointSeries.AddXY(aChart.BottomAxis.Minimum, Max, '', clTeeColor);
       end
       else if aID = 'serComments' then
       begin
         min := aChart.MinYValue(aChart.LeftAxis);
-        if aChart.SeriesCount = 2 then        // only 1 series (besides comment)
-          if aChart.Series[0].Count = 1 then  // only 1 numeric
-            min := min - 1;                   // force comment label to bottom
-        if min < 0 then min := 0;
-        aPointSeries.AddXY((aChart.BottomAxis.Maximum - pad), min, '', clTeeColor) ;
+        if aChart.SeriesCount = 2 then // only 1 series (besides comment)
+          if aChart.Series[0].Count = 1 then // only 1 numeric
+            min := min - 1; // force comment label to bottom
+        if min < 0 then
+          min := 0;
+        aPointSeries.AddXY((aChart.BottomAxis.Maximum - pad), min, '',
+          clTeeColor);
       end;
       aPointSeries.Marks.Visible := true;
       break;
@@ -2007,7 +2151,8 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.GraphFooter(aChart: TChart; datediff: integer; aDate: TDateTime);
+procedure TfrmGraphs.GraphFooter(aChart: TChart; datediff: Integer;
+  aDate: TDateTime);
 begin
   if datediff < 1 then
   begin
@@ -2023,17 +2168,20 @@ begin
     aChart.Foot.Visible := false;
 end;
 
-procedure TfrmGraphs.MakeSeparate(aScrollBox: TScrollBox; aListView:
-  TListView; aPadPanel: TPanel; section: string);
+procedure TfrmGraphs.MakeSeparate(aScrollBox: TScrollBox; aListView: TListView;
+  aPadPanel: TPanel; section: string);
 var
-  displayheight, displaynum, i: integer;
+  displayheight, displaynum, i: Integer;
 begin
   FNonNumerics := false;
-  if section = 'top' then pnlItemsTop.Tag := 0 else pnlItemsBottom.Tag := 0;
+  if section = 'top' then
+    pnlItemsTop.Tag := 0
+  else
+    pnlItemsBottom.Tag := 0;
   while aScrollBox.ControlCount > 0 do
     aScrollBox.Controls[0].Free;
   aPadPanel.Visible := false;
-  if FGraphSetting.Hints then         //**************
+  if FGraphSetting.Hints then // **************
   begin
     chartDatelineTop.OnMouseMove := chartBaseMouseMove;
     chartDatelineBottom.OnMouseMove := chartBaseMouseMove;
@@ -2060,7 +2208,8 @@ begin
   end;
   with aScrollBox do
   begin
-    if ControlCount < FGraphSetting.MaxGraphs then        //**** formating should be made for top & bottom
+    if ControlCount < FGraphSetting.MaxGraphs then
+    // **** formating should be made for top & bottom
       displaynum := ControlCount
     else
       displaynum := FGraphSetting.MaxGraphs;
@@ -2071,19 +2220,21 @@ begin
     else
       displayheight := (Height div displaynum);
     for i := 0 to aScrollBox.ControlCount - 1 do
-      Controls[i].height := displayheight;
+      Controls[i].Height := displayheight;
   end;
   AdjustTimeframe;
-  //if chartDatelineTop.Visible then chartDatelineTop.ZoomPercent(ZOOM_PERCENT);
-  //if chartDatelineBottom.Visible then chartDatelineBottom.ZoomPercent(ZOOM_PERCENT);
+  // if chartDatelineTop.Visible then chartDatelineTop.ZoomPercent(ZOOM_PERCENT);
+  // if chartDatelineBottom.Visible then chartDatelineBottom.ZoomPercent(ZOOM_PERCENT);
   if FNonNumerics then
-    if section = 'top' then pnlItemsTop.Tag := 1
-    else pnlItemsBottom.Tag := 1;
+    if section = 'top' then
+      pnlItemsTop.Tag := 1
+    else
+      pnlItemsBottom.Tag := 1;
 end;
 
 function TfrmGraphs.TitleInfo(filetype, typeitem, caption: string): string;
 var
-  i: integer;
+  i: Integer;
   checkdata, high, low, refrange, specimen, specnum, units: string;
 begin
   if (filetype = '63') and (GtslData.Count > 0) then
@@ -2092,12 +2243,13 @@ begin
     for i := 0 to GtslData.Count - 1 do
     begin
       checkdata := GtslData[i];
-      if (Piece(checkdata, '^', 1) = '63') and (Piece(checkdata, '^', 2) = typeitem) then
+      if (Piece(checkdata, '^', 1) = '63') and
+        (Piece(checkdata, '^', 2) = typeitem) then
         break;
     end;
     refrange := Piece(checkdata, '^', 10);
     specimen := Piece(checkdata, '^', 8);
-    if length(refrange) > 0  then
+    if length(refrange) > 0 then
     begin
       low := Piece(refrange, '!', 1);
       high := Piece(refrange, '!', 2);
@@ -2107,39 +2259,52 @@ begin
     begin
       specnum := Piece(checkdata, '^', 7);
       RefUnits(typeitem, specnum, low, high, units);
-      units := LowerCase(units);
+      units := lowercase(units);
     end;
-    if units = '' then units := '  ';
+    if units = '' then
+      units := '  ';
   end
   else
   begin
-    specimen := ''; low := ''; high := ''; units := '';
+    specimen := '';
+    low := '';
+    high := '';
+    units := '';
   end;
   if (filetype = '63') and (Piece(typeitem, '.', 2) = '0') then
   begin
-    specimen := ''; low := ''; high := '';
+    specimen := '';
+    low := '';
+    high := '';
   end;
-  Result := filetype + '^' + typeitem + '^' + caption + '^' +
-            specimen + '^' + low + '^' + high + '^' + units + '^';
+  Result := filetype + '^' + typeitem + '^' + caption + '^' + specimen + '^' +
+    low + '^' + high + '^' + units + '^';
 end;
 
-procedure TfrmGraphs.MakeSeparateItems(aScrollBox: TScrollBox; aListView: TListView; section: string);
+procedure TfrmGraphs.MakeSeparateItems(aScrollBox: TScrollBox;
+  aListView: TListView; section: string);
 var
-  bcnt, gcnt, graphtype, lcnt, ncnt, pcnt, vcnt: integer;
+  bcnt, gcnt, graphtype, lcnt, ncnt, pcnt, vcnt: Integer;
   aTitle, filetype, typeitem: string;
   newchart: TChart;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
-  pcnt := 0; gcnt := 0; vcnt := 0; lcnt := 0; ncnt := 0; bcnt := 0;
+  pcnt := 0;
+  gcnt := 0;
+  vcnt := 0;
+  lcnt := 0;
+  ncnt := 0;
+  bcnt := 0;
   aListItem := aListView.Selected;
   while aListItem <> nil do
   begin
     aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);
     filetype := UpperCase(Piece(aGraphItem.Values, '^', 1));
     typeitem := UpperCase(Piece(aGraphItem.Values, '^', 2));
-    graphtype := GraphTypeNum(filetype); //*****strtointdef(Piece(aListBox.Items[j], '^', 2), 1);
-    aTitle := TitleInfo(filetype, typeitem, aListItem.Caption);
+    graphtype := GraphTypeNum(filetype);
+    // *****strtointdef(Piece(aListBox.Items[j], '^', 2), 1);
+    aTitle := TitleInfo(filetype, typeitem, aListItem.caption);
     newchart := TChart.Create(self);
     newchart.Tag := GtslNonNum.Count;
     MakeChart(newchart, aScrollBox);
@@ -2149,44 +2314,50 @@ begin
       Align := alBottom;
       Align := alTop;
       Tag := aListItem.Index;
-      //SetPiece(aTitle, '^', 3, 'zzzz: ' + Piece(aTitle, '^', 3)); // test prefix
+      // SetPiece(aTitle, '^', 3, 'zzzz: ' + Piece(aTitle, '^', 3)); // test prefix
       if (graphtype = 1) and (btnChangeSettings.Tag = 1) then
-        LeftAxis.Title.Caption := 'StdDev'
+        LeftAxis.Title.caption := 'StdDev'
       else if (graphtype = 1) and (btnChangeSettings.Tag = 2) then
       begin
-        LeftAxis.Title.Caption := '1/' + Piece(aTitle, '^', 7);
+        LeftAxis.Title.caption := '1/' + Piece(aTitle, '^', 7);
         SetPiece(aTitle, '^', 3, 'Inverse ' + Piece(aTitle, '^', 3));
       end
       else
-        LeftAxis.Title.Caption := Piece(aTitle, '^', 7);
+        LeftAxis.Title.caption := Piece(aTitle, '^', 7);
       if graphtype <> 1 then
       begin
         LeftAxis.Visible := false;
         MarginLeft := PadLeftEvent(pnlScrollTopBase.Width);
-        //MarginLeft := round((65 / (pnlScrollTopBase.Width + 1)) * 100);       // ************* marginleft is a %
+        // MarginLeft := round((65 / (pnlScrollTopBase.Width + 1)) * 100);       // ************* marginleft is a %
       end;
     end;
-    splGraphs.Tag := 1;    // show ref ranges
-    if graphtype = 4 then graphtype := 2;         // change points to be bars
+    splGraphs.Tag := 1; // show ref ranges
+    if graphtype = 4 then
+      graphtype := 2; // change points to be bars
     case graphtype of
-      1:  MakeLineSeries(newchart, aTitle, filetype, section, lcnt, ncnt, false);
-      2:  MakeBarSeries(newchart, aTitle, filetype, bcnt);
-      3:  MakeVisitGanttSeries(newchart, aTitle, filetype, vcnt);
-      4:  MakePointSeries(newchart, aTitle, filetype, pcnt);
-      8:  MakeGanttSeries(newchart, aTitle, filetype, gcnt);
+      1:
+        MakeLineSeries(newchart, aTitle, filetype, section, lcnt, ncnt, false);
+      2:
+        MakeBarSeries(newchart, aTitle, filetype, bcnt);
+      3:
+        MakeVisitGanttSeries(newchart, aTitle, filetype, vcnt);
+      4:
+        MakePointSeries(newchart, aTitle, filetype, pcnt);
+      8:
+        MakeGanttSeries(newchart, aTitle, filetype, gcnt);
     end;
     MakeOtherSeries(newchart);
     aListItem := aListView.GetNextItem(aListItem, sdAll, [isSelected]);
   end;
-  if (FGraphSetting.HighTime = FGraphSetting.LowTime)
-  or (lcnt = 1) or (pcnt = 1) or (bcnt = 1) or (vcnt = 1) then
+  if (FGraphSetting.HighTime = FGraphSetting.LowTime) or (lcnt = 1) or
+    (pcnt = 1) or (bcnt = 1) or (vcnt = 1) then
   begin
     FGraphSetting.HighTime := FGraphSetting.HighTime + 1;
     FGraphSetting.LowTime := FGraphSetting.LowTime - 1;
   end;
 end;
 
-function TfrmGraphs.PadLeftEvent(aWidth: integer): integer;
+function TfrmGraphs.PadLeftEvent(aWidth: Integer): Integer;
 begin
   if aWidth < 50 then
     Result := 10
@@ -2220,7 +2391,7 @@ begin
     Result := 5;
 end;
 
-function TfrmGraphs.PadLeftNonNumeric(aWidth: integer): integer;
+function TfrmGraphs.PadLeftNonNumeric(aWidth: Integer): Integer;
 begin
   if aWidth < 50 then
     Result := 10
@@ -2246,16 +2417,19 @@ begin
     Result := 5;
 end;
 
-procedure TfrmGraphs.MakeTogetherMaybe(aScrollBox: TScrollBox; aListView:
-  TListView; aPadPanel: TPanel; section: string);
+procedure TfrmGraphs.MakeTogetherMaybe(aScrollBox: TScrollBox;
+  aListView: TListView; aPadPanel: TPanel; section: string);
 var
   filetype: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
   FNonNumerics := false;
-  if section = 'top' then pnlItemsTop.Tag := 0 else pnlItemsBottom.Tag := 0;
-  if aListView.SelCount = 1 then                 // one lab test - make separate
+  if section = 'top' then
+    pnlItemsTop.Tag := 0
+  else
+    pnlItemsBottom.Tag := 0;
+  if aListView.SelCount = 1 then // one lab test - make separate
   begin
     aListItem := aListView.Selected;
     aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);
@@ -2263,29 +2437,36 @@ begin
     if (filetype = '63') or (filetype = '120.5') then
     begin
       MakeSeparate(aScrollBox, aListView, aPadPanel, section);
-      exit;
+      Exit;
     end;
   end;
   MakeTogether(aScrollBox, aListView, aPadPanel, section);
 end;
 
-procedure TfrmGraphs.MakeTogether(aScrollBox: TScrollBox; aListView:
-  TListView; aPadPanel: TPanel; section: string);
+procedure TfrmGraphs.MakeTogether(aScrollBox: TScrollBox; aListView: TListView;
+  aPadPanel: TPanel; section: string);
 var
   anylines, nolines, onlylines, singlepoint: boolean;
-  bcnt, gcnt, graphtype, lcnt, pcnt, vcnt: integer;
-  portion: double;
+  bcnt, gcnt, graphtype, lcnt, pcnt, vcnt: Integer;
+  portion: Double;
   filetype, typeitem: string;
   newchart: TChart;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
-  pcnt := 0; gcnt := 0; lcnt := 0; bcnt := 0; vcnt := 0;
+  pcnt := 0;
+  gcnt := 0;
+  lcnt := 0;
+  bcnt := 0;
+  vcnt := 0;
   onlylines := true;
   anylines := false;
   nolines := true;
   FNonNumerics := false;
-  if section = 'top' then pnlItemsTop.Tag := 0 else pnlItemsBottom.Tag := 0;
+  if section = 'top' then
+    pnlItemsTop.Tag := 0
+  else
+    pnlItemsBottom.Tag := 0;
   aListItem := aListView.Selected;
   while aListItem <> nil do
   begin
@@ -2294,11 +2475,16 @@ begin
     typeitem := UpperCase(Piece(aGraphItem.Values, '^', 2));
     graphtype := GraphTypeNum(filetype);
     case graphtype of
-    1: lcnt := lcnt + 1;
-    2: bcnt := bcnt + 1;
-    3: vcnt := vcnt + 1;
-    4: pcnt := pcnt + 1;
-    8: gcnt := gcnt + 1;
+      1:
+        lcnt := lcnt + 1;
+      2:
+        bcnt := bcnt + 1;
+      3:
+        vcnt := vcnt + 1;
+      4:
+        pcnt := pcnt + 1;
+      8:
+        gcnt := gcnt + 1;
     end;
     if graphtype = 1 then
     begin
@@ -2314,13 +2500,15 @@ begin
   else
     chkItemsBottom.Checked := false;
   GtslTempCheck.Clear;
-  while aScrollBox.ControlCount > 0 do aScrollBox.Controls[0].Free;
-  newchart := TChart.Create(self);  // whynot use base?
+  while aScrollBox.ControlCount > 0 do
+    aScrollBox.Controls[0].Free;
+  newchart := TChart.Create(self); // whynot use base?
   MakeChart(newchart, aScrollBox);
-  with newchart do          // if a single line graph do lab stuff (ref range, units) ****************************************
+  with newchart do
+  // if a single line graph do lab stuff (ref range, units) ****************************************
   begin
     Align := alClient;
-    LeftAxis.Title.Caption := ' ';
+    LeftAxis.Title.caption := ' ';
   end;
   aPadPanel.Visible := true;
   portion := PortionSize(lcnt, pcnt, gcnt, vcnt, bcnt);
@@ -2330,32 +2518,42 @@ begin
   else
     SizeTogether(onlylines, nolines, anylines, scrlBottom, newchart,
       pnlDatelineBottom, pnlScrollBottomBase, portion);
-  if btnChangeSettings.Tag = 1 then  splGraphs.Tag := 1 // show ref ranges
-  else splGraphs.Tag := 0;
+  if btnChangeSettings.Tag = 1 then
+    splGraphs.Tag := 1 // show ref ranges
+  else
+    splGraphs.Tag := 0;
 
-  if nolines then MakeTogetherNoLines(aListView, section)
-  else if onlylines then MakeTogetherOnlyLines(aListView, section, newchart)
-  else if anylines then MakeTogetherAnyLines(aListView, section, newchart);
+  if nolines then
+    MakeTogetherNoLines(aListView, section)
+  else if onlylines then
+    MakeTogetherOnlyLines(aListView, section, newchart)
+  else if anylines then
+    MakeTogetherAnyLines(aListView, section, newchart);
   MakeOtherSeries(newchart);
 
   singlepoint := (lcnt = 1) or (pcnt = 1) or (bcnt = 1) or (vcnt = 1);
   GraphBoundry(singlepoint);
   if FNonNumerics then
-    if section = 'top' then pnlItemsTop.Tag := 1
-    else pnlItemsBottom.Tag := 1;
+    if section = 'top' then
+      pnlItemsTop.Tag := 1
+    else
+      pnlItemsBottom.Tag := 1;
 end;
 
 procedure TfrmGraphs.GraphBoundry(singlepoint: boolean);
 begin
-  if (FGraphSetting.HighTime = FGraphSetting.LowTime)
-  or singlepoint then
+  if (FGraphSetting.HighTime = FGraphSetting.LowTime) or singlepoint then
   begin
     FGraphSetting.HighTime := FGraphSetting.HighTime + 1;
     FGraphSetting.LowTime := FGraphSetting.LowTime - 1;
-    chartDatelineTop.LeftAxis.Minimum := chartDatelineTop.LeftAxis.Minimum - 0.5;
-    chartDatelineTop.LeftAxis.Maximum := chartDatelineTop.LeftAxis.Maximum + 0.5;
-    chartDatelineBottom.LeftAxis.Minimum := chartDatelineBottom.LeftAxis.Minimum - 0.5;
-    chartDatelineBottom.LeftAxis.Maximum := chartDatelineBottom.LeftAxis.Maximum + 0.5;
+    chartDatelineTop.LeftAxis.Minimum :=
+      chartDatelineTop.LeftAxis.Minimum - 0.5;
+    chartDatelineTop.LeftAxis.Maximum :=
+      chartDatelineTop.LeftAxis.Maximum + 0.5;
+    chartDatelineBottom.LeftAxis.Minimum :=
+      chartDatelineBottom.LeftAxis.Minimum - 0.5;
+    chartDatelineBottom.LeftAxis.Maximum :=
+      chartDatelineBottom.LeftAxis.Maximum + 0.5;
   end;
   if FGraphSetting.Hints then
   begin
@@ -2368,51 +2566,57 @@ begin
     chartDatelineBottom.OnMouseMove := nil;
   end;
   AdjustTimeframe;
-  //if chartDatelineTop.Visible then chartDatelineTop.ZoomPercent(ZOOM_PERCENT);
-  //if chartDatelineBottom.Visible then chartDatelineBottom.ZoomPercent(ZOOM_PERCENT);
+  // if chartDatelineTop.Visible then chartDatelineTop.ZoomPercent(ZOOM_PERCENT);
+  // if chartDatelineBottom.Visible then chartDatelineBottom.ZoomPercent(ZOOM_PERCENT);
 end;
 
 procedure TfrmGraphs.MakeTogetherNoLines(aListView: TListView; section: string);
 var
-  bcnt, gcnt, graphtype, pcnt, vcnt: integer;
+  bcnt, gcnt, graphtype, pcnt, vcnt: Integer;
   aTitle, filetype, typeitem: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
-  pcnt := 0; gcnt := 0; vcnt := 0; bcnt := 0;
+  pcnt := 0;
+  gcnt := 0;
+  vcnt := 0;
+  bcnt := 0;
   aListItem := aListView.Selected;
   while aListItem <> nil do
   begin
     aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);
     filetype := Piece(aGraphItem.Values, '^', 1);
     typeitem := Piece(aGraphItem.Values, '^', 2);
-    aTitle := filetype + '^' + typeitem + '^' + aListItem.Caption + '^';
+    aTitle := filetype + '^' + typeitem + '^' + aListItem.caption + '^';
     graphtype := GraphTypeNum(filetype);
     if section = 'top' then
-      MakeDateline(section, aTitle, filetype, chartDatelineTop, graphtype, bcnt, pcnt, gcnt, vcnt)
+      MakeDateline(section, aTitle, filetype, chartDatelineTop, graphtype, bcnt,
+        pcnt, gcnt, vcnt)
     else
-      MakeDateline(section, aTitle, filetype, chartDatelineBottom, graphtype, bcnt, pcnt, gcnt, vcnt);
+      MakeDateline(section, aTitle, filetype, chartDatelineBottom, graphtype,
+        bcnt, pcnt, gcnt, vcnt);
     aListItem := aListView.GetNextItem(aListItem, sdAll, [isSelected]);
   end;
   if section = 'top' then
   begin
     scrlTop.Align := alTop;
-    scrlTop.Height := 1; //pnlScrollTopBase.Height div 4;
+    scrlTop.Height := 1; // pnlScrollTopBase.Height div 4;
     pnlDatelineTop.Align := alClient;
     pnlDatelineTop.Visible := true;
   end
   else
   begin
     scrlBottom.Align := alTop;
-    scrlBottom.Height := 1; //pnlScrollBottomBase.Height div 4;
+    scrlBottom.Height := 1; // pnlScrollBottomBase.Height div 4;
     pnlDatelineBottom.Align := alClient;
     pnlDatelineBottom.Visible := true;
   end;
 end;
 
-procedure TfrmGraphs.MakeTogetherOnlyLines(aListView: TListView; section: string; aChart: TChart);
+procedure TfrmGraphs.MakeTogetherOnlyLines(aListView: TListView;
+  section: string; aChart: TChart);
 var
-  lcnt, ncnt: integer;
+  lcnt, ncnt: Integer;
   aTitle, filetype, typeitem: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
@@ -2424,9 +2628,10 @@ begin
     aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);
     filetype := Piece(aGraphItem.Values, '^', 1);
     typeitem := Piece(aGraphItem.Values, '^', 2);
-    aTitle := TitleInfo(filetype, typeitem, aListItem.Caption);
+    aTitle := TitleInfo(filetype, typeitem, aListItem.caption);
     MakeLineSeries(aChart, aTitle, filetype, section, lcnt, ncnt, true);
-    if FDisplayFreeText = true then DisplayFreeText(aChart);
+    if FDisplayFreeText = true then
+      DisplayFreeText(aChart);
     aListItem := aListView.GetNextItem(aListItem, sdAll, [isSelected]);
   end;
   if section = 'top' then
@@ -2446,46 +2651,54 @@ begin
   with aChart do
   begin
     if btnChangeSettings.Tag = 1 then
-      LeftAxis.Title.Caption := 'StdDev';
+      LeftAxis.Title.caption := 'StdDev';
     Visible := true;
   end;
 end;
 
-procedure TfrmGraphs.MakeTogetherAnyLines(aListView: TListView; section: string; aChart: TChart);
+procedure TfrmGraphs.MakeTogetherAnyLines(aListView: TListView; section: string;
+  aChart: TChart);
 var
   singletest: boolean;
-  bcnt, gcnt, graphtype, lcnt, ncnt, pcnt, vcnt: integer;
+  bcnt, gcnt, graphtype, lcnt, ncnt, pcnt, vcnt: Integer;
   aTitle, filetype, typeitem: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
   singletest := SingleLabTest(aListView);
-  pcnt := 0; gcnt := 0; vcnt := 0; lcnt := 0; bcnt := 0;
+  pcnt := 0;
+  gcnt := 0;
+  vcnt := 0;
+  lcnt := 0;
+  bcnt := 0;
   aListItem := aListView.Selected;
   while aListItem <> nil do
   begin
     aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);
     filetype := Piece(aGraphItem.Values, '^', 1);
     typeitem := Piece(aGraphItem.Values, '^', 2);
-    aTitle := TitleInfo(filetype, typeitem, aListItem.Caption);
+    aTitle := TitleInfo(filetype, typeitem, aListItem.caption);
     graphtype := GraphTypeNum(filetype);
     if graphtype = 1 then
     begin
       if btnChangeSettings.Tag = 1 then
-        aChart.LeftAxis.Title.Caption := 'StdDev'
+        aChart.LeftAxis.Title.caption := 'StdDev'
       else
-        aChart.LeftAxis.Title.Caption := Piece(aTitle, '^', 7);
+        aChart.LeftAxis.Title.caption := Piece(aTitle, '^', 7);
       if singletest then
         splGraphs.Tag := 1
       else
         splGraphs.Tag := 0;
       MakeLineSeries(aChart, aTitle, filetype, section, lcnt, ncnt, true);
-      if FDisplayFreeText = true then DisplayFreeText(aChart);
+      if FDisplayFreeText = true then
+        DisplayFreeText(aChart);
     end
     else if section = 'top' then
-      MakeDateline(section, aTitle, filetype, chartDatelineTop, graphtype, bcnt, pcnt, gcnt, vcnt)
+      MakeDateline(section, aTitle, filetype, chartDatelineTop, graphtype, bcnt,
+        pcnt, gcnt, vcnt)
     else
-      MakeDateline(section, aTitle, filetype, chartDatelineBottom, graphtype, bcnt, pcnt, gcnt, vcnt);
+      MakeDateline(section, aTitle, filetype, chartDatelineBottom, graphtype,
+        bcnt, pcnt, gcnt, vcnt);
     aListItem := aListView.GetNextItem(aListItem, sdAll, [isSelected]);
   end;
   if section = 'top' then
@@ -2507,14 +2720,14 @@ begin
   with aChart do
   begin
     if btnChangeSettings.Tag = 1 then
-      LeftAxis.Title.Caption := 'StdDev';
+      LeftAxis.Title.caption := 'StdDev';
     Visible := true;
   end;
 end;
 
 function TfrmGraphs.SingleLabTest(aListView: TListView): boolean;
 var
-  cnt: integer;
+  cnt: Integer;
   filetype: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
@@ -2558,6 +2771,7 @@ begin
     Legend.Visible := true;
     BottomAxis.ExactDateTime := true;
     BottomAxis.Increment := DateTimeStep[dtOneMinute];
+    BottomAxis.LabelStyle := talValue;
     HideDates(aChart);
     BevelOuter := bvNone;
     OnZoom := ChartOnZoom;
@@ -2574,7 +2788,8 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.MakeSeriesInfo(aChart: TChart; aSeries: TChartSeries; aTitle, aFileType: string; aSerCnt: integer);
+procedure TfrmGraphs.MakeSeriesInfo(aChart: TChart; aSeries: TChartSeries;
+  aTitle, aFileType: string; aSerCnt: Integer);
 begin
   with aSeries do
   begin
@@ -2591,13 +2806,14 @@ begin
     Marks.Frame.Visible := true;
     Marks.Visible := false;
     OnGetMarkText := serDatelineTop.OnGetMarkText;
-    XValues.DateTime := True;
-    GetHorizAxis.ExactDateTime := True;
+    XValues.DateTime := true;
+    GetHorizAxis.ExactDateTime := true;
     GetHorizAxis.Increment := DateTimeStep[dtOneMinute];
   end;
 end;
 
-procedure TfrmGraphs.MakeSeriesPoint(aChart: TChart; aPointSeries: TPointSeries);
+procedure TfrmGraphs.MakeSeriesPoint(aChart: TChart;
+  aPointSeries: TPointSeries);
 begin
   with aPointSeries do
   begin
@@ -2621,26 +2837,27 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.MakeSeriesRef(aChart: TChart; aTest, aRef: TLineSeries; aTitle, aValue: string; aDate: double);
+procedure TfrmGraphs.MakeSeriesRef(aChart: TChart; aTest, aRef: TLineSeries;
+  aTitle, aValue: string; aDate: Double);
 var
-  value: double;
+  value: Double;
 begin
   with aRef do
   begin
     Active := true;
     ParentChart := aChart;
-    XValues.DateTime := True;
+    XValues.DateTime := true;
     Pointer.Visible := false;
     Pointer.InflateMargins := true;
     OnGetMarkText := serDatelineTop.OnGetMarkText;
     ColorEachPoint := false;
     Title := aTitle + aValue;
     Pointer.Style := psCircle;
-    SeriesColor := clTeeColor; //aTest.SeriesColor; // clBtnShadow;  //
+    SeriesColor := clTeeColor; // aTest.SeriesColor; // clBtnShadow;  //
     Marks.Visible := false;
     LinePen.Visible := true;
     LinePen.Width := 1;
-    LinePen.Style := psDash;  //does not show when width <> 1
+    LinePen.Style := psDash; // does not show when width <> 1
   end;
   value := strtofloatdef(aValue, -BIG_NUMBER);
   if value <> -BIG_NUMBER then
@@ -2651,7 +2868,8 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.MakeSeriesBP(aChart: TChart; aTest, aBP: TLineSeries; aFileType: string);
+procedure TfrmGraphs.MakeSeriesBP(aChart: TChart; aTest, aBP: TLineSeries;
+  aFileType: string);
 begin
   with aBP do
   begin
@@ -2659,7 +2877,7 @@ begin
     Title := 'Blood Pressure';
     XValues.DateTime := true;
     Pointer.Style := aTest.Pointer.Style;
-    ShowInLegend := false;    //****
+    ShowInLegend := false; // ****
     Identifier := aFileType;
     Pointer.Visible := true;
     Pointer.InflateMargins := true;
@@ -2674,7 +2892,8 @@ begin
   if GtslNonNum.Count > 0 then
   begin
     MakeNonNumerics(aChart);
-    if FDisplayFreeText = true then DisplayFreeText(aChart);
+    if FDisplayFreeText = true then
+      DisplayFreeText(aChart);
   end;
   if length(aChart.Hint) > 0 then
   begin
@@ -2695,19 +2914,21 @@ begin
     SeriesColor := clTeeColor;
     Marks.ArrowLength := -24;
     Marks.Visible := true;
-    end;
+  end;
 end;
 
 procedure TfrmGraphs.MakeNonNumerics(aChart: TChart);
 var
   nonnumericonly, nonnumsection: boolean;
-  i, bmax, tmax: integer;
-  diffvalue, highestvalue, lowestvalue, padvalue: double;
+  i, bmax, tmax: Integer;
+  diffvalue, highestvalue, lowestvalue, padvalue: Double;
   astring, listofseries, section: string;
   serBlank: TPointSeries;
 begin
-  if aChart.Parent = scrlBottom then section := 'bottom'
-  else section := 'top';
+  if aChart.Parent = scrlBottom then
+    section := 'bottom'
+  else
+    section := 'top';
   nonnumericonly := true;
   for i := 0 to aChart.SeriesCount - 1 do
   begin
@@ -2719,8 +2940,10 @@ begin
       end;
   end;
   PadNonNum(aChart, section, listofseries, bmax, tmax);
-  if bmax = 0 then bmax := 1;
-  if tmax = 0 then tmax := 1;
+  if bmax = 0 then
+    bmax := 1;
+  if tmax = 0 then
+    tmax := 1;
   if nonnumericonly then
   begin
     highestvalue := 1;
@@ -2738,13 +2961,15 @@ begin
     padvalue := POINT_PADDING * diffvalue;
   highestvalue := highestvalue + (tmax * padvalue);
   lowestvalue := lowestvalue - (bmax * padvalue);
-  if not (aChart.MinYValue(aChart.LeftAxis) < 0) then
+  if not(aChart.MinYValue(aChart.LeftAxis) < 0) then
   begin
-    if highestvalue < 0 then highestvalue := 0;
-    if lowestvalue < 0 then lowestvalue := 0;
+    if highestvalue < 0 then
+      highestvalue := 0;
+    if lowestvalue < 0 then
+      lowestvalue := 0;
   end;
   if lowestvalue > highestvalue then
-     lowestvalue := highestvalue;
+    lowestvalue := highestvalue;
   aChart.LeftAxis.Maximum := highestvalue;
   aChart.LeftAxis.Minimum := lowestvalue;
   nonnumsection := false;
@@ -2768,59 +2993,66 @@ begin
     end;
     aChart.LeftAxis.Labels := false;
     aChart.MarginLeft := PadLeftNonNumeric(pnlScrollTopBase.Width);
-    //aChart.MarginLeft := round((40 / (pnlScrollTopBase.Width + 1)) * 100);       // ************* marginleft is a %
+    // aChart.MarginLeft := round((40 / (pnlScrollTopBase.Width + 1)) * 100);       // ************* marginleft is a %
     ChartOnUndoZoom(aChart);
   end;
-  MakeNonNumSeries(aChart, padvalue, highestvalue, lowestvalue, listofseries, section);
+  MakeNonNumSeries(aChart, padvalue, highestvalue, lowestvalue,
+    listofseries, section);
 end;
 
-procedure TfrmGraphs.MakeNonNumSeries(aChart: TChart; padvalue, highestvalue, lowestvalue: double; listofseries, section: string);
+procedure TfrmGraphs.MakeNonNumSeries(aChart: TChart;
+  padvalue, highestvalue, lowestvalue: Double; listofseries, section: string);
 var
-  asernum, i, j, offset, originalindex, linenum: integer;
-  graphvalue, nonvalue: double;
-  avalue, line: string;
+  asernum, i, j, offset, originalindex, linenum: Integer;
+  graphvalue, nonvalue: Double;
+  aValue, line: string;
   adatetime: TDateTime;
   serPoint: TPointSeries;
 begin
   for j := 2 to BIG_NUMBER do
   begin
-    line := Piece(listofseries, '^' , j);
-    if length(line) < 1 then break;
+    line := Piece(listofseries, '^', j);
+    if length(line) < 1 then
+      break;
     linenum := strtointdef(line, -BIG_NUMBER);
-    if linenum = -BIG_NUMBER then break;
+    if linenum = -BIG_NUMBER then
+      break;
     serPoint := TPointSeries.Create(aChart);
     MakeSeriesPoint(aChart, serPoint);
     with serPoint do
     begin
       serPoint.Title := '(non-numeric)';
       serPoint.Identifier := (aChart.Series[linenum] as TCustomSeries).Title;
-      serPoint.Pointer.Style := (aChart.Series[linenum] as TCustomSeries).Pointer.Style;
-      serPoint.SeriesColor := (aChart.Series[linenum] as TCustomSeries).SeriesColor;
+      serPoint.Pointer.Style := (aChart.Series[linenum] as TCustomSeries)
+        .Pointer.Style;
+      serPoint.SeriesColor := (aChart.Series[linenum] as TCustomSeries)
+        .SeriesColor;
       serPoint.Tag := BIG_NUMBER + linenum;
     end;
     for i := 0 to GtslNonNum.Count - 1 do
     begin
-      avalue := GtslNonNum[i];
-      if Piece(avalue, '^', 7) = section then
+      aValue := GtslNonNum[i];
+      if Piece(aValue, '^', 7) = section then
       begin
-        originalindex := strtointdef(Piece(avalue, '^', 3), 0);
+        originalindex := strtointdef(Piece(aValue, '^', 3), 0);
         if originalindex = linenum then
         begin
-          adatetime := strtofloatdef(Piece(avalue, '^', 1), -BIG_NUMBER);
+          adatetime := strtofloatdef(Piece(aValue, '^', 1), -BIG_NUMBER);
           asernum := aChart.Tag;
-          if adatetime = -BIG_NUMBER then break;
-          if asernum = strtointdef(Piece(avalue, '^', 2), -BIG_NUMBER) then
+          if adatetime = -BIG_NUMBER then
+            break;
+          if asernum = strtointdef(Piece(aValue, '^', 2), -BIG_NUMBER) then
           begin
-            offset := strtointdef(Piece(avalue, '^', 5), 1);
+            offset := strtointdef(Piece(aValue, '^', 5), 1);
             graphvalue := padvalue * offset;
-            if copy(Piece(avalue, '^', 13), 0, 1) = '>' then
+            if copy(Piece(aValue, '^', 13), 0, 1) = '>' then
               nonvalue := highestvalue
             else
               nonvalue := lowestvalue;
             nonvalue := nonvalue + graphvalue;
             with serPoint do
             begin
-              Hint := Piece(avalue, '^', 9);
+              Hint := Piece(aValue, '^', 9);
               AddXY(adatetime, nonvalue, '', serPoint.SeriesColor);
             end;
           end;
@@ -2830,38 +3062,42 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.StackNonNum(astring: string; var offset, bmax, tmax: integer; var blabelon, tlabelon: boolean);
+procedure TfrmGraphs.StackNonNum(astring: string;
+  var offset, bmax, tmax: Integer; var blabelon, tlabelon: boolean);
 var
   inlist: boolean;
-  i, lastnum, plusminus: integer;
-  avalue, checktime, lasttime: string;
+  i, lastnum, plusminus: Integer;
+  aValue, checktime, lasttime: string;
 begin
   inlist := false;
   offset := 0;
   checktime := Piece(astring, '^', 1);
-  if length(checktime) < 4 then exit;
+  if length(checktime) < 4 then
+    Exit;
   if copy(Piece(astring, '^', 13), 0, 1) = '>' then
   begin
-    checktime := checktime + ';t';    // top values will stack downwards
+    checktime := checktime + ';t'; // top values will stack downwards
     plusminus := -1;
     tlabelon := true;
   end
   else
   begin
-    checktime := checktime + ';b';    // bottom values will stack upwards
+    checktime := checktime + ';b'; // bottom values will stack upwards
     plusminus := 1;
     blabelon := true;
   end;
   for i := 0 to GtslNonNumDates.Count - 1 do
   begin
-    avalue := GtslNonNumDates[i];
-    lasttime := Piece(avalue, '^' , 1);
+    aValue := GtslNonNumDates[i];
+    lasttime := Piece(aValue, '^', 1);
     if checktime = lasttime then
     begin
-      lastnum := strtointdef(Piece(avalue, '^', 2), 0);
+      lastnum := strtointdef(Piece(aValue, '^', 2), 0);
       offset := lastnum + 1;
-      if offset > 0 then bmax := bmax + 1
-      else tmax := tmax + 1;
+      if offset > 0 then
+        bmax := bmax + 1
+      else
+        tmax := tmax + 1;
       GtslNonNumDates[i] := checktime + '^' + inttostr(offset * plusminus);
       inlist := true;
       break;
@@ -2871,28 +3107,31 @@ begin
     GtslNonNumDates.Add(checktime + '^' + inttostr(offset * plusminus));
 end;
 
-procedure TfrmGraphs.PadNonNum(aChart: TChart; aSection: string; var listofseries: string; var bmax, tmax: integer);
+procedure TfrmGraphs.PadNonNum(aChart: TChart; aSection: string;
+  var listofseries: string; var bmax, tmax: Integer);
 var
   blabelon, tlabelon: boolean;
-  i, offset: integer;
-  astring, avalue, charttag, lasttime, newseries, newtime: string;
+  i, offset: Integer;
+  astring, aValue, charttag, lasttime, newseries, newtime: string;
   serNonNumBottom, serNonNumTop: TPointSeries;
 begin
   GtslNonNumDates.Clear;
   listofseries := '^';
-  blabelon := false; tlabelon := false;
-  bmax := 0; tmax := 0;
+  blabelon := false;
+  tlabelon := false;
+  bmax := 0;
+  tmax := 0;
   lasttime := '';
   for i := 0 to GtslNonNum.Count - 1 do
   begin
-    astring   := GtslNonNum[i];
+    astring := GtslNonNum[i];
     if Piece(astring, '^', 7) = aSection then
     begin
       charttag := Piece(astring, '^', 2);
       if charttag = inttostr(aChart.Tag) then
       begin
-        newtime   := Piece(astring, '^', 1);
-        avalue    := Piece(astring, '^', 13);
+        newtime := Piece(astring, '^', 1);
+        aValue := Piece(astring, '^', 13);
         newseries := '^' + Piece(astring, '^', 3) + '^';
         if Pos(newseries, listofseries) = 0 then
           listofseries := listofseries + Piece(astring, '^', 3) + '^';
@@ -2928,9 +3167,9 @@ begin
   end;
 end;
 
-function TfrmGraphs.PortionSize(lcnt, pcnt, gcnt, vcnt, bcnt: integer): double;
+function TfrmGraphs.PortionSize(lcnt, pcnt, gcnt, vcnt, bcnt: Integer): Double;
 var
-  dvalue, etotal, evalue, value: double;
+  dvalue, etotal, evalue, value: Double;
 begin
   dvalue := (gcnt + vcnt);
   evalue := (pcnt + bcnt) / 2;
@@ -2938,34 +3177,44 @@ begin
   if etotal > 0 then
   begin
     value := lcnt / etotal;
-    if value > 4 then Result := 0.2
-    else if etotal < 5 then Result := 0.2
-    else if value < 0.25 then Result := 0.8
-    else if value < 0.4 then Result := 0.6
-    else Result := 0.5;
+    if value > 4 then
+      Result := 0.2
+    else if etotal < 5 then
+      Result := 0.2
+    else if value < 0.25 then
+      Result := 0.8
+    else if value < 0.4 then
+      Result := 0.6
+    else
+      Result := 0.5;
   end
   else
     Result := 0;
 end;
 
-procedure TfrmGraphs.MakeDateline(section, aTitle, aFileType: string; aChart: TChart; graphtype: integer;
-  var bcnt, pcnt, gcnt, vcnt: integer);
+procedure TfrmGraphs.MakeDateline(section, aTitle, aFileType: string;
+  aChart: TChart; graphtype: Integer; var bcnt, pcnt, gcnt, vcnt: Integer);
 begin
   aChart.LeftAxis.Automatic := true;
   aChart.LeftAxis.Visible := true;
-  //if graphtype = 4 then graphtype := 2;    // makes all points into bars
+  // if graphtype = 4 then graphtype := 2;    // makes all points into bars
   case graphtype of
-    2:  MakeBarSeries(aChart, aTitle, aFileType, bcnt);
-    3:  MakeVisitGanttSeries(aChart, aTitle, aFileType, vcnt);
-    4:  MakePointSeries(aChart, aTitle, aFileType, pcnt);
-    8:  MakeGanttSeries(aChart, aTitle, aFileType, gcnt);
+    2:
+      MakeBarSeries(aChart, aTitle, aFileType, bcnt);
+    3:
+      MakeVisitGanttSeries(aChart, aTitle, aFileType, vcnt);
+    4:
+      MakePointSeries(aChart, aTitle, aFileType, pcnt);
+    8:
+      MakeGanttSeries(aChart, aTitle, aFileType, gcnt);
   end;
 end;
 
-procedure TfrmGraphs.SizeTogether(onlylines, nolines, anylines: Boolean; aScroll: TScrollBox;
-  aChart: TChart; aPanel, aPanelBase: TPanel; portion: Double);
+procedure TfrmGraphs.SizeTogether(onlylines, nolines, anylines: boolean;
+  aScroll: TScrollBox; aChart: TChart; aPanel, aPanelBase: TPanel;
+  portion: Double);
 begin
-  if onlylines then                     //top &bottom
+  if onlylines then // top &bottom
   begin
     aScroll.Align := alTop;
     aScroll.Height := 1;
@@ -2980,7 +3229,7 @@ begin
     aScroll.Align := alClient;
     aPanel.Visible := false;
     if btnChangeSettings.Tag = 1 then
-      aChart.LeftAxis.Title.Caption := 'StdDev';
+      aChart.LeftAxis.Title.caption := 'StdDev';
   end
   else if anylines then
   begin
@@ -2988,51 +3237,71 @@ begin
     aPanel.Align := alBottom;
     aPanel.Height := round(aPanelBase.Height * portion);
     if aPanel.Height < 60 then
-      if aPanelBase.Height > 100 then aPanel.Height := 60;           //***
+      if aPanelBase.Height > 100 then
+        aPanel.Height := 60; // ***
     aScroll.Align := alClient;
     aPanel.Visible := true;
     if btnChangeSettings.Tag = 1 then
-      aChart.LeftAxis.Title.Caption := 'StdDev';
+      aChart.LeftAxis.Title.caption := 'StdDev';
   end;
 end;
 
-function TfrmGraphs.NextColor(aCnt: integer): TColor;
+function TfrmGraphs.NextColor(aCnt: Integer): TColor;
 begin
   case (aCnt mod NUM_COLORS) of
-    1: Result := clRed;
-    2: Result := clBlue;
-    3: Result := clYellow;
-    4: Result := clGreen;
-    5: Result := clFuchsia;
-    6: Result := clMoneyGreen;
-    7: Result := clOlive;
-    8: Result := clLime;
-    9: Result := clMedGray;
-   10: Result := clNavy;
-   11: Result := clAqua;
-   12: Result := clGray;
-   13: Result := clSkyBlue;
-   14: Result := clTeal;
-   15: Result := clBlack;
-    0: Result := clPurple;
-   16: Result := clMaroon;
-   17: Result := clCream;
-   18: Result := clSilver;
-   else
-       Result := clWhite;
-   end;
+    1:
+      Result := clRed;
+    2:
+      Result := clBlue;
+    3:
+      Result := clYellow;
+    4:
+      Result := clGreen;
+    5:
+      Result := clFuchsia;
+    6:
+      Result := clMoneyGreen;
+    7:
+      Result := clOlive;
+    8:
+      Result := clLime;
+    9:
+      Result := clMedGray;
+    10:
+      Result := clNavy;
+    11:
+      Result := clAqua;
+    12:
+      Result := clGray;
+    13:
+      Result := clSkyBlue;
+    14:
+      Result := clTeal;
+    15:
+      Result := clBlack;
+    0:
+      Result := clPurple;
+    16:
+      Result := clMaroon;
+    17:
+      Result := clCream;
+    18:
+      Result := clSilver;
+  else
+    Result := clWhite;
+  end;
 end;
-
 
 procedure TfrmGraphs.mnuPopGraphSwapClick(Sender: TObject);
 var
-  tempcheck: boolean;
-  bottomview, topview: integer;
+  TempCheck: boolean;
+  bottomview, topview: Integer;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
   FFirstClick := true;
-  if (lvwItemsTop.SelCount = 0) and (lvwItemsBottom.SelCount = 0) then exit;
+  if (lvwItemsTop.SelCount = 0) and (lvwItemsBottom.SelCount = 0) then
+    Exit;
   topview := lstViewsTop.ItemIndex;
   bottomview := lstViewsBottom.ItemIndex;
   HideGraphs(true);
@@ -3042,9 +3311,9 @@ begin
       Checked := true;
       Click;
     end;
-  tempcheck := chkItemsTop.Checked;
+  TempCheck := chkItemsTop.Checked;
   chkItemsTop.Checked := chkItemsBottom.Checked;
-  chkItemsBottom.Checked := tempcheck;
+  chkItemsBottom.Checked := TempCheck;
   pnlBottom.Height := pnlMain.Height - pnlBottom.Height;
   GtslScratchSwap.Clear;
   if topview < 1 then
@@ -3062,12 +3331,13 @@ begin
   HideGraphs(false);
 end;
 
-procedure TfrmGraphs.GraphSwap(bottomview, topview: integer);
+procedure TfrmGraphs.GraphSwap(bottomview, topview: Integer);
 var
-  tempcheck: boolean;
+  TempCheck: boolean;
 begin
   FFirstClick := true;
-  if (lvwItemsTop.SelCount = 0) and (lvwItemsBottom.SelCount = 0) then exit;
+  if (lvwItemsTop.SelCount = 0) and (lvwItemsBottom.SelCount = 0) then
+    Exit;
   topview := lstViewsTop.ItemIndex;
   bottomview := lstViewsBottom.ItemIndex;
   HideGraphs(true);
@@ -3077,18 +3347,18 @@ begin
       Checked := true;
       Click;
     end;
-  tempcheck := chkItemsTop.Checked;
+  TempCheck := chkItemsTop.Checked;
   chkItemsTop.Checked := chkItemsBottom.Checked;
-  chkItemsBottom.Checked := tempcheck;
+  chkItemsBottom.Checked := TempCheck;
   pnlBottom.Height := pnlMain.Height - pnlBottom.Height;
   GtslScratchSwap.Clear;
   GraphSwitch(bottomview, topview);
   HideGraphs(false);
 end;
 
-procedure TfrmGraphs.GraphSwitch(bottomview, topview: integer);
+procedure TfrmGraphs.GraphSwitch(bottomview, topview: Integer);
 var
-  i, j: integer;
+  i, j: Integer;
   typeitem: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
@@ -3143,7 +3413,8 @@ begin
     for i := 0 to GtslScratchSwap.Count - 1 do
       for j := 0 to lvwItemsBottom.Items.Count - 1 do
       begin
-        aGraphItem := TGraphItem(lvwItemsBottom.Items.Item[j].SubItems.Objects[3]);
+        aGraphItem := TGraphItem(lvwItemsBottom.Items.Item[j]
+          .SubItems.Objects[3]);
         if aGraphItem.Values = GtslScratchSwap[i] then
         begin
           lvwItemsBottom.Items[j].Selected := true;
@@ -3158,7 +3429,8 @@ end;
 procedure TfrmGraphs.mnuPopGraphSplitClick(Sender: TObject);
 begin
   FFirstClick := true;
-  if (lvwItemsTop.SelCount = 0) and (lvwItemsBottom.SelCount = 0) then exit;
+  if (lvwItemsTop.SelCount = 0) and (lvwItemsBottom.SelCount = 0) then
+    Exit;
   HideGraphs(true);
   with chkDualViews do
     if not Checked then
@@ -3176,7 +3448,7 @@ begin
     begin
       ItemIndex := -1;
     end;
-    SplitClick;
+  SplitClick;
 end;
 
 procedure TfrmGraphs.SplitClick;
@@ -3198,7 +3470,7 @@ procedure TfrmGraphs.SplitClick;
   end;
 
 var
-  i: integer;
+  i: Integer;
   typeitem, typenum: string;
 begin
   chkItemsTop.Checked := true;
@@ -3226,7 +3498,7 @@ end;
 
 procedure TfrmGraphs.SelectItem(aListView: TListView; typeitem: string);
 var
-  i: integer;
+  i: Integer;
   aGraphItem: TGraphItem;
 begin
   with aListView do
@@ -3240,23 +3512,26 @@ end;
 
 procedure TfrmGraphs.mnuPopGraphLinesClick(Sender: TObject);
 begin
-  with FGraphSetting do Lines := not Lines;
+  with FGraphSetting do
+    Lines := not Lines;
   ChangeStyle;
 end;
 
 procedure TfrmGraphs.mnuPopGraph3DClick(Sender: TObject);
 begin
-  with FGraphSetting do View3D := not View3D;
+  with FGraphSetting do
+    View3D := not View3D;
   ChangeStyle;
 end;
 
 procedure TfrmGraphs.mnuPopGraphValueMarksClick(Sender: TObject);
 var
-  i: integer;
+  i: Integer;
 begin
-  if (FGraphSeries is TPointSeries) and not (FGraphSeries is TGanttSeries) then
+  if (FGraphSeries is TPointSeries) and not(FGraphSeries is TGanttSeries) then
   begin
-    if (FGraphSeries as TPointSeries).Pointer.Style = psSmallDot then exit;    // keep non-numeric label unchanged
+    if (FGraphSeries as TPointSeries).Pointer.Style = psSmallDot then
+      Exit; // keep non-numeric label unchanged
     if Piece(FGraphSeries.Title, '^', 1) = '(non-numeric)' then
     begin
       FGraphSeries.Marks.Visible := not FGraphSeries.Marks.Visible;
@@ -3265,21 +3540,23 @@ begin
         if FGraphClick.Series[i].Title = FGraphSeries.Identifier then
         begin
           FGraphClick.Series[i].Marks.Visible := FGraphSeries.Marks.Visible;
-          if FGraphSeries.Title <> 'Blood Pressure' then break;
+          if FGraphSeries.Title <> 'Blood Pressure' then
+            break;
         end;
       end;
     end;
   end
-  else if chartDatelineTop.Tag = 1 then               // series
+  else if chartDatelineTop.Tag = 1 then // series
   begin
     FGraphSeries.Marks.Visible := not FGraphSeries.Marks.Visible;
     for i := 0 to FGraphClick.SeriesCount - 1 do
     begin
-      if (FGraphClick.Series[i].Identifier = FGraphSeries.Title)
-      or (FGraphClick.Series[i].Title = FGraphSeries.Title) then
+      if (FGraphClick.Series[i].Identifier = FGraphSeries.Title) or
+        (FGraphClick.Series[i].Title = FGraphSeries.Title) then
       begin
         FGraphClick.Series[i].Marks.Visible := FGraphSeries.Marks.Visible;
-        if FGraphSeries.Title <> 'Blood Pressure' then break;
+        if FGraphSeries.Title <> 'Blood Pressure' then
+          break;
       end;
     end;
   end;
@@ -3287,7 +3564,8 @@ end;
 
 procedure TfrmGraphs.mnuPopGraphValuesClick(Sender: TObject);
 begin
-  with FGraphSetting do Values := not Values;
+  with FGraphSetting do
+    Values := not Values;
   ChangeStyle;
 end;
 
@@ -3295,8 +3573,10 @@ procedure TfrmGraphs.mnuPopGraphSortClick(Sender: TObject);
 begin
   with FGraphSetting do
   begin
-    if SortColumn = 1 then SortColumn := 0
-    else SortColumn := 1;
+    if SortColumn = 1 then
+      SortColumn := 0
+    else
+      SortColumn := 1;
     mnuPopGraphSort.Checked := SortColumn = 1;
     if not FItemsSortedTop then
     begin
@@ -3311,7 +3591,8 @@ begin
     if SortColumn > 0 then
     begin
       lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[SortColumn]);
-      lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[SortColumn]);
+      lvwItemsBottomColumnClick(lvwItemsBottom,
+        lvwItemsBottom.Column[SortColumn]);
       FItemsSortedTop := false;
       FItemsSortedBottom := false;
     end;
@@ -3323,12 +3604,15 @@ begin
   with FGraphSetting do
   begin
     ClearBackground := not ClearBackground;
-    if ClearBackground then Gradient := false;
+    if ClearBackground then
+      Gradient := false;
   end;
   ChangeStyle;
   // ???redisplay if nonnumericonly graph exists
-  if pnlItemsTop.Tag = 1 then lvwItemsTopClick(self);
-  if pnlItemsBottom.Tag = 1 then lvwItemsBottomClick(self);
+  if pnlItemsTop.Tag = 1 then
+    lvwItemsTopClick(self);
+  if pnlItemsBottom.Tag = 1 then
+    lvwItemsBottomClick(self);
 end;
 
 procedure TfrmGraphs.mnuPopGraphHorizontalClick(Sender: TObject);
@@ -3337,7 +3621,8 @@ begin
   begin
     HorizontalZoom := not HorizontalZoom;
     mnuPopGraphHorizontal.Checked := HorizontalZoom;
-    if not HorizontalZoom then mnuPopGraphResetClick(self);
+    if not HorizontalZoom then
+      mnuPopGraphResetClick(self);
   end;
 end;
 
@@ -3347,14 +3632,15 @@ begin
   begin
     VerticalZoom := not VerticalZoom;
     mnuPopGraphVertical.Checked := VerticalZoom;
-    if not VerticalZoom then mnuPopGraphResetClick(self);
+    if not VerticalZoom then
+      mnuPopGraphResetClick(self);
   end;
 end;
 
 procedure TfrmGraphs.mnuPopGraphViewDefinitionClick(Sender: TObject);
 begin
   mnuPopGraphViewDefinition.Checked := not mnuPopGraphViewDefinition.Checked;
-  if mnuPopGraphViewDefinition.Checked  then
+  if mnuPopGraphViewDefinition.Checked then
   begin
     memViewsTop.Height := (tsTopViews.Height div 3) + 1;
     memViewsBottom.Height := (tsBottomViews.Height div 3) + 1;
@@ -3368,7 +3654,8 @@ end;
 
 procedure TfrmGraphs.mnuPopGraphDatesClick(Sender: TObject);
 begin
-  with FGraphSetting do Dates := not Dates;
+  with FGraphSetting do
+    Dates := not Dates;
   ChangeStyle;
 end;
 
@@ -3380,22 +3667,23 @@ end;
 
 procedure TfrmGraphs.mnuPopGraphExportClick(Sender: TObject);
 
-  procedure AddRow(worksheet: variant;
-    linestring, typename, itemname, date1, date2, result, other: string);
+  procedure AddRow(worksheet: variant; linestring, typename, ItemName, Date1,
+    Date2, Result, other: string);
   begin
     worksheet.range('A' + linestring) := typename;
-    worksheet.range('B' + linestring) := itemname;
-    worksheet.range('C' + linestring) := date1;
-    worksheet.range('D' + linestring) := date2;
-    worksheet.range('E' + linestring) := result;
+    worksheet.range('B' + linestring) := ItemName;
+    worksheet.range('C' + linestring) := Date1;
+    worksheet.range('D' + linestring) := Date2;
+    worksheet.range('E' + linestring) := Result;
     worksheet.range('F' + linestring) := other;
   end;
 
-  procedure FillData(aListView: TListView; worksheet: variant; var cnt: integer);
+  procedure FillData(aListView: TListView; worksheet: variant;
+    var cnt: Integer);
   var
-    i: integer;
-    dtdata1, dtdata2: double;
-    item, itemname, itemtype, itemtypename, typeitem: String;
+    i: Integer;
+    dtdata1, dtdata2: Double;
+    Item, ItemName, itemtype, itemtypename, typeitem: String;
     datax, fmdate1, fmdate2, linestring: String;
     aGraphItem: TGraphItem;
     aListItem: TListItem;
@@ -3403,17 +3691,17 @@ procedure TfrmGraphs.mnuPopGraphExportClick(Sender: TObject);
     aListItem := aListView.Selected;
     while aListItem <> nil do
     begin
-      itemname := aListItem.Caption;
+      ItemName := aListItem.caption;
       itemtypename := aListItem.SubItems[0];
       aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);
       typeitem := UpperCase(aGraphItem.Values);
       itemtype := Piece(typeitem, '^', 1);
-      item := Piece(typeitem, '^', 2);
+      Item := Piece(typeitem, '^', 2);
       for i := 0 to GtslData.Count - 1 do
       begin
         datax := GtslData[i];
         if Piece(datax, '^', 1) = itemtype then
-          if Piece(datax, '^', 2) = item then
+          if Piece(datax, '^', 2) = Item then
           begin
             dtdata1 := strtofloatdef(Piece(datax, '^', 3), -1);
             fmdate1 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata1);
@@ -3425,7 +3713,8 @@ procedure TfrmGraphs.mnuPopGraphExportClick(Sender: TObject);
               fmdate2 := StringReplace(fmdate2, ' 00:00', '', [rfReplaceAll]);
               cnt := cnt + 1;
               linestring := inttostr(cnt);
-              AddRow(worksheet, linestring, itemtypename, itemname, fmdate1, fmdate2, Piece(datax, '^', 5), Piece(datax, '^', 8));
+              AddRow(worksheet, linestring, itemtypename, ItemName, fmdate1,
+                fmdate2, Piece(datax, '^', 5), Piece(datax, '^', 8));
             end;
           end;
       end;
@@ -3434,11 +3723,11 @@ procedure TfrmGraphs.mnuPopGraphExportClick(Sender: TObject);
   end;
 
 var
-  cnt, i: integer;
+  cnt, i: Integer;
   aTitle, aWarning, aDateRange, ShortHeader, StrForFooter, StrForHeader: String;
   linestring: String;
   aHeader: TStringList;
-  excelApp, workbook, worksheet: Variant;
+  excelApp, workbook, worksheet: variant;
 begin
   try
     excelApp := CreateOleObject('Excel.Application');
@@ -3447,25 +3736,26 @@ begin
   end;
   Screen.Cursor := crDefault;
   aTitle := 'CPRS Graphing';
-  aWarning := pnlInfo.Caption;
-  aDateRange :=  'Date Range: ' + cboDateRange.Text + '  Selected Items from ' +
-      FormatDateTime('mm/dd/yy', FGraphSetting.LowTime) + ' to ' +
-      FormatDateTime('mm/dd/yy', FGraphSetting.HighTime);
+  aWarning := pnlInfo.caption;
+  aDateRange := 'Date Range: ' + cboDateRange.Text + '  Selected Items from ' +
+    FormatDateTime('mm/dd/yy', FGraphSetting.LowTime) + ' to ' +
+    FormatDateTime('mm/dd/yy', FGraphSetting.HighTime);
   aHeader := TStringList.Create;
   CreateExcelPatientHeader(aHeader, aTitle, aWarning, aDateRange);
   StrForHeader := '';
-  for i := 0 to aHeader.Count -1 do
+  for i := 0 to aHeader.Count - 1 do
     if (length(StrForHeader) + length(aHeader[i])) < 250 then
       StrForHeader := StrForHeader + aHeader[i] + #13;
-  ShortHeader := Patient.Name + '         ' + Patient.SSN + '          '
-         + Encounter.LocationName + '                            '
-         + FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')'
-         + #13 + TXT_COPY_DISCLAIMER;
-  StrForFooter := aTitle + '                    *** WORK COPY ONLY ***                            '
-                + 'Printed: ' + FormatDateTime('mmm dd, yyyy  hh:nn', Now) + #13;
+  ShortHeader := Patient.name + '         ' + Patient.SSN + '          ' +
+    Encounter.LocationName + '                            ' +
+    FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + inttostr(Patient.Age)
+    + ')' + #13 + TXT_COPY_DISCLAIMER;
+  StrForFooter := aTitle +
+    '                    *** WORK COPY ONLY ***                            ' +
+    'Printed: ' + FormatDateTime('mmm dd, yyyy  hh:nn', Now) + #13;
   excelApp.Visible := true;
-  workbook := excelApp.workbooks.add;
-  worksheet := workbook.worksheets.add;
+  workbook := excelApp.workbooks.Add;
+  worksheet := workbook.worksheets.Add;
   worksheet.name := aTitle;
   worksheet.PageSetup.PrintArea := '';
   worksheet.PageSetup.TopMargin := 120;
@@ -3481,11 +3771,13 @@ begin
     AddRow(worksheet, linestring, '', '', '', '', '', '');
     FillData(lvwItemsBottom, worksheet, cnt);
   end;
-  worksheet.Range['A1', 'F' + LineString].Columns.AutoFit;
-  worksheet.Range['A1', 'F' + LineString].Select;
-  worksheet.Range['A1', 'F' + LineString].AutoFormat(12, true, true, true, true, true, true);
+  worksheet.range['A1', 'F' + linestring].Columns.AutoFit;
+  worksheet.range['A1', 'F' + linestring].Select;
+  worksheet.range['A1', 'F' + linestring].AutoFormat(12, true, true, true, true,
+    true, true);
   if length(StrForHeader) > 250 then
-    worksheet.PageSetup.CenterHeader := ShortHeader           // large header does not work (excel errors when > 255 char)
+    worksheet.PageSetup.CenterHeader := ShortHeader
+    // large header does not work (excel errors when > 255 char)
   else
     worksheet.PageSetup.CenterHeader := StrForHeader;
   Screen.Cursor := crDefault;
@@ -3513,7 +3805,8 @@ begin
   with FGraphSetting do
   begin
     Gradient := not Gradient;
-    if Gradient then ClearBackground := false;
+    if Gradient then
+      ClearBackground := false;
   end;
   ChangeStyle;
 end;
@@ -3527,7 +3820,8 @@ end;
 
 procedure TfrmGraphs.mnuPopGraphLegendClick(Sender: TObject);
 begin
-  with FGraphSetting do Legend := not Legend;
+  with FGraphSetting do
+    Legend := not Legend;
   ChangeStyle;
 end;
 
@@ -3551,7 +3845,7 @@ end;
 
 procedure TfrmGraphs.ChartStyle(aChart: TChart);
 var
-  j: integer;
+  j: Integer;
 begin
 
   with aChart do
@@ -3589,12 +3883,14 @@ begin
         end;
       if Series[j] is TPointSeries then
         with (Series[j] as TPointSeries) do
-        if Pointer.Style <> psSmallDot then      // keep non-numeric label unchanged
-        begin
-          Marks.Visible := FGraphSetting.Values;
-          LinePen.Visible := FGraphSetting.Lines;
-          if Title = '(non-numeric)' then Marks.Visible := FDisplayFreeText;
-        end;
+          if Pointer.Style <> psSmallDot then
+          // keep non-numeric label unchanged
+          begin
+            Marks.Visible := FGraphSetting.Values;
+            LinePen.Visible := FGraphSetting.Lines;
+            if Title = '(non-numeric)' then
+              Marks.Visible := FDisplayFreeText;
+          end;
       if Series[j] is TBarSeries then
         with (Series[j] as TBarSeries) do
         begin
@@ -3617,7 +3913,7 @@ end;
 
 procedure TfrmGraphs.ChangeStyle;
 var
-  i: integer;
+  i: Integer;
   ChildControl: TControl;
   ClearColor, OriginalColor: TColor;
 begin
@@ -3633,10 +3929,10 @@ begin
     ChildControl := scrlBottom.Controls[i];
     ChartStyle(ChildControl as TChart);
   end;
-  if pnlDateLineTop.Visible then   // not visible when separate graphs
-    ChartStyle(chartDateLineTop);
-  if pnlDateLineBottom.Visible then
-    ChartStyle(chartDateLineBottom);
+  if pnlDatelineTop.Visible then // not visible when separate graphs
+    ChartStyle(chartDatelineTop);
+  if pnlDatelineBottom.Visible then
+    ChartStyle(chartDatelineBottom);
   if FGraphSetting.ClearBackground then
     ChartColor(ClearColor)
   else
@@ -3657,15 +3953,16 @@ begin
   mnuPopGraphMergeLabs.Checked := FGraphSetting.MergeLabs;
 end;
 
-procedure TfrmGraphs.chartBaseClickSeries(Sender: TCustomChart; Series: TChartSeries;
-  ValueIndex: Integer; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TfrmGraphs.chartBaseClickSeries(Sender: TCustomChart;
+  Series: TChartSeries; ValueIndex: Integer; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
 var
   lbutton: boolean;
 begin
-  if FOnMark then       // action already taken by mousedown on a mark
+  if FOnMark then // action already taken by mousedown on a mark
   begin
     FOnMark := false;
-    exit;
+    Exit;
   end;
   FOnMark := false;
   timHintPause.Enabled := false;
@@ -3673,7 +3970,7 @@ begin
   FGraphClick := Sender;
   FGraphSeries := Series;
   FGraphValueIndex := ValueIndex;
-  chartDateLineTop.Tag := 1;       // indicates a series click
+  chartDatelineTop.Tag := 1; // indicates a series click
   if (Series is TGanttSeries) then
   begin
     FDate1 := (Series as TGanttSeries).StartValues[ValueIndex];
@@ -3688,14 +3985,15 @@ begin
   (Sender as TChart).AllowZoom := false;
   SeriesClicks(Sender as TChart, Series, ValueIndex, lbutton);
   FMouseDown := false;
-  //(Sender as TChart).AllowZoom := FGraphSetting.HorizontalZoom;
+  // (Sender as TChart).AllowZoom := FGraphSetting.HorizontalZoom;
 end;
 
-
-procedure TfrmGraphs.SeriesClicks(aChart: TChart; aSeries: TChartSeries; aIndex: integer; lbutton: boolean);
+procedure TfrmGraphs.SeriesClicks(aChart: TChart; aSeries: TChartSeries;
+  aIndex: Integer; lbutton: boolean);
 var
-  originalindex: integer;
-  dttm, labresult, seriestitle, showing, testname, textvalue, textvalue1, textvalue2, typename, typenum: string;
+  originalindex: Integer;
+  dttm, labresult, seriestitle, showing, testname, textvalue, textvalue1,
+    textvalue2, typename, typenum: string;
 begin
   if lbutton then
   begin
@@ -3724,28 +4022,35 @@ begin
     end;
     mnuPopGraphIsolate.Enabled := true;
     if pnlTop.Tag = 1 then
-      mnuPopGraphIsolate.Caption := 'Move - ' + seriestitle + ' - from Top to Bottom'
+      mnuPopGraphIsolate.caption := 'Move - ' + seriestitle +
+        ' - from Top to Bottom'
     else
-      mnuPopGraphIsolate.Caption := 'Move - ' + seriestitle + ' - from Bottom to Top';
+      mnuPopGraphIsolate.caption := 'Move - ' + seriestitle +
+        ' - from Bottom to Top';
     scrlTop.Hint := 'Details - for ' + seriestitle + ' for ' +
       FormatDateTime('mmm d, yyyy  h:nn am/pm', FDate1);
     scrlTop.Tag := aIndex + 1;
     mnuPopGraphIsolate.Hint := seriestitle;
     mnuPopGraphRemove.Enabled := true;
-    mnuPopGraphRemove.Caption := 'Remove - ' + seriestitle;
-    mnuPopGraphDetails.Caption := 'Details - ' + seriestitle;
-    if FGraphSeries.Marks.Visible then showing := ' - turn off' else showing := ' - turn on';
-    mnuPopGraphValueMarks.Caption := 'Values - ' + seriestitle + showing;
+    mnuPopGraphRemove.caption := 'Remove - ' + seriestitle;
+    mnuPopGraphDetails.caption := 'Details - ' + seriestitle;
+    if FGraphSeries.Marks.Visible then
+      showing := ' - turn off'
+    else
+      showing := ' - turn on';
+    mnuPopGraphValueMarks.caption := 'Values - ' + seriestitle + showing;
     mnuPopGraphValueMarks.Enabled := true;
   end;
 end;
 
-procedure TfrmGraphs.AllTypeDate(aType, aTypeName, firstline, secondline: string; aDate, aDate2: double);
+procedure TfrmGraphs.AllTypeDate(aType, aTypeName, firstline,
+  secondline: string; aDate, aDate2: Double);
 var
-  i: integer;
+  i: Integer;
   datex1, datex2, newline, oldline, spacer, titlemsg: string;
-  labdate, labflag, labname, labunit, labvalue, refrange, specimen, testnum: string;
-  dt1, dt2: double;
+  labdate, labflag, labname, labunit, labvalue, refrange, specimen,
+    testnum: string;
+  dt1, dt2: Double;
   tmpOtherList, templist: TStringList;
 begin
   Screen.Cursor := crHourGlass;
@@ -3755,12 +4060,14 @@ begin
   datex1 := floattostr(DateTimeToFMDateTime(aDate));
   datex1 := Piece(datex1, '.', 1);
   if aDate <> aDate2 then
-    datex2 := Piece(floattostr(DateTimeToFMDateTime(aDate2)), '.', 1) + '.23595959'
+    datex2 := Piece(floattostr(DateTimeToFMDateTime(aDate2)), '.', 1) +
+      '.23595959'
   else
     datex2 := datex1 + '.23595959';
   dt1 := strtofloatdef(datex1, BIG_NUMBER);
   dt2 := strtofloatdef(datex2, BIG_NUMBER);
-  CheckToAddData(lvwItemsTop, 'top', aType);    // if type is not loaded - load data
+  CheckToAddData(lvwItemsTop, 'top', aType);
+  // if type is not loaded - load data
   TempData(tmpOtherList, aType, dt1, dt2);
   with tmpOtherList do
   begin
@@ -3786,33 +4093,35 @@ begin
         if Piece(testnum, '.', 2) = '0' then
           labname := Piece(labname, '*', 1) + ' (' + specimen + ')';
         newline := labdate + '   ' + labname;
-        spacer := Copy(BIG_SPACES, 1, 42 - length(newline) - length(labvalue));
+        spacer := copy(BIG_SPACES, 1, 42 - length(newline) - length(labvalue));
         newline := newline + spacer + ' ' + labvalue + ' ' + labflag;
-        spacer := Copy(BIG_SPACES, 1, 47 - length(newline));
+        spacer := copy(BIG_SPACES, 1, 47 - length(newline));
         newline := newline + spacer + ' ' + labunit;
-        spacer := Copy(BIG_SPACES, 1, 57 - length(newline));
+        spacer := copy(BIG_SPACES, 1, 57 - length(newline));
         newline := newline + spacer + ' ' + refrange;
       end
       else
       begin
         newline := Piece(oldline, '^', 4) + '   ' + Piece(oldline, '^', 5);
-        spacer := Copy(BIG_SPACES, 1, 40 - length(newline));
+        spacer := copy(BIG_SPACES, 1, 40 - length(newline));
         newline := newline + spacer + ' ' + Piece(oldline, '^', 3);
       end;
       templist.Add(newline);
     end;
     Clear;
     FastAssign(templist, tmpOtherList);
-    if Copy(aTypeName, length(aTypeName) - 2, 3) = 'ies' then
-      aTypeName := Copy(aTypeName, 1, length(aTypeName) - 3) + 'y'
-    else if Copy(aTypeName, length(aTypeName), 1) = 's' then
-      aTypeName := Copy(aTypeName, 1, length(aTypeName) - 1);
-    //Assign(templist);
+    if copy(aTypeName, length(aTypeName) - 2, 3) = 'ies' then
+      aTypeName := copy(aTypeName, 1, length(aTypeName) - 3) + 'y'
+    else if copy(aTypeName, length(aTypeName), 1) = 's' then
+      aTypeName := copy(aTypeName, 1, length(aTypeName) - 1);
+    // Assign(templist);
     if aDate <> aDate2 then
-      titlemsg := aTypeName + ' occurrences for ' + FormatDateTime('mmm d, yyyy', aDate) +
-        ' - ' + FormatDateTime('mmm d, yyyy', aDate2)
+      titlemsg := aTypeName + ' occurrences for ' +
+        FormatDateTime('mmm d, yyyy', aDate) + ' - ' +
+        FormatDateTime('mmm d, yyyy', aDate2)
     else
-      titlemsg := aTypeName + ' occurrences for ' + FormatDateTime('mmm d, yyyy', aDate);
+      titlemsg := aTypeName + ' occurrences for ' +
+        FormatDateTime('mmm d, yyyy', aDate);
     Insert(0, firstline);
     Insert(1, secondline);
     Insert(2, '');
@@ -3828,12 +4137,13 @@ begin
   Screen.Cursor := crDefault;
 end;
 
-procedure TfrmGraphs.TempData(aStringList: TStringList; aType: string; dt1, dt2: double);
+procedure TfrmGraphs.TempData(aStringList: TStringList; aType: string;
+  dt1, dt2: Double);
 var
-  i: integer;
+  i: Integer;
   dttm, datax, fmdate1, fmdate2, itemnum, itemqualifier, newdata: string;
-  date1, date2, itemvalue: string;
-  dtdata, dtdata1, dtdata2: double;
+  Date1, Date2, itemvalue: string;
+  dtdata, dtdata1, dtdata2: Double;
   ok: boolean;
 begin
   for i := 0 to GtslData.Count - 1 do
@@ -3842,25 +4152,21 @@ begin
     if Piece(datax, '^', 1) = aType then
     begin
       itemnum := Piece(datax, '^', 2);
-      date1 := Piece(datax, '^', 3);
-      date2 := Piece(datax, '^', 4);
+      Date1 := Piece(datax, '^', 3);
+      Date2 := Piece(datax, '^', 4);
       itemvalue := Piece(datax, '^', 5);
-      if (length(date2)> 0) then    // date/times of episodes
+      if (length(Date2) > 0) then // date/times of episodes
       begin
-        dtdata1 := strtofloatdef(date1, -1);
+        dtdata1 := strtofloatdef(Date1, -1);
         fmdate1 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata1);
         fmdate1 := StringReplace(fmdate1, ' 00:00', '', [rfReplaceAll]);
-        dtdata2 := strtofloatdef(date2, -1);
+        dtdata2 := strtofloatdef(Date2, -1);
         fmdate2 := FormatFMDateTime('mm/dd/yy hh:nn', dtdata2);
         fmdate2 := StringReplace(fmdate2, ' 00:00', '', [rfReplaceAll]);
         if (dtdata2 > dt1) and (dtdata1 < dt2) then
         begin
-          newdata := date1 + '^' +
-                     itemnum + '^' +
-                     fmdate1 + ' - ' +
-                     fmdate2 + '^' +
-                     ItemName(aType, itemnum) + '^' +
-                     itemvalue;
+          newdata := Date1 + '^' + itemnum + '^' + fmdate1 + ' - ' + fmdate2 +
+            '^' + ItemName(aType, itemnum) + '^' + itemvalue;
           aStringList.Add(MixedCase(newdata));
         end;
       end
@@ -3874,25 +4180,24 @@ begin
           if length(itemqualifier) > 0 then
           begin
             if FGraphSetting.MergeLabs then
-              if itemqualifier  <> '0' then ok := false;
+              if itemqualifier <> '0' then
+                ok := false;
             if not FGraphSetting.MergeLabs then
-              if itemqualifier  = '0' then ok := false;
+              if itemqualifier = '0' then
+                ok := false;
           end;
         end;
         if ok then
         begin
-          dtdata := strtofloatdef(date1, -1);
+          dtdata := strtofloatdef(Date1, -1);
           if (dtdata >= dt1) and (dtdata < dt2) then
           begin
-            if length(Piece(date1, '.', 2)) > 0 then
+            if length(Piece(Date1, '.', 2)) > 0 then
               dttm := FormatFMDateTime('mm/dd/yy hh:nn', dtdata)
             else
               dttm := FormatFMDateTime('mm/dd/yy', dtdata);
-            newdata := date1 + '^' +
-            itemnum + '^' +
-            itemvalue + '^' +
-            dttm + '^' +
-            ItemName(aType, itemnum);
+            newdata := Date1 + '^' + itemnum + '^' + itemvalue + '^' + dttm +
+              '^' + ItemName(aType, itemnum);
             newdata := MixedCase(newdata);
             newdata := newdata + '^' + Pieces(datax, '^', 6, 11);
             aStringList.Add(newdata);
@@ -3913,7 +4218,9 @@ begin
   units := Piece(datax, '^', 11);
   if length(refrange) = 0 then
   begin
-    lo := ''; hi := ''; unitsv := '';
+    lo := '';
+    hi := '';
+    unitsv := '';
     RefUnits(itemnum, specnum, lo, hi, unitsv);
     refrange := lo + '!' + hi;
     SetPiece(datax, '^', 10, refrange);
@@ -3932,7 +4239,9 @@ begin
   units := Piece(datax, '^', 19);
   if length(refrange) = 0 then
   begin
-    lo := ''; hi := ''; unitsv := '';
+    lo := '';
+    hi := '';
+    unitsv := '';
     RefUnits(itemnum, specnum, lo, hi, unitsv);
     refrange := lo + '!' + hi;
     SetPiece(datax, '^', 18, refrange);
@@ -3944,9 +4253,11 @@ end;
 procedure TfrmGraphs.ItemDateRange(Sender: TCustomChart);
 var
   bpnotdone, ok: boolean;
-  i, j: integer;
-  prevtype, results, seriestitle, seriestype, spacer, textvalue, typenum: string;
-  datadate, labdate, labflag, labname, labunit, labvalue, newline, refrange, specimen, testnum: string;
+  i, j: Integer;
+  prevtype, results, seriestitle, seriestype, spacer, textvalue,
+    typenum: string;
+  datadate, labdate, labflag, labname, labunit, labvalue, newline, refrange,
+    specimen, testnum: string;
   tmpOtherList: TStringList;
 begin
   Screen.Cursor := crHourGlass;
@@ -3955,9 +4266,9 @@ begin
   with tmpOtherList do
   begin
     Add('Date Range: ' + cboDateRange.Text);
-    Add('Selected Items from ' +
-      FormatDateTime('mm/dd/yy', FGraphSetting.LowTime) + ' to ' +
-      FormatDateTime('mm/dd/yy', FGraphSetting.HighTime));
+    Add('Selected Items from ' + FormatDateTime('mm/dd/yy',
+      FGraphSetting.LowTime) + ' to ' + FormatDateTime('mm/dd/yy',
+      FGraphSetting.HighTime));
     Add('');
   end;
   bpnotdone := true;
@@ -3969,14 +4280,15 @@ begin
       seriestype := Piece(textvalue, '^', 2);
       if (seriestype <> '') and (seriestype <> prevtype) then
       begin
-        tmpOtherList.Add('     ' + seriestype);    // type
+        tmpOtherList.Add('     ' + seriestype); // type
         prevtype := seriestype;
       end;
     end;
     ok := true;
     seriestitle := Sender.Series[i].Title;
     if seriestitle = 'Blood Pressure' then
-      if not bpnotdone then ok := false;
+      if not bpnotdone then
+        ok := false;
     if ok then
     begin
       for j := 0 to Sender.Series[i].Count - 1 do
@@ -3984,7 +4296,8 @@ begin
         textvalue := ValueText(Sender, Sender.Series[i], j);
         seriestitle := Piece(textvalue, '^', 4);
         typenum := trim(Piece(textvalue, '^', 1));
-        if (typenum = '120.5') and (seriestitle = 'Blood Pressure') then bpnotdone := false;
+        if (typenum = '120.5') and (seriestitle = 'Blood Pressure') then
+          bpnotdone := false;
         if length(typenum) > 0 then
         begin
           if typenum = '63' then
@@ -4000,21 +4313,24 @@ begin
             if refrange = '!' then
               refrange := ''
             else
-              refrange := Piece(refrange, '!', 1) + ' - ' + Piece(refrange, '!', 2);
+              refrange := Piece(refrange, '!', 1) + ' - ' +
+                Piece(refrange, '!', 2);
             if Piece(testnum, '.', 2) = '0' then
               labname := Piece(labname, '*', 1) + ' (' + specimen + ')';
             newline := labname;
-            spacer := Copy(BIG_SPACES, 1, 29 - length(newline) - length(labvalue));
+            spacer := copy(BIG_SPACES, 1, 29 - length(newline) -
+              length(labvalue));
             newline := newline + spacer + ' ' + labvalue + ' ' + labflag;
-            spacer := Copy(BIG_SPACES, 1, 34 - length(newline));
+            spacer := copy(BIG_SPACES, 1, 34 - length(newline));
             newline := newline + spacer + ' ' + labunit;
-            spacer := Copy(BIG_SPACES, 1, 44 - length(newline));
+            spacer := copy(BIG_SPACES, 1, 44 - length(newline));
             newline := newline + spacer + ' ' + refrange;
-            spacer := Copy(BIG_SPACES, 1, 58 - length(newline));
+            spacer := copy(BIG_SPACES, 1, 58 - length(newline));
             newline := newline + spacer + ' ' + labdate;
-            if length(labdate)= 0 then   // in case of duplicate names in listview
+            if length(labdate) = 0 then
+            // in case of duplicate names in listview
               newline := newline + ' ' + TXT_WARNING_CHECK_RESULTS;
-            tmpOtherList.Add(newline);                 // item occurrence
+            tmpOtherList.Add(newline); // item occurrence
           end
           else
           begin
@@ -4022,20 +4338,21 @@ begin
               datadate := Piece(textvalue, '^', 6)
             else
               datadate := Piece(textvalue, '^', 8);
-            spacer := Copy(BIG_SPACES, 1, 30 - length(seriestitle));
-            results := seriestitle + ':  ' + //spacer +
-            Piece(textvalue, '^', 5); //LowerCase(Piece(textvalue, '^', 5));
-            spacer := Copy(BIG_SPACES, 1, 54 - length(results));
+            spacer := copy(BIG_SPACES, 1, 30 - length(seriestitle));
+            results := seriestitle + ':  ' + // spacer +
+              Piece(textvalue, '^', 5); // LowerCase(Piece(textvalue, '^', 5));
+            spacer := copy(BIG_SPACES, 1, 54 - length(results));
             results := results + ' ' + spacer + datadate;
             results := StringReplace(results, ' 00:00', '', [rfReplaceAll]);
-            if length(datadate)= 0 then   // in case of duplicate names in listview
+            if length(datadate) = 0 then
+            // in case of duplicate names in listview
               results := results + ' ' + TXT_WARNING_CHECK_RESULTS;
-            tmpOtherList.Add(results);                 // item occurrence
+            tmpOtherList.Add(results); // item occurrence
           end;
         end;
       end;
     end;
-  end;                               // same items are not being sorted by date
+  end; // same items are not being sorted by date
   if tmpOtherList.Count > 0 then
   begin
     tmpOtherList.Insert(0, TXT_REPORT_DISCLAIMER);
@@ -4049,7 +4366,7 @@ end;
 
 procedure TfrmGraphs.mnuPopGraphIsolateClick(Sender: TObject);
 var
-  i, j, selnum: integer;
+  i, j, selnum: Integer;
   aOtherSection, aSection, typeitem: string;
   aGraphItem: TGraphItem;
   aListView, aOtherListView: TListView;
@@ -4060,16 +4377,22 @@ begin
   lstViewsBottom.ItemIndex := -1;
   if pnlTop.Tag = 1 then
   begin
-    aListView := lvwItemsTop;       aOtherListView := lvwItemsBottom;
-    aSection := 'top';              aOtherSection := 'bottom';
+    aListView := lvwItemsTop;
+    aOtherListView := lvwItemsBottom;
+    aSection := 'top';
+    aOtherSection := 'bottom';
   end
   else
   begin
-    aListView := lvwItemsBottom;    aOtherListView := lvwItemsTop;
-    aSection := 'bottom';           aOtherSection := 'top';
+    aListView := lvwItemsBottom;
+    aOtherListView := lvwItemsTop;
+    aSection := 'bottom';
+    aOtherSection := 'top';
   end;
-  if aListView.SelCount = 0 then exit;
-  if StripHotKey(mnuPopGraphIsolate.Caption) = ('Move all selections to ' + aOtherSection) then
+  if aListView.SelCount = 0 then
+    Exit;
+  if StripHotKey(mnuPopGraphIsolate.caption)
+    = ('Move all selections to ' + aOtherSection) then
   begin
     aListItem := aListView.Selected;
     while aListItem <> nil do
@@ -4078,7 +4401,8 @@ begin
       typeitem := Pieces(aGraphItem.Values, '^', 1, 2);
       for j := 0 to aOtherListView.Items.Count - 1 do
       begin
-        aGraphItem := TGraphItem(aOtherListView.Items.Item[j].SubItems.Objects[3]);
+        aGraphItem := TGraphItem(aOtherListView.Items.Item[j]
+          .SubItems.Objects[3]);
         if Pieces(aGraphItem.Values, '^', 1, 2) = typeitem then
           aOtherListView.Items[j].Selected := true;
       end;
@@ -4089,59 +4413,63 @@ begin
   else
   begin
     ItemCheck(lvwItemsTop, mnuPopGraphIsolate.Hint, selnum, typeitem);
-    if selnum = -1 then exit;
+    if selnum = -1 then
+      Exit;
     for i := 0 to aOtherListView.Items.Count - 1 do
     begin
-      aGraphItem := TGraphItem(aOtherListView.Items.Item[i].SubItems.Objects[3]);
+      aGraphItem := TGraphItem(aOtherListView.Items.Item[i]
+        .SubItems.Objects[3]);
       if Pieces(aGraphItem.Values, '^', 1, 2) = typeitem then
         aOtherListView.Items[i].Selected := true;
     end;
     aListView.Items[selnum].Selected := false;
   end;
   with chkDualViews do
-  if not Checked then
-  begin
-    Checked := true;
-    Click;
-  end;
+    if not Checked then
+    begin
+      Checked := true;
+      Click;
+    end;
   ChangeStyle;
   DisplayData(aSection);
   DisplayData(aOtherSection);
   mnuPopGraphIsolate.Enabled := false;
 end;
 
-procedure TFrmGraphs.ItemCheck(aListView: TListView; aItemName: string;
-  var aNum: integer; var aTypeItem: string);
+procedure TfrmGraphs.ItemCheck(aListView: TListView; aItemName: string;
+  var aNum: Integer; var aTypeItem: string);
 var
-  i: integer;
+  i: Integer;
   aGraphItem: TGraphItem;
 begin
   aNum := -1;
   aTypeItem := '';
   with aListView do
-  for i := 0 to Items.Count - 1 do
-  if Items[i].Caption = aItemName then
-  begin
-    aGraphItem := TGraphItem(Items.Item[i].SubItems.Objects[3]);     //get file^ien match
-    aNum := i;
-    aTypeItem := Pieces(aGraphItem.Values, '^', 1, 2);
-    break;
-  end;
+    for i := 0 to Items.Count - 1 do
+      if Items[i].caption = aItemName then
+      begin
+        aGraphItem := TGraphItem(Items.Item[i].SubItems.Objects[3]);
+        // get file^ien match
+        aNum := i;
+        aTypeItem := Pieces(aGraphItem.Values, '^', 1, 2);
+        break;
+      end;
   if aNum = -1 then
   begin
     aItemName := ReverseString(aItemName);
     aItemName := Pieces(aItemName, '(', 2, DelimCount(aItemName, '(') + 1);
-    aItemName := Copy(aItemName, 2, length(aItemName) - 1);
+    aItemName := copy(aItemName, 2, length(aItemName) - 1);
     aItemName := ReverseString(aItemName);
     with aListView do
-    for i := 0 to Items.Count - 1 do
-    if Items[i].Caption = aItemName then            // match without (specimen)
-    begin
-      aGraphItem := TGraphItem(Items.Item[i].SubItems.Objects[3]);     //get file^ien match
-      aNum := i;
-      aTypeItem := Pieces(aGraphItem.Values, '^', 1, 2);
-      break;
-    end;
+      for i := 0 to Items.Count - 1 do
+        if Items[i].caption = aItemName then // match without (specimen)
+        begin
+          aGraphItem := TGraphItem(Items.Item[i].SubItems.Objects[3]);
+          // get file^ien match
+          aNum := i;
+          aTypeItem := Pieces(aGraphItem.Values, '^', 1, 2);
+          break;
+        end;
   end;
 end;
 
@@ -4159,20 +4487,24 @@ begin
   FYMinValue := (Sender as TChart).MinYValue((Sender as TChart).LeftAxis);
   FYMaxValue := (Sender as TChart).MaxYValue((Sender as TChart).LeftAxis);
   pnlTop.Tag := 1;
-  if (Sender as TControl).Parent = pnlBottom then pnlTop.Tag := 0;
-  if ((Sender as TControl).Parent as TControl) = pnlBottom then pnlTop.Tag := 0;
-  if (((Sender as TControl).Parent as TControl).Parent as TControl).Parent = pnlBottom then pnlTop.Tag := 0;
+  if (Sender as TControl).Parent = pnlBottom then
+    pnlTop.Tag := 0;
+  if ((Sender as TControl).Parent as TControl) = pnlBottom then
+    pnlTop.Tag := 0;
+  if (((Sender as TControl).Parent as TControl).Parent as TControl).Parent = pnlBottom
+  then
+    pnlTop.Tag := 0;
   if pnlTop.Tag = 1 then
   begin
-    mnuPopGraphIsolate.Caption := 'Move all selections to bottom';
-    mnuPopGraphRemove.Caption := 'Remove all selections from top';
+    mnuPopGraphIsolate.caption := 'Move all selections to bottom';
+    mnuPopGraphRemove.caption := 'Remove all selections from top';
     if memTop.Visible then
       memTop.SetFocus;
   end
   else
   begin
-    mnuPopGraphIsolate.Caption := 'Move all selections to top';
-    mnuPopGraphRemove.Caption := 'Remove all selections from bottom';
+    mnuPopGraphIsolate.caption := 'Move all selections to top';
+    mnuPopGraphRemove.caption := 'Remove all selections from bottom';
     if memBottom.Visible then
       memBottom.SetFocus;
   end;
@@ -4182,18 +4514,20 @@ begin
   MouseClicks(Sender as TChart, lbutton, X, Y);
 end;
 
-procedure TfrmGraphs.MouseClicks(aChart: TChart; lbutton: boolean; X, Y: Integer);
+procedure TfrmGraphs.MouseClicks(aChart: TChart; lbutton: boolean;
+  X, Y: Integer);
 var
-  i, tmp: integer;
+  i, tmp: Integer;
   aSeries: TChartSeries;
 begin
   tmp := -1;
   for i := 0 to aChart.SeriesCount - 1 do
-  if aChart.Series[i].Marks.Visible then
-  begin
-    tmp := aChart.Series[i].Marks.Clicked(X, Y);
-    if tmp <> -1 then break;
-  end;
+    if aChart.Series[i].Marks.Visible then
+    begin
+      tmp := aChart.Series[i].Marks.Clicked(X, Y);
+      if tmp <> -1 then
+        break;
+    end;
   if tmp <> -1 then
   begin
     FOnMark := true;
@@ -4201,7 +4535,7 @@ begin
     FGraphClick := aChart;
     FGraphSeries := aSeries;
     FGraphValueIndex := tmp;
-    chartDateLineTop.Tag := 1;       // indicates a series click
+    chartDatelineTop.Tag := 1; // indicates a series click
     if (aSeries is TGanttSeries) then
     begin
       FDate1 := (aSeries as TGanttSeries).StartValues[tmp];
@@ -4218,102 +4552,115 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.LabelClicks(aChart: TChart; aSeries: TChartSeries; lbutton: boolean; tmp: integer);
+procedure TfrmGraphs.LabelClicks(aChart: TChart; aSeries: TChartSeries;
+  lbutton: boolean; tmp: Integer);
 var
   firstnon, toggle: boolean;
-  i, originalindex: integer;
-  dttm, labresult, seriestitle, showing, testname, textvalue, textvalue1, textvalue2, typename, typenum: string;
+  i, originalindex: Integer;
+  dttm, labresult, seriestitle, showing, testname, textvalue, textvalue1,
+    textvalue2, typename, typenum: string;
 begin
-    seriestitle := Piece(aSeries.Title, '^', 1);
-    if seriestitle = '(non-numeric)' then
+  seriestitle := Piece(aSeries.Title, '^', 1);
+  if seriestitle = '(non-numeric)' then
+  begin
+    originalindex := strtointdef(Piece(GtslNonNum[tmp], '^', 3), 0);
+    seriestitle := Piece(aChart.Series[originalindex].Title, '^', 1);
+  end;
+  if (seriestitle = TXT_COMMENTS) and lbutton then
+  begin
+    chartDatelineTop.Tag := 0;
+    mnuPopGraphDetailsClick(self);
+  end
+  else if (seriestitle = TXT_NONNUMERICS) and lbutton then
+  begin
+    if (aSeries.Identifier = 'serNonNumBottom') or
+      (aSeries.Identifier = 'serNonNumTop') then
     begin
-      originalindex := strtointdef(Piece(GtslNonNum[tmp], '^', 3), 0);
-      seriestitle := Piece(aChart.Series[originalindex].Title, '^', 1);
-    end;
-    if (seriestitle = TXT_COMMENTS) and lbutton then
-    begin
-      chartDatelineTop.Tag := 0;
-      mnuPopGraphDetailsClick(self);
-    end
-    else if (seriestitle = TXT_NONNUMERICS) and lbutton then
-    begin
-      if (aSeries.Identifier = 'serNonNumBottom') or (aSeries.Identifier = 'serNonNumTop') then
-      begin
-        firstnon := true;
-        toggle := false;
-        for i := 0 to aChart.SeriesCount - 1 do
+      firstnon := true;
+      toggle := false;
+      for i := 0 to aChart.SeriesCount - 1 do
         if Piece(aChart.Series[i].Title, '^', 1) = '(non-numeric)' then
         begin
           if firstnon then
           begin
-           toggle := not aChart.Series[i].Marks.Visible;
-           firstnon := false;
+            toggle := not aChart.Series[i].Marks.Visible;
+            firstnon := false;
           end;
           aChart.Series[i].Marks.Visible := toggle;
         end;
-      end;
-    end
-    else if lbutton and (seriestitle <> TXT_NONNUMERICS) then
-    begin
-      textvalue := ValueText(aChart, aSeries, tmp);
-      textvalue := StringReplace(textvalue, ' 00:00', '', [rfReplaceAll]);
-      dttm := Piece(textvalue, '^', 3);
-      typenum := trim(Piece(textvalue, '^', 1));
-      typename := Piece(textvalue, '^', 2);
-      textvalue1 := typename + '  ' + dttm;
-      if typenum = '63' then
-      begin
-        LabNameResults(textvalue, testname, labresult);
-        textvalue2 := testname + '  ' + labresult;
-      end
-      else
-        textvalue2 := Piece(textvalue, '^', 4) + '  ' + Piece(textvalue, '^', 5);
-      AllTypeDate(typenum, typename, textvalue1, textvalue2, FDate1, FDate2);
-    end
-    else if (Piece(aSeries.Title, '^', 1) <> TXT_NONNUMERICS)
-        and (Piece(aSeries.Title, '^', 1) <> TXT_COMMENTS) then
-    begin
-      mnuPopGraphIsolate.Enabled := true;
-      if pnlTop.Tag = 1 then
-        mnuPopGraphIsolate.Caption := 'Move - ' + seriestitle + ' - from Top to Bottom'
-      else
-        mnuPopGraphIsolate.Caption := 'Move - ' + seriestitle + ' - from Bottom to Top';
-      scrlTop.Hint := 'Details - for ' + seriestitle + ' for ' +
-        FormatDateTime('mmm d, yyyy  h:nn am/pm', FDate1);
-      scrlTop.Tag := tmp + 1;
-      mnuPopGraphIsolate.Hint := seriestitle;
-      mnuPopGraphRemove.Enabled := true;
-      mnuPopGraphRemove.Caption := 'Remove - ' + seriestitle;
-      mnuPopGraphDetails.Caption := 'Details - ' + seriestitle;
-      if FGraphSeries.Marks.Visible then showing := ' - turn off' else showing := ' - turn on';
-      mnuPopGraphValueMarks.Caption := 'Values - ' + seriestitle + showing;
-      mnuPopGraphValueMarks.Enabled := true;
     end;
+  end
+  else if lbutton and (seriestitle <> TXT_NONNUMERICS) then
+  begin
+    textvalue := ValueText(aChart, aSeries, tmp);
+    textvalue := StringReplace(textvalue, ' 00:00', '', [rfReplaceAll]);
+    dttm := Piece(textvalue, '^', 3);
+    typenum := trim(Piece(textvalue, '^', 1));
+    typename := Piece(textvalue, '^', 2);
+    textvalue1 := typename + '  ' + dttm;
+    if typenum = '63' then
+    begin
+      LabNameResults(textvalue, testname, labresult);
+      textvalue2 := testname + '  ' + labresult;
+    end
+    else
+      textvalue2 := Piece(textvalue, '^', 4) + '  ' + Piece(textvalue, '^', 5);
+    AllTypeDate(typenum, typename, textvalue1, textvalue2, FDate1, FDate2);
+  end
+  else if (Piece(aSeries.Title, '^', 1) <> TXT_NONNUMERICS) and
+    (Piece(aSeries.Title, '^', 1) <> TXT_COMMENTS) then
+  begin
+    mnuPopGraphIsolate.Enabled := true;
+    if pnlTop.Tag = 1 then
+      mnuPopGraphIsolate.caption := 'Move - ' + seriestitle +
+        ' - from Top to Bottom'
+    else
+      mnuPopGraphIsolate.caption := 'Move - ' + seriestitle +
+        ' - from Bottom to Top';
+    scrlTop.Hint := 'Details - for ' + seriestitle + ' for ' +
+      FormatDateTime('mmm d, yyyy  h:nn am/pm', FDate1);
+    scrlTop.Tag := tmp + 1;
+    mnuPopGraphIsolate.Hint := seriestitle;
+    mnuPopGraphRemove.Enabled := true;
+    mnuPopGraphRemove.caption := 'Remove - ' + seriestitle;
+    mnuPopGraphDetails.caption := 'Details - ' + seriestitle;
+    if FGraphSeries.Marks.Visible then
+      showing := ' - turn off'
+    else
+      showing := ' - turn on';
+    mnuPopGraphValueMarks.caption := 'Values - ' + seriestitle + showing;
+    mnuPopGraphValueMarks.Enabled := true;
+  end;
 end;
 
 procedure TfrmGraphs.mnuPopGraphStuffPopup(Sender: TObject);
 begin
-  if scrlTop.Tag = 0 then scrlTop.Hint := '';
-  if (lvwItemsTop.SelCount = 0) and (lvwItemsBottom.SelCount = 0) then scrlTop.Hint := '';
+  if scrlTop.Tag = 0 then
+    scrlTop.Hint := '';
+  if (lvwItemsTop.SelCount = 0) and (lvwItemsBottom.SelCount = 0) then
+    scrlTop.Hint := '';
   if scrlTop.Hint = '' then
   begin
-    if Pieces(mnuPopGraphIsolate.Caption, ' ', 1, 3) = 'Move all selections' then
+    if Pieces(mnuPopGraphIsolate.caption, ' ', 1, 3) = 'Move all selections'
+    then
       mnuPopGraphIsolate.Enabled := true
     else
     begin
-      mnuPopGraphIsolate.Caption := 'Move';
+      mnuPopGraphIsolate.caption := 'Move';
       mnuPopGraphIsolate.Enabled := false;
     end;
-    if Pieces(mnuPopGraphRemove.Caption, ' ', 1, 3) = 'Remove all selections' then
+    if Pieces(mnuPopGraphRemove.caption, ' ', 1, 3) = 'Remove all selections'
+    then
       mnuPopGraphRemove.Enabled := true
     else
     begin
-      mnuPopGraphRemove.Caption := 'Remove';
+      mnuPopGraphRemove.caption := 'Remove';
       mnuPopGraphRemove.Enabled := false;
     end;
-    mnuPopGraphDetails.Caption := 'Details...';
-    mnuPopGraphDetails.Enabled := (lvwItemsTop.SelCount > 0) or (lvwItemsBottom.SelCount > 0);
-    mnuPopGraphValueMarks.Caption := 'Values - ';
+    mnuPopGraphDetails.caption := 'Details...';
+    mnuPopGraphDetails.Enabled := (lvwItemsTop.SelCount > 0) or
+      (lvwItemsBottom.SelCount > 0);
+    mnuPopGraphValueMarks.caption := 'Values - ';
     mnuPopGraphValueMarks.Enabled := false;
   end
   else
@@ -4324,34 +4671,37 @@ begin
     if chartDatelineTop.Tag <> -1 then
       mnuPopGraphValueMarks.Enabled := true;
   end;
-  {mnuPopGraphViewDefinition.Enabled := (pcTop.ActivePageIndex = 1)
-                                    or (pcBottom.ActivePageIndex = 1);}
-  mnuPopGraphSwap.Enabled := (lvwItemsTop.SelCount > 0) or (lvwItemsBottom.SelCount > 0);
+  { mnuPopGraphViewDefinition.Enabled := (pcTop.ActivePageIndex = 1)
+    or (pcBottom.ActivePageIndex = 1); }
+  mnuPopGraphSwap.Enabled := (lvwItemsTop.SelCount > 0) or
+    (lvwItemsBottom.SelCount > 0);
   mnuPopGraphReset.Enabled := mnuPopGraphSwap.Enabled;
   mnuPopGraphCopy.Enabled := mnuPopGraphSwap.Enabled;
   mnuPopGraphPrint.Enabled := mnuPopGraphSwap.Enabled;
 
   with pnlMain.Parent do
-  if BorderWidth <> 1 then            // only do on float Graph
-    mnuPopGraphStayOnTop.Enabled :=false
-  else
-    mnuPopGraphStayOnTop.Enabled :=true;
+    if BorderWidth <> 1 then // only do on float Graph
+      mnuPopGraphStayOnTop.Enabled := false
+    else
+      mnuPopGraphStayOnTop.Enabled := true;
 end;
 
 procedure TfrmGraphs.mnuPopGraphDetailsClick(Sender: TObject);
 var
   tmpList: TStringList;
-  date1, date2: TFMDateTime;
-  labresult, testname, teststring, textvalue, textvalue1, textvalue2, typeitem, typename, typenum: string;
-  selnum: integer;
+  Date1, Date2: TFMDateTime;
+  labresult, testname, teststring, textvalue, textvalue1, textvalue2, typeitem,
+    typename, typenum: string;
+  selnum: Integer;
   aGraphItem: TGraphItem;
   aListView: TListView;
   aListItem: TListItem;
 begin
-  if chartDatelineTop.Tag = 1 then               // series
+  if chartDatelineTop.Tag = 1 then // series
   begin
     ItemCheck(lvwItemsTop, mnuPopGraphIsolate.Hint, selnum, typeitem);
-    if selnum < 0 then exit;
+    if selnum < 0 then
+      Exit;
     if not HSAbbrev(Piece(typeitem, '^', 1)) then
     begin
       if (FGraphSeries is TGanttSeries) then
@@ -4374,17 +4724,18 @@ begin
         textvalue2 := testname + '  ' + labresult;
       end
       else
-        textvalue2 := Piece(textvalue, '^', 4) + '  ' + Piece(textvalue, '^', 5);
+        textvalue2 := Piece(textvalue, '^', 4) + '  ' +
+          Piece(textvalue, '^', 5);
       AllTypeDate(typenum, typename, textvalue1, textvalue2, FDate1, FDate2);
-      exit;
+      Exit;
     end
     else
       OneDayTypeDetails(typeitem);
   end
-  else            // legend
+  else // legend
   begin
-    date1 := DateTimeToFMDateTime(FGraphSetting.HighTime);
-    date2 := DateTimeToFMDateTime(FGraphSetting.LowTime);
+    Date1 := DateTimeToFMDateTime(FGraphSetting.HighTime);
+    Date2 := DateTimeToFMDateTime(FGraphSetting.LowTime);
     tmpList := TStringList.Create;
     if pnlTop.Tag = 1 then
       aListView := lvwItemsTop
@@ -4393,13 +4744,14 @@ begin
     aListItem := aListView.Selected;
     while aListItem <> nil do
     begin
-      aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);      //get file^ien match
+      aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);
+      // get file^ien match
       teststring := aGraphItem.Values;
       tmpList.Add(teststring);
       aListItem := aListView.GetNextItem(aListItem, sdAll, [isSelected]);
     end;
     if tmpList.Count > 0 then
-      AllDetails(date1, date2, tmplist);
+      AllDetails(Date1, Date2, tmpList);
     tmpList.Free;
   end;
   FMouseDown := false;
@@ -4407,19 +4759,20 @@ begin
     (Sender as TChart).AllowZoom := false;
 end;
 
-procedure TfrmGraphs.AllDetails(aDate1, aDate2: TFMDateTime; aTempList: TStrings);
+procedure TfrmGraphs.AllDetails(aDate1, aDate2: TFMDateTime;
+  aTempList: TStrings);
 var
-  i: integer;
+  i: Integer;
   detailsok: boolean;
   testnum, teststring, testtype: string;
   ztmpList: TStringList;
   TypeList: TStringList;
 begin
-  //ShowMsg('This funtionality is currently unavailable.');
-  //exit;      // ****************** temporary 11-4-07
+  // ShowMsg('This funtionality is currently unavailable.');
+  // exit;      // ****************** temporary 11-4-07
   TypeList := TStringList.Create;
-   detailsok := true;
-  for i := 0 to aTempList.Count -1 do
+  detailsok := true;
+  for i := 0 to aTempList.Count - 1 do
   begin
     teststring := aTempList[i];
     testtype := Piece(teststring, '^', 1);
@@ -4438,9 +4791,9 @@ begin
   begin
     ztmpList := TStringList.Create;
     try
-      FastAssign(rpcDetailSelected(Patient.DFN, aDate1, aDate2, TypeList, true), ztmpList);
+      rpcDetailSelected(ztmpList, Patient.DFN, aDate1, aDate2, TypeList, true);
       NotifyApps(ztmpList);
-      ReportBox(ztmpList, 'Graph results on ' + Patient.Name, True);
+      ReportBox(ztmpList, 'Graph results on ' + Patient.name, true);
     finally
       ztmpList.Free;
     end;
@@ -4453,7 +4806,7 @@ end;
 procedure TfrmGraphs.OneDayTypeDetails(aTypeItem: string);
 var
   strdate1, strdate2, titleitem, titletype: string;
-  date1, date2: TFMDateTime;
+  Date1, Date2: TFMDateTime;
   tmpList: TStringList;
 begin
   tmpList := TStringList.Create;
@@ -4461,77 +4814,86 @@ begin
   strdate2 := FormatDateTime('mm/dd/yyyy', FDate2);
   FDate1 := StrToDateTime(strdate1);
   FDate2 := StrToDateTime(strdate2);
-  date1 := DateTimeToFMDateTime(FDate1 + 1);
-  date2 := DateTimeToFMDateTime(FDate2);
+  Date1 := DateTimeToFMDateTime(FDate1 + 1);
+  Date2 := DateTimeToFMDateTime(FDate2);
   titletype := FileNameX(Piece(aTypeItem, '^', 1));
   titleitem := ItemName(Piece(aTypeItem, '^', 1), Piece(aTypeItem, '^', 2));
-  rpcDetailDay(tmpList, Patient.DFN, date1, date2, aTypeItem, true);
+  rpcDetailDay(tmpList, Patient.DFN, Date1, Date2, aTypeItem, true);
   NotifyApps(tmpList);
-  ReportBox(tmpList, titletype + ': ' + titleitem + ' on ' + Patient.Name + ' for ' + FormatFMDateTime('mmm d, yyyy', date1), True);
+  ReportBox(tmpList, titletype + ': ' + titleitem + ' on ' + Patient.name +
+    ' for ' + FormatFMDateTime('mmm d, yyyy', Date1), true);
   tmpList.Free;
 end;
 
 procedure TfrmGraphs.NotifyApps(aList: TStrings);
 var
-  i: integer;
+  i: Integer;
   aID, aTag, info: string;
 begin
-  for i := aList.Count - 1 downto 0  do
+  for i := aList.Count - 1 downto 0 do
   begin
     info := aList[i];
-    if Piece(info, '^', 1 ) = '~~~' then
+    if Piece(info, '^', 1) = '~~~' then
     begin
       aList.Delete(i);
       if length(Piece(info, '^', 11)) > 0 then
       begin
         aID := '';
         aTag := 'SUR' + '^';
-        //NotifyOtherApps(NAE_REPORT, aTag + aID);
+        // NotifyOtherApps(NAE_REPORT, aTag + aID);
       end;
     end;
   end;
 end;
 
-procedure TfrmGraphs.CreatePatientHeader(var HeaderList: TStringList; PageTitle, Warning, DateRange: string);
+procedure TfrmGraphs.CreatePatientHeader(var HeaderList: TStringList;
+  PageTitle, Warning, DateRange: string);
 // this procedure modified from rReports
 var
   tmpItem, tmpStr: string;
 begin
-  if Warning = TXT_INFO then Warning := '  ';
+  if Warning = TXT_INFO then
+    Warning := '  ';
   with HeaderList do
   begin
     Add(' ');
-    Add(StringOfChar(' ', (74 - Length(PageTitle)) div 2) + PageTitle);
+    Add(StringOfChar(' ', (74 - length(PageTitle)) div 2) + PageTitle);
     Add(' ');
-    tmpStr := Patient.Name + '   ' + Patient.SSN;
-    tmpItem := tmpStr + StringOfChar(' ', 39 - Length(tmpStr)) + Encounter.LocationName;
-    tmpStr := FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
-    tmpItem := tmpItem + StringOfChar(' ', 74 - (Length(tmpItem) + Length(tmpStr))) + tmpStr;
+    tmpStr := Patient.name + '   ' + Patient.SSN;
+    tmpItem := tmpStr + StringOfChar(' ', 39 - length(tmpStr)) +
+      Encounter.LocationName;
+    tmpStr := FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' +
+      inttostr(Patient.Age) + ')';
+    tmpItem := tmpItem + StringOfChar(' ',
+      74 - (length(tmpItem) + length(tmpStr))) + tmpStr;
     Add(tmpItem);
     Add(StringOfChar('=', 74));
-    Add(' *** WORK COPY ONLY *** ' + StringOfChar(' ', 24) + 'Printed: '
-      + FormatFMDateTime('mmm dd, yyyy  hh:nn', FMNow));
+    Add(' *** WORK COPY ONLY *** ' + StringOfChar(' ', 24) + 'Printed: ' +
+      FormatFMDateTime('mmm dd, yyyy  hh:nn', FMNow));
     Add('  ' + TXT_COPY_DISCLAIMER);
-    Add(StringOfChar(' ', (74 - Length(DateRange)) div 2) + DateRange);
-    Add(StringOfChar(' ', (74 - Length(Warning)) div 2) + Warning);
+    Add(StringOfChar(' ', (74 - length(DateRange)) div 2) + DateRange);
+    Add(StringOfChar(' ', (74 - length(Warning)) div 2) + Warning);
     Add(' ');
   end;
 end;
 
-procedure TfrmGraphs.CreateExcelPatientHeader(var HeaderList: TStringList; PageTitle, Warning, DateRange: string);
+procedure TfrmGraphs.CreateExcelPatientHeader(var HeaderList: TStringList;
+  PageTitle, Warning, DateRange: string);
 // this procedure modified from rReports
 var
   tmpItem: string;
 begin
-  if Warning = TXT_INFO then Warning := '  ';
+  if Warning = TXT_INFO then
+    Warning := '  ';
   with HeaderList do
   begin
     Add(' ');
     Add(PageTitle);
     Add(' ');
-    tmpItem := Patient.Name + '         ' + Patient.SSN + '          '
-             + Encounter.LocationName + '                            '
-             + FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' + IntToStr(Patient.Age) + ')';
+    tmpItem := Patient.name + '         ' + Patient.SSN + '          ' +
+      Encounter.LocationName + '                            ' +
+      FormatFMDateTime('mmm dd, yyyy', Patient.DOB) + ' (' +
+      inttostr(Patient.Age) + ')';
     Add(tmpItem);
     Add(TXT_COPY_DISCLAIMER);
     Add(DateRange);
@@ -4539,77 +4901,86 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.GetData(aString: string);
+procedure TfrmGraphs.GetData(astring: string);
 var
-  i: integer;
+  i: Integer;
   filenum, itemdata, itemid: string;
-  aDate, aDate1: double;
+  aDate, aDate1: Double;
 begin
   GtslTemp.Clear;
-  itemid := UpperCase(Pieces(aString, '^', 1, 2));
+  itemid := UpperCase(Pieces(astring, '^', 1, 2));
   for i := GtslData.Count - 1 downto 0 do
     if itemid = UpperCase(Pieces(GtslData[i], '^', 1, 2)) then
     begin
       itemdata := GtslData[i];
       filenum := Piece(itemdata, '^', 1);
-      if (filenum = '52') or (filenum = '55') or (filenum = '55NVA')
-      or (filenum = '9999911') or (filenum = '405') or (filenum = '9000010') then
+      if (filenum = '52') or (filenum = '55') or (filenum = '55NVA') or
+        (filenum = '9999911') or (filenum = '405') or (filenum = '9000010') then
       begin
         aDate := strtofloat(FMCorrectedDate(Piece(itemdata, '^', 3)));
         aDate1 := strtofloat(FMCorrectedDate(Piece(itemdata, '^', 4)));
-        if (aDate < FGraphSetting.FMStopDate) and (aDate > FGraphSetting.FMStartDate) then
+        if (aDate < FGraphSetting.FMStopDate) and
+          (aDate > FGraphSetting.FMStartDate) then
           GtslTemp.Add(GtslData[i])
-        else if (aDate < FGraphSetting.FMStopDate) and (aDate1 > FGraphSetting.FMStartDate) then
+        else if (aDate < FGraphSetting.FMStopDate) and
+          (aDate1 > FGraphSetting.FMStartDate) then
           GtslTemp.Add(GtslData[i])
-        else if (aDate < FGraphSetting.FMStartDate) and (aDate1 > FGraphSetting.FMStopDate) then
+        else if (aDate < FGraphSetting.FMStartDate) and
+          (aDate1 > FGraphSetting.FMStopDate) then
           GtslTemp.Add(GtslData[i]);
       end
       else if Piece(itemdata, '^', 3) <> '' then
       begin
         aDate := strtofloat(FMCorrectedDate(Piece(itemdata, '^', 3)));
-        if (aDate < FGraphSetting.FMStopDate) and (aDate > FGraphSetting.FMStartDate) then
-          if Copy(itemdata, 1, 4) = '63MI' then
+        if (aDate < FGraphSetting.FMStopDate) and
+          (aDate > FGraphSetting.FMStartDate) then
+          if copy(itemdata, 1, 4) = '63MI' then
             GtslTemp.Add(Pieces(GtslData[i], '^', 1, 4))
-          else if Copy(itemdata, 1, 4) = '63AP' then
+          else if copy(itemdata, 1, 4) = '63AP' then
             GtslTemp.Add(Pieces(GtslData[i], '^', 1, 4))
-          //else GtslTemp.Add(Pieces(Items[i], '^', 1, 5));         // add in non micro, ap
-          else GtslTemp.Add(GtslData[i]);         // add in non micro, ap
+            // else GtslTemp.Add(Pieces(Items[i], '^', 1, 5));         // add in non micro, ap
+          else
+            GtslTemp.Add(GtslData[i]); // add in non micro, ap
       end;
     end;
 end;
 
 function TfrmGraphs.FMToDateTime(FMDateTime: string): TDateTime;
 var
-  Year, x: string;
+  Year, X: string;
 begin
   { Note: TDateTime cannot store month only or year only dates }
-  x := FMDateTime + '0000000';
-  if Length(x) > 12 then x := Copy(x, 1, 12);
-  if StrToInt(Copy(x, 9, 4)) > 2359 then x := Copy(x, 1, 7) + '.2359';
-  Year := IntToStr(17 + StrToInt(Copy(x, 1, 1))) + Copy(x, 2, 2);
-  x := Copy(x, 4, 2) + '/' + Copy(x, 6, 2) + '/' + Year + ' ' + Copy(x, 9, 2) + ':' + Copy(x, 11, 2);
-  Result := StrToDateTime(x);
+  X := FMDateTime + '0000000';
+  if length(X) > 12 then
+    X := copy(X, 1, 12);
+  if strtoint(copy(X, 9, 4)) > 2359 then
+    X := copy(X, 1, 7) + '.2359';
+  Year := inttostr(17 + strtoint(copy(X, 1, 1))) + copy(X, 2, 2);
+  X := copy(X, 4, 2) + '/' + copy(X, 6, 2) + '/' + Year + ' ' + copy(X, 9, 2) +
+    ':' + copy(X, 11, 2);
+  Result := StrToDateTime(X);
 end;
 
-function TfrmGraphs.GraphTypeNum(aType: string): integer;
+function TfrmGraphs.GraphTypeNum(aType: string): Integer;
 var
-  i: integer;
+  i: Integer;
 begin
   Result := 4;
-  if (aType = '52') or (aType = '55') or (aType = '55NVA') or (aType = '9999911') then
+  if (aType = '52') or (aType = '55') or (aType = '55NVA') or (aType = '9999911')
+  then
     Result := 8
   else
-  for i := 0 to GtslAllTypes.Count - 1 do
-    if aType = Piece(GtslAllTypes[i], '^', 1) then
-    begin
-      Result := strtointdef(Piece(GtslAllTypes[i], '^', 3), 4);
-      break;
-    end;
+    for i := 0 to GtslAllTypes.Count - 1 do
+      if aType = Piece(GtslAllTypes[i], '^', 1) then
+      begin
+        Result := strtointdef(Piece(GtslAllTypes[i], '^', 3), 4);
+        break;
+      end;
 end;
 
 function TfrmGraphs.HSAbbrev(aType: string): boolean;
 var
-  i: integer;
+  i: Integer;
   astring: string;
 begin
   Result := false;
@@ -4624,24 +4995,26 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.TempCheck(typeitem: string; var levelseq: double);
+procedure TfrmGraphs.TempCheck(typeitem: string; var levelseq: Double);
 var
   done, previous: boolean;
-  j: integer;
+  j: Integer;
 begin
   previous := false;
   done := false;
   j := 0;
   while not done do
   begin
-    if GtslTempCheck.Count = j then done := true
+    if GtslTempCheck.Count = j then
+      done := true
     else if GtslTempCheck[j] = typeitem then
     begin
       previous := true;
       levelseq := j + 1;
       done := true;
     end
-    else j := j + 1;
+    else
+      j := j + 1;
   end;
   if not previous then
   begin
@@ -4652,10 +5025,11 @@ end;
 
 function TfrmGraphs.DCName(aDCien: string): string;
 var
-  i: integer;
+  i: Integer;
 begin
   if GtslDrugClass.Count < 1 then
-    FastAssign(rpcClass('50.605'), GtslDrugClass);
+    // FastAssign(rpcClass('50.605'), GtslDrugClass);
+    rpcClass(GtslDrugClass, '50.605');
   Result := '';
   for i := 0 to GtslDrugClass.Count - 1 do
     if Piece(GtslDrugClass[i], '^', 2) = aDCien then
@@ -4667,22 +5041,22 @@ end;
 
 procedure TfrmGraphs.splItemsBottomMoved(Sender: TObject);
 begin
- chkItemsBottom.Left := pnlItemsBottom.Width - chkItemsBottom.Width - 2;
- pnlItemsTop.Width := pnlItemsBottom.Width;
- chkItemsTop.Left := pnlItemsTop.Width - chkItemsTop.Width - 2;
+  chkItemsBottom.Left := pnlItemsBottom.Width - chkItemsBottom.Width - 2;
+  pnlItemsTop.Width := pnlItemsBottom.Width;
+  chkItemsTop.Left := pnlItemsTop.Width - chkItemsTop.Width - 2;
 end;
 
 procedure TfrmGraphs.splItemsTopMoved(Sender: TObject);
 begin
- chkItemsTop.Left := pnlItemsTop.Width - chkItemsTop.Width - 2;
- pnlItemsBottom.Width := pnlItemsTop.Width;
- chkItemsBottom.Left := pnlItemsBottom.Width - chkItemsBottom.Width - 2;
+  chkItemsTop.Left := pnlItemsTop.Width - chkItemsTop.Width - 2;
+  pnlItemsBottom.Width := pnlItemsTop.Width;
+  chkItemsBottom.Left := pnlItemsBottom.Width - chkItemsBottom.Width - 2;
 end;
 
 procedure TfrmGraphs.splViewsTopMoved(Sender: TObject);
 begin
-  mnuPopGraphViewDefinition.Checked := (memViewsTop.Height > 5)
-                                    or (memViewsBottom.Height > 5);
+  mnuPopGraphViewDefinition.Checked := (memViewsTop.Height > 5) or
+    (memViewsBottom.Height > 5);
 end;
 
 procedure TfrmGraphs.cboDateRangeChange(Sender: TObject);
@@ -4692,18 +5066,17 @@ begin
   SelCopy(lvwItemsTop, GtslSelCopyTop);
   SelCopy(lvwItemsBottom, GtslSelCopyBottom);
   dateranges := '';
-  if (cboDateRange.ItemID = 'S') then
+  if (cboDateRange.itemid = 'S') then
   begin
     with calDateRange do
     begin
       if Execute then
-        if Length(TextOfStart) > 0 then
-          if Length(TextOfStop) > 0 then
+        if length(TextOfStart) > 0 then
+          if length(TextOfStop) > 0 then
           begin
-            dateranges :=
-              '^' + UpperCase(TextOfStart) + ' to ' + UpperCase(TextOfStop) +
-              '^^^' + RelativeStart + ';' + RelativeStop +
-              '^' + floattostr(FMDateStart) + '^' + floattostr(FMDateStop);
+            dateranges := '^' + UpperCase(TextOfStart) + ' to ' +
+              UpperCase(TextOfStop) + '^^^' + RelativeStart + ';' + RelativeStop
+              + '^' + floattostr(FMDateStart) + '^' + floattostr(FMDateStop);
             cboDateRange.Items.Append(dateranges);
             cboDateRange.ItemIndex := cboDateRange.Items.Count - 1;
           end
@@ -4718,59 +5091,74 @@ begin
   HideGraphs(true);
   DateSteps(dateranges);
   uDateStart := FGraphSetting.FMStartDate;
-  uDateStop  := FGraphSetting.FMStopDate;
+  uDateStop := FGraphSetting.FMStopDate;
   FilterListView(FGraphSetting.FMStartDate, FGraphSetting.FMStopDate);
   SelReset(GtslSelCopyTop, lvwItemsTop);
   SelReset(GtslSelCopyBottom, lvwItemsBottom);
   DisplayData('top');
   DisplayData('bottom');
-  if lstViewsTop.ItemIndex > 1 then lstViewsTopChange(self);
-  if lstViewsBottom.ItemIndex > 1 then lstViewsBottomChange(self);
+  if lstViewsTop.ItemIndex > 1 then
+    lstViewsTopChange(self);
+  if lstViewsBottom.ItemIndex > 1 then
+    lstViewsBottomChange(self);
   HideGraphs(false);
 end;
 
 procedure TfrmGraphs.DateSteps(dateranges: string);
 var
-  datetag: integer;
-  endofday: double;
+  datetag: Integer;
+  endofday: Double;
   manualstart, manualstop: string;
 begin
   endofday := FMDateTimeOffsetBy(FMToday, 1);
   datetag := cboDateRange.ItemIEN;
   FGraphSetting.FMStopDate := endofday;
   with FGraphSetting do
-  case datetag of
-  0:  begin
-        if cboDateRange.ItemIndex > 7 then    // selected date range
+    case datetag of
+      0:
         begin
-          if dateranges = '' then dateranges := cboDateRange.Items[cboDateRange.ItemIndex];
-          manualstart := Piece(dateranges, '^' , 6);
-          manualstop := Piece(dateranges, '^' , 7);
-          if (manualstop <> '') and (length(Piece(manualstop, '.', 2)) = 0) then
-            manualstop := manualstop + '.2359';
-          FMStartDate := MakeFMDateTime(manualstart);
-          FMStopDate := MakeFMDateTime(manualstop);
-          if (manualstart <> '') and (length(Piece(manualstart, '.', 2)) = 0) then
+          if cboDateRange.ItemIndex > 7 then // selected date range
           begin
-            FMStartDate := FMDateTimeOffsetBy(FMStartDate, -1);
-            manualstart := floattostr(FMStartDate) + '.2359';
+            if dateranges = '' then
+              dateranges := cboDateRange.Items[cboDateRange.ItemIndex];
+            manualstart := Piece(dateranges, '^', 6);
+            manualstop := Piece(dateranges, '^', 7);
+            if (manualstop <> '') and (length(Piece(manualstop, '.', 2)) = 0)
+            then
+              manualstop := manualstop + '.2359';
             FMStartDate := MakeFMDateTime(manualstart);
+            FMStopDate := MakeFMDateTime(manualstop);
+            if (manualstart <> '') and (length(Piece(manualstart, '.', 2)) = 0)
+            then
+            begin
+              FMStartDate := FMDateTimeOffsetBy(FMStartDate, -1);
+              manualstart := floattostr(FMStartDate) + '.2359';
+              FMStartDate := MakeFMDateTime(manualstart);
+            end;
           end;
         end;
-      end;
-  1:  FMStartDate := FMToday;
-  2:  FMStartDate := FMDateTimeOffsetBy(FMToday, -7);
-  3:  FMStartDate := FMDateTimeOffsetBy(FMToday, -30);
-  4:  FMStartDate := FMDateTimeOffsetBy(FMToday, -183);
-  5:  FMStartDate := FMDateTimeOffsetBy(FMToday, -365);
-  6:  FMStartDate := FMDateTimeOffsetBy(FMToday, -730);
-  7:  FMStartDate := FM_START_DATE;   // earliest recorded values
-  else
+      1:
+        FMStartDate := FMToday;
+      2:
+        FMStartDate := FMDateTimeOffsetBy(FMToday, -7);
+      3:
+        FMStartDate := FMDateTimeOffsetBy(FMToday, -30);
+      4:
+        FMStartDate := FMDateTimeOffsetBy(FMToday, -183);
+      5:
+        FMStartDate := FMDateTimeOffsetBy(FMToday, -365);
+      6:
+        FMStartDate := FMDateTimeOffsetBy(FMToday, -730);
+      7:
+        FMStartDate := FM_START_DATE; // earliest recorded values
+    else
       begin
-        if dateranges = '' then dateranges := cboDateRange.Items[cboDateRange.ItemIndex];
-        manualstart := Piece(dateranges, '^' , 6);
-        manualstop := Piece(dateranges, '^' , 7);
-        if (manualstop <> '') and (length(Piece(manualstop, '.', 2)) = 0) then manualstop := manualstop + '.2359';
+        if dateranges = '' then
+          dateranges := cboDateRange.Items[cboDateRange.ItemIndex];
+        manualstart := Piece(dateranges, '^', 6);
+        manualstop := Piece(dateranges, '^', 7);
+        if (manualstop <> '') and (length(Piece(manualstop, '.', 2)) = 0) then
+          manualstop := manualstop + '.2359';
         FMStartDate := MakeFMDateTime(manualstart);
         FMStopDate := MakeFMDateTime(manualstop);
         if (manualstart <> '') and (length(Piece(manualstart, '.', 2)) = 0) then
@@ -4780,46 +5168,61 @@ begin
           FMStartDate := MakeFMDateTime(manualstart);
         end;
       end;
-  end;
+    end;
 end;
 
-function TfrmGraphs.StdDev(value, high, low: double): double;
+function TfrmGraphs.StdDev(value, high, low: Double): Double;
 begin
   if high - low <> 0 then
   begin
-    Result := (value - (low + ((high - low) / 2)))/((high - low) / 4);
+    Result := (value - (low + ((high - low) / 2))) / ((high - low) / 4);
     Result := RoundTo(Result, -2);
   end
   else
     Result := 0;
 end;
 
-function TfrmGraphs.InvVal(value: double): double;
+function TfrmGraphs.InvVal(value: Double): Double;
 begin
-  if value = 0 then value := 0.0001;
+  if value = 0 then
+    value := 0.0001;
   Result := 1 / value;
   Result := RoundTo(Result, -2);
 end;
 
-procedure TfrmGraphs.lvwItemsTopCompare(Sender: TObject; Item1,
-  Item2: TListItem; Data: Integer; var Compare: Integer);
+procedure TfrmGraphs.lvwItemsTopCompare(Sender: TObject;
+  Item1, Item2: TListItem; Data: Integer; var Compare: Integer);
 begin
-  if not(Sender is TListView) then exit;
-  if FsortAscending then
+  if not(Sender is TListView) then
+    Exit;
+  if FSortAscending then
   begin
     if FSortCol = 0 then
-      Compare := CompareStr(Item1.Caption, Item2.Caption)
+      Compare := CompareStr(Item1.caption, Item2.caption)
     else
-      Compare := CompareStr(Item1.SubItems[FsortCol - 1],
-        Item2.SubItems[FsortCol - 1]);
+      Compare := CompareStr(Item1.SubItems[FSortCol - 1],
+        Item2.SubItems[FSortCol - 1]);
   end
   else
   begin
     if FSortCol = 0 then
-      Compare := CompareStr(Item2.Caption, Item1.Caption)
+      Compare := CompareStr(Item2.caption, Item1.caption)
     else
-      Compare := CompareStr(Item2.SubItems[FsortCol - 1],
-        Item1.SubItems[FsortCol - 1]);
+      Compare := CompareStr(Item2.SubItems[FSortCol - 1],
+        Item1.SubItems[FSortCol - 1]);
+  end;
+end;
+
+procedure TfrmGraphs.lvwItemsTopDeletion(Sender: TObject; Item: TListItem);
+var
+  I: integer;
+begin
+  inherited;
+  tObject(Item.Data).Free;
+  for I := 0 to Item.SubItems.Count - 1 do
+  begin
+    tObject(Item.SubItems.Objects[i]).Free;
+    Item.SubItems.Objects[i] := nil;
   end;
 end;
 
@@ -4834,14 +5237,15 @@ begin
   (Sender as TListView).AlphaSort;
 end;
 
-procedure TfrmGraphs.lvwItemsBottomCompare(Sender: TObject; Item1,
-  Item2: TListItem; Data: Integer; var Compare: Integer);
+procedure TfrmGraphs.lvwItemsBottomCompare(Sender: TObject;
+  Item1, Item2: TListItem; Data: Integer; var Compare: Integer);
 begin
-  if not(Sender is TListView) then exit;
+  if not(Sender is TListView) then
+    Exit;
   if FBSortAscending then
   begin
     if FBSortCol = 0 then
-      Compare := CompareStr(Item1.Caption, Item2.Caption)
+      Compare := CompareStr(Item1.caption, Item2.caption)
     else
       Compare := CompareStr(Item1.SubItems[FBSortCol - 1],
         Item2.SubItems[FBSortCol - 1]);
@@ -4849,7 +5253,7 @@ begin
   else
   begin
     if FBSortCol = 0 then
-      Compare := CompareStr(Item2.Caption, Item1.Caption)
+      Compare := CompareStr(Item2.caption, Item1.caption)
     else
       Compare := CompareStr(Item2.SubItems[FBSortCol - 1],
         Item1.SubItems[FBSortCol - 1]);
@@ -4870,8 +5274,9 @@ end;
 procedure TfrmGraphs.btnGraphSelectionsClick(Sender: TObject);
 var
   actionOK, checkaction: boolean;
-  counter: integer;
-  profile, profilestring, section, selections, seltext, specnum, typeitem: string;
+  counter: Integer;
+  profile, profilestring, section, selections, seltext, specnum,
+    typeitem: string;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
@@ -4885,24 +5290,29 @@ begin
     if Piece(typeitem, '^', 1) = '63' then
     begin
       specnum := Piece(Piece(typeitem, '^', 2), '.', 2);
-      if length(specnum) > 0 then  // multispecimen
-        if (specnum = '1') or (specnum = '0') then typeitem := Piece(typeitem, '.', 1)
-        else typeitem := '';
+      if length(specnum) > 0 then // multispecimen
+        if (specnum = '1') or (specnum = '0') then
+          typeitem := Piece(typeitem, '.', 1)
+        else
+          typeitem := '';
     end;
     if length(typeitem) > 0 then
-      selections := selections + Piece(typeitem, '^', 1) + '~' + Piece(typeitem, '^', 2) + '~|';
+      selections := selections + Piece(typeitem, '^', 1) + '~' +
+        Piece(typeitem, '^', 2) + '~|';
     aListItem := lvwItemsTop.GetNextItem(aListItem, sdAll, [isSelected]);
   end;
   checkaction := false;
   actionOK := false;
   profile := '*';
-  counter := lstViewsTop.Tag;           // unclear on use of actual count ??
+  counter := lstViewsTop.Tag; // unclear on use of actual count ??
   if counter = BIG_NUMBER then
     counter := lstViewsBottom.Tag;
-  DialogGraphProfiles(actionOK, checkaction, FGraphSetting,
-    profile, profilestring, section, Patient.DFN, counter, true, selections);
-  if (not actionOK) then exit;
-  if (section = 'neither') then exit;
+  DialogGraphProfiles(actionOK, checkaction, FGraphSetting, profile,
+    profilestring, section, Patient.DFN, counter, true, selections);
+  if (not actionOK) then
+    Exit;
+  if (section = 'neither') then
+    Exit;
   FillViews;
   if (section = 'bottom') or (section = 'both') then
   begin
@@ -4912,14 +5322,14 @@ begin
   if (section = 'top') or (section = 'both') then
   begin
     lstViewsTop.Tag := counter;
-    lvwItemsTop.Tag  := counter;
+    lvwItemsTop.Tag := counter;
   end;
   ViewSelections;
 end;
 
 procedure TfrmGraphs.DisplayFreeText(aChart: TChart);
 var
-  i: integer;
+  i: Integer;
 begin
   for i := 0 to aChart.SeriesCount - 1 do
     if (Piece(aChart.Series[i].Title, '^', 1) = '(non-numeric)') then
@@ -4928,8 +5338,8 @@ end;
 
 procedure TfrmGraphs.ViewSelections;
 var
-  i: integer;
-begin    // uses lvwItems... Tag as index for view selection
+  i: Integer;
+begin // uses lvwItems... Tag as index for view selection
   with lvwItemsBottom do
   begin
     if (Tag = 0) and (length(lvwItemsBottom.Hint) > 0) then
@@ -4982,13 +5392,13 @@ end;
 procedure TfrmGraphs.CheckExpandedLabs(aListView: TListView);
 var
   flag: boolean;
-  i, j: integer;
+  i, j: Integer;
   multicheck, testcheck, typeitem: string;
   aList: TStrings;
   aGraphItem: TGraphItem;
   aListItem: TListItem;
 begin
-  flag := false;     // check if need to convert lab tests
+  flag := false; // check if need to convert lab tests
   aListItem := aListView.Selected;
   while (aListItem <> nil) and (flag = false) do
   begin
@@ -4996,22 +5406,23 @@ begin
     typeitem := UpperCase(Pieces(aGraphItem.Values, '^', 1, 2));
     if Piece(typeitem, '^', 1) = '63' then
       if length(Piece(typeitem, '.', 2)) = 0 then
-      for j := 0 to GtslCheck.Count - 1 do
-      begin
-        testcheck := GtslCheck[j];
-        if Pieces(testcheck, '^', 1, 2) = typeitem then
-          if Piece(testcheck, '^', 3) = '*' then
-          begin
-            flag := true;
-            break;
-          end;
-      end;
+        for j := 0 to GtslCheck.Count - 1 do
+        begin
+          testcheck := GtslCheck[j];
+          if Pieces(testcheck, '^', 1, 2) = typeitem then
+            if Piece(testcheck, '^', 3) = '*' then
+            begin
+              flag := true;
+              break;
+            end;
+        end;
     aListItem := aListView.GetNextItem(aListItem, sdAll, [isSelected]);
   end;
   if flag then
   begin
     // copy selected tests - multiples with #.0, #.#
     aList := TStringList.Create;
+    try
     aListItem := aListView.Selected;
     while aListItem <> nil do
     begin
@@ -5039,25 +5450,25 @@ begin
                     if Piece(multicheck, '.', 1) = typeitem then
                       if Piece(multicheck, '.', 2) <> '0' then
                       begin
-                        aList.Add(multicheck);  // add split lab tests
+                        aList.Add(multicheck); // add split lab tests
                       end;
                   end;
                 end;
                 break;
               end
               else
-                aList.Add(typeitem);  // add merged lab tests
+                aList.Add(typeitem); // add merged lab tests
           end;
         end
         else
-          aList.Add(typeitem);  // add regular lab tests
+          aList.Add(typeitem); // add regular lab tests
       end
       else
-        aList.Add(typeitem);  // add non lab items
+        aList.Add(typeitem); // add non lab items
       aListItem := aListView.GetNextItem(aListItem, sdAll, [isSelected]);
     end;
 
-    cboDateRangeChange(self);     // update all tests
+    cboDateRangeChange(self); // update all tests
 
     // put back selections    (do not need to update other listview)
     for i := aListView.Items.Count - 1 downto 0 do
@@ -5074,12 +5485,15 @@ begin
         end;
       end;
     end;
+    finally
     FreeAndNil(aList);
   end;
 end;
+end;
 
-procedure TfrmGraphs.ItemsClick(Sender: TObject; aListView, aOtherListView: TListView;
-  aCheckBox: TCheckBox; aListBox: TORListBox; aList: TStrings; aSection: string);
+procedure TfrmGraphs.ItemsClick(Sender: TObject;
+  aListView, aOtherListView: TListView; aCheckBox: TCheckBox;
+  aListBox: TORListBox; aList: TStrings; aSection: string);
 begin
   FRetainZoom := (GtslZoomHistoryFloat.Count > 0);
   FWarning := false;
@@ -5089,11 +5503,11 @@ begin
   HideGraphs(true);
   if Sender = aListView then
   begin
-    aListBox.Tag := BIG_NUMBER;                   // avoids recurssion
+    aListBox.Tag := BIG_NUMBER; // avoids recurssion
     aListBox.ItemIndex := -1;
     aListBox.ClearSelection;
   end;
-  if (Sender is TListView) then           // clear out selcopy list
+  if (Sender is TListView) then // clear out selcopy list
     aList.Clear;
   if aOtherListView.SelCount < 1 then
   begin
@@ -5102,13 +5516,17 @@ begin
   end
   else if (FBHighTime <> 0) and (aSection = 'top') then
   begin
-    if FBHighTime < FTHighTime then FGraphSetting.HighTime := FBHighTime;
-    if FBLowTime > FTLowTime then FGraphSetting.LowTime := FBLowTime;
+    if FBHighTime < FTHighTime then
+      FGraphSetting.HighTime := FBHighTime;
+    if FBLowTime > FTLowTime then
+      FGraphSetting.LowTime := FBLowTime;
   end
   else if (FTHighTime <> 0) and (aSection = 'bottom') then
   begin
-    if FTHighTime < FBHighTime then FGraphSetting.HighTime := FTHighTime;
-    if FTLowTime > FBLowTime then FGraphSetting.LowTime := FTLowTime;
+    if FTHighTime < FBHighTime then
+      FGraphSetting.HighTime := FTHighTime;
+    if FTLowTime > FBLowTime then
+      FGraphSetting.LowTime := FTLowTime;
   end;
   if aSection = 'top' then
   begin
@@ -5136,31 +5554,37 @@ begin
   Screen.Cursor := crDefault;
 end;
 
-procedure TfrmGraphs.CheckToAddData(aListView: TListView; aSection, TypeToCheck: string);
+procedure TfrmGraphs.CheckToAddData(aListView: TListView;
+  aSection, TypeToCheck: string);
 var
   done, ok, previous, singletype: boolean;
-  i, j: integer;
-  itemname, typeitem: string;
+  i, j: Integer;
+  ItemName, typeitem: string;
   aGraphItem: TGraphItem;
+  sl: TStrings;
 begin
   if FFastTrack then
-    exit;
+    Exit;
   Application.ProcessMessages;
   TypeToCheck := UpperCase(TypeToCheck);
-  if (TypeToCheck = 'SELECT') and (lvwItemsTop.SelCount = 0)
-    and (lvwItemsBottom.SelCount = 0) then exit;
+  if (TypeToCheck = 'SELECT') and (lvwItemsTop.SelCount = 0) and
+    (lvwItemsBottom.SelCount = 0) then
+    Exit;
   singletype := length(Piece(TypeToCheck, '^', 2)) = 0;
   for i := 0 to aListView.Items.Count - 1 do
   begin
     ok := false;
-    if (TypeToCheck = 'ALL') then ok := true;
-    if (TypeToCheck = 'SELECT') and aListView.Items[i].Selected then ok := true;
+    if (TypeToCheck = 'ALL') then
+      ok := true;
+    if (TypeToCheck = 'SELECT') and aListView.Items[i].Selected then
+      ok := true;
     aGraphItem := TGraphItem(aListView.Items.Item[i].SubItems.Objects[3]);
     typeitem := UpperCase(Pieces(aGraphItem.Values, '^', 1, 2));
     if not ok then
-      if TypeToCheck = typeitem then ok := true
-      else if (TypeToCheck = Piece(typeitem, '^', 1)) and
-        singletype then ok := true;
+      if TypeToCheck = typeitem then
+        ok := true
+      else if (TypeToCheck = Piece(typeitem, '^', 1)) and singletype then
+        ok := true;
     if ok then
     begin
       previous := false;
@@ -5168,22 +5592,32 @@ begin
       j := 0;
       while not done do
       begin
-        if GtslCheck.Count = j then done := true
+        if GtslCheck.Count = j then
+          done := true
         else if Pieces(GtslCheck[j], '^', 1, 2) = typeitem then
         begin
           previous := true;
           done := true;
         end
-        else j := j + 1;
-      end;
-      if not previous then
-      begin
-        GtslCheck.Add(typeitem);
-        itemname := aListView.Items[i].Caption;
-        if Piece(typeitem, '^', 1) = '63' then
-          LabData(typeitem, itemname, aSection, true) // need to get lab data
         else
-          FastAddStrings(rpcGetItemData(typeitem, FMTimeStamp, Patient.DFN), GtslData);
+          j := j + 1;
+      end;
+      sl := TStringList.Create;
+      try
+        if not previous then
+        begin
+          GtslCheck.Add(typeitem);
+          ItemName := aListView.Items[i].caption;
+          if Piece(typeitem, '^', 1) = '63' then
+            LabData(typeitem, ItemName, aSection, true) // need to get lab data
+          else
+          begin
+            rpcGetItemData(sl, typeitem, FMTimestamp, Patient.DFN);
+            FastAddStrings(sl, GtslData);
+          end;
+        end;
+      finally
+        sl.Free;
       end;
     end;
   end;
@@ -5191,7 +5625,7 @@ end;
 
 procedure TfrmGraphs.lvwItemsBottomClick(Sender: TObject);
 var
-  i: integer;
+  i: Integer;
 begin
   FFirstClick := true;
   if not FFastTrack then
@@ -5203,16 +5637,18 @@ begin
     lvwItemsBottom.ClearSelection;
     ShowMsg('Too many items to graph');
     for i := 0 to GtslSelPrevBottomFloat.Count - 1 do
-      lvwItemsBottom.Items[strtoint(GtslSelPrevBottomFloat[i])].Selected := true;
+      lvwItemsBottom.Items[strtoint(GtslSelPrevBottomFloat[i])
+        ].Selected := true;
     pnlItemsBottomInfo.Tag := 0;
   end
   else
   begin
     GtslSelPrevBottomFloat.Clear;
     for i := 0 to lvwItemsBottom.Items.Count - 1 do
-    if lvwItemsBottom.Items[i].Selected then
-      GtslSelPrevBottomFloat.Add(inttostr(i));
-    ItemsClick(Sender, lvwItemsBottom, lvwItemsTop, chkItemsBottom, lstViewsBottom, GtslSelCopyBottom, 'bottom');
+      if lvwItemsBottom.Items[i].Selected then
+        GtslSelPrevBottomFloat.Add(inttostr(i));
+    ItemsClick(Sender, lvwItemsBottom, lvwItemsTop, chkItemsBottom,
+      lstViewsBottom, GtslSelCopyBottom, 'bottom');
   end;
 end;
 
@@ -5226,7 +5662,8 @@ begin
     aListItem := aListView.Selected;
     while aListItem <> nil do
     begin
-      aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);    //get file^ien match
+      aGraphItem := TGraphItem(aListItem.SubItems.Objects[3]);
+      // get file^ien match
       aList.Add(aGraphItem.Values);
       aListItem := aListView.GetNextItem(aListItem, sdAll, [isSelected]);
     end;
@@ -5235,13 +5672,14 @@ end;
 
 procedure TfrmGraphs.SelReset(aList: TStrings; aListView: TListView);
 var
-  i, j: integer;
+  i, j: Integer;
   itemtype, typeitem, typenum: string;
   aGraphItem: TGraphItem;
 begin
   for i := 0 to aListView.Items.Count - 1 do
   begin
-    aGraphItem := TGraphItem(aListView.Items.Item[i].SubItems.Objects[3]);    //get file^ien match
+    aGraphItem := TGraphItem(aListView.Items.Item[i].SubItems.Objects[3]);
+    // get file^ien match
     typeitem := UpperCase(Pieces(aGraphItem.Values, '^', 1, 3));
     typenum := Piece(typeitem, '^', 1);
     for j := 0 to aList.Count - 1 do
@@ -5262,20 +5700,23 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.ViewsChange(aListView: TListView; aListBox: TORListBox; aSection: string);
+procedure TfrmGraphs.ViewsChange(aListView: TListView; aListBox: TORListBox;
+  aSection: string);
 var
   Updated: boolean;
   aProfile: string;
 begin
   timHintPause.Enabled := false;
   InactivateHint;
-  if aListBox.ItemIndex = -1 then exit;  // or clear graph  ***************************
-  if aListBox.Tag = BIG_NUMBER then            // avoids recurssion
-    exit;
-  if pos(LLS_FRONT, aListBox.Items[aListBox.ItemIndex]) > 0 then  // <clear all selections>
+  if aListBox.ItemIndex = -1 then
+    Exit; // or clear graph  ***************************
+  if aListBox.Tag = BIG_NUMBER then // avoids recurssion
+    Exit;
+  if Pos(LLS_FRONT, aListBox.Items[aListBox.ItemIndex]) > 0 then
+  // <clear all selections>
   begin
-    if aListBox.Tag = BIG_NUMBER then            // avoids recurssion
-      exit;
+    if aListBox.Tag = BIG_NUMBER then // avoids recurssion
+      Exit;
     aListView.ClearSelection;
     if aSection = 'top' then
     begin
@@ -5292,14 +5733,15 @@ begin
       memViewsBottom.Lines[0] := TXT_VIEW_DEFINITION;
     end;
     DisplayData(aSection);
-    aListBox.Tag := 0;                     // reset
-    exit;
+    aListBox.Tag := 0; // reset
+    Exit;
   end;
   aListView.ClearSelection;
   Updated := false;
   aProfile := aListBox.Items[aListBox.ItemIndex];
-  if (length(Piece(aProfile, '^', 3)) = 0) or (length(Piece(aProfile, '^', 1)) = 0) or
-     (Piece(aProfile, '^', 1) = VIEW_LABS) then        //or <custom>
+  if (length(Piece(aProfile, '^', 3)) = 0) or
+    (length(Piece(aProfile, '^', 1)) = 0) or
+    (Piece(aProfile, '^', 1) = VIEW_LABS) then // or <custom>
     CheckProfile(aProfile, Updated);
   if Updated then
     cboDateRangeChange(self);
@@ -5310,7 +5752,8 @@ begin
     if not FItemsSortedTop then
       lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[0]);
     if FGraphSetting.SortColumn > 0 then
-      lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[FGraphSetting.SortColumn]);
+      lvwItemsTopColumnClick(lvwItemsTop,
+        lvwItemsTop.Column[FGraphSetting.SortColumn]);
     lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[2]);
     lvwItemsTopColumnClick(lvwItemsTop, lvwItemsTop.Column[2]);
     FItemsSortedTop := false;
@@ -5322,7 +5765,8 @@ begin
     if not FItemsSortedBottom then
       lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[0]);
     if FGraphSetting.SortColumn > 0 then
-      lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[FGraphSetting.SortColumn]);
+      lvwItemsBottomColumnClick(lvwItemsBottom,
+        lvwItemsBottom.Column[FGraphSetting.SortColumn]);
     lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[2]);
     lvwItemsBottomColumnClick(lvwItemsBottom, lvwItemsBottom.Column[2]);
     FItemsSortedBottom := false;
@@ -5334,20 +5778,21 @@ end;
 
 procedure TfrmGraphs.AssignProfile(aProfile, aSection: string);
 var
-  profilename: string;
+  ProfileName: string;
 begin
-  profilename := Piece(aProfile, '^', 2);
+  ProfileName := Piece(aProfile, '^', 2);
   aProfile := UpperCase(Piece(aProfile, '^', 3));
-  if length(aProfile) = 0 then exit;
+  if length(aProfile) = 0 then
+    Exit;
   if aSection = 'top' then
-    SetProfile(aProfile, profilename, lvwItemsTop)
+    SetProfile(aProfile, ProfileName, lvwItemsTop)
   else
-    SetProfile(aProfile, profilename, lvwItemsBottom);
+    SetProfile(aProfile, ProfileName, lvwItemsBottom);
 end;
 
 procedure TfrmGraphs.SetProfile(aProfile, aName: string; aListView: TListView);
 var
-  i: integer;
+  i: Integer;
   itemstring: string;
   aGraphItem: TGraphItem;
 begin
@@ -5358,23 +5803,25 @@ begin
   else
     for i := 0 to aListView.Items.Count - 1 do
     begin
-      aGraphItem := TGraphItem(aListView.Items.Item[i].SubItems.Objects[3]);   //get file^ien match
+      aGraphItem := TGraphItem(aListView.Items.Item[i].SubItems.Objects[3]);
+      // get file^ien match
       itemstring := aGraphItem.Values;
-      aListView.Items[i].SubItems[1] := ProfileName(aProfile, aName, itemstring);
+      aListView.Items[i].SubItems[1] := ProfileName(aProfile, aName,
+        itemstring);
     end;
   aListView.Items.EndUpdate;
 end;
 
-function TfrmGraphs.ProfileName(aProfile, aName, aString: string): string;
+function TfrmGraphs.ProfileName(aProfile, aName, astring: string): string;
 var
-  j: integer;
+  j: Integer;
   dcnm, itemdrugclass, itemnums, itempart, itempart1, itempart2: string;
   itemstring1, itemstringnums: string;
 begin
   Result := '';
-  itemstring1 := UpperCase(Piece(aString, '^', 1));
-  itemdrugclass := Piece(aString, '^', 6);
-  itemstringnums := UpperCase(Pieces(aString, '^', 1, 2));
+  itemstring1 := UpperCase(Piece(astring, '^', 1));
+  itemdrugclass := Piece(astring, '^', 6);
+  itemstringnums := UpperCase(Pieces(astring, '^', 1, 2));
   for j := 1 to BIG_NUMBER do
   begin
     itempart := Piece(aProfile, '|', j);
@@ -5413,39 +5860,46 @@ begin
       Result := aName;
       break;
     end
-    else if (itempart1 = '0') and (length(Piece(itempart2, ';', 2)) > 0) then    // subtypes
-    if copy(itempart2, 1, length(itemstring1)) = Piece(itempart2, ';', 1) then
-    if Piece(itempart2, ';', 2) = UpperCase(Piece(Piece(aString, '^', 2), ';', 2)) then
-    begin
-      Result := aName;
-      break;
-    end;
+    else if (itempart1 = '0') and (length(Piece(itempart2, ';', 2)) > 0) then
+    // subtypes
+      if copy(itempart2, 1, length(itemstring1)) = Piece(itempart2, ';', 1) then
+        if Piece(itempart2, ';', 2) = UpperCase(Piece(Piece(astring, '^', 2),
+          ';', 2)) then
+        begin
+          Result := aName;
+          break;
+        end;
   end;
 end;
 
-procedure TfrmGraphs.ViewDefinition(profile: string; amemo: TRichEdit);
+procedure TfrmGraphs.ViewDefinition(profile: string; aMemo: TRichEdit);
 var
-  i, defnum: integer;
+  i, defnum: Integer;
   vdef, vlist, vname, vnum, vtype: string;
 begin
   vtype := Piece(profile, '^', 1);
   defnum := strtointdef(vtype, BIG_NUMBER);
   vname := Piece(profile, '^', 2);
   case defnum of
-    -1:  vdef := 'Personal View';
-    -2:  vdef := 'Public View';
-    -3:  vdef := 'Lab Group';
-    else vdef := 'Temporary View';
+    - 1:
+      vdef := 'Personal View';
+    -2:
+      vdef := 'Public View';
+    -3:
+      vdef := 'Lab Group';
+  else
+    vdef := 'Temporary View';
   end;
-  amemo.Clear;
-  amemo.Lines.Add(vname + ' [' + vdef + ']:');
+  aMemo.Clear;
+  aMemo.Lines.Add(vname + ' [' + vdef + ']:');
   if vdef = 'Temporary View' then
   begin
     for i := 4 to BIG_NUMBER do
     begin
       vlist := Piece(profile, '^', i);
-      if vlist = '' then break;
-      amemo.Lines.Add('  ' + vlist);
+      if vlist = '' then
+        break;
+      aMemo.Lines.Add('  ' + vlist);
     end;
   end
   else
@@ -5460,22 +5914,28 @@ begin
             vnum := Piece(vlist, '^', 3);
       if vnum <> '' then
         if Piece(vlist, '^', 2) = 'C' then
-           if Piece(vlist, '^', 3) = vnum then
-             amemo.Lines.Add('   ' + Piece(vlist, '^', 4));
+          if Piece(vlist, '^', 3) = vnum then
+            aMemo.Lines.Add('   ' + Piece(vlist, '^', 4));
     end;
   end;
 end;
 
 function TfrmGraphs.ExpandTax(profile: string): string;
 var
-  i: integer;
+  i: Integer;
   itempart, itempart1, itempart2, newprofile: string;
   expandedcodes: TStrings;
   taxonomies: TStrings;
   taxonomycodes: TStrings;
-begin    //  '811.2~123~|0~63~|' or '55~12~|0~811.2~|0~63~|'
+begin // '811.2~123~|0~63~|' or '55~12~|0~811.2~|0~63~|'
   Result := profile;
-  if Pos('811.2~', profile) = 0 then exit;
+  if Pos('811.2~', profile) = 0 then
+    Exit;
+
+  taxonomies := nil;
+  expandedcodes := nil;
+  taxonomycodes := nil;
+  try
   taxonomies := TStringList.Create;
   expandedcodes := TStringList.Create;
   taxonomycodes := TStringList.Create;
@@ -5483,54 +5943,61 @@ begin    //  '811.2~123~|0~63~|' or '55~12~|0~811.2~|0~63~|'
   for i := 1 to BIG_NUMBER do
   begin
     itempart := Piece(profile, '|', i);
-    if length(itempart) = 0 then break;
+    if length(itempart) = 0 then
+      break;
     if Pos('811.2~', itempart) = 0 then
       newprofile := newprofile + '|'
     else
       taxonomies.Add(itempart);
   end;
-  for i := 0 to taxonomies.Count -1 do
+  for i := 0 to taxonomies.Count - 1 do
   begin
     itempart := taxonomies[i];
-    if (Piece(itempart, '~', 1) = '0') and (Piece(itempart, '~', 2) = '811.2') then
+    if (Piece(itempart, '~', 1) = '0') and (Piece(itempart, '~', 2) = '811.2')
+    then
     begin
       // this is Reminder Taxonomy <any> and would bring back a ton of codes
-      //FastAssign(rpcTaxonomy(true, nil), expandedcodes);
+      // FastAssign(rpcTaxonomy(true, nil), expandedcodes);
       break;
     end
     else if Piece(itempart, '~', 1) = '811.2' then
       taxonomycodes.Add(Piece(itempart, '~', 2));
   end;
   if taxonomycodes.Count > 0 then
-    FastAssign(rpcTaxonomy(false, taxonomycodes), expandedcodes);
-  for i := 1 to expandedcodes.Count -1 do
+    // FastAssign(rpcTaxonomy(false, taxonomycodes), expandedcodes);
+    rpcTaxonomy(expandedcodes, false, taxonomycodes);
+  for i := 1 to expandedcodes.Count - 1 do
   begin
     itempart := expandedcodes[i];
     itempart1 := Piece(itempart, ';', 1);
     itempart2 := Piece(itempart, ';', 2);
     newprofile := newprofile + itempart1 + '~' + itempart2 + '~|'
   end;
-  FreeAndNil(taxonomies);
-  FreeAndNil(expandedcodes);
-  FreeAndNil(taxonomycodes);
+  finally
+    FreeAndNil(taxonomycodes);
+    FreeAndNil(expandedcodes);
+    FreeAndNil(taxonomies);
+  end;
   Result := newprofile;
 end;
 
 procedure TfrmGraphs.CheckProfile(var aProfile: string; var Updated: boolean);
 var
-  i, j: integer;
-  itempart, itempart1, itempart2, profile, profilename, profiletype, xprofile: string;
+  i, j: Integer;
+  itempart, itempart1, itempart2, profile, ProfileName, profiletype,
+    xprofile: string;
 begin
   Application.ProcessMessages;
   profiletype := Piece(aProfile, '^', 1);
-  profilename := Piece(aProfile, '^', 2);
+  ProfileName := Piece(aProfile, '^', 2);
   if profiletype = VIEW_PUBLIC then
-    FastAssign(GetGraphProfiles(UpperCase(profilename), '1', 0, 0), GtslTemp)
+    GetGraphProfiles(UpperCase(ProfileName), '1', 0, 0, GtslTemp)
   else if profiletype = VIEW_PERSONAL then
-    FastAssign(GetGraphProfiles(UpperCase(profilename), '0', 0, User.DUZ), GtslTemp)
+    GetGraphProfiles(UpperCase(ProfileName), '0', 0, User.DUZ, GtslTemp)
   else if profiletype = VIEW_LABS then
   begin
-    FastAssign(GetATestGroup(strtoint(Piece(aProfile, '^', 3)), strtoint(Piece(aProfile, '^', 4))), GtslTemp);
+    GetATestGroup(GtslTemp, strtoint(Piece(aProfile, '^', 3)),
+      StrToInt64Def(Piece(aProfile, '^', 4),0));
     aProfile := VIEW_LABS + '^' + Piece(aProfile, '^', 2) + '^';
     for i := 0 to GtslTemp.Count - 1 do
       aProfile := aProfile + '63~' + Piece(GtslTemp[i], '^', 1) + '~|';
@@ -5546,32 +6013,33 @@ begin
   profile := UpperCase(Piece(aProfile, '^', 3));
   xprofile := ExpandTax(profile);
   if xprofile <> profile then
-  begin                                         // taxonomies
+  begin // taxonomies
     profile := xprofile;
     LoadDisplayCheck('45DX', Updated);
     LoadDisplayCheck('45OP', Updated);
     LoadDisplayCheck('9000010.07', Updated);
     LoadDisplayCheck('9000010.18', Updated);
     LoadDisplayCheck('9000011', Updated);
-    //LoadDisplayCheck('9999911', Updated);   // problems as durations not being used
+    // LoadDisplayCheck('9999911', Updated);   // problems as durations not being used
   end;
   aProfile := Pieces(aProfile, '^', 1, 2) + '^' + profile;
   for j := 1 to BIG_NUMBER do
   begin
     itempart := Piece(profile, '|', j);
-    if itempart = '' then break;
+    if itempart = '' then
+      break;
     itempart1 := Piece(itempart, '~', 1);
     itempart2 := Piece(itempart, '~', 2);
-    if itempart1 = '0' then                      // <any> type
+    if itempart1 = '0' then // <any> type
       LoadDisplayCheck(itempart2, Updated)
-    else if itempart1 = '50.605' then            // drug class
+    else if itempart1 = '50.605' then // drug class
     begin
       LoadDisplayCheck('52', Updated);
       LoadDisplayCheck('55', Updated);
       LoadDisplayCheck('55NVA', Updated);
       LoadDisplayCheck('53.79', Updated);
     end
-    else if itempart1 <> '0' then                // all others
+    else if itempart1 <> '0' then // all others
       LoadDisplayCheck(itempart1, Updated);
   end;
 end;
@@ -5580,7 +6048,7 @@ procedure TfrmGraphs.LoadDisplayCheck(typeofitem: string; var Updated: boolean);
 begin
   if FFastTrack then
   begin
-    exit;
+    Exit;
   end;
   if not TypeIsLoaded(typeofitem) then
   begin
@@ -5596,7 +6064,7 @@ end;
 
 procedure TfrmGraphs.AutoSelect(aListView: TListView);
 var
-  counter, i: integer;
+  counter, i: Integer;
 begin
   counter := 0;
   for i := 0 to aListView.Items.Count - 1 do
@@ -5623,7 +6091,8 @@ begin
     lvwItemsBottomClick(self);
 end;
 
-procedure TfrmGraphs.LabAdd(aListView: TListView; filename: string; aIndex, oldlisting: integer; selectlab: boolean);
+procedure TfrmGraphs.LabAdd(aListView: TListView; filename: string;
+  aIndex, oldlisting: Integer; selectlab: boolean);
 var
   aGraphItem: TGraphItem;
   aListItem: TListItem;
@@ -5634,11 +6103,13 @@ begin
   newmult := Piece(newlabtest, '.', 2);
   if length(newmult) > 0 then
   begin
-    if (newmult <> '0') and FGraphSetting.MergeLabs then exit;
-    if (newmult = '0') and not FGraphSetting.MergeLabs then exit;
+    if (newmult <> '0') and FGraphSetting.MergeLabs then
+      Exit;
+    if (newmult = '0') and not FGraphSetting.MergeLabs then
+      Exit;
   end;
   aListItem := aListView.Items.Insert(oldlisting);
-  aListItem.Caption := Piece(newlab, '^', 4);
+  aListItem.caption := Piece(newlab, '^', 4);
   aListItem.SubItems.Add(filename);
   aListItem.SubItems.Add('');
   aListItem.SubItems.Add(Piece(newlab, '^', 8));
@@ -5647,21 +6118,24 @@ begin
   aListItem.SubItems.AddObject('', aGraphItem);
   if selectlab then
     if not FFastLabs then
-      if not FPointClick then    // do not select test if expanding data from a point click
+      if not FPointClick then
+      // do not select test if expanding data from a point click
         aListView.Items[oldlisting].Selected := true;
 end;
 
-procedure TfrmGraphs.LabCheck(aListView: TListView; aItemType: string; var oldlisting: integer);
+procedure TfrmGraphs.LabCheck(aListView: TListView; aItemType: string;
+  var oldlisting: Integer);
 var
-  i: integer;
+  i: Integer;
   checkitem: string;
   aGraphItem: TGraphItem;
 begin
   oldlisting := 0;
-  aListView.SortType := stNone;    // avoids out of bounds error
+  aListView.SortType := stNone; // avoids out of bounds error
   for i := 0 to aListView.Items.Count - 1 do
   begin
-    aGraphItem := TGraphItem(aListView.Items.Item[i].SubItems.Objects[3]);   //get file^ien match
+    aGraphItem := TGraphItem(aListView.Items.Item[i].SubItems.Objects[3]);
+    // get file^ien match
     checkitem := Pieces(aGraphItem.Values, '^', 1, 2);
     if aItemType = checkitem then
     begin
@@ -5672,14 +6146,16 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.LabData(aItemType, aItemName, aSection: string; getdata: boolean);
+procedure TfrmGraphs.LabData(aItemType, aItemName, aSection: string;
+  GetData: boolean);
 var
   selectlab, singlespec: boolean;
-  i, j, oldlisting: integer;
+  i, j, oldlisting: Integer;
   checktest, checktypeitem, filename, newline, newtest: string;
 begin
-  if getdata then
-    FastAssign(rpcGetItemData(aItemType, FMTimeStamp, Patient.DFN), GtslScratchLab);
+  if GetData then
+    // FastAssign(rpcGetItemData(aItemType, FMTimeStamp, Patient.DFN), GtslScratchLab);
+    rpcGetItemData(GtslScratchLab, aItemType, FMTimestamp, Patient.DFN);
   SpecRefCheck(aItemType, aItemName, singlespec);
   if singlespec then
     FastAddStrings(GtslScratchLab, GtslData)
@@ -5692,7 +6168,7 @@ begin
       SetPiece(newline, '^', 2, newtest);
       GtslScratchLab[i] := newline;
     end;
-    FastAddStrings(GtslScratchLab, GtslData);    //&&&&&
+    FastAddStrings(GtslScratchLab, GtslData); // &&&&&
     SpecRefSet(aItemType, aItemName);
     filename := FileNameX('63');
 
@@ -5702,7 +6178,7 @@ begin
     for i := 0 to GtslMultiSpec.Count - 1 do
     begin
       checktest := UpperCase(Pieces(GtslMultiSpec[i], '^', 1, 2));
-      if Piece(checktest, '.', 2) = '0' then      // flag expanded test
+      if Piece(checktest, '.', 2) = '0' then // flag expanded test
       begin
         checktypeitem := Piece(checktest, '.', 1);
         for j := 0 to GtslCheck.Count - 1 do
@@ -5716,7 +6192,8 @@ begin
       end;
       GtslCheck.Add(checktest);
       if (FGraphSetting.FMStartDate = FM_START_DATE) or
-          DateRangeMultiItems(FGraphSetting.FMStartDate, FGraphSetting.FMStopDate, Piece(GtslMultiSpec[i], '^', 2)) then
+        DateRangeMultiItems(FGraphSetting.FMStartDate, FGraphSetting.FMStopDate,
+        Piece(GtslMultiSpec[i], '^', 2)) then
         LabAdd(lvwItemsTop, filename, i, oldlisting, selectlab);
     end;
     lvwItemsTop.SortType := stBoth;
@@ -5733,83 +6210,94 @@ begin
 end;
 
 // sort out for multiple spec or ref ranges
-procedure TfrmGraphs.SpecRefCheck(aItemType, aItemName: string; var singlespec: boolean);
+procedure TfrmGraphs.SpecRefCheck(aItemType, aItemName: string;
+  var singlespec: boolean);
 var
-  i: integer;
-  aitem, aspec, checkstring, datastring, refrange, low, high, srcheck, srcheck1, units: string;
+  i: Integer;
+  aItem, aSpec, checkstring, datastring, refrange, low, high, srcheck, srcheck1,
+    units: string;
 begin
   GtslSpec1.Sorted := true;
   GtslSpec1.Clear;
   singlespec := true;
   srcheck1 := '';
-  if GtslScratchLab.Count < 1 then exit;
+  if GtslScratchLab.Count < 1 then
+    Exit;
   for i := 0 to GtslScratchLab.Count - 1 do
   begin
     datastring := GtslScratchLab[i];
-    aitem := Piece(datastring, '^', 2);
-    aspec := Piece(datastring, '^', 7);
+    aItem := Piece(datastring, '^', 2);
+    aSpec := Piece(datastring, '^', 7);
     refrange := Piece(datastring, '^', 10);
     units := Piece(datastring, '^', 11);
     if length(refrange) = 0 then
     begin
-      RefUnits(aitem, aspec, low, high, units);
+      RefUnits(aItem, aSpec, low, high, units);
       refrange := low + '!' + high;
       SetPiece(datastring, '^', 10, refrange);
       SetPiece(datastring, '^', 11, units);
     end;
-    srcheck := aitem + '^' + aspec + '^' + refrange + '^' + units;
+    srcheck := aItem + '^' + aSpec + '^' + refrange + '^' + units;
     checkstring := UpperCase(srcheck) + '^' + datastring;
     GtslSpec1.Add(checkstring);
-    if i = 0 then srcheck1 := srcheck
-    else if srcheck1 <> srcheck then singlespec := false;
+    if i = 0 then
+      srcheck1 := srcheck
+    else if srcheck1 <> srcheck then
+      singlespec := false;
   end;
 end;
 
 // for mutiple spec ranges replace data and items
 procedure TfrmGraphs.SpecRefSet(aItemType, aItemName: string);
 
-function MultiRef(aline: string): boolean;
-// check for multiple ref ranges on test/specimen
-var
-  cnt, i: integer;
-  checkspec, listline, testspec: string;
-begin
-  Result := false;
-  checkspec := Piece(aline, '^', 2);
-  cnt := 0;
-  for i := 0 to GtslSpec2.Count - 1 do
+  function MultiRef(aline: string): boolean;
+  // check for multiple ref ranges on test/specimen
+  var
+    cnt, i: Integer;
+    checkspec, listline, testspec: string;
   begin
-    listline := GtslSpec2[i];
-    testspec := Piece(listline, '^', 2);
-    if testspec = checkspec then cnt := cnt + 1;
-    if cnt > 1 then
+    Result := false;
+    checkspec := Piece(aline, '^', 2);
+    cnt := 0;
+    for i := 0 to GtslSpec2.Count - 1 do
     begin
-      Result := true;
-      break;
+      listline := GtslSpec2[i];
+      testspec := Piece(listline, '^', 2);
+      if testspec = checkspec then
+        cnt := cnt + 1;
+      if cnt > 1 then
+      begin
+        Result := true;
+        break;
+      end;
     end;
   end;
-end;
 
 var
-  cnt, i, lastnum: integer;
-  listline, newline, newtest, newtsru, oldline, oldspec, oldtsru, refrange: string;
+  cnt, i, lastnum: Integer;
+  listline, newline, newtest, newtsru, oldline, oldspec, oldtsru,
+    refrange: string;
   range, specimen, specimens: string;
   multispec: boolean;
 begin
   lastnum := GtslSpec1.Count - 1;
   if lastnum < 0 then
-    exit;
-  GtslSpec2.Clear; GtslSpec3.Clear; GtslSpec4.Clear;
+    Exit;
+  GtslSpec2.Clear;
+  GtslSpec3.Clear;
+  GtslSpec4.Clear;
   GtslSpec1.Sort;
-  oldtsru := ''; newtest := '';
+  oldtsru := '';
+  newtest := '';
   oldspec := Piece(GtslSpec1[0], '^', 2);
   multispec := false;
   cnt := 0;
-  for i := GtslSpec1.Count - 1 downto 0 do  // backwards to assure most recent item
+  for i := 0 to GtslSpec1.Count - 1 do // Oldest to newest
   begin
     listline := GtslSpec1[i];
-    if Piece(listline, '^', 2) <> oldspec then multispec := true;
-    newtsru := Pieces(listline, '^', 1 , 4);
+    if Piece(listline, '^', 2) <> oldspec then
+      multispec := true;
+    newtsru := Pieces(listline, '^', 1, 4);
     if newtsru <> oldtsru then
     begin
       cnt := cnt + 1;
@@ -5824,20 +6312,22 @@ begin
   end;
   oldline := '';
   for i := 0 to GtslItems.Count - 1 do
-  if aItemType = Pieces(GtslItems[i], '^', 1, 2) then
-  begin
-    oldline := GtslItems[i];
-    GtslItems.Delete(i);
-    break;
-  end;
-  specimen := ''; specimens := ''; range := '';
+    if aItemType = Pieces(GtslItems[i], '^', 1, 2) then
+    begin
+      oldline := GtslItems[i];
+      GtslItems.Delete(i);
+      break;
+    end;
+  specimen := '';
+  specimens := '';
+  range := '';
   for i := 0 to GtslSpec2.Count - 1 do
   begin
     listline := GtslSpec2[i];
     newtest := Piece(oldline, '^', 4);
     if multispec then
     begin
-      specimen := LowerCase(Piece(listline, '^', 12));
+      specimen := lowercase(Piece(listline, '^', 12));
       newtest := newtest + ' (' + specimen + ')';
       specimens := specimens + specimen + ', ';
     end;
@@ -5859,11 +6349,11 @@ begin
   newtest := Piece(newline, '^', 2) + '.0';
   SetPiece(newline, '^', 2, newtest);
   newtest := Piece(newline, '^', 4) + '*';
-  {if length(specimens) > 0 then        // add multi-specimens to name
-  begin
+  { if length(specimens) > 0 then        // add multi-specimens to name
+    begin
     specimens := LeftStr(specimens, length(specimens) - 2);
     newtest := newtest + ' (' + specimens + ')';
-  end;}
+    end; }
   SetPiece(newline, '^', 4, newtest);
   GtslSpec4.Add(newline);
   FastAddStrings(GtslSpec4, GtslItems);
@@ -5871,30 +6361,33 @@ begin
   FastAssign(GtslSpec4, GtslMultiSpec);
 end;
 
-procedure TfrmGraphs.RefUnits(aItem, aSpec: string; var low, high, units: string);
+procedure TfrmGraphs.RefUnits(aItem, aSpec: string;
+  var low, high, units: string);
 var
-  i: integer;
-  item2: double;
+  i: Integer;
+  Item2: Double;
   itemspec, specstring: string;
 begin
-  item2 := strtofloatdef(aItem, -BIG_NUMBER);
-  if item2 <> -BIG_NUMBER then
+  Item2 := strtofloatdef(aItem, -BIG_NUMBER);
+  if Item2 <> -BIG_NUMBER then
   begin
-    item2 := round(item2);
-    aItem := floattostr(item2);
+    Item2 := round(Item2);
+    aItem := floattostr(Item2);
   end;
   itemspec := aItem + '^' + aSpec;
   for i := 0 to GtslTestSpec.Count - 1 do
-  if itemspec = Pieces(GtslTestSpec[i], '^', 1, 2) then
-  begin
-    specstring := GtslTestSpec[i];
-    low :=   Piece(specstring, '^', 3);
-    high :=  Piece(specstring, '^', 4);
-    units := Piece(specstring, '^', 8);
-    if (Copy(low, 1, 3) = '$S(') then low  := SelectRef(low);
-    if (Copy(high, 1, 3) = '$S(') then high := SelectRef(high);
-    break;
-  end;
+    if itemspec = Pieces(GtslTestSpec[i], '^', 1, 2) then
+    begin
+      specstring := GtslTestSpec[i];
+      low := Piece(specstring, '^', 3);
+      high := Piece(specstring, '^', 4);
+      units := Piece(specstring, '^', 8);
+      if (copy(low, 1, 3) = '$S(') then
+        low := SelectRef(low);
+      if (copy(high, 1, 3) = '$S(') then
+        high := SelectRef(high);
+      break;
+    end;
 end;
 
 function TfrmGraphs.SelectRef(aRef: string): string;
@@ -5902,48 +6395,59 @@ function TfrmGraphs.SelectRef(aRef: string): string;
 
   procedure CheckRef(selection: string; var value: string; var ok: boolean);
   var
-    age: integer;
+    Age: Integer;
     part1, part2, part3: string;
   begin
     value := '';
     ok := false;
-    if pos('$S', selection) > 0 then exit;
-    if pos(':', selection) = 0 then exit;
+    if Pos('$S', selection) > 0 then
+      Exit;
+    if Pos(':', selection) = 0 then
+      Exit;
     part1 := Piece(selection, ':', 1);
     part2 := Piece(selection, ':', 2);
     part3 := Piece(selection, ':', 3);
-    if length(part1) = 0 then exit;
-    if length(part2) = 0 then exit;
-    if length(part3) <> 0 then exit;
+    if length(part1) = 0 then
+      Exit;
+    if length(part2) = 0 then
+      Exit;
+    if length(part3) <> 0 then
+      Exit;
     ok := true;
     value := part2;
-    if part1 = '1' then exit;
+    if part1 = '1' then
+      Exit;
     if copy(part1, 1, 4) = 'SEX=' then
     begin
-      if (part1 = 'SEX="M"') and (Patient.Sex = 'M') then exit;
-      if (part1 = 'SEX="F"') and (Patient.Sex = 'F') then exit; //?? check for '= '> '<    ??
+      if (part1 = 'SEX="M"') and (Patient.Sex = 'M') then
+        Exit;
+      if (part1 = 'SEX="F"') and (Patient.Sex = 'F') then
+        Exit; // ?? check for '= '> '<    ??
       value := '';
     end
     else if copy(part1, 1, 3) = 'AGE' then
     begin
       part3 := copy(part1, 5, length(part1));
-      age := strtointdef(part3, BIG_NUMBER);
-      if age <> BIG_NUMBER then
+      Age := strtointdef(part3, BIG_NUMBER);
+      if Age <> BIG_NUMBER then
       begin
         part3 := copy(part1, 1, 4);
-        if (part3 = 'AGE>') and (Patient.Age > age) then exit;
-        if (part3 = 'AGE<') and (Patient.Age < age) then exit;
-        if (part3 = 'AGE=') and (Patient.Age = age) then exit;
+        if (part3 = 'AGE>') and (Patient.Age > Age) then
+          Exit;
+        if (part3 = 'AGE<') and (Patient.Age < Age) then
+          Exit;
+        if (part3 = 'AGE=') and (Patient.Age = Age) then
+          Exit;
       end;
       value := '';
     end
     else
-      value:= '';
+      value := '';
   end;
 
 var
   ok: boolean;
-  i: integer;
+  i: Integer;
   selection, selections: string;
 begin
   Result := '';
@@ -5953,11 +6457,14 @@ begin
     for i := 1 to BIG_NUMBER do
     begin
       selection := Piece(selections, ',', i);
-      if selection = '' then break;
+      if selection = '' then
+        break;
       ok := true;
       CheckRef(selection, Result, ok);
-      if not ok then break;
-      if length(Result) > 0 then break;
+      if not ok then
+        break;
+      if length(Result) > 0 then
+        break;
     end;
   end;
 end;
@@ -5968,7 +6475,7 @@ var
   seriestitle: string;
 begin
   FGraphClick := Sender;
-  chartDatelineTop.Tag := -1;   // indicates a legend click
+  chartDatelineTop.Tag := -1; // indicates a legend click
   if Button <> mbRight then
     ItemDateRange(Sender)
   else
@@ -5981,18 +6488,19 @@ begin
         seriestitle := Sender.SeriesTitleLegend(0);
         scrlTop.Hint := 'Details - for ' + seriestitle;
         scrlTop.Tag := 1;
-        mnuPopGraphIsolate.Caption := 'Move - ' + seriestitle + ' - from Top to Bottom';
+        mnuPopGraphIsolate.caption := 'Move - ' + seriestitle +
+          ' - from Top to Bottom';
         mnuPopGraphIsolate.Hint := seriestitle;
         mnuPopGraphRemove.Enabled := true;
-        mnuPopGraphRemove.Caption := 'Remove - ' + seriestitle;
-        mnuPopGraphDetails.Caption := 'Details - ' + seriestitle;
-        mnuPopGraphValueMarks.Caption := 'Values - ';
+        mnuPopGraphRemove.caption := 'Remove - ' + seriestitle;
+        mnuPopGraphDetails.caption := 'Details - ' + seriestitle;
+        mnuPopGraphValueMarks.caption := 'Values - ';
         mnuPopGraphValueMarks.Enabled := false;
       end
       else
       begin
-        mnuPopGraphIsolate.Caption := 'Move all selections to bottom';
-        mnuPopGraphRemove.Caption := 'Remove all selections from top';
+        mnuPopGraphIsolate.caption := 'Move all selections to bottom';
+        mnuPopGraphRemove.caption := 'Remove all selections from top';
       end;
     end
     else
@@ -6002,40 +6510,43 @@ begin
         seriestitle := Sender.SeriesTitleLegend(0);
         scrlTop.Hint := 'Details - for ' + seriestitle;
         scrlTop.Tag := 1;
-        mnuPopGraphIsolate.Caption := 'Move - ' + seriestitle + ' - from Bottom to Top';
+        mnuPopGraphIsolate.caption := 'Move - ' + seriestitle +
+          ' - from Bottom to Top';
         mnuPopGraphIsolate.Hint := seriestitle;
         mnuPopGraphRemove.Enabled := true;
-        mnuPopGraphRemove.Caption := 'Remove - ' + seriestitle;
-        mnuPopGraphDetails.Caption := 'Details - ' + seriestitle;
-        mnuPopGraphValueMarks.Caption := 'Values - ';
+        mnuPopGraphRemove.caption := 'Remove - ' + seriestitle;
+        mnuPopGraphDetails.caption := 'Details - ' + seriestitle;
+        mnuPopGraphValueMarks.caption := 'Values - ';
         mnuPopGraphValueMarks.Enabled := false;
       end
       else
       begin
-        mnuPopGraphIsolate.Caption := 'Move all selections to top';
-        mnuPopGraphRemove.Caption := 'Remove all selections from bottom';
+        mnuPopGraphIsolate.caption := 'Move all selections to top';
+        mnuPopGraphRemove.caption := 'Remove all selections from bottom';
       end;
     end;
   end;
 end;
 
-function TfrmGraphs.BPValue(aDateTime: TDateTime): string;
+function TfrmGraphs.BPValue(adatetime: TDateTime): string;
 var
-  i: integer;
-  fmdatetime: double;
+  i: Integer;
+  FMDateTime: Double;
   datastring, datecheck, fmstring: string;
 begin
   Result := '';
-  fmdatetime := datetimetofmdatetime(aDateTime);
-  fmstring := floattostr(fmdatetime);
+  FMDateTime := DateTimeToFMDateTime(adatetime);
+  fmstring := floattostr(FMDateTime);
   for i := 0 to GtslData.Count - 1 do
   begin
     datastring := GtslData[i];
-    if Pieces(datastring, '^', 1, 2) = '120.5^1' then   //********** get item # for bp instead of 1
+    if Pieces(datastring, '^', 1, 2) = '120.5^1' then
+    // ********** get item # for bp instead of 1
     begin
       datecheck := Piece(datastring, '^', 3);
       if length(Piece(datecheck, '.', 2)) > 0 then
-        datecheck := Piece(datecheck, '.', 1) + '.' + copy(Piece(datecheck, '.', 2), 1, 4);
+        datecheck := Piece(datecheck, '.', 1) + '.' +
+          copy(Piece(datecheck, '.', 2), 1, 4);
       if fmstring = datecheck then
       begin
         Result := Piece(datastring, '^', 5);
@@ -6059,7 +6570,8 @@ end;
 
 procedure TfrmGraphs.mnuPopGraphMergeLabsClick(Sender: TObject);
 begin
-  with FGraphSetting do MergeLabs := not MergeLabs;
+  with FGraphSetting do
+    MergeLabs := not MergeLabs;
   cboDateRangeChange(self);
   PositionSelections(lvwItemsTop);
   PositionSelections(lvwItemsBottom);
@@ -6068,7 +6580,7 @@ end;
 
 procedure TfrmGraphs.PositionSelections(aListView: TListView);
 var
-  bottomitem, i: integer;
+  bottomitem, i: Integer;
 begin
   if aListView.SelCount > 0 then
   begin
@@ -6100,12 +6612,13 @@ end;
 procedure TfrmGraphs.serDatelineTopGetMarkText(Sender: TChartSeries;
   ValueIndex: Integer; var MarkText: String);
 var
-  i: integer;
+  i: Integer;
   checkindex, checkseries, checktag, firsttext, nonstring: string;
 begin
   firsttext := MarkText;
   MarkText := Sender.Title;
-  if Copy(MarkText, 1, 4) = 'Ref ' then MarkText := ''
+  if copy(MarkText, 1, 4) = 'Ref ' then
+    MarkText := ''
   else if Piece(Sender.Title, '^', 1) = '(non-numeric)' then
   begin
     if Sender.Tag > 0 then
@@ -6119,11 +6632,11 @@ begin
         if checktag = Piece(nonstring, '^', 2) then
         begin
           if checkseries = Piece(nonstring, '^', 3) then
-          if Piece(nonstring, '^', 4) = checkindex then
-          begin
-            MarkText := Piece(nonstring, '^', 13);
-            break;
-          end;
+            if Piece(nonstring, '^', 4) = checkindex then
+            begin
+              MarkText := Piece(nonstring, '^', 13);
+              break;
+            end;
         end;
       end;
     end;
@@ -6134,7 +6647,7 @@ end;
 
 procedure TfrmGraphs.mnuPopGraphRemoveClick(Sender: TObject);
 var
-  selnum: integer;
+  selnum: Integer;
   aSection, typeitem: string;
   aListBox: TORListBox;
   aListView: TListView;
@@ -6153,13 +6666,16 @@ begin
     aSection := 'bottom';
   end;
   aListBox.ItemIndex := -1;
-  if aListView.SelCount = 0 then exit;
-  if StripHotKey(mnuPopGraphRemove.Caption) = ('Remove all selections from ' + aSection) then
+  if aListView.SelCount = 0 then
+    Exit;
+  if StripHotKey(mnuPopGraphRemove.caption)
+    = ('Remove all selections from ' + aSection) then
     aListView.Selected := nil
   else
   begin
     ItemCheck(aListView, mnuPopGraphIsolate.Hint, selnum, typeitem);
-    if selnum = -1 then exit;
+    if selnum = -1 then
+      Exit;
     aListView.Items[selnum].Selected := false;
   end;
   DisplayData('top');
@@ -6173,13 +6689,14 @@ begin
   with dlgDate do
   begin
     FMDateTime := FMToday;
-    if Execute then FMToday := FMDateTime;
+    if Execute then
+      FMToday := FMDateTime;
   end;
 end;
 
 procedure TfrmGraphs.BaseResize(aScrollBox: TScrollBox);
 var
-  displayheight, displaynum, i: integer;
+  displayheight, displaynum, i: Integer;
 begin
   ChartOnZoom(chartDatelineTop);
   with aScrollBox do
@@ -6195,7 +6712,7 @@ begin
       else
         displayheight := (Height div displaynum);
     for i := 0 to aScrollBox.ControlCount - 1 do
-      Controls[i].height := displayheight;
+      Controls[i].Height := displayheight;
   end;
 end;
 
@@ -6206,9 +6723,9 @@ begin
   BaseResize(scrlBottom);
 end;
 
-procedure TfrmGraphs.NextPointerStyle(aSeries: TChartSeries; aSerCnt: integer);
+procedure TfrmGraphs.NextPointerStyle(aSeries: TChartSeries; aSerCnt: Integer);
 var
-  colors1, colors2, colors3, colors4, colors5, colors6: integer;
+  colors1, colors2, colors3, colors4, colors5, colors6: Integer;
 begin
   colors1 := NUM_COLORS + 1;
   colors2 := NUM_COLORS * 2 + 1;
@@ -6219,66 +6736,69 @@ begin
   if aSeries is TLineSeries then
   begin
     with (aSeries as TLineSeries) do
-    if aSerCnt < colors1 then
-      Pointer.Style := psCircle
-    else if aSerCnt < colors2 then
-      Pointer.Style := psTriangle
-    else if aSerCnt < colors3 then
-      Pointer.Style := psRectangle
-    else if aSerCnt < colors4 then
-      Pointer.Style := psStar
-    else if aSerCnt < colors5 then
-      Pointer.Style := psDownTriangle
-    else if aSerCnt < colors6 then
-      Pointer.Style := psCross
-    else
-      Pointer.Style := psDiagCross;
+      if aSerCnt < colors1 then
+        Pointer.Style := psCircle
+      else if aSerCnt < colors2 then
+        Pointer.Style := psTriangle
+      else if aSerCnt < colors3 then
+        Pointer.Style := psRectangle
+      else if aSerCnt < colors4 then
+        Pointer.Style := psStar
+      else if aSerCnt < colors5 then
+        Pointer.Style := psDownTriangle
+      else if aSerCnt < colors6 then
+        Pointer.Style := psCross
+      else
+        Pointer.Style := psDiagCross;
   end
   else if aSeries is TBarSeries then
   begin
     with (aSeries as TBarSeries) do
-    if aSerCnt < colors1 then
-      BarStyle := bsPyramid
-    else if aSerCnt < colors2 then
-      BarStyle := bsInvPyramid
-    else if aSerCnt < colors3 then
-      BarStyle := bsArrow
-    else if aSerCnt < colors4 then
-      BarStyle := bsEllipse
-    else
-      BarStyle := bsRectangle;
+      if aSerCnt < colors1 then
+        BarStyle := bsPyramid
+      else if aSerCnt < colors2 then
+        BarStyle := bsInvPyramid
+      else if aSerCnt < colors3 then
+        BarStyle := bsArrow
+      else if aSerCnt < colors4 then
+        BarStyle := bsEllipse
+      else
+        BarStyle := bsRectangle;
   end
   else if aSeries is TPointSeries then
   begin
     with (aSeries as TPointSeries) do
-    if aSerCnt < colors1 then
-      Pointer.Style := psRectangle
-    else if aSerCnt < colors2 then
-      Pointer.Style := psTriangle
-    else if aSerCnt < colors3 then
-      Pointer.Style := psCircle
-    else if aSerCnt < colors4 then
-      Pointer.Style := psStar
-    else if aSerCnt < colors5 then
-      Pointer.Style := psDownTriangle
-    else if aSerCnt < colors6 then
-      Pointer.Style := psCross
-    else
-      Pointer.Style := psDiagCross;
+      if aSerCnt < colors1 then
+        Pointer.Style := psRectangle
+      else if aSerCnt < colors2 then
+        Pointer.Style := psTriangle
+      else if aSerCnt < colors3 then
+        Pointer.Style := psCircle
+      else if aSerCnt < colors4 then
+        Pointer.Style := psStar
+      else if aSerCnt < colors5 then
+        Pointer.Style := psDownTriangle
+      else if aSerCnt < colors6 then
+        Pointer.Style := psCross
+      else
+        Pointer.Style := psDiagCross;
   end;
 end;
 
 function TfrmGraphs.FMCorrectedDate(fmtime: string): string;
 begin
-  if Copy(fmtime, 4, 4) = '0000' then Result := Copy(fmtime, 1, 3) + '0101'
-  else if Copy(fmtime, 6, 2) = '00' then Result := Copy(fmtime, 1, 5) + '01'
-  else Result := fmtime;
+  if copy(fmtime, 4, 4) = '0000' then
+    Result := copy(fmtime, 1, 3) + '0101'
+  else if copy(fmtime, 6, 2) = '00' then
+    Result := copy(fmtime, 1, 5) + '01'
+  else
+    Result := fmtime;
 end;
 
 procedure TfrmGraphs.FixedDates(var adatetime, adatetime1: TDateTime);
 begin
   if FGraphSetting.FMStartDate <> FM_START_DATE then
-  begin  // do not use when All Results
+  begin // do not use when All Results
     adatetime := FMDateTimeToDateTime(FGraphSetting.FMStopDate);
     adatetime1 := FMDateTimeToDateTime(FGraphSetting.FMStartDate);
     FGraphSetting.HighTime := adatetime;
@@ -6290,45 +6810,58 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.HighLow(fmtime, fmtime1: string; aChart: TChart; var adatetime, adatetime1: TDateTime);
+procedure TfrmGraphs.HighLow(fmtime, fmtime1: string; aChart: TChart;
+  var adatetime, adatetime1: TDateTime);
 begin
   adatetime1 := 0;
   adatetime := FMToDateTime(fmtime);
-  if adatetime > FGraphSetting.HighTime then FGraphSetting.HighTime := adatetime;
-  if adatetime < FGraphSetting.LowTime then FGraphSetting.LowTime := adatetime;
+  if adatetime > FGraphSetting.HighTime then
+    FGraphSetting.HighTime := adatetime;
+  if adatetime < FGraphSetting.LowTime then
+    FGraphSetting.LowTime := adatetime;
   if aChart = chartDatelineTop then
   begin
-    if adatetime > FTHighTime then FTHighTime := adatetime;
-    if adatetime < FTLowTime then FTLowTime := adatetime;
+    if adatetime > FTHighTime then
+      FTHighTime := adatetime;
+    if adatetime < FTLowTime then
+      FTLowTime := adatetime;
   end
   else
   begin
-    if adatetime > FBHighTime then FBHighTime := adatetime;
-    if adatetime < FBLowTime then FBLowTime := adatetime;
+    if adatetime > FBHighTime then
+      FBHighTime := adatetime;
+    if adatetime < FBLowTime then
+      FBLowTime := adatetime;
   end;
   if fmtime1 <> '' then
   begin
     adatetime1 := FMToDateTime(fmtime1);
-    if adatetime1 > FGraphSetting.HighTime then FGraphSetting.HighTime := adatetime1;
-    if adatetime1 < FGraphSetting.LowTime then FGraphSetting.LowTime := adatetime1;
+    if adatetime1 > FGraphSetting.HighTime then
+      FGraphSetting.HighTime := adatetime1;
+    if adatetime1 < FGraphSetting.LowTime then
+      FGraphSetting.LowTime := adatetime1;
     if aChart = chartDatelineTop then
     begin
-      if adatetime1 > FTHighTime then FTHighTime := adatetime1;
-      if adatetime1 < FTLowTime then FTLowTime := adatetime1;
+      if adatetime1 > FTHighTime then
+        FTHighTime := adatetime1;
+      if adatetime1 < FTLowTime then
+        FTLowTime := adatetime1;
     end
     else
     begin
-      if adatetime1 > FBHighTime then FBHighTime := adatetime1;
-      if adatetime1 < FBLowTime then FBLowTime := adatetime1;
+      if adatetime1 > FBHighTime then
+        FBHighTime := adatetime1;
+      if adatetime1 < FBLowTime then
+        FBLowTime := adatetime1;
     end;
   end;
 end;
 
-procedure TfrmGraphs.HideGraphs(action: boolean);
+procedure TfrmGraphs.HideGraphs(Action: boolean);
 begin
   pnlTop.Color := chartDatelineTop.Color;
   pnlBottom.Color := chartDatelineTop.Color;
-  if action then
+  if Action then
   begin
     pnlScrollTopBase.Visible := false;
     pnlScrollBottomBase.Visible := false;
@@ -6341,37 +6874,45 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.BorderValue(var bordervalue: double; value: double);
+procedure TfrmGraphs.BorderValue(var BorderValue: Double; value: Double);
 begin
   if FGraphSetting.FixedDateRange then
-    if bordervalue = -BIG_NUMBER then
-      bordervalue := value;
+    if BorderValue = -BIG_NUMBER then
+      BorderValue := value;
 end;
 
-procedure TfrmGraphs.BPAdd(itemvalue: string; adatetime: TDateTime; var fixeddatevalue: double; serLine, serBPDiastolic, serBPMean: TLineSeries);
+procedure TfrmGraphs.BPAdd(itemvalue: string; adatetime: TDateTime;
+  var fixeddatevalue: Double; serLine, serBPDiastolic, serBPMean: TLineSeries);
 var
-  value: double;
-  valueD, valueM, valueS: string;
+  value: Double;
+  valueD, valueM, Values: string;
 begin
-  valueS := Piece(itemvalue, '/', 1);
+  Values := Piece(itemvalue, '/', 1);
   valueD := Piece(itemvalue, '/', 2);
   valueM := Piece(itemvalue, '/', 3);
-  value := strtofloatdef(valueS, -BIG_NUMBER);
+  value := strtofloatdef(Values, -BIG_NUMBER);
   if value <> -BIG_NUMBER then
-    serLine.AddXY(adatetime, value, '', clTeeColor);
+    // blj: Jazz 617584
+    // serLine.AddXY(adatetime, value, '', clTeeColor);
+    serLine.AddXY(adatetime, value, format('%g', [value]), clTeeColor);
   value := strtofloatdef(valueD, -BIG_NUMBER);
   if value <> -BIG_NUMBER then
-    serBPDiastolic.AddXY(adatetime, value, '', clTeeColor);
+    // blj: Jazz 617584
+    // serLine.AddXY(adatetime, value, '', clTeeColor);
+    serBPDiastolic.AddXY(adatetime, value, format('%g', [value]), clTeeColor);
   value := strtofloatdef(valueM, -BIG_NUMBER);
   if value <> -BIG_NUMBER then
   begin
-    serBPMean.AddXY(adatetime, value, '', clTeeColor);
+    // blj: Jazz 617584
+    // serBPMean.AddXY(adatetime, value, '', clTeeColor);
+    serBPMean.AddXY(adatetime, value, format('%g', [value]), clTeeColor);
     serBPMean.Active := true;
   end;
   BorderValue(fixeddatevalue, 100);
 end;
 
-procedure TfrmGraphs.BPCheck(aChart: TChart; aFileType: string; serLine, serBPDiastolic, serBPMean: TLineSeries);
+procedure TfrmGraphs.BPCheck(aChart: TChart; aFileType: string;
+  serLine, serBPDiastolic, serBPMean: TLineSeries);
 begin
   MakeSeriesBP(aChart, serLine, serBPDiastolic, aFileType);
   MakeSeriesBP(aChart, serLine, serBPMean, aFileType);
@@ -6384,56 +6925,69 @@ begin
   begin
     serBlank.Active := true;
     serBlank.Pointer.Pen.Visible := false;
-    serBlank.AddXY(IncDay(FGraphSetting.LowTime, -1), 0, '', pnlScrollTopBase.Color);
-    serBlank.AddXY(IncDay(FGraphSetting.LowTime, -1), 10, '', pnlScrollTopBase.Color);
+    serBlank.AddXY(IncDay(FGraphSetting.LowTime, -1), 0, '',
+      pnlScrollTopBase.Color);
+    serBlank.AddXY(IncDay(FGraphSetting.LowTime, -1), 10, '',
+      pnlScrollTopBase.Color);
   end;
 end;
 
-procedure TfrmGraphs.NumAdd(serLine: TLineSeries; value: double; adatetime: TDateTime;
-  var fixeddatevalue, hi, lo: double; var high, low: string);
+procedure TfrmGraphs.NumAdd(serLine: TLineSeries; value: Double;
+  adatetime: TDateTime; var fixeddatevalue, hi, lo: Double;
+  var high, low: string);
 begin
-  if (btnChangeSettings.Tag = 1) and (hi <> -BIG_NUMBER) and (lo <> -BIG_NUMBER) then
-  begin      // standard deviation
+  if (btnChangeSettings.Tag = 1) and (hi <> -BIG_NUMBER) and (lo <> -BIG_NUMBER)
+  then
+  begin // standard deviation
     value := StdDev(value, hi, lo);
-    serLine.AddXY(adatetime, value, '', clTeeColor);
-    high := '2'; low := '-2';
+    // blj: Jazz 617584
+    // serLine.AddXY(adatetime, value, '', clTeeColor);
+    serLine.AddXY(adatetime, value, format('%g', [value]), clTeeColor);
+    high := '2';
+    low := '-2';
     BorderValue(fixeddatevalue, 0);
-    //splGraphs.Tag := 1;   // show ref range
-  end        // inverse value
+    // splGraphs.Tag := 1;   // show ref range
+  end // inverse value
   else if btnChangeSettings.Tag = 2 then
   begin
     value := InvVal(value);
-    serLine.AddXY(adatetime, value, '', clTeeColor);
-    high := '2'; low := '0';
+    // blj: Jazz 617584
+    // serLine.AddXY(adatetime, value, '', clTeeColor);
+    serLine.AddXY(adatetime, value, format('%g', [value]), clTeeColor);
+    high := '2';
+    low := '0';
     BorderValue(fixeddatevalue, 0);
-    splGraphs.Tag := 0;  // do not show ref range
+    splGraphs.Tag := 0; // do not show ref range
   end
   else
-  begin       // numeric value
-    serLine.AddXY(adatetime, value, '', clTeeColor);
+  begin // numeric value
+    // blj: Jazz 617584
+    // serLine.AddXY(adatetime, value, '', clTeeColor);
+    serLine.AddXY(adatetime, value, format('%g', [value]), clTeeColor);
     BorderValue(fixeddatevalue, value);
   end;
 end;
 
-procedure TfrmGraphs.NonNumSave(aChart: TChart; aTitle, aSection: string; adatetime: TDateTime;
-  var noncnt: integer; newcnt, aIndex: integer);
+procedure TfrmGraphs.NonNumSave(aChart: TChart; aTitle, aSection: string;
+  adatetime: TDateTime; var noncnt: Integer; newcnt, aIndex: Integer);
 var
   astring: string;
 begin
   noncnt := noncnt + 1;
-  astring := floattostr(adatetime) + '^' + inttostr(aChart.Tag) + '^'
-           + inttostr(newcnt) + '^' + inttostr(noncnt) + '^^' + aTitle + '^'
-           + aSection + '^^' + GtslTemp[aIndex];
+  astring := floattostr(adatetime) + '^' + inttostr(aChart.Tag) + '^' +
+    inttostr(newcnt) + '^' + inttostr(noncnt) + '^^' + aTitle + '^' + aSection +
+    '^^' + GtslTemp[aIndex];
   GtslNonNum.Add(astring);
 end;
 
-//****************************************************************************
+// ****************************************************************************
 
-procedure TfrmGraphs.MakeLineSeries(aChart: TChart; aTitle, aFileType, section: string;
-  var aSerCnt, aNonCnt: integer; multiline: boolean);
+procedure TfrmGraphs.MakeLineSeries(aChart: TChart;
+  aTitle, aFileType, section: string; var aSerCnt, aNonCnt: Integer;
+  multiline: boolean);
 var
-  i, noncnt, newcnt: integer;
-  fixeddatevalue, hi, lo, testint, testpad, value: double;
+  i, noncnt, newcnt: Integer;
+  fixeddatevalue, hi, lo, testint, testpad, value: Double;
   checkdata, fmtime, itemvalue: string;
   comments, high, low, specimen: string;
   afixeddate, afixeddate1: TDateTime;
@@ -6442,10 +6996,10 @@ var
   serBlank: TPointSeries;
 begin
   fixeddatevalue := -BIG_NUMBER;
-  noncnt := 0; //GtslNonNum.Count;
+  noncnt := 0; // GtslNonNum.Count;
   aChart.LeftAxis.LabelsFont.Color := aChart.BottomAxis.LabelsFont.Color;
   aSerCnt := aSerCnt + 1;
-  specimen := LowerCase(Piece(aTitle, '^', 4));
+  specimen := lowercase(Piece(aTitle, '^', 4));
   low := Piece(aTitle, '^', 5);
   high := Piece(aTitle, '^', 6);
   lo := strtofloatdef(low, -BIG_NUMBER);
@@ -6473,7 +7027,7 @@ begin
   end;
   if serLine.Title = 'Blood Pressure' then
     BPCheck(aChart, aFileType, serLine, serBPDiastolic, serBPMean);
-  for i := GtslTemp.Count - 1 downto 0 do         // go from oldest first
+  for i := GtslTemp.Count - 1 downto 0 do // go from oldest first
   begin
     checkdata := GtslTemp[i];
     fmtime := FMCorrectedDate(Piece(checkdata, '^', 3));
@@ -6481,17 +7035,20 @@ begin
     begin
       HighLow(fmtime, '', aChart, adatetime, adatetime1);
       comments := Piece(checkdata, '^', 9);
-      if strtointdef(comments, -1) > 0  then aChart.Hint := comments;  // for any occurrence
+      if strtointdef(comments, -1) > 0 then
+        aChart.Hint := comments; // for any occurrence
       itemvalue := Piece(checkdata, '^', 5);
       itemvalue := trim(itemvalue);
       itemvalue := StringReplace(itemvalue, ',', '', [rfReplaceAll]);
       if serLine.Title = 'Blood Pressure' then
-        BPAdd(itemvalue, adatetime, fixeddatevalue, serLine, serBPDiastolic, serBPMean)
+        BPAdd(itemvalue, adatetime, fixeddatevalue, serLine, serBPDiastolic,
+          serBPMean)
       else
       begin
         value := strtofloatdef(itemvalue, -BIG_NUMBER);
-        if (value <> -BIG_NUMBER) and (GtslTemp.Count = 1) and (lo = -BIG_NUMBER) and (hi = -BIG_NUMBER) then
-        begin   // pad single numbers (without refs) to avoid exceptions
+        if (value <> -BIG_NUMBER) and (GtslTemp.Count = 1) and
+          (lo = -BIG_NUMBER) and (hi = -BIG_NUMBER) then
+        begin // pad single numbers (without refs) to avoid exceptions
           testint := int(value);
           if testint = 0 then
           begin
@@ -6506,7 +7063,8 @@ begin
         if value <> -BIG_NUMBER then
           NumAdd(serLine, value, adatetime, fixeddatevalue, hi, lo, high, low)
         else
-          NonNumSave(aChart, serLine.Title, section, adatetime, noncnt, newcnt, i);
+          NonNumSave(aChart, serLine.Title, section, adatetime, noncnt,
+            newcnt, i);
       end;
     end;
   end;
@@ -6532,10 +7090,11 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.MakePointSeries(aChart: TChart; aTitle, aFileType: string; var aSerCnt: integer);
+procedure TfrmGraphs.MakePointSeries(aChart: TChart; aTitle, aFileType: string;
+  var aSerCnt: Integer);
 var
-  i: integer;
-  value: double;
+  i: Integer;
+  value: Double;
   fmtime: string;
   adatetime, adatetime1: TDateTime;
   serPoint: TPointSeries;
@@ -6570,10 +7129,11 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.MakeBarSeries(aChart: TChart; aTitle, aFileType: string; var aSerCnt: integer);
+procedure TfrmGraphs.MakeBarSeries(aChart: TChart; aTitle, aFileType: string;
+  var aSerCnt: Integer);
 var
-  i: integer;
-  value: double;
+  i: Integer;
+  value: Double;
   fmtime: string;
   adatetime, adatetime1: TDateTime;
   afixeddate, afixeddate1: TDateTime;
@@ -6590,7 +7150,7 @@ begin
     YOrigin := 0;
     CustomBarWidth := 7;
     NextPointerStyle(serBar, aSerCnt);
-    for i:= 0 to GtslTemp.Count - 1 do
+    for i := 0 to GtslTemp.Count - 1 do
     begin
       fmtime := FMCorrectedDate(Piece(GtslTemp[i], '^', 3));
       if IsFMDateTime(fmtime) then
@@ -6598,11 +7158,13 @@ begin
         HighLow(fmtime, '', aChart, adatetime, adatetime1);
         value := 25 - (aSerCnt mod NUM_COLORS);
         if FPrevEvent = copy(fmtime, 1, 10) then
-          if copy((FPrevEvent + '00'), 1, 12) = copy(fmtime, 1, 12) then  // same time occurrence
+          if copy((FPrevEvent + '00'), 1, 12) = copy(fmtime, 1, 12) then
+          // same time occurrence
           begin
             InfoMessage(TXT_WARNING_SAME_TIME, COLOR_WARNING, true);
             if MergedLabsSelected then
-              InfoMessage(pnlInfo.Caption + ' ' + TXT_WARNING_MERGED_LABS, COLOR_WARNING, true);
+              InfoMessage(pnlInfo.caption + ' ' + TXT_WARNING_MERGED_LABS,
+                COLOR_WARNING, true);
             pnlHeader.Visible := true;
             FWarning := true;
           end;
@@ -6625,9 +7187,10 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.MakeGanttSeries(aChart: TChart; aTitle, aFileType: string; var aSerCnt: integer);
+procedure TfrmGraphs.MakeGanttSeries(aChart: TChart; aTitle, aFileType: string;
+  var aSerCnt: Integer);
 var
-  i, value: integer;
+  i, value: Integer;
   fmtime, fmtime1: string;
   adatetime, adatetime1: TDateTime;
   afixeddate, afixeddate1: TDateTime;
@@ -6641,11 +7204,14 @@ begin
   MakeSeriesInfo(aChart, serGantt, aTitle, aFileType, aSerCnt);
   with serGantt do
   begin
-    if Piece(aTitle, '^', 1) = '55' then       // make inpatient meds smaller to identify
+    if Piece(aTitle, '^', 1) = '55' then
+    // make inpatient meds smaller to identify
       Pointer.VertSize := RX_HEIGHT_IN
-    else if Piece(aTitle, '^', 1) = '55NVA' then       // make nonva meds smaller to identify
+    else if Piece(aTitle, '^', 1) = '55NVA' then
+    // make nonva meds smaller to identify
       Pointer.VertSize := RX_HEIGHT_NVA
-    else if Piece(aTitle, '^', 1) = '9999911' then       // make problems smaller to identify
+    else if Piece(aTitle, '^', 1) = '9999911' then
+    // make problems smaller to identify
       Pointer.VertSize := PROB_HEIGHT
     else
       Pointer.VertSize := RX_HEIGHT_OUT;
@@ -6680,10 +7246,11 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.MakeVisitGanttSeries(aChart: TChart; aTitle, aFileType: string; var aSerCnt: integer);
+procedure TfrmGraphs.MakeVisitGanttSeries(aChart: TChart;
+  aTitle, aFileType: string; var aSerCnt: Integer);
 var
-  i: integer;
-  value: double;
+  i: Integer;
+  value: Double;
   fmtime, fmtime1: string;
   adatetime, adatetime1: TDateTime;
   afixeddate, afixeddate1: TDateTime;
@@ -6697,14 +7264,15 @@ begin
   MakeSeriesInfo(aChart, serGantt, aTitle, aFileType, aSerCnt);
   with serGantt do
   begin
-    if Piece(aTitle, '^', 1) = '405' then  // make admit smaller to identify
+    if Piece(aTitle, '^', 1) = '405' then // make admit smaller to identify
       Pointer.VertSize := NUM_COLORS + 3
-    else if Piece(aTitle, '^', 1) = '9999911' then  // make problems smaller to identify
+    else if Piece(aTitle, '^', 1) = '9999911' then
+    // make problems smaller to identify
       Pointer.VertSize := PROB_HEIGHT
     else
       Pointer.VertSize := NUM_COLORS + (aSerCnt mod NUM_COLORS) + 10;
     value := aSerCnt div NUM_COLORS;
-    for i:= 0 to GtslTemp.Count - 1 do
+    for i := 0 to GtslTemp.Count - 1 do
     begin
       fmtime := FMCorrectedDate(Piece(GtslTemp[i], '^', 3));
       fmtime1 := FMCorrectedDate(Piece(GtslTemp[i], '^', 4));
@@ -6734,23 +7302,24 @@ begin
     chkDualViews.Checked := pnlBottom.Height > 3;
 end;
 
-function TfrmGraphs.NonNumText(listnum , seriesnum, valueindex: integer): string;
+function TfrmGraphs.NonNumText(listnum, SeriesNum, ValueIndex: Integer): string;
 var
   ok: boolean;
-  i: integer;
-  date1, moreinfo, nonvalue, otherdate, resultdate: string;
-  datestart: double;
-  charttag, filename, filenum, itemnum, seriescheck, specimen, typeitemname, value: string;
+  i: Integer;
+  Date1, moreinfo, nonvalue, otherdate, resultdate: string;
+  datestart: Double;
+  charttag, filename, filenum, itemnum, seriescheck, specimen, typeitemname,
+    value: string;
 begin
   ok := false;
-  seriescheck := inttostr(seriesnum - BIG_NUMBER);
+  seriescheck := inttostr(SeriesNum - BIG_NUMBER);
   charttag := inttostr(listnum);
   for i := 0 to GtslNonNum.Count - 1 do
   begin
     nonvalue := GtslNonNum[i];
     if Piece(nonvalue, '^', 2) = charttag then
       if Piece(nonvalue, '^', 3) = seriescheck then
-        if Piece(nonvalue, '^', 4) = inttostr(valueindex + 1) then
+        if Piece(nonvalue, '^', 4) = inttostr(ValueIndex + 1) then
         begin
           ok := true;
           break;
@@ -6759,37 +7328,35 @@ begin
   if not ok then
   begin
     Result := '';
-    exit;
+    Exit;
   end;
-  date1    := Piece(nonvalue, '^', 1);
-  filenum  := Piece(nonvalue, '^', 9);
-  itemnum  := Piece(nonvalue, '^', 10);
-  value    := Piece(nonvalue, '^', 13);
+  Date1 := Piece(nonvalue, '^', 1);
+  filenum := Piece(nonvalue, '^', 9);
+  itemnum := Piece(nonvalue, '^', 10);
+  value := Piece(nonvalue, '^', 13);
   specimen := Piece(nonvalue, '^', 16);
   filename := FileNameX(filenum);
   typeitemname := MixedCase(ItemName(filenum, itemnum));
   SetRefNonNum(nonvalue);
   if length(specimen) > 0 then
-    typeitemname := typeitemname + ' (' + LowerCase(specimen) + ')';
-  datestart := strtofloat(date1);
+    typeitemname := typeitemname + ' (' + lowercase(specimen) + ')';
+  datestart := strtofloat(Date1);
   resultdate := FormatDateTime('mmm d, yyyy  h:nn am/pm', datestart);
   otherdate := FormatDateTime('mm/dd/yy hh:nn', datestart);
-  moreinfo := itemnum + '^' +
-              Piece(nonvalue, '^', 11) + '^' +  //date
-              value + '^' +
-              Piece(nonvalue, '^', 14) + '^' +  //flag
-              specimen + '^' +
-              Piece(nonvalue, '^', 18) + '^' +  //refrange
-              Piece(nonvalue, '^', 19);  //units
-  Result := filenum + '^' +filename + '^' + resultdate + '^'
-          + typeitemname + '^' + value + '^' + otherdate + '^' + moreinfo;
+  moreinfo := itemnum + '^' + Piece(nonvalue, '^', 11) + '^' + // date
+    value + '^' + Piece(nonvalue, '^', 14) + '^' + // flag
+    specimen + '^' + Piece(nonvalue, '^', 18) + '^' + // refrange
+    Piece(nonvalue, '^', 19); // units
+  Result := filenum + '^' + filename + '^' + resultdate + '^' + typeitemname +
+    '^' + value + '^' + otherdate + '^' + moreinfo;
 end;
 
-function TfrmGraphs.ValueText(Sender: TCustomChart; aSeries: TChartSeries; ValueIndex: Integer): string;
-var      // type#^typename^formatdate^itemname^result^date
+function TfrmGraphs.ValueText(Sender: TCustomChart; aSeries: TChartSeries;
+  ValueIndex: Integer): string;
+var // type#^typename^formatdate^itemname^result^date
   OKToUse: boolean;
-  chartnum, i, selnum, SeriesNum: integer;
-  startdate: double;
+  chartnum, i, selnum, SeriesNum: Integer;
+  startdate: Double;
   filetype, moreinfo, otherdate: string;
   resultdate, resultstring, seriestitle, typeitem, typename, typenum: string;
 begin
@@ -6806,21 +7373,21 @@ begin
   if SeriesNum = -1 then
   begin
     Result := '';
-    exit;
+    Exit;
   end;
   chartnum := Sender.Tag;
   seriestitle := Piece(Sender.Series[SeriesNum].Title, '^', 1);
   if seriestitle = '(non-numeric)' then
   begin
     Result := NonNumText(chartnum, (aSeries as TChartSeries).Tag, ValueIndex);
-    exit;
+    Exit;
   end;
   ItemCheck(lvwItemsTop, seriestitle, selnum, typeitem);
   typeitem := UpperCase(typeitem);
   if selnum < 0 then
   begin
     Result := '^^^' + seriestitle;
-    exit;
+    Exit;
   end;
   typenum := Piece(typeitem, '^', 1);
   if (typenum <> filetype) and (filetype <> '') then
@@ -6833,10 +7400,11 @@ begin
   if ValueIndex < 0 then
   begin
     Result := typenum + '^' + typename + '^^' + seriestitle;
-    exit;
+    Exit;
   end;
   ValueDates(aSeries, ValueIndex, resultdate, otherdate, startdate);
-  ResultValue(resultstring, seriestitle, typenum, typeitem, Sender, aSeries, ValueIndex, SeriesNum, OKToUse);
+  ResultValue(resultstring, seriestitle, typenum, typeitem, Sender, aSeries,
+    ValueIndex, SeriesNum, OKToUse);
   if not OKToUse then
     Result := ''
   else
@@ -6844,25 +7412,30 @@ begin
     moreinfo := '';
     if typenum = '63' then
       OtherInfo(typeitem, resultstring, startdate, moreinfo);
-    Result := typenum + '  ^' + typename + '^' + resultdate + '^' +
-      seriestitle + '^' + resultstring + '^' + otherdate + '^' + moreinfo;
+    Result := typenum + '  ^' + typename + '^' + resultdate + '^' + seriestitle
+      + '^' + resultstring + '^' + otherdate + '^' + moreinfo;
   end;
 end;
 
-procedure TfrmGraphs.OtherInfo(aTypeItem, aResult: string; aDateTime: double; var moreinfo: string);
+procedure TfrmGraphs.OtherInfo(aTypeItem, aResult: string; adatetime: Double;
+  var moreinfo: string);
 var
-  i: integer;
-  fmdatetime: double;
-  datax, decimals, fmdt, fmstring, itemnum, itemresult, resultcheck, resultcheckz, typenum: string;
+  i: Integer;
+  FMDateTime: Double;
+  datax, decimals, fmdt, fmstring, itemnum, itemresult, resultcheck,
+    resultcheckz, typenum: string;
 begin
-  moreinfo := ''; resultcheckz := '';
+  moreinfo := '';
+  resultcheckz := '';
   typenum := Piece(aTypeItem, '^', 1);
-  if typenum <> '63' then exit;
+  if typenum <> '63' then
+    Exit;
   itemnum := Piece(aTypeItem, '^', 2);
-  fmdatetime := datetimetofmdatetime(aDateTime);
-  fmstring := floattostr(fmdatetime);
+  FMDateTime := DateTimeToFMDateTime(adatetime);
+  fmstring := floattostr(FMDateTime);
   resultcheck := aResult;
-  if Copy(resultcheck, 1, 2) = '0.' then   // graph values preface decimals with 0.#
+  if copy(resultcheck, 1, 2) = '0.' then
+  // graph values preface decimals with 0.#
     resultcheckz := '.' + Piece(resultcheck, '.', 2);
   for i := 0 to GtslData.Count - 1 do
   begin
@@ -6871,32 +7444,36 @@ begin
       if Piece(datax, '^', 2) = itemnum then
       begin
         fmdt := Piece(datax, '^', 3);
-        if fmstring = copy(fmdt, 1, length(fmstring)) then  // date/time from graph is not as exact as results date/time
+        if fmstring = copy(fmdt, 1, length(fmstring)) then
+        // date/time from graph is not as exact as results date/time
         begin
           itemresult := Piece(datax, '^', 5);
           decimals := Piece(itemresult, '.', 2);
-          if length(decimals) > 0 then  // graph values do not have trail decimal zeros
-            if Copy(decimals,length(decimals), 1) = '0' then
+          if length(decimals) > 0 then
+          // graph values do not have trail decimal zeros
+            if copy(decimals, length(decimals), 1) = '0' then
               resultcheck := Piece(resultcheck, '.', 1) + '.' + decimals;
-          if (resultcheck = itemresult) or (resultcheckz = itemresult) then  // check for matching result
-          begin   //results from GtslData
+          if (resultcheck = itemresult) or (resultcheckz = itemresult) then
+          // check for matching result
+          begin // results from GtslData
             SetRef(datax);
-            moreinfo := itemnum + '^' +               //test number
-                        fmdt + '^' +                  //date/time
-                        itemresult + '^' +            //result
-                        Piece(datax, '^', 6) + '^' +  //flag
-                        Piece(datax, '^', 8) + '^' +  //specimen
-                        Piece(datax, '^', 10) + '^' +  //ref range
-                        Piece(datax, '^', 11);         //units
+            moreinfo := itemnum + '^' + // test number
+              fmdt + '^' + // date/time
+              itemresult + '^' + // result
+              Piece(datax, '^', 6) + '^' + // flag
+              Piece(datax, '^', 8) + '^' + // specimen
+              Piece(datax, '^', 10) + '^' + // ref range
+              Piece(datax, '^', 11); // units
           end;
         end;
       end;
   end;
 end;
 
-procedure TfrmGraphs.ValueDates(aSeries: TChartSeries; ValueIndex: Integer; var resultdate, otherdate: string; var startdate: double);
+procedure TfrmGraphs.ValueDates(aSeries: TChartSeries; ValueIndex: Integer;
+  var resultdate, otherdate: string; var startdate: Double);
 var
-  dateend, datestart: double;
+  dateend, datestart: Double;
 begin
   if (aSeries is TGanttSeries) then
   begin
@@ -6911,10 +7488,10 @@ begin
   startdate := datestart;
   if datestart <> dateend then
   begin
-    resultdate := FormatDateTime('mmm d, yyyy  h:nn am/pm', datestart) +
-      ' - ' + FormatDateTime('mmm d, yyyy  h:nn am/pm', dateend);
-    otherdate := FormatDateTime('mm/dd/yy hh:nn', datestart) +
-      ' - ' + FormatDateTime('mm/dd/yy hh:nn', dateend);
+    resultdate := FormatDateTime('mmm d, yyyy  h:nn am/pm', datestart) + ' - ' +
+      FormatDateTime('mmm d, yyyy  h:nn am/pm', dateend);
+    otherdate := FormatDateTime('mm/dd/yy hh:nn', datestart) + ' - ' +
+      FormatDateTime('mm/dd/yy hh:nn', dateend);
   end
   else
   begin
@@ -6928,34 +7505,38 @@ begin
   if typenum = '55' then
   begin
     if aSeries is TGanttSeries then
-    if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_IN then
-    if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_NVA then
-      typenum := '52'
-    else typenum := '55NVA';
+      if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_IN then
+        if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_NVA then
+          typenum := '52'
+        else
+          typenum := '55NVA';
   end
   else if typenum = '55NVA' then
   begin
     if aSeries is TGanttSeries then
-    if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_NVA then
-    if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_OUT then
-      typenum := '55'
-    else typenum := '52';
+      if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_NVA then
+        if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_OUT then
+          typenum := '55'
+        else
+          typenum := '52';
   end
   else if typenum = '52' then
   begin
     if aSeries is TGanttSeries then
-    if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_OUT then
-    if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_NVA then
-      typenum := '55'
-    else typenum := '55NVA';
+      if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_OUT then
+        if (aSeries as TGanttSeries).Pointer.VertSize <> RX_HEIGHT_NVA then
+          typenum := '55'
+        else
+          typenum := '55NVA';
   end;
 end;
 
-procedure TfrmGraphs.ResultValue(var resultstring, seriestitle: string; typenum, typeitem: string;
-  Sender: TCustomChart; aSeries: TChartSeries; ValueIndex, SeriesNum: Integer; var OKToUse: boolean);
+procedure TfrmGraphs.ResultValue(var resultstring, seriestitle: string;
+  typenum, typeitem: string; Sender: TCustomChart; aSeries: TChartSeries;
+  ValueIndex, SeriesNum: Integer; var OKToUse: boolean);
 var
-  i: integer;
-  astring, datecheck, fmdatecheck, item, partitem: string;
+  i: Integer;
+  astring, datecheck, fmdatecheck, Item, partitem: string;
 begin
   resultstring := '';
   OKToUse := true;
@@ -6965,41 +7546,46 @@ begin
       if (aSeries as TLineSeries).LinePen.Style = psDash then
       begin
         OKToUse := false;
-        exit;    // serHigh or serLow
+        Exit; // serHigh or serLow
       end;
     if aSeries is TPointSeries then
       if (aSeries as TPointSeries).Pointer.Style = psSmallDot then
       begin
         OKToUse := false;
-        exit;    // serBlank
+        Exit; // serBlank
       end;
-    if copy(seriestitle, length(seriestitle) - 12, length(seriestitle)) = '(non-numeric)' then
+    if copy(seriestitle, length(seriestitle) - 12, length(seriestitle)) = '(non-numeric)'
+    then
     begin
       seriestitle := copy(seriestitle, 1, length(seriestitle) - 13);
-      serDatelineTopGetMarkText(Sender.Series[SeriesNum], ValueIndex, resultstring);
+      serDatelineTopGetMarkText(Sender.Series[SeriesNum], ValueIndex,
+        resultstring);
     end
     else
       resultstring := floattostr(aSeries.YValue[ValueIndex]);
   end
   else if typenum <> '120.5' then
   begin
-    item := Piece(typeitem, '^', 2);
-    partitem := copy(item, 1, 4);
-    //if (partitem = 'M;A;') then     //or (partitem = 'M;T;') then   tb antibiotic on 1st piece
+    Item := Piece(typeitem, '^', 2);
+    partitem := copy(Item, 1, 4);
+    // if (partitem = 'M;A;') then     //or (partitem = 'M;T;') then   tb antibiotic on 1st piece
     begin
-      fmdatecheck := floattostr(DateTimeToFMDateTime(aSeries.XValue[ValueIndex]));
+      fmdatecheck :=
+        floattostr(DateTimeToFMDateTime(aSeries.XValue[ValueIndex]));
       for i := 0 to GtslData.Count - 1 do
       begin
         astring := GtslData[i];
         if typenum = Piece(astring, '^', 1) then
-          if item = Piece(astring, '^', 2) then
+          if Item = Piece(astring, '^', 2) then
           begin
             datecheck := Piece(astring, '^', 3);
             if length(Piece(datecheck, '.', 2)) > 0 then
-              datecheck := Piece(datecheck, '.', 1) + '.' + copy(Piece(datecheck, '.', 2), 1, 4);
+              datecheck := Piece(datecheck, '.', 1) + '.' +
+                copy(Piece(datecheck, '.', 2), 1, 4);
             if datecheck = fmdatecheck then
             begin
-              resultstring := MixedCase(Pieces(astring, '^', 5, 6)) + '^' + Piece(astring, '^', 7);
+              resultstring := MixedCase(Pieces(astring, '^', 5, 6)) + '^' +
+                Piece(astring, '^', 7);
               break;
             end;
           end;
@@ -7015,37 +7601,42 @@ begin
   end;
 end;
 
-procedure TfrmGraphs.chartBaseMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+procedure TfrmGraphs.chartBaseMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
 var
   ClickedLegend, ClickedMark, ClickedValue, j: Integer;
-  itemname: string;
+  ItemName: string;
   NewPt: TPoint;
 begin
-  //if not FGraphSetting.Hints then exit;       //*****
-  FX := x;
-  FY := y;
+  // if not FGraphSetting.Hints then exit;       //*****
+  FX := X;
+  FY := Y;
   FActiveGraph := (Sender as TChart);
   NewPt := Mouse.CursorPos;
   ClickedLegend := -1;
-  ClickedMark   := -1;
-  ClickedValue  := -1;
-  if FHintWinActive then exit;
+  ClickedMark := -1;
+  ClickedValue := -1;
+  if FHintWinActive then
+    Exit;
   with FActiveGraph do
   begin
     for j := 0 to SeriesCount - 1 do
-    with (Series[j] as TChartSeries) do
-    begin
-      itemname := Series[j].Title;
-      if (length(itemname) > 0) and (Copy(itemname, 1, 7) <> 'Ref Low') and (Copy(itemname, 1, 8) <> 'Ref High') then
+      with (Series[j] as TChartSeries) do
       begin
-        ClickedValue := Clicked(FX, FY);
-        if ClickedValue > -1 then break;
-        ClickedMark := Marks.Clicked(FX, FY);
-        if ClickedMark > -1 then break;
-        //ClickedLegend := Legend.Clicked(FX, FY);
-        //if ClickedLegend > -1 then break;
+        ItemName := Series[j].Title;
+        if (length(ItemName) > 0) and (copy(ItemName, 1, 7) <> 'Ref Low') and
+          (copy(ItemName, 1, 8) <> 'Ref High') then
+        begin
+          ClickedValue := Clicked(FX, FY);
+          if ClickedValue > -1 then
+            break;
+          ClickedMark := Marks.Clicked(FX, FY);
+          if ClickedMark > -1 then
+            break;
+          // ClickedLegend := Legend.Clicked(FX, FY);
+          // if ClickedLegend > -1 then break;
+        end;
       end;
-    end;
     if (ClickedValue > -1) or (ClickedMark > -1) then
     begin
       FHintStop := false;
@@ -7070,30 +7661,33 @@ end;
 procedure TfrmGraphs.chartBaseMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-  (Sender as TChart).AllowZoom := FGraphSetting.HorizontalZoom;      // avoids cursor rectangle from appearing
+  (Sender as TChart).AllowZoom := FGraphSetting.HorizontalZoom;
+  // avoids cursor rectangle from appearing
 end;
 
 procedure TfrmGraphs.FormatHint(var astring: string);
 var
-  i, j: integer;
-  dttm, hintslice, hintformat, info, itemname, newinfo, slice, text, titlename, value: string;
+  i, j: Integer;
+  dttm, hintslice, hintformat, info, ItemName, newinfo, slice, Text, titlename,
+    value: string;
   labresults: string;
 begin
   // hint format: slice|slice|slice| ...
   // where | is linebreak and slice is [text] value~[text] value~[text] value~ ...
-  hintformat := Piece(TypeString(Piece(Piece(astring, '^', 1), ' ', 1)), '^', 9);
+  hintformat := Piece(TypeString(Piece(Piece(astring, '^', 1), ' ', 1)
+    ), '^', 9);
   titlename := Piece(astring, '^', 2);
   astring := StringReplace(astring, ' 00:00', '', [rfReplaceAll]);
   dttm := Piece(astring, '^', 3);
   if trim(Piece(astring, '^', 1)) = '63' then
   begin
-    LabNameResults(astring, itemname, labresults);
-    info := itemname + '~' + labresults + '~';
+    LabNameResults(astring, ItemName, labresults);
+    info := ItemName + '~' + labresults + '~';
   end
   else
   begin
-    itemname := Piece(astring, '^', 4);
-    info := itemname + '~' + Piece(astring, '^', 5) + '~';
+    ItemName := Piece(astring, '^', 4);
+    info := ItemName + '~' + Piece(astring, '^', 5) + '~';
   end;
   newinfo := '';
   for i := 1 to BIG_NUMBER do
@@ -7102,11 +7696,11 @@ begin
     slice := Piece(info, '|', i);
     for j := 1 to BIG_NUMBER do
     begin
-      text := Piece(hintslice, '~', j);
+      Text := Piece(hintslice, '~', j);
       value := Piece(info, '~', j);
-      newinfo := newinfo + text + ' ' + value;
-      //if Piece(hintslice, '~', j + 1) = '' then
-      //  break;                                                   .
+      newinfo := newinfo + Text + ' ' + value;
+      // if Piece(hintslice, '~', j + 1) = '' then
+      // break;                                                   .
 
       if Pos('~', hintslice) = length(hintslice) then
         break;
@@ -7120,10 +7714,12 @@ begin
     if Piece(hintformat, '|', i + 1) = '' then
       break;
   end;
-  astring := titlename + '  ' + dttm + #13 + newinfo; //itemname + '  ' + newinfo;
+  astring := titlename + '  ' + dttm + #13 + newinfo;
+  // itemname + '  ' + newinfo;
 end;
 
-procedure TfrmGraphs.LabNameResults(astring: string; var labname, labresult: string);
+procedure TfrmGraphs.LabNameResults(astring: string;
+  var labname, labresult: string);
 var
   labnum, labref, xlabref: string;
 begin
@@ -7132,13 +7728,11 @@ begin
   labref := Piece(astring, '^', 12);
   if length(labref) > 1 then
     xlabref := '[' + Piece(labref, '!', 1) + '-' + Piece(labref, '!', 2) + ']';
-  labresult := Piece(astring, '^', 9)
-                + ' ' + Piece(astring, '^', 10)
-                + '    ' + Piece(astring, '^', 13)
-                + '    ' + xlabref;
-  if Piece(labnum, '.', 2) = '0'  then
-     labname := Piece(Piece(astring, '^', 4), '*', 1)
-                 + ' (' + lowercase(Piece(astring, '^', 11)) + ')'
+  labresult := Piece(astring, '^', 9) + ' ' + Piece(astring, '^', 10) + '    ' +
+    Piece(astring, '^', 13) + '    ' + xlabref;
+  if Piece(labnum, '.', 2) = '0' then
+    labname := Piece(Piece(astring, '^', 4), '*', 1) + ' (' +
+      lowercase(Piece(astring, '^', 11)) + ')'
   else
     labname := Piece(astring, '^', 4);
 end;
@@ -7148,11 +7742,16 @@ procedure TfrmGraphs.timHintPauseTimer(Sender: TObject);
   function TitleOK(aTitle: string): boolean;
   begin
     Result := false;
-    if Copy(aTitle, 1, 7)= 'Ref Low' then exit
-    else if Copy(aTitle, 1, 8)= 'Ref High' then exit
-    else if aTitle = TXT_COMMENTS then exit
-    else if aTitle = TXT_NONNUMERICS then exit
-    else if aTitle = '' then exit;
+    if copy(aTitle, 1, 7) = 'Ref Low' then
+      Exit
+    else if copy(aTitle, 1, 8) = 'Ref High' then
+      Exit
+    else if aTitle = TXT_COMMENTS then
+      Exit
+    else if aTitle = TXT_NONNUMERICS then
+      Exit
+    else if aTitle = '' then
+      Exit;
     Result := true;
   end;
 
@@ -7165,26 +7764,30 @@ begin
   begin
     ClickedValue := -1;
     for j := 0 to SeriesCount - 1 do
-    with (Series[j] as TChartSeries) do
-    begin
-      if FHintStop then break;
-      ClickedValue := Clicked(FX, FY);
-      if ClickedValue = -1 then ClickedValue := Marks.Clicked(FX, FY);
-      if ClickedValue > -1 then break;
-    end;
-    if FHintStop then          // stop when clicked
+      with (Series[j] as TChartSeries) do
+      begin
+        if FHintStop then
+          break;
+        ClickedValue := Clicked(FX, FY);
+        if ClickedValue = -1 then
+          ClickedValue := Marks.Clicked(FX, FY);
+        if ClickedValue > -1 then
+          break;
+      end;
+    if FHintStop then // stop when clicked
     begin
       timHintPause.Enabled := false;
       InactivateHint;
       FHintStop := false;
-      exit;
+      Exit;
     end;
-    if (ClickedValue > -1) and ((FOnValue <> ClickedValue) or (FOnSeries <> j)) then
-    begin     // on a value but not the same value or series
+    if (ClickedValue > -1) and ((FOnValue <> ClickedValue) or (FOnSeries <> j))
+    then
+    begin // on a value but not the same value or series
       if FHintWinActive then
         InactivateHint;
       if not TitleOK(Series[j].Title) then
-        exit;
+        Exit;
       FOnSeries := j;
       FOnValue := ClickedValue;
       textvalue := ValueText(FActiveGraph, Series[j], ClickedValue);
@@ -7197,8 +7800,9 @@ begin
       FHintWin.ActivateHint(Rct, textvalue);
       FHintWinActive := true;
     end
-    else if (ClickedValue = -1) and ((FOnValue <> BIG_NUMBER) and (FOnSeries <> BIG_NUMBER)) then
-    begin  // not on a value anymore (used to be on a value and series)
+    else if (ClickedValue = -1) and
+      ((FOnValue <> BIG_NUMBER) and (FOnSeries <> BIG_NUMBER)) then
+    begin // not on a value anymore (used to be on a value and series)
       FOnSeries := BIG_NUMBER;
       FOnValue := BIG_NUMBER;
       timHintPause.Enabled := false;
@@ -7209,8 +7813,8 @@ end;
 
 procedure TfrmGraphs.InactivateHint;
 begin
-    FHintWin.ReleaseHandle;
-    FHintWinActive := false;
+  FHintWin.ReleaseHandle;
+  FHintWinActive := false;
 end;
 
 procedure TfrmGraphs.mnuPopGraphStayOnTopClick(Sender: TObject);
@@ -7218,12 +7822,12 @@ begin
   mnuPopGraphStayOnTop.Checked := not mnuPopGraphStayOnTop.Checked;
   if mnuPopGraphStayOnTop.Checked then
   begin
-    MarkFormAsStayOnTop(Self, true);
+    MarkFormAsStayOnTop(self, true);
     FGraphSetting.StayOnTop := true;
   end
   else
   begin
-    MarkFormAsStayOnTop(Self, false);
+    MarkFormAsStayOnTop(self, false);
     FGraphSetting.StayOnTop := false;
   end;
 end;
@@ -7231,32 +7835,32 @@ end;
 procedure TfrmGraphs.StayOnTop;
 begin
   with pnlMain.Parent do
-  if BorderWidth <> 1 then
-  begin
-     mnuPopGraphStayOnTop.Enabled :=false;
-     mnuPopGraphStayOnTop.Checked := false;
-  end
-  else
-  begin     // only use on float Graph
-    mnuPopGraphStayOnTop.Enabled :=true;
-    mnuPopGraphStayOnTop.Checked := not FGraphSetting.StayOnTop;
-    mnuPopGraphStayOnTopClick(self);
-  end;
+    if BorderWidth <> 1 then
+    begin
+      mnuPopGraphStayOnTop.Enabled := false;
+      mnuPopGraphStayOnTop.Checked := false;
+    end
+    else
+    begin // only use on float Graph
+      mnuPopGraphStayOnTop.Enabled := true;
+      mnuPopGraphStayOnTop.Checked := not FGraphSetting.StayOnTop;
+      mnuPopGraphStayOnTopClick(self);
+    end;
 end;
 
 procedure TfrmGraphs.HideDates(aChart: TChart);
 var
-  hidedates: boolean;
+  HideDates: boolean;
 begin
-  with aChart do          // dateline charts always have dates
+  with aChart do // dateline charts always have dates
   begin
     if (aChart = chartDatelineTop) then
-      hidedates := false
+      HideDates := false
     else if (aChart = chartDatelineBottom) then
-      hidedates := false
+      HideDates := false
     else
-      hidedates := not FGraphSetting.Dates;
-    if hidedates then
+      HideDates := not FGraphSetting.Dates;
+    if HideDates then
     begin
       MarginBottom := 0;
       BottomAxis.LabelsFont.Color := chartDatelineTop.Color;
@@ -7266,16 +7870,18 @@ begin
     else
     begin
       MarginBottom := chartDatelineTop.MarginBottom;
-      BottomAxis.LabelsFont.Color := chartDatelineTop.BottomAxis.LabelsFont.Color;
+      BottomAxis.LabelsFont.Color :=
+        chartDatelineTop.BottomAxis.LabelsFont.Color;
       BottomAxis.LabelsSize := chartDatelineTop.BottomAxis.LabelsSize;
       LeftAxis.LabelsFont.Color := chartDatelineTop.LeftAxis.LabelsFont.Color;
     end;
   end;
 end;
 
-procedure TfrmGraphs.InfoMessage(aCaption: string; aColor: TColor; aVisible: boolean);
+procedure TfrmGraphs.InfoMessage(aCaption: string; aColor: TColor;
+  aVisible: boolean);
 begin
-  pnlInfo.Caption := aCaption;
+  pnlInfo.caption := aCaption;
   pnlInfo.Color := aColor;
   pnlInfo.Visible := aVisible;
 end;
@@ -7284,8 +7890,10 @@ procedure TfrmGraphs.mnuPopGraphZoomBackClick(Sender: TObject);
 begin
   FFirstClick := true;
   GtslZoomHistoryFloat.Delete(GtslZoomHistoryFloat.Count - 1);
-  if GtslZoomHistoryFloat.Count = 0 then mnuPopGraphResetClick(self)
-  else ZoomUpdate;
+  if GtslZoomHistoryFloat.Count = 0 then
+    mnuPopGraphResetClick(self)
+  else
+    ZoomUpdate;
 end;
 
 procedure TfrmGraphs.ZoomUpdate;
@@ -7294,28 +7902,28 @@ var
   BigTime, SmallTime: TDateTime;
 begin
   lastzoom := GtslZoomHistoryFloat[GtslZoomHistoryFloat.Count - 1];
-  SmallTime := StrToFloat(Piece(lastzoom, '^', 1));
-  BigTime := StrToFloat(Piece(lastzoom, '^', 2));
+  SmallTime := strtofloat(Piece(lastzoom, '^', 1));
+  BigTime := strtofloat(Piece(lastzoom, '^', 2));
   ZoomTo(SmallTime, BigTime);
   ZoomUpdateInfo(SmallTime, BigTime);
 end;
 
 procedure TfrmGraphs.ZoomUpdateInfo(SmallTime, BigTime: TDateTime);
 var
-  aString: string;
+  astring: string;
 begin
-  aString := TXT_ZOOMED
-           + FormatDateTime('mmm d, yyyy  h:nn am/pm', SmallTime)
-           + ' to ' + FormatDateTime('mmm d, yyyy  h:nn am/pm', BigTime) + '.';
-  InfoMessage(aString, COLOR_ZOOM, true);
+  astring := TXT_ZOOMED + FormatDateTime('mmm d, yyyy  h:nn am/pm', SmallTime) +
+    ' to ' + FormatDateTime('mmm d, yyyy  h:nn am/pm', BigTime) + '.';
+  InfoMessage(astring, COLOR_ZOOM, true);
   if MergedLabsSelected then
-    InfoMessage(pnlInfo.Caption + ' ' + TXT_WARNING_MERGED_LABS, COLOR_WARNING, true);
+    InfoMessage(pnlInfo.caption + ' ' + TXT_WARNING_MERGED_LABS,
+      COLOR_WARNING, true);
   pnlHeader.Visible := true;
 end;
 
 procedure TfrmGraphs.ZoomTo(SmallTime, BigTime: TDateTime);
 var
-  i: integer;
+  i: Integer;
   ChildControl: TControl;
 begin
   for i := 0 to scrlTop.ControlCount - 1 do
@@ -7335,10 +7943,10 @@ end;
 procedure TfrmGraphs.mnuPopGraphPrintClick(Sender: TObject);
 var
   topflag: boolean;
-  count, i: integer;
+  Count, i: Integer;
   aAction, aDateRange, aTitle, aWarning, StrForFooter, StrForHeader: String;
   aHeader: TStringList;
-  wrdApp, wrdDoc, wrdPrintDlg: Variant;
+  wrdApp, wrdDoc, wrdPrintDlg: variant;
   ChildControl: TControl;
 begin
   try
@@ -7353,82 +7961,82 @@ begin
   topflag := mnuPopGraphStayOnTop.Checked and mnuPopGraphStayOnTop.Enabled;
   Screen.Cursor := crDefault;
   aTitle := 'CPRS Graphing';
-  aWarning := pnlInfo.Caption;
-  aDateRange :=  'Date Range: ' + cboDateRange.Text + '  Selected Items from ' +
-      FormatDateTime('mm/dd/yy', FGraphSetting.LowTime) + ' to ' +
-      FormatDateTime('mm/dd/yy', FGraphSetting.HighTime);
+  aWarning := pnlInfo.caption;
+  aDateRange := 'Date Range: ' + cboDateRange.Text + '  Selected Items from ' +
+    FormatDateTime('mm/dd/yy', FGraphSetting.LowTime) + ' to ' +
+    FormatDateTime('mm/dd/yy', FGraphSetting.HighTime);
   aHeader := TStringList.Create;
   CreatePatientHeader(aHeader, aTitle, aWarning, aDateRange);
   StrForHeader := '';
-  for i := 0 to aHeader.Count -1 do
+  for i := 0 to aHeader.Count - 1 do
     StrForHeader := StrForHeader + aHeader[i] + Chr(13);
   StrForFooter := aTitle + ' - *** WORK COPY ONLY ***' + Chr(13);
-  wrdApp.Visible := False;
+  wrdApp.Visible := false;
   wrdApp.Documents.Add;
   wrdDoc := wrdApp.Documents.Item(1);
   wrdDoc := wrdDoc.Sections.Item(1);
-  wrdDoc := wrdDoc.Headers.Item(1).Range;
-  wrdDoc.Font.Name := 'Courier New';
+  wrdDoc := wrdDoc.Headers.Item(1).range;
+  wrdDoc.Font.name := 'Courier New';
   wrdDoc.Font.Size := 9;
   wrdDoc.Text := StrForHeader;
   wrdDoc := wrdApp.Documents.Item(1);
   wrdDoc := wrdDoc.Sections.Item(1);
   wrdDoc := wrdDoc.Footers.Item(1);
-  wrdDoc.Range.Font.Name := 'Courier New';
-  wrdDoc.Range.Font.Size := 9;
-  wrdDoc.Range.Text := StrForFooter;
+  wrdDoc.range.Font.name := 'Courier New';
+  wrdDoc.range.Font.Size := 9;
+  wrdDoc.range.Text := StrForFooter;
   wrdDoc.PageNumbers.Add;
   wrdDoc := wrdApp.Documents.Item(1);
   if aAction = 'COPY' then
   begin
-    wrdDoc.Range.Font.Name := 'Courier New';
-    wrdDoc.Range.Font.Size := 9;
-    wrdDoc.Range.Text := StrForHeader;
+    wrdDoc.range.Font.name := 'Courier New';
+    wrdDoc.range.Font.Size := 9;
+    wrdDoc.range.Text := StrForHeader;
   end;
-  wrdDoc.Range.InsertParagraphAfter;
-  for i := 0 to scrlTop.ControlCount - 1 do           // goes from top to bottom
+  wrdDoc.range.InsertParagraphAfter;
+  for i := 0 to scrlTop.ControlCount - 1 do // goes from top to bottom
   begin
     ChildControl := scrlTop.Controls[i];
     if (ChildControl as TChart).Visible then
     begin
       (ChildControl as TChart).CopyToClipboardBitmap;
-      wrdDoc.Range.InsertParagraphAfter;
-      wrdDoc.Paragraphs.Last.Range.Paste;
+      wrdDoc.range.InsertParagraphAfter;
+      wrdDoc.Paragraphs.Last.range.Paste;
     end;
   end;
   if (chartDatelineTop.SeriesCount > 0) and (not chkItemsTop.Checked) then
   begin
     chartDatelineTop.CopyToClipboardBitmap;
-    wrdDoc.Range.InsertParagraphAfter;
-    wrdDoc.Paragraphs.Last.Range.Paste;
+    wrdDoc.range.InsertParagraphAfter;
+    wrdDoc.Paragraphs.Last.range.Paste;
   end;
-  wrdDoc.Range.InsertParagraphAfter;
-  wrdDoc.Paragraphs.Last.Range.Text := '   ';
+  wrdDoc.range.InsertParagraphAfter;
+  wrdDoc.Paragraphs.Last.range.Text := '   ';
   for i := 0 to scrlBottom.ControlCount - 1 do
   begin
     ChildControl := scrlBottom.Controls[i];
     if (ChildControl as TChart).Visible then
     begin
       (ChildControl as TChart).CopyToClipboardBitmap;
-      wrdDoc.Range.InsertParagraphAfter;
-      wrdDoc.Paragraphs.Last.Range.Paste;
+      wrdDoc.range.InsertParagraphAfter;
+      wrdDoc.Paragraphs.Last.range.Paste;
     end;
   end;
-  if (chartDatelineBottom.SeriesCount > 0) and (chkDualViews.Checked)
-    and (not chkItemsBottom.Checked) then
+  if (chartDatelineBottom.SeriesCount > 0) and (chkDualViews.Checked) and
+    (not chkItemsBottom.Checked) then
   begin
     chartDatelineBottom.CopyToClipboardBitmap;
-    wrdDoc.Range.InsertParagraphAfter;
-    wrdDoc.Paragraphs.Last.Range.Paste;
+    wrdDoc.range.InsertParagraphAfter;
+    wrdDoc.Paragraphs.Last.range.Paste;
   end;
   if aAction = 'PRINT' then
   begin
     if topflag then
     begin
       mnuPopGraphStayOnTopClick(self);
-      Self.SendToBack;           // avoid print dialog being hidden behind form
+      self.SendToBack; // avoid print dialog being hidden behind form
     end;
-    wrdPrintDlg := wrdApp.Dialogs.item(wdDialogFilePrint);
+    wrdPrintDlg := wrdApp.Dialogs.Item(wdDialogFilePrint);
     Screen.Cursor := crDefault;
     Application.ProcessMessages;
     wrdPrintDlg.Show;
@@ -7436,19 +8044,20 @@ begin
     Screen.Cursor := crHourGlass;
     Application.ProcessMessages;
     Sleep(5000);
-    count := 0;
+    Count := 0;
     while (wrdApp.Application.BackgroundPrintingStatus > 0) do
     begin
       Sleep(1000);
       Application.ProcessMessages;
-      count := count + 1;
-      if count > 3 then break;
+      Count := Count + 1;
+      if Count > 3 then
+        break;
     end;
   end;
   if aAction = 'COPY' then
   begin
-    wrdDoc.Range.WholeStory;
-    wrdDoc.Range.Copy;
+    wrdDoc.range.WholeStory;
+    wrdDoc.range.copy;
   end;
   wrdApp.DisplayAlerts := false;
   wrdDoc.Close(false);
@@ -7472,13 +8081,13 @@ end;
 procedure TfrmGraphs.lstViewsTopEnter(Sender: TObject);
 begin
   if Sender = lstViewsTop then
-    lstViewsTop.Tag := 0;                     // reset
+    lstViewsTop.Tag := 0; // reset
 end;
 
 procedure TfrmGraphs.lstViewsTopMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-  //  for right mouse click make arrangements for view definition ****************
+  // for right mouse click make arrangements for view definition ****************
 end;
 
 procedure TfrmGraphs.lstViewsBottomChange(Sender: TObject);
@@ -7491,7 +8100,7 @@ end;
 procedure TfrmGraphs.lstViewsBottomEnter(Sender: TObject);
 begin
   if Sender = lstViewsBottom then
-    lstViewsBottom.Tag := 0;                     // reset
+    lstViewsBottom.Tag := 0; // reset
 end;
 
 procedure TfrmGraphs.lvwItemsBottomChange(Sender: TObject; Item: TListItem;
@@ -7520,7 +8129,7 @@ end;
 
 procedure TfrmGraphs.lvwItemsTopClick(Sender: TObject);
 var
-  i: integer;
+  i: Integer;
 begin
   FFirstClick := true;
   if not FFastTrack then
@@ -7539,9 +8148,10 @@ begin
   begin
     GtslSelPrevTopFloat.Clear;
     for i := 0 to lvwItemsTop.Items.Count - 1 do
-    if lvwItemsTop.Items[i].Selected then
-      GtslSelPrevTopFloat.Add(inttostr(i));
-    ItemsClick(Sender, lvwItemsTop, lvwItemsBottom, chkItemsTop, lstViewsTop, GtslSelCopyTop, 'top');
+      if lvwItemsTop.Items[i].Selected then
+        GtslSelPrevTopFloat.Add(inttostr(i));
+    ItemsClick(Sender, lvwItemsTop, lvwItemsBottom, chkItemsTop, lstViewsTop,
+      GtslSelCopyTop, 'top');
   end;
 end;
 
@@ -7572,12 +8182,17 @@ begin
   inherited;
   if not chkDualViews.Checked and ShiftTabIsPressed() then
   begin
-    if scrlTop.VertScrollBar.IsScrollBarVisible and scrlTop.CanFocus then memTop.SetFocus
-    else begin
+    if scrlTop.VertScrollBar.IsScrollBarVisible and scrlTop.CanFocus then
+      memTop.SetFocus
+    else
+    begin
       Case pcTop.ActivePageIndex of
-        0:  lvwItemsTop.SetFocus;
-        1:  memViewsTop.SetFocus;
-        2:  tsTopCustom.SetFocus;
+        0:
+          lvwItemsTop.SetFocus;
+        1:
+          memViewsTop.SetFocus;
+        2:
+          tsTopCustom.SetFocus;
       End;
     end;
   end;
@@ -7585,19 +8200,20 @@ end;
 
 procedure TfrmGraphs.mnuPopGraphFixedClick(Sender: TObject);
 begin
-  with FGraphSetting do FixedDateRange := not FixedDateRange;
+  with FGraphSetting do
+    FixedDateRange := not FixedDateRange;
   ChangeStyle;
 end;
 
-//*********************
+// *********************
 
 procedure TfrmGraphs.FormDestroy(Sender: TObject);
 begin
   SetSize;
 end;
 
-procedure TfrmGraphs.SetFontSize(FontSize: integer);
-begin   // for now, ignore changing chart font size
+procedure TfrmGraphs.SetFontSize(FontSize: Integer);
+begin // for now, ignore changing chart font size
   with chartDatelineTop do
   begin
     LeftAxis.LabelsFont.Size := 8;
@@ -7622,7 +8238,7 @@ begin
     if pnlFooter.Visible then
       cboDateRange.SetFocus
     else
-      SelectNext(ActiveControl as TWinControl, True, True);
+      SelectNext(ActiveControl as TWinControl, true, true);
 end;
 
 procedure TfrmGraphs.lvwItemsBottomEnter(Sender: TObject);
@@ -7631,10 +8247,11 @@ begin
     if lvwItemsBottom.Items.Count > 0 then
       lvwItemsBottom.Items[0].Focused := true;
   if not chkDualViews.Checked then
-    SelectNext(ActiveControl as TWinControl, True, True);
+    SelectNext(ActiveControl as TWinControl, true, true);
 end;
 
-procedure TfrmGraphs.UpdateAccessibilityActions(var Actions: TAccessibilityActions);
+procedure TfrmGraphs.UpdateAccessibilityActions(var Actions
+  : TAccessibilityActions);
 begin
   Actions := Actions - [aaColorConversion];
 end;
@@ -7663,12 +8280,18 @@ procedure TfrmGraphs.memTopKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   case Key of
-    VK_UP:      SendMessage(scrlTop.Handle, WM_VSCROLL, SB_LINEUP,   0);
-    VK_PRIOR:   SendMessage(scrlTop.Handle, WM_VSCROLL, SB_PAGEUP,   0);
-    VK_NEXT:    SendMessage(scrlTop.Handle, WM_VSCROLL, SB_PAGEDOWN, 0);
-    VK_DOWN:    SendMessage(scrlTop.Handle, WM_VSCROLL, SB_LINEDOWN, 0);
-    VK_HOME:    SendMessage(scrlTop.Handle, WM_VSCROLL, SB_TOP,      0);
-    VK_END:     SendMessage(scrlTop.Handle, WM_VSCROLL, SB_BOTTOM,   0);
+    VK_UP:
+      SendMessage(scrlTop.Handle, WM_VSCROLL, SB_LINEUP, 0);
+    VK_PRIOR:
+      SendMessage(scrlTop.Handle, WM_VSCROLL, SB_PAGEUP, 0);
+    VK_NEXT:
+      SendMessage(scrlTop.Handle, WM_VSCROLL, SB_PAGEDOWN, 0);
+    VK_DOWN:
+      SendMessage(scrlTop.Handle, WM_VSCROLL, SB_LINEDOWN, 0);
+    VK_HOME:
+      SendMessage(scrlTop.Handle, WM_VSCROLL, SB_TOP, 0);
+    VK_END:
+      SendMessage(scrlTop.Handle, WM_VSCROLL, SB_BOTTOM, 0);
   end;
 end;
 
@@ -7676,15 +8299,23 @@ procedure TfrmGraphs.memBottomKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   case Key of
-    VK_UP:      SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_LINEUP,   0);
-    VK_PRIOR:   SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_PAGEUP,   0);
-    VK_NEXT:    SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_PAGEDOWN, 0);
-    VK_DOWN:    SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_LINEDOWN, 0);
-    VK_HOME:    SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_TOP,      0);
-    VK_END:     SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_BOTTOM,   0);
+    VK_UP:
+      SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_LINEUP, 0);
+    VK_PRIOR:
+      SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_PAGEUP, 0);
+    VK_NEXT:
+      SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_PAGEDOWN, 0);
+    VK_DOWN:
+      SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_LINEDOWN, 0);
+    VK_HOME:
+      SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_TOP, 0);
+    VK_END:
+      SendMessage(scrlBottom.Handle, WM_VSCROLL, SB_BOTTOM, 0);
   end;
 end;
 
 initialization
-  CoInitialize (nil);
+
+CoInitialize(nil);
+
 end.

@@ -8,42 +8,31 @@ uses
 
 type
   TfraCoPayDesc = class(TFrame)
-    pnlRight: TPanel;
     lblCaption: TStaticText;
     pnlSCandRD: TPanel;
     lblSCDisplay: TLabel;
     memSCDisplay: TCaptionMemo;
-    Spacer2: TLabel;
-    pnlMain: TPanel;
-    spacer1: TLabel;
-    pnlHNC: TPanel;
     lblHNC2: TVA508StaticText;
     lblHNC: TVA508StaticText;
-    pnlMST: TPanel;
     lblMST2: TVA508StaticText;
     lblMST: TVA508StaticText;
-    pnlSWAC: TPanel;
     lblSWAC2: TVA508StaticText;
     lblSWAC: TVA508StaticText;
-    pnlIR: TPanel;
     lblIR2: TVA508StaticText;
     lblIR: TVA508StaticText;
-    pnlAO: TPanel;
     lblAO2: TVA508StaticText;
     lblAO: TVA508StaticText;
-    pnlSC: TPanel;
     lblSC2: TVA508StaticText;
     lblSC: TVA508StaticText;
-    pnlCV: TPanel;
     lblCV2: TVA508StaticText;
     lblCV: TVA508StaticText;
-    pnlSHD: TPanel;
     lblSHAD: TVA508StaticText;
     lblSHAD2: TVA508StaticText;
-    ScrollBox1: TScrollBox;
-    pnlCL: TPanel;
     lblCL: TVA508StaticText;
     lblCL2: TVA508StaticText;
+    pnlRight: TPanel;
+    ScrollBox2: TScrollBox;
+    GridPanel1: TGridPanel;
     procedure lblEnter(Sender: TObject);
     procedure lblExit(Sender: TObject);
   private
@@ -169,7 +158,7 @@ begin
   except
      on E: Exception do
         begin
-//        {$ifdef debug}Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');{$endif}
+//        Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');
         raise;
         end;
   end;
@@ -193,7 +182,7 @@ begin
   except
      on E: Exception do
         begin
-//        {$ifdef debug}Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');{$endif}
+//        Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');
           raise;
         end;
   end;

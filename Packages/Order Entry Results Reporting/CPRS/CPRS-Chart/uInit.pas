@@ -3,16 +3,11 @@ unit uInit;
 interface
 
 uses
-  Forms, Windows, Messages, SysUtils, ExtCtrls, ORSystem;
+  Forms, Windows, Messages, SysUtils, ExtCtrls;
 
 type
-{$IFDEF GroupEncounter}
-  TCPRSTimeoutTimerCondition = function: boolean;
-  TCPRSTimeoutTimerAction = procedure;
-{$ELSE}
   TCPRSTimeoutTimerCondition = function: boolean of object;
   TCPRSTimeoutTimerAction = procedure of object;
-{$ENDIF}
 
 procedure InitTimeOut(AUserCondition: TCPRSTimeoutTimerCondition;
                       AUserAction: TCPRSTimeoutTimerAction);
@@ -118,8 +113,10 @@ begin
         FHooked := FALSE;
       end;
     end;
-    timTimeout.Free;
-    timTimeout := nil;
+    try // for some reason this can throw an invalid pointer on Application.Terminate
+      FreeAndNil(timTimeout);
+    except
+    end;
   end;
 end;
 

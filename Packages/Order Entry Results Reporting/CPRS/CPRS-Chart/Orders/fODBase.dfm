@@ -1,24 +1,23 @@
 inherited frmODBase: TfrmODBase
   Left = 277
   Top = 179
-  Width = 687
-  Height = 379
-  HorzScrollBar.Range = 625
+  Width = 592
+  Height = 358
+  HorzScrollBar.Range = 500
   HorzScrollBar.Tracking = True
   HorzScrollBar.Visible = True
-  VertScrollBar.Range = 281
+  VertScrollBar.Range = 225
   VertScrollBar.Visible = True
   BorderIcons = [biSystemMenu]
   Caption = ''
   FormStyle = fsStayOnTop
-  OnClose = FormClose
+  Scaled = False
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
   OnKeyPress = FormKeyPress
-  ExplicitWidth = 687
-  ExplicitHeight = 379
-  PixelsPerInch = 120
-  TextHeight = 16
+  ExplicitWidth = 592
+  ExplicitHeight = 358
+  PixelsPerInch = 96
+  TextHeight = 13
   object memOrder: TCaptionMemo [0]
     Left = 8
     Top = 243
@@ -37,10 +36,10 @@ inherited frmODBase: TfrmODBase
     Caption = ''
   end
   object cmdAccept: TButton [1]
-    Left = 553
-    Top = 243
-    Width = 90
-    Height = 26
+    Left = 442
+    Top = 194
+    Width = 86
+    Height = 21
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -50,10 +49,10 @@ inherited frmODBase: TfrmODBase
     OnClick = cmdAcceptClick
   end
   object cmdQuit: TButton [2]
-    Left = 553
-    Top = 276
-    Width = 48
-    Height = 27
+    Left = 442
+    Top = 221
+    Width = 39
+    Height = 21
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -64,10 +63,10 @@ inherited frmODBase: TfrmODBase
     OnClick = cmdQuitClick
   end
   object pnlMessage: TPanel [3]
-    Left = 30
-    Top = 220
-    Width = 476
-    Height = 55
+    Left = 24
+    Top = 176
+    Width = 381
+    Height = 44
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -80,10 +79,10 @@ inherited frmODBase: TfrmODBase
     OnMouseDown = pnlMessageMouseDown
     OnMouseMove = pnlMessageMouseMove
     object imgMessage: TImage
-      Left = 5
-      Top = 5
-      Width = 40
-      Height = 40
+      Left = 4
+      Top = 4
+      Width = 32
+      Height = 32
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -91,18 +90,18 @@ inherited frmODBase: TfrmODBase
       OnMouseUp = memMessageMouseUp
     end
     object memMessage: TRichEdit
-      Left = 50
-      Top = 5
-      Width = 415
-      Height = 40
+      Left = 40
+      Top = 4
+      Width = 332
+      Height = 32
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Color = clInfoBk
       Font.Charset = ANSI_CHARSET
-      Font.Color = clInfoText
-      Font.Height = -15
+      Font.Color = clWindowText
+      Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False

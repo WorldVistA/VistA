@@ -7,15 +7,12 @@ inherited frmPLLex: TfrmPLLex
   Constraints.MinHeight = 480
   Constraints.MinWidth = 640
   OldCreateOrder = True
-  OnClose = FormClose
-  OnCreate = FormCreate
   OnHelp = nil
   OnKeyDown = nil
-  OnShow = FormShow
-  ExplicitWidth = 640
-  ExplicitHeight = 480
+  ExplicitWidth = 642
+  ExplicitHeight = 487
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlDialog: TPanel [0]
     Left = 0
     Top = 0
@@ -47,17 +44,17 @@ inherited frmPLLex: TfrmPLLex
         Left = 15
         Top = 6
         Width = 594
-        Height = 13
+        Height = 16
         Align = alTop
         Caption = 'Enter Term to Search:'
-        ExplicitWidth = 104
+        ExplicitWidth = 129
       end
       object ebLex: TCaptionEdit
         AlignWithMargins = True
         Left = 12
-        Top = 25
+        Top = 28
         Width = 518
-        Height = 24
+        Height = 21
         Margins.Left = 0
         Align = alClient
         AutoSize = False
@@ -72,9 +69,9 @@ inherited frmPLLex: TfrmPLLex
       object bbSearch: TBitBtn
         AlignWithMargins = True
         Left = 536
-        Top = 25
+        Top = 28
         Width = 76
-        Height = 24
+        Height = 21
         Hint = 'Search Problem List Subset of SNOMED CT'
         Margins.Right = 0
         Align = alRight
@@ -179,16 +176,16 @@ inherited frmPLLex: TfrmPLLex
         Left = 15
         Top = 6
         Width = 594
-        Height = 13
+        Height = 16
         Align = alTop
         Caption = 'Select from one of the following items:'
-        ExplicitWidth = 178
+        ExplicitWidth = 221
       end
       inline tgfLex: TTreeGridFrame
         Left = 12
-        Top = 22
+        Top = 25
         Width = 600
-        Height = 309
+        Height = 306
         Margins.Left = 0
         Margins.Top = 0
         Margins.Right = 0
@@ -203,39 +200,39 @@ inherited frmPLLex: TfrmPLLex
         TabOrder = 0
         TabStop = True
         ExplicitLeft = 12
-        ExplicitTop = 22
+        ExplicitTop = 25
         ExplicitWidth = 600
-        ExplicitHeight = 309
+        ExplicitHeight = 306
         inherited tv: TTreeView
           Width = 600
-          Height = 205
+          Height = 202
           BorderStyle = bsSingle
           OnChange = tgfLextvChange
           OnDblClick = tgfLextvDblClick
           OnEnter = tgfLextvEnter
           OnExit = tgfLextvExit
           ExplicitWidth = 600
-          ExplicitHeight = 205
+          ExplicitHeight = 202
         end
         inherited pnlTop: TPanel
           Width = 600
           ExplicitWidth = 600
           inherited stTitle: TStaticText
-            Width = 42
+            Width = 55
             Caption = 'Problem'
-            ExplicitWidth = 42
+            ExplicitWidth = 55
           end
         end
         inherited pnlSpace: TPanel
-          Top = 229
+          Top = 226
           Width = 600
-          ExplicitTop = 229
+          ExplicitTop = 226
           ExplicitWidth = 600
         end
         inherited pnlHint: TPanel
-          Top = 237
+          Top = 234
           Width = 600
-          ExplicitTop = 237
+          ExplicitTop = 234
           ExplicitWidth = 600
           inherited pnlTarget: TPanel
             Top = 285

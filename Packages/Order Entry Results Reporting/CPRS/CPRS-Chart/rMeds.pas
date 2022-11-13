@@ -39,6 +39,11 @@ procedure Refill(AnOrderID, PickUpAt: string);
 function IsFirstDoseNowOrder(OrderID: string): boolean;
 function GetMedStatus(MedID: TStringList): boolean;
 
+/////////////////////////////////////////////////////////////////////////// PaPI
+function ParkOrder(AnOrderID:String):String;
+function UnParkOrder(AnOrderID,PickupAt: String):String;
+/////////////////////////////////////////////////////////////////////////// PaPI
+
 implementation
 
 procedure ClearMedList(AList: TList);
@@ -221,19 +226,19 @@ begin
   else Result := 0;
 end;
 
-procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList; var view: integer; var DateRange: string; var DateRangeIp: string; var DateRangeOp: string);
+procedure LoadActiveMedLists(InPtMeds, OutPtMeds, NonVAMeds: TList;
+  var view: Integer; var DateRange: string; var DateRangeIp: string;
+  var DateRangeOp: string);
 var
-  idx, ASeq: Integer;
+  ASeq: Integer;
   x, y: string;
-  ClinMeds, tmpInPtMeds: TList;
   AMed: TMedListRec;
   aTmpList: TStringList;
 begin
-  //Check for CQ 9814 this should prevent an M error is DFn is not defined.
-  if patient=nil then exit;
-  if patient.DFN='' then exit;
-  ClinMeds := TList.Create;           //IMO new
-  tmpInPtMeds := TList.Create;        //IMO new
+  // Check for CQ 9814 this should prevent an M error if DFN is not defined.
+  if (not assigned(Patient)) or (Patient.DFN = '') then
+    exit;
+
   ClearMedList(InPtMeds);
   ClearMedList(OutPtMeds);
   ClearMedList(NonVAMeds);
@@ -241,55 +246,43 @@ begin
   aTmpList := TStringList.Create;
   try
     CallVistA('ORWPS ACTIVE', [Patient.DFN, User.DUZ, view, '1'], aTmpList);
-    ASeq := 0;
-    if (view = 0) and (aTmpList.Count > 0) then
-      view := StrToIntDef(Piece(aTmpList[0], U, 1), 0);
-    DateRange := Piece(aTmpList[0], U, 2);
-    DateRangeIp := Piece(aTmpList[0], U, 3);
-    DateRangeOp := Piece(aTmpList[0], U, 4);
-    while aTmpList.Count > 0 do
+    if aTmpList.Count > 0 then
+    begin
+      ASeq := 0;
+      if (view = 0) then
+        view := StrToIntDef(Piece(aTmpList[0], U, 1), 0);
+      DateRange := Piece(aTmpList[0], U, 2);
+      DateRangeIp := Piece(aTmpList[0], U, 3);
+      DateRangeOp := Piece(aTmpList[0], U, 4);
+      while aTmpList.Count > 0 do
       begin
         x := aTmpList[0];
         aTmpList.Delete(0);
-        if CharAt(x, 1) <> '~' then Continue; // only happens if out of synch
+        if CharAt(x, 1) <> '~' then
+          Continue; // only happens if out of synch
         y := '';
         while (aTmpList.Count > 0) and (CharAt(aTmpList[0], 1) <> '~') do
-          begin
-            if CharAt(aTmpList[0], 1) = '\' then y := y + CRLF;
-            y := y + Copy(aTmpList[0], 2, Length(aTmpList[0])) + ' ';
-            aTmpList.Delete(0);
-          end;
+        begin
+          if CharAt(aTmpList[0], 1) = '\' then
+            y := y + CRLF;
+          y := y + Copy(aTmpList[0], 2, Length(aTmpList[0])) + ' ';
+          aTmpList.Delete(0);
+        end;
         AMed := TMedListRec.Create;
         SetMedFields(AMed, x, y);
         Inc(ASeq);
         AMed.SrvSeq := ASeq;
         if (AMed.Inpatient) then
-          begin
-            tmpInPtMeds.Add(AMed);
-          end
-        else
-        if AMed.NonVAMed then
+          InPtMeds.Add(AMed)
+        else if AMed.NonVAMed then
           NonVAMeds.Add(AMed)
         else
           OutPtMeds.Add(AMed);
       end;
+    end;
   finally
     FreeAndNil(aTmpList);
   end;
-
-  // 12-4 if view <> 1 then ClinMeds.Sort(ByStatusThenStop);
- // 12-4 if view = 1 then tmpInPtMeds.Sort(ByStatusThenLocation)
- // 12-4 else tmpInPtMeds.Sort(ByStatusThenStop);
-  //tmpInPtMeds.Sort(ByStatusThenStop);                           //IMO
- //12-4 if view <> 1 then InPtMeds.Assign(ClinMeds);
-  for idx := 0 to tmpInPtMeds.Count - 1 do
-    InPtMeds.Add(TMedListRec(tmpInPtMeds.Items[idx]));
-  //if view <> 1 then OutPtMeds.Sort(ByStatusThenStop)
-  //else OutPtMeds.Sort(ByStatusThenLocation);
- //12-4 if view <> 1 then NonVAMeds.Sort(ByStatusThenStop)
- //12-4 else NonVAMeds.Sort(ByStatusThenLocation);
-  if Assigned(ClinMeds) then FreeAndNil(ClinMeds);
-  if Assigned(tmpInPtMeds) then FreeAndNil(tmpInPtMeds);
 end;
 
 function GetNewDialog: string;
@@ -329,6 +322,49 @@ var
 begin
   CallVistA('ORWDX1 STCHANGE', [Patient.DFN, MedID], aStr);
   Result := (aStr = '1');
+end;
+
+/////////////////////////////////////////////////////////////////////////// PaPI
+
+function ParkOrder(AnOrderID: string): String;
+var
+  sl: TStringList;
+  { sends request for Park to pharmacy }
+begin
+  // CallV('PSORPC', ['PARK',AnOrderID, 'PickUpAt', Patient.DFN, Encounter.Provider, Encounter.Location]);
+  // Result := RPCBrokerV.Results.Text;
+  sl := TStringList.Create;
+
+  try
+    if not CallVistA('PSORPC', ['PARK', AnOrderID, 'PickUpAt', Patient.DFN,
+      Encounter.Provider, Encounter.Location], sl) then
+      sl.Clear;
+  except
+    on E: Exception do
+      sl.Clear;
+  end;
+  Result := {RPCBrokerV.Results} sl.Text;
+  sl.Free;
+end;
+
+function UnParkOrder(AnOrderID, PickUpAt: string): String;
+var
+  Results: TStringList;
+  { sends request for UnPark to pharmacy }
+begin
+  // CallV('PSORPC', ['UNPARK',AnOrderID, PickUpAt, Patient.DFN, Encounter.Provider, Encounter.Location]);
+  // Result := RPCBrokerV.Results.Text;
+  Results := TStringList.Create;
+  try
+    if not CallVistA('PSORPC', ['UNPARK', AnOrderID, PickUpAt, Patient.DFN,
+      Encounter.Provider, Encounter.Location], Results) then
+      Results.Clear;
+  except
+    on E: Exception do
+      Results.Clear;
+  end;
+  Result := {RPCBrokerV.} Results.Text;
+  Results.Free;
 end;
 
 end.

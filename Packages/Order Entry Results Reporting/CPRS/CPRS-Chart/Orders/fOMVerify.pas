@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fAutoSz, StdCtrls, ComCtrls, VA508AccessibilityManager, VA508AccessibilityRouter;
+  fAutoSz, StdCtrls, ComCtrls, VA508AccessibilityManager, VA508AccessibilityRouter,
+  Vcl.ExtCtrls;
 
 type
   TfrmOMVerify = class(TfrmAutoSz)
@@ -13,6 +14,8 @@ type
     cmdCancel: TButton;
     memText: TRichEdit;
     VA508ComponentAccessibility1: TVA508ComponentAccessibility;
+    pnlButtons: TPanel;
+    Panel1: TPanel;
     procedure cmdAcceptClick(Sender: TObject);
     procedure cmdEditClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);

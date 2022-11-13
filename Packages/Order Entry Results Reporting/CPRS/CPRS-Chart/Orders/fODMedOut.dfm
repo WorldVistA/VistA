@@ -1,9 +1,11 @@
 inherited frmODMedOut: TfrmODMedOut
   Left = 427
   Top = 145
-  Height = 316
+  Width = 546
+  Height = 384
   Caption = 'Outpatient Medication Order'
-  ExplicitHeight = 316
+  ExplicitWidth = 546
+  ExplicitHeight = 384
   PixelsPerInch = 96
   TextHeight = 13
   object lblMedication: TLabel [0]
@@ -200,13 +202,9 @@ inherited frmODMedOut: TfrmODMedOut
     CharsNeedMatch = 1
   end
   inherited memOrder: TCaptionMemo
-    Top = 235
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 289
     TabOrder = 15
-    ExplicitTop = 235
+    ExplicitTop = 289
   end
   object cboRoute: TORComboBox [19]
     Left = 314
@@ -434,46 +432,70 @@ inherited frmODMedOut: TfrmODMedOut
     TabOrder = 17
     OnClick = cmdComplexClick
   end
+  object pnlIndications: TPanel [31]
+    Left = 8
+    Top = 384
+    Width = 349
+    Height = 71
+    TabOrder = 24
+  end
+  object Panel1: TPanel [32]
+    Left = 6
+    Top = 234
+    Width = 516
+    Height = 47
+    TabOrder = 25
+    object lblIndications: TLabel
+      Left = 5
+      Top = 2
+      Width = 54
+      Height = 16
+      AutoSize = False
+      Caption = 'Indication:'
+    end
+    object cboIndication: TORComboBox
+      Left = 5
+      Top = 18
+      Width = 205
+      Height = 21
+      Style = orcsDropDown
+      AutoSelect = True
+      Caption = ''
+      Color = clWindow
+      DropDownCount = 8
+      ItemHeight = 13
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = False
+      LongList = False
+      LookupPiece = 0
+      MaxLength = 0
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 0
+      Text = ''
+      OnChange = cboIndicationChange
+      OnKeyDown = cboIndicationKeyDown
+      OnKeyUp = cboIndicationKeyUp
+      CharsNeedMatch = 1
+    end
+  end
   inherited cmdAccept: TButton
-    Top = 235
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 289
     TabOrder = 13
-    ExplicitTop = 235
+    ExplicitTop = 289
   end
   inherited cmdQuit: TButton
-    Top = 262
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 316
     TabOrder = 14
-    ExplicitTop = 262
+    ExplicitTop = 316
   end
   inherited pnlMessage: TPanel
-    Left = 6
-    Top = 190
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 42
+    Top = 168
     TabOrder = 16
-    ExplicitLeft = 6
-    ExplicitTop = 190
-    inherited imgMessage: TImage
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-    end
-    inherited memMessage: TRichEdit
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-    end
+    ExplicitLeft = 42
+    ExplicitTop = 168
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -542,6 +564,15 @@ inherited frmODMedOut: TfrmODMedOut
         'Status = stsDefault')
       (
         'Component = frmODMedOut'
+        'Status = stsDefault')
+      (
+        'Component = pnlIndications'
+        'Status = stsDefault')
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = cboIndication'
         'Status = stsDefault'))
   end
   object popUnits: TPopupMenu

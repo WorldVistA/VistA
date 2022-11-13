@@ -14,8 +14,8 @@ inherited frmBroker: TfrmBroker
   OnKeyUp = FormKeyUp
   OnResize = FormResize
   OnStartDock = FormStartDock
-  ExplicitWidth = 700
-  ExplicitHeight = 452
+  ExplicitWidth = 692
+  ExplicitHeight = 441
   PixelsPerInch = 96
   TextHeight = 13
   object SplDebug: TSplitter [0]
@@ -46,6 +46,10 @@ inherited frmBroker: TfrmBroker
       TabOrder = 0
       object SrchPage: TTabSheet
         Caption = 'Search'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object PnlDebugResults: TPanel
           Left = 0
           Top = 51
@@ -58,7 +62,7 @@ inherited frmBroker: TfrmBroker
             AlignWithMargins = True
             Left = 5
             Top = 3
-            Width = 185
+            Width = 72
             Height = 13
             Margins.Left = 5
             Align = alTop
@@ -69,14 +73,13 @@ inherited frmBroker: TfrmBroker
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
-            ExplicitWidth = 72
           end
           object ResultList: TListView
             AlignWithMargins = True
             Left = 10
-            Top = 19
+            Top = 22
             Width = 173
-            Height = 287
+            Height = 284
             Margins.Left = 10
             Margins.Right = 10
             Margins.Bottom = 10
@@ -98,7 +101,7 @@ inherited frmBroker: TfrmBroker
             ParentFont = False
             TabOrder = 0
             ViewStyle = vsReport
-            OnClick = ResultListClick
+            OnSelectItem = LiveListSelectItem
           end
         end
         object PnlSearch: TPanel
@@ -113,7 +116,7 @@ inherited frmBroker: TfrmBroker
             AlignWithMargins = True
             Left = 5
             Top = 3
-            Width = 185
+            Width = 69
             Height = 13
             Margins.Left = 5
             Align = alTop
@@ -124,13 +127,12 @@ inherited frmBroker: TfrmBroker
             Font.Name = 'MS Sans Serif'
             Font.Style = []
             ParentFont = False
-            ExplicitWidth = 69
           end
           object pnlSubSearch: TPanel
             Left = 0
-            Top = 16
+            Top = 19
             Width = 193
-            Height = 35
+            Height = 32
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
@@ -139,7 +141,7 @@ inherited frmBroker: TfrmBroker
               Left = 10
               Top = 3
               Width = 105
-              Height = 29
+              Height = 26
               Margins.Left = 10
               Margins.Right = 10
               Align = alClient
@@ -159,7 +161,7 @@ inherited frmBroker: TfrmBroker
               Left = 128
               Top = 3
               Width = 55
-              Height = 29
+              Height = 26
               Margins.Right = 10
               Align = alRight
               Caption = 'Search'
@@ -210,7 +212,7 @@ inherited frmBroker: TfrmBroker
           ParentFont = False
           TabOrder = 0
           ViewStyle = vsReport
-          OnClick = ResultListClick
+          OnSelectItem = LiveListSelectItem
         end
         object ToolBar1: TToolBar
           AlignWithMargins = True
@@ -265,6 +267,10 @@ inherited frmBroker: TfrmBroker
       object LivePage: TTabSheet
         Caption = 'Live'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object LiveList: TListView
           AlignWithMargins = True
           Left = 10
@@ -297,7 +303,7 @@ inherited frmBroker: TfrmBroker
           TabOrder = 0
           ViewStyle = vsReport
           OnAdvancedCustomDrawItem = LiveListAdvancedCustomDrawItem
-          OnClick = ResultListClick
+          OnSelectItem = LiveListSelectItem
         end
         object ToolBar3: TToolBar
           AlignWithMargins = True
@@ -324,7 +330,7 @@ inherited frmBroker: TfrmBroker
             OnClick = ToolButton2Click
           end
           object ToolButton6: TToolButton
-            Left = 38
+            Left = 36
             Top = 0
             Width = 37
             Caption = 'ToolButton6'
@@ -332,7 +338,7 @@ inherited frmBroker: TfrmBroker
             Style = tbsSeparator
           end
           object tlFlag: TToolButton
-            Left = 75
+            Left = 73
             Top = 0
             Caption = 'Align Bottom'
             ImageIndex = 3
@@ -376,6 +382,7 @@ inherited frmBroker: TfrmBroker
       ScrollBars = ssBoth
       TabOrder = 0
       WantReturns = False
+      Zoom = 100
     end
     object pnlTop: TORAutoPanel
       Left = 0
@@ -695,7 +702,7 @@ inherited frmBroker: TfrmBroker
     Left = 8
     Top = 368
     Bitmap = {
-      494C01010B007000740010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01010B008800880010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

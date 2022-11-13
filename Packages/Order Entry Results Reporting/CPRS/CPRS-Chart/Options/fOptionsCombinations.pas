@@ -58,7 +58,7 @@ procedure DialogOptionsCombinations(topvalue, leftvalue, fontsize: integer; var 
 
 implementation
 
-uses rOptions, rCore, uSimilarNames;
+uses rOptions, rCore, uORLists, uSimilarNames;
 
 {$R *.DFM}
 
@@ -158,11 +158,11 @@ begin
          end;
       1: begin
            Pieces := '2';
-           ForDataUse(SubSetOfClinics(StartFrom, Direction));
+           setClinicList(lstAddBy, StartFrom, Direction);
          end;
       2: begin
            Pieces := '2,3';
-           ForDataUse(SubSetOfProviders(StartFrom, Direction));
+           setProviderList(lstAddBy, StartFrom, Direction);
          end;
       3: begin
            Pieces := '2';
@@ -189,10 +189,10 @@ var
 begin
   if radAddByType.ItemIndex = 2 then
   begin
-    if not CheckForSimilarName(lstAddBy, aErrMsg, ltProvider, sPr, '') then
+    if not CheckForSimilarName(lstAddBy, aErrMsg, sPr) then
     begin
       ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Invalid Provider');
-      Exit;
+      exit;
     end;
   end;
 
@@ -323,20 +323,21 @@ var
   aCombination: TCombination;
 begin
   if FDirty then
-    begin
-      alist := TStringList.Create;
-      try
-        with lvwCombinations do
-          for i := 0 to Items.Count - 1 do
-            begin
-              aCombination := TCombination(Items.Item[i].SubItems.Objects[1]);
-              with aCombination do alist.Add(IEN + '^' + Source);
-            end;
-        rpcSetCombo(alist);
-      finally
-        alist.Free;
-      end;
+  begin
+    alist := TStringList.Create;
+    try
+      with lvwCombinations do
+        for i := 0 to Items.Count - 1 do
+        begin
+          aCombination := TCombination(Items.Item[i].SubItems.Objects[1]);
+          with aCombination do
+            alist.Add(IEN + '^' + Source);
+        end;
+      rpcSetCombo(alist);
+    finally
+      alist.Free;
     end;
+  end;
 end;
 
 procedure TfrmOptionsCombinations.lstAddByEnter(Sender: TObject);

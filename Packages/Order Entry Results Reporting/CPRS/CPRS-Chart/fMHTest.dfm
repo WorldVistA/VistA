@@ -6,11 +6,8 @@ inherited frmMHTest: TfrmMHTest
   ClientHeight = 433
   ClientWidth = 500
   Position = poScreenCenter
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  OnShow = FormShow
   ExplicitWidth = 516
-  ExplicitHeight = 471
+  ExplicitHeight = 472
   PixelsPerInch = 96
   TextHeight = 13
   object sbMain: TScrollBox [0]

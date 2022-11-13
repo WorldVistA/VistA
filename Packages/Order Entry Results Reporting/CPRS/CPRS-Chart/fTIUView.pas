@@ -24,7 +24,6 @@ type
     edMaxDocs: TCaptionEdit;
     lblContains: TLabel;
     txtKeyword: TCaptionEdit;
-    Bevel1: TBevel;
     grpListView: TGroupBox;
     radListSort: TRadioGroup;
     lblSortBy: TLabel;
@@ -39,6 +38,17 @@ type
     grpWhereEitherOf: TGroupBox;
     ckTitle: TCheckBox;
     ckSubject: TCheckBox;
+    pnlButtons: TPanel;
+    pnlStatus: TPanel;
+    Panel2: TPanel;
+    Panel1: TPanel;
+    pnlAuthor: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    pnlOptions: TPanel;
+    pnlOp: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure lstStatusSelect(Sender: TObject);
@@ -71,7 +81,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, uCore, rTIU(*, fNotes, fDCSumm, rDCSumm*);
+uses rCore, uCore, rTIU(*, fNotes, fDCSumm, rDCSumm*), uSimilarNames;
 
 const
    TX_DATE_ERR = 'Enter valid beginning and ending dates or press Cancel.';
@@ -124,6 +134,7 @@ begin
             SelectByIEN(User.DUZ);
             FAuthor := ItemIEN;
           end;
+      TSimilarNames.RegORComboBox(cboAuthor);
       if CurrentContext.MaxDocs > 0 then
         edMaxDocs.Text :=  IntToStr(CurrentContext.MaxDocs)
       else
@@ -175,6 +186,8 @@ end;
 procedure TfrmTIUView.cmdOKClick(Sender: TObject);
 var
   bdate, edate: TFMDateTime;
+  ErrMsg: string;
+
 begin
   FStatus := lstStatus.ItemID;
 
@@ -203,11 +216,15 @@ begin
 
   FAuthor := cboAuthor.ItemIEN;
   if (FStatus = '4') and (FAuthor = 0) then
-    begin
-      InfoBox(TX_AUTH_ERR, TX_AUTH_ERR_CAP, MB_OK or MB_ICONWARNING);
-      Exit;
-    end;
-
+  begin
+    InfoBox(TX_AUTH_ERR, TX_AUTH_ERR_CAP, MB_OK or MB_ICONWARNING);
+    Exit;
+  end;
+  if cboAuthor.Enabled and (not CheckForSimilarName(cboAuthor, ErrMsg, sPr)) then
+  begin
+    ShowMsgOn(ErrMsg <> '', ErrMsg, 'Signed Document by Author Error');
+    Exit;
+  end;
   FSortBy := cboSortBy.ItemID;
   if FSortBy = '' then FSortBy := 'R';
   FListAscending := (radListSort.ItemIndex = 0);
@@ -296,8 +313,16 @@ end;
 
 procedure TfrmTIUView.cboAuthorNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-    cboAuthor.ForDataUse(SubSetOfActiveAndInactivePersons(StartFrom, Direction));
+  sl := TSTringList.Create;
+  try
+    setSubSetOfActiveAndInactivePersons(cboAuthor, sl, StartFrom, Direction);
+    cboAuthor.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmTIUView.cmdClearClick(Sender: TObject);

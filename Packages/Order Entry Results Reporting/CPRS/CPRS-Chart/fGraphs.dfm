@@ -15,7 +15,7 @@ inherited frmGraphs: TfrmGraphs
   ExplicitWidth = 583
   ExplicitHeight = 394
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlHeader: TPanel [0]
     Left = 0
     Top = 0
@@ -84,7 +84,7 @@ inherited frmGraphs: TfrmGraphs
       OnDblClick = mnuPopGraphDetailsClick
       OnMouseDown = chartBaseMouseDown
       OnMouseUp = chartBaseMouseUp
-      DefaultCanvas = 'TTeeCanvas3D'
+      DefaultCanvas = 'TGDIPlusCanvas'
       ColorPaletteIndex = 13
     end
   end
@@ -97,36 +97,45 @@ inherited frmGraphs: TfrmGraphs
     BevelOuter = bvNone
     TabOrder = 2
     object lblDateRange: TLabel
+      AlignWithMargins = True
       Left = 3
-      Top = 8
-      Width = 61
-      Height = 13
+      Top = 3
+      Width = 76
+      Height = 22
+      Align = alLeft
       Caption = 'Date Range:'
+      ExplicitHeight = 16
     end
     object btnClose: TButton
-      Left = 502
-      Top = 4
+      AlignWithMargins = True
+      Left = 511
+      Top = 3
       Width = 69
-      Height = 21
+      Height = 22
+      Align = alRight
       Caption = 'Close'
       TabOrder = 4
       OnClick = btnCloseClick
     end
     object btnChangeSettings: TButton
-      Left = 374
-      Top = 4
+      AlignWithMargins = True
+      Left = 421
+      Top = 3
       Width = 84
-      Height = 21
+      Height = 22
+      Align = alRight
       Caption = 'Settings...'
       TabOrder = 3
       OnClick = btnChangeSettingsClick
     end
     object cboDateRange: TORComboBox
-      Left = 69
-      Top = 6
+      AlignWithMargins = True
+      Left = 85
+      Top = 3
       Width = 119
-      Height = 21
+      Height = 24
       Style = orcsDropDown
+      Align = alLeft
       AutoSelect = True
       Caption = ''
       Color = clWindow
@@ -140,7 +149,7 @@ inherited frmGraphs: TfrmGraphs
         '5^One Year'
         '6^Two Years'
         '7^All Results')
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -159,19 +168,22 @@ inherited frmGraphs: TfrmGraphs
       CharsNeedMatch = 1
     end
     object chkDualViews: TCheckBox
-      Left = 194
-      Top = 7
+      Left = 207
+      Top = 0
       Width = 84
-      Height = 17
+      Height = 28
+      Align = alLeft
       Caption = 'Split Views'
       TabOrder = 1
       OnClick = chkDualViewsClick
     end
     object btnGraphSelections: TButton
-      Left = 283
-      Top = 4
-      Width = 84
-      Height = 21
+      AlignWithMargins = True
+      Left = 304
+      Top = 3
+      Width = 111
+      Height = 22
+      Align = alRight
       Caption = 'Select/Define...'
       TabOrder = 2
       OnClick = btnGraphSelectionsClick
@@ -251,9 +263,9 @@ inherited frmGraphs: TfrmGraphs
             Visible = False
           end
           object chkItemsTop: TCheckBox
-            Left = 39
+            Left = 8
             Top = 2
-            Width = 103
+            Width = 134
             Height = 20
             Alignment = taLeftJustify
             Anchors = [akTop, akRight]
@@ -278,7 +290,7 @@ inherited frmGraphs: TfrmGraphs
               Left = 0
               Top = 0
               Width = 138
-              Height = 195
+              Height = 192
               Align = alClient
               BevelInner = bvNone
               BevelOuter = bvNone
@@ -323,22 +335,21 @@ inherited frmGraphs: TfrmGraphs
             ImageIndex = 1
             object splViewsTop: TSplitter
               Left = 0
-              Top = 192
+              Top = 190
               Width = 138
               Height = 2
               Cursor = crVSplit
               Align = alBottom
               OnMoved = splViewsTopMoved
-              ExplicitTop = 198
+              ExplicitTop = 196
               ExplicitWidth = 139
             end
             object lstViewsTop: TORListBox
               Left = 0
               Top = 0
               Width = 138
-              Height = 192
+              Height = 190
               Align = alClient
-              ItemHeight = 13
               ParentShowHint = False
               ShowHint = False
               TabOrder = 0
@@ -352,9 +363,9 @@ inherited frmGraphs: TfrmGraphs
             end
             object memViewsTop: TRichEdit
               Left = 0
-              Top = 194
+              Top = 192
               Width = 138
-              Height = 1
+              Height = 0
               Align = alBottom
               Color = clCream
               Font.Charset = ANSI_CHARSET
@@ -377,10 +388,6 @@ inherited frmGraphs: TfrmGraphs
           object tsTopCustom: TTabSheet
             Caption = 'Custom'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
           end
         end
       end
@@ -497,12 +504,7 @@ inherited frmGraphs: TfrmGraphs
             OnDblClick = mnuPopGraphDetailsClick
             OnMouseDown = chartBaseMouseDown
             OnMouseUp = chartBaseMouseUp
-            DefaultCanvas = 'TTeeCanvas3D'
-            PrintMargins = (
-              15
-              46
-              15
-              46)
+            DefaultCanvas = 'TGDIPlusCanvas'
             ColorPaletteIndex = 13
             object serDatelineTop: TGanttSeries
               Legend.Visible = False
@@ -614,9 +616,9 @@ inherited frmGraphs: TfrmGraphs
             Visible = False
           end
           object chkItemsBottom: TCheckBox
-            Left = 38
+            Left = 8
             Top = 2
-            Width = 104
+            Width = 134
             Height = 20
             Alignment = taLeftJustify
             Caption = 'Individual Graphs'
@@ -641,7 +643,7 @@ inherited frmGraphs: TfrmGraphs
               Left = 0
               Top = 0
               Width = 138
-              Height = 47
+              Height = 44
               Align = alClient
               BevelInner = bvNone
               BevelOuter = bvNone
@@ -686,22 +688,21 @@ inherited frmGraphs: TfrmGraphs
             ImageIndex = 1
             object splViewsBottom: TSplitter
               Left = 0
-              Top = 44
+              Top = 42
               Width = 138
               Height = 2
               Cursor = crVSplit
               Align = alBottom
               OnMoved = splViewsTopMoved
-              ExplicitTop = 50
+              ExplicitTop = 48
               ExplicitWidth = 139
             end
             object lstViewsBottom: TORListBox
               Left = 0
               Top = 0
               Width = 138
-              Height = 44
+              Height = 42
               Align = alClient
-              ItemHeight = 13
               ParentShowHint = False
               ShowHint = False
               TabOrder = 0
@@ -714,9 +715,9 @@ inherited frmGraphs: TfrmGraphs
             end
             object memViewsBottom: TRichEdit
               Left = 0
-              Top = 46
+              Top = 44
               Width = 138
-              Height = 1
+              Height = 0
               Align = alBottom
               Color = clCream
               Font.Charset = ANSI_CHARSET
@@ -739,10 +740,6 @@ inherited frmGraphs: TfrmGraphs
           object tsBottomCustom: TTabSheet
             Caption = 'Custom'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
           end
         end
       end
@@ -842,7 +839,7 @@ inherited frmGraphs: TfrmGraphs
             OnDblClick = mnuPopGraphDetailsClick
             OnMouseDown = chartBaseMouseDown
             OnMouseUp = chartBaseMouseUp
-            DefaultCanvas = 'TTeeCanvas3D'
+            DefaultCanvas = 'TGDIPlusCanvas'
             ColorPaletteIndex = 13
             object serDatelineBottom: TGanttSeries
               Legend.Visible = False
@@ -852,8 +849,8 @@ inherited frmGraphs: TfrmGraphs
               ShowInLegend = False
               OnGetMarkText = serDatelineTopGetMarkText
               ClickableLine = False
-              Pointer.Brush.Gradient.EndColor = 7028779
-              Pointer.Gradient.EndColor = 7028779
+              Pointer.Brush.Gradient.EndColor = 11842740
+              Pointer.Gradient.EndColor = 11842740
               Pointer.InflateMargins = True
               Pointer.Style = psRectangle
               XValues.Name = 'Start'
@@ -920,6 +917,8 @@ inherited frmGraphs: TfrmGraphs
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 232
+    Top = 80
     Data = (
       (
         'Component = pnlHeader'
@@ -1075,7 +1074,8 @@ inherited frmGraphs: TfrmGraphs
   end
   object mnuPopGraphStuff: TPopupMenu
     OnPopup = mnuPopGraphStuffPopup
-    Left = 30
+    Left = 262
+    Top = 80
     object mnuPopGraphDetails: TMenuItem
       Caption = 'Details...'
       Enabled = False
@@ -1280,18 +1280,21 @@ inherited frmGraphs: TfrmGraphs
     LabelStop = 'End Date'
     RequireTime = False
     Format = 'mmm d,yy@hh:nn'
-    Left = 59
+    Left = 291
+    Top = 80
   end
   object dlgDate: TORDateTimeDlg
     FMDateTime = 3040806.000000000000000000
     DateOnly = True
     RequireTime = False
-    Left = 88
+    Left = 320
+    Top = 80
   end
   object timHintPause: TTimer
     Enabled = False
     Interval = 100
     OnTimer = timHintPauseTimer
-    Left = 117
+    Left = 349
+    Top = 80
   end
 end

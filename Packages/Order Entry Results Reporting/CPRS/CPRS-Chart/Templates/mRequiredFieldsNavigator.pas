@@ -60,8 +60,8 @@ type
     property FocusedControl: TWinControl read fFocusedControl
       write setFocusedControl;
 
-    procedure setAlign(anAl: TAlign); overload;
-    procedure setAlign(anAl: Integer); overload;
+    procedure setAlign(anAlign: TAlign); overload;
+    procedure setAlign(anAlign: Integer); overload;
     procedure adjustButtonSize(aSize: Integer);
 
   end;
@@ -294,9 +294,9 @@ begin
   end;
 end;
 
-procedure TRequiredFieldsFrame.setAlign(anAl: TAlign);
+procedure TRequiredFieldsFrame.setAlign(anAlign: TAlign);
 begin
-  case anAl of
+  case anAlign of
     alNone:
       ;
     alTop:
@@ -363,9 +363,9 @@ begin
   invalidate;
 end;
 
-procedure TRequiredFieldsFrame.setAlign(anAl: Integer);
+procedure TRequiredFieldsFrame.setAlign(anAlign: Integer);
 begin
-  case anAl of
+  case anAlign of
     0:
       setAlign(alTop);
     1:

@@ -10,10 +10,10 @@ inherited frmSearchStop: TfrmSearchStop
   OldCreateOrder = False
   Position = poMainFormCenter
   OnShow = FormShow
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitWidth = 169
+  ExplicitHeight = 123
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object btnSearchStop: TButton [0]
     Left = 45
     Top = 64
@@ -26,13 +26,15 @@ inherited frmSearchStop: TfrmSearchStop
   object lblSearchStatus: TStaticText [1]
     Left = 8
     Top = 32
-    Width = 78
-    Height = 17
+    Width = 98
+    Height = 20
     Caption = 'lblSearchStatus'
     TabOrder = 0
     TabStop = True
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 88
+    Top = 8
     Data = (
       (
         'Component = btnSearchStop'

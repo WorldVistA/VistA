@@ -52,7 +52,7 @@ object fPlinkPassword: TfPlinkPassword
     Left = 20
     Top = 44
     Width = 201
-    Height = 24
+    Height = 21
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2

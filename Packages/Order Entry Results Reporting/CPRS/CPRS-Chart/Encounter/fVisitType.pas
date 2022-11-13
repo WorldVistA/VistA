@@ -1,5 +1,9 @@
 unit fVisitType;
+{------------------------------------------------------------------------------
+Update History
 
+    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
+-------------------------------------------------------------------------------}
 interface
 
 uses
@@ -8,6 +12,7 @@ uses
   ComCtrls, mVisitRelated, VA508AccessibilityManager;
 
 type
+
   TfrmVisitType = class(TfrmPCEBase)
     pnlTop: TPanel;
     splLeft: TSplitter;
@@ -53,8 +58,9 @@ type
     procedure lbModsClickCheck(Sender: TObject; Index: Integer);
     procedure lbxVisitsClick(Sender: TObject);
     procedure memSCDisplayEnter(Sender: TObject);
+    procedure cboPtProviderKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   protected
-    FCboPTProviderVistaParams: TArray<string>;
     FSplitterMove: boolean;
     procedure ShowModifiers;
     procedure CheckModifiers;
@@ -84,11 +90,11 @@ implementation
 {$R *.DFM}
 
 uses
-  fEncounterFrame, uCore, uConst, VA508AccessibilityRouter, VAUtils, uSimilarNames;
+  fEncounterFrame, uCore, uConst, VA508AccessibilityRouter, uORLists, uSimilarNames, VAUtils;
 
 const
   FN_NEW_PERSON = 200;
-  
+
 procedure TfrmVisitType.MatchVType;
 var
   i: Integer;
@@ -206,7 +212,7 @@ begin
   end;
   RefreshProviders;
   FLastMods := uEncPCEData.VisitType.Modifiers;
-  fraVisitRelated.TabStop := FALSE;
+  fraVisitRelated.TabStop := False;
   TSimilarNames.RegORComboBox(cboPTProvider);
 end;
 
@@ -265,12 +271,7 @@ var
   aSimRtn: Boolean;
 begin
   inherited;
-
-  if (uEncPCEData.VisitCategory = 'E') then
-    aSimRtn := CheckForSimilarName(cboPTProvider, aErrMsg, ltPerson, FCboPTProviderVistaParams, sPr, '', lbProviders.Items)
-  else
-    aSimRtn := CheckForSimilarName(cboPTProvider, aErrMsg, ltPerson, FCboPTProviderVistaParams, sPr, FloatToStr(uEncPCEData.PersonClassDate), lbProviders.Items);
-
+  aSimRtn := CheckForSimilarName(cboPTProvider, aErrMsg, sPr, lbProviders.Items);
   if aSimRtn then
   begin
     uProviders.AddProvider(IntToStr(cboPTProvider.ItemIEN), cboPTProvider.Text, FALSE);
@@ -317,6 +318,14 @@ begin
   btnAddClick(Sender);
 end;
 
+procedure TfrmVisitType.cboPtProviderKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if Key = VK_RETURN then
+    btnAddClick(nil);
+end;
+
 procedure TfrmVisitType.cboPtProviderChange(Sender: TObject);
 begin
   inherited;
@@ -325,13 +334,23 @@ end;
 
 procedure TfrmVisitType.cboPtProviderNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
   inherited;
-  if(uEncPCEData.VisitCategory = 'E') then
-    cboPtProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboPTProviderVistaParams))
+  if (uEncPCEData.VisitCategory = 'E') then
+    setPersonList(cboPtProvider, StartFrom, Direction)
   else
-    cboPtProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction,
-      FloatToStr(uEncPCEData.PersonClassDate), FCboPTProviderVistaParams));
+  begin
+    sl := TSTringList.Create;
+    try
+      setSubSetOfUsersWithClass(cboPtProvider, sl, StartFrom, Direction,
+        FloatToStr(uEncPCEData.PersonClassDate));
+      cboPtProvider.ForDataUse(sl);
+    finally
+      sl.Free;
+    end;
+  end;
 end;
 
 procedure TfrmVisitType.lbProvidersChange(Sender: TObject);
@@ -472,7 +491,7 @@ begin
   if(pos(CRLF,Hint)>0) then
     Hint := ':' + CRLF + Spaces + Hint;
   lblMod.Hint := msg + Hint;
-  
+
   if(FLastCPTCodes = Codes) then
     TopIdx := lbMods.TopIndex
   else

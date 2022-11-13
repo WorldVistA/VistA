@@ -1,13 +1,13 @@
 inherited frmODRTC: TfrmODRTC
   Left = 203
   Top = 183
-  Width = 670
-  Height = 466
+  Width = 673
+  Height = 468
   Caption = 'Return To Clinic'
   Constraints.MinHeight = 365
   Constraints.MinWidth = 300
-  ExplicitWidth = 670
-  ExplicitHeight = 466
+  ExplicitWidth = 673
+  ExplicitHeight = 468
   PixelsPerInch = 96
   TextHeight = 13
   object lblOrderSig: TLabel [0]
@@ -35,24 +35,20 @@ inherited frmODRTC: TfrmODRTC
     ExplicitHeight = 69
   end
   object pnlRequired: TPanel [2]
-    Left = 0
-    Top = 0
-    Width = 654
+    Left = 2
+    Top = 1
+    Width = 614
     Height = 329
     Margins.Left = 2
     Margins.Top = 2
     Margins.Right = 2
     Margins.Bottom = 2
-    Align = alTop
     BevelEdges = []
     BevelOuter = bvNone
     TabOrder = 1
-    DesignSize = (
-      654
-      329)
     object lblClinic: TLabel
-      Left = 8
-      Top = 44
+      Left = 10
+      Top = 50
       Width = 32
       Height = 13
       Margins.Left = 2
@@ -62,7 +58,7 @@ inherited frmODRTC: TfrmODRTC
       Caption = 'Clinic *'
     end
     object lblQO: TLabel
-      Left = 8
+      Left = 10
       Top = 5
       Width = 79
       Height = 13
@@ -73,15 +69,15 @@ inherited frmODRTC: TfrmODRTC
       Caption = 'My Quick Orders'
     end
     object lblMoreInfo: TLabel
-      Left = 8
-      Top = 248
+      Left = 10
+      Top = 246
       Width = 79
       Height = 13
       Caption = 'More Information'
       Visible = False
     end
     object stQuickOrdersDisabled: TStaticText
-      Left = 8
+      Left = 10
       Top = 22
       Width = 163
       Height = 17
@@ -90,15 +86,15 @@ inherited frmODRTC: TfrmODRTC
     end
     object stIntervalInDays: TStaticText
       Left = 152
-      Top = 160
+      Top = 168
       Width = 165
       Height = 17
       Caption = 'Interval in day(s) spin edit disabled'
       TabOrder = 8
     end
     object cboRTCClinic: TORComboBox
-      Left = 8
-      Top = 62
+      Left = 10
+      Top = 70
       Width = 595
       Height = 21
       Style = orcsDropDown
@@ -125,17 +121,16 @@ inherited frmODRTC: TfrmODRTC
       CharsNeedMatch = 1
     end
     object lblClinicallyIndicated: TStaticText
-      Left = 9
-      Top = 93
+      Left = 10
+      Top = 100
       Width = 106
       Height = 17
-      Anchors = [akTop, akRight]
       Caption = 'Return to clinic date*:'
       TabOrder = 16
     end
     object dateCIDC: TORDateBox
-      Left = 8
-      Top = 114
+      Left = 10
+      Top = 120
       Width = 98
       Height = 21
       Margins.Left = 2
@@ -149,17 +144,16 @@ inherited frmODRTC: TfrmODRTC
       Caption = ''
     end
     object lblNumberAppts: TStaticText
-      Left = 8
-      Top = 140
+      Left = 10
+      Top = 148
       Width = 124
       Height = 17
-      Anchors = [akTop, akRight]
       Caption = 'Number of Appointments*'
       TabOrder = 5
     end
     object txtNumAppts: TCaptionEdit
-      Left = 8
-      Top = 159
+      Left = 10
+      Top = 168
       Width = 60
       Height = 19
       AutoSize = False
@@ -170,8 +164,8 @@ inherited frmODRTC: TfrmODRTC
       Caption = 'Nums of Appointments*'
     end
     object SpinNumAppt: TUpDown
-      Left = 68
-      Top = 159
+      Left = 10
+      Top = 168
       Width = 16
       Height = 19
       Associate = txtNumAppts
@@ -182,34 +176,31 @@ inherited frmODRTC: TfrmODRTC
     end
     object lblFrequency: TStaticText
       Left = 147
-      Top = 140
+      Top = 148
       Width = 81
       Height = 17
-      Anchors = [akTop, akRight]
       Caption = 'Interval in day(s)'
       TabOrder = 18
     end
     object lblPReReq: TStaticText
       Left = 342
-      Top = 93
+      Top = 100
       Width = 169
       Height = 17
-      Anchors = [akTop, akRight]
       Caption = 'Prerequisites: (Check all that apply)'
       TabOrder = 19
     end
     object lblComments: TStaticText
-      Left = 8
-      Top = 201
+      Left = 10
+      Top = 195
       Width = 53
       Height = 17
-      Anchors = [akTop, akRight]
       Caption = 'Comments'
       TabOrder = 12
     end
     object txtInterval: TCaptionEdit
       Left = 147
-      Top = 159
+      Top = 168
       Width = 66
       Height = 21
       TabOrder = 9
@@ -220,7 +211,7 @@ inherited frmODRTC: TfrmODRTC
     end
     object spnInterval: TUpDown
       Left = 213
-      Top = 159
+      Top = 168
       Width = 16
       Height = 21
       Associate = txtInterval
@@ -229,7 +220,7 @@ inherited frmODRTC: TfrmODRTC
     end
     object chkTimeSensitve: TCheckBox
       Left = 147
-      Top = 111
+      Top = 120
       Width = 97
       Height = 17
       Caption = 'Time Sensitive'
@@ -237,8 +228,8 @@ inherited frmODRTC: TfrmODRTC
       OnClick = chkTimeSensitveClick
     end
     object memInfo: TMemo
-      Left = 9
-      Top = 267
+      Left = 10
+      Top = 266
       Width = 594
       Height = 57
       Color = clInfoBk
@@ -249,16 +240,16 @@ inherited frmODRTC: TfrmODRTC
       TabOrder = 14
     end
     object edtComment: TEdit
-      Left = 8
-      Top = 218
+      Left = 10
+      Top = 215
       Width = 595
       Height = 21
       TabOrder = 13
       OnChange = edtCommentChange
     end
     object cboPerQO: TORComboBox
-      Left = 8
-      Top = 19
+      Left = 10
+      Top = 25
       Width = 595
       Height = 21
       Style = orcsDropDown
@@ -285,9 +276,9 @@ inherited frmODRTC: TfrmODRTC
     end
     object lstPreReq: TCheckListBox
       Left = 342
-      Top = 109
+      Top = 120
       Width = 261
-      Height = 97
+      Height = 74
       OnClickCheck = lstPreReqClickCheck
       ItemHeight = 13
       ParentShowHint = False

@@ -138,8 +138,15 @@ begin
 end;
 
 procedure TfraTemplateFieldButton.SetButtonText(const Value: string);
+var
+  i: Integer;
+const
+  iGap = 4;
 begin
   lblText.Caption := Value;
+  i := lblText.Canvas.textWidth(Value);
+  if width < i + iGap then
+    width := i + iGap ;
 end;
 
 procedure TfraTemplateFieldButton.pbFocusPaint(Sender: TObject);

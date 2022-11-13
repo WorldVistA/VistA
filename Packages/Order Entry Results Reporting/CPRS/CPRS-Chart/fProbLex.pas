@@ -430,25 +430,29 @@ procedure TfrmPLLex.SetColumnTreeModel(ResultSet: TStrings);
 var
   i: Integer;
   Node: TLexTreeNode;
-  RecStr: String;
+  RecStr, Desc: String;
 begin
-  //  1     2        3      4       5       6         7          8     9
-  //VUID^SCT TEXT^ICDCODE^ICDIEN^CODE SYS^CONCEPT^DESIGNATION^ICDVER^PARENT
+  //  1     2        3      4       5       6         7          8     9       10
+  //VUID^SCT TEXT^ICDCODE^ICDIEN^CODE SYS^CONCEPT^DESIGNATION^ICDVER^PARENT^FULL DESCRIPTION
   tgfLex.tv.Items.Clear;
   tgfLex.tv.Refresh;
 
   for i := 0 to ResultSet.Count - 1 do
   begin
     RecStr := ResultSet[i];
+    Desc := Piece(RecStr, '^', 10);
+    if Desc = '' then
+      Desc := Piece(RecStr, '^', 2);
     if Piece(RecStr, '^', 9) = '' then
-      Node := (tgfLex.tv.Items.Add(nil, Piece(RecStr, '^', 2))) as TLexTreeNode
+      Node := (tgfLex.tv.Items.Add(nil, Desc)) as TLexTreeNode
     else
-      Node := (tgfLex.tv.Items.AddChild(tgfLex.tv.Items[(StrToInt(Piece(RecStr, '^', 9))-1)], Piece(RecStr, '^', 2))) as TLexTreeNode;
+      Node := (tgfLex.tv.Items.AddChild(tgfLex.tv.Items[(StrToInt(Piece(RecStr, '^', 9))-1)], Desc)) as TLexTreeNode;
 
     Node.ResultLine := RecStr;
     Node.VUID := Piece(RecStr, '^', 1);
-    Node.Text := Piece(RecStr, '^', 2);
-    Node.CodeDescription := Node.Text;
+    Node.Text := Desc;
+    Node.CodeDescription := Piece(RecStr, '^', 2);
+    Node.CodeFullDescription := Desc;
     Node.CodeIEN := Piece(RecStr, '^', 4);
     Node.CodeSys := Piece(RecStr, '^', 5);
     Node.Code := Piece(RecStr, '^', 6);
@@ -486,6 +490,7 @@ const
                     #32#32#32#32#42 + '   Refine your search by adding more words' + CRLF + #32#32#32#32#42 + '   Try different keywords';
   MaxRec = 5000;
 var
+  aDest:TStrings;
   ProblemList: TStringList;
   v, Max, subset: string;
   Match: TLexTreeNode;
@@ -531,10 +536,16 @@ begin  {processSearch body}
 
     if (v <> '') then
     begin
-      if Extend then
-        ProblemLexiconSearch(ProblemList, v, DateOfInterest, True)
-      else
-        ProblemLexiconSearch(ProblemList, v, DateOfInterest);
+      aDest := TSTringList.Create;
+      try
+        if Extend then
+          ProblemLexiconSearch(aDest,v, DateOfInterest, True)
+        else
+          ProblemLexiconSearch(aDest, v, DateOfInterest);
+        ProblemList.Assign(aDest);
+      finally
+        aDest.Free;
+      end;
     end;
     if ProblemList.count > 0 then
     begin
@@ -542,6 +553,8 @@ begin  {processSearch body}
       ProblemList.delete(pred(ProblemList.count)); {shed max# found}
       SetColumnTreeModel(ProblemList);
       SetClientWidth(tgfLex);
+      if ProblemList.Count < 1 then
+        Max := 'Code search failed';
       UpdateStatus(Max + subset + '.');
 
       EnableExtend;

@@ -5,38 +5,27 @@ inherited frmImmunizations: TfrmImmunizations
   OnPaint = FormPaint
   PixelsPerInch = 96
   TextHeight = 13
-  object lblReaction: TLabel [0]
-    Left = 490
-    Top = 274
-    Width = 43
-    Height = 13
-    Caption = 'Reaction'
-  end
-  object lblSeries: TLabel [1]
-    Left = 490
-    Top = 236
-    Width = 29
-    Height = 13
-    Caption = 'Series'
-  end
   inherited lblSection: TLabel
     Width = 100
     Caption = 'Immunization Section'
+    Visible = False
     ExplicitWidth = 100
   end
-  object lblContra: TLabel [6]
-    Left = 509
-    Top = 312
-    Width = 74
-    Height = 26
-    Caption = 'Repeat Contraindicated'
-    WordWrap = True
+  inherited lblList: TLabel
+    Visible = False
+  end
+  inherited lblComment: TLabel
+    Visible = False
+  end
+  inherited bvlMain: TBevel
+    Left = -3
+    ExplicitLeft = -3
   end
   inherited btnOK: TBitBtn
-    TabOrder = 8
+    TabOrder = 5
   end
   inherited btnCancel: TBitBtn
-    TabOrder = 9
+    TabOrder = 6
   end
   inherited pnlGrid: TPanel
     TabOrder = 1
@@ -47,12 +36,9 @@ inherited frmImmunizations: TfrmImmunizations
           Width = 80
         end
         item
-          Caption = 'Reaction'
+          Caption = 'Refused/Contra'
           Tag = 1
           Width = 120
-        end
-        item
-          Caption = 'Contra'
         end
         item
           Caption = 'Selected Immunizations'
@@ -64,74 +50,16 @@ inherited frmImmunizations: TfrmImmunizations
   end
   inherited edtComment: TCaptionEdit
     TabOrder = 3
+    Visible = False
   end
-  object cboImmReaction: TORComboBox [11]
-    Tag = 20
-    Left = 490
-    Top = 288
-    Width = 121
-    Height = 21
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Reaction'
-    Color = clWindow
-    DropDownCount = 8
-    Enabled = False
-    ItemHeight = 13
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = False
-    LookupPiece = 0
-    MaxLength = 0
-    Pieces = '2'
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 5
-    Text = ''
-    OnChange = cboImmReactionChange
-    CharsNeedMatch = 1
-  end
-  object cboImmSeries: TORComboBox [12]
-    Tag = 10
-    Left = 490
-    Top = 250
-    Width = 121
-    Height = 21
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Series'
-    Color = clWindow
-    DropDownCount = 8
-    Enabled = False
-    ItemHeight = 13
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = False
-    LookupPiece = 0
-    MaxLength = 0
-    Pieces = '2'
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 4
-    Text = ''
-    OnChange = cboImmSeriesChange
-    CharsNeedMatch = 1
-  end
-  object ckbContra: TCheckBox [13]
-    Left = 490
-    Top = 319
-    Width = 13
-    Height = 13
-    Enabled = False
-    TabOrder = 6
-    OnClick = ckbContraClick
-    OnEnter = ckbContraEnter
-    OnExit = ckbContraExit
-  end
-  inherited btnRemove: TButton
-    TabOrder = 7
+  object btnAdd: TButton [8]
+    Left = 487
+    Top = 256
+    Width = 129
+    Height = 25
+    Caption = 'Add/Edit/Delete Record'
+    TabOrder = 8
+    OnClick = btnAddClick
   end
   inherited btnSelectAll: TButton
     TabOrder = 2
@@ -141,72 +69,92 @@ inherited frmImmunizations: TfrmImmunizations
     TabOrder = 0
     inherited lbxSection: TORListBox
       Tag = 40
+      Visible = False
     end
     inherited pnlLeft: TPanel
       inherited lbSection: TORListBox
         Tag = 40
         TabOrder = 0
+        Visible = False
         Caption = 'Immunization Section'
       end
       inherited btnOther: TButton
         Tag = 20
         Caption = 'Other Immunization...'
         TabOrder = 1
+        Visible = False
       end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
       (
-        'Component = cboImmReaction'
-        'Label = lblReaction'
-        'Status = stsOK')
-      (
-        'Component = cboImmSeries'
-        'Label = lblSeries'
-        'Status = stsOK')
-      (
-        'Component = ckbContra'
-        'Label = lblContra'
-        'Status = stsOK')
-      (
         'Component = edtComment'
         'Label = lblComment'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsOK')
       (
         'Component = btnRemove'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnSelectAll'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlMain'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lbxSection'
         'Label = lblList'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsOK')
       (
         'Component = pnlLeft'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lbSection'
         'Label = lblSection'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsOK')
       (
         'Component = btnOther'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlGrid'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnOK'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnCancel'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = frmImmunizations'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
+        'Status = stsDefault')
+      (
+        'Component = btnAdd'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault'))
   end
 end

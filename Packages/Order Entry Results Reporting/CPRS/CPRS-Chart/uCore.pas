@@ -6,8 +6,18 @@ unit uCore;
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses, uCombatVet,
-  system.json, System.Generics.Collections;
+uses
+  SysUtils,
+  Windows,
+  Classes,
+  Forms,
+  ORFn,
+  rCore,
+  uConst,
+  ORClasses,
+  uCombatVet,
+  UJSONParameters,
+  system.json;
 
 type
   TUser = class(TObject)
@@ -158,7 +168,7 @@ type
   private
     FChanged:       Boolean;                     // one or more visit fields have changed
     FDateTime:      TFMDateTime;                 // date/time of encounter (appt, admission)
-    FInpatient:     Boolean;                     // true if this is an inpatient encounter
+//    FInpatient:     Boolean;                     // true if this is an inpatient encounter
     FLocation:      Integer;                     // IEN in Hospital Location file
     FLocationName:  string;                      // Name in Hospital Location file
     FLocationText:  string;                      // Name + Date/Time or Name + RoomBed
@@ -173,6 +183,7 @@ type
     function GetVisitCategory: Char;
     function GetVisitStr: string;
     procedure SetDateTime(Value: TFMDateTime);
+    function GetInpatient: Boolean;
     procedure SetInpatient(Value: Boolean);
     procedure SetLocation(Value: Integer);
     procedure SetProvider(Value: Int64);
@@ -190,7 +201,7 @@ type
     function GetICDVersion: String;
     function NeedVisit: Boolean;
     property DateTime:        TFMDateTime read FDateTime  write SetDateTime;
-    property Inpatient:       Boolean     read FInpatient write SetInpatient;
+    property Inpatient:       Boolean     read GetInpatient write SetInpatient;
     property Location:        Integer     read FLocation  write SetLocation;
     property LocationName:    string      read GetLocationName write FLocationName;
     property LocationText:    string      read GetLocationText write FLocationText;
@@ -413,19 +424,6 @@ type
     HDR      : String;         //HDR is source of data if = 1
   end;
 
-  TSystemParameters = class(TObject)
-  private
-    fdataValues: TJsonValue;
-  public
-    function getJsonValueString(const name: string): String;
-    function getJsonValueStrings(const name: string): TStringList;
-    function getJsonValue(const name: string): TJsonValue;
-    property dataValues: TJsonValue read fdataValues write fdataValues;
-    Property JsonValue[const aName: String]: TJsonValue read getJsonValue;
-    Property StringValues[const aName: String]: TStringList read getJsonValueStrings;
-    Property StringValue[const aName: String]: String read getJsonValueString;
-  end;
-
 var
   User: TUser;
   Patient: TPatient;
@@ -452,7 +450,9 @@ var
   SavedEncounterDateTime: TFMDateTime;
   SavedEncounterVisitCat: Char;
   SavedEncounterReason: string; //used to store why it will be reverted to the saved value
-  systemParameters: TSystemParameters;
+  SystemParameters: TJSONParameters;
+  uAllergyCacheCreated: Boolean = False;
+  uAllergiesChanged: Boolean = false;
 
 procedure NotifyOtherApps(const AppEvent, AppData: string);
 procedure FlushNotifierBuffer;
@@ -461,6 +461,9 @@ procedure GotoWebPage(const URL: WideString);
 function subtractMinutesFromDateTime(Time1 : TDateTime;Minutes : extended) : TDateTime;
 function AllowAccessToSensitivePatient(NewDFN: string; var AccessStatus: integer): boolean;
 
+const
+  ICD_9_CM = 'ICD^ICD-9-CM';
+  ICD_10_CM = '10D^ICD-10-CM';
 
 implementation
 
@@ -1006,7 +1009,7 @@ procedure TEncounter.Clear;
 begin
   FChanged      := False;
   FDateTime     := 0;
-  FInpatient    := False;
+//  FInpatient    := False;
   FLocationName := '';
   FLocationText := '';
   FProvider     := 0;
@@ -1062,10 +1065,12 @@ begin
    if ICD10ImplDate <> 0 then
      begin
         if (ICD10ImplDate > cd) then
-          Result := 'ICD^ICD-9-CM'
+          Result := ICD_9_CM
         else
-          Result := '10D^ICD-10-CM';
-     end;
+          Result := ICD_10_CM;
+     end
+     else
+      Result := '';
 end;
 
 function TEncounter.NeedVisit: Boolean;
@@ -1085,12 +1090,18 @@ begin
   end;
 end;
 
+function TEncounter.GetInpatient: Boolean;
+{ sets the inpatient flag for the encounter - causes the visit to be reset }
+begin
+  Result := (FVisitCategory = 'H');
+end;
+
 procedure TEncounter.SetInpatient(Value: Boolean);
 { sets the inpatient flag for the encounter - causes the visit to be reset }
 begin
-  if Value <> FInpatient then
+  if Value <> GetInpatient then
   begin
-    FInpatient := Value;
+//    FInpatient := Value;
     FChanged := True;
   end;
 end;
@@ -1186,7 +1197,7 @@ function TChangeItem.CSValue(): boolean;
 var
   ret: string;
 begin
-  ret := sCallV('ORDEA CSVALUE', [FID]);
+  CallVistA('ORDEA CSVALUE', [FID], ret);
   if ret = '1' then Result :=  True
   else Result := False;
 end;
@@ -1839,8 +1850,10 @@ begin
             Add(ALocations.Strings[i]);
         FNoDataReason := '';
       end
+    else if ALocations.Count > 0 then
+      FNoDataReason := Piece(ALocations[0], U, 2)
     else
-      FNoDataReason := Piece(ALocations[0], U, 2);
+      FNoDataReason := '';
     FCount := FSiteList.Count;
   finally
     ALocations.Free;
@@ -1916,76 +1929,6 @@ begin
   begin
     if AnsiCompareText(FOrderGrp[i],oldGrpName)= 0 then
       FOrderGrp[i] := newGrpName;
-  end;
-end;
-
-{ TSystemParameters }
-
-function TSystemParameters.getJsonValue(const name: string): TJsonValue;
-var
- jo: TJSONObject;
- JSV: TJsonValue;
-begin
- Result := nil;
- jo := dataValues as TJSONObject;
- if jo.TryGetValue(name, JSV) then
- begin
-    Result := JSV;
- end;
-
-end;
-
-function TSystemParameters.getJsonValueString(const name: string): String;
-var
-  aTmp: TStringlist;
-begin
-  Result := '';
-  aTmp := TStringlist.create;
-  try
-    aTmp := getJsonValueStrings(name);
-    if aTmp.count = 1 then
-      Result := aTmp[0];
-  finally
-    aTmp.free;
-  end;
-end;
-
-function TSystemParameters.getJsonValueStrings(const name: string): TStringList;
-var
-  i: integer;
-  arrayjson: TJSONArray;
-  jo: TJSONObject;
-  JSV, value: TJsonValue;
-  JP: TJSONPair;
-  S: String;
-begin
-  Result := TStringList.Create;
-
-  result.Clear;
-  jo := dataValues as TJSONObject;
-  if jo.TryGetValue(name, JSV) then
-  begin
-    if (JSV is TJSONArray) then
-    begin
-      arrayjson := JSV as TJSONArray;
-      for value in arrayjson do
-      begin
-        s := '';
-        for I := 0 to (value as TJSONObject).Count - 1 do
-        begin
-        JP := (value as TJSONObject).Pairs[i];
-        if s <> '' then
-          s := s + '^';
-        S := s + JP.JsonString.value + '=' + JP.JsonValue.value;
-        end;
-        result.Add(S);
-      end;
-    end
-    else
-    begin
-      JSV.TryGetValue(S);
-      result.Add(S);
-    end;
   end;
 end;
 

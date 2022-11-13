@@ -8,10 +8,6 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, fBase508Form,
   System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, Vcl.StdCtrls,
   Vcl.Buttons, Vcl.ExtCtrls,
-{$IFDEF PDMPTEST}
-  uCore.Messages,
-{$ELSE}
-{$ENDIF}
   oPDMPData, uPDMP;
 
 type
@@ -21,18 +17,23 @@ type
     acPDMPRequest: TAction;
     acCancel: TAction;
     pnlPdmp: TPanel;
-    bbCancel: TBitBtn;
-    bbResults: TBitBtn;
-    bbStart: TBitBtn;
+    bbCancel: TButton;
+    bbResults: TButton;
+    bbStart: TButton;
     procedure acCancelExecute(Sender: TObject);
     procedure acPDMPRequestExecute(Sender: TObject);
     procedure acResultsExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     fCachedData: Boolean;
     fUseDefaultBrowser: Boolean;
+    fShowNow: Boolean;
+    fAlignView: TAlign;
     fStatus: Integer;
+    fNoteIEN: String;
+    fRequester: Pointer;
     fPDMPData: TPDMPDataObject;
 
     procedure UMPdmpAbort(var Message: TMessage); message UM_PDMP_Abort;
@@ -45,18 +46,25 @@ type
     procedure doDone;
 
     procedure setStatus(aStatus: Integer);
-    procedure updateBtnWidth(aBtn: TBitBtn; aCaption: String = '');
+    procedure updateBtnWidth(aBtn: TButton; aCaption: String = '');
     procedure notifyManager(var Message: TMessage);
     procedure updateChangeList;
+
+    function CanCosign: Boolean;
+
   public
     { Public declarations }
+    property AlignView: TAlign read fAlignView write fAlignView;
+    property ShowNow: Boolean read fShowNow write fShowNow;
     property CachedData: Boolean read fCachedData write fCachedData;
     property Status: Integer read fStatus write setStatus;
-    property PDMPData: TPDMPDataObject read fPDMPData write fPDMPData;
+    property PDMPData: TPDMPDataObject read fPDMPData;
     property UseDefaultBrowser: Boolean read fUseDefaultBrowser
       write fUseDefaultBrowser;
+    property  PDMPNoteIEN: String read fNoteIEN write fNoteIEN;
+    property Requester: pointer read fRequester write fRequester;
 
-    procedure doStart;
+    procedure doStart(aRequester:Pointer = nil);
     procedure doCancel(bKill: Boolean = True);
     procedure updateFont;
     procedure doCache(aPatient: String; aResult: TStrings = nil);
@@ -71,13 +79,8 @@ implementation
 {$R *.dfm}
 
 uses
-  fEncnt, ORFn, fPDMPView,
-{$IFDEF PDMPTEST}
-  uCore.SystemParameters, uCore.User, uCore.Encounter, rCore.DateTimeUtils,
-  uCore.Patient,
-{$ELSE}
-  uCore, fFrame, rCore,
-{$ENDIF}
+  fEncnt, ORFn, fPDMPView,    fReminderDialog,
+  uCore, fFrame, rCore, uSizing,
   rPDMP, fPDMPUser, fPDMPCosigner;
 
 const
@@ -115,7 +118,7 @@ end;
 procedure TfrmPDMP.UMPdmpReady(var Message: TMessage);
 begin
   Status := UM_PDMP_Ready;
-  notifyManager(Message);
+//  notifyManager(Message); - commented as this is status of DATA not UI
 end;
 
 procedure TfrmPDMP.UMPdmpDone(var Message: TMessage);
@@ -158,7 +161,7 @@ begin
             MB_YESNO + MB_ICONWARNING) <> ID_Yes then
             exit;
       end;
-      doStart; // check requirements, create pdmpData object, Load data
+      doStart(Sender); // check requirements, create pdmpData object, Load data
     finally
       sl.Free;
       acPDMPRequest.Enabled := True;
@@ -172,6 +175,7 @@ end;
 procedure TfrmPDMP.acResultsExecute(Sender: TObject);
 begin
   acResults.Enabled := False;
+  fRequester := Sender;
   doShowResults;
   acResults.Enabled := True;
 end;
@@ -198,13 +202,13 @@ begin
   end;
 end;
 
-procedure TfrmPDMP.doStart;
+procedure TfrmPDMP.doStart(aRequester:Pointer = nil);
 var
   pdmpCosignerRequired: Boolean;
   tempUser, CosignerIEN, CosignerName: string;
   DelegationAllowed, hasDea: Boolean;
 begin
-  if SystemParameters.StringValue['PDMP.validNoteTitle'] <> '1' then
+  if SystemParameters.AsType<string>('PDMP.validNoteTitle') <> '1' then
   begin
     InfoBox('No valid PDMP Note Title found', PDMP_MSG_TITLE,
       MB_OK + MB_ICONERROR);
@@ -212,25 +216,24 @@ begin
     exit;
   end;
 
-  if not assigned(PDMPData) then
-    PDMPData := TPDMPDataObject.Create;
+  fRequester := aRequester;            // Tracking origin of the request
+  fShowNow := not assigned(Requester); // Auto-opens non modal results view
+
+  if not assigned(fPDMPData) then
+    fPDMPData := TPDMPDataObject.Create;
   PDMPData.pdmpClearData;
 
   if PDMPData <> nil then
   begin
     // Need to init Data object and verify if it is authorized to do the request
-    hasDea := SystemParameters.StringValue['PDMP.isAuthorizedUser'] = '1';
-    pdmpCosignerRequired := SystemParameters.StringValue
-      [PDMP_PARAM_RequiredCosigner] = '1';
-    DelegationAllowed := SystemParameters.StringValue
-      ['PDMP.delegateFeatureEnabled'] = '1';
+    hasDea := SystemParameters.AsType<string>('PDMP.isAuthorizedUser') = '1';
+    pdmpCosignerRequired := SystemParameters.AsType<string>(PDMP_PARAM_RequiredCosigner) = '1';
+    DelegationAllowed := SystemParameters.AsType<string>('PDMP.delegateFeatureEnabled') = '1';
 
-{$IFDEF PDMPTEST}
-{$ELSE}
     PDMPData.Init(IntToStr(User.DUZ), IntToStr(Encounter.Provider) + U +
       Encounter.ProviderName, IntToStr(Encounter.Location), Patient.DFN,
       Encounter.VisitStr, hasDea, self.Handle);
-{$ENDIF}
+
     Status := UM_PDMP_Init;
 
     if hasDea then
@@ -299,47 +302,62 @@ procedure TfrmPDMP.FormCreate(Sender: TObject);
 begin
   inherited;
   updateFont;
-  if not assigned(PDMPData) then
-    PDMPData := TPDMPDataObject.Create;
+  if not assigned(fPDMPData) then
+    fPDMPData := TPDMPDataObject.Create;
+  AlignView := alNone;
+  ShowNow := False;
+end;
+
+procedure TfrmPDMP.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(fPDMPData);
+  inherited;
+end;
+
+function TfrmPDMP.CanCosign: Boolean;
+var
+  bCosignerRequired: Boolean;
+  CosignerIEN, CosignerName: String;
+begin
+  // check if cosigner is needed and available
+  bCosignerRequired := SystemParameters.AsType<string>
+    (PDMP_PARAM_RequiredCosigner) = '1';
+
+  if bCosignerRequired and (PDMPData.AuthorizedUserIEN = '') then
+  begin
+    CosignerIEN := pdmpSelectCosigner('', 0, FMNow);
+    CosignerName := piece(CosignerIEN, U, 2); // IEN only
+    CosignerIEN := piece(CosignerIEN, U, 1); // IEN only
+
+    if CosignerIEN <> '-2' then
+    begin
+      PDMPData.AuthorizedUserIEN := CosignerIEN; // IntToStr(User.DUZ);
+      PDMPData.AuthorizedUserName := CosignerName; // User.Name;
+      Result := True;
+    end
+    else
+    begin
+      InfoBox('PDMP: Required cosigner is not selected', PDMP_MSG_TITLE,
+        MB_OK + MB_ICONWARNING);
+      Result := False;
+    end;
+  end
+  else
+    Result := True;
 end;
 
 procedure TfrmPDMP.doShowResults;
 var
-  bCosignerRequired: Boolean;
-  CosignerIEN, CosignerName: String;
   iRC: Integer;
   sRC: string;
-
-  function CanReview: Boolean;
-  var
-    s: String;
-    b: Boolean;
-  begin
-    s := frmFrame.EditInProgress;
-    Result := False;
-    if s <> '' then
-    begin
-      if InfoBox('You are currently editing:' + CRLF + CRLF + s + CRLF + CRLF +
-        'Do you wish to save this note and review PDMP report?', 'PDMP Warning',
-        MB_YESNO or MB_ICONQUESTION) <> IDYES then
-        exit
-      else
-      begin
-        Result := frmFrame.SaveEditInProgress(b);
-        if not Result and b then
-          InfoBox('Failed to save currently edited note', 'PDMP', MB_OK);
-      end;
-    end
-    else
-      Result := True;
-  end;
+  bModal: Boolean;
 
 begin
   iRC := 0;
   UseDefaultBrowser := PDMP_UseDefaultBrowser;
+
   if PDMPData <> nil then
   begin
-    // check if there was error
     if PDMPData.pdmpStatus = UM_PDMP_Error then
     begin
       InfoBox('PDMP Error:' + #13#10#13#10 + PDMPData.LongMessage,
@@ -347,35 +365,30 @@ begin
     end
     else
     begin
-      if not CanReview then
-        exit;
+      if assigned(fRequester) then // Request came from ribbon bar
+      begin                        // check if edited note is saved
+        if CanReview <> IDYES then
+          exit;
+      end;
+
       try
-        // check if cosigner is needed and available
-        bCosignerRequired := SystemParameters.StringValue
-          [PDMP_PARAM_RequiredCosigner] = '1';
-        if bCosignerRequired and (PDMPData.AuthorizedUserIEN = '') then
-        begin
-          CosignerIEN := pdmpSelectCosigner('', 0, FMNow);
-          CosignerName := piece(CosignerIEN, U, 2); // IEN only
-          CosignerIEN := piece(CosignerIEN, U, 1); // IEN only
+        if CanCosign then
+          try
+            bModal := (fRequester <> nil); // Requestor is not nil when called from ribbon
+            if bModal then
+              PDMPData.NoteIEN := ''
+            else
+              PDMPData.NoteIEN := fNoteIEN; // note ien is not used in non modal cases
 
-          if CosignerIEN <> '-2' then
-          begin
-            PDMPData.AuthorizedUserIEN := CosignerIEN; // IntToStr(User.DUZ);
-            PDMPData.AuthorizedUserName := CosignerName; // User.Name;
-          end
-          else
-          begin
-            InfoBox('PDMP: Required cosigner is not selected', PDMP_MSG_TITLE,
-              MB_OK + MB_ICONWARNING);
-            exit;
+            sRC := showPDMP(PDMPData, bModal, AlignView, UseDefaultBrowser);
+            iRC := StrToIntDef(piece(sRC, '^', 1), 0);
+            if (0 < iRC) and assigned(Application.MainForm) then
+              PostMessage(Application.MainForm.Handle, UM_PDMP_NOTE_ID, iRC, 0);
+          except
+            on E: Exception do
+              InfoBox(E.Message, PDMP_MSG_TITLE, MB_OK + MB_ICONERROR);
           end;
-        end;
 
-        sRC := showPDMP(PDMPData, UseDefaultBrowser);
-        iRC := StrToIntDef(piece(sRC, '^', 1), 0);
-        if (0 < iRC) and assigned(Application.MainForm) then
-          PostMessage(Application.MainForm.Handle, UM_PDMP_NOTE_ID, iRC, 0);
       except
         on E: Exception do
           InfoBox(E.Message, PDMP_MSG_TITLE, MB_OK + MB_ICONERROR);
@@ -393,10 +406,7 @@ begin
     if assigned(PDMPData) then
       acPDMPRequest.Hint := acPDMPRequest.Hint + #13#10 +
         format(fmtLastReview, [pdmpLastReviewDate(PDMPData.PatIEN)]);
-
     doDone;
-    if assigned(Application.MainForm) then
-      SendMessage(Application.MainForm.Handle, UM_PDMP_Done, 0, 0);
   end;
 end;
 
@@ -408,9 +418,15 @@ begin
     fPDMPData.pdmpTimer.Enabled := False; // stop checking for results
 
   Status := UM_PDMP_Done;
+
+  if assigned(Application.MainForm) then
+    SendMessage(Application.MainForm.Handle, UM_PDMP_Done, 0, 0);
+
+  fRequester := nil; // reset to default
+  fShowNow := False;
 end;
 
-procedure TfrmPDMP.updateBtnWidth(aBtn: TBitBtn; aCaption: String = '');
+procedure TfrmPDMP.updateBtnWidth(aBtn: TButton; aCaption: String = '');
 var
   s: String;
 begin
@@ -420,13 +436,7 @@ begin
       s := aCaption;
       if s = '' then
         s := aBtn.Caption;
-      if Application.MainForm.font.Size < 10 then
-        s := s + 'W'
-      else
-        s := s + 'ww';
-
-      Width := TextWidthByFont(self.Handle, s) + CAPTION_GAP;
-      Application.ProcessMessages;
+      Width := getMainFormTextWidth(s) + CAPTION_GAP * 3;
     end;
 end;
 
@@ -434,7 +444,7 @@ procedure TfrmPDMP.updateFont;
 begin
   if assigned(Application.MainForm) then
     self.font.Size := Application.MainForm.font.Size;
-
+  Application.ProcessMessages;
   updateBtnWidth(bbStart, 'Query');
   updateBtnWidth(bbCancel, 'Cancel');
   updateBtnWidth(bbResults, 'Results');
@@ -442,19 +452,25 @@ end;
 
 procedure TfrmPDMP.updateChangeList;
 begin
+  // Notes are not used for registering the fact of disclosure
   if not assigned(fPDMPData) then
     exit;
-{$IFDEF PDMPTEST}
-{$ELSE}
+
   // if PDMP_Use_NOTE_FOR_ACCOUNTING_OF_DISCLOSURE  then
   // begin
   // if (StrToIntDef(fPDMPData.NoteIEN, -1) > 0) then
   // Changes.Add(10, fPDMPData.NoteIEN, fPDMPData.NoteHeader, '', 1);
   // end;
-{$ENDIF}
 end;
 
 procedure TfrmPDMP.setStatus(aStatus: Integer);
+
+  function NeedToShowNow: Boolean;
+  begin
+    Result := fShowNow or
+      (SystemParameters.AsType<string>('PDMP.backgroundRetrieval') <> '1');
+  end;
+
 begin
   fStatus := aStatus;
 
@@ -473,7 +489,6 @@ begin
   updateBtnWidth(bbStart, 'Query');
   updateBtnWidth(bbCancel, 'Cancel');
   updateBtnWidth(bbResults, 'Results');
-
   Application.ProcessMessages;
 
   if (Status = UM_PDMP_Ready) then
@@ -482,7 +497,7 @@ begin
       Screen.Cursor := crDefault;
     end;
 
-  if (SystemParameters.StringValue['PDMP.backgroundRetrieval'] <> '1') then
+  if NeedToShowNow then
   begin
     if bbResults.Visible then
     begin
@@ -495,6 +510,12 @@ begin
         Screen.Cursor := crHourGlass;
     end;
   end;
+
+  case Status of
+    UM_PDMP_Done: Screen.Cursor := crDefault;
+    UM_PDMP_Ready: PostMessage(Application.MainForm.Handle, UM_PDMP_READY, 0, 0);
+  end;
+
 end;
 
 procedure TfrmPDMP.doCache(aPatient: String; aResult: TStrings = nil);
@@ -513,7 +534,6 @@ function TfrmPDMP.getLastReviewDate(aPatientID: String): String;
 begin
   Result := '';
   acPDMPRequest.Hint := cRequestHintDefault;
-  // commented out until we have RPC to get last request date
   if aPatientID <> '' then
   begin
     Result := pdmpLastReviewDate(aPatientID);

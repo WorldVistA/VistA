@@ -307,6 +307,7 @@ inherited frmVit: TfrmVit
       Width = 59
       Height = 21
       DropDownCount = 2
+      ItemHeight = 13
       TabOrder = 2
       OnChange = cboTempChange
       OnEnter = SetVitPointer
@@ -371,6 +372,7 @@ inherited frmVit: TfrmVit
       Top = 142
       Width = 58
       Height = 21
+      ItemHeight = 13
       TabOrder = 7
       OnChange = cboHeightChange
       OnEnter = SetVitPointer
@@ -399,6 +401,7 @@ inherited frmVit: TfrmVit
       Top = 166
       Width = 58
       Height = 21
+      ItemHeight = 13
       TabOrder = 9
       OnChange = cboWeightChange
       OnEnter = SetVitPointer

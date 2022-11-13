@@ -16,7 +16,7 @@ type
   TDrugHasMaxData = record
     CaptureMaxData: boolean;
     MaxSupply: integer;
-    MaxQuantity: integer;
+    MaxQuantity: Double;
     MaxRefills: integer;
   end;
 
@@ -39,12 +39,15 @@ procedure LoadSchedules(Dest: TStrings; IsInptDlg: boolean = False);
 procedure LoadDOWSchedules(Dest: TStrings);
 procedure LoadAllIVRoutes(Dest: TStrings);
 procedure LoadDosageFormIVRoutes(Dest: TStrings; OrderIDs: TStringList);
+procedure LoadInfusionIndications(Dest: TStrings; OrderIDs: TStringList);
 function GetDefaultAddFreq(OID: integer): string;
 function QtyToDays(Quantity: Double;   const UnitsPerDose, Schedule, Duration, Drug: string): Integer;
-function DaysToQty(DaysSupply: Integer; const UnitsPerDose, Schedule, Duration, Drug: string): Integer;
+function DaysToQty(DaysSupply: Integer; const UnitsPerDose, Schedule, Duration, Drug: string): Double;
 function DurToQty(DaysSupply: Integer; const UnitStr, SchedStr: string): Integer;
 function DefaultDays(const ADrug, UnitStr, SchedStr: string; OI : Integer): Integer;
-function CalcMaxRefills(const Drug: string; Days, OrdItem: Integer; Discharge: Boolean): Integer;
+function CalcMaxRefills(Drug: string; Days, OrdItem: Integer;
+                  Discharge: boolean; Titration: boolean): integer;
+procedure ClearOutPtMedsRPCCache;
 function ScheduleRequired(OrdItem: Integer; const ARoute, ADrug: string): Boolean;
 function ODForMedsIn(aReturn: TStrings): integer;
 function ODForMedsOut(aReturn: TStrings): integer;
@@ -54,19 +57,22 @@ function QOHasRouteDefined(AQOID: integer): boolean;
 procedure CheckExistingPI(AOrderId: string; var APtI: string);
 function PassDrugTest(OI: integer; OrderType: string; InptOrder: boolean; CheckForClozapineOnly: boolean = false): boolean;
 function AdminTimeHelpText(): string;
-//function ValidateDaySupplyandQuantity(DaySupply, Quantity: integer): boolean;
-//function ValidateMaxQuantity(Quantity: integer): boolean;
-function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string; OI, tempSupply, tempRefills: integer; tempQuantity: Double): boolean;
-function ValidateDaySupplyandQuantityErrorMsg(DaySupply, quantity: integer): String;
+function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string;
+    OI, tempSupply, tempRefills: integer; tempQuantity: string; Titration: boolean): boolean;
+procedure UpdateSupplyQtyRefillErrorMsg(var ErrorMessage: string;
+  DaySupply, Refills: integer; Quantity, Drug, Units, Schedule,
+  Duration: string; Titration: boolean; OrderableItem: integer;
+  IncludeRefillCheck: boolean);
 procedure ClearMaxData;
 function DifferentOrderLocations(ID: string; Loc: integer): boolean;
 function IsClozapineOrder: boolean;
-//function ValidateQuantityErrorMsg(Quantity: integer): String;
 function GetMaxDS(OrderableIEN: string; DrugIEN: string): integer;
 function GetQOOrderableItem(DialogIEN: string): integer;
 
 
 implementation
+
+uses uOrders, rODBase;
  var
   uAdminTimeHelpText: TAdminTimeHelpText;
   uDrugHasMaxData: TDrugHasMaxData;
@@ -119,13 +125,13 @@ begin
     if Append then
       FastAddStrings(aLst, Dest)
     else
-      begin
+  begin
         for i := Pred(aLst.Count) downto 0 do
           Dest.Insert(0, aLst[i]);
-      end;
+  end;
   finally
     FreeAndNil(aLst);
-  end;
+end;
 end;
 
 function IndexOfOrderable(ListIEN: integer; From: string): integer;
@@ -170,7 +176,7 @@ begin
       Dest.Add(aLst[i]);
   finally
     FreeAndNil(aLst);
-  end;
+end;
 end;
 
 function IndexOfQuickOrder(AListIEN: integer; From: string): integer;
@@ -248,6 +254,11 @@ begin
   CallVistA('ORWDPS33 IVDOSFRM', [OrderIDs, False], Dest);
 end;
 
+procedure LoadInfusionIndications(Dest: TStrings; OrderIDs: TStringList);
+begin
+  CallVistA('ORWDPS33 IVIND', [OrderIDs], Dest);
+end;
+
 function GetDefaultAddFreq(OID: integer): string;
 begin
   CallVistA('ORWDPS33 GETADDFR', [OID], Result);
@@ -264,11 +275,42 @@ begin
   CallVistA('ORWDPS2 QTY2DAY', [Quantity, UnitsPerDose, Schedule, Duration, Patient.DFN, Drug], Result, 0);
 end;
 
-function DaysToQty(DaysSupply: integer; const UnitsPerDose, Schedule, Duration, Drug: string): integer;
+type
+  TDaysToQtyData = record
+    LastPatientDFN: string;
+    LastDaysSupply: integer;
+    LastUnitsPerDose: string;
+    LastSchedule: string;
+    LastDuration: string;
+    LastDrug: string;
+    LastResult: Double;
+  end;
+
+var
+  uLastDaysToQtyData: TDaysToQtyData;
+
+function DaysToQty(DaysSupply: integer; const UnitsPerDose, Schedule, Duration, Drug: string): Double;
 begin
-  CallVistA('ORWDPS2 DAY2QTY', [DaysSupply, UnitsPerDose, Schedule, Duration, Patient.DFN, Drug], Result, 0);
-  if uDrugHasMaxData.CaptureMaxData = True then
-    uDrugHasMaxData.MaxQuantity := Result;
+  with uLastDaysToQtyData do
+  begin
+    if (Patient.DFN = LastPatientDFN) and (DaysSupply = LastDaysSupply) and
+      (UnitsPerDose = LastUnitsPerDose) and (Schedule = LastSchedule) and
+      (Duration = LastDuration) and (Drug = LastDrug) then
+      Result := LastResult
+    else
+    begin
+      LastPatientDFN := Patient.DFN;
+      LastDaysSupply := DaysSupply;
+      LastUnitsPerDose := UnitsPerDose;
+      LastSchedule := Schedule;
+      LastDuration := Duration;
+      LastDrug := Drug;
+      CallVistA('ORWDPS2 DAY2QTY', [DaysSupply, UnitsPerDose, Schedule, Duration, Patient.DFN, Drug], Result, 0);
+      LastResult := Result;
+    end;
+    if uDrugHasMaxData.CaptureMaxData = True then
+      uDrugHasMaxData.MaxQuantity := Result;
+  end;
 end;
 
 function DurToQty(DaysSupply: integer; const UnitStr, SchedStr: string): integer;
@@ -276,18 +318,87 @@ begin
   CallVistA('ORWDPS2 DAY2QTY', [DaysSupply, UnitStr, SchedStr], Result, 0);
 end;
 
+type
+  TDefaultDaysData = record
+    LastPatientDFN: string;
+    LastDrug: string;
+    LastUnitStr: string;
+    LastSchedStr: string;
+    LastOI: integer;
+    LastResult: integer;
+  end;
+
+var
+  uLastDaysSupplyData: TDefaultDaysData;
+
 function DefaultDays(const ADrug, UnitStr, SchedStr: string; OI: integer): integer;
 begin
-  CallVistA('ORWDPS1 DFLTSPLY', [UnitStr, SchedStr, Patient.DFN, ADrug, OI], Result, 0);
-  if uDrugHasMaxData.CaptureMaxData = True then
-    uDrugHasMaxData.MaxSupply := Result;
+  with uLastDaysSupplyData do
+  begin
+    if (Patient.DFN = LastPatientDFN) and (ADrug = LastDrug) and
+      (UnitStr = LastUnitStr) and (SchedStr = LastSchedStr) and (OI = LastOI) then
+      Result := LastResult
+    else
+    begin
+      LastPatientDFN := Patient.DFN;
+      LastDrug := ADrug;
+      LastUnitStr := UnitStr;
+      LastSchedStr := SchedStr;
+      LastOI := OI;
+      CallVistA('ORWDPS1 DFLTSPLY', [UnitStr, SchedStr, Patient.DFN, ADrug, OI], Result, 0);
+      LastResult := Result;
+    end;
+    if uDrugHasMaxData.CaptureMaxData = True then
+      uDrugHasMaxData.MaxSupply := Result;
+  end;
 end;
 
-function CalcMaxRefills(const Drug: string; Days, OrdItem: integer; Discharge: boolean): integer;
+type
+  TMaxRefillData = record
+    LastPatientDFN: string;
+    LastDrug: string;
+    LastDaysSupply: integer;
+    LastOrderableItem: integer;
+    LastDischarge: boolean;
+    LastTitration: boolean;
+    LastResult: Integer;
+  end;
+
+var
+  uMaxRefillData: TMaxRefillData;
+
+function CalcMaxRefills(Drug: string; Days, OrdItem: integer;
+                  Discharge: boolean; Titration: boolean): integer;
 begin
-  CallVistA('ORWDPS2 MAXREF', [Patient.DFN, Drug, Days, OrdItem, Discharge], Result, 0);
+  Drug := Piece(Drug, U, 1);
+  with uMaxRefillData do
+  begin
+    if (Patient.DFN = LastPatientDFN) and (Drug = LastDrug) and
+      (Days = LastDaysSupply) and (OrdItem = LastOrderableItem) and
+      (Discharge = LastDischarge) and (Titration = LastTitration) then
+      Result := LastResult
+    else
+    begin
+      LastPatientDFN := Patient.DFN;
+      LastDrug := Drug;
+      LastDaysSupply := Days;
+      LastOrderableItem := OrdItem;
+      LastDischarge := Discharge;
+      LastTitration := Titration;
+      CallVistA('ORWDPS2 MAXREF', [Patient.DFN, Drug, Days, OrdItem, Discharge,
+        BOOLCHAR[Titration]], Result, 0);
+      LastResult := Result;
+    end;
+  end;
   if uDrugHasMaxData.CaptureMaxData = True then
     uDrugHasMaxData.MaxRefills := Result;
+end;
+
+procedure ClearOutPtMedsRPCCache;
+begin
+  uLastDaysToQtyData.LastPatientDFN := '';
+  uLastDaysSupplyData.LastPatientDFN := '';
+  uMaxRefillData.LastPatientDFN := '';
 end;
 
 function ScheduleRequired(OrdItem: Integer; const ARoute, ADrug: string): Boolean;
@@ -337,7 +448,7 @@ begin
   if CallVistA('ORWDPS1 HASROUTE', [AQOID], aStr) then
     Result := (aStr = '1')
   else
-    Result := False;
+  Result := False;
 end;
 
 procedure CheckExistingPI(AOrderId: string; var APtI: string);
@@ -349,7 +460,7 @@ function PassDrugTest(OI: integer; OrderType: string; InptOrder: boolean; CheckF
 var
   MessCap: string;
   MessText: string;
-  i: integer;
+i: integer;
   aLst: TStringList;
 begin
   result := false;
@@ -362,16 +473,16 @@ begin
   try
     CallVistA('ORALWORD ALLWORD', [Patient.DFN, OI, OrderType, Encounter.Provider], aLst);
     for i := 0 to aLst.Count - 1 do
-      begin
-        if i = 0 then
-          begin
+    begin
+      if i = 0 then
+        begin
             MessCap := Piece(aLst[i], U, 1);
             if Piece(aLst[i], U, 2) = '1' then
               uDrugHasMaxData.CaptureMaxData := True;
-          end;
+        end;
         if i > 0 then
           MessText := MessText + aLst[i] + CRLF;
-      end;
+    end;
   finally
     FreeAndNil(aLst);
   end;
@@ -409,11 +520,11 @@ end;
 
 function AdminTimeHelpText(): string;
 var
-  i: integer;
+i: integer;
   aLst: TStringList;
 begin
-  if uAdminTimeHelpText.HelpText = '' then
-    begin
+      if uAdminTimeHelpText.HelpText = '' then
+       begin
       aLst := TStringList.Create;
       try
         CallVistA('ORDDPAPI ADMTIME', [], aLst);
@@ -424,103 +535,98 @@ begin
             uAdminTimeHelpText.HelpText := uAdminTimeHelpText.HelpText + CRLF + aLst[i];
       finally
         FreeAndNil(aLst);
-      end;
+       end;
     end;
   Result := uAdminTimeHelpText.HelpText
 end;
 
-function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string; OI, tempSupply, tempRefills: integer; tempQuantity: Double): boolean;
+function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string;
+    OI, tempSupply, tempRefills: integer; tempQuantity: string; Titration: boolean): boolean;
 var
-daySupply, Refills: integer;
-Quantity: Double;
+  ErrorMessage: string;
+
 begin
-  Result := True;
-  if uDrugHasMaxData.CaptureMaxData = false then exit;
-  daySupply := DefaultDays(tempDrug, tempUnit, tempSch, OI);
-  if (tempSupply > daySupply) and (uDrugHasMaxData.MaxSupply > 0) then
-    begin
-      infoBox('For this medication Day Supply cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxSupply), 'Cannot Save Error', MB_OK);
-      Result := false;
-      uDrugHasMaxData.CaptureMaxData := false;
-      Exit;
-    end;
-  Quantity := DaysToQty(daySupply, tempUnit, tempSch, tempDur, tempDrug);
-  if (tempQuantity > Quantity) and (uDrugHasMaxData.MaxQuantity > 0) then
-    begin
-      infoBox('For this medication Quantity cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxQuantity), 'Cannot Save Error', MB_OK);
-      Result := false;
-      uDrugHasMaxData.CaptureMaxData := false;
-      Exit;
-    end;
-  Refills := CalcMaxRefills(tempDrug, daySupply, OI, false);
-  if tempRefills > Refills then
-    begin
-      infoBox('For this medication Quantity cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxRefills), 'Cannot Save Error', MB_OK);
-      Result := false;
-      uDrugHasMaxData.CaptureMaxData := false;
-      Exit;
-    end;
+  ErrorMessage := '';
+  UpdateSupplyQtyRefillErrorMsg(ErrorMessage, tempSupply, tempRefills,
+    tempQuantity, tempDrug, tempUnit, tempSch, tempDur, Titration, OI, False);
+  Result := (ErrorMessage = '');
+  if not Result then
+  begin
+    infoBox(ErrorMessage, 'Cannot Save Error', MB_OK);
+    Result := false;
+    uDrugHasMaxData.CaptureMaxData := false;
+  end;
 end;
 
-function ValidateDaySupplyandQuantity(DaySupply, Quantity: integer): boolean;
+procedure UpdateSupplyQtyRefillErrorMsg(var ErrorMessage: string;
+  DaySupply, Refills: integer; Quantity, Drug, Units, Schedule,
+  Duration: string; Titration: boolean; OrderableItem: integer;
+  IncludeRefillCheck: boolean);
+
 var
-str: string;
-begin
-  Result := True;
-  str := '';
-  if uDrugHasMaxData.CaptureMaxData = false then exit;
-  if (daySupply > uDrugHasMaxData.MaxSupply) and (uDrugHasMaxData.MaxSupply > 0) then
-    begin
-      str := 'For this medication Day Supply cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxSupply);
-      Result := false;
-    end;
-  if (Quantity > uDrugHasMaxData.MaxQuantity) and (uDrugHasMaxData.MaxQuantity > 0) then
-    begin
-      if str <> '' then str := str + CRLF + 'For this medication Day Supply cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxQuantity)
-      else str := 'For this medication Day Supply cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxQuantity);
-      result := false;
-    end;
- if str <> '' then infoBox(str, 'Cannot Save Error', MB_OK);
- //uDrugHasMaxData.CaptureMaxData := false;
-end;
+  CheckClozapine, CheckValues, MaxDaysSupplyError: boolean;
+  maxDS, maxRefills: integer;
+  maxQty: Double;
+  msg: string;
 
-function ValidateMaxQuantity(Quantity: integer): boolean;
-begin
-  Result := True;
-  if uDrugHasMaxData.CaptureMaxData = false then exit;
-  if uDrugHasMaxData.MaxQuantity = 0 then exit;
-  if Quantity > uDrugHasMaxData.MaxQuantity then
-    begin
-      infoBox('For this medication Day Supply cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxQuantity), 'Cannot Save Error', MB_OK);
-      Result := false;
-    end;
-end;
+  procedure SetError(const x: string);
+  begin
+    if Length(ErrorMessage) > 0 then
+      ErrorMessage := ErrorMessage + CRLF;
+    ErrorMessage := ErrorMessage + x;
+  end;
 
-function ValidateDaySupplyandQuantityErrorMsg(DaySupply, quantity: integer): String;
 begin
-  Result := '';
-  if uDrugHasMaxData.CaptureMaxData = false then exit;
-  if (daySupply > uDrugHasMaxData.MaxSupply) and (uDrugHasMaxData.MaxSupply > 0) then
+  Drug := Piece(Drug, U, 1);
+  CheckValues := True;
+  if (DaySupply < 1) then
+  begin
+    SetError(TX_SUPPLY_LIM1);
+    CheckValues := False;
+  end;
+  if not ValidQuantity(Quantity) then
+  begin
+    SetError(TX_QTY_NV);
+    CheckValues := False;
+  end;
+  if CheckValues then
+  begin
+    CheckClozapine := IsClozapineOrder;
+    MaxDaysSupplyError := False;
+    if CheckClozapine then
+      maxDS := DefaultDays(Drug, Units, Schedule, OrderableItem)
+    else
+      maxDS := GetMaxDS(IntToStr(OrderableItem), Drug);
+    if (maxDS > 0) and (DaySupply > maxDS) then
+      MaxDaysSupplyError := True;
+    if CheckClozapine then
     begin
-      Result := 'For this medication Day Supply cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxSupply);
+      CallVistA('ORWDPS33 CLZDS', [Patient.DFN, Drug, DaySupply,
+        OrderableItem], msg);
+      if Piece(msg, U, 1) = '0' then
+      begin
+        SetError(Piece(msg, U, 2));
+        CheckClozapine := False;
+        MaxDaysSupplyError := False;
+      end;
     end;
-  if (Quantity > uDrugHasMaxData.MaxQuantity) and (uDrugHasMaxData.MaxQuantity > 0) then
+    if MaxDaysSupplyError then
+      SetError(TX_SUPPLY_LIM + IntToStr(maxDS));
+    if CheckClozapine then
     begin
-      if Result <> '' then Result := Result + CRLF + 'For this medication Quantity cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxQuantity)
-      else Result := 'For this medication Quantity cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxQuantity);
+      maxQty := DaysToQty(DaySupply, Units, Schedule, Duration, Drug);
+      if (maxQty > 0) and (StrToFloatDef(Quantity, 0) > maxQty) then
+        SetError(TX_QTY_LIM + FloatToStr(maxQty));
     end;
-  //uDrugHasMaxData.CaptureMaxData := false;
-end;
+  end;
 
-function ValidateQuantityErrorMsg(Quantity: integer): String;
-begin
-  Result := '';
-  if uDrugHasMaxData.CaptureMaxData = false then exit;
-  if uDrugHasMaxData.MaxQuantity = 0 then exit;
-  if Quantity > uDrugHasMaxData.MaxQuantity then
-    begin
-      Result := 'For this medication Quantity cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxQuantity);
-    end;
+  if IncludeRefillCheck and (Refills > 0) then
+  begin
+    maxRefills := CalcMaxRefills(Drug, DaySupply, OrderableItem, False,
+      Titration);
+    if Refills > maxRefills then
+      SetError(TX_ERR_REFILL + IntToStr(maxRefills));
+  end;
 end;
 
 procedure ClearMaxData;

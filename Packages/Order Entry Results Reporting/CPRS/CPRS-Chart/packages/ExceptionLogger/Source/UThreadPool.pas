@@ -3,7 +3,8 @@ unit UThreadPool;
 interface
 
 uses
-  Windows, SysUtils, Classes;
+  Windows,
+  Classes;
 
 const
   WT_EXECUTEDEFAULT = DWORD($00000000);
@@ -20,7 +21,6 @@ const
 function QueueUserWorkItem(ThreadFunc: TThreadStartRoutine; Context: Pointer; Flags: DWORD): BOOL; stdcall; external kernel32 name 'QueueUserWorkItem';
 
 type
-
   TThreadPool = class
   private
     fWorkingThreads: Integer;
@@ -40,11 +40,13 @@ type
     ThreadBoss: TThreadPool;
     Parameters: Pointer;
     WorkerEvent: TNotifyEvent;
-    public
-     destructor Destroy; override;
+  public
+    destructor Destroy; override;
   end;
 
 implementation
+uses
+  SysUtils;
 
 function InternalThreadFunction(lpThreadParameter: Pointer): Integer; stdcall;
 begin

@@ -6,10 +6,13 @@
   Herlan Westra, Roy Gaber, Vadim Dubinsky
   Description: Contains TRPCBroker and related components.
   Unit: Wsockc manages WinSock connections and creates/parses messages.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in XWB*1.1*71 (RGG 04/19/2019) XWB*1.1*71
   1. Updated RPC Version to version 71.
   2. Fixed an old error surrounding boundary of 999 character
@@ -242,6 +245,7 @@ type
     procedure CloseSockSystem(hSocket: TSocket; s: string);
     procedure NetError(Action: string; ErrType: Integer);
     constructor Create;
+    destructor Destroy; override;
     property CountWidth: Integer read FCountWidth write FCountWidth;
   end;
 
@@ -546,7 +550,7 @@ function TXWBWinsock.StrPack(n: String; p: Integer): String;
 var
   s, l: Integer;
   t, x, zero: shortstring;
-  y: String;
+  y: string;
 begin
   s := Length(n);
   fillchar(zero, p + 1, '0');
@@ -554,7 +558,7 @@ begin
   Str(s, x);
   t := zero + x;
   l := Length(x) + 1;
-  y := Copy(t, l, p);
+  y := Copy(String(t), l, p);
   y := y + n;
   Result := y;
 end; // function TXWBWinsock.StrPack
@@ -637,12 +641,12 @@ begin
             begin
               if BufPtr[BytesRead - 1] = #4 then
               begin
-                sBuf := ConCat(sBuf, BufPtr);
+                sBuf := String(sBuf) + String(BufPtr);
               end // if BufPtr
               else
               begin
                 BufPtr[BytesRead] := #0;
-                sBuf := ConCat(sBuf, BufPtr);
+                sBuf := String(sBuf) + String(BufPtr);
               end; // else BufPtr
               Inc(BytesTotal, BytesRead);
             end; // if BytesRead > 0
@@ -670,7 +674,7 @@ begin
     end; // try BufSend
     if BadXfer then
     begin
-      NetError(AnsiStrings.StrPas('Repeated Incomplete Reads on the server'),
+      NetError(String('Repeated Incomplete Reads on the server'),
         XWB_BadReads); // p60
       Result := StrNew('');
     end; // if BadXfer
@@ -804,7 +808,7 @@ begin
     NetError('getaddrinfo (Client)', 0);
   pLocalName := pLocalResult.AI_CANONNAME;
   // Don't send an IPv6 address as a host name due to VistA x-ref "AS2" in SIGN-ON LOG
-  if AnsiContainsStr(pLocalName, ':') then
+  if AnsiContainsStr(String(pLocalName), ':') then
   begin
     DNSLookup := gethostname(pLocalName, 255); // get name of local system
     if DNSLookup > 0 then
@@ -934,7 +938,7 @@ begin
   if buflen = SOCKET_ERROR then
     NetError('recv', 0);
   sb[buflen] := #0;
-  Result := AnsiStrings.StrPas(sb); // p60
+  Result := String(sb); // p60
   AnsiStrings.StrDispose(sb); // p60
   AnsiStrings.StrDispose(s); // p60
 end; // function TXWBWinsock.GetServerPacket
@@ -949,8 +953,21 @@ begin
   CountWidth := 5; // this makes the boundary 99999   p71
 end; // constructor TXWBWinsock.Create
 
+
+{ ----------------------- TXWBWinsock.Destroy --------------------
+  ---------------------------------------------------------------- }
+
+destructor TXWBWinsock.Destroy;
+begin
+  CountWidth := 0;
+  inherited;
+end; // destructor TXWBWinsock.Destroy
+
 { ----------------------- TXWBWinsock.NetError ------------------
   ---------------------------------------------------------------- }
+
+
+
 procedure TXWBWinsock.NetError(Action: string; ErrType: Integer);
 var
   x, s: string;

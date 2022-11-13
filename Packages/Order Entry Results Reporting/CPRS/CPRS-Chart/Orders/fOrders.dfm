@@ -3,54 +3,50 @@ inherited frmOrders: TfrmOrders
   Top = 177
   HelpContext = 4000
   Caption = 'Orders Page'
-  ClientHeight = 739
-  ClientWidth = 958
+  ClientHeight = 591
+  ClientWidth = 766
   HelpFile = 'overvw'
   Menu = mnuOrders
-  ExplicitWidth = 974
-  ExplicitHeight = 798
-  PixelsPerInch = 120
+  ExplicitWidth = 782
+  ExplicitHeight = 650
+  PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
-    Top = 734
-    Width = 958
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
-    ExplicitTop = 733
-    ExplicitWidth = 958
+    Top = 586
+    Width = 766
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    ExplicitTop = 586
+    ExplicitWidth = 766
   end
   inherited sptHorz: TSplitter
-    Left = 146
-    Height = 734
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 117
+    Height = 586
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     OnMoved = sptHorzMoved
-    ExplicitLeft = 146
-    ExplicitHeight = 733
+    ExplicitLeft = 95
+    ExplicitHeight = 457
   end
   inherited pnlLeft: TPanel
-    Width = 146
-    Height = 734
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    Constraints.MinWidth = 46
-    ExplicitWidth = 146
-    ExplicitHeight = 734
+    Width = 117
+    Height = 586
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Constraints.MinWidth = 37
+    ExplicitWidth = 117
+    ExplicitHeight = 586
     object OROffsetLabel1: TOROffsetLabel
       Left = 0
       Top = 0
-      Width = 146
-      Height = 24
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 117
+      Height = 19
       Align = alTop
       Caption = 'View Orders'
       HorzOffset = 2
@@ -60,13 +56,9 @@ inherited frmOrders: TfrmOrders
     end
     object lblWrite: TLabel
       Left = 0
-      Top = 121
-      Width = 146
-      Height = 24
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 97
+      Width = 117
+      Height = 19
       Align = alTop
       AutoSize = False
       Caption = 'Write Orders'
@@ -77,28 +69,20 @@ inherited frmOrders: TfrmOrders
     end
     object sptVert: TSplitter
       Left = 0
-      Top = 94
-      Width = 146
-      Height = 5
+      Top = 75
+      Width = 117
+      Height = 4
       Cursor = crVSplit
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Align = alTop
       OnMoved = sptVertMoved
     end
     object lstSheets: TORListBox
       Left = 0
-      Top = 24
-      Width = 146
-      Height = 70
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 19
+      Width = 117
+      Height = 56
       Align = alTop
-      Constraints.MinHeight = 38
+      Constraints.MinHeight = 30
       ItemHeight = 13
       ParentShowHint = False
       ShowHint = True
@@ -111,13 +95,9 @@ inherited frmOrders: TfrmOrders
     end
     object lstWrite: TORListBox
       Left = 0
-      Top = 145
-      Width = 146
-      Height = 589
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 116
+      Width = 117
+      Height = 470
       Align = alClient
       ItemHeight = 13
       ParentShowHint = False
@@ -131,13 +111,9 @@ inherited frmOrders: TfrmOrders
     end
     object btnDelayedOrder: TORAlignButton
       Left = 0
-      Top = 99
-      Width = 146
-      Height = 22
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 79
+      Width = 117
+      Height = 18
       Align = alTop
       Caption = 'Write Delayed Orders'
       TabOrder = 2
@@ -146,48 +122,39 @@ inherited frmOrders: TfrmOrders
     end
   end
   inherited pnlRight: TPanel
-    Left = 150
-    Width = 808
-    Height = 734
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    Constraints.MinWidth = 38
+    Left = 121
+    Width = 645
+    Height = 586
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Constraints.MinWidth = 30
     ParentColor = True
     ParentCtl3D = False
     ParentFont = False
     OnResize = pnlRightResize
-    ExplicitLeft = 150
-    ExplicitWidth = 808
-    ExplicitHeight = 734
+    ExplicitLeft = 121
+    ExplicitWidth = 645
+    ExplicitHeight = 586
     object lblOrders: TOROffsetLabel
       Left = 0
       Top = 0
-      Width = 808
-      Height = 24
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 645
+      Height = 19
       Align = alTop
       Caption = 'Active Orders'
       HorzOffset = 2
       Transparent = False
       VertOffset = 6
       WordWrap = False
-      ExplicitWidth = 806
     end
     object imgHide: TImage
-      Left = 650
+      Left = 520
       Top = 0
       Width = 16
       Height = 16
       Hint = 'All Active Orders not Visible'
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       AutoSize = True
       ParentShowHint = False
       Picture.Data = {
@@ -205,13 +172,9 @@ inherited frmOrders: TfrmOrders
     end
     object hdrOrders: THeaderControl
       Left = 0
-      Top = 24
-      Width = 808
-      Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 19
+      Width = 645
+      Height = 17
       Sections = <
         item
           ImageIndex = -1
@@ -273,8 +236,7 @@ inherited frmOrders: TfrmOrders
         end
         item
           ImageIndex = -1
-          Text = 'Reviewed'
-          Width = 0
+          Width = 50
         end>
       OnSectionClick = hdrOrdersSectionClick
       OnSectionResize = hdrOrdersSectionResize
@@ -283,13 +245,9 @@ inherited frmOrders: TfrmOrders
     end
     object lstOrders: TCaptionListBox
       Left = 0
-      Top = 45
-      Width = 808
-      Height = 689
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Top = 36
+      Width = 645
+      Height = 550
       Style = lbOwnerDrawVariable
       Align = alClient
       Color = clCream
@@ -297,12 +255,15 @@ inherited frmOrders: TfrmOrders
       ItemHeight = 32
       MultiSelect = True
       ParentCtl3D = False
+      ParentShowHint = False
       PopupMenu = popOrder
+      ShowHint = True
       TabOrder = 1
       OnDblClick = lstOrdersDblClick
       OnDrawItem = lstOrdersDrawItem
       OnMeasureItem = lstOrdersMeasureItem
       Caption = 'Active Orders'
+      OnHintShow = lstOrdersHintShow
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -333,12 +294,11 @@ inherited frmOrders: TfrmOrders
         'Status = stsDefault'))
   end
   object mnuOrders: TMainMenu
-    Left = 136
+    Left = 200
     Top = 60
     object mnuView: TMenuItem
       Caption = '&View'
       GroupIndex = 3
-      OnClick = mnuViewClick
       object mnuViewChart: TMenuItem
         Caption = 'Chart &Tab'
         object mnuChartCover: TMenuItem
@@ -611,11 +571,19 @@ inherited frmOrders: TfrmOrders
         Caption = 'One Step Clinic Admin'
         OnClick = mnuActOneStepClick
       end
+      object N4: TMenuItem
+        Caption = '-'
+      end
+      object Park1: TMenuItem
+        Action = actPark
+      end
+      object UnparkGeneratesarequesttoFillRefill1: TMenuItem
+        Action = actUnpark
+      end
     end
     object mnuOpt: TMenuItem
       Caption = '&Options'
       GroupIndex = 5
-      OnClick = mnuOptClick
       object mnuOptSaveQuick: TMenuItem
         Caption = '&Save as Quick Order...'
         OnClick = mnuOptSaveQuickClick
@@ -627,9 +595,10 @@ inherited frmOrders: TfrmOrders
     end
   end
   object popOrder: TPopupMenu
+    Tag = 1
     OnPopup = popOrderPopup
-    Left = 445
-    Top = 300
+    Left = 213
+    Top = 244
     object popOrderDetail: TMenuItem
       Caption = 'Detai&ls...'
       OnClick = mnuViewDetailClick
@@ -651,11 +620,13 @@ inherited frmOrders: TfrmOrders
       OnClick = mnuActChangeClick
     end
     object popOrderRel: TMenuItem
+      Tag = 1
       Caption = 'Release Delayed Orders'
       Visible = False
       OnClick = mnuActRelClick
     end
     object mnuChgEvnt: TMenuItem
+      Tag = 1
       Caption = 'Change Release Event'
       OnClick = mnuActChgEvntClick
     end
@@ -673,6 +644,15 @@ inherited frmOrders: TfrmOrders
       Tag = 1
       Caption = 'Rene&w...'
       OnClick = mnuActRenewClick
+    end
+    object N3: TMenuItem
+      Caption = '-'
+    end
+    object popPark: TMenuItem
+      Action = actPark
+    end
+    object popUnpark: TMenuItem
+      Action = actUnpark
     end
     object sepOrderVerify: TMenuItem
       Caption = '-'
@@ -701,21 +681,25 @@ inherited frmOrders: TfrmOrders
       Caption = '-'
     end
     object F1: TMenuItem
+      Tag = 1
       Caption = 'Flag...'
       OnClick = mnuActFlagClick
     end
     object F2: TMenuItem
+      Tag = 1
       Caption = 'Flag Comment...'
       OnClick = mnuActFlagCommentClick
     end
     object U1: TMenuItem
+      Tag = 1
       Caption = 'Unflag...'
       OnClick = mnuActUnflagClick
     end
-    object AllowMutlipleassignment1: TMenuItem
-      Caption = 'Allow Mutliple Assignment'
+    object mnuAllowMultipleAssignment: TMenuItem
+      Caption = 'Allow Multiple Assignment'
+      Enabled = False
       Hint = 'Allow to assign the same flag comment to several order flags'
-      OnClick = AllowMutlipleassignment1Click
+      OnClick = mnuAllowMultipleAssignmentClick
     end
   end
   object PopUAPOrder: TPopupMenu
@@ -755,6 +739,18 @@ inherited frmOrders: TfrmOrders
       Tag = 1
       Caption = '&Sign...'
       OnClick = mnuActSignClick
+    end
+  end
+  object ActionList: TActionList
+    Left = 352
+    Top = 111
+    object actPark: TAction
+      Caption = 'Park'
+      OnExecute = actParkExecute
+    end
+    object actUnpark: TAction
+      Caption = 'Unpark - Generates a request to Fill/Refill'
+      OnExecute = actUnparkExecute
     end
   end
 end

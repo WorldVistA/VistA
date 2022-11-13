@@ -11,8 +11,15 @@ type
   TfrmExams = class(TfrmPCEBaseMain)
     lblExamResults: TLabel;
     cboExamResults: TORComboBox;
+    lblUCUM2: TLabel;
+    lblUCUM: TLabel;
+    edtMag: TCaptionEdit;
+    lblMag: TLabel;
     procedure cboExamResultsChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure edtMagChange(Sender: TObject);
+    procedure edtMagExit(Sender: TObject);
+    procedure edtMagKeyPress(Sender: TObject; var Key: Char);
   private
   protected
     procedure UpdateNewItemStr(var x: string); override;
@@ -28,23 +35,43 @@ implementation
 {$R *.DFM}
 
 uses
-  fEncounterFrame, VA508AccessibilityRouter;
+  fEncounterFrame, VA508AccessibilityRouter, uMisc;
 
 procedure TfrmExams.cboExamResultsChange(Sender: TObject);
 var
   i: integer;
 
 begin
-  if(NotUpdating) and (cboExamResults.Text <> '') and (Assigned(lstCaptionList.Selected)) then
+  if(NotUpdating) and (cboExamResults.Text <> '') and (lstCaptionList.SelCount > 0) then
   begin
-    TPCEExams(lstCaptionList.Objects[lstCaptionList.Selected.Index]).Results := cboExamResults.ItemID;
-
     for i := 0 to lstCaptionList.Items.Count-1 do
-      if(lstCaptionList.Items[i].Selected) then
-        TPCEExams(lstCaptionList.Objects[lstCaptionList.Selected.Index]).Results := cboExamResults.ItemID;
-
+      if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEExams) then
+        TPCEExams(lstCaptionList.Objects[i]).Results := cboExamResults.ItemID;
     GridChanged;
   end;
+end;
+
+procedure TfrmExams.edtMagChange(Sender: TObject);
+var
+ item: TPCEExams;
+
+begin
+  inherited;
+  if (GridIndex<0) or (lstCaptionList.SelCount <> 1) then exit;
+  item := lstCaptionList.Objects[GridIndex] as TPCEExams;
+  item.Magnitude := edtMag.Text;
+end;
+
+procedure TfrmExams.edtMagExit(Sender: TObject);
+begin
+  inherited;
+  PostValidateMag(edtMag);
+end;
+
+procedure TfrmExams.edtMagKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  ValidateMagKeyPress(Sender, Key);
 end;
 
 procedure TfrmExams.FormCreate(Sender: TObject);
@@ -89,6 +116,8 @@ begin
         begin
           if lstCaptionList.Items[i].Selected then
           begin
+            if not (lstCaptionList.Objects[i] is TPCEExams) then
+              continue;
             Obj := TPCEExams(lstCaptionList.Objects[i]);
             if(First) then
             begin
@@ -112,6 +141,23 @@ begin
       begin
         cboExamResults.Text := '';
       end;
+
+      ok := (lstCaptionList.SelCount = 1);
+      if(ok) then
+      begin
+        Obj := TPCEExams(lstCaptionList.Objects[GridIndex]);
+        ParseMagUCUMData(Obj.UCUMInfo, lblMag, edtMag, lblUCUM, lblUCUM2);
+        if edtMag.Visible then
+          edtMag.Text := Obj.Magnitude;
+      end
+      else
+      begin
+        lblMag.Visible := False;
+        edtMag.Visible := False;
+        lblUCUM.Visible := False;
+        lblUCUM2.Visible := False;
+      end;
+
     finally
       EndUpdate;
     end;

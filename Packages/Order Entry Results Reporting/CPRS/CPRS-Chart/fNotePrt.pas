@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fAutoSz, ORCtrls, StdCtrls, Mask, ORNet, ORFn, ComCtrls,
+  fAutoSz, ORCtrls, StdCtrls, Mask, ORNet, ORFn, ComCtrls, uPrinting,
   VA508AccessibilityManager;
 
 type
@@ -22,7 +22,7 @@ type
     lblNoteTitle: TMemo;
     cboDevice: TORComboBox;
     lblPrintTo: TLabel;
-    dlgWinPrinter: TPrintDialog;
+    dlgWinPrinter: uPrinting.TPrintDialog;
     chkDefault: TCheckBox;
     procedure cboDeviceNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -99,41 +99,41 @@ begin
             radWorkCopy.Checked := True;
           end;
 
-        lblNoteTitle.Text := ANoteTitle;
-        frmNotePrint.Caption := 'Print ' + Piece(Piece(ANoteTitle, #9, 2), ',', 1);
-        FNote := ANote;
-        DefPrt := GetDefaultPrinter(User.Duz, Encounter.Location);
+      lblNoteTitle.Text := ANoteTitle;
+      frmNotePrint.Caption := 'Print ' + Piece(Piece(ANoteTitle, #9, 2), ',', 1);
+      FNote := ANote;
+      DefPrt := GetDefaultPrinter(User.Duz, Encounter.Location);
 
         if User.CurrentPrinter = '' then
           User.CurrentPrinter := DefPrt;
 
-        with cboDevice do
-          begin
-            if Printer.Printers.Count > 0 then
-              begin
-                Items.Add('WIN;Windows Printer^Windows Printer');
-                Items.Add('^--------------------VistA Printers----------------------');
-              end;
-            if User.CurrentPrinter <> '' then
-              begin
-                InitLongList(Piece(User.CurrentPrinter, ';', 2));
-                SelectByID(User.CurrentPrinter);
-              end
-            else
-              InitLongList('');
-          end;
+      with cboDevice do
+        begin
+          if Printer.Printers.Count > 0 then
+            begin
+              Items.Add('WIN;Windows Printer^Windows Printer');
+              Items.Add('^--------------------VistA Printers----------------------');
+            end;
+          if User.CurrentPrinter <> '' then
+            begin
+              InitLongList(Piece(User.CurrentPrinter, ';', 2));
+              SelectByID(User.CurrentPrinter);
+            end
+          else
+            InitLongList('');
+        end;
 
-        { if ((DefPrt = 'WIN;Windows Printer') and (User.CurrentPrinter = DefPrt)) then
-          cmdOKClick(frmNotePrint) //CQ6660
-          //Commented out for CQ6660
-          //or
-          //((User.CurrentPrinter <> '') and
+     { if ((DefPrt = 'WIN;Windows Printer') and (User.CurrentPrinter = DefPrt)) then
+        cmdOKClick(frmNotePrint) //CQ6660
+        //Commented out for CQ6660
+         //or
+         //((User.CurrentPrinter <> '') and
           //(MultiNotes = True)) then
-          //frmNotePrint.cmdOKClick(frmNotePrint)
-          //end CQ6660
-          else }
+           //frmNotePrint.cmdOKClick(frmNotePrint)
+        //end CQ6660
+      else }
         frmNotePrint.ShowModal;
-      end;
+    end;
   finally
     frmNotePrint.Release;
   end;
@@ -150,9 +150,17 @@ end;
 
 procedure TfrmNotePrint.cboDeviceNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
+var
+  sl: TSTrings;
 begin
   inherited;
-  cboDevice.ForDataUse(SubsetOfDevices(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setSubsetOfDevices(sl,StartFrom, Direction);
+    cboDevice.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmNotePrint.cboDeviceChange(Sender: TObject);
@@ -205,7 +213,7 @@ begin
     if dlgWinPrinter.Execute then
        begin
        FReportText := CreateReportTextComponent(Self);
-       FastAssign(GetFormattedNote(FNote, ChartCopy), FReportText.Lines);
+       GetFormattedNote(FReportText.Lines, FNote, ChartCopy);
        PrintWindowsReport(FReportText, PAGE_BREAK, Self.Caption, ErrMsg);
        if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
        end

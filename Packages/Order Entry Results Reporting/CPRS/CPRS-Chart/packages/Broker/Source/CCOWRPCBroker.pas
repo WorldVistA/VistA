@@ -5,10 +5,13 @@
   Developers: Danila Manapsal, Don Craven, Joel Ivey, Herlan Westra
   Description: Contains TRPCBroker and related components.
   Unit: CCOWRPCBroker Authenticates user using CCOW
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in XWB*1.1*71 (RGG 10/18/2018) XWB*1.1*71
   1. Updated RPC Version to version 71.
 
@@ -72,20 +75,17 @@ type
     FVistaDomain: String;
     FCCOWLogonVpid: String;
     FCCOWLogonVpidValue: String;
-    FWasUserDefined: boolean;
+    FWasUserDefined: Boolean;
     function GetCCOWHandle(ConnectedBroker: TCCOWRPCBroker): string;
     function GetCCOWduz(Contextor: TContextorControl): string;
-    procedure CCOWsetUser(Uname, token, Domain, Vpid: string;
-      Contextor: TContextorControl);
+    procedure CCOWsetUser(Uname, token, Domain, Vpid: string; Contextor: TContextorControl);
   public
     { Public declarations }
     function GetCCOWtoken(Contextor: TContextorControl): string;
-    function IsUserCleared: boolean;
-    function WasUserDefined: boolean;
-    function IsUserContextPending(aContextItemCollection
-      : IContextItemCollection): boolean;
-    property Contextor: TContextorControl read FContextor write FContextor;
-    // CCOW
+    function IsUserCleared: Boolean;
+    function WasUserDefined: Boolean;
+    function IsUserContextPending(aContextItemCollection: IContextItemCollection):Boolean;
+    property Contextor: TContextorControl read Fcontextor write FContextor;  //CCOW
     property CCOWLogonIDName: String read FCCOWLogonIDName;
     property CCOWLogonIDValue: String read FCCOWLogonIDValue;
     property CCOWLogonName: String read FCCOWLogonName;
@@ -110,12 +110,14 @@ var
   PassCode1: String;
   PassCode2: String;
 
-function TCCOWRPCBroker.WasUserDefined: boolean;
+
+function TCCOWRPCBroker.WasUserDefined: Boolean;
 begin
   Result := FWasUserDefined;
 end; // function TCCOWRPCBroker.WasUserDefined
 
-function TCCOWRPCBroker.IsUserCleared: boolean;
+
+function TCCOWRPCBroker.IsUserCleared: Boolean;
 var
   CCOWcontextItem: IContextItemCollection; // CCOW
   CCOWdataItem1: IContextItem; // CCOW
@@ -127,7 +129,7 @@ begin
     try
       // See if context contains the ID item
       CCOWcontextItem := Contextor.CurrentContext;
-      CCOWdataItem1 := CCOWcontextItem.Present(Name);
+      CCOWDataItem1 := CCowContextItem.Present(Name);
       if (CCOWdataItem1 <> nil) then
       begin
         if CCOWdataItem1.Value = '' then
@@ -170,36 +172,31 @@ begin
     SaveVistaLogin := Login; // p13
   end; // with
   blnSignedOn := False; // initialize to bad sign-on
-  if ConnectingBroker.AccessVerifyCodes <> '' then
-  // p13 handle as AVCode single signon
+  if ConnectingBroker.AccessVerifyCodes <> '' then   // p13 handle as AVCode single signon
   begin
-    ConnectingBroker.Login.AccessCode :=
-      Piece(ConnectingBroker.AccessVerifyCodes, ';', 1);
-    ConnectingBroker.Login.VerifyCode :=
-      Piece(ConnectingBroker.AccessVerifyCodes, ';', 2);
+    ConnectingBroker.Login.AccessCode := Piece(ConnectingBroker.AccessVerifyCodes, ';', 1);
+    ConnectingBroker.Login.VerifyCode := Piece(ConnectingBroker.AccessVerifyCodes, ';', 2);
     ConnectingBroker.Login.Mode := lmAVCodes;
-    ConnectingBroker.KernelLogin := False;
+    ConnectingBroker.KernelLogIn := False;
   end; // if
   // CCOW start
-  if ConnectingBroker.KernelLogin and (not(ConnectingBroker.Contextor = nil))
-  then
+  if ConnectingBroker.KernelLogIn and (not (ConnectingBroker.Contextor = nil)) then
   begin
-    CCOWToken := ConnectingBroker.GetCCOWtoken(ConnectingBroker.Contextor);
-    if length(CCOWToken) > 0 then
+    CCOWtoken := ConnectingBroker.GetCCOWtoken(ConnectingBroker.Contextor);
+    if length(CCOWtoken)>0 then
     begin
-      ConnectingBroker.FKernelLogIn := False;
+      ConnectingBroker.FKernelLogIn := false;
       ConnectingBroker.Login.Mode := lmAppHandle;
-      ConnectingBroker.Login.LogInHandle := CCOWToken;
+      ConnectingBroker.Login.LogInHandle := CCOWtoken;
     end; // if
   end; // if
   if not ConnectingBroker.FKernelLogIn then
-    if ConnectingBroker.FLogin <> nil then
-    // the user.  vistalogin contains login info
+    if ConnectingBroker.FLogin <> nil then     //the user.  vistalogin contains login info
     begin
-      blnSignedOn := SilentLogin(ConnectingBroker); // RpcSLogin unit
+      blnsignedon := SilentLogin(ConnectingBroker);    // RpcSLogin unit
       if not blnSignedOn then
       begin // Switch back to Kernel Login
-        ConnectingBroker.FKernelLogIn := True;
+        ConnectingBroker.FKernelLogIn := true;
         ConnectingBroker.Login.Mode := lmAVCodes;
       end; // if
     end; // if
@@ -220,10 +217,10 @@ begin
       PrepareSignonForm(ConnectingBroker);
       if SetUpSignOn then // SetUpSignOn in loginfrm unit.
       begin // True if signon needed
-        if frmSignon.lblServer.Caption <> '' then
+         if frmSignOn.lblServer.Caption <> '' then
         begin
-          frmSignon.ShowModal; // do interactive logon   // p13
-          if frmSignon.Tag = 1 then // Tag=1 for good logon
+           frmSignOn.ShowModal;                    //do interactive logon   // p13
+           if frmSignOn.Tag = 1 then               //Tag=1 for good logon
             blnSignedOn := True; // Successfull logon
         end // if
       end // if
@@ -237,8 +234,7 @@ begin
           blnSignedOn := False; // P8
           { Select division if multi-division user.  First parameter is 'userid'
             (DUZ or username) for future use. (P8) }
-          ConnectingBroker.Login.ErrorText := 'Failed to select Division';
-          // p13 set some text indicating problem
+           ConnectingBroker.Login.ErrorText := 'Failed to select Division';  // p13 set some text indicating problem
         end; // if
       end; // if
       SetForegroundWindow(OldHandle);
@@ -250,15 +246,12 @@ begin
       Application.OnException := OldExceptionHandler;
   end; // if ConnectingBroker.FKernelLogIn
   // p13  following section for silent signon
-  if (not ConnectingBroker.KernelLogin) and (not blnSignedOn) then
-    // was doing the signon twice if already true
-    if ConnectingBroker.Login <> nil then
-      // the user.  vistalogin contains login info
-      blnSignedOn := SilentLogin(ConnectingBroker); // RpcSLogin unit
-  if not blnSignedOn then
+   if (not ConnectingBroker.KernelLogIn) and (not blnsignedon) then     // was doing the signon twice if already true
+     if ConnectingBroker.Login <> nil then     //the user.  vistalogin contains login info
+       blnsignedon := SilentLogin(ConnectingBroker);    // RpcSLogin unit
+   if not blnsignedon then
   begin
-    TXWBWinsock(ConnectingBroker.XWBWinsock).NetworkDisconnect
-      (ConnectingBroker.Socket);
+     TXWBWinsock(ConnectingBroker.XWBWinsock).NetworkDisconnect(ConnectingBroker.Socket);
   end // if
   else
     GetBrokerInfo(ConnectingBroker);
@@ -272,12 +265,11 @@ begin
     RemoteProcedure := SaveRemoteProcedure;
     RpcVersion := SaveRpcVersion;
     Results := SaveResults;
-    FKernelLogIn := SaveKernelLogin; // p13
+     FKernelLogin := SaveKernelLogin;         // p13
     FLogin := SaveVistaLogin; // p13
   end; // with
   if not blnSignedOn then // Flag for unsuccessful signon.
-    TXWBWinsock(ConnectingBroker.XWBWinsock).NetError('', XWB_BadSignOn);
-  // Will raise error.
+     TXWBWinsock(ConnectingBroker.XWBWinsock).NetError('',XWB_BadSignOn);    //Will raise error.
 end; // procedure AuthenticateUser
 
 { ----------------------- GetCCOWHandle --------------------------
@@ -286,8 +278,7 @@ end; // procedure AuthenticateUser
   The Broker of a new application can get the CCOWHandle from the context
   and use it to do a ImAPPHandle Sign-on.
   ---------------------------------------------------------------- }
-function TCCOWRPCBroker.GetCCOWHandle(ConnectedBroker: TCCOWRPCBroker): String;
-// p13
+function TCCOWRPCBroker.GetCCOWHandle(ConnectedBroker : TCCOWRPCBroker): String;   // p13
 begin
   Result := '';
   with ConnectedBroker do
@@ -310,8 +301,7 @@ end; // function TCCOWRPCBroker.GetCCOWHandle
 { ----------------------- CCOWsetUser --------------------------
   CCOW Start
   ---------------------------------------------------------------- }
-procedure TCCOWRPCBroker.CCOWsetUser(Uname, token, Domain, Vpid: string;
-  Contextor: TContextorControl);
+procedure TCCOWRPCBroker.CCOWsetUser(Uname, token, Domain, Vpid: string; Contextor: TContextorControl);
 var
   CCOWdata: IContextItemCollection; // CCOW
   CCOWdataItem1, CCOWdataItem2, CCOWdataItem3: IContextItem;
@@ -328,8 +318,8 @@ begin
       CCOWdataItem1 := CoContextItem.Create;
       Cname := CCOW_LOGON_ID;
       CCOWdataItem1.Name := Cname;
-      CCOWdataItem1.Value := Domain;
-      CCOWdata.Add(CCOWdataItem1);
+      CCOWdataItem1.Value := domain;
+      CCOWData.Add(CCOWdataItem1);
       CCOWdataItem2 := CoContextItem.Create;
       Cname := CCOW_LOGON_TOKEN;
       CCOWdataItem2.Name := Cname;
@@ -353,7 +343,7 @@ begin
       CCOWdataItem5.Value := Uname;
       CCOWdata.Add(CCOWdataItem5);
       // Part 3 Make change
-      Contextor.EndContextChange(True, CCOWdata);
+      Contextor.EndContextChange(true, CCOWdata);
       // We don't need to check CCOWresponce
     finally
     end; // try
@@ -367,9 +357,9 @@ function TCCOWRPCBroker.GetCCOWtoken(Contextor: TContextorControl): string;
 var
   CCOWdataItem1: IContextItem; // CCOW
   CCOWcontextItem: IContextItemCollection; // CCOW
-  Name: string;
+  name: string;
 begin
-  Result := '';
+  result := '';
   name := CCOW_LOGON_TOKEN;
   if (Contextor <> nil) then
     try
@@ -378,8 +368,8 @@ begin
       CCOWdataItem1 := CCOWcontextItem.Present(name);
       if (CCOWdataItem1 <> nil) then // 1
       begin
-        Result := CCOWdataItem1.Value;
-        if not(Result = '') then
+        result := CCOWdataItem1.Value;
+        if not (result = '') then
           FWasUserDefined := True;
       end; // if
       FCCOWLogonIDName := CCOW_LOGON_ID;
@@ -387,7 +377,7 @@ begin
       FCCOWLogonVpid := CCOW_LOGON_VPID;
       CCOWdataItem1 := CCOWcontextItem.Present(CCOW_LOGON_ID);
       if CCOWdataItem1 <> nil then
-        FCCOWLogonIDValue := CCOWdataItem1.Value;
+        FCCOWLogonIdValue := CCOWdataItem1.Value;
       CCOWdataItem1 := CCOWcontextItem.Present(CCOW_LOGON_NAME);
       if CCOWdataItem1 <> nil then
         FCCOWLogonNameValue := CCOWdataItem1.Value;
@@ -405,9 +395,9 @@ function TCCOWRPCBroker.GetCCOWduz(Contextor: TContextorControl): string;
 var
   CCOWdataItem1: IContextItem; // CCOW
   CCOWcontextItem: IContextItemCollection; // CCOW
-  Name: string;
+  name: string;
 begin
-  Result := '';
+  result := '';
   name := CCOW_LOGON_ID;
   if (Contextor <> nil) then
     try
@@ -416,8 +406,8 @@ begin
       CCOWdataItem1 := CCOWcontextItem.Present(name);
       if (CCOWdataItem1 <> nil) then // 1
       begin
-        Result := CCOWdataItem1.Value;
-        if Result <> '' then
+        result := CCOWdataItem1.Value;
+        if result <> '' then
           FWasUserDefined := True;
       end; // if
     finally
@@ -426,17 +416,16 @@ end; // function TCCOWRPCBroker.GetCCOWduz
 
 { ----------------------- IsUserContextPending --------------------------
   ---------------------------------------------------------------- }
-function TCCOWRPCBroker.IsUserContextPending(aContextItemCollection
-  : IContextItemCollection): boolean;
+function TCCOWRPCBroker.IsUserContextPending(aContextItemCollection: IContextItemCollection): Boolean;
 var
   CCOWdataItem1: IContextItem; // CCOW
   Val1: String;
 begin
-  Result := False;
+  result := false;
   if WasUserDefined() then // indicates data was defined
   begin
     Val1 := ''; // look for any USER Context items defined
-    Result := True;
+    result := True;
     //
     CCOWdataItem1 := aContextItemCollection.Present(CCOW_LOGON_ID);
     if CCOWdataItem1 <> nil then
@@ -458,9 +447,8 @@ begin
       if not(CCOWdataItem1.Value = user.Name) then
         Val1 := Val1 + '^' + CCOWdataItem1.Value;
     //
-    if Val1 = '' then
-      // nothing defined or all matches, so not user context change
-      Result := False;
+    if Val1 = '' then    // nothing defined or all matches, so not user context change
+      result := False;
   end; // if
 end; // function TCCOWRPCBroker.IsUserContextPending
 

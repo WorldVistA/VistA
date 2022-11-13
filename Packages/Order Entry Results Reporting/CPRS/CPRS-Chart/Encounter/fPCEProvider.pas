@@ -22,7 +22,6 @@ type
     procedure btnSelectClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
-    FCboPrimaryVistaParams: TArray<string>;
     FPCEData: TPCEData;
     FUseDefault: boolean;
     FIEN: array[boolean] of Int64;
@@ -35,7 +34,7 @@ function NoPrimaryPCEProvider(AProviders: TPCEProviderList; PCEData: TPCEData): 
 
 implementation
 
-uses rCore, uCore, rTIU, rPCE, uSimilarNames;
+uses rCore, uCore, rTIU, rPCE, uORLists, uSimilarNames;
 
 {$R *.DFM}
 
@@ -114,12 +113,22 @@ end;
 
 procedure TfrmPCEProvider.cboPrimaryNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  if(FPCEData.VisitCategory = 'E') then
-    cboPrimary.ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboPrimaryVistaParams))
+  if (FPCEData.VisitCategory = 'E') then
+    setPersonList(cboPrimary, StartFrom, Direction)
   else
-    cboPrimary.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction,
-      FloatToStr(FPCEData.PersonClassDate), FCboPrimaryVistaParams));
+  begin
+    sl := TStringList.Create;
+    try
+      setSubSetOfUsersWithClass(cboPrimary, sl, StartFrom, Direction,
+        FloatToStr(FPCEData.PersonClassDate));
+      cboPrimary.ForDataUse(sl);
+    finally
+      sl.Free;
+    end;
+  end;
 end;
 
 procedure TfrmPCEProvider.cboPrimaryChange(Sender: TObject);
@@ -143,14 +152,10 @@ var
   ErrMsg: string;
 begin
   inherited;
-  CanClose := (not (ModalResult in [mrOK, mrYes, mrYesToAll])) or
-    (Length(FCboPrimaryVistaParams) <= 0);
+  CanClose := (not (ModalResult in [mrOK, mrYes, mrYesToAll]));
   if not CanClose then
   begin
-    if (FPCEData.VisitCategory = 'E') then
-      CanClose := CheckForSimilarName(cboPrimary, ErrMsg, ltPerson, FCboPrimaryVistaParams, sPr)
-    else
-      CanClose := CheckForSimilarName(cboPrimary, ErrMsg, ltPerson, FCboPrimaryVistaParams, sPr, FloatToStr(FPCEData.PersonClassDate));
+    CanClose := CheckForSimilarName(cboPrimary, ErrMsg, sPr);
   end;
   if not CanClose then
     ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');

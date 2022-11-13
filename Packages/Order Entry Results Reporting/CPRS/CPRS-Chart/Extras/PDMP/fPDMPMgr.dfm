@@ -5,18 +5,18 @@ object frmPDMP: TfrmPDMP
   Caption = 'PDMP'
   ClientHeight = 65
   ClientWidth = 99
-  Color = clBtnFace
+  Color = clWindow
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -19
-  Font.Name = 'Tahoma'
+  Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
-  TextHeight = 23
+  TextHeight = 24
   object pnlPdmp: TPanel
     Left = 0
     Top = 0
@@ -26,46 +26,41 @@ object frmPDMP: TfrmPDMP
     BevelWidth = 2
     Caption = 'Requested...'
     ParentBackground = False
+    ParentColor = True
     ShowCaption = False
     TabOrder = 0
-    object bbCancel: TBitBtn
-      Left = 2
-      Top = 2
-      Width = 95
-      Height = 61
+    object bbCancel: TButton
+      Left = 1
+      Top = 1
+      Width = 97
+      Height = 63
       Action = acCancel
       Align = alClient
-      Caption = 'PDMP Cancel'
-      Layout = blGlyphTop
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
       Visible = False
       WordWrap = True
     end
-    object bbResults: TBitBtn
-      Left = 2
-      Top = 2
-      Width = 95
-      Height = 61
+    object bbResults: TButton
+      Left = 1
+      Top = 1
+      Width = 97
+      Height = 63
       Action = acResults
       Align = alClient
-      Caption = 'PDMP Results'
-      Layout = blGlyphTop
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
       WordWrap = True
     end
-    object bbStart: TBitBtn
-      Left = 2
-      Top = 2
-      Width = 95
-      Height = 61
+    object bbStart: TButton
+      Left = 1
+      Top = 1
+      Width = 97
+      Height = 63
       Action = acPDMPRequest
       Align = alClient
-      Caption = 'PDMP Query'
-      Layout = blGlyphTop
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0

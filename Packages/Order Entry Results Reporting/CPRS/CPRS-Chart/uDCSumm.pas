@@ -28,7 +28,7 @@ type
     LocationName: string;
     VisitStr: string;
     NeedCPT: Boolean;
-    Status: integer;       
+    Status: integer;
     LastCosigner: Int64;
     LastCosignerName: string;
     IDParent: integer;
@@ -44,7 +44,7 @@ type
     VisitStr: string;
   end;
 
-  TDCSummTitles = class
+  TDCSummTitles = class(TObject)
   public
     DfltTitle: Integer;
     DfltTitleName: string;
@@ -53,7 +53,7 @@ type
     destructor Destroy; override;
   end;
 
-  TDCSummPrefs = class
+  TDCSummPrefs = class(TObject)
   public
     DfltLoc: Integer;
     DfltLocName: string;
@@ -68,6 +68,8 @@ function  MakeDCSummDisplayText(RawText: string): string;
 
 implementation
 
+uses uDocTree;
+
 function MakeDCSummDisplayText(RawText: string): string;
 var
   x: string;
@@ -77,10 +79,17 @@ begin
   if CharInSet(Piece(x, U, 1)[1], ['A', 'N', 'E']) then
     Result := Piece(x, U, 2)
   else
-    Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ' +
-              Piece(x, U, 2) + ', ' + Piece(x, U, 6) + ', ' + Piece(Piece(x, U, 5), ';', 2) +
-              '  (' + Piece(x,U,7) + '), ' + Piece(Piece(x, U, 8), ';', 1) + ', ' +
-              Piece(Piece(x, U, 9), ';', 1);
+  begin
+    if ShowMoreNode(Piece(x, U, 2)) then
+      Result := Piece(x, U, 2)
+    else
+    begin
+      Result := FormatFMDateTime('mmm dd,yy', MakeFMDateTime(Piece(x, U, 3))) + '  ';
+      Result := Result + Piece(x, U, 2) + ', ' + Piece(x, U, 6) + ', ' +
+        Piece(Piece(x, U, 5), ';', 2) + '  (' + Piece(x, U, 7) + '), ' +
+        Piece(Piece(x, U, 8), ';', 1) + ', ' + Piece(Piece(x, U, 9), ';', 1);
+    end;
+  end;
 end;
 
 { Discharge Summary Titles  -------------------------------------------------------------------- }

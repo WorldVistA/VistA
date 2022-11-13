@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, fRptBox, StdCtrls, ExtCtrls, ComCtrls, fARTAllgy, ORFn,
+  Dialogs, fRptBox, StdCtrls, ExtCtrls, ComCtrls, fAllgyAR, ORFn,
   VA508AccessibilityManager, Vcl.Menus, U_CPTEditMonitor;
 
 type
@@ -41,7 +41,6 @@ const
 function CreateAllergyBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean): TfrmAllgyBox;
 var
   i, AWidth, MaxWidth, AHeight: Integer;
-  Rect: TRect;
   // %$@# buttons!
   BtnArray: array of TButton;
   BtnRight: array of integer;
@@ -76,9 +75,7 @@ begin
       if MaxWidth > Screen.Width then MaxWidth := Screen.Width;
       ClientWidth := MaxWidth;
       ClientHeight := AHeight;
-      Rect := BoundsRect;
-      ForceInsideWorkArea(Rect);
-      BoundsRect := Rect;
+      ForceInsideWorkArea(Result);
       ResizeAnchoredFormToFont(Result);
 
       //CQ6889 - force Print & Close buttons to bottom right of form regardless of selected font size

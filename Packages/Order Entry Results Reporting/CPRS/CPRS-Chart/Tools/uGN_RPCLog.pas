@@ -1,33 +1,25 @@
 unit uGN_RPCLog;
 
 interface
-
 uses
-  vcl.StdCtrls,
   fGN_RPCLog, Dialogs, Forms, Classes, System.SysUtils, System.Types, Graphics;
 
-function WorkArea: TRect;
+function WorkArea:TRect;
 
-function RPCLogExists: Boolean;
+function RPCLogExists:Boolean;
 procedure RPCLogInit;
 procedure RPCLogClose;
 procedure AddLogLine(aLine, aTitle: string; bLoud: Boolean = true);
-procedure AddFlag(aText, aTitle: string);
+procedure AddFlag(aText,aTitle: string);
 procedure ShowBroker; overload;
-procedure ShowBroker(RR: TRect); overload;
+procedure ShowBroker(RR:TRect); overload;
 procedure RPCLogNext;
 procedure RPCLogPrev;
 procedure RPCLogSaveAll;
 procedure RPCLogDump;
 procedure DebugShowServer;
-function RPCLogDefaultFileName: TFileName;
-procedure RPCLogSetFontSize(aSize: Integer);
-procedure RPCLogShowActiveControl;
-procedure RPCLogShowVistAObjects;
-
-function AddVistAObject(aName:String; anObject: TObject): Boolean;
-
-procedure DebugListItems(AListBox: TListBox);
+function RPCLogDefaultFileName:TFileName;
+procedure RPCLogSetFontSize(aSize:Integer);
 
 var
   RPCLog_SaveAvailable: Boolean; // If TRUE saving of the Log is available
@@ -35,15 +27,13 @@ var
   RPCLog_SaveOnExit: Boolean; // If TRUE Log will be saved by RPCLogClose
   RPCLog_Chronological: Boolean; // If TRUE the oldest record is on the top
 
-  RPCLog_clFlag: Integer = clRed; // clBlack
+  RPCLog_clFlag: Integer = clBlue;
   RPCLog_clItem: Integer = clBlue;
   RPCLog_clTarget: Integer = clRed;
 
   RPCLog_bgclTarget: Integer = clYellow;
-  RPCLog_bgclFlag: Integer = clBtnFace; //clInfoBk;
+  RPCLog_bgclFlag: Integer = clInfoBk;
   RPCLog_bgclItem: Integer = clInactiveCaption;
-
-  VistAObjects: TStringList;
 
 const
 
@@ -64,40 +54,21 @@ const
   RPCLog_Export = '--- EXPORT ---';
 
 implementation
-
 uses
-  System.RTTI,
-  VAUtils, WinApi.SHFolder, Windows, ORCtrls, vcl.ComCtrls, vcl.Controls;
+  VAUtils, WinApi.SHFolder, Windows;
 
 var
   RPCLog_Enabled: Boolean; // Indicates the Log is available
 
-procedure DebugListItems(AListBox: TListBox);
-var
-  sTitle,sText: String;
-begin
-  try
-    begin
-      sTitle := aListBox.ClassName;
-      if AListBox is TORListBox then
-        sText := TORListBox(AListBox).Items.Text
-      else
-        sText := AListBox.Items.Text;
-      AddLogLine(sText,sTitle);
-    end;
-  finally
-  end;
-end;
-
-function WorkArea: TRect;
+function WorkArea:TRect;
 var
   r: TRect;
 begin
-  SystemParametersInfo(SPI_GETWORKAREA, 0, @r, 0);
+  SystemParametersInfo(SPI_GETWORKAREA,0,@r,0);
   Result := r;
 end;
 
-function RPCLogExists: Boolean;
+function RPCLogExists:Boolean;
 begin
   Result := Assigned(frmRPCLog);
 end;
@@ -108,7 +79,8 @@ begin
   if not Assigned(frmRPCLog) then
     try
       frmRPCLog := TfrmRPCLog.Create(Application);
-{$IFNDEF DEBUG}
+{$IFDEF DEBUG}
+{$ELSE}
       frmRPCLog.FileSaveAs1.Visible := False;
       frmRPCLog.FileSaveAs2.Visible := False;
 {$ENDIF}
@@ -130,10 +102,10 @@ procedure RPCLogClose;
 begin
   RPCLogSaveAll;
   if Assigned(frmRPCLog) then
-  begin
-    frmRPCLog.Free;
-    frmRPCLog := nil;
-  end;
+    begin
+      frmRPCLog.Free;
+      frmRPCLog := nil;
+    end;
   RPCLog_Enabled := Assigned(frmRPCLog);
 end;
 
@@ -146,14 +118,14 @@ begin
     Exit;
 
   if not RPCLog_Enabled then
-    RPCLogInit;
+    exit;
 
   sl := TStringList.Create;
   sl.Text := aLine;
   frmRPCLog.addLogItem(aTitle, aTitle, sl);
 end;
 
-procedure AddFlag(aText, aTitle: string);
+procedure AddFlag(aText,aTitle: string);
 // Adds Flag record to the Log
 var
   s: String;
@@ -161,31 +133,31 @@ begin
   s := RPCLog_Flag + ' ' + aTitle;
   if aText = '' then
     aText := aTitle;
-  AddLogLine(aText, s);
+  AddLogLine(aTitle, s);
 end;
 
-procedure ShowBroker(RR: TRect);
+procedure ShowBroker(RR:TRect);
 // Opens Log Window in specified position
 var
   b: Boolean;
 begin
+  b := RPCLogExists;
   RPCLogInit;
   if Assigned(frmRPCLog) then
   begin
-    if (RR.Top <> RR.Bottom) and (RR.Left <> RR.Right) then
-    begin
-      frmRPCLog.Top := RR.Top;
-      frmRPCLog.Left := RR.Left;
-      if Screen.MonitorCount > 0 then
-        frmRPCLog.Height := RR.Bottom - RR.Top
-      else
-        frmRPCLog.Height := Screen.DesktopHeight;
-      frmRPCLog.Width := RR.Right;
-    end;
-    b := frmRPCLog.Reviewed;
+    if (RR.Top<> RR.Bottom) and (RR.Left <> RR.Right) then
+      begin
+        frmRPCLog.Top := RR.Top;
+        frmRPCLog.Left := RR.Left;
+        if Screen.MonitorCount > 0 then
+          frmRPCLog.Height := RR.Bottom - RR.Top
+        else
+          frmRPCLog.Height := Screen.DesktopHeight;
+        frmRPCLog.Width := RR.Right;
+      end;
     frmRPCLog.Show;
     frmRPCLog.BringToFront;
-    if not b then // align on first Show
+    if not b then
       frmRPCLog.acToTheLeft.Execute;
   end;
 end;
@@ -217,21 +189,21 @@ begin
 end;
 
 procedure RPCLogSaveAll;
-// Saves Lod in the file with the Default name
+// SAves Lod in the file with the Default name
 begin
-  if Assigned(frmRPCLog) and RPCLog_SaveOnExit then
+  if assigned(frmRPCLog) and RPCLog_SaveOnExit then
     frmRPCLog.SaveAll;
 end;
 
-function RPCLogDefaultFileName: TFileName;
+function RPCLogDefaultFileName:TFileName;
 // Default file name
 
-// Finds the users special directory (AVCatcher code)
+  // Finds the users special directory (AVCatcher code)
   function LocalAppDataPath: string;
   const
     SHGFP_TYPE_CURRENT = 0;
   var
-    path: array [0 .. MaxChar] of char;
+    path: array [0 .. MAX_PATH] of char;
   begin
     SHGetFolderPath(0, CSIDL_LOCAL_APPDATA, 0, SHGFP_TYPE_CURRENT, @path[0]);
     Result := StrPas(path);
@@ -240,234 +212,40 @@ function RPCLogDefaultFileName: TFileName;
 begin
   Result := LocalAppDataPath;
   if (Copy(Result, Length(Result), 1) <> '\') then
-    Result := Result + '\CPRS\' ;
-  if not DirectoryExists(Result) then
-    CreateDir(Result);
+    Result := Result + '\';
 
-  Result := Result + piece(ExtractFileName(Application.ExeName), '.', 1) + '_v'
-    + FileVersionValue(Application.ExeName, 'FileVersion') + '_Log_' +
-    FormatDateTime('YYYY_MM_DD_HH_NN_SS', Now) + '.txt';
+  Result := result + piece(ExtractFileName(Application.ExeName), '.', 1) + '_v' +
+      FileVersionValue(Application.ExeName, 'FileVersion') + '_Log_' +
+      FormatDateTime('YYYY_MM_DD_HH_NN_SS', Now) + '.txt';
 end;
 
 procedure DebugShowServer;
 begin
   RPCLogInit;
-  if Assigned(frmRPCLog) then
-  begin
-    frmRPCLog.acSymbolTable.Execute;
-    ShowBroker;
-  end;
+  if assigned(frmRPCLog) then
+    begin
+      frmRPCLog.acSymbolTable.Execute;
+      ShowBroker;
+    end;
 end;
 
 procedure RPCLogDump;
 begin
   RPCLogInit;
-  frmRPCLog.acSaveOnExit.Checked := True;
   frmRPCLog.SaveAll;
 end;
 
-procedure RPCLogSetFontSize(aSize: Integer);
+procedure RPCLogSetFontSize(aSize:Integer);
 begin
-  if Assigned(frmRPCLog) then
+  if assigned(frmRPCLog) then
     frmRPCLog.setFontSize(aSize);
 end;
 
-function getObjectInfo(aControl: TObject): String;
-var
-  aName: String;
-  indent, aLine: String;
-  anObj, _Obj: TObject;
-  aContext: TRttiContext;
-  aType: TRttiType;
-  aField: TRttiField;
-  aRecord: TRTTIRecordType;
-  aValue: TValue;
-
-  procedure LogUpdate(aLine: String);
-  begin
-    Result := Result + #13#10 + aLine;
-  end;
-
-  procedure SortResult;
-  var
-    sl: TStringList;
-  begin
-    if Result = '' then
-      Exit;
-    sl := TStringList.Create;
-    try
-      sl.Text := Result;
-      sl.Sort;
-      Result := sl.Text;
-    finally
-      sl.Free;
-    end;
-  end;
-
-  function ListViewToString(aLV: TListView): String;
-  var
-    li: TListItem;
-    i: Integer;
-  begin
-    Result := '';
-    for li in aLV.Items do
-    begin
-      Result := Result + '    ' + li.Caption;
-      for i := 0 to li.SubItems.Count - 1 do
-        Result := Result + '^' + li.SubItems[i];
-      Result := Result + #13#10;
-    end;
-  end;
-
-  function EscapeQuotes(const s: String): String;
-  begin
-    Result := StringReplace(s, '\', '\\', [rfReplaceAll]);
-    Result := StringReplace(Result, '"', '\"', [rfReplaceAll]);
-  end;
-
-const
-  fmtLine = '                            %s';
-  fmtNameValue = '%-25.25s %s';
-  fmtNameClassValue = '%-25.25s (%-25.25s) %s';
-
-begin
-  anObj := TObject(aControl);
-  indent := '  ';
-  Result := '';
-
-  if anObj = nil then
-    Exit;
-  if anObj.ClassType = nil then
-    Exit;
-
-  if anObj is TStringList then
-  begin
-    for aLine in TStringList(anObj) do
-      Result := Result + #13#10 + aLine;
-  end
-  else if (anObj is TListBox) then
-    Result := TListBox(anObj).Items.Text
-  else if (anObj is TListView) then
-    Result := ListViewToString(TListView(anObj))
-  else
-    try
-      aType := aContext.GetType(anObj.ClassType);
-      if aType.IsRecord then
-      begin
-        aRecord := aType.AsRecord;
-        for aField in aRecord.GetFields do
-        begin
-          aName := aField.Name;
-          aValue := aField.GetValue(anObj);
-          Result := Result + #13#10 + aName + '="' + EscapeQuotes(aValue.ToString) + '"';
-        end;
-      end
-      else if aType.IsInstance then
-      begin
-        for aField in aType.GetFields do
-          if aField.FieldType.IsInstance then
-          begin
-            _Obj := nil;
-            try
-              _Obj := aField.GetValue(anObj).AsObject;
-              if Assigned(_Obj) then
-                if _Obj is TStrings then
-                begin
-                  LogUpdate(indent + Format(fmtNameValue,
-                    [aField.Name, _Obj.ClassName]));
-                  for aLine in TStrings(_Obj) do
-                    if pos(#13, aLine) > 0 then
-                      Result := Result + Format(fmtLine, [aLine])
-                    else
-                      Result := Result + #13#10 + Format(fmtLine, [aLine]);
-                end
-                else
-                  LogUpdate(indent + Format(fmtNameValue,
-                    [aField.Name, _Obj.ClassName]));
-            except
-              on E: Exception do
-                if Assigned(_Obj) then
-                  LogUpdate(_Obj.ClassName + #13#10 + E.Message);
-            end;
-          end
-          else
-            LogUpdate(indent + Format(fmtNameValue,
-              [aField.Name, aField.GetValue(anObj).ToString]));
-      end;
-    except
-      on E: Exception do
-      begin
-        LogUpdate('--------------------------------------------');
-        LogUpdate('ClassName <' + anObj.ClassType.ClassName + '>');
-        LogUpdate(E.Message);
-      end;
-    end;
-end;
-
-const
-  fmtObjTitle = ' %s (%s)';
-
-procedure RPCLogShowActiveControl;
-var
-  s: String;
-
-begin
-  if Assigned(Screen.ActiveControl) then
-  begin
-    s := 'Form:    ' + Screen.ActiveForm.Name + #13#10;
-    s := s + 'Control: ' + Screen.ActiveControl.Name + ' (' +
-      Screen.ActiveControl.ClassName + ')' + #13#10#13#10;
-    AddLogLine(s + getObjectInfo(Screen.ActiveControl),
-      Format(fmtObjTitle, [Screen.ActiveControl.Name,
-      Screen.ActiveControl.ClassName]));
-  end;
-end;
-
-procedure RPCLogShowVistAObjects;
-var
-  i: Integer;
-  anObj: TObject;
-
-begin
-  for i := 0 to VistAObjects.Count - 1 do
-  begin
-    anObj := VistAObjects.Objects[i];
-    if Assigned(anObj) then
-    begin
-      AddLogLine(getObjectInfo(anObj), Format(fmtObjTitle,
-        [VistAObjects[i], anObj.ClassName]));
-    end;
-  end;
-
-end;
-
-function AddVistAObject(aName:String; anObject: TObject): Boolean;
-var
-  i: Integer;
-begin
-  Result := False;
-  for i  := 0 to VistAObjects.Count - 1 do
-    begin
-      Result :=  VistAObjects.Objects[i] = anObject;
-      if Result then
-        break;
-    end;
-  if not Result then
-    VistAObjects.AddObject(aName,anObject);
-end;
-
 initialization
-
-RPCLog_Enabled := False;
-RPCLog_SaveAvailable := False;
-RPCLog_TrackForms := False;
-RPCLog_SaveOnExit := False;
-RPCLog_Chronological := False;
-
-VistAObjects := TStringList.Create;
-
-finalization
-
-VistAObjects.Free;
+  RPCLog_Enabled := False;
+  RPCLog_SaveAvailable := False;
+  RPCLog_TrackForms := False;
+  RPCLog_SaveOnExit := False;
+  RPCLog_Chronological := False;
 
 end.

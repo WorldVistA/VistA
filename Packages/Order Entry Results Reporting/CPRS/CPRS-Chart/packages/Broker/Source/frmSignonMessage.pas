@@ -6,10 +6,13 @@
   Description: Contains TRPCBroker and related components.
   Unit: frmSignonMessage displays message from server after user
   signon.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in XWB*1.1*71 (RGG 10/18/2018) XWB*1.1*71
   1. Updated RPC Version to version 71.
 
@@ -81,10 +84,11 @@ type
     procedure FormShow(Sender: TObject);
     procedure introTextURLClick(Sender: TObject; URL: String);
   private
+    DefaultSignonConfiguration: TSignonValues;
+    SignonConfiguration: TSignonConfiguration;
     OrigHelp: String; // Help filename of calling application.
     procedure WMSysCommand(var Message: TWMSysCommand); message WM_SYSCOMMAND;
   public
-    DefaultSignonConfiguration: TSignonValues;
   end;
 
 procedure PrepareSignonMessage(AppBroker: TRPCBroker);
@@ -180,14 +184,16 @@ begin
     WriteRegData(HKCU, REG_SIGNON, 'SignonPos', strPosition);
   end;
   Application.HelpFile := OrigHelp; // Restore helpfile.
+  If Assigned(SignonConfiguration) then
+    FreeAndNil(SignonConfiguration);
+  If Assigned(DefaultSignonConfiguration) then
+    FreeAndNil(DefaultSignonConfiguration);
 end;
 
 { --------------------- TfrmSignonMsg.FormCreate ------------------
   Instantiate frmSignonMessage Form
   ------------------------------------------------------------------ }
 procedure TfrmSignonMsg.FormCreate(Sender: TObject);
-var
-  SignonConfiguration: TSignonConfiguration;
 begin
   if (Pos('LARGE', UpperCase(ReadRegDataDefault(HKCU,
     'Control Panel\Appearance', 'Current', ''))) > 0) or (Screen.Width < 800)
@@ -215,8 +221,8 @@ begin
   FormStyle := fsStayOnTop;
   // make form stay on top of others so it can be found
   { adjust appearance per user's preferences }
-  SignonConfiguration := TSignonConfiguration.Create;
   try
+    SignonConfiguration := TSignonConfiguration.Create;
     DefaultSignonConfiguration := TSignonValues.Create;
     DefaultSignonConfiguration.BackColor := mmoMsg.Color;
     DefaultSignonConfiguration.Height := Height;
@@ -263,7 +269,6 @@ begin
       mmoMsg.Color := clWindow;
     mmoMsg.Font := InitialValues.Font;
   finally
-    SignonConfiguration.Free;
   end;
 end;
 
@@ -297,7 +302,7 @@ begin
     Perform(EM_SCROLLCARET, 0, 0);
     mmoMsg.Repaint;
     mmoMsg.SetFocus;
-    //Application.ProcessMessages;
+    // Application.ProcessMessages;
   end;
 end;
 
@@ -336,7 +341,7 @@ begin
       ShowApplicationAndFocusOK(Application);
       SignonConfiguration.ShowModal;
     finally
-      SignonConfiguration.Free;
+      FreeAndNil(SignonConfiguration);
       Self.WindowState := wsNormal;
     end;
   end
@@ -350,7 +355,7 @@ begin
       ShowApplicationAndFocusOK(Application);
       frmErrMsg.ShowModal;
     finally
-      frmErrMsg.Free;
+      FreeAndNil(frmErrMsg);
     end;
   end
   else

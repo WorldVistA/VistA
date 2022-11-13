@@ -47,8 +47,8 @@ object TreeGridFrame: TTreeGridFrame
     object stTitle: TStaticText
       Left = 8
       Top = 4
-      Width = 32
-      Height = 17
+      Width = 40
+      Height = 20
       Caption = 'stTitle'
       TabOrder = 0
     end

@@ -17,7 +17,7 @@ procedure HasActiveFlg(var FlagList: TStringList; var HasFlag: boolean; const PT
 begin
   CallVistA('ORPRF HASFLG', [PTDFN], FlagList);
   HasFlag := (FlagList.Count > 0);
-end;
+  end;
 
 function TriggerPRFPopUp(PTDFN: string): boolean;
 var

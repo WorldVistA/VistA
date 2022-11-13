@@ -5,23 +5,24 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, fBase508Form, ORCtrls, Vcl.StdCtrls,
-  Vcl.ExtCtrls, VA508AccessibilityManager, System.Actions, Vcl.ActnList;
+  Vcl.ExtCtrls, VA508AccessibilityManager, System.Actions, Vcl.ActnList, u508Button ;
 
 type
+
   TfrmOrderFlagRecipients = class(TfrmBase508Form)
     pnlBottom: TPanel;
     pnlButtons: TPanel;
-    cmdCancel: TButton;
-    cmdOK: TButton;
+    cmdCancel: u508Button.TButton;
+    cmdOK: u508Button.TButton;
     Panel1: TPanel;
     grbRecipients: TGroupBox;
     Splitter1: TSplitter;
     pnlRecipientsList: TPanel;
     orSelectedRecipients: TORListBox;
     pnlListButtons: TPanel;
-    btnAddRecipient: TButton;
-    btnRemoveAllRecipients: TButton;
-    btnRemoveRecipients: TButton;
+    btnAddRecipient: u508Button.TButton;
+    btnRemoveAllRecipients: u508Button.TButton;
+    btnRemoveRecipients: u508Button.TButton;
     pnlRecipientsSource: TPanel;
     cboAlertRecipient: TORComboBox;
     alRecipients: TActionList;
@@ -35,110 +36,91 @@ type
     procedure acDeleteAllExecute(Sender: TObject);
     procedure cboAlertRecipientDblClick(Sender: TObject);
     procedure orSelectedRecipientsDblClick(Sender: TObject);
-    procedure cboAlertRecipientClick(Sender: TObject);
     procedure cboAlertRecipientEnter(Sender: TObject);
-    procedure cboAlertRecipientExit(Sender: TObject);
-    procedure orSelectedRecipientsExit(Sender: TObject);
     procedure orSelectedRecipientsEnter(Sender: TObject);
     procedure cboAlertRecipientKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure orSelectedRecipientsClick(Sender: TObject);
+    procedure cboAlertRecipientChange(Sender: TObject);
   private
-    FCboAlertRecipientVistaParams: TArray<string>;
-    ExistentRecipients:TStrings;
+    fExistentRecipients:TStrings;
     procedure RecipientAdd;
     procedure RecipientRemove;
     procedure SetButtonStatus;
+  public
+    procedure getRecipientsList(aExisintingRecipients:TStrings; aResults: TStrings);
+    Property ExistentRecipients: TStrings read fExistentRecipients write fExistentRecipients;
   end;
-
-function getRecipientsList(anExceptions:TStrings):TStrings;
-procedure NotificationRecipientsCleanUp;
 
 implementation
 
 {$R *.dfm}
 
-uses rCore, ORFn, uSimilarNames;
+uses rCore, ORFn, uORLists, uSimilarNames, VAUtils,
+  VA508AccessibilityRouter;
 
-var
-  frmOrderFlagRecipients: TfrmOrderFlagRecipients;
-
-function getRecipientsList(anExceptions:TStrings):TStrings;
-begin
-  Result := nil;
-  if not assigned(frmOrderFlagRecipients) then
-    Application.CreateForm(TfrmOrderFlagRecipients,frmOrderFlagRecipients);
-  if not assigned(frmOrderFlagRecipients) then
-    Exit;
-  with frmOrderFlagRecipients do
-    begin
-      cboAlertRecipient.InitLongList('');
-      ExistentRecipients := anExceptions;
-//      orSelectedRecipients.Clear;  -- commented out to save list between calls;
-      if ShowModal = mrOK then
-        Result := orSelectedRecipients.Items;
-    end;
-end;
-
-procedure NotificationRecipientsCleanUp;
-// cleans up list for a new flag action
-begin
-  if Assigned(frmOrderFlagRecipients) then
-    try
-      frmOrderFlagRecipients.orSelectedRecipients.Items.Clear
-    except
-      on E: Exception do
-        ShowMessage(E.Message);
-    end;
-end;
 
 procedure TfrmOrderFlagRecipients.acAddExecute(Sender: TObject);
 begin
   inherited;
+  // Add recipient and disable the add button.
+  // Will re-enable when a new person is selected
   RecipientAdd;
+  SetButtonStatus;
+  if ScreenReaderActive then
+    GetScreenReader.Speak('Recipient added');
 end;
 
 procedure TfrmOrderFlagRecipients.acDeleteAllExecute(Sender: TObject);
 begin
   inherited;
+  // Select all recipients and then remove the selected
+  // Disable the remove all button since no entries left
   orSelectedRecipients.SelectAll;
   RecipientRemove;
+  SetButtonStatus;
+  if ScreenReaderActive then
+    GetScreenReader.Speak('All Recipients removed');
 end;
 
 procedure TfrmOrderFlagRecipients.acDeleteExecute(Sender: TObject);
 begin
   inherited;
+  // Remove the selected recipient and disable the remove button.
+  // Will re-enable when a new recipient is selected
   RecipientRemove;
+  SetButtonStatus;
+  if ScreenReaderActive then
+    GetScreenReader.Speak('Recipient removed');
 end;
 
-procedure TfrmOrderFlagRecipients.cboAlertRecipientClick(Sender: TObject);
+procedure TfrmOrderFlagRecipients.cboAlertRecipientChange(Sender: TObject);
 begin
   inherited;
+  // Changing potential recipients so check if we can add
   setButtonStatus;
 end;
+
 
 procedure TfrmOrderFlagRecipients.cboAlertRecipientDblClick(Sender: TObject);
 begin
   inherited;
-  RecipientAdd;
+  // If able call the recipient add action
+  acAdd.Execute;
 end;
 
 procedure TfrmOrderFlagRecipients.cboAlertRecipientEnter(Sender: TObject);
 begin
   inherited;
-  setButtonStatus;
-end;
-
-procedure TfrmOrderFlagRecipients.cboAlertRecipientExit(Sender: TObject);
-begin
-  inherited;
-  setButtonStatus;
+  // Ensure that there is no recipient selection
+  orSelectedRecipients.ClearSelection;
 end;
 
 procedure TfrmOrderFlagRecipients.cboAlertRecipientKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   inherited;
+  // If enter is pressed then try to add to the recipients
   if Key = VK_RETURN then
     cboAlertRecipientDblClick(Sender);
 end;
@@ -147,37 +129,47 @@ procedure TfrmOrderFlagRecipients.cboAlertRecipientNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
   inherited;
-  TORComboBox(Sender).ForDataUse(SubSetOfPersons(StartFrom, Direction,
-    FCboAlertRecipientVistaParams));
+  //Get the list of potential recipients
+  setPersonList(TORComboBox(Sender), StartFrom, Direction); // RTC Defect 732085
+end;
+
+Procedure TfrmOrderFlagRecipients.getRecipientsList(
+  aExisintingRecipients: TStrings; aResults: TStrings);
+begin
+  // show the recipient selection form and return the selected recipients
+  if Assigned(aResults) then
+  begin
+    cboAlertRecipient.Clear;
+    cboAlertRecipient.InitLongList('');
+    fExistentRecipients  := aExisintingRecipients;
+    SetButtonStatus;
+    if ShowModal = mrOK then
+      aResults.Assign(orSelectedRecipients.Items);
+  end;
 end;
 
 procedure TfrmOrderFlagRecipients.orSelectedRecipientsClick(Sender: TObject);
 begin
   inherited;
+  // Update button status since the recipients changed
   setButtonStatus;
 end;
 
 procedure TfrmOrderFlagRecipients.orSelectedRecipientsDblClick(Sender: TObject);
 begin
   inherited;
-  RecipientRemove;
+  // If available remove the selected recipient
+  acDelete.Execute;
 end;
 
 procedure TfrmOrderFlagRecipients.orSelectedRecipientsEnter(Sender: TObject);
 begin
   inherited;
-  setButtonStatus;
-end;
-
-procedure TfrmOrderFlagRecipients.orSelectedRecipientsExit(Sender: TObject);
-begin
-  inherited;
-  setButtonStatus;
+  //Ensure that no potential recipients are selected
+  cboAlertRecipient.ItemIndex := -1;
 end;
 
 procedure TfrmOrderFlagRecipients.RecipientAdd;
-var
-  s, aErrMsg: String;
 
   function IsSelected(anID:String):Boolean;
   var
@@ -185,36 +177,38 @@ var
     i: Integer;
   begin
     Result := False;
-    if Assigned(ExistentRecipients) and (ExistentRecipients.Count>0) then
-      for i := 0 to ExistentRecipients.Count - 1 do
+    if Assigned(fExistentRecipients) and (fExistentRecipients.Count>0) then
+      for i := 0 to fExistentRecipients.Count - 1 do
         begin
-          ss := ExistentRecipients[i];
+          ss := fExistentRecipients[i];
           Result := piece(ss,'^',1) = anID;
           if Result then
             break;
         end;
   end;
 
+var
+  s, aErrMsg: String;
 begin
   if (cboAlertRecipient.ItemIndex = -1) or
     (orSelectedRecipients.SelectByID(cboAlertRecipient.ItemID) <> -1)
     or IsSelected(IntToStr(cboAlertRecipient.ItemID))
     then
   begin
-    ShowMessage('This person is already Order Flag Alert recipient');
+    ShowMessage('This person is already an Order Flag Alert recipient');
     exit;
   end
   else
     begin
       s := cboAlertRecipient.Items[cboAlertRecipient.ItemIndex];
       // checking duplicate names  request ##133 Issue Tracker
-      if not CheckForSimilarName(cboAlertRecipient, aErrMsg, ltProvider,
-        FCboAlertRecipientVistaParams, sPr, '', orSelectedRecipients.Items) then
+      if not CheckForSimilarName(cboAlertRecipient, aErrMsg, sPr,
+        orSelectedRecipients.Items) then
       begin
         ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
-        exit;
+        Exit;
       end else
-      orSelectedRecipients.Items.Add(s); //cboAlertRecipient.Items[cboAlertRecipient.ItemIndex]);
+        orSelectedRecipients.Items.Add(s); //cboAlertRecipient.Items[cboAlertRecipient.ItemIndex]);
     end;
 end;
 
@@ -236,16 +230,16 @@ end;
 
 procedure TfrmOrderFlagRecipients.setButtonStatus;
 begin
+  // Something selected and not already in the recipient list
   acAdd.Enabled := (cboAlertRecipient.ItemIndex > -1) and
     (orSelectedRecipients.SelectByID(cboAlertRecipient.ItemID) < 0);
 
-  acDelete.Enabled := (orSelectedRecipients.SelCount > 0) and
-    (orSelectedRecipients.Items.Count > 0);
-//    orSelectedRecipients.Focused;
+  // recipient(s) selected
+  acDelete.Enabled := (orSelectedRecipients.SelCount > 0);
 
+  // Has recipients
   acDeleteAll.Enabled := orSelectedRecipients.Items.Count > 0;
 
-  orSelectedRecipients.TabStop := orSelectedRecipients.Items.Count > 0;
 end;
 
 end.

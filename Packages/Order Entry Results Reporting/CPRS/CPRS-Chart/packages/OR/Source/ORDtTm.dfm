@@ -38,7 +38,7 @@ object ORfrmDtTm: TORfrmDtTm
     Shape = bsFrame
     Style = bsRaised
   end
-  object Label1: TLabel
+  object lblCalendar: TLabel
     Left = 66
     Top = 204
     Width = 200
@@ -58,12 +58,14 @@ object ORfrmDtTm: TORfrmDtTm
     BorderStyle = bsSingle
     Caption = 'October 20, 1998'
     Color = clWindow
+    Ctl3D = False
+    ParentCtl3D = False
     TabOrder = 0
     object bbtnPrevMonth: TBitBtn
       Left = 0
       Top = 0
       Width = 25
-      Height = 18
+      Height = 20
       Align = alLeft
       Glyph.Data = {
         EE000000424DEE0000000000000076000000280000000F0000000F0000000100
@@ -78,10 +80,10 @@ object ORfrmDtTm: TORfrmDtTm
       OnClick = bbtnPrevMonthClick
     end
     object bbtnNextMonth: TBitBtn
-      Left = 163
+      Left = 165
       Top = 0
       Width = 25
-      Height = 18
+      Height = 20
       Align = alRight
       Glyph.Data = {
         EE000000424DEE0000000000000076000000280000000F0000000F0000000100
@@ -160,6 +162,7 @@ object ORfrmDtTm: TORfrmDtTm
       ':55')
     TabOrder = 5
     OnClick = lstMinuteClick
+    OnEnter = lstMinuteEnter
   end
   object cmdOK: TButton
     Left = 318
@@ -202,8 +205,8 @@ object ORfrmDtTm: TORfrmDtTm
     OnClick = cmdTodayClick
   end
   object cmdNow: TButton
-    Left = 218
-    Top = 200
+    Left = 225
+    Top = 204
     Width = 31
     Height = 23
     Caption = 'Now'
@@ -211,8 +214,8 @@ object ORfrmDtTm: TORfrmDtTm
     OnClick = cmdNowClick
   end
   object cmdMidnight: TButton
-    Left = 249
-    Top = 200
+    Left = 262
+    Top = 204
     Width = 50
     Height = 23
     Caption = 'Midnight'
@@ -220,8 +223,8 @@ object ORfrmDtTm: TORfrmDtTm
     OnClick = cmdMidnightClick
   end
   object VA508AccessibilityManager1: TVA508AccessibilityManager
-    Left = 312
-    Top = 192
+    Left = 344
+    Top = 152
     Data = (
       (
         'Component = pnlDate'
@@ -262,9 +265,11 @@ object ORfrmDtTm: TORfrmDtTm
         'Status = stsDefault')
       (
         'Component = bbtnPrevMonth'
-        'Status = stsDefault')
+        'Text = Previous month'
+        'Status = stsOK')
       (
         'Component = bbtnNextMonth'
-        'Status = stsDefault'))
+        'Text = Next month'
+        'Status = stsOK'))
   end
 end

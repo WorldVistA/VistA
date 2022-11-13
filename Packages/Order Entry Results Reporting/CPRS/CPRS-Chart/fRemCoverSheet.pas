@@ -70,6 +70,8 @@ type
     VA508ImageListLabeler1: TVA508ImageListLabeler;
     caMoveDown: TVA508ComponentAccessibility;
     caMoveUP: TVA508ComponentAccessibility;
+    grdPanel: TGridPanel;
+    cbLegend: TCheckBox;
     procedure cbxLocationNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cbxServiceNeedData(Sender: TObject; const StartFrom: String;
@@ -105,8 +107,8 @@ type
     procedure sbUpClick(Sender: TObject);
     procedure sbDownClick(Sender: TObject);
     procedure sbCopyRightClick(Sender: TObject);
-    procedure udSeqChangingEx(Sender: TObject; var AllowChange: Boolean;
-      NewValue: integer; Direction: TUpDownDirection);
+//    procedure _udSeqChangingEx(Sender: TObject; var AllowChange: Boolean;
+//      NewValue: Smallint; Direction: TUpDownDirection);
     procedure sbCopyLeftClick(Sender: TObject);
     procedure tvAllDblClick(Sender: TObject);
     procedure btnApplyClick(Sender: TObject);
@@ -135,6 +137,9 @@ type
     procedure btnOKExit(Sender: TObject);
     procedure caMoveDownCaptionQuery(Sender: TObject; var Text: string);
     procedure caMoveUPCaptionQuery(Sender: TObject; var Text: string);
+    procedure cbLegendClick(Sender: TObject);
+    procedure udSeqChangingEx(Sender: TObject; var AllowChange: Boolean;
+      NewValue: Integer; Direction: TUpDownDirection);
     procedure cbxUserEnter(Sender: TObject);
     procedure cbxUserExit(Sender: TObject);
     procedure cbxUserMouseClick(Sender: TObject);
@@ -202,7 +207,7 @@ procedure EditCoverSheetReminderList(AsUser: boolean);
 implementation
 
 uses rCore, uCore, uPCE, rProbs, rTIU, ORFn, rReminders, uReminders,
-  fRemCoverPreview, VAUtils, VA508AccessibilityRouter, uSimilarNames;
+  fRemCoverPreview, VAUtils, VA508AccessibilityRouter, uORLists, uSimilarNames;
 
 {$R *.DFM}
 {$R sremcvr}
@@ -316,7 +321,6 @@ begin
   FClasses := TORStringList.Create;
   FUsers := TORStringList.Create;
   FMasterList := TORStringList.Create;
-  //FMasterList.Assign(GetAllRemindersAndCategories);
   aList := TStringList.Create;
   try
     GetAllRemindersAndCategories(aList);
@@ -413,7 +417,7 @@ begin
   finally
     tvAll.Items.EndUpdate;
   end;
-  
+
   FInitialized := TRUE;
   UpdateView;
   UpdateButtons;
@@ -433,34 +437,50 @@ end;
 
 procedure TfrmRemCoverSheet.cbxLocationNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  TORComboBox(Sender).ForDataUse(SubSetOfLocations(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setSubSetOfLocations(sl, StartFrom, Direction);
+    TORComboBox(Sender).ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmRemCoverSheet.cbxServiceNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 var
-  aLst: TStringList;
+  sl: TSTrings;
 begin
-  aLst := TStringList.Create;
+  sl := TSTringList.Create;
   try
-    ServiceSearch(aLst, StartFrom, Direction, TRUE);
-    cbxService.ForDataUse(aLst);
+    ServiceSearch(sl,StartFrom, Direction, TRUE);
+    cbxService.ForDataUse(sl);
   finally
-    FreeAndNil(aLst);
+    sl.Free;
   end;
 end;
 
 procedure TfrmRemCoverSheet.cbxUserNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  cbxUser.ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  setPersonList(cbxUser, StartFrom, Direction);
 end;
 
 procedure TfrmRemCoverSheet.cbxClassNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  cbxClass.ForDataUse(SubSetOfUserClasses(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setSubSetOfUserClasses(sl, StartFrom, Direction);
+    cbxClass.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmRemCoverSheet.FormDestroy(Sender: TObject);
@@ -485,8 +505,7 @@ begin
   if FUser <> AUser then
   begin
     FUser := AUser;
-    //FUserInfo.Assign(UserDivClassInfo(FUser));
-    FastAssign(UserDivClassInfo(FUser), FUserInfo);
+    setUserDivClassInfo(FUserInfo,FUser);
   end;
 end;
 
@@ -519,7 +538,6 @@ begin
     begin
       tmpSL := TORStringList.Create;
       try
-        //tmpSL.Assign(GetCoverSheetLvlData(lvl, cls));
         FastAssign(GetCoverSheetLvlData(lvl, cls),  tmpSL);
         if (not Add) and (tmpSL.Count = 0) then
           FreeAndNil(tmpSL);
@@ -548,7 +566,6 @@ begin
   end;
   Result := tmpSL;
 end;
-
 
 procedure TfrmRemCoverSheet.UpdateView;
 var
@@ -742,7 +759,7 @@ begin
   if FChanging then
     Exit;
 
-  if not CheckForSimilarName(cbxUser, ErrMsg, ltPerson, sPr) then
+  if not CheckForSimilarName(cbxUser, ErrMsg, sPr) then
   begin
     ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');
     exit;
@@ -1231,6 +1248,11 @@ begin
   end;
 end;
 
+procedure TfrmRemCoverSheet.cbLegendClick(Sender: TObject);
+begin
+  grdPanel.Visible := cbLegend.Checked;
+end;
+
 procedure TfrmRemCoverSheet.btnAddClick(Sender: TObject);
 begin
   ChangeStatus(CVAddCode);
@@ -1406,7 +1428,7 @@ begin
       If ScreenReaderSystemActive then
         GetScreenReader.Speak('Reminder Moved up in Sequence');
       UpdateButtons;
-    end;            
+    end;
   end;
 end;
 
@@ -1547,8 +1569,15 @@ begin
 end;
 
 procedure TfrmRemCoverSheet.udSeqChangingEx(Sender: TObject;
-  var AllowChange: Boolean; NewValue: integer;
+  var AllowChange: Boolean; NewValue: Integer; Direction: TUpDownDirection);
+{
+  begin
+  inherited;
+
+end;procedure TfrmRemCoverSheet._udSeqChangingEx(Sender: TObject;
+  var AllowChange: Boolean; NewValue: Smallint;
   Direction: TUpDownDirection);
+}
 begin
   if FUpdating or (not FInitialized) then exit;
   if ListHasData(IntToStr(NewValue), IdxSeq) then
@@ -1597,7 +1626,7 @@ begin
       end;
     end;
     if sbCopyLeft.Enabled and (not sbCopyLeft.Focused) then
-      sbCopyLeft.SetFocus;    
+      sbCopyLeft.SetFocus;
   end;
 end;
 

@@ -2,51 +2,38 @@ inherited frmVerifyOrders: TfrmVerifyOrders
   Left = 341
   Top = 182
   Caption = 'Verify Orders'
-  ClientHeight = 418
+  ClientHeight = 340
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 367
-  PixelsPerInch = 120
-  TextHeight = 16
+  ExplicitHeight = 378
+  PixelsPerInch = 96
+  TextHeight = 13
   object Panel1: TPanel [0]
     Left = 0
     Top = 0
-    Width = 526
-    Height = 361
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 427
+    Height = 293
     Align = alClient
-    Constraints.MinHeight = 320
+    Constraints.MinHeight = 260
     TabOrder = 1
     OnResize = Panel1Resize
     DesignSize = (
-      526
-      361)
+      427
+      293)
     object lblVerify: TLabel
       Left = 1
       Top = 1
-      Width = 524
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 425
+      Height = 13
       Align = alTop
       Caption = 'The following orders will be marked as verified -'
-      ExplicitWidth = 282
+      ExplicitWidth = 222
     end
     object lstOrders: TCaptionListBox
-      Left = 5
-      Top = 20
-      Width = 516
-      Height = 337
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 4
+      Top = 16
+      Width = 419
+      Height = 274
       Style = lbOwnerDrawVariable
       Anchors = [akLeft, akTop, akRight, akBottom]
       ItemHeight = 13
@@ -59,62 +46,42 @@ inherited frmVerifyOrders: TfrmVerifyOrders
   end
   object Panel2: TPanel [1]
     Left = 0
-    Top = 361
-    Width = 526
-    Height = 57
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 293
+    Width = 427
+    Height = 47
     Align = alBottom
     TabOrder = 0
     object lblESCode: TLabel
-      Left = 10
-      Top = 5
-      Width = 155
-      Height = 16
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 8
+      Top = 4
+      Width = 123
+      Height = 13
       Caption = 'Electronic Signature Code'
     end
     object txtESCode: TCaptionEdit
-      Left = 10
-      Top = 25
-      Width = 168
+      Left = 8
+      Top = 20
+      Width = 137
       Height = 21
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       PasswordChar = '*'
       TabOrder = 0
       Caption = 'Electronic Signature Code'
     end
     object cmdOK: TButton
-      Left = 329
-      Top = 25
-      Width = 88
-      Height = 25
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 267
+      Top = 20
+      Width = 72
+      Height = 21
       Caption = 'OK'
       Default = True
       TabOrder = 2
       OnClick = cmdOKClick
     end
     object cmdCancel: TButton
-      Left = 427
-      Top = 25
-      Width = 89
-      Height = 25
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 347
+      Top = 20
+      Width = 72
+      Height = 21
       Cancel = True
       Caption = 'Cancel'
       TabOrder = 3

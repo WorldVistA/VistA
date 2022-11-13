@@ -2,22 +2,20 @@ inherited frmPtSelDemog: TfrmPtSelDemog
   Left = 100
   BorderStyle = bsNone
   Caption = 'frmPtSelDemog'
-  ClientHeight = 193
+  ClientHeight = 206
   ClientWidth = 169
   DefaultMonitor = dmDesktop
   Position = poDesigned
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  OnShow = FormShow
+  OnResize = FormResize
   ExplicitWidth = 169
-  ExplicitHeight = 193
+  ExplicitHeight = 206
   PixelsPerInch = 96
   TextHeight = 13
   object orapnlMain: TORAutoPanel [0]
     Left = 0
     Top = 0
     Width = 169
-    Height = 193
+    Height = 206
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
@@ -25,7 +23,7 @@ inherited frmPtSelDemog: TfrmPtSelDemog
       Left = 0
       Top = 0
       Width = 169
-      Height = 193
+      Height = 206
       Align = alClient
       HideSelection = False
       Lines.Strings = (

@@ -15,7 +15,6 @@ object AppExcept: TAppExcept
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object lblAVText: TLabel
@@ -565,20 +564,5 @@ object AppExcept: TAppExcept
       00000000803F800100000000803F000000000000803F000000000000803F0180
       00008001803F83C1FFFFFFFFC07FC7E300000000000000000000000000000000
       000000000000}
-  end
-  object BindingsList1: TBindingsList
-    Methods = <>
-    OutputConverters = <>
-    Left = 8
-    Top = 48
-    object BindExpression1: TBindExpression
-      Category = 'Binding Expressions'
-      ControlComponent = pnlDetails
-      SourceComponent = LogDetails
-      SourceExpression = 'Font.Size - 4 + (Lines.Count + 2) * -1 * (Font.Height - 3)'
-      ControlExpression = 'height'
-      NotifyOutputs = True
-      Direction = dirSourceToControl
-    end
   end
 end

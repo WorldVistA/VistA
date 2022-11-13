@@ -58,8 +58,21 @@ begin
 end;
 
 procedure TfrmUnflagOrder.cmdOKClick(Sender: TObject);
+const
+  TX_REASON_REQ = 'A reason must be entered to Unflag an order.';
+  TC_REASON_REQ = 'Reason Required';
+// Added by KCH on 05/20/2015 for NSR #20071103
+//  TX_MESSAGE = 'The Unflag Checkbox must be checked to perform this action.';
+//  TC_MESSAGE = 'Unflag Checkbox Status';
+
 begin
   inherited;
+  if txtComment.Text = '' then
+  begin
+    InfoBox(TX_REASON_REQ, TC_REASON_REQ, MB_OK);
+    Exit;
+  end;
+
   OKPressed := True;
   Close;
 end;
@@ -69,6 +82,5 @@ begin
   inherited;
   Close;
 end;
-
 
 end.

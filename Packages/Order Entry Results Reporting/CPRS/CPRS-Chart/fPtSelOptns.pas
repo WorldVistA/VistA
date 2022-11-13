@@ -1,5 +1,9 @@
 unit fPtSelOptns;
+{------------------------------------------------------------------------------
+Update History
 
+    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
+-------------------------------------------------------------------------------}
 interface
 
 uses
@@ -8,6 +12,7 @@ uses
   VA508AccessibilityManager;
 
 type
+
   TSetCaptionTopProc = procedure of object;
   TSetPtListTopProc = procedure(IEN: Int64) of object;
 
@@ -27,22 +32,29 @@ type
     radWards: TRadioButton;
     radAll: TRadioButton;
     radPcmmTeams: TRadioButton;
+    radHistory: TRadioButton;
+    lbHistory: TListBox;
     procedure radHideSrcClick(Sender: TObject);
     procedure radShowSrcClick(Sender: TObject);
     procedure radLongSrcClick(Sender: TObject);
     procedure cboListExit(Sender: TObject);
+    procedure cboListKeyPause(Sender: TObject);
     procedure cboListMouseClick(Sender: TObject);
     procedure cboListNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboDateRangeExit(Sender: TObject);
     procedure cboDateRangeMouseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure radHistoryClick(Sender: TObject);
+    procedure lbHistoryClick(Sender: TObject);
+    procedure lbHistoryDblClick(Sender: TObject);
+    procedure orapnlMainResize(Sender: TObject);
+    procedure cboListChange(Sender: TObject);
     procedure cboDateRangeChange(Sender: TObject);
     procedure cboListEnter(Sender: TObject);
     procedure cboListKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure cboListChange(Sender: TObject);
-    procedure cboListKeyPause(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     FLastTopList: string;
     FLastDateIndex: Integer;
@@ -53,12 +65,13 @@ type
     FChanging: Boolean;
     procedure HideDateRange;
     procedure ShowDateRange;
-    procedure UpdatePtSelection;
+    Procedure UpdatePtSelection;
   public
     function IsLast5(x: string): Boolean;
     function IsFullSSN(x: string): Boolean;
     procedure cmdSaveListClick(Sender: TObject);
     procedure SetDefaultPtList(Dflt: string);
+    procedure UpdateListHeight(ShowDate:Boolean);
     procedure UpdateDefault;
     property LastTopList: string read FLastTopList write FLastTopList;
     property SrcType: Integer read FSrcType write FSrcType;
@@ -76,12 +89,15 @@ const
   TAG_SRC_WARD = 17;                             // patient list by ward
   TAG_SRC_PCMM = 18;                             // patient list by PCMM team added 5/27/2014 by TDP
   TAG_SRC_ALL  = 19;                             // all patients
+  TAG_SRC_HIST = 20;                             // History
 
 var
   frmPtSelOptns: TfrmPtSelOptns;
   clinDoSave, clinSaveToday: boolean;
   clinDefaults: string;
-
+{$IFDEF PTSEL_HISTORY}
+  ptSelHistory: TStringList;
+{$ENDIF}
 implementation
 
 {$R *.DFM}
@@ -102,6 +118,10 @@ const
   TX_LS_SAV2 = CRLF + 'as your default patient list setting?';
   TC_LS_SAVE = 'Save Patient List Settings';
 
+  iGap = 5; //
+
+////////////////////////////////////////////////////////////////////////////////
+
 function TfrmPtSelOptns.IsLast5(x: string): Boolean;
 { returns true if string matchs patterns: A9999 or 9999 (BS & BS5 xrefs for patient lookup) }
 var
@@ -117,6 +137,59 @@ begin
   for i := 1 to 4 do if not CharInSet(x[i], ['0'..'9']) then Exit;
   Result := True;
 end;
+
+// PaPI ////////////////////////////////////////////////////////////////////////
+procedure TfrmPtSelOptns.lbHistoryClick(Sender: TObject);
+begin
+{$IFDEF PTSEL_HISTORY}
+  inherited;
+  if lbHistory.ItemIndex <0 then
+    exit;
+  with parent.parent as TfrmPtSel do
+    begin
+      cboPatient.Text := lbHistory.Items[lbHistory.ItemIndex];
+      cboPatient.InitLongList(cboPatient.Text);
+      cboPatient.ItemIndex := 0;
+      cboPatientKeyPause(nil);
+    end;
+{$ENDIF}
+end;
+
+procedure TfrmPtSelOptns.lbHistoryDblClick(Sender: TObject);
+begin
+{$IFDEF PTSEL_HISTORY}
+  inherited;
+  with parent.parent as TfrmPtSel do
+    cmdOKClick(nil);
+{$ENDIF}
+end;
+
+procedure TfrmPtSelOptns.orapnlMainResize(Sender: TObject);
+begin
+  inherited;
+  if Assigned(cboDateRange) then
+  begin
+    cboDateRange.Top := Height - cboDateRange.Height;
+    if Assigned(lblDateRange) then
+    begin
+      lblDateRange.Top := cboDateRange.Top - lblDateRange.Height - iGap;
+      UpdateListHeight(lblDateRange.Visible);
+    end else begin
+      UpdateListHeight(False);
+    end;
+  end;
+end;
+
+procedure TfrmPtSelOptns.radHistoryClick(Sender: TObject);
+begin
+{$IFDEF PTSEL_HISTORY}
+  inherited;
+  radHideSrcClick(Sender);
+  lbHistory.Items.Assign(ptSelHistory);
+  lbHistory.Visible := True;
+{$ENDIF}
+end;
+/////////////////////////////////////////////////////////////////////////// PaPI
 
 function TfrmPtSelOptns.IsFullSSN(x: string): boolean;
 var
@@ -160,11 +233,13 @@ begin
   cboList.Caption := TRadioButton(Sender).Caption;
   FSetCaptionTop;
   FSetPtListTop(0);
+  lbHistory.Visible := False; // PaPI
 end;
 
 procedure TfrmPtSelOptns.radShowSrcClick(Sender: TObject);
 { called by radTeams, radSpecialties, radWards - shows items for the list source }
 begin
+  lbHistory.Visible := False; // PaPI
   cboList.Pieces := '2';
   FSrcType := TControl(Sender).Tag;
   FLastTopList := '';
@@ -189,6 +264,8 @@ end;
 procedure TfrmPtSelOptns.radLongSrcClick(Sender: TObject);
 { called by radProviders, radClinics - switches to long list & shows items for the list source }
 begin
+  if lbHistory.Visible then
+    lbHistory.Hide; // AA 20150917
   cboList.Pieces := '2';
   FSrcType := TControl(Sender).Tag;
   FLastTopList := '';
@@ -202,7 +279,7 @@ begin
     TAG_SRC_PROV: begin
                     cboList.Pieces := '2,3';
                     HideDateRange;
-                    ListProviderTop(Items);
+//                    ListProviderTop(Items); -- blank procedure
                   end;
     TAG_SRC_CLIN: begin
                     ShowDateRange;
@@ -274,7 +351,7 @@ procedure TfrmPtSelOptns.cboListNeedData(Sender: TObject; const StartFrom: Strin
 The problem is that in LOM1T, there are numerous entries in the HOSPITAL LOCATION file (44) that are lower-case,
 resulting in a "B" xref that looks like this:
 
-^SC("B","module 1x",2897) = 
+^SC("B","module 1x",2897) =
 ^SC("B","pt",3420) = 
 ^SC("B","read",3146) = 
 ^SC("B","zz GIM/WONG NEW",2902) = 
@@ -285,12 +362,12 @@ resulting in a "B" xref that looks like this:
 ^SC("B","zz bhost/sws",2946) = 
 ^SC("B","zz c&P ortho/patel",3292) = 
 ^SC("B","zz mhc md/kelley",320) = 
-^SC("B","zz/mhc/p",1076) = 
-^SC("B","zzMHC MD/THRASHER",1018) = 
-^SC("B","zztest clinic",3090) = 
-^SC("B","zzz-hbpc-phone-jung",1830) = 
-^SC("B","zzz-hbpcphone cocohran",1825) = 
-^SC("B","zzz-home service",1428) = 
+^SC("B","zz/mhc/p",1076) =
+^SC("B","zzMHC MD/THRASHER",1018) =
+^SC("B","zztest clinic",3090) =
+^SC("B","zzz-hbpc-phone-jung",1830) =
+^SC("B","zzz-hbpcphone cocohran",1825) =
+^SC("B","zzz-home service",1428) =
 ^SC("B","zzz-phone-deloye",1834) =
 ^SC("B","zzz/gmonti impotence",2193) =
 
@@ -299,10 +376,29 @@ messes up the logic of the combo box.  This problem has been around since there 
 possible fix is to require those entries to either be in all uppercase or be removed.  If that's cleaned up,
 the logic below will work correctly.
 }
+var
+  Dest:TStrings;
 begin
+  Dest := TStringList.Create;
+  try
   case frmPtSelOptns.SrcType of
-  TAG_SRC_PROV: cboList.ForDataUse(SubSetOfProviders(StartFrom, Direction));
-  TAG_SRC_CLIN: cboList.ForDataUse(SubSetOfClinics(StartFrom, Direction));
+    TAG_SRC_PROV: setSubSetOfProviders(cboList, Dest,StartFrom, Direction);
+    TAG_SRC_CLIN: setSubSetOfClinics(Dest,StartFrom, Direction);
+  end;
+  cboList.ForDataUse(Dest);
+  finally
+    Dest.Free;
+  end;
+end;
+
+procedure TfrmPtSelOptns.UpdateListHeight(ShowDate:Boolean);
+begin
+  if Assigned(cboList) then
+  begin
+    if ShowDate and Assigned(lblDateRange) then
+      cboList.Height := lblDateRange.Top - cboList.Top - iGap
+    else
+      cboList.Height := Self.Height - cboList.Top - iGap;
   end;
 end;
 
@@ -310,7 +406,7 @@ procedure TfrmPtSelOptns.HideDateRange;
 begin
   lblDateRange.Hide;
   cboDateRange.Hide;
-  cboList.Height := cboDateRange.Top - cboList.Top + cboDateRange.Height;
+  updateListHeight(lblDateRange.Visible);
 end;
 
 procedure TfrmPtSelOptns.ShowDateRange;
@@ -338,9 +434,9 @@ begin
         cboDateRange.ItemIndex := cboDateRange.Items.Add(DRStart + ';' +
           DREnd + U + DRStart + ' to ' + DREnd);
     end;
-  cboList.Height := lblDateRange.Top - cboList.Top - 4;
   lblDateRange.Show;
   cboDateRange.Show;
+  updateListHeight(lblDateRange.Visible);
 end;
 
 procedure TfrmPtSelOptns.cboDateRangeChange(Sender: TObject);
@@ -436,10 +532,42 @@ end;
 procedure TfrmPtSelOptns.FormCreate(Sender: TObject);
 begin
   FLastDateIndex := -1;
+{$IFDEF PTSEL_HISTORY}
+  radHistory.Visible := True;
+{$ELSE}
+  radHistory.Visible := False;
+{$ENDIF}
   FChanging := false;
 end;
 
+procedure TfrmPtSelOptns.FormDestroy(Sender: TObject);
+begin
+  frmPtSelOptns := nil;
+  inherited;
+end;
+
 procedure TfrmPtSelOptns.SetDefaultPtList(Dflt: string);
+
+  procedure AdjustRadioButtons(aVisible:Boolean);
+  var
+    cmp: TControl;
+    i, off: Integer;
+  begin
+    if aVisible then
+      exit;
+    // move buttons up if radDflt is hidden
+    off := radProviders.Top - radDflt.Top;
+//    bvlPtList.Height := bvlPtList.Height - off;
+    for i := 0 to bvlPtList.ControlCount -1 do
+      begin
+        cmp := bvlPtList.Controls[i];
+        if (cmp is TRadioButton) and (cmp <> radDflt) then
+          TRadioButton(cmp).Top := TRadioButton(cmp).Top - off;
+      end;
+    bvlPtList.Invalidate;
+    Application.ProcessMessages;
+  end;
+
 begin
   //blj 22 September 2017 258066 - We will not show the Default patient list button unless
   //     we actually have a default patient list coming in.
@@ -449,6 +577,7 @@ begin
   begin
     radDflt.Caption := '&Default: ' + Dflt;
     radDflt.Checked := True;                 // causes radHideSrcClick to be called
+    radDflt.Enabled := True;
   end
   else                                       // otherwise, select from all patients
   begin
@@ -457,6 +586,7 @@ begin
     bvlPtList.TabStop := True;
     bvlPtList.Hint := 'No default radio button unavailable 1 of 7 to move to the other patient list categories press tab';
     // fixes CQ #4716: 508 - No Default rad btn on Patient Selection screen doesn't read in JAWS. [CPRS v28.1] (TC).
+    adjustRadioButtons(radDflt.Enabled);
   end;
 end;
 
@@ -471,7 +601,7 @@ begin
   SetDefaultPtList(fPtSel.FDfltSrc);
 end;
 
-procedure TfrmPtSelOptns.UpdatePtSelection;
+Procedure TfrmPtSelOptns.UpdatePtSelection;
 var
   aErrMsg: String;
 begin
@@ -486,13 +616,14 @@ begin
     FDateRangeChanged := False;
     if FSrcType = TAG_SRC_PROV then
     begin
-      if not CheckForSimilarName(cboList, aErrMsg, ltProvider, sPr) then
-        ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection')
+      If not CheckForSimilarName(cboList, aErrMsg, sPr) then
+       ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection')
       else
-        FSetPtListTop(cboList.ItemIEN);
+       FSetPtListTop(cboList.ItemIEN);
     end else
     begin
-      cboList.SelectByIEN(cboList.ItemIEN);
+     // The following line was removed for VISTAOR-30569
+     // cboList.SelectByIEN(cboList.ItemIEN);
       FSetPtListTop(cboList.ItemIEN);
     end;
   end;
@@ -500,5 +631,11 @@ end;
 
 initialization
   SpecifyFormIsNotADialog(TfrmPtSelOptns);
-
+{$IFDEF PTSEL_HISTORY}
+  ptSelHistory := TStringList.Create;
+{$ENDIF}
+finalization
+{$IFDEF PTSEL_HISTORY}
+  FreeAndNil(ptSelHistory);
+{$ENDIF}
 end.

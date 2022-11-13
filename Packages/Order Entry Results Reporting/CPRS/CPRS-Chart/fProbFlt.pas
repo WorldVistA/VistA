@@ -67,7 +67,7 @@ implementation
 
 {$R *.DFM}
 uses
- ORFn, fProbs, rProbs, rCore;
+ ORFn, fProbs, rProbs, rCore, uORLists, uSimilarNames;
 
 procedure GetViewFilters(FontSize: Integer; var PLFilters: TPLFilters; var ContextString, FilterString: string; var FilterChanged: boolean);
 var
@@ -121,6 +121,7 @@ begin
         cboProvider.InitLongList(Piece(PLUser.usViewProv, U, 2));
         cboProvider.SelectByID(Piece(PLUser.usViewProv, U, 1));
       end;
+    TSimilarNames.RegORComboBox(cboProvider);
     chkComments.Checked := (PLUser.usViewComments = '1');
 end;
 
@@ -171,48 +172,56 @@ end;
 
 procedure TfrmPlVuFilt.rgVuClick(Sender: TObject);
 var
+  aDest,
   AList: TStringList;
-  i: integer;
+  i: Integer;
 begin
- AList := TStringList.Create;
- try
-   cboSource.clear;
-   lstDest.clear;
-   cboSource.enabled:=true;
-   lstDest.enabled:=true;
-   cboSource.color:=clWindow;
-   lstDest.color:=clWindow;
-   case rgVu.itemindex of
-    0:  {out patient view} begin
-                             GetClinicList;
-                             GetListForOP(Alist, frmProblems.wgProbData);
-                             ClinicFilterList(Alist, cboSource.Items);
-                             cboSource.InsertSeparator;
-                             cboSource.InitLongList('') ;
-                             for i := 0 to PLFilters.ClinicList.Count - 1 do
-                               begin
-                                 cboSource.SelectByID(PLFilters.ClinicList[i]);
-                                 cmdAddClick(Self);
-                               end;
-                           end;
-    1:  {in-patient View}  begin
-                             GetServiceList;
-                             GetListForIP(Alist, frmProblems.wgProbData);
-                             ServiceFilterList(Alist, cboSource.Items);
-                             cboSource.InsertSeparator;
-                             cboSource.InitLongList('') ;
-                             for i := 0 to PLFilters.ServiceList.Count - 1 do
-                               begin
-                                 cboSource.SelectByID(PLFilters.ServiceList[i]);
-                                 cmdAddClick(Self);
-                               end;
-                           end;
-   else {unfiltered view}  GetLocationList;
-   end;
-   SetButtons ;
- finally
-   AList.Free;
- end;
+  AList := TStringList.create;
+  aDest := TStringList.create;
+  try
+    cboSource.Clear;
+    lstDest.Clear;
+    cboSource.Enabled := true;
+    lstDest.Enabled := true;
+    cboSource.color := clWindow;
+    lstDest.color := clWindow;
+    case rgVu.itemindex of
+      0: { out patient view }
+        begin
+          GetClinicList;
+          GetListForOP(AList, frmProblems.wgProbData);
+          ClinicFilterList(aDest,AList);
+          FastAssign(aDest, cboSource.Items);
+          cboSource.InsertSeparator;
+          cboSource.InitLongList('');
+          for i := 0 to PLFilters.ClinicList.Count - 1 do
+          begin
+            cboSource.SelectByID(PLFilters.ClinicList[i]);
+            cmdAddClick(Self);
+          end;
+        end;
+      1: { in-patient View }
+        begin
+          GetServiceList;
+          GetListForIP(AList, frmProblems.wgProbData);
+          ServiceFilterList(aDest,AList);
+          FastAssign(aDest, cboSource.Items);
+          cboSource.InsertSeparator;
+          cboSource.InitLongList('');
+          for i := 0 to PLFilters.ServiceList.Count - 1 do
+          begin
+            cboSource.SelectByID(PLFilters.ServiceList[i]);
+            cmdAddClick(Self);
+          end;
+        end;
+    else { unfiltered view }
+      GetLocationList;
+    end;
+    SetButtons;
+  finally
+    AList.Free;
+    aDest.Free;
+  end;
 end;
 
 procedure TfrmPlVuFilt.lstDestClick(Sender: TObject);
@@ -244,6 +253,7 @@ end;
 procedure TfrmPlVuFilt.cmdOKClick(Sender: TObject);
 var
   Alist:TstringList;
+  ErrMsg: string;
 
   procedure SetVu(vulist:TstringList; vu:string);
     var
@@ -267,6 +277,13 @@ var
   end;
 
 begin {BODY of procedure}
+  if not CheckForSimilarName(cboProvider, ErrMsg, sPr) then
+  begin
+    ShowMsgOn(ErrMsg <> '', ErrMsg, 'Problem List Fileter Error');
+    cboProvider.SelectByIen(0);
+    Exit;
+  end;
+
   Alist:=TStringList.create;
   try
      PlFilters.ProviderList.clear;
@@ -385,35 +402,38 @@ end;
 
 procedure TfrmPlVuFilt.cboProviderNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  cboProvider.ForDataUse(SubSetOfActiveAndInactivePersons(StartFrom, Direction));
-  cboProvider.Items.insert(0,'0^All');
+  sl := TStringList.create;
+  try
+    setSubSetOfActiveAndInactivePersons(cboProvider, sl, StartFrom, Direction);
+    cboProvider.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
+  cboProvider.Items.insert(0, '0^All');
 end;
 
 procedure TfrmPlVuFilt.cboSourceNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 var
-  aLst: TStringList;
+  sl:TSTrings;
 begin
-  aLst := TStringList.create;
+  sl := TSTringList.Create;
   try
-    case rgVu.itemindex of
-      0: { out patient view }
-        begin
-          cboSource.ForDataUse(SubsetOfClinics(StartFrom, Direction));
-        end;
-      1: { in-patient View }
-        begin
-          ServiceSearch(aLst, StartFrom, Direction);
-          cboSource.ForDataUse(aLst);
-        end;
-    else { unfiltered view }
-      begin
-        GetLocationList;
-      end;
+ case rgVu.itemindex of
+  0:  {out patient view} setClinicList(cboSource, StartFrom,Direction);
+//  1:  {in-patient View}  cboSource.ForDataUse(ServiceSearch(StartFrom,Direction));
+  1:  {in-patient View}
+    begin
+      ServiceSearch(sl,StartFrom,Direction);
+      cboSource.ForDataUse(sl);
     end;
+ else {unfiltered view}  GetLocationList;
+ end;
   finally
-    FreeAndNil(aLst);
+    sl.Free;
   end;
 end;
 

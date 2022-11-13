@@ -5,7 +5,7 @@ interface
 uses
   Forms, SysUtils, Classes, Dialogs, StdCtrls, ExtCtrls, Controls, Contnrs,
   Graphics, ORClasses, ComCtrls, ORDtTm, uDlgComponents, TypInfo, ORFn, StrUtils,
-  rOptions, uConst;
+  uConst, ORNet;
 
 type
   TTemplateFieldType = (dftUnknown, dftEditBox, dftComboBox, dftButton, dftCheckBoxes,
@@ -43,8 +43,8 @@ type
     FFieldValues: string;
     FUpdating: boolean;
     FAutoDestroyOnPanelFree: boolean;
-    FPanelDying: boolean;
     FOnDestroy: TNotifyEvent;
+    FOldPanelDestroy: TNotifyEvent;
     procedure KillLabels;
     function GetFieldValues: string;
     procedure SetFieldValues(const Value: string);
@@ -59,6 +59,7 @@ type
                             NoFormat: Boolean = false): string;
     function GetControl(CtrlID: integer): TControl; // NSR20100706 AA 2015/10/09
     procedure SetControlText(CtrlID: integer; AText: string);
+    procedure PanelDestroy(Sender: TObject);
   public
     constructor Create(AParent: TWinControl; AID, Text: string);
     destructor Destroy; override;
@@ -135,6 +136,7 @@ type
     procedure Assign(AFld: TTemplateField);
     function NewField: boolean;
     function CanModify: boolean;
+    procedure ErrorCheckText(sl: TStrings);
     property ID: string read FID write SetID;
     property FldName: string read FFldName write SetFldName;
     property NameChanged: boolean read FNameChanged;
@@ -179,7 +181,7 @@ function TemplateFieldNameProblem(Fld: TTemplateField): boolean;
 function SaveTemplateFieldErrors: string;
 procedure ClearModifiedTemplateFields;
 function AnyTemplateFieldsModified: boolean;
-procedure ListTemplateFields(const AText: string; AList: TStrings; ListErrors: boolean = FALSE);
+procedure ListTemplateFields(const AText: string; ErrorList, FieldList: TStrings);
 function BoilerplateTemplateFieldsOK(const AText: string; Msg: string = ''): boolean;
 procedure EnsureText(edt: TEdit; ud: TUpDown);
 procedure ConvertCodes2Text(sl: TStrings; Short: boolean);
@@ -304,13 +306,9 @@ const
 var
   uTmplFlds: TList = nil;
   uEntries: TStringList = nil;
-
   uNewTemplateFieldIDCnt: longint = 0;
   uRadioGroupIndex: integer = 0;
-
   uInternalFieldIDCount: integer = 0;
-
-
 
 const
   FieldIDDelim = '`';
@@ -333,7 +331,6 @@ end;
 function GetDialogEntry(AParent: TWinControl; AID, AText: string): TTemplateDialogEntry;
 var
   idx: integer;
-
 begin
   Result := nil;
   if AID = '' then exit;
@@ -406,7 +403,8 @@ begin
   for i := 0 to SL.Count-1 do
   begin
     txt := SL[i];
-    AssignFieldIDs(txt);
+    if pos(TemplateFieldBeginSignature,txt) > 0 then  //  20190618
+      AssignFieldIDs(txt);
     SL[i] := txt;
   end;
 end;
@@ -635,7 +633,7 @@ begin
           if(assigned(Entry)) then
           begin
             NewTxt := Entry.GetControlText(CtrlID, TRUE, FoundEntry, FALSE);
-            if FoundEntry and (NewTxt = '') then{(Trim(NewTxt) = '') then //CODE ADDED BACK IN - ZZZZZZBELLC}
+            if FoundEntry and (NewTxt = '') then{(Trim(NewTxt) = '') then //CODE ADDED BACK IN - VHAISPBELLC}
               Result := True;
           end;
           if FoundEntry then break;
@@ -662,42 +660,42 @@ var
   aData: TStringList;
 begin
   Result := nil;
-  if (not assigned(uTmplFlds)) then
+  if(not assigned(uTmplFlds)) then
     uTmplFlds := TList.Create;
   idx := -1;
-  for i := 0 to uTmplFlds.Count - 1 do
+  for i := 0 to uTmplFlds.Count-1 do
+  begin
+    if(ByIEN) then
     begin
-      if (ByIEN) then
-        begin
-          if (TTemplateField(uTmplFlds[i]).FID = ATemplateField) then
-            begin
-              idx := i;
-              break;
-            end;
-        end
-      else
-        begin
-          if (TTemplateField(uTmplFlds[i]).FFldName = ATemplateField) then
-            begin
-              idx := i;
-              break;
-            end;
-        end;
+      if(TTemplateField(uTmplFlds[i]).FID = ATemplateField) then
+      begin
+        idx := i;
+        break;
+      end;
+    end
+    else
+    begin
+      if(TTemplateField(uTmplFlds[i]).FFldName = ATemplateField) then
+      begin
+        idx := i;
+        break;
+      end;
     end;
-  if (idx < 0) then
-    begin
+  end;
+  if(idx < 0) then
+  begin
       AData := TStringList.Create;
       try
-        if (ByIEN) then
+    if(ByIEN) then
           LoadTemplateFieldByIEN(ATemplateField, aData)
-        else
+    else
           LoadTemplateField(ATemplateField, AData);
-        if (AData.Count > 1) then
-          Result := TTemplateField.Create(AData);
+    if(AData.Count > 1) then
+      Result := TTemplateField.Create(AData);
       finally
         FreeAndNil(AData);
       end;
-    end
+  end
   else
     Result := TTemplateField(uTmplFlds[idx]);
 end;
@@ -821,18 +819,77 @@ begin
   end;
 end;
 
-procedure ListTemplateFields(const AText: string; AList: TStrings; ListErrors: boolean = FALSE);
+procedure ListTemplateFields(const AText: string; ErrorList, FieldList: TStrings);
 var
-  i, j, k, flen, BadCount: integer;
-  flddesc, tmp, fld: string;
-  TmpList: TStringList;
-  InactiveList: TStringList;
+  i, j, k, dlen, EmptyCount: integer;
+  tmp, fld: string;
+  TmpList, SplitList, BadList: TStringList;
+  InactiveList, MissingList: TStringList;
   FldObj: TTemplateField;
+  IsBad, IsSplit, doFields, doErrors: boolean;
+
+  procedure add2(sl: TStrings; str: string);
+  begin
+    if assigned(sl) and (sl.IndexOf(str) < 0) then
+      sl.Add(str)
+  end;
+
+  procedure addError(sl: TStrings; str: string);
+  begin
+    if doErrors then
+      add2(sl, '  "' + str + '"');
+  end;
+
+  procedure Validate;
+  begin
+    j := pos(TemplateFieldBeginSignature, fld);
+    if j > 0 then
+    begin
+      delete(fld, j, MaxInt);
+      IsBad := True;
+    end;
+  end;
+
+  procedure bump;
+  begin
+    if(ErrorList.Count > 0) then
+      ErrorList.Add('');
+  end;
+
+  procedure AddErrorList(sl: TStringList; txt: string);
+  begin
+    if assigned(sl) and (sl.Count > 0) then
+    begin
+      bump;
+      ErrorList.Add(txt);
+      ErrorList.AddStrings(sl);
+    end;
+  end;
 
 begin
+  // These 2 lines broke export - called recursively to add children to list
+  // if assigned(ErrorList) then ErrorList.Clear;
+  // if assigned(FieldList) then FieldList.Clear;
   if(AText = '') then exit;
-  BadCount := 0;
-  InactiveList := TStringList.Create;
+  doFields := assigned(FieldList);
+  doErrors := assigned(ErrorList);
+  if (not doFields) and (not doErrors) then
+    exit;
+  EmptyCount := 0;
+  if doErrors then
+  begin
+    InactiveList := TStringList.Create;
+    SplitList := TStringList.Create;
+    MissingList := TStringList.Create;
+    BadList := TStringList.Create;
+  end
+  else
+  begin
+    InactiveList := nil;
+    SplitList := nil;
+    MissingList := nil;
+    BadList := nil;
+  end;
   try
     TmpList := TStringList.Create;
     try
@@ -845,37 +902,56 @@ begin
           if(i > 0) then
           begin
             fld := '';
-            j := pos(TemplateFieldEndSignature, copy(tmp, i + TemplateFieldSignatureLen, MaxInt));
-            if(j > 0) then
+            IsBad := False; // had no trailing TemplateFieldEndSignature
+            IsSplit := False; // Split across lines, IsBad takes precedence
+            j := pos(TemplateFieldEndSignature, tmp, i + TemplateFieldSignatureLen);
+            if j > 0 then
             begin
-              inc(j, i + TemplateFieldSignatureLen - 1);
-              flen := j - i - TemplateFieldSignatureLen;
-              fld := copy(tmp,i + TemplateFieldSignatureLen, flen);
-              delete(tmp, i, flen + TemplateFieldSignatureLen + 1);
+              fld := copy(tmp,i + TemplateFieldSignatureLen, j - i - TemplateFieldSignatureLen);
+              Validate;
             end
             else
             begin
-              delete(tmp,i,TemplateFieldSignatureLen);
-              inc(BadCount);
-            end;
-            if(fld <> '') then
-            begin
-              if ListErrors then
+              fld := copy(tmp, i + TemplateFieldSignatureLen, MaxInt);
+              Validate;
+              if (k >= TmpList.Count-1) then
+                IsBad := True;
+              if not IsBad then
               begin
-                FldObj := GetTemplateField(fld, FALSE);
-                if assigned(FldObj) then
+                j := pos(TemplateFieldEndSignature, TmpList[k+1]);
+                if j > 0 then
                 begin
-                  if FldObj.Inactive then
-                    InactiveList.Add('  "' + fld + '"');
-                  flddesc := '';
+                  fld := fld + copy(TmpList[k + 1], 1, j - TemplateFieldSignatureEndLen);
+                  Validate;
+                  if not IsBad then
+                    IsSplit := True;
                 end
                 else
-                  flddesc := '  "' + fld + '"';
+                  IsBad := True;
+              end;
+            end;
+            dlen := length(fld) + TemplateFieldSignatureLen;
+            if (not IsBad) and (not IsSplit) then
+              inc(dlen, TemplateFieldSignatureLen);
+            delete(tmp, i, dlen);
+            if IsBad then
+              AddError(BadList, fld)
+            else if IsSplit then
+              AddError(SplitList, fld)
+            else if fld = '' then
+              inc(EmptyCount)
+            else
+            begin
+              FldObj := GetTemplateField(fld, FALSE);
+              if assigned(FldObj) then
+              begin
+                if FldObj.Inactive then
+                  AddError(InactiveList, fld)
+                else if doFields then
+                  Add2(FieldList, fld);
               end
               else
-                flddesc := fld;
-              if(flddesc <> '') and (AList.IndexOf(flddesc) < 0) then
-                AList.Add(flddesc)
+                AddError(MissingList, fld);
             end;
           end;
         until (i = 0);
@@ -883,52 +959,97 @@ begin
     finally
       TmpList.Free;
     end;
-    if ListErrors then
+    if doErrors then
     begin
-      if(AList.Count > 0) then
-        AList.Insert(0, 'The following template fields were not found:');
-      if (BadCount > 0) then
+      AddErrorList(MissingList, 'Template fields not found:');
+      AddErrorList(InactiveList, 'Inactive template fields found:');
+      AddErrorList(SplitList, 'Template fields split onto different lines:');
+      AddErrorList(BadList, 'Template fields starting with "' +
+          TemplateFieldBeginSignature + '" with no ending "' +
+          TemplateFieldEndSignature + '":');
+      if (EmptyCount > 0) then
       begin
-        if(BadCount = 1) then
-          tmp := 'A template field marker "' + TemplateFieldBeginSignature +
-                 '" was found without a'
+        bump;
+        if(EmptyCount = 1) then
+          tmp := 'was one'
         else
-          tmp := IntToStr(BadCount) + ' template field markers "' + TemplateFieldBeginSignature +
-                 '" were found without';
-        if(AList.Count > 0) then
-          AList.Add('');
-        AList.Add(tmp + ' matching "' + TemplateFieldEndSignature + '"');
-      end;
-      if(InactiveList.Count > 0) then
-      begin
-        if(AList.Count > 0) then
-          AList.Add('');
-        AList.Add('The following inactive template fields were found:');
-        FastAddStrings(InactiveList, AList);
-      end;
-      if(AList.Count > 0) then
-      begin
-        AList.Insert(0, 'Text contains template field errors:');
-        AList.Insert(1, '');
+          tmp := 'were ' + IntToStr(EmptyCount);
+        tmp := 'There ' + tmp + ' empty template field';
+        if(EmptyCount > 1) then
+          tmp := tmp + 's';
+        ErrorList.Add(tmp + '.');
       end;
     end;
   finally
-    InactiveList.Free;
+    if doErrors then
+    begin
+      BadList.Free;
+      MissingList.Free;
+      SplitList.Free;
+      InactiveList.Free;
+    end;
   end;
 end;
 
 function BoilerplateTemplateFieldsOK(const AText: string; Msg: string = ''): boolean;
 var
-  Errors: TStringList;
+  tmp, Errors, tested: TStringList;
   btns: TMsgDlgButtons;
+  fieldPath: string;
+
+  procedure CheckNestedFields(const txt: string);
+  var
+    i, j: integer;
+    Fields: TStringList;
+    fld: TTemplateField;
+
+  begin
+    Fields := TStringList.Create;
+    try
+      ListTemplateFields(txt, Errors, Fields);
+      if Errors.Count = 0 then
+      begin
+        for i := 0 to Fields.Count-1 do
+        begin
+          if tested.IndexOf(Fields[i]) < 0 then
+          begin
+            tested.Add(Fields[i]);
+            fld := GetTemplateField(Fields[i], False);
+            if assigned(fld) then
+            begin
+              fieldPath := fieldPath + ' | ' + Fields[i];
+              tmp.Clear;
+              Fld.ErrorCheckText(tmp);
+              CheckNestedFields(tmp.Text);
+              if Errors.Count > 0 then
+                break;
+              j := length(fieldPath);
+              while(fieldPath[j] <> '|') do
+                dec(j);
+              fieldPath := copy(fieldPath,1,j-2);
+            end;
+          end;
+        end;
+      end;
+    finally
+      Fields.Free;
+    end;
+  end;
 
 begin
-  Result := TRUE;
+  Result := True;
   Errors := TStringList.Create;
+  tmp := TStringList.Create;
+  tested := TStringList.Create;
   try
-    ListTemplateFields(AText, Errors, TRUE);
+    CheckNestedFields(AText);
     if(Errors.Count > 0) then
     begin
+      if length(fieldPath)>0 then
+      begin
+        delete(fieldPath,1,3);
+        Errors.Insert(0,'Errors found in Template Field ' + fieldPath + ':' + CRLF);
+      end;
       if(Msg = 'OK') then
         btns := [mbOK]
       else
@@ -939,9 +1060,12 @@ begin
           Msg := 'text insertion';
         Errors.Add('Do you want to Abort ' + Msg + ', or Ignore the error and continue?');
       end;
-      Result := (MessageDlg(Errors.Text, mtError, btns, 0) = mrIgnore);
+//      Result := (MessageDlg(Errors.Text, mtError, btns, 0) = mrIgnore);
+      Result := (InfoDlg(Errors.Text, 'Template Field Errors', mtError, btns) = mrIgnore);
     end;
   finally
+    tested.Free;
+    tmp.Free;
     Errors.Free;
   end;
 end;
@@ -1112,7 +1236,7 @@ end;
 
 function TTemplateField.GetTIUParam: Integer;
 begin
-  result := StrToIntDef(systemParameters.StringValue['tmRequiredFldsOff'], 1);
+  result := StrToIntDef(systemParameters.AsType<String>('tmRequiredFldsOff'), 1);
 end;
 
 procedure TTemplateField.CreateDialogControls(Entry: TTemplateDialogEntry;
@@ -1435,7 +1559,10 @@ end;
 procedure TTemplateField.SetEditDefault(const Value: string);
 begin
   if(FEditDefault <> Value) and CanModify then
-    FEditDefault := Value;
+// DRM - I9259852FY16/529128 - 2017/7/21 - Restrict default value to printable ASCII characters + TAB
+//    FEditDefault := Value;
+    FEditDefault := FilteredString(Value);
+// DRM - I9259852FY16/529128 - 2017/7/21 ---
 end;
 
 procedure TTemplateField.SetFldName(const Value: string);
@@ -1699,6 +1826,32 @@ begin
   inherited;
 end;
 
+procedure TTemplateField.ErrorCheckText(sl: TStrings);
+begin
+  case FFldType of
+    dftEditBox,
+    dftDate:  sl.Add(FEditDefault);
+//      dftNumber,
+    dftHyperlink: begin
+                    sl.Add(FEditDefault);
+                    sl.Add(FURL);
+                  end;
+
+    dftComboBox,
+    dftButton,
+    dftCheckBoxes,
+    dftRadioButtons:  begin
+                        sl.Add(FItems);
+                        sl.Add(FItemDefault);
+                      end;
+
+    dftWP,
+    dftText: sl.Add(FItems);
+//      dftScreenReader
+  end;
+  sl.Add(FLMText);
+end;
+
 procedure TTemplateField.SetRequired(const Value: boolean);
 begin
   if(FRequired <> Value) and CanModify then
@@ -1777,18 +1930,16 @@ const
   EOL_MARKER = #182;
   SR_BREAK   = #186;
 
-procedure PanelDestroy(AData: Pointer; Sender: TObject);
+procedure TTemplateDialogEntry.PanelDestroy(Sender: TObject);
 var
   idx: integer;
-  dlg: TTemplateDialogEntry;
-
 begin
-  dlg := TTemplateDialogEntry(AData);
-  idx := uEntries.IndexOf(dlg.FID);
-  if(idx >= 0) then
-    uEntries.Delete(idx);
-  dlg.FPanelDying := TRUE;
-  dlg.Free;
+  FPanel := nil; // FPanel is no longer owned by TTemplateDialogEntry!
+  idx := uEntries.IndexOf(FID);
+  if(idx >= 0) then uEntries.Delete(idx);
+  if Assigned(FOldPanelDestroy) then
+    FOldPanelDestroy(Sender);
+  Free;
 end;
 
 constructor TTemplateDialogEntry.Create(AParent: TWinControl; AID, Text: string);
@@ -1796,7 +1947,6 @@ var
   CtrlID, idx, i, j, flen: integer;
   txt, FldName: string;
   Fld: TTemplateField;
-
 begin
   FID := AID;
   FText := Text;
@@ -1813,12 +1963,17 @@ begin
       StripScreenReaderCodes(FControls);
   end;
   FFirstBuild := TRUE;
-  FPanel := TDlgFieldPanel.Create(AParent.Owner);
-  FPanel.Parent := AParent;
-  FPanel.BevelOuter := bvNone;
-  FPanel.Caption := '';
-  FPanel.Font.Assign(FFont);
-  UpdateColorsFor508Compliance(FPanel, TRUE);
+
+  if Assigned(AParent) then
+  begin
+    FPanel := TDlgFieldPanel.Create(AParent.Owner);
+    FPanel.Parent := AParent;
+    FPanel.BevelOuter := bvNone;
+    FPanel.Caption := '';
+    FPanel.Font.Assign(FFont);
+    UpdateColorsFor508Compliance(FPanel, TRUE);
+  end;
+
   idx := 0;
   while (idx < FControls.Count) do
   begin
@@ -1853,7 +2008,7 @@ begin
             end;
             FControls[idx] := FControls[idx] + '*';
           end;
-          Fld.CreateDialogControls(Self, idx, CtrlID);
+          Fld.CreateDialogControls(Self, idx, CtrlID);  // Creates controls
           FControls.Insert(idx+1,copy(txt,i,MaxInt));
         end
         else
@@ -1891,14 +2046,15 @@ end;
 
 destructor TTemplateDialogEntry.Destroy;
 begin
-  if assigned(FOnDestroy) then
+  if Assigned(FOnDestroy) then
     FOnDestroy(Self);
   KillLabels;
   KillObj(@FControls, TRUE);
-  if FPanelDying then
-    FPanel := nil
-  else
+  if Assigned(FPanel) then
+  begin
+    FPanel.Owner.RemoveComponent(FPanel);
     FreeAndNil(FPanel);
+  end;
   FreeAndNil(FFont);
   FreeAndNil(FIndents);
   inherited;
@@ -1910,7 +2066,10 @@ begin
     FOnChange(Self);
 end;
 
-function TTemplateDialogEntry.GetControlText(CtrlID: integer; NoCommas: boolean; var FoundEntry: boolean; AutoWrap: boolean; emField: string = ''; CrntLnTxt: String = ''; AutoWrapIndent: integer = 0; NoFormat: boolean = false): string;
+function TTemplateDialogEntry.GetControlText(CtrlID: integer; NoCommas: boolean;
+  var FoundEntry: boolean; AutoWrap: boolean; emField: string = '';
+  CrntLnTxt: String = ''; AutoWrapIndent: integer = 0;
+  NoFormat: boolean = false): string;
 var
   x, i, j, ind, idx: integer;
   ctrl: TControl;
@@ -1995,7 +2154,7 @@ begin
         end;
       end
       else
-        // !!!!!! CODE ADDED BACK IN - ZZZZZZBELLC !!!!!!
+        // !!!!!! CODE ADDED BACK IN - VHAISPBELLC !!!!!!
         if (ctrl is TEdit) then
           Result := TEdit(ctrl).Text
         else if (ctrl is TORComboBox) then
@@ -2008,7 +2167,7 @@ begin
         else if (ctrl is TORDateCombo) then
           Result := TORDateCombo(ctrl).Text + ':' + FloatToStr(TORDateCombo(ctrl).FMDate)
         else
-          { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
+          { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - VHAISPBELLC !!!!!!
             if(Ctrl is TORDateBox) then begin
             if TORDateBox(Ctrl).IsValid then
             Result := TORDateBox(Ctrl).Text
@@ -2016,7 +2175,7 @@ begin
             Result := '';
             end else
           }
-          // !!!!!! CODE ADDED BACK IN - ZZZZZZBELLC !!!!!!
+          // !!!!!! CODE ADDED BACK IN - VHAISPBELLC !!!!!!
           if (ctrl is TORDateBox) then
             Result := TORDateBox(ctrl).Text
           else if (ctrl is TRichEdit) then
@@ -2060,16 +2219,32 @@ begin
               else
                 TmpSelStart := 0;
               // If we are adding CTLF and we exceed MAX_WRAP_WIDTH characters
-              if (not AutoWrap) and ((ind + Length(TRichEdit(ctrl).Lines[0])) > MAX_WRAP_WIDTH) then
+              if (not AutoWrap) then // and ((ind + Length(TRichEdit(ctrl).Lines[0])) > MAX_WRAP_WIDTH) then
               begin
                 // If we are sharing a line, do not add leading indent
                 WrapTxt := TRichEdit(ctrl).Text;
 
                 // Wrap the text
                 If Length(CrntLnTxt) > 0 then
-                 WrapTxt := SafeWrapTextVariable(WrapTxt, CRLF + StringOfChar(' ', ind), [' '], MAX_WRAP_WIDTH, (MAX_WRAP_WIDTH - ind), MAX_WRAP_WIDTH)
+                begin
+                  WrapTxt := SafeWrapTextVariable(WrapTxt,
+                    CRLF + StringOfChar(' ', ind), [' '], MAX_WRAP_WIDTH,
+                    (MAX_WRAP_WIDTH - ind), MAX_WRAP_WIDTH);
+                  // SafeWrapTextVariable may add additional CRLF and indents to
+                  // WrapTxt.  These need to be added to CrntLnTxt so that when
+                  //   Delete(Result, 1, Length(CrntLnTxt));
+                  // is called these are removed from Result - withouth this
+                  // erroneous xxxxxx can be added to the start of Result.
+                  CrntLnTxt := SafeWrapTextVariable(CrntLnTxt,
+                    CRLF + StringOfChar(' ', ind), [' '], MAX_WRAP_WIDTH,
+                    (MAX_WRAP_WIDTH - ind), MAX_WRAP_WIDTH);
+                  if CrntLnTxt.EndsWith(CRLF) then
+                    delete(CrntLnTxt, length(CrntLnTxt) - length(CRLF) + 1, MaxInt);
+                end
                 else
-                 WrapTxt := SafeWrapText(WrapTxt, CRLF + StringOfChar(' ', ind), [' '], (MAX_WRAP_WIDTH - ind), MAX_WRAP_WIDTH);
+                  WrapTxt := SafeWrapText(WrapTxt,
+                    CRLF + StringOfChar(' ', ind), [' '],
+                    (MAX_WRAP_WIDTH - ind), MAX_WRAP_WIDTH);
 
                 if Length(CrntLnTxt) > 0 then
                   Result := WrapTxt
@@ -2086,10 +2261,25 @@ begin
 
                   // Wrap the text
                   If Length(CrntLnTxt) > 0 then
-                    WrapTxt := SafeWrapTextVariable(WrapTxt, #3 + StringOfChar(' ', ind), [' '], AutoWrapIndent, (AutoWrapIndent - ind), AutoWrapIndent)
+                  begin
+                    WrapTxt := SafeWrapTextVariable(WrapTxt,
+                      #3 + StringOfChar(' ', ind), [' '], AutoWrapIndent,
+                      (AutoWrapIndent - ind), AutoWrapIndent);
+                    // SafeWrapTextVariable may add additional CRLF and indents to
+                    // WrapTxt.  These need to be added to CrntLnTxt so that when
+                    //   Delete(Result, 1, Length(CrntLnTxt));
+                    // is called these are removed from Result - withouth this
+                    // erroneous xxxxxx can be added to the start of Result.
+                    CrntLnTxt := SafeWrapTextVariable(CrntLnTxt,
+                      #3 + StringOfChar(' ', ind), [' '], AutoWrapIndent,
+                      (AutoWrapIndent - ind), AutoWrapIndent);
+                    if CrntLnTxt.EndsWith(CRLF) then
+                      delete(CrntLnTxt, length(CrntLnTxt) - length(CRLF) + 1, MaxInt);
+                  end
                   else
-                    WrapTxt := SafeWrapText(WrapTxt, #3 + StringOfChar(' ', ind), [' '], (AutoWrapIndent - ind), AutoWrapIndent);
-
+                    WrapTxt := SafeWrapText(WrapTxt,
+                      #3 + StringOfChar(' ', ind), [' '],
+                      (AutoWrapIndent - ind), AutoWrapIndent);
 
                   if Length(CrntLnTxt) > 0 then
                     Result := WrapTxt
@@ -2125,7 +2315,7 @@ begin
             end;
           end
           else
-            { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
+            { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - VHAISPBELLC !!!!!!
               if(Ctrl is TEdit) then
               Result := TEdit(Ctrl).Text
               else }
@@ -2400,6 +2590,8 @@ begin
         while(txt <> '') do
         begin
           cnt := NumCharsFitInWidth(FFont.Handle, txt, MaxTextLen-x);
+          if (cnt < 1) and (x = FOCUS_RECT_MARGIN) then
+            cnt := 1;
           MaxChars := cnt;
           if(cnt >= length(txt)) then
           begin
@@ -2513,19 +2705,19 @@ end;
 
 procedure TTemplateDialogEntry.SetAutoDestroyOnPanelFree(
   const Value: boolean);
-var
-  M: TMethod;
-
 begin
-  FAutoDestroyOnPanelFree := Value;
-  if(Value) then
+  if Value <> FAutoDestroyOnPanelFree then
   begin
-    M.Data := Self;
-    M.Code := @PanelDestroy;
-    FPanel.OnDestroy := TNotifyEvent(M);
-  end
-  else
-    FPanel.OnDestroy := nil;
+    FAutoDestroyOnPanelFree := Value;
+    if FAutoDestroyOnPanelFree then
+    begin
+      FOldPanelDestroy := FPanel.OnDestroy;
+      FPanel.OnDestroy := PanelDestroy;
+    end else begin
+      FPanel.OnDestroy := FOldPanelDestroy;
+      FOldPanelDestroy := nil;
+    end;
+  end;
 end;
 
 procedure TTemplateDialogEntry.SetControlText(CtrlID: integer; AText: string);
@@ -2636,26 +2828,26 @@ begin
 end;
 
 function StripEmbedded(iItems: string): string;
-{7/26/01    S Monson
-            Returns the field will all embedded fields removed}
 var
-  p1, p2, icur: integer;
-Begin
-  p1 := pos(TemplateFieldBeginSignature,iItems);
-  icur := 0;
-  while p1 > 0 do
-    begin
-      p2 := pos(TemplateFieldEndSignature,copy(iItems,icur+p1+TemplateFieldSignatureLen,maxint));
-      if  p2 > 0 then
-        begin
-          delete(iItems,p1+icur,TemplateFieldSignatureLen+p2+TemplateFieldSignatureEndLen-1);
-          icur := icur + p1 - 1;
-          p1 := pos(TemplateFieldBeginSignature,copy(iItems,icur+1,maxint));
-        end
-      else
-        p1 := 0;
-    end;
+  i, j: integer;
+
+begin
   Result := iItems;
+  i := pos(TemplateFieldBeginSignature,Result);
+  while i > 0 do
+  begin
+    j := pos(TemplateFieldEndSignature,Result,i + TemplateFieldSignatureLen);
+    if j < 1 then
+      j := length(Result);
+    while(j>=i) do
+    begin
+    // removing CRLF causes sync error between stripped and actual text
+      if(Result[j] <> #13) and (Result[j] <> #10) then
+        delete(Result, j, 1);
+      dec(j);
+    end;
+    i := pos(TemplateFieldBeginSignature,Result,i);
+  end;
 end;
 
 procedure StripScreenReaderCodes(var Text: string);

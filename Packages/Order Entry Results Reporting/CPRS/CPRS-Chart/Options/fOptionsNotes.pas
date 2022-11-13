@@ -20,7 +20,8 @@ type
     bvlBottom: TBevel;
     btnOK: TButton;
     btnCancel: TButton;
-    lblAutoSave2: TLabel;
+    Panel1: TPanel;
+    Panel2: TPanel;
     procedure FormShow(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure txtAutoSaveChange(Sender: TObject);
@@ -47,7 +48,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rOptions, uOptions, rCore, rTIU, rDCSumm, VAUtils;
+  rOptions, uOptions, rCore, rTIU, rDCSumm, VAUtils, uSimilarNames;
 
 procedure DialogOptionsNotes(topvalue, leftvalue, fontsize: integer; var actiontype: Integer);
 // create the form and make it modal, return an action
@@ -98,6 +99,7 @@ begin
   cboCosigner.Items.Add('0^<none>');
   cboCosigner.InitLongList(cosignername);
   cboCosigner.SelectByIEN(cosigner);
+  TSimilarNames.RegORComboBox(cboCosigner);
   FStartingCosigner := cosigner;
   chkAskSubject.Checked := rpcGetSubject;
   if chkAskSubject.Checked then chkAskSubject.Tag := 1;
@@ -107,8 +109,16 @@ procedure TfrmOptionsNotes.btnOKClick(Sender: TObject);
 // only saves values if they have been changed
 // opening tab^use last tab^autosave seconds^verify note title
 var
-  values: string;
+  aErrMsg, values: string;
+
 begin
+  aErrMsg := '';
+  if not CheckForSimilarName(cboCosigner, aErrMsg, sCo) then
+  begin
+    ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
+    ModalResult := mrNone;
+    exit;
+  end;
   values := '';
   values := values + '^';
   values := values + '^';
@@ -162,7 +172,7 @@ begin
   begin
     Key := #0;
     beep;
-  end;
+  end;  
 end;
 
 procedure TfrmOptionsNotes.txtAutoSaveExit(Sender: TObject);
@@ -196,7 +206,7 @@ var
 begin
   aResults := TStringList.Create;
   try
-    rpcGetCosigners(StartFrom, Direction, aResults);
+    rpcGetCosigners(cboCosigner, StartFrom, Direction, aResults);
     cboCosigner.ForDataUse(aResults);
   finally
     FreeAndNil(aResults);

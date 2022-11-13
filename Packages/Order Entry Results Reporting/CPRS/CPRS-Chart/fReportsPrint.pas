@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, fAutoSz, ORCtrls, ORNet, Mask, ComCtrls, rECS,
+  StdCtrls, fAutoSz, ORCtrls, ORNet, Mask, ComCtrls, rECS, uPrinting,
   fBase508Form, VA508AccessibilityManager;
 
 type
@@ -19,7 +19,7 @@ type
     cboDevice: TORComboBox;
     cmdOK: TButton;
     cmdCancel: TButton;
-    dlgWinPrinter: TPrintDialog;
+    dlgWinPrinter: uPrinting.TPrintDialog;
     chkDefault: TCheckBox;
     procedure cboDeviceChange(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
@@ -43,7 +43,7 @@ var
 
 procedure PrintReports(AReports: string; const AReportsTitle: string);
 function StringPad(aString: string; aStringCount, aPadCount: integer): String;
-function DeleteLineBreaks(const S: string): string;
+//function DeleteLineBreaks(const S: string): string;
 
 implementation
 
@@ -259,7 +259,10 @@ begin
         aID := ListItem.SubItems[0];
        if frmReports.TabControl1.Tabs.Count > 1 then
           begin
-            L := StrToIntDef(piece(uColumns[0],'^',6),10);
+            if uColumns.Count > 0 then
+              L := StrToIntDef(piece(uColumns[0],'^',6),10)
+            else
+              L := 10;
             x := StringPad(ListItem.Caption, L, L+1);
             aData := x;
           end;
@@ -456,8 +459,10 @@ begin
                           ListItem := frmReports.lvReports.Items[i];
                           aQualifier := ListItem.SubItems[0];
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
-                          QuickCopy(GetFormattedReport(FReports, aQualifier,
-                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                          QuickCopy(GetFormattedReport(FReports, aQualifier,
+//                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                          GetFormattedReport(FReportText.Lines, FReports, aQualifier,
+                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState);
                           aCaption := piece(uRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -471,8 +476,10 @@ begin
                           ListItem := frmReports.lvReports.Items[i];
                           aQualifier := ListItem.SubItems[0];
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
-                          QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
-                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                          QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
+//                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                          GetFormattedReport(FReportText.Lines, FReports, aQualifier + MoreID,
+                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState);
                           aCaption := piece(uRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -493,8 +500,10 @@ begin
                       end
                     else
                       begin
-                        QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
-                          Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                        QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
+//                          Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                        GetFormattedReport(FReportText.Lines, FReports, aQualifier + MoreID,
+                          Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState);
                         aCaption := piece(uRemoteType,'^',4);
                         PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                         if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -515,8 +524,10 @@ begin
                       end
                     else
                       begin
-                        QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
-                           Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                        QuickCopy(GetFormattedReport(FReports, aQualifier + MoreID,
+//                           Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                        GetFormattedReport(FReportText.Lines, FReports, aQualifier + MoreID,
+                           Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState);
                         aCaption := piece(uRemoteType,'^',4);
                         PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                         if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -530,8 +541,10 @@ begin
                           ListItem := frmReports.lvReports.Items[i];
                           aQualifier := ListItem.SubItems[0];
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
-                          QuickCopy(GetFormattedReport(FReports, aQualifier,
-                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                          QuickCopy(GetFormattedReport(FReports, aQualifier,
+//                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                          GetFormattedReport(FReportText.Lines, FReports, aQualifier,
+                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState);
                           aCaption := piece(uRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -545,8 +558,10 @@ begin
                           ListItem := frmReports.lvReports.Items[i];
                           aQualifier := ListItem.SubItems[0];
                           ADevice := Piece(cboDevice.ItemID, ';', 2);
-                          QuickCopy(GetFormattedReport(FReports, aQualifier,
-                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//                          QuickCopy(GetFormattedReport(FReports, aQualifier,
+//                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+                          GetFormattedReport(FReportText.Lines, FReports, aQualifier,
+                            Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState);
                           aCaption := piece(uRemoteType,'^',4);
                           PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
                           if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -562,8 +577,10 @@ begin
                 Exit;
               end;
               aQualifier := Piece(uRemoteType,'^',5);
-              QuickCopy(GetFormattedReport(FReports, aQualifier,
-                 Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+//              QuickCopy(GetFormattedReport(FReports, aQualifier,
+//                 Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState), FReportText);
+              GetFormattedReport(FReportText.Lines, FReports, aQualifier,
+                 Patient.DFN, uHSComponents, RemoteSiteID, RemoteQuery, uHState);
               aCaption := piece(uRemoteType,'^',4);
               PrintWindowsReport(FReportText, PAGE_BREAK, aCaption, ErrMsg);
               if Length(ErrMsg) > 0 then InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
@@ -707,9 +724,17 @@ end;
 
 procedure TfrmReportPrt.cboDeviceNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TSTrings;
 begin
   inherited;
-  cboDevice.ForDataUse(SubsetOfDevices(StartFrom, Direction));
+  sl := TSTringList.Create;
+  try
+    setSubsetOfDevices(sl,StartFrom, Direction);
+    cboDevice.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 end.

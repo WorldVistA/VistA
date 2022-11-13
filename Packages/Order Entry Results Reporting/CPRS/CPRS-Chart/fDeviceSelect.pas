@@ -137,9 +137,17 @@ end;
 
 procedure TfrmDeviceSelect.cboDeviceNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TSTrings;
 begin
   inherited;
-  cboDevice.ForDataUse(SubsetOfDevices(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setSubsetOfDevices(sl,StartFrom, Direction);
+    cboDevice.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmDeviceSelect.FormClose(Sender: TObject;

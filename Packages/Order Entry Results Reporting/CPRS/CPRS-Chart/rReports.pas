@@ -32,8 +32,10 @@ function HDRActive: String;
 procedure PrintReportsToDevice(AReport: string; const Qualifier, Patient,
      ADevice: string; var ErrMsg: string; aComponents: TStringlist;
      ARemoteSiteID, ARemoteQuery, AHSTag: string);
-function HSFileLookup(aFile: String; const StartFrom: string;
-         Direction: Integer): TStrings;
+//function HSFileLookup(aFile: String; const StartFrom: string;
+//         Direction: Integer): TStrings;
+function HSFileLookup(aDest:TStrings; aFile: String; const StartFrom: string;
+         Direction: Integer): Integer;
 procedure HSComponentFiles(Dest: TStrings; aComponent: String);
 procedure HSSubItems(Dest: TStrings; aItem: String);
 procedure HSReportText(Dest: TStrings; aComponents: TStringlist);
@@ -42,8 +44,9 @@ procedure HSABVComponents(Dest: TStrings);
 procedure HSDispComponents(Dest: TStrings);
 procedure HSComponentSubs(Dest: TStrings; aItem: String);
 procedure HealthSummaryCheck(Dest: TStrings; aQualifier: string);
-function GetFormattedReport(AReport: string; const Qualifier, Patient: string;
-           aComponents: TStringlist; ARemoteSiteID, ARemoteQuery, AHSTag: string): TStrings;
+function GetFormattedReport(aDest:TSTrings; AReport: string; const Qualifier, Patient: string;
+         aComponents: TStringlist; ARemoteSiteID, ARemoteQuery, AHSTag: string): Integer;
+
 procedure PrintWindowsReport(ARichEdit: TRichEdit; APageBreak, ATitle: string;
   var ErrMsg: string; IncludeHeader: Boolean = false);
 function DefaultToWindowsPrinter: Boolean;
@@ -60,7 +63,7 @@ procedure PrintVReports(Dest, ADevice, AHeader: string; AReport: TStringList);
 
 implementation
 
-uses uCore, rCore, Printers, clipbrd, uReports, fReports;
+uses uCore, rCore, Printers, clipbrd, uReports, fReports, uPrinting;
 
 var
   uTree:       TStringList;
@@ -75,47 +78,49 @@ procedure ListConsults(Dest: TStrings);
 var
   i: Integer;
   x: string;
+  Results: TSTrings;
 begin
-  CallV('ORWCS LIST OF CONSULT REPORTS', [Patient.DFN]);
-  with RPCBrokerV do
+  CallVistA('ORWCS LIST OF CONSULT REPORTS', [Patient.DFN], Dest);
+  Results := Dest;
   begin
-    SortByPiece(TStringList(Results), U, 2);
+    SortByPiece(Results, U, 2);
     InvertStringList(TStringList(Results));
-    SetListFMDateTime('mmm dd,yy', TStringList(Results), U, 2);
+    SetListFMDateTime('mmm dd,yy', Results, U, 2);
     for i := 0 to Results.Count - 1 do
     begin
       x := Results[i];
       x := Pieces(x, U, 1, 2) + U + Piece(x, U, 3) + '  (' + Piece(x, U, 4) + ')';
       Results[i] := x;
     end;
-    FastAssign(Results, Dest);
   end;
 end;
 
 procedure LoadConsultText(Dest: TStrings; IEN: Integer);
 begin
-  CallV('ORWCS REPORT TEXT', [Patient.DFN, IEN]);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('ORWCS REPORT TEXT', [Patient.DFN, IEN], Dest);
 end;
 
 { Reports }
 
-procedure ExtractSection(Dest: TStrings; const Section: string; Mixed: Boolean);
+// procedure ExtractSection(Dest: TStrings; const Section: string; Mixed: Boolean);
+procedure ExtractSection(Results, Dest: TStrings; const Section: string;
+  Mixed: Boolean);
 var
   i: Integer;
 begin
-  with RPCBrokerV do
   begin
     i := -1;
-    repeat Inc(i) until (i = Results.Count) or (Results[i] = Section);
+    repeat
+      Inc(i)
+    until (i = Results.Count) or (Results[i] = Section);
     Inc(i);
     while (i < Results.Count) and (Results[i] <> '$$END') do
     begin
-      {if (Pos('OR_ECS',UpperCase(Results[i]))>0) and (not uECSReport.ECSPermit) then
-      begin
+      { if (Pos('OR_ECS',UpperCase(Results[i]))>0) and (not uECSReport.ECSPermit) then
+        begin
         Inc(i);
         Continue;
-      end;}
+        end; }
       if Mixed = true then
         Dest.Add(MixedCase(Results[i]))
       else
@@ -126,28 +131,50 @@ begin
 end;
 
 procedure LoadReportLists;
+var
+  sl: TStrings;
 begin
-  CallV('ORWRP REPORT LISTS', [nil]);
-  uDateRanges := TStringList.Create;
-  uHSTypes    := TStringList.Create;
-  uReportsList    := TStringList.Create;
-  ExtractSection(uDateRanges, '[DATE RANGES]', true);
-  ExtractSection(uHSTypes,    '[HEALTH SUMMARY TYPES]', true);
-  ExtractSection(uReportsList,    '[REPORT LIST]', true);
+  sl := TStringlist.Create;
+  try
+    CallVistA('ORWRP REPORT LISTS', [nil], sl);
+    uDateRanges := TStringlist.Create;
+    uHSTypes := TStringlist.Create;
+    uReportsList := TStringlist.Create;
+    ExtractSection(sl, uDateRanges, '[DATE RANGES]', true);
+    ExtractSection(sl, uHSTypes, '[HEALTH SUMMARY TYPES]', true);
+    ExtractSection(sl, uReportsList, '[REPORT LIST]', true);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure LoadLabReportLists;
+var
+  sl: TStrings;
 begin
-  CallV('ORWRP LAB REPORT LISTS', [nil]);
-  uLabReports  := TStringList.Create;
-  ExtractSection(uLabReports, '[LAB REPORT LIST]', true);
+  sl := TStringlist.Create;
+  try
+    CallVistA('ORWRP LAB REPORT LISTS', [nil]);
+    uLabReports := TStringlist.Create;
+    ExtractSection(sl, uLabReports, '[LAB REPORT LIST]', true);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure LoadTree(Tab: String);
+var
+  sl: TStrings;
 begin
-  CallV('ORWRP3 EXPAND COLUMNS', [Tab]);
-  uTree    := TStringList.Create;
-  ExtractSection(uTree, '[REPORT LIST]', false);
+  sl := TStringlist.Create;
+  try
+    CallVistA('ORWRP3 EXPAND COLUMNS', [Tab], sl);
+    if not assigned(uTree) then
+      uTree := TStringlist.Create;
+    ExtractSection(sl, uTree, '[REPORT LIST]', false);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure ListReports(Dest: TStrings);
@@ -194,23 +221,19 @@ begin
 end;
 
 procedure HealthSummaryCheck(Dest: TStrings; aQualifier: string);
-
 begin
   if aQualifier = '1' then
-    begin
-      ListHealthSummaryTypes(Dest);
-    end;
+    ListHealthSummaryTypes(Dest);
 end;
 
 procedure ColumnHeaders(Dest: TStrings; AReportType: String);
 begin
-  CallV('ORWRP COLUMN HEADERS',[AReportType]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWRP COLUMN HEADERS',[AReportType], Dest);
 end;
 
 procedure SaveColumnSizes(aColumn: String);
 begin
-  CallV('ORWCH SAVECOL', [aColumn]);
+  CallVistA('ORWCH SAVECOL', [aColumn]);
 end;
 
 procedure ListImagingExams(Dest: TStrings);
@@ -218,23 +241,21 @@ var
   x: string;
   i: Integer;
 begin
-  CallV('ORWRA IMAGING EXAMS1', [Patient.DFN]);
-  with RPCBrokerV do
+  CallVistA('ORWRA IMAGING EXAMS1', [Patient.DFN], Dest);
   begin
-    SetListFMDateTime('mm/dd/yyyy hh:nn', TStringList(Results), U, 3);
-    for i := 0 to Results.Count - 1 do
+    SetListFMDateTime('mm/dd/yyyy hh:nn', Dest, U, 3);
+    for i := 0 to Dest.Count - 1 do
     begin
-      x := Results[i];
+      x := Dest[i];
       if Piece(x,U,7) = 'Y' then SetPiece(x,U,7, ' - Abnormal');
         x := Piece(x,U,1) + U + 'i' + Pieces(x,U,2,3)+ U + Piece(x,U,4)
              + U + Piece(x,U,6)  + Piece(x,U,7) + U
              + MixedCase(Piece(Piece(x,U,9),'~',2)) + U + Piece(x,U,5) +  U + '[+]'
-             + U + Pieces(x, U, 15,17);                                                 
+             + U + Pieces(x, U, 15,17);
 (*      x := Piece(x,U,1) + U + 'i' + Pieces(x,U,2,3)+ U + Piece(x,U,4)
         + U + Piece(x,U,6) + Piece(x,U,7) + U + Piece(x,U,5) +  U + '[+]' + U + Piece(x, U, 15);*)
-      Results[i] := x;
+      Dest[i] := x;
     end;
-    FastAssign(Results, Dest);
   end;
 end;
 
@@ -243,20 +264,18 @@ var
   x,sdate: string;
   i: Integer;
 begin
-  CallV('ORWMC PATIENT PROCEDURES1', [Patient.DFN]);
-  with RPCBrokerV do
+  CallVistA('ORWMC PATIENT PROCEDURES1', [Patient.DFN], Dest);
   begin
-    for i := 0 to Results.Count - 1 do
+    for i := 0 to Dest.Count - 1 do
     begin
-      x := Results[i];
+      x := Dest[i];
       if length(piece(x, U, 8)) > 0 then
         begin
           sdate := ShortDateStrToDate(piece(piece(x, U, 8),'@',1)) + ' ' + piece(piece(x, U, 8),'@',2);
         end;
       x := Piece(x, U, 1) + U + 'i' + Piece(x, U, 2) + U + sdate + U + Piece(x, U, 3) + U + Piece(x, U, 9) + '^[+]';
-      Results[i] := x;
+      Dest[i] := x;
     end;
-    FastAssign(Results, Dest);
   end;
 end;
 
@@ -265,16 +284,14 @@ var
   x: string;
   i: Integer;
 begin
-  CallV('ORWRP1 LISTNUTR', [Patient.DFN]);
-  with RPCBrokerV do
+  CallVistA('ORWRP1 LISTNUTR', [Patient.DFN], Dest);
   begin
-    for i := 0 to Results.Count - 1 do
+    for i := 0 to Dest.Count - 1 do
       begin
-        x := Results[i];
+        x := Dest[i];
         x := Piece(x, U, 1) + U + 'i' + Piece(x, U, 3) + U + Piece(x, U, 3);
-        Results[i] := x;
+        Dest[i] := x;
       end;
-    FastAssign(Results, Dest);
   end;
 end;
 
@@ -285,19 +302,17 @@ var
   i: integer;
   x, AFormat: string;
 begin
-  CallV('ORWSR RPTLIST', [Patient.DFN]);
-  with RPCBrokerV do
+  CallVistA('ORWSR RPTLIST', [Patient.DFN], Dest);
    begin
-    for i := 0 to Results.Count - 1 do
+    for i := 0 to Dest.Count - 1 do
       begin
-        x := Results[i];
+        x := Dest[i];
         if Piece(Piece(x, U, 3), '.', 2) = '' then AFormat := 'mm/dd/yyyy' else AFormat := 'mm/dd/yyyy hh:nn';
         x := Piece(x, U, 1) + U + 'i' + Piece(x, U, 2) + U + FormatFMDateTimeStr(AFormat, Piece(x, U, 3))+ U +
              Piece(x, U, 4)+ U + Piece(x, U, 5);
-        if Piece(Results[i], U, 6) = '+' then x := x + '^[+]';
-        Results[i] := x;
+        if Piece(Dest[i], U, 6) = '+' then x := x + '^[+]';
+        Dest[i] := x;
       end;
-    FastAssign(Results, Dest);
   end;
 end;
 
@@ -336,8 +351,7 @@ begin
   AReport := ReportType + '~' + AHSTag;
   if Length(ARpc) > 0 then
     begin
-      CallV(ARpc, [Patient.DFN, AReport, HSType, DaysBack, ExamID, Alpha, Omega]);
-      QuickCopy(RPCBrokerV.Results,Dest);
+      CallVistA(ARpc, [Patient.DFN, AReport, HSType, DaysBack, ExamID, Alpha, Omega], Dest);
     end
   else
     begin
@@ -348,7 +362,7 @@ end;
 
 procedure RemoteQueryAbortAll;
 begin
-  CallV('XWB DEFERRED CLEARALL',[nil]);
+  CallVistA('XWB DEFERRED CLEARALL',[nil]);
 end;
 
 procedure RemoteQuery(Dest: TStrings; AReportType: string; AHSType, ADaysback,
@@ -359,9 +373,8 @@ begin
   AReport := AReportType + ';1' + '~' + AHSTag;
   if length(AHSType) > 0 then
     AHSType := piece(AHSType,':',1) + ';' + piece(AHSType,':',2);  //format for backward compatibility
-  CallV('XWB REMOTE RPC', [ASite, ARemoteRPC, 0, Patient.DFN + ';' + Patient.ICN,
-            AReport, AHSType, ADaysBack, AExamID, Alpha, AOmega]);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('XWB REMOTE RPC', [ASite, ARemoteRPC, 0, Patient.DFN + ';' + Patient.ICN,
+            AReport, AHSType, ADaysBack, AExamID, Alpha, AOmega], Dest);
 end;
 
 procedure DirectQuery(Dest: TStrings; AReportType: string; AHSType, ADaysback,
@@ -372,9 +385,8 @@ begin
   AReport := AReportType + ';1' + '~' + AHSTag;
   if length(AHSType) > 0 then
     AHSType := piece(AHSType,':',1) + ';' + piece(AHSType,':',2);  //format for backward compatibility
-  CallV('XWB DIRECT RPC', [ASite, ARemoteRPC, 0, Patient.DFN + ';' + Patient.ICN,
-            AReport, AHSType, ADaysBack, AExamID, Alpha, AOmega]);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('XWB DIRECT RPC', [ASite, ARemoteRPC, 0, Patient.DFN + ';' + Patient.ICN,
+            AReport, AHSType, ADaysBack, AExamID, Alpha, AOmega], Dest);
 end;
 
 function ReportQualifierType(ReportType: Integer): Integer;
@@ -389,22 +401,22 @@ end;
 
 function ImagingParams: String;
 begin
-  Result := sCallV('ORWTPD GETIMG',[nil]);
+  CallVistA('ORWTPD GETIMG',[nil], Result);
 end;
 
 function AutoRDV: String;
 begin
-  Result := sCallV('ORWCIRN AUTORDV', [nil]);
+  CallVistA('ORWCIRN AUTORDV', [nil], Result);
 end;
 
 function HDRActive: String;
 begin
-  Result := sCallV('ORWCIRN HDRON', [nil]);
+  CallVistA('ORWCIRN HDRON', [nil], Result);
 end;
 
 procedure PrintVReports(Dest, ADevice, AHeader: string; AReport: TStringList);
 begin
-  CallV('ORWRP PRINT V REPORT', [ADevice, Patient.DFN, AHeader, AReport]);
+  CallVistA('ORWRP PRINT V REPORT', [ADevice, Patient.DFN, AHeader, AReport]);
 end;
 
 procedure PrintReportsToDevice(AReport: string; const Qualifier, Patient, ADevice: string;
@@ -459,21 +471,21 @@ begin
   ARpt := AReport + '~' + AHSTag;
   if aHandles.Count > 0 then
     begin
-      ErrMsg := sCallV('ORWRP PRINT REMOTE REPORT',[ADevice, Patient, ARpt, aHandles]);
+      CallVistA('ORWRP PRINT REMOTE REPORT',[ADevice, Patient, ARpt, aHandles], ErrMsg);
       if Piece(ErrMsg, U, 1) = '0' then ErrMsg := '' else ErrMsg := Piece(ErrMsg, U, 2);
     end
   else
     begin
-      ErrMsg := sCallV('ORWRP PRINT REPORT',[ADevice, Patient, ARpt, HSType,
-        DaysBack, ExamID, aComponents, Alpha, Omega]);
+      CallVistA('ORWRP PRINT REPORT',[ADevice, Patient, ARpt, HSType,
+        DaysBack, ExamID, aComponents, Alpha, Omega], ErrMsg);
       if Piece(ErrMsg, U, 1) = '0' then ErrMsg := '' else ErrMsg := Piece(ErrMsg, U, 2);
     end;
   aHandles.Clear;
   aHandles.Free;
 end;
 
-function GetFormattedReport(AReport: string; const Qualifier, Patient: string;
-         aComponents: TStringlist; ARemoteSiteID, ARemoteQuery, AHSTag: string): TStrings;
+function GetFormattedReport(aDest:TSTrings; AReport: string; const Qualifier, Patient: string;
+         aComponents: TStringlist; ARemoteSiteID, ARemoteQuery, AHSTag: string): Integer;
 { prints a report on the selected device }
 var
   HSType, DaysBack, ExamID, MaxOcc, ARpt, x: string;
@@ -524,22 +536,23 @@ begin
   ARpt := AReport + '~' + AHSTag;
   if aHandles.Count > 0 then
     begin
-      CallV('ORWRP PRINT WINDOWS REMOTE',[Patient, ARpt, aHandles]);
-      Result := RPCBrokerV.Results;
+      CallVistA('ORWRP PRINT WINDOWS REMOTE',[Patient, ARpt, aHandles], aDest);
     end
   else
     begin
-      CallV('ORWRP PRINT WINDOWS REPORT',[Patient, ARpt, HSType,
-        DaysBack, ExamID, aComponents, Alpha, Omega]);
-      Result := RPCBrokerV.Results;
+      CallVistA('ORWRP PRINT WINDOWS REPORT',[Patient, ARpt, HSType,
+        DaysBack, ExamID, aComponents, Alpha, Omega], aDest);
     end;
+  Result := aDest.Count;
   aHandles.Clear;
   aHandles.Free;
 end;
 
 function DefaultToWindowsPrinter: Boolean;
+var
+  i: Integer;
 begin
-  Result := (StrToIntDef(sCallV('ORWRP WINPRINT DEFAULT',[]), 0) > 0);
+  Result := CallVistA('ORWRP WINPRINT DEFAULT',[], i, 0) and (i > 0);
 end;
 
 procedure PrintWindowsReport(ARichEdit: TRichEdit; APageBreak, Atitle: string; var ErrMsg: string; IncludeHeader: Boolean = false);
@@ -588,46 +601,53 @@ begin
               y := LineHeight * 5;            // 5 lines = .83" top margin   v15.9 (RV)
 
               try
-              Printer.Refresh; // := Printer.Copies; // RTC 1223892
+//                TryPrintProc(Printer.Refresh); // := Printer.Copies; // RTC 1223892
+//              Printer.Copies := Printer.Copies; // RTC 1223892
 
-              Printer.BeginDoc;
-              if Printer.Printing then
+                TryPrintProc(Printer.BeginDoc);
+                if Printer.Printing then
                 begin
-              //Do we need to add the header?
-              IF IncludeHeader then begin
-               for j := 0 to aHeader.Count - 1 do
-                begin
-                 Printer.Canvas.TextOut(x, y, aHeader[j]);
-                 y := y + LineHeight;
-                end;
-              end;
-
-              for i := 0 to Lines.Count - 1 do
-                begin
-                  if Lines[i] = APageBreak then
+                  try
+                    //Do we need to add the header?
+                    if IncludeHeader then
                     begin
-                      Printer.NewPage;
-                      y := LineHeight * 5;   // 5 lines = .83" top margin    v15.9 (RV)
-                      if (IncludeHeader) then
+                      for j := 0 to aHeader.Count - 1 do
+                      begin
+                        TryPrintProc(Printer.Canvas.TextOut, x, y, aHeader[j]);
+                        y := y + LineHeight;
+                      end;
+                    end;
+
+                    for i := 0 to Lines.Count - 1 do
+                    begin
+                      if Lines[i] = APageBreak then
+                      begin
+                        TryPrintProc(Printer.NewPage);
+                        y := LineHeight * 5;   // 5 lines = .83" top margin    v15.9 (RV)
+                        if (IncludeHeader) then
                         begin
                           for j := 0 to aHeader.Count - 1 do
-                            begin
-                              Printer.Canvas.TextOut(x, y, aHeader[j]);
-                              y := y + LineHeight;
-                            end;
+                          begin
+                            TryPrintProc(Printer.Canvas.TextOut, x, y, aHeader[j]);
+                            y := y + LineHeight;
+                          end;
                         end;
-                    end
-                  else
-                    begin
-                      Printer.Canvas.TextOut(x, y, Lines[i]);
-                      y := y + LineHeight;
+                      end
+                      else
+                      begin
+                        TryPrintProc(Printer.Canvas.TextOut, x, y, Lines[i]);
+                        y := y + LineHeight;
+                      end;
                     end;
-                end;
-              Printer.EndDoc;
+                  finally
+                    if Printer.Printing then
+                      TryPrintProc(Printer.EndDoc);
+                  end;
                 end;
               except
                 on E: Exception do
-                  InfoBox(E.Message, 'Printer error',MB_OK);
+                  if not (E is EPrinter) then
+                    InfoBox(E.Message, 'Printer error', MB_OK);
               end;
 
 (*            end
@@ -695,18 +715,28 @@ begin
         Magnif := (Canvas.TextWidth(StringOfChar('=', 74)) div GraphImage.Width);
         LineHeight := Printer.Canvas.TextHeight(TX_FONT_NAME);
         y := LineHeight;
-        BeginDoc;
         try
-          for i := 0 to AHeader.Count - 1 do
-            begin
-              Canvas.TextOut(0, y, AHeader[i]);
-              y := y + LineHeight;
+          TryPrintProc(BeginDoc);
+          if Printing then
+          begin
+            try
+              for i := 0 to AHeader.Count - 1 do
+              begin
+                TryPrintProc(Canvas.TextOut, 0, y, AHeader[i]);
+                y := y + LineHeight;
+              end;
+              y := y + (4 * LineHeight);
+              //GraphImage.PrintPartial(Rect(0, y, Canvas.TextWidth(StringOfChar('=', 74)), y + (Magnif * GraphImage.Height)));
+              PrintBitmap(Canvas, Rect(0, y, Canvas.TextWidth(StringOfChar('=', 74)), y + (Magnif * GraphImage.Height)), GraphPic);
+            finally
+              if Printing then
+                TryPrintProc(EndDoc);
             end;
-          y := y + (4 * LineHeight);
-          //GraphImage.PrintPartial(Rect(0, y, Canvas.TextWidth(StringOfChar('=', 74)), y + (Magnif * GraphImage.Height)));
-          PrintBitmap(Canvas, Rect(0, y, Canvas.TextWidth(StringOfChar('=', 74)), y + (Magnif * GraphImage.Height)), GraphPic);
-        finally
-          EndDoc;
+          end;
+        except
+          on E: Exception do
+            if not (E is EPrinter) then
+              InfoBox(E.Message, 'Printer error',MB_OK);
         end;
       end;
   finally
@@ -718,95 +748,81 @@ end;
 
 procedure SaveDefaultPrinter(DefPrinter: string) ;
 begin
-  CallV('ORWRP SAVE DEFAULT PRINTER', [DefPrinter]);
+  CallVistA('ORWRP SAVE DEFAULT PRINTER', [DefPrinter]);
 end;
 
-function HSFileLookup(aFile: String; const StartFrom: string;
-          Direction:Integer): TStrings;
+function HSFileLookup(aDest: TStrings; aFile: String; const StartFrom: string;
+          Direction:Integer): Integer;
 begin
-  CallV('ORWRP2 HS FILE LOOKUP', [aFile, StartFrom, Direction]);
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWRP2 HS FILE LOOKUP', [aFile, StartFrom, Direction], aDest);
+  MixedCaseList(aDest);
+  Result := aDest.Count;
 end;
 
 procedure HSComponentFiles(Dest: TStrings; aComponent: String);
 begin
-  CallV('ORWRP2 HS COMP FILES', [aComponent]);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('ORWRP2 HS COMP FILES', [aComponent], Dest);
 end;
 
 procedure HSSubItems(Dest: TStrings; aItem: String);
 begin
-  CallV('ORWRP2 HS SUBITEMS', [aItem]);
-  MixedCaseList(RPCBrokerV.Results);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('ORWRP2 HS SUBITEMS', [aItem], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure HSReportText(Dest: TStrings; aComponents: TStringlist);
 begin
-  CallV('ORWRP2 HS REPORT TEXT', [aComponents, Patient.DFN]);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('ORWRP2 HS REPORT TEXT', [aComponents, Patient.DFN], Dest);
 end;
 
 procedure HSComponents(Dest: TStrings);
 begin
-  CallV('ORWRP2 HS COMPONENTS', [nil]);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('ORWRP2 HS COMPONENTS', [nil], Dest);
 end;
 
 procedure HSABVComponents(Dest: TStrings);
 begin
-  CallV('ORWRP2 COMPABV', [nil]);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('ORWRP2 COMPABV', [nil], Dest);
 end;
 
 procedure HSDispComponents(Dest: TStrings);
 begin
-  CallV('ORWRP2 COMPDISP', [nil]);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('ORWRP2 COMPDISP', [nil], Dest);
 end;
 
 procedure HSComponentSubs(Dest: TStrings; aItem: String);
 begin
-  CallV('ORWRP2 HS COMPONENT SUBS',[aItem]);
-  MixedCaseList(RPCBrokerV.Results);
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('ORWRP2 HS COMPONENT SUBS',[aItem], Dest);
+  MixedCaseList(Dest);
 end;
 
 function GetRemoteStatus(aHandle: string): String;
 begin
-  CallV('XWB REMOTE STATUS CHECK', [aHandle]);
-  Result := RPCBrokerV.Results[0];
+  CallVistA('XWB REMOTE STATUS CHECK', [aHandle], Result);
 end;
 
 function GetAdhocLookup: integer;
 begin
-  CallV('ORWRP2 GETLKUP', [nil]);
-  if RPCBrokerV.Results.Count > 0 then
-    Result := StrToInt(RPCBrokerV.Results[0])
-  else
-    Result := 0;
+  CallVistA('ORWRP2 GETLKUP', [nil], Result);
 end;
 
 procedure SetAdhocLookup(aLookup: integer);
-
 begin
-  CallV('ORWRP2 SAVLKUP', [IntToStr(aLookup)]);
+  CallVistA('ORWRP2 SAVLKUP', [IntToStr(aLookup)]);
 end;
 
 procedure GetRemoteData(Dest: TStrings; aHandle: string; aItem: PChar);
 begin
-  CallV('XWB REMOTE GETDATA', [aHandle]);
-  if RPCBrokerV.Results.Count < 1 then
-    RPCBrokerV.Results[0] := 'No data found.';
-  if (RPCBrokerV.Results.Count < 2) and (RPCBrokerV.Results[0] = '') then
-    RPCBrokerV.Results[0] := 'No data found.';
-  QuickCopy(RPCBrokerV.Results,Dest);
+  CallVistA('XWB REMOTE GETDATA', [aHandle], Dest);
+  if Dest.Count < 1 then
+    Dest.Add('No data found.')
+  else if (Dest.Count < 2) and (Dest[0] = '') then
+    Dest[0] := 'No data found.';
 end;
 
 procedure ModifyHDRData(Dest: string; aHandle: string; aID: string);
 begin
-  CallV('ORWRP4 HDR MODIFY', [aHandle, aID]);
+  CallVistA('ORWRP4 HDR MODIFY', [aHandle, aID]);
 end;
 
 procedure PrintBitmap(Canvas:  TCanvas; DestRect:  TRect;  Bitmap:  TBitmap);
@@ -846,5 +862,4 @@ finalization
   uLabReports.Free;
   uDateRanges.Free;
   uHSTypes.Free;
-
 end.

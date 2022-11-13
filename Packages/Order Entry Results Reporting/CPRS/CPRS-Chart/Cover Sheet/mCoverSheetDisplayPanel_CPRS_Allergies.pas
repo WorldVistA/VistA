@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_CPRS_Allergies;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-21
   *
@@ -74,7 +74,7 @@ implementation
 uses
   uCore,
   rODAllergy,
-  fARTAllgy,
+  fAllgyAR,
   ORFn,
   ORNet;
 

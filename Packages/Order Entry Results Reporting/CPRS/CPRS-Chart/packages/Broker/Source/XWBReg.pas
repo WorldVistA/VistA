@@ -4,10 +4,13 @@
   Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
   Developers: Danila Manapsal, Don Craven, Joel Ivey
   Description: Registers components and property editors.
-  Current Release: Version 1.1 Patch 65
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in V1.1.71 (RGG 10/18/2018) XWB*1.1*71
   1. None
   
@@ -50,9 +53,10 @@ begin
   RegisterComponents('Kernel', [TRPCBroker, TCCOWRPCBroker, TXWBRichEdit,
     TContextorControl, TXWBSSOiToken]);
 
-  RegisterPropertyEditor(TypeInfo(TRemoteProc), nil, '', TRemoteProcProperty);
-  RegisterPropertyEditor(TypeInfo(TServer), nil, '', TServerProperty);
-  RegisterPropertyEditor(TypeInfo(TRpcVersion), nil, '', TRpcVersionProperty);
+  RegisterPropertyEditor(TypeInfo(TRemoteProc), TRPCBroker, 'RemoteProcedure', TRemoteProcProperty);
+  RegisterPropertyEditor(TypeInfo(TServer), TRPCBroker, 'Server', TServerProperty);
+  RegisterPropertyEditor(TypeInfo(TRpcVersion), TRPCBroker, 'RpcVersion', TRpcVersionProperty);
+
 end;
 
 end.

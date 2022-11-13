@@ -5,14 +5,14 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ORCtrls, ORFn, AppEvnts, uTemplates, fBase508Form, uConst,
-  VA508AccessibilityManager
+  VA508AccessibilityManager, ORDtTm
   , mRequiredFieldsNavigator, Vcl.ComCtrls,
   Vcl.Menus, U_CPTEditMonitor, U_CPTPasteDetails,
   Data.DB, Vcl.Grids, Vcl.DBGrids, Datasnap.DBClient, System.Variants,
-  Vcl.DBCtrls, uCore;
+  Vcl.DBCtrls, uCore, fBaseDynamicControlsForm;
 
 type
-  TfrmTemplateDialog = class(TfrmBase508Form)
+  TfrmTemplateDialog = class(TfrmBaseDynamicControlsForm)
     sbMain: TScrollBox;
     splFields: TSplitter;
     grdpnlBottom: TGridPanel;
@@ -410,13 +410,20 @@ end;
 procedure CheckBoilerplate4Fields(var AText: string; const CaptionText: string = ''; PreviewMode: boolean = FALSE; ExtCPMon: TCopyPasteDetails = nil);
 var
   tmp: TStringList;
-
+  aTmpStr: String;
 begin
   tmp := TStringList.Create;
   try
     tmp.text := AText;
     CheckBoilerplate4Fields(tmp, CaptionText, PreviewMode, ExtCPMon);
-    AText := tmp.text;
+//    AText := tmp.text;
+    AText := '';
+        for aTmpStr in tmp do
+        begin
+         if AText <> '' then
+          AText := AText + CRLF;
+         AText := AText + aTmpStr;
+        end;
   finally
     tmp.free;
   end;
@@ -537,8 +544,8 @@ end;
 
 procedure TfrmTemplateDialog.BuildCB(CBidx: Integer; var Y: Integer; FirstTime: Boolean);
 var
-  bGap, Indent, i, idx, p1, p2: integer;
-  EID, ID, PID, DlgProps, tmp, txt, tmpID: string;
+  bGap, Indent, i, idx, p1, p2: Integer;
+  EID, id, pid, DlgProps, tmp, Txt, tmpID: string;
   pctrl, ctrl: TControl;
   pnl: TPanel;
   KillCtrl, doHint, dsp, noTextParent: Boolean;
@@ -681,21 +688,14 @@ begin
     if (dsp or OneOnly) then // if VISIBLE or only 1 ObjMarket found in Template
       cb := nil              // then no need in TCheckBox
     else                     // else create Parent Check Box
-      begin
-        cb := TCPRSDialogParentCheckBox.Create(Self);
-{$IFDEF DEBUG1022950}
-        cb.Color := clLime;                 //1022950
-{$ENDIF}
-      end;
+      cb := TCPRSDialogParentCheckBox.Create(Self);
 
     pnl := Entry.GetPanel(FMaxPnlWidth, sbMain, cb); // TDlgFieldPanel
-{$IFDEF DEBUG1022950}
-    pnl.BorderStyle := bsSingle;              //1022950
-    pnl.ShowCaption := True;                  //1022950
-    pnl.Alignment := taRightJustify;          //1022950
-    pnl.Name := 'pnl'+IntToStr(Integer(pnl)); //1022950
-    pnl.Width := pnl.Width + 150;             //1022950
-{$ENDIF}
+//    pnl.BorderStyle := bsSingle;              //1022950
+//    pnl.ShowCaption := True;                  //1022950
+//    pnl.Alignment := taRightJustify;          //1022950
+//    pnl.Name := 'pnl'+IntToStr(Integer(pnl)); //1022950
+//    pnl.Width := pnl.Width + 150;             //1022950
     pnl.Show;
     if (doHint and (not pnl.ShowHint)) then
     begin
@@ -730,7 +730,7 @@ begin
       TORCheckBox(ctrl).AutoSize := FALSE;
       TORCheckBox(ctrl).Associate := pnl;
       pnl.Tag := Integer(ctrl); // panel Tag assigned to the ctlr (pointer)
-      tmpID := copy(ID, 1, (pos('.', ID) - 1)); 
+      tmpID := copy(id, 1, (pos('.', id) - 1));
       { copy the ID without the decimal place }
       // if Templates.IndexOf(tmpID) > -1 then
       // StringIn := 'Sub-Template: ' + TTemplate(Templates.Objects[Templates.IndexOf(tmpID)]).PrintName
@@ -805,6 +805,7 @@ end;
 
 procedure TfrmTemplateDialog.BuildAllControls;
 var
+  iPos,  // RTC 1022950
   i, Y: integer;
   FirstTime: boolean;
 
@@ -815,6 +816,9 @@ begin
     FTabPos := 0;
     FirstTime := (sbMain.ControlCount = 0);
     NoTextID.Clear;
+    iPos := sbMain.VertScrollBar.Position; // RTC 1022950
+    sbMain.VertScrollBar.Position := 0; // RTC 1022950
+
     Y := Gap - sbMain.VertScrollBar.Position;
 
     for i := 1 to Count do // all @@
@@ -825,6 +829,7 @@ begin
       Application.ProcessMessages;
     end;
     CPTemp.MonitorAllAvailable;
+    sbMain.VertScrollBar.Position := iPos; // RTC 1022950
   finally
     FBuilding := FALSE;
   end;
@@ -839,21 +844,23 @@ end;
 
 procedure TfrmTemplateDialog.FormPaint(Sender: TObject);
 begin
+// RTC#122950 ------------------------------------------------------------ begin
   if RepaintBuild then
   begin
     try
-    RepaintBuild := FALSE;
-    BuildAllControls;
+      RepaintBuild := FALSE;
+      BuildAllControls;
       WinApi.Windows.PostMessage(Handle, UM_UpdateRFN, 0, 0); // reset navigator status
-    InitScreenReaderSetup;
-{$IFDEF DEBUG}
+      InitScreenReaderSetup;
+      {$IFDEF DEBUG}
       SetDebugInfo(nil);
-{$ENDIF}
+      {$ENDIF}
     except
       on E: Exception do
         ShowMessage(E.Message);
     end;
   end;
+// RTC#122950 -------------------------------------------------------------- end
 end;
 
 procedure TfrmTemplateDialog.FormShow(Sender: TObject);
@@ -906,7 +913,7 @@ begin
   FMaxPnlWidth := FontWidthPixel(sbMain.Font.Handle) * MAX_WRAP_WIDTH;
   SetFormPosition(Self);
   ResizeAnchoredFormToFont(Self);
-  FTIUParam := StrToIntDef(systemParameters.StringValue['tmRequiredFldsOff'], 1);
+  FTIUParam := StrToIntDef(systemParameters.AsType<String>('tmRequiredFldsOff'), 1);
 //// 20100706 - VISTAOR-24208 FH 2021/02/12 -------------------------------- Begin
   if (FTIUParam = 0) then
   begin
@@ -1114,23 +1121,49 @@ end;
 
 
 procedure TfrmTemplateDialog.CMFocusChanged(var Message: TCMFocusChanged);
-begin
-// to address TORComboEdit
-  if Assigned(frRequiredFields) then
+var
+  ctrl, pctrl: TWinControl;
+  ok: boolean;
+
+  function IsCtrlAllowed(aControl: TWinControl): boolean;
   begin
-    if ActiveControl is TORComboEdit then
-      frRequiredFields.FocusedControl := ActiveControl.Parent
+    if assigned(aControl.Parent) then
+    begin
+      if aControl.Parent = sbMain then
+        Result := True
+      else
+        Result := IsCtrlAllowed(AControl.Parent);
+    end
     else
-      frRequiredFields.FocusedControl := ActiveControl;
+      Result := False;
   end;
 
+begin
+  ctrl := TWinControl(message.Sender);
+  if not assigned(ctrl) then
+    exit;
+
+// to address TORComboEdit
+  ok := IsCtrlAllowed(ctrl);
+  pctrl := ctrl;
+  if ok then
+  begin
+    if ctrl is TORComboEdit then
+      pctrl := ctrl.Parent
+    else if ctrl is TORYearEdit then
+      pctrl := ctrl.Parent;
+  end;
+  if Assigned(frRequiredFields) and ok then
+    frRequiredFields.FocusedControl := pctrl;
+
 {$IFDEF DEBUG}
-  Caption := TWinControl(message.Sender).Name + ' ' +
-    TWinControl(message.Sender).ClassName +
-    ' @'+IntToStr(Integer(message.Sender));
-  DebugHighlight(TWinControl(message.Sender));
+  Caption := ctrl.Name + ' ' +
+    ctrl.ClassName +
+    ' @'+IntToStr(Integer(ctrl));
+  DebugHighlight(ctrl);
 {$ENDIF}
-  dmRF.cdsControls.Locate('CTRL_OBJ', VarArrayOf([Integer(message.Sender)]), []);
+  if ok then
+    dmRF.cdsControls.Locate('CTRL_OBJ', VarArrayOf([Integer(pctrl)]), []);
 end;
 
 function IsTemplateControl(aCtrl, aCtrlMain: TObject): boolean;

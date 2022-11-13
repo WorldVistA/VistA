@@ -1,13 +1,12 @@
 object frmRPCLog: TfrmRPCLog
   Left = 338
   Top = 235
-  Action = acNext
   Caption = 'RPC Log'
   ClientHeight = 558
-  ClientWidth = 561
+  ClientWidth = 879
   Color = clBtnFace
   Constraints.MinHeight = 400
-  Constraints.MinWidth = 120
+  Constraints.MinWidth = 640
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -29,29 +28,28 @@ object frmRPCLog: TfrmRPCLog
   TextHeight = 13
   object bvlTop: TBevel
     Left = 0
-    Top = 30
-    Width = 561
+    Top = 0
+    Width = 879
     Height = 2
     Align = alTop
     Shape = bsTopLine
     Visible = False
     ExplicitLeft = -186
-    ExplicitTop = 0
     ExplicitWidth = 792
   end
   object splDebug: TSplitter
     Left = 178
-    Top = 32
-    Height = 507
+    Top = 2
+    Height = 535
     ExplicitLeft = 440
     ExplicitTop = 256
     ExplicitHeight = 100
   end
-  object pnlRPC: TPanel
+  object Panel3: TPanel
     Left = 0
-    Top = 32
+    Top = 2
     Width = 178
-    Height = 507
+    Height = 535
     Align = alLeft
     BevelOuter = bvNone
     Caption = 'pnlRPC'
@@ -59,9 +57,77 @@ object frmRPCLog: TfrmRPCLog
     ParentBackground = False
     ShowCaption = False
     TabOrder = 0
-    object Panel1: TPanel
+    object Panel4: TPanel
       Left = 0
       Top = 0
+      Width = 178
+      Height = 32
+      Align = alTop
+      BevelOuter = bvNone
+      Caption = 'Panel1'
+      Color = clSilver
+      ParentBackground = False
+      ShowCaption = False
+      TabOrder = 1
+      object ToolBar5: TToolBar
+        AlignWithMargins = True
+        Left = 3
+        Top = 5
+        Width = 46
+        Height = 27
+        Margins.Top = 5
+        Margins.Bottom = 0
+        Align = alLeft
+        AutoSize = True
+        Caption = 'ToolBar1'
+        Images = c
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        Transparent = True
+        object ToolButton3: TToolButton
+          Left = 0
+          Top = 0
+          Action = acFlag
+        end
+        object ToolButton9: TToolButton
+          Left = 23
+          Top = 0
+          Action = acAddWatch
+          Visible = False
+        end
+      end
+      object ToolBar6: TToolBar
+        AlignWithMargins = True
+        Left = 129
+        Top = 5
+        Width = 46
+        Height = 27
+        Margins.Top = 5
+        Margins.Bottom = 0
+        Align = alRight
+        AutoSize = True
+        Caption = 'ToolBar1'
+        Images = c
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 1
+        Transparent = True
+        object ToolButton2: TToolButton
+          Left = 0
+          Top = 0
+          Action = acOneNext
+        end
+        object ToolButton4: TToolButton
+          Left = 23
+          Top = 0
+          Action = acOnePrev
+        end
+      end
+    end
+    object Panel1: TPanel
+      Left = 0
+      Top = 32
       Width = 178
       Height = 31
       Align = alTop
@@ -81,7 +147,6 @@ object frmRPCLog: TfrmRPCLog
         Margins.Top = 6
         Align = alLeft
         Caption = 'F&ind'
-        FocusControl = edTarget
         ExplicitHeight = 13
       end
       object edTarget: TComboBox
@@ -101,113 +166,12 @@ object frmRPCLog: TfrmRPCLog
           '')
       end
     end
-    object ts: TDockTabSet
-      Left = 0
-      Top = 486
-      Width = 178
-      Height = 21
-      Align = alBottom
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      Style = tsModernTabs
-      Tabs.Strings = (
-        'Live'
-        'Watch')
-      TabIndex = 0
-      Visible = False
-      OnChange = tsChange
-    end
-    object pnlWatch: TPanel
-      Left = 0
-      Top = 31
-      Width = 178
-      Height = 455
-      Align = alClient
-      BevelOuter = bvNone
-      Caption = 'pnlWatch'
-      ShowCaption = False
-      TabOrder = 3
-      Visible = False
-      object Splitter1: TSplitter
-        Left = 0
-        Top = 73
-        Width = 178
-        Height = 3
-        Cursor = crVSplit
-        Align = alTop
-        ExplicitTop = 113
-        ExplicitWidth = 339
-      end
-      object lvWatch: TListView
-        AlignWithMargins = True
-        Left = 3
-        Top = 77
-        Width = 172
-        Height = 378
-        Margins.Top = 1
-        Margins.Bottom = 0
-        Align = alClient
-        BorderStyle = bsNone
-        Color = clInfoBk
-        Columns = <
-          item
-            Width = 0
-          end
-          item
-            Caption = 'RPC'
-          end>
-        ColumnClick = False
-        Ctl3D = False
-        FlatScrollBars = True
-        ReadOnly = True
-        RowSelect = True
-        ParentShowHint = False
-        ShowColumnHeaders = False
-        ShowHint = True
-        TabOrder = 0
-        ViewStyle = vsReport
-        OnResize = lvRPCLogResize
-        OnSelectItem = lvRPCLogSelectItem
-      end
-      object lvWatchNames: TListView
-        AlignWithMargins = True
-        Left = 3
-        Top = 1
-        Width = 172
-        Height = 72
-        Margins.Top = 1
-        Margins.Bottom = 0
-        Align = alTop
-        BorderStyle = bsNone
-        Color = clBtnFace
-        Columns = <
-          item
-            Width = 0
-          end
-          item
-          end>
-        ColumnClick = False
-        Ctl3D = False
-        FlatScrollBars = True
-        ReadOnly = True
-        RowSelect = True
-        ParentShowHint = False
-        ShowColumnHeaders = False
-        ShowHint = True
-        TabOrder = 1
-        ViewStyle = vsReport
-        OnResize = lvRPCLogResize
-      end
-    end
     object lvRPCLog: TListView
       AlignWithMargins = True
       Left = 3
-      Top = 32
+      Top = 64
       Width = 175
-      Height = 454
+      Height = 471
       Margins.Top = 1
       Margins.Right = 0
       Margins.Bottom = 0
@@ -229,6 +193,9 @@ object frmRPCLog: TfrmRPCLog
         item
           Caption = 'Start'
           Width = 96
+        end
+        item
+          Caption = 'W/S time'
         end>
       Ctl3D = False
       FlatScrollBars = True
@@ -237,7 +204,7 @@ object frmRPCLog: TfrmRPCLog
       ParentColor = True
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 1
+      TabOrder = 2
       ViewStyle = vsReport
       OnAdvancedCustomDrawItem = LiveListAdvancedCustomDrawItem
       OnChange = lvRPCLogChange
@@ -250,18 +217,19 @@ object frmRPCLog: TfrmRPCLog
   end
   object pnlMain: TPanel
     Left = 181
-    Top = 32
-    Width = 380
-    Height = 507
+    Top = 2
+    Width = 698
+    Height = 535
     Margins.Left = 0
     Align = alClient
     BevelOuter = bvNone
+    Constraints.MinWidth = 400
     TabOrder = 1
     object memData: TRichEdit
       Left = 0
-      Top = 31
-      Width = 380
-      Height = 476
+      Top = 63
+      Width = 698
+      Height = 472
       Align = alClient
       BorderStyle = bsNone
       Ctl3D = False
@@ -275,42 +243,41 @@ object frmRPCLog: TfrmRPCLog
       ParentFont = False
       ReadOnly = True
       ScrollBars = ssBoth
-      TabOrder = 1
+      TabOrder = 2
       WantReturns = False
       Zoom = 100
     end
     object Panel2: TPanel
       Left = 0
-      Top = 0
-      Width = 380
+      Top = 32
+      Width = 698
       Height = 31
       Align = alTop
       BevelKind = bkFlat
       BevelOuter = bvNone
       Caption = 'Panel2'
       ShowCaption = False
-      TabOrder = 0
+      TabOrder = 1
       OnDblClick = Panel2DblClick
       object lblCallID: TStaticText
         AlignWithMargins = True
         Left = 3
-        Top = 6
-        Width = 62
-        Height = 17
-        Margins.Top = 6
+        Top = 8
+        Width = 591
+        Height = 19
+        Margins.Top = 8
         Margins.Bottom = 0
-        Align = alLeft
-        Alignment = taCenter
+        Align = alClient
         Caption = 'Last Record'
         TabOrder = 0
       end
       object ckbWrap: TCheckBox
         AlignWithMargins = True
-        Left = 300
-        Top = 0
-        Width = 75
-        Height = 27
-        Margins.Top = 0
+        Left = 600
+        Top = 8
+        Width = 93
+        Height = 19
+        Margins.Top = 8
         Margins.Right = 1
         Margins.Bottom = 0
         Action = acWordWrap
@@ -319,231 +286,178 @@ object frmRPCLog: TfrmRPCLog
         TabOrder = 1
       end
     end
+    object pnlMainToolbar: TPanel
+      Left = 0
+      Top = 0
+      Width = 698
+      Height = 32
+      Align = alTop
+      BevelOuter = bvNone
+      Caption = 'pnlMainToolbar'
+      Color = clSilver
+      ParentBackground = False
+      ShowCaption = False
+      TabOrder = 0
+      object Label1: TLabel
+        AlignWithMargins = True
+        Left = 561
+        Top = 10
+        Width = 66
+        Height = 22
+        Margins.Top = 10
+        Margins.Right = 6
+        Margins.Bottom = 0
+        Align = alRight
+        Caption = '&Max Retained'
+        FocusControl = cmbMaxCalls
+        Transparent = False
+        ExplicitHeight = 13
+      end
+      object ToolBar4: TToolBar
+        AlignWithMargins = True
+        Left = 3
+        Top = 5
+        Width = 154
+        Height = 24
+        Margins.Top = 5
+        Align = alLeft
+        AutoSize = True
+        Caption = 'ToolBar4'
+        Images = c
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        Transparent = True
+        object ToolButton21: TToolButton
+          Left = 0
+          Top = 0
+          Action = acTestTime
+        end
+        object ToolButton6: TToolButton
+          Left = 23
+          Top = 0
+          Action = acSymbolTable
+        end
+        object ToolButton22: TToolButton
+          Left = 46
+          Top = 0
+          Width = 8
+          Caption = 'ToolButton22'
+          ImageIndex = 14
+          Style = tbsSeparator
+        end
+        object ToolButton23: TToolButton
+          Left = 54
+          Top = 0
+          Action = EditCopy1
+        end
+        object ToolButton5: TToolButton
+          Left = 77
+          Top = 0
+          Action = acSelectAll
+        end
+        object ToolButton1: TToolButton
+          Left = 100
+          Top = 0
+          Action = FileSaveAs1
+        end
+        object ToolButton8: TToolButton
+          Left = 123
+          Top = 0
+          Width = 8
+          Caption = 'ToolButton8'
+          ImageIndex = 3
+          Style = tbsSeparator
+        end
+        object ToolButton7: TToolButton
+          Left = 131
+          Top = 0
+          Action = acClearLog
+          ImageIndex = 2
+        end
+      end
+      object cmbMaxCalls: TComboBox
+        AlignWithMargins = True
+        Left = 636
+        Top = 7
+        Width = 59
+        Height = 21
+        Margins.Top = 7
+        Align = alRight
+        BevelInner = bvNone
+        Color = clCream
+        Ctl3D = True
+        ParentCtl3D = False
+        TabOrder = 1
+        Text = '200'
+        OnSelect = cmbMaxCallsSelect
+        Items.Strings = (
+          '10'
+          '50'
+          '100'
+          '200'
+          '500'
+          '1000')
+      end
+      object ToolBar1: TToolBar
+        AlignWithMargins = True
+        Left = 478
+        Top = 6
+        Width = 77
+        Height = 23
+        Margins.Top = 6
+        Align = alRight
+        AutoSize = True
+        Caption = 'ToolBar1'
+        Images = c
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 2
+        object ToolButton10: TToolButton
+          Left = 0
+          Top = 0
+          Action = acToTheLeft
+          ImageIndex = 16
+        end
+        object ToolButton11: TToolButton
+          Left = 23
+          Top = 0
+          Action = acToTheRight
+          ImageIndex = 17
+        end
+        object ToolButton12: TToolButton
+          Left = 46
+          Top = 0
+          Width = 8
+          Caption = 'ToolButton12'
+          ImageIndex = 1
+          Style = tbsSeparator
+        end
+        object ToolButton13: TToolButton
+          Left = 54
+          Top = 0
+          Action = acNoAlign
+          ImageIndex = 18
+        end
+      end
+    end
   end
   object sb: TStatusBar
     Left = 0
-    Top = 539
-    Width = 561
-    Height = 19
+    Top = 537
+    Width = 879
+    Height = 21
     Panels = <>
     ParentFont = True
     SimplePanel = True
     UseSystemFont = False
-  end
-  object pnlMainToolbar: TPanel
-    Left = 0
-    Top = 0
-    Width = 561
-    Height = 30
-    Align = alTop
-    BevelOuter = bvNone
-    Caption = 'pnlMainToolbar'
-    Color = clSilver
-    ParentBackground = False
-    ShowCaption = False
-    TabOrder = 3
-    object Label1: TLabel
-      AlignWithMargins = True
-      Left = 424
-      Top = 6
-      Width = 66
-      Height = 21
-      Margins.Top = 6
-      Margins.Right = 6
-      Align = alRight
-      Caption = '&Max Retained'
-      FocusControl = cmbMaxCalls
-      Transparent = False
-      ExplicitHeight = 13
-    end
-    object ToolBar4: TToolBar
-      AlignWithMargins = True
-      Left = 107
-      Top = 5
-      Width = 154
-      Height = 22
-      Margins.Top = 5
-      Align = alLeft
-      AutoSize = True
-      Caption = 'ToolBar4'
-      Images = c
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 0
-      Transparent = True
-      object ToolButton21: TToolButton
-        Left = 0
-        Top = 0
-        Action = acTestTime
-      end
-      object ToolButton6: TToolButton
-        Left = 23
-        Top = 0
-        Action = acSymbolTable
-      end
-      object ToolButton22: TToolButton
-        Left = 46
-        Top = 0
-        Width = 8
-        Caption = 'ToolButton22'
-        ImageIndex = 14
-        Style = tbsSeparator
-      end
-      object ToolButton23: TToolButton
-        Left = 54
-        Top = 0
-        Action = EditCopy1
-      end
-      object ToolButton5: TToolButton
-        Left = 77
-        Top = 0
-        Action = acSelectAll
-      end
-      object ToolButton1: TToolButton
-        Left = 100
-        Top = 0
-        Action = FileSaveAs1
-      end
-      object ToolButton8: TToolButton
-        Left = 123
-        Top = 0
-        Width = 8
-        Caption = 'ToolButton8'
-        ImageIndex = 3
-        Style = tbsSeparator
-      end
-      object ToolButton7: TToolButton
-        Left = 131
-        Top = 0
-        Action = acClearLog
-        ImageIndex = 2
-      end
-    end
-    object cmbMaxCalls: TComboBox
-      AlignWithMargins = True
-      Left = 499
-      Top = 3
-      Width = 59
-      Height = 21
-      Align = alRight
-      BevelInner = bvNone
-      Color = clCream
-      Ctl3D = True
-      ParentCtl3D = False
-      TabOrder = 1
-      Text = '200'
-      OnSelect = cmbMaxCallsSelect
-      Items.Strings = (
-        '10'
-        '50'
-        '100'
-        '200'
-        '500'
-        '1000')
-    end
-    object ToolBar1: TToolBar
-      AlignWithMargins = True
-      Left = 341
-      Top = 5
-      Width = 77
-      Height = 22
-      Margins.Top = 5
-      Align = alRight
-      AutoSize = True
-      Caption = 'ToolBar1'
-      Images = c
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 2
-      object ToolButton10: TToolButton
-        Left = 0
-        Top = 0
-        Action = acToTheLeft
-        ImageIndex = 16
-      end
-      object ToolButton11: TToolButton
-        Left = 23
-        Top = 0
-        Action = acToTheRight
-        ImageIndex = 17
-      end
-      object ToolButton12: TToolButton
-        Left = 46
-        Top = 0
-        Width = 8
-        Caption = 'ToolButton12'
-        ImageIndex = 1
-        Style = tbsSeparator
-      end
-      object ToolButton13: TToolButton
-        Left = 54
-        Top = 0
-        Action = acNoAlign
-        ImageIndex = 18
-      end
-    end
-    object ToolBar5: TToolBar
-      AlignWithMargins = True
-      Left = 3
-      Top = 5
-      Width = 46
-      Height = 25
-      Margins.Top = 5
-      Margins.Bottom = 0
-      Align = alLeft
-      AutoSize = True
-      Caption = 'ToolBar1'
-      Images = c
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 3
-      Transparent = True
-      object ToolButton3: TToolButton
-        Left = 0
-        Top = 0
-        Action = acFlag
-      end
-      object ToolButton9: TToolButton
-        Left = 23
-        Top = 0
-        Action = acAddWatch
-        Visible = False
-      end
-    end
-    object ToolBar6: TToolBar
-      AlignWithMargins = True
-      Left = 55
-      Top = 5
-      Width = 46
-      Height = 25
-      Margins.Top = 5
-      Margins.Bottom = 0
-      Align = alLeft
-      AutoSize = True
-      Caption = 'ToolBar1'
-      Images = c
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 4
-      Transparent = True
-      object ToolButton2: TToolButton
-        Left = 0
-        Top = 0
-        Action = acOneNext
-      end
-      object ToolButton4: TToolButton
-        Left = 23
-        Top = 0
-        Action = acOnePrev
-      end
-    end
   end
   object c: TImageList
     ColorDepth = cd32Bit
     Left = 24
     Top = 80
     Bitmap = {
-      494C0101130018024C0210001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010113002C02040010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1308,6 +1222,7 @@ object frmRPCLog: TfrmRPCLog
     end
     object acTrackForms: TAction
       Caption = 'Track Forms Activation'
+      Checked = True
       Hint = 'Register Forms Activation/Deactivation in the Log'
       OnExecute = acTrackFormsExecute
     end
@@ -1319,7 +1234,6 @@ object frmRPCLog: TfrmRPCLog
     object acAddWatch: TAction
       Caption = 'Add Watch'
       Hint = 'Align to the right side of the main window'
-      OnExecute = acAddWatchExecute
     end
     object acToTheLeft: TAction
       Caption = 'Align Left'
@@ -1342,10 +1256,6 @@ object frmRPCLog: TfrmRPCLog
       Caption = '&Word Wrap'
       OnExecute = acWordWrapExecute
     end
-    object acMainForm: TAction
-      Caption = 'Switch to Main Form'
-      OnExecute = acMainFormExecute
-    end
   end
   object ilWindow: TImageList
     ColorDepth = cd32Bit
@@ -1354,7 +1264,7 @@ object frmRPCLog: TfrmRPCLog
     Left = 224
     Top = 152
     Bitmap = {
-      494C01010700B801EC0120002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C01010700CC01040020002000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000004000000001002000000000000080
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2469,12 +2379,6 @@ object frmRPCLog: TfrmRPCLog
         Action = FileSaveAs2
       end
       object N1: TMenuItem
-        Caption = '-'
-      end
-      object SwitchtoMainForm1: TMenuItem
-        Action = acMainForm
-      end
-      object N4: TMenuItem
         Caption = '-'
       end
       object MenuItem3: TMenuItem

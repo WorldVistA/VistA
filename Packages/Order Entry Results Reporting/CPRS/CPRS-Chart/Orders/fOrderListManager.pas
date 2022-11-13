@@ -13,7 +13,7 @@ uses
   VA508AccessibilityManager, Vcl.ComCtrls, fOrderFlagEditor, uOrderFlag, rOrders,
   ORFn, Vcl.ImgList, uConst, System.Actions, Vcl.ActnList, Vcl.Menus,
   iOrderFlagPropertiesEditorIntf, Vcl.Buttons, VA508ImageListLabeler, ORCtrls, fBase508Form,
-  iResizableFormIntf, System.ImageList;
+  iResizableFormIntf, System.ImageList, u508button;
 
 type
   TProcessor = function(anItem: TObject): String of object;
@@ -30,7 +30,7 @@ type
     pnlDetailsCanvas: TPanel;
     pnlListCanvas: TPanel;
     pnlCancel: TPanel;
-    btnCancel: TButton;
+    btnCancel: u508button.TButton;
     lvItems: TListView;
     mmListStatus: TMemo;
     ilStatus: TImageList;
@@ -46,10 +46,10 @@ type
     RemoveProcessed1: TMenuItem;
     acDebug: TAction;
     Debug1: TMenuItem;
-    Button1: TButton;
-    Button2: TButton;
+    Button1: u508button.TButton;
+    Button2: u508button.TButton;
     pnlFlagAdd: TPanel;
-    Button3: TButton;
+    Button3: u508button.TButton;
     acShowList: TAction;
     ShowItemList1: TMenuItem;
     pnlFlagComment: TPanel;
@@ -91,7 +91,7 @@ type
     lblWarning: TLabel;
     stxtRequired: TStaticText;
     Timer1: TTimer;
-    btnFlagRecipients: TButton;
+    btnFlagRecipients: u508button.TButton;
     procedure lvItemsResize(Sender: TObject);
     procedure lvItemsSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
@@ -152,7 +152,7 @@ implementation
 
 {$R *.dfm}
 
-uses fOptions, uFormUtils, Math, fOrders, System.UITypes;
+uses fOptions, uFormUtils, Math, fOrders, System.UITypes, VAUtils;
 
 var
   frmListManager: TfrmListManager;
@@ -160,10 +160,18 @@ var
 function ProcessOrderList(aList: TStrings; aCaption, aComment: String;
   aMode: TActionMode; aMaster: TForm): Integer;
 begin
+  Result := -1;
+  if aList.Count < 1 then
+    exit;
   try
-    Result := -1;
     frmListManager := TfrmListManager.Create(nil);
+{$IFDEF DEBUG}
+    frmListManager.acDebug.Visible := True;
+{$ELSE}
+    frmListManager.acDebug.Visible := False;
+{$ENDIF}
     frmListManager.pnlDetailsCanvas.ParentColor := True;
+    frmListManager.stxtRequired.Visible := not ScreenReaderActive;
     frmListManager.ItemEditor := TfrmOrderFlag.createParented
       (frmListManager, frmListManager.pnlDetailsCanvas);
     if assigned(frmListManager.ItemEditor) then
@@ -209,7 +217,8 @@ procedure TfrmListManager.acDebugExecute(Sender: TObject);
 // set visibility of the debug components
 begin
   inherited;
-{$IFDEF DEBUG_AA}
+{$IFDEF DEBUG}
+
   acDebug.Checked := not acDebug.Checked;
   acReuseProperties.Enabled := True;
   acRemoveProcessed.Enabled := True;
@@ -395,8 +404,8 @@ var
     if assigned(aPerformer) then
     begin
       Result := aPerformer(anObject);
-      if pos(ssSuccess+'^', Result) = 1 then
-        Result := {$IFDEF DEBUG_xA} piece(Result, U, 2) + CRLF{$ELSE} ''{$ENDIF}
+      if pos(ssSuccess + '^', Result) = 1 then
+        Result := ''
       else
         Result := 'Error: ' + piece(Result, U, 2) + CRLF;
     end
@@ -462,8 +471,9 @@ begin
     else
       inc(i);
 
+  // RTC 798386
   if sMsg <> '' then
-    MessageDlg('Processing results:' + CRLF + sMsg, mtInformation, [mbOK], 0);
+    MessageDlg('Processing results:' + CRLF + CRLF + sMsg, mtInformation, [mbOK], 0);
 
   if (lvItems.Items.Count < 1) or (iError = 0) then
     ModalResult := mrOK
@@ -597,7 +607,7 @@ begin
   lvItems.Clear;
   if not assigned(aList) then
   begin
-{$IFDEF DEBUG_AA}
+{$IFDEF DEBUG}
     ShowMessage('Blank List is not a good assignment');
 {$ENDIF}
   end

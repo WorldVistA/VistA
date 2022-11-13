@@ -1,6 +1,7 @@
 object pdmpUserForm: TpdmpUserForm
   Left = 0
   Top = 0
+  ActiveControl = cboProviderDEA
   Caption = 'Select Authorized User'
   ClientHeight = 327
   ClientWidth = 393

@@ -1,34 +1,19 @@
 unit fOptions;
+{------------------------------------------------------------------------------
+Update History
+
+    2016-02-15: NSR#20081008 (CPRS Notification Alert Processing Improvement)
+-------------------------------------------------------------------------------}
 
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
-  Buttons, ComCtrls, ExtCtrls, ORCtrls, OrFn, Dialogs, ORDtTmRng, fBAOptionsDiagnoses,
-  uBAGlobals, fBase508Form, VA508AccessibilityManager, fAutoSz, Vcl.CheckLst, Messages
-  ,uConst, // NSR20071216 2016-01-14 AA
-  fOptionsSurrogate;
+uses
+  Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
+  Buttons, ComCtrls, ExtCtrls, ORCtrls, OrFn, Dialogs, ORDtTmRng,
+  fBAOptionsDiagnoses, uBAGlobals, fBase508Form, VA508AccessibilityManager,
+  fAutoSz, Vcl.CheckLst, Messages, uConst, fOptionsSurrogate;
 
 type
-  TButton = class(Vcl.StdCtrls.TButton)
-  private
-    fMgr: TVA508AccessibilityManager;
-    f508Label: TVA508StaticText;
-    fScreenReaderActive: Boolean;
-    procedure CMEnabledChanged(var Msg: TMessage); message CM_ENABLEDCHANGED;
-    procedure WMSize(var Msg: TMessage); message WM_SIZE;
-    procedure RegisterWithMGR;
-  public
-    constructor Create(AControl: TComponent); override;
-  end;
-
-  Tlv508Manager = class(TVA508ComponentManager)
-  private
-    Function GetText(ListItem: TListItem; ListView: TListView): String;
-  public
-    constructor Create; override;
-    function GetValue(Component: TWinControl): string; override;
-    function GetItem(Component: TWinControl): TObject; override;
-  end;
 
   TTabSheet = class(ComCtrls.TTabSheet)
   private
@@ -59,37 +44,24 @@ type
     lblCoverDaysDesc: TMemo;
     lblCoverDays: TStaticText;
     btnCoverDays: TButton;
-    bvlCoverDays: TBevel;
     btnCoverReminders: TButton;
-    bvlCoverReminders: TBevel;
     imgCoverDays: TImage;
     imgCoverReminders: TImage;
     lblPatientSelectionDesc: TMemo;
     lblPatientSelection: TStaticText;
     btnPatientSelection: TButton;
-    bvlPatientSelection: TBevel;
     btnPersonalLists: TButton;
     imgPatientSelection: TImage;
-    lblNotificationsOptions: TStaticText;
-    lblNotifications: TStaticText;
-    bvlNotifications: TBevel;
-    imgNotifications: TImage;
     lblOrderChecksDesc: TLabel;
     lblOrderChecks: TStaticText;
-    bvlOrderChecks: TBevel;
     imgOrderChecks: TImage;
     lblTeamsDesc: TMemo;
     lblTeams: TStaticText;
     btnTeams: TButton;
-    bvlTeams: TBevel;
     lvwNotifications: TCaptionListView;
-    lblNotificationView: TLabel;
-    btnNotificationsRemove: TButton;
-    chkNotificationsFlagged: TCheckBox;
     lvwOrderChecks: TCaptionListView;
     lblOrderChecksView: TLabel;
     btnCombinations: TButton;
-    bvlOtherParameters: TBevel;
     lblOtherParameters: TStaticText;
     imgOtherParameters: TImage;
     lblOtherParametersDesc: TMemo;
@@ -100,10 +72,8 @@ type
     btnNotesNotes: TButton;
     lblNotesTitles: TStaticText;
     lblNotesTitlesDesc: TMemo;
-    btnNotesTitles: TButton;
     btnRequiredFields: TButton;
     imgNotesNotes: TImage;
-    imgNotes: TImage;
     imgTeams: TImage;
     tsCprsReports: TTabSheet;
     lblReports: TStaticText;
@@ -127,17 +97,28 @@ type
     memReport2: TMemo;
     imgReport1: TImage;
     imgReport2: TImage;
-    pnlNoteTop: TPanel;
+    imgRequiredFields: TImage;
     tsSurrogates: TTabSheet;
     pnlSurrogatesTop: TPanel;
     StaticText2: TStaticText;
     Bevel2: TBevel;
     txtSurrogatesManagement: TStaticText;
     imgSurrogates: TImage;
+    pnlNotificationsList: TPanel;
     Panel2: TPanel;
+    lblNotificationView: TLabel;
+    lblNotifications: TStaticText;
+    bvlNotifications: TBevel;
+    imgNotifications: TImage;
+    lblNotificationsOptions: TStaticText;
+    chkNotificationsFlagged: TCheckBox;
+    btnProcessedAlertsSettings: TButton;
     pnlSurrogates: TPanel;
+    pnlNotificationTools: TPanel;
+    Button1: TButton;
+    Button2: TButton;
+    btnNotificationsRemove: TButton;
     tsCopyPaste: TTabSheet;
-    ImgCopyPaste: TImage;
     GroupBox1: TGroupBox;
     pnlCPMain: TPanel;
     Panel1: TPanel;
@@ -156,6 +137,12 @@ type
     CPLcsLimitText: TStaticText;
     lblTextColor: TStaticText;
     pnlCPOptions: TPanel;
+    lblCopyPaste: TStaticText;
+    ImgCopyPaste: TImage;
+    cbkCopyPaste: TCheckBox;
+    bvlCopyPasteTitle: TBevel;
+    imgNotes: TImage;
+    btnNotesTitles: TButton;
     Panel4: TPanel;
     Panel5: TPanel;
     Panel7: TPanel;
@@ -192,9 +179,9 @@ type
     Panel38: TPanel;
     Bevel9: TBevel;
     Panel39: TPanel;
-    imgRequiredFields: TImage;
     Panel40: TPanel;
     Panel41: TPanel;
+    pnlNoteTop: TPanel;
     Panel43: TPanel;
     Bevel10: TBevel;
     Panel44: TPanel;
@@ -210,31 +197,37 @@ type
     Panel51: TPanel;
     Panel42: TPanel;
     Panel52: TPanel;
+    bvlOrderChecks: TBevel;
     Panel53: TPanel;
     Panel54: TPanel;
     Panel55: TPanel;
     Panel56: TPanel;
     Panel57: TPanel;
+    bvlCoverDays: TBevel;
     Panel58: TPanel;
     Panel59: TPanel;
     Panel60: TPanel;
     Panel61: TPanel;
     Panel62: TPanel;
+    bvlCoverReminders: TBevel;
     Panel63: TPanel;
     Panel64: TPanel;
     Panel65: TPanel;
     Panel66: TPanel;
     Panel67: TPanel;
+    bvlOtherParameters: TBevel;
     Panel68: TPanel;
     Panel69: TPanel;
     Panel70: TPanel;
     Panel71: TPanel;
     Panel72: TPanel;
+    bvlPatientSelection: TBevel;
     Panel73: TPanel;
     Panel74: TPanel;
     Panel75: TPanel;
     Panel76: TPanel;
     Panel77: TPanel;
+    bvlTeams: TBevel;
     Panel78: TPanel;
     Panel79: TPanel;
     Panel80: TPanel;
@@ -244,13 +237,6 @@ type
     Panel84: TPanel;
     Panel85: TPanel;
     Panel17: TPanel;
-    pnlCPTop: TPanel;
-    pnlCPTopLeft: TPanel;
-    pnlCPTopTop: TPanel;
-    bvlCopyPasteTitle: TBevel;
-    lblCopyPaste: TStaticText;
-    pnlCPTopClient: TPanel;
-    cbkCopyPaste: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnCoverDaysClick(Sender: TObject);
@@ -284,6 +270,7 @@ type
     procedure pagOptionsDrawTab(Control: TCustomTabControl; TabIndex: Integer;
       const Rect: TRect; Active: Boolean);
     procedure btnRequiredFieldsClick(Sender: TObject);
+    procedure btnProcessedAlertsSettingsClick(Sender: TObject);
     procedure pagOptionsChange(Sender: TObject);
     procedure cbkCopyPasteClick(Sender: TObject);
     procedure CPOptionsClickCheck(Sender: TObject);
@@ -308,7 +295,6 @@ type
     CopyPasteColor: TColor;  //Color used for copy paste
     LCSIdentColor: TColor;  //Color used for copy paste LCS
     FfrmOptionsSurrogate: TfrmOptionsSurrogate; // Use InitSurrogatesTab to set
-    fLV508Manager: Tlv508Manager;
     procedure Offset(var topnum: integer; topoffset: integer; var leftnum: integer; leftoffset: integer);
     procedure LoadNotifications;
     procedure LoadOrderChecks;
@@ -341,9 +327,8 @@ uses fOptionsDays, fOptionsReminders,
      fOptionsOther, fOptionsNotes, fOptionsTitles, fOptionsReportsCustom, fOptionsReportsDefault,
      fGraphs, fGraphSettings, fGraphProfiles, rGraphs, uGraphs,
      rOptions, rCore, uCore, uOptions, UBACore, fFrame, UITypes, VA508AccessibilityRouter,
-     fOptionsTIUTemplates, vaUtils;
-
-// This needs to be changed in the 32 branch
+     fOptionsTIUTemplates, fOptionsProcessedAlerts,
+     VAUtils;
 
 {$R *.DFM}
 procedure setFormParented(aForm:TForm; aParent:TWinControl;anAlign: TAlign = alClient);
@@ -459,19 +444,19 @@ begin
   if not Assigned(FfrmOptionsSurrogate) then begin
     Application.CreateForm(TfrmOptionsSurrogate, FfrmOptionsSurrogate);
     setFormParented(FfrmOptionsSurrogate, pnlSurrogates);
+    ResizeAnchoredFormToFont(FfrmOptionsSurrogate);
     FFrmOptionsSurrogate.OnChange := SurrogateUpdated;
   end;
 end;
-
-
 // NSR20071216 AA 2016-01-23 --------------------------------------------- end
 
 procedure TfrmOptions.FormCreate(Sender: TObject);
 // initialize form
-Var
+var
+  I:integer;
   FTIUParam: Integer;
 begin
-  AutoSizeDisabled := True;
+  AutoSizeDisabled := True; // This avoids weird moving issues on the tabs, and eliminates severe sluggishness
   LoadNotifications;
   LoadOrderChecks;
   FdirtyNotifications := false;
@@ -481,14 +466,15 @@ begin
   //Retrieve the Copy Paste options
   if frmFrame.CPAppMon.Enabled then
    LoadCopyPaste;
-
-  if not frmFrame.CPAppMon.Enabled then
+  for i := 0 to pagOptions.PageCount -1 do
   begin
-    // Only hide this when the copy and paste module is disabled.
-    // If not this will cause a weird tab order issue
-    tsCopyPaste.TabVisible := false;
-    tsCopyPaste.Visible := false;
+    if pagOptions.Pages[i].Name = 'tsCopyPaste' then
+    begin
+    pagOptions.Pages[i].TabVisible := frmFrame.CPAppMon.Enabled;
+    break;
+    end;
   end;
+  tsCopyPaste.TabVisible := frmFrame.CPAppMon.Enabled; // SDS 5/19/2017
 
   CheckApply;
 
@@ -497,16 +483,7 @@ begin
   FGiveMultiTabMessage := ScreenReaderSystemActive;
 
   if PagOptions.ActivePage = tsSurrogates then InitSurrogatesTab; // NSR20071216 AA 2016-01-23
-
-  memReport2.TabStop := ScreenReaderActive;
-  if ScreenReaderActive then
-  begin
-    fLV508Manager := Tlv508Manager.Create;
-    amgrMain.ComponentManager[lvwNotifications] := fLV508Manager;
-    amgrMain.ComponentManager[lvwOrderChecks] := fLV508Manager;
-  end;
-
-  FTIUParam := StrToIntDef(systemParameters.StringValue['tmRequiredFldsOff'], 1);
+  FTIUParam := StrToIntDef(systemParameters.AsType<String>('tmRequiredFldsOff'), 1);
   pnlTIU.Visible := (FTIUParam = 0);
   Init508;
 end;
@@ -521,13 +498,6 @@ begin
     lvwOrderChecks.Items.Item[i].SubItems.Objects[2].free;
   for i := 0 to lvwNotifications.Items.Count - 1 do
     lvwNotifications.Items.Item[i].SubItems.Objects[2].free;
-
-  if assigned(fLV508Manager) then
-  begin
-    amgrMain.ComponentManager[lvwNotifications] := nil;
-    amgrMain.ComponentManager[lvwOrderChecks] := nil;
-    FreeAndNil(fLV508Manager);
-  end;
 end;
 
 procedure TfrmOptions.btnCoverDaysClick(Sender: TObject);
@@ -631,7 +601,7 @@ end;
 procedure TfrmOptions.btnApplyClick(Sender: TObject);
 // save actions without exiting
 Var
- Verified: Integer;
+  Verified: Integer;
 begin
   if FdirtyNotifications then
     ApplyNotifications;
@@ -655,8 +625,10 @@ begin
         Close;
       end;
     end
-    else // switch to the "Surrogates" tab that has issues
-      pagOptions.ActivePage := tsSurrogates; // NSR20071216 2016-01-14 AA ---------- end
+    else begin
+      pagOptions.ActivePage := tsSurrogates; // NSR20071216 2016-01-14 AA ---------- end  \
+      ModalResult := mrNone;
+    end;
   end;
   CheckApply;
 end;
@@ -664,6 +636,7 @@ end;
 procedure TfrmOptions.LoadNotifications;
 // load Notification tab
 var
+  processedAlertsInfo,
   notifydefaults, flag, enableerase: string;
   aResults: TStringList;
 begin
@@ -680,6 +653,9 @@ begin
   enableerase := Piece(notifydefaults, '^', 3);
   chkNotificationsFlagged.Checked := flag = '1';
   btnNotificationsRemove.Enabled := enableerase = '1';
+
+  processedAlertsInfo := pieces(notifydefaults,U,4,5);
+  setProcessedAlertsInfo(ProcessedAlertsInfo); // save values in unit fOptionsProcessedAlerts
 end;
 
 procedure TfrmOptions.LoadOrderChecks;
@@ -691,10 +667,10 @@ begin
   try
     rpcGetOrderChecks(aResults);
     LoadListView(lvwOrderChecks, aResults);
-    lvwOrderChecks.Checkboxes := true;
+  lvwOrderChecks.Checkboxes := true;
   finally
     FreeAndNil(aResults);
-  end;
+end;
 end;
 
 procedure TfrmOptions.ApplyNotifications;
@@ -707,22 +683,22 @@ var
 begin
   aList := TStringList.Create;
   try
-    for i := 0 to lvwNotifications.Items.Count - 1 do
+  for i := 0 to lvwNotifications.Items.Count - 1 do
+  begin
+    aRule := TRule(lvwNotifications.Items.Item[i].SubItems.Objects[2]);
+    if lvwNotifications.Items.Item[i].SubItems[1] <> 'Mandatory' then
+    begin
+      newonoff := Uppercase(lvwNotifications.Items.Item[i].SubItems[0]);
+      if aRule.OriginalValue <> newonoff then
       begin
-        aRule := TRule(lvwNotifications.Items.Item[i].SubItems.Objects[2]);
-        if lvwNotifications.Items.Item[i].SubItems[1] <> 'Mandatory' then
-          begin
-            newonoff := Uppercase(lvwNotifications.Items.Item[i].SubItems[0]);
-            if aRule.OriginalValue <> newonoff then
-              begin
-                // ***Show508Message(aRule.IEN + ' ' + aRule.OriginalValue + ' ' + newonoff);
-                aList.Add(aRule.IEN + '^' + newonoff);
-                aRule.OriginalValue := lvwNotifications.Items.Item[i].SubItems[0];
-              end;
-          end;
+        //***Show508Message(aRule.IEN + ' ' + aRule.OriginalValue + ' ' + newonoff);
+        aList.Add(aRule.IEN + '^' + newonoff);
+        aRule.OriginalValue := lvwNotifications.Items.Item[i].SubItems[0];
       end;
-    rpcSetNotifications(aList);
-    FdirtyNotifications := false;
+    end;
+  end;
+  rpcSetNotifications(aList);
+  FdirtyNotifications := false;
   finally
     aList.free;
   end;
@@ -738,18 +714,18 @@ var
 begin
   aList := TStringList.Create;
   try
-    for i := 0 to lvwOrderChecks.Items.Count - 1 do
-      begin
-        aRule := TRule(lvwOrderChecks.Items.Item[i].SubItems.Objects[2]);
-        newonoff := Uppercase(lvwOrderChecks.Items.Item[i].SubItems[0]);
-        if aRule.OriginalValue <> newonoff then
-          begin
-            aList.Add(aRule.IEN + '^' + newonoff);
-            aRule.OriginalValue := lvwOrderChecks.Items.Item[i].SubItems[0];
-          end;
-      end;
-    rpcSetOrderChecks(aList);
-    FdirtyOrderChecks := false;
+  for i := 0 to lvwOrderChecks.Items.Count - 1 do
+  begin
+    aRule := TRule(lvwOrderChecks.Items.Item[i].SubItems.Objects[2]);
+    newonoff := Uppercase(lvwOrderChecks.Items.Item[i].SubItems[0]);
+    if aRule.OriginalValue <> newonoff then
+    begin
+      aList.Add(aRule.IEN + '^' + newonoff);
+      aRule.OriginalValue := lvwOrderChecks.Items.Item[i].SubItems[0];
+    end;
+  end;
+  rpcSetOrderChecks(aList);
+  FdirtyOrderChecks := false;
   finally
     aList.free;
   end;
@@ -765,12 +741,14 @@ begin
     aString := aString + '^1'
   else
     aString := aString + '^0';
-  rpcSetOtherStuff(aString);
+  rpcSetOtherStuff(aString+'^^'+getProcessedAlertsInfo);
+  ProcessedAlertsSessionInfo := '';
   FdirtyOtherStuff := false;
 end;
 
 procedure TfrmOptions.CheckApply;
 // determine if Apply button is enabled
+// RDD: There may be an issue here with CopyPasteChanged. It seems to always return true for me.
 begin
   btnApply.Enabled :=
     FdirtyOrderChecks or
@@ -799,7 +777,7 @@ begin
   CheckApply;
 end;
 
-procedure TfrmOptions.LoadListView(aListView: TListView; aList: TStrings);
+procedure TfrmOptions.LoadListView; //(aListView: TListView; aList: TStrings);
 // load a list view with: name, on/off, comment
 var
   i: integer;
@@ -930,18 +908,19 @@ begin
   CheckApply;
 end;
 
-//procedure TfrmOptions.btnSurrogateClick(Sender: TObject);
-//// display Surrogate Options
+
+procedure TfrmOptions.btnProcessedAlertsSettingsClick(Sender: TObject);
 //var
-//  topsize, leftsize: integer;
-//  surrogateinfo: string;
-//begin
-//  surrogateinfo := btnSurrogate.Hint;
+//  b:boolean;
+begin
 //  Offset(topsize, -30, leftsize, -30);
-//  DialogOptionsSurrogate(topsize, leftsize, Font.Size, surrogateinfo);
-//  LabelSurrogate(surrogateinfo, lblNotificationsSurrogateText);
-//  btnSurrogate.Hint := surrogateinfo;
-//end;
+//  b := (UpdateProcessedAlertsPreferences <> mrCancel);
+//  FdirtyOtherStuff := FdirtyOtherStuff or b;
+//  CheckApply;
+
+  // AA: passing ApplyOtherStuff to save changes without clicking "Apply"
+  UpdateProcessedAlertsPreferences(ApplyOtherStuff);
+end;
 
 procedure TfrmOptions.btnCombinationsClick(Sender: TObject);
 // display Combination List Options
@@ -1042,13 +1021,8 @@ end;
 procedure TfrmOptions.pagOptionsChange(Sender: TObject);
 begin
   inherited;
-  if pagOptions.ActivePage = tsSurrogates then InitSurrogatesTab;
-
-  if ScreenReaderSystemActive then
-    GetScreenReader.Speak(pagOptions.Pages[pagOptions.TabIndex].Hint);
-
-  if pagOptions.TabIndex < 0 then
-    Exit;
+  if pagOptions.ActivePage = tsSurrogates then InitSurrogatesTab; // Creates the surrogates tab content if it is not there yet
+  if pagOptions.TabIndex < 0 then Exit;
 end;
 
 procedure TfrmOptions.pagOptionsChanging(Sender: TObject;
@@ -1442,16 +1416,16 @@ const
     + #13 + 'Please check the following section(s): ' + #13#13 + '%s' + #13 +
     'Click OK to reverify your selection';
 Var
-  DlgButtons: TMsgDlgButtons;
+ DlgButtons: TMsgDlgButtons;
   ShowErr: Boolean;
   AddMsg: String;
 begin
-  Result := -1;
+ Result := -1;
   ShowErr := false;
-  // Copy paste options (at least one selected)
-  if Sender = btnOK then
+   //Copy paste options (at least one selected)
+   if Sender = btnOK then
     DlgButtons := [mbOK, mbIgnore]
-  else
+   else
     DlgButtons := [mbOK];
 
   if (cbkCopyPaste.Checked) and (not CopyPasteOptions.Checked[0]) and
@@ -1479,19 +1453,19 @@ begin
       else
       begin
         Result := 0;
-        cbkCopyPaste.Checked := false;
-        cbkCopyPasteClick(cbkCopyPaste);
-        CopyPasteOptions.Checked[0] := false;
-        CopyPasteOptions.Checked[1] := false;
-        CopyPasteOptions.Checked[2] := false;
-        CopyPasteOptions.Checked[3] := false;
+      cbkCopyPaste.Checked := false;
+      cbkCopyPasteClick(cbkCopyPaste);
+      CopyPasteOptions.Checked[0] := false;
+      CopyPasteOptions.Checked[1] := false;
+      CopyPasteOptions.Checked[2] := false;
+      CopyPasteOptions.Checked[3] := false;
         frmFrame.CPAppMon.MatchHighlight := false;
         lbCPhighLight.visible := false;
         cpHLColor.visible := false;
-      end;
+    end;
     end;
   end
-  else
+     else
     Result := MessageDlg(Format(Msg, [AddMsg]), mtError, DlgButtons, -1)
 
 end;
@@ -1505,12 +1479,10 @@ end;
 
 procedure TTabSheet.WMEraseBkGnd(var Msg: TWMEraseBkGnd);
 begin
-  inherited;
-  Brush.Color := FColor;
-  Windows.FillRect(Msg.dc, ClientRect, Brush.Handle);
-  Msg.Result := 1;
+    Brush.Color := FColor;
+    Windows.FillRect(Msg.dc, ClientRect, Brush.Handle);
+    Msg.Result := 1;
 end;
-
 // NSR20100706 AA 2015/10/10 - Management of Highlighting preferences ---- begin
 procedure TfrmOptions.btnRequiredFieldsClick(Sender: TObject);
 begin
@@ -1528,22 +1500,13 @@ end;
 procedure TColorBox.AdjustSizeOfSelf;
 var
   FontHeight: Integer;
-//  cboBtnX, cboBtnY: integer;
   cboYMargin: integer;
-
 begin
   DroppedDown := False;
   FontHeight := FontHeightPixel(Self.Font.Handle);
-
   cboYMargin := 8;
-//  cboBtnX := 5;
-//  cboBtnY := 5;
-
   ItemHeight := HigherOf(FontHeight + cboYMargin, ItemHeight); // must be at least as high as text
-  self.SetBounds(Left, Top, Width, FontHeight + cboYMargin);
-
-  //ItemHeight := FontHeight + cboYMargin; // DropDown can only be text height
-
+  SetBounds(Left, Top, Width, FontHeight + cboYMargin);
 end;
 
 function TfrmOptions.VerifyIfTabCanChange: Boolean;
@@ -1559,162 +1522,5 @@ begin
       FfrmOptionsSurrogate.UpdateWithServerData;
   end;
 end;
-
-
-{$REGION '508Button'}
-
-constructor TButton.Create(AControl: TComponent);
-begin
-  inherited Create(AControl);
-  fScreenReaderActive := ScreenReaderActive;
-  fMgr := nil;
-end;
-
-procedure TButton.RegisterWithMGR;
-var
-  aFrm: TCustomForm;
-  I: Integer;
-begin
-  if not Assigned(fMgr) then
-  begin
-    aFrm := GetParentForm(Self);
-    for I := 0 to aFrm.ComponentCount - 1 do
-    begin
-      if aFrm.Components[I] is TVA508AccessibilityManager then
-      begin
-        fMgr := TVA508AccessibilityManager(aFrm.Components[I]);
-        break;
-      end;
-    end;
-  end;
-
-  if Assigned(fMgr) then
-    fMgr.AccessData.EnsureItemExists(f508Label);
-end;
-
-procedure TButton.CMEnabledChanged(var Msg: TMessage);
-begin
-  inherited;
-  if not fScreenReaderActive then
-    exit;
-
-  if not Self.Enabled then
-  begin
-    if Assigned(f508Label) then
-      f508Label.Visible := true
-    else begin
-      f508Label := TVA508StaticText.Create(Self);
-      f508Label.Parent := Self.Parent;
-      f508Label.SendToBack;
-      // self.SendToBack;
-      f508Label.TabStop := true;
-      f508Label.TabOrder := Self.TabOrder;
-      f508Label.caption := ' ' + Self.caption + ' button disabled';
-      f508Label.Top := Self.Top - 2;
-      f508Label.Left := Self.Left - 2;
-      f508Label.Width := Self.Width + 5;
-      f508Label.Height := Self.Height + 5;
-      RegisterWithMGR;
-    end;
-  end
-  else
-  begin
-   if Assigned(f508Label) then
-      f508Label.Visible := false;
-   // PostMessage(Self.Handle, WM_FREE508LBL, 0, 0);
-   //Might need to call UnregisterComponent
-  end;
-end;
-
-procedure TButton.WMSize(var Msg: TMessage);
-begin
-  inherited;
-  if not fScreenReaderActive then
-    exit;
-
-  if Assigned(f508Label) then
-  begin
-    f508Label.Top := Self.Top - 2;
-    f508Label.Left := Self.Left - 2;
-    f508Label.Width := Self.Width + 5;
-    f508Label.Height := Self.Height + 5;
-  end;
-end;
-
-{$ENDREGION}
-{$REGION 'ListView508Manager'}
-
-constructor Tlv508Manager.Create;
-begin
-  inherited Create([mtValue, mtItemChange]);
-end;
-
-function Tlv508Manager.GetItem(Component: TWinControl): TObject;
-var
-  lv: TListView;
-begin
-  Result := nil;
-  if Component is TListView then
-  begin
-    lv := TListView(Component);
-    if Assigned(lv) then
-      Result := lv.Selected;
-  end;
-end;
-
-function Tlv508Manager.GetValue(Component: TWinControl): string;
-var
-  lv: TListView;
-  lvItm: TListItem;
-begin
-  Result := '';
-  if Assigned(Component) and (Component is TListView) then
-  begin
-    lv := TListView(Component);
-    lvItm := lv.Selected;
-    Result := GetText(lvItm, lv);
-  end;
-end;
-
-function Tlv508Manager.GetText(ListItem: TListItem;
-  ListView: TListView): String;
-var
-  I: Integer;
-  AddTxt: String;
-begin
-  Result := '';
-
-  if Assigned(ListItem) and Assigned(ListView) then
-  begin
-    AddTxt := '';
-    for I := 0 to ListView.Columns.Count - 1 do
-    begin
-      if Trim(ListView.Columns[I].caption) = '' then
-        AddTxt := 'Blank'
-      else
-        AddTxt := ListView.Columns[I].caption;
-
-      if I = 0 then
-      begin
-        if trim(ListItem.caption) = '' then
-          AddTxt := AddTxt + ' ' + 'Blank'
-        else
-          AddTxt := AddTxt + ' ' + ListItem.caption;
-      end
-      else
-      begin
-        if trim(ListItem.SubItems[I - 1]) = '' then
-          AddTxt := AddTxt + ' ' + 'Blank'
-        else
-          AddTxt := AddTxt + ' ' + ListItem.SubItems[I - 1];
-      end;
-
-      Result := Result + ' ' + AddTxt + ',';
-    end;
-  end;
-
-end;
-
-{$ENDREGION}
 
 end.

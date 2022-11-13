@@ -13,19 +13,48 @@ uses
   VA508AccessibilityManager,
   ORDtTm, Vcl.ExtCtrls, uOrderFlag, uFormUtils, Vcl.Buttons,fBase508Form,
   Vcl.ActnList, iOrderFlagPropertiesEditorIntf, iResizableFormIntf, uConst,
-  System.Actions, System.UITypes;
+  System.Actions, fOrderFlagNotificationRecipients, u508button;
 
 type
+
+  TCheckBox = class(StdCtrls.TCheckBox)
+  protected
+    procedure Resize; override;
+  private
+    fMgr: TVA508AccessibilityManager;
+    f508Label: TVA508StaticText;
+    procedure CMEnabledChanged(var Msg: TMessage); message CM_ENABLEDCHANGED;
+    procedure RegisterWithMGR;
+    function GetIsScreenReaderActive: Boolean;
+  public
+    constructor Create(AOwner: TComponent); override;
+    property IsScreenReaderActive: Boolean read GetIsScreenReaderActive;
+  end;
+
+  TORDateBox = class(ORDtTm.TORDateBox)
+  protected
+    procedure Resize; override;
+  private
+    fMgr: TVA508AccessibilityManager;
+    f508Label: TVA508StaticText;
+    procedure CMEnabledChanged(var Msg: TMessage); message CM_ENABLEDCHANGED;
+    procedure RegisterWithMGR;
+    function GetIsScreenReaderActive: Boolean;
+  public
+    constructor Create(AOwner: TComponent); override;
+    property IsScreenReaderActive: Boolean read GetIsScreenReaderActive;
+  end;
+
   TfrmOrderFlag = class(TfrmBase508Form, IOrderFlagPropertiesEditor, IResizableForm)
-    cmdOK: TButton;
-    cmdCancel: TButton;
+    cmdOK: u508button.TButton;
+    cmdCancel: u508button.TButton;
     mmOrder: TMemo;
     cboFlagReason: TORComboBox;
     cboAlertRecipient: TORComboBox;
     orSelectedRecipients: TORListBox;
     dtFlagExpire: TORDateBox;
-    btnRemoveAllRecipients: TButton;
-    btnAddRecipient: TButton;
+    btnRemoveAllRecipients: u508button.TButton;
+    btnAddRecipient: u508button.TButton;
     pnlBottom: TPanel;
     pnlCanvas: TPanel;
     pnlNoActionAlert: TPanel;
@@ -45,12 +74,6 @@ type
     sbDebug: TSpeedButton;
     pnlButtons: TPanel;
     pnlListButtons: TPanel;
-    grbInstructions: TGroupBox;
-    grbComment: TGroupBox;
-    grbNoActionAlert: TGroupBox;
-    grbReason: TGroupBox;
-    grbOrderDetails: TGroupBox;
-    grbRecipients: TGroupBox;
     cbRecipientsRequired: TCheckBox;
     alEditorActions: TActionList;
     acFlagRemove: TAction;
@@ -60,11 +83,19 @@ type
     acRecipientRemoveAll: TAction;
     acRecipientSelect: TAction;
     memComment: TMemo;
-    btnRemoveRecipients: TButton;
+    btnRemoveRecipients: u508button.TButton;
     acRecipientRemove: TAction;
     orRecipientsAdd: TORListBox;
-    grbRecipientsAdd: TGroupBox;
     cbCreateNoActionAlert: TCheckBox;
+    lblOrderDetails: TLabel;
+    lblReason: TLabel;
+    lblRecipients: TLabel;
+    pnlRecipientsSub: TPanel;
+    lblNoActionAlert: TLabel;
+    lblRecipientsAdd: TLabel;
+    pnlRecipientsAdd: TPanel;
+    pnlCommentSub: TPanel;
+    lblComment: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure cboAlertRecipientNeedData(Sender: TObject;
       const StartFrom: string; Direction, InsertAt: Integer);
@@ -83,8 +114,6 @@ type
     procedure pnlRecipientsListResize(Sender: TObject);
     procedure pnlNoActionAlertResize(Sender: TObject);
     procedure acFlagSetExecute(Sender: TObject);
-    procedure mmOrderChange(Sender: TObject);
-    procedure orSelectedRecipientsChange(Sender: TObject);
     procedure cboAlertRecipientKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure orSelectedRecipientsClick(Sender: TObject);
@@ -93,10 +122,7 @@ type
     procedure acRecipientRemoveAllExecute(Sender: TObject);
     procedure cboAlertRecipientEnter(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure cboAlertRecipientClick(Sender: TObject);
     procedure orSelectedRecipientsEnter(Sender: TObject);
-    procedure orSelectedRecipientsExit(Sender: TObject);
-    procedure cboAlertRecipientExit(Sender: TObject);
     procedure acRecipientSelectExecute(Sender: TObject);
     procedure memCommentChange(Sender: TObject);
     procedure orRecipientsAddChange(Sender: TObject);
@@ -105,6 +131,9 @@ type
     procedure orRecipientsAddDblClick(Sender: TObject);
     procedure cbCreateNoActionAlertClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure mmOrderEnter(Sender: TObject);
+    procedure orSelectedRecipientsKeyPress(Sender: TObject; var Key: Char);
   private
     FNeedsToResizeToFontSize: Integer;
     fDebug: Boolean;
@@ -113,6 +142,7 @@ type
     fViewMode: TViewMode;
     fActionMode: TActionMode;
     fOrdersCount: Integer;
+    fFlagRecipients: TfrmOrderFlagRecipients;
     procedure setButtonStatus;
     procedure setFlagInfo(anInfo: TOrderFlag);
 //    procedure setFlagRecipients(anInfo: TOrderFlag);
@@ -124,11 +154,10 @@ type
     procedure setProcessedMode(aProcessed: Boolean);
     procedure RecipientAdd;
     procedure RecipientRemove;
-
     function _AddRef: Integer; stdcall;
     function _Release: Integer; stdcall;
-
     procedure setOrdersCount(aValue:Integer);
+    function GetFlagRecipients: TfrmOrderFlagRecipients;
   protected
     // procedure Loaded;override;
   public
@@ -138,20 +167,19 @@ type
     property ActionMode: TActionMode read fActionMode write setActionMode;
     property FlagInfo: TOrderFlag read fFlagInfo write setFlagInfo;
     property OrdersCount: Integer read fOrdersCount write setOrdersCount;
+    property FlagRecipients: TfrmOrderFlagRecipients read GetFlagRecipients;
 
     constructor createParented(aParentForm: TForm; aParentControl: TWinControl);
     function IsValid(aTag: Integer): Boolean;
     function IsCommentValid:Boolean;
-    procedure ResizeToFont(aSize:Integer);
+    procedure ResizeToFont(aSize: Integer);
 
     procedure setGUIByMultipleObjects(aList:TObject);
     procedure setGUIByObject(anObject: TObject);
     function IsValidArray(anArray: Array of Integer): Boolean;
 
     function getVisibleFieldNames:String;
-{$IFDEF DEBUG_AA}
     procedure setDebugView(aValue: Boolean);
-{$ENDIF}
     function CheckFlag: boolean;
   end;
 
@@ -162,6 +190,7 @@ const
   prpNoAction = 4;
 
   PrefixRequired = '* ';
+  a508PrefixRequired = ' Required';
 
   iGap = 8;
   iGapHeader = 4;
@@ -176,11 +205,20 @@ const
 
   OrderFlagCommentsLimit = 240; // comments should not exceed 240 chars RSD 2.6.24.1.1.5
 
+  TX_NO_PROVIDER_CAP = 'Invalid Provider';
+
 implementation
 
 {$R *.DFM}
 
-uses uCore, rCore, uSimilarNames, fOrderFlagNotificationRecipients;
+uses
+  uCore,
+  rCore,
+  uORLists,
+  uSimilarNames,
+  System.UITypes,
+  VAUtils,
+  VA508AccessibilityRouter;
 
 function getHint(aStrings:TStrings;aCount: Integer = 15):String;
 var
@@ -198,16 +236,27 @@ begin
 end;
 
 function getRequiredCaption(aCaption: String; aRequired: Boolean): String;
+var
+  ReqPrefix: String;
 begin
+  if ScreenReaderActive then
+    ReqPrefix := a508PrefixRequired
+  else
+    ReqPrefix := PrefixRequired;
+
   if aRequired then
   begin
-    if pos(PrefixRequired, aCaption) <> 1 then
-      Result := PrefixRequired + aCaption
-    else
+    if pos(ReqPrefix, aCaption) <> 1 then
+    begin
+      if ScreenReaderActive then
+        Result := aCaption + ReqPrefix
+      else
+        Result := ReqPrefix + aCaption
+    end else
       Result := aCaption;
   end
-  else if pos(PrefixRequired, aCaption) = 1 then
-    Result := copy(aCaption, Length(PrefixRequired) + 1, Length(aCaption))
+  else if pos(ReqPrefix, aCaption) = 1 then
+    Result := copy(aCaption, Length(ReqPrefix) + 1, Length(aCaption))
   else
     Result := aCaption
 end;
@@ -215,57 +264,6 @@ end;
 const
   TX_REASON_REQ = 'A reason must be entered to flag an order.';
   TC_REASON_REQ = 'Reason Required';
-(*
-function FlagOrderConfirmation(aCaption,anAction, anInfo: String): Integer;
-var
-  frmFlagOrder: TfrmOrderFlag;
-begin
-  frmFlagOrder := TfrmOrderFlag.Create(Application);
-  try
-    frmFlagOrder.Caption := aCaption;
-    frmFlagOrder.ViewMode := vmConfirmationDlg;
-    frmFlagOrder.mmOrder.Text := anInfo;
-    frmFlagOrder.mmOrder.Hint := getHint(frmFlagOrder.mmOrder.Lines);
-    frmFlagOrder.mmInstructions.Text :=
-      'The following orders are not eligible for action "' + anAction +'"'+ CRLF +
-      'They will be removed from selection' + CRLF +
-      'Click "OK" to continue or "Cancel" to return to the order list';
-//    ResizeFormToFont(TForm(frmFlagOrder));
-    frmFlagOrder.ResizeToFont(Application.MainForm.Font.Size);
-    Result := frmFlagOrder.ShowModal;
-  finally
-    frmFlagOrder.Release;
-  end;
-end;
-
-function ExecuteFlagOrder(AnOrder: TOrder): Boolean;
-var
-  frmFlagOrder: TfrmOrderFlag;
-begin
-  Result := False;
-
-  frmFlagOrder := TfrmOrderFlag.Create(Application);
-
-  try
-    ResizeFormToFont(TForm(frmFlagOrder));
-    // AlertRecip := User.DUZ;
-    with frmFlagOrder do
-    begin
-      mmOrder.SetTextBuf(PChar(AnOrder.Text));
-      if ShowModal = mrOK then
-      begin
-        // FlagOrder(AnOrder, cboFlagReason.Text, AlertRecip);
-        FlagOrder(AnOrder, cboFlagReason.Text, orSelectedRecipients.Items,
-          dtFlagExpire.Text);
-        Result := True;
-      end;
-    end;
-  finally
-    frmFlagOrder.Release;
-  end;
-end;
-*)
-/// /////////////////////////////////////////////////////////////////////////////
 
 constructor TfrmOrderFlag.createParented(aParentForm: TForm;
   aParentControl: TWinControl);
@@ -274,20 +272,18 @@ begin
   MasterForm := aParentForm;
   ViewMode := vmParentedForm;
   setFormParented(self, aParentControl);
-{$IFDEF DEBUG_AA}
-{$ELSE}
   sbDebug.Visible := fDebug;
-{$ENDIF}
   cbReasonRequired.Visible := fDebug;
   cbNoActionRequired.Visible := fDebug;
   cbRecipientsRequired.Visible := fDebug;
-  grbReason.Caption := getRequiredCaption(grbReason.Caption,
+
+  lblReason.Caption := getRequiredCaption(lblReason.Caption,
     cbReasonRequired.Checked);
-  grbNoActionAlert.Caption := getRequiredCaption(grbNoActionAlert.Caption,
+  lblNoActionAlert.Caption := getRequiredCaption(lblNoActionAlert.Caption,
     cbNoActionRequired.Checked);
-  grbRecipients.Caption := getRequiredCaption(grbRecipients.Caption,
+  lblRecipients.Caption := getRequiredCaption(lblRecipients.Caption,
     cbRecipientsRequired.Checked);
-  grbComment.Caption := getRequiredCaption(grbComment.Caption,
+  lblComment.Caption := getRequiredCaption(lblComment.Caption,
     cbRequiredComment.Checked);
 end;
 
@@ -321,34 +317,36 @@ begin
     acRecipientSelect.Execute;
 end;
 
-procedure TfrmOrderFlag.orSelectedRecipientsChange(Sender: TObject);
-begin
-  inherited;
-  reportStatus;
-end;
+
 
 procedure TfrmOrderFlag.orSelectedRecipientsClick(Sender: TObject);
 begin
   inherited;
+  // Update button status since the recipients changed
   setButtonStatus;
 end;
 
 procedure TfrmOrderFlag.orSelectedRecipientsDblClick(Sender: TObject);
 begin
   inherited;
-  RecipientRemove;
+  // If available remove the selected recipient
+  acRecipientRemove.Execute;
 end;
 
 procedure TfrmOrderFlag.orSelectedRecipientsEnter(Sender: TObject);
 begin
   inherited;
-  SetButtonStatus;
+   //Ensure that no potential recipients are selected
+  cboAlertRecipient.ItemIndex := -1;
 end;
 
-procedure TfrmOrderFlag.orSelectedRecipientsExit(Sender: TObject);
+procedure TfrmOrderFlag.orSelectedRecipientsKeyPress(Sender: TObject;
+  var Key: Char);
 begin
   inherited;
-  SetButtonStatus;
+  // If enter is pressed then try to remove the recipient(s)
+  if ord(Key) = VK_RETURN then
+    orSelectedRecipientsDblClick(Sender);
 end;
 
 procedure TfrmOrderFlag.pnlNoActionAlertResize(Sender: TObject);
@@ -409,6 +407,8 @@ end;
 procedure TfrmOrderFlag.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 
   function IsValid: Boolean;
+  var
+    Err:String;
   begin
     Result := False;
     case ViewMode of
@@ -416,7 +416,7 @@ procedure TfrmOrderFlag.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
         ;
       vmDialog:
         if Assigned(FlagInfo) then
-          Result := FlagInfo.IsValid; // OFStatus = stOFValid;
+          Result := FlagInfo.IsValid(Err); // OFStatus = stOFValid;
       vmConfirmationDlg:
         Result := True;
     end;
@@ -434,7 +434,7 @@ var
   tmpList: TStringList;
 begin
   inherited;
-//  AutoSizeDisabled := True;
+  // AutoSizeDisabled := True;
   tmpList := TStringList.Create;
   try
     GetUserListParam(tmpList, 'OR FLAGGED ORD REASONS');
@@ -444,17 +444,29 @@ begin
     tmpList.Free;
   end;
   cboAlertRecipient.InitLongList('');
-  dtFlagExpire.DateSelected := getOrderFlagExpireDefault; //Now;
+  dtFlagExpire.DateSelected := getOrderFlagExpireDefault; // Now;
   dtFlagExpire.FMDateTime := DateTimeToFMDateTime(dtFlagExpire.DateSelected);
-  dtFlagExpire.DateRange.MinDate := FMDateTimeToDateTime(FMNow);
 
-  NotificationRecipientsCleanUp;
+  dtFlagExpire.DateRange.MinDate := FMDateTimeToDateTime(FMNow);
+end;
+
+procedure TfrmOrderFlag.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(fFlagRecipients);
+  inherited;
 end;
 
 procedure TfrmOrderFlag.FormShow(Sender: TObject);
 begin
   inherited;
   if FNeedsToResizeToFontSize >= 0 then ResizeToFont(FNeedsToResizeToFontSize);
+end;
+
+function TfrmOrderFlag.GetFlagRecipients: TfrmOrderFlagRecipients;
+begin
+  if not assigned(fFlagRecipients) then
+    fFlagRecipients := TfrmOrderFlagRecipients.Create(self);
+  result := fFlagRecipients;
 end;
 
 procedure TfrmOrderFlag.acFlagSetExecute(Sender: TObject);
@@ -470,41 +482,43 @@ end;
 procedure TfrmOrderFlag.acRecipientAddExecute(Sender: TObject);
 begin
   inherited;
+  // Add recipient and disable the add button.
+  // Will re-enable when a new person is selected
   RecipientAdd;
+  SetButtonStatus;
+  if ScreenReaderActive then
+    GetScreenReader.Speak('Recipient added');
 end;
 
 procedure TfrmOrderFlag.acRecipientRemoveAllExecute(Sender: TObject);
 begin
   inherited;
+  // Select all recipients and then remove the selected
+  // Disable the remove all button since no entries left
   orSelectedRecipients.SelectAll;
   RecipientRemove;
+  SetButtonStatus;
+  if ScreenReaderActive then
+    GetScreenReader.Speak('All Recipients removed');
 end;
 
 procedure TfrmOrderFlag.acRecipientRemoveExecute(Sender: TObject);
 begin
   inherited;
+  // Remove the selected recipient and disable the remove button.
+  // Will re-enable when a new recipient is selected
   RecipientRemove;
+  SetButtonStatus;
+  if ScreenReaderActive then
+    GetScreenReader.Speak('Recipient removed');
 end;
 
 procedure TfrmOrderFlag.acRecipientSelectExecute(Sender: TObject);
-var
-  SS: TStrings;
 begin
   inherited;
-  SS := getRecipientsList(FlagInfo.Recipients);
-  if SS <> nil then
-    begin
-{$IFDEF DEBUG}
-      if SS.Count > 0 then
-        ShowMessage(SS.Text);
-{$ENDIF}
-      FlagInfo.RecipientsNew.Assign(SS);
-
-      grbRecipientsAdd.Visible := SS.Count > 0;
-      orRecipientsAdd.Items.Assign(SS);
-    end
-  else
-    grbRecipientsAdd.Visible := orRecipientsAdd.Items.Count > 0;
+  FlagRecipients.getRecipientsList(FlagInfo.Recipients, FlagInfo.RecipientsNew);
+  pnlRecipientsAdd.Visible := FlagInfo.RecipientsNew.Count > 0;
+  orRecipientsAdd.Items.Assign(FlagInfo.RecipientsNew);
 end;
 
 procedure TfrmOrderFlag.RecipientRemove;
@@ -523,45 +537,35 @@ begin
         Items.Delete(i);
       end;
   end;
-//  reportStatus;
-  setButtonStatus;
 end;
 
 procedure TfrmOrderFlag.cboAlertRecipientChange(Sender: TObject);
 begin
   inherited;
-//  reportStatus;
+  // Changing potential recipients so check if we can add
   setButtonStatus;
 end;
 
-procedure TfrmOrderFlag.cboAlertRecipientClick(Sender: TObject);
-begin
-  inherited;
-  setButtonStatus;
-end;
 
 procedure TfrmOrderFlag.cboAlertRecipientDblClick(Sender: TObject);
 begin
   inherited;
-  RecipientAdd;
+  acRecipientAdd.Execute;
 end;
 
 procedure TfrmOrderFlag.cboAlertRecipientEnter(Sender: TObject);
 begin
   inherited;
+  // Ensure that there is no recipient selection
+  orSelectedRecipients.ClearSelection;
   SetButtonStatus;
-end;
-
-procedure TfrmOrderFlag.cboAlertRecipientExit(Sender: TObject);
-begin
-  inherited;
-  setButtonStatus;
 end;
 
 procedure TfrmOrderFlag.cboAlertRecipientKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   inherited;
+  // If enter is pressed then try to add to the recipients
   if Key = VK_RETURN then
     cboAlertRecipientDblClick(Sender);
 end;
@@ -569,7 +573,11 @@ end;
 procedure TfrmOrderFlag.cboAlertRecipientNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
-  TORComboBox(Sender).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  // Get the list of potential recipients
+  if Sender = cboAlertRecipient then
+    setPersonList(cboAlertRecipient, StartFrom, Direction)
+  else
+    setPersonList(Sender as TORComboBox, StartFrom, Direction); // RTC Defect 732085
 end;
 
 procedure TfrmOrderFlag.cboFlagReasonChange(Sender: TObject);
@@ -577,17 +585,6 @@ const
   InputLimit: Integer = 80; // Original value assigned to the Field.MaxLength
 begin
   inherited;
-(*
-  if Length(cboFlagReason.Text) > InputLimit then
-    begin
-      InfoBox('Sorry, the input can''t exceed '+ IntToStr(inputLimit) +
-        ' chars.'+CRLF+
-        'The extra characters will be removed'
-
-        ,'Input string too long',MB_OK);
-      cboFlagReason.Text := copy(cboFlagReason.Text,1,inputLimit);
-    end;
-*)
   if Assigned(FlagInfo) then
     FlagInfo.Reason := cboFlagReason.Text;
   reportStatus;
@@ -602,7 +599,7 @@ begin
     FlagInfo.bRequiredReason := cbReasonRequired.Checked;
 
   reportStatus;
-  grbReason.Caption := getRequiredCaption(grbReason.Caption,
+  lblReason.Caption := getRequiredCaption(lblReason.Caption,
     cbReasonRequired.Checked);
 end;
 
@@ -614,7 +611,7 @@ begin
   if Assigned(FlagInfo) then
     FlagInfo.bRequiredExpires := cbNoActionRequired.Checked;
   reportStatus;
-  grbNoActionAlert.Caption := getRequiredCaption(grbNoActionAlert.Caption,
+  lblNoActionAlert.Caption := getRequiredCaption(lblNoActionAlert.Caption,
     cbNoActionRequired.Checked);
   if cbNoActionRequired.Checked then cbCreateNoActionAlert.Checked := True;
   cbCreateNoActionAlert.Enabled := not cbNoActionRequired.Checked;
@@ -628,7 +625,7 @@ begin
   if Assigned(FlagInfo) then
     FlagInfo.bRequiredRecipients := cbRecipientsRequired.Checked;
   reportStatus;
-  grbRecipients.Caption := getRequiredCaption(grbRecipients.Caption,
+  lblRecipients.Caption := getRequiredCaption(lblRecipients.Caption,
     cbRecipientsRequired.Checked);
 end;
 
@@ -641,7 +638,7 @@ begin
   if Assigned(FlagInfo) then
     FlagInfo.bRequiredComment := cbRequiredComment.Checked;
   reportStatus;
-  grbComment.Caption := getRequiredCaption(grbComment.Caption,
+  lblComment.Caption := getRequiredCaption(lblComment.Caption,
     cbRequiredComment.Checked);
   bIgnore := False;
 end;
@@ -654,30 +651,17 @@ end;
 
 procedure TfrmOrderFlag.setButtonStatus;
 begin
-  Application.ProcessMessages;
-
+   // Something selected and not already in the recipient list
   acRecipientAdd.Enabled := (cboAlertRecipient.ItemIndex > -1) and
     (orSelectedRecipients.SelectByID(cboAlertRecipient.ItemID) < 0);
 
-  acRecipientRemove.Enabled := (orSelectedRecipients.SelCount > 0) and
-    (orSelectedRecipients.Items.Count > 0);
-//     and
-//    orSelectedRecipients.Focused;
+  // recipient(s) selected
+  acRecipientRemove.Enabled := (orSelectedRecipients.SelCount > 0);
 
+  // Has recipients
   acRecipientRemoveAll.Enabled := orSelectedRecipients.Items.Count > 0;
+end;
 
-  orSelectedRecipients.TabStop := orSelectedRecipients.Items.Count > 0;
-end;
-{
-procedure TfrmOrderFlag.setFlagRecipients;
-var
-  i: Integer;
-begin
-  orSelectedRecipients.Items.Clear;
-  for i := 0 to fFlagInfo.Recipients.Count - 1 do
-    orSelectedRecipients.Items.Add(fFlagInfo.Recipients[i]);
-end;
-}
 procedure TfrmOrderFlag.setFlagInfo(anInfo: TOrderFlag);
 begin
   fFlagInfo := anInfo;
@@ -695,6 +679,8 @@ begin
   fFlagInfo.bRequiredRecipients := cbRecipientsRequired.Checked;
   fFlagInfo.bRequiredExpires := cbNoActionRequired.Checked;
   fFlagInfo.bRequiredComment := cbRequiredComment.Checked;
+
+  fFlagInfo.ExpiresMin := dtFlagExpire.DateRange.MinDate;
 
   bIgnore := False;
 end;
@@ -734,7 +720,7 @@ end;
 procedure TfrmOrderFlag.setViewMode(aMode: TViewMode);
 // sets visibility of the dialog components based on the expected usage of teh window.
 
-  procedure adjustActionPanelHeight(aPanel:TPanel;anAction:TAction = nil);
+  procedure adjustActionPanelHeight(aPanel: TPanel; anAction: TAction = nil);
   var
     iHeight: Integer;
   begin
@@ -809,9 +795,9 @@ begin
   pnlComment.Visible := (aMode = amEdit) or (aMode = amRemove);
 
   if aMode = amAdd then
-    grbRecipients.Caption := 'Flag &Notification Recipients'
+    lblRecipients.Caption := 'Flag &Notification Recipients'
   else
-    grbRecipients.Caption := 'Additional Flag &Notification Recipients';
+    lblRecipients.Caption := 'Additional Flag &Notification Recipients';
 
   setRequiredByActionMode(aMode);
 
@@ -845,23 +831,11 @@ begin
   inherited;
   if bIgnore then
     exit;
-  inherited;
-(**)
-  if Assigned(FlagInfo) then
-    begin
-{
-      if Length(txtComment.Text) > OrderFlagCommentsLimit then
-        begin
-          beep;
-          InfoBox('Comment size exceeds '+ IntToStr(OrderFlagCommentsLimit) + ' characters'
-            + CRLF + 'The extra text is removed' ,'Error',MB_OK or MB_ICONERROR);
-        end;
 
-      FlagInfo.FlagComments := copy(txtComment.Text, 1, OrderFlagCommentsLimit); // RSD 2.6.24.1.1.5
-}
-      FlagInfo.FlagComments.Text := txtComment.Text;
-    end;
-(**)
+  if Assigned(FlagInfo) then
+  begin
+    FlagInfo.FlagComments.Text := txtComment.Text;
+  end;
   reportStatus;
 end;
 
@@ -882,12 +856,17 @@ begin
   bIgnore := bIgnoreOld;
 end;
 
+procedure TfrmOrderFlag.mmOrderEnter(Sender: TObject);
+begin
+  inherited;
+  if ScreenReaderActive then
+    GetScreenReader.Speak(lblOrderDetails.Caption);
+end;
+
 procedure TfrmOrderFlag.sbDebugClick(Sender: TObject);
 begin
   inherited;
-{$IFDEF DEBUG_AA}
   setDebugView(not cbRecipientsRequired.Visible);
-{$ENDIF}
 end;
 
 procedure TfrmOrderFlag.RecipientAdd;
@@ -922,7 +901,7 @@ begin
   else
     begin
        // checking duplicate names  request ##133 Issue Tracker
-      if not CheckForSimilarName(cboAlertRecipient, aErrMsg, ltPerson, sPr, '', orSelectedRecipients.Items) then
+      if not CheckForSimilarName(cboAlertRecipient, aErrMsg, sPr, orSelectedRecipients.Items) then
       begin
         ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
         exit;
@@ -948,10 +927,9 @@ begin
     mmOrder.Hint := getHint(mmOrder.Lines);
     memComment.Text := FlagInfo.FlagComments.Text;
 
-    grbOrderDetails.Caption := 'Order Details';
+    lblOrderDetails.Caption := 'Order Details';
 
     if FlagInfo.Expires = 0.0 then
-//      FlagInfo.Expires := DateTimeToStr(getOrderFlagExpireDefault);
       FlagInfo.Expires := getOrderFlagExpireDefault;// 20180222
 
     dtFlagExpire.FMDateTime := DateTimeToFMDateTime(fFlagInfo.Expires);
@@ -993,7 +971,7 @@ procedure TfrmOrderFlag.setGUIByMultipleObjects(aList:TObject);
 begin
   mmOrder.Text := getSelectedItemsInfo(TListView(aList));
   mmOrder.Hint := getHint(mmOrder.Lines);
-  grbOrderDetails.Caption := getSelectedItemsCaption(TListView(aList));
+  lblOrderDetails.Caption := getSelectedItemsCaption(TListView(aList));
 end;
 
 procedure TfrmOrderFlag.setProcessedMode(aProcessed: Boolean);
@@ -1040,12 +1018,6 @@ begin
     Result := Result and IsValid(anArray[i]);
 end;
 
-procedure TfrmOrderFlag.mmOrderChange(Sender: TObject);
-begin
-  inherited;
-end;
-
-{$IFDEF DEBUG_AA}
 procedure TfrmOrderFlag.setDebugView(aValue: Boolean);
 begin
   cbRecipientsRequired.Visible := aValue;
@@ -1053,18 +1025,16 @@ begin
   cbReasonRequired.Visible := aValue;
   cbRequiredComment.Visible := aValue;
 end;
-{$ENDIF}
 
-procedure TfrmOrderFlag.ResizeToFont(aSize:Integer);
+procedure TfrmOrderFlag.ResizeToFont(aSize: Integer);
 var
   iHeight: Integer;
 
-  procedure adjustPanelWidth(aPanel:TPanel;aCaption: String);
+  procedure adjustPanelWidth(aPanel: TPanel; aCaption: string);
   var
     iWidth: Integer;
   begin
-    iWidth := self.Canvas.TextWidth(aCaption) +
-      2 * btnLeftMargin + 2 * iGap;
+    iWidth := Self.Canvas.TextWidth(aCaption) + 2 * btnLeftMargin + 2 * iGap;
     if iWidth < btnMinWidth then
       iWidth := btnMinWidth;
 
@@ -1138,10 +1108,10 @@ end;
 
 function TfrmOrderFlag.getVisibleFieldNames:String;
 
-  function getGroupBoxCaption(aGroupBox: TGroupBox; aDelim: String = CRLF;
+  function getCompleteSections(aSection: tPanel; aCaption: String; aDelim: String = CRLF;
     aPrefix: String = '    '): String;
   var
-    s: String;
+    s, ReqPrefix: String;
 
     function getCommentText:String;
     begin
@@ -1152,27 +1122,38 @@ function TfrmOrderFlag.getVisibleFieldNames:String;
     end;
 
   begin
-    if aGroupBox.Parent.Visible then
+    if aSection.Parent.Visible then
     begin
-      if ((aGroupBox = grbReason) and (Trim(cboFlagReason.Text) <> '')) or
-        ((aGroupBox = grbComment) and IsCommentValid) or
-        ((aGroupBox = grbNoActionAlert) and (Trim(dtFlagExpire.Text) <> '')) or
-        ((aGroupBox = grbRecipients) and (orSelectedRecipients.Items.Count > 0))
+      if ((aSection = pnlReason) and (Trim(cboFlagReason.Text) <> '')) or
+        ((aSection = pnlComment) and IsCommentValid) or
+        ((aSection = pnlNoActionAlert) and (Trim(dtFlagExpire.Text) <> '')) or
+        ((aSection = pnlRecipients) and (orSelectedRecipients.Items.Count > 0))
       then
       begin
-        s := aGroupBox.Caption;
-        if pos(PrefixRequired, s) = 1 then
-          s := Trim(copy(s, Length(PrefixRequired) + 1, Length(s)));
+        s := aCaption;
+
+        if ScreenReaderActive then
+          ReqPrefix := a508PrefixRequired
+        else
+          ReqPrefix := PrefixRequired;
+
+        if pos(ReqPrefix, s) = 1 then
+        begin
+          if ScreenReaderActive then
+            s := Trim(copy(s, 1, Length(ReqPrefix) - 1))
+          else
+            s := Trim(copy(s, Length(ReqPrefix) + 1, Length(s)));
+        end;
         s := StringReplace(s, '&', '', [rfReplaceAll, rfIgnoreCase]);
         Result := aPrefix + s + aDelim;
 
-        if aGroupBox = grbReason then
+        if aSection = pnlReason then
           Result := Result + char(VK_Tab) + cboFlagReason.Text + aDelim
-        else if aGroupBox = grbComment then
+        else if aSection = pnlCommentSub then
           Result := Result + char(VK_Tab) + getCommentText +  aDelim
-        else if aGroupBox = grbNoActionAlert then
+        else if aSection = pnlNoActionAlert then
           Result := Result + char(VK_Tab) + dtFlagExpire.Text + aDelim
-        else if aGroupBox = grbRecipients then
+        else if aSection = pnlRecipients then
           begin
             for s in orSelectedRecipients.Items
               do Result := Result + char(VK_Tab) + Piece(s, '^', 2) + Piece(s, '^', 3) + aDelim;
@@ -1183,17 +1164,173 @@ function TfrmOrderFlag.getVisibleFieldNames:String;
   end;
 
 begin
+  { TODO 4 -ochris bell : update based on panels }
   Result := '';
-  Result := Result + getGroupBoxCaption(grbReason);
-  Result := Result + getGroupBoxCaption(grbRecipients);
-  Result := Result + getGroupBoxCaption(grbNoActionAlert);
-  Result := Result + getGroupBoxCaption(grbComment);
+  Result := Result + getCompleteSections(pnlReason, lblReason.Caption);
+  Result := Result + getCompleteSections(pnlRecipients, lblRecipients.Caption);
+  Result := Result + getCompleteSections(pnlNoActionAlert, lblNoActionAlert.Caption);
+  Result := Result + getCompleteSections(pnlComment, lblComment.Caption);
 end;
 
 procedure TfrmOrderFlag.setOrdersCount(aValue: Integer);
 begin
   fOrdersCount := aValue;
-  grbOrderDetails.Caption := 'Details - '+ IntToStr(aValue)+ ' Order(s)';
+  lblOrderDetails.Caption := 'Details - '+ IntToStr(aValue)+ ' Order(s)';
+end;
+
+
+
+///////////////// TORDateBox /////////////////
+
+procedure TORDateBox.Resize;
+begin
+  inherited;
+  if Assigned(f508Label) then
+  begin
+    f508Label.width := Self.width + 5;
+    f508Label.height := Self.height + 5;
+  end;
+end;
+
+procedure TORDateBox.CMEnabledChanged(var Msg: TMessage);
+begin
+  inherited;
+  if not IsScreenReaderActive then
+    exit;
+  if not self.Enabled then
+  begin
+    f508Label := TVA508StaticText.Create(self);
+    f508Label.Parent := self.Parent;
+    f508Label.SendToBack;
+    // self.SendToBack;
+    f508Label.TabStop := true;
+    f508Label.TabOrder := self.TabOrder;
+    f508Label.Name := 'lbl'+self.name;
+    if self.name = 'dtFlagExpire' then
+      f508Label.Caption := 'No Action Alert Flag Expiration Date date box disabled'
+    else
+      f508Label.Caption := ' ' + self.Caption + ' date box disabled';
+    f508Label.Top := self.Top - 2;
+    f508Label.Left := self.Left - 2;
+    f508Label.Width := self.Width + 5;
+    f508Label.Height := self.Height + 5;
+    RegisterWithMGR;
+  end
+  else
+  begin
+    FreeAndNil(f508Label);
+  end;
+end;
+
+constructor TORDateBox.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  fMgr := nil;
+end;
+
+function TORDateBox.GetIsScreenReaderActive: Boolean;
+begin
+  Result := ScreenReaderActive;
+end;
+
+procedure TORDateBox.RegisterWithMGR;
+var
+  aFrm: TCustomForm;
+  I: Integer;
+begin
+  if not assigned(fMgr) then
+  begin
+    aFrm := GetParentForm(self);
+    if not assigned(aFrm) then
+      raise Exception.Create('Procedure: RegisterWithMGR - Unable to find parent form for ' + self.Name);
+    for I := 0 to aFrm.ComponentCount - 1 do
+    begin
+      if aFrm.Components[I] is TVA508AccessibilityManager then
+      begin
+        fMgr := TVA508AccessibilityManager(aFrm.Components[I]);
+        break;
+      end;
+    end;
+  end;
+  if assigned(fMgr) then
+    fMgr.AccessData.EnsureItemExists(f508Label)
+  else
+    raise Exception.Create('Procedure: RegisterWithMGR - Unable to find Manager for ' + self.Name);
+end;
+
+///////////////// TCheckBox /////////////////
+
+procedure TCheckBox.Resize;
+begin
+  inherited;
+  if Assigned(f508Label) then
+  begin
+    f508Label.width := Self.width + 5;
+    f508Label.height := Self.height + 5;
+  end;
+end;
+
+procedure TCheckBox.CMEnabledChanged(var Msg: TMessage);
+begin
+  inherited;
+  if not IsScreenReaderActive then
+    exit;
+  if not self.Enabled then
+  begin
+    f508Label := TVA508StaticText.Create(self);
+    f508Label.Parent := self.Parent;
+    f508Label.SendToBack;
+    // self.SendToBack;
+    f508Label.TabStop := true;
+    f508Label.TabOrder := self.TabOrder;
+    f508Label.Name := 'lbl'+self.name;
+    f508Label.Caption := ' ' + self.Caption + ' check box disabled';
+    f508Label.Top := self.Top - 2;
+    f508Label.Left := self.Left - 2;
+    f508Label.Width := self.Width + 5;
+    f508Label.Height := self.Height + 5;
+    RegisterWithMGR;
+  end
+  else
+  begin
+    FreeAndNil(f508Label);
+  end;
+end;
+
+constructor TCheckBox.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  fMgr := nil;
+end;
+
+function TCheckBox.GetIsScreenReaderActive: Boolean;
+begin
+  Result := ScreenReaderActive;
+end;
+
+procedure TCheckBox.RegisterWithMGR;
+var
+  aFrm: TCustomForm;
+  I: Integer;
+begin
+  if not assigned(fMgr) then
+  begin
+    aFrm := GetParentForm(self);
+    if not assigned(aFrm) then
+      raise Exception.Create('Procedure: RegisterWithMGR - Unable to find parent form for ' + self.Name);
+    for I := 0 to aFrm.ComponentCount - 1 do
+    begin
+      if aFrm.Components[I] is TVA508AccessibilityManager then
+      begin
+        fMgr := TVA508AccessibilityManager(aFrm.Components[I]);
+        break;
+      end;
+    end;
+  end;
+  if assigned(fMgr) then
+    fMgr.AccessData.EnsureItemExists(f508Label)
+  else
+    raise Exception.Create('Procedure: RegisterWithMGR - Unable to find Manager for ' + self.Name);
 end;
 
 end.

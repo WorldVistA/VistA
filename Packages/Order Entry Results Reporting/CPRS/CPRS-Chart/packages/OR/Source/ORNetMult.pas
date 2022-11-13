@@ -6,7 +6,8 @@ uses
   System.Classes,
   System.SysUtils,
   ORNetIntf,
-  TRPCB;
+  TRPCB,
+  ORFn;
 
 type
   TORNetMult = class(TInterfacedObject, IORNetParam, IORNetMult)
@@ -160,7 +161,7 @@ var
 begin
   aParam.PType := list;
   for i := 0 to fSubscripts.Count - 1 do
-    aParam.Mult[fSubscripts.Names[i]] := fSubscripts.ValueFromIndex[i];
+    aParam.Mult[fSubscripts.Names[i]] := NullStrippedString(fSubscripts.ValueFromIndex[i]);
 end;
 
 end.

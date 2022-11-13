@@ -6,26 +6,31 @@ inherited frmProbCmt: TfrmProbCmt
   ClientWidth = 403
   OldCreateOrder = True
   Position = poScreenCenter
-  ExplicitWidth = 419
-  ExplicitHeight = 139
+  ExplicitWidth = 411
+  ExplicitHeight = 128
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object lblComment: TOROffsetLabel [0]
-    Left = 9
-    Top = 10
-    Width = 215
-    Height = 15
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 397
+    Height = 33
+    Align = alTop
     Caption = 'Enter a new comment (up to 200 characters):'
     HorzOffset = 2
     Transparent = False
     VertOffset = 2
     WordWrap = False
+    ExplicitLeft = 0
+    ExplicitTop = 0
+    ExplicitWidth = 403
   end
   object edComment: TCaptionEdit [1]
     Left = 11
     Top = 30
     Width = 386
-    Height = 21
+    Height = 24
     MaxLength = 200
     TabOrder = 0
     Caption = 'Enter a new comment (up to 200 characters)'

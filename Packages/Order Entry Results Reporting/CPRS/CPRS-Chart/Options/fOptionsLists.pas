@@ -33,6 +33,7 @@ type
     mnuPopPatient: TPopupMenu;
     mnuPatientID: TMenuItem;
     grpVisibility: TRadioGroup;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnNewListClick(Sender: TObject);
     procedure radAddByTypeClick(Sender: TObject);
@@ -64,9 +65,11 @@ type
       Shift: TShiftState);
     procedure lstAddByMouseClick(Sender: TObject);
   private
+    { Private declarations }
     FLastList: integer;
     FChanging: boolean;
     FProviderChanging: Boolean;
+    FAddSelection: Boolean;
     procedure AddIfUnique(entry: string; aList: TORListBox);
   public
     { Public declarations }
@@ -79,7 +82,7 @@ procedure DialogOptionsLists(topvalue, leftvalue, fontsize: integer; var actiont
 
 implementation
 
-uses fOptionsNewList, rOptions, uOptions, rCore, fPtSelOptns, VAUtils, uSimilarNames;
+uses fOptionsNewList, rOptions, uOptions, rCore, fPtSelOptns, VAUtils, uORLists, uSimilarNames;
 
 {$R *.DFM}
 
@@ -149,6 +152,7 @@ procedure TfrmOptionsLists.radAddByTypeClick(Sender: TObject);
 begin
   with lstAddBy do
   begin
+    Clear;
     case radAddByType.ItemIndex of
       0: begin
            ListItemsOnly := false;
@@ -163,13 +167,13 @@ begin
            lblAddBy.Caption := 'Ward:';
          end;
       2: begin
-           ListItemsOnly := true;
+           ListItemsOnly := false;
            LongList := true;
            InitLongList('');
            lblAddBy.Caption := 'Clinic:';
          end;
       3: begin
-           ListItemsOnly := true;
+           ListItemsOnly := false;
            LongList := true;
            InitLongList('');
            lblAddBy.Caption := 'Provider:';
@@ -270,7 +274,7 @@ end;
 
 procedure TfrmOptionsLists.lstAddByChange(Sender: TObject);
 var
-  aErrMsg: String;
+ aErrMsg: String;
 
   procedure ShowMatchingPatients;
   begin
@@ -303,17 +307,21 @@ begin
     end;
   end;
 
-  if radAddByType.ItemIndex = 3 then
+ if radAddByType.ItemIndex = 3 then
   begin
-    if not CheckForSimilarName(lstAddBy, aErrMsg, ltProvider, sPr, '', lstPersonalLists.Items) then
+    if not CheckForSimilarName(lstAddBy, aErrMsg, sPr, lstPersonalLists.Items) then
     begin
       ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Invalid Provider');
-      lstAddBy.SetFocus;
     end;
   end;
 
-  lstAddByClick(sender);
+  if FAddSelection or (radAddByType.ItemIndex <> 0) then
+  begin
+    FAddSelection := False;
+    lstAddByClick(sender);
+  end;
 end;
+
 
 procedure TfrmOptionsLists.lstAddByClick(Sender: TObject);
 var
@@ -383,10 +391,13 @@ procedure TfrmOptionsLists.lstAddByEnter(Sender: TObject);
 begin
   inherited;
   FProviderChanging := true;
+  FAddSelection := False;
 end;
 
 procedure TfrmOptionsLists.lstAddByExit(Sender: TObject);
 begin
+  inherited;
+  FAddSelection := False;
   if FProviderChanging then
   begin
     FProviderChanging := False;
@@ -560,18 +571,18 @@ begin
     case radAddByType.ItemIndex of
       0: begin
            Pieces := '2';
-           ForDataUse(SubSetOfPatients(StartFrom, Direction));
+           setPatientList(lstAddBy, StartFrom, Direction);
          end;
       1: begin
            Pieces := '2';
          end;
       2: begin
            Pieces := '2';
-           ForDataUse(SubSetOfClinics(StartFrom, Direction));
+           setClinicList(lstAddBy, StartFrom, Direction);
          end;
       3: begin
            Pieces := '2,3';
-           ForDataUse(SubSetOfProviders(StartFrom, Direction));
+           setProviderList(lstAddBy, StartFrom, Direction);
          end;
       4: begin
            Pieces := '2';
@@ -629,15 +640,15 @@ procedure TfrmOptionsLists.lstAddByKeyDown(Sender: TObject; var Key: Word;
 begin
   inherited;
 
-  FProviderChanging := True;
-
-  if Key = VK_LEFT then
-    Key := VK_UP;
-  if Key = VK_RIGHT then
-    Key := VK_DOWN;
-  if Key = VK_RETURN then
-    FProviderChanging := False;
-
+  if (radAddByType.ItemIndex = 0) then
+  begin
+    FProviderChanging := ((Key = VK_UP) or (Key = VK_DOWN) or
+        (Key = VK_PRIOR) or (Key = VK_NEXT));
+    FAddSelection := (Key = VK_RETURN);
+  end else if (radAddByType.ItemIndex = 3) then
+  begin
+    FProviderChanging := (Key <> VK_RETURN);
+  end;
 end;
 
 procedure TfrmOptionsLists.lstAddByKeyPress(Sender: TObject;
@@ -686,11 +697,9 @@ end;
 procedure TfrmOptionsLists.lstAddByMouseClick(Sender: TObject);
 begin
   inherited;
-  if FProviderChanging then
-  begin
-    FProviderChanging := False;
-    lstAddByChange(sender);
-  end;
+  FProviderChanging := False;
+  FAddSelection := True;
+  lstAddByChange(sender);
 end;
 
 end.

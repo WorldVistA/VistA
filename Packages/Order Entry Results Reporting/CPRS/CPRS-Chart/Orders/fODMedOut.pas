@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, ORCtrls, StdCtrls, ORFn, ExtCtrls, uConst, ComCtrls, uCore, Mask,
-  Menus, Buttons, VA508AccessibilityManager;
+  Menus, Buttons, VA508AccessibilityManager, uIndications;
 
 type
   TfrmODMedOut = class(TfrmODBase)
@@ -40,6 +40,10 @@ type
     lblSIG: TLabel;
     popUnits: TPopupMenu;
     memComplex: TMemo;
+    pnlIndications: TPanel;
+    Panel1: TPanel;
+    lblIndications: TLabel;
+    cboIndication: TORComboBox;
     procedure cboMedicationNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure cboMedicationSelect(Sender: TObject);
@@ -52,12 +56,19 @@ type
     procedure btnUnitsClick(Sender: TObject);
     procedure cmdComplexClick(Sender: TObject);
     procedure memCommentsEnter(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure cboIndicationChange(Sender: TObject);
+    procedure cboIndicationKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cboIndicationKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     FLastDrug: Integer;
     FLastMedID: string;
     FDispenseMsg: string;
     FMedCombo: TORComboBox;
+    FIndications: TIndications;
     procedure CheckFormAlt;
     procedure ResetOnMedChange;
     procedure SetAskSC;
@@ -114,6 +125,7 @@ const
   TC_RESTRICT = 'Ordering Restrictions';
 var
   Restriction: string;
+  sl: TStrings;
 begin
   inherited;
   AllowQuickOrder := True;
@@ -124,14 +136,29 @@ begin
     Close;
     Exit;
   end;
-  FillerID := 'PSO';                        // does 'on Display' order check **KCM**
+  FillerID := 'PSO'; // does 'on Display' order check **KCM**
   StatusText('Loading Dialog Definition');
-  Responses.Dialog := 'PSO OERR';           // loads formatting info
+  Responses.Dialog := 'PSO OERR'; // loads formatting info
   StatusText('Loading Default Values');
-  CtrlInits.LoadDefaults(ODForMedOut);      // ODForMedOut returns TStrings with defaults
+  // CtrlInits.LoadDefaults(ODForMedOut);      // ODForMedOut returns TStrings with defaults
+  sl := TSTringList.Create;
+  try
+    setODForMedOut(sl);
+    CtrlInits.LoadDefaults(sl); // ODForMedOut returns TStrings with defaults
+
+  finally
+    sl.Free;
+  end;
   InitDialog;
-  CtrlInits.SetControl(cboPickup, 'Pickup'); // do only once, so don't do in InitDialog
+  CtrlInits.SetControl(cboPickup, 'Pickup');
+  // do only once, so don't do in InitDialog
   PreserveControl(cboPickup);
+end;
+
+procedure TfrmODMedOut.FormDestroy(Sender: TObject);
+begin
+  FIndications.Free;
+  inherited;
 end;
 
 procedure TfrmODMedOut.InitDialog;
@@ -150,6 +177,12 @@ begin
     SetControl(cboPriority,   'Priorities');
     //SetControl(cboPickup,     'Pickup');
     SetControl(cboSC,         'SCStatus');
+
+    FreeAndNil(FIndications);
+    FIndications := TIndications.Create(CtrlInits);
+
+    FIndications.Load;
+    cboIndication.Items.Text := FIndications.GetIndicationList;
   end;
   SetAskSC;
   StatusText('Retrieving List of Medications');
@@ -287,30 +320,52 @@ begin
 end;
 
 procedure TfrmODMedOut.SetOnOISelect;
+var
+  sl: TStrings;
 begin
   with CtrlInits do
   begin
     FLastMedID := FMedCombo.ItemID;
-    LoadOrderItem(OIForMedOut(FMedCombo.ItemIEN));
-    SetControl(cboDispense,     'Dispense');
-    if cboDispense.Items.Count = 1 then cboDispense.ItemIndex := 0;
+    sl := TSTringList.Create;
+    try
+      setOIForMedOut(sl, FMedCombo.ItemIEN);
+      LoadOrderItem(sl);
+    finally
+      sl.Free;
+    end;
+    SetControl(cboDispense, 'Dispense');
+    if cboDispense.Items.Count = 1 then
+      cboDispense.ItemIndex := 0;
     lblDosage.Caption := DefaultText('Verb');
-    if lblDosage.Caption = '' then lblDosage.Caption := 'Amount';
+    if lblDosage.Caption = '' then
+      lblDosage.Caption := 'Amount';
     SetControl(cboInstructions, 'Instruct');
     SetupNouns;
-    SetControl(cboRoute,        'Route');
-    if cboRoute.Items.Count = 1 then cboRoute.ItemIndex := 0;
-    if DefaultText('DefSched') <> '' then cboSchedule.SelectByID(DefaultText('DefSched'));
+    SetControl(cboRoute, 'Route');
+    if cboRoute.Items.Count = 1 then
+      cboRoute.ItemIndex := 0;
+    if DefaultText('DefSched') <> '' then
+      cboSchedule.SelectByID(DefaultText('DefSched'));
     OrderMessage(TextOf('Message'));
   end;
 end;
 
-procedure TfrmODMedOut.cboMedicationNeedData(Sender: TObject; const StartFrom: string;
-  Direction, InsertAt: Integer);
-{ retrieves a subset of inpatient medication orderable items }
+procedure TfrmODMedOut.cboMedicationNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
+  { retrieves a subset of inpatient medication orderable items }
 begin
   inherited;
-  FMedCombo.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.O RX', Responses.QuickOrder));
+  // FMedCombo.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.O RX', Responses.QuickOrder));
+  sl := TSTringList.Create;
+  try
+    setSubSetOfOrderItems(sl, StartFrom, Direction, 'S.O RX',
+      Responses.QuickOrder);
+    FMedCombo.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODMedOut.cboMedicationSelect(Sender: TObject);
@@ -414,6 +469,38 @@ begin
     if ItemIEN > 0 then OrderMessage(DispenseMessage(ItemIEN));
     FLastDrug := ItemIEN;
   end;
+end;
+
+procedure TfrmODMedOut.cboIndicationChange(Sender: TObject);
+begin
+  inherited;
+  if Changing then
+    Exit;
+  if not Showing then
+    Exit;
+
+//  UpdateRelated;
+//  if FUpdated then
+    ControlChange(Self);
+end;
+
+procedure TfrmODMedOut.cboIndicationKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_RETURN) or (Key = VK_ESCAPE) then
+  begin
+    Perform(WM_NEXTDLGCTL, 0, 0);
+    Key := 0;
+  end;
+end;
+
+procedure TfrmODMedOut.cboIndicationKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if (Key = VK_BACK) and (cboIndication.Text = '') then
+    cboIndication.ItemIndex := -1;
 end;
 
 { dosage instructions }
@@ -612,8 +699,8 @@ begin
   with cboPriority     do Responses.Update('URGENCY', 1, ItemID, Text);
   with memComments     do Responses.Update('COMMENT', 1, TX_WPTYPE, Text);
   with cboSC           do if Enabled then Responses.Update('SC', 1, ItemID, Text);
+  with cboIndication   do Responses.Update('INDICATION', 1, Text, Text);
   memOrder.Text := Responses.OrderText;
 end;
 
 end.
-

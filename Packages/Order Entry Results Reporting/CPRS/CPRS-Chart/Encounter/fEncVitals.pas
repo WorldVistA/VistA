@@ -548,27 +548,34 @@ var
 begin
   HeadingList := TStringList.Create;
   tmpList := TStringList.Create;
-  lvVitals.ShowColumnHeaders := false;                //CQ: 10069 - the column display becomes squished.
-  lvVitals.Items.Clear;
-  lvVitals.Columns.Clear;
-  PiecesToList(VitalsList[0],U,HeadingList);
-  for i := 0 to HeadingList.Count-1 do
-  begin
-    curCol := lvVitals.Columns.Add;
-    curCol.Caption := HeadingList[i];
-    curCol.AutoSize := true;
+  try
+    lvVitals.ShowColumnHeaders := false;                //CQ: 10069 - the column display becomes squished.
+    lvVitals.Items.Clear;
+    lvVitals.Columns.Clear;
+    if VitalsList.Count > 0 then
+      PiecesToList(VitalsList[0],U,HeadingList);
+    for i := 0 to HeadingList.Count-1 do
+    begin
+      curCol := lvVitals.Columns.Add;
+      curCol.Caption := HeadingList[i];
+      curCol.AutoSize := true;
+    end;
+    for i := 1 to VitalsList.Count-1 do
+    begin
+      curItem := lvVitals.Items.Add;
+      PiecesToList(VitalsList[i],U,tmpList);
+      if tmpList.Count > 0 then
+      begin
+        curItem.Caption := tmpList[0];
+        tmpList.Delete(0);
+      end;
+      curItem.SubItems.Assign(tmpList);
+    end;
+    lvVitals.ShowColumnHeaders := true;                 //CQ: 10069 - the column display becomes squished.
+  finally
+    HeadingList.Free;
+    tmpList.Free;
   end;
-  for i := 1 to VitalsList.Count-1 do
-  begin
-    curItem := lvVitals.Items.Add;
-    PiecesToList(VitalsList[i],U,tmpList);
-    curItem.Caption := tmpList[0];
-    tmpList.Delete(0);
-    curItem.SubItems.Assign(tmpList);
-  end;
-  lvVitals.ShowColumnHeaders := true;                 //CQ: 10069 - the column display becomes squished.
-  HeadingList.Free;
-  tmpList.Free;
 end;
 
 procedure TfrmEncVitals.btnEnterVitalsClick(Sender: TObject);

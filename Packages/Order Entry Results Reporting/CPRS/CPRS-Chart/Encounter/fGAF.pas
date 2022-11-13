@@ -48,7 +48,7 @@ var
 implementation
 
 uses rPCE, rCore, uCore, uPCE, fEncounterFrame, VA508AccessibilityRouter,
-  uSimilarNames;
+  uORLists, uSimilarNames;
 
 {$R *.DFM}
 
@@ -62,30 +62,34 @@ end;
 
 procedure TfrmGAF.LoadScores;
 var
-  i: integer;
+  i: Integer;
   tmp: string;
-
+  sl: TSTrings;
 begin
-  RecentGafScores(3);
-  if(RPCBrokerV.Results.Count > 0) and (RPCBrokerV.Results[0] = '[DATA]') then
-  begin
-    for i := 1 to RPCBrokerV.Results.Count-1 do
+  sl := TStringList.Create;
+  try
+    RecentGafScores(sl, 3);
+    if (sl.Count > 0) and (sl[0] = '[DATA]') then
     begin
-      tmp := RPCBrokerV.Results[i];
-      lstCaptionList.Add(Piece(tmp,U,5) + U + Piece(Piece(tmp,U,2),NoPCEValue,1) + U +
-                                Piece(tmp,U,7) + U + Piece(tmp,U,8));
-
+      for i := 1 to sl.Count - 1 do
+      begin
+        tmp := sl[i];
+        lstCaptionList.Add(Piece(tmp, U, 5) + U + Piece(Piece(tmp, U, 2),
+          NoPCEValue, 1) + U + Piece(tmp, U, 7) + U + Piece(tmp, U, 8));
+      end;
     end;
+    if lstCaptionList.Items.Count = 0 then
+      lstCaptionList.Add('No GAF scores found.');
+  finally
+    sl.Free;
   end;
-   if lstCaptionList.Items.Count = 0 then
-     lstCaptionList.Add('No GAF scores found.');
 end;
 
 procedure TfrmGAF.cboGAFProviderNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
   inherited;
-  cboGAFProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  setPersonList(cboGAFProvider,StartFrom, Direction);
 end;
 
 function TfrmGAF.BADData(ShowMessage: boolean): boolean;
@@ -173,11 +177,11 @@ end;
 
 function TfrmGAF.CheckSimilarNameOK: Boolean;
 var
- aErrMsg: String;
+  aErrMsg: String;
 begin
   Result := true;
   if (udScore.Position > 0) and
-    (not CheckForSimilarName(cboGAFProvider, aErrMsg, ltPerson, sPr)) then
+    (not CheckForSimilarName(cboGAFProvider, aErrMsg, sPr)) then
   begin
     if Trim(aErrMsg) = '' then
       aErrMsg := 'A determining party is required to enter a GAF score.';
@@ -193,9 +197,10 @@ begin
   begin
     FDataLoaded := TRUE;
     LoadScores;
-    if Encounter.Provider > 0 then
+    if uEncPCEData.Providers.PCEProviderForce > 0 then
     begin
-      cboGAFProvider.SetExactByIEN(Encounter.Provider, Encounter.ProviderName);
+      cboGAFProvider.SetExactByIEN(uEncPCEData.Providers.PCEProviderForce,
+        uEncPCEData.Providers.PCEProviderNameForce);
       TSimilarNames.RegORComboBox(cboGAFProvider);
     end
     else

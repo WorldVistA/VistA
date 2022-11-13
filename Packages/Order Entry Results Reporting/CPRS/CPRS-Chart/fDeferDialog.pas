@@ -31,16 +31,10 @@ type
     cmdCancel: TButton;
     cmdDefer: TButton;
 
-    dtpDate: TDateTimePicker;
-    dtpTime: TDateTimePicker;
-
     pnlBottom: TPanel;
     pnlLeft: TPanel;
 
     gbxDeferBy: TGroupBox;
-
-    lblDate: TLabel;
-    lblTime: TLabel;
     lblCustom: TLabel;
     Bevel2: TBevel;
 
@@ -49,10 +43,16 @@ type
     stxtDeferUntilDate: TStaticText;
     stxtDeferUntilTime: TStaticText;
     stxtDescription: TStaticText;
+    gp: TGridPanel;
+    lblDate: TLabel;
+    dtpDate: TDateTimePicker;
+    lblTime: TLabel;
+    dtpTime: TDateTimePicker;
 
     procedure FormCreate(Sender: TObject);
     procedure acNewDeferalClickedExecute(Sender: TObject);
     procedure acDeferExecute(Sender: TObject);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     fDeferByDefault: TDeferBy;
     fMaxDeferDateTime: TDateTime;
@@ -83,6 +83,8 @@ type
 
 implementation
 
+uses uSizing;
+
 const
   // dfbCustom, dfb1H, dfb2H, dfb3H, dfb4H, dfb6H, dfb8H, dfb12H, dfb1D, dfb2D, dfb3D, dfb4D, dfb5D, dfb6D, dfb7D, dfb8D, dfb9D, dfb10D, dfb11D, dfb12D, dfb13D, dfb14D);
   DEFER_BY_LABEL: array [TDeferBy] of string = ('Custom', '1 Hour', '2 Hours', '3 Hours', '4 Hours', '6 Hours', '8 Hours', '12 Hours', '1 Day', '2 Days', '3 Days', '4 Days', '5 Days', '6 Days', '7 Days (1 week)', '8 Days', '9 Days', '10 Days', '11 Days', '12 Days', '13 Days', '14 Days (2 weeks)');
@@ -93,8 +95,14 @@ const
 procedure TfrmDeferDialog.FormCreate(Sender: TObject);
 var
   aDeferBy: TDeferBy;
+  i: Integer;
 begin
-  Font.Assign(Screen.IconFont);
+//  Font.Assign(Screen.IconFont);
+  Font.Size := Application.MainForm.Font.Size;
+  AdjustToolPanel(pnlBottom);
+
+  i := getMainFormTextHeight;
+  gp.Height := 2 * ( i + 12);
 
   for aDeferBy := Low(TDeferBy) to High(TDeferBy) do
     cbxDeferBy.Items.Add(DEFER_BY_LABEL[aDeferBy]);
@@ -102,6 +110,16 @@ begin
   dtpTime.DateTime := Now;
   setDefaultDeferral(dfbCustom);
   setDeferUntilMax(IncDay(Now, 14));
+end;
+
+procedure TfrmDeferDialog.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+    begin
+      Key := 0;
+      ModalResult := mrCancel;
+    end;
 end;
 
 function TfrmDeferDialog.Execute: boolean;

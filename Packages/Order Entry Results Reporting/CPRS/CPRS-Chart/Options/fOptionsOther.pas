@@ -13,6 +13,7 @@ type
     btnOK: TButton;
     btnCancel: TButton;
     bvlBottom: TBevel;
+    lblMedsTab: TLabel;
     lblTabDefault: TStaticText;
     lblTab: TLabel;
     cboTab: TORComboBox;
@@ -31,15 +32,6 @@ type
     stStopEncAppts: TStaticText;
     Bevel2: TBevel;
     btnEncDefaults: TButton;
-    Panel1: TPanel;
-    Panel2: TPanel;
-    Panel3: TPanel;
-    Panel4: TPanel;
-    Panel5: TPanel;
-    Panel6: TPanel;
-    Panel7: TPanel;
-    Panel8: TPanel;
-    lblMedsTab: TLabel;
     grpOverAll: TGroupBox;
     stStart: TStaticText;
     dtStart: TORDateBox;
@@ -55,6 +47,13 @@ type
     dtStartOp: TORDateBox;
     stStopOp: TStaticText;
     dtStopOp: TORDateBox;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Panel7: TPanel;
     procedure FormShow(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

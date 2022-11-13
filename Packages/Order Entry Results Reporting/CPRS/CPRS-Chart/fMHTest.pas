@@ -5,7 +5,7 @@ unit fMHTest;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, uPCE,
   StdCtrls, ExtCtrls, ORCtrls, ORFn, uConst, fBase508Form, uDlgComponents,
   VA508AccessibilityManager, uCore, orNet, TRPCB, StrUtils, rCore, VAUtils, System.UITypes
   ;
@@ -77,16 +77,17 @@ type
     function CurrentQ: integer;
     procedure GotoQ(x: integer);
   public
-  MHTestComp: string;
-  MHA3: boolean;
-  function CallMHDLL(TestName: string; Required: boolean): String;
+    MHTestComp: string;
+    MHA3: boolean;
+    class function CallMHDLL(TestName: string; Required: boolean;
+      PCEData: TPCEData): String;
   end;
 
-function PerformMHTest(InitialAnswers, TestName: string; QText: TStringList; Required: boolean): string;
+function PerformMHTest(InitialAnswers, TestName: string; QText: TStringList;
+  Required: boolean; PCEData: TPCEData): string;
 function SaveMHTest(TestName, Date, Loc: string): boolean;
 procedure RemoveMHTest(TestName: string);
 function CheckforMHDll: boolean;
-procedure CloseMHDLL;
 
 var
   MHDLLHandle: THandle = 0;
@@ -155,6 +156,8 @@ const
 var
  MHDLLName: string;
 
+procedure CloseMHDLL(Handle: THandle); forward;
+
 function LoadMHDLL: TDllRtnRec;
 begin
   if MHDLLHandle = 0 then
@@ -168,7 +171,7 @@ begin
     Result.Return_Message := DLL_PARAM;
    end else begin
     //Load the dll
-    Result := LoadDll(MHDLLName);
+    Result := LoadDll(MHDLLName, CloseMHDLL);
     MHDLLHandle := Result.DLL_HWND;
    end;
   end;
@@ -202,12 +205,13 @@ begin
     Application.ProcessMessages;
 end;
 
-function PerformMHTest(InitialAnswers, TestName: string; QText: TStringList; Required: boolean): string;
+function PerformMHTest(InitialAnswers, TestName: string; QText: TStringList;
+  Required: boolean; PCEData: TPCEData): string;
 var
 str,scores, tempStr: string;
 begin
   Result := InitialAnswers;
-  str := frmMHTest.CallMHDLL(testName, Required);
+  str := TfrmMHTest.CallMHDLL(testName, Required, PCEData);
   if str <> '' then
     begin
       if Piece(str,U,1) = 'COMPLETE' then
@@ -352,18 +356,12 @@ begin
   result := (MHDLLHandle <> 0) or (Trim(FindDllDir(MHDLLName)) <> '');
 end;
 
-procedure CloseMHDLL;
+procedure CloseMHDLL(Handle: THandle);
 begin
-  if MHDLLHandle = 0 then Exit;
-  try
-    @CloseProc := GetProcAddress(MHDLLHandle, 'CloseDLL');
-    if Assigned(CloseProc) then
-    begin
-      CloseProc;
-    end;
-  finally
-    UnloadMHDLL;
-  end; {try..finally}
+  if Handle = 0 then Exit;
+  @CloseProc := GetProcAddress(Handle, 'CloseDLL');
+  if Assigned(CloseProc) then
+    CloseProc;
 end;
 
 { TfrmMHTest }
@@ -681,7 +679,8 @@ begin
     QText.Add(copy(IntToStr(i+1) + '.      ', 1, lx) + TMHQuestion(FObjs[i]).Question);
 end;
 }
-function TfrmMHTest.CallMHDLL(TestName: string; Required: boolean): String;
+class function TfrmMHTest.CallMHDLL(TestName: string; Required: boolean;
+  PCEData: TPCEData): String;
 var
   ProgressNote: string;
   tmpRtnRec: TDllRtnRec;
@@ -704,8 +703,8 @@ begin
                 InttoStr(User.duz), // OrderedByDUZ
                 User.Name, // AdministeredByName
                 InttoStr(User.duz), // AdministeredByDUZ
-                Encounter.LocationName, // Location
-                InttoStr(Encounter.Location) + 'V', // LocationIEN
+                ExternalName(PCEData.Location, 44), // Location
+                InttoStr(PCEData.Location) + 'V', // LocationIEN
                 Required, ProgressNote);
               Result := ProgressNote;
             finally

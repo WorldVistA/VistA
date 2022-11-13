@@ -24,9 +24,9 @@ function GetDialogInfo(IEN: string; RemIEN: boolean; aReturn: TStrings): integer
 function GetDialogPrompts(IEN: string; Historical: boolean; FindingType, remIEN: string; aReturn: TStrings; newDataOnly: String): integer;
 procedure GetDialogStatus(AList: TStringList);
 function GetRemindersActive: boolean;
-function GetProgressNoteHeader: string;
+function GetProgressNoteHeader(Locaton: integer): string;
 procedure SaveWomenHealthData(var WHData: TStringlist);
-function CheckGECValue(const RemIEN: string; NoteIEN: integer): String;
+function CheckGECValue(const RemIEN: string; NoteIEN: integer; VisitStr: string): String;
 procedure SaveMSTDataFromReminder(VDate, Sts, Prov, FType, FIEN, Res: string);
 
 function GetReminderFolders: string;
@@ -145,11 +145,16 @@ begin
 end;
 
 function GetDialogInfo(IEN: string; RemIEN: boolean; aReturn: TStrings): integer;
+var
+visitID: string;
 begin
+     if remForm.PCEObj.VisitIEN > 0 then visitID := IntToStr(remForm.PCEObj.VisitIEN)
+     else visitID := remForm.PCEObj.VisitString;
+
      if RemIEN then
-      CallVistA('ORQQPXRM REMINDER DIALOG', [IEN, Patient.DFN], aReturn)
+      CallVistA('ORQQPXRM REMINDER DIALOG', [IEN, Patient.DFN, visitID], aReturn)
      else
-      CallVistA('PXRM REMINDER DIALOG (TIU)', [IEN, Patient.DFN], aReturn);
+      CallVistA('PXRM REMINDER DIALOG (TIU)', [IEN, Patient.DFN, visitID], aReturn);
   Result := aReturn.Count;
 end;
 
@@ -180,9 +185,9 @@ begin
   result := aReturn = '1';
 end;
 
-function GetProgressNoteHeader: string;
+function GetProgressNoteHeader(Locaton: integer): string;
 begin
-  CallVistA('ORQQPXRM PROGRESS NOTE HEADER', [Encounter.Location], result);
+  CallVistA('ORQQPXRM PROGRESS NOTE HEADER', [Locaton], result);
 end;
 
 procedure SaveWomenHealthData(var WHData: TStringlist);
@@ -307,7 +312,10 @@ begin
   aList := TStringList.create;
   try
     CallVistA('PXRMRPCG VIEW', [dfn, ien, value], alist);
-    tmp := aList[0];
+    if aList.Count > 0 then
+      tmp := aList[0]
+    else
+      tmp := '';
     if Piece(tmp, U, 1) = '1' then canPrint := true
     else canPrint := false;
     header := Piece(tmp, U, 2);
@@ -357,14 +365,14 @@ begin
 
 end;
 
-function CheckGECValue(const RemIEN: string; NoteIEN: integer): String;
+function CheckGECValue(const RemIEN: string; NoteIEN: integer; VisitStr: string): String;
 var
 ans,str,str1,title: string;
 fin: boolean;
 i,cnt: integer;
 
 begin
-  CallVistA('ORQQPXRM GEC DIALOG', [RemIEN, Patient.DFN, Encounter.VisitStr, NoteIEN], result);
+  CallVistA('ORQQPXRM GEC DIALOG', [RemIEN, Patient.DFN, VisitStr, NoteIEN], result);
   if Piece(Result,U,1) <> '0' then
   begin
     if Piece(Result,U,5)='1' then
@@ -496,7 +504,13 @@ begin
   aReturn := TStringList.Create;
   try
     CallVistA('ORQQPXRM MHV', [Patient.DFN, TestName, Answers], aReturn);
-    returnValue := aReturn[0];
+    if aReturn.Count > 0 then
+      returnValue := aReturn[0]
+    else
+    begin
+      Result := '';
+      Exit;
+    end;
     if returnValue='2' then
       begin
         Result := '2'+ U;
@@ -509,7 +523,9 @@ begin
       end;
     if returnValue = '0' then
       begin
-        Result := '0' + U + aReturn.Strings[1];
+        Result := '0' + U;
+        if aReturn.Count > 1 then
+          Result := Result + aReturn.Strings[1];
         EXIT;
       end;
   finally

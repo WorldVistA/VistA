@@ -4,203 +4,252 @@ inherited frmGraphOthers: TfrmGraphOthers
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Select Other Views and Lab Groups'
-  ClientHeight = 384
-  ClientWidth = 335
+  ClientHeight = 452
+  ClientWidth = 474
   Position = poScreenCenter
   OnShow = FormShow
+  ExplicitWidth = 480
+  ExplicitHeight = 480
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlMain: TORAutoPanel [0]
     Left = 0
     Top = 0
-    Width = 335
-    Height = 241
-    Align = alTop
-    BevelOuter = bvNone
+    Width = 474
+    Height = 420
+    Align = alClient
     TabOrder = 0
-    DesignSize = (
-      335
-      241)
-    object lblOthers: TLabel
-      Left = 12
-      Top = 29
-      Width = 101
-      Height = 13
-      Caption = 'Select or enter name:'
-    end
-    object lblViews: TLabel
-      Left = 179
-      Top = 29
-      Width = 110
-      Height = 13
-      Caption = 'Views and Lab Groups:'
-    end
+    ExplicitHeight = 241
     object lblInfo: TLabel
-      Left = 12
-      Top = 10
-      Width = 313
-      Height = 13
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 466
+      Height = 16
+      Align = alTop
       Caption = 
         'You can copy other user'#39's views and lab groups for your own use.' +
         ' '
+      ExplicitLeft = 3
+      ExplicitTop = 3
+      ExplicitWidth = 389
     end
-    object lblDefinitions: TLabel
-      Left = 12
-      Top = 224
-      Width = 52
-      Height = 13
-      Caption = 'Definitions:'
-    end
-    object cboOthers: TORComboBox
-      Left = 12
-      Top = 48
-      Width = 144
-      Height = 170
-      Style = orcsSimple
-      AutoSelect = True
-      Caption = 'Select or enter name'
-      Color = clWindow
-      DropDownCount = 8
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = True
-      LongList = True
-      LookupPiece = 2
-      MaxLength = 0
-      Pieces = '2,3'
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 0
-      OnClick = cboOthersClick
-      OnNeedData = cboOthersNeedData
-      CharsNeedMatch = 1
-    end
-    object lstViews: TORListBox
-      Left = 179
-      Top = 48
-      Width = 144
-      Height = 137
-      Anchors = [akLeft, akTop, akRight]
-      ItemHeight = 13
-      MultiSelect = True
-      ParentShowHint = False
-      ShowHint = True
+    object memReport: TRichEdit
+      AlignWithMargins = True
+      Left = 4
+      Top = 323
+      Width = 466
+      Height = 93
+      Align = alBottom
+      BevelInner = bvNone
+      Color = clCream
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Courier New'
+      Font.Style = []
+      Lines.Strings = (
+        '')
+      ParentFont = False
+      ReadOnly = True
+      ScrollBars = ssBoth
       TabOrder = 1
-      OnClick = lstViewsClick
-      Caption = 'Currently selected recipients'
-      ItemTipColor = clWindow
-      LongList = False
-      Pieces = '2'
+      WantReturns = False
+      WordWrap = False
+      Zoom = 100
+      ExplicitLeft = 3
+      ExplicitTop = 256
+      ExplicitWidth = 468
     end
-    object btnCopy: TButton
-      Left = 179
-      Top = 193
-      Width = 144
-      Height = 25
-      Anchors = [akLeft, akTop, akRight]
-      Caption = 'Copy'
-      TabOrder = 3
-    end
-    object pnlTempData: TPanel
-      Left = -90
-      Top = 96
-      Width = 425
-      Height = 49
-      TabOrder = 4
-      Visible = False
-      object lblSave: TLabel
-        Left = 184
-        Top = 16
-        Width = 3
-        Height = 13
-        Visible = False
-      end
-      object lblClose: TLabel
-        Left = 192
+    object Panel1: TPanel
+      Left = 1
+      Top = 23
+      Width = 472
+      Height = 259
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'Panel1'
+      ShowCaption = False
+      TabOrder = 2
+      ExplicitTop = 304
+      ExplicitHeight = 217
+      object Panel2: TPanel
+        Left = 0
         Top = 0
-        Width = 3
-        Height = 13
-        Visible = False
-      end
-      object lstActualItems: TORListBox
-        Left = 8
-        Top = 5
-        Width = 97
-        Height = 41
-        ItemHeight = 13
-        ParentShowHint = False
-        ShowHint = True
+        Width = 209
+        Height = 259
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
         TabOrder = 0
-        ItemTipColor = clWindow
-        LongList = False
+        ExplicitHeight = 217
+        object lblOthers: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 203
+          Height = 16
+          Align = alTop
+          Caption = 'Select or enter name:'
+          ExplicitLeft = 12
+          ExplicitTop = 29
+          ExplicitWidth = 126
+        end
+        object cboOthers: TORComboBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 25
+          Width = 203
+          Height = 231
+          Style = orcsSimple
+          Align = alClient
+          AutoSelect = True
+          Caption = 'Select or enter name'
+          Color = clWindow
+          DropDownCount = 8
+          ItemHeight = 16
+          ItemTipColor = clWindow
+          ItemTipEnable = True
+          ListItemsOnly = True
+          LongList = True
+          LookupPiece = 2
+          MaxLength = 0
+          Pieces = '2,3'
+          Sorted = False
+          SynonymChars = '<>'
+          TabOrder = 0
+          Text = ''
+          OnClick = cboOthersClick
+          OnNeedData = cboOthersNeedData
+          CharsNeedMatch = 1
+          ExplicitLeft = 12
+          ExplicitTop = 47
+          ExplicitWidth = 144
+          ExplicitHeight = 170
+        end
       end
-      object lstDrugClass: TListBox
-        Left = 112
-        Top = 5
-        Width = 97
-        Height = 41
-        ItemHeight = 13
+      object Panel3: TPanel
+        Left = 209
+        Top = 0
+        Width = 38
+        Height = 259
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
         TabOrder = 1
+        ExplicitLeft = 155
+        ExplicitHeight = 217
       end
-      object lstScratch: TListBox
-        Left = 216
-        Top = 5
-        Width = 97
-        Height = 41
-        ItemHeight = 13
+      object Panel4: TPanel
+        Left = 247
+        Top = 0
+        Width = 225
+        Height = 259
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel4'
+        ShowCaption = False
         TabOrder = 2
+        ExplicitLeft = 144
+        ExplicitTop = 88
+        ExplicitWidth = 185
+        ExplicitHeight = 41
+        object lblViews: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 219
+          Height = 16
+          Align = alTop
+          Caption = 'Views and Lab Groups:'
+          ExplicitLeft = -100
+          ExplicitTop = 29
+          ExplicitWidth = 138
+        end
+        object lstViews: TORListBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 25
+          Width = 219
+          Height = 231
+          Align = alClient
+          MultiSelect = True
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+          OnClick = lstViewsClick
+          Caption = 'Currently selected recipients'
+          ItemTipColor = clWindow
+          LongList = False
+          Pieces = '2'
+          ExplicitLeft = -58
+          ExplicitTop = 51
+          ExplicitWidth = 283
+          ExplicitHeight = 137
+        end
       end
-      object lstTests: TListBox
-        Left = 320
-        Top = 5
-        Width = 97
-        Height = 41
-        ItemHeight = 13
-        TabOrder = 3
+    end
+    object Panel5: TPanel
+      Left = 1
+      Top = 282
+      Width = 472
+      Height = 38
+      Align = alBottom
+      BevelOuter = bvNone
+      Caption = 'Panel1'
+      ShowCaption = False
+      TabOrder = 3
+      ExplicitTop = 23
+      ExplicitWidth = 281
+      object lblDefinitions: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 16
+        Width = 214
+        Height = 19
+        Margins.Top = 16
+        Align = alLeft
+        Caption = 'Definitions:'
+        ExplicitTop = 3
+        ExplicitHeight = 32
+      end
+      object btnCopy: TButton
+        AlignWithMargins = True
+        Left = 395
+        Top = 3
+        Width = 74
+        Height = 32
+        Align = alRight
+        Caption = 'Copy'
+        TabOrder = 0
       end
     end
   end
-  object memReport: TRichEdit [1]
+  object pnlBottom: TPanel [1]
     Left = 0
-    Top = 241
-    Width = 335
-    Height = 102
-    Align = alClient
-    BevelInner = bvNone
-    Color = clCream
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Courier New'
-    Font.Style = []
-    Lines.Strings = (
-      '')
-    ParentFont = False
-    ReadOnly = True
-    ScrollBars = ssBoth
-    TabOrder = 1
-    WantReturns = False
-    WordWrap = False
-  end
-  object pnlBottom: TPanel [2]
-    Left = 0
-    Top = 343
-    Width = 335
-    Height = 41
+    Top = 420
+    Width = 474
+    Height = 32
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 2
+    TabOrder = 1
+    ExplicitTop = 352
     object btnClose: TButton
-      Left = 250
-      Top = 6
+      AlignWithMargins = True
+      Left = 396
+      Top = 3
       Width = 75
-      Height = 25
+      Height = 26
+      Align = alRight
       Caption = 'Close'
       TabOrder = 0
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 120
+    Top = 272
     Data = (
       (
         'Component = pnlMain'
@@ -215,21 +264,6 @@ inherited frmGraphOthers: TfrmGraphOthers
         'Component = btnCopy'
         'Status = stsDefault')
       (
-        'Component = pnlTempData'
-        'Status = stsDefault')
-      (
-        'Component = lstActualItems'
-        'Status = stsDefault')
-      (
-        'Component = lstDrugClass'
-        'Status = stsDefault')
-      (
-        'Component = lstScratch'
-        'Status = stsDefault')
-      (
-        'Component = lstTests'
-        'Status = stsDefault')
-      (
         'Component = memReport'
         'Status = stsDefault')
       (
@@ -240,6 +274,21 @@ inherited frmGraphOthers: TfrmGraphOthers
         'Status = stsDefault')
       (
         'Component = frmGraphOthers'
+        'Status = stsDefault')
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = Panel2'
+        'Status = stsDefault')
+      (
+        'Component = Panel3'
+        'Status = stsDefault')
+      (
+        'Component = Panel4'
+        'Status = stsDefault')
+      (
+        'Component = Panel5'
         'Status = stsDefault'))
   end
 end

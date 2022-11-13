@@ -43,7 +43,6 @@ type
     procedure cboProviderExit(Sender: TObject);
   private
     FCheckingSimilarNames: boolean;
-    FCboProviderVistaParams: TArray<string>;
     FCheckingCode: boolean;
     FCheckingMods: boolean;
     FLastCPTCodes: string;
@@ -61,6 +60,8 @@ type
     procedure InitTab(ACopyProc: TCopyItemsMethod; AListProc: TListSectionsProc);
     procedure AllowTabChange(var AllowChange: boolean); override;
     function CheckSimilarNameOK: Boolean;
+    procedure addToList(str: string);
+    procedure deleteFromList(str: string);
   end;
 
 var
@@ -71,7 +72,7 @@ implementation
 {$R *.DFM}
 
 uses
-  fEncounterFrame, uConst, rCore, VA508AccessibilityRouter, VAUtils, uSimilarNames;
+  fEncounterFrame, uConst, rCore, VA508AccessibilityRouter, uORLists, uSimilarNames, VAUtils;
 
 const
   TX_PROC_PROV = 'Each procedure requires selection of a Provider before it can be saved.';
@@ -85,7 +86,7 @@ begin
   if(NotUpdating) then
   begin
     for i := 0 to lstCaptionList.Items.Count-1 do
-      if(lstCaptionList.Items[i].Selected) then
+      if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEProc) then
         TPCEProc(lstCaptionList.Objects[i]).Quantity := spnProcQty.Position;
     GridChanged;
   end;
@@ -99,7 +100,7 @@ begin
   if(NotUpdating) then
   begin
     for i := 0 to lstCaptionList.Items.Count-1 do
-      if(lstCaptionList.Items[i].Selected) then
+      if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEProc) then
         TPCEProc(lstCaptionList.Objects[i]).Provider := cboProvider.ItemIEN;
     FProviderChanging := TRUE; // CQ 11707
     try
@@ -155,9 +156,16 @@ begin
 end;
 
 procedure TfrmProcedures.UpdateNewItemStr(var x: string);
+var
+  qty: integer;
+
 begin
-  SetPiece(x, U, pnumProcQty, '1');
-  //x := x + U + '1';
+  qty := StrToIntDef(Piece(x, U, pnumProcQty), 1);
+  if qty < spnProcQty.Min then
+    qty := spnProcQty.Min
+  else if qty > spnProcQty.Max then
+    qty := spnProcQty.Max;
+  SetPiece(x, U, pnumProcQty, IntToStr(qty));
 end;
 
 procedure TfrmProcedures.UpdateControls;
@@ -191,7 +199,7 @@ begin
         Qty := 1;
         for i := 0 to lstCaptionList.Items.Count-1 do
         begin
-          if lstCaptionList.Items[i].Selected then
+          if lstCaptionList.Items[i].Selected and (lstCaptionList.Objects[i] is TPCEProc) then
           begin
             Obj := TPCEProc(lstCaptionList.Objects[i]);
             if(First) then
@@ -246,7 +254,7 @@ procedure TfrmProcedures.FormResize(Sender: TObject);
 var
   v, i: integer;
   s: string;
-  
+
 begin
   inherited;
   FSectionTabs[0] := -(lbxSection.width - LBCheckWidthSpace - MainFontWidth - ScrollBarWidth);
@@ -281,6 +289,22 @@ begin
   ShowModifiers;
 end;
 
+procedure TfrmProcedures.deleteFromList(str: string);
+var
+j: integer;
+APCEItem: TPCEItem;
+begin
+  lstCaptionList.ClearSelection;
+  for j := lstCaptionList.Items.Count - 1 downto 0 do
+    begin
+    APCEItem := TPCEItem(lstCaptionList.Objects[j]);
+      if APCEItem.Code = Piece(str, u, 2) then
+          lstCaptionList.Items.Item[j].selected := true;
+    end;
+  btnRemoveClick(btnRemove);
+  Sync2Grid;
+end;
+
 procedure TfrmProcedures.btnSelectAllClick(Sender: TObject);
 begin
   inherited;
@@ -309,7 +333,7 @@ begin
 //  Needed := '';
   for i := 0 to lstCaptionList.Items.Count-1 do
   begin
-    if(lstCaptionList.Items[i].Selected) then
+    if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEProc) then
     begin
       Proc := TPCEProc(lstCaptionList.Objects[i]);
       Codes := Codes + Proc.Code + U;
@@ -337,7 +361,7 @@ begin
   if(pos(CRLF,Hint)>0) then
     Hint := ':' + CRLF + Spaces + Hint;
   lblMod.Hint := msg + Hint;
-  
+
   if(FLastCPTCodes = Codes) then
     TopIdx := lbMods.TopIndex
   else
@@ -365,7 +389,7 @@ begin
     Mods := ';';
     for i := 0 to lstCaptionList.Items.Count-1 do
     begin
-      if(lstCaptionList.Items[i].Selected) then
+      if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEProc) then
       begin
         inc(cnt);
         Mods := Mods + TPCEProc(lstCaptionList.Objects[i]).Modifiers;
@@ -435,7 +459,7 @@ begin
       ModIEN := piece(lbMods.Items[Index],U,1) + ';';
       for i := 0 to lstCaptionList.Items.Count-1 do
       begin
-        if(lstCaptionList.Items[i].Selected) then
+        if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEProc) then
         begin
           PCEObj := TPCEProc(lstCaptionList.Objects[i]);
           idx := pos(';' + ModIEN, ';' + PCEObj.Modifiers);
@@ -494,10 +518,10 @@ begin
       (lbxSection.Checked[Index]) then
     begin
       UpdateModifierList(lbxSection.Items, Index); // CQ#16439
-      lbxSection.Checked[Index] := TRUE;    
+      lbxSection.Checked[Index] := TRUE;
       for i := 0 to lstCaptionList.Items.Count-1 do
       begin
-        if(lstCaptionList.Items[i].Selected) then
+        if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEProc) then
         with TPCEProc(lstCaptionList.Objects[i]) do
         begin
           if(Category = GetCat) and
@@ -571,7 +595,7 @@ begin
   end
   else if ShiftTabIsPressed then
     if lbMods.CanFocus then
-      lbMods.SetFocus;    
+      lbMods.SetFocus;
 end;
 
 procedure TfrmProcedures.btnRemoveClick(Sender: TObject);
@@ -583,13 +607,23 @@ end;
 
 procedure TfrmProcedures.cboProviderNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
   inherited;
-  if(uEncPCEData.VisitCategory = 'E') then
-    cboProvider.ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboProviderVistaParams))
+  if (uEncPCEData.VisitCategory = 'E') then
+    setPersonList(cboProvider, StartFrom, Direction)
   else
-    cboProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction,
-      FloatToStr(uEncPCEData.PersonClassDate), FCboProviderVistaParams));
+  begin
+    sl := TSTringList.Create;
+    try
+      setSubSetOfUsersWithClass(cboProvider, sl, StartFrom, Direction,
+        FloatToStr(uEncPCEData.PersonClassDate));
+      cboProvider.ForDataUse(sl);
+    finally
+      sl.Free;
+    end;
+  end;
 end;
 
 function TfrmProcedures.OK2SaveProcedures: boolean;
@@ -597,7 +631,7 @@ begin
   Result := TRUE;
   if MissingProvider then
   begin
-    InfoBox(TX_PROC_PROV, TC_PROC_PROV, MB_OK or MB_ICONWARNING);
+//    InfoBox(TX_PROC_PROV, TC_PROC_PROV, MB_OK or MB_ICONWARNING);
     Result := False;
   end;
   if Result then
@@ -619,6 +653,8 @@ begin
 //------------------------------------------------
   for i := 0 to lstCaptionList.Items.Count - 1 do
   begin
+    if not (lstCaptionList.Objects[i] is TPCEProc) then
+      continue;
     AProc := TPCEProc(lstCaptionList.Objects[i]);
     if AProc.fIsOldProcedure then continue;
     if (AProc.Provider = 0) then
@@ -654,10 +690,7 @@ begin
   end;
   FCheckingSimilarNames := True;
   try
-    if (uEncPCEData.VisitCategory = 'E') then
-      Result := CheckForSimilarName(cboProvider, ErrMsg, ltPerson, FCboProviderVistaParams, sPr)
-    else
-      Result := CheckForSimilarName(cboProvider, ErrMsg, ltPerson, FCboProviderVistaParams, sPr, FloatToStr(uEncPCEData.PersonClassDate));
+    Result := CheckForSimilarName(cboProvider, ErrMsg, sPr);
     if not Result then
       ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');
     // Displaying the dialog to pick from similar names can stop on click events
@@ -676,7 +709,36 @@ var
 begin
   inherited;
   for i := 0 to lstCaptionList.Items.Count - 1 do
-    TPCEProc(lstCaptionList.Objects[i]).fIsOldProcedure := True;
+    if (lstCaptionList.Objects[i] is TPCEProc) then
+      TPCEProc(lstCaptionList.Objects[i]).fIsOldProcedure := True;
+end;
+
+procedure TfrmProcedures.addToList(str: string);
+var
+j: integer;
+APCEItem: TPCEItem;
+found: boolean;
+begin
+  found := false;
+  UpdateNewItemStr(str); // ensure Qty correct
+  for j := lstCaptionList.Items.Count - 1 downto 0 do
+    begin
+      APCEItem := TPCEItem(lstCaptionList.Objects[j]);
+      if APCEItem.Code = Piece(str, u, 2) then
+        begin
+//          APCEItem.SetFromString(str);
+          found := true;
+          TPCEProc(lstCaptionList.Objects[j]).Quantity :=  StrToIntDef(Piece(str, U, pnumProcQty), 1);
+          break;
+        end
+    end;
+  if not found then
+    begin
+      APCEItem := FPCEItemClass.Create;
+      APCEItem.SetFromString(str);
+      lstCaptionList.Add(APCEItem.ItemStr, APCEItem);
+    end;
+  updateControls;
 end;
 
 procedure TfrmProcedures.AllowTabChange(var AllowChange: boolean);
@@ -686,5 +748,4 @@ end;
 
 initialization
   SpecifyFormIsNotADialog(TfrmProcedures);
-
 end.

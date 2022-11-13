@@ -17,6 +17,7 @@ type
     radSort: TRadioGroup;
     cmdOK: TButton;
     cmdCancel: TButton;
+    Panel1: TPanel;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure calBeginDateKeyPress(Sender: TObject; var Key: Char);

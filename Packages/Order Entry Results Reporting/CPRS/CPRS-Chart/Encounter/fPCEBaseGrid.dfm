@@ -2,10 +2,8 @@ inherited frmPCEBaseGrid: TfrmPCEBaseGrid
   Left = 128
   Top = 192
   Caption = 'frmPCEBaseGrid'
-  ExplicitWidth = 640
-  ExplicitHeight = 438
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   inherited btnCancel: TBitBtn
     TabOrder = 2
   end
@@ -44,6 +42,7 @@ inherited frmPCEBaseGrid: TfrmPCEBaseGrid
       ShowHint = True
       TabOrder = 0
       ViewStyle = vsReport
+      OnChanging = lstCaptionListChanging
       AutoSize = False
     end
   end

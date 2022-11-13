@@ -26,6 +26,9 @@ type
     Label1: TLabel;
     popStatus: TPopupMenu;
     popStatusSelectNone: TMenuItem;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure treServiceChange(Sender: TObject; Node: TTreeNode);
@@ -82,9 +85,9 @@ begin
       ClientHeight := H; pnlBase.Height := H;
       FChanged := False;
       with radSort do ItemIndex := 1;
-      //FastAssign(LoadServiceList(CN_SVC_LIST_DISP), SvcList);                         {RV}
-      FastAssign(LoadServiceListWithSynonyms(CN_SVC_LIST_DISP), SvcList);           {RV}
-      SortByPiece(TStringList(SvcList), U, 2);                                   {RV}
+      setServiceListWithSynonyms(SvcList, CN_SVC_LIST_DISP);           {RV}
+//      SortByPiece(TStringList(SvcList), U, 2);                                   {RV}
+      SortByPiece(SvcList, U, 2);                                   {RV}
       for i := 0 to SvcList.Count - 1 do
         if cboService.Items.IndexOf(Trim(Piece(SvcList.Strings[i], U, 2))) = -1 then   {RV}
         //if cboService.SelectByID(Piece(SvcList.Strings[i], U, 1)) = -1 then
@@ -96,8 +99,11 @@ begin
           begin
             if Items[i].Level > 0 then Items[i].Expanded := False else Items[i].Expanded := True;
           end ;
-        TopItem := Items[0] ;
-        Selected := Items[0] ;
+        if Items.Count > 0 then
+        begin
+          TopItem := Items[0] ;
+//          Selected := Items[0] ;
+        end;
       end;
       CurrentService := CurrentContext.Service;
       if StrToIntDef(CurrentService, 0) > 0 then
@@ -105,7 +111,7 @@ begin
           cboservice.SelectByID(CurrentService);
           cboServiceSelect(frmConsultsView);
         end;
-      FastAssign(SubSetOfStatus, lstStatus.Items);
+      setSubSetOfStatus(lstStatus.Items);
       CurrentStatus := CurrentContext.Status;
       if CurrentStatus <> '' then with lstStatus do
         begin
@@ -218,27 +224,45 @@ end;
 procedure TfrmConsultsView.treServiceChange(Sender: TObject; Node: TTreeNode);
 begin
    if uChanging then Exit;
-   SvcInfo  := TORTreeNode(treService.Selected).StringData ;
-   cboService.ItemIndex := cboService.Items.IndexOf(Trim(treService.Selected.Text));  {RV}
+   if assigned(treService.Selected) then
+   begin
+     SvcInfo  := TORTreeNode(treService.Selected).StringData ;
+     cboService.ItemIndex := cboService.Items.IndexOf(Trim(treService.Selected.Text));  {RV}
    //cboService.SelectByID(Piece(string(treService.Selected.Data), U, 1));
+   end
+   else
+   begin
+     SvcInfo  := '';
+     cboService.ItemIndex := -1;
+   end;
 end;
 
 procedure TfrmConsultsView.cboServiceSelect(Sender: TObject);
 var                                                                      
   i: integer;                                                            
-begin                                                                    
-  uChanging := True;
-  with treService do for i := 0 to Items.Count-1 do
-    begin                                                                
-      if Piece(TORTreeNode(Items[i]).StringData,U,1) = cboService.ItemID then
-        begin                                                            
-          Selected := Items[i];                                          
-          //treServiceChange(Self, Items[i]);
-          break;                                                         
-        end;                                                             
+begin
+  with treService do
+  begin
+    uChanging := True;
+    try
+      Selected := nil;
+      for i := 0 to Items.Count-1 do
+      begin
+        if Piece(TORTreeNode(Items[i]).StringData,U,1) = cboService.ItemID then
+          begin
+            Selected := Items[i];
+            //treServiceChange(Self, Items[i]);
+            break;
+          end;
+      end;
+    finally
+      uChanging := False;
     end;
-  uChanging := False;
-  SvcInfo  := TORTreeNode(treService.Selected).StringData ;
+    if assigned(Selected) then
+      SvcInfo  := TORTreeNode(treService.Selected).StringData
+    else
+      SvcInfo := '';
+  end;
 end;                                                                     
 
 procedure TfrmConsultsView.popStatusSelectNoneClick(Sender: TObject);

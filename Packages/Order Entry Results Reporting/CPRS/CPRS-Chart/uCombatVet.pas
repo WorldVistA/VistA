@@ -70,13 +70,13 @@ begin
     FIsEligible := (aLst.Count > 4) and (aLst[0] <> 'NOTCV');
     ClearProperties;
     if FIsEligible then
-      begin
-        FServiceBranch := Piece(aLst[0], U, 2);
-        FStatus := Piece(aLst[1], U, 2);
-        FSeperationDate := Piece(aLst[2], U, 2);
-        FExpirationDate := Piece(aLst[3], U, 2);
-        FOIF_OEF := aLst[4];
-      end;
+    begin
+      FServiceBranch := Piece(aLst[0], U, 2);
+      FStatus := Piece(aLst[1], U, 2);
+      FSeperationDate := Piece(aLst[2], U, 2);
+      FExpirationDate := Piece(aLst[3], U, 2);
+      FOIF_OEF := aLst[4];
+    end;
   finally
     FreeAndNil(aLst);
   end;

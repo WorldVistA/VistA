@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_CPRS;
   ================================================================================
   *
   *       Application:  CPRS - CoverSheet
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-04
   *
@@ -55,9 +55,9 @@ type
     procedure lvDataSelectItem(Sender: TObject; Item: TListItem; Selected: boolean);
     procedure tmrTimer(Sender: TObject);
     procedure lvDataKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure lvDataDeletion(Sender: TObject; Item: TListItem);
   private
-    { Private declarations }
-    FInTmrTimer: boolean;
+    FInTmrTimer: boolean; // Is the Tmr TTimer currently executing?
     procedure DisplayItemDetail(Sender: TObject; aItem: TListItem; Button: TMouseButton);
   protected
     fBackgroundLoading: boolean;
@@ -108,6 +108,8 @@ type
 var
   fraCoverSheetDisplayPanel_CPRS: TfraCoverSheetDisplayPanel_CPRS;
 
+  UPDATING_WAIT_TIME: integer = 3000; // milliseconds
+
 implementation
 
 {$R *.dfm}
@@ -128,7 +130,6 @@ const
   UPDATING_BACKGROUND = 'Loading in Background ...';
   UPDATING_FAILURE    = 'Update failed.';
   UPDATING_ATTEMPTS   = 100;  // Max try to get data from background job
-  UPDATING_WAIT_TIME  = 3000; // milliseconds
 
 constructor TfraCoverSheetDisplayPanel_CPRS.Create(aOwner: TComponent);
 begin
@@ -146,9 +147,6 @@ begin
   fColumns := TStringList.Create;
   fLastItemIndex := -1;
   fAllowDetailDisplay := True;
-{$IFDEF DEBUG_AA}
-  AlignWithMargins := False;
-{$ENDIF}
 
   tmr.Interval := UPDATING_WAIT_TIME;
   tmr.Enabled := false;
@@ -163,22 +161,14 @@ end;
 
 function TfraCoverSheetDisplayPanel_CPRS.ClearListView(aListView: TListView): boolean;
 begin
-  aListView.Items.BeginUpdate;
   try
-    while aListView.Items.Count > 0 do
-      begin
-        if aListView.Items[0].Data <> nil then
-          try
-            TObject(aListView.Items[0].Data).Free;
-          finally
-            aListView.Items[0].Data := nil;
-          end;
-        aListView.Items.Delete(0);
-      end;
-    aListView.Items.EndUpdate;
-    fLastItemIndex := -1;
-    Result := True;
-  except
+    aListView.Items.BeginUpdate;
+    try
+      aListView.Items.Clear;
+    finally
+      aListView.Items.EndUpdate;
+    end;
+  finally
     Result := false;
   end;
 end;
@@ -332,8 +322,8 @@ end;
 procedure TfraCoverSheetDisplayPanel_CPRS.OnLoadError(Sender: TObject; E: Exception);
 begin
   inherited;
-
-  lvData.Items.Clear;
+  ClearListView(lvData);
+//  lvData.Items.Clear;
   with lvData.Items.Add do
     Caption := '** Error Loading Data **';
   lvData.Enabled := True;
@@ -361,6 +351,13 @@ begin
       Result := nil
   else
     Result := nil;
+end;
+
+procedure TfraCoverSheetDisplayPanel_CPRS.lvDataDeletion(Sender: TObject;
+  Item: TListItem);
+begin
+  TObject(Item.Data).free;
+  inherited;
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS.lvDataEnter(Sender: TObject);
@@ -583,59 +580,59 @@ begin
 
       // if try = 0 then it just hit from getting set to fire, give server a free loop
       if fBackgroundLoadTry = 0 then
-        begin
-          ClearListView(lvData);
-          lvData.Items.Add.Caption := UPDATING_BACKGROUND;
-          inc(fBackgroundLoadTry);
-          Application.ProcessMessages;
-          Exit;
-        end;
+      begin
+        ClearListView(lvData);
+        lvData.Items.Add.Caption := UPDATING_BACKGROUND;
+        inc(fBackgroundLoadTry);
+        Application.ProcessMessages;
+        Exit;
+      end;
 
       ClearListView(lvData);
 
       if not tmr.Enabled then
-        begin
-          lvData.Items.Add.Caption := 'Exit, timer not enabled';
-          Exit;
-        end;
+      begin
+        lvData.Items.Add.Caption := 'Exit, timer not enabled';
+        Exit;
+      end;
 
       if getParam.QueryInterface(ICoverSheetParam_CPRS, aParam) <> 0 then
-        begin
-          lvData.Items.Add.Caption := 'Invalid param set for display.';
-          tmr.Enabled := false;
-          Exit;
-        end
+      begin
+        lvData.Items.Add.Caption := 'Invalid param set for display.';
+        tmr.Enabled := false;
+        Exit;
+      end
       else if aParam.PollingID = '' then
-        begin
-          lvData.Items.Add.Caption := 'Invalid PollingID in param set.';
-          tmr.Enabled := false;
-          Exit;
-        end;
+      begin
+        lvData.Items.Add.Caption := 'Invalid PollingID in param set.';
+        tmr.Enabled := false;
+        Exit;
+      end;
 
       // Do the call here and determine if we can load anything
       try
         aLst := TStringList.Create;
         CallVistA('ORWCV POLL', [Patient.DFN, CoverSheet.IPAddress, CoverSheet.UniqueID, aParam.PollingID], aLst);
         if aLst.Count > 0 then
+        begin
+          for i := aLst.Count - 1 downto 0 do
           begin
-            for i := aLst.Count - 1 downto 0 do
-              begin
-                if Copy(aLst[i], 1, 1) = '~' then
-                  aLst.Delete(i)
-                else if Copy(aLst[i], 1, 1) = 'i' then
-                  aLst[i] := Copy(aLst[i], 2, Length(aLst[i]));
-              end;
-
-            ClearListView(lvData);
-
-            if CPRSParams.Invert then
-              InvertStringList(aLst);
-
-            OnAddItems(aLst);
-            tmr.Enabled := false;
-            OnCompleteBackgroundLoad(Self);
-            Exit;
+            if Copy(aLst[i], 1, 1) = '~' then
+              aLst.Delete(i)
+            else if Copy(aLst[i], 1, 1) = 'i' then
+              aLst[i] := Copy(aLst[i], 2, Length(aLst[i]));
           end;
+
+          ClearListView(lvData);
+
+          if CPRSParams.Invert then
+            InvertStringList(aLst);
+
+          OnAddItems(aLst);
+          tmr.Enabled := false;
+          OnCompleteBackgroundLoad(Self);
+          Exit;
+        end;
       finally
         FreeAndNil(aLst);
       end;
@@ -646,18 +643,14 @@ begin
       if fBackgroundLoading then
         lvData.Items.Add.Caption := Format(UPDATING_BACKGROUND + '%s', [Copy('..........', 1, fBackgroundLoadTry)])
       else
-        begin
-          tmr.Enabled := false;
-          lvData.Items.Add.Caption := UPDATING_FAILURE;
-        end;
+      begin
+        tmr.Enabled := false;
+        lvData.Items.Add.Caption := UPDATING_FAILURE;
+      end;
 
       Application.ProcessMessages;
     finally
-      if tmr.Enabled then
-      begin
-        tmr.Enabled:= False; // reset the timer to not fire for UPDATING_WAIT_TIME
-        tmr.Enabled:= True;
-      end;
+      if tmr.Enabled then tmr.OnTimer := tmr.OnTimer; // setting OnTimer calls UpdateTimer, which resets the timer to not fire again for UPDATING_WAIT_TIME
       FInTmrTimer := False;
     end;
   end;

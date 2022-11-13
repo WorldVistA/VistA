@@ -1,13 +1,19 @@
 unit fNoteCPFields;
+{------------------------------------------------------------------------------
+Update History
 
+    2016-03-03: NSR#20110606 (Similar Provider/Cosigner names)
+-------------------------------------------------------------------------------}
 interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fAutoSz, StdCtrls, ORCtrls, ORFn, ORDtTm, VA508AccessibilityManager;
+  fAutoSz, StdCtrls, ORCtrls, ORFn, ORDtTm, VA508AccessibilityManager,
+  Vcl.ExtCtrls;
 
 type
-  TfrmNoteCPFields = class(TfrmAutoSz)
+
+  TfrmNoteCPFields = class(TForm)
     lblAuthor: TLabel;
     cboAuthor: TORComboBox;
     lblProcSummCode: TOROffsetLabel;
@@ -16,6 +22,8 @@ type
     calProcDateTime: TORDateBox;
     cmdOK: TButton;
     cmdCancel: TButton;
+    Panel1: TPanel;
+    Panel2: TPanel;
     procedure cmdCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
@@ -27,12 +35,13 @@ type
     FProcDateTime: TFMDateTime;
     FCPStatusFlag: integer;
     FOKPressed: Boolean;
-    function ValidateFields(var ErrMsg: string): boolean;
+    Function ValidateFields(var ErrMsg: string): Boolean;
   end;
 
 const
   TC_REQ_FIELDS        = 'Required Information';
   TX_REQ_AUTHOR        = CRLF + 'The author of the note must be identified.';
+  TX_REQ_AUTHOR_DUPL   = CRLF + 'The author confirmation failed.';
   TX_NO_FUTURE         = CRLF + 'A reference date/time in the future is not allowed.';
   TX_REQ_PROCSUMMCODE  = CRLF + 'A procedure summary code for this procedure must be entered.';
   TX_REQ_PROCDATETIME  = CRLF + 'A valid date/time for the procedure must be entered.';
@@ -47,7 +56,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, uConst, uConsults, uCore, uSimilarNames;
+uses rCore, uConst, uConsults, uCore, uORLists, uSimilarNames;
 
 procedure EnterClinProcFields(ACPStatusFlag: integer; ErrMsg: string; var AProcSummCode: integer; var AProcDate: TFMDateTime; var AnAuthor: int64);
 var
@@ -90,20 +99,20 @@ begin
   If not ValidateFields(ErrMsg) then
   begin
     ShowMsgOn(Length(ErrMsg) > 0, ErrMsg, TC_REQ_FIELDS);
-    Exit;
+    Exit
   end else
-  begin
-    FOKPressed := True;
-    ModalResult := mrOK;
-  end;
+    begin
+      FOKPressed := True;
+      ModalResult := mrOK;
+    end;
 end;
 
-function TfrmNoteCPFields.ValidateFields(var ErrMsg: string): boolean;
+Function TfrmNoteCPFields.ValidateFields(var ErrMsg: string): Boolean;
 var
   rtnErrMsg: String;
 begin
   Result := True;
-  if cboAuthor.ItemIEN = 0   then ErrMsg := ErrMsg + TX_REQ_AUTHOR else FAuthor := cboAuthor.ItemIEN;
+
   if (FCPStatusFlag = CP_INSTR_INCOMPLETE) then
     begin
       if cboProcSummCode.ItemIEN = 0 then ErrMsg := ErrMsg + TX_REQ_PROCSUMMCODE
@@ -123,7 +132,7 @@ begin
         end;
     end;
 
-  if not CheckForSimilarName(cboAuthor, rtnErrMsg, ltPerson, sPr) then
+  if not CheckForSimilarName(cboAuthor, rtnErrMsg, sPr) then
   begin
     if Trim(rtnErrMsg) <> '' then
       ErrMsg := ErrMsg + rtnErrMsg;
@@ -152,7 +161,7 @@ end;
 procedure TfrmNoteCPFields.cboAuthorNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  setPersonList((Sender as TORComboBox), StartFrom, Direction);
 end;
 
 end.

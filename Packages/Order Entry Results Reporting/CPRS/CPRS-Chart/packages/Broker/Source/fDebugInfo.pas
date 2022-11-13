@@ -5,10 +5,13 @@
   Developers: Joel Ivey
   Description: Contains TRPCBroker and related components.
   Unit: fDebugInfo displays information for debug mode.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in XWB*1.1*71 (RGG 10/18/2018) XWB*1.1*71
   1. Updated RPC Version to version 71.
 

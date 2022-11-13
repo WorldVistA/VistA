@@ -35,7 +35,6 @@ const
   DST_CONSULT_PTFIRSTNAME = 'patient_first_name';
   DST_CONSULT_PTLASTNAME = 'patient_last_name';
   DST_CONSULT_PTMIDNAME = 'patient_middle_name';
-  DST_CONSULT_PTSSN = 'patient_ssn';
   DST_CONSULT_PTDOB = 'patient_dob';
   DST_CONSULT_PTICN = 'patient_icn';
   DST_CONSULT_PTCLASS = 'outpatient';

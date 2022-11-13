@@ -49,7 +49,6 @@ inherited frmNotes: TfrmNotes
     ParentDoubleBuffered = False
     TabOrder = 0
     OnExit = pnlLeftExit
-    ExplicitHeight = 704
     object cmdNewNote: TORAlignButton
       Left = 0
       Top = 679
@@ -64,7 +63,6 @@ inherited frmNotes: TfrmNotes
       Caption = 'New Note'
       TabOrder = 1
       OnExit = cmdNewNoteExit
-      ExplicitTop = 678
     end
     object cmdPCE: TORAlignButton
       Left = 0
@@ -80,7 +78,6 @@ inherited frmNotes: TfrmNotes
       Caption = 'Encounter'
       TabOrder = 2
       OnExit = cmdPCEExit
-      ExplicitTop = 653
     end
     object pnlLeftTop: TPanel
       Left = 0
@@ -98,8 +95,6 @@ inherited frmNotes: TfrmNotes
       ParentBackground = False
       ParentDoubleBuffered = False
       TabOrder = 0
-      ExplicitTop = 18
-      ExplicitHeight = 632
       object splDrawers: TSplitter
         Left = 0
         Top = 596
@@ -148,7 +143,6 @@ inherited frmNotes: TfrmNotes
         Caption = ''
         NodePiece = 0
         ShortNodeCaptions = True
-        ExplicitHeight = 600
       end
       object pnlDrawers: TPanel
         Left = 0
@@ -233,14 +227,12 @@ inherited frmNotes: TfrmNotes
                   51)
                 inherited edtSearch: TCaptionEdit
                   Width = 133
-                  Height = 24
                   Margins.Left = 4
                   Margins.Top = 4
                   Margins.Right = 4
                   Margins.Bottom = 4
                   TabOrder = 1
                   ExplicitWidth = 133
-                  ExplicitHeight = 24
                 end
                 inherited btnFind: TORAlignButton
                   Left = 133
@@ -482,8 +474,6 @@ inherited frmNotes: TfrmNotes
       TabOrder = 3
       VerticalAlignment = taAlignBottom
       ShowAccelChar = True
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 74
     end
   end
@@ -513,7 +503,6 @@ inherited frmNotes: TfrmNotes
     BevelOuter = bvNone
     TabOrder = 1
     OnExit = PnlRightExit
-    ExplicitHeight = 704
     object pnlNote: TPanel
       Left = 0
       Top = 0
@@ -527,7 +516,6 @@ inherited frmNotes: TfrmNotes
       BevelOuter = bvNone
       TabOrder = 0
       OnExit = pnlNoteExit
-      ExplicitHeight = 704
       object splList: TSplitter
         Left = 0
         Top = 142
@@ -749,12 +737,11 @@ inherited frmNotes: TfrmNotes
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
-        InfoMessage.ExplicitHeight = 68
         InfoSelector.AlignWithMargins = True
         InfoSelector.Left = 4
         InfoSelector.Top = 4
         InfoSelector.Width = 109
-        InfoSelector.Height = 68
+        InfoSelector.Height = 72
         InfoSelector.Margins.Left = 4
         InfoSelector.Margins.Top = 4
         InfoSelector.Margins.Right = 4
@@ -768,7 +755,6 @@ inherited frmNotes: TfrmNotes
         SyncSizes = True
         VisualEdit = memNote
         SaveFindAfter = 0
-        ExplicitTop = 439
       end
       object memPCERead: TRichEdit
         Left = 0
@@ -812,7 +798,6 @@ inherited frmNotes: TfrmNotes
       TabOrder = 1
       Visible = False
       OnResize = pnlWriteResize
-      ExplicitHeight = 704
       object spEditDetails: TSplitter
         Left = 0
         Top = 435
@@ -943,12 +928,11 @@ inherited frmNotes: TfrmNotes
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
-        InfoMessage.ExplicitHeight = 68
         InfoSelector.AlignWithMargins = True
         InfoSelector.Left = 4
         InfoSelector.Top = 4
         InfoSelector.Width = 109
-        InfoSelector.Height = 68
+        InfoSelector.Height = 72
         InfoSelector.Margins.Left = 4
         InfoSelector.Margins.Top = 4
         InfoSelector.Margins.Right = 4
@@ -962,7 +946,6 @@ inherited frmNotes: TfrmNotes
         SyncSizes = True
         VisualEdit = memNewNote
         SaveFindAfter = 0
-        ExplicitTop = 439
       end
       object memPCEWrite: TRichEdit
         Left = 0
@@ -1109,8 +1092,6 @@ inherited frmNotes: TfrmNotes
           ShowHint = True
           TabOrder = 1
           Transparent = False
-          ExplicitLeft = 544
-          ExplicitWidth = 258
         end
         object lblVisit: TStaticText
           AlignWithMargins = True
@@ -1141,8 +1122,6 @@ inherited frmNotes: TfrmNotes
           ShowAccelChar = False
           ShowHint = True
           TabOrder = 3
-          ExplicitLeft = 355
-          ExplicitWidth = 183
         end
         object stCosigner: TStaticText
           AlignWithMargins = True
@@ -1162,8 +1141,6 @@ inherited frmNotes: TfrmNotes
           ShowHint = True
           TabOrder = 4
           Transparent = False
-          ExplicitLeft = 544
-          ExplicitWidth = 258
         end
         object cmdChange: TButton
           AlignWithMargins = True
@@ -1192,7 +1169,7 @@ inherited frmNotes: TfrmNotes
           Left = 63
           Top = 83
           Width = 839
-          Height = 24
+          Height = 21
           Hint = 'Subject is limited to a maximum of 80 characters.'
           Align = alTop
           MaxLength = 80
@@ -1201,8 +1178,6 @@ inherited frmNotes: TfrmNotes
           TabOrder = 7
           Text = 'txtSubject'
           Caption = #1
-          ExplicitLeft = 53
-          ExplicitWidth = 849
         end
       end
     end

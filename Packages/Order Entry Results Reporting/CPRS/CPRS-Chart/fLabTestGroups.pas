@@ -164,10 +164,33 @@ begin
   end;
 end;
 
+{
+var
+  sl: TSTrings;
+begin
+  sl := TStringList.Create;
+  try
+    set
+
+  finally
+    sl.Free;
+  end;
+}
 procedure TfrmLabTestGroups.cboTestsNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+//begin
+//  cboTests.ForDataUse(ChemTest(StartFrom, Direction));
+var
+  sl: TSTrings;
 begin
-  cboTests.ForDataUse(ChemTest(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setChemTest(sl,StartFrom, Direction);
+    cboTests.ForDataUse(sl);
+
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmLabTestGroups.cmdOKClick(Sender: TObject);
@@ -269,19 +292,39 @@ end;
 
 procedure TfrmLabTestGroups.cboUsersNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+//begin
+//  cboUsers.ForDataUse(Users(StartFrom, Direction));
+var
+  sl: TSTrings;
 begin
-  cboUsers.ForDataUse(Users(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setUsers(sl,StartFrom, Direction);
+    cboUsers.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmLabTestGroups.cboSpecimenNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+//begin
+//  cboSpecimen.ForDataUse(Specimens(StartFrom, Direction));
+var
+  sl: TSTrings;
 begin
-  cboSpecimen.ForDataUse(Specimens(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setSpecimens(sl,StartFrom, Direction);
+     cboSpecimen.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmLabTestGroups.cboUsersClick(Sender: TObject);
 begin
-  FastAssign(TestGroups(cboUsers.ItemIEN), lstTestGroups.Items);
+  setTestGroups(lstTestGroups.Items,cboUsers.ItemIEN);
   TestGroupEnable;
 end;
 
@@ -311,10 +354,18 @@ begin
 end;
 
 procedure TfrmLabTestGroups.lstTestGroupsChange(Sender: TObject);
+var
+  sl: TStrings;
 begin
   if lstTestGroups.ItemIEN > 0 then
   begin
-    AddTests(ATestGroup(lstTestGroups.ItemIEN, cboUsers.ItemIEN));
+    sl := TStringList.Create;
+    try
+      setATestGroup(sl,lstTestGroups.ItemIEN, cboUsers.ItemIEN);
+      AddTests(sl);
+    finally
+      sl.Free;
+    end;
   end;
 end;
 
@@ -342,7 +393,7 @@ begin
       GetScreenReader.Speak('test group replaced');
   end;
   cboUsersClick(self);
-  lstTestGroups.SetFocus;  
+  lstTestGroups.SetFocus;
 end;
 
 procedure TfrmLabTestGroups.cmdAddClick(Sender: TObject);
@@ -367,7 +418,7 @@ begin
       end;
   end;
   if cboUsers.ItemIndex > -1 then cboUsersClick(self);
-  lstTestGroups.SetFocus;  
+  lstTestGroups.SetFocus;
 end;
 
 procedure TfrmLabTestGroups.cmdDeleteClick(Sender: TObject);
@@ -412,8 +463,16 @@ begin
 end;
 
 procedure TfrmLabTestGroups.cmdAddTestClick(Sender: TObject);
+var
+  sl: TStrings;
 begin
-  AddTests(ATest(cboTests.ItemIEN));
+  sl := TStringList.Create;
+  try
+    setATest(sl, cboTests.ItemIEN);
+    AddTests(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmLabTestGroups.pnlUpButtonEnter(Sender: TObject);

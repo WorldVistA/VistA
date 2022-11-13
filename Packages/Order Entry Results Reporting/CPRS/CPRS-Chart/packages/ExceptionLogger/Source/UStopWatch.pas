@@ -3,11 +3,11 @@ unit UStopWatch;
 interface
 
 uses
- Winapi.Windows, System.Classes, System.SysUtils, System.DateUtils;
+  Winapi.Windows,
+  System.Classes;
 
 type
-
- TStopWatch = class
+  TStopWatch = class
   private
     FOwner: TObject;
     fFrequency: TLargeInteger;
@@ -36,6 +36,9 @@ type
 
 implementation
 
+uses
+  System.SysUtils,
+  System.DateUtils;
 
 {$REGION 'TStopWatch'}
 

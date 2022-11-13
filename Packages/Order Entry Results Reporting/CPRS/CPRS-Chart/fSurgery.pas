@@ -236,7 +236,7 @@ type
     FLastNoteID: string;
     FEditingNotePCEObj: Boolean;
     FDeleted: Boolean;
-//    FEditNoteIEN: Integer;  // Note IEN for note currently being edited
+    FEditNoteIEN: Integer;  // Note IEN for note currently being edited
     procedure ClearEditControls;
     procedure DoAutoSave(Suppress: Integer = 1);
     function GetTitleText(AnIndex: Integer): string;
@@ -295,7 +295,7 @@ uses fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem,
   FIconLegend, fPCEEdit, rTIU, fRptBox, fTemplateDialog,
   VA508AccessibilityRouter,
   System.Types, rECS, ORNet, trpcb, System.IniFiles, ORNetIntf,
-  U_CPTEditMonitor, VAUtils;
+  U_CPTEditMonitor, VAUtils, uMisc;
 
 const
   CT_SURGERY = 11; // chart tab - surgery
@@ -372,7 +372,7 @@ const
     ' but will remain indefinitely discoverable to HIMS.' + CRLF + CRLF;
 
 var
-  uPCEShow, uPCEEdit: TPCEData;
+  uPCEMaster: TPCEData;
   ViewContext: Integer;
   frmDrawers: TFrmDrawers;
   uChanging: Boolean;
@@ -448,14 +448,16 @@ begin
   ClearEditControls;
   uChanging := True;
   tvSurgery.Items.BeginUpdate;
-  KillCaseTreeObjects(tvSurgery);
-  tvSurgery.Items.Clear;
-  tvSurgery.Items.EndUpdate;
+  try
+    KillCaseTreeObjects(tvSurgery);
+    tvSurgery.Items.Clear;
+  finally
+    tvSurgery.Items.EndUpdate;
+  end;
   lstNotes.Clear;
   uChanging := False;
   memSurgery.Clear;
-  uPCEShow.Clear;
-  uPCEEdit.Clear;
+  uPCEMaster.Clear;
   frmDrawers.ResetTemplates;
   CPMemSurgery.EditMonitor.ItemIEN := -1;
   CPMemNewNote.EditMonitor.ItemIEN := -1;
@@ -465,6 +467,7 @@ procedure TfrmSurgery.DisplayPage;
 { causes page to be visible and conditionally executes initialization code }
 begin
   inherited DisplayPage;
+  CurrentTabPCEObject := uPCEMaster;
   frmFrame.ShowHideChartTabMenus(mnuViewChart);
   frmFrame.mnuFilePrint.Tag := CT_SURGERY;
   frmFrame.mnuFilePrint.Enabled := True;
@@ -516,9 +519,12 @@ begin
   FImageFlag := TBitmap.Create;
   FCaseList := TStringList.Create;
 
-    //safteynet
+  // safteynet
   CPMemSurgery.CopyMonitor := frmFrame.CPAppMon;
   CPMemNewNote.CopyMonitor := frmFrame.CPAppMon;
+
+  mnuIconLegend.Visible := not ScreenReaderActive;
+  N6.Visible := not ScreenReaderActive;
 end;
 
 procedure TfrmSurgery.pnlRightResize(Sender: TObject);
@@ -621,13 +627,16 @@ begin
   begin
     uChanging := True;
     Items.BeginUpdate;
-    for i := 0 to DocList.Count - 1 do
-    begin
-      if Piece(DocList[i], U, 10) <> '' then
-        lstNotes.Items.Add(DocList[i]);
+    try
+      for i := 0 to DocList.Count - 1 do
+      begin
+        if Piece(DocList[i], U, 10) <> '' then
+          lstNotes.Items.Add(DocList[i]);
+      end;
+      BuildCaseTree(DocList, '0', Tree, nil, uSurgeryContext);
+    finally
+      Items.EndUpdate;
     end;
-    BuildCaseTree(DocList, '0', Tree, nil, uSurgeryContext);
-    Items.EndUpdate;
     uChanging := False;
   end;
 end;
@@ -825,7 +834,7 @@ begin
   memNewNote.Clear;
   timAutoSave.Enabled := False;
   // clear the PCE object for editing
-  uPCEEdit.Clear;
+  uPCEMaster.Clear;
   // set the tracking variables to initial state
   EditingIndex := -1;
   FChanged := False;
@@ -860,13 +869,15 @@ begin
     end
     else if ItemIndex = EditingIndex then
     begin
-      with uPCEEdit do
+      with uPCEMaster do
       begin
+        NoteDateTime := FEditNote.DateTime;
+        PCEForNote(FEditNoteIEN);
         AddStrData(memPCEShow.Lines);
         NoPCE := (memPCEShow.Lines.Count = 0);
         VitalStr := TStringList.Create;
         try
-          GetVitalsFromDate(VitalStr, uPCEEdit);
+          GetVitalsFromDate(VitalStr, uPCEMaster);
           AddVitalData(VitalStr, memPCEShow.Lines);
         finally
           VitalStr.Free;
@@ -901,16 +912,16 @@ begin
       if ActionSts.Success then
       begin
         StatusText('Retrieving encounter information...');
-        with uPCEShow do
+        with uPCEMaster do
         begin
           NoteDateTime := MakeFMDateTime
             (Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
-          PCEForNote(AnIEN, uPCEEdit);
+          PCEForNote(AnIEN);
           AddStrData(memPCEShow.Lines);
           NoPCE := (memPCEShow.Lines.Count = 0);
           VitalStr := TStringList.Create;
           try
-            GetVitalsFromNote(VitalStr, uPCEShow, AnIEN);
+            GetVitalsFromNote(VitalStr, uPCEMaster, AnIEN);
             AddVitalData(VitalStr, memPCEShow.Lines);
           finally
             VitalStr.Free;
@@ -1022,7 +1033,7 @@ var
   x, AClassName: string;
   DocInfo: string;
 begin
-  if tvSurgery.Selected = nil then
+  if not AssignedAndHasData(tvSurgery.Selected) then
     Exit;
   if PCaseTreeObject(tvSurgery.Selected.Data)^.OperativeProc = '' then
   begin
@@ -1064,18 +1075,19 @@ begin
       HaveRequired := True;
     if HaveRequired then
     begin
-      // set up uPCEEdit for entry of new note
-      uPCEEdit.UseEncounter := True;
-      uPCEEdit.NoteDateTime := FEditNote.DateTime;
-      uPCEEdit.PCEForNote(USE_CURRENT_VISITSTR, uPCEShow);
-      FEditNote.NeedCPT := uPCEEdit.CPTRequired;
+      // set up uPCEMaster for entry of new note
+      uPCEMaster.UseEncounter := True;
+      uPCEMaster.NoteDateTime := FEditNote.DateTime;
+      uPCEMaster.PCEForNote(USE_CURRENT_VISITSTR);
+      FEditNote.NeedCPT := uPCEMaster.CPTRequired;
       // create the note
       PutNewNote(CreatedNote, FEditNote);
 
-      uPCEEdit.NoteIEN := CreatedNote.IEN;
+      FEditNoteIEN := CreatedNote.IEN;
+      uPCEMaster.NoteIEN := CreatedNote.IEN;
       if CreatedNote.IEN > 0 then
         LockDocument(CreatedNote.IEN, CreatedNote.ErrorText);
-      if CreatedNote.ErrorText = '' then
+      if (CreatedNote.IEN > 0) and (CreatedNote.ErrorText = '') then
       begin
         // x := $$RESOLVE^TIUSRVLO formatted string
         // 7348^Note Title^3000913^NERD, YOURA  (N0165)^1329;Rich Vertigan;VERTIGAN,RICH^8E REHAB MED^complete^Adm: 11/05/98;2981105.095547^        ;^^0^^^2
@@ -1090,32 +1102,35 @@ begin
         lstNotes.Items.Insert(0, x);
         uChanging := True;
         tvSurgery.Items.BeginUpdate;
-        (* if IsIDChild then
+        try
+          (* if IsIDChild then
+            begin
+            tmpNode := tvSurgery.FindPieceNode(IntToStr(AnIDParent), 1, U, tvSurgery.Items.GetFirstNode);
+            tmpNode.ImageIndex := IMG_IDNOTE_OPEN;
+            tmpNode.SelectedIndex := IMG_IDNOTE_OPEN;
+            tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode, MakeNoteDisplayText(x), MakeCaseTreeObject(x));
+            tmpNode.ImageIndex := IMG_ID_CHILD;
+            tmpNode.SelectedIndex := IMG_ID_CHILD;
+            end
+            else *)
           begin
-          tmpNode := tvSurgery.FindPieceNode(IntToStr(AnIDParent), 1, U, tvSurgery.Items.GetFirstNode);
-          tmpNode.ImageIndex := IMG_IDNOTE_OPEN;
-          tmpNode.SelectedIndex := IMG_IDNOTE_OPEN;
-          tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode, MakeNoteDisplayText(x), MakeCaseTreeObject(x));
-          tmpNode.ImageIndex := IMG_ID_CHILD;
-          tmpNode.SelectedIndex := IMG_ID_CHILD;
-          end
-          else *)
-        begin
-          tmpNode := tvSurgery.Items.AddObjectFirst
-            (tvSurgery.Items.GetFirstNode, 'New Note in Progress',
-            MakeCaseTreeObject('NEW^New Note in Progress^^^^^^^^^^^%^0'));
-          TORTreeNode(tmpNode).StringData :=
-            'NEW^New Note in Progress^^^^^^^^^^^%^0';
-          tmpNode.ImageIndex := IMG_SURG_TOP_LEVEL;
-          tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode,
-            MakeNoteDisplayText(x), MakeCaseTreeObject(x));
-          tmpNode.ImageIndex := IMG_SURG_RPT_SINGLE;
-          tmpNode.SelectedIndex := IMG_SURG_RPT_SINGLE;
+            tmpNode := tvSurgery.Items.AddObjectFirst
+              (tvSurgery.Items.GetFirstNode, 'New Note in Progress',
+              MakeCaseTreeObject('NEW^New Note in Progress^^^^^^^^^^^%^0'));
+            TORTreeNode(tmpNode).StringData :=
+              'NEW^New Note in Progress^^^^^^^^^^^%^0';
+            tmpNode.ImageIndex := IMG_SURG_TOP_LEVEL;
+            tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode,
+              MakeNoteDisplayText(x), MakeCaseTreeObject(x));
+            tmpNode.ImageIndex := IMG_SURG_RPT_SINGLE;
+            tmpNode.SelectedIndex := IMG_SURG_RPT_SINGLE;
+          end;
+          tmpNode.StateIndex := IMG_NO_IMAGES;
+          TORTreeNode(tmpNode).StringData := x;
+          tvSurgery.Selected := tmpNode;
+        finally
+          tvSurgery.Items.EndUpdate;
         end;
-        tmpNode.StateIndex := IMG_NO_IMAGES;
-        TORTreeNode(tmpNode).StringData := x;
-        tvSurgery.Selected := tmpNode;
-        tvSurgery.Items.EndUpdate;
         uChanging := False;
         Changes.Add(CH_SUR, IntToStr(CreatedNote.IEN), GetTitleText(0), '',
           CH_SIGN_YES);
@@ -1124,7 +1139,7 @@ begin
         SetSubjectVisible(AskSubjectForNotes);
         if not Assigned(TmpBoilerPlate) then
           TmpBoilerPlate := TStringList.Create;
-        LoadBoilerPlate(TmpBoilerPlate, FEditNote.Title);
+        LoadBoilerPlate(TmpBoilerPlate, FEditNote.Title, uPCEMaster.VisitString);
         FChanged := False;
         cmdChangeClick(Self); // will set captions, sign state for Changes
         lstNotesClick(Self); // will make pnlWrite visible
@@ -1203,17 +1218,18 @@ begin
     HaveRequired := True;
   if HaveRequired then
   begin
-    uPCEEdit.NoteDateTime := FEditNote.DateTime;
-    uPCEEdit.PCEForNote(FEditNote.Addend, uPCEShow);
-    FEditNote.Location := uPCEEdit.Location;
-    FEditNote.LocationName := ExternalName(uPCEEdit.Location, 44);
-    FEditNote.VisitDate := uPCEEdit.DateTime;
+    uPCEMaster.NoteDateTime := FEditNote.DateTime;
+    uPCEMaster.PCEForNote(FEditNote.Addend);
+    FEditNote.Location := uPCEMaster.Location;
+    FEditNote.LocationName := ExternalName(uPCEMaster.Location, 44);
+    FEditNote.VisitDate := uPCEMaster.DateTime;
     PutAddendum(CreatedNote, FEditNote, FEditNote.Addend);
 
-    uPCEEdit.NoteIEN := CreatedNote.IEN;
+    FEditNoteIEN := CreatedNote.IEN;
+    uPCEMaster.NoteIEN := CreatedNote.IEN;
     if CreatedNote.IEN > 0 then
       LockDocument(CreatedNote.IEN, CreatedNote.ErrorText);
-    if CreatedNote.ErrorText = '' then
+    if (CreatedNote.IEN > 0) and (CreatedNote.ErrorText = '') then
     begin
       with FEditNote do
       begin
@@ -1226,20 +1242,23 @@ begin
       lstNotes.Items.Insert(0, x);
       uChanging := True;
       tvSurgery.Items.BeginUpdate;
-      tmpNode := tvSurgery.Items.AddObjectFirst(tvSurgery.Items.GetFirstNode,
-        'New Addendum in Progress',
-        MakeCaseTreeObject('ADDENDUM^New Addendum in Progress^^^^^^^^^^^%^0'));
-      TORTreeNode(tmpNode).StringData :=
-        'ADDENDUM^New Addendum in Progress^^^^^^^^^^^%^0';
-      tmpNode.ImageIndex := IMG_SURG_TOP_LEVEL;
-      tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode,
-        MakeNoteDisplayText(x), MakeCaseTreeObject(x));
-      TORTreeNode(tmpNode).StringData := x;
+      try
+        tmpNode := tvSurgery.Items.AddObjectFirst(tvSurgery.Items.GetFirstNode,
+          'New Addendum in Progress',
+          MakeCaseTreeObject('ADDENDUM^New Addendum in Progress^^^^^^^^^^^%^0'));
+        TORTreeNode(tmpNode).StringData :=
+          'ADDENDUM^New Addendum in Progress^^^^^^^^^^^%^0';
+        tmpNode.ImageIndex := IMG_SURG_TOP_LEVEL;
+        tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode,
+          MakeNoteDisplayText(x), MakeCaseTreeObject(x));
+        TORTreeNode(tmpNode).StringData := x;
 
-      tmpNode.ImageIndex := IMG_SURG_ADDENDUM;
-      tmpNode.SelectedIndex := IMG_SURG_ADDENDUM;
-      tvSurgery.Selected := tmpNode;
-      tvSurgery.Items.EndUpdate;
+        tmpNode.ImageIndex := IMG_SURG_ADDENDUM;
+        tmpNode.SelectedIndex := IMG_SURG_ADDENDUM;
+        tvSurgery.Selected := tmpNode;
+      finally
+        tvSurgery.Items.EndUpdate;
+      end;
       uChanging := False;
       Changes.Add(CH_SUR, IntToStr(CreatedNote.IEN), GetTitleText(0), '',
         CH_SIGN_YES);
@@ -1288,35 +1307,37 @@ begin
 
   uChanging := True;
   tvSurgery.Items.BeginUpdate;
-
-  tmpNode := tvSurgery.FindPieceNode('EDIT', 1, U, nil);
-  if tmpNode = nil then
-  begin
-    tmpNode := tvSurgery.Items.AddObjectFirst(tvSurgery.Items.GetFirstNode,
-      'Note being edited',
-      MakeCaseTreeObject('EDIT^Note being edited^^^^^^^^^^^%^0'));
-    TORTreeNode(tmpNode).StringData := 'EDIT^Note being edited^^^^^^^^^^^%^0';
-  end
-  else
-    tmpNode.DeleteChildren;
-  x := lstNotes.Items[lstNotes.ItemIndex];
-  tmpNode.ImageIndex := IMG_SURG_TOP_LEVEL;
-  tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode,
-    MakeNoteDisplayText(x), MakeCaseTreeObject(x));
-  TORTreeNode(tmpNode).StringData := x;
-  if CompareText(Copy(FEditNote.TitleName, 1, 8), 'Addendum') <> 0 then
-    tmpNode.ImageIndex := IMG_SURG_RPT_SINGLE
-  else
-    tmpNode.ImageIndex := IMG_SURG_ADDENDUM;
-  tmpNode.SelectedIndex := tmpNode.ImageIndex;
-  tvSurgery.Selected := tmpNode;
-  tvSurgery.Items.EndUpdate;
+  try
+    tmpNode := tvSurgery.FindPieceNode('EDIT', 1, U, nil);
+    if tmpNode = nil then
+    begin
+      tmpNode := tvSurgery.Items.AddObjectFirst(tvSurgery.Items.GetFirstNode,
+        'Note being edited',
+        MakeCaseTreeObject('EDIT^Note being edited^^^^^^^^^^^%^0'));
+      TORTreeNode(tmpNode).StringData := 'EDIT^Note being edited^^^^^^^^^^^%^0';
+    end
+    else
+      tmpNode.DeleteChildren;
+    x := lstNotes.Items[lstNotes.ItemIndex];
+    tmpNode.ImageIndex := IMG_SURG_TOP_LEVEL;
+    tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode,
+      MakeNoteDisplayText(x), MakeCaseTreeObject(x));
+    TORTreeNode(tmpNode).StringData := x;
+    if CompareText(Copy(FEditNote.TitleName, 1, 8), 'Addendum') <> 0 then
+      tmpNode.ImageIndex := IMG_SURG_RPT_SINGLE
+    else
+      tmpNode.ImageIndex := IMG_SURG_ADDENDUM;
+    tmpNode.SelectedIndex := tmpNode.ImageIndex;
+    tvSurgery.Selected := tmpNode;
+  finally
+    tvSurgery.Items.EndUpdate;
+  end;
   uChanging := False;
 
-  uPCEEdit.NoteDateTime :=
+  uPCEMaster.NoteDateTime :=
     MakeFMDateTime(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
-  uPCEEdit.PCEForNote(lstNotes.ItemIEN, uPCEShow);
-  FEditNote.NeedCPT := uPCEEdit.CPTRequired;
+  uPCEMaster.PCEForNote(lstNotes.ItemIEN);
+  FEditNote.NeedCPT := uPCEMaster.CPTRequired;
   txtSubject.Text := FEditNote.Subject;
   SetSubjectVisible(AskSubjectForNotes);
   cmdChangeClick(Self); // will set captions, sign state for Changes
@@ -1359,7 +1380,7 @@ begin
   // ExpandTabsFilter(memNewNote.Lines, TAB_STOP_CHARS);
   FEditNote.Lines := memNewNote.Lines;
   FEditNote.Subject := txtSubject.Text;
-  FEditNote.NeedCPT := uPCEEdit.CPTRequired;
+  FEditNote.NeedCPT := uPCEMaster.CPTRequired;
   timAutoSave.Enabled := False;
   try
     PutEditedNote(UpdatedNote, FEditNote, lstNotes.GetIEN(EditingIndex));
@@ -1387,8 +1408,7 @@ begin
   else
   begin
     if not FSilent then
-      InfoBox(TX_SAVE_ERROR1 + UpdatedNote.ErrorText + TX_SAVE_ERROR2,
-        TC_SAVE_ERROR, MB_OK or MB_ICONWARNING);
+      ShowNoteError(UpdatedNote.ErrorText, FEditNote.Lines);
   end;
 end;
 
@@ -1428,15 +1448,15 @@ begin
       ActOnDocument(ActionSts, AnIEN, 'VIEW');
       if ActionSts.Success then
       begin
-        uPCEShow.CopyPCEData(uPCEEdit);
-        PCEObj := uPCEEdit;
+//        uPCEShow.CopyPCEData(uPCEEdit);
+        PCEObj := uPCEMaster;
       end;
     end;
     Refresh := EditPCEData(PCEObj);
   end
   else
   begin
-    UpdatePCE(uPCEEdit);
+    UpdatePCE(uPCEMaster);
     Refresh := True;
   end;
   cmdPCE.Enabled := True;
@@ -1502,8 +1522,11 @@ begin
         ParamStr := IntToStr(EditMonitor.ItemIEN) + ';' +
           EditMonitor.RelatedPackage;
         LoadList.BeginUpdate;
-        CallVistA('ORWTIU GETPASTE', [ParamStr, DivId], LoadList);
-        LoadList.EndUpdate;
+        try
+          CallVistA('ORWTIU GETPASTE', [ParamStr, DivId], LoadList);
+        finally
+          LoadList.EndUpdate;
+        end;
       end;
     end;
 
@@ -1550,7 +1573,7 @@ begin
   BoilerText := TStringList.Create;
   try
     NoteEmpty := memNewNote.Text = '';
-    LoadBoilerPlate(BoilerText, FEditNote.Title);
+    LoadBoilerPlate(BoilerText, FEditNote.Title, uPCEMaster.VisitString);
     if (BoilerText.Text <> '') or
       Assigned(GetLinkedTemplate(IntToStr(FEditNote.Title), ltTitle)) then
     begin
@@ -1621,7 +1644,7 @@ begin
   lblRefDate.Caption := FormatFMDateTime('mmm dd,yyyy@hh:nn',
     FEditNote.DateTime);
   lblAuthor.Caption := FEditNote.AuthorName;
-  if uPCEEdit.Inpatient then
+  if uPCEMaster.Inpatient then
     x := 'Adm: '
   else
     x := 'Vst: ';
@@ -1632,7 +1655,7 @@ begin
     lblCosigner.Caption := 'Expected Cosigner: ' + FEditNote.CosignerName
   else
     lblCosigner.Caption := '';
-  uPCEEdit.NoteTitle := FEditNote.Title;
+  uPCEMaster.NoteTitle := FEditNote.Title;
   // modify signature requirements if author or cosigner changed
   if (User.DUZ <> FEditNote.Author) and (User.DUZ <> FEditNote.Cosigner) then
     Changes.ReplaceSignState(CH_SUR, lstNotes.ItemID, CH_SIGN_NA)
@@ -1641,8 +1664,11 @@ begin
   x := lstNotes.Items[EditingIndex];
   SetPiece(x, U, 2, lblNewTitle.Caption);
   SetPiece(x, U, 3, FloatToStr(FEditNote.DateTime));
-  tvSurgery.Selected.Text := MakeNoteDisplayText(x);
-  TORTreeNode(tvSurgery.Selected).StringData := x;
+  if Assigned(tvSurgery.Selected) then
+  begin
+    tvSurgery.Selected.Text := MakeNoteDisplayText(x);
+    TORTreeNode(tvSurgery.Selected).StringData := x;
+  end;
   lstNotes.Items[EditingIndex] := x;
   Changes.ReplaceText(CH_SUR, lstNotes.ItemID, GetTitleText(EditingIndex));
   if LastTitle <> FEditNote.Title then
@@ -1681,7 +1707,6 @@ begin
 
       if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
         CPMemNewNote.SaveTheMonitor(lstNotes.GetIEN(EditingIndex));
-
     finally
       timAutoSave.Enabled := True;
     end;
@@ -1689,9 +1714,7 @@ begin
     StatusText('');
   end;
   if ErrMsg <> '' then
-    InfoBox(TX_SAVE_ERROR1 + ErrMsg + TX_SAVE_ERROR2, TC_SAVE_ERROR,
-      MB_OK or MB_ICONWARNING);
-  // Assert(ErrMsg = '', 'AutoSave: ' + ErrMsg);
+    ShowNoteError(ErrMsg, memNewNote.Lines);
 end;
 
 procedure TfrmSurgery.timAutoSaveTimer(Sender: TObject);
@@ -1948,6 +1971,7 @@ begin
   if lstNotes.ItemIndex = EditingIndex then
     Exit;
   ANoteID := lstNotes.ItemID;
+  FEditNoteIEN := lstNotes.ItemID;
   if not StartNewEdit(NT_ACT_EDIT_NOTE) then
     Exit;
   // LoadNotes;
@@ -2046,13 +2070,13 @@ begin
   ActOnDocument(ActionSts, lstNotes.ItemIEN, ActionType);
   if ActionSts.Success then
   begin
-    OK := IsOK2Sign(uPCEShow, lstNotes.ItemIEN);
+    OK := IsOK2Sign(uPCEMaster, lstNotes.ItemIEN);
     if frmFrame.Closing then
       Exit;
-    if (uPCEShow.Updated) then
+    if (uPCEMaster.Updated) then
     begin
-      uPCEShow.CopyPCEData(uPCEEdit);
-      uPCEShow.Updated := False;
+//      uPCEShow.CopyPCEData(uPCEEdit);
+      uPCEMaster.Updated := False;
       lstNotesClick(Self);
     end;
     if (OK) then
@@ -2179,20 +2203,20 @@ begin
     if ContinueSign then
     begin
       if (AnIndex >= 0) and (AnIndex = lstNotes.ItemIndex) then
-        APCEObject := uPCEShow
+        APCEObject := uPCEMaster
       else
         APCEObject := nil;
       OK := IsOK2Sign(APCEObject, IEN);
       if frmFrame.Closing then
         Exit;
-      if (Assigned(APCEObject)) and (uPCEShow.Updated) then
+      if (Assigned(APCEObject)) and (uPCEMaster.Updated) then
       begin
-        uPCEShow.CopyPCEData(uPCEEdit);
-        uPCEShow.Updated := False;
+//        uPCEShow.CopyPCEData(uPCEEdit);
+        uPCEMaster.Updated := False;
         lstNotesClick(Self);
       end
       else
-        uPCEEdit.Clear;
+        uPCEMaster.Clear;
       if (OK) then
       begin
         // if not FSilent then DisplayOpTop(IEN);
@@ -2276,12 +2300,23 @@ begin
     (assigned(CPMemNewNote.EditMonitor.CopyMonitor)) and
     (CPMemNewNote.EditMonitor.CopyMonitor.Enabled) then
   begin
-    ScrubTheClipboard;
+    ClipboardFilemanSafe;
     FEditCtrl.PasteFromClipboard;
   end
-  else
-    FEditCtrl.Perform(EM_REPLACESEL, WParam(true),
-      Longint(PChar(Clipboard.AsText)));
+  else begin
+    //Ensure that we do not have any non fileman safe characters
+    ClipboardFilemanSafe;
+
+    If (FEditCtrl is TCustomRichEdit) then
+      // We can not allow WM_Paste to be called on a richedit because RTF tags
+      // should not be allowed into the control.
+      // We also can not just use SelText since this does not add to the
+      // undo buffer
+      FEditCtrl.Perform(EM_REPLACESEL, WParam(True), LongInt(PChar(Clipboard.AsText)))
+    else
+      //Let WM_Paste take over
+      FEditCtrl.PasteFromClipboard;
+  end;
 end;
 
 procedure TfrmSurgery.popNoteMemoReformatClick(Sender: TObject);
@@ -2536,27 +2571,30 @@ begin
     FCaseList.Clear;
     uChanging := True;
     tvSurgery.Items.BeginUpdate;
-    lstNotes.Clear;
-    KillCaseTreeObjects(tvSurgery);
-    tvSurgery.Items.Clear;
-    GetSingleCaseListItemWithDocs(tmpList, StrToIntDef(Piece(x, U, 1), 0));
-    with FCurrentContext do
-      CreateListItemsForCaseTree(FCaseList, tmpList, SR_ALL, GroupBy,
-        TreeAscending);
-    UpdateTreeView(FCaseList, tvSurgery);
-    with tvSurgery do
-      Selected := FindPieceNode(Piece(x, U, 1), 1, U, Items.GetFirstNode);
-    (* lstNotes.Items.Add(x);
-      AnObject := MakeCaseTreeObject('ALERT^Alerted Note^^^^^^^^^^^%^0');
-      tmpNode := tvSurgery.Items.AddObjectFirst(tvSurgery.Items.GetFirstNode, AnObject.NodeText, AnObject);
-      TORTreeNode(tmpNode).StringData := 'ALERT^Alerted Note^^^^^^^^^^^%^0';
-      tmpNode.ImageIndex := IMG_SURG_TOP_LEVEL;
-      AnObject := MakeCaseTreeObject(x);
-      tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode, AnObject.NodeText, AnObject);
-      TORTreeNode(tmpNode).StringData := x;
-      SetCaseTreeNodeImagesAndFormatting(TORTreeNode(tmpNode), FCurrentContext);
-      tvSurgery.Selected := tmpNode; *)
-    tvSurgery.Items.EndUpdate;
+    try
+      lstNotes.Clear;
+      KillCaseTreeObjects(tvSurgery);
+      tvSurgery.Items.Clear;
+      GetSingleCaseListItemWithDocs(tmpList, StrToIntDef(Piece(x, U, 1), 0));
+      with FCurrentContext do
+        CreateListItemsForCaseTree(FCaseList, tmpList, SR_ALL, GroupBy,
+          TreeAscending);
+      UpdateTreeView(FCaseList, tvSurgery);
+      with tvSurgery do
+        Selected := FindPieceNode(Piece(x, U, 1), 1, U, Items.GetFirstNode);
+      (* lstNotes.Items.Add(x);
+        AnObject := MakeCaseTreeObject('ALERT^Alerted Note^^^^^^^^^^^%^0');
+        tmpNode := tvSurgery.Items.AddObjectFirst(tvSurgery.Items.GetFirstNode, AnObject.NodeText, AnObject);
+        TORTreeNode(tmpNode).StringData := 'ALERT^Alerted Note^^^^^^^^^^^%^0';
+        tmpNode.ImageIndex := IMG_SURG_TOP_LEVEL;
+        AnObject := MakeCaseTreeObject(x);
+        tmpNode := tvSurgery.Items.AddChildObjectFirst(tmpNode, AnObject.NodeText, AnObject);
+        TORTreeNode(tmpNode).StringData := x;
+        SetCaseTreeNodeImagesAndFormatting(TORTreeNode(tmpNode), FCurrentContext);
+        tvSurgery.Selected := tmpNode; *)
+    finally
+      tvSurgery.Items.EndUpdate;
+    end;
     uChanging := False;
     tvSurgeryChange(Self, tvSurgery.Selected);
 
@@ -2736,7 +2774,7 @@ begin
     cmdPCE.Visible := True;
     if Editing then
     begin
-      cmdPCE.Enabled := CanEditPCE(uPCEEdit);
+      cmdPCE.Enabled := CanEditPCE(uPCEMaster);
       { TODO -oRich V. -cSurgery/TIU : Uncomment if allow new notes from Surgery tab }
       // cmdNewNote.Visible := AnytimeEncounters;
       // cmdNewNote.Enabled := FALSE;
@@ -2788,7 +2826,7 @@ begin
   // ShowReport := True;
   with tvSurgery do
   begin
-    if Selected = nil then
+    if not AssignedAndHasData(Selected) then
       Exit;
     popNoteListExpandSelected.Enabled := Selected.HasChildren;
     popNoteListCollapseSelected.Enabled := Selected.HasChildren;
@@ -2891,9 +2929,12 @@ begin
     uChanging := True;
     RedrawSuspend(memSurgery.Handle);
     tvSurgery.Items.BeginUpdate;
-    KillCaseTreeObjects(tvSurgery);
-    tvSurgery.Items.Clear;
-    tvSurgery.Items.EndUpdate;
+    try
+      KillCaseTreeObjects(tvSurgery);
+      tvSurgery.Items.Clear;
+    finally
+      tvSurgery.Items.EndUpdate;
+    end;
     lstNotes.Items.Clear;
     memSurgery.Clear;
     memSurgery.Invalidate;
@@ -2913,30 +2954,33 @@ begin
     begin
       uChanging := True;
       tvSurgery.Items.BeginUpdate;
-      if FLastNoteID <> '' then
-        Selected := FindPieceNode(FLastNoteID, 1, U, nil);
-      if Selected = nil then
-      begin
-        if (uSurgeryContext.GroupBy <> '') then
+      try
+        if FLastNoteID <> '' then
+          Selected := FindPieceNode(FLastNoteID, 1, U, nil);
+        if Selected = nil then
         begin
-          ANode := TORTreeNode(Items.GetFirstNode);
-          while ANode <> nil do
+          if (uSurgeryContext.GroupBy <> '') then
           begin
-            ANode.Expand(False);
-            Selected := ANode;
-            ANode := TORTreeNode(ANode.GetNextSibling);
+            ANode := TORTreeNode(Items.GetFirstNode);
+            while ANode <> nil do
+            begin
+              ANode.Expand(False);
+              Selected := ANode;
+              ANode := TORTreeNode(ANode.GetNextSibling);
+            end;
+          end
+          else
+          begin
+            ANode := tvSurgery.FindPieceNode(IntToStr(SR_ALL), 1, U, nil);
+            if ANode <> nil then
+              Selected := ANode.getFirstChild;
           end;
-        end
-        else
-        begin
-          ANode := tvSurgery.FindPieceNode(IntToStr(SR_ALL), 1, U, nil);
-          if ANode <> nil then
-            Selected := ANode.getFirstChild;
         end;
+        memSurgery.Clear;
+        RemoveParentsWithNoChildren(tvSurgery, uSurgeryContext);
+      finally
+        tvSurgery.Items.EndUpdate;
       end;
-      memSurgery.Clear;
-      RemoveParentsWithNoChildren(tvSurgery, uSurgeryContext);
-      tvSurgery.Items.EndUpdate;
       uChanging := False;
       lblCases.Caption := SetSurgTreeLabel(FCurrentContext);
       tvSurgery.Caption := lblCases.Caption;
@@ -3175,8 +3219,11 @@ begin
     LookUpLst := THashedStringList.Create;
     try
       LookUpLst.BeginUpdate;
-      LookUpLst.Assign(SaveList);
-      LookUpLst.EndUpdate;
+      try
+        LookUpLst.Assign(SaveList);
+      finally
+        LookUpLst.EndUpdate;
+      end;
       neworNetMult(aList);
 
       for i := 1 to Total do
@@ -3188,32 +3235,35 @@ begin
         begin
           aName := IntToStr(i) + ',' + IntToStr(x);
           aValue := FilteredString(LookUpLst.values[aName]);
-          aList.AddSubscript([i,x], aValue);
+          aList.AddSubscript([i, x], aValue);
         end;
 
         // Send in the original if needed
-        LineCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',Copy,-1'], -1);
-        for X := 1 to LineCnt do
+        LineCnt := StrToIntDef(LookUpLst.values[IntToStr(i) + ',Copy,-1'], -1);
+        for x := 1 to LineCnt do
         begin
-         aName := IntToStr(i) + ',Copy,' + IntToStr(X);
-         aValue := FilteredString(LookupLst.values[aName]);
-         aList.AddSubscript([i,0,x], aValue);
+          aName := IntToStr(i) + ',Copy,' + IntToStr(x);
+          aValue := FilteredString(LookUpLst.values[aName]);
+          aList.AddSubscript([i, 0, x], aValue);
         end;
 
         // Send in the "Paste"
-        if StrToIntDef(Piece(LookupLst.values[IntToStr(i) + ',Paste,-1'], '^', 2), 0) >
-        (TCopyEditMonitor(Sender).CopyMonitor.SaveCutOff * 1000) then
+        if StrToIntDef(Piece(LookUpLst.values[IntToStr(i) + ',Paste,-1'], '^',
+          2), 0) > (TCopyEditMonitor(Sender).CopyMonitor.SaveCutOff * 1000) then
         begin
-          LineCnt := StrToIntDef(Piece(LookupLst.values[IntToStr(i) + ',Paste,-1'], '^', 1), -1);
-          for X := 1 to LineCnt do
+          LineCnt := StrToIntDef
+            (Piece(LookUpLst.values[IntToStr(i) + ',Paste,-1'], '^', 1), -1);
+          for x := 1 to LineCnt do
           begin
-           SubCnt := StrToIntDef(LookupLst.values[IntToStr(i) + ',Paste,' + IntToStr(X) + ',-1'], -1);
-           for Z := 1 to SubCnt do
-           begin
-            aName := IntToStr(i) + ',Paste,' + IntToStr(X) +','+ IntToStr(z);
-            aValue := FilteredString(LookupLst.values[aName]);
-            aList.AddSubscript([i,'Paste',x,z], aValue);
-           end;
+            SubCnt := StrToIntDef(LookUpLst.values[IntToStr(i) + ',Paste,' +
+              IntToStr(x) + ',-1'], -1);
+            for z := 1 to SubCnt do
+            begin
+              aName := IntToStr(i) + ',Paste,' + IntToStr(x) + ',' +
+                IntToStr(z);
+              aValue := FilteredString(LookUpLst.values[aName]);
+              aList.AddSubscript([i, 'Paste', x, z], aValue);
+            end;
           end;
         end;
       end;
@@ -3232,7 +3282,7 @@ begin
   inherited;
   CPMemNewNote.EditMonitor.ItemIEN := lstNotes.ItemIEN;
   AllowMonitor := CPMemNewNote.CopyMonitor.ExcludedList.IndexOf(IntToStr(FEditNote.Title)) = -1;
-  ScrubTheClipboard;
+  ClipboardFilemanSafe;
 end;
 
 procedure TfrmSurgery.CPShow(Sender: TObject);
@@ -3254,14 +3304,10 @@ begin
 end;
 
 initialization
-
-SpecifyFormIsNotADialog(TfrmSurgery);
-uPCEEdit := TPCEData.Create;
-uPCEShow := TPCEData.Create;
+  SpecifyFormIsNotADialog(TfrmSurgery);
+  uPCEMaster := TPCEData.Create;
 
 finalization
-
-uPCEEdit.Free;
-uPCEShow.Free;
+  FreeAndNil(uPCEMaster);
 
 end.

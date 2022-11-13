@@ -20,13 +20,11 @@ type
     lblDefinitions: TLabel;
     btnClose: TButton;
     btnCopy: TButton;
-    pnlTempData: TPanel;
-    lblSave: TLabel;
-    lblClose: TLabel;
-    lstActualItems: TORListBox;
-    lstDrugClass: TListBox;
-    lstScratch: TListBox;
-    lstTests: TListBox;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
     procedure cboOthersNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure FormShow(Sender: TObject);
@@ -71,14 +69,25 @@ end;
 
 procedure TfrmGraphOthers.cboOthersClick(Sender: TObject);
 begin
-  FastAssign(TestGroups(cboOthers.ItemIEN), lstViews.Items);
+//  FastAssign(TestGroups(cboOthers.ItemIEN), lstViews.Items);
+  setTestGroups(lstViews.Items,cboOthers.ItemIEN);
 end;
 
 procedure TfrmGraphOthers.cboOthersNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+// begin
+// cboOthers.ForDataUse(SubSetOfPersons(StartFrom, Direction));
+// cboOthers.ForDataUse(Users(StartFrom, Direction));
+var
+  sl: TStrings;
 begin
-  //cboOthers.ForDataUse(SubSetOfPersons(StartFrom, Direction));
-  cboOthers.ForDataUse(Users(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setUsers(sl, StartFrom, Direction);
+    cboOthers.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmGraphOthers.FormShow(Sender: TObject);
@@ -89,8 +98,17 @@ begin
 end;
 
 procedure TfrmGraphOthers.lstViewsClick(Sender: TObject);
+var
+  sl: TStrings;
 begin
-  AddTests(ATestGroup(lstViews.ItemIEN, cboOthers.ItemIEN));
+  // AddTests(ATestGroup(lstViews.ItemIEN, cboOthers.ItemIEN));
+  sl := TStringList.Create;
+  try
+    setATestGroup(sl, lstViews.ItemIEN, cboOthers.ItemIEN);
+    AddTests(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmGraphOthers.AddTests(tests: TStrings);

@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_Web;
   ================================================================================
   *
   *       Application:  Demo
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-21
   *
@@ -69,6 +69,9 @@ var
 
 implementation
 
+uses
+  ORExtensions;
+
 {$R *.dfm}
 
 { TfraCoverSheetDisplayPanel_Web }
@@ -81,6 +84,7 @@ end;
 constructor TfraCoverSheetDisplayPanel_Web.Create(aOwner: TComponent);
 begin
   inherited;
+  SetUserDataFolder(brwsr);
 end;
 
 procedure TfraCoverSheetDisplayPanel_Web.edtURLKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

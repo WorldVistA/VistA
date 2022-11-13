@@ -84,9 +84,11 @@ var
   procedure GraphDataOnUser;
   procedure GraphDataOnPatient(var allitems, alldata: boolean);
 
-  function GetATestGroup(testgroup: Integer; userx: int64): TStrings;
+  function GetATestGroup(aDest:TSTrings; testgroup: Integer; userx: int64): Integer;
+
   function GetCurrentSetting: string;
-  function GetGraphProfiles(profiles, permission: string; ext: integer; userx: int64): TStrings;
+  function GetGraphProfiles(profiles, permission: string; ext: integer; userx: int64; aDest: TStrings): Integer;
+
   function GetGraphStatus: string;
   function GetOldDFN: string;
   function GetPersonalSetting: string;
@@ -159,31 +161,36 @@ var
   aList: TStrings;
 begin
   aList := TStringList.Create;
-  FastAssign(rpcGetGraphSettings, aList);
-  if aList.Count > 0 then
-  begin
-    setting := aList[0];
-    FGraphActivity.PublicSetting := aList[1];
-    FGraphActivity.Cache := not (Piece(aList[2], '^', 1) = '-1');
-    if length(setting) > 0 then
-    begin                                  // maxselectmax - system max selection limit
-      SetPiece(setting, '|', 8, Piece(FGraphActivity.PublicSetting, '|', 8));
-      turbo := Piece(FGraphActivity.PublicSetting, '|', 6);
-      if (turbo = '0') or (not FGraphActivity.Cache) then // deactivate users if public turbo (6th piece) is off
-      begin
-        SetPiece(setting, '|', 6, '0');
-        FGraphActivity.TurboOn := false;
+  try
+    rpcGetGraphSettings(aList);
+    if aList.Count > 0 then
+    begin
+      setting := aList[0];
+      FGraphActivity.PublicSetting := aList[1];
+      FGraphActivity.Cache := not(Piece(aList[2], '^', 1) = '-1');
+      if length(setting) > 0 then
+      begin // maxselectmax - system max selection limit
+        SetPiece(setting, '|', 8, Piece(FGraphActivity.PublicSetting, '|', 8));
+        turbo := Piece(FGraphActivity.PublicSetting, '|', 6);
+        if (turbo = '0') or (not FGraphActivity.Cache) then
+        // deactivate users if public turbo (6th piece) is off
+        begin
+          SetPiece(setting, '|', 6, '0');
+          FGraphActivity.TurboOn := false;
+        end
+        else
+          FGraphActivity.TurboOn := true;
+        FGraphActivity.PersonalSetting := setting;
       end
       else
-        FGraphActivity.TurboOn := true;
-      FGraphActivity.PersonalSetting := setting;
-    end
-    else
-      FGraphActivity.PersonalSetting := FGraphActivity.PublicSetting;
-    FGraphActivity.CurrentSetting := FGraphActivity.PersonalSetting;
-    FGraphActivity.PublicEditor := rpcPublicEdit;    // use this as PublicEdit permission for user
+        FGraphActivity.PersonalSetting := FGraphActivity.PublicSetting;
+      FGraphActivity.CurrentSetting := FGraphActivity.PersonalSetting;
+      FGraphActivity.PublicEditor := rpcPublicEdit;
+      // use this as PublicEdit permission for user
+    end;
+  finally
+    FreeAndNil(aList);
   end;
-  FreeAndNil(aList);
 end;
 
 procedure GraphDataOnUser;
@@ -193,7 +200,7 @@ var                                        // called from fFrame after this form
 begin
   if GtslData = nil then
     exit;                                  // do not setup if graphing is off
-  FastAssign(rpcGetTypes('0', false), GtslAllTypes);
+  rpcGetTypes(GtslAllTypes,'0', false);
   for i := 0 to GtslAllTypes.Count - 1 do  // uppercase all filetypes
   begin
     listline := GtslAllTypes[i];
@@ -201,10 +208,11 @@ begin
     SetPiece(listline, '^', 1, dfntype);
     GtslAllTypes[i] := listline;
   end;
-  FastAssign(rpcGetTestSpec, GtslTestSpec);
-  FastAssign(rpcGetViews(VIEW_PUBLIC, 0), GtslAllViews);
-  FastAddStrings(rpcGetViews(VIEW_PERSONAL, User.DUZ), GtslAllViews);
-  FastAddStrings(rpcGetViews(VIEW_LABS, User.DUZ), GtslAllViews);
+  rpcGetTestSpec(GtslTestSpec);
+  GtslAllViews.Clear;
+  rpcGetViews(GtslAllViews, VIEW_PUBLIC, 0);
+  rpcGetViews(GtslAllViews, VIEW_PERSONAL, User.DUZ);
+  rpcGetViews(GtslAllViews, VIEW_LABS, User.DUZ);
 end;
 
 procedure TfrmGraphData.ClearPtData;
@@ -218,7 +226,7 @@ begin
   ClearGtsl;
   pnlData.Hint := '';
   oldDFN := FGraphActivity.OldDFN;         // cleanup any previous patient cache
-  FastAssign(rpcGetTypes(Patient.DFN, false), GtslTypes);
+  rpcGetTypes(GtslTypes, Patient.DFN, false);
   faststatus := rpcFastTask(Patient.DFN, oldDFN);
   FGraphActivity.Cache := (faststatus = '1');
   FGraphActivity.OldDFN := Patient.DFN;
@@ -340,6 +348,9 @@ begin
   FreeAndNil(GtslViewPersonal);
   FreeAndNil(GtslViewPublic);
   FreeAndNil(GtslLabGroup);
+  FreeAndNil(GtslCheck);
+  FreeAndNil(GtslTemp);
+  FreeAndNil(GtslViews);
 end;
 
 //----------------------------- displays when testing
@@ -438,7 +449,8 @@ end;
 
 procedure TfrmGraphData.btnTestingClick(Sender: TObject);
 begin
-  FastAssign(rpcTesting, memTesting.Lines);
+//  FastAssign(rpcTesting, memTesting.Lines);
+  rpcTesting(memTesting.Lines);
 end;
 
 procedure TfrmGraphData.MakeMemos(aName: string; aList: TStrings; aTag, left, top, width, height: integer);
@@ -530,7 +542,8 @@ begin
   Result := FGraphActivity.CurrentSetting;
 end;
 
-function GetGraphProfiles(profiles, permission: string; ext: integer; userx: int64): TStrings;
+//function GetGraphProfiles(profiles, permission: string; ext: integer; userx: int64): TStrings;
+function GetGraphProfiles(profiles, permission: string; ext: integer; userx: int64; aDest: TStrings): Integer;
 var      // temporary fix - converting definitions in GtslAllViews to rpc format
   allviews, fulltext: boolean;
   i: integer;
@@ -538,7 +551,8 @@ var      // temporary fix - converting definitions in GtslAllViews to rpc format
   //auser: string;
 begin
   if (userx > 0) and (userx <> User.DUZ) then
-    Result := rpcGetGraphProfiles(profiles, permission, ext, userx)
+//    Result := rpcGetGraphProfiles(profiles, permission, ext, userx)
+    rpcGetGraphProfiles(aDest, profiles, permission, ext, userx)
   else
   begin
     profiles := UpperCase(profiles);
@@ -596,18 +610,23 @@ begin
     end;
     if allviews or fulltext then
       MixedCaseList(GtslScratchTemp);
-    Result := GtslScratchTemp;
+    aDest.Assign(GtslScratchTemp);
   end;
+  Result := aDest.Count;
 end;
 
-function GetATestGroup(testgroup: Integer; userx: int64): TStrings;
+//function GetATestGroup(testgroup: Integer; userx: int64): TSTrings ;
+function GetATestGroup(aDest:TSTrings; testgroup: Integer; userx: int64): Integer;
 var      // temporary fix - converting definitions in GtslAllViews to rpc format
   i: integer;
   aitem, aline, aname, avc, avnum, avtype, partsnum: string;
   //atype, auser: string;
 begin
   if (userx > 0) and (userx <> User.DUZ) then
-    Result := rpcATestGroup(testgroup, userx)
+    begin
+//    Result := rpcATestGroup(testgroup, userx)
+      rpcATestGroup(aDest, testgroup, userx)
+    end
   else
   begin
     partsnum := '0';
@@ -634,8 +653,9 @@ begin
       end;
     end;
     //MixedCaseList(GtslScratchTemp);
-    Result := GtslScratchTemp;
+    aDest.Assign(GtslScratchTemp);
   end;
+  Result := aDest.Count;
 end;
 
 function GetGraphStatus: string;
@@ -710,5 +730,12 @@ procedure TfrmGraphData.FormDestroy(Sender: TObject);
 begin
   FreeGtsl;
 end;
+
+initialization
+
+finalization;
+
+  if assigned(FGraphActivity) then
+    FreeAndNil(FGraphActivity);
 
 end.

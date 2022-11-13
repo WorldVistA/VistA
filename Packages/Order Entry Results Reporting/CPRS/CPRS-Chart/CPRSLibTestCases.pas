@@ -151,29 +151,33 @@ var
 begin
   //Load AList with strings analogous to RPC Results
   AList := TStringList.Create;
-  AList.Add('917^3101012.142241^p^ANTICOAG^Consult^^ANTICOAG Cons^14520207^C');
-  AList.Add('903^3100813.144108^a^NUTRITION ASSESSMENT^Consult^^NUTRITION ASSESSMENT Cons^14519894^C');
-  AList.Add('902^20100713.124501^c^NUTRITION ASSESSMENT^Consult^*^NUTRITION ASSESSMENT Cons^14519811^C');
-  AList.Add('899^3100707.093843^p^CARDIOLOGY^Consult^^CARDIOLOGY Cons^14519751^C');
-  AList.Add('900^31007^p^CARDIOLOGY^Consult^^CARDIOLOGY Cons^14519752^C');
-  SetListFMDateTime('mm/dd/yyyy@hh:nn:ss', AList, '^', 2);
-  Check(Piece(AList[0], '^', 2) = '10/12/2010@14:22:41', 'SetListFMDateTime failed: ' + Piece(AList[0], '^', 2));
-  Check(Piece(AList[1], '^', 2) = '08/13/2010@14:41:08', 'SetListFMDateTime failed: ' + Piece(AList[1], '^', 2));
-  Check(Piece(AList[2], '^', 2) = '', 'HL7 Date/Time caused: ' + Piece(AList[2], '^', 2));
-  Check(Piece(AList[3], '^', 2) = '07/07/2010@09:38:43', 'SetListFMDateTime failed: ' + Piece(AList[3], '^', 2));
-  Check(Piece(AList[4], '^', 2) = '', 'Imprecise Date/Time caused: ' + Piece(AList[4], '^', 2));
-  AList.Clear;
-  AList.Add('917^3101012.142241^p^ANTICOAG^Consult^^ANTICOAG Cons^14520207^C');
-  AList.Add('903^3100813.144108^a^NUTRITION ASSESSMENT^Consult^^NUTRITION ASSESSMENT Cons^14519894^C');
-  AList.Add('902^20100713.124501^c^NUTRITION ASSESSMENT^Consult^*^NUTRITION ASSESSMENT Cons^14519811^C');
-  AList.Add('899^3100707.093843^p^CARDIOLOGY^Consult^^CARDIOLOGY Cons^14519751^C');
-  AList.Add('900^31007^p^CARDIOLOGY^Consult^^CARDIOLOGY Cons^14519752^C');
-  SetListFMDateTime('mm/dd/yyyy@hh:nn:ss', AList, '^', 2, True);
-  Check(Piece(AList[0], '^', 2) = '10/12/2010@14:22:41', 'SetListFMDateTime failed: ' + Piece(AList[0], '^', 2));
-  Check(Piece(AList[1], '^', 2) = '08/13/2010@14:41:08', 'SetListFMDateTime failed: ' + Piece(AList[1], '^', 2));
-  Check(Piece(AList[2], '^', 2) = '20100713.124501', 'HL7 Date/Time caused: ' + Piece(AList[2], '^', 2));
-  Check(Piece(AList[3], '^', 2) = '07/07/2010@09:38:43', 'SetListFMDateTime failed: ' + Piece(AList[3], '^', 2));
-  Check(Piece(AList[4], '^', 2) = '31007', 'Imprecise Date/Time caused: ' + Piece(AList[4], '^', 2));
+  try
+    AList.Add('917^3101012.142241^p^ANTICOAG^Consult^^ANTICOAG Cons^14520207^C');
+    AList.Add('903^3100813.144108^a^NUTRITION ASSESSMENT^Consult^^NUTRITION ASSESSMENT Cons^14519894^C');
+    AList.Add('902^20100713.124501^c^NUTRITION ASSESSMENT^Consult^*^NUTRITION ASSESSMENT Cons^14519811^C');
+    AList.Add('899^3100707.093843^p^CARDIOLOGY^Consult^^CARDIOLOGY Cons^14519751^C');
+    AList.Add('900^31007^p^CARDIOLOGY^Consult^^CARDIOLOGY Cons^14519752^C');
+    SetListFMDateTime('mm/dd/yyyy@hh:nn:ss', AList, '^', 2);
+    Check(Piece(AList[0], '^', 2) = '10/12/2010@14:22:41', 'SetListFMDateTime failed: ' + Piece(AList[0], '^', 2));
+    Check(Piece(AList[1], '^', 2) = '08/13/2010@14:41:08', 'SetListFMDateTime failed: ' + Piece(AList[1], '^', 2));
+    Check(Piece(AList[2], '^', 2) = '', 'HL7 Date/Time caused: ' + Piece(AList[2], '^', 2));
+    Check(Piece(AList[3], '^', 2) = '07/07/2010@09:38:43', 'SetListFMDateTime failed: ' + Piece(AList[3], '^', 2));
+    Check(Piece(AList[4], '^', 2) = '', 'Imprecise Date/Time caused: ' + Piece(AList[4], '^', 2));
+    AList.Clear;
+    AList.Add('917^3101012.142241^p^ANTICOAG^Consult^^ANTICOAG Cons^14520207^C');
+    AList.Add('903^3100813.144108^a^NUTRITION ASSESSMENT^Consult^^NUTRITION ASSESSMENT Cons^14519894^C');
+    AList.Add('902^20100713.124501^c^NUTRITION ASSESSMENT^Consult^*^NUTRITION ASSESSMENT Cons^14519811^C');
+    AList.Add('899^3100707.093843^p^CARDIOLOGY^Consult^^CARDIOLOGY Cons^14519751^C');
+    AList.Add('900^31007^p^CARDIOLOGY^Consult^^CARDIOLOGY Cons^14519752^C');
+    SetListFMDateTime('mm/dd/yyyy@hh:nn:ss', AList, '^', 2, True);
+    Check(Piece(AList[0], '^', 2) = '10/12/2010@14:22:41', 'SetListFMDateTime failed: ' + Piece(AList[0], '^', 2));
+    Check(Piece(AList[1], '^', 2) = '08/13/2010@14:41:08', 'SetListFMDateTime failed: ' + Piece(AList[1], '^', 2));
+    Check(Piece(AList[2], '^', 2) = '20100713.124501', 'HL7 Date/Time caused: ' + Piece(AList[2], '^', 2));
+    Check(Piece(AList[3], '^', 2) = '07/07/2010@09:38:43', 'SetListFMDateTime failed: ' + Piece(AList[3], '^', 2));
+    Check(Piece(AList[4], '^', 2) = '31007', 'Imprecise Date/Time caused: ' + Piece(AList[4], '^', 2));
+  finally
+    AList.Free;
+  end;
 end;
 
 procedure TORFnTestCase.TestStrToFloatDef;

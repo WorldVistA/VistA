@@ -36,8 +36,8 @@ object fraTemplateFieldButton: TfraTemplateFieldButton
       Width = 128
       Height = 6
       Align = alClient
-      Brush.Color = clRed
-      Pen.Color = clRed
+      Brush.Color = clBtnFace
+      Pen.Color = clBtnFace
       Shape = stRoundRect
       ExplicitLeft = 0
       ExplicitTop = 0

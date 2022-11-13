@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORFn, ComCtrls, ExtCtrls, fBase508Form, VA508AccessibilityManager,
-  uReports;
+  uReports, uPrinting;
 
 type
   TfrmPrerequisites = class(TfrmBase508Form)
@@ -15,7 +15,7 @@ type
     cmdContinue: TButton;
     cmdCancel: TButton;
     cmdPrint: TButton;
-    dlgPrintReport: TPrintDialog;
+    dlgPrintReport: uPrinting.TPrintDialog;
     procedure memReportClick(Sender: TObject);
     procedure cmdContinueClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
@@ -42,7 +42,7 @@ uses
 function CreateReportBox(ReportText: TStrings; ReportTitle: string): TfrmPrerequisites;
 var
   i, AWidth, MaxWidth, AHeight: Integer;
-  Rect: TRect;
+
 begin
   Result := TfrmPrerequisites.Create(Application);
   try
@@ -63,9 +63,7 @@ begin
       if MaxWidth > Screen.Width then MaxWidth := Screen.Width;
       Width := MaxWidth;
       Height := AHeight;
-      Rect := BoundsRect;
-      ForceInsideWorkArea(Rect);
-      BoundsRect := Rect;
+      ForceInsideWorkArea(Result);
       QuickCopy(ReportText, memReport);
       //Quick fix to work around glich in resize algorithim
       AlignButtons();

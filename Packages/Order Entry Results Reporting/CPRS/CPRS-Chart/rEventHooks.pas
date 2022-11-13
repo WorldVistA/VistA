@@ -3,34 +3,58 @@ unit rEventHooks;
 interface
 
 uses
-  Classes, ORNet;
-  
-function GetPatientChangeGUIDs: string;
-function GetOrderAcceptGUIDs(DisplayGroup: integer): string;
-function GetAllActiveCOMObjects: TStrings;
-function GetCOMObjectDetails(IEN: integer): string;
+  Classes, ORNet, System.SysUtils;
+
+function GetPatientChangeGUIDs(aDefault:String=''): string;
+function GetOrderAcceptGUIDs(DisplayGroup: integer;aDefault:String=''): string;
+function setAllActiveCOMObjects(aDest: TStrings): Integer;
+function GetCOMObjectDetails(IEN: integer;aDefault:String=''): string;
 
 implementation
 
-function GetPatientChangeGUIDs: string;
+function GetPatientChangeGUIDs(aDefault:String=''): string;
 begin
-  Result := sCallV('ORWCOM PTOBJ', []);
+  try
+    if not CallVistA('ORWCOM PTOBJ', [],Result) then
+      Result := aDefault;
+  except
+    on E: Exception do
+      Result := aDefault;
+  end;
 end;
 
-function GetOrderAcceptGUIDs(DisplayGroup: integer): string;
+function GetOrderAcceptGUIDs(DisplayGroup: integer;aDefault:String=''): string;
 begin
-  Result := sCallV('ORWCOM ORDEROBJ', [DisplayGroup]);
+  try
+    if not CallVistA('ORWCOM ORDEROBJ', [DisplayGroup],Result) then
+      Result := aDefault;
+  except
+    on E: Exception do
+      Result := aDefault;
+  end;
 end;
 
-function GetAllActiveCOMObjects: TStrings;
+function GetAllActiveCOMObjects(aDest: TStrings): Integer;
 begin
-  CallV('ORWCOM GETOBJS', []);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWCOM GETOBJS', [], aDest);
+  Result := aDest.Count;
 end;
 
-function GetCOMObjectDetails(IEN: integer): string;
+function setAllActiveCOMObjects(aDest: TStrings): Integer;
 begin
-  Result := sCallV('ORWCOM DETAILS', [IEN]);
+  CallVistA('ORWCOM GETOBJS', [], aDest);
+  Result := aDest.Count;
+end;
+
+function GetCOMObjectDetails(IEN: integer;aDefault:String=''): string;
+begin
+  try
+    if not CallVistA('ORWCOM DETAILS', [IEN],Result) then
+      Result := aDefault;
+  except
+    on E: Exception do
+      Result := aDefault;
+  end;
 end;
 
 end.

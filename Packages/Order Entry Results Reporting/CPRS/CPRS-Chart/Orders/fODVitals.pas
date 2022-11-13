@@ -64,6 +64,8 @@ const
   TX_STOPSTART     = 'The stop date must be after the start date.';
 
 procedure TfrmODVitals.FormCreate(Sender: TObject);
+var
+  sl: TStrings;
 begin
   frmFrame.pnlVisit.Enabled := false;
   inherited;
@@ -72,7 +74,13 @@ begin
   Responses.Dialog := 'GMRVOR';
   //Responses.Dialog := 'ORWD GENERIC VITALS';       // loads formatting info
   StatusText('Loading Default Values');            // there are no defaults for text only
-  CtrlInits.LoadDefaults(ODForVitals);
+  sl := TSTringList.Create;
+  try
+    setODForVitals(sl);
+    CtrlInits.LoadDefaults(sl);
+  finally
+    sl.Free;
+  end;
   InitDialog;
   StatusText('');
 end;

@@ -66,6 +66,17 @@ type
     lbl508Apply: TVA508StaticText;
     lbl508SelectOthers: TVA508StaticText;
     lbl508SelectionInfo: TVA508StaticText;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Panel9: TPanel;
+    Panel10: TPanel;
+    Panel11: TPanel;
+    Panel3: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -146,7 +157,7 @@ implementation
 {$R *.DFM}
 
 uses
-  UITypes, rGraphs, fGraphData, fGraphOthers, fRptBox, VAUtils, uSimilarNames;
+  UITypes, rGraphs, fGraphData, fGraphOthers, fRptBox, VAUtils, uORLists, uSimilarNames;
 
 procedure DialogOptionsGraphProfiles(var actiontype: boolean);
 // create the form and make it modal, return an action
@@ -317,8 +328,8 @@ begin
     if radSourcePat.Tag = 0 then
     begin
       dfn := lblClose.Hint;
-      FastAssign(rpcGetAllItems(dfn), lstTests.Items);  // items for patient
-      FastAssign(rpcGetItems('50.605', dfn), lstDrugClass.Items);
+      rpcGetAllItems(lstTests.Items, dfn);  // items for patient
+      rpcGetItems(lstDrugClass.Items, '50.605', dfn);
       radSourcePat.Tag := 1;
     end;
     cboAllItems.Visible := false;
@@ -460,16 +471,16 @@ end;
 
 procedure TfrmGraphProfiles.cboUserChange(Sender: TObject);
 var
-  ErrMsg: String;
+ ErrMsg: String;
 begin
   inherited;
   if FChanging then
     exit;
 
-  if not CheckForSimilarName(cboUser, ErrMsg, ltPerson, sPr) then
+  if not CheckForSimilarName(cboUser, ErrMsg, sPr) then
   begin
     ShowMsgOn(Trim(ErrMsg) <> '' , ErrMsg, 'Similiar Name Selection');
-    Exit;
+    exit;
   end;
 
   cboUserClick(Sender);
@@ -519,24 +530,17 @@ end;
 procedure TfrmGraphProfiles.cboUserMouseClick(Sender: TObject);
 begin
   inherited;
-
   if FChanging then
   begin
     FChanging := False;
     cboUserChange(sender);
   end;
-
-  FillSource(lstOtherSources);
-  if cboUser.ItemIndex <> -1 then
-    lblOtherViews.Caption := cboUser.DisplayText[cboUser.ItemIndex] + ' Views:'
-  else
-    lblOtherViews.Caption := 'Other Views:'
 end;
 
 procedure TfrmGraphProfiles.cboUserNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
-  cboUser.ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  setPersonList(cboUser, StartFrom, Direction);
 end;
 
 procedure TfrmGraphProfiles.cboAllItemsChange(Sender: TObject);
@@ -591,23 +595,34 @@ procedure TfrmGraphProfiles.cboAllItemsNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 var
   filetype: string;
+  sl: TStrings;
 begin
-  if lstSources.ItemIndex = -1 then exit;
+  if lstSources.ItemIndex = -1 then
+    exit;
   filetype := Piece(lstSources.Items[lstSources.ItemIndex], '^', 1);
-  cboAllItems.ForDataUse(rpcLookupItems(filetype, StartFrom, Direction));
+  sl := TSTringList.Create;
+  try
+    rpcLookupItems(sl, filetype, StartFrom, Direction);
+    cboAllItems.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmGraphProfiles.lstItemsDisplayedChange(Sender: TObject);
 begin
- btnSave.Enabled := lstItemsDisplayed.Items.Count > 0;
- btnSavePublic.Enabled := btnSave.Enabled and FPublicEditor;
- btnRemoveAll.Enabled := btnSave.Enabled;
- btnAdd.Enabled := (cboAllItems.Visible and (cboAllItems.ItemIndex > -1))
-   or (lstItemsSelection.Visible and (lstItemsSelection.ItemIndex > -1));
- btnRemoveOne.Enabled :=  btnSave.Enabled and (lstItemsDisplayed.ItemIndex > -1);
- btnClear.Enabled := btnSave.Enabled or (lstItemsSelection.Items.Count > 0);
- if btnSave.Enabled and pnlApply.Visible then btnClose.Caption := 'Close and Display'
- else btnClose.Caption := 'Close';
+  btnSave.Enabled := lstItemsDisplayed.Items.Count > 0;
+  btnSavePublic.Enabled := btnSave.Enabled and FPublicEditor;
+  btnRemoveAll.Enabled := btnSave.Enabled;
+  btnAdd.Enabled := (cboAllItems.Visible and (cboAllItems.ItemIndex > -1)) or
+    (lstItemsSelection.Visible and (lstItemsSelection.ItemIndex > -1));
+  btnRemoveOne.Enabled := btnSave.Enabled and
+    (lstItemsDisplayed.ItemIndex > -1);
+  btnClear.Enabled := btnSave.Enabled or (lstItemsSelection.Items.Count > 0);
+  if btnSave.Enabled and pnlApply.Visible then
+    btnClose.Caption := 'Close and Display'
+  else
+    btnClose.Caption := 'Close';
 end;
 
 procedure TfrmGraphProfiles.lstItemsDisplayedDblClick(Sender: TObject);
@@ -1464,19 +1479,19 @@ begin
   if Piece(aProfile, '^', 1) = VIEW_LABS then
   begin
     lstScratch.Items.Clear;
-    FastAssign(GetATestGroup(strtointdef(Piece(Piece(aProfile, '^', 2), ')', 1), -1), UserNum), aList);
+    GetATestGroup(aList, strtointdef(Piece(Piece(aProfile, '^', 2), ')', 1), -1), UserNum);
     for i  := 0 to aList.Count - 1 do
       aList[i] := '63^' + aList[i];
   end
   else
   if Piece(aProfile, '^', 1) = VIEW_PUBLIC then
   begin
-    FastAssign(GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '1', 0, 0), lstScratch.Items);
+    GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '1', 0, 0, lstScratch.Items);
     typedata := '0^-1^ ' + Piece(aProfile, '^', 2);
   end
   else
   begin
-    FastAssign(GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '0', 0, UserNum), lstScratch.Items);
+    GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '0', 0, UserNum, lstScratch.Items);
     typedata := '0^' + Piece(aProfile, '^', 1) + '^ ' + Piece(aProfile, '^', 2);
   end;
   if Piece(aProfile, '^', 1) = VIEW_LABS then
@@ -1494,18 +1509,18 @@ var
 begin
   if Piece(aProfile, '^', 1) = VIEW_LABS then
   begin
-    FastAssign(GetATestGroup(strtointdef(Piece(Piece(aProfile, '^', 2), ')', 1), -1), UserNum), aList);
+    GetATestGroup(aList, strtointdef(Piece(Piece(aProfile, '^', 2), ')', 1), -1), UserNum);
     for i  := 0 to aList.Count - 1 do
       aList[i] := '63^' + aList[i];
   end
   else
   if Piece(aProfile, '^', 1) = VIEW_PUBLIC then
-    FastAssign(GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '1', 1, 0), aList)
+    GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '1', 1, 0, aList)
   else
   if Piece(aProfile, '^', 1) = VIEW_PERSONAL then
-    FastAssign(GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '0', 1, UserNum), aList)
+    GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '0', 1, UserNum, aList)
   else
-    FastAssign(GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '0', 1, UserNum), aList);
+    GetGraphProfiles(UpperCase(Piece(aProfile, '^', 2)), '0', 1, UserNum, aList);
 end;
 
 procedure TfrmGraphProfiles.AssignProfilePost(aList: TStrings; var aProfile, typedata: string);
@@ -1584,7 +1599,7 @@ begin
     OnChange := nil;
     if aList = lstSources then                  // user
     begin
-      FastAssign(rpcGetTypes('0', true), Items);   //*** use GtslAllTypes ???
+      rpcGetTypes(Items, '0', true);   //*** use GtslAllTypes ???
       for i := 0 to Items.Count - 1 do
       begin
         listline := Items[i];
@@ -1613,7 +1628,7 @@ begin
       UserNum := cboUser.ItemIEN;
       Sorted := false;
     end;
-    FastAssign(GetGraphProfiles('1', '0', 0, UserNum), lstScratch.Items);
+    GetGraphProfiles('1', '0', 0, UserNum, lstScratch.Items);
     lstScratch.Sorted := true;
     if lstScratch.Items.Count > 0 then
     begin
@@ -1621,7 +1636,7 @@ begin
       for i := 0 to lstScratch.Items.Count - 1 do
         Items.Add(VIEW_PERSONAL + '^' + lstScratch.Items[i] + '^');
     end;
-    FastAssign(GetGraphProfiles('1', '1', 0, 0), lstScratch.Items);
+    GetGraphProfiles('1', '1', 0, 0, lstScratch.Items);
     lstScratch.Sorted := true;
     if (lstScratch.Items.Count > 0) and (aList = lstSources) then
     begin
@@ -1629,7 +1644,7 @@ begin
       for i := 0 to lstScratch.Items.Count - 1 do
         Items.Add(VIEW_PUBLIC + '^' + lstScratch.Items[i] + '^');
     end;
-    FastAssign(rpcTestGroups(UserNum), lstScratch.Items);
+    rpcTestGroups(lstScratch.Items,UserNum);
     lstScratch.Sorted := true;
     if lstScratch.Items.Count > 0 then
     begin

@@ -1,11 +1,11 @@
-/// /////////////////////////////////////////////////////////////////////////////
-// Modifed: 9/18/98
-// By: Robert Bott
-// Location: ISL
-// Description of Mod:
-// Changed function ValAndStoreVitals to return the string indicating the value
-// that failed.
-/// /////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//Modifed: 9/18/98
+//By: Robert Bott
+//Location: ISL
+//Description of Mod:
+//  Changed function ValAndStoreVitals to return the string indicating the value
+//   that failed.
+////////////////////////////////////////////////////////////////////////////////
 
 unit rVitals;
 
@@ -39,7 +39,7 @@ begin
   CallVistA('ORQQVI VITALS', [IDString], Dest);
 end;
 
-function VerifyVital(typ, rte, unt: String): boolean;
+function VerifyVital(typ,rte,unt: String):boolean;
 var
   aStr: string;
 begin
@@ -48,24 +48,28 @@ begin
 end;
 
 /// //////////////////////////////////////////////////////////////////////////////
-// Modifed: 9/18/98
-// By: Robert Bott
-// Location: ISL
-// Description of Mod:
-// Changed function ValAndStoreVitals to return the string indicating the value
-// that failed.
+//Modifed: 9/18/98
+//By: Robert Bott
+//Location: ISL
+//Description of Mod:
+//  Changed function ValAndStoreVitals to return the string indicating the value
+//   that failed.
 /// //////////////////////////////////////////////////////////////////////////////
-function ValAndStoreVitals(VitalList: TStringList): string;
+function ValAndStoreVitals(VitalList: TStringList):string;
 var
   aLst: TStringList;
 begin
   aLst := TStringList.Create;
   try
     CallVistA('ORQQVI2 VITALS VAL & STORE', [VitalList], aLst);
-    if aLst[0] >= '0' then
-      Result := 'True' // stored ok
-    else
-      Result := Piece(aLst[1], U, 2) + ': ' + Piece(aLst[1], U, 3) + ' Value: ' + Piece(aLst[1], U, 4);
+    Result := 'Error Saving Vitals';
+    if aLst.Count > 0 then
+    begin
+      if aLst[0] >= '0' then
+        Result := 'True' // stored ok
+      else if aLst.Count > 1 then
+        Result := Piece(aLst[1], U, 2) + ': ' + Piece(aLst[1], U, 3) + ' Value: ' + Piece(aLst[1], U, 4);
+    end;
   finally
     FreeAndNil(aLst);
   end;

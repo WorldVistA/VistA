@@ -5,10 +5,13 @@
   Developers: Danila Manapsal, Don Craven, Joel Ivey, Herlan Westra
   Description: Contains TRPCBroker and related components.
   Unit: Loginfrm code supporting Login form.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in XWB*1.1*71 (RGG 10/18/2018) XWB*1.1*71
   1. Updated RPC Version to version 71.
   2. Replaced RichEdit component with new XWBRichEdit component
@@ -55,7 +58,8 @@ uses
   {WinApi}
   WinTypes, WinProcs, Messages, ShellApi, Windows,
   {Vcl}
-  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons,
+  Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Vcl.ExtCtrls, Vcl.Buttons,
   {VA}
   XWBHash, MFunStr, Trpcb, SgnonCnf, XWBut1, frmSignonMessage, XWBRich20,
   Vcl.ComCtrls, Vcl.Menus;
@@ -296,12 +300,14 @@ begin
                 // ShowModal;                                        //Causes memory error
               end;
             finally
-              frmSignonMsg.Free;
+              FreeAndNil(EntryString);
+              FreeAndNil(frmSignonMsg);
               frmSignon.Enabled := True; // p65
             end;
           end;
         end;
         Close;
+        FreeAndNil(EntryString);
       end;
     end;
   except // P4
@@ -428,7 +434,9 @@ begin
       introText.Color := clWindow;
     introText.Font := InitialValues.Font;
   finally
-    SignonConfiguration.Free;
+    //p73 change from FreeAndNil to CleanupInstance
+    SignonConfiguration.CleanupInstance;        //p73
+    DefaultSignonConfiguration.CleanupInstance; //p73
   end;
   FChngVerify := False;
 end;
@@ -463,7 +471,8 @@ begin
       ShowApplicationAndFocusOK(Application);
       frmErrMsg.ShowModal;
     finally
-      frmErrMsg.Free;
+      FreeAndNil(frmErrMsg);
+      FreeAndNil(SignonConfiguration);
     end;
   end
   else

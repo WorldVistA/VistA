@@ -441,7 +441,10 @@ begin
         RPCText := TStringList.Create;
         try
           LoadRPCData(RPCText, I);
-          RpcName := RPCText[0];
+          if RPCText.Count > 0 then
+            RpcName := RPCText[0]
+          else
+            RpcName := '';
           UCallListIndex := I;
 
           for X := 0 to RPCText.Count - 1 do
@@ -510,7 +513,10 @@ begin
       RPCText := TStringList.Create;
       try
         LoadRPCData(RPCText, RetainedRPCCount - 1);
-        RpcName := RPCText[0];
+        if RPCText.Count > 0 then
+          RpcName := RPCText[0]
+        else
+          RPCName := '';
         UCallListIndex := RetainedRPCCount - 1;
 
         for X := 0 to RPCText.Count - 1 do

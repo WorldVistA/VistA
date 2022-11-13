@@ -29,7 +29,7 @@ import "va508jaws.jsd" ; import function declarations  from documentation file (
 ; constants are differentiated by underscores between words,
 Const	
 ; Not used by any code in this file, but read by JAWS.SR from this file to determine if the script file should be updated with a newer version
-	VA508_Script_Version = 5,
+	VA508_Script_Version = 15,
 ; Site specific library used in  PerformFunction()
 	VA508_SITE_LIBRARY  = "VA508JAWS_SiteCode::"
 
@@ -43,11 +43,11 @@ GLOBALS
 	collection Delphi_AppDefined 
 
 Function AutoStartEvent () ; Set globals used for determineing specific application being run
-Delphi_AppDefined  = new collection 
-; Uncomment below line if Site specific library is being used.
-; SiteCodeInitialize  ()
-; Call standard 
-AutoStartEvent()
+	Delphi_AppDefined  = new collection 
+	; Uncomment below line if Site specific library is being used.
+	; SiteCodeInitialize  ()
+	; Call standard 
+	AutoStartEvent()
 EndFunction
 
 ; Place any customizations here.

@@ -595,6 +595,8 @@ begin
   fNTRTComment.Free;
   fFieldList.free;
   fFilerObj.free;
+  fCodeDate.Free;
+  fCodeSystem.Free;
   EraseComments(fComments);
   fComments.free;
   inherited Destroy;
@@ -1543,4 +1545,10 @@ begin
   Result := OutString;
 end;
 
+initialization
+
+finalization
+  KillObj(@PLFilters);
+  KillObj(@PLUser);
+  KillObj(@PLPt);
 end.

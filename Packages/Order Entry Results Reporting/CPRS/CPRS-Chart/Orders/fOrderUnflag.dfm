@@ -2,44 +2,45 @@ inherited frmUnflagOrder: TfrmUnflagOrder
   Left = 365
   Top = 389
   Caption = 'Unflag Order'
-  ClientHeight = 203
+  ClientHeight = 221
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 230
+  ExplicitHeight = 259
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
     Left = 8
     Top = 123
-    Width = 90
+    Width = 96
     Height = 13
-    Caption = 'Comment (optional)'
+    Caption = 'Comment (Required)'
   end
   object txtComment: TCaptionEdit [1]
     Left = 8
     Top = 137
     Width = 411
     Height = 21
-    MaxLength = 80
+    MaxLength = 240
     TabOrder = 0
     Caption = 'Comment (optional)'
   end
   object cmdOK: TButton [2]
-    Left = 267
-    Top = 174
-    Width = 72
+    Left = 232
+    Top = 192
+    Width = 107
     Height = 21
-    Caption = 'OK'
+    Anchors = [akRight, akBottom]
+    Caption = 'Submit Comment'
     Default = True
     TabOrder = 1
     OnClick = cmdOKClick
   end
   object cmdCancel: TButton [3]
     Left = 347
-    Top = 174
+    Top = 192
     Width = 72
     Height = 21
+    Anchors = [akRight, akBottom]
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 2
@@ -72,13 +73,16 @@ inherited frmUnflagOrder: TfrmUnflagOrder
         'Status = stsDefault')
       (
         'Component = cmdOK'
-        'Status = stsDefault')
+        'Text = Submit Unflagging Comment'
+        'Status = stsOK')
       (
         'Component = cmdCancel'
-        'Status = stsDefault')
+        'Text = Cancel Unflagging Comment'
+        'Status = stsOK')
       (
         'Component = memReason'
-        'Status = stsDefault')
+        'Text = Add an Unflagging Comment'
+        'Status = stsOK')
       (
         'Component = memOrder'
         'Status = stsDefault')

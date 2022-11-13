@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.CheckLst, Vcl.ImgList, Vcl.ComCtrls,
   Vcl.ToolWin,
   Vcl.StdCtrls, Vcl.ExtCtrls, VA508AccessibilityManager, ColnEdit,
-  System.ImageList;
+  Vcl.Menus;
 
 type
 
@@ -26,11 +26,6 @@ type
     cmbAccessProp: TComboBox;
     memAccessTxt: TMemo;
     lbCtrllList: TLabel;
-    ToolBar1: TToolBar;
-    ToolButton1: TToolButton;
-    ToolButton2: TToolButton;
-    ToolButton3: TToolButton;
-    ImageList1: TImageList;
     lblAccLbl: TLabel;
     lblAccProp: TLabel;
     lnlAccTxt: TLabel;
@@ -40,6 +35,9 @@ type
     lstCtrls: TListView;
     StatusBar1: TStatusBar;
     lblHeader: TLabel;
+    MainMenu1: TMainMenu;
+    Main1: TMenuItem;
+    RefreshAll1: TMenuItem;
     procedure lstCtrlsSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
     procedure memAccessTxtChange(Sender: TObject);
@@ -49,6 +47,7 @@ type
     procedure lstAccessColClickCheck(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure RefreshAll1Click(Sender: TObject);
   private
     { Private declarations }
     fInternal: Boolean;
@@ -117,6 +116,12 @@ end;
 procedure Tva508CollectionEditor.MyHint(Sender: TObject);
 begin
   StatusBar1.SimpleText := Application.Hint;
+end;
+
+procedure Tva508CollectionEditor.RefreshAll1Click(Sender: TObject);
+begin
+ fOwnerCtrl.RefreshComponents;
+ FillOutList(fCollection, fOwnerCtrl);
 end;
 
 Function Tva508CollectionEditor.GetAccessItem: TVA508AccessibilityItem;
@@ -337,7 +342,7 @@ begin
   for I := 0 to fCollection.Count - 1 do
   begin
     aItem := lstCtrls.Items.Add;
-    aItem.Caption := fCollection.Items[I].Component.Name;
+    aItem.Caption := fCollection.Items[I].DisplayName;
     aItem.Data := fCollection.Items[I];
   end;
 

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="Adobe RoboHelp 2020" />
+  <title>Park a Prescription</title>
+  <meta name="topic-status" content="Draft" />
+  <link rel="stylesheet" type="text/css" href="assets/css/CPRS.css" />
+</head>
+<body>
+  <h1>Park a Prescription</h1>
+  <p>This action enables a user to select “park” as a routing/pickup option when creating or modifying an outpatient pharmacy order. When a prescription is parked, it is on file, but it will not be dispensed until requested by the patient or caregiver. A parked prescription has an Active/Parked status in reports and cannot be sent to automated dispensing equipment or to CMOP until it is unparked. Park a prescription works with mail-in barcode refills requests and the AudioCare AudioRefill System.</p>
+  <p style="margin-left: 54.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;">
+    <font color="#010100" style="font-weight: bold;">Note:</font>
+    <font color="#010100"> Park a prescription only works with outpatient pharmacy orders.</font>
+  </p>
+  <p>Any activity performed for an active prescription can be performed for an active/parked prescription. CPRS allows the initial fill, and the refill, of a prescription in Active/Parked status.</p>
+  <p>Only active prescriptions can be parked. Drugs with a DEA special handling code of “D” and Cloazpine orders cannot be parked.</p>
+  <p>When a patient requests a fill of a prescription that has been replaced by a newer, parked prescription for the same orderable item but different dispense drug, the fill will get processed as if the newer prescription were requested. However, the old prescription number will be used. This “linking and replacement” capability is limited by specific conditions:</p>
+  <p> </p>
+  <ul>
+    <li>
+      <font style="font-size: 12pt;">The patient requesting the prescription must be the same for both the previous and parked prescription. </font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">The prescriptions must be for the same orderable item. </font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">The previous prescription for the orderable item is no longer active. </font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">The most recent prescription is in Active/Parked status. </font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">There is only one prescription on file for the specific patient and orderable item. </font>
+    </li>
+  </ul>
+  <p>If these conditions are not met, the user will see this error message: “[Rx number] is no longer refillable please speak to a pharmacist”.</p>
+  <p>Once a prescription is unparked, it will proceed through normal prescription processes.</p>
+  <p> </p>
+  <p><strong>To park a new prescription, do the following:</strong></p>
+  <ol>
+    <li>
+      <font style="font-size: 12pt;">Click on either the Meds or Orders tab: </font>
+      <ol style="list-style:lower-alpha">
+        <li>
+          <font style="font-size: 12pt;">If you clicked on the Meds tab, click on <strong>Action</strong> and then, click on <strong>New Medication</strong>.</font>
+        </li>
+        <li>
+          <font style="font-size: 12pt;">If you clicked on the Orders tab, click on <strong>Outpatient Meds</strong> in the Write Orders table.</font>
+        </li>
+      </ol>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">On the Location for Current Activities screen, select a Visit Location and Date/Time of Visit and click <strong>OK</strong>.</font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">On the Outpatient Medications or Medications Orders screen, fill in all required fields: Medication, Dosage, Route, Schedule, Indication, Days Supply, Quantity, Refills and Priority. In the Pick Up area, select the <strong>Park</strong> radio button.</font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">Click <strong>Accept Order</strong>. After the order has been accepted, it will be in the Pending status until the pharmacist processes the order, at which point it will become Active/Parked.</font>
+    </li>
+  </ol>
+  <ol>
+  </ol>
+  <p> </p>
+  <p><strong>To park an existing prescription, do the following:</strong></p>
+  <ol>
+    <li>
+      <font style="font-size: 12pt;">Click on either the Orders or Meds tab.</font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">Right-click on an active order on the Outpatient Medications and then, click on <strong>Park</strong>.</font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">On the Park Orders screen (the confirmation screen), click <strong>OK</strong>. The order will get into the Active/Parked status.</font>
+    </li>
+  </ol>
+  <p> </p>
+  <p><strong>To unpark a prescription, do the following:</strong></p>
+  <ol>
+    <li>
+      <font style="font-size: 12pt;">Click on either the Orders or Meds tab.</font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">Right-click on an Active/Parked order in the Outpatient Medications or Out Meds table and then, click on <strong>Unpark – Generates a request to Fill/Refill</strong>.</font>
+    </li>
+    <li>
+      <font style="font-size: 12pt;">On the Un-Park Orders screen, click the order to be unparked and then, click <strong>OK</strong>. The order will get into the Active/Parked status.</font>
+    </li>
+  </ol>
+  <p> </p>
+  <p style="margin-top: 6.00pt; margin-bottom: 0.00pt; border-bottom: 0.75pt solid #000000;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">Related Topics</font>
+  </p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Hold_Medication_Order.htm">Hold Order</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Viewing_Medications.htm">Viewing Medications</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Sorting_the_Medications_View.htm">Sorting the Medications View</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Ordering_Inpatient_Medications.htm">Ordering Inpatient Medications (Simple Dose)</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Ordering_Inpatient_Medications_Complex_Dose_.htm">Ordering Inpatient Medications (Complex Dose)</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Ordering_Outpatient_Medications_(Simple_Dose).htm">Ordering Outpatient Medications (Simple Dose)</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Ordering_Outpatient_Medications_(Complex_Dose).htm">Ordering Outpatient Medications (Complex Dose)</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Changing_Medication_Orders.htm">Change Medication Order</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Discontinuing_Orders.htm">Discontinue Medication Order</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Renew_Medication.htm">Renew Medication Order</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Other_Medication_Actions.htm">Other Medication Actions (popup menu)</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 4.00pt; margin-bottom: 3.00pt;"><a href="Refilling_a_Medication.htm">Refilling a Medication</a></p>
+</body>
+</html>

@@ -24,9 +24,8 @@ type
     lblLegalCopyright: TMemo;
     pnl508Disclaimer: TPanel;
     lbl508Notice: TMemo;
-    Panel2: TPanel;
-    Panel3: TPanel;
-    Panel4: TPanel;
+    pnlInfo: TPanel;
+    pnlTop: TPanel;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -48,7 +47,8 @@ var
 begin
   frmAbout := TfrmAbout.Create(Application);
   try
-//    ResizeFormToFont(TForm(frmAbout));
+    ResizeFormToFont(TForm(frmAbout));
+    frmAbout.lblProductName.Font.Size := frmAbout.lblLegalCopyright.Font.Size + 4;
     frmAbout.lblLegalCopyright.SelStart := 0;
     frmAbout.lblLegalCopyright.SelLength := 0;
     frmAbout.lbl508Notice.SelStart := 0;
@@ -62,15 +62,14 @@ end;
 procedure TfrmAbout.FormCreate(Sender: TObject);
 begin
   inherited;
-  lblCompanyName.Caption        := 'Developed by the ' + FileVersionValue(Application.ExeName, FILE_VER_COMPANYNAME);
-//  lblFileDescription.Caption    := 'Compiled ' + FileVersionValue(Application.ExeName, FILE_VER_FILEDESCRIPTION);  //date
-  lblFileVersion.Caption        := FileVersionValue(Application.ExeName, FILE_VER_FILEVERSION);
-  lblInternalName.Caption       := FileVersionValue(Application.ExeName, FILE_VER_INTERNALNAME);
-  lblLegalCopyright.Text        := FileVersionValue(Application.ExeName, FILE_VER_LEGALCOPYRIGHT);
-  lblOriginalFileName.Caption   := FileVersionValue(Application.ExeName, FILE_VER_ORIGINALFILENAME);  //patch
   lblProductName.Caption        := FileVersionValue(Application.ExeName, FILE_VER_PRODUCTNAME);
+  lblFileVersion.Caption        := FileVersionValue(Application.ExeName, FILE_VER_FILEVERSION);
   lblComments.Caption           := FileVersionValue(Application.ExeName, FILE_VER_COMMENTS);  // version comment
+  lblInternalName.Caption       := FileVersionValue(Application.ExeName, FILE_VER_INTERNALNAME);
+  lblCompanyName.Caption        := 'Developed by the ' + FileVersionValue(Application.ExeName, FILE_VER_COMPANYNAME);
+  lblOriginalFileName.Caption   := FileVersionValue(Application.ExeName, FILE_VER_ORIGINALFILENAME);  //patch
   lblCRC.Caption                := 'CRC: ' + IntToHex(CRCForFile(Application.ExeName), 8);
+  lblLegalCopyright.Text        := FileVersionValue(Application.ExeName, FILE_VER_LEGALCOPYRIGHT);
 end;
 
 end.

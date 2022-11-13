@@ -1,8 +1,13 @@
 unit fAddlSigners;
+{------------------------------------------------------------------------------
+Update History
+
+    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
+-------------------------------------------------------------------------------}
 
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
+uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ORCtrls, ORfn, ExtCtrls, FNoteProps, Dialogs, fBase508Form,
   VA508AccessibilityManager;
 
@@ -43,8 +48,6 @@ type
     procedure btnRemoveAllSignersClick(Sender: TObject);
     procedure cboSrcListChange(Sender: TObject);
   private
-    FCboSrcListVistaParams: TArray<string>;
-    FCboCosignerVistaParams: TArray<string>;
     FSigners: TStringList ;
     FCosigner: int64;
     FExclusions: TStringList;
@@ -77,7 +80,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rCore, uCore, rTIU, uConst, rPCE, fDCSumm, uSimilarNames;
+  rCore, uCore, rTIU, uConst, rPCE, fDCSumm, uORLists, uSimilarNames;
 
 const
   TX_SIGNER_CAP = 'Error adding signers';
@@ -163,12 +166,22 @@ end;
 
 procedure TfrmAddlSigners.NewPersonNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  Astrings: TStrings;
 begin
-  if Sender = cboSrcList then
-    TORComboBox(Sender).ForDataUse(SubSetOfPersons(StartFrom, Direction, FCboSrcListVistaParams, True))
-  else
-    (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  // SDS - See also V32 issue #126 M changes by AB - #129 is a Delphi follow-on to #126
+  // SDS - We only show providers for additional signers, by request from field users
+  // setProviderList(TORComboBox(Sender), StartFrom, Direction);    // SDS Aug 2017 V32 Test Issue #129
+  // FH Oct 2019 - Revert Back from providerlist to personlist
+  Astrings := TStringList.Create;
+  try
+    setSubSetOfPersons(cboSrcList, Astrings, StartFrom, Direction, True);
+    cboSrcList.ForDataUse(Astrings);
+  finally
+    FreeAndNil(Astrings);
+  end;
 end;
+
 
 procedure TfrmAddlSigners.cmdCancelClick(Sender: TObject);
 begin
@@ -226,12 +239,10 @@ var
   i: integer;
   aErrMsg: String;
 begin
-  if not CheckForSimilarName(cboSrcList, aErrMsg, ltPerson, FCboSrcListVistaParams, sPr, '', DstList.Items) then
+  if not CheckForSimilarName(cboSrcList, aErrMsg, sPr, DstList.Items) then
   begin
     ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, TX_NO_SIGNER_CAP);
-    // cboSrcList.ItemIndex := -1; // This doesn't happen in 32b
-    // cboSrcList.SetFocus; // This doesn't happen in 32b
-    exit;
+    Exit;
   end;
 
   if cboSrcList.ItemIndex = -1 then
@@ -251,7 +262,8 @@ begin
         InfoBox(TX_BAD_SIGNER, TX_SIGNER_CAP, MB_OK or MB_ICONWARNING);
         Exit;
       end;
-  DstList.Items.Add(cboSrcList.Items[cboSrcList.Itemindex]) ;
+
+  DstList.Items.Add(cboSrcList.Items[cboSrcList.Itemindex]);
   btnRemoveSigners.Enabled := DstList.SelCount > 0;
   btnRemoveAllSigners.Enabled := DstList.Items.Count > 0;
 end;
@@ -322,19 +334,25 @@ begin
       InfoBox(TX_NO_DELETE, TX_NO_DELETE_CAP, MB_OK or MB_ICONWARNING);
       Exit;
     end;
+
+
   case FTabID of
     CT_NOTES, CT_CONSULTS:
+    begin
       if (not CanCosign(TitleForNote(FNoteIEN), 0, cboCosigner.ItemIEN, FRefDate)) then
         begin
           InfoBox(cboCosigner.Text + TX_NO_COSIGNER, TX_NO_COSIGNER_CAP, MB_OK or MB_ICONWARNING);
           Exit;
         end;
+    end;
     CT_DCSUMM:
+    begin
       if not IsUserAProvider(cboCosigner.ItemIEN, FMNow) then
         begin
           InfoBox(cboCosigner.Text + TX_NO_COSIGNER, TX_NO_COSIGNER_CAP, MB_OK or MB_ICONWARNING);
           Exit;
         end;
+    end;
   end;
   Result := True;
 end;
@@ -343,13 +361,7 @@ function TfrmAddlSigners.DoSimilar: Boolean;
 var
   sError: String;
 begin
-  Result := false;
-
-  Case FTabID of
-    CT_NOTES, CT_CONSULTS: Result := CheckForSimilarName(cboCosigner, sError, ltPerson, FCboCosignerVistaParams, sCo, FToday);
-    CT_DCSUMM: Result := CheckForSimilarName(cboCosigner, sError, ltCosign, FCboCosignerVistaParams, sCo, FToday, nil, frmDCSumm.lstSumms.ItemIEN);
-  end;
-
+  Result := CheckForSimilarName(cboCosigner, sError, sCo);
   if not Result then
   begin
     ShowMsgOn(Trim(sError) <> '' , sError, TX_NO_COSIGNER_CAP);
@@ -359,11 +371,24 @@ end;
 
 procedure TfrmAddlSigners.cboCosignerNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
+  cbo: TORComboBox;
+
 begin
-  case FTabID of
-    CT_NOTES: (Sender as TORComboBox).ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FToday, FCboCosignerVistaParams));
-    CT_CONSULTS: (Sender as TORComboBox).ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FToday, FCboCosignerVistaParams));
-    CT_DCSUMM: (Sender as TORComboBox).ForDataUse(SubSetOfCosigners(StartFrom, Direction, FMToday, frmDCSumm.lstSumms.ItemIEN, 0, FCboCosignerVistaParams));
+  cbo := (Sender as TORComboBox);
+  sl := TStringList.Create;
+  try
+    case FTabID of
+      CT_CONSULTS, CT_NOTES:
+        setSubSetOfUsersWithClass(cbo, sl, StartFrom, Direction, FToday);
+      CT_DCSUMM://CQ #17218 - Updated to properly filter co-signers - JCS
+        setSubSetOfCosigners(cbo, sl, StartFrom, Direction, FMToday,
+          frmDCSumm.lstSumms.ItemIEN, 0);
+    end;
+    cbo.ForDataUse(sl);
+  finally
+    FreeAndNil(sl);
   end;
 end;
 

@@ -1,270 +1,1189 @@
 inherited frmOCSession: TfrmOCSession
   Left = 366
   Top = 222
-  BorderIcons = []
+  Width = 815
+  Height = 500
+  HorzScrollBar.Visible = True
+  VertScrollBar.Visible = True
+  ActiveControl = lblInstr
+  AutoScroll = True
+  BorderIcons = [biSystemMenu]
   Caption = 'Order Checks'
-  ClientHeight = 580
-  ClientWidth = 816
-  Constraints.MinHeight = 625
-  Constraints.MinWidth = 750
+  Constraints.MinHeight = 500
+  Constraints.MinWidth = 800
   DefaultMonitor = dmMainForm
   DoubleBuffered = True
   Position = poScreenCenter
   ShowHint = True
-  OnClose = FormClose
-  OnCreate = FormCreate
-  OnResize = FormResize
-  OnShow = FormShow
-  ExplicitWidth = 834
-  ExplicitHeight = 625
-  PixelsPerInch = 120
-  TextHeight = 16
-  object pnlBottom: TPanel [0]
+  ExplicitWidth = 815
+  ExplicitHeight = 500
+  PixelsPerInch = 96
+  TextHeight = 13
+  object PnlCtr: TPanel [0]
     Left = 0
-    Top = 424
-    Width = 816
-    Height = 156
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Align = alBottom
+    Top = 27
+    Width = 799
+    Height = 378
+    Align = alClient
     BevelOuter = bvNone
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
-    TabOrder = 0
-    DesignSize = (
-      816
-      156)
-    object lblJustify: TLabel
-      AlignWithMargins = True
-      Left = 6
-      Top = 62
-      Width = 806
-      Height = 16
-      Margins.Left = 6
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Align = alTop
-      Caption = 'Enter reason for overriding order checks:'
-      ExplicitWidth = 241
+    ParentBackground = False
+    TabOrder = 1
+    object Splitter: TSplitter
+      Left = 322
+      Top = 0
+      Height = 378
+      ExplicitLeft = 788
+      ExplicitTop = -6
+      ExplicitHeight = 513
     end
-    object memNote: TMemo
-      AlignWithMargins = True
-      Left = 400
-      Top = 4
-      Width = 406
-      Height = 50
-      Margins.Left = 400
-      Margins.Top = 4
-      Margins.Right = 10
-      Margins.Bottom = 4
-      Align = alTop
-      Alignment = taRightJustify
-      BorderStyle = bsNone
-      Color = clBtnFace
-      Lines.Strings = (
-        'NOTE: The override reason is for tracking purposes'
-        'and does not change or place new order(s).')
-      ReadOnly = True
-      TabOrder = 0
-      OnEnter = memNoteEnter
-      ExplicitWidth = 410
-    end
-    object txtJustify: TCaptionEdit
-      AlignWithMargins = True
-      Left = 6
-      Top = 86
-      Width = 804
-      Height = 27
-      Margins.Left = 6
-      Margins.Top = 4
-      Margins.Right = 6
-      Margins.Bottom = 4
-      Align = alTop
-      AutoSize = False
-      MaxLength = 80
-      TabOrder = 3
-      OnKeyDown = txtJustifyKeyDown
-      Caption = 'Enter justification for overriding critical order checks -'
-    end
-    object cmdCancelOrder: TButton
-      Left = 4
-      Top = 1
-      Width = 219
-      Height = 32
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Caption = 'Cancel Checked Order(s)'
-      ModalResult = 4
+    object pnlCtrRght: TPanel
+      Left = 325
+      Top = 0
+      Width = 474
+      Height = 378
+      Margins.Right = 2
+      Align = alClient
+      BevelOuter = bvNone
+      Constraints.MinWidth = 400
       TabOrder = 1
-      OnClick = cmdCancelOrderClick
+      OnResize = pnlOrderChecksResize
+      object Panel1: TPanel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 468
+        Height = 372
+        Align = alClient
+        AutoSize = True
+        BevelOuter = bvNone
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        object Splitter2: TSplitter
+          Left = 0
+          Top = 267
+          Width = 468
+          Height = 3
+          Cursor = crVSplit
+          Align = alBottom
+          ExplicitLeft = 1
+          ExplicitWidth = 399
+        end
+        object pnlOrderChecks: TPanel
+          Left = 0
+          Top = 0
+          Width = 468
+          Height = 267
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 0
+          object lblNote: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 218
+            Width = 462
+            Height = 13
+            Margins.Bottom = 6
+            Align = alBottom
+            Caption = 
+              'NOTE: The override reason is for tracking purposes and does not ' +
+              'change or place new order(s).'
+            WordWrap = True
+            ExplicitWidth = 452
+          end
+          object pnlReason: TPanel
+            Left = 0
+            Top = 237
+            Width = 468
+            Height = 30
+            Margins.Left = 5
+            Margins.Top = 10
+            Margins.Right = 5
+            Align = alBottom
+            AutoSize = True
+            BevelOuter = bvNone
+            TabOrder = 1
+            object lblReason: TLabel
+              AlignWithMargins = True
+              Left = 3
+              Top = 6
+              Width = 169
+              Height = 21
+              Margins.Top = 6
+              Align = alLeft
+              Caption = 'Rea&son for overriding order checks:'
+              ExplicitHeight = 13
+            end
+            object cmbOverReason: TORComboBox
+              AlignWithMargins = True
+              Left = 178
+              Top = 3
+              Width = 287
+              Height = 21
+              Hint = 'Please either select the reason for the override or type one in.'
+              Style = orcsDropDown
+              Align = alClient
+              AutoSelect = True
+              Caption = ''
+              Color = clWindow
+              DropDownCount = 8
+              ItemHeight = 13
+              ItemTipColor = clWindow
+              ItemTipEnable = True
+              ListItemsOnly = False
+              LongList = False
+              LookupPiece = 0
+              MaxLength = 0
+              Sorted = False
+              SynonymChars = '<>'
+              TabOrder = 0
+              Text = ''
+              OnChange = cmbOverReasonChange
+              CharsNeedMatch = 1
+            end
+          end
+          object rchOrdChk: TRichEdit
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 462
+            Height = 212
+            Hint = 
+              'This is the list of order checks for the selected drug. Blue tex' +
+              't indicates HIGH while green text indicates MODERATE and black t' +
+              'ext indicates LOW.'
+            Margins.Bottom = 0
+            Align = alClient
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            ReadOnly = True
+            ScrollBars = ssVertical
+            TabOrder = 0
+            Zoom = 100
+          end
+        end
+        object pnlComment: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 273
+          Width = 462
+          Height = 94
+          Margins.Bottom = 5
+          Align = alBottom
+          BevelOuter = bvNone
+          TabOrder = 1
+          object lblComment: TLabel
+            AlignWithMargins = True
+            Left = 0
+            Top = 3
+            Width = 459
+            Height = 13
+            Margins.Left = 0
+            Align = alTop
+            Caption = 'Remote Allergy Co&mment (Optional):'
+            ExplicitWidth = 169
+          end
+          object memRmtCmt: TMemo
+            Left = 0
+            Top = 19
+            Width = 462
+            Height = 75
+            Hint = 'These are the addiitonal comments '
+            Align = alClient
+            Lines.Strings = (
+              'No remote '
+              'comments found')
+            ScrollBars = ssVertical
+            TabOrder = 0
+            OnChange = memRmtCmtChange
+            OnEnter = memRmtCmtEnter
+          end
+        end
+      end
     end
-    object cmdContinue: TButton
-      Left = 266
-      Top = 118
-      Width = 157
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akRight, akBottom]
-      Caption = 'Accept Order(s)'
-      TabOrder = 4
-      OnClick = cmdContinueClick
-    end
-    object btnReturn: TButton
-      Left = 430
-      Top = 118
-      Width = 156
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akRight, akBottom]
-      Cancel = True
-      Caption = 'Return to Orders'
-      TabOrder = 5
-      OnClick = btnReturnClick
-    end
-    object cmdMonograph: TButton
-      Left = 594
-      Top = 118
-      Width = 219
-      Height = 31
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akRight, akBottom]
-      Caption = 'Drug Interaction Monograph'
-      TabOrder = 6
-      OnClick = cmdMonographClick
+    object PnlCtrLft: TPanel
+      Left = 0
+      Top = 0
+      Width = 322
+      Height = 378
+      Align = alLeft
+      BevelOuter = bvNone
+      BorderWidth = 2
+      Constraints.MinWidth = 100
+      TabOrder = 0
+      object pnlLegend: TPanel
+        Left = 2
+        Top = 290
+        Width = 318
+        Height = 86
+        Align = alBottom
+        BevelOuter = bvNone
+        ParentBackground = False
+        TabOrder = 1
+        object lvLegend: TListView
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 312
+          Height = 77
+          Margins.Bottom = 6
+          Align = alClient
+          Color = clInfoBk
+          Columns = <
+            item
+              Caption = 'Image'
+            end
+            item
+              AutoSize = True
+              Caption = 'Description'
+            end>
+          Items.ItemData = {
+            053A0100000400000000000000FFFFFFFFFFFFFFFF01000000FFFFFFFF000000
+            00001241006300740069006F006E002000690073002000720065007100750069
+            007200650064002066211F01000000FFFFFFFFFFFFFFFF01000000FFFFFFFF00
+            000000001E41006C006C00200072006500710075006900720065006D0065006E
+            00740073002000680061007600650020006200650065006E0020006D00650074
+            00386E211F02000000FFFFFFFFFFFFFFFF01000000FFFFFFFF0000000000174F
+            0072006400650072002000770069006C006C002000620065002000630061006E
+            00630065006C006C00650064009074211F03000000FFFFFFFFFFFFFFFF010000
+            00FFFFFFFF00000000001449006E0066006F0072006D006100740069006F006E
+            0020006400690061006C006F006700750065007873211FFFFFFFFFFFFFFFFF}
+          ShowColumnHeaders = False
+          SmallImages = ImageList1
+          TabOrder = 0
+          TabStop = False
+          ViewStyle = vsReport
+        end
+      end
+      object pnlList: TPanel
+        Left = 2
+        Top = 2
+        Width = 318
+        Height = 288
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'pnlList'
+        TabOrder = 0
+        object PnlCtrBtm: TPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 260
+          Width = 312
+          Height = 25
+          Align = alBottom
+          AutoSize = True
+          BevelOuter = bvNone
+          BorderStyle = bsSingle
+          Ctl3D = False
+          Locked = True
+          ParentCtl3D = False
+          TabOrder = 1
+          object LblOverrideNum: TLabel
+            AlignWithMargins = True
+            Left = 9
+            Top = 5
+            Width = 301
+            Height = 13
+            Margins.Left = 9
+            Margins.Top = 5
+            Margins.Right = 0
+            Align = alTop
+            Caption = 'N'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clRed
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            ExplicitWidth = 10
+          end
+          object lblOverrideChecks: TVA508StaticText
+            Name = 'lblOverrideChecks'
+            AlignWithMargins = True
+            Left = 27
+            Top = 5
+            Width = 222
+            Height = 15
+            Margins.Top = 4
+            Alignment = taLeftJustify
+            AutoSize = True
+            Caption = 'Remaining Critical High Order Check Overrides'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 0
+            ShowAccelChar = True
+          end
+        end
+        object lvOrders: TListView
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 312
+          Height = 253
+          Margins.Bottom = 1
+          Align = alClient
+          Columns = <
+            item
+              Caption = 'Cancel'
+              Width = -2
+              WidthType = (
+                -2)
+            end
+            item
+              Caption = 'Status'
+              Width = -2
+              WidthType = (
+                -2)
+            end
+            item
+              Caption = 'Order'
+              Width = -1
+              WidthType = (
+                -1)
+            end>
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ReadOnly = True
+          RowSelect = True
+          ParentFont = False
+          SmallImages = ImageList1
+          StateImages = ImageList2
+          TabOrder = 0
+          ViewStyle = vsReport
+          OnClick = lvOrdersClick
+          OnEnter = lvOrdersEnter
+          OnKeyUp = lvOrdersKeyUp
+          OnSelectItem = lvOrdersSelectItem
+        end
+      end
     end
   end
-  object pnlTop: TORAutoPanel [1]
+  object pnlInstr: TPanel [1]
     Left = 0
     Top = 0
-    Width = 816
-    Height = 424
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Align = alClient
-    BevelEdges = []
+    Width = 799
+    Height = 27
+    Align = alTop
+    AutoSize = True
     BevelOuter = bvNone
-    DoubleBuffered = True
-    ParentDoubleBuffered = False
-    TabOrder = 1
-    object lblHover: TLabel
+    Ctl3D = False
+    ParentCtl3D = False
+    TabOrder = 0
+    object lblInstr: TStaticText
       AlignWithMargins = True
-      Left = 19
-      Top = 47
-      Width = 793
-      Height = 16
-      Margins.Left = 19
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 5
+      Top = 5
+      Width = 789
+      Height = 17
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Align = alTop
       Caption = 
-        'If the order check description is cut short, hover over the text' +
-        ' to view the complete description.'
-      WordWrap = True
-      ExplicitTop = 39
-      ExplicitWidth = 545
-    end
-    object grdchecks: TCaptionStringGrid
-      AlignWithMargins = True
-      Left = 4
-      Top = 67
-      Width = 808
-      Height = 353
-      Margins.Left = 4
-      Margins.Top = 0
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Align = alClient
-      ColCount = 3
-      DefaultDrawing = False
-      FixedColor = clBtnShadow
-      FixedCols = 0
-      RowCount = 2
-      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goRowMoving, goTabs]
-      ScrollBars = ssVertical
+        'Move through the list on the left side. The right side displays ' +
+        'the associated order checks and reason for override, when availa' +
+        'ble. All orders require a reason for override. To cancel an indi' +
+        'vidual order use the checkbox.'
       TabOrder = 0
-      OnDrawCell = grdchecksDrawCell
-      OnEnter = grdchecksEnter
-      OnKeyDown = grdchecksKeyDown
-      OnMouseDown = grdchecksMouseDown
-      OnMouseMove = grdchecksMouseMove
-      OnSelectCell = grdchecksSelectCell
-      Caption = ''
-      JustToTab = True
-      ExplicitTop = 59
-      ExplicitHeight = 361
     end
-    object pnlInstr: TPanel
-      AlignWithMargins = True
-      Left = 4
-      Top = 4
-      Width = 808
-      Height = 35
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Align = alTop
-      Alignment = taLeftJustify
+  end
+  object grdPnlButtom: TGridPanel [2]
+    AlignWithMargins = True
+    Left = 3
+    Top = 408
+    Width = 793
+    Height = 50
+    Align = alBottom
+    BevelOuter = bvNone
+    ColumnCollection = <
+      item
+        Value = 23.961350406954420000
+      end
+      item
+        Value = 16.725673610998430000
+      end
+      item
+        Value = 24.259577060002150000
+      end
+      item
+        SizeStyle = ssAuto
+        Value = 12.397639584010210000
+      end
+      item
+        Value = 17.525324237847330000
+      end
+      item
+        Value = 17.528074684197660000
+      end>
+    Constraints.MaxHeight = 50
+    Constraints.MinHeight = 34
+    ControlCollection = <
+      item
+        Column = 0
+        Control = pnlPAA
+        Row = 0
+      end
+      item
+        Column = 1
+        Control = pnlVM
+        Row = 0
+      end
+      item
+        Column = 2
+        Control = pnlCCO
+        Row = 0
+      end
+      item
+        Column = 4
+        Control = pnlAccept
+        Row = 0
+      end
+      item
+        Column = 5
+        Control = pnlRTO
+        Row = 0
+      end>
+    RowCollection = <
+      item
+        Value = 100.000000000000000000
+      end>
+    TabOrder = 2
+    object pnlPAA: TPanel
+      Left = 0
+      Top = 0
+      Width = 190
+      Height = 50
+      Align = alClient
       BevelOuter = bvNone
-      Caption = 
-        'To cancel an order select the order by checking the checkbox and' +
-        ' press the "Cancel Checked Order(s)" button.'
+      TabOrder = 0
+      object btnAllergy: TButton
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 184
+        Height = 44
+        Action = acAllergyAssessment
+        Align = alClient
+        TabOrder = 0
+        WordWrap = True
+      end
+    end
+    object pnlVM: TPanel
+      Left = 190
+      Top = 0
+      Width = 132
+      Height = 50
+      Align = alClient
+      BevelOuter = bvNone
       TabOrder = 1
+      object btnMonograph: TButton
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 126
+        Height = 44
+        Action = acViewMonograph
+        Align = alClient
+        Cancel = True
+        TabOrder = 0
+        WordWrap = True
+      end
+    end
+    object pnlCCO: TPanel
+      Left = 322
+      Top = 0
+      Width = 192
+      Height = 50
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 2
+      object cmdCancelOrder: TButton
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 186
+        Height = 44
+        Align = alClient
+        Caption = 'Cancel Checked Order(s)'
+        TabOrder = 0
+        WordWrap = True
+        OnClick = cmdCancelOrderClick
+      end
+    end
+    object pnlAccept: TPanel
+      Left = 514
+      Top = 0
+      Width = 138
+      Height = 50
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 3
+      object cmdContinue: TButton
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 132
+        Height = 44
+        Align = alClient
+        Caption = '&Accept'
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ModalResult = 1
+        ParentFont = False
+        TabOrder = 0
+        WordWrap = True
+        OnClick = cmdAcceptOrdersClick
+      end
+    end
+    object pnlRTO: TPanel
+      Left = 652
+      Top = 0
+      Width = 141
+      Height = 50
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 4
+      object btnReturn: TButton
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 135
+        Height = 44
+        Align = alClient
+        Cancel = True
+        Caption = 'Return to &Orders'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ModalResult = 2
+        ParentFont = False
+        TabOrder = 0
+        WordWrap = True
+      end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 744
-    Top = 88
+    Left = 32
+    Top = 112
     Data = (
       (
-        'Component = pnlBottom'
+        'Component = frmOCSession'
         'Status = stsDefault')
       (
-        'Component = txtJustify'
+        'Component = PnlCtr'
+        'Status = stsDefault')
+      (
+        'Component = PnlCtrBtm'
+        'Status = stsDefault')
+      (
+        'Component = lblOverrideChecks'
+        'Label = LblOverrideNum'
+        'Status = stsOK')
+      (
+        'Component = PnlCtrLft'
+        'Status = stsDefault')
+      (
+        'Component = pnlCtrRght'
+        'Status = stsDefault')
+      (
+        'Component = lvOrders'
+        'Status = stsDefault'
+        'Columns'
+        (
+          '1 = False'
+          '0 = False'))
+      (
+        'Component = rchOrdChk'
+        'Status = stsDefault')
+      (
+        'Component = pnlReason'
+        'Text = Reason for overriding order checks disabled'
+        'Status = stsOK')
+      (
+        'Component = pnlComment'
+        'Text = Remote allergy comment disabled'
+        'Status = stsOK')
+      (
+        'Component = memRmtCmt'
+        'Label = lblComment'
+        'Status = stsOK')
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = pnlInstr'
+        'Status = stsDefault')
+      (
+        'Component = pnlLegend'
+        'Status = stsDefault')
+      (
+        'Component = lvLegend'
+        'Status = stsDefault'
+        'Columns'
+        (
+          '0 = False'))
+      (
+        'Component = pnlList'
+        'Status = stsDefault')
+      (
+        'Component = pnlOrderChecks'
+        'Status = stsDefault')
+      (
+        'Component = grdPnlButtom'
+        'Status = stsDefault')
+      (
+        'Component = cmbOverReason'
+        
+          'Text = Reason for overriding order checks. NOTE, The override re' +
+          'ason is for tracking purposes and does not change or place new o' +
+          'rders'
+        'Status = stsOK')
+      (
+        'Component = pnlPAA'
+        'Status = stsDefault')
+      (
+        'Component = btnAllergy'
+        'Status = stsDefault')
+      (
+        'Component = pnlVM'
+        'Status = stsDefault')
+      (
+        'Component = btnMonograph'
+        'Status = stsDefault')
+      (
+        'Component = pnlCCO'
         'Status = stsDefault')
       (
         'Component = cmdCancelOrder'
         'Status = stsDefault')
       (
+        'Component = pnlAccept'
+        'Status = stsDefault')
+      (
         'Component = cmdContinue'
         'Status = stsDefault')
       (
+        'Component = pnlRTO'
+        'Status = stsDefault')
+      (
         'Component = btnReturn'
-        'Status = stsDefault')
-      (
-        'Component = memNote'
-        'Status = stsDefault')
-      (
-        'Component = frmOCSession'
-        'Status = stsDefault')
-      (
-        'Component = cmdMonograph'
-        'Status = stsDefault')
-      (
-        'Component = grdchecks'
-        'Status = stsDefault')
-      (
-        'Component = pnlTop'
-        'Status = stsDefault')
-      (
-        'Component = pnlInstr'
         'Status = stsDefault'))
+  end
+  object ImageList1: TImageList
+    ColorDepth = cd32Bit
+    Left = 440
+    Top = 136
+    Bitmap = {
+      494C010106000800040010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      0000000000003600000028000000400000002000000001002000000000000020
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000050505100C0C0C2A00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000A0A0A23474747E2505050FF2626267C000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000050505123131
+      319B1F1F1F650000000000000000000000000000000000000000000000000808
+      081B323232A11B1B1B5700000000000000000000000000000000000000000000
+      0000000000000A0A0A23474747E2505050FF505050FF505050FF2828287D0000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000323232A25050
+      50FF505050FF25252578000000000000000000000000000000000808081D4646
+      46DB505050FF4F4F4FFC0A0A0A23000000000000000000000000000000000000
+      00000A0A0A23474747E2505050FF505050FF505050FF505050FF505050FF2828
+      287D000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000242424735050
+      50FF505050FF505050FF2626267C00000000000000000909091F474747DE5050
+      50FF505050FF474747E20404040F000000000000000000000000000000000A0A
+      0A23474747E2505050FF505050FF474747DE2F2F2F93505050FF505050FF5050
+      50FF2828287D0000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000012F2F
+      2F97505050FF505050FF505050FF242424740808081D464646DB505050FF5050
+      50FF494949E80D0D0D2B000000000000000000000000000000000B0B0B224747
+      47E2505050FF505050FF474747DE0909091F0000000129292984505050FF5050
+      50FF505050FF2626267C00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000029292984505050FF505050FF505050FF4C4C4CF1505050FF505050FF4646
+      46E00B0B0B220000000000000000000000000000000000000000383838B15050
+      50FF505050FF474747DE0909091F000000000000000000000001292929845050
+      50FF505050FF505050FF0C0C0C29000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000002B2B2B8C505050FF505050FF505050FF505050FF474747E30B0B
+      0B250000000000000000000000000000000000000000000000001E1E1E635050
+      50FF474747DE0909091F00000000000000000000000000000000000000012929
+      2984505050FF424242D20303030A000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000002B2B2B8A505050FF505050FF474747E20A0A0A240000
+      0000000000000000000000000000000000000000000000000000000000000C0C
+      0C29050505100000000000000000000000000000000000000000000000000000
+      00010E0E0E2F0303030C00000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000020202069323232A00808081C000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000001120F0C3E27211B822E27229F2E27229F261F1B81110F0C3D0000
+      000000000000000000000000000000000000595859BC737273F4737273F47372
+      73F4737273F4737273F4737273F4737273F4747373F4747374F4747374F47473
+      74F4747374F4747374F4737273F4595859BD0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000000406152F151D72EF151D
+      72EF0406152F00000000000000000000000000000000000000000406152F151E
+      71EF141C6EEF0406152F0000000000000000000000000000000000000000100E
+      0C38342A25AD201B166C09070621000000010000000109090722211B186E342A
+      25AD100D0C360000000000000000000000005F5D5DCAF4F7FAFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFF9FBFBFF535353C30000000000000000000000000000
+      000000000000001F004E004B00AE000000080000000000000000000000000000
+      0000000000000000000000000000000000000406152F192173EF4E56C5FF303A
+      BCFF151D72EF0406152F0000000000000000000000000406152F151E71EF333B
+      AEFF333BAEFF151E71EF0406152F0000000000000000000000001B16125A2B23
+      1F91010101070000000000000000000000000000000000000000000000000202
+      02082C2420951A16125800000000000000003938387BB1BBC3FC94D5F8FF06B7
+      F7FF00CBFEFF00D0FFFF00DCFFFF373D3EFF21888EFF0CFEFFFF31FFFFFF54FF
+      FFFF6FFFFFFFC5FEFEFFB8BABBF8323232770000000000000000000000000000
+      00000021004F006F00E6008000FF004100B70000000700000000000000000000
+      0000000000000000000000000000000000001A2274EF5A62CCFF686ADEFF595C
+      DAFF2A34BBFF151D72EF0406152F000000000406152F151E72EF3139B1FF383E
+      D8FF383ED7FF333BAEFF151E71EF0000000000000000110E0C3A2A241D900000
+      000000000000000000000303030C14110E4414110E4406040413000000000000
+      0000000000002D251F94100D0C3700000000000000006E6B6CDCEAF3F9FF24B8
+      F5FF01C5FCFF00CEFFFF00D1F9FF383A3AFF506061FF00F9FFFF0FFEFFFF2BFF
+      FFFF56FFFFFFEFFAFAFF6A6A6AE6000000000000000000000000000000000828
+      08550B7A0BE7008700FF008700FF008700FF004200B300000005000000000000
+      000000000000000000000000000000000000141C6EEF525BC1FF6C6FE0FF6968
+      DFFF4A4DD7FF2933BCFF151D72EF03030D1F151E72EF2E37B5FF363CD9FF373C
+      E8FF373DD8FF2C34A1FF141C6EEF0000000000000001332923AC010101060000
+      0000000000000000000004030311382C27B83B312AC708050419000000000000
+      00000000000002020208342A25AD00000001000000001B1B1B3CB5B8BBFA93D7
+      F8FF04BBF9FF00CCFEFF00D0FFFF03DFF2FF03E2F3FF00EFFFFF00F8FFFF06FD
+      FFFF99FBFBFFB1B2B2F71918193B00000000000000000000000009280956419A
+      41EC47AC47FF2B9F2BFF0B910BFF038D03FF038D03FF004100AE000000040000
+      0000000000000000000000000000000000000406152F1A2274EF5C65CFFF6A6E
+      E0FF6867DFFF3E41D5FF2833BDFF182180FF2B35BAFF353AD7FF373AE4FF363C
+      D9FF2A32A4FF141C6EEF0406152F00000000130F0D411D181665000000000000
+      00000000000000000000000000002A241D90322A24A800000000000000000000
+      000000000000000000001F1A166B120F0E3F00000000000000005E5D5EBFDBE8
+      F0FF45B6E9FF02C3FCFF00CDFEFF222424FF3C4E50FF00E4FFFF00ECFFFF37F5
+      FFFFDDEDEDFE4F4E4FB80000000000000000000000000A290A564B9E4BEC55B2
+      55FF53B153FF51B151FF4FB04FFF3BA63BFF239C23FF139413FF094009A90000
+      000300000000000000000000000000000000000000000406152F192174EF5B63
+      CFFF696CE0FF6160DDFF3538D4FF2C37CFFF3338D6FF3638DFFF343AD8FF2731
+      A8FF141C6EEF0406152F000000000000000028211D8706060418000000000000
+      00000000000000000000000000002A241D90322A24A800000000000000000000
+      000000000000000000000807071F27211B8400000000000000000D0B0D1A9898
+      99F6D4EEFBFF42B1E5FF18C6F6FF131313FF2A3234FF10DBFFFF16E2FFFFD1F7
+      FCFF908F90F30C0C0C1D00000000000000000926095354A554ED60B760FF5FB7
+      5FFF5DB65DFF408C40D8164D169152AB52F757B357FF52B152FF45AB45FF2853
+      28AE0000000200000000000000000000000000000000000000000406152F1921
+      74EF5962D0FF676BE0FF5756DBFF3435D6FF3636D9FF3237D7FF252FABFF141C
+      6EEF0406152F0000000000000000000000002D27229C00000000000000000000
+      00000000000000000000000000002A241D90322A24A800000000000000000000
+      00000000000000000000000000002E27229F0000000000000000000000004240
+      4084E4E9ECFF4EB0E1FF4AB1E1FF151413FF111212FF51DEFEFF79E8FEFFE2E7
+      E8FD404040950000000000000000000000000213022C4C944CDB6ABC6AFF69BB
+      69FF469046D9020F0225000000001341137E5CAD5CF760B760FF5FB65FFF5DB6
+      5DFF325832AB000000010000000000000000000000000000000000000000070B
+      2B5F202984FF6871E6FF6669DFFF4B4AD8FF3435D6FF2934CCFF161F7AFF070B
+      2B5F000000000000000000000000000000002D27229C00000000000000000000
+      00000000000000000000000000002A241D90322A24A800000000000000000000
+      0000000000000000000000000000302823A00000000000000000000000000000
+      0000969596F1DCECF7FF4AADDFFF21201EFF21201FFF4BD4F7FFDFF2F7FF8C8C
+      8CEF00000000000000000000000000000000000000000213022C519451DB5092
+      50D9020F02250000000000000000000000001441147D64B264F76ABC6AFF68BB
+      68FF67BA67FF325432A6000000010000000000000000000000000406152F1A22
+      75EF626BD6FF6774E3FF646DDEFF6164DEFF3E3DD6FF3135D5FF2631C2FF151D
+      73EF0406152F00000000000000000000000028211D8905050515000000000000
+      0000000000000000000006050314392F27BF322A24A800000000000000000000
+      000000000000000000000707061C28211D870000000000000000000000000000
+      00002B2B2B5CC8CBCFFC5CB3E1FF1D1C1AFF232220FF9BDBF2FFC2C3C4F92725
+      275A0000000000000000000000000000000000000000000000000213022C020F
+      022500000000000000000000000000000000000000001541157D6BB66BF773C0
+      73FF72BF72FF70BE70FF365136A100000000000000000406152F1B2375EF6D75
+      DAFF6F81E6FF6477DFFF6672E3FF636CE3FF595DDEFF3837D4FF3134D5FF2530
+      C3FF151D73EF0406152F000000000000000015100E451C181560000000000000
+      0000000000000000000002020209130F0C410D0C093200000000000000000000
+      000000000000000000001F19156613110D420000000000000000000000000000
+      0000000000007D7C7DDBEFF3F7FF4EBFE7FF4CCBF0FFF0F4F7FF6F6F6FD60000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00000000000000000000000000000000000000000000000000001643167D74BC
+      74F77CC47CFF7BC37BFF7BBF7BFE1338136A0406152F1C2475EF7881DEFF7E8F
+      EAFF7086E2FF6D7EE6FF5E67CAFF273085FF5B64D7FF4B4FDCFF3534D4FF3034
+      D6FF2430C4FF151D73EF0406152F0000000001010002332B25AA010101040000
+      00000000000000000000000000003D332BCE42362FDD00000000000000000000
+      00000000000001000005342A25AD000000010000000000000000000000000000
+      0000000000000D0C0C1DC5C5C5FC62A8CCFF4FCEF3FFBFBFBFF7191819390000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000001743
+      177D7FC07FF785C585FE2D652DA9000100021C2475EF848CE1FF909DEEFF8295
+      E6FF7D8DEAFF6971CFFF1A2270EF04071C3F151D65CF505AD3FF3D42D9FF3534
+      D4FF3034D6FF232FC5FF151D73EF0000000000000000120F0E3F28211D870000
+      00000000000000000000000000001E1A1568211C187200000000000000000000
+      0000000000002A231E8C120F0C3C000000000000000000000000000000000000
+      00000000000000000000646364AED3DBE4FFD3D8DEFD575657A8000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      00001841187B2F652FA600010002000000001C2475EF8990E2FF97A4F0FF8E9C
+      EEFF757CCCFF1B2371EF0406152F0000000003030D1F192174EF4B55D3FF2E34
+      D8FF2E33D7FF222EC7FF151D73EF0000000000000000000000001C1714612722
+      1C86000000030000000000000000000000000000000000000000000000000101
+      01042A231D8A1C17145F00000000000000000000000000000000000000000000
+      000000000000000000000D0B0D1A6A6768D3585858CB0C0B0C1B000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000406152F1C2475EF878FE3FF8288
+      CAFF1C2471EF0406152F0000000000000000000000000406152F182174EF3F4A
+      D2FF1E2CCCFF141D73EF0406152F000000000000000000000000000000001310
+      0E40342A24AB1B17135E040404120000000000000000060503141C17145F342A
+      24AB120F0C3E0000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000000406152F1C2472EF1C24
+      72EF0406152F00000000000000000000000000000000000000000406152F1820
+      74EF182074EF0406152F00000000000000000000000000000000000000000000
+      000001010002151210482A231E8C2D27229C2D27229C2A231E8C15120F460101
+      000200000000000000000000000000000000424D3E000000000000003E000000
+      2800000040000000200000000100010000000000000100000000000000000000
+      000000000000000000000000FFFFFF00FFFFFFFF00000000FFFFFFFF00000000
+      FFFFFFFF00000000FFFFFE7F00000000FFFFFC3F00000000C7E3F81F00000000
+      C3C1F00F00000000C181E00700000000C003C00300000000F007C18100000000
+      F80FC3C100000000FC1FE7E300000000FE3FFFFF00000000FFFFFFFF00000000
+      FFFFFFFF00000000FFFFFFFF00000000FFFFFFFFFFFFF01F0000FFFF87C3E007
+      0000F8FF0381C7E30000F07F01019C398001E03F00011C388001C01F00013E7C
+      C003800F80033E7CC0030007C0077E7EE0070203E00F7E7EF00F8701C0073C7C
+      F00FCF8180033C7CF81FFFC000011E78F81FFFE000019E79FC3FFFF10101C7E3
+      FC3FFFFF0381E187FFFFFFFF87C3F00F00000000000000000000000000000000
+      000000000000}
+  end
+  object ImageList2: TImageList
+    ColorDepth = cd32Bit
+    Left = 536
+    Top = 136
+    Bitmap = {
+      494C010102000800040010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      0000000000003600000028000000400000001000000001002000000000000010
+      000000000000000000000000000000000000000000FF000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      000000000000000000008686869F8686869F0000000000000000000000000000
+      0000000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      0000000000008686869F000000FF000000FF8686869F00000000000000000000
+      0000000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      00008686869F000000FF000000FF000000FF000000FF8686869F000000000000
+      0000000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000008686
+      869F000000FF000000FF000000FF000000FF000000FF000000FF8686869F0000
+      0000000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF000000008686869F0000
+      00FF000000FF000000FF8686869F8686869F000000FF000000FF000000FF8686
+      869F000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF000000008686869F0000
+      00FF000000FF8686869F00000000000000008686869F000000FF000000FF0000
+      00FF8686869F0000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000008686
+      869F8686869F000000000000000000000000000000008686869F000000FF0000
+      00FF000000FF8686869F00000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      00000000000000000000000000000000000000000000000000008686869F0000
+      00FF000000FF8686869F00000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000008686
+      869F8686869F0000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF000000FF00000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000000000FF000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF0000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000424D3E000000000000003E000000
+      2800000040000000100000000100010000000000800000000000000000000000
+      000000000000000000000000FFFFFF0000000000000000007FFE7FFE00000000
+      7FFE7FFE000000007FFE7CFE000000007FFE787E000000007FFE703E00000000
+      7FFE601E000000007FFE400E000000007FFE4306000000007FFE678200000000
+      7FFE7FC2000000007FFE7FE6000000007FFE7FFE000000007FFE7FFE00000000
+      7FFE7FFE00000000000000000000000000000000000000000000000000000000
+      000000000000}
+  end
+  object VA508StatusImgLst: TVA508ImageListLabeler
+    Components = <
+      item
+        Component = lvOrders
+      end
+      item
+        Component = lvLegend
+      end>
+    ImageList = ImageList1
+    Labels = <
+      item
+        Caption = 'Required'
+        ImageIndex = 0
+        OverlayIndex = -1
+      end
+      item
+        Caption = 'Complete'
+        ImageIndex = 1
+        OverlayIndex = -1
+      end
+      item
+        Caption = 'Canceled'
+        ImageIndex = 2
+        OverlayIndex = -1
+      end
+      item
+        Caption = 'Information'
+        ImageIndex = 3
+        OverlayIndex = -1
+      end
+      item
+        Caption = 'Up'
+        ImageIndex = 4
+        OverlayIndex = -1
+      end
+      item
+        Caption = 'Down'
+        ImageIndex = 5
+        OverlayIndex = -1
+      end>
+    Left = 112
+    Top = 112
+  end
+  object VA508CheckBoxImgLst: TVA508ImageListLabeler
+    Components = <
+      item
+        Component = lvOrders
+      end>
+    ImageList = ImageList2
+    Labels = <
+      item
+        Caption = 'Unchecked'
+        ImageIndex = 0
+        OverlayIndex = -1
+      end
+      item
+        Caption = 'Checked'
+        ImageIndex = 1
+        OverlayIndex = -1
+      end>
+    Left = 248
+    Top = 112
+  end
+  object ActionList1: TActionList
+    Left = 616
+    Top = 136
+    object acAllergyAssessment: TAction
+      Caption = 'Perform Aller&gy Assessment'
+      OnExecute = acAllergyAssessmentExecute
+    end
+    object acViewMonograph: TAction
+      Caption = 'View &Monograph'
+      OnExecute = acViewMonographExecute
+    end
   end
 end

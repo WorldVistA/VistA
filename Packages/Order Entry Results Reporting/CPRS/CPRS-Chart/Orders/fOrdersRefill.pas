@@ -14,7 +14,6 @@ type
     grbPickUp: TGroupBox;
     radWindow: TRadioButton;
     radMail: TRadioButton;
-    radClinic: TRadioButton;
     pnlClient: TPanel;
     lstOrders: TCaptionListBox;
     lblOrders: TLabel;
@@ -23,9 +22,15 @@ type
     procedure cmdCancelClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure lstOrdersDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure lstOrdersMeasureItem(Control: TWinControl; Index: Integer;
+      var aHeight: Integer);
   private
     OKPressed: Boolean;
     PickupAt: string;
+    function MeasureColumnHeight(TheOrderText: string;
+      Index: Integer): integer;
   end;
 
 function ExecuteRefillOrders(SelectedList: TList): Boolean;
@@ -34,7 +39,7 @@ implementation
 
 {$R *.DFM}
 
-uses rOrders, rMeds, uCore, uConst, rMisc;
+uses rOrders, rMeds, uCore, uConst, rMisc, uPaPI;
 
 function ExecuteRefillOrders(SelectedList: TList): Boolean;
 var
@@ -81,9 +86,6 @@ begin
   if PickupAt = 'M' then
     radMail.Checked := true
   else
-  if PickupAt = 'C' then
-    radClinic.Checked := true
-  else
   begin
     PickupAt := 'W';
     radWindow.Checked := true;
@@ -96,7 +98,7 @@ const
   TC_LOCATION_REQ = 'Missing Refill Location';
 begin
   inherited;
-  if not (radWindow.Checked or radMail.Checked or radClinic.Checked) then
+  if not (radWindow.Checked or radMail.Checked) then
   begin
     InfoBox(TX_LOCATION_REQ, TC_LOCATION_REQ, MB_OK);
     Exit;
@@ -104,7 +106,8 @@ begin
   OKPressed := True;
   if radWindow.Checked then PickupAt := 'W'
   else if radMail.Checked then PickupAt := 'M'
-  else PickupAt := 'C';
+  //  else if radPark.Checked then PickupAt := 'P' // PaPI
+  else PickupAt := 'W';
   Close;
 end;
 
@@ -123,6 +126,53 @@ end;
 procedure TfrmRefillOrders.FormShow(Sender: TObject);
 begin
   SetFormPosition(Self);
+end;
+
+procedure TfrmRefillOrders.lstOrdersDrawItem(Control: TWinControl;
+  Index: Integer; Rect: TRect; State: TOwnerDrawState);
+var
+  x: string;
+  ARect: TRect;
+begin
+  inherited;
+  x := '';
+  ARect := Rect;
+  with lstOrders do
+  begin
+    Canvas.FillRect(ARect);
+    Canvas.Pen.Color := Get508CompliantColor(clSilver);
+    Canvas.MoveTo(0, ARect.Bottom - 1);
+    Canvas.LineTo(ARect.Right, ARect.Bottom - 1);
+    if Index < Items.Count then
+    begin
+      x := Items[Index];
+      DrawText(Canvas.handle, PChar(x), Length(x), ARect, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+    end;
+  end;end;
+
+procedure TfrmRefillOrders.lstOrdersMeasureItem(Control: TWinControl;
+  Index: Integer; var aHeight: Integer);
+var
+  x:string;
+begin
+  inherited;
+  with lstOrders do if Index < Items.Count then
+  begin
+    x := Items[index];
+    aHeight := MeasureColumnHeight(x, Index);
+  end;
+end;
+
+function TfrmRefillOrders.MeasureColumnHeight(TheOrderText: string;
+  Index: Integer): integer;
+var
+  ARect: TRect;
+begin
+  ARect.Left := 0;
+  ARect.Top := 0;
+  ARect.Bottom := 0;
+  ARect.Right := lstOrders.Width - 6;
+  Result := WrappedTextHeightByFont(lstOrders.Canvas,lstOrders.Font,TheOrderText,ARect);
 end;
 
 end.

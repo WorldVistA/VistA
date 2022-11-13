@@ -1,5 +1,9 @@
 unit fOCMonograph;
+{------------------------------------------------------------------------------
+Update History
 
+    2016-09-20: NSR#20101203 (Critical/Hight Order Check Display)
+-------------------------------------------------------------------------------}
 interface
 
 uses
@@ -7,7 +11,7 @@ uses
   Dialogs, StdCtrls, ORFn, ORCtrls, rOrders, VA508AccessibilityManager, ExtCtrls;
 
 type
-  TfrmOCMonograph = class(TForm) 
+  TfrmOCMonograph = class(TForm)
     monoCmbLst: TComboBox;
     monoMemo: TCaptionMemo;
     cmdOK: TButton;
@@ -15,19 +19,24 @@ type
     VA508StaticText2: TVA508StaticText;
     VA508AccessibilityManager1: TVA508AccessibilityManager;
     VA508ComponentAccessibility1: TVA508ComponentAccessibility;
+    pnlBottom: TPanel;
+    pnlTop: TPanel;
+    pnlCanvas: TPanel;
     procedure DisplayMonograph;
     procedure monoCmbLstChange(Sender: TObject);
-    procedure cmdOKClick(Sender: TObject);
     procedure VA508ComponentAccessibility1CaptionQuery(Sender: TObject;
       var Text: string);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
+    mList: TStringList;  // AA: tmp reference on the list of monographs.
+                         // Object itself is released in calling module
   public
     { Public declarations }
+    procedure setupByMList(aList:TStringList);
   end;
-var
-  mList: TStringList;
-procedure ShowMonographs(monoList: TStringList);
+
+procedure ShowMonographs(monoList: TStringList); overload;
 
 implementation
 
@@ -35,27 +44,37 @@ implementation
 
 procedure ShowMonographs(monoList: TStringList);
 var
-  i: Integer;
-  frmOCMonograph: TfrmOCMonograph;
+  frm: TfrmOCMonograph;
 begin
   if monoList.Count > 0 then
   begin
-    mList := monoList;
-    frmOCMonograph := TfrmOCMonograph.Create(Application);
+    frm := TfrmOCMonograph.Create(Application);
     try
-      for i := 0 to monoList.Count - 1 do
-        begin
-          frmOCMonograph.monoCmbLst.Items.Add(Piece(monoList[i], U, 2));
-        end;
-
-     //frmOCMonograph.monoMemo.Clear;
-     frmOCMonograph.monoCmbLst.ItemIndex := 0;
-     frmOCMonograph.DisplayMonograph;
-     frmOCMonograph.ShowModal;
+      ResizeFormToFont(frm);
+      frm.setupByMList(monoList);
+      frm.ShowModal;
     finally
-      frmOCMonograph.Free;
+      frm.Free;
     end;
   end;
+end;
+
+procedure TfrmOCMonograph.setupByMList(aList:TStringList);
+var
+  i: Integer;
+begin
+  if not Assigned(aList) then
+    exit;
+  if aList.Count < 1 then
+    exit;
+
+  mList := aList;
+
+  for i := 0 to aList.Count - 1 do
+    monoCmbLst.Items.Add(Piece(aList[i], U, 2));
+
+  monoCmbLst.ItemIndex := 0;
+  DisplayMonograph;
 end;
 
 procedure TfrmOCMonograph.DisplayMonograph;
@@ -67,25 +86,27 @@ begin
   x := -1;
   monograph := TStringList.Create;
   monoMemo.Clear;
-  for i := 0 to mList.Count - 1 do
-  begin
-    if Piece(mList[i],'^',2)=monoCmbLst.Items[monoCmbLst.ItemIndex] then x := StrtoInt(Piece(mList[i],'^',1));
-  end;
-  if (x > -1) then
-  begin
-    GetMonograph(monograph,x);
-    for i := 0 to monograph.Count - 1 do
+  try
+    for i := 0 to mList.Count - 1 do
     begin
-      monoMemo.Text := monoMemo.Text + monograph[i] + CRLF;
+      if Piece(mList[i], '^', 2) = monoCmbLst.Items[monoCmbLst.ItemIndex] then
+        x := StrToIntDef(Piece(mList[i], '^', 1),-1); // AA: re-enforcing conversion
     end;
-
+    if (x > -1) then
+    begin
+      GetMonograph(monograph, x);
+      monoMemo.Lines.Assign(monograph);
+    end;
+  finally
+    monograph.Free; // AA. 20101203
   end;
-    
 end;
 
-procedure TfrmOCMonograph.cmdOKClick(Sender: TObject);
+procedure TfrmOCMonograph.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
 begin
-  self.Close;
+  if Key = VK_ESCAPE then
+    Close;
 end;
 
 procedure TfrmOCMonograph.monoCmbLstChange(Sender: TObject);

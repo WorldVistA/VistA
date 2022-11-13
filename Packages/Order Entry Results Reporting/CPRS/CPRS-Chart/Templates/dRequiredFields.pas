@@ -47,9 +47,7 @@ type
     function getNumberOfMissingFields(aParent: TWinControl): Integer;
     procedure AddFieldControl(aFld: TTemplateField; aControl: TWinControl;
       anID: string);
-{$IFDEF DEBUG}
     function RequiredFields2Str: string;
-{$ENDIF}
     procedure FindFocusedControl(aCtrl:TWinControl);
   end;
 
@@ -312,11 +310,9 @@ begin
     Result := TCPRSDialogNumber(aControl).Edit.Text
     // Result := '' // testing blank values for Number fields
   else
-{$IFDEF DEBUG}
-    // uncomment for testing the highligting of the required fields in DEBUG build
-    // ShowMessage('DEBUG ONLY MESSAGE:' + CRLF + 'Control of class "' +
-    // aControl.ClassName + '" returns blank value')
-{$ENDIF}
+  // uncomment for testing the highligting of the required fields in DEBUG build
+  // ShowMessage('DEBUG ONLY MESSAGE:' + CRLF + 'Control of class "' +
+  //   aControl.ClassName + '" returns blank value')
       ;
   // Comment in case TRichEdit with only CRFL is considered NOT empty
   if (aControl is TRichEdit) then
@@ -352,6 +348,9 @@ end;
 
 /// ////////////////////////////////////////////////////////////////////////////
 
+type
+  TMyORDateCombo = class(TCPRSDialogDateCombo);
+
 function TdmRF.getFieldControl: TWinControl;
 var
   sObj: string;
@@ -361,7 +360,11 @@ begin
   cds := cdsControls;
   sObj := cds.FieldByName('CTRL_OBJ').AsString;
   if sObj <> '' then
+  begin
     Result := TWinControl(StrToInt(sObj));
+    if Result is TCPRSDialogDateCombo then
+      Result := TMyORDateCombo(Result).YearEdit;
+  end;
 end;
 
 procedure TdmRF.DataModuleCreate(Sender: TObject);
@@ -387,9 +390,7 @@ begin
 
   bFilter := cds.Filtered;
   setFilterFieldsRequired(True);
-{$IFDEF DEBUG}
-  Application.ProcessMessages; // to refresh debug table
-{$ENDIF}
+
   if cds.RecordCount > 0 then
   begin
     cds.First;
@@ -659,7 +660,6 @@ begin
   sl.Free;
 end;
 
-{$IFDEF DEBUG}
 function TdmRF.RequiredFields2Str: string;
 var
   sl: TStringList;
@@ -720,7 +720,6 @@ begin
     [fRequiredFields.Count, iCtrl, iFocusable, iBlank]) + CRLF;
   sl.Free;
 end;
-{$ENDIF}
 
 // FH 12/3/2019
 // This function instantiate one datamodule

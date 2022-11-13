@@ -23,15 +23,13 @@ type
     lblPtName: TStaticText;
     Memo: TCaptionMemo;
     lblCombatVet: TStaticText;
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MemoEnter(Sender: TObject);
     procedure MemoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormResize(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     FLastDFN: string;
-    FOldWinProc :TWndMethod;
-    procedure NewWinProc(var Message: TMessage);
   public
     procedure ClearIDInfo;
     procedure ShowDemog(ItemID: string);
@@ -43,7 +41,7 @@ var
 
 implementation
 
-uses rCore, VA508AccessibilityRouter, uCombatVet;
+uses rCore, VA508AccessibilityRouter, uCombatVet, AVCatcher;
 
 {$R *.DFM}
 
@@ -55,16 +53,35 @@ const
 procedure TfrmPtSelDemog.ClearIDInfo;
 { clears controls with patient ID info (controls have '2' in their Tag property }
 var
-  i: Integer;
+  i, tryCount: Integer;
+  Done: boolean;
+
 begin
   FLastDFN := '';
-  with orapnlMain do
-  for i := 0 to ControlCount - 1 do
-  begin
-    if Controls[i].Tag = TAG_HIDE then Controls[i].Visible := False;
-    if Controls[i].Tag = TAG_CLEAR then with Controls[i] as TStaticText do Caption := '';
-  end;
-  Memo.Clear;
+  tryCount := 0;
+  Done := False;
+  repeat
+    try
+      with orapnlMain do
+      begin
+        for i := 0 to ControlCount - 1 do
+        begin
+          if Controls[i].Tag = TAG_HIDE then Controls[i].Visible := False;
+          if (Controls[i] is TStaticText) and (Controls[i].Tag = TAG_CLEAR) then
+            TStaticText(Controls[i]).Caption := '';
+        end;
+      end;
+      Memo.Clear;
+      Done := True;
+    except
+      inc(tryCount);
+      if tryCount >= 3 then
+      begin
+        ExceptionLog.TerminateApp := True;
+        raise;
+      end;
+    end;
+  until Done;
 end;
 
 procedure TfrmPtSelDemog.ShowDemog(ItemID: string);
@@ -142,75 +159,61 @@ begin
   end;
 end;
 
-procedure TfrmPtSelDemog.FormCreate(Sender: TObject);
-begin
-  FOldWinProc := orapnlMain.WindowProc;
-  orapnlMain.WindowProc := NewWinProc;
-end;
-
-procedure TfrmPtSelDemog.NewWinProc(var Message: TMessage);
-const
-  Gap = 4;
-  MaxFont = 10;
-  var uHeight:integer;
-
-
-begin
-  if(assigned(FOldWinProc)) then FOldWinProc(Message);
-  if(Message.Msg = WM_Size) then
-  begin
-    if(lblPtSSN.Left < (lblSSN.Left+lblSSN.Width+Gap)) then
-      lblPtSSN.Left := (lblSSN.Left+lblSSN.Width+Gap);
-    if(lblPtDOB.Left < (lblDOB.Left+lblDOB.Width+Gap)) then
-      lblPtDOB.Left := (lblDOB.Left+lblDOB.Width+Gap);
-    if(lblPtSSN.Left < lblPtDOB.Left) then
-      lblPtSSN.Left := lblPtDOB.Left
-    else
-      lblPtDOB.Left := lblPtSSN.Left;
-
-    if(lblPtLocation.Left < (lblLocation.Left+lblLocation.Width+Gap)) then
-      lblPtLocation.Left := (lblLocation.Left+lblLocation.Width+Gap);
-    if(lblPtRoomBed.Left < (lblRoomBed.Left+lblRoomBed.Width+Gap)) then
-      lblPtRoomBed.Left := (lblRoomBed.Left+lblRoomBed.Width+Gap);
-    if(lblPtLocation.Left < lblPtRoomBed.Left) then
-      lblPtLocation.Left := lblPtRoomBed.Left
-    else
-      lblPtRoomBed.Left := lblPtLocation.Left;
-  end;
-  if frmPtSelDemog.Canvas.Font.Size > MaxFont then
-  begin
-    uHeight         := frmPtSelDemog.Canvas.TextHeight(lblPtSSN.Caption)-2;
-    lblPtSSN.Top    := (lblPtName.Top + uHeight);
-    lblSSN.Top      := lblPtSSN.Top;
-    lblPtDOB.Height := uHeight;
-    lblPtDOB.Top    := (lblPtSSn.Top + uHeight);
-    lblDOB.Top      := lblPtDOB.Top;
-    lblPtSex.Height :=  uHeight;
-    lblPtSex.Top    := (lblPtDOB.Top + uHeight);
-    lblPtVet.Height :=  uHeight;
-    lblPtVet.Top    := (lblPtSex.Top + uHeight);
-    lblPtSC.Height  := uHeight;
-    lblPtSC.Top     :=  lblPtVet.Top;
-    lblLocation.Height := uHeight;
-    lblLocation.Top := ( lblPtVet.Top + uHeight);
-    lblPtLocation.Top := lblLocation.Top;
-    lblRoomBed.Height := uHeight;
-    lblRoomBed.Top    :=(lblLocation.Top + uHeight)+ 2;
-    lblPtRoomBed.Height := uHeight;
-    lblPtRoomBed.Top  := lblRoomBed.Top ;
-    lblCombatVet.Top := (lblRoomBed.Top + uHeight) + 2;
-  end;
-end;
-
 procedure TfrmPtSelDemog.FormDestroy(Sender: TObject);
 begin
-  orapnlMain.WindowProc := FOldWinProc;
+  frmPtSelDemog := nil;
+  inherited;
+end;
+
+procedure TfrmPtSelDemog.FormResize(Sender: TObject);
+begin
+  inherited;
+  FormShow(nil);
 end;
 
 procedure TfrmPtSelDemog.FormShow(Sender: TObject);
+const
+  Gap = 4;
+
+var
+  uHeight, y: integer;
+
+  procedure Update(lbl1: TStaticText; lbl2: TStaticText = nil);
+  begin
+    lbl1.Height := uHeight;
+    lbl1.Top := y;
+    if assigned(lbl2) then
+    begin
+      lbl2.Height := uHeight;
+      lbl2.Top := y;
+      lbl1.Left := lbl2.Left + lbl2.Width + Gap;
+    end;
+    inc(y, uHeight + 2);
+  end;
+
+  procedure LineUp(lbl1, lbl2: TStaticText);
+  begin
+    if(lbl1.Left < lbl2.Left) then
+      lbl1.Left := lbl2.Left
+    else
+      lbl2.Left := lbl1.Left;
+  end;
+
 begin
   inherited;
   lblCombatVet.Caption := '';
+  uHeight := Canvas.TextHeight('Xy')+2;
+  y := lblPtName.Top + uHeight;
+  Update(lblPtSSN, lblSSN);
+  Update(lblPtDOB, lblDOB);
+  LineUp(lblPtSSN, lblPtDOB);
+  Update(lblPtSex);
+  Update(lblPtVet);
+  Update(lblPtSC);
+  Update(lblPtLocation, lblLocation);
+  Update(lblPtRoomBed, lblRoomBed);
+  LineUp(lblPtLocation, lblPtRoomBed);
+  Update(lblCombatVet);
 end;
 
 procedure TfrmPtSelDemog.MemoEnter(Sender: TObject);

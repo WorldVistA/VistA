@@ -5,10 +5,13 @@
   Developers: Danila Manapsal, Don Craven, Joel Ivey
   Description: Property Editors for TRPCBroker component.
   Unit: RpcbEdtr
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in v1,1,71 (RGG 11/01/2018) XWB*1.1*71
   1. Changed current release to 71
 
@@ -182,9 +185,10 @@ end;
 
 procedure Register;
 begin
-  RegisterPropertyEditor(TypeInfo(TRemoteProc), nil, '', TRemoteProcProperty);
-  RegisterPropertyEditor(TypeInfo(TServer), nil, '', TServerProperty);
-  RegisterPropertyEditor(TypeInfo(TRpcVersion), nil, '', TRpcVersionProperty);
+  RegisterPropertyEditor(TypeInfo(TRemoteProc), TRPCBroker, 'RemoteProcedure', TRemoteProcProperty);
+  RegisterPropertyEditor(TypeInfo(TServer), TRPCBroker, 'Server', TServerProperty);
+  RegisterPropertyEditor(TypeInfo(TRpcVersion), TRPCBroker, 'RpcVersion', TRpcVersionProperty);
+
 end;
 
 end.

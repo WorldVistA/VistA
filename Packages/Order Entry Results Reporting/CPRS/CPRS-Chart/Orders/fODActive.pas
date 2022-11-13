@@ -249,7 +249,13 @@ begin
           if IsFMDateTime(StopTime)  and (Length(StopTime) = FM_DATE_ONLY)  then y := Piece(y, #32, 1);
           if Length(y) > 0 then x := x + CRLF + 'Stop: ' + y;
         end;
-        if i = 3 then x := NameOfStatus(Status);
+        if i = 3 then
+          begin // RTC Defect 701722 ------------------------------------- begin
+            if ParkedStatus <> '' then // NSR#20090509 AA 2015/09/29
+              x := ParkedStatus
+            else
+              x := NameOfStatus(Status);
+          end;  // RTC Defect 701722 --------------------------------------- end
         if (i = 1) or (i = 2) then
           DrawText(Canvas.Handle, PChar(x), Length(x), ARect, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK)
         else

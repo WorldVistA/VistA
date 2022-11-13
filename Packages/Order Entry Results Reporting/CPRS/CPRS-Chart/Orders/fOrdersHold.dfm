@@ -21,8 +21,11 @@ inherited frmHoldOrders: TfrmHoldOrders
     Top = 22
     Width = 411
     Height = 176
+    Style = lbOwnerDrawVariable
     ItemHeight = 13
     TabOrder = 0
+    OnDrawItem = lstOrdersDrawItem
+    OnMeasureItem = lstOrdersMeasureItem
     Caption = 'The following orders will be placed on hold -'
   end
   object cmdOK: TButton [2]

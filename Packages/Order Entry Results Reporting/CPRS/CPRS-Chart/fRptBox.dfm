@@ -13,10 +13,10 @@ inherited frmReportBox: TfrmReportBox
   Position = poScreenCenter
   OnClose = FormClose
   OnResize = FormResize
-  ExplicitWidth = 364
-  ExplicitHeight = 357
+  ExplicitWidth = 356
+  ExplicitHeight = 346
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object lblFontTest: TLabel [0]
     Left = 148
     Top = 208
@@ -34,12 +34,12 @@ inherited frmReportBox: TfrmReportBox
     Left = 0
     Top = 0
     Width = 348
-    Height = 298
+    Height = 287
     Align = alClient
     Color = clCream
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -12
+    Font.Height = -11
     Font.Name = 'Courier New'
     Font.Style = []
     HideScrollBars = False
@@ -53,36 +53,35 @@ inherited frmReportBox: TfrmReportBox
     TabOrder = 0
     WantReturns = False
     WordWrap = False
+    Zoom = 100
   end
   object pnlButton: TPanel [2]
     Left = 0
-    Top = 298
+    Top = 287
     Width = 348
-    Height = 21
+    Height = 32
     Align = alBottom
     Anchors = []
-    AutoSize = True
     BevelOuter = bvNone
     TabOrder = 1
-    DesignSize = (
-      348
-      21)
     object cmdPrint: TButton
+      AlignWithMargins = True
       Left = 189
-      Top = 0
+      Top = 3
       Width = 75
-      Height = 21
-      Anchors = [akRight]
+      Height = 26
+      Align = alRight
       Caption = 'Print'
       TabOrder = 0
       OnClick = cmdPrintClick
     end
     object cmdClose: TButton
-      Left = 272
-      Top = 0
+      AlignWithMargins = True
+      Left = 270
+      Top = 3
       Width = 75
-      Height = 21
-      Anchors = [akRight]
+      Height = 26
+      Align = alRight
       Cancel = True
       Caption = 'Close'
       Default = True
@@ -114,8 +113,8 @@ inherited frmReportBox: TfrmReportBox
   end
   object pmnu: TPopupMenu
     AutoPopup = False
-    Left = 312
-    Top = 136
+    Left = 216
+    Top = 24
     object mnuCopy: TMenuItem
       Caption = '&Copy'
       ShortCut = 16451

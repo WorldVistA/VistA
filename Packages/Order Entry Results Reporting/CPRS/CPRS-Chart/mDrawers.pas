@@ -265,7 +265,7 @@ uses
   VAUtils, rTemplates, dShared, fTemplateDialog, RichEdit, fFindingTemplates,
   Clipbrd, VA508AccessibilityRouter, ORFn, fRptBox, fTemplateEditor, fIconLegend,
   fTemplateView, fReminderDialog, uReminders, uVA508CPRSCompatibility, System.Types,
-  uConst;
+  uConst, uMisc;
 
 const
   FindNextText = 'Find Next';
@@ -325,7 +325,8 @@ begin
   Accept := FALSE;
   if(Source = tvTemplates) then
   begin
-    if(assigned(FDragNode)) and (TTemplate(FDragNode.Data).RealType in [ttDoc, ttGroup]) then
+    if(AssignedAndHasData(FDragNode)) and
+      (TTemplate(FDragNode.Data).RealType in [ttDoc, ttGroup]) then
     begin
       Accept := TRUE;
       MoveCaret(X, Y);
@@ -355,7 +356,7 @@ var
 
 begin
   txt := '';
-  if((assigned(tvTemplates.Selected)) and
+  if((AssignedAndHasData(tvTemplates.Selected)) and
      (TTemplate(tvTemplates.Selected.Data).RealType in [ttDoc, ttGroup])) and
      (dmodShared.TemplateOK(tvTemplates.Selected.Data)) then
   begin
@@ -493,7 +494,7 @@ end;
 {-----------------------------------------------------------------------------------------}
 procedure TfraDrawers.acInsertTemplateExecute(Sender: TObject);
 begin
-  if((assigned(tvTemplates.Selected)) and
+  if((AssignedAndHasData(tvTemplates.Selected)) and
      (TTemplate(tvTemplates.Selected.Data).RealType in [ttDoc, ttGroup])) then
     InsertText;
 end;
@@ -553,7 +554,7 @@ var
   tmpl: TTemplate;
   txt: String;
 begin
-  if(assigned(tvTemplates.Selected)) then
+  if(AssignedAndHasData(tvTemplates.Selected)) then
   begin
     if(dmodShared.TemplateOK(tvTemplates.Selected.Data,'template preview')) then
     begin
@@ -642,7 +643,7 @@ var
   tmpSL: TStringList;
 
 begin
-  if(assigned(tvTemplates.Selected)) then
+  if(AssignedAndHasData(tvTemplates.Selected)) then
   begin
     tmpl := TTemplate(tvTemplates.Selected.Data);
     if(tmpl.Description = '') then
@@ -825,7 +826,8 @@ var
 
 begin
   DocInfo := '';
-  if InsertOK(TRUE) and (dmodShared.TemplateOK(tvTemplates.Selected.Data)) then
+  if AssignedAndHasData(tvTemplates.Selected) and InsertOK(TRUE) and
+    (dmodShared.TemplateOK(tvTemplates.Selected.Data)) then
   begin
     Template := TTemplate(tvTemplates.Selected.Data);
     Template.TemplatePreviewMode := FALSE;
@@ -1183,7 +1185,7 @@ begin
     if(Dragging) then EndDrag(FALSE);
     if(not FInternalExpand) then
     begin
-      if(TTemplate(Node.Data).RealType = ttGroup) then
+      if assigned(Node.Data) and (TTemplate(Node.Data).RealType = ttGroup) then
       begin
         FAsk := TRUE;
         FAskExp := FALSE;
@@ -1205,7 +1207,7 @@ begin
   else
   begin
     FAsk := FALSE;
-    if((assigned(tvTemplates.Selected)) and
+    if((AssignedAndHasData(tvTemplates.Selected)) and
        (TTemplate(tvTemplates.Selected.Data).RealType in [ttDoc, ttGroup])) then
       InsertText;
   end;
@@ -1217,7 +1219,8 @@ end;
 procedure TfraDrawers.tvTemplatesDragging(Sender: TObject; Node: TTreeNode;
   var CanDrag: Boolean);
 begin
-  if(TTemplate(Node.Data).RealType in [ttDoc, ttGroup]) then
+  if AssignedAndHasData(Node) and
+    (TTemplate(Node.Data).RealType in [ttDoc, ttGroup]) then
   begin
     FDragNode := Node;
     CanDrag := TRUE;
@@ -1240,7 +1243,7 @@ begin
     if(Dragging) then EndDrag(FALSE);
     if(not FInternalExpand) then
     begin
-      if(TTemplate(Node.Data).RealType = ttGroup) then
+      if assigned(Node.Data) and (TTemplate(Node.Data).RealType = ttGroup) then
       begin
         FAsk := TRUE;
         FAskExp := TRUE;
@@ -1309,7 +1312,7 @@ var
   function FindNode: TTreeNode;
   begin
     Result := tvTemplates.Items.GetFirstNode;
-    while assigned(Result) do
+    while AssignedAndHasData(Result) do
     begin
       if(Result.Data = MyTemplate) then exit;
       Result := Result.getNextSibling;
@@ -1630,7 +1633,7 @@ begin
   begin
     Node := tvTemplates.Selected;
     tvTemplates.Selected := Node; // This line prevents selected from changing after menu closes
-    NodeFound := (assigned(Node));
+    NodeFound := (AssignedAndHasData(Node));
     if(NodeFound) then
     begin
       with TTemplate(Node.Data) do

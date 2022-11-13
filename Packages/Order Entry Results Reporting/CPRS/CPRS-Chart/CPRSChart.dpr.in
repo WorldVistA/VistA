@@ -1,14 +1,33 @@
 program CPRSChart;
 
+// Build Configuration Setup
+//  1. In GitHub clone down the cprs-gui-utilities repository
+//  2. Define an environment variable named Utils that points to the root of
+//     the cprs-gui-utilities
+//  3. Add the folowing to your browing paths
+//     - $(Utils)\JawsLauncher
+//     - $(Utils)\FastMM
+
 {$R 'mGridPanelFrame.res' 'Cover Sheet\mGridPanelFrame.rc'}
 
+{$IFDEF FASTMM}
+  {$INCLUDE CPRSDefines.inc}
+{$ENDIF}
+
 uses
+  {$IFDEF FASTMM}
+  FastMM4,
+  {$ENDIF }
   ShareMem,
+  {$IFDEF JAWS}
+  UJawsLauncher,
+  {$ENDIF }
   MidasLib,
   Forms,
-  Windows,
   WinHelpViewer,
   ORSystem,
+  ORRedirect,
+  Windows,
   fPage in 'fPage.pas' {frmPage},
   fHSplit in 'fHSplit.pas' {frmHSplit},
   fHP in 'fHP.pas' {frmHP},
@@ -67,7 +86,6 @@ uses
   fNoteDR in 'fNoteDR.pas' {frmNoteDelReason},
   rDCSumm in 'rDCSumm.pas',
   fSplash in 'fSplash.pas' {frmSplash},
-  fCsltNote in 'Consults\fCsltNote.pas' {frmCsltNote},
   rProbs in 'rProbs.pas',
   fEditConsult in 'Consults\fEditConsult.pas' {frmEditCslt},
   fEditProc in 'Consults\fEditProc.pas' {frmEditProc},
@@ -228,7 +246,6 @@ uses
   fOptionsReminders in 'Options\fOptionsReminders.pas' {frmOptionsReminders},
   fOptionsReportsCustom in 'Options\fOptionsReportsCustom.pas' {frmOptionsReportsCustom},
   fOptionsReportsDefault in 'Options\fOptionsReportsDefault.pas' {frmOptionsReportsDefault},
-  fOptionsSubscribe in 'Options\fOptionsSubscribe.pas' {frmOptionsSubscribe},
   fOptionsSurrogate in 'Options\fOptionsSurrogate.pas' {frmOptionsSurrogate},
   fOptionsTeams in 'Options\fOptionsTeams.pas' {frmOptionsTeams},
   fOptionsTitles in 'Options\fOptionsTitles.pas' {frmOptionsTitles},
@@ -236,7 +253,6 @@ uses
   fOptions in 'Options\fOptions.pas' {frmOptions},
   uSignItems in 'uSignItems.pas',
   mCoPayDesc in 'mCoPayDesc.pas' {fraCoPayDesc: TFrame},
-  XuDigSigSC_TLB in 'XuDigSigSC_TLB.pas',
   fOrdersCV in 'Orders\fOrdersCV.pas' {frmChgEvent},
   fODReleaseEvent in 'Orders\fODReleaseEvent.pas' {frmOrdersReleaseEvent},
   fODActive in 'Orders\fODActive.pas' {frmODActive},
@@ -262,7 +278,6 @@ uses
   fReview in 'fReview.pas' {frmReview},
   fARTFreeTextMsg in 'fARTFreeTextMsg.pas' {frmARTFreeTextMsg},
   fAllgyBox in 'fAllgyBox.pas' {frmAllgyBox},
-  fARTAllgy in 'fARTAllgy.pas' {frmARTAllergy},
   UBACore in 'BA\UBACore.pas',
   fBAOptionsDiagnoses in 'BA\fBAOptionsDiagnoses.pas' {frmBAOptionsDiagnoses},
   fOtherSchedule in 'Orders\fOtherSchedule.pas' {frmOtherSchedule},
@@ -278,7 +293,6 @@ uses
   fActivateDeactivate in 'fActivateDeactivate.pas' {frmActivateDeactive},
   uFormMonitor in 'uFormMonitor.pas',
   fAResize in 'fAResize.pas' {frmAutoResize},
-  fODAllgy in 'Orders\fODAllgy.pas' {frmODAllergy},
   fDeviceSelect in 'fDeviceSelect.pas' {frmDeviceSelect},
   fLabCollTimes in 'fLabCollTimes.pas' {frmLabCollectTimes},
   fPostings in 'fPostings.pas' {frmPostings},
@@ -307,15 +321,19 @@ uses
   fDeferDialog in 'fDeferDialog.pas' {frmDeferDialog},
   fViewNotifications in 'fViewNotifications.pas' {frmViewNotifications},
   fNotificationProcessor in 'fNotificationProcessor.pas' {frmNotificationProcessor},
-  uInfoBoxWithBtnControls in 'uInfoBoxWithBtnControls.pas',
   fODRTC in 'Orders\fODRTC.pas' {frmODRTC},
+  frmDCOrdersAllrgsCrrnt in 'Orders\frmDCOrdersAllrgsCrrnt.pas' {frmDCOrdersAllrgsCrrnt},
+  fOrdersPark in 'Orders\fOrdersPark.pas' {frmParkOrders},
+  fOrdersUnPark in 'Orders\fOrdersUnPark.pas' {frmUnParkOrders},
+  fODAllergyCheck in 'Orders\fODAllergyCheck.pas' {frmAllergyCheck},
   mRequiredFieldsNavigator in 'Templates\mRequiredFieldsNavigator.pas' {RequiredFieldsFrame: TFrame},
   fOptionsTIUTemplates in 'Options\fOptionsTIUTemplates.pas' {frmTIUTemplates},
-  fWVEIEReasonsDlg in 'Womens Health\fWVEIEReasonsDlg.pas' {frmWVEIEReasonsDlg},
-  fWVPregLacStatusUpdate in 'Womens Health\fWVPregLacStatusUpdate.pas' {frmWVPregLacStatusUpdate},
-  iWVInterface in 'Womens Health\iWVInterface.pas',
-  oWVController in 'Womens Health\oWVController.pas',
-  oWVPatient in 'Womens Health\oWVPatient.pas',
+  uPaPI in 'uPaPI.pas',
+  iGridPanelIntf in 'Cover Sheet\iGridPanelIntf.pas',
+  mGridPanelFrame in 'Cover Sheet\mGridPanelFrame.pas' {fraGridPanelFrame: TFrame},
+  oDelimitedString in 'Cover Sheet\oDelimitedString.pas',
+  oGridPanelDisplay in 'Cover Sheet\oGridPanelDisplay.pas',
+  oGridPanelFunctions in 'Cover Sheet\oGridPanelFunctions.pas',
   fCoverSheet in 'Cover Sheet\fCoverSheet.pas' {frmCoverSheet},
   fCoverSheetDetailDisplay in 'Cover Sheet\fCoverSheetDetailDisplay.pas' {frmCoverSheetDetailDisplay},
   iCoverSheetIntf in 'Cover Sheet\iCoverSheetIntf.pas',
@@ -350,27 +368,52 @@ uses
   oCoverSheetParam_WidgetClock in 'Cover Sheet\oCoverSheetParam_WidgetClock.pas',
   oCoverSheetParamEnumerator in 'Cover Sheet\oCoverSheetParamEnumerator.pas',
   oCoverSheetParamList in 'Cover Sheet\oCoverSheetParamList.pas',
-  iGridPanelIntf in 'Cover Sheet\iGridPanelIntf.pas',
-  mGridPanelFrame in 'Cover Sheet\mGridPanelFrame.pas' {fraGridPanelFrame: TFrame},
-  oGridPanelDisplay in 'Cover Sheet\oGridPanelDisplay.pas',
-  oGridPanelFunctions in 'Cover Sheet\oGridPanelFunctions.pas',
-  oDelimitedString in 'Cover Sheet\oDelimitedString.pas',
+  fWVEIEReasonsDlg in 'Womens Health\fWVEIEReasonsDlg.pas' {frmWVEIEReasonsDlg},
+  fWVPregLacStatusUpdate in 'Womens Health\fWVPregLacStatusUpdate.pas' {frmWVPregLacStatusUpdate},
+  iWVInterface in 'Womens Health\iWVInterface.pas',
+  oWVController in 'Womens Health\oWVController.pas',
+  oWVPatient in 'Womens Health\oWVPatient.pas',
   fOrdersPickEvent in 'Orders\fOrdersPickEvent.pas' {frmOrdersPickEvent},
-  oWVWebSite in 'Womens Health\oWVWebSite.pas',
+  mVimmReminders in 'Encounter\Immunization and Skin Tests\mVimmReminders.pas' {fraReminders},
+  mVimmEdit in 'Encounter\Immunization and Skin Tests\mVimmEdit.pas' {fraImmEdit: TFrame},
+  mVimmSelect in 'Encounter\Immunization and Skin Tests\mVimmSelect.pas',
+  mVImmBase in 'Encounter\Immunization and Skin Tests\mVImmBase.pas' {fraParent: TFrame},
+  mVimmGrid in 'Encounter\Immunization and Skin Tests\mVimmGrid.pas' {fraGrid: TFrame},
+  fVimm in 'Encounter\Immunization and Skin Tests\fVimm.pas' {vimmMainForm},
+  rVimm in 'Encounter\Immunization and Skin Tests\rVimm.pas',
+  uSimilarNames in 'uSimilarNames.pas',
+  fOptionsProcessedAlerts in 'Options\fOptionsProcessedAlerts.pas' {frmOptionsProcessedAlerts},
   fSurrogateEdit in 'Options\fSurrogateEdit.pas' {frmSurrogateEdit},
+  fAlertRangeEdit in 'Options\fAlertRangeEdit.pas' {frmAlertRangeEdit},
+  fAlertsProcessed in 'fAlertsProcessed.pas' {frmAlertsProcessed},
   oCoverSheetGrid in 'Cover Sheet\oCoverSheetGrid.pas',
+  oWVWebSite in 'Womens Health\oWVWebSite.pas',
+  oODAnatPath in 'Orders\oODAnatPath.pas',
+  rODAnatPath in 'Orders\rODAnatPath.pas',
+  fODAnatPathPreview in 'Orders\fODAnatPathPreview.pas' {frmAnatPathPreview},
+  mODAnatPathBuilder in 'Orders\mODAnatPathBuilder.pas' {fraAnatPathBuilder: TFrame},
+  mODAnatPathSpecimen in 'Orders\mODAnatPathSpecimen.pas' {fraAnatPathSpecimen: TFrame},
+  fODAnatPath in 'Orders\fODAnatPath.pas' {frmODAnatPath},
+  fAllgyAR in 'fAllgyAR.pas' {frmARTAllergy},
+  fNewAllergyCheck in 'fNewAllergyCheck.pas' {frmNewAllergyCheck},
+  rOCSession in 'Orders\rOCSession.pas',
+  uInfoBoxWithBtnControls in 'uInfoBoxWithBtnControls.pas',
   rODRTC in 'Orders\rODRTC.pas',
-  uVersionCheck in 'Utils\uVersionCheck.pas',
-  uOwnerWrapper in 'Utils\uOwnerWrapper.pas',
+  fCsltNote in 'Consults\fCsltNote.pas' {frmCsltNote},
+  fGN_RPCLog in 'Tools\fGN_RPCLog.pas' {frmRPCLog},
+  fxLists in 'Tools\fxLists.pas' {frmDbgList},
+  uGN_RPCLog in 'Tools\uGN_RPCLog.pas',
+  uOrderFlag in 'Orders\uOrderFlag.pas',
+  fOrderFlagEditor in 'Orders\fOrderFlagEditor.pas' {frmOrderFlag},
+  iOrderFlagPropertiesEditorIntf in 'Orders\iOrderFlagPropertiesEditorIntf.pas',
+  fOrderListManager in 'Orders\fOrderListManager.pas' {frmListManager},
+  fOrderFlagNotificationRecipients in 'Orders\fOrderFlagNotificationRecipients.pas' {frmOrderFlagRecipients},
+  uFormUtils in 'Utils\uFormUtils.pas',
+  uSizing in 'Utils\uSizing.pas',
   oPDMPData in 'Extras\PDMP\oPDMPData.pas',
   fPDMPView in 'Extras\PDMP\fPDMPView.pas' {pdmpView},
   fPDMPUser in 'Extras\PDMP\fPDMPUser.pas' {pdmpUserForm},
   rPDMP in 'Extras\PDMP\rPDMP.pas',
-  uSizing in 'Utils\uSizing.pas',
-  uFormUtils in 'Utils\uFormUtils.pas',
-  fGN_RPCLog in 'Tools\fGN_RPCLog.pas' {frmRPCLog},
-  fxLists in 'Tools\fxLists.pas' {frmDbgList},
-  uGN_RPCLog in 'Tools\uGN_RPCLog.pas',
   fPDMPMgr in 'Extras\PDMP\fPDMPMgr.pas' {frmPDMP},
   mPDMPReviewItem in 'Extras\PDMP\mPDMPReviewItem.pas' {frPDMPReviewItem: TFrame},
   mPDMPReviewOptions in 'Extras\PDMP\mPDMPReviewOptions.pas' {frPDMPReviewOptions: TFrame},
@@ -380,53 +423,66 @@ uses
   mDSTMgr in 'Extras\DST\mDSTMgr.pas' {frDSTMgr: TFrame},
   oDST in 'Extras\DST\oDST.pas',
   uDstConst in 'Extras\DST\uDstConst.pas',
-  dRequiredFields in 'Templates\dRequiredFields.pas' {dmRF: TDataModule},
   uUserInfo in 'Utils\uUserInfo.pas',
-  rODAnatPath in 'Orders\rODAnatPath.pas',
-  fODAnatPath in 'Orders\fODAnatPath.pas' {frmODAnatPath},
-  fODAnatPathPreview in 'Orders\fODAnatPathPreview.pas' {frmAnatPathPreview},
-  mODAnatPathBuilder in 'Orders\mODAnatPathBuilder.pas' {fraAnatPathBuilder},
-  mODAnatPathSpecimen in 'Orders\mODAnatPathSpecimen.pas' {fraAnatPathSpecimen},
-  oODAnatPath in 'Orders\oODAnatPath.pas',
+  uMisc in 'Utils\uMisc.pas',
+  mEditBase in 'mEditBase.pas' {fraEditGridBase: TFrame},
+  rEditObject in 'rEditObject.pas',
+  uEditObject in 'uEditObject.pas',
+  uVimmEditObject in 'Encounter\Immunization and Skin Tests\uVimmEditObject.pas',
+  mVimmEditGrid in 'Encounter\Immunization and Skin Tests\mVimmEditGrid.pas' {fraVimmEditGrid: TFrame},
   uORLists in 'Tools\uORLists.pas',
-  uSimilarNames in 'uSimilarNames.pas',
-  uOrderFlag in 'Orders\uOrderFlag.pas',
-  iOrderFlagPropertiesEditorIntf in 'Orders\iOrderFlagPropertiesEditorIntf.pas',
-  fOrderFlagEditor in 'Orders\fOrderFlagEditor.pas' {frmOrderFlag},
-  fOrderFlagNotificationRecipients in 'Orders\fOrderFlagNotificationRecipients.pas' {frmOrderFlagRecipients},
-  fOrderListManager in 'Orders\fOrderListManager.pas' {frmListManager},
-  fNewAllergyCheck in 'fNewAllergyCheck.pas' {frmNewAllergyCheck},
+  FTemplateReport in 'Templates\FTemplateReport.pas' {frmTemplateReport},
+  mVimmICE in 'Encounter\Immunization and Skin Tests\mVimmICE.pas' {fraIce: TFrame},
+  fStandardCodes in 'Encounter\fStandardCodes.pas' {frmStandardCodes},
+  dRequiredFields in 'Templates\dRequiredFields.pas' {dmRF: TDataModule},
+  rOTH in 'rOTH.pas',
+  uVersionCheck in 'Utils\uVersionCheck.pas',
+  uIndications in 'uIndications.pas',
+  uOwnerWrapper in 'Utils\uOwnerWrapper.pas',
+  ORExtensions in 'ORExtensions.pas',
+  UJSONParameters in 'UJSONParameters.pas',
   UCaptionListView508Manager in 'Tools\UCaptionListView508Manager.pas',
   uHelpNetworkMGR in 'uHelpNetworkMGR.pas',
-  u508Extensions in 'Tools\u508Extensions.pas';
+  u508Extensions in 'Tools\u508Extensions.pas',
+  u508Button in '508\u508Button.pas',
+  uPrinting in 'Tools\uPrinting.pas',
+  fBaseDynamicControlsForm in 'fBaseDynamicControlsForm.pas' {frmBaseDynamicControlsForm},
+  UResponsiveGUI in 'Utils\UResponsiveGUI.pas';
 
 {$R *.TLB}
-
 {$R *.RES}
+{$SetPEFlags IMAGE_FILE_RELOCS_STRIPPED}
 
 begin
-  if not BorlandDLLVersionOK then exit;         // Exit immediately if old or missing BORLNDMM.DLL
-{$IFDEF DEBUG}
-{$ELSE}
-  RegisterCPRSTypeLibrary;                      // will halt program if /regserver or /unregserver param
+  if not BorlandDLLVersionOK then exit;   // Exit immediately if old or missing BORLNDMM.DLL
+{$IFDEF JAWS}
+  if not JawsLauncher.ShouldContinue then exit;
 {$ENDIF}
+{$IFNDEF DEBUG}
+  RegisterCPRSTypeLibrary;                // will halt program if /regserver or /unregserver param
+{$ENDIF}
+
+  TORRedirect.Init;
+
   Application.Initialize;
 
   frmSplash := nil;
   if ParamSearch('SPLASH') <> 'OFF' then
   begin
     frmSplash := TfrmSplash.Create(nil);  // show splash screen
-    frmSplash.Show;                               //         "
-    frmSplash.Refresh;                            //         "
+    frmSplash.Show;                       //         "
+    frmSplash.Refresh;                    //         "
   end;
   Application.Title := 'CPRS - Patient Chart';
   Application.HelpFile := 'help\cprs.chm';
   Application.CreateForm(TdmodShared, dmodShared);
   Application.CreateForm(TfrmFrame, frmFrame);
   Application.CreateForm(TfrmSearchStop, frmSearchStop);
-  Application.CreateForm(TfrmProbFreetext, frmProbFreetext);
-  if assigned(frmSplash) then
-    frmSplash.Free;                               // close & free splash screen
+  if Assigned(frmSplash) then
+  begin
+    frmSplash.Free;                       // close & free splash screen
+    frmSplash := nil;
+  end;
 
   Application.Run;
 end.

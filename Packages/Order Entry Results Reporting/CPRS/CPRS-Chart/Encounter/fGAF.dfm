@@ -147,7 +147,7 @@ inherited frmGAF: TfrmGAF
   end
   object cboGAFProvider: TORComboBox [13]
     Left = 226
-    Top = 233
+    Top = 237
     Width = 212
     Height = 117
     Style = orcsSimple

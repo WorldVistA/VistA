@@ -13,6 +13,7 @@ type
     btnCancel: TButton;
     lblPrimaryList: TLabel;
     cboPrimary: TORComboBox;
+    Panel1: TPanel;
   private
     { Private declarations }
   public

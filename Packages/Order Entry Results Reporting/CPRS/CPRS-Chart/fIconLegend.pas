@@ -16,6 +16,43 @@ type
     Templates: TTabSheet;
     Reminders: TTabSheet;
     btnOK: TButton;
+    Notes: TTabSheet;
+    Consults: TTabSheet;
+    Surgery: TTabSheet;
+    gpTemplates: TGridPanel;
+    fraImgText56: TfraImgText;
+    fraImgText57: TfraImgText;
+    Label1: TLabel;
+    Label2: TLabel;
+    fraImgText11: TfraImgText;
+    fraImgText10: TfraImgText;
+    fraImgText24: TfraImgText;
+    fraImgText23: TfraImgText;
+    fraImgText20: TfraImgText;
+    fraImgText17: TfraImgText;
+    fraImgText12: TfraImgText;
+    fraImgText18: TfraImgText;
+    fraImgText15: TfraImgText;
+    fraImgText19: TfraImgText;
+    fraImgText16: TfraImgText;
+    fraImgText21: TfraImgText;
+    fraImgText13: TfraImgText;
+    fraImgText22: TfraImgText;
+    fraImgText14: TfraImgText;
+    fraImgText9: TfraImgText;
+    fraImgText8: TfraImgText;
+    gpSurgery: TGridPanel;
+    fraImgText42: TfraImgText;
+    fraImgText45: TfraImgText;
+    fraImgText51: TfraImgText;
+    fraImgText50: TfraImgText;
+    fraImgText58: TfraImgText;
+    fraImgText59: TfraImgText;
+    fraImgText46: TfraImgText;
+    fraImgText47: TfraImgText;
+    fraImgText48: TfraImgText;
+    fraImgText49: TfraImgText;
+    gpReminders: TGridPanel;
     fraImgText1: TfraImgText;
     fraImgText2: TfraImgText;
     fraImgText3: TfraImgText;
@@ -23,29 +60,9 @@ type
     fraImgText5: TfraImgText;
     fraImgText6: TfraImgText;
     fraImgText7: TfraImgText;
-    fraImgText12: TfraImgText;
-    Panel1: TPanel;
-    fraImgText8: TfraImgText;
-    fraImgText10: TfraImgText;
-    fraImgText15: TfraImgText;
-    fraImgText16: TfraImgText;
-    fraImgText17: TfraImgText;
-    fraImgText13: TfraImgText;
-    fraImgText14: TfraImgText;
-    Panel2: TPanel;
-    fraImgText22: TfraImgText;
-    fraImgText20: TfraImgText;
-    fraImgText19: TfraImgText;
-    fraImgText18: TfraImgText;
-    fraImgText21: TfraImgText;
-    fraImgText11: TfraImgText;
-    fraImgText9: TfraImgText;
-    fraImgText23: TfraImgText;
-    fraImgText24: TfraImgText;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Notes: TTabSheet;
+    gpNotes: TGridPanel;
+    fraImgText33: TfraImgText;
+    fraImgText34: TfraImgText;
     fraImgText25: TfraImgText;
     fraImgText26: TfraImgText;
     fraImgText27: TfraImgText;
@@ -54,41 +71,26 @@ type
     fraImgText30: TfraImgText;
     fraImgText31: TfraImgText;
     fraImgText32: TfraImgText;
-    fraImgText33: TfraImgText;
-    fraImgText34: TfraImgText;
-    Consults: TTabSheet;
-    Panel3: TPanel;
-    fraImgText35: TfraImgText;
-    fraImgText36: TfraImgText;
-    fraImgText43: TfraImgText;
-    Panel4: TPanel;
-    Label5: TLabel;
-    fraImgText41: TfraImgText;
-    fraImgText37: TfraImgText;
-    fraImgText38: TfraImgText;
-    fraImgText39: TfraImgText;
-    fraImgText40: TfraImgText;
-    Label4: TLabel;
-    fraImgText44: TfraImgText;
-    Surgery: TTabSheet;
-    fraImgText42: TfraImgText;
-    fraImgText45: TfraImgText;
-    fraImgText46: TfraImgText;
-    fraImgText47: TfraImgText;
-    fraImgText48: TfraImgText;
-    fraImgText49: TfraImgText;
-    fraImgText50: TfraImgText;
-    fraImgText51: TfraImgText;
-    fraImgText52: TfraImgText;
-    fraImgText53: TfraImgText;
     fraImgText54: TfraImgText;
-    fraImgText55: TfraImgText;
-    fraImgText56: TfraImgText;
-    fraImgText57: TfraImgText;
-    fraImgText58: TfraImgText;
-    fraImgText59: TfraImgText;
+    fraImgText53: TfraImgText;
+    gpConsults: TGridPanel;
+    Label4: TLabel;
+    Label5: TLabel;
+    fraImgText35: TfraImgText;
+    fraImgText41: TfraImgText;
+    fraImgText36: TfraImgText;
+    fraImgText37: TfraImgText;
     fraImgText60: TfraImgText;
+    fraImgText38: TfraImgText;
     fraImgText61: TfraImgText;
+    fraImgText39: TfraImgText;
+    fraImgText43: TfraImgText;
+    fraImgText52: TfraImgText;
+    fraImgText44: TfraImgText;
+    fraImgText40: TfraImgText;
+    fraImgText55: TfraImgText;
+    Label3: TLabel;
+    StaticText1: TStaticText;
     procedure btnOKClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
@@ -106,7 +108,7 @@ procedure ShowIconLegend(IconType: TIconLegendType; Restart: boolean = FALSE);
 implementation
 
 uses
-  fFrame, uConst, ORFn;
+  fFrame, uConst, ORFn, uSizing;
 
 {$R *.DFM}
 
@@ -160,12 +162,35 @@ begin
 end;
 
 class procedure TfrmIconLegend.SetFontSize( NewFontSize: integer);
+var
+  iHeight: Integer;
+
+procedure updateGrid(aGrid: TGridPanel; aSize: Integer);
+var
+  i: Integer;
+begin
+  for i := 0 to aGrid.RowCollection.Count - 1 do
+    aGrid.RowCollection[i].Value := aSize;
+end;
+
 begin
   if Assigned(frmIconLegend) then begin
-    if FirstSize or (frmIconLegend.Font.Size <> NewFontSize) then begin
+    if FirstSize or (frmIconLegend.Font.Size <> NewFontSize) then
+    begin
       ResizeFormToFont(frmIconLegend);
       frmIconLegend.Font.Size := NewFontSize;
       frmIconLegend.SnapLabels;
+
+      with frmIconLegend do
+        begin
+          iHeight := getMainFormTextHeight + 8;
+          updateGrid(gpTemplates,iHeight);
+          updateGrid(gpReminders,iHeight);
+          updateGrid(gpNotes,iHeight);
+          updateGrid(gpConsults,iHeight);
+          updateGrid(gpSurgery,iHeight);
+        end;
+
       FirstSize := FALSE;
       LastX := (Screen.Width - frmIconLegend.Width) div 2;
       LastY := (Screen.Height - frmIconLegend.Height) div 2;
@@ -176,9 +201,10 @@ begin
 end;
 
 procedure TfrmIconLegend.SnapLabels;
-var
-  i: integer;
+//var
+//  i: integer;
 begin
+(*
   for i := 0 to ComponentCount-1 do
     if Components[i] is TfraImgText then
       with TfraImgText(Components[i]).lblText do
@@ -190,11 +216,13 @@ begin
         Width := Parent.Width - Left - ScrollBarWidth;
         AutoSize := True;
       end;
+*)
 end;
 
 procedure TfrmIconLegend.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+{
   inherited;
   if (Key = VK_TAB) then begin
     if (ssCtrl in Shift) then begin
@@ -204,6 +232,7 @@ begin
       end;
     end;
   end;
+}
 end;
 
 end.

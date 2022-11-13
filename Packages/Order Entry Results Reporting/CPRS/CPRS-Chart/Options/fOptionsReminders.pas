@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ORCtrls, OrFn, fBase508Form, VA508AccessibilityManager;
+  StdCtrls, ExtCtrls, ORCtrls, OrFn, fBase508Form, VA508AccessibilityManager,
+  Vcl.Buttons;
 
 type
   TfrmOptionsReminders = class(TfrmBase508Form)
@@ -13,14 +14,18 @@ type
     btnCancel: TButton;
     lstDisplayed: TORListBox;
     lstNotDisplayed: TORListBox;
-    btnUp: TButton;
-    btnDown: TButton;
-    btnDelete: TButton;
-    btnAdd: TButton;
     lblDisplayed: TLabel;
     lblNotDisplayed: TLabel;
     bvlBottom: TBevel;
     radSort: TRadioGroup;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    btnAdd: TBitBtn;
+    btnDelete: TBitBtn;
+    btnUp: TBitBtn;
+    btnDown: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure lstDisplayedChange(Sender: TObject);
     procedure lstNotDisplayedChange(Sender: TObject);

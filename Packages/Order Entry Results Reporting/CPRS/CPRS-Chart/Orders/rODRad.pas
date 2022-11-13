@@ -5,17 +5,18 @@ interface
 uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, TRPCB, dialogs;
 
 { Radiology Ordering Calls }
-function ODForRad(const PatientDFN, AnEventDiv: string; ImagingType: integer)
-  : TStrings; // *DFN*
+//function ODForRad(const PatientDFN, AnEventDiv: string; ImagingType: integer)
+//  : TStrings; // *DFN*
+procedure ODForRad(sl: TStrings; const PatientDFN, AnEventDiv: string; ImagingType: integer);
 function IsRadProcsLongList(ImagingType: integer): boolean;
 function SubsetOfRadProcs(ImagingType: integer; const StartFrom: string;
   Direction: integer): TStringList;
 function ImagingMessage(AnIEN: integer): string;
 function PatientOnIsolationProcedures(const PatientDFN: string): boolean;
 // *DFN*
-function SubsetOfRadiologists: TStrings;
-function SubsetOfImagingTypes: TStrings;
-function SubsetOfRadSources(SrcType: string): TStrings;
+procedure SubsetOfRadiologists(Dest: TStrings);
+procedure SubsetOfImagingTypes(Dest: TStrings);
+procedure SubsetOfRadSources(Dest: TStrings; SrcType: string);
 function LocationType(Location: integer): string;
 function ReasonForStudyCarryOn: boolean;
 
@@ -24,18 +25,21 @@ implementation
 uses rODBase;
 (* fODBase, rODBase, fODRad; *)
 
-function ODForRad(const PatientDFN, AnEventDiv: string; ImagingType: integer)
-  : TStrings; // *DFN*
+//function ODForRad(const PatientDFN, AnEventDiv: string; ImagingType: integer)
+procedure ODForRad(sl: TStrings; const PatientDFN, AnEventDiv: string; ImagingType: integer);
 { Returns init values for radiology dialog.  The results must be used immediately. }
 begin
   { 276867
     //  CallV('ORWDRA32 DEF', [PatientDFN, AnEventDiv, ImagingType]);
     //  Result := RPCBrokerV.Results;
   }
-  Result := TSTringList.Create;
-  if not CallVistA('ORWDRA32 DEF', [PatientDFN, AnEventDiv, ImagingType],
-    Result) then
-    Result.Clear;
+  try
+    if not CallVistA('ORWDRA32 DEF', [PatientDFN, AnEventDiv, ImagingType], sl) then
+      sl.Clear;
+  except
+    on E: Exception do
+      sl.Clear;
+  end;
 end;
 
 function IsRadProcsLongList(ImagingType: integer): boolean;
@@ -54,77 +58,83 @@ begin
   Result := TStringList.Create;
   // Callv('ORWDRA32 RAORDITM',[StartFrom, Direction, ImagingType]);
   // Result := RPCBrokerV.Results;
-  if not CallVistA('ORWDRA32 RAORDITM', [StartFrom, Direction, ImagingType],
-    Result) then
-    Result.Clear;
+  try
+    if not CallVistA('ORWDRA32 RAORDITM', [StartFrom, Direction, ImagingType],
+      Result) then
+      Result.Clear;
+  except
+    on E: Exception do
+      Result.Clear;
+  end;
 end;
 
 function ImagingMessage(AnIEN: integer): string;
 var
-//  x: string;
-//  i: integer;
   sl: TStrings;
+//  x: string;
+  i: integer;
 begin
-  sl := TStringList.Create;
-//  CallV('ORWDRA32 PROCMSG', [AnIEN]);
-//  for i := 0 to RPCBrokerV.Results.Count - 1 do
-//    x := x + RPCBrokerV.Results[i] + #13#10;
-//  Result := x;
-  if not CallVistA('ORWDRA32 PROCMSG', [AnIEN],sl) then
-    sl.Clear;
-  Result := sl.Text;
-  sl.Free;
+  // CallV('ORWDRA32 PROCMSG', [AnIEN]);
+  // for i := 0 to RPCBrokerV.Results.Count - 1 do
+  // x := x + RPCBrokerV.Results[i] + #13#10;
+  // Result := x;
+  Result := '';
+  sl := TSTringList.Create;
+  try
+    if CallVistA('ORWDRA32 PROCMSG', [AnIEN], sl) then
+      for i := 0 to sl.Count - 1 do
+        Result := Result + sl[i] + CRLF;
+  finally
+    sl.Free;
+  end;
 end;
 
 function PatientOnIsolationProcedures(const PatientDFN: string): boolean;
 var
   s: String;
 begin
-  // RTC 272867
-  // Result := (StrToInt(Piece(sCallV('ORWDRA32 ISOLATN', [PatientDFN]),U,1)) > 0) ;
-  Result := CallVistA('ORWDRA32 ISOLATN', [PatientDFN], s) and
-    (StrToIntDef(Piece(s, U, 1), -1) > 0);
+  try
+    Result := CallVistA('ORWDRA32 ISOLATN', [PatientDFN], s);
+    if Result then
+      Result := StrToIntDef(Piece(s, U, 1), -1) > 0;
+  except
+    On E: Exception do
+      Result := false;
+  end;
 end;
 
-function SubsetOfRadiologists: TStrings;
+procedure SubsetOfRadiologists(Dest: TStrings);
 begin
   { 272867
     //  Callv('ORWDRA32 APPROVAL',['']);
     //  Result := RPCBrokerV.Results ;
   }
-  Result := TSTringList.Create;
-  if not CallVistA('ORWDRA32 APPROVAL', [''], Result) then
-    Result.Clear;
+  CallVistA('ORWDRA32 APPROVAL', [''], Dest);
 end;
 
-function SubsetOfImagingTypes: TStrings;
+procedure SubsetOfImagingTypes(Dest: TStrings);
 begin
   { 272867
     Callv('ORWDRA32 IMTYPSEL',['']);
     Result := RPCBrokerV.Results ;
   }
-  Result := TSTringList.Create;
-  if not CallVistA('ORWDRA32 IMTYPSEL', [''], Result) then
-    Result.Clear;
+  CallVistA('ORWDRA32 IMTYPSEL', [''], Dest);
 end;
 
-function SubsetOfRadSources(SrcType: string): TStrings;
+procedure SubsetOfRadSources(Dest: TStrings; SrcType: string);
 begin
   { 272867
     Callv('ORWDRA32 RADSRC',[SrcType]);
     Result := RPCBrokerV.Results ;
   }
-  Result := TSTringList.Create;
-  if not CallVistA('ORWDRA32 RADSRC', [SrcType], Result) then
-    Result.Clear;
+  CallVistA('ORWDRA32 RADSRC', [SrcType], Dest);
 end;
 
 function LocationType(Location: integer): string;
 begin
   // RTC 272867
   // Result := sCallV('ORWDRA32 LOCTYPE',[Location]);
-  if not CallVistA('ORWDRA32 LOCTYPE', [Location], Result) then
-    Result := '';
+  CallVistA('ORWDRA32 LOCTYPE', [Location], Result);
 end;
 
 function ReasonForStudyCarryOn: boolean;

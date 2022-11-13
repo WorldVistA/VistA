@@ -62,16 +62,24 @@ begin
   RedrawActivate(cboTests.Handle);
 end;
 
-procedure TfrmLabInfo.cboTestsNeedData(Sender: TObject;
-  const StartFrom: string; Direction, InsertAt: Integer);
+procedure TfrmLabInfo.cboTestsNeedData(Sender: TObject; const StartFrom: string;
+  Direction, InsertAt: Integer);
+var
+  sl: TSTrings;
 begin
-  cboTests.ForDataUse(AllTests(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setAllTests(sl, StartFrom, Direction);
+    cboTests.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmLabInfo.cboTestsClick(Sender: TObject);
 begin
   inherited;
-  FastAssign(TestInfo(cboTests.Items[cboTests.ItemIndex]), memInfo.Lines);
+  setTestInfo(memInfo.Lines, cboTests.Items[cboTests.ItemIndex]);
 end;
 
 end.

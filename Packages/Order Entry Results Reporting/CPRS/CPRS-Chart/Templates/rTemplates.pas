@@ -15,17 +15,18 @@ uses
 
 { Templates }
 procedure GetTemplateRoots(aLst: TStrings);
-function IsUserTemplateEditor(TemplateID: string; UserID: Int64): boolean;
+function IsUserTemplateEditor(TemplateID: string; UserID :Int64): boolean;
 procedure GetTemplateChildren(ID: string; aLst: TStrings);
 procedure GetTemplateBoilerplate(ID: string; aLst: TStrings);
-procedure GetTemplateText(BoilerPlate: TStrings);
+procedure GetTemplateText(BoilerPlate: TStrings; VisitStr: string);
 function IsTemplateEditor(ID: string): boolean;
 function UpdateTemplate(ID: string; Fields: TStrings): string;
-procedure UpdateChildren(ID: string; Children: TStrings);
+function UpdateChildren(aDest:TStrings; ID: string; Children: TStrings): Integer;
+
 procedure DeleteTemplates(DelList: TStrings);
 procedure GetObjectList(aLst: TStrings);
 procedure GetAllowedPersonalObjects(aLst: TStrings);
-procedure TestBoilerplate(BoilerPlate: TStrings);
+procedure TestBoilerplate(BoilerPlate: TStrings; Dest: TStrings);
 function GetTemplateAccess(ID: string): integer;
 function SubSetOfBoilerplatedTitles(const StartFrom: string; Direction: integer; aLst: TStrings): boolean;
 function GetTitleBoilerplate(TitleIEN: string): string;
@@ -49,33 +50,35 @@ function UpdateTemplateField(const ID: string; Fields: TStrings): string;
 function LockTemplateField(const ID: string): boolean;
 procedure UnlockTemplateField(const ID: string);
 procedure DeleteTemplateField(const ID: string);
-function ExportTemplateFields(FldList: TStrings): TStrings;
-function ImportTemplateFields(FldList: TStrings): TStrings;
+function ExportTemplateFields(aDest, FldList: TStrings): Integer;
 function IsTemplateFieldNameUnique(const FldName, IEN: string): boolean;
+
 procedure Convert2LMText(Text: TStringList);
 procedure CheckTemplateFields(ResultString: TStrings);
 function BuildTemplateFields(XMLString: TStrings): boolean;
 function ImportLoadedFields(ResultSet: TStrings): boolean;
 
 implementation
+uses
+  ORnetIntf;
 
 var
   uUserTemplateDefaults: string = '';
   uCanEditDlgFldChecked: boolean = FALSE;
   uCanEditDlgFlds: boolean;
 
-  { Template RPCs -------------------------------------------------------------- }
+{ Template RPCs -------------------------------------------------------------- }
 
 procedure GetTemplateRoots(aLst: TStrings);
 begin
   CallVistA('TIU TEMPLATE GETROOTS', [User.DUZ], aLst);
 end;
 
-function IsUserTemplateEditor(TemplateID: string; UserID: Int64): boolean;
+function IsUserTemplateEditor(TemplateID: string; UserID :Int64): boolean;
 var
   aStr: string;
 begin
-  if StrToIntDef(TemplateID, 0) > 0 then
+  if StrToIntDef(TemplateID,0) > 0 then
     begin
       CallVistA('TIU TEMPLATE ISEDITOR', [TemplateID, UserID], aStr);
       Result := (Piece(aStr, U, 1) = '1')
@@ -86,7 +89,7 @@ end;
 
 procedure GetTemplateChildren(ID: string; aLst: TStrings);
 begin
-  if (ID = '') or (ID = '0') then
+  if(ID = '') or (ID = '0') then
     aLst.Clear
   else
     CallVistA('TIU TEMPLATE GETITEMS', [ID], aLst);
@@ -94,38 +97,25 @@ end;
 
 procedure GetTemplateBoilerplate(ID: string; aLst: TStrings);
 begin
-  if (ID = '') or (ID = '0') then
+  if(ID = '') or (ID = '0') then
     aLst.Clear
   else
     CallVistA('TIU TEMPLATE GETBOIL', [ID], aLst);
 end;
 
-procedure GetTemplateText(BoilerPlate: TStrings);
+procedure GetTemplateText(BoilerPlate: TStrings; VisitStr: string);
 var
   i: integer;
-
+  aList: iORNetMult;
 begin
-  LockBroker;
-  try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'TIU TEMPLATE GETTEXT';
-      Param[0].PType := literal;
-      Param[0].Value := Patient.DFN;
-      Param[1].PType := literal;
-      Param[1].Value := Encounter.VisitStr;
-      Param[2].PType := list;
-      for i := 0 to BoilerPlate.Count - 1 do
-        Param[2].Mult[IntToStr(i + 1) + ',0'] := BoilerPlate[i];
-      CallBroker;
-      RPCBrokerV.Results.Delete(0);
-      FastAssign(RPCBrokerV.Results, BoilerPlate);
-      RPCBrokerV.Results.Clear;
-    end;
-  finally
-    UnlockBroker;
-  end;
+  newOrNetMult(aList);
+
+  for i := 0 to BoilerPlate.Count - 1 do
+    aList.AddSubscript([i + 1, 0], BoilerPlate[i]);
+  CallVistA('TIU TEMPLATE GETTEXT', [Patient.DFN, VisitStr, aList],
+    BoilerPlate);
+  if BoilerPlate.Count > 0 then
+    BoilerPlate.Delete(0);
 end;
 
 function IsTemplateEditor(ID: string): boolean;
@@ -139,28 +129,47 @@ end;
 function UpdateTIURec(RPC, ID: string; Fields: TStrings): string;
 var
   i, j: integer;
+  sl: TSTrings;
+  aList: IORNetMult;
+
+  s: String;  // RTC 841112
+  aSubscript: TArray<string>;// RTC 841112
+  anArr: array of TVarRec; // RTC 841112
+  k,l: Integer; // RTC 841112
 
 begin
-  LockBroker;
-  try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := RPC;
-      Param[0].PType := literal;
-      Param[0].Value := ID;
-      Param[1].PType := list;
-      for i := 0 to Fields.Count - 1 do
+  newOrNetMult(aList);
+  sl := TStringList.Create;
+  for i := 0 to Fields.Count - 1 do
+  begin
+    j := pos('=', Fields[i]);
+    if (j > 0) then
+      begin
+        // RTC 841112 -- begin
+        // RTC 841112      aList.AddSubscript([Fields.Names[i]], copy(Fields[i], j + 1, MaxInt));
+        s := Fields.Names[i];
+        aSubscript := s.Split([',']);
+        l := Length(aSubscript);
+
+        setLength(anArr, l);
+        for k := Low(anArr) to High(anArr) do
         begin
-          j := pos('=', Fields[i]);
-          if (j > 0) then
-            Param[1].Mult[Fields.Names[i]] := copy(Fields[i], j + 1, MaxInt);
+          anArr[k].vType := vtString;
+          anArr[k].VString := pointer(string(aSubscript[k]));
         end;
-      CallBroker;
-      Result := RPCBrokerV.Results[0];
-    end;
+
+        aList.AddSubscript(anArr, copy(Fields[i], j + 1, MaxInt));
+        // RTC 841112 -- end
+      end;
+  end;
+  try
+    CallVistA(RPC, [ID, aList], sl);
+    if sl.Count > 0 then
+      Result := sl[0]
+    else
+      Result := '';
   finally
-    UnlockBroker;
+    sl.Free;
   end;
 end;
 
@@ -169,51 +178,31 @@ begin
   Result := UpdateTIURec('TIU TEMPLATE CREATE/MODIFY', ID, Fields);
 end;
 
-procedure UpdateChildren(ID: string; Children: TStrings);
+function UpdateChildren(aDest:TStrings; ID: string; Children: TStrings): Integer;
 var
   i: integer;
-
+  aList: IORNetMult;
 begin
-  LockBroker;
-  try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'TIU TEMPLATE SET ITEMS';
-      Param[0].PType := literal;
-      Param[0].Value := ID;
-      Param[1].PType := list;
-      for i := 0 to Children.Count - 1 do
-        Param[1].Mult[IntToStr(i + 1)] := Children[i];
-      CallBroker;
-    end;
-  finally
-    UnlockBroker;
-  end;
+  newOrNetMult(aList);
+  for i := 0 to Children.Count-1 do
+    aList.AddSubscript([IntToStr(i+1)], Children[i]);
+  CallVistA('TIU TEMPLATE SET ITEMS',[ID,aList], aDest);
+  Result := aDest.Count;
 end;
 
 procedure DeleteTemplates(DelList: TStrings);
 var
   i: integer;
-
+  aList: IORNetMult;
 begin
-  if (DelList.Count > 0) then
-    begin
-      LockBroker;
-      try
-        with RPCBrokerV do
-        begin
-          ClearParameters := True;
-          RemoteProcedure := 'TIU TEMPLATE DELETE';
-          Param[0].PType := list;
-          for i := 0 to DelList.Count - 1 do
-            Param[0].Mult[IntToStr(i + 1)] := DelList[i];
-          CallBroker;
-        end;
-      finally
-        UnlockBroker;
-      end;
-    end;
+
+  if(DelList.Count > 0) then
+  begin
+    newOrNetMult(aList);
+    for i := 0 to DelList.Count - 1 do
+      aList.AddSubscript([IntToStr(i + 1)], DelList[i]);
+    CallVistA('TIU TEMPLATE DELETE', [aList]);
+  end;
 end;
 
 procedure GetObjectList(aLst: TStrings);
@@ -226,25 +215,15 @@ begin
   CallVistA('TIU TEMPLATE PERSONAL OBJECTS', [], aLst);
 end;
 
-procedure TestBoilerplate(BoilerPlate: TStrings);
+procedure TestBoilerplate(BoilerPlate: TStrings; Dest: TStrings);
 var
   i: integer;
-
+  aList: IORNetMult;
 begin
-  LockBroker;
-  try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'TIU TEMPLATE CHECK BOILERPLATE';
-      Param[0].PType := list;
-      for i := 0 to BoilerPlate.Count - 1 do
-        Param[0].Mult['2,' + IntToStr(i + 1) + ',0'] := BoilerPlate[i];
-      CallBroker;
-    end;
-  finally
-    UnlockBroker;
-  end;
+  newOrNetMult(aList);
+  for i := 0 to BoilerPlate.Count - 1 do
+    aList.AddSubscript([2, i + 1, 0], BoilerPlate[i]);
+  CallVistA('TIU TEMPLATE CHECK BOILERPLATE', [aList], Dest);
 end;
 
 function GetTemplateAccess(ID: string): integer;
@@ -270,7 +249,7 @@ begin
     Result := aLst.Text;
   finally
     FreeAndNil(aLst);
-  end;
+end;
 end;
 
 function GetUserTemplateDefaults(LoadFromServer: boolean = FALSE): string;
@@ -304,23 +283,10 @@ begin
     Result := CallVistA('TIU REMINDER DIALOGS', [], aTmpLst);
     SortByPiece(aTmpLst, U, 2);
     MixedCaseList(aTmpLst);
-    aLst.Text := aTmpLst.Text;
+    aLst.Assign(aTmpLst);
   finally
     FreeAndNil(aTmpLst);
   end;
-  {
-    CallV('TIU REMINDER DIALOGS', []);
-    TmpList := TStringList.Create;
-    try
-    FastAssign(RPCBrokerV.Results, TmpList);
-    SortByPiece(TmpList, U, 2);
-    MixedCaseList(TmpList);
-    FastAssign(TmpList, RPCBrokerV.Results);
-    finally
-    TmpList.Free;
-    end;
-    Result := RPCBrokerV.Results;
-  }
 end;
 
 function IsRemDlgAllowed(RemDlgIEN: string): integer;
@@ -376,12 +342,12 @@ function CanEditTemplateFields: boolean;
 var
   aStr: string;
 begin
-  if (not uCanEditDlgFldChecked) then
-    begin
+  if(not uCanEditDlgFldChecked) then
+  begin
       uCanEditDlgFldChecked := True;
       CallVistA('TIU FIELD CAN EDIT', [], aStr);
       uCanEditDlgFlds := (aStr = '1');
-    end;
+  end;
   Result := uCanEditDlgFlds;
 end;
 
@@ -408,32 +374,21 @@ begin
   CallVistA('TIU FIELD DELETE', [ID]);
 end;
 
-function CallImportExportTemplateFields(FldList: TStrings; RPCName: string): TStrings;
+function getImportExportTemplateFields(aDest,FldList: TStrings; RPCName: string): Integer;
 var
   i: integer;
-
+  aList: IORNetMult;
 begin
-// LockBroker in calling code, since result is RPCBrokerV.Results;
-  with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := RPCName;
-      Param[0].PType := list;
-      for i := 0 to FldList.Count - 1 do
-        Param[0].Mult[IntToStr(i + 1)] := FldList[i];
-      CallBroker;
-    end;
-  Result := RPCBrokerV.Results;
+  newOrNetMult(aList);
+    for i := 0 to FldList.Count-1 do
+      aList.AddSubscript([IntToStr(i+1)], FldList[i]);
+  CallVistA(RPCName,[aList],aDest);
+  Result := aDest.Count;
 end;
 
-function ExportTemplateFields(FldList: TStrings): TStrings;
+function ExportTemplateFields(aDest, FldList: TStrings): Integer;
 begin
-  Result := CallImportExportTemplateFields(FldList, 'TIU FIELD EXPORT');
-end;
-
-function ImportTemplateFields(FldList: TStrings): TStrings;
-begin
-  Result := CallImportExportTemplateFields(FldList, 'TIU FIELD IMPORT');
+  Result := getImportExportTemplateFields(aDest, FldList, 'TIU FIELD EXPORT');
 end;
 
 procedure CheckTemplateFields(ResultString: TStrings);
@@ -452,75 +407,62 @@ end;
 procedure Convert2LMText(Text: TStringList);
 var
   i: integer;
+  aList: iORNetMult;
 begin
-  LockBroker;
-  try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'TIU FIELD DOLMTEXT';
-      Param[0].PType := list;
-      for i := 0 to Text.Count - 1 do
-        Param[0].Mult[IntToStr(i + 1) + ',0'] := Text[i];
-      CallBroker;
-    end;
-    FastAssign(RPCBrokerV.Results, Text);
-  finally
-    UnlockBroker;
-  end;
+  newOrNetMult(aList);
+  for i := 0 to Text.Count-1 do
+    aList.AddSubscript([i+1, 0], Text[i]);
+  CallVistA('TIU FIELD DOLMTEXT',[aList], Text);
 end;
 
-function BuildTemplateFields(XMLString: TStrings): boolean; // Simply builds XML fields on the server
-var // in chunks.
-  i, j, p1: integer;
+function BuildTemplateFields(XMLString: TStrings): boolean;   //Simply builds XML fields on the server
+var                                                           //in chunks.
+  i,j,p1: integer;
   ok: boolean;
+  aList: iORNetMult;
+  Results: TSTrings;
 
   procedure reset_broker;
   begin
-    with RPCBrokerV do
-      begin
-        ClearParameters := True;
-        RemoteProcedure := 'TIU FIELD LIST ADD';
-        Param[0].PType := list;
-      end;
+    newOrNetMult(aList);
+    Results.Clear;
   end;
 
 begin
   ok := True;
-  LockBroker;
+  Results := TStringList.Create;
   try
-    with RPCBrokerV do
+    reset_broker;
+    j := 1;
+    for i := 0 to XMLString.Count - 1 do
     begin
-      reset_broker;
-      j := 1;
-      for i := 0 to XMLString.Count - 1 do
+      p1 := pos('<FIELD NAME="', XMLString[i]);
+      if (p1 > 0) and (pos('">', copy(XMLString[i], p1 + 13, MaxInt)) > 0) then
+      begin
+        j := j + 1;
+        if (j > 50) then
         begin
-          p1 := pos('<FIELD NAME="', XMLString[i]);
-          if (p1 > 0) and (pos('">', copy(XMLString[i], p1 + 13, MaxInt)) > 0) then
-            begin
-              j := j + 1;
-              if (j > 50) then
-                begin
-                  j := 1;
-                  CallBroker;
-                  if pos('1', Results[0]) = 0 then
-                    begin
-                      ok := FALSE;
-                      break;
-                    end; // if
-                  reset_broker;
-                end; // if
-            end; // if
-          Param[0].Mult[IntToStr(i + 1)] := XMLString[i];
-        end; // for
-      if ok then
-        begin
-          CallBroker;
-          if pos('1', Results[0]) = 0 then ok := FALSE;
+          j := 1;
+          CallVistA('TIU FIELD LIST ADD', [aList], Results);
+          if (Results.Count < 1) or (pos('1', Results[0]) = 0) then
+          begin
+            ok := FALSE;
+            break;
+          end; // if
+          reset_broker;
         end; // if
-    end;
+      end; // if
+      aList.AddSubscript([IntToStr(i + 1)], XMLString[i]);
+    end; // for
+
+    if ok then
+    begin
+      CallVistA('TIU FIELD LIST ADD', [aList], Results);
+      if (Results.Count < 1) or (pos('1', Results[0]) = 0) then
+        ok := FALSE;
+    end; // if
   finally
-    UnlockBroker;
+    Results.Free;
   end;
   Result := ok;
 end;

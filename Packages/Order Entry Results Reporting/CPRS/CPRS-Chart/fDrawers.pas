@@ -221,7 +221,7 @@ implementation
 uses fTemplateView, uCore, rTemplates, fTemplateEditor, dShared, uReminders,
   fReminderDialog, RichEdit, fRptBox, Clipbrd, fTemplateDialog, fIconLegend,
   VA508AccessibilityRouter, uVA508CPRSCompatibility, VAUtils, fFindingTemplates,
-  System.Types;
+  System.Types, uMisc;
 
 {$R *.DFM}
 
@@ -705,7 +705,7 @@ begin
     if(Dragging) then EndDrag(FALSE);
     if(not FInternalExpand) then
     begin
-      if(TTemplate(Node.Data).RealType = ttGroup) then
+      if assigned(Node.Data) and (TTemplate(Node.Data).RealType = ttGroup) then
       begin
         FAsk := TRUE;
         FAskExp := TRUE;
@@ -751,8 +751,8 @@ begin
   else
   begin
     FAsk := FALSE;
-    if((assigned(tvTemplates.Selected)) and
-       (TTemplate(tvTemplates.Selected.Data).RealType in [ttDoc, ttGroup])) then
+    if AssignedAndHasData(tvTemplates.Selected) and
+       (TTemplate(tvTemplates.Selected.Data).RealType in [ttDoc, ttGroup]) then
       InsertText;
   end;
 end;
@@ -765,7 +765,7 @@ begin
     if(Dragging) then EndDrag(FALSE);
     if(not FInternalExpand) then
     begin
-      if(TTemplate(Node.Data).RealType = ttGroup) then
+      if assigned(Node.Data) and (TTemplate(Node.Data).RealType = ttGroup) then
       begin
         FAsk := TRUE;
         FAskExp := FALSE;
@@ -849,7 +849,8 @@ begin
   Accept := FALSE;
   if(Source = tvTemplates) then
   begin
-    if(assigned(FDragNode)) and (TTemplate(FDragNode.Data).RealType in [ttDoc, ttGroup]) then
+    if(AssignedAndHasData(FDragNode)) and
+      (TTemplate(FDragNode.Data).RealType in [ttDoc, ttGroup]) then
     begin
       Accept := TRUE;
       MoveCaret(X, Y);
@@ -867,6 +868,8 @@ var
   Template: TTemplate;
 
 begin
+  if not AssignedAndHasData(tvTemplates.Selected) then
+    Exit;
   DocInfo := '';
   if InsertOK(TRUE) and (dmodShared.TemplateOK(tvTemplates.Selected.Data)) then
   begin
@@ -915,7 +918,7 @@ begin
   begin
     Node := tvTemplates.Selected;
     tvTemplates.Selected := Node; // This line prevents selected from changing after menu closes
-    NodeFound := (assigned(Node));
+    NodeFound := (AssignedAndHasData(Node));
     if(NodeFound) then
     begin
       with TTemplate(Node.Data) do
@@ -952,7 +955,7 @@ var
   txt: String;
 
 begin
-  if(assigned(tvTemplates.Selected)) then
+  if AssignedAndHasData(tvTemplates.Selected) then
   begin
     if(dmodShared.TemplateOK(tvTemplates.Selected.Data,'template preview')) then
     begin
@@ -1082,7 +1085,7 @@ procedure TfrmDrawers.tvTemplatesDragging(Sender: TObject; Node: TTreeNode;
   var CanDrag: Boolean);
 
 begin
-  if(TTemplate(Node.Data).RealType in [ttDoc, ttGroup]) then
+  if AssignedAndHasData(Node) and (TTemplate(Node.Data).RealType in [ttDoc, ttGroup]) then
   begin
     FDragNode := Node;
     CanDrag := TRUE;
@@ -1215,8 +1218,8 @@ end;
 
 procedure TfrmDrawers.mnuInsertTemplateClick(Sender: TObject);
 begin
-  if((assigned(tvTemplates.Selected)) and
-     (TTemplate(tvTemplates.Selected.Data).RealType in [ttDoc, ttGroup])) then
+  if AssignedAndHasData(tvTemplates.Selected) and
+     (TTemplate(tvTemplates.Selected.Data).RealType in [ttDoc, ttGroup]) then
   InsertText;
 end;
 
@@ -1264,7 +1267,7 @@ var
   function FindNode: TTreeNode;
   begin
     Result := tvTemplates.Items.GetFirstNode;
-    while assigned(Result) do
+    while AssignedAndHasData(Result) do
     begin
       if(Result.Data = MyTemplate) then exit;
       Result := Result.getNextSibling;
@@ -1437,7 +1440,7 @@ var
   tmpSL: TStringList;
 
 begin
-  if(assigned(tvTemplates.Selected)) then
+  if AssignedAndHasData(tvTemplates.Selected) then
   begin
     tmpl := TTemplate(tvTemplates.Selected.Data);
     if(tmpl.Description = '') then
@@ -1462,9 +1465,9 @@ var
 
 begin
   txt := '';
-  if((assigned(tvTemplates.Selected)) and
-     (TTemplate(tvTemplates.Selected.Data).RealType in [ttDoc, ttGroup])) and
-     (dmodShared.TemplateOK(tvTemplates.Selected.Data)) then
+  if AssignedAndHasData(tvTemplates.Selected) and
+     (TTemplate(tvTemplates.Selected.Data).RealType in [ttDoc, ttGroup]) and
+     dmodShared.TemplateOK(tvTemplates.Selected.Data) then
   begin
     Template := TTemplate(tvTemplates.Selected.Data);
     txt := Template.Text;

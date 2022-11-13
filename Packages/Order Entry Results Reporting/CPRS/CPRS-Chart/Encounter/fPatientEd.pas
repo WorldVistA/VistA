@@ -11,8 +11,15 @@ type
   TfrmPatientEd = class(TfrmPCEBaseMain)
     lblUnderstanding: TLabel;
     cboPatUnderstanding: TORComboBox;
+    edtMag: TCaptionEdit;
+    lblUCUM2: TLabel;
+    lblUCUM: TLabel;
+    lblMag: TLabel;
     procedure cboPatUnderstandingChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure edtMagChange(Sender: TObject);
+    procedure edtMagExit(Sender: TObject);
+    procedure edtMagKeyPress(Sender: TObject; var Key: Char);
   private
   protected
     procedure UpdateNewItemStr(var x: string); override;
@@ -28,7 +35,7 @@ implementation
 {$R *.DFM}
 
 uses
-  fEncounterFrame, VA508AccessibilityRouter;
+  fEncounterFrame, VA508AccessibilityRouter, uMisc;
 
 {///////////////////////////////////////////////////////////////////////////////
 //Name:procedure tfrmPatientEd.cboPatUnderstandingChange(Sender: TObject);
@@ -45,11 +52,33 @@ begin
   if(NotUpdating) and (cboPatUnderstanding.Text <> '') then
   begin
      for i := 0 to lstCaptionList.Items.Count-1 do
-      if(lstCaptionList.Items[i].Selected) then
+      if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEPat) then
         TPCEPat(lstCaptionList.Objects[i]).Level := cboPatUnderstanding.ItemID;
-
     GridChanged;
   end;
+end;
+
+procedure TfrmPatientEd.edtMagChange(Sender: TObject);
+var
+ item: TPCEPat;
+
+begin
+  inherited;
+  if (GridIndex<0) or (lstCaptionList.SelCount <> 1) then exit;
+  item := lstCaptionList.Objects[GridIndex] as TPCEPat;
+  item.Magnitude := edtMag.Text;
+end;
+
+procedure TfrmPatientEd.edtMagExit(Sender: TObject);
+begin
+  inherited;
+  PostValidateMag(edtMag);
+end;
+
+procedure TfrmPatientEd.edtMagKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  ValidateMagKeyPress(Sender, Key);
 end;
 
 procedure TfrmPatientEd.FormCreate(Sender: TObject);
@@ -92,7 +121,7 @@ begin
 
        for i := 0 to lstCaptionList.Items.Count-1 do
         begin
-          if lstCaptionList.Items[i].Selected then
+          if lstCaptionList.Items[i].Selected and (lstCaptionList.Objects[i] is TPCEPat) then
           begin
             Obj := TPCEPat(lstCaptionList.Objects[i]);
             if(First) then
@@ -117,6 +146,23 @@ begin
       begin
         cboPatUnderstanding.Text := '';
       end;
+
+      ok := (lstCaptionList.SelCount = 1);
+      if(ok) then
+      begin
+        Obj := TPCEPat(lstCaptionList.Objects[GridIndex]);
+        ParseMagUCUMData(Obj.UCUMInfo, lblMag, edtMag, lblUCUM, lblUCUM2);
+        if edtMag.Visible then
+          edtMag.Text := Obj.Magnitude;
+      end
+      else
+      begin
+        lblMag.Visible := False;
+        edtMag.Visible := False;
+        lblUCUM.Visible := False;
+        lblUCUM2.Visible := False;
+      end;
+
     finally
       EndUpdate;
     end;

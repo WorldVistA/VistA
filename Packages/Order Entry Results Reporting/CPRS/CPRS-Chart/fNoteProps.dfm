@@ -3,435 +3,131 @@ inherited frmNoteProperties: TfrmNoteProperties
   Top = 56
   BorderIcons = []
   Caption = 'Progress Note Properties'
-  ClientHeight = 861
-  ClientWidth = 758
-  Constraints.MinWidth = 775
-  Font.Height = -16
-  Font.Name = 'Tahoma'
-  Position = poScreenCenter
-  OnDestroy = FormDestroy
-  ExplicitTop = -284
-  ExplicitWidth = 776
-  ExplicitHeight = 906
-  PixelsPerInch = 120
-  TextHeight = 19
-  object lblNewTitle: TLabel [0]
-    Left = 43
-    Top = 18
-    Width = 141
-    Height = 19
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Alignment = taRightJustify
-    Caption = 'Progress Note Title:'
-  end
-  object lblDateTime: TLabel [1]
-    Left = 47
-    Top = 173
-    Width = 137
-    Height = 19
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Alignment = taRightJustify
-    Caption = 'Date/Time of Note:'
-  end
-  object lblAuthor: TLabel [2]
-    Left = 129
-    Top = 205
-    Width = 55
-    Height = 19
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Alignment = taRightJustify
-    Caption = 'Author:'
-  end
-  object lblCosigner: TLabel [3]
-    Left = 48
-    Top = 239
-    Width = 136
-    Height = 19
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Alignment = taRightJustify
-    Caption = 'Expected Cosigner:'
-  end
-  object lblProcSummCode: TLabel [4]
-    Left = 520
-    Top = 169
-    Width = 185
-    Height = 19
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Caption = 'Procedure Summary Code'
-    Transparent = False
-  end
-  object lblProcDateTime: TLabel [5]
-    Left = 520
-    Top = 218
-    Width = 150
-    Height = 19
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Caption = 'Procedure Date/Time'
-    Transparent = False
-  end
-  object cboNewTitle: TORComboBox [6]
-    Left = 193
-    Top = 14
-    Width = 445
-    Height = 147
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Anchors = [akLeft, akTop, akRight]
-    Style = orcsSimple
-    AutoSelect = True
-    Caption = 'Progress Note Title'
-    Color = clWindow
-    DropDownCount = 8
-    ItemHeight = 19
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = True
-    LongList = True
-    LookupPiece = 0
-    MaxLength = 0
-    ParentShowHint = False
-    Pieces = '2'
-    ShowHint = True
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 0
-    Text = ''
-    OnDblClick = cboNewTitleDblClick
-    OnEnter = cboNewTitleEnter
-    OnExit = cboNewTitleExit
-    OnMouseClick = cboNewTitleMouseClick
-    OnNeedData = cboNewTitleNeedData
-    CharsNeedMatch = 1
-  end
-  object calNote: TORDateBox [7]
-    Left = 193
-    Top = 169
-    Width = 175
-    Height = 27
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    TabOrder = 1
-    OnEnter = calNoteEnter
-    DateOnly = False
-    RequireTime = True
-    Caption = 'Date/Time of Note:'
-  end
-  object cboAuthor: TORComboBox [8]
-    Left = 193
-    Top = 204
-    Width = 292
-    Height = 27
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Author'
-    Color = clWindow
-    DropDownCount = 8
-    ItemHeight = 19
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = True
-    LookupPiece = 2
-    MaxLength = 0
-    ParentShowHint = False
-    Pieces = '2,3'
-    ShowHint = True
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 2
-    Text = ''
-    OnEnter = cboAuthorEnter
-    OnExit = cboAuthorExit
-    OnMouseClick = cboAuthorMouseClick
-    OnNeedData = NewPersonNeedData
-    CharsNeedMatch = 1
-  end
-  object cboCosigner: TORComboBox [9]
-    Left = 193
-    Top = 236
-    Width = 292
-    Height = 27
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Expected Cosigner:'
-    Color = clWindow
-    DropDownCount = 8
-    ItemHeight = 19
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = True
-    LookupPiece = 2
-    MaxLength = 0
-    ParentShowHint = False
-    Pieces = '2,3'
-    ShowHint = True
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 3
-    Text = ''
-    OnExit = cboCosignerExit
-    OnNeedData = cboCosignerNeedData
-    CharsNeedMatch = 1
-  end
-  object cmdOK: TButton [10]
-    Left = 655
-    Top = 14
-    Width = 90
-    Height = 26
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Anchors = [akTop, akRight]
-    Caption = 'OK'
-    Default = True
-    TabOrder = 8
-    OnClick = cmdOKClick
-  end
-  object cmdCancel: TButton [11]
-    Left = 655
-    Top = 48
-    Width = 90
-    Height = 26
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Anchors = [akTop, akRight]
-    Cancel = True
-    Caption = 'Cancel'
-    TabOrder = 9
-    OnClick = cmdCancelClick
-  end
-  object cboProcSummCode: TORComboBox [12]
-    Left = 520
-    Top = 188
-    Width = 200
-    Height = 27
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Procedure Summary Code'
-    Color = clWindow
-    DropDownCount = 8
-    Items.Strings = (
-      '1^Normal'
-      '2^Abnormal'
-      '3^Borderline'
-      '4^Incomplete')
-    ItemHeight = 19
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = False
-    LookupPiece = 0
-    MaxLength = 0
-    Pieces = '2'
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 4
-    Text = ''
-    CharsNeedMatch = 1
-  end
-  object calProcDateTime: TORDateBox [13]
-    Left = 520
-    Top = 236
-    Width = 200
-    Height = 27
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    TabOrder = 5
-    OnEnter = calNoteEnter
-    DateOnly = False
-    RequireTime = True
-    Caption = 'Procedure Date/Time'
-  end
-  object pnlConsults: TPanel [14]
+  ClientHeight = 634
+  ClientWidth = 691
+  Constraints.MinHeight = 400
+  Constraints.MinWidth = 551
+  OnResize = FormResize
+  ExplicitWidth = 707
+  ExplicitHeight = 673
+  PixelsPerInch = 96
+  TextHeight = 13
+  object pnlConsults: TPanel [0]
     Tag = 1
     Left = 0
-    Top = 459
-    Width = 758
-    Height = 211
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 328
+    Width = 691
+    Height = 153
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 6
+    TabOrder = 0
     Visible = False
     object bvlConsult: TBevel
       Tag = 1
-      AlignWithMargins = True
-      Left = 4
-      Top = 4
-      Width = 750
+      Left = 0
+      Top = 0
+      Width = 691
       Height = 2
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Align = alTop
+      Visible = False
+      ExplicitLeft = 1
+      ExplicitTop = 2
+      ExplicitWidth = 531
     end
     object pnlCTop: TPanel
-      AlignWithMargins = True
-      Left = 4
-      Top = 14
-      Width = 750
-      Height = 51
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 0
+      Top = 2
+      Width = 691
+      Height = 49
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      object pnlCButtons: TPanel
-        Left = 489
-        Top = 0
-        Width = 261
-        Height = 51
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Align = alRight
-        BevelOuter = bvNone
-        TabOrder = 0
-        object btnShowList: TButton
-          Left = 13
-          Top = 13
-          Width = 125
-          Height = 26
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          Caption = 'Show Unresolved'
-          TabOrder = 0
-          OnClick = btnShowListClick
-        end
-        object btnDetails: TButton
-          Left = 143
-          Top = 13
-          Width = 110
-          Height = 26
-          Margins.Left = 4
-          Margins.Top = 4
-          Margins.Right = 4
-          Margins.Bottom = 4
-          Caption = 'Show Details'
-          TabOrder = 1
-          OnClick = btnDetailsClick
-        end
+      object lblConsult1: TLabel
+        Tag = 1
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 685
+        Height = 13
+        Align = alTop
+        Caption = 
+          'This progress note title must be associated with a consult reque' +
+          'st.'
+        ExplicitWidth = 309
       end
       object pnlCText: TPanel
         Left = 0
-        Top = 0
-        Width = 489
-        Height = 51
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Top = 19
+        Width = 691
+        Height = 30
         Align = alClient
         BevelOuter = bvNone
-        TabOrder = 1
-        object lblConsult1: TLabel
-          Tag = 1
-          AlignWithMargins = True
-          Left = 3
-          Top = 3
-          Width = 483
-          Height = 19
-          Margins.Bottom = 0
-          Align = alTop
-          Caption = 
-            'This progress note title must be associated with a consult reque' +
-            'st.'
-          Layout = tlCenter
-          ExplicitWidth = 467
-        end
+        TabOrder = 0
         object lblConsult2: TLabel
           Tag = 1
           AlignWithMargins = True
           Left = 3
-          Top = 25
-          Width = 483
-          Height = 23
+          Top = 3
+          Width = 443
+          Height = 24
           Align = alClient
           Caption = 'Select one of the following or choose a different title.'
-          ExplicitTop = 21
-          ExplicitWidth = 375
-          ExplicitHeight = 19
+          ExplicitWidth = 247
+          ExplicitHeight = 13
+        end
+        object btnDetails: TButton
+          AlignWithMargins = True
+          Left = 576
+          Top = 3
+          Width = 112
+          Height = 24
+          Align = alRight
+          Caption = 'Show &Details'
+          TabOrder = 1
+          OnClick = btnDetailsClick
+        end
+        object btnShowList: TButton
+          AlignWithMargins = True
+          Left = 452
+          Top = 3
+          Width = 118
+          Height = 24
+          Align = alRight
+          Caption = 'Show &Unresolved'
+          TabOrder = 0
+          OnClick = btnShowListClick
         end
       end
     end
     object lstRequests: TCaptionListView
-      AlignWithMargins = True
-      Left = 3
-      Top = 72
-      Width = 752
-      Height = 136
+      Left = 0
+      Top = 51
+      Width = 691
+      Height = 102
+      Margins.Left = 8
+      Margins.Right = 8
       Align = alClient
       Columns = <
         item
           Caption = 'Consult Request Date'
-          Width = 175
+          Width = 120
         end
         item
-          AutoSize = True
           Caption = 'Service'
           Tag = 1
+          Width = 120
         end
         item
-          AutoSize = True
           Caption = 'Procedure'
           Tag = 2
+          Width = 160
         end
         item
           Caption = 'Status'
-          Width = 75
+          Width = 70
         end
         item
           Caption = '# Notes'
-          Width = 75
         end>
       HideSelection = False
       HoverTime = 0
@@ -447,62 +143,46 @@ inherited frmNoteProperties: TfrmNoteProperties
       AutoSize = False
       Caption = 'Associated Consult Request'
       Pieces = '2,3,4,5,6'
-      HideTinyColumns = False
     end
   end
-  object pnlPRF: TORAutoPanel [15]
+  object pnlPRF: TORAutoPanel [1]
     Tag = 3
     Left = 0
-    Top = 670
-    Width = 758
-    Height = 191
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 481
+    Width = 691
+    Height = 153
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 7
+    TabOrder = 1
     Visible = False
     object lblPRF: TLabel
       Tag = 1
       AlignWithMargins = True
-      Left = 4
-      Top = 14
-      Width = 750
-      Height = 19
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 3
+      Top = 5
+      Width = 685
+      Height = 13
       Align = alTop
       Caption = 'Which Patient Record Flag Action should this Note be linked to?'
-      ExplicitWidth = 450
+      ExplicitWidth = 304
     end
     object Bevel1: TBevel
       Tag = 1
-      AlignWithMargins = True
-      Left = 4
-      Top = 4
-      Width = 750
+      Left = 0
+      Top = 0
+      Width = 691
       Height = 2
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       Align = alTop
+      ExplicitLeft = 1
+      ExplicitTop = 2
+      ExplicitWidth = 531
     end
     object lvPRF: TCaptionListView
-      AlignWithMargins = True
-      Left = 4
-      Top = 41
-      Width = 750
-      Height = 146
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Align = alClient
+      Left = 0
+      Top = 32
+      Width = 691
+      Height = 121
+      Align = alBottom
       Columns = <
         item
           Caption = 'Used For Screen Readers'
@@ -524,48 +204,45 @@ inherited frmNoteProperties: TfrmNoteProperties
           AutoSize = True
           Caption = 'Note'
         end>
-      Constraints.MinHeight = 63
+      Constraints.MinHeight = 50
       HideSelection = False
       ReadOnly = True
       RowSelect = True
       TabOrder = 0
       ViewStyle = vsReport
       AutoSize = False
-      HideTinyColumns = True
     end
   end
-  object pnlSurgery: TPanel [16]
+  object pnlSurgery: TPanel [2]
     Tag = 2
-    AlignWithMargins = True
-    Left = 4
-    Top = 263
-    Width = 750
-    Height = 192
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 0
+    Top = 175
+    Width = 691
+    Height = 153
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 12
+    TabOrder = 2
     Visible = False
     object bvlSurgery: TBevel
       Tag = 2
-      AlignWithMargins = True
-      Left = 3
-      Top = 3
-      Width = 744
+      Left = 0
+      Top = 0
+      Width = 691
       Height = 2
       Align = alTop
-      ExplicitWidth = 745
+      Shape = bsBottomLine
+      ExplicitLeft = 1
+      ExplicitTop = 2
+      ExplicitWidth = 531
     end
     object lblSurgery1: TStaticText
       Tag = 2
       AlignWithMargins = True
       Left = 3
-      Top = 11
-      Width = 744
-      Height = 23
+      Top = 10
+      Width = 685
+      Height = 17
+      Margins.Top = 8
       Margins.Bottom = 0
       Align = alTop
       Alignment = taCenter
@@ -576,9 +253,9 @@ inherited frmNoteProperties: TfrmNoteProperties
       Tag = 2
       AlignWithMargins = True
       Left = 3
-      Top = 34
-      Width = 744
-      Height = 23
+      Top = 27
+      Width = 685
+      Height = 17
       Margins.Top = 0
       Align = alTop
       Alignment = taCenter
@@ -588,26 +265,27 @@ inherited frmNoteProperties: TfrmNoteProperties
       TabOrder = 1
     end
     object lstSurgery: TCaptionListView
-      AlignWithMargins = True
-      Left = 3
-      Top = 63
-      Width = 744
-      Height = 126
+      Left = 0
+      Top = 47
+      Width = 691
+      Height = 106
+      Margins.Left = 8
+      Margins.Right = 8
       Align = alClient
       Columns = <
         item
           Caption = 'Surgery Date'
-          Width = 175
+          Width = 180
         end
         item
-          AutoSize = True
           Caption = 'Procedure'
           Tag = 1
+          Width = 100
         end
         item
-          AutoSize = True
           Caption = 'Surgeon'
           Tag = 2
+          Width = 160
         end>
       HideSelection = False
       HoverTime = 0
@@ -622,12 +300,387 @@ inherited frmNoteProperties: TfrmNoteProperties
       AutoSize = False
       Caption = 'Associated Surgery Case'
       Pieces = '3,2,4'
-      HideTinyColumns = False
+    end
+  end
+  object gpMain: TGridPanel [3]
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 685
+    Height = 169
+    Align = alClient
+    BevelOuter = bvNone
+    Caption = 'gpMain'
+    ColumnCollection = <
+      item
+        SizeStyle = ssAbsolute
+        Value = 128.000000000000000000
+      end
+      item
+        Value = 50.000000000000000000
+      end
+      item
+        Value = 50.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 104.000000000000000000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        Control = lblNewTitle
+        Row = 0
+        RowSpan = 2
+      end
+      item
+        Column = 1
+        ColumnSpan = 2
+        Control = cboNewTitle
+        Row = 0
+        RowSpan = 2
+      end
+      item
+        Column = 3
+        Control = cmdOK
+        Row = 0
+      end
+      item
+        Column = 3
+        Control = cmdCancel
+        Row = 1
+        RowSpan = 4
+      end
+      item
+        Column = 0
+        Control = lblDateTime
+        Row = 2
+      end
+      item
+        Column = 1
+        Control = calNote
+        Row = 2
+      end
+      item
+        Column = 2
+        Control = lblProcSummCode
+        Row = 2
+      end
+      item
+        Column = 0
+        Control = lblAuthor
+        Row = 3
+      end
+      item
+        Column = 1
+        Control = cboAuthor
+        Row = 3
+      end
+      item
+        Column = 2
+        Control = cboProcSummCode
+        Row = 3
+      end
+      item
+        Column = 0
+        Control = lblCosigner
+        Row = 4
+      end
+      item
+        Column = 1
+        Control = cboCosigner
+        Row = 4
+      end
+      item
+        Column = 2
+        Control = lblProcDateTime
+        Row = 4
+      end
+      item
+        Column = 2
+        Control = calProcDateTime
+        Row = 5
+      end>
+    RowCollection = <
+      item
+        SizeStyle = ssAbsolute
+        Value = 26.000000000000000000
+      end
+      item
+        Value = 100.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 26.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 26.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 26.000000000000000000
+      end
+      item
+        SizeStyle = ssAbsolute
+        Value = 26.000000000000000000
+      end>
+    ShowCaption = False
+    TabOrder = 3
+    object lblNewTitle: TLabel
+      AlignWithMargins = True
+      Left = 32
+      Top = 3
+      Width = 93
+      Height = 59
+      Align = alRight
+      Alignment = taRightJustify
+      Caption = 'Progress Note Title:'
+      ExplicitHeight = 13
+    end
+    object cboNewTitle: TORComboBox
+      AlignWithMargins = True
+      Left = 131
+      Top = 3
+      Width = 447
+      Height = 59
+      Style = orcsSimple
+      Align = alClient
+      AutoSelect = True
+      Caption = 'Progress Note Title'
+      Color = clWindow
+      DropDownCount = 8
+      ItemHeight = 13
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = True
+      LongList = True
+      LookupPiece = 0
+      MaxLength = 0
+      ParentShowHint = False
+      Pieces = '2'
+      ShowHint = True
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 0
+      Text = ''
+      OnDblClick = cboNewTitleDblClick
+      OnEnter = cboNewTitleEnter
+      OnExit = cboNewTitleExit
+      OnMouseClick = cboNewTitleMouseClick
+      OnNeedData = cboNewTitleNeedData
+      CharsNeedMatch = 1
+    end
+    object cmdOK: TButton
+      AlignWithMargins = True
+      Left = 584
+      Top = 0
+      Width = 98
+      Height = 26
+      Margins.Top = 0
+      Margins.Bottom = 0
+      Align = alClient
+      Caption = '&OK'
+      Default = True
+      TabOrder = 1
+      OnClick = cmdOKClick
+    end
+    object cmdCancel: TButton
+      AlignWithMargins = True
+      Left = 584
+      Top = 29
+      Width = 98
+      Height = 26
+      Align = alTop
+      Cancel = True
+      Caption = '&Cancel'
+      TabOrder = 2
+      OnClick = cmdCancelClick
+    end
+    object lblDateTime: TLabel
+      AlignWithMargins = True
+      Left = 33
+      Top = 68
+      Width = 92
+      Height = 20
+      Align = alRight
+      Alignment = taRightJustify
+      Caption = 'Date/Time of Note:'
+      ExplicitHeight = 13
+    end
+    object calNote: TORDateBox
+      AlignWithMargins = True
+      Left = 131
+      Top = 65
+      Width = 220
+      Height = 26
+      Margins.Top = 0
+      Margins.Bottom = 0
+      Align = alClient
+      TabOrder = 3
+      OnEnter = calNoteEnter
+      DateOnly = False
+      RequireTime = True
+      Caption = 'Date/Time of Note:'
+      ExplicitHeight = 21
+    end
+    object lblProcSummCode: TLabel
+      AlignWithMargins = True
+      Left = 357
+      Top = 68
+      Width = 123
+      Height = 20
+      Align = alLeft
+      Caption = 'Procedure Summary Code'
+      Transparent = False
+      ExplicitHeight = 13
+    end
+    object lblAuthor: TLabel
+      AlignWithMargins = True
+      Left = 91
+      Top = 94
+      Width = 34
+      Height = 20
+      Align = alRight
+      Alignment = taRightJustify
+      Caption = 'Author:'
+      ExplicitHeight = 13
+    end
+    object cboAuthor: TORComboBox
+      AlignWithMargins = True
+      Left = 131
+      Top = 94
+      Width = 220
+      Height = 21
+      Style = orcsDropDown
+      Align = alClient
+      AutoSelect = True
+      Caption = 'Author'
+      Color = clWindow
+      DropDownCount = 8
+      ItemHeight = 13
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = False
+      LongList = True
+      LookupPiece = 2
+      MaxLength = 0
+      ParentShowHint = False
+      Pieces = '2,3'
+      ShowHint = True
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 4
+      Text = ''
+      OnEnter = cboAuthorEnter
+      OnExit = cboAuthorExit
+      OnMouseClick = cboAuthorMouseClick
+      OnNeedData = NewPersonNeedData
+      CharsNeedMatch = 1
+      UniqueAutoComplete = True
+    end
+    object cboProcSummCode: TORComboBox
+      AlignWithMargins = True
+      Left = 357
+      Top = 94
+      Width = 221
+      Height = 21
+      Style = orcsDropDown
+      Align = alClient
+      AutoSelect = True
+      Caption = 'Procedure Summary Code'
+      Color = clWindow
+      DropDownCount = 8
+      Items.Strings = (
+        '1^Normal'
+        '2^Abnormal'
+        '3^Borderline'
+        '4^Incomplete')
+      ItemHeight = 13
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = False
+      LongList = False
+      LookupPiece = 0
+      MaxLength = 0
+      Pieces = '2'
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 5
+      Text = ''
+      CharsNeedMatch = 1
+    end
+    object lblCosigner: TLabel
+      AlignWithMargins = True
+      Left = 33
+      Top = 120
+      Width = 92
+      Height = 20
+      Align = alRight
+      Alignment = taRightJustify
+      Caption = 'Expected Cosigner:'
+      ExplicitHeight = 13
+    end
+    object cboCosigner: TORComboBox
+      AlignWithMargins = True
+      Left = 131
+      Top = 120
+      Width = 220
+      Height = 21
+      Style = orcsDropDown
+      Align = alClient
+      AutoSelect = True
+      Caption = 'Expected Cosigner:'
+      Color = clWindow
+      DropDownCount = 8
+      ItemHeight = 13
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = False
+      LongList = True
+      LookupPiece = 2
+      MaxLength = 0
+      ParentShowHint = False
+      Pieces = '2,3'
+      ShowHint = True
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 6
+      Text = ''
+      OnExit = cboCosignerExit
+      OnNeedData = cboCosignerNeedData
+      CharsNeedMatch = 1
+      UniqueAutoComplete = True
+    end
+    object lblProcDateTime: TLabel
+      AlignWithMargins = True
+      Left = 357
+      Top = 120
+      Width = 103
+      Height = 20
+      Align = alLeft
+      Caption = 'Procedure Date/Time'
+      Transparent = False
+      ExplicitHeight = 13
+    end
+    object calProcDateTime: TORDateBox
+      AlignWithMargins = True
+      Left = 357
+      Top = 143
+      Width = 221
+      Height = 26
+      Margins.Top = 0
+      Margins.Bottom = 0
+      Align = alClient
+      TabOrder = 7
+      OnEnter = calNoteEnter
+      DateOnly = False
+      RequireTime = True
+      Caption = 'Procedure Date/Time'
+      ExplicitHeight = 21
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 16
-    Top = 24
     Data = (
       (
         'Component = cboNewTitle'
@@ -683,9 +736,6 @@ inherited frmNoteProperties: TfrmNoteProperties
         'Component = pnlCTop'
         'Status = stsDefault')
       (
-        'Component = pnlCButtons'
-        'Status = stsDefault')
-      (
         'Component = pnlCText'
         'Status = stsDefault')
       (
@@ -700,6 +750,9 @@ inherited frmNoteProperties: TfrmNoteProperties
           'Text = This progress note title must be associated with a consul' +
           't request.'#13#10'Select one of the following or choose a different ti' +
           'tle.'
-        'Status = stsOK'))
+        'Status = stsOK')
+      (
+        'Component = gpMain'
+        'Status = stsDefault'))
   end
 end

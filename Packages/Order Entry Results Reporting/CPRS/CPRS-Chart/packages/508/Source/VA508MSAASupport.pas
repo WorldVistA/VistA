@@ -446,23 +446,25 @@ begin
   FServerTypes := FServerTypes + [AServerType];
 end;
 
-procedure TMSAAServer.Attach;
 var
   NamePropIDs: array [0 .. 0] of TGUID;
+
+procedure TMSAAServer.Attach;
 begin
   // blj 22 Feb 2018.  We need to sanitize all of the parameters going to
   // SetHwndPropServer.
   //
-  if not FAttached or uShutdown then
+  if FAttached or uShutdown then
     exit;
 
   if not Assigned(FComponent) then
     exit;
 
+  if not Assigned(FComponent.Parent) then Exit;
+
   if FComponent.Handle < 1 then
     exit;
 
-  NamePropIDs[0] := PROPID_ACC_NAME;
   // if FServerType = stNormal then
   // FAttached := Succeeded(AccPropServices.SetHwndPropServer(FComponent.Handle,
   // OBJID_CLIENT, CHILDID_SELF, @NamePropIDs, 1, Self, ANNO_THIS))
@@ -493,31 +495,21 @@ begin
 end;
 
 procedure TMSAAServer.Detach;
-var
-  NamePropIDs: array [0 .. 0] of TGUID;
 begin
-  NamePropIDs[0] := PROPID_ACC_NAME;
-
-
   // blj 22 Feb 2018.  Just like Attach(), we need to sanitize the inputs here.
   //  The OS does not give us a window to debug, so we have to make sure that
   //  everything is as clean as we can make it before calling ClearHwndProps.
+  FAttached := False;
 
-  if not(FAttached) or uShutDown then
-    exit;
+  if not(FAttached) or uShutDown then Exit;
+  if not Assigned(FComponent) then Exit;
+  if not Assigned(FComponent.Parent) then Exit;
+  if FComponent.Handle < 1 then Exit;
+  if (csDestroying in FComponent.ComponentState) or
+    (not FComponent.Visible) then Exit;
 
-  if not Assigned(FComponent) then
-    exit;
-
-  if FComponent.Handle < 1 then
-    exit;
-
-  if (csDestroying in FComponent.ComponentState) or not FComponent.Visible then
-    exit;
-
-  if Succeeded(AccPropServices.ClearHwndProps(FComponent.Handle,
-    OBJID_CLIENT, CHILDID_SELF, @NamePropIDs, 1)) then
-    FAttached := FALSE;
+  FAttached := not Succeeded(AccPropServices.ClearHwndProps(FComponent.Handle,
+    OBJID_CLIENT, CHILDID_SELF, @NamePropIDs, 1));
 end;
 
 function TMSAAServer.EventCount: integer;
@@ -949,9 +941,9 @@ begin
 end;
 
 initialization
+  NamePropIDs[0] := PROPID_ACC_NAME;
 
 finalization
-
-Cleanup;
+  Cleanup;
 
 end.

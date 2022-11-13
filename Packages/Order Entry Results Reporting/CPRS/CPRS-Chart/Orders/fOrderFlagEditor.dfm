@@ -1,27 +1,19 @@
-object frmOrderFlag: TfrmOrderFlag
+inherited frmOrderFlag: TfrmOrderFlag
   Left = 334
   Top = 234
   BorderStyle = bsDialog
   Caption = 'Flag Order'
   ClientHeight = 666
   ClientWidth = 474
-  Color = clBtnFace
   Constraints.MinWidth = 480
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'MS Sans Serif'
-  Font.Style = []
   OldCreateOrder = True
   Position = poMainFormCenter
-  OnActivate = FormActivate
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  OnShow = FormShow
+  ExplicitWidth = 480
+  ExplicitHeight = 695
   PixelsPerInch = 96
   TextHeight = 13
-  object pnlBottom: TPanel
+  object pnlBottom: TPanel [0]
     Left = 0
     Top = 635
     Width = 474
@@ -67,7 +59,7 @@ object frmOrderFlag: TfrmOrderFlag
       end
     end
   end
-  object pnlCanvas: TPanel
+  object pnlCanvas: TPanel [1]
     Left = 0
     Top = 65
     Width = 474
@@ -98,23 +90,71 @@ object frmOrderFlag: TfrmOrderFlag
       ParentCtl3D = False
       TabOrder = 4
       Visible = False
-      object grbComment: TGroupBox
-        AlignWithMargins = True
-        Left = 196
-        Top = 3
-        Width = 273
-        Height = 153
+      object pnlRecipientsAdd: TPanel
+        Left = 0
+        Top = 0
+        Width = 185
+        Height = 159
+        Margins.Left = 8
+        Align = alLeft
+        BevelOuter = bvNone
+        TabOrder = 0
+        Visible = False
+        object lblRecipientsAdd: TLabel
+          AlignWithMargins = True
+          Left = 8
+          Top = 3
+          Width = 174
+          Height = 13
+          Margins.Left = 8
+          Align = alTop
+          Caption = 'Additional Recipients'
+          ExplicitWidth = 99
+        end
+        object orRecipientsAdd: TORListBox
+          AlignWithMargins = True
+          Left = 8
+          Top = 22
+          Width = 174
+          Height = 134
+          Margins.Left = 8
+          Align = alClient
+          ItemHeight = 13
+          MultiSelect = True
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+          OnDblClick = orRecipientsAddDblClick
+          OnKeyDown = orRecipientsAddKeyDown
+          Caption = ''
+          ItemTipColor = clWindow
+          LongList = False
+          Pieces = '2'
+        end
+      end
+      object pnlCommentSub: TPanel
+        Left = 185
+        Top = 0
+        Width = 287
+        Height = 159
         Align = alClient
-        Caption = '&Comment'
-        Ctl3D = True
-        ParentCtl3D = False
         TabOrder = 1
         DesignSize = (
-          273
-          153)
+          287
+          159)
+        object lblComment: TLabel
+          AlignWithMargins = True
+          Left = 4
+          Top = 4
+          Width = 279
+          Height = 13
+          Align = alTop
+          Caption = '&Comment'
+          ExplicitWidth = 44
+        end
         object cbRequiredComment: TCheckBox
-          Left = 196
-          Top = -3
+          Left = 203
+          Top = 5
           Width = 75
           Height = 24
           Alignment = taLeftJustify
@@ -130,59 +170,29 @@ object frmOrderFlag: TfrmOrderFlag
           Visible = False
           OnClick = cbRequiredCommentClick
         end
+        object memComment: TMemo
+          AlignWithMargins = True
+          Left = 4
+          Top = 50
+          Width = 279
+          Height = 105
+          Align = alClient
+          TabOrder = 1
+          OnChange = memCommentChange
+        end
         object txtComment: TCaptionEdit
           AlignWithMargins = True
-          Left = 5
-          Top = 127
-          Width = 263
+          Left = 4
+          Top = 23
+          Width = 279
           Height = 21
-          Align = alBottom
+          Align = alTop
           Ctl3D = True
           MaxLength = 240
           ParentCtl3D = False
-          TabOrder = 1
+          TabOrder = 2
           OnChange = txtCommentChange
-          Caption = 'Comment (optional)'
-        end
-        object memComment: TMemo
-          AlignWithMargins = True
-          Left = 5
-          Top = 18
-          Width = 263
-          Height = 103
-          Align = alClient
-          TabOrder = 3
-          OnChange = memCommentChange
-        end
-      end
-      object grbRecipientsAdd: TGroupBox
-        AlignWithMargins = True
-        Left = 3
-        Top = 3
-        Width = 187
-        Height = 153
-        Align = alLeft
-        Caption = 'Additional Recipients'
-        TabOrder = 0
-        Visible = False
-        object orRecipientsAdd: TORListBox
-          AlignWithMargins = True
-          Left = 4
-          Top = 17
-          Width = 179
-          Height = 132
-          Align = alClient
-          ItemHeight = 13
-          MultiSelect = True
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          OnDblClick = orRecipientsAddDblClick
-          OnKeyDown = orRecipientsAddKeyDown
           Caption = ''
-          ItemTipColor = clWindow
-          LongList = False
-          Pieces = '2'
         end
       end
     end
@@ -198,138 +208,140 @@ object frmOrderFlag: TfrmOrderFlag
       ParentCtl3D = False
       TabOrder = 3
       OnResize = pnlNoActionAlertResize
-      object grbNoActionAlert: TGroupBox
+      DesignSize = (
+        472
+        68)
+      object lblNoActionAlert: TLabel
         AlignWithMargins = True
-        Left = 3
+        Left = 8
         Top = 3
-        Width = 466
-        Height = 62
-        Align = alClient
+        Width = 456
+        Height = 13
+        Margins.Left = 8
+        Margins.Right = 8
+        Align = alTop
         Caption = '&No Action Alert'
-        Ctl3D = True
-        ParentCtl3D = False
+        ExplicitWidth = 71
+      end
+      object cbCreateNoActionAlert: TCheckBox
+        AlignWithMargins = True
+        Left = 8
+        Top = 22
+        Width = 456
+        Height = 18
+        Margins.Left = 8
+        Margins.Right = 8
+        Align = alTop
+        Caption = 'Create a No Action Alert'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clPurple
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
         TabOrder = 0
-        DesignSize = (
-          466
-          62)
-        object cbNoActionRequired: TCheckBox
-          Left = 389
-          Top = -1
-          Width = 75
-          Height = 18
-          Alignment = taLeftJustify
-          Anchors = [akTop, akRight]
-          Caption = 'Required'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clPurple
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-          Visible = False
-          OnClick = cbNoActionRequiredClick
-        end
-        object dtFlagExpire: TORDateBox
-          AlignWithMargins = True
-          Left = 5
-          Top = 36
-          Width = 456
-          Height = 21
-          Align = alBottom
-          Ctl3D = True
-          Enabled = False
-          ParentCtl3D = False
-          TabOrder = 2
-          DateOnly = False
-          RequireTime = True
-          Caption = ''
-        end
-        object cbCreateNoActionAlert: TCheckBox
-          Left = 5
-          Top = 16
-          Width = 456
-          Height = 18
-          Anchors = [akLeft, akTop, akRight]
-          Caption = 'Create a No Action Alert'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clPurple
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 1
-          OnClick = cbCreateNoActionAlertClick
-        end
+        OnClick = cbCreateNoActionAlertClick
+      end
+      object cbNoActionRequired: TCheckBox
+        Left = 389
+        Top = -2
+        Width = 75
+        Height = 18
+        Alignment = taLeftJustify
+        Anchors = [akTop, akRight]
+        Caption = 'Required'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clPurple
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        Visible = False
+        OnClick = cbNoActionRequiredClick
+      end
+      object dtFlagExpire: TORDateBox
+        AlignWithMargins = True
+        Left = 8
+        Top = 46
+        Width = 456
+        Height = 21
+        Margins.Left = 8
+        Margins.Right = 8
+        Align = alTop
+        Ctl3D = True
+        Enabled = False
+        ParentCtl3D = False
+        TabOrder = 2
+        DateOnly = False
+        RequireTime = True
+        Caption = 'No Action Alert Flag Expiration Date'
       end
     end
     object pnlRecipients: TPanel
       Left = 1
-      Top = 176
+      Top = 164
       Width = 472
-      Height = 166
+      Height = 178
       Align = alClient
       BevelOuter = bvNone
       Constraints.MinHeight = 132
       TabOrder = 2
       OnResize = pnlRecipientsResize
-      object grbRecipients: TGroupBox
+      DesignSize = (
+        472
+        178)
+      object lblRecipients: TLabel
         AlignWithMargins = True
-        Left = 3
+        Left = 8
         Top = 3
-        Width = 466
-        Height = 160
-        Align = alClient
-        Caption = 'Flag Notification &Recepients'
+        Width = 456
+        Height = 13
+        Margins.Left = 8
+        Margins.Right = 8
+        Align = alTop
+        Caption = 'Flag Notification &Recipients'
+        ExplicitWidth = 129
+      end
+      object cbRecipientsRequired: TCheckBox
+        Left = 389
+        Top = -1
+        Width = 77
+        Height = 17
+        Alignment = taLeftJustify
+        Anchors = [akTop, akRight]
+        Caption = 'Required'
+        Checked = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clPurple
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        State = cbChecked
         TabOrder = 0
-        DesignSize = (
-          466
-          160)
-        object pnlRecipientsList: TPanel
-          Left = 271
-          Top = 15
-          Width = 193
-          Height = 143
-          Align = alClient
-          BevelOuter = bvNone
-          TabOrder = 2
-          OnResize = pnlRecipientsListResize
-          ExplicitLeft = 274
-          ExplicitWidth = 190
-          object orSelectedRecipients: TORListBox
-            AlignWithMargins = True
-            Left = 3
-            Top = 3
-            Width = 187
-            Height = 137
-            TabStop = False
-            Align = alClient
-            ItemHeight = 13
-            MultiSelect = True
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 0
-            OnClick = orSelectedRecipientsClick
-            OnDblClick = orSelectedRecipientsDblClick
-            OnEnter = orSelectedRecipientsEnter
-            OnExit = orSelectedRecipientsExit
-            Caption = ''
-            ItemTipColor = clWindow
-            LongList = False
-            Pieces = '2,3'
-            OnChange = orSelectedRecipientsChange
-            ExplicitWidth = 184
-          end
-        end
+        Visible = False
+        OnClick = cbRecipientsRequiredClick
+      end
+      object pnlRecipientsSub: TPanel
+        AlignWithMargins = True
+        Left = 5
+        Top = 22
+        Width = 459
+        Height = 153
+        Margins.Left = 5
+        Margins.Right = 8
+        Align = alClient
+        BevelOuter = bvNone
+        TabOrder = 1
         object pnlListButtons: TPanel
-          Left = 187
-          Top = 15
+          Left = 185
+          Top = 0
           Width = 84
-          Height = 143
+          Height = 153
           Align = alLeft
           BevelOuter = bvNone
           TabOrder = 1
-          ExplicitLeft = 190
           object sbDebug: TSpeedButton
             AlignWithMargins = True
             Left = 0
@@ -361,7 +373,6 @@ object frmOrderFlag: TfrmOrderFlag
             Action = acRecipientAdd
             Align = alTop
             TabOrder = 0
-            ExplicitWidth = 81
           end
           object btnRemoveAllRecipients: TButton
             AlignWithMargins = True
@@ -374,7 +385,6 @@ object frmOrderFlag: TfrmOrderFlag
             Action = acRecipientRemoveAll
             Align = alTop
             TabOrder = 2
-            ExplicitWidth = 81
           end
           object btnRemoveRecipients: TButton
             AlignWithMargins = True
@@ -387,14 +397,44 @@ object frmOrderFlag: TfrmOrderFlag
             Action = acRecipientRemove
             Align = alTop
             TabOrder = 1
-            ExplicitWidth = 81
+          end
+        end
+        object pnlRecipientsList: TPanel
+          Left = 269
+          Top = 0
+          Width = 190
+          Height = 153
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 2
+          OnResize = pnlRecipientsListResize
+          object orSelectedRecipients: TORListBox
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 184
+            Height = 147
+            Align = alClient
+            ItemHeight = 13
+            MultiSelect = True
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            OnClick = orSelectedRecipientsClick
+            OnDblClick = orSelectedRecipientsDblClick
+            OnEnter = orSelectedRecipientsEnter
+            OnKeyPress = orSelectedRecipientsKeyPress
+            Caption = ''
+            ItemTipColor = clWindow
+            LongList = False
+            Pieces = '2,3'
           end
         end
         object pnlRecipientsSource: TPanel
-          Left = 2
-          Top = 15
+          Left = 0
+          Top = 0
           Width = 185
-          Height = 143
+          Height = 153
           Align = alLeft
           BevelOuter = bvNone
           Constraints.MinWidth = 185
@@ -404,7 +444,7 @@ object frmOrderFlag: TfrmOrderFlag
             Left = 3
             Top = 3
             Width = 179
-            Height = 137
+            Height = 147
             Style = orcsSimple
             Align = alClient
             AutoSelect = True
@@ -425,34 +465,14 @@ object frmOrderFlag: TfrmOrderFlag
             SynonymChars = '<>'
             TabOrder = 0
             Text = ''
-            OnClick = cboAlertRecipientClick
+            OnChange = cboAlertRecipientChange
             OnDblClick = cboAlertRecipientDblClick
             OnEnter = cboAlertRecipientEnter
-            OnExit = cboAlertRecipientExit
             OnKeyDown = cboAlertRecipientKeyDown
             OnNeedData = cboAlertRecipientNeedData
             CharsNeedMatch = 1
+            UniqueAutoComplete = True
           end
-        end
-        object cbRecipientsRequired: TCheckBox
-          Left = 389
-          Top = -1
-          Width = 77
-          Height = 17
-          Alignment = taLeftJustify
-          Anchors = [akTop, akRight]
-          Caption = 'Required'
-          Checked = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clPurple
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          State = cbChecked
-          TabOrder = 3
-          Visible = False
-          OnClick = cbRecipientsRequiredClick
         end
       end
     end
@@ -460,76 +480,77 @@ object frmOrderFlag: TfrmOrderFlag
       Left = 1
       Top = 112
       Width = 472
-      Height = 64
+      Height = 52
       Align = alTop
       BevelOuter = bvNone
       Constraints.MinHeight = 46
       Ctl3D = False
       ParentCtl3D = False
       TabOrder = 1
-      object grbReason: TGroupBox
+      DesignSize = (
+        472
+        52)
+      object lblReason: TLabel
         AlignWithMargins = True
-        Left = 3
+        Left = 8
         Top = 3
-        Width = 466
-        Height = 58
-        Align = alClient
+        Width = 456
+        Height = 13
+        Margins.Left = 8
+        Margins.Right = 8
+        Align = alTop
         Caption = '&Reason'
+        ExplicitWidth = 37
+      end
+      object cboFlagReason: TORComboBox
+        AlignWithMargins = True
+        Left = 8
+        Top = 22
+        Width = 461
+        Height = 21
+        Margins.Left = 8
+        Style = orcsDropDown
+        Align = alTop
+        AutoSelect = True
+        Caption = ''
+        Color = clWindow
         Ctl3D = True
+        DropDownCount = 8
+        ItemHeight = 13
+        ItemTipColor = clWindow
+        ItemTipEnable = True
+        ListItemsOnly = False
+        LongList = False
+        LookupPiece = 0
+        MaxLength = 240
         ParentCtl3D = False
+        Pieces = '2'
+        Sorted = False
+        SynonymChars = '<>'
         TabOrder = 0
-        DesignSize = (
-          466
-          58)
-        object cboFlagReason: TORComboBox
-          AlignWithMargins = True
-          Left = 5
-          Top = 32
-          Width = 456
-          Height = 21
-          Style = orcsDropDown
-          Align = alBottom
-          AutoSelect = True
-          Caption = ''
-          Color = clWindow
-          Ctl3D = True
-          DropDownCount = 8
-          ItemHeight = 13
-          ItemTipColor = clWindow
-          ItemTipEnable = True
-          ListItemsOnly = False
-          LongList = False
-          LookupPiece = 0
-          MaxLength = 240
-          ParentCtl3D = False
-          Pieces = '2'
-          Sorted = False
-          SynonymChars = '<>'
-          TabOrder = 0
-          Text = ''
-          OnChange = cboFlagReasonChange
-          CharsNeedMatch = 1
-        end
-        object cbReasonRequired: TCheckBox
-          Left = 389
-          Top = -1
-          Width = 77
-          Height = 17
-          Alignment = taLeftJustify
-          Anchors = [akTop, akRight]
-          Caption = 'Required'
-          Checked = True
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clPurple
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          State = cbChecked
-          TabOrder = 1
-          Visible = False
-          OnClick = cbReasonRequiredClick
-        end
+        Text = ''
+        OnChange = cboFlagReasonChange
+        CharsNeedMatch = 1
+      end
+      object cbReasonRequired: TCheckBox
+        Left = 389
+        Top = -1
+        Width = 77
+        Height = 17
+        Alignment = taLeftJustify
+        Anchors = [akTop, akRight]
+        Caption = 'Required'
+        Checked = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clPurple
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        State = cbChecked
+        TabOrder = 1
+        Visible = False
+        OnClick = cbReasonRequiredClick
       end
     end
     object pnlDescription: TPanel
@@ -541,49 +562,48 @@ object frmOrderFlag: TfrmOrderFlag
       BevelOuter = bvNone
       ParentBackground = False
       TabOrder = 0
-      object grbOrderDetails: TGroupBox
+      object lblOrderDetails: TLabel
         AlignWithMargins = True
-        Left = 3
+        Left = 8
         Top = 3
-        Width = 466
-        Height = 102
-        Align = alClient
+        Width = 456
+        Height = 13
+        Margins.Left = 8
+        Margins.Right = 8
+        Margins.Bottom = 0
+        Align = alTop
         Caption = '&Order(s) Details'
+        ExplicitWidth = 72
+      end
+      object mmOrder: TMemo
+        AlignWithMargins = True
+        Left = 8
+        Top = 24
+        Width = 456
+        Height = 76
+        Hint = 'Selected flag(s) description'
+        Margins.Left = 8
+        Margins.Top = 8
+        Margins.Right = 8
+        Margins.Bottom = 8
+        Align = alClient
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsNone
         Color = clCream
-        ParentBackground = False
-        ParentColor = False
+        Ctl3D = False
+        ParentCtl3D = False
+        ParentShowHint = False
+        ReadOnly = True
+        ScrollBars = ssVertical
+        ShowHint = True
         TabOrder = 0
-        object mmOrder: TMemo
-          AlignWithMargins = True
-          Left = 10
-          Top = 23
-          Width = 446
-          Height = 69
-          Hint = 'Selected flag(s) description'
-          Margins.Left = 8
-          Margins.Top = 8
-          Margins.Right = 8
-          Margins.Bottom = 8
-          TabStop = False
-          Align = alClient
-          BevelInner = bvNone
-          BevelOuter = bvNone
-          BorderStyle = bsNone
-          Color = clCream
-          Ctl3D = False
-          ParentCtl3D = False
-          ParentShowHint = False
-          ReadOnly = True
-          ScrollBars = ssVertical
-          ShowHint = True
-          TabOrder = 0
-          WantReturns = False
-          OnChange = mmOrderChange
-        end
+        WantReturns = False
+        OnEnter = mmOrderEnter
       end
     end
   end
-  object pnlInstructions: TPanel
+  object pnlInstructions: TPanel [2]
     Left = 0
     Top = 0
     Width = 474
@@ -594,41 +614,149 @@ object frmOrderFlag: TfrmOrderFlag
     ParentColor = True
     TabOrder = 0
     Visible = False
-    object grbInstructions: TGroupBox
+    object mmInstructions: TMemo
       AlignWithMargins = True
-      Left = 4
-      Top = 4
-      Width = 466
-      Height = 57
+      Left = 9
+      Top = 1
+      Width = 456
+      Height = 55
+      Margins.Left = 8
+      Margins.Top = 0
+      Margins.Right = 8
+      Margins.Bottom = 8
       Align = alClient
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BorderStyle = bsNone
+      Color = clBtnFace
+      Ctl3D = False
+      ParentCtl3D = False
+      ReadOnly = True
       TabOrder = 0
-      object mmInstructions: TMemo
-        AlignWithMargins = True
-        Left = 10
-        Top = 15
-        Width = 446
-        Height = 32
-        Margins.Left = 8
-        Margins.Top = 0
-        Margins.Right = 8
-        Margins.Bottom = 8
-        Align = alClient
-        BevelInner = bvNone
-        BevelOuter = bvNone
-        BorderStyle = bsNone
-        Color = clBtnFace
-        Ctl3D = False
-        ParentCtl3D = False
-        ReadOnly = True
-        TabOrder = 0
-        WantReturns = False
-        WordWrap = False
-      end
+      WantReturns = False
+      WordWrap = False
     end
   end
+  inherited amgrMain: TVA508AccessibilityManager
+    Left = 24
+    Top = 8
+    Data = (
+      (
+        'Component = pnlBottom'
+        'Status = stsDefault')
+      (
+        'Component = pnlButtons'
+        'Status = stsDefault')
+      (
+        'Component = cmdCancel'
+        'Status = stsDefault')
+      (
+        'Component = cmdOK'
+        'Status = stsDefault')
+      (
+        'Component = pnlCanvas'
+        'Status = stsDefault')
+      (
+        'Component = pnlComment'
+        'Status = stsDefault')
+      (
+        'Component = cbRequiredComment'
+        'Status = stsDefault')
+      (
+        'Component = txtComment'
+        'Label = lblComment'
+        'Status = stsOK')
+      (
+        'Component = memComment'
+        'Status = stsDefault')
+      (
+        'Component = orRecipientsAdd'
+        'Label = lblRecipientsAdd'
+        'Status = stsOK')
+      (
+        'Component = pnlNoActionAlert'
+        'Status = stsDefault')
+      (
+        'Component = cbNoActionRequired'
+        'Status = stsDefault')
+      (
+        'Component = dtFlagExpire'
+        'Label = lblNoActionAlert'
+        'Status = stsOK')
+      (
+        'Component = cbCreateNoActionAlert'
+        'Status = stsDefault')
+      (
+        'Component = pnlRecipients'
+        'Status = stsDefault')
+      (
+        'Component = pnlRecipientsList'
+        'Status = stsDefault')
+      (
+        'Component = orSelectedRecipients'
+        'Text = Flag Order Recipients'#13#10
+        'Status = stsOK')
+      (
+        'Component = pnlListButtons'
+        'Status = stsDefault')
+      (
+        'Component = btnAddRecipient'
+        'Status = stsDefault')
+      (
+        'Component = btnRemoveAllRecipients'
+        'Status = stsDefault')
+      (
+        'Component = btnRemoveRecipients'
+        'Status = stsDefault')
+      (
+        'Component = pnlRecipientsSource'
+        'Status = stsDefault')
+      (
+        'Component = cboAlertRecipient'
+        'Label = lblRecipients'
+        'Status = stsOK')
+      (
+        'Component = cbRecipientsRequired'
+        'Status = stsDefault')
+      (
+        'Component = pnlReason'
+        'Status = stsDefault')
+      (
+        'Component = cboFlagReason'
+        'Label = lblReason'
+        'Status = stsOK')
+      (
+        'Component = cbReasonRequired'
+        'Status = stsDefault')
+      (
+        'Component = pnlDescription'
+        'Status = stsDefault')
+      (
+        'Component = mmOrder'
+        'Label = lblOrderDetails'
+        'Status = stsOK')
+      (
+        'Component = pnlInstructions'
+        'Status = stsDefault')
+      (
+        'Component = mmInstructions'
+        'Status = stsDefault')
+      (
+        'Component = frmOrderFlag'
+        'Status = stsDefault')
+      (
+        'Component = pnlRecipientsSub'
+        'Status = stsDefault')
+      (
+        'Component = pnlRecipientsAdd'
+        'Status = stsDefault')
+      (
+        'Component = pnlCommentSub'
+        'Status = stsDefault'))
+  end
   object alEditorActions: TActionList
-    Left = 56
-    Top = 104
+    Left = 80
+    Top = 8
     object acFlagRemove: TAction
       Caption = 'Remove Flag'
     end

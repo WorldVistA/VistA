@@ -3,46 +3,49 @@ inherited frmAddlSigners: TfrmAddlSigners
   Top = 164
   BorderStyle = bsDialog
   Caption = 'Identify Additional Signers'
-  ClientHeight = 364
-  ClientWidth = 443
+  ClientHeight = 359
+  ClientWidth = 524
   OldCreateOrder = True
   Position = poScreenCenter
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  ExplicitWidth = 449
-  ExplicitHeight = 396
+  ExplicitWidth = 530
+  ExplicitHeight = 388
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TPanel [0]
     Left = 0
     Top = 0
-    Width = 443
-    Height = 364
+    Width = 524
+    Height = 359
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
     object pnlButtons: TORAutoPanel
       Left = 0
-      Top = 311
-      Width = 443
-      Height = 53
+      Top = 324
+      Width = 524
+      Height = 35
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
       object cmdOK: TButton
-        Left = 138
-        Top = 14
+        AlignWithMargins = True
+        Left = 360
+        Top = 3
         Width = 75
-        Height = 25
+        Height = 29
+        Align = alRight
         Caption = '&OK'
         TabOrder = 0
         OnClick = cmdOKClick
       end
       object cmdCancel: TButton
-        Left = 230
-        Top = 14
+        AlignWithMargins = True
+        Left = 441
+        Top = 3
         Width = 75
-        Height = 25
+        Height = 29
+        Margins.Right = 8
+        Align = alRight
         Cancel = True
         Caption = '&Cancel'
         TabOrder = 1
@@ -52,31 +55,31 @@ inherited frmAddlSigners: TfrmAddlSigners
     object pnlAdditional: TORAutoPanel
       Left = 0
       Top = 70
-      Width = 443
-      Height = 241
+      Width = 524
+      Height = 254
       Align = alClient
       TabOrder = 1
       object SrcLabel: TLabel
         Left = 11
         Top = 15
-        Width = 175
+        Width = 202
         Height = 16
         AutoSize = False
         Caption = 'Select or enter additional signers'
       end
       object DstLabel: TLabel
-        Left = 266
+        Left = 298
         Top = 15
-        Width = 145
+        Width = 170
         Height = 16
         AutoSize = False
         Caption = 'Current additional signers'
       end
       object cboSrcList: TORComboBox
-        Left = 10
+        Left = 11
         Top = 37
-        Width = 174
-        Height = 185
+        Width = 202
+        Height = 216
         Style = orcsSimple
         AutoSelect = True
         Caption = 'Select or enter additional signers'
@@ -94,6 +97,7 @@ inherited frmAddlSigners: TfrmAddlSigners
         SynonymChars = '<>'
         TabOrder = 0
         TabStop = True
+        Text = ''
         OnChange = cboSrcListChange
         OnDblClick = btnAddSignersClick
         OnKeyDown = cboSrcListKeyDown
@@ -102,10 +106,10 @@ inherited frmAddlSigners: TfrmAddlSigners
         UniqueAutoComplete = True
       end
       object DstList: TORListBox
-        Left = 266
+        Left = 299
         Top = 37
-        Width = 170
-        Height = 185
+        Width = 216
+        Height = 204
         ItemHeight = 13
         MultiSelect = True
         ParentShowHint = False
@@ -121,9 +125,9 @@ inherited frmAddlSigners: TfrmAddlSigners
         OnChange = DstListChange
       end
       object btnRemoveSigners: TButton
-        Left = 190
+        Left = 216
         Top = 108
-        Width = 71
+        Width = 77
         Height = 25
         Caption = '&Remove'
         Enabled = False
@@ -131,9 +135,9 @@ inherited frmAddlSigners: TfrmAddlSigners
         OnClick = btnRemoveSignersClick
       end
       object btnAddSigners: TButton
-        Left = 189
+        Left = 216
         Top = 77
-        Width = 71
+        Width = 76
         Height = 25
         Caption = '&Add'
         Enabled = False
@@ -141,9 +145,9 @@ inherited frmAddlSigners: TfrmAddlSigners
         OnClick = btnAddSignersClick
       end
       object btnRemoveAllSigners: TButton
-        Left = 190
+        Left = 216
         Top = 139
-        Width = 71
+        Width = 77
         Height = 25
         Caption = 'R&emove All'
         Enabled = False
@@ -154,16 +158,16 @@ inherited frmAddlSigners: TfrmAddlSigners
     object pnlTop: TORAutoPanel
       Left = 0
       Top = 0
-      Width = 443
+      Width = 524
       Height = 70
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
       object lblAuthor: TOROffsetLabel
-        Left = 19
+        Left = 11
         Top = 6
-        Width = 97
-        Height = 15
+        Width = 134
+        Height = 31
         Caption = 'Author (not editable)'
         HorzOffset = 2
         Transparent = False
@@ -171,20 +175,20 @@ inherited frmAddlSigners: TfrmAddlSigners
         WordWrap = False
       end
       object lblCosigner: TOROffsetLabel
-        Left = 246
+        Left = 298
         Top = 6
-        Width = 155
-        Height = 15
-        Caption = 'Expected Cosigner (not editable)'
+        Width = 208
+        Height = 28
+        Caption = 'Expected Cosigner (not editable)     '
         HorzOffset = 2
         Transparent = False
         VertOffset = 2
         WordWrap = False
       end
       object cboCosigner: TORComboBox
-        Left = 246
-        Top = 27
-        Width = 178
+        Left = 298
+        Top = 40
+        Width = 216
         Height = 21
         Style = orcsDropDown
         AutoSelect = True
@@ -204,15 +208,16 @@ inherited frmAddlSigners: TfrmAddlSigners
         SynonymChars = '<>'
         TabOrder = 1
         TabStop = True
+        Text = ''
         OnChange = cboCosignerChange
         OnExit = cboCosignerExit
         OnNeedData = cboCosignerNeedData
         CharsNeedMatch = 1
       end
       object txtAuthor: TCaptionEdit
-        Left = 19
-        Top = 27
-        Width = 178
+        Left = 11
+        Top = 43
+        Width = 202
         Height = 21
         TabStop = False
         AutoSize = False
@@ -224,6 +229,8 @@ inherited frmAddlSigners: TfrmAddlSigners
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 224
+    Top = 16
     Data = (
       (
         'Component = pnlBase'

@@ -1,73 +1,108 @@
 inherited frmODDiet: TfrmODDiet
   Left = 541
   Top = 398
-  Width = 650
-  Height = 375
+  Width = 655
+  Height = 611
   Anchors = [akLeft, akTop, akRight, akBottom]
   Caption = 'Diet Order'
-  ExplicitWidth = 650
-  ExplicitHeight = 375
+  Constraints.MinHeight = 611
+  Constraints.MinWidth = 655
+  ExplicitWidth = 655
+  ExplicitHeight = 611
   PixelsPerInch = 96
   TextHeight = 13
   object nbkDiet: TPageControl [0]
     Left = 0
     Top = 0
-    Width = 634
-    Height = 194
+    Width = 639
+    Height = 239
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     ActivePage = pgeOutPt
     Align = alTop
     TabOrder = 4
     TabStop = False
     OnChange = nbkDietChange
     OnChanging = nbkDietChanging
+    ExplicitWidth = 634
     object pgeDiet: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Diet'
       object lblDietAvail: TLabel
-        Left = 4
+        Left = 5
         Top = 0
         Width = 127
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Available Diet Components'
       end
       object lblDietSelect: TLabel
-        Left = 200
+        Left = 246
         Top = 0
         Width = 126
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Selected Diet Components'
       end
       object lblComment: TLabel
-        Left = 200
-        Top = 119
+        Left = 246
+        Top = 146
         Width = 92
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Special Instructions'
       end
       object lblStart: TLabel
-        Left = 393
+        Left = 484
         Top = 0
         Width = 96
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Effective Date/Time'
       end
       object lblDelivery: TLabel
-        Left = 393
-        Top = 77
+        Left = 484
+        Top = 95
         Width = 38
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Delivery'
       end
       object cboDietAvail: TORComboBox
-        Left = 3
-        Top = 19
-        Width = 188
-        Height = 140
+        Left = 4
+        Top = 23
+        Width = 231
+        Height = 173
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = orcsSimple
         AutoSelect = True
         Caption = 'Available Diet Components'
         Color = clWindow
         DropDownCount = 8
-        ItemHeight = 13
+        ItemHeight = 16
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = True
@@ -85,10 +120,14 @@ inherited frmODDiet: TfrmODDiet
         CharsNeedMatch = 1
       end
       object lstDietSelect: TORListBox
-        Left = 200
-        Top = 14
-        Width = 185
-        Height = 71
+        Left = 246
+        Top = 17
+        Width = 228
+        Height = 88
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
@@ -99,29 +138,41 @@ inherited frmODDiet: TfrmODDiet
         Pieces = '2'
       end
       object cmdRemove: TButton
-        Left = 313
-        Top = 85
-        Width = 72
-        Height = 17
+        Left = 385
+        Top = 105
+        Width = 89
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Remove'
         TabOrder = 2
         OnClick = cmdRemoveClick
       end
       object txtDietComment: TCaptionEdit
-        Left = 200
-        Top = 133
-        Width = 308
+        Left = 246
+        Top = 164
+        Width = 379
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         MaxLength = 80
         TabOrder = 3
         OnChange = DietChange
         Caption = 'Special Instructions'
       end
       object calDietStart: TORDateBox
-        Left = 393
-        Top = 14
-        Width = 115
+        Left = 484
+        Top = 17
+        Width = 141
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 4
         Text = 'Now'
         OnChange = DietChange
@@ -130,16 +181,20 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'Effective Date/Time'
       end
       object cboDelivery: TORComboBox
-        Left = 393
-        Top = 90
-        Width = 115
+        Left = 484
+        Top = 111
+        Width = 141
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = orcsDropDown
         AutoSelect = True
         Caption = 'Delivery'
         Color = clWindow
         DropDownCount = 8
-        ItemHeight = 13
+        ItemHeight = 16
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = True
@@ -155,10 +210,14 @@ inherited frmODDiet: TfrmODDiet
         CharsNeedMatch = 1
       end
       object chkCancelTubefeeding: TCheckBox
-        Left = 393
-        Top = 114
-        Width = 115
-        Height = 17
+        Left = 484
+        Top = 140
+        Width = 141
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Cancel Tubefeeding'
         State = cbGrayed
         TabOrder = 6
@@ -167,17 +226,25 @@ inherited frmODDiet: TfrmODDiet
       end
     end
     object pgeOutPt: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Outpatient Meals'
       object lblOPStart: TLabel
-        Left = 292
+        Left = 359
         Top = 1
         Width = 48
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Start Date'
       end
       object lblOPStop: TLabel
-        Left = 292
-        Top = 37
+        Left = 359
+        Top = 45
         Width = 45
         Height = 13
         Caption = 'End Date'
@@ -187,34 +254,54 @@ inherited frmODDiet: TfrmODDiet
         Top = 1
         Width = 70
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Available Diets'
       end
       object lblOPComment: TLabel
-        Left = 4
-        Top = 128
+        Left = 5
+        Top = 158
         Width = 92
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Special Instructions'
       end
       object lblOPDelivery: TLabel
-        Left = 292
-        Top = 74
+        Left = 359
+        Top = 91
         Width = 38
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Delivery'
       end
       object lblOPSelect: TLabel
         Left = 0
-        Top = 39
+        Top = 48
         Width = 64
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Selected Diet'
       end
       object grpOPMeal: TKeyClickRadioGroup
-        Left = 168
-        Top = 11
-        Width = 110
-        Height = 107
+        Left = 207
+        Top = 14
+        Width = 135
+        Height = 131
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = ' Meal '
         ItemIndex = 3
         Items.Strings = (
@@ -227,81 +314,117 @@ inherited frmODDiet: TfrmODDiet
         OnClick = grpOPMealClick
       end
       object grpOPDoW: TGroupBox
-        Left = 415
-        Top = 5
-        Width = 93
-        Height = 155
+        Left = 511
+        Top = 6
+        Width = 114
+        Height = 191
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Days of Week'
         TabOrder = 7
         object chkOPMonday: TCheckBox
-          Left = 8
-          Top = 15
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 18
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Monday'
           TabOrder = 0
           OnClick = OPChange
         end
         object chkOPTuesday: TCheckBox
-          Left = 8
-          Top = 35
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 43
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Tuesday'
           TabOrder = 1
           OnClick = OPChange
         end
         object chkOPWednesday: TCheckBox
-          Left = 8
-          Top = 54
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 66
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Wednesday'
           TabOrder = 2
           OnClick = OPChange
         end
         object chkOPThursday: TCheckBox
-          Left = 8
-          Top = 73
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 90
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Thursday'
           TabOrder = 3
           OnClick = OPChange
         end
         object chkOPFriday: TCheckBox
-          Left = 8
-          Top = 92
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 113
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Friday'
           TabOrder = 4
           OnClick = OPChange
         end
         object chkOPSaturday: TCheckBox
-          Left = 8
-          Top = 111
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 137
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Saturday'
           TabOrder = 5
           OnClick = OPChange
         end
         object chkOPSunday: TCheckBox
-          Left = 8
-          Top = 130
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 160
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Sunday'
           TabOrder = 6
           OnClick = OPChange
         end
       end
       object calOPStart: TORDateBox
-        Left = 292
-        Top = 14
-        Width = 120
+        Left = 359
+        Top = 17
+        Width = 148
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 4
         OnChange = calOPStartChange
         OnEnter = calOPStartEnter
@@ -311,8 +434,8 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'Start Date'
       end
       object calOPStop: TORDateBox
-        Left = 292
-        Top = 50
+        Left = 359
+        Top = 61
         Width = 120
         Height = 21
         TabOrder = 10
@@ -323,9 +446,13 @@ inherited frmODDiet: TfrmODDiet
       end
       object cboOPDietAvail: TORComboBox
         Left = 0
-        Top = 16
-        Width = 157
+        Top = 20
+        Width = 193
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = orcsDropDown
         AutoSelect = True
         Caption = 'Available Diet Components'
@@ -349,20 +476,28 @@ inherited frmODDiet: TfrmODDiet
         CharsNeedMatch = 1
       end
       object txtOPDietComment: TCaptionEdit
-        Left = 3
-        Top = 143
-        Width = 404
+        Left = 4
+        Top = 176
+        Width = 497
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         MaxLength = 80
         TabOrder = 9
         OnChange = OPChange
         Caption = 'Special Instructions'
       end
       object cboOPDelivery: TORComboBox
-        Left = 292
-        Top = 86
-        Width = 120
+        Left = 359
+        Top = 106
+        Width = 148
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = orcsDropDown
         AutoSelect = True
         Caption = 'Delivery'
@@ -385,9 +520,13 @@ inherited frmODDiet: TfrmODDiet
       end
       object lstOPDietSelect: TORListBox
         Left = 0
-        Top = 53
-        Width = 156
-        Height = 56
+        Top = 65
+        Width = 192
+        Height = 69
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
@@ -399,19 +538,27 @@ inherited frmODDiet: TfrmODDiet
         OnChange = OPChange
       end
       object cmdOPRemove: TButton
-        Left = 85
-        Top = 110
-        Width = 72
-        Height = 17
+        Left = 105
+        Top = 135
+        Width = 88
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Remove'
         TabOrder = 2
         OnClick = cmdOPRemoveClick
       end
       object chkOPCancelTubefeeding: TCheckBox
-        Left = 292
-        Top = 112
-        Width = 115
-        Height = 17
+        Left = 359
+        Top = 138
+        Width = 142
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Cancel Tubefeeding'
         State = cbGrayed
         TabOrder = 6
@@ -420,68 +567,104 @@ inherited frmODDiet: TfrmODDiet
       end
     end
     object pgeTubefeeding: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Tubefeeding'
       object lblTFProductList: TLabel
-        Left = 4
+        Left = 5
         Top = 0
         Width = 105
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Tubefeeding Products'
       end
       object lblTFComment: TLabel
-        Left = 4
-        Top = 119
+        Left = 5
+        Top = 146
         Width = 92
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Special Instructions'
       end
       object lblTFStrength: TLabel
-        Left = 288
+        Left = 354
         Top = 0
         Width = 40
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Strength'
       end
       object lblTFQuantity: TLabel
-        Left = 352
+        Left = 433
         Top = 0
-        Width = 39
-        Height = 13
+        Width = 48
+        Height = 16
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Quantity'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         ParentFont = False
         OnClick = lblTFQuantityClick
       end
       object lblTFProduct: TLabel
-        Left = 152
+        Left = 187
         Top = 0
         Width = 37
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Product'
       end
       object lblTFAmount: TLabel
-        Left = 428
+        Left = 527
         Top = 0
         Width = 36
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Amount'
       end
       object lblOPTFStart: TLabel
-        Left = 341
-        Top = 90
+        Left = 420
+        Top = 111
         Width = 51
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Start Date:'
       end
       object cboProduct: TORComboBox
-        Left = 4
-        Top = 14
-        Width = 140
-        Height = 97
+        Left = 5
+        Top = 17
+        Width = 172
+        Height = 120
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = orcsSimple
         AutoSelect = True
         Caption = 'Tubefeeding Products'
@@ -504,20 +687,28 @@ inherited frmODDiet: TfrmODDiet
         CharsNeedMatch = 1
       end
       object txtTFComment: TCaptionEdit
-        Left = 6
-        Top = 133
-        Width = 504
+        Left = 7
+        Top = 164
+        Width = 621
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         MaxLength = 240
-        TabOrder = 6
+        TabOrder = 7
         OnChange = TFChange
         Caption = 'Special Instructions'
       end
       object grdSelected: TCaptionStringGrid
-        Left = 152
-        Top = 14
-        Width = 356
-        Height = 63
+        Left = 187
+        Top = 17
+        Width = 438
+        Height = 78
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         ColCount = 4
         DefaultColWidth = 88
         DefaultRowHeight = 19
@@ -535,23 +726,31 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'Selected Products'
       end
       object cmdTFRemove: TButton
-        Left = 436
-        Top = 77
-        Width = 72
-        Height = 17
+        Left = 537
+        Top = 95
+        Width = 88
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Remove'
         TabOrder = 4
         OnClick = cmdTFRemoveClick
       end
       object txtQuantity: TCaptionEdit
         Tag = -1
-        Left = 151
-        Top = 124
-        Width = 93
+        Left = 194
+        Top = 128
+        Width = 114
         Height = 19
         Hint = 
           'Enter quantity as 2000 K, 100 ML/HOUR, 8 OZ/TID, etc; total quan' +
           'tity may not exceed 5000ml.'
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Ctl3D = False
         ParentCtl3D = False
         ParentShowHint = False
@@ -566,10 +765,14 @@ inherited frmODDiet: TfrmODDiet
       end
       object cboStrength: TCaptionComboBox
         Tag = -1
-        Left = 252
-        Top = 124
-        Width = 53
+        Left = 318
+        Top = 128
+        Width = 65
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = csDropDownList
         Ctl3D = False
         ParentCtl3D = False
@@ -587,12 +790,16 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'Strength'
       end
       object calOPTFStart: TORDateBox
-        Left = 341
-        Top = 104
-        Width = 169
+        Left = 420
+        Top = 128
+        Width = 208
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabStop = False
-        TabOrder = 7
+        TabOrder = 6
         Visible = False
         OnChange = TFChange
         DateOnly = False
@@ -600,10 +807,14 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'Start Date:'
       end
       object cboOPTFRecurringMeals: TORComboBox
-        Left = 342
-        Top = 105
-        Width = 160
+        Left = 421
+        Top = 129
+        Width = 197
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = orcsDropDown
         AutoSelect = True
         Caption = ''
@@ -628,26 +839,42 @@ inherited frmODDiet: TfrmODDiet
       end
     end
     object pgeEarlyLate: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Early / Late Tray'
       object lblELStart: TLabel
-        Left = 287
+        Left = 353
         Top = 2
         Width = 48
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Start Date'
       end
       object lblELStop: TLabel
-        Left = 287
-        Top = 46
+        Left = 353
+        Top = 57
         Width = 45
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'End Date'
       end
       object grpMeal: TKeyClickRadioGroup
-        Left = 4
+        Left = 5
         Top = 2
-        Width = 106
-        Height = 93
+        Width = 130
+        Height = 115
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = ' Meal '
         ItemIndex = 3
         Items.Strings = (
@@ -660,80 +887,116 @@ inherited frmODDiet: TfrmODDiet
         OnClick = grpMealClick
       end
       object grpMealTime: TGroupBox
-        Left = 114
-        Top = 4
-        Width = 161
-        Height = 93
+        Left = 140
+        Top = 5
+        Width = 198
+        Height = 114
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = ' Meal Times '
         TabOrder = 1
         object lblNoTimes: TLabel
-          Left = 29
-          Top = 44
+          Left = 36
+          Top = 54
           Width = 96
           Height = 13
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'No meal times listed.'
           Visible = False
         end
         object radET1: TRadioButton
-          Left = 8
-          Top = 18
-          Width = 56
-          Height = 17
+          Left = 10
+          Top = 22
+          Width = 69
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 0
           Visible = False
           OnClick = ELChange
         end
         object radET2: TRadioButton
-          Left = 8
-          Top = 43
-          Width = 56
-          Height = 17
+          Left = 10
+          Top = 53
+          Width = 69
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 1
           Visible = False
           OnClick = ELChange
         end
         object radET3: TRadioButton
-          Left = 8
-          Top = 68
-          Width = 56
-          Height = 17
+          Left = 10
+          Top = 84
+          Width = 69
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 2
           Visible = False
           OnClick = ELChange
         end
         object radLT1: TRadioButton
-          Left = 92
-          Top = 18
-          Width = 56
-          Height = 17
+          Left = 113
+          Top = 22
+          Width = 69
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 3
           Visible = False
           OnClick = ELChange
         end
         object radLT2: TRadioButton
-          Left = 92
-          Top = 43
-          Width = 56
-          Height = 17
+          Left = 113
+          Top = 53
+          Width = 69
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 4
           Visible = False
           OnClick = ELChange
         end
         object radLT3: TRadioButton
-          Left = 92
-          Top = 68
-          Width = 56
-          Height = 17
+          Left = 113
+          Top = 84
+          Width = 69
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           TabOrder = 5
           Visible = False
           OnClick = ELChange
         end
       end
       object calELStart: TORDateBox
-        Left = 287
-        Top = 15
-        Width = 120
+        Left = 353
+        Top = 18
+        Width = 148
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 2
         OnChange = calELStartChange
         OnEnter = calELStartEnter
@@ -743,10 +1006,14 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'Start Date'
       end
       object calELStop: TORDateBox
-        Left = 287
-        Top = 60
-        Width = 120
+        Left = 353
+        Top = 74
+        Width = 148
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabOrder = 4
         OnChange = calELStopChange
         DateOnly = True
@@ -754,96 +1021,136 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'End Date'
       end
       object grpDoW: TGroupBox
-        Left = 415
+        Left = 511
         Top = 2
-        Width = 93
-        Height = 152
+        Width = 114
+        Height = 188
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Days of Week'
         TabOrder = 5
         object chkMonday: TCheckBox
-          Left = 8
-          Top = 16
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 20
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Monday'
           TabOrder = 0
           OnClick = ELChange
         end
         object chkTuesday: TCheckBox
-          Left = 8
-          Top = 35
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 43
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Tuesday'
           TabOrder = 1
           OnClick = ELChange
         end
         object chkWednesday: TCheckBox
-          Left = 8
-          Top = 54
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 66
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Wednesday'
           TabOrder = 2
           OnClick = ELChange
         end
         object chkThursday: TCheckBox
-          Left = 8
-          Top = 73
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 90
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Thursday'
           TabOrder = 3
           OnClick = ELChange
         end
         object chkFriday: TCheckBox
-          Left = 8
-          Top = 92
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 113
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Friday'
           TabOrder = 4
           OnClick = ELChange
         end
         object chkSaturday: TCheckBox
-          Left = 8
-          Top = 111
-          Width = 80
-          Height = 17
+          Left = 10
+          Top = 137
+          Width = 98
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Saturday'
           TabOrder = 5
           OnClick = ELChange
         end
         object chkSunday: TCheckBox
-          Left = 9
-          Top = 130
-          Width = 80
-          Height = 17
+          Left = 11
+          Top = 160
+          Width = 99
+          Height = 21
+          Margins.Left = 4
+          Margins.Top = 4
+          Margins.Right = 4
+          Margins.Bottom = 4
           Caption = 'Sunday'
           TabOrder = 6
           OnClick = ELChange
         end
       end
       object chkBagged: TCheckBox
-        Left = 4
-        Top = 120
-        Width = 85
-        Height = 17
+        Left = 5
+        Top = 148
+        Width = 105
+        Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Bagged Meal'
         TabOrder = 6
         OnClick = ELChange
       end
       object cboOPELRecurringMeals: TORComboBox
-        Left = 287
-        Top = 15
-        Width = 121
+        Left = 353
+        Top = 18
+        Width = 149
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = orcsDropDown
         AutoSelect = True
         Caption = ''
         Color = clWindow
         DropDownCount = 8
-        ItemHeight = 13
+        ItemHeight = 16
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = False
@@ -862,33 +1169,53 @@ inherited frmODDiet: TfrmODDiet
       end
     end
     object pgeIsolations: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Isolations / Precautions'
       object lblIsolation: TLabel
-        Left = 4
+        Left = 5
         Top = 0
         Width = 123
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Select Type of Precaution'
       end
       object lblIPComment: TLabel
-        Left = 4
-        Top = 119
+        Left = 5
+        Top = 146
         Width = 54
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Instructions'
       end
       object lblIPCurrent: TLabel
-        Left = 224
+        Left = 276
         Top = 0
         Width = 76
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Current Isolation'
       end
       object lstIsolation: TORListBox
-        Left = 4
-        Top = 14
-        Width = 212
-        Height = 97
+        Left = 5
+        Top = 17
+        Width = 261
+        Height = 120
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
@@ -900,20 +1227,28 @@ inherited frmODDiet: TfrmODDiet
         OnChange = IPChange
       end
       object txtIPComment: TCaptionEdit
-        Left = 4
-        Top = 133
-        Width = 504
+        Left = 5
+        Top = 164
+        Width = 620
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         MaxLength = 240
         TabOrder = 2
         OnChange = IPChange
         Caption = 'Instructions'
       end
       object txtIPCurrent: TCaptionEdit
-        Left = 224
-        Top = 14
-        Width = 212
+        Left = 276
+        Top = 17
+        Width = 261
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Color = clBtnFace
         ReadOnly = True
         TabOrder = 1
@@ -922,36 +1257,56 @@ inherited frmODDiet: TfrmODDiet
       end
     end
     object pgeAdditional: TTabSheet
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Additional Order'
       object lblAddlOrder: TLabel
-        Left = 4
-        Top = 24
+        Left = 5
+        Top = 30
         Width = 125
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Enter Additional Diet Order'
       end
       object lblOPAOStart: TLabel
-        Left = 6
-        Top = 72
+        Left = 7
+        Top = 89
         Width = 51
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Start Date:'
       end
       object txtAOComment: TCaptionEdit
-        Left = 4
-        Top = 38
-        Width = 504
+        Left = 5
+        Top = 47
+        Width = 620
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         MaxLength = 80
         TabOrder = 1
         OnChange = AOChange
         Caption = 'Enter Additional Diet Order'
       end
       object calOPAOStart: TORDateBox
-        Left = 54
-        Top = 88
-        Width = 169
+        Left = 66
+        Top = 108
+        Width = 208
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         TabStop = False
         TabOrder = 4
         Visible = False
@@ -961,16 +1316,20 @@ inherited frmODDiet: TfrmODDiet
         Caption = 'Start Date:'
       end
       object cboOPAORecurringMeals: TORComboBox
-        Left = 6
-        Top = 88
-        Width = 168
+        Left = 7
+        Top = 108
+        Width = 207
         Height = 21
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Style = orcsDropDown
         AutoSelect = True
         Caption = ''
         Color = clWindow
         DropDownCount = 8
-        ItemHeight = 13
+        ItemHeight = 16
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = False
@@ -990,66 +1349,100 @@ inherited frmODDiet: TfrmODDiet
     end
   end
   inherited memOrder: TCaptionMemo
-    Top = 213
-    Width = 412
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 0
+    Top = 390
+    Width = 521
+    Height = 172
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Anchors = [akLeft, akRight, akBottom]
-    ExplicitTop = 213
-    ExplicitWidth = 412
+    ExplicitLeft = 0
+    ExplicitTop = 390
+    ExplicitWidth = 521
+    ExplicitHeight = 172
   end
   inherited cmdAccept: TButton
-    Left = 427
-    Top = 213
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 531
+    Top = 490
+    Width = 98
+    Height = 29
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Anchors = [akRight, akBottom]
     TabOrder = 2
-    ExplicitLeft = 427
-    ExplicitTop = 213
+    ExplicitLeft = 531
+    ExplicitTop = 464
+    ExplicitWidth = 98
+    ExplicitHeight = 29
   end
   inherited cmdQuit: TButton
-    Left = 426
-    Top = 242
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Left = 531
+    Top = 529
+    Width = 98
+    Height = 29
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Anchors = [akRight, akBottom]
     TabOrder = 3
-    ExplicitLeft = 426
-    ExplicitTop = 242
+    ExplicitLeft = 531
+    ExplicitTop = 503
+    ExplicitWidth = 98
+    ExplicitHeight = 29
   end
   inherited pnlMessage: TPanel
-    Top = 202
-    Height = 57
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Anchors = [akLeft, akBottom]
+    Left = 0
+    Top = 239
+    Width = 639
+    Height = 141
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Align = alTop
+    Constraints.MaxHeight = 141
+    UseDockManager = False
+    DragMode = dmAutomatic
+    Locked = True
     TabOrder = 1
-    ExplicitTop = 202
-    ExplicitHeight = 57
+    ExplicitLeft = 4
+    ExplicitTop = 244
+    ExplicitWidth = 635
+    ExplicitHeight = 141
     inherited imgMessage: TImage
-      Top = 10
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      ExplicitTop = 10
+      Left = 5
+      Top = 49
+      Width = 41
+      Height = 45
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      ExplicitLeft = 5
+      ExplicitTop = 49
+      ExplicitWidth = 41
+      ExplicitHeight = 45
     end
     inherited memMessage: TRichEdit
-      Height = 45
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      ExplicitHeight = 45
+      Left = 56
+      Top = 3
+      Width = 571
+      Height = 124
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      Constraints.MaxHeight = 124
+      ExplicitLeft = 56
+      ExplicitTop = 3
+      ExplicitWidth = 571
+      ExplicitHeight = 124
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

@@ -260,6 +260,8 @@ inherited frmVitals: TfrmVitals
       TabOrder = 1
       OnSelectCell = grdVitalsSelectCell
       Caption = 'Vitals Data'
+      ExplicitWidth = 418
+      ExplicitHeight = 153
       ColWidths = (
         64
         64
@@ -276,6 +278,7 @@ inherited frmVitals: TfrmVitals
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitHeight = 153
       DesignSize = (
         95
         152)

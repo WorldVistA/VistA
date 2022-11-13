@@ -85,14 +85,34 @@ end;
 
 procedure TfrmLabTest.cboListNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
-  cboList.ForDataUse(AtomicTests(StartFrom, Direction));
+//  cboList.ForDataUse(AtomicTests(StartFrom, Direction));
+  sl := TSTringList.Create;
+  try
+    setAtomicTests(sl,StartFrom, Direction);
+    cboList.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmLabTest.cboSpecimenNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+// begin
+// cboSpecimen.ForDataUse(Specimens(StartFrom, Direction));
+var
+  sl: TStrings;
 begin
-  cboSpecimen.ForDataUse(Specimens(StartFrom, Direction));
+  sl := TSTringList.Create;
+  try
+    setSpecimens(sl, StartFrom, Direction);
+    cboSpecimen.ForDataUse(sl);
+
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmLabTest.cmdOKClick(Sender: TObject);

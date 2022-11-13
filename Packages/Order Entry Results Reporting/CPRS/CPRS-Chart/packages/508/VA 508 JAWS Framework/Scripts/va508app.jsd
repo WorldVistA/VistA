@@ -1,4 +1,4 @@
-:function AutoStartEvent
+:function AutoStartEvent 
 
 :function HandleCustomWindows
 :Returns int True means speaking was handled.
@@ -21,3 +21,38 @@
 :Synopsis This event gets overridden when JAWS starts talking too much
 :Description The edit field of TORComboBoxes uses highlighted text to auto-complete what has been typed in so far.  We only want JAWS to say the selected list item.
 
+:script SpeakControlInfo
+:SearchRank 1
+
+
+:script SayWindowsClass
+:SearchRank 1
+:Synopsis For Debugging purposes, speaks the Windows Class of a control in focus
+:Description For Debugging purposes, speaks the Windows Class of a control in focus
+
+:script SayRealWindowClass
+:SearchRank 1
+:Synopsis For Debugging purposes, speaks the class of the Real Window
+:Description For Debugging purposes, speaks the class of the Real Window
+
+:script SayPanelItem
+:SearchRank 1
+:Synopsis Speaks the name of the Cover Sheet list panel
+:Description On the Cover Sheet page, speaks the name of the Cover Sheet list
+
+:script ShowUIAInfo
+:SearchRank 1
+:Synopsis For Debugging Purposes, shows the UIA information for the control in focus
+:Description For Debugging Purposes, shows the UIA information for the control in focus
+
+:function GetButtonByAutomationIDEx
+:Returns object No Return Description
+:SearchRank 1
+:Synopsis Gets the UIA information for a button to activate
+:Description Gets the UIA information for a button to activate
+:Param string/sAutomationID No Description
+:Param int/iNumber No Description
+:Param handle/hWindow No Description
+
+:script WalkThroughUIAObjects
+:SearchRank 1

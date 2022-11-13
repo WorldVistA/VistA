@@ -138,12 +138,12 @@ end;
 
 function isDstEnabled: Boolean;
 begin
-  Result := SystemParameters.StringValue[DST_CTB_SWITCH] <> '0';
+  Result := SystemParameters.AsType<string>(DST_CTB_SWITCH) <> '0';
 end;
 
 function isCtbEnabled: Boolean;
 begin
-  Result := SystemParameters.StringValue[CTB_ENABLED] <> '0';
+  Result := SystemParameters.AsType<string>(CTB_ENABLED) <> '0';
 end;
 
 procedure initDst;
@@ -152,6 +152,32 @@ begin
     DSTPro := TDstProvider.Create;
   DSTPro.ReloadParameters; // -- might be not connected yet
   DSTPro.Production := User.IsProductionAccount;
+end;
+
+function ctbFormattedDate(aFMDate: TFMDateTime): String;
+var
+  ADatePart: Integer;
+  AYear, AMonth, ADay: Word;
+begin
+  {FormatFMDateTime will not return 00 if a value is missing. Janurary 1950
+  will be returned as 1950-01-. 1950 will return as 1950--. These values are
+  considered valid DOBs and therefore must be reset to yyyy-mm-dd prior
+  to sending to CTB 2.0 }
+
+  ADatePart := Trunc(aFMDate);
+
+  AYear := ADatePart div 10000 + 1700;
+  AMonth := ADatePart mod 10000 div 100;
+  ADay := ADatePart mod 100;
+
+  if (AYear > 0) and (AMonth = 0) and (ADay = 0) then
+    Result := FormatFMDateTime('yyyy', aFMDate) + '-00-00'
+  else if (AYear > 0) and (AMonth > 0) and (ADay = 0) then
+    Result := FormatFMDateTime('yyyy-mm', aFMDate) + '-00'
+  else if (AYear > 0) and (AMonth > 0) and (ADay > 0) then
+    Result := FormatFMDateTime('yyyy-mm-dd', aFMDate)
+  else
+    Result := '';
 end;
 
 function getDstRequestString(anID: String; aPatient: TPatient; aUser: TUser;
@@ -171,8 +197,7 @@ begin
   LName := Piece(aPatient.Name, ',', 1);
   FName := Piece(aPatient.Name, ',', 2);
   MName := Piece(FName, ' ', 2);
-  DOB := FormatDateTime(DST_DATE_TIME_FORMAT,
-    FMDateTimeToDateTime(Patient.DOB));
+  DOB := ctbFormattedDate(Patient.DOB);
 
   UserID := getUserInfo();
 
@@ -184,15 +209,15 @@ begin
     PTData.AddPair(DST_CONSULT_CONSULTSERVICE, service);
     PTData.AddPair(DST_CONSULT_CONSULTURGENCY, urgency);
     if cid > 0 then
-      PTData.AddPair(DST_CONSULT_DATE, FormatDateTime(DST_DATE_TIME_FORMAT,
-        FMDateTimeToDateTime(cid)));
+      PTData.AddPair(DST_CONSULT_DATE, FormatFMDateTime('yyyy-mm-dd', cid));
     if nltd > 0 then
       PTData.AddPair(DST_CONSULT_NOTLATERTHAN,
-        FormatDateTime(DST_DATE_TIME_FORMAT, FMDateTimeToDateTime(nltd)));
+        FormatFMDateTime('yyyy-mm-dd', nltd));
     PTData.AddPair(DST_CONSULT_PTFIRSTNAME, FName);
     PTData.AddPair(DST_CONSULT_PTLASTNAME, LName);
     PTData.AddPair(DST_CONSULT_PTMIDNAME, MName);
-    PTData.AddPair(DST_CONSULT_PTDOB, DOB);
+    if DOB <> '' then
+        PTData.AddPair(DST_CONSULT_PTDOB, DOB);
     PTData.AddPair(DST_CONSULT_PTICN, Patient.FullICN);
     PTData.AddPair(DST_CONSULT_PTCLASS, outpatient);
     PTData.AddPair(DST_CONSULT_SITEID, User.StationNumber);
@@ -275,42 +300,6 @@ begin
   end;
 end;
 
-function getNetJsonReply(aUrl: String): String;
-//this function is not used - candidate for cleanup
-var
-  i: Integer;
-  jHeader: TNameValuePair;
-  nClient: TNetHTTPClient;
-  nRequest: TNetHTTPRequest;
-  iResponse: IHTTPResponse;
-begin
-  Result := '';
-  jHeader.Name := 'Content-Type';
-  jHeader.Value := 'application/json';
-
-  nClient := TNetHTTPClient.Create(nil);
-  nClient.AllowCookies := True;
-  nClient.HandleRedirects := True;
-  nClient.UserAgent := 'Embarcadero URI Client/1.0';
-  nRequest := TNetHTTPRequest.Create(nil);
-  nRequest.Client := nClient;
-  try
-    iResponse := nRequest.Get(aUrl, nil, [jHeader]);
-    i := iResponse.StatusCode;
-    if i <> 200 then
-      Result := 'Error ' + IntToStr(i) + ' (' + iResponse.StatusText + ')'
-    else
-      Result := iResponse.ContentAsString();
-
-    addLogLine(Result, 'HTTP JSON REPLY');
-  finally
-    nClient.Free;
-    nRequest.Free;
-  end;
-end;
-
-/// /////////////////////////////////////////////////////////////////////////////
-
 function TDstProvider.getDstMode;
 begin
   Result := fParameters.FSwitch;
@@ -368,22 +357,22 @@ begin
   with fParameters do
   begin
     // switch parameter value can be D, C, or O (DST, CTB, or OFF)
-    FSwitch := SystemParameters.StringValue[DST_CTB_SWITCH];
+    FSwitch := SystemParameters.AsType<string>(DST_CTB_SWITCH);
     if FSwitch <> 'O' then
     begin
-      FTestUrl := SystemParameters.StringValue[DST_TEST_SERVER];
-      FProdUrl := SystemParameters.StringValue[DST_PROD_SERVER];
+      FTestUrl := SystemParameters.AsType<string>(DST_TEST_SERVER);
+      FProdUrl := SystemParameters.AsType<string>(DST_PROD_SERVER);
     end;
     if FSwitch = 'D' then
     begin
-      FUiPath := SystemParameters.StringValue[DST_UI_PATH];
+      FUiPath := SystemParameters.AsType<string>(DST_UI_PATH);
     end;
     if FSwitch = 'C' then
     begin
-      FUiPath := SystemParameters.StringValue[CTB_UI_PATH];
+      FUiPath := SystemParameters.AsType<string>(CTB_UI_PATH);
     end;
-    FDstConsSaveApi := SystemParameters.StringValue[DST_CONSULT_SAVE_API];
-    FDstConsDecApi := SystemParameters.StringValue[DST_CONSULT_DECISION_API];
+    FDstConsSaveApi := SystemParameters.AsType<string>(DST_CONSULT_SAVE_API);
+    FDstConsDecApi := SystemParameters.AsType<string>(DST_CONSULT_DECISION_API);
     if FSwitch = 'O' then
     begin
       FOrderConsult := False;
@@ -399,17 +388,16 @@ begin
     end
     else
     begin
-      FOrderConsult := StrToBool(SystemParameters.StringValue
-        [CTB_ORDER_CONSULT]);
-      FReceive := StrToBool(SystemParameters.StringValue[CTB_RECEIVE]);
-      FSchedule := StrToBool(SystemParameters.StringValue[CTB_SCHEDULE]);
-      FCancel := StrToBool(SystemParameters.StringValue[CTB_CANCEL]);
-      FEditRes := StrToBool(SystemParameters.StringValue[CTB_EDITRES]);
-      FDiscontinue := StrToBool(SystemParameters.StringValue[CTB_DISCON]);
-      FForward := StrToBool(SystemParameters.StringValue[CTB_FORWARD]);
-      FComment := StrToBool(SystemParameters.StringValue[CTB_COMMENT]);
-      FSigFind := StrToBool(SystemParameters.StringValue[CTB_SIGFIND]);
-      FAdminComp := StrToBool(SystemParameters.StringValue[CTB_ADMINCOMP]);
+      FOrderConsult := StrToBool(SystemParameters.AsType<string>(CTB_ORDER_CONSULT));
+      FReceive := StrToBool(SystemParameters.AsType<string>(CTB_RECEIVE));
+      FSchedule := StrToBool(SystemParameters.AsType<string>(CTB_SCHEDULE));
+      FCancel := StrToBool(SystemParameters.AsType<string>(CTB_CANCEL));
+      FEditRes := StrToBool(SystemParameters.AsType<string>(CTB_EDITRES));
+      FDiscontinue := StrToBool(SystemParameters.AsType<string>(CTB_DISCON));
+      FForward := StrToBool(SystemParameters.AsType<string>(CTB_FORWARD));
+      FComment := StrToBool(SystemParameters.AsType<string>(CTB_COMMENT));
+      FSigFind := StrToBool(SystemParameters.AsType<string>(CTB_SIGFIND));
+      FAdminComp := StrToBool(SystemParameters.AsType<string>(CTB_ADMINCOMP));
     end;
   end;
 
@@ -441,7 +429,7 @@ begin
       Result := JSonValue.GetValue<string>('dst_id', '');
       JSonValue.Free;
     end
-  finally
+   finally
     addLogLine('Server: ' + sServer + #13#10 + 'Path: ' + sPath + #13#10 +
       'Request: ' + #13#10 + sRequest + #13#10 + 'Result:' + #13#10 + Result,
       '--GET DST ID--');
@@ -487,7 +475,7 @@ begin
       finally
         JSonValue.Free;
       end;
-    end
+    end;
   end;
 end;
 
@@ -540,17 +528,6 @@ end;
 
 procedure TDSTMgr.doDst;
 begin
-{  if not assigned(DstProvider) then
-    ShowMessage('DST Provider is not defined')
-  else if DSTCase = '' then
-    ShowMessage('DST execution case is not defined!')
-  else if DSTCase = DST_CASE_CONSULT_ACT then
-    doDSTConsultAct
-  else if DSTCase = DST_CASE_CONSULT_EDIT then
-    doDSTConsult('EDIT-RESUBMIT')
-  else if DSTCase = DST_CASE_CONSULT_OD then
-    doDSTConsult('ORDER');
-}
   if (assigned(DstProvider)) and (DSTCase <> '') then
   begin
     if DSTCase = DST_CASE_CONSULT_ACT then
@@ -569,17 +546,16 @@ begin
   DSTId := DstProvider.getDstUuid(DSTId, DSTService, DSTUrgency, DSTCid,
     DSTNltd, aWorkflow, DSTOutpatient);
 
-  if (Pos('Error',DSTId) <> 1) and (DSTId <> '') then
-  begin
-     DstProvider.getDSTReply(DSTId);
-     DstResult := DstProvider.getDstReply(DSTId, aWorkflow);
-  end
+  if (Pos('Error',DSTId) <> 1) and (DSTId <> '')  then
+    begin
+      DstProvider.getDSTReply(DSTId);
+      DSTResult := DstProvider.getDSTReply(DSTId, aWorkflow);
+   end
   else if Pos('Error',DSTId) = 1 then
        DstResult := DSTId;
 end;
 
 procedure TDSTMgr.doDSTConsultAct;
-
   function getActionName: String;
   begin
     case fDSTAction of
@@ -608,7 +584,6 @@ begin
   DSTId := DstProvider.getDstUuid(DSTId, DSTService, DSTUrgency,
     ConsultRec.ClinicallyIndicatedDate, ConsultRec.NoLaterThanDate,
     getActionName, DSTOutpatient);
-
   if (Pos('Error',DSTId) <> 1) and (DSTId <> '') then
   begin
      DstProvider.getDSTReply(DSTId);

@@ -261,7 +261,6 @@ end;
 procedure TfrmODDietLT.cmdYesClick(Sender: TObject);
 begin
   inherited;
-  if not FOutpatient then
     if (radLT1.Checked = False) and (radLT2.Checked = False) and (radLT3.Checked = False) then
     begin
       InfoBox(TX_MEAL_REQ, TC_MEAL_REQ, MB_OK);

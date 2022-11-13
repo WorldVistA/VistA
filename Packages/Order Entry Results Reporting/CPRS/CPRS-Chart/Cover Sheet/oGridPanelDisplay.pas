@@ -106,6 +106,12 @@ end;
 destructor TGridPanelDisplay.Destroy;
 begin
   fGridPanel := nil;
+  SetLength(fRowCollapsed, 0);
+  SetLength(fRowStyles, 0);
+  SetLength(fRowValues, 0);
+  SetLength(fColCollapsed, 0);
+  SetLength(fColStyles, 0);
+  SetLength(fColValues, 0);
   inherited;
 end;
 
@@ -293,6 +299,12 @@ begin
       ControlCollection.Clear; { Note: This frees the controls in the list as well }
       RowCollection.Clear;
       ColumnCollection.Clear;
+      SetLength(fRowCollapsed, 0);
+      SetLength(fRowStyles, 0);
+      SetLength(fRowValues, 0);
+      SetLength(fColCollapsed, 0);
+      SetLength(fColStyles, 0);
+      SetLength(fColValues, 0);
       RowCollection.Add;
       ColumnCollection.Add;
     end;

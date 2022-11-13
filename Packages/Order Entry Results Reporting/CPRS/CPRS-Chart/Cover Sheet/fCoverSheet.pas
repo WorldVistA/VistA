@@ -3,7 +3,7 @@ unit fCoverSheet;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-21
   *
@@ -30,10 +30,11 @@ uses
   Vcl.StdCtrls,
   Vcl.ExtCtrls,
   VA508AccessibilityRouter,
-  iCoverSheetIntf;
+  iCoverSheetIntf,
+  fBase508Form;
 
 type
-  TfrmCoverSheet = class(TForm, ICPRSTab)
+  TfrmCoverSheet = class(TfrmBase508Form, ICPRSTab)
     gpMain: TGridPanel;
   private
     fDisplayCount: Integer;
@@ -53,6 +54,8 @@ type
     procedure OnFocusFirstControl(Sender: TObject); virtual;
     procedure OnSetFontSize(Sender: TObject; aNewSize: Integer); virtual;
     procedure OnSetScreenReaderStatus(Sender: TObject; aActive: boolean);
+
+    procedure DestroyWindowHandle; override;
   public
     { Public declarations }
     constructor Create(aOwner: TComponent); override;
@@ -66,7 +69,7 @@ implementation
 uses
   uConst,
   uCore,
-  VAUtils;
+  VAUtils, uPCE;
 
 {$R *.dfm}
 
@@ -110,6 +113,12 @@ begin
   // Nothing to do here, ICoverSheet is an entry point.
 end;
 
+procedure TfrmCoverSheet.DestroyWindowHandle;
+begin
+  CoverSheet.OnClearPtData(Self);
+  inherited;
+end;
+
 procedure TfrmCoverSheet.OnClearPtData(Sender: TObject);
 begin
   CoverSheet.OnClearPtData(Sender);
@@ -119,6 +128,7 @@ end;
 procedure TfrmCoverSheet.OnDisplayPage(Sender: TObject; aCallingContext: Integer);
 { cause the page to be displayed and update the display counters }
 begin
+  CurrentTabPCEObject := nil;
   BringToFront;
 
   Inc(fDisplayCount);

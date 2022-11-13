@@ -49,6 +49,7 @@ begin
     ResizeFormToFont(TForm(frmNotesBP));
     with frmNotesBP do
     begin
+//      Result := 0;
       FBPText := BPText;
       ShowModal;
       radIndex:= 0; //radIgnore.checked

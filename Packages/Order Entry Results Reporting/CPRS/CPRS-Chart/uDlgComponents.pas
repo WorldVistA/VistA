@@ -63,13 +63,19 @@ type
     property AccessText: string read FAccessText write FAccessText;
   end;
 
-  TCPRSDialogFieldEdit = class(TEdit, ICPRSDialogComponent)
+  TCPRSDialogFieldEdit = class(TDataEdit, ICPRSDialogComponent)
   private
     FCPRSDialogData: ICPRSDialogComponent;
+    FAssociateLabel: TLabel;
+    FUCUMCaption: string;
+    FPrompt: TRemPrompt;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     property CPRSDialogData: ICPRSDialogComponent read FCPRSDialogData implements ICPRSDialogComponent;
+    property AssociateLabel: TLabel read FAssociateLabel write FAssociateLabel;
+    property UCUMCaption: string read FUCUMCaption write FUCUMCaption;
+    property Prompt: TRemPrompt read FPrompt write FPrompt;
   end;
 
   TCPRSDialogComboBox = class(TORComboBox, ICPRSDialogComponent)
@@ -179,10 +185,11 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    function CanFocus: Boolean; override;
     function GetFirstComponent: ICPRSDialogComponent;
     function GetNextComponent: ICPRSDialogComponent;
     property OnDestroy: TNotifyEvent read FOnDestroy write FOnDestroy;
-    property Focus:  boolean read GetFocus write SetTheFocus; {to draw focus rect}
+    property Focus: boolean read GetFocus write SetTheFocus; {to draw focus rect}
     property OnKeyPress;        {to click the checkbox when spacebar is pressed}
   end;
 
@@ -380,6 +387,14 @@ begin
   inherited;
 end;
 
+function TDlgFieldPanel.CanFocus: Boolean;
+begin
+  if csDestroying in ComponentState then
+    Result := False
+  else
+    Result := inherited CanFocus;
+end;
+
 function TDlgFieldPanel.GetFirstComponent: ICPRSDialogComponent;
 begin
   FCurrentPos := Point(-1,-1);
@@ -474,7 +489,7 @@ end;
 
 procedure TDlgFieldPanel.SetTheFocus(const Value: boolean);
 begin
-  if Value then
+  if Value and ShouldFocus(Self) then
     SetFocus;
 end;
 

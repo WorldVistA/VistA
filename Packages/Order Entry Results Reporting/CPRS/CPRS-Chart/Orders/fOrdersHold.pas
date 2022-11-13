@@ -15,8 +15,14 @@ type
     procedure FormCreate(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
+    procedure lstOrdersMeasureItem(Control: TWinControl; Index: Integer; // PaPI
+      var aHeight: Integer);
+    procedure lstOrdersDrawItem(Control: TWinControl; Index: Integer; // PaPI
+      Rect: TRect; State: TOwnerDrawState);
   private
     OKPressed: Boolean;
+  function MeasureColumnHeight(TheOrderText: string;  // PaPI
+      Index: Integer): integer;
   end;
 
 function ExecuteHoldOrders(SelectedList: TList): Boolean;
@@ -64,6 +70,44 @@ begin
   OKPressed := False;
 end;
 
+// PaPI
+procedure TfrmHoldOrders.lstOrdersDrawItem(Control: TWinControl; Index: Integer;
+  Rect: TRect; State: TOwnerDrawState);
+var
+  x: string;
+  ARect: TRect;
+begin
+  inherited;
+  x := '';
+  ARect := Rect;
+  with lstOrders do
+  begin
+    Canvas.FillRect(ARect);
+    Canvas.Pen.Color := Get508CompliantColor(clSilver);
+    Canvas.MoveTo(0, ARect.Bottom - 1);
+    Canvas.LineTo(ARect.Right, ARect.Bottom - 1);
+    if Index < Items.Count then
+    begin
+      x := Items[Index];
+      DrawText(Canvas.handle, PChar(x), Length(x), ARect, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+    end;
+  end;
+end;
+
+procedure TfrmHoldOrders.lstOrdersMeasureItem(Control: TWinControl;
+  Index: Integer; var aHeight: Integer);
+var
+  x:string;
+begin
+  inherited;
+  with lstOrders do if Index < Items.Count then
+  begin
+    x := Items[index];
+    aHeight := MeasureColumnHeight(x, Index);
+  end;
+end;
+// PaPI
+
 procedure TfrmHoldOrders.cmdOKClick(Sender: TObject);
 begin
   inherited;
@@ -76,5 +120,19 @@ begin
   inherited;
   Close;
 end;
+
+// PaPI
+function TfrmHoldOrders.MeasureColumnHeight(TheOrderText: string;
+  Index: Integer): integer;
+var
+  ARect: TRect;
+begin
+  ARect.Left := 0;
+  ARect.Top := 0;
+  ARect.Bottom := 0;
+  ARect.Right := lstOrders.Width - 6;
+  Result := WrappedTextHeightByFont(lstOrders.Canvas,lstOrders.Font,TheOrderText,ARect);
+end;
+// PaPI
 
 end.

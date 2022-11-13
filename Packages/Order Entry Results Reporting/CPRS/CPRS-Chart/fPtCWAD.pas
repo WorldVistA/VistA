@@ -108,8 +108,7 @@ begin
     end;
 end;
 
-procedure TfrmPtCWAD.lstAllergiesKeyDown(Sender: TObject; var Key: Word;
-Shift: TShiftState);
+procedure TfrmPtCWAD.lstAllergiesKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   inherited;
   if lstAllergies.Focused then
@@ -142,8 +141,7 @@ begin
     end;
 end;
 
-procedure TfrmPtCWAD.FormKeyUp(Sender: TObject; var Key: Word;
-Shift: TShiftState);
+procedure TfrmPtCWAD.FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   inherited;
   if Key = VK_ESCAPE then

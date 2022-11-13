@@ -37,11 +37,12 @@ inherited fraCoverSheetDisplayPanel_Web: TfraCoverSheetDisplayPanel_Web
         Margins.Top = 0
         Align = alClient
         TabOrder = 0
+        SelectedEngine = EdgeIfAvailable
         OnNavigateComplete2 = brwsrNavigateComplete2
-        ExplicitWidth = 682
-        ExplicitHeight = 475
+        ExplicitWidth = 437
+        ExplicitHeight = 304
         ControlData = {
-          4C000000252D00006B1F00000000000000000000000000000000000000000000
+          4C0000006E380000462700000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E12620A000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -128,8 +129,15 @@ inherited fraCoverSheetDisplayPanel_Web: TfraCoverSheetDisplayPanel_Web
           Align = alClient
           TabOrder = 0
           OnKeyDown = edtURLKeyDown
-          ExplicitHeight = 24
         end
+      end
+    end
+    inherited pnlVertHeader: TPanel
+      Height = 413
+      ExplicitHeight = 413
+      inherited img: TImage
+        Height = 413
+        ExplicitHeight = 407
       end
     end
   end

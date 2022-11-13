@@ -44,9 +44,6 @@ function GetLastDialogInfo(BtnList: TStringList): string;
 
 procedure ExtractList(data: string; list: TStrings);
 
-function BeginAPIRedirect(FromAPI, ToAPI: Pointer): string;
-procedure EndAPIRedirect(token: string);
-
 const
   START_PARAMS = 'Params -------------';
   START_RESULTS = 'Results ------------';
@@ -588,11 +585,14 @@ begin
         ModalDailogBoundsRect := BoundsRect;
         if length(PendingKeys) > 0 then
         begin
-          for i := 0 to High(PendingKeys) do
+          if assigned(ActiveControl) then
           begin
-            PostMessage(ActiveControl.Handle, WM_KEYDOWN, PendingKeys[i], 0);
-            PostMessage(ActiveControl.Handle, WM_KEYUP, PendingKeys[i], 0);
-            Application.ProcessMessages;
+            for i := 0 to High(PendingKeys) do
+            begin
+              PostMessage(ActiveControl.Handle, WM_KEYDOWN, PendingKeys[i], 0);
+              PostMessage(ActiveControl.Handle, WM_KEYUP, PendingKeys[i], 0);
+              Application.ProcessMessages;
+            end;
           end;
           SetLength(PendingKeys, 0);
         end
@@ -630,61 +630,6 @@ begin
     else if x <> '' then
       list.Add(x);
   until p = 0;
-end;
-
-const
-  ASMCNT = 4;
-
-type
-  TPtrRec = record
-    case integer of
-      1:
-        (lw: Pointer);
-      2:
-        (b1, b2, b3, b4: byte);
-  end;
-
-  TBuf = array [0 .. ASMCNT] of byte;
-
-function BeginAPIRedirect(FromAPI, ToAPI: Pointer): string;
-var
-  buf: TBuf;
-  i: integer;
-  rec: TPtrRec;
-  fp: ^TBuf;
-  dwNull: DWORD;
-
-begin
-  rec.lw :=  Pointer(Integer(ToAPI) - Integer(FromAPI) - 5);
-  buf[0] := $E9;
-  buf[1] := rec.b1;
-  buf[2] := rec.b2;
-  buf[3] := rec.b3;
-  buf[4] := rec.b4;
-  Result := IntToStr(LongWord(FromAPI)) + '/';
-  fp := FromAPI;
-  VirtualProtect(fp, ASMCNT + 1, PAGE_EXECUTE_READWRITE, dwNull);
-  for i := 0 to ASMCNT do
-  begin
-    Result := Result + char(fp^[i]);
-    fp^[i] := buf[i];
-  end;
-end;
-
-procedure EndAPIRedirect(token: string);
-var
-  ptr: ^TBuf;
-  p, i: integer;
-
-begin
-  p := pos('/', token);
-  if p > 0 then
-  begin
-    ptr := Pointer(StrToIntDef(copy(token, 1, p - 1), 0));
-    inc(p);
-    for i := 0 to ASMCNT do
-      ptr^[i] := byte(token[p + i]);
-  end;
 end;
 
 initialization

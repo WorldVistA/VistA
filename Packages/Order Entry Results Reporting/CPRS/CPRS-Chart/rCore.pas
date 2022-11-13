@@ -1,20 +1,27 @@
 unit rCore;
+{ ------------------------------------------------------------------------------
+  Update History
+
+  2016-02-15: NSR#20081008 (CPRS Notification Alert Processing Improvement)
+  2016-02-26: NSR#20110606 (Confirm Provider Similar Names)
+  2018-08-13: RTC#272867 (Replacement of CallV,sCallV, tCallV with CallVistA)
+  ------------------------------------------------------------------------------- }
 
 interface
 
-uses SysUtils, Classes, Forms, ORNet, ORFn, ORClasses, system.JSON;
+uses SysUtils, Classes, Forms, ORNet, ORFn, ORClasses, system.JSON, ORCtrls;
 
 { record types used to return data from the RPC's.  Generally, the delimited strings returned
   by the RPC are mapped into the records defined below. }
 
 const
-  UC_UNKNOWN   = 0;                               // user class unknown
-  UC_CLERK     = 1;                               // user class clerk
-  UC_NURSE     = 2;                               // user class nurse
-  UC_PHYSICIAN = 3;                               // user class physician
+  UC_UNKNOWN = 0; // user class unknown
+  UC_CLERK = 1; // user class clerk
+  UC_NURSE = 2; // user class nurse
+  UC_PHYSICIAN = 3; // user class physician
 
 type
-  TUserInfo = record                              // record for ORWU USERINFO
+  TUserInfo = record // record for ORWU USERINFO
     DUZ: Int64;
     Name: string;
     UserClass: Integer;
@@ -43,12 +50,12 @@ type
     DisableHold: Boolean;
     GECStatusCheck: Boolean;
     StationNumber: string;
-    IsProductionAccount: boolean;
+    IsProductionAccount: Boolean;
     JobNumber: string;
     EvaluateRemCoverSheetOnDialogFinish: BOOLEAN;
   end;
 
-  TPtIDInfo = record                              // record for ORWPT IDINFO
+  TPtIDInfo = record // record for ORWPT IDINFO
     Name: string;
     SSN: string;
     DOB: string;
@@ -60,7 +67,7 @@ type
     RoomBed: string;
   end;
 
-  TPtSelect = record                              // record for ORWPT SELECT
+  TPtSelect = record // record for ORWPT SELECT
     Name: string;
     ICN: string;
     FullICN: string;                              //added via ORWPT GET FULL ICN
@@ -87,14 +94,14 @@ type
     InProvider: string;
   end;
 
-  TEncounterText = record                         // record for ORWPT ENCTITL
+  TEncounterText = record // record for ORWPT ENCTITL
     LocationName: string;
     LocationAbbr: string;
     RoomBed: string;
     ProviderName: string;
   end;
 
-{ Date/Time functions - right now these make server calls to use server time}
+  { Date/Time functions - right now these make server calls to use server time }
 
 function FMToday: TFMDateTime;
 function FMNow: TFMDateTime;
@@ -110,26 +117,20 @@ function ExternalName(IEN: Int64; FileNumber: Double): string; overload;
 function ExternalName(IEN: string; FileNumber: Double): string; overload;
 function PersonHasKey(APerson: Int64; const AKey: string): Boolean;
 function GlobalRefForFile(const FileID: string): string;
-function SubsetOfGeneric(const StartFrom: string; Direction: Integer; const GlobalRef: string): TStrings;
-function SubsetOfDevices(const StartFrom: string; Direction: Integer): TStrings;
-function SubSetOfPersons(const StartFrom: string; Direction: Integer): TStrings; overload;
-function SubSetOfPersons(const StartFrom: string; Direction: Integer;
-  out VistaParams: TArray<string>; ExcludeClass: boolean = False): TStrings; overload;
-function setSubSetOfPersons(var aDest: TStrings; const StartFrom: string;
+// function SubsetOfGeneric(const StartFrom: string; Direction: Integer; const GlobalRef: string): TStrings;
+
+function setSubsetOfDevices(var aDest: TStrings; const StartFrom: string;
   Direction: Integer): Integer;
 
-function SubSetOfActiveAndInactivePersons(const StartFrom: string; Direction: Integer): TStrings;
+function setSubSetOfPersons(AORComboBox: TORComboBox; var aDest: TStrings;
+  const StartFrom: string; Direction: Integer; ExcludeClass: Boolean = False): Integer;
 
-function SubSetOfActiveAndInactivePersonsWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
-function setSubSetOfProvidersWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
-function SubsetOfCosignersWithSimilarNames(aDUZ: Int64; CSPDate: TFMDateTime;
-  TITLEIEN: Integer): TStrings;
-function setSubSetOfPDMPAuthorizedUsersWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
+function setSubSetOfActiveAndInactivePersons(AORComboBox: TORComboBox;
+  var aDest: TStrings; const StartFrom: string; Direction: Integer): Integer;
 
-function SubsetOfPatientsWithSimilarSSNs(aDest:TStrings; aDFN: Int64): Integer;
-function GetDefaultPrinter(DUZ: Int64; Location: integer): string;
+function SubsetOfPatientsWithSimilarSSNs(aDest:TStrings; aDFN: String): Integer;
+function GetDefaultPrinter(DUZ: Int64; Location: Integer): string;
 procedure getSysUserParameters(DUZ: Int64);
-
 
 { User specific calls }
 
@@ -144,21 +145,27 @@ function ValidESCode(const ACode: string): Boolean;
 { Notifications calls }
 
 procedure LoadNotifications(Dest: TStrings);
+procedure LoadProcessedNotifications(var Dest: TStrings;
+  DateFrom, DateTo, MaxNumber, ProcessedOnly: String);
 function LoadNotificationLongText(AlertID: string): string;
-function IsSmartAlert(notIEN: integer): boolean;
+function IsSmartAlert(notIEN: Integer): Boolean;
 procedure DeleteAlert(XQAID: string);
 procedure DeleteAlertForUser(XQAID: string);
-function  GetXQAData(XQAID: string; pFlag: string = ''): string;
-function  GetTIUAlertInfo(XQAID: string): string;
+function GetXQAData(XQAID: string;  pFlag: string = ''): string;
+function GetTIUAlertInfo(XQAID: string): string;
 procedure UpdateUnsignedOrderAlerts(PatientDFN: string);
 function UnsignedOrderAlertFollowup(XQAID: string): string;
 procedure UpdateExpiringMedAlerts(PatientDFN: string);
-procedure UpdateExpiringFlaggedOIAlerts(PatientDFN: string; FollowUp: integer);
+procedure UpdateExpiringFlaggedOIAlerts(PatientDFN: string; FollowUp: Integer);
 procedure AutoUnflagAlertedOrders(PatientDFN, XQAID: string);
 procedure UpdateUnverifiedMedAlerts(PatientDFN: string);
 procedure UpdateUnverifiedOrderAlerts(PatientDFN: string);
-function GetNotificationFollowUpText(PatientDFN: string; Notification: integer; XQADATA: string): TStrings;
-procedure ForwardAlert(XQAID: string; Recip: string; FWDtype: string; Comment: string);
+
+function setNotificationFollowUpText(aDest: TStrings; PatientDFN: string;
+  Notification: Integer; XQADATA: string): Integer;
+
+procedure ForwardAlert(XQAID: string; Recip: string; FWDtype: string;
+  Comment: string);
 procedure RenewAlert(XQAID: string);
 function GetSortMethod: string;
 procedure SetSortMethod(Sort: string; Direction: string);
@@ -174,20 +181,15 @@ procedure ListSpecialtyAll(Dest: TStrings);
 procedure ListTeamAll(Dest: TStrings);
 procedure ListPcmmAll(Dest: TStrings);
 procedure ListWardAll(Dest: TStrings);
-procedure ListProviderTop(Dest: TStrings);
 
-function setSubSetOfProviders(aDest: TStrings; const StartFrom: string;
-  Direction: Integer): Integer;
+function setSubSetOfProviders(aComponent: TORComboBox; aDest: TStrings;
+  const StartFrom: string; Direction: Integer): Integer;
 
-function SubSetOfProviders(const StartFrom: string; Direction: Integer): TStrings;
-
-function SubSetOfCosigners(const StartFrom: string; Direction: Integer;
-  Date: TFMDateTime; ATitle: integer; ADocType: integer): TStrings; overload;
-function SubSetOfCosigners(const StartFrom: string; Direction: Integer;
-  Date: TFMDateTime; ATitle: integer; ADocType: integer; out VistaParams: TArray<string>): TStrings; overload;
+function setSubSetOfCosigners(AORComboBox: TORComboBox; aDest: TStrings;
+  const StartFrom: string; Direction: Integer; Date: TFMDateTime;
+  ATitle: Integer; ADocType: Integer): Integer;
 
 procedure ListClinicTop(Dest: TStrings);
-function SubSetOfClinics(const StartFrom: string; Direction: Integer): TStrings;
 
 function setSubSetOfClinics(aDest: TStrings; const StartFrom: string;
   Direction: Integer): Integer;
@@ -199,7 +201,8 @@ procedure ListPtByProvider(Dest: TStrings; ProviderIEN: Int64);
 procedure ListPtByTeam(Dest: TStrings; TeamIEN: Integer);
 procedure ListPtByPcmmTeam(Dest: TStrings; TeamIEN: Integer);
 procedure ListPtBySpecialty(Dest: TStrings; SpecialtyIEN: Integer);
-procedure ListPtByClinic(Dest: TStrings; ClinicIEN: Integer; FirstDt, LastDt: string);
+procedure ListPtByClinic(Dest: TStrings; ClinicIEN: Integer;
+  FirstDt, LastDt: string);
 procedure ListPtByWard(Dest: TStrings; WardIEN: Integer);
 procedure ListPtByLast5(Dest: TStrings; const Last5: string);
 procedure ListPtByRPLLast5(Dest: TStrings; const Last5: string);
@@ -210,19 +213,22 @@ procedure ListPtTop(Dest: TStrings);
 function setSubSetOfPatients(aDest: TStrings; const StartFrom: string;
   Direction: Integer): Integer;
 
-function SubSetOfPatients(const StartFrom: string; Direction: Integer): TStrings;
 function DfltDateRangeClinic: string;
 function MakeRPLPtList(RPLList: string): string;
-function ReadRPLPtList(RPLJobNumber: string; const StartFrom: string; Direction: Integer) : TStrings;
+
+function setRPLPtList(aDest: TStrings; RPLJobNumber: string;
+  const StartFrom: string; Direction: Integer): Integer;
 procedure KillRPLPtList(RPLJobNumber: string);
 
 { Patient specific calls }
 
 function CalcAge(BirthDate, DeathDate: TFMDateTime): Integer;
-procedure CheckSensitiveRecordAccess(const DFN: string; var AccessStatus: Integer;
-  var MessageText: string);
-procedure CheckRemotePatient(var Dest: string; Patient, ASite: string; var AccessStatus: Integer);
-procedure CurrentLocationForPatient(const DFN: string; var ALocation: Integer; var AName: string; var ASvc: string);
+procedure CheckSensitiveRecordAccess(const DFN: string;
+  var AccessStatus: Integer; var MessageText: string);
+procedure CheckRemotePatient(var Dest: string; Patient, ASite: string;
+  var AccessStatus: Integer);
+procedure CurrentLocationForPatient(const DFN: string; var ALocation: Integer;
+  var AName: string; var ASvc: string);
 function DateOfDeath(const DFN: string): TFMDateTime;
 function GetPtIDInfo(const DFN: string): TPtIDInfo;
 function HasLegacyData(const DFN: string; var AMsg: string): Boolean;
@@ -239,18 +245,25 @@ procedure otherInformationPanelDetails(const DFN: string; valueType: string; var
 
 { Encounter specific calls }
 
-function GetEncounterText(const DFN: string; Location: integer; Provider: Int64): TEncounterText;  //*DFN*
+function GetEncounterText(const DFN: string; Location: Integer; Provider: Int64)
+  : TEncounterText; // *DFN*
 function GetActiveICDVersion(ADate: TFMDateTime = 0): String;
 function GetICD10ImplementationDate: TFMDateTime;
 procedure ListApptAll(Dest: TStrings; const DFN: string; From: TFMDateTime = 0;
-                                                         Thru: TFMDateTime = 0);
+  Thru: TFMDateTime = 0);
 procedure ListAdmitAll(Dest: TStrings; const DFN: string);
-function SubSetOfLocations(const StartFrom: string; Direction: Integer): TStrings;
-function SubSetOfNewLocs(const StartFrom: string; Direction: Integer): TStrings;
-function SubSetOfInpatientLocations(const StartFrom: string; Direction: Integer): TStrings;
-function SubSetOfProvWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings;
-function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings; overload;
-function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer; DateTime: string; out VistaParams: TArray<string>): TStrings; overload;
+
+function setSubSetOfLocations(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+
+function setSubSetOfNewLocs(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+
+function setSubSetOfInpatientLocations(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
+
+function setSubSetOfUsersWithClass(AORComboBox: TORComboBox; aDest: TStrings;
+  const StartFrom: string; Direction: Integer; DateTime: string): Integer;
 
 { Remote Data Access calls }
 function HasRemoteData(const DFN: string; var ALocations: TStringList): Boolean;
@@ -260,19 +273,27 @@ function GetVistaWeb_JLV_LabelName: string;
 
 implementation
 
-uses XWBHash, uCore, ShlObj, Windows;
+uses
+  XWBHash,
+  uCore,
+  ShlObj,
+  Windows,
+  VAUtils,
+  UJSONParameters, uSimilarNames;
 
 var
-  uPtListDfltSort: string = '';                  // Current user's patient selection list default sort order.
+  uPtListDfltSort: string = '';
+  // Current user's patient selection list default sort order.
 
-{ private calls }
+  { private calls }
 
 function FormatSSN(const x: string): string;
 { places the dashes in a social security number }
 begin
-  if Length(x) > 8
-    then Result := Copy(x,1,3) + '-' + Copy(x,4,2) + '-' + Copy(x,6,Length(x))
-    else Result := x;
+  if Length(x) > 8 then
+    Result := Copy(x, 1, 3) + '-' + Copy(x, 4, 2) + '-' + Copy(x, 6, Length(x))
+  else
+    Result := x;
 end;
 
 function IsSSN(const x: string): Boolean;
@@ -280,8 +301,11 @@ var
   i: Integer;
 begin
   Result := False;
-  if (Length(x) < 9) or (Length(x) > 10) then Exit;
-  for i := 1 to 9 do if not CharInSet(x[i], ['0'..'9']) then Exit;
+  if (Length(x) < 9) or (Length(x) > 10) then
+    Exit;
+  for i := 1 to 9 do
+    if not CharInSet(x[i], ['0' .. '9']) then
+      Exit;
   Result := True;
 end;
 
@@ -290,12 +314,15 @@ var
   i: Integer;
 begin
   Result := False;
-  if Length(x) <> 7 then Exit;
-  for i := 1 to 7 do if not CharInSet(x[i], ['0'..'9']) then Exit;
+  if Length(x) <> 7 then
+    Exit;
+  for i := 1 to 7 do
+    if not CharInSet(x[i], ['0' .. '9']) then
+      Exit;
   Result := True;
 end;
 
-{ Date/Time functions - not in ORFn because they make server calls to use server time}
+{ Date/Time functions - not in ORFn because they make server calls to use server time }
 
 function FMToday: TFMDateTime;
 { return the current date in Fileman format }
@@ -305,65 +332,76 @@ end;
 
 function FMNow: TFMDateTime;
 { return the current date/time in Fileman format }
-var
-  x: string;
+//var
+//  x: string;
 begin
-  x := sCallV('ORWU DT', ['NOW']);
-  Result := StrToFloatDef(x, 0.0);
+  Result := GetFMNow;
+//  CallVistA('ORWU DT', ['NOW'], x);
+//  Result := StrToFloatDef(x, 0.0);
 end;
 
 function MakeRelativeDateTime(FMDateTime: TFMDateTime): string;
 var
   Offset: Integer;
-  h,n,s,l: Word;
+  h, n, s, l: Word;
   ADateTime: TDateTime;
   ATime: string;
 begin
   Result := '';
-  if FMDateTime <= 0 then Exit;
+  if FMDateTime <= 0 then
+    Exit;
   ADateTime := FMDateTimeToDateTime(FMDateTime);
   Offset := Trunc(Int(ADateTime) - Int(FMDateTimeToDateTime(FMToday)));
-  if Offset < 0 then Result := 'T' + IntToStr(Offset)
-  else if Offset = 0 then Result := 'T'
-  else Result := 'T+' + IntToStr(Offset);
+  if Offset < 0 then
+    Result := 'T' + IntToStr(Offset)
+  else if Offset = 0 then
+    Result := 'T'
+  else
+    Result := 'T+' + IntToStr(Offset);
   DecodeTime(ADateTime, h, n, s, l);
   ATime := Format('@%.2d:%.2d', [h, n]);
-  if ATime <> '@00:00' then Result := Result + ATime;
+  if ATime <> '@00:00' then
+    Result := Result + ATime;
 end;
 
 function StrToFMDateTime(const AString: string): TFMDateTime;
 { use %DT the validate and convert a string to Fileman format (accepts T, T-1, NOW, etc.) }
-var
-  x: string;
+//var
+//  x: string;
 begin
-  x := sCallV('ORWU DT', [AString]);
-  Result := StrToFloat(x);
+  Result := GetFMDT(aString);
+//  CallVistA('ORWU DT', [AString], x);
+//  Result := StrToFloat(x);
 end;
 
 function ValidDateTimeStr(const AString, Flags: string): TFMDateTime;
 { use %DT to validate & convert a string to Fileman format, accepts %DT flags }
+var
+  x: string;
 begin
-  Result := StrToFloat(sCallV('ORWU VALDT', [AString, Flags]));
+  CallVistA('ORWU VALDT', [AString, Flags], x);
+  Result := StrToFloatDef(x, -1);
 end;
 
 procedure ListDateRangeClinic(Dest: TStrings);
 { returns date ranges for displaying clinic appointments in patient lookup }
 begin
-  CallV('ORWPT CLINRNG', [nil]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWPT CLINRNG', [nil], Dest);
 end;
 
 function IsDateMoreRecent(Date1: TDateTime; Date2: TDateTime): Boolean;
-{ is Date1 more recent than Date2}
+{ is Date1 more recent than Date2 }
 begin
-  if Date1 > Date2 then Result := True
-  else Result := False;
+  if Date1 > Date2 then
+    Result := True
+  else
+    Result := False;
 end;
 
 function DfltDateRangeClinic;
 { returns current default date range settings for displaying clinic appointments in patient lookup }
 begin
-  Result := sCallV('ORQPT DEFAULT CLINIC DATE RANG', [nil]);
+  CallVistA('ORQPT DEFAULT CLINIC DATE RANG', [nil], Result);
 end;
 
 { General calls }
@@ -371,92 +409,63 @@ end;
 function ExternalName(IEN: Int64; FileNumber: Double): string;
 { returns the external name of the IEN within a file }
 begin
-  Result := sCallV('ORWU EXTNAME', [IEN, FileNumber]);
+  if not CallVistA('ORWU EXTNAME', [IEN, FileNumber], Result) then
+    Result := IntToStr(IEN);
 end;
 
 function ExternalName(IEN: String; FileNumber: Double): string;
 { returns the external name of the IEN within a file }
+
 begin
-  Result := sCallV('ORWU EXTNAME', [IEN, FileNumber]);
+//  Result := sCallV('ORWU EXTNAME', [IEN, FileNumber]);
+  CallVistA('ORWU EXTNAME', [IEN, FileNumber], Result);
 end;
 
 function PersonHasKey(APerson: Int64; const AKey: string): Boolean;
+var
+  x: String;
 begin
-  Result := sCallV('ORWU NPHASKEY', [APerson, AKey]) = '1';
+  Result := CallVistA('ORWU NPHASKEY', [APerson, AKey], x) and (x = '1');
 end;
 
 function GlobalRefForFile(const FileID: string): string;
 begin
-  Result := sCallV('ORWU GBLREF', [FileID]);
+  CallVistA('ORWU GBLREF', [FileID], Result);
 end;
 
-function SubsetOfGeneric(const StartFrom: string; Direction: Integer; const GlobalRef: string): TStrings;
-begin
-  CallV('ORWU GENERIC', [StartFrom, Direction, GlobalRef]);
-  Result := RPCBrokerV.Results;
-end;
-
-function SubsetOfDevices(const StartFrom: string; Direction: Integer): TStrings;
+{ RTC 272867
+  function SubsetOfGeneric(const StartFrom: string; Direction: Integer; const GlobalRef: string): TStrings;
+  begin
+    CallV('ORWU GENERIC', [StartFrom, Direction, GlobalRef]);
+    Result := RPCBrokerV.Results;
+  end;
+}
+function setSubsetOfDevices(var aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
 { returns a pointer to a list of devices (for use in a long list box) -  The return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
 begin
-  CallV('ORWU DEVICE', [StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
-end;
-
-function SubSetOfPersons(const StartFrom: string; Direction: Integer): TStrings;
-{ returns a pointer to a list of persons (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
-var
-  VistaParams: TArray<string>;
-begin
-  Result := SubSetOfPersons(StartFrom, Direction, VistaParams);
-end;
-
-function SubSetOfPersons(const StartFrom: string; Direction: Integer;
-  out VistaParams: TArray<string>; ExcludeClass: boolean = False): TStrings;
-{ returns a pointer to a list of persons (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
-const
-  BoolChar: array [boolean] of char = ('0', '1');
-begin
-  CallV('ORWU NEWPERS', [StartFrom, Direction,'','','','','','',ExcludeClass]);
-//  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
-
-  SetLength(VistaParams, 10);
-  VistaParams[0] := 'ORWU NEWPERS';
-  VistaParams[1] := StartFrom;
-  VistaParams[2] := IntToStr(Direction);
-  VistaParams[3] := '';
-  VistaParams[4] := '';
-  VistaParams[5] := '';
-  VistaParams[6] := '';
-  VistaParams[7] := '';
-  VistaParams[8] := '';
-  VistaParams[9] := BoolChar[ExcludeClass];
-end;
-
-function setSubSetOfPersons(var aDest: TStrings; const StartFrom: string;
-  Direction: Integer): Integer;
-{ returns a pointer to a list of persons (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
-begin
-  CallVistA('ORWU NEWPERS', [StartFrom, Direction], aDest);
+  CallVistA('ORWU DEVICE', [StartFrom, Direction], aDest);
   Result := aDest.Count;
 end;
 
-{ User specific calls }
+function setSubSetOfPersons(AORComboBox: TORComboBox; var aDest: TStrings;
+  const StartFrom: string; Direction: Integer; ExcludeClass: Boolean = False): Integer;
+begin
+  SNCallVistA(AORComboBox, SN_ORWU_NEWPERS,
+    [StartFrom, Direction,'','','','','','',ExcludeClass], aDest);
+  Result := aDest.Count;
+end;
 
 function GetUserInfo: TUserInfo;
 { returns a record of user information,
   Pieces: DUZ^NAME^USRCLS^CANSIGN^ISPROVIDER^ORDERROLE^NOORDER^DTIME^CNTDN^VERORD^NOTIFYAPPS^
-          MSGHANG^DOMAIN^SERVICE^AUTOSAVE^INITTAB^LASTTAB^WEBACCESS^ALLOWHOLD^ISRPL^RPLLIST^
-          CORTABS^RPTTAB^STATION#^GECStatus^Production account?}
+  MSGHANG^DOMAIN^SERVICE^AUTOSAVE^INITTAB^LASTTAB^WEBACCESS^ALLOWHOLD^ISRPL^RPLLIST^
+  CORTABS^RPTTAB^STATION#^GECStatus^Production account? }
 var
   x: string;
 begin
-  x := sCallV('ORWU USERINFO', [nil]);
+  CallVistA('ORWU USERINFO', [nil], x);
   with Result do
   begin
     DUZ := StrToInt64Def(Piece(x, U, 1), 0);
@@ -486,41 +495,33 @@ begin
     StationNumber := Piece(x, U, 24);
     GECStatusCheck := Piece(x, U, 25) = '1';
     IsProductionAccount := Piece(x, U, 26) = '1';
-    IsReportsOnly := false;
+    IsReportsOnly := False;
     if ((HasRptTab) and (not HasCorTabs)) then
-      IsReportsOnly := true;
+      IsReportsOnly := True;
     // Remove next if and nested if should an "override" later be provided for RPL users,etc.:
     if HasCorTabs then
       if (IsRPL = '1') then
-        begin
-          IsRPL := '0'; // Hard set for now.
-          IsReportsOnly := false;
-        end;
+      begin
+        IsRPL := '0'; // Hard set for now.
+        IsReportsOnly := False;
+      end;
     // Following hard set to TRUE per VHA mgt decision:
-    ToolsRptEdit := true;
-     //    x := GetUserParam('ORWT TOOLS RPT SETTINGS OFF');
-     //    if x = '1' then
-    //      ToolsRptEdit := false;
+    ToolsRptEdit := True;
+    // x := GetUserParam('ORWT TOOLS RPT SETTINGS OFF');
+    // if x = '1' then
+    // ToolsRptEdit := false;
     JobNumber := Piece(x, U, 28);
   end;
 end;
 
 function GetUserParam(const AParamName: string): string;
 begin
-  Result := sCallV('ORWU PARAM', [AParamName]);
+  CallVistA('ORWU PARAM', [AParamName], Result);
 end;
 
 procedure GetUserListParam(Dest: TStrings; const AParamName: string);
-var
-  tmplst: TStringList;
 begin
-  tmplst := TStringList.Create;
-  try
-    tCallV(tmplst, 'ORWU PARAMS', [AParamName]);
-    FastAssign(tmplst, Dest);
-  finally
-    tmplst.Free;
-  end;
+  CallVistA('ORWU PARAMS', [AParamName], Dest);
 end;
 
 function HasSecurityKey(const KeyName: string): Boolean;
@@ -528,20 +529,22 @@ function HasSecurityKey(const KeyName: string): Boolean;
 var
   x: string;
 begin
-  Result := False;
-  x := sCallV('ORWU HASKEY', [KeyName]);
-  if x = '1' then Result := True;
+  Result := CallVistA('ORWU HASKEY', [KeyName], x) and (x = '1');
 end;
 
 function HasMenuOptionAccess(const OptionName: string): Boolean;
+var
+  x: string;
 begin
-  Result := (sCallV('ORWU HAS OPTION ACCESS', [OptionName]) = '1');
+  Result := CallVistA('ORWU HAS OPTION ACCESS', [OptionName], x) and (x = '1');
 end;
 
 function ValidESCode(const ACode: string): Boolean;
 { returns true if the electronic signature code in ACode is valid }
+var
+  x: string;
 begin
-  Result := sCallV('ORWU VALIDSIG', [Encrypt(ACode)]) = '1';
+  Result := CallVistA('ORWU VALIDSIG', [Encrypt(ACode)], x) and (x = '1');
 end;
 
 //function otherInformationPanelControls: string;
@@ -552,24 +555,14 @@ end;
 { Notifications Calls }
 
 procedure LoadNotifications(Dest: TStrings);
-var
-  tmplst: TStringList;
 begin
-  tmplst := TStringList.Create;
-  try
-    //UpdateUnsignedOrderAlerts(Patient.DFN);      //moved to AFTER signature and DC actions
-    tCallV(tmplst, 'ORWORB FASTUSER', [nil]);
-    FastAssign(tmplst, Dest);
-  finally
-    tmplst.Free;
-  end;
+  CallVistA('ORWORB FASTUSER', [nil], Dest);
 end;
 
 function LoadNotificationLongText(AlertID: string): string;
 var
   temp: TStringList;
   i: Integer;
-
 begin
   temp := TStringList.Create();
   try
@@ -582,22 +575,36 @@ begin
   end;
 end;
 
-function IsSmartAlert(notIEN: integer):boolean;
+procedure LoadProcessedNotifications(var Dest: TStrings;
+  DateFrom, DateTo, MaxNumber, ProcessedOnly: String);
+var
+  tmplst: TStringList;
+begin
+  tmplst := TStringList.Create;
+  try
+    // UpdateUnsignedOrderAlerts(Patient.DFN);      //moved to AFTER signature and DC actions
+    CallVistA('ORWORB PROUSER', [DateFrom, DateTo, MaxNumber,
+      ProcessedOnly], Dest);
+  finally
+    tmplst.Free;
+  end;
+end;
+
+function IsSmartAlert(notIEN: Integer): Boolean;
 var
   temp: string;
 begin
-  temp := sCallV('ORBSMART ISSMNOT',[notIEN]);
-  Result := temp = '1';
+  Result := CallVistA('ORBSMART ISSMNOT', [notIEN], temp) and (temp = '1');
 end;
 
 procedure UpdateUnsignedOrderAlerts(PatientDFN: string);
 begin
-  CallV('ORWORB KILL UNSIG ORDERS ALERT',[PatientDFN]);
+  CallVistA('ORWORB KILL UNSIG ORDERS ALERT', [PatientDFN]);
 end;
 
 function UnsignedOrderAlertFollowup(XQAID: string): string;
 begin
-  Result := sCallV('ORWORB UNSIG ORDERS FOLLOWUP',[XQAID]);
+  CallVistA('ORWORB UNSIG ORDERS FOLLOWUP', [XQAID], Result);
 end;
 
 procedure UpdateIndOrderAlerts();
@@ -611,82 +618,84 @@ end;
 
 procedure UpdateExpiringMedAlerts(PatientDFN: string);
 begin
-  CallV('ORWORB KILL EXPIR MED ALERT',[PatientDFN]);
+  CallVistA('ORWORB KILL EXPIR MED ALERT', [PatientDFN]);
 end;
 
-procedure UpdateExpiringFlaggedOIAlerts(PatientDFN: string; FollowUp: integer);
+procedure UpdateExpiringFlaggedOIAlerts(PatientDFN: string; FollowUp: Integer);
 begin
-  CallV('ORWORB KILL EXPIR OI ALERT',[PatientDFN, FollowUp]);
+  CallVistA('ORWORB KILL EXPIR OI ALERT', [PatientDFN, FollowUp]);
 end;
 
 procedure UpdateUnverifiedMedAlerts(PatientDFN: string);
 begin
-  CallV('ORWORB KILL UNVER MEDS ALERT',[PatientDFN]);
+  CallVistA('ORWORB KILL UNVER MEDS ALERT', [PatientDFN]);
 end;
 
 procedure UpdateUnverifiedOrderAlerts(PatientDFN: string);
 begin
-  CallV('ORWORB KILL UNVER ORDERS ALERT',[PatientDFN]);
+  CallVistA('ORWORB KILL UNVER ORDERS ALERT', [PatientDFN]);
 end;
 
 procedure AutoUnflagAlertedOrders(PatientDFN, XQAID: string);
 begin
-  CallV('ORWORB AUTOUNFLAG ORDERS',[PatientDFN, XQAID]);
+  CallVistA('ORWORB AUTOUNFLAG ORDERS', [PatientDFN, XQAID]);
 end;
 
 procedure DeleteAlert(XQAID: string);
-//deletes an alert
+// deletes an alert
 begin
-  CallV('ORB DELETE ALERT',[XQAID]);
+  CallVistA('ORB DELETE ALERT', [XQAID]);
 end;
 
 procedure DeleteAlertForUser(XQAID: string);
-//deletes an alert
+// deletes an alert
 begin
-  CallV('ORB DELETE ALERT',[XQAID, True]);
+  CallVistA('ORB DELETE ALERT', [XQAID, True]);
 end;
 
-procedure ForwardAlert(XQAID: string; Recip: string; FWDtype: string; Comment: string);
+procedure ForwardAlert(XQAID: string; Recip: string; FWDtype: string;
+  Comment: string);
 // Forwards an alert with comment to Recip[ient]
 begin
-   CallV('ORB FORWARD ALERT', [XQAID, Recip, FWDtype, Comment]);
+  CallVistA('ORB FORWARD ALERT', [XQAID, Recip, FWDtype, Comment]);
 end;
 
 procedure RenewAlert(XQAID: string);
 // Restores/renews an alert
 begin
-   CallV('ORB RENEW ALERT', [XQAID]);
+  CallVistA('ORB RENEW ALERT', [XQAID]);
 end;
 
 function GetSortMethod: string;
 // Returns alert sort method
 begin
-  Result := sCallV('ORWORB GETSORT',[nil]);
+  CallVistA('ORWORB GETSORT', [nil], Result);
 end;
 
 procedure SetSortMethod(Sort: string; Direction: string);
 // Sets alert sort method for user
 begin
-   CallV('ORWORB SETSORT', [Sort, Direction]);
+  CallVistA('ORWORB SETSORT', [Sort, Direction]);
 end;
 
 function GetXQAData(XQAID: string; pFlag: string = ''): string;
 // Returns data associated with an alert
 begin
-  Result := sCallV('ORWORB GETDATA',[XQAID, pFlag]);
+  CallVistA('ORWORB GETDATA', [XQAID, pFlag], Result);
 end;
 
-function  GetTIUAlertInfo(XQAID: string): string;
+function GetTIUAlertInfo(XQAID: string): string;
 // Returns DFN and document type associated with a TIU alert
 begin
-  Result := sCallV('TIU GET ALERT INFO',[XQAID]);
+  CallVistA('TIU GET ALERT INFO', [XQAID], Result);
 end;
 
-function GetNotificationFollowUpText(PatientDFN: string; Notification: integer; XQADATA: string): TStrings;
+function setNotificationFollowUpText(aDest: TStrings; PatientDFN: string;
+  Notification: Integer; XQADATA: string): Integer;
 // Returns follow-up text for an alert
 begin
-   CallV('ORWORB TEXT FOLLOWUP', [PatientDFN, Notification, XQADATA]);
-   Result := RPCBrokerV.Results;
+  CallVistA('ORWORB TEXT FOLLOWUP', [PatientDFN, Notification, XQADATA], aDest);
+  Result := aDest.Count;
 end;
 
 { Patient List Calls }
@@ -695,58 +704,57 @@ function DfltPtList: string;
 { returns the name of the current user's default patient list, null if none is defined
   Pieces: Ptr to Source File^Source Name^Source Type }
 begin
-  Result := sCallV('ORQPT DEFAULT LIST SOURCE', [nil]);
-  if Length(Result) > 0 then Result := Pieces(Result, U, 2, 3);
+  if CallVistA('ORQPT DEFAULT LIST SOURCE', [nil], Result) and
+    (Length(Result) > 0) then
+    Result := Pieces(Result, U, 2, 3);
 end;
 
 function DfltPtListSrc: Char;
+var
+  x: String;
 begin
-  Result := CharAt(sCallV('ORWPT DFLTSRC', [nil]), 1);
+  CallVistA('ORWPT DFLTSRC', [nil], x);
+  Result := CharAt(x, 1);
 end;
 
 function DefltPtListSrc: string;
-{ returns the default pastient list source as string}
+{ returns the default pastient list source as string }
 // TDP - ADDED 5/28/2014 to handle new possible "E" default list source
 begin
-  Result := sCallV('ORWPT DFLTSRC', [nil]);
+  CallVistA('ORWPT DFLTSRC', [nil], Result);
 end;
 
 procedure SavePtListDflt(const x: string);
 begin
-  CallV('ORWPT SAVDFLT', [x]);
+  CallVistA('ORWPT SAVDFLT', [x]);
 end;
 
 procedure ListSpecialtyAll(Dest: TStrings);
 { lists all treating specialties: IEN^Treating Specialty Name }
 begin
-  CallV('ORQPT SPECIALTIES', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQPT SPECIALTIES', [nil], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure ListTeamAll(Dest: TStrings);
 { lists all patient care teams: IEN^Team Name }
 begin
-  CallV('ORQPT TEAMS', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQPT TEAMS', [nil], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure ListPcmmAll(Dest: TStrings);
 { lists all patient care teams: IEN^Team Name }
 // TDP - Added 5/27/2014 as part of PCMMR mods
 begin
-  CallV('ORQPT PTEAMPR', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQPT PTEAMPR', [nil], Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure ListWardAll(Dest: TStrings);
 { lists all active inpatient wards: IEN^Ward Name }
 begin
-  CallV('ORQPT WARDS', [nil]);
-  //MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQPT WARDS', [nil], Dest);
 end;
 
 procedure ListProviderTop(Dest: TStrings);
@@ -754,128 +762,42 @@ procedure ListProviderTop(Dest: TStrings);
 begin
 end;
 
-function setSubSetOfProviders(aDest: TStrings; const StartFrom: string;
-  Direction: Integer): Integer;
-{ returns a pointer to a list of providers (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
+function setSubSetOfProviders(aComponent: TORComboBox; aDest: TStrings;
+  const StartFrom: string; Direction: Integer): Integer;
 begin
-  CallVistA('ORWU NEWPERS', [StartFrom, Direction, 'PROVIDER'], aDest);
+  SNCallVistA(aComponent, SN_ORWU_NEWPERS, [StartFrom, Direction, 'PROVIDER'], aDest);
   Result := aDest.Count;
 end;
 
-function SubSetOfProviders(const StartFrom: string; Direction: Integer): TStrings;
-{ returns a pointer to a list of providers (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
+function setSubSetOfCosigners(AORComboBox: TORComboBox; aDest: TStrings;
+  const StartFrom: string; Direction: Integer; Date: TFMDateTime;
+  ATitle: Integer; ADocType: Integer): Integer;
 begin
-  CallV('ORWU NEWPERS', [StartFrom, Direction, 'PROVIDER']);
-//  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+  if ATitle > 0 then
+    ADocType := 0;
+  SNCallVistA(AORComboBox, SN_ORWU2_COSIGNER, [StartFrom, Direction, Date,
+    ADocType, ATitle], aDest);
+  Result := aDest.Count;
 end;
 
-function SubSetOfCosigners(const StartFrom: string; Direction: Integer; Date: TFMDateTime;
-  ATitle: integer; ADocType: integer): TStrings;
-var
-  VistaParams: TArray<string>;
+function setSubSetOfUsersWithClass(AORComboBox: TORComboBox; aDest: TStrings;
+  const StartFrom: string; Direction: Integer; DateTime: string): Integer;
 begin
-  Result := SubSetOfCosigners(StartFrom, Direction, Date, ATitle, ADocType, VistaParams);
+  SNCallVistA(AORComboBox, SN_ORWU_NEWPERS, [StartFrom, Direction, '', DateTime], aDest);
+  Result := aDest.Count;
 end;
 
-function SubSetOfCosigners(const StartFrom: string; Direction: Integer; Date: TFMDateTime;
-  ATitle: integer; ADocType: integer; out VistaParams: TArray<string>): TStrings;
-{ returns a pointer to a list of cosigners (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
+function setSubSetOfActiveAndInactivePersons(AORComboBox: TORComboBox;
+  var aDest: TStrings; const StartFrom: string; Direction: Integer): Integer;
 begin
-  if ATitle > 0 then ADocType := 0;
-  // CQ #17218 - Correcting order of parameters for this call - jcs
-  //CallV('ORWU2 COSIGNER', [StartFrom, Direction, Date, ATitle, ADocType]);
-  CallV('ORWU2 COSIGNER', [StartFrom, Direction, Date, ADocType, ATitle]);
-  //  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
-
-  SetLength(VistaParams, 6);
-  VistaParams[0] := 'ORWU2 COSIGNER';
-  VistaParams[1] := StartFrom;
-  VistaParams[2] := IntToStr(Direction);
-  VistaParams[3] := FloatToStr(Date);
-  VistaParams[4] := IntToStr(ADocType);
-  VistaParams[5] := IntToStr(ATitle);
-end;
-
-function SubSetOfProvWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings;
-{ returns a pointer to a list of providers (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
-begin
-  CallV('ORWU NEWPERS', [StartFrom, Direction, 'PROVIDER', DateTime]);
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
-end;
-
-function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer;
-  DateTime: string; out VistaParams: TArray<string>): TStrings;
-{ returns a pointer to a list of users (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
-begin
-  CallV('ORWU NEWPERS', [StartFrom, Direction, '', DateTime]);
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
-  SetLength(VistaParams, 5);
-  VistaParams[0] := 'ORWU NEWPERS';
-  VistaParams[1] := StartFrom;
-  VistaParams[2] := IntToStr(Direction);
-  VistaParams[3] := '';
-  VistaParams[4] := DateTime;
-end;
-
-function SubSetOfUsersWithClass(const StartFrom: string; Direction: Integer; DateTime: string): TStrings;
-var
-  VistaParams: TArray<string>;
-begin
-  Result := SubSetOfUsersWithClass(StartFrom, Direction, DateTime, VistaParams);
-end;
-
-function SubSetOfActiveAndInactivePersons(const StartFrom: string; Direction: Integer): TStrings;
-{ returns a pointer to a list of users (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call!}
-begin
-  CallV('ORWU NEWPERS', [StartFrom, Direction, '', '', '', True]);  //TRUE = return all active and inactive users
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
-end;
-
-function SubSetOfActiveAndInactivePersonsWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
-{ returns a pointer to a list of users holding key aKey and names similar to the one
-  with provided DUZ }
-begin
-  Result := TStringList.Create;
-  CallVistA('ORWU NEWPERS', [aDUZ, 1, '', DateTime, '', '', '', True], Result); // RDD: fixed for 7th param = null
-  // TRUE - to indicate this is NSR 20110606
-end;
-
-function setSubSetOfProvidersWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
-{ returns a pointer to a list of users holding key aKey and names similar to the one
-  with provided DUZ }
-begin
-  Result := TStringList.Create;
-  CallVistA('ORWU NEWPERS', [aDUZ, 1, 'PROVIDER', DateTime, '', '', '', True], Result); // RDD: fixed for 7th param = null
-end;
-
-function setSubSetOfPDMPAuthorizedUsersWithSimilarNames(aDUZ: Int64; DateTime: string = ''): TStrings;
-begin
-  Result := TStringList.Create;
-  CallVistA('ORWU NEWPERS', [aDUZ, 1, 'PROVIDER', DateTime, '', '', '1', True], Result);
-end;
-
-function SubsetOfCosignersWithSimilarNames(aDUZ: Int64; CSPDate: TFMDateTime;
-  TITLEIEN: Integer): TStrings;
-{ returns a pointer to a list of users that can sign document with TITLEIEN and names similar to the one
-  with provided DUZ }
-begin
-  Result := TStringList.Create;
-  CallVistA('ORWU2 COSIGNER', [aDUZ, 1, CSPDate, 0, TITLEIEN, True], Result);
+  SNCallVistA(AORComboBox, SN_ORWU_NEWPERS, [StartFrom, Direction, '', '', '', True], aDest);
+  // TRUE = return all active and inactive users
+  MixedCaseList(aDest);
+  Result := aDest.Count;
 end;
 
 //function SubsetOfPatientsWithSimilarSSNs(aDFN: Int64): TStrings;
-function SubsetOfPatientsWithSimilarSSNs(aDest: TStrings;aDFN: Int64): Integer;
+function SubsetOfPatientsWithSimilarSSNs(aDest: TStrings;aDFN: String): Integer;
 { returns a pointer to a list of patients that has similar SSNs }
 begin
   CallVistA('DG CHK BS5 XREF ARRAY', [aDFN], aDest);
@@ -885,15 +807,6 @@ end;
 procedure ListClinicTop(Dest: TStrings);
 { checks parameters for list of commonly selected clinics }
 begin
-end;
-
-function SubSetOfClinics(const StartFrom: string; Direction: Integer): TStrings;
-{ returns a pointer to a list of clinics (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
-begin
-  CallV('ORWU CLINLOC', [StartFrom, Direction]);
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
 end;
 
 function setSubSetOfClinics(aDest: TStrings; const StartFrom: string;
@@ -907,11 +820,12 @@ begin
 end;
 
 function GetDfltSort: string;
-{ Assigns uPtLstDfltSort to user's default patient list sort order (string character).}
+{ Assigns uPtLstDfltSort to user's default patient list sort order (string character). }
 begin
-  uPtListDfltSort := sCallV('ORQPT DEFAULT LIST SORT', [nil]);
-  if uPtListDfltSort = '' then uPtListDfltSort := 'A'; // Default is always "A" for alpha.
-  result := uPtListDfltSort;
+  CallVistA('ORQPT DEFAULT LIST SORT', [nil], uPtListDfltSort);
+  if uPtListDfltSort = '' then
+    uPtListDfltSort := 'A'; // Default is always "A" for alpha.
+  Result := uPtListDfltSort;
 end;
 
 procedure ResetDfltSort;
@@ -929,11 +843,12 @@ begin
   Sort := GetDfltSort();
   tmplst := TORStringList.Create;
   try
-    tCallV(tmplst, 'ORQPT DEFAULT PATIENT LIST', [nil]);
-    Source := sCallV('ORWPT DFLTSRC', [nil]);
-    if Source = 'C' then                    // Clinics.
+    CallVistA('ORQPT DEFAULT PATIENT LIST', [nil], tmplst);
+    // Source := sCallV('ORWPT DFLTSRC', [nil]);
+    CallVistA('ORWPT DFLTSRC', [nil], Source);
+    if Source = 'C' then // Clinics.
     begin
-      if Sort = 'P' then                    // "Appointments" sort.
+      if Sort = 'P' then // "Appointments" sort.
         SortByPiece(tmplst, U, 4)
       else
         SortByPiece(tmplst, U, 2);
@@ -950,17 +865,29 @@ begin
     end
     else
     begin
-      SourceType := 0;                      // Default.
-      if Source = 'M' then SourceType := 1; // Combinations.
-      if Source = 'W' then SourceType := 2; // Wards.
+      SourceType := 0; // Default.
+      if Source = 'M' then
+        SourceType := 1; // Combinations.
+      if Source = 'W' then
+        SourceType := 2; // Wards.
       case SourceType of
-        1 : if Sort = 'S' then tmplst.SortByPieces([3, 8, 2]) // "Source" sort.
-            else if Sort = 'P' then tmplst.SortByPieces([8, 2]) // "Appointment" sort.
-                 else if Sort = 'T' then SortByPiece(tmplst, U, 5) // "Terminal Digit" sort.
-                      else SortByPiece(tmplst, U, 2); // "Alphabetical" (also the default) sort.
-        2 : if Sort = 'R' then tmplst.SortByPieces([3, 2])
-            else SortByPiece(tmplst, U, 2);
-      else SortByPiece(tmplst, U, 2);
+        1:
+          if Sort = 'S' then
+            tmplst.SortByPieces([3, 8, 2]) // "Source" sort.
+          else if Sort = 'P' then
+            tmplst.SortByPieces([8, 2]) // "Appointment" sort.
+          else if Sort = 'T' then
+            SortByPiece(tmplst, U, 5) // "Terminal Digit" sort.
+          else
+            SortByPiece(tmplst, U, 2);
+        // "Alphabetical" (also the default) sort.
+        2:
+          if Sort = 'R' then
+            tmplst.SortByPieces([3, 2])
+          else
+            SortByPiece(tmplst, U, 2);
+      else
+        SortByPiece(tmplst, U, 2);
       end;
     end;
     MixedCaseList(tmplst);
@@ -973,66 +900,67 @@ end;
 procedure ListPtByProvider(Dest: TStrings; ProviderIEN: Int64);
 { lists all patients associated with a given provider: DFN^Patient Name }
 begin
-  CallV('ORQPT PROVIDER PATIENTS', [ProviderIEN]);
-  SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQPT PROVIDER PATIENTS', [ProviderIEN], Dest);
+  SortByPiece(Dest, U, 2);
+  MixedCaseList(Dest);
 end;
 
 procedure ListPtByTeam(Dest: TStrings; TeamIEN: Integer);
 { lists all patients associated with a given team: DFN^Patient Name }
 begin
-  CallV('ORQPT TEAM PATIENTS', [TeamIEN]);
-  SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQPT TEAM PATIENTS', [TeamIEN], Dest);
+  SortByPiece(Dest, U, 2);
+  MixedCaseList(Dest);
 end;
 
 procedure ListPtByPcmmTeam(Dest: TStrings; TeamIEN: Integer);
 { lists all patients associated with a given PCMM team: DFN^Patient Name }
 // TDP - Added 5/23/2014
 begin
-  CallV('ORQPT PTEAM PATIENTS', [TeamIEN]);
-  SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQPT PTEAM PATIENTS', [TeamIEN], Dest);
+  SortByPiece(Dest, U, 2);
+  MixedCaseList(Dest);
 end;
 
 procedure ListPtBySpecialty(Dest: TStrings; SpecialtyIEN: Integer);
 { lists all patients associated with a given specialty: DFN^Patient Name }
 begin
-  CallV('ORQPT SPECIALTY PATIENTS', [SpecialtyIEN]);
-  SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQPT SPECIALTY PATIENTS', [SpecialtyIEN], Dest);
+  SortByPiece(Dest, U, 2);
+  MixedCaseList(Dest);
 end;
 
-procedure ListPtByClinic(Dest: TStrings; ClinicIEN: Integer; FirstDt, LastDt: string); //TFMDateTime);
+procedure ListPtByClinic(Dest: TStrings; ClinicIEN: Integer;
+  FirstDt, LastDt: string); // TFMDateTime);
 { lists all patients associated with a given clinic: DFN^Patient Name^App't }
 var
   i: Integer;
   x, ATime, APlace, Sort: string;
+  slAppts: TStringList;
 begin
   Sort := GetDfltSort();
-  CallV('ORQPT CLINIC PATIENTS', [ClinicIEN, FirstDt, LastDt]);
-  with RPCBrokerV do
-  begin
+  CallVistA('ORQPT CLINIC PATIENTS', [ClinicIEN, FirstDt, LastDt], Dest);
+  slAppts := TStringList.Create;
+  try
+    slAppts.Assign(Dest);
     if Sort = 'P' then
-      SortByPiece(TStringList(Results), U, 4)
+      SortByPiece(slAppts, U, 4)
     else
-      SortByPiece(TStringList(Results), U, 2);
-    for i := 0 to Results.Count - 1 do
+      SortByPiece(slAppts, U, 2);
+    for i := 0 to slAppts.Count - 1 do
     begin
-      x := Results[i];
+      x := slAppts[i];
       ATime := Piece(x, U, 4);
       APlace := Piece(x, U, 3);
       ATime := FormatFMDateTime('hh:nn  mmm dd, yyyy', MakeFMDateTime(ATime));
       SetPiece(x, U, 3, ATime);
       x := x + U + APlace;
-      Results[i] := x;
+      slAppts[i] := x;
     end;
-    MixedCaseList(Results);
-    FastAssign(Results, Dest);
+    MixedCaseList(slAppts);
+    Dest.Assign(slAppts);
+  finally
+    slAppts.Free;
   end;
 end;
 
@@ -1040,15 +968,22 @@ procedure ListPtByWard(Dest: TStrings; WardIEN: Integer);
 { lists all patients associated with a given ward: DFN^Patient Name^Room/Bed }
 var
   Sort: string;
+  i: Integer;
 begin
   Sort := GetDfltSort();
-  CallV('ORWPT BYWARD', [WardIEN]);
+  CallVistA('ORWPT BYWARD', [WardIEN], Dest);
+  // if Sort = 'R' then
+  // SortByPiece(TStringList(RPCBrokerV.Results), U, 3)
+  // else
+  // SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
   if Sort = 'R' then
-    SortByPiece(TStringList(RPCBrokerV.Results), U, 3)
+    i := 3
   else
-    SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+    i := 2;
+  // SortByPiece(TStringList(Dest), U, i);
+  SortByPiece(Dest, U, i);
+
+  MixedCaseList(Dest);
 end;
 
 procedure ListPtByLast5(Dest: TStrings; const Last5: string);
@@ -1056,21 +991,23 @@ var
   i: Integer;
   x, ADate, AnSSN: string;
 begin
-{ Lists all patients found in the BS and BS5 xrefs that match Last5: DFN^Patient Name }
-  CallV('ORWPT LAST5', [UpperCase(Last5)]);
-  SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
-  with RPCBrokerV do for i := 0 to Results.Count - 1 do
+  { Lists all patients found in the BS and BS5 xrefs that match Last5: DFN^Patient Name }
+  CallVistA('ORWPT LAST5', [UpperCase(Last5)], Dest);
+  // SortByPiece(TStringList({RPCBrokerV.Results}Dest), U, 2);
+  SortByPiece(Dest, U, 2);
+  for i := 0 to Dest.Count - 1 do
   begin
-    x := Results[i];
+    x := Dest[i];
     ADate := Piece(x, U, 3);
     AnSSN := Piece(x, U, 4);
-    if IsFMDate(ADate) then ADate := FormatFMDateTimeStr('mmm d, yyyy', ADate);
-    if IsSSN(AnSSN)    then AnSSN := FormatSSN(AnSSN);
+    if IsFMDate(ADate) then
+      ADate := FormatFMDateTimeStr('mmm d, yyyy', ADate);
+    if IsSSN(AnSSN) then
+      AnSSN := FormatSSN(AnSSN);
     SetPiece(x, U, 3, AnSSN + '   ' + ADate);
-    Results[i] := x;
+    Dest[i] := x;
   end;
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure ListPtByRPLLast5(Dest: TStrings; const Last5: string);
@@ -1078,87 +1015,94 @@ var
   i: Integer;
   x, ADate, AnSSN: string;
 begin
-{ Lists patients from RPL list that match Last5: DFN^Patient Name }
-  CallV('ORWPT LAST5 RPL', [UpperCase(Last5)]);
-  SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
-  with RPCBrokerV do for i := 0 to Results.Count - 1 do
+  { Lists patients from RPL list that match Last5: DFN^Patient Name }
+  CallVistA('ORWPT LAST5 RPL', [UpperCase(Last5)], Dest);
+  // SortByPiece(TStringList({RPCBrokerV.Results}Dest), U, 2);
+  SortByPiece(Dest, U, 2);
+  for i := 0 to Dest.Count - 1 do
   begin
-    x := Results[i];
+    x := Dest[i];
     ADate := Piece(x, U, 3);
     AnSSN := Piece(x, U, 4);
-    if IsFMDate(ADate) then ADate := FormatFMDateTimeStr('mmm d, yyyy', ADate);
-    if IsSSN(AnSSN)    then AnSSN := FormatSSN(AnSSN);
+    if IsFMDate(ADate) then
+      ADate := FormatFMDateTimeStr('mmm d, yyyy', ADate);
+    if IsSSN(AnSSN) then
+      AnSSN := FormatSSN(AnSSN);
     SetPiece(x, U, 3, AnSSN + '   ' + ADate);
-    Results[i] := x;
+    Dest[i] := x;
   end;
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure ListPtByFullSSN(Dest: TStrings; const FullSSN: string);
 { lists all patients found in the SSN xref that match FullSSN: DFN^Patient Name }
 var
-  i: integer;
+  i: Integer;
   x, ADate, AnSSN: string;
 begin
   x := FullSSN;
   i := Pos('-', x);
   while i > 0 do
   begin
-    x := Copy(x, 1, i-1) + Copy(x, i+1, 12);
+    x := Copy(x, 1, i - 1) + Copy(x, i + 1, 12);
     i := Pos('-', x);
   end;
-  CallV('ORWPT FULLSSN', [UpperCase(x)]);
-  SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
-  with RPCBrokerV do for i := 0 to Results.Count - 1 do
+  CallVistA('ORWPT FULLSSN', [UpperCase(x)], Dest);
+  // SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
+  // SortByPiece(TStringList(Dest), U, 2);
+  SortByPiece(Dest, U, 2);
+  { with RPCBrokerV do } for i := 0 to { Results } Dest.Count - 1 do
   begin
-    x := Results[i];
+    x := Dest[i];
     ADate := Piece(x, U, 3);
     AnSSN := Piece(x, U, 4);
-    if IsFMDate(ADate) then ADate := FormatFMDateTimeStr('mmm d, yyyy', ADate);
-    if IsSSN(AnSSN)    then AnSSN := FormatSSN(AnSSN);
+    if IsFMDate(ADate) then
+      ADate := FormatFMDateTimeStr('mmm d, yyyy', ADate);
+    if IsSSN(AnSSN) then
+      AnSSN := FormatSSN(AnSSN);
     SetPiece(x, U, 3, AnSSN + '   ' + ADate);
-    Results[i] := x;
+    Dest[i] := x;
   end;
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure ListPtByRPLFullSSN(Dest: TStrings; const FullSSN: string);
 { lists all patients found in the SSN xref that match FullSSN: DFN^Patient Name }
 var
-  i: integer;
+  i: Integer;
   x, ADate, AnSSN: string;
 begin
   x := FullSSN;
   i := Pos('-', x);
   while i > 0 do
   begin
-    x := Copy(x, 1, i-1) + Copy(x, i+1, 12);
+    x := Copy(x, 1, i - 1) + Copy(x, i + 1, 12);
     i := Pos('-', x);
   end;
-  CallV('ORWPT FULLSSN RPL', [UpperCase(x)]);
-  SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
-  with RPCBrokerV do for i := 0 to Results.Count - 1 do
+  CallVistA('ORWPT FULLSSN RPL', [UpperCase(x)], Dest);
+  // SortByPiece(TStringList(RPCBrokerV.Results), U, 2);
+  // SortByPiece(TStringList(Dest), U, 2);
+  SortByPiece(Dest, U, 2);
+  for i := 0 to Dest.Count - 1 do
   begin
-    x := Results[i];
+    x := Dest[i];
     ADate := Piece(x, U, 3);
     AnSSN := Piece(x, U, 4);
-    if IsFMDate(ADate) then ADate := FormatFMDateTimeStr('mmm d, yyyy', ADate);
-    if IsSSN(AnSSN)    then AnSSN := FormatSSN(AnSSN);
+    if IsFMDate(ADate) then
+      ADate := FormatFMDateTimeStr('mmm d, yyyy', ADate);
+    if IsSSN(AnSSN) then
+      AnSSN := FormatSSN(AnSSN);
     SetPiece(x, U, 3, AnSSN + '   ' + ADate);
-    Results[i] := x;
+    Dest[i] := x;
   end;
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  MixedCaseList(Dest);
 end;
 
 procedure ListPtTop(Dest: TStrings);
 { currently returns the last patient selected }
 begin
-  CallV('ORWPT TOP', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWPT TOP', [nil], Dest);
+  MixedCaseList(Dest);
 end;
 
 function setSubSetOfPatients(aDest: TStrings; const StartFrom: string;
@@ -1171,33 +1115,26 @@ begin
   Result := aDest.Count;
 end;
 
-function SubSetOfPatients(const StartFrom: string; Direction: Integer): TStrings;
-{ returns a pointer to a list of patients (for use in a long list box) -  The return value is
-  a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
-begin
-  CallV('ORWPT LIST ALL', [StartFrom, Direction]);
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
-end;
-
 function MakeRPLPtList(RPLList: string): string;
 { Creates "RPL" Restricted Patient List based on Team List info in user's record. }
 begin
-  result := sCallV('ORQPT MAKE RPL', [RPLList]);
+  // RTC 272867 result := sCallV('ORQPT MAKE RPL', [RPLList]);
+  CallVistA('ORQPT MAKE RPL', [RPLList], Result);
 end;
 
-function ReadRPLPtList(RPLJobNumber: string; const StartFrom: string; Direction: Integer) : TStrings;
+function setRPLPtList(aDest: TStrings; RPLJobNumber: string;
+  const StartFrom: string; Direction: Integer): Integer;
 { returns a pointer to a list of patients (for use in a long list box) -  The return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
 begin
-  CallV('ORQPT READ RPL', [RPLJobNumber, StartFrom, Direction]);
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQPT READ RPL', [RPLJobNumber, StartFrom, Direction], aDest);
+  MixedCaseList(aDest);
+  Result := aDest.Count;
 end;
 
 procedure KillRPLPtList(RPLJobNumber: string);
 begin
-  CallV('ORQPT KILL RPL', [RPLJobNumber]);
+  CallVistA('ORQPT KILL RPL', [RPLJobNumber]);
 end;
 
 { Patient Specific Calls }
@@ -1211,57 +1148,76 @@ begin
     Result := Trunc(FMToday - BirthDate) div 10000
 end;
 
-procedure CheckSensitiveRecordAccess(const DFN: string; var AccessStatus: Integer;
-  var MessageText: string);
+procedure CheckSensitiveRecordAccess(const DFN: string;
+  var AccessStatus: Integer; var MessageText: string);
+var
+  Results: TStrings;
 begin
-  CallV('DG SENSITIVE RECORD ACCESS', [DFN]);
-  AccessStatus := -1;
-  MessageText := '';
-  with RPCBrokerV do
-  begin
-    if Results.Count > 0 then
+  Results := TStringList.Create;
+  try
+    CallVistA('DG SENSITIVE RECORD ACCESS', [DFN], Results);
+    AccessStatus := -1;
+    MessageText := '';
+    // RTC 272867    with RPCBrokerV do
     begin
-      AccessStatus := StrToIntDef(Results[0], -1);
-      Results.Delete(0);
-      if Results.Count > 0 then MessageText := Results.Text;
+      if Results.Count > 0 then
+      begin
+        AccessStatus := StrToIntDef(Results[0], -1);
+        Results.Delete(0);
+        if Results.Count > 0 then
+          MessageText := Results.Text;
+      end;
     end;
+  finally
+    Results.Free;
   end;
 end;
 
-procedure CheckRemotePatient(var Dest: string; Patient, ASite: string; var AccessStatus: Integer);
-
+procedure CheckRemotePatient(var Dest: string; Patient, ASite: string;
+  var AccessStatus: Integer);
+var
+  Results: TStrings;
 begin
-  CallV('XWB DIRECT RPC', [ASite, 'ORWCIRN RESTRICT', 0, Patient]);
-  AccessStatus := -1;
-  Dest := '';
-  with RPCBrokerV do
-  begin
-    if Results.Count > 0 then
+  Results := TStringList.Create;
+  try
+    CallVistA('XWB DIRECT RPC', [ASite, 'ORWCIRN RESTRICT', 0,
+      Patient], Results);
+    AccessStatus := -1;
+    Dest := '';
+    begin
+      if Results.Count > 0 then
       begin
-        if Results[0] = '' then Results.Delete(0);
+        if Results[0] = '' then
+          Results.Delete(0);
       end;
-    if Results.Count > 0 then
+      if Results.Count > 0 then
       begin
-        if (length(piece(Results[0],'^',2)) > 0) and ((StrToIntDef(piece(Results[0],'^',1),0) = -1)) then
-          begin
-            AccessStatus := -1;
-            Dest := piece(Results[0],'^',2);
-          end
+        if (Length(Piece(Results[0], '^', 2)) > 0) and
+          ((StrToIntDef(Piece(Results[0], '^', 1), 0) = -1)) then
+        begin
+          AccessStatus := -1;
+          Dest := Piece(Results[0], '^', 2);
+        end
         else
-          begin
-            AccessStatus := StrToIntDef(Results[0], -1);
-            Results.Delete(0);
-            if Results.Count > 0 then Dest := Results.Text;
-          end;
+        begin
+          AccessStatus := StrToIntDef(Results[0], -1);
+          Results.Delete(0);
+          if Results.Count > 0 then
+            Dest := Results.Text;
+        end;
       end;
+    end;
+  finally
+    Results.Free;
   end;
 end;
 
-procedure CurrentLocationForPatient(const DFN: string; var ALocation: Integer; var AName: string; var ASvc: string);
+procedure CurrentLocationForPatient(const DFN: string; var ALocation: Integer;
+  var AName: string; var ASvc: string);
 var
   x: string;
 begin
-  x := sCallV('ORWPT INPLOC', [DFN]);
+  CallVistA('ORWPT INPLOC', [DFN], x);
   ALocation := StrToIntDef(Piece(x, U, 1), 0);
   AName := Piece(x, U, 2);
   ASvc := Piece(x, U, 3);
@@ -1269,89 +1225,126 @@ end;
 
 function DateOfDeath(const DFN: string): TFMDateTime;
 { returns 0 or the date a patient died }
+var
+  x: String;
 begin
-  Result := MakeFMDateTime(sCallV('ORWPT DIEDON', [DFN]));
+  CallVistA('ORWPT DIEDON', [DFN], x);
+  Result := MakeFMDateTime(x);
 end;
 
-function GetPtIDInfo(const DFN: string): TPtIDInfo;  //*DFN*
+function GetPtIDInfo(const DFN: string): TPtIDInfo; // *DFN*
 { returns the identifiers displayed upon patient selection
   Pieces: SSN[1]^DOB[2]^SEX[3]^VET[4]^SC%[5]^WARD[6]^RM-BED[7]^NAME[8] }
 var
   x: string;
 begin
-  x := sCallV('ORWPT ID INFO', [DFN]);
-  with Result do                                    // map string into TPtIDInfo record
+  CallVistA('ORWPT ID INFO', [DFN], x);
+  with Result do // map string into TPtIDInfo record
   begin
-    Name := MixedCase(Piece(x, U, 8));                                  // Name
-    SSN  := Piece(x, U, 1);
-    DOB  := Piece(x, U, 2);
-    Age  := '';
-    if IsSSN(SSN)    then SSN := FormatSSN(Piece(x, U, 1));                // SSN (PID)
-    if IsFMDate(DOB) then DOB := FormatFMDateTimeStr('mmm dd,yyyy', DOB);  // Date of Birth
-    //Age := IntToStr(CalcAge(MakeFMDateTime(Piece(x, U, 2))));            // Age
-    Sex := Piece(x, U, 3);                                                 // Sex
-    if Length(Sex) = 0 then Sex := 'U';
+    Name := MixedCase(Piece(x, U, 8)); // Name
+    SSN := Piece(x, U, 1);
+    DOB := Piece(x, U, 2);
+    Age := '';
+    if IsSSN(SSN) then
+      SSN := FormatSSN(Piece(x, U, 1)); // SSN (PID)
+    if IsFMDate(DOB) then
+      DOB := FormatFMDateTimeStr('mmm dd,yyyy', DOB); // Date of Birth
+    // Age := IntToStr(CalcAge(MakeFMDateTime(Piece(x, U, 2))));            // Age
+    Sex := Piece(x, U, 3); // Sex
+    if Length(Sex) = 0 then
+      Sex := 'U';
     case Sex[1] of
-    'F','f': Sex := 'Female';
-    'M','m': Sex := 'Male';
-    else     Sex := 'Unknown';
+      'F', 'f':
+        Sex := 'Female';
+      'M', 'm':
+        Sex := 'Male';
+    else
+      Sex := 'Unknown';
     end;
-    if Piece(x, U, 4) = 'Y' then Vet := 'Veteran' else Vet := '';       // Veteran?
-    if Length(Piece(x, U, 5)) > 0                                       // % Service Connected
-      then SCSts := Piece(x, U, 5) + '% Service Connected'
-      else SCSts := '';
-    Location := Piece(x, U, 6);                                         // Inpatient Location
-    RoomBed  := Piece(x, U, 7);                                         // Inpatient Room-Bed
+    if Piece(x, U, 4) = 'Y' then
+      Vet := 'Veteran'
+    else
+      Vet := ''; // Veteran?
+    if Length(Piece(x, U, 5)) > 0 // % Service Connected
+    then
+      SCSts := Piece(x, U, 5) + '% Service Connected'
+    else
+      SCSts := '';
+    Location := Piece(x, U, 6); // Inpatient Location
+    RoomBed := Piece(x, U, 7); // Inpatient Room-Bed
   end;
 end;
 
 function HasLegacyData(const DFN: string; var AMsg: string): Boolean;
 var
+  sl: TStrings;
   i: Integer;
 begin
   Result := False;
   AMsg := '';
-  CallV('ORWPT LEGACY', [DFN]);
-  with RPCBrokerV do if Results.Count > 0 then
+  if DFN <> '' then // RTC Defect 596428
   begin
-    Result := Results[0] = '1';
-    for i := 1 to Results.Count - 1 do AMsg := AMsg + Results[i] + CRLF;
+    sl := TStringList.Create;
+    try
+      CallVistA('ORWPT LEGACY', [DFN], sl);
+      if sl.Count > 0 then
+      begin
+        Result := sl[0] = '1';
+        for i := 1 to sl.Count - 1 do
+          AMsg := AMsg + sl[i] + CRLF;
+      end;
+    finally
+      sl.Free;
+    end;
   end;
 end;
 
 function LogSensitiveRecordAccess(const DFN: string): Boolean;
+var
+  x: String;
 begin
-  Result := sCallV('DG SENSITIVE RECORD BULLETIN', [DFN]) = '1';
+  Result := CallVistA('DG SENSITIVE RECORD BULLETIN', [DFN], x) and (x = '1');
 end;
 
 function MeansTestRequired(const DFN: string; var AMsg: string): Boolean;
 var
   i: Integer;
+  sl: TStrings;
 begin
   Result := False;
   AMsg := '';
-  CallV('DG CHK PAT/DIV MEANS TEST', [DFN]);
-  with RPCBrokerV do if Results.Count > 0 then
-  begin
-    Result := Results[0] = '1';
-    for i := 1 to Results.Count - 1 do AMsg := AMsg + Results[i] + CRLF;
+  sl := TStringList.Create;
+  try
+    CallVistA('DG CHK PAT/DIV MEANS TEST', [DFN], sl);
+    // with RPCBrokerV do if Results.Count > 0 then
+    if sl.Count > 0 then
+    begin
+      Result := sl[0] = '1';
+      for i := 1 to sl.Count - 1 do
+        AMsg := AMsg + sl[i] + CRLF;
+    end;
+  finally
+    sl.Free;
   end;
 end;
 
-function RestrictedPtRec(const DFN: string): Boolean;  //*DFN*
-{ returns true if the record for a patient identified by DFN is restricted }
+function RestrictedPtRec(const DFN: string): Boolean;
+var
+  x: String; // *DFN*
+  { returns true if the record for a patient identified by DFN is restricted }
 begin
-  Result := Piece(sCallV('ORWPT SELCHK', [DFN]), U, 1) = '1';
+  Result := CallVistA('ORWPT SELCHK', [DFN], x) and (Piece(x, U, 1) = '1');
 end;
 
-procedure SelectPatient(const DFN: string; var PtSelect: TPtSelect);   //*DFN*
+procedure SelectPatient(const DFN: string; var PtSelect: TPtSelect); // *DFN*
 { selects the patient (updates DISV, calls Pt Select actions) & returns key fields
   Pieces: NAME[1]^SEX[2]^DOB[3]^SSN[4]^LOCIEN[5]^LOCNAME[6]^ROOMBED[7]^CWAD[8]^SENSITIVE[9]^
-          ADMITTIME[10]^CONVERTED[11]^SVCONN[12]^SC%[13]^ICN[14]^Age[15]^TreatSpec[16] }
+  ADMITTIME[10]^CONVERTED[11]^SVCONN[12]^SC%[13]^ICN[14]^Age[15]^TreatSpec[16] }
 var
   x: string;
 begin
-  CallVista('ORWPT SELECT', [DFN], x);
+  CallVistA('ORWPT SELECT', [DFN], x);
+  uAllergyCacheCreated := False;
   with PtSelect do
   begin
     Name := Piece(x, U, 1);
@@ -1359,8 +1352,11 @@ begin
     SSN := FormatSSN(Piece(x, U, 4));
     DOB := MakeFMDateTime(Piece(x, U, 3));
     Age := StrToIntDef(Piece(x, U, 15), 0);
-    //Age := CalcAge(DOB, DateOfDeath(DFN));
-    if Length(Piece(x, U, 2)) > 0 then Sex := Piece(x, U, 2)[1] else Sex := 'U';
+    // Age := CalcAge(DOB, DateOfDeath(DFN));
+    if Length(Piece(x, U, 2)) > 0 then
+      Sex := Piece(x, U, 2)[1]
+    else
+      Sex := 'U';
     LocationIEN := StrToIntDef(Piece(x, U, 5), 0);
     Location := Piece(x, U, 6);
     RoomBed := Piece(x, U, 7);
@@ -1375,17 +1371,17 @@ begin
   CallVistA('ORWPT1 PRCARE', [DFN], x);
   with PtSelect do
   begin
-    PrimaryTeam     := Piece(x, U, 1);
+    PrimaryTeam := Piece(x, U, 1);
     PrimaryProvider := Piece(x, U, 2);
     Associate := Piece(x, U, 4);
     MHTC := Piece(x, U, 5);
     if Length(Location) > 0 then
-      begin
-        Attending := Piece(x, U, 3);
-        InProvider := Piece(x, U, 6);
-        CallVistA('ORWPT INPLOC', [DFN], x);
-        WardService := Piece(x, U, 3);
-      end;
+    begin
+      Attending := Piece(x, U, 3);
+      InProvider := Piece(x, U, 6);
+      CallVistA('ORWPT INPLOC', [DFN], x);
+      WardService := Piece(x, U, 3);
+    end;
   end;
   with PtSelect do
   begin
@@ -1412,34 +1408,31 @@ begin
 end;
 
 function SimilarRecordsFound(const DFN: string; var AMsg: string): Boolean;
+var
+  sl: TStrings;
 begin
   Result := False;
   AMsg := '';
-  CallV('DG CHK BS5 XREF Y/N', [DFN]);
-  with RPCBrokerV do if Results.Count > 0 then
-  begin
-    Result := Results[0] = '1';
-    Results.Delete(0);
-    AMsg := Results.Text;
-  end;
-  (*
-  CallV('DG CHK BS5 XREF ARRAY', [DFN]);
-  with RPCBrokerV do if Results.Count > 0 then
-  begin
-    Result := Results[0] = '1';
-    for i := 1 to Results.Count - 1 do
+  // CallV('DG CHK BS5 XREF Y/N', [DFN]);
+  sl := TStringList.Create;
+  try
+    CallVistA('DG CHK BS5 XREF Y/N', [DFN], sl);
+    // with RPCBrokerV do if Results.Count > 0 then
+    if sl.Count > 0 then
     begin
-      if Piece(Results[i], U, 1) = '0' then AMsg := AMsg + Copy(Results[i], 3, Length(Results[i])) + CRLF;
-      if Piece(Results[i], U, 1) = '1' then AMsg := AMsg + Piece(Results[i], U, 3) + #9 +
-        FormatFMDateTimeStr('mmm dd,yyyy', Piece(Results[i], U, 4)) + #9 + Piece(Results[i], U, 5) + CRLF;
+      Result := sl[0] = '1';
+      sl.Delete(0);
+      AMsg := sl.Text;
     end;
+  finally
+    sl.Free;
   end;
-  *)
 end;
 
 function GetDFNFromICN(AnICN: string): string;
 begin
-  Result := Piece(sCallV('VAFCTFU CONVERT ICN TO DFN', [AnICN]), U, 1);
+  CallVistA('VAFCTFU CONVERT ICN TO DFN', [AnICN], Result);
+  Result := Piece(Result, U, 1);
 end;
 
 function otherInformationPanel(const DFN: string): string;
@@ -1455,169 +1448,148 @@ begin
 end;
 { Encounter specific calls }
 
-function GetEncounterText(const DFN: string; Location: integer; Provider: Int64): TEncounterText;  //*DFN*
+function GetEncounterText(const DFN: string; Location: Integer; Provider: Int64)
+  : TEncounterText; // *DFN*
 { returns resolved external values  Pieces: LOCNAME[1]^PROVNAME[2]^ROOMBED[3] }
 var
   x: string;
 begin
-  x := sCallV('ORWPT ENCTITL', [DFN, Location, Provider]);
+  CallVistA('ORWPT ENCTITL', [DFN, Location, Provider], x);
   with Result do
   begin
     LocationName := Piece(x, U, 1);
     LocationAbbr := Piece(x, U, 2);
-    RoomBed      := Piece(x, U, 3);
+    RoomBed := Piece(x, U, 3);
     ProviderName := Piece(x, U, 4);
-//    ProviderName := sCallV('ORWU1 NAMECVT', [Provider]);
- end;
+    // ProviderName := sCallV('ORWU1 NAMECVT', [Provider]);
+  end;
 end;
 
-function  GetActiveICDVersion(ADate: TFMDateTime = 0): String;
+function GetActiveICDVersion(ADate: TFMDateTime = 0): String;
 begin
-  Result := sCallV('ORWPCE ICDVER', [ADate]);
+  CallVistA('ORWPCE ICDVER', [ADate], Result);
 end;
 
 function GetICD10ImplementationDate: TFMDateTime;
 var
   impDt: String;
 begin
-  impDt := sCallV('ORWPCE I10IMPDT', [nil]);
+  CallVistA('ORWPCE I10IMPDT', [nil], impDt);
   if impDt <> '' then
     Result := StrToFMDateTime(impDt)
   else
-    Result := 3141001;  //Default to 10/01/2014
+    Result := 3141001; // Default to 10/01/2014
 end;
 
 procedure ListApptAll(Dest: TStrings; const DFN: string; From: TFMDateTime = 0;
-                                                         Thru: TFMDateTime = 0);
+  Thru: TFMDateTime = 0);
 { lists appts/visits for a patient (uses same call as cover sheet)
   V|A;DateTime;LocIEN^DateTime^LocName^Status }
 const
   SKIP_ADMITS = 1;
 begin
-  CallV('ORWCV VST', [Patient.DFN, From, Thru, SKIP_ADMITS]);
-  with RPCBrokerV do
-  begin
-    InvertStringList(TStringList(Results));
-    MixedCaseList(Results);
-    SetListFMDateTime('mmm dd,yyyy hh:nn', TStringList(Results), U, 2);
-    FastAssign(Results, Dest);
-  end;
-  (*
-  CallV('ORWPT APPTLST', [DFN]);
-  with RPCBrokerV do
-  begin
-    SortByPiece(TStringList(Results), U, 1);
-    InvertStringList(TStringList(Results));
-    for i := 0 to Results.Count - 1 do
-    begin
-      x := Results[i];
-      ATime := Piece(x, U, 1);
-      ATime := FormatFMDateTime('mmm dd, yyyy hh:nn', MakeFMDateTime(ATime));
-      SetPiece(x, U, 5, ATime);
-      Results[i] := x;
-    end;
-    FastAssign(Results, Dest);
-  end;
-  *)
+  CallVistA('ORWCV VST', [Patient.DFN, From, Thru, SKIP_ADMITS], Dest);
+  InvertStringList(Dest);
+  MixedCaseList(Dest);
+  // SetListFMDateTime('mmm dd,yyyy hh:nn', TStringList(Dest), U, 2);
+  SetListFMDateTime('mmm dd,yyyy hh:nn', Dest, U, 2);
 end;
 
-procedure ListAdmitAll(Dest: TStrings; const DFN: string);  //*DFN*
+procedure ListAdmitAll(Dest: TStrings; const DFN: string); // *DFN*
 { lists all admissions for a patient: MovementTime^LocIEN^LocName^Type }
 var
   i: Integer;
   ATime, x: string;
 begin
-  CallV('ORWPT ADMITLST', [DFN]);
-  with RPCBrokerV do
+  CallVistA('ORWPT ADMITLST', [DFN], Dest);
   begin
-    for i := 0 to Results.Count - 1 do
+    for i := 0 to Dest.Count - 1 do
     begin
-      x := Results[i];
+      x := Dest[i];
       ATime := Piece(x, U, 1);
       ATime := FormatFMDateTime('mmm dd, yyyy hh:nn', MakeFMDateTime(ATime));
       SetPiece(x, U, 5, ATime);
-      Results[i] := x;
+      Dest[i] := x;
     end;
-    FastAssign(Results, Dest);
   end;
 end;
 
-function SubSetOfLocations(const StartFrom: string; Direction: Integer): TStrings;
+function setSubSetOfLocations(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
 { returns a pointer to a list of locations (for use in a long list box) -  The return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
 begin
-  CallV('ORWU HOSPLOC', [StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWU HOSPLOC', [StartFrom, Direction], aDest);
+  Result := aDest.Count;
 end;
 
-function SubSetOfNewLocs(const StartFrom: string; Direction: Integer): TStrings;
+function setSubSetOfNewLocs(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
 { Returns a pointer to a list of locations (for use in a long list box) -  the return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call!
-  Filtered by C, W, and Z types - i.e., Clinics, Wards, and "Other" type locations.}
+  Filtered by C, W, and Z types - i.e., Clinics, Wards, and "Other" type locations. }
 begin
-  CallV('ORWU1 NEWLOC', [StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWU1 NEWLOC', [StartFrom, Direction], aDest);
+  Result := aDest.Count;
 end;
 
-function SubSetOfInpatientLocations(const StartFrom: string; Direction: Integer): TStrings;
+function setSubSetOfInpatientLocations(aDest: TStrings; const StartFrom: string;
+  Direction: Integer): Integer;
 { returns a pointer to a list of locations (for use in a long list box) -  The return value is
   a pointer to RPCBrokerV.Results, so the data must be used BEFORE the next broker call! }
 begin
-  CallV('ORWU INPLOC', [StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWU INPLOC', [StartFrom, Direction], aDest);
+  Result := aDest.Count;
 end;
 
 { Remote Data Access calls }
 
 function HasRemoteData(const DFN: string; var ALocations: TStringList): Boolean;
 begin
-  CallV('ORWCIRN FACLIST', [DFN]);
-  FastAssign(RPCBrokerV.Results, ALocations);
-  Result := not (Piece(RPCBrokerV.Results[0], U, 1) = '-1');
+  CallVistA('ORWCIRN FACLIST', [DFN], ALocations);
+  if ALocations.Count = 0 then
+    ALocations.Add('-1');
+  Result := not(Piece(ALocations[0], U, 1) = '-1')
 
-//   '-1^NO DFN'
-//   '-1^PATIENT NOT IN DATABASE'
-//   '-1^NO MPI Node'
-//   '-1^NO ICN'
-//   '-1^Parameter missing.'
-//   '-1^No patient DFN.'
-//   '-1^Could not find Treating Facilities'
-//   '-1^Remote access not allowed'     <===parameter ORWCIRN REMOTE DATA ALLOW
+  // '-1^NO DFN'
+  // '-1^PATIENT NOT IN DATABASE'
+  // '-1^NO MPI Node'
+  // '-1^NO ICN'
+  // '-1^Parameter missing.'
+  // '-1^No patient DFN.'
+  // '-1^Could not find Treating Facilities'
+  // '-1^Remote access not allowed'     <===parameter ORWCIRN REMOTE DATA ALLOW
 end;
 
 function CheckHL7TCPLink: Boolean;
- begin
-   CallV('ORWCIRN CHECKLINK',[nil]);
-   Result := RPCBrokerV.Results[0] = '1';
- end;
+var
+  x: String;
+begin
+  Result := CallVistA('ORWCIRN CHECKLINK', [nil], x) and (x = '1');
+end;
 
 function GetVistaWebAddress(value: string): string;
 begin
-  CallV('ORWCIRN WEBADDR', [value]);
-  result := RPCBrokerV.Results[0];
+  // RPC description states the result type is "SINGLE VALUE"
+  CallVistA('ORWCIRN WEBADDR', [value], Result);
 end;
 
 function GetVistaWeb_JLV_LabelName: string;
 begin
-  result := sCallV('ORWCIRN JLV LABEL', [nil]);
+  CallVistA('ORWCIRN JLV LABEL', [nil], Result);
 end;
 
-function GetDefaultPrinter(DUZ: Int64; Location: integer): string;
+function GetDefaultPrinter(DUZ: Int64; Location: Integer): string;
 begin
-  Result := sCallV('ORWRP GET DEFAULT PRINTER', [DUZ, Location]) ;
+  CallVistA('ORWRP GET DEFAULT PRINTER', [DUZ, Location], Result);
 end;
 
 procedure getSysUserParameters(DUZ: Int64);
 var
-aReturn: string;
+  AReturn: string;
 begin
-  systemParameters := TsystemParameters.Create;
-  try
-  CallVistA('ORWU SYSPARAM', [DUZ], aReturn);
-  systemParameters.dataValues := TJSONObject.ParseJSONValue(aReturn);
-  finally
-  end;
-
+  CallVistA('ORWU SYSPARAM', [DUZ], AReturn);
+  SystemParameters := TJSONParameters.Create(AReturn);
 end;
 
 end.

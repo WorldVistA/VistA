@@ -17,7 +17,7 @@
   Add something that prevents overwriting of the script files if another
   app is running that's using the JAWS DLL }
 { DONE -oJeremy Merrill -c508 : Add check in here to look at script version in JSS file -
-  ZZZZZZBELLC: This appears to already be added. Marking as done }
+  VHAISPBELLC: This appears to already be added. Marking as done }
 { DONE -oJeremy Merrill -c508 :
   Replace registry communication with multiple windows - save strings in the window titles
   Use EnumerateChildWindows jaws script function in place of the FindWindow function
@@ -34,7 +34,7 @@
   need to test for csDesigning some place that we're not testing for (maybe?) }
 { DONE -oJeremy Merrill -c508 :
   Change APP_DATA so that "application data" isn't used - Windows Vista
-  doesn't use this value - get data from Windows API call - ZZZZZZBELLC:
+  doesn't use this value - get data from Windows API call - VHAISPBELLC:
   This is no longer an issue since we do not call this function. }
 
 { DONE -oChris Bell -c508 : Add log ability }
@@ -96,6 +96,7 @@ const
   JAWS_SHARED_DIR = 'Shared\';
   KEY_WOW64_64KEY = $0100;
   ShowSplash = 'SplashScreen';
+  P = '|';
 
 type
   TCompareType = (jcPrior, jcINI, jcLineItems, jcVersion, jcScriptMerge,
@@ -292,9 +293,11 @@ type
       data: array of const); overload;
     // class function GetPathFromJAWS(PathID: Integer;
     // DoLowerCase: boolean = TRUE): string;
+    Class function CheckCustomOverride: Boolean;
     class function GetJAWSWindow: HWND;
     class function IsRunning(HighVersion, LowVersion: Word): BOOL;
     class function FindJaws(): HWND;
+    class function GetCurrentPath: String;
     function Initialize(ComponentCallBackProc: TComponentDataRequestProc): BOOL;
     procedure SendComponentData(WindowHandle: HWND; DataStatus: LongInt;
       Caption, Value, data, ControlType, State, Instructions,
@@ -401,8 +404,15 @@ end;
 function FindJaws(): BOOL; stdcall;
 begin
   if FJAWSHandleSearchPerformed then
+  begin
+    Result := (JAWSHandle <> 0);
     exit;
-  FJAWSHandleSearchPerformed := true;
+  end;
+
+  LogInterface.LogText('INITIALIZATION','In Exported FindJAWS method');
+  JAWSHandle := TJAWSManager.FindJaws;
+  Result := (JAWSHandle <> 0);
+
   LogInterface.LogText('INITIALIZATION','In Exported FindJAWS method');
 end;
 
@@ -579,12 +589,9 @@ var
   i: Integer;
   LogTxt: string;
 begin
-  SetLength(path, MAX_PATH);
-  SetLength(path, GetModuleFileName(HInstance, PChar(path), Length(path)));
-  path := ExtractFilePath(path);
-  path := AppendBackSlash(path);
-  // look for the script files in the same directory as this DLL
+  Path := TJAWSManager.GetCurrentPath;
 
+  // look for the script files in the same directory as this DLL
   FRequiredFilesFound := True;
 
   // Look up the files
@@ -779,7 +786,7 @@ var
         // Section name should be the applications name
         if UpperCase(FileName) = UpperCase(SectionName) then
         begin
-          if Pos('MRG', UpperCase(Piece(Scripts.Values[Scripts.Names[i]], '|',
+          if Pos('MRG', UpperCase(Piece(Scripts.Values[Scripts.Names[i]], P,
             1))) = 0 then
             info.Update(path, { Scripts.Names[i] } JAWS_APP_NAME + '.' +
               UpperCase(extName), Scripts.Values[Scripts.Names[i]], SectionName)
@@ -812,10 +819,7 @@ var
   end;
 
 begin
-  SetLength(path, MAX_PATH);
-  SetLength(path, GetModuleFileName(HInstance, PChar(path), Length(path)));
-  path := ExtractFilePath(path);
-  path := AppendBackSlash(path);
+  Path := TJAWSManager.GetCurrentPath;
   ScriptsFileName := FindScriptFileLocation(path, JAWS_SCRIPT_LIST);
   if ScriptsFileName <> '' then
   begin
@@ -837,7 +841,7 @@ begin
         LoadOverWrites(TmpStr);
 
         // second look for a specific version
-        TmpStr := TmpStr + '|' + FileVersionValue(LoadForApplication,
+        TmpStr := TmpStr + P + FileVersionValue(LoadForApplication,
           FILE_VER_FILEVERSION);
         LoadOverWrites(TmpStr);
 
@@ -900,6 +904,12 @@ end;
 // ******************************************************************
 // Return the handle of the Jaws application
 // ******************************************************************
+class function TJAWSManager.GetCurrentPath: String;
+begin
+  Result := SysUtils.GetModuleName(HInstance);
+  Result := IncludeTrailingPathDelimiter(ExtractFilePath(Result));
+end;
+
 class function TJAWSManager.GetJAWSWindow: HWND;
 const
   VISIBLE_WINDOW_CLASS: PChar = 'JFWUI2';
@@ -914,7 +924,6 @@ begin
     if JAWSHandle = 0 then
       JAWSHandle := FindJaws();
   end;
-
   Result := JAWSHandle;
 end;
 
@@ -978,12 +987,12 @@ var
   reg: TRegistry;
   CanContinue: Boolean;
 begin
-    if FJAWSHandleSearchPerformed then
+  if FJAWSHandleSearchPerformed then
   begin
+    result := JAWSHandle;
     LogInterface.LogText('INITIALIZATION', 'JAWS handle search already performed.  No need to do it again.');
     exit;
   end;
-
 
   LogInterface.LogText('INITIALIZATION', 'In TJAWSManager.FindJAWS');
 
@@ -993,10 +1002,15 @@ begin
   // Allow to turn off jaws if not wanted
   FindCommandSwitch('SCREADER', JawsParam);
   CanContinue := not(UpperCase(JawsParam) = 'NONE');
-
   if not CanContinue then
     LogInterface.LogText('Jaws Run  ',
       'Jaws Framework explictily turnded off via SCREADER parameter');
+
+  CanContinue := CheckCustomOverride;
+  if not CanContinue then
+    LogInterface.LogText('Jaws Run  ',
+      'Jaws Framework explictily turnded off via Override section');
+
 
   // check for the registry
   if CanContinue then
@@ -1009,10 +1023,10 @@ begin
     finally
       reg.free;
     end;
-  end;
 
-  if not CanContinue then
-    LogInterface.LogText('Jaws Run  ', 'Jaws registry not found');
+    if not CanContinue then
+      LogInterface.LogText('Jaws Run  ', 'Jaws registry not found');
+  end;
 
   // look for the exe (jaws 16 and up)
   if CanContinue then
@@ -1030,7 +1044,7 @@ begin
         Result := FindHandle(JawsParam);
         if Result = 0 then
         begin
-          // could not find the parameter exe running
+                      // could not find the parameter exe running
           ErrMsg := Format(JAWS_NOT_RUNNING,
             [ExtractFileName(Application.ExeName), JawsParam,
             ExtractFileName(Application.ExeName)]);
@@ -1047,6 +1061,8 @@ begin
       else
       begin
         // no parameter and expected exe is not running
+         ErrMsg := Format(JAWS_AUTO_NOT_RUNNING,
+            [ExtractFileName(Application.ExeName)]);
           MessageBoxTimeOut(Application.Handle, PWideChar(ErrMsg),
             'JAWS Accessibility Detection Error', MB_OK or MB_ICONERROR or
             MB_TASKMODAL or MB_TOPMOST, 0, 30000);
@@ -1718,7 +1734,7 @@ var
     function DependenciesNotInFile(const aIdx: Integer;
       const ToFile: string): Boolean;
     var
-      i, newIdx, oldIdx: Integer;
+      i: Integer;
     begin
       Result := FALSE;
       for i := Low(ScriptFiles[aIdx].Dependencies)
@@ -2729,6 +2745,140 @@ begin
   end;
 end;
 
+Class function TJAWSManager.CheckCustomOverride: Boolean;
+type
+  tInfoType = (itDomain, itMachine, itUser);
+
+  function GetCompInfoA(ANameFormat: _COMPUTER_NAME_FORMAT): string;
+  var
+    OutStr: string;
+    OutStrLen: DWORD;
+  begin
+    OutStrLen := 255;
+    SetLength(OutStr, OutStrLen);
+    if (GetComputerNameEx(ANameFormat, PChar(OutStr), OutStrLen)) then
+      SetLength(OutStr, OutStrLen)
+    else
+      OutStr := 'Unknown';
+
+    Result := OutStr;
+  end;
+
+  Function GetCompInfoB(LookupInfo: tInfoType): String;
+  var
+    vlBuffer: array [0 .. MAXCHAR] of char;
+    vlSize: ^DWORD;
+  begin
+    New(vlSize);
+    vlSize^ := MAXCHAR;
+    case LookupInfo of
+      itDomain:
+        ExpandEnvironmentStrings(PChar('%USERDOMAIN%'), vlBuffer, vlSize^);
+      itMachine:
+        GetComputerName(vlBuffer, vlSize^);
+      itUser:
+        GetUserName(vlBuffer, vlSize^);
+    end;
+
+    Dispose(vlSize);
+    Result := vlBuffer;
+  end;
+
+const
+  OverrideSection = 'FRAMEWORK_OVERRIDE';
+  EnableName = 'EnableType';
+  EnableValue = 'Enabled';
+var
+  OverrideFile: TINIFile;
+  path, ScriptsFileName, s, LookupType, LookupValue, CompareValue: string;
+  OverrideStrings: TStringList;
+  UserIsEnabled, UserFound: Boolean;
+begin
+  //Assume there is not custom override
+  Result := true;
+  // Fine the ini file name
+  Path := TJAWSManager.GetCurrentPath;
+  ScriptsFileName := FindScriptFileLocation(path, JAWS_SCRIPT_LIST);
+  if ScriptsFileName <> '' then
+  begin
+    ScriptsFileName := AppendBackSlash(ScriptsFileName) + JAWS_SCRIPT_LIST;
+    if FileExists(ScriptsFileName) then
+    begin
+      // Load the ini file if found
+      OverrideFile := TINIFile.Create(ScriptsFileName);
+      try
+        OverrideStrings := TStringList.Create;
+        try
+          if OverrideFile.ValueExists(OverrideSection, EnableName) then
+          begin
+            OverrideFile.ReadSectionValues(OverrideSection, OverrideStrings);
+            // Determine the compare type
+            UserIsEnabled := SameText(OverrideStrings.Values[EnableName], EnableValue) ;
+      //        UpperCase(OverrideStrings.Values[EnableName]) = EnableValue;
+
+            // Loop through entries and compare
+            UserFound := FALSE;
+            for s in OverrideStrings do
+            begin
+              // We found this user in the lookup
+              if UserFound then
+                break;
+
+              // Skip the enable type
+              if Pos(EnableName + '=', s) > 0 then
+                continue;
+
+              // Figure out the lookup value and type
+              LookupValue := Piece(s, '=', 1);
+              LookupType := Piece(s, '=', 2);
+
+              if UpperCase(LookupType) = 'DOMAIN' then
+                CompareValue := GetCompInfoB(itDomain)
+              else if UpperCase(LookupType) = 'COMPUTER' then
+                CompareValue := GetCompInfoB(itMachine)
+              else if UpperCase(LookupType) = 'USER' then
+                CompareValue := GetCompInfoB(itUser)
+              else if UpperCase(LookupType) = 'CNET' then
+                CompareValue := GetCompInfoA(ComputerNameNetBIOS)
+              else if UpperCase(LookupType) = 'CDNSH' then
+                CompareValue := GetCompInfoA(ComputerNameDnsHostname)
+              else if UpperCase(LookupType) = 'CDNS' then
+                CompareValue := GetCompInfoA(ComputerNameDnsDomain)
+              else if UpperCase(LookupType) = 'CDNSF' then
+                CompareValue := GetCompInfoA(ComputerNameDnsFullyQualified)
+              else if UpperCase(LookupType) = 'PCNET' then
+                CompareValue := GetCompInfoA(ComputerNamePhysicalNetBIOS)
+              else if UpperCase(LookupType) = 'PCDNSH' then
+                CompareValue := GetCompInfoA(ComputerNamePhysicalDnsHostname)
+              else if UpperCase(LookupType) = 'PCDNS' then
+                CompareValue := GetCompInfoA(ComputerNamePhysicalDnsDomain)
+              else if UpperCase(LookupType) = 'PCDNSF' then
+                CompareValue :=
+                  GetCompInfoA(ComputerNamePhysicalDnsFullyQualified)
+              else
+                continue;
+
+              UserFound := SameText(CompareValue, LookupValue);
+
+            end;
+
+            if UserIsEnabled then
+              Result := UserFound
+            else
+              Result := not UserFound
+
+          end;
+        finally
+          FreeAndNil(OverrideStrings);
+        end;
+      finally
+        FreeAndNil(OverrideFile);
+      end;
+    end;
+  end;
+
+end;
+
 {$REGION '************************** Archived Method *************************'}
 {
   class function TJAWSManager.GetPathFromJAWS(PathID: Integer;
@@ -2740,7 +2890,7 @@ end;
   JAWS_PATH_ID_USER_SCRIPT_FILES = 1;
   JAWS_PATH_ID_JAWS_DEFAULT_SCRIPT_FILES = 2;
   // 0 = C:\Program Files\Freedom Scientific\JAWS\8.0\jfw.INI
-  // 1 = D:\Documents and Settings\zzzzzzmerrij\Application Data\Freedom Scientific\JAWS\8.0\USER.INI
+  // 1 = D:\Documents and Settings\vhaislmerrij\Application Data\Freedom Scientific\JAWS\8.0\USER.INI
   // 2 = D:\Documents and Settings\All Users\Application Data\Freedom Scientific\JAWS\8.0\Settings\enu\DEFAULT.SBL
   var
   atm: ATOM;
@@ -2836,10 +2986,7 @@ var
   var
     ScriptsIniFile: string;
   begin
-    SetLength(path, MAX_PATH);
-    SetLength(path, GetModuleFileName(HInstance, PChar(path), Length(path)));
-    path := ExtractFilePath(path);
-    path := AppendBackSlash(path);
+    Path := TJAWSManager.GetCurrentPath;
     ScriptsIniFile := FindScriptFileLocation(path, JAWS_SCRIPT_LIST);
     if ScriptsIniFile <> '' then
     begin
@@ -2926,11 +3073,6 @@ end;
 
 function TFileInfoArrayHelper.Add(const aPatchDir, aFileName, Value,
   aSectionName: String): Integer;
-var
-  TmpCompare: string;
-  FoundPath: String;
-  TmpStrLst: TStringList;
-  i: Integer;
 begin
   Result := -1;
   if not Self.ContainsFile(aFileName) then
@@ -2980,7 +3122,7 @@ begin
       Self[ArryIdx].Exist := FALSE;
     end;
 
-    TmpCompare := Piece(Value, '|', 1);
+    TmpCompare := Piece(Value, P, 1);
     if UpperCase(TmpCompare) = 'JCPRIOR' then
       Self[ArryIdx].CompareType := jcPrior
     else if UpperCase(TmpCompare) = 'JCINI' then
@@ -2998,19 +3140,19 @@ begin
     else if UpperCase(TmpCompare) = 'JCLINEITEMSMRG' then
       Self[ArryIdx].CompareType := jcLineItemsMRG;
 
-    TmpCompare := Piece(Value, '|', 2);
+    TmpCompare := Piece(Value, P, 2);
     if UpperCase(TmpCompare) = 'TRUE' then
       Self[ArryIdx].Required := True
     else if UpperCase(TmpCompare) = 'FALSE' then
       Self[ArryIdx].Required := FALSE;
 
-    TmpCompare := Piece(Value, '|', 3);
+    TmpCompare := Piece(Value, P, 3);
     if UpperCase(TmpCompare) = 'TRUE' then
       Self[ArryIdx].Compile := True
     else if UpperCase(TmpCompare) = 'FALSE' then
       Self[ArryIdx].Compile := FALSE;
 
-    TmpCompare := Piece(Value, '|', 4);
+    TmpCompare := Piece(Value, P, 4);
     if Trim(TmpCompare) <> '' then
     begin
       TmpCompare := Piece(TmpCompare, '[', 2);

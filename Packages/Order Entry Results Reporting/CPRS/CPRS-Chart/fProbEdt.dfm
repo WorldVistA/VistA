@@ -62,6 +62,7 @@ inherited frmdlgProb: TfrmdlgProb
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 558
     DesignSize = (
       903
       249)
@@ -111,6 +112,7 @@ inherited frmdlgProb: TfrmdlgProb
       AutoSize = False
       Caption = 'Comments'
       Pieces = '1,2'
+      ExplicitWidth = 542
     end
     object Panel1: TPanel
       Left = 0
@@ -124,6 +126,7 @@ inherited frmdlgProb: TfrmdlgProb
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitWidth = 558
       DesignSize = (
         903
         51)
@@ -145,6 +148,7 @@ inherited frmdlgProb: TfrmdlgProb
         ShowHint = True
         TabOrder = 0
         OnClick = bbAddComClick
+        ExplicitLeft = 230
       end
       object bbEdit: TBitBtn
         Left = 625
@@ -165,6 +169,7 @@ inherited frmdlgProb: TfrmdlgProb
         ShowHint = True
         TabOrder = 1
         OnClick = bbEditClick
+        ExplicitLeft = 336
       end
       object bbRemove: TBitBtn
         Left = 758
@@ -185,6 +190,7 @@ inherited frmdlgProb: TfrmdlgProb
         ShowHint = True
         TabOrder = 2
         OnClick = bbRemoveClick
+        ExplicitLeft = 442
       end
     end
   end
@@ -200,6 +206,7 @@ inherited frmdlgProb: TfrmdlgProb
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
+    ExplicitWidth = 558
     DesignSize = (
       903
       35)
@@ -221,6 +228,7 @@ inherited frmdlgProb: TfrmdlgProb
       NumGlyphs = 2
       TabOrder = 3
       OnClick = bbQuitClick
+      ExplicitLeft = 471
     end
     object bbFile: TBitBtn
       Left = 686
@@ -239,6 +247,7 @@ inherited frmdlgProb: TfrmdlgProb
       NumGlyphs = 2
       TabOrder = 2
       OnClick = bbFileClick
+      ExplicitLeft = 385
     end
     object ckVerify: TCheckBox
       Left = 19
@@ -321,6 +330,7 @@ inherited frmdlgProb: TfrmdlgProb
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 558
     object Panel2: TPanel
       Left = 0
       Top = 0
@@ -332,6 +342,7 @@ inherited frmdlgProb: TfrmdlgProb
       Margins.Bottom = 4
       Align = alTop
       TabOrder = 0
+      ExplicitWidth = 558
       DesignSize = (
         903
         64)
@@ -367,6 +378,7 @@ inherited frmdlgProb: TfrmdlgProb
         Layout = blGlyphBottom
         TabOrder = 1
         OnClick = bbChangeProbClick
+        ExplicitLeft = 380
       end
       object edProb: TCaptionEdit
         Left = 11
@@ -384,6 +396,7 @@ inherited frmdlgProb: TfrmdlgProb
         Text = 'Problem Title'
         OnChange = ControlChange
         Caption = 'Activity'
+        ExplicitWidth = 358
       end
     end
     object Panel3: TPanel
@@ -397,6 +410,7 @@ inherited frmdlgProb: TfrmdlgProb
       Margins.Bottom = 4
       Align = alClient
       TabOrder = 1
+      ExplicitWidth = 331
       DesignSize = (
         580
         207)
@@ -483,6 +497,7 @@ inherited frmdlgProb: TfrmdlgProb
         OnKeyPress = cbLocKeyPress
         OnNeedData = cbLocNeedData
         CharsNeedMatch = 1
+        ExplicitWidth = 135
       end
       object cbProv: TORComboBox
         Left = 233
@@ -522,6 +537,7 @@ inherited frmdlgProb: TfrmdlgProb
         OnKeyPress = cbProvKeyPress
         OnNeedData = cbProvNeedData
         CharsNeedMatch = 1
+        ExplicitWidth = 134
       end
       object cbServ: TORComboBox
         Left = 233
@@ -560,6 +576,7 @@ inherited frmdlgProb: TfrmdlgProb
         OnChange = ControlChange
         OnNeedData = cbServNeedData
         CharsNeedMatch = 1
+        ExplicitWidth = 134
       end
       object edOnsetdate: TCaptionEdit
         Tag = 3
@@ -576,6 +593,7 @@ inherited frmdlgProb: TfrmdlgProb
         Text = 'Today'
         OnChange = ControlChange
         Caption = 'Date of Onset'
+        ExplicitWidth = 133
       end
       object rgStage: TKeyClickRadioGroup
         Left = 115
@@ -641,7 +659,7 @@ inherited frmdlgProb: TfrmdlgProb
         Align = alClient
         AutoSize = True
         TabOrder = 0
-        ExplicitHeight = 199
+        ExplicitWidth = 199
         object gbTreatment: TGroupBox
           Left = 1
           Top = 1
@@ -654,7 +672,7 @@ inherited frmdlgProb: TfrmdlgProb
           Align = alClient
           Caption = 'Treatment Factors'
           TabOrder = 0
-          ExplicitHeight = 197
+          ExplicitWidth = 197
           object lblYN: TLabel
             Left = 4
             Top = 15

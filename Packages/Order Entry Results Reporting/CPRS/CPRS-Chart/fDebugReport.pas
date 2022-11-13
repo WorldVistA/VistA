@@ -206,30 +206,30 @@ begin
   ReturnCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   try
-    if UseMultThread then
-      begin
-        // threaded
-        if Trim(ActionMemo.Text) > '' then
-          begin
-            ConnectionParam := RPCBrokerV.Server + '^' +
-            IntToStr(RPCBrokerV.ListenerPort) + '^' +
-            GetAppHandle(RPCBrokerV) + '^' +
-            RPCBrokerV.User.Division;
+   if UseMultThread then
+   begin
+    //threaded
+    if Trim(ActionMemo.Text) > '' then
+    begin
+     ConnectionParam := RPCBrokerV.Server + '^' +
+              IntToStr(RPCBrokerV.ListenerPort) + '^' +
+              GetAppHandle(RPCBrokerV) + '^' +
+              RPCBrokerV.User.Division;
 
-            DebugThread := tDebugThread.Create(ActionMemo.Lines, ConnectionParam, RPCBrokerV.CurrentContext);
-{$WARN SYMBOL_DEPRECATED OFF} // researched
-            DebugThread.Resume;
-{$WARN SYMBOL_DEPRECATED ON} // researched
-            Self.Close;
-          end;
+     DebugThread := tDebugThread.Create(ActionMemo.Lines, ConnectionParam, RPCBrokerV.CurrentContext);
+     {$WARN SYMBOL_DEPRECATED OFF} // researched
+     DebugThread.Resume;
+     {$WARN SYMBOL_DEPRECATED ON} // researched
+     Self.Close;
+    end;
       end
     else
       begin
-        // Non threaded
-        RunNonThread;
-      end;
+    //Non threaded
+    RunNonThread;
+   end;
   finally
-    Screen.Cursor := ReturnCursor;
+   Screen.Cursor := ReturnCursor;
   end;
 end;
 
@@ -246,26 +246,31 @@ begin
  Result := (RetainedRPCCount - 1);
 end;
 
-constructor tDebugThread.Create(ActionDescription: TStrings; RPCParams, CurContext: string);
+constructor tDebugThread.Create(ActionDescription: TStrings;
+  RPCParams, CurContext: string);
 
-function Piece(const S: string; Delim: char; PieceNum: Integer): string;
-{ returns the Nth piece (PieceNum) of a string delimited by Delim }
-var
-  i: Integer;
-  Strt, Next: PChar;
-begin
-  i := 1;
-  Strt := PChar(S);
-  Next := StrScan(Strt, Delim);
-  while (i < PieceNum) and (Next <> nil) do
+  function Piece(const S: string; Delim: char; PieceNum: Integer): string;
+  { returns the Nth piece (PieceNum) of a string delimited by Delim }
+  var
+    i: Integer;
+    Strt, Next: PChar;
   begin
-    Inc(i);
-    Strt := Next + 1;
+    i := 1;
+    Strt := PChar(S);
     Next := StrScan(Strt, Delim);
+    while (i < PieceNum) and (Next <> nil) do
+    begin
+      Inc(i);
+      Strt := Next + 1;
+      Next := StrScan(Strt, Delim);
+    end;
+    if Next = nil then
+      Next := StrEnd(Strt);
+    if i < PieceNum then
+      Result := ''
+    else
+      SetString(Result, Strt, Next - Strt);
   end;
-  if Next = nil then Next := StrEnd(Strt);
-  if i < PieceNum then Result := '' else SetString(Result, Strt, Next - Strt);
-end;
 
 begin
   inherited Create(True);
@@ -275,17 +280,17 @@ begin
   FreeOnTerminate := True;
   SetLength(RPCArray, 0);
   try
-   ThreadBroker := TRPCBroker.Create(nil);
-   ThreadBroker.Server := Piece(RPCParams, '^', 1);
-   ThreadBroker.ListenerPort := StrToIntDef(Piece(RPCParams, '^', 2), 9200);
-   ThreadBroker.LogIn.LogInHandle := Piece(RPCParams, '^', 3);
-   ThreadBroker.LogIn.Division := Piece(RPCParams, '^', 4);
-   ThreadBroker.LogIn.Mode := lmAppHandle;
-   ThreadBroker.KernelLogIn := False;
-   ThreadBroker.Connected := True;
-   ThreadBroker.CreateContext(CurContext);
+    ThreadBroker := TRPCBroker.Create(nil);
+    ThreadBroker.Server := Piece(RPCParams, '^', 1);
+    ThreadBroker.ListenerPort := StrToIntDef(Piece(RPCParams, '^', 2), 9200);
+    ThreadBroker.LogIn.LogInHandle := Piece(RPCParams, '^', 3);
+    ThreadBroker.LogIn.Division := Piece(Piece(RPCParams, '^', 4), '^', 3);
+    ThreadBroker.LogIn.Mode := lmAppHandle;
+    ThreadBroker.KernelLogIn := false;
+    ThreadBroker.Connected := True;
+    ThreadBroker.CreateContext(CurContext);
   except
-   FreeAndNil(ThreadBroker);
+    FreeAndNil(ThreadBroker);
   end;
 end;
 
@@ -478,19 +483,19 @@ end;
 
 procedure TfrmDebugReport.EnsureDebugBroker;
 begin
- if not Assigned(DebugReportBroker) then
-  DebugReportBroker := TRPCBroker.Create(nil);
+  if not Assigned(DebugReportBroker) then
+    DebugReportBroker := TRPCBroker.Create(nil);
 
- //Setup the broker
-    DebugReportBroker.Server := RPCBrokerV.Server;
-    DebugReportBroker.ListenerPort := RPCBrokerV.ListenerPort;
-    DebugReportBroker.LogIn.LogInHandle := GetAppHandle(RPCBrokerV);
-    DebugReportBroker.LogIn.Division := RPCBrokerV.User.Division;
-    DebugReportBroker.LogIn.Mode := lmAppHandle;
-    DebugReportBroker.KernelLogIn := False;
-    DebugReportBroker.Connected := True;
-    if DebugReportBroker.CreateContext(RPCBrokerV.CurrentContext) = false then
-     ShowMessage('Error switching broker context');
+  // Setup the broker
+  DebugReportBroker.Server := RPCBrokerV.Server;
+  DebugReportBroker.ListenerPort := RPCBrokerV.ListenerPort;
+  DebugReportBroker.LogIn.LogInHandle := GetAppHandle(RPCBrokerV);
+  DebugReportBroker.LogIn.Division := Piece(RPCBrokerV.User.Division, '^', 3);
+  DebugReportBroker.LogIn.Mode := lmAppHandle;
+  DebugReportBroker.KernelLogIn := false;
+  DebugReportBroker.Connected := True;
+  if DebugReportBroker.CreateContext(RPCBrokerV.CurrentContext) = false then
+    ShowMessage('Error switching broker context');
 end;
 
   function TfrmDebugReport.FilteredString(const x: string; ATabWidth: Integer = 8): string;

@@ -3,59 +3,60 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
   Top = 211
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Template Field Editor'
-  ClientHeight = 420
+  ClientHeight = 429
   ClientWidth = 788
   Position = poScreenCenter
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnResize = FormResize
-  ExplicitWidth = 804
-  ExplicitHeight = 458
+  ExplicitWidth = 806
+  ExplicitHeight = 474
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object splLeft: TSplitter [0]
     Left = 429
     Top = 25
-    Height = 366
+    Height = 371
     Beveled = True
     ExplicitLeft = 273
+    ExplicitHeight = 366
   end
   object pnlBottom: TPanel [1]
     Left = 0
-    Top = 391
+    Top = 396
     Width = 788
-    Height = 29
+    Height = 33
     Align = alBottom
     TabOrder = 3
-    DesignSize = (
-      788
-      29)
     object lblReq: TStaticText
-      Left = 132
-      Top = 8
-      Width = 134
-      Height = 17
+      AlignWithMargins = True
+      Left = 154
+      Top = 9
+      Width = 169
+      Height = 20
+      Margins.Top = 8
+      Align = alLeft
       Caption = '* Indicates a Required Field'
       TabOrder = 5
     end
     object btnOK: TButton
-      Left = 548
+      AlignWithMargins = True
+      Left = 547
       Top = 4
       Width = 75
-      Height = 21
-      Anchors = [akTop, akRight, akBottom]
+      Height = 25
+      Align = alRight
       Caption = 'OK'
       ModalResult = 1
       TabOrder = 1
       OnClick = btnOKClick
     end
     object btnCancel: TButton
+      AlignWithMargins = True
       Left = 628
       Top = 4
       Width = 75
-      Height = 21
-      Anchors = [akTop, akRight, akBottom]
+      Height = 25
+      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
@@ -63,68 +64,79 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       OnClick = btnCancelClick
     end
     object btnApply: TButton
-      Left = 708
+      AlignWithMargins = True
+      Left = 709
       Top = 4
       Width = 75
-      Height = 21
-      Anchors = [akTop, akRight, akBottom]
+      Height = 25
+      Align = alRight
       Caption = 'Apply'
       TabOrder = 3
       OnClick = btnApplyClick
     end
     object btnPreview: TButton
-      Left = 435
+      AlignWithMargins = True
+      Left = 354
       Top = 4
-      Width = 75
-      Height = 21
-      Anchors = [akTop, akRight, akBottom]
-      Caption = 'Preview'
-      Enabled = False
+      Width = 76
+      Height = 25
+      Action = acPreview
+      Align = alRight
       TabOrder = 0
-      OnClick = btnPreviewClick
     end
     object cbHide: TCheckBox
-      Left = 6
-      Top = 6
-      Width = 115
-      Height = 17
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 144
+      Height = 25
+      Align = alLeft
       Caption = 'Hide Inactive Fields'
       Checked = True
       State = cbChecked
       TabOrder = 4
       OnClick = cbHideClick
     end
+    object btnErrorCheck: TButton
+      AlignWithMargins = True
+      Left = 436
+      Top = 4
+      Width = 105
+      Height = 25
+      Action = acCheckForErrors
+      Align = alRight
+      TabOrder = 6
+    end
   end
   object pnlObjs: TPanel [2]
     Left = 0
     Top = 25
     Width = 429
-    Height = 366
+    Height = 371
     Align = alLeft
     Caption = 'pnlObjs'
     TabOrder = 1
-    OnResize = pnlObjsResize
     object lblObjs: TLabel
       Left = 1
       Top = 1
       Width = 427
-      Height = 13
+      Height = 16
       Align = alTop
       Caption = 'Template Fields'
-      ExplicitWidth = 74
+      ExplicitWidth = 98
     end
     object cbxObjs: TORComboBox
       Left = 1
-      Top = 14
+      Top = 17
       Width = 427
-      Height = 351
+      Height = 353
       Style = orcsSimple
       Align = alClient
       AutoSelect = True
       Caption = 'Template Fields'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = True
@@ -149,34 +161,35 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
     Left = 432
     Top = 25
     Width = 356
-    Height = 366
+    Height = 371
     Align = alClient
     Constraints.MinWidth = 356
     TabOrder = 2
     OnResize = FormResize
     object splBottom: TSplitter
       Left = 1
-      Top = 278
+      Top = 283
       Width = 354
       Height = 3
       Cursor = crVSplit
       Align = alBottom
       Beveled = True
+      ExplicitTop = 278
     end
     object lblCommCareLock: TLabel
       Left = 1
       Top = 1
       Width = 354
-      Height = 13
+      Height = 16
       Align = alTop
       Caption = 'This template field has been locked and may not be edited.'
       Visible = False
       WordWrap = True
-      ExplicitWidth = 278
+      ExplicitWidth = 351
     end
     object pnlPreview: TPanel
       Left = 1
-      Top = 281
+      Top = 286
       Width = 354
       Height = 84
       Align = alBottom
@@ -186,16 +199,16 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Left = 1
         Top = 1
         Width = 352
-        Height = 13
+        Height = 16
         Align = alTop
         Caption = 'Notes:'
-        ExplicitWidth = 31
+        ExplicitWidth = 39
       end
       object reNotes: TRichEdit
         Left = 1
-        Top = 14
+        Top = 17
         Width = 352
-        Height = 69
+        Height = 66
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -216,92 +229,89 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
     end
     object pnlObjInfo: TPanel
       Left = 1
-      Top = 14
+      Top = 17
       Width = 354
-      Height = 264
+      Height = 266
       Align = alClient
       TabOrder = 0
       OnResize = FormResize
-      ExplicitTop = 27
-      ExplicitHeight = 251
       DesignSize = (
         354
-        264)
+        266)
       object lblName: TLabel
         Left = 4
         Top = 8
-        Width = 31
-        Height = 13
+        Width = 40
+        Height = 16
         Caption = 'Name:'
       end
       object lblS2: TLabel
         Left = 4
         Top = 75
-        Width = 23
-        Height = 13
+        Width = 30
+        Height = 16
         Caption = 'lblS2'
       end
       object lblLM: TLabel
         Left = 3
-        Top = 181
-        Width = 42
-        Height = 13
+        Top = 186
+        Width = 50
+        Height = 16
         Hint = 'Text to replace template field when used in List Manager'
         Anchors = [akLeft, akBottom]
         Caption = 'LM Text:'
         ParentShowHint = False
         ShowHint = True
-        ExplicitTop = 194
       end
       object lblS1: TLabel
         Left = 4
         Top = 53
-        Width = 23
-        Height = 13
+        Width = 30
+        Height = 16
         Caption = 'lblS1'
       end
       object lblType: TLabel
         Left = 4
         Top = 32
-        Width = 27
-        Height = 13
+        Width = 35
+        Height = 16
         Caption = 'Type:'
       end
       object lblTextLen: TLabel
         Left = 255
         Top = 31
-        Width = 45
-        Height = 13
+        Width = 54
+        Height = 16
         Anchors = [akTop, akRight]
         Caption = 'Text Len:'
       end
       object lblLength: TLabel
         Left = 157
         Top = 31
-        Width = 46
-        Height = 13
+        Width = 58
+        Height = 16
         Anchors = [akTop, akRight]
         Caption = 'Field Len:'
       end
       object lblS3: TLabel
         Left = 4
         Top = 97
-        Width = 23
-        Height = 13
+        Width = 30
+        Height = 16
         Caption = 'lblS3'
       end
       object lblLine: TLabel
         Left = 4
         Top = 152
-        Width = 23
-        Height = 13
+        Width = 28
+        Height = 16
         Caption = 'Line:'
       end
       object lblCol: TLabel
         Left = 4
         Top = 168
-        Width = 18
-        Height = 13
+        Width = 23
+        Height = 16
         Caption = 'Col:'
       end
       object edtName: TCaptionEdit
@@ -327,7 +337,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       end
       object edtLMText: TCaptionEdit
         Left = 50
-        Top = 176
+        Top = 181
         Width = 300
         Height = 22
         Hint = 'Text to replace template field when used in List Manager'
@@ -346,13 +356,12 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         OnChange = edtLMTextChange
         OnEnter = edtpopControlEnter
         Caption = 'LM Text'
-        ExplicitTop = 163
       end
       object cbxType: TORComboBox
         Left = 50
         Top = 27
         Width = 102
-        Height = 21
+        Height = 24
         Anchors = [akLeft, akTop, akRight]
         Style = orcsDropDown
         AutoSelect = True
@@ -371,7 +380,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           'H^Hyperlink'
           'W^Word Processing'
           'T^Text')
-        ItemHeight = 13
+        ItemHeight = 16
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = True
@@ -390,7 +399,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Left = 309
         Top = 27
         Width = 26
-        Height = 21
+        Height = 24
         Anchors = [akTop, akRight]
         TabOrder = 5
         Text = '0'
@@ -401,7 +410,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Left = 335
         Top = 27
         Width = 15
-        Height = 21
+        Height = 24
         Anchors = [akTop, akRight]
         Associate = edtTextLen
         Max = 240
@@ -411,31 +420,10 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Left = 50
         Top = 49
         Width = 300
-        Height = 127
+        Height = 132
         Anchors = [akLeft, akTop, akRight, akBottom]
         BevelOuter = bvNone
         TabOrder = 7
-        ExplicitHeight = 114
-        object edtDefault: TCaptionEdit
-          Left = 0
-          Top = 0
-          Width = 300
-          Height = 22
-          Align = alTop
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Courier New'
-          Font.Style = []
-          MaxLength = 70
-          ParentFont = False
-          PopupMenu = popText
-          TabOrder = 1
-          OnChange = edtDefaultChange
-          OnEnter = edtpopControlEnter
-          OnExit = ControlExit
-          Caption = 'Default Value'
-        end
         object pnlNum: TPanel
           Left = 0
           Top = 22
@@ -447,29 +435,29 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           object lblMin: TLabel
             Left = 53
             Top = 4
-            Width = 20
-            Height = 13
+            Width = 24
+            Height = 16
             Caption = 'Min:'
           end
           object lblInc: TLabel
             Left = 207
             Top = 4
-            Width = 50
-            Height = 13
+            Width = 61
+            Height = 16
             Caption = 'Increment:'
           end
           object lblMaxVal: TLabel
             Left = 129
             Top = 4
-            Width = 23
-            Height = 13
+            Width = 28
+            Height = 16
             Caption = 'Max:'
           end
           object udDefNum: TUpDown
             Left = 34
             Top = 0
             Width = 15
-            Height = 21
+            Height = 24
             Associate = edtDefNum
             Min = -9999
             Max = 9999
@@ -480,7 +468,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Left = 0
             Top = 0
             Width = 34
-            Height = 21
+            Height = 24
             TabOrder = 0
             Text = '0'
             OnChange = edtDefNumChange
@@ -490,7 +478,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Left = 110
             Top = 0
             Width = 15
-            Height = 21
+            Height = 24
             Associate = edtMinVal
             Min = -9999
             Max = 9999
@@ -501,7 +489,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Left = 76
             Top = 0
             Width = 34
-            Height = 21
+            Height = 24
             TabOrder = 3
             Text = '0'
             OnChange = edtMinValChange
@@ -511,7 +499,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Left = 285
             Top = 0
             Width = 15
-            Height = 21
+            Height = 24
             Associate = edtInc
             Min = 1
             Max = 999
@@ -522,7 +510,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Left = 259
             Top = 0
             Width = 26
-            Height = 21
+            Height = 24
             TabOrder = 8
             Text = '1'
             OnChange = edtIncChange
@@ -532,7 +520,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Left = 155
             Top = 0
             Width = 34
-            Height = 21
+            Height = 24
             TabOrder = 6
             Text = '0'
             OnChange = edtMaxValChange
@@ -542,7 +530,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Left = 189
             Top = 0
             Width = 15
-            Height = 21
+            Height = 24
             Associate = edtMaxVal
             Min = -9999
             Max = 9999
@@ -573,7 +561,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Left = 0
           Top = 110
           Width = 300
-          Height = 17
+          Height = 22
           Align = alClient
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -592,7 +580,6 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           OnKeyUp = reNotesKeyUp
           OnResizeRequest = reItemsResizeRequest
           OnSelectionChange = reItemsSelectionChange
-          ExplicitHeight = 4
         end
         object cbxDefault: TORComboBox
           Left = 0
@@ -640,8 +627,8 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           object lblDateType: TLabel
             Left = 111
             Top = 4
-            Width = 53
-            Height = 13
+            Width = 67
+            Height = 16
             Anchors = [akTop, akRight]
             Caption = 'Date Type:'
           end
@@ -649,7 +636,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Left = 0
             Top = 0
             Width = 106
-            Height = 21
+            Height = 24
             Anchors = [akLeft, akTop, akRight]
             MaxLength = 70
             PopupMenu = popText
@@ -662,7 +649,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             Left = 167
             Top = 0
             Width = 133
-            Height = 21
+            Height = 24
             Anchors = [akTop, akRight]
             Style = orcsDropDown
             AutoSelect = True
@@ -676,7 +663,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
               'C^Combo Style'
               'Y^Combo Year Only'
               'M^Combo Year & Month')
-            ItemHeight = 13
+            ItemHeight = 16
             ItemTipColor = clWindow
             ItemTipEnable = True
             ListItemsOnly = True
@@ -692,12 +679,32 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
             CharsNeedMatch = 1
           end
         end
+        object edtDefault: TCaptionEdit
+          Left = 0
+          Top = 0
+          Width = 300
+          Height = 22
+          Align = alTop
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Courier New'
+          Font.Style = []
+          MaxLength = 70
+          ParentFont = False
+          PopupMenu = popText
+          TabOrder = 1
+          OnChange = edtDefaultChange
+          OnEnter = edtpopControlEnter
+          OnExit = ControlExit
+          Caption = 'Default Value'
+        end
       end
       object edtLen: TCaptionEdit
         Left = 214
         Top = 27
-        Width = 19
-        Height = 21
+        Width = 26
+        Height = 24
         Anchors = [akTop, akRight]
         TabOrder = 3
         Text = '1'
@@ -705,10 +712,10 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         Caption = 'Field Length'
       end
       object udLen: TUpDown
-        Left = 233
+        Left = 240
         Top = 27
         Width = 15
-        Height = 21
+        Height = 24
         Anchors = [akTop, akRight]
         Associate = edtLen
         Min = 1
@@ -718,32 +725,31 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       end
       object gbIndent: TGroupBox
         Left = 232
-        Top = 200
+        Top = 205
         Width = 118
         Height = 59
         Anchors = [akLeft, akBottom]
         Caption = ' Indent '
         TabOrder = 13
-        ExplicitTop = 187
         object lblIndent: TLabel
           Left = 10
           Top = 14
-          Width = 58
-          Height = 13
+          Width = 72
+          Height = 16
           Caption = 'Indent Field:'
         end
         object lblPad: TLabel
           Left = 10
           Top = 37
-          Width = 57
-          Height = 13
+          Width = 68
+          Height = 16
           Caption = 'Indent Text:'
         end
         object edtIndent: TCaptionEdit
           Left = 72
           Top = 10
           Width = 21
-          Height = 21
+          Height = 24
           TabOrder = 1
           Text = '0'
           OnChange = edtIndentChange
@@ -753,7 +759,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Left = 93
           Top = 10
           Width = 15
-          Height = 21
+          Height = 24
           Associate = edtIndent
           Max = 30
           TabOrder = 2
@@ -763,7 +769,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Left = 93
           Top = 33
           Width = 15
-          Height = 21
+          Height = 24
           Associate = edtPad
           Max = 30
           TabOrder = 5
@@ -773,7 +779,7 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
           Left = 72
           Top = 33
           Width = 21
-          Height = 21
+          Height = 24
           TabOrder = 3
           Text = '0'
           OnChange = edtPadChange
@@ -782,13 +788,12 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       end
       object gbMisc: TGroupBox
         Left = 10
-        Top = 200
+        Top = 205
         Width = 207
         Height = 59
         Anchors = [akLeft, akBottom]
         Caption = ' Miscellaneous '
         TabOrder = 12
-        ExplicitTop = 187
         object cbActive: TCheckBox
           Left = 6
           Top = 14
@@ -838,57 +843,59 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
-    DesignSize = (
-      788
-      25)
-    object MenuBar1: TMenuBar
-      Left = 0
-      Top = 0
-      Width = 41
-      Height = 25
-      Align = alLeft
-      AutoSize = True
-      ButtonHeight = 21
-      ButtonWidth = 37
-      Caption = 'MenuBar1'
-      Menu = mnuMain
-      ShowCaptions = True
-      TabOrder = 0
-    end
     object btnNew: TButton
+      AlignWithMargins = True
       Left = 710
-      Top = 2
+      Top = 3
       Width = 75
-      Height = 21
-      Anchors = [akTop, akRight, akBottom]
-      Caption = 'New'
-      TabOrder = 3
-      OnClick = mnuNewClick
+      Height = 19
+      Action = acNew
+      Align = alRight
+      TabOrder = 2
     end
     object btnCopy: TButton
-      Left = 631
-      Top = 2
+      AlignWithMargins = True
+      Left = 629
+      Top = 3
       Width = 75
-      Height = 21
-      Anchors = [akTop, akRight, akBottom]
-      Caption = 'Copy'
-      Enabled = False
-      TabOrder = 2
-      OnClick = mnuCopyClick
+      Height = 19
+      Action = acCopy
+      Align = alRight
+      TabOrder = 1
     end
     object btnDelete: TButton
-      Left = 552
-      Top = 2
+      AlignWithMargins = True
+      Left = 548
+      Top = 3
       Width = 75
-      Height = 21
-      Anchors = [akTop, akRight, akBottom]
-      Caption = 'Delete'
-      Enabled = False
-      TabOrder = 1
-      OnClick = mnuDeleteClick
+      Height = 19
+      Action = acDelete
+      Align = alRight
+      TabOrder = 0
+    end
+    object ToolBar1: TToolBar
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 49
+      Height = 19
+      Align = alLeft
+      AutoSize = True
+      ButtonWidth = 49
+      Caption = 'ToolBar1'
+      List = True
+      ShowCaptions = True
+      TabOrder = 3
+      object tbMnuAction: TToolButton
+        Left = 0
+        Top = 0
+        Action = acAction
+      end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 48
+    Top = 64
     Data = (
       (
         'Component = pnlBottom'
@@ -1035,9 +1042,6 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         'Component = pnlTop'
         'Status = stsDefault')
       (
-        'Component = MenuBar1'
-        'Status = stsDefault')
-      (
         'Component = btnNew'
         'Status = stsDefault')
       (
@@ -1048,36 +1052,18 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
         'Status = stsDefault')
       (
         'Component = frmTemplateFieldEditor'
+        'Status = stsDefault')
+      (
+        'Component = btnErrorCheck'
+        'Status = stsDefault')
+      (
+        'Component = ToolBar1'
         'Status = stsDefault'))
-  end
-  object mnuMain: TMainMenu
-    Left = 8
-    Top = 64
-    object mnuAction: TMenuItem
-      Caption = '&Action'
-      OnClick = mnuActionClick
-      object mnuNew: TMenuItem
-        Caption = '&New'
-        OnClick = mnuNewClick
-      end
-      object mnuCopy: TMenuItem
-        Caption = '&Copy'
-        OnClick = mnuCopyClick
-      end
-      object mnuDelete: TMenuItem
-        Caption = '&Delete'
-        OnClick = mnuDeleteClick
-      end
-      object mnuPreview: TMenuItem
-        Caption = '&Preview'
-        OnClick = btnPreviewClick
-      end
-    end
   end
   object popText: TPopupMenu
     OnPopup = popTextPopup
-    Left = 339
-    Top = 204
+    Left = 147
+    Top = 84
     object mnuBPUndo: TMenuItem
       Caption = '&Undo'
       ShortCut = 16474
@@ -1119,6 +1105,12 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       ShortCut = 16467
       OnClick = mnuBPSpellCheckClick
     end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object mnuErrorCheck2: TMenuItem
+      Action = acCheckForErrors
+    end
     object N14: TMenuItem
       Caption = '-'
     end
@@ -1126,6 +1118,66 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
       Caption = 'Insert Template &Field'
       ShortCut = 16454
       OnClick = mnuInsertTemplateFieldClick
+    end
+  end
+  object alMain: TActionList
+    Left = 32
+    Top = 288
+    object acNew: TAction
+      Caption = '&New'
+      OnExecute = acNewExecute
+    end
+    object acCopy: TAction
+      Caption = '&Copy'
+      OnExecute = acCopyExecute
+    end
+    object acDelete: TAction
+      Caption = '&Delete'
+      OnExecute = acDeleteExecute
+    end
+    object acCheckForErrors: TAction
+      Caption = 'Check for &Errors'
+      OnExecute = acCheckForErrorsExecute
+    end
+    object acCheckAll: TAction
+      Caption = 'Error Check &All Template Fields'
+      OnExecute = acCheckAllExecute
+    end
+    object acPreview: TAction
+      Caption = '&Preview'
+      OnExecute = acPreviewExecute
+    end
+    object acAction: TAction
+      Caption = '&Action'
+      OnExecute = acActionExecute
+    end
+  end
+  object popMain: TPopupMenu
+    Left = 96
+    Top = 288
+    object New1: TMenuItem
+      Action = acNew
+    end
+    object Copy1: TMenuItem
+      Action = acCopy
+    end
+    object Delete1: TMenuItem
+      Action = acDelete
+    end
+    object N5: TMenuItem
+      Caption = '-'
+    end
+    object CheckforErrors1: TMenuItem
+      Action = acCheckForErrors
+    end
+    object ErrorCheckAllTemplateFields1: TMenuItem
+      Action = acCheckAll
+    end
+    object N6: TMenuItem
+      Caption = '-'
+    end
+    object Preview1: TMenuItem
+      Action = acPreview
     end
   end
 end

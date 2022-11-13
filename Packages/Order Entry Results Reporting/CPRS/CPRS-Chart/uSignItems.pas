@@ -106,7 +106,7 @@ implementation
 
 uses
   ORFn,
-  ORNet,
+  ORNet, ORNetIntf,
   uConst,
   TRPCB,
   rOrders,
@@ -159,7 +159,7 @@ var
   uSingletonFlag: boolean = FALSE;
   FlagCount: integer;
   BaseFlags: string;
-  tempCkBx: TORCheckBox;
+  tempCkBx: TORCheckBox = nil;
   thisOrderID: string;
   thisChangeItem: TChangeItem;
   AllBtnLeft: integer;
@@ -248,8 +248,8 @@ begin
   inherited Create(AOwner);
   FItems := TORStringList.Create;
   Fcb := TList.Create;
-  tempCkBx := TORCheckBox.Create(AOwner);
-
+  if not assigned(tempCkBx) then
+    tempCkBx := TORCheckBox.Create(AOwner);
 end;
 
 destructor TSigItems.Destroy;
@@ -342,6 +342,9 @@ var
 
   itemText: string;
   thisTagInfo: TSigItemTagInfo;
+  sl: TStrings;
+
+  aList: iORNetMult;
 
   function CreateCB(AParent: TWinControl): TORCheckBox;
   begin
@@ -378,7 +381,6 @@ var
             idx := TChangeItem(lb.Items.Objects[ix]).ID;
             if ID = idx then
               Result := FALSE;
-
           end;
       end;
   end;
@@ -387,41 +389,38 @@ begin
   Result := FALSE;
   // Fcb.Clear;
   FBuilding := TRUE;
+  NewORNetMult(aList);
   try
+
     try
       idx := 0;
-      LockBroker;
-      try
-        RPCBrokerV.ClearParameters := TRUE;
-
-        for i := 0 to FItems.Count - 1 do
+      for i := 0 to FItems.Count - 1 do
         begin
           if notRightOne(i) then
             continue;
 
           s := FItems[i];
           thisOrderID := piece(s, U, 1);
+
           if BILLING_AWARE then
             if not UBACore.IsOrderBillable(thisOrderID) then
               RemoveOrderFromDxList(thisOrderID);
-          if (piece(s, U, 2) <> '-1') and (piece(s, U, 3) <> '1') then
-          begin
-            with RPCBrokerV do
-            begin
-              if idx = 0 then
-                Param[1].PType := list;
-              inc(idx);
-              Param[1].Mult[IntToStr(idx)] := piece(s, U, 1);
-            end;
-          end;
-        end; // for
 
-        if idx > 0 then
-        begin
-          rpcGetSC4Orders;
-          for i := 0 to RPCBrokerV.Results.Count - 1 do
+          if (piece(s, U, 2) <> '-1') and (piece(s, U, 3) <> '1') then
             begin
-              s := RPCBrokerV.Results[i];
+              inc(idx);
+              aList.AddSubscript([IntToStr(idx)], thisOrderID);
+            end;
+         end; // for
+
+      if idx > 0 then
+        begin
+          sl := TSTringList.Create;
+          try
+            rpcGetSC4Orders(sl,Patient.DFN ,aList);
+          for i := 0 to sl.Count - 1 do
+            begin
+              s := sl[i];
               { Begin BillingAware }
               if BILLING_AWARE then
                 begin
@@ -512,11 +511,11 @@ begin
 
                 end; // if idx >= 0
 
-            end; // for i := 0 to RPCBrokerV.Results.Count-1
+            end;
+            finally
+              sl.Free;
+          end;
         end; // if idx > 0
-      finally
-        UnlockBroker;
-      end;
       FStsCount := 0;
       AllBtnLeft := 0;
 
@@ -1146,7 +1145,7 @@ begin
   except
     on EAccessViolation do
       begin
-        // {$ifdef debug}Show508Message('EAccessViolation in uSignItems.GetTempCkBxState()');{$endif}
+        // Show508Message('EAccessViolation in uSignItems.GetTempCkBxState()');
         raise;
       end;
   end;
@@ -1157,11 +1156,16 @@ initialization
 
 FlagCount := ord(high(TSigItemType)) - ord(low(TSigItemType)) + 1;
 BaseFlags := StringOfChar(StsChar[isNA], FlagCount);
-thisChangeItem := TChangeItem.Create; // CQ3301/3302
+thisChangeItem := nil;
 AllBtnLeft := 0;
 
 finalization
 
-FreeAndNil(uSigItems);
+if assigned(tempCkBx) then
+  FreeAndNil(tempCkBx);
+if assigned(uSigItems) then
+  FreeAndNil(uSigItems);
+if assigned(uSigItemsCS) then
+  FreeAndNil(uSigItemsCS);
 
 end.

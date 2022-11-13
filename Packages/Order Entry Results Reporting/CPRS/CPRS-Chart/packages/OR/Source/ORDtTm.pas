@@ -61,7 +61,7 @@ type
   TORfrmDtTm = class(Tfrm2006Compatibility)
     VA508AccessibilityManager1: TVA508AccessibilityManager;
     TxtDateSelected: TLabel;
-    Label1: TLabel;
+    lblCalendar: TLabel;
     bvlFrame: TBevel;
     pnlDate: TPanel;
     txtTime: TEdit;
@@ -90,11 +90,13 @@ type
     procedure lstHourEnter(Sender: TObject);
     procedure bbtnPrevMonthClick(Sender: TObject);
     procedure bbtnNextMonthClick(Sender: TObject);
+    procedure lstMinuteEnter(Sender: TObject);
     // NSR20071216 AA 2016-01-22 ----------------------------------------------- End
   private
     FFromSelf: Boolean;
     FNowPressed: Boolean;
     TimeIsRequired: Boolean;
+    FQuiet: boolean;
     // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
     procedure setTimeListsBySelectedDate;
     procedure setRangeTimeBoundaries;
@@ -198,6 +200,7 @@ type
     property DateSelected: TDateTime read fDateSelected write fDateSelected;
     property DateRange: TDateRange read fDateRange write fDateRange;
     // NSR20071216 AA 2016-01-22 ----------------------------------------------- End
+    property InternalFMDateTime: TFMDateTime read FFMDateTime;
   published
     property FMDateTime: TFMDateTime read GetFMDateTime write SetFMDateTime;
     property DateOnly: Boolean read FDateOnly write SetDateOnly;
@@ -284,6 +287,7 @@ type
     destructor Destroy; override;
     function DateText: string;
     procedure SetBlackColorMode(Value: Boolean);
+    procedure updateYear;
     property TemplateField: Boolean read FTemplateField write SetTemplateField;
     property FMDate: TFMDateTime read GetFMDate write SetFMDate;
   published
@@ -432,11 +436,14 @@ end;
 
 procedure TORfrmDtTm.FormCreate(Sender: TObject);
 begin
+  lblCalendar.Caption :=
+//    'Date calendar selector. Use the page up and down buttons to cycle through the months.';
+    'Date calendar selector. Use the left and right arrow buttons to cycle through the months.';
   ResizeAnchoredFormToFont(self);
   lstHour.TopIndex := 6;
   FFromSelf := False;
   if ScreenReaderSystemActive then
-    GetScreenReader.Speak(Label1.Caption);
+    GetScreenReader.Speak(lblCalendar.Caption);
 end;
 
 // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
@@ -520,15 +527,31 @@ begin
   calSelect.PrevMonth;
 end;
 
+
 procedure TORfrmDtTm.calSelectChange(Sender: TObject);
+
+  function DoW: String;
+  var
+    myDate : TDateTime;
+    i: integer;
+  begin
+    try
+      with calSelect do
+        myDate := EncodeDate(year, month, day);
+      i := DayofWeek(myDate); // starts SUNDAY
+      Result := FormatSettings.LongDayNames[i];
+    except
+      Result := '';
+    end;
+  end;
+
 begin
   pnlDate.Caption := FormatDateTime('mmmm d, yyyy', calSelect.CalendarDate);
   FNowPressed := False;
-  if ScreenReaderSystemActive then
+  if ScreenReaderSystemActive and not FQuiet then
   begin
-    // TxtDateSelected.Caption := lblDate.Caption;
-    TxtDateSelected.Caption := Label1.Caption + ' ' + pnlDate.Caption;
-    GetScreenReader.Speak(pnlDate.Caption);
+    TxtDateSelected.Caption := pnlDate.Caption + ' ' + DOW;
+    GetScreenReader.Speak(pnlDate.Caption + Dow);
   end;
   // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
   if IsRangeMode then // check if the valid range was set
@@ -578,15 +601,23 @@ begin
     cmdMidnight.Enabled := calSelect.ValidRange.IsBetweenMinAndMax
       (round(dt) + 1 - 1 / (24 * 60));
 
-    bbtnPrevMonth.Enabled :=
-      calSelect.ValidRange.MinDate < EncodeDate(calSelect.Year, calSelect.Month, 1);
+    try
+      bbtnPrevMonth.Enabled :=
+        calSelect.ValidRange.MinDate < EncodeDate(calSelect.Year, calSelect.Month, 1);
+    except
+      bbtnPrevMonth.Enabled := True;
+    end;
 
-    if calSelect.Month = 12 then
-      dt := EncodeDate(calSelect.Year + 1, 1, 1) - 1
-    else
-      dt := EncodeDate(calSelect.Year, calSelect.Month + 1, 1) - 1;
+    try
+      if calSelect.Month = 12 then
+        dt := EncodeDate(calSelect.Year + 1, 1, 1) - 1
+      else
+        dt := EncodeDate(calSelect.Year, calSelect.Month + 1, 1) - 1;
 
-    bbtnNextMonth.Enabled := dt < calSelect.ValidRange.MaxDate;
+      bbtnNextMonth.Enabled := dt < calSelect.ValidRange.MaxDate;
+    except
+      bbtnNextMonth.Enabled := True;
+    end;
   end;
 end;
 
@@ -604,6 +635,7 @@ end;
 
 var
   HourSel: String;
+  ATime: TDateTime;
 begin
   // only in case the valid range is assigned
   if (not assigned(calSelect.ValidRange)) or (
@@ -618,8 +650,12 @@ begin
 
   // Grab the hour selected
   if lstHour.ItemIndex < 0 then
-    HourSel := '0'
-  else
+  begin
+    if TryStrToTime(txtTime.Text, ATime) then
+      HourSel := IntToStr(HourOf(ATime))
+    else
+      HourSel := '0';
+  end else
     HourSel := stripChars(lstHour.Items[lstHour.ItemIndex]);
 
   // Now need to enforce invalid times
@@ -675,6 +711,10 @@ end;
 // NSR20071216 AA 2016-01-22 ----------------------------------------------- End
 
 procedure TORfrmDtTm.lstHourClick(Sender: TObject);
+var
+  hr, txt: string;
+  idx: integer;
+
 begin
   setRangeTimeBoundaries; // NSR20071216 AA 2016-01-29
   if lstHour.ItemIndex = 0 then lstMinute.Items[0] := ':01  --'
@@ -682,33 +722,85 @@ begin
   if lstMinute.ItemIndex > -1 then
     // The situation where itemindex = -1 occurs when the minimum time is in
     // the last 5 minutes of the hour, because all minute choices are greyed out
-    lstMinuteClick(Sender);
+    lstMinuteClick(Sender)
+  else if lstHour.ItemIndex >= 0 then
+  begin
+    hr := Format('%.2d:', [lstHour.ItemIndex]);
+    txt := txtTime.Text;
+    if (txt = '00:01') and (lstHour.ItemIndex > 0) then
+      txt := hr + '00'
+    else
+    begin
+      idx := pos(':', txt);
+      if idx > 0 then
+        txt := hr + copy(txt, idx + 1, MaxInt)
+      else
+        txt := hr + '00';
+    end;
+    if txt = '00:00' then
+      txt := '00:01';
+    FFromSelf := True;
+    try
+      txtTime.Text := txt;
+    finally
+      FFromSelf := False;
+    end;
+  end;
 end;
 
 procedure TORfrmDtTm.lstHourEnter(Sender: TObject);
 begin
   setRangeTimeBoundaries; // NSR20071216 AA 2016-01-29
+  if ScreenReaderSystemActive then
+    if lstHour.ItemIndex > -1 then
+      GetScreenReader.Speak(lstHour.Items[lstHour.ItemIndex])
+    else
+      GetScreenReader.Speak('No value selected');
 end;
 
 procedure TORfrmDtTm.lstMinuteClick(Sender: TObject);
+
+function ConvertMinuteToMinMaxIndex(aDateTime: TDateTime; var NewMinute: Integer) : Integer;
+begin
+  try
+    NewMinute := MinuteOf(aDateTime);
+    if NewMinute mod 5 > 0 then
+      Result := -1
+    else
+      Result := NewMinute div 5;
+    if Result > 11 then Result := 11;
+  except
+    Result := 0;
+  end;
+end;
+
 var
   AnHour, AMinute: Integer;
   ATime: TDateTime;
+  
 begin
-  if lstHour.ItemIndex < 0 then
+  setRangeTimeBoundaries;
+
+  AnHour := lstHour.ItemIndex;
+  if AnHour < 0 then
   begin
     if TryStrToTime(txtTime.Text, ATime) then
-    begin
-      lstHour.ItemIndex := HourOf(ATime);
-    end else begin
-      lstHour.ItemIndex := 0;
-    end;
-    lstHourClick(Sender);
+      AnHour := HourOf(ATime)
+    else
+      AnHour := 0;
   end;
-  AnHour := lstHour.ItemIndex;
-  if lstMinute.ItemIndex >= 0 then AMinute := lstMinute.ItemIndex * 5
-  else AMinute := 0; // NSR20071216 AA 2016-01-29
+  if lstMinute.ItemIndex >= 0 then
+  begin
+    AMinute := lstMinute.ItemIndex * 5;
+    //ensure we picked a valid time
+    if (lstMinute.MinTime <> -1) and ((lstMinute.ItemIndex * 5) < lstMinute.MinTime) then
+      lstMinute.itemIndex := ConvertMinuteToMinMaxIndex(calSelect.MinDateTime, AMinute)
+    else if (lstMinute.MaxTime <> -1) and ((lstMinute.ItemIndex * 5) > lstMinute.MaxTime) then
+      lstMinute.itemIndex := ConvertMinuteToMinMaxIndex(calSelect.MaxDateTime, AMinute);
+
+  end else AMinute := 0; // NSR20071216 AA 2016-01-29
   if (AnHour = 0) and (AMinute = 0) then AMinute := 1; // <-------------- NEW CODE
+
   FFromSelf := True;
   try
     txtTime.Text := Format('%.2d:%.2d ', [AnHour, AMinute]);
@@ -717,15 +809,28 @@ begin
   end;
 end;
 
+procedure TORfrmDtTm.lstMinuteEnter(Sender: TObject);
+begin
+  inherited;
+  if ScreenReaderSystemActive then
+    if lstMinute.ItemIndex > -1 then
+      GetScreenReader.Speak(lstMinute.Items[lstMinute.ItemIndex])
+    else
+      GetScreenReader.Speak('No value selected');
+end;
+
 procedure TORfrmDtTm.cmdNowClick(Sender: TObject);
 begin
   calSelect.CalendarDate := ServerToday;
   txtTime.Text := FormatDateTime('hh:nn', ServerNow); // if ampm time
 
-    lstHour.ItemIndex := -1;
-    lstMinute.ItemIndex := -1;
+  lstHour.ItemIndex := -1;
+  lstMinute.ItemIndex := -1;
 
   FNowPressed := True;
+
+  if ScreenReaderSystemActive then
+    GetScreenReader.Speak(txtTime.Text);
 end;
 
 procedure TORfrmDtTm.cmdMidnightClick(Sender: TObject);
@@ -734,6 +839,9 @@ begin
 
   lstHour.ItemIndex := -1;
   lstMinute.ItemIndex := -1;
+
+  if ScreenReaderSystemActive then
+    GetScreenReader.Speak(pnlDate.Caption + ' ' + txtTime.Text);
 end;
 
 function TORfrmDtTm.TimeIsValid: Boolean;
@@ -915,7 +1023,9 @@ begin
     begin
       pnlDate.Caption := FormatDateTime('mmmm d, yyyy',FDateTime);
       calSelect.CalendarDate := FDateTime;
+      frmDtTm.FQuiet := True;
       setRange; // NSR20071216 AA 2016-01-22
+      frmDtTm.FQuiet := False;
 
       if Frac(FDateTime) > 0
       // then txtTime.Text := FormatDateTime('h:nn ampm', FDateTime);  // if ampm time
@@ -1037,13 +1147,14 @@ begin
   FButton.Parent := self;
   FButton.Width := 18;
   FButton.Height := 17;
+  FButton.Align := alRight; //AA aligning button to parent area
   FButton.OnClick := ButtonClick;
   // blj 19 Sept 2017 JAZZ 329927 - We have to be able to set focus to the button using
   //      Dragon before we can pop the dialog and worry about whether or not we can use
   //      Dragon to move forward or backwards a month.
   FButton.TabStop := True;
   if ScreenReaderActive and not (csDesigning in ComponentState) then
-    FButton.Caption := 'Ellipsis';
+    FButton.Caption := 'Date and time selector'; // 'Ellipsis';
   FBlackColorMode := False;
   LoadEllipsis(FButton.Glyph, False);
   FButton.Visible := True;
@@ -1060,19 +1171,21 @@ end;
 // NSR20071216 AA 2016-01-22 ----------------------------------------------- End
 
 procedure TORDateBox.WMSize(var Message: TWMSize);
-var
-  ofs: Integer;
-
+//var
+//  ofs: Integer;
 begin
   inherited;
   if Assigned(FButton) then
   begin
-    if BorderStyle = bsNone then
-      ofs := 0
-    else
-      ofs := 4;
-    FButton.SetBounds(Width - FButton.Width - ofs, 0, FButton.Width,
-      Height - ofs);
+//    if BorderStyle = bsNone then
+//      ofs := 0
+//    else
+//      ofs := 4;
+//    FButton.SetBounds(Width - FButton.Width - ofs, 0, FButton.Width,
+// FButton is aligned to the right of the parent area
+// so no additional position correction is required.
+// Adjusting width of the button instead
+    FButton.Width := FontHeightPixel(Self.Font.Handle) + 6;
   end;
   SetEditRect;
 end;
@@ -1112,34 +1225,37 @@ var
   ParsedDate: TFMDateTime;
 begin
   DateDialog := TORDateTimeDlg.Create(Application);
-  // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
-  DateDialog.DateRange := DateRange;
-  if DateSelected <> 0 then // RTC item # 322517 (20160518)
-  DateDialog.DateTime := DateSelected;
-  // NSR20071216 AA 2016-01-22 ----------------------------------------------- End
-  if Length(Text) > 0 then
-  begin
-    ParsedDate := ServerParseFMDate(Text);
-    if ParsedDate > -1 then
-      FFMDateTime := ParsedDate
-    else
-      FFMDateTime := 0;
-  end;
-  DateDialog.DateOnly := FDateOnly;
-  DateDialog.FMDateTime := FFMDateTime;
-  DateDialog.RequireTime := FRequireTime;
+  try
+    // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
+    DateDialog.DateRange := DateRange;
+    if DateSelected <> 0 then // RTC item # 322517 (20160518)
+    DateDialog.DateTime := DateSelected;
+    // NSR20071216 AA 2016-01-22 ----------------------------------------------- End
+    if Length(Text) > 0 then
+    begin
+      ParsedDate := ServerParseFMDate(Text);
+      if ParsedDate > -1 then
+        FFMDateTime := ParsedDate
+      else
+        FFMDateTime := 0;
+    end;
+    DateDialog.DateOnly := FDateOnly;
+    DateDialog.FMDateTime := FFMDateTime;
+    DateDialog.RequireTime := FRequireTime;
 
-  if DateDialog.Execute then
-  begin
-    FFMDateTime := DateDialog.FMDateTime;
-    UpdateText;
-    FTimeIsNow := DateDialog.RelativeTime = 'NOW';
-    fDateSelected := DateDialog.DateTime; // NSR20071216 AA 2016-01-22
+    if DateDialog.Execute then
+    begin
+      FFMDateTime := DateDialog.FMDateTime;
+      UpdateText;
+      FTimeIsNow := DateDialog.RelativeTime = 'NOW';
+      fDateSelected := DateDialog.DateTime; // NSR20071216 AA 2016-01-22
+    end;
+  finally
+    DateDialog.Free;
   end;
-  DateDialog.Free;
   if Assigned(OnDateDialogClosed) then
     OnDateDialogClosed(self);
-  if Visible and Enabled and not (csDestroying in self.ComponentState) then // Some events may hide the component
+  if ShouldFocus(Self) then // Some events may hide the component
     SetFocus;
 end;
 
@@ -1160,9 +1276,13 @@ begin
 end;
 
 procedure TORDateBox.KeyPress(var Key: Char);
+// TfrmODMeds.CMDialogKey takes #9 out of the dialogkeys, thus making it
+// generate a KeyPress event on that form, which causes this code to add a
+// tab to the text in the edit control. This control should never accept a key
+// press of tab, hence setting Key to #0 to prevent further processing for #9
+// when it gets here. (The code to ignore #13 was already in place)
 begin
-  if Key = #13 then
-    Key := #0;
+  if CharInSet(Key, [#9, #13]) then Key := #0;
   inherited;
 end;
 
@@ -1179,7 +1299,7 @@ begin
   Result := '';
   if FTimeIsNow then
     Result := 'NOW'
-  else if UpperCase(Text) = 'NOW' then
+  else if IsNow(Text) then
     Result := 'NOW'
   else if Length(Text) > 0 then
   begin
@@ -1231,9 +1351,10 @@ var
 begin
   SendMessage(Handle, EM_GETRECT, 0, Longint(@Loc));
   Loc.Bottom := ClientHeight + 1; // +1 is workaround for windows paint bug
-  Loc.Right := FButton.Left - 2;
+//  Loc.Right := FButton.Left - 2;
+  loc.Right := loc.Right - fbutton.Width - 2;
   Loc.Top := 0;
-  Loc.Left := 0;
+  Loc.Left := 4;// updating position to avoid overlaping with left border
   SendMessage(Handle, EM_SETRECTNP, 0, Longint(@Loc));
 end;
 
@@ -1260,7 +1381,7 @@ begin
   if Length(Text) > 0 then
   begin
     {
-      !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
+      !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - VHAISPBELLC !!!!!!
       //We need to make sure that there is a date entered before parse
       if FRequireTime and ((Pos('@', Text) = 0) or (Length(Piece(Text, '@', 1)) = 0)) then
       ErrMsg := 'Date Required';
@@ -2014,6 +2135,12 @@ begin
   end;
 end;
 
+procedure TORDateCombo.updateYear;
+begin
+ FYearUD.Position := self.FYear;
+ FYearEdit.Text := IntToStr(self.FYear);
+end;
+
 procedure Register;
 { used by Delphi to put components on the Palette }
 begin
@@ -2151,21 +2278,25 @@ begin
   TheText := CellText[ACol, ARow];
   if TheText = '' then
     exit;
-  DteToChk := EncodeDate(Year, Month, StrToIntDef(TheText, 0));
+  try
+    DteToChk := EncodeDate(Year, Month, StrToIntDef(TheText, 0));
 
-  // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
-  if Assigned(ValidRange) then
-  begin
-    if Result then
+    // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
+    if Assigned(ValidRange) then
     begin
-      _min := getMinDateTime;
-      _max := getMaxDateTime;
-      if _min <> -1 then
-        Result := DateOf(DteToChk) >= DateOf(FloatToDateTime(_min));
-      if _max <> -1 then
-        Result := Result and
-          (DateOf(DteToChk) <= DateOf(FloatToDateTime(_max)));
+      if Result then
+      begin
+        _min := getMinDateTime;
+        _max := getMaxDateTime;
+        if _min <> -1 then
+          Result := DateOf(DteToChk) >= DateOf(FloatToDateTime(_min));
+        if _max <> -1 then
+          Result := Result and
+            (DateOf(DteToChk) <= DateOf(FloatToDateTime(_max)));
+      end;
     end;
+  except
+    Result := True;
   end;
   // NSR20071216 AA 2016-01-22 ----------------------------------------------- End
 end;
@@ -2197,6 +2328,8 @@ var
   CurMonth, CurYear, CurDay: Word;
   UseColor: TColor;
   _min, _max: TDateTime;
+  TempRect: TRect;
+  DayText: string;
 
 begin
   TheText := CellText[ACol, ARow];
@@ -2211,38 +2344,45 @@ begin
 
       if StrToIntDef(TheText, -1) <> -1 then
       begin
-        DteToChk := EncodeDate(Year, Month, StrToIntDef(TheText, 0));
         UseColor := clWindow;
+        try
+          DteToChk := EncodeDate(Year, Month, StrToIntDef(TheText, 0));
 
-        if (_min <> -1) and (_max <> -1) then
-        begin
-          // All dates between
-          if not IsBetweenMinAndMax(DteToChk) then
-            UseColor := clLtGray;
-         if DateOf(DteToChk) = DateOf(FloatToDateTime(_min)) then
-            UseColor := clWindow;
-          if DateOf(DteToChk) = DateOf(FloatToDateTime(_max)) then
-            UseColor := clWindow;
-        end
-        else if _min <> -1 then
-        begin
-          // All dates between
-          if DateOf(DteToChk) < DateOf(FloatToDateTime(_min)) then
-            UseColor := clLtGray;
-         if DateOf(DteToChk) = DateOf(FloatToDateTime(_min)) then
-            UseColor := clWindow;
-        end
-        else if _max <> -1 then
-        begin
-          // All dates between
-          if DateOf(DteToChk) > DateOf(FloatToDateTime(_max)) then
-            UseColor := clLtGray;
-          if DateOf(DteToChk) = DateOf(FloatToDateTime(_max)) then
-            UseColor := clWindow;
+          if (_min <> -1) and (_max <> -1) then
+          begin
+            // All dates between
+            if not IsBetweenMinAndMax(DteToChk) then
+              UseColor := clLtGray;
+           if DateOf(DteToChk) = DateOf(FloatToDateTime(_min)) then
+              UseColor := clWindow;
+            if DateOf(DteToChk) = DateOf(FloatToDateTime(_max)) then
+              UseColor := clWindow;
+          end
+          else if _min <> -1 then
+          begin
+            // All dates between
+            if DateOf(DteToChk) < DateOf(FloatToDateTime(_min)) then
+              UseColor := clLtGray;
+           if DateOf(DteToChk) = DateOf(FloatToDateTime(_min)) then
+              UseColor := clWindow;
+          end
+          else if _max <> -1 then
+          begin
+            // All dates between
+            if DateOf(DteToChk) > DateOf(FloatToDateTime(_max)) then
+              UseColor := clLtGray;
+            if DateOf(DteToChk) = DateOf(FloatToDateTime(_max)) then
+              UseColor := clWindow;
+          end;
+        except
+          UseColor := clLtGray;
         end;
         Brush.Color := UseColor;
       end;
     end;
+
+    DayText := TheText;
+
     DecodeDate(Date, CurYear, CurMonth, CurDay);
     if (CurYear = Year) and (CurMonth = Month) and (IntToStr(CurDay) = TheText)
     then
@@ -2255,6 +2395,14 @@ begin
 
     TextRect(ARect, Left + (Right - Left - TextWidth(TheText)) div 2,
       Top + (Bottom - Top - TextHeight(TheText)) div 2, TheText);
+
+    if (not Focused) and (StrToIntDef(DayText, 0) = Day) then
+    begin
+      TempRect := ARect;
+      InflateRect(TempRect, -1, -1);
+      Canvas.Brush.Style := bsSolid;
+      Windows.DrawFocusRect(Canvas.Handle, TempRect);
+    end;
   end;
 end;
 

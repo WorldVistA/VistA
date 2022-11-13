@@ -9,6 +9,12 @@
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+  2. Changed ChooseDiv function - if a user is not multi-divisional the
+  original code would set RPCBroker1.User.Division equal to the value of
+  the Kernel parameter
+
   Changes in XWB*1.1*71 (RGG 10/18/2018) XWB*1.1*71
   1. Updated RPC Version to version 71.
 
@@ -50,6 +56,7 @@ type
     btnHelp: TBitBtn;
     DivLabel1: TLabel;
     DivListBox: TListBox;
+    ListBox1: TListBox;
     procedure btnOKClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure btnHelpClick(Sender: TObject);
@@ -74,6 +81,7 @@ implementation
 
 var
   DivSel: string;
+  selectedDiv: string;
   CntDiv: integer;
   DivArray: TStrings; // Holds Results from 'XUS Division Get'
 {$R *.DFM}
@@ -104,28 +112,44 @@ begin
     CntDiv := StrToInt(MDivBroker.Results[0]); // count of divisions.
   end; { with }
   if CntDiv = 0 then
+//p72 start
+  begin
+    try
+      MDivBroker.RemoteProcedure := 'XUS GET USER INFO';
+      MDivBroker.Call;
+      if MDivBroker.Results.Count > 0 then
+          MDivBroker.User.Division := MDivBroker.Results[3]
+    except
+      begin
+        ShowMessage('Unable to set division');
+      end;
+    end;
     Result := true; // using the Kernel default division.
+  end;
+//p72 end
   // if CntDiv = 1 then ? //if a user is assigned to one division, use it?
   // if CntDiv > 1 then   //pop up form below
   if CntDiv > 0 then
   begin
     DivArray := TStringlist.Create; // Put Results in DivArray
     DivArray.Assign(MDivBroker.Results);
+    SelDivForm := TSelDivForm.Create(Application); // create division form.
     try
-      SelDivForm := TSelDivForm.Create(Application); // create division form.
       ShowApplicationAndFocusOK(Application);
       SetForegroundWindow(SelDivForm.Handle);
       SelDivForm.Enter;
     finally;
+      DivArray.Destroy;
       SelDivForm.Free;
     end;
   end; { if/begin }
   if DivSel <> '' then
   begin
     Result := true; // user selected a division.
-    division := Piece((Piece(DivSel, '(', 2)), ')', 1);
+    division := Piece(selectedDiv, '^', 3);
+    //division := Piece((Piece(DivSel, '(', 2)), ')', 1);
     if SetDiv(division, MDivBroker) then
-      MDivBroker.User.division := division;
+      MDivBroker.User.division := selectedDiv;
   end; { if/begin }
 end; { procedure }
 
@@ -166,9 +190,10 @@ begin
   if DivSel <> '' then
   begin
     Result := true; // user selected a division.
-    division := Piece((Piece(DivSel, '(', 2)), ')', 1);
+    division := selectedDiv;
+    //division := Piece((Piece(DivSel, '(', 2)), ')', 1);
     if SetDiv(division, MDivBroker) then
-      MDivBroker.User.division := division;
+        MDivBroker.User.division := division;
   end { if divsel }
   else
     MDivBroker.LogIn.ErrorText := 'Invalid Division';
@@ -228,6 +253,8 @@ begin
   else
   begin
     DivSel := DivListBox.Items[DivListBox.ItemIndex]; // division
+    selectedDiv := ListBox1.Items[DivListBox.ItemIndex];
+
     close; // selected.
   end;
 end;
@@ -256,6 +283,7 @@ begin
   while not(I > CntDiv) do
   begin
     X := DivArray[I];
+    ListBox1.Items.Add(X);
     y := '(' + Piece(X, U, 3) + ') ' + Piece(X, U, 2);
     // p13 moved div# in front
     // of div name
@@ -265,7 +293,7 @@ begin
       def := y;
     I := I + 1;
   end;
-  DivListBox.Sorted := true;
+  //DivListBox.Sorted := true;
   if def <> '' then
     DivListBox.ItemIndex := DivListBox.Items.Indexof(def);
   // use itemindex to highlight the default division

@@ -228,7 +228,7 @@ begin
               SigItems.Add(CH_ORD, Obj.ID, cidx);
               frmSignOrders.clstOrders.Checked[cidx] := True;
 
-              if (TOrder(Items[i]).DGroupName) = NonVAMedGroup then
+              if Obj.Signature = OSS_NOT_REQUIRE then
                 frmSignOrders.clstOrders.State[cidx] := cbGrayed;
             end
 
@@ -239,7 +239,7 @@ begin
 
               frmSignOrders.clstOrders.Checked[cidx] := True;
 
-              if (TOrder(Items[i]).DGroupName) = NonVAMedGroup then
+              if Obj.Signature = OSS_NOT_REQUIRE then
                 frmSignOrders.clstOrders.State[cidx] := cbGrayed;
             end
 
@@ -258,7 +258,7 @@ begin
                   else
                     frmSignOrders.clstCSOrders.Checked[cidx] := False;
 
-                  if (TOrder(Items[i]).DGroupName) = NonVAMedGroup then
+                  if Obj.Signature = OSS_NOT_REQUIRE then
                     frmSignOrders.clstCSOrders.State[cidx] := cbGrayed;
                 end;
             end;
@@ -392,7 +392,7 @@ begin
 
                   if (cidx > -1) and (CSOrder = False) and (cErr = '') then
                     begin
-                      if TOrder(Items[i]).DGroupName = NonVAMedGroup then
+                      if TOrder(Items[i]).Signature = OSS_NOT_REQUIRE then
                         frmSignOrders.clstOrders.Checked[cidx] := True; // Non VA MEDS
                       if frmSignOrders.clstOrders.Checked[cidx] then
                         begin
@@ -629,6 +629,7 @@ begin
   Application.HintPause := 250;
   FOldHintHidePause := Application.HintHidePause;
   Application.HintHidePause := 30000;
+  ResizeFormToFont(Self);
 end;
 
 procedure TfrmSignOrders.FormShow(Sender: TObject);
@@ -664,7 +665,8 @@ begin
         begin
           for j := 0 to clstOrders.Items.Count - 1 do
             clstOrders.Selected[j] := False;
-          clstOrders.Selected[0] := True;
+          if clstOrders.Items.Count > 0 then
+            clstOrders.Selected[0] := True;
           clstOrders.SetFocus;
         end;
     // end CQ5054
@@ -683,11 +685,12 @@ begin
   except
     on E: Exception do
       begin
-        // {$ifdef debug}Show508Message('Unhandled exception in procedure TfrmSignOrders.FormMouseMove()');{$endif}
+        // Show508Message('Unhandled exception in procedure TfrmSignOrders.FormMouseMove()');
         raise;
       end;
   end;
 end;
+
 
 procedure TfrmSignOrders.FormPaint(Sender: TObject);
 begin
@@ -705,13 +708,11 @@ begin
       clstCSOrders.Height := pnlCSOrderList.Height - clstCSOrders.Top - 4;
       clstCSOrders.Width := pnlCSOrderList.Width - clstCSOrders.Left - 4;
     end;
-
 end;
 
 procedure TfrmSignOrders.FormResize(Sender: TObject);
 begin
   inherited;
-
   if clstCSOrders.Count = 0 then
     begin
       clstOrders.Height := pnlOrderList.Height - clstOrders.Top - 4;
@@ -844,6 +845,7 @@ end;
 procedure TfrmSignOrders.clstOrdersClickCheck(Sender: TObject);
 var
   aListView: TCaptionCheckListBox;
+  aOrder: TOrder;
 
   procedure updateAllChilds(CheckedStatus: boolean; ParentOrderId: string);
   var
@@ -879,25 +881,33 @@ begin
             mtError, [mbOk], 0);
       end;
 
-  with aListView do
-    begin
-      if length(TOrder(Items.Objects[ItemIndex]).ParentID) > 0 then
-        begin
-          if aListView = clstOrders then
-            SigItems.EnableSettings(ItemIndex, Checked[ItemIndex]);
-          if aListView = clstCSOrders then
-            SigItemsCS.EnableSettings(ItemIndex, Checked[ItemIndex]);
+   if not Assigned(aListView.Items.Objects[aListView.ItemIndex]) then
+    exit;
+   aOrder := TOrder(aListView.Items.Objects[aListView.ItemIndex]);
 
-          updateAllChilds(Checked[ItemIndex], TOrder(Items.Objects[ItemIndex]).ParentID);
-        end
-      else
-        begin
-          if aListView = clstOrders then
-            SigItems.EnableSettings(ItemIndex, Checked[ItemIndex]);
-          if aListView = clstCSOrders then
-            SigItemsCS.EnableSettings(ItemIndex, Checked[ItemIndex]);
-        end
-    end;
+   if (aOrder.Signature = OSS_NOT_REQUIRE) then
+    aListView.State[aListView.ItemIndex] := cbGrayed
+   else begin
+    with aListView do
+      begin
+        if length(TOrder(Items.Objects[ItemIndex]).ParentID) > 0 then
+          begin
+            if aListView = clstOrders then
+              SigItems.EnableSettings(ItemIndex, Checked[ItemIndex]);
+            if aListView = clstCSOrders then
+              SigItemsCS.EnableSettings(ItemIndex, Checked[ItemIndex]);
+
+            updateAllChilds(Checked[ItemIndex], TOrder(Items.Objects[ItemIndex]).ParentID);
+          end
+        else
+          begin
+            if aListView = clstOrders then
+              SigItems.EnableSettings(ItemIndex, Checked[ItemIndex]);
+            if aListView = clstCSOrders then
+              SigItemsCS.EnableSettings(ItemIndex, Checked[ItemIndex]);
+          end
+      end;
+   end;
 
   if ItemsAreChecked(clstCSOrders) and nonDCCSItemsAreChecked then
     begin
@@ -995,7 +1005,7 @@ begin
       begin
         if clstOrders.Checked[i] then
           begin
-            with TOrder(Items[i]) do
+            with TOrder(Items.Objects[i]) do
               if Signature <> OSS_NOT_REQUIRE then
                 Result := True;
           end;
@@ -1006,7 +1016,7 @@ begin
       begin
         if clstCSOrders.Checked[i] then
           begin
-            with TOrder(Items[i]) do
+            with TOrder(Items.Objects[i]) do
               if Signature <> OSS_NOT_REQUIRE then
                 Result := True;
           end;

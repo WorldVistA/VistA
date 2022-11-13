@@ -13,6 +13,8 @@ type
   TfrmPCEBaseGrid = class(TfrmPCEBase)
     pnlGrid: TPanel;
     lstCaptionList: TCaptionListView;
+    procedure lstCaptionListChanging(Sender: TObject; Item: TListItem;
+      Change: TItemChange; var AllowChange: Boolean);
   private
     FSel: string;
     function GetGridIndex: integer;
@@ -21,6 +23,7 @@ type
     procedure UpdateControls; virtual;
     procedure SaveGridSelected;
     procedure RestoreGridSelected;
+    procedure RemoveGridSelected(Index: integer);
   public
     procedure ClearGrid;
     property GridIndex: integer read GetGridIndex write SetGridIndex;
@@ -58,6 +61,13 @@ begin
   end;
 end;
 
+procedure TfrmPCEBaseGrid.lstCaptionListChanging(Sender: TObject;
+  Item: TListItem; Change: TItemChange; var AllowChange: Boolean);
+begin
+  inherited;
+  AllowChange := ProcessPostedValidateMag(Self);
+end;
+
 procedure TfrmPCEBaseGrid.SetGridIndex(const Value: integer);
 var
   i: integer;
@@ -76,6 +86,11 @@ end;
 
 procedure TfrmPCEBaseGrid.UpdateControls;
 begin
+end;
+
+procedure TfrmPCEBaseGrid.RemoveGridSelected(Index: integer);
+begin
+  Delete(FSel, Index + 1, 1);
 end;
 
 procedure TfrmPCEBaseGrid.RestoreGridSelected;

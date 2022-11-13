@@ -2,7 +2,7 @@ unit fConsMedRslt;
 
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
+uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ORCtrls, ORfn, ExtCtrls, fAutoSz, ORDtTm, fConsultAlertTo, fRptBox,
   VA508AccessibilityManager, Vcl.ComCtrls, Vcl.ImgList, System.ImageList;
 
@@ -57,7 +57,7 @@ implementation
 
 {$R *.DFM}
 
-uses rConsults, rCore, uCore, uConst, uSimilarNames;
+uses rConsults, rCore, uCore, uConst, uORLists, uSimilarNames;
 
 const
   TX_MEDRSLT_TEXT = 'Select medicine result or press Cancel.';
@@ -70,6 +70,7 @@ function SelectMedicineResult(ConsultIEN: integer; FormTitle: string; var MedRes
 { displays Medicine Result selection form and returns a record of the selection }
 var
   frmConsMedRslt: TfrmConsMedRslt;
+  TempList: TCaptionListStringList;
 
   procedure DisplayImage(LstView: TCaptionListView);
   var
@@ -100,18 +101,27 @@ begin
       cboPerson.SelectByIEN(User.DUZ);
       ResizeFormToFont(TForm(frmConsMedRslt));
 
-      if MedResult.Action = 'ATTACH' then
+      TempList := TCaptionListStringList.Create;
+      try
+        if MedResult.Action = 'ATTACH' then
         begin
-          FastAssign(GetAssignableMedResults(ConsultIEN), lstMedResults.ItemsStrings);
+          // Must use TempList, NOT lstMedResults.ItemsStrings
+          setAssignableMedResults(TempList, ConsultIEN);
+          lstMedResults.ItemsStrings := TempList; // rebuilds list view items
           ckAlert.Visible := True;
           DisplayImage(lstMedResults);
         end
-      else if MedResult.Action = 'REMOVE' then
+        else if MedResult.Action = 'REMOVE' then
         begin
-          FastAssign(GetRemovableMedResults(ConsultIEN), lstMedResults.ItemsStrings);
+          // Must use TempList, NOT lstMedResults.ItemsStrings
+          setRemovableMedResults(TempList, ConsultIEN);
+          lstMedResults.ItemsStrings := TempList; // rebuilds list view items
           ckAlert.Visible := False;
           DisplayImage(lstMedResults);
         end;
+      finally
+        TempList.Free;
+      end;
       if lstMedResults.Items.Count > 0 then
         ShowModal
       else
@@ -132,6 +142,8 @@ begin
 end;
 
 procedure TfrmConsMedRslt.cmdOKClick(Sender: TObject);
+var
+ ErrMsg: String;
 begin
   FillChar(FMedResult, SizeOf(FMedResult), 0);
   if lstMedResults.ItemIndex = -1 then
@@ -139,6 +151,11 @@ begin
     InfoBox(TX_MEDRSLT_TEXT, TX_MEDRSLT_CAP, MB_OK or MB_ICONWARNING);
     FChanged := False ;
     Exit;
+  end;
+  if not CheckForSimilarName(cboPerson, ErrMsg, sPr) then
+  begin
+    ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');
+    exit;
   end;
   FChanged := True;
   with FMedResult do
@@ -156,22 +173,32 @@ const
   TX_RESULTS_CAP = 'Detailed Results Display';
 var
   x: string;
-  //MsgString, HasImages: string;
+  // MsgString, HasImages: string;
+  sl: TStrings;
 begin
   inherited;
-  if lstMedResults.ItemIndex = -1 then exit;
-  x := Piece(Piece(Piece(lstMedResults.ItemID, ';', 2), '(', 2), ',', 1) + ';' + Piece(lstMedResults.ItemID, ';', 1);
+  if lstMedResults.ItemIndex = -1 then
+    Exit;
+  x := Piece(Piece(Piece(lstMedResults.ItemID, ';', 2), '(', 2), ',', 1) + ';' +
+    Piece(lstMedResults.ItemID, ';', 1);
   // ---------------------------------------------------------------
   // Don't do this until MED API is changed for new/unassigned results, or false '0' will be broadcast
-(*  MsgString := 'MED^' + x;
-  HasImages := BOOLCHAR[StrToIntDef(Piece(x, U, 5), 0) > 0];
-  SetPiece(HasImages, U, 10, HasImages);
-  NotifyOtherApps(NAE_REPORT, MsgString);*)
+  (* MsgString := 'MED^' + x;
+    HasImages := BOOLCHAR[StrToIntDef(Piece(x, U, 5), 0) > 0];
+    SetPiece(HasImages, U, 10, HasImages);
+    NotifyOtherApps(NAE_REPORT, MsgString); *)
   // ---------------------------------------------------------------
   NotifyOtherApps(NAE_REPORT, 'MED^' + x);
-  if(not assigned(FShowDetails)) then
+  if (not assigned(FShowDetails)) then
   begin
-    FShowDetails := ModelessReportBox(GetDetailedMedicineResults(lstMedResults.ItemID), TX_RESULTS_CAP, True);
+    // FShowDetails := ModelessReportBox(GetDetailedMedicineResults(lstMedResults.ItemID), TX_RESULTS_CAP, True);
+    sl := TSTringList.Create;
+    try
+      setDetailedMedicineResults(sl, lstMedResults.ItemID);
+      FShowDetails := ModelessReportBox(sl, TX_RESULTS_CAP, True);
+    finally
+      sl.Free;
+    end;
     FOldShowDetailsOnDestroy := FShowDetails.OnDestroy;
     FShowDetails.OnDestroy := ShowDetailsDestroyed;
     cmdDetails.Enabled := (not assigned(FShowDetails));
@@ -188,6 +215,7 @@ begin
   lstMedResults.Enabled := (not assigned(FShowDetails));
 end;
 
+
 procedure TfrmConsMedRslt.ckAlertClick(Sender: TObject);
 begin
   FillChar(RecipientList, SizeOf(RecipientList), 0);
@@ -198,7 +226,7 @@ procedure TfrmConsMedRslt.NewPersonNeedData(Sender: TObject; const StartFrom: st
   Direction, InsertAt: Integer);
 begin
   inherited;
-  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  setPersonList((Sender as TORComboBox), StartFrom, Direction);
 end;
 
 procedure TfrmConsMedRslt.FormCreate(Sender: TObject);

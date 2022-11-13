@@ -2,8 +2,8 @@ object frmViewNotifications: TfrmViewNotifications
   Left = 0
   Top = 0
   Caption = 'All Current Notifications for Patient'
-  ClientHeight = 515
-  ClientWidth = 953
+  ClientHeight = 424
+  ClientWidth = 801
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,8 @@ object frmViewNotifications: TfrmViewNotifications
     AlignWithMargins = True
     Left = 6
     Top = 6
-    Width = 941
-    Height = 446
+    Width = 789
+    Height = 355
     Margins.Left = 6
     Margins.Top = 6
     Margins.Right = 6
@@ -69,16 +69,22 @@ object frmViewNotifications: TfrmViewNotifications
     OnDblClick = acProcessExecute
     AutoSize = False
     Caption = 'clvNotifications'
+    HideTinyColumns = False
+    ExplicitWidth = 941
+    ExplicitHeight = 446
   end
   object pnlBottom: TPanel
     Left = 0
-    Top = 458
-    Width = 953
+    Top = 367
+    Width = 801
     Height = 57
     Align = alBottom
     TabOrder = 1
+    ExplicitLeft = -6
+    ExplicitTop = 370
+    ExplicitWidth = 793
     DesignSize = (
-      953
+      801
       57)
     object lblFrom: TLabel
       Left = 12
@@ -97,7 +103,7 @@ object frmViewNotifications: TfrmViewNotifications
       Caption = 'To:'
     end
     object btnClose: TButton
-      Left = 873
+      Left = 721
       Top = 13
       Width = 73
       Height = 30
@@ -108,9 +114,10 @@ object frmViewNotifications: TfrmViewNotifications
       Action = acClose
       Anchors = [akRight, akBottom]
       TabOrder = 0
+      ExplicitLeft = 873
     end
     object btnDefer: TButton
-      Left = 790
+      Left = 638
       Top = 13
       Width = 74
       Height = 30
@@ -121,9 +128,10 @@ object frmViewNotifications: TfrmViewNotifications
       Action = acDefer
       Anchors = [akRight, akBottom]
       TabOrder = 1
+      ExplicitLeft = 790
     end
     object btnProcess: TButton
-      Left = 708
+      Left = 555
       Top = 13
       Width = 75
       Height = 30
@@ -134,6 +142,7 @@ object frmViewNotifications: TfrmViewNotifications
       Action = acProcess
       Anchors = [akRight, akBottom]
       TabOrder = 2
+      ExplicitLeft = 592
     end
     object ordbFrom: TORDateBox
       Left = 55
@@ -160,9 +169,9 @@ object frmViewNotifications: TfrmViewNotifications
       Caption = ''
     end
     object btnUpdate: TButton
-      Left = 359
+      Left = 351
       Top = 13
-      Width = 106
+      Width = 100
       Height = 30
       Margins.Left = 4
       Margins.Top = 4
@@ -172,6 +181,16 @@ object frmViewNotifications: TfrmViewNotifications
       Caption = '&Update List'
       TabOrder = 7
       OnClick = btnUpdateClick
+    end
+    object btnDetails: TButton
+      Left = 472
+      Top = 13
+      Width = 75
+      Height = 30
+      Action = acDetails
+      Anchors = [akRight, akBottom]
+      TabOrder = 8
+      ExplicitLeft = 509
     end
   end
   object acList: TActionList
@@ -197,6 +216,10 @@ object frmViewNotifications: TfrmViewNotifications
     object acSortByColumn: TAction
       Caption = 'acSortByColumn'
       OnExecute = acSortByColumnExecute
+    end
+    object acDetails: TAction
+      Caption = 'Det&ails'
+      OnExecute = acDetailsExecute
     end
   end
 end

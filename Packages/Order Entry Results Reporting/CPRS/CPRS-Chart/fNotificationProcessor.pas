@@ -8,6 +8,7 @@ uses
   System.SysUtils,
   System.Variants,
   System.Classes,
+  System.UITypes,
   Vcl.Graphics,
   Vcl.Controls,
   Vcl.Forms,
@@ -15,8 +16,7 @@ uses
   Vcl.StdCtrls,
   Vcl.ExtCtrls,
   System.Actions,
-  Vcl.ActnList,
-  System.UITypes;
+  Vcl.ActnList;
 
 type
   TNotificationAction = (naCancel, naNewNote, naAddendum);
@@ -103,7 +103,7 @@ begin
       if Execute then
         try
           Self.ModalResult := mrCancel;
-          aResult := sCallV('ORB3UTL DEFER', [User.DUZ, fAlert, DeferUntilFM]);
+          CallVistA('ORB3UTL DEFER', [User.DUZ, fAlert, DeferUntilFM],aResult);
           if aResult <> '1' then
             raise Exception.Create(Copy(aResult, Pos(aResult, '^') + 1, Length(aResult)))
           else

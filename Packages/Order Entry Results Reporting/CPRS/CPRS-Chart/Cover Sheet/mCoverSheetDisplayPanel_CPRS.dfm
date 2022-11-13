@@ -27,6 +27,7 @@ inherited fraCoverSheetDisplayPanel_CPRS: TfraCoverSheetDisplayPanel_CPRS
         RowSelect = True
         TabOrder = 0
         ViewStyle = vsReport
+        OnDeletion = lvDataDeletion
         OnEnter = lvDataEnter
         OnExit = lvDataExit
         OnKeyDown = lvDataKeyDown

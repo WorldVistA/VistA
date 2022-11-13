@@ -15,9 +15,9 @@ inherited frmOptionsOther: TfrmOptionsOther
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitHeight = 609
+  ExplicitHeight = 605
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlBottom: TPanel [0]
     Left = 0
     Top = 548
@@ -28,6 +28,8 @@ inherited frmOptionsOther: TfrmOptionsOther
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 0
+    ExplicitTop = 528
+    ExplicitWidth = 329
     object bvlBottom: TBevel
       Left = 0
       Top = 0
@@ -49,6 +51,9 @@ inherited frmOptionsOther: TfrmOptionsOther
       ModalResult = 1
       TabOrder = 0
       OnClick = btnOKClick
+      ExplicitLeft = 131
+      ExplicitTop = 7
+      ExplicitHeight = 22
     end
     object btnCancel: TButton
       AlignWithMargins = True
@@ -63,6 +68,9 @@ inherited frmOptionsOther: TfrmOptionsOther
       ModalResult = 2
       TabOrder = 1
       OnClick = btnCancelClick
+      ExplicitLeft = 223
+      ExplicitTop = 7
+      ExplicitHeight = 22
     end
   end
   object Panel1: TPanel [1]
@@ -75,7 +83,27 @@ inherited frmOptionsOther: TfrmOptionsOther
     BevelOuter = bvNone
     Caption = 'Panel1'
     ShowCaption = False
-    TabOrder = 1
+    TabOrder = 3
+    ExplicitTop = 400
+    ExplicitHeight = 549
+    object lblMedsTab: TLabel
+      Left = 0
+      Top = 113
+      Width = 308
+      Height = 29
+      Hint = 'Set date ranges for displaying medication orders on Meds tab.'
+      Align = alTop
+      Caption = 'Set date ranges for Meds tab display:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      WordWrap = True
+    end
     object Panel2: TPanel
       Left = 0
       Top = 0
@@ -86,15 +114,18 @@ inherited frmOptionsOther: TfrmOptionsOther
       Caption = 'Panel2'
       ShowCaption = False
       TabOrder = 0
+      ExplicitWidth = 314
       object lblTab: TLabel
         AlignWithMargins = True
         Left = 3
-        Top = 26
+        Top = 29
         Width = 302
-        Height = 13
+        Height = 16
         Align = alTop
         Caption = 'Initial tab when CPRS starts:'
-        ExplicitWidth = 134
+        ExplicitLeft = 8
+        ExplicitTop = 27
+        ExplicitWidth = 164
       end
       object Bevel1: TBevel
         AlignWithMargins = True
@@ -112,7 +143,7 @@ inherited frmOptionsOther: TfrmOptionsOther
         Left = 3
         Top = 3
         Width = 302
-        Height = 17
+        Height = 20
         Align = alTop
         Caption = 'Chart tabs'
         Font.Charset = DEFAULT_CHARSET
@@ -122,13 +153,16 @@ inherited frmOptionsOther: TfrmOptionsOther
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
+        ExplicitLeft = 8
+        ExplicitTop = 6
+        ExplicitWidth = 74
       end
       object cboTab: TORComboBox
         AlignWithMargins = True
         Left = 3
-        Top = 45
+        Top = 51
         Width = 302
-        Height = 21
+        Height = 24
         HelpContext = 9111
         Style = orcsDropDown
         Align = alTop
@@ -136,7 +170,7 @@ inherited frmOptionsOther: TfrmOptionsOther
         Caption = 'Initial tab when CPRS starts:'
         Color = clWindow
         DropDownCount = 8
-        ItemHeight = 13
+        ItemHeight = 16
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = False
@@ -150,17 +184,23 @@ inherited frmOptionsOther: TfrmOptionsOther
         TabStop = True
         Text = ''
         CharsNeedMatch = 1
+        ExplicitLeft = 8
+        ExplicitTop = 48
+        ExplicitWidth = 217
       end
       object chkLastTab: TCheckBox
         AlignWithMargins = True
         Left = 3
-        Top = 72
+        Top = 81
         Width = 302
         Height = 21
         HelpContext = 9112
         Align = alTop
         Caption = 'Use last selected tab on patient change'
         TabOrder = 2
+        ExplicitLeft = 8
+        ExplicitTop = 78
+        ExplicitWidth = 305
       end
     end
     object Panel3: TPanel
@@ -173,6 +213,8 @@ inherited frmOptionsOther: TfrmOptionsOther
       Caption = 'Panel3'
       ShowCaption = False
       TabOrder = 1
+      ExplicitTop = 184
+      ExplicitWidth = 314
       object Bevel2: TBevel
         AlignWithMargins = True
         Left = 3
@@ -189,7 +231,7 @@ inherited frmOptionsOther: TfrmOptionsOther
         Left = 3
         Top = 11
         Width = 302
-        Height = 13
+        Height = 20
         Hint = 'Set date range for Encounter Appointments.'
         Align = alTop
         Caption = 'Set date range for Encounter Appointments:'
@@ -202,13 +244,13 @@ inherited frmOptionsOther: TfrmOptionsOther
         ParentShowHint = False
         ShowHint = True
         WordWrap = True
-        ExplicitWidth = 250
+        ExplicitWidth = 183
       end
       object Panel4: TPanel
         Left = 208
-        Top = 27
+        Top = 34
         Width = 100
-        Height = 122
+        Height = 115
         Align = alRight
         BevelOuter = bvNone
         Caption = 'Panel4'
@@ -231,21 +273,27 @@ inherited frmOptionsOther: TfrmOptionsOther
           ParentFont = False
           TabOrder = 0
           OnClick = btnEncDefaultsClick
+          ExplicitLeft = 120
+          ExplicitTop = 15
+          ExplicitWidth = 191
         end
       end
       object Panel5: TPanel
         Left = 0
-        Top = 27
+        Top = 34
         Width = 208
-        Height = 122
+        Height = 115
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel5'
         ShowCaption = False
         TabOrder = 1
+        ExplicitLeft = -3
+        ExplicitTop = 33
+        ExplicitHeight = 163
         object Panel6: TPanel
           Left = 0
-          Top = 23
+          Top = 26
           Width = 208
           Height = 31
           Align = alTop
@@ -257,7 +305,7 @@ inherited frmOptionsOther: TfrmOptionsOther
             AlignWithMargins = True
             Left = 16
             Top = 3
-            Width = 64
+            Width = 82
             Height = 25
             Margins.Left = 16
             Align = alLeft
@@ -266,10 +314,13 @@ inherited frmOptionsOther: TfrmOptionsOther
             Color = clBtnFace
             ParentColor = False
             TabOrder = 0
+            ExplicitLeft = 40
+            ExplicitTop = 11
+            ExplicitHeight = 20
           end
           object txtEncStart: TCaptionEdit
             AlignWithMargins = True
-            Left = 86
+            Left = 104
             Top = 3
             Width = 46
             Height = 25
@@ -284,7 +335,7 @@ inherited frmOptionsOther: TfrmOptionsOther
           end
           object spnEncStart: TUpDown
             Tag = 30
-            Left = 132
+            Left = 152
             Top = 3
             Width = 15
             Height = 25
@@ -297,30 +348,36 @@ inherited frmOptionsOther: TfrmOptionsOther
           end
           object txtDaysMinus: TStaticText
             AlignWithMargins = True
-            Left = 179
+            Left = 171
             Top = 3
-            Width = 26
+            Width = 34
             Height = 25
             Align = alRight
             Caption = 'days'
             Color = clBtnFace
             ParentColor = False
             TabOrder = 3
+            ExplicitLeft = 174
+            ExplicitTop = 11
+            ExplicitHeight = 20
           end
         end
         object stStopEncAppts: TStaticText
           AlignWithMargins = True
           Left = 3
-          Top = 57
+          Top = 60
           Width = 202
-          Height = 17
+          Height = 20
           Align = alTop
           Caption = 'Stop Date:'
           TabOrder = 1
+          ExplicitLeft = 12
+          ExplicitTop = 143
+          ExplicitWidth = 67
         end
         object Panel7: TPanel
           Left = 0
-          Top = 77
+          Top = 83
           Width = 208
           Height = 31
           Align = alTop
@@ -332,7 +389,7 @@ inherited frmOptionsOther: TfrmOptionsOther
             AlignWithMargins = True
             Left = 16
             Top = 3
-            Width = 56
+            Width = 82
             Height = 25
             Margins.Left = 16
             Align = alLeft
@@ -344,7 +401,7 @@ inherited frmOptionsOther: TfrmOptionsOther
           end
           object txtEncStop: TCaptionEdit
             AlignWithMargins = True
-            Left = 78
+            Left = 104
             Top = 3
             Width = 46
             Height = 25
@@ -359,19 +416,22 @@ inherited frmOptionsOther: TfrmOptionsOther
           end
           object txtDaysPlus: TStaticText
             AlignWithMargins = True
-            Left = 179
+            Left = 171
             Top = 3
-            Width = 26
+            Width = 34
             Height = 25
             Align = alRight
             Caption = 'days'
             Color = clBtnFace
             ParentColor = False
             TabOrder = 2
+            ExplicitLeft = 174
+            ExplicitTop = 11
+            ExplicitHeight = 20
           end
           object spnEncStop: TUpDown
             Tag = 30
-            Left = 124
+            Left = 152
             Top = 3
             Width = 15
             Height = 25
@@ -388,209 +448,172 @@ inherited frmOptionsOther: TfrmOptionsOther
           Left = 3
           Top = 3
           Width = 202
-          Height = 17
+          Height = 20
           Align = alTop
           Caption = 'Start Date:'
           TabOrder = 3
         end
       end
     end
-    object Panel8: TPanel
-      Left = 0
-      Top = 113
-      Width = 308
-      Height = 280
-      Align = alClient
-      BevelOuter = bvNone
+    object grpOverAll: TGroupBox
+      AlignWithMargins = True
+      Left = 3
+      Top = 145
+      Width = 302
+      Height = 77
+      Align = alTop
+      Caption = 'Overall Meds Default'
       TabOrder = 2
-      ExplicitLeft = 32
-      ExplicitTop = 128
-      ExplicitWidth = 465
-      ExplicitHeight = 265
-      object lblMedsTab: TLabel
-        Left = 0
-        Top = 0
-        Width = 308
-        Height = 13
-        Hint = 'Set date ranges for displaying medication orders on Meds tab.'
-        Align = alTop
-        Caption = 'Set date ranges for Meds tab display:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = True
-        WordWrap = True
-        ExplicitLeft = 1
-        ExplicitTop = 1
-        ExplicitWidth = 213
-      end
-      object grpOverAll: TGroupBox
-        AlignWithMargins = True
-        Left = 3
-        Top = 16
-        Width = 302
-        Height = 77
-        Align = alTop
-        Caption = 'Overall Meds Default'
+      ExplicitTop = 132
+      ExplicitWidth = 305
+      object stStart: TStaticText
+        Left = 26
+        Top = 25
+        Width = 66
+        Height = 20
+        Caption = 'Start Date:'
         TabOrder = 0
-        ExplicitLeft = 4
-        ExplicitTop = 17
-        ExplicitWidth = 457
-        object stStart: TStaticText
-          Left = 26
-          Top = 25
-          Width = 55
-          Height = 17
-          Caption = 'Start Date:'
-          TabOrder = 0
-        end
-        object dtStart: TORDateBox
-          Left = 104
-          Top = 21
-          Width = 187
-          Height = 21
-          Hint = 
-            'Start Date for All Meds -Overriden by Inpatient/Outpatient Setti' +
-            'ngs Below'
-          TabOrder = 1
-          OnChange = dtStartChange
-          OnExit = dtStartExit
-          DateOnly = True
-          RequireTime = False
-          Caption = 'Start Date'
-        end
-        object stStop: TStaticText
-          Left = 26
-          Top = 48
-          Width = 55
-          Height = 17
-          Caption = 'Stop Date:'
-          TabOrder = 3
-        end
-        object dtStop: TORDateBox
-          Left = 104
-          Top = 48
-          Width = 186
-          Height = 21
-          Hint = 
-            'Stop Date for All Meds -Overriden by Inpatient/Outpatient Settin' +
-            'gs Below'
-          TabOrder = 4
-          OnExit = dtStopExit
-          DateOnly = True
-          RequireTime = False
-          Caption = 'Stop Date'
-        end
       end
-      object grpInpatientMeds: TGroupBox
-        AlignWithMargins = True
-        Left = 3
-        Top = 99
-        Width = 302
-        Height = 77
-        Align = alTop
-        Caption = 'Inpatient Meds'
+      object dtStart: TORDateBox
+        Left = 104
+        Top = 21
+        Width = 187
+        Height = 24
+        Hint = 
+          'Start Date for All Meds -Overriden by Inpatient/Outpatient Setti' +
+          'ngs Below'
         TabOrder = 1
-        ExplicitLeft = 4
-        ExplicitTop = 100
-        ExplicitWidth = 457
-        object stStartIn: TStaticText
-          Left = 26
-          Top = 25
-          Width = 55
-          Height = 17
-          Caption = 'Start Date:'
-          TabOrder = 0
-        end
-        object dtStartIn: TORDateBox
-          Left = 104
-          Top = 21
-          Width = 187
-          Height = 21
-          Hint = 'Start Date for Inpatient (Unit Dose/IV) Meds'
-          TabOrder = 1
-          OnExit = dtStartInExit
-          DateOnly = True
-          RequireTime = False
-          Caption = 'Start Date'
-        end
-        object stStopIn: TStaticText
-          Left = 26
-          Top = 48
-          Width = 55
-          Height = 17
-          Caption = 'Stop Date:'
-          TabOrder = 3
-        end
-        object dtStopIn: TORDateBox
-          Left = 104
-          Top = 48
-          Width = 186
-          Height = 21
-          Hint = 'Stop Date for Inpatient (Unit Dose/IV) Meds'
-          TabOrder = 4
-          OnExit = dtStopInExit
-          DateOnly = True
-          RequireTime = False
-          Caption = 'Stop Date'
-        end
+        OnChange = dtStartChange
+        OnExit = dtStartExit
+        DateOnly = True
+        RequireTime = False
+        Caption = 'Start Date'
       end
-      object grpOutpatientMeds: TGroupBox
-        AlignWithMargins = True
-        Left = 3
-        Top = 182
-        Width = 302
-        Height = 77
-        Align = alTop
-        Caption = 'Outpatient / non-VA Meds'
-        TabOrder = 2
-        ExplicitLeft = 4
-        ExplicitTop = 183
-        ExplicitWidth = 457
-        object stStartOp: TStaticText
-          Left = 26
-          Top = 25
-          Width = 55
-          Height = 17
-          Caption = 'Start Date:'
-          TabOrder = 0
-        end
-        object dtStartOp: TORDateBox
-          Left = 104
-          Top = 21
-          Width = 187
-          Height = 21
-          Hint = 'Start Date for Outpatient / non-VA Meds'
-          TabOrder = 1
-          OnExit = dtStartOpExit
-          DateOnly = True
-          RequireTime = False
-          Caption = 'Start Date'
-        end
-        object stStopOp: TStaticText
-          Left = 26
-          Top = 48
-          Width = 55
-          Height = 17
-          Caption = 'Stop Date:'
-          TabOrder = 3
-        end
-        object dtStopOp: TORDateBox
-          Left = 104
-          Top = 48
-          Width = 186
-          Height = 21
-          Hint = 'Stop Date for Outpatient / non-VA Meds'
-          TabOrder = 4
-          OnExit = dtStopOpExit
-          DateOnly = True
-          RequireTime = False
-          Caption = 'Stop Date'
-        end
+      object stStop: TStaticText
+        Left = 26
+        Top = 48
+        Width = 67
+        Height = 20
+        Caption = 'Stop Date:'
+        TabOrder = 3
+      end
+      object dtStop: TORDateBox
+        Left = 104
+        Top = 48
+        Width = 186
+        Height = 24
+        Hint = 
+          'Stop Date for All Meds -Overriden by Inpatient/Outpatient Settin' +
+          'gs Below'
+        TabOrder = 4
+        OnExit = dtStopExit
+        DateOnly = True
+        RequireTime = False
+        Caption = 'Stop Date'
+      end
+    end
+    object grpInpatientMeds: TGroupBox
+      AlignWithMargins = True
+      Left = 3
+      Top = 228
+      Width = 302
+      Height = 77
+      Align = alTop
+      Caption = 'Inpatient Meds'
+      TabOrder = 3
+      ExplicitTop = 215
+      ExplicitWidth = 305
+      object stStartIn: TStaticText
+        Left = 26
+        Top = 25
+        Width = 66
+        Height = 20
+        Caption = 'Start Date:'
+        TabOrder = 0
+      end
+      object dtStartIn: TORDateBox
+        Left = 104
+        Top = 21
+        Width = 187
+        Height = 24
+        Hint = 'Start Date for Inpatient (Unit Dose/IV) Meds'
+        TabOrder = 1
+        OnExit = dtStartInExit
+        DateOnly = True
+        RequireTime = False
+        Caption = 'Start Date'
+      end
+      object stStopIn: TStaticText
+        Left = 26
+        Top = 48
+        Width = 67
+        Height = 20
+        Caption = 'Stop Date:'
+        TabOrder = 3
+      end
+      object dtStopIn: TORDateBox
+        Left = 104
+        Top = 48
+        Width = 186
+        Height = 24
+        Hint = 'Stop Date for Inpatient (Unit Dose/IV) Meds'
+        TabOrder = 4
+        OnExit = dtStopInExit
+        DateOnly = True
+        RequireTime = False
+        Caption = 'Stop Date'
+      end
+    end
+    object grpOutpatientMeds: TGroupBox
+      AlignWithMargins = True
+      Left = 3
+      Top = 311
+      Width = 302
+      Height = 77
+      Align = alTop
+      Caption = 'Outpatient / non-VA Meds'
+      TabOrder = 4
+      ExplicitTop = 298
+      ExplicitWidth = 305
+      object stStartOp: TStaticText
+        Left = 26
+        Top = 25
+        Width = 66
+        Height = 20
+        Caption = 'Start Date:'
+        TabOrder = 0
+      end
+      object dtStartOp: TORDateBox
+        Left = 104
+        Top = 21
+        Width = 187
+        Height = 24
+        Hint = 'Start Date for Outpatient / non-VA Meds'
+        TabOrder = 1
+        OnExit = dtStartOpExit
+        DateOnly = True
+        RequireTime = False
+        Caption = 'Start Date'
+      end
+      object stStopOp: TStaticText
+        Left = 26
+        Top = 48
+        Width = 67
+        Height = 20
+        Caption = 'Stop Date:'
+        TabOrder = 3
+      end
+      object dtStopOp: TORDateBox
+        Left = 104
+        Top = 48
+        Width = 186
+        Height = 24
+        Hint = 'Stop Date for Outpatient / non-VA Meds'
+        TabOrder = 4
+        OnExit = dtStopOpExit
+        DateOnly = True
+        RequireTime = False
+        Caption = 'Stop Date'
       end
     end
   end
@@ -653,30 +676,6 @@ inherited frmOptionsOther: TfrmOptionsOther
         'Component = frmOptionsOther'
         'Status = stsDefault')
       (
-        'Component = Panel1'
-        'Status = stsDefault')
-      (
-        'Component = Panel2'
-        'Status = stsDefault')
-      (
-        'Component = Panel3'
-        'Status = stsDefault')
-      (
-        'Component = Panel4'
-        'Status = stsDefault')
-      (
-        'Component = Panel5'
-        'Status = stsDefault')
-      (
-        'Component = Panel6'
-        'Status = stsDefault')
-      (
-        'Component = Panel7'
-        'Status = stsDefault')
-      (
-        'Component = Panel8'
-        'Status = stsDefault')
-      (
         'Component = grpOverAll'
         'Status = stsDefault')
       (
@@ -720,6 +719,27 @@ inherited frmOptionsOther: TfrmOptionsOther
         'Status = stsDefault')
       (
         'Component = dtStopOp'
+        'Status = stsDefault')
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = Panel2'
+        'Status = stsDefault')
+      (
+        'Component = Panel3'
+        'Status = stsDefault')
+      (
+        'Component = Panel4'
+        'Status = stsDefault')
+      (
+        'Component = Panel5'
+        'Status = stsDefault')
+      (
+        'Component = Panel6'
+        'Status = stsDefault')
+      (
+        'Component = Panel7'
         'Status = stsDefault'))
   end
 end

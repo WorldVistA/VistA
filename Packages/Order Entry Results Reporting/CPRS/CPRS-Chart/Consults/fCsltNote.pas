@@ -12,6 +12,7 @@ type
     cboCsltNote: TORComboBox;
     lblAction: TLabel;
     pnlBase: TORAutoPanel;
+    pnlButtons: TPanel;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
   private

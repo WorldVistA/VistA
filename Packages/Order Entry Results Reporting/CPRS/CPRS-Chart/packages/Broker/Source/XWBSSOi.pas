@@ -6,10 +6,13 @@
   Description: Contains the TXWBSSOiToken component.
   Unit: XWBSSOi contains a simple TWebBrowser to 'POST' a SOAP
   message to IAM to obtain a SAML token.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { *************************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in v1.1.71 (RGG 02/07/2019) XWB*1.1*71
   1. Re-factored the internals of securing the STS token from
   IAM. Converted from TWebBrowser to THTTPRIO and TXMLDocument.
@@ -132,7 +135,6 @@ uses
   Xml.Win.msxmldom,
   System.Net.URLClient,
   System.Net.HttpClient;
-
 type
   { ------ TXWBSSOiToken ------ }
   { This component defines and obtains the STS SAML token used to authenticate
@@ -203,6 +205,7 @@ type
     UserName, Password: String; // p71
     httpRio1: THTTPRIO; // p71
   end;
+var  ShowCertDialog: boolean;
 
 const
   NameUnknown = 0; // Unknown name type.
@@ -399,6 +402,7 @@ var
   begin
   Store := CertOpenSystemStore(0, 'MY');
   MemoryStore := CertOpenStore(CERT_STORE_PROV_MEMORY, 0, 0, 0, nil);
+  SelectedCert := nil;
   try
     CertContext := CertEnumCertificatesInStore(Store, nil);
     while CertContext <> nil do
@@ -428,28 +432,41 @@ var
           {if((KeyUsageBits and CERT_DIGITAL_SIGNATURE_KEY_USAGE)=CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
           (ValidDate = 0) and (not ContainsText(NameString, 'people')) then}
           //Chris' Change Starts Here
-		  if((KeyUsageBits and CERT_DIGITAL_SIGNATURE_KEY_USAGE)=CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
-          (ValidDate = 0) and (ContainsText(NameString, 'Authentication - ')) then
+//		  if((KeyUsageBits and CERT_DIGITAL_SIGNATURE_KEY_USAGE)=CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
+//          (ValidDate = 0) and (ContainsText(NameString, 'Authentication - ')) then
+		          if((KeyUsageBits and CERT_DIGITAL_SIGNATURE_KEY_USAGE)=CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
+                (ValidDate = 0) and (not ContainsText(NameString, 'Card Authentication')) and
+                  (not ContainsText(NameString, '0,')) and
+                    (not ContainsText(NameString, 'Signature'))
+              then
           //Chris' Change Ends Here
             begin
               CertAddCertificateContextToStore(MemoryStore, CertContext,
                 CERT_STORE_ADD_ALWAYS, ValidCert);
+              SelectedCert := ValidCert;
             end
             else
 		          if((KeyUsageBits and CERT_DIGITAL_SIGNATURE_KEY_USAGE)=CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
                 (ValidDate = 0) and (not ContainsText(NameString, 'Card Authentication')) and
-                  (not ContainsText(NameString, '0,')) then
-                    CertAddCertificateContextToStore(MemoryStore, CertContext,
-                      CERT_STORE_ADD_ALWAYS, ValidCert);
+                  (not ContainsText(NameString, '0,')) and
+                    (not ContainsText(NameString, 'Signature'))
+              then
+                  CertAddCertificateContextToStore(MemoryStore, CertContext,
+                    CERT_STORE_ADD_ALWAYS, ValidCert);
       end;
       CertContext := CertEnumCertificatesInStore(Store, CertContext);
     end;
   finally
     CertCloseStore(Store, 0);
   end;
-  SelectedCert := CryptUIDlgSelectCertificateFromStore(MemoryStore, 0,
+
+  if ShowCertDialog = true then
+    begin
+    SelectedCert := CryptUIDlgSelectCertificateFromStore(MemoryStore, 0,
     'VistA Logon - Certificate Selection',
     'Select a certificate for VistA authentication', 0, 0, nil);
+    end;
+
   if MemoryStore <> nil then
     CertCloseStore(MemoryStore, 0);
   tokenMemo.Clear;
@@ -509,6 +526,7 @@ procedure TXWBSSOiFrm.FormCreate(Sender: TObject);
 var
   LogonAttempts: Integer;
   AppTitle: string;
+  SessionName: string;
 begin
   httpRio1 := THTTPRIO.Create(self);
 {$IF CompilerVersion < 33}                                          // p71
@@ -530,7 +548,13 @@ begin
   WindowState := wsNormal;
   LogonAttempts := 0;
   // Token seems to be truncated if this is run minimized
-  lType := GetLogonInfo();
+  //lType := GetLogonInfo();
+  //check if session is Citrix, if so default to PIV
+  SessionName := GetEnvironmentVariable('SESSIONNAME');
+  if SessionName <> 'Console'
+    then lType := 'lTypePIV'
+  else lType := GetLogonInfo();
+  //end Citrix mod
   if lType = 'lTypeAD' then
   begin
     GetADToken();
@@ -678,27 +702,69 @@ begin
 end;
 {$ENDIF}
 {$IF CompilerVersion >= 33.0}
-
 { ----------- TXWBSSOiFrm.httpRio1HTTPWebNode1NeedClientCertificate -----------
   If Delphi version is 10.3.x, this procedure sets the client certificate for
   the HTTPRIO object,it compares the serial number of the user selected cert
   against the list of certificates presented in ACertificateList.
   --------------------------------------------------------------------------- }
+
+{ ----------------------------------------------------------------------------
+  function ChangeHexEndianness(const AStr: string): String;
+  This function was taken out of System.Net.HttpClient.Win because it is not
+  callable via the unit.  Version 10.4.1 changed the way certificate serial
+  numbers are rendered, in the past they were rendered as is, now in 10.4.1
+  they are rendered by changing the endianness of the data, thereby causing
+  exisiting checks on SerialNum to no longer function.  Incorporating this
+  function here alleviates that issue.
+  --------------------------------------------------------------------------- }
+
+//patch xwb*1.1*72 added this function
+function ChangeHexEndianness(const AStr: string): String;
+var
+  i: Integer;
+  l: Integer;
+  LRight: PChar;
+  LLeft: PChar;
+  c: Char;
+begin
+  i := 1;
+  Result := AStr;
+  l := (Length(Result) div 2) and not 1;
+  LRight := PChar(Result) + Length(Result) - 2;
+  LLeft := PChar(Result);
+  while i <= l do
+  begin
+    c := LRight^;
+    LRight^ := LLeft^;
+    LLeft^ := c;
+
+    c := (LRight + 1)^;
+    (LRight + 1)^ := (LLeft + 1)^;
+    (LLeft + 1)^ := c;
+
+    Inc(i, 2);
+    Inc(LLeft, 2);
+    Dec(LRight, 2);
+  end;
+end;
+//patch xwb*1.1*72 end of added function
+
 procedure TXWBSSOiFrm.httpRio1HTTPWebNode1NeedClientCertificate
   (const Sender: TObject; const ARequest: TURLRequest;
   const ACertificateList: TCertificateList; var AnIndex: Integer);
 var
-  i: Integer;
-  Result: string;
+   i : Integer;
+   SerialNumber: String;
 begin
-  SetLength(Result, lCertContext.pCertInfo.SerialNumber.cbData * 2);
-  BinToHex(lCertContext.pCertInfo.SerialNumber.pbData, PChar(Result),
+  SetLength(SerialNumber, lCertContext.pCertInfo.SerialNumber.cbData * 2);
+  BinToHex(lCertContext.pCertInfo.SerialNumber.pbData, PChar(SerialNumber),
     lCertContext.pCertInfo.SerialNumber.cbData);
+{$IF CompilerVersion >= 34.0}
+  SerialNumber := ChangeHexEndianness(SerialNumber);
+{$ENDIF}
   try
     for i := 0 to ACertificateList.Count - 1 do
-      //WV/SMH - No property called SerialNum in Delphi 10.3
-      //Changing to bogus property.
-      if Result = ACertificateList[i].Issuer then
+      if String(SerialNumber) = ACertificateList[i].SerialNum then
         AnIndex := i;
   except
     RaiseLastOSError;

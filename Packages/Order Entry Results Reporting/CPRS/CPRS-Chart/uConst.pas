@@ -34,36 +34,23 @@ const
   UM_EVENTOCCUR   = (WM_USER + 9249);  // used by EDO for background occured event
   UM_NSSOTHER     = (WM_USER + 9250);  // used by NSS for auto-display schedule builder
   UM_MISC         = (WM_USER + 9251);  // used for misc stuff across forms
-  UM_508          = (WM_USER + 9508);  // used for 508 messages at 508 base form level
   UM_REMINDERS    = (WM_USER + 9252);  // in fReminderDialog
-  UM_OBJDESTROY   = (WM_USER + 9253);  // used in uOwnerWrapper & fFrame
-  UM_NOTELIMIT    = (WM_USER + 9254);  // used to redraw the richedit's editable rect
-
+  UM_508          = (WM_USER + 9508);  // used for 508 messages at 508 base form level
+  UM_ENCUPD       = (WM_USER + 9509);  // encounter update (PaPI)
+  UM_PaPI         = (WM_USER + 9510);  // PaPI Test
+  UM_SELECTPATIENT= (WM_USER + 9700);  // request to select a patient based on Processed Alerts record
   UM_ORDFLAGSTATUS= (WM_USER + 9710);  // request to update Processed list in case of flag status change (NSR#20110719)
   UM_ORDFLAGACTION= (WM_USER + 9711);  // request to update Processed list. (NSR#20110719)
   UM_ORDDESELECT  = (WM_USER + 9720);  // request to drop selection (NSR#20110719)
+  UM_MAXIMIZEBUG  = (WM_USER + 9721);  // fix Windows 10 Maximized Screen bug
+  UM_TIMEOUT      = (WM_USER + 9722);  // Timeout
+  UM_ENABLENEXT   = (WM_USER + 9725);  // Enables "Next" button of the main form (VISTAOR-31343)
 
   UM_SELECT       = (WM_USER + 9800);  // test
 
-//  PDMP Messages are kept in uPDMP unit
-//  PDMP Messages occupying range WM_USER + 9300..9400
-//  UM_PDMP_BASE    = (WM_USER + 9300);
-//  UM_PDMP         = (UM_PDMP_BASE + 60);  // used by PDMP when results are loaded
-//  UM_PDMP_Done    = (UM_PDMP_BASE + 60);  // used by PDMP when results are loaded
-//  UM_PDMP_Start   = (UM_PDMP_BASE + 62);  // used by PDMP when process started
-//  UM_PDMP_Loading = (UM_PDMP_BASE + 64);  // used by PDMP when data is pulled
-//  UM_PDMP_Show    = (UM_PDMP_BASE + 66);  // used by PDMP to show results
-//  UM_PDMP_Ready   = (UM_PDMP_BASE + 68);  // used by PDMP to indicate results are ready
-//  UM_PDMP_Init    = (UM_PDMP_BASE + 70);  // used by PDMP to init window
-//  UM_PDMP_NOTE_ID = (UM_PDMP_BASE + 72);  // Note ID created by PDMP
-//  UM_PDMP_ABORT   = (UM_PDMP_BASE + 74);  // Aborting PDMP request processing
-//  UM_PDMP_CANCEL  = (UM_PDMP_BASE + 76);  // Canceling PDMP request processing
-//  UM_PDMP_Error   = (UM_PDMP_BASE + 78);  // PDMP Data Object Error
-//  UM_PDMP_Options = (UM_PDMP_BASE + 80);  // PDMP Options updated
-//  UM_PDMP_WebError= (UM_PDMP_BASE + 82);  // PDMP Web page failed to load
-//  UM_PDMP_Refresh = (UM_PDMP_BASE + 84);  // PDMP Review updated
-
   UM_UpdateRFN    = (WM_USER + 9900);  // resetting Required Fields Navigator (Template dialog)
+  UM_OBJDESTROY   = (WM_USER + 9253);  // used in uOwnerWrapper & fFrame
+  UM_NOTELIMIT    = (WM_USER + 9254);  // used to redraw the richedit's editable rect
 
   { Tab Indexes, moved from fFrame }
   CT_NOPAGE   = -1;                             // chart tab - none selected
@@ -141,6 +128,8 @@ const
   OA_TRANSFER = 'XFR';
   OA_CHGEVT   = 'EV';
   OA_EDREL    = 'MN';
+  OA_PARK     = 'PK'; // PaPI
+  OA_UNPARK   = 'UP'; // PaPI
 
   { Ordering Dialog Form IDs }
   OD_ACTIVITY  = 100;
@@ -277,6 +266,7 @@ const
   NF_NEW_ALLERGY_CONFLICT_ORDER    = 88;
   NF_PROSTHETICS_REQUEST_UPDATED   = 89;
   NF_RTC_CANCEL_ORDERS             = 91;
+  NF_NO_FLAG_ACTION_ORDER          = 98;
   NF_DCSUMM_UNSIGNED_NOTE          = 901;
   NF_CONSULT_UNSIGNED_NOTE         = 902;
   NF_NOTES_UNSIGNED_NOTE           = 903;
@@ -417,6 +407,11 @@ const
   LOC_OUTP     = 1;
   LOC_INP      = 2;
 
+  // Used in Meds screen
+  MedsTab_List_Tag_OUTPT = 1;  // Outpatient
+  MedsTab_List_Tag_INPT = 2;   // Inpatient
+  MedsTab_List_Tag_NONVA = 3;  // Non VA
+
   { File Numbers }
   FN_HOSPITAL_LOCATION = 44;
   FN_NEW_PERSON = 200;
@@ -475,6 +470,15 @@ const
                  'assigned. Provider is ineligible to sign the order.';
   TX_INSTRUCT  = CRLF + CRLF + 'Click RETRY to select another provider.' + CRLF + 'Click CANCEL to cancel the current order.';
   TC_DEAFAIL   = 'Order not completed';
+
+  // Used in Meds and Orders tab for PARK
+  /// //////////////////////////////////////////////////////////////////////// PaPI
+  TX_NO_PARK = CRLF + CRLF + '- cannot be parked.' + CRLF + CRLF + 'Reason:  ';
+  TC_NO_PARK = 'Unable to Park';
+  TX_NO_UNPARK = CRLF + CRLF + '- cannot be unparked.' + CRLF + CRLF +
+    'Reason:  ';
+  TC_NO_UNPARK = 'Unable to Unpark';
+  ////////////////////////////////////////////////////////////////////////////
 
   CampLejeunePatch = 'OR*3.0*407';
 

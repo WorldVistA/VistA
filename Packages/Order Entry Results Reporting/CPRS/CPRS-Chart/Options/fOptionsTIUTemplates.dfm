@@ -3,8 +3,8 @@ inherited frmTIUTemplates: TfrmTIUTemplates
   ClientHeight = 202
   ClientWidth = 292
   Position = poOwnerFormCenter
-  ExplicitWidth = 300
-  ExplicitHeight = 229
+  ExplicitWidth = 308
+  ExplicitHeight = 241
   PixelsPerInch = 96
   TextHeight = 13
   object bvlNotesTitles: TBevel [0]

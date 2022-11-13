@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_CPRS_WH;
   ================================================================================
   *
   *       Application:  CPRS - CoverSheet
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-04
   *
@@ -60,6 +60,7 @@ type
     { Inherited events - TfraCoverSheetDisplayPanel_CPRS }
     procedure OnAddItems(aList: TStrings); override;
     procedure OnGetDetail(aRec: TDelimitedString; aResult: TStrings); override;
+    procedure OnBeginUpdate(Sender: TObject); override;
     procedure OnEndUpdate(Sender: TObject); override;
 
     { Introduced events }
@@ -144,8 +145,28 @@ begin
     end;
 end;
 
+procedure TfraCoverSheetDisplayPanel_CPRS_WH.OnBeginUpdate(Sender: TObject);
+begin
+  if Sender.ClassType = TSpeedButton then
+  begin
+    CPRSParams.Param1 := '1';
+  end
+  else
+  begin
+    CPRSParams.Param1 := '0';
+  end;
+{$IFDEF DEBUG}
+  CPRSParams.Param1 := ''; // prevent error loading coversheet. v32b
+{$ENDIF}
+  inherited;
+end;
+
 procedure TfraCoverSheetDisplayPanel_CPRS_WH.OnEndUpdate(Sender: TObject);
 begin
+  if Sender.ClassType = TSpeedButton then
+  begin
+    CPRSParams.Param1 := '0';
+  end;
   inherited;
 end;
 

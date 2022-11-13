@@ -10,27 +10,29 @@ inherited frmDeviceSelect: TfrmDeviceSelect
   ExplicitWidth = 423
   ExplicitHeight = 262
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object grpDevice: TGroupBox [0]
     Left = 0
     Top = 0
     Width = 415
-    Height = 194
+    Height = 203
     Align = alClient
     Caption = 'Device'
     TabOrder = 0
+    ExplicitHeight = 194
     object cboDevice: TORComboBox
-      Left = 2
-      Top = 15
-      Width = 411
-      Height = 145
+      AlignWithMargins = True
+      Left = 5
+      Top = 21
+      Width = 405
+      Height = 143
       Style = orcsSimple
       Align = alClient
       AutoSelect = True
       Caption = 'Device'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 16
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -44,92 +46,138 @@ inherited frmDeviceSelect: TfrmDeviceSelect
       SynonymChars = '<>'
       TabPositions = '30'
       TabOrder = 0
+      Text = ''
       OnChange = cboDeviceChange
       OnNeedData = cboDeviceNeedData
       CharsNeedMatch = 1
+      ExplicitLeft = 2
+      ExplicitTop = 18
+      ExplicitWidth = 411
+      ExplicitHeight = 142
     end
     object pnlGBBottom: TPanel
-      Left = 2
-      Top = 160
-      Width = 411
-      Height = 32
+      AlignWithMargins = True
+      Left = 5
+      Top = 170
+      Width = 405
+      Height = 28
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 1
+      ExplicitLeft = 2
+      ExplicitTop = 173
+      ExplicitWidth = 411
       object lblMargin: TLabel
-        Left = 8
-        Top = 12
-        Width = 60
-        Height = 13
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 75
+        Height = 22
+        Align = alLeft
         Caption = 'Right Margin'
+        ExplicitLeft = 8
+        ExplicitTop = 12
+        ExplicitHeight = 16
       end
       object lblLength: TLabel
-        Left = 120
-        Top = 12
-        Width = 61
-        Height = 13
+        AlignWithMargins = True
+        Left = 123
+        Top = 3
+        Width = 76
+        Height = 22
+        Align = alLeft
         Caption = 'Page Length'
+        ExplicitLeft = 120
+        ExplicitTop = 12
+        ExplicitHeight = 16
       end
       object txtRightMargin: TMaskEdit
-        Left = 72
-        Top = 6
+        AlignWithMargins = True
+        Left = 84
+        Top = 3
         Width = 33
-        Height = 19
+        Height = 22
+        Align = alLeft
         AutoSize = False
         EditMask = '99999;0; '
         MaxLength = 5
         TabOrder = 0
+        Text = ''
+        ExplicitLeft = 72
+        ExplicitTop = 6
+        ExplicitHeight = 19
       end
       object txtPageLength: TMaskEdit
-        Left = 184
-        Top = 6
+        AlignWithMargins = True
+        Left = 205
+        Top = 3
         Width = 34
-        Height = 19
+        Height = 22
+        Align = alLeft
         AutoSize = False
         EditMask = '99999;0; '
         MaxLength = 5
         TabOrder = 1
+        Text = ''
+        ExplicitLeft = 184
+        ExplicitTop = 6
+        ExplicitHeight = 19
       end
     end
   end
   object pnlBottom: TPanel [1]
     Left = 0
-    Top = 194
+    Top = 203
     Width = 415
-    Height = 41
+    Height = 32
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitTop = 194
     object cmdOK: TButton
-      Left = 257
-      Top = 11
+      AlignWithMargins = True
+      Left = 262
+      Top = 3
       Width = 72
-      Height = 22
+      Height = 26
+      Align = alRight
       Caption = 'OK'
       Default = True
       TabOrder = 0
       OnClick = cmdOKClick
+      ExplicitLeft = 257
+      ExplicitTop = 11
+      ExplicitHeight = 22
     end
     object cmdCancel: TButton
-      Left = 337
-      Top = 11
+      AlignWithMargins = True
+      Left = 340
+      Top = 3
       Width = 72
-      Height = 22
+      Height = 26
+      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       TabOrder = 1
       OnClick = cmdCancelClick
+      ExplicitLeft = 337
+      ExplicitTop = 11
+      ExplicitHeight = 22
     end
     object chkDefault: TCheckBox
-      Left = 12
-      Top = 16
-      Width = 163
-      Height = 17
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 217
+      Height = 26
+      Align = alLeft
       Caption = 'Save as user'#39's default printer'
       TabOrder = 2
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 24
+    Top = 56
     Data = (
       (
         'Component = grpDevice'

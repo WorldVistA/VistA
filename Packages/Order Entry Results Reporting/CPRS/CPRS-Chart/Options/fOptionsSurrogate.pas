@@ -239,9 +239,7 @@ procedure TfrmOptionsSurrogate.FormCreate(Sender: TObject);
 begin
   inherited;
   fIDCollection := TCollection.Create(TIDItem);
-{$IFDEF DEBUG_AA}
-  pnlDebug.Visible := True;
-{$ENDIF}
+//  pnlDebug.Visible := True;
   fRawServerData := csNeverLoaded;
   fRawParams := csNeverLoaded;
 
@@ -548,6 +546,8 @@ var
   i: Integer;
   IDItem, IDPrev: TIDItem;
 begin
+  if clvSurrogates.Items.Count < 1 then
+    exit;
   i := 1;
   IDPrev := TIDItem(clvSurrogates.Items[0].Data);
   while i < clvSurrogates.Items.Count do
@@ -765,7 +765,8 @@ begin
     // no open records are expected while setting open ranges
     begin
 {$IFDEF DEBUG}
-      MessageDlg('DEBUG: No Open records expected at this time! (record: ' + intToStr(i) + ')', mtError, [mbOK], 0);
+      MessageDlg('DEBUG: No Open records expected at this time! (record: ' +
+        intToStr(i) + ')', mtError, [mbOK], 0);
 {$ENDIF}
       inc(i);
       continue;
@@ -977,10 +978,8 @@ begin
 end;
 
 function TfrmOptionsSurrogate.ApplyChanges: Boolean;
-var
-  sMsg, sNewList, sRaw: String;
 
-  function getRawList(aString: String): String;
+  function getRawList: String;
   var
     i: Integer;
     lst: TStringList;
@@ -1000,20 +999,20 @@ var
     end;
   end;
 
+var
+  sMsg, sRaw: String;
 begin
-
   // check if params were changed since the last load
   rpcGetSurrogateParams(sRaw);
-  if sRaw <> fRawParams then
-    rpcSetSurrogateParams(fRawParams);
-
+  if sRaw <> fRawParams then rpcSetSurrogateParams(fRawParams);
   if fRawServerData = csNeverLoaded then // fixing defect 331720
   begin
     Result := True;
-    exit;
+    Exit;
   end;
+
   // check if the surrogates settings were updated since the last load
-  sRaw := getRawList(sNewList);
+  sRaw := getRawList;
   if fRawServerData <> sRaw then
   begin
     MessageDlg(msgSurrogateChangesSinceLastLoad
@@ -1023,26 +1022,23 @@ begin
 {$ENDIF}
       , mtWarning, [mbOK], 0);
     Result := False;
-  end
-  else
-  begin
+  end else begin
     Result := not SurrogateUpdated;
-    if Result then // no need to save changes (or update the table)
-      exit;
+    if Result then Exit; // no need to save changes (or update the table)
     sMsg := ServerDeleteAll;
-    if sMsg = '' then
-      sMsg := ServerSaveAll;
-
+    if sMsg = '' then sMsg := ServerSaveAll;
     Result := sMsg = '';
-
     if Result then
-      SurrogateUpdated := False
-    else
-      MessageDlg('Error applying saving surrogates changes' + CRLF + CRLF +
+    begin
+      UpdateWithServerData; // only update if changes saved (VISTAOR-25134)
+      SurrogateUpdated := False;
+    end else begin
+      MessageDlg('Error applying surrogate changes' + CRLF + CRLF +
         sMsg, mtError, [mbOK], 0);
+      FRawServerData := getRawList;
+      SurrogateUpdated := ListViewToRaw <> FRawServerData;
+    end;
   end;
-
-  UpdateWithServerData;
 end;
 
 procedure TfrmOptionsSurrogate.ParseServerRecord(aValue: String;

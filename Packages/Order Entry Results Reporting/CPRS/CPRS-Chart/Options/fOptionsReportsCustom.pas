@@ -46,6 +46,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure grdReportKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     //startDate,endDate,
@@ -126,7 +127,14 @@ end;
 
 procedure TfrmOptionsReportsCustom.FormCreate(Sender: TObject);
 begin
+  inherited;
   rptList := TStringList.Create;
+end;
+
+procedure TfrmOptionsReportsCustom.FormDestroy(Sender: TObject);
+begin
+  inherited;
+  rptList.Free;
 end;
 
 procedure TfrmOptionsReportsCustom.ShowEditor(ACol, ARow: Integer; AChar: Char);
@@ -595,10 +603,10 @@ var
 begin
     today := FMToday;
     signal := 0;
-    rptList := TStringList.Create;
-    CallV('ORWTPD GETSETS',[nil]);
-    MixedCaseList( RPCBrokerV.Results );
-    rptList := TStringList(RPCBrokerV.Results);
+
+    if CallVistA('ORWTPD GETSETS',[nil],rptList) then
+      MixedCaseList(rptList);
+
     SortByPiece(rptList,'^',2);
     rowNum := rptList.Count;
     grdReport.RowCount := rowNum + 1;

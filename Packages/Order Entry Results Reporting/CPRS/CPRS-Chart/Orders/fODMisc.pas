@@ -106,9 +106,19 @@ end;
 
 procedure TfrmODMisc.cboCareNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
+var
+  sl: TStrings;
 begin
   inherited;
-  cboCare.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.NURS', Responses.QuickOrder));
+  // cboCare.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.NURS', Responses.QuickOrder));
+  sl := TStringList.Create;
+  try
+    setSubSetOfOrderItems(sl, StartFrom, Direction, 'S.NURS',
+      Responses.QuickOrder);
+    cboCare.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODMisc.ControlChange(Sender: TObject);

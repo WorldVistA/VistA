@@ -2,27 +2,27 @@ inherited frmODProc: TfrmODProc
   Tag = 112
   Left = 430
   Top = 203
-  Width = 606
-  Height = 442
+  Width = 640
+  Height = 521
   HorzScrollBar.Range = 523
   VertScrollBar.Range = 295
   Anchors = [akLeft, akTop, akRight, akBottom]
   Caption = 'Order a Procedure'
-  Constraints.MinHeight = 442
-  Constraints.MinWidth = 606
+  Constraints.MinHeight = 480
+  Constraints.MinWidth = 640
   Position = poDesigned
-  OnShow = FormShow
-  ExplicitWidth = 606
-  ExplicitHeight = 442
-  PixelsPerInch = 96
-  TextHeight = 13
+  ExplicitWidth = 640
+  ExplicitHeight = 521
+  PixelsPerInch = 120
+  TextHeight = 16
   object pnlCombatVet: TPanel [0]
     Left = 0
     Top = 0
-    Width = 590
+    Width = 622
     Height = 25
     Align = alTop
-    BevelOuter = bvLowered
+    AutoSize = True
+    BevelOuter = bvNone
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -32,12 +32,13 @@ inherited frmODProc: TfrmODProc
     TabOrder = 0
     object txtCombatVet: TVA508StaticText
       Name = 'txtCombatVet'
-      Left = 1
-      Top = 1
-      Width = 588
-      Height = 23
+      Left = 0
+      Top = 0
+      Width = 622
+      Height = 25
       Align = alClient
       Alignment = taCenter
+      AutoSize = True
       BevelOuter = bvNone
       Caption = ''
       Enabled = False
@@ -46,11 +47,14 @@ inherited frmODProc: TfrmODProc
     end
   end
   inherited memOrder: TCaptionMemo
-    Left = 0
-    Top = 365
-    Width = 380
-    Height = 41
-    Anchors = [akLeft, akRight, akBottom]
+    AlignWithMargins = True
+    Top = 367
+    Width = 486
+    Height = 50
+    Margins.Left = 6
+    Margins.Right = 130
+    Align = alBottom
+    Constraints.MinHeight = 50
     Lines.Strings = (
       'The order text...'
       
@@ -58,111 +62,56 @@ inherited frmODProc: TfrmODProc
         '--------------'
       'An order message may be displayed here.')
     ParentFont = False
-    TabOrder = 3
-    ExplicitLeft = 0
-    ExplicitTop = 365
-    ExplicitWidth = 380
-    ExplicitHeight = 41
+    TabOrder = 2
+    ExplicitTop = 367
+    ExplicitWidth = 486
+    ExplicitHeight = 50
   end
   object pnlMain: TPanel [2]
     Left = 0
-    Top = 0
-    Width = 598
-    Height = 354
-    Anchors = [akLeft, akTop, akRight, akBottom]
+    Top = 25
+    Width = 622
+    Height = 339
+    Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    DesignSize = (
-      598
-      354)
-    object lblProc: TLabel
-      Left = 4
-      Top = 4
-      Width = 49
-      Height = 13
-      Caption = 'Procedure'
-    end
-    object lblService: TOROffsetLabel
-      Left = 4
-      Top = 114
-      Width = 158
-      Height = 15
-      Caption = 'Service to perform this procedure'
-      HorzOffset = 2
-      Transparent = False
-      VertOffset = 2
-      WordWrap = False
-    end
-    object lblReason: TLabel
-      Left = 8
-      Top = 165
-      Width = 95
-      Height = 13
-      Margins.Left = 0
-      Caption = 'Reason for Request'
-    end
-    object lblUrgency: TStaticText
-      Left = 312
-      Top = 4
-      Width = 44
-      Height = 17
-      Anchors = [akTop, akRight]
-      Caption = 'Urgency'
-      TabOrder = 13
-    end
-    object lblPlace: TStaticText
-      Left = 460
-      Top = 92
-      Width = 104
-      Height = 17
-      Anchors = [akTop, akRight]
-      Caption = 'Place of Consultation'
-      TabOrder = 14
-    end
-    object lblAttn: TStaticText
-      Left = 460
-      Top = 4
-      Width = 46
-      Height = 17
-      Anchors = [akTop, akRight]
-      Caption = 'Attention'
-      TabOrder = 15
-    end
-    object lblProvDiag: TStaticText
-      Left = 312
-      Top = 135
-      Width = 104
-      Height = 17
-      Anchors = [akTop, akRight]
-      Caption = 'Provisional Diagnosis'
-      TabOrder = 16
-    end
     object pnlReason: TPanel
       Left = 0
-      Top = 184
-      Width = 591
-      Height = 166
-      Anchors = [akLeft, akTop, akRight, akBottom]
+      Top = 206
+      Width = 622
+      Height = 133
+      Align = alClient
       BevelOuter = bvNone
-      TabOrder = 11
+      TabOrder = 0
+      object lblReason: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 616
+        Height = 16
+        Align = alTop
+        Caption = 'Reason for Request'
+        ExplicitWidth = 120
+      end
       object memReason: TCaptionRichEdit
-        Left = 0
-        Top = 0
-        Width = 591
-        Height = 166
+        AlignWithMargins = True
+        Left = 3
+        Top = 25
+        Width = 616
+        Height = 105
         Align = alClient
-        Anchors = [akLeft, akTop, akRight]
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Courier New'
         Font.Style = []
-        Constraints.MinHeight = 40
+        Constraints.MinHeight = 73
         ParentFont = False
         PopupMenu = popReason
         ScrollBars = ssVertical
         TabOrder = 0
         WantTabs = True
+        Zoom = 100
         OnChange = ControlChange
         OnKeyDown = memReasonKeyDown
         OnKeyPress = memReasonKeyPress
@@ -170,306 +119,610 @@ inherited frmODProc: TfrmODProc
         Caption = 'Reason for Request'
       end
     end
-    object cboUrgency: TORComboBox
-      Left = 312
-      Top = 17
-      Width = 133
-      Height = 21
-      Anchors = [akTop, akRight]
-      Style = orcsDropDown
-      AutoSelect = True
-      Caption = 'Urgency'
-      Color = clWindow
-      DropDownCount = 8
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = True
-      LongList = False
-      LookupPiece = 0
-      MaxLength = 0
-      Pieces = '2'
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 3
-      Text = ''
-      OnChange = ControlChange
-      CharsNeedMatch = 1
-    end
-    object cboPlace: TORComboBox
-      Left = 460
-      Top = 105
-      Width = 133
-      Height = 21
-      Anchors = [akTop, akRight]
-      Style = orcsDropDown
-      AutoSelect = True
-      Caption = 'Place of Consultation'
-      Color = clWindow
-      DropDownCount = 8
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = True
-      LongList = False
-      LookupPiece = 0
-      MaxLength = 0
-      Pieces = '2'
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 8
-      Text = ''
-      OnChange = ControlChange
-      CharsNeedMatch = 1
-    end
-    object txtAttn: TORComboBox
-      Left = 460
-      Top = 17
-      Width = 131
-      Height = 21
-      Anchors = [akTop, akRight]
-      Style = orcsDropDown
-      AutoSelect = True
-      Caption = 'Attention'
-      Color = clWindow
-      DropDownCount = 8
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = True
-      LongList = True
-      LookupPiece = 2
-      MaxLength = 0
-      Pieces = '2,3'
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 4
-      Text = ''
-      OnChange = ControlChange
-      OnNeedData = txtAttnNeedData
-      CharsNeedMatch = 1
-    end
-    object cboProc: TORComboBox
-      Left = 4
-      Top = 17
-      Width = 290
-      Height = 91
-      Anchors = [akLeft, akTop, akRight]
-      Style = orcsSimple
-      AutoSelect = True
-      Caption = 'Procedure'
-      Color = clWindow
-      DropDownCount = 8
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = True
-      LongList = True
-      LookupPiece = 0
-      MaxLength = 0
-      Pieces = '2'
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 0
-      Text = ''
-      OnChange = cboProcSelect
-      OnNeedData = cboProcNeedData
-      CharsNeedMatch = 1
-    end
-    object cboCategory: TORComboBox
-      Left = 516
-      Top = 10
-      Width = 3
-      Height = 21
-      Style = orcsDropDown
-      AutoSelect = True
-      Caption = ''
-      Color = clWindow
-      DropDownCount = 8
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = False
-      LongList = False
-      LookupPiece = 0
-      MaxLength = 0
-      Sorted = False
-      SynonymChars = '<>'
-      TabOrder = 12
-      Text = ''
-      Visible = False
-      OnChange = ControlChange
-      CharsNeedMatch = 1
-    end
-    object cboService: TORComboBox
-      Left = 4
-      Top = 130
-      Width = 290
-      Height = 21
-      Anchors = [akLeft, akTop, akRight]
-      Style = orcsDropDown
-      AutoSelect = True
-      Caption = 'Service to perform this procedure'
-      Color = clWindow
-      DropDownCount = 8
-      Enabled = False
-      ItemHeight = 13
-      ItemTipColor = clWindow
-      ItemTipEnable = True
-      ListItemsOnly = False
-      LongList = False
-      LookupPiece = 0
-      MaxLength = 0
-      Pieces = '2'
-      Sorted = False
-      SynonymChars = '<>'
+    object gpMain: TGridPanel
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 616
+      Height = 200
+      Align = alTop
+      BevelOuter = bvNone
+      Caption = 'gpMain'
+      ColumnCollection = <
+        item
+          Value = 33.527518069967260000
+        end
+        item
+          Value = 33.303817253371960000
+        end
+        item
+          Value = 33.168664676660790000
+        end>
+      ControlCollection = <
+        item
+          Column = 0
+          Control = Panel1
+          Row = 0
+          RowSpan = 3
+        end
+        item
+          Column = 1
+          Control = Panel2
+          Row = 0
+        end
+        item
+          Column = 2
+          Control = Panel3
+          Row = 0
+        end
+        item
+          Column = 1
+          Control = Panel4
+          Row = 1
+        end
+        item
+          Column = 2
+          Control = Panel5
+          Row = 1
+        end
+        item
+          Column = 1
+          Control = Panel6
+          Row = 2
+        end
+        item
+          Column = 2
+          Control = Panel7
+          Row = 2
+        end
+        item
+          Column = 0
+          Control = Panel8
+          Row = 3
+        end
+        item
+          Column = 1
+          ColumnSpan = 2
+          Control = Panel9
+          Row = 3
+        end>
+      RowCollection = <
+        item
+          Value = 25.077118045960510000
+        end
+        item
+          Value = 24.954780075211350000
+        end
+        item
+          Value = 24.958019562453050000
+        end
+        item
+          Value = 25.010082316375080000
+        end>
+      ShowCaption = False
       TabOrder = 1
-      Text = ''
-      OnChange = cboServiceChange
-      CharsNeedMatch = 1
-    end
-    object cmdLexSearch: TButton
-      Left = 549
-      Top = 149
-      Width = 49
-      Height = 21
-      Anchors = [akTop, akRight]
-      Caption = 'Lexicon'
-      TabOrder = 10
-      OnClick = cmdLexSearchClick
-    end
-    object gbInptOpt: TGroupBox
-      Left = 312
-      Top = 85
-      Width = 140
-      Height = 45
-      Anchors = [akTop, akRight]
-      Caption = 'Patient will be seen as an:'
-      TabOrder = 7
-      object radInpatient: TRadioButton
-        Left = 3
-        Top = 20
-        Width = 61
-        Height = 17
-        Caption = '&Inpatient'
-        TabOrder = 1
-        OnClick = radInpatientClick
-      end
-      object radOutpatient: TRadioButton
-        Left = 67
-        Top = 20
-        Width = 71
-        Height = 17
-        Caption = '&Outpatient'
+      object Panel1: TPanel
+        Left = 0
+        Top = 0
+        Width = 206
+        Height = 148
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
         TabOrder = 0
-        OnClick = radOutpatientClick
+        object lblProc: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 200
+          Height = 16
+          Align = alTop
+          Caption = 'Procedure'
+          ExplicitWidth = 63
+        end
+        object cboProc: TORComboBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 25
+          Width = 200
+          Height = 120
+          Style = orcsSimple
+          Align = alClient
+          AutoSelect = True
+          Caption = 'Procedure'
+          Color = clWindow
+          DropDownCount = 8
+          ItemHeight = 16
+          ItemTipColor = clWindow
+          ItemTipEnable = True
+          ListItemsOnly = True
+          LongList = True
+          LookupPiece = 0
+          MaxLength = 0
+          Pieces = '2'
+          Sorted = False
+          SynonymChars = '<>'
+          TabOrder = 0
+          Text = ''
+          OnChange = cboProcSelect
+          OnNeedData = cboProcNeedData
+          CharsNeedMatch = 1
+        end
       end
-    end
-    object txtProvDiag: TCaptionEdit
-      Left = 312
-      Top = 149
-      Width = 234
-      Height = 21
-      Anchors = [akTop, akRight]
-      MaxLength = 180
-      ParentShowHint = False
-      PopupMenu = mnuPopProvDx
-      ShowHint = True
-      TabOrder = 9
-      OnChange = txtProvDiagChange
-      Caption = 'Provisional Diagnosis'
-    end
-    object lblClinicallyIndicated: TStaticText
-      Left = 312
-      Top = 44
-      Width = 117
-      Height = 17
-      Anchors = [akTop, akRight]
-      Caption = 'Clinically indicated date:'
-      TabOrder = 18
-    end
-    object calClinicallyIndicated: TORDateBox
-      Left = 312
-      Top = 58
-      Width = 133
-      Height = 21
-      Anchors = [akTop, akRight]
-      TabOrder = 5
-      OnChange = ControlChange
-      DateOnly = True
-      RequireTime = False
-      Caption = ''
-    end
-    object lblLatest: TStaticText
-      Left = 460
-      Top = 44
-      Width = 116
-      Height = 17
-      Anchors = [akTop, akRight]
-      Caption = 'Latest appropriate date:'
-      TabOrder = 19
-      Visible = False
-    end
-    object calLatest: TORDateBox
-      Left = 460
-      Top = 58
-      Width = 131
-      Height = 21
-      Anchors = [akTop, akRight]
-      TabOrder = 6
-      Visible = False
-      OnChange = ControlChange
-      DateOnly = True
-      RequireTime = False
-      Caption = ''
-    end
-    object servicelbl508: TVA508StaticText
-      Name = 'servicelbl508'
-      Left = 183
-      Top = 114
-      Width = 106
-      Height = 15
-      Alignment = taLeftJustify
-      Caption = 'service (for screen R.)'
-      Enabled = False
-      TabOrder = 2
-      Visible = False
-      ShowAccelChar = True
+      object Panel2: TPanel
+        Left = 206
+        Top = 0
+        Width = 205
+        Height = 50
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
+        TabOrder = 1
+        object lblUrgency: TStaticText
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 199
+          Height = 20
+          Align = alTop
+          Caption = 'Urgency'
+          TabOrder = 0
+        end
+        object cboUrgency: TORComboBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 29
+          Width = 199
+          Height = 24
+          Style = orcsDropDown
+          Align = alClient
+          AutoSelect = True
+          Caption = 'Urgency'
+          Color = clWindow
+          DropDownCount = 8
+          ItemHeight = 16
+          ItemTipColor = clWindow
+          ItemTipEnable = True
+          ListItemsOnly = True
+          LongList = False
+          LookupPiece = 0
+          MaxLength = 0
+          Pieces = '2'
+          Sorted = False
+          SynonymChars = '<>'
+          TabOrder = 1
+          Text = ''
+          OnChange = ControlChange
+          CharsNeedMatch = 1
+        end
+      end
+      object Panel3: TPanel
+        Left = 411
+        Top = 0
+        Width = 205
+        Height = 50
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
+        TabOrder = 2
+        object lblAttn: TStaticText
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 199
+          Height = 20
+          Align = alTop
+          Caption = 'Attention'
+          TabOrder = 0
+        end
+        object cboAttn: TORComboBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 29
+          Width = 199
+          Height = 24
+          Style = orcsDropDown
+          Align = alClient
+          AutoSelect = True
+          Caption = 'Attention'
+          Color = clWindow
+          DropDownCount = 8
+          ItemHeight = 16
+          ItemTipColor = clWindow
+          ItemTipEnable = True
+          ListItemsOnly = True
+          LongList = True
+          LookupPiece = 2
+          MaxLength = 0
+          Pieces = '2,3'
+          Sorted = False
+          SynonymChars = '<>'
+          TabOrder = 1
+          Text = ''
+          OnChange = cboAttnChange
+          OnNeedData = cboAttnNeedData
+          CharsNeedMatch = 1
+        end
+      end
+      object Panel4: TPanel
+        Left = 206
+        Top = 50
+        Width = 205
+        Height = 49
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
+        TabOrder = 3
+        object lblClinicallyIndicated: TStaticText
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 199
+          Height = 20
+          Align = alTop
+          Caption = 'Clinically indicated date:'
+          TabOrder = 0
+        end
+        object calClinicallyIndicated: TORDateBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 29
+          Width = 199
+          Height = 17
+          Align = alClient
+          TabOrder = 1
+          OnChange = ControlChange
+          DateOnly = True
+          RequireTime = False
+          Caption = ''
+          ExplicitHeight = 24
+        end
+      end
+      object Panel5: TPanel
+        Left = 411
+        Top = 50
+        Width = 205
+        Height = 49
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
+        TabOrder = 4
+        object lblLatest: TStaticText
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 199
+          Height = 20
+          Align = alTop
+          Caption = 'Latest appropriate date:'
+          TabOrder = 0
+          Visible = False
+        end
+        object calLatest: TORDateBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 29
+          Width = 199
+          Height = 17
+          Align = alClient
+          TabOrder = 1
+          Visible = False
+          OnChange = ControlChange
+          DateOnly = True
+          RequireTime = False
+          Caption = ''
+          ExplicitHeight = 24
+        end
+      end
+      object Panel6: TPanel
+        Left = 206
+        Top = 99
+        Width = 205
+        Height = 49
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
+        TabOrder = 5
+        object gbInptOpt: TGroupBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 199
+          Height = 43
+          Align = alClient
+          Caption = 'Patient will be seen as an:'
+          TabOrder = 0
+          object radInpatient: TRadioButton
+            Left = 11
+            Top = 23
+            Width = 74
+            Height = 17
+            Caption = '&Inpatient'
+            TabOrder = 1
+            OnClick = radInpatientClick
+          end
+          object radOutpatient: TRadioButton
+            Left = 91
+            Top = 23
+            Width = 89
+            Height = 17
+            Caption = '&Outpatient'
+            TabOrder = 0
+            OnClick = radOutpatientClick
+          end
+        end
+      end
+      object Panel7: TPanel
+        Left = 411
+        Top = 99
+        Width = 205
+        Height = 49
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
+        TabOrder = 6
+        object lblPlace: TStaticText
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 199
+          Height = 20
+          Align = alTop
+          Caption = 'Place of Consultation'
+          TabOrder = 0
+        end
+        object cboPlace: TORComboBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 29
+          Width = 199
+          Height = 24
+          Style = orcsDropDown
+          Align = alClient
+          AutoSelect = True
+          Caption = 'Place of Consultation'
+          Color = clWindow
+          DropDownCount = 8
+          ItemHeight = 16
+          ItemTipColor = clWindow
+          ItemTipEnable = True
+          ListItemsOnly = True
+          LongList = False
+          LookupPiece = 0
+          MaxLength = 0
+          Pieces = '2'
+          Sorted = False
+          SynonymChars = '<>'
+          TabOrder = 1
+          Text = ''
+          OnChange = ControlChange
+          CharsNeedMatch = 1
+        end
+        object cboCategory: TORComboBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 29
+          Width = 199
+          Height = 24
+          Style = orcsDropDown
+          Align = alClient
+          AutoSelect = True
+          Caption = ''
+          Color = clWindow
+          DropDownCount = 8
+          ItemHeight = 16
+          ItemTipColor = clWindow
+          ItemTipEnable = True
+          ListItemsOnly = False
+          LongList = False
+          LookupPiece = 0
+          MaxLength = 0
+          Sorted = False
+          SynonymChars = '<>'
+          TabOrder = 2
+          Text = ''
+          Visible = False
+          OnChange = ControlChange
+          CharsNeedMatch = 1
+        end
+      end
+      object Panel8: TPanel
+        Left = 0
+        Top = 148
+        Width = 206
+        Height = 52
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
+        TabOrder = 7
+        object lblService: TOROffsetLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 200
+          Height = 15
+          Align = alTop
+          Caption = 'Service to perform this procedure'
+          HorzOffset = 2
+          Transparent = False
+          VertOffset = 2
+          WordWrap = False
+          ExplicitLeft = -7
+          ExplicitTop = 37
+          ExplicitWidth = 205
+        end
+        object servicelbl508: TVA508StaticText
+          Name = 'servicelbl508'
+          Left = 0
+          Top = 21
+          Width = 206
+          Height = 32
+          Align = alClient
+          Alignment = taLeftJustify
+          Caption = 'service (for screen R.)'
+          Enabled = False
+          TabOrder = 1
+          Visible = False
+          ShowAccelChar = True
+          ExplicitHeight = 31
+        end
+        object cboService: TORComboBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 24
+          Width = 200
+          Height = 24
+          Style = orcsDropDown
+          Align = alClient
+          AutoSelect = True
+          Caption = 'Service to perform this procedure'
+          Color = clWindow
+          DropDownCount = 8
+          Enabled = False
+          ItemHeight = 16
+          ItemTipColor = clWindow
+          ItemTipEnable = True
+          ListItemsOnly = False
+          LongList = False
+          LookupPiece = 0
+          MaxLength = 0
+          Pieces = '2'
+          Sorted = False
+          SynonymChars = '<>'
+          TabOrder = 0
+          Text = ''
+          OnChange = cboServiceChange
+          CharsNeedMatch = 1
+        end
+      end
+      object Panel9: TPanel
+        Left = 206
+        Top = 148
+        Width = 410
+        Height = 52
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        ShowCaption = False
+        TabOrder = 8
+        object lblProvDiag: TStaticText
+          Left = 0
+          Top = 0
+          Width = 410
+          Height = 20
+          Align = alTop
+          Caption = 'Provisional Diagnosis'
+          TabOrder = 0
+        end
+        object Panel10: TPanel
+          Left = 0
+          Top = 20
+          Width = 410
+          Height = 32
+          Align = alClient
+          BevelOuter = bvNone
+          Caption = 'Panel1'
+          ShowCaption = False
+          TabOrder = 1
+          object cmdLexSearch: TButton
+            AlignWithMargins = True
+            Left = 351
+            Top = 3
+            Width = 56
+            Height = 26
+            Align = alRight
+            Caption = 'Lexicon'
+            TabOrder = 0
+            OnClick = cmdLexSearchClick
+          end
+          object txtProvDiag: TCaptionEdit
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 342
+            Height = 26
+            Align = alClient
+            MaxLength = 180
+            ParentShowHint = False
+            PopupMenu = mnuPopProvDx
+            ShowHint = True
+            TabOrder = 1
+            OnChange = txtProvDiagChange
+            Caption = 'Provisional Diagnosis'
+            ExplicitHeight = 24
+          end
+        end
+      end
     end
   end
   inherited cmdAccept: TButton
-    Left = 427
-    Top = 382
+    Left = 505
+    Top = 433
+    Width = 113
+    Height = 24
     Anchors = [akRight, akBottom]
     TabOrder = 4
-    ExplicitLeft = 427
-    ExplicitTop = 382
+    ExplicitLeft = 505
+    ExplicitTop = 433
+    ExplicitWidth = 113
+    ExplicitHeight = 24
   end
   inherited cmdQuit: TButton
-    Left = 526
-    Top = 382
-    Width = 64
+    Left = 505
+    Top = 456
+    Width = 113
+    Height = 24
     Anchors = [akRight, akBottom]
     TabOrder = 5
-    ExplicitLeft = 526
-    ExplicitTop = 382
-    ExplicitWidth = 64
+    ExplicitLeft = 505
+    ExplicitTop = 456
+    ExplicitWidth = 113
+    ExplicitHeight = 24
   end
   inherited pnlMessage: TPanel
-    Left = 13
-    Top = 361
-    Width = 316
-    Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 2
-    ExplicitLeft = 13
-    ExplicitTop = 361
-    ExplicitWidth = 316
+    AlignWithMargins = True
+    Left = 3
+    Top = 423
+    Width = 489
+    Height = 50
+    Margins.Right = 130
+    Align = alBottom
+    ExplicitLeft = 3
+    ExplicitTop = 423
+    ExplicitWidth = 489
+    ExplicitHeight = 50
+    inherited imgMessage: TImage
+      Left = 2
+      Top = 2
+      Height = 42
+      Align = alLeft
+      ExplicitLeft = 2
+      ExplicitTop = 2
+      ExplicitHeight = 42
+    end
     inherited memMessage: TRichEdit
-      Width = 254
-      ExplicitWidth = 254
+      Left = 34
+      Top = 2
+      Width = 449
+      Height = 42
+      Align = alClient
+      ExplicitLeft = 34
+      ExplicitTop = 2
+      ExplicitWidth = 449
+      ExplicitHeight = 42
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 32
+    Top = 272
     Data = (
       (
         'Component = memOrder'
@@ -520,7 +773,7 @@ inherited frmODProc: TfrmODProc
         'Component = cboPlace'
         'Status = stsDefault')
       (
-        'Component = txtAttn'
+        'Component = cboAttn'
         'Status = stsDefault')
       (
         'Component = cboProc'
@@ -547,15 +800,6 @@ inherited frmODProc: TfrmODProc
         'Component = txtProvDiag'
         'Status = stsDefault')
       (
-        'Component = lblClinicallyIndicated'
-        'Status = stsDefault')
-      (
-        'Component = calClinicallyIndicated'
-        
-          'Text = Earliest appropriate Date/Time. Press the enter key to ac' +
-          'cess.'
-        'Status = stsOK')
-      (
         'Component = lblLatest'
         
           'Text = Latest appropriate Date/Time. Press the enter key to acce' +
@@ -572,11 +816,44 @@ inherited frmODProc: TfrmODProc
         'Status = stsDefault')
       (
         'Component = servicelbl508'
+        'Status = stsDefault')
+      (
+        'Component = gpMain'
+        'Status = stsDefault')
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = Panel2'
+        'Status = stsDefault')
+      (
+        'Component = Panel3'
+        'Status = stsDefault')
+      (
+        'Component = Panel4'
+        'Status = stsDefault')
+      (
+        'Component = Panel5'
+        'Status = stsDefault')
+      (
+        'Component = Panel6'
+        'Status = stsDefault')
+      (
+        'Component = Panel7'
+        'Status = stsDefault')
+      (
+        'Component = Panel8'
+        'Status = stsDefault')
+      (
+        'Component = Panel9'
+        'Status = stsDefault')
+      (
+        'Component = Panel10'
         'Status = stsDefault'))
   end
   object mnuPopProvDx: TPopupMenu
-    Left = 353
-    Top = 133
+    Left = 177
+    Top = 277
     object mnuPopProvDxDelete: TMenuItem
       Caption = 'Delete diagnosis'
       OnClick = mnuPopProvDxDeleteClick
@@ -584,8 +861,8 @@ inherited frmODProc: TfrmODProc
   end
   object popReason: TPopupMenu
     OnPopup = popReasonPopup
-    Left = 483
-    Top = 337
+    Left = 99
+    Top = 273
     object popReasonCut: TMenuItem
       Caption = 'Cu&t'
       ShortCut = 16472

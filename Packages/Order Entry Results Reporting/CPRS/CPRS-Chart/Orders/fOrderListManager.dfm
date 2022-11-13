@@ -6,9 +6,9 @@ inherited frmListManager: TfrmListManager
   PopupMenu = popList
   Position = poMainFormCenter
   ExplicitWidth = 637
-  ExplicitHeight = 539
+  ExplicitHeight = 540
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   object pnlBottom: TPanel [0]
     Left = 0
     Top = 470
@@ -18,8 +18,6 @@ inherited frmListManager: TfrmListManager
     Alignment = taLeftJustify
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 437
-    ExplicitWidth = 661
     object pnlCancel: TPanel
       Left = 540
       Top = 0
@@ -28,7 +26,6 @@ inherited frmListManager: TfrmListManager
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 4
-      ExplicitLeft = 580
       object btnCancel: TButton
         AlignWithMargins = True
         Left = 3
@@ -49,7 +46,6 @@ inherited frmListManager: TfrmListManager
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 3
-      ExplicitLeft = 504
       object Button1: TButton
         AlignWithMargins = True
         Left = 3
@@ -69,7 +65,6 @@ inherited frmListManager: TfrmListManager
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitLeft = 288
       object Button3: TButton
         AlignWithMargins = True
         Left = 3
@@ -89,7 +84,6 @@ inherited frmListManager: TfrmListManager
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitLeft = 411
       object Button2: TButton
         AlignWithMargins = True
         Left = 3
@@ -121,8 +115,6 @@ inherited frmListManager: TfrmListManager
     BevelOuter = bvNone
     TabOrder = 0
     OnResize = pnlCanvasResize
-    ExplicitWidth = 661
-    ExplicitHeight = 437
     object splList: TSplitter
       Left = 195
       Top = 61
@@ -148,12 +140,11 @@ inherited frmListManager: TfrmListManager
       PopupMenu = popList
       ShowCaption = False
       TabOrder = 0
-      ExplicitWidth = 650
       object stxtRequired: TStaticText
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 183
+        Width = 145
         Height = 16
         Align = alLeft
         Caption = '* Denotes the Required Fields'
@@ -168,8 +159,6 @@ inherited frmListManager: TfrmListManager
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
-      ExplicitWidth = 462
-      ExplicitHeight = 376
       object pnlDetails: TPanel
         Left = 0
         Top = 0
@@ -178,8 +167,6 @@ inherited frmListManager: TfrmListManager
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 462
-        ExplicitHeight = 376
         object pnlDetailsCanvas: TPanel
           Left = 0
           Top = 0
@@ -191,8 +178,6 @@ inherited frmListManager: TfrmListManager
           Color = clSkyBlue
           ParentBackground = False
           TabOrder = 0
-          ExplicitWidth = 462
-          ExplicitHeight = 376
           object Bevel1: TBevel
             Left = 0
             Top = 395
@@ -221,7 +206,6 @@ inherited frmListManager: TfrmListManager
       Align = alLeft
       BevelOuter = bvLowered
       TabOrder = 2
-      ExplicitHeight = 368
       object pnlListStatus: TPanel
         Left = 1
         Top = 349
@@ -233,7 +217,6 @@ inherited frmListManager: TfrmListManager
         ParentBackground = False
         TabOrder = 0
         Visible = False
-        ExplicitTop = 316
         object Bevel3: TBevel
           Left = 0
           Top = 0
@@ -270,7 +253,6 @@ inherited frmListManager: TfrmListManager
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitHeight = 226
         object lvItems: TListView
           Left = 0
           Top = 17
@@ -295,7 +277,6 @@ inherited frmListManager: TfrmListManager
           ViewStyle = vsReport
           OnClick = lvItemsClick
           OnResize = lvItemsResize
-          ExplicitHeight = 209
         end
         object Panel1: TPanel
           Left = 0
@@ -323,7 +304,6 @@ inherited frmListManager: TfrmListManager
         ParentCtl3D = False
         TabOrder = 2
         Visible = False
-        ExplicitTop = 227
         object Bevel2: TBevel
           Left = 0
           Top = 0
@@ -385,12 +365,11 @@ inherited frmListManager: TfrmListManager
       PopupMenu = popList
       TabOrder = 1
       Visible = False
-      ExplicitWidth = 653
       object lblWarning: TLabel
         AlignWithMargins = True
         Left = 4
         Top = 5
-        Width = 290
+        Width = 227
         Height = 18
         Hint = 
           'The same values of "Reason", "Comments", Recipients and "No acti' +
@@ -407,7 +386,7 @@ inherited frmListManager: TfrmListManager
         ParentShowHint = False
         ShowHint = True
         Visible = False
-        ExplicitHeight = 16
+        ExplicitHeight = 13
       end
       object cbReuseProperties: TCheckBox
         AlignWithMargins = True
@@ -425,7 +404,6 @@ inherited frmListManager: TfrmListManager
         State = cbChecked
         TabOrder = 0
         Visible = False
-        ExplicitLeft = 512
       end
       object cbRemoveProcessed: TCheckBox
         AlignWithMargins = True
@@ -441,7 +419,6 @@ inherited frmListManager: TfrmListManager
         ShowHint = True
         TabOrder = 1
         Visible = False
-        ExplicitLeft = 360
       end
     end
   end
@@ -538,7 +515,7 @@ inherited frmListManager: TfrmListManager
     Left = 115
     Top = 160
     Bitmap = {
-      494C0101060018014C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010106001801040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000808080008080
       8000808080008080800080808000808080008080800080808000808080008080

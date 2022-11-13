@@ -3,9 +3,9 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
   ClientHeight = 282
   ClientWidth = 464
   ExplicitWidth = 480
-  ExplicitHeight = 320
+  ExplicitHeight = 321
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   object pnlBottom: TPanel [0]
     Left = 0
     Top = 251
@@ -15,7 +15,7 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
     BevelOuter = bvNone
     ParentBackground = False
     ParentColor = True
-    TabOrder = 0
+    TabOrder = 1
     object pnlButtons: TPanel
       Left = 307
       Top = 0
@@ -25,7 +25,6 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
       BevelOuter = bvNone
       ParentColor = True
       TabOrder = 0
-      ExplicitHeight = 33
       object cmdCancel: TButton
         AlignWithMargins = True
         Left = 82
@@ -37,7 +36,6 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
         Caption = 'Cancel'
         ModalResult = 2
         TabOrder = 1
-        ExplicitHeight = 27
       end
       object cmdOK: TButton
         AlignWithMargins = True
@@ -49,7 +47,6 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
         Caption = 'OK'
         ModalResult = 1
         TabOrder = 0
-        ExplicitHeight = 27
       end
     end
   end
@@ -61,8 +58,7 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
     Align = alClient
     Caption = 'Panel1'
     ShowCaption = False
-    TabOrder = 1
-    ExplicitHeight = 249
+    TabOrder = 0
     object grbRecipients: TGroupBox
       AlignWithMargins = True
       Left = 4
@@ -72,33 +68,31 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
       Align = alClient
       Caption = 'Flag &Notification Recipients'
       TabOrder = 0
-      ExplicitHeight = 241
       object Splitter1: TSplitter
         Left = 187
-        Top = 18
-        Height = 223
+        Top = 15
+        Height = 226
         ExplicitLeft = 216
         ExplicitTop = 64
         ExplicitHeight = 100
       end
       object pnlRecipientsList: TPanel
         Left = 274
-        Top = 18
+        Top = 15
         Width = 180
-        Height = 223
+        Height = 226
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 2
-        ExplicitHeight = 221
         object orSelectedRecipients: TORListBox
           AlignWithMargins = True
           Left = 3
           Top = 3
           Width = 169
-          Height = 217
+          Height = 220
           Margins.Right = 8
-          TabStop = False
           Align = alClient
+          ItemHeight = 13
           MultiSelect = True
           ParentShowHint = False
           ShowHint = True
@@ -106,23 +100,20 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
           OnClick = orSelectedRecipientsClick
           OnDblClick = orSelectedRecipientsDblClick
           OnEnter = orSelectedRecipientsEnter
-          OnExit = orSelectedRecipientsExit
           Caption = ''
           ItemTipColor = clWindow
           LongList = False
           Pieces = '2'
-          ExplicitHeight = 215
         end
       end
       object pnlListButtons: TPanel
         Left = 190
-        Top = 18
+        Top = 15
         Width = 84
-        Height = 223
+        Height = 226
         Align = alLeft
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitHeight = 221
         object btnAddRecipient: TButton
           AlignWithMargins = True
           Left = 0
@@ -159,20 +150,19 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
       end
       object pnlRecipientsSource: TPanel
         Left = 2
-        Top = 18
+        Top = 15
         Width = 185
-        Height = 223
+        Height = 226
         Align = alLeft
         BevelOuter = bvNone
         Constraints.MinWidth = 185
         TabOrder = 0
-        ExplicitHeight = 221
         object cboAlertRecipient: TORComboBox
           AlignWithMargins = True
           Left = 8
           Top = 3
           Width = 174
-          Height = 217
+          Height = 220
           Margins.Left = 8
           Style = orcsSimple
           Align = alClient
@@ -180,7 +170,7 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
           Caption = ''
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = False
@@ -193,17 +183,15 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
           Sorted = False
           SynonymChars = '<>'
           TabOrder = 0
+          TabStop = True
           Text = ''
-          OnClick = cboAlertRecipientClick
+          OnChange = cboAlertRecipientChange
           OnDblClick = cboAlertRecipientDblClick
           OnEnter = cboAlertRecipientEnter
-          OnExit = cboAlertRecipientExit
           OnKeyDown = cboAlertRecipientKeyDown
           OnNeedData = cboAlertRecipientNeedData
           CharsNeedMatch = 1
-          ExplicitLeft = 5
-          ExplicitTop = 6
-          ExplicitHeight = 215
+          UniqueAutoComplete = True
         end
       end
     end
@@ -238,7 +226,8 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
         'Status = stsDefault')
       (
         'Component = orSelectedRecipients'
-        'Status = stsDefault')
+        'Text = Flag Order Recipients'
+        'Status = stsOK')
       (
         'Component = pnlListButtons'
         'Status = stsDefault')
@@ -256,7 +245,8 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
         'Status = stsDefault')
       (
         'Component = cboAlertRecipient'
-        'Status = stsDefault'))
+        'Text = List of potential flag order recipients'
+        'Status = stsOK'))
   end
   object alRecipients: TActionList
     Left = 336

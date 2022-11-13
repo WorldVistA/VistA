@@ -3,7 +3,7 @@ unit rPDMP;
 interface
 
 uses
-  System.classes, ORNET;
+  System.classes, ORNET, ORCtrls;
 
 /// <summary> Function is called when the user finishes reviewing </summary?
 /// <summary> the report to generate the note</summary>
@@ -24,7 +24,7 @@ function pdmpGetResultsPoll(PDMPList: TStrings;
   patient, aTaskID: string): String;
 
 /// <summary> Returns list of users with DEA keys (to select as the provider)</summary>
-function pdmpSetSubSetOfAuthorizedUsers(aDest: TStrings;
+function pdmpSetSubSetOfAuthorizedUsers(aORComboBox: TORComboBox; aDest: TStrings;
   const StartFrom: string; Direction: Integer): Integer;
 
 /// <summary> Kills VistA task by ID</summary>
@@ -48,7 +48,7 @@ function pdmpRPCCheck(const aReport: TStrings): Boolean;
 /// "ERROR" - error getting review data
 /// "RCANCEL" - user cancels revie dialog
 /// </param>
-function pdmpRegisterReview(aHandle, aStatus: String;
+function pdmpRegisterReview(aHandle, aStatus, aNoteID: String;
   aComments: String = ''): String;
 
 /// <summary> Returns TRUE is the note is still linked to the same </summary>
@@ -68,14 +68,12 @@ implementation
 
 uses
   System.SysUtils, ORFn, oPDMPData, uPDMP,
-{$IFDEF PDMPTEST}
-  uCore.SystemParameters
-{$ELSE}
+//  uCore.SystemParameters
   uCore
-{$ENDIF}
-    , uGN_RPCLog;
+  , uGN_RPCLog, uSimilarNames;
 
-// Result format - the same as pieces 2-4 of the 0 node of STRTPDMP... NOTE IEN^Change Log^Date/Time
+// Result format - the same as pieces 2-4 of the 0 node of STRTPDMP... NOTE:
+//                 IEN^Change Log^Date/Time
 
 function pdmpCreateNote(importList: TStrings; encDate, encLoc, vstr, patient,
   user, authorizedUser, error, VistATask: String; errorDescr: TStrings): string;
@@ -84,7 +82,7 @@ begin
     CallVistA('ORPDMPNT MAKENOTE', [importList, // Text of the note
       encDate, // visit date
       encLoc, // visit location
-      vstr, // visit string 1st p - location, 2nd - date, 3rd - encounter type(?)
+      vstr, // visit string p1 = location, p2 = date, p3 = encounter type(?)
       patient, // patient DFN
       user, // author
       authorizedUser, // cosigner (authorized user with DEA)
@@ -108,13 +106,13 @@ end;
 // Array format:
 // Line 1: RC^.....
 // RC = "0" - Query kicked off in background task; 2nd piece will be Handle. Pass in that Handle to PRPDMP CHKTASK
-// RC = "-1" - error code (PDMP down, or other reason that didn't even attempt to connect). No note is created. Lines 2…n should have message to display to the user.
-// RC = "-2" - error code (eError connecting to PDMP server). No note is created. Lines 2…n should have message to display to the user.
-// RC = "-3" - error code (Connected to PDMP, but error was returned by PDMP). Note is created. Lines 2…n should have message to display to the user.
+// RC = "-1" - error code (PDMP down, or other reason that didn't even attempt to connect). No note is created. Lines 2â€¦n should have message to display to the user.
+// RC = "-2" - error code (eError connecting to PDMP server). No note is created. Lines 2â€¦n should have message to display to the user.
+// RC = "-3" - error code (Connected to PDMP, but error was returned by PDMP). Note is created. Lines 2â€¦n should have message to display to the user.
 // RC = "1" - successful Query.
 // RC^Note IEN (optional)^Change List (Required if piece 2 is populated with Note IEN)^Change List Date/Time (Required if piece 2 is populated with Note IEN)
 // Line 2 should be the report URL.
-// Lines 3…b should be the info needed to create the review form (radio buttons/check list)
+// Lines 3â€¦b should be the info needed to create the review form (radio buttons/check list)
 
 function pdmpGetResults(PDMPList: TStrings; user, aDelegateOf, aVisitStr,
   patient: string): String;
@@ -136,10 +134,10 @@ begin
     Result := Piece(PDMPList[0], U, TASK_ID_POS);
 end;
 
-function pdmpSetSubSetOfAuthorizedUsers(aDest: TStrings;
+function pdmpSetSubSetOfAuthorizedUsers(aORComboBox: TORComboBox; aDest: TStrings;
   const StartFrom: string; Direction: Integer): Integer;
 begin
-  CallVistA('ORWU NEWPERS', [StartFrom, Direction, '', '', '', '', '1'], aDest);
+  SNCallVistA(aORComboBox, SN_ORWU_NEWPERS, [StartFrom, Direction, '', '', '', '', '1'], aDest);
   Result := aDest.Count;
 end;
 
@@ -193,7 +191,7 @@ begin
   sl := TStringList.Create;
   try
     sl.Add('ORWU SYSPARAM'); // RPC returns user parameters
-    sl.Add('ORWU NEWPERS');
+    sl.Add(SN_ORWU_NEWPERS);
     sl.Add('ORPDMP STRTPDMP');
     sl.Add('ORPDMP CHCKTASK');
     sl.Add('ORPDMP STOPTASK');
@@ -213,49 +211,37 @@ end;
 function pdmpGetParams: Integer;
 begin
   Result := 0;
-  PDMP_ENABLED := SystemParameters.StringValue['PDMP.turnedOn'] = '1';
+  PDMP_ENABLED := SystemParameters.AsType<string>('PDMP.turnedOn') = '1';
+
 {$IFDEF DEBUG}
   PDMP_UseDefaultBrowser := False;
 {$ELSE}
-  PDMP_UseDefaultBrowser := SystemParameters.StringValue
-    ['PDMP.useDefaultBrowser'] = '1';
+  PDMP_UseDefaultBrowser := SystemParameters.AsType<string>('PDMP.useDefaultBrowser') = '1';
 {$ENDIF}
-  PDMP_COMMENT_LIMIT := StrToIntDef(SystemParameters.StringValue
-    ['PDMP.commentLimit'], 250);
-  PDMP_Days := StrToIntDef(SystemParameters.StringValue
-    ['PDMP.daysBetweenReview'], 90);
+  PDMP_COMMENT_LIMIT := StrToIntDef(SystemParameters.AsType<string>('PDMP.commentLimit'), 250);
+  PDMP_Days := StrToIntDef(SystemParameters.AsType<string>('PDMP.daysBetweenReview'), 90);
   PDMP_PollingInterval :=
-    StrToIntDef(SystemParameters.StringValue['PDMP.pollingInterval'], 2) * 1000;
+    StrToIntDef(SystemParameters.AsType<string>('PDMP.pollingInterval'), 2) * 1000;
 
-{$IFDEF xDEBUG}
-//  PDMP_ShowButton := 'ALWAYS';
-//  PDMP_ShowButton := 'NEVER';
-  PDMP_ShowButton := 'RESULTS ONLY';
-{$ELSE}
-  PDMP_ShowButton := SystemParameters.StringValue['PDMP.showButton'];
-{$ENDIF}
-  PDMP_PASTE_ENABLED := SystemParameters.StringValue['PDMP.pasteEnabled'] = '1';
+  PDMP_ShowButton := SystemParameters.AsType<string>('PDMP.showButton');
+  PDMP_PASTE_ENABLED := SystemParameters.AsType<string>('PDMP.pasteEnabled') = '1';
 
-  PDMP_NoteTitleID := StrToIntDef(SystemParameters.StringValue
-    ['PDMP.noteTitle'], 90);
+  PDMP_NoteTitleID := StrToIntDef(SystemParameters.AsType<string>('PDMP.noteTitle'), 90);
 
 {$IFDEF DEBUG}
-  AddLogLine('PDMP.turnedOn = ' + SystemParameters.StringValue['PDMP.turnedOn']
-    + #13#10 + 'PDMP.useDefaultBrowser = ' + SystemParameters.StringValue
-    ['PDMP.useDefaultBrowser'] + #13#10 + 'PDMP.commentLimit = ' +
-    SystemParameters.StringValue['PDMP.commentLimit'] + #13#10 +
-    'PDMP.daysBetweenReview = ' + SystemParameters.StringValue
-    ['PDMP.daysBetweenReview'] + #13#10 + 'PDMP.pollingInterval = ' +
-    SystemParameters.StringValue['PDMP.pollingInterval'] + #13#10 +
-    'PDMP.pasteEnabled = ' + SystemParameters.StringValue['PDMP.pasteEnabled'] +
-    #13#10 + 'PDMP.noteTitle = ' + SystemParameters.StringValue
-    ['PDMP.noteTitle'] + #13#10 + 'PDMP.showButton = ' +
-    SystemParameters.StringValue['PDMP.showButton'] + #13#10,
+  AddLogLine('PDMP.turnedOn = ' + SystemParameters.AsType<string>('PDMP.turnedOn')
+    + #13#10 + 'PDMP.useDefaultBrowser = ' + SystemParameters.AsType<string>('PDMP.useDefaultBrowser') + #13#10 + 'PDMP.commentLimit = ' +
+    SystemParameters.AsType<string>('PDMP.commentLimit') + #13#10 +
+    'PDMP.daysBetweenReview = ' + SystemParameters.AsType<string>('PDMP.daysBetweenReview') + #13#10 +
+    'PDMP.pollingInterval = ' + SystemParameters.AsType<string>('PDMP.pollingInterval') + #13#10 +
+    'PDMP.pasteEnabled = ' + SystemParameters.AsType<string>('PDMP.pasteEnabled') +
+    #13#10 + 'PDMP.noteTitle = ' + SystemParameters.AsType<string>('PDMP.noteTitle') + #13#10 +
+    'PDMP.showButton = ' + SystemParameters.AsType<string>('PDMP.showButton') + #13#10,
     'PDMP Parameters');
 {$ENDIF}
 end;
 
-function pdmpRegisterReview(aHandle, aStatus: String;
+function pdmpRegisterReview(aHandle, aStatus, aNoteID: String;
   aComments: String = ''): String;
 var
   s: String;
@@ -266,9 +252,9 @@ begin
   sl.Text := aComments;
   try
     if aComments = '' then
-      b := CallVistA('ORPDMP VIEWEDREPORT', [aHandle, aStatus], s)
+      b := CallVistA('ORPDMP VIEWEDREPORT', [aHandle, aStatus, aNoteID], s)
     else
-      b := CallVistA('ORPDMP VIEWEDREPORT', [aHandle, aStatus, sl], s);
+      b := CallVistA('ORPDMP VIEWEDREPORT', [aHandle, aStatus, aNoteID, sl], s);
 
     if b then
       Result := s

@@ -2,25 +2,28 @@
   Package: XWB - Kernel RPCBroker
   Date Created: Sept 18, 1997 (Version 1.1)
   Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
-  Developers: Danila Manapsal, Don Craven, Joel Ivey,
-  Herlan Westra, Roy Gaber
+  Developers: Roy Gaber
   Description: Contains TRPCBroker and related components.
   Unit: RequestSecurityTokenSVC.pas, this unit is the result
   of importing the IAM WSDL.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { *************************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in v1.1.71 (RGG 02/07/2019) XWB*1.1*71
   1. Created this unit from the IAM WSDL via the WSDL importer
+
   *************************************************************** }
 
 
 // ************************************************************************ //
 // The types declared in this file were generated from data read from the
 // WSDL File described below:
-// WSDL     : https://services.aadomain.ext:9301/STS/RequestSecurityToken?wsdl
-// >Import : https://services.aadomain.ext:9301/STS/RequestSecurityToken?wsdl>0
+// WSDL     : https://services.eauth.va.gov:9301/STS/RequestSecurityToken?wsdl
+// >Import : https://services.eauth.va.gov:9301/STS/RequestSecurityToken?wsdl>0
 // Encoding : UTF-8
 // Version  : 1.0
 // (1/28/2019 10:49:03 AM - - $Rev: 86412 $)
@@ -117,7 +120,7 @@ type
   // binding   : RequestSecurityTokenPortBinding
   // service   : SecurityTokenService
   // port      : RequestSecurityToken
-  // URL       : https://int.services.aadomain.ext:9301/STS/RequestSecurityToken
+  // URL       : https://int.services.eauth.va.gov:9301/STS/RequestSecurityToken
   // ************************************************************************ //
   SecurityTokenService = interface(IInvokable)
     ['{1A87D2AC-73FC-BBCF-B7F7-2AF8B4086479}']
@@ -134,8 +137,8 @@ uses System.SysUtils;
 function GetSecurityTokenService(UseWSDL: Boolean; Addr: string;
   HTTPRIO: THTTPRIO): SecurityTokenService;
 const
-  defWSDL = 'https://services.aadomain.ext:9301/STS/RequestSecurityToken?wsdl';
-  defURL = 'https://int.services.aadomain.ext:9301/STS/RequestSecurityToken';
+  defWSDL = 'https://services.eauth.va.gov:9301/STS/RequestSecurityToken?wsdl';
+  defURL = 'https://int.services.eauth.va.gov:9301/STS/RequestSecurityToken';
   defSvc = 'SecurityTokenService';
   defPrt = 'RequestSecurityToken';
 var

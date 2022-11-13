@@ -2,41 +2,41 @@ inherited frmODActive: TfrmODActive
   Left = 267
   Top = 216
   Caption = 'Copy active orders for selected event'
-  ClientHeight = 311
-  ClientWidth = 530
+  ClientHeight = 307
+  ClientWidth = 584
   OldCreateOrder = False
   Position = poScreenCenter
-  OnCreate = FormCreate
-  ExplicitWidth = 546
-  ExplicitHeight = 346
+  ExplicitWidth = 600
+  ExplicitHeight = 345
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object lblCaption: TLabel [0]
     Left = 0
     Top = 0
-    Width = 530
+    Width = 584
     Height = 29
     Align = alTop
     AutoSize = False
     Caption = '  Highlight orders to be copied to delayed release event'
     Layout = tlCenter
     WordWrap = True
+    ExplicitWidth = 530
   end
   object pnlClient: TPanel [1]
     Left = 0
     Top = 29
-    Width = 530
-    Height = 282
+    Width = 584
+    Height = 278
     Align = alClient
     BevelOuter = bvNone
     Locked = True
     TabOrder = 0
     DesignSize = (
-      530
-      282)
+      584
+      278)
     object btnOK: TButton
-      Left = 380
-      Top = 266
+      Left = 458
+      Top = 255
       Width = 56
       Height = 20
       Anchors = [akRight, akBottom]
@@ -45,8 +45,8 @@ inherited frmODActive: TfrmODActive
       OnClick = btnOKClick
     end
     object btnCancel: TButton
-      Left = 451
-      Top = 266
+      Left = 520
+      Top = 255
       Width = 56
       Height = 20
       Anchors = [akRight, akBottom]
@@ -57,8 +57,8 @@ inherited frmODActive: TfrmODActive
     object lstActiveOrders: TCaptionListBox
       Left = 0
       Top = 21
-      Width = 530
-      Height = 238
+      Width = 584
+      Height = 228
       Style = lbOwnerDrawVariable
       Align = alTop
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -72,7 +72,7 @@ inherited frmODActive: TfrmODActive
     object hdControl: THeaderControl
       Left = 0
       Top = 0
-      Width = 530
+      Width = 584
       Height = 21
       Sections = <
         item

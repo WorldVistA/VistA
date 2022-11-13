@@ -1,8 +1,8 @@
 inherited frmRemDlg: TfrmRemDlg
   Left = 310
   Top = 154
-  Width = 545
-  Height = 407
+  Width = 250
+  Height = 250
   HelpContext = 11100
   VertScrollBar.Range = 162
   BorderIcons = [biSystemMenu]
@@ -10,20 +10,16 @@ inherited frmRemDlg: TfrmRemDlg
   Constraints.MinHeight = 250
   Constraints.MinWidth = 250
   FormStyle = fsStayOnTop
-  OnClose = FormClose
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnMouseWheel = FormMouseWheel
-  OnShow = FormShow
-  ExplicitWidth = 545
-  ExplicitHeight = 407
+  ExplicitWidth = 250
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object splTxtData: TSplitter [0]
     Left = 0
-    Top = 206
-    Width = 529
+    Top = 49
+    Width = 234
     Height = 3
     Cursor = crVSplit
     Align = alBottom
@@ -33,8 +29,8 @@ inherited frmRemDlg: TfrmRemDlg
   object sb1: TScrollBox [1]
     Left = 0
     Top = 0
-    Width = 529
-    Height = 206
+    Width = 234
+    Height = 49
     HorzScrollBar.Tracking = True
     VertScrollBar.Tracking = True
     Align = alClient
@@ -51,8 +47,8 @@ inherited frmRemDlg: TfrmRemDlg
   object sb2: TScrollBox [2]
     Left = 0
     Top = 0
-    Width = 529
-    Height = 206
+    Width = 234
+    Height = 49
     HorzScrollBar.Tracking = True
     VertScrollBar.Tracking = True
     Align = alClient
@@ -67,8 +63,8 @@ inherited frmRemDlg: TfrmRemDlg
   end
   object pnlFrmBottom: TPanel [3]
     Left = 0
-    Top = 209
-    Width = 529
+    Top = 52
+    Width = 234
     Height = 159
     Align = alBottom
     BevelOuter = bvNone
@@ -76,7 +72,7 @@ inherited frmRemDlg: TfrmRemDlg
     object lblFootnotes: TLabel
       Left = 0
       Top = 144
-      Width = 529
+      Width = 234
       Height = 15
       Align = alBottom
       AutoSize = False
@@ -86,14 +82,14 @@ inherited frmRemDlg: TfrmRemDlg
     object pnlBottom: TPanel
       Left = 0
       Top = 0
-      Width = 529
+      Width = 234
       Height = 144
       Align = alClient
       TabOrder = 0
       object splText: TSplitter
         Left = 1
         Top = 94
-        Width = 527
+        Width = 232
         Height = 3
         Cursor = crVSplit
         Align = alBottom
@@ -102,7 +98,7 @@ inherited frmRemDlg: TfrmRemDlg
       object reData: TRichEdit
         Left = 1
         Top = 97
-        Width = 527
+        Width = 232
         Height = 46
         Align = alBottom
         Color = clCream
@@ -122,7 +118,7 @@ inherited frmRemDlg: TfrmRemDlg
       object reText: TRichEdit
         Left = 1
         Top = 25
-        Width = 527
+        Width = 232
         Height = 69
         Align = alClient
         Color = clCream
@@ -143,7 +139,7 @@ inherited frmRemDlg: TfrmRemDlg
       object gpButtons: TGridPanel
         Left = 1
         Top = 1
-        Width = 527
+        Width = 232
         Height = 24
         Align = alTop
         ColumnCollection = <
@@ -212,7 +208,7 @@ inherited frmRemDlg: TfrmRemDlg
         object btnClear: TButton
           Left = 1
           Top = 1
-          Width = 65
+          Width = 28
           Height = 22
           Hint = 'Clear Reminder Resolutions for this Reminder'
           Align = alClient
@@ -221,9 +217,9 @@ inherited frmRemDlg: TfrmRemDlg
           OnClick = btnClearClick
         end
         object btnClinMaint: TButton
-          Left = 66
+          Left = 29
           Top = 1
-          Width = 108
+          Width = 47
           Height = 22
           Hint = 'View the Clinical Maintenance Component'
           Align = alClient
@@ -232,9 +228,9 @@ inherited frmRemDlg: TfrmRemDlg
           OnClick = btnClinMaintClick
         end
         object btnVisit: TButton
-          Left = 174
+          Left = 76
           Top = 1
-          Width = 66
+          Width = 29
           Height = 22
           Align = alClient
           Caption = '&Visit Info'
@@ -242,9 +238,9 @@ inherited frmRemDlg: TfrmRemDlg
           OnClick = btnVisitClick
         end
         object btnBack: TButton
-          Left = 240
+          Left = 105
           Top = 1
-          Width = 68
+          Width = 29
           Height = 22
           Hint = 'Go back to the Previous Reminder Dialog'
           Align = alClient
@@ -253,9 +249,9 @@ inherited frmRemDlg: TfrmRemDlg
           OnClick = btnBackClick
         end
         object btnNext: TButton
-          Left = 308
+          Left = 134
           Top = 1
-          Width = 70
+          Width = 30
           Height = 22
           Hint = 'Go on to the Next Reminder Dialog'
           Align = alClient
@@ -264,9 +260,9 @@ inherited frmRemDlg: TfrmRemDlg
           OnClick = btnNextClick
         end
         object btnFinish: TButton
-          Left = 378
+          Left = 164
           Top = 1
-          Width = 71
+          Width = 31
           Height = 22
           Hint = 'Finish Processing'
           Align = alClient
@@ -275,9 +271,9 @@ inherited frmRemDlg: TfrmRemDlg
           OnClick = btnFinishClick
         end
         object btnCancel: TButton
-          Left = 449
+          Left = 195
           Top = 1
-          Width = 77
+          Width = 36
           Height = 22
           Hint = 'Cancel All Reminder Dialog Processing'
           Align = alClient
@@ -285,6 +281,7 @@ inherited frmRemDlg: TfrmRemDlg
           Caption = 'Cancel'
           TabOrder = 6
           OnClick = btnCancelClick
+          OnMouseDown = btnCancelMouseDown
         end
       end
     end

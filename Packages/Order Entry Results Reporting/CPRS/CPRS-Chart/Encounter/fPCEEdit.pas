@@ -35,13 +35,14 @@ const
   TX_NOPCE_TXT   = 'You can not edit encounter information because ';
   TX_NOPCE_HDR   = 'Can not edit encounter';
 
-var
-  uPCETemp: TPCEData;
-  uPCETempOld: TPCEData;
-  uPatient: string;
+//var
+//  uPCETemp: TPCEData;
+//  uPCETempOld: TPCEData;
+//  uPatient: string;
 
 function EditPCEData(NoteData: TPCEData): boolean;   // Returns TRUE if NoteData is edited
 var
+  uPCETemp: TPCEData;
   frmPCEEdit: TfrmPCEEdit;
   BtnTxt, NewTxt, txt: string;
   Ans: integer;
@@ -49,11 +50,11 @@ var
 begin
   Result := FALSE;
   (* agp moved from FormCreate to addrss a problem with editing an encounter without a note displaying in CPRS*)
-  if uPatient <> Patient.DFN then begin
-    FreeAndNil(uPCETemp);
-    FreeAndNil(uPCETempOld);
-  end;
-  uPatient := Patient.DFN;
+//  if uPatient <> Patient.DFN then begin
+//    FreeAndNil(uPCETemp);
+//    FreeAndNil(uPCETempOld);
+//  end;
+//  uPatient := Patient.DFN;
   if (Encounter.VisitCategory = 'H') then
   begin
     if Assigned(NoteData) then
@@ -106,23 +107,32 @@ begin
       InfoBox(TX_NEED_VISIT2, TX_NO_VISIT, MB_OK or MB_ICONWARNING);
       Exit;
     end;
-    if not assigned(uPCETemp) then
-      uPCETemp := TPCEData.Create;
-    if not CanEditPCE(uPCETemp) then
-    begin
-      if FutureEncounter(uPCETemp) then
-        txt := TX_NOPCE_TXT1
+    uPCETemp := TPCEData.Create;
+    try
+      uPCETemp.Location := Encounter.Location;
+      uPCETemp.DateTime := Encounter.DateTime;
+      uPCETemp.VisitCategory := Encounter.VisitCategory;
+      if CanEditPCE(uPCETemp) then
+      begin
+        uPCETemp.PCEForNote(USE_CURRENT_VISITSTR);//, uPCETempOld);
+        uPCETemp.UseEncounter := True;
+        UpdatePCE(uPCETemp);
+      end
       else
-        txt := TX_NOPCE_TXT2;
-      InfoBox(TX_NOPCE_TXT + txt, TX_NOPCE_HDR, MB_OK or MB_ICONWARNING);
-      Exit;
+      begin
+        if FutureEncounter(uPCETemp) then
+          txt := TX_NOPCE_TXT1
+        else
+          txt := TX_NOPCE_TXT2;
+        InfoBox(TX_NOPCE_TXT + txt, TX_NOPCE_HDR, MB_OK or MB_ICONWARNING);
+        Exit;
+      end;
+  //    if not assigned(uPCETempOld) then
+  //      uPCETempOld := TPCEData.Create;
+  //    uPCETemp.CopyPCEData(uPCETempOld);
+    finally
+      uPCETemp.Free;
     end;
-    uPCETemp.PCEForNote(USE_CURRENT_VISITSTR, uPCETempOld);
-    uPCETemp.UseEncounter := True;
-    UpdatePCE(uPCETemp);
-    if not assigned(uPCETempOld) then
-      uPCETempOld := TPCEData.Create;
-    uPCETemp.CopyPCEData(uPCETempOld);
   end
   else
   if ans = mrNo then
@@ -133,12 +143,12 @@ begin
 end;
 
 initialization
-  uPCETemp := nil;
-  uPCETempOld := nil;
-  uPatient := '';
+//  uPCETemp := nil;
+//  uPCETempOld := nil;
+//  uPatient := '';
 
 finalization
-  FreeAndNil(uPCETemp);
-  FreeAndNil(uPCETempOld);
+//  FreeAndNil(uPCETemp);
+//  FreeAndNil(uPCETempOld);
 
 end.

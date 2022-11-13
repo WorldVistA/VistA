@@ -1,4 +1,4 @@
-﻿{ ******************************************************************************
+{ ******************************************************************************
   *
   * AV Catcher
   *
@@ -16,13 +16,16 @@ unit AVCatcher;
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,
-  SHFolder, ShellAPI, Vcl.StdCtrls, Vcl.ExtCtrls,
-  ComObj, UExceptHook, Vcl.ImgList, Vcl.Imaging.pngimage, Data.Bind.EngExt,
-  Vcl.Bind.DBEngExt, System.Rtti,
-  System.Bindings.Outputs, Data.Bind.Components, Vcl.Bind.Editors,
-  System.ImageList, uMapParser;
+  Winapi.Windows,
+  System.SysUtils,
+  System.Classes,
+  System.ImageList,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.StdCtrls,
+  Vcl.ExtCtrls,
+  Vcl.ImgList,
+  Vcl.Imaging.pngimage;
 
 type
   TAppExcept = class(TForm)
@@ -42,13 +45,10 @@ type
     btnClose: TButton;
     pnlBtns: TGridPanel;
     btnCustom: TButton;
-    BindingsList1: TBindingsList;
-    BindExpression1: TBindExpression;
     procedure lblDeatailTxt1Click(Sender: TObject);
     procedure LogDetailsChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnLogEMailClick(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
   private
     Function CalcWidthResize(): Integer;
   public
@@ -57,113 +57,72 @@ type
 
   TAppException = procedure(Sender: TObject; E: Exception) of object;
 
-  IExceptionInterface = interface(IInterface)
-    ['{72A771EF-0DDF-4D73-8F4E-FDEB86683F1E}']
-    function GetLogFileName(): String;
-    function GetDaysToPurge(): Integer;
-    procedure SetDaysToPurge(aValue: Integer);
-    function GetEmailTo(): TStringList;
-    procedure SetEmailTo(aValue: TStringList);
-    function GetEnabled(): Boolean;
-    procedure SetEnabled(aValue: Boolean);
-    function GetAppException(): TAppException;
-    procedure SetAppException(aValue: TAppException);
-    function GetAfterAppException(): TAppException;
-    procedure SetAfterAppException(aValue: TAppException);
-    function GetCustomMethod(): TNotifyEvent;
-    procedure SetCustomMethod(aValue: TNotifyEvent);
-    function GetTerminateApp(): Boolean;
-    procedure SetTerminateApp(aValue: Boolean);
-    function GetVisible(): Boolean;
-    procedure SetVisible(aValue: Boolean);
-    Procedure SetCustomBtn(aValue: string);
-
-    Property AVLogFile: String read GetLogFileName;
-    property DaysToPurge: Integer read GetDaysToPurge write SetDaysToPurge;
-    Property EmailTo: TStringList read GetEmailTo write SetEmailTo;
-    property Enabled: Boolean read GetEnabled write SetEnabled;
-    property OnAppException: TAppException read GetAppException
-      write SetAppException;
-    property OnAfterAppException: TAppException read GetAfterAppException
-      write SetAfterAppException;
-    property OnCustomMethod: TNotifyEvent read GetCustomMethod
-      write SetCustomMethod;
-    Property TerminateApp: Boolean read GetTerminateApp write SetTerminateApp;
-    Property Visible: Boolean read GetVisible write SetVisible;
-    Property CustomButtonCaption: string write SetCustomBtn;
-  end;
-
-  TExceptionLogger = class(TInterfacedObject, IExceptionInterface)
+  TExceptionLogger = class(TObject)
   private
+    fErrLogString: TStringList;
     fAppException: TAppException;
     fAfterAppException: TAppException;
-    fCustomAction: TNotifyEvent;
-    fAV_LogFileName: string; // Log file for the AV info
-    fCustomBtnCap: String;
+    FOnBtnCustomClick: TNotifyEvent;
+    FBtnCustomCaption: string;
+    FAVLogFile: string; // Log file for the AV info
     fEmailTo: TStringList;
     fEnabled: Boolean;
-    fExceptionForm: TAppExcept;
     fDaysToPurge: Integer;
     fVisible: Boolean;
     fTerminateApp: Boolean;
-    fErrLogString: TStringList;
     fParsing: boolean;
     fExceptObj: Exception;
-    procedure WaitForIt;
+    procedure WaitForParsing;
     procedure AppException(Sender: TObject; E: Exception);
     // Inital way to call code
     procedure CatchException(Sender: TObject; E: Exception);
     // Creates blank email with log information in body
     procedure EmailError(LogMessage: String);
     // Sets up the log file for the AppData folder
-    function GetLogFileName(): String;
-    function GetDaysToPurge(): Integer;
-    procedure SetDaysToPurge(aValue: Integer);
-    function GetEmailTo(): TStringList;
-    procedure SetEmailTo(aValue: TStringList);
-    function GetEnabled(): Boolean;
-    procedure SetEnabled(aValue: Boolean);
-    function GetAppException(): TAppException;
-    procedure SetAppException(aValue: TAppException);
-    function GetAfterAppException(): TAppException;
-    procedure SetAfterAppException(aValue: TAppException);
-    function GetCustomMethod(): TNotifyEvent;
-    procedure SetCustomMethod(aValue: TNotifyEvent);
-    function GetTerminateApp(): Boolean;
-    procedure SetTerminateApp(aValue: Boolean);
-    function GetVisible(): Boolean;
-    procedure SetVisible(aValue: Boolean);
-    Procedure SetCustomBtn(aValue: string);
-    // function LeftPad(S: string; ch: char; Len: Integer): string;
+    function GetLogFileName: string;
     // Writes error to log file (creates new files if needed)
     procedure LogError(LogMessage: string);
     function RightPad(S: string; ch: char; Len: Integer): string;
     // Purges log files based on DaysToPurge const
-    Function ThePurge(): String;
+    Function ThePurge: String;
+    procedure StartParsing(AException: Exception; AParseResult: TStrings);
   public
-    constructor Create();
-    destructor Destroy(); override;
-    Property CustomButtonCaption: string write SetCustomBtn;
-    Property AVLogFile: String read GetLogFileName write fAV_LogFileName;
+    constructor Create;
+    destructor Destroy; override;
+    property BtnCustomCaption: string read FBtnCustomCaption
+      write FBtnCustomCaption;
+    property AVLogFile: string read GetLogFileName write FAVLogFile;
+    property TerminateApp: Boolean read fTerminateApp write fTerminateApp;
+    property DaysToPurge: Integer read fDaysToPurge write fDaysToPurge;
+    property Enabled: Boolean read fEnabled write fEnabled;
+    property Visible: Boolean read FVisible write FVisible;
+    property EmailTo: TStringList read fEmailTo;
+    property OnBtnCustomClick: TNotifyEvent read FOnBtnCustomClick
+      write FOnBtnCustomClick;
+    property OnAppException: TAppException read fAppException
+      write fAppException;
+    property OnAfterAppException: TAppException read fAfterAppException
+      write fAfterAppException;
   end;
 
-function ExceptionLog: IExceptionInterface;
-
 var
-  fExceptionLog: IExceptionInterface;
+  ExceptionLog: TExceptionLogger;
 
 implementation
 
 uses
-  StrUtils;
+  Winapi.SHFolder,
+  Winapi.ShellAPI,
+  System.StrUtils,
+  System.Types,
+  Vcl.Dialogs,
+  Vcl.Graphics,
+  IdURI,
+  UExceptHook,
+  uMapParser;
 
 
 {$R *.dfm}
-
-function ExceptionLog: IExceptionInterface;
-begin
-  fExceptionLog.QueryInterface(IExceptionInterface, Result);
-end;
 
 {$REGION' CRC'}
 const
@@ -234,6 +193,154 @@ begin
  FreeMem(Buffer);
  Result := not Result;
 end;
+
+{$ENDREGION}
+{$REGION 'TAppExceptThread'}
+
+type
+  TAppExceptThread = class(TThread)
+  private
+    FExceptionLogger: TExceptionLogger;
+    fE: Exception;
+    FParseResult: TStrings;
+  protected
+    procedure Execute; override;
+  public
+    constructor Create(AExceptionLogger: TExceptionLogger; aException: Exception; AParseResult: TStrings); overload;
+    destructor Destroy; override;
+  end;
+
+constructor TAppExceptThread.Create(AExceptionLogger: TExceptionLogger;
+  AException: Exception; AParseResult: TStrings);
+begin
+  FExceptionLogger := AExceptionLogger;
+  FExceptionLogger.fParsing := True;
+  fE := AException;
+  FParseResult := AParseResult;
+  FreeOnTerminate := True;
+  inherited Create(False);
+end;
+
+destructor TAppExceptThread.Destroy;
+begin
+  if Assigned(FExceptionLogger) then
+    Synchronize(
+      procedure
+      begin
+        FExceptionLogger.fParsing := False;
+      end);
+  inherited;
+end;
+
+procedure TAppExceptThread.Execute;
+
+  function GetAppVersionStr: string;
+  var
+    Exe: string;
+    Size, Handle: DWORD;
+    Buffer: TBytes;
+    FixedPtr: PVSFixedFileInfo;
+  begin
+    Exe := ParamStr(0);
+    Size := GetFileVersionInfoSize(PChar(Exe), Handle);
+    if Size = 0 then RaiseLastOSError;
+    SetLength(Buffer, Size);
+    if not GetFileVersionInfo(PChar(Exe), Handle, Size, Buffer) then
+      RaiseLastOSError;
+    if not VerQueryValue(Buffer, '\', Pointer(FixedPtr), Size) then
+      RaiseLastOSError;
+    Result := Format('%d.%d.%d.%d', [
+      LongRec(FixedPtr.dwFileVersionMS).Hi, // major
+      LongRec(FixedPtr.dwFileVersionMS).Lo, // minor
+      LongRec(FixedPtr.dwFileVersionLS).Hi, // release
+      LongRec(FixedPtr.dwFileVersionLS).Lo]); // build
+  end;
+
+  procedure GatherStackInfo(var OutList: TStringList);
+  const
+    MAX_STACK_LENGTH = 50; // How many stack addresses do we map
+    NoMapFormat = '[%p]';
+    StackFormat = '[%p] %s (Line %s, "%s")';
+  var
+    P: Pointer;
+    aUnit, aMethod, aLine: string;
+    AStack: TStack;
+    Parser: TMapParser;
+    CurrentLevel: Integer;
+  begin
+    if not Assigned(OutList) then Exit;
+    with ExceptionLog do
+    begin
+      fExceptObj := fe;
+      OutList.Add(StringOfChar(' ', 15) + 'Application Information');
+      OutList.Add(RightPad('', '=', 50));
+      OutList.Add(RightPad('Name', ' ', 10) + ': ' + ExtractFileName(Application.ExeName));
+      OutList.Add(RightPad('Version', ' ', 10) + ': ' + GetAppVersionStr);
+      OutList.Add(RightPad('CRC', ' ', 10) + ': ' + IntToHex(CRCForFile(Application.ExeName), 8));
+      OutList.Add('');
+      OutList.Add(StringOfChar(' ', 15) + 'Error Information');
+      OutList.Add(RightPad('', '=', 50));
+      OutList.Add(RightPad('Date/Time', ' ', 10) + ': ' + FormatDateTime('mm/dd/yyyy hh:mm:ss', now()));
+      OutList.Add(RightPad('Unit', ' ', 10) + ': ' + fE.UnitName);
+      OutList.Add(RightPad('Class', ' ', 10) + ': ' + fE.ClassName);
+      OutList.Add(RightPad('Message', ' ', 10) + ': ' + fE.Message);
+      if fE.ToString <> fE.Message then OutList.Add(RightPad('Text', ' ', 10) + ': ' + fE.ToString);
+      OutList.Add('');
+      OutList.Add(StringOfChar(' ', 15) + 'Error Trace');
+      OutList.Add(RightPad('', '=', 50));
+
+      AStack := TStack(fE.StackInfo);
+      if Assigned(AStack) then
+      begin
+        CurrentLevel := 0;
+        Parser := tMapParser.Create; // slightly faster than threaded version
+        try
+          for P in AStack do
+          begin
+            if CurrentLevel >= MAX_STACK_LENGTH then Break;
+            if not Parser.MapLoaded then
+            begin
+              OutList.Add(Format(NoMapFormat, [P]));
+              Inc(CurrentLevel);
+            end else begin
+              Parser.LookupInMap(LongWord(P), aUnit, aMethod, aLine);
+              if (aUnit <> 'NA') then begin
+                OutList.Add(Format(StackFormat, [P, aMethod, aLine, aUnit]));
+                Inc(CurrentLevel);
+              end;
+            end;
+          end;
+        finally
+          Parser.Free;
+        end;
+      end;
+    end;
+  end;
+
+var
+  AStackInfo: TStringList;
+begin
+  try
+    inherited;
+    AStackInfo := TStringList.Create;
+    try
+      if Assigned(FExceptionLogger) and Assigned(fE) then
+        GatherStackInfo(AStackInfo); // Can't use ExceptionLog.fErrLogString directly on the thread without synchronize!!!
+      if Assigned(FExceptionLogger) then
+        Synchronize(
+          procedure
+          begin
+            FExceptionLogger.fErrLogString.Text := AStackInfo.Text;
+            if Assigned(FParseResult) then FParseResult.Text := AStackInfo.Text;
+          end);
+    finally
+      FreeAndNil(AStackInfo)
+    end;
+  except
+    // swallow
+  end;
+end;
+
 {$ENDREGION}
 {$REGION' TExceptionLogger'}
 
@@ -241,7 +348,7 @@ end;
 // DaysToPurge defines how long a log file can exist on the system. If/when a
 // new exception happens all files older than the purge days will be deleted.
 // ==============================================================================
-constructor TExceptionLogger.Create();
+constructor TExceptionLogger.Create;
 begin
   inherited;
   fDaysToPurge := 60;
@@ -249,11 +356,13 @@ begin
   fEmailTo := TStringList.Create;
   fVisible := true;
   fTerminateApp := false;
+  fErrLogString := TStringList.Create;
   Application.OnException := AppException;
 end;
 
 destructor TExceptionLogger.Destroy();
 begin
+  FreeAndNil(fErrLogString);
   FreeAndNil(fEmailTo);
   inherited;
 end;
@@ -272,42 +381,43 @@ begin
     fAfterAppException(Sender, E);
   if fTerminateApp and (not Application.Terminated) then
     Application.Terminate;
-
 end;
 
 procedure TExceptionLogger.CatchException(Sender: TObject; E: Exception);
+var
+  AExceptionForm: TAppExcept;
 begin
-  fErrLogString := TStringList.Create;
+  fErrLogString.Clear;
   try
     try
-      fExceptionForm := TAppExcept.CreateForm(Application, E);
+      AExceptionForm := TAppExcept.CreateForm(Application, E);
       try
-        fExceptionForm.ShowModal;
+        AExceptionForm.ShowModal;
         Screen.Cursor := crHourGlass;
         try
-          WaitForIt;
-          LogError(fErrLogString.text);
+          WaitForParsing;
+          LogError(fErrLogString.Text);
           //Log to email
-          if fVisible and assigned(fExceptionForm) and
-            (fExceptionForm.ModalResult = mrNo) then
-            EmailError(fErrLogString.text);
+          if fVisible and
+            (AExceptionForm.ModalResult = mrNo) then
+            EmailError(fErrLogString.Text);
         finally
           Screen.Cursor := crDefault;
         end;
       finally
-        if assigned(fExceptionForm) then
-          fExceptionForm.Free;
+        if Assigned(AExceptionForm) then
+          AExceptionForm.Free;
       end;
     except
       // swallow
     end;
   finally
-    fErrLogString.free;
+    fErrLogString.Clear;
   end;
 end;
 
-function TExceptionLogger.GetLogFileName(): String;
-Var
+function TExceptionLogger.GetLogFileName: string;
+var
   OurLogFile, LocalOnly, AppDir, AppName: string;
 
   // Finds the users special directory
@@ -322,8 +432,8 @@ Var
   end;
 
 begin
-  if Trim(fAV_LogFileName) <> '' then
-    Result := fAV_LogFileName
+  if Trim(FAVLogFile) <> '' then
+    Result := FAVLogFile
   else
   begin
     OurLogFile := LocalAppDataPath;
@@ -350,93 +460,15 @@ begin
     OurLogFile := OurLogFile + AppName + '_' + IntToStr(GetCurrentProcessID) +
       '_' + FormatDateTime('mm_dd_yy_hh_mm', now) + '_LOG.TXT';
 
-    fAV_LogFileName := OurLogFile;
+    FAVLogFile := OurLogFile;
     Result := OurLogFile;
   end;
 end;
 
-function TExceptionLogger.GetDaysToPurge(): Integer;
+procedure TExceptionLogger.StartParsing(AException: Exception;
+  AParseResult: TStrings);
 begin
-  Result := fDaysToPurge;
-end;
-
-procedure TExceptionLogger.SetDaysToPurge(aValue: Integer);
-begin
-  fDaysToPurge := aValue;
-end;
-
-function TExceptionLogger.GetEmailTo(): TStringList;
-begin
-  Result := fEmailTo;
-end;
-
-procedure TExceptionLogger.SetEmailTo(aValue: TStringList);
-begin
-  fEmailTo := aValue;
-end;
-
-function TExceptionLogger.GetEnabled(): Boolean;
-begin
-  Result := fEnabled;
-end;
-
-procedure TExceptionLogger.SetEnabled(aValue: Boolean);
-begin
-  fEnabled := aValue;
-end;
-
-function TExceptionLogger.GetAppException(): TAppException;
-begin
-  Result := fAppException;
-end;
-
-procedure TExceptionLogger.SetAppException(aValue: TAppException);
-begin
-  fAppException := aValue;
-end;
-
-function TExceptionLogger.GetAfterAppException(): TAppException;
-begin
-  Result := fAfterAppException;
-end;
-
-procedure TExceptionLogger.SetAfterAppException(aValue: TAppException);
-begin
-  fAfterAppException := aValue;
-end;
-function TExceptionLogger.GetCustomMethod(): TNotifyEvent;
-begin
- Result := fCustomAction;
-end;
-
-procedure TExceptionLogger.SetCustomMethod(aValue: TNotifyEvent);
-begin
-  fCustomAction := aValue;
-end;
-
-function TExceptionLogger.GetTerminateApp(): Boolean;
-begin
-  Result := fTerminateApp;
-end;
-
-procedure TExceptionLogger.SetTerminateApp(aValue: Boolean);
-begin
-  fTerminateApp := aValue;
-end;
-
-function TExceptionLogger.GetVisible(): Boolean;
-begin
-  Result := fVisible;
-end;
-
-procedure TExceptionLogger.SetVisible(aValue: Boolean);
-begin
-  fVisible := aValue;
-end;
-
-Procedure TExceptionLogger.SetCustomBtn(aValue: string);
-begin
-  fCustomBtnCap := aValue;
+  TAppExceptThread.Create(Self, aException, AParseResult);
 end;
 
 Function TExceptionLogger.ThePurge(): String;
@@ -496,10 +528,9 @@ begin
     Result := '';
 end;
 
-procedure TExceptionLogger.WaitForIt;
+procedure TExceptionLogger.WaitForParsing;
 var
   cr: TCursor;
-
 begin
   if fParsing then
   begin
@@ -522,7 +553,7 @@ var
   myFile: TextFile;
 begin
   // Clean the old dir on first run
-  if Trim(fAV_LogFileName) = '' then
+  if Trim(FAVLogFile) = '' then
     LogMessage := ThePurge + LogMessage;
 
   // Asign our file
@@ -545,9 +576,6 @@ begin
 end;
 
 Procedure TExceptionLogger.EmailError(LogMessage: string);
-const
-  CannedBdy =
-    'An access violation has occurred. Log file as follows (also attached to the email)';
 var
   EmailUsrs, TmpStr: string;
 
@@ -612,31 +640,52 @@ var
 
   procedure SendMail(Subject, Body, RecvAddress, Attachs: string);
   const
-    olMailItem = 0;
+    cEmailError = 'An error occured trying to generate the email. Please copy '
+      + 'the data from the details section and manually send to %s';
+    cCRLF = #13#10;
   var
-    Outlook: OLEVariant;
-    MailItem: Variant;
-    MailInspector: Variant;
-    stringlist: TStringList;
+    stringlist, AttachmentStr: TStringList;
+    EMailStr: PWideChar;
+    S: String;
   begin
-    try
-      Outlook := GetActiveOleObject('Outlook.Application');
-    except
-      Outlook := CreateOleObject('Outlook.Application');
-    end;
     stringlist := TStringList.Create;
     try
-      MailItem := Outlook.CreateItem(olMailItem);
-      MailItem.Subject := Subject;
-      MailItem.Recipients.Add(RecvAddress);
-      MailItem.Attachments.Add(Attachs);
-      stringlist := TStringList.Create;
-      stringlist.Add(Body);
-      MailItem.Body := stringlist.text;
-      MailInspector := MailItem.GetInspector;
-      MailInspector.display(false); // true means modal
+
+      stringlist.Add('mailto:' + RecvAddress);
+      stringlist.Add('?Subject=' + TIdURI.ParamsEncode(Subject));
+      stringlist.Add('&Body=' + TIdURI.ParamsEncode(Body));
+
+      if Attachs <> '' then
+      begin
+        AttachmentStr := TStringList.Create;
+        try
+          AttachmentStr.LoadFromFile(Attachs);
+          if CompareText(StringReplace(Body, cCRLF, '', [rfReplaceAll]),
+            StringReplace(AttachmentStr.Text, cCRLF, '', [rfReplaceAll])) <> 0
+          then
+          begin
+            S := cCRLF + RightPad('', 'X', 50) + cCRLF + StringOfChar(' ', 15) +
+              'Session Errors' + cCRLF + RightPad('', 'X', 50) + cCRLF + cCRLF;
+            AttachmentStr.Insert(0, S);
+            stringlist.Add(TIdURI.ParamsEncode(AttachmentStr.Text));
+          end;
+        finally
+          AttachmentStr.Free;
+        end;
+      end;
+
+      GetMem(EMailStr, (Length(stringlist.Text) + 1) * SizeOf(WideChar));
+      try
+        StringToWideChar(stringlist.Text, EMailStr,
+          Length(stringlist.Text) + 1);
+        if ShellExecute(Application.Handle, nil, EMailStr, nil, nil,
+          SW_NORMAL) <= 0 then
+          ShowMessage(Format(cEmailError, [RecvAddress]));
+      finally
+        FreeMem(EMailStr);
+      end;
+
     finally
-      Outlook := Unassigned;
       stringlist.Free;
     end;
   end;
@@ -647,20 +696,40 @@ var
   var
     StrtPos, EndPos: Integer;
     ErrStr: String;
+    AStack: TStack;
   begin
-    Result := fExceptObj.UnitName+'.'+fExceptObj.ClassName;
-    if trim(fExceptObj.ClassName) = 'EBrokerError' then
+    if not Assigned(fExceptObj) then
+      Exit;
+
+    Result := fExceptObj.UnitName + '.' + fExceptObj.ClassName;
+    ErrStr := '';
+    if Trim(fExceptObj.ClassName) = 'EBrokerError' then
     begin
       StrtPos := Pos(mMsgLookup, fExceptObj.Message);
       if StrtPos > -1 then
       begin
-        StrtPos := StrtPos+Length(mMsgLookup);
+        StrtPos := StrtPos + Length(mMsgLookup);
         EndPos := PosEx(#13, fExceptObj.Message, StrtPos) - StrtPos;
         ErrStr := Copy(fExceptObj.Message, StrtPos, EndPos);
-        Result := Result + '[{' + ErrStr +'}]';
+        Result := Result + '[{' + ErrStr + '}]';
       end;
-    end else
-      Result := Result + TStringList(fExceptObj.StackInfo).Strings[0];
+    end
+    else
+    begin
+      try
+        if Assigned(fExceptObj.StackInfo) and
+          (TObject(fExceptObj.StackInfo) is TStack) then
+        begin
+          AStack := TStack(fExceptObj.StackInfo);
+          if AStack.Count > 0 then
+            ErrStr := Format('[%p]', [AStack.First]);
+        end;
+      except
+        raise Exception.Create('StackInfo is not of expected type');
+      end;
+
+      Result := Result + ErrStr;
+    end;
   end;
 
 begin
@@ -675,7 +744,7 @@ begin
     EmailUsrs := EmailUsrs + TmpStr;
   end;
   SendMail(ExtractFileName(Application.ExeName) +' Error logged - ' + SetEmailSubject,
-    CannedBdy + #13#10 + #13#10 + LogMessage, EmailUsrs, AVLogFile);
+    LogMessage, EmailUsrs, AVLogFile);
 
 end;
 
@@ -690,175 +759,37 @@ begin
   Result := S + StringOfChar(ch, RestLen);
 end;
 
-{
-  function TExceptionLogger.LeftPad(S: string; ch: char; Len: Integer): string;
-  var
-  RestLen: Integer;
-  begin
-  Result := S;
-  RestLen := Len - Length(S);
-  if RestLen < 1 then
-  Exit;
-  Result := StringOfChar(ch, RestLen) + S;
-  end;
-}
 {$ENDREGION}
 {$REGION 'TAppExcept'}
-
-type
-  TAppExceptThread = class(TThread)
-  private
-    fE: Exception;
-  protected
-    procedure Execute; override;
-  public
-    constructor Create(aException: Exception); overload;
-  end;
-
-{ TAppExceptThread }
-
-constructor TAppExceptThread.Create(aException: Exception);
-begin
-  fE := aException;
-  FreeOnTerminate := true;
-  inherited Create(False);
-end;
-
-procedure TAppExceptThread.Execute;
-const
-  StackFormat = '%s %s (Line %s, "%s")';
-
-  function GetAppVersionStr: string;
-  var
-    Exe: string;
-    Size, Handle: DWORD;
-    Buffer: TBytes;
-    FixedPtr: PVSFixedFileInfo;
-
-  begin
-    Exe := ParamStr(0);
-    Size := GetFileVersionInfoSize(PChar(Exe), Handle);
-    if Size = 0 then
-      RaiseLastOSError;
-    SetLength(Buffer, Size);
-    if not GetFileVersionInfo(PChar(Exe), Handle, Size, Buffer) then
-      RaiseLastOSError;
-    if not VerQueryValue(Buffer, '\', Pointer(FixedPtr), Size) then
-      RaiseLastOSError;
-    Result := Format('%d.%d.%d.%d', [LongRec(FixedPtr.dwFileVersionMS).Hi,
-      // major
-      LongRec(FixedPtr.dwFileVersionMS).Lo, // minor
-      LongRec(FixedPtr.dwFileVersionLS).Hi, // release
-      LongRec(FixedPtr.dwFileVersionLS).Lo]) // build
-  end;
-
-  procedure GatherStackInfo(var OutList: TStringList);
-  var
-    LookUp: Longword;
-    aUnit, aMethod, aLine: String;
-    i: integer;
-    stk: TStringList;
-    parser: TMapParser;
-
-  begin
-    if not Assigned(OutList) then
-      exit;
-    with TExceptionLogger(fExceptionLog) do
-    begin
-      fExceptObj := fe;
-      OutList.Add(StringOfChar(' ', 15) + 'Application Information');
-      OutList.Add(RightPad('', '=', 50));
-      OutList.Add(RightPad('Name', ' ', 10) + ': ' +
-        ExtractFileName(Application.ExeName));
-      OutList.Add(RightPad('Version', ' ', 10) + ': ' + GetAppVersionStr);
-      OutList.Add(RightPad('CRC', ' ', 10) + ': ' +IntToHex(CRCForFile(Application.ExeName), 8));
-      OutList.Add('');
-      OutList.Add(StringOfChar(' ', 15) + 'Error Information');
-      OutList.Add(RightPad('', '=', 50));
-      OutList.Add(RightPad('Date/Time', ' ', 10) + ': ' +
-        FormatDateTime('mm/dd/yyyy hh:mm:ss', now()));
-      OutList.Add(RightPad('Unit', ' ', 10) + ': ' + fE.UnitName);
-      OutList.Add(RightPad('Class', ' ', 10) + ': ' + fE.ClassName);
-      OutList.Add(RightPad('Message', ' ', 10) + ': ' + fE.Message);
-      if fE.ToString <> fE.Message then
-        OutList.Add(RightPad('Text', ' ', 10) + ': ' + fE.ToString);
-      OutList.Add('');
-      OutList.Add(StringOfChar(' ', 15) + 'Error Trace');
-      OutList.Add(RightPad('', '=', 50));
-
-      stk := TStringList(fE.StackInfo);
-      if assigned(stk) then
-      begin
-        parser := tMapParser.Create; // slightly faster than threaded version
-        try
-          for i := 0 to stk.Count - 1 do
-          begin
-            if parser.MapLoaded then
-            begin
-              LookUp := Longword(StrToIntDef('$' + copy(stk[i], 2, 8), 0));
-              if LookUp > 0 then
-              begin
-                parser.LookupInMap(LookUp, aUnit, aMethod, aLine);
-                if (aUnit <> 'NA') then
-                  OutList.Add(Format(StackFormat, [stk[i], aMethod, aLine, aUnit]));
-              end else
-               OutList.Add(stk[i]);
-            end
-            else
-              OutList.Add(stk[i]);
-          end;
-        finally
-          parser.Free;
-        end;
-      end;
-    end;
-  end;
-
-begin
-  inherited;
-  try
-    with TExceptionLogger(fExceptionLog) do
-    begin
-      GatherStackInfo(fErrLogString);
-      Synchronize(
-        procedure
-        begin
-          if Assigned(fExceptionForm) and (not Application.Terminated) then
-            fExceptionForm.LogDetails.Lines.text := fErrLogString.text;
-          fParsing := false;
-        end);
-    end;
-  except
-    // swallow
-  end;
-end;
-
-{ TAppExcept }
 
 constructor TAppExcept.CreateForm(AOwner: TComponent; aException: Exception);
 begin
   inherited Create(AOwner);
-  with TExceptionLogger(fExceptionLog) do
+  with ExceptionLog do
   begin
-    fParsing := True;
     if fEmailTo.Count = 0 then
       pnlBtns.ColumnCollection[2].Value := 0
     else
       pnlBtns.ColumnCollection[2].Value := 25;
+    pnlBtns.UpdateControlsColumn(2);
 
-    if Assigned(fCustomAction) then
+    if Assigned(FOnBtnCustomClick) then
     begin
       pnlBtns.ColumnCollection[3].Value := 25;
-      btnCustom.Caption := fCustomBtnCap;
-      btnCustom.OnClick := fCustomAction;
+      btnCustom.Visible := true;
+      btnCustom.Caption := FBtnCustomCaption;
+      btnCustom.OnClick := FOnBtnCustomClick;
     end
     else
+    begin
      pnlBtns.ColumnCollection[3].Value := 0;
+     btnCustom.Visible := false;
+    end;
+    pnlBtns.UpdateControlsColumn(3);
 
     lblAVText.Caption := aException.Message;
+    StartParsing(aException, LogDetails.Lines);
   end;
-
-  TAppExceptThread.Create(aException);
 end;
 
 procedure TAppExcept.FormCreate(Sender: TObject);
@@ -866,38 +797,44 @@ begin
   SetWindowLong(Handle, GWL_EXSTYLE, WS_EX_APPWINDOW);
 end;
 
-procedure TAppExcept.FormDestroy(Sender: TObject);
-begin
-  TExceptionLogger(fExceptionLog).fExceptionForm := nil;
-end;
-
 procedure TAppExcept.lblDeatailTxt1Click(Sender: TObject);
 var
- NewWidth: Integer;
+  NewWidth: Integer;
 begin
-  TExceptionLogger(fExceptionLog).WaitForIt;
-  Self.AutoSize := false;
+  ExceptionLog.WaitForParsing;
+  Self.AutoSize := False;
   try
-  NewWidth := CalcWidthResize;
-  //Ensure that the width and height dont go past the screen
-  if screen.DesktopWidth > (self.Width + NewWidth)  then
-   Self.Width := self.Width + NewWidth;
-  if screen.DesktopHeight < (Self.Height)  then
-    Self.Height := screen.DesktopHeight;
+    NewWidth := CalcWidthResize;
+    //Ensure that the width and height dont go past the screen
+    if Screen.DesktopWidth > (Self.Width + NewWidth) then
+      Self.Width := Self.Width + NewWidth;
+    if screen.DesktopHeight < (Self.Height) then
+      Self.Height := Screen.DesktopHeight;
   finally
-   Self.AutoSize := true;
+    Self.AutoSize := True;
   end;
   pnlDetails.Visible := True;
 end;
 
 procedure TAppExcept.LogDetailsChange(Sender: TObject);
+var
+  RemainingArea, RequestNewHeigh: Integer;
 begin
- BindingsList1.Notify(Sender, '');
+  RemainingArea := (Screen.WorkAreaHeight - LogDetails.ClientToScreen(Point(0,
+    0)).y) - (pnlBtns.Height + 30);
+  RequestNewHeigh := LogDetails.Font.Size - 4 + (LogDetails.Lines.Count + 2) *
+    -1 * (LogDetails.Font.Height - 3);
+
+  if RequestNewHeigh > RemainingArea then
+    pnlDetails.Height := RemainingArea
+  else
+    pnlDetails.Height := RequestNewHeigh;
 end;
 
 procedure TAppExcept.btnLogEMailClick(Sender: TObject);
 begin
-  TExceptionLogger(fExceptionLog).WaitForIt;
+  // This ensures that parsing is done before the modal result is returned
+  ExceptionLog.WaitForParsing;
 end;
 
 Function TAppExcept.CalcWidthResize(): Integer;
@@ -908,47 +845,40 @@ var
   LngLineText: String;
   TextSize: TSize;
 begin
-
   DC := GetDC(Logdetails.Handle);
   try
-  CacheFont := SelectObject(DC, Logdetails.Font.Handle);
-  try
+    CacheFont := SelectObject(DC, Logdetails.Font.Handle);
+    try
+      LngLineText := '';
+      LongLineIDX := -1;
+      LineCharCnt := 0;
+      LngLineText := '';
+      for I := 0 to Logdetails.Lines.Count - 0 do
+      begin
+        if Length(LogDetails.Lines[i]) > LineCharCnt then
+        begin
+          LineCharCnt := Length(LogDetails.Lines[i]);
+          LongLineIDX := I;
+        end;
+      end;
+      LngLineText := LogDetails.Lines[LongLineIDX];
 
-  LngLineText := '';
-  LongLineIDX := -1;
-  LineCharCnt := 0;
-  LngLineText := '';
-  for I := 0 to Logdetails.Lines.Count - 0 do
-  begin
-   if Length(LogDetails.Lines[i]) > LineCharCnt then
-   begin
-    LineCharCnt := Length(LogDetails.Lines[i]);
-    LongLineIDX := I;
-   end;
-  end;
-  LngLineText := LogDetails.Lines[LongLineIDX];
-
-  GetTextExtentPoint32(DC, PChar(LngLineText), Length(LngLineText), TextSize);
-  Result := TextSize.cx  - (self.Width) + 100;
-
+      GetTextExtentPoint32(DC, PChar(LngLineText), Length(LngLineText), TextSize);
+      Result := TextSize.cx  - (self.Width) + 100;
+    finally
+      SelectObject(DC, CacheFont);
+    end;
   finally
-   SelectObject(DC, CacheFont);
+    ReleaseDC(Logdetails.Handle, DC);
   end;
-  finally
-   ReleaseDC(Logdetails.Handle, DC);
-  end;
-
 end;
 
-{$ENDREGION 'Private'}
+{$ENDREGION}
 
 initialization
-
- TExceptionLogger.Create.GetInterface(IExceptionInterface, fExceptionLog);
-
- StartExceptionStackMonitoring;
-
+  ExceptionLog := TExceptionLogger.Create;
+  StartExceptionStackMonitoring;
 finalization
- StopExceptionStackMonitoring;
-
+  StopExceptionStackMonitoring;
+  FreeAndNil(ExceptionLog);
 end.

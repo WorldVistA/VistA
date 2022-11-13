@@ -4,9 +4,9 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ORFn, ComCtrls, ExtCtrls, fFrame, fBase508Form,
+  StdCtrls, ORFn, ComCtrls, ExtCtrls, fFrame, fBase508Form, Types,
   VA508AccessibilityManager, uReports, Vcl.Menus, U_CPTEditMonitor, fDeviceSelect,
-  WinApi.ShellApi, WinApi.RichEdit;
+  WinApi.ShellApi, WinApi.RichEdit, uPrinting;
 
 type
   TfrmReportBox = class(TfrmBase508Form)
@@ -14,7 +14,7 @@ type
     memReport: TRichEdit;
     pnlButton: TPanel;
     cmdPrint: TButton;
-    dlgPrintReport: TPrintDialog;
+    dlgPrintReport: uPrinting.TPrintDialog;
     cmdClose: TButton;
     pmnu: TPopupMenu;
     mnuCopy: TMenuItem;
@@ -53,13 +53,16 @@ function CreateReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: 
                         VistAPrintOnly: boolean = true): TfrmReportBox;
 var
   i, AWidth, MinWidth, MaxWidth, AHeight: Integer;
-  Rect: TRect;
   BtnArray: array of TButton;
   BtnRight: array of integer;
   BtnLeft:  array of integer;
   //cmdCloseRightMargin: integer;
   //cmdPrintRightMargin: integer;
   j, k: integer;
+  line: string;
+  Format: TCharFormat2;
+  AdjWidth: boolean;
+
 begin
   Result := TfrmReportBox.Create(Application);
   try
@@ -69,7 +72,7 @@ begin
       i := SendMessage(memReport.Handle, EM_GETEVENTMASK, 0, 0);
       SendMessage(memReport.Handle, EM_SETEVENTMASK, 0, i or ENM_LINK);
       SendMessage(memReport.Handle, EM_AUTOURLDETECT, Integer(True), 0);
-
+      lblFontTest.Font.Size := MainFontSize;
       k := 0;
       MinWidth := 0;
       with pnlButton do for j := 0 to ControlCount - 1 do
@@ -122,10 +125,56 @@ begin
       QuickCopy(ReportText, memReport);
       for i := 1 to Length(ReportTitle) do if ReportTitle[i] = #9 then ReportTitle[i] := ' ';
       Caption := ReportTitle;
-      memReport.SelStart := 0;
-      Rect := BoundsRect;
-      ForceInsideWorkArea(Rect);
-      BoundsRect := Rect;
+
+      // RTC 1291792
+      AdjWidth := False;
+      with memReport do
+      begin
+        if Lines.Count > 1 then
+        begin
+          i := 0;
+          repeat
+            line := Lines[i];
+            j := Length(line);
+            if (j > 0) and (ord(line[j]) > 32) and (Length(Lines[i + 1]) > 0)
+              and (ord(Lines[i + 1][1]) > 32) then
+            begin
+              CaretPos := Point(j - 1, i);
+              SelLength := 1;
+              FillChar(Format, SizeOf(TCharFormat2), 0);
+              Format.cbSize := SizeOf(TCharFormat2);
+              SendGetStructMessage(Handle, EM_GETCHARFORMAT, WPARAM(true),
+                Format, true);
+              if (Format.dwEffects and CFE_LINK) <> 0 then
+              begin
+                line := line + Lines[i + 1];
+                Lines[i] := line;
+                Lines.Delete(i + 1);
+                dec(i);
+                AdjWidth := true;
+              end;
+            end;
+            inc(i);
+          until i >= (Lines.Count - 1);
+        end;
+        SelStart := 0;
+        if AdjWidth then
+        begin
+          MaxWidth := 350;
+          for i := 0 to Lines.Count - 1 do
+          begin
+            AWidth := lblFontTest.Canvas.TextWidth(Lines[i]);
+            if AWidth > MaxWidth then
+              MaxWidth := AWidth;
+          end;
+          MaxWidth := MaxWidth + GetSystemMetrics(SM_CXVSCROLL) + MainFont.Size;
+          if MaxWidth > Screen.Width then
+            MaxWidth := Screen.Width;
+          Result.ClientWidth := MaxWidth;
+        end;
+      end;
+
+      ForceInsideWorkArea(Result);
       SetLength(BtnArray, 0);
       SetLength(BtnRight, 0);
       SetLength(BtnLeft, 0);
@@ -171,7 +220,7 @@ begin
   try
     frmReportBox.ShowModal;
     Result := frmReportBox.VistADevice;
-    finally
+  finally
     frmReportBox.Release;
     Screen.Cursor := crDefault;
     fFrame.frmFrame.mnuFileOpen.Enabled := True;
@@ -186,7 +235,7 @@ var
   ErrMsg: string;
 //  RemoteSiteID: string;    //for Remote site printing
 //  RemoteQuery: string;    //for Remote site printing
-  dlgPrintReport: TPrintDialog;
+  dlgPrintReport: uPrinting.TPrintDialog;
     BM: TBitmap;
 const
   PAGE_BREAK = '**PAGE BREAK**';
@@ -196,7 +245,7 @@ begin
 //  RemoteQuery := '';
  BM := TBitmap.Create;
   try
-  dlgPrintReport := TPrintDialog.Create(Form);
+  dlgPrintReport := uPrinting.TPrintDialog.Create(Form);
   try
     frmFrame.CCOWBusy := True;
     if dlgPrintReport.Execute then
@@ -332,7 +381,5 @@ begin
   inherited;
   self.memReport.Refresh;
 end;
-
-
 
 end.

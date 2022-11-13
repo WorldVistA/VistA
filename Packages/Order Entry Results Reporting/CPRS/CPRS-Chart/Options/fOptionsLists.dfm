@@ -6,13 +6,11 @@ inherited frmOptionsLists: TfrmOptionsLists
   BorderStyle = bsSingle
   Caption = 'Personal Lists'
   ClientHeight = 468
-  ClientWidth = 407
+  ClientWidth = 474
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
-  OnCreate = FormCreate
-  OnShow = FormShow
-  ExplicitWidth = 413
-  ExplicitHeight = 493
+  ExplicitWidth = 480
+  ExplicitHeight = 497
   PixelsPerInch = 96
   TextHeight = 13
   object lblAddBy: TLabel [0]
@@ -44,24 +42,24 @@ inherited frmOptionsLists: TfrmOptionsLists
     Caption = 'Personal Lists:'
   end
   object lblInfo: TMemo [4]
-    Left = 199
-    Top = 24
-    Width = 186
-    Height = 65
+    Left = 249
+    Top = 16
+    Width = 221
+    Height = 104
     TabStop = False
     BorderStyle = bsNone
     Color = clBtnFace
     Lines.Strings = (
-      'You can change your personal lists by '
-      'adding or removing patients.')
+      'You can change your personal lists '
+      'by adding or removing patients.')
     ReadOnly = True
     TabOrder = 14
   end
   object pnlBottom: TPanel [5]
     Left = 0
-    Top = 435
-    Width = 407
-    Height = 33
+    Top = 436
+    Width = 474
+    Height = 32
     HelpContext = 9070
     Align = alBottom
     BevelOuter = bvNone
@@ -70,31 +68,56 @@ inherited frmOptionsLists: TfrmOptionsLists
     object bvlBottom: TBevel
       Left = 0
       Top = 0
-      Width = 407
+      Width = 474
       Height = 2
       Align = alTop
+      ExplicitWidth = 407
     end
     object btnOK: TButton
-      Left = 245
-      Top = 8
+      AlignWithMargins = True
+      Left = 315
+      Top = 5
       Width = 75
-      Height = 22
+      Height = 24
       HelpContext = 9996
+      Align = alRight
       Caption = 'OK'
       ModalResult = 1
       TabOrder = 0
       OnClick = btnOKClick
     end
     object btnCancel: TButton
-      Left = 325
-      Top = 8
+      AlignWithMargins = True
+      Left = 396
+      Top = 5
       Width = 75
-      Height = 22
+      Height = 24
       HelpContext = 9997
+      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
       TabOrder = 1
+    end
+    object Button1: TButton
+      AlignWithMargins = True
+      Left = 3
+      Top = 5
+      Width = 118
+      Height = 24
+      HelpContext = 9080
+      Align = alLeft
+      Caption = 'Save Changes'
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      Visible = False
+      OnClick = btnListSaveChangesClick
     end
   end
   object lstAddBy: TORComboBox [6]
@@ -188,9 +211,10 @@ inherited frmOptionsLists: TfrmOptionsLists
   object lstPersonalPatients: TORListBox [10]
     Left = 249
     Top = 244
-    Width = 153
+    Width = 217
     Height = 134
     HelpContext = 9075
+    Anchors = [akLeft, akTop, akRight, akBottom]
     ItemHeight = 13
     MultiSelect = True
     ParentShowHint = False
@@ -260,9 +284,10 @@ inherited frmOptionsLists: TfrmOptionsLists
   object lstPersonalLists: TORListBox [14]
     Left = 249
     Top = 141
-    Width = 153
+    Width = 217
     Height = 81
     HelpContext = 9074
+    Anchors = [akLeft, akTop, akRight]
     ItemHeight = 13
     ParentShowHint = False
     ShowHint = True
@@ -277,7 +302,7 @@ inherited frmOptionsLists: TfrmOptionsLists
   object radAddByType: TRadioGroup [15]
     Left = 7
     Top = 8
-    Width = 170
+    Width = 234
     Height = 112
     HelpContext = 9071
     Caption = 'Select patients by '
@@ -331,8 +356,9 @@ inherited frmOptionsLists: TfrmOptionsLists
   object grpVisibility: TRadioGroup [18]
     Left = 8
     Top = 384
-    Width = 391
+    Width = 458
     Height = 45
+    Anchors = [akLeft, akTop, akRight]
     Caption = 'Who should be able to see and use the selected  list?'
     Columns = 3
     ItemIndex = 1
@@ -343,8 +369,8 @@ inherited frmOptionsLists: TfrmOptionsLists
     OnClick = grpVisibilityClick
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 64
-    Top = 424
+    Left = 56
+    Top = 280
     Data = (
       (
         'Component = lblInfo'
@@ -400,11 +426,14 @@ inherited frmOptionsLists: TfrmOptionsLists
         'Status = stsDefault')
       (
         'Component = frmOptionsLists'
+        'Status = stsDefault')
+      (
+        'Component = Button1'
         'Status = stsDefault'))
   end
   object mnuPopPatient: TPopupMenu
-    Left = 8
-    Top = 408
+    Left = 336
+    Top = 272
     object mnuPatientID: TMenuItem
       Caption = 'Patient ID...'
       OnClick = mnuPatientIDClick

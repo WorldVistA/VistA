@@ -65,14 +65,21 @@ end;
 
 procedure TfrmLkUpLocation.cboLocationNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
+var
+  Dest: TStrings;
 begin
   inherited;
+    Dest := TStringList.Create;
+    try
     case LocType of
-      LOC_ALL:   cboLocation.ForDataUse(SubSetOfLocations(StartFrom, Direction));
-      LOC_OUTP:  cboLocation.ForDataUse(SubSetOfClinics(StartFrom, Direction));
-      LOC_INP:   cboLocation.ForDataUse(SubSetOfInpatientLocations(StartFrom, Direction));
+      LOC_ALL:   setSubSetOfLocations(Dest,StartFrom, Direction);
+      LOC_OUTP:  setSubSetOfClinics(Dest,StartFrom, Direction);
+      LOC_INP:   setSubSetOfInpatientLocations(Dest,StartFrom, Direction);
     end;
-
+      cboLocation.ForDataUse(Dest);
+    finally
+      Dest.Free;
+    end;
 end;
 
 procedure TfrmLkUpLocation.cmdOKClick(Sender: TObject);

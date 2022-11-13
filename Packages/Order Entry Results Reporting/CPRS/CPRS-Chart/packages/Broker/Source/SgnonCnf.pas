@@ -5,10 +5,13 @@
   Developers: Danila Manapsal, Don Craven, Joel Ivey
   Description: Contains TRPCBroker and related components.
   Unit: SgnonCnf Signon Form configuration dialog.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in XWB*1.1*71 (RGG 10/18/2018) XWB*1.1*71
   1. Updated RPC Version to version 71.
 
@@ -61,7 +64,6 @@ type
     FIntroFont: String;
     FIntroFontStyles: String;
     FBackColor: LongInt;
-    FFont: TFont;
     FFontStyles: TFontStyles;
     FTop: Integer;
     FLeft: Integer;
@@ -72,6 +74,7 @@ type
     procedure SetFont(Value: TFont);
     procedure SetTextColor(Value: LongInt);
   public
+    FFont: TFont;
     procedure Clear; virtual;
     constructor Create;
     destructor Destroy; override;
@@ -91,7 +94,30 @@ type
     property Left: Integer read FLeft write FLeft;
   end;
 
-  TSignonConfiguration = class;
+  {
+    This class handles the processing for signon configuration
+  }
+  TSignonConfiguration = class(TObject)
+  private
+    OrigHelp: String;
+    FIntroBackColor: LongInt;
+    FIntroFontValue: String;
+    FIntroFontStyles: String;
+    FIntroTextColor: LongInt;
+    FPosition: String;
+    FSize: String;
+  protected
+    procedure ResetToDefaults; virtual;
+    procedure UserClickedOK; virtual;
+    procedure IntroBackColor; virtual;
+    procedure FontDialog; virtual;
+    procedure UpdateWindow;
+  public
+    function ShowModal: Integer; virtual;
+    procedure ReadRegistrySettings;
+    constructor Create;
+    destructor Destroy; override;
+  end;
 
   {
     This class is the form shown for configuration of the signon form
@@ -120,30 +146,6 @@ type
     property Controller: TSignonConfiguration read FController
       write FController;
     { Public declarations }
-  end;
-
-  {
-    This class handles the processing for signon configuration
-  }
-  TSignonConfiguration = class(TObject)
-  private
-    OrigHelp: String;
-    FIntroBackColor: LongInt;
-    FIntroFontValue: String;
-    FIntroFontStyles: String;
-    FIntroTextColor: LongInt;
-    FPosition: String;
-    FSize: String;
-  protected
-    procedure ResetToDefaults; virtual;
-    procedure UserClickedOK; virtual;
-    procedure IntroBackColor; virtual;
-    procedure FontDialog; virtual;
-    procedure UpdateWindow;
-  public
-    function ShowModal: Integer; virtual;
-    procedure ReadRegistrySettings;
-    constructor Create;
   end;
 
 function StoreFontStyle(Values: TFontStyles): string;
@@ -303,7 +305,7 @@ begin
     end; // with SignonForm
     Result := ModalValue;
   finally
-    frmSignonConfig.Free; // Release;  jli 041104
+    FreeAndNil(frmSignonConfig); // Release;  jli 041104
     Application.HelpFile := OrigHelp; // Restore helpfile.
   end;
 end;
@@ -338,6 +340,7 @@ begin
   end
   else
     FIntroBackColor := InitialValues.BackColor;
+    FreeAndNil(frmSignonDialog);
   SetForegroundWindow(OldHandle);
 end;
 
@@ -348,14 +351,14 @@ var
   OldHandle: THandle;
   FFontValue: TFont;
 begin
-  FFontValue := TFont.Create;
   OldHandle := GetForegroundWindow;
+  FFontValue := TFont.Create;
+  frmSignonDialog := TfrmSignonDialog.Create(Application);
   try
     FFontValue.Name := InitialValues.Font.Name;
     FFontValue.Size := InitialValues.Font.Size;
     FFontValue.Style := InitialValues.Font.Style;
     FFontValue.Color := InitialValues.Font.Color;
-    frmSignonDialog := TfrmSignonDialog.Create(Application);
     frmSignonDialog.Label1.Caption :=
       'Do you want to use the Default Font face and size?';
     // ShowApplicationAndFocusOK(Application);
@@ -382,9 +385,12 @@ begin
     FIntroTextColor := FFontValue.Color;
   finally
     FreeAndNil(FFontValue);
+    FreeAndNil(frmSignonDialog);
     SetForegroundWindow(OldHandle);
     inherited;
   end;
+//  FreeAndNil(FFontValue);
+//  FreeAndNil(frmSignonDialog);
 end;
 
 procedure TSignonConfiguration.ResetToDefaults;
@@ -492,25 +498,36 @@ end;
 constructor TSignonConfiguration.Create;
 begin
   inherited;
-  if SignonDefaults = nil then
+  if not Assigned(SignonDefaults) then
     SignonDefaults := TSignonValues.Create;
-  if InitialValues = nil then
+  if not Assigned(InitialValues) then
     InitialValues := TSignonValues.Create;
+end;
 
+destructor TSignonConfiguration.Destroy;
+begin
+  if Assigned(SignonDefaults) then
+    FreeAndNil(SignonDefaults);
+  if Assigned(InitialValues) then
+    FreeAndNil(InitialValues);
+  inherited;
 end;
 
 procedure TSignonConfiguration.UpdateWindow;
 begin
   // TODO -cMM: default body inserted
-  frmSignon.IntroText.Color := InitialValues.BackColor;
-  frmSignon.IntroText.Font.Name := InitialValues.Font.Name;
-  frmSignon.IntroText.Font.Size := InitialValues.Font.Size;
-  frmSignon.IntroText.Font.Style := InitialValues.Font.Style;
-  frmSignon.IntroText.Font.Color := InitialValues.Font.Color;
-  frmSignon.Left := SignonDefaults.Left;
-  frmSignon.Top := SignonDefaults.Top;
-  frmSignon.Width := SignonDefaults.Width;
-  frmSignon.Height := SignonDefaults.Height;
+  if assigned(frmSignon) then
+  begin
+    frmSignon.IntroText.Color := InitialValues.BackColor;
+    frmSignon.IntroText.Font.Name := InitialValues.Font.Name;
+    frmSignon.IntroText.Font.Size := InitialValues.Font.Size;
+    frmSignon.IntroText.Font.Style := InitialValues.Font.Style;
+    frmSignon.IntroText.Font.Color := InitialValues.Font.Color;
+    frmSignon.Left := SignonDefaults.Left;
+    frmSignon.Top := SignonDefaults.Top;
+    frmSignon.Width := SignonDefaults.Width;
+    frmSignon.Height := SignonDefaults.Height;
+  end;
 end;
 
 procedure TSignonValues.Clear;
@@ -531,12 +548,14 @@ end;
 constructor TSignonValues.Create;
 begin
   inherited;
-  FFont := TFont.Create;
+  if not Assigned(FFont) then
+    FFont := TFont.Create;
 end;
 
 destructor TSignonValues.Destroy;
 begin
-  FreeAndNil(FFont);
+  // if Assigned(FFont) then
+  // FreeAndNil(FFont);
   inherited;
 end;
 

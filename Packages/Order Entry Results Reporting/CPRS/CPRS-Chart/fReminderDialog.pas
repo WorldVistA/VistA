@@ -5,11 +5,12 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, ORFn, StdCtrls, ComCtrls, Buttons, ORCtrls, uReminders, uConst,
-  ORClasses, fRptBox, Menus, rPCE, uTemplates, fBase508Form,
-  VA508AccessibilityManager, fMHTest, fFrame, System.UITypes;
+  ORClasses, fRptBox, Menus, rPCE, uTemplates, fBase508Form, System.Generics.Collections,
+  VA508AccessibilityManager, fMHTest, fFrame, System.UITypes, rvimm, uPCE,
+  fBaseDynamicControlsForm;
 
 type
-  TfrmRemDlg = class(TfrmBase508Form)
+  TfrmRemDlg = class(TfrmBaseDynamicControlsForm)
     sb1: TScrollBox;
     sb2: TScrollBox;
     splTxtData: TSplitter;
@@ -40,10 +41,11 @@ type
     procedure btnFinishClick(Sender: TObject);
     procedure btnClinMaintClick(Sender: TObject);
     procedure btnVisitClick(Sender: TObject);
-    procedure KillDlg(ptr: Pointer; ID: string; KillObjects: Boolean = FALSE);
     procedure FormShow(Sender: TObject);
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure btnCancelMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
     // AGP Change 24.8
   private
     FSCCond: TSCConditions;
@@ -67,6 +69,23 @@ type
     FOldClinMaintOnDestroy: TNotifyEvent;
     FProcessingTemplate: Boolean;
     FSilent: Boolean;
+    FMessageBoxText: string;
+    FFinishing: boolean;
+    FAllowAutoRebuild: boolean;
+    FPendingAutoRebuild: boolean;
+    FLockCount: integer;
+    procedure UMMessageBox(var Message: TMessage); message UM_MESSAGEBOX;
+    procedure UMResyncRem(var Message: TMessage); message UM_RESYNCREM;
+    procedure UMValidateMag(var Message: TMessage); message UM_VALIDATE_MAG;
+    procedure KillDlg(ptr: Pointer; ID: string; KillObjects: Boolean = FALSE);
+    procedure getProcedureCodes(var codesList: TStrings);
+    procedure getDiagnosisCodes(var codesList: TStrings);
+    function inCodesList(codeSys, code: string; codesList: TStrings): boolean;
+    function CanAbort: boolean;
+    procedure DoAbort;
+    procedure Lock;
+    procedure Unlock;
+    procedure RequestRebuild;
   protected
     procedure RemindersChanged(Sender: TObject);
     procedure ClearControls(All: Boolean = FALSE);
@@ -76,7 +95,6 @@ type
     procedure ResetProcessing(Wipe: string = ''); // AGP CHANGE 24.8;
     procedure BoxUpdateDone;
     procedure ControlsChanged(Sender: TObject);
-    procedure UMResyncRem(var Message: TMessage); message UM_RESYNCREM;
     procedure UpdateText(Sender: TObject);
     function GetCurReminderList: Integer;
     function NextReminder: string;
@@ -90,6 +108,7 @@ type
     procedure ProcessReminder(ARemData: string; NodeID: string);
     procedure SetFontSize;
     property Silent: Boolean read FSilent write FSilent;
+    property MessageBoxText: string read FMessageBoxText write FMessageBoxText;
   end;
 
 procedure ViewReminderDialog(RemNode: TORTreeNode; InitDlg: Boolean = TRUE);
@@ -121,10 +140,10 @@ const
 implementation
 
 uses
-  fNotes, uPCE, uOrders, rOrders, uCore, rMisc, rReminders,
+  fNotes, uOrders, rOrders, uCore, rMisc, rReminders,
   fReminderTree, uVitals, rVitals, RichEdit, fConsults, fTemplateDialog,
   uTemplateFields, fRemVisitInfo, rCore, uVA508CPRSCompatibility,
-  VA508AccessibilityRouter, VAUtils, uGlobalVar;
+  VA508AccessibilityRouter, VAUtils, uGlobalVar, uDlgComponents, uPDMP;
 
 {$R *.DFM}
 
@@ -137,12 +156,19 @@ const
   REQ_TXT = 'The following required items must be entered:' + CRLF;
   REQ_HDR = 'Required Items Missing';
 
-function ClinRemText: string;
+function ClinRemText(Location: Integer): string;
+var
+  loc: Integer;
+
 begin
-  if (ClinRemTextLocation <> Encounter.Location) then
+  if Location < 1 then
+    loc := Encounter.Location
+  else
+    loc := Location;
+  if (ClinRemTextLocation <> loc) then
   begin
-    ClinRemTextLocation := Encounter.Location;
-    ClinRemTextStr := GetProgressNoteHeader;
+    ClinRemTextLocation := loc;
+    ClinRemTextStr := GetProgressNoteHeader(loc);
   end;
   Result := ClinRemTextStr;
 end;
@@ -331,6 +357,8 @@ procedure KillReminderDialog(frm: TForm);
 begin
   if (assigned(frm) and (assigned(RemForm.Form)) and (frm <> RemForm.Form)) then
     exit;
+  if assigned(frmRemDlg) and frmRemDlg.FFinishing then
+    exit;
   if (assigned(frmRemDlg)) then
   begin
     frmRemDlg.FExitOK := TRUE;
@@ -349,41 +377,46 @@ var
   Flds, Abort: Boolean;
 
 begin
-  FProcessingTemplate := FALSE;
-  Rem := GetReminder(ARemData);
-  if (FReminder <> Rem) then
-  begin
-    if (assigned(FReminder)) then
+  Lock;
+  try
+    FProcessingTemplate := FALSE;
+    Rem := GetReminder(ARemData);
+    if (FReminder <> Rem) then
     begin
-      Abort := FALSE;
-      Flds := FALSE;
-      TmpList := TStringList.Create;
-      try
-        FReminder.FinishProblems(TmpList, Flds);
-        if (TmpList.Count > 0) or Flds then
-        begin
-          TmpList.Insert(0, '   Reminder: ' + FReminder.PrintName);
-          if Flds then
-                TmpList.Add('      ' + MissingFieldsTxt);
-                Msg := REQ_TXT + TmpList.Text + CRLF +
-                        ' Ignore required items and continue processing?';
-                Abort := (InfoBox(Msg, REQ_HDR, MB_YESNO or MB_DEFBUTTON2) = IDNO);
+      if (assigned(FReminder)) then
+      begin
+        Abort := FALSE;
+        Flds := FALSE;
+        TmpList := TStringList.Create;
+        try
+          FReminder.FinishProblems(TmpList, Flds);
+          if (TmpList.Count > 0) or Flds then
+          begin
+            TmpList.Insert(0, '   Reminder: ' + FReminder.PrintName);
+            if Flds then
+                  TmpList.Add('      ' + MissingFieldsTxt);
+                  Msg := REQ_TXT + TmpList.Text + CRLF +
+                          ' Ignore required items and continue processing?';
+                  Abort := (InfoBox(Msg, REQ_HDR, MB_YESNO or MB_DEFBUTTON2) = IDNO);
+          end;
+        finally
+          TmpList.Free;
         end;
-      finally
-        TmpList.Free;
+        if (Abort) then
+          exit;
       end;
-      if (Abort) then
-        exit;
+      ClearControls(TRUE);
+      FReminder := Rem;
+      Rem.PCEDataObj := RemForm.PCEObj;
+      BuildControls;
+      UpdateText(nil);
     end;
-    ClearControls(TRUE);
-    FReminder := Rem;
-    Rem.PCEDataObj := RemForm.PCEObj;
-    BuildControls;
-    UpdateText(nil);
+    PositionTrees(NodeID);
+    UpdateButtons;
+    Show;
+  finally
+    Unlock;
   end;
-  PositionTrees(NodeID);
-  UpdateButtons;
-  Show;
 end;
 
 procedure TfrmRemDlg.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -392,18 +425,32 @@ begin
 end;
 
 procedure TfrmRemDlg.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
+  ask, IsWorking: boolean;
+
 begin
   if not FExitOK then
   begin
-    if PXRMWorking then
-    begin
-      CanClose := False;
-      exit;
-    end;
+    ClearPostValidateMag(Self);
+    isWorking := PXRMWorking;
     try
-      CanClose := KillAll;
+      if isWorking then
+        ask := CanAbort
+      else
+        ask := True;
+      if ask then
+      begin
+        if (assigned(FReminder)) then
+          FReminder.closeReportView;
+        CanClose := KillAll;
+        if CanClose then
+          DoAbort;
+      end
+      else
+        CanClose := False;
     finally
-      PXRMDoneWorking;
+      if not IsWorking then
+        PXRMDoneWorking;
     end;
   end;
 end;
@@ -412,7 +459,7 @@ procedure TfrmRemDlg.FormCreate(Sender: TObject);
 begin
   // reData.Color := ReadOnlyColor;
   // reText.Color := ReadOnlyColor;
-  FSCCond := EligbleConditions;
+  FSCCond := EligbleConditions(RemForm.PCEObj);
   (* FSCRelated  := SCC_NA;
     FAORelated  := SCC_NA;
     FIRRelated  := SCC_NA;       AGP Change 25.2
@@ -426,10 +473,24 @@ begin
   RemForm.DrawerReminderTreeChange(RemindersChanged);
   // RemForm.Drawers.NotifyWhenRemTreeChanges(RemindersChanged);
   KillReminderDialogProc := KillReminderDialog;
+  Left := RemDlgLeft;
+  Top := RemDlgTop;
+  Width := RemDlgWidth;
+  Height := RemDlgHeight;
+  KeepBounds := True;
+  FFinishing := False;
+  FAllowAutoRebuild := True;
+  FPendingAutoRebuild := False;
+  FLockCount := 0;
+  uPXRMWorkingCount := 0;
+  IgnoreReminderClicks := False;
 end;
 
 procedure TfrmRemDlg.FormDestroy(Sender: TObject);
 begin
+  uPXRMWorkingCount := 0;
+  FAllowAutoRebuild := False;
+  FPendingAutoRebuild := False;
   if FProcessingTemplate then
     KillObj(@FReminder);
   KillObj(@FClinMainBox);
@@ -442,6 +503,8 @@ begin
   RemDlgSpltr2 := reData.Height;
   // SaveDialogSplitterPos(Name + 'Splitters', pnlBottom.Height, reData.Height);
 
+  RemForm.DisplayPCEProc; // VISTAOR-24268
+
   RemForm.DrawerRemoveReminderTreeChange(RemindersChanged);
   // RemForm.Drawers.RemoveNotifyWhenRemTreeChanges(RemindersChanged);
   RemoveNotifyRemindersChange(RemindersChanged);
@@ -451,6 +514,9 @@ begin
   if (assigned(frmReminderTree)) then
     frmReminderTree.EnableActions;
   RemForm.Form := nil;
+
+  if assigned(frmFrame) then
+    frmFrame.pdmpCloseReport;
 end;
 
 procedure TfrmRemDlg.FormMouseWheel(Sender: TObject; Shift: TShiftState;
@@ -466,32 +532,74 @@ begin
   end;
 end;
 
+function TfrmRemDlg.CanAbort: boolean;
+begin
+  Result := (FLockCount = 0);
+end;
+
+procedure TfrmRemDlg.DoAbort;
+var
+  Msg: TMsg;
+
+begin
+  clearGlobals;
+  clearResults;
+  clearInputs;
+  uPXRMWorkingCount := 0;
+  FAllowAutoRebuild := False;
+  FPendingAutoRebuild := False;
+  IgnoreReminderClicks := False;
+  PeekMessage(Msg, Handle, UM_RESYNCREM, UM_RESYNCREM, PM_REMOVE);
+end;
+
 procedure TfrmRemDlg.ClearControls(All: Boolean = FALSE);
+var
+  oldAutoRebuild: boolean;
 
   procedure WipeOutControls(const Ctrl: TWinControl);
   var
-    i: Integer;
+    cnt1, cnt2, decamt, idx: Integer;
+    ACtrl: TControl;
 
   begin
-    for i := Ctrl.ControlCount - 1 downto 0 do
+    idx := Ctrl.ControlCount;
+    while idx > 0 do
     begin
-      if (Ctrl.Controls[i].Owner = Self) then
+      ACtrl := Ctrl.Controls[idx - 1];
+      if (ACtrl.Owner = Self) then
       begin
-        if (Ctrl.Controls[i] is TWinControl) then
-          WipeOutControls(TWinControl(Ctrl.Controls[i]));
-        Ctrl.Controls[i].Free
-      end;
+        cnt1 := Ctrl.ControlCount;
+        if (ACtrl is TWinControl) then
+          WipeOutControls(TWinControl(ACtrl));
+        try
+          ACtrl.Free;
+        except
+        end;
+        cnt2 := Ctrl.ControlCount;
+        decamt := cnt1 - cnt2;
+        if decamt < 1 then
+          decamt := 1;
+      end
+      else
+        decamt := 1;
+      dec(idx, decamt);
     end;
   end;
 
 begin
-  if (All) then
-  begin
-    WipeOutControls(sb1);
-    WipeOutControls(sb2);
-  end
-  else
-    WipeOutControls(GetBox);
+  oldAutoRebuild := FAllowAutoRebuild;
+  FAllowAutoRebuild := False;
+  try
+    if (All) then
+    begin
+      WipeOutControls(sb1);
+      WipeOutControls(sb2);
+    end
+    else
+      WipeOutControls(GetBox);
+  finally
+    FAllowAutoRebuild := oldAutoRebuild;
+  end;
 end;
 
 procedure TfrmRemDlg.ClearMHTest(Rien: string);
@@ -521,8 +629,8 @@ begin
     end;
     if assigned(TReminderDialog(TReminder(RemindersInProcess.Objects[idx]))
       .MHTestArray) then
-      TReminderDialog(TReminder(RemindersInProcess.Objects[idx]))
-        .MHTestArray.Free;
+      FreeAndNil(TReminderDialog(TReminder(RemindersInProcess.Objects[idx]))
+        .MHTestArray);
     (* if (TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray <> nil) and
       (TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray.Count = 0) then
       TReminderDialog(TReminder(RemindersInProcess.Objects[idx])).MHTestArray.Free; *)
@@ -631,56 +739,66 @@ var
   end;
 
 begin
-  if (assigned(FReminder)) then
-  begin
-    box := GetBox(TRUE);
-    if box.ControlCount > 0 then
-      ClearControls; // AGP Change 26.1 this change should
-    // resolve the problem with Duplicate CheckBoxes
-    // appearing on some reminder dialogs CQ #2843
-    Y := box.VertScrollBar.Position;
-    GetBox.VertScrollBar.Position := 0;
-    if FProcessingTemplate then
-      txt := 'Reminder Dialog Template'
-    else
-      txt := 'Reminder Resolution';
-    Caption := txt + ': ' + FReminder.PrintName;
-    FReminder.OnNeedRedraw := nil;
-    ParentWidth := box.Width - ScrollBarWidth - 6;
-    SetActiveVars(ActiveControl);
-    AutoCtrl := FReminder.BuildControls(ParentWidth, GetBox, Self);
-    GetBox.VertScrollBar.Position := Y;
-    BoxUpdateDone;
-
-    if (LastCB <> 0) then
+  Lock;
+  try
+    if (assigned(FReminder)) then
     begin
       box := GetBox(TRUE);
-      if (assigned(AutoCtrl)) then
-      begin
-        AutoCtrl.SetFocus;
-        if (AutoCtrl is TORComboBox) then
-          TORComboBox(AutoCtrl).DroppedDown := TRUE;
-      end
+      if box.ControlCount > 0 then
+        ClearControls; // AGP Change 26.1 this change should
+      // resolve the problem with Duplicate CheckBoxes
+      // appearing on some reminder dialogs CQ #2843
+      Y := box.VertScrollBar.Position;
+      GetBox.VertScrollBar.Position := 0;
+      if FProcessingTemplate then
+        txt := 'Reminder Dialog Template'
       else
-        for i := 0 to ComponentCount - 1 do
+        txt := 'Reminder Resolution';
+      Caption := txt + ': ' + FReminder.PrintName;
+      FReminder.OnNeedRedraw := nil;
+      ParentWidth := box.Width - ScrollBarWidth - 6;
+      SetActiveVars(ActiveControl);
+      AutoCtrl := FReminder.BuildControls(ParentWidth, GetBox, Self);
+      GetBox.VertScrollBar.Position := Y;
+      BoxUpdateDone;
+
+      if (LastCB <> 0) then
+      begin
+        box := GetBox(TRUE);
+        if assigned(AutoCtrl) then
         begin
-          if (IsOnBox(Components[i])) then
+          if assigned(AutoCtrl.Parent) then
           begin
-            Ctrl := TWinControl(Components[i]);
-            if (Ctrl is TORCheckBox) and (Ctrl.Tag = LastCB) then
+            AutoCtrl.SetFocus;
+            if (AutoCtrl is TORComboBox) then
+              TORComboBox(AutoCtrl).DroppedDown := TRUE;
+          end
+          else
+            ShowMessage('No Parent Control assigned');
+        end
+        else
+          for i := 0 to ComponentCount - 1 do
+          begin
+            if (IsOnBox(Components[i])) then
             begin
-              if ((i + LastObjCnt) < ComponentCount) and
-                (Components[i + LastObjCnt] is TWinControl) then
-                TWinControl(Components[i + LastObjCnt]).SetFocus;
-              break;
+              Ctrl := TWinControl(Components[i]);
+              if (Ctrl is TORCheckBox) and (Ctrl.Tag = LastCB) then
+              begin
+                if ((i + LastObjCnt) < ComponentCount) and
+                  (Components[i + LastObjCnt] is TWinControl) then
+                  TWinControl(Components[i + LastObjCnt]).SetFocus;
+                break;
+              end;
             end;
           end;
-        end;
+      end;
+      ClearControls;
+  //    FReminder.ResetDefaultCheckedElements;
+      FReminder.OnNeedRedraw := ControlsChanged;
+      FReminder.OnTextChanged := UpdateText;
     end;
-    ClearControls;
-//    FReminder.ResetDefaultCheckedElements;
-    FReminder.OnNeedRedraw := ControlsChanged;
-    FReminder.OnTextChanged := UpdateText;
+  finally
+    Unlock;
   end;
 end;
 
@@ -693,9 +811,35 @@ begin
 end;
 
 procedure TfrmRemDlg.BoxUpdateDone;
+var
+  tryCount: Integer;
+  Done: boolean;
+
+  // Not sure why, but sometimes setting Visible to true could cause errors
 begin
-  sb2.Visible := FUseBox2;
-  sb1.Visible := not FUseBox2;
+  tryCount := 0;
+  Done := False;
+  repeat
+    try
+      if FUseBox2 then
+      begin
+        sb1.Visible := False;
+        sb2.Visible := True;
+      end
+      else
+      begin
+        sb2.Visible := False;
+        sb1.Visible := True;
+      end;
+      Done := True;
+    except
+      inc(tryCount);
+      if tryCount > 3 then
+        raise
+      else
+        Application.ProcessMessages;
+    end;
+  until Done;
   FUseBox2 := not FUseBox2;
   ClearControls;
   if ScreenReaderSystemActive then
@@ -705,23 +849,85 @@ end;
 
 procedure TfrmRemDlg.ControlsChanged(Sender: TObject);
 begin
-  inc(uPXRMWorkingCount);
-  FLastWidth := GetBox(TRUE).ClientWidth;
-  { This routine is fired as a result of clicking a checkbox.  If we destroy
-    the checkbox here we get access violations because the checkbox code is
-    still processing the click event after calling this routine.  By posting
-    a message we can guarantee that the checkbox is no longer processing the
-    click event when the message is handled, preventing access violations. }
-  PostMessage(Handle, UM_RESYNCREM, 0, 0);
+  if FAllowAutoRebuild and (not FPendingAutoRebuild) then
+  begin
+    if FLockCount = 0 then
+      RequestRebuild
+    else
+      FPendingAutoRebuild := True;
+  end;
+end;
+
+procedure TfrmRemDlg.UMMessageBox(var Message: TMessage);
+var
+  prompt: TRemPrompt;
+  msg, hdr: string;
+
+begin
+  Message.Result := 0;
+  if FMessageBoxText = '' then exit;
+  prompt := TRemPrompt(Message.LParam);
+  hdr := Piece(FMessageBoxText, U, 1);
+  msg := Piece(FMessageBoxText, U, 2);
+  InfoBox(msg, hdr, MB_OK or MB_ICONERROR);
+  if assigned(prompt) and assigned(prompt.CurrentControl) then
+    TCPRSDialogFieldEdit(prompt.CurrentControl).SetFocus;
+  ClearPostValidateMag(Self);
+  FMessageBoxText := '';
 end;
 
 procedure TfrmRemDlg.UMResyncRem(var Message: TMessage);
+var
+  i: integer;
+  evnt: TNotifyEvent;
+
 begin
-  try
-    BuildControls;
-  finally
-    PXRMDoneWorking;
+  if Message.WParam = 0 then
+  begin
+    IgnoreReminderClicks := True;
+    try
+      BuildControls;
+    finally
+      PXRMDoneWorking;
+      FAllowAutoRebuild := True;
+      PostMessage(Handle, UM_RESYNCREM, 1, 0);
+    end;
+  end
+  else
+  begin
+    try
+      if assigned(RemDlgResyncElements) then
+      begin
+        for i := 0 to RemDlgResyncElements.Count - 1 do
+          with RemDlgResyncElements[i] do
+          begin
+            evnt := cb.OnClick;
+            try
+              cb.OnClick := nil;
+              cb.Checked := elem.Checked;
+            finally
+              cb.OnClick := evnt;
+            end;
+          end;
+        RemDlgResyncElements.Clear;
+      end;
+    finally
+      IgnoreReminderClicks := False;
+    end;
   end;
+end;
+
+procedure TfrmRemDlg.UMValidateMag(var Message: TMessage);
+begin
+  HandlePostValidateMag(Message);
+end;
+
+procedure TfrmRemDlg.Unlock;
+begin
+  if FLockCount > 0 then
+    dec(FLockCount);
+  if FPendingAutoRebuild and (FLockCount = 0) then
+    RequestRebuild;
 end;
 
 procedure TfrmRemDlg.sbResize(Sender: TObject);
@@ -756,26 +962,29 @@ begin
         Rem := FReminder
       else
         Rem := TReminder(RemindersInProcess.Objects[i]);
-      Rem.AddText(reText.Lines);
-      reText.SelStart := MaxInt;
-      CurPos := reText.SelStart;
-      if (Rem = FReminder) then
+      if assigned(Rem) then
       begin
-        reText.SelStart := LastPos;
-        reText.SelLength := CurPos - LastPos;
-        reText.SelAttributes.Style := reText.SelAttributes.Style + [fsBold];
-        reText.SelLength := 0;
-        reText.SelStart := CurPos;
-        reText.SelAttributes.Style := reText.SelAttributes.Style - [fsBold];
+        Rem.AddText(reText.Lines);
+        reText.SelStart := MaxInt;
+        CurPos := reText.SelStart;
+        if (Rem = FReminder) then
+        begin
+          reText.SelStart := LastPos;
+          reText.SelLength := CurPos - LastPos;
+          reText.SelAttributes.Style := reText.SelAttributes.Style + [fsBold];
+          reText.SelLength := 0;
+          reText.SelStart := CurPos;
+          reText.SelAttributes.Style := reText.SelAttributes.Style - [fsBold];
+        end;
+        LastPos := CurPos;
       end;
-      LastPos := CurPos;
       inc(i);
     until (FProcessingTemplate or (i >= RemindersInProcess.Count));
     if ((not FProcessingTemplate) and (reText.Lines.Count > 0)) then
     begin
-      reText.Lines.Insert(0, ClinRemText);
+      reText.Lines.Insert(0, ClinRemText(RemForm.PCEObj.Location));
       reText.SelStart := 0;
-      reText.SelLength := length(ClinRemText);
+      reText.SelLength := length(ClinRemText(RemForm.PCEObj.Location));
       reText.SelAttributes.Style := reText.SelAttributes.Style - [fsBold];
       reText.SelLength := 0;
       reText.SelStart := MaxInt;
@@ -793,7 +1002,12 @@ begin
       FECRelated, FMSTRelated, FHNCRelated, FCVRelated, FSHDRelated,
       FCLRelated);
     if FProcessingTemplate then
-      i := GetReminderData(FReminder, TmpData)
+    begin
+      if assigned(FReminder) then
+        i := GetReminderData(FReminder, TmpData)
+      else
+        i := 0;
+    end
     else
       i := GetReminderData(TmpData);
     if (tmp = '') and (i = 0) then
@@ -875,6 +1089,7 @@ begin
             OK := TRUE;
           if (OK) then
           begin
+  //          immProcedureCnt := 0;
             ClearMHTest(FReminder.IEN);
             FReminder.closeReportView;
             RemindersInProcess.Delete(i);
@@ -886,6 +1101,8 @@ begin
           end;
         end;
       finally
+        clearResults;
+        clearInputs;
         Self.btnClear.Enabled := TRUE;
       end;
     end;
@@ -895,26 +1112,46 @@ begin
 end;
 
 procedure TfrmRemDlg.btnCancelClick(Sender: TObject);
+var
+  ask, isWorking: boolean;
+
 begin
-  if PXRMWorking then exit;
+  isWorking := PXRMWorking;
   try
-    Self.btnCancel.Enabled := FALSE;
-    try
-      if (assigned(FReminder)) then
-        FReminder.closeReportView;
-      if (KillAll) then
-      begin
-        clearGlobals;
-        FExitOK := TRUE;
-        frmRemDlg.Release;
-        frmRemDlg := nil;
+    if IsWorking then
+      ask := CanAbort
+    else
+      ask := True;
+    if ask then
+    begin
+      ClearPostValidateMag(Self);
+      Self.btnCancel.Enabled := FALSE;
+      try
+        if (assigned(FReminder)) then
+          FReminder.closeReportView;
+        if (KillAll) then
+        begin
+          DoAbort;
+          FExitOK := TRUE;
+          frmRemDlg.Release;
+          frmRemDlg := nil;
+        end;
+      finally
+        Self.btnCancel.Enabled := TRUE;
       end;
-    finally
-      Self.btnCancel.Enabled := TRUE;
     end;
   finally
-    PXRMDoneWorking;
+    if not IsWorking then
+      PXRMDoneWorking;
   end;
+end;
+
+procedure TfrmRemDlg.btnCancelMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  if Button = mbLeft then
+    ClearPostValidateMag(Self);
 end;
 
 function TfrmRemDlg.KillAll: Boolean;
@@ -1001,7 +1238,7 @@ begin
           ClearMH := true;
           end; *)
         RemoveMHTest('');
-        FReminder.MHTestArray.Free;
+        FreeAndNil(FReminder.MHTestArray);
       end;
     end
     else
@@ -1020,8 +1257,8 @@ begin
             ClearMH := true;
             end; *)
           RemoveMHTest('');
-          TReminderDialog(TReminder(RemindersInProcess.Objects[i]))
-            .MHTestArray.Free;
+          FreeAndNil(TReminderDialog(TReminder(RemindersInProcess.Objects[i]))
+            .MHTestArray);
         end;
       end;
     end;
@@ -1065,6 +1302,92 @@ begin
     end;
     Node := TORTreeNode(Node.GetNextVisible);
   end;
+end;
+
+procedure TfrmRemDlg.getDiagnosisCodes(var codesList: TStrings);
+var
+dx: TPCEDiag;
+i: integer;
+begin
+  for i := 0 to RemForm.PCEObj.Diagnoses.Count - 1 do
+    begin
+      dx := TPCEDiag(RemForm.PCEObj.Diagnoses[i]);
+      if not inCodesList('POV', dx.Code, codesList) then
+        begin
+          codesList.Add(dx.DelimitedStr);
+        end;
+
+    end;
+end;
+
+procedure TfrmRemDlg.getProcedureCodes(var codesList: TStrings);
+var
+cpt: TPCEProc;
+i: integer;
+begin
+  for i := 0 to RemForm.PCEObj.Procedures.Count - 1 do
+    begin
+      cpt := TPCEProc(RemForm.PCEObj.Procedures[i]);
+      if not inCodesList('POV', cpt.Code, codesList) then
+        begin
+          codesList.Add(cpt.DelimitedStr);
+        end;
+
+    end;
+end;
+
+function TfrmRemDlg.inCodesList(codeSys, code: string;
+  codesList: TStrings): boolean;
+var
+i: integer;
+temp: string;
+begin
+  result := false;
+  for i := 0 to codesList.count - 1 do
+    begin
+      Temp := codesList.Strings[i];
+      if (Pos(codeSys, temp) > 0) and (Code = Piece(temp, U, 2)) then
+        begin
+          result := true;
+          break;
+        end;
+    end;
+end;
+
+{ This routine is fired as a result of clicking a checkbox.  If we destroy
+  the checkbox here we get access violations because the checkbox code is
+  still processing the click event after calling this routine.  By posting
+  a message we can guarantee that the checkbox is no longer processing the
+  click event when the message is handled, preventing access violations. }
+procedure TfrmRemDlg.RequestRebuild;
+var
+  ACount: Integer;
+  NeedsRetry: boolean;
+begin
+  inc(uPXRMWorkingCount);
+
+  // Copying the fix from TfrmRemDlg.BoxUpdateDone
+  ACount := 0;
+  repeat
+    try
+      NeedsRetry := False;
+      FLastWidth := GetBox(TRUE).ClientWidth;
+    except
+      Inc(ACount);
+      if ACount > 3 then raise;
+      Application.ProcessMessages;
+      NeedsRetry := True;
+    end;
+  until not NeedsRetry;
+
+  try
+    FLastWidth := GetBox(TRUE).ClientWidth;
+  finally
+
+  end;
+  PostMessage(Handle, UM_RESYNCREM, 0, 0);
+  FAllowAutoRebuild := False;
+  FPendingAutoRebuild := False;
 end;
 
 function TfrmRemDlg.NextReminder: string;
@@ -1124,17 +1447,27 @@ end;
 procedure TfrmRemDlg.btnNextClick(Sender: TObject);
 begin
   if PXRMWorking then exit;
-  FReminder.closeReportView;
-  ProcessReminderFromNodeStr(NextReminder);
-  PostMessage(Handle, UM_RESYNCREM, 0, 0);
+  try
+    if assigned(FReminder) then
+      FReminder.closeReportView;
+    ProcessReminderFromNodeStr(NextReminder);
+  finally
+    RequestRebuild;
+    PXRMDoneWorking;
+  end;
 end;
 
 procedure TfrmRemDlg.btnBackClick(Sender: TObject);
 begin
   if PXRMWorking then exit;
-  FReminder.closeReportView;
-  ProcessReminderFromNodeStr(BackReminder);
-  PostMessage(Handle, UM_RESYNCREM, 0, 0);
+  try
+    if assigned(FReminder) then
+      FReminder.closeReportView;
+    ProcessReminderFromNodeStr(BackReminder);
+  finally
+    RequestRebuild;
+    PXRMDoneWorking;
+  end;
 end;
 
 procedure TfrmRemDlg.UpdateButtons;
@@ -1159,9 +1492,9 @@ end;
 
 procedure TfrmRemDlg.btnFinishClick(Sender: TObject);
 var
-  i, cnt, lcnt, OldRemCount, OldCount, T: Integer;
+  i, c, cnt, lcnt, OldRemCount, OldCount, T: Integer;
   CurDate, CurLoc, newStatus: string;
-  LastDate, LastLoc: string;
+  LastDate, LastLoc, immFirst, immSecond: string;
   Rem: TReminderDialog;
   Reminder: TReminder;
   // Prompt: TRemPrompt;
@@ -1174,7 +1507,9 @@ var
   MHList: TStringList;
   WHList: TStringList;
   MSTList: TStringList;
+  immCPTList: TStringList;
   HistData, PCEObj: TPCEData;
+  pceProc: TPCEProc;
   Cat: TPCEDataCat;
   VisitParent, Msg, tmp: string;
   DelayEvent: TOrderDelayEvent;
@@ -1183,7 +1518,7 @@ var
   UserStr: string;
   BeforeLine, AfterTop: Integer;
   GAFScore: Integer;
-  TestDate: TFMDateTime;
+  TempDate: TFMDateTime;
   TestStaff: Int64;
   DoOrders, Done, Kill, Flds: Boolean;
   TR: TEXTRANGE;
@@ -1198,13 +1533,16 @@ var
   WHArray: TStringList;
   GecRemIen, GecRemStr, RemWipe, RemId, GenRemId: String;
   GenFindingList: TStringList;
-  AVisitStr, FileCat, FileDate, FNoteDate: string;
+  AVisitStr, FileCat, FileDate, FNoteDate, strData: string;
   RemList: TStringList;
+  cptList, povList, codesList: TStrings;
+  itm: TPCEItem;
 
   procedure Add(PCEItemClass: TPCEItemClass);
   var
     itm: TPCEItem;
-    tmp: string;
+    strData, tmp: string;
+    vimmData: TVimmResult;
 
   begin
     if (Cat in MSTDataTypes) then
@@ -1220,19 +1558,42 @@ var
     end;
     itm := PCEItemClass.Create;
     try
-      itm.SetFromString(copy(TmpData[i], 2, MaxInt));
+      strData := copy(TmpData[i], 2, MaxInt);
+      itm.SetFromString(strData);
       TmpList.AddObject('', itm);
       if Cat = pdcHF then
         itm.FGecRem := GecRemStr;
       case Cat of
         pdcDiag:
-          PCEObj.SetDiagnoses(TmpList, FALSE);
+          begin
+            PCEObj.SetDiagnoses(TmpList, FALSE);
+//            codesList.Add(strData);
+          end;
         pdcProc:
-          PCEObj.SetProcedures(TmpList, FALSE);
+          begin
+            PCEObj.SetProcedures(TmpList, FALSE);
+//            codesList.Add(strData);
+          end;
         pdcImm:
-          PCEObj.SetImmunizations(TmpList, FALSE);
+          begin
+            vimmData := TVimmResult(TmpData.objects[i]);
+//            if hist then SetPiece(vimmData.DelimitedStr, U, 11, '');
+
+            PCEObj.SetImmunizations(TmpList, FALSE, vimmData);
+            if not Hist then
+              codesList.Add(vimmData.DelimitedStr);
+          end;
+
         pdcSkin:
-          PCEObj.SetSkinTests(TmpList, FALSE);
+          begin
+            vimmData := TVimmResult(TmpData.objects[i]);
+//            if hist then SetPiece(vimmData.DelimitedStr, U, 11, '');
+            PCEObj.SetSkinTests(TmpList, FALSE, vimmData);
+              if not Hist then
+                codesList.Add(vimmData.DelimitedStr);
+//            PCEObj.SetSkinTests(TmpList, FALSE);
+          end;
+
         pdcPED:
           PCEObj.SetPatientEds(TmpList, FALSE);
         pdcHF:
@@ -1241,6 +1602,8 @@ var
           PCEObj.SetExams(TmpList, FALSE);
         pdcGenFinding:
           PCEObj.SetGenFindings(TmpList, FALSE);
+        pdcStandardCodes:
+          PCEObj.SetStandardCodes(TmpList, FALSE);
       end;
       itm.Free;
       TmpList.Clear;
@@ -1264,12 +1627,12 @@ var
       begin
         s2 := s1;
         s1 := '';
-        FType := RemDataCodes[dtExam];
+        FType := RemDataCodes[rdtExam];
       end
       else
       begin
         s2 := '';
-        FType := RemDataCodes[dtHealthFactor];
+        FType := RemDataCodes[rdtHealthFactor];
       end;
       SaveMSTDataFromReminder(vdate, s1, prov, FType, FIEN, s2);
     end;
@@ -1291,6 +1654,8 @@ var
 
 begin
   if PXRMWorking then exit;
+  FFinishing := True;
+  Lock;
   try
     Kill := FALSE;
     GecRemIen := '0';
@@ -1308,6 +1673,7 @@ begin
       try
         TmpList := TStringList.Create;
         RemList := TStringList.create;
+        codesList := TStringList.Create;
         try
           i := 0;
           repeat
@@ -1317,15 +1683,14 @@ begin
               if FProcessingTemplate then
               begin
                 Rem := FReminder;
-                if Rem.RemWipe = 1 then
+                if assigned(Rem) and (Rem.RemWipe = 1) then
                   RemWipe := Piece(Rem.DlgData, U, 1);
               end
               else
               begin
                 Rem := TReminder(RemindersInProcess.Objects[i]);
                 RemList.Add(TReminderDialog(TReminder(RemindersInProcess.Objects[i])).IEN);
-                if TReminderDialog(TReminder(RemindersInProcess.Objects[i]))
-                  .RemWipe = 1 then
+                if TReminderDialog(TReminder(RemindersInProcess.Objects[i])).RemWipe = 1 then
                 begin
                   if RemWipe = '' then
                     RemWipe := TReminder(RemindersInProcess.Objects[i]).IEN
@@ -1337,15 +1702,18 @@ begin
 
               Flds := FALSE;
               OldCount := TmpList.Count;
-              Rem.FinishProblems(TmpList, Flds);
-              Rem.closeReportView;
-              if (OldCount <> TmpList.Count) or Flds  then
+              if assigned(Rem) then
               begin
-                TmpList.Insert(OldCount, '');
-                if not FProcessingTemplate then
-                  TmpList.Insert(OldCount + 1, '   Reminder: ' + Rem.PrintName);
-                if Flds then
-                  TmpList.Add('      ' + MissingFieldsTxt);
+                Rem.FinishProblems(TmpList, Flds);
+                Rem.closeReportView;
+                if (OldCount <> TmpList.Count) or Flds then
+                begin
+                  TmpList.Insert(OldCount, '');
+                  if not FProcessingTemplate then
+                    TmpList.Insert(OldCount + 1, '   Reminder: ' + Rem.PrintName);
+                  if Flds then
+                    TmpList.Add('      ' + MissingFieldsTxt);
+                end;
               end;
               inc(i);
             end;
@@ -1396,7 +1764,10 @@ begin
                 end;
               end;
               if FProcessingTemplate then
-                FReminder.AddText(TmpText)
+              begin
+                if assigned(FReminder) then
+                  FReminder.AddText(TmpText);
+              end
               else
               begin
                 for i := 0 to RemindersInProcess.Count - 1 do
@@ -1406,7 +1777,7 @@ begin
               begin
                 if not FProcessingTemplate then
                 begin
-                  tmp := ClinRemText;
+                  tmp := ClinRemText(RemForm.PCEObj.Location);
                   if (tmp <> '') then
                   begin
                     i := RemForm.NewNoteRE.Lines.IndexOf(tmp);
@@ -1431,6 +1802,11 @@ begin
                   if RemForm.PCEObj.NeedProviderInfo and
                     MissingProviderInfo(RemForm.PCEObj, PCEType) then
                     Process := FALSE
+  //                else
+  //                begin
+  //                  RemForm.NewNoteRE.SelText := TmpText.Text;
+  //                  SpeakTextInserted;
+  //                end;
                 end;
               end;
               if (Process) then
@@ -1445,10 +1821,10 @@ begin
   //            TmpText.Free;
             end;
           end;
-  //        if CheckDailyHospitalization(RemForm.PCEObj) = False then
-  //        begin
-  //          Process := False;
-  //        end;
+          if CheckDailyHospitalization(RemForm.PCEObj) = False then
+          begin
+            Process := False;
+          end;
           if (Process) then
           begin
             PCEObj := RemForm.PCEObj;
@@ -1496,8 +1872,11 @@ begin
                           TmpData.Clear;
                           if FProcessingTemplate then
                           begin
-                            i := GetReminderData(FReminder, TmpData, TRUE, Hist);
-                            RemId := Rem.IEN;
+                            if assigned(FReminder) then
+                            begin
+                              i := GetReminderData(FReminder, TmpData, TRUE, Hist);
+                              RemId := FReminder.IEN;
+                            end;
                           end
                           else
                           begin
@@ -1521,13 +1900,23 @@ begin
                                 CurDate := Piece(TmpData[i], U, pnumVisitDate);
                                 CurLoc := Piece(TmpData[i], U, pnumVisitLoc);
                                 if (CurDate = '') then
-                                  CurDate := FloatToStr(Encounter.DateTime);
+                                begin
+                                  if RemForm.PCEObj.VisitDateTime < 1 then
+                                  begin
+                                    if Encounter.DateTime < 1 then
+                                      CurDate := FloatToStr(FMNow)
+                                    else
+                                      CurDate := FloatToStr(Encounter.DateTime);
+                                  end
+                                  else
+                                    CurDate := FloatToStr(RemForm.PCEObj.VisitDateTime);
+                                end;
                                 if (LastDate <> CurDate) or (LastLoc <> CurLoc)
                                 then
                                 begin
                                   if (assigned(HistData)) then
                                   begin
-                                    HistData.Save;
+                                    if not HistData.Save then exit;
                                     HistData.Free;
                                   end;
                                   LastDate := CurDate;
@@ -1557,7 +1946,7 @@ begin
                                   GecRemIen := TRemData(TmpData.Objects[i])
                                     .Parent.Reminder.IEN;
                                   GecRemStr := CheckGECValue('R' + GecRemIen,
-                                    PCEObj.NoteIEN);
+                                    PCEObj.NoteIEN, RemForm.PCEObj.VisitString);
                                   // SetPiece(TmpData.Strings[i],U,11,GecRemStr);
                                 end;
                                 if FProcessingTemplate then
@@ -1566,7 +1955,8 @@ begin
                                   begin
                                     GecRemIen := Rem.IEN;
                                     GecRemStr :=
-                                      CheckGECValue(Rem.IEN, PCEObj.NoteIEN)
+                                      CheckGECValue(Rem.IEN, PCEObj.NoteIEN,
+                                        RemForm.PCEObj.VisitString)
                                   end;
                                 end;
                               end;
@@ -1577,7 +1967,7 @@ begin
                                 pdcProc:
                                   Add(TPCEProc);
                                 pdcImm:
-                                  Add(TPCEImm);
+                                    Add(TPCEImm);
                                 pdcSkin:
                                   Add(TPCESkin);
                                 pdcPED:
@@ -1586,6 +1976,8 @@ begin
                                   Add(TPCEHealth);
                                 pdcExam:
                                   Add(TPCEExams);
+                                pdcStandardCodes:
+                                  Add(TStandardCode);
 
                                 pdcVital:
                                   if (StoreVitals) then
@@ -1669,8 +2061,13 @@ begin
                                     AVisitStr :=  IntToStr(RemForm.PCEObj.Location) + ';' + FileDate + ';' + FileCat;
                                   end
                                 else AVisitStr := RemForm.PCEObj.VisitString;
-                                 if ValidateGenFindingData(GenFindingList, Patient.DFN, AVisitStr, '', IntToStr(RemForm.PCEObj.NoteIEN), IntToStr(user.DUZ), IntToStr(encounter.Provider)) = false then exit;
-                                 SaveGenFindingData(GenFindingList, Patient.DFN, AVisitStr, '', IntToStr(RemForm.PCEObj.NoteIEN), IntToStr(user.DUZ), IntToStr(encounter.Provider));
+                                if ValidateGenFindingData(GenFindingList, Patient.DFN, AVisitStr, '',
+                                  IntToStr(RemForm.PCEObj.NoteIEN), IntToStr(user.DUZ),
+                                  IntToStr(RemForm.PCEObj.Providers.PCEProviderForce)) = FALSE then
+                                  exit;
+                                SaveGenFindingData(GenFindingList, Patient.DFN, AVisitStr, '',
+                                  IntToStr(RemForm.PCEObj.NoteIEN), IntToStr(user.DUZ),
+                                  IntToStr(RemForm.PCEObj.Providers.PCEProviderForce));
                               end;
 
   //                          if tmpText <> nil then
@@ -1684,16 +2081,69 @@ begin
                             begin
                               if (assigned(HistData)) then
                               begin
-                                HistData.Save;
+                                if not HistData.Save then exit;
                                 HistData.Free;
                                 HistData := nil;
                               end;
                             end
                             else
                             begin
+                              if codesList.Count > 0 then
+                                begin
+                                  cptList := TStringList.Create;
+                                  povList := TStringList.create;
+                                    try
+                                      tmpList.Clear;
+                                      getDiagnosisCodes(codesList);
+                                      getProcedureCodes(codesList);
+                                      getBillingCodesList(codesList, IntToStr(remForm.PCEObj.VisitIEN), cptList);
+                                      if cptList.Count > 0 then
+                                        begin
+                                          for c := 0 to cptList.Count -1 do
+                                            begin
+                                              strData := cptList[c];
+                                              if Pos('CPT', Piece(strData, U, 1)) > 0 then
+                                                begin
+                                                  itm := TPCEProc.Create;
+                                                  if remForm.PCEObj.Providers.PCEProvider > 0 then
+                                                    SetPiece(strData, U, 6, IntToStr(remForm.PCEObj.Providers.PCEProvider));
+                                                  itm.SetFromString(strData);
+                                                  TmpList.AddObject('', itm);
+                                                end
+                                              else povList.Add(strData);
+                                            end;
+                                          pceObj.SetProcedures(tmpList, false);
+                                          if povList.Count > 0 then
+                                            begin
+                                              tmpList.Clear;
+                                              for c := 0 to povList.Count - 1 do
+                                                begin
+                                                  strData := povList[c];
+                                                  itm := TPCEDiag.Create;
+                                                  itm.SetFromString(strData);
+                                                  tmpList.AddObject('', itm);
+                                                end;
+                                              pceObj.SetDiagnoses(tmpList, false);
+                                            end;
+                                        end;
+                                    finally
+                                      for c := 0 to tmpList.Count -1 do
+                                        tmpList.Objects[c].Free;
+                                      tmpList.Clear;
+                                      FreeAndNil(cptList);
+                                      FreeAndNil(povList);
+                                    end;
+                                end;
+
                               while RemForm.PCEObj.NeedProviderInfo do
                                 MissingProviderInfo(RemForm.PCEObj, PCEType);
-                              RemForm.PCEObj.Save;
+                              for c := 0 to RemForm.PCEObj.Procedures.Count - 1 do
+                                begin
+                                  if TPCEProc(RemForm.PCEObj.Procedures[c]).Provider = 0 then
+                                    TPCEProc(RemForm.PCEObj.Procedures[c]).Provider :=
+                                      RemForm.PCEObj.Providers.PCEProvider;
+                                end;
+                              if not RemForm.PCEObj.Save then exit;
                               VisitParent :=
                                 GetVisitIEN(RemForm.NoteList.ItemIEN);
                             end;
@@ -1730,10 +2180,10 @@ begin
                     begin
                       VitalList.Insert(0, VitalDateStr + FloatToStr(FVitalsDate));
                       VitalList.Insert(1, VitalPatientStr + Patient.DFN);
-                      if IntToStr(Encounter.Location) <> '0' then
+                      if IntToStr(RemForm.PCEObj.Location) <> '0' then
                       // AGP change 26.9
                         VitalList.Insert(2, VitalLocationStr +
-                          IntToStr(Encounter.Location))
+                          IntToStr(RemForm.PCEObj.Location))
                       else
                         VitalList.Insert(2, VitalLocationStr +
                           IntToStr(RemForm.PCEObj.Location));;
@@ -1748,18 +2198,18 @@ begin
 
                   if (MHList.Count > 0) then
                   begin
-                    TestDate := 0;
+                    TempDate := 0;
                     for i := 0 to MHList.Count - 1 do
                     begin
                       try
-                        TestDate := StrToFloat(Piece(MHList[i], U, 4));
+                        TempDate := StrToFloat(Piece(MHList[i], U, 4));
                       except
                         on EConvertError do
-                          TestDate := 0
+                          TempDate := 0
                         else
                           raise;
                       end;
-                      if (TestDate > 0) then
+                      if (TempDate > 0) then
                       begin
                         TestStaff := StrToInt64Def(Piece(MHList[i], U, 5), 0);
                         if TestStaff <= 0 then
@@ -1769,21 +2219,25 @@ begin
                         begin
                           GAFScore := StrToIntDef(Piece(MHList[i], U, 6), 0);
                           if (GAFScore > 0) then
-                            SaveGAFScore(GAFScore, TestDate, TestStaff);
+                            SaveGAFScore(GAFScore, TempDate, TestStaff);
                         end
                         else
                         begin
                           if Piece(MHList[i], U, 6) = 'New MH dll' then
                           begin
                             // The dll take date and time the original code took only date.
-                            if Encounter.Location <> FReminder.PCEDataObj.Location
+                            if assigned(FReminder) and
+                              (Encounter.Location <> FReminder.PCEDataObj.Location)
                             then
                               MHLoc := FReminder.PCEDataObj.Location
                             else
                               MHLoc := Encounter.Location;
+                            if assigned(FReminder) then
+                              TempDate := FReminder.PCEDataObj.VisitDateTime
+                            else
+                              TempDate := Encounter.DateTime;
                             saveMHTest(Piece(MHList[i], U, 2),
-                              FloatToStr(FReminder.PCEDataObj.VisitDateTime),
-                              IntToStr(MHLoc));
+                                FloatToStr(TempDate), IntToStr(MHLoc));
                           end;
                         end;
                       end;
@@ -1792,9 +2246,9 @@ begin
 
                 finally
                   MHList.Free;
-                  if (FReminder.MHTestArray <> nil) and
+                  if assigned(FReminder) and (FReminder.MHTestArray <> nil) and
                     (FReminder.MHTestArray.Count > 0) then
-                    FReminder.MHTestArray.Free;
+                    FreeAndNil(FReminder.MHTestArray);
                 end;
 
   //            if (GenFindingList.Count > 0) then
@@ -1821,7 +2275,7 @@ begin
                       setpiece(WHResult, U, 1, 'WHIEN:' + Piece(WHNode, U, 2));
                       setpiece(WHResult, U, 2, 'DFN:' + Patient.DFN);
                       setpiece(WHResult, U, 3, 'WHRES:' + Piece(WHNode, U, 11));
-                      setpiece(WHResult, U, 4, 'Visit:' + Encounter.VisitStr);
+                      setpiece(WHResult, U, 4, 'Visit:' + RemForm.PCEObj.VisitString);
                       if (not assigned(WHArray)) then
                         WHArray := TStringList.Create;
                       WHArray.Add(WHResult);
@@ -1844,22 +2298,19 @@ begin
               finally
                 WHList.Free;
               end;
-  //                            begin
-  //                  RemForm.NewNoteRE.SelText := TmpText.Text;
-  //                  SpeakTextInserted;
-  //                end;
+
               ResetProcessing(RemWipe);
               Hide;
               Kill := TRUE;
-              RemForm.DisplayPCEProc;
-  //            if RemList <> nil then
-  //              begin
-  //                for i := 0 to RemList.Count - 1 do
-  //                  begin
-  //                    NewStatus := EvaluateReminder(RemList.Strings[i]);
-  //                    ReminderEvaluated(NewStatus);
-  //                  end;
-  //              end;
+  //            RemForm.DisplayPCEProc; - moved to FormDestroy
+//              if RemList <> nil then
+//                begin
+//                  for i := 0 to RemList.Count - 1 do
+//                    begin
+//                      NewStatus := EvaluateReminder(RemList.Strings[i]);
+//                      ReminderEvaluated(NewStatus);
+//                    end;
+//                end;
 
 
               // Process orders after PCE data saved in case of user input
@@ -1926,6 +2377,7 @@ begin
         finally
           TmpList.Free;
           RemList.Free;
+          codesList.Free;
         end;
       finally
         if not FProcessingTemplate then
@@ -1933,6 +2385,8 @@ begin
             OldRemCount);
       end;
     finally
+      clearResults;
+      clearInputs;
       if assigned(TmpText) then
         FreeAndNil(TmpText);
       Self.btnFinish.Enabled := TRUE;
@@ -1945,8 +2399,10 @@ begin
       end;
     end;
   finally
+    Unlock;
+    FFinishing := False;
     PXRMDoneWorking;
-  end;
+  end
 end;
 
 procedure TfrmRemDlg.ResetProcessing(Wipe: string = ''); // AGP CHANGE 24.8
@@ -1973,34 +2429,39 @@ begin
   end;
   ClearControls(TRUE);
   PositionTrees('');
+//  immProcedureCnt := 0;
   // AGP Change 24.8 Add wipe section for reminder wipe
   If Wipe <> '' then
   begin
     RemWipeArray := TStringList.Create;
-    if pos(U, Wipe) > 0 then
-    begin
-      for i := 0 to ReminderDialogInfo.Count - 1 do
+    try
+      if pos(U, Wipe) > 0 then
       begin
-        if pos(ReminderDialogInfo.Strings[i], Wipe) > 0 then
+        Wipe := U + Wipe + U;
+        for i := 0 to ReminderDialogInfo.Count - 1 do
         begin
-          RemWipeArray.Add(ReminderDialogInfo.Strings[i]);
+          if pos(U + ReminderDialogInfo.Strings[i] + U, Wipe) > 0 then
+          begin
+            RemWipeArray.Add(ReminderDialogInfo.Strings[i]);
+          end;
         end;
+      end
+      else
+      begin
+        RemWipeArray.Add(Wipe);
       end;
-    end
-    else
-    begin
-      RemWipeArray.Add(Wipe);
-    end;
 
-    if assigned(RemWipeArray) then
-    begin
-      for i := 0 to RemWipeArray.Count - 1 do
-        KillDlg(@ReminderDialogInfo, RemWipeArray.Strings[i], TRUE);
-    end;
-    if (assigned(RemWipeArray)) then
-    begin
-      RemWipeArray.Clear;
-      RemWipeArray.Free;
+      if assigned(RemWipeArray) then
+      begin
+        for i := 0 to RemWipeArray.Count - 1 do
+          KillDlg(@ReminderDialogInfo, RemWipeArray.Strings[i], TRUE);
+      end;
+    finally
+      if (assigned(RemWipeArray)) then
+      begin
+        RemWipeArray.Clear;
+        RemWipeArray.Free;
+      end;
     end;
   end;
 end;
@@ -2012,28 +2473,29 @@ end;
 
 procedure TfrmRemDlg.btnClinMaintClick(Sender: TObject);
 var
-aList: TStrings;
-returnValue: integer;
+  aList: TStrings;
+  returnValue: integer;
+
 begin
-  if PXRMWorking then exit;
+  if PXRMWorking then
+    exit;
   try
     aList := TStringList.Create;
     try
-      if (not assigned(FClinMainBox)) then
+      if assigned(FReminder) and (not assigned(FClinMainBox)) then
       begin
         returnValue := DetailReminder(StrToIntDef(FReminder.IEN, 0), aList);
         if returnValue > 0 then
-          FClinMainBox := ModelessReportBox(aList, ClinMaintText + ': ' + FReminder.PrintName, TRUE)
+          FClinMainBox := ModelessReportBox(aList, ClinMaintText + ': ' +
+            FReminder.PrintName, TRUE)
         else
-          infoBox('Error loading Clinical Maintanence', 'Error', MB_OK);
-    //    FClinMainBox := ModelessReportBox(DetailReminder(StrToIntDef(FReminder.IEN,
-    //      0)), ClinMaintText + ': ' + FReminder.PrintName, TRUE);
+          InfoBox('Error loading Clinical Maintanence', 'Error', MB_OK);
         FOldClinMaintOnDestroy := FClinMainBox.OnDestroy;
         FClinMainBox.OnDestroy := ClinMaintDestroyed;
         UpdateButtons;
       end;
     finally
-      aList.Free;
+      FreeAndNil(aList);
     end;
   finally
     PXRMDoneWorking;
@@ -2084,19 +2546,24 @@ end;
 
 procedure TfrmRemDlg.ProcessTemplate(Template: TTemplate);
 begin
-  FProcessingTemplate := TRUE;
-  btnClear.Visible := FALSE;
-  btnClinMaint.Visible := FALSE;
-  btnBack.Visible := FALSE;
-  btnNext.Visible := FALSE;
-  FReminder := TReminderDialog.Create(Template.ReminderDialogIEN + U +
-    Template.PrintName + U + Template.ReminderWipe); // AGP CHANGE      24.8
-  ClearControls(TRUE);
-  FReminder.PCEDataObj := RemForm.PCEObj;
-  BuildControls;
-  UpdateText(nil);
-  UpdateButtons;
-  Show;
+  Lock;
+  try
+    FProcessingTemplate := TRUE;
+    btnClear.Visible := FALSE;
+    btnClinMaint.Visible := FALSE;
+    btnBack.Visible := FALSE;
+    btnNext.Visible := FALSE;
+    FReminder := TReminderDialog.Create(Template.ReminderDialogIEN + U +
+      Template.PrintName + U + Template.ReminderWipe); // AGP CHANGE      24.8
+    ClearControls(TRUE);
+    FReminder.PCEDataObj := RemForm.PCEObj;
+    BuildControls;
+    UpdateText(nil);
+    UpdateButtons;
+    Show;
+  finally
+    Unlock;
+  end;
 end;
 
 procedure TfrmRemDlg.SetFontSize;
@@ -2121,7 +2588,7 @@ procedure TfrmRemDlg.KillDlg(ptr: Pointer; ID: string;
   KillObjects: Boolean = FALSE);
 var
   Obj: TObject;
-  Lst: TList;
+//  Lst: TList;
   SLst: TStringList;
   i: Integer;
 
@@ -2131,34 +2598,39 @@ begin
   begin
     if (KillObjects) then
     begin
-      if (Obj is TList) then
+      {if (Obj is TList) then
       begin
         Lst := TList(Obj);
         for i := Lst.Count - 1 downto 0 do
           if assigned(Lst[i]) then
             TObject(Lst[i]).Free;
       end
-      else if (Obj is TStringList) then
+      else}
+      if (Obj is TStringList) then
       begin
         SLst := TStringList(Obj);
         // Check to see if the Reminder IEN is in the of IEN to be wipe out
         for i := SLst.Count - 1 downto 0 do
-          if assigned(SLst.Objects[i]) and (pos(SLst.Strings[i], ID) > 0) then
+          if assigned(SLst.Objects[i]) and (SLst.Strings[i] = ID) then
+          begin
             SLst.Objects[i].Free;
+            SLst.Delete(i);
+          end;
       end;
     end;
-    Obj.Free;
-    TObject(ptr^) := nil;
+//    Obj.Free;
+//    TObject(ptr^) := nil;
   end;
+end;
+
+procedure TfrmRemDlg.Lock;
+begin
+  inc(FLockCount);
 end;
 
 procedure TfrmRemDlg.FormShow(Sender: TObject);
 begin
   // Set The form to it's Saved Position
-  Left := RemDlgLeft;
-  Top := RemDlgTop;
-  Width := RemDlgWidth;
-  Height := RemDlgHeight;
   pnlFrmBottom.Height := RemDlgSpltr1 + lblFootnotes.Height;
   reData.Height := RemDlgSpltr2;
 end;

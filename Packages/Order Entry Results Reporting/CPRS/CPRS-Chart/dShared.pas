@@ -107,7 +107,7 @@ const
                             (8,20), (9,21),
                             (11,22),(12,23),
                             (14,24),(15,25));
-
+                            
   RemDlgIdx: array[boolean] of integer = (26, 27);
   COMObjIdx: array[boolean] of integer = (29, 28);
 
@@ -207,7 +207,7 @@ begin
         end;
       until Done;
     end;
-    if(assigned(NewNode) and (InEditor or (not tmpl.HideItems)) and
+    if(assigned(NewNode) and (InEditor or (not tmpl.HideItems)) and 
                              ((tmpl.Children in [tcActive, tcBoth]) or
                              ((tmpl.Children <> tcNone) and AllowInactive))) then
     begin
@@ -276,7 +276,7 @@ var
   var
     tmpl: TTemplate;
     IDX: string;
-
+    
   begin
     inc(IDCount);
     Result := '';
@@ -547,10 +547,10 @@ var
   aLst: TStringList;
 begin
   if (not assigned(FTIUObjects)) or (FRefreshObject = TRUE) then
-    begin
-      if (not assigned(FTIUObjects)) then
-        FTIUObjects := TStringList.Create;
-      FTIUObjects.Clear;
+  begin
+    if(not assigned(FTIUObjects)) then
+      FTIUObjects := TStringList.Create;
+    FTIUObjects.Clear;
       aLst := TStringList.Create;
       try
         GetObjectList(aLst);
@@ -559,9 +559,9 @@ begin
       finally
         FreeAndNil(aLst);
       end;
-      FTIUObjects.Sort;
+    FTIUObjects.Sort;
       FRefreshObject := FALSE;
-    end;
+   end;
 end;
 
 function TdmodShared.NeedsCollapsing(Tree: TTreeView): boolean;
@@ -662,7 +662,7 @@ begin
   Result := (cnt = ErrCount);
   if(not Result) then
   begin
-    Err.Insert(0,'Boilerplate Contains Errors:');
+    Err.Insert(0,'Boilerplate Contains Errors:'); 
     Err.Insert(1,'');
     if(BadObj) then
     begin

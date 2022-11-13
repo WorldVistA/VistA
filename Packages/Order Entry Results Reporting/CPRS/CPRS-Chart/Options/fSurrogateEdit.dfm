@@ -108,7 +108,6 @@ inherited frmSurrogateEdit: TfrmSurrogateEdit
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    OnDblClick = pnlSurrogateToolsDblClick
     DesignSize = (
       311
       173)
@@ -120,7 +119,6 @@ inherited frmSurrogateEdit: TfrmSurrogateEdit
       Height = 13
       Align = alBottom
       Caption = 'Start and stop times must be within this range...'
-      ExplicitTop = 155
       ExplicitWidth = 221
     end
     object cboSurrogate: TORComboBox

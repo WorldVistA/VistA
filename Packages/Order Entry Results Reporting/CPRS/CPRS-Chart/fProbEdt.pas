@@ -37,6 +37,7 @@ type
     bbChangeProb: TBitBtn;
     edProb: TCaptionEdit;
     gbTreatment: TGroupBox;
+    lblYN: TLabel;
     ckYSC: TCheckBox;
     ckYRad: TCheckBox;
     ckYAO: TCheckBox;
@@ -71,7 +72,6 @@ type
     Panel4: TPanel;
     ckNCL: TCheckBox;
     ckYCL: TCheckBox;
-    lblYN: TLabel;
     procedure bbQuitClick(Sender: TObject);
     procedure bbAddComClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -160,7 +160,7 @@ implementation
 {$R *.DFM}
 
 uses ORFn, uProbs, fProbs, rProbs, rCover, rCore, rOrders, fProbCmt, fProbLex, rPCE, uInit  ,
-     VA508AccessibilityRouter, VAUtils, rMisc, uGlobalVar, uSimilarNames;
+     VA508AccessibilityRouter, VAUtils, rMisc, uGlobalVar, uORLists, uSimilarNames;
 
 type
   TDialogItem = class { for loading edits & quick orders }
@@ -491,7 +491,7 @@ begin
     if Reason <> 'A' then
       begin {edit,remove or display existing problem}
         problemIFN := Piece(subjProb, u, 1);
-        EditLoad(ProblemIFN, AList);
+        EditLoad(aList, ProblemIFN);   //V17.5   RV
       end
     else {new  problem}
       SetDefaultProb(Alist, subjProb);
@@ -795,7 +795,7 @@ begin
     DateOfInterest := Encounter.DateTime;
   frmProblems.wgProbData.TabStop := True;  //CQ #15531 part (c) [CPRS v28.1] {TC}.
 
-  if not CheckForSimilarName(cbProv, aErrMsg, ltProvider, sPr) then
+  if not CheckForSimilarName(cbProv, aErrMsg, sPr) then
   begin
     ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
     exit;
@@ -895,24 +895,24 @@ begin
         begin
           ut := '';
           if PLUser.usPrimeUser then ut := '1';
-          EditSave(ProblemIFN, User.DUZ, PLPt.ptVAMC, ut, ProbRec.FilerObject, FSearchString, AList);
+          EditSave(aList,ProblemIFN, User.DUZ, PLPt.ptVAMC, ut, ProbRec.FilerObject, FSearchString);    //V17.5  RV
           PLUpdateDateTime := Now;
         end;
       'A','a':  {new problem}
         begin
-           AddSave(PLPt.GetGMPDFN(Patient.DFN, Patient.Name),
-           pProviderID, PLPt.ptVAMC, ProbRec.FilerObject, FSearchString, AList) ;  //*DFN*
-           PLUpdateDateTime := Now;
+          AddSave(aList,PLPt.GetGMPDFN(Patient.DFN, Patient.Name),
+           pProviderID, PLPt.ptVAMC, ProbRec.FilerObject, FSearchString);  //*DFN*
+          PLUpdateDateTime := Now;
         end;
       'R','r': {remove problem}
-         begin
-           remcom := '';
-           if Probrec.commentcount > 0 then
-             if TComment(Probrec.comments[pred(probrec.commentcount)]).IsNew then
-               remcom := TComment(Probrec.comments[pred(probrec.commentcount)]).Narrative;
-           ProblemDelete(ProbRec.PIFN, User.DUZ, PLPt.ptVAMC, remcom, AList);
-           PLUpdateDateTime := Now;
-         end
+        begin
+          remcom := '';
+          if Probrec.commentcount > 0 then
+            if TComment(Probrec.comments[pred(probrec.commentcount)]).IsNew then
+              remcom := TComment(Probrec.comments[pred(probrec.commentcount)]).Narrative;
+          ProblemDelete(aList, ProbRec.PIFN, User.DUZ, PLPt.ptVAMC, remcom);    //changed in v14
+          PLUpdateDateTime := Now;
+        end
     else exit;
     end; {case}
     screen.cursor := crDefault;
@@ -982,7 +982,7 @@ begin
 
 procedure TfrmdlgProb.bbRemoveClick(Sender: TObject);
 begin
- if (lstComments.Items.Count = 0) or (lstComments.SelCount < 0) then exit ;
+ if (lstComments.Items.Count = 0) or (lstComments.SelCount < 1) then exit;
  lstComments.Strings[lstComments.Selected.Index] := 'DELETED' ;
  fChanged := true;
 end;
@@ -1166,7 +1166,7 @@ end;
 
 procedure TfrmdlgProb.ControlChange(Sender: TObject);
 begin
-  fChanged := True;
+  fChanged:=true;
 end;
 
 destructor TfrmdlgProb.Destroy;
@@ -1194,7 +1194,7 @@ begin
     begin
       alist := TstringList.create;
       try
-        ProviderList('', 25, V, V, AList);
+        ProviderList(aList,'', 25, V, V);
         if alist.count > 0 then
           begin
             if cbProv.items.count + 25 > 100 then
@@ -1210,8 +1210,18 @@ begin
 end;
 
 procedure TfrmdlgProb.cbLocDropDown(Sender: TObject);
+var
+  alist: TstringList;
+  v: string;
 begin
-  ClinicSearch(' ', cbLoc.Items);
+  v := uppercase(cbLoc.text);
+  alist := TstringList.create;
+  try
+    ClinicSearch(aList,' ');
+    if alist.count > 0 then FastAssign(Alist, cbLoc.Items);
+  finally
+    alist.free;
+  end;
 end;
 
 procedure TfrmdlgProb.FormCreate(Sender: TObject);
@@ -1399,30 +1409,29 @@ end ;
 procedure TfrmdlgProb.cbLocNeedData(Sender: TObject; const StartFrom: String;
   Direction, InsertAt: Integer);
 begin
-  cbLoc.ForDataUse(SubSetOfClinics(StartFrom, Direction));
+  setClinicList(cbLoc, StartFrom, Direction);
 end;
 
 procedure TfrmdlgProb.cbProvNeedData(Sender: TObject; const StartFrom: String;
   Direction, InsertAt: Integer);
 begin
-  cbProv.ForDataUse(SubSetOfProviders(StartFrom, Direction));
+  setProviderList(cbProv, StartFrom, Direction);
 end;
 
 procedure TfrmdlgProb.cbServNeedData(Sender: TObject; const StartFrom: String;
   Direction, InsertAt: Integer);
 var
-  aLst: TStringList;
+  sl: TSTrings;
 begin
-  aLst := TstringList.Create;
+  sl := TstringList.Create;
   try
-    ServiceSearch(aLst, StartFrom, Direction);
-    cbServ.ForDataUse(aLst);
+    ServiceSearch(sl, StartFrom, Direction);
+    cbServ.ForDataUse(sl);
   finally
-    FreeAndNil(aLst);
+    sl.free;
   end;
 end;
 
-//procedure TfraVisitRelated.HandleVA508Caption(ParentCheckBox: TCheckBox; chkEnabled: Boolean);
 procedure TfrmdlgProb.HandleVA508Caption();
 Var
  i,X: Integer;

@@ -1,161 +1,184 @@
-inherited frmNoteCPFields: TfrmNoteCPFields
+object frmNoteCPFields: TfrmNoteCPFields
   Left = 508
   Top = 307
   Caption = 'Enter Required Fields'
-  ClientHeight = 151
-  ClientWidth = 249
+  ClientHeight = 210
+  ClientWidth = 275
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitWidth = 265
-  ExplicitHeight = 189
   PixelsPerInch = 96
   TextHeight = 13
-  object lblAuthor: TLabel [0]
-    Left = 7
-    Top = 5
-    Width = 94
-    Height = 13
-    AutoSize = False
-    Caption = 'Author:'
-  end
-  object lblProcSummCode: TOROffsetLabel [1]
-    Left = 4
-    Top = 50
-    Width = 125
-    Height = 15
-    Caption = 'Procedure Summary Code'
-    HorzOffset = 2
-    Transparent = False
-    VertOffset = 2
-    WordWrap = False
-  end
-  object lblProcDateTime: TOROffsetLabel [2]
-    Left = 4
-    Top = 96
-    Width = 105
-    Height = 15
-    Caption = 'Procedure Date/Time'
-    HorzOffset = 2
-    Transparent = False
-    VertOffset = 2
-    WordWrap = False
-  end
-  object cboAuthor: TORComboBox [3]
-    Left = 4
-    Top = 17
-    Width = 239
-    Height = 21
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Author'
-    Color = clWindow
-    DropDownCount = 8
-    ItemHeight = 13
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = True
-    LookupPiece = 2
-    MaxLength = 0
-    ParentShowHint = False
-    Pieces = '2,3'
-    ShowHint = True
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 0
-    Text = ''
-    OnNeedData = cboAuthorNeedData
-    CharsNeedMatch = 1
-  end
-  object cboProcSummCode: TORComboBox [4]
-    Left = 4
-    Top = 66
-    Width = 142
-    Height = 21
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Procedure Summary Code'
-    Color = clWindow
-    DropDownCount = 8
-    Items.Strings = (
-      '1^Normal'
-      '2^Abnormal'
-      '3^Borderline'
-      '4^Incomplete')
-    ItemHeight = 13
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = False
-    LookupPiece = 0
-    MaxLength = 0
-    Pieces = '2'
-    Sorted = False
-    SynonymChars = '<>'
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 275
+    Height = 179
+    Align = alClient
+    Caption = 'Panel1'
+    ShowCaption = False
     TabOrder = 1
-    Text = ''
-    CharsNeedMatch = 1
+    object lblAuthor: TLabel
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 267
+      Height = 19
+      Align = alTop
+      AutoSize = False
+      Caption = 'Author:'
+      ExplicitWidth = 228
+    end
+    object lblProcSummCode: TOROffsetLabel
+      AlignWithMargins = True
+      Left = 4
+      Top = 56
+      Width = 267
+      Height = 18
+      Align = alTop
+      Caption = 'Procedure Summary Code'
+      HorzOffset = 2
+      Transparent = False
+      VertOffset = 2
+      WordWrap = False
+      ExplicitWidth = 161
+    end
+    object lblProcDateTime: TOROffsetLabel
+      AlignWithMargins = True
+      Left = 4
+      Top = 107
+      Width = 267
+      Height = 18
+      Align = alTop
+      Caption = 'Procedure Date/Time'
+      HorzOffset = 2
+      Transparent = False
+      VertOffset = 2
+      WordWrap = False
+      ExplicitWidth = 134
+    end
+    object cboAuthor: TORComboBox
+      AlignWithMargins = True
+      Left = 4
+      Top = 29
+      Width = 267
+      Height = 21
+      Style = orcsDropDown
+      Align = alTop
+      AutoSelect = True
+      Caption = 'Author'
+      Color = clWindow
+      DropDownCount = 8
+      ItemHeight = 13
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = False
+      LongList = True
+      LookupPiece = 2
+      MaxLength = 0
+      ParentShowHint = False
+      Pieces = '2,3'
+      ShowHint = True
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 0
+      Text = ''
+      OnNeedData = cboAuthorNeedData
+      CharsNeedMatch = 1
+    end
+    object cboProcSummCode: TORComboBox
+      AlignWithMargins = True
+      Left = 4
+      Top = 80
+      Width = 267
+      Height = 21
+      Style = orcsDropDown
+      Align = alTop
+      AutoSelect = True
+      Caption = 'Procedure Summary Code'
+      Color = clWindow
+      DropDownCount = 8
+      Items.Strings = (
+        '1^Normal'
+        '2^Abnormal'
+        '3^Borderline'
+        '4^Incomplete')
+      ItemHeight = 13
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = False
+      LongList = False
+      LookupPiece = 0
+      MaxLength = 0
+      Pieces = '2'
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 1
+      Text = ''
+      CharsNeedMatch = 1
+    end
+    object calProcDateTime: TORDateBox
+      AlignWithMargins = True
+      Left = 4
+      Top = 131
+      Width = 267
+      Height = 21
+      Align = alTop
+      TabOrder = 2
+      DateOnly = False
+      RequireTime = True
+      Caption = 'Procedure Date/Time'
+    end
   end
-  object calProcDateTime: TORDateBox [5]
-    Left = 4
-    Top = 112
-    Width = 142
-    Height = 21
-    TabOrder = 2
-    DateOnly = False
-    RequireTime = True
-    Caption = 'Procedure Date/Time'
-  end
-  object cmdOK: TButton [6]
-    Left = 166
-    Top = 78
-    Width = 72
-    Height = 21
-    Hint = 
-      'Save these items, and continue to enter text interpretation of r' +
-      'esults.'
-    Caption = 'Save'
-    Default = True
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 3
-    OnClick = cmdOKClick
-  end
-  object cmdCancel: TButton [7]
-    Left = 166
-    Top = 105
-    Width = 72
-    Height = 21
-    Hint = 
-      'Enter text interpretation of results now, and enter these items ' +
-      'later.'
-    Cancel = True
-    Caption = 'Enter Later'
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 4
-    OnClick = cmdCancelClick
-  end
-  inherited amgrMain: TVA508AccessibilityManager
-    Data = (
-      (
-        'Component = cboAuthor'
-        'Status = stsDefault')
-      (
-        'Component = cboProcSummCode'
-        'Status = stsDefault')
-      (
-        'Component = calProcDateTime'
-        'Text = Procedure Date/Time. Press the enter key to access.'
-        'Status = stsOK')
-      (
-        'Component = cmdOK'
-        'Status = stsDefault')
-      (
-        'Component = cmdCancel'
-        'Status = stsDefault')
-      (
-        'Component = frmNoteCPFields'
-        'Status = stsDefault'))
+  object Panel2: TPanel
+    Left = 0
+    Top = 179
+    Width = 275
+    Height = 31
+    Align = alBottom
+    BevelOuter = bvNone
+    Caption = 'Panel2'
+    ShowCaption = False
+    TabOrder = 0
+    object cmdCancel: TButton
+      AlignWithMargins = True
+      Left = 181
+      Top = 3
+      Width = 91
+      Height = 25
+      Hint = 
+        'Enter text interpretation of results now, and enter these items ' +
+        'later.'
+      Align = alRight
+      Cancel = True
+      Caption = 'Enter Later'
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = cmdCancelClick
+    end
+    object cmdOK: TButton
+      AlignWithMargins = True
+      Left = 103
+      Top = 3
+      Width = 72
+      Height = 25
+      Hint = 
+        'Save these items, and continue to enter text interpretation of r' +
+        'esults.'
+      Align = alRight
+      Caption = 'Save'
+      Default = True
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+      OnClick = cmdOKClick
+    end
   end
 end

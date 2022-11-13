@@ -761,6 +761,9 @@ begin
 end;
 
 procedure TfrmODAnatPath.cbxAvailTestChange(Sender: TObject);
+var
+  idx: integer;
+
 begin
   inherited;
 
@@ -789,6 +792,15 @@ begin
         ResetDialog;
 
         ALabTest := TLabTest.Create(FLastLabIEN, Responses);
+
+        // VISTAOR-25898
+        if ALabTest.OrderableItemExternal = 'URINE' then
+        begin
+          idx := cbxCollType.SelectByID('LC');
+          if idx > -1 then
+            cbxCollType.Items.Delete(idx);
+        end;
+
         ALabTest.LoadSpecimen(cbxSpecimenSelect);
 
         StatusText('Loading Test Specific Data');
@@ -871,7 +883,7 @@ begin
         if Piece(sTime,'@',2) = '00:00' then
           calCollTime.Text := Piece(sTime,'@',1);
 
-        if (sTime = 'TODAY') or (sTime = 'NOW') or (sTime = 'NOON') or (sTime = 'MID') then
+        if (sTime = 'TODAY') or IsNow(sTime) or (sTime = 'NOON') or (sTime = 'MID') then
           ALabTest.CollectionDateTimeInternal := calCollTime.Text
         else
           ALabTest.CollectionDateTimeInternal := FloatToStr(calCollTime.FMDateTime);
@@ -2153,7 +2165,7 @@ var
   dCollectionTime: TFMDateTime;
 begin
   if ((ALabTest.CollectionDateTimeInternal <> 'TODAY') and
-      (ALabTest.CollectionDateTimeInternal <> 'NOW') and
+      (not IsNow(ALabTest.CollectionDateTimeInternal)) and
       (ALabTest.CollectionDateTimeInternal <> 'NOON') and
       (ALabTest.CollectionDateTimeInternal <> 'MID')) then
   begin
@@ -2415,12 +2427,12 @@ procedure TfrmODAnatpath.SurgeonPhysicianV(var AnErrMsg: string);
 var
   rtnErrMsg: String;
 begin
-  if not CheckForSimilarName(cbxPtProvider, rtnErrMsg, ltProvider, sPr) then
+  if not CheckForSimilarName(cbxPtProvider, rtnErrMsg, sPr) then
   begin
     if rtnErrMsg <> '' then
       SetError(rtnErrMsg, AnErrMsg);
   end;
-  if ((lblSurgeon.Caption[1] = '*') and (StrToIntDef(ALabTest.SurgeonInternal, 0) < 1)) then
+  if ((lblSurgeon.Caption[1] = '*') and (StrToInt64Def(ALabTest.SurgeonInternal, 0) < 1)) then
     SetError(TX_NO_SURGEON, AnErrMsg);
 end;
 

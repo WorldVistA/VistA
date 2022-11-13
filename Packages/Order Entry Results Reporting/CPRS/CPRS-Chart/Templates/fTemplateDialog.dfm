@@ -10,6 +10,7 @@ inherited frmTemplateDialog: TfrmTemplateDialog
   OnMouseWheel = FormMouseWheel
   OnPaint = FormPaint
   OnResize = FormResize
+  ExplicitTop = -110
   ExplicitWidth = 926
   ExplicitHeight = 642
   PixelsPerInch = 96
@@ -276,6 +277,7 @@ inherited frmTemplateDialog: TfrmTemplateDialog
         Height = 27
         Align = alClient
         Caption = 'OK'
+        Default = True
         ModalResult = 1
         TabOrder = 3
         OnClick = btnOKClick
@@ -306,7 +308,7 @@ inherited frmTemplateDialog: TfrmTemplateDialog
           Left = 3
           Top = 3
           Width = 134
-          Height = 17
+          Height = 21
           Align = alLeft
           Alignment = taCenter
           Caption = '* Indicates a Required Field'
@@ -330,6 +332,12 @@ inherited frmTemplateDialog: TfrmTemplateDialog
           Height = 27
           Align = alRight
           Caption = 'Fields'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clPurple
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 2
           Visible = False
           OnClick = btnFieldsClick

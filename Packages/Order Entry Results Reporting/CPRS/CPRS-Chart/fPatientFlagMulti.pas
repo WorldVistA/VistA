@@ -144,26 +144,39 @@ begin
   SaveUserBounds(Self);
 end;
 
-procedure TfrmFlags.GetNotes(SelectedList : TORListBox);
+procedure TfrmFlags.GetNotes(SelectedList: TORListBox);
 var
-  NoteTitleIEN, FlagID : Int64;
+  NoteTitleIEN, FlagId: Int64;
+  sl: TStrings;
 begin
-    if FPRFNotes = nil then
-      FPRFNotes := TPRFNotes.Create;
-    FlagID := SelectedList.ItemID;
-    CallV('TIU GET PRF TITLE', [Patient.DFN,FlagID]);
-    FNoteTitle := Piece(RPCBrokerV.Results[0],U,NOTE_TITLE);
+  if FPRFNotes = nil then
+    FPRFNotes := TPRFNotes.create;
+  FlagId := SelectedList.ItemID;
+  sl := TStringList.create;
+  try
+    CallVistA('TIU GET PRF TITLE', [Patient.DFN, FlagId], sl);
+    if sl.Count > 0 then
+    begin
+      FNoteTitle := Piece(sl[0], U, NOTE_TITLE);
+      NoteTitleIEN := StrToInt(Piece(sl[0], U, NOTE_TITLE_IEN));
+      FPRFNotes.Load(NoteTitleIEN, Patient.DFN);
+    end
+    else
+    begin
+      FNoteTitle := '';
+      FPRFNotes.FPRFNoteList.Clear;
+    end;
     lblNoteTitle.Caption := 'Signed, Linked Notes of Title: '+ FNoteTitle;
-    NoteTitleIEN := StrToInt(Piece(RPCBrokerV.Results[0],U,NOTE_TITLE_IEN));
-    FPRFNotes.Load(NoteTitleIEN,Patient.DFN);
     FPRFNotes.ShowActionsOnList(lvPRF);
-    with lvPRF do begin
-
+    with lvPRF do
+    begin
       Columns.BeginUpdate;
       Columns.EndUpdate;
     end;
+  finally
+    sl.Free;
+  end;
 end;
-
 { TPRFNotes }
 
 constructor TPRFNotes.create;
@@ -186,9 +199,16 @@ end;
 procedure TPRFNotes.Load(TitleIEN: Int64; DFN: String);
 const
   REVERSE_CHRONO = 1;
+var
+  sl: TStrings;
 begin
-  CallV('TIU GET LINKED PRF NOTES', [DFN,TitleIEN,REVERSE_CHRONO]);
-  FastAssign(RPCBrokerV.Results, FPRFNoteList);
+  sl := TSTringList.Create;
+  try
+    if CallVistA('TIU GET LINKED PRF NOTES', [DFN,TitleIEN,REVERSE_CHRONO],sl) then
+      FastAssign(sl, FPRFNoteList);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TPRFNotes.ShowActionsOnList(DisplayList: TCaptionListView);
@@ -256,12 +276,16 @@ procedure TfrmFlags.LoadSelectedFlagData(SelectedList: TORListBox);
 var
   FlagArray: TStringList;
 begin
-    FlagArray := TStringList.Create;
+  FlagArray := TStringList.create;
+  try
     GetActiveFlg(FlagArray, Patient.DFN, SelectedList.ItemID);
     if FlagArray.Count > 0 then
       QuickCopy(FlagArray, memFlags);
     memFlags.SelStart := 0;
     GetNotes(SelectedList);
+  finally
+    FlagArray.Free;
+  end;
 end;
 
 procedure TfrmFlags.lstFlagsCat2Click(Sender: TObject);

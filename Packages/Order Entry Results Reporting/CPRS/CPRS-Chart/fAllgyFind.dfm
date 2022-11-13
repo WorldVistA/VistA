@@ -1,78 +1,205 @@
 inherited frmAllgyFind: TfrmAllgyFind
   Left = 564
   Top = 212
-  ActiveControl = txtSearch
-  BorderIcons = []
-  BorderStyle = bsDialog
+  BorderIcons = [biSystemMenu]
   Caption = 'Causative Agent Lookup'
-  ClientHeight = 566
-  ClientWidth = 615
+  ClientHeight = 475
+  ClientWidth = 462
+  Constraints.MinHeight = 520
+  Constraints.MinWidth = 480
   Position = poScreenCenter
-  OnCreate = FormCreate
-  ExplicitWidth = 621
-  ExplicitHeight = 599
+  Scaled = False
+  ExplicitWidth = 480
+  ExplicitHeight = 520
   PixelsPerInch = 120
   TextHeight = 16
-  object lblSearch: TLabel [0]
-    AlignWithMargins = True
-    Left = 8
-    Top = 4
-    Width = 603
-    Height = 27
-    Margins.Left = 8
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Align = alTop
-    AutoSize = False
-    Caption = 'Enter causative agent for Allergy or Adverse Drug Reaction:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -14
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
-    ParentFont = False
-    Layout = tlBottom
-  end
-  object lblDetail: TLabel [1]
-    AlignWithMargins = True
-    Left = 8
-    Top = 39
-    Width = 603
-    Height = 32
-    Margins.Left = 8
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Align = alTop
-    AutoSize = False
-    Caption = 
-      'Enter the FIRST FEW LETTERS of the causative agent (minimum of 3' +
-      ') to allow for a comprehensive search. Only one reactant may be ' +
-      'entered at a time'
-    Layout = tlBottom
-    WordWrap = True
-  end
-  object pnlSearch: TPanel [2]
+  object gpMain: TGridPanel [0]
     Left = 0
-    Top = 75
-    Width = 615
-    Height = 63
-    Margins.Left = 8
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Align = alTop
+    Top = 0
+    Width = 462
+    Height = 475
+    Align = alClient
     BevelOuter = bvNone
+    ColumnCollection = <
+      item
+        Value = 16.000000000000000000
+      end
+      item
+        Value = 16.000000000000000000
+      end
+      item
+        Value = 16.000000000000000000
+      end
+      item
+        Value = 16.000000000000000000
+      end
+      item
+        Value = 18.000000000000000000
+      end
+      item
+        Value = 18.000000000000000000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        ColumnSpan = 6
+        Control = lblSearch
+        Row = 0
+      end
+      item
+        Column = 0
+        ColumnSpan = 6
+        Control = lblDetail
+        Row = 1
+      end
+      item
+        Column = 0
+        ColumnSpan = 6
+        Control = lblSearchCaption
+        Row = 2
+      end
+      item
+        Column = 0
+        ColumnSpan = 5
+        Control = txtSearch
+        Row = 3
+      end
+      item
+        Column = -1
+        Row = -1
+      end
+      item
+        Column = 5
+        Control = cmdSearch
+        Row = 3
+      end
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = lblSelect
+        Row = 4
+      end
+      item
+        Column = 4
+        ColumnSpan = 2
+        Control = ckNoKnownAllergies
+        Row = 4
+      end
+      item
+        Column = 0
+        ColumnSpan = 6
+        Control = tvAgent
+        Row = 5
+      end
+      item
+        Column = 5
+        Row = 5
+      end
+      item
+        Column = 0
+        ColumnSpan = 4
+        Control = ckbWarning
+        Row = 7
+      end
+      item
+        Column = 4
+        Control = cmdOK
+        Row = 7
+      end
+      item
+        Column = 5
+        Control = cmdCancel
+        Row = 7
+      end
+      item
+        Column = 0
+        ColumnSpan = 6
+        Control = stsFound
+        Row = 6
+      end>
+    Padding.Left = 3
+    Padding.Top = 3
+    Padding.Right = 3
+    Padding.Bottom = 3
+    RowCollection = <
+      item
+        SizeStyle = ssAuto
+        Value = 8.695652173913045000
+      end
+      item
+        SizeStyle = ssAuto
+        Value = 36.507936507936510000
+      end
+      item
+        SizeStyle = ssAuto
+        Value = 20.000000000000000000
+      end
+      item
+        SizeStyle = ssAuto
+        Value = 20.000000000000000000
+      end
+      item
+        SizeStyle = ssAuto
+        Value = 33.333333333333340000
+      end
+      item
+        Value = 100.000000000000000000
+      end
+      item
+        SizeStyle = ssAuto
+        Value = 50.000000000000000000
+      end
+      item
+        SizeStyle = ssAuto
+      end
+      item
+        SizeStyle = ssAuto
+      end>
     TabOrder = 0
-    DesignSize = (
-      615
-      63)
+    object lblSearch: TLabel
+      AlignWithMargins = True
+      Left = 14
+      Top = 10
+      Width = 438
+      Height = 16
+      Margins.Left = 8
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Align = alTop
+      Caption = 'Enter causative agent for Allergy or Adverse Drug Reaction:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      WordWrap = True
+      ExplicitWidth = 413
+    end
+    object lblDetail: TLabel
+      AlignWithMargins = True
+      Left = 14
+      Top = 40
+      Width = 438
+      Height = 48
+      Margins.Left = 8
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Align = alTop
+      Caption = 
+        'Enter the FIRST FEW LETTERS of the causative agent (minimum of 3' +
+        ') to allow for a comprehensive search. Only one reactant may be ' +
+        'entered at a time'
+      WordWrap = True
+      ExplicitWidth = 435
+    end
     object lblSearchCaption: TLabel
       AlignWithMargins = True
-      Left = 8
-      Top = 4
-      Width = 603
+      Left = 14
+      Top = 102
+      Width = 438
       Height = 16
       Margins.Left = 8
       Margins.Top = 4
@@ -82,118 +209,71 @@ inherited frmAllgyFind: TfrmAllgyFind
       Caption = 'Search for:'
       ExplicitWidth = 64
     end
-    object cmdSearch: TButton
-      Left = 511
-      Top = 24
-      Width = 94
-      Height = 26
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akTop, akRight]
-      Caption = '&Search'
-      Default = True
-      TabOrder = 2
-      OnClick = cmdSearchClick
-    end
     object txtSearch: TCaptionEdit
       Left = 6
-      Top = 24
-      Width = 498
+      Top = 128
+      Width = 364
       Height = 24
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Anchors = [akLeft, akTop, akRight]
+      Align = alTop
       TabOrder = 0
       OnChange = txtSearchChange
       Caption = ''
     end
-  end
-  object pnlSearchResults: TPanel [3]
-    Left = 0
-    Top = 138
-    Width = 615
-    Height = 340
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Align = alClient
-    BevelOuter = bvNone
-    TabOrder = 1
-    object pnlSearchResultsTitle: TPanel
-      Left = 0
-      Top = 0
-      Width = 615
-      Height = 26
+    object cmdSearch: TButton
+      Left = 376
+      Top = 128
+      Width = 80
+      Height = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alTop
-      BevelOuter = bvNone
-      TabOrder = 0
-      object lblSelect: TLabel
-        AlignWithMargins = True
-        Left = 8
-        Top = 4
-        Width = 457
-        Height = 18
-        Margins.Left = 8
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Align = alClient
-        Caption = 'Select one of the following items'
-        Visible = False
-        ExplicitWidth = 189
-        ExplicitHeight = 16
-      end
-      object ckNoKnownAllergies: TCheckBox
-        AlignWithMargins = True
-        Left = 473
-        Top = 4
-        Width = 138
-        Height = 18
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Align = alRight
-        Caption = '&No Known Allergies'
-        TabOrder = 1
-        OnClick = ckNoKnownAllergiesClick
-      end
-      object NoAllergylbl508: TVA508StaticText
-        Name = 'NoAllergylbl508'
-        Left = 210
-        Top = 4
-        Width = 211
-        Height = 19
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Alignment = taLeftJustify
-        BevelInner = bvLowered
-        BorderStyle = bsSingle
-        Caption = ''
-        Enabled = False
-        TabOrder = 0
-        TabStop = True
-        Visible = False
-        ShowAccelChar = True
-      end
+      Caption = '&Search'
+      Default = True
+      TabOrder = 2
+      OnClick = cmdSearchClick
+    end
+    object lblSelect: TLabel
+      AlignWithMargins = True
+      Left = 14
+      Top = 163
+      Width = 270
+      Height = 16
+      Margins.Left = 8
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Align = alTop
+      Caption = 'Select one of the following items'
+      Visible = False
+      WordWrap = True
+      ExplicitWidth = 189
+    end
+    object ckNoKnownAllergies: TCheckBox
+      AlignWithMargins = True
+      Left = 298
+      Top = 163
+      Width = 154
+      Height = 19
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Align = alTop
+      Caption = '&No Known Allergies'
+      TabOrder = 3
+      OnClick = ckNoKnownAllergiesClick
     end
     object tvAgent: TORTreeView
-      AlignWithMargins = True
-      Left = 8
-      Top = 30
-      Width = 599
-      Height = 287
+      Left = 6
+      Top = 192
+      Width = 450
+      Height = 162
       Margins.Left = 8
       Margins.Top = 4
       Margins.Right = 8
@@ -204,143 +284,97 @@ inherited frmAllgyFind: TfrmAllgyFind
       Indent = 19
       ReadOnly = True
       StateImages = imTree
-      TabOrder = 1
+      TabOrder = 4
       TabStop = False
       OnChange = tvAgentChange
       OnDblClick = tvAgentDblClick
       Caption = 'Select from one of the following items'
       NodePiece = 0
     end
-    object stsFound: TStatusBar
+    object ckbWarning: TCheckBox
       AlignWithMargins = True
-      Left = 8
-      Top = 317
-      Width = 599
-      Height = 19
-      Margins.Left = 8
-      Margins.Top = 0
-      Margins.Right = 8
-      Margins.Bottom = 4
-      Panels = <>
-      SimplePanel = True
-      SizeGrip = False
+      Left = 16
+      Top = 392
+      Width = 269
+      Height = 74
+      Margins.Left = 10
+      Align = alTop
+      Caption = 
+        'The selected reactant does not have an associated drug class nee' +
+        'ded for complete drug allergy order checking. Please check this ' +
+        'box to continue or select another reactant.'
+      TabOrder = 6
+      WordWrap = True
+      OnClick = ckbWarningClick
     end
-  end
-  object pnlBottom: TPanel [4]
-    Left = 0
-    Top = 478
-    Width = 615
-    Height = 88
-    Align = alBottom
-    BevelOuter = bvNone
-    TabOrder = 2
-    object Panel1: TPanel
-      AlignWithMargins = True
-      Left = 3
-      Top = 3
-      Width = 378
-      Height = 82
-      Align = alLeft
-      BevelOuter = bvNone
-      TabOrder = 0
-      object ckbWarning: TCheckBox
-        AlignWithMargins = True
-        Left = 10
-        Top = 3
-        Width = 365
-        Height = 76
-        Margins.Left = 10
-        Align = alClient
-        Caption = 
-          'The selected reactant does not have an associated drug class nee' +
-          'ded for complete drug allergy order checking. Please check this ' +
-          'box to continue or select another reactant.'
-        TabOrder = 0
-        WordWrap = True
-        OnClick = ckbWarningClick
-      end
-    end
-    object pnlButtons: TPanel
-      Left = 403
-      Top = 0
-      Width = 212
-      Height = 88
+    object cmdOK: TButton
+      Left = 294
+      Top = 444
+      Width = 76
+      Height = 25
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Align = alRight
-      BevelOuter = bvNone
-      TabOrder = 1
-      DesignSize = (
-        212
-        88)
-      object cmdCancel: TButton
-        Left = 110
-        Top = 51
-        Width = 93
-        Height = 28
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Cancel = True
-        Caption = '&Cancel'
-        TabOrder = 1
-        OnClick = cmdCancelClick
-      end
-      object cmdOK: TButton
-        Left = 11
-        Top = 50
-        Width = 94
-        Height = 28
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
-        Anchors = [akLeft, akBottom]
-        Caption = '&OK'
-        TabOrder = 0
-        OnClick = cmdOKClick
-      end
+      Align = alBottom
+      Caption = '&OK'
+      TabOrder = 7
+      OnClick = cmdOKClick
+    end
+    object cmdCancel: TButton
+      Left = 376
+      Top = 444
+      Width = 80
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      Align = alBottom
+      Cancel = True
+      Caption = '&Cancel'
+      TabOrder = 8
+      OnClick = cmdCancelClick
+    end
+    object stsFound: TStatusBar
+      AlignWithMargins = True
+      Left = 11
+      Top = 360
+      Width = 440
+      Height = 19
+      Margins.Left = 5
+      Margins.Top = 0
+      Margins.Right = 5
+      Margins.Bottom = 4
+      Anchors = []
+      Panels = <>
+      ParentFont = True
+      SimplePanel = True
+      SizeGrip = False
+      UseSystemFont = False
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 96
-    Top = 184
+    Left = 24
+    Top = 208
     Data = (
       (
-        'Component = txtSearch'
-        
-          'Text = Enter causative agent for Allergy or Adverse Drug Reactio' +
-          'n (Enter the FIRST FEW LETTERS of the causative agent (minimum o' +
-          'f 3) to allow for a comprehensive search. Only one reactant may ' +
-          'be entered at a time)   Search for:'
-        'Status = stsOK')
-      (
-        'Component = cmdSearch'
+        'Component = frmAllgyFind'
         'Status = stsDefault')
       (
-        'Component = stsFound'
+        'Component = gpMain'
+        'Status = stsDefault')
+      (
+        'Component = txtSearch'
+        'Status = stsDefault')
+      (
+        'Component = cmdSearch'
         'Status = stsDefault')
       (
         'Component = ckNoKnownAllergies'
         'Status = stsDefault')
       (
         'Component = tvAgent'
-        'Status = stsDefault')
-      (
-        'Component = frmAllgyFind'
-        'Status = stsDefault')
-      (
-        'Component = NoAllergylbl508'
-        'Text = No Known Allergies checkbox disabled'
-        'Status = stsOK')
-      (
-        'Component = pnlBottom'
-        'Status = stsDefault')
-      (
-        'Component = Panel1'
         'Status = stsDefault')
       (
         'Component = ckbWarning'
@@ -352,23 +386,14 @@ inherited frmAllgyFind: TfrmAllgyFind
         'Component = cmdCancel'
         'Status = stsDefault')
       (
-        'Component = pnlSearch'
-        'Status = stsDefault')
-      (
-        'Component = pnlSearchResults'
-        'Status = stsDefault')
-      (
-        'Component = pnlSearchResultsTitle'
-        'Status = stsDefault')
-      (
-        'Component = pnlButtons'
+        'Component = stsFound'
         'Status = stsDefault'))
   end
   object imTree: TImageList
-    Left = 92
-    Top = 302
+    Left = 20
+    Top = 262
     Bitmap = {
-      494C010103002400480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010103002400840010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -510,7 +535,6 @@ inherited frmAllgyFind: TfrmAllgyFind
   object imgLblAllgyFindTree: TVA508ImageListLabeler
     Components = <
       item
-        Component = tvAgent
       end>
     ImageList = imTree
     Labels = <
@@ -528,7 +552,7 @@ inherited frmAllgyFind: TfrmAllgyFind
         ImageIndex = 2
         OverlayIndex = -1
       end>
-    Left = 96
-    Top = 232
+    Left = 136
+    Top = 208
   end
 end

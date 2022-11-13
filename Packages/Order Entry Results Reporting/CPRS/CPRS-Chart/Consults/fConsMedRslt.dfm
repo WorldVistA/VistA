@@ -3,38 +3,36 @@ inherited frmConsMedRslt: TfrmConsMedRslt
   Top = 172
   BorderStyle = bsDialog
   Caption = 'Select Medicine Result'
-  ClientHeight = 222
-  ClientWidth = 500
+  ClientHeight = 264
+  ClientWidth = 526
   Position = poScreenCenter
-  OnCreate = FormCreate
-  ExplicitWidth = 506
-  ExplicitHeight = 250
+  ExplicitWidth = 532
+  ExplicitHeight = 297
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlBase: TORAutoPanel [0]
     Left = 0
     Top = 0
-    Width = 500
-    Height = 222
+    Width = 526
+    Height = 231
     Align = alClient
-    BevelOuter = bvNone
     TabOrder = 0
     object pnlAction: TPanel
-      Left = 0
-      Top = 128
-      Width = 500
-      Height = 53
+      Left = 1
+      Top = 168
+      Width = 524
+      Height = 62
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 1
       DesignSize = (
-        500
-        53)
+        524
+        62)
       object lblDateofAction: TOROffsetLabel
-        Left = 134
-        Top = -2
-        Width = 112
-        Height = 20
+        Left = 133
+        Top = -3
+        Width = 157
+        Height = 28
         Caption = 'Date/time of this action'
         HorzOffset = 2
         Transparent = False
@@ -42,30 +40,21 @@ inherited frmConsMedRslt: TfrmConsMedRslt
         WordWrap = False
       end
       object lblActionBy: TOROffsetLabel
-        Left = 267
+        Left = 296
         Top = -2
-        Width = 215
-        Height = 19
+        Width = 220
+        Height = 27
         Caption = 'Action by'
         HorzOffset = 2
         Transparent = False
         VertOffset = 6
         WordWrap = False
       end
-      object cmdDetails: TButton
-        Left = 15
-        Top = 23
-        Width = 75
-        Height = 21
-        Caption = 'Show Details'
-        TabOrder = 0
-        OnClick = cmdDetailsClick
-      end
       object calDateofAction: TORDateBox
         Left = 131
         Top = 23
-        Width = 116
-        Height = 21
+        Width = 159
+        Height = 24
         TabOrder = 1
         Text = 'Now'
         DateOnly = False
@@ -73,17 +62,17 @@ inherited frmConsMedRslt: TfrmConsMedRslt
         Caption = 'Date/time of this action'
       end
       object cboPerson: TORComboBox
-        Left = 267
+        Left = 296
         Top = 23
-        Width = 221
-        Height = 21
+        Width = 216
+        Height = 24
         Anchors = [akLeft, akTop, akRight]
         Style = orcsDropDown
         AutoSelect = True
         Caption = 'Action by'
         Color = clWindow
         DropDownCount = 8
-        ItemHeight = 13
+        ItemHeight = 16
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = True
@@ -99,33 +88,43 @@ inherited frmConsMedRslt: TfrmConsMedRslt
         OnNeedData = NewPersonNeedData
         CharsNeedMatch = 1
       end
+      object ckAlert: TCheckBox
+        Left = 8
+        Top = 28
+        Width = 89
+        Height = 17
+        Caption = 'Send alert'
+        TabOrder = 0
+        OnClick = ckAlertClick
+      end
     end
     object pnlMiddle: TPanel
-      Left = 0
-      Top = 0
-      Width = 500
-      Height = 128
+      Left = 1
+      Top = 1
+      Width = 524
+      Height = 167
       Align = alClient
+      BevelOuter = bvNone
       TabOrder = 0
       object SrcLabel: TLabel
-        Left = 1
-        Top = 1
-        Width = 498
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 518
         Height = 16
         Align = alTop
         AutoSize = False
         Caption = 'Select medicine result:'
-        ExplicitLeft = 12
-        ExplicitTop = 6
-        ExplicitWidth = 145
+        ExplicitLeft = 1
+        ExplicitTop = 0
+        ExplicitWidth = 498
       end
       object lstMedResults: TCaptionListView
-        Left = 1
-        Top = 17
-        Width = 498
-        Height = 110
-        Margins.Left = 8
-        Margins.Right = 8
+        AlignWithMargins = True
+        Left = 3
+        Top = 25
+        Width = 518
+        Height = 139
         Align = alClient
         Columns = <
           item
@@ -158,57 +157,63 @@ inherited frmConsMedRslt: TfrmConsMedRslt
         Pieces = '2,3,4'
       end
     end
-    object pnlbottom: TPanel
-      Left = 0
-      Top = 181
-      Width = 500
-      Height = 41
-      Align = alBottom
+  end
+  object pnlbottom: TPanel [1]
+    Left = 0
+    Top = 231
+    Width = 526
+    Height = 33
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 1
+    object pnlButtons: TPanel
+      Left = 341
+      Top = 0
+      Width = 185
+      Height = 33
+      Align = alRight
       BevelOuter = bvNone
-      TabOrder = 2
-      object pnlButtons: TPanel
-        Left = 315
-        Top = 0
-        Width = 185
-        Height = 41
+      TabOrder = 1
+      object cmdOK: TButton
+        AlignWithMargins = True
+        Left = 26
+        Top = 3
+        Width = 75
+        Height = 27
         Align = alRight
-        BevelOuter = bvNone
-        TabOrder = 1
-        object cmdOK: TButton
-          Left = 11
-          Top = 9
-          Width = 75
-          Height = 21
-          Caption = 'OK'
-          Default = True
-          TabOrder = 0
-          OnClick = cmdOKClick
-        end
-        object cmdCancel: TButton
-          Left = 99
-          Top = 9
-          Width = 75
-          Height = 21
-          Cancel = True
-          Caption = 'Cancel'
-          TabOrder = 1
-          OnClick = cmdCancelClick
-        end
-      end
-      object ckAlert: TCheckBox
-        Left = 134
-        Top = 12
-        Width = 79
-        Height = 17
-        Caption = 'Send alert'
+        Caption = 'OK'
+        Default = True
         TabOrder = 0
-        OnClick = ckAlertClick
+        OnClick = cmdOKClick
       end
+      object cmdCancel: TButton
+        AlignWithMargins = True
+        Left = 107
+        Top = 3
+        Width = 75
+        Height = 27
+        Align = alRight
+        Cancel = True
+        Caption = 'Cancel'
+        TabOrder = 1
+        OnClick = cmdCancelClick
+      end
+    end
+    object cmdDetails: TButton
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 110
+      Height = 27
+      Align = alLeft
+      Caption = 'Show Details'
+      TabOrder = 0
+      OnClick = cmdDetailsClick
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 8
-    Top = 40
+    Left = 16
+    Top = 72
     Data = (
       (
         'Component = pnlBase'
@@ -254,6 +259,7 @@ inherited frmConsMedRslt: TfrmConsMedRslt
   object ImageList1: TImageList
     Height = 12
     Width = 12
-    Left = 8
+    Left = 104
+    Top = 72
   end
 end

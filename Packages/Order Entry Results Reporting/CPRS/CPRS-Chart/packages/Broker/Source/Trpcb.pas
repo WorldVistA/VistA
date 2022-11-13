@@ -6,10 +6,13 @@
   Herlan Westra, Roy Gaber
   Description: Contains TRPCBroker and related components.
   Unit: Tbrpc RPC broker.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 72
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
+  1. Updated RPC Version to version 72.
+
   Changes in v1.1.71 (RGG 03/11/2019) XWB*1.1*71
   1. Updated CURRENT_RPC_VERSION to version XWB*1.1*71
   2. Corrected an issue reported in I18491582FY18 where context creation
@@ -115,7 +118,7 @@ uses
 const
   NoMore: boolean = False;
   MIN_RPCTIMELIMIT: integer = 30;
-  CURRENT_RPC_VERSION: String = 'XWB*1.1*71';
+  CURRENT_RPC_VERSION: String = 'XWB*1.1*73';
 
 type
   TParamType = (literal, reference, list, global, empty, stream, undefined);
@@ -310,6 +313,7 @@ type
   TRPCBroker = class(TComponent)
   private
   protected
+    FShowCertDialog: boolean; //p73
     FBrokerVersion: String;
     FAccessVerifyCodes: TAccessVerifyCodes;
     FClearParameters: boolean;
@@ -437,6 +441,8 @@ type
       write FSSOiLogonNameValue;
   published
     constructor Create(AOwner: TComponent); override;
+    property ShowCertDialog: boolean read FShowCertDialog
+      write FShowCertDialog; //p73
     property ClearParameters: boolean read FClearParameters
       write SetClearParameters;
     property ClearResults: boolean read FClearResults write SetClearResults;
@@ -764,9 +770,8 @@ end; // constructor TParams.Create
 destructor TParams.Destroy;
 begin
   Clear; { clear the Multiple first! }
-  FParameters.Free;
-  FParameters := nil;
-  inherited Destroy;
+  FreeAndNil(FParameters);
+  inherited;
 end; // destructor TParams.Destroy
 
 { ------------------------- TParams.Assign -------------------------
@@ -874,7 +879,7 @@ begin
     Interval := DEFAULT_PULSE; // P6
     OnTimer := DoPulseOnTimer; // P6
   end; // with
-  FLogIn := TVistaLogin.Create(Self); // p13
+  FLogIn := TVistaLogin.Create(Application); // p13
   FKernelLogIn := True; // p13
   FUser := TVistaUser.Create; // p13
   FShowErrorMsgs := semRaise; // p13
@@ -887,19 +892,14 @@ end; // constructor TRPCBroker.Create
 destructor TRPCBroker.Destroy;
 begin
   Connected := False;
-  XWBWinsock.DisposeOf;
-  // TXWBWinsock(XWBWinsock).Free;
-  FParams.Free;
-  FParams := nil;
-  FResults.Free;
-  FResults := nil;
-  FPulse.Free; // P6
-  FPulse := nil;
-  FUser.Free;
-  FUser := nil;
-  FLogIn.Free;
-  FLogIn := nil;
-  inherited Destroy;
+  if XWBWinsock <> nil then
+    FreeAndNil(XWBWinsock);
+  FreeAndNil(FParams);
+  FreeAndNil(FResults);
+  FreeAndNil(FPulse); // P6
+  FreeAndNil(FUser);
+  FreeAndNil(FLogIn);
+  inherited;
 end; // destructor TRPCBroker.Destroy
 
 { --------------------- TRPCBroker.CreateContext -------------------
@@ -914,11 +914,11 @@ var
   InternalBroker: TRPCBroker; { use separate component }
   Str: String;
 begin
-  Result := False;
+  // Result := False;
   Connected := True;
   InternalBroker := nil;
   try
-    InternalBroker := TRPCBroker.Create(Self);
+    InternalBroker := TRPCBroker.Create(Application);
     InternalBroker.FSocket := Self.Socket;
     // p13 -- permits multiple broker connections to same server/port
     with InternalBroker do
@@ -959,8 +959,8 @@ begin
         Self.RPCBError := RPCBError;
     end; // with InternalBroker do
   finally
-    InternalBroker.XWBWinsock := nil;
-    InternalBroker.Free; { release memory }
+    // InternalBroker.XWBWinsock := nil;
+    FreeAndNil(InternalBroker); { release memory }
   end; // try
 end; // function TRPCBroker.CreateContext
 
@@ -984,8 +984,7 @@ begin
     lstCall(ResultBuffer);
     Self.Results.AddStrings(ResultBuffer);
   finally
-    ResultBuffer.Clear;
-    ResultBuffer.Free;
+    FreeAndNil(ResultBuffer);
   end; // try
 end; // procedure TRPCBroker.Call
 
@@ -1416,8 +1415,7 @@ begin
     BrokerAllConnections.Delete(BrokerAllConnections.IndexOfObject(Broker));
     if BrokerAllConnections.Count = 0 then
     begin
-      BrokerAllConnections.Free;
-      BrokerAllConnections := nil;
+      FreeAndNil(BrokerAllConnections);
     end; // if
   end; // if Assigned(BrokerAllConnections)
 end; // function RemoveConnection
@@ -1515,13 +1513,14 @@ begin
     begin
       // Set SSOi token values (get token from IAM).
       try
+        XWBSSOi.ShowCertDialog := ConnectingBroker.ShowCertDialog;
         thisSSOiToken := TXWBSSOiToken.Create(Application);
         currentSSOiToken := thisSSOiToken.SSOiToken;
         ConnectingBroker.SSOiToken := currentSSOiToken;
         ConnectingBroker.SSOiSECID := thisSSOiToken.SSOiSECID;
         ConnectingBroker.SSOiADUPN := thisSSOiToken.SSOiADUPN;
         ConnectingBroker.SSOiLogonName := thisSSOiToken.SSOiLogonName;
-        thisSSOiToken.Free;
+        FreeAndNil(thisSSOiToken);
       finally
         if currentSSOiToken <> '' then
         begin
@@ -1547,8 +1546,8 @@ begin
         else // if blnSignedOn
         begin
           GetBrokerInfo(ConnectingBroker);
-          frmSignonMsg := TfrmSignonMsg.Create(Application);
           // Create in frmSignonMessage unit
+          frmSignonMsg := TfrmSignonMsg.Create(Application);
           try
             // ShowApplicationAndFocusOK(Application);
             OldHandle := GetForegroundWindow;
@@ -1557,10 +1556,11 @@ begin
             if SetUpMessage then // SetUpMessage in frmSignonMessage unit
             begin // True if Message should be displayed
               frmSignonMsg.ShowModal;
+              //FreeAndNil(frmSignonMsg);
               // Show Sign-on Message (VA Handbook 6500 requirement)
             end;
           finally
-            frmSignonMsg.Free;
+            FreeAndNil(frmSignonMsg);
             ShowApplicationAndFocusOK(Application);
           end; // try
           if not SelDiv.ChooseDiv('', ConnectingBroker) then
@@ -1585,9 +1585,9 @@ begin
       else
         OldExceptionHandler := nil;
       Application.OnException := TfrmErrMsg.RPCBShowException;
+        frmSignon := TfrmSignon.Create(Nil); // Create in Loginfrm unit
       try
-        frmSignon := TfrmSignon.Create(Application); // Create in Loginfrm unit
-        // ShowApplicationAndFocusOK(Application);
+        ShowApplicationAndFocusOK(Application);
         OldHandle := GetForegroundWindow;
         SetForegroundWindow(frmSignon.Handle);
         PrepareSignonForm(ConnectingBroker);
@@ -1614,7 +1614,7 @@ begin
         end; // if blnSignedOn
         SetForegroundWindow(OldHandle);
       finally
-        frmSignon.Free;
+          FreeAndNil(frmSignOn);
         ShowApplicationAndFocusOK(Application);
       end; // try
       if Assigned(OldExceptionHandler) then
@@ -1631,7 +1631,7 @@ begin
       ClearParameters := SaveClearParmeters;
       ClearResults := SaveClearResults;
       Param.Assign(SaveParam); // restore settings
-      SaveParam.Free;
+      FreeAndNil(SaveParam);
       RemoteProcedure := SaveRemoteProcedure;
       RpcVersion := SaveRpcVersion;
       Results := SaveResults;

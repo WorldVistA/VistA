@@ -4,10 +4,8 @@ inherited frmAlertOrders: TfrmAlertOrders
   Caption = 'Alert when Results Available'
   ClientHeight = 251
   Position = poScreenCenter
-  OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 278
   OnCloseQuery = FormCloseQuery
+  ExplicitHeight = 290
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
@@ -44,8 +42,8 @@ inherited frmAlertOrders: TfrmAlertOrders
     Height = 21
     Caption = 'OK'
     Default = True
+    ModalResult = 1
     TabOrder = 2
-    OnClick = cmdOKClick
   end
   object cmdCancel: TButton [4]
     Left = 347
@@ -54,12 +52,12 @@ inherited frmAlertOrders: TfrmAlertOrders
     Height = 21
     Cancel = True
     Caption = 'Cancel'
+    ModalResult = 2
     TabOrder = 3
-    OnClick = cmdCancelClick
   end
   object cboAlertRecipient: TORComboBox [5]
     Left = 7
-    Top = 226
+    Top = 222
     Width = 226
     Height = 21
     HelpContext = 9102
@@ -79,7 +77,7 @@ inherited frmAlertOrders: TfrmAlertOrders
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 1
-    OnExit = cboOnExit
+    Text = ''
     OnNeedData = cboAlertRecipientNeedData
     CharsNeedMatch = 1
   end

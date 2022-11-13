@@ -4,10 +4,10 @@ object pdmpView: TpdmpView
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Prescription Drug Monitoring Program Results'
   ClientHeight = 409
-  ClientWidth = 624
+  ClientWidth = 1024
   Color = clCream
   Constraints.MinHeight = 320
-  Constraints.MinWidth = 640
+  Constraints.MinWidth = 1040
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -15,7 +15,7 @@ object pdmpView: TpdmpView
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  Position = poOwnerFormCenter
+  Position = poDesigned
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -27,7 +27,7 @@ object pdmpView: TpdmpView
   object pnlBottom: TPanel
     Left = 0
     Top = 374
-    Width = 624
+    Width = 1024
     Height = 35
     Align = alBottom
     Alignment = taLeftJustify
@@ -37,7 +37,7 @@ object pdmpView: TpdmpView
     TabOrder = 1
     object btnDone: TButton
       AlignWithMargins = True
-      Left = 488
+      Left = 888
       Top = 3
       Width = 133
       Height = 29
@@ -48,7 +48,7 @@ object pdmpView: TpdmpView
     end
     object btnCancel: TButton
       AlignWithMargins = True
-      Left = 344
+      Left = 744
       Top = 3
       Width = 138
       Height = 29
@@ -57,11 +57,41 @@ object pdmpView: TpdmpView
       ModalResult = 2
       TabOrder = 0
     end
+    object btnClose: TButton
+      AlignWithMargins = True
+      Left = 680
+      Top = 3
+      Width = 58
+      Height = 29
+      Hint = 'Close'
+      Align = alRight
+      Caption = 'C&lose'
+      TabOrder = 2
+      OnClick = btnCloseClick
+    end
+    object btnBrowser: TButton
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 150
+      Height = 29
+      Hint = 'What is My Web Browser?'
+      Align = alLeft
+      Caption = 'What is my Browser?'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clPurple
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 3
+      OnClick = btnBrowserClick
+    end
   end
   object pnlCanvas: TPanel
     Left = 0
     Top = 0
-    Width = 624
+    Width = 1024
     Height = 374
     Align = alClient
     Caption = 'pnlCanvas'
@@ -70,42 +100,38 @@ object pdmpView: TpdmpView
     object splBrowser: TSplitter
       Left = 1
       Top = 251
-      Width = 622
+      Width = 1022
       Height = 3
       Cursor = crVSplit
       Align = alBottom
       Visible = False
       ExplicitLeft = 4
       ExplicitTop = 235
+      ExplicitWidth = 622
     end
     object pnlBrowser: TPanel
       Left = 1
       Top = 1
-      Width = 622
+      Width = 1022
       Height = 250
       Align = alClient
       BevelOuter = bvNone
-      Caption = 'pnlBrowser'
-      ShowCaption = False
+      Caption = 'Please WAIT - report  ggeneration is in progress'
       TabOrder = 0
       object wbPDMP: TWebBrowser
-        AlignWithMargins = True
-        Left = 3
-        Top = 3
-        Width = 616
-        Height = 244
+        Left = 0
+        Top = 0
+        Width = 1022
+        Height = 250
         Align = alClient
         TabOrder = 0
-        OnNavigateComplete2 = wbPDMPNavigateComplete2
+        SelectedEngine = EdgeIfAvailable
         OnNavigateError = wbPDMPNavigateError
-        ExplicitLeft = 43
-        ExplicitTop = 35
-        ExplicitWidth = 576
-        ExplicitHeight = 166
+        ExplicitLeft = -1
         ControlData = {
-          4C000000AA3F0000381900000000000000000000000000000000000000000000
+          4C000000A0690000D71900000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
-          2B2E12620A000000000000004C0000000114020000000000C000000000000046
+          2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
           00000000000000000100000000000000000000000000000000000000}
       end
@@ -113,19 +139,19 @@ object pdmpView: TpdmpView
     inline frPDMPReview: TfrPDMPReviewOptions
       Left = 1
       Top = 254
-      Width = 622
+      Width = 1022
       Height = 119
       Align = alBottom
       TabOrder = 1
       Visible = False
       ExplicitLeft = 1
       ExplicitTop = 254
-      ExplicitWidth = 622
+      ExplicitWidth = 1022
       ExplicitHeight = 119
       inherited sbPDMP: TScrollBox
-        Width = 616
+        Width = 1016
         Height = 113
-        ExplicitWidth = 616
+        ExplicitWidth = 1016
         ExplicitHeight = 113
       end
     end
@@ -138,6 +164,16 @@ object pdmpView: TpdmpView
     end
     object acBrowser: TAction
       Caption = 'Browser'
+    end
+    object WindowClose1: TWindowClose
+      Category = 'Window'
+      Caption = 'C&lose'
+      Enabled = False
+      Hint = 'Close'
+    end
+    object acVerifySave: TAction
+      Caption = 'Done && Update Note'
+      OnExecute = acVerifySaveExecute
     end
   end
 end

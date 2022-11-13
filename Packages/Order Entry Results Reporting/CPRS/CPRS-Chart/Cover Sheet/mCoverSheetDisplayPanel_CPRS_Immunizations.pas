@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_CPRS_Immunizations;
   ================================================================================
   *
   *       Application:  Demo
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@med.va.gov
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-21
   *
@@ -34,15 +34,21 @@ uses
   Vcl.StdCtrls,
   Vcl.Buttons,
   mCoverSheetDisplayPanel_CPRS,
-  iCoverSheetIntf;
+  iCoverSheetIntf,
+  fFrame;
 
 type
   TfraCoverSheetDisplayPanel_CPRS_Immunizations = class(TfraCoverSheetDisplayPanel_CPRS)
   private
     { Private declarations }
+    fEnterImmunization: TMenuItem;
+    procedure pmnEnterNewImmunization(Sender: TObject);
   protected
     { Overidden events - TfraCoverSheetDisplayPanel_CPRS }
     procedure OnAddItems(aList: TStrings); override;
+    procedure OnPopupMenu(Sender: TObject); override;
+    procedure OnPopupMenuFree(Sender: TObject); override;
+    procedure OnPopupMenuInit(Sender: TObject); override;
   public
     constructor Create(aOwner: TComponent); override;
   end;
@@ -57,7 +63,13 @@ implementation
 
 uses
   ORFn,
-  oDelimitedString;
+  oDelimitedString,
+  uCore,
+  fEncnt,
+  fVimm,
+  rVimm,
+  fNotes,
+  uPDMP;
 
 { TfraCoverSheetDisplayPanel_CPRS_Immunizations }
 
@@ -102,6 +114,93 @@ begin
       end;
   finally
     lvData.Items.EndUpdate;
+  end;
+end;
+
+procedure TfraCoverSheetDisplayPanel_CPRS_Immunizations.OnPopupMenu(
+  Sender: TObject);
+begin
+  inherited;
+  fEnterImmunization.enabled := true;
+end;
+
+procedure TfraCoverSheetDisplayPanel_CPRS_Immunizations.OnPopupMenuFree(
+  Sender: TObject);
+begin
+  inherited;
+   FreeAndNil(fEnterImmunization);
+end;
+
+procedure TfraCoverSheetDisplayPanel_CPRS_Immunizations.OnPopupMenuInit(
+  Sender: TObject);
+begin
+  inherited;
+  fEnterImmunization := NewItem('Enter New Immunization ...', 0, False, False, pmnEnterNewImmunization, 0, 'pmnEnterNewImmunization');
+  pmn.Items.Add(NewItem('-', 0, False, False, nil, 0, 'pmnImmunization_Separator'));
+  pmn.Items.Add(fEnterImmunization);
+end;
+
+procedure TfraCoverSheetDisplayPanel_CPRS_Immunizations.pmnEnterNewImmunization(
+  Sender: TObject);
+var
+resultList: TStringList;
+noteStr: String;
+Reason: string;
+
+begin
+  if assigned(frmNotes) then
+    begin
+      frmNotes.currentlyEditingRecord(Reason);
+      if reason <> '' then
+        begin
+          ShowMessage(reason);
+          exit;
+        end;
+    end;
+  try
+    if Encounter.NeedVisit then
+      UpdateEncounter(0, 0, 0);
+      frmFrame.DisplayEncounterText;
+  finally
+
+  end;
+  resultList := TStringList.create;
+  try
+  uvimmInputs.noGrid := false;
+  uvimmInputs.makeNote := true;
+  uvimmInputs.collapseICE := false;
+  uvimminputs.canSaveData := true;
+  uvimmInputs.patientName := patient.Name;
+  uvimmInputs.patientIEN := patient.DFN;
+  uvimmInputs.userName := user.Name;
+  uvimmInputs.userIEN := user.DUZ;
+  uvimmInputs.encounterProviderName := encounter.ProviderName;
+  uvimmInputs.encounterProviderIEN := encounter.Provider;
+  uvimmInputs.encounterLocation := encounter.Location;
+  uvimmInputs.encounterCategory := encounter.VisitCategory;
+  uvimmInputs.dateEncounterDateTime := encounter.DateTime;
+  uvimmInputs.visitString := encounter.VisitStr;
+  uvimmInputs.startInEditMode := true;
+//  uvimmInputs.isFromEncounter := false;
+  uvimmInputs.isSkinTest := false;
+  uVimmInputs.immunizationReading := false;
+  uVimmInputs.selectionType := 'all';
+  uVimmInputs.fromCover := true;
+
+  if performVimm(resultList, true) then
+    begin
+      CoverSheet.OnRefreshPanel(Self, CV_CPRS_IMMU);
+//      frmNotes.Refresh;
+    end;
+  clearInputs;
+  if resultList.Count = 1 then
+    begin
+      noteStr := resultList.Strings[0];
+      Changes.Add(10, Piece(noteStr, U, 1), Piece(noteStr, U, 2), '', 1);
+      PostMessage(Application.MainForm.Handle, UM_PDMP_NOTE_ID, 0, 0);
+    end;
+  finally
+    FreeAndNil(resultList);
   end;
 end;
 

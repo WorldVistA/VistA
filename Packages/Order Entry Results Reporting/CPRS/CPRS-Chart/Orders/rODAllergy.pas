@@ -1,10 +1,11 @@
 unit rODAllergy;
 
-{$O-}
+//{$O-}
 
 interface
 
-uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, TRPCB, dialogs, rMisc, fNotes;
+uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, TRPCB, dialogs, rMisc, fNotes,
+     VAUtils;
 
 type
   TAllergyRec = record
@@ -54,9 +55,10 @@ type
     AccessChecked: boolean;
   end;
 
-function SearchForAllergies(StringToMatch: string): TStrings;
-function SubsetofSymptoms(const StartFrom: string; Direction: Integer): TStrings;
-function ODForAllergies: TStrings;
+function setAllergiesByTarget(aTarget: string;aDest: TStrings): Integer;
+function setSubsetofSymptoms(const StartFrom: string; Direction: Integer;const aList: TStrings): integer;
+function setAllergiesDefaults(aDest:TSTrings): Integer;
+
 function GetCWADInfo(const DFN: string): string;
 function SaveAllergy(EditRec: TAllergyRec): string;
 function LoadAllergyForEdit(AllergyIEN: integer): TAllergyRec;
@@ -74,6 +76,9 @@ function GetAllergyTitleText: string;
 
 implementation
 
+uses
+  ORNetIntf;
+
 const
   NO_YES: array[Boolean] of string = ('NO', 'YES');
 
@@ -82,30 +87,38 @@ var
   uGMRASiteParams: TGMRASiteParams;
   uARTClinUser: TARTClinUser;
 
-function ODForAllergies: TStrings;
+function setSubsetofSymptoms(const StartFrom: string; Direction: Integer;const aList: TStrings): integer;
 begin
-  CallV('ORWDAL32 DEF',[nil]);
-  Result := RPCBrokerV.Results;
+  result := -1;
+  if assigned(aList) then
+    begin
+      if CallvistA('ORWDAL32 SYMPTOMS',[StartFrom, Direction],aList) then
+        Result := aList.Count
+      else
+        Result := 0;
+    end;
 end;
 
-function SearchForAllergies(StringToMatch: string): TStrings;
+function setAllergiesDefaults(aDest:TSTrings): Integer;
 begin
-  CallV('ORWDAL32 ALLERGY MATCH',[StringToMatch]);
-  Result := RPCBrokerV.Results;
+  Result := -1;
+  if CallVistA('ORWDAL32 DEF',[nil],aDest) then
+    Result := aDest.Count;
 end;
 
-function SubsetofSymptoms(const StartFrom: string; Direction: Integer): TStrings;
+function setAllergiesByTarget(aTarget: string;aDest: TStrings): Integer;
 begin
-  Callv('ORWDAL32 SYMPTOMS',[StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
+  Result := -1;
+  if CallVistA('ORWDAL32 ALLERGY MATCH',[aTarget],aDest) then
+    Result := aDest.Count;
 end;
 
 function GetCWADInfo(const DFN: string): string;
 begin
-  CallVista('ORWPT CWAD', [DFN], Result);
+  CallVistA('ORWPT CWAD', [DFN], Result);
 end;
 
-function LoadAllergyForEdit(AllergyIEN: integer): TAllergyRec;
+function LoadAllergyForEdit(AllergyIEN: Integer): TAllergyRec;
 var
   Dest: TStringList;
   EditRec: TAllergyRec;
@@ -113,53 +126,54 @@ var
 begin
   Dest := TStringList.Create;
   try
-    tCallV(Dest, 'ORWDAL32 LOAD FOR EDIT', [AllergyIEN]) ;
-    if Piece(RPCBrokerV.Results[0], U, 1) <> '-1' then
+    CallvistA('ORWDAL32 LOAD FOR EDIT', [AllergyIEN], Dest);
+    if (Dest.Count > 0) and (Piece(Dest[0], U, 1) <> '-1') then
     begin
       with EditRec do
-        begin
-          Changed             := False;
-          IEN                 := AllergyIEN;
-          CausativeAgent      := ExtractDefault(Dest, 'CAUSATIVE AGENT');
-          AllergyType         := ExtractDefault(Dest, 'ALLERGY TYPE');
-          NatureOfReaction    := ExtractDefault(Dest, 'NATURE OF REACTION');
-          SignsSymptoms       := TStringList.Create;
-          ExtractItems(SignsSymptoms, Dest, 'SIGN/SYMPTOMS');
-          MixedCaseByPiece(SignsSymptoms, U, 4);
-          x                   := ExtractDefault(Dest, 'ORIGINATOR');
-          Originator          := StrToInt64Def(Piece(x, U, 1), 0);
-          OriginatorName      := Piece(x, U, 2);
-          Originated          := StrToFMDateTime(ExtractDefault(Dest, 'ORIGINATED'));
-          Comments            := TStringList.Create;
-          ExtractText(Comments, Dest, 'COMMENTS');
-          IDBandMarked        := TStringList.Create;
-          ExtractItems(IDBandMarked, Dest, 'ID BAND MARKED');
-          ChartMarked         := TStringList.Create;
-          ExtractItems(ChartMarked, Dest, 'CHART MARKED');
-          //x                   := ExtractDefault(Dest, 'VERIFIER');
-          //Verifier            := StrToInt64Def(Piece(x, U, 1), 0);
-          //VerifierName        := Piece(x, U, 2);
-          //x                   := ExtractDefault(Dest, 'VERIFIED');
-          //Verified            := Piece(x, U, 1) = 'YES';
-          //if Verified then
-          //  VerifiedDateTime  := StrToFMDateTime(Piece(x, U, 2));
-          x                   := ExtractDefault(Dest, 'ENTERED IN ERROR');
-          EnteredInError      := Piece(x, U, 1) = 'YES';
-          DateEnteredInError  := StrToFloatDef(Piece(x, U, 2), 0);
-          UserEnteringInError := StrToInt64Def(Piece(x, U, 3), 0);
-          ErrorComments       := TStringList.Create;
-          Observed_Historical := ExtractDefault(Dest, 'OBS/HIST');
-          Observations        := TStringList.Create;
-          ExtractText(Observations, Dest, 'OBSERVATIONS');
-          //ReactionDate        := StrToFMDateTime(Piece(ExtractDefault(Dest, 'REACTDT'), U, 3));
-          //Severity            := Piece(ExtractDefault(Dest, 'SEVERITY'), U, 3);
-          NoKnownAllergies    := (StrToIntDef(Piece(ExtractDefault(Dest, 'NKA'), U, 3), 0) > 0);
-          NewComments         := TStringList.Create;
-        end;
+      begin
+        Changed := False;
+        IEN := AllergyIEN;
+        CausativeAgent := ExtractDefault(Dest, 'CAUSATIVE AGENT');
+        AllergyType := ExtractDefault(Dest, 'ALLERGY TYPE');
+        NatureOfReaction := ExtractDefault(Dest, 'NATURE OF REACTION');
+        SignsSymptoms := TStringList.Create;
+        ExtractItems(SignsSymptoms, Dest, 'SIGN/SYMPTOMS');
+        MixedCaseByPiece(SignsSymptoms, U, 4);
+        x := ExtractDefault(Dest, 'ORIGINATOR');
+        Originator := StrToInt64Def(Piece(x, U, 1), 0);
+        OriginatorName := Piece(x, U, 2);
+        Originated := StrToFMDateTime(ExtractDefault(Dest, 'ORIGINATED'));
+        Comments := TStringList.Create;
+        ExtractText(Comments, Dest, 'COMMENTS');
+        IDBandMarked := TStringList.Create;
+        ExtractItems(IDBandMarked, Dest, 'ID BAND MARKED');
+        ChartMarked := TStringList.Create;
+        ExtractItems(ChartMarked, Dest, 'CHART MARKED');
+        // x                   := ExtractDefault(Dest, 'VERIFIER');
+        // Verifier            := StrToInt64Def(Piece(x, U, 1), 0);
+        // VerifierName        := Piece(x, U, 2);
+        // x                   := ExtractDefault(Dest, 'VERIFIED');
+        // Verified            := Piece(x, U, 1) = 'YES';
+        // if Verified then
+        // VerifiedDateTime  := StrToFMDateTime(Piece(x, U, 2));
+        x := ExtractDefault(Dest, 'ENTERED IN ERROR');
+        EnteredInError := Piece(x, U, 1) = 'YES';
+        DateEnteredInError := StrToFloatDef(Piece(x, U, 2), 0);
+        UserEnteringInError := StrToInt64Def(Piece(x, U, 3), 0);
+        ErrorComments := TStringList.Create;
+        Observed_Historical := ExtractDefault(Dest, 'OBS/HIST');
+        Observations := TStringList.Create;
+        ExtractText(Observations, Dest, 'OBSERVATIONS');
+        // ReactionDate        := StrToFMDateTime(Piece(ExtractDefault(Dest, 'REACTDT'), U, 3));
+        // Severity            := Piece(ExtractDefault(Dest, 'SEVERITY'), U, 3);
+        NoKnownAllergies :=
+          (StrToIntDef(Piece(ExtractDefault(Dest, 'NKA'), U, 3), 0) > 0);
+        NewComments := TStringList.Create;
+      end;
     end
     else
       EditRec.IEN := -1;
-    Result := EditRec;
+    result := EditRec;
   finally
     Dest.Free;
   end;
@@ -167,151 +181,149 @@ end;
 
 function SaveAllergy(EditRec: TAllergyRec): string;
 var
-  i: integer;
-begin
-  LockBroker;
-  try
-    with RPCBrokerV, EditRec do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORWDAL32 SAVE ALLERGY';
-      Param[0].PType := literal;
-      Param[0].Value := IntToStr(IEN);
-      Param[1].PType := literal;
-      Param[1].Value := Patient.DFN;
-      Param[2].PType := list;
-      with Param[2] do
-        begin
-          if NoKnownAllergies then
-            Mult['"GMRANKA"']  := NO_YES[NoKnownAllergies];
-          if CausativeAgent <> '' then
-            Mult['"GMRAGNT"']  := CausativeAgent;
-          if AllergyType <> '' then
-            Mult['"GMRATYPE"'] := AllergyType ;
-          if NatureOfReaction <> '' then
-            Mult['"GMRANATR"'] := NatureOfReaction ;
-          if Originator > 0 then
-            Mult['"GMRAORIG"'] := IntToStr(Originator);
-          if Originated > 0 then
-            Mult['"GMRAORDT"'] := FloatToStr(Originated);
-          with SignsSymptoms do if Count > 0 then
-            begin
-              Mult['"GMRASYMP",0'] := IntToStr(Count);
-              for i := 0 to Count - 1 do
-                Mult['"GMRASYMP",' + IntToStr(i+1)] := Pieces(Strings[i], U, 1, 5);
-            end;
-          //if Verified then
-          //  Mult['"GMRAVER"']  := NO_YES[Verified];
-          //if Verifier > 0 then
-          //  Mult['"GMRAVERF"'] := IntToStr(Verifier);
-          //if VerifiedDateTime > 0 then
-          //  Mult['"GMRAVERD"'] := FloatToStr(VerifiedDateTime);
-          if EnteredInError then
-            begin
-              Mult['"GMRAERR"']  := NO_YES[EnteredInError];
-              Mult['"GMRAERRBY"']  := IntToStr(UserEnteringInError);
-              Mult['"GMRAERRDT"']  := FloatToStr(DateEnteredInError);
-              with ErrorComments do if Count > 0 then
-                begin
-                  Mult['"GMRAERRCMTS",0'] := IntToStr(Count);
-                  for i := 0 to Count - 1 do
-                    Mult['"GMRAERRCMTS",' + IntToStr(i+1)] := Strings[i];
-                end;
+  i: Integer;
+  aList: iORNetMult;
+  sl: TStrings;
+  x, dt3, dt4: string;
+  dt: TFMDateTime;
 
-            end ;
-          with ChartMarked do if Count > 0 then
-            begin
-              Mult['"GMRACHT",0'] := IntToStr(Count);
-              for i := 0 to Count - 1 do
-                Mult['"GMRACHT",' + IntToStr(i+1)] := Strings[i];
-            end;
-          with IDBandMarked do if Count > 0 then
-            begin
-              Mult['"GMRAIDBN",0'] := IntToStr(Count);
-              for i := 0 to Count - 1 do
-                Mult['"GMRAIDBN",' + IntToStr(i+1)] := Strings[i];
-            end;
-          if Length(Observed_Historical) > 0 then
-            Mult['"GMRAOBHX"'] :=  Observed_Historical;
-          if ReactionDate > 0 then
-            Mult['"GMRARDT"']  :=  FloatToStr(ReactionDate);
-          if Length(Severity) > 0 then
-            Mult['"GMRASEVR"'] :=  Severity;
-          with NewComments do if Count > 0 then
-            begin
-              Mult['"GMRACMTS",0'] := IntToStr(Count);
-              for i := 0 to Count - 1 do
-                Mult['"GMRACMTS",' + IntToStr(i+1)] := Strings[i];
-            end;
+begin
+  newORNetMult(aList);
+  with EditRec do
+  begin
+    if NoKnownAllergies then
+      aList.AddSubscript(['GMRANKA'], NO_YES[NoKnownAllergies]);
+    if CausativeAgent <> '' then
+      aList.AddSubscript(['GMRAGNT'], CausativeAgent);
+    if AllergyType <> '' then
+      aList.AddSubscript(['GMRATYPE'], AllergyType);
+    if NatureOfReaction <> '' then
+      aList.AddSubscript(['GMRANATR'], NatureOfReaction);
+    if Originator > 0 then
+      aList.AddSubscript(['GMRAORIG'], Originator);
+    if Originated > 0 then
+      aList.AddSubscript(['GMRAORDT'], Originated);
+
+    with SignsSymptoms do
+      if Count > 0 then
+      begin
+        aList.AddSubscript(['GMRASYMP', 0], Count);
+        dt := GetFMNow;
+        dt3 := FloatToStr(dt);
+        dt4 := FormatFMDateTime('mmm dd,yyyy@hh:nn', dt);
+        for i := 0 to Count - 1 do
+        begin
+          x := Pieces(Strings[i], U, 1, 5);
+          if Piece(x, U, 3) = '' then
+          begin
+            SetPiece(x, U, 3, dt3);
+            SetPiece(x, U, 4, dt4);
+          end;
+          aList.AddSubscript(['GMRASYMP', i + 1], x);
         end;
-        CallBroker;
-        Result := Results[0];
-        // Include "Allergy Entered in Error" items require signature list.
-        //cq-8002  -piece 2 is Allergy Entered in Error (IEN)
-       // code added allowing v27 GUI changes to continue if M change is not released prior.
-       //cq-14842 -  add observed/drug allergies to the fReview/fSignOrders forms for signature.
-       if Length(Piece(Result,'^',2))> 0 then
-         Changes.Add(10, Piece(Result,'^',2), GetAllergyTitleText, '', 1)
-       else
-          exit;
+      end;
+
+    if EnteredInError then
+    begin
+      aList.AddSubscript(['GMRAERR'], NO_YES[EnteredInError]);
+      aList.AddSubscript(['GMRAERRBY'], UserEnteringInError);
+      aList.AddSubscript(['GMRAERRDT'], DateEnteredInError);
+      with ErrorComments do
+        if Count > 0 then
+        begin
+          aList.AddSubscript(['GMRAERRCMTS', 0], Count);
+          for i := 0 to Count - 1 do
+            aList.AddSubscript(['GMRAERRCMTS', i + 1], Strings[i]);
         end;
-  finally
-    UnlockBroker;
+    end; // RTC 827305
+
+    with ChartMarked do
+      if Count > 0 then
+      begin
+        aList.AddSubscript(['GMRACHT', 0], Count);
+        for i := 0 to Count - 1 do
+          aList.AddSubscript(['GMRACHT', i + 1], Strings[i]);
+      end;
+
+    with IDBandMarked do
+      if Count > 0 then
+      begin
+        aList.AddSubscript(['GMRAIDBN', 0], Count);
+        for i := 0 to Count - 1 do
+          aList.AddSubscript(['GMRAIDBN', i + 1], Strings[i]);
+      end;
+
+    if Length(Observed_Historical) > 0 then
+      aList.AddSubscript(['GMRAOBHX'], Observed_Historical);
+    if ReactionDate > 0 then
+      aList.AddSubscript(['GMRARDT'], ReactionDate);
+    if Length(Severity) > 0 then
+      aList.AddSubscript(['GMRASEVR'], Severity);
+
+    with NewComments do
+      if Count > 0 then
+      begin
+        aList.AddSubscript(['GMRACMTS', 0], Count);
+        for i := 0 to Count - 1 do
+          aList.AddSubscript(['GMRACMTS', i + 1], Strings[i]);
+      end;
+
+    sl := TStringList.Create;
+    try
+      CallvistA('ORWDAL32 SAVE ALLERGY', [IEN, Patient.DFN, aList], sl);
+      if sl.Count > 0 then
+        result := sl[0]
+      else
+        result := '';
+    finally
+      sl.Free;
+    end;
+    // Include "Allergy Entered in Error" items require signature list.
+    // cq-8002  -piece 2 is Allergy Entered in Error (IEN)
+    // code added allowing v27 GUI changes to continue if M change is not released prior.
+    // cq-14842 -  add observed/drug allergies to the fReview/fSignOrders forms for signature.
+    if Length(Piece(result, '^', 2)) > 0 then
+      Changes.Add(10, Piece(result, '^', 2), GetAllergyTitleText, '', 1)
   end;
 end;
 
 function RPCEnterNKAForPatient: string;
+var
+  aList: iORNetMult;
+  sl: TStrings;
 begin
-  LockBroker;
+  newORNetMult(aList);
+  sl := TStringList.Create;
+  aList.AddSubscript(['GMRANKA'], 'YES');
   try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORWDAL32 SAVE ALLERGY';
-      Param[0].PType := literal;
-      Param[0].Value := '0';
-      Param[1].PType := literal;
-      Param[1].Value := Patient.DFN;
-      Param[2].PType := list;
-      with Param[2] do
-        Mult['"GMRANKA"']  := 'YES';
-      CallBroker;
-      Result := Results[0];
-    end;
+    CallvistA('ORWDAL32 SAVE ALLERGY', ['0', Patient.DFN, aList], sl);
+    if sl.Count > 0 then
+      result := sl[0]
+    else
+      result := '';
   finally
-    UnlockBroker;
+    sl.Free;
   end;
 end;
 
 function SendARTBulletin(AFreeTextEntry: string; AComment: TStringList): string;
 var
-  i: integer;
+  i: Integer;
+  aList: iORNetMult;
 begin
-  LockBroker;
-  try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORWDAL32 SEND BULLETIN';
-      Param[0].PType := literal;
-      Param[0].Value := User.DUZ;
-      Param[1].PType := literal;
-      Param[1].Value := Patient.DFN;
-      Param[2].PType := literal;
-      Param[2].Value := AFreeTextEntry;
-      if AComment.Count > 0 then with Param[3] do
-        begin
-          PType := list;
-          for i := 0 to AComment.Count - 1 do
-            Mult[IntToStr(Succ(i)) + ',0'] := AComment[i];
-          Mult['0'] := '^^' + IntToStr(AComment.Count);
-        end;
-      CallBroker;
-      Result := Results[0];
-    end;
-  finally
-    UnlockBroker;
-  end;
+  if AComment.Count > 0 then
+  begin
+    newORNetMult(aList);
+    for i := 0 to AComment.Count - 1 do
+      aList.AddSubscript([Succ(i), 0], AComment[i]);
+    aList.AddSubscript(['0'], '^^' + IntToStr(AComment.Count));
+
+    CallvistA('ORWDAL32 SEND BULLETIN', [User.DUZ, Patient.DFN, AFreeTextEntry,
+      aList], result);
+  end
+  else
+    CallvistA('ORWDAL32 SEND BULLETIN', [User.DUZ, Patient.DFN,
+      AFreeTextEntry], result);
 end;
 
 // Site parameter functions
@@ -334,7 +346,8 @@ begin
   with uGMRASiteParams do
     if not ParamsSet then
       begin
-        x := sCallV('ORWDAL32 SITE PARAMS', [nil]);
+//        x := sCallV('ORWDAL32 SITE PARAMS', [nil]);
+        CallVistA('ORWDAL32 SITE PARAMS', [nil],x);
         MarkIDBandFlag := (Piece(x, U, 5) <> '0');
         OriginatorCommentsRequired := (Piece(x, U, 4) = '1');
         ErrorCommentsEnabled := (Piece(x, U, 11) = '1');
@@ -377,7 +390,8 @@ begin
   begin
     if not AccessChecked then
       begin
-        x := sCallV('ORWDAL32 CLINUSER',[nil]);
+//        x := sCallV('ORWDAL32 CLINUSER',[nil]);
+        CallVistA('ORWDAL32 CLINUSER',[nil],x);
         IsClinUser := (Piece(x, U, 1) = '1');
         if not IsClinUser then ReasonFailed := TX_NO_AUTH + Piece(x, U, 2) else ReasonFailed := '';
         AccessChecked := True;

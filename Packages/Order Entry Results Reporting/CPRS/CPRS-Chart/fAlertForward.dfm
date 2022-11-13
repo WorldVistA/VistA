@@ -7,9 +7,8 @@ inherited frmAlertForward: TfrmAlertForward
   ClientWidth = 387
   OldCreateOrder = True
   Position = poScreenCenter
-  OnCreate = FormCreate
   ExplicitWidth = 393
-  ExplicitHeight = 406
+  ExplicitHeight = 410
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -22,19 +21,16 @@ inherited frmAlertForward: TfrmAlertForward
     TabOrder = 0
     object SrcLabel: TLabel
       Left = 12
-      Top = 120
-      Width = 144
-      Height = 30
-      AutoSize = False
-      Caption = 'Select one or more names to receive forwarded alert'
-      WordWrap = True
+      Top = 136
+      Width = 123
+      Height = 13
+      Caption = 'Select one or more names'
     end
     object DstLabel: TLabel
       Left = 231
-      Top = 133
-      Width = 145
-      Height = 16
-      AutoSize = False
+      Top = 136
+      Width = 132
+      Height = 13
       Caption = 'Currently selected recipients'
     end
     object Label1: TLabel
@@ -70,6 +66,7 @@ inherited frmAlertForward: TfrmAlertForward
       Height = 185
       Style = orcsSimple
       AutoSelect = True
+      Caption = ''
       Color = clWindow
       DropDownCount = 8
       ItemHeight = 13
@@ -83,9 +80,10 @@ inherited frmAlertForward: TfrmAlertForward
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 2
+      Text = ''
       OnChange = cboSrcListChange
+      OnDblClick = cboSrcListMouseClick
       OnKeyDown = cboSrcListKeyDown
-      OnMouseClick = cboSrcListMouseClick
       OnNeedData = cboSrcListNeedData
       CharsNeedMatch = 1
       UniqueAutoComplete = True
@@ -124,7 +122,7 @@ inherited frmAlertForward: TfrmAlertForward
       Left = 12
       Top = 64
       Width = 363
-      Height = 49
+      Height = 66
       MaxLength = 180
       ScrollBars = ssVertical
       TabOrder = 1
@@ -160,8 +158,8 @@ inherited frmAlertForward: TfrmAlertForward
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 56
-    Top = 72
+    Left = 32
+    Top = 64
     Data = (
       (
         'Component = pnlBase'

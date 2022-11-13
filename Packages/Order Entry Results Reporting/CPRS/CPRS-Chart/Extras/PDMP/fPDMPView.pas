@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.ComCtrls,
   Vcl.StdCtrls, Vcl.ImgList, Vcl.ActnList, Vcl.OleCtrls,
   ORFn, ORCtrls, rMisc, fBase508Form,
-  mPDMPReviewOptions, oPDMPData, rPDMP, uPDMP;
+  mPDMPReviewOptions, oPDMPData, rPDMP, uPDMP, Vcl.StdActns;
 
 type
   TpdmpView = class(TfrmBase508Form)
@@ -19,10 +19,14 @@ type
     acSelectAll: TAction;
     pnlBrowser: TPanel;
     acBrowser: TAction;
-    wbPDMP: TWebBrowser;
     splBrowser: TSplitter;
     frPDMPReview: TfrPDMPReviewOptions;
     pnlCanvas: TPanel;
+    btnClose: TButton;
+    WindowClose1: TWindowClose;
+    acVerifySave: TAction;
+    wbPDMP: TWebBrowser;
+    btnBrowser: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -31,62 +35,52 @@ type
     procedure FormShow(Sender: TObject);
     procedure wbPDMPNavigateError(ASender: TObject; const pDisp: IDispatch;
       const URL, Frame, StatusCode: OleVariant; var Cancel: WordBool);
-    procedure wbPDMPNavigateComplete2(ASender: TObject; const pDisp: IDispatch;
-      const URL: OleVariant);
+    procedure btnCloseClick(Sender: TObject);
+    procedure acVerifySaveExecute(Sender: TObject);
+    procedure btnBrowserClick(Sender: TObject);
   private
     { Private declarations }
+    fPDMPLayout: String;
     fPageErrorCode: Integer;
     fUseDefaultBrowser: Boolean;
     pdmpDataObject: TpdmpDataObject;
     function validateBrowser: Boolean;
     procedure setUseDefaultBrowser(aValue: Boolean);
     procedure setHeight;
+    procedure setPDMPLayout(aLayout:String);
   public
     constructor createByPDMPData(aData: TpdmpDataObject;
       aDefaultBrowser: Boolean);
     property UseDefaultBrowser: Boolean read fUseDefaultBrowser
       write setUseDefaultBrowser;
+    property PDMPLayout: String read fPDMPLayout write setPDMPLayout;
 
     procedure _PDMP_WebError(var Message: TMessage); message UM_PDMP_WEBERROR;
     procedure _Pdmp_Refresh(var Message: TMessage); message UM_PDMP_Refresh;
     procedure setFontSize(aSize: Integer);
   end;
 
-function showPDMP(pdmpData: TpdmpDataObject;
-  DefaultBrowser: Boolean = false): string;
+function showPDMP(pdmpData: TpdmpDataObject; aModalView: Boolean;
+  anAlign: TAlign; DefaultBrowser: Boolean = false): string;
 function IsEncounterOK: Boolean;
+
+var
+  pdmpNonModal: TPdmpView;
 
 implementation
 
 uses
+  ActiveX,
   Winapi.CommCtrl, ShellAPI, HTTPApp,
-{$IFDEF PDMPTEST}
-  uCore.Encounter, uCore.SystemParameters, uCore.User, rCore.TIU, uCore.TIU,
-{$ELSE}
-  uCore,
-  rTIU, uTIU, fFrame, rCore,
-{$ENDIF}
-  uFormUtils, uGN_RPCLog, uSizing, fEncnt, fPDMPCosigner;
+  uCore, rTIU, uTIU, fFrame, rCore,
+  uFormUtils, uGN_RPCLog, uSizing, fEncnt, fPDMPCosigner, ORExtensions;
 
 {$R *.dfm}
 
 const
   _URL_OK = 399;
+  _No_Notes_ = 'NONOTES';
 
-procedure Pause(const ADelay: LongWord);
-var
-  StartTC: DWORD;
-  CurrentTC: Int64;
-begin
-  StartTC := GetTickCount;
-  repeat
-    Application.ProcessMessages;
-    CurrentTC := GetTickCount;
-    if CurrentTC < StartTC then
-      // tick count has wrapped around: adjust it
-      CurrentTC := CurrentTC + High(DWORD);
-  until CurrentTC - StartTC >= ADelay;
-end;
 
 function PageMsgByCode(aCode: Integer): String;
 var
@@ -135,9 +129,6 @@ function IsEncounterOK: Boolean;
 var
   bEncounterUpdated: Boolean;
 begin
-{$IFDEF PDMPTEST}
-  Result := True;
-{$ELSE}
   bEncounterUpdated := false;
   if Encounter.NeedVisit then
   begin
@@ -154,7 +145,6 @@ begin
   end
   else
     Result := True;
-{$ENDIF}
 end;
 
 /// <summary> Validates the browser error code</summary>
@@ -285,8 +275,6 @@ begin
       sError := pdmpCreateNote(tmpList, encDate, aData.EncounterLocation,
         aData.VisitString, aData.PatIEN, aData.SignOnUserIEN,
         aData.AuthorizedUserIEN, sError, aData.VistATask, errList);
-{$IFDEF PDMPTEST}
-{$ELSE}
       sRC := Piece(sError, U, 1);
       iRC := StrToIntDef(sRC, -1);
 
@@ -302,7 +290,6 @@ begin
         InfoBox('Note creation failed.' + #13#10#13#10 + Piece(sError, U, 2),
           'Error creating note', MB_OK);
       end;
-{$ENDIF}
 {$IFDEF DEBUG}
       AddLogLine('REVIEW TEXT: "' + noteText + '"' + #13#10 +
         'REGISTRATION RESULT:' + #13#10 + Result,
@@ -314,90 +301,132 @@ begin
   end
 end;
 
-/// <summary>Opens dialog window to review the results of the PDMP request</summary>
-function showPDMP(pdmpData: TpdmpDataObject;
-  DefaultBrowser: Boolean = false): string;
-var
-  iCount: Integer;
-  s: String;
-  pdmp: TpdmpView;
+/// <summary>Opens window to review the results of the PDMP request</summary>
+function showPDMP(pdmpData: TpdmpDataObject; aModalView: Boolean;
+  anAlign: TAlign; DefaultBrowser: Boolean = false): string;
+
+  procedure nonModalReview;
+  begin
+    if Assigned(pdmpNonModal) then
+      FreeAndNil(pdmpNonModal);
+    try
+//      if Assigned(Application.MainForm) then
+//        sendMessage(Application.MainForm.Handle, UM_PDMP_Disable, 0, 0);
+      // flashing Cache with "YES" option prior to review
+      pdmpRegisterReview(pdmpData.VistATask, 'YES', pdmpData.NoteIEN);
+
+      if DefaultBrowser then
+        ShowURL(pdmpData.ReportURL)
+      else
+      begin
+        pdmpNonModal := TpdmpView.createByPDMPData(pdmpData, DefaultBrowser);
+        pdmpNonModal.PDMPLayout := _No_Notes_;
+        pdmpNonModal.setHeight;
+        pdmpNonModal.wbPDMP.Navigate(pdmpData.ReportURL);
+        pdmpNonModal.Show;
+//        AlignForm(pdmpNonModal, anAlign);
+      end;
+      if Assigned(Application.MainForm) then
+        sendMessage(Application.MainForm.Handle, UM_PDMP_Reviewed, 0, 0);
+    finally
+    end;
+  end;
+
+  procedure ModalReview;
+  var
+    s: String;
+    pdmp: TpdmpView;
+  begin
+    // flashing Cache with "YES" option prior to review
+    pdmpRegisterReview(pdmpData.VistATask, 'YES', '');
+    pdmp := TpdmpView.createByPDMPData(pdmpData, DefaultBrowser);
+    pdmp.btnClose.Visible := false;
+    pdmp.setHeight;
+    try
+      if DefaultBrowser then
+        ShowURL(pdmpData.ReportURL)
+      else
+        pdmp.wbPDMP.Navigate(pdmpData.ReportURL);
+
+      if pdmp.ShowModal = mrOK then
+      begin
+        s := pdmp.frPDMPReview.getValue;
+        // Moving registration of the results to the point Browser reached
+        // INTERACTIVE State
+        // ss := pdmpRegisterReview(pdmpData.VistATask, 'YES');
+        // add s if needed
+        // if Piece(ss, '^', 1) = '1' then
+        Result := registerReview(pdmpData, s); // updates CPRS notes list
+
+        if Assigned(Application.MainForm) then
+          sendMessage(Application.MainForm.Handle, UM_PDMP_Reviewed, 0, 0);
+      end
+      else
+      begin
+        // registration of the case user canceled the Review dialog
+        if pdmp.btnCancel.Caption <> 'Close' then
+          pdmpRegisterReview(pdmpData.VistATask, 'RCANCEL', '');
+        Result := ''; // don't update CPRS notes list
+      end;
+    finally
+      pdmp.Free;
+    end;
+  end;
 
 begin
-  if not assigned(pdmpData) then
-  begin
-    beep;
-    beep;
-    beep;
-    InfoBox(PDMP_ERROR_NO_DATA, PDMP_MSG_TITLE, MB_OK + MB_ICONERROR);
-  end
+  Result := '';
+  if not Assigned(pdmpData) then
+    InfoBox(PDMP_ERROR_NO_DATA, PDMP_MSG_TITLE, MB_OK + MB_ICONERROR)
   else
   begin
     if pdmpData.errorOccurred <> '' then
     begin
       InfoBox(pdmpData.errorOccurred, PDMP_MSG_TITLE, MB_OK + MB_ICONERROR);
-      pdmpRegisterReview(pdmpData.VistATask, 'ERROR', pdmpData.errorOccurred);
+      pdmpRegisterReview(pdmpData.VistATask, 'ERROR', '', pdmpData.errorOccurred);
     end
     else if pdmpData.pdmpList.Count = 1 then
     begin
       InfoBox(PDMP_NO_DATA_FOUND, PDMP_MSG_TITLE, MB_OK + MB_ICONWARNING);
-      pdmpRegisterReview(pdmpData.VistATask, 'ERROR', PDMP_NO_DATA_FOUND);
+      pdmpRegisterReview(pdmpData.VistATask, 'ERROR', '', PDMP_NO_DATA_FOUND);
     end
-    else
+    else if aModalView then
     begin
       if IsEncounterOK then
-      begin
-        pdmp := TpdmpView.createByPDMPData(pdmpData, DefaultBrowser);
-        try
-          pdmp.setHeight;
-
-          // flashing Cache with "YES" option prior to review
-          pdmpRegisterReview(pdmpData.VistATask, 'YES');
-
-          if DefaultBrowser then
-            ShowURL(pdmpData.ReportURL)
-          else
-          begin
-            pdmp.wbPDMP.Navigate(pdmpData.ReportURL);
-            iCount := 0;
-            // The latest state that was observed: INTERACTIVE :(
-            while (pdmp.wbPDMP.ReadyState <> READYSTATE_INTERACTIVE) and
-              (iCount < 30) do
-            begin
-              Pause(5);
-              inc(iCount);
-            end;
-          end;
-          //
-          if pdmp.ShowModal = mrOK then
-          begin
-            s := pdmp.frPDMPReview.getValue;
-            // Moving registration of the results to the point Browser reached INTERACTIVE State
-            // ss := pdmpRegisterReview(pdmpData.VistATask, 'YES'); // add s if needed
-            // if Piece(ss, '^', 1) = '1' then
-            Result := registerReview(pdmpData, s); // updates CPRS notes list
-
-            if assigned(Application.MainForm) then
-              sendMessage(Application.MainForm.Handle, UM_PDMP_Reviewed,0,0);
-          end
-          else
-          begin
-            // registration of the case user canceled the Review dialog
-            if pdmp.btnCancel.Caption <> 'Close' then
-              pdmpRegisterReview(pdmpData.VistATask, 'RCANCEL');
-            Result := ''; // don't update CPRS notes list
-          end;
-        finally
-          pdmp.Free;
-        end;
-      end
+        ModalReview
       else
         Result := '-1^Encounter incomplete';
-    end;
+    end else
+      nonModalReview;
+
+    pdmpData.NoteIEN := '';
   end;
 end;
 
-/// /////////////////////////////////////////////////////////////////////////////
-/// <summary> Review form constructor utilizing TPDMPDataObject information</summary>
+
+procedure TpdmpView.acVerifySaveExecute(Sender: TObject);
+begin
+  inherited;
+  case CanReview  of
+    IDCANCEL:;
+    IDNO:;
+    IDYES:
+      if validateBrowser then
+        ModalResult := mrOK;
+  end;
+end;
+
+procedure TpdmpView.btnBrowserClick(Sender: TObject);
+begin
+  inherited;
+  wbPDMP.Navigate('http://whatismywebbrowser.com');
+end;
+
+procedure TpdmpView.btnCloseClick(Sender: TObject);
+begin
+  inherited;
+  Close;
+end;
+
 constructor TpdmpView.createByPDMPData(aData: TpdmpDataObject;
   aDefaultBrowser: Boolean);
 var
@@ -416,6 +445,7 @@ begin
       sl.Free;
     end;
   end;
+  Width := 1024;
   UseDefaultBrowser := aDefaultBrowser;
 end;
 
@@ -425,7 +455,7 @@ var
 begin
   msg := PageMsgByCode(Message.WParam);
   if msg = '' then
-    msg := 'Oops!';
+    msg := 'Oops! Web Error';
   ShowMessage(msg);
   ModalResult := mrCancel;
 end;
@@ -442,7 +472,7 @@ begin
       frPDMPReview.Height := h;
 end;
 
-/// <summay> Hides TWebBrowser and updates size of the form if the default OS browser is used</summary>
+/// <summay> Updates size of the form </summary>
 procedure TpdmpView.setHeight;
 var
   h, hh: Integer;
@@ -472,34 +502,6 @@ begin
   Result := frPDMPReview.IsValid(sError);
   if not Result then
     InfoBox(sError, PDMP_MSG_TITLE, MB_OK + MB_ICONERROR);
-end;
-
-/// <summary> Processes TWebBrowser navigation errors/return codes</summary>
-procedure TpdmpView.wbPDMPNavigateComplete2(ASender: TObject;
-  const pDisp: IDispatch; const URL: OleVariant);
-var
-  i: Integer;
-  s: String;
-begin
-  inherited;
-  // notify Server the navigation is complete
-  i := wbPDMP.ReadyState;
-  case i of
-    0:
-      s := 'UNINTIALIZED';
-    1:
-      s := 'LOADING';
-    2:
-      s := 'LOADED';
-    3:
-      s := 'INTERACTIVE';
-    4:
-      s := 'COMPLETE';
-  else
-    s := 'UNKNOWN ReadyState=' + IntToStr(i);
-  end;
-  // if (i = 3) and assigned(pdmpDataObject) then
-  // pdmpRegisterReview(pdmpDataObject.VistATask, 'YES');
 end;
 
 /// <summary> Processing navigstion errors </summary>
@@ -536,7 +538,7 @@ begin
       #13#10 + msg;
     AddLogLine(s, 'PDMP URL ERROR ' + IntToStr(StatusCode));
 
-    pdmpRegisterReview(pdmpDataObject.VistATask, 'ERROR', s);
+    pdmpRegisterReview(pdmpDataObject.VistATask, 'ERROR', pdmpDataObject.NoteIEN, s);
   end;
 
   if fPageErrorCode < -99 then
@@ -558,7 +560,10 @@ end;
 /// <summary> Validates user input prior to form closing</summary>
 procedure TpdmpView.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
-  CanClose := (ModalResult = mrCancel) or (validateBrowser);
+  if fPDMPLayout <> _No_Notes_ then
+    CanClose := (ModalResult = mrCancel) or (validateBrowser)
+  else
+    CanClose := True;
 end;
 
 /// <summary> Adjustment of the form components to match Main Form font </summary>
@@ -568,12 +573,26 @@ begin
   ResizeFormToFont(self);
   SetFormPosition(self);
   btnDone.Caption := '&Done and Create Note';
-
+{$IFDEF DEBUG}
+  btnBrowser.Visible := True;
+  adjustBtn(btnBrowser);
+{$ELSE}
+  btnBrowser.Visible := False;
+{$ENDIF}
   adjustBtn(btnCancel, True);
   adjustBtn(btnDone);
+  adjustBtn(btnClose);
   Constraints.MinHeight := pnlBottom.Height * PDMP_ConstraintsRatio;
 
   frPDMPReview.ReviewHandler := self.Handle;
+
+  if wbPDMP.ActiveEngine = IE then
+    wbPDMP.Navigate('about:blank') // call prior to use TWebBrowser object
+  else
+// Set data folder prior to use TWebBrowser
+// if not set the Edge browser will try to use folder with exe
+// Note: assigning data folder eliminates need on navigation to 'about:blank'
+    SetUserDataFolder(wbPDMP);
 end;
 
 /// <summary> ESC processing </summary>
@@ -623,9 +642,31 @@ begin
   end;
 end;
 
+/// <summary> Adjusts components based on font size
 procedure TpdmpView.setFontSize(aSize: Integer);
 begin
   Font.Size := aSize;
 end;
+
+/// <summary> Adjusts components based on Layout/Review mode
+procedure TpdmpView.setPDMPLayout(aLayout: String);
+begin
+  fPDMPLayout := aLayout;
+
+  if fPDMPLayout = _NO_NOTES_ then
+    FormStyle := fsStayOnTop
+  else
+    FormStyle := fsNormal;
+
+  btnClose.Visible := fPDMPLayout = _NO_NOTES_;
+
+  splBrowser.Visible := fPDMPLayout <> _NO_NOTES_;
+  frPDMPReview.Visible := fPDMPLayout <> _NO_NOTES_;
+  btnDone.Visible := fPDMPLayout <> _NO_NOTES_;
+  btnCancel.Visible := fPDMPLayout <> _NO_NOTES_;
+
+  splBrowser.Top := frPDMPReview.Top - splBrowser.Height;
+end;
+
 
 end.

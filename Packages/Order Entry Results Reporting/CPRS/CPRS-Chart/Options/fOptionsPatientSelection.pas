@@ -53,6 +53,7 @@ type
     bvlBottom: TBevel;
     cboPCMM: TORComboBox;
     lblPcmm: TLabel;
+    Bevel1: TBevel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure spnVisitStartClick(Sender: TObject; Button: TUDBtnType);
@@ -67,18 +68,6 @@ type
     procedure cboProviderExit(Sender: TObject);
     procedure radListSourceClick(Sender: TObject);
     procedure cboMondayNeedData(Sender: TObject; const StartFrom: String;
-      Direction, InsertAt: Integer);
-    procedure cboTuesdayNeedData(Sender: TObject; const StartFrom: String;
-      Direction, InsertAt: Integer);
-    procedure cboWednesdayNeedData(Sender: TObject;
-      const StartFrom: String; Direction, InsertAt: Integer);
-    procedure cboThursdayNeedData(Sender: TObject; const StartFrom: String;
-      Direction, InsertAt: Integer);
-    procedure cboFridayNeedData(Sender: TObject; const StartFrom: String;
-      Direction, InsertAt: Integer);
-    procedure cboSaturdayNeedData(Sender: TObject; const StartFrom: String;
-      Direction, InsertAt: Integer);
-    procedure cboSundayNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboProviderNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -103,7 +92,7 @@ procedure DialogOptionsPatientSelection(topvalue, leftvalue, fontsize: integer; 
 
 implementation
 
-uses rOptions, uOptions, rCore, VAUtils, uSimilarNames;
+uses rOptions, uOptions, rCore, uORLists, uSimilarNames, VAUtils;
 
 {$R *.DFM}
 
@@ -335,10 +324,10 @@ var
   pcmm, prov, spec, team, ward: integer;
 begin
 
-  if not CheckForSimilarName(cboProvider, aErrMsg, ltProvider, sPr) then
+  if not CheckForSimilarName(cboProvider, aErrMsg, sPr) then
   begin
     ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Invalid Provider');
-    Exit;
+    exit;
   end;
 
   StartDays := txtVisitStart.Tag;
@@ -456,9 +445,9 @@ end;
 procedure TfrmOptionsPatientSelection.cboMondayNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  cboMonday.ForDataUse(SubSetOfClinics(StartFrom, Direction));
+  setClinicList((Sender as TORComboBox), StartFrom, Direction);
 end;
-
+(* RTC 272867
 procedure TfrmOptionsPatientSelection.cboTuesdayNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
@@ -494,11 +483,12 @@ procedure TfrmOptionsPatientSelection.cboSundayNeedData(Sender: TObject;
 begin
   cboSunday.ForDataUse(SubSetOfClinics(StartFrom, Direction));
 end;
+*)
 
 procedure TfrmOptionsPatientSelection.cboProviderNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  cboProvider.ForDataUse(SubSetOfProviders(StartFrom, Direction));
+  setProviderList(cboProvider, StartFrom, Direction);
 end;
 
 procedure TfrmOptionsPatientSelection.NextControl(Key: Char);

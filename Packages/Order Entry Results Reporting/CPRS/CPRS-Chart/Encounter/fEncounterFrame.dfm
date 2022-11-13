@@ -8,16 +8,12 @@ inherited frmEncounterFrame: TfrmEncounterFrame
   OldCreateOrder = True
   Position = poMainFormCenter
   OnCanResize = FormCanResize
-  OnClose = FormClose
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnResize = FormResize
-  OnShow = FormShow
-  ExplicitWidth = 648
-  ExplicitHeight = 462
+  ExplicitWidth = 650
+  ExplicitHeight = 469
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Bevel1: TBevel [0]
     Left = 0
     Top = 0

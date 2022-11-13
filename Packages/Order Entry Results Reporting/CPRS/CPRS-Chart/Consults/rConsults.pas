@@ -33,21 +33,36 @@ function  GetCurrentContext: TSelectContext;
 procedure SaveCurrentContext(AContext: TSelectContext) ;
 procedure DisplayResults(Dest: TStrings; IEN: integer) ;
 procedure GetConsultRec(IEN: integer) ;
-function  ShowSF513(ConsultIEN: integer): TStrings ;
+function setSF513(aDest:TStrings;ConsultIEN: integer): Integer;
 procedure PrintSF513ToDevice(AConsult: Integer; const ADevice: string; ChartCopy: string;
   var ErrMsg: string);
-function GetFormattedSF513(AConsult: Integer; ChartCopy: string): TStrings;
+
+//function GetFormattedSF513(AConsult: Integer; ChartCopy: string): TStrings; deprecated;
+function setFormattedSF513(aDest:TStrings;AConsult: Integer; ChartCopy: string): Integer;
+
 function UnresolvedConsultsExist: boolean;
 procedure GetUnresolvedConsultsInfo;
 
 {list box fillers}
-function  SubSetOfStatus: TStrings;
-function  SubSetOfUrgencies(ConsultIEN: integer): TStrings;
-function  LoadServiceList(Purpose: integer): TStrings ; overload ;
-function  LoadServiceList(ShowSynonyms: Boolean; StartService, Purpose: integer; ConsultIEN: integer = -1): TStrings ; overload;
-function  LoadServiceListWithSynonyms(Purpose: integer): TStrings ; overload;
-function  LoadServiceListWithSynonyms(Purpose, ConsultIEN: integer): TStrings ; overload;
-function  SubSetOfServices(const StartFrom: string; Direction: Integer): TStrings;
+function  setSubSetOfStatus(aDest: TStrings):Integer;
+function  setSubSetOfUrgencies(aDest:TStrings;ConsultIEN: integer): Integer;
+//function  LoadServiceList(Purpose: integer): TStrings ; overload ;deprecated;
+function setServiceList(aDest: Tstrings;Purpose: integer): Integer; overload;
+
+//function  LoadServiceList(ShowSynonyms: Boolean; StartService, Purpose: integer; ConsultIEN: integer = -1): TStrings ; overload; deprecated;
+function  setServiceList(aDest:TStrings; ShowSynonyms: Boolean; StartService, Purpose: integer; ConsultIEN: integer = -1): Integer; overload;
+
+//function  LoadServiceListWithSynonyms(Purpose: integer): TStrings ; overload; deprecated;
+function setServiceListWithSynonyms(aDest:TStrings; Purpose: integer): Integer; overload;
+
+//function  LoadServiceListWithSynonyms(Purpose, ConsultIEN: integer): TStrings ; overload;deprecated;
+function  setServiceListWithSynonyms(aDest:TStrings; Purpose, ConsultIEN: integer): Integer; overload;
+
+{ Not used?
+function  SubSetOfServices(const StartFrom: string; Direction: Integer): TStrings; deprecated;
+function setSubSetOfServices(aDest: TStrings; const StartFrom: string; Direction: Integer): Integer;
+}
+
 function  FindConsult(ConsultIEN: integer): string ;
 
 {user access level functions}
@@ -55,9 +70,9 @@ function  ConsultServiceUser(ServiceIEN: integer; DUZ: int64): boolean ;
 function GetActionMenuLevel(ConsultIEN: integer): TMenuAccessRec ;
 
 {consult result functions}
-function  GetAssignableMedResults(ConsultIEN: integer): TStrings;
-function  GetRemovableMedResults(ConsultIEN: integer): TStrings;
-function  GetDetailedMedicineResults(ResultID: string): TStrings;
+function  setAssignableMedResults(aDest:TStrings; ConsultIEN: integer): Integer;
+function  setRemovableMedResults(aDest:TStrings; ConsultIEN: integer): Integer;
+function  setDetailedMedicineResults(aDest:TStrings; ResultID: string): Integer;
 procedure AttachMedicineResult(ConsultIEN: integer; ResultID: string; DateTime: TFMDateTime; ResponsiblePerson: int64; AlertTo: string);
 procedure RemoveMedicineResult(ConsultIEN: integer; ResultID: string; DateTime: TFMDateTime; ResponsiblePerson: int64);
 
@@ -79,24 +94,42 @@ procedure AdminComplete(Dest: TStrings; IEN: integer; SigFindingsFlag: string; C
           RespProv: Int64; ActionDate: TFMDateTime; Alert: integer; AlertTo: string) ;
 
      { Consults Ordering Calls }
-function ODForConsults: TStrings;
-function ODForProcedures: TStrings;
+//function ODForConsults: TStrings; deprecated;
+function setODForConsults(aDest: TStrings): Integer;
+
+//function ODForProcedures: TStrings; deprecated;
+function setODForProcedures(aDest: TStrings): Integer;
+
 function ConsultMessage(AnIEN: Integer): string;
+
+{ Not used?
 function LoadConsultsQuickList: TStrings ;
-function GetProcedureServices(ProcIEN: integer): TStrings;
+function setConsultsQuickList(aDest: TStrings): Integer ;
+}
+//function GetProcedureServices(ProcIEN: integer): TStrings; deprecated
+function setProcedureServices(aDest:TStrings; ProcIEN: integer): Integer;
+
 function ConsultCanBeResubmitted(ConsultIEN: integer): string;
+
 function LoadConsultForEdit(ConsultIEN: integer): TEditResubmitRec;
+
 function ResubmitConsult(EditResubmitRec: TEditResubmitRec): string;
-function SubSetOfProcedures(const StartFrom: string; Direction: Integer): TStrings;
+
+//function SubSetOfProcedures(const StartFrom: string; Direction: Integer): TStrings; deprecated;
 function setSubSetOfProcedures(aDest: TStrings;const StartFrom: string; Direction: Integer): Integer;
 
-function GetDefaultReasonForRequest(Service: string; Resolve: Boolean): TStrings;
+//function GetDefaultReasonForRequest(Service: string; Resolve: Boolean): TStrings; deprecated;
+function setDefaultReasonForRequest(aDest: TStrings;Service: string; Resolve: Boolean): Integer;
+
 function ReasonForRequestEditable(Service: string): string;
 function GetNewDialog(OrderType: string): string;
 function GetServiceIEN(ORIEN: string): string;
 function GetProcedureIEN(ORIEN: string): string;
 function GetConsultOrderIEN(ConsultIEN: integer): string;
-function GetServicePrerequisites(Service: string): TStrings;
+
+//function GetServicePrerequisites(Service: string): TStrings; deprecated;
+function setServicePrerequisites(aDest: TStrings;Service: string): Integer;
+
 procedure GetProvDxMode(var ProvDx: TProvisionalDiagnosis; SvcIEN: string);
 function IsProstheticsService(SvcIen: int64) : Boolean;
 function GetServiceUserLevel(ServiceIEN, UserDUZ: integer): String ;
@@ -113,7 +146,7 @@ var
 
 implementation
 
-uses  rODBase;
+uses  ORNetIntf, uMisc;
 
 var
   uLastOrderedIEN: Integer;
@@ -124,7 +157,7 @@ var
 function IdentifyConsultsClass: integer;
 begin
   if uConsultsClass = 0 then
-    uConsultsClass := StrToIntDef(sCallV('TIU IDENTIFY CONSULTS CLASS',[nil]), 0)  ;
+    CallVistA('TIU IDENTIFY CONSULTS CLASS',[nil],uConsultsClass, 0);
   Result := uConsultsClass;
 end;
 
@@ -132,15 +165,26 @@ procedure LoadConsultTitles;
 { private - called one time to set up the uConsultTitles object }
 var
   x: string;
+  Results: TStrings;
 begin
-  if uConsultTitles <> nil then Exit;
-  CallV('TIU PERSONAL TITLE LIST', [User.DUZ, IdentifyConsultsClass]);
-  RPCBrokerV.Results.Insert(0, '~SHORT LIST');  // insert so can call ExtractItems
-  uConsultTitles := TConsultTitles.Create;
-  ExtractItems(uConsultTitles.ShortList, RPCBrokerV.Results, 'SHORT LIST');
-  x := ExtractDefault(RPCBrokerV.Results, 'SHORT LIST');
-  uConsultTitles.DfltTitle := StrToIntDef(Piece(x, U, 1), 0);
-  uConsultTitles.DfltTitleName := Piece(x, U, 2);
+  if uConsultTitles <> nil then
+    Exit;
+  // CallV('TIU PERSONAL TITLE LIST', [User.DUZ, IdentifyConsultsClass]);
+  Results := TSTringList.Create;
+  try
+    CallVistA('TIU PERSONAL TITLE LIST',
+      [User.DUZ, IdentifyConsultsClass], Results);
+    {RPCBrokerV.} Results.Insert(0, '~SHORT LIST');
+    // insert so can call ExtractItems
+    uConsultTitles := TConsultTitles.Create;
+    ExtractItems(uConsultTitles.ShortList, {RPCBrokerV. } Results,
+      'SHORT LIST');
+    x := ExtractDefault({RPCBrokerV.} Results, 'SHORT LIST');
+    uConsultTitles.DfltTitle := StrToIntDef(Piece(x, U, 1), 0);
+    uConsultTitles.DfltTitleName := Piece(x, U, 2);
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure ResetConsultTitles;
@@ -191,7 +235,8 @@ end;
 function IdentifyClinProcClass: integer;
 begin
   if uClinProcClass = 0 then
-    uClinProcClass := StrToIntDef(sCallV('TIU IDENTIFY CLINPROC CLASS',[nil]), 0)  ;
+//    uClinProcClass := StrToIntDef(sCallV('TIU IDENTIFY CLINPROC CLASS',[nil]), 0)  ;
+    CallVistA('TIU IDENTIFY CLINPROC CLASS',[nil], uClinProcClass, 0)  ;
   Result := uClinProcClass;
 end;
 
@@ -199,15 +244,25 @@ procedure LoadClinProcTitles;
 { private - called one time to set up the uConsultTitles object }
 var
   x: string;
+  Results: TStrings;
 begin
-  if uClinProcTitles <> nil then Exit;
-  CallV('TIU PERSONAL TITLE LIST', [User.DUZ, IdentifyClinProcClass]);
-  RPCBrokerV.Results.Insert(0, '~SHORT LIST');  // insert so can call ExtractItems
-  uClinProcTitles := TClinProcTitles.Create;
-  ExtractItems(uClinProcTitles.ShortList, RPCBrokerV.Results, 'SHORT LIST');
-  x := ExtractDefault(RPCBrokerV.Results, 'SHORT LIST');
-  uClinProcTitles.DfltTitle := StrToIntDef(Piece(x, U, 1), 0);
-  uClinProcTitles.DfltTitleName := Piece(x, U, 2);
+  if uClinProcTitles <> nil then
+    Exit;
+  Results := TSTringList.Create;
+  try
+    CallVistA('TIU PERSONAL TITLE LIST',
+      [User.DUZ, IdentifyClinProcClass], Results);
+    {RPCBrokerV.}Results.Insert(0, '~SHORT LIST');
+    // insert so can call ExtractItems
+    uClinProcTitles := TClinProcTitles.Create;
+    ExtractItems(uClinProcTitles.ShortList, { RPCBrokerV. } Results,
+      'SHORT LIST');
+    x := ExtractDefault( { RPCBrokerV. } Results, 'SHORT LIST');
+    uClinProcTitles.DfltTitle := StrToIntDef(Piece(x, U, 1), 0);
+    uClinProcTitles.DfltTitleName := Piece(x, U, 2);
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure ResetClinProcTitles;
@@ -259,46 +314,51 @@ procedure GetConsultsList(Dest: TStrings; Early, Late: double;
   Service, Status: string; SortAscending: Boolean);
 { returns a list of consults for a patient, based on selected dates, service, status, or ALL}
 var
+  Results: TStrings;
   i: Integer;
   x, date1, date2: string;
 begin
   if Early <= 0 then date1 := '' else date1 := FloatToStr(Early) ;
   if Late  <= 0 then date2 := '' else date2 := FloatToStr(Late)  ;
-  CallV('ORQQCN LIST', [Patient.DFN, date1, date2, Service, Status]);
-  with RPCBrokerV do
-   begin
-    if Copy(Results[0],1,1) <> '<' then
+  Results := TStringList.Create;
+  try
+    CallVistA('ORQQCN LIST', [Patient.DFN, date1, date2, Service, Status], Results);
+    Dest.Clear;
+    if Results.Count > 0 then
+    begin
+      if Copy(Results[0],1,1) <> '<' then
       begin
-       SortByPiece(TStringList(Results), U, 2);
-       if not SortAscending then InvertStringList(TStringList(Results));
+        SortByPiece(Results, U, 2);
+        if not SortAscending then
+          InvertStringList(Results);
        //SetListFMDateTime('mmm dd,yy', TStringList(Results), U, 2);
-       for i := 0 to Results.Count - 1 do
-         begin
-           x := MakeConsultListItem(Results[i]);
-           Results[i] := x;
-         end;
-       FastAssign(Results, Dest);
-     end
+        for i := 0 to Results.Count - 1 do
+        begin
+          x := MakeConsultListItem(Results[i]);
+          Results[i] := x;
+        end;
+        FastAssign(Results, Dest);
+      end
+      else
+        Dest.Add('-1^No Matches') ;
+    end
     else
-     begin
-       Dest.Clear ;
-       Dest.Add('-1^No Matches') ;
-     end ;
+      Dest.Add('-1^No Matches') ;
+  finally
+    Results.Free;
   end;
 end;
 
 procedure LoadConsultDetail(Dest: TStrings; IEN: integer) ;
 { returns the detail of a consult }
 begin
-  CallV('ORQQCN DETAIL', [IEN]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQQCN DETAIL', [IEN], Dest);
 end;
 
 procedure DisplayResults(Dest: TStrings; IEN: integer) ;
 { returns the results for a consult }
 begin
-  CallV('ORQQCN MED RESULTS', [IEN]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORQQCN MED RESULTS', [IEN], Dest);
 end;
 
 procedure GetConsultRec(IEN: integer);
@@ -314,133 +374,142 @@ var
     16      17     18    19     20     21      22
  ^EntMode^ReqTyp^InOut^SigFnd^TIUPtr^OrdFac^FrgnCslt}
 begin
+  ConsultRec.Clear;
   FillChar(ConsultRec, SizeOf(ConsultRec), 0);
-  CallV('ORQQCN GET CONSULT', [IEN, SHOW_ADDENDA]);
-  ConsultRec.IEN := IEN ;
-  alist := TStringList.Create ;
- try
-  FastAssign(RPCBrokerV.Results, aList);
-  x := alist[0] ;
-  if Piece(x,u,1) <> '-1' then
-    with ConsultRec do
-     begin
-      EntryDate             := MakeFMDateTime(Piece(x, U, 1));
-      ORFileNumber          := StrToIntDef(Piece(x, U, 3),0);
-      PatientLocation       := StrToIntDef(Piece(x, U, 4),0);
-      OrderingFacility      := StrToIntDef(Piece(x, U, 21),0);
-      ForeignConsultFileNum := StrToIntDef(Piece(x, U, 22),0);
-      ToService             := StrToIntDef(Piece(x, U, 5),0);
-      From                  := StrToIntDef(Piece(x, U, 6),0);
-      RequestDate           := MakeFMDateTime(Piece(x, U, 7));
-      ConsultProcedure      := Piece(x, U, 8)  ;
-      Urgency               := StrToIntDef(Piece(x, U, 9),0);
-      PlaceOfConsult        := StrToIntDef(Piece(x, U, 10),0);
-      Attention             := StrToInt64Def(Piece(x, U, 11),0);
-      ORStatus              := StrToIntDef(Piece(x, U, 12),0);
-      LastAction            := StrToIntDef(Piece(x, U, 13),0);
-      SendingProvider       := StrToInt64Def(Piece(Piece(x, U, 14),';',1),0);
-      SendingProviderName   := Piece(Piece(x, U, 14),';',2)   ;
-      Result                := Piece(x, U, 15)  ;
-      ModeOfEntry           := Piece(x, U, 16)  ;
-      RequestType           := StrToIntDef(Piece(x, U, 17),0);
-      InOut                 := Piece(x, U, 18)  ;
-      Findings              := Piece(x, U, 19)  ;
-      TIUResultNarrative    := StrToIntDef(Piece(x, U, 20),0);
-      ClinicallyIndicatedDate          := StrToFloatDef(Piece(x, U, 24), 0);
-      NoLaterThanDate       := StrToFloatDef(Piece(x, U, 25), 0);
-      DstId                 := Piece(x, U, 26);
-      //ProvDiagnosis         := Piece(x, U, 23);  NO!!!!! Up to 180 Characters!!!!
-      alist.delete(0) ;
-      TIUDocuments := TStringList.Create ;
-      MedResults := TStringList.Create;
-      if alist.count > 0 then
+  ConsultRec.IEN := IEN;
+  alist := TSTringList.Create;
+  try
+    CallVistA('ORQQCN GET CONSULT', [IEN, SHOW_ADDENDA], alist);
+    ConsultRec.EntryDate := -1;
+    if alist.Count > 0 then
+    begin
+      x := alist[0];
+      if Piece(x, U, 1) <> '-1' then
+        with ConsultRec do
         begin
-          SortByPiece(TStringList(alist), U, 3);
-          for i := 0 to alist.Count - 1 do
-            if Copy(Piece(Piece(alist[i], U, 1), ';', 2), 1, 4) = 'MCAR' then
-              MedResults.Add(alist[i])
-            else
-              TIUDocuments.Add(alist[i]);
-        end;
-     end  {ConsultRec}
-  else
-   ConsultRec.EntryDate := -1 ;
- finally
-   alist.free ;
- end ;
-end ;
-
-{---------------- list box fillers -----------------------------------}
-
-function SubSetOfStatus: TStrings;
-{ returns a pointer to a list of stati (for use in a list box) }
-begin
-  CallV('ORQQCN STATUS', [nil]);
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+          EntryDate               := MakeFMDateTime(Piece(x, U, 1));
+          ORFileNumber            := StrToIntDef(Piece(x, U, 3), 0);
+          PatientLocation         := StrToIntDef(Piece(x, U, 4), 0);
+          OrderingFacility        := StrToIntDef(Piece(x, U, 21), 0);
+          ForeignConsultFileNum   := StrToIntDef(Piece(x, U, 22), 0);
+          ToService               := StrToIntDef(Piece(x, U, 5), 0);
+          From                    := StrToIntDef(Piece(x, U, 6), 0);
+          RequestDate             := MakeFMDateTime(Piece(x, U, 7));
+          ConsultProcedure        := Piece(x, U, 8);
+          Urgency                 := StrToIntDef(Piece(x, U, 9), 0);
+          PlaceOfConsult          := StrToIntDef(Piece(x, U, 10), 0);
+          Attention               := StrToInt64Def(Piece(x, U, 11), 0);
+          ORStatus                := StrToIntDef(Piece(x, U, 12), 0);
+          LastAction              := StrToIntDef(Piece(x, U, 13), 0);
+          SendingProvider         := StrToInt64Def(Piece(Piece(x, U, 14), ';', 1), 0);
+          SendingProviderName     := Piece(Piece(x, U, 14), ';', 2);
+          Result                  := Piece(x, U, 15);
+          ModeOfEntry             := Piece(x, U, 16);
+          RequestType             := StrToIntDef(Piece(x, U, 17), 0);
+          InOut                   := Piece(x, U, 18);
+          Findings                := Piece(x, U, 19);
+          TIUResultNarrative      := StrToIntDef(Piece(x, U, 20), 0);
+          ClinicallyIndicatedDate := StrToFloatDef(Piece(x, U, 24), 0);
+          NoLaterThanDate         := StrToFloatDef(Piece(x, U, 25), 0);
+          DstId                   := Piece(x, U, 26);
+          // ProvDiagnosis         := Piece(x, U, 23);  NO!!!!! Up to 180 Characters!!!!
+          alist.delete(0);
+          InitSL(TIUDocuments);
+          InitSL(MedResults);
+          if alist.Count > 0 then
+          begin
+            SortByPiece(alist, U, 3);
+            for i := 0 to alist.Count - 1 do
+              if Copy(Piece(Piece(alist[i], U, 1), ';', 2), 1, 4) = 'MCAR' then
+                MedResults.Add(alist[i])
+              else
+                TIUDocuments.Add(alist[i]);
+          end;
+        end { ConsultRec }
+    end;
+  finally
+    alist.Free;
+  end;
 end;
 
-function SubSetOfUrgencies(ConsultIEN: integer): TStrings;
+{---------------- list box fillers -----------------------------------}
+function setSubSetOfStatus(aDest: TStrings): Integer;
+{ returns a pointer to a list of stati (for use in a list box) }
+begin
+  CallVistA('ORQQCN STATUS', [nil], aDest);
+  MixedCaseList(aDest);
+  Result := aDest.Count;
+end;
+
+function setSubSetOfUrgencies(aDest: TStrings; ConsultIEN: integer): Integer;
 { returns a pointer to a list of urgencies  }
 begin
-  CallV('ORQQCN URGENCIES',[ConsultIEN]) ;
-  MixedCaseList(RPCBrokerV.Results);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQCN URGENCIES',[ConsultIEN], aDest) ;
+  MixedCaseList(aDest);
+  Result := aDest.Count;
 end;
 
 function FindConsult(ConsultIEN: integer): string ;
 var
   x: string;
 begin
-  x := sCallV('ORQQCN FIND CONSULT',[ConsultIEN]);
+  CallVistA('ORQQCN FIND CONSULT',[ConsultIEN], x);
   Result := MakeConsultListItem(x);
 end;
 
 {-----------------consult result functions-----------------------------------}
-function GetAssignableMedResults(ConsultIEN: integer): TStrings;
+function setAssignableMedResults(aDest: TStrings; ConsultIEN: integer): Integer;
 begin
-  CallV('ORQQCN ASSIGNABLE MED RESULTS', [ConsultIEN]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQCN ASSIGNABLE MED RESULTS', [ConsultIEN], aDest);
+  Result := aDest.Count;
 end;
 
-function GetRemovableMedResults(ConsultIEN: integer): TStrings;
+function setRemovableMedResults(aDest: TStrings; ConsultIEN: integer): Integer;
 begin
-  CallV('ORQQCN REMOVABLE MED RESULTS', [ConsultIEN]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQCN REMOVABLE MED RESULTS', [ConsultIEN], aDest);
+  Result := aDest.Count;
 end;
 
-function GetDetailedMedicineResults(ResultID: string): TStrings;
+function  setDetailedMedicineResults(aDest:TStrings; ResultID: string): Integer;
 begin
-  CallV('ORQQCN GET MED RESULT DETAILS', [ResultID]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQCN GET MED RESULT DETAILS', [ResultID], aDest);
+  Result := aDest.Count;
 end;
 
 procedure AttachMedicineResult(ConsultIEN: integer; ResultID: string; DateTime: TFMDateTime; ResponsiblePerson: int64; AlertTo: string);
 begin
-  CallV('ORQQCN ATTACH MED RESULTS', [ConsultIEN, ResultID, DateTime, ResponsiblePerson, AlertTo]);
+  CallVistA('ORQQCN ATTACH MED RESULTS', [ConsultIEN, ResultID, DateTime, ResponsiblePerson, AlertTo]);
 end;
 
 procedure RemoveMedicineResult(ConsultIEN: integer; ResultID: string; DateTime: TFMDateTime; ResponsiblePerson: int64);
 begin
-  CallV('ORQQCN REMOVE MED RESULTS', [ConsultIEN, ResultID, DateTime, ResponsiblePerson]);
+  CallVistA('ORQQCN REMOVE MED RESULTS', [ConsultIEN, ResultID, DateTime, ResponsiblePerson]);
 end;
 {-------------- user access level functions ---------------------------------}
 
-function ConsultServiceUser(ServiceIEN: integer; DUZ: int64): boolean ;
+function ConsultServiceUser(ServiceIEN: integer; DUZ: int64): boolean;
 var
-  i: integer ;
+  i: integer;
+  Results: TStrings;
 begin
-  Result := False ;
-  CallV('ORWU GENERIC', ['',1,'^GMR(123.5,'+IntToStr(ServiceIEN)+',123.3,"B")']) ;
-  for i:=0 to RPCBrokerV.Results.Count-1 do
-      if StrToInt64(Piece(RPCBrokerV.Results[i],u,2))=DUZ then result := True  ;
-end ;
+  Result := False;
+  Results := TSTringList.Create;
+  try
+    CallVistA('ORWU GENERIC', ['', 1, '^GMR(123.5,' + IntToStr(ServiceIEN) +
+      ',123.3,"B")'], Results);
+    for i := 0 to Results.Count - 1 do
+      if StrToInt64(Piece(Results[i], U, 2)) = DUZ then
+        Result := True;
+  finally
+    Results.Free;
+  end;
+end;
 
 function GetActionMenuLevel(ConsultIEN: integer): TMenuAccessRec ;
 var
   x: string;
 begin
-  x := sCallV('ORQQCN SET ACT MENUS', [ConsultIEN]) ;
+  CallVistA('ORQQCN SET ACT MENUS', [ConsultIEN], x) ;
   Result.UserLevel := StrToIntDef(Piece(x, U, 1), 1);
   Result.AllowMedResulting := (Piece(x, U, 4) = '1');
   Result.AllowMedDissociate := (Piece(x, U, 5) = '1');
@@ -453,79 +522,85 @@ end ;
 
 procedure ReceiveConsult(Dest: TStrings; IEN: integer; ReceivedBy: int64; RcptDate: TFMDateTime; Comments: TStrings);
 begin
-  CallV('ORQQCN RECEIVE', [IEN, ReceivedBy, RcptDate, Comments]);
-  FastAssign(RPCBrokerV.Results, Dest);   {1^Error message' or '0'}
+  CallVistA('ORQQCN RECEIVE', [IEN, ReceivedBy, RcptDate, Comments], Dest);
 end;
 
 procedure ScheduleConsult(Dest: TStrings; IEN: integer; ScheduledBy: Int64; SchdDate: TFMDateTime; Alert: integer;
      AlertTo: string; Comments: TStrings);
 begin
-  CallV('ORQQCN2 SCHEDULE CONSULT', [IEN, ScheduledBy, SchdDate, Alert, AlertTo, Comments]);
-  FastAssign(RPCBrokerV.Results, Dest);   {1^Error message' or '0'}
+  CallVistA('ORQQCN2 SCHEDULE CONSULT', [IEN, ScheduledBy, SchdDate, Alert, AlertTo, Comments], Dest);
 end;
 
 procedure DenyConsult(Dest: TStrings; IEN: integer; DeniedBy: int64;
             DenialDate: TFMDateTime; Comments: TStrings);
 begin
-  CallV('ORQQCN DISCONTINUE', [IEN, DeniedBy, DenialDate,'DY',Comments]);
-  FastAssign(RPCBrokerV.Results, Dest);   {1^Error message' or '0'}
+  CallVistA('ORQQCN DISCONTINUE', [IEN, DeniedBy, DenialDate,'DY',Comments], Dest);
 end;
 
 procedure DiscontinueConsult(Dest: TStrings; IEN: integer; DiscontinuedBy: int64;
             DiscontinueDate: TFMDateTime; Comments: TStrings);
 begin
-  CallV('ORQQCN DISCONTINUE', [IEN, DiscontinuedBy, DiscontinueDate,'DC',Comments]);
-  FastAssign(RPCBrokerV.Results, Dest);   {1^Error message' or '0'}
+  CallVistA('ORQQCN DISCONTINUE', [IEN, DiscontinuedBy, DiscontinueDate,'DC',Comments], Dest);
 end;
 
 procedure ForwardConsult(Dest: TStrings; IEN, ToService: integer; Forwarder, AttentionOf: int64; Urgency: integer;
      ActionDate: TFMDateTime; Comments: TStrings);
 begin
-  CallV('ORQQCN FORWARD', [IEN, ToService, Forwarder, AttentionOf, Urgency, ActionDate, Comments]);
-  FastAssign(RPCBrokerV.Results, Dest);   {1^Error message' or '0'}
-end ;
+  CallVistA('ORQQCN FORWARD', [IEN, ToService, Forwarder, AttentionOf, Urgency, ActionDate, Comments],Dest);
+end;
 
 procedure AddComment(Dest: TStrings; IEN: integer; Comments: TStrings; ActionDate: TFMDateTime; Alert: integer;
 AlertTo: string) ;
 begin
-  CallV('ORQQCN ADDCMT', [IEN, Comments, Alert, AlertTo, ActionDate]);
-  FastAssign(RPCBrokerV.Results, Dest);   {1^Error message' or '0'}
+  CallVistA('ORQQCN ADDCMT', [IEN, Comments, Alert, AlertTo, ActionDate], Dest);
 end ;
 
 procedure AdminComplete(Dest: TStrings; IEN: integer; SigFindingsFlag: string; Comments: TStrings;
           RespProv: Int64; ActionDate: TFMDateTime; Alert: integer; AlertTo: string) ;
 begin
-  CallV('ORQQCN ADMIN COMPLETE', [IEN, SigFindingsFlag, Comments, RespProv, Alert, AlertTo, ActionDate]);
-  FastAssign(RPCBrokerV.Results, Dest);   {1^Error message' or '0'}
+  CallVistA('ORQQCN ADMIN COMPLETE', [IEN, SigFindingsFlag, Comments, RespProv, Alert, AlertTo, ActionDate], Dest);
 end ;
 
 procedure SigFindings(Dest: TStrings; IEN: integer; SigFindingsFlag: string; Comments: TStrings; ActionDate: TFMDateTime; Alert: integer;
 AlertTo: string) ;
 begin
-  CallV('ORQQCN SIGFIND', [IEN, SigFindingsFlag, Comments, Alert, AlertTo, ActionDate]);
-  FastAssign(RPCBrokerV.Results, Dest);   {1^Error message' or '0'}
+  CallVistA('ORQQCN SIGFIND', [IEN, SigFindingsFlag, Comments, Alert, AlertTo, ActionDate], Dest);
 end ;
 
 //==================  Ordering functions   ===================================
-function ODForConsults: TStrings;
+//function ODForConsults: TStrings;
+{ Returns init values for consults dialog.  The results must be used immediately. }
+//begin
+//  CallV('ORWDCN32 DEF', ['C']);
+//  Result := RPCBrokerV.Results;
+//end;
+
+function setODForConsults(aDest: TStrings): Integer;
 { Returns init values for consults dialog.  The results must be used immediately. }
 begin
-  CallV('ORWDCN32 DEF', ['C']);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDCN32 DEF', ['C'], aDest);
+  Result := aDest.Count;
 end;
 
-function ODForProcedures: TStrings;
+//function ODForProcedures: TStrings;
+{ Returns init values for procedures dialog.  The results must be used immediately. }
+//begin
+//  CallV('ORWDCN32 DEF', ['P']);
+//  Result := RPCBrokerV.Results;
+//end;
+
+function setODForProcedures(aDest: TStrings): Integer;
 { Returns init values for procedures dialog.  The results must be used immediately. }
 begin
-  CallV('ORWDCN32 DEF', ['P']);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDCN32 DEF', ['P'], aDest);
+  Result := aDest.Count;
 end;
 
-function SubSetOfProcedures(const StartFrom: string; Direction: Integer): TStrings;
-begin
-  CallV('ORWDCN32 PROCEDURES', [StartFrom, Direction]);
-  Result := RPCBrokerV.Results;
-end;
+//function SubSetOfProcedures(const StartFrom: string; Direction: Integer): TStrings;
+//begin
+//  CallV('ORWDCN32 PROCEDURES', [StartFrom, Direction]);
+//  Result := RPCBrokerV.Results;
+//end;
 
 function setSubSetOfProcedures(aDest: TStrings;const StartFrom: string; Direction: Integer): Integer;
 begin
@@ -533,14 +608,22 @@ begin
   Result := aDest.Count;
 end;
 
-function LoadServiceList(Purpose: integer): TStrings ;
+//function LoadServiceList(Purpose: integer): TStrings ;
+// Purpose:  0=display all services, 1=forward or order from possible services
+//begin
+//  Callv('ORQQCN SVCTREE',[Purpose]) ;
+//  MixedCaseList(RPCBrokerV.Results) ;
+//  Result := RPCBrokerV.Results;
+//end ;
+
+function setServiceList(aDest: Tstrings;Purpose: integer): Integer;
 // Purpose:  0=display all services, 1=forward or order from possible services
 begin
-  Callv('ORQQCN SVCTREE',[Purpose]) ;
-  MixedCaseList(RPCBrokerV.Results) ;
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQCN SVCTREE',[Purpose], aDest) ;
+  MixedCaseList(aDest) ;
+  Result := aDest.Count;
 end ;
-
+{
 function LoadServiceList(ShowSynonyms: Boolean; StartService, Purpose: Integer; ConsultIEN: integer = -1): TStrings ;
 // Param 1 = Starting service (1=All Services)
 // Param 2 = Purpose:  0=display all services, 1=forward or order from possible services
@@ -554,7 +637,21 @@ begin
   MixedCaseList(RPCBrokerV.Results) ;
   Result := RPCBrokerV.Results;
 end ;
-
+}
+function setServiceList(aDest: TStrings;ShowSynonyms: Boolean; StartService, Purpose: Integer; ConsultIEN: integer = -1): Integer;
+// Param 1 = Starting service (1=All Services)
+// Param 2 = Purpose:  0=display all services, 1=forward or order from possible services
+// Param 3 = Show synonyms
+// Param 4 = Consult IEN
+begin
+  if ConsultIEN > -1 then
+   CallVistA('ORQQCN SVC W/SYNONYMS',[StartService, Purpose, ShowSynonyms, ConsultIEN], aDest)
+  else
+   CallVistA('ORQQCN SVC W/SYNONYMS',[StartService, Purpose, ShowSynonyms], aDest) ;
+  MixedCaseList(aDest);
+  Result := aDest.Count;
+end ;
+{
 function LoadServiceListWithSynonyms(Purpose: integer): TStrings ;
 // Param 1 = Starting service (1=All Services)
 // Param 2 = Purpose:  0=display all services, 1=forward or order from possible services
@@ -563,8 +660,18 @@ begin
   Callv('ORQQCN SVC W/SYNONYMS',[1, Purpose, True]) ;
   MixedCaseList(RPCBrokerV.Results) ;
   Result := RPCBrokerV.Results;
+end;
+}
+function setServiceListWithSynonyms(aDest:TStrings; Purpose: integer): Integer;
+// Param 1 = Starting service (1=All Services)
+// Param 2 = Purpose:  0=display all services, 1=forward or order from possible services
+// Param 3 = Show synonyms
+begin
+  CallVistA('ORQQCN SVC W/SYNONYMS',[1, Purpose, True],aDest) ;
+  MixedCaseList(aDest) ;
+  Result := aDest.Count;
 end ;
-
+{
 function LoadServiceListWithSynonyms(Purpose, ConsultIEN: integer): TStrings ;
 // Param 1 = Starting service (1=All Services)
 // Param 2 = Purpose:  0=display all services, 1=forward or order from possible services
@@ -574,61 +681,92 @@ begin
   Callv('ORQQCN SVC W/SYNONYMS',[1, Purpose, True, ConsultIEN]) ;
   MixedCaseList(RPCBrokerV.Results) ;
   Result := RPCBrokerV.Results;
+end;
+}
+function setServiceListWithSynonyms(aDest:TStrings; Purpose, ConsultIEN: integer): Integer;
+// Param 1 = Starting service (1=All Services)
+// Param 2 = Purpose:  0=display all services, 1=forward or order from possible services
+// Param 3 = Show synonyms
+// Param 4 = Consult IEN
+begin
+  CallVistA('ORQQCN SVC W/SYNONYMS',[1, Purpose, True, ConsultIEN], aDest) ;
+  MixedCaseList(aDest) ;
+  Result := aDest.Count;
 end ;
 
+{ Not Used?
 function SubSetOfServices(const StartFrom: string; Direction: Integer): TStrings;
 //  used only on consults order dialog for service long combo box, which needs to include quick orders
 begin
   CallV('ORQQCN SVCLIST', [StartFrom, Direction]);
   Result := RPCBrokerV.Results;
 end;
+function setSubSetOfServices(aDest: TStrings; const StartFrom: string; Direction: Integer): Integer;
+//  used only on consults order dialog for service long combo box, which needs to include quick orders
+begin
+  CallVistA('ORQQCN SVCLIST', [StartFrom, Direction], aDest);
+  Result := aDest.Count;
+end;
 
 function LoadConsultsQuickList: TStrings ;
 begin
   Callv('ORWDXQ GETQLST',['CSLT', 'Q']) ;
   Result := RPCBrokerV.Results;
+end;
+function setConsultsQuickList(aDest: TStrings): Integer ;
+begin
+  CallvistA('ORWDXQ GETQLST',['CSLT', 'Q'], aDest) ;
+  Result := aDest.Count;
 end ;
+}
 
-function ShowSF513(ConsultIEN: integer): TStrings ;
+function setSF513(aDest:TStrings;ConsultIEN: integer): Integer;
 var
   x: string;
   i: integer;
 begin
-  CallV('ORQQCN SHOW SF513',[ConsultIEN]) ;
-  if RPCBrokerV.Results.Count > 0 then
+  CallVistA('ORQQCN SHOW SF513',[ConsultIEN], aDest) ;
+  if aDest.Count > 0 then
     begin
-      x := RPCBrokerV.Results[0];
+      x := aDest[0];
       i := Pos('-', x);
       x := Copy(x, i, 999);
-      RPCBrokerV.Results[0] := x;
+      aDest[0] := x;
     end;
-  Result := RPCBrokerV.Results;
+  Result := aDest.Count;
 end ;
 
 procedure PrintSF513ToDevice(AConsult: Integer; const ADevice: string; ChartCopy: string;
   var ErrMsg: string);
 { prints a SF 513 on the selected device }
 begin
-  ErrMsg := sCallV('ORQQCN PRINT SF513', [AConsult, ChartCopy, ADevice]);
+  CallVistA('ORQQCN PRINT SF513', [AConsult, ChartCopy, ADevice], ErrMsg);
 //  if Piece(ErrMsg, U, 1) = '0' then ErrMsg := '' else ErrMsg := Piece(ErrMsg, U, 2);
 end;
 
-function GetFormattedSF513(AConsult: Integer; ChartCopy: string): TStrings;
+//function GetFormattedSF513(AConsult: Integer; ChartCopy: string): TStrings;
+//begin
+//  CallV('ORQQCN SF513 WINDOWS PRINT',[AConsult, ChartCopy]);
+//  Result := RPCBrokerV.Results;
+//end;
+function setFormattedSF513(aDest:TStrings;AConsult: Integer; ChartCopy: string): Integer;
 begin
-  CallV('ORQQCN SF513 WINDOWS PRINT',[AConsult, ChartCopy]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQCN SF513 WINDOWS PRINT',[AConsult, ChartCopy],aDest);
+  Result := aDest.Count;
 end;
 
 function UnresolvedConsultsExist: boolean;
+var
+  s: String;
 begin
-  Result := (sCallV('ORQQCN UNRESOLVED', [Patient.DFN]) = '1');
+  Result := CallVistA('ORQQCN UNRESOLVED', [Patient.DFN], s) and (s = '1');
 end;
 
 procedure GetUnresolvedConsultsInfo;
 var
   x: string;
 begin
-  x := sCallV('ORQQCN UNRESOLVED', [Patient.DFN]);
+  CallVistA('ORQQCN UNRESOLVED', [Patient.DFN], x);
   with uUnresolvedConsults do
   begin
     UnresolvedConsultsExist := (Piece(x, U, 1) = '1');
@@ -637,29 +775,44 @@ begin
 end;
 
 function ConsultMessage(AnIEN: Integer): string;
+var
+  sl: TStringList;
+
 begin
   if AnIEN = uLastOrderedIEN then Result := uLastOrderMsg else
   begin
-    Result := sCallV('ORWDCN32 ORDRMSG', [AnIEN]);
-    uLastOrderedIEN := AnIEN;
-    uLastOrderMsg := Result;
+    sl := TStringList.Create;
+    try
+      CallVistA('ORWDCN32 ORDRMSG', [AnIEN], sl);
+      Result := sl.Text;
+      uLastOrderedIEN := AnIEN;
+      uLastOrderMsg := Result;
+    finally
+      sl.Free;
+    end;
   end;
 end;
 
 function GetProcedureIEN(ORIEN: string): string;
 begin
-  Result := sCallV('ORQQCN GET PROC IEN', [ORIEN]);
+  CallVistA('ORQQCN GET PROC IEN', [ORIEN], Result);
 end;
 
-function GetProcedureServices(ProcIEN: integer): TStrings;
+//function GetProcedureServices(ProcIEN: integer): TStrings;
+//begin
+//  CallV('ORQQCN GET PROC SVCS',[ProcIEN]) ;
+//  Result := RPCBrokerV.Results;
+//end;
+
+function setProcedureServices(aDest:TStrings; ProcIEN: integer): Integer;
 begin
-  CallV('ORQQCN GET PROC SVCS',[ProcIEN]) ;
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQCN GET PROC SVCS',[ProcIEN], aDest) ;
+  Result := aDest.Count;
 end;
 
 function ConsultCanBeResubmitted(ConsultIEN: integer): string;
 begin
-  Result := sCallV('ORQQCN CANEDIT', [ConsultIEN]);
+  CallVistA('ORQQCN CANEDIT', [ConsultIEN], Result);
 end;
 
 function LoadConsultForEdit(ConsultIEN: integer): TEditResubmitRec;
@@ -669,7 +822,7 @@ var
 begin
   Dest := TStringList.Create;
   try
-    tCallV(Dest, 'ORQQCN LOAD FOR EDIT',[ConsultIEN]) ;
+    CallVistA('ORQQCN LOAD FOR EDIT',[ConsultIEN],Dest) ;
     with EditRec do
       begin
          Changed         := False;
@@ -691,14 +844,14 @@ begin
          ProvDiagnosis      := Piece(ExtractDefault(Dest, 'DIAGNOSIS'), U, 1);
          ProvDxCode         := Piece(ExtractDefault(Dest, 'DIAGNOSIS'), U, 2);
          ProvDxCodeInactive := (Piece(ExtractDefault(Dest, 'DIAGNOSIS'), U, 3) = '1');
-         RequestReason   := TStringList.Create;
+         InitSL(RequestReason);
          ExtractText(RequestReason, Dest, 'REASON');
          LimitStringLength(RequestReason, 74);
-         DenyComments    := TStringList.Create;
+         InitSL(DenyComments);
          ExtractText(DenyComments, Dest, 'DENY COMMENT');
-         OtherComments   := TStringList.Create;
+         InitSL(OtherComments);
          ExtractText(OtherComments, Dest, 'ADDED COMMENT');
-         NewComments     := TStringList.Create;
+         InitSL(NewComments);
          EditRec.DstId           := Piece(ExtractDefault(Dest, 'DSTID'), U, 2);
       end;
     Result := EditRec;
@@ -710,62 +863,50 @@ end;
 function ResubmitConsult(EditResubmitRec: TEditResubmitRec): string;
 var
   i: integer;
+  aList: iORNetMult;
 begin
-  LockBroker;
-  try
-    with RPCBrokerV, EditResubmitRec do
+  neworNetMult(aList);
+  with EditResubmitRec do
     begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORQQCN RESUBMIT';
-      Param[0].PType := literal;
-      Param[0].Value := IntToStr(IEN);
-      Param[1].PType := list;
-      with Param[1] do
-        begin
           if ToService > 0 then
-            Mult['1']  := 'GMRCSS^'   + IntToStr(ToService);
+            aList.AddSubscript(['1'], 'GMRCSS^'   + IntToStr(ToService));
           if ConsultProc <> '' then
-            Mult['2']  := 'GMRCPROC^' + ConsultProc ;
+            aList.AddSubscript(['2'], 'GMRCPROC^' + ConsultProc);
           if Urgency > 0 then
-            Mult['3']  := 'GMRCURG^'  + IntToStr(Urgency);
+            aList.AddSubscript(['3'], 'GMRCURG^'  + IntToStr(Urgency));
           if Length(Place) > 0 then
-            Mult['4']  := 'GMRCPL^'   + Place;
+            aList.AddSubscript(['4'], 'GMRCPL^'   + Place);
           if Attention > 0 then
-            Mult['5']  := 'GMRCATN^'  + IntToStr(Attention)
+            aList.AddSubscript(['5'], 'GMRCATN^'  + IntToStr(Attention))
           else if Attention = -1 then
-            Mult['5']  := 'GMRCATN^'  + '@';
+            aList.AddSubscript(['5'], 'GMRCATN^'  + '@');
           if RequestType <> '' then
-            Mult['6']  := 'GMRCRQT^'  + RequestType;
+            aList.AddSubscript(['6'], 'GMRCRQT^'  + RequestType);
           if Length(InpOutP) > 0 then
-            Mult['7']  := 'GMRCION^'  + InpOutp;
+            aList.AddSubscript(['7'], 'GMRCION^'  + InpOutp);
           if Length(ProvDiagnosis) > 0 then
-            Mult['8']  := 'GMRCDIAG^' + ProvDiagnosis + U + ProvDxCode;
+            aList.AddSubscript(['8'], 'GMRCDIAG^' + ProvDiagnosis + U + ProvDxCode);
           if RequestReason.Count > 0 then
             begin
-              Mult['9']  := 'GMRCRFQ^20';
+              aList.AddSubscript(['9'], 'GMRCRFQ^20');
               for i := 0 to RequestReason.Count - 1 do
-                Mult['9,' + IntToStr(i+1)]  := RequestReason.Strings[i];
+                aList.AddSubscript(['9', IntToStr(i+1)],RequestReason.Strings[i]);
             end;
           if NewComments.Count > 0 then
             begin
-              Mult['10'] := 'COMMENT^';
+              aList.AddSubscript(['10'], 'COMMENT^');
               for i := 0 to NewComments.Count - 1 do
-                Mult['10,' + IntToStr(i+1)] := NewComments.Strings[i];
+                aList.AddSubscript(['10', IntToStr(i+1)], NewComments.Strings[i]);
             end;
           if ClinicallyIndicatedDate > 0 then
-             Mult['11']  := 'GMRCERDT^'  + FloatToStr(ClinicallyIndicatedDate);
+             aList.AddSubscript(['11'], 'GMRCERDT^'  + FloatToStr(ClinicallyIndicatedDate));  //wat renamed v28
           if NoLaterThanDate > 0 then
-             Mult['12']  := 'GMRCNLTD^'  + FloatToStr(NoLaterThanDate);
+             aList.AddSubscript(['12'],'GMRCNLTD^'  + FloatToStr(NoLaterThanDate));
           if DstId <> '' then
-             Mult['13'] := 'GMRCDSID^' + DstId
-        end;
-      CallBroker;
-      Result := '0';
-      //Result := Results[0];
+             aList.AddSubscript(['13'],'GMRCDSID^' + DstId);
     end;
-  finally
-    UnlockBroker;
-  end;
+  CallVistA('ORQQCN RESUBMIT',[EditResubmitRec.IEN,aList]);
+  Result := '0';
 end;
 
 function  GetCurrentContext: TSelectContext;
@@ -773,7 +914,7 @@ var
   x: string;
   AContext: TSelectContext;
 begin
-  x := sCallV('ORQQCN2 GET CONTEXT', [User.DUZ]) ;
+  CallVistA('ORQQCN2 GET CONTEXT', [User.DUZ], x) ;
   with AContext do
     begin
       Changed       := True;
@@ -800,49 +941,59 @@ begin
       SetPiece(x, ';', 5, GroupBy);
       SetPiece(x, ';', 6, BOOLCHAR[Ascending]);
     end;
-  CallV('ORQQCN2 SAVE CONTEXT', [x]);
+  CallVistA('ORQQCN2 SAVE CONTEXT', [x]);
 end;
 
-function GetDefaultReasonForRequest(Service: string; Resolve: Boolean): TStrings;
+//function GetDefaultReasonForRequest(Service: string; Resolve: Boolean): TStrings;
+//begin
+//  CallV('ORQQCN DEFAULT REQUEST REASON',[Service, Patient.DFN, Resolve]) ;
+//  Result := RPCBrokerV.Results;
+//end;
+function setDefaultReasonForRequest(aDest: TStrings;Service: string; Resolve: Boolean): Integer;
 begin
-  CallV('ORQQCN DEFAULT REQUEST REASON',[Service, Patient.DFN, Resolve]) ;
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQCN DEFAULT REQUEST REASON',[Service, Patient.DFN, Resolve], aDest) ;
+  Result := aDest.Count;
 end;
 
 function ReasonForRequestEditable(Service: string): string;
 begin
-  Result := sCallV('ORQQCN EDIT DEFAULT REASON', [Service]);
+  CallVistA('ORQQCN EDIT DEFAULT REASON', [Service], Result);
 end;
 
-function GetServicePrerequisites(Service: string): TStrings;
+//function GetServicePrerequisites(Service: string): TStrings;
+//begin
+//  CallV('ORQQCN2 GET PREREQUISITE',[Service, Patient.DFN]) ;
+//  Result := RPCBrokerV.Results;
+//end;
+function setServicePrerequisites(aDest: TStrings;Service: string): Integer;
 begin
-  CallV('ORQQCN2 GET PREREQUISITE',[Service, Patient.DFN]) ;
-  Result := RPCBrokerV.Results;
+  CallVistA('ORQQCN2 GET PREREQUISITE',[Service, Patient.DFN], aDest) ;
+  Result := aDest.Count;
 end;
 
 function GetNewDialog(OrderType: string): string;
 { get dialog for new consults}
 begin
-  Result := sCallV('ORWDCN32 NEWDLG', [OrderType, Encounter.Location]);
+  CallVistA('ORWDCN32 NEWDLG', [OrderType, Encounter.Location], Result);
 end;
 
 function GetServiceIEN(ORIEN: string): string;
 begin
-  Result := sCallV('ORQQCN GET SERVICE IEN', [ORIEN]);
+  CallVistA('ORQQCN GET SERVICE IEN', [ORIEN], Result);
 end;
 
 procedure GetProvDxMode(var ProvDx: TProvisionalDiagnosis; SvcIEN: string);
 var
   x: string;
 begin
-  x := sCallV('ORQQCN PROVDX', [SvcIEN]);
+  CallVistA('ORQQCN PROVDX', [SvcIEN], x);
   ProvDx.Reqd := Piece(x, U, 1);
   ProvDx.PromptMode := Piece(x, U, 2);
 end;
 
 function GetConsultOrderIEN(ConsultIEN: integer): string;
 begin
-  Result := sCallV('ORQQCN GET ORDER NUMBER', [ConsultIEN]); 
+  CallVistA('ORQQCN GET ORDER NUMBER', [ConsultIEN], Result);
 end;
 
 function GetSavedCPFields(NoteIEN: integer): TEditNoteRec;
@@ -850,29 +1001,33 @@ var
   x: string;
   AnEditRec: TEditNoteRec;
 begin
-  x := sCallV('ORWTIU GET SAVED CP FIELDS', [NoteIEN]);
+  CallVistA('ORWTIU GET SAVED CP FIELDS', [NoteIEN], x);
   with AnEditRec do
-    begin
-      Author := StrToInt64Def(Piece(x, U, 1), 0);
-      Cosigner := StrToInt64Def(Piece(x, U, 2), 0);
-      ClinProcSummCode := StrToIntDef(Piece(x, U, 3), 0);
-      ClinProcDateTime := StrToFMDateTime(Piece(x, U, 4));
-      Title := StrToIntDef(Piece(x, U, 5), 0);
-      DateTime := StrToFloatDef(Piece(x, U, 6), 0);
-    end;
+  begin
+    Author := StrToInt64Def(Piece(x, U, 1), 0);
+    Cosigner := StrToInt64Def(Piece(x, U, 2), 0);
+    ClinProcSummCode := StrToIntDef(Piece(x, U, 3), 0);
+    ClinProcDateTime := StrToFMDateTime(Piece(x, U, 4));
+    Title := StrToIntDef(Piece(x, U, 5), 0);
+    DateTime := StrToFloatDef(Piece(x, U, 6), 0);
+  end;
   Result := AnEditRec;
 end;
 
 function IsProstheticsService(SvcIen : int64) : Boolean;  //wat v28
+var
+  s: String;
 begin
-  Result := sCallV('ORQQCN ISPROSVC', [SvcIEN]) = '1';
+  CallVistA('ORQQCN ISPROSVC', [SvcIEN], s);
+  Result := s = '1';
 end;
 
-function GetServiceUserLevel(ServiceIEN, UserDUZ: integer): String ;
+function GetServiceUserLevel(ServiceIEN, UserDUZ: integer): String;
 // Param 1 = IEN of service
 // Param 2 = Users DUZ (currently can be null)
 begin
-Result := sCallV('ORQQCN GET USER AUTH',[ServiceIEN]) ;
+  // Result := sCallV('ORQQCN GET USER AUTH',[ServiceIEN]) ;
+  CallVistA('ORQQCN GET USER AUTH', [ServiceIEN], Result);
 end;
 
 initialization
@@ -882,7 +1037,7 @@ initialization
   uClinProcClass := 0;
 
 finalization
-  if uConsultTitles <> nil then uConsultTitles.Free;
-  if uClinProcTitles <> nil then uClinProcTitles.Free;
+  KillObj(@uConsultTitles);
+  KillObj(@uClinProcTitles);
 
 end.

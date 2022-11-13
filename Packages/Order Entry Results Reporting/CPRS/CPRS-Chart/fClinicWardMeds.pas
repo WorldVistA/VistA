@@ -177,8 +177,8 @@ end;
 
 procedure TfrmClinicWardMeds.rpcChangeOrderLocation(pOrderList:TStringList);
 begin
-  // OrderIEN^Location^1  -- used to alter location if ward is selected RPC expected third value to determine if
-  // order is an IMO order. If it is being called from here assumed IMO order.
+// OrderIEN^Location^1  -- used to alter location if ward is selected RPC expected third value to determine if
+//order is an IMO order. If it is being called from here assumed IMO order.
 
   CallVistA('ORWDX CHANGE',[pOrderList, Patient.DFN, '1']);
 end;

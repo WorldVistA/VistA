@@ -1,28 +1,33 @@
 unit rODLab;
+{ ------------------------------------------------------------------------------
+  Update History
 
+  2018-07-27: RTC 272867 (Replacing old server calls with CallVistA)
+------------------------------------------------------------------------------- }
 interface
 
 uses SysUtils, Classes, ORNet, ORFn, rCore, uCore, TRPCB, dialogs ;
 
-     { Laboratory Ordering Calls }
+{ Laboratory Ordering Calls }
 function getODForLab(aDest: TStrings; Location, Division: integer): Integer;
-function  ODForLab(aReturn: TStrings; Location: integer; Division: integer = 0): integer;
 procedure LoadLabTestData(LoadData: TStringList; LabTestIEN: string) ;
 procedure LoadSamples(LoadList: TStringList) ;
 procedure LoadSpecimens(SpecimenList: TStringList) ;
-function SubsetOfSpecimens(aReturn: TStrings; const StartFrom: string; Direction: Integer): integer;
+function  setSubsetOfSpecimens(aDest:TStrings;const StartFrom: string; Direction: Integer): Integer;
 function  CalcStopDate(Text: string): string ;
 function  MaxDays(Location, Schedule: integer): integer;
 function  IsLabCollectTime(ADateTime: TFMDateTime; Location: integer): boolean;
-function  ImmediateCollectTimes(aReturn: TStrings): integer;
+function  setImmediateCollectTimes(aDest: TStrings):Integer;
 function  LabCollectFutureDays(Location: integer; Division: integer = 0): integer;
 function  GetDefaultImmCollTime: TFMDateTime;
 function  ValidImmCollTime(CollTime: TFMDateTime): string;
-function  GetOneCollSamp(aReturn: TStrings; LRFSAMP: integer): integer;
+function  GetOneCollSamp(aDest:TSTrings; LRFSAMP: integer): Integer;
+
 function  GetOneSpecimen(LRFSPEC: integer): string;
 procedure GetLabTimesForDate(Dest: TStrings; LabDate: TFMDateTime; Location: integer);
 function  GetLastCollectionTime: string;
 procedure GetPatientBBInfo(Dest: TStrings; PatientID: string; Loc: integer);
+procedure GetPatientBBInfoByDate(Dest: TStrings; PatientID: string; Loc: integer; ADate: TFMDateTime);
 procedure ListForQuickOrders(var AListIEN, ACount: Integer; const DGrpNm: string);
 procedure SubsetOfQuickOrders(Dest: TStringList; AListIEN, First, Last: Integer);
 procedure GetPatientBloodResults(Dest: TStrings; PatientID: string; ATests: TStringList);
@@ -54,98 +59,93 @@ uses  rODBase;
 
 procedure GetBloodComponents(Dest: TStrings);
 begin
-  CallVistA('ORWDXVB COMPORD', [], Dest);
+  CallVistA('ORWDXVB COMPORD', [],Dest);
 end;
 
 procedure GetDiagnosticTests(Dest: TStrings);
 begin
-  CallVistA('ORWDXVB3 DIAGORD', [], Dest);
+  CallVistA('ORWDXVB3 DIAGORD', [],Dest);
 end;
 
 function NursAdminSuppress: boolean;
 var
-  aInt: integer;
+  i: Integer;
 begin
-  CallVistA('ORWDXVB NURSADMN',[nil], aInt);
-  Result := (aInt < 1);
+  Result := CallVistA('ORWDXVB NURSADMN',[nil],i) and (i < 1);
 end;
 
 function  StatAllowed(PatientID: string): boolean;
 var
-  aInt: integer;
+  i: Integer;
 begin
-  CallVistA('ORWDXVB STATALOW',[PatientID], aInt);
-  Result := (aInt > 0);
+  Result := CallVistA('ORWDXVB STATALOW',[PatientID],i) and (i > 0);
 end;
 
 function  RemoveCollTimeDefault: boolean;
 var
-  aInt: integer;
+  i: Integer;
 begin
-  CallVistA('ORWDXVB3 COLLTIM',[nil], aInt);
-  Result := (aInt > 0);
+  Result := CallVistA('ORWDXVB3 COLLTIM',[nil],i) and (i > 0);
 end;
 
 function  GetDiagnosticPanelLocation: boolean;
 var
-  aInt: integer;
+  i: Integer;
 begin
-  CallVistA('ORWDXVB3 SWPANEL',[nil], aInt);
-  Result := (aInt > 0);
+  Result := CallVistA('ORWDXVB3 SWPANEL',[nil],i) and (i > 0);
 end;
 
 procedure GetPatientBloodResultsRaw(Dest: TStrings; PatientID: string; ATests: TStringList);
 begin
-  CallVistA('ORWDXVB RAW', [PatientID, ATests], Dest);
+  CallVistA('ORWDXVB RAW', [PatientID, ATests],Dest);
 end;
 
 procedure GetPatientBloodResults(Dest: TStrings; PatientID: string; ATests: TStringList);
 begin
-  CallVistA('ORWDXVB RESULTS', [PatientID, ATests], Dest);
+  CallVistA('ORWDXVB RESULTS', [PatientID, ATests],Dest);
 end;
 
 procedure GetPatientBBInfo(Dest: TStrings; PatientID: string; Loc: integer);
 begin
-  CallVistA('ORWDXVB GETALL', [PatientID, Loc], Dest);
+  CallVistA('ORWDXVB GETALL', [PatientID, Loc],Dest);
+end;
+
+procedure GetPatientBBInfoByDate(Dest: TStrings; PatientID: string; Loc: integer; ADate: TFMDateTime);
+begin
+  CallVistA('ORWDXVB GETALL', [PatientID, Loc, ADate],Dest);
 end;
 
 function GetSubtype(TestName: string): string;
 begin
-  CallVistA('ORWDXVB SUBCHK', [TestName], Result);
+  CallVistA('ORWDXVB SUBCHK', [TestName],Result);
 end;
 
 function TNSDaysBack: integer;
 begin
-  CallVistA('ORWDXVB VBTNS', [nil], Result, 3);
+  if not CallVistA('ORWDXVB VBTNS', [nil], Result, 3) then
+    Result := 3;
 end;
 
-procedure ListForQuickOrders(var AListIEN, ACount: Integer; const DGrpNm: string);
+procedure ListForQuickOrders(var AListIEN, ACount: integer;
+  const DGrpNm: string);
 var
-  aLst: TStringList;
+  s: String;
 begin
-  aLst := TStringList.Create;
-  try
-    CallVistA('ORWUL QV4DG', [DGrpNm], aLst);
-    AListIEN := StrToIntDef(Piece(aLst[0], U, 1), 0);
-    ACount   := StrToIntDef(Piece(aLst[0], U, 2), 0);
-  finally
-    FreeAndNil(aLst);
+  if CallVistA('ORWUL QV4DG', [DGrpNm], s) then
+  begin
+    AListIEN := StrToIntDef(Piece(s, U, 1), 0);
+    ACount := StrToIntDef(Piece(s, U, 2), 0);
+  end
+  else
+  begin
+    AListIEN := 0;
+    ACount := 0;
   end;
 end;
 
 procedure SubsetOfQuickOrders(Dest: TStringList; AListIEN, First, Last: Integer);
-var
-  i: Integer;
-  aLst: TStringList;
 begin
-  aLst := TStringList.Create;
-  try
-    CallVistA('ORWUL QVSUB', [AListIEN, '', ''], aLst);
-    for i := 0 to aLst.Count -1 do
-      Dest.Add(aLst[i]);
-   finally
-     FreeAndNil(aLst);
-   end;
+  CallVistA('ORWUL QVSUB', [AListIEN,'',''],Dest);
 end;
 
 function getODForLab(aDest: TStrings; Location, Division: integer): Integer;
@@ -154,104 +154,114 @@ begin
   Result := aDest.Count;
 end;
 
-function  ODForLab(aReturn: TStrings; Location: integer; Division: integer = 0): integer;
-begin
-  CallVistA('ORWDLR32 DEF', [Location,Division], aReturn);
-  Result := aReturn.Count;
-end;
-
 procedure LoadLabTestData(LoadData: TStringList; LabTestIEN: string) ;
 begin
-  CallVistA('ORWDLR32 LOAD', [LabTestIEN], LoadData);
-end;
+  CallVistA('ORWDLR32 LOAD', [LabTestIEN],LoadData);
+end ;
 
 procedure LoadSamples(LoadList: TStringList) ;
 begin
-  CallVistA('ORWDLR32 ALLSAMP', [nil], LoadList);
-end;
+  CallVistA('ORWDLR32 ALLSAMP', [nil],LoadList);
+end ;
 
-function SubsetOfSpecimens(aReturn: TStrings; const StartFrom: string; Direction: Integer): integer;
+function setSubsetOfSpecimens(aDest:TStrings;const StartFrom: string; Direction: Integer): Integer;
 begin
-  CallVistA('ORWDLR32 ALLSPEC',[StartFrom, Direction], aReturn);
-  Result := aReturn.Count;
-end;
+  CallVistA('ORWDLR32 ALLSPEC',[StartFrom, Direction],aDest);
+  Result := aDest.Count;
+end ;
 
 procedure LoadSpecimens(SpecimenList: TStringList) ;
 begin
-  CallVistA('ORWDLR32 ABBSPEC', [nil], SpecimenList);
-end;
+  CallVistA('ORWDLR32 ABBSPEC', [nil],SpecimenList);
+end ;
 
 function CalcStopDate(Text: string): string ;
 begin
-  CallVistA('ORWDLR32 STOP', [Text], Result);
+  CallVistA('ORWDLR32 STOP', [Text],Result);
 end ;
 
 function MaxDays(Location, Schedule: integer): integer;
 begin
-  CallVistA('ORWDLR32 MAXDAYS',[Location, Schedule], Result);
+  CallVistA('ORWDLR32 MAXDAYS',[Location, Schedule],Result);
 end;
 
 function IsLabCollectTime(ADateTime: TFMDateTime; Location: integer): boolean;
 var
-  aInt: integer;
+  i: Integer;
 begin
-  CallVistA('ORWDLR32 LAB COLL TIME',[ADateTime,Location], aInt);
-  Result := (aInt > 0);
+  Result := CallVistA('ORWDLR32 LAB COLL TIME',[ADateTime,Location],i) and (i > 0);
 end;
 
 function  LabCollectFutureDays(Location: integer; Division: integer): integer;
 begin
-  CallVistA('ORWDLR33 FUTURE LAB COLLECTS', [Location, Division], Result);
+  CallVistA('ORWDLR33 FUTURE LAB COLLECTS',[Location, Division],Result);
 end;
 
-function  ImmediateCollectTimes(aReturn: TStrings): integer;
+function  setImmediateCollectTimes(aDest: TStrings): Integer;
 begin
-  CallVistA('ORWDLR32 IMMED COLLECT', [nil], aReturn);
-  Result := aReturn.Count;
+  CallVistA('ORWDLR32 IMMED COLLECT',[nil],aDest);
+  Result := aDest.Count;
 end;
 
 function  GetDefaultImmCollTime: TFMDateTime;
 var
-  aStr: string;
+  sl: TStringList;
 begin
-  CallVistA('ORWDLR32 IC DEFAULT', [nil], aStr);
-  Result := StrToFloat(Piece(aStr, U, 1));
+  sl := TStringList.Create;
+  try
+    CallVistA('ORWDLR32 IC DEFAULT',[nil], sl);
+    if sl.Count > 0 then
+      Result := StrToFloatDef(Piece(sl[0], U, 1), 0)
+    else
+      Result := 0;
+  finally
+    sl.Free;
+  end;
 end;
 
 function  ValidImmCollTime(CollTime: TFMDateTime): string;
 begin
-  CallVistA('ORWDLR32 IC VALID', [CollTime], Result);
+  CallVistA('ORWDLR32 IC VALID',[CollTime],Result);
 end;
 
-function  GetOneCollSamp(aReturn: TStrings; LRFSAMP: integer): integer;
+function  GetOneCollSamp(aDest:TSTrings; LRFSAMP: integer): Integer;
 begin
-  CallVistA('ORWDLR32 ONE SAMPLE', [LRFSAMP], aReturn);
-  Result := aReturn.Count;
+  CallVistA('ORWDLR32 ONE SAMPLE', [LRFSAMP],aDest);
+  Result := aDest.Count;
 end;
 
 function  GetOneSpecimen(LRFSPEC: integer): string;
 begin
-  CallVistA('ORWDLR32 ONE SPECIMEN', [LRFSPEC], Result);
+  CallVistA('ORWDLR32 ONE SPECIMEN', [LRFSPEC],Result);
 end;
 
 function  GetLastCollectionTime: string;
 begin
-  CallVistA('ORWDLR33 LASTTIME', [nil], Result);
+  CallVistA('ORWDLR33 LASTTIME', [nil],Result);
 end;
 
 procedure GetLabTimesForDate(Dest: TStrings; LabDate: TFMDateTime; Location: integer);
 var
   Prefix: string;
   i: integer;
+  Results: TStrings;
 begin
-  CallVistA('ORWDLR32 GET LAB TIMES', [LabDate, Location], Dest);
+  Results := TSTringList.Create;
+  try
+  CallVistA('ORWDLR32 GET LAB TIMES', [LabDate, Location], Results);
   with Dest do
-    if (Count > 0) and (Piece(Strings[0], U, 1) <> '-1') then
-      for i := 0 to Count - 1 do
-        begin
-          if Strings[i] > '1159' then Prefix := 'PM Collection:  ' else Prefix := 'AM Collection:  ';
-          Strings[i] := Strings[i] + U + Prefix + Copy(Strings[i], 1, 2) + ':' + Copy(Strings[i], 3, 2);
-        end;
+    begin
+      Assign(Results);
+      if (Count > 0) and (Piece(Strings[0], U, 1) <> '-1') then
+        for i := 0 to Count - 1 do
+          begin
+            if Strings[i] > '1159' then Prefix := 'PM Collection:  ' else Prefix := 'AM Collection:  ';
+            Strings[i] := Strings[i] + U + Prefix + Copy(Strings[i], 1, 2) + ':' + Copy(Strings[i], 3, 2);
+          end;
+    end;
+  finally
+    Results.Free;
+  end;
 end;
 
 procedure CheckForChangeFromLCtoWCOnAccept(Dest: TStrings; ALocation: integer; AStartDate, ACollType, ASchedule, ADuration: string);
@@ -260,7 +270,7 @@ var
 begin
   AList := TStringList.Create;
   try
-    CallVistA('ORCDLR2 CHECK ONE LC TO WC', [ALocation, '', AStartDate, ACollType, ASchedule, ADuration], AList);
+    CallVistA('ORCDLR2 CHECK ONE LC TO WC', [ALocation, '', AStartDate, ACollType, ASchedule, ADuration],aList);
     FormatLCtoWCDisplayTextOnAccept(AList, Dest);
   finally
     AList.Free;
@@ -273,7 +283,7 @@ var
 begin
   AList := TStringList.Create;
   try
-    CallVistA('ORCDLR2 CHECK ALL LC TO WC', [ALocation, OrderList], AList);
+    CallVistA('ORCDLR2 CHECK ALL LC TO WC', [ALocation, OrderList],aList);
     FormatLCtoWCDisplayTextOnRelease(AList, Dest);
   finally
     AList.Free;
@@ -290,7 +300,7 @@ begin
     if Piece(InputList[i], U, 2) = '1' then InputList.Delete(i);
   if InputList.Count > 0 then
   begin
-    SetListFMDateTime('mmm dd, yyyy@hh:nn', TStringList(InputList), U, 1);
+    SetListFMDateTime('mmm dd, yyyy@hh:nn', InputList, U, 1);
     with OutputList do
     begin
       Add(TX0);
@@ -333,7 +343,8 @@ begin
           Add(TX_BLANK);
           AList.Clear;
           ExtractText(AList, InputList, 'ORDER_' + IntToStr(i));
-          Add('Order   :' + #9 + AList[0]);
+          if AList.Count > 0 then
+            Add('Order   :' + #9 + AList[0]);
           k := Length(OutputList[Count-1]);
           if AList.Count > 1 then
             for j := 1 to AList.Count - 1 do
@@ -362,7 +373,7 @@ end;
 
 function GetLCtoWCInstructions(Alocation: integer): string;
 begin
-  CallVistA('ORWDLR33 LC TO WC', [Encounter.Location], Result);
+  CallVistA('ORWDLR33 LC TO WC', [Encounter.Location],Result);
 end;
 
 end.

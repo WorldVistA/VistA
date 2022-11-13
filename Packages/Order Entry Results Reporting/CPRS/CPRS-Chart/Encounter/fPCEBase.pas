@@ -26,6 +26,8 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject); virtual;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnCancelMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     FDisplayCount: Integer;                      // number of times page displayed
     FPatientCount: Integer;                      // number of times page displayed for given pt
@@ -268,9 +270,18 @@ end;
 procedure TfrmPCEBase.btnCancelClick(Sender: TObject);
 begin
   inherited;
+  ClearPostValidateMag(Self);
   frmencounterframe.Abort := FALSE;
   frmEncounterFrame.Cancel := true;
   frmencounterframe.Close;
+end;
+
+procedure TfrmPCEBase.btnCancelMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  if Button = mbLeft then
+    ClearPostValidateMag(Self);
 end;
 
 {///////////////////////////////////////////////////////////////////////////////

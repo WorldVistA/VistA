@@ -72,7 +72,6 @@ inherited frmTemplateAutoGen: TfrmTemplateAutoGen
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 1
-    Text = ''
     Visible = False
     OnDblClick = cbxObjectsDblClick
     CharsNeedMatch = 1
@@ -118,7 +117,6 @@ inherited frmTemplateAutoGen: TfrmTemplateAutoGen
     Sorted = False
     SynonymChars = '<>'
     TabOrder = 0
-    Text = ''
     Visible = False
     OnDblClick = cbxTitlesDblClick
     OnNeedData = cbxTitlesNeedData

@@ -48,7 +48,7 @@ begin
       ClientWidth  := W; pnlBase.Width  := W;
       ClientHeight := H; pnlBase.Height := H;
       FChanged := False;
-      FastAssign(SubsetOfRadiologists, cboRadiologist.Items);
+      SubsetOfRadiologists(cboRadiologist.Items);
       ShowModal;
       Radiologist := FRadiologist ;
     end; {with frmODRadApproval}

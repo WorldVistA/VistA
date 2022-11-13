@@ -88,11 +88,7 @@ implementation
 uses
   rPDMP, Forms,
   fPDMPUser,
-{$IFDEF PDMPTEST}
-  uCore.Messages,
-{$ELSE}
   uConst,
-{$ENDIF}
   uPDMP;
 
 { TpdmpDataObject }
@@ -106,7 +102,7 @@ constructor TpdmpDataObject.Create;
 begin
   inherited;
   PDMPList := TStringList.Create;
-  pdmpTimer := TTimer.Create(application);
+  pdmpTimer := TTimer.Create(nil);
   pdmpTimer.Interval := PDMP_PollingInterval;
   pdmpTimer.OnTimer := pollPDMPResult;
   pdmpTimer.Enabled := false;
@@ -114,13 +110,8 @@ end;
 
 destructor TpdmpDataObject.Destroy;
 begin
-  if assigned(fPDMPList) then
-    FreeAndNil(fPDMPList);
-  if assigned(pdmpTimer) then
-  begin
-    pdmpTimer.Enabled := false;
-    FreeAndNil(pdmpTimer);
-  end;
+  FreeAndNil(pdmpTimer);
+  FreeAndNil(fPDMPList);
   inherited;
 end;
 
@@ -212,7 +203,7 @@ var
   s, sRC, sNoteIEN, sChange, sChangeDate, sVistATask, sCosigner: String;
 begin
 
-  if (pdmpTimer.Enabled) and (PDMPList.Count = 0) then
+  if (aList.Count < 1) or ((pdmpTimer.Enabled) and (PDMPList.Count = 0)) then
   begin
     fStatus := UM_PDMP_ERROR;
     fErrorOccurred := PDMP_MSG_RPCReturnedNoData;

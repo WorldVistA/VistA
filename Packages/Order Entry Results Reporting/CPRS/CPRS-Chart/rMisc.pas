@@ -20,14 +20,16 @@ type
   end;
 
   TDLL_Return_Type = (DLL_Success, DLL_Missing, DLL_VersionErr);
+  TDLLCloseProc = procedure(Handle: THandle);
 
-  TDllRtnRec = Record
+  TDllRtnRec = record
     DLLName: string;
     LibName: string;
     DLL_HWND: HMODULE;
     Return_Type: TDLL_Return_Type;
     Return_Message: String;
-  End;
+    ForceCloseProc: TDLLCloseProc;
+  end;
 
 var
   uToolMenuItems: TObjectList = nil;
@@ -48,14 +50,18 @@ type
 
   SettingSizeArray = array of integer;
 
-function DetailPrimaryCare(const DFN: string): TStrings;  //*DFN*
+
+function setDetailPrimaryCare(aDest:TSTrings;const DFN: string): Integer;  //*DFN*
 procedure GetToolMenu;
-procedure ListSymbolTable(Dest: TStrings);
+procedure ListSymbolTable(aDest: TStrings);
 function MScalar(const x: string): string; deprecated;
 procedure SetShareNode(const DFN: string; AHandle: HWND);  //*DFN*
 function ServerHasPatch(const x: string): Boolean;
 function SiteSpansIntlDateLine: boolean;
-function RPCCheck(aRPC: TStrings):Boolean;
+function RPCCheck(aRPC: TStrings):Boolean; overload;
+function RPCCheck(aRPC: String):Boolean;  overload;
+function RPCCheckList(aRPC: TStrings; aDest: TStrings): Boolean;
+
 function ServerVersion(const Option, VerClient: string): string;
 function PackageVersion(const Namespace: string): string;
 
@@ -65,7 +71,8 @@ function VistaCommonFilesDirectory: string;
 function DropADir(DirName: string): string;
 function RelativeCommonFilesDirectory: string;
 function FindDllDir(DllName: string): string;
-function LoadDll(DllName: string): TDllRtnRec;
+function LoadDll(DllName: string; CloseProc: TDLLCloseProc): TDllRtnRec;
+procedure ForceCloseAllDLLs;
 function DllVersionCheck(DllName: string; DLLVersion: string): string;
 function GetMOBDLLName(): string;
 
@@ -87,6 +94,21 @@ function StrUserString(StrName: string; Str: string): string;
 function UserFontSize: integer;
 procedure SaveUserFontSize( FontSize: integer);
 
+/// <summary>Returns value of the specified piece. First piece reserved for ID.
+/// Defaults if ID is not found</summary>
+function getPieceByFieldID(aSource: TStrings; anID: String; aPiece: Integer;
+  Default: String = ''): String;
+
+function FindDT(aSource: TStrings; const FieldID: string; aPiece: Integer)
+: TFMDateTime;
+function FindExt(aSource: TStrings; const FieldID: string;
+  aPiece: Integer): string;
+function FindInt(aSource: TStrings; const FieldID: string;
+  aPiece: Integer): Integer;
+function FindInt64(aSource: TStrings; const FieldID: string;
+  aPiece: Integer): Int64;
+function FindVal(aSource:TStrings;const FieldID: string;aPiece:Integer): string;
+
 var
   SizeHolder : TSizeHolder;
 
@@ -96,12 +118,12 @@ uses TRPCB, fOrders, math, Registry, ORSystem, rCore, System.Generics.Collection
 
 var
   uBounds, uWidths, uColumns: TStringList;
-
-function DetailPrimaryCare(const DFN: string): TStrings;  //*DFN*
+function setDetailPrimaryCare(aDest:TStrings;const DFN: string): Integer;  //*DFN*
 begin
-  CallV('ORWPT1 PCDETAIL', [DFN]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWPT1 PCDETAIL', [DFN],aDest);
+  Result := aDest.Count;
 end;
+
 
 const
   SUBMENU_KEY = 'SUBMENU';
@@ -119,17 +141,21 @@ var
   caption, action: string;
   CurrentMenuID: string;
   MenuIDs: TStringList;
+  Results: TSTrings;
 begin
   if not assigned(uToolMenuItems) then
     uToolMenuItems := TObjectList.Create
   else
     uToolMenuItems.Clear;
-  CallV('ORWU TOOLMENU', [nil]);
+
+  Results := TSTringList.Create;
+  try
+  CallVistA('ORWU TOOLMENU', [nil],Results);
   MenuIDs := TStringList.Create;
   try
-    for i := 0 to RPCBrokerV.Results.Count - 1 do
+    for i := 0 to {RPCBrokerV.}Results.Count - 1 do
     begin
-      x := Piece(RPCBrokerV.Results[i], U, 1);
+      x := Piece({RPCBrokerV.}Results[i], U, 1);
       item := TToolMenuItem.Create;
       Caption := Piece(x, '=', 1);
       Action := Copy(x, Pos('=', x) + 1, Length(x));
@@ -215,23 +241,34 @@ begin
   finally
     MenuIDs.Free;
   end;
+  finally
+    Results.Free;
+  end;
 end;
 
-procedure ListSymbolTable(Dest: TStrings);
+procedure ListSymbolTable(aDest: TSTrings);
 var
-  i: Integer;
+  Results: TSTrings;
+  i: integer;
   x: string;
 begin
-  Dest.Clear;
-  CallV('ORWUX SYMTAB', [nil]);
-  i := 0;
-  with RPCBrokerV.Results do while i < Count do
-  begin
-    x := Strings[i] + '=';
-    Inc(i);
-    if i < Count then x := x + Strings[i];
-    Dest.Add(x);
-    Inc(i);
+  aDest.Clear;
+  Results := TStringList.Create;
+  try
+    CallVistA('ORWUX SYMTAB', [nil], Results);
+    i := 0;
+    with { RPCBrokerV. } Results do
+      while i < Count do
+      begin
+        x := Strings[i] + '=';
+        inc(i);
+        if i < Count then
+          x := x + Strings[i];
+        aDest.Add(x);
+        inc(i);
+      end;
+  finally
+    Results.Free;
   end;
 end;
 
@@ -246,7 +283,10 @@ begin
       Param[0].Value := x;
       Param[0].PType := reference;
       CallBroker;
-      Result := Results[0];
+      if Results.Count > 0 then
+        Result := Results[0]
+      else
+        Result := '';
     end;
   finally
     UnlockBroker;
@@ -254,26 +294,33 @@ begin
 end;
 
 function ServerHasPatch(const x: string): Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWU PATCH', [x]) = '1';
+  Result := CallVistA('ORWU PATCH', [x],s) and ( s = '1');
 end;
 
 function SiteSpansIntlDateLine: boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWU OVERDL', []) = '1';
+  Result := CallVistA('ORWU OVERDL', [],s) and (s = '1');
 end;
 
 function RPCCheck(aRPC: TStrings):Boolean; //aRPC format array of RPC's Name^Version
 //All RPC's in the list must come back true/active
 var
+  Results: TStrings;
   i: integer;
 begin
   Result := false;
-  CallV('XWB ARE RPCS AVAILABLE',['L',aRPC]);
-  if RPCBrokerV.Results.Count > 0 then
-    for i := 0 to RPCBrokerV.Results.Count - 1 do
+  Results := TStringList.Create;
+  try
+  CallVistA('XWB ARE RPCS AVAILABLE',['L',aRPC],Results);
+  if Results.Count > 0 then
+    for i := 0 to Results.Count - 1 do
       begin
-        if RPCBrokerV.Results[i] = '1' then
+        if Results[i] = '1' then
           Result := true
         else
           begin
@@ -281,51 +328,105 @@ begin
             Break;
           end;
       end;
+  finally
+    Results.Free;
+  end;
 end;
+
+function RPCCheck(aRPC: String):Boolean; //aRPC format array of RPC's Name^Version
+//All RPC's in the list must come back true/active
+var
+  aList,
+  Results: TStrings;
+begin
+  Results := TStringList.Create;
+  aList := TStringList.Create;
+  aList.Add(aRPC);
+  try
+    Result := CallVistA('XWB ARE RPCS AVAILABLE',['L',aList],Results) and
+      (Results.Count > 0) and (Results[0] = '1');
+ finally
+    Results.Free;
+    aList.Free;
+  end;
+end;
+
+
+
+function RPCCheckList(aRPC: TSTrings; aDest: TSTrings): Boolean;
+var
+  s: String;
+  i: integer;
+begin
+  try
+    CallVistA('XWB ARE RPCS AVAILABLE', ['L', aRPC], aDest);
+    Result := aRPC.Count = aDest.Count;
+    if Result then
+      for i := 0 to aDest.Count - 1 do
+      begin
+        if (aDest[i] = '1') or (aRPC[i]=' ') or (pos('---',aRPC[i])=1) then
+          s := ' '
+        else
+          s := '?';
+        aDest[i] := aDest[i] + ' ' + s + ' ' + aRPC[i];
+      end;
+  finally
+  end;
+end;
+
 
 function ServerVersion(const Option, VerClient: string): string;
 begin
-  Result := sCallV('ORWU VERSRV', [Option, VerClient]);
+  CallVistA('ORWU VERSRV', [Option, VerClient],Result);
 end;
 
 function PackageVersion(const Namespace: string): string;
 begin
-  Result := sCallV('ORWU VERSION', [Namespace]);
+  CallVistA('ORWU VERSION', [Namespace],Result);
 end;
 
 function UserFontSize: integer;
 begin
-  Result := StrToIntDef(sCallV('ORWCH LDFONT', [nil]),8);
+  if not CallVistA('ORWCH LDFONT', [nil],Result,8) then // RTC 822208 - adding RPC default result '8'
+    Result := 8;
+  if Result < 8 then Result := 8;
   If Result = 24 then Result := 18; // CQ #12322 removed 24 pt font
   if Result = 18 then Result := 14; // Same thing as before, can't handle font size anymore
 end;
 
 procedure LoadSizes;
 var
-  i, p: Integer;
+  Results: TStrings;
+  i, p: integer;
 begin
-  uBounds  := TStringList.Create;
-  uWidths  := TStringList.Create;
+  uBounds := TStringList.Create;
+  uWidths := TStringList.Create;
   uColumns := TStringList.Create;
-  CallV('ORWCH LOADALL', [nil]);
-  with RPCBrokerV do
-  begin
-    for i := 0 to Results.Count - 1 do    // change '^' to '='
+
+  Results := TStringList.Create;
+  try
+    CallVistA('ORWCH LOADALL', [nil], Results);
     begin
-      p := Pos(U, Results[i]);
-      if p > 0 then Results[i] := Copy(Results[i], 1, p - 1) + '=' +
-                                  Copy(Results[i], p + 1, Length(Results[i]));
+      for i := 0 to Results.Count - 1 do // change '^' to '='
+      begin
+        p := Pos(U, Results[i]);
+        if p > 0 then
+          Results[i] := Copy(Results[i], 1, p - 1) + '=' +
+            Copy(Results[i], p + 1, length(Results[i]));
+      end;
+      ExtractItems(uBounds, Results, 'Bounds');
+      ExtractItems(uWidths, Results, 'Widths');
+      ExtractItems(uColumns, Results, 'Columns');
     end;
-    ExtractItems(uBounds,  RPCBrokerV.Results, 'Bounds');
-    ExtractItems(uWidths,  RPCBrokerV.Results, 'Widths');
-    ExtractItems(uColumns, RPCBrokerV.Results, 'Columns');
+  finally
+    Results.Free;
   end;
 end;
 
 procedure SetShareNode(const DFN: string; AHandle: HWND);  //*DFN*
 begin
   // sets node that allows other apps to see which patient is currently selected
-  sCallV('ORWPT SHARE', [DottedIPStr, IntToHex(AHandle, 8), DFN]);
+  CallVistA('ORWPT SHARE', [DottedIPStr, IntToHex(AHandle, 8), DFN]);
 end;
 
 function GetControlName(var AControl: TControl): string;
@@ -346,6 +447,8 @@ end;
 procedure SetUserBounds(var AControl: TControl);
 var
   x: string;
+  kb: IORKeepBounds;
+
 begin
   x := GetControlName(AControl);
   if x = '' then
@@ -359,9 +462,8 @@ begin
       AControl.Left   := HigherOf(StrToIntDef(Piece(x, ',', 1), AControl.Left), 0);
       AControl.Top    := HigherOf(StrToIntDef(Piece(x, ',', 2), AControl.Top), 0);
 
-      if (AControl is TForm) then
-       TForm(AControl).MakeFullyVisible;
-
+//      if (AControl is TForm) then
+//       TForm(AControl).MakeFullyVisible;
 
       if Assigned( AControl.Parent ) then
       begin
@@ -373,7 +475,11 @@ begin
         AControl.Width  := StrToIntDef(Piece(x, ',', 3), AControl.Width);
         AControl.Height := StrToIntDef(Piece(x, ',', 4), AControl.Height);
       end;
+          if (AControl is TForm) then
+       TForm(AControl).MakeFullyVisible;
   end;
+  if (AControl is TForm) and AControl.GetInterface(IORKeepBounds, kb) and assigned(kb) then
+    kb.KeepBounds := True;
   //if (x = '0,0,' + IntToStr(Screen.Width) + ',' + IntToStr(Screen.Height)) and
   //  (AControl is TForm) then TForm(AControl).WindowState := wsMaximized;
 end;
@@ -476,18 +582,19 @@ end;
 
 procedure SaveUserSizes(SizingList: TStringList);
 begin
-  CallV('ORWCH SAVEALL', [SizingList]);
+  CallVistA('ORWCH SAVEALL', [SizingList]);
 end;
 
 procedure SaveUserFontSize( FontSize: integer);
 begin
-  CallV('ORWCH SAVFONT', [IntToStr(FontSize)]);
+  CallVistA('ORWCH SAVFONT', [IntToStr(FontSize)]);
 end;
 
 procedure SetFormPosition(AForm: TForm; FormID: string = '');
 var
   x: string;
-  Rect: TRect;
+  kb: IORKeepBounds;
+
 begin
   x := SizeHolder.GetSize(AForm.Name + FormID);
   if x = '' then Exit; // allow default bounds to be passed in, else screen center?
@@ -499,10 +606,11 @@ begin
                     StrToIntDef(Piece(x, ',', 2), AForm.Top),
                     StrToIntDef(Piece(x, ',', 3), AForm.Width),
                     StrToIntDef(Piece(x, ',', 4), AForm.Height));
-    Rect := AForm.BoundsRect;
-    ForceInsideWorkArea(Rect);
-    AForm.BoundsRect := Rect;
+    if not assigned(AForm.Parent) then
+      ForceInsideWorkArea(AForm);
   end;
+  if AForm.GetInterface(IORKeepBounds, kb) and assigned(kb) then
+    kb.KeepBounds := True;
 end;
 
 function StrUserBounds(AControl: TControl): string;
@@ -532,8 +640,11 @@ var
   i: integer;
 begin
   Result := 'B' + U + AName + U;
-  for i := 0 to (Length(SizeArray) - 1) do begin
-    Result := Result + ',' + IntToStr(SizeArray[i]);
+  for i := 0 to (Length(SizeArray) - 1) do
+  begin
+    if i > 0 then
+      Result := Result + ',';
+    Result := Result + IntToStr(SizeArray[i]);
   end;
 end;
 
@@ -622,7 +733,7 @@ begin
   nameIndex := FNameList.IndexOf(AName);
   if nameIndex = -1 then //Currently Not in the NameList
   begin
-    rSizeVal := sCallV('ORWCH LOADSIZ', [AName]);
+    CallVistA('ORWCH LOADSIZ', [AName],rSizeVal);
     if rSizeVal <> '' then
     begin
       FNameList.Add(AName);
@@ -719,10 +830,11 @@ var
   LoadOnce: boolean = False;
   LoadedDLLs: TList<TDllRtnRec> = nil;
 
-function LoadDll(DllName: string): TDllRtnRec;
+function LoadDll(DllName: string; CloseProc: TDLLCloseProc): TDllRtnRec;
 var
   LibName, TmpStr, HelpTxt: string;
   i: integer;
+  add2List: boolean;
 
   procedure ConfigLoadOnce;
   begin
@@ -757,8 +869,13 @@ begin
       if LoadedDLLs[i].DLLName = DLLName then
       begin
         Result := LoadedDLLs[i];
-        IncReferenceCount;
-        exit;
+        if Result.Return_Type = DLL_Success then
+        begin
+          IncReferenceCount;
+          exit;
+        end
+        else
+          break;
       end;
   end;
 
@@ -766,7 +883,8 @@ begin
   Result.DLLName := DLLName;
   Result.LibName := LibName;
   Result.DLL_HWND := LoadLib(Result);
-
+  Result.ForceCloseProc := CloseProc;
+  add2List := False;
   if Result.DLL_HWND <> 0 then
   Begin
     // DLL exist
@@ -779,9 +897,14 @@ begin
         [rfReplaceAll]);
       // DLL version mismatch
       Result.Return_Type := DLL_VersionErr;
+      FreeLibrary(Result.DLL_HWND);
+      Result.DLL_HWND := 0;
     end
     else
+    begin
+      add2List := True;
       Result.Return_Message := '';
+    end;
   end
   else
   begin
@@ -796,21 +919,100 @@ begin
     Result.Return_Message := DLLName + ' was not found. ' + HelpTxt + CRLF +
       CRLF + TmpStr;
   end;
-  if LoadOnce then
+  if LoadOnce and Add2List then
   begin
     LoadedDLLs.Add(Result);
     IncReferenceCount;
   end;
 end;
 
+procedure ForceCloseAllDLLs;
+var
+  i: integer;
+
+begin
+  if LoadOnce then
+    for i := LoadedDLLs.Count - 1 downto 0 do
+      with LoadedDLLs[i] do
+        if (Return_Type = DLL_Success) and (DLL_HWND <> 0) then
+        begin
+          if assigned(ForceCloseProc) then
+            ForceCloseProc(DLL_HWND);
+          // When LoadOnce is true LoadDll can load a DLL multiple times
+          // to prevent FreeLibrary from actually freeing the DLL.  We call
+          // FreeLibrary multiple times here to make sure the DLL is actually
+          // unloaded.
+          FreeLibrary(DLL_HWND);
+          FreeLibrary(DLL_HWND);
+          FreeLibrary(DLL_HWND);
+          LoadedDLLs.Delete(i);
+        end;
+end;
+
 function DllVersionCheck(DllName: string; DLLVersion: string): string;
 begin
-  Result := sCallV('ORUTL4 DLL', [DllName, DllVersion]);
+  CallVistA('ORUTL4 DLL', [DllName, DllVersion],Result);
 end;
 
 function GetMOBDLLName(): string;
 begin
   Result := GetUserParam('OR MOB DLL NAME');
+end;
+
+function getPieceByFieldID(aSource: TStrings; anID: String; aPiece: Integer;
+  Default: String = ''): String;
+var
+  s: String;
+begin
+  Result := Default;
+  if not assigned(aSource) then
+    exit;
+  for s in aSource do
+    if Piece(s, U, 1) = anID then
+    begin
+      Result := Piece(s, U, aPiece);
+      break;
+    end;
+end;
+
+function FindDT(aSource: TStrings; const FieldID: string; aPiece: Integer)
+  : TFMDateTime;
+var
+  x: String;
+begin
+  Result := 0;
+  x := getPieceByFieldID(aSource, FieldID, aPiece);
+  if x <> '' then
+    Result := MakeFMDateTime(x);
+end;
+
+function FindExt(aSource: TStrings; const FieldID: string;
+  aPiece: Integer): string;
+begin
+  Result := getPieceByFieldID(aSource, FieldID, aPiece);
+end;
+
+function FindInt(aSource: TStrings; const FieldID: string;
+  aPiece: Integer): Integer;
+var
+  x: String;
+begin
+  x := getPieceByFieldID(aSource, FieldID, aPiece);
+  Result := StrToIntDef(x, 0);
+end;
+
+function FindInt64(aSource: TStrings; const FieldID: string;
+  aPiece: Integer): Int64;
+var
+  x: String;
+begin
+  x := getPieceByFieldID(aSource, FieldID, aPiece);
+  Result := StrToInt64Def(x, 0);
+end;
+
+function FindVal(aSource:TStrings;const FieldID: string;aPiece:Integer): string;
+begin
+  Result := getPieceByFieldID(aSource,FieldID,aPiece);
 end;
 
 initialization

@@ -184,27 +184,18 @@ begin
 end;
 
 procedure TfrmReleaseOrders.FormCreate(Sender: TObject);
-var
-  AParam: string;
 begin
   inherited;
   OKPressed := False;
   ESCode := '';
-  AParam := GetUserParam('OR NATURE DEFAULT');
-
-
-  if AParam = 'P' then
+  if Encounter.Provider = User.DUZ then
   begin
     FNature := NO_POLICY;
     radPolicy.Checked := True;
-  end else if AParam = 'V' then
+  end else
   begin
     FNature := NO_VERBAL;
-    radVerbal.Checked := True;
-  end else if AParam = 'T' then
-  begin
-    FNature := NO_PHONE;
-    radPhone.Checked := True;
+    radVerbal.Checked := True
   end;
   FSigSts := SS_UNSIGNED;
 end;

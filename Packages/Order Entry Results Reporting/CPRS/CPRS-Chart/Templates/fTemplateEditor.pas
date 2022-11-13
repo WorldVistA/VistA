@@ -1,24 +1,12 @@
 unit fTemplateEditor;
-{The OwnerScan conditional compile varaible was created because there were too
- many things that needed to be done to incorporate the viewing of other user's
- personal templates by clinical coordinators.  These include:
-   Changing the Personal tree.
-   expanding entirely new personal list when personal list changes
-   when click on stop editing shared button, and personal is for someone else,
-     need to resync to personal list.
 
-HOT HEYS NOT YET ASSIGNED:
-JFKQRUVZ
-}
-{$DEFINE OwnerScan}
-{$UNDEF OwnerScan}
 interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, ComCtrls, ORCtrls, Buttons, Mask, ORFn, ORNet,
-  uTemplates, Menus, ImgList, Clipbrd, ToolWin, MenuBar, TypInfo, MSXML_TLB, fBase508Form,
-  VA508AccessibilityManager, VA508ImageListLabeler;
+  uTemplates, Menus, ImgList, Clipbrd, ToolWin, TypInfo, MSXML_TLB, fBase508Form,
+  VA508AccessibilityManager, VA508ImageListLabeler, System.Actions, Vcl.ActnList, ORExtensions;
 
 type
   TTemplateTreeControl = (tcDel, tcUp, tcDown, tcLbl, tcCopy);
@@ -56,29 +44,7 @@ type
     sbPerDelete: TBitBtn;
     cbPerHide: TCheckBox;
     pnlPersonalGap: TPanel;
-    popTemplates: TPopupMenu;
-    mnuCollapseTree: TMenuItem;
-    mnuFindTemplates: TMenuItem;
-    popBoilerplate: TPopupMenu;
-    mnuBPInsertObject: TMenuItem;
-    mnuBPErrorCheck: TMenuItem;
-    mnuBPSpellCheck: TMenuItem;
     tmrAutoScroll: TTimer;
-    popGroup: TPopupMenu;
-    mnuGroupBPCopy: TMenuItem;
-    mnuBPCut: TMenuItem;
-    N2: TMenuItem;
-    mnuBPCopy: TMenuItem;
-    mnuBPPaste: TMenuItem;
-    N4: TMenuItem;
-    mnuGroupBPSelectAll: TMenuItem;
-    mnuBPSelectAll: TMenuItem;
-    N6: TMenuItem;
-    mnuNodeCopy: TMenuItem;
-    mnuNodePaste: TMenuItem;
-    mnuNodeDelete: TMenuItem;
-    N8: TMenuItem;
-    mnuBPUndo: TMenuItem;
     cbEditShared: TCheckBox;
     pnlProperties: TPanel;
     gbProperties: TGroupBox;
@@ -86,77 +52,22 @@ type
     lblLines: TLabel;
     cbExclude: TORCheckBox;
     cbActive: TCheckBox;
-    edtGap: TCaptionEdit;
+    edtGap: ORExtensions.TCaptionEdit;
     udGap: TUpDown;
-    edtName: TCaptionEdit;
-    mnuMain: TMainMenu;
-    mnuEdit: TMenuItem;
-    mnuUndo: TMenuItem;
-    N9: TMenuItem;
-    mnuCut: TMenuItem;
-    mnuCopy: TMenuItem;
-    mnuPaste: TMenuItem;
-    mnuSelectAll: TMenuItem;
-    N11: TMenuItem;
-    mnuInsertObject: TMenuItem;
-    mnuErrorCheck: TMenuItem;
-    mnuSpellCheck: TMenuItem;
-    N13: TMenuItem;
-    mnuGroupBoilerplate: TMenuItem;
-    mnuGroupCopy: TMenuItem;
-    mnuGroupSelectAll: TMenuItem;
-    mnuTemplate: TMenuItem;
-    mnuTCopy: TMenuItem;
-    mnuTPaste: TMenuItem;
-    mnuTDelete: TMenuItem;
-    N12: TMenuItem;
+    edtName: ORExtensions.TCaptionEdit;
     pnlShSearch: TPanel;
     btnShFind: TORAlignButton;
-    edtShSearch: TCaptionEdit;
+    edtShSearch: ORExtensions.TCaptionEdit;
     cbShMatchCase: TCheckBox;
     cbShWholeWords: TCheckBox;
     pnlPerSearch: TPanel;
     btnPerFind: TORAlignButton;
-    edtPerSearch: TCaptionEdit;
+    edtPerSearch: ORExtensions.TCaptionEdit;
     cbPerMatchCase: TCheckBox;
     cbPerWholeWords: TCheckBox;
-    mnuFindShared: TMenuItem;
-    mnuFindPersonal: TMenuItem;
-    N3: TMenuItem;
-    mnuShCollapse: TMenuItem;
-    mnuPerCollapse: TMenuItem;
-    pnlMenuBar: TPanel;
-    lblPerOwner: TLabel;
-    cboOwner: TORComboBox;
+    pnlToolBar: TPanel;
     btnNew: TORAlignButton;
-    pnlMenu: TPanel;
-    mbMain: TMenuBar;
-    mnuNewTemplate: TMenuItem;
     Bevel1: TBevel;
-    mnuNodeNew: TMenuItem;
-    mnuBPCheckGrammar: TMenuItem;
-    mnuCheckGrammar: TMenuItem;
-    N1: TMenuItem;
-    N7: TMenuItem;
-    N14: TMenuItem;
-    mnuSort: TMenuItem;
-    N15: TMenuItem;
-    mnuNodeSort: TMenuItem;
-    mnuTry: TMenuItem;
-    mnuBPTry: TMenuItem;
-    mnuAutoGen: TMenuItem;
-    mnuNodeAutoGen: TMenuItem;
-    popNotes: TPopupMenu;
-    mnuNotesUndo: TMenuItem;
-    MenuItem2: TMenuItem;
-    mnuNotesCut: TMenuItem;
-    mnuNotesCopy: TMenuItem;
-    mnuNotesPaste: TMenuItem;
-    MenuItem6: TMenuItem;
-    mnuNotesSelectAll: TMenuItem;
-    MenuItem8: TMenuItem;
-    mnuNotesGrammar: TMenuItem;
-    mnuNotesSpelling: TMenuItem;
     cbNotes: TCheckBox;
     gbDialogProps: TGroupBox;
     cbDisplayOnly: TCheckBox;
@@ -165,13 +76,6 @@ type
     cbFirstLine: TCheckBox;
     cbHideDlgItems: TCheckBox;
     cbIndent: TCheckBox;
-    mnuTools: TMenuItem;
-    mnuEditTemplateFields: TMenuItem;
-    N16: TMenuItem;
-    mnuImportTemplate: TMenuItem;
-    mnuExportTemplate: TMenuItem;
-    mnuBPInsertField: TMenuItem;
-    mnuInsertField: TMenuItem;
     cbEditUser: TCheckBox;
     dlgImport: TOpenDialog;
     dlgExport: TSaveDialog;
@@ -179,13 +83,10 @@ type
     lblType: TLabel;
     cbxRemDlgs: TORComboBox;
     lblRemDlg: TLabel;
-    N17: TMenuItem;
-    mnuTemplateIconLegend: TMenuItem;
     cbLock: TORCheckBox;
-    mnuRefresh: TMenuItem;
     pnlCOM: TPanel;
     lblCOMParam: TLabel;
-    edtCOMParam: TCaptionEdit;
+    edtCOMParam: ORExtensions.TCaptionEdit;
     cbxCOMObj: TORComboBox;
     lblCOMObj: TLabel;
     pnlLink: TPanel;
@@ -196,12 +97,12 @@ type
     pnlBoilerplate: TPanel;
     splBoil: TSplitter;
     splNotes: TSplitter;
-    reBoil: TRichEdit;
+    reBoil: ORExtensions.TRichEdit;
     pnlGroupBP: TPanel;
     lblGroupBP: TLabel;
     lblGroupRow: TLabel;
     lblGroupCol: TLabel;
-    reGroupBP: TRichEdit;
+    reGroupBP: ORExtensions.TRichEdit;
     pnlGroupBPGap: TPanel;
     pnlBP: TPanel;
     lblBoilerplate: TLabel;
@@ -210,15 +111,143 @@ type
     cbLongLines: TCheckBox;
     pnlNotes: TPanel;
     lblNotes: TLabel;
-    reNotes: TRichEdit;
+    reNotes: ORExtensions.TRichEdit;
     pnlComCare: TPanel;
     lblComCare: TLabel;
-    procedure btnNewClick(Sender: TObject);
+    alMain: TActionList;
+    tbMain: TToolBar;
+    popEdit: TPopupMenu;
+    MenuItem1: TMenuItem;
+    MenuItem3: TMenuItem;
+    MenuItem4: TMenuItem;
+    MenuItem5: TMenuItem;
+    MenuItem7: TMenuItem;
+    MenuItem9: TMenuItem;
+    MenuItem10: TMenuItem;
+    MenuItem11: TMenuItem;
+    MenuItem12: TMenuItem;
+    MenuItem13: TMenuItem;
+    InsertPatientDataObject1: TMenuItem;
+    InsertTemplateField1: TMenuItem;
+    CheckforErrors1: TMenuItem;
+    PreviewPrintTemplate1: TMenuItem;
+    popAction: TPopupMenu;
+    MenuItem14: TMenuItem;
+    MenuItem15: TMenuItem;
+    MenuItem16: TMenuItem;
+    MenuItem17: TMenuItem;
+    MenuItem18: TMenuItem;
+    MenuItem19: TMenuItem;
+    MenuItem20: TMenuItem;
+    MenuItem21: TMenuItem;
+    MenuItem22: TMenuItem;
+    N18: TMenuItem;
+    FindPersonalTemplates1: TMenuItem;
+    CollapseSharedTree1: TMenuItem;
+    CollapsePersonalTree1: TMenuItem;
+    popTools: TPopupMenu;
+    MenuItem23: TMenuItem;
+    MenuItem24: TMenuItem;
+    MenuItem25: TMenuItem;
+    ExportTemplate1: TMenuItem;
+    N19: TMenuItem;
+    RefreshTemplates1: TMenuItem;
+    emplateIconLegend1: TMenuItem;
+    N20: TMenuItem;
+    ErrorCheckAllSharedTemplates1: TMenuItem;
+    ErrorCheckAllTemplateFields1: TMenuItem;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    tbMnuEdit: TToolButton;
+    acMnuEdit: TAction;
+    acMnuAction: TAction;
+    tbMnuAction: TToolButton;
+    acMnuTools: TAction;
+    tbMnuTools: TToolButton;
+    acEditUndo: TAction;
+    acEditCut: TAction;
+    acEditCopy: TAction;
+    acEditPaste: TAction;
+    acEditSelectAll: TAction;
+    acEditInsertObject: TAction;
+    acEditInsertField: TAction;
+    acEditCheck: TAction;
+    acEditPreview: TAction;
+    acEditGrammar: TAction;
+    acEditSpelling: TAction;
+    acActionNewTemplate: TAction;
+    acActionTemplateGenerate: TAction;
+    acActionTemplateCopy: TAction;
+    acActionTemplatePaste: TAction;
+    acActionTemplateDelete: TAction;
+    acActionTemplateSort: TAction;
+    acActionTemplateFindShared: TAction;
+    acActionTemplateFindPersonal: TAction;
+    acActionTemplateCollapseShared: TAction;
+    acActionTemplateCollapsePersonal: TAction;
+    acToolsEdit: TAction;
+    acToolsImport: TAction;
+    acToolsExport: TAction;
+    acToolsRefresh: TAction;
+    acToolsIcon: TAction;
+    acToolsCheckSharedTemplates: TAction;
+    acToolsCheckAllTemplateFields: TAction;
+    acNodeTemplateFind: TAction;
+    acNodeTemplateCollapse: TAction;
+    popTemplatesPlus: TPopupMenu;
+    NewTemplate2: TMenuItem;
+    GenerateTemplate1: TMenuItem;
+    CopyTemplate1: TMenuItem;
+    PasteTemplate1: TMenuItem;
+    DeleteTemplate1: TMenuItem;
+    N21: TMenuItem;
+    Sort1: TMenuItem;
+    N22: TMenuItem;
+    FindTemplate1: TMenuItem;
+    acNodeTemplateCollapse1: TMenuItem;
+    popNotesPlus: TPopupMenu;
+    MenuItem26: TMenuItem;
+    MenuItem27: TMenuItem;
+    MenuItem28: TMenuItem;
+    MenuItem29: TMenuItem;
+    MenuItem30: TMenuItem;
+    MenuItem32: TMenuItem;
+    MenuItem33: TMenuItem;
+    MenuItem34: TMenuItem;
+    MenuItem35: TMenuItem;
+    popGroupPlus: TPopupMenu;
+    MenuItem36: TMenuItem;
+    MenuItem37: TMenuItem;
+    MenuItem38: TMenuItem;
+    popBoilerplatePlus: TPopupMenu;
+    MenuItem39: TMenuItem;
+    MenuItem40: TMenuItem;
+    MenuItem41: TMenuItem;
+    MenuItem42: TMenuItem;
+    MenuItem43: TMenuItem;
+    MenuItem44: TMenuItem;
+    MenuItem45: TMenuItem;
+    MenuItem46: TMenuItem;
+    MenuItem47: TMenuItem;
+    MenuItem48: TMenuItem;
+    MenuItem49: TMenuItem;
+    MenuItem50: TMenuItem;
+    MenuItem51: TMenuItem;
+    MenuItem52: TMenuItem;
+    CheckforErrors2: TMenuItem;
+    PreviewPrintTemplate2: TMenuItem;
+    acEditRedo: TAction;
+    Redo1: TMenuItem;
+    Redo2: TMenuItem;
+    Redo3: TMenuItem;
+    N1: TMenuItem;
+    N2: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
     procedure btnApplyClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cboOwnerNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
-    procedure cboOwnerChange(Sender: TObject);
     procedure tvPersonalExpanding(Sender: TObject; Node: TTreeNode;
       var AllowExpansion: Boolean);
     procedure tvSharedExpanding(Sender: TObject; Node: TTreeNode;
@@ -250,9 +279,6 @@ type
     procedure sbCopyRightClick(Sender: TObject);
     procedure reBoilChange(Sender: TObject);
     procedure cbEditSharedClick(Sender: TObject);
-    procedure popTemplatesPopup(Sender: TObject);
-    procedure mnuCollapseTreeClick(Sender: TObject);
-    procedure mnuFindTemplatesClick(Sender: TObject);
     procedure btnFindClick(Sender: TObject);
     procedure edtSearchChange(Sender: TObject);
     procedure edtShSearchEnter(Sender: TObject);
@@ -261,12 +287,8 @@ type
     procedure edtPerSearchExit(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure mnuBPInsertObjectClick(Sender: TObject);
-    procedure mnuBPErrorCheckClick(Sender: TObject);
-    procedure popBoilerplatePopup(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure mnuBPSpellCheckClick(Sender: TObject);
     procedure splBoilMoved(Sender: TObject);
     procedure edtGapKeyPress(Sender: TObject; var Key: Char);
     procedure edtNameExit(Sender: TObject);
@@ -274,47 +296,17 @@ type
     procedure tvTreeStartDrag(Sender: TObject;
       var DragObject: TDragObject);
     procedure tvTreeEndDrag(Sender, Target: TObject; X, Y: Integer);
-    procedure mnuGroupBPCopyClick(Sender: TObject);
-    procedure popGroupPopup(Sender: TObject);
-    procedure mnuBPCutClick(Sender: TObject);
-    procedure mnuBPCopyClick(Sender: TObject);
-    procedure mnuBPPasteClick(Sender: TObject);
-    procedure mnuGroupBPSelectAllClick(Sender: TObject);
-    procedure mnuBPSelectAllClick(Sender: TObject);
-    procedure mnuNodeDeleteClick(Sender: TObject);
-    procedure mnuNodeCopyClick(Sender: TObject);
-    procedure mnuNodePasteClick(Sender: TObject);
-    procedure mnuBPUndoClick(Sender: TObject);
     procedure tvTreeKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure mnuEditClick(Sender: TObject);
-    procedure mnuGroupBoilerplateClick(Sender: TObject);
     procedure cbShFindOptionClick(Sender: TObject);
     procedure cbPerFindOptionClick(Sender: TObject);
-    procedure mnuTemplateClick(Sender: TObject);
-    procedure mnuFindSharedClick(Sender: TObject);
-    procedure mnuFindPersonalClick(Sender: TObject);
-    procedure mnuShCollapseClick(Sender: TObject);
-    procedure mnuPerCollapseClick(Sender: TObject);
     procedure pnlShSearchResize(Sender: TObject);
     procedure pnlPerSearchResize(Sender: TObject);
     procedure pnlPropertiesResize(Sender: TObject);
     procedure mbMainResize(Sender: TObject);
-    procedure mnuBPCheckGrammarClick(Sender: TObject);
-    procedure mnuSortClick(Sender: TObject);
     procedure pnlBoilerplateCanResize(Sender: TObject; var NewWidth,
       NewHeight: Integer; var Resize: Boolean);
-    procedure mnuBPTryClick(Sender: TObject);
-    procedure mnuAutoGenClick(Sender: TObject);
     procedure reNotesChange(Sender: TObject);
-    procedure mnuNotesUndoClick(Sender: TObject);
-    procedure mnuNotesCutClick(Sender: TObject);
-    procedure mnuNotesCopyClick(Sender: TObject);
-    procedure mnuNotesPasteClick(Sender: TObject);
-    procedure mnuNotesSelectAllClick(Sender: TObject);
-    procedure mnuNotesGrammarClick(Sender: TObject);
-    procedure mnuNotesSpellingClick(Sender: TObject);
-    procedure popNotesPopup(Sender: TObject);
     procedure cbNotesClick(Sender: TObject);
     procedure cbDisplayOnlyClick(Sender: TObject);
     procedure cbFirstLineClick(Sender: TObject);
@@ -322,19 +314,12 @@ type
     procedure cbHideDlgItemsClick(Sender: TObject);
     procedure cbHideItemsClick(Sender: TObject);
     procedure cbIndentClick(Sender: TObject);
-    procedure mnuToolsClick(Sender: TObject);
-    procedure mnuEditTemplateFieldsClick(Sender: TObject);
-    procedure mnuBPInsertFieldClick(Sender: TObject);
-    procedure mnuExportTemplateClick(Sender: TObject);
-    procedure mnuImportTemplateClick(Sender: TObject);
     procedure cbxTypeDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
     procedure cbxTypeChange(Sender: TObject);
     procedure cbxRemDlgsChange(Sender: TObject);
-    procedure mnuTemplateIconLegendClick(Sender: TObject);
     procedure cbLongLinesClick(Sender: TObject);
     procedure cbLockClick(Sender: TObject);
-    procedure mnuRefreshClick(Sender: TObject);
     procedure reResizeRequest(Sender: TObject; Rect: TRect);
     procedure reBoilSelectionChange(Sender: TObject);
     procedure reGroupBPSelectionChange(Sender: TObject);
@@ -353,6 +338,52 @@ type
       var Accept: Boolean);
     procedure cbxLinkEnter(Sender: TObject);
     procedure cbxLinkChange(Sender: TObject);
+    procedure acMnuEditExecute(Sender: TObject);
+    procedure acMnuActionExecute(Sender: TObject);
+    procedure acMnuToolsExecute(Sender: TObject);
+    procedure acEditUndoExecute(Sender: TObject);
+    procedure acEditCutExecute(Sender: TObject);
+    procedure acEditCopyExecute(Sender: TObject);
+    procedure acEditPasteExecute(Sender: TObject);
+    procedure acEditSelectAllExecute(Sender: TObject);
+    procedure acEditInsertObjectExecute(Sender: TObject);
+    procedure acEditInsertFieldExecute(Sender: TObject);
+    procedure acEditPreviewExecute(Sender: TObject);
+    procedure acEditCheckExecute(Sender: TObject);
+    procedure acEditGrammarExecute(Sender: TObject);
+    procedure acEditSpellingExecute(Sender: TObject);
+    procedure acEditGroupExecute(Sender: TObject);
+    procedure acActionNewTemplateExecute(Sender: TObject);
+    procedure acActionTemplateGenerateExecute(Sender: TObject);
+    procedure acActionTemplateCopyExecute(Sender: TObject);
+    procedure acActionTemplatePasteExecute(Sender: TObject);
+    procedure acActionTemplateDeleteExecute(Sender: TObject);
+    procedure acActionTemplateSortExecute(Sender: TObject);
+    procedure acActionTemplateFindSharedExecute(Sender: TObject);
+    procedure acActionTemplateFindPersonalExecute(Sender: TObject);
+    procedure acActionTemplateCollapseSharedExecute(Sender: TObject);
+    procedure acActionTemplateCollapsePersonalExecute(Sender: TObject);
+    procedure acToolsEditExecute(Sender: TObject);
+    procedure acToolsImportExecute(Sender: TObject);
+    procedure acToolsExportExecute(Sender: TObject);
+    procedure acToolsRefreshExecute(Sender: TObject);
+    procedure acToolsIconExecute(Sender: TObject);
+    procedure acToolsCheckSharedTemplatesExecute(Sender: TObject);
+    procedure acToolsCheckAllTemplateFieldsExecute(Sender: TObject);
+    procedure acNodeTemplateFindExecute(Sender: TObject);
+    procedure acNodeTemplateCollapseExecute(Sender: TObject);
+    procedure popNotesPlusPopup(Sender: TObject);
+    procedure popGroupPlusPopup(Sender: TObject);
+    procedure popTemplatesPlusPopup(Sender: TObject);
+    procedure popBoilerplatePlusPopup(Sender: TObject);
+    procedure acNotesUndoExecute(Sender: TObject);
+    procedure acNotesCutExecute(Sender: TObject);
+    procedure acNotesCopyExecute(Sender: TObject);
+    procedure acNotesPasteExecute(Sender: TObject);
+    procedure acNotesSelectAllExecute(Sender: TObject);
+    procedure acNotesGrammarExecute(Sender: TObject);
+    procedure acNotesSpellingExecute(Sender: TObject);
+    procedure acEditRedoExecute(Sender: TObject);
   private
     FLastRect: TRect;
     FForceContainer: boolean;
@@ -401,6 +432,7 @@ type
     FOriginalTreeNode: TTreeNode; //*SMT used to prevent template link issues.
     FLastLinkIEN: Integer;
     FLastLinkString: String;
+    Procedure UpdateActionsStatus;
   protected
     procedure UpdateXY(re: TRichEdit; lblX, lblY: TLabel);
     function IsTemplateLocked(Node: TTreeNode): boolean;
@@ -437,6 +469,15 @@ type
     function GetLinkType(const ANode: TTreeNode): TTemplateLinkType;
     function IsParentAConsult(Node: TTreeNode): Boolean;
     function IsParentAConsultOrProcedure: Boolean;
+
+    procedure doCheckErrors(ShowWarning:Boolean = False);
+
+    procedure doTemplateNew;
+    procedure doTemplateFind(aTree:TORTreeView = nil);
+    procedure doTemplateCollapse(aTree: TORTreeView = nil);
+
+    procedure doToolsImport;
+    procedure doToolsExport;
   end;
 
 procedure EditTemplates(Form: TForm; NewTemplate: boolean = FALSE; CopiedText: string = ''; Shared: boolean = FALSE);
@@ -459,7 +500,7 @@ implementation
 uses dShared, uCore, rTemplates, fTemplateObjects, uSpell, fTemplateView,
   fTemplateAutoGen, fDrawers, mDrawers, fTemplateFieldEditor, fTemplateFields, XMLUtils,
   fIconLegend, uReminders, uConst, rCore, rEventHooks, rConsults, VAUtils,
-  rMisc, fFindingTemplates, System.UITypes;
+  rMisc, fFindingTemplates, System.UITypes, FTemplateReport, Winapi.RichEdit;
 
 const
   PropText = ' Template Properties ';
@@ -576,7 +617,8 @@ begin
           tvPersonal.Selected := SelNode;
       if (NewTemplate) then
       begin
-        btnNewClick(frmTemplateEditor);
+//        btnNewClick(frmTemplateEditor);
+        doTemplateNew;
         if (CopiedText <> '') then
         begin
           TTemplate(FBtnNewNode.Data).Boilerplate := CopiedText;
@@ -597,7 +639,7 @@ begin
   end;
 end;
 
-procedure TfrmTemplateEditor.btnNewClick(Sender: TObject);
+procedure TfrmTemplateEditor.doTemplateNew;
 var
   idx: integer;
   Tmp, Owner: TTemplate;
@@ -697,6 +739,8 @@ begin
 end;
 
 procedure TfrmTemplateEditor.FormCreate(Sender: TObject);
+var
+  sl: TSTrings;
 begin
   SetFormPosition(Self);
   ResizeAnchoredFormToFont(self);
@@ -719,7 +763,15 @@ begin
     FCanDoReminders := FALSE;
 
 //  QuickCopy(GetAllActiveCOMObjects, cbxCOMObj.Items);
-  cbxCOMObj.Items.Text := GetAllActiveCOMObjects.Text;
+//  cbxCOMObj.Items.Text := GetAllActiveCOMObjects.Text;
+  sl := TStringList.Create;
+  setAllActiveComObjects(sl);
+  try
+    cbxComObj.Items.Assign(sl);
+  finally
+    sl.Free;
+  end;
+
   FCanDoCOMObjects := (cbxCOMObj.Items.Count > 0);
 
   FUpdating := TRUE;
@@ -750,10 +802,12 @@ begin
 
   ClearBackup;
 
-  cboOwner.SelText := MixedCase(User.Name);
   NewPersonalUser(User.DUZ);
 
   cbEditShared.Visible := (UserTemplateAccessLevel = taEditor);
+  acToolsCheckSharedTemplates.Enabled := cbEditShared.Visible;
+
+  acToolsCheckAllTemplateFields.Enabled := cbEditShared.Visible;
   FCanEditShared := FALSE;
   SharedEditing;
 
@@ -788,11 +842,6 @@ procedure TfrmTemplateEditor.cboOwnerNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
 //  cboOwner.ForDataUse(SubSetOfTemplateOwners(StartFrom, Direction));
-end;
-
-procedure TfrmTemplateEditor.cboOwnerChange(Sender: TObject);
-begin
-  NewPersonalUser(cboOwner.ItemIEN);
 end;
 
 procedure TfrmTemplateEditor.NewPersonalUser(UsrIEN: Int64);
@@ -1068,7 +1117,7 @@ begin
             if not assigned(FConsultServices) then
             begin
               FConsultServices := TStringList.Create;
-              FastAssign(LoadServiceListWithSynonyms(1), FConsultServices);
+              setServiceListWithSynonyms(FConsultServices,1);
               SortByPiece(FConsultServices, U, 2);
             end;
             FastAssign(FConsultServices, cbxLink.Items);
@@ -1915,16 +1964,47 @@ begin
         if assigned(FTreeControl[Tree, i]) then
           FTreeControl[Tree, i].Enabled := FALSE;
     end;
+    //OR*3.0*463
     if (FCurTree = tvShared) and (FCanEditShared) then
-      btnNew.Enabled := TRUE
+    begin
+//      btnNew.Enabled := TRUE;
+      acActionNewTemplate.Enabled := True;
+      acActionTemplateSort.Enabled := True;
+    end
     else
       if (FCurTree = tvPersonal) and (FCanEditPersonal) then
-        btnNew.Enabled := TRUE
+      begin
+//        btnNew.Enabled := TRUE;
+        acActionNewTemplate.Enabled := True;
+        acActionTemplateSort.Enabled := True;
+      end
       else
-        btnNew.Enabled := FALSE;
+      begin
+//        btnNew.Enabled := FALSE;
+        acActionNewTemplate.Enabled := False;
+        acActionTemplateSort.Enabled := False;
+    end
   end
   else
-    btnNew.Enabled := FALSE;
+  begin
+//    btnNew.Enabled := FALSE;
+    acActionNewTemplate.Enabled := False;
+    acActionTemplateSort.Enabled := False;
+  end;
+end;
+
+procedure TfrmTemplateEditor.acToolsCheckAllTemplateFieldsExecute(
+  Sender: TObject);
+begin
+  inherited;
+  RunTemplateErrorReport(True);
+end;
+
+procedure TfrmTemplateEditor.acToolsCheckSharedTemplatesExecute(
+  Sender: TObject);
+begin
+  inherited;
+  RunTemplateErrorReport(False);
 end;
 
 procedure TfrmTemplateEditor.tvTreeDragging(Sender: TObject;
@@ -2332,13 +2412,6 @@ end;
 
 procedure TfrmTemplateEditor.SharedEditing;
 begin
-{$IFDEF OwnerScan}
-  lblPerOwner.Visible := FCanEditShared;
-  cboOwner.Visible := FCanEditShared;
-{$ELSE}
-  lblPerOwner.Visible := FALSE;
-  cboOwner.Visible := FALSE;
-{$ENDIF}
   sbCopyLeft.Visible := FCanEditShared;
   if (not FCanEditShared) then
     cbShHide.Checked := TRUE;
@@ -2359,55 +2432,73 @@ begin
   SharedEditing;
 end;
 
-procedure TfrmTemplateEditor.popTemplatesPopup(Sender: TObject);
+procedure TfrmTemplateEditor.popTemplatesPlusPopup(Sender: TObject);
 var
   Tree: TTreeView;
   Node: TTreeNode;
   FindOn: boolean;
   Txt: string;
-
+  b: Boolean;
 begin
+  inherited;
   FFromMainMenu := FALSE;
   Tree := GetTree;
   Node := Tree.Selected;
   Tree.Selected := Node; // This line prevents selected from changing after menu closes
-  mnuCollapseTree.Enabled := dmodShared.NeedsCollapsing(Tree);
+  acNodeTemplateCollapse.Enabled := dmodShared.NeedsCollapsing(Tree);
   if (Tree = tvShared) then
   begin
     Txt := 'Shared';
     FindOn := FFindShOn;
-    mnuNodeDelete.Enabled := ((sbShDelete.Visible) and (sbShDelete.Enabled));
+    acActionTemplateDelete.Enabled := ((sbShDelete.Visible) and (sbShDelete.Enabled));
   end
   else
   begin
     Txt := 'Personal';
     FindOn := FFindPerOn;
-    mnuNodeDelete.Enabled := ((sbPerDelete.Visible) and (sbPerDelete.Enabled));
+    acActionTemplateDelete.Enabled := ((sbPerDelete.Visible) and (sbPerDelete.Enabled));
   end;
-  mnuFindTemplates.Checked := FindOn;
-  mnuCollapseTree.Caption := 'Collapse ' + Txt + ' &Tree';
-  mnuFindTemplates.Caption := '&Find ' + Txt + ' Templates';
+  acNodeTemplateFind.Checked := FindOn;
+  acNodeTemplateCollapse.Caption := 'Collapse ' + Txt + ' &Tree';
+  acNodeTemplateFind.Caption := '&Find ' + Txt + ' Templates';
 
   if (assigned(Tree) and assigned(Tree.Selected) and assigned(Tree.Selected.Data)) then
   begin
-    mnuNodeCopy.Enabled := (TTemplate(Tree.Selected.Data).RealType in [ttDoc, ttGroup, ttClass]);
-    mnuNodeSort.Enabled := (TTemplate(Tree.Selected.Data).RealType in AllTemplateFolderTypes) and
+    b := (TTemplate(Tree.Selected.Data).RealType in [ttDoc, ttGroup, ttClass]);
+    acActionTemplateCopy.Enabled := b;
+
+    b :=(TTemplate(Tree.Selected.Data).RealType in AllTemplateFolderTypes) and
       (Tree.Selected.HasChildren) and
       (Tree.Selected.GetFirstChild.GetNextSibling <> nil);
+    acActionTemplateSort.Enabled := b;
+    if b then  //OR*3.0*463
+      begin
+        if (Tree = tvShared) then
+          b := FCanEditShared
+        else
+          b := FCanEditPersonal;
+      end;
+    acActionTemplateSort.Enabled := b;
   end
   else
   begin
-    mnuNodeCopy.Enabled := FALSE;
-    mnuNodeSort.Enabled := FALSE;
+    acActionTemplateCopy.Enabled := False;
+    acActionTemplateSort.Enabled := False;
   end;
   FPasteNode := Tree.Selected;
-  mnuNodePaste.Enabled := PasteOK;
-  mnuNodeNew.Enabled := btnNew.Enabled;
-  mnuNodeAutoGen.Enabled := btnNew.Enabled;
+  acActionTemplatePaste.Enabled := PasteOK;
+//  acActionNewTemplate.Enabled := btnNew.Enabled;
+  acActionTemplateGenerate.Enabled := acActionNewTemplate.Enabled;
 end;
 
-procedure TfrmTemplateEditor.mnuCollapseTreeClick(Sender: TObject);
+procedure TfrmTemplateEditor.doTemplateCollapse(aTree: TORTreeView = nil);
 begin
+  if assigned(aTree) then
+    begin
+      aTree.Selected := aTree.Items.GetFirstNode;
+      aTree.FullCollapse;
+    end
+  else
   if (GetTree = tvShared) then
   begin
     tvShared.Selected := tvShared.Items.GetFirstNode;
@@ -2420,12 +2511,14 @@ begin
   end;
 end;
 
-procedure TfrmTemplateEditor.mnuFindTemplatesClick(Sender: TObject);
+procedure TfrmTemplateEditor.doTemplateFind(aTree:TORTreeView = nil);
 var
   Tree: TTreeView;
 
 begin
-  Tree := GetTree;
+  Tree := aTree;
+  if not Assigned(Tree) then
+    Tree := GetTree;
   if (Tree = tvShared) then
   begin
     FFindShOn := not FFindShOn;
@@ -2464,7 +2557,8 @@ begin
     Result := FMainMenuTree
   else
   begin
-    if (TTemplateTreeType(PopupComponent(popTemplates, popTemplates).Tag) = ttShared) then
+//    if (TTemplateTreeType(PopupComponent(popTemplates, popTemplates).Tag) = ttShared) then
+    if (TTemplateTreeType(PopupComponent(popTemplatesPlus, popTemplatesPlus).Tag) = ttShared) then
       Result := tvShared
     else
       Result := tvPersonal;
@@ -2474,7 +2568,7 @@ end;
 procedure TfrmTemplateEditor.btnFindClick(Sender: TObject);
 var
   Found: TTreeNode;
-  edtSearch: TEdit;
+  edtSearch: stdCtrls.TEdit;
   IsNext: boolean;
   FindNext: boolean;
   FindWholeWords: boolean;
@@ -2617,80 +2711,80 @@ begin
   end;
 end;
 
-procedure TfrmTemplateEditor.mnuBPInsertObjectClick(Sender: TObject);
-var
-  i: integer;
-  DoIt: boolean;
+procedure TfrmTemplateEditor.acEditInsertObjectExecute(Sender: TObject);
+
+  procedure doInsertObject;
+  var
+    i: Integer;
+    DoIt: Boolean;
+
+  begin
+    if (not assigned(frmTemplateObjects)) then
+    begin
+      dmodShared.LoadTIUObjects;
+      frmTemplateObjects := TfrmTemplateObjects.Create(Self);
+      DoIt := TRUE;
+      if (UserTemplateAccessLevel <> taEditor) then
+      begin
+        UpdatePersonalObjects;
+        if uPersonalObjects.Count > 0 then
+        // -------- CQ #8665 - RV ------------
+        begin
+          DoIt := FALSE;
+          for i := 0 to dmodShared.TIUObjects.Count - 1 do
+            if uPersonalObjects.IndexOf(Piece(dmodShared.TIUObjects[i], U, 2))
+              >= 0 then // -------- CQ #8665 - RV ------------
+              frmTemplateObjects.cboObjects.Items.Add(dmodShared.TIUObjects[i]);
+        end;
+      end;
+      if DoIt then
+        FastAssign(dmodShared.TIUObjects, frmTemplateObjects.cboObjects.Items);
+      frmTemplateObjects.Font := Font;
+      frmTemplateObjects.re := reBoil;
+      frmTemplateObjects.AutoLongLines := AutoLongLines;
+    end;
+    frmTemplateObjects.Show;
+  end;
 
 begin
-  if (not assigned(frmTemplateObjects)) then
-  begin
-    dmodShared.LoadTIUObjects;
-    frmTemplateObjects := TfrmTemplateObjects.Create(Self);
-    DoIt := TRUE;
-    if (UserTemplateAccessLevel <> taEditor) then
-    begin
-      UpdatePersonalObjects;
-      if uPersonalObjects.Count > 0 then // -------- CQ #8665 - RV ------------
-      begin
-        DoIt := FALSE;
-        for i := 0 to dmodShared.TIUObjects.Count - 1 do
-          if uPersonalObjects.IndexOf(Piece(dmodShared.TIUObjects[i], U, 2)) >= 0 then // -------- CQ #8665 - RV ------------
-            frmTemplateObjects.cboObjects.Items.Add(dmodShared.TIUObjects[i]);
-      end;
-    end;
-    if DoIt then
-      FastAssign(dmodShared.TIUObjects, frmTemplateObjects.cboObjects.Items);
-    frmTemplateObjects.Font := Font;
-    frmTemplateObjects.re := reBoil;
-    frmTemplateObjects.AutoLongLines := AutoLongLines;
-  end;
-  frmTemplateObjects.Show;
+  inherited;
+  doInsertObject;
 end;
 
-procedure TfrmTemplateEditor.mnuBPErrorCheckClick(Sender: TObject);
+procedure TfrmTemplateEditor.doCheckErrors(ShowWarning:Boolean = False);//(Sender: TObject);
+var
+  bp: TStringList;
+
 begin
   FBPOK := FALSE;
-  if (reBoil.Lines.Count > 0) then
+  if (reBoil.Lines.Count > 0) or (pnlGroupBP.Visible and (reGroupBP.Lines.Count > 0)) then
   begin
     if (dmodShared.TemplateOK(FCurTree.Selected.Data, 'OK')) then
     begin
-      TestBoilerplate(reBoil.Lines);
-      if (RPCBrokerV.Results.Count > 0) then
-        InfoBox('Boilerplate Contains Errors:' + CRLF + CRLF +
-          RPCBrokerV.Results.Text, 'Error', MB_OK or MB_ICONERROR)
-      else
-      begin
-        FBPOK := TRUE;
-        if (assigned(Sender)) then
-          InfoBox('No Errors Found in Boilerplate.', 'Information', MB_OK or MB_ICONINFORMATION);
+      bp := TStringList.Create;
+      try
+        TestBoilerplate(reBoil.Lines, bp);
+        if (bp.Count > 0) then
+          InfoBox('Boilerplate Contains Errors:' + CRLF + CRLF +
+            bp.Text, 'Error', MB_OK or MB_ICONERROR)
+        else
+        begin
+          FBPOK := TRUE;
+//          if (assigned(Sender)) then
+          if ShowWarning then
+            InfoBox('No Errors Found in Boilerplate.', 'Information', MB_OK or MB_ICONINFORMATION);
+        end;
+      finally
+        bp.Free;
       end;
     end;
   end;
 end;
 
-procedure TfrmTemplateEditor.popBoilerplatePopup(Sender: TObject);
-var
-  tryOK, ok: boolean;
-
+procedure TfrmTemplateEditor.popBoilerplatePlusPopup(Sender: TObject);
 begin
-  ok := not reBoil.ReadOnly;
-  mnuBPInsertObject.Enabled := ok;
-  mnuBPInsertField.Enabled := ok;
-
-  mnuBPPaste.Enabled := (ok and Clipboard.HasFormat(CF_TEXT));
-  if (ok) then
-    ok := (reBoil.Lines.Count > 0);
-  tryOK := (reBoil.Lines.Count > 0) or ((pnlGroupBP.Visible) and (reGroupBP.Lines.Count > 0));
-  mnuBPErrorCheck.Enabled := tryOK;
-  mnuBPTry.Enabled := tryOK;
-  mnuBPSpellCheck.Enabled := ok and SpellCheckAvailable;
-  mnuBPCheckGrammar.Enabled := ok and SpellCheckAvailable;
-
-  mnuBPCopy.Enabled := (reBoil.SelLength > 0);
-  mnuBPCut.Enabled := (ok and (reBoil.SelLength > 0));
-  mnuBPSelectAll.Enabled := (reBoil.Lines.Count > 0);
-  mnuBPUndo.Enabled := (reBoil.Perform(EM_CANUNDO, 0, 0) <> 0);
+  inherited;
+  UpdateActionsStatus;
 end;
 
 function TfrmTemplateEditor.ScanNames: boolean;
@@ -2780,8 +2874,9 @@ begin
   end;
 end;
 
-procedure TfrmTemplateEditor.mnuBPSpellCheckClick(Sender: TObject);
+procedure TfrmTemplateEditor.acEditSpellingExecute(Sender: TObject);
 begin
+  inherited;
   SpellCheckForControl(reBoil);
 end;
 
@@ -2932,52 +3027,65 @@ begin
   tmrAutoScroll.Enabled := FALSE;
 end;
 
-procedure TfrmTemplateEditor.mnuGroupBPCopyClick(Sender: TObject);
+
+
+procedure TfrmTemplateEditor.popGroupPlusPopup(Sender: TObject);
 begin
-  reGroupBP.CopyToClipboard;
+  inherited;
+  UpdateActionsStatus;
 end;
 
-procedure TfrmTemplateEditor.popGroupPopup(Sender: TObject);
+procedure TfrmTemplateEditor.acEditCutExecute(Sender: TObject);
 begin
-  mnuGroupBPCopy.Enabled := (pnlGroupBP.Visible and (reGroupBP.SelLength > 0));
-  mnuGroupBPSelectAll.Enabled := (pnlGroupBP.Visible and (reGroupBP.Lines.Count > 0));
+  inherited;
+  If Assigned(ActiveControl) and (ActiveControl is TCustomEdit) then
+    (ActiveControl as TCustomEdit).CutToClipboard;
 end;
 
-procedure TfrmTemplateEditor.mnuBPCutClick(Sender: TObject);
+procedure TfrmTemplateEditor.acEditCopyExecute(Sender: TObject);
 begin
-  reBoil.CutToClipboard;
+  inherited;
+  If Assigned(ActiveControl) and (ActiveControl is TCustomEdit) then
+    (ActiveControl as TCustomEdit).CopyToClipboard;
 end;
 
-procedure TfrmTemplateEditor.mnuBPCopyClick(Sender: TObject);
+procedure TfrmTemplateEditor.acEditPasteExecute(Sender: TObject);
 begin
-  reBoil.CopyToClipboard;
+  inherited;
+  If Assigned(ActiveControl) and (ActiveControl is TCustomEdit) then
+  begin
+    If (ActiveControl is TCustomRichEdit) then
+      // We can not allow WM_Paste to be called on a richedit because RTF tags
+      // should not be allowed into the control.
+      // We also can not just use SelText since this does not add to the
+      // undo buffer
+      (ActiveControl as TCustomEdit).Perform(EM_REPLACESEL, WParam(TRUE),
+        LongInt(PChar(Clipboard.AsText)))
+    else
+      (ActiveControl as TCustomEdit).PasteFromClipboard;
+  end;
 end;
 
-procedure TfrmTemplateEditor.mnuBPPasteClick(Sender: TObject);
+
+
+procedure TfrmTemplateEditor.acEditSelectAllExecute(Sender: TObject);
 begin
-  reBoil.SelText := Clipboard.AsText;
+  inherited;
+  If Assigned(ActiveControl) and (ActiveControl is TCustomEdit) then
+    (ActiveControl as TCustomEdit).SelectAll;
 end;
 
-procedure TfrmTemplateEditor.mnuGroupBPSelectAllClick(Sender: TObject);
+procedure TfrmTemplateEditor.acActionTemplateDeleteExecute(Sender: TObject);
 begin
-  reGroupBP.SelectAll;
-end;
-
-procedure TfrmTemplateEditor.mnuBPSelectAllClick(Sender: TObject);
-begin
-  reBoil.SelectAll;
-end;
-
-procedure TfrmTemplateEditor.mnuNodeDeleteClick(Sender: TObject);
-begin
-  if (FCurTree = tvShared) and (sbShDelete.Visible) and (sbShDelete.Enabled) then
+  if (FCurTree = tvShared) and (sbShDelete.Visible) and (sbShDelete.Enabled)
+  then
     sbDeleteClick(sbShDelete)
-  else
-    if (FCurTree = tvPersonal) and (sbPerDelete.Visible) and (sbPerDelete.Enabled) then
-      sbDeleteClick(sbPerDelete);
+  else if (FCurTree = tvPersonal) and (sbPerDelete.Visible) and
+    (sbPerDelete.Enabled) then
+    sbDeleteClick(sbPerDelete);
 end;
 
-procedure TfrmTemplateEditor.mnuNodeCopyClick(Sender: TObject);
+procedure TfrmTemplateEditor.acActionTemplateCopyExecute(Sender: TObject);
 begin
   if (assigned(FCurTree)) then
     FCopyNode := FCurTree.Selected
@@ -2985,7 +3093,7 @@ begin
     FCopyNode := nil;
 end;
 
-procedure TfrmTemplateEditor.mnuNodePasteClick(Sender: TObject);
+procedure TfrmTemplateEditor.acActionTemplatePasteExecute(Sender: TObject);
 begin
   if (PasteOK) then
   begin
@@ -2996,7 +3104,7 @@ begin
     try
       tvTreeDragDrop(tvShared, tvPersonal, 0, 0);
     finally
-      FCopying := FALSE;
+      FCopying := False;
     end;
   end;
   FCopyNode := nil;
@@ -3026,9 +3134,11 @@ begin
   end;
 end;
 
-procedure TfrmTemplateEditor.mnuBPUndoClick(Sender: TObject);
+procedure TfrmTemplateEditor.acEditUndoExecute(Sender: TObject);
 begin
-  reBoil.Perform(EM_UNDO, 0, 0);
+  inherited;
+  If Assigned(ActiveControl) and (ActiveControl is TCustomEdit) then
+    (ActiveControl as TCustomEdit).Perform(EM_UNDO, 0, 0);
 end;
 
 procedure TfrmTemplateEditor.tvTreeKeyDown(Sender: TObject;
@@ -3056,22 +3166,29 @@ begin
       reBoil.CopyToClipboard
     else
       if (ssCtrl in Shift) and (Key = VK_E) then
-        mnuBPErrorCheckClick(Self)
+//        mnuBPErrorCheckClick(Self)
+        doCheckErrors(True)//Self)
       else
         if (ssCtrl in Shift) and (Key = VK_F) then
-          mnuBPInsertFieldClick(Self)
+//          mnuBPInsertFieldClick(Self)
+//          doInsertField
+          acEditInsertFieldExecute(self)
         else
           if (ssCtrl in Shift) and (Key = VK_G) then
             GrammarCheckForControl(reBoil)
           else
             if (ssCtrl in Shift) and (Key = VK_I) then
-              mnuBPInsertObjectClick(Self)
+//              mnuBPInsertObjectClick(Self)
+//              doInsertObject
+              acEditInsertObjectExecute(self)
             else
               if (ssCtrl in Shift) and (Key = VK_S) then
                 SpellCheckForControl(reBoil)
               else
                 if (ssCtrl in Shift) and (Key = VK_T) then
-                  mnuBPTryClick(Self)
+//                  mnuBPTryClick(Self)
+//                  doPreview
+                  acEditPreviewExecute(self)
                 else
                   if (ssCtrl in Shift) and (Key = VK_V) then
                     reBoil.SelText := Clipboard.AsText
@@ -3084,52 +3201,19 @@ begin
   //End of ---- Code Added to provide CTRL Key access for 508 compliance  GRE 3/03
 end;
 
-procedure TfrmTemplateEditor.mnuEditClick(Sender: TObject);
+procedure TfrmTemplateEditor.acMnuEditExecute(Sender: TObject);
 var
-  tryOK, ok: boolean;
-
+  p: TPoint;
 begin
-  if reboil.Visible then
-  begin
-    ok := (not reBoil.ReadOnly);
-    mnuInsertObject.Enabled := ok;
-    mnuInsertField.Enabled := ok;
-    mnuPaste.Enabled := (ok and Clipboard.HasFormat(CF_TEXT));
-    if (ok) then
-      ok := (reBoil.Lines.Count > 0);
-    tryOK := (reBoil.Lines.Count > 0) or ((pnlGroupBP.Visible) and (reGroupBP.Lines.Count > 0));
-    mnuErrorCheck.Enabled := tryOK;
-    mnuTry.Enabled := tryOK;
-    mnuSpellCheck.Enabled := ok and SpellCheckAvailable;
-    mnuCheckGrammar.Enabled := ok and SpellCheckAvailable;
-
-    mnuCopy.Enabled := (reBoil.SelLength > 0);
-    mnuCut.Enabled := (ok and (reBoil.SelLength > 0));
-    mnuSelectAll.Enabled := (reBoil.Lines.Count > 0);
-    mnuUndo.Enabled := (reBoil.Perform(EM_CANUNDO, 0, 0) <> 0);
-    mnuGroupBoilerplate.Enabled := pnlGroupBP.Visible;
-  end
-  else
-  begin
-    mnuInsertObject.Enabled := FALSE;
-    mnuInsertField.Enabled := FALSE;
-    mnuPaste.Enabled := FALSE;
-    mnuErrorCheck.Enabled := FALSE;
-    mnuTry.Enabled := FALSE;
-    mnuSpellCheck.Enabled := FALSE;
-    mnuCheckGrammar.Enabled := FALSE;
-    mnuCopy.Enabled := FALSE;
-    mnuCut.Enabled := FALSE;
-    mnuSelectAll.Enabled := FALSE;
-    mnuUndo.Enabled := FALSE;
-    mnuGroupBoilerplate.Enabled := FALSE;
-  end;
+  UpdateActionsStatus;
+  p := tbMnuEdit.ClientToScreen(TPoint.Create(0, 0));
+  popEdit.Popup(p.X, p.Y + pnlToolBar.Height);
 end;
 
-procedure TfrmTemplateEditor.mnuGroupBoilerplateClick(Sender: TObject);
+procedure TfrmTemplateEditor.acEditGroupExecute(Sender: TObject);
 begin
-  mnuGroupCopy.Enabled := (pnlGroupBP.Visible and (reGroupBP.SelLength > 0));
-  mnuGroupSelectAll.Enabled := (pnlGroupBP.Visible and (reGroupBP.Lines.Count > 0));
+  inherited;
+  UpdateActionsStatus;
 end;
 
 procedure TfrmTemplateEditor.cbShFindOptionClick(Sender: TObject);
@@ -3144,9 +3228,11 @@ begin
   if (pnlPerSearch.Visible) then edtPerSearch.SetFocus;
 end;
 
-procedure TfrmTemplateEditor.mnuTemplateClick(Sender: TObject);
+procedure TfrmTemplateEditor.acMnuActionExecute(Sender: TObject);
 var
+  p: TPoint;
   Tree: TTreeView;
+  b: Boolean;
 
 begin
   FFromMainMenu := TRUE;
@@ -3154,61 +3240,90 @@ begin
   if (assigned(Tree) and assigned(Tree.Selected)) then
   begin
     if (Tree = tvShared) then
-      mnuTDelete.Enabled := ((sbShDelete.Visible) and (sbShDelete.Enabled))
+      acActionTemplateDelete.Enabled :=
+        ((sbShDelete.Visible) and (sbShDelete.Enabled))
     else
-      mnuTDelete.Enabled := ((sbPerDelete.Visible) and (sbPerDelete.Enabled));
-    if (assigned(Tree) and assigned(Tree.Selected) and assigned(Tree.Selected.Data)) then
+      acActionTemplateDelete.Enabled :=
+        ((sbPerDelete.Visible) and (sbPerDelete.Enabled));
+
+    if (assigned(Tree) and assigned(Tree.Selected) and
+      assigned(Tree.Selected.Data)) then
     begin
-      mnuTCopy.Enabled := (TTemplate(Tree.Selected.Data).RealType in [ttDoc, ttGroup, ttClass]);
-      mnuSort.Enabled := (TTemplate(Tree.Selected.Data).RealType in AllTemplateFolderTypes) and
-        (Tree.Selected.HasChildren) and
+      b := (TTemplate(Tree.Selected.Data).RealType in [ttDoc, ttGroup,
+        ttClass]);
+      acActionTemplateCopy.Enabled := b;
+
+      b := (TTemplate(Tree.Selected.Data).RealType in AllTemplateFolderTypes)
+        and (Tree.Selected.HasChildren) and
         (Tree.Selected.GetFirstChild.GetNextSibling <> nil);
+      acActionTemplateSort.Enabled := b;
+
+      if b then
+      begin
+        if (Tree = tvShared) then
+          b := FCanEditShared
+        else
+          b := FCanEditPersonal;
+        acActionTemplateSort.Enabled := b;
+      end;
     end
     else
     begin
-      mnuTCopy.Enabled := FALSE;
-      mnuSort.Enabled := FALSE;
+      acActionTemplateCopy.Enabled := False;
+      acActionTemplateSort.Enabled := False;
     end;
     FPasteNode := Tree.Selected;
-    mnuTPaste.Enabled := PasteOK;
+    acActionTemplatePaste.Enabled := PasteOK;
   end
   else
   begin
-    mnuTCopy.Enabled := FALSE;
-    mnuTPaste.Enabled := FALSE;
-    mnuTDelete.Enabled := FALSE;
-    mnuSort.Enabled := FALSE;
+    acActionTemplateCopy.Enabled := False;
+    acActionTemplatePaste.Enabled := False;
+    acActionTemplateDelete.Enabled := False;
+    acActionTemplateSort.Enabled := False;
   end;
-  mnuNewTemplate.Enabled := btnNew.Enabled;
-  mnuAutoGen.Enabled := btnNew.Enabled;
-  mnuFindShared.Checked := FFindShOn;
-  mnuFindPersonal.Checked := FFindPerOn;
-  mnuShCollapse.Enabled := dmodShared.NeedsCollapsing(tvShared);
-  mnuPerCollapse.Enabled := dmodShared.NeedsCollapsing(tvPersonal);
+  // mnuNewTemplate.Enabled := btnNew.Enabled;
+  acActionTemplateFindShared.Checked := FFindShOn;
+  acActionTemplateFindPersonal.Checked := FFindPerOn;
+  acActionTemplateCollapseShared.Enabled := dmodShared.NeedsCollapsing
+    (tvShared);
+  acActionTemplateCollapsePersonal.Enabled := dmodShared.NeedsCollapsing
+    (tvPersonal);
+  acActionTemplateGenerate.Enabled := acActionNewTemplate.Enabled;
+
+  p := tbMnuAction.ClientToScreen(TPoint.Create(0, 0));
+  popAction.Popup(p.X, p.Y + pnlToolBar.Height);
 end;
 
-procedure TfrmTemplateEditor.mnuFindSharedClick(Sender: TObject);
+procedure TfrmTemplateEditor.acActionTemplateFindSharedExecute(
+  Sender: TObject);
 begin
+  inherited;
   FMainMenuTree := tvShared;
-  mnuFindTemplatesClick(tvShared);
+  doTemplateFind(tvShared);
 end;
 
-procedure TfrmTemplateEditor.mnuFindPersonalClick(Sender: TObject);
+procedure TfrmTemplateEditor.acActionTemplateFindPersonalExecute(
+  Sender: TObject);
 begin
+  inherited;
   FMainMenuTree := tvPersonal;
-  mnuFindTemplatesClick(tvPersonal);
+  doTemplateFind(tvPersonal);
 end;
 
-procedure TfrmTemplateEditor.mnuShCollapseClick(Sender: TObject);
+procedure TfrmTemplateEditor.acActionTemplateCollapseSharedExecute(Sender: TObject);
 begin
+  inherited;
   FMainMenuTree := tvShared;
-  mnuCollapseTreeClick(tvShared);
+  doTemplateCollapse(tvShared);
 end;
 
-procedure TfrmTemplateEditor.mnuPerCollapseClick(Sender: TObject);
+procedure TfrmTemplateEditor.acActionTemplateCollapsePersonalExecute(
+  Sender: TObject);
 begin
+  inherited;
   FMainMenuTree := tvPersonal;
-  mnuCollapseTreeClick(tvPersonal);
+  doTemplateCollapse(tvPersonal);
 end;
 
 procedure TfrmTemplateEditor.pnlShSearchResize(Sender: TObject);
@@ -3229,27 +3344,29 @@ end;
 
 procedure TfrmTemplateEditor.pnlPropertiesResize(Sender: TObject);
 begin
-  btnNew.Width := pnlProperties.Width;
+//  btnNew.Width := pnlProperties.Width;
 end;
 
 procedure TfrmTemplateEditor.mbMainResize(Sender: TObject);
 begin
-  pnlMenu.Width := mbMain.Width + 4;
-  mbMain.Width := pnlMenu.Width - 3;
+//  pnlMenu.Width := mbMain.Width + 4;
+//  mbMain.Width := pnlMenu.Width - 3;
 end;
 
-procedure TfrmTemplateEditor.mnuBPCheckGrammarClick(Sender: TObject);
+procedure TfrmTemplateEditor.acEditGrammarExecute(Sender: TObject);
 begin
+  inherited;
   GrammarCheckForControl(reBoil);
 end;
 
-procedure TfrmTemplateEditor.mnuSortClick(Sender: TObject);
+procedure TfrmTemplateEditor.acActionTemplateSortExecute(Sender: TObject);
 var
   Tree: TTreeView;
-
 begin
+  inherited;
   Tree := FCurTree;
-  if (assigned(Tree) and assigned(Tree.Selected) and Tree.Selected.HasChildren) then
+  if (assigned(Tree) and assigned(Tree.Selected) and Tree.Selected.HasChildren)
+  then
   begin
     TTemplate(Tree.Selected.Data).SortChildren;
     Resync([TTemplate(Tree.Selected.Data)]);
@@ -3273,15 +3390,17 @@ begin
     Result := FALSE;
 end;
 
-procedure TfrmTemplateEditor.mnuBPTryClick(Sender: TObject);
+procedure TfrmTemplateEditor.acEditPreviewExecute(Sender: TObject);
 var
   R: TRect;
-  Move: boolean;
+  Move: Boolean;
   tmpl: TTemplate;
-  txt: string;
+  Txt: string;
 
 begin
-  mnuBPErrorCheckClick(nil);
+  inherited;
+
+  doCheckErrors; // (nil);
   if (FBPOK) or (reBoil.Lines.Count = 0) then
   begin
     Move := assigned(frmTemplateView);
@@ -3302,24 +3421,35 @@ begin
         ShowTemplateData(Self, tmpl.PrintName, Txt);
       if (Move) then
         frmTemplateView.BoundsRect := R;
-      tmpl.TemplatePreviewMode := FALSE;
+      tmpl.TemplatePreviewMode := False;
     finally
       MAX_WRAP_WIDTH := MAX_ENTRY_WIDTH;
     end;
   end;
 end;
 
-procedure TfrmTemplateEditor.mnuAutoGenClick(Sender: TObject);
+procedure TfrmTemplateEditor.acEditRedoExecute(Sender: TObject);
+begin
+  inherited;
+  If Assigned(ActiveControl) and (ActiveControl is TCustomEdit) then
+    (ActiveControl as TCustomEdit).Perform(EM_REDO, 0, 0);
+end;
+
+procedure TfrmTemplateEditor.acActionTemplateGenerateExecute(Sender: TObject);
 var
   AName, AText: string;
 
 begin
+  inherited;
+
   dmodShared.LoadTIUObjects;
   UpdatePersonalObjects;
-  GetAutoGenText(AName, AText, uPersonalObjects); // -------- CQ #8665 - RV ------------
+  GetAutoGenText(AName, AText, uPersonalObjects);
+  // -------- CQ #8665 - RV ------------
   if (AName <> '') and (AText <> '') then
   begin
-    btnNewClick(Self);
+    doTemplateNew;
+
     TTemplate(FBtnNewNode.Data).PrintName := AName;
     TTemplate(FBtnNewNode.Data).Boilerplate := AText;
     ShowInfo(FBtnNewNode);
@@ -3355,56 +3485,53 @@ begin
   end;
 end;
 
-procedure TfrmTemplateEditor.mnuNotesUndoClick(Sender: TObject);
+procedure TfrmTemplateEditor.acNotesUndoExecute(Sender: TObject);
 begin
+  inherited;
   reNotes.Perform(EM_UNDO, 0, 0);
 end;
 
-procedure TfrmTemplateEditor.mnuNotesCutClick(Sender: TObject);
+procedure TfrmTemplateEditor.acNotesCutExecute(Sender: TObject);
 begin
+  inherited;
   reNotes.CutToClipboard;
 end;
 
-procedure TfrmTemplateEditor.mnuNotesCopyClick(Sender: TObject);
+procedure TfrmTemplateEditor.acNotesCopyExecute(Sender: TObject);
 begin
+  inherited;
   reNotes.CopyToClipboard;
 end;
 
-procedure TfrmTemplateEditor.mnuNotesPasteClick(Sender: TObject);
+procedure TfrmTemplateEditor.acNotesPasteExecute(Sender: TObject);
 begin
+  inherited;
   reNotes.SelText := Clipboard.AsText;
 end;
 
-procedure TfrmTemplateEditor.mnuNotesSelectAllClick(Sender: TObject);
+procedure TfrmTemplateEditor.acNotesSelectAllExecute(Sender: TObject);
 begin
+  inherited;
   reNotes.SelectAll;
 end;
 
-procedure TfrmTemplateEditor.mnuNotesGrammarClick(Sender: TObject);
+procedure TfrmTemplateEditor.acNotesGrammarExecute(Sender: TObject);
 begin
+  inherited;
   GrammarCheckForControl(reNotes);
 end;
 
-procedure TfrmTemplateEditor.mnuNotesSpellingClick(Sender: TObject);
+procedure TfrmTemplateEditor.acNotesSpellingExecute(Sender: TObject);
 begin
+  inherited;
   SpellCheckForControl(reNotes);
 end;
 
-procedure TfrmTemplateEditor.popNotesPopup(Sender: TObject);
-var
-  ok: boolean;
 
+procedure TfrmTemplateEditor.popNotesPlusPopup(Sender: TObject);
 begin
-  ok := not reNotes.ReadOnly;
-  mnuNotesPaste.Enabled := (ok and Clipboard.HasFormat(CF_TEXT));
-  if (ok) then
-    ok := (reNotes.Lines.Count > 0);
-  mnuNotesSpelling.Enabled := ok and SpellCheckAvailable;
-  mnuNotesGrammar.Enabled := ok and SpellCheckAvailable;
-  mnuNotesCopy.Enabled := (reNotes.SelLength > 0);
-  mnuNotesCut.Enabled := (ok and (reNotes.SelLength > 0));
-  mnuNotesSelectAll.Enabled := (reNotes.Lines.Count > 0);
-  mnuNotesUndo.Enabled := (reNotes.Perform(EM_CANUNDO, 0, 0) <> 0);
+  inherited;
+  UpdateActionsStatus;
 end;
 
 procedure TfrmTemplateEditor.cbNotesClick(Sender: TObject);
@@ -3503,16 +3630,22 @@ begin
   cbClick(TCheckBox(Sender), BPIndentFld);
 end;
 
-procedure TfrmTemplateEditor.mnuToolsClick(Sender: TObject);
+procedure TfrmTemplateEditor.acMnuToolsExecute(Sender: TObject);
+var
+  p: TPoint;
 begin
-  mnuEditTemplateFields.Enabled := CanEditTemplateFields;
-  mnuImportTemplate.Enabled := btnNew.Enabled;
-  mnuExportTemplate.Enabled := (assigned(FCurTree) and assigned(FCurTree.Selected) and
-    assigned(FCurTree.Selected.Data));
+  inherited;
+  acToolsEdit.Enabled := CanEditTemplateFields;
+  acToolsImport.Enabled := acActionNewTemplate.Enabled;
+  acToolsExport.Enabled := (assigned(FCurTree) and assigned(FCurTree.Selected)
+    and assigned(FCurTree.Selected.Data));
+  p := tbMnuTools.ClientToScreen(TPoint.Create(0, 0));
+  popTools.Popup(p.X, p.Y + pnlToolBar.Height);
 end;
 
-procedure TfrmTemplateEditor.mnuEditTemplateFieldsClick(Sender: TObject);
+procedure TfrmTemplateEditor.acToolsEditExecute(Sender: TObject);
 begin
+  inherited;
   if assigned(frmTemplateObjects) then
     frmTemplateObjects.Hide;
   if assigned(frmTemplateFields) then
@@ -3521,8 +3654,9 @@ begin
     FreeAndNil(frmTemplateFields);
 end;
 
-procedure TfrmTemplateEditor.mnuBPInsertFieldClick(Sender: TObject);
+procedure TfrmTemplateEditor.acEditInsertFieldExecute(Sender: TObject);
 begin
+  inherited;
   if (not assigned(frmTemplateFields)) then
   begin
     frmTemplateFields := TfrmTemplateFields.Create(Self);
@@ -3541,13 +3675,13 @@ begin
     frmTemplateFields.UpdateStatus;
 end;
 
-procedure TfrmTemplateEditor.mnuExportTemplateClick(Sender: TObject);
+procedure TfrmTemplateEditor.doToolsExport;
 var
   Tmpl, Flds: TStringList;
   i: integer;
   XMLDoc: IXMLDOMDocument;
   err: boolean;
-
+  sl: TStrings;
 begin
   err := FALSE;
   if (assigned(FCurTree) and assigned(FCurTree.Selected) and assigned(FCurTree.Selected.Data)) then
@@ -3562,18 +3696,17 @@ begin
           Tmpl.Add('<' + XMLHeader + '>');
           if TTemplate(FCurTree.Selected.Data).CanExportXML(Tmpl, Flds, 2) then
           begin
-            if (Flds.Count > 0) then
-            begin
+            if (Flds.Count > 0) then begin
               ExpandEmbeddedFields(Flds);
-              LockBroker;
+              sl := TStringList.Create;
               try
-                FastAssign(ExportTemplateFields(Flds), Flds);
+                ExportTemplateFields(sl, Flds);
+                for i := 0 to sl.Count - 1 do
+                  sl[i] := '  ' + sl[i];
+                FastAddStrings(sl, Tmpl);
               finally
-                UnlockBroker;
+                sl.Free;
               end;
-              for i := 0 to Flds.Count - 1 do
-                Flds[i] := '  ' + Flds[i];
-              FastAddStrings(Flds, Tmpl);
             end; {if}
             Tmpl.Add('</' + XMLHeader + '>');
             try
@@ -3603,7 +3736,7 @@ begin
   end;
 end;
 
-procedure TfrmTemplateEditor.mnuImportTemplateClick(Sender: TObject);
+procedure TfrmTemplateEditor.doToolsImport;
 const
   Filter1 = 'Template Files|*.txml';
   WordFilter = '|Word Documents|*.doc;*.dot';
@@ -3728,7 +3861,8 @@ begin
                     begin
                       FImportingFromXML := TRUE;
                       try
-                        btnNewClick(Self);
+//                        btnNewClick(Self);
+                        doTemplateNew;
                         ImportedTemplate := TTemplate(FBtnNewNode.Data);
                       finally
                         FImportingFromXML := FALSE;
@@ -3801,7 +3935,8 @@ begin
                 begin
                   FImportingFromXML := TRUE;
                   try
-                    btnNewClick(Self);
+//                    btnNewClick(Self);
+                    doTemplateNew;
                     ImportedTemplate := TTemplate(FBtnNewNode.Data);
                   finally
                     FImportingFromXML := FALSE;
@@ -3947,8 +4082,9 @@ begin
   end;
 end;
 
-procedure TfrmTemplateEditor.mnuTemplateIconLegendClick(Sender: TObject);
+procedure TfrmTemplateEditor.acToolsIconExecute(Sender: TObject);
 begin
+  inherited;
   ShowIconLegend(ilTemplates, TRUE);
 end;
 
@@ -4040,6 +4176,51 @@ begin
     Result := FALSE;
 end;
 
+procedure TfrmTemplateEditor.UpdateActionsStatus;
+var
+  aBoolCheck: Boolean;
+begin
+
+  // Standard Actions
+  aBoolCheck := Assigned(ActiveControl) and ActiveControl.Enabled and (ActiveControl is TCustomEdit);
+  If Assigned(ActiveControl) and (ActiveControl is TCustomRichEdit) then
+    aBoolCheck := not(ActiveControl as TCustomRichEdit).ReadOnly;
+  acEditPaste.Enabled := (aBoolCheck and Clipboard.HasFormat(CF_TEXT));
+
+  acEditCut.Enabled :=
+    (aBoolCheck and ((ActiveControl as TCustomEdit).SelLength > 0));
+  acEditCopy.Enabled := (ActiveControl is TCustomEdit) and
+    ((ActiveControl as TCustomEdit).SelLength > 0);
+  acEditSelectAll.Enabled := (ActiveControl is TCustomEdit) and
+    (length((ActiveControl as TCustomEdit).Text) > 0);
+
+  acEditRedo.Enabled := aBoolCheck and
+    ((ActiveControl as TCustomEdit).Perform(EM_CANREDO, 0, 0) <> 0);
+  acEditUndo.Enabled := aBoolCheck and
+    (((ActiveControl as TCustomEdit).Perform(EM_CANUNDO, 0, 0) <> 0) and
+    ((ActiveControl as TCustomEdit).Perform(EM_CANREDO, 0, 0) = 0));
+
+  // reBoil actions
+  aBoolCheck := Assigned(ActiveControl) and (ActiveControl = reBoil) and (not reBoil.ReadOnly);
+  acEditInsertObject.Enabled := aBoolCheck;
+  acEditInsertField.Enabled := aBoolCheck;
+
+  // reBoil and Notes
+  aBoolCheck := Assigned(ActiveControl) and (((ActiveControl = reBoil) and (reBoil.Lines.Count > 0) and
+    (not reBoil.ReadOnly)) or ((ActiveControl = reNotes)) and
+    (reNotes.Lines.Count > 0) and (not reNotes.ReadOnly));
+  acEditGrammar.Enabled := aBoolCheck and SpellCheckAvailable;
+  acEditSpelling.Enabled := aBoolCheck and SpellCheckAvailable;
+
+  // reBoil and Group Actions
+  aBoolCheck := Assigned(ActiveControl) and (((ActiveControl = reBoil) and (reBoil.Lines.Count > 0)) or
+    ((ActiveControl = reGroupBP) and (pnlGroupBP.Visible) and
+    (reGroupBP.Lines.Count > 0)));
+  acEditCheck.Enabled := aBoolCheck;
+  acEditPreview.Enabled := aBoolCheck;
+
+end;
+
 procedure TfrmTemplateEditor.UpdateApply(Template: TTemplate);
 begin
   if (not btnApply.Enabled) then
@@ -4057,17 +4238,20 @@ begin
   cbClick(TCheckBox(Sender), BPLockFLD);
 end;
 
-procedure TfrmTemplateEditor.mnuRefreshClick(Sender: TObject);
+procedure TfrmTemplateEditor.acToolsRefreshExecute(Sender: TObject);
 begin
+  inherited;
   if btnApply.Enabled then
   begin
-    if InfoBox('All changes must be saved before you can Refresh.  Save Changes?',
+    if InfoBox
+      ('All changes must be saved before you can Refresh.  Save Changes?',
       'Confirmation', MB_YESNO or MB_ICONQUESTION) <> IDYES then
       exit;
   end;
-  btnApplyClick(Sender);
-  if BtnApply.Enabled then
-    InfoBox('Save not completed - unable to refresh.', 'Error', MB_OK or MB_ICONERROR)
+  btnApplyClick(nil); // Sender);
+  if btnApply.Enabled then
+    InfoBox('Save not completed - unable to refresh.', 'Error',
+      MB_OK or MB_ICONERROR)
   else
     RefreshData;
 end;
@@ -4280,7 +4464,7 @@ begin
       ltTitle: SubSetOfAllTitles(StartFrom, Direction, tmpSL);
       ltProcedure:
         begin
-          FastAssign(SubSetOfProcedures(StartFrom, Direction), tmpSL);
+          setSubSetOfProcedures(tmpSL,StartFrom, Direction);
           for i := 0 to tmpSL.Count - 1 do
           begin
             tmp := tmpSL[i];
@@ -4413,6 +4597,42 @@ begin
   FNavigatingTab := (Key = VK_TAB) and ([ssShift, ssCtrl] * Shift <> []);
   if FNavigatingTab then
     Key := 0;
+end;
+
+procedure TfrmTemplateEditor.acActionNewTemplateExecute(Sender: TObject);
+begin
+  inherited;
+  doTemplateNew;
+end;
+
+procedure TfrmTemplateEditor.acNodeTemplateCollapseExecute(Sender: TObject);
+begin
+  inherited;
+  doTemplateCollapse;
+end;
+
+procedure TfrmTemplateEditor.acNodeTemplateFindExecute(Sender: TObject);
+begin
+  inherited;
+  doTemplateFind;
+end;
+
+procedure TfrmTemplateEditor.acEditCheckExecute(Sender: TObject);
+begin
+  inherited;
+  doCheckErrors(True);
+end;
+
+procedure TfrmTemplateEditor.acToolsExportExecute(Sender: TObject);
+begin
+  inherited;
+  doToolsExport;
+end;
+
+procedure TfrmTemplateEditor.acToolsImportExecute(Sender: TObject);
+begin
+  inherited;
+  doToolsImport;
 end;
 
 end.

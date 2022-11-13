@@ -477,13 +477,23 @@ end;
 function TfrmOtherSchedule.GetSiteMessage: string;
 var
   i: integer;
-  rstStr: string;
+//  rstStr: string;
+  sl: TSTrings;
 begin
-  rstStr := '';
-  CallV('ORWNSS NSSMSG',[nil]);
-  for i := 0 to RPCBrokerV.Results.Count - 1 do
-    rstStr := rstStr + RPCBrokerV.Results[i];
-  Result := rstStr;
+//  rstStr := '';
+  Result := '';
+  sl := TSTringList.Create;
+  try
+//  CallV('ORWNSS NSSMSG',[nil]);
+//  for i := 0 to RPCBrokerV.Results.Count - 1 do
+//    rstStr := rstStr + RPCBrokerV.Results[i];
+//  Result := rstStr;
+  if CallVistA('ORWNSS NSSMSG',[nil],sl) then
+  for i := 0 to sl.Count - 1 do
+    Result := Result + sl[i];
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmOtherSchedule.FormClose(Sender: TObject;

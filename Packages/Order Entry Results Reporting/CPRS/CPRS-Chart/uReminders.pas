@@ -1,12 +1,12 @@
-unit uReminders;
+ï»¿unit uReminders;
 
 interface
 
 uses
   Windows, Messages, Classes, Controls, StdCtrls, SysUtils, ComCtrls, Menus,
   Graphics, Forms, ORClasses, ORCtrls, ORDtTm, ORFn, ORNet, Dialogs, uPCE,
-  uVitals,
-  ExtCtrls, fDrawers, fDeviceSelect, TypInfo, StrUtils,fRptBox;
+  uVitals, System.Generics.Collections,
+  ExtCtrls, fDrawers, fDeviceSelect, TypInfo, StrUtils, fRptBox, fVimm, rVimm;
 
 type
   TReminderDialog = class(TObject)
@@ -33,7 +33,7 @@ type
     procedure EndNeedRedraw(Sender: TObject);
     procedure BeginTextChanged;
     procedure EndTextChanged(Sender: TObject);
-    function GetDlgSL: TORStringList;
+    function GetDlgSL(Purge: Boolean = True): TORStringList;
     procedure ComboBoxResized(Sender: TObject);
     procedure ComboBoxCheckedText(Sender: TObject; NumChecked: integer;
       var Text: string);
@@ -100,6 +100,7 @@ type
     FChildren: TList; // Points to other TRemDlgElement objects
     FData: TList; // List of TRemData objects
     FPrompts: TList; // list of TRemPrompts objects
+    FCodesList: TStrings;
     FText: string;
     FPNText: string;
     FRec1: string;
@@ -118,6 +119,7 @@ type
     FWHPrintDevice, FWHResultChk, FWHResultNot: String;
     FVitalDateTime: TFMDateTime; // AGP Changes 26.1
     FInitialChecked: boolean;
+    FImmunizationPromptCreated: boolean;
   protected
     originalType: String;
     function buildLinkSeq(linkIEN, dialogIEN, seq: string): boolean;
@@ -162,6 +164,8 @@ type
     function Indent: integer;
     function FindingType: string;
     function Historical: boolean;
+    function contraindication: boolean;
+    function refused: boolean;
     function ResultDlgID: string;
     function IncludeMHTestInPN: boolean;
     function HideChildren: boolean;
@@ -174,6 +178,7 @@ type
     function IndentPNLevel: integer;
     function GetTemplateFieldValues(const Text: string;
       FldValues: TORStringList = nil): string;
+    function allCompleteResults: boolean;
     procedure AddText(Lst: TStrings);
     property Text: string read FText;
     property ID: string read FID;
@@ -188,9 +193,9 @@ type
       write FVitalDateTime;
   end;
 
-  TRemDataType = (dtDiagnosis, dtProcedure, dtPatientEducation, dtExam,
-    dtHealthFactor, dtImmunization, dtSkinTest, dtVitals, dtOrder,
-    dtMentalHealthTest, dtWHPapResult, dtWhNotPurp, dtGenFindings);
+  TRemDataType = (rdtDiagnosis, rdtProcedure, rdtPatientEducation, rdtExam,
+    rdtHealthFactor, rdtImmunization, rdtSkinTest, rdtVitals, rdtOrder,
+    rdtMentalHealthTest, rdtWHPapResult, rdtWhNotPurp, rdtGenFindings, rdtStandardCode);
 
   TRemPCERoot = class;
 
@@ -211,8 +216,9 @@ type
     FChoicesMax: integer;
     FChoicesFont: THandle;
     FSyncCount: integer;
+    vimmResult: TVimmResult;
   protected
-    function AddData(List: TStrings; Finishing: boolean): integer;
+    function AddData(List: TStrings; Finishing: boolean; historical: boolean): integer;
   public
     destructor Destroy; override;
     function Add2PN: boolean;
@@ -222,21 +228,24 @@ type
     function Narrative: string;
     function Category: string;
     function DataType: TRemDataType;
+    function Code: string;
     property Parent: TRemDlgElement read FParent;
   end;
 
   TRemPromptType = (ptComment, ptVisitLocation, ptVisitDate, ptQuantity,
     ptPrimaryDiag, ptAdd2PL, ptExamResults, ptSkinResults, ptSkinReading,
-    ptLevelSeverity, ptSeries, ptReaction, ptContraindicated,
-    ptLevelUnderstanding, ptWHPapResult, ptWHNotPurp, ptDate, ptDateTime, ptView, ptPrint);
+    ptLevelSeverity, ptSeries, ptReaction, ptContraindicated, ptLevelUnderstanding,
+    ptWHPapResult, ptWHNotPurp, ptDate, ptDateTime, ptView, ptPrint, ptMagnitude,
+    ptUCUMCode, ptPDMP);
 
-  TRemPrompt = class(TObject)
+  TRemPrompt = class(TComponent)
   private
     FFromControl: boolean;
     FParent: TRemDlgElement;
     FRec4: string;
     FCaptionAssigned: boolean;
     FData: TRemData;
+    FOriginalDataRec3: string;
     FValue: string;
     FOverrideType: TRemPromptType;
     FIsShared: boolean;
@@ -251,8 +260,18 @@ type
     FValidate: String;
     ViewRecord: boolean;
     reportView: TfrmReportBox;
+    FUCUMText: string;
+    FLastUCUMData: TStrings;
+    FLastUCUMStartFrom: string;
+    FLastUCUMDirection: integer;
+    FUCUMPrompt: TRemPrompt;
     FOldReportViewOnDestroy: TNotifyEvent;
+    FUCUMInfo: TUCUMInfo;
+    FLastUCUMInfoData: string;
     procedure reportViewClosed(Sender: TObject);
+    procedure SetCurrentControl(const Value: TControl);
+    function getUCumData: string;
+    function getDataType: string;
   protected
     function RemDataActive(RData: TRemData; encDt: TFMDateTime): boolean;
     function CompareActiveDate(ActiveDates: TStringList;
@@ -269,15 +288,24 @@ type
     function CanShare(Prompt: TRemPrompt): boolean;
     procedure InitValue;
     procedure DoMHTest(Sender: TObject);
+    procedure DoVimm(Sender: TObject);
     procedure DoView(Sender: TObject);
     procedure DoWHReport(Sender: TObject);
     procedure ViewWHText(Sender: TObject);
     procedure GAFHelp(Sender: TObject);
     function EntryID: string;
     procedure EditKeyPress(Sender: TObject; var Key: Char);
+    procedure EditEnter(Sender: TObject);
+//    function buildUCUMDataText: string;
+//    procedure EditEnter2(Sender: TObject);
+    procedure EditExit(Sender: TObject);
+    procedure UCUMNeedData(Sender: TObject; const StartFrom: string; Direction, InsertAt: Integer);
     function EventType: string;
+    procedure DoPDMP(Sender: TObject);
+    function getSeries: string;
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     function PromptOK: boolean;
     function PromptType: TRemPromptType;
@@ -286,12 +314,14 @@ type
     function Forced: boolean;
     function Caption: string;
     function ForcedCaption: string;
+    function UCUMInfo: TUCUMInfo;
     function SameLine: boolean;
     function Required: boolean;
     function NoteText: string;
     function VitalType: TVitalType;
     function VitalValue: string;
     function VitalUnitValue: string;
+    property CurrentControl: TControl read FCurrentControl write SetCurrentControl;
     property Value: string read GetValue write SetValue;
     property validate: string read FValidate write FValidate;
   end;
@@ -335,11 +365,19 @@ type
     NoteList: TORListBox;
   end;
 
+  TResyncObj = class
+  public
+    cb: TORCheckBox;
+    elem: TRemDlgElement;
+  end;
+
 var
   RemForm: TRemForm;
   NotPurposeValue: string;
   WHRemPrint: string;
   InitialRemindersLoaded: boolean = FALSE;
+  IgnoreReminderClicks: boolean = False;
+  RemDlgResyncElements: TObjectList<TResyncObj>;
 
 const
   HAVE_REMINDERS = 0;
@@ -347,9 +385,11 @@ const
   RemPriorityText: array [1 .. 3] of string = ('High', '', 'Low');
   ClinMaintText = 'Clinical Maintenance';
 
-  dtUnknown = TRemDataType(-1);
-  dtAll = TRemDataType(-2);
-  dtHistorical = TRemDataType(-3);
+  rdtUnknown = TRemDataType(-1);
+  rdtAll = TRemDataType(-2);
+  rdtHistorical = TRemDataType(-3);
+  rdtMagnitudeTypes = TRemDataType(-4);
+  rdtAdd2PLTypes = TRemDataType(-5);
 
   ptUnknown = TRemPromptType(-1);
   ptSubComment = TRemPromptType(-2);
@@ -358,10 +398,14 @@ const
   ptMHTest = TRemPromptType(-5);
   ptGAF = TRemPromptType(-6);
   ptMST = TRemPromptType(-7);
+  ptImmunization = TRemPromptType(-8);
+  ptSkinTest = TRemPromptType(-9);
 
   MSTCode = 'MST';
   MSTDataTypes = [pdcHF, pdcExam];
   pnumMST = ord(pnumComment) + 4;
+
+  MAX_REMINDER_CACHE_SIZE = 16 * 1024 * 1024;
 
 procedure NotifyWhenRemindersChange(Proc: TNotifyEvent);
 procedure RemoveNotifyRemindersChange(Proc: TNotifyEvent);
@@ -423,9 +467,12 @@ var
   RemindersStarted: boolean = FALSE;
   ProcessedReminders: TORStringList = nil;
   ReminderDialogInfo: TStringList = nil;
+//  immProcedureCnt: integer = 0;
   uPXRMWorkingCount: integer = 0;
 
 const
+  UM_MESSAGEBOX = WM_USER + 381;
+
   CatCode = 'C';
   RemCode = 'R';
   EduCode = 'E';
@@ -436,7 +483,7 @@ const
   OtherCatID = CatCode + '-6';
 
   RemDataCodes: array [TRemDataType] of string =
-  { dtDiagnosis } ('POV',
+    { dtDiagnosis } ('POV',
     { dtProcedure } 'CPT',
     { dtPatientEducation } 'PED',
     { dtExam } 'XAM',
@@ -448,16 +495,17 @@ const
     { dtMentalHealthTest } 'MH',
     { dtWHPapResult } 'WHR',
     { dtWHNotPurp } 'WH',
-    { dtGenFindings } 'GFIND');
+    { dtGenFindings } 'GFIND',
+    { dtStandardCode } 'SC');
 
 implementation
 
 uses
   rCore, uCore, rReminders, uConst, fReminderDialog, fNotes, rMisc,
   fMHTest, rPCE, rTemplates, dShared, uTemplateFields, fIconLegend,
-  fReminderTree, uInit,
-  VAUtils, VA508AccessibilityRouter, VA508AccessibilityManager, uDlgComponents,
-  fBase508Form, System.Types, System.UITypes;
+  fReminderTree, uInit, VAUtils, VA508AccessibilityRouter,
+  VA508AccessibilityManager, uDlgComponents, fBase508Form,
+  System.Types, System.UITypes, uMisc, fPDMPMgr, fFrame, uPDMP;
 
 type
   TRemFolder = (rfUnknown, rfDue, rfApplicable, rfNotApplicable,
@@ -519,6 +567,7 @@ var
   ElementChecked: TRemDlgElement = nil;
   HistRootCount: longint = 0;
   uRemFolders: TRemFolders = [rfUnknown];
+//  immProcedureCnt: integer = 0;
 
 const
   DueText = 'Due';
@@ -548,7 +597,7 @@ const
   ReminderDateFormat = 'mm/dd/yyyy';
 
   RemData2PCECat: array [TRemDataType] of TPCEDataCat =
-  { dtDiagnosis } (pdcDiag,
+    { dtDiagnosis } (pdcDiag,
     { dtProcedure } pdcProc,
     { dtPatientEducation } pdcPED,
     { dtExam } pdcExam,
@@ -560,10 +609,11 @@ const
     { dtMentalHealthTest } pdcMH,
     { dtWHPapResult } pdcWHR,
     { dtWHNotPurp } pdcWH,
-    { dtGenFindings } pdcGenFinding);
+    { dtGenFindings } pdcGenFinding,
+    { dtStandardCode } pdcStandardCodes);
 
   RemPromptCodes: array [TRemPromptType] of string =
-  { ptComment } ('COM',
+    { ptComment } ('COM',
     { ptVisitLocation } 'VST_LOC',
     { ptVisitDate } 'VST_DATE',
     { ptQuantity } 'CPT_QTY',
@@ -581,38 +631,44 @@ const
     { ptWHNotPurp } 'WH_NOT_PURP',
     { ptDate } 'DATE',
     { ptDateTime } 'DATE_TIME',
-    {ptView} 'GF_VIEW',
-    {ptPrint} 'GF_PRINT');
+    { ptView } 'GF_VIEW',
+    { ptPrint } 'GF_PRINT',
+    { ptMagnitude } 'UCUM',
+    { ptUCUMCode } 'UCUM_CODE',
+    {ptPDMP} 'PDMP');
 
   RemPromptTypes: array [TRemPromptType] of TRemDataType =
-  { ptComment } (dtAll,
-    { ptVisitLocation } dtHistorical,
-    { ptVisitDate } dtHistorical,
-    { ptQuantity } dtProcedure,
-    { ptPrimaryDiag } dtDiagnosis,
-    { ptAdd2PL } dtDiagnosis,
-    { ptExamResults } dtExam,
-    { ptSkinResults } dtSkinTest,
-    { ptSkinReading } dtSkinTest,
-    { ptLevelSeverity } dtHealthFactor,
-    { ptSeries } dtImmunization,
-    { ptReaction } dtImmunization,
-    { ptContraindicated } dtImmunization,
-    { ptLevelUnderstanding } dtPatientEducation,
-    { ptWHPapResult } dtWHPapResult,
-    { ptWHNotPurp } dtWhNotPurp,
-    { ptDate } dtAll,
-    { ptDateTime } dtGenFindings,
-    { ptView} dtGenFindings,
-    { ptPrint} dtGenFindings);
+    { ptComment } (rdtAll,
+    { ptVisitLocation } rdtHistorical,
+    { ptVisitDate } rdtHistorical,
+    { ptQuantity } rdtProcedure,
+    { ptPrimaryDiag } rdtDiagnosis,
+    { ptAdd2PL } rdtAdd2PLTypes,
+    { ptExamResults } rdtExam,
+    { ptSkinResults } rdtSkinTest,
+    { ptSkinReading } rdtSkinTest,
+    { ptLevelSeverity } rdtHealthFactor,
+    { ptSeries } rdtImmunization,
+    { ptReaction } rdtImmunization,
+    { ptContraindicated } rdtImmunization,
+    { ptLevelUnderstanding } rdtPatientEducation,
+    { ptWHPapResult } rdtWHPapResult,
+    { ptWHNotPurp } rdtWhNotPurp,
+    { ptDate } rdtAll,
+    { ptDateTime } rdtGenFindings,
+    { ptView } rdtGenFindings,
+    { ptPrint } rdtGenFindings,
+    { ptMagnitude } rdtMagnitudeTypes,
+    { ptUCUMCode } rdtStandardCode,
+    { ptPDMP } rdtAll);
 
   FinishPromptPieceNum: array [TRemPromptType] of integer =
-  { ptComment } (pnumComment,
+    { ptComment } (pnumComment,
     { ptVisitLocation } pnumVisitLoc,
     { ptVisitDate } pnumVisitDate,
     { ptQuantity } pnumProcQty,
     { ptPrimaryDiag } pnumDiagPrimary,
-    { ptAdd2PL } pnumDiagAdd2PL,
+    { ptAdd2PL } pnumAdd2PL,
     { ptExamResults } pnumExamResults,
     { ptSkinResults } pnumSkinResults,
     { ptSkinReading } pnumSkinReading,
@@ -625,11 +681,14 @@ const
     { ptWHNotPurp } pnumWHNotPurp,
     { ptDate } pnumDate,
     { ptDateTime } pnumDate,
-    { ptView} pnumGFPrint,
-    { ptPrint} pnumGFPrint);
+    { ptView } pnumGFPrint,
+    { ptPrint } pnumGFPrint,
+    { ptMagnitude } pnumCodesMagnitude,
+    { ptUCUMCode } pnumCodesUCUM,
+    { ptPDMP } pnumPDMP);
 
   ComboPromptTags: array [TRemPromptType] of integer =
-  { ptComment } (0,
+    { ptComment } (0,
     { ptVisitLocation } TAG_HISTLOC,
     { ptVisitDate } 0,
     { ptQuantity } 0,
@@ -648,7 +707,11 @@ const
     { ptDate } 0,
     { ptDateTime } 0,
     { ptView } 0,
-    { ptPrint} 0);
+    { ptPrint } 0,
+    { ptMagnitude } 0,
+    { ptUCUMCode } 0,
+    { ptPDPM} 0
+    );
 
   PromptDescriptions: array [TRemPromptType] of string =
   { ptComment } ('Comment',
@@ -669,8 +732,11 @@ const
     { ptWHNotPurp } 'Women Health Notification Purpose',
     { ptDate } 'Date',
     { ptDateTime } 'Date\Time',
-    { ptView} 'General Finding View',
-    { ptPrint} 'General Finding Print');
+    { ptView } 'General Finding View',
+    { ptPrint } 'General Finding Print',
+    { ptMagnitude } 'Magnitude',
+    { ptUCUMCode } 'Unified Code for Units of Measure (UCUM)',
+    { ptPDMP} 'PDMP');
 
   RemFolderCodes: array [TValidRemFolders] of Char =
   { rfDue } ('D',
@@ -685,6 +751,9 @@ const
   SyncPrompts = [ptComment, ptQuantity, ptAdd2PL, ptExamResults, ptSkinResults,
     ptSkinReading, ptLevelSeverity, ptSeries, ptReaction, ptContraindicated,
     ptLevelUnderstanding];
+
+  MagnitudeDataTypes = [rdtPatientEducation, rdtExam, rdtHealthFactor, rdtStandardCode];
+  Add2PLDataTypes = [rdtDiagnosis, rdtStandardCode];
 
   Gap = 3;
   LblGap = 4;
@@ -702,6 +771,7 @@ const
   r3Code = 7;
   r3Cat = 9;
   r3Nar = 8;
+  r3CodingSystem = 10;
   r3GAF = 12;
   r3GenFindID = 14;
   r3GenFindNewData = 16;
@@ -799,6 +869,8 @@ type
         (WHChk: TWHCheckBox);
       12:
         (date: TCPRSDialogDateBox);
+      13:
+        (pdmpBtn: TfrmPDMP); // Windows control
   end;
 
   EForcedPromptConflict = class(EAbort);
@@ -1441,7 +1513,7 @@ begin
     aList := TStringList.Create;
     try
       if ReminderInquiry(IEN, aList) > 0 then
-            ReportBox(Alist, 'Reminder Inquiry: ' + ReminderName(IEN), TRUE)
+            ReportBox(aList, 'Reminder Inquiry: ' + ReminderName(IEN), TRUE)
       else infoBox('Error loading Reminder Inquiry.', 'Error', MB_OK);
     finally
       FreeAndNil(aList);
@@ -2236,6 +2308,8 @@ begin
   KillObj(@ReminderDialogInfo, TRUE);
   KillObj(@PCERootList, TRUE);
   KillObj(@ProcessedReminders);
+  if assigned(RemDlgResyncElements) then
+    FreeAndNil(RemDlgResyncElements);
 end;
 
 function GetReminder(ARemData: string): TReminder;
@@ -2508,7 +2582,7 @@ begin
   end;
 end;
 
-procedure ExpandTIUObjects(var txt: string; Msg: string = '');
+procedure ExpandTIUObjects(var txt: string; VisitStr: string);
 var
   ObjList: TStringList;
   Err: TStringList;
@@ -2534,7 +2608,7 @@ begin
     end;
     if (ObjList.Count > 0) then
     begin
-      GetTemplateText(ObjList);
+      GetTemplateText(ObjList, VisitStr);
       i := 0;
       while (i < ObjList.Count) do
       begin
@@ -2591,7 +2665,7 @@ var
 
 begin
   TempSL := GetDlgSL;
-  if Piece(TempSL[0], U, 2) = '1' then
+  if (TempSL.Count > 0) and (Piece(TempSL[0], U, 2) = '1') then
   begin
     Self.RemWipe := 1;
   end;
@@ -2627,7 +2701,7 @@ begin
             FText := FText + Trim(Piece(TempSL[i], U, 4));
           end;
         until (i < 0);
-        ExpandTIUObjects(FText);
+        ExpandTIUObjects(FText, RemForm.PCEObj.VisitString);
         AssignFieldIDs(FText);
 
         if (pos('.', FDlgID) > 0) then
@@ -2670,6 +2744,10 @@ begin
   KillObj(@FElements, TRUE);
   FreeAndNil(linkSeqList);
   FreeAndNil(linkSeqListChecked);
+
+//  if assigned(frmFrame.PDMPMgr) then // PDMP
+//    frmFrame.PDMPMgr.ShowNow := False;
+
   inherited;
 end;
 
@@ -2730,8 +2808,6 @@ begin
               RData := TRemData(Elem.FData[j]);
               if Piece(RData.FRec3, U, 4) = 'MH' then
                 Result := TRUE;
-
-
               if (Result) then
                 break;
             end;
@@ -2744,29 +2820,47 @@ begin
   end;
 end;
 
-function TReminderDialog.GetDlgSL: TORStringList;
+function TReminderDialog.GetDlgSL(Purge: Boolean = True): TORStringList;
 var
   idx: integer;
   aList: TStrings;
   isReminder: boolean;
+
+  procedure GetIdx(const id: string);
+  var
+    i: integer;
+
+  begin
+    idx := - 1;
+    for i := ReminderDialogInfo.Count - 1 downto 0 do
+      if ReminderDialogInfo[i] = id then
+      begin
+        idx := i;
+        exit;
+      end;
+  end;
+
 begin
   aList := TStringList.Create;
   try
-  if (not Assigned(ReminderDialogInfo)) then
-    ReminderDialogInfo := TStringList.Create;
-  idx := ReminderDialogInfo.IndexOf(GetIEN);
-  if (idx < 0) then
-    idx := ReminderDialogInfo.AddObject(GetIEN, TORStringList.Create);
-  Result := TORStringList(ReminderDialogInfo.Objects[idx]);
-  if (Result.Count = 0) then
-  begin
-    if (Self is TReminder) then isReminder := true
-    else isReminder := false;
-    if GetDialogInfo(GetIEN, isReminder, aList) = 0 then exit;
-    FastAssign(alist, Result);
-    Result.Add(DlgCalled);
-    // Used to prevent repeated calling of RPC if dialog is empty
-  end;
+    if (not Assigned(ReminderDialogInfo)) then
+      ReminderDialogInfo := TStringList.Create;
+    GetIdx(GetIEN);
+    if (idx < 0) then
+      idx := ReminderDialogInfo.AddObject(GetIEN, TORStringList.Create);
+    Result := TORStringList(ReminderDialogInfo.Objects[idx]);
+    MarkMostRecent(ReminderDialogInfo, idx);
+    if (Result.Count = 0) then
+    begin
+      if (Self is TReminder) then isReminder := true
+      else isReminder := false;
+      if GetDialogInfo(GetIEN, isReminder, aList) = 0 then exit;
+      FastAssign(alist, Result);
+      // Used to prevent repeated calling of RPC if dialog is empty
+      Result.Add(DlgCalled);
+      if Purge then
+        PurgeOldIfNeeded(ReminderDialogInfo, MAX_REMINDER_CACHE_SIZE);
+    end;
   finally
      FreeAndNil(aList);
   end;
@@ -3097,138 +3191,137 @@ var
       end;
 
 begin
+  promptActedOn := TStringList.Create;
   try
-    promptActedOn := TStringList.Create;
     for r := 0 to Self.FElements.Count - 1 do
-  begin
-    elementChange := FALSE;
-    Element := TRemDlgElement(Self.FElements.Objects[r]);
-    if (elementList.Count > 0) then
     begin
-      for a := 0 to elementList.Count - 1 do
+      elementChange := FALSE;
+      Element := TRemDlgElement(Self.FElements.Objects[r]);
+      if (elementList.Count > 0) then
       begin
-        action := elementList.Strings[a];
+        for a := 0 to elementList.Count - 1 do
+        begin
+          action := elementList.Strings[a];
 
-        if StrToInt(Piece(Element.FRec1, U, 2)) <> StrToInt(Piece(action, U, 1))
-        then
-          continue;
-        if (Piece(action, u, 4) <> '0') and (not sequenceMatch(Piece(action, U, 1), Piece(action, u, 4), element.FRec1, startSeq)) then continue;
-//        if (Piece(Element.FRec1, U, 3) <> Piece(action, U, 4)) and (Piece(action, U, 4) <> '') then
-//          continue;
-
-        if (Piece(action, U, 2) = 'CHECKED') and (not Element.isChecked) then
-        begin
-          Application.ProcessMessages;
-          Element.SetChecked(TRUE);
-          elementChange := TRUE;
-        end
-        else if Piece(action, U, 2) = 'SUPPRESS' then
-        begin
-
-          if Piece(Element.FRec1, U, 4) <> 'D' then
-          begin
-            Application.ProcessMessages;
-            SetPiece(Element.FRec1, U, 4, 'D');
-            Element.SetChecked(TRUE);
-            elementChange := TRUE;
-          end;
-        end
-        else if (Piece(action, U, 2) = 'UNCHECKED') and (Element.isChecked) then
-        begin
-          Application.ProcessMessages;
-          Element.SetChecked(FALSE);
-          elementChange := TRUE;
-        end
-        else if (Piece(action, U, 2) = 'UNSUPPRESS') and (Piece(Element.FRec1, U, 4) = 'D') then
-        begin
-          Application.ProcessMessages;
-          SetPiece(Element.FRec1, U, 4, 'S');
-          Element.SetChecked(FALSE);
-          elementChange := TRUE;
-        end
-        else if Piece(action, U, 2) = 'DISABLE' then
-          begin
-            Application.ProcessMessages;
-            if Piece(Element.FRec1, U, 4) <> 'H' then
-              begin
-//                element.originalType := Piece(Element.FRec1, U, 4);
-                if element.Checked then element.originalType := Piece(Element.FRec1, U, 4) + U + '1'
-                else element.originalType := Piece(Element.FRec1, U, 4) + U + '0';
-                SetPiece(Element.FRec1, U, 4, 'H');
-                Element.SetChecked(false);
-                setToDisable(element);
-                elementChange := True;
-              end;
-          end
-        else if Piece(action, U, 2) = 'UNDISABLE' then
-          begin
-              Application.ProcessMessages;
-                SetPiece(Element.FRec1, U, 4, Piece(element.originalType, U, 1));
-                if (Piece(element.originalType, U, 2)= '1') or (Piece(element.originalType, U, 1) = 'D') then element.SetChecked(true)
-                else element.SetChecked(false);
-                setToEnable(element);
-                elementChange := True;
-          end
-      end;
-    end;
-    if (Element.FPrompts = nil) then
-      begin
-        if elementChange then Element.linkItemRedraw(element);
-        continue;
-      end;
-    if not Element.FChecked then
-      begin
-        if elementChange then Element.linkItemRedraw(element);
-        continue;
-      end;
-    if promptList.Count > 0 then
-    begin
-
-      for p := 0 to Element.FPrompts.Count - 1 do
-      begin
-        Prompt := TRemPrompt(Element.FPrompts[p]);
-        for a := 0 to promptList.Count - 1 do
-        begin
-          action := promptList.Strings[a];
-          if StrToInt(Piece(Prompt.FRec4, U, 2)) <> StrToInt(Piece(action, U, 1))
+          if StrToInt(Piece(Element.FRec1, U, 2)) <> StrToInt(Piece(action, U, 1))
           then
             continue;
-          if (Piece(Prompt.FRec4, U, 4) <> Piece(action, U, 2)) then
-            continue;
-          if (Piece(action, u, 5) <> '0') and (not sequenceMatch(Piece(action, U, 1), Piece(action, u, 5), element.FRec1, startSeq)) then continue;
-          promptActedOn.Add(action);
-          if (Piece(action, U, 3) = 'REQUIRED') then
-          begin
-            SetPiece(Prompt.FRec4, U, 10, '1');
-            elementChange := TRUE;
-          end
-          else if (Piece(action, U, 3) = 'UNREQUIRED') then
-          begin
-            SetPiece(Prompt.FRec4, U, 10, '0');
-            elementChange := TRUE;
-          end
-          else
-          begin
-            Prompt.SetValueFromParent(Piece(action, U, 4));
-//            Prompt.SetValue(Piece(action, U, 4));
-          end;
+          if (Piece(action, u, 4) <> '0') and (not sequenceMatch(Piece(action, U, 1), Piece(action, u, 4), element.FRec1, startSeq)) then continue;
+  //        if (Piece(Element.FRec1, U, 3) <> Piece(action, U, 4)) and (Piece(action, U, 4) <> '') then
+  //          continue;
 
+          if (Piece(action, U, 2) = 'CHECKED') and (not Element.isChecked) then
+          begin
+            Application.ProcessMessages;
+            Element.SetChecked(TRUE);
+            elementChange := TRUE;
+          end
+          else if Piece(action, U, 2) = 'SUPPRESS' then
+          begin
+            Application.ProcessMessages;
+            if Piece(Element.FRec1, U, 4) <> 'D' then
+            begin
+              SetPiece(Element.FRec1, U, 4, 'D');
+              Element.SetChecked(TRUE);
+              elementChange := TRUE;
+            end;
+          end
+          else if (Piece(action, U, 2) = 'UNCHECKED') and (Element.isChecked) then
+          begin
+            Application.ProcessMessages;
+            Element.SetChecked(FALSE);
+            elementChange := TRUE;
+          end
+          else if (Piece(action, U, 2) = 'UNSUPPRESS') and (Piece(Element.FRec1, U, 4) = 'D') then
+          begin
+            Application.ProcessMessages;
+            SetPiece(Element.FRec1, U, 4, 'S');
+            Element.SetChecked(FALSE);
+            elementChange := TRUE;
+          end
+          else if Piece(action, U, 2) = 'DISABLE' then
+            begin
+              Application.ProcessMessages;
+              if Piece(Element.FRec1, U, 4) <> 'H' then
+                begin
+  //                element.originalType := Piece(Element.FRec1, U, 4);
+                  if element.Checked then element.originalType := Piece(Element.FRec1, U, 4) + U + '1'
+                  else element.originalType := Piece(Element.FRec1, U, 4) + U + '0';
+                  SetPiece(Element.FRec1, U, 4, 'H');
+                  Element.SetChecked(false);
+                  setToDisable(element);
+                  elementChange := True;
+                end;
+            end
+          else if Piece(action, U, 2) = 'UNDISABLE' then
+            begin
+                Application.ProcessMessages;
+                  SetPiece(Element.FRec1, U, 4, Piece(element.originalType, U, 1));
+                  if (Piece(element.originalType, U, 2)= '1') or (Piece(element.originalType, U, 1) = 'D') then element.SetChecked(true)
+                  else element.SetChecked(false);
+                  setToEnable(element);
+                  elementChange := True;
+            end
         end;
       end;
-    end;
-    if elementChange and (element <> nil) and (element.FParent <> nil) then Element.linkItemRedraw(element);
-  end;
-      for p := 0 to promptList.Count - 1 do
+      if (Element.FPrompts = nil) then
+        begin
+          if elementChange then Element.linkItemRedraw(element);
+          continue;
+        end;
+      if not Element.FChecked then
+        begin
+          if elementChange then Element.linkItemRedraw(element);
+          continue;
+        end;
+      if promptList.Count > 0 then
       begin
-         action := promptList.Strings[p];
-         if (promptActedOn <> nil) and (promptActedOn.IndexOf(action) = -1) then
+        for p := 0 to Element.FPrompts.Count - 1 do
+        begin
+          Prompt := TRemPrompt(Element.FPrompts[p]);
+          for a := 0 to promptList.Count - 1 do
           begin
-             if FPromptsDefaults = nil then FPromptsDefaults := TStringList.Create;
-             FPromptsDefaults.Add(action);
+            action := promptList.Strings[a];
+            if StrToInt(Piece(Prompt.FRec4, U, 2)) <> StrToInt(Piece(action, U, 1))
+            then
+              continue;
+            if (Piece(Prompt.FRec4, U, 4) <> Piece(action, U, 2)) then
+              continue;
+            if (Piece(action, u, 5) <> '0') and
+               (not sequenceMatch(Piece(action, U, 1), Piece(action, u, 5), element.FRec1, startSeq)) then
+                  continue;
+            promptActedOn.Add(action);
+            if (Piece(action, U, 3) = 'REQUIRED') then
+            begin
+              SetPiece(Prompt.FRec4, U, 10, '1');
+              elementChange := TRUE;
+            end
+            else if (Piece(action, U, 3) = 'UNREQUIRED') then
+            begin
+              SetPiece(Prompt.FRec4, U, 10, '0');
+              elementChange := TRUE;
+            end
+            else
+            begin
+              Prompt.SetValueFromParent(Piece(action, U, 4));
+  //            Prompt.SetValue(Piece(action, U, 4));
+            end;
           end;
+        end;
       end;
+      if elementChange and (element <> nil) and (element.FParent <> nil) then Element.linkItemRedraw(element);
+    end;
+    for p := 0 to promptList.Count - 1 do
+    begin
+      action := promptList.Strings[p];
+      if (promptActedOn <> nil) and (promptActedOn.IndexOf(action) = -1) then
+      begin
+        if FPromptsDefaults = nil then FPromptsDefaults := TStringList.Create;
+        FPromptsDefaults.Add(action);
+      end;
+    end;
   finally
-
+    promptActedOn.free;
   end;
 end;
 
@@ -3279,7 +3372,7 @@ var
   idx: TRemDataType;
 
 begin
-  Result := dtUnknown;
+  Result := rdtUnknown;
   for idx := low(TRemDataType) to high(TRemDataType) do
   begin
     if (Code = RemDataCodes[idx]) then
@@ -3384,12 +3477,18 @@ begin
   Result := (Piece(FRec1, U, 17) = '1');
 end;
 
+function TRemDlgElement.contraindication: boolean;
+begin
+  Result := (Piece(FRec1, U, 8) = '2');
+end;
+
 destructor TRemDlgElement.Destroy;
 begin
   KillObj(@FFieldValues);
   KillObj(@FData, TRUE);
   KillObj(@FPrompts, TRUE);
   KillObj(@FChildren);
+  FreeAndNil(FCodesList);
   inherited;
 end;
 
@@ -3441,44 +3540,51 @@ var
   tmp, remIEN, newDataOnly, tempRPC: string;
 
 begin
-  if FHaveData then exit;
-  if Piece(FRec1, U, 25) = '0' then exit;
+  if FHaveData then
+    exit;
+  if Piece(FRec1, U, 25) = '0' then
+    exit;
 
   TempSL := TStringList.Create;
   try
-  newDataOnly := Piece(self.FRec1, U, 27);
-  if (FReminder.GetDlgSL.IndexOfPieces([RPCCalled, FID, FTaxID, newDataOnly]) < 0) then
-  begin
-    if self.FReminder.DlgData <> '' then remIen := Piece(self.FReminder.FDlgData, U, 1)
-    else remIen := Piece(TReminder(self.FReminder).FRemData, U, 1);
-    if GetDialogPrompts(FID, Historical, FindingType, remIEN, tempSL, newDataOnly) = 0 then exit;
-    tempRPC := RPCCalled + U + U + U + newDataOnly;
-    TempSL.Add(tempRPC);
-    for i := 0 to TempSL.Count - 1 do
+    newDataOnly := Piece(Self.FRec1, U, 27);
+    if (FReminder.GetDlgSL.IndexOfPieces([RPCCalled, FID, FTaxID, newDataOnly]
+      ) < 0) then
     begin
-      tmp := TempSL[i];
-      SetPiece(tmp, U, 2, FID);
-      SetPiece(tmp, U, 3, FTaxID);
-      TempSL[i] := tmp;
+      if Self.FReminder.DlgData <> '' then
+        remIEN := Piece(Self.FReminder.FDlgData, U, 1)
+      else
+        remIEN := Piece(TReminder(Self.FReminder).FRemData, U, 1);
+      if GetDialogPrompts(FID, Historical, FindingType, remIEN, TempSL,
+        newDataOnly) = 0 then
+        exit;
+      tempRPC := RPCCalled + U + U + U + newDataOnly;
+      TempSL.Add(tempRPC);
+      for i := 0 to TempSL.Count - 1 do
+      begin
+        tmp := TempSL[i];
+        SetPiece(tmp, U, 2, FID);
+        SetPiece(tmp, U, 3, FTaxID);
+        TempSL[i] := tmp;
+      end;
+      FastAddStrings(TempSL, FReminder.GetDlgSL(False));
+      PurgeOldIfNeeded(ReminderDialogInfo, MAX_REMINDER_CACHE_SIZE);
     end;
-    FastAddStrings(TempSL, FReminder.GetDlgSL);
-  end;
-  UpdateData;
+    UpdateData;
   finally
-  FreeAndNil(TempSL);
+    FreeAndNil(TempSL);
   end;
-
 end;
 
 procedure TRemDlgElement.UpdateData;
 var
   Ary: array of integer;
-  idx, i, Cnt: integer;
+  idx, i, j, Cnt: integer;
   TempSL: TORStringList;
   RData: TRemData;
-  RPrompt: TRemPrompt;
-  tmp, Tmp2, choiceTmp: string;
-  NewLine: boolean;
+  RPrompt, LastPrompt: TRemPrompt;
+  tmp, Tmp2, choiceTmp{, data}: string;
+  {InsertUCUM,} NewLine: boolean;
   dt: TRemDataType;
   pt: TRemPromptType;
   DateRange: string;
@@ -3499,8 +3605,7 @@ begin
     idx := -1;
     repeat
       idx := TempSL.IndexOfPieces(['3', FID, FTaxID], idx);
-      if (idx >= 0) and (Pieces(TempSL[idx - 1], U, 1, 6) = Pieces(TempSL[idx],
-        U, 1, 6)) then
+      if (idx >= 0) and (Pieces(TempSL[idx - 1], U, 1, 6) = Pieces(TempSL[idx], U, 1, 6)) then
         if pos(':', Piece(TempSL[idx], U, 7)) > 0 then // if has date ranges
         begin
           if RData <> nil then
@@ -3523,10 +3628,10 @@ begin
         U, 1, 6)) then
       begin
         dt := Code2DataType(Piece(TempSL[idx], U, r3Type));
-        if (dt <> dtUnknown) and
-          ((dt <> dtOrder) or CharInSet(CharAt(Piece(TempSL[idx], U, 11), 1),
+        if (dt <> rdtUnknown) and
+          ((dt <> rdtOrder) or CharInSet(CharAt(Piece(TempSL[idx], U, 11), 1),
           ['D', 'Q', 'M', 'O', 'A'])) and // AGP change 26.10 for allergy orders
-          ((dt <> dtMentalHealthTest) or MHTestsOK) then
+          ((dt <> rdtMentalHealthTest) or MHTestsOK) then
         begin
           if (not Assigned(FData)) then
             FData := TList.Create;
@@ -3572,7 +3677,7 @@ begin
                   if (not Assigned(FPrompts)) then
                     FPrompts := TList.Create;
                   FChoicePrompt :=
-                    TRemPrompt(FPrompts[FPrompts.Add(TRemPrompt.Create)]);
+                    TRemPrompt(FPrompts[FPrompts.Add(TRemPrompt.Create(nil))]);
                   with FChoicePrompt do
                   begin
                     FParent := Self;
@@ -3649,6 +3754,8 @@ begin
               for i := 0 to Cnt - 1 do
                 Ary[i] := i + 4;
               SetPieces(FRec3, U, Ary, tmp);
+              if RData.DataType = rdtStandardCode then
+                SetPiece(FRec3, U, 10, piece(tmp, U, 10)); // Save Coding System
               if (not Assigned(RData.FActiveDates)) then
               begin
                 RData.FActiveDates := TStringList.Create;
@@ -3663,14 +3770,14 @@ begin
             end
             else
               FPCERoot := TRemPCERoot.GetRoot(RData, RData.FRec3, Historical);
-            if (dt = dtVitals) then
+            if (dt = rdtVitals) then
             begin
               if (Code2VitalType(Piece(FRec3, U, 6)) <> vtUnknown) then
               begin
                 if (not Assigned(FPrompts)) then
                   FPrompts := TList.Create;
                 FChoicePrompt :=
-                  TRemPrompt(FPrompts[FPrompts.Add(TRemPrompt.Create)]);
+                  TRemPrompt(FPrompts[FPrompts.Add(TRemPrompt.Create(nil))]);
                 with FChoicePrompt do
                 begin
                   FParent := Self;
@@ -3687,12 +3794,37 @@ begin
                 end;
               end;
             end;
-            if (dt = dtMentalHealthTest) then
+            if (dt = rdtImmunization) or (dt = rdtSkinTest) then
+              begin
+                if not self.FImmunizationPromptCreated  then
+                  begin
+                    if (not Assigned(FPrompts)) then
+                      FPrompts := TList.Create;
+                    FChoicePrompt := TRemPrompt(FPrompts[FPrompts.Add(TRemPrompt.Create(nil))]);
+                      with FChoicePrompt do
+                        begin
+                          FParent := Self;
+                          tmp := Piece(FRec3, U, 10);
+                          NewLine := FALSE;
+                          FRec4 := '4' + U + FID + U + FTaxID + U + U +
+                          BOOLCHAR[not RData.Add2PN] + U + U + 'P' + U + '' + U +
+                          BOOLCHAR[NewLine] + U + '0';
+                          FData := RData;
+                          FOriginalDataRec3 := RData.FRec3;
+                          if dt = rdtSkinTest then FOverrideType := ptSkinTest
+                          else FOverrideType := ptImmunization;
+                      end;
+                      self.FImmunizationPromptCreated := true;
+                  end;
+              end;
+              //AGP VIMM end changes
+
+            if (dt = rdtMentalHealthTest) then
             begin
               if (not Assigned(FPrompts)) then
                 FPrompts := TList.Create;
               FChoicePrompt :=
-                TRemPrompt(FPrompts[FPrompts.Add(TRemPrompt.Create)]);
+                TRemPrompt(FPrompts[FPrompts.Add(TRemPrompt.Create(nil))]);
               with FChoicePrompt do
               begin
                 FParent := Self;
@@ -3717,8 +3849,17 @@ begin
           end;
         end;
       end;
+    if (FCodesList <> nil) and (RData <> nil) and (RData.FRec3 <> '') then
+      begin
+        if (Piece(RData.FRec3, U, 4) = 'CPT') or
+           (Piece(RData.FRec3, U, 4) = 'POV') or
+           (Piece(RData.FRec3, U, 4) = 'SCT') then
+              FCodesList.Add(RData.FRec3);
+      end;
+
     until (idx < 0);
 
+    LastPrompt := nil;
     idx := -1;
     repeat
       idx := TempSL.IndexOfPieces(['4', FID, FTaxID], idx);
@@ -3731,12 +3872,47 @@ begin
         begin
           if (not Assigned(FPrompts)) then
             FPrompts := TList.Create;
-          RPrompt := TRemPrompt(FPrompts[FPrompts.Add(TRemPrompt.Create)]);
+          RPrompt := TRemPrompt(FPrompts[FPrompts.Add(TRemPrompt.Create(nil))]);
           with RPrompt do
           begin
             FParent := Self;
             FRec4 := TempSL[idx];
             InitValue;
+            if pt = ptMagnitude then
+            begin
+              if assigned(FParent.FData) and (FParent.FData.Count > 0) then
+              begin
+                for j := 0 to FParent.FData.Count-1 do
+                begin
+                  if TRemData(FParent.FData[j]).DataType in MagnitudeDataTypes then
+                  begin
+                    RPrompt.FData := FParent.FData[j];
+                    FOverrideType := ptMagnitude;
+                    UpdateUCUMInfo(RPrompt.getDataType, RPrompt.FData.Code, RPrompt.getUCumData);
+                    break;
+                  end;
+                end;
+//                if Assigned(RPrompt.FData) and (RPrompt.FData.DataType = dtStandardCode) then
+//                begin
+//                  if (idx < (TempSL.Count-1)) then
+//                    InsertUCUM := (Piece(TempSL[idx+1],U,4) <> RemPromptCodes[ptUCUMCode])
+//                  else
+//                    InsertUCUM := True;
+//                  if InsertUCUM then
+//                  begin
+//                    data := '4' + U + FID + U + FTaxID + U + RemPromptCodes[ptUCUMCode] +
+//                            '^1^^P^' + PromptDescriptions[ptUCUMCode] + '^1^' + Piece(FRec4, U, 10);
+//                    TempSL.Insert(idx+1,data);
+//                  end;
+//                  LastPrompt := RPrompt;
+//                end;
+              end;
+            end;
+            if pt = ptUCUMCode then
+            begin
+              FUCUMPrompt := LastPrompt;
+              LastPrompt := nil;
+            end;
           end;
           if (pt = ptComment) then
           begin
@@ -3762,7 +3938,7 @@ begin
         FPNText := FPNText + Trim(Piece(TempSL[idx], U, 4));
       end;
     until (idx < 0);
-    ExpandTIUObjects(FPNText);
+    ExpandTIUObjects(FPNText, RemForm.PCEObj.VisitString);
   end;
 end;
 
@@ -3911,14 +4087,37 @@ begin
 end;
 
 procedure TRemDlgElement.cbClicked(Sender: TObject);
+var
+  i: integer;
+  robj: TResyncObj;
+  chk: TORCheckBox;
+
 begin
+  chk := (Sender as TORCheckBox);
+  if IgnoreReminderClicks then
+  begin
+    if not assigned(RemDlgResyncElements) then
+      RemDlgResyncElements := TObjectList<TResyncObj>.Create
+    else
+    begin
+      for i := 0 to RemDlgResyncElements.Count - 1 do
+        with RemDlgResyncElements[i] do
+          if (cb = chK) and (elem = Self) then
+            exit;
+    end;
+    robj := TResyncObj.Create;
+    robj.cb := chk;
+    robj.elem := Self;
+    RemDlgResyncElements.Add(robj);
+    exit;
+  end;
   FReminder.BeginTextChanged;
   try
     FReminder.BeginNeedRedraw;
     try
       if (Assigned(Sender)) then
       begin
-        SetChecked((Sender as TORCheckBox).Checked);
+        SetChecked(chk.Checked);
         ElementChecked := Self;
       end;
     finally
@@ -3928,11 +4127,12 @@ begin
     FReminder.EndTextChanged(Sender);
   end;
   RemindersInProcess.Notifier.Notify;
-  if Assigned(TORCheckBox(Sender).Associate) and (not ScreenReaderSystemActive)
+  if Assigned(chk.Associate) and (not ScreenReaderSystemActive)
   then
-    if self.FInitialChecked then self.FInitialChecked := false
-    else TDlgFieldPanel(TORCheckBox(Sender).Associate).SetFocus;
-
+    if self.FInitialChecked then
+      self.FInitialChecked := false
+    else if ShouldFocus(TDlgFieldPanel(chk.Associate)) then
+      TDlgFieldPanel(chk.Associate).SetFocus;
 end;
 
 function TRemDlgElement.EnableChildren: boolean;
@@ -3999,7 +4199,7 @@ begin
   begin
     if ScreenReaderSystemActive then
       (Sender as TCPRSDialogParentCheckBox).FocusOnBox := TRUE
-    else
+    else if ShouldFocus(TDlgFieldPanel(TORCheckBox(Sender).Associate)) then
       TDlgFieldPanel(TORCheckBox(Sender).Associate).SetFocus;
   end;
 end;
@@ -4014,13 +4214,18 @@ begin
   (Sender as TORCheckBox).FocusOnBox := FALSE;
 end;
 
+function TRemDlgElement.refused: boolean;
+begin
+  Result := (Piece(FRec1, U, 8) = '3');
+end;
+
 type
   TORExposedWinControl = class(TWinControl);
 
 function TRemDlgElement.BuildControls(var Y: integer; ParentWidth: integer;
   BaseParent, AOwner: TWinControl): TWinControl;
 var
-  lbl: TLabel;
+  lbl, UCUMlbl: TLabel;
   lblText: string;
   sLbl: TCPRSDialogStaticLabel;
   lblCtrl: TControl;
@@ -4204,16 +4409,17 @@ var
   procedure AddPrompts(Shared: boolean; AParent: TWinControl; PWidth: integer;
     var Y: integer);
   var
+    idx64: Int64;
     i, j, k, idx: integer;
     textArr, DefLoc: TStrings;
-    LocText, text: string;
+    LocText, text, isReq: string;
     LocFound: boolean;
     M, n,t: integer;
     ActDt, InActDt: Double;
     encDt: TFMDateTime;
     ActChoicesSL: TORStringList;
     Piece12, WHReportStr, TMP: String;
-    WrapLeft, LineWidth: integer;
+    FirstX, WrapLeft, LineWidth: integer;
 
   begin
     SameLineCtrl := TList.Create;
@@ -4236,6 +4442,10 @@ var
           SameLineCtrl.Add(pnl);
         LastX := PWidth;
       end;
+      if (Assigned(cb)) then
+        FirstX := cb.Left + NewLinePromptGap
+      else
+        FirstX := pnl.Left + NewLinePromptGap;
       for i := 0 to FPrompts.Count - 1 do
       begin
         Prompt := TRemPrompt(FPrompts[i]);
@@ -4266,21 +4476,96 @@ var
           MinX := 0;
           MaxX := 0;
           lbl := nil;
+          UCUMlbl := nil;
           sLbl := nil;
           lblCtrl := nil;
           DoLbl := Prompt.Required;
           case pt of
-            ptComment, ptQuantity:
+            ptPDMP: // PDMP Button on Dialog
+              begin
+                ctrl.btn := TCPRSDialogButton.Create(AOwner);
+                ctrl.ctrl.Parent := aParent;
+                ctrl.btn.OnClick := prompt.DoPDMP;
+                ctrl.btn.Caption := prompt.ForcedCaption;
+                MinX := TextWidthByFont(ctrl.btn.Font.Handle,ctrl.btn.Caption);
+                doLbl := False;
+                MinX := 120;
+
+//                if assigned(frmFrame.PDMPMgr) then
+//                  frmFrame.PDMPMgr.ShowNow := True;
+{
+                ctrl.pdmpBtn := TfrmPDMP.Create(AOwner);
+                ctrl.ctrl.Parent := aParent;
+                ctrl.pdmpBtn.Parent := aParent;
+                ctrl.pdmpBtn.Width := 120;
+                ctrl.pdmpBtn.Height := 22;
+                ctrl.pdmpBtn.Top := ctrl.ctrl.Top;
+                ctrl.pdmpBtn.Height := ctrl.ctrl.left + ctrl.ctrl.width + 20;
+                ctrl.pdmpBtn.Color := clMoneyGreen;
+                ctrl.pdmpBtn.Show;
+                MinX := 240;
+}
+              end;
+            ptUCUMCode:
+              begin
+                doLbl := True;
+                ctrl.cbo := TCPRSDialogComboBox.Create(AOwner);
+                ctrl.cbo.Parent := AParent;
+                ctrl.cbo.OnKeyDown := Prompt.ComboBoxKeyDown;
+                ctrl.cbo.Style := orcsDropDown;
+                ctrl.cbo.LongList := True;
+                ctrl.cbo.Pieces := '2';
+                ctrl.cbo.LookupPiece := 2;
+                ctrl.cbo.OnNeedData := Prompt.UCUMNeedData;
+                idx64 := StrToInt64Def(Prompt.Value,0);
+                ctrl.cbo.InitLongList(GetUCUMText(idx64));
+                ctrl.cbo.SelectByIEN(idx64);
+                UpdateColorsFor508Compliance(ctrl.edt);
+                MinX := TextWidthByFont(ctrl.cbo.Font.Handle,
+                  'AbCdEfGhIjKlMnOpQrStUvWxYz 1234');
+                MaxX := PWidth;
+                ctrl.cbo.OnChange := Prompt.PromptChange;
+              end;
+
+            ptComment, ptQuantity, ptMagnitude:
               begin
                 ctrl.edt := TCPRSDialogFieldEdit.Create(AOwner);
                 ctrl.ctrl.Parent := AParent;
                 ctrl.edt.Text := Prompt.Value;
+                UpdateColorsFor508Compliance(ctrl.edt);
                 if (pt = ptComment) then
                 begin
                   ctrl.edt.MaxLength := 245;
                   MinX := TextWidthByFont(ctrl.edt.Font.Handle,
                     'AbCdEfGhIjKlMnOpQrStUvWxYz 1234');
                   MaxX := PWidth;
+                end
+                else if (pt = ptMagnitude) then
+                begin
+                  if assigned(Prompt.FData) then
+                  begin
+                    ctrl.edt.UCUMCaption := Prompt.Caption;
+                    ctrl.edt.Prompt := prompt;
+                    MinX := ctrl.edt.Width - LblGap;
+                    MaxX := MinX;
+                    ctrl.edt.ShowHint := True;
+//                    if Prompt.FData.DataType = dtStandardCode then
+//                    begin
+//                      Prompt.EditEnter2(ctrl.edt); // setup hint etc.
+//                      ctrl.edt.OnEnter := Prompt.EditEnter2;
+//                    end
+//                    else
+//                    begin
+                      UCUMlbl := TLabel.Create(AOwner);
+//                      UCumlbl.Caption := Piece(prompt.FRec4, u, 34);
+                      ctrl.edt.AssociateLabel := UCUMLbl;
+                      UCUMlbl.Parent := AParent;
+                      Prompt.EditEnter(ctrl.edt); // setup hint etc.
+                      ctrl.edt.OnEnter := Prompt.EditEnter;
+//                    end;
+                    ctrl.edt.OnExit := Prompt.EditExit;
+                    UpdateColorsFor508Compliance(UCUMlbl);
+                  end;
                 end
                 else
                 begin
@@ -4389,7 +4674,12 @@ var
                 begin
                   ctrl.cbo.Text := Prompt.Value;
                   if (pt = ptVisitLocation) then
-                    ctrl.cbo.Items[0] := '0' + U + Prompt.Value;
+                  begin
+                    if ctrl.cbo.Items.Count > 0 then
+                      ctrl.cbo.Items[0] := '0' + U + Prompt.Value
+                    else
+                      ctrl.cbo.Items.Add('0' + U + Prompt.Value);
+                  end;
                 end;
                 if (ctrl.cbo.ItemIndex < 0) then
                   ctrl.cbo.ItemIndex := 0;
@@ -4675,7 +4965,7 @@ var
 
 //                ctrl.dt.LongMonths := TRUE;
                 try
-                  DefaultDate := ctrl.dt.FMDate;
+                  DefaultDate := ctrl.date.FMDateTime;
                   tmp := Prompt.Value;
 //                  ctrl.date.FMDateTime := StrToFloat(Prompt.Value);
                   if tmp = 'E' then
@@ -4695,9 +4985,9 @@ var
                 if Prompt.EventType = 'E' then
                   ctrl.Date.onExit := Prompt.promptChange
                 else ctrl.date.OnChange := Prompt.PromptChange;
-                UpdateColorsFor508Compliance(ctrl.dt);
+                UpdateColorsFor508Compliance(ctrl.date);
                 DoLbl := TRUE;
-                MinX := ctrl.dt.Width;
+                MinX := ctrl.date.Width;
               end;
 
             ptView, ptPrint:
@@ -4937,7 +5227,8 @@ var
                 ctrl.btn := TCPRSDialogButton.Create(AOwner);
                 ctrl.ctrl.Parent := AParent;
                 ctrl.btn.OnClick := Prompt.DoMHTest;
-                ctrl.btn.Caption := Prompt.ForcedCaption;
+                ctrl.btn.Caption := 'Perform ' + Prompt.FData.Narrative;
+//                ctrl.btn.Caption := Prompt.ForcedCaption;
                 if Piece(Prompt.FData.FRec3, U, 13) = '1' then
                 begin
                   ctrl.btn.Caption := ctrl.btn.Caption + ' *';
@@ -4947,7 +5238,7 @@ var
                   ctrl.btn.Caption) + 13;
                 ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle,
                   ctrl.btn.Caption) + 8;
-                DoLbl := TRUE;
+                DoLbl := false;
               end
               else if ((pt = ptGAF)) and (MHDLLFound = FALSE) then
               begin
@@ -4977,6 +5268,25 @@ var
                 end;
                 DoLbl := TRUE;
               end
+              else if (pt = ptImmunization) or (pt = ptSkinTest) then
+                begin
+                  ctrl.btn := TCPRSDialogButton.Create(AOwner);
+                  ctrl.ctrl.Parent := AParent;
+                  ctrl.btn.OnClick := Prompt.DoVimm;
+                  if assigned(Prompt.FData) and (Piece(Prompt.FData.FRec3, U, 13) = '1') then isReq := '*'
+                  else isReq := '';
+                  if assigned(Prompt.FData) and (Piece(Prompt.FData.FRec3, u, 10) <> '') then ctrl.btn.Caption := Piece(Prompt.FData.FRec3, u, 10) + isReq
+                  else if pt = ptSkinTest then ctrl.btn.Caption := 'Enter Skin Test' + isReq
+                  else ctrl.btn.Caption := 'Enter Immunizations' + isReq;
+//                  if Piece(Prompt.FData.FRec3, U, 13) = '1' then
+//                    begin
+//                      ctrl.btn.Caption := ctrl.btn.Caption + ' *';
+//                      (ctrl.btn as ICPRSDialogComponent).RequiredField := TRUE;
+//                    end;
+                  MinX := TextWidthByFont(ctrl.btn.Font.Handle, ctrl.btn.Caption) + 13;
+                  ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle, ctrl.btn.Caption) + 8;
+                  DoLbl := TRUE;
+                end
               else
                 ctrl.ctrl := nil;
             end;
@@ -5010,12 +5320,7 @@ var
             if (Shared) and (Assigned(FChildren)) and (FChildren.Count > 0) then
               X := TRemDlgElement(FChildren[0]).TrueIndent
             else
-            begin
-              if (Assigned(cb)) then
-                X := cb.Left + NewLinePromptGap
-              else
-                X := pnl.Left + NewLinePromptGap;
-            end;
+              X := FirstX;
             NextLine(Y);
           end;
           if (MaxX > (PWidth - X - Gap)) then
@@ -5047,8 +5352,22 @@ var
                 ctrl.ctrl.Font.Color := DisabledFontColor;
               ctrl.ctrl.Left := X;
               ctrl.ctrl.Top := Y;
+              LastX := ctrl.ctrl.Left + ctrl.ctrl.Width + Gap;
               SameLineCtrl.Add(ctrl.ctrl);
-              if (Assigned(ud)) then
+              if assigned(UCUMlbl) then
+              begin
+                if (UCUMlbl.Width + LastX) > PWidth then
+                begin
+                  NextLine(Y);
+                  X := FirstX;
+                  UCUMlbl.Left := X;
+                end
+                else
+                  UCUMlbl.Left := X + ctrl.ctrl.Width + LblGap;
+                UCUMlbl.Top := Y;
+                SameLineCtrl.Add(UCUMlbl);
+              end
+              else if (Assigned(ud)) then
               begin
                 SameLineCtrl.Add(ud);
                 if (Assigned(HelpBtn)) then
@@ -5084,14 +5403,23 @@ var
           end;
         end;
         if (Assigned(ud)) then
-          Prompt.FCurrentControl := ud
+          Prompt.CurrentControl := ud
         else
-          Prompt.FCurrentControl := ctrl.ctrl;
+          Prompt.CurrentControl := ctrl.ctrl;
       end;
       NextLine(Y);
     finally
       SameLineCtrl.Free;
     end;
+
+//    if Assigned(Application.MainForm) then
+////      if fHasPdmp then
+//         disabling access to PDMP from the main window toolbar
+//        sendMessage(Application.MainForm.Handle, UM_PDMP_Disable, 0, 0)
+//      else
+////         enabling access to PDMP from the main window toolbar
+//        sendMessage(Application.MainForm.Handle, UM_PDMP_Enable, 0, 0);
+
   end;
 
   procedure UpdatePrompts(EnablePanel: boolean; ClearCB: boolean);
@@ -5129,11 +5457,11 @@ begin
   if (Assigned(FPrompts)) then
   begin
     for i := 0 to FPrompts.Count - 1 do
-      TRemPrompt(FPrompts[i]).FCurrentControl := nil;
+      TRemPrompt(FPrompts[i]).CurrentControl := nil;
   end;
   if (ElemType = etDisplayOnly) or ((isDisable) and (Piece(originalType, U, 1) = 'D')) then
   begin
-    if (FText <> '') then
+    if (FText <> '') or ((FData <> nil) and (FData.Count > 0)) then
     begin
       inc(Y, Gap);
       pnl := GetPanel(EntryID, CRLFText(FText),
@@ -5404,11 +5732,11 @@ end;
 
 procedure TRemDlgElement.AddText(Lst: TStrings);
 var
-  i, ilvl: integer;
+  i, ilvl, r: integer;
   Prompt: TRemPrompt;
   txt: string;
   FldData: TORStringList;
-
+  RData: TRemData;
 begin
   if (not(FReminder is TReminder)) then
     ScootOver := 4;
@@ -5443,6 +5771,30 @@ begin
       end
       else
         WordWrap(txt, Lst, ilvl);
+//      dec(ilvl, 2);
+      if assigned(fData) then
+        begin
+          for r := 0 to fData.Count - 1 do
+            begin
+              rdata := TRemData(fData[r]);
+              if assigned(rData.vimmResult) and rData.vimmResult.isComplete = true  then
+//                wordWrap(CRLF + rData.vimmResult.getNoteText.Text, Lst, ilvl);
+                begin
+                if (txt <> '') and (txt = CRLF) then wordWrap(txt + rData.vimmResult.getNoteText.Text, Lst, ilvl)
+//                  begin
+//                    if txt <> CRLF then wordWrap(txt + CRLF + rData.vimmResult.getNoteText.Text, Lst, ilvl)
+//                    else wordWrap(txt + rData.vimmResult.getNoteText.Text, Lst, ilvl)
+//                  end
+                else
+                  begin
+                    wordWrap(rData.vimmResult.getNoteText.Text, Lst, ilvl)
+//                    if r = 0 then wordWrap(rData.vimmResult.getNoteText.Text, Lst, ilvl)
+//                    else wordWrap(CRLF + rData.vimmResult.getNoteText.Text, Lst, ilvl);
+                  end;
+                end;
+
+            end;
+        end;
       dec(ilvl, 2);
       if (Assigned(FPrompts)) then
       begin
@@ -5489,6 +5841,25 @@ begin
   end;
 end;
 
+function TRemDlgElement.allCompleteResults: boolean;
+var
+i: integer;
+remData: TRemData;
+begin
+  result := true;
+  if not assigned(FData) then
+    begin
+      result := false;
+    end;
+  for i := 0 to FData.Count - 1 do
+    begin
+      remData := TRemData(self.FData[i]);
+      if ((Piece(remData.FRec3, U, 4) <> 'IMM') and (Piece(remData.FRec3, U, 4) <> 'SK')) then continue;
+      if (remData.vimmResult = nil) then result := false
+      else if not remData.vimmResult.isComplete then result := false;
+    end;
+end;
+
 function TRemDlgElement.AddData(Lst: TStrings; Finishing: boolean;
   AHistorical: boolean = FALSE): integer;
 var
@@ -5526,7 +5897,10 @@ begin
   OK := FChecked;
   newDataOnly := Piece(self.FRec1, U, 27);
   if (OK and Finishing) then
-    OK := (Historical = AHistorical);
+    begin
+      OK := (Historical = AHistorical);
+//      if not OK then OK := FImmunizationPromptCreated = true;
+    end;
   if OK then
   begin
     if (Assigned(FData)) then
@@ -5558,12 +5932,12 @@ begin
               ':', 2), 9999999);
             if (encDt >= ActDt) and (encDt <= InActDt) then
             begin
-              inc(Result, TRemData(FData[i]).AddData(Lst, Finishing));
+              inc(Result, TRemData(FData[i]).AddData(Lst, Finishing, AHistorical));
               break;
             end;
           end
         else
-          inc(Result, TRemData(FData[i]).AddData(Lst, Finishing));
+          inc(Result, TRemData(FData[i]).AddData(Lst, Finishing, AHistorical));
       end;
     end;
   end;
@@ -5672,13 +6046,15 @@ end;
 
 procedure TRemDlgElement.FinishProblems(List: TStrings);
 var
-  i, Cnt: integer;
+  i, {iCode, iValue,} Cnt: integer;
   cReq: TRDChildReq;
   Kid: TRemDlgElement;
   Prompt: TRemPrompt;
   txt, Msg, Value: string;
   pt: TRemPromptType;
   required: boolean;
+//  UCUMData, temp: string;
+//  failed: boolean;
 
 begin
   // if(ElemType <> etDisplayOnly) and (FChecked) and (assigned(FPrompts)) then
@@ -5728,7 +6104,7 @@ begin
         txt := Prompt.ForcedCaption;
         if (pt in [ptVisitDate]) and Prompt.FMonthReq then
           txt := txt + ' (Month Required)';
-        WordWrap('Item: ' + txt, List, 65, 6);
+//        WordWrap('Item: ' + txt, List, 65, 6);
         if (pt = ptDate) then txt := txt + ' (Month and Day Required)';
         WordWrap('Item: ' + txt, List, 65, 6);
       end;
@@ -5771,6 +6147,44 @@ begin
               WordWrap('Element: ' + FText, List, 68, 6);
               WordWrap('Prompt: ' + Prompt.ForcedCaption + ' must be viewed', List, 65, 6);
             end;
+        end;
+      if (pt = ptMagnitude) and (Value <> '') then
+        begin
+          if prompt.CurrentControl is TCPRSDialogFieldEdit then
+          begin
+            msg := ValidateMagnitudeMessage(prompt.CurrentControl as TCPRSDialogFieldEdit);
+            if msg <> '' then
+            begin
+              WordWrap('Element: ' + FText, List, 68, 6);
+              WordWrap('Prompt: ' + Piece(msg,U,2), List, 65, 6);
+            end;
+          end;
+//          failed := false;
+//          uCUMData := Prompt.getUCumData;
+//          if (StrToIntDef(Piece(uCUMData, u, 3), 0) = 0) and (POS('.', value) > 0) then
+//            failed := true
+//          else if (StrToIntDef(Piece(uCUMData, u, 3), 0) > 0) and (POS('.', value) > 0) then
+//            begin
+//              temp := Piece(value, '.', 2);
+//              if Length(temp) > StrToIntDef(Piece(uCUMData, u, 3), 0) then
+//                failed := true;
+//            end;
+//          if not failed then
+//            begin
+//              temp := Piece(value, '.', 1);
+//              val(temp, iValue, iCode);
+//              if iCode <> 0 then
+//                failed := true
+//              else if iValue < StrToIntDef(Piece(uCUMData, u, 1), 0) then
+//                failed := true
+//              else if iValue > StrToIntDef(Piece(uCUMData, u, 1), 0) then
+//                failed := true;
+//            end;
+//          if failed then
+//            begin
+//              WordWrap('Element: ' + FText, List, 68, 6);
+//              WordWrap('Prompt: ' + Prompt.ForcedCaption + ' ' + Prompt.buildUCUMDataText, List, 65, 6);
+//            end;
         end;
       // (AGP Change 24.9 add check to see if MH tests are required)
       if ((pt = ptMHTest) or (pt = ptGAF)) and
@@ -5817,6 +6231,18 @@ begin
           WordWrap(' ', List, 65, 6);
         end;
       end;
+      if ((pt = ptImmunization) or (pt = ptSkinTest)) and ((assigned(Prompt.FData)) and (Piece(Prompt.FData.FRec3, U, 13) = '1')) then
+         begin
+          if not prompt.FParent.allCompleteResults then
+            begin
+              WordWrap('You are missing a complete Immunization/Skin Test Record', List, 65, 6);
+              if assigned(Prompt.FData) and (Piece(Prompt.FData.FRec3, u, 10) <> '') then
+                WordWrap(Piece(Prompt.FData.FRec3, u, 10), List, 65, 5)
+              else WordWrap(Piece(Prompt.FParent.FText, u, 10), List, 65, 5);
+            end;
+
+
+         end;
     end;
   end;
   if (Assigned(FChildren)) and (FChecked or (ElemType = etDisplayOnly)) then
@@ -5893,21 +6319,25 @@ var
 begin
   Cnt := 0;
   Result := '';
-  Prompt := TRemPrompt.Create();
-  lastItem := 0;
-  for C := 0 to Choices.Count - 1 do
-  begin
-    if (Prompt.CompareActiveDate(TStringList(ChoicesActiveDates[C]), encDt)
-      = TRUE) then
+  Prompt := TRemPrompt.Create(nil);
+  try
+    lastItem := 0;
+    for C := 0 to Choices.Count - 1 do
     begin
-      Cnt := Cnt + 1;
-      lastItem := C;
-      if (Cnt > 1) then
-        break;
+      if (Prompt.CompareActiveDate(TStringList(ChoicesActiveDates[C]), encDt)
+        = TRUE) then
+      begin
+        Cnt := Cnt + 1;
+        lastItem := C;
+        if (Cnt > 1) then
+          break;
+      end;
     end;
+    if (Cnt = 1) then
+      Result := Choices[lastItem];
+  finally
+    Prompt.Free;
   end;
-  if (Cnt = 1) then
-    Result := Choices[lastItem];
 end;
 
 function TRemDlgElement.IndentChildrenInPN: boolean;
@@ -5993,6 +6423,7 @@ end;
 constructor TRemDlgElement.Create;
 begin
   FFieldValues := TORStringList.Create;
+  FCodesList := TStringList.Create;
 end;
 
 function TRemDlgElement.EntryID: string;
@@ -6109,7 +6540,7 @@ begin
   Result := (Piece(FRec3, U, 5) <> '1');
 end;
 
-function TRemData.AddData(List: TStrings; Finishing: boolean): integer;
+function TRemData.AddData(List: TStrings; Finishing: boolean; historical: boolean): integer;
 var
   i, j, k: integer;
   PCECat: TPCEDataCat;
@@ -6129,7 +6560,8 @@ var
   begin
     PNum := -1;
     pt := Prompt.PromptType;
-    if (pt = ptSubComment) or (pt = ptUnknown) or (((pt = ptView) or (pt = ptPrint)) and (Piece(prompt.FRec4, U, 12) <> 'V')) then
+    if (pt = ptSubComment) or (pt = ptUnknown) or (((pt = ptView) or
+       (pt = ptPrint)) and (Piece(prompt.FRec4, U, 12) <> 'V')) then
       exit;
     if (pt = ptMST) then
     begin
@@ -6176,17 +6608,23 @@ var
     else if (pt <> ptDataList) and (ord(pt) >= ord(low(TRemPromptType))) then
     begin
       Pdt := RemPromptTypes[pt];
-      if (Pdt = dt) or (Pdt = dtAll) or (Pdt = dtGenFindings) or
-        ((Pdt = dtHistorical) and Assigned(Prompt.FParent) and
+      if (Pdt = dt) or (Pdt = rdtAll) or (Pdt = rdtGenFindings) or
+        ((pdt = rdtAdd2PLTypes) and (dt in Add2PLDataTypes)) or
+        ((pdt = rdtMagnitudeTypes) and (dt in MagnitudeDataTypes)) or
+        ((Pdt = rdtHistorical) and Assigned(Prompt.FParent) and
         Prompt.FParent.Historical) then
         PNum := FinishPromptPieceNum[pt];
+      if (PNum < 0) and (pdt = rdtAdd2PLTypes) then
+      begin
+        case dt of
+          rdtDiagnosis: PNum := pnumPOVAdd2PL;
+          rdtStandardCode: PNUM := pnumSCAdd2PL;
+        end;
+      end;
       if (PNum > 0) then
       begin
         if (pt = ptPrimaryDiag) then
-        begin
-          SetPiece(X, U, PNum, BOOLCHAR[Primary]);
-          // SetPiece(x, U, 13, BoolChar[Primary]);
-        end
+          SetPiece(X, U, PNum, BOOLCHAR[Primary])
         else if (pt = ptDate) or (pt = ptDateTime) then
         begin
           tmp := Prompt.GetValue;
@@ -6194,20 +6632,126 @@ var
             tmp := '';
           SetPiece(X, U, PNum, tmp);
         end
-
+        else if pdt = rdtMagnitudeTypes then
+          begin
+            SetPiece(X, U, PNum, Prompt.GetValue);
+            if (Prompt.UCUMInfo <> nil) and (prompt.UCUMInfo.Code <> '') then
+              SetPiece(X, U, pnumCodesUCUM, prompt.UCUMInfo.Code);
+            SetPiece(X, U, PNum, Prompt.GetValue);
+          end
         else
-        begin
           SetPiece(X, U, PNum, Prompt.GetValue);
-          // SetPiece(x, U, 13, Prompt.GetValue);
-        end;
       end;
     end;
   end;
 
-  procedure Add(Str: string; Root: TRemPCERoot);
+  procedure addVimmData(var List: TStrings; PCECat: TPCEDataCat;
+    values: string; Finishing, historical: boolean);
+  var
+    str, tmp: string;
+    i, idx: integer;
+    Data: TVimmResult;
+    codes: TStringList;
+//    cs: TVimmCS;
+    codeCat: TPCEDataCat;
+    immList, tempList: TStrings;
+//    isHistorical: boolean;
+  begin
+    codes := TStringList.Create;
+    tempList := TStringList.Create;
+    immList := TStringList.Create;
+    try
+      if Self.vimmResult = nil then
+        exit;
+      Data := Self.vimmResult;
+
+      if Data.isComplete = FALSE then
+        exit;
+      if finishing then
+        begin
+          if (historical = true) and (data.documType <> 'Historical') then exit
+          else if (historical = false) and (data.documType = 'Historical') then exit;
+        end;
+
+      SetPiece(str, U, pnumCode, Data.ID);
+      SetPiece(str, U, pnumNarrative, Data.name);
+      if historical = true then
+        begin
+          if PCECat = pdcSkin then setPiece(str, u, pnumVisitDate, Piece(data.DelimitedStr, u, 8))
+          else setPiece(str, u, pnumVisitDate, Piece(data.DelimitedStr, u, 19));
+          if StrToIntDef(data.outsideLocIEN, 0) = 0 then
+            setPiece(str, U, pnumVisitLoc, data.outsideLoc)
+          else setPiece(str, U, pnumVisitLoc, data.outsideLocIEN);
+        end;
+
+
+        if data.cptCode <> '' then codes.Add(data.diagnosisDelimitedStr);
+        if data.dxCode <> '' then codes.Add(data.procedureDelimitedStr);
+
+
+
+      if Finishing then
+      begin
+        idx := List.IndexOf(Char(ord('A') + ord(PCECat)) + str);
+        List.AddObject(Char(ord('A') + ord(PCECat)) + str, Data);
+        if (data.documType = 'Administered') and (not data.isSkin) and (not historical) and
+          (StrToIntDef(Piece(data.DelimitedStr, U, 30), 0) = 0) and (idx = -1) then
+          begin
+            if Pos('IMM', Piece(data.DelimitedStr, U, 1)) > 0 then
+              immList.Add(data.DelimitedStr);
+//            inc(immProcedureCnt)
+          end;
+      end
+      else
+      begin
+        tmp := Char(ord('A') + ord(PCECat)) + GetPCEDataText(PCECat, '', '',
+          Data.name) + GetImmContraText(Data.isContraindicated, Data.isRefused);
+          if data.documType = 'Historical' then tmp := tmp + ' (Historical)';
+
+        List.AddObject(tmp, Self);
+        inc(Result);
+      end;
+      if (codes = nil) or (data.documType = 'Historical') then
+        exit;
+      for i := 0 to codes.Count - 1 do
+      begin
+        tmp := codes.Strings[i];
+//        cs := TVimmCS(codes.Objects[i]);
+        str := '';
+        SetPiece(str, U, pnumCode, Piece(tmp, U, 2));
+        SetPiece(str, U, pnumNarrative, Piece(tmp, u, 4));
+        codeCat := pdcHNC;
+        if Pos('CPT', Piece(tmp, u, 1)) > 0 then
+          codeCat := pdcProc
+        else if Pos('POV', Piece(tmp, u, 1)) > 0 then
+          codeCat := pdcDiag
+//        if cs.codingSystem = 'CPT' then
+//          codeCat := pdcProc
+//        else if cs.codingSystem = 'I10' then
+//          codeCat := pdcDiag
+        else if codeCat = pdcHNC then
+          continue;
+        if Finishing then
+          List.AddObject(Char(ord('A') + ord(codeCat)) + tmp, Self)
+        else
+        begin
+          tmp := Char(ord('A') + ord(codeCat)) + GetPCEDataText(codeCat,
+            Piece(tmp, u, 2), '', Piece(tmp, u, 4));
+          // if (Assigned(FParent) and FParent.Historical) then txt := txt + ' (Historical)';
+          List.AddObject(tmp, Self);
+        end;
+      end;
+    finally
+      codes.Free;
+      FreeAndNil(tempList);
+      FreeAndNil(immList);
+    end;
+  end;
+
+  procedure Add(Str: string; Root: TRemPCERoot; historical: boolean);
   var
     i, Qty: integer;
-    Value, IsGAF, txt, X, Code, Nar, Cat,
+    Value, IsGAF, txt, X, Code, Nar, Cat, CodingSystem,
     GenFindID, GenFindNewData, GenFindDataGroup, GenFindPrinter: string;
     Skip: boolean;
     Prompt: TRemPrompt;
@@ -6224,6 +6768,7 @@ var
       Code := Piece(Str, U, r3Code2);
     Nar := Piece(Str, U, r3Nar);
     Cat := Piece(Str, U, r3Cat);
+    CodingSystem := Piece(Str, U, r3CodingSystem);
     GenFindID := Piece(Str, U, r3GenFindID);
     GenFindNewData := Piece(Str, U, r3GenFindNewData);
     GenFindDataGroup := Piece(Str, U, r3GenFindDataGroup);
@@ -6260,7 +6805,7 @@ var
 
     if Finishing or (PCECat = pdcVital) then
     begin
-      if (dt = dtOrder) then
+      if (dt = rdtOrder) then
         X := U + Piece(Str, U, 6) + U + Piece(Str, U, 11) + U + Nar
       else
       begin
@@ -6280,6 +6825,11 @@ var
         else if (PCECat <> pdcVital) then
         begin
           X := Piece(Str, U, 6);
+          if (PCECat = pdcImm) or (PCECat = pdcSkin) then
+            begin
+              addVimmData(List, PCECat, str, finishing, historical);
+              Exit;
+            end;
           SetPiece(X, U, pnumCode, Code);
           SetPiece(X, U, pnumCategory, Cat);
           SetPiece(X, U, pnumNarrative, Nar);
@@ -6287,6 +6837,7 @@ var
           SetPiece(X, U, pnumRemGenFindNewData, GenFindNewData);
           SetPiece(X, U, pnumRemGenFindGroup, GenFindDataGroup);
           setPiece(X, U, pnumGFPrint, GenFindPrinter);
+          SetPiece(X, U, pnumCodingSystem, CodingSystem);
         end;
         if (Assigned(FParent)) then
         begin
@@ -6337,8 +6888,13 @@ var
       end;
       if (not Skip) then
       begin
+        if (PCECat = pdcIMM) or (PCECat = pdcSkin) then
+          begin
+            addVimmData(List, PCECat, str, finishing, historical);
+            exit;
+          end;
         txt := Char(ord('A') + ord(PCECat)) + GetPCEDataText(PCECat, Code, Cat,
-          Nar, Primary, Qty);
+          Nar, Primary, Qty, CodingSystem);
         if (Assigned(FParent) and FParent.Historical) then
           txt := txt + ' (Historical)';
         List.AddObject(txt, Self);
@@ -6380,7 +6936,7 @@ begin
       for i := 0 to FChoices.Count - 1 do
       begin
         if (copy(FChoicePrompt.GetValue, i + 1, 1) = '1') then
-          Add(FChoices[i], TRemPCERoot(FChoices.Objects[i]))
+          Add(FChoices[i], TRemPCERoot(FChoices.Objects[i]), historical)
       end
     end
     else { if there are active dates for each choice then check them }
@@ -6403,7 +6959,7 @@ begin
           if (encDt >= ActDt) and (encDt <= InActDt) then
           begin
             if (copy(FChoicePrompt.GetValue, k + 1, 1) = '1') then
-              Add(FChoices[i], TRemPCERoot(FChoices.Objects[i]));
+              Add(FChoices[i], TRemPCERoot(FChoices.Objects[i]), historical);
             inc(k);
           end; { Active date check }
         end; { FChoicesActiveDates.Items[i] loop }
@@ -6411,13 +6967,18 @@ begin
     end { FChoicesActiveDates check }
   end { FChoicePrompt and FChoices check }
   else
-    Add(FRec3, FPCERoot);
+    Add(FRec3, FPCERoot, historical);
   { Active dates for this are checked in TRemDlgElement.AddData }
 end;
 
 function TRemData.Category: string;
 begin
   Result := Piece(FRec3, U, r3Cat);
+end;
+
+function TRemData.Code: string;
+begin
+  Result := Piece(FRec3, U, r3Code2);
 end;
 
 function TRemData.DataType: TRemDataType;
@@ -6432,6 +6993,8 @@ var
 begin
   if (Assigned(FPCERoot)) then
     FPCERoot.Done(Self);
+  if vimmResult <> nil then
+    FreeAndNil(vimmResult);
   if (Assigned(FChoices)) then
   begin
     for i := 0 to FChoices.Count - 1 do
@@ -6481,6 +7044,11 @@ end;
 function TRemPrompt.Caption: string;
 begin
   Result := Piece(FRec4, U, 8);
+  //AGP commented out according to GIT this was added from a merge of 31.266.2
+  //this code not exist in 31B, 31MA, or 32A.
+  // if Result = '' then
+  // Result := PromptDescriptions[PromptType];
+
   if (not FCaptionAssigned) then
   begin
     AssignFieldIDs(Result);
@@ -6489,9 +7057,13 @@ begin
   end;
 end;
 
-constructor TRemPrompt.Create;
+constructor TRemPrompt.Create(AOwner: TComponent);
 begin
+  inherited Create(AOwner);
   FOverrideType := ptUnknown;
+  FLastUCUMDirection := -789;
+  FUCUMInfo := nil;
+  FLastUCUMInfoData := '';
 end;
 
 function TRemPrompt.Forced: boolean;
@@ -6562,7 +7134,7 @@ begin
       NeedRedraw := FALSE;
       elementNeedRedraw := FALSE;
       case pt of
-        ptComment, ptQuantity:
+        ptComment, ptQuantity, ptMagnitude:
           TmpValue := (Sender as TEdit).Text;
 
         ptVisitDate, ptDate, ptDateTime:
@@ -6774,8 +7346,9 @@ begin
           end;
 
         ptExamResults, ptSkinResults, ptLevelSeverity, ptSeries, ptReaction,
-          ptLevelUnderstanding, ptSkinReading: // (AGP Change 26.1)
+          ptLevelUnderstanding, ptSkinReading, ptUCUMCode:
           TmpValue := (Sender as TORComboBox).itemId;
+
       else
         if pt = ptVitalEntry then
         begin
@@ -6903,21 +7476,23 @@ begin
   if (pt = ptUnknown) or (pt = ptMST) then
     Result := FALSE
   else if (pt = ptDataList) or (pt = ptVitalEntry) or (pt = ptMHTest) or
-    (pt = ptGAF) or (pt = ptWHPapResult) then
+    (pt = ptGAF) or (pt = ptWHPapResult) or (pt = ptImmunization) or (pt = ptSkinTest) then
     Result := TRUE
   else if (pt = ptSubComment) then
     Result := FParent.FHasComment
   else
   begin
-    dt := RemPromptTypes[PromptType];
-    if (dt = dtAll) then
+    dt := RemPromptTypes[pt];
+    if (dt = rdtAll) or (dt = rdtMagnitudeTypes) or (dt = rdtAdd2PLTypes) then
       Result := TRUE
-    else if (dt = dtUnknown) then
+    else if (dt = rdtUnknown) then
       Result := FALSE
-    else if (dt = dtHistorical) then
+    else if (pt = ptUCUMCode) and (dt = rdtStandardCode) then
+      Result := TRUE
+    else if (dt = rdtHistorical) then
       Result := FParent.Historical
       // hanlde combo box prompts that are not assocaite with codes
-    else if (dt <> dtProcedure) and (dt <> dtDiagnosis) then
+    else if (dt <> rdtProcedure) and (dt <> rdtDiagnosis) and (dt <> rdtStandardCode) then
     begin
       Result := FALSE;
       if (Assigned(FParent.FData)) then
@@ -6983,7 +7558,7 @@ end;
 
 function TRemPrompt.PromptType: TRemPromptType;
 begin
-  if (Assigned(FData)) then
+  if (Assigned(FData)) or (FOriginalDataRec3 <> '') then
     Result := FOverrideType
   else
     Result := Code2PromptType(Piece(FRec4, U, 4));
@@ -7018,12 +7593,12 @@ var
 
 begin
   Result := '';
+  pt := PromptType;
   if Add2PN then
   begin
-    pt := PromptType;
     tmp := GetValue;
     case pt of
-      ptComment:
+      ptComment, ptMagnitude:
         Result := tmp;
 
       ptQuantity:
@@ -7051,12 +7626,12 @@ begin
                 if (copy(tmp, 4, 4) = '0000') then
                 begin
                   fmt := 'YYYY';
-                  dateStr := ' – Exact date is unknown';
+                  dateStr := ' Â– Exact date is unknown';
                 end
                 else if (copy(tmp, 6, 2) = '00') then
                 begin
                   fmt := 'MMMM, YYYY';
-                  dateStr := ' – Exact date is unknown';
+                  dateStr := ' Â– Exact date is unknown';
                 end
                 else
                   fmt := 'MMMM D, YYYY';
@@ -7319,8 +7894,36 @@ begin
     end;
   end;
   if (Result <> '') and (Caption <> '') then
+  begin
     Result := Trim(Caption + ' ' + Trim(Result));
+    if (pt = ptMagnitude) and (FUCUMText <> '') then
+      Result := Result + ' ' + FUCUMText;
+  end;
   // end;
+end;
+
+{
+function TRemPrompt.buildUCUMDataText: string;
+var
+temp: string;
+begin
+  temp := getUCUMData;
+  if StrToIntDef(Piece(temp, u, 3), 0) > 0 then
+    result := 'Enter a number between '
+  else result := 'Enter a whole number between ';
+  result := result + Piece(temp, U, 1) + ' and ';
+  result := result + Piece(temp, u, 2);
+  if StrToIntDef(Piece(temp, u, 3), 0) > 0 then
+    result := result + ' up to ' + Piece(temp, u, 3) + ' right of the decimal';
+end;
+}
+
+procedure TRemPrompt.Notification(AComponent: TComponent;
+  Operation: TOperation);
+begin
+  inherited;
+  if (Operation = opRemove) and (AComponent = FCurrentControl) then
+    FCurrentControl := nil;
 end;
 
 function TRemPrompt.CanShare(Prompt: TRemPrompt): boolean;
@@ -7349,6 +7952,8 @@ end;
 destructor TRemPrompt.Destroy;
 begin
   KillObj(@FSharedChildren);
+  if assigned(FLastUCUMData) then
+    FreeAndNil(FLastUCUMData);
   inherited;
 end;
 
@@ -7433,6 +8038,20 @@ begin
     end;
 end;
 
+function TRemPrompt.UCUMInfo: TUCUMInfo;
+var
+  data: string;
+
+begin
+  data := getDataType + U + FData.Code + U + getUCumData;
+  if data <> FLastUCUMInfoData then
+  begin
+    FLastUCUMInfoData := data;
+    FUCUMInfo:= GetUCUMInfo(getDataType, FData.Code);
+  end;
+  Result := FUCUMInfo;
+end;
+
 function TRemPrompt.GetValue: string;
 // Returns TRemPrompt.FValue if this TRemPrompt is not a ptPrimaryDiag
 // Returns 0-False or 1-True if this TRemPrompt is a ptPrimaryDiag
@@ -7456,7 +8075,7 @@ begin
       begin
         encDt := RemForm.PCEObj.VisitDateTime;
         RData := TRemData(FParent.FData[i]);
-        if (RData.DataType = dtDiagnosis) then
+        if (RData.DataType = rdtDiagnosis) then
         begin
           if (Assigned(RData.FPCERoot)) and (RemDataActive(RData, encDt)) then
             OK := (RData.FPCERoot = PrimaryDiagRoot)
@@ -7493,6 +8112,18 @@ begin
     Result := FValue;
 end;
 
+procedure TRemPrompt.SetCurrentControl(const Value: TControl);
+begin
+  if FCurrentControl <> Value then
+  begin
+    if assigned(FCurrentControl) then
+      FCurrentControl.RemoveFreeNotification(Self);
+    FCurrentControl := Value;
+    if assigned(FCurrentControl) then
+      FCurrentControl.FreeNotification(Self);
+  end;
+end;
+
 procedure TRemPrompt.SetValue(Value: string);
 var
   pt: TRemPromptType;
@@ -7511,17 +8142,14 @@ var
   begin
     result := true;
     for i := 0 to list.Count-1 do
+    begin
+      rData := TRemData(List[i]);
+      if (rData.DataType <> rdtGenFindings) and (rData.DataType <> rdtOrder) then
       begin
-//        if (list[i] is not typeof(TRemDlgElement)) then
-//          begin
-//            result := false;
-//            continue;
-//          end;
-        rData := TRemData(List[i]);
-        if (rData.DataType <> dtGenFindings) and (rData.DataType <> dtOrder) then
         result := false;
         exit;
       end;
+    end;
   end;
 
 begin
@@ -7566,8 +8194,10 @@ begin
           .InternalValue;
     end;
 
-    if assigned(FParent.FData) then genFindOnly := genFindingOnly(FParent.FData)
-    else  genFindOnly := false;
+    if assigned(FParent.FData) then
+      genFindOnly := genFindingOnly(FParent.FData)
+    else
+      genFindOnly := false;
 
     OK := (Assigned(FParent) and Assigned(FParent.FData) and
       (Piece(FRec4, U, 4) = RemPromptCodes[ptPrimaryDiag]));
@@ -7582,7 +8212,7 @@ begin
       for i := 0 to FParent.FData.Count - 1 do
       begin
         RData := TRemData(FParent.FData[i]);
-        if (RData.DataType = dtDiagnosis) then
+        if (RData.DataType = rdtDiagnosis) then
         begin
           if (Assigned(RData.FPCERoot)) and (RemDataActive(RData, encDt)) then
           begin
@@ -7638,6 +8268,8 @@ begin
           break;
       end;
     end;
+    if (pt = ptUCUMCode) and assigned(FUCUMPrompt) then
+      FUCUMPrompt.FUCUMText := GetUCUMText(StrToInt64Def(Value,0));
 
     if (Assigned(FParent) and Assigned(FParent.FData) and IsSyncPrompt(pt)) and (not genFindOnly) then
     begin
@@ -7660,17 +8292,14 @@ begin
   end;
   if (not NeedRefresh) then
     NeedRefresh := (GetValue <> Value);
-  if (NeedRefresh and Assigned(FCurrentControl) and FParent.FReminder.Visible)
-  then
+  if (NeedRefresh and Assigned(FCurrentControl) and FParent.FReminder.Visible) then
   begin
     case pt of
-      ptComment:
+      ptComment, ptMagnitude:
         begin
           try
-//            infoBox('before set', 'Warning',MB_OK);
             tmp := GetValue;
             (FCurrentControl as TEdit).Text := tmp;
-//            infoBox('after set set', 'Warning',MB_OK);
           except
 
           end;
@@ -7717,7 +8346,10 @@ begin
           begin
             if (Piece(tmp, U, 1) = '0') then
             begin
-              Items[0] := tmp;
+              if Items.Count > 0 then
+                Items[0] := tmp
+              else
+                Items.Add(tmp);
               SelectByID('0');
             end
             else
@@ -7732,7 +8364,7 @@ begin
         (FCurrentControl as TORCheckBox).Checked := (GetValue = BOOLCHAR[TRUE]);
 
       ptExamResults, ptSkinResults, ptLevelSeverity, ptSeries, ptReaction,
-        ptLevelUnderstanding, ptSkinReading: // (AGP Change 26.1)
+        ptLevelUnderstanding, ptSkinReading, ptUCUMCode:
         (FCurrentControl as TORComboBox).SelectByID(GetValue);
 
     else
@@ -7768,6 +8400,21 @@ begin
   finally
     FFromParent := FALSE;
   end;
+end;
+
+procedure TRemPrompt.UCUMNeedData(Sender: TObject; const StartFrom: string;
+  Direction, InsertAt: Integer);
+begin
+  if (FLastUCUMStartFrom <> StartFrom) or
+     (FLastUCUMDirection <> Direction) then
+  begin
+    if not assigned(FLastUCUMData) then
+      FLastUCUMData := TStringList.Create;
+    FLastUCUMStartFrom := StartFrom;
+    FLastUCUMDirection := Direction;
+    ListUCUMCodes(StartFrom, Direction, FLastUCUMData);
+  end;
+  TORComboBox(Sender).ForDataUse(FLastUCUMData);
 end;
 
 procedure TRemPrompt.InitValue;
@@ -7842,10 +8489,12 @@ begin
     begin
       if (Assigned(FData)) then
       begin
-        if (FData.DataType = dtDiagnosis) then
+        if (FData.DataType = rdtDiagnosis) then
           Result := 'Diagnosis'
-        else if (FData.DataType = dtProcedure) then
-          Result := 'Procedure';
+        else if (FData.DataType = rdtProcedure) then
+          Result := 'Procedure'
+        else if (FData.DataType = rdtStandardCode) then
+          Result := 'Standard Codes';
       end;
     end
     else if (pt = ptVitalEntry) then
@@ -7898,7 +8547,8 @@ begin
     if (vedt.Tag = TAG_VITHEIGHT) then
       vedt.Text := ConvertHeight2Inches(vedt.Text);
     if VitalInvalid(vedt, vcbo) then
-      vedt.SetFocus;
+      if ShouldFocus(vedt) then
+        vedt.SetFocus;
   end;
 end;
 
@@ -7933,38 +8583,58 @@ begin
   Result := Piece(GetValue, ';', 1);
 end;
 
+/// <summary>Starts PDMP request/review from the template</summary>
+procedure TRemPrompt.DoPDMP(Sender: TObject);
+begin
+  if assigned(frmFrame.PDMPMgr) then
+    begin
+//      TButton(FCurrentcontrol).Enabled := False;
+
+//      frmFrame.PDMPMgr.ShowNow := True;
+      frmFrame.PDMPMgr.AlignView := alLeft;
+      frmFrame.PDMPMgr.PDMPNoteIEN := IntToStr(fNotes.frmNotes.EditNoteIEN);
+      frmFrame.pdmpRun(alLeft);
+    end;
+end;
+
 procedure TRemPrompt.DoView(Sender: TObject);
 var
-ien,value: string;
-aList: TStrings;
-canPrint,vistaPrint: boolean;
-header, vistaDevice: string;
+  IEN, Value: string;
+  aList: TStrings;
+  canPrint, vistaPrint: boolean;
+  header, vistaDevice: string;
+
 begin
   if pxrmworking then
     exit;
   aList := TStringList.Create;
   try
+    begin
+      // IEN := Piece(TRemData(FParent.FData[0]).FRec3, U, 6);
+      canPrint := FALSE;
+      vistaPrint := Piece(FRec4, U, 12) = 'V';
+      IEN := Piece(FParent.FRec1, U, 2);
+      if FParent.FData.Count > 0 then
+        Value := Piece(TRemData(FParent.FData[0]).FRec3, U, 14)
+      else
+        Value := '';
+      getGeneralFindingText(aList, canPrint, header, patient.dfn, IEN, Value);
+      if Piece(FRec4, U, 12) = 'N' then
+        canPrint := FALSE;
+      if vistaPrint then
       begin
-//        IEN := Piece(TRemData(FParent.FData[0]).FRec3, U, 6);
-        canPrint := false;
-        vistaPrint := Piece(Frec4, U, 12) = 'V';
-        IEN := Piece(FParent.FRec1, U, 2);
-        value := Piece(TRemData(FParent.FData[0]).FRec3, U, 14);
-        getGeneralFindingText(aList, canprint, header, patient.DFN, ien, value);
-        if Piece(FRec4, U, 12) = 'N' then canPrint := false;
+        vistaDevice := VistAPrintReportBox(aList, header);
         if vistaPrint then
-          begin
-            vistaDevice := VistAPrintReportBox(aList, header);
-            if VistaPrint then setValue(Piece(VistADevice, U, 1));
-          end
-        else
-          begin
-            self.reportView := ModelessReportBox(aList, header, canPrint, false);
-            FOldReportViewOnDestroy := self.reportView.OnDestroy;
-            self.reportView.OnDestroy := self.reportViewClosed;
-          end;
-        ViewRecord := true;
-      end;
+          SetValue(Piece(vistaDevice, U, 1));
+      end
+      else
+        begin
+          self.reportView := ModelessReportBox(aList, header, canPrint, false);
+          FOldReportViewOnDestroy := self.reportView.OnDestroy;
+          self.reportView.OnDestroy := self.reportViewClosed;
+        end;
+      ViewRecord := TRUE;
+    end;
   finally
     FreeAndNil(aList);
     pxrmDoneWorking;
@@ -7975,6 +8645,8 @@ procedure TRemPrompt.DoWHReport(Sender: TObject);
 Var
   comp, IEN: string;
   i: integer;
+  lst: TStringList;
+
 begin
   if pxrmWorking then
     exit;
@@ -7984,8 +8656,13 @@ begin
         comp := Piece(TRemData(FParent.FData[i]).FRec3, U, 4);
         IEN := Piece(TRemData(FParent.FData[i]).FRec3, U, 6);
       end;
-    CallV('ORQQPXRM GET WH REPORT TEXT', [IEN]);
-    ReportBox(RPCBrokerV.Results, 'Procedure Report Results', TRUE);
+    lst := TStringList.Create;
+    try
+      CallVistA('ORQQPXRM GET WH REPORT TEXT', [IEN], lst);
+      ReportBox(lst, 'Procedure Report Results', TRUE);
+    finally
+      lst.Free;
+    end;
   finally
     pxrmDoneWorking;
   end;
@@ -7995,6 +8672,8 @@ procedure TRemPrompt.ViewWHText(Sender: TObject);
 var
   WHRecNum, WHTitle: string;
   i: integer;
+  lst: TStringList;
+
 begin
   if pxrmWorking then
     exit;
@@ -8007,9 +8686,13 @@ begin
             WHTitle := (Piece(TRemData(FParent.FData[i]).FRec3, U, 8));
           end;
       end;
-    CallV('ORQQPXRM GET WH LETTER TEXT', [WHRecNum]);
-    ReportBox(RPCBrokerV.Results, 'Women Health Notification Purpose: ' +
-              WHTitle, FALSE);
+    lst := TStringList.Create;
+    try
+      CallVistA('ORQQPXRM GET WH LETTER TEXT', [WHRecNum], lst);
+      ReportBox(lst, 'Women Health Notification Purpose: ' + WHTitle, FALSE);
+    finally
+      lst.Free;
+    end;
   finally
     pxrmDoneWorking;
   end;
@@ -8046,7 +8729,7 @@ begin
         else
           MHRequired := FALSE;
         Before := GetValue;
-        After := PerformMHTest(Before, FData.Narrative, TmpSL, MHRequired);
+        After := PerformMHTest(Before, FData.Narrative, TmpSL, MHRequired, RemForm.PCEObj);
         if uInit.TimedOut then
           After := '';
         if Piece(After, U, 1) = 'New MH dll' then
@@ -8082,7 +8765,7 @@ begin
               end;
             end;
             // end;
-            // ExpandTIUObjects(FMiscText);
+            // ExpandTIUObjects(FMiscText, RemForm.PCEObj.VisitString);
           end
           else if Piece(After, U, 2) = 'INCOMPLETE' then
           begin
@@ -8155,9 +8838,214 @@ begin
       if (Sender is TCPRSDialogButton) then
         begin
           (Sender as TCPRSDialogButton).Enabled := TRUE;
-          (Sender as TCPRSDialogButton).SetFocus;
+          if ShouldFocus(Sender as TCPRSDialogButton) then
+            (Sender as TCPRSDialogButton).SetFocus;
         end;
       pxrmdoneWorking;
+  end;
+end;
+
+procedure TRemPrompt.DoVimm(Sender: TObject);
+var
+  i, r: integer;
+  resultList: TStringList;
+  Code, codeSys, temp, VIMM, vimmFrec3: string;
+  Data, dataResult: TVimmResult;
+  Found: boolean;
+  RData, RemData: TRemData;
+  codesLst: TStrings;
+  promptList: TStringList;
+  Prompt: TRemPrompt;
+
+begin
+  resultList := TStringList.Create;
+  promptList := TStringList.Create;
+  uVimmInputs.documentType := '';
+  if uVimmInputs.DataList = nil then
+    uVimmInputs.DataList := TStringList.Create;
+  if uVimmInputs.NewList <> nil then
+    uVimmInputs.NewList.Clear
+  else
+    uVimmInputs.NewList := TStringList.Create;
+  codesLst := TStringList.Create;
+  try
+    FParent.FReminder.BeginTextChanged;
+    // search for existing VImm Object for element (edits)
+    uVimmInputs.collapseICE := True;
+    for i := 0 to FParent.FData.Count - 1 do
+    begin
+      vimmFrec3 := TRemData(FParent.FData[i]).FRec3;
+      if (Piece(vimmFrec3, U, 4) <> 'IMM') and (Piece(vimmFrec3, U, 4) <> 'SK')
+      then
+        continue;
+      if Piece(vimmFrec3, U, 4) = 'SK' then
+        uVimmInputs.isSkinTest := True
+      else
+        uVimmInputs.isSkinTest := FALSE;
+
+      if TRemData(FParent.FData[i]).vimmResult <> nil then
+      begin
+        Data := TRemData(FParent.FData[i]).vimmResult.copy;
+        uVimmInputs.DataList.AddObject('DATA' + U + Data.ID, Data);
+        continue;
+      end;
+      VIMM := Piece(vimmFrec3, U, 6) + U + Piece(vimmFrec3, U, 8);
+      uVimmInputs.NewList.Add('VIMM' + U + VIMM);
+      if (FParent.Historical) and (not uVimmInputs.isSkinTest) then
+        uVimmInputs.documentType := '1'
+      else
+        uVimmInputs.documentType := '0';
+    end;
+
+    uVimmInputs.noGrid := FALSE;
+    uVimmInputs.makeNote := FALSE;
+    uVimmInputs.patientName := patient.name;
+    uVimmInputs.patientIEN := patient.dfn;
+    uVimmInputs.userName := user.name;
+    uVimmInputs.userIEN := user.DUZ;
+    if FParent.Historical then
+      uVimmInputs.selectionType := 'historical'
+    else
+      uVimmInputs.selectionType := 'current';
+    uVimmInputs.encounterProviderName :=
+      RemForm.PCEObj.Providers.PCEProviderName;
+    uVimmInputs.encounterProviderIEN := RemForm.PCEObj.Providers.PCEProvider;
+    if ((uVimmInputs.encounterProviderName = '') or (uVimmInputs.encounterProviderIEN < 1)) and
+        (encounter.Provider > 0) then
+      begin
+        uVimmInputs.encounterProviderName := encounter.ProviderName;
+        uVimmInputs.encounterProviderIEN := encounter.Provider;
+      end;
+
+    uVimmInputs.encounterLocation := RemForm.PCEObj.Location;
+    uVimmInputs.encounterCategory := RemForm.PCEObj.VisitCategory;
+    uVimmInputs.dateEncounterDateTime := RemForm.PCEObj.VisitDateTime;
+    uVimmInputs.VisitString := RemForm.PCEObj.VisitString;
+    if (Assigned(uVimmInputs.DataList)) and (uVimmInputs.DataList.Count > 0)
+    then
+      uVimmInputs.startInEditMode := FALSE
+    else
+      uVimmInputs.startInEditMode := True;
+    if (FParent.FData.Count > 0) and
+      (Piece(TRemData(FParent.FData[0]).FRec3, U, 18) = '1') then
+    begin
+      uVimmInputs.noGrid := True;
+      uVimmInputs.immunizationReading := True;
+      uVimmInputs.startInEditMode := True;
+    end
+    else
+      uVimmInputs.immunizationReading := FALSE;
+    if uVimmInputs.isSkinTest and FParent.Historical then
+    begin
+      uVimmInputs.noGrid := True;
+      uVimmInputs.startInEditMode := True;
+    end;
+    if FParent.contraindication then
+      uVimmInputs.documentType := '2'
+    else if FParent.refused then
+      uVimmInputs.documentType := '3';
+    if not uVimmInputs.isSkinTest then
+    begin
+      uVimmInputs.defaultSeries := Self.getSeries;
+    end;
+    uVimmInputs.fromCover := FALSE;
+    if performVimm(resultList, FALSE) = FALSE then
+      exit;
+    for i := FParent.FData.Count - 1 downto 0 do
+    begin
+      RData := TRemData(FParent.FData[i]);
+      if Assigned(FParent.FPrompts) then
+      begin
+        for r := 0 to FParent.FPrompts.Count - 1 do
+        begin
+          Prompt := TRemPrompt(FParent.FPrompts[r]);
+          if Prompt.FData = RData then
+          begin
+            Prompt.FData := nil;
+            promptList.AddObject(RData.FRec3, Prompt);
+          end;
+        end;
+      end;
+      FParent.FData.delete(i);
+      RData.Free;
+    end;
+
+    for r := 0 to resultList.Count - 1 do
+    begin
+      dataResult := TVimmResult(resultList.Objects[r]);
+      RemData := TRemData(FParent.FData[FParent.FData.Add(TRemData.Create)]);
+      RemData.FParent := FParent;
+      RemData.FRec3 := FOriginalDataRec3;
+      SetPiece(RemData.FRec3, U, 6, dataResult.ID);
+      SetPiece(RemData.FRec3, U, 8, dataResult.name);
+      RemData.vimmResult := dataResult.copy;
+      if dataResult.cptCode <> '' then
+        codesLst.Add(dataResult.procedureDelimitedStr);
+      if dataResult.dxCode <> '' then
+        codesLst.Add(dataResult.diagnosisDelimitedStr);
+    end;
+
+    for i := 0 to FParent.FCodesList.Count - 1 do
+    begin
+      Found := FALSE;
+      temp := FParent.FCodesList.Strings[i];
+      codeSys := Piece(temp, U, 4);
+      Code := Piece(temp, U, 7);
+      for r := 0 to codesLst.Count - 1 do
+      begin
+        temp := codesLst.Strings[r];
+        if (pos(codeSys, Piece(temp, U, 1)) > 0) and (Code = Piece(temp, U, 2))
+        then
+        begin
+          Found := True;
+          break;
+        end;
+      end;
+      if Found then
+        continue;
+      RemData := TRemData(FParent.FData[FParent.FData.Add(TRemData.Create)]);
+      RemData.FParent := FParent;
+      RemData.FRec3 := FParent.FCodesList.Strings[i];
+    end;
+
+    if (promptList.Count > 0) and (FParent.FData.Count > 0) then
+    begin
+      for r := promptList.Count - 1 downto 0 do
+      begin
+        for i := 0 to FParent.FData.Count - 1 do
+        begin
+          RData := TRemData(FParent.FData[i]);
+          if (Piece(RData.FRec3, U, 6) = Piece(promptList[r], U, 6)) and
+            (Piece(RData.FRec3, U, 8) = Piece(promptList[r], U, 8)) then
+          begin
+            TRemPrompt(promptList.Objects[r]).FData := RData;
+            promptList.delete(r);
+            break;
+          end;
+        end;
+      end;
+    end;
+
+    if promptList.Count > 0 then
+    begin
+      for r := 0 to promptList.Count - 1 do
+      begin
+        Prompt := TRemPrompt(promptList.Objects[r]);
+        RemData := TRemData(FParent.FData[FParent.FData.Add(TRemData.Create)]);
+        RemData.FParent := FParent;
+        RemData.FRec3 := Prompt.FOriginalDataRec3;
+        Prompt.FData := RemData;
+      end;
+    end;
+
+  finally
+    if resultList <> nil then
+      FreeAndNil(resultList);
+    if codesLst <> nil then
+      FreeAndNil(codesLst);
+    clearResults;
+    FreeAndNil(promptList);
+    FParent.FReminder.EndTextChanged(Sender);
   end;
 end;
 
@@ -8165,6 +9053,60 @@ procedure TRemPrompt.GAFHelp(Sender: TObject);
 begin
   inherited;
   GotoWebPage(GAFURL);
+end;
+
+function TRemPrompt.getDataType: string;
+begin
+  Result := Piece(FData.FRec3, U, r3Type);
+end;
+
+function TRemPrompt.getSeries: string;
+var
+i: integer;
+begin
+  result := '';
+  if FParent.FPrompts.count = 1 then
+    exit;
+  for I := 0 to FParent.FPrompts.Count - 1 do
+    begin
+      if piece(TRemPrompt(FParent.FPrompts[i]).FRec4, u, 4) <> 'IMM_SER' then
+        continue;
+      result := piece(TRemPrompt(FParent.FPrompts[i]).FRec4, u, 6)
+    end;
+end;
+
+function TRemPrompt.getUCumData: string;
+begin
+  Result := Pieces(self.FRec4, u, 30, 36);
+end;
+
+//procedure TRemPrompt.EditEnter2(Sender: TObject);
+//var
+//  edt: TCPRSDialogFieldEdit;
+//
+//begin
+//  edt := TCPRSDialogFieldEdit(Sender);
+//  ParseMagUCUM4StandardCodes(edt);
+//end;
+
+procedure TRemPrompt.EditEnter(Sender: TObject);
+var
+  edt: TCPRSDialogFieldEdit;
+
+begin
+  if assigned(FData) then
+  begin
+    edt := TCPRSDialogFieldEdit(Sender);
+    //data := GetMagUCUMData(RemDataCodes[FData.DataType],FData.Code);
+    ParseMagUCUMData(UCUMInfo, nil, edt, nil, edt.AssociateLabel);
+    FUCUMText := edt.AssociateLabel.Caption;
+  end;
+end;
+
+procedure TRemPrompt.EditExit(Sender: TObject);
+begin
+  if Sender is TCPRSDialogFieldEdit then
+    PostValidateMag(TCPRSDialogFieldEdit(Sender));
 end;
 
 function TRemPrompt.EntryID: string;
@@ -8179,9 +9121,14 @@ end;
 
 procedure TRemPrompt.EditKeyPress(Sender: TObject; var Key: Char);
 begin
-  if (Key = '?') and (Sender is TCustomEdit) and
+  if PromptType = ptMagnitude then
+    ValidateMagKeyPress(Sender, Key)
+  else
+  begin
+    if (Key = '?') and (Sender is TCustomEdit) and
     ((TCustomEdit(Sender).Text = '') or (TCustomEdit(Sender).SelStart = 0)) then
-    Key := #0;
+      Key := #0;
+  end;
 end;
 
 { TRemPCERoot }
@@ -8226,7 +9173,7 @@ var
   obj: TRemPCERoot;
 
 begin
-  if (Data.DataType = dtVitals) then
+  if (Data.DataType = rdtVitals) then
     DID := 'V' + Piece(Rec3, U, 6)
   else
   begin

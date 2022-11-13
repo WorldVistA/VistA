@@ -74,20 +74,20 @@ begin
     CallVistA('ORWDFH PARAM', [Patient.DFN, ALocation], aLst);
 
     if aLst.Count > 0 then
-      begin
+  begin
         DietParams.BTimes := Pieces(aLst[0], U, 1, 6);
         DietParams.NTimes := Pieces(aLst[0], U, 7, 12);
         DietParams.ETimes := Pieces(aLst[0], U, 13, 18);
-      end;
+    end;
 
     if aLst.Count > 1 then
-      begin
+    begin
         DietParams.Alarms := Pieces(aLst[1], U, 1, 6);
         DietParams.Bagged := Piece(aLst[1], U, 10) = 'Y';
-      end;
+    end;
 
     if aLst.Count > 2 then
-      begin
+    begin
         DietParams.Tray := Pos('T', aLst[2]) > 0;
         DietParams.Cafeteria := Pos('C', aLst[2]) > 0;
         DietParams.DiningRm := Pos('D', aLst[2]) > 0;
@@ -96,7 +96,7 @@ begin
         DietParams.EarlyIEN := Piece(aLst[2], U, 4);
         DietParams.LateIEN := Piece(aLst[2], U, 5);
         DietParams.CurTF := Piece(aLst[2], U, 6);
-      end;
+    end;
 
     if (not DietParams.Tray) and (not DietParams.Cafeteria) and (not DietParams.DiningRm) then
       DietParams.Tray := True;
@@ -123,7 +123,7 @@ begin
     Result := aLst.Text;
   finally
     FreeAndNil(aLst);
-  end;
+end;
 end;
 
 function CurrentTFText(const IENStr: string): string;
@@ -140,7 +140,7 @@ begin
     Dest.AddStrings(aLst);
   finally
     FreeAndNil(aLst);
-  end;
+end;
 end;
 
 function ExpandedQuantity(Product, Strength: Integer; const Qty: string): string;
@@ -164,10 +164,23 @@ begin
   Result := aReturn.Count;
 end;
 
-procedure OrderLateTray(NewOrder: TOrder; Meal: Char; const MealTime: string; Bagged: Boolean);
+procedure OrderLateTray(NewOrder: TOrder; Meal: Char; const MealTime: string;
+  Bagged: boolean);
+var
+  sl: TStrings;
 begin
-  CallV('ORWDFH ADDLATE', [Patient.DFN, Encounter.Provider, Encounter.Location, Meal, MealTime, Bagged]);
-  SetOrderFromResults(NewOrder);
+  sl := TStringList.Create;
+  try
+    if not CallVistA('ORWDFH ADDLATE', [Patient.DFN, Encounter.Provider,
+      Encounter.Location, Meal, MealTime, Bagged], sl) then
+      sl.Clear
+
+  except
+    on E: Exception do
+      sl.Clear;
+  end;
+  SetOrderFromResults(NewOrder, sl);
+  sl.Free;
 end;
 
 function IsolationID: string;
@@ -239,10 +252,10 @@ end;
 
 procedure CheckForDelayedDietOrders(var OutPutText: string; CurrentView: TOrderView; DispGrp: Integer);
 var
-  i, Z: Integer;
-  AList: TList;
+ i, Z: Integer;
+ AList: TList;
   EventList: TStringList;
-  x, PtEvtIFN, PtEvtName: string;
+ x, PtEvtIFN, PtEvtName: string;
   aReturn: TStringList;
 const
   TX_DEL = 'There are diet orders in future events which will not be affected by this action.';
@@ -251,48 +264,48 @@ begin
   try
     CallVistA('OREVNTX PAT', [Patient.DFN], aReturn);
     if aReturn.Count > 1 then
-      begin
-        AList := TList.Create;
-        EventList := TStringList.Create;
-        try
+  begin
+   AList := TList.Create;
+   EventList := TStringList.Create;
+    try
           for i := 1 to aReturn.Count - 1 do EventList.Add(aReturn[i]);
           for i := 0 to EventList.Count - 1 do
             begin
-              PtEvtIFN := Piece(EventList.Strings[i], '^', 1);
-              PtEvtName := Piece(EventList.Strings[i], '^', 2);
-              LoadOrdersAbbr(AList, CurrentView, PtEvtIFN);
-              for Z := AList.Count - 1 downto 0 do
-                begin
+      PtEvtIFN := Piece(EventList.Strings[i], '^', 1);
+      PtEvtName := Piece(EventList.Strings[i], '^', 2);
+      LoadOrdersAbbr(AList, CurrentView, PtEvtIFN);
+      for Z := AList.Count - 1 downto 0 do
+      begin
                   if TOrder(AList.Items[Z]).DGroup <> DispGrp then
-                    begin
-                      TOrder(AList.Items[Z]).Free;
-                      AList.Delete(Z);
-                    end;
-                end;
-              if AList.Count > 0 then
-                begin
-                  x := '';
-                  RetrieveOrderFields(AList, 0, 0);
-                  OutPutText := OutPutText + CRLF + 'Delayed event: ' + PtEvtName;
-                  for Z := 0 to AList.Count - 1 do
-                    with TOrder(AList.Items[Z]) do
-                      begin
-                        x := x + #9 + StringReplace(Text, #13#10, #13#10#9, [rfReplaceAll, rfIgnoreCase]) + CRLF;
-                      end;
-                  OutPutText := OutPutText + CRLF + x;
-                end;
-            end;
-          if OutPutText > '' then OutPutText := TX_DEL + CRLF + OutPutText;
-        finally
-          EventList.Free;
-          with AList do
-            for i := 0 to Count - 1 do TOrder(Items[i]).Free;
-          AList.Free;
+        begin
+          TOrder(AList.Items[Z]).Free;
+          AList.Delete(Z);
         end;
       end;
+      if AList.Count > 0 then
+      begin
+        x := '';
+        RetrieveOrderFields(AList, 0, 0);
+        OutPutText := OutPutText + CRLF + 'Delayed event: ' + PtEvtName;
+        for Z := 0 to AList.Count - 1 do
+          with TOrder(AList.Items[Z]) do
+          begin
+            x := x + #9 +  StringReplace(Text, #13#10, #13#10#9, [rfReplaceAll, rfIgnoreCase]) + CRLF;
+          end;
+        OutPutText := OutPutText + CRLF + x;
+       end;
+     end;
+          if OutPutText > '' then OutPutText := TX_DEL + CRLF + OutPutText;
+    finally
+      EventList.Free;
+          with AList do
+            for i := 0 to Count - 1 do TOrder(Items[i]).Free;
+      AList.Free;
+    end;
+  end;
   finally
     FreeAndNil(aReturn);
-  end;
+end;
 end;
 
 end.

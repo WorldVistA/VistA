@@ -8,9 +8,9 @@ inherited frmARTFreeTextMsg: TfrmARTFreeTextMsg
   Constraints.MinWidth = 394
   Position = poMainFormCenter
   ExplicitWidth = 394
-  ExplicitHeight = 366
+  ExplicitHeight = 359
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlText: TORAutoPanel [0]
     Left = 0
     Top = 0
@@ -20,36 +20,43 @@ inherited frmARTFreeTextMsg: TfrmARTFreeTextMsg
     BevelOuter = bvNone
     Constraints.MinHeight = 133
     TabOrder = 0
+    ExplicitTop = -6
     object lblText: TLabel
       Left = 17
       Top = 7
       Width = 3
-      Height = 13
+      Height = 16
     end
     object lblComments: TOROffsetLabel
-      Left = 2
-      Top = 118
-      Width = 100
+      AlignWithMargins = True
+      Left = 3
+      Top = 115
+      Width = 380
       Height = 15
+      Align = alBottom
       Caption = 'Comments (optional):'
       HorzOffset = 2
       Transparent = False
       VertOffset = 2
       WordWrap = False
+      ExplicitLeft = 2
+      ExplicitTop = 118
+      ExplicitWidth = 100
     end
   end
   object pnlButton: TORAutoPanel [1]
     Left = 0
-    Top = 294
+    Top = 300
     Width = 386
-    Height = 38
+    Height = 32
     Align = alBottom
     BevelOuter = bvNone
-    Constraints.MinHeight = 38
+    Constraints.MinHeight = 32
     TabOrder = 2
+    ExplicitTop = 294
     object cmdContinue: TButton
       Left = 155
-      Top = 9
+      Top = 7
       Width = 75
       Height = 21
       Caption = '&Continue'
@@ -62,9 +69,9 @@ inherited frmARTFreeTextMsg: TfrmARTFreeTextMsg
     Left = 0
     Top = 133
     Width = 386
-    Height = 161
+    Height = 167
     Align = alClient
-    Font.Charset = DEFAULT_CHARSET
+    Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Courier New'
@@ -72,7 +79,9 @@ inherited frmARTFreeTextMsg: TfrmARTFreeTextMsg
     ParentFont = False
     PlainText = True
     TabOrder = 1
+    Zoom = 100
     Caption = 'Additional comments:'
+    ExplicitHeight = 161
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (

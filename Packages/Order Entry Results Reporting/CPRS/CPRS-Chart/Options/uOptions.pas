@@ -45,8 +45,7 @@ function RelativeDate(entry: string): integer;
     Result := false;
     if value = 'T' then Result := true
     else if value = 'TODAY' then Result := true
-    else if value = 'N' then Result := true
-    else if value = 'NOW' then Result := true;
+    else if IsNow(value) then Result := true;
   end;
 
   procedure GetMultiplier(var entry: string; var multiplier: integer);
@@ -54,7 +53,7 @@ function RelativeDate(entry: string): integer;
   var
     lastchar: char;
   begin
-    if (entry = 'NOW') or (entry = 'TODAY') then
+    if IsNow(entry) or (entry = 'TODAY') then
     begin
       multiplier := 1;
       exit;

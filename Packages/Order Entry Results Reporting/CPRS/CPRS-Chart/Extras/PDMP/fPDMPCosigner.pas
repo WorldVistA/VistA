@@ -32,12 +32,10 @@ type
     procedure btnDebugClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cboCosignerDblClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure cboCosignerNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure cboCosignerExit(Sender: TObject);
   private
-    FCboCosignerVistaParams: TArray<string>;
     fEncounterProvider: string;
     fDateTime: TFMDateTime;
     fDocType: Integer;
@@ -51,21 +49,16 @@ type
   end;
 
 function pdmpSelectCosigner(encounterProvider: string; aDocType: Integer;
-  encDate:TFMDateTime): string;
+  encDate:TFMDateTime): string; overload;
+function pdmpSelectCosigner(encounterProvider: string; aDocType: Integer;
+  encDate:TFMDateTime; header: string; noteIEN: Integer): string; overload;
 
 implementation
 
 uses
-{$IFDEF PDMPTEST}
-  rCore.User,
-  rCore.DateTimeUtils,
-  rCore.TIU,
-  uCore.TIU,
-{$ELSE}
   rCore,
   rPDMP,
   rTIU,
-{$ENDIF}
   uSimilarNames,
   uSizing,
   oPDMPData,
@@ -100,6 +93,34 @@ begin
     end;
 end;
 
+function pdmpSelectCosigner(encounterProvider: string; aDocType: Integer;
+  encDate:TFMDateTime; header: string; noteIEN: Integer): string; overload;
+var
+  pdmpUserForm: TpdmpCosigner;
+  idx: Integer;
+begin
+  result := '-1'; //
+  pdmpUserForm := TpdmpCosigner.Create(Application);
+  pdmpUserForm.Caption := header;
+  PDMP_NoteTitleID := noteIEN;
+  with pdmpUserForm do
+    try
+      SetFontSize(Application.MainForm.Font.Size);
+      fEncounterProvider := encounterProvider;
+      fDateTime := encDate;
+      fDocType := aDocType;
+      // pdmpUserForm.cboCosigner.InitLongList(Piece(encounterProvider, U, 2));
+      if ShowModal = mrOK then
+      begin
+        idx := cboCosigner.ItemIndex;
+        result := Pieces(cboCosigner.Items.Strings[idx], U, 1, 2);
+      end
+      else
+        result := '-2'; // user canceled selection
+    finally
+      FreeAndNil(pdmpUserForm);
+    end;
+end;
 /// /////////////////////////////////////////////////////////////////////////////
 
 procedure TpdmpCosigner.btnDebugClick(Sender: TObject);
@@ -126,9 +147,19 @@ end;
 
 procedure TpdmpCosigner.cboCosignerNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
+  cbo: TORComboBox;
+
 begin
-  (Sender as TORComboBox).ForDataUse(SubSetOfUsersWithClass(StartFrom,
-    Direction, FloatToStr(FMToday), FCboCosignerVistaParams));
+  sl := TSTringList.Create;
+  try
+    cbo := (Sender as TORComboBox);
+    setSubSetOfUsersWithClass(cbo, sl, StartFrom, Direction, FloatToStr(FMToday));
+    cbo.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TpdmpCosigner.cboCosignerDblClick(Sender: TObject);
@@ -146,7 +177,7 @@ begin
   begin
     CanClose := True;
   end else begin
-    if not CheckForSimilarName(cboCosigner, ErrMsg, ltCosign, FCboCosignerVistaParams, sCo) then
+    if not CheckForSimilarName(cboCosigner, ErrMsg, sCo) then
     begin
       CanClose := False;
     end else begin
@@ -162,14 +193,6 @@ begin
       if not CanClose then InfoBox(ErrMsg, PDMP_MSG_TITLE, MB_OK + MB_ICONWARNING);
     end;
   end;
-end;
-
-procedure TpdmpCosigner.FormCreate(Sender: TObject);
-begin
-  inherited;
-{$IFDEF DEBUG}
-  btnDebug.Visible := True;
-{$ENDIF}
 end;
 
 procedure TpdmpCosigner.FormKeyDown(Sender: TObject; var Key: Word;

@@ -7,7 +7,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, ORCtrls, StdCtrls, ORFn, ExtCtrls, uConst, ComCtrls, uCore,
-  Menus, VA508AccessibilityManager;
+  Menus, VA508AccessibilityManager, uIndications;
 
 type
   TfrmODMedIn = class(TfrmODBase)
@@ -27,6 +27,8 @@ type
     txtDosage: TCaptionEdit;
     Bevel1: TBevel;
     cboMedAlt: TORComboBox;
+    lblIndications: TLabel;
+    cboIndication: TORComboBox;
     procedure cboMedicationNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure cboMedicationSelect(Sender: TObject);
@@ -34,12 +36,14 @@ type
     procedure ControlChange(Sender: TObject);
     procedure cboDispenseExit(Sender: TObject);
     procedure cboDispenseMouseClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
     FLastDrug: Integer;
     FLastMedID: string;
     FDispenseMsg: string;
     FMedCombo: TORComboBox;
+    FIndications: TIndications;
     procedure CheckFormAlt;
     procedure ResetOnMedChange;
     procedure SetAltCombo;
@@ -82,9 +86,11 @@ const
   TC_RESTRICT = 'Ordering Restrictions';
 var
   Restriction: string;
+  sl: TStrings;
 begin
   inherited;
   AllowQuickOrder := True;
+
   CheckAuthForMeds(Restriction);
   if Length(Restriction) > 0 then
   begin
@@ -92,12 +98,25 @@ begin
     Close;
     Exit;
   end;
-  FillerID := 'PSI';                             // does 'on Display' order check **KCM**
+  FillerID := 'PSI'; // does 'on Display' order check **KCM**
   StatusText('Loading Dialog Definition');
-  Responses.Dialog := 'PSJ OR PAT OE';           // loads formatting info
+  Responses.Dialog := 'PSJ OR PAT OE'; // loads formatting info
   StatusText('Loading Default Values');
-  CtrlInits.LoadDefaults(ODForMedIn);            // ODForMedIn returns TStrings with defaults
+  // CtrlInits.LoadDefaults(ODForMedIn);            // ODForMedIn returns TStrings with defaults
+  sl := TSTringList.Create;
+  try
+    setODForMedIn(sl);
+    CtrlInits.LoadDefaults(sl); // ODForMedIn returns TStrings with defaults
+  finally
+    sl.Free;
+  end;
   InitDialog;
+end;
+
+procedure TfrmODMedIn.FormDestroy(Sender: TObject);
+begin
+  FIndications.Free;
+  inherited;
 end;
 
 procedure TfrmODMedIn.InitDialog;
@@ -114,6 +133,12 @@ begin
     //SetControl(cboMedAlt,     'ShortList'); can't do this since it calls InitLongList
     SetControl(cboSchedule,   'Schedules');
     SetControl(cboPriority,   'Priorities');
+
+    FreeAndNil(FIndications);
+    FIndications := TIndications.Create(CtrlInits);
+
+    FIndications.Load;
+    cboIndication.Items.Text := FIndications.GetIndicationList;
   end;
   StatusText('Initializing Long List');
   cboMedAlt.Visible := False;
@@ -225,29 +250,51 @@ begin
 end;
 
 procedure TfrmODMedIn.SetOnOISelect;
+var
+  sl: TStrings;
 begin
   with CtrlInits do
   begin
     FLastMedID := FMedCombo.ItemID;
-    LoadOrderItem(OIForMedIn(FMedCombo.ItemIEN));
+    sl := TSTringList.Create;
+    try
+      setOIForMedIn(sl, FMedCombo.ItemIEN);
+      LoadOrderItem(sl);
+
+    finally
+      sl.Free;
+    end;
     SetControl(cboDispense, 'Dispense');
-    if cboDispense.Items.Count = 1 then cboDispense.ItemIndex := 0;
-    SetControl(txtDosage,   'Instruct');
-    SetControl(cboRoute,    'Route');
-    if cboRoute.Items.Count = 1 then cboRoute.ItemIndex := 0;
-    //cboRoute.InsertSeparator;
-    //AppendMedRoutes(cboRoute.Items);
-    if DefaultText('DefSched') <> '' then cboSchedule.SelectByID(DefaultText('DefSched'));
+    if cboDispense.Items.Count = 1 then
+      cboDispense.ItemIndex := 0;
+    SetControl(txtDosage, 'Instruct');
+    SetControl(cboRoute, 'Route');
+    if cboRoute.Items.Count = 1 then
+      cboRoute.ItemIndex := 0;
+    // cboRoute.InsertSeparator;
+    // AppendMedRoutes(cboRoute.Items);
+    if DefaultText('DefSched') <> '' then
+      cboSchedule.SelectByID(DefaultText('DefSched'));
     OrderMessage(TextOf('Message'));
   end;
 end;
 
-procedure TfrmODMedIn.cboMedicationNeedData(Sender: TObject; const StartFrom: string;
-  Direction, InsertAt: Integer);
-{ retrieves a subset of inpatient medication orderable items }
+procedure TfrmODMedIn.cboMedicationNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
+  { retrieves a subset of inpatient medication orderable items }
 begin
   inherited;
-  FMedCombo.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.UD RX', Responses.QuickOrder));
+  // FMedCombo.ForDataUse(SubSetOfOrderItems(StartFrom, Direction, 'S.UD RX', Responses.QuickOrder));
+  sl := TStringList.Create;
+  try
+    setSubSetOfOrderItems(sl, StartFrom, Direction, 'S.UD RX',
+      Responses.QuickOrder);
+    FMedCombo.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODMedIn.cboMedicationSelect(Sender: TObject);
@@ -352,9 +399,9 @@ begin
     else Responses.Update('ROUTE', 1, Text, Text);
   with cboSchedule   do if Length(Text) > 0 then Responses.Update('SCHEDULE', 1, Text, Text);
   with cboPriority   do if ItemIndex > -1   then Responses.Update('URGENCY', 1, ItemID, Text);
+  with cboIndication do if Length(Text) > 0 then Responses.Update('Indication', 1, Text, Text);
   with memComments   do                          Responses.Update('COMMENT', 1, TX_WPTYPE, Text);
   memOrder.Text := Responses.OrderText;
 end;
 
 end.
-

@@ -1,6 +1,6 @@
 unit rODBase;
 
-interface                        
+interface
 
 uses SysUtils, Windows, Classes, ORNet, ORFn, uCore, uConst, rOrders;
 
@@ -82,17 +82,15 @@ function DisplayGroupForDialog(const DialogName: string): Integer;
 procedure IdentifyDialog(var DialogNames: TDialogNames; ADialog: Integer);
 procedure LoadDialogDefinition(Dest: TList; const DialogName: string);
 procedure LoadOrderPrompting(Dest: TList; ADialog: Integer);
-//procedure LoadResponses(Dest: TList; const OrderID: string);
-procedure LoadResponses(Dest: TList; const OrderID: string; var HasObjects: boolean);
+procedure LoadResponses(Dest: TList; const OrderID: string; var HasObjects: boolean;IsTitration: boolean = False);
+//Modified for NSR 20071211 by KCH on 09/04/2015
 procedure PutNewOrder(var AnOrder: TOrder; ConstructOrder: TConstructOrder; OrderSource: string);
 //procedure PutNewOrderAuto(var AnOrder: TOrder; ADialog: Integer); // no longer used
 function OIMessage(IEN: Integer): string;
 function OrderMenuStyle: Integer;
 function ResolveScreenRef(const ARef: string): string;
-function SubsetOfEntries(const StartFrom: string; Direction: Integer;
-  const XRef, GblRef, ScreenRef: string): TStrings;
-function SubSetOfOrderItems(const StartFrom: string; Direction: Integer;
-  const XRef: string; QuickOrderDlgIen: Integer): TStrings;
+function setSubsetOfEntries(aDest:TSTrings;const StartFrom: string; Direction: Integer;
+  const XRef, GblRef, ScreenRef: string): Integer;
 
 function setSubSetOfOrderItems(aDest:TStrings;const StartFrom: string; Direction: Integer;
   const XRef: string; QuickOrderDlgIen: Integer): Integer;
@@ -124,24 +122,27 @@ function QuantityMessage(AnIEN: Integer): string;
 function RequiresCopay(DispenseDrug: Integer): Boolean;
 procedure LoadFormularyAlt(AList: TStringList; AnIEN: Integer; PSType: Char);
 function MedTypeIsIV(AnIEN: Integer): Boolean;
-function ODForMedIn: TStrings;
-function OIForMedIn(AnIEN: Integer): TStrings;
-function ODForIVFluids: TStrings;
-function ODForMedOut: TStrings;
-function OIForMedOut(AnIEN: Integer): TStrings;
-function ODForSD: TStrings;
+function setODForMedIn(aDest:TStrings): Integer;
+function setOIForMedIn(aDest:TSTrings;AnIEN: Integer): Integer;
+//function ODForIVFluids: TStrings;
+function setODForIVFluids(aDest: TStrings):Integer;
+//function ODForMedOut: TStrings;
+function setODForMedOut(aDest: TStrings): Integer;
+function setOIForMedOut(aDest:TStrings;AnIEN: Integer): Integer;
+function setODForSD(aDest: TStrings): Integer;
 function RatedDisabilities: string;
-//function ValidIVRate(const x: string): Boolean;
 procedure ValidateIVRate(var x: string);
 function ValidSchedule(const x: string; PSType: Char = 'I'): Integer;
 function ValidQuantity(const x: string): Boolean;
 
 { Vitals Calls }
-function ODForVitals: TStrings;
+function setODForVitals(aDest: TStrings): Integer;
 
 implementation
 
-uses TRPCB, uOrders, uODBase, fODBase;
+uses TRPCB, uOrders, uODBase, fODBase
+  , ORNetIntf
+  ;
 
 var
   uLastDispenseIEN: Integer;
@@ -152,7 +153,7 @@ var
 
 { Common Internal Calls }
 
-procedure SetupORDIALOG(AParam: TParamRecord; ResponseList: TList; IsIV: boolean = False);
+procedure SetupORDIALOG(aList:iORNetMult; ResponseList: TList; IsIV: boolean = False);
 const
   MAX_STR_LEN = 74;
 var
@@ -165,7 +166,6 @@ begin
   odIdx := 0;
   IVDuration := '';
   IVDurVal := '';
-  AParam.PType := list;
   for j := 0 to ResponseList.Count - 1 do
   begin
     if TResponse(ResponseList.Items[j]).PromptID = 'SIG' then
@@ -220,7 +220,7 @@ begin
     end;
   end;
 
-  with AParam, ResponseList do for i := 0 to Count - 1 do
+  with ResponseList do for i := 0 to Count - 1 do
   begin
     with TResponse(Items[i]) do
     begin
@@ -232,17 +232,16 @@ begin
           WPStrings.Text := EValue;
           LimitStringLength(WPStrings, MAX_STR_LEN);
           x := 'ORDIALOG("WP",' + Subs + ')';
-          Mult[Subs] := x;
+          aList.AddSubscript([PromptIEN,Instance], x);
           for ALine := 0 to WPStrings.Count - 1 do
           begin
-            x := '"WP",' + Subs + ',' + IntToStr(ALine+1) + ',0';
-            Mult[x] := WPStrings[ALine];
+            aList.AddSubscript(['WP', PromptIEN, Instance, ALine+1, 0], WPStrings[ALine]);
           end; {for}
         finally
           WPStrings.Free;
         end; {try}
       end
-      else Mult[Subs] := IValue;
+      else aList.AddSubscript([PromptIEN,Instance], IValue);
     end; {with TResponse}
   end; {with AParam}
 end;
@@ -256,19 +255,17 @@ end;
 
 function GetQuickName(const CRC: string): string;
 begin
-  Result := sCallV('ORWDXQ GETQNAM', [CRC]);
+  CallVistA('ORWDXQ GETQNAM', [CRC], Result);
 end;
 
 procedure LoadQuickListForOD(Dest: TStrings; DGroup: Integer);
 begin
-  CallV('ORWDXQ GETQLST', [DGroup]);
-  FastAssign(RPCBrokerV.Results, Dest);
+  CallVistA('ORWDXQ GETQLST', [DGroup],Dest);
 end;
 
 procedure SaveQuickListForOD(Src: TStrings;  DGroup: Integer);
 begin
-  CallV('ORWDXQ PUTQLST', [DGroup, Src]);
-  // ignore return value for now
+  CallVistA('ORWDXQ PUTQLST', [DGroup, Src]);
 end;
 
 //procedure PutQuickName(DialogIEN: Integer; const DisplayName: string);
@@ -279,51 +276,46 @@ end;
 
 procedure PutQuickOrder(var NewIEN: Integer; const CRC, DisplayName: string; DGroup: Integer;
   ResponseList: TList);
+var
+  sl: TStrings;
+  aList: iORNetMult;
 begin
-  LockBroker;
+  newORNetMult(AList);
+  SetupORDIALOG(AList, ResponseList);
+  sl := TStringList.Create;
   try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORWDXQ DLGSAVE';
-      Param[0].PType := literal;
-      Param[0].Value := CRC;
-      Param[1].PType := literal;
-      Param[1].Value := DisplayName;
-      Param[2].PType := literal;
-      Param[2].Value := IntToStr(DGroup);
-      SetupORDIALOG(Param[3], ResponseList);
-      CallBroker;
-      if Results.Count = 0 then Exit;  // error creating order
-      NewIEN := StrToIntDef(Results[0], 0);
-    end;
+    CallVistA('ORWDXQ DLGSAVE', [CRC, DisplayName, DGroup, AList], sl);
+    if sl.Count <> 0 then
+      NewIEN := StrToIntDef(sl[0], 0);
   finally
-    UnlockBroker;
+    sl.Free;
   end;
 end;
 
 { General Calls }
 
 function AskAnotherOrder(ADialog: Integer): Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWDX AGAIN', [ADialog]) = '1';
+  Result := CallVistA('ORWDX AGAIN', [ADialog], s) and (s = '1');
 end;
 
 function DisplayGroupByName(const AName: string): Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDX DGNM', [AName]), 0);
+  CallVistA('ORWDX DGNM', [AName], Result);
 end;
 
 function DisplayGroupForDialog(const DialogName: string): Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDX DGRP', [DialogName]),0);
+  CallVistA('ORWDX DGRP', [DialogName], Result);
 end;
 
 procedure IdentifyDialog(var DialogNames: TDialogNames; ADialog: Integer);
 var
   x: string;
 begin
-  x := sCallV('ORWDXM DLGNAME', [ADialog]);
+  CallVistA('ORWDXM DLGNAME', [ADialog], x);
   with DialogNames do
   begin
     Internal := Piece(x, U, 1);
@@ -339,28 +331,36 @@ procedure LoadDialogDefinition(Dest: TList; const DialogName: string);
 var
   i: Integer;
   APrompt: TPrompt;
+  Results: TStrings;
 begin
-  CallV('ORWDX DLGDEF', [DialogName]);
-  with RPCBrokerV do for i := 0 to Results.Count - 1 do
-  begin
-    APrompt := TPrompt.Create;
-    with APrompt do
+  Results := TStringList.Create;
+  try
+    CallVistA('ORWDX DLGDEF', [DialogName], Results);
+    for i := 0 to Results.Count - 1 do
     begin
-      ID        := Piece(Results[i], U, 1);
-      IEN       := StrToIntDef(Piece(Results[i], U, 2), 0);
-      if Length(Piece(Results[i], U, 3)) > 0
-        then Sequence := StrToFloat(Piece(Results[i], U, 3))
-        else Sequence := 0;
-      FmtCode   := Piece(Results[i], U, 4);
-      Omit      := Piece(Results[i], U, 5);
-      Leading   := Piece(Results[i], U, 6);
-      Trailing  := Piece(Results[i], U, 7);
-      NewLine   := Piece(Results[i], U, 8) = '1';
-      WrapWP    := Piece(Results[i], U, 9) = '1';
-      Children  := Piece(Results[i], U, 10);
-      IsChild   := Piece(Results[i], U, 11) = '1';
+      APrompt := TPrompt.Create;
+      with APrompt do
+      begin
+        ID := Piece(Results[i], U, 1);
+        IEN := StrToIntDef(Piece(Results[i], U, 2), 0);
+        if Length(Piece(Results[i], U, 3)) > 0 then
+          Sequence := StrToFloat(Piece(Results[i], U, 3))
+        else
+          Sequence := 0;
+        FmtCode := Piece(Results[i], U, 4);
+        Omit := Piece(Results[i], U, 5);
+        Leading := Piece(Results[i], U, 6);
+        Trailing := Piece(Results[i], U, 7);
+        NewLine := Piece(Results[i], U, 8) = '1';
+        WrapWP := Piece(Results[i], U, 9) = '1';
+        Children := Piece(Results[i], U, 10);
+        IsChild := Piece(Results[i], U, 11) = '1';
+      end;
+      Dest.Add(APrompt);
     end;
-    Dest.Add(APrompt);
+
+  finally
+    Results.Free;
   end;
 end;
 
@@ -369,50 +369,55 @@ procedure LoadOrderPrompting(Dest: TList; ADialog: Integer);
 var
   i: Integer;
   DialogItem: TDialogItem;
+  Results: TStrings;
 begin
-  CallV('ORWDXM PROMPTS', [ADialog]);
-  DialogItem := nil;
-  with RPCBrokerV do for i := 0 to Results.Count - 1 do
-  begin
-    if CharAt(Results[i], 1) = '~' then
+  Results := TStringList.Create;
+  try
+    CallVistA('ORWDXM PROMPTS', [ADialog], Results);
+    DialogItem := nil;
+    for i := 0 to Results.Count - 1 do
     begin
-      DialogItem := TDialogItem.Create;                       // create a new dialog item
-      with DialogItem do
+      if CharAt(Results[i], 1) = '~' then
       begin
-        Results[i] := Copy(Results[i], 2, Length(Results[i]));
-        ID         := Piece(Results[i], U, 1);
-        Required   := Piece(Results[i], U, 2) = '1';
-        Hidden     := Piece(Results[i], U, 3) = '1';
-        Prompt     := Piece(Results[i], U, 4);
-        DataType   := CharAt(Piece(Results[i], U, 5), 1);
-        Domain     := Piece(Results[i], U, 6);
-        EDefault   := Piece(Results[i], U, 7);
-        IDefault   := Piece(Results[i], U, 8);
-        HelpText   := Piece(Results[i], U, 9);
-        CrossRef   := Piece(Results[i], U, 10);
-        ScreenRef  := Piece(Results[i], U, 11);
-        if Hidden then DataType := 'H';                       // if hidden, use 'Hidden' type
+        DialogItem := TDialogItem.Create; // create a new dialog item
+        with DialogItem do
+        begin
+          Results[i] := Copy(Results[i], 2, Length(Results[i]));
+          ID := Piece(Results[i], U, 1);
+          Required := Piece(Results[i], U, 2) = '1';
+          Hidden := Piece(Results[i], U, 3) = '1';
+          Prompt := Piece(Results[i], U, 4);
+          DataType := CharAt(Piece(Results[i], U, 5), 1);
+          Domain := Piece(Results[i], U, 6);
+          EDefault := Piece(Results[i], U, 7);
+          IDefault := Piece(Results[i], U, 8);
+          HelpText := Piece(Results[i], U, 9);
+          CrossRef := Piece(Results[i], U, 10);
+          ScreenRef := Piece(Results[i], U, 11);
+          if Hidden then
+            DataType := 'H'; // if hidden, use 'Hidden' type
+        end;
+        Dest.Add(DialogItem);
       end;
-      Dest.Add(DialogItem);
+      if (CharAt(Results[i], 1) = 't') and (DialogItem <> nil) then
+      // use last DialogItem
+        with DialogItem do
+          EDefault := EDefault + Copy(Results[i], 2, Length(Results[i])) + CRLF;
     end;
-    if (CharAt(Results[i], 1) = 't') and (DialogItem <> nil) then  // use last DialogItem
-      with DialogItem do EDefault := EDefault + Copy(Results[i], 2, Length(Results[i])) + CRLF;
+  finally
+    Results.Free;
   end;
 end;
 
-procedure ExtractToResponses(Dest: TList; var HasObjects: boolean);
+procedure ExtractToResponses(TempBroker: TStrings; Dest: TList; var HasObjects: boolean);
 { load a list with TResponse records, assumes source strings are in RPCBrokerV.Results }
 var
   i: Integer;
   AResponse: TResponse;
   WPContainsObjects, TxContainsObjects: boolean;
-  TempBroker: TStrings;
 begin
   i := 0;
   HasObjects := FALSE;
-  TempBroker := TStringlist.Create;
-  FastAssign(RPCBrokerV.Results, TempBroker);
-  try
   with TempBroker do while i < Count do
   begin
     if CharAt(Strings[i], 1) = '~' then
@@ -439,134 +444,138 @@ begin
         if IValue <> TX_WPTYPE then ExpandOrderObjects(IValue, TxContainsObjects);
         ExpandOrderObjects(EValue, WPContainsObjects);
         HasObjects := HasObjects or WPContainsObjects or TxContainsObjects;
+        if Assigned(frmODBase) then begin
+          if AResponse.PromptID = 'OVERRIDE' then frmODBase.Responses.Reason := EValue;
+          if AResponse.PromptID = 'ORREMCOMMENT' then frmODBase.Responses.RemComment := EValue;
+        end;
         Dest.Add(AResponse);
       end; {with AResponse}
     end; {if CharAt}
   end; {With RPCBrokerV}
+end;
+
+procedure LoadResponses(Dest: TList; const OrderID: string; var HasObjects: boolean;
+                        IsTitration: boolean = False);
+var
+  Transfer: Boolean;
+  sl: TStrings;
+begin
+  if ((XferOuttoInOnMeds = True) or (XfInToOutNow = True)) and
+    (CharAt(OrderID, 1) = 'C') then
+    Transfer := True
+  else
+    Transfer := False;
+  sl := TStringList.Create;
+  try
+    CallVistA('ORWDX LOADRSP', [OrderID, Transfer, IsTitration.ToInteger], sl);
+    ExtractToResponses(sl, Dest, HasObjects);
   finally
-    TempBroker.Free;
+    sl.Free;
   end;
 end;
 
-procedure LoadResponses(Dest: TList; const OrderID: string; var HasObjects: boolean);
-var
-Transfer: boolean;
-begin
-  if ((XferOuttoInOnMeds = True) or (XfInToOutNow = True)) and (CharAt(OrderID,1)='C') then Transfer := true
-  else Transfer := false;
-  CallV('ORWDX LOADRSP', [OrderID, Transfer]);
-  ExtractToResponses(Dest, HasObjects);
-end;
-
+//Modified for NSR 20071211 by KCH on 09/04/2015
 procedure PutNewOrder(var AnOrder: TOrder; ConstructOrder: TConstructOrder; OrderSource: string);
 var
-  i, inc, len, numLoop, remain: Integer;
-  ocStr, tmpStr, x, y, z: string;
-begin
-  LockBroker;
-  try
-    with RPCBrokerV do
+  inc, len, numLoop, remain: Integer;
+  ocStr, tmpStr, x, y, z, p1, p3: string;
+
+  sTime:String;
+  aList: iORNetMult;
+  Results: TStrings;
+
+  procedure setListParam;
+  var
+    i: Integer;
+  begin
+    if Length(ConstructOrder.LeadText)  > 0
+      then aList.AddSubscript(['ORLEAD'], ConstructOrder.LeadText);
+    if Length(ConstructOrder.TrailText) > 0
+      then aList.AddSubscript(['ORTRAIL'], ConstructOrder.TrailText);
+    aList.AddSubscript(['ORCHECK'], ConstructOrder.OCList.Count);
+    with ConstructOrder do for i := 0 to OCList.Count - 1 do
     begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORWDX SAVE';
-      Param[0].PType := literal;
-      Param[0].Value := Patient.DFN;  //*DFN*
-      Param[1].PType := literal;
-      Param[1].Value := IntToStr(Encounter.Provider);
-      Param[2].PType := literal;
-      (*if loc > 0 then Param[2].Value := IntToStr(Loc)
-      else Param[2].Value := IntToStr(Encounter.Location);*)
-      Param[2].Value := IntToStr(Encounter.Location);
-      Param[3].PType := literal;
-      Param[3].Value := ConstructOrder.DialogName;
-      Param[4].PType := literal;
-      Param[4].Value := IntToStr(ConstructOrder.DGroup);
-      Param[5].PType := literal;
-      Param[5].Value := IntToStr(ConstructOrder.OrderItem);
-      Param[6].PType := literal;
-      Param[6].Value := AnOrder.EditOf;        // null if new order, otherwise ORIFN of original
-      if (ConstructOrder.DGroup = IVDisp) or (ConstructOrder.DGroup = ClinIVDisp) or (ConstructOrder.DialogName = 'PSJI OR PAT FLUID OE') then
-        SetupORDIALOG(Param[7], ConstructOrder.ResponseList, True)
-      else
-        SetupORDIALOG(Param[7], ConstructOrder.ResponseList);
-      if Length(ConstructOrder.LeadText)  > 0
-        then Param[7].Mult['"ORLEAD"']  := ConstructOrder.LeadText;
-      if Length(ConstructOrder.TrailText) > 0
-        then Param[7].Mult['"ORTRAIL"'] := ConstructOrder.TrailText;
-      Param[7].Mult['"ORCHECK"'] := IntToStr(ConstructOrder.OCList.Count);
-      with ConstructOrder do for i := 0 to OCList.Count - 1 do
-      begin
-        // put quotes around everything to prevent broker from choking
-        y := '"ORCHECK","' + Piece(OCList[i], U, 1) + '","' + Piece(OCList[i], U, 3) +
-          '","' + IntToStr(i+1) + '"';
-        //Param[7].Mult[y] := Pieces(OCList[i], U, 2, 4);
-        OCStr :=  Pieces(OCList[i], U, 2, 4);
-        len := Length(OCStr);
-        if len > 255 then
-          begin
-            numLoop := len div 255;
-            remain := len mod 255;
-            inc := 0;
-            while inc <= numLoop do
-              begin
-                tmpStr := Copy(OCStr, 1, 255);
-                OCStr := Copy(OCStr, 256, Length(OcStr));
-                Param[7].Mult[y + ',' + InttoStr(inc)] := tmpStr;
-                inc := inc +1;
-              end;
-            if remain > 0 then  Param[7].Mult[y + ',' + inttoStr(inc)] := OCStr;
-
-          end
-        else
-         Param[7].Mult[y] := OCStr;
-      end;
-      if CharInSet(ConstructOrder.DelayEvent, ['A','D','T','M','O']) then
-        Param[7].Mult['"OREVENT"'] := ConstructOrder.PTEventPtr;
-      if ConstructOrder.LogTime > 0
-        then Param[7].Mult['"ORSLOG"'] := FloatToStr(ConstructOrder.LogTime);
-      Param[7].Mult['"ORTS"'] := IntToStr(Patient.Specialty);  // pass in treating specialty for ORTS
-      Param[8].PType := literal;
-      Param[8].Value := ConstructOrder.DigSig;
-      if (Constructorder.IsIMODialog) or (ConstructOrder.DGroup = ClinDisp) or (ConstructOrder.DGroup = ClinIVDisp) then
-      begin
-        Param[9].PType := literal;                       //IMO
-        Param[9].Value := FloatToStr(Encounter.DateTime);
-      end else
-      begin
-        Param[9].PType := literal;                       //IMO
-        Param[9].Value := '';
-      end;
-      Param[10].PType := literal;
-      Param[10].Value := OrderSource;
-      Param[11].PType := literal;
-      Param[11].Value := IntToStr(Constructorder.IsEventDefaultOR);
-
-      CallBroker;
-      if Results.Count = 0 then Exit;          // error creating order
-      x := Results[0];
-      Results.Delete(0);
-      y := '';
-
-      while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
+      // put quotes around everything to prevent broker from choking
+//      y := '"ORCHECK","' + Piece(OCList[i], U, 1) + '","' + Piece(OCList[i], U, 3) +
+//        '","' + IntToStr(i+1) + '"';
+      p1 := Piece(OCList[i], U, 1);
+      p3 := Piece(OCList[i], U, 3);
+      OCStr :=  Pieces(OCList[i], U, 2, 4);
+      len := Length(OCStr);
+      if len > 255 then
         begin
-          y := y + Copy(Results[0], 2, Length(Results[0])) + CRLF;
-          Results.Delete(0);
-        end;
-      if Length(y) > 0 then y := Copy(y, 1, Length(y) - 2);  // take off last CRLF
-      z := '';
-      if (Results.Count > 0) and (Results[0] = '|') then
-        begin
-          Results.Delete(0);
-          while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and (CharAt(Results[0], 1) <> '|') do
+          numLoop := len div 255;
+          remain := len mod 255;
+          inc := 0;
+          while inc <= numLoop do
             begin
-              z := z + Copy(Results[0], 2, Length(Results[0]));
-              Results.Delete(0);
+              tmpStr := Copy(OCStr, 1, 255);
+              OCStr := Copy(OCStr, 256, Length(OcStr));
+              aList.AddSubscript(['ORCHECK',p1,p3,i+1, inc], tmpStr);
+              inc := inc +1;
             end;
-        end;
-      SetOrderFields(AnOrder, x, y, z);
+          if remain > 0 then  aList.AddSubscript(['ORCHECK',p1,p3, i+1, inc], OCStr);
+        end
+      else
+       aList.AddSubscript(['ORCHECK',p1,p3, i+1], OCStr); //Modified for NSR 20071211 by KCH on 09/04/2015
     end;
+    if CharInSet(ConstructOrder.DelayEvent, ['A','D','T','M','O']) then
+      aList.AddSubscript(['OREVENT'], ConstructOrder.PTEventPtr);
+    if ConstructOrder.LogTime > 0
+      then aList.AddSubscript(['ORSLOG'], ConstructOrder.LogTime);
+    aList.AddSubscript(['ORTS'], Patient.Specialty);  // pass in treating specialty for ORTS
+    aList.AddSubscript(['OVERRIDE'], frmODBase.Responses.Reason);  //for NSR 20071211 10/08/2015 KCH See if we can make this work
+    aList.AddSubscript(['ORREMCOMMENT'], frmODBase.Responses.RemComment);  //for NSR 20071211 10/08/2015 KCH See if we can make this work
+  end;
+
+begin
+  NewORNetMult(aList);
+  if (ConstructOrder.DGroup = IVDisp) or (ConstructOrder.DGroup = ClinIVDisp) or (ConstructOrder.DialogName = 'PSJI OR PAT FLUID OE') then
+    SetupORDIALOG(aList, ConstructOrder.ResponseList, True)
+  else
+    SetupORDIALOG(aList, ConstructOrder.ResponseList);
+  setListParam;
+  sTime := '';
+  if (Constructorder.IsIMODialog) or
+    (ConstructOrder.DGroup = ClinDisp) or (ConstructOrder.DGroup = ClinIVDisp) then
+    sTime := FloatToStr(Encounter.DateTime);
+
+  Results := TStringList.Create;
+  try
+    if CallVistA('ORWDX SAVE', [Patient.DFN, Encounter.Provider,
+      Encounter.Location, ConstructOrder.DialogName, ConstructOrder.DGroup,
+      ConstructOrder.OrderItem, AnOrder.EditOf, AList, ConstructOrder.DigSig,
+      sTime, OrderSource, ConstructOrder.IsEventDefaultOR], Results) then
+      uAllergyCacheCreated := False;
+
+    if Results.Count = 0 then
+      Exit; // error creating order
+    x := Results[0];
+    Results.Delete(0);
+    y := '';
+
+    while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+      (CharAt(Results[0], 1) <> '|') do
+    begin
+      y := y + Copy(Results[0], 2, Length(Results[0])) + CRLF;
+      Results.Delete(0);
+    end;
+    if Length(y) > 0 then
+      y := Copy(y, 1, Length(y) - 2); // take off last CRLF
+    z := '';
+    if (Results.Count > 0) and (Results[0] = '|') then
+    begin
+      Results.Delete(0);
+      while (Results.Count > 0) and (CharAt(Results[0], 1) <> '~') and
+        (CharAt(Results[0], 1) <> '|') do
+      begin
+        z := z + Copy(Results[0], 2, Length(Results[0]));
+        Results.Delete(0);
+      end;
+    end;
+    SetOrderFields(AnOrder, x, y, z);
   finally
-    UnlockBroker;
+    Results.Free;
   end;
 end;
 
@@ -589,29 +598,26 @@ end;
 }
 
 function OIMessage(IEN: Integer): string;
+var
+  sl: TSTrings;
 begin
-  CallV('ORWDX MSG', [IEN]);
-  with RPCBrokerV.Results do SetString(Result, GetText, Length(Text));
+  sl := TSTringList.Create;
+  try
+    CallVistA('ORWDX MSG', [IEN], sl);
+    Result := sl.Text;
+  finally
+    sl.Free;
+  end;
 end;
 
 function OrderMenuStyle: Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDXM MSTYLE', [nil]), 0);
+  CallVistA('ORWDXM MSTYLE', [nil], Result);
 end;
 
 function ResolveScreenRef(const ARef: string): string;
 begin
-  Result := sCallV('ORWDXM RSCRN', [ARef]);
-end;
-
-function SubSetOfOrderItems(const StartFrom: string; Direction: Integer;
-  const XRef: string; QuickOrderDlgIen: Integer): TStrings;
-{ returns a pointer to a list of orderable items matching an S.xxx cross reference (for use in
-  a long list box) -  The return value is  a pointer to RPCBrokerV.Results, so the data must
-  be used BEFORE the next broker call! }
-begin
-  CallV('ORWDX ORDITM', [StartFrom, Direction, XRef, QuickOrderDlgIen]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDXM RSCRN', [ARef], Result);
 end;
 
 function setSubSetOfOrderItems(aDest:TStrings;const StartFrom: string; Direction: Integer;
@@ -625,25 +631,21 @@ begin
 end;
 
 function GetDefaultCopay(AnOrderID: string): String;
+var
+  aList: iORNetMult;
+  sl: TStrings;
 begin
-  LockBroker;
+  newORNetMult(aList);
+  sl := TSTringList.Create;
   try
-    with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := 'ORWDPS4 CPLST';
-      Param[0].PType := literal;
-      Param[0].Value := Patient.DFN;
-      Param[1].PType := list;
-      Param[1].Mult['1'] := AnOrderID;
-    end;
-    CallBroker;
-    if RPCBrokerV.Results.Count > 0 then
-      Result := RPCBrokerV.Results[0]
+    aList.AddSubscript(['1'], AnOrderID);
+    CallVistA('ORWDPS4 CPLST',[Patient.DFN,aList],sl);
+    if sl.Count > 0 then
+      Result := sl[0]
     else
       Result := '';
   finally
-    UnlockBroker;
+    sl.Free;
   end;
 end;
 
@@ -731,31 +733,33 @@ begin
     end;
   finally
     UnlockBroker;
-  end;
+  end;  
 end;
 
-function SubsetOfEntries(const StartFrom: string; Direction: Integer;
-  const XRef, GblRef, ScreenRef: string): TStrings;
+function setSubsetOfEntries(aDest:TStrings;const StartFrom: string; Direction: Integer;
+  const XRef, GblRef, ScreenRef: string): Integer;
 { returns a pointer to a list of file entries (for use in a long list box) -
   The return value is  a pointer to RPCBrokerV.Results, so the data must
   be used BEFORE the next broker call! }
 begin
-  CallV('ORWDOR LKSCRN', [StartFrom, Direction, XRef, GblRef, ScreenRef]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDOR LKSCRN', [StartFrom, Direction, XRef, GblRef, ScreenRef],aDest);
+  Result := aDest.Count;
 end;
 
 procedure ValidateNumericStr(const x, Dom: string; var ErrMsg: string);
 begin
-  ErrMsg := sCallV('ORWDOR VALNUM', [x, Dom]);
+  CallVistA('ORWDOR VALNUM', [x, Dom], ErrMsg);
   if ErrMsg = '0' then ErrMsg := '' else ErrMsg := Piece(ErrMsg, U, 2);
 end;
 
 function IsPFSSActive: boolean;
+var
+  s: String;
 begin
   with uPFSSActive do
     if not PFSSChecked then
       begin
-        PFSSActive := (sCallV('ORWPFSS IS PFSS ACTIVE?', [nil]) = '1');
+        PFSSActive := CallVistA('ORWPFSS IS PFSS ACTIVE?', [nil], s) and (s = '1');
         PFSSChecked := True;
       end;
   Result := uPFSSActive.PFSSActive
@@ -767,14 +771,15 @@ procedure AppendMedRoutes(Dest: TStrings);
 var
   i: Integer;
   x: string;
+  Results: TStrings;
 begin
   if uMedRoutes = nil then
   begin
-    CallV('ORWDPS32 ALLROUTE', [nil]);
-    with RPCBrokerV do
-    begin
+    Results := TStringList.Create;
+    try
+      CallVistA('ORWDPS32 ALLROUTE', [nil], Results);
       uMedRoutes := TStringList.Create;
-      FastAssign(RPCBrokerV.Results, uMedRoutes);
+      FastAssign(Results, uMedRoutes);
       for i := 0 to Results.Count - 1 do if Length(Piece(Results[i], U, 3)) > 0 then
       begin
         x := Piece(Results[i], U, 1) + U + Piece(Results[i], U, 3) +
@@ -782,7 +787,9 @@ begin
         uMedRoutes.Add(x);
       end; {if Length}
       SortByPiece(uMedRoutes, U, 2);
-    end; {with RPCBrokerV}
+    finally
+      Results.Free;
+    end;
   end; {if uMedRoutes}
   FastAddStrings(uMedRoutes, Dest);
 end;
@@ -791,7 +798,8 @@ procedure CheckAuthForMeds(var x: string; dlgID: string = '');
 begin
   //CQ 21724 - Nurses should be able to order supplies, pass in dlgID
   //from fODMeds - jcs
-  x := Piece(sCallV('ORWDPS32 AUTH', [Encounter.Provider, dlgID]), U, 2);
+  CallVistA('ORWDPS32 AUTH', [Encounter.Provider, dlgID],x);
+  x := Piece(x, U, 2);
 end;
 
 function DispenseMessage(AnIEN: Integer): string;
@@ -800,7 +808,7 @@ var
 begin
   if AnIEN = uLastDispenseIEN then Result := uLastDispenseMsg else
   begin
-    x := sCallV('ORWDPS32 DRUGMSG', [AnIEN]);
+    CallVistA('ORWDPS32 DRUGMSG', [AnIEN], x);
     uLastDispenseIEN := AnIEN;
     uLastDispenseMsg := Piece(x, U, 1);
     uLastQuantityMsg := Piece(x, U, 2);
@@ -814,7 +822,7 @@ var
 begin
   if AnIEN = uLastDispenseIEN then Result := uLastQuantityMsg else
   begin
-    x := sCallV('ORWDPS32 DRUGMSG', [AnIEN]);
+    CallVistA('ORWDPS32 DRUGMSG', [AnIEN], x);
     uLastDispenseIEN := AnIEN;
     uLastDispenseMsg := Piece(x, U, 1);
     uLastQuantityMsg := Piece(x, U, 2);
@@ -823,91 +831,103 @@ begin
 end;
 
 function RequiresCopay(DispenseDrug: Integer): Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWDPS32 SCSTS', [Patient.DFN, DispenseDrug]) = '1';
+  Result := CallVistA('ORWDPS32 SCSTS', [Patient.DFN, DispenseDrug],s) and (s = '1');
 end;
 
 procedure LoadFormularyAlt(AList: TStringList; AnIEN: Integer; PSType: Char);
 begin
-  CallV('ORWDPS32 FORMALT', [AnIEN, PSType]);
-  FastAssign(RPCBrokerV.Results, AList);
+  CallVistA('ORWDPS32 FORMALT', [AnIEN, PSType], aList);
 end;
 
 procedure LookupRoute(const AName: string; var ID, Abbreviation: string);
 var
   x: string;
 begin
-  x := sCallV('ORWDPS32 VALROUTE', [AName]);
+  CallVistA('ORWDPS32 VALROUTE', [AName], x);
   ID := Piece(x, U, 1);
   Abbreviation := Piece(x, U, 2);
 end;
 
 function MedIsSupply(AnIEN: Integer): Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWDPS32 ISSPLY', [AnIEN]) = '1';
+  Result := CallVistA('ORWDPS32 ISSPLY', [AnIEN], s) and (s = '1');
 end;
 
 function MedTypeIsIV(AnIEN: Integer): Boolean;
+var
+  s: String;
 begin
-  Result := sCallV('ORWDPS32 MEDISIV', [AnIEN]) = '1';
+  Result := CallVistA('ORWDPS32 MEDISIV', [AnIEN], s) and (s = '1');
 end;
 
-function ODForMedIn: TStrings;
+function setODForMedIn(aDest:TStrings): Integer;
 { Returns init values for inpatient meds dialog.  The results must be used immediately. }
 begin
-  CallV('ORWDPS32 DLGSLCT', [PST_UNIT_DOSE, patient.dfn, patient.location]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDPS32 DLGSLCT', [PST_UNIT_DOSE, patient.dfn, patient.location], aDest);
+  Result := aDest.Count;
 end;
 
-function ODForIVFluids: TStrings;
+function setODForIVFluids(aDest: TStrings): Integer;
 { Returns init values for IV Fluids dialog.  The results must be used immediately. }
 begin
-  CallV('ORWDPS32 DLGSLCT', [PST_IV_FLUIDS, patient.dfn, patient.location]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDPS32 DLGSLCT', [PST_IV_FLUIDS, patient.dfn, patient.location],aDest);
+  Result := aDest.Count;
 end;
 
 function AmountsForIVFluid(AnIEN: Integer; FluidType: Char): string;
 begin
-  Result := sCallV('ORWDPS32 IVAMT', [AnIEN, FluidType]);
+  CallVistA('ORWDPS32 IVAMT', [AnIEN, FluidType], Result);
 end;
 
-function ODForMedOut: TStrings;
+function setODForMedOut(aDest: TStrings): Integer;
 { Returns init values for outpatient meds dialog.  The results must be used immediately. }
 begin
-  CallV('ORWDPS32 DLGSLCT', [PST_OUTPATIENT, patient.dfn, patient.location]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDPS32 DLGSLCT', [PST_OUTPATIENT, patient.dfn, patient.location],aDest);
+  Result := aDest.Count;
 end;
 
-function OIForMedIn(AnIEN: Integer): TStrings;
+function setOIForMedIn(aDest:TStrings;AnIEN: Integer): Integer;
 { Returns init values for inpatient meds order item.  The results must be used immediately. }
 begin
-  CallV('ORWDPS32 OISLCT', [AnIEN, PST_UNIT_DOSE, Patient.DFN]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDPS32 OISLCT', [AnIEN, PST_UNIT_DOSE, Patient.DFN],aDest);
+  Result := aDest.Count;
 end;
 
-function OIForMedOut(AnIEN: Integer): TStrings;
+function setOIForMedOut(aDest: TSTrings; AnIEN: Integer): Integer;
 { Returns init values for outpatient meds order item.  The results must be used immediately. }
 begin
-  CallV('ORWDPS32 OISLCT', [AnIEN, PST_OUTPATIENT, Patient.DFN]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDPS32 OISLCT', [AnIEN, PST_OUTPATIENT, Patient.DFN],aDest);
+  Result := aDest.Count;
 end;
 
-function ODForSD: TStrings;
+function setODForSD(aDest: TStrings):Integer;
 begin
-  CallV('ORWDSD1 ODSLCT', [PATIENT.DFN, Encounter.Location]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDSD1 ODSLCT', [PATIENT.DFN, Encounter.Location],aDest);
+  Result := aDest.Count;
 end;
 
 function RatedDisabilities: string;
 { Returns a list of rated disabilities, if any, for a patient }
+var
+  sl:TSTrings;
 begin
-  CallV('ORWPCE SCDIS', [Patient.DFN]);
-  Result := RPCBrokerV.Results.Text;
+  sl := TSTringList.Create;
+  try
+    CallVistA('ORWPCE SCDIS', [Patient.DFN], sl);
+    Result := sl.Text;
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure ValidateIVRate(var x: string);
 begin
-  x := sCallV('ORWDPS32 VALRATE', [x]);
+  CallVistA('ORWDPS32 VALRATE', [x], x);
 end;
 
 //function ValidIVRate(const x: string): Boolean;
@@ -919,20 +939,23 @@ end;
 function ValidSchedule(const x: string; PSType: Char = 'I'): Integer;
 { returns 1 if schedule is valid, 0 if schedule is not valid, -1 pharmacy routine not there }
 begin
-  Result := StrToIntDef(sCallV('ORWDPS32 VALSCH', [x, PSType]), -1);
+  CallVistA('ORWDPS32 VALSCH', [x, PSType], Result, -1);
 end;
 
 function ValidQuantity(const x: string): Boolean;
+var
+  s: String;
 { returns true if the text entered as the quantity is valid }
 begin
-  Result := sCallV('ORWDPS32 VALQTY', [Trim(x)]) = '1';
+  Result := CallVistA('ORWDPS32 VALQTY', [Trim(x)], s) and (s = '1');
 end;
 
-function ODForVitals: TStrings;
+//function ODForVitals: TStrings;
+function setODForVitals(aDest: TStrings): Integer;
 { Returns init values for vitals dialog.  The results must be used immediately. }
 begin
-  CallV('ORWDOR VMSLCT', [nil]);
-  Result := RPCBrokerV.Results;
+  CallVistA('ORWDOR VMSLCT', [nil], aDest);
+  Result := aDest.Count;
 end;
 
 initialization

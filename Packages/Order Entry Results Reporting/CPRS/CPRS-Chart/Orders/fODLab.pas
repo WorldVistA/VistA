@@ -44,7 +44,6 @@ type
     txtDoseTime: TCaptionEdit;
     txtDrawTime: TCaptionEdit;
     txtOrderComment: TCaptionEdit;
-    FLabCommonCombo: TORListBox;
     lblHowManyDays: TLabel;
     cboCollTime: TORComboBox;
     lblCollType: TLabel;
@@ -90,6 +89,7 @@ type
     procedure pnlCollTimeButtonEnter(Sender: TObject);
     procedure pnlCollTimeButtonExit(Sender: TObject);
     procedure ViewinReportWindow1Click(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   protected
     FCmtTypes: TStringList ;
     procedure InitDialog; override;
@@ -100,6 +100,7 @@ type
     procedure GetAllSpecimens(AComboBox: TORComboBox);
     procedure SetupCollTimes(CollType: string);
     procedure LoadCollType(AComboBox:TORComboBox);
+    procedure ShowOrderMessage(Show: boolean); override;
    private
     FLastCollType: string;
     FLastCollTime: string;
@@ -111,7 +112,10 @@ type
     procedure ReadServerVariables;
     procedure DisplayChangedOrders(ACollType: string);
     procedure setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl; lbl2: string);
+    procedure ClearControls;
+    procedure ResetConstaints;
   public
+    procedure SetFontSize( FontSize: integer); override;
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
     procedure LoadRequiredComment(CmtType: integer);
     procedure DetermineCollectionDefaults(Responses: TResponses);
@@ -218,6 +222,7 @@ begin
   frmFrame.pnlVisit.Enabled := false;
   AutoSizeDisabled := True;
   inherited;
+  ResetConstaints;
   AList := TStringList.Create;
   try
     LRFZX    := '';
@@ -247,11 +252,11 @@ begin
       EvtDelayLoc := StrToIntDef(GetEventLoc1(IntToStr(Self.EvtID)),0);
       EvtDivision := StrToIntDef(GetEventDiv1(IntToStr(Self.EvtID)),0);
       if EvtDelayLoc>0 then
-        ODForLab(AList, EvtDelayLoc, EvtDivision)
+        getODForLab(aList,EvtDelayLoc, EvtDivision)
       else
-        ODForLab(AList, Encounter.Location, EvtDivision);
+        getODForLab(aList,Encounter.Location, EvtDivision);
     end else
-      ODForLab(aList, Encounter.Location);
+      getODForLab(aList,Encounter.Location,0); // ODForLab returns TStrings with defaults
     CtrlInits.LoadDefaults(AList);
     InitDialog;
     with CtrlInits do
@@ -308,6 +313,12 @@ begin
   end;
 end;
 
+procedure TfrmODLab.FormResize(Sender: TObject);
+begin
+  inherited;
+  ResetConstaints;
+end;
+
 {TDP - CQ#19396 Added to address 508 related changes. I modified slightly to
        change lbl.Caption and retain lbl.Width}
 procedure TfrmODLab.setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl; lbl2: string);
@@ -336,7 +347,10 @@ begin
   with CtrlInits do
     begin
       SetControl(cboUrgency, 'Default Urgency') ;
-      uDfltUrgency := StrToInt(Piece(cboUrgency.Items[0],U,1));
+      if cboUrgency.Items.Count > 0 then
+        uDfltUrgency := StrToInt(Piece(cboUrgency.Items[0],U,1))
+      else
+        uDfltUrgency := -1;
     end;
   lblTestName.Caption := '';
   DisableCommentPanels;
@@ -430,6 +444,12 @@ begin
    end;
 end;
 
+procedure TfrmODLab.ShowOrderMessage(Show: boolean);
+begin
+  inherited;
+  ResetConstaints;
+end;
+
 { dialog specific event procedures follow here ---------------------------------------------- }
 
 constructor TLabTest.Create(const LabTestIEN: string; Responses: TResponses);
@@ -450,7 +470,7 @@ begin
       LabSubscript := Piece(ExtractDefault(LoadData, 'Item ID'),U,2);
       TestReqComment := ExtractDefault(LoadData, 'ReqCom');
       if Length(ExtractDefault(LoadData, 'Unique CollSamp')) > 0 then UniqueCollSamp := True;
-      x := ExtractDefault(LoadData, 'Unique CollSamp');                            
+      x := ExtractDefault(LoadData, 'Unique CollSamp');
       if Length(x) = 0 then x := ExtractDefault(LoadData, 'Lab CollSamp');
       if Length(x) = 0 then x := ExtractDefault(LoadData, 'Default CollSamp');
       if Length(x) = 0 then x := '-1';
@@ -1038,7 +1058,7 @@ begin
               // date/time was entered
               else
                 begin
-                  if (UpperCase(Text) <> 'NOW') and (FMDateTime < FMNow) then SetError(TX_PAST_TIME);
+                  if (not IsNow(Text)) and (FMDateTime < FMNow) then SetError(TX_PAST_TIME);
                 end;
             end;
         end;
@@ -1174,7 +1194,7 @@ begin
     end;
 
   if (AnErrMsg <> '') or (Self.EvtID > 0) then exit;
-    
+
   // add check and display for auto-change from LC to WC - v27.1 - CQ #10226
   ACollType := Responses.FindResponseByName('COLLECT', 1).EValue;
   if ((ACollType = 'LC') or (ACollType = 'I')) then DisplayChangedOrders(ACollType);
@@ -1182,7 +1202,7 @@ end;
 
 procedure TfrmODLab.DisplayChangedOrders(ACollType: string);
 var
-  AStartDate, ASchedule, ADuration: string;
+  AStartDate, ASchedule, ADuration, Temp: string;
   ChangedOrdersList, AList: TStringlist;
   i, j, k: integer;
 begin
@@ -1199,17 +1219,26 @@ begin
         AList.Text := Responses.OrderText;
         with ChangedOrdersList do
         begin
-          Insert(5, 'Order   :' + #9 + AList[0]);
-          k := Length(ChangedOrdersList[5]);
-          i := 0;
-          if AList.Count > 1 then
-            for j := 1 to AList.Count - 1 do
-            begin
-              Insert(5 + j, StringOfChar(' ', 9) + #9 + AList[j]);
-              k := HigherOf(k, Length(ChangedOrdersList[5 + j]));
-              i := j;
-            end;
-          Insert(5 + i + 1, StringOfChar('-', k + 4));
+          if Count > 4 then
+          begin
+            if AList.Count > 0 then
+              temp := AList[0]
+            else
+              temp := '';
+            Insert(5, 'Order   :' + #9 + temp);
+            k := Length(ChangedOrdersList[5]);
+            i := 0;
+            if AList.Count > 1 then
+              for j := 1 to AList.Count - 1 do
+              begin
+                Insert(5 + j, StringOfChar(' ', 9) + #9 + AList[j]);
+                k := HigherOf(k, Length(ChangedOrdersList[5 + j]));
+                i := j;
+              end;
+            Insert(5 + i + 1, StringOfChar('-', k + 4));
+          end
+          else
+            Add(StringOfChar('-', 40));
         end;
         ReportBox(ChangedOrdersList, 'Changed Orders', TRUE);
       finally
@@ -1222,9 +1251,19 @@ begin
 end;
 
 procedure TfrmODLab.cboAvailTestNeedData(Sender: TObject;
-              const StartFrom: string; Direction, InsertAt: Integer);
+  const StartFrom: string; Direction, InsertAt: Integer);
+var
+  sl: TStrings;
+
 begin
-  cboAvailTest.ForDataUse(SubsetOfOrderItems(StartFrom, Direction, 'S.LAB', Responses.QuickOrder));
+  sl := TStringList.Create;
+  try
+    setSubsetOfOrderItems(sl, StartFrom, Direction, 'S.LAB',
+      Responses.QuickOrder);
+    cboAvailTest.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmODLab.cboAvailTestExit(Sender: TObject);
@@ -1236,6 +1275,26 @@ begin
   cboAvailTest.SetFocus;
   PostMessage(Handle, WM_NEXTDLGCTL, 0, 0);
 end;
+
+
+Procedure TfrmODLab.ClearControls;
+begin
+  txtUrineVolume.text := '';
+  txtAntiCoagulant.text := '';
+  txtOrderComment.text := '';
+  txtDoseTime.text := '';
+  txtDrawTime.text := '';
+  txtAddlComment.text := '';
+  txtImmedColl.text := '';
+  txtDays.text := '';
+  grpPeakTrough.ItemIndex := -1;
+  cboCollSamp.ItemIndex := -1;
+  cboSpecimen.ItemIndex := -1;
+  cboUrgency.ItemIndex := -1;
+  cboCollType.ItemIndex := -1;
+  cboCollTime.ItemIndex := -1;
+end;
+
 
 procedure TfrmODLab.cboAvailTestSelect(Sender: TObject);
 var
@@ -1260,6 +1319,7 @@ begin
             if (Length(ItemID) = 0) or (ItemID = '0') then Exit;
             FLastLabID := ItemID;
           end;
+      ClearControls;
       ALabTest := TLabTest.Create(ItemID, Responses);
     end;
   with ALabTest do
@@ -1998,6 +2058,29 @@ begin
   LRFDATE := KeyVariable['LRFDATE'];
   LRFURG  := KeyVariable['LRFURG'];
   LRFSCH  := KeyVariable['LRFSCH'];
+end;
+
+procedure TfrmODLab.ResetConstaints;
+var
+  x, y: integer;
+
+begin
+  x := bvlTestName.BoundsRect.Right;
+  if x < cmdAccept.BoundsRect.Right then
+    x := cmdAccept.BoundsRect.Right;
+  y := memOrder.BoundsRect.Bottom;
+  if pnlMessage.Visible and (y < pnlMessage.BoundsRect.Bottom) then
+    y := pnlMessage.BoundsRect.Bottom;
+  Constraints.MinWidth := x + Width - ClientWidth + 12; //20;
+  Constraints.MinHeight := y + Height - ClientHeight + 12; //20;
+  Width := Constraints.MinWidth;
+  Height := Constraints.MinHeight;
+end;
+
+procedure TfrmODLab.SetFontSize(FontSize: integer);
+begin
+  inherited;
+  ResetConstaints;
 end;
 
 procedure TfrmODLab.DetermineCollectionDefaults(Responses: TResponses);

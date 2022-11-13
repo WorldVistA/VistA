@@ -13,7 +13,6 @@ type
     Label3: TLabel;
     Label4: TLabel;
     edtDefaultMax: TCaptionEdit;
-    Bevel1: TBevel;
     Bevel2: TBevel;
     Panel1: TPanel;
     btnOK: TButton;
@@ -22,6 +21,9 @@ type
     btnCancel: TButton;
     odcDfStart: TORDateBox;
     odcDfStop: TORDateBox;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
     procedure btnOKClick(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure btnResetClick(Sender: TObject);

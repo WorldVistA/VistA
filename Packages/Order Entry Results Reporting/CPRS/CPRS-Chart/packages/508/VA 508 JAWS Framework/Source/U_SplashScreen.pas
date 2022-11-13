@@ -131,10 +131,11 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     property ImageID: Integer read fMainImageID write SetMainImageId;
   public
+    constructor Create(AOwner: TComponent); overload; override;
     constructor Create(ExecuteEvent: TExecutEvent;
       ComponentCallBackProc: TComponentDataRequestProc;
       LogLink: Boolean = false; ForceUPD: Integer = -1;
-      DoThread: Boolean = true; ShowSplash: Boolean = true);
+      DoThread: Boolean = true; ShowSplash: Boolean = true); reintroduce; overload;
     destructor Destroy; override;
     Procedure IncProg(ByCnt: Integer = 1);
     procedure ShowSystemError(aErrorText: string);
@@ -394,16 +395,18 @@ begin
   end;
 end;
 
+
+constructor tSplashTaskDialog.Create(AOwner: TComponent);
+begin
+  raise Exception.Create('Invalid create');
+end;
+
 constructor tSplashTaskDialog.Create(ExecuteEvent: TExecutEvent;
 ComponentCallBackProc: TComponentDataRequestProc; LogLink: Boolean = false;
 ForceUPD: Integer = -1; DoThread: Boolean = true; ShowSplash: Boolean = true);
   function GetDLLName: string;
-  var
-    aName: array [0 .. MAX_PATH] of char;
   begin
-    fillchar(aName, SizeOf(aName), #0);
-    GetModuleFileName(HInstance, aName, MAX_PATH);
-    Result := aName;
+    Result := system.SysUtils.GetModuleName(HInstance);
   end;
 
   Procedure StartProcessing(aDoThread: Boolean);

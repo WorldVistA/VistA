@@ -1,10 +1,10 @@
-unit fEncounterFrame;
+﻿unit fEncounterFrame;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  Tabs, ComCtrls, ExtCtrls, Menus, StdCtrls, Buttons, fPCEBase,
+  Tabs, ComCtrls, ExtCtrls, Menus, StdCtrls, Buttons, fPCEBase, fStandardCodes,
   fVisitType, fDiagnoses, fProcedure, fImmunization, fSkinTest, fPatientEd,
   fHealthFactor, fExam, uPCE, rPCE, rTIU, ORCtrls, ORFn, fEncVitals, rvitals, fBase508Form,
   VA508AccessibilityManager;
@@ -21,6 +21,7 @@ const
   CT_XamNm   = 'Exams';
   CT_VitNm   = 'Vitals';
   CT_GAFNm   = 'GAF';
+  CT_STDNm   = 'Standard Codes';
 
   //numbers assigned to tabs to make changes easier
   //they must be sequential
@@ -35,7 +36,8 @@ const
   CT_HEALTHFACTORS = 7;
   CT_EXAMS         = 8;
   CT_VITALS        = 9;
-  CT_GAF           = 10; CT_LAST = 10;
+  CT_GAF           = 10;
+  CT_STANDARDCODES = 11; CT_LAST = 11;
 
   NUM_TABS       = 3;
   TAG_VTYPE      = 10;
@@ -99,11 +101,15 @@ type
     procedure CreateForms;
     procedure AddTabs;
     function FormListContains(item: string): Boolean;
-    procedure SendData;
+    function SendData: boolean;
     procedure UpdateEncounter(PCE: TPCEData);
     procedure SetFormFonts;
-
+    procedure UMValidateMag(var Message: TMessage); message UM_VALIDATE_MAG;
   public
+//    procedure savePCEVimmSubData;
+//    procedure SynchPCEVimmSubData;
+    procedure getCodesList(var tmpList: TStrings);
+    procedure synchPCEVimmData(povList, cptList: TStringList);
     procedure SelectTab(NewTabName: string);
     property ChangeSource:    Integer read FChangeSource;
     property Forms:           tstringlist read FormList;
@@ -119,7 +125,8 @@ var
   uProviders: TPCEProviderList;
 
 // Returns true if PCE data still needs to be saved - vitals/gaf are always saved
-function UpdatePCE(PCEData: TPCEData; SaveOnExit: boolean = TRUE): boolean;
+function UpdatePCE(PCEData: TPCEData; SaveOnExit: boolean = TRUE;
+  KeepPrimaryProvider: boolean = FALSE): boolean;
 
 implementation
 
@@ -153,10 +160,19 @@ begin
     CT_EXAMS:         Result := CT_XamNm;
     CT_VITALS:        Result := CT_VitNm;
     CT_GAF:           Result := CT_GAFNm;
-
+    CT_STANDARDCODES: Result := CT_STDNm;
   end;
 end;
 
+
+//procedure TfrmEncounterFrame.savePCEVimmSubData;
+//begin
+//  if uEncPCEData = nil then exit;
+//  if FormListContains(CT_DiagNm) then
+//    uEncPCEData.SetDiagnoses(frmDiagnoses.lstCaptionList.ItemsStrings);
+//  if FormListContains(CT_ProcNm) then
+//    uEncPCEData.SetProcedures(frmProcedures.lstCaptionList.ItemsStrings);
+//end;
 
 {///////////////////////////////////////////////////////////////////////////////
 //Name: function TfrmEncounterFrame.PageIDToForm(PageID: Integer): TfrmPCEBase;
@@ -178,6 +194,7 @@ begin
     CT_EXAMS:         Result := frmExams;
     CT_VITALS:        Result := frmEncVitals;
     CT_GAF:           Result := frmGAF;
+    CT_STANDARDCODES: Result := frmStandardCodes;
   else  //not a valid form
     result := frmPCEBase;
   end;
@@ -191,6 +208,8 @@ end;
 //Location: ISL
 //Description: Finds out what pages to display, has the pages and tabs created.
 ///////////////////////////////////////////////////////////////////////////////}
+
+
 procedure TfrmEncounterFrame.CreateChildForms(Sender: TObject; Location: integer);
 begin
   //load FormList with a list of all forms to display.
@@ -224,7 +243,8 @@ begin
   formList.add(CT_XamNm);
   if MHClinic(Location) then
     formList.add(CT_GAFNm);
-  end;
+ // formList.add(CT_STDNm); - moved to EP1
+end;
 
 
 {///////////////////////////////////////////////////////////////////////////////
@@ -275,6 +295,8 @@ begin
     frmExams := TfrmExams.CreateLinked(pnlPage);
   if FormListContains(CT_GAFNm) then
     frmGAF := TfrmGAF.CreateLinked(pnlPage);
+  if FormListContains(CT_STDNm) then
+    frmStandardCodes := TfrmStandardCodes.CreateLinked(pnlPage);
   //must switch based on caption, as all tabs may not be present.
   for i := CT_FIRST to CT_LAST do
   begin
@@ -373,46 +395,69 @@ end;
 //Description: The main call to open the encounter frame and capture encounter
 // information.
 ///////////////////////////////////////////////////////////////////////////////}
-function UpdatePCE(PCEData: TPCEData; SaveOnExit: boolean = TRUE): boolean;
+function UpdatePCE(PCEData: TPCEData; SaveOnExit: boolean = TRUE;
+  KeepPrimaryProvider: boolean = FALSE): boolean;
 var
 //  FontHeight,
 //  FontWidth: Integer;
-  AUser: string;
+  AUser, PrimaryProvider: string;
 
 begin
+  if KeepPrimaryProvider and (PCEData.Providers.PrimaryIdx >= 0) then
+    PrimaryProvider := PCEData.Providers.Strings[PCEData.Providers.PrimaryIdx]
+  else
+    PrimaryProvider := '';
+  PCEData.PCEForNote(PCEData.NoteIEN); // VISTAOR-24269
+  if (PCEData.Location = 0) and (PCEData.VisitCategory = #0) and (PCEData.VisitIEN = 0) then
+  begin
+    InfoDlg('You cannot edit this encounter because there is no visit associated with this note.',
+      'Encounter Edit Error', mtError, [mbOK], mbOK);
+    Result := False;
+    exit;
+  end;
+  if (PrimaryProvider <> '') and (PCEData.Providers.PrimaryIdx < 0) then
+    PCEData.Providers.Add(PrimaryProvider);
+
   frmEncounterFrame := TfrmEncounterFrame.Create(Application);
   try
     frmEncounterFrame.FAutoSave := SaveOnExit;
 
     uEncPCEData := PCEData;
-    if(uEncPCEData.Empty and ((uEncPCEData.Location = 0) or (uEncPCEData.VisitDateTime = 0)) and
-      (not Encounter.NeedVisit)) then
-      uEncPCEData.UseEncounter := TRUE;
-    frmEncounterFrame.Caption := 'Encounter Form for ' + ExternalName(uEncPCEData.Location, 44) +
-                                  '  (' + FormatFMDateTime('mmm dd,yyyy@hh:nn', uEncPCEData.VisitDateTime) + ')';
+    try
+      if(uEncPCEData.Empty and ((uEncPCEData.Location = 0) or (uEncPCEData.VisitDateTime = 0)) and
+        (not Encounter.NeedVisit)) then
+        uEncPCEData.UseEncounter := TRUE;
+      frmEncounterFrame.Caption := 'Encounter Form for ' + ExternalName(uEncPCEData.Location, 44) +
+                                    '  (' + FormatFMDateTime('mmm dd,yyyy@hh:nn', uEncPCEData.VisitDateTime) + ')';
+      uProviders.Assign(uEncPCEData.Providers);
+      SetDefaultProvider(uProviders, uEncPCEData);
+      AUser := IntToStr(uProviders.PendingIEN(FALSE));
+      if(AUser <> '0') and (uProviders.IndexOfProvider(AUser) < 0) and
+         AutoCheckout(uEncPCEData.Location) then
+        uProviders.AddProvider(AUser, uProviders.PendingName(FALSE), FALSE);
 
-    uProviders.Assign(uEncPCEData.Providers);
-    SetDefaultProvider(uProviders, uEncPCEData);
-    AUser := IntToStr(uProviders.PendingIEN(FALSE));
-    if(AUser <> '0') and (uProviders.IndexOfProvider(AUser) < 0) and
-       AutoCheckout(uEncPCEData.Location) then
-      uProviders.AddProvider(AUser, uProviders.PendingName(FALSE), FALSE);
+      frmEncounterFrame.CreateChildForms(frmEncounterFrame, PCEData.Location);
+      SetFormPosition(frmEncounterFrame);
+      ResizeAnchoredFormToFont(frmEncounterFrame);
+      //SetFormPosition(frmEncounterFrame);
 
-    frmEncounterFrame.CreateChildForms(frmEncounterFrame, PCEData.Location);
-    SetFormPosition(frmEncounterFrame);
-    ResizeAnchoredFormToFont(frmEncounterFrame);
-    //SetFormPosition(frmEncounterFrame);
+      with frmEncounterFrame do
+      begin
+        SetRPCEncLocation(PCEData.Location);
+        SynchPCEData;
+        TabControl.Tabindex := 0;
+        TabControlChange(TabControl);
 
-    with frmEncounterFrame do
-    begin
-      SetRPCEncLocation(PCEData.Location);
-      SynchPCEData;
-      TabControl.Tabindex := 0;
-      TabControlChange(TabControl);
+        ShowModal;
+        Result := FSaveNeeded;
+      end;
 
-      ShowModal;
-      Result := FSaveNeeded;
+      PCEData.PCEForNote(PCEData.NoteIEN); // VISTAOR-24268
+
+    finally
+      uEncPCEData := nil;
     end;
+
   finally
     // frmEncounterFrame.Free;   v22.11 (JD and SM)
     frmEncounterFrame.Release;
@@ -438,6 +483,10 @@ begin
   end;
 end;
 
+procedure EmptyProc(Dest: TStrings);
+begin
+  // used by Sync Standard Codes
+end;
 {///////////////////////////////////////////////////////////////////////////////
 //Name: procedure TfrmEncounterFrame.SynchPCEData;
 //Created: Jan 1999
@@ -480,7 +529,7 @@ begin
     begin
       InitList(frmVisitType.lstVTypeSection);                     // set up Visit Type page
       ListSCDisabilities(memSCDisplay.Lines);
-      uSCCond := EligbleConditions;
+      uSCCond := EligbleConditions(uEncPCEData);
       frmVisitType.fraVisitRelated.InitAllow(uSCCond);
     end;
   with uEncPCEData do                               // load any existing data from PCEData
@@ -501,6 +550,8 @@ begin
       frmHealthFactors.InitTab(CopyHealthFactors, ListHealthSections);
     if FormListContains(CT_XamNm) then
       frmExams.InitTab(CopyExams, ListExamsSections);
+    if FormListContains(CT_STDNm) then
+      frmStandardCodes.InitTab(CopyStandardCodes, EmptyProc);
     uVisitType.Assign(VisitType);
     if FormListContains(CT_VisitNm) then
     with frmVisitType do
@@ -510,6 +561,50 @@ begin
   end;
 end;
 
+
+procedure TfrmEncounterFrame.synchPCEVimmData(povList, cptList: TStringList);
+var
+i: integer;
+str: string;
+begin
+  if FormListContains(CT_DiagNm) and (povList.Count >0) then
+    begin
+      for i := povList.Count -1 downto 0 do
+        begin
+          str := povList.Strings[i];
+          if Piece(str, U, 1) = 'POV-' then
+            frmDiagnoses.deleteFromList(str)
+          else frmDiagnoses.addToList(str);
+        end;
+    end;
+  if FormListContains(CT_ProcNm) and (cptList.Count >0) then
+    begin
+      for i := cptList.Count -1 downto 0 do
+        begin
+          str := cptList.Strings[i];
+          if Piece(str, U, 1) = 'CPT-' then
+            frmProcedures.deleteFromList(str)
+          else frmProcedures.addToList(str);
+        end;
+    end;
+end;
+
+//procedure TfrmEncounterFrame.SynchPCEVimmSubData;
+//begin
+//  with uEncPCEData do                               // load any existing data from PCEData
+//    begin
+//      if FormListContains(CT_DiagNm) then
+//        begin
+//          frmDiagnoses.removeAll;
+//          frmDiagnoses.InitTab(CopyDiagnoses, ListDiagnosisSections);
+//        end;
+//      if FormListContains(CT_ProcNm) then
+//        begin
+//          frmProcedures.removeAll;
+//          frmProcedures.InitTab(CopyProcedures, ListProcedureSections);
+//        end;
+//    end;
+//end;
 
 {///////////////////////////////////////////////////////////////////////////////
 //Name: procedure TfrmEncounterFrame.FormDestroy(Sender: TObject);
@@ -527,11 +622,11 @@ begin
   for i := ComponentCount-1 downto 0 do
     if(Components[i] is TForm) then
       TForm(Components[i]).Free;
-
   formlist.clear;
   KillObj(@uProviders);
   uVisitType.Free;
   Formlist.free;
+  Application.ProcessMessages;
 end;
 
 
@@ -563,7 +658,7 @@ end;
 //Location: ISL
 //Description: Send Data back to the M side sor storing.
 ///////////////////////////////////////////////////////////////////////////////}
-procedure TfrmEncounterFrame.SendData;
+function TfrmEncounterFrame.SendData: boolean;
 //send PCE data to the RPC
 var
   StoreMessage: string;
@@ -574,6 +669,7 @@ var
 begin
   inherited;
   // do validation for vitals & anything else here
+   Result := true;
   //process vitals
   if FormListContains(CT_VitNm) then
   begin
@@ -605,11 +701,23 @@ begin
   with uEncPCEData do
   begin
     if FAutoSave then
-      Save
+      begin
+        if not uEncPCEData.validateMagnitudeValues then
+          begin
+            result := false;
+            exit;
+          end;
+        if not uEncPCEData.proceduresMissingProvider then
+          begin
+            ShowMessage('Each procedure must have a provider assign to it');
+            result := false;
+          end
+        else result := Save;
+      end
     else
       FSaveNeeded := TRUE;
   end;
-  Close;
+  if Result then Close;
 end;
 
 {///////////////////////////////////////////////////////////////////////////////
@@ -631,6 +739,7 @@ var
   ask, ChangeOK: boolean;
 
 begin
+  ClearPostValidateMag(Self);
   CanClose := True;
   if(FAbort) then
   begin
@@ -669,7 +778,7 @@ begin
   if FormListContains(CT_VitNm) then
     CanClose := frmEncVitals.OK2SaveVitals;
 
-  if CanClose and FormListContains(CT_ProcNm) then  
+  if CanClose and FormListContains(CT_ProcNm) then
     begin
       CanClose := frmProcedures.OK2SaveProcedures;
       if not CanClose then
@@ -680,13 +789,14 @@ begin
         end;
     end;
 
-  if TabControl.TabIndex = FormList.IndexOf(CT_GAFNm) then
+   if TabControl.TabIndex = FormList.IndexOf(CT_GAFNm) then
     CanClose := frmGAF.CheckSimilarNameOK;
 
-  if TabControl.TabIndex = FormList.IndexOf(CT_ProcNm) then
+   if TabControl.TabIndex = FormList.IndexOf(CT_ProcNm) then
     CanClose := frmProcedures.CheckSimilarNameOK;
 
-  if CanClose then SendData;  //*KCM*
+
+  if CanClose then CanClose := SendData;  //*KCM*
 
 end;
 
@@ -720,6 +830,11 @@ begin
     FLastPage.AllowTabChange(AllowChange);
 end;
 
+procedure TfrmEncounterFrame.UMValidateMag(var Message: TMessage);
+begin
+  HandlePostValidateMag(Message);
+end;
+
 procedure TfrmEncounterFrame.UpdateEncounter(PCE: TPCEData);
 begin
   with PCE do
@@ -730,7 +845,7 @@ begin
       frmVisitType.fraVisitRelated.GetRelated(uEncPCEData);
       Providers.Merge(uProviders);
     end;
-    //ZZZZZZBELLC
+    //VHAISPBELLC
     if FormListContains(CT_DiagNm) then
       SetDiagnoses(frmDiagnoses.lstCaptionList.ItemsStrings);
     if FormListContains(CT_ProcNm) then
@@ -745,6 +860,8 @@ begin
       SetHealthFactors(frmHealthFactors.lstCaptionList.ItemsStrings);
     if FormListContains(CT_XamNm) then
       SetExams(frmExams.lstCaptionList.ItemsStrings);
+    if FormListContains(CT_STDNm) then
+      SetStandardCodes(frmStandardCodes.lstCaptionList.ItemsStrings);
   end;
 end;
 
@@ -828,6 +945,8 @@ begin
     frmEncVitals.Font.Size := NewFontSize;
   if FormListContains(CT_GAFNm) then
     frmGAF.SetFontSize(NewFontSize);
+  if FormListContains(CT_STDNm) then
+    frmStandardCodes.SetFontSize(NewFontSize);
 end;
 
 procedure TfrmEncounterFrame.FormClose(Sender: TObject;
@@ -852,6 +971,33 @@ begin
   inherited;
   if TabControl.CanFocus then
     TabControl.SetFocus;
+end;
+
+procedure TfrmEncounterFrame.getCodesList(var tmpList: TStrings);
+var
+i: integer;
+APCEProc: TPCEProc;
+APCEITem: TPCEItem;
+tmp: String;
+begin
+  if FormListContains(CT_DiagNm) then
+    begin
+      for i := 0 to frmDiagnoses.lstCaptionList.Items.Count - 1 do
+        begin
+          APCEItem := TPCEItem(frmDiagnoses.lstCaptionList.Objects[i]);
+          tmp := 'POV^'+ APCEitem.Code + '^^' + APCEItem.Narrative;
+          tmpList.Add(tmp);
+        end;
+    end;
+  if FormListContains(CT_ProcNm) then
+    begin
+      for i := 0 to frmProcedures.lstCaptionList.Items.Count - 1 do
+        begin
+          APCEProc := TPCEProc(frmProcedures.lstCaptionList.Objects[i]);
+          tmp := 'CPT^'+ APCEProc.Code + '^^' + APCEProc.Narrative + '^' + IntToStr(APCEProc.Quantity);
+          tmpList.Add(tmp);
+        end;
+    end;
 end;
 
 end.

@@ -7,13 +7,10 @@ inherited frmPCELex: TfrmPCELex
   Constraints.MinHeight = 480
   Constraints.MinWidth = 640
   Font.Name = 'Tahoma'
-  Position = poOwnerFormCenter
-  OnClose = FormClose
-  OnCreate = FormCreate
   OnKeyDown = nil
-  OnShow = FormShow
-  ExplicitWidth = 640
-  ExplicitHeight = 480
+  OnResize = FormResize
+  ExplicitWidth = 642
+  ExplicitHeight = 487
   PixelsPerInch = 96
   TextHeight = 13
   object pnlDialog: TPanel [0]
@@ -120,7 +117,7 @@ inherited frmPCELex: TfrmPCELex
         Left = 11
         Top = 21
         Width = 526
-        Height = 19
+        Height = 25
         Margins.Left = 0
         Align = alClient
         Constraints.MinHeight = 20
@@ -160,6 +157,9 @@ inherited frmPCELex: TfrmPCELex
       ParentShowHint = False
       ShowHint = False
       TabOrder = 1
+      DesignSize = (
+        624
+        334)
       object lblSelect: TVA508StaticText
         Name = 'lblSelect'
         Left = 11
@@ -172,7 +172,6 @@ inherited frmPCELex: TfrmPCELex
         TabOrder = 0
         Visible = False
         ShowAccelChar = True
-        ExplicitWidth = 186
       end
       inline tgfLex: TTreeGridFrame
         Left = 11
@@ -213,9 +212,9 @@ inherited frmPCELex: TfrmPCELex
           Width = 602
           ExplicitWidth = 602
           inherited stTitle: TStaticText
-            Width = 28
+            Width = 36
             Caption = 'Term'
-            ExplicitWidth = 28
+            ExplicitWidth = 36
           end
         end
         inherited pnlSpace: TPanel
@@ -270,6 +269,29 @@ inherited frmPCELex: TfrmPCELex
             end
           end
         end
+      end
+      object clbFilter: TCaptionCheckListBox
+        Left = 400
+        Top = 42
+        Width = 185
+        Height = 183
+        OnClickCheck = clbFilterClickCheck
+        Anchors = [akLeft, akTop, akRight, akBottom]
+        TabOrder = 2
+        Visible = False
+        Caption = ''
+      end
+      object btnFilter: TButton
+        Left = 543
+        Top = 0
+        Width = 70
+        Height = 25
+        Anchors = [akTop, akRight]
+        Caption = 'Filter'
+        Enabled = False
+        TabOrder = 3
+        Visible = False
+        OnClick = btnFilterClick
       end
     end
   end
@@ -367,6 +389,12 @@ inherited frmPCELex: TfrmPCELex
         'Status = stsDefault')
       (
         'Component = tgfLex.pnlSpace'
+        'Status = stsDefault')
+      (
+        'Component = clbFilter'
+        'Status = stsDefault')
+      (
+        'Component = btnFilter'
         'Status = stsDefault'))
   end
 end

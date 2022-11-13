@@ -4,86 +4,37 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Default Settings For Available CPRS Reports'
-  ClientHeight = 205
-  ClientWidth = 384
+  ClientHeight = 178
+  ClientWidth = 314
   OnCreate = FormCreate
-  ExplicitWidth = 390
-  ExplicitHeight = 233
+  ExplicitHeight = 206
   PixelsPerInch = 96
-  TextHeight = 13
-  object Label2: TLabel [0]
-    Left = 8
-    Top = 118
-    Width = 23
-    Height = 13
-    Caption = 'Max:'
-  end
-  object Label3: TLabel [1]
-    Left = 8
-    Top = 48
-    Width = 51
-    Height = 13
-    Caption = 'Start Date:'
-  end
-  object Label4: TLabel [2]
-    Left = 8
-    Top = 81
-    Width = 51
-    Height = 13
-    Caption = 'Stop Date:'
-  end
-  object Bevel1: TBevel [3]
-    Left = 8
-    Top = 8
-    Width = 337
-    Height = 2
-  end
-  object Bevel2: TBevel [4]
+  TextHeight = 16
+  object Bevel2: TBevel [0]
     Left = 0
-    Top = 173
-    Width = 384
+    Top = 144
+    Width = 314
     Height = 2
     Align = alBottom
+    ExplicitTop = 173
+    ExplicitWidth = 384
   end
-  object lblDefaultText: TMemo [5]
-    Left = 232
-    Top = 40
-    Width = 137
-    Height = 121
-    TabStop = False
-    BorderStyle = bsNone
-    Color = clBtnFace
-    Lines.Strings = (
-      'Click dots in boxes to set '
-      'start and end dates. You can '
-      'also input values directly.')
-    ReadOnly = True
-    TabOrder = 4
-  end
-  object edtDefaultMax: TCaptionEdit [6]
-    Left = 96
-    Top = 112
-    Width = 121
-    Height = 21
-    TabOrder = 2
-    OnClick = edtDefaultMaxClick
-    OnExit = edtDefaultMaxExit
-    OnKeyPress = edtDefaultMaxKeyPress
-    Caption = 'Max'
-  end
-  object Panel1: TPanel [7]
+  object Panel1: TPanel [1]
     Left = 0
-    Top = 175
-    Width = 384
-    Height = 30
+    Top = 146
+    Width = 314
+    Height = 32
     Align = alBottom
-    TabOrder = 3
+    BevelOuter = bvNone
+    TabOrder = 1
     object btnOK: TButton
-      Left = 264
-      Top = 4
+      AlignWithMargins = True
+      Left = 198
+      Top = 3
       Width = 50
-      Height = 22
+      Height = 26
       Hint = 'Click to save the new setting.'
+      Align = alRight
       Caption = 'OK'
       ParentShowHint = False
       ShowHint = True
@@ -91,11 +42,13 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
       OnClick = btnOKClick
     end
     object btnReset: TButton
-      Left = 176
-      Top = 4
-      Width = 81
-      Height = 22
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 94
+      Height = 26
       Hint = 'Click to keep original setting'
+      Align = alLeft
       Caption = 'Use Defaults'
       ParentShowHint = False
       ShowHint = True
@@ -103,43 +56,145 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
       OnClick = btnResetClick
     end
     object btnCancel: TButton
-      Left = 320
-      Top = 4
+      AlignWithMargins = True
+      Left = 254
+      Top = 3
       Width = 57
-      Height = 22
+      Height = 26
+      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       TabOrder = 2
       OnClick = btnCancelClick
     end
   end
-  object odcDfStart: TORDateBox [8]
-    Left = 96
-    Top = 48
-    Width = 121
-    Height = 21
-    TabOrder = 0
-    OnClick = odcDfStartClick
-    OnExit = odcDfStartExit
-    OnKeyPress = odcDfStartKeyPress
-    DateOnly = True
-    RequireTime = False
-    Caption = ''
+  object Panel2: TPanel [2]
+    Left = 0
+    Top = 107
+    Width = 314
+    Height = 30
+    Align = alTop
+    BevelOuter = bvNone
+    Caption = 'Panel2'
+    ShowCaption = False
+    TabOrder = 3
+    object Label2: TLabel
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 63
+      Height = 24
+      Align = alLeft
+      Caption = 'Max:'
+    end
+    object edtDefaultMax: TCaptionEdit
+      AlignWithMargins = True
+      Left = 72
+      Top = 3
+      Width = 239
+      Height = 24
+      Align = alClient
+      TabOrder = 0
+      OnClick = edtDefaultMaxClick
+      OnExit = edtDefaultMaxExit
+      OnKeyPress = edtDefaultMaxKeyPress
+      Caption = 'Max'
+      ExplicitLeft = 37
+      ExplicitWidth = 274
+    end
   end
-  object odcDfStop: TORDateBox [9]
-    Left = 96
-    Top = 80
-    Width = 121
-    Height = 21
-    TabOrder = 1
-    OnClick = odcDfStopClick
-    OnExit = odcDfStopExit
-    OnKeyPress = odcDfStopKeyPress
-    DateOnly = True
-    RequireTime = False
-    Caption = ''
+  object lblDefaultText: TMemo [3]
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 308
+    Height = 41
+    TabStop = False
+    Align = alTop
+    Alignment = taCenter
+    BorderStyle = bsNone
+    Color = clBtnFace
+    Lines.Strings = (
+      'Click dots in boxes to set start and end dates. '
+      'You can also input values directly.')
+    ReadOnly = True
+    TabOrder = 0
+  end
+  object Panel3: TPanel [4]
+    Left = 0
+    Top = 77
+    Width = 314
+    Height = 30
+    Align = alTop
+    BevelOuter = bvNone
+    Caption = 'Panel3'
+    ShowCaption = False
+    TabOrder = 2
+    object Label4: TLabel
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 63
+      Height = 24
+      Align = alLeft
+      Caption = 'Stop Date:'
+      ExplicitHeight = 16
+    end
+    object odcDfStop: TORDateBox
+      AlignWithMargins = True
+      Left = 72
+      Top = 3
+      Width = 239
+      Height = 24
+      Align = alClient
+      TabOrder = 0
+      OnClick = odcDfStopClick
+      OnExit = odcDfStopExit
+      OnKeyPress = odcDfStopKeyPress
+      DateOnly = True
+      RequireTime = False
+      Caption = ''
+    end
+  end
+  object Panel4: TPanel [5]
+    Left = 0
+    Top = 47
+    Width = 314
+    Height = 30
+    Align = alTop
+    BevelOuter = bvNone
+    Caption = 'Panel4'
+    ShowCaption = False
+    TabOrder = 4
+    object Label3: TLabel
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 62
+      Height = 24
+      Align = alLeft
+      Caption = 'Start Date:'
+      ExplicitHeight = 16
+    end
+    object odcDfStart: TORDateBox
+      AlignWithMargins = True
+      Left = 71
+      Top = 3
+      Width = 240
+      Height = 24
+      Align = alClient
+      TabOrder = 0
+      OnClick = odcDfStartClick
+      OnExit = odcDfStartExit
+      OnKeyPress = odcDfStartKeyPress
+      DateOnly = True
+      RequireTime = False
+      Caption = ''
+    end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 8
+    Top = 8
     Data = (
       (
         'Component = lblDefaultText'
@@ -169,6 +224,15 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
         'Status = stsOK')
       (
         'Component = frmOptionsReportsDefault'
+        'Status = stsDefault')
+      (
+        'Component = Panel2'
+        'Status = stsDefault')
+      (
+        'Component = Panel3'
+        'Status = stsDefault')
+      (
+        'Component = Panel4'
         'Status = stsDefault'))
   end
 end

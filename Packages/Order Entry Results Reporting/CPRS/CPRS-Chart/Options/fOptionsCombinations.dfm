@@ -5,14 +5,12 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsSingle
   Caption = 'Source Combinations'
-  ClientHeight = 306
-  ClientWidth = 407
+  ClientHeight = 345
+  ClientWidth = 474
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
-  OnCreate = FormCreate
-  OnShow = FormShow
-  ExplicitWidth = 413
-  ExplicitHeight = 334
+  ExplicitWidth = 480
+  ExplicitHeight = 374
   PixelsPerInch = 96
   TextHeight = 13
   object lblAddby: TLabel [0]
@@ -23,18 +21,19 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     Caption = 'Ward:'
   end
   object lblCombinations: TLabel [1]
-    Left = 224
-    Top = 97
+    Left = 280
+    Top = 96
     Width = 66
     Height = 13
     Caption = 'Combinations:'
   end
   object lblInfo: TMemo [2]
     Left = 183
-    Top = 16
-    Width = 218
-    Height = 81
+    Top = 8
+    Width = 283
+    Height = 89
     TabStop = False
+    Anchors = [akLeft, akTop, akRight]
     BorderStyle = bsNone
     Color = clBtnFace
     Lines.Strings = (
@@ -49,7 +48,7 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
   object radAddByType: TRadioGroup [3]
     Left = 7
     Top = 8
-    Width = 153
+    Width = 170
     Height = 86
     HelpContext = 9121
     Caption = 'Select source by '
@@ -68,9 +67,10 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
   object lstAddBy: TORComboBox [4]
     Left = 7
     Top = 112
-    Width = 153
-    Height = 153
+    Width = 170
+    Height = 189
     HelpContext = 9122
+    Anchors = [akLeft, akTop, akBottom]
     Style = orcsSimple
     AutoSelect = True
     Caption = 'Ward'
@@ -95,15 +95,14 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     OnKeyUp = lstAddByKeyUp
     OnNeedData = lstAddByNeedData
     CharsNeedMatch = 1
-    UniqueAutoComplete = True
   end
   object btnAdd: TButton [5]
-    Left = 166
+    Left = 183
     Top = 145
-    Width = 50
+    Width = 75
     Height = 22
     HelpContext = 9124
-    Caption = 'Add'
+    Caption = '&Add'
     Enabled = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -115,12 +114,12 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     OnClick = btnAddClick
   end
   object btnRemove: TButton [6]
-    Left = 165
-    Top = 218
-    Width = 50
+    Left = 183
+    Top = 186
+    Width = 75
     Height = 22
     HelpContext = 9125
-    Caption = 'Remove'
+    Caption = '&Remove'
     Enabled = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -133,9 +132,9 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
   end
   object pnlBottom: TPanel [7]
     Left = 0
-    Top = 273
-    Width = 407
-    Height = 33
+    Top = 313
+    Width = 474
+    Height = 32
     HelpContext = 9120
     Align = alBottom
     BevelOuter = bvNone
@@ -144,16 +143,19 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     object bvlBottom: TBevel
       Left = 0
       Top = 0
-      Width = 407
+      Width = 474
       Height = 2
       Align = alTop
+      ExplicitWidth = 407
     end
     object btnOK: TButton
-      Left = 245
-      Top = 8
+      AlignWithMargins = True
+      Left = 315
+      Top = 5
       Width = 75
-      Height = 22
+      Height = 24
       HelpContext = 9996
+      Align = alRight
       Caption = 'OK'
       Default = True
       ModalResult = 1
@@ -161,11 +163,13 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
       OnClick = btnOKClick
     end
     object btnCancel: TButton
-      Left = 325
-      Top = 8
+      AlignWithMargins = True
+      Left = 396
+      Top = 5
       Width = 75
-      Height = 22
+      Height = 24
       HelpContext = 9997
+      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
@@ -173,11 +177,12 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     end
   end
   object lvwCombinations: TCaptionListView [8]
-    Left = 224
-    Top = 112
-    Width = 177
-    Height = 150
+    Left = 264
+    Top = 118
+    Width = 202
+    Height = 183
     HelpContext = 9123
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
       item
         Caption = 'Entry'
@@ -201,6 +206,8 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     Caption = 'Combinations'
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 16
+    Top = 288
     Data = (
       (
         'Component = lblInfo'

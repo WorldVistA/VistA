@@ -25,7 +25,10 @@ type
     Description: String;
     Details: String;
     Reason: String;
-    Expires: TDateTime; //String;
+
+    ExpiresMin,
+    Expires: TDateTime;
+
     FlagComments: TStrings;
     Recipients: TStrings;
     RecipientsNew: TStrings;
@@ -49,7 +52,7 @@ type
     function FlagInfoRemove:String;
     function FlagInfoUpdate:String;
 
-    function IsValid:Boolean;
+    function IsValid(var sError:String):Boolean;
   end;
 
 const
@@ -77,7 +80,7 @@ implementation
 
 uses
   System.RegularExpressions,
-  System.SysUtils, Dialogs, rCore;
+  System.SysUtils, Dialogs, rCore, ORDtTm;
 
 var
   InfoCollection: TCollection;
@@ -92,9 +95,7 @@ begin
   Result := nil;
   if not assigned(aList) then
   begin
-{$IFDEF DEBUG_AA}
-    ShowMessage('Blank List is not a good assignment');
-{$ENDIF}
+//    ShowMessage('Blank List is not a good assignment');
     exit;
   end;
   Result := TStringList.Create;
@@ -113,10 +114,10 @@ end;
 
 function getOrderFlagExpireDefault:TDateTime;
 var
-  s: String;
+  s: string;
 begin
   s := GetUserParam('OR FLAG ORDER EXPIRE DEFAULT');
-  Result := StrToFloatDef(s,24.0) / 24.0;
+  Result := StrToFloatDef(s, 24.0) / 24.0;
   Result := Now + Result;
 end;
 
@@ -158,7 +159,7 @@ procedure TOrderFlag.SetByOrder(anOrder: TOrder);
   begin
     if aDT = '' then
       Result := aBlank
-    else if aDT = 'NOW' then
+    else if IsNow(aDT) then
       Result := FormatFMDateTime('MMM-dd-YYYY', FMNow)
     else if isFMDateTime(aDT) then
       try
@@ -176,10 +177,10 @@ procedure TOrderFlag.SetByOrder(anOrder: TOrder);
 
     procedure FormatComments;
     var
-      sComments:TStringList;
+      sComments: TStringList;
       s: String;
       i: integer;
-      bCommentHeader:Boolean;
+      bCommentHeader: Boolean;
     const
       COMMENT_BEGIN = '<COMMENT>';
       COMMENT_END = '</COMMENT>';
@@ -299,20 +300,6 @@ procedure TOrderFlag.SetByOrder(anOrder: TOrder);
       SL.Free;
   end;
 
-  //  function getFlagDescription:String;
-  //  var
-  //    SL: TStringList;
-  //  begin
-  //    Result := '';
-  //    SL := TStringList.Create;
-  //    try
-  //      LoadFlagReason(SL, Order.ID);    // uses ORWDXA FLAGTXT rpc
-  //      Result := SL.Text;
-  //    finally
-  //    end;
-  //    SL.Free;
-  //  end;
-
   function getStartStopDates:String;
   var
     s: String;
@@ -339,27 +326,30 @@ begin
   Order := anOrder;
   if assigned(Order) then
   begin
-
     AFlagInfo := getFlagInfo;
     // The below code extracts Recipients and Comments from AFlagInfo
-
-    // Copy everything up to the first <COMMENT>
-    AOrderFlagRecipients := TRegEx.Match(AFlagInfo, '(?si)(.*?)(<COMMENT>)').Value;
-    AOrderFlagRecipients := TRegEx.Match(AOrderFlagRecipients, '(?si)(.*?)(?=<COMMENT>)').Value;
-
+    AOrderFlagRecipients := Copy(AFlagInfo, 1, Pos('<COMMENT>', AFlagInfo) - 1);
     AFlagComments := '';
-    if AOrderFlagRecipients = '' then begin // The <COMMENT> tag wasn't found
-      AOrderFlagRecipients := Trim(AFlagInfo);
-    end else begin
-      AMatch := TRegEx.Match(AFlagInfo, '(?si)<COMMENT>(.*?)</COMMENT>');
-      while AMatch.Value <> '' do begin
-        S := TRegEx.Match(AMatch.Value, '(?si)(?<=<COMMENT>).*(?=</COMMENT>)').Value;
-        AFlagCommentsTime := Piece(Piece(S, U, 1), ';', 2); // Gets the time
-        S := Piece(S, U, 2); // Reduces FlagComments to the second piece
-        S := TRegEx.Match(S, '(?si)(?<=;).*').Value; // Get everything after the semicolon
-        AFlagComments := Trim(Format('%s'#13#10#13#10'%s - %s', [AFlagComments, AFlagCommentsTime, S]));
-        AMatch := AMatch.NextMatch;
-      end;
+    // The following line just grabs everything between and including the
+    // <comment> and </comment> tags and stores it in a Match object.
+    // (?..): directive
+    //   s: Include "special characters" in the definition of "any character" when the . is used, for instance in (.*).
+    //   i: Ignore case in all matching.
+    // (..): a set
+    //   .: any character
+    //   *: previous character 0 or more times, greedy
+    //   ?: makes the .* non-greedy (match as little as possible)
+    AMatch := TRegEx.Match(AFlagInfo, '(?si)<COMMENT>(.*?)</COMMENT>');
+    while AMatch.Value <> '' do begin
+      // (?<=..): Lookbehind assertion, match the set after this only if preceded by..
+      // (?=..): Lookahead assertion, match the set before this only if followed by..
+      // The following line just grabs everything between the <comment> and </comment> tags
+      S := TRegEx.Match(AMatch.Value, '(?si)(?<=<COMMENT>).*(?=</COMMENT>)').Value;
+      AFlagCommentsTime := Piece(Piece(S, U, 1), ';', 2); // Gets the time
+      S := Piece(S, U, 2); // Reduces FlagComments to the second piece
+      S := TRegEx.Match(S, '(?si)(?<=;).*').Value; // Get everything after the semicolon
+      AFlagComments := Trim(Format('%s'#13#10#13#10'%s - %s', [AFlagComments, AFlagCommentsTime, S]));
+      AMatch := AMatch.NextMatch;
     end;
     S := AOrderFlagRecipients;
     AOrderFlagRecipients := '';
@@ -383,9 +373,7 @@ begin
       'Status:' + Char(VK_TAB) + getFlagStatusText + CRLF +
       'Group:' + Char(VK_TAB) + NameOfDGroup(Order.DGroup) + CRLF +
       AOrderFlagRecipients + CRLF +
-      AFlagComments
-      ;
-
+      AFlagComments;
     Description := Order.Text;
 
     if Order.Flagged then
@@ -413,12 +401,14 @@ begin
 end;
 
 function TOrderFlag.getOFStatus: Integer;
+var
+  Err:String;
 begin
-  isValid;
+  isValid(Err);
   Result := fOFStatus;
 end;
 
-function TOrderFlag.IsValid:Boolean;
+function TOrderFlag.IsValid(var sError:String):Boolean;
 var
   b: Boolean;
   s: String;
@@ -434,13 +424,9 @@ var
     end;
   end;
 
-  function isExpiredDateValid(aDate:TDateTime{String}): Boolean;
-//  var
-//    dt: TDateTime;
+  function isExpiredDateValid: Boolean;
   begin
-//    dt := StrToFloatDef(aDate,-1.0);
-//    Result := dt > Now;
-    Result := aDate > Now;
+    Result := Expires >  FMDateTimeToDateTime(FMNow);
   end;
 
 begin
@@ -452,12 +438,14 @@ begin
     b := b and (Reason <> '');
     AppendString(s, Reason = '', 'Reason is not defined');
   end;
-  if bRequiredExpires then
+  if bRequiredExpires or (Expires > 0.0) then
   begin
-    b := b and  isExpiredDateValid(Expires);  //20180222
-    AppendString(s, isExpiredDateValid(Expires), 'Date is not valid');
-//    AppendString(s, Expires = '', 'Date is not defined');
+    b := b and isExpiredDateValid;
+    AppendString(s, not isExpiredDateValid, 'Date "' +
+      FormatDateTime('MMM-dd-YYYY hh:mm', Expires) +
+      '" is not valid or in the past');
   end;
+
   if bRequiredRecipients then
   begin
     b := b and (Recipients.Count > 0);
@@ -481,33 +469,43 @@ begin
     fOFStatusInfo := trim(s);
   end;
   Result := b;
+
+  sError := s;
 end;
 
 function TOrderFlag.FlagInfoSave: String;
 // saving new flag
 var
   SL: TStrings;
-  sDate:String;
+  sDate: String;
 begin
-  if Expires > 0.0 then sDate := FloatToStr(DateTimeToFMDateTime(Expires))
-  else sDate := '';
-  SL := FlagOrder(Order, Reason, sDate, Recipients);
-  try
-    if pos('ERROR',UpperCase(SL.Text)) > 0 then
-    begin
-      Result := SL.Text;
-      if Order.Flagged then
-        OFSetStatus := ofssSet
-      else
-        OFSetStatus := ofssNotSet;
-    end else begin
-      setOrderFromResults(Order,SL);
-      OFSetStatus := ofssSet;
-      OFStatusInfo := 'Flag SET: OK (' + Description + ')';
-      Result := ssSuccess + U + OFStatusInfo;
+  if not IsValid(Result) then
+  begin
+    OFSetStatus := ofssNotSet;
+    OFStatusInfo := Result;
+    Result := ssError + U + OFStatusInfo;
+  end else begin
+    if Expires > 0.0 then sDate := FloatToStr(DateTimeToFMDateTime(Expires))
+    else sDate := '';
+    SL := TStringList.Create;
+    try
+      getFlagOrderResults(Order, Reason, sDate, Recipients, SL);
+      if pos('ERROR', UpperCase(SL.Text)) > 0 then
+      begin
+        Result := SL.Text;
+        if Order.Flagged then
+          OFSetStatus := ofssSet
+        else
+          OFSetStatus := ofssNotSet;
+      end else begin
+        setOrderFromResults(Order, SL);
+        OFSetStatus := ofssSet;
+        OFStatusInfo := 'Flag SET: OK (' + Description + ')';
+        Result := ssSuccess + U + OFStatusInfo;
+      end;
+    finally
+      SL.Free;
     end;
-  finally
-    FreeAndNil(SL);
   end;
 
   OFStatus := stOFProcessed;
@@ -523,11 +521,11 @@ begin
   S := FlagComments.Text;
   if Copy(S, Length(S)-1, 2) = CRLF then
     S := Copy(S, 1, Length(S) - 2); // Stripping off the CRLF if it is there (VISTAOR-23685)
-  SL := unFlagOrder(Order, S, sError); // This creates a stringlist!
+  SL := unFlagOrder(Order, S, sError);
   try
     if sError = '' then
     begin
-      setOrderFromResults(Order, SL);
+      setOrderFromResults(Order,SL);
       OFSetStatus := ofssNotSet;
       OFStatusInfo := 'Flag REMOVED: OK (' + Description + ')';
       Result := ssSuccess + U + OFStatusInfo;
@@ -591,7 +589,9 @@ var
   end;
 
 begin
-  slResult := setFlagComments(Order.ID,FlagComments,RecipientsNew);
+  slResult := TStringList.Create;
+  setFlagComments(Order.ID,FlagComments,RecipientsNew,slResult);
+
   if Success(slResult) then
     begin
       for s in RecipientsNew do

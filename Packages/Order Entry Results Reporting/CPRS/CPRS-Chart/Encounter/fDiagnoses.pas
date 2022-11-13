@@ -36,6 +36,8 @@ type
     procedure UpdateNewItemStr(var x: string); override;
     procedure UpdateControls; override;
   public
+    procedure addToList(str: string);
+    procedure deleteFromList(str: string);
   end;
 
 const
@@ -135,7 +137,7 @@ begin
 
     if not Primary and (Items.Count > 0) then
     begin
-      GridIndex := Items.Count - 1;//0; zzzzzzbellc CQ 15836
+      GridIndex := Items.Count - 1;//0; vhaispbellc CQ 15836
       TPCEDiag(Objects[Items.Count - 1]).Primary := True;
       GridChanged;
     end;
@@ -158,6 +160,22 @@ begin
   GridChanged;
 end;
 
+procedure TfrmDiagnoses.deleteFromList(str: string);
+var
+j: integer;
+APCEItem: TPCEItem;
+begin
+  lstCaptionList.ClearSelection;
+  for j := lstCaptionList.Items.Count - 1 downto 0 do
+    begin
+    APCEItem := TPCEItem(lstCaptionList.Objects[j]);
+      if APCEItem.Code = Piece(str, u, 2) then
+          lstCaptionList.Items.Item[j].selected := true;
+    end;
+  btnRemoveClick(btnRemove);
+  EnsurePrimaryDiag;
+end;
+
 procedure TfrmDiagnoses.ckbDiagProbClicked(Sender: TObject);
 var
   i: integer;
@@ -169,12 +187,14 @@ begin
     begin
       if(lstCaptionList.Items[i].Selected) then
       begin
+        if not (lstCaptionList.Objects[i] is TPCEDiag) then
+          continue;
         TPCEDiag(lstCaptionList.Objects[i]).AddProb := (ckbDiagProb.Checked) and
                                                      (not isProblem(TPCEDiag(lstCaptionList.Objects[i]))) and
                                                      (TPCEDiag(lstCaptionList.Objects[i]).Category <> PL_ITEMS);
         //TODO: Add check for I10Active
         if TPCEDiag(lstCaptionList.Objects[i]).AddProb and
-          (Piece(Encounter.GetICDVersion, U, 1) = '10D') and
+          (Piece(uEncPCEData.GetICDVersion, U, 1) = '10D') and
           (not ((pos('SCT', TPCEDiag(lstCaptionList.Objects[i]).Narrative) > 0) or
           (pos('SNOMED', TPCEDiag(lstCaptionList.Objects[i]).Narrative) > 0))) then
             GetSCTforICD(TPCEDiag(lstCaptionList.Objects[i]));
@@ -200,7 +220,7 @@ var
   x, Code, SCode, Text, Caption: string;
   APCEItem: TPCEItem;
   j, SrchCode: integer;
-  Match: boolean;
+//  Match: boolean;
 begin
   ClearGrid;
   SrchCode := (Sender as TButton).Tag;
@@ -209,20 +229,22 @@ begin
   if Code <> '' then
   begin
     SCode := Piece(Code, U, 1);
-    Match := False;
+//    Match := False;
     for j := lstCaptionList.Items.Count - 1 downto 0 do
     begin
+      if not (lstCaptionList.Objects[j] is TPCEItem) then
+        continue;
       APCEItem := TPCEItem(lstCaptionList.Objects[j]);
       if APCEItem.Code = SCode then
       begin
-//        Match := True;
+//        Match := True;  // -- value is never used
         Text := '"' + Piece(Code, U, 2) + '" is already included in the list of selected diagnoses for this encounter. Please select a different diagnosis...';
         Caption := 'Duplicate Diagnosis';
         InfoBox(Text, Caption, MB_ICONWARNING or MB_OK);
         Exit;
       end
     end;
-    if not Match then
+//    if not Match then
     begin
       x := FPCECode + U + Piece(Code, U, 1) + U + U + Piece(Code, U, 2);
       if FPCEItemClass = TPCEProc then
@@ -244,12 +266,16 @@ begin
 end;
 
 procedure TfrmDiagnoses.UpdateNewItemStr(var x: string);
+var
+  Primary: string;
+
 begin
   inherited;
   if lstCaptionList.Items.Count = 0 then
-    x := x + U + '1'
+    Primary :='1'
   else
-    x := x + U + '0';
+    Primary :='0';
+  SetPiece(x, U, pnumDiagPrimary, Primary);
 end;
 
 procedure TfrmDiagnoses.UpdateProblem(AplIEN: String; AICDCode: String; ASCTCode: String = '');
@@ -258,11 +284,12 @@ var
   ProbRec: TProbRec;
   CodeSysStr: String;
   DateOfInt: TFMDateTime;
+
 begin
   // Update problem list entry with new ICD (& SCT) code(s) (& narrative).
   AList := TStringList.create;
   try
-    EditLoad(AplIEN, AList);
+    EditLoad(aList,AplIEN);
     ProbRec := TProbRec.create(AList);
     ProbRec.PIFN := AplIEN;
 
@@ -271,9 +298,9 @@ begin
       ProbRec.Diagnosis.DHCPtoKeyVal(Pieces(AICDCode, U, 1, 2));
       CodeSysStr := Piece(AICDCode, U, 4);
       if (Pos('10', CodeSysStr) > 0) then
-        CodeSysStr := '10D^ICD-10-CM'
+        CodeSysStr := ICD_10_CM
       else
-        CodeSysStr := 'ICD^ICD-9-CM';
+        CodeSysStr := ICD_9_CM;
       ProbRec.CodeSystem.DHCPtoKeyVal(CodeSysStr);
     end;
 
@@ -284,13 +311,17 @@ begin
       ProbRec.Narrative.DHCPtoKeyVal(U + Piece(ASCTCode, U, 3));
       ProbRec.SCTDesignation.DHCPtoKeyVal(Piece(ASCTCode, U, 4) + U + Piece(ASCTCode, U, 4));
     end;
-
-    ProbRec.RespProvider.DHCPtoKeyVal(IntToStr(Encounter.Provider) + u + Encounter.ProviderName);
-    if Encounter.DateTime = 0 then DateOfInt := FMNow
-    else DateOfInt := Encounter.DateTime;
+    ProbRec.RespProvider.DHCPtoKeyVal(IntToStr(uEncPCEData.Providers.PCEProviderForce) + U +
+      uEncPCEData.Providers.PCEProviderNameForce);
+    DateOfInt := uEncPCEData.VisitDateTime;
+    if DateOfInt = 0 then
+    begin
+      if Encounter.DateTime = 0 then DateOfInt := FMNow
+      else DateOfInt := Encounter.DateTime;
+    end;
     ProbRec.CodeDateStr := FormatFMDateTime('mm/dd/yy', DateOfInt);
     AList.Clear;
-    EditSave(ProbRec.PIFN, User.DUZ, User.StationNumber, '1', ProbRec.FilerObject, '', AList);
+    EditSave(aList,ProbRec.PIFN, User.DUZ, User.StationNumber, '1', ProbRec.FilerObject, '');
   finally
     AList.clear;
   end;
@@ -401,6 +432,8 @@ begin
         begin
           if (lstCaptionList.Items[k].Selected) then
           begin
+            if not (lstCaptionList.Objects[k] is TPCEDiag) then
+              continue;
             if (TPCEDiag(lstCaptionList.Objects[k]).Category = PL_ITEMS) or isProblem(TPCEDiag(lstCaptionList.Objects[k])) then
               PLItemCount := PLItemCount + 1;
           end;
@@ -412,6 +445,8 @@ begin
         j := 0;
         for i := 0 to lstCaptionList.Items.Count-1 do
         begin
+          if not (lstCaptionList.Objects[i] is TPCEDiag) then
+            continue;
           if(lstCaptionList.Items[i].Selected) and (TPCEDiag(lstCaptionList.Objects[i]).AddProb) then
             inc(j);
         end;
@@ -481,7 +516,7 @@ begin
         lbxSection.Checked[Index] := True;
         if plIEN <> '' then
         begin
-          if not (Pos('SCT', Piece(ICDCode, U, 2)) > 0) and (Piece(Encounter.GetICDVersion, U, 1) = '10D') then
+          if not (Pos('SCT', Piece(ICDCode, U, 2)) > 0) and (Piece(uEncPCEData.GetICDVersion, U, 1) = '10D') then
           begin
             //ask for SNOMED CT
             I10Description := Piece(ICDCode, U, 2) + ' (' + Piece(ICDCode, U, 4) + #32 + Piece(ICDCode, U, 1) + ')';
@@ -570,7 +605,7 @@ begin
 
       LexiconLookup(SCTCode, LX_SCT, 0, True, InputStr, msg);
 
-      if (Piece(SCTCode, U, 4) = '') then
+      if (Piece(SCTCode, U, 3) = '') then
       begin
         lbxSection.Checked[Index] := False;
         exit;
@@ -612,7 +647,7 @@ begin
       end;
     end
     else if (Piece(lbSection.Items[lbSection.ItemIndex], U, 2) = PL_ITEMS) and
-      (Piece(Encounter.GetICDVersion, U, 1) = '10D') and
+      (Piece(uEncPCEData.GetICDVersion, U, 1) = '10D') and
       not (Pos('SCT', Piece(lbxSection.Items[Index], U, 2)) > 0) then
     begin
       // Problem Lacks SCT Code
@@ -649,7 +684,7 @@ begin
         exit;
       end;
     end
-    else if (Piece(Encounter.GetICDVersion, U, 1) = 'ICD') and
+    else if (Piece(uEncPCEData.GetICDVersion, U, 1) = 'ICD') and
       ((Pos('ICD-10', Piece(lbxSection.Items[Index], U, 2)) > 0) or (Piece(lbxSection.Items[Index], U, 6)='10D')) then
     begin
       // Attempting to add an ICD10 diagnosis code to an ICD9 encounter
@@ -732,6 +767,33 @@ begin
   DrawText((Control as TListBox).Canvas.Handle, PChar(Code), Length(Code), ARect, Format);
 end;
 
+procedure TfrmDiagnoses.addToList(str: string);
+var
+j: integer;
+APCEItem: TPCEItem;
+found: boolean;
+begin
+  found := false;
+  for j := lstCaptionList.Items.Count - 1 downto 0 do
+    begin
+      APCEItem := TPCEItem(lstCaptionList.Objects[j]);
+      if APCEItem.Code = Piece(str, u, 2) then
+        begin
+//          APCEItem.SetFromString(str);
+          found := true;
+          break;
+        end
+    end;
+  UpdateNewItemStr(str); // keep after loop - not a bug
+  if not found then
+    begin
+      APCEItem := FPCEItemClass.Create;
+      APCEItem.SetFromString(str);
+      lstCaptionList.Add(APCEItem.ItemStr, APCEItem);
+    end;
+  updateControls;
+end;
+
 procedure TfrmDiagnoses.btnOKClick(Sender: TObject);
 begin
   inherited;
@@ -776,7 +838,7 @@ begin
   if Pos('ICD-10-CM', ADiagnosis.Narrative) > 0 then
     ICDDescription := ADiagnosis.Narrative
   else
-    ICDDescription := ADiagnosis.Narrative + ' (' + Piece(Encounter.GetICDVersion, U, 2) + #32 + ADiagnosis.Code + ')';
+    ICDDescription := ADiagnosis.Narrative + ' (' + Piece(uEncPCEData.GetICDVersion, U, 2) + #32 + ADiagnosis.Code + ')';
   msg := TX_ICD_LACKS_SCT_CODE + CRLF + CRLF + ICDDescription;
   LexiconLookup(Code, LX_SCT, 0, False, '', msg);
   if (Code = '') then

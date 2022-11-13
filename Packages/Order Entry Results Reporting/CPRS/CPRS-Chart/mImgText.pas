@@ -8,17 +8,35 @@ uses
 
 type
   TfraImgText = class(TFrame)
+    gp: TGridPanel;
     img: TImage;
-    lblText: TLabel;
+    lblText: TStaticText;
+    procedure FrameEnter(Sender: TObject);
+    procedure FrameExit(Sender: TObject);
   end;
 
 implementation
 
-//uses VA508AccessibilityRouter;
+uses VAUtils, VA508AccessibilityRouter;
 
 {$R *.DFM}
 
 { TfraImgText }
+
+procedure TfraImgText.FrameEnter(Sender: TObject);
+begin
+  gp.BorderStyle := bsSingle;
+//  if parent is TGridPanel then
+//    TGridPanel(parent).Hint := lblText.Caption;
+
+  if ScreenReaderActive then
+    GetScreenReader.Speak(lblText.Caption);
+end;
+
+procedure TfraImgText.FrameExit(Sender: TObject);
+begin
+  gp.BorderStyle := bsNone;
+end;
 
 initialization
   //SpecifyFormIsNotADialog(TfraImgText);

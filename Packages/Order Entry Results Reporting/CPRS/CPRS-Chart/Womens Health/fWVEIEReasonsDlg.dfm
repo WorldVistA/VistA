@@ -4,25 +4,25 @@ object frmWVEIEReasonsDlg: TfrmWVEIEReasonsDlg
   BorderStyle = bsDialog
   Caption = 'Women'#39's Health - Entered In Error Reason'
   ClientHeight = 110
-  ClientWidth = 375
+  ClientWidth = 443
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
-  Font.Name = 'Tahoma'
+  Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   DesignSize = (
-    375
+    443
     110)
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object pnlOther: TPanel
     Left = 10
     Top = 20
-    Width = 365
+    Width = 433
     Height = 25
     Anchors = [akLeft, akTop, akRight]
     BevelOuter = bvNone
@@ -32,12 +32,12 @@ object frmWVEIEReasonsDlg: TfrmWVEIEReasonsDlg
     ShowCaption = False
     TabOrder = 0
     DesignSize = (
-      365
+      433
       25)
     object chkbxOther: TCheckBox
       Left = 0
-      Top = 0
-      Width = 97
+      Top = 2
+      Width = 58
       Height = 17
       Caption = 'Other'
       TabOrder = 0
@@ -46,18 +46,18 @@ object frmWVEIEReasonsDlg: TfrmWVEIEReasonsDlg
     object stxtReason: TStaticText
       Left = 64
       Top = 2
-      Width = 131
-      Height = 17
+      Width = 158
+      Height = 20
       Alignment = taRightJustify
       Caption = 'Enter Reason (3-50 chars)'
       Enabled = False
       TabOrder = 1
     end
     object edtOtherReason: TEdit
-      Left = 213
+      Left = 228
       Top = 0
-      Width = 142
-      Height = 21
+      Width = 195
+      Height = 24
       Anchors = [akLeft, akTop, akRight]
       Enabled = False
       MaxLength = 50
@@ -66,7 +66,7 @@ object frmWVEIEReasonsDlg: TfrmWVEIEReasonsDlg
     end
   end
   object btnCancel: TButton
-    Left = 290
+    Left = 358
     Top = 77
     Width = 75
     Height = 25
@@ -78,7 +78,7 @@ object frmWVEIEReasonsDlg: TfrmWVEIEReasonsDlg
     TabOrder = 1
   end
   object btnOK: TButton
-    Left = 208
+    Left = 276
     Top = 77
     Width = 75
     Height = 25

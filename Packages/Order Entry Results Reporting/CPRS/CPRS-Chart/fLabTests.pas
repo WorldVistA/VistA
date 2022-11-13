@@ -79,8 +79,19 @@ end;
 
 procedure TfrmLabTests.cboTestsNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
+// begin
+// cboTests.ForDataUse(AllTests(StartFrom, Direction));
+var
+  sl: TSTrings;
 begin
-  cboTests.ForDataUse(AllTests(StartFrom, Direction));
+  sl := TStringList.Create;
+  try
+    setAllTests(sl, StartFrom, Direction);
+    cboTests.ForDataUse(sl);
+
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmLabTests.cmdOKClick(Sender: TObject);

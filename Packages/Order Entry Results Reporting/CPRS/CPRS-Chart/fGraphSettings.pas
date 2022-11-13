@@ -9,16 +9,12 @@ uses
 
 type
   TfrmGraphSettings = class(TfrmBase508Form)
-    brnClear: TButton;
-    btnAll: TButton;
     btnClose: TButton;
     btnPersonal: TButton;
     btnPersonalSave: TButton;
     btnPublic: TButton;
     btnPublicSave: TButton;
-    bvlBase: TBevel;
     bvlDefaults: TBevel;
-    bvlMid: TBevel;
     cboConversions: TORComboBox;
     cboDateRangeInpatient: TORComboBox;
     cboDateRangeOutpatient: TORComboBox;
@@ -30,9 +26,7 @@ type
     lblMaxGraphs: TLabel;
     lblMaxGraphsRef: TLabel;
     lblMaxSelect: TLabel;
-    lblMaxSelectRef: TLabel;
     lblMinGraphHeight: TLabel;
-    lblMinGraphHeightRef: TLabel;
     lblOptions: TLabel;
     lblOptionsInfo: TLabel;
     lblOutpatient: TLabel;
@@ -44,11 +38,27 @@ type
     lstSources: TCheckListBox;
     lstSourcesCopy: TListBox;
     spnMaxGraphs: TUpDown;
-    spnMaxSelect: TUpDown;
-    spnMinGraphHeight: TUpDown;
     txtMaxGraphs: TEdit;
-    txtMaxSelect: TEdit;
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    btnAll: TButton;
+    brnClear: TButton;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Panel9: TPanel;
     txtMinGraphHeight: TEdit;
+    spnMinGraphHeight: TUpDown;
+    lblMinGraphHeightRef: TLabel;
+    Panel10: TPanel;
+    txtMaxSelect: TEdit;
+    spnMaxSelect: TUpDown;
+    lblMaxSelectRef: TLabel;
+    Panel11: TPanel;
+    Panel12: TPanel;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -148,8 +158,9 @@ begin
   AllTypes.Free;
 end;
 
-procedure DialogGraphSettings(fontsize: integer;  var okbutton: boolean;
-  aGraphSetting: TGraphSetting; DisplaySource: TStrings; var conv: integer; var aSettings: string);
+procedure DialogGraphSettings(fontsize: integer; var okbutton: boolean;
+  aGraphSetting: TGraphSetting; DisplaySource: TStrings; var conv: integer;
+  var aSettings: string);
 var
   t1, t2: string;
   aList: TStrings;
@@ -163,13 +174,16 @@ begin
   try
     with frmGraphSettings do
     begin
-      if displaysource.Count > 99999 then exit;
-      FastAssign(rpcGetGraphDateRange('OR_GRAPHS'), cboDateRangeOutpatient.Items);
+      if DisplaySource.Count > 99999 then
+        exit;
+      rpcGetGraphDateRange(cboDateRangeOutpatient.Items, 'OR_GRAPHS');
       if cboDateRangeOutpatient.Items.Count > 0 then
         cboDateRangeOutpatient.Items.Delete(0);
       FastAssign(cboDateRangeOutpatient.Items, cboDateRangeInpatient.Items);
-      FastAssign(rpcGetGraphSettings, aList);
-      t1 := GetPersonalSetting; t2 := GetPublicSetting;   // t1 are personal, t2 public settings
+
+      rpcGetGraphSettings(aList);
+      t1 := GetPersonalSetting;
+      t2 := GetPublicSetting; // t1 are personal, t2 public settings
       FPersonalSettings := t1;
       FPublicSettings := t2;
       GetTypeList(aList);
@@ -178,17 +192,20 @@ begin
       with spnMaxGraphs do
       begin
         lblMaxGraphsRef.Caption := inttostr(Min) + ' to ' + inttostr(Max);
-        amgrMain.AccessData[4].AccessText := 'Max Graphs in Display:' + lblMaxGraphsRef.Caption;
+        amgrMain.AccessData[4].AccessText := 'Max Graphs in Display:' +
+          lblMaxGraphsRef.Caption;
       end;
       with spnMinGraphHeight do
       begin
         lblMinGraphHeightRef.Caption := inttostr(Min) + ' to ' + inttostr(Max);
-        amgrMain.AccessData[3].AccessText := 'Minimum Graph Height:' + lblMinGraphHeightRef.Caption;
+        amgrMain.AccessData[3].AccessText := 'Minimum Graph Height:' +
+          lblMinGraphHeightRef.Caption;
       end;
       with spnMaxSelect do
       begin
         lblMaxSelectRef.Caption := inttostr(Min) + ' to ' + inttostr(Max);
-        amgrMain.AccessData[13].AccessText := 'Max Items to Select:' + lblMaxSelectRef.Caption;
+        amgrMain.AccessData[13].AccessText := 'Max Items to Select:' +
+          lblMaxSelectRef.Caption;
       end;
       Conversion(conv);
       ResizeAnchoredFormToFont(frmGraphSettings);

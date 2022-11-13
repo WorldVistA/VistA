@@ -1,4 +1,9 @@
 unit fDCSummProps;
+{------------------------------------------------------------------------------
+Update History
+
+    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
+-------------------------------------------------------------------------------}
 
 interface
 
@@ -10,7 +15,6 @@ uses
   Vcl.ComCtrls, Math;
 
 type
-
   TfrmDCSummProperties = class(TfrmBase508Form)
     bvlConsult: TBevel;
     lblNewTitle: TLabel;
@@ -32,6 +36,12 @@ type
     lblDCSumm1: TStaticText;
     lblDCSumm2: TStaticText;
     lstAdmissions: TCaptionListView;
+    pnlSummaryTitle: TPanel;
+    pnlMain: TPanel;
+    pnlButtons: TPanel;
+    pnlCanvas: TPanel;
+    Bevel1: TBevel;
+    Panel1: TPanel;
     procedure FormShow(Sender: TObject);
     procedure cboNewTitleNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -39,13 +49,9 @@ type
       Direction, InsertAt: Integer);
     procedure cboAttendingNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
-    procedure cmdOKClick(Sender: TObject);
-    procedure cmdCancelClick(Sender: TObject);
     procedure cboNewTitleExit(Sender: TObject);
     procedure cboNewTitleMouseClick(Sender: TObject);
     procedure cboNewTitleEnter(Sender: TObject);
-    procedure cboAttendingExit(Sender: TObject);
-    procedure cboAuthorExit(Sender: TObject);
     procedure cboAuthorMouseClick(Sender: TObject);
     procedure cboAuthorEnter(Sender: TObject);
     procedure cboNewTitleDropDownClose(Sender: TObject);
@@ -54,10 +60,13 @@ type
     procedure cboNewTitleChange(Sender: TObject);
     procedure lstAdmissionsSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
+    procedure cmdCancelMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
-    FCosignIEN: Int64; // store cosigner that was passed in
-    FCosignName: string; // store cosigner that was passed in
+//    FCosignIEN: Int64; // store cosigner that was passed in
+//    FCosignName: string; // store cosigner that was passed in
     FDocType: Integer; // store document type that was passed in
     FAddend: Integer; // store IEN of note being addended (if make addendum)
     FLastAuthor: Int64; // set by mouseclick to avoid redundant call on exit
@@ -73,10 +82,17 @@ type
     // holds cosigner from previous note (for defaulting)
     FShowAdmissions: Boolean;
     FIDNoteTitlesOnly: Boolean;
+    FInlstAdmissionsSelectItem: boolean;
+    FLastItemText: string;
     procedure SetCosignerRequired;
     procedure ShowAdmissionList;
     procedure UMDelayEvent(var Message: TMessage); message UM_DELAYEVENT;
-    function isValidInput: Boolean;
+    function isValidInput:Boolean;
+//    function isValidAuthor(Sender:TObject):Boolean;
+//    function isValidPhysician(Sender:TObject):Boolean;
+    procedure AdjustToMainFontSize;
+  public
+    { Public declarations }
   end;
 
 function ExecuteDCSummProperties(var ASumm: TEditDCSummRec;
@@ -90,7 +106,7 @@ implementation
 {$R *.DFM}
 
 uses
-  VAUtils, ORFn, uCore, rCore, uPCE, rPCE, rMisc, uSimilarNames;
+  VAUtils, ORFn, uCore, rCore, uPCE, rPCE, rMisc, uORLists, uSimilarNames;
 
 { Initial values in ASumm
 
@@ -106,9 +122,9 @@ uses
 const
   TC_REQ_FIELDS = 'Required Information';
   TX_REQ_TITLE = CRLF + 'A title must be selected.';
-  TX_REQ_AUTHOR = CRLF + 'The author of the note must be identified.';
+  TX_REQ_AUTHOR = CRLF + 'The Author/Dictator of the note must be identified.';
   TX_REQ_REFDATE = CRLF + 'A valid date/time for the note must be entered.';
-  TX_REQ_COSIGNER = CRLF + 'An attending must be identified.';
+  TX_REQ_COSIGNER = CRLF + 'An Attending Physician must be identified.';
   TX_NO_FUTURE = CRLF + 'A reference date/time in the future is not allowed.';
   TX_COS_SELF = CRLF + 'You cannot make yourself a cosigner.';
   TX_COS_AUTH = CRLF + ' is not authorized to cosign this document.';
@@ -118,8 +134,6 @@ const
     'Only one discharge summary may be written for each admission.';
   TC_NO_EDIT = 'Unable to Edit';
   TC_EDIT_EXISTING = 'Unsigned document in progress';
- // TX_EDIT_EXISTING =
-//    'Would you like to continue editing the existing unsigned summary for this admission?';
   TX_EDIT_EXISTING =
       'Would you like to continue editing the existing unsigned summary for the %s addminsion to %s on %s?';
 
@@ -135,6 +149,7 @@ begin
     ResizeAnchoredFormToFont(frmDCSummProperties);
     with frmDCSummProperties do
     begin
+      Height := pnlSummaryTitle.Height + pnlMain.Height + pnlTranscription.Height;
       // setup common fields (title, reference date, author)
       FShowAdmissions := ShowAdmissions;
       FIDNoteTitlesOnly := IDNoteTitlesOnly;
@@ -252,6 +267,8 @@ begin
   end;
 end;
 
+////////////////////////////////////////////////////////////////////////////////
+
 { Form events }
 
 procedure TfrmDCSummProperties.FormShow(Sender: TObject);
@@ -268,6 +285,7 @@ begin
     stType.TabStop := srActive;
     stSummStatus.TabStop := srActive; }
   // if cboNewTitle.Text = '' then PostMessage(Handle, UM_DELAYEVENT, 0, 0);
+  AdjustToMainFontSize;
 end;
 
 procedure TfrmDCSummProperties.UMDelayEvent(var Message: TMessage);
@@ -308,7 +326,6 @@ var
 begin
   TempList := TStringList.Create;
   try
-
       ListAdmitAll(TempList, Patient.DFN);
       if TempList.Count > 0 then
       begin
@@ -342,16 +359,19 @@ end;
 
 { cboNewTitle events }
 
-procedure TfrmDCSummProperties.cboNewTitleNeedData(Sender: TObject; const StartFrom: string; Direction, InsertAt: Integer);
+procedure TfrmDCSummProperties.cboNewTitleNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
 var
-  aLst: TStringList;
+  sl: TStringList;
 begin
-  aLst := TStringList.Create;
+  sl := TSTringList.Create;
   try
-    SubSetOfDCSummTitles(StartFrom, Direction, FIDNoteTitlesOnly, aLst);
-    cboNewTitle.ForDataUse(aLst);
+    if SubSetOfDCSummTitles(StartFrom, Direction,FIDNoteTitlesOnly,sl) then
+      cboNewTitle.ForDataUse(sl)
+    else
+      cboNewTitle.Items.Clear;
   finally
-    FreeAndNil(aLst);
+    sl.Free;
   end;
 end;
 
@@ -377,10 +397,12 @@ begin
   if FShowAdmissions and (not pnlAdmission.Visible) then
   begin
     pnlAdmission.Visible := True;
-    pnlAdmission.Top := cmdCancel.Top + cmdCancel.Height + 8;
-    pnlAdmission.Height := Height - pnlAdmission.Top;
+//    pnlAdmission.Top := cmdCancel.Top + cmdCancel.Height + 8;
+//    pnlAdmission.Height := Height - pnlAdmission.Top;
   end;
   FLastTitle := cboNewTitle.ItemIEN;
+
+  AdjustToMainFontSize;
 end;
 
 procedure TfrmDCSummProperties.cboNewTitleExit(Sender: TObject);
@@ -400,13 +422,16 @@ end;
 procedure TfrmDCSummProperties.cboAuthorNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
+  setPersonList(cboAuthor, StartFrom, Direction);
 end;
 
 procedure TfrmDCSummProperties.cboAttendingNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 var
+  sl: TStrings;
   TitleIEN: Int64;
+  cbo: TORComboBox;
+
 begin
   // (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
 
@@ -419,8 +444,16 @@ begin
   if TitleIEN = 0 then
     TitleIEN := FDocType;
 
-  (Sender as TORComboBox).ForDataUse(SubSetOfCosigners(StartFrom, Direction,
-    FMToday, TitleIEN, 0));
+  // (Sender as TORComboBox).ForDataUse(SubSetOfCosigners(StartFrom, Direction,
+  // FMToday, TitleIEN, 0));
+  sl := TStringList.Create;
+  try
+    cbo := (Sender as TORComboBox);
+    setSubSetOfCosigners(cbo, sl, StartFrom, Direction, FMToday, TitleIEN, 0);
+    cbo.ForDataUse(sl);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure TfrmDCSummProperties.cboAuthorEnter(Sender: TObject);
@@ -433,11 +466,13 @@ begin
   SetCosignerRequired;
   FLastAuthor := cboAuthor.ItemIEN;
 end;
+{ Command Button events }
 
-function TfrmDCSummProperties.isValidInput: Boolean;
+function TfrmDCSummProperties.isValidInput:Boolean;
 var
   ErrMsg, ItemText, WhyNot, spErrMsg: string;
-  aTitleIEN: Integer;
+  ActionSts: TActionRec;
+
 begin
   SetCosignerRequired;
   ErrMsg := '';
@@ -450,7 +485,7 @@ begin
   if cboAuthor.ItemIEN = 0 then
     ErrMsg := ErrMsg + TX_REQ_AUTHOR
   else begin
-    if not CheckForSimilarName(cboAuthor, spErrMsg, ltPerson, sPr) then
+    if not CheckForSimilarName(cboAuthor, spErrMsg, sPr) then
     begin
       if trim(spErrMsg) = '' then
         spErrMsg := TX_REQ_AUTHOR
@@ -469,10 +504,7 @@ begin
     if (cboAttending.ItemIEN = 0) then
       ErrMsg := ErrMsg + TX_REQ_COSIGNER
     else begin
-      aTitleIEN := cboNewTitle.ItemIEN;
-      if aTitleIEN = 0 then
-        aTitleIEN := FDocType;
-      if not CheckForSimilarName(cboAttending, spErrMsg, ltCosign, sPr, FloatToStr(FMToday), nil, aTitleIEN) then
+      if not CheckForSimilarName(cboAttending, spErrMsg, sPr) then
       begin
         if trim(spErrMsg) = '' then
           spErrMsg := TX_REQ_COSIGNER
@@ -507,21 +539,27 @@ begin
         ErrMsg := ErrMsg + CRLF + TX_NO_ADMISSION
       else
       begin
-        ItemText:= Strings[Selected.Index];
+        ItemText := Strings[Selected.Index];
         if (Piece(ItemText, U, 7) = '1') then
         begin
           FVisitStr := Piece(ItemText, U, 2) + ';' +
             Piece(ItemText, U, 1) + ';H';
-          if (OneNotePerVisit(cboNewTitle.ItemIEN, Patient.DFN, FVisitStr))
-          then
+          if (OneNotePerVisit(cboNewTitle.ItemIEN, Patient.DFN, FVisitStr)) then
           begin
             FEditIEN := 0;
-            InfoBox(TX_NO_MORE_SUMMS, TC_NO_EDIT, MB_OK);
+            ErrMsg := ErrMsg + CRLF + TX_NO_MORE_SUMMS;
             Selected := nil;
           end;
         end
         else
         begin
+          if (StrToIntDef(Piece(ItemText, U, 7), 0) = 2) then
+          begin
+            FEditIEN := StrToInt(Piece(ItemText, U, 6));
+            ActOnDCDocument(ActionSts, FEditIEN, 'EDIT RECORD');
+            if not ActionSts.Success then
+              ErrMsg := ErrMsg + CRLF + ActionSts.Reason;
+          end;
           FAdmitDateTime := Piece(ItemText, U, 1);
           FLocation := StrToIntDef(Piece(ItemText, U, 2), 0);
           if (MakeFMDateTime(FAdmitDateTime) = -1) or (FLocation = 0) then
@@ -531,114 +569,15 @@ begin
         end;
       end;
     end;
-
   Result := Length(ErrMsg) = 0;
   ShowMsgOn(not Result, Trim(ErrMsg), TC_REQ_FIELDS);
 end;
 
-procedure TfrmDCSummProperties.cboAuthorExit(Sender: TObject);
+procedure TfrmDCSummProperties.cmdCancelMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  if cboAuthor.ItemIEN <> FLastAuthor then
-    cboAuthorMouseClick(Self);
-end;
-
-procedure TfrmDCSummProperties.cboAttendingExit(Sender: TObject);
-{ make sure FCosign fields stay up to date in case SetCosigner gets called again }
-begin
-  with cboAttending do
-    if Text = '' then
-      ItemIndex := -1;
-  if cboAttending.ItemIndex < 0 then
-  begin
-    FCosignIEN := 0;
-    FCosignName := '';
-  end
-  else
-  begin
-    FCosignIEN := cboAttending.ItemIEN;
-    FCosignName := Piece(cboAttending.Items[cboAttending.ItemIndex], U, 2);
-  end;
-end;
-
-{ Command Button events }
-
-procedure TfrmDCSummProperties.cmdOKClick(Sender: TObject);
-var
-  ErrMsg, ItemText, WhyNot: string;
-begin
-  cmdOK.SetFocus; // make sure cbo exit events fire
-  Application.ProcessMessages;
-  SetCosignerRequired;
-  ErrMsg := '';
-  if cboNewTitle.ItemIEN = 0 then
-    ErrMsg := ErrMsg + TX_REQ_TITLE
-  else if FIDNoteTitlesOnly and
-    (not CanTitleBeIDChild(cboNewTitle.ItemIEN, WhyNot)) then
-    ErrMsg := ErrMsg + CRLF + WhyNot;
-  if cboAuthor.ItemIEN = 0 then
-    ErrMsg := ErrMsg + TX_REQ_AUTHOR;
-  if not calSumm.IsValid then
-    ErrMsg := ErrMsg + TX_REQ_REFDATE;
-  if calSumm.IsValid and (calSumm.FMDateTime > FMNow) then
-    ErrMsg := ErrMsg + TX_NO_FUTURE;
-  if cboAttending.Visible and (cboAttending.ItemIEN = 0) then
-    ErrMsg := ErrMsg + TX_REQ_COSIGNER;
-  // if cboAttending.ItemIEN = User.DUZ                      then ErrMsg := TX_COS_SELF;
-
-  // --------------------------------- REPLACED THIS BLOCK IN V27.37-----------------------------------------------
-  /// if (cboAttending.ItemIEN > 0) and not IsUserAProvider(cboAttending.ItemIEN, FMNow) then
-  // //if (cboAttending.ItemIEN > 0) and not CanCosign(cboNewTitle.ItemIEN, FDocType, cboAttending.ItemIEN) then
-  // ErrMsg := cboAttending.Text + TX_COS_AUTH;
-  // ------------------------------------ NEW CODE FOLLOWS --------------------------------------------------------
-  if (cboAttending.ItemIEN > 0) then
-    if ((not IsUserAUSRProvider(cboAttending.ItemIEN, FMNow)) or
-      (not CanCosign(cboNewTitle.ItemIEN, FDocType, cboAttending.ItemIEN,
-      calSumm.FMDateTime))) then
-      ErrMsg := cboAttending.Text + TX_COS_AUTH;
-  // -----------------------------------END OF NEW REPLACEMENT CODE -----------------------------------------------
-
-  if pnlAdmission.Visible then
-    with lstAdmissions do
-    begin
-      if not Assigned(Selected) then
-        ErrMsg := TX_NO_ADMISSION
-      else
-      begin
-       ItemText:= Strings[Selected.Index];
-            if (Piece(ItemText, U, 7) = '1') then
-            begin
-              FVisitStr := Piece(ItemText, U, 2) + ';' +
-                Piece(ItemText, U, 1) + ';H';
-              if (OneNotePerVisit(cboNewTitle.ItemIEN, Patient.DFN, FVisitStr))
-              then
-              begin
-                FEditIEN := 0;
-                InfoBox(TX_NO_MORE_SUMMS, TC_NO_EDIT, MB_OK);
-                Selected := nil;
-              end;
-            end
-            else
-            begin
-              FAdmitDateTime := Piece(ItemText, U, 1);
-              FLocation := StrToIntDef(Piece(ItemText, U, 2), 0);
-              if (MakeFMDateTime(FAdmitDateTime) = -1) or (FLocation = 0) then
-                ErrMsg := TX_BAD_ADMISSION
-              else
-                FLocationName := ExternalName(FLocation, 44);
-            end;
-        end;
-    end;
-
-  if ShowMsgOn(Length(ErrMsg) > 0, ErrMsg, TC_REQ_FIELDS) then
-    Exit
-  else
-    ModalResult := mrOK;
-end;
-
-procedure TfrmDCSummProperties.cmdCancelClick(Sender: TObject);
-begin
+  inherited;
   ModalResult := mrCancel;
-  Close;
 end;
 
 procedure TfrmDCSummProperties.cboNewTitleDropDownClose(Sender: TObject);
@@ -653,109 +592,112 @@ begin
     lblCosigner.Visible := True; *)
 end;
 
-
 procedure TfrmDCSummProperties.lstAdmissionsSelectItem(Sender: TObject;
   Item: TListItem; Selected: Boolean);
-{Using the message dialogs makes additonal calls to this event. We need to ignore the select sometimes}
-const
-  OldItem: TListItem = nil;
-  CanSelect: Boolean = True;
 var
   ItemText, ADType, ADLocation, ADDate: string;
   AnEditSumm: TEditDCSummRec;
   ActionSts: TActionRec;
 begin
-  if (Selected) and (Item.Focused) then
-  begin
-    if ((OldItem = nil) or (OldItem <> Item)) then
+  if (not Assigned(Item)) or (not Assigned(lstAdmissions.Selected)) then
+    Exit;
+  if FInlstAdmissionsSelectItem then
+    Exit;
+  FInlstAdmissionsSelectItem := True;
+  try
+    if (Selected) and (Item.Focused) then
     begin
-      CanSelect := True;
       with lstAdmissions do
       begin
-
-            ItemText := Strings[Selected.Index];
-            if (StrToIntDef(Piece(ItemText, U, 7), 0) = 2) then
+        ItemText := Strings[Selected.Index];
+        if (FLastItemText <> '') then
+        begin
+          if (FLastItemText = ItemText) then
+          begin
+            FLastItemText := '';
+            ClearSelection;
+            exit;
+          end
+          else
+            FLastItemText := '';
+        end;
+        if (StrToIntDef(Piece(ItemText, U, 7), 0) = 2) then
+        begin
+          { Prompt for edit first - proceed as below if yes, else proceed as if '1' }
+          ADType := Piece(ItemText, '^', 4);
+          ADLocation := Piece(ItemText, '^', 3);
+          ADDate := Piece(ItemText, '^', 5);
+          if InfoBox(Format(TX_EDIT_EXISTING, [ADType, ADLocation, ADDate]),
+            TC_EDIT_EXISTING, MB_YESNO) = MRYES then
+          begin
+            FillChar(AnEditSumm, SizeOf(AnEditSumm), 0);
+            FEditIEN := StrToInt(Piece(ItemText, U, 6));
+            ActOnDCDocument(ActionSts, FEditIEN, 'EDIT RECORD');
+            if not ActionSts.Success then
             begin
-              { Prompt for edit first - proceed as below if yes, else proceed as if '1' }
-              ADType := Piece(ItemText, '^', 4);
-              ADLocation := Piece(ItemText, '^', 3);
-              ADDate := Piece(ItemText, '^', 5);
-              if InfoBox(Format(TX_EDIT_EXISTING, [ADType,ADLocation,ADDate]), TC_EDIT_EXISTING, MB_YESNO) = MRYES
-              then
-              begin
-                FillChar(AnEditSumm, SizeOf(AnEditSumm), 0);
-                FEditIEN := StrToInt(Piece(ItemText, U, 6));
-                ActOnDCDocument(ActionSts, FEditIEN, 'EDIT RECORD');
-                if not ActionSts.Success then
-                begin
-                  InfoBox(ActionSts.Reason, TX_IN_AUTH, MB_OK);
-                  ClearSelection;
-                  CanSelect := False;
-                  exit;
-                end;
-                GetDCSummForEdit(AnEditSumm, FEditIEN);
-                EditLines.Assign(AnEditSumm.Lines);
-                cboNewTitle.InitLongList(AnEditSumm.TitleName);
-                ListDCSummTitlesShort(cboNewTitle.Items);
-                if AnEditSumm.Title > 0 then
-                  cboNewTitle.SelectByIEN(AnEditSumm.Title);
-                cboAuthor.InitLongList(AnEditSumm.DictatorName);
-                if AnEditSumm.Dictator > 0 then
-                  cboAuthor.SelectByIEN(AnEditSumm.Dictator);
-                LoadDCUrgencies(cboUrgency.Items);
-                cboUrgency.SelectByID('R');
-                cboAttending.InitLongList(AnEditSumm.AttendingName);
-                if AnEditSumm.Attending > 0 then
-                begin
-                  cboAttending.SelectByIEN(AnEditSumm.Attending);
-                  TSimilarNames.RegORComboBox(cboAttending);
-                end;
-                calSumm.FMDateTime := AnEditSumm.DictDateTime;
-              end
-              else // if user answers NO to edit existing document, can new one be created?
-              begin
-                FVisitStr := Piece(ItemText, U, 2) + ';' +
-                  Piece(ItemText, U, 1) + ';H';
-                if (OneNotePerVisit(cboNewTitle.ItemIEN, Patient.DFN, FVisitStr))
-                then
-                begin
-                  FEditIEN := 0;
-                  InfoBox(TX_NO_MORE_SUMMS, TC_NO_EDIT, MB_OK);
-                  ClearSelection;
-                  CanSelect := False;
-                end;
-              end;
-            end
-            else if Piece(ItemText, U, 7) = '1' then
+              InfoBox(ActionSts.Reason, TX_IN_AUTH, MB_OK);
+              FEditIEN := 0;
+              ClearSelection;
+              FLastItemText := ItemText;
+              Exit;
+            end;
+            GetDCSummForEdit(AnEditSumm, FEditIEN);
+            EditLines.Assign(AnEditSumm.Lines);
+            cboNewTitle.InitLongList(AnEditSumm.TitleName);
+            ListDCSummTitlesShort(cboNewTitle.Items);
+            if AnEditSumm.Title > 0 then
+              cboNewTitle.SelectByIEN(AnEditSumm.Title);
+            cboAuthor.InitLongList(AnEditSumm.DictatorName);
+            if AnEditSumm.Dictator > 0 then
+              cboAuthor.SelectByIEN(AnEditSumm.Dictator);
+            LoadDCUrgencies(cboUrgency.Items);
+            cboUrgency.SelectByID('R');
+            cboAttending.InitLongList(AnEditSumm.AttendingName);
+            if AnEditSumm.Attending > 0 then
             begin
-              FVisitStr := Piece(ItemText, U, 2) + ';' +
-                Piece(ItemText, U, 1) + ';H';
-              if (OneNotePerVisit(cboNewTitle.ItemIEN, Patient.DFN, FVisitStr))
-              then
-              begin
-                FEditIEN := 0;
-                InfoBox(TX_NO_MORE_SUMMS, TC_NO_EDIT, MB_OK);
-                ClearSelection;
-                CanSelect := False;
-              end;
-            end
-            else
+              cboAttending.SelectByIEN(AnEditSumm.Attending);
+              TSimilarNames.RegORComboBox(cboAttending);
+            end;
+            calSumm.FMDateTime := AnEditSumm.DictDateTime;
+          end
+          else // if user answers NO to edit existing document, can new one be created?
+          begin
+            FVisitStr := Piece(ItemText, U, 2) + ';' +
+              Piece(ItemText, U, 1) + ';H';
+            if (OneNotePerVisit(cboNewTitle.ItemIEN, Patient.DFN, FVisitStr))
+            then
             begin
               FEditIEN := 0;
-              (* cboNewTitle.ItemIndex := -1;
-                cboAttending.ItemIndex := -1;
-                calSumm.FMDateTime := FMNow; *)
+              InfoBox(TX_NO_MORE_SUMMS, TC_NO_EDIT, MB_OK);
+              ClearSelection;
+              FLastItemText := ItemText;
             end;
+          end;
+        end
+        else if Piece(ItemText, U, 7) = '1' then
+        begin
+          FVisitStr := Piece(ItemText, U, 2) + ';' +
+            Piece(ItemText, U, 1) + ';H';
+          if (OneNotePerVisit(cboNewTitle.ItemIEN, Patient.DFN, FVisitStr)) then
+          begin
+            FEditIEN := 0;
+            InfoBox(TX_NO_MORE_SUMMS, TC_NO_EDIT, MB_OK);
+            ClearSelection;
+            FLastItemText := ItemText;
+          end;
+        end
+        else
+        begin
+          FEditIEN := 0;
+          (* cboNewTitle.ItemIndex := -1;
+            cboAttending.ItemIndex := -1;
+            calSumm.FMDateTime := FMNow; *)
+        end;
 
       end;
-      OldItem := Item;
-    end
-    else if OldItem = Item then
-    begin
-      if Not CanSelect then
-        lstAdmissions.ClearSelection;
-      OldItem := nil;
     end;
+  finally
+    FInlstAdmissionsSelectItem := False;
   end;
 
 end;
@@ -789,7 +731,7 @@ end;
 
 procedure TfrmDCSummProperties.cboNewTitleDblClick(Sender: TObject);
 begin
-  cmdOKClick(Self);
+  ModalResult := mrOK;
 end;
 
 procedure TfrmDCSummProperties.FormClose(Sender: TObject;
@@ -804,6 +746,26 @@ begin
   inherited;
   if ModalResult = mrOK then
     CanClose := isValidInput;
+end;
+
+procedure TfrmDCSummProperties.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if Key = vk_Escape then
+    ModalResult := mrCancel;
+end;
+
+procedure TfrmDCSummProperties.AdjustToMainFontSize;
+begin
+  Width := 4 * Application.MainForm.Canvas.TextWidth(lblNewTitle.Caption);
+  Constraints.MinWidth := Width;
+
+  Height := pnlSummaryTitle.Height +
+    pnlMain.Height + 32;
+
+  if pnlAdmission.Visible then
+    Height := Height + pnlSummaryTitle.Height;
 end;
 
 end.

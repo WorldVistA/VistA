@@ -6,10 +6,10 @@ inherited frmVisitType: TfrmVisitType
   Constraints.MinHeight = 581
   Constraints.MinWidth = 750
   OnCloseQuery = FormCloseQuery
-  ExplicitWidth = 758
-  ExplicitHeight = 593
+  ExplicitWidth = 756
+  ExplicitHeight = 587
   PixelsPerInch = 120
-  TextHeight = 16
+  TextHeight = 13
   inherited btnOK: TBitBtn
     Left = 545
     Top = 518
@@ -69,26 +69,27 @@ inherited frmVisitType: TfrmVisitType
         Left = 0
         Top = 0
         Width = 181
-        Height = 16
+        Height = 13
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alTop
         Caption = 'Type of Visit'
-        ExplicitWidth = 74
+        ExplicitWidth = 58
       end
       object lstVTypeSection: TORListBox
         Tag = 10
         Left = 0
-        Top = 16
+        Top = 13
         Width = 181
-        Height = 115
+        Height = 118
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alClient
+        ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -116,7 +117,7 @@ inherited frmVisitType: TfrmVisitType
         Left = 0
         Top = 0
         Width = 285
-        Height = 16
+        Height = 13
         Hint = 'Modifiers'
         Margins.Left = 4
         Margins.Top = 4
@@ -126,13 +127,13 @@ inherited frmVisitType: TfrmVisitType
         Caption = 'Modifiers'
         ParentShowHint = False
         ShowHint = True
-        ExplicitWidth = 55
+        ExplicitWidth = 42
       end
       object lbMods: TORListBox
         Left = 0
-        Top = 16
+        Top = 13
         Width = 285
-        Height = 115
+        Height = 118
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -175,21 +176,21 @@ inherited frmVisitType: TfrmVisitType
         Left = 0
         Top = 0
         Width = 266
-        Height = 16
+        Height = 13
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alTop
         Caption = 'Section Name'
-        ExplicitWidth = 85
+        ExplicitWidth = 67
       end
       object lbxVisits: TORListBox
         Tag = 10
         Left = 0
-        Top = 16
+        Top = 13
         Width = 266
-        Height = 115
+        Height = 118
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -248,22 +249,22 @@ inherited frmVisitType: TfrmVisitType
         ExplicitWidth = 312
         ExplicitHeight = 205
         inherited Panel1: TPanel
-          Width = 291
+          Width = 295
           Height = 226
           Margins.Left = 4
           Margins.Top = 4
           Margins.Right = 4
           Margins.Bottom = 4
-          ExplicitWidth = 291
+          ExplicitWidth = 295
           ExplicitHeight = 226
           inherited gbVisitRelatedTo: TGroupBox
-            Width = 291
+            Width = 295
             Height = 226
             Margins.Left = 4
             Margins.Top = 4
             Margins.Right = 4
             Margins.Bottom = 4
-            ExplicitWidth = 291
+            ExplicitWidth = 295
             ExplicitHeight = 226
             inherited chkSCYes: TCheckBox
               Left = 9
@@ -571,20 +572,20 @@ inherited frmVisitType: TfrmVisitType
         Left = 0
         Top = 0
         Width = 428
-        Height = 16
+        Height = 13
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alTop
         Caption = 'Service Connection && Rated Disabilities'
-        ExplicitWidth = 237
+        ExplicitWidth = 186
       end
       object memSCDisplay: TCaptionMemo
         Left = 0
-        Top = 16
+        Top = 13
         Width = 428
-        Height = 189
+        Height = 192
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -668,20 +669,20 @@ inherited frmVisitType: TfrmVisitType
         Left = 0
         Top = 0
         Width = 300
-        Height = 16
+        Height = 13
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alTop
         Caption = 'Available providers'
-        ExplicitWidth = 117
+        ExplicitWidth = 89
       end
       object cboPtProvider: TORComboBox
         Left = 0
-        Top = 16
+        Top = 13
         Width = 300
-        Height = 161
+        Height = 164
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -692,7 +693,7 @@ inherited frmVisitType: TfrmVisitType
         Caption = 'Available providers'
         Color = clWindow
         DropDownCount = 8
-        ItemHeight = 16
+        ItemHeight = 13
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = False
@@ -728,25 +729,26 @@ inherited frmVisitType: TfrmVisitType
         Left = 0
         Top = 0
         Width = 300
-        Height = 16
+        Height = 13
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alTop
         Caption = 'Current providers for this encounter'
-        ExplicitWidth = 205
+        ExplicitWidth = 165
       end
       object lbProviders: TORListBox
         Left = 0
-        Top = 16
+        Top = 13
         Width = 300
-        Height = 161
+        Height = 164
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         Align = alClient
+        ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0

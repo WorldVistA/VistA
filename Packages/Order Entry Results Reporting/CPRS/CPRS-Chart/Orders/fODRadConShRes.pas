@@ -53,7 +53,7 @@ begin
       FChanged := False;
       if CharInSet(SrcType, ['C','S']) then with cboSource do
          begin
-           FastAssign(SubsetOfRadSources(SrcType), cboSource.Items);
+           SubsetOfRadSources(cboSource.Items, SrcType);
            if Items.Count > 0 then
             begin
              txtResearch.Enabled := False;

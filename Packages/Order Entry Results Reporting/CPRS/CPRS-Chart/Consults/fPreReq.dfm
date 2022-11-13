@@ -9,12 +9,10 @@ inherited frmPrerequisites: TfrmPrerequisites
   OldCreateOrder = True
   Position = poScreenCenter
   OnActivate = OnActivate
-  OnClose = FormClose
-  OnCreate = FormCreate
-  ExplicitWidth = 375
-  ExplicitHeight = 346
+  ExplicitWidth = 383
+  ExplicitHeight = 357
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object lblFontTest: TLabel [0]
     Left = 148
     Top = 208
@@ -45,9 +43,10 @@ inherited frmPrerequisites: TfrmPrerequisites
     ParentFont = False
     ReadOnly = True
     ScrollBars = ssBoth
-    TabOrder = 0
+    TabOrder = 1
     WantReturns = False
     WordWrap = False
+    Zoom = 100
   end
   object pnlButton: TPanel [2]
     Left = 0
@@ -56,42 +55,46 @@ inherited frmPrerequisites: TfrmPrerequisites
     Height = 33
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 2
-    DesignSize = (
-      367
-      33)
+    TabOrder = 0
+    ExplicitTop = -6
     object cmdContinue: TButton
-      Left = 207
-      Top = 6
+      AlignWithMargins = True
+      Left = 183
+      Top = 3
       Width = 75
-      Height = 21
-      Anchors = [akTop, akRight]
+      Height = 27
+      Align = alRight
       Caption = 'Continue'
-      TabOrder = 0
+      TabOrder = 1
       OnClick = cmdContinueClick
     end
     object cmdCancel: TButton
-      Left = 290
-      Top = 6
-      Width = 75
-      Height = 21
-      Anchors = [akTop, akRight]
+      AlignWithMargins = True
+      Left = 264
+      Top = 3
+      Width = 100
+      Height = 27
+      Align = alRight
       Cancel = True
       Caption = 'Cancel Order'
-      TabOrder = 1
+      TabOrder = 2
       OnClick = cmdCancelClick
     end
-  end
-  object cmdPrint: TButton [3]
-    Left = 2
-    Top = 6
-    Width = 75
-    Height = 21
-    Caption = 'Print'
-    TabOrder = 1
-    OnClick = cmdPrintClick
+    object cmdPrint: TButton
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 75
+      Height = 27
+      Align = alLeft
+      Caption = 'Print'
+      TabOrder = 0
+      OnClick = cmdPrintClick
+    end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 184
+    Top = 48
     Data = (
       (
         'Component = memReport'
@@ -113,7 +116,7 @@ inherited frmPrerequisites: TfrmPrerequisites
         'Status = stsDefault'))
   end
   object dlgPrintReport: TPrintDialog
-    Left = 113
-    Top = 3
+    Left = 281
+    Top = 51
   end
 end

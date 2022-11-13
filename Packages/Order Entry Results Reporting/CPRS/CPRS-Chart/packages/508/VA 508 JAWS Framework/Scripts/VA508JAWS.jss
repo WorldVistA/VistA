@@ -5,7 +5,7 @@ Written for the VA508 Script project
 Original scripts by: JMerrill
 Updated: June, 2007 - JAvila and DLee, for Freedom Scientific
 Updated: October, 2007 by DLee
-Updated: July, 2013 by Chris Bell
+Updated: July, 2021 by Chris Bell
 JAWS 7.1 and 8.0
 The top line of this file should be preserved for CVS purposes
 The framework requires the jaws.SR and VA508JAWSDispatcher.exe files in addition to the FSAPI 1.0 com library in the shared folder of the JAWS program
@@ -19,7 +19,7 @@ include "common.jsm"
 ; constants are differentiated by underscores between words
 Const
 ; Not used by any code in this file, but read by JAWS.SR from this file to determine if the script file should be updated with a newer version
-	VA508_Script_Version = 1140,
+	VA508_Script_Version = 15,
 
 ; Maximum property cache lifespan in milliseconds
 	VA508_Cache_Mils = 2000,  ; 2 seconds
@@ -29,6 +29,7 @@ Const
 	VA508_Cache_Use = 0,  ; Use the cache but don't force it to update
 	VA508_Cache_Update = 1,  ; Update the cache, then use it
 	VA508_Cache_Skip = 2,  ; Don't touch the cache at all, just pull straight from Framework
+
 ; Constant used to indicate that the framework sent a null property value explicitly.
 ; When a cache property value is actually null, it means the framework did not send a value for that property at all.
 ; This means either there was an error (VA508_QueryCode_Error dataStatus bit set)
@@ -42,6 +43,7 @@ Const
 	VA508_DLL_Dispatcher_Hidden_Window_Class = "TfrmVA508JawsDispatcherHiddenWindow",
 	VA508_DLL_Hidden_Main_Window_Class = "TfrmVA508HiddenJawsMainWindow",
 	VA508_Message_Get_DLL_With_Focus = 1,
+
 ; Not used by any code.
 	VA508_DLL_Dispatcher_Hidden_Window_Title = "VA 508 JAWS Dispatcher Window",
 	VA508_DLL_Hidden_Data_Window_Class = "TfrmVA508HiddenJawsDataWindow",
@@ -49,6 +51,7 @@ Const
 ; General data format = prefix : next window handle : data
 ; See VA508GetApplicationData() for more info on the data structure.
 	VA508_DLL_Data_Window_Delim = ":",
+
 ; Next two used only by VA508GetStringValue.
 	VA508_DLL_Data_Offset = "=",
 	VA508_DLL_Data_Length = ",",
@@ -73,11 +76,14 @@ Const
 	VA508_QueryCode_Instructions = 0x00000010L, ;16
 	VA508_QueryCode_Item_Instructions = 0x00000020L, ;32
 	VA508_QueryCode_Data = 0x00000040L, ;64
+
 ; Query code to retrieve all of the above at once.
 	VA508_QueryCode_All = 0x0000007FL, ; 127
+
 ; Extra bits that can be sent to the VA508ChangeEvent
 	VA508_Data_Change_Event = 0x00001000L, ; 4096
 	VA508_DataItem_Change_Event = 0x00002000L, ;8192
+
 ; If this comes back from a query, it means the sent hwnd was not in the framework's list of windows
 ; This can happen if
 ;	- The hwnd is to another application, or
@@ -88,6 +94,7 @@ Const
 	Key_F4 = "F4",  ; Key to close an open combo box.
 	ksRightArrow = "RightArrow",
 	ksLeftArrow = "LeftArrow",
+
 ; Window class constants
 	wcComboLBox = "ComboLBox", ; Window class of a normal combo box's list window.
 	wcTMaskEdit = "TMaskEdit",
@@ -98,11 +105,14 @@ Const
 	wcTStringGrid = "TStringGrid",
 	wcTComboBox = "TComboBox",
 	wcEdit = "Edit",
-WC_CAPTION_LISTBOX = "TCaptionListBox",
+	WC_CAPTION_LISTBOX = "TCaptionListBox",
+
 ; ControlTypes
 	ctSpinBox = "SpinBox",
+
 ; Window Styles
 	window_style_tabsWithButtons = 0x100,
+
 ; MSAA constans
 	ChildID_Self = 0,
 	SELFLAG_TAKEFOCUS = 0x1L,
@@ -115,6 +125,7 @@ WC_CAPTION_LISTBOX = "TCaptionListBox",
 	STATE_SYSTEM_FOCUSABLE = 0x00100000L,
 	STATE_SYSTEM_SELECTABLE = 0x00200000L,
 	STATE_SYSTEM_CHECKED = 0x00000010L,
+
 ; Messages
 	msgPage = "Page",
 	msgNotSelected = "not selected",
@@ -133,6 +144,7 @@ WC_CAPTION_LISTBOX = "TCaptionListBox",
 	msgLevel = "Level ",
 	msgColumn = "Column",
 	msgRow = "Row",
+
 ; Personalized settings
 	hKey_GridSpeechMode = "GridSpeechMode", ; ini key name
 	hKey_GridBrailleMode = "GridBrailleMode", ; ini key name
@@ -140,6 +152,7 @@ WC_CAPTION_LISTBOX = "TCaptionListBox",
 	jvToggleGridBrailleMode="|ToggleGridBrailleMode:Grid Braille",	 ; function name then shown description
 	Section_ControlTypes = "ControlTypes",
 	Section_BrailleClasses = "BrailleClasses",
+
 ; General Constants
 	string_delim = "|",
 	gi_mag_draw_highlights = 1, 	; for magic
@@ -169,13 +182,17 @@ EndMessages
 Globals
 ; True for debugging enabled (see autoStartEvent)
 	int inDebugging,
+
 ; True for framework debugging
 	int fwDebug,
+
 ; Property cache
 ; GetTickCount() value at the time of the last full cache update
 	int giVA508cacheTick,
+
 ; Handle of window to which the cache now applies
 	handle ghVA508cacheHwnd,
+
 ; Properties cached
 	string gsVA508cacheCaption,
 	string gsVA508cacheValue,
@@ -184,6 +201,7 @@ Globals
 	string gsVA508cacheInstructions,
 	string gsVA508cacheItemInstructions,
 	int giVA508cacheDataStatus,
+
 ; Cache of grid data for string grids
 ; "valid" is not passed by the DLL; it is set (along with all the rest of these) by VA508GetGridData().
 ; The rest are passed in a ^-delimited string from the DLL in the Value field.
@@ -196,11 +214,14 @@ Globals
 	string gsVA508cacheGridCellVal, 
 	int giVA508cacheGridCellNum, 
 	int giVA508cacheGridCellCnt,
+
 ; Handle of the window of the DLL for the application in focus.
 	handle ghVA508DLLWindow,
+
 ; ID of registered VA508_Reg_Msg_ID Windows message.
 ; Sent to the dispatch window and DLL-specific windows, obtained by RegisterWindowMessage
 	int giVA508messageID,
+
 ; True if the app-specific DLL link has not yet been established.
 ; This link is remade every time a VA508 app receives focus.
 	int gbVA508needToLinkToDLL,
@@ -209,22 +230,28 @@ Globals
 	handle ghVA508tutorWindow, ; handle of the window where there was a custom tutor message
 	string gsVA508dataWindowTitle,
 	int giVA508dataWindowTitleLen,
+
 ; Data field names and values for the last-queried control.
 	string gsVA508varData,
 	string gsVA508data,
+
 ; A flag to suppress speech at certain times.
 	int gbVA508suppressEcho,
 	int glbSuppressFocusChange,
+
 ; Custom braille types
 	string glbsTable,
 	string glbsTable2,
+
 ; Custom control types for speech
 	string glbsTable3,
 	string glbsTable4,
+
 ; personalized settings for how row and column headers are displayed in a table
 	int giGridSpeechMode,
 	int giGridBrailleMode,
 	int giAppHasBeenLoaded, ; keeps track of if the app has been loaded before so we don't need to pull the ini settings for personalized grids
+
 ; Globals for ChangeEvent speaking
 	int giSuppressCaption,  ; use custom caption when event occurs but focus did not move
 	int giSuppressControlType,
@@ -252,104 +279,130 @@ EndFunction
 ; This causes it to be counted.
 ;**************************************************************
 int function VA508stringSegmentCount(string s, string sDelim)
-var
-	int segcount
-let segcount = stringSegmentCount(s, sDelim)
-if stringRight(s, 1) == sDelim then
-	let segcount = segcount +1
-endIf
-return segcount
+	var
+		int segcount
+
+	let segcount = stringSegmentCount(s, sDelim)
+
+	if stringRight(s, 1) == sDelim then
+		let segcount = segcount +1
+	endIf
+
+	return segcount
+
 endFunction
 
 ;**************************************************************
 ; Classification of list types:  lb=listbox, lv=listview, lx=extended-select, lm=multiselect.
 ;**************************************************************
 string function getListType(int typeCode)
-if typeCode == WT_ListView || typeCode == wt_listboxItem then
-	return "lv"
-elif typeCode == WT_ListBox then
-	return "lb"
-elif typeCode == WT_MultiSelect_ListBox then
-	return "lm"
-elif typeCode == WT_ExtendedSelect_ListBox then
-	return "lx"
-endIf
-; Return non-null, or things like stringContains("lb lm lx", getListType(typeCode)) will return 1!
-return "--"
+
+	if typeCode == WT_ListView || typeCode == WT_LISTVIEWITEM then
+		return "lv"
+
+	elif typeCode == WT_ListBox || typeCode == wt_listboxItem then
+		return "lb"
+
+	elif typeCode == WT_MultiSelect_ListBox then
+		return "lm"
+
+	elif typeCode == WT_ExtendedSelect_ListBox then
+		return "lx"
+
+	endIf
+
+	; Return non-null, or things like stringContains("lb lm lx", getListType(typeCode)) will return 1!
+	return "--"
+
 endFunction
 
 ;**************************************************************
 ; Detection of special focus situations.
 ;**************************************************************
 int function isSpecialFocus(int includeAllDialogs)
-if menusActive() || userBufferIsActive() || inHJDialog() then
-	return True
-endIf
-if includeAllDialogs && dialogActive() then
-	return True
-endIf
-if (getWindowClass(getFocus()) == "#32771"
-&& getObjectTypeCode(getFocus()) == WT_ListBoxItem) then
-	; This is the Alt+Tab window.
-	return True
-endIf
-return False
+
+	if menusActive() || userBufferIsActive() || inHJDialog() then
+		return True
+	endIf
+
+	if includeAllDialogs && dialogActive() then
+		return True
+	endIf
+
+	if (getWindowClass(getFocus()) == "#32771" && getObjectTypeCode(getFocus()) == WT_ListBoxItem) then
+		; This is the Alt+Tab window.
+		return True
+	endIf
+
+	return False
+
 endFunction
 
 globals
 	object goCountDict,
 	string gsCountList
+
 ;**************************************************************
 ; Reports execution counts of functions/code blocks.
 ;**************************************************************
 Void function watchCount(string sKey)
-var
-	int resetting,
-	string sKey1
-if !inDebugging then
-	return
-endIf
+	var
+		int resetting,
+		string sKey1
 
-let resetting = False
-if sKey == "*" then
-	let sKey = stringChopLeft(sKey, 1)
-	let resetting = True
-endIf
-
-if !sKey || resetting then
-	; Internal or external call to speak and reset counts.
-	var int i
-	let i = 1
-	while i
-		let sKey1 = stringSegment(gsCountList, "|", i+1)
-		if sKey1 then
-			if goCountDict(sKey1) then
-				sayMessage(OT_Message, formatString("%1 %2", sKey1, goCountDict(sKey1)))
-				dictSet(goCountDict, sKey1, 0)
-			endIf
-			let i = i +1
-		else
-			let i = 0  ; exits loop
-		endIf
-	endWhile
-	if !sKey then
+	if !inDebugging then
 		return
 	endIf
-endIf
 
-; External call to count.
-if stringLeft(gsCountList, 1) != "|" then
-	let goCountDict = createObjectEx("Scripting.Dictionary", False)
-	let gsCountList = "|"
-endIf
-if !goCountDict then
-	return
-endIf
-dictDelta(goCountDict, sKey, 1)
-if !stringContains(gsCountList, "|"+sKey+"|") then
-	let gsCountList = gsCountList +sKey +"|"
-endIf
-scheduleFunction("watchCount", 8)
+	let resetting = False
+
+	if sKey == "*" then
+		let sKey = stringChopLeft(sKey, 1)
+		let resetting = True
+	endIf
+
+	if !sKey || resetting then
+		; Internal or external call to speak and reset counts.
+		var int i
+		let i = 1
+		while i
+			let sKey1 = stringSegment(gsCountList, "|", i+1)
+			if sKey1 then
+				if goCountDict(sKey1) then
+					sayMessage(OT_Message, formatString("%1 %2", sKey1, goCountDict(sKey1)))
+					dictSet(goCountDict, sKey1, 0)
+				endIf
+				let i = i +1
+			else
+				let i = 0  ; exits loop
+			endIf
+
+		endWhile
+
+		if !sKey then
+			return
+		endIf
+
+	endIf
+
+	; External call to count.
+	if stringLeft(gsCountList, 1) != "|" then
+		let goCountDict = createObjectEx("Scripting.Dictionary", False)
+		let gsCountList = "|"
+	endIf
+
+	if !goCountDict then
+		return
+	endIf
+
+	dictDelta(goCountDict, sKey, 1)
+
+	if !stringContains(gsCountList, "|"+sKey+"|") then
+		let gsCountList = gsCountList +sKey +"|"
+	endIf
+
+	scheduleFunction("watchCount", 8)
+
 endFunction
 
 ;***************************************************************
@@ -370,6 +423,8 @@ int Function VA508SendMessage(Handle Window, int wParam, int lParam)
 		string header2,
 		string value
 
+	;Say ("VA508 JAWS Send Message", OT_JAWS_MESSAGE)
+	
 	let Result = 0
 	if (Window != 0) then
 		let working = TRUE
@@ -416,7 +471,9 @@ int Function VA508SendMessage(Handle Window, int wParam, int lParam)
 			endIf
 		endWhile
 	endIf ; is window handle valid
+
 	return Result
+
 EndFunction
 
 
@@ -425,27 +482,31 @@ EndFunction
 ; MSAA is only used when it seems necessary; getWindowName is used otherwise for efficiency.
 ;**************************************************************
 string Function Get4KName(handle hWnd)
-var
-	string wName,
-	string mName,
-	int cutoffLen
-
-; Window names can reach 255 characters, but we choose an earlier cutoff for safety.
-let cutoffLen = 240
-
-let wName = GetWindowName(HWnd)
-if stringLength(wName) > cutoffLen
-|| (hasTitleBar(hwnd) && stringLength(wName) == 0) then
 	var
-		int childID,
-		object obj
-	let obj = GetObjectFromEvent(HWnd, -4, 0, childID)  ; -4 = ObjID_Client
-	let mName = obj.accName(0)
-	if stringLength(mName) > cutoffLen then
-		return mName
+		string wName,
+		string mName,
+		int cutoffLen
+
+	; Window names can reach 255 characters, but we choose an earlier cutoff for safety.
+	let cutoffLen = 240
+
+	let wName = GetWindowName(HWnd)
+
+	if stringLength(wName) > cutoffLen || (hasTitleBar(hwnd) && stringLength(wName) == 0) then
+		var
+			int childID,
+			object obj
+		let obj = GetObjectFromEvent(HWnd, -4, 0, childID)  ; -4 = ObjID_Client
+		let mName = obj.accName(0)
+
+		if stringLength(mName) > cutoffLen then
+			return mName
+		endIf
+
 	endIf
-endIf
-return wName
+
+	return wName
+
 EndFunction
 
 
@@ -453,15 +514,15 @@ EndFunction
 ; Gets a value by its name from the data structure saved in gsVA508varData and gsVA508data.
 ;***********************************************************************
 String Function VA508GetStringValue(string VarName)
-var
-	string Search,
-	string Result,
-	int idx,
-	int idx2,
-	int idx3,
-	int max,
-	int offset,
-	int len
+	var
+		string Search,
+		string Result,
+		int idx,
+		int idx2,
+		int idx3,
+		int max,
+		int offset,
+		int len
 
 	let Result = ""
 	let Search = VA508_DLL_Data_Window_Delim + VarName + VA508_DLL_Data_Offset ; something like ":Caption="
@@ -471,20 +532,28 @@ var
 		let max = idx + 50 ; just in case of bad data - prevents infinite loop lock up
 		let idx = idx + StringLength(Search)
 		let idx2 = idx+1
+
 		while (SubString(gsVA508varData, idx2, 1) != VA508_DLL_Data_Length) && (idx2 < max)
 			let idx2 = idx2 + 1
 		endWhile
+
 		let idx3 = idx2 + 1
+
 		while (SubString(gsVA508varData, idx3, 1) != VA508_DLL_Data_Window_Delim) && (idx2 < max)
 			let idx3 = idx3 + 1
 		endWhile
+
 		let offset = StringToInt(SubString(gsVA508varData, idx, idx2-idx)) + 1
 		let len = StringToInt(SubString(gsVA508varData, idx2+1, idx3-idx2-1))
+
 		if len > 0 then
 			let Result = SubString(gsVA508data, offset, len)
 		EndIf
+
 	EndIf
+
 	return Result
+
 EndFunction
 
 ;***********************************************************************
@@ -497,38 +566,34 @@ EndFunction
 ; caption:[next window handle]:varlen:var=offset,length:var=offset,len:data
 ; varlen = from first to last :
 ;***********************************************************************
-globals string gsVA508GetAppDataDebugBuf
+globals 
+	string gsVA508GetAppDataDebugBuf
+
 Void Function VA508GetApplicationData(handle hwnd, int iQueryCode)
-watchCount("*appData")
-var
-	handle hWindow,
-	handle nullHandle,
-	string sCaption,
-	string sSubTitle,
-	int idx,
-	int len,
-	string sData
+	watchCount("*appData")
+
+	var
+		handle hWindow,
+		handle nullHandle,
+		string sCaption,
+		string sSubTitle,
+		int idx,
+		int len,
+		string sData
 
 	let gsVA508varData = ""
 	let gsVA508data = ""
-let gsVA508GetAppDataDebugBuf = ""
+	let gsVA508GetAppDataDebugBuf = ""
 	let sData= ""
 
 	if fwDebug then
-		let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf
-		+formatString(
-			"VA508GetApplicationData execution info:\13\10Invocation: handle %1, iQueryCode %2",
-			intToString(hwnd), intToString(iQueryCode)
-			)
+		let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf + formatString("VA508GetApplicationData execution info:\13\10Invocation: handle %1, iQueryCode %2", intToString(hwnd), intToString(iQueryCode))
 	endIf
 
 	; hWindow becomes handle of data window received from dll window
 	let hWindow = VA508Cast(VA508SendMessage(ghVA508DLLWindow, hwnd, iQueryCode))
 	if fwDebug then
-		let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +formatString(
-			"\13\10VA508SendMessage(%1, %2) returns %3",
-			intToString(ghVA508DLLWindow), intToString(iQueryCode), intToString(hWindow)
-			)
+		let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +formatString("\13\10VA508SendMessage(%1, %2) returns %3", intToString(ghVA508DLLWindow), intToString(iQueryCode), intToString(hWindow))
 	endIf
 
 	; if more than 4k or 255char windows are chained together and window contains next windows hwnd like a linked list
@@ -537,48 +602,44 @@ let gsVA508GetAppDataDebugBuf = ""
 
 		let sCaption= Get4KName(hWindow) ; uses MSAA to get the name of the dll Window
 		if fwDebug then
-			let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +formatString(
-				"\13\10sCaption from window %1: '%2'",
-				intToString(hWindow), sCaption
-				)
+			let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf + formatString("\13\10sCaption from window %1: '%2'", intToString(hWindow), sCaption)
 		endIf
+
 		let hWindow = nullHandle
 
 		; Data window title and len are set in Initialization function
 		let sSubTitle = SubString(sCaption,1,giVA508dataWindowTitleLen)
 		if fwDebug then
-			let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +formatString(
-				"\13\10sSubtitle from caption: '%1'",
-				sSubtitle
-				)
+			let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf + formatString("\13\10sSubtitle from caption: '%1'", sSubtitle)
 		endIf
 
 		if StringCompare(sSubTitle, gsVA508dataWindowTitle , TRUE) == 0 then ; just checking to make sure we have proper window
 			if fwDebug then
-				let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +"\13\10Data window title recognized"
+				let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf + "\13\10Data window title recognized"
 			endIf
+
 			let sCaption= StringChopLeft(sCaption, giVA508dataWindowTitleLen) ; get everything after the title
 			let idx = StringContains(sCaption, VA508_DLL_Data_Window_Delim) ; ":"
+
 			if idx > 1 then ; see if we have a handle embedded in caption
 				let hWindow = VA508Cast(StringToInt(SubString(sCaption, 1, idx-1)))
 				if fwDebug then
-					let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +formatString(
-						"\13\10Next window: %1", intToString(hWindow))
+					let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +formatString("\13\10Next window: %1", intToString(hWindow))
 				endIf
 			else
 				if fwDebug then
-					let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +"\13\10No next window"
+					let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf + "\13\10No next window"
 				endIf
 			endIf
 
 			let sCaption = StringChopLeft(sCaption, idx) ; pull out everything after handle
+
 			if fwDebug then
-				let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +formatString(
-					"\13\10Caption text saved (idx %1): '%2'",
-					intToString(idx), sCaption
-					)
+				let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +formatString("\13\10Caption text saved (idx %1): '%2'", intToString(idx), sCaption)
 			endIf
+
 			let sData=sData+sCaption ; save what we pulled out into sData variable
+
 		endIf
 	EndWhile
 
@@ -594,7 +655,7 @@ let gsVA508GetAppDataDebugBuf = ""
 		endIf
 	else
 		if fwDebug then
-			let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf +"\13\10No data to return."
+			let gsVA508GetAppDataDebugBuf = gsVA508GetAppDataDebugBuf + "\13\10No data to return."
 		endIf
 	EndIf
 EndFunction
@@ -611,7 +672,8 @@ Void Function VA508ResetGlobals ()
 	; Clear the cache of framework data.
 	VA508cacheUpdate(0)
 	let	gbVA508suppressEcho = FALSE
-	endFunction
+
+endFunction
 
 ;***********************************************************************
 Void Function VA508EnsureInitialized ()
@@ -642,9 +704,10 @@ var
 
 	if gbVA508needToLinkToDLL then	; if not linked then clear and try again
 		let ghVA508DLLWindow = VA508cast(0)
-; keep this delay at 1 or first field may not function on startup
+		; keep this delay at 1 or first field may not function on startup
 		ScheduleFunction("VA508EnsureInitialized",1)
 	EndIf
+
 EndFunction
 
 ;***********************************************************************
@@ -655,29 +718,40 @@ EndFunction
 ; On a return of 1, sVal is the property value; otherwise, it is null.
 ;***********************************************************************
 int function VA508cacheGetVal(int iQueryCode, string byRef sVal)
-let sVal = ""
-if giVA508cacheDataStatus & VA508_QueryCode_Error then
-	return -1
-elif !(giVA508cacheDataStatus & iQueryCode) then
-	return 0
-elif iQueryCode == VA508_QueryCode_Caption then
-	let sVal = gsVA508cacheCaption
-elif iQueryCode == VA508_QueryCode_Value then
-	let sVal = gsVA508cacheValue
-elif iQueryCode == VA508_QueryCode_Control_Type then
-	let sVal = gsVA508cacheControlType
-elif iQueryCode == VA508_QueryCode_State then
-	let sVal = gsVA508cacheState
-elif iQueryCode == VA508_QueryCode_Instructions then
-	let sVal = gsVA508cacheInstructions
-elif iQueryCode == VA508_QueryCode_Item_Instructions then
-	let sVal = gsVA508cacheItemInstructions
-else
-	; This should not happen in production and indicates a programming error.
-	beep()
-	return -1
-endIf
-return 1
+	let sVal = ""
+
+	if giVA508cacheDataStatus & VA508_QueryCode_Error then
+		return -1
+
+	elif !(giVA508cacheDataStatus & iQueryCode) then
+		return 0
+
+	elif iQueryCode == VA508_QueryCode_Caption then
+		let sVal = gsVA508cacheCaption
+
+	elif iQueryCode == VA508_QueryCode_Value then
+		let sVal = gsVA508cacheValue
+
+	elif iQueryCode == VA508_QueryCode_Control_Type then
+		let sVal = gsVA508cacheControlType
+
+	elif iQueryCode == VA508_QueryCode_State then
+		let sVal = gsVA508cacheState
+
+	elif iQueryCode == VA508_QueryCode_Instructions then
+		let sVal = gsVA508cacheInstructions
+
+	elif iQueryCode == VA508_QueryCode_Item_Instructions then
+		let sVal = gsVA508cacheItemInstructions
+
+	else
+		; This should not happen in production and indicates a programming error.
+		beep()
+		return -1
+	endIf
+
+	return 1
+
 endFunction
 
 ;***********************************************************************
@@ -685,111 +759,139 @@ endFunction
 ; hwnd:  The window handle of interest, or 0 to clear the cache.
 ;***********************************************************************
 Void Function VA508CacheUpdate (handle hwnd)
-var
-	int iQueryCode,
-	int iStatus,
-	string sVal
-let iQueryCode = 0
-if hwnd then
-	let iQueryCode = VA508_QueryCode_All
-endIf
+	var
+		int iQueryCode,
+		int iStatus,
+		string sVal
 
-; Clear the cache first.
-let giVA508cacheTick = 0
-let ghVA508cacheHwnd = VA508cast(0)
-let gsVA508cacheCaption = ""
-let gsVA508cacheValue = ""
-let gsVA508cacheControlType = ""
-let gsVA508cacheState = ""
-let gsVA508cacheInstructions = ""
-let gsVA508cacheItemInstructions = ""
-let giVA508cacheDataStatus = 0
-; Clear grid data also.
-VA508getGridData("",0)
+	let iQueryCode = 0
 
-; If we're just clearing the cache, we're done.
-if iQueryCode == 0 then
-	return
-endIf
+	if hwnd then
+		let iQueryCode = VA508_QueryCode_All
+	endIf
 
-; Replace the just-cleared cache from the framework.
-; VA508getApplicationData should have been called by the caller already.
-let iStatus = StringToInt(VA508GetStringValue(VA508_FieldName_Data_Status))
-let giVA508cacheTick = getTickCount()
-let ghVA508cacheHwnd = hwnd
-let giVA508cacheDataStatus = iStatus
-if giVA508cacheDataStatus & VA508_QueryCode_Caption then
-	let gsVA508cacheCaption = VA508GetStringValue(VA508_FieldName_Caption)
-endIf
-if giVA508cacheDataStatus & VA508_QueryCode_Value then
-	let gsVA508cacheValue = VA508GetStringValue(VA508_FieldName_Value)
-	; Grid data shows up in Value, so only try to get it if there's something to get.
-	VA508getGridData(gsVA508cacheValue, 1)
-endIf
-if giVA508cacheDataStatus & VA508_QueryCode_Control_Type then
-	let gsVA508cacheControlType = VA508GetStringValue(VA508_FieldName_Control_Type)
-endIf
-if giVA508cacheDataStatus & VA508_QueryCode_State then
-	let gsVA508cacheState = VA508GetStringValue(VA508_FieldName_State)
-endIf
-if giVA508cacheDataStatus & VA508_QueryCode_Instructions then
-	let gsVA508cacheInstructions = VA508GetStringValue(VA508_FieldName_Instructions)
-endIf
-if giVA508cacheDataStatus & VA508_QueryCode_Item_Instructions then
-	let gsVA508cacheItemInstructions = VA508GetStringValue(VA508_FieldName_Item_Instructions)
-endIf
+	; Clear the cache first.
+	let giVA508cacheTick = 0
+	let ghVA508cacheHwnd = VA508cast(0)
+	let gsVA508cacheCaption = ""
+	let gsVA508cacheValue = ""
+	let gsVA508cacheControlType = ""
+	let gsVA508cacheState = ""
+	let gsVA508cacheInstructions = ""
+	let gsVA508cacheItemInstructions = ""
+	let giVA508cacheDataStatus = 0
+
+	; Clear grid data also.
+	VA508getGridData("",0)
+
+	; If we're just clearing the cache, we're done.
+	if iQueryCode == 0 then
+		return
+	endIf
+
+	; Replace the just-cleared cache from the framework.
+	; VA508getApplicationData should have been called by the caller already.
+	let iStatus = StringToInt(VA508GetStringValue(VA508_FieldName_Data_Status))
+	let giVA508cacheTick = getTickCount()
+	let ghVA508cacheHwnd = hwnd
+	let giVA508cacheDataStatus = iStatus
+
+	if giVA508cacheDataStatus & VA508_QueryCode_Caption then
+		let gsVA508cacheCaption = VA508GetStringValue(VA508_FieldName_Caption)
+	endIf
+
+	if giVA508cacheDataStatus & VA508_QueryCode_Value then
+		let gsVA508cacheValue = VA508GetStringValue(VA508_FieldName_Value)
+		; Grid data shows up in Value, so only try to get it if there's something to get.
+		VA508getGridData(gsVA508cacheValue, 1)
+	endIf
+
+	if giVA508cacheDataStatus & VA508_QueryCode_Control_Type then
+		let gsVA508cacheControlType = VA508GetStringValue(VA508_FieldName_Control_Type)
+	endIf
+
+	if giVA508cacheDataStatus & VA508_QueryCode_State then
+		let gsVA508cacheState = VA508GetStringValue(VA508_FieldName_State)
+	endIf
+
+	if giVA508cacheDataStatus & VA508_QueryCode_Instructions then
+		let gsVA508cacheInstructions = VA508GetStringValue(VA508_FieldName_Instructions)
+	endIf
+
+	if giVA508cacheDataStatus & VA508_QueryCode_Item_Instructions then
+		let gsVA508cacheItemInstructions = VA508GetStringValue(VA508_FieldName_Item_Instructions)
+	endIf
+
 EndFunction
 
 ;***********************************************************************
 ; Return the framework field name corresponding to the given query code.
 ;***********************************************************************
 string function VA508FieldNameFromQueryCode(int iQueryCode)
-var
-	string sFieldName
-if iQueryCode == VA508_QueryCode_Caption then
-	let sFieldName = VA508_FieldName_Caption
-elif iQueryCode == VA508_QueryCode_Value then
-	let sFieldName = VA508_FieldName_Value
-elif iQueryCode == VA508_QueryCode_Control_Type then
-	let sFieldName = VA508_FieldName_Control_Type
-elif iQueryCode == VA508_QueryCode_State then
-	let sFieldName = VA508_FieldName_State
-elif iQueryCode == VA508_QueryCode_Instructions then
-	let sFieldName = VA508_FieldName_Instructions
-elif iQueryCode == VA508_QueryCode_Item_Instructions then
-	let sFieldName = VA508_FieldName_Item_Instructions
-else
-	; This should not happen in production and indicates a programming error.
-	beep()
-	return 0
-endIf
-return sFieldName
+	var
+		string sFieldName
+
+	if iQueryCode == VA508_QueryCode_Caption then
+		let sFieldName = VA508_FieldName_Caption
+
+	elif iQueryCode == VA508_QueryCode_Value then
+		let sFieldName = VA508_FieldName_Value
+
+	elif iQueryCode == VA508_QueryCode_Control_Type then
+		let sFieldName = VA508_FieldName_Control_Type
+
+	elif iQueryCode == VA508_QueryCode_State then
+		let sFieldName = VA508_FieldName_State
+
+	elif iQueryCode == VA508_QueryCode_Instructions then
+		let sFieldName = VA508_FieldName_Instructions
+
+	elif iQueryCode == VA508_QueryCode_Item_Instructions then
+		let sFieldName = VA508_FieldName_Item_Instructions
+
+	else
+		; This should not happen in production and indicates a programming error.
+		beep()
+		return 0
+	endIf
+
+	return sFieldName
+
 endFunction
 
 ;***********************************************************************
 ; Return the query code corresponding to the given framework field name.
 ;***********************************************************************
 int function VA508QueryCodeFromFieldName(string sFieldName)
-var
-	int iQueryCode
-if sFieldName == VA508_FieldName_Caption then
-	let iQueryCode = VA508_QueryCode_Caption
-elif sFieldName == VA508_FieldName_Value then
-	let iQueryCode = VA508_QueryCode_Value
-elif sFieldName == VA508_FieldName_Control_Type then
-	let iQueryCode = VA508_QueryCode_Control_Type
-elif sFieldName == VA508_FieldName_State then
-	let iQueryCode = VA508_QueryCode_State
-elif sFieldName == VA508_FieldName_Instructions then
-	let iQueryCode = VA508_QueryCode_Instructions
-elif sFieldName == VA508_FieldName_Item_Instructions then
-	let iQueryCode = VA508_QueryCode_Item_Instructions
-else
-	; This should not happen in production and indicates a programming error.
-	beep()
-	return 0
-endIf
-return iQueryCode
+	var
+		int iQueryCode
+
+	if sFieldName == VA508_FieldName_Caption then
+		let iQueryCode = VA508_QueryCode_Caption
+
+	elif sFieldName == VA508_FieldName_Value then
+		let iQueryCode = VA508_QueryCode_Value
+
+	elif sFieldName == VA508_FieldName_Control_Type then
+		let iQueryCode = VA508_QueryCode_Control_Type
+
+	elif sFieldName == VA508_FieldName_State then
+		let iQueryCode = VA508_QueryCode_State
+
+	elif sFieldName == VA508_FieldName_Instructions then
+		let iQueryCode = VA508_QueryCode_Instructions
+
+	elif sFieldName == VA508_FieldName_Item_Instructions then
+		let iQueryCode = VA508_QueryCode_Item_Instructions
+
+	else
+		; This should not happen in production and indicates a programming error.
+		beep()
+		return 0
+	endIf
+
+	return iQueryCode
+
 endFunction
 
 ;***********************************************************************
@@ -810,84 +912,86 @@ endFunction
 ; Called by VA508SayData for Speech and controlPropGet for Braille
 ;***********************************************************************
 int Function VA508GetComponentProp(handle hWnd, variant xProp, int iCacheHandling, string byRef sVal)
-Var
-	string sProp,
-	int iQueryCode,
-	Int iDataStatus
+	Var
+		string sProp,
+		int iQueryCode,
+		Int iDataStatus
 
 ; ***** Code from here to the next short set of stars can be called 40 or more times per second by Braille code.
 ; For efficiency, frequent callers should pass a query code, not a field name here.
 
-if stringToInt(xProp) then
-	let iQueryCode = VA508cast(xProp)
-	let sProp = ""  ; Don't figure that one out unless we need it.
-else
-	let sProp = VA508cast(xProp)
-	let iQueryCode = VA508QueryCodeFromFieldName(sProp)
-endIf
+	if stringToInt(xProp) then
+		let iQueryCode = VA508cast(xProp)
+		let sProp = ""  ; Don't figure that one out unless we need it.
+	else
+		let sProp = VA508cast(xProp)
+		let iQueryCode = VA508QueryCodeFromFieldName(sProp)
+	endIf
 
 ; Optimize by far the most frequent call case.
-let sVal = ""
-if iCacheHandling == VA508_Cache_Use
-&& hwnd == ghVA508cacheHwnd
-&& getTickCount() -giVA508cacheTick < VA508_Cache_Mils then
-	; Use the cached value and don't call on the framework at all this time.
-	watchCount("cacheUse")
-	return VA508cacheGetVal(iQueryCode, sVal)
+	let sVal = ""
 
-; ***** End of 40-time-per-second code block.
+	if iCacheHandling == VA508_Cache_Use && hwnd == ghVA508cacheHwnd && getTickCount() - giVA508cacheTick < VA508_Cache_Mils then
+		; Use the cached value and don't call on the framework at all this time.
+		watchCount("cacheUse")
+		return VA508cacheGetVal(iQueryCode, sVal)
 
-elif iCacheHandling == VA508_Cache_Skip then
-	; Always go to the framework for these.  We'll need the field name for that.
-	if !sProp then
-		let sProp = VA508FieldNameFromQueryCode(iQueryCode)
-	endIf
-	watchCount("cacheSkip")
-	VA508GetApplicationData(hWnd, iQueryCode)
-	let iDataStatus = StringToInt(VA508GetStringValue(VA508_FieldName_Data_Status))  ;"DataStatus"
-
-	if iDataStatus & iQueryCode then
-		let sVal = VA508GetStringValue(sProp)
-		if hwnd == ghVA508cacheHwnd then
-			; A trick to re-use VA508cacheSetVals for this.
-			; Makes sure the dataStatus bit is set and sets the property value.
-			VA508cacheSetVals(iQueryCode, iDataStatus, sVal, sVal, sVal, sVal, sVal, sVal)
+	; ***** End of 40-time-per-second code block.
+	elif iCacheHandling == VA508_Cache_Skip then
+		; Always go to the framework for these.  We'll need the field name for that.
+		if !sProp then
+			let sProp = VA508FieldNameFromQueryCode(iQueryCode)
 		endIf
-		return 1
-	elif iDataStatus & VA508_QueryCode_Error then
-		; Should not happen, but force the next call to update the cache if it does.
-		if hwnd == ghVA508cacheHwnd then
-			let giVA508cacheTick = 0
-		endIf
-		return -1
-	else
-		; Property not handled by the framework.
-		if hwnd == ghVA508cacheHwnd then
-			if giVA508cacheDataStatus & iQueryCode then
-				; Property removed from framework (probably never happens).
-				; Remove the status bit from the cache as well.
-				; let giVA508cacheDataStatus = giVA508cacheDataStatus -iQueryCode
+		watchCount("cacheSkip")
+		VA508GetApplicationData(hWnd, iQueryCode)
+
+		let iDataStatus = StringToInt(VA508GetStringValue(VA508_FieldName_Data_Status))  ;"DataStatus"
+
+		if iDataStatus & iQueryCode then
+			let sVal = VA508GetStringValue(sProp)
+			if hwnd == ghVA508cacheHwnd then
+				; A trick to re-use VA508cacheSetVals for this.
+				; Makes sure the dataStatus bit is set and sets the property value.
+				VA508cacheSetVals(iQueryCode, iDataStatus, sVal, sVal, sVal, sVal, sVal, sVal)
 			endIf
+			return 1
+
+		elif iDataStatus & VA508_QueryCode_Error then
+			; Should not happen, but force the next call to update the cache if it does.
+			if hwnd == ghVA508cacheHwnd then
+				let giVA508cacheTick = 0
+			endIf
+			return -1
+
+		else
+			; Property not handled by the framework.
+			if hwnd == ghVA508cacheHwnd then
+				if giVA508cacheDataStatus & iQueryCode then
+					; Property removed from framework (probably never happens).
+					; Remove the status bit from the cache as well.
+					; let giVA508cacheDataStatus = giVA508cacheDataStatus -iQueryCode
+				endIf
+			endIf
+			return 0
+
 		endIf
-		return 0
 	endIf
-endIf
 
 ; All remaining use cases are rebuild-cache cases.
 
-; Clear the cache first.
-VA508cacheUpdate(0)
+	; Clear the cache first.
+	VA508cacheUpdate(0)
 
-; Get all properties from the framework.
-watchCount("cacheUpdate")
-VA508GetApplicationData(hWnd, VA508_QueryCode_All)
+	; Get all properties from the framework.
+	watchCount("cacheUpdate")
+	VA508GetApplicationData(hWnd, VA508_QueryCode_All)
 
-; Update all properties in the cache.
-VA508cacheUpdate(hwnd)
+	; Update all properties in the cache.
+	VA508cacheUpdate(hwnd)
 
-; Return the property sought in the first place.
+	; Return the property sought in the first place.
+	return VA508cacheGetVal(iQueryCode, sVal)
 
-return VA508cacheGetVal(iQueryCode, sVal)
 EndFunction
 
 ;**********************************************************************
@@ -896,34 +1000,40 @@ EndFunction
 ; should update only items that have changed and getcomponentProp
 ;**********************************************************************
 Void Function VA508CacheSetVals (handle hwnd, int iDataStatus, string sCaption, string sValue, string sControlType, string sState, string sInstructions, string sItemInstructions)
-; Don't mess with the cache if it doesn't apply to this window.
-if hwnd != ghVA508cacheHwnd then
-	return
-endIf
+	; Don't mess with the cache if it doesn't apply to this window.
+	if hwnd != ghVA508cacheHwnd then
+		return
+	endIf
 
-; This is in case the framework suddenly decides to include a property not previously included by tossing it at us in an event call.
-; This will probably never happen, but this line shouldn't hurt anything anyway.
-let giVA508cacheDataStatus = giVA508cacheDataStatus | iDataStatus
+	; This is in case the framework suddenly decides to include a property not previously included by tossing it at us in an event call.
+	; This will probably never happen, but this line shouldn't hurt anything anyway.
+	let giVA508cacheDataStatus = giVA508cacheDataStatus | iDataStatus
 
-; Hand out property changes based on what we're told changed.
-if iDataStatus & VA508_QueryCode_Caption then
-	let gsVA508cacheCaption = sCaption
-endIf
-if iDataStatus & VA508_QueryCode_Value then
-	let gsVA508cacheValue = sValue
-endIf
-if iDataStatus & VA508_QueryCode_Control_Type then
-	let gsVA508cacheControlType = sControlType
-endIf
-if iDataStatus & VA508_QueryCode_State then
-	let gsVA508cacheState = sState
-endIf
-if iDataStatus & VA508_QueryCode_Instructions then
-	let gsVA508cacheInstructions = sInstructions
-endIf
-if iDataStatus & VA508_QueryCode_Item_Instructions then
-	let gsVA508cacheItemInstructions = sItemInstructions
-endIf
+	; Hand out property changes based on what we're told changed.
+	if iDataStatus & VA508_QueryCode_Caption then
+		let gsVA508cacheCaption = sCaption
+	endIf
+
+	if iDataStatus & VA508_QueryCode_Value then
+		let gsVA508cacheValue = sValue
+	endIf
+
+	if iDataStatus & VA508_QueryCode_Control_Type then
+		let gsVA508cacheControlType = sControlType
+	endIf
+
+	if iDataStatus & VA508_QueryCode_State then
+		let gsVA508cacheState = sState
+	endIf
+
+	if iDataStatus & VA508_QueryCode_Instructions then
+		let gsVA508cacheInstructions = sInstructions
+	endIf
+
+	if iDataStatus & VA508_QueryCode_Item_Instructions then
+		let gsVA508cacheItemInstructions = sItemInstructions
+	endIf
+
 EndFunction
 
 ;**********************************************************************
@@ -935,54 +1045,57 @@ EndFunction
 ; TODO:  If a row or column header or cell value contains a ^, False will be returned and no grid data will be set.
 ;**********************************************************************
 int Function VA508GetGridData (variant fromWhere, int dontCheck)
-watchCount("grid")
-var
-	int iResult,
-	string sVal
+	watchCount("grid")
+	var
+		int iResult,
+		string sVal
 
-; It's not a grid until we say it's a grid...
-let gsVA508cacheGridColHdr = ""
-let giVA508cacheGridColNum = 0
-let giVA508cacheGridColCnt = 0
-let gsVA508cacheGridRowHdr = ""
-let giVA508cacheGridRowNum = 0
-let giVA508cacheGridRowCnt = 0
-let giVA508cacheGridCellNum = 0
-let giVA508cacheGridCellCnt = 0
-let gsVA508cacheGridCellVal = ""
-if !fromWhere then
-	return False
-endIf
-
-if stringToInt(fromWhere) && !stringContains(fromWhere, "^") && !dontCheck then
-; A window handle.
-; sayString("grid check")
-	let iResult = VA508GetComponentProp(fromWhere, VA508_FieldName_Value, VA508_Cache_Skip, sVal)
-	If iResult < 1 then
+	; It's not a grid until we say it's a grid...
+	let gsVA508cacheGridColHdr = ""
+	let giVA508cacheGridColNum = 0
+	let giVA508cacheGridColCnt = 0
+	let gsVA508cacheGridRowHdr = ""
+	let giVA508cacheGridRowNum = 0
+	let giVA508cacheGridRowCnt = 0
+	let giVA508cacheGridCellNum = 0
+	let giVA508cacheGridCellCnt = 0
+	let gsVA508cacheGridCellVal = ""
+	if !fromWhere then
 		return False
 	endIf
-else
-	; A value property already obtained from somewhere.
-	let sVal = fromWhere
-endIf
 
-if VA508stringSegmentCount(sVal, "^") != 9 then
-	; Got a value, but it's not grid data.
-	return False
-endIf
+	if stringToInt(fromWhere) && !stringContains(fromWhere, "^") && !dontCheck then
+	; A window handle.
+	; sayString("grid check")
+		let iResult = VA508GetComponentProp(fromWhere, VA508_FieldName_Value, VA508_Cache_Skip, sVal)
+		If iResult < 1 then
+			return False
+		endIf
+	else
+		; A value property already obtained from somewhere.
+		let sVal = fromWhere
+	endIf
 
-; sayString("valid grid found by ggd")
-let gsVA508cacheGridColHdr = stringSegment(sVal, "^", 1)
-let giVA508cacheGridColNum = stringToInt(stringSegment(sVal, "^", 2))
-let giVA508cacheGridColCnt = stringToInt(stringSegment(sVal, "^", 3))
-let gsVA508cacheGridRowHdr = stringSegment(sVal, "^", 4)
-let giVA508cacheGridRowNum = stringToInt(stringSegment(sVal, "^", 5))
-let giVA508cacheGridRowCnt = stringToInt(stringSegment(sVal, "^", 6))
-; The cell value is at the end of the string from the DLL.
-let giVA508cacheGridCellNum = stringToInt(stringSegment(sVal, "^", 7))
-let giVA508cacheGridCellCnt = stringToInt(stringSegment(sVal, "^", 8))
-let gsVA508cacheGridCellVal = stringSegment(sVal, "^", 9)
-return True
+	if VA508stringSegmentCount(sVal, "^") != 9 then
+		; Got a value, but it's not grid data.
+		return False
+	endIf
+
+	; sayString("valid grid found by ggd")
+	let gsVA508cacheGridColHdr = stringSegment(sVal, "^", 1)
+	let giVA508cacheGridColNum = stringToInt(stringSegment(sVal, "^", 2))
+	let giVA508cacheGridColCnt = stringToInt(stringSegment(sVal, "^", 3))
+	let gsVA508cacheGridRowHdr = stringSegment(sVal, "^", 4)
+	let giVA508cacheGridRowNum = stringToInt(stringSegment(sVal, "^", 5))
+	let giVA508cacheGridRowCnt = stringToInt(stringSegment(sVal, "^", 6))
+
+	; The cell value is at the end of the string from the DLL.
+	let giVA508cacheGridCellNum = stringToInt(stringSegment(sVal, "^", 7))
+	let giVA508cacheGridCellCnt = stringToInt(stringSegment(sVal, "^", 8))
+	let gsVA508cacheGridCellVal = stringSegment(sVal, "^", 9)
+
+	return True
+
 EndFunction
 
 ;***********************************************************************
@@ -990,29 +1103,29 @@ EndFunction
 ; Returns False if we should use default and True if this function announced the control and we don't need to do anything else
 ;***********************************************************************
 int Function VA508SayData(handle hwnd)
-var
-	int iResult,
-	int iResultInstructions,
-	int iResultValue,
-	int iResultState,
-	int bUseDefault,
-	string Caption,
-	string Value,
-	string ControlType,
-	string State,
-	string Instructions,
-	string ItemInstructions,
-	string Text,
-	handle tempHandle,
-	int TypeCode,
-	int subTypeCode,
-	string StaticText,
-	string position,
-	string Grouping,
-	string GroupingType,
-	int special,
-	string newControlType,
-	int iDataStatus
+	var
+		int iResult,
+		int iResultInstructions,
+		int iResultValue,
+		int iResultState,
+		int bUseDefault,
+		string Caption,
+		string Value,
+		string ControlType,
+		string State,
+		string Instructions,
+		string ItemInstructions,
+		string Text,
+		handle tempHandle,
+		int TypeCode,
+		int subTypeCode,
+		string StaticText,
+		string position,
+		string Grouping,
+		string GroupingType,
+		int special,
+		string newControlType,
+		int iDataStatus
 
 	; clear global variables, this should happen every time tab is pressed
 	let gsVA508tutorMessage = ""
@@ -1054,12 +1167,16 @@ var
 			let ControlType = ctSpinBox
 			let special = true
 		Endif ; check for presence of custom controlType
+
 	elif TypeCode == wt_listbox || TypeCode == wt_listView then ; position in group is wrong for standard delphi list boxes
 		let special = true
+
 	elif getWindowClass(hwnd) == wcTTreeView then ; to remove unchecked from value
 			let special = true
+
 	elif getWindowClass(hwnd) == "TORComboEdit" || getWindowClass(hwnd) == "TORComboBox" then
 		let special = True
+
 	endif ; check for spinBox
 
 	if bUseDefault == FALSE || special then
@@ -1086,8 +1203,10 @@ var
 			let ControlType = newControlType
 		EndIf ; end custom spoken control type
 		sayControlEx(hwnd, Caption, ControlType, State, Grouping, GroupingType, Value, PositionInGroup(), StaticText)
+
 	else ; use default
 		return False
+
 	EndIf ; use default?
 
 	;Say(ItemInstructions,OT_TUTOR)  ; should always say item instructions if they exist?
@@ -1095,18 +1214,24 @@ var
 	; TODO: This may speak in a few undesirable places depending on user settings.
 	var
 		int ot
+
 	let ot = OT_Tutor
+
 	if !shouldItemSpeak(OT_Tutor) && False then
 		; TODO: "False" above should be "code invoked from script", but I see no way to establish that.
 		let ot = OT_Line
 	endIf
+
 	sayUsingVoice(VCTX_Message, itemInstructions, ot)
+
 	If iResultInstructions > 0 then
 		let ghVA508tutorWindow = hWnd
 		let gsVA508tutorMessage = Instructions
 		let giVA508TutorReturnValue = iResultInstructions
 	EndIf ; instructions
+
 	return True
+
 EndFunction
 
 ;***************************************************************************
@@ -1135,81 +1260,83 @@ EndFunction
 ; groupbox = not possible
 ;***************************************************************************
 Script SayLine()
-var
-	int theTypeCode,
-	string strVal,
-	string strState,
-	handle hwnd,
-	string strControlType
+	var
+		int theTypeCode,
+		string strVal,
+		string strState,
+		handle hwnd,
+		string strControlType
 
-;sayString("sayline")
-if !isPcCursor() || isSpecialFocus(False) then
-	performScript sayLine()
-	return
-Endif
+	;sayString("sayline")
+	if !isPcCursor() || isSpecialFocus(False) then
+		performScript sayLine()
+		return
+	Endif
 
-/*
-; Update the cache
-VA508GetComponentProp(hwnd, VA508_FieldName_Value, VA508_Cache_Update, strVal)
+/* Commented out...
+	; Update the cache
+	VA508GetComponentProp(hwnd, VA508_FieldName_Value, VA508_Cache_Update, strVal)
 
-let hwnd = getFocus()
-Let TheTypeCode = GetWindowSubTypeCode (GetFocus ())
-If !TheTypeCode then  ; if any unknown typeCode then get the sub type code from MSAA
-	Let TheTypeCode = GetObjectSubTypeCode ()
-EndIf
+	let hwnd = getFocus()
+	Let TheTypeCode = GetWindowSubTypeCode (GetFocus ())
+	If !TheTypeCode then  ; if any unknown typeCode then get the sub type code from MSAA
+		Let TheTypeCode = GetObjectSubTypeCode ()
+	EndIf
 
-; if we have a custom control type, then we really don't know how much or little information should be spoken, so say it all!
-if theTypeCode == wt_unknown && VA508GetComponentProp(hwnd, VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) >  0 then ; make assumption that anything that has a value has child objects, doesn't cover case where it isn't a list but has a custom state but not a custom value
-	VA508SayData(hwnd)
-	return
-Endif
+	; if we have a custom control type, then we really don't know how much or little information should be spoken, so say it all!
+	if theTypeCode == wt_unknown && VA508GetComponentProp(hwnd, VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) >  0 then ; make assumption that anything that has a value has child objects, doesn't cover case where it isn't a list but has a custom state but not a custom value
+		VA508SayData(hwnd)
+		return
+	Endif
 
-; this only applies to list boxes
-if stringContains("lb lm lx", getListType(theTypeCode))  ; doesn't apply to listview, should pick up tree with custom value
-&& !VA508GetGridData(hwnd) then ; grids should be handled differently though, so if value but grid don't use this code, use code in sayLine function
-	; BOTH value and state are custom
-	if VA508GetComponentProp(hwnd, VA508_FieldName_Value, VA508_Cache_Use, strVal) >  0 &&
- 	VA508GetComponentProp(hwnd, VA508_FieldName_State, VA508_Cache_Use, strState) >  0 then
-		SayMessage (OT_LINE, strVal)
-		SayMessage (OT_item_state, strState)  ; custom expanded/collapsed states should be handled by the framework
+	; this only applies to list boxes
+	if stringContains("lb lm lx", getListType(theTypeCode))  ; doesn't apply to listview, should pick up tree with custom value
+		&& !VA508GetGridData(hwnd) then ; grids should be handled differently though, so if value but grid don't use this code, use code in sayLine function
+		; BOTH value and state are custom
+		if VA508GetComponentProp(hwnd, VA508_FieldName_Value, VA508_Cache_Use, strVal) >  0 &&
+		VA508GetComponentProp(hwnd, VA508_FieldName_State, VA508_Cache_Use, strState) >  0 then
+			SayMessage (OT_LINE, strVal)
+			SayMessage (OT_item_state, strState)  ; custom expanded/collapsed states should be handled by the framework
+			SayMessage (OT_POSITION, PositionInGroup ())
+			return
+		Endif
+		; only VALUE is custom, use state from jaws
+		if VA508GetComponentProp(hwnd, VA508_FieldName_Value, VA508_Cache_Use, strVal) >  0 &&
+		VA508GetComponentProp(hwnd, VA508_FieldName_State, VA508_Cache_Use, strState) < 1 then
+			SayMessage (OT_line, strVal)
+			If (theTypeCode == WT_TREEVIEW || theTypecode == WT_TREEVIEWITEM) then
+				SayTVFocusItemExpandState (hwnd)  ; getObjectState() doesn't return correct info for tree views
+			Else
+				SayMessage  (ot_item_state,getObjectState())
+			endif
+			SayMessage (OT_POSITION, PositionInGroup ())
+			return
+		Endif
+		; only STATE is custom - current case for checklist box
+		if VA508GetComponentProp(hwnd, VA508_FieldName_State, VA508_Cache_Use, strState) > 0 &&
+		VA508GetComponentProp(hwnd, VA508_FieldName_Value, VA508_Cache_Use, strVal) <  1 then
+			Let strVal = GetAccName()
+			SayMessage (OT_line, strVal)
+			SayMessage (OT_item_State, strState)
+			SayMessage (OT_POSITION, PositionInGroup ())
+			return
+		EndIf  ; only state
+	Endif ; are we on a listbox or a custom control that has it's value set
+
+	; another special case for listboxes
+	; no custom state or value found but need to use msaa for listboxes
+	; for standard listboxes that JAWS has trouble announcing not selected for
+	if stringContains("lb lm lx", getListType(theTypeCode)) then  ; doesn't apply to listview, only listbox, should pick up tree with custom value
+		say(getAccState(),ot_item_state)
+		say(getAccName(),ot_selected_item) ; uses msaa for list item, falls back on getObjectValue()
 		SayMessage (OT_POSITION, PositionInGroup ())
 		return
 	Endif
-	; only VALUE is custom, use state from jaws
-	if VA508GetComponentProp(hwnd, VA508_FieldName_Value, VA508_Cache_Use, strVal) >  0 &&
- 	VA508GetComponentProp(hwnd, VA508_FieldName_State, VA508_Cache_Use, strState) < 1 then
-		SayMessage (OT_line, strVal)
-		If (theTypeCode == WT_TREEVIEW || theTypecode == WT_TREEVIEWITEM) then
-			SayTVFocusItemExpandState (hwnd)  ; getObjectState() doesn't return correct info for tree views
-		Else
-			SayMessage  (ot_item_state,getObjectState())
-		endif
-		SayMessage (OT_POSITION, PositionInGroup ())
-		return
-	Endif
-	; only STATE is custom - current case for checklist box
- 	if VA508GetComponentProp(hwnd, VA508_FieldName_State, VA508_Cache_Use, strState) > 0 &&
-	VA508GetComponentProp(hwnd, VA508_FieldName_Value, VA508_Cache_Use, strVal) <  1 then
-		Let strVal = GetAccName()
-		SayMessage (OT_line, strVal)
-		SayMessage (OT_item_State, strState)
-		SayMessage (OT_POSITION, PositionInGroup ())
-		return
-	EndIf  ; only state
-Endif ; are we on a listbox or a custom control that has it's value set
-
-; another special case for listboxes
-; no custom state or value found but need to use msaa for listboxes
-; for standard listboxes that JAWS has trouble announcing not selected for
-if stringContains("lb lm lx", getListType(theTypeCode)) then  ; doesn't apply to listview, only listbox, should pick up tree with custom value
-	say(getAccState(),ot_item_state)
-	say(getAccName(),ot_selected_item) ; uses msaa for list item, falls back on getObjectValue()
-	SayMessage (OT_POSITION, PositionInGroup ())
-	return
-Endif
 */
-; performScript sayLine()  ; this function in default is likely to call the function sayLine below
-sayLine()
+	; performScript sayLine()  ; this function in default is likely to call the function sayLine below
+
+	sayLine()
+
 EndScript
 
 ;*****************************************************************************************
@@ -1225,150 +1352,178 @@ EndFunction
 ; also called by control+home and control+end in grid
 ; called by script sayLine for edits and buttons when sayLine command is pressed
 void Function SayLine(int iDrawHighlights)
-var
-	int typeCode,
-	int subTypeCode,
-	handle hwnd,
-	string strState,
-	string strCaption,
-	string strValue,
-	string strControlType,
-	string strPosition,
-	int special
+	var
+		int typeCode,
+		int subTypeCode,
+		handle hwnd,
+		string strState,
+		string strCaption,
+		string strValue,
+		string strControlType,
+		string strPosition,
+		int special
 
-;sayString("sayline")
-if !isPCCursor() || isSpecialFocus(False)  then
-	return sayLine(iDrawHighlights)
-endIf
-let hwnd = getFocus()
-let typeCode = getWindowTypeCode(hwnd)
-; sayInteger(typeCode)
-let subTypeCode = getWindowSubTypeCode(hwnd)
+	;sayString("sayline")
+	if !isPCCursor() || isSpecialFocus(False)  then
+		return sayLine(iDrawHighlights)
+	endIf
 
-if stringContains("lb lm lx", getListType(TypeCode)) then 
-	let special = true ; for listbox without customizations we need this for msaa names to be announced
-elif getObjectTypeCode() == wt_listboxItem then ; for list view
-	let special = true ; for listview without customizations we need this for position in group to be spoken
-elif (getWindowClass(hwnd) == "TORComboEdit" || getWindowClass(hwnd) == "TORComboBox") && positionInGroup() then
-	let special = True
-EndIf
+	let hwnd = getFocus()
+	let typeCode = getWindowTypeCode(hwnd)
 
-; simple call to update the cache
-VA508GetComponentProp(getFocus(), VA508_FieldName_Control_Type, VA508_Cache_Update, strControlType)
+	; sayInteger(typeCode)
+	let subTypeCode = getWindowSubTypeCode(hwnd)
 
-; added jda 4-22-08 to make standard edit combos announce blank when empty and nothing else, also prevents speaking of caption on standard edit combos when sayLine is pressed
-if getWindowClass(hwnd) == wcEdit && getWindowClass(getParent(hwnd)) == wcTComboBox then
-	let typeCode = wt_editCombo
-endif
+	if stringContains("lb lm lx", getListType(TypeCode)) then 
+		let special = true ; for listbox without customizations we need this for msaa names to be announced
+
+	elif getObjectTypeCode() == wt_listboxItem then ; for list view
+		let special = true ; for listview without customizations we need this for position in group to be spoken
+		
+	elif getObjectTypeCode() == WT_LISTVIEWITEM then ; for list view
+		let special = true ; for listview without customizations we need this for position in group to be spoken
+
+	elif (getWindowClass(hwnd) == "TORComboEdit" || getWindowClass(hwnd) == "TORComboBox") && positionInGroup() then
+		let special = True
+
+	EndIf
+
+	; simple call to update the cache
+	VA508GetComponentProp(getFocus(), VA508_FieldName_Control_Type, VA508_Cache_Update, strControlType)
+
+	; added jda 4-22-08 to make standard edit combos announce blank when empty and nothing else, also prevents speaking of caption on standard edit combos when sayLine is pressed
+	if getWindowClass(hwnd) == wcEdit && getWindowClass(getParent(hwnd)) == wcTComboBox then
+		let typeCode = wt_editCombo
+	endif
 
 ; combo boxes should not have their name spoken
-if (typeCode == wt_edit && subTypeCode != wt_multiline_edit) ; also covers edit comboes, and spinboxes because they have a typeCode of edit
-|| typeCode == wt_button then ; also handles edit & edit comboes
-	; sayInteger(subTypeCode)
-	if VA508SayData(hwnd) then
+	if (typeCode == wt_edit && subTypeCode != wt_multiline_edit) ; also covers edit comboes, and spinboxes because they have a typeCode of edit 
+		|| typeCode == wt_button then ; also handles edit & edit comboes
+
+		; sayInteger(subTypeCode)
+		if VA508SayData(hwnd) then
+			return
+		else			; else fall through to regular sayline
+			sayLine(iDrawHighlights)	 ; calls internal sayline function as default has no sayline function
+			return
+		endIf
+
+	; if we have a custom control type, then we really don't know how much or little information should be spoken, so say it all!
+	elif TypeCode == wt_unknown && VA508GetComponentProp(hwnd, VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) >  0 then ; make assumption that anything that has a value has child objects, doesn't cover case where it isn't a list but has a custom state but not a custom value
+		VA508SayData(hwnd)
 		return
-	else			; else fall through to regular sayline
+
+	elif VA508getGridData(getFocus(),0) > 0 then  ; GRID
+		say(getCurrentCellHeadersData(),ot_line)
+		return
+
+	elif VA508GetComponentProp(getFocus(), VA508_FieldName_Caption, VA508_Cache_Use, strCaption) < 1 &&
+		VA508GetComponentProp(getFocus(), VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) < 1 &&
+		VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Use, strValue) < 1 &&
+		VA508GetComponentProp(getFocus(), VA508_FieldName_State, VA508_Cache_Use, strState) < 1  &&
+		!special then
 		sayLine(iDrawHighlights)	 ; calls internal sayline function as default has no sayline function
 		return
+
+	elif subTypeCode == wt_multiline_Edit then
+		sayLine(iDrawHighlights)	 ; calls internal sayline function as default has no sayline function
+		return
+
 	endIf
-; if we have a custom control type, then we really don't know how much or little information should be spoken, so say it all!
-elif TypeCode == wt_unknown && VA508GetComponentProp(hwnd, VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) >  0 then ; make assumption that anything that has a value has child objects, doesn't cover case where it isn't a list but has a custom state but not a custom value
-	VA508SayData(hwnd)
-	return
-elif VA508getGridData(getFocus(),0) > 0 then  ; GRID
-	say(getCurrentCellHeadersData(),ot_line)
-	return
-elif VA508GetComponentProp(getFocus(), VA508_FieldName_Caption, VA508_Cache_Use, strCaption) < 1 &&
-VA508GetComponentProp(getFocus(), VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) < 1 &&
-VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Use, strValue) < 1 &&
-VA508GetComponentProp(getFocus(), VA508_FieldName_State, VA508_Cache_Use, strState) < 1  &&
-!special then
-	sayLine(iDrawHighlights)	 ; calls internal sayline function as default has no sayline function
-	return
-elif subTypeCode == wt_multiline_Edit then
-	sayLine(iDrawHighlights)	 ; calls internal sayline function as default has no sayline function
-	return
-endIf
 
-; now we have at least one custom property and it is stored in our local variable or we are special
+	; now we have at least one custom property and it is stored in our local variable or we are special
 
-let strPosition = PositionInGroup()
-if getWindowClass(hwnd) == "TORComboEdit" then
-	let typeCode = WT_EditCombo
-elif getWindowClass(hwnd) == "TORComboBox" then
-	let typeCode = WT_ComboBox
-endIf
+	let strPosition = PositionInGroup()
+	if getWindowClass(hwnd) == "TORComboEdit" then
+		let typeCode = WT_EditCombo
+	elif getWindowClass(hwnd) == "TORComboBox" then
+		let typeCode = WT_ComboBox
+	endIf
 
-; now let's set everything from default if there wasn't a custom framework property
-if VA508GetComponentProp(getFocus(), VA508_FieldName_Caption, VA508_Cache_Use, strCaption) < 1 then
-	;let strCaption = getAccName()
-	let strCaption = getObjectName() ; don't need to worry about child objects
-Endif
-if VA508GetComponentProp(getFocus(), VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) < 1 then
-	let strControlType = getObjectType()
-Endif
-if VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Use, strValue) < 1 then
-	let strValue = getAccValue()
-Endif
-if VA508GetComponentProp(getFocus(), VA508_FieldName_State, VA508_Cache_Use, strState) < 1 then
-	let strState = getObjectState()
-Endif
-if typeCode == wt_treeview then
-	let strState = tvGetFocusItemExpandStateString (hwnd) + " " + strState
-Endif
+	; now let's set everything from default if there wasn't a custom framework property
+	if VA508GetComponentProp(getFocus(), VA508_FieldName_Caption, VA508_Cache_Use, strCaption) < 1 then
+		;let strCaption = getAccName()
+		let strCaption = getObjectName() ; don't need to worry about child objects
+	Endif
+
+	if VA508GetComponentProp(getFocus(), VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) < 1 then
+		let strControlType = getObjectType()
+	Endif
+
+	if VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Use, strValue) < 1 then
+		let strValue = getAccValue()
+	Endif
+
+	if VA508GetComponentProp(getFocus(), VA508_FieldName_State, VA508_Cache_Use, strState) < 1 then
+		let strState = getObjectState()
+	Endif
+
+	if typeCode == wt_treeview then
+		let strState = tvGetFocusItemExpandStateString (hwnd) + " " + strState
+	Endif
 
 ; caption is typically not announced here, so no custom caption is announced unless we think we are on a control with no children and no value
 ; ControlType is typically not announced here, so no custom control type is announced
 ; controls with custom values should be handled by sayLine script and thus are not handled here
 ; instructions and item instructions are typically not announced when sayLine is pressed that is why custom ones are not set here
 
-if typeCode == wt_checkbox ||
-typeCode == wt_radiobutton then
-	say(strCaption,ot_control_name)
-	say(strControlType,ot_control_type)
-	say(strState,ot_item_state)
-Elif typeCode == wt_comboBox || typeCode == WT_EditCombo then
-	if !strValue then
-		let strValue = " "
-	endIf
-	say(strValue,ot_line)
-	; jda added 4-22-08 if statement to prevent position in group from being announced when tor edit combo box is empty
-	if !(strValue == " " && stringLength(strValue)) then
+	if typeCode == wt_checkbox || typeCode == wt_radiobutton then
+		say(strCaption,ot_control_name)
+		say(strControlType,ot_control_type)
+		say(strState,ot_item_state)
+
+	Elif typeCode == wt_comboBox || typeCode == WT_EditCombo then
+		if !strValue then
+			let strValue = " "
+		endIf
+		say(strValue,ot_line)
+		; jda added 4-22-08 if statement to prevent position in group from being announced when tor edit combo box is empty
+		if !(strValue == " " && stringLength(strValue)) then
+			say(strPosition,ot_position)
+		Endif
+
+	Elif typeCode == wt_slider || typeCode == wt_progressBar then
+		say(strCaption,ot_control_name)
+		say(strControlType,ot_control_type)
+		say(strValue,ot_selected_item)
+
+	elif stringContains("lb lm lx", getListType(typeCode)) then
+		say(strValue,ot_selected_item)
+		say(strState,ot_item_state)
 		say(strPosition,ot_position)
+
+	elif typecode == wt_listview then ; for list views
+		say(strValue,ot_selected_item)
+		say(strState,ot_item_state)
+		say(strPosition,ot_position)
+
+	elif typeCode == wt_treeview then
+		; no level needs to be announced here
+		say(strValue,ot_selected_item)
+		say(strState,ot_item_state)
+		say(strPosition,ot_position)	
+
+	Else ; for anything else speak everything
+		if VA508SayData(hwnd) then
+			return
+		else
+			sayLine(iDrawHighlights)	; this should never get called, here as backup!
+		endif
+
 	Endif
-Elif typeCode == wt_slider ||
-typeCode == wt_progressBar then
-	say(strCaption,ot_control_name)
-	say(strControlType,ot_control_type)
-	say(strValue,ot_selected_item)
-elif stringContains("lb lm lx", getListType(typeCode)) then
-	say(strValue,ot_selected_item)
-	say(strState,ot_item_state)
-	say(strPosition,ot_position)
-elif typecode == wt_listview then ; for list views
-	say(strValue,ot_selected_item)
-	say(strState,ot_item_state)
-	say(strPosition,ot_position)
-elif typeCode == wt_treeview then
-	; no level needs to be announced here
-	say(strValue,ot_selected_item)
-	say(strState,ot_item_state)
-	say(strPosition,ot_position)	
-Else ; for anything else speak everything
-	if VA508SayData(hwnd) then
-		return
-	else
-		sayLine(iDrawHighlights)	; this should never get called, here as backup!
-	endif
-Endif
+
 EndFunction
 
 ;****************************************
 ; this function should replace sayObjectTypeAndText
 int Function HandleCustomWindows(handle hwnd)
-;		sayString(getWindowClass(hwnd))
+	;Say ("VA 508 JAWS Handle Custom Windows", OT_JAWS_MESSAGE)
+	
 
-	if getWindowClass(hwnd) == wcTComboBox && getWindowClass(getFirstChild(hwnd)) == wcEdit then
+
+	;sayString (getWindowClass (hwnd))
+
+	if getWindowClass (hwnd) == wcTComboBox && getWindowClass (getFirstChild (hwnd)) == wcEdit then
 		return True
 	endif
 
@@ -1382,13 +1537,14 @@ int Function HandleCustomWindows(handle hwnd)
 		return true
 	Endif
 
-	if VA508SayData(hwnd) then
-		; sayString("custom")
+	if VA508SayData (hwnd) then
+		;sayString("custom")
 		return true  ; customizations were announced
 	else
 		; sayString("use default")
 		return false ; we are using default code in JAWS
 	endIf
+
 EndFunction
 
 ; called first
@@ -1420,25 +1576,28 @@ EndFunction
 ; initialize variables and tell code to perform handshake with dispatch window.  Reset any globals in case other application left them in memory which should not be the case though
 ;**********************************************************************
 Void Function AutoStartEvent ()
-let inDebugging = False
-let fwDebug = False
-let giDebugMode = 0
-if fileExists(getJAWSSettingsDirectory() +"\\debug.ini") then
-	let inDebugging = True
-endIf
-if fileExists(getJAWSSettingsDirectory() +"\\fwdebug.ini") then
-	let fwDebug = True
-endIf
-	let gbVA508needToLinkToDLL = TRUE
-	let giVA508messageID = RegisterWindowMessage(VA508_Reg_Msg_ID)
-	VA508ResetGlobals()
-	VA508EnsureInitialized()
-	UpdateBrailleClasses()
-	UpdateControlTypes()
-If !giAppHasBeenLoaded Then
-	LoadPersonalSettings()	; load personal settings
-	let giAppHasBeenLoaded=TRUE
-EndIf
+	let inDebugging = False
+	let fwDebug = False
+	let giDebugMode = 0
+
+	if fileExists(getJAWSSettingsDirectory() +"\\debug.ini") then
+		let inDebugging = True
+	endIf
+
+	if fileExists(getJAWSSettingsDirectory() +"\\fwdebug.ini") then
+		let fwDebug = True
+	endIf
+		let gbVA508needToLinkToDLL = TRUE
+		let giVA508messageID = RegisterWindowMessage(VA508_Reg_Msg_ID)
+		VA508ResetGlobals()
+		VA508EnsureInitialized()
+		UpdateBrailleClasses()
+		UpdateControlTypes()
+
+	If !giAppHasBeenLoaded Then
+		LoadPersonalSettings()	; load personal settings
+		let giAppHasBeenLoaded=TRUE
+	EndIf
 
 EndFunction
 
@@ -1446,149 +1605,180 @@ EndFunction
 ; called when user alt+tabs out of application, resets all global variables and forces the application to re-initialize next time.  This helps to ensure patient privacy as no patient data is left in hidden windows.
 ;**********************************************************************
 Void Function AutoFinishEvent()
-var
-	object nullObject
+	var
+		object nullObject
 
-	let gbVA508needToLinkToDLL = TRUE
-	VA508ResetGlobals()
+		let gbVA508needToLinkToDLL = TRUE
+		VA508ResetGlobals()
 EndFunction
 
 ;**********************************************************************
 ; called when JAWSKey+Q is pressed to announce script file settings that are loaded and module file name that is being used
 ;**********************************************************************
 Script ScriptFileName()
-; one line of debugging code
-if !giDebugMode then
-	ScriptAndAppNames(msgScriptSetName)
-Else ; start debug mode
-	DisplayDebugData()
-Endif ; end debug mode
+
+	; one line of debugging code
+	if !giDebugMode then
+		ScriptAndAppNames(msgScriptSetName)
+
+	Else ; start debug mode
+		DisplayDebugData()
+
+	Endif ; end debug mode
+
 EndScript
 
 ;***********************************************************************
 ; added by jda 4-22-08
 ;***********************************************************************
 void Function DisplayDebugData()
-var
-	string strCaption,
-	string strControlType,
-	string strValue,
-	string strState,
-	string strInstructions,
-	string strItemInstructions,
-	int iCustomInfo,
-	string sDisplayText
+	var
+		string strCaption,
+		string strControlType,
+		string strValue,
+		string strState,
+		string strInstructions,
+		string strItemInstructions,
+		int iCustomInfo,
+		string sDisplayText
 	
-let sDisplayText = ""
-if VA508GetComponentProp(getFocus(), VA508_FieldName_Caption, VA508_Cache_Use, strCaption) > 0 then
-	;say("has custom name",ot_jaws_message)
-	;say(strCaption,ot_control_name)
-	let sDisplayText = sDisplayText + "Custom Name: " + strCaption + "\n"
-	let iCustomInfo = true
-Endif
-if VA508GetComponentProp(getFocus(), VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) > 0 then
-	;say("has custom type",ot_jaws_message)
-	;say(strControlType,ot_control_type)
-	let sDisplayText = sDisplayText + "Custom Type: " + strControlType + "\n"
-	let iCustomInfo = true
-Endif
-if VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Use, strValue) > 0 then
-	;say("has custom value",ot_jaws_message)
-	;say(strValue,ot_selected_item)
-	let sDisplayText = sDisplayText + "Custom Value: " + strValue + "\n"
-	let iCustomInfo = true
-Endif
-if VA508GetComponentProp(getFocus(), VA508_FieldName_State, 	VA508_Cache_Use, strState) > 0 then
-	;say("has custom state",ot_jaws_message)
-	;say(strState,ot_item_state)
-	let sDisplayText = sDisplayText + "Custom State: " + strState + "\n"
-	let iCustomInfo = true
-Endif
-if VA508GetComponentProp(getFocus(),VA508_FieldName_Instructions, VA508_Cache_Use, strInstructions) > 0 then
-	;say("has custom instructions",ot_jaws_message)
-	;say(strInstructions,ot_line)
-	let sDisplayText = sDisplayText + "Custom Instructions: " + strInstructions + "\n"
-	let iCustomInfo = true
-Endif
-if VA508GetComponentProp(getFocus(), VA508_FieldName_Item_Instructions, 	VA508_Cache_Use, strItemInstructions) > 0 then
-	;say("has custom item instructions",ot_jaws_message)
-	;say(strItemInstructions,ot_line)
-	let sDisplayText = sDisplayText + "Custom Item Instructions: " + strItemInstructions + "\n"
-	let iCustomInfo = true
-Endif
-if !iCustomInfo then
-	;say("No custom information found",ot_Jaws_message)
-	let sDisplayText = "no custom information found\n"
-Endif
+	let sDisplayText = ""
+	if VA508GetComponentProp(getFocus(), VA508_FieldName_Caption, VA508_Cache_Use, strCaption) > 0 then
+		;say("has custom name",ot_jaws_message)
+		;say(strCaption,ot_control_name)
+		let sDisplayText = sDisplayText + "Custom Name: " + strCaption + "\n"
+		let iCustomInfo = true
+	Endif
+
+	if VA508GetComponentProp(getFocus(), VA508_FieldName_Control_Type, VA508_Cache_Use, strControlType) > 0 then
+		;say("has custom type",ot_jaws_message)
+		;say(strControlType,ot_control_type)
+		let sDisplayText = sDisplayText + "Custom Type: " + strControlType + "\n"
+		let iCustomInfo = true
+	Endif
+
+	if VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Use, strValue) > 0 then
+		;say("has custom value",ot_jaws_message)
+		;say(strValue,ot_selected_item)
+		let sDisplayText = sDisplayText + "Custom Value: " + strValue + "\n"
+		let iCustomInfo = true
+	Endif
+
+	if VA508GetComponentProp(getFocus(), VA508_FieldName_State, 	VA508_Cache_Use, strState) > 0 then
+		;say("has custom state",ot_jaws_message)
+		;say(strState,ot_item_state)
+		let sDisplayText = sDisplayText + "Custom State: " + strState + "\n"
+		let iCustomInfo = true
+	Endif
+
+	if VA508GetComponentProp(getFocus(),VA508_FieldName_Instructions, VA508_Cache_Use, strInstructions) > 0 then
+		;say("has custom instructions",ot_jaws_message)
+		;say(strInstructions,ot_line)
+		let sDisplayText = sDisplayText + "Custom Instructions: " + strInstructions + "\n"
+		let iCustomInfo = true
+	Endif
+
+	if VA508GetComponentProp(getFocus(), VA508_FieldName_Item_Instructions, 	VA508_Cache_Use, strItemInstructions) > 0 then
+		;say("has custom item instructions",ot_jaws_message)
+		;say(strItemInstructions,ot_line)
+		let sDisplayText = sDisplayText + "Custom Item Instructions: " + strItemInstructions + "\n"
+		let iCustomInfo = true
+	Endif
+
+	if !iCustomInfo then
+		;say("No custom information found",ot_Jaws_message)
+		let sDisplayText = "no custom information found\n"
+	Endif
 	
-va508getApplicationData(getFocus(),va508_queryCode_all)
-;copyToClipboard("Status:" + VA508GetStringValue(va508_fieldname_data_status)+ " Data: " + gsva508data)
-let sDisplayText = sDisplayText + "Status:" + VA508GetStringValue(va508_fieldname_data_status)+ " Data: " + gsva508data + "\n" + "DLL handle: " + IntToString(ghVA508DLLWindow) + "\n" + "Need to link to DLL?: " + IntToString(gbVA508needToLinkToDLL) + "\n" + "Data Windows Title: " + gsVA508dataWindowTitle + "\n"
-;sayMessage(ot_message,"data copied to clipboard")
-If UserBufferIsActive() then UserBufferDeActivate() Endif
-UserBufferClear()
-sayMessage(ot_user_buffer,sDisplayText)
+	va508getApplicationData(getFocus(),va508_queryCode_all)
+	;copyToClipboard("Status:" + VA508GetStringValue(va508_fieldname_data_status)+ " Data: " + gsva508data)
+
+	let sDisplayText = sDisplayText + "Status:" + VA508GetStringValue(va508_fieldname_data_status)+ " Data: " + gsva508data + "\n" + "DLL handle: " + IntToString(ghVA508DLLWindow) + "\n" + "Need to link to DLL?: " + IntToString(gbVA508needToLinkToDLL) + "\n" + "Data Windows Title: " + gsVA508dataWindowTitle + "\n"
+
+	;sayMessage(ot_message,"data copied to clipboard")
+	If UserBufferIsActive() then 
+		UserBufferDeActivate() 
+	Endif
+
+	UserBufferClear()
+
+	sayMessage(ot_user_buffer,sDisplayText)
+
 EndFunction
 
 ;**********************************************************************
 int function abs(int n)
-; Absolute value
-if n < 0 then
-	return 0-n
-endIf
-return n
+	; Absolute value
+	if n < 0 then
+		return 0 - n
+	endIf
+
+	return n
+
 endFunction
 
 ;**********************************************************************
 ; Get position and count from TORComboBox windows.
 ;**********************************************************************
 int function getTorComboInfo(int byRef pos, int byRef count)
-var
-	handle hwnd,
-	object o, int childID
-let hwnd = getCurrentWindow()
-if !hwnd then
-	return False
-endIf
-if getWindowClass(hwnd) == "TorComboEdit" then
-	let hwnd = getParent(hwnd)
-endIf
-if getWindowClass(hwnd) != "TorComboBox" then
-	return False
-endIf
-let o = getObjectFromEvent(hwnd, -4, 0, childID)  ; -4 = ObjID_Client
-if !o then
-	return False
-endIf
-let o = o.accNavigate(8, childID)  ; 8 = NavDir_LastChild
-if !o then
-	return False
-endIf
-if o.accRole(0) == 9 then  ; 9 = Role_System_Window
-	let o = o.accChild(-4)
-	if !o then
+	var
+		handle hwnd,
+		object o, 
+		int childID
+		
+	let hwnd = getCurrentWindow()
+	if !hwnd then
 		return False
 	endIf
-endIf
-if o.accRole(0) != 33  ; 33 = Role_System_List
-&& isPCCursor() && getWindowTypeCode(getFirstChild(getFocus())) == WT_Button then
-	let hwnd = getFirstChild(findTopLevelWindow("TORDropPanel", ""))
-	if getWindowClass(hwnd) != "TORListBox"
-	|| abs(getWindowLeft(hwnd) -getWindowLeft(getFocus())) > 5
-	|| abs(getWindowTop(hwnd) -getWindowBottom(getFocus())) > 5 then
+
+	if getWindowClass(hwnd) == "TorComboEdit" then
+		let hwnd = getParent(hwnd)
+	endIf
+
+	if getWindowClass(hwnd) != "TorComboBox" then
 		return False
 	endIf
+
 	let o = getObjectFromEvent(hwnd, -4, 0, childID)  ; -4 = ObjID_Client
 	if !o then
 		return False
 	endIf
-	if o.accRole(0) != 33 then  ; 33 = Role_System_List
+
+	let o = o.accNavigate(8, childID)  ; 8 = NavDir_LastChild
+	if !o then
 		return False
 	endIf
-endIf
-let count = o.accChildCount +0
-let pos = o.accSelection +0
-return True
+
+	if o.accRole(0) == 9 then  ; 9 = Role_System_Window
+		let o = o.accChild(-4)
+		if !o then
+			return False
+		endIf
+	endIf
+
+	if o.accRole(0) != 33  ; 33 = Role_System_List
+		&& isPCCursor() && getWindowTypeCode(getFirstChild(getFocus())) == WT_Button then
+		let hwnd = getFirstChild(findTopLevelWindow("TORDropPanel", ""))
+		if getWindowClass(hwnd) != "TORListBox" || abs(getWindowLeft(hwnd) -getWindowLeft(getFocus())) > 5 || abs(getWindowTop(hwnd) -getWindowBottom(getFocus())) > 5 then
+			return False
+		endIf
+
+		let o = getObjectFromEvent(hwnd, -4, 0, childID)  ; -4 = ObjID_Client
+		if !o then
+			return False
+		endIf
+
+		if o.accRole(0) != 33 then  ; 33 = Role_System_List
+			return False
+		endIf
+
+	endIf
+
+	let count = o.accChildCount +0
+	let pos = o.accSelection +0
+
+	return True
+
 endFunction
 
 ;**********************************************************************
@@ -1610,16 +1800,21 @@ var
 	if getObjectTypeCode() == wt_listboxitem then ; this is actually for list views which return a type code of listbox item
 		let pos = lvGetFocusItem(hwnd)
 		let count = lvGetItemCount (hwnd)
+
+	elif getObjectTypeCode() == WT_LISTVIEWITEM then ; this is actually for list views which return a type code of listbox item
+		let pos = lvGetFocusItem(hwnd)
+		let count = lvGetItemCount (hwnd)
+		
 	elif getObjectTypeCode() == wt_listbox then
 		let pos = SendMessage(hwnd,LB_GETCURSEL,0,0)+1
 		let count = SendMessage(hwnd,LB_COUNT,0,0)
-	elif getWindowClass(hwnd) == "TorComboEdit"
-	|| (getWindowClass(hwnd) == "TorComboBox" && !positionInGroup())
-	then
+
+	elif getWindowClass(hwnd) == "TorComboEdit" || (getWindowClass(hwnd) == "TorComboBox" && !positionInGroup()) then
 		if !getTorComboInfo(pos, count) then
 			let pos = 0
 			let count = 0
 		endIf
+
 	elif getObjectTypeCode() == wt_treeview && !(StringContains(StringLower(PositionInGroup()),"of") ||
 			StringContains(StringLower(PositionInGroup()),"item")) then
 		; sayString(positioninGroup())
@@ -1642,6 +1837,7 @@ var
 			let count = count+count1
 		Endif ; if we a valid handle for the item
 	endif ; if we have a valid position
+
 	if count then
 		if pos == 0 then
 			if count == 1 then
@@ -1653,25 +1849,28 @@ var
 			let str = formatString(msgPosMOfN, intToString(pos), intToString(count))
 		endIf
 	endIf
+
 	if stringLength(str) then
 		return str
 	endIf
+
 	return PositionInGroup()
+
 EndFunction
 
 ;**********************************************************************
 ;**********************************************************************
 Script Test()
-var
-	string str
+	var
+		string str
 
-; get4kName(getCurrentWindow())
-; sayInteger(RegisterWindowMessage("VA 508 / Freedom Scientific - JAWS Communication Message ID"))
+	; get4kName(getCurrentWindow())
+	; sayInteger(RegisterWindowMessage("VA 508 / Freedom Scientific - JAWS Communication Message ID"))
 EndScript
 
 ;**********************************************************************
 ; Test function for getting and speaking and/or displaying all DLL framework data for any window.
-; Requires BX to be loaded.
+; Requires BX to be loaded.  [BX tools are not allowed on VA computers]
 ; Usage:
 ; First select a window via the BX Window Navigation map.
 ; Then from inside or outside of BX, type BXQuickKey T (for Test) <num>.
@@ -1688,93 +1887,96 @@ EndScript
 ; This function calls VA508GetApplicationData and VA508GetGridData but does all other parsing internally.
 ;**********************************************************************
 void function bxTestNum(int n)
-var
-	handle hwnd,
-	int iQueryCode,
-	string fmt,
-	string varData, string data,
-	string delim,
-	string seg,
-	string varName, int varStart, int varLen, string varVal,
-	int i,
-	string debugBuf,
-	string buf
-/*
-let hwnd = VA508Cast(bxGetWindow())
-if !hwnd then
-	bxSayString("No window selected", "")
-	return
-endIf
-*/
-let hwnd = getCurrentWindow()
-let fmt = ""
-if n >= 32 then
-	let n = n -33
-	let fmt = fmt +"v"
-endIf
-if n then
-	let iQueryCode = 1 << (n-1)
-else
-	let iQueryCode = VA508_QueryCode_All
-endIf
-VA508GetApplicationData(hwnd, iQueryCode)
-let debugBuf = gsVA508GetAppDataDebugBuf
-
-let varData = gsVA508varData
-let data = gsVA508data
-let delim = stringLeft(varData, 1)
-let buf = ""
-let buf = buf +formatString(
-		;"VA508 data for window of class %1:\13\10Delimiter: '%2'\13\10",
-		"VA508 data for window of class %1:\13\10",
-		getWindowClass(hwnd),
-		delim
-		)
-let i = 1
-while i
-	let i = i +1
-	let seg = stringSegment(varData, delim, i)
-	if stringLength(seg) then
-		let varName = stringSegment(seg, "=,", 1)
-		let varVal = ""
-		let varStart = stringToInt(stringSegment(seg, "=,", 2)) +1
-		let varLen = stringToInt(stringSegment(seg, "=,", 3))
-		if varStart && varLen then
-			let varVal = substring(data, varStart, varLen)
-		endIf
-		if stringLength(varVal) then
-			let buf = buf +formatString("\13\10%1: %2", varName, varVal)
-			if varName == "value" then
-				; Include grid data where appropriate.
-				if VA508getGridData(varVal,0) then
-					let buf = buf +formatString(
-							"\13\10Grid data:\13\10Column %1 (%2 of %3)\13\10Row %4 (%5 of %6)\13\10Cell %7 (%8 of %9)",
-							gsVA508cacheGridColHdr, intToString(giVA508cacheGridColNum), intToString(giVA508cacheGridColCnt),
-							gsVA508cacheGridRowHdr, intToString(giVA508cacheGridRowNum), intToString(giVA508cacheGridRowCnt),
-							gsVA508cacheGridCellVal, intToString(giVA508cacheGridCellNum), intToString(giVA508cacheGridCellCnt))
-				endIf
-			elif varName == "dataStatus" then
-				; Some of these bits are obsolete but can still be passed, so they are named here.
-				; Obsolete bits: CheckForStateChanges through ItemChangeSpeakValues, except for ItemChanged.
-				; [DGL, 2007-05-31]
-				let buf = buf +formatString(" (%1)",
-						VA508Cast(olStringFlags(stringToInt(varVal),
-						"|Caption|Value|ControlType|State|Instructions|ItemInstructions|Data||CheckForStateChanges|CheckForItemChanges|GetOnlyIfStateChanged|GetOnlyIfItemChanged|StateChanged|ItemChanged|ItemChangeSpeakValues|||||||||Error"))
-						)
-			endIf
-		endIf
+	var
+		handle hwnd,
+		int iQueryCode,
+		string fmt,
+		string varData, string data,
+		string delim,
+		string seg,
+		string varName, int varStart, int varLen, string varVal,
+		int i,
+		string debugBuf,
+		string buf
+	/*
+	let hwnd = VA508Cast(bxGetWindow())
+	if !hwnd then
+		bxSayString("No window selected", "")
+		return
+	endIf
+	*/
+	let hwnd = getCurrentWindow()
+	let fmt = ""
+	if n >= 32 then
+		let n = n -33
+		let fmt = fmt +"v"
+	endIf
+	if n then
+		let iQueryCode = 1 << (n-1)
 	else
-		let i = 0  ; exits loop
+		let iQueryCode = VA508_QueryCode_All
 	endIf
-endWhile
-if fwDebug then
-	let buf = buf +formatString("\13\10\13\10VarData: %1\13\10Data: %2",
-		varData, data)
-	if debugBuf then
-		let buf = buf +"\13\10\13\10" +debugBuf
-	endIf
-endIf  ; fwDebug
-bxSayString(buf, fmt)
+	VA508GetApplicationData(hwnd, iQueryCode)
+	let debugBuf = gsVA508GetAppDataDebugBuf
+
+	let varData = gsVA508varData
+	let data = gsVA508data
+	let delim = stringLeft(varData, 1)
+	let buf = ""
+	let buf = buf +formatString(
+			;"VA508 data for window of class %1:\13\10Delimiter: '%2'\13\10",
+			"VA508 data for window of class %1:\13\10",
+			getWindowClass(hwnd),
+			delim
+			)
+	let i = 1
+	while i
+		let i = i +1
+		let seg = stringSegment(varData, delim, i)
+		if stringLength(seg) then
+			let varName = stringSegment(seg, "=,", 1)
+			let varVal = ""
+			let varStart = stringToInt(stringSegment(seg, "=,", 2)) +1
+			let varLen = stringToInt(stringSegment(seg, "=,", 3))
+			if varStart && varLen then
+				let varVal = substring(data, varStart, varLen)
+			endIf
+			if stringLength(varVal) then
+				let buf = buf +formatString("\13\10%1: %2", varName, varVal)
+				if varName == "value" then
+					; Include grid data where appropriate.
+					if VA508getGridData(varVal,0) then
+						let buf = buf +formatString(
+								"\13\10Grid data:\13\10Column %1 (%2 of %3)\13\10Row %4 (%5 of %6)\13\10Cell %7 (%8 of %9)",
+								gsVA508cacheGridColHdr, intToString(giVA508cacheGridColNum), intToString(giVA508cacheGridColCnt),
+								gsVA508cacheGridRowHdr, intToString(giVA508cacheGridRowNum), intToString(giVA508cacheGridRowCnt),
+								gsVA508cacheGridCellVal, intToString(giVA508cacheGridCellNum), intToString(giVA508cacheGridCellCnt))
+					endIf
+				elif varName == "dataStatus" then
+					; Some of these bits are obsolete but can still be passed, so they are named here.
+					; Obsolete bits: CheckForStateChanges through ItemChangeSpeakValues, except for ItemChanged.
+					; [DGL, 2007-05-31]
+					let buf = buf +formatString(" (%1)",
+							VA508Cast(olStringFlags(stringToInt(varVal),
+							"|Caption|Value|ControlType|State|Instructions|ItemInstructions|Data||CheckForStateChanges|CheckForItemChanges|GetOnlyIfStateChanged|GetOnlyIfItemChanged|StateChanged|ItemChanged|ItemChangeSpeakValues|||||||||Error"))
+							)
+				endIf
+			endIf
+		else
+			let i = 0  ; exits loop
+		endIf
+	endWhile
+
+	if fwDebug then
+		let buf = buf +formatString("\13\10\13\10VarData: %1\13\10Data: %2",
+			varData, data)
+		if debugBuf then
+			let buf = buf +"\13\10\13\10" +debugBuf
+		endIf
+	endIf  ; fwDebug
+
+	bxSayString(buf, fmt)
+
 endFunction
 
 ;**********************************************************************
@@ -1782,47 +1984,56 @@ endFunction
 ; Without this, tab and shift+tab in an open combo box do nothing.
 ;**********************************************************************
 void function autoCloseIfOpenCombo()
-var
-	string class,
-	handle hWnd
+	var
+		string class,
+		handle hWnd
+
 	let hWnd = getFocus()
+
 	if getWindowClass(hWnd) == wcComboLBox then
 		TypeKey(Key_F4)
 	endIf
+
 endFunction
 
 ;**********************************************************************
 Script Tab()
-if isSpecialFocus(False) then
-	autoCloseIfOpenCombo()
-endIf
+	if isSpecialFocus(False) then
+		autoCloseIfOpenCombo()
+	endIf
+
 	PerformScript Tab()
+
 EndScript
 
 ;**********************************************************************
 Script ShiftTab()
-if isSpecialFocus(False) then
-	autoCloseIfOpenCombo()
-endIf
+	if isSpecialFocus(False) then
+		autoCloseIfOpenCombo()
+	endIf
+
 	PerformScript ShiftTab()
+
 EndScript
 
 ;**********************************************************************
 ; Avoids double speech in edit combo boxes.
 ;**********************************************************************
 Void Function ValueChangedEvent (handle hwnd, int objId, int childId, int nObjType, string sObjName, string sObjValue,int bIsFocusObject)
-; A fix borrowed from JAWS 9...
-if nObjType == WT_Edit
-&& getObjectSubtypeCode() == WT_EditCombo then
-	; This seems to happen at random;
-	; nObjType should normally be WT_EditCombo also.  [DGL, 2007-10-03]
-	let nObjType = WT_EditCombo
-endIf
+	; A fix borrowed from JAWS 9...
+	if nObjType == WT_Edit && getObjectSubtypeCode() == WT_EditCombo then
+		; This seems to happen at random;
+		; nObjType should normally be WT_EditCombo also.  [DGL, 2007-10-03]
+		let nObjType = WT_EditCombo
+	endIf
+
 	ValueChangedEvent (hwnd, objId, childId, nObjType, sObjName, sObjValue, bIsFocusObject)
+
 	if nObjType == wt_editCombo && bIsFocusObject && sObjValue then
 		; we can assume it was spoken so suppress sayHighLightedText
 		let gbVA508suppressEcho = true
 	endIf
+
 EndFunction
 
 ;**********************************************************************
@@ -1834,32 +2045,37 @@ Void Function SayHighLightedText (handle hwnd, string buffer)
 		return
 	endIf
 
-;	 sayInteger(GetWindowSubTypeCode(hwnd))
+	;sayInteger(GetWindowSubTypeCode(hwnd))
+
 	; prevent double speaking in open edit comboes
 	if getWindowClass(getFocus()) == wcComboLBox then
 	  if getWindowSubTypeCode(hwnd) == wt_editcombo || getWindowClass(hwnd) == "TORComboEdit" then
 	  	return
 	  endIf
 	EndIf
+
 	; prevent double speaking in TORComboEdit boxes, which seem to stay open.
-if (hwnd == getFocus() || getWindowClass(hwnd) == "TORListBox")
-&& getWindowClass(getFocus()) == "TORComboEdit" then
-	return
-endIf
-;sayString(getWindowClass(hwnd) +" " +getWindowClass(getFocus()))
+	if (hwnd == getFocus() || getWindowClass(hwnd) == "TORListBox") && getWindowClass(getFocus()) == "TORComboEdit" then
+		return
+	endIf
+
+	;sayString(getWindowClass(hwnd) +" " +getWindowClass(getFocus()))
 	if getWindowClass(hwnd) == wcTMaskEdit then
 		return
 	Endif
+
 	; added to suppress echo when valueChangedEvent works in closed editComboes
 	if gbVA508suppressEcho then
 		let gbVA508suppressEcho = false
 		return
 	EndIf
+
 	if getWindowClass(hwnd) == wcTStringGrid && hwnd != getFocus() then
 		return ; prevent speaking of highlight in grid when focus is not in that control
 	Endif
 
 	SayHighLightedText (hwnd, buffer)
+
 EndFunction
 
 ;**********************************************************************
@@ -1886,61 +2102,67 @@ EndFunction
 ; Called by controlPropGet
 ;**********************************************************************
 int function VA508TranslateProps(string sTable, int iQueryCode, string byRef sTypeVal, string byRef sStateVal)
-var
-	string sFile,
-	string sSect,
-	string sKeyFormat1, string sKeyFormat2, string sKeyFormat,
-	string sKey,
-	string sTran,
-	string sDelim,
-	int i,
-	int iChanged
-let iChanged = False
+	var
+		string sFile,
+		string sSect,
+		string sKeyFormat1, string sKeyFormat2, string sKeyFormat,
+		string sKey,
+		string sTran,
+		string sDelim,
+		int i,
+		int iChanged
 
-; Set file and section.
-let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jcf")
-if !fileExists(sFile) then
-	; No file, no translations.
-	return False
-endIf
-let sSect = formatString("%1 Translations", sTable)
+	let iChanged = False
 
-; Set key by constructing it based on iQueryCode.
-let sKeyFormat1 = ""
-let sKeyFormat2 = ""
-if iQueryCode & VA508_QueryCode_Control_Type then
-	let sKeyFormat1 = sKeyFormat1 +"|ControlType"
-	let sKeyFormat2 = sKeyFormat2 +"|%1"
-endIf
-if iQueryCode & VA508_QueryCode_State then
-	let sKeyFormat1 = sKeyFormat1 +"|State"
-	let sKeyFormat2 = sKeyFormat2 +"|%2"
-endIf
-let sKeyFormat = stringChopLeft(sKeyFormat1, 1) +msgSpace +stringChopLeft(sKeyFormat2, 1)
-let sKey = formatString(sKeyFormat, sTypeVal, sStateVal)
+	; Set file and section.
+	let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jcf")
+	if !fileExists(sFile) then
+		; No file, no translations.
+		return False
+	endIf
+	let sSect = formatString("%1 Translations", sTable)
 
-; Look up the key and abort if not found.
-let sTran = iniReadString(sSect, sKey, "<NoTranslation>", sFile)
-if stringCompare(sTran, "<NoTranslation>", True) == 0 then
-	return False
-endIf
+	; Set key by constructing it based on iQueryCode.
+	let sKeyFormat1 = ""
+	let sKeyFormat2 = ""
+	if iQueryCode & VA508_QueryCode_Control_Type then
+		let sKeyFormat1 = sKeyFormat1 +"|ControlType"
+		let sKeyFormat2 = sKeyFormat2 +"|%1"
+	endIf
 
-; A translation was found; interpret it.
-let sDelim = stringLeft(sTran, 1)
-let i = 1
-if stringContains(sKeyFormat, "%1") then
-	; There is a Type translation.
-	let i = i +1
-	let sTypeVal = stringSegment(sTran, sDelim, i)
-	let iChanged = True
-endIf
-if stringContains(sKeyFormat, "%2") then
-	; There is a State translation.
-	let i = i +1
-	let sStateVal = stringSegment(sTran, sDelim, i)
-	let iChanged = True
-endIf
-return iChanged
+	if iQueryCode & VA508_QueryCode_State then
+		let sKeyFormat1 = sKeyFormat1 +"|State"
+		let sKeyFormat2 = sKeyFormat2 +"|%2"
+	endIf
+
+	let sKeyFormat = stringChopLeft(sKeyFormat1, 1) +msgSpace +stringChopLeft(sKeyFormat2, 1)
+	let sKey = formatString(sKeyFormat, sTypeVal, sStateVal)
+
+	; Look up the key and abort if not found.
+	let sTran = iniReadString(sSect, sKey, "<NoTranslation>", sFile)
+	if stringCompare(sTran, "<NoTranslation>", True) == 0 then
+		return False
+	endIf
+
+	; A translation was found; interpret it.
+	let sDelim = stringLeft(sTran, 1)
+	let i = 1
+	if stringContains(sKeyFormat, "%1") then
+		; There is a Type translation.
+		let i = i +1
+		let sTypeVal = stringSegment(sTran, sDelim, i)
+		let iChanged = True
+	endIf
+
+	if stringContains(sKeyFormat, "%2") then
+		; There is a State translation.
+		let i = i +1
+		let sStateVal = stringSegment(sTran, sDelim, i)
+		let iChanged = True
+	endIf
+
+	return iChanged
+
 endFunction
 
 ;**********************************************************************
@@ -1955,274 +2177,303 @@ endFunction
 ; sVal is the returned property value if the function returns 1, undefined otherwise.
 ;**********************************************************************
 int function controlpropGet(string sOrigin, string whichProp, int nSubtype, string byRef sVal)
-var
-	handle hwnd,
-	int iCacheHandling,
-	int isBraille,
-	int iResult
-
-; sayString("control prop")
-; Get hwnd, iCacheHandling, and nSubtype worked out.
-let iCacheHandling = VA508_Cache_Skip
-if sOrigin == "focus"
-|| (sOrigin == "current" && isPCCursor()) then
-	let hwnd = getFocus()
-	let iCacheHandling = VA508_Cache_Use
-	if !nSubtype then
-		let nSubtype = getObjectSubtypeCode()
-	endIf
-elif sOrigin == "current" then
-	let hwnd = getCurrentWindow()
-	if !nSubtype then
-		let nSubtype = getObjectSubtypeCode()
-	endIf
-elif sOrigin == "hwnd" then
-	let hwnd = stringToHandle(stringChopLeft(sOrigin, 4))
-	if hwnd == getFocus() then
-		let iCacheHandling = VA508_Cache_Use
-	endIf
-	if !nSubtype then
-		let nSubtype = getWindowSubtypeCode(hwnd)
-	endIf
-else
-	; Not supported at this time.
-	return 0
-endIf
-
-; Now for isBraille and whichProp.
-let isBraille = False
-if stringRight(whichProp, 4) == ".brl" then
-	let whichProp = stringChopRight(whichProp, 4)
-	let isBraille = True
-endIf
-
-; Check the framework for custom values.
-if whichProp == "Name" then
-	return VA508GetComponentProp(hwnd, VA508_FieldName_Caption, iCacheHandling, sVal)
-elif whichProp == "Type" || whichProp == "State" then
 	var
-		int iTypeRet, string sTypeVal,
-		int iStateRet, string sStateVal
-	let iTypeRet = VA508GetComponentProp(hwnd, VA508_FieldName_Control_Type, iCacheHandling, sTypeVal)
-	let iStateRet = VA508GetComponentProp(hwnd, VA508_FieldName_State, iCacheHandling, sStateVal)
-	if isBraille then
-		if iTypeRet > 0 && iStateRet > 0 then
-			VA508TranslateProps("Braille", VA508_QueryCode_Control_Type +VA508_QueryCode_State, sTypeVal, sStateVal)
+		handle hwnd,
+		int iCacheHandling,
+		int isBraille,
+		int iResult
+
+	; sayString("control prop")
+	; Get hwnd, iCacheHandling, and nSubtype worked out.
+	let iCacheHandling = VA508_Cache_Skip
+	if sOrigin == "focus" || (sOrigin == "current" && isPCCursor()) then
+		let hwnd = getFocus()
+		let iCacheHandling = VA508_Cache_Use
+		if !nSubtype then
+			let nSubtype = getObjectSubtypeCode()
 		endIf
-		if iTypeRet > 0 then
-			VA508TranslateProps("Braille", VA508_QueryCode_Control_Type, sTypeVal, sStateVal)
+
+	elif sOrigin == "current" then
+		let hwnd = getCurrentWindow()
+		if !nSubtype then
+			let nSubtype = getObjectSubtypeCode()
 		endIf
-		if iStateRet > 0 then
-			VA508TranslateProps("Braille", VA508_QueryCode_State, sTypeVal, sStateVal)
+
+	elif sOrigin == "hwnd" then
+		let hwnd = stringToHandle(stringChopLeft(sOrigin, 4))
+		if hwnd == getFocus() then
+			let iCacheHandling = VA508_Cache_Use
 		endIf
-	endIf  ; isBraille
-	if whichProp == "Type" then
-		let sVal = sTypeVal
-		return iTypeRet
-	else  ; State
-		let sVal = sStateVal
-		return iStateRet
-	endIf
-elif whichProp == "Value" then
-	var int iValFound
-	let iValFound = VA508GetComponentProp(hwnd, VA508_FieldName_Value, iCacheHandling, sVal) > 0
-	if iValFound > 0 && VA508GetGridData(sVal,0) then ; GRID
-		if isBraille then
-			let sVal = ""
-			if giGridBrailleMode == 1 || giGridBrailleMode == 3 then
-				let sVal = "r"+IntToString(giVA508CacheGridRowNum)+"c"+intToString(giVa508CacheGridcolNum)+msgSpace
-			Endif
-			if giGridBrailleMode == 1 || giGridBrailleMode == 2 then
-				let sVal = sVal + gsVA508cacheGridRowHdr +msgSpace +gsVA508CacheGridColHdr +msgSpace
-			endif
-			if gsVA508CacheGridCellVal == "" then
-				let gsVA508CacheGridCellVal = "-" 
-			Endif
-		else ; NOT BRAILLE
-			let sVal = ""
-		endIf  ; isBraille
-		let sVal = sVal + gsVA508CacheGridCellVal ;always show cell
-		return true
-	elif nSubType == wt_progressBar then
-		if iValFound < 1 then
-			let sVal = getObjectValue()
-			return true
-		Endif
-	endif
-	return iValFound
-; TODO:  Many of the rest are not handled yet.
-elif whichProp == "ContainerName" then
-	; Generally a group box name.
-elif whichProp == "ContainerType" then
-	; Not sure how often this one gets used.
-elif whichProp == "Position" then
-	; e.g., "1 of 4" or "4 items" for lists and trees.
-elif whichProp == "DlgPageName" then
-	; Name of active tab.
-elif whichProp == "DlgText" then
-	; Dialog static text.
-elif whichProp == "ContextHelp" then
-	; TODO: This could be Instructions or Item_Instructions.
-elif whichProp == "Time" then
-	; This may not be used at all.
-elif whichProp == "Level" then
-	; Tree level.
+		if !nSubtype then
+			let nSubtype = getWindowSubtypeCode(hwnd)
+		endIf
+
+	else
+		; Not supported at this time.
+		return 0
+
 endIf
-return 0  ; no custom value for this property
+
+	; Now for isBraille and whichProp.
+	let isBraille = False
+	if stringRight(whichProp, 4) == ".brl" then
+		let whichProp = stringChopRight(whichProp, 4)
+		let isBraille = True
+	endIf
+
+	; Check the framework for custom values.
+	if whichProp == "Name" then
+		return VA508GetComponentProp(hwnd, VA508_FieldName_Caption, iCacheHandling, sVal)
+
+	elif whichProp == "Type" || whichProp == "State" then
+		var
+			int iTypeRet, string sTypeVal,
+			int iStateRet, string sStateVal
+		let iTypeRet = VA508GetComponentProp(hwnd, VA508_FieldName_Control_Type, iCacheHandling, sTypeVal)
+		let iStateRet = VA508GetComponentProp(hwnd, VA508_FieldName_State, iCacheHandling, sStateVal)
+		if isBraille then
+			if iTypeRet > 0 && iStateRet > 0 then
+				VA508TranslateProps("Braille", VA508_QueryCode_Control_Type +VA508_QueryCode_State, sTypeVal, sStateVal)
+			endIf
+			if iTypeRet > 0 then
+				VA508TranslateProps("Braille", VA508_QueryCode_Control_Type, sTypeVal, sStateVal)
+			endIf
+			if iStateRet > 0 then
+				VA508TranslateProps("Braille", VA508_QueryCode_State, sTypeVal, sStateVal)
+			endIf
+		endIf  ; isBraille
+
+		if whichProp == "Type" then
+			let sVal = sTypeVal
+			return iTypeRet
+		else  ; State
+			let sVal = sStateVal
+			return iStateRet
+		endIf
+
+	elif whichProp == "Value" then
+		var int iValFound
+		let iValFound = VA508GetComponentProp(hwnd, VA508_FieldName_Value, iCacheHandling, sVal) > 0
+		if iValFound > 0 && VA508GetGridData(sVal,0) then ; GRID
+			if isBraille then
+				let sVal = ""
+				if giGridBrailleMode == 1 || giGridBrailleMode == 3 then
+					let sVal = "r"+IntToString(giVA508CacheGridRowNum)+"c"+intToString(giVa508CacheGridcolNum)+msgSpace
+				Endif
+				if giGridBrailleMode == 1 || giGridBrailleMode == 2 then
+					let sVal = sVal + gsVA508cacheGridRowHdr +msgSpace +gsVA508CacheGridColHdr +msgSpace
+				endif
+				if gsVA508CacheGridCellVal == "" then
+					let gsVA508CacheGridCellVal = "-" 
+				Endif
+			else ; NOT BRAILLE
+				let sVal = ""
+			endIf  ; isBraille
+			let sVal = sVal + gsVA508CacheGridCellVal ;always show cell
+			return true
+		elif nSubType == wt_progressBar then
+			if iValFound < 1 then
+				let sVal = getObjectValue()
+				return true
+			Endif
+		endif
+
+		return iValFound
+
+	; TODO:  Many of the rest are not handled yet.
+	elif whichProp == "ContainerName" then
+		; Generally a group box name.
+
+	elif whichProp == "ContainerType" then
+		; Not sure how often this one gets used.
+
+	elif whichProp == "Position" then
+		; e.g., "1 of 4" or "4 items" for lists and trees.
+
+	elif whichProp == "DlgPageName" then
+		; Name of active tab.
+
+	elif whichProp == "DlgText" then
+		; Dialog static text.
+
+	elif whichProp == "ContextHelp" then
+		; TODO: This could be Instructions or Item_Instructions.
+
+	elif whichProp == "Time" then
+		; This may not be used at all.
+
+	elif whichProp == "Level" then
+		; Tree level.
+
+	endIf
+
+	return 0  ; no custom value for this property
+
 endFunction
 
 ; Braille Support
 ;**********************************************************************
 int function BraillePropHelper(string whichProp, int nSubtype)
-; Logic for BrailleAddObject* functions to use.
-var
-	int x, int y,
-	int tc,
-	int iResult,
-	string sVal,
-	int nWindowSubTypeCode
+	; Logic for BrailleAddObject* functions to use.
+	var
+		int x, int y,
+		int tc,
+		int iResult,
+		string sVal,
+		int nWindowSubTypeCode
 
-let nWindowSubTypeCode = getWindowSubtypeCode(getFocus())
-if nWindowSubTypeCode == wt_unknown then
-	let nWindowSubTypeCode = getObjectSubTypeCode()
-endif
+	let nWindowSubTypeCode = getWindowSubtypeCode(getFocus())
+	if nWindowSubTypeCode == wt_unknown then
+		let nWindowSubTypeCode = getObjectSubTypeCode()
+	endif
 
-if  nWindowSubTypeCode != nSubtype then
-	; BrailleAddObject* function(s) called on a parent (e.g., dialog) control.
-	; We currently have no way to handle this, so let JAWS do it.
+	if  nWindowSubTypeCode != nSubtype then
+		; BrailleAddObject* function(s) called on a parent (e.g., dialog) control.
+		; We currently have no way to handle this, so let JAWS do it.
+		return False
+	endIf
+
+	let iResult = controlpropGet("focus", whichProp +".brl", nSubType, sVal)
+	if iResult > 0 then
+		if whichProp != "name" then  ; prevents cursor from being placed on label instead of value in edit fields
+			let x = getCursorCol()
+			let y = getCursorRow()
+		Endif
+		BrailleAddString(sVal, x,y, 0)
+		return True
+	endIf
+
 	return False
-endIf
 
-let iResult = controlpropGet("focus", whichProp +".brl", nSubType, sVal)
-if iResult > 0 then
-	if whichProp != "name" then  ; prevents cursor from being placed on label instead of value in edit fields
-		let x = getCursorCol()
-		let y = getCursorRow()
-	Endif
-	BrailleAddString(sVal, x,y, 0)
-	return True
-endIf
-return False
 endFunction
 
 ;************************************************************************
 int Function BrailleClassFound(string ControlType, int byref nType)
-var
-	int i,
-	int count
+	var
+		int i,
+		int count
 
 	let i = StringSegmentIndex (glbsTable, string_delim, StringLower(msgSpace+ControlType), true)
 	if i then
 		let nType = StringToInt(StringSegment(glbsTable2,string_delim,i))
 		return true
 	endif
-return false
+
+	return false
+
 EndFunction
 
 ;************************************************************************
 int function BrailleCallbackObjectIdentify()
-var
-	int nType,
-	string controlType
+	var
+		int nType,
+		string controlType
 
-if isSpinBox(getCurrentWindow()) then
-		return wt_spinbox
-Endif
-if VA508GetComponentProp(getCurrentWindow(),VA508_FieldName_Control_Type,VA508_Cache_Use,controlType) > 0 then
-	let nType = 0
-	if BrailleClassFound(ControlType, nType) then
-		return nType
-	EndIf
-Endif
-return BrailleCallBackObjectIdentify()
+	if isSpinBox(getCurrentWindow()) then
+			return wt_spinbox
+	Endif
+
+	if VA508GetComponentProp(getCurrentWindow(),VA508_FieldName_Control_Type,VA508_Cache_Use,controlType) > 0 then
+		let nType = 0
+		if BrailleClassFound(ControlType, nType) then
+			return nType
+		EndIf
+	Endif
+
+	return BrailleCallBackObjectIdentify()
+
 EndFunction
 
 ; added so spinbox sub type code can make nSubType code passed to BrailleAddObject functions
 ; what is returned in getWindowSubTypeCode must matach what is returned in BrailleCallBackObjectIdentify for the BraillePropHelper to show any custom information
 ;************************************************************************
 int Function getWindowSubTypeCode (handle hwnd)
-var
-	int nType,
-	string ControlType,
-	int cacheHandling
+	var
+		int nType,
+		string ControlType,
+		int cacheHandling
 
-; sayString("get window sub type code")
+	; sayString("get window sub type code")
 
-if isSpinBox(hwnd) then
-		return wt_spinbox
-Endif
-if hwnd == getFocus() then
-	let cacheHandling = VA508_Cache_Use
-else
-	let cacheHandling = VA508_Cache_Skip
-endIf
-if VA508GetComponentProp(getCurrentWindow(),VA508_FieldName_Control_Type,cacheHandling,controlType) > 0 then
-	if BrailleClassFound(ControlType, nType) then
-		return nType
-	EndIf
-Endif
-return getWindowSubTypeCode(hwnd)
+	if isSpinBox(hwnd) then
+			return wt_spinbox
+	Endif
+
+	if hwnd == getFocus() then
+		let cacheHandling = VA508_Cache_Use
+	else
+		let cacheHandling = VA508_Cache_Skip
+	endIf
+
+	if VA508GetComponentProp(getCurrentWindow(),VA508_FieldName_Control_Type,cacheHandling,controlType) > 0 then
+		if BrailleClassFound(ControlType, nType) then
+			return nType
+		EndIf
+	Endif
+
+	return getWindowSubTypeCode(hwnd)
+
 EndFunction
 
 ;************************************************************************
 ; These are all the BrailleAddObject* functions internally recognized as of JAWS 8.0.
 int function BrailleAddObjectName(int nSubtype)
-return BraillePropHelper("Name", nSubtype)
+	return BraillePropHelper("Name", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectType(int nSubtype)
-return BraillePropHelper("Type", nSubtype)
+	return BraillePropHelper("Type", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectState(int nSubtype)
-return BraillePropHelper("State", nSubtype)
+	return BraillePropHelper("State", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectValue(int nSubtype)
-return BraillePropHelper("Value", nSubtype)
+	return BraillePropHelper("Value", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectContainerName(int nSubtype)
-return BraillePropHelper("ContainerName", nSubtype)
+	return BraillePropHelper("ContainerName", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectContainerType(int nSubtype)
-return BraillePropHelper("ContainerType", nSubtype)
+	return BraillePropHelper("ContainerType", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectPosition(int nSubtype)
-return BraillePropHelper("Position", nSubtype)
+	return BraillePropHelper("Position", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectDlgPageName(int nSubtype)
-return BraillePropHelper("DlgPageName", nSubtype)
+	return BraillePropHelper("DlgPageName", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectDlgText(int nSubtype)
-return BraillePropHelper("DlgText", nSubtype)
+	return BraillePropHelper("DlgText", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectContextHelp(int nSubtype)
-return BraillePropHelper("ContextHelp", nSubtype)
+	return BraillePropHelper("ContextHelp", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectTime(int nSubtype)
-return BraillePropHelper("Time", nSubtype)
+	return BraillePropHelper("Time", nSubtype)
 endFunction
 
 ;************************************************************************
 int function BrailleAddObjectLevel(int nSubtype)
-return BraillePropHelper("Level", nSubtype)
+	return BraillePropHelper("Level", nSubtype)
 endFunction
 
 ;**********************************************************************
@@ -2230,42 +2481,50 @@ endFunction
 ; Only affects JAWS 7.1 and later.
 ;**********************************************************************
 int function isTrueListView(handle hwnd)
-var
-	int result
-let result = isTrueListView(hwnd)
-if result then
-	return result
-endIf
-if stringContains(stringLower(getWindowClass(hwnd)), "list")
-&& lvGetNumOfColumns(hwnd) > 0 then
-	return True
-endIf
-return False
+	var
+		int result
+
+	let result = isTrueListView(hwnd)
+	if result then
+		return result
+	endIf
+
+	if stringContains(stringLower(getWindowClass(hwnd)), "list") && lvGetNumOfColumns(hwnd) > 0 then
+		return True
+	endIf
+
+	return False
+
 endFunction
 
 ;**********************************************************************
 ; Makes F2 edit the current tree node as a left-click does
 ;**********************************************************************
 Script f2editTreeNode ()
-var
-	int hItem,
-	handle hWnd
+	var
+		int hItem,
+		handle hWnd
 
-sayCurrentScriptKeyLabel()
-let hwnd = getFocus()
-if getWindowClass(hWnd) == wcTTreeView then
-	let hItem = sendMessage(hWnd,TVM_GETNEXTITEM,TVGN_CARET,0)
-	if hItem then
-		sendMessage(hWnd,TVM_EDITLABELW,0,hitem)
+	sayCurrentScriptKeyLabel()
+
+	let hwnd = getFocus()
+	if getWindowClass(hWnd) == wcTTreeView then
+		let hItem = sendMessage(hWnd,TVM_GETNEXTITEM,TVGN_CARET,0)
+		if hItem then
+			sendMessage(hWnd,TVM_EDITLABELW,0,hitem)
+			return
+		Endif
+
+	elif getWindowTypeCode(hwnd) == WT_TREEVIEW then ; we have a tree that's not a TTreeView then it might not have an api so use mouse
+		saveCursor()  
+		JAWSCursor()  
+		saveCursor()
+		routeJAWSToPC()
+		leftMouseButton()
 		return
-	Endif
-elif getWindowTypeCode(hwnd) == WT_TREEVIEW then ; we have a tree that's not a TTreeView then it might not have an api so use mouse
-	saveCursor()  JAWSCursor()  saveCursor()
-	routeJAWSToPC()
-	leftMouseButton()
-	return
-endIf
-typeCurrentScriptKey()
+	endIf
+
+	typeCurrentScriptKey()
 
 EndScript
 
@@ -2275,28 +2534,28 @@ EndScript
 ; ControlTypes are only sent for custom types and are always sent regardless of whether the type changes, it is doubtful that a type will actually change
 ; This function gets called before focusChangedEvent, thus 3ms schedule functions were used
 ;**********************************************************************
-void function VA508ChangeEvent(handle hwnd, int iDataStatus, string sCaption, string sValue, string sControlType,
- string sState, string sInstructions, string sItemInstructions)
+void function VA508ChangeEvent(handle hwnd, int iDataStatus, string sCaption, string sValue, string sControlType, string sState, string sInstructions, string sItemInstructions)
 
-; sayString("called")
+	; sayString("called")
 
-if giCancelEvent == true then
-	return
-Endif
+	if giCancelEvent == true then
+		return
+	Endif
 
-let ghFromChangeEvent = hwnd
-let giDidFocusChange = false ; used to ensure that we don't have double speaking when the event comes in before handleCustomWindows has a change to speak it
-if iDataStatus & VA508_Data_Change_Event then
-	let iDataStatus = iDataStatus - VA508_Data_Change_Event ; not needed so let's remove
-Endif
-if iDataStatus & VA508_QueryCode_Control_Type then
-	let iDataStatus = iDataStatus - VA508_QueryCode_Control_Type ; not needed
-Endif
+	let ghFromChangeEvent = hwnd
+	let giDidFocusChange = false ; used to ensure that we don't have double speaking when the event comes in before handleCustomWindows has a change to speak it
+	if iDataStatus & VA508_Data_Change_Event then
+		let iDataStatus = iDataStatus - VA508_Data_Change_Event ; not needed so let's remove
+	Endif
 
-; Update the cache so Braille will update immediately.
-VA508CacheSetVals(hwnd, iDataStatus, sCaption, sValue, sControlType,
- sState, sInstructions, sItemInstructions)
-BrailleRefresh() ;for an instant update rather than waiting up to 2 seconds to see the change, or in the case of braille viewer instead of waiting 30 seconds
+	if iDataStatus & VA508_QueryCode_Control_Type then
+		let iDataStatus = iDataStatus - VA508_QueryCode_Control_Type ; not needed
+	Endif
+
+	; Update the cache so Braille will update immediately.
+	VA508CacheSetVals(hwnd, iDataStatus, sCaption, sValue, sControlType, sState, sInstructions, sItemInstructions)
+	BrailleRefresh() ;for an instant update rather than waiting up to 2 seconds to see the change, or in the case of braille viewer instead of waiting 30 seconds
+
 /*
 sayString(formatString(
 "Event %1 vals %2 %3 %4 %5 %6 %7",
@@ -2305,50 +2564,57 @@ decToHex(iDataStatus), sCaption, sValue, sControlType,
 ))
 */
 
-; Don't speak changes to non-focused windows.
-if hwnd != getFocus() then
-	if inDebugging then bxGauge(3, 0) Endif
-	return
-endIf
-watchCount("change")
+	; Don't speak changes to non-focused windows.
+	if hwnd != getFocus() then
+		if inDebugging then bxGauge(3, 0) Endif
+		return
+	endIf
 
-; was a grid cell changed?
-; jda 9-14-07
+	watchCount("change")
 
-if VA508GetGridData(sValue,0) && !giSpokeCellUnit then
-	say(gsVA508cacheGridColHdr,ot_control_name)
-	say(gsVA508cacheGridRowHdr,ot_control_name)
-	if gsVA508cacheGridCellVal == "" then
-		let gsVA508cacheGridCellVal = " " ; so blank will be spoken
+	; was a grid cell changed?
+	; jda 9-14-07
+
+	if VA508GetGridData(sValue,0) && !giSpokeCellUnit then
+		say(gsVA508cacheGridColHdr,ot_control_name)
+		say(gsVA508cacheGridRowHdr,ot_control_name)
+		if gsVA508cacheGridCellVal == "" then
+			let gsVA508cacheGridCellVal = " " ; so blank will be spoken
+		Endif
+		say(gsVA508cacheGridCellVal,ot_line)
+		say("column " + intToString(giVA508cacheGridColNum),ot_position)
+		say("row " + intToString(giVA508cacheGridRowNum),ot_position)
+		return
 	Endif
-	say(gsVA508cacheGridCellVal,ot_line)
-	say("column " + intToString(giVA508cacheGridColNum),ot_position)
-	say("row " + intToString(giVA508cacheGridRowNum),ot_position)
-	return
-Endif
 
-; For some one-thing-only changes, just speak what changed.
-; Since changes are spoken individually this might affect reading order preferences that users have set when arrow keys are used
-if iDataStatus & VA508_QueryCode_Caption && sCaption then
-	let giSuppressCaption = true
-Endif
-; this is always set and thus would always be announced, thus it is filtered out and should not get called
-if iDataStatus & VA508_QueryCode_Control_Type && sControlType then
-	let giSuppressControlType = true
-endIf
-if iDataStatus & VA508_QueryCode_State && sState then
-	let giSuppressState = true
-Endif
-if iDataStatus & VA508_QueryCode_Value && sValue && !VA508GetGridData(hwnd,0) then
-	let giSuppressValue = true
-Endif
-if iDataStatus & VA508_QueryCode_Instructions && sInstructions then
-	let giSuppressInstructions = true
-Endif
-if iDataStatus & VA508_QueryCode_Item_instructions && sItemInstructions then
-	let giSuppressItemInstructions = true
-Endif
-ScheduleFunction("AnnounceEvent",3)
+	; For some one-thing-only changes, just speak what changed.
+	; Since changes are spoken individually this might affect reading order preferences that users have set when arrow keys are used
+	if iDataStatus & VA508_QueryCode_Caption && sCaption then
+		let giSuppressCaption = true
+	Endif
+
+	; this is always set and thus would always be announced, thus it is filtered out and should not get called
+	if iDataStatus & VA508_QueryCode_Control_Type && sControlType then
+		let giSuppressControlType = true
+	endIf
+
+	if iDataStatus & VA508_QueryCode_State && sState then
+		let giSuppressState = true
+	Endif
+
+	if iDataStatus & VA508_QueryCode_Value && sValue && !VA508GetGridData(hwnd,0) then
+		let giSuppressValue = true
+	Endif
+
+	if iDataStatus & VA508_QueryCode_Instructions && sInstructions then
+		let giSuppressInstructions = true
+	Endif
+
+	if iDataStatus & VA508_QueryCode_Item_instructions && sItemInstructions then
+		let giSuppressItemInstructions = true
+	Endif
+
+	ScheduleFunction("AnnounceEvent",3)
 
 endFunction
 
@@ -2356,27 +2622,29 @@ endFunction
 ; Called by the Announce* functions below.
 ;*********************************************************************************************************
 Void Function AnnounceProp(int iQueryCode, int outputType, int byRef propGlobalFlag)
-var
-	string prop
+	var
+		string prop
 
-if propGlobalFlag && giDidFocusChange == false then
-	if VA508getComponentProp(ghFromChangeEvent, iQueryCode, VA508_Cache_Use, prop) > 0 then
-		sayMessage(outputType, prop)
+	if propGlobalFlag && giDidFocusChange == false then
+		if VA508getComponentProp(ghFromChangeEvent, iQueryCode, VA508_Cache_Use, prop) > 0 then
+			sayMessage(outputType, prop)
+		Endif
 	Endif
-Endif
-let propGlobalFlag = false
+
+	let propGlobalFlag = false
+
 EndFunction
 
 ;*********************************************************************************************************
 ; All these are called by va508ChangeEvent
 ;*********************************************************************************************************
 Void Function AnnounceEvent()
-AnnounceProp(VA508_QueryCode_Caption, OT_Control_Name, giSuppressCaption)
-AnnounceProp(VA508_QueryCode_Control_Type, OT_Control_Type, giSuppressControlType)
-AnnounceProp(VA508_QueryCode_State, OT_Item_State, giSuppressState)
-AnnounceProp(VA508_QueryCode_Value, OT_Selected_Item, giSuppressValue)
-AnnounceProp(VA508_QueryCode_Instructions, OT_Tutor, giSuppressInstructions)
-AnnounceProp(VA508_QueryCode_Item_Instructions, OT_Tutor, giSuppressItemInstructions)
+	AnnounceProp(VA508_QueryCode_Caption, OT_Control_Name, giSuppressCaption)
+	AnnounceProp(VA508_QueryCode_Control_Type, OT_Control_Type, giSuppressControlType)
+	AnnounceProp(VA508_QueryCode_State, OT_Item_State, giSuppressState)
+	AnnounceProp(VA508_QueryCode_Value, OT_Selected_Item, giSuppressValue)
+	AnnounceProp(VA508_QueryCode_Instructions, OT_Tutor, giSuppressInstructions)
+	AnnounceProp(VA508_QueryCode_Item_Instructions, OT_Tutor, giSuppressItemInstructions)
 endFunction
 
 ;*********************************************************************************************************
@@ -2396,9 +2664,9 @@ EndScript
 ; allows control tab to announce the correct tab when focus in on page tab control and style is set to button or flat button
 ;*********************************************************************************************************
 Void Function ChangeDocumentWindow(int direction)
-var
-	string pageName,
-	handle hwnd
+	var
+		string pageName,
+		handle hwnd
 
 	if isSpecialFocus(False) then
 		if direction == 1 then
@@ -2440,20 +2708,22 @@ var
 			ScheduleFunction("ClearSuppressFocusChange",3)
 			return
 		endif
+
 	; announce change when focus is on child of page tab
 	elif PageName != getDialogPageName() && getDialogPageName() then
 			say(getDialogPageName()+msgSpace+MsgPage,ot_controL_name)
 	endif
+
 EndFunction
 
 ;*********************************************************************************************************
 ; overwrite of default function to return proper page names in Delphi windows
 String Function GetDialogPageName()
-var
-	string page,
-	object o,
-	int cid,
-	handle hwnd
+	var
+		string page,
+		object o,
+		int cid,
+		handle hwnd
 
 	let hwnd = getFocus()
 	let page = getDialogPageName()
@@ -2462,13 +2732,16 @@ var
 			getWindowClass(getParent(getParent(hwnd))) == wcTTabSheet then ; for TPageControl when child or granchild has focus
 			if getWindowTypeCode(getParent(hwnd)) == wt_tabControl then
 				let page = getWindowName(getParent(hwnd))
+
 			elif getWindowTypeCode(getParent(getParent(hwnd))) == wt_tabControl then
 				let page = getWindowName(getParent(getParent(hwnd)))
 			endif
+
 		; TTabControl not handled here
 		elif getWindowClass(getParent(hwnd)) == wcTTabControl ||
 			getWindowClass(getParent(getParent(hwnd))) == wcTTabControl then ; forTTabControl when child or grandchild has focus
 			let page = getSelectedTab()
+
 		elif getObjectTypeCode() == wt_tabControl then ; for TTabControl and TPageControl
 			; getObjectName() can return the wrong name
 			let o = getFocusObject(cid)
@@ -2477,35 +2750,38 @@ var
 			endif
 		endif
 	endif
+
 	return page
+
 EndFunction
 
 ; gets the selected tab from a TTabControl when a child control is in focus
 ;***************************************************************************
 String Function getSelectedTab()
-var
-	object o,
-	int cid,
-	int count
+	var
+		object o,
+		int cid,
+		int count
 
-if getWindowClass(getParent(getFocus())) == wcTTabControl then ; forTTabControl
-	let o = getFocusObject(cid) ; full child control
-	let count = 1
-	while o && count < 10 && o.accRole(childId_self) != role_system_pagetablist
-		let o = o.accParent() ; window
-		let count = count + 1
-	EndWhile
-
-	if o && o.accRole(childId_self) == role_system_pagetablist then
+	if getWindowClass(getParent(getFocus())) == wcTTabControl then ; forTTabControl
+		let o = getFocusObject(cid) ; full child control
 		let count = 1
-		while count <= o.accChildCount()
-			if o.accState(count) & state_system_selected then
-				return o.accName(count)
-			endif
+		while o && count < 10 && o.accRole(childId_self) != role_system_pagetablist
+			let o = o.accParent() ; window
 			let count = count + 1
 		EndWhile
-	endif
-Endif
+
+		if o && o.accRole(childId_self) == role_system_pagetablist then
+			let count = 1
+			while count <= o.accChildCount()
+				if o.accState(count) & state_system_selected then
+					return o.accName(count)
+				endif
+				let count = count + 1
+			EndWhile
+		endif
+	Endif
+
 EndFunction
 
 ;***************************************************************************
@@ -2514,46 +2790,53 @@ EndFunction
 ; Used for TTabControl to activate a new tab using MSAA
 ;***************************************************************************
 Void Function SelectTab(int direction)
-var
-	object o,
-	int cid,
-	int childCount,
-	int count
+	var
+		object o,
+		int cid,
+		int childCount,
+		int count
 
-; msaa structure includes all control in page under page tab list.... troubling
-; only works when groupbox or panel is not used
-if getWindowClass(getParent(getFocus())) == wcTTabControl then ; forTTabControl
-	let o = getFocusObject(cid)
-	let count = 1
-	; find the page tab list
-	while o && count < 10 && o.accRole(childId_self) != role_system_pagetablist
-		let o = o.accParent() ; window
-		let count = count + 1
-	EndWhile
-	; find the selected child
-	if o && o.accRole(childId_self) == role_system_pagetablist then
-		let childCount = o.accChildCount()
+	; msaa structure includes all control in page under page tab list.... troubling
+	; only works when groupbox or panel is not used
+	if getWindowClass(getParent(getFocus())) == wcTTabControl then ; forTTabControl
+		let o = getFocusObject(cid)
 		let count = 1
-		while count <= o.accChildCount()
-			if o.accState(count) & state_system_selected then
-				let cid = count
-			endif
+
+		; find the page tab list
+		while o && count < 10 && o.accRole(childId_self) != role_system_pagetablist
+			let o = o.accParent() ; window
 			let count = count + 1
 		EndWhile
-		; set focus to the next or prior child
-		if direction == 1 then
-			if o.accRole(cid+1) != role_system_pagetab then
-				let cid = 0
-			endif ; role page tab
-			o.accSelect(selflag_takeSelection,cid+1)
-		elif direction == 0 then
-			if cid > 1 then
-				o.accSelect(selflag_takeSelection,cid-1)
-			else ; just sit on first tab
-			endif
-		Endif ; direction
-	EndIf ; role page tab list
-Endif ; TTabControl
+
+		; find the selected child
+		if o && o.accRole(childId_self) == role_system_pagetablist then
+			let childCount = o.accChildCount()
+			let count = 1
+			while count <= o.accChildCount()
+				if o.accState(count) & state_system_selected then
+					let cid = count
+				endif
+				let count = count + 1
+			EndWhile
+
+			; set focus to the next or prior child
+			if direction == 1 then
+				if o.accRole(cid+1) != role_system_pagetab then
+					let cid = 0
+				endif ; role page tab
+				o.accSelect(selflag_takeSelection,cid+1)
+
+			elif direction == 0 then
+				if cid > 1 then
+					o.accSelect(selflag_takeSelection,cid-1)
+				else ; just sit on first tab
+				endif
+			Endif ; direction
+
+		EndIf ; role page tab list
+
+	Endif ; TTabControl
+
 EndFunction
 
 ;***************************************************************************
@@ -2564,72 +2847,81 @@ EndFunction
 
 ;***************************************************************************
 int Function isSpinBox (handle hwnd)
-if getObjectTypeCode() == wt_edit && getWindowClass(getNextWindow(hwnd)) == wcTUpDown then
-	return true
-endif
-return false
+	if getObjectTypeCode() == wt_edit && getWindowClass(getNextWindow(hwnd)) == wcTUpDown then
+		return true
+	endif
+
+	return false
+
 EndFunction
 
 ;***************************************************************************
 ; get value for element from framework, falls back on getObjectValue()
 String Function getValue()
-var
-	string value
+	var
+		string value
 
-if VA508GetComponentProp(getFocus(),VA508_FieldName_Value,VA508_Cache_Update,value) <= 0 then ; no custom property returned
-	let value = getObjectValue()
-endif
-return value ; could be null from either getObjectValue or from framework if it was set to null on purpose
+	if VA508GetComponentProp(getFocus(),VA508_FieldName_Value,VA508_Cache_Update,value) <= 0 then ; no custom property returned
+		let value = getObjectValue()
+	endif
+
+	return value ; could be null from either getObjectValue or from framework if it was set to null on purpose
+
 EndFunction
 
 ;***************************************************************************
 ; updated for grid support
 int function moveByLine(int forward)
-var
-	handle hwnd
-let hwnd = getFocus()
-if isPCCursor() && !isSpecialFocus(False) then
-	if isSpinBox(hwnd)
-	|| getWindowClass(hwnd) == "TORComboEdit"
-	|| getWindowClass(hwnd) == "TORComboBox" then
-		if forward then
-			nextLine()
-		else
-			priorLine()
+	var
+		handle hwnd
+
+	let hwnd = getFocus()
+
+	if isPCCursor() && !isSpecialFocus(False) then
+		if isSpinBox(hwnd) || getWindowClass(hwnd) == "TORComboEdit" || getWindowClass(hwnd) == "TORComboBox" then
+			if forward then
+				nextLine()
+			else
+				priorLine()
+			endIf
+			if 	isSpinBox(hwnd) || getWindowClass(hwnd) == "TORComboEdit" then
+				; JCC January 2015 foirce refresh of MSAA before  speaking selection
+				MSAARefresh (True, 200)
+				say(getValue(),ot_selected_item)
+			endIf
+			return True
+
+		elif SpeakCellUnit("downArrow") then
+			return True
+
 		endIf
-		if 	isSpinBox(hwnd)
-		|| getWindowClass(hwnd) == "TORComboEdit" then
-			; JCC January 2015 foirce refresh of MSAA before  speaking selection
-			MSAARefresh (True, 200)
-			say(getValue(),ot_selected_item)
-		endIf
-		return True
-	elif SpeakCellUnit("downArrow") then
-		return True
 	endIf
-endIf
-return False
+
+	return False
+
 endFunction
 
 Script SayNextLine()
-if !moveByLine(True) then
-	performScript sayNextLine()
-endIf
+	if !moveByLine(True) then
+		performScript sayNextLine()
+	endIf
 EndScript
 
 Script SayPriorLine()
-if !moveByLine(False) then
-	performScript sayPriorLine()
-endIf
+	if !moveByLine(False) then
+		performScript sayPriorLine()
+	endIf
 EndScript
 
 ;***************************************************************************
 ; updated for grid support
 Script SayNextCharacter()
-if SpeakCellUnit("rightArrow") then
-	return
-Endif
-performScript sayNextCharacter()
+	if SpeakCellUnit("rightArrow") then
+		return
+	Endif
+
+	performScript sayNextCharacter()
+
 EndScript
 
 ;***************************************************************************
@@ -2639,7 +2931,9 @@ Script SayPriorCharacter()
 	if SpeakCellUnit("leftArrow") then
 		return
 	Endif
+
 	performScript sayPriorCharacter()
+
 EndScript
 
 ;******************************************************************
@@ -2650,74 +2944,81 @@ EndFunction
 ;******************************************************************
 ; Speaks the aspects of a cell that are different from the last cell visited
 int Function SpeakCellUnit(string str)
-var
-	string strVal,
-	string buildString
-	
-;sayString("speak cell unit")
-let giSpokeCellUnit = true
-scheduleFunction("clearSpokeCellUnit",2) ; prevent double speaking by changeEvent
+	var
+		string strVal,
+		string buildString
+		
+	;sayString("speak cell unit")
+	let giSpokeCellUnit = true
+	scheduleFunction("clearSpokeCellUnit",2) ; prevent double speaking by changeEvent
 
-if !isPCCursor() || isSpecialFocus(False) then
-	return 0
-elif VA508getGridData(getFocus(),0) > 0 then ; IN GRID
-	TypeKey(str)
-	delay(1, True)
-	; Update the cache.
-	VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Update, strVal)
-	VA508GetGridData(strVal,0) ; have to call here to refresh view when Braille is not being used
-	if gsVA508cacheGridCellVal == "" then 
-		let gsVA508cacheGridCellVal = " " ; so it will say blank with ot_line
-	Endif
-	if !giGridSpeechMode then
-		say(gsVA508cacheGridCellVal,ot_line)  ; DATA ONLY
-		return 1
-	elif str == "leftArrow" || str == "rightArrow" || str == "home" || str == "end" then
-		;	COLUMN CHANGE
-		if giGridSpeechMode == 1 || giGridSpeechMode == 2 then
+	if !isPCCursor() || isSpecialFocus(False) then
+		return 0
+
+	elif VA508getGridData(getFocus(),0) > 0 then ; IN GRID
+		TypeKey(str)
+		delay(1, True)
+		; Update the cache.
+		VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Update, strVal)
+		VA508GetGridData(strVal,0) ; have to call here to refresh view when Braille is not being used
+		if gsVA508cacheGridCellVal == "" then 
+			let gsVA508cacheGridCellVal = " " ; so it will say blank with ot_line
+		Endif
+		if !giGridSpeechMode then
+			say(gsVA508cacheGridCellVal,ot_line)  ; DATA ONLY
+			return 1
+		elif str == "leftArrow" || str == "rightArrow" || str == "home" || str == "end" then
+			;	COLUMN CHANGE
+			if giGridSpeechMode == 1 || giGridSpeechMode == 2 then
+				; don't use ot_line here incase it is blank we dont' want blank spoken
+				sayUsingVoice(VCTX_MESSAGE,gsVA508cacheGridColHdr,ot_control_name)
+			Endif
+			say(gsVA508cacheGridCellVal,ot_line)
+			if giGridSpeechMode == 1 || giGridSpeechMode == 3 then
+				say("column " + intToString(giVA508cacheGridColNum),ot_position)
+			Endif
+			return 1
+		elif str == "upArrow" || str == "downArrow" || str == "pageUp" || str == "pageDown" then
+			; Row change
+			if giGridSpeechMode == 1 || giGridSpeechMode == 2 then
 			; don't use ot_line here incase it is blank we dont' want blank spoken
-			sayUsingVoice(VCTX_MESSAGE,gsVA508cacheGridColHdr,ot_control_name)
-		Endif
-		say(gsVA508cacheGridCellVal,ot_line)
-		if giGridSpeechMode == 1 || giGridSpeechMode == 3 then
-			say("column " + intToString(giVA508cacheGridColNum),ot_position)
-		Endif
+				sayUsingVoice(VCTX_MESSAGE,gsVA508cacheGridRowHdr,ot_control_name)
+			Endif
+			say(gsVA508cacheGridCellVal,ot_line)
+			if giGridSpeechMode == 1 || giGridSpeechMode == 3 then
+				say("row " + intToString(giVA508cacheGridRowNum),ot_position)
+			Endif
+			return 1
+		endif
+
+	; IN TAB CONTROL
+	elif getObjectTypeCode() == wt_tabcontrol && getWindowStyleBits(getCurrentWindow()) & window_style_tabsWithButtons then  ; tabs with buttons or flat buttons
+		let glbSuppressFocusChange = true
+		TypeKey(str)
+		delay(1, True)
+		sayControlEx(getCurrentWindow(), getObjectName(), getObjectSubtype(), getAccState())
+		ScheduleFunction("ClearSuppressFocusChange",3)
 		return 1
-	elif str == "upArrow" || str == "downArrow" || str == "pageUp" || str == "pageDown" then
-		; Row change
-		if giGridSpeechMode == 1 || giGridSpeechMode == 2 then
-		; don't use ot_line here incase it is blank we dont' want blank spoken
-			sayUsingVoice(VCTX_MESSAGE,gsVA508cacheGridRowHdr,ot_control_name)
-		Endif
-		say(gsVA508cacheGridCellVal,ot_line)
-		if giGridSpeechMode == 1 || giGridSpeechMode == 3 then
-			say("row " + intToString(giVA508cacheGridRowNum),ot_position)
-		Endif
-		return 1
+
 	endif
-; IN TAB CONTROL
-elif getObjectTypeCode() == wt_tabcontrol && getWindowStyleBits(getCurrentWindow()) & window_style_tabsWithButtons then  ; tabs with buttons or flat buttons
-	let glbSuppressFocusChange = true
-	TypeKey(str)
-	delay(1, True)
-	sayControlEx(getCurrentWindow(), getObjectName(), getObjectSubtype(), getAccState())
-	ScheduleFunction("ClearSuppressFocusChange",3)
-	return 1
-endif
-return 0
+
+	return 0
+
 EndFunction
 
 ;******************************************************************
 ; returns the full string of col number, row number, column name, row name, and cell data for the current table cell
 ; used by sayLine, tab, shift+tab, insert+tab and control+home, and control+end
 string Function getCurrentCellHeadersData ()
-var
-	string str
+	var
+		string str
 
-VA508GetGridData(getFocus(),0) ; have to call here to refresh view when Braille is not being used
-let str = "column" + msgSpace + IntToString(giVA508CacheGridColNum) + "row" + msgSpace + IntToString(giVA508CacheGridRowNum) + msgSpace
-let str = str + gsVA508cacheGridColHdr + msgSpace + gsVA508cacheGridRowHdr + msgSpace + gsVA508cacheGridCellVal
-return str
+	VA508GetGridData(getFocus(),0) ; have to call here to refresh view when Braille is not being used
+	let str = "column" + msgSpace + IntToString(giVA508CacheGridColNum) + "row" + msgSpace + IntToString(giVA508CacheGridRowNum) + msgSpace
+	let str = str + gsVA508cacheGridColHdr + msgSpace + gsVA508cacheGridRowHdr + msgSpace + gsVA508cacheGridCellVal
+
+	return str
+
 EndFunction
 
 ;home and end in grid
@@ -2728,7 +3029,9 @@ Script JAWSHome()
 	if SpeakCellUnit("home") then
 		return
 	Endif
+
 	performScript JAWSHome()
+
 EndScript
 
 ;*********************************************************************
@@ -2760,74 +3063,84 @@ EndScript
 
 ;*********************************************************************
 Int Function UpdateBrailleClasses()
-var
-	string sFile,
-	string sTable,
-	int i,
-	int count
+	var
+		string sFile,
+		string sTable,
+		int i,
+		int count
 
-let glbsTable = ""
-let glbsTable2 = ""
-let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jcf") ; get applicatio specific jcf file
-if !fileExists(sFile) then
-	; No file, no translations.
-	return False
-endIf
-; file exists
-; this line adds a space at the beginning of each item in the list that is returned because of a bug in StringSegmentIndex
-let glbsTable = msgSpace + StringReplaceSubStrings(StringLower(IniReadSectionKeys (section_BrailleClasses, sFile)),string_delim, string_delim+MsgSpace) ; msgSpace need for first item to match
-let count = VA508StringSegmentCount (glbsTable, string_delim)
-let i = 1
-while i <= count
-	let glbsTable2 = glbsTable2 + IntToString(IniReadInteger (section_BrailleClasses, StringChopLeft(StringSegment(glbsTable,string_delim,count),1), 0, sFile)) + string_delim
-	let i = i + 1
-endWhile
-if glbsTable2 then
-	let glbsTable2 = stringChopRight (glbsTable2, 1)
-Endif
-return True
+	let glbsTable = ""
+	let glbsTable2 = ""
+	let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jcf") ; get applicatio specific jcf file
+	if !fileExists(sFile) then
+		; No file, no translations.
+		return False
+	endIf
+
+	; file exists
+	; this line adds a space at the beginning of each item in the list that is returned because of a bug in StringSegmentIndex
+	let glbsTable = msgSpace + StringReplaceSubStrings(StringLower(IniReadSectionKeys (section_BrailleClasses, sFile)),string_delim, string_delim+MsgSpace) ; msgSpace need for first item to match
+	let count = VA508StringSegmentCount (glbsTable, string_delim)
+	let i = 1
+	while i <= count
+		let glbsTable2 = glbsTable2 + IntToString(IniReadInteger (section_BrailleClasses, StringChopLeft(StringSegment(glbsTable,string_delim,count),1), 0, sFile)) + string_delim
+		let i = i + 1
+	endWhile
+
+	if glbsTable2 then
+		let glbsTable2 = stringChopRight (glbsTable2, 1)
+	Endif
+
+	return True
+
 EndFunction
 
 ;*****************************************************************************************************
 Int Function UpdateControlTypes()
-var
-	string sFile,
-	string sTable,
-	int i,
-	int count
+	var
+		string sFile,
+		string sTable,
+		int i,
+		int count
 
-let glbsTable3 = ""
-let glbsTable4 = ""
-let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jcf")
-if !fileExists(sFile) then
-	; No file, no translations.
-	return False
-endIf
-let glbsTable3 = msgSpace + StringReplaceSubStrings(StringLower(IniReadSectionKeys (section_ControlTypes, sFile)),string_delim, string_delim+msgSpace)
-let count = VA508StringSegmentCount (glbsTable3, string_delim)
-let i = 1
-while i <= count
-	let glbsTable4 = glbsTable4 + IniReadString (section_ControlTypes, StringChopLeft(StringSegment(glbsTable3,string_delim,count),1), msgNull, sFile) + string_delim
-	let i = i + 1
-endWhile
-if glbsTable4 then
-	let glbsTable4 = stringChopRight (glbsTable4, 1)
-Endif
-return True
+	let glbsTable3 = ""
+	let glbsTable4 = ""
+	let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jcf")
+	if !fileExists(sFile) then
+		; No file, no translations.
+		return False
+	endIf
+
+	let glbsTable3 = msgSpace + StringReplaceSubStrings(StringLower(IniReadSectionKeys (section_ControlTypes, sFile)),string_delim, string_delim+msgSpace)
+	let count = VA508StringSegmentCount (glbsTable3, string_delim)
+	let i = 1
+	while i <= count
+		let glbsTable4 = glbsTable4 + IniReadString (section_ControlTypes, StringChopLeft(StringSegment(glbsTable3,string_delim,count),1), msgNull, sFile) + string_delim
+		let i = i + 1
+	endWhile
+
+	if glbsTable4 then
+		let glbsTable4 = stringChopRight (glbsTable4, 1)
+	Endif
+
+	return True
+
 EndFunction
 
 ;************************************************************************
 int Function ControlTypeFound (string ControlType, string ByRef newControlType)
-var
-	int i,
-	int count
+	var
+		int i,
+		int count
 
 	let i = StringSegmentIndex (glbsTable3, string_delim, StringLower(msgSpace+ControlType), true)
 	if i then
 		let newControlType = StringSegment(glbsTable4,string_delim,i)
 		return true
 	endif
-return false
+
+	return false
+
 EndFunction
 
 
@@ -2836,97 +3149,106 @@ EndFunction
 ;*******************************************************************************************
 ; called by JAWS verbosity dialog to flip or return status
 String Function ToggleGridSpeechMode (int iRetVal)
-If not iRetVal Then ; flip only if space pressed
-	Let giGridSpeechMode = giGridSpeechMode + 1
-	if giGridSpeechMode > 3 then
-		let giGridSpeechMode = 0
-	Endif
-EndIf  ; update it
+	If not iRetVal Then ; flip only if space pressed
+		Let giGridSpeechMode = giGridSpeechMode + 1
+		if giGridSpeechMode > 3 then
+			let giGridSpeechMode = 0
+		Endif
+	EndIf  ; update it
 
 ; return state, used to build visual list of current settings
-If giGridSpeechMode == 1 Then
-	return msgRowAndColumnHeadersAndNumbers
-elif giGridSpeechMode == 2 then
-	return msgRowAndColumnHeaders
-elif giGridSpeechMode == 3 then
-	return msgRowAndColumnNumbers
-Else ; 0
-	return msgDataOnly
-EndIf
+	If giGridSpeechMode == 1 Then
+		return msgRowAndColumnHeadersAndNumbers
+
+	elif giGridSpeechMode == 2 then
+		return msgRowAndColumnHeaders
+
+	elif giGridSpeechMode == 3 then
+		return msgRowAndColumnNumbers
+
+	Else ; 0
+		return msgDataOnly
+
+	EndIf
+
 EndFunction
 
 ;*******************************************************************************************
 ; called by JAWS verbosity dialog to flip or return status
 String Function ToggleGridBrailleMode (int iRetVal)
-If not iRetVal Then ; flip only if space pressed
-	Let giGridBrailleMode = giGridBrailleMode + 1
-	if giGridBrailleMode > 3 then
-		let giGridBrailleMode = 0
-	Endif
-EndIf  ; update it
-; return state
-If giGridBrailleMode == 1 Then
-	return msgRowAndColumnHeadersAndNumbers
-elif giGridBrailleMode == 2 then
-	return msgRowAndColumnHeaders
-elif giGridBrailleMode == 3 then
-	return msgRowAndColumnNumbers
-Else ; 0
-	return msgDataOnly
-EndIf
+	If not iRetVal Then ; flip only if space pressed
+		Let giGridBrailleMode = giGridBrailleMode + 1
+		if giGridBrailleMode > 3 then
+			let giGridBrailleMode = 0
+		Endif
+	EndIf  ; update it
+
+	; return state
+	If giGridBrailleMode == 1 Then
+		return msgRowAndColumnHeadersAndNumbers
+
+	elif giGridBrailleMode == 2 then
+		return msgRowAndColumnHeaders
+
+	elif giGridBrailleMode == 3 then
+		return msgRowAndColumnNumbers
+
+	Else ; 0
+		return msgDataOnly
+
+	EndIf
+
 EndFunction
 
 ;*******************************************************************************************
 Void Function LoadPersonalSettings ()
-var
-	string sFile
+	var
+		string sFile
 
-; Load personal preferences
-; SayUsingVoice(VCTX_MESSAGE,msgLoadingSettings,OT_USER_REQUESTED_INFORMATION)
-let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jsi")
-let giGridSpeechMode = IniReadInteger (Section_Options, hKey_GridSpeechMode, 1, sFile)
-let giGridBrailleMode = IniReadInteger (Section_Options, hKey_GridBrailleMode, 1, sFile)
+	; Load personal preferences
+	; SayUsingVoice(VCTX_MESSAGE,msgLoadingSettings,OT_USER_REQUESTED_INFORMATION)
+	let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jsi")
+	let giGridSpeechMode = IniReadInteger (Section_Options, hKey_GridSpeechMode, 1, sFile)
+	let giGridBrailleMode = IniReadInteger (Section_Options, hKey_GridBrailleMode, 1, sFile)
 EndFunction
 
 ;*******************************************************************************************
 Int Function SavePersonalSettings ()
 ; save personal preferences
-Var
-	int iResult,
-	string sFile
+	Var
+		int iResult,
+		string sFile
 
-let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jsi")
-let iResult =IniWriteInteger (Section_Options, hKey_GridSpeechMode, giGridSpeechMode, sFile)
-let iResult = IResult | IniWriteInteger (Section_Options, hKey_GridBrailleMode, giGridBrailleMode, sFile)
-return iResult
+	let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jsi")
+	let iResult =IniWriteInteger (Section_Options, hKey_GridSpeechMode, giGridSpeechMode, sFile)
+	let iResult = IResult | IniWriteInteger (Section_Options, hKey_GridBrailleMode, giGridBrailleMode, sFile)
+	return iResult
 EndFunction
 
 ;*******************************************************************************************
 ; modified to include personalized settings for automatically speaking buddies as the sign in and incoming messages
 Script AdjustJAWSVerbosity ()
-Var
-	int iPrevGridSpeechMode,
-	int iPrevGridBrailleMode,
-	string sList
+	Var
+		int iPrevGridSpeechMode,
+		int iPrevGridBrailleMode,
+		string sList
 
-;	save the current values
-let iPrevGridSpeechMode = giGridSpeechMode
-let iPrevGridBrailleMode = giGridBrailleMode
+	;	save the current values
+	let iPrevGridSpeechMode = giGridSpeechMode
+	let iPrevGridBrailleMode = giGridBrailleMode
 
-let sList=jvToggleGridSpeechMode
-	+ jvToggleGridBrailleMode
+	let sList=jvToggleGridSpeechMode + jvToggleGridBrailleMode
 
-JAWSVerbosityCore (sList) ; call default
+	JAWSVerbosityCore (sList) ; call default
 
-; If any values changed, save them...
-If iPrevGridSpeechMode != giGridSpeechMode
-|| iPrevGridBrailleMode != giGridBrailleMode then
-	If savePersonalSettings() then
-		SayUsingVoice(VCTX_MESSAGE, msgPersonalSettingsSaved,OT_STATUS)
-	Else
-		SayFormattedMessage(ot_error, msgPersonalSettingsNotSaved)
+	; If any values changed, save them...
+	If iPrevGridSpeechMode != giGridSpeechMode || iPrevGridBrailleMode != giGridBrailleMode then
+		If savePersonalSettings() then
+			SayUsingVoice(VCTX_MESSAGE, msgPersonalSettingsSaved,OT_STATUS)
+		Else
+			SayFormattedMessage(ot_error, msgPersonalSettingsNotSaved)
+		EndIf
 	EndIf
-EndIf
 
 EndScript
 
@@ -2938,79 +3260,94 @@ EndScript
 ; called on listboxes and listviews
 ;***************************************************************************************
 string Function getAccName ()
-var
-	object o,
-	int cid,
-	string str
+	var
+		object o,
+		int cid,
+		string str,
+		int TypeCode
 
-let o = getFocusObject(cid)
-if o then
-	if getObjectTypeCode() == wt_listbox || getObjectTypeCode() == wt_listview || getObjectTypeCode() == wt_listboxItem then
-		let str = o.accName(cid)
-	Else
-		let str = getObjectName()
+	let TypeCode = getObjectTypeCode()
+	let o = getFocusObject(cid)
+	if o then
+		
+		if TypeCode == wt_listbox || TypeCode == wt_listboxItem || TypeCode == wt_listview || TypeCode == WT_LISTVIEWITEM  then
+			let str = o.accName(cid)
+		Else
+			let str = getObjectName()
+		Endif
+		if o.accRole(cid) == role_system_list then ; we are on parent not simple child, should cover listView and listbox
+			let str = o.accName(1) ; announce first item if nothing is focused
+		Endif
+	Endif ; object exists?
+
+	if !str then
+		if TypeCode == wt_listbox || TypeCode == wt_listboxItem || TypeCode == wt_listview || TypeCode == WT_LISTVIEWITEM then
+			let str = getObjectValue()
+		else
+			let str = getObjectName()
+		EndIf
 	Endif
-	if o.accRole(cid) == role_system_list then ; we are on parent not simple child, should cover listView and listbox
-		let str = o.accName(1) ; announce first item if nothing is focused
-	Endif
-Endif ; object exists?
-if !str then
-	if getObjectTypeCode() == wt_listbox || getObjectTypeCode() == wt_listview || getObjectTypeCode() == wt_listboxItem then
-		let str = getObjectValue()
-	else
-		let str = getObjectName()
-	EndIf
-Endif
-return str
+
+	return str
+
 EndFunction
 
 ;***************************************************************************
 string Function getAccValue ()
-var
-	object o,
-	int cid,
-	string str
+	var
+		object o,
+		int cid,
+		string str,
+		int TypeCode
 
-let o = getFocusObject(cid)
-if o then
-	if getObjectTypeCode() == wt_listbox || getObjectTypeCode() == wt_listview || getObjectTypeCode() == wt_listboxItem ||
-		getObjectTypeCode() == wt_treeview then
-		let str = o.accName(cid)
-	else
-		; let str = o.accValue(cid)
+	let TypeCode = getObjectTypeCode()
+	let o = getFocusObject(cid)
+	if o then
+		if TypeCode == wt_listbox || TypeCode == wt_listview || TypeCode == wt_listboxItem || TypeCode == WT_LISTVIEWITEM ||
+			TypeCode == wt_treeview then
+			let str = o.accName(cid)
+		else
+			; let str = o.accValue(cid)
+			let str = getObjectValue()
+		Endif
+		if o.accRole(cid) == role_system_list then ; we are on parent not simple child, should cover listView and listbox
+			let str = o.accName(1) ; announce first item if nothing is focused
+		Endif
+	Endif ; object exists?
+
+	if !str then
 		let str = getObjectValue()
 	Endif
-	if o.accRole(cid) == role_system_list then ; we are on parent not simple child, should cover listView and listbox
-		let str = o.accName(1) ; announce first item if nothing is focused
-	Endif
-Endif ; object exists?
-if !str then
-	let str = getObjectValue()
-Endif
-return str
+
+	return str
+
 EndFunction
 
 ;***************************************************************************************
 ; currently only returns checked and/or not selected
 ; getObjectName() is often wrong and this can be used to get the real msaa name as long as the msaa cache is up-to-date in JAWS
 string Function getAccState ()
-var
-	object o,
-	int cid,
-	int ret,
-	string str
+	var
+		object o,
+		int cid,
+		int ret,
+		string str
 
-let o = getFocusObject(cid)
-if o then
-	let ret = o.accState(cid)
-EndIf
-if ret & state_system_focused && ret & state_system_selectable && !(ret & state_system_selected) then
-	let str = msgNotSelected
-endif
-if ret & state_system_checked then
-	let str = str + msgSpace + msgChecked
-Endif
-return str
+	let o = getFocusObject(cid)
+	if o then
+		let ret = o.accState(cid)
+	EndIf
+
+	if ret & state_system_focused && ret & state_system_selectable && !(ret & state_system_selected) then
+		let str = msgNotSelected
+	endif
+
+	if ret & state_system_checked then
+		let str = str + msgSpace + msgChecked
+	Endif
+
+	return str
+
 EndFunction
 
 ;****************************************************************************************************
@@ -3026,7 +3363,7 @@ var
 	int iResultValue,
 	int iResultState
 
-; sayString("sayObjectActiveItem")
+	; sayString("sayObjectActiveItem")
 
 	if getObjectTypeCode() == wt_tabcontrol && getWindowStyleBits(getCurrentWindow()) & window_style_tabsWithButtons then  ; tabs with buttons or flat buttons
 		say(getAccState(),ot_item_state) ; Makes JAWS say "not selected" when a tab is in focus but not selected (possible on this type of tab control)
@@ -3056,7 +3393,9 @@ var
 		Endif
 		return
 	endif
+
 	sayObjectActiveItem(speakPositionInfo)
+
 EndFunction
 
 ;****************************************************************************************************
@@ -3064,69 +3403,77 @@ EndFunction
 ; arrows, home, end in treeview
 ; currently doesn't handle custom states, position, level, information etc.
 ;****************************************************************************************************
-Void Function ActiveItemChangedEvent (handle curHwnd, int curObjectId, int curChildId,
-	handle prevHwnd, int prevObjectId, int prevChildId)
-var
-	int iObjType,
-	int level,
-	string strValue,
-	string strState,
-	int iResultValue,
-	int iResultState
+Void Function ActiveItemChangedEvent (handle curHwnd, int curObjectId, int curChildId, handle prevHwnd, int prevObjectId, int prevChildId)
+	var
+		int iObjType,
+		int level,
+		string strValue,
+		string strState,
+		int iResultValue,
+		int iResultState
 
-; sayString("active item changed")
-Let iObjType = GetObjectSubtypeCode ()
+	; sayString("active item changed")
+	Let iObjType = GetObjectSubtypeCode ()
 
-If (WT_TREEVIEW == iObjType || WT_TREEVIEWITEM == iObjType) && !MenusActive() then
-	;SayTreeViewLevel (true) ; calls sayTreeViewItem even though you would not expect it to to say name, level, also says position in group
-	; level change
-	let iResultValue = VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Update, strValue)
-	let iResultState = VA508GetComponentProp(getFocus(), VA508_FieldName_State, VA508_Cache_Use, strState)
+	If (WT_TREEVIEW == iObjType || WT_TREEVIEWITEM == iObjType) && !MenusActive() then
+		;SayTreeViewLevel (true) ; calls sayTreeViewItem even though you would not expect it to to say name, level, also says position in group
+		; level change
+		let iResultValue = VA508GetComponentProp(getFocus(), VA508_FieldName_Value, VA508_Cache_Update, strValue)
+		let iResultState = VA508GetComponentProp(getFocus(), VA508_FieldName_State, VA508_Cache_Use, strState)
 
-	let level = getTreeViewLevel()
-	if level != PreviousTreeviewLevel then
-		sayMessage(ot_position,msgLevel + IntToString(level), IntToString(level))
-		let PreviousTreeviewLevel = level
-	Endif
-	; value
-	if !giSuppressValue then ; don't announce value because ChangeEvent will catch it
-		if iResultValue > 0 then
-			say(strValue,ot_selected_item)
+		let level = getTreeViewLevel()
+		if level != PreviousTreeviewLevel then
+			sayMessage(ot_position,msgLevel + IntToString(level), IntToString(level))
+			let PreviousTreeviewLevel = level
+		Endif
+
+		; value
+		if !giSuppressValue then ; don't announce value because ChangeEvent will catch it
+			if iResultValue > 0 then
+				say(strValue,ot_selected_item)
+			Else
+				say(getAccValue(),ot_selected_item) ;also contains state
+			Endif
 		Else
-			say(getAccValue(),ot_selected_item) ;also contains state
+			if iResultValue > 0 then
+				say(strValue,ot_selected_item)
+				let giSuppressValue = false
+			Endif		
 		Endif
-	Else
-		if iResultValue > 0 then
-			say(strValue,ot_selected_item)
-			let giSuppressValue = false
-		Endif		
+
+		; never suppress open/closed states on tree views even if the framework has state data
+		SayTVFocusItemExpandState (curhwnd)
+		if giSuppressState then
+			if iResultState > 0 then
+				say(strState,ot_item_state)
+				let giSuppressState = false
+			Endif
+		Else ; if we have a custom state but the event didn't fire still speak it
+			if iResultState > 0 then
+				say(strState,ot_item_state)
+			Endif
+		Endif
+
+		; position info, always speak it, never get it from the framework
+		SayMessage(ot_position, PositionInGroup())
+
+		return
+
 	Endif
-	; never suppress open/closed states on tree views even if the framework has state data
-	SayTVFocusItemExpandState (curhwnd)
-	if giSuppressState then
-		if iResultState > 0 then
-			say(strState,ot_item_state)
-			let giSuppressState = false
-		Endif
-	Else ; if we have a custom state but the event didn't fire still speak it
-		if iResultState > 0 then
-			say(strState,ot_item_state)
-		Endif
-	Endif
-	; position info, always speak it, never get it from the framework
-	SayMessage(ot_position, PositionInGroup())
-	return
-Endif
-ActiveItemChangedEvent (curHwnd, curObjectId, curChildId, prevHwnd, prevObjectId, prevChildId)
+
+	ActiveItemChangedEvent (curHwnd, curObjectId, curChildId, prevHwnd, prevObjectId, prevChildId)
+
 Endfunction
 
 ;**********************************************************************************************************
 ; overwritten so when this function is called from saytree viewLevel in ActivateItemChangedEvent the item will not be spoken because we have a custom value that represents a custom name for the focused tree view item
 void function SayTreeViewItem()
-if giSuppressValue then ; don't announce value because ChangeEvent will catch it
-	return
-Endif
-sayTreeViewItem()
+	if giSuppressValue then ; don't announce value because ChangeEvent will catch it
+		return
+	Endif
+
+	sayTreeViewItem()
+
 EndFunction
 
 ;*****************************************************************************************************
@@ -3178,51 +3525,61 @@ globals
 	int lt_lastCol
 
 string function lt_stringCast(variant v)
-; Cast of anything to string, to make the compiler happy in a few places.
-return v
+	; Cast of anything to string, to make the compiler happy in a few places.
+	return v
 endFunction
 
 string function lt_stringSegmentWithMultiCharDelim(string s, string sep, int idx)
-; Same as stringSegment but with multi-character delimiters.
-; Used in breaking up MSAA accDescription strings containing multiple ListView column names/values.
-var
-	int pos
-let idx = idx -1
-while stringLength(s) && idx
-	let pos = stringContains(s, sep)
-	if !pos then
-		return ""
-	endIf
-	let s = stringChopLeft(s, pos+stringLength(sep) -1)
+	; Same as stringSegment but with multi-character delimiters.
+	; Used in breaking up MSAA accDescription strings containing multiple ListView column names/values.
+	var
+		int pos
 	let idx = idx -1
-endWhile
-let pos = stringContains(s, sep)
-if pos then
-	let s = stringLeft(s, pos-1)
-endIf
-return s
+	while stringLength(s) && idx
+		let pos = stringContains(s, sep)
+		if !pos then
+			return ""
+		endIf
+		let s = stringChopLeft(s, pos+stringLength(sep) -1)
+		let idx = idx -1
+	endWhile
+
+	let pos = stringContains(s, sep)
+	if pos then
+		let s = stringLeft(s, pos-1)
+	endIf
+
+	return s
+
 endFunction
 
 int function lt_canTryLVCalls()
-; Returns True if it is ok to try the lv* functions, which became available in JAWS 5.10.
-;return (getJfwVersion() >= 510000)
-return False
+	; Returns True if it is ok to try the lv* functions, which became available in JAWS 5.10.
+	;return (getJfwVersion() >= 510000)
+
+	return False
+
 endFunction
 
 int function lt_getMSAARect(object o, int childID, int byRef left, int byRef right, int byRef top, int byRef bottom)
 ; Get the bounding rectangle for the given MSAA object and childID.
 ; The rectangle is returned 1-based, as JAWS likes its rectangles.
 ; MSAA provides 0-based left/top/width/height.
-o.accLocation(intRef(left), intRef(top), intRef(right), intRef(bottom), childID)
-if !left && !right && !top && !bottom then
-	return False
-endIf
-; but we want 1-based left/right/top/bottom.
-let left = left +1
-let top = top +1
-let right = left +right
-let bottom = top +bottom
-return True
+
+	o.accLocation(intRef(left), intRef(top), intRef(right), intRef(bottom), childID)
+
+	if !left && !right && !top && !bottom then
+		return False
+	endIf
+
+	; but we want 1-based left/right/top/bottom.
+	let left = left +1
+	let top = top +1
+	let right = left +right
+	let bottom = top +bottom
+
+	return True
+
 endFunction
 
 int function lt_move(string where)
@@ -3235,407 +3592,435 @@ int function lt_move(string where)
 ;	- First/last for first/last cell in view.
 ;	- Here for current cell.
 ;	- (Cell|Header)Click(Left|Right) to left- or right-click the current cell or its header.
-var
-	int useLV, string moveFunc,
-	handle hwndList, handle hwndHeader,
-	object oList, int rowIdx, int rowCount,
-	object oHeader, int colIdx, int colCount,
-	int sayRow, int sayCol, int sayCell,
-	int rowSaid,
-	string buf, int pos,
-	int sayColPos, int sayRowPos
-
-if !isPCCursor() || userBufferIsActive() || menusActive() then
-	return False
-endIf
-let hwndList = getFocus()
-
-; Figure out if this is a control with which we can do anything useful.
-; Also figure out if we can use JAWS 5.10+ lv* calls or whether we must use MSAA instead.
-let useLV = lt_canTryLVCalls()
-if useLV then
-	let useLV = (lvGetNumOfColumns(hwndList))
-endIf
-if !useLV && getWindowTypeCode(hwndList) != WT_ListView then
-	return False
-endIf
-
-; Reset the column index when we move from one list to another.
-if lt_lastWin != hwndList then
-	let lt_lastWin = hwndList
-	let lt_lastCol = 1
-endIf
-
-; Get the list's MSAA object even if we will be using lv* calls.
-; Reason: lvSetFocusItem() and setCurrentItem() seem unreliable; they can return 1 but still change nothing.
-; This is just in case we need to use accSelect.
-let oList = getObjectFromEvent(hwndList, 0-4, 0, rowIdx)
-if !oList then
-	sayMessage(OT_Error, "List access error")
-	return True  ; don't go on to try a table access
-endIf
-
-; Get the current list item and header info.
-if useLV then
-	let rowIdx = getCurrentItem(hwndList)
-	if !rowIdx then
-		sayMessage(OT_Error, "Nothing selected")
-		return True
-	endIf
-	let rowCount = getItemCount(hwndList)
-	let colIdx = lt_lastCol
-	; May be 0 or out of range; leave it that way for now.
-	let colCount = lvGetNumOfColumns(hwndList)
-else  ; use MSAA
-	; List info
-	let rowIdx = oList.accFocus +0
-	if !rowIdx then
-		sayMessage(OT_Error, "Nothing selected")
-		return True
-	endIf
-	let rowCount = oList.accChildCount -1  ; -1 to account for the header object
-
-	; Header info
-	let hwndHeader = getFirstChild(hwndList)
-	if !hwndHeader then
-		sayMessage(OT_Error, "List headers not found")
-		return True
-	endIf
-	let oHeader = getObjectFromEvent(hwndHeader, 0-4, 0, colIdx)
-	if !oHeader then
-		sayMessage(OT_Error, "List header access error")
-		return True
-	endIf
-	let colIdx = lt_lastCol
-	; May be 0 or out of range; leave it that way for now.
-	let colCount = oHeader.accChildCount +0
-endIf
-
-; Set rowIdx, colIdx, sayCol, sayRow, sayColPos, sayRowPos, and sayCell based on the navigation request.
-; Also set moveFunc if the list item is changing.
-let sayCol = False
-let sayRow = False
-let sayColPos = False
-let sayRowPos = False
-let sayCell = True
-	let moveFunc = ""
-if where == "left" then
-	let colIdx = colIdx -1
-	let sayCol = True
-elif where == "right" then
-	let colIdx = colIdx +1
-	let sayCol = True
-elif where == "up" then
-	let rowIdx = rowIdx -1
-	let sayRow = True
-	let moveFunc = "priorLine"
-elif where == "down" then
-	let rowIdx = rowIdx +1
-	let sayRow = True
-	let moveFunc = "nextLine"
-elif where == "home" then
-	let colIdx = 1
-	let sayCol = True
-elif where == "end" then
-	let colIdx = colCount
-	let sayCol = True
-elif where == "top" then
-	let rowIdx = 1
-	let sayRow = True
-	let moveFunc = "JAWSHome"
-elif where == "bottom" then
-	let rowIdx = rowCount
-	let sayRow = True
-	let moveFunc = "JAWSEnd"
-elif where == "first" then
-	let rowIdx = 1
-	let colIdx = 1
-	let sayCol = True
-	let sayRow = True
-	let moveFunc = "JAWSHome"
-elif where == "last" then
-	let rowIdx = rowCount
-	let colIdx = colCount
-	let sayCol = True
-	let sayRow = True
-	let moveFunc = "JAWSEnd"
-elif where == "here" then
-	; No navigation.
-	let sayCol = True
-	let sayRow = True
-	let sayColPos = True
-	let sayRowPos = True
-elif where == "cellClick" then  ; left or right
-	; SayCell already set.
-elif where == "headerClick" then  ; left or right
-	let sayCell = False
-	let sayCol = True
-else
-	sayMessage(OT_Error, "Unknown navigation: " +where)
-	return True
-endIf
-
-; Enforce boundaries and update the remembered last-visited column index.
-if !moveFunc then
-	; Row boundaries are determined by the control itself when key sending is used to move focus; see below.
-	if rowIdx < 1 then
-		beep()
-		let rowIdx = 1
-		let moveFunc = ""
-	elif rowIdx > rowCount then
-		beep()
-		let rowIdx = rowCount
-		let moveFunc = ""
-	endIf
-endIf
-if colIdx < 1 then
-	beep()
-	let colIdx = 1
-elif colIdx > colCount then
-	beep()
-	let colIdx = colCount
-endIf
-let lt_lastCol = colIdx
-
-; Move focus if necessary but prevent the speaking of highlighting.
-if moveFunc then
-	let lt_suppressHighlight = True
-	if moveFunc then
-		; This is the preferred way of changing focus:  It's what the app will expect, and it won't focus something without scrolling it into view.
-		if formatStringWithEmbeddedFunctions("<" +moveFunc +">") == 0 then
-			beep()
-		endIf
-	elif useLV then
-		; LvSetFocusItem() and setCurrentItem() seem unreliable; they can return 1 but still change nothing.
-		; We therefore still use MSAA here, which is why we got the MSAA object earlier regardless of useLV.  [DGL, 2006-01-11, JAWS 6.20]
-		;SetCurrentItem(hwndList, rowIdx)
-		oList.accSelect(3, rowIdx)
-	else
-		oList.accSelect(3, rowIdx)
-	endIf
-	pause()
-	; The stopSpeech is still here even though we suppress highlighting via the global lt_suppressHighlight variable.
-	; This is because app-specific scripts with their own sayHighlightedText functions can (and often do) speak their own highlighting, thus defeating the lt_suppressHighlight approach.
-	; For some reason, using only stopSpeech seems to allow a split second of unwanted speech unless the lt_suppressHighlight method is also used.
-	; We therefore use both at once.  [DGL, 2006-01-11]
-	stopSpeech()
-endIf
-
-; Click if a click was requested.
-if stringContains(stringLower(where), "click") then
 	var
-		int isRight,
-		int left, int right, int top, int bottom,
-		int cx, int cy
-	let isRight = (stringContains(stringLower(where), "right") > 0)
-	; lvGetItemColumnRect can crash the app against which it is called, so we use MSAA here.
-	if !lt_getMSAARect(oHeader, colIdx, left, right, top, bottom) then
-		beep()
+		int useLV, string moveFunc,
+		handle hwndList, handle hwndHeader,
+		object oList, int rowIdx, int rowCount,
+		object oHeader, int colIdx, int colCount,
+		int sayRow, int sayCol, int sayCell,
+		int rowSaid,
+		string buf, int pos,
+		int sayColPos, int sayRowPos
+
+	if !isPCCursor() || userBufferIsActive() || menusActive() then
 		return False
 	endIf
-	let cx = (left+right) /2
-	if where == "cellClick" then
-		let cy = getCursorRow()
-	elif where == "headerClick" then
-		let cy = (top+bottom) /2
-	endIf  ; cell or header
-	saveCursor()  JAWSCursor()  saveCursor()
-	moveTo(cx, cy)
-	if isRight then
-		rightMouseButton()
-	else
-		leftMouseButton()
-	endIf
-	delay(1, True)
-endIf  ; click
+	let hwndList = getFocus()
 
-; Reset the row index to what's actually the case.
-; This is to handle cases where arrows follow visual order but not item index order.
-; Example:  when a Windows Explorer Details view is sorted by type.
-; This may also be needed when a list is resorted by a click.
-if useLV then
-let rowIdx = getCurrentItem(hwndList)
-else
-let rowIdx = oList.accFocus +0
-endIf
+	; Figure out if this is a control with which we can do anything useful.
+	; Also figure out if we can use JAWS 5.10+ lv* calls or whether we must use MSAA instead.
+	let useLV = lt_canTryLVCalls()
+	if useLV then
+		let useLV = (lvGetNumOfColumns(hwndList))
+	endIf
+	if !useLV && getWindowTypeCode(hwndList) != WT_ListView then
+		return False
+	endIf
 
-; Say row, column, and/or cell if appropriate.
-if useLV then
-	if sayRow then
-		;sayMessage(OT_Message, lt_stringCast(lvGetItemText(hwndList, rowIdx, 1)))
-		;let rowSaid = True
+	; Reset the column index when we move from one list to another.
+	if lt_lastWin != hwndList then
+		let lt_lastWin = hwndList
+		let lt_lastCol = 1
 	endIf
-	if sayCol then
-		sayMessage(OT_Message, lvGetColumnHeader(hwndList, colIdx))
+
+	; Get the list's MSAA object even if we will be using lv* calls.
+	; Reason: lvSetFocusItem() and setCurrentItem() seem unreliable; they can return 1 but still change nothing.
+	; This is just in case we need to use accSelect.
+	let oList = getObjectFromEvent(hwndList, 0-4, 0, rowIdx)
+	if !oList then
+		sayMessage(OT_Error, "List access error")
+		return True  ; don't go on to try a table access
 	endIf
-	if sayCell then
-		if colIdx == 1 then
-			if !rowSaid then
-				sayMessage(OT_Message, lvGetItemText(hwndList, rowIdx, colIdx))
-			endIf
-		else
-			sayMessage(OT_Message, lvGetItemText(hwndList, rowIdx, colIdx))
+
+	; Get the current list item and header info.
+	if useLV then
+		let rowIdx = getCurrentItem(hwndList)
+		if !rowIdx then
+			sayMessage(OT_Error, "Nothing selected")
+			return True
 		endIf
-	endIf  ; sayCell
-else  ; Use MSAA instead
-	if sayRow then
-		;sayMessage(OT_Message, lt_stringCast(oList.accName(1)))
-		;let rowSaid = True
+		let rowCount = getItemCount(hwndList)
+		let colIdx = lt_lastCol
+		; May be 0 or out of range; leave it that way for now.
+		let colCount = lvGetNumOfColumns(hwndList)
+	else  ; use MSAA
+		; List info
+		let rowIdx = oList.accFocus +0
+		if !rowIdx then
+			sayMessage(OT_Error, "Nothing selected")
+			return True
+		endIf
+		let rowCount = oList.accChildCount -1  ; -1 to account for the header object
+
+		; Header info
+		let hwndHeader = getFirstChild(hwndList)
+		if !hwndHeader then
+			sayMessage(OT_Error, "List headers not found")
+			return True
+		endIf
+		let oHeader = getObjectFromEvent(hwndHeader, 0-4, 0, colIdx)
+		if !oHeader then
+			sayMessage(OT_Error, "List header access error")
+			return True
+		endIf
+		let colIdx = lt_lastCol
+		; May be 0 or out of range; leave it that way for now.
+		let colCount = oHeader.accChildCount +0
 	endIf
-	if sayCol then
-		sayMessage(OT_Message, oHeader.accName(colIdx))
+
+	; Set rowIdx, colIdx, sayCol, sayRow, sayColPos, sayRowPos, and sayCell based on the navigation request.
+	; Also set moveFunc if the list item is changing.
+	let sayCol = False
+	let sayRow = False
+	let sayColPos = False
+	let sayRowPos = False
+	let sayCell = True
+		let moveFunc = ""
+
+	if where == "left" then
+		let colIdx = colIdx -1
+		let sayCol = True
+
+	elif where == "right" then
+		let colIdx = colIdx +1
+		let sayCol = True
+
+	elif where == "up" then
+		let rowIdx = rowIdx -1
+		let sayRow = True
+		let moveFunc = "priorLine"
+
+	elif where == "down" then
+		let rowIdx = rowIdx +1
+		let sayRow = True
+		let moveFunc = "nextLine"
+
+	elif where == "home" then
+		let colIdx = 1
+		let sayCol = True
+
+	elif where == "end" then
+		let colIdx = colCount
+		let sayCol = True
+
+	elif where == "top" then
+		let rowIdx = 1
+		let sayRow = True
+		let moveFunc = "JAWSHome"
+
+	elif where == "bottom" then
+		let rowIdx = rowCount
+		let sayRow = True
+		let moveFunc = "JAWSEnd"
+
+	elif where == "first" then
+		let rowIdx = 1
+		let colIdx = 1
+		let sayCol = True
+		let sayRow = True
+		let moveFunc = "JAWSHome"
+
+	elif where == "last" then
+		let rowIdx = rowCount
+		let colIdx = colCount
+		let sayCol = True
+		let sayRow = True
+		let moveFunc = "JAWSEnd"
+
+	elif where == "here" then
+		; No navigation.
+		let sayCol = True
+		let sayRow = True
+		let sayColPos = True
+		let sayRowPos = True
+
+	elif where == "cellClick" then  ; left or right
+		; SayCell already set.
+
+	elif where == "headerClick" then  ; left or right
+		let sayCell = False
+		let sayCol = True
+
+	else
+		sayMessage(OT_Error, "Unknown navigation: " +where)
+		return True
+
 	endIf
-	if sayCell then
-		if colIdx == 1 then
-			if !rowSaid then
-				sayMessage(OT_Message, oList.accName(rowIdx))
+
+	; Enforce boundaries and update the remembered last-visited column index.
+	if !moveFunc then
+		; Row boundaries are determined by the control itself when key sending is used to move focus; see below.
+		if rowIdx < 1 then
+			beep()
+			let rowIdx = 1
+			let moveFunc = ""
+		elif rowIdx > rowCount then
+			beep()
+			let rowIdx = rowCount
+			let moveFunc = ""
+		endIf
+	endIf
+
+	if colIdx < 1 then
+		beep()
+		let colIdx = 1
+
+	elif colIdx > colCount then
+		beep()
+		let colIdx = colCount
+	endIf
+
+	let lt_lastCol = colIdx
+
+	; Move focus if necessary but prevent the speaking of highlighting.
+	if moveFunc then
+		let lt_suppressHighlight = True
+		if moveFunc then
+			; This is the preferred way of changing focus:  It's what the app will expect, and it won't focus something without scrolling it into view.
+			if formatStringWithEmbeddedFunctions("<" +moveFunc +">") == 0 then
+				beep()
 			endIf
+		elif useLV then
+			; LvSetFocusItem() and setCurrentItem() seem unreliable; they can return 1 but still change nothing.
+			; We therefore still use MSAA here, which is why we got the MSAA object earlier regardless of useLV.  [DGL, 2006-01-11, JAWS 6.20]
+			;SetCurrentItem(hwndList, rowIdx)
+			oList.accSelect(3, rowIdx)
 		else
-			let buf = oList.accDescription(rowIdx)
-			let pos = stringContains(buf, lt_stringCast(oHeader.accName(colIdx)) +":")
-			if !pos then
-				let buf = lt_stringSegmentWithMultiCharDelim(buf, ", ", colIdx-1)  ; -1 because the first column is not included in accDescription
-				if !stringLength(buf) then
-					sayMessage(OT_Error, "Can't find column value")
-					return True
+			oList.accSelect(3, rowIdx)
+		endIf
+		pause()
+		; The stopSpeech is still here even though we suppress highlighting via the global lt_suppressHighlight variable.
+		; This is because app-specific scripts with their own sayHighlightedText functions can (and often do) speak their own highlighting, thus defeating the lt_suppressHighlight approach.
+		; For some reason, using only stopSpeech seems to allow a split second of unwanted speech unless the lt_suppressHighlight method is also used.
+		; We therefore use both at once.  [DGL, 2006-01-11]
+		stopSpeech()
+	endIf
+
+	; Click if a click was requested.
+	if stringContains(stringLower(where), "click") then
+		var
+			int isRight,
+			int left, int right, int top, int bottom,
+			int cx, int cy
+		let isRight = (stringContains(stringLower(where), "right") > 0)
+		; lvGetItemColumnRect can crash the app against which it is called, so we use MSAA here.
+		if !lt_getMSAARect(oHeader, colIdx, left, right, top, bottom) then
+			beep()
+			return False
+		endIf
+		let cx = (left+right) /2
+		if where == "cellClick" then
+			let cy = getCursorRow()
+		elif where == "headerClick" then
+			let cy = (top+bottom) /2
+		endIf  ; cell or header
+		saveCursor()  JAWSCursor()  saveCursor()
+		moveTo(cx, cy)
+		if isRight then
+			rightMouseButton()
+		else
+			leftMouseButton()
+		endIf
+		delay(1, True)
+	endIf  ; click
+
+	; Reset the row index to what's actually the case.
+	; This is to handle cases where arrows follow visual order but not item index order.
+	; Example:  when a Windows Explorer Details view is sorted by type.
+	; This may also be needed when a list is resorted by a click.
+	if useLV then
+		let rowIdx = getCurrentItem(hwndList)
+	else
+		let rowIdx = oList.accFocus +0
+	endIf
+
+	; Say row, column, and/or cell if appropriate.
+	if useLV then
+		if sayRow then
+			;sayMessage(OT_Message, lt_stringCast(lvGetItemText(hwndList, rowIdx, 1)))
+			;let rowSaid = True
+		endIf
+
+		if sayCol then
+			sayMessage(OT_Message, lvGetColumnHeader(hwndList, colIdx))
+		endIf
+
+		if sayCell then
+			if colIdx == 1 then
+				if !rowSaid then
+					sayMessage(OT_Message, lvGetItemText(hwndList, rowIdx, colIdx))
 				endIf
 			else
-				let buf = stringChopLeft(buf, pos +stringLength(oHeader.accName(colIdx)) +1)
-				if colIdx < colCount then
-					let pos = stringContains(buf, lt_stringCast(oHeader.accName(colIdx+1)) +":")
-					if pos then
-						let buf = stringLeft(buf, pos-1)
-					else
-;						sayMessage(OT_Error, "Can't find end of cell value")
-	beep()
-						; allow the overly long value to speak though
+				sayMessage(OT_Message, lvGetItemText(hwndList, rowIdx, colIdx))
+			endIf
+		endIf  ; sayCell
+
+	else  ; Use MSAA instead
+		if sayRow then
+			;sayMessage(OT_Message, lt_stringCast(oList.accName(1)))
+			;let rowSaid = True
+		endIf
+
+		if sayCol then
+			sayMessage(OT_Message, oHeader.accName(colIdx))
+		endIf
+
+		if sayCell then
+			if colIdx == 1 then
+				if !rowSaid then
+					sayMessage(OT_Message, oList.accName(rowIdx))
+				endIf
+			else
+				let buf = oList.accDescription(rowIdx)
+				let pos = stringContains(buf, lt_stringCast(oHeader.accName(colIdx)) +":")
+				if !pos then
+					let buf = lt_stringSegmentWithMultiCharDelim(buf, ", ", colIdx-1)  ; -1 because the first column is not included in accDescription
+					if !stringLength(buf) then
+						sayMessage(OT_Error, "Can't find column value")
+						return True
+					endIf
+				else
+					let buf = stringChopLeft(buf, pos +stringLength(oHeader.accName(colIdx)) +1)
+					if colIdx < colCount then
+						let pos = stringContains(buf, lt_stringCast(oHeader.accName(colIdx+1)) +":")
+						if pos then
+							let buf = stringLeft(buf, pos-1)
+						else
+							;sayMessage(OT_Error, "Can't find end of cell value")
+							beep()
+							; allow the overly long value to speak though
+						endIf
 					endIf
 				endIf
+				sayMessage(OT_Message, buf)
 			endIf
-			sayMessage(OT_Message, buf)
-		endIf
-	endIf  ; sayCell
-endIf  ; LV vs. MSAA
+		endIf  ; sayCell
+	endIf  ; LV vs. MSAA
 
-if sayRowPos then
-	sayMessage(OT_Position, "Row " +intToString(rowIdx) +" of " +intToString(rowCount))
-endIf
-if sayColPos then
-	sayMessage(OT_Position, "Column " +intToString(colIdx) +" of " +intToString(colCount))
-endIf
-return True
+	if sayRowPos then
+		sayMessage(OT_Position, "Row " +intToString(rowIdx) +" of " +intToString(rowCount))
+	endIf
+
+	if sayColPos then
+		sayMessage(OT_Position, "Column " +intToString(colIdx) +" of " +intToString(colCount))
+	endIf
+
+	return True
+
 endFunction
 
 void function lt_clearSuppressHighlight()
-let lt_suppressHighlight = False
+	let lt_suppressHighlight = False
 endFunction
 
 script downCell()
-if !lt_move("down") then
-	performScript downCell()
-endIf
+	if !lt_move("down") then
+		performScript downCell()
+	endIf
 endScript
 
 script upCell()
-if !lt_move("up") then
-	performScript upCell()
-endIf
+	if !lt_move("up") then
+		performScript upCell()
+	endIf
 endScript
 
 script priorCell()
-if !lt_move("left") then
-	performScript priorCell()
-endIf
+	if !lt_move("left") then
+		performScript priorCell()
+	endIf
 endScript
 
 script nextCell()
-if !lt_move("right") then
-	performScript nextCell()
-endIf
+	if !lt_move("right") then
+		performScript nextCell()
+	endIf
 endScript
 
 script moveToTopOfColumn()
-if !lt_move("top") then
-	performScript moveToTopOfColumn()
-endIf
+	if !lt_move("top") then
+		performScript moveToTopOfColumn()
+	endIf
 endScript
 
 script moveToBottomOfColumn()
-if !lt_move("bottom") then
-	performScript moveToBottomOfColumn()
-endIf
+	if !lt_move("bottom") then
+		performScript moveToBottomOfColumn()
+	endIf
 endScript
 
 script moveToStartOfRow()
-if !lt_move("home") then
-	performScript moveToStartOfRow()
-endIf
+	if !lt_move("home") then
+		performScript moveToStartOfRow()
+	endIf
 endScript
 
 script moveToEndOfRow()
-if !lt_move("end") then
-	performScript moveToEndOfRow()
-endIf
+	if !lt_move("end") then
+		performScript moveToEndOfRow()
+	endIf
 endScript
 
 script firstCellInTable()
-if !lt_move("first") then
-	performScript firstCellInTable()
-endIf
+	if !lt_move("first") then
+		performScript firstCellInTable()
+	endIf
 endScript
 
 script lastCellInTable()
-if !lt_move("last") then
-	performScript lastCellInTable()
-endIf
+	if !lt_move("last") then
+		performScript lastCellInTable()
+	endIf
 endScript
 
 script sayCell()
-if !lt_move("here") then
-	performScript sayCell()
-endIf
+	if !lt_move("here") then
+		performScript sayCell()
+	endIf
 endScript
 
 script ltLeftClickCell()
-if !lt_move("cellClickLeft") then
-	sayCurrentScriptKeyLabel()
-	typeCurrentScriptKey()
-endIf
+	if !lt_move("cellClickLeft") then
+		sayCurrentScriptKeyLabel()
+		typeCurrentScriptKey()
+	endIf
 endScript
 
 script ltRightClickCell()
-if !lt_move("cellClickRight") then
-	sayCurrentScriptKeyLabel()
-	typeCurrentScriptKey()
-endIf
+	if !lt_move("cellClickRight") then
+		sayCurrentScriptKeyLabel()
+		typeCurrentScriptKey()
+	endIf
 endScript
 
 script ltLeftClickHeader()
-if !lt_move("headerClickLeft") then
-	sayCurrentScriptKeyLabel()
-	typeCurrentScriptKey()
-endIf
+	if !lt_move("headerClickLeft") then
+		sayCurrentScriptKeyLabel()
+		typeCurrentScriptKey()
+	endIf
 endScript
 
 script ltRightClickHeader()
-if !lt_move("headerClickRight") then
-	sayCurrentScriptKeyLabel()
-	typeCurrentScriptKey()
-endIf
+	if !lt_move("headerClickRight") then
+		sayCurrentScriptKeyLabel()
+		typeCurrentScriptKey()
+	endIf
 endScript
 
 ;*******************************************
 ; called when left/right arrows are used in tree views
 ; and when checkboxes are clicked 
 void function ObjStateChangedEvent(handle hObj, int iObjType, int nChangedState, int nState, int nOldState)
-; force v508 change event state from speaking state 
-giSuppressState = false 
+	; force v508 change event state from speaking state 
+	giSuppressState = false 
 
 	if iObjType == wt_treeview || iObjType == wt_treeviewItem then
 		sayLine(0)
 		return
 	endif
+
 	ObjStateChangedEvent(hObj, iObjType, nChangedState, nState, nOldState)
+
 EndFunction
 
 
@@ -3655,10 +4040,13 @@ const
 ; Name of the below script
 ; jkm lines should look like, for example,  F1=VA508SendCustomCommand(1)
 	VA508_Custom_Command_Script = "VA508SendCustomCommand",
+
 ; Offset added to the cmdno passed to the script to get the LParam value for SendMessage.
 	VA508_Custom_Command_Offset = 0x100000,
+
 ; app.jcf section name for help text
 	VA508_Custom_Command_Help_Section = "Custom Command Help",
+
 ; Prefixes for command synopses and descriptions, the full key being one of these plus the command number.
 	VA508_Custom_Command_Help_Prefix1 = "short",
 	VA508_Custom_Command_Help_Prefix2 = "long"
@@ -3668,18 +4056,22 @@ const
 ; Example jkm line:  F1=VA508SendCustomCommand(1)
 ;*******************************************
 script VA508SendCustomCommand(int cmdno)
-var
-	handle hwnd,
-	int WParam,
-	int LParam
-if gbVA508needToLinkToDLL then
-	sayMessage(OT_Error, "Framework not connected")
-	return
-endIf
-let hwnd = ghVA508DLLWindow
-let WParam = 0
-let LParam = cmdno +VA508_Custom_Command_Offset
-VA508SendMessage(hwnd, WParam, LParam)
+	var
+		handle hwnd,
+		int WParam,
+		int LParam
+
+	if gbVA508needToLinkToDLL then
+		sayMessage(OT_Error, "Framework not connected")
+		return
+	endIf
+
+	let hwnd = ghVA508DLLWindow
+	let WParam = 0
+	let LParam = cmdno +VA508_Custom_Command_Offset
+
+	VA508SendMessage(hwnd, WParam, LParam)
+
 endScript
 
 ;*******************************************
@@ -3689,41 +4081,51 @@ endScript
 ; Extended is True for long (Description) text and False for short (Synopsis) text.
 ;*******************************************
 string function getCustomScriptHelpText(string scr, int cmdno, int extended)
-var
-	string sSect,
-	string sKey,
-	string sFile,
-	string helpBuf
-let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jcf")
-if !fileExists(sFile) then
-	; No file, no custom help.
-	return ""
-endIf
-let sSect = VA508_Custom_Command_Help_Section
-if extended then
-	let sKey = VA508_Custom_Command_Help_Prefix2
-else
-	let sKey = VA508_Custom_Command_Help_Prefix1
-endIf
-let sKey = sKey +intToString(cmdno)
-let helpBuf = iniReadString(sSect, sKey, "", sFile)
-return helpBuf
+	var
+		string sSect,
+		string sKey,
+		string sFile,
+		string helpBuf
+
+	let sFile = findJAWSSettingsFile(getActiveConfiguration() +".jcf")
+
+	if !fileExists(sFile) then
+		; No file, no custom help.
+		return ""
+	endIf
+
+	let sSect = VA508_Custom_Command_Help_Section
+	if extended then
+		let sKey = VA508_Custom_Command_Help_Prefix2
+	else
+		let sKey = VA508_Custom_Command_Help_Prefix1
+	endIf
+
+	let sKey = sKey +intToString(cmdno)
+	let helpBuf = iniReadString(sSect, sKey, "", sFile)
+
+	return helpBuf
+
 endFunction
 
 ;*******************************************
 ; Pull the command number being queried from the jkm line for the just-pressed keystroke.
 ;*******************************************
 int function getCustomCommandNumber()
-var
-	string keyName,
-	string scr
-; This pulls the current script name with parameters.
-let keyName = getCurrentScriptKeyName()
-let scr = getScriptAssignedTo(keyName)
-; and this pulls out the number in parentheses.
-let scr = stringChopLeft(scr, stringContains(scr, "("))
-let scr = stringLeft(scr, stringContains(scr, ")") -1)
-return stringToInt(scr)
+	var
+		string keyName,
+		string scr
+
+	; This pulls the current script name with parameters.
+	let keyName = getCurrentScriptKeyName()
+	let scr = getScriptAssignedTo(keyName)
+
+	; and this pulls out the number in parentheses.
+	let scr = stringChopLeft(scr, stringContains(scr, "("))
+	let scr = stringLeft(scr, stringContains(scr, ")") -1)
+
+	return stringToInt(scr)
+
 endFunction
 
 ;*******************************************
@@ -3731,22 +4133,26 @@ endFunction
 ; Returns custom help if found and normal (jsd) help if not.
 ;*******************************************
 string function getScriptHelpText(string scr, int extended)
-var
-	int cmdno,
-	string helpBuf
+	var
+		int cmdno,
+		string helpBuf
+
 let helpBuf = ""
-if stringCompare(scr, VA508_Custom_Command_Script, False) == 0 then
-	let cmdno = getCustomCommandNumber()
-	let helpBuf = getCustomScriptHelpText(scr, cmdno, extended)
-	if helpBuf then
-		return helpBuf
+
+	if stringCompare(scr, VA508_Custom_Command_Script, False) == 0 then
+		let cmdno = getCustomCommandNumber()
+		let helpBuf = getCustomScriptHelpText(scr, cmdno, extended)
+		if helpBuf then
+			return helpBuf
+		endIf
 	endIf
-endIf
-if extended then
-	return getScriptDescription(scr)
-else
-	return getScriptSynopsis(scr)
-endIf
+
+	if extended then
+		return getScriptDescription(scr)
+	else
+		return getScriptSynopsis(scr)
+	endIf
+
 endFunction
 
 ;*******************************************
@@ -3760,10 +4166,10 @@ endFunction
 ; Override of standard JAWS function.
 ;*******************************************
 string function getScriptDescription(string scr)
-return getScriptHelpText(scr, True)
-;va508getApplicationData(getFocus(),va508_queryCode_all)
-;sayString(VA508GetStringValue(va508_fieldname_data_status))
-;sayString(gsva508data)
+	return getScriptHelpText(scr, True)
+	;va508getApplicationData(getFocus(),va508_queryCode_all)
+	;sayString(VA508GetStringValue(va508_fieldname_data_status))
+	;sayString(gsva508data)
 endFunction
 
 ;*******************************************
@@ -3775,49 +4181,50 @@ EndFunction
 
 ; ProcessEventOnFocusChangedEventEx
 ; when in a GRID view, use ActiveItemEvent logic to suppress speaking of WindowName and ttype for each move.
-void function ProcessEventOnFocusChangedEventEx(
-	handle hwndFocus, int nObject, int nChild,
-	handle hwndPrevFocus, int nPrevObject, int nPrevChild,
-	int nChangeDepth, string sClass, int nType)
-if  hwndFocus ==  hwndPrevFocus
-  && nType ==WT_LISTBOX 
-  && StringCompare(sClass , "TCaptionStringGrid" ) == 0 
-then 
-	ActiveItemChangedEvent(hwndFocus,nObject,nChild,hwndPrevFocus,nPrevObject,nPrevChild)
-	SayMessage (OT_POSITION, PositionInGroup ())
-Else
-	ProcessEventOnFocusChangedEventEx(
-	hwndFocus, nObject, nChild,
-	hwndPrevFocus, nPrevObject, nPrevChild,
-	nChangeDepth, sClass, nType)
-EndIf 
+void function ProcessEventOnFocusChangedEventEx(handle hwndFocus, int nObject, int nChild, handle hwndPrevFocus, int nPrevObject, int nPrevChild, int nChangeDepth, string sClass, int nType)
+
+	if hwndFocus == hwndPrevFocus && nType == WT_LISTBOX && StringCompare (sClass, "TCaptionStringGrid") == 0 then 
+		;Say ("Process Event 1", OT_JAWS_MESSAGE)
+		
+		ActiveItemChangedEvent (hwndFocus, nObject, nChild, hwndPrevFocus, nPrevObject, nPrevChild)
+		SayMessage (OT_POSITION, PositionInGroup ())
+	Else
+		;Say ("Process Event 2", OT_JAWS_MESSAGE)
+		
+		ProcessEventOnFocusChangedEventEx (hwndFocus, nObject, nChild, hwndPrevFocus, nPrevObject, nPrevChild, nChangeDepth, sClass, nType)
+	EndIf 
+
 EndFunction
 
 Script ControlEnter ()
-var
-	int hItem,
-	handle hWnd
+	var
+		int hItem,
+		handle hWnd
+	
+	sayCurrentScriptKeyLabel()
+	let hwnd = getFocus()
 
-sayCurrentScriptKeyLabel()
-let hwnd = getFocus()
-if getWindowClass(hWnd) == WC_CAPTION_LISTBOX then
-	saveCursor()  JAWSCursor()  saveCursor()
-	routeJAWSToPC()
-	leftMouseButton()
-	LeftMouseButton ()
-	return
-endIf
-typeCurrentScriptKey() ; Pass key to application 
+	if getWindowClass(hWnd) == WC_CAPTION_LISTBOX then
+		saveCursor()  JAWSCursor()  saveCursor()
+		routeJAWSToPC()
+		leftMouseButton()
+		LeftMouseButton ()
+		return
+	endIf
+
+	typeCurrentScriptKey() ; Pass key to application 
+
 EndScript
 
 Script EnterKey ()
-var 
-	Handle hwnd = getFocus()
+	var 
+		Handle hwnd = getFocus()
 
-if getWindowClass(hWnd) == WC_CAPTION_LISTBOX then
-			SayMessage(OT_JAWS_MESSAGE, "Use the controlEnter to simulate a double click", "Enter")
-EndIf
+	if getWindowClass(hWnd) == WC_CAPTION_LISTBOX then
+				SayMessage(OT_JAWS_MESSAGE, "Use the controlEnter to simulate a double click", "Enter")
+	EndIf
 
 	typeCurrentScriptKey() ; Pass key to application 
+
 EndScript
 

@@ -2,23 +2,23 @@ inherited frmFrame: TfrmFrame
   Left = 219
   Top = 102
   Caption = ']='
-  ClientHeight = 586
-  ClientWidth = 1129
+  ClientHeight = 828
+  ClientWidth = 976
   FormStyle = fsMDIForm
   Menu = mnuFrame
   OldCreateOrder = True
   Visible = True
   OnCloseQuery = FormCloseQuery
   OnResize = FormResize
-  ExplicitWidth = 1145
-  ExplicitHeight = 645
+  ExplicitWidth = 992
+  ExplicitHeight = 887
   PixelsPerInch = 96
   TextHeight = 13
   object pnlNoPatientSelected: TPanel [0]
     Left = 0
     Top = 0
-    Width = 1129
-    Height = 586
+    Width = 976
+    Height = 828
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -37,8 +37,8 @@ inherited frmFrame: TfrmFrame
   object pnlPatientSelected: TPanel [1]
     Left = 0
     Top = 0
-    Width = 1129
-    Height = 586
+    Width = 976
+    Height = 828
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -48,7 +48,7 @@ inherited frmFrame: TfrmFrame
     object bvlPageTop: TBevel
       Left = 1
       Top = 103
-      Width = 1127
+      Width = 974
       Height = 2
       Margins.Left = 5
       Margins.Top = 5
@@ -56,12 +56,11 @@ inherited frmFrame: TfrmFrame
       Margins.Bottom = 5
       Align = alTop
       ExplicitTop = 62
-      ExplicitWidth = 982
     end
     object pnlToolbar: TPanel
       Left = 1
       Top = 1
-      Width = 1127
+      Width = 974
       Height = 61
       Margins.Left = 5
       Margins.Top = 5
@@ -73,7 +72,7 @@ inherited frmFrame: TfrmFrame
       object bvlToolTop: TBevel
         Left = 0
         Top = 0
-        Width = 1127
+        Width = 974
         Height = 1
         Margins.Left = 5
         Margins.Top = 5
@@ -81,7 +80,6 @@ inherited frmFrame: TfrmFrame
         Margins.Bottom = 5
         Align = alTop
         Style = bsRaised
-        ExplicitWidth = 982
       end
       object pnlCCOW: TPanel
         Left = 0
@@ -315,7 +313,7 @@ inherited frmFrame: TfrmFrame
       object pnlPrimaryCare: TKeyClickPanel
         Left = 523
         Top = 1
-        Width = 75
+        Width = 177
         Height = 60
         Hint = 'Primary Care Team / Primary Care Provider'
         Margins.Left = 5
@@ -405,15 +403,16 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlReminders: TKeyClickPanel
-        Left = 989
+        Left = 814
         Top = 1
-        Width = 30
+        Width = 52
         Height = 60
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
         Margins.Bottom = 5
         Align = alRight
+        BevelWidth = 2
         Caption = 'Reminders'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
@@ -431,10 +430,10 @@ inherited frmFrame: TfrmFrame
         OnMouseDown = pnlRemindersMouseDown
         OnMouseUp = pnlRemindersMouseUp
         object imgReminder: TImage
-          Left = 1
-          Top = 1
-          Width = 28
-          Height = 58
+          Left = 2
+          Top = 2
+          Width = 48
+          Height = 56
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -443,16 +442,13 @@ inherited frmFrame: TfrmFrame
           Center = True
           OnMouseDown = pnlRemindersMouseDown
           OnMouseUp = pnlRemindersMouseUp
-          ExplicitLeft = 2
-          ExplicitTop = 2
-          ExplicitWidth = 48
           ExplicitHeight = 57
         end
         object anmtRemSearch: TAnimate
-          Left = 1
-          Top = 1
-          Width = 28
-          Height = 58
+          Left = 2
+          Top = 2
+          Width = 48
+          Height = 56
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -462,7 +458,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlPostings: TKeyClickPanel
-        Left = 1019
+        Left = 866
         Top = 1
         Width = 108
         Height = 60
@@ -540,9 +536,9 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlOTHD: TKeyClickPanel
-        Left = 598
+        Left = 456
         Top = 1
-        Width = 52
+        Width = 109
         Height = 60
         Margins.Left = 5
         Margins.Top = 5
@@ -554,14 +550,15 @@ inherited frmFrame: TfrmFrame
         ShowHint = True
         TabOrder = 4
         TabStop = True
+        Visible = False
         OnClick = pnlOTHDClick
         OnEnter = pnlOTHDEnter
         OnExit = pnlOTHDExit
         OnMouseDown = pnlOTHDMouseDown
         OnMouseUp = pnlOTHDMouseUp
         object lblOTHDTitle: TStaticText
-          Left = 2
-          Top = -2
+          Left = 7
+          Top = 2
           Width = 40
           Height = 24
           Hint = 'Other than Honorable'
@@ -601,7 +598,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object paVAA: TKeyClickPanel
-        Left = 650
+        Left = 366
         Top = 1
         Width = 90
         Height = 60
@@ -610,6 +607,7 @@ inherited frmFrame: TfrmFrame
         Margins.Right = 5
         Margins.Bottom = 5
         Align = alRight
+        BevelOuter = bvNone
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnFace
         Font.Height = -19
@@ -622,10 +620,10 @@ inherited frmFrame: TfrmFrame
         Visible = False
         OnResize = paVAAResize
         object laVAA2: TButton
-          Left = 1
-          Top = 33
-          Width = 88
-          Height = 26
+          Left = 0
+          Top = 24
+          Width = 90
+          Height = 36
           Hint = 'Click to display patient insurance data'
           Margins.Left = 5
           Margins.Top = 5
@@ -639,10 +637,10 @@ inherited frmFrame: TfrmFrame
           OnClick = laVAA2Click
         end
         object laMHV: TButton
-          Left = 1
-          Top = 1
-          Width = 88
-          Height = 32
+          Left = 0
+          Top = 0
+          Width = 90
+          Height = 24
           Hint = 'Click to display MHV data'
           Margins.Left = 5
           Margins.Top = 5
@@ -657,7 +655,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlCVnFlag: TPanel
-        Left = 740
+        Left = 565
         Top = 1
         Width = 138
         Height = 60
@@ -752,7 +750,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlRemoteData: TKeyClickPanel
-        Left = 878
+        Left = 703
         Top = 1
         Width = 111
         Height = 60
@@ -761,7 +759,6 @@ inherited frmFrame: TfrmFrame
         Margins.Right = 5
         Margins.Bottom = 5
         Align = alRight
-        BevelOuter = bvNone
         BevelWidth = 2
         Caption = 'Remote Data'
         Font.Charset = DEFAULT_CHARSET
@@ -780,10 +777,10 @@ inherited frmFrame: TfrmFrame
         OnMouseDown = pnlCIRNMouseDown
         OnMouseUp = pnlCIRNMouseUp
         object pnlVistaWeb: TKeyClickPanel
-          Left = 0
-          Top = 0
-          Width = 111
-          Height = 28
+          Left = 2
+          Top = 2
+          Width = 107
+          Height = 29
           Hint = 'Click for any external patient data'
           Margins.Left = 5
           Margins.Top = 5
@@ -809,8 +806,8 @@ inherited frmFrame: TfrmFrame
           object lblVistaWeb: TLabel
             Left = 2
             Top = 2
-            Width = 107
-            Height = 24
+            Width = 103
+            Height = 25
             Margins.Left = 4
             Margins.Top = 4
             Margins.Right = 4
@@ -832,10 +829,10 @@ inherited frmFrame: TfrmFrame
           end
         end
         object pnlCIRN: TKeyClickPanel
-          Left = 0
-          Top = 28
-          Width = 111
-          Height = 32
+          Left = 2
+          Top = 31
+          Width = 107
+          Height = 27
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -861,8 +858,8 @@ inherited frmFrame: TfrmFrame
           object lblCIRN: TLabel
             Left = 2
             Top = 2
-            Width = 107
-            Height = 28
+            Width = 103
+            Height = 23
             Margins.Left = 4
             Margins.Top = 4
             Margins.Right = 4
@@ -887,8 +884,8 @@ inherited frmFrame: TfrmFrame
     end
     object stsArea: TStatusBar
       Left = 1
-      Top = 564
-      Width = 1127
+      Top = 806
+      Width = 974
       Height = 21
       Margins.Left = 5
       Margins.Top = 5
@@ -919,8 +916,8 @@ inherited frmFrame: TfrmFrame
     end
     object tabPage: TTabControl
       Left = 1
-      Top = 537
-      Width = 1127
+      Top = 779
+      Width = 974
       Height = 27
       Margins.Left = 4
       Margins.Top = 4
@@ -942,8 +939,8 @@ inherited frmFrame: TfrmFrame
     object pnlPage: TPanel
       Left = 1
       Top = 105
-      Width = 1127
-      Height = 432
+      Width = 974
+      Height = 674
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -957,8 +954,6 @@ inherited frmFrame: TfrmFrame
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 2
-      ExplicitTop = 110
       object lstCIRNLocations: TORListBox
         Left = 642
         Top = 0
@@ -988,7 +983,7 @@ inherited frmFrame: TfrmFrame
         ItemTipColor = clWindow
         LongList = False
         Pieces = '2,3,4'
-        TabPositions = '16,20'
+        TabPositions = '16'
         RightClickSelect = True
         CheckBoxes = True
         CheckEntireLine = True
@@ -997,7 +992,7 @@ inherited frmFrame: TfrmFrame
     object pnlOtherInfo: TKeyClickPanel
       Left = 1
       Top = 62
-      Width = 1127
+      Width = 974
       Height = 41
       Align = alTop
       Color = clYellow
@@ -1122,6 +1117,9 @@ inherited frmFrame: TfrmFrame
         'Status = stsDefault')
       (
         'Component = txtCmdFlags'
+        'Status = stsDefault')
+      (
+        'Component = lblOTHDDtl'
         'Status = stsDefault'))
   end
   object mnuFrame: TMainMenu
@@ -1409,8 +1407,7 @@ inherited frmFrame: TfrmFrame
         Caption = '-'
       end
       object PDMP1: TMenuItem
-        AutoHotkeys = maManual
-        Caption = '&PDMP'
+        Caption = 'PDMP'
         object RequestPDMPData1: TMenuItem
           Action = acPDMPRequest
         end
@@ -1515,6 +1512,7 @@ inherited frmFrame: TfrmFrame
   end
   object AppEvents: TApplicationEvents
     OnActivate = AppEventsActivate
+    OnIdle = AppEventsIdle
     OnMessage = AppEventsMessage
     OnShortCut = AppEventsShortCut
     Left = 336
@@ -1557,29 +1555,24 @@ inherited frmFrame: TfrmFrame
     Left = 528
     Top = 224
     object acPDMPRequest: TAction
-      Caption = '&Request PDMP Data'
-      Hint = 'Request PDMP report for current patient'
+      Caption = 'Request PDMP Data'
       OnExecute = acPDMPRequestExecute
     end
     object acPDMPReview: TAction
-      Caption = 'Re&view PDMP Data'
+      Caption = 'Review PDMP Data'
       Enabled = False
-      Hint = 'Review PDMP report for current patient'
       OnExecute = acPDMPReviewExecute
     end
     object acPDMPCancel: TAction
-      Caption = '&Cancel PDMP Request'
+      Caption = 'Cancel PDMP Request'
       Enabled = False
-      Hint = 'Cancel request for PDMP report'
       OnExecute = acPDMPCancelExecute
     end
     object acPDMPOptions: TAction
-      Caption = 'PDMP &Options'
-      Hint = 'Review/modify PDMP options'
+      Caption = 'PDMP Options'
     end
     object acResetParams: TAction
-      Caption = 'Reset P&arams'
-      Hint = 'Reset PDMP parameters to default values'
+      Caption = 'Reset Params'
       OnExecute = acResetParamsExecute
     end
   end
