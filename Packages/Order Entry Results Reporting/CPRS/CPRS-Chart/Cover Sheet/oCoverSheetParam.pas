@@ -4,7 +4,7 @@ unit oCoverSheetParam;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet
-  *       Developer:    dan.petit@med.va.gov
+  *       Developer:    doma.user@domain.ext
   *       Site:         Salt Lake City ISC
   *
   *       Description:  Simple object that maintains the parameters for any

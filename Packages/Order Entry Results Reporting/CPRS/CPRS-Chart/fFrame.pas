@@ -334,7 +334,6 @@ type
     FOrderPrintForm: boolean;
     FReviewclick: boolean;
     FCtrlTabUsed: boolean;
-    FFixingMaximizeBug: boolean;
     fPDMPMgr: TfrmPDMP;
     fotherPanelUseColor: boolean;
     fotherPanelType: string;
@@ -378,8 +377,7 @@ type
     procedure WMSetFocus(var Message: TMessage);   message WM_SETFOCUS;
     procedure WMSysCommand(var Message: TMessage); message WM_SYSCOMMAND;
     procedure UMPAPI(var Message: TMessage); message UM_PAPI; // PaPI Test
-    procedure UMMAXIMIZEBUG(var Message: TMessage); message UM_MAXIMIZEBUG;
-    procedure WMSize(var Msg: TMessage); message WM_SIZE;
+    procedure WMMove(var Msg: TMessage); message WM_MOVE;
     procedure UMNOTELIMIT(var Message: TMessage);  message UM_NOTELIMIT;
     procedure UMEnableNext(var Message: TMessage);   message UM_ENABLENEXT;
 
@@ -1766,48 +1764,20 @@ begin
        aCPRS508.OnFocusFirstControl(Self);
 end;
 
-procedure TfrmFrame.UMMAXIMIZEBUG(var Message: TMessage);
+procedure TfrmFrame.WMMove(var Msg: TMessage);
 var
-  r: TRect;
-
-begin
-  if not FFixingMaximizeBug then
-  begin
-    FFixingMaximizeBug := True;
-    try
-      r := Screen.MonitorFromWindow(Self.Handle).WorkareaRect;
-      if WindowState = wsMaximized then
-      begin
-        WindowState := wsNormal;
-        left := r.Left;
-        width := r.Width;
-      end;
-      top := r.Top;
-      Height := r.Height;
-      if Height > r.Height then
-      begin
-        RecreateWnd;
-        Height := r.Height;
-        Invalidate;
-        TResponsiveGUI.ProcessMessages;
-      end;
-    finally
-      FFixingMaximizeBug := False;
-    end;
-  end;
-end;
-
-procedure TfrmFrame.WMSize(var Msg: TMessage);
-var
-  r: TRect;
-
+  r, newBounds: TRect;
 begin
   inherited;
-  if HandleAllocated and Showing then
+  if HandleAllocated and Showing and (WindowState <> wsMaximized) then
   begin
+    newBounds := BoundsRect;
     r := Screen.MonitorFromWindow(Self.Handle).WorkareaRect;
-    if HiWord(Msg.LParam) > r.Height then
-      PostMessage(Handle, UM_MAXIMIZEBUG, 0, 0);
+    if Height > r.Height then
+      newBounds.Height := r.Height;
+    if Top < r.Top then
+      newBounds.Top := r.Top;
+    BoundsRect := newBounds;
   end;
 end;
 
@@ -3237,7 +3207,7 @@ procedure TfrmFrame.FormResize(Sender: TObject);
 { need to resize tab forms specifically since they don't inherit resize event (because they
   are derived from TForm itself) }
 var
-  r: TRect;
+  r, newBounds: TRect;
 
 begin
   if FTerminate or FClosing then Exit;
@@ -3272,16 +3242,13 @@ begin
 
   if Self.WindowState <> wsMaximized then
   begin
+    newBounds := BoundsRect;
     r := Screen.MonitorFromWindow(Self.Handle).WorkareaRect;
-
-    if height > r.Height then
-    begin
-      height := r.Height;
-      top := r.top;
-    end;
-    if (top+height) > r.Bottom then
-      top := r.Bottom-height;
-    if (top < r.Top) then top := r.Top;
+    if newBounds.Height > r.Height then
+      newBounds.Height := r.Height;
+    if newBounds.Top < r.Top then
+       newBounds.Top := r.Top;
+    BoundsRect := newBounds;
   end;
   stsArea.Invalidate;
   Self.Repaint;
@@ -5432,7 +5399,7 @@ var
   PtSubject: string;
 begin
   data := IContextItemCollection(aContextItemCollection) ;
-  anItem := data.Present('[hds_med_va.gov]request.id.name');
+  anItem := data.Present('[hds_med_domain]request.id.name');
   // Retrieve the ContextItem name and value as strings
   if anItem <> nil then
     begin
@@ -6071,7 +6038,7 @@ begin
       end;
     4:begin
         if Patient.PtIsMHV then
-          ShellExecute(laMHV.Handle, 'open', PChar('http://www.myhealth.va.gov/'), '', '', SW_NORMAL);
+          ShellExecute(laMHV.Handle, 'open', PChar('http://www.myhealth.domain/'), '', '', SW_NORMAL);
       end;
     5:begin
        if Patient.PtIsVAA then

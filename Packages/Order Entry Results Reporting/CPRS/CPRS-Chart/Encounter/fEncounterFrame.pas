@@ -125,8 +125,7 @@ var
   uProviders: TPCEProviderList;
 
 // Returns true if PCE data still needs to be saved - vitals/gaf are always saved
-function UpdatePCE(PCEData: TPCEData; SaveOnExit: boolean = TRUE;
-  KeepPrimaryProvider: boolean = FALSE): boolean;
+function UpdatePCE(PCEData: TPCEData; KeepPrimaryProvider: boolean = FALSE): boolean;
 
 implementation
 
@@ -395,8 +394,7 @@ end;
 //Description: The main call to open the encounter frame and capture encounter
 // information.
 ///////////////////////////////////////////////////////////////////////////////}
-function UpdatePCE(PCEData: TPCEData; SaveOnExit: boolean = TRUE;
-  KeepPrimaryProvider: boolean = FALSE): boolean;
+function UpdatePCE(PCEData: TPCEData; KeepPrimaryProvider: boolean = FALSE): boolean;
 var
 //  FontHeight,
 //  FontWidth: Integer;
@@ -420,7 +418,7 @@ begin
 
   frmEncounterFrame := TfrmEncounterFrame.Create(Application);
   try
-    frmEncounterFrame.FAutoSave := SaveOnExit;
+    frmEncounterFrame.FAutoSave := True;
 
     uEncPCEData := PCEData;
     try
@@ -453,6 +451,12 @@ begin
       end;
 
       PCEData.PCEForNote(PCEData.NoteIEN); // VISTAOR-24268
+      if KeepPrimaryProvider and (PrimaryProvider <> '') and
+        (PCEData.Providers.PrimaryIdx < 0) then
+      begin
+        PCEData.Providers.Add(PrimaryProvider);
+        Result := True;
+      end;
 
     finally
       uEncPCEData := nil;
@@ -845,7 +849,7 @@ begin
       frmVisitType.fraVisitRelated.GetRelated(uEncPCEData);
       Providers.Merge(uProviders);
     end;
-    //VHAISPBELLC
+    //ZZZZZZBELLC
     if FormListContains(CT_DiagNm) then
       SetDiagnoses(frmDiagnoses.lstCaptionList.ItemsStrings);
     if FormListContains(CT_ProcNm) then

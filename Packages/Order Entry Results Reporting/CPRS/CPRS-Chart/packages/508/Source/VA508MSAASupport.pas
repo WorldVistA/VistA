@@ -788,10 +788,45 @@ var
     pfHasProp := 0;
   end;
 
+  Procedure FindChildID(out phwnd: HWND; out pidChild: LongWord);
+  var
+    tNode: TTreeNode;
+    lvItem: TListItem;
+  begin
+    phwnd := FComponent.Handle;
+    pidChild := 0;
+    if (FComponent is TCustomTreeView) then
+    begin
+      for tNode in TExposedTreeView(FComponent).Items do
+      begin
+        If tNode.Focused then
+        begin
+          pidChild := tNode.AbsoluteIndex + 1;
+          break;
+        end;
+      end;
+    end else if FComponent is TCustomListView then
+    begin
+      lvItem := TCustomListView(FComponent).ItemFocused;
+      If Assigned(lvItem) then
+        pidChild := lvItem.Index + 1;
+    end;
+  end;
+
 begin
   VariantInit(pvarValue);
-  OleCheck(AccPropServices.DecomposeHwndIdentityString(pIDString, dwIDStringLen,
-    phwnd, pidObject, pidChild));
+
+  // it was discovered in windows 10 (maybe earlier) that pidChild from
+  // DecomposeHwndIdentityString on a treeview would come back incorrect
+  // if the treeview was cleared and reloaded. TpidChild return the count
+  // times the number of clears plus the acutal index. Because of this we
+  // have decided to not rely on this call when selecting and item on a treeview
+  if (FComponent is TCustomTreeView) or (FComponent is TCustomListView) then
+    FindChildID(phwnd, pidChild)
+  else
+    OleCheck(AccPropServices.DecomposeHwndIdentityString(pIDString, dwIDStringLen,
+      phwnd, pidObject, pidChild));
+
   if (phwnd = FComponent.Handle) then
   begin
     if (pidChild = CHILDID_SELF) then

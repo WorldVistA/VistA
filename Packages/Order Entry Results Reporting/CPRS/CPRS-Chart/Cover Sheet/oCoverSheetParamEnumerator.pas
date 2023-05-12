@@ -4,7 +4,7 @@ unit oCoverSheetParamEnumerator;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet
-  *       Developer:    dan.petit@med.va.gov
+  *       Developer:    doma.user@domain.ext
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-04
   *

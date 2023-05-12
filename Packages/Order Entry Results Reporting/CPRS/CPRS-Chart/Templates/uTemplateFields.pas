@@ -633,7 +633,7 @@ begin
           if(assigned(Entry)) then
           begin
             NewTxt := Entry.GetControlText(CtrlID, TRUE, FoundEntry, FALSE);
-            if FoundEntry and (NewTxt = '') then{(Trim(NewTxt) = '') then //CODE ADDED BACK IN - VHAISPBELLC}
+            if FoundEntry and (NewTxt = '') then{(Trim(NewTxt) = '') then //CODE ADDED BACK IN - ZZZZZZBELLC}
               Result := True;
           end;
           if FoundEntry then break;
@@ -2154,7 +2154,7 @@ begin
         end;
       end
       else
-        // !!!!!! CODE ADDED BACK IN - VHAISPBELLC !!!!!!
+        // !!!!!! CODE ADDED BACK IN - ZZZZZZBELLC !!!!!!
         if (ctrl is TEdit) then
           Result := TEdit(ctrl).Text
         else if (ctrl is TORComboBox) then
@@ -2167,7 +2167,7 @@ begin
         else if (ctrl is TORDateCombo) then
           Result := TORDateCombo(ctrl).Text + ':' + FloatToStr(TORDateCombo(ctrl).FMDate)
         else
-          { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - VHAISPBELLC !!!!!!
+          { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
             if(Ctrl is TORDateBox) then begin
             if TORDateBox(Ctrl).IsValid then
             Result := TORDateBox(Ctrl).Text
@@ -2175,7 +2175,7 @@ begin
             Result := '';
             end else
           }
-          // !!!!!! CODE ADDED BACK IN - VHAISPBELLC !!!!!!
+          // !!!!!! CODE ADDED BACK IN - ZZZZZZBELLC !!!!!!
           if (ctrl is TORDateBox) then
             Result := TORDateBox(ctrl).Text
           else if (ctrl is TRichEdit) then
@@ -2315,7 +2315,7 @@ begin
             end;
           end
           else
-            { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - VHAISPBELLC !!!!!!
+            { !!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
               if(Ctrl is TEdit) then
               Result := TEdit(Ctrl).Text
               else }

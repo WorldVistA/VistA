@@ -15,7 +15,6 @@ uses
 
 const
   UM_DELAYCLICK = 11037; // temporary for listview click event
-  MAX_DURATION_DAYS = 90;
 
 type
 
@@ -4794,50 +4793,6 @@ procedure TfrmODMeds.txtXDurationChange(Sender: TObject);
 var
   FLG, j, i, code: Integer;
   OrgValue: string;
-
-const   //1      8     14   19    25
-  keys = 'months^weeks^days^hours^minutes';
-
-  function getDurationDays(aValue: Integer; aUnit: String): Integer;
-  var
-    iUnit: Integer;
-  begin
-    Result := 0;
-    if aValue > 0 then
-    begin
-      iUnit := pos(aUnit,keys);
-      case iUnit of
-        1: Result := 30 * aValue;
-        8: Result := 7 * aValue;
-        14: Result := aValue;
-        19: Result := aValue div 24;
-        25: Result := aValue div (24 * 60);
-      end;
-    end;
-  end;
-
-  function getDurationMax(aUnit: String): Integer;
-  var
-    iUnit: Integer;
-  begin
-    Result := 0;
-    iUnit := pos(aUnit,keys);
-    case iUnit of
-      1: Result := MAX_DURATION_DAYS div 30;
-      8: Result := MAX_DURATION_DAYS div 7;
-      14: Result := MAX_DURATION_DAYS;
-      19: Result := MAX_DURATION_DAYS * 24;
-      25: Result := MAX_DURATION_DAYS * (24 * 60);
-    end;
-  end;
-
-  function getDurationMaxStr: String;
-  begin
-    Result := Format('%d months/%d weeks/%d hours/%d minutes',
-      [getDurationMax('months'), getDurationMax('weeks'),
-      getDurationMax('hours'), getDurationMax('minutes')]);
-  end;
-
 begin
   inherited;
   if Changing then
@@ -4857,22 +4812,7 @@ begin
         SelStart := Length(Text);
       end;
       Exit;
-    end
-    else if getDurationDays(i,btnXDuration.Caption) > MAX_DURATION_DAYS then
-    begin
-      InfoBox('Duration can''t be longer ' + IntToStr(MAX_DURATION_DAYS) +
-        ' days.' + CRLF + '(' + getDurationMaxStr + ')',
-        'Error', MB_OK or MB_ICONWARNING);
-
-      with txtXDuration do
-      begin
-        Text := IntToStr(getDurationMax(btnXDuration.Caption));
-        SelStart := 0;
-        SelLength := Length(Text);
-      end;
-      Exit;
     end;
-
     { AGP change 26.19 for PSI-05-018 cq #7322
       else if PopDuration.Items.Tag = 0 then
       begin

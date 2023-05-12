@@ -3942,6 +3942,9 @@ begin
       splDrawers.Enabled := Drawers.DrawerIsOpen;
       if Drawers.DrawerIsOpen then
       begin
+        if Drawers.LastOpenSize >
+            (pnlLeftTop.Height - tvNotes.Constraints.MinHeight) then
+          Drawers.LastOpenSize := (pnlLeftTop.Height - tvNotes.Constraints.MinHeight);
         if Drawers.LastOpenSize > Drawers.TotalButtonHeight then
           ExpandedDrawerHeight := Drawers.LastOpenSize;
         Drawers.Parent.height := ExpandedDrawerHeight;
@@ -5853,7 +5856,12 @@ procedure TfrmNotes.frmDrawersResize(Sender: TObject);
 begin
   inherited;
   if Drawers.DrawerIsOpen then
+  begin
     Drawers.LastOpenSize := pnlDrawers.height;
+    if Drawers.LastOpenSize >
+        (pnlLeftTop.Height - tvNotes.Constraints.MinHeight) then
+      Drawers.LastOpenSize := (pnlLeftTop.Height - tvNotes.Constraints.MinHeight);
+  end;
 end;
 
 procedure TfrmNotes.frmFramePnlToolbarExit(Sender: TObject);

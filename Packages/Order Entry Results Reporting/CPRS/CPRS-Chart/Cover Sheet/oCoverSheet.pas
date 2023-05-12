@@ -3,7 +3,7 @@ unit oCoverSheet;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet controller object
-  *       Developer:    dan.petit@med.va.gov
+  *       Developer:    doma.user@domain.ext
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-04
   *
@@ -451,7 +451,7 @@ begin
     try
       CallVistA('ORWCV1 COVERSHEET LIST', [], aReturn);
       // Proof of concepts!
-      // aReturn.Insert(0, '1001^My Web Browser^http://www.va.gov^1');
+      // aReturn.Insert(0, '1001^My Web Browser^http://www.domain^1');
       // aReturn.Insert(0, '1001^My Web Page');
       // aReturn.Insert(0, '1000^Clock');
 

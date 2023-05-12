@@ -183,11 +183,14 @@ begin
           else
             frmDCOrders.lstOrders.Items.AddObject(AnOrder.Text, AnOrder);
           frmDCOrders.OrderIDArr.Add(AnOrder.ID);
-          if not((AnOrder.Status = 11) and (AnOrder.Signature = 2)) then
-            NeedReason := true;
-          if (NeedReason = true) and (AnOrder.Status = 10) and
-            (AnOrder.Signature = 2) then
-            NeedReason := false;
+          if not NeedReason then
+          begin
+            if not((AnOrder.Status = 11) and (AnOrder.Signature = 2)) then
+              NeedReason := true;
+            if (NeedReason = true) and (AnOrder.Status = 10) and
+              (AnOrder.Signature = 2) then
+              NeedReason := false;
+          end;
         end;
       Descend.Customsort(DescendSort);
       frmDCOrders.cnlOrders.Items.Assign(Descend);

@@ -491,9 +491,9 @@ begin
       dlg := CreateMessageDialog(Text, DlgType, Buttons, TMsgDlgBtn(DefaultButton));
     try
       dlg.DefaultMonitor := dmDesktop;
-      dlg.Caption := Caption;
-      dx := workarea.Width div 4;
-      if dlg.Width < dx then
+      Dlg.Caption := Caption;
+      Dx := Workarea.Width div 4;
+      if Dlg.Width < Dx then
       begin
         dlg.Width := dx;
         x1 := dlg.ClientWidth;
@@ -525,7 +525,8 @@ begin
       dx := (workarea.Width - dlg.Width) div 2;
       dlg.Left := workarea.Left + dx;
       AddScrollBoxIfNeeded;
-
+      dx := (workarea.Height - dlg.Height) div 2;
+      dlg.Top := workArea.Top + dx;
       if ScreenReaderActive then
       begin
         dlg.Caption := dlg.Caption + ' Dialog';

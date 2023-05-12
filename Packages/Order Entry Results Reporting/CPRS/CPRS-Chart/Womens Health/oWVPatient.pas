@@ -3,7 +3,7 @@ unit oWVPatient;
   ================================================================================
   *
   *       Application:  TDrugs Patch OR*3*377 and WV*1*24
-  *       Developer:    dan.petit@med.va.gov
+  *       Developer:    doma.user@domain.ext
   *       Site:         Salt Lake City ISC
   *
   *       Description:  Object that is created via the WVController to maintain

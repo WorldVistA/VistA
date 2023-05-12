@@ -3,7 +3,7 @@ unit fWVEIEReasonsDlg;
   ================================================================================
   *
   *       Application:  TDrugs Patch OR*3*377 and WV*1*24
-  *       Developer:    dan.petit@med.va.gov
+  *       Developer:    doma.user@domain.ext
   *       Site:         Salt Lake City ISC
   *
   *       Description:  Simple form that accepts a list of free text reasons

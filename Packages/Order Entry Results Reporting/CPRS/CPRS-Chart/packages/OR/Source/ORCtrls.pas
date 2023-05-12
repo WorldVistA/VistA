@@ -722,6 +722,8 @@ type
     FTag: integer;
     FStringData: string;
     FCaption: string;
+    // NOTE: If you add more fields to TORTreeNode, you will need to update
+    //       Read/WriteORNodeData to match.
     function GetParent: TORTreeNode;
     procedure SetCaption(const Value: string);
   protected
@@ -732,6 +734,8 @@ type
     procedure SetBold(const Value: boolean);
     procedure SetStringData(const Value: string);
     function GetORTreeView: TORTreeView;
+    procedure WriteORNodeData(aStream: TStream);
+    procedure ReadORNodeData(aStream: TStream);
   public
     procedure SetPiece(PieceNum: Integer; const NewPiece: string);
     procedure EnsureVisible;
@@ -748,6 +752,7 @@ type
 
   TORTreeView = class(TCaptionTreeView)
   private
+    FRecreateStream: TMemoryStream;
     FOnDragging: TORDraggingEvent;
     FDelim: Char;
     FPiece: integer;
@@ -757,6 +762,8 @@ type
     procedure SetShortNodeCaptions(const Value: boolean);
   protected
     procedure CNNotify(var Message: TWMNotify); message CN_NOTIFY;
+    procedure CreateWnd; override;
+    procedure DestroyWnd; override;
     function CreateNode: TTreeNode; override;
     function GetHorzScrollPos: integer;
     procedure SetHorzScrollPos(Value: integer);
@@ -1162,7 +1169,7 @@ implementation // --------------------------------------------------------------
 {$R ORCTRLS}
 
 uses
-  System.Types, VAUtils;
+  System.Types, Vcl.ComStrs, VAUtils;
 
 const
   ALPHA_DISTRIBUTION: array[0..100] of string = ('', ' ', 'ACE', 'ADG', 'ALA', 'AMI', 'ANA', 'ANT',
@@ -5934,6 +5941,46 @@ begin
   Result := ((inherited TreeView) as TORTreeView);
 end;
 
+procedure TORTreeNode.WriteORNodeData(aStream: TStream);
+var
+  savedTextLen: integer;
+  savedBold: boolean;
+begin
+  aStream.WriteBuffer(FTag, SizeOf(FTag));
+  savedTextLen := Length(FStringData);
+  aStream.WriteBuffer(savedTextLen, SizeOf(savedTextLen));
+  if savedTextLen > 0 then
+    aStream.WriteBuffer(FStringData[1], savedTextLen * SizeOf(WideChar));
+  savedTextLen := Length(FCaption);
+  aStream.WriteBuffer(savedTextLen, SizeOf(savedTextLen));
+  if savedTextLen > 0 then
+    aStream.WriteBuffer(FCaption[1], savedTextLen * SizeOf(WideChar));
+  savedBold := Bold;
+  aStream.WriteBuffer(savedBold, SizeOf(savedBold));
+end;
+
+procedure TORTreeNode.ReadORNodeData(aStream: TStream);
+var
+  savedTextLen: integer;
+  savedBold: boolean;
+begin
+  aStream.ReadBuffer(FTag, SizeOf(FTag));
+  aStream.ReadBuffer(savedTextLen, SizeOf(savedTextLen));
+  if savedTextLen > 0 then
+  begin
+    SetLength(FStringData, savedTextLen);
+    aStream.ReadBuffer(FStringData[1], savedTextLen * SizeOf(WideChar));
+  end;
+  aStream.ReadBuffer(savedTextLen, SizeOf(savedTextLen));
+  if savedTextLen > 0 then
+  begin
+    SetLength(FCaption, savedTextLen);
+    aStream.ReadBuffer(FCaption[1], savedTextLen * SizeOf(WideChar));
+  end;
+  aStream.ReadBuffer(savedBold, SizeOf(savedBold));
+  Bold := savedBold;
+end;
+
 function TORTreeNode.GetParent: TORTreeNode;
 begin
   Result := ((inherited Parent) as TORTreeNode);
@@ -6076,6 +6123,106 @@ constructor TORTreeView.Create(AOwner: TComponent);
 begin
   inherited;
   FDelim := '^';
+end;
+
+procedure TORTreeView.CreateWnd;
+
+var
+  FNodeCache: TNodeCache;
+
+  function GetNodeFromIndex(Index: Integer): TTreeNode;
+  var
+    I: Integer;
+  begin
+    if Index < 0 then
+      raise ETreeViewError.Create(sInvalidIndex);
+    if (FNodeCache.CacheNode <> nil) and (Abs(FNodeCache.CacheIndex - Index) <= 1) then
+    begin
+      with FNodeCache do
+      begin
+        if Index = CacheIndex then
+          Result := CacheNode
+        else
+          if Index < CacheIndex then
+            Result := CacheNode.GetPrev
+          else
+            Result := CacheNode.GetNext;
+      end;
+    end
+    else
+    begin
+      Result := Items.GetFirstNode;
+      I := Index;
+      while (I <> 0) and (Result <> nil) do
+      begin
+        Result := Result.GetNext;
+        Dec(I);
+      end;
+    end;
+    if Result = nil then
+      raise ETreeViewError.Create(sInvalidIndex);
+    FNodeCache.CacheNode := Result;
+    FNodeCache.CacheIndex := Index;
+  end;
+
+var
+  node: TTreeNode;
+  savedCount, savedIndex: integer;
+begin
+  inherited;
+  if FRecreateStream <> nil then
+  begin
+    try
+      FNodeCache.CacheNode := nil;
+      Items.BeginUpdate;
+      try
+        FRecreateStream.ReadBuffer(savedCount, SizeOf(savedCount));
+        if (savedCount = Items.Count) then
+        begin
+          while (savedCount > 0) do
+          begin
+            FRecreateStream.ReadBuffer(savedIndex, SizeOf(savedIndex));
+            node := GetNodeFromIndex(savedIndex);
+            if node <> nil then
+              TORTreeNode(node).ReadORNodeData(FRecreateStream);
+            Dec(savedCount);
+          end;
+        end;
+      finally
+        Items.EndUpdate;
+      end;
+    finally
+      FreeAndNil(FRecreateStream);
+    end;
+  end;
+end;
+
+procedure TORTreeView.DestroyWnd;
+var
+  node: TTreeNode;
+  savedCount, savedIndex: integer;
+begin
+  if CreateWndRestores and (Items.Count > 0) and (csRecreating in ControlState) then
+  begin
+    FRecreateStream := TMemoryStream.Create;
+    try
+      savedCount := Items.Count;
+      FRecreateStream.WriteBuffer(savedCount, SizeOf(savedCount));
+      node := Items.GetFirstNode;
+      while node <> nil do
+      begin
+        savedIndex := TORTreeNode(node).AbsoluteIndex;
+        FRecreateStream.WriteBuffer(savedIndex, SizeOf(savedIndex));
+        TORTreeNode(node).WriteORNodeData(FRecreateStream);
+        node := node.GetNext;
+      end;
+      FRecreateStream.Position := 0;
+    except
+      FreeAndNil(FRecreateStream);
+      raise;
+    end;
+  end;
+  inherited;
 end;
 
 function TORTreeView.CreateNode: TTreeNode;

@@ -137,7 +137,7 @@ begin
 
     if not Primary and (Items.Count > 0) then
     begin
-      GridIndex := Items.Count - 1;//0; vhaispbellc CQ 15836
+      GridIndex := Items.Count - 1;//0; zzzzzzbellc CQ 15836
       TPCEDiag(Objects[Items.Count - 1]).Primary := True;
       GridChanged;
     end;

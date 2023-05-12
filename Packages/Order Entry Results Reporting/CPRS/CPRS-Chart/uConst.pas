@@ -42,7 +42,6 @@ const
   UM_ORDFLAGSTATUS= (WM_USER + 9710);  // request to update Processed list in case of flag status change (NSR#20110719)
   UM_ORDFLAGACTION= (WM_USER + 9711);  // request to update Processed list. (NSR#20110719)
   UM_ORDDESELECT  = (WM_USER + 9720);  // request to drop selection (NSR#20110719)
-  UM_MAXIMIZEBUG  = (WM_USER + 9721);  // fix Windows 10 Maximized Screen bug
   UM_TIMEOUT      = (WM_USER + 9722);  // Timeout
   UM_ENABLENEXT   = (WM_USER + 9725);  // Enables "Next" button of the main form (VISTAOR-31343)
 

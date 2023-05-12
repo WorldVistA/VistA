@@ -11,12 +11,12 @@ Please see developer document for further details
 Update Information
 ====================
 
- 2/22/17 - VHAISPBELLC
+ 2/22/17 - ZZZZZZBELLC
  ---------------------
   Updated SR and SR3 files to version 1.11.0.1
   Update to fix thread pause issue. currently there is a hack in place which adda a space to the caption. the form needs a message to fire but     the caption needs to change to make this happen. Can not just keep resetting the caption to itself.	 
 
- 5/27/16 - VHAISPBELLC
+ 5/27/16 - ZZZZZZBELLC
  ---------------------
   Updated SR and SR3 files to version 1.11.0.0
   New features Added
@@ -26,7 +26,7 @@ Update Information
 	*New update methods - Added two new "merge" update actions that will merge a script file with its applications counterpart script file.
 	*Force parameter - Added new parameter that will force the script updates of a specific version or all installed versions of jaws.
  
- 2/24/16 - VHAISPBELLC
+ 2/24/16 - ZZZZZZBELLC
  ---------------------
   Updated SR and SR3 files to version 1.10.0.2
   Updated ScriptList INI to include missing script files for Vitals View

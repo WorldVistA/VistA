@@ -1306,7 +1306,7 @@ object XWBLoginForm: TXWBLoginForm
       Top = 148
       Width = 153
       Height = 16
-      Caption = 'For example: vhaispgaberr'
+      Caption = 'For example: zzzzzzgaberr'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -13

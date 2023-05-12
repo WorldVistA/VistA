@@ -1483,7 +1483,8 @@ begin
             getDetailOrder(BigOrderID, tmpList);
             if ((TOrder(Items.Objects[i]).DGroupName = 'Inpt. Meds') or
               (TOrder(Items.Objects[i]).DGroupName = 'Out. Meds') or
-              (TOrder(Items.Objects[i]).DGroupName = 'Clinic Orders') or
+              (TOrder(Items.Objects[i]).DGroupName = 'Clinic Infusions') or
+              (TOrder(Items.Objects[i]).DGroupName = 'Clinic Medications') or
               (TOrder(Items.Objects[i]).DGroupName = 'Infusion')) then
             begin
               tmpList.Add('');

@@ -1983,7 +1983,7 @@ procedure TfrmODBBank.ValidateAdd(var AnErrMsg: string);
 
 var
   aList: TStringList;
-  i, DaysofFuturePast: integer;
+  i, DaysofFuturePast, useLocation: integer;
   d1, d2: TDateTime;
   x,test,aOther: string;
 const
@@ -2058,15 +2058,21 @@ begin
                          d1 := FMDateTimeToDateTime(Trunc(StrToFMDateTime(cboColltime.Text)));
                          d2 := FMDateTimeToDateTime(FMToday);
                          if EvtDelayLoc > 0 then
-                           DaysofFuturePast := LabCollectFutureDays(EvtDelayLoc,EvtDivision)
+                         begin
+                           DaysofFuturePast := LabCollectFutureDays(EvtDelayLoc,EvtDivision);
+                           useLocation := EvtDelayLoc;
+                         end
                          else
+                         begin
                            DaysofFuturePast := LabCollectFutureDays(Encounter.Location);
+                           useLocation := Encounter.Location;
+                         end;
                          if DaysofFuturePast = 0 then DaysofFuturePast := 7;
                          if ((d1 - d2) > DaysofFuturePast) then
                            SetError('A lab collection cannot be ordered more than '
                              + IntToStr(DaysofFuturePast) + ' days in advance')
                          // make sure it's a valid lab collect time
-                         else if (not IsLabCollectTime(StrToFMDateTime(cboCollTime.Text), EvtDelayLoc)) then
+                         else if (not IsLabCollectTime(StrToFMDateTime(cboCollTime.Text), useLocation)) then
                            SetError(cboCollTime.Text + TX_NOT_LAB_COLL_TIME + ' (' + test + ')')
                          else
                            // convert entered text to date/time

@@ -1592,7 +1592,10 @@ var
   var
     i: integer;
   begin
-    if (not assigned(Component.Parent)) or (csAcceptsControls in Component.Parent.ControlStyle) and (Trim(Component.name) <> '') then
+    if (not assigned(Component.Parent)) or
+      ((csAcceptsControls in Component.Parent.ControlStyle) and
+      ((not(csDesigning in Component.ComponentState)) or
+      (Trim(Component.name) <> ''))) then
       list.add(Component);
     for I := 0 to Component.ControlCount - 1 do
     begin

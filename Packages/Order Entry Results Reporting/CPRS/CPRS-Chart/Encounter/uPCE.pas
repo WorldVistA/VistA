@@ -4303,19 +4303,13 @@ begin
           begin
             if(not MissingProviderInfo(Self)) then
             begin
-              NeedSave := UpdatePCE(Self, TRUE, TRUE);
+              NeedSave := UpdatePCE(Self, TRUE);
               if(not DoSave) then
                 DoSave := NeedSave;
               FUpdated := TRUE;
             end;
-            done := frmFrame.Closing;
-//            if frmFrame.Closing then done := true
-
-//            Done := frmFrame.Closing;
-//            else if DoSave then Asked := TRUE
-            if not done and doSave then
-            Asked := true
-            else done := false;
+            Done := frmFrame.Closing;
+            Asked := True;
           end;
         end;
       until(Done);
@@ -4440,7 +4434,7 @@ end;
 function TPCEData.IsSecondaryVisit: boolean;
 begin
   Result := ((FEncSvcCat = 'H') and (FNoteDateTime > 0) and (GetInpatient));
-  if not Result then result := ((FEncSvcCat = 'D') and (FNoteDateTime > 0));
+//  if not Result then result := ((FEncSvcCat = 'D') and (FNoteDateTime > 0));
 end;
 
 function TPCEData.NeedProviderInfo: boolean;

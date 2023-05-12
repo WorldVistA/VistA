@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_CPRS_Vitals;
   ================================================================================
   *
   *       Application:  CPRS - CoverSheet
-  *       Developer:    dan.petit@med.va.gov
+  *       Developer:    doma.user@domain.ext
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-21
   *

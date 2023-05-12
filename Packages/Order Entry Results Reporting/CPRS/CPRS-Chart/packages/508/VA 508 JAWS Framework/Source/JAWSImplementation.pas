@@ -17,7 +17,7 @@
   Add something that prevents overwriting of the script files if another
   app is running that's using the JAWS DLL }
 { DONE -oJeremy Merrill -c508 : Add check in here to look at script version in JSS file -
-  VHAISPBELLC: This appears to already be added. Marking as done }
+  ZZZZZZBELLC: This appears to already be added. Marking as done }
 { DONE -oJeremy Merrill -c508 :
   Replace registry communication with multiple windows - save strings in the window titles
   Use EnumerateChildWindows jaws script function in place of the FindWindow function
@@ -34,7 +34,7 @@
   need to test for csDesigning some place that we're not testing for (maybe?) }
 { DONE -oJeremy Merrill -c508 :
   Change APP_DATA so that "application data" isn't used - Windows Vista
-  doesn't use this value - get data from Windows API call - VHAISPBELLC:
+  doesn't use this value - get data from Windows API call - ZZZZZZBELLC:
   This is no longer an issue since we do not call this function. }
 
 { DONE -oChris Bell -c508 : Add log ability }
@@ -2890,7 +2890,7 @@ end;
   JAWS_PATH_ID_USER_SCRIPT_FILES = 1;
   JAWS_PATH_ID_JAWS_DEFAULT_SCRIPT_FILES = 2;
   // 0 = C:\Program Files\Freedom Scientific\JAWS\8.0\jfw.INI
-  // 1 = D:\Documents and Settings\vhaislmerrij\Application Data\Freedom Scientific\JAWS\8.0\USER.INI
+  // 1 = D:\Documents and Settings\zzzzzzmerrij\Application Data\Freedom Scientific\JAWS\8.0\USER.INI
   // 2 = D:\Documents and Settings\All Users\Application Data\Freedom Scientific\JAWS\8.0\Settings\enu\DEFAULT.SBL
   var
   atm: ATOM;

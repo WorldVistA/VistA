@@ -22,8 +22,8 @@
 // ************************************************************************ //
 // The types declared in this file were generated from data read from the
 // WSDL File described below:
-// WSDL     : https://services.eauth.va.gov:9301/STS/RequestSecurityToken?wsdl
-// >Import : https://services.eauth.va.gov:9301/STS/RequestSecurityToken?wsdl>0
+// WSDL     : https://services.aadomain.ext:9301/STS/RequestSecurityToken?wsdl
+// >Import : https://services.aadomain.ext:9301/STS/RequestSecurityToken?wsdl>0
 // Encoding : UTF-8
 // Version  : 1.0
 // (1/28/2019 10:49:03 AM - - $Rev: 86412 $)
@@ -120,7 +120,7 @@ type
   // binding   : RequestSecurityTokenPortBinding
   // service   : SecurityTokenService
   // port      : RequestSecurityToken
-  // URL       : https://int.services.eauth.va.gov:9301/STS/RequestSecurityToken
+  // URL       : https://int.services.aadomain.ext:9301/STS/RequestSecurityToken
   // ************************************************************************ //
   SecurityTokenService = interface(IInvokable)
     ['{1A87D2AC-73FC-BBCF-B7F7-2AF8B4086479}']
@@ -137,8 +137,8 @@ uses System.SysUtils;
 function GetSecurityTokenService(UseWSDL: Boolean; Addr: string;
   HTTPRIO: THTTPRIO): SecurityTokenService;
 const
-  defWSDL = 'https://services.eauth.va.gov:9301/STS/RequestSecurityToken?wsdl';
-  defURL = 'https://int.services.eauth.va.gov:9301/STS/RequestSecurityToken';
+  defWSDL = 'https://services.aadomain.ext:9301/STS/RequestSecurityToken?wsdl';
+  defURL = 'https://int.services.aadomain.ext:9301/STS/RequestSecurityToken';
   defSvc = 'SecurityTokenService';
   defPrt = 'RequestSecurityToken';
 var

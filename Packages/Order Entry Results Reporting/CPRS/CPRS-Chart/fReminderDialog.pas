@@ -1821,10 +1821,10 @@ begin
   //            TmpText.Free;
             end;
           end;
-          if CheckDailyHospitalization(RemForm.PCEObj) = False then
-          begin
-            Process := False;
-          end;
+//          if CheckDailyHospitalization(RemForm.PCEObj) = False then
+//          begin
+//            Process := False;
+//          end;
           if (Process) then
           begin
             PCEObj := RemForm.PCEObj;

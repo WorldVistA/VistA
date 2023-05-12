@@ -3,7 +3,7 @@ unit oWVController;
   ================================================================================
   *
   *       Application:  TDrugs Patch OR*3*377 and WV*1*24
-  *       Developer:    dan.petit@med.va.gov
+  *       Developer:    doma.user@domain.ext
   *       Site:         Salt Lake City ISC
   *
   *       Description:  Primary controller accessed via the WVController
